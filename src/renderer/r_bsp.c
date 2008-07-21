@@ -27,58 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_material.h"
 
-#define R_SurfaceToSurfaces(surfs, surf)\
-	(surfs)->surfaces[(surfs)->count++] = surf
-
-/* temporary space used to group surfaces by texture */
-mBspSurfaces_t r_sorted_surfaces[MAX_GL_TEXTURES];
-
 /*
 =============================================================
 BRUSH MODELS
 =============================================================
 */
-
-/**
- * @sa R_SortSurfaces
- */
-static void R_SortSurfaces_ (mBspSurfaces_t *surfs)
-{
-	int i, j;
-
-	/* sort them by texture */
-	for (i = 0; i < surfs->count; i++) {
-		const int index = surfs->surfaces[i]->texinfo->image->index;
-		assert(index < MAX_GL_TEXTURES);
-		R_SurfaceToSurfaces(&r_sorted_surfaces[index], surfs->surfaces[i]);
-	}
-
-	surfs->count = 0;
-
-	/* and now add the ordered surfaces again */
-	for (i = 0; i < numgltextures; i++) {
-		for (j = 0; j < r_sorted_surfaces[i].count; j++)
-			R_SurfaceToSurfaces(surfs, r_sorted_surfaces[i].surfaces[j]);
-		r_sorted_surfaces[i].count = 0;
-	}
-}
-
-/**
- * @brief Sort bsp surfaces by textures to reduce the amount of GL_BindTexture
- * call. This should increase the rendering speed a lot
- * @sa R_SortSurfaces_
- */
-void R_SortSurfaces (void)
-{
-	if (r_opaque_surfaces.count)
-		R_SortSurfaces_(&r_opaque_surfaces);
-
-	if (r_blend_surfaces.count)
-		R_SortSurfaces_(&r_blend_surfaces);
-
-	if (r_material_surfaces.count)
-		R_SortSurfaces_(&r_material_surfaces);
-}
 
 #define BACKFACE_EPSILON 0.01
 
@@ -90,13 +43,6 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 	int i;
 	float dot;
 	mBspSurface_t *surf;
-	mBspSurfaces_t opaque_surfaces, opaque_warp_surfaces;
-	mBspSurfaces_t blend_surfaces, blend_warp_surfaces;
-	mBspSurfaces_t alpha_test_surfaces, material_surfaces;
-
-	opaque_surfaces.count = opaque_warp_surfaces.count = 0;
-	blend_surfaces.count = blend_warp_surfaces.count = 0;
-	alpha_test_surfaces.count = material_surfaces.count = 0;
 
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
@@ -114,42 +60,24 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 		}
 
 		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
-			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON))) {
-
-			/* add to appropriate surface chain */
-			if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-				if (surf->texinfo->flags & SURF_WARP)
-					R_SurfaceToSurfaces(&blend_warp_surfaces, surf);
-				else
-					R_SurfaceToSurfaces(&blend_surfaces, surf);
-			} else {
-				if (surf->texinfo->flags & SURF_WARP)
-					R_SurfaceToSurfaces(&opaque_warp_surfaces, surf);
-				else if (surf->texinfo->flags & SURF_ALPHATEST)
-					R_SurfaceToSurfaces(&alpha_test_surfaces, surf);
-				else
-					R_SurfaceToSurfaces(&opaque_surfaces, surf);
-			}
-
-			/* add to the material chain if appropriate */
-			if (surf->texinfo->image->material.flags & STAGE_RENDER)
-				R_SurfaceToSurfaces(&material_surfaces, surf);
-		}
+			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
+			/* visible flag for rendering */
+			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
 	}
 
-	R_DrawOpaqueSurfaces(&opaque_surfaces);
+	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
 
-	R_DrawOpaqueWarpSurfaces(&opaque_warp_surfaces);
+	R_DrawOpaqueWarpSurfaces(e->model->bsp.opaque_warp_surfaces);
 
 	R_EnableBlend(qtrue);
 
-	R_DrawBlendSurfaces(&blend_surfaces);
+	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
 
-	R_DrawBlendWarpSurfaces(&blend_warp_surfaces);
+	R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
 
-	R_DrawAlphaTestSurfaces(&alpha_test_surfaces);
+	R_DrawAlphaTestSurfaces(e->model->bsp.alpha_test_surfaces);
 
-	R_DrawMaterialSurfaces(&material_surfaces);
+	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
 
 	R_EnableBlend(qfalse);
 }
@@ -275,27 +203,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 
 	/* draw stuff */
 	for (c = node->numsurfaces, surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface; c; c--, surf++) {
-		if ((surf->flags & MSURF_PLANEBACK) != sidebit)
-			continue;			/* wrong side */
-
-		/* add to appropriate surfaces list */
-		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-			if (surf->texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(&r_blend_warp_surfaces, surf);
-			else
-				R_SurfaceToSurfaces(&r_blend_surfaces, surf);
-		} else {
-			if (surf->texinfo->flags & SURF_WARP)
-				R_SurfaceToSurfaces(&r_opaque_warp_surfaces, surf);
-			else if (surf->texinfo->flags & SURF_ALPHATEST)
-				R_SurfaceToSurfaces(&r_alpha_test_surfaces, surf);
-			else
-				R_SurfaceToSurfaces(&r_opaque_surfaces, surf);
-		}
-
-		/* add to the material list if appropriate */
-		if (surf->texinfo->image->material.flags & STAGE_RENDER)
-			R_SurfaceToSurfaces(&r_material_surfaces, surf);
+		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
+			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
 	}
 
 	/* recurse down the back side */
@@ -324,13 +233,6 @@ static void R_RecurseWorld (mBspNode_t * node, int tile)
 void R_GetLevelSurfaceLists (void)
 {
 	int i, tile, mask;
-
-	/* reset surface chains and regenerate them
-	 * even reset them when RDF_NOWORLDMODEL is set - otherwise
-	 * there still might be some surfaces in none-world-mode */
-	r_opaque_surfaces.count = r_opaque_warp_surfaces.count = 0;
-	r_blend_surfaces.count = r_blend_warp_surfaces.count = 0;
-	r_alpha_test_surfaces.count = r_material_surfaces.count = 0;
 
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;

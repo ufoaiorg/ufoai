@@ -34,7 +34,7 @@ BRUSHMODEL LOADING
 
 static byte *mod_base;
 static int shift[3];
-static model_t *r_worldmodel;
+model_t *r_worldmodel;
 
 /**
  * @brief Load the lightmap data
@@ -475,7 +475,7 @@ static void R_ModShiftTile (void)
  * @todo Don't use the buffers from r_state here - they might overflow
  * @todo Decrease MAX_GL_ARRAY_LENGTH to 32768 again when this is fixed
  */
-static void R_LoadBspVertexArrays (void)
+static void R_LoadBspVertexArrays (model_t *mod)
 {
 	int i, j;
 	int vertind, coordind;
@@ -483,24 +483,24 @@ static void R_LoadBspVertexArrays (void)
 	mBspSurface_t *surf;
 
 	vertind = coordind = 0;
-	surf = r_worldmodel->bsp.surfaces;
+	surf = mod->bsp.surfaces;
 
-	for (i = 0; i < r_worldmodel->bsp.numsurfaces; i++, surf++) {
+	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertind / 3;
 
 		for (j = 0; j < surf->numedges; j++) {
-			const int index = r_worldmodel->bsp.surfedges[surf->firstedge + j];
+			const int index = mod->bsp.surfedges[surf->firstedge + j];
 
 			if (vertind >= MAX_GL_ARRAY_LENGTH * 3)
 				Com_Error(ERR_DROP, "R_LoadBspVertexArrays: Exceeded MAX_GL_ARRAY_LENGTH %i", vertind);
 
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
-				const mBspEdge_t *edge = &r_worldmodel->bsp.edges[index];
-				vec = r_worldmodel->bsp.vertexes[edge->v[0]].position;
+				const mBspEdge_t *edge = &mod->bsp.edges[index];
+				vec = mod->bsp.vertexes[edge->v[0]].position;
 			} else {
-				const mBspEdge_t *edge = &r_worldmodel->bsp.edges[-index];
-				vec = r_worldmodel->bsp.vertexes[edge->v[1]].position;
+				const mBspEdge_t *edge = &mod->bsp.edges[-index];
+				vec = mod->bsp.vertexes[edge->v[1]].position;
 			}
 
 			/* shift it for assembled maps */
@@ -543,38 +543,206 @@ static void R_LoadBspVertexArrays (void)
 	}
 
 	/* populate the vertex arrays */
-	r_worldmodel->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(r_worldmodel->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
+	mod->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
 
-	r_worldmodel->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(r_worldmodel->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
+	mod->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
 
-	r_worldmodel->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(r_worldmodel->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
+	mod->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
 
-	r_worldmodel->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(r_worldmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
+	mod->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
 
 	if (r_state.vertex_buffers) {
 		/* and also the vertex buffer objects */
-		qglGenBuffers(1, &r_worldmodel->bsp.vertex_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, r_worldmodel->bsp.vertex_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), r_worldmodel->bsp.verts, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.vertex_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
 
-		qglGenBuffers(1, &r_worldmodel->bsp.texcoord_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, r_worldmodel->bsp.texcoord_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), r_worldmodel->bsp.texcoords, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.texcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
 
-		qglGenBuffers(1, &r_worldmodel->bsp.lmtexcoord_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, r_worldmodel->bsp.lmtexcoord_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), r_worldmodel->bsp.lmtexcoords, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
 
-		qglGenBuffers(1, &r_worldmodel->bsp.normal_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, r_worldmodel->bsp.normal_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), r_worldmodel->bsp.normals, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.normal_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
 
 		qglBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+}
+
+/** @brief temporary space for sorting surfaces by texture index */
+static mBspSurfaces_t *r_sorted_surfaces[MAX_GL_TEXTURES];
+
+static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
+{
+	int i, j;
+
+	for (i = 0; i < surfs->count; i++) {
+		const int texindex = surfs->surfaces[i]->texinfo->image->index;
+		R_SurfaceToSurfaces(r_sorted_surfaces[texindex], surfs->surfaces[i]);
+	}
+
+	surfs->count = 0;
+
+	for (i = 0; i < r_numImages; i++) {
+		mBspSurfaces_t *sorted = r_sorted_surfaces[r_images[i].index];
+		if (sorted && sorted->count) {
+			for (j = 0; j < sorted->count; j++)
+				R_SurfaceToSurfaces(surfs, sorted->surfaces[j]);
+
+			sorted->count = 0;
+		}
+	}
+}
+
+/**
+ * @brief Reorders all surfaces arrays for the specified model, grouping the surface
+ * pointers by texture.  This dramatically reduces glBindTexture calls.
+ */
+static void R_SortSurfacesArrays (model_t *mod)
+{
+	mBspSurface_t *surf, *s;
+	int i, ns;
+
+	/* resolve the start surface and total surface count */
+	if (mod->type == mod_bsp) {  /*  world model */
+		s = mod->bsp.surfaces;
+		ns = mod->bsp.numsurfaces;
+	} else {  /* submodels */
+		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+		ns = mod->bsp.nummodelsurfaces;
+	}
+
+	memset(r_sorted_surfaces, 0, sizeof(r_sorted_surfaces));
+
+	/* allocate the per-texture surfaces arrays and determine counts */
+	for (i = 0, surf = s; i < ns; i++, surf++) {
+		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image->index];
+		if (!surfs) {  /* allocate it */
+			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
+			r_sorted_surfaces[surf->texinfo->image->index] = surfs;
+		}
+
+		surfs->count++;
+	}
+
+	/* allocate the surfaces pointers based on counts */
+	for (i = 0; i < r_numImages; i++) {
+		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].index];
+		if (surfs) {
+			surfs->surfaces = (mBspSurface_t **)Mem_PoolAlloc(sizeof(mBspSurface_t *) * surfs->count, vid_modelPool, 0);
+			surfs->count = 0;
+		}
+	}
+
+	/* sort the model's surfaces arrays into the per-texture arrays */
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
+		if (mod->bsp.sorted_surfaces[i]->count) {
+			R_SortSurfacesArrays_(mod->bsp.sorted_surfaces[i]);
+			Com_DPrintf(DEBUG_RENDERER, "%i: #%i surfaces\n", i, mod->bsp.sorted_surfaces[i]->count);
+		}
+	}
+
+	/* free the per-texture surfaces arrays */
+	for (i = 0; i < r_numImages; i++) {
+		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].index];
+		if (surfs) {
+			if (surfs->surfaces)
+				Mem_Free(surfs->surfaces);
+			Mem_Free(surfs);
+		}
+	}
+}
+
+static void R_LoadSurfacesArrays_ (model_t *mod)
+{
+	mBspSurface_t *surf, *s;
+	int i, ns;
+
+	/* allocate the surfaces array structures */
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++)
+		mod->bsp.sorted_surfaces[i] = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
+
+	/* resolve the start surface and total surface count */
+	if (mod->type == mod_bsp) {  /* world model */
+		s = mod->bsp.surfaces;
+		ns = mod->bsp.numsurfaces;
+	} else {  /* submodels */
+		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+		ns = mod->bsp.nummodelsurfaces;
+	}
+
+	/* determine the maximum counts for each rendered type in order to
+	 * allocate only what is necessary for the specified model */
+	for (i = 0, surf = s; i < ns; i++, surf++) {
+		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+			if (surf->texinfo->flags & SURF_WARP)
+				mod->bsp.blend_warp_surfaces->count++;
+			else
+				mod->bsp.blend_surfaces->count++;
+		} else {
+			if (surf->texinfo->flags & SURF_WARP)
+				mod->bsp.opaque_warp_surfaces->count++;
+			else if (surf->texinfo->flags & SURF_ALPHATEST)
+				mod->bsp.alpha_test_surfaces->count++;
+			else
+				mod->bsp.opaque_surfaces->count++;
+		}
+
+		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+			mod->bsp.material_surfaces->count++;
+	}
+
+	/* allocate the surfaces pointers based on the counts */
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
+		if (mod->bsp.sorted_surfaces[i]->count) {
+			mod->bsp.sorted_surfaces[i]->surfaces = (mBspSurface_t **)Mem_PoolAlloc(
+					sizeof(mBspSurface_t *) * mod->bsp.sorted_surfaces[i]->count, vid_modelPool, 0);
+
+			mod->bsp.sorted_surfaces[i]->count = 0;
+		}
+	}
+
+	/* iterate the surfaces again, populating the allocated arrays based
+	 * on primary render type */
+	for (i = 0, surf = s; i < ns; i++, surf++) {
+		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+			if (surf->texinfo->flags & SURF_WARP)
+				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
+			else
+				R_SurfaceToSurfaces(mod->bsp.blend_surfaces, surf);
+		} else {
+			if (surf->texinfo->flags & SURF_WARP)
+				R_SurfaceToSurfaces(mod->bsp.opaque_warp_surfaces, surf);
+			else if (surf->texinfo->flags & SURF_ALPHATEST)
+				R_SurfaceToSurfaces(mod->bsp.alpha_test_surfaces, surf);
+			else
+				R_SurfaceToSurfaces(mod->bsp.opaque_surfaces, surf);
+		}
+
+		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
+	}
+
+	/* now sort them by texture */
+	R_SortSurfacesArrays(mod);
+}
+
+static void R_LoadSurfacesArrays (model_t *mod)
+{
+	int i;
+
+	R_LoadSurfacesArrays_(mod);
+
+	for (i = 0; i < mod->bsp.numsubmodels; i++)
+		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
 
 /**
@@ -654,12 +822,16 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 		VectorCopy(bm->maxs, starmod->maxs);
 		VectorCopy(bm->mins, starmod->mins);
 		starmod->radius = bm->radius;
+		starmod->type = mod_bsp_submodel;
 
 		starmod->bsp.numleafs = bm->visleafs;
 		r_numModelsInline++;
 	}
 
-	R_LoadBspVertexArrays();
+	R_LoadBspVertexArrays(r_worldmodel);
+
+	R_LoadSurfacesArrays(r_worldmodel);
+
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
 

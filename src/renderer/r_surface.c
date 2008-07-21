@@ -27,12 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_error.h"
 
-mBspSurfaces_t r_opaque_surfaces;
-mBspSurfaces_t r_opaque_warp_surfaces;
-mBspSurfaces_t r_blend_surfaces;
-mBspSurfaces_t r_blend_warp_surfaces;
-mBspSurfaces_t r_alpha_test_surfaces;
-
 /**
  * @brief this is the currently handled bsp model
  * @note Remember that we can have loaded more than one bsp at the same time
@@ -161,6 +155,9 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	int i;
 
 	for (i = 0; i < surfs->count; i++) {
+		if (surfs->surfaces[i]->levelflagToRenderIn != (1 << refdef.worldlevel))
+			continue;
+
 		R_SetSurfaceState(surfs->surfaces[i]);
 		R_DrawSurface(surfs->surfaces[i]);
 	}

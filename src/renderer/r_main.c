@@ -285,25 +285,23 @@ void R_RenderFrame (void)
 	/* draw brushes on current worldlevel */
 	R_GetLevelSurfaceLists();
 
-	R_SortSurfaces();
-
 	R_AddLights();
 
 	R_CheckError();
 
-	R_DrawOpaqueSurfaces(&r_opaque_surfaces);
+	R_DrawOpaqueSurfaces(r_worldmodel->bsp.opaque_surfaces);
 
-	R_DrawOpaqueWarpSurfaces(&r_opaque_warp_surfaces);
+	R_DrawOpaqueWarpSurfaces(r_worldmodel->bsp.opaque_warp_surfaces);
 
-	R_DrawAlphaTestSurfaces(&r_alpha_test_surfaces);
+	R_DrawAlphaTestSurfaces(r_worldmodel->bsp.alpha_test_surfaces);
 
 	R_EnableBlend(qtrue);
 
-	R_DrawMaterialSurfaces(&r_material_surfaces);
+	R_DrawMaterialSurfaces(r_worldmodel->bsp.material_surfaces);
 
-	R_DrawBlendSurfaces(&r_blend_surfaces);
+	R_DrawBlendSurfaces(r_worldmodel->bsp.blend_surfaces);
 
-	R_DrawBlendWarpSurfaces(&r_blend_warp_surfaces);
+	R_DrawBlendWarpSurfaces(r_worldmodel->bsp.blend_warp_surfaces);
 
 	R_EnableBlend(qfalse);
 
@@ -682,7 +680,6 @@ qboolean R_Init (void)
 	R_Register();
 
 	memset(&r_state, 0, sizeof(r_state));
-	memset(&r_sorted_surfaces, 0, sizeof(r_sorted_surfaces));
 
 	/* set our "safe" modes */
 	viddef.prev_mode = 6;

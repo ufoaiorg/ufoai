@@ -74,6 +74,9 @@ typedef struct image_s {
 #define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES
 #define TEXNUM_IMAGES		(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
 
+extern image_t r_images[MAX_GL_TEXTURES];
+extern int r_numImages;
+
 void R_WritePNG(qFILE *f, byte *buffer, int width, int height);
 void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);
 void R_WriteTGA(qFILE *f, byte *buffer, int width, int height);

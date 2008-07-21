@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static char glerrortex[MAX_GL_ERRORTEX];
 static char *glerrortexend;
-static image_t gltextures[MAX_GL_TEXTURES];
-int numgltextures;
+image_t r_images[MAX_GL_TEXTURES];
+int r_numImages;
 
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
@@ -59,7 +59,7 @@ void R_ImageClearMaterials (void)
 	int i;
 
 	/* clear previously loaded materials */
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		material_t *m = &image->material;
 		materialStage_t *s = m->stages;
 
@@ -85,7 +85,7 @@ void R_ImageList_f (void)
 	Com_Printf("------------------\n");
 	texels = 0;
 
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (!image->texnum)
 			continue;
 		texels += image->upload_width * image->upload_height;
@@ -124,7 +124,7 @@ void R_ImageList_f (void)
 
 		Com_Printf(" %3i %3i RGB: %5i idx: %i - %s\n", image->upload_width, image->upload_height, image->texnum, image->index, image->name);
 	}
-	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GL_TEXTURES);
+	Com_Printf("Total textures: %i (max textures: %i)\n", r_numImages, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
 }
 
@@ -1235,16 +1235,16 @@ void R_CalcDayAndNight (float q)
 
 	/* get image */
 	if (!r_dayandnighttexture) {
-		if (numgltextures >= MAX_GL_TEXTURES)
+		if (r_numImages >= MAX_GL_TEXTURES)
 			Com_Error(ERR_DROP, "MAX_GL_TEXTURES");
-		r_dayandnighttexture = &gltextures[numgltextures];
-		r_dayandnighttexture->index = numgltextures;
+		r_dayandnighttexture = &r_images[r_numImages];
+		r_dayandnighttexture->index = r_numImages;
 		Q_strncpyz(r_dayandnighttexture->name, "day_and_night_mask", sizeof(r_dayandnighttexture->name));
 		r_dayandnighttexture->width = DAN_WIDTH;
 		r_dayandnighttexture->height = DAN_HEIGHT;
 		r_dayandnighttexture->type = it_pic;
-		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - gltextures);
-		numgltextures++;
+		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - r_images);
+		r_numImages++;
 	}
 	assert(r_dayandnighttexture->texnum);
 	R_BindTexture(r_dayandnighttexture->texnum);
@@ -1562,16 +1562,16 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	size_t len;
 
 	/* find a free image_t */
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++)
+	for (i = 0, image = r_images; i < r_numImages; i++, image++)
 		if (!image->texnum)
 			break;
 
-	if (i == numgltextures) {
-		if (numgltextures >= MAX_GL_TEXTURES)
+	if (i == r_numImages) {
+		if (r_numImages >= MAX_GL_TEXTURES)
 			Com_Error(ERR_DROP, "R_LoadImageData: MAX_GL_TEXTURES hit");
-		numgltextures++;
+		r_numImages++;
 	}
-	image = &gltextures[i];
+	image = &r_images[i];
 	image->has_alpha = qfalse;
 	image->index = i;
 	image->type = type;
@@ -1591,7 +1591,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	if (image->type == it_pic && strstr(image->name, "_noclamp"))
 		image->type = it_wrappic;
 
-	image->texnum = TEXNUM_IMAGES + (image - gltextures);
+	image->texnum = TEXNUM_IMAGES + (image - r_images);
 	if (pic) {
 		R_BindTexture(image->texnum);
 		R_UploadTexture((unsigned *) pic, width, height, image);
@@ -1637,7 +1637,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	*ename = 0;
 
 	/* look for it */
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++)
+	for (i = 0, image = r_images; i < r_numImages; i++, image++)
 		if (!Q_strncmp(lname, image->name, MAX_QPATH)) {
 			image->registration_sequence = registration_sequence;
 			return image;
@@ -1722,7 +1722,7 @@ void R_FreeUnusedImages (void)
 	image_t *image;
 
 	R_CheckError();
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (!image->texnum)
 			continue;			/* free image slot */
 		if (image->type < it_world)
@@ -1742,7 +1742,7 @@ void R_InitImages (void)
 	int i;
 
 	registration_sequence = 1;
-	numgltextures = 0;
+	r_numImages = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
 	r_dayandnighttexture = NULL;
@@ -1763,7 +1763,7 @@ void R_ShutdownImages (void)
 	image_t *image;
 
 	R_CheckError();
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (!image->texnum)
 			continue;			/* free image_t slot */
 		/* free it */
@@ -1804,7 +1804,7 @@ void R_TextureMode (const char *string)
 		return;
 	}
 
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
 			continue;
 
