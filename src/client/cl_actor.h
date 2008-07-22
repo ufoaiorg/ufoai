@@ -90,7 +90,7 @@ void CL_DisplayBlockedPaths_f(void);
 void LE_List_f(void);
 void LM_List_f(void);
 #endif
-void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
+void CL_ConditionalMoveCalc(routing_t *map, pathing_t *path, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);
@@ -139,4 +139,5 @@ void CL_ActorInventoryOpen_f(void);
 void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
 void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
 
+void CL_DumpTUs(void);
 #endif
