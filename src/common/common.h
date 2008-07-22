@@ -239,6 +239,9 @@ MISC
 #define	ERR_DROP	1			/* print to console and disconnect from game */
 #define	ERR_QUIT	2			/* not an error, just a normal exit */
 
+/* text color constant */
+#define	COLORED_GREEN		1
+
 void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *));
 void Com_EndRedirect(void);
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
