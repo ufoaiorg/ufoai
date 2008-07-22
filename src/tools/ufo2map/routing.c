@@ -218,9 +218,11 @@ void DoRouting (void)
 	for (i = 0; i < 3; i++) {
 		if (wpMins[i] < 0)
 			wpMins[i] = 0;
-		if (wpMaxs[i] > ROUTING_NOT_REACHABLE)
-			wpMaxs[i] = ROUTING_NOT_REACHABLE;
+		if (wpMaxs[i] > PATHFINDING_WIDTH)
+			wpMaxs[i] = PATHFINDING_WIDTH;
 	}
+	if (wpMaxs[2] > PATHFINDING_HEIGHT)
+		wpMaxs[2] = PATHFINDING_HEIGHT;
 
 	/* scan area heights */
 	U2M_ProgressBar(CheckUnit, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "UNITCHECK");
@@ -238,12 +240,12 @@ void DoRouting (void)
 		COM_DefaultExtension(filename, sizeof(filename), ".floor.csv");
 		handle = fopen(filename, "w");
 		fprintf(handle, ",");
-		for (x = 0; x < PATHFINDING_WIDTH; x++)
-				fprintf(handle, "%i,", x);
-		for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
-			for (y = PATHFINDING_WIDTH - 1; y >= 0; y--) {
-				fprintf(handle, "%i - %i,", z ,y);
-				for (x = 0; x < PATHFINDING_WIDTH; x++) {
+		for (x = wpMins[0]; x <= wpMaxs[0]; x++)
+				fprintf(handle, "x:%i,", x);
+		for (z = wpMaxs[2]; z >= wpMins[2]; z--) {
+			for (y = wpMaxs[1]; y >= wpMins[1]; y--) {
+				fprintf(handle, "z:%i  y:%i,", z ,y);
+				for (x = wpMins[0]; x <= wpMaxs[0]; x++) {
 					/* compare results */
 					if (map.filled[y][x] & (1 << z) && RT_CEILING(Nmap, 1, x, y, z) - RT_FLOOR(Nmap, 1, x, y, z) < PATHFINDING_MIN_OPENING) {
 						fprintf(handle, "M Filled,");
@@ -300,12 +302,12 @@ void DoRouting (void)
 		COM_DefaultExtension(filename, sizeof(filename), ".elevation.csv");
 		handle = fopen(filename, "w");
 		fprintf(handle, ",");
-		for (x = 0; x < PATHFINDING_WIDTH; x++)
-				fprintf(handle, "%i,", x);
-		for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
-			for (y = PATHFINDING_WIDTH - 1; y >= 0; y--) {
-				fprintf(handle, "%i - %i,", z ,y);
-				for (x = 0; x < PATHFINDING_WIDTH; x++) {
+		for (x = wpMins[0]; x <= wpMaxs[0]; x++)
+				fprintf(handle, "x:%i,", x);
+		for (z = wpMaxs[2]; z >= wpMins[2]; z--) {
+			for (y = wpMaxs[1]; y >= wpMins[1]; y--) {
+				fprintf(handle, "z:%i  y:%i,", z ,y);
+				for (x = wpMins[0]; x <= wpMaxs[0]; x++) {
 					/* compare results */
 					fprintf(handle, "h:%i c:%i,", RT_FLOOR(Nmap, 1, x, y, z), RT_CEILING(Nmap, 1, x, y, z));
 				}
@@ -331,18 +333,18 @@ void DoRouting (void)
 		COM_DefaultExtension(filename, sizeof(filename), ".walls.csv");
 		handle = fopen(filename, "w");
 		fprintf(handle, ",");
-		for (x = 0; x < PATHFINDING_WIDTH; x++)
-				fprintf(handle, "x = %i,", x);
-		for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
-			for (y = PATHFINDING_WIDTH - 1; y >= 0; y--) {
-				fprintf(handle, "z = %i, y = %i,", z ,y);
-				for (x = 0; x < PATHFINDING_WIDTH; x++) {
+		for (x = wpMins[0]; x <= wpMaxs[0]; x++)
+				fprintf(handle, "x:%i,", x);
+		for (z = wpMaxs[2]; z >= wpMins[2]; z--) {
+			for (y = wpMaxs[1]; y >= wpMins[1]; y--) {
+				fprintf(handle, "z:%i  y:%i,", z ,y);
+				for (x = wpMins[0]; x <= wpMaxs[0]; x++) {
 					/* compare results */
 					fprintf(handle, "\"");
 
 					/* NW corner */
 					cc1= R_CONN_NX_PY(&map,x,y,z);
-					cc2 = RT_CONN_NX_PY(Nmap, 0, x, y, z) >= PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_NX_PY(Nmap, 1, x, y, z) >= PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -352,11 +354,11 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_NX_PY(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_NX_PY(Nmap, 1, x, y, z));
 
 					/* N side */
 					cc1= R_CONN_PY(&map,x,y,z);
-					cc2 = RT_CONN_PY(Nmap, 0, x, y, z) >= PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_PY(Nmap, 1, x, y, z) >= PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -366,11 +368,11 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_PY(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_PY(Nmap, 1, x, y, z));
 
 					/* NE corner */
 					cc1= R_CONN_PX_PY(&map,x,y,z);
-					cc2 = RT_CONN_PX_PY(Nmap, 0, x, y, z) >= PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_PX_PY(Nmap, 1, x, y, z) >= PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -380,13 +382,13 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_PX_PY(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_PX_PY(Nmap, 1, x, y, z));
 
 					fprintf(handle, "\n");
 
 					/* W side */
 					cc1= R_CONN_NX(&map,x,y,z);
-					cc2 = RT_CONN_NX(Nmap, 0, x, y, z) >= PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_NX(Nmap, 1, x, y, z) >= PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -396,13 +398,13 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_NX(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_NX(Nmap, 1, x, y, z));
 
-					fprintf(handle, "___");
+					fprintf(handle, "___ ");
 
 					/* E side */
 					cc1= R_CONN_PX(&map,x,y,z);
-					cc2 = RT_CONN_PX(Nmap, 0, x, y, z) > PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_PX(Nmap, 1, x, y, z) > PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -412,13 +414,13 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_PX(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_PX(Nmap, 1, x, y, z));
 
 					fprintf(handle, "\n");
 
 					/* SW corner */
 					cc1= R_CONN_NX_NY(&map,x,y,z);
-					cc2 = RT_CONN_NX_NY(Nmap, 0, x, y, z) > PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_NX_NY(Nmap, 1, x, y, z) > PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -428,11 +430,11 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_NX_NY(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_NX_NY(Nmap, 1, x, y, z));
 
 					/* S side */
 					cc1= R_CONN_NY(&map,x,y,z);
-					cc2 = RT_CONN_NY(Nmap, 0, x, y, z) > PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_NY(Nmap, 1, x, y, z) > PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -442,11 +444,11 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_NY(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_NY(Nmap, 1, x, y, z));
 
 					/* SE corner */
 					cc1= R_CONN_PX_NY(&map,x,y,z);
-					cc2 = RT_CONN_PX_NY(Nmap, 0, x, y, z) > PATHFINDING_MIN_OPENING;
+					cc2 = RT_CONN_PX_NY(Nmap, 1, x, y, z) > PATHFINDING_MIN_OPENING;
 					if (cc1 && cc2) {
 						fprintf(handle, "*");
 					} else if (!cc1 && cc2) {
@@ -456,7 +458,7 @@ void DoRouting (void)
 					} else {
 						fprintf(handle, " ");
 					}
-					fprintf(handle, "%3i ", RT_CONN_PX_NY(Nmap, 0, x, y, z));
+					fprintf(handle, "%3i ", RT_CONN_PX_NY(Nmap, 1, x, y, z));
 
 					fprintf(handle, "\",");
 				}
