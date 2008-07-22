@@ -2126,6 +2126,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");
 	Cmd_AddCommand("debug_cgrid", Grid_DumpWholeClientMap, "Shows the whole client side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap, "Shows the whole server side pathfinding grid of the current loaded map");
+	Cmd_AddCommand("debug_tus", CL_DumpTUs, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");
 	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
