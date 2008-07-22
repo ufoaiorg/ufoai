@@ -3,7 +3,7 @@
 DIR="${1:-.}"
 echo "using directory $DIR"
 
-EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py map"
+EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py map xml"
 # define REPORTNEGATIVES to report all files that had no modifications performed
 #REPORTNEGATIVES=yes
 
