@@ -855,7 +855,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language");
 	s_language->modified = qfalse;
-	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
+	cl_maxfps = Cvar_Get("cl_maxfps", "50", 0, NULL);
 	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
 
@@ -933,7 +933,7 @@ static void tick_timer (int now, void *data)
 	int old_interval = timer->interval;
 
 	/* Compute and store the lateness, updating the total */
-	int lateness = Sys_Milliseconds() - now;
+	const int lateness = Sys_Milliseconds() - now;
 	timer->total_lateness -= timer->recent_lateness[timer->next_lateness];
 	timer->recent_lateness[timer->next_lateness] = lateness;
 	timer->total_lateness += lateness;
@@ -943,7 +943,7 @@ static void tick_timer (int now, void *data)
 	/* Is it time to check the mean yet? */
 	timer->next_check--;
 	if (timer->next_check <= 0) {
-		int mean = timer->total_lateness / TIMER_LATENESS_HISTORY;
+		const int mean = timer->total_lateness / TIMER_LATENESS_HISTORY;
 
 		/* We use a saturating counter to damp the adjustment */
 
@@ -1073,7 +1073,7 @@ void Qcommon_Frame (void)
 	do {
 		const char *s;
 
-		/* XXX: This shouldn't exist */
+		/** @todo This shouldn't exist */
 		do {
 			s = Sys_ConsoleInput();
 			if (s)
