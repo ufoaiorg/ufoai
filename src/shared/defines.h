@@ -78,6 +78,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	DEBUG_RENDERER	(1<<8)
 #define	DEBUG_SOUND		(1<<9)
 #define DEBUG_EVENTSYS	(1<<10)
+#define DEBUG_PATHING	(1<<11)
 
 /* {game}, [client], common/scripts.c */
 #define	NONE		-1
