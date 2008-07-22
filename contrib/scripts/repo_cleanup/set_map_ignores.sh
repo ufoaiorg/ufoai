@@ -5,7 +5,7 @@ PROPFILE=/tmp/map.properties
 
 cd "$(dirname $0)"
 SCRIPTDIR="$PWD"
-. scripts_common
+. ../scripts_common
 
 SVN="$(which svn)"
 [ -x "$SVN" ] || fail "can't find svn executable"

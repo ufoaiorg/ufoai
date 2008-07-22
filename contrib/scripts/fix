@@ -33,7 +33,7 @@ mime xbm image/x-xbitmap
 mime xpm image/x-xpixmap
 mime 3ds application/x-3ds
 mime psd image/psd
-mime dll application/x-msdownload
+mime dll application/octet-stream
 mime pdf application/pdf
 mime doc application/msword
 mime zip application/zip

@@ -1,0 +1,2 @@
+MIME_EXTENSION=(jpg tga wav ogg png dll bmp blend xpm odg ico zip xcf xbm psd exe doc pdf 3ds)
+MIME_TYPE=(image/jpeg image/x-tga audio/x-wav application/ogg image/png application/octet-stream image/bmp application/x-blender image/x-xpixmap application/vnd.oasis.opendocument.graphics image/x-icon application/zip image/x-xcf image/x-xbitmap image/psd application/x-executable application/msword application/pdf application/x-3ds)
