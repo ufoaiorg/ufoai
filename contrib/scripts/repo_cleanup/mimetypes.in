@@ -19,3 +19,4 @@ zip application/zip
 ico image/x-icon
 odg application/vnd.oasis.opendocument.graphics
 bz2 application/bzip2
+ttf application/x-truetype-font
