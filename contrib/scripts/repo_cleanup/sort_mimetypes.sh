@@ -10,6 +10,9 @@ DIR=${1:-.}
 TMPFILE=/tmp/typestats
 INFILE=mimetypes.in
 
+# define SHOWSTATS to show distribution statistics after building the list
+SHOWSTATS=yes
+
 cd "$(dirname $0)"
 SCRIPTDIR="$PWD"
 . ../scripts_common
@@ -34,7 +37,7 @@ while read line; do
     echo -n "$extension " >> "mimetypes.ext"
     echo -n "$mimetype " >> "mimetypes.mime"
 done < <(sort -nr -k 3 "$TMPFILE")
-
+[[ $SHOWSTATS ]] && sort -nr -k 3 "$TMPFILE"
 sed -i 's/ $//g' mimetypes.ext mimetypes.mime
 echo ")" >> mimetypes.ext
 echo ")" >> mimetypes.mime
