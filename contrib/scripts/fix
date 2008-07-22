@@ -63,3 +63,4 @@ mime pdf application/pdf
 mime doc application/msword
 mime zip application/zip
 mime ico image/x-icon
+mime odg application/vnd.oasis.opendocument.graphics
