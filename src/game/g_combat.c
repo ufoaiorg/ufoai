@@ -373,7 +373,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 		} else if (stunEl) {
 			target->STUN += damage;
 		} else if (stunGas) {
-			if (!isRobot)
+			if (!isRobot) /* Can't stun robots with gas */
 				target->STUN += damage;
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
@@ -629,7 +629,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 
 	/* get positional data */
 	VectorCopy(from, last);
-	gi.GridPosToVec(gi.routingMap, at, target);
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, target);
 	/* first apply z_align value */
 	target[2] -= z_align;
 
@@ -867,7 +867,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	}
 
 	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.routingMap, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
 	impact[2] -= z_align;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
@@ -1096,7 +1096,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
-	gi.GridPosToVec(gi.routingMap, shooter->pos, shotOrigin);
+	gi.GridPosToVec(gi.routingMap, shooter->fieldSize, shooter->pos, shotOrigin);
 	/* adjust height: */
 	shotOrigin[2] += fd->shotOrg[1];
 	/* adjust horizontal: */
@@ -1229,7 +1229,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	/* check target is not out of range */
-	gi.GridPosToVec(gi.routingMap, at, target);
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, target);
 	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_HUD, _("Can't perform action - target out of range!\n"));
