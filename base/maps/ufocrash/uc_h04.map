@@ -2292,3 +2292,27 @@
 "spawnflags" "1"
 "anim" "idle"
 }
+// entity 13
+{
+"classname" "light"
+"origin" "104 288 64"
+"light" "120"
+}
+// entity 14
+{
+"classname" "light"
+"origin" "184 288 64"
+"light" "120"
+}
+// entity 15
+{
+"classname" "light"
+"origin" "184 480 64"
+"light" "120"
+}
+// entity 16
+{
+"classname" "light"
+"origin" "104 480 64"
+"light" "120"
+}
