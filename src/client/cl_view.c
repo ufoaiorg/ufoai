@@ -52,7 +52,7 @@ static void CL_ParseEntitystring (const char *es)
 	char keyname[256];
 	char classname[MAX_VAR];
 	char animname[MAX_QPATH], model[MAX_QPATH], particle[MAX_QPATH], sound[MAX_QPATH];
-	vec3_t origin, angles;
+	vec3_t origin, angles, scale;
 	vec2_t wait;
 	int maxlevel = 8, maxmultiplayerteams = 2, entnum = 0;
 	int skin, frame, spawnflags;
@@ -85,6 +85,7 @@ static void CL_ParseEntitystring (const char *es)
 		/* initialize */
 		VectorCopy(vec3_origin, origin);
 		VectorCopy(vec3_origin, angles);
+		VectorSet(scale, 1, 1, 1);
 		Vector2Clear(wait);
 		spawnflags = frame = skin = 0;
 		animname[0] = model[0] = particle[0] = '\0';
@@ -124,6 +125,8 @@ static void CL_ParseEntitystring (const char *es)
 				Q_strncpyz(sound, entity_token, sizeof(sound));
 			else if (!Q_strcmp(keyname, "volume"))
 				volume = atof(entity_token);
+			else if (!Q_strcmp(keyname, "modelscale_vec"))
+				Com_ParseValue(scale, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "origin"))
 				Com_ParseValue(origin, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "angles") && !angles[YAW])
@@ -169,7 +172,7 @@ static void CL_ParseEntitystring (const char *es)
 				renderFlags |= RF_GLOW;
 
 			/* add it */
-			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF), renderFlags);
+			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF), renderFlags, scale);
 			if (lm) {
 				lm->skin = skin;
 				lm->frame = frame;

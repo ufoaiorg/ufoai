@@ -321,6 +321,8 @@ void R_DrawAliasModel (const entity_t *e)
 
 	qglMultMatrixf(e->transform.matrix);
 
+	qglScalef(e->scale[0], e->scale[1], e->scale[2]);
+
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		vec4_t color = {1, 1, 1, 1};

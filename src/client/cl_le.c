@@ -110,6 +110,7 @@ void LM_AddToScene (void)
 		VectorCopy(lm->origin, ent.origin);
 		VectorCopy(lm->origin, ent.oldorigin);
 		VectorCopy(lm->angles, ent.angles);
+		VectorCopy(lm->scale, ent.scale);
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
@@ -248,7 +249,7 @@ void LM_Register (void)
  * @sa CL_ParseEntitystring
  * @param[in] entnum Entity number
  */
-localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags)
+localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
 	localModel_t *lm;
 
@@ -268,6 +269,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
+	VectorCopy(scale, lm->scale);
 
 	return lm;
 }
@@ -1059,6 +1061,7 @@ void LE_AddToScene (void)
 
 			ent.alpha = le->alpha;
 			ent.state = le->state;
+			VectorSet(ent.scale, 1, 1, 1);
 
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;

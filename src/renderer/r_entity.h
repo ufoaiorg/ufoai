@@ -37,7 +37,7 @@ typedef struct {
 typedef struct entity_s {
 	struct model_s *model;		/**< opaque type outside refresh */
 	vec3_t angles;
-
+	vec3_t scale;
 	vec3_t origin;
 	vec3_t oldorigin;
 
@@ -49,9 +49,7 @@ typedef struct entity_s {
 
 	/* misc */
 	int skinnum;
-
 	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
-
 	int state;					/**< same state as the le->state */
 	int flags;
 
