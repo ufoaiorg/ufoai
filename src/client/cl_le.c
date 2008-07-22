@@ -279,7 +279,7 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
 /**
  * @brief Checks whether give position is still inside the map borders
  */
-qboolean CL_OutsideMap (vec3_t impact)
+qboolean CL_OutsideMap (const vec3_t impact)
 {
 	if (impact[0] < map_min[0] - mapBorder || impact[0] > map_max[0] + mapBorder)
 		return qtrue;

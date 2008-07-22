@@ -3834,7 +3834,6 @@ void CL_ActorDie (struct dbuffer *msg)
 	int number, state;
 	int i;
 	char tmpbuf[128];
-	character_t *chr;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -3887,7 +3886,7 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
-		chr = CL_GetActorChr(le);
+		character_t *chr = CL_GetActorChr(le);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was stunned\n"),
 			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
