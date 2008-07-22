@@ -283,6 +283,7 @@ void R_RenderFrame (void)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+		int tile;
 
 		/* draw brushes on current worldlevel */
 		R_GetLevelSurfaceLists();
@@ -291,22 +292,20 @@ void R_RenderFrame (void)
 
 		R_CheckError();
 
-		R_DrawOpaqueSurfaces(r_worldmodel->bsp.opaque_surfaces);
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
+			R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
+			R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
 
-		R_DrawOpaqueWarpSurfaces(r_worldmodel->bsp.opaque_warp_surfaces);
+			R_EnableBlend(qtrue);
 
-		R_DrawAlphaTestSurfaces(r_worldmodel->bsp.alpha_test_surfaces);
+			R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
+			R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
+			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
 
-		R_EnableBlend(qtrue);
-
-		R_DrawMaterialSurfaces(r_worldmodel->bsp.material_surfaces);
-
-		R_DrawBlendSurfaces(r_worldmodel->bsp.blend_surfaces);
-
-		R_DrawBlendWarpSurfaces(r_worldmodel->bsp.blend_warp_surfaces);
+			R_EnableBlend(qfalse);
+		}
 	}
-
-	R_EnableBlend(qfalse);
 
 	R_DrawEntities();
 

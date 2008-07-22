@@ -76,10 +76,10 @@ void R_DrawAliasFrameLerp(const mAliasModel_t* mod, const mAliasMesh_t *mesh, fl
 void R_DrawAliasModel(const entity_t *e);
 void R_ShutdownModels(void);
 
+/** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;
 
-extern model_t *r_worldmodel;
 extern model_t r_models[MAX_MOD_KNOWN];
 extern int r_numModels;
 

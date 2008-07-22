@@ -34,7 +34,11 @@ BRUSHMODEL LOADING
 
 static byte *mod_base;
 static int shift[3];
-model_t *r_worldmodel;
+/**
+ * @brief The currently loaded world model for the actual tile
+ * @sa r_mapTiles
+ */
+static model_t *r_worldmodel;
 
 /**
  * @brief Load the lightmap data
