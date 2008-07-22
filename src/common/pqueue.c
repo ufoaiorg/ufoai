@@ -46,7 +46,7 @@ void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 		Sys_Error("PQueueInitialise: Memory alloc failed!");
 }
 
-void PQueuePush (priorityQueue_t *pq, pos3_t item, priorityQueueRating_t r)
+void PQueuePush (priorityQueue_t *pq, vec4_t item, priorityQueueRating_t r)
 {
 	uint32_t i, j;
 	priorityQueueElement_t * elements = pq->elements;
@@ -74,7 +74,7 @@ void PQueuePush (priorityQueue_t *pq, pos3_t item, priorityQueueRating_t r)
 	}
 
 	/* then add the element at the space we created. */
-	for (j = 0; j < 3; j++)
+	for (j = 0; j < 4; j++)
 		elements[i].item[j] = item[j];
 
 	elements[i].rating = r;
@@ -93,7 +93,7 @@ void PQueueFree (priorityQueue_t *pq)
 /**
  * @brief remove the first node from the pqueue and provide a pointer to it
  */
-void PQueuePop (priorityQueue_t *pq, pos3_t item)
+void PQueuePop (priorityQueue_t *pq, vec4_t item)
 {
 	uint32_t i, j;
 	uint32_t child;

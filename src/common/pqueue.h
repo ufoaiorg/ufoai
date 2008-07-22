@@ -23,7 +23,7 @@ originated:
 typedef int priorityQueueRating_t;
 
 typedef struct priorityQueueElement_s {
-	pos3_t item;
+	vec4_t item;
 	priorityQueueRating_t rating;
 } priorityQueueElement_t;
 
@@ -37,7 +37,7 @@ void PQueueInitialise(priorityQueue_t *pq, uint32_t maxElements);
 void PQueueFree(priorityQueue_t *pq);
 
 #define PQueueIsEmpty(pq) ((pq)->currentSize == 0)
-void PQueuePush(priorityQueue_t *pq, pos3_t item, priorityQueueRating_t rating);
-void PQueuePop(priorityQueue_t *pq, pos3_t item);
+void PQueuePush(priorityQueue_t *pq, vec4_t item, priorityQueueRating_t rating);
+void PQueuePop(priorityQueue_t *pq, vec4_t item);
 
 #endif /* #ifdef __PQUEUE_H */
