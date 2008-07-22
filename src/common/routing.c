@@ -595,15 +595,16 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	vec3_t start, end;
 	pos3_t pos;
 	int i;
-	int h, c; /* height, ceiling */
-	int ah, ac; /* attributes of the destination cell */
-	int fz, cz; /* Floor and celing Z cell coordinates */
-	int floor_p, ceil_p; /* floor of the passage, ceiling of the passage. */
-	int hi, lo, worst; /* used to find floor and ceiling of passage */
+	int h, c; /**< height, ceiling */
+	int ah, ac; /**< attributes of the destination cell */
+	int fz, cz; /**< Floor and celing Z cell coordinates */
+	int floor_p, ceil_p; /**< floor of the passage, ceiling of the passage. */
+	int hi, lo, worst; /**< used to find floor and ceiling of passage */
+	int maxh; /**< The higher value of h and ah */
 	qboolean obstructed;
 	/** 127 <= y <= 134, z=0, 129 <= x <= 135 */
 	/* qboolean doit = 127 <= y && y <= 134 && z==0 && 129 <= x && x <= 135 && actor_size == 1 && dir < 4; */
-	qboolean doit = 0;
+	qboolean doit = qfalse; /**< If true causes debug output for wall checks */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
@@ -615,6 +616,7 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	assert(z < PATHFINDING_HEIGHT);
 
 	RT_CONN_TEST(map, actor_size, ax, ay, z, dir);
+	RT_CONN_TEST(map, actor_size, x, y, z, dir);
 
 	if (doit) Com_Printf("\n(%i, %i, %i) to (%i, %i, %i)\n", x, y, z, ax, ay, z);
 
@@ -623,7 +625,7 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* test if the unit is blocked by a loaded model */
 	if (RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT || RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING){
 		/* We can't go this way. */
-		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		if (doit)  Com_Printf("Current cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_CEILING(map, actor_size, x, y, z));
 		return z + 1;
 	}
@@ -632,15 +634,16 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* if our destination cell is out of bounds, bail. */
 	if ((ax < 0) || (ax > PATHFINDING_WIDTH - actor_size) || (ay < 0) || (y > PATHFINDING_WIDTH - actor_size)) {
 		/* We can't go this way. */
-		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		if (doit)  Com_Printf("Destination cell non-existant.\n");
 		return z + 1;
 	}
 
-	/* If the destination floor is more than PATHFINDING_STEPUP higher, then we can't go there. */
-	if (RT_FLOOR(map, actor_size, ax, ay, z) - RT_FLOOR(map, actor_size, x, y, z) > PATHFINDING_STEPUP) {
+	/* If the destination floor is more than PATHFINDING_STEPUP higher than the base of the current floor
+	 * AND the base of the current cell, then we can't go there. */
+	if (RT_FLOOR(map, actor_size, ax, ay, z) - max(0, RT_FLOOR(map, actor_size, x, y, z)) > PATHFINDING_STEPUP) {
 		/* We can't go this way. */
-		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		if (doit) Com_Printf("Destination cell too high up. cf:%i df:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_FLOOR(map, actor_size, ax, ay, z));
 		return z + 1;
 	}
@@ -648,7 +651,7 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* test if the destination cell is blocked by a loaded model */
 	if (RT_CEILING(map, actor_size, ax, ay, z) - RT_FLOOR(map, actor_size, ax, ay, z) < PATHFINDING_MIN_OPENING) {
 		/* We can't go this way. */
-		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		if (doit) Com_Printf("Destination cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, ax, ay, z), RT_CEILING(map, actor_size, ax, ay, z));
 		return z + 1;
 	}
@@ -665,13 +668,16 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* get the destination ceiling's absolute height */
 	ac = RT_CEILING(map, actor_size, ax, ay, z) + z * (UNIT_HEIGHT / QUANT);
 
+	/* Set maxh to the larger of h and ah. */
+	maxh = max(h, ah);
+
 	assert (c >= h);
 	assert (ac >= ah);
 
 	/* test if the destination cell is blocked by a loaded model */
 	if (h >= ac || ah >= c) {
 		/* We can't go this way. */
-		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		if (doit)  Com_Printf("Destination cell filled. h = %i, c = %i, ah = %i, ac = %i\n", h, c, ah, ac);
 		return z + 1;
 	}
@@ -696,15 +702,15 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* calculate tracing coordinates */
 	VectorSet(pos, x, y, z);
 	SizedPosToVec(pos, actor_size, start);
-	start[2] = h * QUANT; /** start is now at the center of the floor of the originating cell. */
+	start[2] = maxh * QUANT; /** start is now at the center of the floor of the originating cell and as high as the higher of the two floors. */
 
 	/* Locate the destination point. */
 	VectorSet(pos, ax, ay, z);
 	SizedPosToVec(pos, actor_size, end);
-	end[2] = start[2]; /** end is now at the center of the destination cell but at the same height as the starting point. */
+	end[2] = start[2]; /** end is now at the center of the destination cell and at the same height as the starting point. */
 
 	/*
-	 * Part A: Look for the mandatory opening. Low point at original floor plus PATHFINDING_STEPUP,
+	 * Part A: Look for the mandatory opening. Low point at the higher floor plus PATHFINDING_STEPUP,
 	 * high point at original floor plus PATHFINDING_MIN_OPENING. If this is not open, there is no way to
 	 * enter the cell.  There cannot be any obstructions above PATHFINDING_STEPUP because
 	 * the floor would be too high to enter, and there cannot be obstructions below
@@ -717,8 +723,8 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	ceil_p = PATHFINDING_MIN_OPENING;
 	if (RT_ObstructedTrace(start, end, actor_size, ceil_p, floor_p)) {
 		/* We can't go this way. */
-		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
-		if (doit) Com_Printf("No opening in required space between cells. hi:%i lo:%i\n", ceil_p + h , floor_p + h);
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		if (doit) Com_Printf("No opening in required space between cells. hi:%i lo:%i\n", ceil_p + maxh , floor_p + maxh);
 		return z + 1;
 	}
 
@@ -819,7 +825,9 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* Last, update the routes of cells from (x, y, fz) to (x, y, cz) for direction dir */
 	for (i = fz; i <= cz; i++) {
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
+		RT_CONN_TEST(map, actor_size, x, y, i, dir);
 		RT_CONN(map, actor_size, x, y, i, dir) = ceil_p - max(floor_p, i * UNIT_HEIGHT / QUANT);
+		if (doit) Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, actor_size, dir, RT_CONN(map, actor_size, x, y, i, dir));
 	}
 	/* RT_CONN(map, actor_size, ax, ay, z, dir) = ceil_p - floor_p; */
 
