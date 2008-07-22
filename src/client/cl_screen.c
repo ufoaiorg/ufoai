@@ -292,6 +292,15 @@ static void SCR_DrawCursor (void)
 				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
+			/* Display ceiling text */
+			if (mn.menuText[TEXT_MOUSECURSOR_TOP] && cl_show_cursor_tooltips->integer)
+				SCR_DrawString(mousePosX, mousePosY - 64, mn.menuText[TEXT_MOUSECURSOR_TOP], qfalse);
+			/* Display floor text */
+			if (mn.menuText[TEXT_MOUSECURSOR_BOTTOM] && cl_show_cursor_tooltips->integer)
+				SCR_DrawString(mousePosX, mousePosY + 64, mn.menuText[TEXT_MOUSECURSOR_BOTTOM], qfalse);
+			/* Display floor text */
+			if (mn.menuText[TEXT_MOUSECURSOR_LEFT] && cl_show_cursor_tooltips->integer)
+				SCR_DrawString(mousePosX - 64, mousePosY, mn.menuText[TEXT_MOUSECURSOR_LEFT], qfalse);
 		}
 	} else {
 		const vec3_t scale = { 3.5, 3.5, 3.5 };
