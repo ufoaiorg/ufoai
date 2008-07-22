@@ -137,6 +137,7 @@ typedef struct mBspLeaf_s {
 
 /** @brief brush model */
 typedef struct mBspModel_s {
+	/* range of surface numbers in this (sub)model */
 	int firstmodelsurface, nummodelsurfaces;
 
 	int numsubmodels;
