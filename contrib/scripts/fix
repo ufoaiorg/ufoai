@@ -36,7 +36,7 @@ set +f
 echo "setting mime types"
 mime () {
     while read FILENAME; do
-    	if [ "$(svn pg svn:mime-type)" == "$2" ]; then
+    	if [ "$(svn pg svn:mime-type $FILENAME)" == "$2" ]; then
 	    [[ $REPORTNEGATIVES ]] && echo "not setting mime type for $FILENAME, already $2"
 	else
 	    [[ $REPORTPOSITIVES ]] && echo "*** setting svn:mime-type to $2 for $FILENAME"
