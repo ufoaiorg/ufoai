@@ -846,8 +846,8 @@ void CheckBrushes (void)
 #endif
 
 			if (side0->contentFlags != side->contentFlags) {
-				int jNotZero = side->contentFlags & ~side0->contentFlags;
-				int zeroNotJ = side0->contentFlags & ~side->contentFlags;
+				const int jNotZero = side->contentFlags & ~side0->contentFlags;
+				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
 				Com_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
 				if (jNotZero) {
 					Com_Printf("face %i has and face 0 has not", j);
