@@ -856,6 +856,80 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	return NULL;
 }
 
+int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
+{
+	switch (aircraft->weight) {
+	case AIRCRAFT_SMALL:
+		return CAP_AIRCRAFTS_SMALL;
+	case AIRCRAFT_LARGE:
+		return CAP_AIRCRAFTS_BIG;
+	}
+	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->weight);
+}
+
+/**
+ * @brief Moves a given aircraft to a new base (also the employees and inventory)
+ * @note Also checks for a working hangar
+ * @param[in] aircraft The aircraft to move into a new base
+ * @param[in] base The base to move the aircraft into
+ */
+qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
+{
+	base_t *oldBase;
+	baseCapacities_t capacity;
+	int i;
+
+	/* Base should be founded */
+	assert(base);
+
+	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
+
+	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
+		return qfalse;
+
+	oldBase = aircraft->homebase;
+	assert(oldBase);
+
+	/* Transfer employees */
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			employee_t *employee = aircraft->acTeam[i];
+			assert(employee);
+			employee->baseHired = base;
+			base->capacities[CAP_EMPLOYEES].cur++;
+			oldBase->capacities[CAP_EMPLOYEES].cur--;
+			/* Transfer items carried by soldiers from oldBase to base */
+			INV_TransferItemCarriedByChr(employee, oldBase, base);
+		}
+ 	}
+
+	/* Move aircraft to new base */
+	base->aircraft[base->numAircraftInBase] = *aircraft;
+	base->capacities[capacity].cur++;
+	base->numAircraftInBase++;
+
+	/* Remove aircraft from old base */
+	oldBase->numAircraftInBase--;
+	oldBase->capacities[capacity].cur--;
+	i = AIR_GetAircraftIdxInBase(aircraft);
+	/* move other aircraft if the deleted aircraft was not the last one of the base */
+	if (i != AIRCRAFT_INBASE_INVALID)
+		memmove(aircraft, aircraft + 1, (oldBase->numAircraftInBase - i) * sizeof(*aircraft));
+	/* wipe the now vacant last slot */
+	memset(&oldBase->aircraft[oldBase->numAircraftInBase], 0, sizeof(oldBase->aircraft[oldBase->numAircraftInBase]));
+
+	/* Reset aircraft */
+	aircraft = &base->aircraft[base->numAircraftInBase - 1];
+
+	/* Change homebase of aircraft */
+	aircraft->homebase = base;
+
+	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
+
+	return qtrue;
+}
+
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] aircraft Pointer to aircraft that should be removed.

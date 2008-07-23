@@ -163,7 +163,7 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
  * @sa B_UpdateBaseCapacities
  * @sa B_PrintCapacities_f
  */
-static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
+buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 {
 	switch (cap) {
 	case CAP_ALIENS:
@@ -3290,7 +3290,6 @@ static void B_PrintCapacities_f (void)
 {
 	int i, j;
 	base_t *base;
-	buildingType_t buildingType;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -3304,7 +3303,7 @@ static void B_PrintCapacities_f (void)
 	}
 	base = B_GetBaseByIDX(i);
 	for (i = 0; i < MAX_CAP; i++) {
-		buildingType = B_GetBuildingTypeByCapacity(i);
+		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(i);
 		if (buildingType >= MAX_BUILDING_TYPE)
 			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
 		else {

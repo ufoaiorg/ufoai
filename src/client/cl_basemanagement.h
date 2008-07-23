@@ -271,6 +271,7 @@ int B_GetFoundedBaseCount(void);
 void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
+buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
 building_t* B_SetBuildingByClick(base_t *base, const building_t const *template, int row, int col);
 void B_InitStartup(void);

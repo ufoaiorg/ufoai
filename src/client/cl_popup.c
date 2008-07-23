@@ -101,19 +101,12 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 {
 	int baseIdx, homebase, numAvailableBase = 0;
 	baseCapacities_t capacity;
+	buildingType_t buildingType;
 
 	assert(aircraft);
 
-	switch (aircraft->weight) {
-	case AIRCRAFT_SMALL:
-		capacity = CAP_AIRCRAFTS_SMALL;
-		break;
-	case AIRCRAFT_LARGE:
-		capacity = CAP_AIRCRAFTS_BIG;
-		break;
-	default:
-		Sys_Error("CL_DisplayHomebasePopup: Unkown type of aircraft '%i'\n", aircraft->weight);
-	}
+	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+	buildingType = B_GetBuildingTypeByCapacity(capacity);
 
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
@@ -126,9 +119,8 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	homebase = 0;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		char        text[MAX_VAR];
+		char text[MAX_VAR];
 		char const* msg;
-
 		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
@@ -137,6 +129,9 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 			msg = _("current homebase of aircraft");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 			homebase = popupNum;
+		} else if (!B_GetBuildingStatus(base, buildingType)) {
+			msg = _("not a working hangar");
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 		} else if (base->capacities[capacity].cur >= base->capacities[capacity].max) {
 			msg = _("no more available hangar");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
@@ -182,8 +177,7 @@ static void CL_PopupChangeHomebase_f (void)
 	linkedList_t* popup = popupListData;	/**< Use this so we do not change the original popupListData pointer. */
 	int selectedPopupIndex;
 	int i;
-	base_t *base, *oldBase;
-	baseCapacities_t capacity;
+	base_t *base;
 
 	/* If popup is opened, that means an aircraft is selected */
 	if (!selectedAircraft) {
@@ -229,60 +223,8 @@ static void CL_PopupChangeHomebase_f (void)
 		popupListNode->textLineSelected = selectedPopupIndex;
 	}
 
-	/* Base should be founded */
-	assert(base);
-	oldBase = selectedAircraft->homebase;
-	assert(oldBase);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Change homebase of '%s' to '%s'\n", selectedAircraft->id, base->name);
-
-	switch (selectedAircraft->weight) {
-	case AIRCRAFT_SMALL:
-		capacity = CAP_AIRCRAFTS_SMALL;
-		break;
-	case AIRCRAFT_LARGE:
-		capacity = CAP_AIRCRAFTS_BIG;
-		break;
-	default:
-		Sys_Error("CL_PopupChangeHomebase_f: Unkown type of aircraft '%i'\n", selectedAircraft->weight);
-	}
-
-	/* Transfer employees */
-	for (i = 0; i < selectedAircraft->maxTeamSize; i++) {
-		if (selectedAircraft->acTeam[i]) {
-			employee_t *employee = selectedAircraft->acTeam[i];
-			assert(employee);
-			employee->baseHired = base;
-			base->capacities[CAP_EMPLOYEES].cur++;
-			oldBase->capacities[CAP_EMPLOYEES].cur--;
-			INV_TransferItemCarriedByChr(employee, oldBase, base);
-		}
- 	}
-
-	/** @todo Transfer items carried by soldiers from oldBase to base */
-
-	/* Move aircraft to new base */
-	base->aircraft[base->numAircraftInBase] = *selectedAircraft;
-	base->capacities[capacity].cur++;
-	base->numAircraftInBase++;
-
-	/* Remove aircraft from old base */
-	oldBase->numAircraftInBase--;
-	oldBase->capacities[capacity].cur--;
-	i = AIR_GetAircraftIdxInBase(selectedAircraft);
-	/* move other aircraft if the deleted aircraft was not the last one of the base */
-	if (i != AIRCRAFT_INBASE_INVALID)
-		memmove(selectedAircraft, selectedAircraft + 1, (oldBase->numAircraftInBase - i) * sizeof(*selectedAircraft));
-	/* wipe the now vacant last slot */
-	memset(&oldBase->aircraft[oldBase->numAircraftInBase], 0, sizeof(oldBase->aircraft[oldBase->numAircraftInBase]));
-
-	/* Reset selectedAircraft */
-	selectedAircraft = &base->aircraft[base->numAircraftInBase - 1];
-
-	/* Change homebase of aircraft */
-	selectedAircraft->homebase = base;
-
-	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
+	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);
 
 	MN_PopMenu(qfalse);
 	CL_DisplayHomebasePopup(selectedAircraft, qtrue);

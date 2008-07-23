@@ -242,6 +242,7 @@ void AIR_AircraftSelect_f(void);
 
 void AIR_DeleteAircraft(struct base_s *base, aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
+qboolean AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *base);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
@@ -272,5 +273,6 @@ void AIR_AutoAddPilotToAircraft(struct base_s* base, struct employee_s* pilot);
 void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct employee_s* pilot);
 float AIR_GetMaxAircraftWeaponRange(const aircraftSlot_t *slot, int maxSlot);
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
+int AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 
 #endif
