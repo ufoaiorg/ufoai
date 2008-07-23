@@ -879,13 +879,27 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	baseCapacities_t capacity;
 	int i;
 
-	/* Base should be founded */
+	assert(aircraft);
 	assert(base);
+	assert(base != aircraft->homebase);
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
+		return qfalse;
+
+	/* not enough capacity */
+	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
+		return qfalse;
+
+	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+		return qfalse;
+
+	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
+		return qfalse;
+
+	if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos))
 		return qfalse;
 
 	oldBase = aircraft->homebase;
