@@ -1827,7 +1827,6 @@ void INVSH_PrintItemDescription (const objDef_t *od)
 objDef_t *INVSH_GetItemByID (const char *id)
 {
 	int i;
-	objDef_t *item;
 
 #ifdef DEBUG
 	if (!id || !*id) {
@@ -1837,7 +1836,7 @@ objDef_t *INVSH_GetItemByID (const char *id)
 #endif
 
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
-		item = &CSI->ods[i];
+		objDef_t *item = &CSI->ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			return item;
 		}

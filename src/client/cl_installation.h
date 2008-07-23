@@ -78,6 +78,7 @@ typedef struct installation_s {
 	radar_t	radar;
 
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation.  For Sam Sites Only.  */
+	int numBatteries;		/**< how many batteries are installed? */
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 

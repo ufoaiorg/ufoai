@@ -2,6 +2,7 @@
  * @file cl_installation.c
  * @brief Handles everything that is located in or accessed through an installation.
  * @note Installation functions prefix: INS_*
+ * @todo Allow transfer of items to installations
  */
 
 /*
@@ -100,6 +101,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 {
 	const int newInstallationAlienInterest = 1.0f;
 	int idxBattery;
+	objDef_t *od;
 
 	assert(installation);
 
@@ -125,10 +127,19 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* intialise hit points */
 	installation->installationDamage = installation->installationTemplate->maxDamage;
 
-	Q_strncpyz (&installation->storage.name[16], "base_AA51_launcher", sizeof(installation->storage.name[16]));
-	installation->storage.num[16] = 3;
+	/** @todo Put this into the scripts */
+	od = INVSH_GetItemByID("base_AA51_launcher");
+	if (!od)
+		Sys_Error("Could not find base_AA51_launcher item definition");
 
-	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id, installation->installationTemplate->radarRange, installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
+	/* this is a craftitem */
+	assert(od->craftitem.type != MAX_ACITEMS);
+
+	installation->storage.num[od->idx] = 3;
+
+	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id,
+		installation->installationTemplate->radarRange, installation->installationTemplate->maxBatteries,
+		installation->installationTemplate->maxUfoStored);
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
@@ -137,7 +148,6 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	for (idxBattery = 0; idxBattery < installation->installationTemplate->maxBatteries; idxBattery++) {
 		AII_InitialiseSlot(&installation->batteries[idxBattery].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
 		installation->batteries[idxBattery].target = NULL;
-
 	}
 }
 
@@ -173,6 +183,8 @@ static int INS_GetFirstUnfoundedInstallation (void)
 }
 /**
  * @param[in] installation If this is @c NULL we want to installation a new base
+ * @note This is (and should be) the only place where installationCurrent is set
+ * to a value that is not @c NULL
  */
 void INS_SelectInstallation (installation_t *installation)
 {
@@ -614,6 +626,7 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
 #if 0
+		int j;
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		MSG_WriteByte(sb, inst->founded);
 		if (!inst->founded)
@@ -627,14 +640,19 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 
 		MSG_WriteByte(sb, inst->numBatteries);
 		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);
-		/** @todo storage, aircraft (don't save capacities, they should
+
+		/* store equipments */
+		for (j = 0; j < presaveArray[PRE_NUMODS]; j++) {
+			MSG_WriteString(sb, csi.ods[i].id);
+			MSG_WriteLong(sb, inst->storage.num[i]);
+		}
+
+		/** @todo aircraft (don't save capacities, they should
 		 * be recalculated after loading) */
 #endif
 	}
 	return qtrue;
 }
-
-
 
 /**
  * @brief Load callback for savegames
@@ -647,6 +665,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
 #if 0
+		int j;
 		installation_t *inst = INS_GetInstallationByIDX(i);
 		inst->founded = MSG_ReadByte(sb);
 		if (!inst->founded)
@@ -662,7 +681,19 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->numBatteries = MSG_ReadByte(sb);
 		B_LoadBaseSlots(inst->batteries, inst->numBatteries, sb);
 
-		/** @todo storage, aircraft */
+		/* load equipments */
+		for (j = 0; j < presaveArray[PRE_NUMODS]; j++) {
+			const char *s = MSG_ReadString(sb);
+			objDef_t *od = INVSH_GetItemByID(s);
+			if (!od) {
+				Com_Printf("INS_Load: Could not find item '%s'\n", s);
+				MSG_ReadLong(sb);
+			} else {
+				inst->storage.num[od->idx] = MSG_ReadLong(sb);
+			}
+		}
+
+		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 #endif
 	}
