@@ -77,12 +77,12 @@ typedef struct installation_s {
 
 	radar_t	radar;
 
-	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation.  For Sam Sites Only.  */
+	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation. For Sam Sites only. */
 	int numBatteries;		/**< how many batteries are installed? */
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
-	/** All ufo aircraft in this installation.  This used for UFO Yards. **/
+	/** All ufo aircraft in this installation. This is used for UFO Yards. **/
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInInstallation;	/**< How many aircraft are in this installation. */
 
