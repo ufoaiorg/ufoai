@@ -50,7 +50,7 @@ extern const int UGV_SIZE;
 
 void INV_ParseComponents(const char *name, const char **text);
 void INV_TransferItemCarriedByChr(employee_t *employee, base_t *sourceBase, base_t* destBase);
-int INV_GetStorageRoom(aircraft_t *aircraft);
+int INV_GetStorageRoom(const aircraft_t *aircraft);
 
 void INV_CollectingItems(int won);
 void INV_SellOrAddItems(aircraft_t *aircraft);

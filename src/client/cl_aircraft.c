@@ -867,6 +867,28 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->weight);
 }
 
+const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
+{
+	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
+		return _("not a working hangar");
+
+	/* not enough capacity */
+	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
+		return _("no more available hangar");
+
+	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+		return _("no more quarter for employees aboard");
+
+	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
+		return _("no more room in storage");
+
+	/* check aircraft fuel, because the aircraft has to travel to the new base */
+	if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos))
+		return _("base is too far");
+
+	return NULL;
+}
+
 /**
  * @brief Moves a given aircraft to a new base (also the employees and inventory)
  * @note Also checks for a working hangar
@@ -886,20 +908,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
-	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
-		return qfalse;
-
-	/* not enough capacity */
-	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
-		return qfalse;
-
-	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
-		return qfalse;
-
-	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
-		return qfalse;
-
-	if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos))
+	if (AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity))
 		return qfalse;
 
 	oldBase = aircraft->homebase;

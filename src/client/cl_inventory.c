@@ -141,7 +141,7 @@ void INV_TransferItemCarriedByChr (employee_t *employee, base_t *sourceBase, bas
  * @brief Calculate storage room corresponding to items in an aircraft.
  * @param[in] aircraft Pointer to the aircraft.
  */
-int INV_GetStorageRoom (aircraft_t *aircraft)
+int INV_GetStorageRoom (const aircraft_t *aircraft)
 {
 	invList_t *ic;
 	int i, container;

@@ -129,26 +129,14 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 			msg = _("current homebase of aircraft");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 			homebase = popupNum;
-		} else if (!B_GetBuildingStatus(base, buildingType)) {
-			msg = _("not a working hangar");
-			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
-		} else if (base->capacities[capacity].cur >= base->capacities[capacity].max) {
-			msg = _("no more available hangar");
-			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
-		} else if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos)) {
-			msg = _("base is too far");
-			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
-		} else if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max) {
-			msg = _("no more quarter for employees aboard");
-			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
-		} else if (aircraft->maxTeamSize &&
-				base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max) {
-			msg = _("no more room in storage");
-			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
-		} else {
+		}
+		msg = AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity);
+		if (!msg) {
 			msg = _("base can hold aircraft");
 			LIST_Add(&popupListData, (byte *)&baseIdx, sizeof(int));
 			numAvailableBase++;
+		} else {
+			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 		}
 
 		Com_sprintf(text, sizeof(text), "%s\t%s", base->name, msg);
@@ -222,7 +210,6 @@ static void CL_PopupChangeHomebase_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Setting currently selected line (from %i) to %i.\n", popupListNode->textLineSelected, selectedPopupIndex);
 		popupListNode->textLineSelected = selectedPopupIndex;
 	}
-
 
 	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);
 
