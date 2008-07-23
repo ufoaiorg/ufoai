@@ -20,3 +20,7 @@ ico image/x-icon
 odg application/vnd.oasis.opendocument.graphics
 bz2 application/bzip2
 ttf application/x-truetype-font
+html text/html
+txt text/plain
+po text/x-gettext-translation
+py text/plain
