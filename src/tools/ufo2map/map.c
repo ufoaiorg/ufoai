@@ -641,11 +641,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		Q_strncpyz(td.name, parsedToken, sizeof(td.name));
 
 		GetToken(qfalse);
-		td.shift[0] = atoi(parsedToken);
+		td.shift[0] = atof(parsedToken);
 		GetToken(qfalse);
-		td.shift[1] = atoi(parsedToken);
+		td.shift[1] = atof(parsedToken);
 		GetToken(qfalse);
-		td.rotate = atoi(parsedToken);
+		td.rotate = atof(parsedToken);
 		GetToken(qfalse);
 		td.scale[0] = atof(parsedToken);
 		GetToken(qfalse);
@@ -974,26 +974,6 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 }
 
 /**
- * @brief create string without unnecessary trailing zeroes (or decimal point).
- */
-static void TrimTrailing (char* const buf, size_t const bufSize, float const num)
-{
-	char* end;
-
-	Com_sprintf(buf, bufSize, "%8.6f", num);
-
-	/* work back from the end, find the first non-zero digit */
-	end = strchr(buf, '\0');
-	while (*--end == '0') {}
-
-	/* remove the first non-zero 'digit' only if it is the decimal point */
-	if (*end != '.')
-		++end;
-
-	*end = '\0';
-}
-
-/**
  * @sa LoadMapFile
  * @sa FixErrors
  */
@@ -1029,26 +1009,13 @@ void WriteMapFile (const char *filename)
 				const ptrdiff_t index = side - brushsides;
 				const brush_texture_t *t = &side_brushtextures[index];
 				const plane_t *p = &mapplanes[side->planenum];
-				char floatBuf[20];
 				int l;
 
-				for (l = 0; l < 3; l++) {
-					fprintf(f, "( ");
-					TrimTrailing(floatBuf, sizeof(floatBuf), p->planeVector[l][0]);
-					fprintf(f, "%s ", floatBuf);
-					TrimTrailing(floatBuf, sizeof(floatBuf), p->planeVector[l][1]);
-					fprintf(f, "%s ", floatBuf);
-					TrimTrailing(floatBuf, sizeof(floatBuf), p->planeVector[l][2]);
-					fprintf(f, "%s ", floatBuf);
-					fprintf(f, ") ");
-				}
+				for (l = 0; l < 3; l++)
+					fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
 				fprintf(f, "%s ", t->name);
-				/* shift[] and rotate are only stored as integers in the file */
-				fprintf(f, "%1.0f %1.0f %1.0f ", t->shift[0], t->shift[1], t->rotate);
-				TrimTrailing(floatBuf, sizeof(floatBuf), t->scale[0]);
-				fprintf(f, "%s ", floatBuf);
-				TrimTrailing(floatBuf, sizeof(floatBuf), t->scale[1]);
-				fprintf(f, "%s ", floatBuf);
+				fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
+				fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
 				fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
 			}
 			fprintf(f, "}\n");
