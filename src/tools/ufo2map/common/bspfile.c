@@ -288,11 +288,11 @@ static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, v
  * @brief Swaps the bsp file in place, so it should not be referenced again
  * @sa LoadBSPFile
  */
-size_t WriteBSPFile (const char *filename)
+long WriteBSPFile (const char *filename)
 {
 	qFILE bspfile;
 	dBspHeader_t outheader;
-	size_t size;
+	long size;
 
 	memset(&outheader, 0, sizeof(outheader));
 	memset(&bspfile, 0, sizeof(bspfile));
@@ -321,10 +321,10 @@ size_t WriteBSPFile (const char *filename)
 	AddLump(&bspfile, &outheader, LUMP_LIGHTING_DAY, curTile->lightdata[1], curTile->lightdatasize[1]);
 	AddLump(&bspfile, &outheader, LUMP_ROUTING, curTile->routedata, curTile->routedatasize);
 	AddLump(&bspfile, &outheader, LUMP_ENTITIES, curTile->entdata, curTile->entdatasize);
-
-	fseek(bspfile.f, 0, SEEK_SET);
-	SafeWrite(&bspfile, &outheader, sizeof(outheader));
 	size = ftell(bspfile.f);
+
+	fseek(bspfile.f, 0L, SEEK_SET);
+	SafeWrite(&bspfile, &outheader, sizeof(outheader));
 	CloseFile(&bspfile);
 	SwapBSPFile();
 	return size;

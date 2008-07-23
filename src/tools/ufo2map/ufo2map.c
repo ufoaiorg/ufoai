@@ -510,7 +510,7 @@ int main (int argc, const char **argv)
 	Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
-		size_t size;
+		long size;
 
 		Com_Printf("----- Radiosity ----\n");
 
@@ -538,7 +538,7 @@ int main (int argc, const char **argv)
 		Com_Printf("writing %s\n", bspFilename);
 		size = WriteBSPFile(bspFilename);
 
-		Com_Printf("sum: %5.0f seconds elapsed - %.1f MB (%d bytes)\n\n", end - begin, (float) size / (1024 * 1024), (int) size);
+		Com_Printf("sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 	}
 
 	return 0;
