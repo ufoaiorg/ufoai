@@ -46,7 +46,7 @@ void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 		Sys_Error("PQueueInitialise: Memory alloc failed!");
 }
 
-void PQueuePush (priorityQueue_t *pq, vec4_t item, priorityQueueRating_t r)
+void PQueuePush (priorityQueue_t *pq, pos4_t item, priorityQueueRating_t r)
 {
 	uint32_t i, j;
 	priorityQueueElement_t * elements = pq->elements;
@@ -93,7 +93,7 @@ void PQueueFree (priorityQueue_t *pq)
 /**
  * @brief remove the first node from the pqueue and provide a pointer to it
  */
-void PQueuePop (priorityQueue_t *pq, vec4_t item)
+void PQueuePop (priorityQueue_t *pq, pos4_t item)
 {
 	uint32_t i, j;
 	uint32_t child;
@@ -110,7 +110,7 @@ void PQueuePop (priorityQueue_t *pq, vec4_t item)
 	/* get pointer to last element in tree */
 	pLastElement = elements[currentSize--];
 
-	for (j = 0; j < 3; j++)
+	for (j = 0; j < 4; j++)
 		item[j] = pMaxElement.item[j];
 
 	for (i = PQ_FIRST_ENTRY; (child = PQ_LEFT_CHILD_INDEX(i)) <= currentSize; i = child) {

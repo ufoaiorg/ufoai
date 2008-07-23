@@ -1409,7 +1409,7 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 	byte ol;
 	int nx, ny, nz;
 	int dx, dy, dz;
-	vec4_t dummy;
+	pos4_t dummy;
 	byte l;
 	qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	qboolean has_ladder_support = qfalse; /**< Indicates if there is a ladder present providing support. */
@@ -1704,7 +1704,7 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	int dir;
 	int count;
 	priorityQueue_t pqueue;
-	vec4_t epos; /**< Extended position; includes crouching state */
+	pos4_t epos; /**< Extended position; includes crouching state */
 	pos3_t pos;
 
 
