@@ -132,7 +132,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
-	RADAR_UpdateInstallationRadarCoverage_f(installation, installation->installationTemplate->radarRange);
+	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
 
 	for (idxBattery = 0; idxBattery < installation->installationTemplate->maxBatteries; idxBattery++) {
 		AII_InitialiseSlot(&installation->batteries[idxBattery].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
