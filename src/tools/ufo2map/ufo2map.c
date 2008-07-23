@@ -488,7 +488,7 @@ int main (int argc, const char **argv)
 			CheckLevelFlags();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
-		if (config.chkNodraws /* || config.chkAll */) /* include in chkAll when it works */
+		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */
 			CheckNodraws();
 		if (config.chkEntities || config.chkAll)
 			CheckEntities();
