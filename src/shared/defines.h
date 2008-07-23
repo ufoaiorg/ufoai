@@ -40,12 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	PLANESIDE_EPSILON	0.001
 
 /* bsp constants */
-/* ufo2map/map.c, ufo2map/brushbsp.c (both unused) */
-#define	CLIP_EPSILON	0.1
 /* ufo2map/csg.c, ufo2map/portals.c, ufo2map/brushbsp.c */
 #define	TEXINFO_NODE		-1		/* side is already on a node */
-/* unused */
-#define	MAX_NODE_BRUSHES	8
 /* ufo2map/faces.c, shared/typedefs.h (face_t) */
 #define	MAXEDGES		20
 
@@ -201,8 +197,6 @@ const int TUs_used[PATHFINDING_DIRECTIONS];
 #define	MAX_MAP_FACES		65536
 /* ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_LEAFBRUSHES	65536
-/* Unused */
-#define	MAX_MAP_PORTALS		65536
 /* ufo2map/faces.c, ufo2map/lightmap.c, shared/typedefs.h */
 #define	MAX_MAP_EDGES		128000
 /* ufo2map/writebsp.c, renderer/r_model_brush.c, shared/typedefs.h */
@@ -213,8 +207,6 @@ const int TUs_used[PATHFINDING_DIRECTIONS];
 /* shared/typedefs.h */
 #define	MAX_MAP_ROUTING		0x100000
 
-/* Unused */
-#define	MAX_MAP_LIGHTS	1024
 /* common/tracing.c */
 #define	MAX_LEAFS		1024
 
@@ -418,11 +410,6 @@ COLLISION DETECTION
 
 /* common/tracing.c, ufo2map/common/polylib.c, ufo2map/faces.c, ufo2map/patches.c, ufo2map/portals.c, ufo2map/common/polylib.h */
 #define	ON_EPSILON	0.1
-
-/* Unused */
-#define	GRENADE_ALPHAFAC	0.7
-#define	GRENADE_MINALPHA	M_PI/6
-#define	GRENADE_MAXALPHA	M_PI*7/16
 
 /* 1/32 epsilon to keep floating point happy */
 /* common/tracing.c, ufo2map/map.c, client/cl_actor.c, common/cmodel.c */

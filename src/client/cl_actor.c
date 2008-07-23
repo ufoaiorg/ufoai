@@ -4325,6 +4325,7 @@ void CL_ActorMouseTrace (void)
 
 	/* Set truePos- test pos is under the cursor. */
 	VectorCopy(testPos, truePos);
+	truePos[2] = intersectionLevel;
 
 	/* Set mousePos to the position that the actor will move to. */
 	testPos[2] = restingLevel;
