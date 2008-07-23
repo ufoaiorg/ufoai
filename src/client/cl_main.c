@@ -82,6 +82,7 @@ cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
 cvar_t* cl_showCoords;
+cvar_t* cl_mapDebug;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
@@ -2075,6 +2076,9 @@ static void CL_InitLocal (void)
 	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
 	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
 	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
+
+	cl_mapDebug = Cvar_Get("mapdebug", "0", 0, "Activate realtime map debugging options");
+
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");

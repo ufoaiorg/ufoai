@@ -48,6 +48,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_TEAMLIST	8
 
+/* Map debugging constants */
+#define MAPDEBUG_PATHING	(1<<0) /* Turns on pathing tracing. */
+#define MAPDEBUG_CELLS		(1<<1) /* Creates arrows pointing at floors and ceilings at mouse cursor */
+#define MAPDEBUG_WALLS		(1<<2) /* Creates arrows pointing at obstructions in the 8 primary directions */
+
 /* Macros for faster access to the inventory-container. */
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
@@ -266,6 +271,9 @@ extern cvar_t *mn_inputlength;
 extern cvar_t *s_language;
 extern cvar_t *difficulty;
 extern cvar_t *confirm_actions;
+
+extern cvar_t* cl_mapDebug;
+
 
 /** limit the input for cvar editing (base name, save slots and so on) */
 #define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */

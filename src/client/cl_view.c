@@ -364,7 +364,7 @@ void V_RenderView (void)
 		/* add local entities to the renderer chain */
 		LE_AddToScene();
 		/* adds pathing data */
-		if (developer->integer & DEBUG_CLIENT)
+		if (cl_mapDebug->integer & MAPDEBUG_PATHING)
 			CL_AddPathing();
 		/* adds target cursor */
 		CL_AddTargeting();

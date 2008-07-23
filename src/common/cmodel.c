@@ -1809,7 +1809,7 @@ int Grid_MoveNext (struct routing_s *map, const int actor_size, struct pathing_s
  * @brief Returns the height of the floor in a cell.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] pos Position in the map to check the height
- * @return The actual model height of the cell's floor.
+ * @return The actual model height of the cell's ceiling.
  */
 int Grid_Height (struct routing_s *map, const int actor_size, const pos3_t pos)
 {
@@ -1935,8 +1935,8 @@ void Grid_PosToVec (struct routing_s *map, const int actor_size, pos3_t pos, vec
 	if (pos[2] >= PATHFINDING_HEIGHT)
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
-    /* Clamp the floor value between 0 and 16 */
-	vec[2] += max(0, min(16, Grid_Floor(map, actor_size, pos)));
+    /* Clamp the floor value between 0 and UNIT_HEIGHT */
+	vec[2] += max(0, min(UNIT_HEIGHT, Grid_Floor(map, actor_size, pos)));
 }
 
 /**

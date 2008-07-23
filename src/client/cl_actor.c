@@ -5181,7 +5181,6 @@ static void CL_AddPathingBox (pos3_t pos)
 	VectorSubtract(ent.origin, boxShift, ent.origin);
 
 	base = Grid_Floor(clMap, fieldSize, pos);
-	height = Grid_Height(clMap, fieldSize, pos);
 
 	/**
 	 * Paint the box green if it is reachable,
@@ -5204,7 +5203,7 @@ static void CL_AddPathingBox (pos3_t pos)
 	/**
 	 * Set the box height to the ceiling value of the cell.
 	 */
-	/* height = Grid_StepUp(clMap, fieldSize, pos); */
+	height = 2;
 	ent.oldorigin[2] = height;
 
 	ent.alpha = 0.25;
