@@ -129,14 +129,15 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 			msg = _("current homebase of aircraft");
 			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
 			homebase = popupNum;
-		}
-		msg = AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity);
-		if (!msg) {
-			msg = _("base can hold aircraft");
-			LIST_Add(&popupListData, (byte *)&baseIdx, sizeof(int));
-			numAvailableBase++;
 		} else {
-			LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+			msg = AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity);
+			if (!msg) {
+				msg = _("base can hold aircraft");
+				LIST_Add(&popupListData, (byte *)&baseIdx, sizeof(int));
+				numAvailableBase++;
+			} else {
+				LIST_Add(&popupListData, (byte *)&INVALID_BASE, sizeof(int));
+			}
 		}
 
 		Com_sprintf(text, sizeof(text), "%s\t%s", base->name, msg);
