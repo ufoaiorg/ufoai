@@ -1115,14 +1115,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		aircraft->pos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
 		aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
-		while (aircraft->pos[0] > 180.0)
-			aircraft->pos[0] -= 360.0;
-		while (aircraft->pos[0] < -180.0)
-			aircraft->pos[0] += 360.0;
-		while (aircraft->pos[1] > 90.0)
-			aircraft->pos[1] -= 180.0;
-		while (aircraft->pos[1] < -90.0)
-			aircraft->pos[1] += 180.0;
+		MAP_CheckPositionBoundaries(aircraft->pos);
 	}
 
 	return qfalse;
@@ -1163,6 +1156,7 @@ void CL_CampaignRunAircraft (int dt)
 
 						end = aircraft->route.point[aircraft->route.numPoints - 1];
 						Vector2Copy(end, aircraft->pos);
+						MAP_CheckPositionBoundaries(aircraft->pos);
 
 						switch (aircraft->status) {
 						case AIR_MISSION:

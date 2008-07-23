@@ -2116,6 +2116,22 @@ float MAP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 }
 
 /**
+ * @brief Check that a position (in latitude / longitude) is within boundaries.
+ * @param[in,out] pos Pointer to the 2 elements vector giving the position.
+ */
+void MAP_CheckPositionBoundaries (float *pos)
+{
+	while (pos[0] > 180.0)
+		pos[0] -= 360.0;
+	while (pos[0] < -180.0)
+		pos[0] += 360.0;
+	while (pos[1] > 90.0)
+		pos[1] -= 180.0;
+	while (pos[1] < -90.0)
+		pos[1] += 180.0;
+}
+
+/**
  * @brief Check whether given position is Day or Night.
  * @param[in] pos Given position.
  * @return True if given position is Night.

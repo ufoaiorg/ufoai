@@ -493,6 +493,7 @@ void UFO_CampaignRunUFOs (int dt)
 			float *end;
 			end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
+			MAP_CheckPositionBoundaries(ufo->pos);
 			UFO_SetRandomDest(ufo);
 			CP_CheckNextStageDestination(ufo);
 		}

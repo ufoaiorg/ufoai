@@ -6710,7 +6710,7 @@ base_t *CP_GetMissionBase (void)
 
 /**
  * @brief Determines a random position on Geoscape
- * @param[out] pos The position that will be overwritten
+ * @param[out] pos The position that will be overwritten. pos[0] is within -180, +180. pos[1] within -90, +90.
  * @param[in] noWater True if the position should not be on water
  * @sa CP_GetRandomPosOnGeoscapeWithParameters
  * @note The random positions should be roughly uniform thanks to the non-uniform distribution used.
@@ -6728,7 +6728,7 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, qboolean noWater)
 
 /**
  * @brief Determines a random position on Geoscape that fulfills certain criteria given via parameters
- * @param[out] pos The position that will be overwritten with the random point fulfilling the criterias
+ * @param[out] pos The position that will be overwritten with the random point fulfilling the criterias. pos[0] is within -180, +180. pos[1] within -90, +90.
  * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be NULL.
  * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be NULL.
  * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be NULL.
@@ -6807,6 +6807,12 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 		pos[0], pos[1], num, hits);
+
+	/* Make sure that position is within bounds */
+	assert(pos[0] >= -180);
+	assert(pos[0] <= 180);
+	assert(pos[1] >= -90);
+	assert(pos[1] <= 90);
 
 	return qtrue;
 }
