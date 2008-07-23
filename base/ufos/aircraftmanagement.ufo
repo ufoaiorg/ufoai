@@ -151,7 +151,7 @@ aircraft craft_inter_stiletto
 {
 	param {
 		speed		13
-		speed		20
+		maxspeed	20
 		shield		0
 		ecm		100
 		damage		30
