@@ -448,13 +448,8 @@ static void CheckInteractionList (const entity_t *entity)
 			for (j = 0; j < brush->numsides; j++) {
 				side_t *side = &brush->original_sides[j];
 				const plane_t *p = &mapplanes[side->planenum];
-				vec3_t p1, p2, p3;
-
-				VectorCopy(p->planeVector[0], p1);
-				VectorCopy(p->planeVector[1], p2);
-				VectorCopy(p->planeVector[2], p3);
 				/* we only have to calculate these values for potential sides */
-				side->hessianP = HessianNormalPlane(p1, p2, p3, side->hessianNormal);
+				side->hessianP = HessianNormalPlane(p->planeVector[0], p->planeVector[1], p->planeVector[2], side->hessianNormal);
 			}
 
 			AddBrushToList(&list, brush, n);
