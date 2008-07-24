@@ -658,6 +658,7 @@ menu map_combatzoom
 
 	func close
 	{
+		cmd		"music_change geoscape;"
 		cmd		"combatzoom_exit;"
 	}
 
