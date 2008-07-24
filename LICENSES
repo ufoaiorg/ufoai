@@ -150,7 +150,7 @@ base/maps/farm/f_silo.map | GNU General Public License 2.0
 base/maps/farm/f_stables_a.map | GNU General Public License 2.0
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0
 base/maps/fighter_crash.map | GNU General Public License 2.0 | "SparX" Beyeler
-base/maps/forest.ump | GNU General Public License 2.0 | Kildor
+base/maps/forest.ump | GNU General Public License 2.0 | Kostia "Kildor" Romanov
 base/maps/forest/forest_crash_scout.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
 base/maps/forest/forest_drop_firebird.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
 base/maps/forest/forest_f1.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
@@ -338,8 +338,8 @@ base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2
 base/models/aircraft/craft_item_det/detection.tga | GNU General Public License 2.0 | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
 base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_fuel/fuel.tga | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/craft_item_prop/propulsion.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/craft_item_prop/propulsion.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/craft_item_prop/propulsion.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/craft_item_prop/propulsion.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/craft_item_raven_ecm/ecm.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_raven_ecm/ecm.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 | Willem "Sitters"
@@ -362,12 +362,12 @@ base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License 2.0
 base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License 2.0 | Ryan Span (Winter)
 base/models/aircraft/craft_weapon_tr20/tr20_1.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_weapon_tr20/tr20_rocket.md2 | GNU General Public License 2.0 | Ryan Span (Winter)
-base/models/aircraft/drop_firebird/firebird.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/drop_firebird/firebird.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 | Willem "Sitters"
@@ -390,36 +390,36 @@ base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.
 base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span
 base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_corrupter/ufo_corrupter.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
-base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_hull.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_hull.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_upper.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_upper.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_hull.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_hull.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_upper.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_upper.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
-base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_engines_1.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_hull.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_hull.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_upper.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_hull.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_hull.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_upper.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_upper2.md2 | GNU General Public License 2.0 | Martin Gerhardy | ufo_scout_upper.md2
-base/models/aircraft/ufo_supply/ufo_supply.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_body_closed.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_body_open.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_engine.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_engine_left.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_engine_right.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_body_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_body_open.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_engine.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_engine_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_engine_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
@@ -427,68 +427,68 @@ base/models/aliens/bloodspider/bloodspider.tag | Creative Commons Attribution-Sh
 base/models/aliens/bloodspider/head.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/aliens/hovernet/body01.jpg | GNU General Public License 2.0 | Protoarmor
 base/models/aliens/hovernet/body01.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/models/aliens/ortnok/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/body01a.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/body01b.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/body01c.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/head01.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/head02.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/head02.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/head03.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnok/head03.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/armor.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/body.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/head01.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/head02.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/head02.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/head03.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/head03.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/armor.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/body.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head01.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head02.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head02.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head03.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head03.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/body01a.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/body01b.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/head01.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/shevaar/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/body01a.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/body01b.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/taman/head01a.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/armor.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/body.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/head01.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/armor.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/body.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/body01.anm | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/body01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/body01.tag | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/head01.jpg | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/head01.md2 | GNU General Public License 2.0 | Lukas "rastaman_bey" Beyeler
+base/models/aliens/ortnok/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/animals/cow/cow.jpg |  | hullbr3ach
 base/models/animals/cow/cow.md2 |  | hullbr3ach
 base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 | Willem "Sitters"
@@ -508,85 +508,85 @@ base/models/characters/falkland.jpg | GNU General Public License 2.0 | Willem "S
 base/models/characters/floydd.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/characters/howard.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/characters/navarre.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/civilians/female/body01.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body01.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body01.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body01c.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body01d.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body02.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body02.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body02.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body02b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body03.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body03.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body03.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/body03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/civilians/female/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body01c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body01d.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body02.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body02.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body02a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body02b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body03.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body03.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/body03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/body05.anm | GNU General Public License 2.0
 base/models/civilians/female/body05.md2 | GNU General Public License 2.0 | Willem "Sitters"   Martin Gerhardy
 base/models/civilians/female/body05.tag | GNU General Public License 2.0
 base/models/civilians/female/body05a.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/civilians/female/head01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head02b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head04a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head04b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head04c.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/head04c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/civilians/female/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head01c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head02a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head02b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head04a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head04b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head04c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/head04c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/head05a.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/civilians/female/head05a.md2 | GNU General Public License 2.0 | Willem "Sitters"
-base/models/civilians/female/scientist01.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/scientist01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/scientist01.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/female/scientist01.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body01.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body01.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body01.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body01c.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body02.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body02.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/body02.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/head01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/head01.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/head02.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/head03.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/head03.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head01.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head03.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sci_head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/scientist01.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/scientist01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/scientist01.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/scientist01.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/civilians/male/sheik01.anm | GNU General Public License 2.0 | hullr3ach
-base/models/civilians/male/sheik01.jpg | GNU General Public License 2.0 | hullr3ach
-base/models/civilians/male/sheik01.md2 | GNU General Public License 2.0 | hullr3ach
-base/models/civilians/male/sheik01.tag | GNU General Public License 2.0 | hullr3ach
-base/models/civilians/male/sheik02.jpg | GNU General Public License 2.0 | hullr3ach
-base/models/civilians/male/sheik_head01.jpg | GNU General Public License 2.0 | hullr3ach
-base/models/civilians/male/sheik_head01.md2 | GNU General Public License 2.0 | hullr3ach
+base/models/civilians/female/scientist01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/scientist01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/scientist01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/female/scientist01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body01c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body02.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/body02.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sci_head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/scientist01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/scientist01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/scientist01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/scientist01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/civilians/male/sheik01.anm | GNU General Public License 2.0 | hullbr3ach
+base/models/civilians/male/sheik01.jpg | GNU General Public License 2.0 | hullbr3ach
+base/models/civilians/male/sheik01.md2 | GNU General Public License 2.0 | hullbr3ach
+base/models/civilians/male/sheik01.tag | GNU General Public License 2.0 | hullbr3ach
+base/models/civilians/male/sheik02.jpg | GNU General Public License 2.0 | hullbr3ach
+base/models/civilians/male/sheik_head01.jpg | GNU General Public License 2.0 | hullbr3ach
+base/models/civilians/male/sheik_head01.md2 | GNU General Public License 2.0 | hullbr3ach
 base/models/civilians/male/soldier01.md2 | GNU General Public License 2.0 | Willem "Sitters"   Martin Gerhardy
 base/models/civilians/male/soldier01.tag | GNU General Public License 2.0 | Willem "Sitters"
 base/models/civilians/male/soldier01_body.jpg | GNU General Public License 2.0 | Willem "Sitters"
@@ -651,8 +651,8 @@ base/models/objects/aircraft/heli_military/helicopter.md2 | GNU General Public L
 base/models/objects/aircraft/heli_military/helicopter.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/aircraft/hheli/hheli.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/aircraft/hheli/hheli.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/alien/battery/battery.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/battery/battery.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/disassembled/ufo_fighter.jpg | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_fighter.md2 | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_harvester.jpg | GNU General Public License 2.0
@@ -663,19 +663,19 @@ base/models/objects/alien/ion_condenser/ion_condenser.jpg | GNU General Public L
 base/models/objects/alien/ion_condenser/ion_condenser.md2 | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
-base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/panel/panel.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation01.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation01.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation02.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation02.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation03.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation03.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation04.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/pstation/pstation04.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/seat/seat.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/alien/seat/seat.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/panel/panel.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation04.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/seat/seat.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/seat/seat.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/ufo_crashed/acrash_engine.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_engine.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_hull.jpg | GNU General Public License 2.0
@@ -690,12 +690,12 @@ base/models/objects/alien/ufo_crashed/ufo_scout_hull.jpg | GNU General Public Li
 base/models/objects/alien/ufo_crashed/ufo_scout_hull.md2 | GNU General Public License 2.0
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/base/radar/radar_a.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/base/radar/radar_a.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/base/radar/radar_b.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/base/radar/radar_b.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/base/radar/radar_c.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/base/radar/radar_a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/base/radar/radar_a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/base/radar/radar_b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/base/radar/radar_b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/base/radar/radar_c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
@@ -720,13 +720,13 @@ base/models/objects/cars/carcrashed/car1.md2 | GNU General Public License 2.0 | 
 base/models/objects/cars/carcrashed/car1.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/carcrashed/car2.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/carcrashed/car2.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/cars/golf/car1.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/cars/golf/car1_brown.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/cars/golf/car1_dmg.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/cars/golf/car1_red.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/cars/golf/car1_white.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/cars/golf/car1t.md2 | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/cars/golf/cars_tires.jpg | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/cars/golf/car1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/car1_brown.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/car1_dmg.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/car1_red.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/car1_white.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/car1t.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/cars_tires.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/hummer/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/hummer/hummer.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/hummer/hummer.tga | GNU General Public License 2.0 | Willem "Sitters"
@@ -769,8 +769,8 @@ base/models/objects/city/lantern/lantern.md2 | GNU General Public License 2.0 | 
 base/models/objects/city/lantern/lantern.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/mailbox/mailbox.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/mailbox/mailbox.png | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/city/oriental.jpg | GNU General Public License 2.0 | Lucas Beyeler
-base/models/objects/city/oriental.md2 | GNU General Public License 2.0 | Lucas Beyeler
+base/models/objects/city/oriental.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/city/oriental.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/city/parkbench/parkbench.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/city/parkbench/parkbench.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/city/parktable/parktable.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -1015,174 +1015,174 @@ base/models/objects/vehicles/tractor/Readme.txt | GNU General Public License 2.0
 base/models/objects/vehicles/tractor/tractor.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor1.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/soldiers/female/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/body_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/female/body_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/body_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
-base/models/soldiers/female/head01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/head01_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head01_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head01_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head01_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
-base/models/soldiers/female/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/head01b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/female/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/head01b_arctic.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/female/head01b_desert.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/female/head01b_jungle.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/female/head01b_urban.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/female/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/head01c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/head02_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head02_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head02_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head02_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
-base/models/soldiers/female/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head03.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head04.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/headhunt.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/female/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head04.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/female/headhunt.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/body_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head01a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head01a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head01b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head01b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head01c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/femalelight/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head01c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head01c_cccp.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelight/head01c_yellow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/femalelight/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head02a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head02a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head02a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head02b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head02b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head02b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head02b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head03a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head03a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head03b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head03b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head04a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head04a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head04a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head04a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head04b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelight/head04b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelight/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelight/head04b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head04b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/body.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/femalelightadv/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/body_arctic.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/body_cccp.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/body_desert.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/body_jungle.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/body_yellow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/femalelightadv/head01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head01a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head01a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head01b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head01b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head01c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/femalelightadv/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head01c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head01c_cccp.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/head01c_yellow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/femalelightadv/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head02a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head02a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head02a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head02b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head02b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head02b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head02b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head03a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head03a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head03b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head03b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head04a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head04a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head04a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head04a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head04b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalelightadv/head04b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalelightadv/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalelightadv/head04b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head04b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/body_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head01_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head01_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head01_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head01_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head01_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head02_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head01c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head02_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head02_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head02_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head02_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head02_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head02_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head02_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head03.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head03_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head03_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head03_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head03_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head03_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head03_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head03_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head03_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head04.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head04_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head04.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head04_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head04_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head04_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head04_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head04_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head04_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head04_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalemedium/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/femalemedium/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/femalemedium/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalepower/body.md2 | Creative Commons Attribution-Share Alike 3.0
 base/models/soldiers/femalepower/body.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head01a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
@@ -1194,216 +1194,216 @@ base/models/soldiers/femalepower/head03a.md2 | Creative Commons Attribution-Shar
 base/models/soldiers/femalepower/head03b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head04a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head04b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/male/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/body_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/body_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/body_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/head01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head01_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head01_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head01_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head01_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head02_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head02_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head02_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head02_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head04a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head04b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head04a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head04b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head04b_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head04b_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head04b_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head04b_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/head04c.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head04c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/head04c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head04c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head04c_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head04c_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head04c_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head04c_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/head05a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head05a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head05b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/head05b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/head05a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head05a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head05b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/head05b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head05b_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head05b_desert.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head05b_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
 base/models/soldiers/male/head05b_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/male/ by Lukas Beyeler (Rasta)
-base/models/soldiers/male/head05c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/head05c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/male/head06.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/soldiers/male/head06a.md2 | GNU General Public License 2.0 | Willem "Sitters"
-base/models/soldiers/male/headhunt.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/humanmale_light_body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/male/headhunt.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/male/humanmale_light_body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/body_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head01a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head01a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head01b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head01b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head02a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head02a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head02a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head02b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head02b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head02b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head02b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head03a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head03a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head03b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head03b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head04a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head04a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head04a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head04a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head04b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head04b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head04b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head04b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head05a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head05a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head05a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head05a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head05a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head05a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head05b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head05c.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelight/head05c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head05b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head05c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/head05c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head05c_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head05c_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/body.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/malelightadv/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/body_arctic.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/malelightadv/body_cccp.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/malelightadv/body_desert.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/malelightadv/body_jungle.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/malelightadv/body_yellow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/models/soldiers/malelightadv/head01a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head01a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head01a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head01b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head01b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head01b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head02a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head02a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head02a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head02b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head02b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head02b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head02b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head03a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head03a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head03b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head03b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head04a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head04a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head04a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head04a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head04b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head04b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head04b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head04b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head05a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head05a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head05a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head05a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head05a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head05a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head05b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head05c.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malelightadv/head05c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malelightadv/head05b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head05c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelightadv/head05c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelightadv/head05c_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelightadv/head05c_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body.anm | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body.tag | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/body_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head01.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head01_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head01_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head01_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head01_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head01_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head01_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head01_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head01_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head02_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head01b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head02_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head02_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head02_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head02_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head02_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head02_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head02_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head02b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03a_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head02a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head02b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03a_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head03a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03a_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03a_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head03a_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03a_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head03a_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03b.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03b_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head03b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03b_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head03b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03b_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head03b_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head03b_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head03b_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head03b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head04.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head04_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head04.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head04_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head04_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head04_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head04_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head04_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head04_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head04_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head04a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head04b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05_arctic.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head05.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head05_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head05_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05_desert.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05_jungle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head05_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head05_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head05_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malemedium/ by Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/malemedium/head05c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malemedium/head05a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head05b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malemedium/head05c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malepower/body.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/body.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/head01a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
@@ -1444,14 +1444,14 @@ base/models/soldiers/ugv_phoenix/phoenix_turret.md2 | GNU General Public License
 base/models/soldiers/ugv_phoenix/rocket_pods.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/rocket_pods.obj | GNU General Public License 2.0 | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/rocket_pods.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/weapons/assault/assault.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/assault/assault.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/assault/assault_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/assault/assault.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/assault/assault.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/assault/assault_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bombs/bomb1.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
@@ -1465,83 +1465,83 @@ base/models/weapons/coilgun/coilgun.jpg | Creative Commons Attribution-Share Ali
 base/models/weapons/coilgun/coilgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/flamer/flamer.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/flamer/flamer.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flare/flare.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flare/flare.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/fraggren/fraggren.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/clip.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_clip2.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_flechette_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_flechette_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_ic_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/fraggren/fraggren.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_clip2.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_flechette_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_flechette_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_ic_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/kerrblade/kerrblade.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/knife/knife.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/knife/knife.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/kerrblade/kerrblade.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/knife/knife.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/knife/knife.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/knifemono/knifemono.jpg | GNU General Public License 2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/knifemono/knifemono.md2 | GNU General Public License 2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
-base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserpistol/laserpistol.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserpistol/laserpistol_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserpistol/laserpistol_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserrifle/laserrifle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserrifle/laserrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserrifle/laserrifle_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserrifle/laserrifle_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserpistol/laserpistol.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserpistol/laserpistol_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserpistol/laserpistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserrifle/laserrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserrifle/laserrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserrifle/laserrifle_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/laserrifle/laserrifle_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/machinegun/machinegun.jpg | Creative Commons Attribution-Share Alike 3.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/machinegun/machinegun.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/machinegun/machinegun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/medikit/medikit.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/medikit/medikit.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/medikit/medikit.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/medikit/medikit.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/needlergun/needler.jpg | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/needlergun/needler.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/needlergun/needler_ammo.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
-base/models/weapons/pbeamcannon/pbeamcannon.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamcannon/pbeamcannon.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamcannon/pbeamcannon_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamcannon/pbeamcannon_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeampistol/clip.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeampistol/clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeampistol/pbeampistol.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeampistol/pbeampistol.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeampistol/pbeampistol.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeampistol/pbeampistol_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/clip.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle_big.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pistol/pistol.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pistol/pistol.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pistol/pistol_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pistol/pistol_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/pbeamcannon/pbeamcannon.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamcannon/pbeamcannon.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamcannon/pbeamcannon_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamcannon/pbeamcannon_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeampistol/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeampistol/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeampistol/pbeampistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/pbeamrifle.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/pbeamrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/pbeamrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/pbeamrifle_big.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/pbeamrifle_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pbeamrifle/pbeamrifle_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pistol/pistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pistol/pistol.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pistol/pistol_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/pistol/pistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pistol2/pistol2.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2.psd | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
@@ -1549,35 +1549,35 @@ base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License 2.0 | 
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
-base/models/weapons/plasblaster/clip.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/plasblaster.3ds | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/plasblaster.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/plasblaster.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/plasblaster_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/plasblaster/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasblaster/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasblaster/plasblaster.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasblaster/plasblaster.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasblaster/plasblaster.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasblaster/plasblaster_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/plasmagren/plasmagren.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasmagren/plasmagren.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/plaspistol/plaspistol.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plaspistol/plaspistol.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plaspistol/plaspistol_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plaspistol/plaspistol_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasrifle/plasrifle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasrifle/plasrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasrifle/plasrifle_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasrifle/plasrifle_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/rocket.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/rocket.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/rocket_inc.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/plaspistol/plaspistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plaspistol/plaspistol.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plaspistol/plaspistol_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plaspistol/plaspistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasrifle/plasrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasrifle/plasrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasrifle/plasrifle_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/plasrifle/plasrifle_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/rpg/rocket.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/rpg/rocket.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/rpg/rocket_inc.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rocket_particle.jpg | GNU General Public License 2.0 | A M D G
-base/models/weapons/rpg/rpg.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/rpg.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/rpg_ammo.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/rpg/rpg_inc_ammo.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rpg.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/rpg/rpg.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/rpg/rpg_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/rpg/rpg_inc_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rpg_particle_ammo.md2 | GNU General Public License 2.0 | A M D G
-base/models/weapons/shotgun/shotgun.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/shotgun/shotgun.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/shotgun/shotgun_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/shotgun/shotgun_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/shotgun/shotgun.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/shotgun/shotgun.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/shotgun/shotgun_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/shotgun/shotgun_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/shotgun/shotgun_clip_green.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
@@ -1588,19 +1588,19 @@ base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution
 base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/smg/smg.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/smg/smg.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/smg/smg_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/smg/smg_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/smg/smg.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/smg/smg.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/smg/smg_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/smg/smg_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/smokegren/smoke_gren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_r.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_w.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_y.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smokegren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/sniper/sniper.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/sniper/sniper.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/sniper/sniper.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/sniper/sniper.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
 base/models/weapons/stungren_alien/stungren.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -3332,7 +3332,7 @@ base/ufos/weapons_melee.ufo | GNU General Public License 2.0
 base/ufos/weapons_particle.ufo | GNU General Public License 2.0
 base/ufos/weapons_plasma.ufo | GNU General Public License 2.0
 base/ufos/weapons_ugv.ufo | GNU General Public License 2.0
-contrib/scripts/compile_po.bat |  | Kildor
+contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
 src/common/pqueue.c | Public Domain
 src/common/pqueue.h | Public Domain
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner "hoehrer" Höhrer
