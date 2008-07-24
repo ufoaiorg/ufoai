@@ -275,7 +275,6 @@ void CL_SequenceRender (void)
 			ent.skinnum = se->skin;
 			ent.as = se->as;
 			ent.alpha = se->alpha;
-			VectorSet(ent.scale, 1, 1, 1);
 
 			VectorCopy(se->origin, ent.origin);
 			VectorCopy(se->origin, ent.oldorigin);

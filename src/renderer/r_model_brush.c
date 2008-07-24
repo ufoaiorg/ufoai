@@ -745,7 +745,7 @@ static void R_LoadSurfacesArrays (model_t *mod)
 
 	R_LoadSurfacesArrays_(mod);
 
-	for (i = 0; i < mod->bsp.numsubmodels; i++)
+	for (i = 0; i < r_numModelsInline; i++)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
 

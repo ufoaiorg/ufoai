@@ -268,7 +268,7 @@ static void R_DrawEntityEffects (void)
 			R_DrawHighlight(e);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-			/**@todo Shouldn't we get the texture type from the team-definition somehow? */
+			/** @todo Shouldn't we get the texture type from the team-definition somehow? */
 			if (e->flags & RF_SHADOW)
 				R_BindTexture(shadow->texnum);
 			else

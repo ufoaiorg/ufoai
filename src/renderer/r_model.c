@@ -278,11 +278,10 @@ void R_SwitchModelMemPoolTag (void)
 void R_ShutdownModels (void)
 {
 	int i;
-	model_t *mod;
 
 	/* free the vertex buffer - but not for the static models */
 	for (i = r_numModelsStatic; i < r_numModels; i++) {
-		mod = &r_models[i];
+		model_t *mod = &r_models[i];
 
 		if (mod->bsp.vertex_buffer)
 			qglDeleteBuffers(1, &mod->bsp.vertex_buffer);
