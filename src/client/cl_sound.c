@@ -35,7 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MUSIC_MAIN 0
 #define MUSIC_GEOSCAPE 1
 #define MUSIC_BATTLESCAPE 2
-#define MUSIC_MAX 3
+#define MUSIC_AIRCOMBAT 3
+#define MUSIC_MAX 4
 #define MUSIC_MAX_ENTRIES 64
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
@@ -629,7 +630,7 @@ static void S_Music_Change_f (void)
 	} else if (!Q_strcmp(type, "main")) {
 		category = MUSIC_MAIN;
 	} else if (!Q_strcmp(type, "aircombat")) {
-		category = MUSIC_GEOSCAPE;
+		category = MUSIC_AIRCOMBAT;
 	} else {
 		Com_Printf("Invalid parameter given\n");
 		return;
@@ -768,6 +769,8 @@ void CL_ParseMusic (const char *name, const char **text)
 		i = MUSIC_GEOSCAPE;
 	else if (!Q_strcmp(name, "battlescape"))
 		i = MUSIC_BATTLESCAPE;
+	else if (!Q_strcmp(name, "aircombat"))
+		i = MUSIC_AIRCOMBAT;
 	else if (!Q_strcmp(name, "main"))
 		i = MUSIC_MAIN;
 	else {
