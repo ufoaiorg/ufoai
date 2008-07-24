@@ -359,9 +359,9 @@ base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Att
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License 2.0 | Ryan Span (Winter)
+base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/craft_weapon_tr20/tr20_1.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/craft_weapon_tr20/tr20_rocket.md2 | GNU General Public License 2.0 | Ryan Span (Winter)
+base/models/aircraft/craft_weapon_tr20/tr20_rocket.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/drop_firebird/firebird.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -386,8 +386,8 @@ base/models/aircraft/inter_stiletto/stiletto_glass.md2 | GNU General Public Lice
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span
-base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span
+base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span ("Winter")
+base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_corrupter/ufo_corrupter.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1602,7 +1602,7 @@ base/models/weapons/sniper/sniper.md2 | GNU General Public License 2.0 | Lukas "
 base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
-base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan A. Span ("Winter")
 base/models/weapons/stungren_alien/stungren.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/weapons/stungren_alien/stungren.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
