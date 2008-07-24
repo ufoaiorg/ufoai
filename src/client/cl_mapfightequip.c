@@ -166,6 +166,30 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 }
 
 /**
+ * @brief Check that airequipSelectedSlot is the indice of an existing slot in the aircraft
+ * @note airequipSelectedSlot concerns only weapons and electronics
+ * @sa aircraft Pointer to the aircraft
+ */
+static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
+{
+	switch (airequipID) {
+	case AC_ITEM_AMMO:
+	case AC_ITEM_WEAPON:
+		if (airequipSelectedSlot >= aircraft->maxWeapons) {
+			airequipSelectedSlot = 0;
+			return;
+		}
+		break;
+	case AC_ITEM_ELECTRONICS:
+		if (airequipSelectedSlot >= aircraft->maxElectronics) {
+			airequipSelectedSlot = 0;
+			return;
+		}
+		break;
+	}
+}
+
+/**
  * @brief Returns a pointer to the selected slot.
  * @param[in] aircraft Pointer to the aircraft
  * @return Pointer to the slot corresponding to airequipID
@@ -174,6 +198,7 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 {
 	aircraftSlot_t *slot;
 
+	AIM_CheckAirequipSelectedSlot(aircraft);
 	switch (airequipID) {
 	case AC_ITEM_SHIELD:
 		slot = &aircraft->shield;
@@ -183,12 +208,10 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics + airequipSelectedSlot;
-		assert(airequipSelectedSlot < aircraft->maxElectronics);
 		break;
 	case AC_ITEM_AMMO:
 	case AC_ITEM_WEAPON:
 		slot = aircraft->weapons + airequipSelectedSlot;
-		assert(airequipSelectedSlot < aircraft->maxWeapons);
 		break;
 	default:
 		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", airequipID);
@@ -1041,30 +1064,6 @@ void AII_UpdateInstallationDelay (void)
 					AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
 				}
 			}
-	}
-}
-
-/**
- * @brief Check that airequipSelectedSlot is the indice of an existing slot in the aircraft
- * @note airequipSelectedSlot concerns only weapons and electronics
- * @sa aircraft Pointer to the aircraft
- */
-static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
-{
-	switch (airequipID) {
-	case AC_ITEM_AMMO:
-	case AC_ITEM_WEAPON:
-		if (airequipSelectedSlot >= aircraft->maxWeapons) {
-			airequipSelectedSlot = 0;
-			return;
-		}
-		break;
-	case AC_ITEM_ELECTRONICS:
-		if (airequipSelectedSlot >= aircraft->maxElectronics) {
-			airequipSelectedSlot = 0;
-			return;
-		}
-		break;
 	}
 }
 
