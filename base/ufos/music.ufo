@@ -1,0 +1,50 @@
+music main
+{
+	van_theme
+}
+
+music geoscape
+{
+	van_geoscape
+	karlmacklin_geoscape
+}
+
+music battlescape
+{
+	David01
+	David02
+	David03
+	David04
+	alBasrahM
+	turinItalyM
+	ufo1
+	ufo2
+	AlexSullencity
+	AlexFightmare
+	AlexForest
+	PsymongN1
+	PsymongN2
+	PsymongN3
+	PsymongN4
+	PsymongN5
+	PsymongR1
+	PsymongR2
+	PsymongR3
+	PsymongR4
+	PsymongR5
+	PsymongO1
+	PsymongO2
+	PsymongO3
+	PsymongO4
+	PsymongO5
+	PsymongO6
+	van_mission
+	van_mission2
+	van_mission3
+	van_mission4
+	dawn
+	dbsea
+	greecei
+	space
+	defeatfear
+}
