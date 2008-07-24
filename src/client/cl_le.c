@@ -232,7 +232,7 @@ void LM_Register (void)
 	int i;
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
-		/* register the model and recalculate routing info */
+		/* register the model */
 		lm->model = R_RegisterModelShort(lm->name);
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);

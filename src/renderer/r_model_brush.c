@@ -760,10 +760,10 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	dBspHeader_t *header;
 
 	/* get new model */
-	if ((r_numModels < 0) || (r_numModels >= MAX_MOD_KNOWN))
+	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
 
-	if ((r_numMapTiles < 0) || (r_numMapTiles >= MAX_MAPTILES))
+	if (r_numMapTiles < 0 || r_numMapTiles >= MAX_MAPTILES)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: Too many map tiles");
 
 	/* alloc model and tile */

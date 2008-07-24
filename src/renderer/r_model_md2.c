@@ -155,6 +155,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 		Com_Error(ERR_DROP, "model %s has too many (or no) frames", mod->name);
 
 	mod->alias.meshes = outMesh = Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
+	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
 	outMesh->num_verts = LittleLong(md2->num_verts);
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
 		Com_Error(ERR_DROP, "model %s has too many (or no) vertices", mod->name);
