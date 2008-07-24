@@ -241,7 +241,7 @@ base/maps/prefabs/prefab_vegetation.map | GNU General Public License 2.0
 base/maps/resort.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/scout_crash.map | GNU General Public License 2.0
-base/maps/shelter.ump | GNU General Public License 2.0
+base/maps/shelter.ump | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelter/shelter_corridor_ne.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelter/shelter_corridor_nw.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelter/shelter_entrance.map | GNU General Public License 2.0 | Bas Fournier
