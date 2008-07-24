@@ -4345,6 +4345,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			add.model = cls.model_weapons[le->left];
 			assert(add.model);
+			VectorSet(add.scale, 1, 1, 1);
 
 			/* +2 (resp. +3) because the body and the head are already
 			 * (and maybe the right weapon will be)
@@ -4362,6 +4363,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
 			assert(add.model);
+			VectorSet(add.scale, 1, 1, 1);
 
 			/* +2 because the body and the head are already
 			 * at the previous location */
@@ -4384,6 +4386,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		}
 	}
 
+	VectorSet(add.scale, 1, 1, 1);
 	add.alpha = le->alpha;
 	add.model = le->model2;
 	assert(add.model);
@@ -4440,6 +4443,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 			memset(&add, 0, sizeof(add));
 
 			add.model = cls.model_weapons[le->left];
+			VectorSet(add.scale, 1, 1, 1);
 
 			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
@@ -4453,6 +4457,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
+			VectorSet(add.scale, 1, 1, 1);
 
 			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
@@ -4467,6 +4472,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	add.alpha = le->alpha;
 	add.model = le->model2;
 	add.skinnum = le->skinnum;
+	VectorSet(add.scale, 1, 1, 1);
 
 	/** @todo */
 	add.tagent = R_GetFreeEntity() + 1;
