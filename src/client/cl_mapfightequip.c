@@ -918,7 +918,8 @@ void BDEF_ListClick_f (void)
 		return;
 	num = atoi(Cmd_Argv(1));
 
-	if ((baseCurrent && num < baseCurrent->numBatteries) || (installationCurrent && num < installationCurrent->installationTemplate->maxBatteries))
+	if ((baseCurrent && num < baseCurrent->numBatteries)
+	 || (installationCurrent && num < installationCurrent->installationTemplate->maxBatteries))
 		airequipSelectedSlot = num;
 
 	/* draw an arrow in front of the selected base defence */
@@ -1331,6 +1332,8 @@ void AIM_AircraftEquipSlotSelect_f (void)
 	assert(aircraft);
 
 	pos = atoi(Cmd_Argv(1));
+
+	airequipSelectedSlot = ZONE_NONE;
 
 	/* select the slot corresponding to pos, and set airequipSelectedSlot to this slot */
 	switch (airequipID) {
