@@ -1,8 +1,8 @@
 filename | license | author | source
-base/maps/africa.ump | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/africa/af_drop_firebird.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/africa/af_drop_herakles.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/africa/af_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/africa.ump | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/africa/af_drop_firebird.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/africa/af_drop_herakles.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/africa/af_main.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/alienb/a_empty.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/alienb/a_lab.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/alienb/a_tunnel_h.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -13,19 +13,19 @@ base/maps/alienbase.ump | GNU General Public License 2.0
 base/maps/b/aliencont.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/antimatter.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/base_empty.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/b/commando.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/b/drop.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/b/commando.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/b/drop.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/b/empty.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/b/entrance.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/b/entrance.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/b/hospital.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/b/intercept.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/b/lab.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/b/intercept.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/b/lab.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/b/missile.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/powerplant.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/b/quarters.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/b/quarters.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/b/radar.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/radar_adv.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/b/storage.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/b/storage.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/b/teamroom.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/ufohangar.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/b/ufohangar_l.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -54,16 +54,16 @@ base/maps/cemetery/cem_p10.map | GNU General Public License 2.0 | wotwot
 base/maps/cemetery/cem_p11.map | GNU General Public License 2.0 | wotwot
 base/maps/cemetery/cem_p12.map | GNU General Public License 2.0 | wotwot
 base/maps/cemetery/cem_p13.map | GNU General Public License 2.0 | wotwot
-base/maps/city_disco/cd_drop_firebird.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/city_disco/cd_drop_herakles.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/city_disco/cd_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/city_disco/cd_drop_firebird.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/city_disco/cd_drop_herakles.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/city_disco/cd_main.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/city_train.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/community_centre/cm_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/community_centre/cm_drop_herakles.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/community_centre/cm_main.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/construction/cs_drop_firebird.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/construction/cs_drop_herakles.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/construction/cs_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/construction/cs_drop_firebird.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/construction/cs_drop_herakles.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/construction/cs_main.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/corrupter_crash.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/country.ump | GNU General Public License 2.0
 base/maps/country/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -127,7 +127,7 @@ base/maps/druglord/dl_main.map | GNU General Public License 2.0 | Martin Gerhard
 base/maps/eaglenest/en_main.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/estate.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/excavation.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/farm.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/farm.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/farm.ump | GNU General Public License 2.0
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0
 base/maps/farm/f_barn_b.map | GNU General Public License 2.0
@@ -149,7 +149,7 @@ base/maps/farm/f_filler_s.map | GNU General Public License 2.0
 base/maps/farm/f_silo.map | GNU General Public License 2.0
 base/maps/farm/f_stables_a.map | GNU General Public License 2.0
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0
-base/maps/fighter_crash.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/fighter_crash.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 | Kildor
 base/maps/forest/forest_crash_scout.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
 base/maps/forest/forest_drop_firebird.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
@@ -185,19 +185,19 @@ base/maps/frozen/st_n03.map | GNU General Public License 2.0
 base/maps/frozen/st_n04.map | GNU General Public License 2.0
 base/maps/frozen/st_n05.map | GNU General Public License 2.0
 base/maps/fueldump.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/gasstation/gas_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/harbor.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/harvester_crash.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/gasstation/gas_main.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/harbor.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/harvester_crash.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/ice.ump | GNU General Public License 2.0
 base/maps/ice/ice_drop_firebird.map | GNU General Public License 2.0
 base/maps/ice/ice_r01.map | GNU General Public License 2.0
 base/maps/ice/ice_r02.map | GNU General Public License 2.0
 base/maps/ice/ice_r03.map | GNU General Public License 2.0
 base/maps/industrial.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/italy/it_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/italy/it_main.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/japan/ja_main.map | GNU General Public License 2.0
 base/maps/laboratory/lab_main.map | GPL version 2
-base/maps/lake_ice.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/lake_ice.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/lake_ice_big.map | GNU General Public License 2.0 | 'SparX' Beyeler, Martin Gerhardy
 base/maps/mart/ma_main.map | GNU General Public License 2.0 | Drew Babkirk (Druterium)
 base/maps/military_convoy/mc_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
@@ -222,7 +222,7 @@ base/maps/oriental/or_stand_b.map | GNU General Public License 2.0
 base/maps/oriental/or_trees_a.map | GNU General Public License 2.0
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0
 base/maps/oriental/or_well.map | GNU General Public License 2.0
-base/maps/oriental_mosque.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/oriental_mosque.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/prefabs/prefab_drop_firebird.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_household.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_inter_saracen.map | GNU General Public License 2.0
@@ -238,7 +238,7 @@ base/maps/prefabs/prefab_ufo_fighter.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_ufo_scout.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_ufo_supply.map | GNU General Public License 2.0
 base/maps/prefabs/prefab_vegetation.map | GNU General Public License 2.0
-base/maps/resort.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/resort.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/scout_crash.map | GNU General Public License 2.0
 base/maps/shelter.ump | GNU General Public License 2.0
@@ -257,9 +257,9 @@ base/maps/shelter/shelter_room_w_a.map | GNU General Public License 2.0 | Bas Fo
 base/maps/shelter/shelter_room_w_b.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelter/shelter_solid.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/spedition/sp_main.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/stadium/st_main.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/subway.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/tower.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/stadium/st_main.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/subway.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/tower.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/transport/tra_main.map | GNU General Public License 2.0
 base/maps/tropic.ump | GNU General Public License 2.0
 base/maps/tropic/tr_drop_firebird.map | GNU General Public License 2.0
@@ -293,7 +293,7 @@ base/maps/ufocrash/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h04.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h05.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ufocrash/uc_h06.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/village.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/village.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/village.ump | GNU General Public License 2.0
 base/maps/village/vil_c01.map | GNU General Public License 2.0
 base/maps/village/vil_c02.map | GNU General Public License 2.0
@@ -1030,12 +1030,12 @@ base/models/soldiers/female/head01_desert.jpg | GNU General Public License 2.0 |
 base/models/soldiers/female/head01_jungle.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head01_urban.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
 base/models/soldiers/female/head01a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head01b.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/models/soldiers/female/head01b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/female/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/head01b_arctic.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/models/soldiers/female/head01b_desert.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/models/soldiers/female/head01b_jungle.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/models/soldiers/female/head01b_urban.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/models/soldiers/female/head01b_arctic.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/models/soldiers/female/head01b_desert.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/models/soldiers/female/head01b_jungle.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/models/soldiers/female/head01b_urban.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/female/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/female/head02.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/female/head02_arctic.jpg | GNU General Public License 2.0 | ctf4void | Work based on original textures in base/models/soldiers/female/ by Lukas Beyeler (Rasta)
@@ -1068,10 +1068,10 @@ base/models/soldiers/femalelight/head01b.jpg | GNU General Public License 2.0 | 
 base/models/soldiers/femalelight/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head01b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head01b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head01c.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/models/soldiers/femalelight/head01c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelight/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelight/head01c_cccp.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/models/soldiers/femalelight/head01c_yellow.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/models/soldiers/femalelight/head01c_cccp.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/models/soldiers/femalelight/head01c_yellow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelight/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/head02a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
@@ -1113,10 +1113,10 @@ base/models/soldiers/femalelightadv/head01b.jpg | GNU General Public License 2.0
 base/models/soldiers/femalelightadv/head01b.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head01b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head01b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head01c.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/models/soldiers/femalelightadv/head01c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/head01c.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalelightadv/head01c_cccp.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/models/soldiers/femalelightadv/head01c_yellow.jpg | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/models/soldiers/femalelightadv/head01c_cccp.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/models/soldiers/femalelightadv/head01c_yellow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/models/soldiers/femalelightadv/head02a.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head02a.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelightadv/head02a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/femalelight/ by Lukas Beyeler (Rasta)
@@ -1710,11 +1710,11 @@ base/pics/circle.tga | GNU General Public License 2.0
 base/pics/circleactive.tga | GNU General Public License 2.0
 base/pics/conback.jpg | GNU General Public License 2.0
 base/pics/cross.tga | GNU General Public License 2.0
-base/pics/envmaps/envmap_0.tga | GNU General Public License 2.0 | Jay Dolan (quake2world)
-base/pics/envmaps/envmap_1.tga | GNU General Public License 2.0 | Jay Dolan (quake2world)
+base/pics/envmaps/envmap_0.tga | GNU General Public License 2.0 | Jay Dolan (Quake2World)
+base/pics/envmaps/envmap_1.tga | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/geoscape/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
-base/pics/geoscape/map_earth_nations_overlay.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar) | map_earth_nations.tga
+base/pics/geoscape/map_earth_nations_overlay.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
 base/pics/geoscape/map_earth_night.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
 base/pics/geoscape/map_earth_xvi_overlay.tga | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
@@ -2148,21 +2148,21 @@ base/pics/sfx/b_flame6.tga | GNU General Public License 2.0 | OpenArena GPLed Co
 base/pics/sfx/b_flame7.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/b_flame8.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/b_flameball.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/pics/sfx/blood_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_cyan_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_cyan_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_cyan_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_green_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_green_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_green_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_oil_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_oil_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_oil_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_purple_0.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_purple_1.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
-base/pics/sfx/blood_purple_2.tga | GNU General Public License 2.0 | J. W. Bjerk (Eleazar)
+base/pics/sfx/blood_0.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_1.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_2.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_cyan_0.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_cyan_1.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_cyan_2.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_green_0.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_green_1.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_green_2.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_oil_0.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_oil_1.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_oil_2.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_purple_0.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_purple_1.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/pics/sfx/blood_purple_2.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/bms2fl_rglow.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/bubble.tga | GNU General Public License 2.0 | Martin Gerhardy
@@ -2238,9 +2238,9 @@ base/pics/tutorial/gameplay8a.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
-base/shaders/lighting.fp | GNU General Public License 2.0 | Jay Dolan (q2w)
-base/shaders/lighting_mtex.fp | GNU General Public License 2.0 | Jay Dolan (q2w)
-base/shaders/warp.fp | GNU General Public License 2.0 | Jay Dolan (q2w)
+base/shaders/lighting.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
+base/shaders/lighting_mtex.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
+base/shaders/warp.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
@@ -2382,11 +2382,11 @@ base/sound/weapons/smokeexplosion.wav | GNU General Public License 2.0 | Alex Pa
 base/sound/weapons/sniperrifle.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/stun_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/textures/tex_alienbase/floor01.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
-base/textures/tex_alienbase/floor02.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | GPL2 photo by Martin Gerhardy
+base/textures/tex_alienbase/floor02.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | GPL2 photo by Martin Gerhardy
 base/textures/tex_alienbase/wall01.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
-base/textures/tex_alienbase/wall01_a.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
-base/textures/tex_alienbase/wall01_b.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
-base/textures/tex_alienbase/wall01_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_alienbase/wall01_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_alienbase/wall01_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_alienbase/wall01_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/9hangwires01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/barrel_rst_top.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/barrel_rst_top2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2420,11 +2420,11 @@ base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner
 base/textures/tex_base/lasertable.jpg | GNU General Public License 2.0 | gthf http://sourceforge.net/users/gthf/ | data-soource/images/lasertable/
 base/textures/tex_base/map002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/pharmacy.jpg | GNU General Public License 2.0 | XaverXN
-base/textures/tex_base/screen_base.tga | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_base/screen_base.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/screenp001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/screenp002.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/screenp004.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_base/sign01.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_base/sign01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/sign03.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -2529,7 +2529,7 @@ base/textures/tex_buildings/e8crete03g.jpg | GNU General Public License 2.0 | Ne
 base/textures/tex_buildings/e8crete_pillar.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8crete_pillarb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8crete_pillarc.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/floor020.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_buildings/floor020.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -2727,8 +2727,8 @@ base/textures/tex_ctp1/wood_b_9.jpg | GNU General Public License 2.0 |  | http:/
 base/textures/tex_ctp1/wood_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/woodb_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_doors/door001.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_doors/door003.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
-base/textures/tex_doors/door005.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_doors/door003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_doors/door005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_doors/door006.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_doors/door007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_doors/door008.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -3059,7 +3059,7 @@ base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz 
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/drawer001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_misc/dvdshop.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_misc/dvdshop.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_misc/e8_btrim02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8_btrim05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8beam02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3108,18 +3108,18 @@ base/textures/tex_nature/grass003_way_vert.jpg | GNU General Public License 2.0 
 base/textures/tex_nature/grass003_way_x_fork.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/grass004.jpg | GNU General Public License 2.0 | wotwot
 base/textures/tex_nature/grass_lush.tga | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/grass_mowed_dry_a.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_mowed_dry_b.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_mowed_dry_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_mowed_green_a.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_mowed_green_b.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_mowed_green_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_tall_dry_a.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_tall_dry_b.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_tall_dry_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_tall_green_a.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
-base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_dry_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_dry_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_dry_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_green_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_green_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_tall_dry_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_tall_dry_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_tall_dry_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_tall_green_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
 base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_nature/ice003.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3155,7 +3155,7 @@ base/textures/tex_pics/art_abstract002.jpg | GNU General Public License 2.0 | Jo
 base/textures/tex_pics/art_abstract003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract004.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_abstract006.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_pics/art_abstract006.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_ceramics01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_ceramics02.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_ceramics03.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -3164,13 +3164,13 @@ base/textures/tex_pics/art_abstract_design002.jpg | GNU General Public License 2
 base/textures/tex_pics/art_abstract_design003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_cactus.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_floral_scrollwork.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_flower.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_pics/art_flower.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_bw_lady.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_girl001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_madonna001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_maiden.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_runner.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_textile01.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_pics/art_textile01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/asia003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -3194,13 +3194,13 @@ base/textures/tex_pics/landsc007.jpg | GNU General Public License 2.0
 base/textures/tex_pics/landsc008.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc_conners_hill.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/landsc_topichow.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/mc_kinnsi.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_pics/mc_kinnsi.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/messboard002.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_pics/poster_xcommando.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_pics/poster_xcommando.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/science001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/science002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/science003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/science004.jpg | GNU General Public License 2.0 | J. W. Bjerk (eleazar)
+base/textures/tex_pics/science004.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/science005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/statistics.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/tonight1.tga | GNU General Public License 2.0 | Martin Gerhardy
@@ -3234,31 +3234,31 @@ base/textures/tex_terrain/grass.jpg | GNU General Public License 2.0 |  | http:/
 base/textures/tex_terrain/mountain.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_terrain/tropical.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_terrain/wasted.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo1_02.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo1_04.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo1_05.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo1_05_glow.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_01.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_02.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_03.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_04.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_05.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_06.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_07.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_08.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_09.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_10.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_12.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_13.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_14.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_15.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_16.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_medic01.jpg |  | "Sparx" Beyeler
-base/textures/tex_ufo/ufo2_medic02.jpg |  | "Sparx" Beyeler
+base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_04.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_05_glow.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_02.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_08.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_12.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_13.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_14.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_15.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_16.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_medic01.jpg |  | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_medic02.jpg |  | "SparX" Beyeler
 base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 | Martin Gerhardy | data_source/images/train_a.xcf
 base/ufos/aircraftmanagement.ufo | GNU General Public License 2.0
 base/ufos/armour.ufo | GNU General Public License 2.0
