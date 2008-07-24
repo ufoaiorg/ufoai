@@ -644,6 +644,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 					maxs = v;
 			}
 
+			/* no bsp subdivide for this winding? */
 			if (maxs - mins <= config.subdivideSize)
 				break;
 
