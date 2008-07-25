@@ -702,7 +702,6 @@ base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lu
 base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/base/turret2/turret.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret2/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
@@ -1467,10 +1466,8 @@ base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas "
 base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flare/flare.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flare/flare.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flashbang/flashbang.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/fraggren/fraggren.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1486,7 +1483,6 @@ base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | L
 base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/incgren/incgren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -1580,7 +1576,6 @@ base/models/weapons/smg/smg.jpg | GNU General Public License 2.0 | Lukas "Rastam
 base/models/weapons/smg/smg.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/smg/smg_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/smg/smg_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/smokegren/smoke_gren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_r.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_w.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_y.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
