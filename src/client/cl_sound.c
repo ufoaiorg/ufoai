@@ -264,12 +264,12 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 		src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
-			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' \n", sound);
+			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' (%s)\n", sound, Mix_GetError());
 	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), (byte **)&sfxBuf)) != -1) {
 		src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
-			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' \n", sound);
+			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' (%s)\n", sound, Mix_GetError());
 	} else {
 		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
 		return NULL;
