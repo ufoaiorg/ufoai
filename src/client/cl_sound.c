@@ -245,7 +245,6 @@ SOUND FILES
 static Mix_Chunk *S_LoadSound (const char *sound)
 {
 	size_t len;
-	SDL_RWops *src;
 	byte *sfxBuf;
 	int size;
 	Mix_Chunk *mix = NULL;
@@ -261,15 +260,15 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), (byte **)&sfxBuf)) != -1) {
-		src = SDL_RWFromMem(sfxBuf, size);
+		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
-			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' \n", sound);
+			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' (%s)\n", sound, Mix_GetError());
 	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), (byte **)&sfxBuf)) != -1) {
-		src = SDL_RWFromMem(sfxBuf, size);
+		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
-			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' \n", sound);
+			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' (%s)\n", sound, Mix_GetError());
 	} else {
 		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
 		return NULL;
@@ -320,7 +319,8 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 }
 
 /**
- * @brief
+ * @brief Loads and registers a sound file for later use
+ * @param[in] name The name of the soundfile, relative to the sounds dir
  * @sa S_LoadSound
  */
 sfx_t *S_RegisterSound (const char *name)
@@ -691,6 +691,47 @@ static int S_CompleteMusic (const char *partial, const char **match)
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
+/** @todo This should be removed and read from the dir tree instead */
+static const char *soundFileSubDirs[] = {
+	"aliens", "ambience", "civilians", "footsteps", "misc", "weapons", NULL
+};
+
+static int S_CompleteSounds (const char *partial, const char **match)
+{
+	const char *filename;
+	int matches = 0;
+	char *localMatch[MAX_COMPLETE];
+	size_t len = strlen(partial);
+	const char **dirList = soundFileSubDirs;
+	int returnValue;
+
+	/* check for partial matches */
+	while (*dirList) {
+		char pattern[MAX_OSPATH];
+		Com_sprintf(pattern, sizeof(pattern), "sound/%s/*.wav", *dirList);
+		FS_BuildFileList(pattern);
+		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
+			char fileWithPath[MAX_OSPATH];
+			Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s/%s", *dirList, filename);
+			if (!len) {
+				Com_Printf("%s\n", fileWithPath);
+			} else if (!Q_strncmp(partial, fileWithPath, len)) {
+				Com_Printf("%s\n", fileWithPath);
+				localMatch[matches++] = strdup(fileWithPath);
+				if (matches >= MAX_COMPLETE)
+					break;
+			}
+		}
+		FS_NextFileFromFileList(NULL);
+		dirList++;
+	}
+
+	returnValue = Cmd_GenericCompleteFunction(len, match, matches, (const char **)localMatch);
+	while (--matches >= 0)
+		free(localMatch[matches]);
+	return returnValue;
+}
+
 /**
  * @sa S_Shutdown
  * @sa S_Restart_f
@@ -713,16 +754,15 @@ void S_Init (void)
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
-	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_start\" if you experience crackling when background music loops");
+	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_play\" if you experience crackling when background music loops");
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
-	Cmd_AddCommand("music_start", S_Music_Play_f, "Starts the background music track from cvar snd_music");
 	Cmd_AddCommand("music_change", S_Music_Change_f, "Changes the music theme");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
-	Cmd_AddParamCompleteFunction("music_start", S_CompleteMusic);
-	/** @todo Complete functions */
+	Cmd_AddParamCompleteFunction("music_play", S_CompleteMusic);
+	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
 
 	if (!SND_Init()) {
 		Com_Printf("SND_Init failed\n");
