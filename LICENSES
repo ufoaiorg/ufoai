@@ -698,6 +698,9 @@ base/models/objects/base/radar/radar_c.jpg | GNU General Public License 2.0 | Lu
 base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret2/turret.obj | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret2/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
