@@ -691,6 +691,47 @@ static int S_CompleteMusic (const char *partial, const char **match)
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
+/** @todo This should be removed and read from the dir tree instead */
+static const char *soundFileSubDirs[] = {
+	"aliens", "ambience", "civilians", "footsteps", "misc", "weapons", NULL
+};
+
+static int S_CompleteSounds (const char *partial, const char **match)
+{
+	const char *filename;
+	int matches = 0;
+	char *localMatch[MAX_COMPLETE];
+	size_t len = strlen(partial);
+	const char **dirList = soundFileSubDirs;
+	int returnValue;
+
+	/* check for partial matches */
+	while (*dirList) {
+		char pattern[MAX_OSPATH];
+		Com_sprintf(pattern, sizeof(pattern), "sound/%s/*.wav", *dirList);
+		FS_BuildFileList(pattern);
+		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
+			char fileWithPath[MAX_OSPATH];
+			Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s/%s", *dirList, filename);
+			if (!len) {
+				Com_Printf("%s\n", fileWithPath);
+			} else if (!Q_strncmp(partial, fileWithPath, len)) {
+				Com_Printf("%s\n", fileWithPath);
+				localMatch[matches++] = strdup(fileWithPath);
+				if (matches >= MAX_COMPLETE)
+					break;
+			}
+		}
+		FS_NextFileFromFileList(NULL);
+		dirList++;
+	}
+
+	returnValue = Cmd_GenericCompleteFunction(len, match, matches, (const char **)localMatch);
+	while (--matches >= 0)
+		free(localMatch[matches]);
+	return returnValue;
+}
+
 /**
  * @sa S_Shutdown
  * @sa S_Restart_f
@@ -722,6 +763,7 @@ void S_Init (void)
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
 	Cmd_AddParamCompleteFunction("music_start", S_CompleteMusic);
+	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
 	/** @todo Complete functions */
 
 	if (!SND_Init()) {
