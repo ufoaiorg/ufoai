@@ -32,11 +32,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include "../ports/windows/win_local.h"
 #endif
 
-#define MUSIC_MAIN 0
-#define MUSIC_GEOSCAPE 1
-#define MUSIC_BATTLESCAPE 2
-#define MUSIC_AIRCOMBAT 3
-#define MUSIC_MAX 4
+enum {
+	MUSIC_MAIN,
+	MUSIC_GEOSCAPE,
+	MUSIC_BATTLESCAPE,
+	MUSIC_AIRCOMBAT,
+
+	MUSIC_MAX
+};
+
 #define MUSIC_MAX_ENTRIES 64
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
