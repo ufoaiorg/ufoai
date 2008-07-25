@@ -745,6 +745,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 /**
  * @brief Show the filesystem contents - also supports wildcarding
  * @sa FS_NextPath
+ * @note No pk3 support
  */
 static void FS_Dir_f (void)
 {
@@ -901,7 +902,6 @@ static listBlock_t *fs_blocklist = NULL;
 static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock, char* name)
 {
 	char *f, *tl = NULL;
-	int len;
 
 	/* strip path */
 	f = strrchr(name, '/');
@@ -924,7 +924,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 	}
 
 	if (tl && !*tl) {
-		len = strlen(f);
+		const size_t len = strlen(f);
 		if (*fl - block->files + len >= FL_BLOCKSIZE) {
 			/* terminalize the last block */
 			**fl = 0;
@@ -1003,12 +1003,14 @@ int FS_BuildFileList (const char *fileList)
 		if (search->pack) {
 			const char *ext = strrchr(files, '.');
 			const pack_t *pak = search->pack;
-			const size_t l = strlen(search->filename);
+			size_t l = strlen(files);
 			/* *.* is not implemented here - only e.g. *.ufo */
 			if (!ext)
 				break;
-			Q_strncpyz(findname, search->filename, sizeof(findname));
+			Q_strncpyz(findname, files, sizeof(findname));
 			FS_NormPath(findname);
+			l -= (strlen(ext) + 1);
+			findname[l] = '\0';
 
 			/* look through all the pak file elements */
 			for (i = 0; i < pak->numfiles; i++)
