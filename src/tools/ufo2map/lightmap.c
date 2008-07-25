@@ -895,7 +895,7 @@ nextpatch:;
  */
 static void FacesWithVert (int vert, int *faces, int *nfaces)
 {
-	int i, j, k, v;
+	int i, j, k;
 
 	k = 0;
 	for (i = 0; i < curTile->numfaces; i++) {
@@ -906,11 +906,10 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 
 		for (j = 0; j < face->numedges; j++) {
 			const int e = curTile->surfedges[face->firstedge + j];
-
-			v = e >= 0 ? curTile->edges[e].v[0] : curTile->edges[-e].v[1];
+			const int v = e >= 0 ? curTile->edges[e].v[0] : curTile->edges[-e].v[1];
 
 			/* compare using surfedge reference or point equality */
-			if (v == vert || VectorCompare(curTile->vertexes[v].point, curTile->vertexes[vert].point)) {
+			if (v == vert || VectorCompareEps(curTile->vertexes[v].point, curTile->vertexes[vert].point, EQUAL_EPSILON)) {
 				faces[k++] = i;
 				break;
 			}

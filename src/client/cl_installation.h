@@ -50,8 +50,9 @@ typedef struct installationTemplate_s {
 
 	int cost;
 	float radarRange; /* The range of the installation's radar.  Units is the angle of the two points from center of earth. */
-	int numMaxBatteries; /* The maximum number of battery slots that can be used in an installation. */
-	int numMaxUfoStored; /* The maximum number of ufos that can be stored in an installation. */
+	int maxBatteries; /* The maximum number of battery slots that can be used in an installation. */
+	int maxUfoStored; /* The maximum number of ufos that can be stored in an installation. */
+	int maxDamage; /* The maximum amount of damage an installation can sustain before it is destroyed. */
 } installationTemplate_t;
 
 typedef struct installationWeapon_s {
@@ -65,7 +66,7 @@ typedef struct installation_s {
 	int idx;					/**< Self link. Index in the global installation-list. */
 	char name[MAX_VAR];			/**< Name of the installation */
 
-	installationTemplate_t *installationTemplate; /** The template used for the installation. **/ 
+	installationTemplate_t *installationTemplate; /** The template used for the installation. **/
 
 	qboolean founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
@@ -76,12 +77,12 @@ typedef struct installation_s {
 
 	radar_t	radar;
 
-	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation.  For Sam Sites Only.  */
-	int numBatteries;
+	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation. For Sam Sites only. */
+	int numBatteries;		/**< how many batteries are installed? */
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
-	/** All ufo aircraft in this installation.  This used for UFO Yards. **/
+	/** All ufo aircraft in this installation. This is used for UFO Yards. **/
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInInstallation;	/**< How many aircraft are in this installation. */
 

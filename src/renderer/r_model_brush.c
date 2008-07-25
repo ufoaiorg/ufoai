@@ -34,7 +34,11 @@ BRUSHMODEL LOADING
 
 static byte *mod_base;
 static int shift[3];
-static model_t *loadmodel;
+/**
+ * @brief The currently loaded world model for the actual tile
+ * @sa r_mapTiles
+ */
+static model_t *r_worldmodel;
 
 /**
  * @brief Load the lightmap data
@@ -42,14 +46,14 @@ static model_t *loadmodel;
 static void R_ModLoadLighting (lump_t * l)
 {
 	if (!l->filelen) {
-		loadmodel->bsp.lightdata = NULL;
-		loadmodel->bsp.lightquant = 4;
+		r_worldmodel->bsp.lightdata = NULL;
+		r_worldmodel->bsp.lightquant = 4;
 		return;
 	}
 
-	loadmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
-	loadmodel->bsp.lightquant = *(byte *) (mod_base + l->fileofs);
-	memcpy(loadmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
+	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
+	r_worldmodel->bsp.lightquant = *(byte *) (mod_base + l->fileofs);
+	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
 static void R_ModLoadVertexes (lump_t * l)
@@ -60,13 +64,13 @@ static void R_ModLoadVertexes (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...verts: %i\n", count);
 
-	loadmodel->bsp.vertexes = out;
-	loadmodel->bsp.numvertexes = count;
+	r_worldmodel->bsp.vertexes = out;
+	r_worldmodel->bsp.numvertexes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->position[0] = LittleFloat(in->point[0]);
@@ -99,13 +103,13 @@ static void R_ModLoadSubmodels (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...submodels: %i\n", count);
 
-	loadmodel->bsp.submodels = out;
-	loadmodel->bsp.numsubmodels = count;
+	r_worldmodel->bsp.submodels = out;
+	r_worldmodel->bsp.numsubmodels = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		/* spread the mins / maxs by a pixel */
@@ -128,13 +132,13 @@ static void R_ModLoadEdges (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc((count + 1) * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...edges: %i\n", count);
 
-	loadmodel->bsp.edges = out;
-	loadmodel->bsp.numedges = count;
+	r_worldmodel->bsp.edges = out;
+	r_worldmodel->bsp.numedges = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->v[0] = (unsigned short) LittleShort(in->v[0]);
@@ -154,13 +158,13 @@ static void R_ModLoadTexinfo (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...texinfo: %i\n", count);
 
-	loadmodel->bsp.texinfo = out;
-	loadmodel->bsp.numtexinfo = count;
+	r_worldmodel->bsp.texinfo = out;
+	r_worldmodel->bsp.numtexinfo = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 4; j++) {
@@ -246,13 +250,13 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
 
-	loadmodel->bsp.surfaces = out;
-	loadmodel->bsp.numsurfaces = count;
+	r_worldmodel->bsp.surfaces = out;
+	r_worldmodel->bsp.numsurfaces = count;
 
 	for (surfnum = 0; surfnum < count; surfnum++, in++, out++) {
 		out->firstedge = LittleLong(in->firstedge);
@@ -260,7 +264,7 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 
 		/* resolve plane */
 		planenum = LittleShort(in->planenum);
-		out->plane = loadmodel->bsp.planes + planenum;
+		out->plane = r_worldmodel->bsp.planes + planenum;
 
 		/* and sideness */
 		side = LittleShort(in->side);
@@ -272,14 +276,14 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 		}
 
 		ti = LittleShort(in->texinfo);
-		if (ti < 0 || ti >= loadmodel->bsp.numtexinfo)
+		if (ti < 0 || ti >= r_worldmodel->bsp.numtexinfo)
 			Com_Error(ERR_DROP, "R_ModLoadSurfaces: bad texinfo number");
-		out->texinfo = loadmodel->bsp.texinfo + ti;
+		out->texinfo = r_worldmodel->bsp.texinfo + ti;
 
-		out->lightmap_scale = (1 << loadmodel->bsp.lightquant);
+		out->lightmap_scale = (1 << r_worldmodel->bsp.lightquant);
 
 		/* and size, texcoords, etc */
-		R_SetSurfaceExtents(out, loadmodel);
+		R_SetSurfaceExtents(out, r_worldmodel);
 
 		if (day)
 			i = LittleLong(in->lightofs[LIGHTMAP_DAY]);
@@ -289,7 +293,7 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 		if (i == -1 || (out->texinfo->flags & (SURF_WARP)))
 			out->samples = NULL;
 		else {
-			out->samples = loadmodel->bsp.lightdata + i;
+			out->samples = r_worldmodel->bsp.lightdata + i;
 			out->flags |= MSURF_LIGHTMAP;
 		}
 
@@ -317,13 +321,13 @@ static void R_ModLoadNodes (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...nodes: %i\n", count);
 
-	loadmodel->bsp.nodes = out;
-	loadmodel->bsp.numnodes = count;
+	r_worldmodel->bsp.nodes = out;
+	r_worldmodel->bsp.numnodes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
@@ -335,7 +339,7 @@ static void R_ModLoadNodes (lump_t * l)
 		if (in->planenum == PLANENUM_LEAF)
 			out->plane = NULL;
 		else
-			out->plane = loadmodel->bsp.planes + p;
+			out->plane = r_worldmodel->bsp.planes + p;
 
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
@@ -345,17 +349,17 @@ static void R_ModLoadNodes (lump_t * l)
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
 			if (p > LEAFNODE) {
-				assert(p < loadmodel->bsp.numnodes);
-				out->children[j] = loadmodel->bsp.nodes + p;
+				assert(p < r_worldmodel->bsp.numnodes);
+				out->children[j] = r_worldmodel->bsp.nodes + p;
 			} else {
-				assert((LEAFNODE - p) < loadmodel->bsp.numleafs);
-				out->children[j] = (mBspNode_t *) (loadmodel->bsp.leafs + (LEAFNODE - p));
+				assert((LEAFNODE - p) < r_worldmodel->bsp.numleafs);
+				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p));
 			}
 		}
 	}
 
 	/* sets nodes and leafs */
-	R_ModSetParent(loadmodel->bsp.nodes, NULL);
+	R_ModSetParent(r_worldmodel->bsp.nodes, NULL);
 }
 
 static void R_ModLoadLeafs (lump_t * l)
@@ -366,13 +370,13 @@ static void R_ModLoadLeafs (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...leafs: %i\n", count);
 
-	loadmodel->bsp.leafs = out;
-	loadmodel->bsp.numleafs = count;
+	r_worldmodel->bsp.leafs = out;
+	r_worldmodel->bsp.numleafs = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
@@ -391,16 +395,16 @@ static void R_ModLoadSurfedges (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
-		Com_Error(ERR_DROP, "R_ModLoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
+		Com_Error(ERR_DROP, "R_ModLoadSurfedges: bad surfedges count in %s: %i", r_worldmodel->name, count);
 
 	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...surface edges: %i\n", count);
 
-	loadmodel->bsp.surfedges = out;
-	loadmodel->bsp.numsurfedges = count;
+	r_worldmodel->bsp.surfedges = out;
+	r_worldmodel->bsp.numsurfedges = count;
 
 	for (i = 0; i < count; i++)
 		out[i] = LittleLong(in[i]);
@@ -418,13 +422,13 @@ static void R_ModLoadPlanes (lump_t * l)
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
-		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = Mem_PoolAlloc(count * 2 * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...planes: %i\n", count);
 
-	loadmodel->bsp.planes = out;
-	loadmodel->bsp.numplanes = count;
+	r_worldmodel->bsp.planes = out;
+	r_worldmodel->bsp.numplanes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		int bits = 0;
@@ -457,12 +461,12 @@ static void R_ModShiftTile (void)
 
 	/* we can't do this instantly, because of rounding errors on extents calculation */
 	/* shift vertexes */
-	for (i = 0, vert = loadmodel->bsp.vertexes; i < loadmodel->bsp.numvertexes; i++, vert++)
+	for (i = 0, vert = r_worldmodel->bsp.vertexes; i < r_worldmodel->bsp.numvertexes; i++, vert++)
 		for (j = 0; j < 3; j++)
 			vert->position[j] += shift[j];
 
 	/* shift planes */
-	for (i = 0, plane = loadmodel->bsp.planes; i < loadmodel->bsp.numplanes; i++, plane++)
+	for (i = 0, plane = r_worldmodel->bsp.planes; i < r_worldmodel->bsp.numplanes; i++, plane++)
 		for (j = 0; j < 3; j++)
 			plane->dist += plane->normal[j] * shift[j];
 }
@@ -475,7 +479,7 @@ static void R_ModShiftTile (void)
  * @todo Don't use the buffers from r_state here - they might overflow
  * @todo Decrease MAX_GL_ARRAY_LENGTH to 32768 again when this is fixed
  */
-static void R_LoadBspVertexArrays (void)
+static void R_LoadBspVertexArrays (model_t *mod)
 {
 	int i, j;
 	int vertind, coordind;
@@ -483,24 +487,24 @@ static void R_LoadBspVertexArrays (void)
 	mBspSurface_t *surf;
 
 	vertind = coordind = 0;
-	surf = loadmodel->bsp.surfaces;
+	surf = mod->bsp.surfaces;
 
-	for (i = 0; i < loadmodel->bsp.numsurfaces; i++, surf++) {
+	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertind / 3;
 
 		for (j = 0; j < surf->numedges; j++) {
-			const int index = loadmodel->bsp.surfedges[surf->firstedge + j];
+			const int index = mod->bsp.surfedges[surf->firstedge + j];
 
 			if (vertind >= MAX_GL_ARRAY_LENGTH * 3)
 				Com_Error(ERR_DROP, "R_LoadBspVertexArrays: Exceeded MAX_GL_ARRAY_LENGTH %i", vertind);
 
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
-				const mBspEdge_t *edge = &loadmodel->bsp.edges[index];
-				vec = loadmodel->bsp.vertexes[edge->v[0]].position;
+				const mBspEdge_t *edge = &mod->bsp.edges[index];
+				vec = mod->bsp.vertexes[edge->v[0]].position;
 			} else {
-				const mBspEdge_t *edge = &loadmodel->bsp.edges[-index];
-				vec = loadmodel->bsp.vertexes[edge->v[1]].position;
+				const mBspEdge_t *edge = &mod->bsp.edges[-index];
+				vec = mod->bsp.vertexes[edge->v[1]].position;
 			}
 
 			/* shift it for assembled maps */
@@ -543,38 +547,206 @@ static void R_LoadBspVertexArrays (void)
 	}
 
 	/* populate the vertex arrays */
-	loadmodel->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(loadmodel->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
+	mod->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
 
-	loadmodel->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(loadmodel->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
+	mod->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
 
-	loadmodel->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(loadmodel->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
+	mod->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
 
-	loadmodel->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(loadmodel->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
+	mod->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
+	memcpy(mod->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
 
 	if (r_state.vertex_buffers) {
 		/* and also the vertex buffer objects */
-		qglGenBuffers(1, &loadmodel->bsp.vertex_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.vertex_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), loadmodel->bsp.verts, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.vertex_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.verts, GL_STATIC_DRAW);
 
-		qglGenBuffers(1, &loadmodel->bsp.texcoord_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.texcoord_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), loadmodel->bsp.texcoords, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.texcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.texcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.texcoords, GL_STATIC_DRAW);
 
-		qglGenBuffers(1, &loadmodel->bsp.lmtexcoord_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.lmtexcoord_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), loadmodel->bsp.lmtexcoords, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.lmtexcoord_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.lmtexcoord_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, coordind * sizeof(GLfloat), mod->bsp.lmtexcoords, GL_STATIC_DRAW);
 
-		qglGenBuffers(1, &loadmodel->bsp.normal_buffer);
-		qglBindBuffer(GL_ARRAY_BUFFER, loadmodel->bsp.normal_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), loadmodel->bsp.normals, GL_STATIC_DRAW);
+		qglGenBuffers(1, &mod->bsp.normal_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
 
 		qglBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+}
+
+/** @brief temporary space for sorting surfaces by texture index */
+static mBspSurfaces_t *r_sorted_surfaces[MAX_GL_TEXTURES];
+
+static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
+{
+	int i, j;
+
+	for (i = 0; i < surfs->count; i++) {
+		const int texindex = surfs->surfaces[i]->texinfo->image->index;
+		R_SurfaceToSurfaces(r_sorted_surfaces[texindex], surfs->surfaces[i]);
+	}
+
+	surfs->count = 0;
+
+	for (i = 0; i < r_numImages; i++) {
+		mBspSurfaces_t *sorted = r_sorted_surfaces[r_images[i].index];
+		if (sorted && sorted->count) {
+			for (j = 0; j < sorted->count; j++)
+				R_SurfaceToSurfaces(surfs, sorted->surfaces[j]);
+
+			sorted->count = 0;
+		}
+	}
+}
+
+/**
+ * @brief Reorders all surfaces arrays for the specified model, grouping the surface
+ * pointers by texture.  This dramatically reduces glBindTexture calls.
+ */
+static void R_SortSurfacesArrays (model_t *mod)
+{
+	mBspSurface_t *surf, *s;
+	int i, ns;
+
+	/* resolve the start surface and total surface count */
+	if (mod->type == mod_bsp) {  /*  world model */
+		s = mod->bsp.surfaces;
+		ns = mod->bsp.numsurfaces;
+	} else {  /* submodels */
+		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+		ns = mod->bsp.nummodelsurfaces;
+	}
+
+	memset(r_sorted_surfaces, 0, sizeof(r_sorted_surfaces));
+
+	/* allocate the per-texture surfaces arrays and determine counts */
+	for (i = 0, surf = s; i < ns; i++, surf++) {
+		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image->index];
+		if (!surfs) {  /* allocate it */
+			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
+			r_sorted_surfaces[surf->texinfo->image->index] = surfs;
+		}
+
+		surfs->count++;
+	}
+
+	/* allocate the surfaces pointers based on counts */
+	for (i = 0; i < r_numImages; i++) {
+		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].index];
+		if (surfs) {
+			surfs->surfaces = (mBspSurface_t **)Mem_PoolAlloc(sizeof(mBspSurface_t *) * surfs->count, vid_modelPool, 0);
+			surfs->count = 0;
+		}
+	}
+
+	/* sort the model's surfaces arrays into the per-texture arrays */
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
+		if (mod->bsp.sorted_surfaces[i]->count) {
+			R_SortSurfacesArrays_(mod->bsp.sorted_surfaces[i]);
+			Com_DPrintf(DEBUG_RENDERER, "%i: #%i surfaces\n", i, mod->bsp.sorted_surfaces[i]->count);
+		}
+	}
+
+	/* free the per-texture surfaces arrays */
+	for (i = 0; i < r_numImages; i++) {
+		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].index];
+		if (surfs) {
+			if (surfs->surfaces)
+				Mem_Free(surfs->surfaces);
+			Mem_Free(surfs);
+		}
+	}
+}
+
+static void R_LoadSurfacesArrays_ (model_t *mod)
+{
+	mBspSurface_t *surf, *s;
+	int i, ns;
+
+	/* allocate the surfaces array structures */
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++)
+		mod->bsp.sorted_surfaces[i] = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
+
+	/* resolve the start surface and total surface count */
+	if (mod->type == mod_bsp) {  /* world model */
+		s = mod->bsp.surfaces;
+		ns = mod->bsp.numsurfaces;
+	} else {  /* submodels */
+		s = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
+		ns = mod->bsp.nummodelsurfaces;
+	}
+
+	/* determine the maximum counts for each rendered type in order to
+	 * allocate only what is necessary for the specified model */
+	for (i = 0, surf = s; i < ns; i++, surf++) {
+		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+			if (surf->texinfo->flags & SURF_WARP)
+				mod->bsp.blend_warp_surfaces->count++;
+			else
+				mod->bsp.blend_surfaces->count++;
+		} else {
+			if (surf->texinfo->flags & SURF_WARP)
+				mod->bsp.opaque_warp_surfaces->count++;
+			else if (surf->texinfo->flags & SURF_ALPHATEST)
+				mod->bsp.alpha_test_surfaces->count++;
+			else
+				mod->bsp.opaque_surfaces->count++;
+		}
+
+		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+			mod->bsp.material_surfaces->count++;
+	}
+
+	/* allocate the surfaces pointers based on the counts */
+	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
+		if (mod->bsp.sorted_surfaces[i]->count) {
+			mod->bsp.sorted_surfaces[i]->surfaces = (mBspSurface_t **)Mem_PoolAlloc(
+					sizeof(mBspSurface_t *) * mod->bsp.sorted_surfaces[i]->count, vid_modelPool, 0);
+
+			mod->bsp.sorted_surfaces[i]->count = 0;
+		}
+	}
+
+	/* iterate the surfaces again, populating the allocated arrays based
+	 * on primary render type */
+	for (i = 0, surf = s; i < ns; i++, surf++) {
+		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+			if (surf->texinfo->flags & SURF_WARP)
+				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
+			else
+				R_SurfaceToSurfaces(mod->bsp.blend_surfaces, surf);
+		} else {
+			if (surf->texinfo->flags & SURF_WARP)
+				R_SurfaceToSurfaces(mod->bsp.opaque_warp_surfaces, surf);
+			else if (surf->texinfo->flags & SURF_ALPHATEST)
+				R_SurfaceToSurfaces(mod->bsp.alpha_test_surfaces, surf);
+			else
+				R_SurfaceToSurfaces(mod->bsp.opaque_surfaces, surf);
+		}
+
+		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
+	}
+
+	/* now sort them by texture */
+	R_SortSurfacesArrays(mod);
+}
+
+static void R_LoadSurfacesArrays (model_t *mod)
+{
+	int i;
+
+	R_LoadSurfacesArrays_(mod);
+
+	for (i = 0; i < r_numModelsInline; i++)
+		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
 
 /**
@@ -588,25 +760,25 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	dBspHeader_t *header;
 
 	/* get new model */
-	if ((r_numModels < 0) || (r_numModels >= MAX_MOD_KNOWN))
+	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: r_numModels >= MAX_MOD_KNOWN");
 
-	if ((r_numMapTiles < 0) || (r_numMapTiles >= MAX_MAPTILES))
+	if (r_numMapTiles < 0 || r_numMapTiles >= MAX_MAPTILES)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: Too many map tiles");
 
 	/* alloc model and tile */
-	loadmodel = &r_models[r_numModels++];
-	r_mapTiles[r_numMapTiles++] = loadmodel;
-	memset(loadmodel, 0, sizeof(*loadmodel));
-	Com_sprintf(loadmodel->name, sizeof(loadmodel->name), "maps/%s.bsp", name);
+	r_worldmodel = &r_models[r_numModels++];
+	r_mapTiles[r_numMapTiles++] = r_worldmodel;
+	memset(r_worldmodel, 0, sizeof(*r_worldmodel));
+	Com_sprintf(r_worldmodel->name, sizeof(r_worldmodel->name), "maps/%s.bsp", name);
 
 	/* load the file */
-	FS_LoadFile(loadmodel->name, (byte **) &buffer);
+	FS_LoadFile(r_worldmodel->name, (byte **) &buffer);
 	if (!buffer)
-		Com_Error(ERR_DROP, "R_ModAddMapTile: %s not found", loadmodel->name);
+		Com_Error(ERR_DROP, "R_ModAddMapTile: %s not found", r_worldmodel->name);
 
 	/* init */
-	loadmodel->type = mod_brush;
+	r_worldmodel->type = mod_bsp;
 
 	/* prepare shifting */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
@@ -615,7 +787,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	header = (dBspHeader_t *) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
-		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
+		Com_Error(ERR_DROP, "R_ModAddMapTile: %s has wrong version number (%i should be %i)", r_worldmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
 	mod_base = (byte *) header;
@@ -640,26 +812,30 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	/* set up the submodels, the first 255 submodels are the models of the
 	 * different levels, don't care about them */
-	for (i = NUM_REGULAR_MODELS; i < loadmodel->bsp.numsubmodels; i++) {
-		const mBspHeader_t *bm = &loadmodel->bsp.submodels[i];
+	for (i = NUM_REGULAR_MODELS; i < r_worldmodel->bsp.numsubmodels; i++) {
+		const mBspHeader_t *bm = &r_worldmodel->bsp.submodels[i];
 		model_t *starmod = &r_modelsInline[r_numModelsInline];
 
-		*starmod = *loadmodel;
+		*starmod = *r_worldmodel;
 		starmod->bsp.firstmodelsurface = bm->firstface;
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
-		if (starmod->bsp.firstnode >= loadmodel->bsp.numnodes)
+		if (starmod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
 			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
 
 		VectorCopy(bm->maxs, starmod->maxs);
 		VectorCopy(bm->mins, starmod->mins);
 		starmod->radius = bm->radius;
+		starmod->type = mod_bsp_submodel;
 
 		starmod->bsp.numleafs = bm->visleafs;
 		r_numModelsInline++;
 	}
 
-	R_LoadBspVertexArrays();
+	R_LoadBspVertexArrays(r_worldmodel);
+
+	R_LoadSurfacesArrays(r_worldmodel);
+
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
 

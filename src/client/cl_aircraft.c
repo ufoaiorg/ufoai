@@ -856,6 +856,103 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	return NULL;
 }
 
+int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
+{
+	switch (aircraft->weight) {
+	case AIRCRAFT_SMALL:
+		return CAP_AIRCRAFTS_SMALL;
+	case AIRCRAFT_LARGE:
+		return CAP_AIRCRAFTS_BIG;
+	}
+	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->weight);
+}
+
+const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
+{
+	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
+		return _("not a working hangar");
+
+	/* not enough capacity */
+	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
+		return _("no more available hangar");
+
+	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+		return _("no more quarter for employees aboard");
+
+	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
+		return _("no more room in storage");
+
+	/* check aircraft fuel, because the aircraft has to travel to the new base */
+	if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos))
+		return _("base is too far");
+
+	return NULL;
+}
+
+/**
+ * @brief Moves a given aircraft to a new base (also the employees and inventory)
+ * @note Also checks for a working hangar
+ * @param[in] aircraft The aircraft to move into a new base
+ * @param[in] base The base to move the aircraft into
+ */
+qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
+{
+	base_t *oldBase;
+	baseCapacities_t capacity;
+	int i;
+
+	assert(aircraft);
+	assert(base);
+	assert(base != aircraft->homebase);
+
+	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
+
+	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
+	if (AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity))
+		return qfalse;
+
+	oldBase = aircraft->homebase;
+	assert(oldBase);
+
+	/* Transfer employees */
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			employee_t *employee = aircraft->acTeam[i];
+			assert(employee);
+			employee->baseHired = base;
+			base->capacities[CAP_EMPLOYEES].cur++;
+			oldBase->capacities[CAP_EMPLOYEES].cur--;
+			/* Transfer items carried by soldiers from oldBase to base */
+			INV_TransferItemCarriedByChr(employee, oldBase, base);
+		}
+ 	}
+
+	/* Move aircraft to new base */
+	base->aircraft[base->numAircraftInBase] = *aircraft;
+	base->capacities[capacity].cur++;
+	base->numAircraftInBase++;
+
+	/* Remove aircraft from old base */
+	oldBase->numAircraftInBase--;
+	oldBase->capacities[capacity].cur--;
+	i = AIR_GetAircraftIdxInBase(aircraft);
+	/* move other aircraft if the deleted aircraft was not the last one of the base */
+	if (i != AIRCRAFT_INBASE_INVALID)
+		memmove(aircraft, aircraft + 1, (oldBase->numAircraftInBase - i) * sizeof(*aircraft));
+	/* wipe the now vacant last slot */
+	memset(&oldBase->aircraft[oldBase->numAircraftInBase], 0, sizeof(oldBase->aircraft[oldBase->numAircraftInBase]));
+
+	/* Reset aircraft */
+	aircraft = &base->aircraft[base->numAircraftInBase - 1];
+
+	/* Change homebase of aircraft */
+	aircraft->homebase = base;
+
+	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
+
+	return qtrue;
+}
+
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] aircraft Pointer to aircraft that should be removed.
@@ -1018,14 +1115,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		aircraft->pos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
 		aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
-		while (aircraft->pos[0] > 180.0)
-			aircraft->pos[0] -= 360.0;
-		while (aircraft->pos[0] < -180.0)
-			aircraft->pos[0] += 360.0;
-		while (aircraft->pos[1] > 90.0)
-			aircraft->pos[1] -= 180.0;
-		while (aircraft->pos[1] < -90.0)
-			aircraft->pos[1] += 180.0;
+		MAP_CheckPositionBoundaries(aircraft->pos);
 	}
 
 	return qfalse;
@@ -1066,6 +1156,7 @@ void CL_CampaignRunAircraft (int dt)
 
 						end = aircraft->route.point[aircraft->route.numPoints - 1];
 						Vector2Copy(end, aircraft->pos);
+						MAP_CheckPositionBoundaries(aircraft->pos);
 
 						switch (aircraft->status) {
 						case AIR_MISSION:
@@ -2246,6 +2337,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);
+			if (ufo->route.numPoints > LINE_MAXPTS)
+				return qfalse;
 			ufo->route.distance = MSG_ReadFloat(sb);
 			for (j = 0; j < ufo->route.numPoints; j++)
 				MSG_Read2Pos(sb, ufo->route.point[j]);

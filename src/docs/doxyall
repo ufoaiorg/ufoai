@@ -480,7 +480,8 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = */.svn/*
+EXCLUDE                = src/ports/macosx/installer/
+EXCLUDE                += */.svn/*
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded
@@ -1141,7 +1142,7 @@ INCLUDED_BY_GRAPH      = YES
 # So in most cases it will be better to enable call graphs for selected
 # functions only using the \callgraph command.
 
-CALL_GRAPH             = YES
+CALL_GRAPH             = NO
 
 # If the GRAPHICAL_HIERARCHY and HAVE_DOT tags are set to YES then doxygen
 # will graphical hierarchy of all classes instead of a textual one.

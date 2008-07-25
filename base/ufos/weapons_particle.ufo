@@ -57,7 +57,7 @@ item pbeampistol_ammo
 		}
 		firedef
 		{
-			name	"_Rapid Shots"
+			name	"_Burst"
 			skill	close
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
@@ -157,7 +157,7 @@ item pbeamrifle_ammo
 		}
 		firedef
 		{
-			name	"_Repeat Fire"
+			name	"_Burst"
 			skill	assault
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
@@ -239,7 +239,7 @@ item pbeamcannon_ammo
 		}
 		firedef
 		{
-			name	"_Rapid Shots"
+			name	"_Burst"
 			skill	heavy
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
@@ -260,7 +260,7 @@ item pbeamcannon_ammo
 		firedef
 		{
 			name	"_Unrestricted Blast"
-			skill	explosive
+			skill	heavy
 			projtl	pbeamBigBeam
 			impact	pbeamBigImpact
 			hitbody pbeamBigImpact

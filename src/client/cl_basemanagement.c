@@ -163,7 +163,7 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
  * @sa B_UpdateBaseCapacities
  * @sa B_PrintCapacities_f
  */
-static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
+buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 {
 	switch (cap) {
 	case CAP_ALIENS:
@@ -2444,6 +2444,7 @@ void B_SelectBase (base_t *base)
 		baseID = B_GetFirstUnfoundedBase();
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
+			installationCurrent = NULL;
 			baseCurrent = B_GetBaseByIDX(baseID);
 			baseCurrent->idx = baseID;
 			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
@@ -2457,11 +2458,13 @@ void B_SelectBase (base_t *base)
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
+			installationCurrent = NULL;
 			baseCurrent = B_GetBaseByIDX(0);
 			gd.mapAction = MA_NONE;
 		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
+		installationCurrent = NULL;
 		baseCurrent = base;
 		gd.mapAction = MA_NONE;
 		MN_PushMenu("bases");
@@ -3287,7 +3290,6 @@ static void B_PrintCapacities_f (void)
 {
 	int i, j;
 	base_t *base;
-	buildingType_t buildingType;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -3301,7 +3303,7 @@ static void B_PrintCapacities_f (void)
 	}
 	base = B_GetBaseByIDX(i);
 	for (i = 0; i < MAX_CAP; i++) {
-		buildingType = B_GetBuildingTypeByCapacity(i);
+		const buildingType_t buildingType = B_GetBuildingTypeByCapacity(i);
 		if (buildingType >= MAX_BUILDING_TYPE)
 			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
 		else {

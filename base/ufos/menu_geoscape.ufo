@@ -28,16 +28,16 @@ menu map
 		// menu
 		excluderect
 		{
-			pos		"768 0"
+			pos	"768 0"
 			size	"256 768"
 		}
 	}
 
 	map themap_wmessagesystem
 	{
-		// only if messagesystem is turned on
+		// only if messagesystem is turned on in halfheight mode (click)
 		if "mn_messagesystem == 1"
-		pos		"0 0"
+		pos	"0 0"
 		size	"1024 768"
 		click	mclick wheel
 		rclick	{ cmd "mn_mapaction_reset;" }
@@ -54,9 +54,17 @@ menu map
 		}
 	}
 
+	map themap_wfullmessagesystem
+	{
+		// only if messagesystem is turned on in in fullheight mode (rclick)
+		if "mn_messagesystem == 2"
+		pos	"0 0"
+		size	"1024 768"
+	}
+
 	text messagesystem
 	{
-		pos		"0 0"
+		pos	"0 0"
 		size	"768 22"
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
@@ -70,7 +78,7 @@ menu map
 	pic back
 	{
 		image	menu/geo_menu
-		pos		"768 0"
+		pos	"768 0"
 		blend	true
 	}
 
@@ -81,7 +89,7 @@ menu map
 	string date
 	{
 		string	"*cvar mn_mapdate *cvar mn_maptime"
-		pos		"896 30"
+		pos	"896 30"
 		align	uc
 		color	"1 1 1 1"
 		font	f_small
@@ -90,7 +98,7 @@ menu map
 	string txt_credits_caption
 	{
 		string	"_CREDITS"
-		pos		"808 54"
+		pos	"808 54"
 		font	f_small
 		align	ul
 	}
@@ -100,7 +108,7 @@ menu map
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
 		size	"256 20"
-		pos		"990 54"
+		pos	"990 54"
 		font	f_small
 		align	ur
 		in
@@ -110,11 +118,11 @@ menu map
 	{
 		tooltip	"_Stop time"
 		image	menu/buttons_time
-		pos		"865 100"
+		pos	"865 100"
 		texl	"0 0"
 		texh	"20 20"
-		out		{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
-		in		{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
+		out	{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
+		in	{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
 		click	{ cmd "game_timestop;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
@@ -124,11 +132,11 @@ menu map
 	{
 		tooltip	"_Slow down time"
 		image	menu/buttons_time
-		pos		"896 100"
+		pos	"896 100"
 		texl	"42 0"
 		texh	"52 20"
-		out		{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
-		in		{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
+		out	{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
+		in	{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
 		click	{ cmd "game_timeslow;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
@@ -138,11 +146,11 @@ menu map
 	{
 		tooltip	"_Speed up time"
 		image	menu/buttons_time
-		pos		"916 100"
+		pos	"916 100"
 		texl	"53 0"
 		texh	"63 20"
-		out		{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
-		in		{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
+		out	{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
+		in	{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
 		click	{ cmd "game_timefast;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
@@ -413,6 +421,7 @@ menu map
 	{
 		// only if messagesystem is turned off
 		if "mn_messagesystem == 0"
+		// @todo: better -more verbose- tooltip
 		tooltip	"_Open up messages"
 		image	menu/geo_eventlog
 		pos		"850 320"
@@ -422,27 +431,33 @@ menu map
 		out	{
 				*bt_messagesystem texl "0 0"
 				*bt_messagesystem texh "32 32"
-				*messagesystem size "1024 22"
+				*messagesystem size "768 22"
 				*messagesystem height "1"
 			}
 		in	{
 				*bt_messagesystem texl "32 0"
 				*bt_messagesystem texh "64 32"
-				*messagesystem size "1024 400"
-				*messagesystem height "25"
+				*messagesystem size "768 400"
+				*messagesystem height "20"
 			}
 		click	{
 				*messagesystem size "768 400"
 				*messagesystem scrollbar "true"
 				cmd "set mn_messagesystem 1;" 
 		}
+		rclick	{
+				*messagesystem size "768 768"
+				*messagesystem scrollbar "true"
+				cmd "game_timestop; set mn_messagesystem 2;"
+				*messagesystem height "38"
+		}
 	}
 
 	pic bt_messagesystem_on
 	{
 		// only if messagesystem is turned on
-		if "mn_messagesystem == 1"
-		tooltip	"_Open up messages"
+		if "mn_messagesystem > 0"
+		tooltip	"_Close down messages"
 		image	menu/geo_eventlog
 		pos		"850 320"
 		texl	"32 0"
@@ -450,7 +465,7 @@ menu map
 		mousefx	false
 		click	{
 				cmd "mn_textscroll messagesystem reset"
-				*messagesystem size "1024 400"
+				*messagesystem size "768 400"
 				*messagesystem scrollbar "false"
 				cmd "set mn_messagesystem 0;" 
 		}
@@ -643,6 +658,7 @@ menu map_combatzoom
 
 	func close
 	{
+		cmd		"music_change geoscape;"
 		cmd		"combatzoom_exit;"
 	}
 

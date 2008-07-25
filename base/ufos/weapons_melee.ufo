@@ -176,6 +176,22 @@ item stunrod
 			dmgweight stun_electro
 			reaction	true
 		}
+		firedef
+		{
+			name	"_Bludgeon"
+			skill	close
+			projtl	null
+			impact	null
+			hitbody	blood
+			firesnd	misc/klonk03
+			speed	0
+			range	1.5
+			shots	1
+			time	7
+			damage	"40 4"
+			dmgweight normal_light
+			reaction	true
+		}
 	}
 }
 

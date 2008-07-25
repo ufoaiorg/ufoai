@@ -242,7 +242,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *srcb
 	assert(destbase);
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
-		into the same hangar type than aircraft. */
+	 * into the same hangar type than aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++)
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIdx(i);

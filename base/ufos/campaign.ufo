@@ -1,56 +1,7 @@
-music main
-{
-	van_theme
-}
-
-music geoscape
-{
-	van_geoscape
-	karlmacklin_geoscape
-}
-
-music battlescape
-{
-	David01
-	David02
-	alBasrahM
-	turinItalyM
-	ufo1
-	ufo2
-	AlexSullencity
-	AlexFightmare
-	AlexForest
-	PsymongN1
-	PsymongN2
-	PsymongN3
-	PsymongN4
-	PsymongN5
-	PsymongR1
-	PsymongR2
-	PsymongR3
-	PsymongR4
-	PsymongR5
-	PsymongO1
-	PsymongO2
-	PsymongO3
-	PsymongO4
-	PsymongO5
-	PsymongO6
-	van_mission
-	van_mission2
-	van_mission3
-	van_mission4
-	dawn
-	dbsea
-	greecei
-	space
-	defeatfear
-}
-
 campaign veryhard
 {
 	name		"_Very Hard Campaign"
-	text		"_txt_veryhard_campaign"
+	text		"_veryhard_campaign_txt"
 	team		human
 	soldiers	6
 	scientists	2
@@ -75,7 +26,7 @@ campaign veryhard
 campaign hard
 {
 	name		"_Hard Campaign"
-	text		"_txt_hard_campaign"
+	text		"_hard_campaign_txt"
 	team		human
 	soldiers	7
 	scientists	3
@@ -103,7 +54,7 @@ campaign hard
 campaign main
 {
 	name		"_Standard Campaign"
-	text		"_txt_standard_campaign"
+	text		"_standard_campaign_txt"
 	team		human
 	soldiers	9
 	scientists	6
@@ -150,7 +101,7 @@ campaign main
 campaign easy
 {
 	name		"_Easy Campaign"
-	text		"_txt_easy_campaign"
+	text		"_easy_campaign_txt"
 	team		human
 	soldiers	25
 	scientists	16
@@ -178,7 +129,7 @@ campaign easy
 campaign veryeasy
 {
 	name		"_Very Easy Campaign"
-	text		"_txt_veryeasy_campaign"
+	text		"_veryeasy_campaign_txt"
 	team		human
 	soldiers	35
 	scientists	26
@@ -222,7 +173,7 @@ campaign veryeasy
 campaign aliencampaign
 {
 	name		"_Play the aliens"
-	text		"_txt_alien_campaign"
+	text		"_alien_campaign_txt"
 	team		alien
 	soldiers	15
 	scientists	12

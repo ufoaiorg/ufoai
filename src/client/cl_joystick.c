@@ -355,6 +355,4 @@ void IN_StartupJoystick (void)
 	Com_Printf("... balls: %d\n", SDL_JoystickNumBalls(stick));
 
 	SDL_JoystickEventState(SDL_QUERY);
-
-	return;
 }

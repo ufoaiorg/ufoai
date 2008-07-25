@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
+#include "check.h"
 
 extern qboolean onlyents;
 
@@ -118,7 +119,7 @@ static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 	nummapplanes += 2;
 
 	/* always put axial planes facing positive first */
-	if (p->type < 3) {
+	if (p->type <= PLANE_Z) {
 		if (p->normal[0] < 0 || p->normal[1] < 0 || p->normal[2] < 0) {
 			/* flip order */
 			temp = *p;
@@ -170,7 +171,7 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 {
 	int i;
 	plane_t *p;
-	int hash, h;
+	int hash;
 
 	SnapPlane(normal, &dist);
 	hash = (int)fabs(dist) / 8;
@@ -178,7 +179,7 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 
 	/* search the border bins as well */
 	for (i = -1; i <= 1; i++) {
-		h = (hash + i) & (PLANE_HASHES - 1);
+		const int h = (hash + i) & (PLANE_HASHES - 1);
 		for (p = planehash[h]; p; p = p->hash_chain) {
 			if (PlaneEqual(p, normal, dist))
 				return p - mapplanes;
@@ -193,7 +194,7 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
  * @param[in] p1 A vector with plane coordinates
  * @param[in] p2 A vector with plane coordinates
  */
-static int PlaneFromPoints (const mapbrush_t *b, int *p0, int *p1, int *p2)
+static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p1, const vec3_t p2)
 {
 	vec3_t t1, t2, normal;
 	vec_t dist;
@@ -224,7 +225,6 @@ static int BrushContents (mapbrush_t *b)
 	contentFlags = s->contentFlags;
 	trans = curTile->texinfo[s->texinfo].surfaceFlags;
 	for (i = 1; i < b->numsides; i++, s++) {
-		s = &b->original_sides[i];
 		trans |= curTile->texinfo[s->texinfo].surfaceFlags;
 		if (s->contentFlags != contentFlags) {
 			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
@@ -236,7 +236,7 @@ static int BrushContents (mapbrush_t *b)
 	/* if any side is translucent, mark the contents
 	 * and change solid to window */
 	if (trans & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST)) {
-		contentFlags |= CONTENTS_TRANSLUCENT;
+		contentFlags |= CONTENTS_TRANSLUCENT; /** @todo Don't do this in fix mode - this is only for ufo2map */
 		if (contentFlags & CONTENTS_SOLID) {
 			contentFlags &= ~CONTENTS_SOLID;
 			contentFlags |= CONTENTS_WINDOW;
@@ -262,13 +262,13 @@ static void AddBrushBevels (mapbrush_t *b)
 {
 	int axis, dir;
 	int i, j, l, order;
-	side_t *s, *s2;
 	vec3_t normal;
 
 	/* add the axial planes */
 	order = 0;
 	for (axis = 0; axis < 3; axis++) {
 		for (dir = -1; dir <= 1; dir += 2, order++) {
+			side_t *s;
 			/* see if the plane is already present */
 			for (i = 0, s = b->original_sides; i < b->numsides; i++, s++) {
 				if (mapplanes[s->planenum].normal[axis] == dir)
@@ -315,10 +315,8 @@ static void AddBrushBevels (mapbrush_t *b)
 
 	/* test the non-axial plane edges */
 	for (i = 6; i < b->numsides; i++) {
-		winding_t *w;
-
-		s = b->original_sides + i;
-		w = s->winding;
+		side_t *s = b->original_sides + i;
+		winding_t *w = s->winding;
 		if (!w)
 			continue;
 
@@ -345,6 +343,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* construct a plane */
 					vec3_t vec2 = {0, 0, 0};
 					float dist;
+					side_t *s2;
 
 					vec2[axis] = dir;
 					CrossProduct(vec, vec2, normal);
@@ -474,6 +473,7 @@ static int materialsCnt = 0;
 static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, mapbrush_t *b, brush_texture_t *t, side_t *s)
 {
 	FILE *file;
+	qboolean terrainByTexture = qfalse;
 	char fileBase[MAX_OSPATH];
 
 	if (!config.generateMaterialFile)
@@ -508,19 +508,26 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 		}
 	}
 
-	if (b->isTerrain || b->isGenSurf) {
+	if (strstr(textureref[mipTexIndex].name, "dirt")
+	 || strstr(textureref[mipTexIndex].name, "rock")
+	 || strstr(textureref[mipTexIndex].name, "grass")) {
+		terrainByTexture = qtrue;
+	}
+
+	if (b->isTerrain || b->isGenSurf || terrainByTexture) {
 		fprintf(file, "{\n\tmaterial %s\n\t{\n\t\ttexture <fillme>\n\t\tterrain 0 64\n\t\tlightmap\n\t}\n}\n", textureref[mipTexIndex].name);
 		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
 	}
 
 	/* envmap for water surfaces */
-	if (s->contentFlags & CONTENTS_WATER) {
+	if ((s->contentFlags & CONTENTS_WATER)
+	 || strstr(textureref[mipTexIndex].name, "glass")
+	 || strstr(textureref[mipTexIndex].name, "window")) {
 		fprintf(file, "{\n\tmaterial %s\n\t{\n\t\tenvmap 0\n\t}\n}\n", textureref[mipTexIndex].name);
 		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
 	}
-	/** @todo Check for rock textures and so on */
 
 	fclose(file);
 }
@@ -575,11 +582,12 @@ static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 static void ParseBrush (entity_t *mapent, const char *filename)
 {
 	mapbrush_t *b;
-	int i, j, k, mt;
+	int i, j, k, m, mt;
 	side_t *side;
 	int planenum;
 	brush_texture_t td;
-	int planepts[3][3];
+	vec3_t planepts[3];
+	int notInformedMixedFace = 1;
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
@@ -615,7 +623,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 			for (j = 0; j < 3; j++) {
 				GetToken(qfalse);
-				planepts[i][j] = atoi(parsedToken);
+				planepts[i][j] = atof(parsedToken);
 			}
 
 			GetToken(qfalse);
@@ -633,11 +641,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		Q_strncpyz(td.name, parsedToken, sizeof(td.name));
 
 		GetToken(qfalse);
-		td.shift[0] = atoi(parsedToken);
+		td.shift[0] = atof(parsedToken);
 		GetToken(qfalse);
-		td.shift[1] = atoi(parsedToken);
+		td.shift[1] = atof(parsedToken);
 		GetToken(qfalse);
-		td.rotate = atoi(parsedToken);
+		td.rotate = atof(parsedToken);
 		GetToken(qfalse);
 		td.scale[0] = atof(parsedToken);
 		GetToken(qfalse);
@@ -731,6 +739,22 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 	/* get the content for the entire brush */
 	b->contentFlags = BrushContents(b);
+
+	/* copy all set face contentflags to the brush contentflags */
+	for (m = 0; m < b->numsides; m++)
+		b->contentFlags |= b->original_sides[m].contentFlags;
+
+	/* set the contentflags on all faces to avoid problems in check/fix code */
+	for (m = 0; m < b->numsides; m++) {
+		/* only tell them once per brush */
+		if (notInformedMixedFace && checkOrFix && b->original_sides[m].contentFlags != b->contentFlags) {
+			Com_Printf("* Brush %i (entity %i): mixed face contents setting ", b->brushnum, b->entitynum);
+			DisplayContentFlags(b->contentFlags & ~b->original_sides[m].contentFlags);
+			Com_Printf("\n");
+			notInformedMixedFace = 0;
+		}
+		b->original_sides[m].contentFlags |= b->contentFlags ;
+	}
 
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
@@ -985,11 +1009,14 @@ void WriteMapFile (const char *filename)
 				const ptrdiff_t index = side - brushsides;
 				const brush_texture_t *t = &side_brushtextures[index];
 				const plane_t *p = &mapplanes[side->planenum];
-				fprintf(f, "( %i %i %i ) ", p->planeVector[0][0], p->planeVector[0][1], p->planeVector[0][2]);
-				fprintf(f, "( %i %i %i ) ", p->planeVector[1][0], p->planeVector[1][1], p->planeVector[1][2]);
-				fprintf(f, "( %i %i %i ) ", p->planeVector[2][0], p->planeVector[2][1], p->planeVector[2][2]);
-				fprintf(f, "%s %f %f %f %f %f %i %i %i\n", t->name, t->shift[0], t->shift[1],
-					t->rotate, t->scale[0], t->scale[1], side->contentFlags, t->surfaceFlags, t->value);
+				int l;
+
+				for (l = 0; l < 3; l++)
+					fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
+				fprintf(f, "%s ", t->name);
+				fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
+				fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
+				fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
 			}
 			fprintf(f, "}\n");
 		}

@@ -667,7 +667,6 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 			return;
 		}
 	}
-	return;
 }
 
 /**

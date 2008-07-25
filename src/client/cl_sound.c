@@ -32,10 +32,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include "../ports/windows/win_local.h"
 #endif
 
-#define MUSIC_MAIN 0
-#define MUSIC_GEOSCAPE 1
-#define MUSIC_BATTLESCAPE 2
-#define MUSIC_MAX 3
+enum {
+	MUSIC_MAIN,
+	MUSIC_GEOSCAPE,
+	MUSIC_BATTLESCAPE,
+	MUSIC_AIRCOMBAT,
+
+	MUSIC_MAX
+};
+
 #define MUSIC_MAX_ENTRIES 64
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
@@ -210,19 +215,23 @@ static void S_Music_RandomTrack_f (void)
 		return;
 
 	musicTrackCount = FS_BuildFileList("music/*.ogg");
-	randomID = rand() % musicTrackCount;
-	Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
+	if (musicTrackCount){
+		randomID = rand() % musicTrackCount;
+		Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
-	while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
-		if (!randomID) {
-			Com_sprintf(findname, sizeof(findname), "%s", filename);
-			musicTrack = COM_SkipPath(findname);
-			Com_Printf("..playing next: '%s'\n", musicTrack);
-			Cvar_Set("snd_music", musicTrack);
+		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
+			if (!randomID) {
+				Com_sprintf(findname, sizeof(findname), "%s", filename);
+				musicTrack = COM_SkipPath(findname);
+				Com_Printf("..playing next: '%s'\n", musicTrack);
+				Cvar_Set("snd_music", musicTrack);
+			}
+			randomID--;
 		}
-		randomID--;
+		FS_NextFileFromFileList(NULL);
+	} else {
+		Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: No musics found!\n");
 	}
-	FS_NextFileFromFileList(NULL);
 }
 
 /*
@@ -254,16 +263,18 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), (byte **)&sfxBuf)) != -1) {
 		src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
+		if (!mix)
+			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' \n", sound);
 	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), (byte **)&sfxBuf)) != -1) {
 		src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
+		if (!mix)
+			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' \n", sound);
 	} else {
 		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
 		return NULL;
 	}
 
-	if (!mix)
-		Com_Printf("S_LoadSound: '%s' doesn't seam to be a valid ogg or wav file\n", sound);
 	return mix;
 }
 
@@ -625,7 +636,7 @@ static void S_Music_Change_f (void)
 	} else if (!Q_strcmp(type, "main")) {
 		category = MUSIC_MAIN;
 	} else if (!Q_strcmp(type, "aircombat")) {
-		category = MUSIC_GEOSCAPE;
+		category = MUSIC_AIRCOMBAT;
 	} else {
 		Com_Printf("Invalid parameter given\n");
 		return;
@@ -764,6 +775,8 @@ void CL_ParseMusic (const char *name, const char **text)
 		i = MUSIC_GEOSCAPE;
 	else if (!Q_strcmp(name, "battlescape"))
 		i = MUSIC_BATTLESCAPE;
+	else if (!Q_strcmp(name, "aircombat"))
+		i = MUSIC_AIRCOMBAT;
 	else if (!Q_strcmp(name, "main"))
 		i = MUSIC_MAIN;
 	else {

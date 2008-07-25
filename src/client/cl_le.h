@@ -113,6 +113,7 @@ typedef struct lm_s {
 
 	vec3_t origin;
 	vec3_t angles;
+	vec3_t scale;	/**< default is 1.0 - no scaling */
 
 	int entnum;
 	int skin;
@@ -135,7 +136,7 @@ static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 
-qboolean CL_OutsideMap(vec3_t impact);
+qboolean CL_OutsideMap(const vec3_t impact);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, qboolean autohide);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
@@ -152,7 +153,7 @@ void LET_PlayAmbientSound(le_t *le);
 void LET_BrushModel(le_t *le);
 
 /* local model functions */
-localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags);
+localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 

@@ -1,0 +1,26 @@
+# modify this file
+bmp image/bmp
+jpg image/jpeg
+ogg application/ogg
+blend application/x-blender
+exe application/x-executable
+png image/png
+tga image/x-tga
+wav audio/x-wav
+xcf image/x-xcf
+xbm image/x-xbitmap
+xpm image/x-xpixmap
+3ds application/x-3ds
+psd image/psd
+dll application/octet-stream
+pdf application/pdf
+doc application/msword
+zip application/zip
+ico image/x-icon
+odg application/vnd.oasis.opendocument.graphics
+bz2 application/bzip2
+ttf application/x-truetype-font
+html text/html
+txt text/plain
+po text/x-gettext-translation
+py text/plain

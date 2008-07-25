@@ -110,6 +110,8 @@ static void Usage (void) {
 		"     bru    brushes       : includes 'levelflags textures'. Performs all checks and fixes associated with brushes.\n"
 		"     ent    entities      : performs all checks and fixes associated with entities.\n"
 		"     lvl    levelflags    : if no levelflags for a brush or entity are set, all of them are set\n"
+		"     ndr    nodraws       : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
+		"                            may have it incorrectly assigned. ***not working properly, do not included in 'all'.\n"
 		"     tex    textures      : warns when no texture or error texture is assigned.\n"
 		"                            ensures special textures and content/surface flags are consistent.\n"
 	);
@@ -157,6 +159,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "textures") || !strcmp(argv[i], "tex")) {
 					Com_Printf("  %s textures\n", config.fixMap ? "fixing" : "checking");
 					config.chkTextures = qtrue;
+				} else if (!strcmp(argv[i], "nodraws") || !strcmp(argv[i], "ndr")) {
+					Com_Printf("  %s nodraws\n", config.fixMap ? "fixing" : "checking");
+					config.chkNodraws = qtrue;
 				} else if (!strcmp(argv[i], "all")) {
 					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
@@ -350,13 +355,13 @@ static void U2M_Parameter (int argc, const char **argv)
  */
 static void U2M_SetDefaultConfigValues (void)
 {
-	config.subdivideSize = 1024.0f; /* bsp subdiv */
+	config.subdivideSize = 256.0f; /* bsp subdiv */
 	config.block_xl = -8;
 	config.block_xh = 7;
 	config.block_yl = -8;
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
-	config.subdiv = 1024.0f; /* rad chop/subdiv */
+	config.subdiv = 256.0f; /* rad chop/subdiv */
 
 	config.night_ambient_red = 0.0;
 	config.night_ambient_green = 0.0;
@@ -498,6 +503,8 @@ int main (int argc, const char **argv)
 			CheckLevelFlags();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
+		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */
+			CheckNodraws();
 		if (config.chkEntities || config.chkAll)
 			CheckEntities();
 		if (config.fixMap) {
@@ -518,7 +525,7 @@ int main (int argc, const char **argv)
 	Com_Printf("%5.0f seconds elapsed\n", end - start);
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
-		size_t size;
+		long size;
 
 		Com_Printf("----- Radiosity ----\n");
 
@@ -546,7 +553,7 @@ int main (int argc, const char **argv)
 		Com_Printf("writing %s\n", bspFilename);
 		size = WriteBSPFile(bspFilename);
 
-		Com_Printf("sum: %5.0f seconds elapsed - %.1f MB (%d bytes)\n\n", end - begin, (float) size / (1024 * 1024), (int) size);
+		Com_Printf("sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 	}
 
 	return 0;

@@ -377,7 +377,6 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 	default:
 		break;
 	}
-	return;
 }
 
 /**

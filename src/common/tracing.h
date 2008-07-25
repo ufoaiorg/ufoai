@@ -97,10 +97,10 @@ extern tnode_t *tnode_p;
 
 
 /* int BoxOnPlaneSide(vec3_t mins, vec3_t maxs, plane_t *plane); */
-int TR_BoxOnPlaneSide(vec3_t mins, vec3_t maxs, TR_PLANE_TYPE *plane);
+int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plane);
 int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 
-void TR_BuildTracingNode_r (int node, int level);
+void TR_BuildTracingNode_r(int node, int level);
 
 trace_t TR_BoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject);
 trace_t TR_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject, const vec3_t origin, const vec3_t angles);

@@ -16,7 +16,7 @@
 language=$1
 url="http://ufoai.ninex.info"
 wiki_url="/wiki/index.php/List_of_msgid/"
-chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
+chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment UGVs UGV_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
 headers="mail_to_base_commander mail_from_paul_navarre mail_from_col_falkland mail_from_dr_connor mail_from_air_cdr mail_from_xo mail_from_surgeon mail_from_un"
 index="List_of_msgid_"${language}
 input_file=$language".po"
@@ -196,7 +196,7 @@ set_BEGIN_END()
 
 download_description()
 {
-# Procedure looking for the url of the description of $english. It download it, then return 0 if it's OK, 1 if the english text is not on the wiki, and 2 if didn't find any translation in this language.
+# Procedure looking for the url of the description of $english. It download it, then return 0 if it's OK, 1 if the msgid is not on the wiki, and 2 if didn't find any translation in this language.
     number=`grep -iwnm 1 "<td> $english" ${index} | cut -d : -f 1`
     if [ $number -ge $FIRST_LINE ]
     then
@@ -574,13 +574,13 @@ then
 	fi
 fi
 
-english="txt_standard_campaign"
+english="standard_campaign_txt"
 download_description $english
 if [[ $? -eq 0 ]]
 then
 	clean_html
 
-	for english in "txt_standard_campaign" "txt_hard_campaign" "txt_veryhard_campaign" "txt_easy_campaign" "txt_veryeasy_campaign" "txt_alien_campaign"
+	for english in "standard_campaign_txt" "hard_campaign_txt" "veryhard_campaign_txt" "easy_campaign_txt" "veryeasy_campaign_txt" "alien_campaign_txt"
 	do
 		update_one_sentence "1"
 	done
@@ -662,7 +662,7 @@ do
 		continue
 	fi
 
-	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]] && [[ "$english" != "Aliens" ]] && [[ "$english" != "mail_"* ]]
+	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != *"_campaign_txt" ]] && [[ "$english" != "Aliens" ]] && [[ "$english" != "mail_"* ]]
 	then
 		printf "."
 		if [[ "$debug" = "1" ]]
@@ -674,7 +674,7 @@ do
 		then
 		# This is case 1. (translation of a title of the wiki)
 			printf "\n"
-			echo "Found section title msgid : " $english
+			echo "Found section title msgid: " $english
 			set_BEGIN_END "0"
 			grep -iwm 1 ">$english</a> (en), <a href" ${index} |
 			$sed_soft 's/<\/a>//g;/ ('$language')/!d;s/.*>\(.*\) ('$language').*/\1/;s/\"/\\\"/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g;s/\\/\\\\/g' >> sed_commands_${language0}
@@ -722,26 +722,31 @@ do
 				fi
 			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]]
 			then
-			# This is the case when the english text exists, but not the desired translation
+			# This is the case when the msgid is in the wiki, but not the desired translation: check if we can use english text
 				language0=$language
 				language="en"
 				download_description
-				clean_html
-				if [[ $pre_txt -eq 1 ]]
+				test=$?
+				if [[ "$test" -eq 0 ]]
 				then
-				update_txt 3 0 0 $pre_txt
-
-				english=${english:0:${#english}-4}_pre_txt
-				update_txt 2 0 0 $pre_txt
-					if [[ $? -eq 0 ]]
+					# There is a text in english, use it for this language
+					clean_html
+					if [[ $pre_txt -eq 1 ]]
 					then
-						set_BEGIN_END 0
-						printf "\"$default_pre_txt\"" >> sed_commands_${language0}
-						apply_sed $english
-						pre_txt=0
+					update_txt 3 0 0 $pre_txt
+
+					english=${english:0:${#english}-4}_pre_txt
+					update_txt 2 0 0 $pre_txt
+						if [[ $? -eq 0 ]]
+						then
+							set_BEGIN_END 0
+							printf "\"$default_pre_txt\"" >> sed_commands_${language0}
+							apply_sed $english
+							pre_txt=0
+						fi
+					else
+						update_txt 2 1 3 $pre_txt
 					fi
-				else
-					update_txt 2 1 3 $pre_txt
 				fi
 				language=$language0
 			elif [[ "$test" -eq 1 ]] && [[ "$onlyDescription" = "0" ]]

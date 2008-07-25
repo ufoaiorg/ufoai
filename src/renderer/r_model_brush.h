@@ -64,6 +64,8 @@ typedef struct mBspSurface_s {
 	int flags;
 	int tile;				/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
+	int levelflagToRenderIn;	/**< used to decide whether this surface should be drawn */
+
 	/** look up in model->surfedges[], negative numbers are backwards edges */
 	int firstedge;
 	int numedges;
@@ -88,12 +90,24 @@ typedef struct mBspSurface_s {
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
 } mBspSurface_t;
 
-#define MAX_RENDERER_SURFACES 32768
-/* surfaces are assembled according to bsp order into arrays */
+/* surfaces are assigned to arrays based on their primary rendering type
+ * and then sorted by world texnum to reduce binds */
 typedef struct msurfaces_s {
-	mBspSurface_t *surfaces[MAX_RENDERER_SURFACES];
+	mBspSurface_t **surfaces;
 	int count;
 } mBspSurfaces_t;
+
+#define opaque_surfaces			sorted_surfaces[0]
+#define opaque_warp_surfaces	sorted_surfaces[1]
+#define alpha_test_surfaces		sorted_surfaces[2]
+#define blend_surfaces			sorted_surfaces[3]
+#define blend_warp_surfaces		sorted_surfaces[4]
+#define material_surfaces		sorted_surfaces[5]
+
+#define NUM_SURFACES_ARRAYS		6
+
+#define R_SurfaceToSurfaces(surfs, surf)\
+	(surfs)->surfaces[(surfs)->count++] = surf
 
 #define NODE_NO_LEAF -1
 
@@ -123,6 +137,7 @@ typedef struct mBspLeaf_s {
 
 /** @brief brush model */
 typedef struct mBspModel_s {
+	/* range of surface numbers in this (sub)model */
 	int firstmodelsurface, nummodelsurfaces;
 
 	int numsubmodels;
@@ -167,6 +182,9 @@ typedef struct mBspModel_s {
 
 	byte lightquant;
 	byte *lightdata;
+
+	/* sorted surfaces arrays */
+	mBspSurfaces_t *sorted_surfaces[NUM_SURFACES_ARRAYS];
 } mBspModel_t;
 
 #endif /* R_MODEL_BRUSH_H */

@@ -10,6 +10,8 @@
 	<string>@VERSION@</string>
 	<key>CFBundleIconFile</key>
 	<string>ufo.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.UFOAI</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

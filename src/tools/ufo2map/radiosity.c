@@ -315,7 +315,7 @@ void RadWorld (void)
 	MakePatches();
 
 	/* subdivide patches to a maximum dimension */
-	SubdividePatches();
+	SubdividePatches(num_patches);
 
 	/* create directlights out of patches and lights */
 	CreateDirectLights();

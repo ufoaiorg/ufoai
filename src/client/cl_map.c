@@ -49,6 +49,7 @@ MULTI SELECTION DEFINITION
  */
 typedef enum {
 	MULTISELECT_TYPE_BASE,
+	MULTISELECT_TYPE_INSTALLATION,
 	MULTISELECT_TYPE_MISSION,
 	MULTISELECT_TYPE_AIRCRAFT,
 	MULTISELECT_TYPE_UFO,
@@ -164,6 +165,12 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			break;
 		MAP_ResetAction();
 		B_SelectBase(B_GetFoundedBaseByIDX(id));
+		break;
+	case MULTISELECT_TYPE_INSTALLATION:	/* Select a installation */
+		if (id >= gd.numInstallations)
+			break;
+		MAP_ResetAction();
+		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
 		break;
 	case MULTISELECT_TYPE_MISSION: /* Select a mission */
 		if (gd.mapAction == MA_INTERCEPT && selectedMission && selectedMission == MAP_GetMissionByIdx(id)) {
@@ -338,6 +345,15 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		for (; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), _(aircraft->name));
+	}
+
+	/* Get selected installations */
+	for (i = 0; i < MAX_INSTALLATIONS && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
+		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
+		if (!installation)
+			continue;
+		if (MAP_IsMapPositionSelected(node, gd.installations[i].pos, x, y))
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, i, _("Installation"), installation->name);
 	}
 
 	/* Get selected ufos */
@@ -1448,7 +1464,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* Draw weapon range if at least one UFO is visible */
 		if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
 			/** @todo When there will be different possible installation weapon, range should change */
-			for (i = 0; i < installation->numBatteries; i++) {
+			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 				if (installation->batteries[i].slot.item && installation->batteries[i].slot.ammoLeft > 0
 					&& installation->batteries[i].slot.installationTime == 0) {
 					MAP_MapDrawEquidistantPoints(node, installation->pos,
@@ -2097,6 +2113,22 @@ float MAP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 	distance = acos(distance) * todeg;
 
 	return distance;
+}
+
+/**
+ * @brief Check that a position (in latitude / longitude) is within boundaries.
+ * @param[in,out] pos Pointer to the 2 elements vector giving the position.
+ */
+void MAP_CheckPositionBoundaries (float *pos)
+{
+	while (pos[0] > 180.0)
+		pos[0] -= 360.0;
+	while (pos[0] < -180.0)
+		pos[0] += 360.0;
+	while (pos[1] > 90.0)
+		pos[1] -= 180.0;
+	while (pos[1] < -90.0)
+		pos[1] += 180.0;
 }
 
 /**

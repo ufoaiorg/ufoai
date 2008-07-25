@@ -1,0 +1,15 @@
+{
+	// glass of the shop windows
+	material tex_material/c_gray255
+	{
+		envmap 1
+	}
+}
+
+{
+	// the river
+	material tex_nature/water_dark
+	{
+		envmap 0
+	}
+}

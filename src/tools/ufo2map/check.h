@@ -1,6 +1,7 @@
 /**
  * @file check.c
- * @brief Performs check on a loaded mapfile
+ * @brief Performs check on a loaded mapfile, and makes changes
+ * that can be saved back to the source map.
  */
 
 /*
@@ -27,4 +28,6 @@ void CheckTextures(void);
 void CheckLevelFlags(void);
 void CheckBrushes(void);
 void CheckEntities(void);
+void CheckNodraws(void);
 void FixErrors(void);
+void DisplayContentFlags(const int flags);

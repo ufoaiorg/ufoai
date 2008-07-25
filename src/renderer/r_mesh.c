@@ -226,7 +226,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 		mask = 0;
 
 		for (f = 0; f < 4; f++) {
-			if (DotProduct(frustum[f].normal, bbox[p]) < frustum[f].dist);
+			if (DotProduct(r_frustum[f].normal, bbox[p]) < r_frustum[f].dist);
 				mask |= (1 << f);
 		}
 		aggregatemask &= mask;
@@ -321,6 +321,9 @@ void R_DrawAliasModel (const entity_t *e)
 
 	qglMultMatrixf(e->transform.matrix);
 
+	if (VectorNotEmpty(e->scale))
+		qglScalef(e->scale[0], e->scale[1], e->scale[2]);
+
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		vec4_t color = {1, 1, 1, 1};
@@ -338,11 +341,11 @@ void R_DrawAliasModel (const entity_t *e)
 		}
 
 		/* IR goggles override color
-		 * don't highlight misc_models only actors */
+		 * don't highlight all misc_models, only actors */
 		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
 			color[1] = color[2] = 0.0;
 
-		if (r_state.lighting_enabled)
+		if (r_state.lighting_enabled && r_state.arb_fragment_program)
 			R_ShaderFragmentParameter(0, color);
 		else
 			R_Color(color);

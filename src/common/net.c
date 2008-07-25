@@ -203,7 +203,7 @@ static int NET_StreamGetFree (void)
 	int i;
 
 	for (i = 0; i < MAX_STREAMS; i++) {
-		int pos = (i + start) % MAX_STREAMS;
+		const int pos = (i + start) % MAX_STREAMS;
 		if (streams[pos] == NULL) {
 			start = (pos + 1) % MAX_STREAMS;
 			Com_DPrintf(DEBUG_SERVER, "New stream at index: %i\n", pos);
@@ -222,7 +222,7 @@ static int NET_DatagramFindFreeSocket (void)
 	int i;
 
 	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
-		int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
+		const int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
 		if (datagram_sockets[pos] == NULL) {
 			start = (pos + 1) % MAX_DATAGRAM_SOCKETS;
 			Com_DPrintf(DEBUG_SERVER, "New datagram at index: %i\n", pos);
@@ -417,7 +417,7 @@ void NET_Wait (int timeout)
 	tv.tv_usec = 1000 * (timeout % 1000);
 #ifdef _WIN32
 	if (read_fds_out.fd_count == 0) {
-		Sleep(timeout);
+		Sys_Sleep(timeout);
 		ready = 0;
 	} else
 #endif

@@ -56,18 +56,12 @@ extern mBspSurfaces_t r_blend_warp_surfaces;
 extern mBspSurfaces_t r_alpha_test_surfaces;
 extern mBspSurfaces_t r_material_surfaces;
 
-/* temporary space used to group surfaces by texture */
-extern mBspSurfaces_t r_sorted_surfaces[MAX_GLTEXTURES];
-extern int numgltextures;
-
 /*==================================================== */
 
-extern cBspPlane_t frustum[4];
-
 /* view origin */
-extern vec3_t vup;
-extern vec3_t vpn;
-extern vec3_t vright;
+extern vec3_t r_vup;
+extern vec3_t r_vpn;
+extern vec3_t r_vright;
 
 extern cvar_t *r_brightness;
 extern cvar_t *r_contrast;
@@ -127,11 +121,10 @@ void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
-void R_SortSurfaces(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);
-qboolean R_CullBox(vec3_t mins, vec3_t maxs);
+qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
 
 /** @brief GL config stuff */

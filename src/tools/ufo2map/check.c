@@ -448,13 +448,8 @@ static void CheckInteractionList (const entity_t *entity)
 			for (j = 0; j < brush->numsides; j++) {
 				side_t *side = &brush->original_sides[j];
 				const plane_t *p = &mapplanes[side->planenum];
-				vec3_t p1, p2, p3;
-
-				VectorCopy(p->planeVector[0], p1);
-				VectorCopy(p->planeVector[1], p2);
-				VectorCopy(p->planeVector[2], p3);
 				/* we only have to calculate these values for potential sides */
-				side->hessianP = HessianNormalPlane(p1, p2, p3, side->hessianNormal);
+				side->hessianP = HessianNormalPlane(p->planeVector[0], p->planeVector[1], p->planeVector[2], side->hessianNormal);
 			}
 
 			AddBrushToList(&list, brush, n);
@@ -518,6 +513,23 @@ void CheckEntities (void)
 		if (!v->name) {
 			Com_Printf("No check for '%s' implemented\n", name);
 		}
+	}
+}
+
+/**
+ * @brief Check for SURF_NODRAW which might be exposed, and check for
+ * faces which can safely be set to SURF_NODRAW because they are pressed against
+ * the faces of other brushes.
+ * @todo make it work, by porting from maputils java
+ */
+void CheckNodraws (void)
+{
+	int i;
+
+	/* 0 is the world - start at 1 */
+	for (i = 0; i < num_entities; i++) {
+		const entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
 
 		/* check only these entities for interaction - all the others may be
 		 * rotated, removed or moved */
@@ -527,13 +539,12 @@ void CheckEntities (void)
 	}
 }
 
-
 /**
  * @returns false if the brush has a mirrored set of planes,
  * meaning it encloses no volume.
  * also checks for planes without any normal
  */
-static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
+static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 {
 	int i, j;
 	const side_t *sides = b->original_sides;
@@ -562,18 +573,38 @@ static qboolean Check_DuplicateBrushPlanes (mapbrush_t *b)
 	return qtrue;
 }
 
-#if 0
-static void DisplayContentFlags (const int flags)
+/**
+ * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
+ */
+void DisplayContentFlags (const int flags)
 {
-	Com_Printf("SOLID:%i WINDOW:%i WATER:%i 1:%i 2:%i 3:%i 4:%i 5:%i 6:%i 7:%i 8:%i ACTORCLIP:%i PASSABLE:%i ACTOR:%i ORIGIN:%i WEAPONCLIP:%i DEADACTOR:%i DETAIL:%i TRANSLUCENT:%i STEPON:%i\n",
-		flags & CONTENTS_SOLID ? 1 : 0, flags & CONTENTS_WINDOW ? 1 : 0, flags & CONTENTS_WATER ? 1 : 0,
-		flags & CONTENTS_LEVEL_1 ? 1 : 0, flags & CONTENTS_LEVEL_2 ? 1 : 0, flags & CONTENTS_LEVEL_3 ? 1 : 0, flags & CONTENTS_LEVEL_4 ? 1 : 0,
-		flags & CONTENTS_LEVEL_5 ? 1 : 0, flags & CONTENTS_LEVEL_6 ? 1 : 0, flags & CONTENTS_LEVEL_7 ? 1 : 0, flags & CONTENTS_LEVEL_8 ? 1 : 0,
-		flags & CONTENTS_ACTORCLIP ? 1 : 0, flags & CONTENTS_PASSABLE ? 1 : 0, flags & CONTENTS_ACTOR ? 1 : 0, flags & CONTENTS_ORIGIN ? 1 : 0,
-		flags & CONTENTS_WEAPONCLIP ? 1 : 0, flags & CONTENTS_DEADACTOR ? 1 : 0, flags & CONTENTS_DETAIL ? 1 : 0, flags & CONTENTS_TRANSLUCENT ? 1 : 0,
-		flags & CONTENTS_STEPON ? 1 : 0);
+	if (!flags) {
+		Com_Printf(" no contentflags");
+		return;
+	}
+#define M(x) if (flags & CONTENTS_##x) Com_Printf(" " #x)
+	M(SOLID);
+	M(WINDOW);
+	M(WATER);
+	M(LEVEL_1);
+	M(LEVEL_2);
+	M(LEVEL_3);
+	M(LEVEL_4);
+	M(LEVEL_5);
+	M(LEVEL_6);
+	M(LEVEL_7);
+	M(LEVEL_8);
+	M(ACTORCLIP);
+	M(PASSABLE);
+	M(ACTOR);
+	M(ORIGIN);
+	M(WEAPONCLIP);
+	M(DEADACTOR);
+	M(DETAIL);
+	M(TRANSLUCENT);
+	M(STEPON);
+#undef x
 }
-#endif
 
 /**
  * @brief sets all levelflags, if none are set.
@@ -786,13 +817,6 @@ void CheckBrushes (void)
 		mapbrush_t *brush = &mapbrushes[i];
 		side_t *side0 = &brush->original_sides[0];
 
-		/* Disabled unused variable to prevent compiler warning. */
-#if 0
-		const int contentFlags = (brush->original_sides[0].contentFlags & CONTENTS_LEVEL_ALL)
-			? brush->original_sides[0].contentFlags
-			: (brush->original_sides[0].contentFlags | CONTENTS_LEVEL_ALL);
-#endif
-
 		Check_DuplicateBrushPlanes(brush);
 
 		for (j = 0; j < brush->numsides; j++) {
@@ -821,8 +845,21 @@ void CheckBrushes (void)
 			}
 #endif
 
-			if (config.performMapCheck && side0->contentFlags != side->contentFlags) {
-				Com_Printf("  Brush %i (entity %i): mixed face contents (f: %i, %i)\n", brush->brushnum, brush->entitynum, brush->contentFlags, side->contentFlags);
+			if (side0->contentFlags != side->contentFlags) {
+				const int jNotZero = side->contentFlags & ~side0->contentFlags;
+				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
+				Com_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
+				if (jNotZero) {
+					Com_Printf("face %i has and face 0 has not", j);
+					DisplayContentFlags(jNotZero);
+					if (zeroNotJ)
+						Com_Printf(", ");
+				}
+				if (zeroNotJ) {
+					Com_Printf("face 0 has and face %i has not", j);
+					DisplayContentFlags(zeroNotJ);
+				}
+				Com_Printf(")\n");
 			}
 
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {

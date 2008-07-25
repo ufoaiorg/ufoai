@@ -9,7 +9,7 @@ menu hud
 	// ==================
 	zone render
 	{
-		pos		"32 16"
+		pos	"32 16"
 		size	"992 640"
 	}
 
@@ -19,7 +19,7 @@ menu hud
 
 	zone bar_floor_zone
 	{
-		pos		"0 104"
+		pos	"0 104"
 		size	"40 512"
 		click
 	}
@@ -27,7 +27,7 @@ menu hud
 	pic bar_floor
 	{
 		image	hud/bar_floor
-		pos		"0 128"
+		pos	"0 128"
 	}
 
 	confunc disfloor0 { *bt_floor1 image hud/buttons1g }
@@ -60,7 +60,7 @@ menu hud
 	pic bt_floor1
 	{
 		tooltip	"_Level 1"
-		pos		"6 417"
+		pos	"6 417"
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
@@ -69,7 +69,7 @@ menu hud
 	pic bt_floor2
 	{
 		tooltip	"_Level 2"
-		pos		"6 377"
+		pos	"6 377"
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
@@ -78,7 +78,7 @@ menu hud
 	pic bt_floor3
 	{
 		tooltip	"_Level 3"
-		pos		"6 337"
+		pos	"6 337"
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
@@ -87,7 +87,7 @@ menu hud
 	pic bt_floor4
 	{
 		tooltip	"_Level 4"
-		pos		"6 297"
+		pos	"6 297"
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
@@ -96,7 +96,7 @@ menu hud
 	pic bt_floor5
 	{
 		tooltip	"_Level 5"
-		pos		"6 257"
+		pos	"6 257"
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
@@ -105,7 +105,7 @@ menu hud
 	pic bt_floor6
 	{
 		tooltip	"_Level 6"
-		pos		"6 217"
+		pos	"6 217"
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
@@ -114,7 +114,7 @@ menu hud
 	pic bt_floor7
 	{
 		tooltip	"_Level 7"
-		pos		"6 177"
+		pos	"6 177"
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
@@ -123,7 +123,7 @@ menu hud
 	pic bt_floor8
 	{
 		tooltip	"_Level 8"
-		pos		"6 137"
+		pos	"6 137"
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
@@ -136,42 +136,42 @@ menu hud
 
 	zone bar_head_zone
 	{
-		pos		"0 0"
+		pos	"0 0"
 		size	"111 104"
 		click
 	}
 
 	zone bar_name_zone
 	{
-		pos		"112 0"
+		pos	"112 0"
 		size	"250 48"
 		click
 	}
 
 	zone bar_team_zone
 	{
-		pos		"361 0"
+		pos	"361 0"
 		size	"262 55"
 		click
 	}
 
 	zone bar_nextround_zone1
 	{
-		pos		"623 0"
+		pos	"623 0"
 		size	"100 16"
 		click
 	}
 
 	zone bar_nextround_zone2
 	{
-		pos		"722 0"
+		pos	"722 0"
 		size	"86 27"
 		click
 	}
 
 	zone bar_nextround_zone3
 	{
-		pos		"808 0"
+		pos	"808 0"
 		size	"216 55"
 		click
 	}
@@ -179,32 +179,32 @@ menu hud
 	pic bar_head
 	{
 		image	hud/bar_head
-		pos		"0 0"
+		pos	"0 0"
 	}
 
 	pic bar_name
 	{
 		image	hud/bar_name
-		pos		"256 0"
+		pos	"256 0"
 	}
 
 
 	pic bar_team
 	{
 		image	hud/bar_teammember
-		pos		"512 0"
+		pos	"512 0"
 	}
 
 	pic bar_nextround
 	{
 		image	hud/bar_nextround
-		pos		"768 0"
+		pos	"768 0"
 	}
 
 	string actorname
 	{
 		string	"*cvar mn_name"
-		pos		"130 14"
+		pos	"130 14"
 	}
 
 	pic bt_nextround
@@ -213,7 +213,7 @@ menu hud
 		tooltip	"_Finish round"
 		image	hud/buttons2g
 		mousefx true
-		pos		"950 10"
+		pos	"950 10"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd "nextround;" }
@@ -223,7 +223,7 @@ menu hud
 	{
 		key "*binding nextalien"
 		tooltip	"_Enemy spotted"
-		pos		"816 12"
+		pos	"816 12"
 		size	"48 34"
 		click	{ cmd "nextalien;" }
 	}
@@ -231,8 +231,8 @@ menu hud
 	{
 		key "*binding nextalien"
 		string	"*cvar mn_numaliensspotted"
-		pos		"840 28"
-		size		"48 34"
+		pos	"840 28"
+		size	"48 34"
 		align	cc
 		tooltip "_Click to cycle through spotted enemies"
 		in
@@ -269,7 +269,7 @@ menu hud
 	{
 		key "*binding soldier_select 0"
 		tooltip	"_Soldier 1"
-		pos		"426 10"
+		pos	"426 10"
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
@@ -279,7 +279,7 @@ menu hud
 	{
 		key "*binding soldier_select 1"
 		tooltip	"_Soldier 2"
-		pos		"457 10"
+		pos	"457 10"
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
@@ -289,7 +289,7 @@ menu hud
 	{
 		key "*binding soldier_select 2"
 		tooltip	"_Soldier 3"
-		pos		"488 10"
+		pos	"488 10"
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
@@ -299,7 +299,7 @@ menu hud
 	{
 		key "*binding soldier_select 3"
 		tooltip	"_Soldier 4"
-		pos		"519 10"
+		pos	"519 10"
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
@@ -309,7 +309,7 @@ menu hud
 	{
 		key "*binding soldier_select 4"
 		tooltip	"_Soldier 5"
-		pos		"550 10"
+		pos	"550 10"
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
@@ -319,7 +319,7 @@ menu hud
 	{
 		key "*binding soldier_select 5"
 		tooltip	"_Soldier 6"
-		pos		"581 10"
+		pos	"581 10"
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
@@ -329,7 +329,7 @@ menu hud
 	{
 		key "*binding soldier_select 6"
 		tooltip	"_Soldier 7"
-		pos		"612 10"
+		pos	"612 10"
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
@@ -339,7 +339,7 @@ menu hud
 	{
 		key "*binding soldier_select 7"
 		tooltip	"_Soldier 8"
-		pos		"643 10"
+		pos	"643 10"
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
@@ -366,14 +366,14 @@ menu hud
 
 	zone bar_weapon_left_zone
 	{
-		pos		"0 616"
+		pos	"0 616"
 		size	"176 152"
 		click
 	}
 
 	zone bar_weapon_right_zone
 	{
-		pos		"848 616"
+		pos	"848 616"
 		size	"176 152"
 		click
 	}
@@ -382,14 +382,14 @@ menu hud
 	{
 		image	hud/bar_leftweapon
 		mousefx true
-		pos		"0 512"
+		pos	"0 512"
 	}
 
 	pic bar_weapon_right
 	{
 		image	hud/bar_rightweapon
 		mousefx true
-		pos		"768 512"
+		pos	"768 512"
 	}
 
 	confunc selpls { *bt_pfire_left   image hud/buttons1a }
@@ -409,7 +409,7 @@ menu hud
 	{
 		tooltip	"_Primary fire mode"
 		mousefx true
-		pos		"174 650"
+		pos	"174 650"
 		texl	"0 76"
 		texh	"75 128"
 		click	{ cmd "list_firemodes r;" }
@@ -419,7 +419,7 @@ menu hud
 	{
 		tooltip	"_Use Item"
 		mousefx true
-		pos		"776 650"
+		pos	"776 650"
 		texl	"0 76"
 		texh	"75 128"
 		click	{ cmd "list_firemodes l;" }
@@ -430,7 +430,7 @@ menu hud
 		tooltip	"*cvar mn_reloadleft_tt"
 		image	hud/buttons2
 		mousefx true
-		pos		"857 720"
+		pos	"857 720"
 		texl	"0 38"
 		texh	"64 74"
 		click	{ cmd "reloadleft;" }
@@ -446,7 +446,7 @@ menu hud
 		tooltip	"_Use headgear"
 		image	hud/buttons2
 		mousefx true
-		pos		"180 720"
+		pos	"180 720"
 		texl	"64 0"
 		texh	"128 37"
 		click	{ cmd "useheadgear;" }
@@ -457,7 +457,7 @@ menu hud
 		tooltip	"*cvar mn_reloadright_tt"
 		image	hud/buttons2
 		mousefx true
-		pos		"103 720"
+		pos	"103 720"
 		texl	"0 38"
 		texh	"64 74"
 		click	{ cmd "reloadright;" }
@@ -468,14 +468,14 @@ menu hud
 	string ammoleft
 	{
 		string	"*cvar mn_ammoleft"
-		pos		"974 728"
+		pos	"974 728"
 		align	uc
 	}
 
 	string ammoright
 	{
 		string	"*cvar mn_ammoright"
-		pos		"52 728"
+		pos	"52 728"
 		align	uc
 	}
 
@@ -485,7 +485,7 @@ menu hud
 
 	zone bar_info_zone
 	{
-		pos		"176 640"
+		pos	"176 640"
 		size	"672 128"
 		click
 	}
@@ -493,7 +493,7 @@ menu hud
 	pic bar_info
 	{
 		image	hud/bar_infoscreen
-		pos		"256 640"
+		pos	"256 640"
 	}
 
 	// CROUCH/STAND UP BUTTON
@@ -508,7 +508,7 @@ menu hud
 		tooltip	"*cvar mn_crouchstand_tt"
 
 		image hud/buttons2g
-		pos		"776 723"
+		pos	"776 723"
 		texl	"0 75"
 		texh	"52 112"
 		click	{ cmd "standcrouch;" }
@@ -602,7 +602,7 @@ menu hud
 		image hud/button_guard
 		key "*binding togglereaction"
 		mousefx true
-		pos		"303 723"
+		pos	"303 723"
 		texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 		texh	"31 63"
 		click	{ cmd "togglereaction;" }
@@ -822,14 +822,14 @@ menu hud
 	string tus
 	{
 		string	"*cvar mn_tu"
-		pos		"397 662"
+		pos		"397 663"
 		align	uc
 	}
 
 	string hp
 	{
 		string	"*cvar mn_hp"
-		pos		"397 675"
+		pos		"397 677"
 		align	uc
 	}
 
@@ -874,7 +874,7 @@ menu hud
 
 	bar health
 	{
-		pos		"422 682"
+		pos	"422 683"
 		size	"305 6"
 		color	"1 0 0 1"
 		current	"*cvar mn_hp"
@@ -884,7 +884,7 @@ menu hud
 
 	bar stun
 	{
-		pos		"422 682"
+		pos		"422 683"
 		size	"305 6"
 		color	".3 .3 .3 .9"
 		current	"*cvar mn_stun"
@@ -892,9 +892,26 @@ menu hud
 		align	uc
 	}
 
+	string moral_text
+	{
+		string	"*cvar mn_morale"
+		pos	"397 690"
+		align	uc
+	}
+
+	bar morale
+	{
+		pos	"422 695"
+		size	"305 6"
+		color	"1 1 0.5 1"
+		current	"*cvar mn_morale"
+		max	"*cvar mn_moralemax"
+		align	uc
+	}
+
 	text infoscreen
 	{
-		pos		"410 702"
+		pos	"410 710"
 		size	"290 50"
 		format	"20 100"
 		height	"2"

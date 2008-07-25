@@ -110,6 +110,7 @@ void LM_AddToScene (void)
 		VectorCopy(lm->origin, ent.origin);
 		VectorCopy(lm->origin, ent.oldorigin);
 		VectorCopy(lm->angles, ent.angles);
+		VectorCopy(lm->scale, ent.scale);
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
@@ -231,7 +232,7 @@ void LM_Register (void)
 	int i;
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
-		/* register the model and recalculate routing info */
+		/* register the model */
 		lm->model = R_RegisterModelShort(lm->name);
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
@@ -248,7 +249,7 @@ void LM_Register (void)
  * @sa CL_ParseEntitystring
  * @param[in] entnum Entity number
  */
-localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags)
+localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
 	localModel_t *lm;
 
@@ -268,6 +269,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
+	VectorCopy(scale, lm->scale);
 
 	return lm;
 }
@@ -277,7 +279,7 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
 /**
  * @brief Checks whether give position is still inside the map borders
  */
-qboolean CL_OutsideMap (vec3_t impact)
+qboolean CL_OutsideMap (const vec3_t impact)
 {
 	if (impact[0] < map_min[0] - mapBorder || impact[0] > map_max[0] + mapBorder)
 		return qtrue;

@@ -46,16 +46,18 @@ static const float RADAR_OUTER_CIRCLE_RATIO = 0.41f;
 static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
 
 /**
- * @brief Update base map radar coverage.
+ * @brief Update every static radar drawing (radar that don't move: base and installation radar).
  * @note This is only called when radar range of bases change.
  */
-void RADAR_UpdateBaseRadarCoverage (void)
+void RADAR_UpdateStaticRadarCoverage (void)
 {
-	int baseIdx;
+	int baseIdx, installationIdx;
 
 	/* Initialise radar range (will be filled below) */
 	R_InitializeRadarOverlay(qtrue);
 
+
+	/* Add radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (base) {
@@ -64,23 +66,7 @@ void RADAR_UpdateBaseRadarCoverage (void)
 		}
 	}
 
-	/* Smooth and bind radar overlay without aircraft (in case no aircraft is on geoscape:
-	 * RADAR_UpdateWholeRadarOverlay won't be called) */
-	R_InitializeRadarOverlay(qfalse);
-	R_UploadRadarCoverage(qtrue);
-}
-
-/**
- * @brief Update installation map radar coverage.
- * @note This is only called when radar range of installations change.
- */
-void RADAR_UpdateInstallationRadarCoverage (void)
-{
-	int installationIdx;
-
-	/* Initialise radar range (will be filled below) */
-	R_InitializeRadarOverlay(qtrue);
-
+	/* Add installation coverage */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (installation) {
@@ -94,7 +80,6 @@ void RADAR_UpdateInstallationRadarCoverage (void)
 	R_InitializeRadarOverlay(qfalse);
 	R_UploadRadarCoverage(qtrue);
 }
-
 
 /**
  * @brief Update map radar coverage with moving radar
@@ -326,10 +311,8 @@ void RADAR_Initialise (radar_t* radar, float range, float level, qboolean update
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON)) {
-		RADAR_UpdateBaseRadarCoverage();
-		RADAR_UpdateInstallationRadarCoverage();
-	}
+	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON))
+		RADAR_UpdateStaticRadarCoverage();
 
 	RADAR_DeactivateRadarOverlay();
 }
@@ -371,7 +354,7 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 /**
  * @brief Update radar coverage when building/destroying new radar
  */
-void RADAR_UpdateInstallationRadarCoverage_f (installation_t *installation, const float radarRange)
+void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange)
 {
 	RADAR_Initialise(&installation->radar, radarRange, RADAR_INSTALLATIONLEVEL, qtrue);
 	CP_UpdateMissionVisibleOnGeoscape();

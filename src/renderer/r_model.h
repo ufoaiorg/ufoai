@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief All supported model formats
  * @sa mod_extensions
  */
-typedef enum {mod_bad, mod_brush, mod_alias_md2, mod_alias_md3, mod_alias_dpm} modtype_t;
+typedef enum {mod_bad, mod_bsp, mod_bsp_submodel, mod_alias_md2, mod_alias_md3, mod_alias_dpm} modtype_t;
 
 typedef struct model_s {
 	/** the name needs to be the first entry in the struct */
@@ -76,6 +76,7 @@ void R_DrawAliasFrameLerp(const mAliasModel_t* mod, const mAliasMesh_t *mesh, fl
 void R_DrawAliasModel(const entity_t *e);
 void R_ShutdownModels(void);
 
+/** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];
 extern int r_numMapTiles;
 

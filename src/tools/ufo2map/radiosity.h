@@ -104,7 +104,7 @@ dBspLeaf_t *Rad_PointInLeaf(vec3_t point);
 extern dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 void MakePatches(void);
-void SubdividePatches(void);
+void SubdividePatches(const int num);
 void CalcTextureReflectivity(void);
 void RadWorld(void);
 void BuildVertexNormals(void);

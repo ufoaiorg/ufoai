@@ -362,13 +362,13 @@ static void DicePatch (patch_t *patch)
 
 /**
  * @brief subdivide patches to a maximum dimension
+ * @param[in] num The number of patches - the list will grow in @c DicePatch
  */
-void SubdividePatches (void)
+void SubdividePatches (const int num)
 {
 	int i;
-	/* because the list will grow in DicePatch */
-	const int num = num_patches;
 
+	/* don't subdivide for radiosity? */
 	if (config.subdiv < 1)
 		return;
 

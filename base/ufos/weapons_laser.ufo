@@ -93,13 +93,13 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0.4 0.4"
+			spread	"0.75 0.75"
 			crouch	0.9
 			range	60
 			shots	1
-			ammo	2
-			time	7
-			damage	"60 20"
+			ammo	1
+			time	5
+			damage	"40 6"
 			dmgweight laser_light
 			reaction	true
 		}
@@ -113,13 +113,13 @@ item laserrifle_ammo
 			firesnd	weapons/laser
 			delaybetweenshots		8
 			speed	0
-			spread	"0.4 0.4"
+			spread	"0.75 0.75"
 			crouch	0.9
 			range	60
 			shots	3
 			ammo	3
-			time	10
-			damage	"35 10"
+			time	8
+			damage	"30 6"
 			dmgweight laser_light
 			reaction	true
 		}
@@ -137,13 +137,12 @@ item laserrifle_ammo
 			firesnd	weapons/laser
 			speed	0
 			spread	"0.5 0.5"
-			crouch	0.7
-
+			crouch	0.8
 			range	90
 			shots	1
 			ammo	2
-			time	9
-			damage	"75 20"
+			time	7
+			damage	"55 6"
 			dmgweight laser_medium
 			reaction	true
 		}
@@ -158,12 +157,12 @@ item laserrifle_ammo
 			delaybetweenshots		8
 			speed	0
 			spread	"0.5 0.5"
-			crouch	0.7
+			crouch	0.8
 			range	90
 			shots	3
 			ammo	3
-			time	13
-			damage	"40 10"
+			time	10
+			damage	"35 5"
 			dmgweight laser_medium
 			reaction	true
 		}
@@ -180,13 +179,13 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/heavy_laser
 			speed	0
-			spread	"1 1"
-			crouch	0.5
+			spread	"0.5 0.5"
+			crouch	0.7
 			range	120
 			shots	1
 			ammo	2
-			time	12
-			damage	"90 25"
+			time	10
+			damage	"60 18"
 			dmgweight laser_heavy
 			reaction	true
 		}
@@ -200,13 +199,13 @@ item laserrifle_ammo
 			firesnd	weapons/laser
 			delaybetweenshots		8
 			speed	0
-			spread	"1 1"
-			crouch	0.5
+			spread	"0.5 0.5"
+			crouch	0.7
 			range	120
 			shots	3
 			ammo	3
-			time	18
-			damage	"50 15"
+			time	15
+			damage	"40 12"
 			dmgweight laser_heavy
 			reaction	true
 		}

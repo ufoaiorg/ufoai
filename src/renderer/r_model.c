@@ -29,6 +29,7 @@ static int modfilelen;
 
 model_t r_models[MAX_MOD_KNOWN];
 int r_numModels;
+static int r_numModelsStatic;
 
 model_t *r_mapTiles[MAX_MAPTILES];
 int r_numMapTiles;
@@ -48,10 +49,12 @@ void R_ModModellist_f (void)
 	model_t *mod;
 
 	Com_Printf("Loaded models:\n");
-	Com_Printf("Type | #Tris  | Filename\n");
+	Com_Printf("Type | #Slot | #Tris   | Filename\n");
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
-		if (!mod->name[0])
+		if (!mod->name[0]) {
+			Com_Printf("Empty slot %i\n", i);
 			continue;
+		}
 		switch(mod->type) {
 		case mod_alias_md3:
 			Com_Printf("MD3 ");
@@ -62,12 +65,25 @@ void R_ModModellist_f (void)
 		case mod_alias_dpm:
 			Com_Printf("DPM ");
 			break;
+		case mod_bsp:
+			Com_Printf("BSP ");
+			break;
+		case mod_bsp_submodel:
+			Com_Printf("SUB ");
+			break;
 		default:
 			Com_Printf("%3i ", mod->type);
 			break;
 		}
-		Com_Printf(" | %6i | %s\n", mod->alias.meshes[0].num_tris, mod->name);
+		if (mod->alias.num_meshes)
+			Com_Printf(" | %5i | %7i | %s\n", i, mod->alias.meshes[0].num_tris, mod->name);
+		else
+			Com_Printf(" | %5i | unknown | %s\n", i, mod->name);
 	}
+	Com_Printf("%4i models loaded\n", r_numModels);
+	Com_Printf(" - %4i static models\n", r_numModelsStatic);
+	Com_Printf(" - %4i bsp models\n", r_numMapTiles);
+	Com_Printf(" - %4i inline models\n", r_numModelsInline);
 }
 
 
@@ -122,6 +138,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		if (crash)
 			Sys_Error("R_ModForName: %s not found", mod->name);
 		memset(mod->name, 0, sizeof(mod->name));
+		r_numModels--;
 		return NULL;
 	}
 
@@ -173,7 +190,7 @@ static model_t *R_RegisterModel (const char *name)
 		case mod_alias_md2:
 		case mod_alias_md3:
 			break;
-		case mod_brush:
+		case mod_bsp:
 			for (i = 0; i < mod->bsp.numtexinfo; i++)
 				mod->bsp.texinfo[i].image->registration_sequence = registration_sequence;
 			break;
@@ -223,7 +240,7 @@ model_t *R_RegisterModelShort (const char *name)
 				return mod;
 			i++;
 		}
-		Com_Printf("R_RegisterModelShort: Could not find any supported model with the basename: '%s'\n", name);
+		Com_Printf("R_RegisterModelShort: Could not find: '%s'\n", name);
 		return NULL;
 	} else
 		return R_RegisterModel(name);
@@ -237,7 +254,6 @@ void R_ModEndLoading (void)
 	R_FreeUnusedImages();
 }
 
-static int r_numModelsStatic;
 #define MEM_TAG_STATIC_MODELS 1
 /**
  * @brief After all static models are loaded, switch the pool tag for these models
@@ -278,11 +294,12 @@ void R_SwitchModelMemPoolTag (void)
 void R_ShutdownModels (void)
 {
 	int i;
-	model_t *mod;
 
-	/* free the vertex buffer - but not for the static models */
+	/* free the vertex buffer - but not for the static models
+	 * the world, the submodels and all the misc_models are located in the
+	 * r_models array */
 	for (i = r_numModelsStatic; i < r_numModels; i++) {
-		mod = &r_models[i];
+		model_t *mod = &r_models[i];
 
 		if (mod->bsp.vertex_buffer)
 			qglDeleteBuffers(1, &mod->bsp.vertex_buffer);
@@ -330,12 +347,12 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 
 image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)
 {
-	char path[MAX_QPATH];
-	char *slash, *end;
-
 	if (skin[0] != '.')
 		return R_FindImage(skin, it_skin);
 	else {
+		char path[MAX_QPATH];
+		char *slash, *end;
+
 		Q_strncpyz(path, mod->name, sizeof(path));
 		end = path;
 		while ((slash = strchr(end, '/')) != 0)

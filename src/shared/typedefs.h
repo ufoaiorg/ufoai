@@ -267,7 +267,7 @@ typedef struct plane_s {
 	vec3_t	normal;
 	vec_t	dist;
 	int		type;
-	ipos3_t	planeVector[3];
+	vec3_t	planeVector[3];
 	struct plane_s	*hash_chain;
 } plane_t;
 
