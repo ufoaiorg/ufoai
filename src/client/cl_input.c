@@ -1607,19 +1607,19 @@ void IN_Frame (void)
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
-			case 1:
+			case SDL_BUTTON_LEFT:
 				mouse_buttonstate = K_MOUSE1;
 				break;
-			case 2:
+			case SDL_BUTTON_MIDDLE:
 				mouse_buttonstate = K_MOUSE3;
 				break;
-			case 3:
+			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;
 				break;
-			case 4:
+			case SDL_BUTTON_WHEELUP:
 				mouse_buttonstate = K_MWHEELUP;
 				break;
-			case 5:
+			case SDL_BUTTON_WHEELDOWN:
 				mouse_buttonstate = K_MWHEELDOWN;
 				break;
 			case 6:
