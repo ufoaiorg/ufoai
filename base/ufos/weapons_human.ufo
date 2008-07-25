@@ -482,6 +482,7 @@ item coilgun_ammo
 			damage	"180 36"
 			dmgweight normal_heavy
 		}
+	}
 }
 
 
