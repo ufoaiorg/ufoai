@@ -61,8 +61,8 @@ void FS_GetMaps(qboolean reset);
 int FS_OpenFile(const char *filename, qFILE * file);
 void FS_CloseFile(qFILE * f);
 
-qboolean FS_Rename(const char *from, const char *to, qboolean relative);
-void FS_Remove(const char *osPath);
+qboolean FS_RenameFile(const char *from, const char *to, qboolean relative);
+void FS_RemoveFile(const char *osPath);
 void FS_CopyFile(const char *fromOSPath, const char *toOSPath);
 
 /* note: this can't be called from another DLL, due to MS libc issues */

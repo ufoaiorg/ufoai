@@ -816,6 +816,8 @@ static void Key_Bind_f (void)
 void Key_WriteBindings (const char* filename)
 {
 	int i;
+	/* this gets true in case of an error */
+	qboolean delete = qfalse;
 	qFILE f;
 
 	memset(&f, 0, sizeof(f));
@@ -831,12 +833,19 @@ void Key_WriteBindings (const char* filename)
 	fprintf(f.f, "unbindall\n");
 	for (i = 0; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
-			fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
+			if (fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
+				delete = qtrue;
 	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
-			fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
+			if (fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
+				delete = qtrue;
+
 	FS_CloseFile(&f);
-	Com_Printf("Wrote %s\n", filename);
+	if (!delete)
+		Com_Printf("Wrote %s\n", filename);
+	else
+		/* error in writing the keys.cfg - remove the file again */
+		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
 }
 
 /**
