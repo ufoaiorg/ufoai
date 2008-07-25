@@ -1477,9 +1477,7 @@ base/models/weapons/flashbang/flashbang.obj | GNU General Public License 2.0 | D
 base/models/weapons/flashbang/flashbang.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/fraggren/fraggren.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/grenl/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/grenl/grenl.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1495,7 +1493,6 @@ base/models/weapons/incgren/incgren.obj | GNU General Public License 2.0 | Denis
 base/models/weapons/incgren/incgren.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/kerrblade/kerrblade.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/knife/knife.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1524,15 +1521,11 @@ base/models/weapons/pbeamcannon/pbeamcannon.jpg | GNU General Public License 2.0
 base/models/weapons/pbeamcannon/pbeamcannon.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamcannon/pbeamcannon_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamcannon/pbeamcannon_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/pbeampistol/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeampistol/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/pbeampistol/pbeampistol.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeampistol/pbeampistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeampistol/pbeampistol.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeampistol/pbeampistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/pbeamrifle/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/pbeamrifle/pbeamrifle.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/pbeamrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/pbeamrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/pbeamrifle_big.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1549,9 +1542,7 @@ base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License 2.0 | 
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
-base/models/weapons/plasblaster/clip.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/plasblaster/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/plasblaster/plasblaster.3ds | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/plasblaster/plasblaster.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/plasblaster/plasblaster.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/plasblaster/plasblaster_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
