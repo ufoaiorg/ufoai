@@ -245,7 +245,6 @@ SOUND FILES
 static Mix_Chunk *S_LoadSound (const char *sound)
 {
 	size_t len;
-	SDL_RWops *src;
 	byte *sfxBuf;
 	int size;
 	Mix_Chunk *mix = NULL;
@@ -261,12 +260,12 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), (byte **)&sfxBuf)) != -1) {
-		src = SDL_RWFromMem(sfxBuf, size);
+		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
 			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' (%s)\n", sound, Mix_GetError());
 	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), (byte **)&sfxBuf)) != -1) {
-		src = SDL_RWFromMem(sfxBuf, size);
+		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
 			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' (%s)\n", sound, Mix_GetError());
@@ -320,7 +319,8 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 }
 
 /**
- * @brief
+ * @brief Loads and registers a sound file for later use
+ * @param[in] name The name of the soundfile, relative to the sounds dir
  * @sa S_LoadSound
  */
 sfx_t *S_RegisterSound (const char *name)
