@@ -521,6 +521,11 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 }
 
 #define MAX_PACKFILES 1024
+
+static const char *pakFileExt[] = {
+	"zip", "pk3", NULL
+};
+
 /**
  * @brief Adds the directory to the head of the search path
  * @note No ending slash here
@@ -534,6 +539,7 @@ static void FS_AddGameDirectory (const char *dir)
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
+	const char **extList;
 
 	search = fs_searchpaths;
 	while (search) {
@@ -544,38 +550,25 @@ static void FS_AddGameDirectory (const char *dir)
 
 	Com_Printf("Adding game dir: %s\n", dir);
 
-	Com_sprintf(pattern, sizeof(pattern), "%s/*.zip", dir);
-	dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
-	if (dirnames != NULL) {
-		for (i = 0; i < ndirs - 1; i++) {
-			if (strrchr(dirnames[i], '/')) {
-				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
-				pakfile_count++;
-				if (pakfile_count >= MAX_PACKFILES) {
-					Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
-					break;
+	extList = pakFileExt;
+	while (*extList) {
+		Com_sprintf(pattern, sizeof(pattern), "%s/*.%s", dir, *extList);
+		dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
+		if (dirnames != NULL) {
+			for (i = 0; i < ndirs - 1; i++) {
+				if (strrchr(dirnames[i], '/')) {
+					Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
+					pakfile_count++;
+					if (pakfile_count >= MAX_PACKFILES) {
+						Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
+						break;
+					}
 				}
+				Mem_Free(dirnames[i]);
 			}
-			Mem_Free(dirnames[i]);
+			Mem_Free(dirnames);
 		}
-		Mem_Free(dirnames);
-	}
-
-	Com_sprintf(pattern, sizeof(pattern), "%s/*.pk3", dir);
-	dirnames = FS_ListFiles(pattern, &ndirs, 0, 0);
-	if (dirnames != NULL) {
-		for (i = 0; i < ndirs - 1; i++) {
-			if (strrchr(dirnames[i], '/')) {
-				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
-				pakfile_count++;
-				if (pakfile_count >= MAX_PACKFILES) {
-					Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
-					break;
-				}
-			}
-			Mem_Free(dirnames[i]);
-		}
-		Mem_Free(dirnames);
+		extList++;
 	}
 
 	/* Sort our list alphabetically */
@@ -771,7 +764,7 @@ static void FS_Dir_f (void)
 		Com_Printf("Directory of %s\n", findname);
 		Com_Printf("----\n");
 
-		dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+		dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM);
 		if (dirnames != NULL) {
 			int i;
 
