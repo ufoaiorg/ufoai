@@ -1602,7 +1602,6 @@ void IN_Frame (void)
 	oldMousePosX = mousePosX;
 	oldMousePosY = mousePosY;
 
-	/* get events from x server */
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_MOUSEBUTTONDOWN:
