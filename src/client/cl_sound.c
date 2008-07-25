@@ -754,17 +754,15 @@ void S_Init (void)
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
-	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_start\" if you experience crackling when background music loops");
+	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_play\" if you experience crackling when background music loops");
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
-	Cmd_AddCommand("music_start", S_Music_Play_f, "Starts the background music track from cvar snd_music");
 	Cmd_AddCommand("music_change", S_Music_Change_f, "Changes the music theme");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
-	Cmd_AddParamCompleteFunction("music_start", S_CompleteMusic);
+	Cmd_AddParamCompleteFunction("music_play", S_CompleteMusic);
 	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
-	/** @todo Complete functions */
 
 	if (!SND_Init()) {
 		Com_Printf("SND_Init failed\n");
