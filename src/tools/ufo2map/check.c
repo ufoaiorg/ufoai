@@ -672,8 +672,10 @@ void CheckLevelFlags (void)
  * @brief Sets surface flags dependent on assigned texture
  * @sa ParseBrush
  * @sa CheckFlags
+ * @note surfaceFlags are set in side_t for map compiling and in brush_texture_t
+ * because this is saved back on -fix.
  */
-static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush)
+void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush)
 {
 	const char *texname = tex->name;
 	const int initSurf = tex->surfaceFlags;
@@ -685,15 +687,19 @@ static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_
 		side->contentFlags |= CONTENTS_ACTORCLIP;
 		flagsDescription = "CONTENTS_ACTORCLIP";
 	} else if (!strcmp(texname, "tex_common/caulk")) {
+		side->surfaceFlags |= SURF_NODRAW;
 		tex->surfaceFlags |= SURF_NODRAW;
 		flagsDescription = "SURF_NODRAW";
 	} else if (!strcmp(texname, "tex_common/hint")) {
+		side->surfaceFlags |= SURF_HINT;
 		tex->surfaceFlags |= SURF_HINT;
 		flagsDescription = "SURF_HINT";
 	} else if (!strcmp(texname, "tex_common/nodraw")) {
+		side->surfaceFlags |= SURF_NODRAW;
 		tex->surfaceFlags |= SURF_NODRAW;
 		flagsDescription = "SURF_NODRAW";
 	} else if (!strcmp(texname, "tex_common/trigger")) {
+		side->surfaceFlags |= SURF_NODRAW;
 		tex->surfaceFlags |= SURF_NODRAW;
 		flagsDescription = "SURF_NODRAW";
 	} else if (!strcmp(texname, "tex_common/origin")) {
@@ -711,7 +717,10 @@ static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_
 	}
 
 	if (strstr(texname, "water")) {
-/*		tex->surfaceFlags |= SURF_WARP;*/
+		#if 0
+		side->surfaceFlags |= SURF_WARP;
+		tex->surfaceFlags |= SURF_WARP;
+		#endif
 		side->contentFlags |= CONTENTS_WATER;
 		side->contentFlags |= CONTENTS_PASSABLE;
 		flagsDescription = "CONTENTS_WATER and CONTENTS_PASSABLE";
@@ -726,6 +735,7 @@ static void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_
 	/*one additional test, which does not directly depend on tex. */
 	if ((tex->surfaceFlags & SURF_NODRAW) && (tex->surfaceFlags & SURF_PHONG)) {
 		/* nodraw never has phong set */
+		side->surfaceFlags &= ~SURF_PHONG;
 		tex->surfaceFlags &= ~SURF_PHONG;
 		if (checkOrFix)
 			Com_Printf("* Brush %i (entity %i): SURF_PHONG unset, as it has SURF_NODRAW set\n",

@@ -729,6 +729,10 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			&td, vec3_origin, b->isTerrain);
 		side->brush = b;
 
+		/* if in check or fix mode, let them choose to do this, and the call is made elsewhere */
+		if (!checkOrFix)
+			SetImpliedFlags(side, &td, b);
+
 		/* save the td off in case there is an origin brush and we
 		 * have to recalculate the texinfo */
 		side_brushtextures[nummapbrushsides] = td;
@@ -745,6 +749,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
 	/* set the contentflags on all faces to avoid problems in check/fix code */
+	notInformedMixedFace=1;
 	for (m = 0; m < b->numsides; m++) {
 		/* only tell them once per brush */
 		if (notInformedMixedFace && checkOrFix && b->original_sides[m].contentFlags != b->contentFlags) {
