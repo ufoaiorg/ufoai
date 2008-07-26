@@ -138,8 +138,8 @@ tile +w2
 
 3 3
 
-0     abd        0
-bd     +b        b
+0      ab        0
+b      +b        bd
 0      ab        0
 }
 
@@ -177,9 +177,9 @@ title "_Little forest"
 +f7 "1 10"
 +f8 "1 10"
 +w1 "1 3"
-+w2 "0 3"
-+w3 "0 3"
-+w4 "1 3"
++w2 "2 3"
++w3 "1 3"
++w4 "0 3"
 *rm_drop +drop_firebird "1 1"
 }
 
@@ -196,7 +196,7 @@ size "7 5"
 +f7 "1 10"
 +f8 "1 10"
 +w1 "1 3"
-+w2 "0 3"
++w2 "1 3"
 +w3 "0 3"
 +w4 "1 3"
 +crash_scout "1 1"
