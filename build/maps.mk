@@ -1,4 +1,4 @@
-MAPSDIR = base/maps
+MAPSDIR ?= base/maps
 
 UFO2MAP = ./ufo2map
 
