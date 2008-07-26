@@ -13,7 +13,7 @@ wininstaller: pk3
 	makensis src/ports/windows/installer.nsi
 	md5sum src/ports/windows/ufoai-$(VERSION)-win32.exe > src/ports/windows/ufoai-$(VERSION)-win32.md5
 
-dataarchive:
+dataarchive: pk3
 	tar -cvp -f ufoai-$(VERSION)-data.tar base/*.pk3
 
 linuxinstaller: pk3
