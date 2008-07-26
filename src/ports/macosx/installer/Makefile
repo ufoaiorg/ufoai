@@ -2,21 +2,27 @@
 all: create-dmg
 
 EXT=pk3
-ROOTDIR=../../../../
+ROOTDIR=../../../..
 #relative from root dir
 INSTDIR=src/ports/macosx/installer/
 #get the version of ufo
-VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
+VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)/src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
 
 PACKAGE_NAME=ufoai-$(VERSION_LC)-macosx-$(TARGET_CPU)
 
 BINARIES = \
-	$(ROOTDIR)ufo \
-	$(ROOTDIR)ufoded \
-	$(ROOTDIR)ufo2map
+	$(ROOTDIR)/ufo \
+	$(ROOTDIR)/ufoded \
+	$(ROOTDIR)/ufo2map
 BINARIES_BASE = \
-	$(ROOTDIR)base/game.dylib
+	$(ROOTDIR)/base/game.dylib
+
+include $(ROOTDIR)/build/pk3_def.mk
+
+BASE_PK3 = $(addprefix $(ROOTDIR)/base/, $(PAK_FILES))
+
+BUNDLE_PK3 = $(addprefix UFOAI.app/base/, $(PAK_FILES))
 
 bundle_dirs:
 	@mkdir -p UFOAI.app/base
@@ -24,6 +30,12 @@ bundle_dirs:
 #	@mkdir -p UFOAI.app/Contents/MacOS
 #	@mkdir -p UFOAI.app/Contents/Frameworks
 #	@mkdir -p UFOAI.app/Contents/Libraries
+
+$(BASE_PK3) :
+	$(MAKE) -C $(ROOTDIR) $(addprefix base/,$(notdir $@))
+
+$(BUNDLE_PK3) : UFOAI.app/base/%.pk3 : $(ROOTDIR)/base/%.pk3
+	cp -v $< $@
 
 package_dir:
 	@rm -rf $(PACKAGE_NAME)
@@ -36,15 +48,14 @@ copybinaries: bundle_dirs
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
 
-copydata: bundle_dirs
-	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
+copydata: bundle_dirs $(BUNDLE_PK3)
 	@mkdir -p UFOAI.app/base/i18n
-	@cp -r $(ROOTDIR)base/i18n/[^.]* UFOAI.app/base/i18n
+	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
 
 copynotes: package_dir
-	@cp $(ROOTDIR)README $(PACKAGE_NAME)
-	@cp $(ROOTDIR)CONTRIBUTORS $(PACKAGE_NAME)
-	@cp $(ROOTDIR)COPYING $(PACKAGE_NAME)
+	@cp $(ROOTDIR)/README $(PACKAGE_NAME)
+	@cp $(ROOTDIR)/CONTRIBUTORS $(PACKAGE_NAME)
+	@cp $(ROOTDIR)/COPYING $(PACKAGE_NAME)
 
 copylibs:
 	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
@@ -65,19 +76,18 @@ create-dmg: bundle updateversion copy_package_bundle strip_dev_files
 	@rm -f $(PACKAGE_NAME).dmg
 	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
 
-build_dmg: copybinaries copylibs
+build_dmg: copybinaries copylibs $(BUNDLE_PK3)
 	@cp $(BINARIES) UFOAI.app/Contents/MacOS
 	@cp $(BINARIES_BASE) UFOAI.app/base
-	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
-#	for dir in $(ROOTDIR)base/i18n/[^.]*; do \
+#	for dir in $(ROOTDIR)/base/i18n/[^.]*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
-#		cp $(ROOTDIR)base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
+#		cp $(ROOTDIR)/base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
 #	done
-	@cp -r $(ROOTDIR)base/i18n/[^.]* UFOAI.app/base/i18n
+	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
 	@rm -f $(PACKAGE_NAME).dmg
-	@cp $(ROOTDIR)README UFOAI.app
-	@cp $(ROOTDIR)CONTRIBUTORS UFOAI.app
-	@cp $(ROOTDIR)COPYING UFOAI.app
+	@cp $(ROOTDIR)/README UFOAI.app
+	@cp $(ROOTDIR)/CONTRIBUTORS UFOAI.app
+	@cp $(ROOTDIR)/COPYING UFOAI.app
 	@hdiutil create -srcfolder UFOAI.app $(PACKAGE_NAME).dmg
 
 update_installer_data:

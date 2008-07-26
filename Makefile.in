@@ -93,6 +93,10 @@ echo_info:
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) maps' to compile the maps"
 	@echo
+	@echo "PAK files"
+	@echo "-----------------------"
+	@echo "Type '$(MAKE) pk3' to assemble the pk3 files"
+	@echo
 	@echo "Built for $(BUILDDIR)"
 	@echo
 
@@ -122,12 +126,22 @@ install: install_exec
 	@echo
 	@echo
 
+# recursively call make.
+# If we instead include data.mk and use that rule for pk3, then 
+# we will automatically call the equivalent of make maps before 
+# make pk3, since 0maps.pk3 depends on the bsp files, which 
+# have the rules to build them from maps.mk. This is not what 
+# you want to have happen if you have downloaded a distribution
+# ready 0maps.pk3 file! So long as 0maps.pk3 is newer than the 
+# BSP files this will work correctly even if there are newer 
+# map files kicking around.
+pk3:
+	$(MAKE) -f build/data.mk $@
+
 #
 # Target to install only the game data.
 #
-install_data:
-# Create all pk3 files
-	@cd base && ./archives.sh
+install_data: pk3
 	$(INSTALL) -d $(DATADIR)/base
 # Copy them to datadir
 	$(INSTALL) -m 644 base/*.pk3 $(DATADIR)/base
