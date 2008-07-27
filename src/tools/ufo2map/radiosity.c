@@ -63,18 +63,15 @@ TRANSFER SCALES
 ===================================================================
 */
 
-static int PointInLeafnum (vec3_t point)
+static inline int PointInLeafnum (const vec3_t point)
 {
 	int nodenum;
-	vec_t dist;
-	dBspNode_t *node;
-	dBspPlane_t *plane;
 
 	nodenum = 0;
 	while (nodenum >= 0) {
-		node = &curTile->nodes[nodenum];
-		plane = &curTile->planes[node->planenum];
-		dist = DotProduct (point, plane->normal) - plane->dist;
+		const dBspNode_t *node = &curTile->nodes[nodenum];
+		const dBspPlane_t *plane = &curTile->planes[node->planenum];
+		const vec_t dist = DotProduct(point, plane->normal) - plane->dist;
 		if (dist > 0)
 			nodenum = node->children[0];
 		else
@@ -85,11 +82,9 @@ static int PointInLeafnum (vec3_t point)
 }
 
 
-dBspLeaf_t *Rad_PointInLeaf (vec3_t point)
+dBspLeaf_t *Rad_PointInLeaf (const vec3_t point)
 {
-	int num;
-
-	num = PointInLeafnum(point);
+	const int num = PointInLeafnum(point);
 	return &curTile->leafs[num];
 }
 

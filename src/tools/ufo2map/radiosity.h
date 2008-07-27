@@ -99,7 +99,7 @@ void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
 void CreateDirectLights(void);
 
-dBspLeaf_t *Rad_PointInLeaf(vec3_t point);
+dBspLeaf_t *Rad_PointInLeaf(const vec3_t point);
 
 extern dBspPlane_t backplanes[MAX_MAP_PLANES];
 
