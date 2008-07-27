@@ -85,6 +85,8 @@ static inline int PointInLeafnum (const vec3_t point)
 dBspLeaf_t *Rad_PointInLeaf (const vec3_t point)
 {
 	const int num = PointInLeafnum(point);
+	assert(num >= 0);
+	assert(num < MAX_MAP_LEAFS);
 	return &curTile->leafs[num];
 }
 
