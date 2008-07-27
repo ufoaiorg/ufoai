@@ -51,7 +51,7 @@ typedef struct buyList_s {
 
 static buyList_t buyList;	/**< Current buylist that is shown in the menu. */
 static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on the list. */
-static int buyCategory = -1;			/**< Category of items in the menu. */
+static int buyCategory = 0;			/**< Category of items in the menu. */
 
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
@@ -274,31 +274,6 @@ static void BS_AddToList (const char *name, int storage, int market, int price)
 }
 
 /**
- * @brief Updates status of category buttons in aircraft buy/sell menu.
- */
-static void BS_UpdateAircraftBSButtons (const base_t* base)
-{
-	if (!base)
-		return;
-
-	/* We cannot buy aircraft without any hangar. */
-	if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))
-		Cbuf_AddText("abuy_disableaircrafts2\n");
-	else
-		Cbuf_AddText("abuy_enableaircrafts\n");
-	/* We cannot buy aircraft if there is no power in our base. */
-	if (!B_GetBuildingStatus(base, B_POWER))
-		Cbuf_AddText("abuy_disableaircrafts1\n");
-	else
-		Cbuf_AddText("abuy_enableaircrafts\n");
-	/* We cannot buy any item without storage. */
-	if (!B_GetBuildingStatus(base, B_STORAGE))
-		Cbuf_AddText("abuy_disableitems\n");
-	else
-		Cbuf_AddText("abuy_enableitems\n");
-}
-
-/**
  * @brief Updates the Buy/Sell menu list.
  * @sa BS_BuyType_f
  */
@@ -326,7 +301,6 @@ static void BS_BuyType (const base_t *base)
 	case BUY_AIRCRAFT:	/* Aircraft */
 		{
 		const technology_t* tech;
-		BS_UpdateAircraftBSButtons(base);
 		for (i = 0, j = 0, air_samp = aircraftTemplates; i < numAircraftTemplates; i++, air_samp++) {
 			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
 				continue;
@@ -335,7 +309,6 @@ static void BS_BuyType (const base_t *base)
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
-					Cbuf_AddText(va("buy_tooltip_aircraft%i\n", j - buyList.scroll));
 				}
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(base, air_samp->id, qtrue), AIR_GetStorageSupply(base, air_samp->id, qfalse), air_samp->price);
 				if (j >= MAX_BUYLIST)
@@ -350,7 +323,6 @@ static void BS_BuyType (const base_t *base)
 		}
 		break;
 	case BUY_CRAFTITEM:	/* Aircraft items */
-		BS_UpdateAircraftBSButtons(base);
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			if (od->notOnMarket)
@@ -361,7 +333,6 @@ static void BS_BuyType (const base_t *base)
 			 && (base->storage.num[i] || ccs.eMarket.num[i])) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
-					Cbuf_AddText(va("buy_tooltip_craftitem%i\n", j - buyList.scroll));
 				}
 				BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
@@ -527,6 +498,65 @@ static void BS_BuyType_f (void)
 	if (Cmd_Argc() == 2) {
 		menuNode_t* node = MN_GetNodeFromCurrentMenu("market");
 		buyCategory = atoi(Cmd_Argv(1));
+		if (buyCategory < 0) {
+			buyCategory = MAX_BUYTYPES - 1;
+		} else if (buyCategory >= MAX_BUYTYPES) {
+			buyCategory = 0;
+		}		
+		Cvar_Set("mn_itemtype", va("%d", buyCategory));
+		switch (buyCategory) {
+			case BUY_WEAP_PRI:
+			{
+				Cvar_Set("mn_itemtypename", _("Primary weapons"));
+				break;
+			}
+			case BUY_WEAP_SEC:
+			{
+				Cvar_Set("mn_itemtypename", _("Secondary weapons"));
+				break;
+			}
+			case BUY_MISC:
+			{
+				Cvar_Set("mn_itemtypename", _("Miscellaneous"));
+				break;
+			}
+			case BUY_ARMOUR:
+			{
+				Cvar_Set("mn_itemtypename", _("Personal Armours"));
+				break;
+			}
+			case BUY_MULTI_AMMO:
+			{
+				/** @todo do we deed this? */
+/*				Cvar_Set("mn_itemtypename", _("Weapons and ammo")); */
+				break;
+			}
+			case BUY_AIRCRAFT:
+			{
+				Cvar_Set("mn_itemtypename", _("Aircraft"));
+				break;
+			}
+			case BUY_DUMMY:
+			{
+				Cvar_Set("mn_itemtypename", _("Other"));
+				break;
+			}
+			case BUY_CRAFTITEM:
+			{
+				Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
+				break;
+			}
+			case BUY_HEAVY:
+			{
+				Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
+				break;
+			}
+			default:
+			{
+				Cvar_Set("mn_itemtypename", _("Unknown"));
+				break;
+			}
+		}
 		buyList.scroll = 0;
 		if (node)
 			node->textScroll = 0;
@@ -536,6 +566,37 @@ static void BS_BuyType_f (void)
 	BS_BuyType(baseCurrent);
 }
 
+/**
+ * @brief Rolls buyCategory left in Buy/Sell menu.
+ */
+static void BS_Prev_BuyType_f (void)
+{
+	buyCategory--;
+	if (buyCategory == BUY_MULTI_AMMO)
+		buyCategory--;
+	if (buyCategory < 0) {
+		buyCategory = MAX_BUYTYPES - 1;
+	} else if (buyCategory >= MAX_BUYTYPES) {
+		buyCategory = 0;
+	}
+	Cbuf_AddText(va("buy_type %i\n", buyCategory));
+}
+
+/**
+ * @brief Rolls buyCategory right in Buy/Sell menu.
+ */
+static void BS_Next_BuyType_f (void)
+{
+	buyCategory++;
+	if (buyCategory == BUY_MULTI_AMMO)
+		buyCategory++;
+	if (buyCategory < 0) {
+		buyCategory = MAX_BUYTYPES - 1;
+	} else if (buyCategory >= MAX_BUYTYPES) {
+		buyCategory = 0;
+	}
+	Cbuf_AddText(va("buy_type %i\n", buyCategory));
+}
 /**
  * @brief Buy items.
  * @param[in] base Pointer to the base where items are bought.
@@ -579,6 +640,164 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int nu
 }
 
 /**
+ * @brief Buys aircraft or craftitem.
+ * @sa BS_SellAircraft_f
+ */
+static void BS_BuyAircraft_f (void)
+{
+	int num, freeSpace;
+	const aircraft_t *aircraftTemplate;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= buyList.length)
+		return;
+
+	if (buyCategory == BUY_AIRCRAFT) {
+		/* We cannot buy aircraft if there is no power in our base. */
+		if (!B_GetBuildingStatus(baseCurrent, B_POWER)) {
+			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
+			return;
+		}
+		/* We cannot buy aircraft without any hangar. */
+		if (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR)) {
+			MN_Popup(_("Note"), _("Build a hangar first."));
+			return;
+		}
+		aircraftTemplate = buyList.l[num].aircraft;
+		freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, baseCurrent, 0);
+
+		/* Check free space in hangars. */
+		if (freeSpace < 0) {
+			Com_Printf("BS_BuyAircraft_f: something bad happened, AIR_CalculateHangarStorage returned -1!\n");
+			return;
+		}
+
+		if (freeSpace == 0) {
+			MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
+			return;
+		} else {
+			assert(aircraftTemplate);
+			if (ccs.credits < aircraftTemplate->price) {
+				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
+				return;
+			} else {
+				/* Hangar capacities are being updated in AIR_NewAircraft().*/
+				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
+				Cbuf_AddText(va("aircraft_new %s %i;buy_type 5;", aircraftTemplate->id, baseCurrent->idx));
+			}
+		}
+	}
+}
+
+/**
+ * @brief Update storage, the market, and the player's credits
+ * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
+ */
+static void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, const int numItems)
+{
+	if (craftitem) {
+		ccs.eMarket.num[craftitem->idx] += numItems;
+		/* reinit the menu */
+		BS_BuyType(base);
+		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bid[craftitem->idx] * numItems));
+	}
+}
+
+/**
+ * @brief Sells aircraft or craftitem.
+ * @sa BS_BuyAircraft_f
+ */
+static void BS_SellAircraft_f (void)
+{
+	int num, j;
+	qboolean found = qfalse;
+	qboolean teamNote = qfalse;
+	qboolean aircraftOutNote = qfalse;
+	base_t *base;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= buyList.length)
+		return;
+
+	base = baseCurrent;
+
+	if (buyCategory == BUY_AIRCRAFT) {
+		aircraft_t *aircraft;
+		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
+		if (!aircraftTemplate)
+			return;
+
+		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
+			if (!Q_strncmp(aircraft->id, aircraftTemplate->id, MAX_VAR)) {
+				if (aircraft->teamSize) {
+					teamNote = qtrue;
+					continue;
+				}
+				if (!AIR_IsAircraftInBase(aircraft)) {
+					/* aircraft is not in base */
+					aircraftOutNote = qtrue;
+					continue;
+				}
+				found = qtrue;
+				break;
+			}
+		}
+		/* ok, we've found an empty aircraft (no team) in a base
+		 * so now we can sell it */
+		if (found) {
+			/* sell off any items which are mounted on it */
+			for (j = 0; j < aircraft->maxWeapons; j++) {
+				BS_ProcessCraftItemSale(base, aircraft->weapons[j].item, 1);
+				BS_ProcessCraftItemSale(base, aircraft->weapons[j].ammo, 1);
+			}
+
+			BS_ProcessCraftItemSale(base, aircraft->shield.item, 1);
+			/* there should be no ammo here, but checking can't hurt */
+			BS_ProcessCraftItemSale(base, aircraft->shield.ammo, 1);
+
+			for (j = 0; j < aircraft->maxElectronics; j++) {
+				BS_ProcessCraftItemSale(base, aircraft->electronics[j].item, 1);
+				/* there should be no ammo here, but checking can't hurt */
+				BS_ProcessCraftItemSale(base, aircraft->electronics[j].ammo, 1);
+			}
+
+			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
+			/* the capacities are also updated here */
+			AIR_DeleteAircraft(base, aircraft);
+
+			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
+			/* reinit the menu */
+			BS_BuyType(base);
+			return;
+		}
+		if (!found) {
+			if (teamNote)
+				MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
+			else if (aircraftOutNote)
+				MN_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
+			else
+				Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
+		}
+	}
+}
+
+/**
  * @brief Buy one item of a given type.
  * @sa BS_SellItem_f
  * @sa BS_SellAircraft_f
@@ -597,7 +816,8 @@ static void BS_BuyItem_f (void)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT) {
-		Com_Printf("BS_BuyItem_f: Wrong buyCategory\n");
+		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: Redirects to BS_BuyAircraft_f\n");
+		BS_BuyAircraft_f();
 		return;
 	}
 
@@ -672,7 +892,8 @@ static void BS_SellItem_f (void)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT) {
-		Com_Printf("BS_SellItem_f: Wrong buyCategory\n");
+		Com_DPrintf(DEBUG_CLIENT, "BS_SellItem_f: Redirects to BS_SellAircraft_f\n");
+		BS_SellAircraft_f();
 		return;
 	}
 
@@ -769,189 +990,17 @@ static void BS_Autosell_f (void)
 }
 
 /**
- * @brief Buys aircraft or craftitem.
- * @sa BS_SellAircraft_f
- */
-static void BS_BuyAircraft_f (void)
-{
-	int num, freeSpace;
-	const aircraft_t *aircraftTemplate;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!baseCurrent)
-		return;
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyList.length)
-		return;
-
-	if (buyCategory == BUY_AIRCRAFT) {
-		/* We cannot buy aircraft if there is no power in our base. */
-		if (!B_GetBuildingStatus(baseCurrent, B_POWER)) {
-			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
-			return;
-		}
-		/* We cannot buy aircraft without any hangar. */
-		if (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR)) {
-			MN_Popup(_("Note"), _("Build a hangar first."));
-			return;
-		}
-		aircraftTemplate = buyList.l[num].aircraft;
-		freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, baseCurrent, 0);
-
-		/* Check free space in hangars. */
-		if (freeSpace < 0) {
-			Com_Printf("BS_BuyAircraft_f: something bad happened, AIR_CalculateHangarStorage returned -1!\n");
-			return;
-		}
-
-		if (freeSpace == 0) {
-			MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
-			return;
-		} else {
-			assert(aircraftTemplate);
-			if (ccs.credits < aircraftTemplate->price) {
-				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
-				return;
-			} else {
-				/* Hangar capacities are being updated in AIR_NewAircraft().*/
-				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
-				Cbuf_AddText(va("aircraft_new %s %i;buy_type 5;", aircraftTemplate->id, baseCurrent->idx));
-			}
-		}
-	} else {
-		if (!B_GetBuildingStatus(baseCurrent, B_STORAGE)) {
-			MN_Popup(_("Note"), _("No storage in this base."));
-		} else {
-			const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
-			BS_CheckAndDoBuyItem(baseCurrent, craftitem, BS_GetBuySellFactor());
-		}
-	}
-}
-
-/**
- * @brief Update storage, the market, and the player's credits
- * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
- */
-static void BS_ProcessCraftItemSale (base_t *base, const objDef_t *craftitem, const int numItems)
-{
-	if (craftitem) {
-		ccs.eMarket.num[craftitem->idx] += numItems;
-		/* reinit the menu */
-		BS_BuyType(base);
-		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bid[craftitem->idx] * numItems));
-	}
-}
-
-/**
- * @brief Sells aircraft or craftitem.
- * @sa BS_BuyAircraft_f
- */
-static void BS_SellAircraft_f (void)
-{
-	int num, j;
-	qboolean found = qfalse;
-	qboolean teamNote = qfalse;
-	qboolean aircraftOutNote = qfalse;
-	base_t *base;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!baseCurrent)
-		return;
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyList.length)
-		return;
-
-	base = baseCurrent;
-
-	if (buyCategory == BUY_AIRCRAFT) {
-		aircraft_t *aircraft;
-		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
-		if (!aircraftTemplate)
-			return;
-
-		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-			if (!Q_strncmp(aircraft->id, aircraftTemplate->id, MAX_VAR)) {
-				if (aircraft->teamSize) {
-					teamNote = qtrue;
-					continue;
-				}
-				if (!AIR_IsAircraftInBase(aircraft)) {
-					/* aircraft is not in base */
-					aircraftOutNote = qtrue;
-					continue;
-				}
-				found = qtrue;
-				break;
-			}
-		}
-		/* ok, we've found an empty aircraft (no team) in a base
-		 * so now we can sell it */
-		if (found) {
-			/* sell off any items which are mounted on it */
-			for (j = 0; j < aircraft->maxWeapons; j++) {
-				BS_ProcessCraftItemSale(base, aircraft->weapons[j].item, 1);
-				BS_ProcessCraftItemSale(base, aircraft->weapons[j].ammo, 1);
-			}
-
-			BS_ProcessCraftItemSale(base, aircraft->shield.item, 1);
-			/* there should be no ammo here, but checking can't hurt */
-			BS_ProcessCraftItemSale(base, aircraft->shield.ammo, 1);
-
-			for (j = 0; j < aircraft->maxElectronics; j++) {
-				BS_ProcessCraftItemSale(base, aircraft->electronics[j].item, 1);
-				/* there should be no ammo here, but checking can't hurt */
-				BS_ProcessCraftItemSale(base, aircraft->electronics[j].ammo, 1);
-			}
-
-			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
-			/* the capacities are also updated here */
-			AIR_DeleteAircraft(base, aircraft);
-
-			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
-			/* reinit the menu */
-			BS_BuyType(base);
-			return;
-		}
-		if (!found) {
-			if (teamNote)
-				MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
-			else if (aircraftOutNote)
-				MN_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
-			else
-				Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
-		}
-	} else {
-		const objDef_t *craftitem = BS_GetObjectDefition(&buyList.l[num]);
-		if (base->storage.num[craftitem->idx]) {
-			const int numItems = min(base->storage.num[craftitem->idx], BS_GetBuySellFactor());
-			B_UpdateStorageAndCapacity(base, craftitem, -numItems, qfalse, qfalse);
-			BS_ProcessCraftItemSale(base, craftitem, numItems);
-		}
-	}
-}
-
-/**
  * @brief Activates commands for Market Menu.
  */
 void BS_InitStartup (void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
+	Cmd_AddCommand("prev_buy_type", BS_Prev_BuyType_f, NULL);
+	Cmd_AddCommand("next_buy_type", BS_Next_BuyType_f, NULL);
 	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");
 	Cmd_AddCommand("market_scroll", BS_MarketScroll_f, "Scroll function for buy menu");
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
-	Cmd_AddCommand("mn_buy_aircraft", BS_BuyAircraft_f, "Buy aircraft or craftitem");
-	Cmd_AddCommand("mn_sell_aircraft", BS_SellAircraft_f, "Sell aircraft or craftitem");
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
 
 	memset(&buyList, 0, sizeof(buyList));

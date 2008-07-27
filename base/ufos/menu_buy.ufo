@@ -17,28 +17,10 @@ menu buy
 	// background
 	// ==================
 
-	pic back_ul
+	pic back
 	{
-		image	menu/buy_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/buy_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/buy_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/buy_lr
-		pos		"512 512"
+		image	menu/buy
+		pos	"0 0"
 	}
 
 	// ==================
@@ -48,10 +30,10 @@ menu buy
 	text market
 	{
 		color	"0 .78 0 1"
-		num		"34"
+		num	"34"
 		height	"28"
 		format	"25 0"
-		pos		"55 40"
+		pos	"55 40"
 		size	"265 700"
 		click
 		wheel	{ cmd "market_scroll" }
@@ -62,18 +44,18 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num		"35"
+		num	"35"
 		height	"28"
 		size	"40 700"
 		format	"25 0"
-		pos		"370 40"
+		pos	"370 40"
 	}
 
 	text market_market
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num		"36"
+		num	"36"
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -84,11 +66,11 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num		"37"
+		num	"37"
 		height	"28"
 		size	"80 700"
 		format	"25 0"
-		pos		"542 40"
+		pos	"542 40"
 		wheel	{ cmd "market_scroll" }
 	}
 
@@ -1278,16 +1260,18 @@ menu buy
 
 	string txt_storage_caption
 	{
+		if "mn_itemtype != 5"
 		string 		"_Storage (used/all):"
-		pos		"650 120"
+		pos		"650 80"
 		font		f_small
 		align		ul
 	}
 
 	string txt_storage_value
 	{
+		if "mn_itemtype != 5"
 		string 		"*cvar mn_bs_storage"
-		pos		"830 120"
+		pos		"855 80"
 		font		f_small
 		align		ul
 	}
@@ -1296,148 +1280,42 @@ menu buy
 	// buttons
 	// ==================
 
-	confunc buy_reset
+	string txt_category
 	{
-		*s_primary		color "1 1 1 0.6"
-		*s_secondary	color "1 1 1 0.6"
-		*s_misc			color "1 1 1 0.6"
-		*s_armour		color "1 1 1 0.6"
-		*s_other		color "1 1 1 0.6"
-		*s_heavy		color "1 1 1 0.6"
-	}
-	confunc buy_primary		{ cmd "buy_type 0;" buy_reset *s_primary	color "1 1 1 1" }
-	confunc buy_secondary	{ cmd "buy_type 1;" buy_reset *s_secondary	color "1 1 1 1" }
-	confunc buy_misc		{ cmd "buy_type 2;" buy_reset *s_misc	color "1 1 1 1" }
-	confunc buy_armour		{ cmd "buy_type 3;" buy_reset *s_armour	color "1 1 1 1" }
-	confunc buy_other		{ cmd "buy_type 6;" buy_reset *s_other	color "1 1 1 1" }
-	confunc buy_heavy		{ cmd "buy_type 8;" buy_reset *s_heavy	color "1 1 1 1" }
-
-	pic bt_primary
-	{
-		tooltip	"_Show primary weapons"
-		image	menu/button_blue
-		mousefx	true
-		pos		"615 560"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ buy_primary }
-	}
-
-	string s_primary
-	{
-		pos	"679 586"
-		align	cc
-		color "1 1 1 0.6"
 		font	"f_small"
-		string	"_Primary"
+		string	"*cvar mn_itemtypename"
+		pos	"785 647"
+		align	uc
 	}
 
-	pic bt_secondary
-	{
-		tooltip	"_Show only secondary weapons"
-		image	menu/button_blue
-		mousefx	true
-		pos		"765 560"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ buy_secondary }
-	}
+        pic bt_previtemtype
+        {
+                tooltip	"_Previous category"
+                mousefx	true
+                image	menu/button_aliencont1
+                pos	"650 623"
+                texl	"0 0"
+                texh	"32 64"
+		click	{ cmd "prev_buy_type;" }
+        }
 
-	string s_secondary
-	{
-		pos	"829 586"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_small"
-		string	"_Secondary"
-	}
-
-	pic bt_misc
-	{
-		tooltip	"_Show miscellaneous equipment"
-		image	menu/button_blue
-		mousefx	true
-		pos		"615 622"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ buy_misc }
-	}
-
-	string s_misc
-	{
-		pos	"679 648"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_small"
-		string	"_Misc"
-	}
-
-	pic bt_armour
-	{
-		tooltip	"_Show armour"
-		image	menu/button_blue
-		mousefx	true
-		pos		"765 622"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ buy_armour }
-	}
-
-	string s_armour
-	{
-		pos	"829 648"
-		align	cc
-		color	"1 1 1 0.6"
-		font	"f_small"
-		string	"_Armour"
-	}
-
-	pic bt_heavy
-	{
-		tooltip	"_Show heavy equipment"
-		image	menu/button_blue
-		mousefx	true
-		pos	"615 683"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ buy_heavy }
-	}
-
-	string s_heavy
-	{
-		pos	"679 709"
-		align	cc
-		color	"1 1 1 0.6"
-		font	"f_small"
-		string	"_Heavy"
-	}
-
-	pic bt_other
-	{
-		tooltip	"_Show other items and materials"
-		image	menu/button_blue
-		mousefx	true
-		pos	"765 683"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ buy_other }
-	}
-
-	string s_other
-	{
-		pos	"829 709"
-		align	cc
-		color	"1 1 1 0.6"
-		font	"f_small"
-		string	"_Other"
-	}
+        pic bt_nextitemtype
+        {
+                tooltip	"_Next category"
+                mousefx	true
+                image	menu/button_aliencont1
+                pos	"882 623"
+                texl	"32 0"
+                texh	"64 64"
+		click	{ cmd "next_buy_type;" }
+        }
 
 	pic bt_continue
 	{
 		tooltip	"_Back to baseview"
 		image	hud/buttons2
 		mousefx	true
-		pos		"940 686"
+		pos	"920 715"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd mn_pop }
@@ -1449,21 +1327,32 @@ menu buy
 
 	string itemname
 	{
+		if "mn_itemtype != 5"
 		string	"*cvar mn_itemname"
-		pos		"793 195"
+		pos	"793 155"
 		align	uc
 	}
 
+        string aircraftname
+        {
+		if "mn_itemtype == 5"
+                string  "*cvar mn_aircraftname"
+                pos	"793 155"
+                align   uc
+        }
+
 	item itemmodel
 	{
+		// @todo: models for aircraft/craftitems
+		if "mn_itemtype != 5"
 		string	"*cvar mn_item"
-		pos		"793 278"
+		pos	"793 250"
 		scale	"7 7 7"
 	}
 
 	text description
 	{
-		pos		"620 347"
+		pos		"620 377"
 		size	"336 150"
 		height	"10"
 		format	"15 168"
@@ -1472,7 +1361,7 @@ menu buy
 
 	zone weapon_wz
 	{
-		pos	"745 468"
+		pos	"745 498"
 		size	"226 16"
 		whup	{ cmd mn_increaseweapon }
 		whdown	{ cmd mn_decreaseweapon }
@@ -1484,7 +1373,7 @@ menu buy
 		if "mn_changeweapon == 1"
 		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
-		pos		"745 468"
+		pos	"745 498"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1499,7 +1388,7 @@ menu buy
 		if "mn_changeweapon == 2"
 		tooltip "_Previous ammunition compatible with this weapon"
 		image	menu/buttons_small
-		pos		"745 468"
+		pos	"745 498"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1515,7 +1404,7 @@ menu buy
 		if "mn_changeweapon == 1"
 		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
-		pos		"955 468"
+		pos	"955 498"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1530,7 +1419,7 @@ menu buy
 		if "mn_changeweapon == 2"
 		tooltip "_Next ammunition compatible with this weapon"
 		image	menu/buttons_small
-		pos		"955 468"
+		pos	"955 498"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1540,12 +1429,11 @@ menu buy
 		}
 	}
 
-
 	string header_weapon
 	{
 		if "mn_displayweapon == 1"
 		string	"_With weapon:"
-		pos		"620 476"
+		pos	"620 506"
 		align	cl
 		font	f_verysmall
 	}
@@ -1554,7 +1442,7 @@ menu buy
 	{
 		if "mn_displayweapon == 2"
 		string	"_With ammo:"
-		pos		"620 476"
+		pos	"620 506"
 		align	cl
 		font	f_verysmall
 	}
@@ -1562,14 +1450,14 @@ menu buy
 	string weapon_name
 	{
 		string	"*cvar mn_researchedlinkname"
-		pos		"855 476"
+		pos	"855 506"
 		align	cc
 		font	f_verysmall
 	}
 
 	zone firemode_wz
 	{
-		pos	"745 486"
+		pos	"745 516"
 		size	"226 16"
 		whup	{ cmd mn_increasefiremode }
 		whdown	{ cmd mn_decreasefiremode }
@@ -1580,7 +1468,7 @@ menu buy
 		if "mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
-		pos		"745 486"
+		pos	"745 516"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1595,7 +1483,7 @@ menu buy
 		if "mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
-		pos		"955 486"
+		pos	"955 516"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1609,7 +1497,7 @@ menu buy
 	{
 		if "mn_displayfiremode == 1"
 		string	"_Firemode:"
-		pos		"620 494"
+		pos	"620 524"
 		align	cl
 		font	f_verysmall
 	}
@@ -1618,7 +1506,7 @@ menu buy
 	{
 		if "mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
-		pos		"855 494"
+		pos	"855 524"
 		align	cc
 		font	f_verysmall
 	}
@@ -1630,877 +1518,6 @@ menu buy
 
 	func init
 	{
-		buy_primary
-	}
-}
-
-// ==================
-// AIRCRAFT BUY MENU
-// ==================
-menu buyaircraft
-{
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
-	// background
-	// ==================
-
-	pic back_ul
-	{
-		image	menu/buya_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/buya_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/buya_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/buya_lr
-		pos		"512 512"
-	}
-
-	// ==================
-	// lists
-	// ==================
-
-	text market
-	{
-		color	"0 .78 0 1"
-		num		"34"
-		height	"28"
-		format	"25 0"
-		pos		"55 40"
-		size	"265 700"
-		click
-		wheel	{ cmd "market_scroll" }
-		mousefx	true
-	}
-
-	text market_storage
-	{
-		color	"0 .78 0 1"
-		align	ur
-		num		"35"
-		height	"28"
-		size	"40 700"
-		format	"25 0"
-		pos		"370 40"
-	}
-
-	text market_market
-	{
-		color	"0 .78 0 1"
-		align	ur
-		num		"36"
-		height	"28"
-		size	"40 700"
-		format	"25 0"
-		pos		"446 40"
-	}
-
-	text market_prices
-	{
-		color	"0 .78 0 1"
-		align	ur
-		num		"37"
-		height	"28"
-		size	"80 700"
-		format	"25 0"
-		pos		"542 40"
-		wheel	{ cmd "market_scroll" }
-	}
-
-	// =========================
-	// hide/show functions for the buy/sell entries in the list
-	// =========================
-
-	confunc buy_hide0 { *bt_buy0 invis true	*bt_sell0 invis true  }
-	confunc buy_hide1 { *bt_buy1 invis true	*bt_sell1 invis true  }
-	confunc buy_hide2 { *bt_buy2 invis true	*bt_sell2 invis true  }
-	confunc buy_hide3 { *bt_buy3 invis true	*bt_sell3 invis true  }
-	confunc buy_hide4 { *bt_buy4 invis true	*bt_sell4 invis true  }
-	confunc buy_hide5 { *bt_buy5 invis true	*bt_sell5 invis true  }
-	confunc buy_hide6 { *bt_buy6 invis true	*bt_sell6 invis true  }
-	confunc buy_hide7 { *bt_buy7 invis true	*bt_sell7 invis true  }
-	confunc buy_hide8 { *bt_buy8 invis true	*bt_sell8 invis true  }
-	confunc buy_hide9 { *bt_buy9 invis true	*bt_sell9 invis true  }
-	confunc buy_hide10 { *bt_buy10 invis true *bt_sell10 invis true  }
-	confunc buy_hide11 { *bt_buy11 invis true *bt_sell11 invis true  }
-	confunc buy_hide12 { *bt_buy12 invis true *bt_sell12 invis true  }
-	confunc buy_hide13 { *bt_buy13 invis true *bt_sell13 invis true  }
-	confunc buy_hide14 { *bt_buy14 invis true *bt_sell14 invis true  }
-	confunc buy_hide15 { *bt_buy15 invis true *bt_sell15 invis true  }
-	confunc buy_hide16 { *bt_buy16 invis true *bt_sell16 invis true  }
-	confunc buy_hide17 { *bt_buy17 invis true *bt_sell17 invis true  }
-	confunc buy_hide18 { *bt_buy18 invis true *bt_sell18 invis true  }
-
-	confunc buy_show0 { *bt_buy0 invis false	*bt_sell0 invis false  }
-	confunc buy_show1 { *bt_buy1 invis false	*bt_sell1 invis false  }
-	confunc buy_show2 { *bt_buy2 invis false	*bt_sell2 invis false  }
-	confunc buy_show3 { *bt_buy3 invis false	*bt_sell3 invis false  }
-	confunc buy_show4 { *bt_buy4 invis false	*bt_sell4 invis false  }
-	confunc buy_show5 { *bt_buy5 invis false	*bt_sell5 invis false  }
-	confunc buy_show6 { *bt_buy6 invis false	*bt_sell6 invis false  }
-	confunc buy_show7 { *bt_buy7 invis false	*bt_sell7 invis false  }
-	confunc buy_show8 { *bt_buy8 invis false	*bt_sell8 invis false  }
-	confunc buy_show9 { *bt_buy9 invis false	*bt_sell9 invis false  }
-        confunc buy_show10 { *bt_buy10 invis false	*bt_sell10 invis false  }
-        confunc buy_show11 { *bt_buy11 invis false	*bt_sell11 invis false  }
-        confunc buy_show12 { *bt_buy12 invis false	*bt_sell12 invis false  }
-        confunc buy_show13 { *bt_buy13 invis false	*bt_sell13 invis false  }
-        confunc buy_show14 { *bt_buy14 invis false	*bt_sell14 invis false  }
-        confunc buy_show15 { *bt_buy15 invis false	*bt_sell15 invis false  }
-        confunc buy_show16 { *bt_buy16 invis false	*bt_sell16 invis false  }
-        confunc buy_show17 { *bt_buy17 invis false	*bt_sell17 invis false  }
-        confunc buy_show18 { *bt_buy18 invis false	*bt_sell18 invis false  }
-
-	// ======================
-	// tooltip content update
-	// ======================
-
-	confunc buy_tooltip_aircraft0 {
-		*bt_buy0 tooltip "_Buy aircraft"
-		*bt_sell0 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft1 {
-		*bt_buy1 tooltip "_Buy aircraft"
-		*bt_sell1 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft2 {
-		*bt_buy2 tooltip "_Buy aircraft"
-		*bt_sell2 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft3 {
-		*bt_buy3 tooltip "_Buy aircraft"
-		*bt_sell3 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft4 {
-		*bt_buy4 tooltip "_Buy aircraft"
-		*bt_sell4 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft5 {
-		*bt_buy5 tooltip "_Buy aircraft"
-		*bt_sell5 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft6 {
-		*bt_buy6 tooltip "_Buy aircraft"
-		*bt_sell6 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft7 {
-		*bt_buy7 tooltip "_Buy aircraft"
-		*bt_sell7 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft8 {
-		*bt_buy8 tooltip "_Buy aircraft"
-		*bt_sell8 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft9 {
-		*bt_buy9 tooltip "_Buy aircraft"
-		*bt_sell9 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft10 {
-		*bt_buy10 tooltip "_Buy aircraft"
-		*bt_sell10 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft11 {
-		*bt_buy11 tooltip "_Buy aircraft"
-		*bt_sell11 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft12 {
-		*bt_buy12 tooltip "_Buy aircraft"
-		*bt_sell12 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft13 {
-		*bt_buy13 tooltip "_Buy aircraft"
-		*bt_sell13 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft14 {
-		*bt_buy14 tooltip "_Buy aircraft"
-		*bt_sell14 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft15 {
-		*bt_buy15 tooltip "_Buy aircraft"
-		*bt_sell15 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft16 {
-		*bt_buy16 tooltip "_Buy aircraft"
-		*bt_sell16 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft17 {
-		*bt_buy17 tooltip "_Buy aircraft"
-		*bt_sell17 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_aircraft18 {
-		*bt_buy18 tooltip "_Buy aircraft"
-		*bt_sell18 tooltip "_Sell aircraft"
-	}
-	confunc buy_tooltip_craftitem0 {
-		*bt_buy0 tooltip "_Buy craftitem"
-		*bt_sell0 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem1 {
-		*bt_buy1 tooltip "_Buy craftitem"
-		*bt_sell1 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem2 {
-		*bt_buy2 tooltip "_Buy craftitem"
-		*bt_sell2 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem3 {
-		*bt_buy3 tooltip "_Buy craftitem"
-		*bt_sell3 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem4 {
-		*bt_buy4 tooltip "_Buy craftitem"
-		*bt_sell4 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem5 {
-		*bt_buy5 tooltip "_Buy craftitem"
-		*bt_sell5 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem6 {
-		*bt_buy6 tooltip "_Buy craftitem"
-		*bt_sell6 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem7 {
-		*bt_buy7 tooltip "_Buy craftitem"
-		*bt_sell7 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem8 {
-		*bt_buy8 tooltip "_Buy craftitem"
-		*bt_sell8 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem9 {
-		*bt_buy9 tooltip "_Buy craftitem"
-		*bt_sell9 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem10 {
-		*bt_buy10 tooltip "_Buy craftitem"
-		*bt_sell10 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem11 {
-		*bt_buy11 tooltip "_Buy craftitem"
-		*bt_sell11 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem12 {
-		*bt_buy12 tooltip "_Buy craftitem"
-		*bt_sell12 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem13 {
-		*bt_buy13 tooltip "_Buy craftitem"
-		*bt_sell13 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem14 {
-		*bt_buy14 tooltip "_Buy craftitem"
-		*bt_sell14 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem15 {
-		*bt_buy15 tooltip "_Buy craftitem"
-		*bt_sell15 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem16 {
-		*bt_buy16 tooltip "_Buy craftitem"
-		*bt_sell16 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem17 {
-		*bt_buy17 tooltip "_Buy craftitem"
-		*bt_sell17 tooltip "_Sell craftitem"
-	}
-	confunc buy_tooltip_craftitem18 {
-		*bt_buy18 tooltip "_Buy craftitem"
-		*bt_sell18 tooltip "_Sell craftitem"
-	}
-
-	// ==================
-	// buy/sell buttons
-	// ==================
-
-	zone wz_buysell0
-	{
-		pos	"332 40"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 0;" }
-		whdown	{ cmd "mn_sell_aircraft 0;" }
-	}
-	pic bt_buy0
-	{
-		image	menu/buttons_small
-		pos		"376 40"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 0;" }
-		repeat	true
-	}
-	pic bt_sell0
-	{
-		image	menu/buttons_small
-		pos		"392 40"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 0;" }
-		repeat	true
-	}
-	zone wz_buysell1
-	{
-		pos	"332 65"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 1;" }
-		whdown	{ cmd "mn_sell_aircraft 1;" }
-	}
-	pic bt_buy1
-	{
-		image	menu/buttons_small
-		pos		"376 65"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 1;" }
-		repeat	true
-	}
-	pic bt_sell1
-	{
-		image	menu/buttons_small
-		pos		"392 65"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 1;" }
-		repeat	true
-	}
-	zone wz_buysell2
-	{
-		pos	"332 90"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 2;" }
-		whdown	{ cmd "mn_sell_aircraft 2;" }
-	}
-	pic bt_buy2
-	{
-		image	menu/buttons_small
-		pos		"376 90"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 2;" }
-		repeat	true
-	}
-	pic bt_sell2
-	{
-		image	menu/buttons_small
-		pos		"392 90"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 2;" }
-		repeat	true
-	}
-	zone wz_buysell3
-	{
-		pos	"332 115"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 3;" }
-		whdown	{ cmd "mn_sell_aircraft 3;" }
-	}
-	pic bt_buy3
-	{
-		image	menu/buttons_small
-		pos		"376 115"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 3;" }
-		repeat	true
-	}
-	pic bt_sell3
-	{
-		image	menu/buttons_small
-		pos		"392 115"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 3;" }
-		repeat	true
-	}
-	zone wz_buysell4
-	{
-		pos	"332 140"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 4;" }
-		whdown	{ cmd "mn_sell_aircraft 4;" }
-	}
-	pic bt_buy4
-	{
-		image	menu/buttons_small
-		pos		"376 140"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 4;" }
-		repeat	true
-	}
-	pic bt_sell4
-	{
-		image	menu/buttons_small
-		pos		"392 140"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 4;" }
-		repeat	true
-	}
-	zone wz_buysell5
-	{
-		pos	"332 165"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 5;" }
-		whdown	{ cmd "mn_sell_aircraft 5;" }
-	}
-	pic bt_buy5
-	{
-		image	menu/buttons_small
-		pos		"376 165"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 5;" }
-		repeat	true
-	}
-	pic bt_sell5
-	{
-		image	menu/buttons_small
-		pos		"392 165"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 5;" }
-		repeat	true
-	}
-	zone wz_buysell6
-	{
-		pos	"332 190"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 6;" }
-		whdown	{ cmd "mn_sell_aircraft 6;" }
-		repeat	true
-	}
-	pic bt_buy6
-	{
-		image	menu/buttons_small
-		pos		"376 190"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 6;" }
-		repeat	true
-	}
-	pic bt_sell6
-	{
-		image	menu/buttons_small
-		pos		"392 190"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 6;" }
-		repeat	true
-	}
-	zone wz_buysell7
-	{
-		pos	"332 215"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 7;" }
-		whdown	{ cmd "mn_sell_aircraft 7;" }
-	}
-	pic bt_buy7
-	{
-		image	menu/buttons_small
-		pos		"376 215"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 7;" }
-		repeat	true
-	}
-	pic bt_sell7
-	{
-		image	menu/buttons_small
-		pos		"392 215"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 7;" }
-		repeat	true
-	}
-	zone wz_buysell8
-	{
-		pos	"332 240"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 8;" }
-		whdown	{ cmd "mn_sell_aircraft 8;" }
-	}
-	pic bt_buy8
-	{
-		image	menu/buttons_small
-		pos		"376 240"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 8;" }
-		repeat	true
-	}
-	pic bt_sell8
-	{
-		image	menu/buttons_small
-		pos		"392 240"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 8;" }
-		repeat	true
-	}
-	zone wz_buysell9
-	{
-		pos	"332 265"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 9;" }
-		whdown	{ cmd "mn_sell_aircraft 9;" }
-	}
-	pic bt_buy9
-	{
-		image	menu/buttons_small
-		pos		"376 265"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 9;" }
-		repeat	true
-	}
-	pic bt_sell9
-	{
-		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 9;" }
-		repeat	true
-	}
-	zone wz_buysell10
-	{
-		pos	"332 290"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 10;" }
-		whdown	{ cmd "mn_sell_aircraft 10;" }
-	}
-	pic bt_buy10
-	{
-		image	menu/buttons_small
-		pos		"376 290"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 10;" }
-		repeat	true
-	}
-	pic bt_sell10
-	{
-		image	menu/buttons_small
-		pos		"392 290"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 10;" }
-		repeat	true
-	}
-	zone wz_buysell11
-	{
-		pos	"332 315"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 11;" }
-		whdown	{ cmd "mn_sell_aircraft 11;" }
-	}
-	pic bt_buy11
-	{
-		image	menu/buttons_small
-		pos		"376 315"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 11;" }
-		repeat	true
-	}
-	pic bt_sell11
-	{
-		image	menu/buttons_small
-		pos		"392 315"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 11;" }
-		repeat	true
-	}
-	zone wz_buysell12
-	{
-		pos	"332 340"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 12;" }
-		whdown	{ cmd "mn_sell_aircraft 12;" }
-	}
-	pic bt_buy12
-	{
-		image	menu/buttons_small
-		pos		"376 340"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 12;" }
-		repeat	true
-	}
-	pic bt_sell12
-	{
-		image	menu/buttons_small
-		pos		"392 340"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 12;" }
-		repeat	true
-	}
-	zone wz_buysell13
-	{
-		pos	"332 365"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 13;" }
-		whdown	{ cmd "mn_sell_aircraft 13;" }
-	}
-	pic bt_buy13
-	{
-		image	menu/buttons_small
-		pos		"376 365"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 13;" }
-		repeat	true
-	}
-	pic bt_sell13
-	{
-		image	menu/buttons_small
-		pos		"392 365"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 13;" }
-		repeat	true
-	}
-	zone wz_buysell14
-	{
-		pos	"332 390"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 14;" }
-		whdown	{ cmd "mn_sell_aircraft 14;" }
-	}
-	pic bt_buy14
-	{
-		image	menu/buttons_small
-		pos		"376 390"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 14;" }
-		repeat	true
-	}
-	pic bt_sell14
-	{
-		image	menu/buttons_small
-		pos		"392 390"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 14;" }
-		repeat	true
-	}
-	zone wz_buysell15
-	{
-		pos	"332 415"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 15;" }
-		whdown	{ cmd "mn_sell_aircraft 15;" }
-	}
-	pic bt_buy15
-	{
-		image	menu/buttons_small
-		pos		"376 415"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 15;" }
-		repeat	true
-	}
-	pic bt_sell15
-	{
-		image	menu/buttons_small
-		pos		"392 415"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 15;" }
-		repeat	true
-	}
-	zone wz_buysell16
-	{
-		pos	"332 440"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 16;" }
-		whdown	{ cmd "mn_sell_aircraft 16;" }
-	}
-	pic bt_buy16
-	{
-		image	menu/buttons_small
-		pos		"376 440"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 16;" }
-		repeat	true
-	}
-	pic bt_sell16
-	{
-		image	menu/buttons_small
-		pos		"392 440"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 16;" }
-		repeat	true
-	}
-	zone wz_buysell17
-	{
-		pos	"332 465"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 17;" }
-		whdown	{ cmd "mn_sell_aircraft 17;" }
-	}
-	pic bt_buy17
-	{
-		image	menu/buttons_small
-		pos		"376 465"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 17;" }
-		repeat	true
-	}
-	pic bt_sell17
-	{
-		image	menu/buttons_small
-		pos		"392 465"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 17;" }
-		repeat	true
-	}
-	zone wz_buysell18
-	{
-		pos	"332 490"
-		size	"120 24"
-		whup	{ cmd "mn_buy_aircraft 18;" }
-		whdown	{ cmd "mn_sell_aircraft 18;" }
-	}
-	pic bt_buy18
-	{
-		image	menu/buttons_small
-		pos		"376 490"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy_aircraft 18;" }
-		repeat	true
-	}
-	pic bt_sell18
-	{
-		image	menu/buttons_small
-		pos		"392 490"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell_aircraft 18;" }
-		repeat	true
-	}
-
-
-	// ==================
-	// credits
-	// ==================
-
-	string txt_credits_caption
-	{
-		string	"_CREDIT"
-		pos	"650 70"
-		font	f_big
-		align	ul
-	}
-
-	string txt_credits
-	{
-		font	"f_big"
-		string	"*cvar mn_credits"
-		pos		"944 70"
-		align	ur
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	confunc abuy_reset
-	{
-		*s_aircrafts	color "1 1 1 0.6"
-		*s_craftitems	color "1 1 1 0.6"
-	}
-	confunc abuy_aircrafts	{ cmd "buy_type 5;" abuy_reset *s_aircrafts	color "1 1 1 1" }
-	confunc abuy_craftitems	{ cmd "buy_type 7;" abuy_reset *s_craftitems	color "1 1 1 1" }
-
-	confunc abuy_disableaircrafts1 { *bt_aircrafts image "menu/button_gray"
-		*bt_aircrafts tooltip "_No power supplies in this base" }
-	confunc abuy_disableaircrafts2 { *bt_aircrafts image "menu/button_gray"
-		*bt_aircrafts tooltip "_No hangars in this base"
-	}
-	confunc abuy_disableitems	 { *bt_craftitems image "menu/button_gray"
-		*bt_craftitems tooltip "_No storage in this base"
-	}
-	confunc abuy_enableaircrafts	 { *bt_aircrafts image "menu/button_blue"
-		*bt_aircrafts tooltip "_Buy or sell aircraft"
-	}
-	confunc abuy_enableitems	 { *bt_craftitems image "menu/button_blue"
-		*bt_craftitems tooltip "_Buy or sell craftitems"
-	}
-
-	pic bt_aircrafts
-	{
-		tooltip	"_Show aircraft"
-		image	menu/button_blue
-		mousefx	true
-		pos		"615 560"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ abuy_aircrafts }
-	}
-
-	string s_aircrafts
-	{
-		pos	"679 586"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_small"
-		string	"_Aircraft"
-	}
-
-	pic bt_craftitems
-	{
-		tooltip	"_Show craftitems"
-		image	menu/button_blue
-		mousefx	true
-		pos		"765 560"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ abuy_craftitems }
-	}
-
-	string s_craftitems
-	{
-		pos	"829 586"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_small"
-		string	"_Craftitems"
-	}
-
-	pic bt_continue
-	{
-		tooltip	"_Back to hangar"
-		image	hud/buttons2
-		mousefx	true
-		pos		"940 686"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;" }
-	}
-
-	// ==================
-	// item description
-	// ==================
-
-	string aircraftname
-	{
-		string	"*cvar mn_aircraftname"
-		pos		"793 205"
-		align	uc
-	}
-
-	text description
-	{
-		pos		"620 240"
-		size	"346 90"
-//		bgcolor	"1 1 1 0.5"
-		format	"18 150"
-		height	5
-		wheel
-	}
-
-	// ==================
-	// init
-	// ==================
-
-	func init
-	{
-		abuy_aircrafts
-	}
-	func close
-	{
-		cmd "mn_reset_air;"
+		cmd "buy_type *mn_itemtype;"
 	}
 }

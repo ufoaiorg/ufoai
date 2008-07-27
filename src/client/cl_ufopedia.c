@@ -571,6 +571,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 		Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+		Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+		Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 		Cvar_Set("mn_researchedlinkname", "");
 		Cvar_Set("mn_upresearchedlinknametooltip", "");
 		return;
@@ -584,6 +586,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	Cvar_Set("mn_upmodel_top", item->tech->mdl);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
@@ -635,6 +639,15 @@ void UP_AircraftItemDescription (const objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* t)
 {
+	/* Reset all sort of info for normal items */
+	/** @todo Check if this is all needed. Any better way? */
+	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
 
@@ -698,7 +711,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
 
-	/* REset all sort of info for normal items */
+	/* Reset all sort of info for normal items */
 	/** @todo Check if this is all needed. Any better way? */
 	Cvar_Set("mn_item", "");
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
