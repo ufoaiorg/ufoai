@@ -113,7 +113,6 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 	dMD2Model_t *md2;
 	dMD2Triangle_t *pintri;
 	dMD2Coord_t *pincoord;
-	dMD2Frame_t *pinframe;
 	int version, size;
 	byte *tagbuf = NULL, *animbuf = NULL;
 	mAliasMesh_t *outMesh;
@@ -251,7 +250,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, void *buffer, int bufSize)
 
 	ClearBounds(mod->mins, mod->maxs);
 	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
-		pinframe = (dMD2Frame_t *) ((byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+		const dMD2Frame_t *pinframe = (dMD2Frame_t *) ((byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
 
 		for (j = 0; j < 3; j++) {
 			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);

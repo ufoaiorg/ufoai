@@ -402,7 +402,7 @@ begin:
 /**
  * @sa R_LightPoint_
  */
-void R_LightPoint (vec3_t p)
+void R_LightPoint (const vec3_t p)
 {
 	lightmap_sample_t lms;
 	vec3_t start, end, dest;

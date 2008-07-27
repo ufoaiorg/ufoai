@@ -49,6 +49,6 @@ typedef struct lightmap_sample_s {
 } lightmap_sample_t;
 
 extern lightmap_sample_t r_lightmap_sample;
-void R_LightPoint(vec3_t p);
+void R_LightPoint(const vec3_t p);
 
 #endif
