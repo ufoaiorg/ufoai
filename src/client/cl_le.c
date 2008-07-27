@@ -1054,7 +1054,7 @@ void LE_AddToScene (void)
 					continue;
 			} else if (le->contents & CONTENTS_DETAIL) {
 				/* show them always */
-			} else if ((le->pos[2] > cl_worldlevel->integer))
+			} else if (le->pos[2] > cl_worldlevel->integer)
 				continue;
 
 			memset(&ent, 0, sizeof(ent));
@@ -1091,7 +1091,8 @@ void LE_AddToScene (void)
 
 			/**
 			 * Offset the model to be inside the cursor box
-			 * @todo Dunno if this is the best place to do it - what happens to shot-origin and stuff? le->origin is never changed.
+			 * @todo Dunno if this is the best place to do it - what happens to
+			 * shot-origin and stuff? le->origin is never changed.
 			 */
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:

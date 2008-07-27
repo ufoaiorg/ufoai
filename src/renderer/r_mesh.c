@@ -208,7 +208,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 qboolean R_CullMeshModel (entity_t *e)
 {
 	int i;
-	int32_t aggregatemask;
+	int aggregatemask;
 	vec3_t mins, maxs;
 	vec3_t bbox[8];
 	const mAliasModel_t *mod = &e->model->alias;
@@ -289,9 +289,6 @@ qboolean R_CullMeshModel (entity_t *e)
 	return e->cullResult;
 }
 
-static vec3_t r_mesh_verts[MD3_MAX_VERTS];
-static vec3_t r_mesh_norms[MD3_MAX_VERTS];
-
 void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
 {
 	int i, vertind, coordind;
@@ -299,6 +296,8 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 	const mAliasVertex_t *v, *ov;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
+	vec3_t r_mesh_verts[MD3_MAX_VERTS];
+	vec3_t r_mesh_norms[MD3_MAX_VERTS];
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
