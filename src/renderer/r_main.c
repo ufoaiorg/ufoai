@@ -36,19 +36,10 @@ refdef_t refdef;
 
 rconfig_t r_config;
 rstate_t r_state;
+rlocals_t r_locals;
 
 image_t *r_notexture;			/* use for bad textures */
 image_t *r_warptexture;
-
-static cBspPlane_t r_frustum[4];
-
-/* view origin */
-vec3_t r_vup;
-vec3_t r_vpn;
-vec3_t r_vright;
-
-float r_world_matrix[16];
-float r_base_world_matrix[16];
 
 static cvar_t *r_maxtexres;
 
@@ -113,7 +104,7 @@ qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 		return qfalse;
 
 	for (i = 0; i < 4; i++)
-		if (TR_BoxOnPlaneSide(mins, maxs, &r_frustum[i]) == PSIDE_BACK)
+		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
 			return qtrue;
 	return qfalse;
 }
@@ -137,34 +128,34 @@ static void R_SetFrustum (void)
 
 	if (r_isometric->integer) {
 		/* 4 planes of a cube */
-		VectorScale(r_vright, +1, r_frustum[0].normal);
-		VectorScale(r_vright, -1, r_frustum[1].normal);
-		VectorScale(r_vup, +1, r_frustum[2].normal);
-		VectorScale(r_vup, -1, r_frustum[3].normal);
+		VectorScale(r_locals.right, +1, r_locals.frustum[0].normal);
+		VectorScale(r_locals.right, -1, r_locals.frustum[1].normal);
+		VectorScale(r_locals.up, +1, r_locals.frustum[2].normal);
+		VectorScale(r_locals.up, -1, r_locals.frustum[3].normal);
 
 		for (i = 0; i < 4; i++) {
-			r_frustum[i].type = PLANE_ANYZ;
-			r_frustum[i].dist = DotProduct(refdef.vieworg, r_frustum[i].normal);
-			r_frustum[i].signbits = SignbitsForPlane(&r_frustum[i]);
+			r_locals.frustum[i].type = PLANE_ANYZ;
+			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
+			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
 		}
-		r_frustum[0].dist -= 10 * refdef.fov_x;
-		r_frustum[1].dist -= 10 * refdef.fov_x;
-		r_frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
-		r_frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		r_locals.frustum[0].dist -= 10 * refdef.fov_x;
+		r_locals.frustum[1].dist -= 10 * refdef.fov_x;
+		r_locals.frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		r_locals.frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
 	} else {
 		/* rotate VPN right by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[0].normal, r_vup, r_vpn, -(90 - refdef.fov_x / 2));
+		RotatePointAroundVector(r_locals.frustum[0].normal, r_locals.up, r_locals.forward, -(90 - refdef.fov_x / 2));
 		/* rotate VPN left by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[1].normal, r_vup, r_vpn, 90 - refdef.fov_x / 2);
+		RotatePointAroundVector(r_locals.frustum[1].normal, r_locals.up, r_locals.forward, 90 - refdef.fov_x / 2);
 		/* rotate VPN up by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[2].normal, r_vright, r_vpn, 90 - refdef.fov_y / 2);
+		RotatePointAroundVector(r_locals.frustum[2].normal, r_locals.right, r_locals.forward, 90 - refdef.fov_y / 2);
 		/* rotate VPN down by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[3].normal, r_vright, r_vpn, -(90 - refdef.fov_y / 2));
+		RotatePointAroundVector(r_locals.frustum[3].normal, r_locals.right, r_locals.forward, -(90 - refdef.fov_y / 2));
 
 		for (i = 0; i < 4; i++) {
-			r_frustum[i].type = PLANE_ANYZ;
-			r_frustum[i].dist = DotProduct(refdef.vieworg, r_frustum[i].normal);
-			r_frustum[i].signbits = SignbitsForPlane(&r_frustum[i]);
+			r_locals.frustum[i].type = PLANE_ANYZ;
+			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
+			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
 		}
 	}
 }
@@ -172,7 +163,7 @@ static void R_SetFrustum (void)
 static inline void R_SetupFrame (void)
 {
 	/* build the transformation matrix for the given view angles */
-	AngleVectors(refdef.viewangles, r_vpn, r_vright, r_vup);
+	AngleVectors(refdef.viewangles, r_locals.forward, r_locals.right, r_locals.up);
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
@@ -682,6 +673,7 @@ qboolean R_Init (void)
 	R_Register();
 
 	memset(&r_state, 0, sizeof(r_state));
+	memset(&r_locals, 0, sizeof(r_locals));
 
 	/* set our "safe" modes */
 	viddef.prev_mode = 6;

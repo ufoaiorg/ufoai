@@ -343,11 +343,11 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 
 /**
  * @brief Checks whether a point is "visible" from the edicts position
- * @sa FrustomVis
+ * @sa FrustumVis
  */
 qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
 {
-	return FrustomVis(from->origin, from->dir, point);
+	return FrustumVis(from->origin, from->dir, point);
 }
 
 

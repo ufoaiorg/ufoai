@@ -43,6 +43,11 @@ typedef struct entity_s {
 
 	vec3_t mins, maxs;
 
+	qboolean culled;	/**< use to optimize culling for tag entities (like a
+						 * head that is placed on a body) */
+	qboolean cullResult;	/**< the result of the culling process - true is
+							 * invisible in the current frustum view */
+
 	/* tag positioning */
 	struct entity_s *tagent;	/**< pointer to the parent entity */
 	const char *tagname;				/**< name of the tag */
@@ -60,11 +65,11 @@ typedef struct entity_s {
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
-void R_AddEntity(entity_t * ent);
+void R_AddEntity(entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
-void R_EntityComputeBoundingBox(const vec3_t mins, const vec3_t maxs, vec4_t bbox[8]);
-void R_EntityDrawBBox(vec4_t bbox[8]);
+void R_EntityComputeBoundingBox(const vec3_t mins, const vec3_t maxs, vec3_t bbox[8]);
+void R_EntityDrawBBox(vec3_t bbox[8]);
 
 extern int r_numEntities;
 

@@ -75,14 +75,14 @@ static void R_StageTexcoord (const materialStage_t *stage, const vec3_t v, const
 	float s, t, s0, t0;
 
 	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
-		tmp[0] = v[0] * r_world_matrix[0] + v[1] * r_world_matrix[4] +
-				v[2] * r_world_matrix[8] + r_world_matrix[12];
+		tmp[0] = v[0] * r_locals.world_matrix[0] + v[1] * r_locals.world_matrix[4] +
+				v[2] * r_locals.world_matrix[8] + r_locals.world_matrix[12];
 
-		tmp[1] = v[0] * r_world_matrix[1] + v[1] * r_world_matrix[5] +
-				v[2] * r_world_matrix[9] + r_world_matrix[13];
+		tmp[1] = v[0] * r_locals.world_matrix[1] + v[1] * r_locals.world_matrix[5] +
+				v[2] * r_locals.world_matrix[9] + r_locals.world_matrix[13];
 
-		tmp[2] = v[0] * r_world_matrix[2] + v[1] * r_world_matrix[6] +
-				v[2] * r_world_matrix[10] + r_world_matrix[14];
+		tmp[2] = v[0] * r_locals.world_matrix[2] + v[1] * r_locals.world_matrix[6] +
+				v[2] * r_locals.world_matrix[10] + r_locals.world_matrix[14];
 
 		VectorNormalize(tmp);
 

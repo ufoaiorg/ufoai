@@ -161,7 +161,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 				/* if it's an actor and he's still living */
 				if (G_IsLivingActor(check)) {
 					/* check whether the origin of the enemy is inside the
-					 * AI actors view frustom */
+					 * AI actors view frustum */
 					float actorVis;
 					qboolean frustum = G_FrustumVis(check, ent->origin);
 					if (!frustum)
@@ -210,7 +210,7 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 		/* if it's an actor and he's still living */
 		if (G_IsLivingActor(check)) {
 			/* check whether the origin of the enemy is inside the
-			 * AI actors view frustom */
+			 * AI actors view frustum */
 			float actorVis;
 			qboolean frustum = G_FrustumVis(check, ent->origin);
 			if (!frustum)

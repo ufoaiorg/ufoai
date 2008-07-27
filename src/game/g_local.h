@@ -272,7 +272,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 /** check whether edict is still visible - it maybe is currently visible but this
  * might have changed due to some action */
 #define VT_PERISH		1
-/** don't perform a frustom vis check via G_FrustumVis in G_Vis */
+/** don't perform a frustum vis check via G_FrustumVis in G_Vis */
 #define VT_NOFRUSTUM	2
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )

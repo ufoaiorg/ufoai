@@ -58,11 +58,6 @@ extern mBspSurfaces_t r_material_surfaces;
 
 /*==================================================== */
 
-/* view origin */
-extern vec3_t r_vup;
-extern vec3_t r_vpn;
-extern vec3_t r_vright;
-
 extern cvar_t *r_brightness;
 extern cvar_t *r_contrast;
 extern cvar_t *r_invert;
@@ -106,8 +101,6 @@ extern int gl_compressed_alpha_format;
 extern int gl_filter_min;
 extern int gl_filter_max;
 
-extern float r_world_matrix[16];
-
 /*==================================================================== */
 
 void QR_UnLink(void);
@@ -115,11 +108,27 @@ void QR_Link(void);
 
 /*==================================================================== */
 
-extern int registration_sequence;
+/* private renderer variables */
+typedef struct rlocals_s {
+	/* view origin angle vectors */
+	vec3_t up;
+	vec3_t forward;
+	vec3_t right;
+
+	/* for box culling */
+	cBspPlane_t frustum[4];
+
+	float world_matrix[16];
+} rlocals_t;
+
+extern rlocals_t r_locals;
+
+qboolean R_CullMeshModel(entity_t *e);
 
 void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);
+qboolean R_CullBspModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);

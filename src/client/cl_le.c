@@ -682,7 +682,7 @@ void LET_StartPathMove (le_t * le)
  * @note Think function
  * @sa LET_Projectile
  * @sa CM_TestLine
- * @sa FrustomVis
+ * @sa FrustumVis
  */
 void LET_ProjectileAutoHide (le_t *le)
 {
@@ -703,7 +703,7 @@ void LET_ProjectileAutoHide (le_t *le)
 			continue;
 		if (LE_IsLivingActor(actors)) {
 			/* at least one of our actors can see this */
-			if (FrustomVis(actors->origin, actors->dir, le->origin)) {
+			if (FrustumVis(actors->origin, actors->dir, le->origin)) {
 				if (TR_TestLine(actors->origin, le->origin, TL_FLAG_NONE)) {
 					if (!le->ptl) {
 						le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);

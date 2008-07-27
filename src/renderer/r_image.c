@@ -36,6 +36,7 @@ static char glerrortex[MAX_GL_ERRORTEX];
 static char *glerrortexend;
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
+int registration_sequence;
 
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];

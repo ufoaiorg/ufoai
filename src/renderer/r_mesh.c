@@ -205,39 +205,90 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_Color(NULL);
 }
 
-#if 0
-/**
- * @brief Check if model is out of view
- */
-static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
+qboolean R_CullMeshModel (entity_t *e)
 {
-	int p, mask, f, aggregatemask = ~0;
-	mAliasModel_t *mod;
-	mAliasFrame_t *frame;
+	int i;
+	int32_t aggregatemask;
+	vec3_t mins, maxs;
+	vec3_t bbox[8];
+	const mAliasModel_t *mod = &e->model->alias;
+	const mAliasFrame_t *frame = mod->frames + e->as.frame;
+	const mAliasFrame_t *oldFrame = mod->frames + e->as.oldframe;
 
-	mod = &e->model->alias;
-	frame = mod->frames + e->as.frame;
+	if (e->culled)
+		return e->cullResult;
+
+	/* compute axially aligned mins and maxs */
+	if (frame == oldFrame) {
+		for (i = 0; i < 3; i++) {
+			maxs[i] = frame->maxs[i];
+			mins[i] = frame->maxs[i];
+
+			if (e->scale[i]) {
+				mins[i] *= e->scale[i];
+				maxs[i] *= e->scale[i];
+			}
+		}
+	} else {
+		for (i = 0; i < 3; i++) {
+			if (frame->mins[i] < oldFrame->mins[i])
+				mins[i] = frame->mins[i];
+			else
+				mins[i] = oldFrame->mins[i];
+
+			if (frame->maxs[i] > oldFrame->maxs[i])
+				maxs[i] = frame->maxs[i];
+			else
+				maxs[i] = oldFrame->maxs[i];
+
+			if (e->scale[i]) {
+				mins[i] *= e->scale[i];
+				maxs[i] *= e->scale[i];
+			}
+		}
+	}
 
 	/* compute a full bounding box */
-	R_EntityComputeBoundingBox(frame->mins, frame->maxs, bbox);
+	for (i = 0; i < 8; i++) {
+		vec3_t tmp;
+		tmp[0] = (i & 1) ? mins[0] : maxs[0];
+		tmp[1] = (i & 2) ? mins[1] : maxs[1];
+		tmp[2] = (i & 4) ? mins[2] : maxs[2];
+		/* we can use the origin here, because we never check the tagged models
+		 * here - we only check the parents and define that the tagged model
+		 * is visible when the parent is visible, too - so we can use the origin
+		 * directly without the need to transform against the entity transform
+		 * matrix */
+		/** @todo This is not suitable for big tagged models - e.g. a very small
+		 * body and a huge head */
+		VectorAdd(e->origin, tmp, bbox[i]);
+	}
 
-	/* cull */
-	for (p = 0; p < 8; p++) {
-		mask = 0;
+	aggregatemask = ~0;
 
-		for (f = 0; f < 4; f++) {
-			if (DotProduct(r_frustum[f].normal, bbox[p]) < r_frustum[f].dist);
-				mask |= (1 << f);
+	for (i = 0; i < 8; i++) {
+		int mask = 0;
+		int j;
+
+		for (j = 0; j < 4; j++) {
+			const float f = DotProduct(r_locals.frustum[j].normal, bbox[i]);
+			if ((f - r_locals.frustum[j].dist) < 0)
+				mask |= (1 << j);
 		}
+
 		aggregatemask &= mask;
 	}
 
-	if (aggregatemask)
-		return qtrue;
+	e->culled = qtrue;
 
+	if (aggregatemask) {
+		e->cullResult = qtrue;
+		return qtrue;
+	}
+
+	e->cullResult = qfalse;
 	return qfalse;
 }
-#endif
 
 static vec3_t r_mesh_verts[MD3_MAX_VERTS];
 static vec3_t r_mesh_norms[MD3_MAX_VERTS];
@@ -245,8 +296,8 @@ static vec3_t r_mesh_norms[MD3_MAX_VERTS];
 void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
 {
 	int i, vertind, coordind;
-	mAliasFrame_t *frame, *oldframe;
-	mAliasVertex_t *v, *ov;
+	const mAliasFrame_t *frame, *oldframe;
+	const mAliasVertex_t *v, *ov;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
 
@@ -258,6 +309,8 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 
 	v = &mesh->vertexes[framenum * mesh->num_verts];
 	ov = &mesh->vertexes[oldframenum * mesh->num_verts];
+
+	assert(mesh->num_verts < MD3_MAX_VERTS);
 
 	for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
 		VectorSet(r_mesh_verts[i],
@@ -309,11 +362,7 @@ void R_DrawAliasModel (const entity_t *e)
 {
 	mAliasModel_t *mod;
 	int i;
-	vec4_t bbox[8];
-
-	/* check if model is out of fov */
-	/** @todo fix culling and reactivate check */
-	/*R_CullAliasModel(bbox, e);*/
+	vec3_t bbox[8];
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
@@ -327,10 +376,16 @@ void R_DrawAliasModel (const entity_t *e)
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		vec4_t color = {1, 1, 1, 1};
-		vec4_t tmp;
 
-		GLVectorTransform(e->transform.matrix, e->origin, tmp);
-		R_LightPoint(tmp);
+		/* tagged models have an origin relative to the parent entity - so we
+		 * have to transform them */
+		if (e->tagent) {
+			vec4_t tmp;
+			GLVectorTransform(e->transform.matrix, e->origin, tmp);
+			R_LightPoint(tmp);
+		} else {
+			R_LightPoint(e->origin);
+		}
 
 		/* resolve the color, starting with the lighting result */
 		VectorCopy(r_lightmap_sample.color, color);

@@ -67,6 +67,8 @@ typedef struct image_s {
 	material_t material;
 } image_t;
 
+extern int registration_sequence;
+
 #define MAX_GL_ERRORTEX		4096
 #define MAX_GL_TEXTURES		1024
 #define MAX_GL_LIGHTMAPS 	256

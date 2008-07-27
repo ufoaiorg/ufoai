@@ -384,7 +384,7 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 		verts[3] = y - (radar.gridWidth * sin(actorDirection));
 		R_DrawLine(verts, 3);
 
-		/* 120 degree frustom view - see FrustomVis */
+		/* 120 degree frustum view - see FrustumVis */
 		verts[2] = x + (radar.gridWidth * cos((dangle[le->dir] + 60) * torad)) * 5;
 		verts[3] = y - (radar.gridWidth * sin((dangle[le->dir] + 60) * torad)) * 5;
 		R_DrawLine(verts, 0.1);
@@ -415,7 +415,7 @@ static void MN_DrawItem (const le_t *le, const vec3_t pos)
 
 /**
  * @sa CMod_GetMapSize
- * @todo Show frustom view area for actors (@sa FrustomVis)
+ * @todo Show frustum view area for actors (@sa FrustumVis)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node The radar menu node (located in the hud menu definitions)
  */

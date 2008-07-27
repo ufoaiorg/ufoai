@@ -38,8 +38,6 @@ int r_numMapTiles;
 model_t r_modelsInline[MAX_MOD_KNOWN];
 int r_numModelsInline;
 
-int registration_sequence;
-
 /**
  * @brief Prints all loaded models
  */
