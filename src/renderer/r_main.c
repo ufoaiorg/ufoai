@@ -100,9 +100,6 @@ qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 
-	if (r_nocull->integer)
-		return qfalse;
-
 	for (i = 0; i < 4; i++)
 		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
 			return qtrue;

@@ -553,6 +553,9 @@ static float *R_CalcTransform (entity_t * e)
  */
 static inline qboolean R_CullEntity (entity_t *e)
 {
+	if (r_nocull->integer)
+		return qfalse;
+
 	if (!e->model)  /* don't bother culling null model ents */
 		return qfalse;
 

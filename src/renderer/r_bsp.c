@@ -171,7 +171,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (node->contents == CONTENTS_SOLID)
 		return;					/* solid */
 
-	if (R_CullBox(node->minmaxs, node->minmaxs + 3))
+	if (!r_nocull->integer && R_CullBox(node->minmaxs, node->minmaxs + 3))
 		return;
 
 	/* if a leaf node, draw stuff */

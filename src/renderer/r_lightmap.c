@@ -116,7 +116,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 
 	size = smax * tmax;
-	stride -= (smax << 2);
+	stride -= (smax * 4);
 
 	for (i = 0; i < tmax; i++, dest += stride) {
 		for (j = 0; j < smax; j++) {
@@ -139,7 +139,6 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
 static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 {
 	int smax, tmax;
-	int r, g, b, max;
 	unsigned int i, j, size;
 	byte *lightmap, *lm, *l;
 	float *bl;
@@ -161,7 +160,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	}
 
 	/* put into texture format */
-	stride -= (smax << 2);
+	stride -= (smax * 4);
 	bl = r_lightmaps.fbuffer;
 
 	/* first into an rgba linear block for softening */
@@ -170,9 +169,10 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 
 	for (i = 0; i < tmax; i++) {
 		for (j = 0; j < smax; j++) {
-			r = Q_ftol(bl[0]);
-			g = Q_ftol(bl[1]);
-			b = Q_ftol(bl[2]);
+			int r = Q_ftol(bl[0]);
+			int g = Q_ftol(bl[1]);
+			int b = Q_ftol(bl[2]);
+			int max;
 
 			/* catch negative lights */
 			if (r < 0)
