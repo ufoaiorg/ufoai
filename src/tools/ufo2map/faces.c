@@ -654,7 +654,8 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 			ClipWindingEpsilon(w, temp, dist, ON_EPSILON, &frontw, &backw);
 			if (!frontw || !backw)
-				Sys_Error("SubdivideFace: didn't split the polygon");
+				Sys_Error("SubdivideFace: didn't split the polygon (texture: '%s')",
+					tex->texture);
 
 			f->split[0] = NewFaceFromFace(f);
 			f->split[0]->w = frontw;

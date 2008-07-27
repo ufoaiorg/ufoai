@@ -213,13 +213,12 @@ qboolean R_CullMeshModel (entity_t *e)
 	vec3_t bbox[8];
 	const mAliasModel_t *mod = &e->model->alias;
 	const mAliasFrame_t *frame = mod->frames + e->as.frame;
-	const mAliasFrame_t *oldFrame = mod->frames + e->as.oldframe;
 
 	if (e->culled)
 		return e->cullResult;
 
 	/* compute axially aligned mins and maxs */
-	if (frame == oldFrame) {
+	if (e->as.frame == e->as.oldframe) {
 		for (i = 0; i < 3; i++) {
 			maxs[i] = frame->maxs[i];
 			mins[i] = frame->maxs[i];
@@ -230,6 +229,7 @@ qboolean R_CullMeshModel (entity_t *e)
 			}
 		}
 	} else {
+		const mAliasFrame_t *oldFrame = mod->frames + e->as.oldframe;
 		for (i = 0; i < 3; i++) {
 			if (frame->mins[i] < oldFrame->mins[i])
 				mins[i] = frame->mins[i];
@@ -249,8 +249,13 @@ qboolean R_CullMeshModel (entity_t *e)
 	}
 
 	/* compute a full bounding box */
+	aggregatemask = ~0;
+
 	for (i = 0; i < 8; i++) {
 		vec3_t tmp;
+		int mask = 0;
+		int j;
+
 		tmp[0] = (i & 1) ? mins[0] : maxs[0];
 		tmp[1] = (i & 2) ? mins[1] : maxs[1];
 		tmp[2] = (i & 4) ? mins[2] : maxs[2];
@@ -262,15 +267,10 @@ qboolean R_CullMeshModel (entity_t *e)
 		/** @todo This is not suitable for big tagged models - e.g. a very small
 		 * body and a huge head */
 		VectorAdd(e->origin, tmp, bbox[i]);
-	}
-
-	aggregatemask = ~0;
-
-	for (i = 0; i < 8; i++) {
-		int mask = 0;
-		int j;
 
 		for (j = 0; j < 4; j++) {
+			/* get the distance between the frustom normal vector and the
+			 * current vector of the bounding box */
 			const float f = DotProduct(r_locals.frustum[j].normal, bbox[i]);
 			if ((f - r_locals.frustum[j].dist) < 0)
 				mask |= (1 << j);
@@ -281,13 +281,12 @@ qboolean R_CullMeshModel (entity_t *e)
 
 	e->culled = qtrue;
 
-	if (aggregatemask) {
+	if (aggregatemask)
 		e->cullResult = qtrue;
-		return qtrue;
-	}
+	else
+		e->cullResult = qfalse;
 
-	e->cullResult = qfalse;
-	return qfalse;
+	return e->cullResult;
 }
 
 static vec3_t r_mesh_verts[MD3_MAX_VERTS];
@@ -360,9 +359,8 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
  */
 void R_DrawAliasModel (const entity_t *e)
 {
-	mAliasModel_t *mod;
+	const mAliasModel_t *mod;
 	int i;
-	vec3_t bbox[8];
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
@@ -417,6 +415,7 @@ void R_DrawAliasModel (const entity_t *e)
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
+		vec3_t bbox[8];
 		R_EntityComputeBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs, bbox);
 		R_EntityDrawBBox(bbox);
 	}

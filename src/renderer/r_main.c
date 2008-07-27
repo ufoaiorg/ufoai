@@ -376,7 +376,7 @@ static void R_Register (void)
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
 	r_drawspecialbrushes = Cvar_Get("r_drawspecialbrushes", "0", 0, "Draw stuff like actorclip");
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling");
+	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
