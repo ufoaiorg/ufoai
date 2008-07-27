@@ -231,16 +231,8 @@ qboolean R_CullMeshModel (entity_t *e)
 	} else {
 		const mAliasFrame_t *oldFrame = mod->frames + e->as.oldframe;
 		for (i = 0; i < 3; i++) {
-			if (frame->mins[i] < oldFrame->mins[i])
-				mins[i] = frame->mins[i];
-			else
-				mins[i] = oldFrame->mins[i];
-
-			if (frame->maxs[i] > oldFrame->maxs[i])
-				maxs[i] = frame->maxs[i];
-			else
-				maxs[i] = oldFrame->maxs[i];
-
+			mins[i] = min(frame->mins[i], oldFrame->mins[i]);
+			maxs[i] = max(frame->maxs[i], oldFrame->maxs[i]);
 			if (e->scale[i]) {
 				mins[i] *= e->scale[i];
 				maxs[i] *= e->scale[i];
