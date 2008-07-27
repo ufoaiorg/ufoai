@@ -66,12 +66,12 @@ static unsigned HashVec (const vec3_t vec)
 }
 
 /**
+ * @brief Returns the number of an existing vertex or allocates a new one
  * @note Uses hashing
  */
-static int GetVertexnum (vec3_t in)
+static int GetVertexnum (const vec3_t in)
 {
 	int h, i, vnum;
-	float *p;
 	vec3_t vert;
 
 	c_totalverts++;
@@ -86,10 +86,10 @@ static int GetVertexnum (vec3_t in)
 	h = HashVec(vert);
 
 	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
-		p = curTile->vertexes[vnum].point;
-		if (fabs(p[0]-vert[0]) < POINT_EPSILON
-		 && fabs(p[1]-vert[1]) < POINT_EPSILON
-		 && fabs(p[2]-vert[2]) < POINT_EPSILON)
+		const float *p = curTile->vertexes[vnum].point;
+		if (fabs(p[0] - vert[0]) < POINT_EPSILON
+		 && fabs(p[1] - vert[1]) < POINT_EPSILON
+		 && fabs(p[2] - vert[2]) < POINT_EPSILON)
 			return vnum;
 	}
 
@@ -122,7 +122,7 @@ static face_t *AllocFace (void)
 	return f;
 }
 
-static face_t *NewFaceFromFace (face_t *f)
+static face_t *NewFaceFromFace (const face_t *f)
 {
 	face_t	*newf;
 
@@ -611,8 +611,6 @@ static void MergeNodeFaces (node_t *node)
  */
 static void SubdivideFace (node_t *node, face_t *f)
 {
-	float mins, maxs;
-	vec_t v;
 	int axis, i;
 	const dBspTexinfo_t *tex;
 	vec3_t temp;
@@ -628,14 +626,13 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 	for (axis = 0; axis < 2; axis++) {
 		while (1) {
-			const winding_t *w;
+			const winding_t *w = f->w;
 			winding_t *frontw, *backw;
-
-			mins = 999999;
-			maxs = -999999;
+			float mins = 999999;
+			float maxs = -999999;
+			vec_t v;
 
 			VectorCopy(tex->vecs[axis], temp);
-			w = f->w;
 			for (i = 0; i < w->numpoints; i++) {
 				v = DotProduct(w->p[i], temp);
 				if (v < mins)
