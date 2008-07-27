@@ -778,7 +778,6 @@ void CheckTextures (void)
 				Com_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				tex->surfaceFlags |= SURF_NODRAW;
-				tex->surfaceFlags |= SURF_NODRAW;
 			}
 			if (tex->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
 				Com_Printf("* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
@@ -819,13 +818,77 @@ void CheckTextures (void)
 	}
 }
 
+/**
+ * @brief contentflags should be the same on each face of a brush. print warnings
+ * if they are not. remove contentflags that are set on less than half of the faces.
+ * some content flags are transferred to all faces on parsing, ParseBrush().
+ * @todo at the moment only actorclip is removed if only set on less than half of the
+ * faces. there may be other contentflags that would benefit from this treatment
+ * @sa ParseBrush
+ */
+void CheckMixedFaceContents (void)
+{
+	int i, j;
+	int nfActorclip; /* number of faces with actorclip contentflag set */
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+		side_t *side0 = &brush->original_sides[0];
+		nfActorclip = 0;
+
+		for (j = 0; j < brush->numsides; j++) {
+			side_t *side = &brush->original_sides[j];
+			const ptrdiff_t index = side - brushsides;
+			brush_texture_t *tex = &side_brushtextures[index];
+
+			assert(side);
+			assert(tex);
+
+			nfActorclip += side->contentFlags & CONTENTS_ACTORCLIP ? 1 : 0;
+
+			if (side0->contentFlags != side->contentFlags) {
+				const int jNotZero = side->contentFlags & ~side0->contentFlags;
+				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
+				Com_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
+				if (jNotZero) {
+					Com_Printf("face %i has and face 0 has not", j);
+					DisplayContentFlags(jNotZero);
+					if (zeroNotJ)
+						Com_Printf(", ");
+				}
+				if (zeroNotJ) {
+					Com_Printf("face 0 has and face %i has not", j);
+					DisplayContentFlags(zeroNotJ);
+				}
+				Com_Printf(")\n");
+			}
+
+		}
+
+		if (nfActorclip && nfActorclip <  brush->numsides / 2) {
+			Com_Printf("* Brush %i (entity %i): ACTORCLIP set on less than half of the faces: removing.\n", brush->brushnum, brush->entitynum );
+			for (j = 0; j < brush->numsides; j++) {
+				side_t *side = &brush->original_sides[j];
+				const ptrdiff_t index = side - brushsides;
+				brush_texture_t *tex = &side_brushtextures[index];
+
+				if (side->contentFlags & CONTENTS_ACTORCLIP && !Q_strcmp(tex->name, "tex_common/actorclip")) {
+					Com_Printf("* Brush %i (entity %i): removing tex_common/actorclip, setting tex_common/error\n", brush->brushnum, brush->entitynum );
+					Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
+				}
+
+				side->contentFlags &= ~CONTENTS_ACTORCLIP;
+			}
+		}
+	}
+}
+
 void CheckBrushes (void)
 {
 	int i, j;
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
-		side_t *side0 = &brush->original_sides[0];
 
 		Check_DuplicateBrushPlanes(brush);
 
@@ -854,23 +917,6 @@ void CheckBrushes (void)
 				tex->surfaceFlags |= SURF_BURN;
 			}
 #endif
-
-			if (side0->contentFlags != side->contentFlags) {
-				const int jNotZero = side->contentFlags & ~side0->contentFlags;
-				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
-				Com_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
-				if (jNotZero) {
-					Com_Printf("face %i has and face 0 has not", j);
-					DisplayContentFlags(jNotZero);
-					if (zeroNotJ)
-						Com_Printf(", ");
-				}
-				if (zeroNotJ) {
-					Com_Printf("face 0 has and face %i has not", j);
-					DisplayContentFlags(zeroNotJ);
-				}
-				Com_Printf(")\n");
-			}
 
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
 				Com_Printf("* Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);

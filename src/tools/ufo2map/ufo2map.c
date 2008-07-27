@@ -97,18 +97,19 @@ static void Usage (void) {
 		" -verboseentities         : also be verbose about submodels (entities)\n"
 		"\nMapping options:\n"
 		"\n These options operate on map file only. No bsp file is created.\n"
-		" Output prepended by an asterisk (*) indicates operations that would change the map file.\n"
+		" Output prefixed by an asterisk (*) indicates operations that would change the map file.\n"
 		" \n -check                   : check source map, only print information.\n"
 		" -fix                     : same subparameters as -check, changes the source map file.\n"
 		" \n subparameters for -check and -fix\n"
 		"     all                  : includes 'brushes entities'. Performs all checks and fixes. This is the default.\n"
-		"     bru    brushes       : includes 'levelflags textures'. Performs all checks and fixes associated with brushes.\n"
-		"     ent    entities      : performs all checks and fixes associated with entities.\n"
-		"     lvl    levelflags    : if no levelflags for a brush or entity are set, all of them are set\n"
-		"     ndr    nodraws       : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
+		"     bru brushes          : includes 'lvl tex mfc'. Performs all checks and fixes associated with brushes.\n"
+		"     ent entities         : performs all checks and fixes associated with entities.\n"
+		"     lvl levelflags       : if no levelflags for a brush or entity are set, all of them are set\n"
+		"     ndr nodraws          : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
 		"                            may have it incorrectly assigned. ***not working properly, do not included in 'all'.\n"
-		"     tex    textures      : warns when no texture or error texture is assigned.\n"
+		"     tex textures         : warns when no texture or error texture is assigned.\n"
 		"                            ensures special textures and content/surface flags are consistent.\n"
+		"     mfc mixedfacecontents: ensures the contentflags are the same on each face of each brush.\n"
 	);
 }
 
@@ -157,6 +158,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "nodraws") || !strcmp(argv[i], "ndr")) {
 					Com_Printf("  %s nodraws\n", config.fixMap ? "fixing" : "checking");
 					config.chkNodraws = qtrue;
+				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
+					Com_Printf("  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
+					config.chkMixedFaceContents = qtrue;
 				} else if (!strcmp(argv[i], "all")) {
 					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
@@ -482,6 +486,10 @@ int main (int argc, const char **argv)
 	} else if (config.performMapCheck || config.fixMap) {
 		Com_Printf("Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
+		/* mixed face contents check may remove contentflags. this should be done
+		 * before tex check, as tex may replace tex on the basis of contentflags.*/
+		if (config.chkMixedFaceContents || config.chkBrushes ||config.chkAll )
+			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckTextures();
 		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)

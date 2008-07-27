@@ -87,6 +87,7 @@ typedef struct mapConfig_s {
 	qboolean chkBrushes;
 	qboolean chkLevelFlags;
 	qboolean chkTextures;
+	qboolean chkMixedFaceContents;
 	qboolean chkAll;
 	qboolean fixMap;
 
