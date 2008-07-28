@@ -150,6 +150,7 @@ typedef struct {
 
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
+	float (IMPORT *GetBounceFraction) (const char *texture);
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */

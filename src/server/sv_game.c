@@ -418,6 +418,7 @@ void SV_InitGameProgs (void)
 
 	import.PointContents = SV_PointContents;
 	import.GetFootstepSound = SV_GetFootstepSound;
+	import.GetBounceFraction = SV_GetBounceFraction;
 
 	import.FS_Gamedir = FS_Gamedir;
 

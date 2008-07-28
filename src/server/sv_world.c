@@ -537,3 +537,14 @@ const char *SV_GetFootstepSound (const char *texture)
 	const terrainType_t *t = Com_GetTerrainType(texture);
 	return t ? t->footStepSound : NULL;
 }
+
+/**
+ * @brief
+ * @sa Com_GetTerrainType
+ * @sa GenerateFootstepList
+ */
+float SV_GetBounceFraction (const char *texture)
+{
+	const terrainType_t *t = Com_GetTerrainType(texture);
+	return t ? t->bounceFraction : 1.0f;
+}

@@ -187,6 +187,7 @@ int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int a
 /* returns the CONTENTS_* value from the world at the given point. */
 int SV_PointContents(vec3_t p);
 const char *SV_GetFootstepSound(const char *texture);
+float SV_GetBounceFraction(const char *texture);
 trace_t SV_Trace(vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask);
 
 #endif /* SERVER_SERVER_H */
