@@ -7,11 +7,169 @@
 // normal grass
 terrain tex_nature/grass001 {
 	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// normal grass
+terrain tex_nature/grass {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.5
+}
+
+// lush grass
+terrain tex_nature/grass_lush {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_dry_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_dry_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_dry_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_green_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_green_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_green_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// tall grass
+terrain tex_nature/grass_tall_dry_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_dry_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_dry_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_green_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_green_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_green_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// normal grass
+terrain tex_nature/grass003 {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_d2r {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_hor {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_l2d {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_l2u {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_start_h {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_start_v {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_t_fork {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_x_fork {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_u2r {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_vert {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// normal grass
+terrain tex_nature/grass004 {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.5
 }
 
 // high grass
 terrain tex_nature/jungle002 {
 	footstepsound "footsteps/grass2"
+	bouncefraction 0.2
 }
 
 // ==========================
@@ -21,10 +179,18 @@ terrain tex_nature/jungle002 {
 // bed of potatoes
 terrain tex_nature/potatoes {
 	footstepsound "footsteps/flesh3"
+	bouncefraction 0.3
+}
+
+// flowers
+terrain tex_nature/flower {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.8
 }
 
 // straw
 terrain tex_misc/straw {
+	bouncefraction 0.3
 }
 
 // ==========================
@@ -152,21 +318,97 @@ terrain tex_buildings/floor005 {
 // sand
 terrain tex_nature/desert004 {
 	footstepsound "footsteps/sand2"
+	bouncefraction 0.1
 }
 
-// dirty sand on the floor
+// sand
+terrain tex_nature/desert006 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 0.1
+}
+
+// sand
+terrain tex_nature/desert007 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 1
+}
+
+// sand
+terrain tex_nature/desert008 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 0.1
+}
+
+// dirt ground
 terrain tex_nature/dirt_se01 {
 	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se02 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se03 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se05 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se06 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se08 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se09 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se10 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se11 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se12 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
 }
 
 // dirt ground
 terrain tex_nature/dirt001 {
 	footstepsound "footsteps/softrug2"
+	bouncefraction 0.3
 }
 
 // dirt ground
 terrain tex_nature/dirt002 {
 	footstepsound "footsteps/softrug2"
+	bouncefraction 0.3
 }
 
 // ==========================
