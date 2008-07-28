@@ -443,7 +443,7 @@ menu map
 		click	{
 				*messagesystem size "768 400"
 				*messagesystem scrollbar "true"
-				cmd "set mn_messagesystem 1;" 
+				cmd "set mn_messagesystem 1;"
 		}
 		rclick	{
 				*messagesystem size "768 768"
@@ -467,7 +467,7 @@ menu map
 				cmd "mn_textscroll messagesystem reset"
 				*messagesystem size "768 400"
 				*messagesystem scrollbar "false"
-				cmd "set mn_messagesystem 0;" 
+				cmd "set mn_messagesystem 0;"
 		}
 	}
 
@@ -1127,7 +1127,7 @@ menu popup_newbase
 	string title
 	{
 		string	"_New base"
-		pos		"290 276"
+		pos		"290 280"
 		font	f_big
 	}
 
@@ -1139,21 +1139,69 @@ menu popup_newbase
 	string name
 	{
 		string	"*cvar mn_base_title"
-		pos		"290 330"
+		pos		"310 335"
 		size	"440 32"
 		font	f_big
+	}
+
+	pic bt_nameedit
+	{
+		tooltip "_Rename your base"
+		image   menu/buttons_small
+		pos     "290 340"
+		texl    "0 48"
+		texh    "16 64"
+		mousefx false
+		click {
+			cmd "msgmenu ?mn_base_title"
+			*name mousefx true
+		}
 	}
 
 	string cost_label
 	{
 		string	"_Cost:"
-		pos		"290 380"
+		pos		"290 360"
 	}
 	string cost
 	{
 		string	"*cvar mn_base_newbasecost"
-		pos		"290 390"
+		pos		"290 375"
 		font	f_big
+	}
+
+	// START WITH EMPLOYEES
+	string start_employees_str
+	{
+		if		"mn_base_count <= 0"
+		string	"_Start with employees:"
+		pos		"715 360"
+		align	ur
+	}
+	checkbox start_employees
+	{
+		if		"mn_base_count <= 0"
+		cvar	"*cvar cl_start_employees"
+		pos		"735 360"
+		align	ur
+		tooltip	"_Employees already hired at campaign start"
+	}
+
+	// START WITH BUILDINGS
+	string start_buildings_str
+	{
+		if		"mn_base_count <= 0"
+		string	"_Start with buildings:"
+		pos		"715 385"
+		align	ur
+	}
+	checkbox start_building
+	{
+		if		"mn_base_count <= 0"
+		cvar	"*cvar cl_start_buildings"
+		pos		"735 385"
+		align	ur
+		tooltip	"_Buildings already built in the initial base"
 	}
 
 	pic bt_cancel
@@ -1165,7 +1213,10 @@ menu popup_newbase
 		pos		"290 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
+		click	{
+			*name mousefx false
+			cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;"
+		}
 	}
 	pic bt_build
 	{
@@ -1173,10 +1224,13 @@ menu popup_newbase
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos		"560 450"
-		out		{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
-		in		{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_build_base;" }
+		pos	"560 450"
+		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
+		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
+		click	{
+			*name mousefx false
+			cmd "mn_pop;mn_build_base;"
+		}
 	}
 	string string_cancel
 	{
