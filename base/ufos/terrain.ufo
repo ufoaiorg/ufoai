@@ -441,7 +441,7 @@ terrain tex_buildings/wall_sel2 {
 
 // wooden stairs
 terrain tex_material/wood002 {
-        footstepsound "footsteps/squeak_2"
+	footstepsound "footsteps/squeak_2"
 }
 
 // ==========================
