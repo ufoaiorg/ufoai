@@ -1,6 +1,9 @@
 include build/pk3_def.mk
 
 BASE_DIR = base
+EMPTY =
+SPACE = $(EMPTY) $(EMPTY)
+BASE_DIR_REPLACE = $(EMPTY) $(BASE_DIR)
 
 PAK_FILES_OUT = $(addprefix $(BASE_DIR)/,$(PAK_FILES))
 
@@ -21,7 +24,7 @@ ZIP_DEL_OPTS = -d
 ZIP_LIST = zipinfo -1 $(1)
 endif
 
-DEBASE = $(subst $(BASE_DIR)/,,$(1))
+DEBASE = $(subst $(BASE_DIR_REPLACE)/,$(SPACE),$(1))
 
 $(PAK_FILES_OUT) :
 	cd base; $(ZIP) $(ZIP_UP_OPTS) $(call DEBASE, $@ $?)
