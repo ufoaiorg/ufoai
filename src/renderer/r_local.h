@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_material.h"
 #include "r_image.h"
 #include "r_model.h"
+#include "r_thread.h"
 
 void R_DrawBlendSurfaces(const mBspSurfaces_t *list);
 void R_DrawOpaqueSurfaces(const mBspSurfaces_t *surfs);
@@ -90,6 +91,7 @@ extern cvar_t *r_multisample;
 extern cvar_t *r_texturemode;
 extern cvar_t *r_texturealphamode;
 extern cvar_t *r_texturesolidmode;
+extern cvar_t *r_threads;
 extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
 extern cvar_t *r_maxlightmap;
@@ -135,6 +137,7 @@ void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
+void R_SetFrustum(void);
 
 /** @brief GL config stuff */
 typedef struct {

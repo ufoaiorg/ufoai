@@ -360,6 +360,8 @@ void V_RenderView (void)
 		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
 	default:
+		/* tell the bsp thread to start */
+		r_threadstate.state = THREAD_BSP;
 		/* make sure we are really rendering the world */
 		refdef.rdflags &= ~RDF_NOWORLDMODEL;
 		/* add local models to the renderer chain */

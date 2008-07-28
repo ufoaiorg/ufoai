@@ -161,7 +161,7 @@ void Sys_Init (void)
 	MEMORYSTATUS mem;
 #endif
 
-	sys_affinity = Cvar_Get("sys_affinity", "1", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
+	sys_affinity = Cvar_Get("sys_affinity", "3", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
 
 	timeBeginPeriod(1);
@@ -357,13 +357,14 @@ void Sys_SetAffinityAndPriority (void)
 				break;
 			case 3:
 				Com_Printf("Use both cores\n");
+				Cvar_SetValue("r_threads", 1);
 				procAffinity = 3;
 				break;
 			}
 		} else {
 			Com_Printf("...only use one processor\n");
 		}
-		SetThreadAffinityMask(proc, procAffinity);
+		SetProcessAffinityMask(proc, procAffinity);
 	}
 
 	CloseHandle(proc);

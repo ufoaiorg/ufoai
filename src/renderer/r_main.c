@@ -76,6 +76,7 @@ cvar_t *r_texturealphamode;
 cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
+cvar_t *r_threads;
 cvar_t *r_vertexbuffers;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
@@ -119,7 +120,7 @@ static inline int SignbitsForPlane (const cBspPlane_t * out)
 	return bits;
 }
 
-static void R_SetFrustum (void)
+void R_SetFrustum (void)
 {
 	int i;
 
@@ -248,6 +249,15 @@ void R_BeginFrame (void)
 		r_texturesolidmode->modified = qfalse;
 	}
 
+	/* threads */
+	if (r_threads->modified) {
+		if (r_threads->integer)
+			R_InitThreads();
+		else
+			R_ShutdownThreads();
+		r_threads->modified = qfalse;
+	}
+
 	R_SetupGL2D();
 
 	/* clear screen if desired */
@@ -260,39 +270,43 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	R_SetupFrame();
+	int tile;
 
-	R_SetFrustum();
+	R_SetupFrame();
 
 	R_SetupGL3D();
 
+	if (r_threads->integer) {
+		while (r_threadstate.state != THREAD_RENDERER)
+			Sys_Sleep(0);
+
+		r_threadstate.state = THREAD_CLIENT;
+	} else {
+		R_SetFrustum();
+
+		/* draw brushes on current worldlevel */
+		R_GetLevelSurfaceLists();
+	}
 	/* activate wire mode */
 	if (r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
-		int tile;
+	R_AddLights();
 
-		/* draw brushes on current worldlevel */
-		R_GetLevelSurfaceLists();
+	R_CheckError();
 
-		R_AddLights();
+	for (tile = 0; tile < r_numMapTiles; tile++) {
+		R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
+		R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
+		R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
 
-		R_CheckError();
+		R_EnableBlend(qtrue);
 
-		for (tile = 0; tile < r_numMapTiles; tile++) {
-			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
-			R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
-			R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
+		R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
+		R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
+		R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
 
-			R_EnableBlend(qtrue);
-
-			R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
-			R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
-			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
-
-			R_EnableBlend(qfalse);
-		}
+		R_EnableBlend(qfalse);
 	}
 
 	R_DrawEntities();
@@ -381,6 +395,7 @@ static void R_Register (void)
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
+	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");

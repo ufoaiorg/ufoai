@@ -623,6 +623,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_state.h" />
+		<Unit filename="..\..\src\renderer\r_thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_thread.h" />
 		<Unit filename="..\..\src\renderer\r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
