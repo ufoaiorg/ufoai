@@ -67,7 +67,7 @@ static int GetThreadWork (void)
 
 
 /** @brief Generic function pointer to actual work to be done */
-static void (*WorkFunction) (int);
+static void (*WorkFunction) (unsigned int);
 
 
 /**
@@ -133,7 +133,7 @@ static void RunThreads (void)
  */
 void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id)
 {
-	time_t start, end;
+	int start, end;
 
 	if (threadstate.numthreads < 1)  /* ensure safe thread counts */
 		threadstate.numthreads = 1;
@@ -160,7 +160,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 	end = time(NULL);
 
 	if (threadstate.progress) {
-		Com_Printf(" (time: %6is, count: %i)\n", (int)end - start, workcount);
+		Com_Printf(" (time: %6is, count: %ui)\n", end - start, workcount);
 	}
 }
 
