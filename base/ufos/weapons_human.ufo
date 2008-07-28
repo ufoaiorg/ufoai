@@ -1287,8 +1287,8 @@ item grenl_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 2"
 			range	15
 			shots	1
@@ -1316,8 +1316,8 @@ item grenl_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 1.5"
 			range	15
 			shots	1
@@ -1345,8 +1345,8 @@ item grenl_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 4"
 			range	15
 			shots	3
@@ -1474,8 +1474,8 @@ item grenl_incendiary_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 2"
 			range	15
 			shots	1
@@ -1503,8 +1503,8 @@ item grenl_incendiary_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 1.5"
 			range	15
 			shots	1
@@ -1532,8 +1532,8 @@ item grenl_incendiary_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 4"
 			range	15
 			shots	3
@@ -1718,8 +1718,8 @@ item grenl_plasma_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 2"
 			range	15
 			shots	1
@@ -1746,8 +1746,8 @@ item grenl_plasma_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 1.5"
 			range	15
 			shots	1
@@ -1774,8 +1774,8 @@ item grenl_plasma_ammo
 			gravity	true
 			launched true
 			delay	1
-			bounce	10
-			bncfac	0.5
+			bounce	5
+			bncfac	0.6
 			spread	"0 4"
 			range	15
 			shots	3
