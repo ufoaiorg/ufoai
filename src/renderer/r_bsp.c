@@ -234,9 +234,6 @@ void R_GetLevelSurfaceLists (void)
 {
 	int i, tile, mask;
 
-	if (refdef.rdflags & RDF_NOWORLDMODEL)
-		return;
-
 	if (!r_drawworld->integer)
 		return;
 

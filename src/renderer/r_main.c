@@ -276,37 +276,39 @@ void R_RenderFrame (void)
 
 	R_SetupGL3D();
 
-	if (r_threads->integer) {
-		while (r_threadstate.state != THREAD_RENDERER)
-			Sys_Sleep(0);
+	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
+		if (r_threads->integer) {
+			while (r_threadstate.state != THREAD_RENDERER)
+				Sys_Sleep(0);
 
-		r_threadstate.state = THREAD_CLIENT;
-	} else {
-		R_SetFrustum();
+			r_threadstate.state = THREAD_CLIENT;
+		} else {
+			R_SetFrustum();
 
-		/* draw brushes on current worldlevel */
-		R_GetLevelSurfaceLists();
-	}
-	/* activate wire mode */
-	if (r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			/* draw brushes on current worldlevel */
+			R_GetLevelSurfaceLists();
+		}
+		/* activate wire mode */
+		if (r_wire->integer)
+			qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	R_AddLights();
+		R_AddLights();
 
-	R_CheckError();
+		R_CheckError();
 
-	for (tile = 0; tile < r_numMapTiles; tile++) {
-		R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
-		R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
-		R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
+			R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
+			R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
 
-		R_EnableBlend(qtrue);
+			R_EnableBlend(qtrue);
 
-		R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
-		R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
-		R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
+			R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
+			R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
+			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
 
-		R_EnableBlend(qfalse);
+			R_EnableBlend(qfalse);
+		}
 	}
 
 	R_DrawEntities();

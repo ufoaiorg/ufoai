@@ -665,6 +665,10 @@ void R_AddEntity (entity_t *ent)
 		return;
 	}
 
+	/* don't add the bsp tiles from random map assemblies */
+	if (ent->model && ent->model->type == mod_bsp)
+		return;
+
 	/* frustum cull check - but not while we are in e.g. sequence mode */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL) && R_CullEntity(ent))
 		return;
