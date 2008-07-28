@@ -1298,6 +1298,17 @@ menu buy
 	// buttons
 	// ==================
 
+	zone zone_category {
+		pos	"650 627"
+		size	"270 59"
+		whup	{
+			cmd "prev_buy_type;" 
+		}
+		whdown	{
+			cmd "next_buy_type;" 
+		}
+	}
+
 	string txt_category
 	{
 		font	"f_small"
