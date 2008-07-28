@@ -46,7 +46,7 @@ int R_RunThread (void *p)
 		while (r_threadstate.state != THREAD_BSP)
 			Sys_Sleep(0);
 
-		R_SetFrustum();
+		R_SetupFrustum();
 
 		/* draw brushes on current worldlevel */
 		R_GetLevelSurfaceLists();

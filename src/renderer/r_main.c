@@ -120,9 +120,21 @@ static inline int SignbitsForPlane (const cBspPlane_t * out)
 	return bits;
 }
 
-void R_SetFrustum (void)
+void R_SetupFrustum (void)
 {
 	int i;
+
+	/* build the transformation matrix for the given view angles */
+	AngleVectors(refdef.viewangles, r_locals.forward, r_locals.right, r_locals.up);
+
+	/* clear out the portion of the screen that the NOWORLDMODEL defines */
+	if (refdef.rdflags & RDF_NOWORLDMODEL) {
+		qglEnable(GL_SCISSOR_TEST);
+		qglScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
+		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		R_CheckError();
+		qglDisable(GL_SCISSOR_TEST);
+	}
 
 	if (r_isometric->integer) {
 		/* 4 planes of a cube */
@@ -155,21 +167,6 @@ void R_SetFrustum (void)
 			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
 			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
 		}
-	}
-}
-
-static inline void R_SetupFrame (void)
-{
-	/* build the transformation matrix for the given view angles */
-	AngleVectors(refdef.viewangles, r_locals.forward, r_locals.right, r_locals.up);
-
-	/* clear out the portion of the screen that the NOWORLDMODEL defines */
-	if (refdef.rdflags & RDF_NOWORLDMODEL) {
-		qglEnable(GL_SCISSOR_TEST);
-		qglScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
-		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		R_CheckError();
-		qglDisable(GL_SCISSOR_TEST);
 	}
 }
 
@@ -272,8 +269,6 @@ void R_RenderFrame (void)
 {
 	int tile;
 
-	R_SetupFrame();
-
 	R_SetupGL3D();
 
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
@@ -283,7 +278,7 @@ void R_RenderFrame (void)
 
 			r_threadstate.state = THREAD_CLIENT;
 		} else {
-			R_SetFrustum();
+			R_SetupFrustum();
 
 			/* draw brushes on current worldlevel */
 			R_GetLevelSurfaceLists();

@@ -137,7 +137,7 @@ void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
-void R_SetFrustum(void);
+void R_SetupFrustum(void);
 
 /** @brief GL config stuff */
 typedef struct {
