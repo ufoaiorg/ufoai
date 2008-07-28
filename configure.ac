@@ -546,6 +546,43 @@ then
 	CLIENT_CFLAGS="$CFLAGS"
 
 # end of client only checks
+else
+	#---------------------------------------------------------------------------------------------
+	# Check SDL
+	#---------------------------------------------------------------------------------------------
+	sdl_config=$with_sdl_config
+
+	OLD_CPPFLAGS=$CPPFLAGS
+	OLD_CFLAGS=$CFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+
+	if test $TARGET_OS != "darwin"
+	then
+		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+		then
+			CPPFLAGS=`$sdl_config --cflags`
+			LDFLAGS=`$sdl_config --libs`
+			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
+			AC_SUBST([SDL_LIBS],$LDFLAGS)
+		else
+			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+		fi
+	else
+		# mac is special...again
+		CFLAGS="$CFLAGS $sdl_mac_cflags"
+		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+		SDL_CFLAGS="$sdl_mac_cflags"
+		SDL_LIBS="$sdl_mac_ldflags"
+	fi
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL headers and libraries
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([SDL.h])
+	if test "$ac_cv_header_SDL_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL development headers])
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------

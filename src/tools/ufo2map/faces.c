@@ -266,7 +266,7 @@ static void FindEdgeVerts (const vec3_t v1, const vec3_t v2)
  */
 static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 {
-	int j, k;
+	int k;
 	vec_t dist, error;
 	vec3_t	delta, exact, off, p;
 
@@ -276,7 +276,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 	}
 
 	for (k = startvert; k < num_edge_verts; k++) {
-		j = edge_verts[k];
+		const int j = edge_verts[k];
 		if (j == p1 || j == p2)
 			continue;
 
@@ -386,7 +386,7 @@ void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
 	Sys_FPrintf(SYS_VRB, "---- snap verts ----\n");
-	memset (hashverts, 0, sizeof(hashverts));
+	memset(hashverts, 0, sizeof(hashverts));
 	c_totalverts = 0;
 	c_uniqueverts = 0;
 	c_faceoverflows = 0;

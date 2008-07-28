@@ -268,7 +268,7 @@ static void BounceLight (void)
 
 	for (i = 0; i < config.numbounce; i++) {
 		snprintf(buf, sizeof(buf), " %i LGHTBNCE", i);
-		U2M_ProgressBar(ShootLight, num_patches, qtrue, buf);
+		RunThreadsOn(ShootLight, num_patches, qtrue, buf);
 		added = CollectLight();
 
 		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
@@ -317,11 +317,11 @@ void RadWorld (void)
 	BuildVertexNormals();
 
 	/* build initial facelights */
-	U2M_ProgressBar(BuildFacelights, curTile->numfaces, qtrue, "FACELIGHTS");
+	RunThreadsOn(BuildFacelights, curTile->numfaces, qtrue, "FACELIGHTS");
 
 	if (config.numbounce > 0) {
 		/* build transfer lists */
-		U2M_ProgressBar(MakeTransfers, num_patches, qtrue, "TRANSFERS");
+		RunThreadsOn(MakeTransfers, num_patches, qtrue, "TRANSFERS");
 		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
 			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
@@ -336,6 +336,6 @@ void RadWorld (void)
 	/* blend bounced light into direct light and save */
 	LinkPlaneFaces();
 
-	U2M_ProgressBar(FinalLightFace, curTile->numfaces, qtrue, "FINALLIGHT");
+	RunThreadsOn(FinalLightFace, curTile->numfaces, qtrue, "FINALLIGHT");
 	CloseTracingNodes();
 }

@@ -20,6 +20,7 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/routing.c \
 	tools/ufo2map/textures.c \
 	tools/ufo2map/tree.c \
+	tools/ufo2map/threads.c \
 	tools/ufo2map/writebsp.c \
 	tools/ufo2map/common/bspfile.c \
 	tools/ufo2map/common/cmdlib.c \
@@ -45,8 +46,8 @@ endif
 
 # Say how to link the exe
 $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [MAP] ... linking $(LNKFLAGS) ($(TOOLS_LIBS))"; \
-		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLS_LIBS) $(LNKFLAGS)
+	@echo " * [MAP] ... linking $(LNKFLAGS) ($(TOOLS_LIBS) $(SDL_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLS_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 # -ffloat-store option to ensure that maps are the same on every plattform

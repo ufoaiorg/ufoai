@@ -43,7 +43,7 @@ static void ProcessWorldModel (void)
 	curTile->nummodels = NUM_REGULAR_MODELS;
 
 	/* process levels */
-	U2M_ProgressBar(ProcessLevel, NUM_REGULAR_MODELS, qtrue, "LEVEL");
+	RunThreadsOn(ProcessLevel, NUM_REGULAR_MODELS, qtrue, "LEVEL");
 
 	/* calculate routing */
 	DoRouting();
@@ -73,6 +73,9 @@ static void ProcessSubModel (int entityNum)
 
 	mins[0] = mins[1] = mins[2] = -MAX_WORLD_WIDTH;
 	maxs[0] = maxs[1] = maxs[2] = MAX_WORLD_WIDTH;
+
+	ThreadLock();
+
 	/* every level (-1) */
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
 	if (!config.nocsg)
@@ -88,6 +91,8 @@ static void ProcessSubModel (int entityNum)
 	FixTjuncs(tree->headnode);
 	curTile->models[curTile->nummodels].headnode = WriteBSP(tree->headnode);
 	FreeTree(tree);
+
+	ThreadUnlock();
 
 	EndModel();
 }

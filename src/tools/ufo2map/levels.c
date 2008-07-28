@@ -115,6 +115,8 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 		AddPointToBounds(newmaxs, worldMins, worldMaxs);
 	}
 
+	ThreadUnlock();
+
 	/* return the last stored node */
 	return node;
 }
@@ -178,9 +180,12 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 	/* Call BeginModel only to initialize brush pointers */
 	BeginModel(entity_num);
 
+	ThreadLock();
+
 	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
 	if (!list) {
 		nn[2] = LEAFNODE;
+		ThreadUnlock();
 		return BuildNodeChildren(bmins, bmaxs, nn);
 	}
 

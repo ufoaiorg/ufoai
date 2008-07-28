@@ -69,6 +69,7 @@ static void Usage (void) {
 		" -quant                     : lightquant\n"
 		" -radchop                   : \n"
 		" -scale                     : lightscale\n"
+		" -t --threads               : thread amount\n"
 		"\nBinary space partitioning (BSPing) options:\n"
 		" -block <xl> <yl>           : \n"
 		" -blocks <xl> <yl> <xh> <yh>: \n"
@@ -176,6 +177,10 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			Usage();
 			exit(0);
+		} else if (!strcmp(argv[i], "-t") || !strcmp(argv[i], "-threads")) {
+			threadstate.numthreads = atoi(argv[++i]);
+			Com_Printf("threads: #%i\n", threadstate.numthreads);
+			continue;
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
@@ -195,13 +200,13 @@ static void U2M_Parameter (int argc, const char **argv)
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
 #ifdef HAVE_SETPRIORITY
-			config.nice = atoi(argv[i + 1]);
+			config.nice = atoi(argv[++i]);
 			Com_Printf("nice = %i\n", config.nice);
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
 				Com_Printf("failed to set nice level of %i\n", config.nice);
 #elif defined _WIN32
 			HANDLE proc = GetCurrentProcess();
-			config.nice = atoi(argv[i + 1]);
+			config.nice = atoi(argv[++i]);
 			Com_Printf("nice = %i\n", config.nice);
 			switch (config.nice) {
 			case 0:
@@ -220,8 +225,8 @@ static void U2M_Parameter (int argc, const char **argv)
 			CloseHandle(proc);
 #else
 			Com_Printf("nice not implemented for this arch\n");
-#endif
 			i++;
+#endif
 		} else if (!strcmp(argv[i], "-noprune")) {
 			Com_Printf("noprune = true\n");
 			config.noprune = qtrue;
@@ -433,6 +438,9 @@ int main (int argc, const char **argv)
 	double begin, start, end;
 
 	memset(&config, 0, sizeof(config));
+	/* init thread state */
+	memset(&threadstate, 0, sizeof(threadstate_t));
+
 	U2M_SetDefaultConfigValues();
 
 	Com_Printf("---- ufo2map "VERSION" ----\n");

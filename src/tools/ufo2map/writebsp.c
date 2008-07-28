@@ -27,42 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int c_nofaces;
 static int c_facenodes;
 
-void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id)
-{
-	unsigned int i;
-	int current, previous = 0;
-	int	start = 0;
-	int end;
-	int last = 0;
-
-	if (showProgress) {
-		start = time(NULL);
-		fprintf(stdout, "%10s: ", id);
-		fflush(stdout);
-	}
-	for (i = 0; i < count; i++) {
-		if (showProgress) {
-			current = (10 * i / count);
-			if (current != previous) {
-				previous = current;
-				fprintf(stdout, "%i..", current * 10);
-				fflush(stdout);
-			}
-			if (i % max(1, count / 1000) == 0) {
-				fprintf(stdout, "%c\b", "-\\|/"[++last & 3]);
-				fflush(stdout);
-			}
-		}
-
-		func(i);
-	}
-	if (showProgress) {
-		end = time(NULL);
-		Com_Printf(" (time: %4is, count: %i)\n", end - start, count);
-	}
-}
-
-
 /*
 =========================================================
 ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES

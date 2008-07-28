@@ -285,7 +285,8 @@ bspbrush_t *AllocBrush (int numsides)
 
 	bb = malloc(c);
 	memset(bb, 0, c);
-	c_active_brushes++;
+	if (threadstate.numthreads == 1)
+		c_active_brushes++;
 	return bb;
 }
 
@@ -297,7 +298,8 @@ void FreeBrush (bspbrush_t *brushes)
 		if (brushes->sides[i].winding)
 			FreeWinding(brushes->sides[i].winding);
 	free(brushes);
-	c_active_brushes--;
+	if (threadstate.numthreads == 1)
+		c_active_brushes--;
 }
 
 
@@ -594,7 +596,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				value =  5 * facing - 5 * splits - abs(front - back);
 /*				value = -5 * splits; */
 /*				value = 5 * facing - 5 * splits; */
-				if (mapplanes[pnum].type < 3)
+				if (mapplanes[pnum].type <= PLANE_Z)
 					value += 5;		/* axial is better */
 				value -= epsilonbrush * 1000;	/* avoid! */
 
@@ -617,8 +619,10 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 		/* if we found a good plane, don't bother trying any other passes */
 		if (bestside) {
-			if (pass > 1)
-				c_nonvis++;
+			if (pass > 1) {
+				if (threadstate.numthreads == 1)
+					c_nonvis++;
+			}
 			break;
 		}
 	}
@@ -870,7 +874,8 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	int i;
 	bspbrush_t *children[2];
 
-	c_nodes++;
+	if (threadstate.numthreads == 1)
+		c_nodes++;
 
 	/* find the best plane to use as a splitter */
 	bestside = SelectSplitSide(brushes, node);
