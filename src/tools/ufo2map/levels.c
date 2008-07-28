@@ -65,12 +65,12 @@ void PopInfo (void)
  * @param[in] maxs
  * @param[in] n The node nums
  */
-static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
+static int BuildNodeChildren (vec3_t mins, vec3_t maxs, const int n[3])
 {
 	int node = LEAFNODE, i;
 
 	for (i = 0; i < 3; i++) {
-		dBspNode_t	 *newnode;
+		dBspNode_t *newnode;
 		vec3_t newmins, newmaxs, addvec;
 
 		if (n[i] == LEAFNODE)
@@ -114,8 +114,6 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 		AddPointToBounds(newmins, worldMins, worldMaxs);
 		AddPointToBounds(newmaxs, worldMins, worldMaxs);
 	}
-
-	ThreadUnlock();
 
 	/* return the last stored node */
 	return node;
@@ -180,12 +178,9 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 	/* Call BeginModel only to initialize brush pointers */
 	BeginModel(entity_num);
 
-	ThreadLock();
-
 	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
 	if (!list) {
 		nn[2] = LEAFNODE;
-		ThreadUnlock();
 		return BuildNodeChildren(bmins, bmaxs, nn);
 	}
 
@@ -252,11 +247,15 @@ void ProcessLevel (unsigned int levelnum)
 	/* to reset all the changed values (especialy "finished") */
 	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t) * nummapbrushes);
 
+	ThreadLock();
+
 	/* Store face number for later use */
 	dm->firstface = curTile->numfaces;
 	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs);
 	/* This here replaces the calls to EndModel */
 	dm->numfaces = curTile->numfaces - dm->firstface;
+
+	ThreadUnlock();
 
 /*	if (!dm->numfaces)
 		Com_Printf("level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces);

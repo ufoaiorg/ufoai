@@ -61,6 +61,8 @@ static void ProcessSubModel (int entityNum)
 	bspbrush_t *list;
 	vec3_t mins, maxs;
 
+	ThreadLock();
+
 	BeginModel(entityNum);
 
 	e = &entities[entityNum];
@@ -73,8 +75,6 @@ static void ProcessSubModel (int entityNum)
 
 	mins[0] = mins[1] = mins[2] = -MAX_WORLD_WIDTH;
 	maxs[0] = maxs[1] = maxs[2] = MAX_WORLD_WIDTH;
-
-	ThreadLock();
 
 	/* every level (-1) */
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
