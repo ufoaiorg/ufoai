@@ -2267,7 +2267,7 @@ void CL_SetClientState (int state)
 		break;
 	case ca_ptledit:
 	case ca_sequence:
-		cl.refresh_prepped = qtrue;
+		refdef.ready = qtrue;
 		break;
 	case ca_active:
 		cls.waitingForStart = 0;

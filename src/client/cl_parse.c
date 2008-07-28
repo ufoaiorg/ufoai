@@ -347,7 +347,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 		/* seperate the printfs so the server message can have a color */
 		/*Com_Printf("%c%s\n", COLORED_GREEN, str);*/
 		/* need to prep refresh at next oportunity */
-		cl.refresh_prepped = qfalse;
+		refdef.ready = qfalse;
 	}
 }
 
@@ -370,12 +370,8 @@ static void CL_LoadClientinfo (clientinfo_t *ci, const char *s)
  */
 static void CL_ParseClientinfo (int player)
 {
-	char *s;
-	clientinfo_t *ci;
-
-	s = cl.configstrings[player+CS_PLAYERNAMES];
-
-	ci = &cl.clientinfo[player];
+	clientinfo_t *ci = &cl.clientinfo[player];
+	const char *s = cl.configstrings[player + CS_PLAYERNAMES];
 
 	CL_LoadClientinfo(ci, s);
 }
@@ -411,7 +407,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 
 	/* do something apropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
-		if (cl.refresh_prepped) {
+		if (refdef.ready) {
 			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
 			/* inline models are marked with * as first char followed by the
 			 * number */

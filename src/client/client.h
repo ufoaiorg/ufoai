@@ -65,8 +65,6 @@ typedef struct {
  * @sa client_static_t
  */
 typedef struct client_state_s {
-	qboolean refresh_prepped;	/**< false if on new level or vid restart */
-
 	int time;					/**< this is the time value that the client
 								 * is rendering at.  always <= cls.realtime */
 	int eventTime;				/**< similar to time, but not counting if blockEvents is set */

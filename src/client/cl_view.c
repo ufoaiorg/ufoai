@@ -283,7 +283,7 @@ void CL_LoadMedia (void)
 	/* waiting for EV_START */
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();
-	cl.refresh_prepped = qtrue;
+	refdef.ready = qtrue;
 }
 
 /**
@@ -345,7 +345,7 @@ void V_RenderView (void)
 		return;
 
 	/* still loading */
-	if (!cl.refresh_prepped)
+	if (!refdef.ready)
 		return;
 
 	r_numEntities = 0;

@@ -94,7 +94,7 @@ qboolean VID_GetModeInfo (void)
  */
 void VID_Restart_f (void)
 {
-	cl.refresh_prepped = qfalse;
+	refdef.ready = qfalse;
 
 	R_Shutdown();
 	R_Init();
