@@ -579,6 +579,7 @@ static void BS_Prev_BuyType_f (void)
 	} else if (buyCategory >= MAX_BUYTYPES) {
 		buyCategory = 0;
 	}
+	currentSelectedMenuEntry = NULL;
 	Cbuf_AddText(va("buy_type %i\n", buyCategory));
 }
 
@@ -595,6 +596,7 @@ static void BS_Next_BuyType_f (void)
 	} else if (buyCategory >= MAX_BUYTYPES) {
 		buyCategory = 0;
 	}
+	currentSelectedMenuEntry = NULL;
 	Cbuf_AddText(va("buy_type %i\n", buyCategory));
 }
 /**
