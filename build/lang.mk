@@ -1,16 +1,13 @@
 
 POFILES = $(wildcard src/po/*.po)
 
-lang:
-	@echo "Making lang"
-	@pofiles='$(POFILES)'; \
-	for po in $$pofiles; do \
-	  po=`basename $$po`; \
-	  echo $$po; \
-	  dir=`echo $$po | sed -e 's,\.po,,'`; \
-	  mkdir -p base/i18n/$$dir/LC_MESSAGES; \
-	  msgfmt -v -o base/i18n/$$dir/LC_MESSAGES/ufoai.mo src/po/$$po; \
-	done
+MOFILES = $(patsubst src/po/%.po, base/i18n/%/LC_MESSAGES/ufoai.mo, $(POFILES))
+
+$(MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : src/po/%.po
+	@mkdir -p $(dir $@)
+	msgfmt -v -o $@ $^
+
+lang: $(MOFILES)
 
 update-po:
 	$(MAKE) -C src/po update-po
