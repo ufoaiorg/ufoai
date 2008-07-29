@@ -507,6 +507,7 @@ void CheckEntities (void)
 			if (!strncmp(name, v->name, strlen(v->name))) {
 				if (v->checkCallback(e, i) != 0) {
 					e->skip = qtrue; /* skip: the entity will not be saved back on -fix */
+					Com_Printf("* Entity %i (%s) will be deleted\n",i,name);
 				}
 				break;
 			}
