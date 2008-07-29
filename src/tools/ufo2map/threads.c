@@ -51,8 +51,8 @@ static int GetThreadWork (void)
 			fprintf(stdout, "%i...", f);
 			fflush(stdout);
 		}
-	} else if (threadstate.progress) {
-		fprintf(stdout, "%c\b", "-\\|/"[threadstate.workindex & 3]);
+	} else if (threadstate.progress && threadstate.workindex % threadstate.worktick == 0) {
+		fprintf(stdout, "%c\b", "-\\|/"[(threadstate.workindex / threadstate.worktick) & 3]);
 		fflush(stdout);
 	}
 
@@ -145,6 +145,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 	threadstate.workcount = workcount;
 	threadstate.workfrac = -1;
 	threadstate.progress = progress;
+	threadstate.worktick = sqrt(workcount) + 1;
 
 	WorkFunction = func;
 
@@ -160,7 +161,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 	end = time(NULL);
 
 	if (threadstate.progress) {
-		Com_Printf(" (time: %6is, count: %ui)\n", end - start, workcount);
+		Com_Printf(" (time: %6is, count: %i)\n", end - start, workcount);
 	}
 }
 

@@ -127,6 +127,7 @@ typedef struct threadstate_s {
 	int workindex;		/**< current work cycle */
 	int workcount;		/**< total work cycles */
 	int workfrac;		/**< last fraction of work completed (tenths) */
+	int worktick;		/**< Number of iterations before the progress spinner is spun */
 	qboolean progress;	/**< are we reporting progress */
 } threadstate_t;
 
