@@ -282,10 +282,9 @@ static void BounceLight (void)
 static void CheckPatches (void)
 {
 	unsigned int i;
-	patch_t *patch;
 
 	for (i = 0; i < num_patches; i++) {
-		patch = &patches[i];
+		const patch_t *patch = &patches[i];
 		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
 			Sys_Error("negative patch totallight\n");
 	}

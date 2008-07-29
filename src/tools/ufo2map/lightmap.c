@@ -35,7 +35,7 @@ static int planelinks[2][MAX_MAP_PLANES];
 void LinkPlaneFaces (void)
 {
 	int i;
-	dBspFace_t *f;
+	const dBspFace_t *f;
 
 	f = curTile->faces;
 	for (i = 0; i < curTile->numfaces; i++, f++) {
@@ -156,7 +156,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
 	int i, bestp = 0;
 	vec3_t v1, v2;
-	vec_t *p0, *p1, *p;
+	vec_t *p0, *p1;
 	vec_t best, ang;
 	triangle_t *nt;
 
@@ -168,7 +168,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	p1 = trian->points[e->p1]->origin;
 	best = 1.1;
 	for (i = 0; i < trian->numpoints; i++) {
-		p = trian->points[i]->origin;
+		const vec_t *p = trian->points[i]->origin;
 		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist <= 0)
 			continue;	/* behind edge */
@@ -242,9 +242,15 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 	trian->numpoints++;
 }
 
-static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
+/**
+ * @param[in] trian
+ * @param[in] t
+ * @param[in] point
+ * @param[out] color
+ */
+static void LerpTriangle (const triangulation_t *trian, const triangle_t *t, const vec3_t point, vec3_t color)
 {
-	patch_t *p1, *p2, *p3;
+	const patch_t *p1, *p2, *p3;
 	vec3_t base, d1, d2;
 	float x, y, x1, y1, x2, y2;
 
