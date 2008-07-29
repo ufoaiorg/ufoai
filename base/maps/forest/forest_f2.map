@@ -4,7 +4,7 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 256 256 2 ) ( 256 0 2 ) ( 0 256 2 ) tex_nature/grass_mowed_dry_c 0 0 0 0.200000003 0.200000003 65280 0 0
+( 256 256 2 ) ( 256 0 2 ) ( 0 256 2 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
 ( 256 256 258 ) ( 0 256 258 ) ( 256 256 2 ) tex_common/nodraw 0 2 0 1 1 65280 128 0
 ( 256 256 258 ) ( 256 256 2 ) ( 256 0 258 ) tex_common/nodraw 0 2 0 1 1 65280 128 0
 ( 0 -2 -16 ) ( 256 -2 -16 ) ( 0 254 -16 ) tex_common/nodraw 0 62 0 1 1 65280 128 0
