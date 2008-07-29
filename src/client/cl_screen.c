@@ -347,6 +347,22 @@ static void SCR_DrawCursor (void)
 		if (dragInfo.toNode && checkedTo)
 			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
 		MN_DrawItem(org, &dragInfo.item, -1, -1, scale, color);
+
+
+#if 0
+		/** Debugging only - Will draw a marker in the upper left corner of the
+		 * dragged item (which is the one used for calculating the resulting grid-coordinates).
+		 * @todo Maybe we could make this a feature in some way. i.e. we could draw
+		 * a special cursor at this place when dragging as a hint*/
+
+		Vector4Set(color, 1, 0, 0, 1);
+		if (dragInfo.item.t)
+			VectorSet(org,
+				mousePosX - (C_UNIT * dragInfo.item.t->sx - C_UNIT) / 2,
+				mousePosY - (C_UNIT * dragInfo.item.t->sy - C_UNIT) / 2,
+				-50);
+		R_DrawCircle2D(org[0] * viddef.rx, org[1] * viddef.ry, 2.0, qtrue, color, 1.0);
+#endif
 	}
 }
 
