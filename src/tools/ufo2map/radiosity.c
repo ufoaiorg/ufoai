@@ -255,18 +255,18 @@ static void ShootLight (unsigned int patchnum)
 static void BounceLight (void)
 {
 	unsigned int i, j;
-	float	added;
-	patch_t	*p;
-	char buf[12];
 
 	for (i = 0; i < num_patches; i++) {
-		p = &patches[i];
+		const patch_t *p = &patches[i];
 		for (j = 0; j < 3; j++) {
 			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
 		}
 	}
 
 	for (i = 0; i < config.numbounce; i++) {
+		float added;
+		char buf[12];
+
 		snprintf(buf, sizeof(buf), " %i LGHTBNCE", i);
 		RunThreadsOn(ShootLight, num_patches, qtrue, buf);
 		added = CollectLight();
