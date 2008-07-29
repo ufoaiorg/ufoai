@@ -280,15 +280,13 @@ static void LerpTriangle (const triangulation_t *trian, const triangle_t *t, con
 	VectorMA(color, y / y1, d1, color);
 }
 
-static qboolean PointInTriangle (vec3_t point, triangle_t *t)
+static qboolean PointInTriangle (const vec3_t point, const triangle_t *t)
 {
 	int i;
-	const triedge_t *e;
-	vec_t d;
 
 	for (i = 0; i < 3; i++) {
-		e = t->edges[i];
-		d = DotProduct(e->normal, point) - e->dist;
+		const triedge_t *e = t->edges[i];
+		const vec_t d = DotProduct(e->normal, point) - e->dist;
 		if (d < 0)
 			return qfalse;	/* not inside */
 	}
@@ -296,9 +294,9 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 	return qtrue;
 }
 
-static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
+static void SampleTriangulation (const vec3_t point, const triangulation_t *trian, vec3_t color)
 {
-	triangle_t *t;
+	const triangle_t *t;
 	const triedge_t *e;
 	vec_t d, best;
 	patch_t *p0, *p1;
@@ -405,12 +403,12 @@ typedef struct {
  */
 static void CalcFaceExtents (lightinfo_t *l)
 {
-	dBspFace_t *s;
+	const dBspFace_t *s;
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
 	int i, j;
-	dBspVertex_t *v;
-	dBspTexinfo_t *tex;
+	const dBspVertex_t *v;
+	const dBspTexinfo_t *tex;
 
 	s = l->face;
 
@@ -465,7 +463,7 @@ static void CalcFaceExtents (lightinfo_t *l)
  */
 static void CalcFaceVectors (lightinfo_t *l)
 {
-	dBspTexinfo_t *tex;
+	const dBspTexinfo_t *tex;
 	int i, j, w, h;
 	vec3_t texnormal;
 	vec_t distscale, dist;
@@ -534,7 +532,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	vec_t starts, startt;
 	vec_t *surf;
 	vec3_t pos;
-	dBspLeaf_t *leaf;
+	const dBspLeaf_t *leaf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
@@ -589,7 +587,7 @@ void CreateDirectLights (void)
 	int i;
 	patch_t *p;
 	directlight_t *dl;
-	dBspLeaf_t *leaf;
+	const dBspLeaf_t *leaf;
 
 	/* surfaces */
 	for (i = 0, p = patches; i < num_patches; i++, p++) {
