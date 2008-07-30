@@ -339,10 +339,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_messages.h" />
-		<Unit filename="..\..\src\client\menu\m_node_bar.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\m_node_bar.h" />
 		<Unit filename="..\..\src\client\menu\m_node_checkbox.c">
 			<Option compilerVar="CC" />
 		</Unit>

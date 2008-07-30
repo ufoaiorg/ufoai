@@ -58,7 +58,6 @@ CLIENT_SRCS = \
 	client/menu/m_main.c \
 	client/menu/m_messages.c \
 	client/menu/m_nodes.c \
-	client/menu/m_node_bar.c \
 	client/menu/m_node_checkbox.c \
 	client/menu/m_node_image.c \
 	client/menu/m_node_model.c \
