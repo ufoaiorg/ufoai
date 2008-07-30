@@ -32,7 +32,6 @@ static int c_active_brushes;
 
 /**
  * @brief Sets the mins/maxs based on the windings
- * @returns false if the brush doesn't enclose a valid volume
  */
 static void BoundBrush (bspbrush_t *brush)
 {

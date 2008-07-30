@@ -89,33 +89,31 @@ static int ThreadWork (void *p)
 
 static SDL_mutex *lock = NULL;
 
-void ThreadInit(void)
+void ThreadInit (void)
 {
-	if ( lock != NULL ) {
+	if (lock != NULL)
 		Sys_Error("Mutex already created!");
-	}
 
 	lock = SDL_CreateMutex();
 
-	if ( lock == NULL ) {
+	if (lock == NULL)
 		Sys_Error("Couldn't create mutex!");
-	}
 }
 
-void ThreadRelease(void)
+void ThreadRelease (void)
 {
 	SDL_DestroyMutex(lock);
 	lock = NULL;
 }
 
 /**
- * Lock the shared data by the calling thread.
+ * @brief Lock the shared data by the calling thread.
  */
 void ThreadLock (void)
 {
-	if ( threadstate.numthreads == 1 ) {
+	if (threadstate.numthreads == 1) {
 		/* do nothing */
-	} else if ( lock != NULL && SDL_mutexP(lock) != -1 ) {
+	} else if (lock != NULL && SDL_mutexP(lock) != -1) {
 		/* already locked */
 	} else {
 		Sys_Error("Couldn't lock mutex (%p)!", lock);
@@ -123,13 +121,13 @@ void ThreadLock (void)
 }
 
 /**
- * Release the lock on the shared data.
+ * @brief Release the lock on the shared data.
  */
 void ThreadUnlock (void)
 {
-	if ( threadstate.numthreads == 1 ) {
+	if (threadstate.numthreads == 1) {
 		/* do nothing */
-	} else if ( lock != NULL && SDL_mutexV(lock) != -1 ) {
+	} else if (lock != NULL && SDL_mutexV(lock) != -1) {
 		/* already locked */
 	} else {
 		Sys_Error("Couldn't unlock mutex (%p)!", lock);
@@ -204,7 +202,7 @@ void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboo
 
 	threadstate.numthreads = 1;
 
-	RunThreadsOn( func, workcount, progress, id );
+	RunThreadsOn(func, workcount, progress, id);
 
 	threadstate.numthreads = saved_numthreads;
 }
