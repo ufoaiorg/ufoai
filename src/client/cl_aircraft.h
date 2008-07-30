@@ -52,7 +52,7 @@ typedef enum {
 /** @brief All different size of aircraft. */
 typedef enum {
 	AIRCRAFT_SMALL = 1,
-	AIRCRAFT_LARGE = 2,
+	AIRCRAFT_LARGE = 2
 } aircraftSize_t;
 
 /** @brief All different Hangar size.
@@ -91,8 +91,8 @@ typedef enum {
 } itemPos_t;
 
 typedef enum {
-	COMBAT_ZOOM_FULL,   /* Zoomed in at max weapons range */
-	COMBAT_ZOOM_HALF,   /* Zoomed out, but still tracking the combat zoomed ufo */
+	COMBAT_ZOOM_FULL,	/**< Zoomed in at max weapons range */
+	COMBAT_ZOOM_HALF	/**< Zoomed out, but still tracking the combat zoomed ufo */
 } combatZoomLevel_t;
 
 
