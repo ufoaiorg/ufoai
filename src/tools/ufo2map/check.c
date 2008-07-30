@@ -29,6 +29,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check.h"
 #include "bsp.h"
 
+#define MANDATORY_KEY 1
+#define NON_MANDATORY_KEY 0
+
+/**
+ * @param[in] mandatory if this key is missing the entity will be deleted, else just a warning
+ */
+static int checkEntityKey (entity_t *e, const int entnum, const char* key, int mandatory)
+{
+	const char *val = ValueForKey(e, key);
+	const char *name = ValueForKey(e, "classname");
+	if (!*val) {
+		if (mandatory == MANDATORY_KEY) {
+			Com_Printf("* Entity %i: %s with no %s given - will be deleted\n", entnum, name, key);
+			return 1;
+		} else {
+			Com_Printf("* Entity %i: %s with no %s given\n", entnum, name, key);
+			return 0;
+		}
+	}
+
+	return 0;
+}
+
+static void checkEntityLevelFlags (entity_t *e, const int entnum)
+{
+	const char *val = ValueForKey(e, "spawnflags");
+	const char *name = ValueForKey(e, "classname");
+	if (!*val) {
+		char buf[16];
+		Com_Printf("* Entity %i: %s with no levelflags given - setting all\n", entnum, name);
+		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
+		SetKeyValue(e, "spawnflags", buf);
+	}
+}
+
+static int checkEntityZeroBrushes (entity_t *e, int entnum)
+{
+	const char *name = ValueForKey(e, "classname");
+	if (!e->numbrushes) {
+		Com_Printf("* Entity %i: %s with no brushes given - will be deleted\n", entnum, name);
+		return 1;
+	}
+	return 0;
+}
+
 static int checkWorld (entity_t *e, int entnum)
 {
 	return 0;
@@ -41,53 +86,32 @@ static int checkLight (entity_t *e, int entnum)
 
 static int checkFuncRotating (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val) {
-		char buf[16];
-		Com_Printf("* ERROR: func_rotating with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
-		SetKeyValue(e, "spawnflags", buf);
-	}
+	checkEntityLevelFlags(e, entnum);
 
-	if (!e->numbrushes) {
-		Com_Printf("  ERROR: func_rotating with no brushes given - entnum: %i\n", entnum);
+	if (checkEntityZeroBrushes(e, entnum))
 		return 1;
-	}
+
 	return 0;
 }
 
 static int checkFuncDoor (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val) {
-		char buf[16];
-		Com_Printf("* ERROR: func_door with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
-		SetKeyValue(e, "spawnflags", buf);
-	}
+	checkEntityLevelFlags(e, entnum);
 
-	if (!e->numbrushes) {
-		Com_Printf("  ERROR: func_door with no brushes given - entnum: %i\n", entnum);
+	if (checkEntityZeroBrushes(e, entnum))
 		return 1;
-	}
+
 	return 0;
 }
 
 static int checkFuncBreakable (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val) {
-		char buf[16];
-		Com_Printf("* ERROR: func_breakable with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
-		SetKeyValue(e, "spawnflags", buf);
-	}
+	checkEntityLevelFlags(e, entnum);
 
-	if (!e->numbrushes) {
-		Com_Printf("  ERROR: func_breakable with no brushes given - entnum: %i\n", entnum);
+	if (checkEntityZeroBrushes(e, entnum)) {
 		return 1;
 	} else if (e->numbrushes > 1) {
-		Com_Printf("  WARNING: func_breakable with more than one brush given - entnum: %i (might break pathfinding)\n", entnum);
+		Com_Printf("  Entity %i: func_breakable with more than one brush given (might break pathfinding)\n", entnum);
 	}
 
 	return 0;
@@ -95,48 +119,28 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 
 static int checkMiscItem (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "item");
-	if (!*val) {
-		Com_Printf("  ERROR: misc_item with no item given - entnum: %i\n", entnum);
+	if (checkEntityKey(e, entnum, "item", MANDATORY_KEY))
 		return 1;
-	}
 
 	return 0;
 }
 
 static int checkMiscModel (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val) {
-		char buf[16];
-		Com_Printf("* ERROR: misc_model with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
-		SetKeyValue(e, "spawnflags", buf);
-	}
-	val = ValueForKey(e, "model");
-	if (!*val) {
-		Com_Printf("  ERROR: misc_model with no model given - entnum: %i\n", entnum);
+	checkEntityLevelFlags(e, entnum);
+
+	if (checkEntityKey(e, entnum, "model", MANDATORY_KEY))
 		return 1;
-	}
 
 	return 0;
 }
 
 static int checkMiscParticle (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "spawnflags");
-	if (!*val) {
-		char buf[16];
-		Com_Printf("* ERROR: misc_particle with no levelflags given - entnum: %i\n", entnum);
-		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
-		SetKeyValue(e, "spawnflags", buf);
-	}
+	checkEntityLevelFlags(e, entnum);
 
-	val = ValueForKey(e, "particle");
-	if (!*val) {
-		Com_Printf("  ERROR: misc_particle with no particle given - entnum: %i\n", entnum);
+	if (checkEntityKey(e, entnum, "particle", MANDATORY_KEY))
 		return 1;
-	}
 
 	return 0;
 }
@@ -158,10 +162,9 @@ static int checkMiscMission (entity_t *e, int entnum)
 
 static int checkFuncGroup (entity_t *e, int entnum)
 {
-	if (!e->numbrushes) {
-		Com_Printf("  ERROR: func_group with no brushes given - entnum: %i\n", entnum);
+	if (checkEntityZeroBrushes(e, entnum))
 		return 1;
-	}
+
 	return 0;
 }
 
@@ -182,48 +185,36 @@ static int checkStartPosition (entity_t *e, int entnum)
 
 static int checkInfoPlayerStart (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "team");
-	if (!*val) {
-		Com_Printf("  ERROR: info_player_start with no team given - entnum: %i\n", entnum);
+	if (checkEntityKey(e, entnum, "team", MANDATORY_KEY))
 		return 1;
-	}
+
 	return checkStartPosition(e, entnum);
 }
 
 static int checkInfoNull (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "targetname");
-	if (!*val) {
-		Com_Printf("  ERROR: info_null with no targetname given - entnum: %i\n", entnum);
+	if (checkEntityKey(e, entnum, "targetname", MANDATORY_KEY))
 		return 1;
-	}
 
 	return 0;
 }
 
 static int checkInfoCivilianTarget (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "count");
-	if (!*val)
-		Com_Printf("  ERROR: info_civilian_target with no count value given - entnum: %i\n", entnum);
+	checkEntityKey(e, entnum, "count", NON_MANDATORY_KEY);
 	return 0;
 }
 
 static int checkMiscSound (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "noise");
-	if (!*val) {
-		Com_Printf("  ERROR: misc_sound with no noise given - entnum: %i\n", entnum);
+	if (checkEntityKey(e, entnum, "noise", MANDATORY_KEY))
 		return 1;
-	}
 	return 0;
 }
 
 static int checkTriggerHurt (entity_t *e, int entnum)
 {
-	const char *val = ValueForKey(e, "dmg");
-	if (!*val)
-		Com_Printf("  ERROR: trigger_hurt with no dmg value given - entnum: %i\n", entnum);
+	checkEntityKey(e, entnum, "dmg", NON_MANDATORY_KEY);
 	return 0;
 }
 
@@ -507,7 +498,6 @@ void CheckEntities (void)
 			if (!strncmp(name, v->name, strlen(v->name))) {
 				if (v->checkCallback(e, i) != 0) {
 					e->skip = qtrue; /* skip: the entity will not be saved back on -fix */
-					Com_Printf("* Entity %i (%s) will be deleted\n",i,name);
 				}
 				break;
 			}
