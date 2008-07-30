@@ -1364,7 +1364,7 @@ static void MAP_SmoothTranslate (void)
 /**
  * @brief Draws on bunch of bullets on the geoscape map
  * @param[in] node Pointer to the node in which you want to draw the bullets.
- * @param[in] projectile Projectile pointer (make sure that this is a bullet projectile)
+ * @param[in] pos
  * @sa MAP_DrawMap
  */
 static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
@@ -1374,6 +1374,17 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
 
 	if (MAP_AllMapToScreen(node, pos, &x, &y, NULL))
 		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
+}
+
+/**
+ * @brief Draws on bunch of bullets on the geoscape map
+ * @param[in] node Pointer to the node in which you want to draw the laser.
+ * @param[in] start Start position of the laser shot (on geoscape)
+ * @param[in] end End position of the laser shot (on geoscape)
+ * @sa MAP_DrawMap
+ */
+static void MAP_DrawLaser (const menuNode_t* node, const vec3_t start, const vec3_t end)
+{
 }
 
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / ccs.zoom
@@ -1742,6 +1753,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		if (projectile->bullets)
 			MAP_DrawBullets(node, drawPos);
+		else if (projectile->laser)
+			/** @todo Implement rendering of laser shot */
+			MAP_DrawLaser(node, vec3_origin, vec3_origin);
 		else
 			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
 	}

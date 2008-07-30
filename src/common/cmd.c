@@ -238,14 +238,14 @@ void Cbuf_Execute (void)
  * Set commands are added early, so they are guaranteed to be set before
  * the client and server initialize for the first time.
  * Other commands are added late, after all initialization is complete.
+ * @sa Cbuf_AddLateCommands
  */
 void Cbuf_AddEarlyCommands (qboolean clear)
 {
 	int i;
-	const char *s;
 
 	for (i = 0; i < COM_Argc(); i++) {
-		s = COM_Argv(i);
+		const char *s = COM_Argv(i);
 		if (Q_strncmp(s, "+set", 4))
 			continue;
 		Cbuf_AddText(va("set %s %s\n", COM_Argv(i + 1), COM_Argv(i + 2)));
@@ -262,6 +262,7 @@ void Cbuf_AddEarlyCommands (qboolean clear)
  * @brief Adds command line parameters as script statements
  * @note Commands lead with a + and continue until another + or -
  * @return true if any late commands were added, which will keep the demoloop from immediately starting
+ * @sa Cbuf_AddEarlyCommands
  */
 qboolean Cbuf_AddLateCommands (void)
 {
