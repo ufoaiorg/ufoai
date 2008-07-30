@@ -200,7 +200,6 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
  */
 void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id)
 {
-	int start, end;
 	int saved_numthreads = threadstate.numthreads;
 
 	threadstate.numthreads = 1;
