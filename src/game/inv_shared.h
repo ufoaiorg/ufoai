@@ -204,7 +204,7 @@ typedef enum {
 	BUY_HEAVY,	/**< Heavy equipment like tanks (i.e. these are actually employees). */
 	MAX_BUYTYPES,
 
-	ENSURE_32BIT = 0xFFFFFFFF
+	ENSURE_32BIT = 0x7FFFFFFF
 } equipmentBuytypes_t;
 
 #define MAX_SOLDIER_EQU_BUYTYPES BUY_MULTI_AMMO

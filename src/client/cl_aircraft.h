@@ -212,10 +212,6 @@ typedef struct aircraft_s {
 	qboolean notOnGeoscape;	/**< don't let this aircraft ever appear on geoscape (e.g. ufo_carrier) */
 } aircraft_t;
 
-/*
-@todo for later, this is used quite a lot in the code.
-#define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
-*/
 extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraftTemplates;
 

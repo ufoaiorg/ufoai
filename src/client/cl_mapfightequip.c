@@ -1394,7 +1394,6 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	if (aircraftMenu) {
-		assert(baseCurrent->aircraftCurrent >= 0);
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		/* Select slot */
@@ -1933,7 +1932,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	activeMenu = MN_GetActiveMenu();
 	/* check in which menu we are */
 	if (!Q_strncmp(activeMenu->name, "aircraft_equip", 14)) {
-		if (baseCurrent->aircraftCurrent < 0)
+		if (baseCurrent->aircraftCurrent == NULL)
 			return;
 		aircraft = baseCurrent->aircraftCurrent;
 		base = NULL;

@@ -2090,10 +2090,9 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 {
 	int idxSlot;
 	int idxAllWeap;
-	float allWeaponRanges[maxSlot];
+	float allWeaponRanges[MAX_AIRCRAFTSLOT];
 	int numAllWeaponRanges = 0;
 	int numUniqueWeaponRanges = 0;
-
 
 	assert(slot);
 

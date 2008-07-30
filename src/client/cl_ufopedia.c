@@ -1186,10 +1186,7 @@ static void UP_Index_f (void)
 			/* Add this tech to the index - it gets dsiplayed. */
 			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
 		}
-		if (t->upNext >= 0)
-			t = t->upNext;
-		else
-			t = NULL;
+		t = t->upNext;
 	}
 }
 
@@ -1262,11 +1259,10 @@ static void UP_Next_f (void)
 	t = upCurrentTech;
 
 	/* get next entry */
-	if (t && (t->upNext >= 0)) {
+	if (t && t->upNext) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
 			t = t->upNext;
-			assert(upCurrentTech);
 			if (t == t->upNext)
 				Sys_Error("UP_Next_f: The 'next':%s entry is equal to '%s'.\n", t->upNext->id, t->id);
 		} while (t->upNext && !UP_TechGetsDisplayed(t));
@@ -1323,7 +1319,7 @@ static void UP_Click_f (void)
 		}
 		break;
 	case UFOPEDIA_INDEX:
-		assert(currentChapter >= 0);
+		assert(currentChapter);
 		t = currentChapter->first;
 
 		/* get next entry */
@@ -1335,10 +1331,7 @@ static void UP_Click_f (void)
 				else
 					break;
 			}
-			if (t->upNext >= 0)
-				t = t->upNext;
-			else
-				t = NULL;
+			t = t->upNext;
 		}
 		upCurrentTech = t;
 		if (upCurrentTech)
@@ -1380,12 +1373,12 @@ static void UP_TechTreeClick_f (void)
 	for (i = 0; i <= num; i++) {
 #if 1
 		if (required_AND->links[i].type != RS_LINK_TECH
-		&& required_AND->links[i].type != RS_LINK_TECH_NOT)
+		 && required_AND->links[i].type != RS_LINK_TECH_NOT)
 #else
 		if (required_AND->links[i].type != RS_LINK_TECH
-		&& required_AND->links[i].type != RS_LINK_TECH_NOT
-		&& required_AND->links[i].type != RS_LINK_TECH_BEFORE
-		&& required_AND->links[i].type != RS_LINK_TECH_XOR)
+		 && required_AND->links[i].type != RS_LINK_TECH_NOT
+		 && required_AND->links[i].type != RS_LINK_TECH_BEFORE
+		 && required_AND->links[i].type != RS_LINK_TECH_XOR)
 #endif
 			num++;
 	}

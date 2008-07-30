@@ -1538,7 +1538,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				float angle;
 				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
-				float weaponRanges[aircraft->maxWeapons];
+				float weaponRanges[MAX_AIRCRAFTSLOT];
 				int numWeaponRanges = AIR_GetAircraftWeaponRanges(aircraft->weapons, aircraft->maxWeapons, weaponRanges);
 
 				if (gd.combatZoomedUfo && aircraft->aircraftTarget == gd.combatZoomedUfo) {
