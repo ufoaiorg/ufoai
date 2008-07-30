@@ -240,22 +240,20 @@ void ProcessLevel (unsigned int levelnum)
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
 	/* Com_Printf("Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels); */
 
+	/* \note Should be reentrant as each thread has a unique levelnum at any given time */
 	dm = &curTile->models[levelnum];
 	memset(dm, 0, sizeof(*dm));
 
+	/* \todo Check what happens if two threads do the memcpy */
 	/* back copy backup brush sides structure */
 	/* to reset all the changed values (especialy "finished") */
 	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t) * nummapbrushes);
-
-	ThreadLock();
 
 	/* Store face number for later use */
 	dm->firstface = curTile->numfaces;
 	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs);
 	/* This here replaces the calls to EndModel */
 	dm->numfaces = curTile->numfaces - dm->firstface;
-
-	ThreadUnlock();
 
 /*	if (!dm->numfaces)
 		Com_Printf("level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces);

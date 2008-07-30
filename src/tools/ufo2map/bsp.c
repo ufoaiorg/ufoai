@@ -43,7 +43,7 @@ static void ProcessWorldModel (void)
 	curTile->nummodels = NUM_REGULAR_MODELS;
 
 	/* process levels */
-	RunThreadsOn(ProcessLevel, NUM_REGULAR_MODELS, qtrue, "LEVEL");
+	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, qtrue, "LEVEL");
 
 	/* calculate routing */
 	DoRouting();
@@ -60,8 +60,6 @@ static void ProcessSubModel (int entityNum)
 	tree_t *tree;
 	bspbrush_t *list;
 	vec3_t mins, maxs;
-
-	ThreadLock();
 
 	BeginModel(entityNum);
 
@@ -91,8 +89,6 @@ static void ProcessSubModel (int entityNum)
 	FixTjuncs(tree->headnode);
 	curTile->models[curTile->nummodels].headnode = WriteBSP(tree->headnode);
 	FreeTree(tree);
-
-	ThreadUnlock();
 
 	EndModel();
 }

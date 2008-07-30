@@ -89,20 +89,51 @@ static int ThreadWork (void *p)
 
 static SDL_mutex *lock = NULL;
 
-void ThreadLock (void)
+void ThreadInit(void)
 {
-	if (!lock)
-		return;
+	if ( lock != NULL ) {
+		Sys_Error("Mutex already created!");
+	}
 
-	SDL_mutexP(lock);
+	lock = SDL_CreateMutex();
+
+	if ( lock == NULL ) {
+		Sys_Error("Couldn't create mutex!");
+	}
 }
 
+void ThreadRelease(void)
+{
+	SDL_DestroyMutex(lock);
+	lock = NULL;
+}
+
+/**
+ * Lock the shared data by the calling thread.
+ */
+void ThreadLock (void)
+{
+	if ( threadstate.numthreads == 1 ) {
+		/* do nothing */
+	} else if ( lock != NULL && SDL_mutexP(lock) != -1 ) {
+		/* already locked */
+	} else {
+		Sys_Error("Couldn't lock mutex (%p)!", lock);
+	}
+}
+
+/**
+ * Release the lock on the shared data.
+ */
 void ThreadUnlock (void)
 {
-	if (!lock)
-		return;
-
-	SDL_mutexV(lock);
+	if ( threadstate.numthreads == 1 ) {
+		/* do nothing */
+	} else if ( lock != NULL && SDL_mutexV(lock) != -1 ) {
+		/* already locked */
+	} else {
+		Sys_Error("Couldn't unlock mutex (%p)!", lock);
+	}
 }
 
 static void RunThreads (void)
@@ -115,7 +146,7 @@ static void RunThreads (void)
 		return;
 	}
 
-	lock = SDL_CreateMutex();
+	ThreadInit();
 
 	for (i = 0; i < threadstate.numthreads; i++)
 		threads[i] = SDL_CreateThread(ThreadWork, NULL);
@@ -123,8 +154,7 @@ static void RunThreads (void)
 	for (i = 0; i < threadstate.numthreads; i++)
 		SDL_WaitThread(threads[i], NULL);
 
-	SDL_DestroyMutex(lock);
-	lock = NULL;
+	ThreadRelease();
 }
 
 
@@ -163,5 +193,20 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 	if (threadstate.progress) {
 		Com_Printf(" (time: %6is, count: %i)\n", end - start, workcount);
 	}
+}
+
+/**
+ * @brief Entry point for all thread work requests.
+ */
+void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id)
+{
+	int start, end;
+	int saved_numthreads = threadstate.numthreads;
+
+	threadstate.numthreads = 1;
+
+	RunThreadsOn( func, workcount, progress, id );
+
+	threadstate.numthreads = saved_numthreads;
 }
 
