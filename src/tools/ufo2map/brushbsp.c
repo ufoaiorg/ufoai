@@ -461,7 +461,7 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 	for (b = brushes; b; b = b->next) {
 		/* if the brush is solid and all of its sides are on nodes,
 		 * it eats everything */
-		if (b->original->contentFlags & CONTENTS_SOLID && !b->original->contentFlags & CONTENTS_PASSABLE) {
+		if (b->original->contentFlags & CONTENTS_SOLID && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
 			for (i = 0; i < b->numsides; i++)
 				if (b->sides[i].texinfo != TEXINFO_NODE)
 					break;

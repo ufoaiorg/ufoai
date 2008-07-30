@@ -45,7 +45,8 @@ mapConfig_t config;
 /**
  * @brief print usage information.
  */
-static void Usage (void) {
+static void Usage (void)
+{
 	Com_Printf("Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]\n"
 #ifdef _WIN32
 		"Even on Windows, use / slashes in the path\n"
