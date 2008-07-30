@@ -1,7 +1,7 @@
 # sync sourceforget.net svn to local svn dir
 LOCAL_SVN_DIR=/var/lib/svn
 rsync:
-	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* $(LOCAL_SVN_DIR)
+	rsync -av ufoai.svn.sourceforge.net::svn/ufoai/* $(LOCAL_SVN_DIR)
 
 update-maps:
 	rsync -avz rsync://mattn.ninex.info/ufo base/maps
