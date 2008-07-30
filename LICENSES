@@ -997,6 +997,9 @@ base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or l
 base/models/objects/vegi/tree04/bark.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/tree04/leafs.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/tree04/tree04.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/water_lily/nymphaea_flower.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily/nymphaea_leaf.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily/nymphaea_stem.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/barrel1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
