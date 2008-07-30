@@ -910,6 +910,7 @@ static qboolean ParseMapEntity (const char *filename)
 	const char *entName;
 	int startbrush, startsides;
 	static int worldspawnCount = 0;
+	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
 	if (!GetToken(qtrue))
 		return qfalse;
@@ -956,7 +957,7 @@ static qboolean ParseMapEntity (const char *filename)
 		mapent->numbrushes = 0;
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
-		if (mapent->numbrushes == 0) {
+		if (mapent->numbrushes == 0 && notCheckOrFix) {
 			num_entities--;
 			Com_Printf("Warning: %s has no brushes assigned (entnum: %i)\n", entName, num_entities + 1);
 		}
