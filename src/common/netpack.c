@@ -507,14 +507,14 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 {
 	va_list argptr;
 	static char string[4096];
-	char cmd = clc_oob;
+	char cmd = (char)clc_oob;
 	int len;
 
 	va_start(argptr, format);
 	Q_vsnprintf(string, sizeof(string), format, argptr);
 	va_end(argptr);
 
-	string[sizeof(string)-1] = 0;
+	string[sizeof(string) - 1] = 0;
 
 	len = LittleLong(strlen(string) + 1);
 	NET_StreamEnqueue(s, (char *)&len, 4);
