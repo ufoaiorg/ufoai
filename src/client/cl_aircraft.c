@@ -2442,7 +2442,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			gd.projectiles[i].time = MSG_ReadShort(sb);
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
 			gd.projectiles[i].bullets = MSG_ReadByte(sb);
-			/*gd.projectiles[i].laser = MSG_ReadByte(sb);*/
+			gd.projectiles[i].laser = MSG_ReadByte(sb);
 		} else
 			Sys_Error("AIR_Load: Could not get technology of projectile %i\n", i);
 	}
