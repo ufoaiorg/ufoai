@@ -89,7 +89,7 @@ static int ThreadWork (void *p)
 
 static SDL_mutex *lock = NULL;
 
-void ThreadInit (void)
+static void ThreadInit (void)
 {
 	if (lock != NULL)
 		Sys_Error("Mutex already created!");
@@ -100,7 +100,7 @@ void ThreadInit (void)
 		Sys_Error("Couldn't create mutex!");
 }
 
-void ThreadRelease (void)
+static void ThreadRelease (void)
 {
 	SDL_DestroyMutex(lock);
 	lock = NULL;

@@ -133,8 +133,6 @@ typedef struct threadstate_s {
 
 extern threadstate_t threadstate;
 
-void ThreadInit(void);
-void ThreadRelease(void);
 void ThreadLock(void);
 void ThreadUnlock(void);
 void RunThreadsOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
