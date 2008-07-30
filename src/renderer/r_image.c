@@ -599,6 +599,7 @@ void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
 	Mem_Free(out);
 }
 
+#define TGA_CHANNELS 3
 
 /**
  * @sa R_LoadTGA
@@ -606,9 +607,8 @@ void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
  */
 void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 {
-	const int channels = 3;
-	byte pixel_data[channels];
-	byte block_data[channels * 128];
+	byte pixel_data[TGA_CHANNELS];
+	byte block_data[TGA_CHANNELS * 128];
 	byte rle_packet;
 	int compress = 0;
 	size_t block_length = 0;
@@ -640,21 +640,21 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 
 	for (y = height - 1; y >= 0; y--) {
 		for (x = 0; x < width; x++) {
-			const size_t index = y * width * channels + x * channels;
+			const size_t index = y * width * TGA_CHANNELS + x * TGA_CHANNELS;
 			pixel_data[0] = buffer[index + 2];
 			pixel_data[1] = buffer[index + 1];
 			pixel_data[2] = buffer[index];
 
 			if (block_length == 0) {
-				memcpy(block_data, pixel_data, channels);
+				memcpy(block_data, pixel_data, TGA_CHANNELS);
 				block_length++;
 				compress = 0;
 			} else {
 				if (!compress) {
 					/* uncompressed block and pixel_data differs from the last pixel */
-					if (memcmp(&block_data[(block_length - 1) * channels], pixel_data, channels) != 0) {
+					if (memcmp(&block_data[(block_length - 1) * TGA_CHANNELS], pixel_data, TGA_CHANNELS) != 0) {
 						/* append pixel */
-						memcpy(&block_data[block_length * channels], pixel_data, channels);
+						memcpy(&block_data[block_length * TGA_CHANNELS], pixel_data, TGA_CHANNELS);
 
 						block_length++;
 					} else {
@@ -663,16 +663,16 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 							/* write the uncompressed block */
 							rle_packet = block_length - 2;
 							FS_Write(&rle_packet,1, f);
-							FS_Write(block_data, (block_length - 1) * channels, f);
+							FS_Write(block_data, (block_length - 1) * TGA_CHANNELS, f);
 							block_length = 1;
 						}
-						memcpy(block_data, pixel_data, channels);
+						memcpy(block_data, pixel_data, TGA_CHANNELS);
 						block_length++;
 						compress = 1;
 					}
 				} else {
 					/* compressed block and pixel data is identical */
-					if (memcmp(block_data, pixel_data, channels) == 0) {
+					if (memcmp(block_data, pixel_data, TGA_CHANNELS) == 0) {
 						block_length++;
 					} else {
 						/* compressed block and pixel data differs */
@@ -680,10 +680,10 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 							/* write the compressed block */
 							rle_packet = block_length + 127;
 							FS_Write(&rle_packet, 1, f);
-							FS_Write(block_data, channels, f);
+							FS_Write(block_data, TGA_CHANNELS, f);
 							block_length = 0;
 						}
-						memcpy(&block_data[block_length * channels], pixel_data, channels);
+						memcpy(&block_data[block_length * TGA_CHANNELS], pixel_data, TGA_CHANNELS);
 						block_length++;
 						compress = 0;
 					}
@@ -694,11 +694,11 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 				rle_packet = block_length - 1;
 				if (!compress) {
 					FS_Write(&rle_packet, 1, f);
-					FS_Write(block_data, 128 * channels, f);
+					FS_Write(block_data, 128 * TGA_CHANNELS, f);
 				} else {
 					rle_packet += 128;
 					FS_Write(&rle_packet, 1, f);
-					FS_Write(block_data, channels, f);
+					FS_Write(block_data, TGA_CHANNELS, f);
 				}
 
 				block_length = 0;
@@ -712,11 +712,11 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 		rle_packet = block_length - 1;
 		if (!compress) {
 			FS_Write(&rle_packet, 1, f);
-			FS_Write(block_data, block_length * channels, f);
+			FS_Write(block_data, block_length * TGA_CHANNELS, f);
 		} else {
 			rle_packet += 128;
 			FS_Write(&rle_packet, 1, f);
-			FS_Write(block_data, channels, f);
+			FS_Write(block_data, TGA_CHANNELS, f);
 		}
 	}
 
