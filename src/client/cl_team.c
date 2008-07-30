@@ -889,7 +889,8 @@ static void CL_GenerateEquipment_f (void)
 			continue;
 
 		while (unused.num[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			const objDef_t *od = &csi.ods[i];
+			const item_t item = {NONE_AMMO, NULL, od, 0, 0};
 
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
