@@ -1697,7 +1697,7 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	/* proceed only if an item has been selected */
 	if ((!airequipSelectedTechnology && airequipID != AC_ITEM_PILOT) ||
-	    (!airequipSelectedPilot && airequipID == AC_ITEM_PILOT))
+		(!airequipSelectedPilot && airequipID == AC_ITEM_PILOT))
 		return;
 
 	/* check in which menu we are */

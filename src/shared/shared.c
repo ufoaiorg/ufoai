@@ -235,7 +235,7 @@ const char *COM_EParse (const char **text, const char *errhead, const char *erri
  */
 int Q_FloatSort (const void *float1, const void *float2)
 {
-    return (*(const float *)float1 - *(const float *)float2);
+	return (*(const float *)float1 - *(const float *)float2);
 }
 
 /**
