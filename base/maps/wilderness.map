@@ -7723,3 +7723,60 @@
 "origin" "400 1584 208"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 }
+// entity 87
+{
+"classname" "misc_model"
+"origin" "1744 496 31"
+"model" "models/objects/vegi/water_lily/lily_bloom.md2"
+"spawnflags" "255"
+"modelscale_vec" "0.763158 0.733333 0.777778"
+}
+// entity 88
+{
+"classname" "misc_model"
+"origin" "1712 480 32"
+"model" "models/objects/vegi/water_lily/lily_leaf.md2"
+"spawnflags" "255"
+"angle" "-135"
+"modelscale_vec" "0.790698 0.803089 1"
+}
+// entity 89
+{
+"classname" "misc_model"
+"origin" "1712 480 32"
+"model" "models/objects/vegi/water_lily/lily_stem.md2"
+"spawnflags" "255"
+"angle" "-135"
+}
+// entity 90
+{
+"classname" "misc_model"
+"origin" "1744 496 32"
+"model" "models/objects/vegi/water_lily/lily_stem.md2"
+"spawnflags" "255"
+}
+// entity 91
+{
+"classname" "misc_model"
+"origin" "1744 496 32"
+"model" "models/objects/vegi/water_lily/lily_leaf.md2"
+"spawnflags" "255"
+"modelscale_vec" "0.825 0.8 1"
+}
+// entity 92
+{
+"classname" "misc_model"
+"origin" "1712 512 32"
+"model" "models/objects/vegi/water_lily/lily_stem.md2"
+"spawnflags" "255"
+"angle" "135"
+}
+// entity 93
+{
+"classname" "misc_model"
+"origin" "1712 512 32"
+"model" "models/objects/vegi/water_lily/lily_leaf.md2"
+"spawnflags" "255"
+"angle" "135"
+"modelscale_vec" "0.789474 0.774194 1"
+}
