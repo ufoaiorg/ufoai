@@ -792,6 +792,7 @@ tech rs_weapon_bombkit1
 	producetime	-1
 }
 
+/*
 // only for in-mission spawning, not produceable or buyable
 tech rs_weapon_bombkit2
 {
@@ -808,6 +809,7 @@ tech rs_weapon_bombkit2
 	time	0
 	producetime	-1
 }
+*/
 
 tech rs_weapon_chaingun
 {
