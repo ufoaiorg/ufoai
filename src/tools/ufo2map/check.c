@@ -50,7 +50,7 @@ static int checkFuncRotating (entity_t *e, int entnum)
 	}
 
 	if (!e->numbrushes) {
-		Com_Printf("  ERROR: func_door with no brushes given - entnum: %i\n", entnum);
+		Com_Printf("  ERROR: func_rotating with no brushes given - entnum: %i\n", entnum);
 		return 1;
 	}
 	return 0;

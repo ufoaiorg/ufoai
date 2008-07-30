@@ -879,7 +879,7 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
  */
 static inline qboolean IsInlineModelEntity (const char *entName)
 {
-	qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
+	const qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
 			|| !strcmp("func_door", entName)
 			|| !strcmp("func_rotating", entName));
 	return inlineModelEntity;
@@ -958,7 +958,7 @@ static qboolean ParseMapEntity (const char *filename)
 	} else if (IsInlineModelEntity(entName)) {
 		if (mapent->numbrushes == 0) {
 			num_entities--;
-			Com_Printf("Warning: %s has no brushes assigned\n", entName);
+			Com_Printf("Warning: %s has no brushes assigned (entnum: %i)\n", entName, num_entities + 1);
 		}
 	} else if (!strcmp("worldspawn", entName)) {
 		worldspawnCount++;
