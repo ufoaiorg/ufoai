@@ -517,6 +517,17 @@ aircraft craft_ufo_fighter
 // EQUIPMENT
 // *********************************
 
+craftitem craft_weapon_alc
+{
+	name		"_Aerial Laser Cannon"
+	crafttype		weapon
+	size		40 // light
+	installationTime	2
+	price		12000
+	buytype		craftitem
+	bullets		false
+}
+
 craftitem craft_weapon_shiva
 {
 	name		"_Shiva Rotary Cannon"

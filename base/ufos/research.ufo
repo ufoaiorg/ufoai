@@ -4297,6 +4297,28 @@ tech rs_craft_alien_detection
 	mdl		"craft_item_detector"
 }
 
+tech rs_craft_weapon_alc
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Aerial Laser Cannon"
+	// pre_description	"_craft_weapon_alc_pre_txt"
+	description {
+		default "_craft_weapon_alc_txt"
+	}
+
+	require_AND {
+		tech rs_laser
+		tech rs_damage_laser
+	}
+
+	provides	craft_weapon_alc
+	time		0
+	producetime	100
+
+	mdl		"aircraft/craft_weapon_alc/alc"
+}
+
 tech rs_craft_weapon_shiva
 {
 	type		craftitem
