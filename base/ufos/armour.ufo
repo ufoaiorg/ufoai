@@ -123,66 +123,68 @@ item light
 	}
 }
 
+/*
 //weights 100
-//item lightadv
-//{
-//	name		"_Advanced Combat Armour"
-//	image		armour/lightadv
-//	type		armour
-//	shape		"0 0 3 4"
-//	center		"0 0 -5"
-//	scale		0.7
-//	price		1600
-//	size		60
-//	buytype		armour
-//	useable		0
-//	//TODO: TU penalty value. No support for this yet.
-//
-//	protection {
-//		normal_light		20
-//		normal_medium		18
-//		normal_heavy		11
-//		normal_spray        9
-//
-//		normal_steelblade		10
-//		normal_monomolecularblade	5
-//
-//		blast				25
-//
-//		fire_medium			15
-//		fire_heavy			15
-//		fire_flamer         2
-//
-//		shock				0
-//
-//		plasma_light		7
-//		plasma_medium		6
-//		plasma_heavy		5
-//
-//		laser_light			12
-//		laser_medium		10
-//		laser_heavy			10
-//
-//		particlebeam_light	7
-//		particlebeam_medium	6
-//		particlebeam_heavy	5
-//
-//		stun_electro		0
-//		stun_gas		0
-//	}
-//
-//	rating {
-//		normal				30
-//		blast				30
-//		fire				20
-//		shock				10
-//		plasma				10
-//		laser				20
-//		particlebeam		10
-//		stun_electro			10
-//		stun_gas			10
-//	}
-//}
+item lightadv
+{
+	name		"_Advanced Combat Armour"
+	image		armour/lightadv
+	type		armour
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		1600
+	size		60
+	buytype		armour
+	useable		0
+	//TODO: TU penalty value. No support for this yet.
+
+	protection {
+		normal_light		20
+		normal_medium		18
+		normal_heavy		11
+		normal_spray        9
+
+		normal_steelblade		10
+		normal_monomolecularblade	5
+
+		blast				25
+
+		fire_medium			15
+		fire_heavy			15
+		fire_flamer         2
+
+		shock				0
+
+		plasma_light		7
+		plasma_medium		6
+		plasma_heavy		5
+
+		laser_light			12
+		laser_medium		10
+		laser_heavy			10
+
+		particlebeam_light	7
+		particlebeam_medium	6
+		particlebeam_heavy	5
+
+		stun_electro		0
+		stun_gas		0
+	}
+
+	rating {
+		normal				30
+		blast				30
+		fire				20
+		shock				10
+		plasma				10
+		laser				20
+		particlebeam		10
+		stun_electro			10
+		stun_gas			10
+	}
+}
+*/
 
 //weights 120
 item medium

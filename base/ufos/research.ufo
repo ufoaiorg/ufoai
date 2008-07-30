@@ -2561,6 +2561,7 @@ tech rs_combat_armour
 	producetime	72
 }
 
+/*
 tech rs_advanced_combat_armour
 {
 	type	armour
@@ -2574,6 +2575,7 @@ tech rs_advanced_combat_armour
 	time	0
 	producetime	72
 }
+*/
 
 tech rs_nano_armour
 {
