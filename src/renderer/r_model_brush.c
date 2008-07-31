@@ -321,6 +321,9 @@ static void R_ModLoadNodes (lump_t * l)
 	int i, j, count, p;
 	dBspNode_t *in;
 	mBspNode_t *out;
+	/* in case of "special" pathfinding nodes (they don't have a plane)
+	 * we have to correct the children index, because we skip to load the
+	 * pathfinding nodes for rendering */
 	int skipIndex = 0;
 
 	in = (void *) (mod_base + l->fileofs);
