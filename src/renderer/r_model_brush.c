@@ -35,7 +35,7 @@ BRUSHMODEL LOADING
 /**
  * @brief The model base pointer - bases for the lump offsets
  */
-static byte *mod_base;
+static const byte *mod_base;
 /**
  * @brief The shift array is used for random map assemblies (RMA) to shift
  * the mins/maxs and stuff like that
@@ -59,17 +59,17 @@ static void R_ModLoadLighting (const lump_t *l)
 	}
 
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
-	r_worldmodel->bsp.lightquant = *(byte *) (mod_base + l->fileofs);
+	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
 static void R_ModLoadVertexes (const lump_t *l)
 {
-	dBspVertex_t *in;
+	const dBspVertex_t *in;
 	mBspVertex_t *out;
 	int i, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -86,7 +86,7 @@ static void R_ModLoadVertexes (const lump_t *l)
 	}
 }
 
-static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
+static inline float RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 	vec3_t corner;
@@ -104,11 +104,11 @@ static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
  */
 static void R_ModLoadSubmodels (const lump_t *l)
 {
-	dBspModel_t *in;
+	const dBspModel_t *in;
 	mBspHeader_t *out;
 	int i, j, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -133,11 +133,11 @@ static void R_ModLoadSubmodels (const lump_t *l)
 
 static void R_ModLoadEdges (const lump_t *l)
 {
-	dBspEdge_t *in;
+	const dBspEdge_t *in;
 	mBspEdge_t *out;
 	int i, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -158,12 +158,12 @@ static void R_ModLoadEdges (const lump_t *l)
  */
 static void R_ModLoadTexinfo (const lump_t *l)
 {
-	dBspTexinfo_t *in;
+	const dBspTexinfo_t *in;
 	mBspTexInfo_t *out;
 	int i, j, count;
 	char name[MAX_QPATH];
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -249,13 +249,13 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 
 static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 {
-	dBspFace_t *in;
+	const dBspFace_t *in;
 	mBspSurface_t *out;
 	int i, count, surfnum;
 	int planenum, side;
 	int ti;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -326,14 +326,14 @@ static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 static void R_ModLoadNodes (const lump_t *l)
 {
 	int i, j, count, p;
-	dBspNode_t *in;
+	const dBspNode_t *in;
 	mBspNode_t *out;
 	/* in case of "special" pathfinding nodes (they don't have a plane)
 	 * we have to correct the children index, because we skip to load the
 	 * pathfinding nodes for rendering */
 	int skipIndex = 0;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -384,11 +384,11 @@ static void R_ModLoadNodes (const lump_t *l)
 
 static void R_ModLoadLeafs (const lump_t *l)
 {
-	dBspLeaf_t *in;
+	const dBspLeaf_t *in;
 	mBspLeaf_t *out;
 	int i, j, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -411,9 +411,10 @@ static void R_ModLoadLeafs (const lump_t *l)
 static void R_ModLoadSurfedges (const lump_t *l)
 {
 	int i, count;
-	int *in, *out;
+	const int *in;
+	int *out;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -437,10 +438,10 @@ static void R_ModLoadPlanes (const lump_t *l)
 {
 	int i, j;
 	cBspPlane_t *out;
-	dBspPlane_t *in;
+	const dBspPlane_t *in;
 	int count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
