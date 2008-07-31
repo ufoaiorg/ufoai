@@ -390,8 +390,6 @@ typedef struct {
 	vec3_t	worldtotex[2];	/* s = (world - texorg) . worldtotex[0] */
 	vec3_t	textoworld[2];	/* world = texorg + s * textoworld[0] */
 
-	vec2_t	exactmins, exactmaxs;
-
 	int		texmins[2], texsize[2];
 	int		surfnum;
 	dBspFace_t	*face;
@@ -399,7 +397,7 @@ typedef struct {
 
 
 /**
- * @brief Fills in s->texmins[] and s->texsize[], also sets exactmins[] and exactmaxs[]
+ * @brief Fills in s->texmins[] and s->texsize[]
  */
 static void CalcFaceExtents (lightinfo_t *l)
 {
@@ -420,7 +418,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 	tex = &curTile->texinfo[s->texinfo];
 
 	for (i = 0; i < s->numedges; i++) {
-		const int e = curTile->surfedges[s->firstedge+i];
+		const int e = curTile->surfedges[s->firstedge + i];
 		if (e >= 0)
 			v = curTile->vertexes + curTile->edges[e].v[0];
 		else
@@ -445,9 +443,6 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->center[i] = (mins[i] + maxs[i]) / 2;
 
 	for (i = 0; i < 2; i++) {
-		l->exactmins[i] = stmins[i];
-		l->exactmaxs[i] = stmaxs[i];
-
 		stmins[i] = floor(stmins[i] / (1 << config.lightquant));
 		stmaxs[i] = ceil(stmaxs[i] / (1 << config.lightquant));
 
