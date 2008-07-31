@@ -194,14 +194,13 @@ static void R_ModLoadTexinfo (const lump_t *l)
 /**
  * @brief Fills in s->stmins[] and s->stmaxs[]
  */
-static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
+static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 {
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
 	int bmins[2], bmaxs[2];
 	int i, j;
-	mBspVertex_t *v;
-	mBspTexInfo_t *tex;
+	const mBspTexInfo_t *tex;
 
 	VectorSet(mins, 999999, 999999, 999999);
 	VectorSet(maxs, -999999, -999999, -999999);
@@ -213,6 +212,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
+		const mBspVertex_t *v;
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
@@ -271,6 +271,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 
 		/* resolve plane */
 		planenum = LittleShort(in->planenum);
+		assert(planenum >= 0);
 		out->plane = r_worldmodel->bsp.planes + planenum;
 
 		/* and sideness */
@@ -297,7 +298,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 		else
 			i = LittleLong(in->lightofs[LIGHTMAP_NIGHT]);
 
-		if (i == -1 || (out->texinfo->flags & (SURF_WARP)))
+		if (i == -1 || (out->texinfo->flags & SURF_WARP))
 			out->samples = NULL;
 		else {
 			out->samples = r_worldmodel->bsp.lightdata + i;
@@ -310,8 +311,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 	}
 }
 
-
-static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
+static inline void R_ModSetParent (mBspNode_t *node, mBspNode_t *parent)
 {
 	node->parent = parent;
 	if (node->contents != NODE_NO_LEAF)
@@ -631,9 +631,9 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
  * @brief Reorders all surfaces arrays for the specified model, grouping the surface
  * pointers by texture.  This dramatically reduces glBindTexture calls.
  */
-static void R_SortSurfacesArrays (model_t *mod)
+static void R_SortSurfacesArrays (const model_t *mod)
 {
-	mBspSurface_t *surf, *s;
+	const mBspSurface_t *surf, *s;
 	int i, ns;
 
 	/* resolve the start surface and total surface count */
@@ -773,11 +773,17 @@ static void R_LoadSurfacesArrays (model_t *mod)
 /**
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
+ * @param[in] name The name of the map. Relative to maps/ and without extension
+ * @param[in] day Load the day lightmap
+ * @param[in] sX Shift x grid units
+ * @param[in] sY Shift y grid units
+ * @param[in] sZ Shift z grid units
+ * @sa UNIT_SIZE
  */
 static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int sZ)
 {
 	int i;
-	unsigned *buffer;
+	byte *buffer;
 	dBspHeader_t *header;
 
 	/* get new model */
@@ -794,7 +800,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	Com_sprintf(r_worldmodel->name, sizeof(r_worldmodel->name), "maps/%s.bsp", name);
 
 	/* load the file */
-	FS_LoadFile(r_worldmodel->name, (byte **) &buffer);
+	FS_LoadFile(r_worldmodel->name, &buffer);
 	if (!buffer)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s not found", r_worldmodel->name);
 
@@ -858,6 +864,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	R_LoadSurfacesArrays(r_worldmodel);
 
+	/* in case of random map assembly shift some vectors */
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
 
