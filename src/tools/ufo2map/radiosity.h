@@ -46,14 +46,16 @@ typedef struct directlight_s {
 	float		intensity;
 	vec3_t		origin;
 	vec3_t		color;
-	vec3_t		normal;		/* for surfaces and spotlights */
-	float		stopdot;		/* for spotlights */
+	vec3_t		normal;		/**< for surfaces and spotlights */
+	float		stopdot;	/**< for spotlights */
 } directlight_t;
 
 
-/* the sum of all tranfer->transfer values for a given patch */
-/* should equal exactly 0x10000, showing that all radiance */
-/* reaches other patches */
+/**
+ * @note the sum of all tranfer->transfer values for a given patch
+ * should equal exactly 0x10000, showing that all radiance
+ * reaches other patches
+ */
 typedef struct {
 	unsigned short	patch;
 	unsigned short	transfer;
@@ -64,31 +66,30 @@ typedef struct {
 
 typedef struct patch_s {
 	winding_t	*winding;
-	struct patch_s		*next;		/* next in face */
+	struct patch_s		*next;		/**< next in face */
 	int			numtransfers;
 	transfer_t	*transfers;
 
 	vec3_t		origin;
 	dBspPlane_t	*plane;
 
-	vec3_t		totallight;			/* accumulated by radiosity */
-									/* does NOT include light */
-									/* accounted for by direct lighting */
+	vec3_t		totallight;			/**< accumulated by radiosity
+									 * does NOT include light
+									 * accounted for by direct lighting */
 	float		area;
 
-	/* illuminance * reflectivity = radiosity */
+	/** illuminance * reflectivity = radiosity */
 	vec3_t		reflectivity;
-	vec3_t		baselight;			/* emissivity only */
+	vec3_t		baselight;			/**< emissivity only */
 
-	/* each style 0 lightmap sample in the patch will be */
-	/* added up to get the average illuminance of the entire patch */
+	/** each style 0 lightmap sample in the patch will be
+	 * added up to get the average illuminance of the entire patch */
 	vec3_t		samplelight;
-	int			samples;		/* for averaging direct light */
+	int			samples;		/**< for averaging direct light */
 } patch_t;
 
 extern patch_t *face_patches[MAX_MAP_FACES];
 extern entity_t *face_entity[MAX_MAP_FACES];
-extern vec3_t face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
 extern patch_t patches[MAX_PATCHES];
 extern unsigned num_patches;
 

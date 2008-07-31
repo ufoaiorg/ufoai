@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int facelinks[MAX_MAP_FACES];
 static int planelinks[2][MAX_MAP_PLANES];
 
+vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
+
 /**
  * @sa RadWorld
  */

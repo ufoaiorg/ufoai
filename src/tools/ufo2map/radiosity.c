@@ -35,7 +35,6 @@ unsigned num_patches;
 static vec3_t radiosity[MAX_PATCHES];		/**< light leaving a patch */
 static vec3_t illumination[MAX_PATCHES];	/**< light arriving at a patch */
 
-vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
 dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 /*
@@ -52,6 +51,7 @@ static void MakeBackplanes (void)
 	int i;
 
 	for (i = 0; i < curTile->numplanes; i++) {
+		backplanes[i].dist = PLANE_X;
 		backplanes[i].dist = -curTile->planes[i].dist;
 		VectorSubtract(vec3_origin, curTile->planes[i].normal, backplanes[i].normal);
 	}
