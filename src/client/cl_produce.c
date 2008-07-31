@@ -673,8 +673,8 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 			Q_strcat(productionInfo, "\n", sizeof(productionInfo));
 			Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
 				sizeof(productionInfo));
-			UP_ItemDescription(od);
 		}
+		UP_ItemDescription(od);
 	}
 	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
@@ -1090,8 +1090,48 @@ static void PR_ProductionSelect_f (void)
 	/* Check if the given category index is valid. */
 	if (cat < MAX_BUYTYPES && cat >= BUY_WEAP_PRI) {
 		produceCategory = cat;
-	} else
+		Cvar_Set("mn_itemtype", va("%d", produceCategory));
+		switch (produceCategory) {
+		case BUY_WEAP_PRI:
+			Cvar_Set("mn_itemtypename", _("Primary weapons"));
+			break;
+		case BUY_WEAP_SEC:
+			Cvar_Set("mn_itemtypename", _("Secondary weapons"));
+			break;
+		case BUY_MISC:
+			Cvar_Set("mn_itemtypename", _("Miscellaneous"));
+			break;
+		case BUY_ARMOUR:
+			Cvar_Set("mn_itemtypename", _("Personal Armours"));
+			break;
+		case BUY_MULTI_AMMO:
+			/** @todo do we deed this? */
+			/* Cvar_Set("mn_itemtypename", _("Weapons and ammo")); */
+			break;
+		case BUY_AIRCRAFT:
+			Cvar_Set("mn_itemtypename", _("Aircraft"));
+			break;
+		case BUY_DUMMY:
+			Cvar_Set("mn_itemtypename", _("Other"));
+			break;
+		case BUY_CRAFTITEM:
+			Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
+			break;
+		case BUY_HEAVY:
+			Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
+			break;
+		default:
+			Cvar_Set("mn_itemtypename", _("Unknown"));
+			break;
+		}
+	} else if (cat == MAX_BUYTYPES) {
+		Cvar_Set("mn_itemtypename", _("Disassembling"));
+		PR_ProductionInfo(baseCurrent, qtrue);
+		PR_UpdateDisassemblingList_f();
 		return;
+	} else {
+		return;
+	}
 
 	/** Enable disassembly cvar. @todo Better docu please? enable = qfalse? */
 	productionDisassembling = qfalse;
@@ -1141,16 +1181,6 @@ static void PR_ProductionList_f (void)
 	if (!baseCurrent || !curCampaign)
 		return;
 
-	/** @todo remove these magic numbers */
-	if (atoi(Cmd_Argv(1)) == 0)
-		Cmd_ExecuteString(va("prod_select %i", BUY_WEAP_PRI));
-	else if (atoi(Cmd_Argv(1)) == 1)
-		Cmd_ExecuteString(va("prod_select %i", BUY_AIRCRAFT));
-	else
-		return;
-
-	PR_ProductionInfo(baseCurrent, qfalse);
-
 	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP));
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
@@ -1168,6 +1198,47 @@ static void PR_ProductionList_f (void)
 		baseCurrent->capacities[CAP_ITEMS].cur,
 		baseCurrent->capacities[CAP_ITEMS].max);
 	Cvar_Set("mn_production_storage", tmpbuf);
+
+	produceCategory = atoi(Cmd_Argv(1));
+	Cmd_ExecuteString(va("prod_select %i", produceCategory));
+}
+
+/**
+ * @brief Rolls produceCategory left in Produce menu.
+ */
+static void BS_Prev_ProduceType_f (void)
+{
+	produceCategory--;
+	if (produceCategory == BUY_MULTI_AMMO)
+		produceCategory--;
+	if (produceCategory < 0) {
+		produceCategory = MAX_BUYTYPES;
+	} else if (produceCategory > MAX_BUYTYPES) {
+		produceCategory = 0;
+	}
+	selectedItem = NULL;
+	selectedDisassembly = NULL;
+	selectedAircraft = NULL;
+	Cbuf_AddText(va("prod_select %i\n", produceCategory));
+}
+
+/**
+ * @brief Rolls produceCategory right in Produce menu.
+ */
+static void BS_Next_ProduceType_f (void)
+{
+	produceCategory++;
+	if (produceCategory == BUY_MULTI_AMMO)
+		produceCategory++;
+	if (produceCategory < 0) {
+		produceCategory = MAX_BUYTYPES;
+	} else if (produceCategory > MAX_BUYTYPES) {
+		produceCategory = 0;
+	}
+	selectedItem = NULL;
+	selectedDisassembly = NULL;
+	selectedAircraft = NULL;
+	Cbuf_AddText(va("prod_select %i\n", produceCategory));
 }
 
 /**
@@ -1554,6 +1625,8 @@ void PR_InitStartup (void)
 	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, NULL);
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, NULL);
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, NULL);
+	Cmd_AddCommand("prev_prod_type", BS_Prev_ProduceType_f, NULL);
+	Cmd_AddCommand("next_prod_type", BS_Next_ProduceType_f, NULL);
 }
 
 /**

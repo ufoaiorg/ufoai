@@ -234,7 +234,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push air_production;"
+			cmd "set mn_itemtype 5; mn_push production;"
 		}
 		out		{ *txt_produce color "0 0.8 0 1" *button_produce texl "0 0" *button_produce texh "230 64" }
 		in		{ *txt_produce color "1 1 1 1" *button_produce texl "230 0" *button_produce texh "460 64" }

@@ -285,19 +285,24 @@ void UP_ItemDescription (const objDef_t *od)
 	int up_weapon_id = NONE;
 	const menu_t *activeMenu;
 
-	assert(od);
-
 	activeMenu = MN_GetActiveMenu();
 
-	/* select item */
-	Cvar_Set("mn_itemname", od->name);
-	Cvar_Set("mn_item", od->id);
+	/* reset everything */
+	Cvar_Set("mn_itemname", "");
+	Cvar_Set("mn_item", "");
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+	if (!od)	/* If nothing selected return */
+		return;
+
+	/* select item */
+	Cvar_Set("mn_itemname", od->name);
+	Cvar_Set("mn_item", od->id);
 
 #ifdef DEBUG
 	if (!od->tech && ccs.singleplayer) {
