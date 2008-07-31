@@ -32,7 +32,14 @@ BRUSHMODEL LOADING
 ===============================================================================
 */
 
+/**
+ * @brief The model base pointer - bases for the lump offsets
+ */
 static byte *mod_base;
+/**
+ * @brief The shift array is used for random map assemblies (RMA) to shift
+ * the mins/maxs and stuff like that
+ */
 static int shift[3];
 /**
  * @brief The currently loaded world model for the actual tile
@@ -43,7 +50,7 @@ static model_t *r_worldmodel;
 /**
  * @brief Load the lightmap data
  */
-static void R_ModLoadLighting (lump_t * l)
+static void R_ModLoadLighting (const lump_t *l)
 {
 	if (!l->filelen) {
 		r_worldmodel->bsp.lightdata = NULL;
@@ -56,7 +63,7 @@ static void R_ModLoadLighting (lump_t * l)
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
-static void R_ModLoadVertexes (lump_t * l)
+static void R_ModLoadVertexes (const lump_t *l)
 {
 	dBspVertex_t *in;
 	mBspVertex_t *out;
@@ -95,7 +102,7 @@ static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
  * @brief Loads brush entities like func_door and func_breakable
  * @sa CMod_LoadSubmodels
  */
-static void R_ModLoadSubmodels (lump_t * l)
+static void R_ModLoadSubmodels (const lump_t *l)
 {
 	dBspModel_t *in;
 	mBspHeader_t *out;
@@ -124,7 +131,7 @@ static void R_ModLoadSubmodels (lump_t * l)
 	}
 }
 
-static void R_ModLoadEdges (lump_t * l)
+static void R_ModLoadEdges (const lump_t *l)
 {
 	dBspEdge_t *in;
 	mBspEdge_t *out;
@@ -149,7 +156,7 @@ static void R_ModLoadEdges (lump_t * l)
 /**
  * @sa CP_StartMissionMap
  */
-static void R_ModLoadTexinfo (lump_t * l)
+static void R_ModLoadTexinfo (const lump_t *l)
 {
 	dBspTexinfo_t *in;
 	mBspTexInfo_t *out;
@@ -240,7 +247,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	}
 }
 
-static void R_ModLoadSurfaces (qboolean day, lump_t * l)
+static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 {
 	dBspFace_t *in;
 	mBspSurface_t *out;
@@ -316,7 +323,7 @@ static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 /**
  * @sa BuildNodeChildren
  */
-static void R_ModLoadNodes (lump_t * l)
+static void R_ModLoadNodes (const lump_t *l)
 {
 	int i, j, count, p;
 	dBspNode_t *in;
@@ -375,7 +382,7 @@ static void R_ModLoadNodes (lump_t * l)
 	R_ModSetParent(r_worldmodel->bsp.nodes, NULL);
 }
 
-static void R_ModLoadLeafs (lump_t * l)
+static void R_ModLoadLeafs (const lump_t *l)
 {
 	dBspLeaf_t *in;
 	mBspLeaf_t *out;
@@ -401,7 +408,7 @@ static void R_ModLoadLeafs (lump_t * l)
 	}
 }
 
-static void R_ModLoadSurfedges (lump_t * l)
+static void R_ModLoadSurfedges (const lump_t *l)
 {
 	int i, count;
 	int *in, *out;
@@ -426,7 +433,7 @@ static void R_ModLoadSurfedges (lump_t * l)
 /**
  * @sa CMod_LoadPlanes
  */
-static void R_ModLoadPlanes (lump_t * l)
+static void R_ModLoadPlanes (const lump_t *l)
 {
 	int i, j;
 	cBspPlane_t *out;
