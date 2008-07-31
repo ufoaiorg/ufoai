@@ -2375,7 +2375,8 @@ static void B_NextBase_f (void)
 
 	baseID = (base->idx + 1) % gd.numBases;
 	base = B_GetFoundedBaseByIDX(baseID);
-	B_SelectBase(base);
+	if (base)
+		B_SelectBase(base);
 }
 
 /**
@@ -2402,7 +2403,8 @@ static void B_PrevBase_f (void)
 		baseID = gd.numBases - 1;
 
 	base = B_GetFoundedBaseByIDX(baseID);
-	B_SelectBase(base);
+	if (base)
+		B_SelectBase(base);
 }
 
 /**
@@ -2492,6 +2494,9 @@ void B_SelectBase (base_t *base)
 	}
 }
 
+/** @brief Used from menu scripts as parameter for mn_select_base */
+#define CREATE_NEW_BASE_ID -1
+
 /**
  * @brief Called when a base is opened or a new base is created on geoscape.
  * For a new base the baseID is -1.
@@ -2506,12 +2511,18 @@ static void B_SelectBase_f (void)
 		return;
 	}
 	baseID = atoi(Cmd_Argv(1));
-	if (baseID >= 0 && baseID < gd.numBases)
+	/* check against MAX_BASES here! - only -1 will create a new base
+	 * if we would check against gd.numBases here, a click on the base summary
+	 * base nodes would try to select unfounded bases */
+	if (baseID >= 0 && baseID < MAX_BASES) {
 		base = B_GetFoundedBaseByIDX(baseID);
-	else
+		/* don't create a new base if the index was valid */
+		if (base)
+			B_SelectBase(base);
+	} else if (baseID == CREATE_NEW_BASE_ID) {
 		/* create a new base */
-		base = NULL;
-	B_SelectBase(base);
+		B_SelectBase(NULL);
+	}
 }
 
 #undef RIGHT
@@ -3329,7 +3340,7 @@ void B_InitStartup (void)
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
-	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
+	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
