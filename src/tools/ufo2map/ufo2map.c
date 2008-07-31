@@ -494,14 +494,16 @@ int main (int argc, const char **argv)
 	} else if (config.performMapCheck || config.fixMap) {
 		Com_Printf("Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
+		/* level flags must be fixed before mixed face contents, or they swamp the
+		 * console with output, as levelflags are contentflags */
+		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)
+			CheckLevelFlags();
 		/* mixed face contents check may remove contentflags. this should be done
 		 * before tex check, as tex may replace tex on the basis of contentflags.*/
 		if (config.chkMixedFaceContents || config.chkBrushes ||config.chkAll )
 			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckTextures();
-		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)
-			CheckLevelFlags();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */
