@@ -392,12 +392,12 @@ begin:
 		dt /= surf->lightmap_scale;
 
 		/* resolve the lightmap sample at intersection */
+		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
+
+		/* and normalize it to floating point */
 		/** @todo What about r_modulate? */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
 				surf->lightmap[sample + 1] / 255.0, surf->lightmap[sample + 2] / 255.0);
-
-		/* and normalize it to floating point */
-		VectorScale(surf->lightmap + sample, r_modulate->value * (1.0 / 255), r_lightmap_sample.color);
 
 		return qtrue;
 	}
