@@ -52,11 +52,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note Return may by empty if A is contained inside B.
  * @note The originals are undisturbed.
  */
-static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
+static bspbrush_t *SubtractBrush (bspbrush_t *a, const bspbrush_t *b)
 {
 	/* a - b = out (list) */
 	int i;
-	bspbrush_t *front, *back, *out, *in;
+	bspbrush_t *front, *back, *out;
+	bspbrush_t *in;
 
 	in = a;
 	out = NULL;
@@ -117,6 +118,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 	for (j = 0; j < 2; j++) {
 		if (brush->maxs[j] > clipmaxs[j]) {
 			SplitBrush(brush, maxplanenums[j], &front, &back);
+			FreeBrush(brush);
 			if (front)
 				FreeBrush(front);
 			brush = back;
@@ -125,6 +127,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 		}
 		if (brush->mins[j] < clipmins[j]) {
 			SplitBrush(brush, minplanenums[j], &front, &back);
+			FreeBrush(brush);
 			if (back)
 				FreeBrush(back);
 			brush = front;

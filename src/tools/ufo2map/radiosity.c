@@ -113,8 +113,7 @@ static void MakeTransfers (unsigned int i)
 	VectorCopy(patch->origin, origin);
 	plane = *patch->plane;
 
-	/* find out which patch2s will collect light */
-	/* from patch */
+	/* find out which patches will collect light from patch */
 
 	all_transfers = transfers;
 	patch->numtransfers = 0;
@@ -157,11 +156,11 @@ static void MakeTransfers (unsigned int i)
 		}
 	}
 
-	/* copy the transfers out and normalize */
-	/* total should be somewhere near PI if everything went right */
-	/* because partial occlusion isn't accounted for, and nearby */
-	/* patches have underestimated form factors, it will usually */
-	/* be higher than PI */
+	/* copy the transfers out and normalize
+	 * total should be somewhere near PI if everything went right
+	 * because partial occlusion isn't accounted for, and nearby
+	 * patches have underestimated form factors, it will usually
+	 * be higher than PI */
 	if (patch->numtransfers) {
 		transfer_t *t;
 
@@ -236,9 +235,9 @@ static void ShootLight (unsigned int patchnum)
 	patch_t		*patch;
 	vec3_t		send;
 
-	/* this is the amount of light we are distributing */
-	/* prescale it so that multiplying by the 16 bit */
-	/* transfer values gives a proper output value */
+	/* this is the amount of light we are distributing
+	 * prescale it so that multiplying by the 16 bit
+	 * transfer values gives a proper output value */
 	for (k = 0; k < 3; k++)
 		send[k] = radiosity[patchnum][k] / 0x10000;
 	patch = &patches[patchnum];

@@ -665,14 +665,14 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *b[2];
 	int i, j;
 	winding_t *w, *cw[2], *midwinding;
 	plane_t *plane, *plane2;
 	side_t *cs;
-	float d, d_front, d_back;
+	float d_front, d_back;
 
 	*front = *back = NULL;
 	plane = &mapplanes[planenum];
@@ -684,7 +684,7 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
-			d = DotProduct(w->p[j], plane->normal) - plane->dist;
+			const float d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > 0 && d > d_front)
 				d_front = d;
 			if (d < 0 && d < d_back)

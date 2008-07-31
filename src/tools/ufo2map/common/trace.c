@@ -83,13 +83,9 @@ static int TestContents_r (int node, const vec3_t pos)
 	tnode = &curTile->tnodes[node];
 	switch (tnode->type) {
 	case PLANE_X:
-		front = pos[0] - tnode->dist;
-		break;
 	case PLANE_Y:
-		front = pos[1] - tnode->dist;
-		break;
 	case PLANE_Z:
-		front = pos[2] - tnode->dist;
+		front = pos[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
 		r = TestContents_r(tnode->children[0], pos);

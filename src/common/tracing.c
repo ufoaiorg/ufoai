@@ -517,7 +517,7 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plan
 	vec_t dist1, dist2;
 
 	/* axial planes are easy */
-	if (plane->type < 3) {
+	if (plane->type <= PLANE_Z) {
 		side = 0;
 		if (maxs[plane->type] > plane->dist + PLANESIDE_EPSILON)
 			side |= PSIDE_FRONT;
@@ -905,7 +905,6 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	TR_PLANE_TYPE *plane;
 	float t1, t2, offset;
 	float frac, frac2;
-	float idist;
 	int i;
 	vec3_t mid;
 	int side;
@@ -929,7 +928,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	plane = curTile->planes + node->planenum;
 #endif
 
-	if (plane->type < 3) {
+	if (plane->type <= PLANE_Z) {
 		t1 = p1[plane->type] - plane->dist;
 		t2 = p2[plane->type] - plane->dist;
 		offset = trace_extents[plane->type];
@@ -954,12 +953,12 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 
 	/* put the crosspoint DIST_EPSILON pixels on the near side */
 	if (t1 < t2) {
-		idist = 1.0 / (t1 - t2);
+		const float idist = 1.0 / (t1 - t2);
 		side = 1;
 		frac2 = (t1 + offset + DIST_EPSILON) * idist;
 		frac = (t1 - offset + DIST_EPSILON) * idist;
 	} else if (t1 > t2) {
-		idist = 1.0 / (t1 - t2);
+		const float idist = 1.0 / (t1 - t2);
 		side = 0;
 		frac2 = (t1 - offset - DIST_EPSILON) * idist;
 		frac = (t1 + offset + DIST_EPSILON) * idist;

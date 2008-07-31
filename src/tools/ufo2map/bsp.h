@@ -83,7 +83,7 @@ bspbrush_t *ChopBrushes(bspbrush_t *head);
 /* brushbsp.c */
 
 bspbrush_t *CopyBrush(const bspbrush_t *brush);
-void SplitBrush(bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
+void SplitBrush(const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
 bspbrush_t *AllocBrush(int numsides);
 int	CountBrushList(bspbrush_t *brushes);
 void FreeBrush(bspbrush_t *brushes);
