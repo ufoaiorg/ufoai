@@ -303,6 +303,8 @@ lightmap_sample_t r_lightmap_sample;
 
 /**
  * @brief for resolving static lighting for mesh ents
+ * @todo This is not yet working because we are using some special nodes for
+ * pathfinding @sa BuildNodeChildren - and these nodes don't have a plane assigned
  */
 static qboolean R_LightPoint_ (const model_t *mapTile, const mBspNode_t *node, vec3_t start, vec3_t end)
 {
