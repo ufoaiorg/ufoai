@@ -337,17 +337,18 @@ static void R_ModLoadNodes (lump_t * l)
 	r_worldmodel->bsp.numnodes = count;
 
 	for (i = 0; i < count; i++, in++) {
-		for (j = 0; j < 3; j++) {
-			out->minmaxs[j] = LittleShort(in->mins[j]) + shift[j];
-			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
-		}
-
 		p = LittleLong(in->planenum);
+		/* skip special pathfinding nodes - they have a negative index */
 		if (p == PLANENUM_LEAF) {
 			skipIndex++;
 			continue;
 		} else
 			out->plane = r_worldmodel->bsp.planes + p;
+
+		for (j = 0; j < 3; j++) {
+			out->minmaxs[j] = LittleShort(in->mins[j]) + shift[j];
+			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
+		}
 
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
