@@ -810,6 +810,34 @@ void CheckTextures (void)
 }
 
 /**
+ * @brief some contentlflags are set as a result of some surface flag. For example,
+ * if one face is TRANS* then the brush is TRANSLUCENT. this is required by the .map parser
+ * as well as th check/fix code.
+ * @sa ParseBrush
+ */
+void CheckPropagateParserContentFlags(mapbrush_t *b)
+{
+	int notInformedMixedFace = 1;
+	int m, contentFlagDiff;
+	int checkOrFix = config.performMapCheck || config.fixMap;
+	int transferFlags = (CONTENTS_DETAIL | CONTENTS_TRANSLUCENT);
+
+	for (m = 0; m < b->numsides; m++) {
+		contentFlagDiff = (b->original_sides[m].contentFlags ^ b->contentFlags) & transferFlags;
+		if (contentFlagDiff) {
+			/* only tell them once per brush */
+			if (notInformedMixedFace && checkOrFix) {
+				Com_Printf("* Brush %i (entity %i): transferring contentflags to all faces:", b->brushnum, b->entitynum);
+				DisplayContentFlags(contentFlagDiff);
+				Com_Printf("\n");
+				notInformedMixedFace = 0;
+			}
+			b->original_sides[m].contentFlags |= b->contentFlags ;
+		}
+	}
+}
+
+/**
  * @brief contentflags should be the same on each face of a brush. print warnings
  * if they are not. remove contentflags that are set on less than half of the faces.
  * some content flags are transferred to all faces on parsing, ParseBrush().
@@ -826,6 +854,8 @@ void CheckMixedFaceContents (void)
 		mapbrush_t *brush = &mapbrushes[i];
 		side_t *side0 = &brush->original_sides[0];
 		nfActorclip = 0;
+
+		CheckPropagateParserContentFlags(brush);
 
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];

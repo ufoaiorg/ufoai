@@ -587,7 +587,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	int planenum;
 	brush_texture_t td;
 	vec3_t planepts[3];
-	int notInformedMixedFace, contentFlagDiff;
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
@@ -748,23 +747,9 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	for (m = 0; m < b->numsides; m++)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
-	/* set DETAIL, TRANSLUCENT contentflags on all faces, if they have been set on any
-	 * to avoid problems in check/fix code */
-	notInformedMixedFace=1;
-	for (m = 0; m < b->numsides; m++) {
-		contentFlagDiff = b->original_sides[m].contentFlags ^ b->contentFlags;
-		if (contentFlagDiff & (CONTENTS_DETAIL | CONTENTS_TRANSLUCENT)) {
-			/* only tell them once per brush */
-			if (notInformedMixedFace && checkOrFix) {
-				Com_Printf("* Brush %i (entity %i): transferring contentflags to all faces:", b->brushnum, b->entitynum);
-				DisplayContentFlags(contentFlagDiff);
-				Com_Printf("\n");
-				notInformedMixedFace = 0;
-			}
-			b->original_sides[m].contentFlags |= b->contentFlags ;
-		}
-
-	}
+	/* set DETAIL, TRANSLUCENT contentflags on all faces, if they have been set on any.
+	 * called separately, if in check/fix mode*/
+	if(!checkOrFix) CheckPropagateParserContentFlags(b);
 
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
