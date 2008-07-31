@@ -313,6 +313,9 @@ static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 	R_ModSetParent(node->children[1], node);
 }
 
+/**
+ * @sa BuildNodeChildren
+ */
 static void R_ModLoadNodes (lump_t * l)
 {
 	int i, j, count, p;
@@ -336,7 +339,7 @@ static void R_ModLoadNodes (lump_t * l)
 		}
 
 		p = LittleLong(in->planenum);
-		if (in->planenum == PLANENUM_LEAF)
+		if (p == PLANENUM_LEAF)
 			out->plane = NULL;
 		else
 			out->plane = r_worldmodel->bsp.planes + p;
@@ -820,6 +823,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 		starmod->bsp.firstmodelsurface = bm->firstface;
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
+		starmod->bsp.maptile = r_numMapTiles - 1;
 		if (starmod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
 			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
 

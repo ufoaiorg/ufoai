@@ -136,6 +136,7 @@ static void SwapBSPFile (void)
 
 	/* nodes */
 	for (i = 0; i < curTile->numnodes; i++) {
+		/* planenum might be -1 here - special case for pathfinding nodes */
 		curTile->nodes[i].planenum = LittleLong(curTile->nodes[i].planenum);
 		for (j = 0; j < 3; j++) {
 			curTile->nodes[i].mins[j] = LittleShort(curTile->nodes[i].mins[j]);

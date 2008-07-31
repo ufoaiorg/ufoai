@@ -107,6 +107,9 @@ qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 	return qfalse;
 }
 
+/**
+ * @sa R_ModLoadPlanes
+ */
 static inline int SignbitsForPlane (const cBspPlane_t * out)
 {
 	int bits, j;

@@ -64,6 +64,7 @@ void PopInfo (void)
  * @param[in] mins
  * @param[in] maxs
  * @param[in] n The node nums
+ * @sa R_ModLoadNodes
  */
 static int BuildNodeChildren (vec3_t mins, vec3_t maxs, const int n[3])
 {

@@ -156,7 +156,7 @@ static int EmitDrawNode_r (node_t *node)
 	VectorCopy((short)node->maxs, n->maxs);
 
 	if (node->planenum & 1)
-		Sys_Error("EmitDrawNode_r: odd planenum");
+		Sys_Error("EmitDrawNode_r: odd planenum: %i", node->planenum);
 	n->planenum = node->planenum;
 	n->firstface = curTile->numfaces;
 
