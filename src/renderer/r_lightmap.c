@@ -320,16 +320,6 @@ begin:
 	if (node->contents != NODE_NO_LEAF) /* didn't hit anything */
 		return qfalse;
 
-	/* "special" pathfinding node */
-	/** @todo This prevents the light point code from working properly */
-	if (!node->plane) {
-		side = 0;
-		if (R_LightPoint_(mapTile, node->children[side], start, end))
-			return qtrue;
-
-		return R_LightPoint_(mapTile, node->children[!side], start, end);
-	}
-
 	VectorCopy(end, mid);
 
 	/* optimize for axially aligned planes */

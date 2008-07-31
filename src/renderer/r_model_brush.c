@@ -321,6 +321,7 @@ static void R_ModLoadNodes (lump_t * l)
 	int i, j, count, p;
 	dBspNode_t *in;
 	mBspNode_t *out;
+	int skipIndex = 0;
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -332,16 +333,17 @@ static void R_ModLoadNodes (lump_t * l)
 	r_worldmodel->bsp.nodes = out;
 	r_worldmodel->bsp.numnodes = count;
 
-	for (i = 0; i < count; i++, in++, out++) {
+	for (i = 0; i < count; i++, in++) {
 		for (j = 0; j < 3; j++) {
 			out->minmaxs[j] = LittleShort(in->mins[j]) + shift[j];
 			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
 		}
 
 		p = LittleLong(in->planenum);
-		if (p == PLANENUM_LEAF)
-			out->plane = NULL;
-		else
+		if (p == PLANENUM_LEAF) {
+			skipIndex++;
+			continue;
+		} else
 			out->plane = r_worldmodel->bsp.planes + p;
 
 		out->firstsurface = LittleShort(in->firstface);
@@ -352,6 +354,8 @@ static void R_ModLoadNodes (lump_t * l)
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
 			if (p > LEAFNODE) {
+				p -= skipIndex;
+				assert(p >= 0);
 				assert(p < r_worldmodel->bsp.numnodes);
 				out->children[j] = r_worldmodel->bsp.nodes + p;
 			} else {
@@ -359,6 +363,8 @@ static void R_ModLoadNodes (lump_t * l)
 				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p));
 			}
 		}
+
+		out++;
 	}
 
 	/* sets nodes and leafs */
