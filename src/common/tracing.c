@@ -122,7 +122,7 @@ static void TR_MakeTracingNode (int nodenum)
 {
 	tnode_t *t;
 	TR_PLANE_TYPE *plane;
-	int i, contentFlags;
+	int i;
 	TR_NODE_TYPE *node;
 
 	t = tnode_p++;
@@ -140,7 +140,7 @@ static void TR_MakeTracingNode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
+			const int contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
 			if ((contentFlags & MASK_VERY_SOLID) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else
@@ -379,16 +379,10 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
-		front = start[0] - tnode->dist;
-		back = stop[0] - tnode->dist;
-		break;
 	case PLANE_Y:
-		front = start[1] - tnode->dist;
-		back = stop[1] - tnode->dist;
-		break;
 	case PLANE_Z:
-		front = start[2] - tnode->dist;
-		back = stop[2] - tnode->dist;
+		front = start[tnode->type] - tnode->dist;
+		back = stop[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
 		r = TR_TestLineDist_r(tnode->children[0], start, stop);
