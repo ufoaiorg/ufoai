@@ -2520,8 +2520,8 @@ void MAP_SetOverlay (const char *overlayID)
 			r_geoscape_overlay->integer |= OVERLAY_NATION;
 	}
 
-	/* do nothing while the first base is not build */
-	if (gd.numBases == 0)
+	/* do nothing while the first base/installation is not build */
+	if (gd.numBases + gd.numInstallations == 0)
 		return;
 
 	if (!Q_strcmp(overlayID, "xvi")) {
