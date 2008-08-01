@@ -859,13 +859,9 @@ void CheckMixedFaceContents (void)
 
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
-			const ptrdiff_t index = side - brushsides;
-			brush_texture_t *tex = &side_brushtextures[index];
-
 			assert(side);
-			assert(tex);
 
-			nfActorclip += side->contentFlags & CONTENTS_ACTORCLIP ? 1 : 0;
+			nfActorclip += (side->contentFlags & CONTENTS_ACTORCLIP) ? 1 : 0;
 
 			if (side0->contentFlags != side->contentFlags) {
 				const int jNotZero = side->contentFlags & ~side0->contentFlags;
