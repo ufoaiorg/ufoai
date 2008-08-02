@@ -561,12 +561,10 @@ static inline qboolean R_CullEntity (entity_t *e)
 
 	if (e->model->type == mod_bsp_submodel)
 		return R_CullBspModel(e);
-	else if (e->tagent)
-		/* performs the frustum culling for the parent entity
-		 * The child has an origin relative to the parent origin */
-		return R_CullEntity(e->tagent);
 	else
-		return R_CullMeshModel(e);
+		/** @todo activate this once the culling is fixed */
+		/* return R_CullMeshModel(e); */
+		return qfalse;
 }
 
 /**
