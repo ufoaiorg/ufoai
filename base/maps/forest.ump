@@ -4,6 +4,14 @@
 
 base forest/forest_
 
+
+// Legend:
+// ------
+// f* - ordinary forest tiles, without any info_*_start
+// w* - water tiles with brooks
+// a* - forest tiles with info_alien_start (use in not craft_crash_* assemblies)
+// h* - house tiles, with info_civilian_start.
+
 // Tiletypes
 // ------
 // a: normal
@@ -12,6 +20,9 @@ base forest/forest_
 // d: water left-bottom curve
 // e: water right-bottom curve
 // f: water right-top curve
+
+
+//** drop and crashes tiles 
 
 tile +drop_firebird
 {
@@ -44,6 +55,8 @@ acd     +a     +a	  acef
 acd     +a     +a	  acef
 0      abde    abde	  0
 }
+
+//** forest tiles
 
 tile +f1
 {
@@ -136,6 +149,41 @@ acd     +a      +a        acef
 0      abde     abde         0
 }
 
+tile +f10
+{
+4 3
+
+0       abf      abf         0
+acd     +a      +a        acef
+0      abde     abde         0
+}
+
+
+//** Alien tiles
+
+tile +a1
+{
+
+3 3
+
+0      abf       0
+acd    +a       acef
+0      abde      0
+}
+
+tile +a2
+{
+4 4
+
+0      abcdef      abf      0
+abcdef      a      +a     acef
+acef      +a     +a     acef
+0      abde      abde      0
+}
+
+
+//** House tiles
+
 tile +h1
 {
 
@@ -147,6 +195,8 @@ acd    +a       +a     acef
 acd    +a       +a     acef
 0      abde      abde    0
 }
+
+//** Water tiles
 
 //  .   .
 //  ==,
@@ -264,7 +314,8 @@ size "5 6"
 +f7 "0 10"
 +f8 "0 10"
 +f9 "0 10"
-+h1 "0 1"
++f10 "0 1"
++h1 "1 1"
 +w1 "0 3"
 +w2 "0 3"
 +w3 "1 3"
@@ -272,13 +323,43 @@ size "5 6"
 +w5 "0 2"
 +w6 "0 1"
 +w7 "0 2"
++a1 "1 4"
++a2 "1 2"
+*rm_drop +drop_firebird "1 1"
+}
+
+assembly large
+{
+title "_Little bungalo in forest"
+size "8 8"
+
++w1 "0 6"
++w2 "0 6"
++w3 "0 6"
++w4 "0 6"
++w5 "0 6"
++w6 "0 4"
++w7 "0 6"
++f1 "0 3"
++f2 "0 3"
++f3 "0 3"
++f4 "0 3"
++f5 "0 3"
++f6 "0 2"
++f7 "0 1"
++f8 "0 3"
++f9 "0 1"
++f10 "0 1"
++h1 "1 2"
++a1 "2 3"
++a2 "1 2"
 *rm_drop +drop_firebird "1 1"
 }
 
 assembly craft_crash_scout
 {
 title "_Crashed UFO - Scout"
-size "7 5"
+size "4 8"
 
 +f1 "0 10"
 +f2 "0 10"
@@ -289,14 +370,15 @@ size "7 5"
 +f7 "0 10"
 +f8 "0 10"
 +f9 "0 5"
++f10 "0 1"
 +h1 "0 1"
-+w1 "1 3"
++w1 "0 3"
 +w2 "0 3"
-+w3 "1 3"
++w3 "0 3"
 +w4 "0 3"
-+w5 "1 2"
-+w6 "0 1"
-+w7 "0 2"
++w5 "0 2"
++w6 "1 2"
++w7 "2 2"
 +crash_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }
@@ -315,6 +397,7 @@ size "7 7"
 +f7 "0 10"
 +f8 "0 10"
 +f9 "0 5"
++f10 "0 1"
 +h1 "1 1"
 +w1 "0 3"
 +w2 "0 3"
@@ -323,6 +406,8 @@ size "7 7"
 +w5 "1 2"
 +w6 "0 1"
 +w7 "0 2"
++a1 "0 2"
++a2 "0 1"
 +landed_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }
