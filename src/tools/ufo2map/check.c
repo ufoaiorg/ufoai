@@ -32,56 +32,52 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MANDATORY_KEY 1
 #define NON_MANDATORY_KEY 0
 
+static void Check_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+
 /**
  * @brief decides wether to proceed with output based on ufo2map's mode: check/fix/compile
  * @sa Com_Printf
  */
-static void Check_Printf(const char *format, ...)
+static void Check_Printf (const char *format, ...)
 {
 	static int skippingCheckLine = 0;
-	qboolean startOfWarning;
-	qboolean containsNewline;
+	va_list ap;
 
 	/* some checking/fix functions are called when ufo2map is compiling
 	 * then the check/fix functions should be quiet */
-	if(!(config.performMapCheck || config.fixMap)) return;
+	if (!(config.performMapCheck || config.fixMap))
+		return;
 
 	/* output prefixed with "  " is only a warning, should not be
 	 * be displayed in fix mode. may be sent here in several function calls.
 	 * skip everything from start of line "  " to \n */
-	if(config.fixMap) {
-		startOfWarning = format[0] == ' ' && format[1] == ' ';
-		containsNewline = strchr(format, '\n') != NULL;
+	if (config.fixMap) {
+		const qboolean startOfWarning = (format[0] == ' ' && format[1] == ' ');
+		const qboolean containsNewline = strchr(format, '\n') != NULL;
 
 		/* skip output sent in single call */
-		if(!skippingCheckLine && startOfWarning && containsNewline)
+		if (!skippingCheckLine && startOfWarning && containsNewline)
 			return;
 
 		/* enter multi-call skip mode */
-		if(!skippingCheckLine && startOfWarning) {
+		if (!skippingCheckLine && startOfWarning) {
 			skippingCheckLine = 1;
 			return;
 		}
 
 		/* leave multi-call skip mode */
-		if(skippingCheckLine && containsNewline) {
+		if (skippingCheckLine && containsNewline) {
 			skippingCheckLine = 0;
 			return;
 		}
 
 		/* middle of multi-call skip mode */
-		if(skippingCheckLine)
+		if (skippingCheckLine)
 			return;
 	}
 
-	char out_buffer[4096];
-	va_list argptr;
-
-	va_start(argptr, format);
-	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
-	va_end(argptr);
-
-	printf(out_buffer);
+	va_start(ap, format);
+	Com_Printf(format, ap);
 }
 
 /**
@@ -901,13 +897,14 @@ void CheckMixedFaceContents (void)
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
+		side_t *side0;
 
 		/* if the origin flag is set in the mapbrush_t struct, then the brushes
 		 * work is done, and we can skip the mixed face contents check for this brush*/
-		if(brush->contentFlags & CONTENTS_ORIGIN)
+		if (brush->contentFlags & CONTENTS_ORIGIN)
 			continue;
 
-		side_t *side0 = &brush->original_sides[0];
+		side0 = &brush->original_sides[0];
 		nfActorclip = 0;
 
 		CheckPropagateParserContentFlags(brush);
@@ -934,7 +931,6 @@ void CheckMixedFaceContents (void)
 				}
 				Check_Printf(")\n");
 			}
-
 		}
 
 		if (nfActorclip && nfActorclip <  brush->numsides / 2) {
