@@ -3233,23 +3233,24 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	ccs.battleParameters.zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
 	if (selectedMission->ufo) {
+		const char *shortUFOType = UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype);
+		const char *missionType;
 		if (CP_UFOIsCrashed(mission)) {
-			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
+			missionType = "cp_ufocrashed";
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
-				/* set rm_ufo to the ufo type used */
-				Cvar_Set("rm_ufo", va("+%s", UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype)));
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (!Q_strcmp(mission->mapDef->id, "ufocrash"))
-				ccs.battleParameters.param = Mem_PoolStrDup(UFO_CrashedTypeToShortName(mission->ufo->ufotype), cl_localPool, 0);
+					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cl_localPool, 0);
 			}
-		} else {
-			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
-			/* Set random map UFO if this is a random map */
-			if (mission->mapDef->map[0] == '+') {
-				/* set rm_ufo to the ufo type used */
-				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
-			}
+		} else
+			missionType = "cp_uforecovery";
+
+		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
+		/* Set random map UFO if this is a random map */
+		if (mission->mapDef->map[0] == '+') {
+			/* set rm_ufo to the ufo type used */
+			Cvar_Set("rm_ufo", va("+%s", shortUFOType));
 		}
 	}
 	/** @todo change dropship to any possible aircraft when random assembly tiles will be created */

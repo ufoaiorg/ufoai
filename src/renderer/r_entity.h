@@ -49,7 +49,7 @@ typedef struct entity_s {
 							 * invisible in the current frustum view */
 
 	/* tag positioning */
-	struct entity_s *tagent;	/**< pointer to the parent entity */
+	struct entity_s *tagent;	/**< pointer to the parent entity - @todo is this comment correct? */
 	const char *tagname;				/**< name of the tag */
 
 	/* misc */
