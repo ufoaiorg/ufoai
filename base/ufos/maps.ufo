@@ -2306,6 +2306,14 @@ mapdef ufocrash
 	description		"_UFO Crashsite."
 	storyrelated	true
 	maxaliens		8
+	ufos
+	{
+		craft_crash_scout
+		craft_crash_fighter
+		craft_crash_corrupter
+		craft_crash_harvester
+		craft_crash_supply
+	}
 }
 
 ///////////////////////
