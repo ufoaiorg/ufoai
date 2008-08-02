@@ -328,10 +328,6 @@ static void R_ModLoadNodes (const lump_t *l)
 	int i, j, count, p;
 	const dBspNode_t *in;
 	mBspNode_t *out;
-	/* in case of "special" pathfinding nodes (they don't have a plane)
-	 * we have to correct the children index, because we skip to load the
-	 * pathfinding nodes for rendering */
-	int skipIndex = 0;
 
 	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -343,13 +339,14 @@ static void R_ModLoadNodes (const lump_t *l)
 	r_worldmodel->bsp.nodes = out;
 	r_worldmodel->bsp.numnodes = count;
 
-	for (i = 0; i < count; i++, in++) {
+	for (i = 0; i < count; i++, in++, out++) {
 		p = LittleLong(in->planenum);
 		/* skip special pathfinding nodes - they have a negative index */
-		if (p == PLANENUM_LEAF) {
-			skipIndex++;
-			continue;
-		} else
+		if (p == PLANENUM_LEAF)
+			/* in case of "special" pathfinding nodes (they don't have a plane)
+			 * we have to set this to NULL */
+			out->plane = NULL;
+		else
 			out->plane = r_worldmodel->bsp.planes + p;
 
 		for (j = 0; j < 3; j++) {
@@ -365,8 +362,6 @@ static void R_ModLoadNodes (const lump_t *l)
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
 			if (p > LEAFNODE) {
-				p -= skipIndex;
-				assert(p >= 0);
 				assert(p < r_worldmodel->bsp.numnodes);
 				out->children[j] = r_worldmodel->bsp.nodes + p;
 			} else {
@@ -374,8 +369,6 @@ static void R_ModLoadNodes (const lump_t *l)
 				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p));
 			}
 		}
-
-		out++;
 	}
 
 	/* sets nodes and leafs */

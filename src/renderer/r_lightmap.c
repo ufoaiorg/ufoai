@@ -317,6 +317,10 @@ static qboolean R_LightPoint_ (const model_t *mapTile, const mBspNode_t *node, v
 
 begin:
 
+	/* special pathfinding node */
+	if (!node->plane)
+		return qfalse;
+
 	if (node->contents != NODE_NO_LEAF) /* didn't hit anything */
 		return qfalse;
 
