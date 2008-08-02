@@ -33,6 +33,58 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NON_MANDATORY_KEY 0
 
 /**
+ * @brief decides wether to proceed with output based on ufo2map's mode: check/fix/compile
+ * @sa Com_Printf
+ */
+static void Check_Printf(const char *format, ...)
+{
+	static int skippingCheckLine = 0;
+	qboolean startOfWarning;
+	qboolean containsNewline;
+
+	/* some checking/fix functions are called when ufo2map is compiling
+	 * then the check/fix functions should be quiet */
+	if(!(config.performMapCheck || config.fixMap)) return;
+
+	/* output prefixed with "  " is only a warning, should not be
+	 * be displayed in fix mode. may be sent here in several function calls.
+	 * skip everything from start of line "  " to \n */
+	if(config.fixMap) {
+		startOfWarning = format[0] == ' ' && format[1] == ' ';
+		containsNewline = strchr(format, '\n') != NULL;
+
+		/* skip output sent in single call */
+		if(!skippingCheckLine && startOfWarning && containsNewline)
+			return;
+
+		/* enter multi-call skip mode */
+		if(!skippingCheckLine && startOfWarning) {
+			skippingCheckLine = 1;
+			return;
+		}
+
+		/* leave multi-call skip mode */
+		if(skippingCheckLine && containsNewline) {
+			skippingCheckLine = 0;
+			return;
+		}
+
+		/* middle of multi-call skip mode */
+		if(skippingCheckLine)
+			return;
+	}
+
+	char out_buffer[4096];
+	va_list argptr;
+
+	va_start(argptr, format);
+	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+	va_end(argptr);
+
+	printf(out_buffer);
+}
+
+/**
  * @param[in] mandatory if this key is missing the entity will be deleted, else just a warning
  */
 static int checkEntityKey (entity_t *e, const int entnum, const char* key, int mandatory)
@@ -41,10 +93,10 @@ static int checkEntityKey (entity_t *e, const int entnum, const char* key, int m
 	const char *name = ValueForKey(e, "classname");
 	if (!*val) {
 		if (mandatory == MANDATORY_KEY) {
-			Com_Printf("* Entity %i: %s with no %s given - will be deleted\n", entnum, name, key);
+			Check_Printf("* Entity %i: %s with no %s given - will be deleted\n", entnum, name, key);
 			return 1;
 		} else {
-			Com_Printf("* Entity %i: %s with no %s given\n", entnum, name, key);
+			Check_Printf("* Entity %i: %s with no %s given\n", entnum, name, key);
 			return 0;
 		}
 	}
@@ -58,7 +110,7 @@ static void checkEntityLevelFlags (entity_t *e, const int entnum)
 	const char *name = ValueForKey(e, "classname");
 	if (!*val) {
 		char buf[16];
-		Com_Printf("* Entity %i: %s with no levelflags given - setting all\n", entnum, name);
+		Check_Printf("* Entity %i: %s with no levelflags given - setting all\n", entnum, name);
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
@@ -68,7 +120,7 @@ static int checkEntityZeroBrushes (entity_t *e, int entnum)
 {
 	const char *name = ValueForKey(e, "classname");
 	if (!e->numbrushes) {
-		Com_Printf("* Entity %i: %s with no brushes given - will be deleted\n", entnum, name);
+		Check_Printf("* Entity %i: %s with no brushes given - will be deleted\n", entnum, name);
 		return 1;
 	}
 	return 0;
@@ -111,7 +163,7 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 	if (checkEntityZeroBrushes(e, entnum)) {
 		return 1;
 	} else if (e->numbrushes > 1) {
-		Com_Printf("  Entity %i: func_breakable with more than one brush given (might break pathfinding)\n", entnum);
+		Check_Printf("  Entity %i: func_breakable with more than one brush given (might break pathfinding)\n", entnum);
 	}
 
 	return 0;
@@ -153,10 +205,10 @@ static int checkMiscMission (entity_t *e, int entnum)
 	if (!*val) {
 		val = ValueForKey(e, "target");
 		if (*val && !FindTargetEntity(val))
-			Com_Printf("  ERROR: misc_mission could not find specified target: '%s' - entnum: %i\n", val, entnum);
+			Check_Printf("  ERROR: misc_mission could not find specified target: '%s' - entnum: %i\n", val, entnum);
 	}
 	if (!*val)
-		Com_Printf("  ERROR: misc_mission with no objectives given - entnum: %i\n", entnum);
+		Check_Printf("  ERROR: misc_mission with no objectives given - entnum: %i\n", entnum);
 	return 0;
 }
 
@@ -177,7 +229,7 @@ static int checkStartPosition (entity_t *e, int entnum)
 		align = 32;
 
 	if (((int)e->origin[0] - align) % UNIT_SIZE || ((int)e->origin[1] - align) % UNIT_SIZE) {
-		Com_Printf("* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
+		Check_Printf("* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
 		return 1; /** @todo auto-align entity and check for intersection with brush */
 	}
 	return 0;
@@ -222,9 +274,9 @@ static int checkTriggerTouch (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "target");
 	if (!*val)
-		Com_Printf("  ERROR: trigger_touch with no target given - entnum: %i\n", entnum);
+		Check_Printf("  ERROR: trigger_touch with no target given - entnum: %i\n", entnum);
 	else if (!FindTargetEntity(val))
-		Com_Printf("  ERROR: trigger_touch could not find specified target: '%s' - entnum: %i\n", val, entnum);
+		Check_Printf("  ERROR: trigger_touch could not find specified target: '%s' - entnum: %i\n", val, entnum);
 	return 0;
 }
 
@@ -464,7 +516,7 @@ static void CheckInteractionList (const entity_t *entity)
 							if (BrushSidesAreInside(list[j], list[i])) {
 								if (!(sideI->surfaceFlags & SURF_NODRAW)) {
 									brush_texture_t *tex = &side_brushtextures[sideI - brushsides];
-									Com_Printf("* Brush %i (entity %i): set nodraw flag and texture (face is abutted and entirely covered by another face).\n", list[i]->brushnum, list[i]->entitynum);
+									Check_Printf("* Brush %i (entity %i): set nodraw flag and texture (face is abutted and entirely covered by another face).\n", list[i]->brushnum, list[i]->entitynum);
 									Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 									sideI->surfaceFlags |= SURF_NODRAW;
 									tex->surfaceFlags |= SURF_NODRAW;
@@ -502,7 +554,7 @@ void CheckEntities (void)
 				break;
 			}
 		if (!v->name) {
-			Com_Printf("No check for '%s' implemented\n", name);
+			Check_Printf("No check for '%s' implemented\n", name);
 		}
 	}
 }
@@ -543,7 +595,7 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 	for (i = 1; i < b->numsides; i++) {
 		/* check for a degenerate plane */
 		if (sides[i].planenum == -1) {
-			Com_Printf("  Brush %i (entity %i): degenerated plane\n", b->brushnum, b->entitynum);
+			Check_Printf("  Brush %i (entity %i): degenerated plane\n", b->brushnum, b->entitynum);
 			continue;
 		}
 
@@ -551,12 +603,12 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 		for (j = 0; j < i; j++) {
 			if (sides[i].planenum == sides[j].planenum) {
 				/* remove the second duplicate */
-				Com_Printf("  Brush %i (entity %i): mirrored or duplicated\n", b->brushnum, b->entitynum);
+				Check_Printf("  Brush %i (entity %i): mirrored or duplicated\n", b->brushnum, b->entitynum);
 				break;
 			}
 
 			if (sides[i].planenum == (sides[j].planenum ^ 1)) {
-				Com_Printf("  Brush %i (entity %i): mirror plane - brush is invalid\n", b->brushnum, b->entitynum);
+				Check_Printf("  Brush %i (entity %i): mirror plane - brush is invalid\n", b->brushnum, b->entitynum);
 				return qfalse;
 			}
 		}
@@ -570,10 +622,10 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 void DisplayContentFlags (const int flags)
 {
 	if (!flags) {
-		Com_Printf(" no contentflags");
+		Check_Printf(" no contentflags");
 		return;
 	}
-#define M(x) if (flags & CONTENTS_##x) Com_Printf(" " #x)
+#define M(x) if (flags & CONTENTS_##x) Check_Printf(" " #x)
 	M(SOLID);
 	M(WINDOW);
 	M(WATER);
@@ -616,7 +668,7 @@ void CheckLevelFlags (void)
 			assert(side);
 
 #if 0
-			Com_Printf("CheckLevelFlags: contentflags before changes %i\n", side->contentFlags);
+			("CheckLevelFlags: contentflags before changes %i\n", side->contentFlags);
 #endif
 
 			if (!(side->surfaceFlags & SURF_NODRAW)) {
@@ -649,7 +701,7 @@ void CheckLevelFlags (void)
 			/* set the same flags for each face */
 			if (setFlags) {
 				const int flagsToSet = allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL;
-				Com_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, flagsToSet);
+				Check_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, flagsToSet);
 				for (j = 0; j < brush->numsides; j++) {
 					side_t *side = &brush->original_sides[j];
 					side->contentFlags |= flagsToSet;
@@ -672,7 +724,6 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 	const int initSurf = tex->surfaceFlags;
 	const int initCont = side->contentFlags;
 	const char *flagsDescription = NULL;
-	qboolean checkOrFix = config.performMapCheck || config.fixMap ;
 
 	if (!strcmp(texname, "tex_common/actorclip")) {
 		side->contentFlags |= CONTENTS_ACTORCLIP;
@@ -718,8 +769,8 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 	}
 
 	/* If in check/fix mode and we have made a change, give output. */
-	if (checkOrFix && ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf))) {
-		Com_Printf("* Brush %i (entity %i): %s implied by %s texture has been set\n",
+	if ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf)) {
+		Check_Printf("* Brush %i (entity %i): %s implied by %s texture has been set\n",
 			brush->brushnum, brush->entitynum, flagsDescription ? flagsDescription : "-", texname);
 	}
 
@@ -728,8 +779,7 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 		/* nodraw never has phong set */
 		side->surfaceFlags &= ~SURF_PHONG;
 		tex->surfaceFlags &= ~SURF_PHONG;
-		if (checkOrFix)
-			Com_Printf("* Brush %i (entity %i): SURF_PHONG unset, as it has SURF_NODRAW set\n",
+		Check_Printf("* Brush %i (entity %i): SURF_PHONG unset, as it has SURF_NODRAW set\n",
 				brush->brushnum, brush->entitynum);
 	}
 }
@@ -758,51 +808,51 @@ void CheckTextures (void)
 
 			/* set textures based on flags */
 			if (tex->name[0] == '\0') {
-				Com_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
+				Check_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
 			}
 
 			if (!Q_strcmp(tex->name, "tex_common/error")) {
-				Com_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
+				Check_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
 			}
 
 			if (!Q_strcmp(tex->name, "NULL")) {
-				Com_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				tex->surfaceFlags |= SURF_NODRAW;
 			}
 			if (tex->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
-				Com_Printf("* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 			}
 			if (tex->surfaceFlags & SURF_HINT && Q_strcmp(tex->name, "tex_common/hint")) {
-				Com_Printf("* Brush %i (entity %i): set hint texture for SURF_HINT\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): set hint texture for SURF_HINT\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/hint", sizeof(tex->name));
 			}
 
 			if (side->contentFlags & CONTENTS_ACTORCLIP && side->contentFlags & CONTENTS_STEPON) {
 				if (!Q_strcmp(tex->name, "tex_common/actorclip")) {
-					Com_Printf("* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
+					Check_Printf("* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
 					side->contentFlags &= ~CONTENTS_STEPON;
 				} else {
-					Com_Printf("* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
+					Check_Printf("* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
 					side->contentFlags &= ~CONTENTS_ACTORCLIP;
 				}
 			}
 
 			if (side->contentFlags & CONTENTS_WEAPONCLIP && Q_strcmp(tex->name, "tex_common/weaponclip")) {
-				Com_Printf("* Brush %i (entity %i): set weaponclip texture for CONTENTS_WEAPONCLIP\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): set weaponclip texture for CONTENTS_WEAPONCLIP\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/weaponclip", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ACTORCLIP && Q_strcmp(tex->name, "tex_common/actorclip")) {
-				Com_Printf("* Brush %i (entity %i): set actorclip texture for CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): set actorclip texture for CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_STEPON && Q_strcmp(tex->name, "tex_common/stepon")) {
-				Com_Printf("* Brush %i (entity %i): set stepon texture for CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): set stepon texture for CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/stepon", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ORIGIN && Q_strcmp(tex->name, "tex_common/origin")) {
-				Com_Printf("* Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
 			}
 		}
@@ -819,17 +869,16 @@ void CheckPropagateParserContentFlags(mapbrush_t *b)
 {
 	int notInformedMixedFace = 1;
 	int m, contentFlagDiff;
-	int checkOrFix = config.performMapCheck || config.fixMap;
 	int transferFlags = (CONTENTS_DETAIL | CONTENTS_TRANSLUCENT);
 
 	for (m = 0; m < b->numsides; m++) {
 		contentFlagDiff = (b->original_sides[m].contentFlags ^ b->contentFlags) & transferFlags;
 		if (contentFlagDiff) {
 			/* only tell them once per brush */
-			if (notInformedMixedFace && checkOrFix) {
-				Com_Printf("* Brush %i (entity %i): transferring contentflags to all faces:", b->brushnum, b->entitynum);
+			if (notInformedMixedFace) {
+				Check_Printf("* Brush %i (entity %i): transferring contentflags to all faces:", b->brushnum, b->entitynum);
 				DisplayContentFlags(contentFlagDiff);
-				Com_Printf("\n");
+				Check_Printf("\n");
 				notInformedMixedFace = 0;
 			}
 			b->original_sides[m].contentFlags |= b->contentFlags ;
@@ -866,31 +915,31 @@ void CheckMixedFaceContents (void)
 			if (side0->contentFlags != side->contentFlags) {
 				const int jNotZero = side->contentFlags & ~side0->contentFlags;
 				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
-				Com_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
+				Check_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
 				if (jNotZero) {
-					Com_Printf("face %i has and face 0 has not", j);
+					Check_Printf("face %i has and face 0 has not", j);
 					DisplayContentFlags(jNotZero);
 					if (zeroNotJ)
-						Com_Printf(", ");
+						Check_Printf(", ");
 				}
 				if (zeroNotJ) {
-					Com_Printf("face 0 has and face %i has not", j);
+					Check_Printf("face 0 has and face %i has not", j);
 					DisplayContentFlags(zeroNotJ);
 				}
-				Com_Printf(")\n");
+				Check_Printf(")\n");
 			}
 
 		}
 
 		if (nfActorclip && nfActorclip <  brush->numsides / 2) {
-			Com_Printf("* Brush %i (entity %i): ACTORCLIP set on less than half of the faces: removing.\n", brush->brushnum, brush->entitynum );
+			Check_Printf("* Brush %i (entity %i): ACTORCLIP set on less than half of the faces: removing.\n", brush->brushnum, brush->entitynum );
 			for (j = 0; j < brush->numsides; j++) {
 				side_t *side = &brush->original_sides[j];
 				const ptrdiff_t index = side - brushsides;
 				brush_texture_t *tex = &side_brushtextures[index];
 
 				if (side->contentFlags & CONTENTS_ACTORCLIP && !Q_strcmp(tex->name, "tex_common/actorclip")) {
-					Com_Printf("* Brush %i (entity %i): removing tex_common/actorclip, setting tex_common/error\n", brush->brushnum, brush->entitynum );
+					Check_Printf("* Brush %i (entity %i): removing tex_common/actorclip, setting tex_common/error\n", brush->brushnum, brush->entitynum );
 					Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
 				}
 
@@ -922,21 +971,21 @@ void CheckBrushes (void)
 			/* the old footstep value */
 			if (side->contentFlags & 0x00040000) {
 				side->contentFlags &= ~0x00040000;
-				Com_Printf("* Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
 				side->surfaceFlags |= SURF_FOOTSTEP;
 				tex->surfaceFlags |= SURF_FOOTSTEP;
 			}
 			/* the old fireaffected value */
 			if (side->contentFlags & 0x0008) {
 				side->contentFlags &= ~0x0008;
-				Com_Printf("* Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
 				side->surfaceFlags |= SURF_BURN;
 				tex->surfaceFlags |= SURF_BURN;
 			}
 #endif
 
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
-				Com_Printf("* Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
+				Check_Printf("* Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				side->contentFlags &= ~CONTENTS_ORIGIN;
 			}
 		}

@@ -181,7 +181,6 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-t") || !strcmp(argv[i], "-threads")) {
 			threadstate.numthreads = atoi(argv[++i]);
 			Com_Printf("threads: #%i\n", threadstate.numthreads);
-			continue;
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
