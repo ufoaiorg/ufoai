@@ -901,6 +901,12 @@ void CheckMixedFaceContents (void)
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
+
+		/* if the origin flag is set in the mapbrush_t struct, then the brushes
+		 * work is done, and we can skip the mixed face contents check for this brush*/
+		if(brush->contentFlags & CONTENTS_ORIGIN)
+			continue;
+
 		side_t *side0 = &brush->original_sides[0];
 		nfActorclip = 0;
 

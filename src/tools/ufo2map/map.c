@@ -236,7 +236,7 @@ static int BrushContents (mapbrush_t *b)
 	/* if any side is translucent, mark the contents
 	 * and change solid to window */
 	if (trans & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST)) {
-		contentFlags |= CONTENTS_TRANSLUCENT; /** @todo Don't do this in fix mode - this is only for ufo2map */
+		contentFlags |= CONTENTS_TRANSLUCENT;
 		if (contentFlags & CONTENTS_SOLID) {
 			contentFlags &= ~CONTENTS_SOLID;
 			contentFlags |= CONTENTS_WINDOW;
