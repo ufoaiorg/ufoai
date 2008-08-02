@@ -505,57 +505,37 @@ static void BS_BuyType_f (void)
 		}		
 		Cvar_Set("mn_itemtype", va("%d", buyCategory));
 		switch (buyCategory) {
-			case BUY_WEAP_PRI:
-			{
-				Cvar_Set("mn_itemtypename", _("Primary weapons"));
-				break;
-			}
-			case BUY_WEAP_SEC:
-			{
-				Cvar_Set("mn_itemtypename", _("Secondary weapons"));
-				break;
-			}
-			case BUY_MISC:
-			{
-				Cvar_Set("mn_itemtypename", _("Miscellaneous"));
-				break;
-			}
-			case BUY_ARMOUR:
-			{
-				Cvar_Set("mn_itemtypename", _("Personal Armours"));
-				break;
-			}
-			case BUY_MULTI_AMMO:
-			{
-				/** @todo do we deed this? */
-/*				Cvar_Set("mn_itemtypename", _("Weapons and ammo")); */
-				break;
-			}
-			case BUY_AIRCRAFT:
-			{
-				Cvar_Set("mn_itemtypename", _("Aircraft"));
-				break;
-			}
-			case BUY_DUMMY:
-			{
-				Cvar_Set("mn_itemtypename", _("Other"));
-				break;
-			}
-			case BUY_CRAFTITEM:
-			{
-				Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
-				break;
-			}
-			case BUY_HEAVY:
-			{
-				Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
-				break;
-			}
-			default:
-			{
-				Cvar_Set("mn_itemtypename", _("Unknown"));
-				break;
-			}
+		case BUY_WEAP_PRI:
+			Cvar_Set("mn_itemtypename", _("Primary weapons"));
+			break;
+		case BUY_WEAP_SEC:
+			Cvar_Set("mn_itemtypename", _("Secondary weapons"));
+			break;
+		case BUY_MISC:
+			Cvar_Set("mn_itemtypename", _("Miscellaneous"));
+			break;
+		case BUY_ARMOUR:
+			Cvar_Set("mn_itemtypename", _("Personal Armours"));
+			break;
+		case BUY_MULTI_AMMO:
+			/** @todo do we deed this? */
+/*			Cvar_Set("mn_itemtypename", _("Weapons and ammo")); */
+			break;
+		case BUY_AIRCRAFT:
+			Cvar_Set("mn_itemtypename", _("Aircraft"));
+			break;
+		case BUY_DUMMY:
+			Cvar_Set("mn_itemtypename", _("Other"));
+			break;
+		case BUY_CRAFTITEM:
+			Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
+			break;
+		case BUY_HEAVY:
+			Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
+			break;
+		default:
+			Cvar_Set("mn_itemtypename", _("Unknown"));
+			break;
 		}
 		buyList.scroll = 0;
 		if (node)

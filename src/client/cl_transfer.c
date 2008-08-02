@@ -62,18 +62,16 @@ static const int MAX_TR_FACTORS = 500;
 /**
  * @brief Checks condition for item transfer.
  * @param[in] od Pointer to object definition.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @param[in] amount Number of items to transfer.
  * @return Number of items that can be transfered.
  */
-static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t *destbase, int amount)
+static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 {
 	int i, intransfer = 0, amtransfer = 0;
 	int smallufotransfer = 0, bigufotransfer = 0;
 
 	assert(od);
-	assert(srcbase);
 	assert(destbase);
 
 	/* Count size of all items already on the transfer list. */
@@ -154,16 +152,15 @@ static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t
 /**
  * @brief Checks condition for employee transfer.
  * @param[in] employee Pointer to employee for transfer.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of employee is possible.
  */
-static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *srcbase, const base_t *destbase)
+static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
 {
 	int i, intransfer = 0;
 	employeeType_t emplType;
 
-	assert(employee && srcbase && destbase);
+	assert(employee && destbase);
 
 	/* Count amount of all employees already on the transfer list. */
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
@@ -199,15 +196,14 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *srcb
 /**
  * @brief Checks condition for alive alien transfer.
  * @param[in] alienidx Index of an alien type.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
-static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
 {
 	int i, intransfer = 0;
 
-	assert(srcbase && destbase);
+	assert(destbase);
 
 	/* Count amount of alive aliens already on the transfer list. */
 	for (i = 0; i < gd.numAliensTD; i++) {
@@ -230,15 +226,13 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 /**
  * @brief Checks condition for aircraft transfer.
  * @param[in] aircraft Pointer to aircraft which is going to be added to transferlist.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this aircraft is possible.
  */
-static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *srcbase, const base_t *destbase)
+static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *destbase)
 {
 	int i, hangarStorage, numAircraftTransfer = 0;
 	assert(aircraft);
-	assert(srcbase);
 	assert(destbase);
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
@@ -1035,6 +1029,10 @@ static void TR_TransferStart_f (void)
 	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
+	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
+	PR_ProductionAllowed(baseCurrent);
+	RS_ResearchAllowed(baseCurrent);
+
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	MN_PopMenu(qfalse);
@@ -1093,7 +1091,7 @@ static void TR_TransferListSelect_f (void)
 					/* you can't transfer more item than you have */
 					amount = min(amount, baseCurrent->storage.num[i]);
 					/* you can only transfer items that destination base can accept */
-					amount = TR_CheckItem(od, baseCurrent, transferBase, amount);
+					amount = TR_CheckItem(od, transferBase, amount);
 					if (amount) {
 						trItemsTmp[i] += amount;
 						if (!Q_strncmp(od->id, "antimatter", 10))
@@ -1125,7 +1123,7 @@ static void TR_TransferListSelect_f (void)
 			if (trEmployeesTmp[EMPL_SOLDIER][i])
 				continue;
 			if (cnt == num) {
-				if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
+				if (TR_CheckEmployee(employee, transferBase)) {
 					trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee;
 					added = qtrue;
 					break;
@@ -1161,7 +1159,7 @@ static void TR_TransferListSelect_f (void)
 						continue;
 					if (trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
-					if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
+					if (TR_CheckEmployee(employee, transferBase)) {
 						trEmployeesTmp[emplType][employee->idx] = employee;
 						amount--;
 						if (amount == 0)
@@ -1188,7 +1186,7 @@ static void TR_TransferListSelect_f (void)
 			}
 			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
-					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
+					if (TR_CheckAlien(i, transferBase)) {
 						trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
 						AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), -1);
@@ -1209,7 +1207,7 @@ static void TR_TransferListSelect_f (void)
 				return;
 			if (aircraft->homebase == baseCurrent && TR_AircraftListSelect(i)) {
 				if (cnt == num) {
-					if (TR_CheckAircraft(aircraft, baseCurrent, transferBase)) {
+					if (TR_CheckAircraft(aircraft, transferBase)) {
 						trAircraftsTmp[i] = i;
 						break;
 					} else

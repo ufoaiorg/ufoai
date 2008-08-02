@@ -2630,8 +2630,10 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	if (base->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetBuildingStatus(base, B_LAB)
 	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
+		Cbuf_AddText("set_research_enabled;");
 		return qtrue;
 	} else {
+		Cbuf_AddText("set_research_disabled;");
 		return qfalse;
 	}
 }
