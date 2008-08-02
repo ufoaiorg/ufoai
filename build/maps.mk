@@ -5,9 +5,20 @@ UFO2MAP = ./ufo2map
 MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
 BSPS = $(MAPSRCS:.map=.bsp)
 
+# Set NUMTHREADS to enable multi-threading in ufo2map. This 
+# setting strongly depends on the OS and hardware, so need to 
+# be chosen appropriately.
+ifeq ($(TARGET_OS),darwin)
+	# Setting for Mac OS X and Darwin OS
+	# \note This should also work for *BSD
+	NUMTHREADS = $(shell sysctl -n hw.ncpu)
+else
+	NUMTHREADS = 1
+endif
+
 NICE = 19
-UFO2MAPFLAGS = -nice $(NICE) -extra
-FAST_UFO2MAPFLAGS = -nice $(NICE)
+UFO2MAPFLAGS = -nice $(NICE) -extra -t $(NUMTHREADS)
+FAST_UFO2MAPFLAGS = -nice $(NICE) -t $(NUMTHREADS)
 ENTS_UFO2MAPFLAGS = -nice $(NICE) -onlyents
 
 maps: $(UFO2MAP_TARGET) $(BSPS)
