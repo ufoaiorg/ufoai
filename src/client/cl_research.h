@@ -240,7 +240,7 @@ void RS_RequiredLinksAssign(void);
 void RS_InitTree(qboolean load);
 const char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
-void RS_MarkResearchable(qboolean init);
+void RS_MarkResearchable(qboolean init, const struct base_s *base);
 void RS_ResearchFinish(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 void RS_MarkResearchedAll(void);

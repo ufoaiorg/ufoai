@@ -457,7 +457,7 @@ void RS_MarkCollected (technology_t* tech)
  * the tree-initialisation (RS_InitTree)
  * @sa RS_MarkResearched
  */
-void RS_MarkResearchable (qboolean init)
+void RS_MarkResearchable (qboolean init, const base_t* base)
 {
 	int i;
 
@@ -472,14 +472,11 @@ void RS_MarkResearchable (qboolean init)
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
 			if (tech->statusResearch != RS_FINISH) {
-				const base_t* base;
 				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
 				if (tech->base)
 					base = tech->base;
-				else
-					base = baseCurrent;
 
 				assert(base);
 
@@ -722,9 +719,10 @@ void RS_InitTree (qboolean load)
 		}
 	}
 
-
-	if (!load)
-		RS_MarkResearchable(qtrue);
+	if (!load) {
+		assert(baseCurrent);
+		RS_MarkResearchable(qtrue, baseCurrent);
+	}
 
 	memset(&curRequiredList, 0, sizeof(curRequiredList));
 
@@ -1097,7 +1095,7 @@ static void RS_ResearchStart_f (void)
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(qfalse);	/* Re-check all other techs in case they depend on the marked one. */
+		RS_MarkResearchable(qfalse, baseCurrent);	/* Re-check all other techs in case they depend on the marked one. */
 	}
 
 	/* statusResearchable might have changed - check it again */
@@ -1222,13 +1220,14 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 		MN_ExecuteConfunc("research_clear");
 
 	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
+		const base_t const *b = B_GetFoundedBaseByIDX(i);
+		if (!b)
 			continue;
-		available[i] = E_CountUnassigned(base, EMPL_SCIENTIST);
+		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
 	}
 
-	RS_MarkResearchable(qfalse);
+	assert(base);
+	RS_MarkResearchable(qfalse, base);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
@@ -1244,7 +1243,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 			Cmd_ExecuteString(va("research_show%i", j));
 		}
 
-		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
+		if (tech->statusCollected && !tech->statusResearchable && tech->statusResearch != RS_FINISH) {
 			/* Item is collected but not yet researchable. */
 
 			if (updateMenu) {
@@ -1262,7 +1261,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 			researchList[j] = tech;
 			/* counting the numbers of display-list entries. */
 			j++;
-		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
+		} else if (tech->statusResearch != RS_FINISH && tech->statusResearchable) {
 			/* An item that can be researched. */
 
 			if (updateMenu) {
@@ -1423,12 +1422,12 @@ static qboolean RS_DependsOn (char *id1, char *id2)
  * @param[in] tech Pointer to a technology_t struct.
  * @sa RS_ResearchRun
  */
-static void RS_MarkResearched (technology_t *tech)
+static void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
 	INV_EnableAutosell(tech);
-	RS_MarkResearchable(qfalse);
+	RS_MarkResearchable(qfalse, base);
 }
 
 /**
@@ -1466,7 +1465,7 @@ void RS_ResearchRun (void)
 						while (tech->scientists > 0)
 							RS_RemoveScientist(tech, NULL);
 
-						RS_MarkResearched(tech);
+						RS_MarkResearched(tech, base);
 						researchListLength = 0;
 						researchListPos = 0;
 						newResearch++;

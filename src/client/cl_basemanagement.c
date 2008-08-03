@@ -3497,7 +3497,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 		return;
 	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
 	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
-	RS_MarkResearchable(qfalse);		/**< Mark new technologies researchable. */
+	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
 
 	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
 	* @todo this should be removed when new inventory code will be over */
