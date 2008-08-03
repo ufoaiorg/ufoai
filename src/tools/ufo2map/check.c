@@ -78,6 +78,7 @@ static void Check_Printf (const char *format, ...)
 
 	va_start(ap, format);
 	Com_Printf(format, ap);
+	va_end(ap);
 }
 
 /**
