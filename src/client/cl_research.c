@@ -202,17 +202,18 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 #endif
 			case RS_LINK_ITEM:
 				assert(req->link);
+				assert(base);
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
-				if (B_ItemInBase(req->link, base) < req->amount) {
+				if (B_ItemInBase(req->link, base) < req->amount)
 					met_AND = qfalse;
-				}
 				break;
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
 				assert(req->link);
+				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) < req->amount)
 					met_AND = qfalse;
 				break;
@@ -262,6 +263,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 #endif
 			case RS_LINK_ITEM:
 				assert(req->link);
+				assert(base);
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) >= req->amount)
@@ -272,6 +274,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
 				assert(req->link);
+				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) >= req->amount)
 					met_OR = qtrue;
 				break;
