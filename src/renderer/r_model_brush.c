@@ -40,7 +40,7 @@ static const byte *mod_base;
  * @brief The shift array is used for random map assemblies (RMA) to shift
  * the mins/maxs and stuff like that
  */
-static int shift[3];
+static ipos3_t shift;
 /**
  * @brief The currently loaded world model for the actual tile
  * @sa r_mapTiles
