@@ -376,7 +376,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			for (i = 0; i < numTiles; i++)
 				if (!Q_strncmp(token, mTile[i].id, MAX_VAR)) {
 					if (a->numFixed >= MAX_FIXEDTILES) {
-						Com_Printf("SV_ParseAssembly: Too many fixed tiles\n");
+						Com_Printf("SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
 						break;
 					}
 					/* get coordinates */
@@ -406,7 +406,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarName, cvarValue, token);
 				Cvar_Set(cvarName, token);
 				if (*token != '+')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id");
+					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id in assembly '%s'", a->id);
 			} else
 				token = cvarValue;
 		}
@@ -428,7 +428,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				break;
 			}
 		if (i == numTiles)
-			Com_Error(ERR_DROP, "Could not find tile: '%s'", token);
+			Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 	} while (text);
 }
 
