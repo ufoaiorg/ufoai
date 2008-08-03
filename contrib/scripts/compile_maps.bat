@@ -9,7 +9,14 @@ if NOT EXIST ufo2map.exe (
 	goto end
 )
 
-for /D %%i in (base\maps\*) DO (
+if not "%1"=="" (
+set curpath="base\maps\%1"
+) else (
+set curpath="base\maps"
+)
+
+
+for /D %%i in (%curpath%\*) DO (
 	echo "...found dir %%i";
 	for %%j in (%%i\*.map) DO (
 		ufo2map.exe %ufo2mapparameters% %%j
@@ -19,7 +26,7 @@ rem		if errorlevel 1 echo "TODO"
 	echo "...dir %%i finished";
 )
 
-for %%i in (base\maps\*.map) DO (
+for %%i in (%curpath%\*.map) DO (
 	ufo2map.exe -extra %ufo2mapparameters% %%i
 rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
 )

@@ -2295,6 +2295,38 @@ mapdef forest_small
 	}
 }
 
+mapdef forest_large
+{
+	map				"+forest"
+	param			large
+	multiplayer		false
+	description		"_Aliens are up to no good in this sparsely populated forest region."
+	size			"large"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
+
 ///////////////////////
 // UFOCRASH RANDOM MAPS
 ///////////////////////

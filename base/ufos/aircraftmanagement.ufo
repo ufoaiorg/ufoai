@@ -374,7 +374,7 @@ aircraft craft_ufo_carrier
 		fuelsize	100000
 	}
 	name		"_UFO - Carrier"
-	shortname	"Carrier U"
+	shortname	"_Carrier U"
 	type		ufo
 	model		"ufo_carrier"
 	weight		1

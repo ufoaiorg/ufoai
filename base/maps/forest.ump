@@ -2,7 +2,7 @@
 // Forest assembly
 // ****************
 
-base forest/forest_
+base forest/fr_
 
 
 // Legend:
@@ -34,7 +34,7 @@ acd     +a     +a     +a	  acef
 0      abde    abde    abde	  0
 }
 
-tile +crash_scout
+tile +áraft_crash_scout
 {
 4 5
 
@@ -45,7 +45,7 @@ acd     +a     +a	  acef
 0      abde    abde	  0
 }
 
-tile +landed_scout
+tile +craft_ufo_scout
 {
 4 5
 
@@ -379,7 +379,7 @@ size "4 8"
 +w5 "0 2"
 +w6 "1 2"
 +w7 "2 2"
-+crash_scout "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }
 
@@ -408,6 +408,6 @@ size "7 7"
 +w7 "0 2"
 +a1 "0 2"
 +a2 "0 1"
-+landed_scout "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }
