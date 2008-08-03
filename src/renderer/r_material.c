@@ -119,7 +119,7 @@ static void R_StageTexcoord (const materialStage_t *stage, const vec3_t v, const
 	out[1] = t;
 }
 
-static void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
+static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
 {
 	vec3_t tmp;
 
@@ -273,7 +273,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	R_Color(NULL);
 
 	/* polygon offset parameters */
-	qglPolygonOffset(1, 1);
+	qglPolygonOffset(0, 0);
 	qglDisable(GL_POLYGON_OFFSET_FILL);
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

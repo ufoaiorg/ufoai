@@ -1046,7 +1046,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	int sh[3];
+	ipos3_t sh;
 	int i;
 
 	Mem_FreePool(com_cmodelSysPool);

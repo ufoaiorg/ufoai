@@ -888,7 +888,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	int sh[3];
+	ipos3_t sh;
 	int i;
 
 	assert(mapName);

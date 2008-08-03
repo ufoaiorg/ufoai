@@ -101,7 +101,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 {
 	const int newInstallationAlienInterest = 1.0f;
 	int idxBattery;
-	objDef_t *od;
+	const objDef_t *od;
 
 	assert(installation);
 
@@ -546,7 +546,6 @@ void INS_ParseInstallations (const char *name, const char **text)
 	if (!name) {
 		Com_Printf("INS_ParseInstallations: installation name not specified.\n");
 		return;
-
 	}
 
 	if (gd.numInstallationTemplates >= MAX_INSTALLATION_TEMPLATES) {

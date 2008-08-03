@@ -696,6 +696,7 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
  * @param[in] mission Pointer to mission
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed).
  * @note We don't destroy the UFO because we can use later, e.g. if it takes off
+ * @sa UFO_RemoveFromGeoscape
  */
 static void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 {
