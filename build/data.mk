@@ -9,6 +9,9 @@ PAK_FILES_OUT = $(addprefix $(BASE_DIR)/,$(PAK_FILES))
 
 pk3: $(PAK_FILES_OUT)
 
+clean_pk3:
+	rm $(PAK_FILES_OUT)
+
 ifeq ($(TARGET_OS),mingw32)
 FIND = dir \S \B $(1) 
 ZIP = 7za
