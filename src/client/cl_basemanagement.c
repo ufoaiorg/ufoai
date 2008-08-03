@@ -318,59 +318,59 @@ static void B_BaseMenuInit (const base_t *base)
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
 		Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
-		Cmd_ExecuteString("set_aircraft_enabled");
+		MN_ExecuteConfunc("set_aircraft_enabled");
 	} else {
 		Cvar_SetValue("mn_base_num_aircraft", -1);
-		Cmd_ExecuteString("set_aircraft_disabled");
+		MN_ExecuteConfunc("set_aircraft_disabled");
 	}
 	if (BS_BuySellAllowed(base)) {
 		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
-		Cmd_ExecuteString("set_buysell_enabled");
+		MN_ExecuteConfunc("set_buysell_enabled");
 	} else {
 		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
-		Cmd_ExecuteString("set_buysell_disabled");
+		MN_ExecuteConfunc("set_buysell_disabled");
 	}
 	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK) {
 		Cvar_SetValue("mn_base_transfer_allowed", qtrue);
-		Cmd_ExecuteString("set_transfer_enabled");
+		MN_ExecuteConfunc("set_transfer_enabled");
 	} else {
 		Cvar_SetValue("mn_base_transfer_allowed", qfalse);
-		Cmd_ExecuteString("set_transfer_disabled");
+		MN_ExecuteConfunc("set_transfer_disabled");
 	}
 	if (RS_ResearchAllowed(base)) {
 		Cvar_SetValue("mn_base_research_allowed", qtrue);
-		Cmd_ExecuteString("set_research_enabled");
+		MN_ExecuteConfunc("set_research_enabled");
 	} else {
 		Cvar_SetValue("mn_base_research_allowed", qfalse);
-		Cmd_ExecuteString("set_research_disabled");
+		MN_ExecuteConfunc("set_research_disabled");
 	}
 	if (PR_ProductionAllowed(base)) {
 		Cvar_SetValue("mn_base_prod_allowed", qtrue);
-		Cmd_ExecuteString("set_prod_enabled");
+		MN_ExecuteConfunc("set_prod_enabled");
 	} else {
 		Cvar_SetValue("mn_base_prod_allowed", qfalse);
-		Cmd_ExecuteString("set_prod_disabled");
+		MN_ExecuteConfunc("set_prod_disabled");
 	}
 	if (E_HireAllowed(base)) {
 		Cvar_SetValue("mn_base_hire_allowed", qtrue);
-		Cmd_ExecuteString("set_hire_enabled");
+		MN_ExecuteConfunc("set_hire_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hire_allowed", qfalse);
-		Cmd_ExecuteString("set_hire_disabled");
+		MN_ExecuteConfunc("set_hire_disabled");
 	}
 	if (AC_ContainmentAllowed(base)) {
 		Cvar_SetValue("mn_base_containment_allowed", qtrue);
-		Cmd_ExecuteString("set_containment_enabled");
+		MN_ExecuteConfunc("set_containment_enabled");
 	} else {
 		Cvar_SetValue("mn_base_containment_allowed", qfalse);
-		Cmd_ExecuteString("set_containment_disabled");
+		MN_ExecuteConfunc("set_containment_disabled");
 	}
 	if (HOS_HospitalAllowed(base)) {
 		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
-		Cmd_ExecuteString("set_hospital_enabled");
+		MN_ExecuteConfunc("set_hospital_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
-		Cmd_ExecuteString("set_hospital_disabled");
+		MN_ExecuteConfunc("set_hospital_disabled");
 	}
 }
 

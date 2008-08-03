@@ -1214,7 +1214,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	if (updateMenu)
-		Cmd_ExecuteString("research_clear"); /* confunc */
+		MN_ExecuteConfunc("research_clear");
 
 	for (i = 0; i < MAX_BASES; i++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(i);
@@ -2630,10 +2630,10 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	if (base->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetBuildingStatus(base, B_LAB)
 	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
-		Cbuf_AddText("set_research_enabled;");
+		MN_ExecuteConfunc("set_research_enabled");
 		return qtrue;
 	} else {
-		Cbuf_AddText("set_research_disabled;");
+		MN_ExecuteConfunc("set_research_disabled");
 		return qfalse;
 	}
 }

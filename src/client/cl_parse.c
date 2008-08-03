@@ -513,7 +513,7 @@ static void CL_Reset (struct dbuffer *msg)
 {
 	selActor = NULL;
 	cl.numTeamList = 0;
-	Cbuf_AddText("numonteam1\n"); /* confunc */
+	MN_ExecuteConfunc("numonteam1");
 
 	CL_EventReset();
 	parsedDeath = qfalse;
@@ -536,7 +536,7 @@ static void CL_Reset (struct dbuffer *msg)
 		Cvar_Set("mn_main", "multiplayerInGame");
 	}
 	if (cls.team == cl.actTeam)
-		Cbuf_AddText("startround\n"); /* confunc */
+		MN_ExecuteConfunc("startround");
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }
@@ -628,9 +628,9 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 				/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
 				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
 					CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-					Cbuf_AddText("crouch_checkbox_check\n"); /* confunc */
+					MN_ExecuteConfunc("crouch_checkbox_check");
 				} else {
-					Cbuf_AddText("crouch_checkbox_disable\n"); /* confunc */
+					MN_ExecuteConfunc("crouch_checkbox_disable");
 				}
 			}
 		} else {

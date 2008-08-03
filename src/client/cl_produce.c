@@ -1252,10 +1252,10 @@ qboolean PR_ProductionAllowed (const base_t* base)
 	if (base->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetBuildingStatus(base, B_WORKSHOP)
 	 && E_CountHired(base, EMPL_WORKER) > 0) {
-		Cbuf_AddText("set_prod_enabled;");
+		MN_ExecuteConfunc("set_prod_enabled");
 		return qtrue;
 	} else {
-		Cbuf_AddText("set_prod_disabled;");
+		MN_ExecuteConfunc("set_prod_disabled");
 		return qfalse;
 	}
 }

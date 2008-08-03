@@ -69,6 +69,8 @@ typedef enum ne_s {
 	NE_NUM_NODEEVENT
 } ne_t;
 
+void MN_ExecuteConfunc(const char *confunc);
+
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 void MN_Command_f(void);
 

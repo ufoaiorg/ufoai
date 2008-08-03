@@ -953,7 +953,7 @@ static void AC_UpdateMenu (const base_t *base)
 	Cvar_SetValue("mn_al_capacity_max", base->capacities[CAP_ALIENS].max);
 
 	/* Reset list. */
-	Cmd_ExecuteString("aliencont_clear\n"); /* confunc */
+	MN_ExecuteConfunc("aliencont_clear");
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
 		for (i = 0, j = 0; i < gd.numAliensTD; i++) {
@@ -975,9 +975,9 @@ static void AC_UpdateMenu (const base_t *base)
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
 							if (!containment[i].amount_dead) {
-								Cmd_ExecuteString(va("aliencontkill%i\n", j)); /* confunc */
+								MN_ExecuteConfunc(va("aliencontkill%i", j));
 							} else {
-								Cmd_ExecuteString(va("aliencontneedautopsy%i\n", j)); /* confunc */
+								MN_ExecuteConfunc(va("aliencontneedautopsy%i", j));
 							}
 						}
 						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overalltime) * 100);

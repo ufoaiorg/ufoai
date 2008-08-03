@@ -29,6 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 menuNode_t *focusNode;
 
+void MN_ExecuteConfunc (const char *confunc)
+{
+	Cmd_ExecuteString(confunc);
+}
+
 /**
  * @sa MN_ParseAction
  */
