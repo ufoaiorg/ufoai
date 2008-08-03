@@ -1322,7 +1322,7 @@ void FS_GetMaps (qboolean reset)
 				} else
 					continue;
 
-				if (strstr(pak->files[i].name, ".bsp")) {
+				if (strstr(pak->files[i].name, ".bsp") || strstr(pak->files[i].name, ".ump") ) {
 					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
@@ -1336,6 +1336,10 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename, sizeof(filename));
+
+						if (strstr(findname, ".ump")) {
+						Com_sprintf(filename, sizeof(filename), "+%s", filename);
+					}
 					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 					fs_numInstalledMaps++;
 				}
@@ -1370,6 +1374,34 @@ void FS_GetMaps (qboolean reset)
 				}
 				Mem_Free(dirnames);
 			}
+			/* +RMA to maplisting */
+			Com_sprintf(findname, sizeof(findname), "%s/maps/*.ump", search->filename);
+			FS_NormPath(findname);
+
+			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+			if (dirnames != NULL) {
+				for (i = 0; i < ndirs - 1; i++) {
+					Com_DPrintf(DEBUG_ENGINE, "... found rma: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
+					baseMapName = COM_SkipPath(dirnames[i]);
+					COM_StripExtension(baseMapName, filename, sizeof(filename));
+					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
+						Com_Printf("FS_GetMaps: Max maps limit hit\n");
+						break;
+					}
+					fs_maps[fs_numInstalledMaps + 1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
+						Com_Printf("Could not allocate memory in FS_GetMaps\n");
+						Mem_Free(dirnames[i]);
+						continue;
+					}
+					Com_sprintf(filename, sizeof(filename), "+%s", filename);
+					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
+					fs_numInstalledMaps++;
+					Mem_Free(dirnames[i]);
+				}
+				Mem_Free(dirnames);
+			}
+
 		}
 	}
 
