@@ -481,6 +481,8 @@ void RS_MarkResearchable (qboolean init)
 				else
 					base = baseCurrent;
 
+				assert(base);
+
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
