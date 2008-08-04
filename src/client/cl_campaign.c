@@ -4442,11 +4442,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* restore the overlay */
 	Cvar_SetValue("r_geoscape_overlay", MSG_ReadShort(sb));
 
-	/** @todo remove me */
-	MSG_ReadString(sb);
-	MSG_ReadString(sb);
-	MSG_ReadString(sb);
-
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
 
