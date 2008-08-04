@@ -259,6 +259,7 @@ static void MN_InitKeyList_f (void)
 
 /**
  * @brief Prints the map info for the server creation dialogue
+ * @todo Skip special map that start with a '.' (e.g. .baseattack)
  */
 static void MN_MapInfo (int step)
 {

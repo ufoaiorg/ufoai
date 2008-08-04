@@ -20,6 +20,14 @@ originated:
 
 #include "../game/q_shared.h"
 
+/** @defgroup pqueue Priority Queue (priorityQueue_t)
+ * @ingroup datastructure
+ * Implementation of a priority queue by using a binary heap. Manage a priority
+ * queue as a heap - the heap is implemented as an array.
+ *
+ * @{
+ */
+
 typedef int priorityQueueRating_t;
 
 typedef struct priorityQueueElement_s {
@@ -27,6 +35,10 @@ typedef struct priorityQueueElement_s {
 	priorityQueueRating_t rating;
 } priorityQueueElement_t;
 
+/**
+ * @brief the priority queue struct
+ * the actual data is stored in @c priorityQueueElement_t
+ */
 typedef struct priorityQueue_s {
 	uint32_t maxSize;
 	uint32_t currentSize;
