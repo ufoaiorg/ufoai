@@ -468,6 +468,7 @@ static void SCR_TimeRefresh_f (void)
 		R_BeginFrame();
 		for (i = 0; i < 128; i++) {
 			refdef.viewangles[1] = i / 128.0 * 360.0;
+			r_threadstate.state = THREAD_BSP;
 			R_RenderFrame();
 		}
 		R_EndFrame();
@@ -476,6 +477,7 @@ static void SCR_TimeRefresh_f (void)
 			refdef.viewangles[1] = i / 128.0 * 360.0;
 
 			R_BeginFrame();
+			r_threadstate.state = THREAD_BSP;
 			R_RenderFrame();
 			R_EndFrame();
 		}
