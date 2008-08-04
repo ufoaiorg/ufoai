@@ -49,8 +49,10 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 			break;
 		case EA_CMD:
 			/* execute a command */
-			if (action->data)
-				Cbuf_AddText(va("%s\n", (char*)action->data));
+			if (action->data) {
+				const char *cmd = (const char *)action->data;
+				Cbuf_AddText(cmd);
+			}
 			break;
 		case EA_CALL:
 			/* call another function */

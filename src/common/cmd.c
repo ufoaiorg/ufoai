@@ -178,25 +178,24 @@ void Cbuf_InsertFromDefer (void)
 
 /**
  * @sa Cmd_ExecuteString
- * Pulls off \n terminated lines of text from the command buffer and sends them through Cmd_ExecuteString, stopping when the buffer is empty.
+ * Pulls off \n terminated lines of text from the command buffer and sends them
+ * through Cmd_ExecuteString, stopping when the buffer is empty.
  * Normally called once per frame, but may be explicitly invoked.
  * @note Do not call inside a command function!
  */
 void Cbuf_Execute (void)
 {
 	unsigned int i;
-	char *text;
 	char line[1024];
-	int quotes;
 
 	/* don't allow infinite alias loops */
 	alias_count = 0;
 
 	while (cmd_text.cursize) {
 		/* find a \n or ; line break */
-		text = (char *) cmd_text.data;
+		char *text = (char *) cmd_text.data;
+		int quotes = 0;
 
-		quotes = 0;
 		for (i = 0; i < cmd_text.cursize; i++) {
 			if (text[i] == '"')
 				quotes++;
@@ -214,10 +213,9 @@ void Cbuf_Execute (void)
 		memcpy(line, text, i);
 		line[i] = 0;
 
-		/* delete the text from the command buffer and move remaining commands down */
-		/* this is necessary because commands (exec, alias) can insert data at the */
-		/* beginning of the text buffer */
-
+		/* delete the text from the command buffer and move remaining commands down
+		 * this is necessary because commands (exec, alias) can insert data at the
+		 * beginning of the text buffer */
 		if (i == cmd_text.cursize)
 			cmd_text.cursize = 0;
 		else {
@@ -866,7 +864,7 @@ void Cmd_ExecuteString (const char *text)
 
 	/* check functions */
 	hash = Com_HashKey(str, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd=cmd->hash_next) {
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString(va("cmd %s", text));
