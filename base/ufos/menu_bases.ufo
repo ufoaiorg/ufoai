@@ -608,23 +608,23 @@ menu bases
 	confunc set_research_disabled
 	{
 		*txt_research color "0.5 0.5 0.5 1"
-		cmd "mn_base_research_allowed 0;"
+		cmd "set mn_base_research_allowed 0;"
 	}
 	confunc set_research_enabled
 	{
 		*txt_research color "0 0.8 0 1"
-		cmd "mn_base_research_allowed 1;"
+		cmd "set mn_base_research_allowed 1;"
 	}
 
 	confunc set_prod_disabled
 	{
 		*txt_production color "0.5 0.5 0.5 1"
-		cmd "mn_base_prod_allowed 0;"
+		cmd "set mn_base_prod_allowed 0;"
 	}
 	confunc set_prod_enabled
 	{
 		*txt_production color "0 0.8 0 1"
-		cmd "mn_base_prod_allowed 1;"
+		cmd "set mn_base_prod_allowed 1;"
 	}
 
 	confunc set_hire_disabled
