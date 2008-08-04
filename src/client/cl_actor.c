@@ -4337,7 +4337,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
-	/* add the weapons it the actor's hand */
+	/* add the weapons to the actor's hands */
 	if (!(le->state & STATE_DEAD)) {
 		/* add left hand weapon */
 		if (le->left != NONE) {
@@ -4346,9 +4346,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.model = cls.model_weapons[le->left];
 			assert(add.model);
 
-			/* +2 (resp. +3) because the body and the head are already
-			 * (and maybe the right weapon will be)
-			 * at the previous location */
+			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
@@ -4363,8 +4361,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.model = cls.model_weapons[le->right];
 			assert(add.model);
 
-			/* +2 because the body and the head are already
-			 * at the previous location */
+			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
 
@@ -4389,7 +4386,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	assert(add.model);
 	add.skinnum = le->skinnum;
 
-	/* +1 because the body is already at the previous location */
+	/* point to the body ent which will be added last */
 	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
 

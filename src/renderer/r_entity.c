@@ -551,7 +551,7 @@ static float *R_CalcTransform (entity_t * e)
  * @returns qfalse if visible, qtrue is the origin of the entity is outside the
  * current frustum view
  */
-static inline qboolean R_CullEntity (entity_t *e)
+static qboolean R_CullEntity (entity_t *e)
 {
 	if (r_nocull->integer)
 		return qfalse;
@@ -562,9 +562,7 @@ static inline qboolean R_CullEntity (entity_t *e)
 	if (e->model->type == mod_bsp_submodel)
 		return R_CullBspModel(e);
 	else
-		/** @todo activate this once the culling is fixed */
-		/* return R_CullMeshModel(e); */
-		return qfalse;
+		return R_CullMeshModel(e);
 }
 
 /**
@@ -587,6 +585,11 @@ void R_DrawEntities (void)
 
 	for (i = 0; i < r_numEntities; i++) {
 		entity_t *e = &r_entities[i];
+
+		/* frustum cull check - but not while we are in e.g. sequence mode */
+		if (!(refdef.rdflags & RDF_NOWORLDMODEL) && R_CullEntity(e))
+			continue;
+
 		R_CalcTransform(e);
 
 		if (!e->model) {
@@ -665,10 +668,6 @@ void R_AddEntity (entity_t *ent)
 
 	/* don't add the bsp tiles from random map assemblies */
 	if (ent->model && ent->model->type == mod_bsp)
-		return;
-
-	/* frustum cull check - but not while we are in e.g. sequence mode */
-	if (!(refdef.rdflags & RDF_NOWORLDMODEL) && R_CullEntity(ent))
 		return;
 
 	r_entities[r_numEntities++] = *ent;

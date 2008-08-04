@@ -43,11 +43,6 @@ typedef struct entity_s {
 
 	vec3_t mins, maxs;
 
-	qboolean culled;	/**< use to optimize culling for tag entities (like a
-						 * head that is placed on a body) */
-	qboolean cullResult;	/**< the result of the culling process - true is
-							 * invisible in the current frustum view */
-
 	/* tag positioning */
 	struct entity_s *tagent;	/**< pointer to the parent entity - @todo is this comment correct? */
 	const char *tagname;				/**< name of the tag */

@@ -209,56 +209,42 @@ qboolean R_CullMeshModel (entity_t *e)
 {
 	int i;
 	int aggregatemask;
-	vec3_t mins, maxs;
-	vec3_t bbox[8];
-	const mAliasModel_t *mod = &e->model->alias;
-	const mAliasFrame_t *frame = mod->frames + e->as.frame;
+	vec3_t mins, maxs, origin;
+	vec4_t bbox[8];
 
-	if (e->culled)
-		return e->cullResult;
+	if (e->tagent)
+		VectorCopy(e->tagent->origin, origin);
+	else
+		VectorCopy(e->origin, origin);
 
-	/* compute axially aligned mins and maxs */
-	if (e->as.frame == e->as.oldframe) {
-		for (i = 0; i < 3; i++) {
-			maxs[i] = frame->maxs[i];
-			mins[i] = frame->maxs[i];
-
-			if (e->scale[i]) {
-				mins[i] *= e->scale[i];
-				maxs[i] *= e->scale[i];
-			}
+	/* determine scaled mins/maxs */
+	for (i = 0; i < 3; i++) {
+		if (e->scale[i]) {
+			mins[i] = e->model->mins[i] * e->scale[i];
+			maxs[i] = e->model->maxs[i] * e->scale[i];
+		} else {
+			mins[i] = e->model->mins[i];
+			maxs[i] = e->model->maxs[i];
 		}
-	} else {
-		const mAliasFrame_t *oldFrame = mod->frames + e->as.oldframe;
-		for (i = 0; i < 3; i++) {
-			mins[i] = min(frame->mins[i], oldFrame->mins[i]);
-			maxs[i] = max(frame->maxs[i], oldFrame->maxs[i]);
-			if (e->scale[i]) {
-				mins[i] *= e->scale[i];
-				maxs[i] *= e->scale[i];
-			}
-		}
+	}
+
+	/* compute translated bounding box */
+	for (i = 0; i < 8; i++) {
+		vec3_t tmp;
+
+		tmp[0] = (i & 1) ? mins[0] : maxs[0];
+		tmp[1] = (i & 2) ? mins[1] : maxs[1];
+		tmp[2] = (i & 4) ? mins[2] : maxs[2];
+
+		VectorAdd(origin, tmp, bbox[i]);
 	}
 
 	/* compute a full bounding box */
 	aggregatemask = ~0;
 
 	for (i = 0; i < 8; i++) {
-		vec3_t tmp;
 		int mask = 0;
 		int j;
-
-		tmp[0] = (i & 1) ? mins[0] : maxs[0];
-		tmp[1] = (i & 2) ? mins[1] : maxs[1];
-		tmp[2] = (i & 4) ? mins[2] : maxs[2];
-		/* we can use the origin here, because we never check the tagged models
-		 * here - we only check the parents and define that the tagged model
-		 * is visible when the parent is visible, too - so we can use the origin
-		 * directly without the need to transform against the entity transform
-		 * matrix */
-		/** @todo This is not suitable for big tagged models - e.g. a very small
-		 * body and a huge head */
-		VectorAdd(e->origin, tmp, bbox[i]);
 
 		for (j = 0; j < 4; j++) {
 			/* get the distance between the frustom normal vector and the
@@ -271,14 +257,10 @@ qboolean R_CullMeshModel (entity_t *e)
 		aggregatemask &= mask;
 	}
 
-	e->culled = qtrue;
-
 	if (aggregatemask)
-		e->cullResult = qtrue;
-	else
-		e->cullResult = qfalse;
+		return qtrue;
 
-	return e->cullResult;
+	return qfalse;
 }
 
 void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
