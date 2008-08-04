@@ -82,7 +82,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 			if (od->tech->type == RS_CRAFT) {
 				aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 				assert(ufocraft);
-				if (ufocraft->weight == AIRCRAFT_LARGE)
+				if (ufocraft->size == AIRCRAFT_LARGE)
 					bigufotransfer++;
 				else
 					smallufotransfer++;
@@ -111,7 +111,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	} else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 		aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 		assert(ufocraft);
-		if (ufocraft->weight == AIRCRAFT_LARGE) {
+		if (ufocraft->size == AIRCRAFT_LARGE) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_HANGAR)) {
 				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have functional Large UFO Hangar.\n"));
 				return 0;
@@ -122,7 +122,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 					return 0;
 				}
 			}
-		} else if (ufocraft->weight == AIRCRAFT_SMALL) {
+		} else if (ufocraft->size == AIRCRAFT_SMALL) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_SMALL_HANGAR)) {
 				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have functional Small UFO Hangar.\n"));
 				return qfalse;
@@ -241,7 +241,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIdx(i);
 			assert(aircraftTemp);
-			if (aircraftTemp->weight == aircraft->weight)
+			if (aircraftTemp->size == aircraft->size)
 				numAircraftTransfer++;
 		}
 
@@ -603,7 +603,7 @@ static void TR_TransferListClear_f (void)
 				assert(ufocraft);
 				/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 				baseCurrent->storage.num[i] += trItemsTmp[i];
-				if (ufocraft->weight == AIRCRAFT_LARGE)
+				if (ufocraft->size == AIRCRAFT_LARGE)
 					baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
 				else
 					baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
@@ -661,7 +661,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 							if (UR_ConditionsForStoring(destination, ufocraft)) {
 								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 								baseCurrent->storage.num[i]++; /** @todo Why aren't we using 'destination' here? */
-								if (ufocraft->weight == AIRCRAFT_LARGE)
+								if (ufocraft->size == AIRCRAFT_LARGE)
 									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
 								else
 									destination->capacities[CAP_UFOHANGARS_SMALL].cur++;
@@ -1101,7 +1101,7 @@ static void TR_TransferListSelect_f (void)
 							assert(ufocraft);
 							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 							baseCurrent->storage.num[i] -= amount;
-							if (ufocraft->weight == AIRCRAFT_LARGE)
+							if (ufocraft->size == AIRCRAFT_LARGE)
 								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur -= amount;
 							else
 								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur -= amount;
@@ -1402,7 +1402,7 @@ static void TR_CargoListSelect_f (void)
 						assert(ufocraft);
 						/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 						baseCurrent->storage.num[i] += amount;
-						if (ufocraft->weight == AIRCRAFT_LARGE)
+						if (ufocraft->size == AIRCRAFT_LARGE)
 							baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur += amount;
 						else
 							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur += amount;

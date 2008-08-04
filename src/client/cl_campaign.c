@@ -461,9 +461,6 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	mission->mapDef = &csi.mds[i];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
-	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
-	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
-	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
 	return qtrue;
 }
 
@@ -4445,9 +4442,10 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* restore the overlay */
 	Cvar_SetValue("r_geoscape_overlay", MSG_ReadShort(sb));
 
-	Q_strncpyz(gd.oldMis1, MSG_ReadString(sb), sizeof(gd.oldMis1));
-	Q_strncpyz(gd.oldMis2, MSG_ReadString(sb), sizeof(gd.oldMis2));
-	Q_strncpyz(gd.oldMis3, MSG_ReadString(sb), sizeof(gd.oldMis3));
+	/** @todo remove me */
+	MSG_ReadString(sb);
+	MSG_ReadString(sb);
+	MSG_ReadString(sb);
 
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
@@ -4624,10 +4622,6 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 
 	/* save the overlay state */
 	MSG_WriteShort(sb, r_geoscape_overlay->integer);
-
-	MSG_WriteString(sb, gd.oldMis1);
-	MSG_WriteString(sb, gd.oldMis2);
-	MSG_WriteString(sb, gd.oldMis3);
 
 	/* store credits */
 	MSG_WriteLong(sb, ccs.credits);

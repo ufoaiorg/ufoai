@@ -108,11 +108,7 @@ typedef struct globalData_s
 	aircraft_t *interceptAircraft;
 	/* already paid in this month? */
 	qboolean fund;
-	/* missions last seen on geoscape. Used to not spawn the same mission again
-	 * in a short period of time, */
-	char oldMis1[MAX_VAR];	/**< @todo unused */
-	char oldMis2[MAX_VAR];	/**< @todo unused */
-	char oldMis3[MAX_VAR];	/**< @todo unused */
+
 	qboolean autosell[MAX_OBJDEFS];		/**< True if this objDef_t has autosell enabled. */
 
 	/* == production == */

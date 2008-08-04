@@ -557,7 +557,7 @@ void PR_ProductionRun (void)
 				if (od->tech->type == RS_CRAFT) {
 					ufocraft = AIR_GetAircraft(od->id);
 					assert(ufocraft);
-					if (ufocraft->weight == AIRCRAFT_LARGE) {
+					if (ufocraft->size == AIRCRAFT_LARGE) {
 						/* Large UFOs can only be stored in Large UFO Hangar */
 						if (base->capacities[CAP_UFOHANGARS_LARGE].cur > 0)
 							base->capacities[CAP_UFOHANGARS_LARGE].cur--;

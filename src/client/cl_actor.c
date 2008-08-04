@@ -4763,9 +4763,6 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
  * @brief Shows targetting for a grenade.
  * @param[in] fromPos The (grid-) position of the aiming actor.
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
- * @todo Find out why the ceiling is not checked against the parabola when calculating obstacles.
- * i.e. the line is drawn green even if a ceiling prevents the shot.
- * https://sourceforge.net/tracker/index.php?func=detail&aid=1701263&group_id=157793&atid=805242
  * @sa CL_TargetingStraight
  */
 static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)

@@ -350,7 +350,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			notEnoughFuel = qfalse;
 
 			/* if dependencies of hangar are missing, you can't send aircraft */
-			switch (air->weight) {
+			switch (air->size) {
 			case AIRCRAFT_SMALL:
 				if (!base->hasBuilding[B_SMALL_HANGAR])
 					continue;
@@ -360,7 +360,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 					continue;
 				break;
 			default:
-				Com_Printf("CL_DisplayPopupIntercept: Unknown weight of aircraft '%s': %i\n", air->id, air->weight);
+				Com_Printf("CL_DisplayPopupIntercept: Unknown weight of aircraft '%s': %i\n", air->id, air->size);
 			}
 
 			/* don't show aircraft that have no pilot */

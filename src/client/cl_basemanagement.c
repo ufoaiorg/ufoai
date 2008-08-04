@@ -667,7 +667,7 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
 	for (aircraftIdx = 0, numawayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-		const int aircraftSize = base->aircraft[aircraftIdx].weight;
+		const int aircraftSize = base->aircraft[aircraftIdx].size;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
 			if (buildingType != B_SMALL_HANGAR)

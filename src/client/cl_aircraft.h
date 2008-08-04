@@ -167,7 +167,7 @@ typedef struct aircraft_s {
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
 	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? @note Limited to MAX_ACTIVETEAM */
-	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/** @todo rename me to size. */
+	int size;			/**< Size of the aircraft used in capacity calculations. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	int point;

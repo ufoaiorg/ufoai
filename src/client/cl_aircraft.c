@@ -65,7 +65,7 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	aircraftSize = aircraftTemplate->weight;
+	aircraftSize = aircraftTemplate->size;
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG
@@ -842,7 +842,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
-		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->weight);
+		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		if (ccs.singleplayer) {
 			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
@@ -858,13 +858,13 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
-	switch (aircraft->weight) {
+	switch (aircraft->size) {
 	case AIRCRAFT_SMALL:
 		return CAP_AIRCRAFTS_SMALL;
 	case AIRCRAFT_LARGE:
 		return CAP_AIRCRAFTS_BIG;
 	}
-	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->weight);
+	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
 
 const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
@@ -1393,7 +1393,7 @@ static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, name), 0},
 	{"shortname", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, shortname), 0},
 	{"numteam", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
-	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
+	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 
 	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
@@ -2554,7 +2554,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	aircraftSize = aircraftTemplate->weight;
+	aircraftSize = aircraftTemplate->size;
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG
