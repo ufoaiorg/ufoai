@@ -486,10 +486,6 @@ static void R_FontConvertChars (char *buffer)
 		*replace++ = ' ';
 		replace = strstr(replace, "\t");
 	}
-
-	replace = strstr(buffer, "\n\0");
-	if (replace)
-		*replace = '\n';	/** @todo Could be removed ... Doesn't change anything, no? */
 }
 
 static fontCacheList_t cacheList;
