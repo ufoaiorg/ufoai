@@ -188,54 +188,6 @@ void MN_SetViewRect (const menu_t* menu)
 	}
 }
 
-
-/**
- * @brief Left click on the basemap
- */
-void MN_BaseMapClick (menuNode_t *node, base_t *base, int x, int y)
-{
-	int row, col;
-
-	assert(base);
-
-	if (gd.baseAction == BA_NEWBUILDING) {
-		assert(base->buildingCurrent);
-		for (row = 0; row < BASE_SIZE; row++)
-			for (col = 0; col < BASE_SIZE; col++) {
-				if (x >= base->map[row][col].posX
-				 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE
-				 && y >= base->map[row][col].posY
-				 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
-					/* we're on the tile the player clicked */
-					if (!base->map[row][col].building && !base->map[row][col].blocked) {
-						if (!base->buildingCurrent->needs
-						 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
-						 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
-						/* Set position for a new building */
-						B_SetBuildingByClick(base, base->buildingCurrent, row, col);
-					}
-					return;
-				}
-			}
-	}
-
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++)
-			if (base->map[row][col].building && x >= base->map[row][col].posX
-				&& x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
-				&& y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
-				const building_t *entry = base->map[row][col].building;
-				if (!entry)
-					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
-
-				assert(!base->map[row][col].blocked);
-
-				B_BuildingOpenAfterClick(base, entry);
-				gd.baseAction = BA_NONE;
-				return;
-			}
-}
-
 /**
  * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
  */
