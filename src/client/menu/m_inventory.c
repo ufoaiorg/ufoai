@@ -106,8 +106,13 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 						}
 						/* Finally try left and right hand. There is no other place to put it now. */
 						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
-							packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, node->container, fromX, fromY);
+							const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
+
+							/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
+							if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
+								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, node->container, ic);
+							}
 						}
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py);
