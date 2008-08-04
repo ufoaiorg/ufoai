@@ -54,11 +54,11 @@ PLANE FINDING
 /**
  * @brief Set the type of the plane according to it's normal vector
  */
-static inline int PlaneTypeForNormal (vec3_t normal)
+static inline int PlaneTypeForNormal (const vec3_t normal)
 {
 	vec_t ax, ay, az;
 
-	/* NOTE: should these have an epsilon around 1.0?		 */
+	/* NOTE: should these have an epsilon around 1.0? */
 	if (normal[0] == 1.0 || normal[0] == -1.0)
 		return PLANE_X;
 	if (normal[1] == 1.0 || normal[1] == -1.0)
@@ -77,7 +77,7 @@ static inline int PlaneTypeForNormal (vec3_t normal)
 	return PLANE_ANYZ;
 }
 
-static inline qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
+static inline qboolean PlaneEqual (const plane_t *p, const vec3_t normal, const vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
 	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
@@ -749,7 +749,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 	/* set DETAIL, TRANSLUCENT contentflags on all faces, if they have been set on any.
 	 * called separately, if in check/fix mode*/
-	if(!checkOrFix) CheckPropagateParserContentFlags(b);
+	if (!checkOrFix)
+		CheckPropagateParserContentFlags(b);
 
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {

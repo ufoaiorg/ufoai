@@ -471,7 +471,7 @@ int main (int argc, const char **argv)
 	}
 
 	Com_Printf("...map: '%s'\n", mapFilename);
-	if(!(config.performMapCheck || config.fixMap))
+	if (!(config.performMapCheck || config.fixMap))
 		Com_Printf("...bsp: '%s'\n", bspFilename);
 
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {

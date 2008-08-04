@@ -309,7 +309,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 
 static void FixFaceEdges (node_t *node, face_t *f)
 {
-	int i, p1, p2, base;
+	int i, base;
 	vec3_t e2;
 	vec_t len;
 	int count[MAX_SUPERVERTS], start[MAX_SUPERVERTS];
@@ -320,8 +320,8 @@ static void FixFaceEdges (node_t *node, face_t *f)
 	numsuperverts = 0;
 
 	for (i = 0; i < f->numpoints; i++) {
-		p1 = f->vertexnums[i];
-		p2 = f->vertexnums[(i + 1) % f->numpoints];
+		const int p1 = f->vertexnums[i];
+		const int p2 = f->vertexnums[(i + 1) % f->numpoints];
 
 		VectorCopy(curTile->vertexes[p1].point, edge_start);
 		VectorCopy(curTile->vertexes[p2].point, e2);
