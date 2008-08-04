@@ -111,7 +111,7 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 							/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 							if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py);
-								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, node->container, ic);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idLeft], px, py, node->container, fromX, fromY);
 							}
 						}
 						if (!packed) {
