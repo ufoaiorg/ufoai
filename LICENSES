@@ -2987,6 +2987,7 @@ base/textures/tex_mattn/wall083.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wall_bricks001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall_bricks004.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall_grates.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/warning.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/window001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3021,6 +3022,8 @@ base/textures/tex_mattn/wood018.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wood019.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood020.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood021.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood022.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood023.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/barrel1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel_top.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
