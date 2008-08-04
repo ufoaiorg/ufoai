@@ -1330,8 +1330,11 @@ static void G_BuildForbiddenList (int team)
 }
 
 /**
- * @brief @todo writeme
+ * @brief Precalculates a move table for a given team and a given starting position.
+ * This will calculate a routing table for all reachable fields with the given distance
+ * from the given spot with the given actorsize
  * @param[in] team The current team (see G_BuildForbiddenList)
+ * @param[in] size The actorsize
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
@@ -1376,7 +1379,8 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 }
 
 /**
- * @brief @todo writeme
+ * @brief Generates the client events that are send over the netchannel to move
+ * an actor
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam
  * @param[in] num Edict index to move
