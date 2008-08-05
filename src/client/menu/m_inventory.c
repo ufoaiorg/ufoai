@@ -137,12 +137,12 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int x, int y, qboolean
 								}
 							}
 							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py);
-								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHolster], px, py, node->container, fromX, fromY);
-							}
-							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py);
 								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idBelt], px, py, node->container, fromX, fromY);
+							}
+							if (!packed) {
+								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py);
+								packed = INV_MoveItem(base, menuInventory, &csi.ids[csi.idHolster], px, py, node->container, fromX, fromY);
 							}
 							if (!packed) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py);
