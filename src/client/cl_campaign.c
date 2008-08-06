@@ -3375,6 +3375,9 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 		endCampaign = qtrue;
 	}
 
+	/** @todo Should we make the campaign lost when a player loses all his bases?
+	 * until he has set up a base again, the aliens might have invaded the whole
+	 * world ;) - i mean, removing the credits check here. */
 	if (!gd.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
 		mn.menuText[TEXT_STANDARD] = _("You've lost your bases and don't have enough money to build new ones.");
 		endCampaign = qtrue;

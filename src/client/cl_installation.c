@@ -270,6 +270,10 @@ static void INS_BuildInstallation_f (void)
 		return;
 	}
 
+	/* we should always have at least one base */
+	if (!gd.numBases)
+		return;
+
 	installationTemplate = INS_GetInstallationTemplateFromInstallationId(Cmd_Argv(1));
 
 	if (!installationTemplate) {
@@ -286,6 +290,10 @@ static void INS_BuildInstallation_f (void)
 	assert(installationTemplate->cost >= 0);
 
 	if (ccs.credits - installationTemplate->cost > 0) {
+		/** @todo If there is no nation assigned to the current selected position,
+		 * tell this the gamer and give him an option to rechoose the location.
+		 * If we don't do this, any action that is done for this installation has no
+		 * influence to any nation happiness/funding/supporting */
 		if (CL_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
 			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", gd.numInstallations);
 
