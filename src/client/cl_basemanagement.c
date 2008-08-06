@@ -2815,6 +2815,10 @@ static void B_BuildBase_f (void)
 	assert(curCampaign);
 
 	if (ccs.credits - curCampaign->basecost > 0) {
+		/** @todo If there is no nation assigned to the current selected position,
+		 * tell this the gamer and give him an option to rechoose the location.
+		 * If we don't do this, any action that is done for this base has no
+		 * influence to any nation happiness/funding/supporting */
 		if (CL_NewBase(base, newBasePos)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
 			base->idx = gd.numBases - 1;

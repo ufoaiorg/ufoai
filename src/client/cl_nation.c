@@ -344,7 +344,6 @@ static int CL_NationsMaxFunding (void)
 		nation_t *nation = &gd.nations[n];
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
-				/** NAT_SetHappiness(nation, nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
 				const int funding = NAT_GetFunding(nation, m);
 				if (max < funding)
 					max = funding;
