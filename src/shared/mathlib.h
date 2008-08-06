@@ -147,8 +147,9 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 #define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
 
-#define PosAddDV(p, crouch, dv)          (p[0]+=dvecs[(dv)>>3][0], p[1]+=dvecs[(dv)>>3][1], p[2]+=dvecs[(dv)>>3][2], crouch+=dvecs[(dv)>>3][3])
+#define PosAddDV(p, crouch, dv)          (p[0]+=dvecs[(dv)>>3][0], p[1]+=dvecs[(dv)>>3][1], p[2]=dv&7, crouch+=dvecs[(dv)>>3][3])
 #define PosSubDV(p, crouch, dv)          (p[0]-=dvecs[(dv)>>3][0], p[1]-=dvecs[(dv)>>3][1], p[2]=dv&7, crouch-=dvecs[(dv)>>3][3])
+#define NewDVZ(dv, z)					 ((dv & (~7)) | (z & 7))
 int AngleToDV(int angle);
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
@@ -188,7 +189,7 @@ float AngleNormalize180(float angle);
 
 float LerpAngle(float a1, float a2, float frac);
 
-qboolean FrustomVis(const vec3_t origin, int dir, const vec3_t point);
+qboolean FrustumVis(const vec3_t origin, int dir, const vec3_t point);
 
 void PerpendicularVector(vec3_t dst, const vec3_t src);
 void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);

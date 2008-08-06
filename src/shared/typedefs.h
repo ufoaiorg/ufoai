@@ -300,10 +300,10 @@ typedef struct side_s {
 	vec3_t		hessianNormal;
 	float		hessianP;
 
-	struct brush_s *brush;		/**< backlink to the brush ths side belongs, to */
+	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
 } side_t;
 
-typedef struct brush_s {
+typedef struct mapbrush_s {
 	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
 	int		brushnum;		/**< the brush number in the map */
 
@@ -534,5 +534,11 @@ typedef struct {
 	int				numbrushsides;
 	dBspBrushSide_t	brushsides[MAX_MAP_BRUSHSIDES];
 } dMapTile_t;
+
+typedef struct crossPoints_s {
+	vec3_t floor;
+	vec3_t ceiling;
+	qboolean obstructed;
+} crossPoints_t;
 
 #endif /* SHARED_TYPEDEFS_H */

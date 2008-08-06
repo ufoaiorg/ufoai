@@ -584,7 +584,7 @@ static void LET_PathMove (le_t * le)
 			int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
 			int new_crouching_state = crouching_state;
 			PosAddDV(le->pos, new_crouching_state, fulldv);
-			Com_Printf("Moved in dir %i to (%i, %i, %i)\n", dv, le->pos[0], le->pos[1], le->pos[2]);
+			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dv, le->pos[0], le->pos[1], le->pos[2]);
 			tuCost = Grid_MoveLength(&clPathMap, le->pos, new_crouching_state, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouching_state, qfalse);
 			/*
 			if (le->state & STATE_CROUCHED)
@@ -716,7 +716,7 @@ void LET_ProjectileAutoHide (le_t *le)
 			continue;
 		if (LE_IsLivingActor(actors)) {
 			/* at least one of our actors can see this */
-			if (FrustomVis(actors->origin, actors->dir, le->origin)) {
+			if (FrustumVis(actors->origin, actors->dir, le->origin)) {
 				if (TR_TestLine(actors->origin, le->origin, TL_FLAG_NONE)) {
 					if (!le->ptl) {
 						le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);

@@ -794,7 +794,7 @@ static void CMod_GetMapSize ()
  * @sa CM_AddMapTile
  * @todo Fix z-level routing
  */
-static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
+static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int sZ)
 {
 	static byte reroute[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
@@ -811,7 +811,6 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	/* count all reachable fields of the map for debugging */
 	qboolean route_available = qfalse;
 #endif
-
 	const int targetLength = sizeof(wpMins) + sizeof(wpMaxs) + sizeof(temp_map);
 
 	inlineList = NULL;
@@ -825,6 +824,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	assert((sX > -(PATHFINDING_WIDTH / 2)) && (sX < (PATHFINDING_WIDTH / 2)));
 	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
 	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
+
 
 	/* calculate existing border to determine overlay */
 	CMod_GetMapSize();
@@ -1088,7 +1088,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	/* now increase the amount of loaded tiles */
 	numTiles++;
 
-	CMod_LoadRouting(&header.lumps[LUMP_ROUTING], sX, sY, sZ);
+	CMod_LoadRouting(name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
 	memcpy(&svMap, &clMap, sizeof(svMap));
 
 	FS_FreeFile(buf);
@@ -1370,7 +1370,7 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
 	for (i = 0, p = path->fblist; i < path->fblength / 2; i++, p += 2) {
 		/* Skip initial position. */
 		if (VectorCompare((*p), exclude_from_forbiddenlist)) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]);
+			/* Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
 			continue;
 		}
 
@@ -1380,14 +1380,16 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
 		fy = (*p)[1];
 		fz = (*p)[2];
 
-		Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: comparing (%i, %i, %i) * %i to (%i, %i, %i) * %i \n", x, y, z, actor_size, fx, fy, fz, size);
+		/* Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: comparing (%i, %i, %i) * %i to (%i, %i, %i) * %i \n", x, y, z, actor_size, fx, fy, fz, size); */
 
 		if (fx + size <= x || x + actor_size <= fx)
 			continue; /* x bounds do not intersect */
 		if (fy + size <= y || y + actor_size <= fy)
 			continue; /* y bounds do not intersect */
-		if (z == fz)
+		if (z == fz) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: Collision (%i, %i, %i) * %i and (%i, %i, %i) * %i \n", x, y, z, actor_size, fx, fy, fz, size);
 			return qtrue; /* confirmed intersection */
+		}
 	}
 	return qfalse;
 }
@@ -1403,7 +1405,7 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
  * @sa Grid_CheckForbidden
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	byte ol;
@@ -1435,7 +1437,10 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 	y = pos[1];
 	z = pos[2];
 
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) dir:%i c:%i\n", x, y, z, dir, crouching_state);
+	RT_AREA_TEST(path, x, y, z, crouching_state);
+	ol = RT_AREA(path, x, y, z, crouching_state);
+
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actor_size, dir, crouching_state, ol);
 
 
 	/* We cannot fly and crouch at the same time. This will also cause an actor to stand to fly. */
@@ -1443,9 +1448,6 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly while crouching.\n");
 		return;
 	}
-
-	RT_AREA_TEST(path, x, y, z, crouching_state);
-	ol = RT_AREA(path, x, y, z, crouching_state);
 
 	if (ol >= MAX_MOVELENGTH && ol != ROUTING_NOT_REACHABLE) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Exiting because the TUS needed to move here are already too large. %i %i\n", ol , MAX_MOVELENGTH);
@@ -1530,27 +1532,27 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 		if (dz > 0) {
 			/* If the actor is moving up, check the passage at the current cell.
 			 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-			actor_height = (UNIT_HEIGHT * 2 - PLAYER_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, x, y, z));
+			actor_height = (UNIT_HEIGHT + PLAYER_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, x, y, z));
 			RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
 			passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
 		} else {
 			/* If the actor is moving down, check from the destination cell back. *
 			 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-			actor_height = (UNIT_HEIGHT * 2 - PLAYER_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, nx, ny, nz));
+			actor_height = (UNIT_HEIGHT + PLAYER_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, nx, ny, nz));
 			RT_CONN_TEST(map, actor_size, nx, ny, nz, core_dir ^ 1);
 			passage_height = RT_CONN(map, actor_size, nx, ny, nz, core_dir ^ 1);
 		}
 		if (passage_height < actor_height) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passage_height, actor_height);
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/* This is the standard passage height for all units trying to move horizontally. */
-		actor_height = (UNIT_HEIGHT - PLAYER_HEIGHT) / QUANT;
+		actor_height = PLAYER_HEIGHT / QUANT;
 		RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
 		passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
 		if (passage_height < actor_height) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passage_height, actor_height);
 			return;
 		}
 	}
@@ -1571,7 +1573,7 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 		/** @todo stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 		stepup_height = PATHFINDING_STEPUP;
 		if (height_change > stepup_height) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't step up high enough.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't step up high enough. change:%i stepup:%i\n", height_change, stepup_height);
 			return;
 		}
 
@@ -1584,7 +1586,7 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 		 */
 		has_ladder_support = qfalse;
 		if (height_change < -falling_height && !has_ladder_support) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", height_change, -falling_height);
 			return;
 		}
 
@@ -1616,13 +1618,18 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below.
 		 */
 		if (dir < CORE_DIRECTIONS && height_change < -stepup_height) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall.\n");
+			/* We cannot fall if there is an entity below the cell we want to move to. */
+			if (Grid_CheckForbidden(map, actor_size, path, nx, ny, nz - 1)) {
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
+				return;
+			}
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", height_change, -stepup_height);
 			height_change = 0;
 		}
 
 		/* We cannot fall if there is a floor in this cell. */
 		if (dir == DIRECTION_FALL && RT_FLOOR(map, actor_size, x, y, z) >= 0) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall while supported.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall while supported. floor:%i\n", RT_FLOOR(map, actor_size, x, y, z));
 			return;
 		}
 	} else {
@@ -1635,11 +1642,11 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 		 * might be moving straight up or down.  Ensure there is an opening for this actor to
 		 * move in the desired direction. */
 		if (dir == DIRECTION_CLIMB_UP && RT_CEILING(map, actor_size, x, y, z) * QUANT < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* up */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not enough headroom to fly up.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not enough headroom to fly up. passage:%i actor:%i\n", RT_CEILING(map, actor_size, x, y, z) * QUANT, UNIT_HEIGHT * 2 - PLAYER_HEIGHT);
 			return;
 		}
 		if (dir == DIRECTION_CLIMB_DOWN && RT_FLOOR(map, actor_size, x, y, z) >= 0 ) { /* down */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly down through a floor.\n");
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly down through a floor. floor:%i\n", RT_FLOOR(map, actor_size, x, y, z));
 			return;
 		}
 	}
@@ -1655,7 +1662,11 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 
 	/* If we are moving horizontally, the new z coordinate may need to be adjusted from stepup. */
 	if (dir < CORE_DIRECTIONS && abs(height_change) <= stepup_height) {
-		nz += height_change < 0 ? (height_change - 15) / 16 : height_change / 16;
+		const new_floor = RT_FLOOR(map, actor_size, x, y, z) + height_change;
+		/** @note offset by 15 if negative to force nz down */
+		const delta = new_floor < 0 ? (new_floor - 15) / 16 : new_floor / 16;
+		/* Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Adjusting hight. floor:%i new_floor:%i delta:%i\n", RT_FLOOR(map, actor_size, x, y, z), new_floor, delta); */
+		nz += delta;
 	}
 	/* nz can't move outof bounds */
 	if (nz < 0)
@@ -1677,12 +1688,14 @@ static void Grid_MoveMark (struct routing_s *map, const int actor_size, struct p
 	}
 
 	/* Store move. */
-	RT_AREA(path, nx, ny, nz, crouching_state) = l;	/**< Store TUs for this square. */
-	RT_AREA_FROM(path, nx, ny, nz, crouching_state) = z | (dir << 3); /**< Store origination information for this square. */
-	Vector4Set(dummy, nx, ny, nz, crouching_state);
-	/** @todo add heuristic for A* algorithm */
-	PQueuePush(pqueue, dummy, l);
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", nx, ny, nz, crouching_state, l);
+	if (pqueue) {
+		RT_AREA(path, nx, ny, nz, crouching_state) = l;	/**< Store TUs for this square. */
+		RT_AREA_FROM(path, nx, ny, nz, crouching_state) = z | (dir << 3); /**< Store origination information for this square. */
+		Vector4Set(dummy, nx, ny, nz, crouching_state);
+		/** @todo add heuristic for A* algorithm */
+		PQueuePush(pqueue, dummy, l);
+	}
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i change:%i\n", nx, ny, nz, crouching_state, l, RT_FLOOR(map, actor_size, x, y, z), height_change);
 }
 
 /**
@@ -1725,6 +1738,8 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	RT_AREA_TEST(path, from[0], from[1], from[2], crouching_state);
 	RT_AREA(path, from[0], from[1], from[2], crouching_state) = 0;
 
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouching_state);
+
 	count = 0;
 	while (!PQueueIsEmpty(&pqueue)) {
 		PQueuePop(&pqueue, epos);
@@ -1742,6 +1757,8 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	}
 	/* Com_Printf("Loop: %i", count); */
 	PQueueFree(&pqueue);
+
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Done\n\n");
 }
 
 /**
@@ -1802,6 +1819,23 @@ int Grid_MoveNext (struct routing_s *map, const int actor_size, struct pathing_s
 
 	/* Return the information indicating how the actor got to this cell */
 	return RT_AREA_FROM(path, from[0], from[1], from[2], crouching_state);
+}
+
+
+/**
+ * @brief Returns the height of the floor in a cell.
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] pos Position in the map to check the height
+ * @return The actual model height of the cell's ceiling.
+ */
+unsigned int Grid_Ceiling (struct routing_s *map, const int actor_size, const pos3_t pos)
+{
+	/* max 8 levels */
+	if (pos[2] >= PATHFINDING_HEIGHT) {
+		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
+			(PATHFINDING_HEIGHT - 1), pos[2]);
+	}
+	return RT_CEILING(map, actor_size, pos[0], pos[1], pos[2] & 7) * QUANT;
 }
 
 
@@ -1958,9 +1992,6 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 
 	assert(list);
 
-	/** @todo FIX THIS TO USE THE NEW CODE!!! */
-	return;
-
 	/* get inline model, if it is one */
 	if (*name != '*') {
 		Com_Printf("Called Grid_RecalcRouting with no inline model\n");
@@ -2028,7 +2059,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		for (y = min[1]; y < max[1] - actor_size; y++)
 			for (x = min[0]; x < max[0] - actor_size; x++)
 				for (z = min[2]; z < max[2]; z++)
-					RT_NewCheckCell(map, x, y, z, actor_size);
+					z += RT_NewCheckCell(map, actor_size, x, y, z);
 
 #if 0
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
@@ -2040,7 +2071,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 			for (x = min[0]; x < max[0] - actor_size; x++)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
 					for (z = min[2]; z < max[2]; z++)
-						RT_NewUpdateConnection(map, x, y, z, dir, actor_size);
+						z += RT_NewUpdateConnection(map, actor_size, x, y, z, dir);
 
 #if 0
 	Com_Printf("After:\n");

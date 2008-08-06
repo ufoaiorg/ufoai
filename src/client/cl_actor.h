@@ -140,4 +140,8 @@ void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, 
 void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
 
 void CL_DumpTUs(void);
+void CL_DumpMoveMark(void);
+
+void CL_DisplayFloorArrows(void);
+void CL_DisplayObstructionArrows(void);
 #endif

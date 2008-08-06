@@ -192,6 +192,7 @@ static void R_DrawFloor (const entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;
+	char *string[10];
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
 	qglDisable(GL_TEXTURE_2D);
@@ -241,6 +242,43 @@ static void R_DrawFloor (const entity_t * e)
 	qglEnd();
 	qglDisable(GL_LINE_SMOOTH);
 
+	qglEnable(GL_TEXTURE_2D);
+
+	R_Color(NULL);
+}
+
+/**
+ * @brief Draws an arrow between two points
+ * @sa CL_AddArrow
+ * @sa RF_BOX
+ */
+static void R_DrawArrow (const entity_t * e)
+{
+	vec3_t upper, mid, lower;
+	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+
+	VectorCopy(e->origin, upper);
+	upper[0] += 2;
+
+	VectorCopy(e->origin, mid);
+	mid[1] += 2;
+
+	VectorCopy(e->origin, lower);
+	lower[2] += 2;
+
+	qglDisable(GL_TEXTURE_2D);
+	qglEnable(GL_LINE_SMOOTH);
+
+	R_Color(color);
+
+	qglBegin(GL_TRIANGLE_FAN);
+	qglVertex3fv(e->oldorigin);
+	qglVertex3fv(upper);
+	qglVertex3fv(mid);
+	qglVertex3fv(lower);
+	qglEnd();
+
+	qglDisable(GL_LINE_SMOOTH);
 	qglEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
@@ -374,6 +412,8 @@ static void R_DrawMeshEntities (const entity_t *ents)
 			R_DrawBox(e);
 		} else if (e->flags & RF_PATH) {
 			R_DrawFloor(e);
+		} else if (e->flags & RF_ARROW) {
+			R_DrawArrow(e);
 		} else {
 			switch (e->model->type) {
 			case mod_alias_dpm:
@@ -572,7 +612,7 @@ void R_DrawEntities (void)
 		R_CalcTransform(e);
 
 		if (!e->model) {
-			if (e->flags & RF_BOX || e->flags & RF_PATH)
+			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
 				chain = &r_blend_mesh_entities;
 			else
 				chain = &r_null_entities;

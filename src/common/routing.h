@@ -136,8 +136,12 @@ SHARED EXTERNS (cmodel.c and ufo2map/routing.c)
 /** @note The old value for the normal step up (will become obselete) */
 byte sh_low;
 
+
 /** @note The old value for the STEPON flagged step up (will become obselete) */
 byte sh_big;
+
+
+extern crossPoints_t brushesHit;
 
 
 /*

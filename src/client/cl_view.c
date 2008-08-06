@@ -369,6 +369,12 @@ void V_RenderView (void)
 		/* adds pathing data */
 		if (cl_mapDebug->integer & MAPDEBUG_PATHING)
 			CL_AddPathing();
+		/* adds floor arrows */
+		if (cl_mapDebug->integer & MAPDEBUG_CELLS)
+			CL_DisplayFloorArrows();
+		/* adds wall arrows */
+		if (cl_mapDebug->integer & MAPDEBUG_WALLS)
+			CL_DisplayObstructionArrows();
 		/* adds target cursor */
 		CL_AddTargeting();
 		break;

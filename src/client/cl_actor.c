@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_mesh_anim.h"
 #include "menu/m_inventory.h"
 #include "menu/m_popup.h"
+#include "../common/routing.h"
 
 /* public */
 le_t *selActor;
@@ -2340,12 +2341,12 @@ void CL_ActorUpdateCVars (void)
 		pos[2] = cl_worldlevel->integer;
 
 		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(topText, sizeof(topText), "%i-(%i,%i,%i)\n", Grid_Height(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
+		Com_sprintf(topText, sizeof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
 		/* Save the text for later display next to the cursor. */
 		mn.menuText[TEXT_MOUSECURSOR_TOP] = topText;
 
 		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(bottomText, sizeof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, mousePos), mousePos[0], mousePos[1], mousePos[2]);
+		Com_sprintf(bottomText, sizeof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
 		/* Save the text for later display next to the cursor. */
 		mn.menuText[TEXT_MOUSECURSOR_BOTTOM] = bottomText;
 
@@ -2822,7 +2823,7 @@ void CL_DisplayBlockedPaths_f (void)
  */
 void CL_ConditionalMoveCalc (routing_t *map, pathing_t *path, le_t * le, int distance)
 {
-	const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
+	const int crouching_state = selActor && (le->state & STATE_CROUCHED) ? 1 : 0;
 	if (selActor && selActor == le) {
 		CL_BuildForbiddenList();
 		Grid_MoveCalc(map, le->fieldSize, path, le->pos, crouching_state, distance, fb_list, fb_length);
@@ -2919,13 +2920,13 @@ static qboolean CL_TraceMove (pos3_t to)
 	Grid_PosToVec(clMap, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
-	Com_DPrintf(DEBUG_ENGINE, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
+	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
 	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
 		assert(++counter < 100);
 		length = CL_MoveLength(pos);
 		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
-		Com_DPrintf(DEBUG_ENGINE, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
+		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
 		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
 		if (length > CL_UsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
@@ -2955,7 +2956,7 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 	if (!selActor)
 		return;
 
-	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
 
 	length = CL_MoveLength(to);
 	if (!length || length >= 0x3F)
@@ -2968,7 +2969,7 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 		if (length <= tus)
 			return;
 		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
-		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
+		/* Grid_PosToVec(clMap, selActor->fieldSize, pos, vec); */
 	}
 }
 
@@ -5173,6 +5174,10 @@ static void CL_AddPathingBox (pos3_t pos)
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
+	const int crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
+	const int TUneed = Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse);
+	const int TUhave = CL_UsableTUs(selActor);
+
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_PATH;
 
@@ -5186,7 +5191,7 @@ static void CL_AddPathingBox (pos3_t pos)
 	 * yellow if it can be entered but is too far,
 	 * or red if it cannot be entered ever.
 	 */
-	if (base < -PATHFINDING_MAX_FALL) {
+	if (base < -PATHFINDING_MAX_FALL * QUANT) {
 		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - black */
 	} else {
 		/**
@@ -5194,16 +5199,16 @@ static void CL_AddPathingBox (pos3_t pos)
 		 * Passable but unreachable - yellow
 		 * Not passable - red
 		 */
-		const int crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
-		const int TUs = Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse);
-		VectorSet(ent.angles, (TUs > CL_UsableTUs(selActor)), (TUs != ROUTING_NOT_REACHABLE), 0);
+		VectorSet(ent.angles, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
 	}
 
 	/**
 	 * Set the box height to the ceiling value of the cell.
 	 */
-	height = 2;
+	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
 	ent.oldorigin[2] = height;
+	ent.oldorigin[0] = TUneed;
+	ent.oldorigin[1] = TUhave;
 
 	ent.alpha = 0.25;
 
@@ -5263,4 +5268,100 @@ void CL_DumpTUs (void) {
 		Com_Printf("\n");
 	}
 	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
+}
+
+/**
+ * @brief create an arrow between from and to with the specified color ratios
+ */
+static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float blue)
+{
+	entity_t ent;
+
+	/* Com_Printf("Adding arrow (%f, %f, %f) to (%f, %f, %f).\n", from[0], from[1], from[2], to[0], to[1], to[2]); */
+
+	memset(&ent, 0, sizeof(ent));
+	ent.flags = RF_ARROW;
+	VectorCopy(from, ent.origin);
+	VectorCopy(to, ent.oldorigin);
+	VectorSet(ent.angles, red, green, blue);
+
+	ent.alpha = 0.25;
+
+	/* add it */
+	R_AddEntity(&ent);
+}
+
+void CL_DisplayFloorArrows(void) {
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	vec3_t base, start;
+
+	Grid_PosToVec(clMap, fieldSize, truePos, base);
+	VectorCopy(base, start);
+	base[2] -= QUANT;
+	start[2] += QUANT;
+
+	RT_NewCheckCell(clMap, fieldSize, truePos[0], truePos[1], truePos[2]);
+
+	/* Display floor arrow */
+	if(VectorNotEmpty(brushesHit.floor))
+		CL_AddArrow(base, brushesHit.floor, 0.0, 0.5, 1.0);
+
+	/* Display ceiling arrow */
+	if(VectorNotEmpty(brushesHit.ceiling))
+		CL_AddArrow(start, brushesHit.ceiling, 1.0, 1.0, 0.0);
+}
+
+void CL_DisplayObstructionArrows(void) {
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	int dir;
+	vec3_t base, start;
+
+	Grid_PosToVec(clMap, fieldSize, truePos, base);
+
+	for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+		RT_NewUpdateConnection(clMap, fieldSize, truePos[0], truePos[1], truePos[2], dir);
+
+		VectorCopy(base, start);
+		start[0] += dvecs[dir][0] * QUANT;
+		start[1] += dvecs[dir][1] * QUANT;
+
+		/* Display floor arrow */
+		if(VectorNotEmpty(brushesHit.floor)){
+			if (brushesHit.obstructed) {
+				CL_AddArrow(start, brushesHit.floor, 1.0, 1.0, 1.0);
+			} else {
+				CL_AddArrow(start, brushesHit.floor, 1.0, 0.5, 0.0);
+			}
+		}
+
+		/* Display ceiling arrow */
+		if(VectorNotEmpty(brushesHit.ceiling)){
+			CL_AddArrow(start, brushesHit.ceiling, 0.0, 1.0, 1.0);
+		}
+	}
+}
+
+
+void CL_DumpMoveMark(void) {
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	const int crouching_state = selActor
+		? (selActor->state & STATE_CROUCHED ? 1 : 0)
+		: 0;
+	const int temp = developer->integer;
+
+	developer->integer |= DEBUG_PATHING;
+
+	CL_BuildForbiddenList();
+	Grid_MoveCalc (clMap, fieldSize, &clPathMap, truePos, crouching_state, MAX_ROUTE, fb_list, fb_length);
+
+	developer->integer ^= DEBUG_PATHING;
+
+	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
+	developer->integer = temp;
 }

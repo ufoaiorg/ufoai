@@ -1544,6 +1544,9 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	int len;
 	byte *buf;
 
+	if (!fs_searchpaths)
+		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+
 	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
 
 	f = fopen(fromOSPath, "rb");
@@ -1556,7 +1559,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 
 	buf = Mem_PoolAlloc(len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
-		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()");
+		Com_Error(ERR_FATAL, "Short read in FS_CopyFile");
 	fclose(f);
 
 	FS_CreatePath(toOSPath);
@@ -1577,21 +1580,24 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 /**
  * @sa FS_CopyFile
  */
-void FS_Remove (const char *osPath)
+void FS_RemoveFile (const char *osPath)
 {
-	Com_Printf("FS_Remove: remove %s", osPath);
+	if (!fs_searchpaths)
+		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+
+	Com_Printf("FS_RemoveFile: remove %s\n", osPath);
 	remove(osPath);
 }
 
 /**
  * @brief Renames a file
- * @sa FS_Remove
+ * @sa FS_RemoveFile
  * @sa FS_CopyFile
  * @param[in] from The source filename
  * @param[in] to The filename we want after the rename
  * @param[in] relative If relative is true we have to add the FS_Gamedir path for writing
  */
-qboolean FS_Rename (const char *from, const char *to, qboolean relative)
+qboolean FS_RenameFile (const char *from, const char *to, qboolean relative)
 {
 	char from_buf[MAX_OSPATH];
 	char to_buf[MAX_OSPATH];

@@ -675,7 +675,7 @@ static void CL_DrawSpottedLines_f (void)
 		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			/* not facing in the direction of the 'target' */
-			if (!FrustomVis(watcher->origin, watcher->dir, le->origin))
+			if (!FrustumVis(watcher->origin, watcher->dir, le->origin))
 				continue;
 			VectorCopy(watcher->origin, from);
 			VectorCopy(le->origin, at);

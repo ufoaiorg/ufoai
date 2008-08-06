@@ -28,6 +28,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "routing.h"
 
+static trace_t tr_obstruction;
+
+/*
+===============================================================================
+MAP TRACING DEBUGGING TABLES
+===============================================================================
+*/
+
+crossPoints_t brushesHit;
 
 /*
 ===============================================================================
@@ -445,6 +454,10 @@ int RT_NewCheckCell (routing_t * map, const int actor_size, const int x, const i
 		*/
 		/* We have hit a brush that faces up and can be stood on. Look for a ceiling. */
 		bottom = temp[2];  /* record the floor position. */
+
+		/* Record the debugging data in case it is used. */
+		VectorCopy(temp, brushesHit.floor);
+
 		assert(initial>bottom);
 		/*
 		if (bottom >= initial) {
@@ -490,6 +503,10 @@ int RT_NewCheckCell (routing_t * map, const int actor_size, const int x, const i
 
 		/* Case 2: tr.endpos[2] is the ceiling. */
 		top = tr.endpos[2];
+
+		/* Record the debugging data in case it is used. */
+		VectorCopy(tr.endpos, brushesHit.ceiling);
+
 		/* exit the infinite while loop */
 		break;
 	}
@@ -501,6 +518,11 @@ int RT_NewCheckCell (routing_t * map, const int actor_size, const int x, const i
 		/* no floor in this cell, we are trying to start a new search for a floor above the top of the cell */
 		RT_FLOOR(map, actor_size, x, y, z) = 16; /* The floor is at least the top of this cell. */
 		RT_CEILING(map, actor_size, x, y, z) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+
+		/* Zero the debugging data */
+		/* On second thought, dont- this will show the proper floor for any given cell.
+		 * VectorSet(brushesHit[actor_size - 1].floor[z][y][x], 0, 0, 0);
+		 * VectorSet(brushesHit[actor_size - 1].ceiling[z][y][x], 0, 0, 0); */
 
 		/* return the next z coordinate to scan. */
 		return z + 1;
@@ -546,8 +568,6 @@ int RT_NewCheckCell (routing_t * map, const int actor_size, const int x, const i
 			break; /* Stop when we find an enterable cell. */
 		/* Round up floor to keep feet out of model. */
 		RT_FLOOR(map, actor_size, x, y, i) = (int)ceil((bottom - i * UNIT_HEIGHT) / QUANT);
-		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
-		RT_CEILING(map, actor_size, x, y, i) = (int)floor((top - i * UNIT_HEIGHT) / QUANT);
 	}
 
 	/*
@@ -569,15 +589,14 @@ int RT_NewCheckCell (routing_t * map, const int actor_size, const int x, const i
  */
 static qboolean RT_ObstructedTrace(const vec3_t start, const vec3_t end, int actor_size, int hi, int lo) {
 	vec3_t bmin, bmax;
-	trace_t tr;
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
 	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE, UNIT_SIZE * actor_size / 2 - WALL_SIZE, hi * QUANT);
-	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE, -UNIT_SIZE * actor_size / 2 + WALL_SIZE, lo * QUANT);
+	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE, -UNIT_SIZE * actor_size / 2 + WALL_SIZE, lo * QUANT + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	tr = TR_CompleteBoxTrace (start, end, bmin, bmax, 0x1FF, MASK_VERY_SOLID, CONTENTS_PASSABLE);
-	return tr.fraction < 1.0;
+	tr_obstruction = TR_CompleteBoxTrace (start, end, bmin, bmax, 0x1FF, MASK_VERY_SOLID, CONTENTS_PASSABLE | CONTENTS_STEPON);
+	return tr_obstruction.fraction < 1.0;
 }
 
 
@@ -615,7 +634,7 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actor_size));
 	assert(z < PATHFINDING_HEIGHT);
 
-	RT_CONN_TEST(map, actor_size, ax, ay, z, dir);
+	/* Ensure that the current coordinates are valid. */
 	RT_CONN_TEST(map, actor_size, x, y, z, dir);
 
 	if (doit) Com_Printf("\n(%i, %i, %i) to (%i, %i, %i)\n", x, y, z, ax, ay, z);
@@ -626,6 +645,10 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	if (RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT || RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING){
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		/* Zero the debugging data */
+		VectorSet(brushesHit.floor, 0, 0, 0);
+		VectorCopy(brushesHit.floor, brushesHit.ceiling);
+		brushesHit.obstructed = qtrue;
 		if (doit)  Com_Printf("Current cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_CEILING(map, actor_size, x, y, z));
 		return z + 1;
 	}
@@ -635,26 +658,16 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	if ((ax < 0) || (ax > PATHFINDING_WIDTH - actor_size) || (ay < 0) || (y > PATHFINDING_WIDTH - actor_size)) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		/* Zero the debugging data */
+		VectorSet(brushesHit.floor, 0, 0, 0);
+		VectorCopy(brushesHit.floor, brushesHit.ceiling);
+		brushesHit.obstructed = qtrue;
 		if (doit)  Com_Printf("Destination cell non-existant.\n");
 		return z + 1;
 	}
 
-	/* If the destination floor is more than PATHFINDING_STEPUP higher than the base of the current floor
-	 * AND the base of the current cell, then we can't go there. */
-	if (RT_FLOOR(map, actor_size, ax, ay, z) - max(0, RT_FLOOR(map, actor_size, x, y, z)) > PATHFINDING_STEPUP) {
-		/* We can't go this way. */
-		RT_CONN(map, actor_size, x, y, z, dir) = 0;
-		if (doit) Com_Printf("Destination cell too high up. cf:%i df:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_FLOOR(map, actor_size, ax, ay, z));
-		return z + 1;
-	}
-
-	/* test if the destination cell is blocked by a loaded model */
-	if (RT_CEILING(map, actor_size, ax, ay, z) - RT_FLOOR(map, actor_size, ax, ay, z) < PATHFINDING_MIN_OPENING) {
-		/* We can't go this way. */
-		RT_CONN(map, actor_size, x, y, z, dir) = 0;
-		if (doit) Com_Printf("Destination cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, ax, ay, z), RT_CEILING(map, actor_size, ax, ay, z));
-		return z + 1;
-	}
+	/* Ensure that the destination coordinates are valid. */
+	RT_CONN_TEST(map, actor_size, ax, ay, z, dir);
 
 	/* get the originating floor's absolute height */
 	h = RT_FLOOR(map, actor_size, x, y, z) + z * (UNIT_HEIGHT / QUANT);
@@ -671,16 +684,64 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	/* Set maxh to the larger of h and ah. */
 	maxh = max(h, ah);
 
-	assert (c >= h);
-	assert (ac >= ah);
+	/* Calculate tracing coordinates */
+	VectorSet(pos, x, y, z);
+	SizedPosToVec(pos, actor_size, start);
+	start[2] = maxh * QUANT; /** start is now at the center of the floor of the originating cell and as high as the higher of the two floors. */
+
+	/* Locate the destination point. */
+	VectorSet(pos, ax, ay, z);
+	SizedPosToVec(pos, actor_size, end);
+	end[2] = start[2]; /** end is now at the center of the destination cell and at the same height as the starting point. */
+
+	/* Test to see if c <= h or ac <= ah - indicates a filled cell. */
+	if (c <= h || ac <= ah) {
+		/* We can't go this way. */
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		/* Point to where we can't be. */
+		brushesHit.obstructed = qtrue;
+		if (doit)  Com_Printf("Destination cell filled. h = %i, c = %i, ah = %i, ac = %i\n", h, c, ah, ac);
+		return z + 1;
+	}
 
 	/* test if the destination cell is blocked by a loaded model */
 	if (h >= ac || ah >= c) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		/* Point to where we can't be. */
+		brushesHit.obstructed = qtrue;
 		if (doit)  Com_Printf("Destination cell filled. h = %i, c = %i, ah = %i, ac = %i\n", h, c, ah, ac);
 		return z + 1;
 	}
+
+	/* If the destination floor is more than PATHFINDING_STEPUP higher than the base of the current floor
+	 * AND the base of the current cell, then we can't go there. */
+	if (RT_FLOOR(map, actor_size, ax, ay, z) - max(0, RT_FLOOR(map, actor_size, x, y, z)) > PATHFINDING_STEPUP) {
+		/* We can't go this way. */
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		/* Point to where we can't be. */
+		VectorCopy(end, brushesHit.floor);
+		VectorCopy(brushesHit.floor, brushesHit.ceiling);
+		brushesHit.obstructed = qtrue;
+		if (doit) Com_Printf("Destination cell too high up. cf:%i df:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_FLOOR(map, actor_size, ax, ay, z));
+		return z + 1;
+	}
+
+	/* Point to where we need be. */
+	VectorCopy(end, brushesHit.floor);
+	VectorCopy(brushesHit.floor, brushesHit.ceiling);
+
+	/* test if the destination cell is blocked by a loaded model */
+	if (RT_CEILING(map, actor_size, ax, ay, z) - RT_FLOOR(map, actor_size, ax, ay, z) < PATHFINDING_MIN_OPENING) {
+		/* We can't go this way. */
+		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+		/* Point to where we can't be. */
+		brushesHit.obstructed = qtrue;
+		if (doit) Com_Printf("Destination cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, ax, ay, z), RT_CEILING(map, actor_size, ax, ay, z));
+		return z + 1;
+	}
+
+
 
 	if (doit) Com_Printf("h = %i, c = %i, ah = %i, ac = %i\n", h, c, ah, ac);
 
@@ -699,15 +760,6 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	 * This will allow for flying units later.
 	 */
 
-	/* calculate tracing coordinates */
-	VectorSet(pos, x, y, z);
-	SizedPosToVec(pos, actor_size, start);
-	start[2] = maxh * QUANT; /** start is now at the center of the floor of the originating cell and as high as the higher of the two floors. */
-
-	/* Locate the destination point. */
-	VectorSet(pos, ax, ay, z);
-	SizedPosToVec(pos, actor_size, end);
-	end[2] = start[2]; /** end is now at the center of the destination cell and at the same height as the starting point. */
 
 	/*
 	 * Part A: Look for the mandatory opening. Low point at the higher floor plus PATHFINDING_STEPUP,
@@ -724,6 +776,12 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	if (RT_ObstructedTrace(start, end, actor_size, ceil_p, floor_p)) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
+
+		/* Record the debugging data in case it is used. */
+		VectorCopy(tr_obstruction.endpos, brushesHit.floor);
+		VectorCopy(brushesHit.floor, brushesHit.ceiling);
+		brushesHit.obstructed = qtrue;
+
 		if (doit) Com_Printf("No opening in required space between cells. hi:%i lo:%i\n", ceil_p + maxh , floor_p + maxh);
 		return z + 1;
 	}
@@ -735,11 +793,14 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	lo = max (0, ah - h); /* Relative to the current floor h */
 	hi = floor_p;
 	worst = lo;
+	/* Move the floor brush to the lowest possible floor. */
+	brushesHit.ceiling[2] += lo * QUANT;
 	if (doit) Com_Printf("Checking for passage floor from %i to %i.\n", lo, hi);
 	while (hi > lo) {
 		if (doit) Com_Printf("Looking between %i and %i at (%i, %i) facing %i... ", lo, hi, x, y, dir);
 		obstructed = RT_ObstructedTrace(start, end, actor_size, hi, lo);
 		if (obstructed) {
+			VectorCopy(tr_obstruction.endpos, brushesHit.floor);
 			if (doit)  Com_Printf("found obstruction.\n");
 			/* if hi and lo differ by one, then we are done.*/
 			if (hi == lo + 1) {
@@ -766,11 +827,16 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	lo = ceil_p;
 	hi = min (c, ac) - h;
 	worst = hi;
+	/* Move the ceiling brush to the highest possible ceiling. */
+	brushesHit.ceiling[2] += hi * QUANT;
 	if (doit)  Com_Printf("Checking for passage ceiling from %i to %i.\n", lo, hi);
 	while (hi > lo) {
 		if (doit)  Com_Printf("Looking between %i and %i at (%i, %i) facing %i... ", lo, hi, x, y, dir);
 		obstructed = RT_ObstructedTrace(start, end, actor_size, hi, lo);
 		if (obstructed) {
+			/* Record the debugging data in case it is used. */
+			VectorCopy(tr_obstruction.endpos, brushesHit.ceiling);
+
 			if (doit)  Com_Printf("found obstruction.\n");
 			/* if hi and lo differ by one, then we are done.*/
 			if (hi == lo + 1) {
@@ -814,9 +880,14 @@ int RT_NewUpdateConnection (routing_t * map, const int actor_size, const int x, 
 	if (cz < z) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, ax, ay, z, dir) = 0;
+		/* Point to where we can't be. */
+		brushesHit.obstructed = qtrue;
 		if (doit) Com_Printf("Passage found but below current cell, h = %i, c = %i, ah = %i, ac = %i, floor_p=%i, ceil_p=%i, z = %i, cz = %i.\n", h, c, ah, ac, floor_p, ceil_p, z, cz);
 		return z + 1;
 	}
+
+	/* Point to where we CAN be. */
+	brushesHit.obstructed = qfalse;
 
 	if (doit) Com_Printf("Passage found, floor_p=%i, ceil_p=%i. (%i to %i)\n", floor_p, ceil_p, fz, cz);
 

@@ -1886,6 +1886,7 @@ static const value_t terrainTypeValues[] = {
 	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
 	{"particle", V_STRING, offsetof(terrainType_t, particle), 0},
 	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
+	{"bouncefraction", V_FLOAT, offsetof(terrainType_t, bounceFraction), 0},
 
 	{NULL, 0, 0, 0}
 };

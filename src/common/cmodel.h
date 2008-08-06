@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 CMODEL
 ==============================================================*/
 #include "../common/qfiles.h"
+#include "pqueue.h"
+
 
 extern vec3_t map_min, map_max;
 
@@ -63,11 +65,13 @@ extern struct pathing_s svPathMap, clPathMap;
 void Grid_DumpWholeServerMap(void);
 void Grid_DumpWholeClientMap(void);
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
+void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue);
 void Grid_MoveCalc(struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct pathing_s *path);
 pos_t Grid_MoveLength(struct pathing_s *path, pos3_t to, int crouching_state, qboolean stored);
 int Grid_MoveNext(struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state);
 int Grid_Height(struct routing_s *map, const int actor_size, const pos3_t pos);
+unsigned int Grid_Ceiling (struct routing_s *map, const int actor_size, const pos3_t pos);
 int Grid_Floor(struct routing_s *map, const int actor_size, const pos3_t pos);
 pos_t Grid_StepUp(struct routing_s *map, const int actor_size, const pos3_t pos);
 int Grid_TUsUsed(int dir);

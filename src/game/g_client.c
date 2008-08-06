@@ -347,7 +347,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
  */
 qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
 {
-	return FrustomVis(from->origin, from->dir, point);
+	return FrustumVis(from->origin, from->dir, point);
 }
 
 
@@ -1410,6 +1410,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
 	int dv, toDV;
+	int old_z;
 	byte numdv, length, steps;
 	pos3_t pos;
 	float div, truediv, tu;
@@ -1463,16 +1464,17 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		tu = 0;
 		initTU = ent->TU;
 
-		Com_Printf("Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
+		Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
 		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
 			/* dv indicates the direction traveled to get to the new cell and the original cell height.
 			 * dv = (dir << 3) | z
 			 */
 			assert(numdv < MAX_DVTAB);
-			dvtab[numdv++] = dv;
+			old_z = pos[2];
 			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
-			Com_Printf("Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
+			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
+			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
 		}
 
 		if (VectorCompare(pos, ent->pos)) {
@@ -1660,7 +1662,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* submit the TUs / round down */
 			if (g_notu != NULL && !g_notu->integer) {
 				ent->TU = max(0, initTU - (int) tu);
-				Com_Printf("Used %i TUs.\n", (int) tu);
 			} else {
 				Com_Printf("TUs reset because of developer flag.\n");
 			}

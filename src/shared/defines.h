@@ -354,7 +354,7 @@ COLLISION DETECTION
 /* Maximum step-up height in step units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
 /* common/routing.c */
-#define	PATHFINDING_STEPUP		4
+#define	PATHFINDING_STEPUP		5
 /* Minimum height for an opening to be an opening in step units (model units/QUANT)  */
 /* common/routing.c */
 #define	PATHFINDING_MIN_OPENING	6
