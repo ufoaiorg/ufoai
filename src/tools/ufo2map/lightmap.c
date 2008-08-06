@@ -887,6 +887,7 @@ nextpatch:;
 	}
 }
 
+#define MAX_VERT_FACES 256
 
 /**
  * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
@@ -912,6 +913,8 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 			/* compare using surfedge reference or point equality */
 			if (v == vert || VectorCompareEps(curTile->vertexes[v].point, curTile->vertexes[vert].point, EQUAL_EPSILON)) {
 				faces[k++] = i;
+				if (k >= MAX_VERT_FACES)
+					Sys_Error("MAX_VERT_FACES");
 				break;
 			}
 		}
@@ -928,7 +931,7 @@ static vec3_t vertexnormals[MAX_MAP_VERTS];
  */
 void BuildVertexNormals (void)
 {
-	int vert_faces[256];
+	int vert_faces[MAX_VERT_FACES];
 	int num_vert_faces;
 	vec3_t norm;
 	int i, j;
@@ -958,12 +961,12 @@ void BuildVertexNormals (void)
  * @brief For Phong-shaded samples, interpolate the vertex normals for the surface,
  * weighting them according to their proximity to pos.
  */
-static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
+static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
 	vec3_t temp;
 	float dist, neardist, fardist;
 	int nearEdge, farEdge;
-	int i, v, e;
+	int i, v;
 
 	neardist = 999999;
 	fardist = -999999;
@@ -971,7 +974,7 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 	nearEdge = farEdge = 0;
 
 	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
-		e = curTile->surfedges[l->face->firstedge + i];
+		const int e = curTile->surfedges[l->face->firstedge + i];
 		if (e >= 0)
 			v = curTile->edges[e].v[0];
 		else

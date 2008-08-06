@@ -190,6 +190,7 @@ void MN_SetViewRect (const menu_t* menu)
 
 /**
  * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
+ * @todo Use a linked list here, no static buffer
  */
 static void MN_InitKeyList_f (void)
 {
