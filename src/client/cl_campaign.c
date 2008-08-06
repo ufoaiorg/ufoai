@@ -2722,61 +2722,46 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 
 /**
  * @brief Return Name of the category of a mission.
+ * @note Not translated yet - only for console usage
  */
-static const char* CP_MissionStageToName (missionStage_t stage)
+static const char* CP_MissionStageToName (const missionStage_t stage)
 {
 	switch (stage) {
 	case STAGE_NOT_ACTIVE:
 		return "Not active yet";
-		break;
 	case STAGE_COME_FROM_ORBIT:
 		return "UFO coming from orbit";
-		break;
 	case STAGE_RECON_AIR:
 		return "Aerial recon underway";
-		break;
 	case STAGE_MISSION_GOTO:
 		return "Going to mission position";
-		break;
 	case STAGE_RECON_GROUND:
 		return "Ground recon mission underway";
-		break;
 	case STAGE_TERROR_MISSION:
 		return "Terror mission underway";
-		break;
 	case STAGE_BUILD_BASE:
 		return "Building base";
-		break;
 	case STAGE_BASE_ATTACK:
 		return "Attacking a base";
-		break;
 	case STAGE_SUBVERT_GOV:
 		return "Subverting a government";
-		break;
 	case STAGE_SUPPLY:
 		return "Supplying";
-		break;
 	case STAGE_SPREAD_XVI:
 		return "Spreading XVI";
-		break;
 	case STAGE_INTERCEPT:
 		return "Intercepting aircraft";
-		break;
 	case STAGE_RETURN_TO_ORBIT:
 		return "Leaving earth";
-		break;
 	case STAGE_BASE_DISCOVERED:
 		return "Base visible";
-		break;
 	case STAGE_HARVEST:
 		return "Harvesting";
-		break;
 	case STAGE_OVER:
 		return "Mission over";
-		break;
+	default:
+		Sys_Error("Unknown state type given: %i", stage);
 	}
-	assert(0);
-	return "";
 }
 
 /**
