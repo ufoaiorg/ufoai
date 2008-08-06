@@ -938,7 +938,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 			break;
 		case B_QUARTERS:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarter, every employees inside will be killed.\nAre you sure you want to destroy this building?"),
+				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"mn_pop;building_open;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
