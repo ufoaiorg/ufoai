@@ -9,14 +9,14 @@ BSPS = $(MAPSRCS:.map=.bsp)
 # setting strongly depends on the OS and hardware, so need to 
 # be chosen appropriately.
 
-NUMTHREADS = 1
 ifeq ($(TARGET_OS),darwin)
 	# Setting for Mac OS X and Darwin OS
 	# \note This should also work for *BSD
 	NUMTHREADS = $(shell sysctl -n hw.ncpu)
-endif
-ifeq ($(TARGET_OS),linux-gnu)
+else ifeq ($(TARGET_OS),linux-gnu)
 	NUMTHREADS = $(shell grep -c ^processor /proc/cpuinfo)
+else
+	NUMTHREADS = 1
 endif
 
 NICE = 19
