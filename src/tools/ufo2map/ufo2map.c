@@ -107,7 +107,7 @@ static void Usage (void)
 		"    ent entities            : performs all checks and fixes associated with entities.\n"
 		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
-		"                              may have it incorrectly assigned. ***not working properly, do not included in 'all'.\n"
+		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
 		"    tex textures            : warns when no texture or error texture is assigned.\n"
 		"                              ensures special textures and content/surface flags are consistent.\n"
 		"    mfc mixedfacecontents   : ensures the contentflags are the same on each face of each brush.\n"
