@@ -8,12 +8,15 @@ BSPS = $(MAPSRCS:.map=.bsp)
 # Set NUMTHREADS to enable multi-threading in ufo2map. This 
 # setting strongly depends on the OS and hardware, so need to 
 # be chosen appropriately.
+
+NUMTHREADS = 1
 ifeq ($(TARGET_OS),darwin)
 	# Setting for Mac OS X and Darwin OS
 	# \note This should also work for *BSD
 	NUMTHREADS = $(shell sysctl -n hw.ncpu)
-else
-	NUMTHREADS = 1
+endif
+ifeq ($(TARGET_OS),linux-gnu)
+	NUMTHREADS = $(shell grep -c ^processor /proc/cpuinfo)
 endif
 
 NICE = 19
