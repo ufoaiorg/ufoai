@@ -4469,6 +4469,10 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		name = MSG_ReadString(sb);
 		if (name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
+			if (!mission.mapDef) {
+				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
+				return qfalse;
+			}
 			mission.mapDef->timesAlreadyUsed = MSG_ReadLong(sb);
 		} else
 			mission.mapDef = NULL;
