@@ -17,7 +17,16 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
-				</Compiler>
+					<Add option="-I$(GTK_HOME)/include" />
+					<Add option="-I$(GTK_HOME)/include/gtk-2.0" />
+					<Add option="-I$(GTK_HOME)/include/glib-2.0" />
+					<Add option="-I$(GTK_HOME)/include/pango-1.0" />
+					<Add option="-I$(GTK_HOME)/include/cairo" />
+					<Add option="-I$(GTK_HOME)/include/freetype2" />
+					<Add option="-I$(GTK_HOME)/include/libglade-2.0" />
+					<Add option="-I$(GTK_HOME)/include/atk-1.0" />
+					<Add option="-I$(GTK_HOME)/lib/glib-2.0/include" />
+					<Add option="-I$(GTK_HOME)/lib/gtk-2.0/include" />				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
@@ -93,11 +102,13 @@
 		</Linker>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
+			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
 		</Compiler>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\mainframe.cpp">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\mainframe.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\mainframe.h"/>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\mainframe.h"/>
 		<Extensions>
 			<code_completion />
 			<envvars />
