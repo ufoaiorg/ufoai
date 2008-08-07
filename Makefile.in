@@ -21,12 +21,16 @@ CLIENT_LIBS=@CLIENT_LIBS@
 SERVER_LIBS=@SERVER_LIBS@
 GAME_LIBS=@GAME_LIBS@
 TOOLS_LIBS=@TOOLS_LIBS@
+RADIANT_LIBS=@RADIANT_LIBS@
+
+RADIANT_CFLAGS=@RADIANT_CFLAGS@
 
 PROFILING=@PROFILING@
 PARANOID=@PARANOID@
 BUILD_CLIENT=@BUILD_CLIENT@
 BUILD_DEDICATED=@BUILD_DEDICATED@
 BUILD_UFO2MAP=@BUILD_UFO2MAP@
+BUILD_GTKRADIANT=@BUILD_GTKRADIANT@
 BUILD_DEBUG=@BUILD_DEBUG@
 
 # assign parameters from configure
@@ -49,7 +53,7 @@ include build/defs.mk
 #######################################################################################################
 
 # define all the modules that need to be compiled
-MODULES = client server tools game sound masterserver
+MODULES = radiant client server tools game sound masterserver
 
 all: all2
 
@@ -79,11 +83,13 @@ echo_info:
 	@echo "-----------------------"
 	@echo $(CFLAGS)
 	@echo $(CLIENT_CFLAGS) $(SDL_CFLAGS)
+	@echo $(RADIANT_CFLAGS)
 	@echo
 	@echo "LDFLAGS"
 	@echo "-----------------------"
 	@echo $(LDFLAGS)
 	@echo $(CLIENT_LIBS) $(SDL_LIBS)
+	@echo $(RADIANT_LIBS)
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"
@@ -100,6 +106,9 @@ echo_info:
 	@echo "Built for $(BUILDDIR)"
 	@echo
 
+#
+# TODO why are they included here (again?) shouldn't the -include above be enough
+#
 include build/lang.mk
 include build/install.mk
 include build/various.mk
@@ -127,13 +136,13 @@ install: install_exec
 	@echo
 
 # recursively call make.
-# If we instead include data.mk and use that rule for pk3, then 
-# we will automatically call the equivalent of make maps before 
-# make pk3, since 0maps.pk3 depends on the bsp files, which 
-# have the rules to build them from maps.mk. This is not what 
+# If we instead include data.mk and use that rule for pk3, then
+# we will automatically call the equivalent of make maps before
+# make pk3, since 0maps.pk3 depends on the bsp files, which
+# have the rules to build them from maps.mk. This is not what
 # you want to have happen if you have downloaded a distribution
-# ready 0maps.pk3 file! So long as 0maps.pk3 is newer than the 
-# BSP files this will work correctly even if there are newer 
+# ready 0maps.pk3 file! So long as 0maps.pk3 is newer than the
+# BSP files this will work correctly even if there are newer
 # map files kicking around.
 pk3 clean_pk3:
 	$(MAKE) -f build/data.mk $@

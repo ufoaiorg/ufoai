@@ -34,4 +34,4 @@ $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [GAM] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) $(GAME_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(GAME_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)

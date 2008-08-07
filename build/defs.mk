@@ -1,7 +1,9 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -Winline -Wcast-qual -Wcast-align -ansi \
+GENERIC_FLAGS+=-Wall
+CPPFLAGS+=$(GENERIC_FLAGS)
+CFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -pipe -Winline -Wcast-qual -Wcast-align -ansi \
 	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations
 #	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses \

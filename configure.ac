@@ -1,7 +1,6 @@
 ^AC_INIT()
 
 AC_CONFIG_SRCDIR([src/server/sv_main.c])
-AC_CONFIG_AUX_DIR(.)
 
 # check build/host/target systems
 # (build  = system we're building on,
@@ -44,6 +43,10 @@ AC_ARG_WITH(curl_config,
 	[AS_HELP_STRING([--with-curl-config=FILE],[using the given curl-config @<:@default=curl-config@:>@])],
 	[], [with_curl_config=curl-config])
 
+AC_ARG_WITH(xml2_config,
+	[AS_HELP_STRING([--with-xml2-config=FILE],[using the given xml2-config @<:@default=xml2-config@:>@])],
+	[], [with_xml2_config=xml2-config])
+
 AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
@@ -63,6 +66,10 @@ AC_ARG_ENABLE(client,
 AC_ARG_ENABLE(ufo2map,
 	[AS_HELP_STRING([--disable-ufo2map], [build ufo2map @<:@default=enabled@:>@])],
 	[], [enable_ufo2map=yes])
+
+AC_ARG_ENABLE(gtkradiant,
+	[AS_HELP_STRING([--enable-gtkradiant], [build gtkradiant @<:@default=disabled@:>@])],
+	[], [enable_gtkradiant=no])
 
 AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
@@ -412,6 +419,7 @@ LIBS=
 AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+RADIANT_LIBS="$RADIANT_LIBS $LIBS"
 
 if test "$enable_client" = "yes"
 then
@@ -610,6 +618,34 @@ fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
+# Check for radiant
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_gtkradiant" = "yes"
+then
+	LIBS=
+	OLD_RADIANT_LIBS="$RADIANT_LIBS"
+	RADIANT_LIBS=
+	AC_MSG_NOTICE([GtkRadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
+	PKG_CHECK_MODULES(RADIANT, [gtk+-2.0 gtkglext-1.0 glib-2.0])
+
+	#---------------------------------------------------------------------------------------------
+	# Check for libxml2
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	AC_CHECK_PROG(HAVE_XML2_CONFIG,$with_xml2_config,yes)
+	if test "$ac_cv_prog_HAVE_XML2_CONFIG" = "yes"
+	then
+		RADIANT_LIBS="$RADIANT_LIBS `$with_xml2_config --libs`"
+		RADIANT_CFLAGS="$RADIANT_CFLAGS `$with_xml2_config --cflags`"
+	else
+		AC_MSG_ERROR([You must have the libxml2 development headers])
+	fi
+
+	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
+fi
+
+#---------------------------------------------------------------------------------------------
 # Wipe the LIBS string
 #---------------------------------------------------------------------------------------------
 
@@ -646,6 +682,16 @@ if test "$enable_ufo2map" = "yes"
 then
 	AC_MSG_NOTICE([Enabling ufo2map])
 	AC_SUBST([BUILD_UFO2MAP],1)
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for gtkradiant
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_gtkradiant" = "yes"
+then
+	AC_MSG_NOTICE([Enabling GtkRadiant])
+	AC_SUBST([BUILD_GTKRADIANT],1)
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -716,10 +762,12 @@ AC_SUBST([CLIENT_CFLAGS],"$CLIENT_CFLAGS")
 AC_SUBST([SERVER_LIBS],"$SERVER_LIBS")
 AC_SUBST([GAME_LIBS],"$GAME_LIBS")
 AC_SUBST([TOOLS_LIBS],"$TOOLS_LIBS")
+AC_SUBST([RADIANT_LIBS],"$RADIANT_LIBS")
+AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
 #AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
-#AC_MSG_NOTICE(Link against:   $LIBS")
+#AC_MSG_NOTICE(Link against:   $LIBS)
 
 AC_CONFIG_HEADERS([config.h:config.h.in])
 AC_CONFIG_FILES([Makefile])
