@@ -139,13 +139,15 @@ void environment_init(int argc, char* argv[]) {
 #elif defined(WIN32)
 
 #include <windows.h>
+#include <shlobj.h>
+
+typedef HRESULT (WINAPI *folderPath_sh) (IN HWND, IN int, IN HANDLE, IN DWORD, OUT char *);
 
 void environment_init(int argc, char* argv[]) {
 	args_init(argc, argv);
 
 	{
 		char appdata[MAX_PATH+1];
-		static char path[MAX_OSPATH];
 		HMODULE shfolder;
 
 		shfolder = LoadLibrary("shfolder.dll");
@@ -153,17 +155,12 @@ void environment_init(int argc, char* argv[]) {
 		if (shfolder == NULL)
 			ERROR_MESSAGE("Unable to load SHFolder.dll\n");
 		else {
-			FARPROC qSHGetFolderPath;
-			qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
-			if (qSHGetFolderPath == NULL) {
+			folderPath_sh qSHGetFolderPath;
+			qSHGetFolderPath = (folderPath_sh)GetProcAddress(shfolder, "SHGetFolderPathA");
+			if (qSHGetFolderPath == NULL)
 				ERROR_MESSAGE("Unable to find SHGetFolderPath in SHFolder.dll\n");
-				FreeLibrary(shfolder);
-			}
-
-			if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata))) {
-				ERROR_MESSAGE("Unable to detect CSIDL_APPDATA\n");
-				FreeLibrary(shfolder);
-			}
+			else
+                qSHGetFolderPath(0, CSIDL_APPDATA, 0, 0, appdata);
 			FreeLibrary(shfolder);
 		}
 
