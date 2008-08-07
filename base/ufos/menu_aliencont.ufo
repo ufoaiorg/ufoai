@@ -120,19 +120,6 @@ menu aliencont
 		*ac_button10	image menu/hosp_button_green
 		*ac_button11	image menu/hosp_button_green
 
-		*ac_button0	tooltip "_Unused"
-		*ac_button1	tooltip "_Unused"
-		*ac_button2	tooltip "_Unused"
-		*ac_button3	tooltip "_Unused"
-		*ac_button4	tooltip "_Unused"
-		*ac_button5	tooltip "_Unused"
-		*ac_button6	tooltip "_Unused"
-		*ac_button7	tooltip "_Unused"
-		*ac_button8	tooltip "_Unused"
-		*ac_button9	tooltip "_Unused"
-		*ac_button10	tooltip "_Unused"
-		*ac_button11	tooltip "_Unused"
-
 		*ac_icon0	image	icons/health_unused
 		*ac_icon1	image	icons/health_unused
 		*ac_icon2	image	icons/health_unused
@@ -236,84 +223,72 @@ menu aliencont
 	pic ac_button0 {
 		image menu/hosp_button_green
 		pos "25  25"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 0;" }
 		rclick { cmd "aliencont_pedia 0;" }
 	}
 	pic ac_button1 {
 		image menu/hosp_button_green
 		pos "345  25"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 1;" }
 		rclick { cmd "aliencont_pedia 1;" }
 	}
 	pic ac_button2 {
 		image menu/hosp_button_green
 		pos "25 120"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 2;" }
 		rclick { cmd "aliencont_pedia 2;" }
 	}
 	pic ac_button3 {
 		image menu/hosp_button_green
 		pos "345 120"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 3;" }
 		rclick { cmd "aliencont_pedia 3;" }
 	}
 	pic ac_button4 {
 		image menu/hosp_button_green
 		pos "25 215"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 4;" }
 		rclick { cmd "aliencont_pedia 4;" }
 	}
 	pic ac_button5 {
 		image menu/hosp_button_green
 		pos "345 215"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 5;" }
 		rclick { cmd "aliencont_pedia 5;" }
 	}
 	pic ac_button6 {
 		image menu/hosp_button_green
 		pos "25 310"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 6;" }
 		rclick { cmd "aliencont_pedia 6;" }
 	}
 	pic ac_button7 {
 		image menu/hosp_button_green
 		pos "345 310"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 7;" }
 		rclick { cmd "aliencont_pedia 7;" }
 	}
 	pic ac_button8 {
 		image menu/hosp_button_green
 		pos "25 405"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 8;" }
 		rclick { cmd "aliencont_pedia 8;" }
 	}
 	pic ac_button9 {
 		image menu/hosp_button_green
 		pos "345 405"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 9;" }
 		rclick { cmd "aliencont_pedia 9;" }
 	}
 	pic ac_button10 {
 		image menu/hosp_button_green
 		pos "25 500"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 10;" }
 		rclick { cmd "aliencont_pedia 10;" }
 	}
 	pic ac_button11 {
 		image menu/hosp_button_green
 		pos "345 500"
-		tooltip "_Unused"
 		click { cmd "aliencont_click 11;" }
 		rclick { cmd "aliencont_pedia 11;" }
 	}
