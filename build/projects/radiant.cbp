@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="gtkradiant" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="windows">
+				<Option platforms="Windows;" />
+				<Option output="..\..\radiant\radiant" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DNODEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="windows_debug">
+				<Option platforms="Windows;" />
+				<Option output="..\..\radiant\radiant" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option host_application="..\..\radiant\radiant.exe" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DDEBUG" />
+					<Add option="-I$(GTK_HOME)/include" />
+					<Add option="-I$(GTK_HOME)/include/gtk-2.0" />
+					<Add option="-I$(GTK_HOME)/include/glib-2.0" />
+					<Add option="-I$(GTK_HOME)/include/pango-1.0" />
+					<Add option="-I$(GTK_HOME)/include/cairo" />
+					<Add option="-I$(GTK_HOME)/include/freetype2" />
+					<Add option="-I$(GTK_HOME)/include/libglade-2.0" />
+					<Add option="-I$(GTK_HOME)/include/atk-1.0" />
+					<Add option="-I$(GTK_HOME)/lib/glib-2.0/include" />
+					<Add option="-I$(GTK_HOME)/lib/gtk-2.0/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+				</Linker>
+			</Target>
+			<Target title="linux">
+				<Option platforms="Unix;" />
+				<Option output="..\..\radiant\radiant" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs\radiant" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="`pkg-config gtk+-2.0 --cflags`" />
+					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
+					<Add option="`pkg-config glib-2.0 --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config gtk+-2.0 --libs`" />
+					<Add option="`pkg-config gtkglext-1.0 --libs`" />
+					<Add option="`pkg-config glib-2.0 --libs`" />
+				</Linker>
+			</Target>
+			<Target title="macosx">
+				<Option platforms="Mac;" />
+				<Option output="..\..\radiant\radiant" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs\radiant" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="`pkg-config gtk+-2.0 --cflags`" />
+					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
+					<Add option="`pkg-config glib-2.0 --cflags`" />
+					<Add directory="\sw\include" />
+				</Compiler>
+				<Linker>
+					<Add option="`pkg-config gtk+-2.0 --libs`" />
+					<Add option="`pkg-config gtkglext-1.0 --libs`" />
+					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add directory="\sw\lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Linker>
+			<Add library="libjpeg" />
+		</Linker>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\mainframe.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\mainframe.h"/>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
