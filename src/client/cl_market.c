@@ -766,6 +766,8 @@ static void BS_SellAircraft_f (void)
 			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
 			/* reinit the menu */
 			BS_BuyType(base);
+			/* reinit aircraft menu */
+			AIR_AircraftSelect_f();
 			return;
 		}
 		if (!found) {
