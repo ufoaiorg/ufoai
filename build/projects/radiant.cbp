@@ -105,10 +105,331 @@
 			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
 			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
 		</Compiler>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\autosave.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brush.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushmanip.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushmodule.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushnode.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brush_primit.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushtokens.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushxml.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\build.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\camwindow.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\clippertool.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\commands.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\console.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\csg.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\dialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\eclass.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\eclass_def.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\entity.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\entityinspector.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\entitylist.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\environment.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\error.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\feedback.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\filetypes.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\filters.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\findtexturedialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\glwidget.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\grid.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\groupdialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\gtkdlgs.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\gtkmisc.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\help.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\image.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\main.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\mainframe.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\mainframe.h"/>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\map.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\mru.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\multimon.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\nullmodel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\parse.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patch.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patchdialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patchmanip.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patchmodule.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\pluginapi.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\plugin.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\pluginmanager.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\pluginmenu.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\plugintoolbar.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\points.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\preferencedictionary.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\preferences.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\qe3.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\qgl.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\referencecache.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\renderer.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\renderstate.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\scenegraph.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\select.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\selection.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\server.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\shaders.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\stacktrace.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\surfacedialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\texmanip.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\textureentry.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\textures.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\texwindow.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\timer.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\treemodel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\undo.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\url.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\view.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\winding.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\windowobservers.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\xmlstuff.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\xywindow.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		\
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\accelerator.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\button.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\clipboard.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\closure.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\container.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\cursor.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\dialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\entry.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\filechooser.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\frame.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\glfont.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\glwidget.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\idledraw.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\image.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\menu.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\messagebox.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\nonmodal.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\paned.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\pointer.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\toolbar.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\widget.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\window.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\xorrectangle.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\cmdlib\cmdlib.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\profile\profile.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\profile\file.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\ixml.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmlelement.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmlparser.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmltextags.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmlwriter.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
