@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HTTP_H
 
 #include "common.h"
+#define CURL_STATICLIB
+#include <curl/curl.h>
 
 typedef enum {
 	DLQ_STATE_NOT_STARTED,

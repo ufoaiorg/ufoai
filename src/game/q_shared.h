@@ -41,9 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/shared.h"
 #include "../shared/mathlib.h"
 
-#define CURL_STATICLIB
-#include <curl/curl.h>
-
 /* filesystem stuff */
 #ifdef _WIN32
 # include <direct.h>
