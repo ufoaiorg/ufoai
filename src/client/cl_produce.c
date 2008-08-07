@@ -398,28 +398,6 @@ static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 }
 
 /**
- * @brief Queues the next production in the queue.
- * @param[in] base Pointer to the base.
- */
-static void PR_QueueNext (base_t *base)
-{
-	production_queue_t *queue = &gd.productions[base->idx];
-
-	PR_QueueDelete(base, queue, 0);
-	if (queue->numItems == 0) {
-		selectedQueueItem = qfalse;
-		PR_ClearSelected();
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production queue for base %s is empty"), base->name);
-		MN_AddNewMessage(_("Production queue empty"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
-		CL_GameTimeStop();
-		return;
-	} else if (selectedProduction && selectedProduction->idx >= queue->numItems) {
-		PR_ClearSelected();
-		selectedProduction = &queue->items[queue->numItems - 1];
-	}
-}
-
-/**
  * @brief update the list of queued and available items
  * @param[in] base Pointer to the base.
  */
@@ -522,6 +500,29 @@ static void PR_UpdateProductionList (const base_t* base)
 	mn.menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
 	/* bind the amount of queued items */
 	mn.menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
+}
+
+/**
+ * @brief Queues the next production in the queue.
+ * @param[in] base Pointer to the base.
+ */
+static void PR_QueueNext (base_t *base)
+{
+	production_queue_t *queue = &gd.productions[base->idx];
+
+	PR_QueueDelete(base, queue, 0);
+	if (queue->numItems == 0) {
+		selectedQueueItem = qfalse;
+		PR_ClearSelected();
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production queue for base %s is empty"), base->name);
+		MN_AddNewMessage(_("Production queue empty"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+		CL_GameTimeStop();
+		return;
+	} else if (selectedProduction && selectedProduction->idx >= queue->numItems) {
+		PR_ClearSelected();
+		selectedProduction = &queue->items[queue->numItems - 1];
+		PR_UpdateProductionList(base);
+	}
 }
 
 /**
