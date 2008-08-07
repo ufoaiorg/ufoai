@@ -139,14 +139,33 @@ void environment_init(int argc, char* argv[]) {
 #elif defined(WIN32)
 
 #include <windows.h>
-#include <shfolder.h>
 
 void environment_init(int argc, char* argv[]) {
 	args_init(argc, argv);
 
 	{
 		char appdata[MAX_PATH+1];
-		SHGetFolderPath(0, CSIDL_APPDATA, 0, 0, appdata);
+		static char path[MAX_OSPATH];
+		HMODULE shfolder;
+
+		shfolder = LoadLibrary("shfolder.dll");
+
+		if (shfolder == NULL)
+			ERROR_MESSAGE("Unable to load SHFolder.dll\n");
+		else {
+			FARPROC qSHGetFolderPath;
+			qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
+			if (qSHGetFolderPath == NULL) {
+				ERROR_MESSAGE("Unable to find SHGetFolderPath in SHFolder.dll\n");
+				FreeLibrary(shfolder);
+			}
+
+			if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata))) {
+				ERROR_MESSAGE("Unable to detect CSIDL_APPDATA\n");
+				FreeLibrary(shfolder);
+			}
+			FreeLibrary(shfolder);
+		}
 
 		StringOutputStream home(256);
 		if (string_empty(appdata)) {
