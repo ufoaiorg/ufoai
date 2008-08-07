@@ -439,16 +439,10 @@ static void BS_BuyType (const base_t *base)
 	}
 
 	/* Update some menu cvars. */
-	if (buyCategory < BUY_AIRCRAFT || buyCategory == BUY_DUMMY) {
-		/* Set up base capacities. */
-		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", base->capacities[CAP_ITEMS].cur,
-			base->capacities[CAP_ITEMS].max);
-		Cvar_Set("mn_bs_storage", tmpbuf);
-	} else if (buyCategory == BUY_HEAVY) {
-		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", base->capacities[CAP_ITEMS].cur,
-			base->capacities[CAP_ITEMS].max);
-		Cvar_Set("mn_bs_storage", tmpbuf);
-	}
+	/* Set up base capacities. */
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", base->capacities[CAP_ITEMS].cur,
+		base->capacities[CAP_ITEMS].max);
+	Cvar_Set("mn_bs_storage", tmpbuf);
 
 	/* select first item */
 	if (buyList.length) {
