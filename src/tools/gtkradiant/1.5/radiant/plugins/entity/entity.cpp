@@ -50,10 +50,7 @@ inline scene::Node& entity_for_eclass(EntityClass* eclass) {
 	        || classname_equal(eclass->name(), "misc_gamemodel")
 	        || classname_equal(eclass->name(), "model_static")) {
 		return New_MiscModel(eclass);
-/*	} else if (classname_equal(eclass->name(), "light")) {
-		return New_Light(eclass);*/
-	}
-	if (!eclass->fixedsize) {
+	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
 	} else if (!string_empty(eclass->modelpath())) {
 		return New_EclassModel(eclass);
@@ -248,7 +245,7 @@ void Entity_Construct(EGameType gameType) {
 	Entity_InitFilters();
 	MiscModel_construct();
 
-	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
+/*	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");*/
 
 	GlobalShaderCache().attachRenderable(StaticRenderableConnectionLines::instance());
 }
@@ -256,7 +253,7 @@ void Entity_Construct(EGameType gameType) {
 void Entity_Destroy() {
 	GlobalShaderCache().detachRenderable(StaticRenderableConnectionLines::instance());
 
-	GlobalShaderCache().release("$PIVOT");
+/*	GlobalShaderCache().release("$PIVOT");*/
 
 	MiscModel_destroy();
 }

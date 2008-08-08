@@ -27,7 +27,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 inline void billboard_viewplaneOriented(Matrix4& rotation, const Matrix4& world2screen)
 {
-#if 1
   rotation = g_matrix4_identity;
   Vector3 x(vector3_normalised(vector4_to_vector3(world2screen.x())));
   Vector3 y(vector3_normalised(vector4_to_vector3(world2screen.y())));
@@ -36,88 +35,17 @@ inline void billboard_viewplaneOriented(Matrix4& rotation, const Matrix4& world2
   vector4_to_vector3(rotation.z()) = vector3_negated(Vector3(x.z(), y.z(), z.z()));
   vector4_to_vector3(rotation.x()) = vector3_normalised(vector3_cross(vector4_to_vector3(rotation.y()), vector4_to_vector3(rotation.z())));
   vector4_to_vector3(rotation.y()) = vector3_cross(vector4_to_vector3(rotation.z()), vector4_to_vector3(rotation.x()));
-#else
-  Matrix4 screen2world(matrix4_full_inverse(world2screen));
-
-  Vector3 near_(
-    vector4_projected(
-      matrix4_transformed_vector4(
-        screen2world,
-        Vector4(0, 0, -1, 1)
-      )
-    )
-  );
-
-  Vector3 far_(
-    vector4_projected(
-      matrix4_transformed_vector4(
-        screen2world,
-        Vector4(0, 0, 1, 1)
-      )
-    )
-  );
-
-  Vector3 up(
-    vector4_projected(
-      matrix4_transformed_vector4(
-        screen2world,
-        Vector4(0, 1, -1, 1)
-      )
-    )
-  );
-
-  rotation = g_matrix4_identity;
-  vector4_to_vector3(rotation.y()) = vector3_normalised(vector3_subtracted(up, near_));
-  vector4_to_vector3(rotation.z()) = vector3_normalised(vector3_subtracted(near_, far_));
-  vector4_to_vector3(rotation.x()) = vector3_normalised(vector3_cross(vector4_to_vector3(rotation.y()), vector4_to_vector3(rotation.z())));
-  vector4_to_vector3(rotation.y()) = vector3_cross(vector4_to_vector3(rotation.z()), vector4_to_vector3(rotation.x()));
-#endif
 }
 
 inline void billboard_viewpointOriented(Matrix4& rotation, const Matrix4& world2screen)
 {
   Matrix4 screen2world(matrix4_full_inverse(world2screen));
 
-#if 1
   rotation = g_matrix4_identity;
   vector4_to_vector3(rotation.y()) = vector3_normalised(vector4_to_vector3(screen2world.y()));
   vector4_to_vector3(rotation.z()) = vector3_negated(vector3_normalised(vector4_to_vector3(screen2world.z())));
   vector4_to_vector3(rotation.x()) = vector3_normalised(vector3_cross(vector4_to_vector3(rotation.y()), vector4_to_vector3(rotation.z())));
   vector4_to_vector3(rotation.y()) = vector3_cross(vector4_to_vector3(rotation.z()), vector4_to_vector3(rotation.x()));
-#else
-  Vector3 near_(
-    vector4_projected(
-      matrix4_transformed_vector4(
-        screen2world,
-        Vector4(world2screen[12] / world2screen[15], world2screen[13] / world2screen[15], -1, 1)
-      )
-    )
-  );
-
-  Vector3 far_(
-    vector4_projected(
-      matrix4_transformed_vector4(
-        screen2world,
-        Vector4(world2screen[12] / world2screen[15], world2screen[13] / world2screen[15], 1, 1)
-      )
-    )
-  );
-
-  Vector3 up(
-    vector4_projected(
-      matrix4_transformed_vector4(
-        screen2world,
-        Vector4(world2screen[12] / world2screen[15], world2screen[13] / world2screen[15] + 1, -1, 1)
-      )
-    )
-  );
-
-  rotation = g_matrix4_identity;
-  vector4_to_vector3(rotation.y()) = vector3_normalised(vector3_subtracted(up, near_));
-  vector4_to_vector3(rotation.z()) = vector3_normalised(vector3_subtracted(near_, far_));
-  vector4_to_vector3(rotation.x()) = vector3_normalised(vector3_cross(vector4_to_vector3(rotation.y()), vector4_to_vector3(rotation.z())));
-  vector4_to_vector3(rotation.y()) = vector3_cross(vector4_to_vector3(rotation.z()), vector4_to_vector3(rotation.x()));
-#endif
 }
 
 
@@ -182,7 +110,7 @@ inline void ConstructDevice2Manip(Matrix4& device2manip, const Matrix4& object2w
 inline void Pivot2World_worldSpace(Matrix4& manip2world, const Matrix4& pivot2world, const Matrix4& modelview, const Matrix4& projection, const Matrix4& viewport)
 {
   manip2world = pivot2world;
-  
+
   Matrix4 pivot2screen;
   ConstructObject2Screen(pivot2screen, pivot2world, modelview, projection, viewport);
 
@@ -289,7 +217,5 @@ public:
     renderer.PopState();
   }
 };
-
-
 
 #endif

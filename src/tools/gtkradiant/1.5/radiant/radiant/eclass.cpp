@@ -188,8 +188,8 @@ void EntityClassQuake3_Construct() {
 	StringOutputStream gameDirectory(256);
 	const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
 	const char* gamename = GlobalRadiant().getGameName();
-	baseDirectory << GlobalRadiant().getGameToolsPath() << basegame << '/';
-	gameDirectory << GlobalRadiant().getGameToolsPath() << gamename << '/';
+	baseDirectory << GlobalRadiant().getEnginePath() << basegame << '/';
+	gameDirectory << GlobalRadiant().getEnginePath() << gamename << '/';
 
 	class LoadEntityDefinitionsVisitor : public EClassModules::Visitor {
 		const char* baseDirectory;

@@ -1761,6 +1761,7 @@ void OpenGLShader::construct(const char* name) {
 		state.m_pointsize = 1;
 		break;
 
+#if 0
 	case '$': {
 		OpenGLStateMap::iterator i = g_openglStates->find(name);
 		if (i != g_openglStates->end()) {
@@ -1907,6 +1908,7 @@ void OpenGLShader::construct(const char* name) {
 		state.m_sort = OpenGLState::eSortFirst;
 	}
 	break;
+#endif
 	default:
 		// construction from IShader
 		m_shader = QERApp_Shader_ForName(name);

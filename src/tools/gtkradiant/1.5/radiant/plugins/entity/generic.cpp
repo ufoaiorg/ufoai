@@ -55,8 +55,7 @@ class RenderableArrow : public OpenGLRenderable {
 	const Ray& m_ray;
 
 public:
-	RenderableArrow(const Ray& ray)
-			: m_ray(ray) {
+	RenderableArrow(const Ray& ray) : m_ray(ray) {
 	}
 
 	void render(RenderStateFlags state) const {
