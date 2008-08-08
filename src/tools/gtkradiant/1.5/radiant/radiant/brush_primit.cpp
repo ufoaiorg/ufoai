@@ -222,13 +222,6 @@ void Texdef_basisForNormal(const TextureProjection& projection, const Vector3& n
 		ComputeAxisBase(normal, vector4_to_vector3(basis.x()), vector4_to_vector3(basis.y()));
 		vector4_to_vector3(basis.z()) = normal;
 		matrix4_transpose(basis);
-	} else if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_HALFLIFE) {
-		basis = g_matrix4_identity;
-		vector4_to_vector3(basis.x()) = projection.m_basis_s;
-		vector4_to_vector3(basis.y()) = vector3_negated(projection.m_basis_t);
-		vector4_to_vector3(basis.z()) = vector3_normalised(vector3_cross(vector4_to_vector3(basis.x()), vector4_to_vector3(basis.y())));
-		matrix4_multiply_by_matrix4(basis, matrix4_rotation_for_z_degrees(-projection.m_texdef.rotate));
-		matrix4_transpose(basis);
 	} else {
 		Normal_GetTransform(normal, basis);
 	}
@@ -574,10 +567,6 @@ void Texdef_Assign(TextureProjection& projection, const TextureProjection& other
 		BPTexdef_Assign(projection.m_brushprimit_texdef, other.m_brushprimit_texdef);
 	} else {
 		Texdef_Assign(projection.m_texdef, other.m_texdef);
-		if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_HALFLIFE) {
-			projection.m_basis_s = other.m_basis_s;
-			projection.m_basis_t = other.m_basis_t;
-		}
 	}
 }
 
@@ -771,13 +760,8 @@ inline Matrix4 matrix4_reflection_for_plane45(const Plane3& plane, const Vector3
 }
 
 void Texdef_transformLocked(TextureProjection& projection, std::size_t width, std::size_t height, const Plane3& plane, const Matrix4& identity2transformed) {
-	//globalOutputStream() << "identity2transformed: " << identity2transformed << "\n";
-
-	//globalOutputStream() << "plane.normal(): " << plane.normal() << "\n";
 
 	Vector3 normalTransformed(matrix4_transformed_direction(identity2transformed, plane.normal()));
-
-	//globalOutputStream() << "normalTransformed: " << normalTransformed << "\n";
 
 	// identity: identity space
 	// transformed: transformation
@@ -789,12 +773,7 @@ void Texdef_transformLocked(TextureProjection& projection, std::size_t width, st
 
 	Matrix4 identity2stIdentity;
 	Texdef_basisForNormal(projection, plane.normal(), identity2stIdentity);
-	//globalOutputStream() << "identity2stIdentity: " << identity2stIdentity << "\n";
 
-	if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_HALFLIFE) {
-		matrix4_transform_direction(identity2transformed, projection.m_basis_s);
-		matrix4_transform_direction(identity2transformed, projection.m_basis_t);
-	}
 
 	Matrix4 transformed2stTransformed;
 	Texdef_basisForNormal(projection, normalTransformed, transformed2stTransformed);
@@ -827,31 +806,3 @@ void Texdef_transformLocked(TextureProjection& projection, std::size_t width, st
 	Texdef_normalise(projection, (float)width, (float)height);
 }
 
-void Q3_to_matrix(const texdef_t& texdef, float width, float height, const Vector3& normal, Matrix4& matrix) {
-	Normal_GetTransform(normal, matrix);
-
-	Matrix4 transform;
-
-	Texdef_toTransform(texdef, width, height, transform);
-
-	matrix4_multiply_by_matrix4(matrix, transform);
-}
-
-void BP_from_matrix(brushprimit_texdef_t& bp_texdef, const Vector3& normal, const Matrix4& transform) {
-	Matrix4 basis;
-	basis = g_matrix4_identity;
-	ComputeAxisBase(normal, vector4_to_vector3(basis.x()), vector4_to_vector3(basis.y()));
-	vector4_to_vector3(basis.z()) = normal;
-	matrix4_transpose(basis);
-	matrix4_affine_invert(basis);
-
-	Matrix4 basis2texture = matrix4_multiplied_by_matrix4(basis, transform);
-
-	BPTexdef_fromTransform(bp_texdef, basis2texture);
-}
-
-void Q3_to_BP(const texdef_t& texdef, float width, float height, const Vector3& normal, brushprimit_texdef_t& bp_texdef) {
-	Matrix4 matrix;
-	Q3_to_matrix(texdef, width, height, normal, matrix);
-	BP_from_matrix(bp_texdef, normal, matrix);
-}

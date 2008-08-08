@@ -53,7 +53,6 @@ please contact Id Software immediately at info@idsoftware.com.
 #include "error.h"
 #include "map.h"
 #include "build.h"
-#include "points.h"
 #include "camwindow.h"
 #include "mainframe.h"
 #include "preferences.h"
@@ -261,8 +260,6 @@ void RunBSP(const char* name) {
 		name << StringRange(mapname, path_get_filename_base_end(mapname)) << ".reg";
 		Map_SaveRegion(name.c_str());
 	}
-
-	Pointfile_Delete();
 
 	bsp_init();
 

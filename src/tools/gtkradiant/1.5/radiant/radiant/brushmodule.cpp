@@ -85,27 +85,6 @@ void Brush_registerPreferencesPage() {
 
 
 void Brush_Construct(EBrushType type) {
-	if (type == eBrushTypeQuake3) {
-		g_showAlternativeTextureProjectionOption = true;
-
-		GlobalPreferenceSystem().registerPreference(
-		    "AlternativeTextureProjection",
-		    BoolImportStringCaller(g_useAlternativeTextureProjection.m_latched),
-		    BoolExportStringCaller(g_useAlternativeTextureProjection.m_latched)
-		);
-		g_useAlternativeTextureProjection.useLatched();
-
-		if (g_useAlternativeTextureProjection.m_value) {
-			type = eBrushTypeQuake3BP;
-		}
-
-		// d1223m
-		GlobalPreferenceSystem().registerPreference(
-		    "BrushAlwaysCaulk",
-		    BoolImportStringCaller(g_brush_always_caulk),
-		    BoolExportStringCaller(g_brush_always_caulk));
-	}
-
 	Brush_registerCommands();
 	Brush_registerPreferencesPage();
 
@@ -118,16 +97,7 @@ void Brush_Construct(EBrushType type) {
 	Brush::m_maxWorldCoord = g_MaxWorldCoord;
 	BrushInstance::m_counter = &g_brushCount;
 
-	g_texdef_default_scale = 0.5f;
-	const char* value = g_pGameDescription->getKeyValue("default_scale");
-	if (!string_empty(value)) {
-		float scale = static_cast<float>(atof(value));
-		if (scale != 0) {
-			g_texdef_default_scale = scale;
-		} else {
-			globalErrorStream() << "error parsing \"default_scale\" attribute\n";
-		}
-	}
+	g_texdef_default_scale = 1.0f;
 
 	GlobalPreferenceSystem().registerPreference("TextureLock", BoolImportStringCaller(g_brush_texturelock_enabled), BoolExportStringCaller(g_brush_texturelock_enabled));
 	GlobalPreferenceSystem().registerPreference("BrushSnapPlanes", makeBoolStringImportCallback(FaceImportSnapPlanesCaller()), makeBoolStringExportCallback(FaceExportSnapPlanesCaller()));
@@ -166,7 +136,7 @@ void BrushFaceData_fromFace(const BrushFaceDataCallback& callback, Face& face) {
 typedef ConstReferenceCaller1<BrushFaceDataCallback, Face&, BrushFaceData_fromFace> BrushFaceDataFromFaceCaller;
 typedef Callback1<Face&> FaceCallback;
 
-class Quake3BrushCreator : public BrushCreator {
+class UFOBrushCreator : public BrushCreator {
 public:
 	scene::Node& createBrush() {
 		return (new BrushNode)->node();
@@ -183,10 +153,10 @@ public:
 	}
 };
 
-Quake3BrushCreator g_Quake3BrushCreator;
+UFOBrushCreator g_UFOBrushCreator;
 
 BrushCreator& GetBrushCreator() {
-	return g_Quake3BrushCreator;
+	return g_UFOBrushCreator;
 }
 
 #include "modulesystem/singletonmodule.h"
@@ -203,36 +173,11 @@ class BrushDependencies :
 			public GlobalFilterModuleRef {
 };
 
-
-class BrushQuake3API : public TypeSystemRef {
-	BrushCreator* m_brushquake3;
-public:
-	typedef BrushCreator Type;
-	STRING_CONSTANT(Name, "quake3");
-
-	BrushQuake3API() {
-		Brush_Construct(eBrushTypeQuake3);
-
-		m_brushquake3 = &GetBrushCreator();
-	}
-	~BrushQuake3API() {
-		Brush_Destroy();
-	}
-	BrushCreator* getTable() {
-		return m_brushquake3;
-	}
-};
-
-typedef SingletonModule<BrushQuake3API, BrushDependencies> BrushQuake3Module;
-typedef Static<BrushQuake3Module> StaticBrushQuake3Module;
-StaticRegisterModule staticRegisterBrushQuake3(StaticBrushQuake3Module::instance());
-
-
 class BrushQuake2API : public TypeSystemRef {
 	BrushCreator* m_brushquake2;
 public:
 	typedef BrushCreator Type;
-	STRING_CONSTANT(Name, "quake2");
+	STRING_CONSTANT(Name, "ufo");
 
 	BrushQuake2API() {
 		Brush_Construct(eBrushTypeQuake2);
@@ -251,50 +196,3 @@ typedef SingletonModule<BrushQuake2API, BrushDependencies> BrushQuake2Module;
 typedef Static<BrushQuake2Module> StaticBrushQuake2Module;
 StaticRegisterModule staticRegisterBrushQuake2(StaticBrushQuake2Module::instance());
 
-
-class BrushQuake1API : public TypeSystemRef {
-	BrushCreator* m_brushquake1;
-public:
-	typedef BrushCreator Type;
-	STRING_CONSTANT(Name, "quake");
-
-	BrushQuake1API() {
-		Brush_Construct(eBrushTypeQuake);
-
-		m_brushquake1 = &GetBrushCreator();
-	}
-	~BrushQuake1API() {
-		Brush_Destroy();
-	}
-	BrushCreator* getTable() {
-		return m_brushquake1;
-	}
-};
-
-typedef SingletonModule<BrushQuake1API, BrushDependencies> BrushQuake1Module;
-typedef Static<BrushQuake1Module> StaticBrushQuake1Module;
-StaticRegisterModule staticRegisterBrushQuake1(StaticBrushQuake1Module::instance());
-
-
-class BrushHalfLifeAPI : public TypeSystemRef {
-	BrushCreator* m_brushhalflife;
-public:
-	typedef BrushCreator Type;
-	STRING_CONSTANT(Name, "halflife");
-
-	BrushHalfLifeAPI() {
-		Brush_Construct(eBrushTypeHalfLife);
-
-		m_brushhalflife = &GetBrushCreator();
-	}
-	~BrushHalfLifeAPI() {
-		Brush_Destroy();
-	}
-	BrushCreator* getTable() {
-		return m_brushhalflife;
-	}
-};
-
-typedef SingletonModule<BrushHalfLifeAPI, BrushDependencies> BrushHalfLifeModule;
-typedef Static<BrushHalfLifeModule> StaticBrushHalfLifeModule;
-StaticRegisterModule staticRegisterBrushHalfLife(StaticBrushHalfLifeModule::instance());

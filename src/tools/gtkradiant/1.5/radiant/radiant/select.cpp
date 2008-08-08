@@ -39,8 +39,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/widget.h"
 #include "brushmanip.h"
 #include "brush.h"
-#include "patchmanip.h"
-#include "patchdialog.h"
 #include "selection.h"
 #include "texwindow.h"
 #include "gtkmisc.h"
@@ -350,7 +348,6 @@ void UpdateWorkzone_ForSelectionChanged(const Selectable& selectable) {
 void Select_SetShader(const char* shader) {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetShader_Selected(GlobalSceneGraph(), shader);
-		Scene_PatchSetShader_Selected(GlobalSceneGraph(), shader);
 	}
 	Scene_BrushSetShader_Component_Selected(GlobalSceneGraph(), shader);
 }
@@ -487,7 +484,6 @@ void Select_RotateAxis (int axis, float deg) {
 void Select_ShiftTexture(float x, float y) {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushShiftTexdef_Selected(GlobalSceneGraph(), x, y);
-		Scene_PatchTranslateTexture_Selected(GlobalSceneGraph(), x, y);
 	}
 	//globalOutputStream() << "shift selected face textures: s=" << x << " t=" << y << '\n';
 	Scene_BrushShiftTexdef_Component_Selected(GlobalSceneGraph(), x, y);
@@ -496,7 +492,6 @@ void Select_ShiftTexture(float x, float y) {
 void Select_ScaleTexture(float x, float y) {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushScaleTexdef_Selected(GlobalSceneGraph(), x, y);
-		Scene_PatchScaleTexture_Selected(GlobalSceneGraph(), x, y);
 	}
 	Scene_BrushScaleTexdef_Component_Selected(GlobalSceneGraph(), x, y);
 }
@@ -504,7 +499,6 @@ void Select_ScaleTexture(float x, float y) {
 void Select_RotateTexture(float amt) {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushRotateTexdef_Selected(GlobalSceneGraph(), amt);
-		Scene_PatchRotateTexture_Selected(GlobalSceneGraph(), amt);
 	}
 	Scene_BrushRotateTexdef_Component_Selected(GlobalSceneGraph(), amt);
 }
@@ -528,12 +522,10 @@ void FindReplaceTextures(const char* pFind, const char* pReplace, bool bSelected
 	if (bSelected) {
 		if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 			Scene_BrushFindReplaceShader_Selected(GlobalSceneGraph(), pFind, pReplace);
-			Scene_PatchFindReplaceShader_Selected(GlobalSceneGraph(), pFind, pReplace);
 		}
 		Scene_BrushFindReplaceShader_Component_Selected(GlobalSceneGraph(), pFind, pReplace);
 	} else {
 		Scene_BrushFindReplaceShader(GlobalSceneGraph(), pFind, pReplace);
-		Scene_PatchFindReplaceShader(GlobalSceneGraph(), pFind, pReplace);
 	}
 }
 
@@ -605,7 +597,6 @@ void Select_AllOfType() {
 			Scene_EntitySelectByClassnames(GlobalSceneGraph(), classnames);
 		} else {
 			Scene_BrushSelectByShader(GlobalSceneGraph(), TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
-			Scene_PatchSelectByShader(GlobalSceneGraph(), TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
 		}
 	}
 }

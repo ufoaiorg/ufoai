@@ -40,7 +40,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "ifiletypes.h"
 #include "preferencesystem.h"
 #include "ibrush.h"
-#include "ipatch.h"
 #include "iimage.h"
 #include "itoolbar.h"
 #include "iplugin.h"
@@ -56,7 +55,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qe3.h"
 #include "entityinspector.h"
 #include "entitylist.h"
-#include "points.h"
 #include "gtkmisc.h"
 #include "texwindow.h"
 #include "mainframe.h"
@@ -65,7 +63,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "multimon.h"
 #include "surfacedialog.h"
 #include "groupdialog.h"
-#include "patchdialog.h"
 #include "camwindow.h"
 #include "xywindow.h"
 #include "entity.h"
@@ -229,7 +226,6 @@ public:
 		Grid_construct();
 		MultiMon_Construct();
 		MRU_Construct();
-		Pointfile_Construct();
 		GLWindow_Construct();
 		BuildMenu_Construct();
 		Map_Construct();
@@ -237,7 +233,6 @@ public:
 		MainFrame_Construct();
 		GroupDialog_Construct();
 		SurfaceInspector_Construct();
-		PatchInspector_Construct();
 		CamWnd_Construct();
 		XYWindow_Construct();
 		TextureBrowser_Construct();
@@ -263,7 +258,6 @@ public:
 		TextureBrowser_Destroy();
 		XYWindow_Destroy();
 		CamWnd_Destroy();
-		PatchInspector_Destroy();
 		SurfaceInspector_Destroy();
 		GroupDialog_Destroy();
 		MainFrame_Destroy();
@@ -271,7 +265,6 @@ public:
 		Map_Destroy();
 		BuildMenu_Destroy();
 		GLWindow_Destroy();
-		Pointfile_Destroy();
 		MRU_Destroy();
 		MultiMon_Destroy();
 		Grid_destroy();

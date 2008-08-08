@@ -60,9 +60,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/button.h"
 #include "map.h"
 #include "select.h"
-#include "patchmanip.h"
 #include "brushmanip.h"
-#include "patchdialog.h"
 #include "preferences.h"
 #include "brush_primit.h"
 #include "xywindow.h"
@@ -70,7 +68,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkdlgs.h"
 #include "dialog.h"
 #include "brush.h"				//Shamus: for Textool
-#include "patch.h"
 #include "commands.h"
 #include "stream/stringstream.h"
 #include "grid.h"
@@ -322,9 +319,6 @@ void SurfaceInspector_SetCurrent_FromSelected() {
 
 			CopiedString name;
 			Scene_BrushGetShader_Selected(GlobalSceneGraph(), name);
-			if (string_empty(name.c_str())) {
-				Scene_PatchGetShader_Selected(GlobalSceneGraph(), name);
-			}
 			if (string_not_empty(name.c_str())) {
 				SurfaceInspector_SetSelectedShader(name.c_str());
 			}
@@ -430,33 +424,10 @@ void SurfaceInspector_FitTexture() {
 	Select_FitTexture(getSurfaceInspector().m_fitHorizontal, getSurfaceInspector().m_fitVertical);
 }
 
-static void OnBtnPatchdetails(GtkWidget *widget, gpointer data) {
-	Scene_PatchCapTexture_Selected(GlobalSceneGraph());
-}
-
-static void OnBtnPatchnatural(GtkWidget *widget, gpointer data) {
-	Scene_PatchNaturalTexture_Selected(GlobalSceneGraph());
-}
-
-static void OnBtnPatchreset(GtkWidget *widget, gpointer data) {
-	float fx, fy;
-
-	if (DoTextureLayout (&fx, &fy) == eIDOK) {
-		Scene_PatchTileTexture_Selected(GlobalSceneGraph(), fx, fy);
-	}
-}
-
-static void OnBtnPatchFit(GtkWidget *widget, gpointer data) {
-	Scene_PatchTileTexture_Selected(GlobalSceneGraph(), 1, 1);
-}
-
 static void OnBtnAxial(GtkWidget *widget, gpointer data) {
-//globalOutputStream() << "--> [OnBtnAxial]...\n";
 	UndoableCommand undo("textureDefault");
 	TextureProjection projection;
-//globalOutputStream() << "    TexDef_Construct_Default()...\n";
 	TexDef_Construct_Default(projection);
-//globalOutputStream() << "    Select_SetTexdef()...\n";
 
 #if TEXTOOL_ENABLED
 
@@ -835,13 +806,6 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 					                 (GtkAttachOptions) (0), 0, 0);
 				}
 				{
-					GtkWidget* label = gtk_label_new ("Patch");
-					gtk_widget_show (label);
-					gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
-				}
-				{
 					GtkWidget* label = gtk_label_new ("Width");
 					gtk_widget_show (label);
 					gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
@@ -873,46 +837,6 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 					                 (GtkAttachOptions) (0), 0, 0);
 					g_signal_connect(G_OBJECT(button), "clicked",
 					                 G_CALLBACK(OnBtnFaceFit), 0);
-					gtk_widget_set_usize (button, 60, -2);
-				}
-				{
-					GtkWidget* button = gtk_button_new_with_label ("CAP");
-					gtk_widget_show (button);
-					gtk_table_attach(GTK_TABLE(table), button, 0, 1, 3, 4,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
-					g_signal_connect(G_OBJECT(button), "clicked",
-					                 G_CALLBACK(OnBtnPatchdetails), 0);
-					gtk_widget_set_usize (button, 60, -2);
-				}
-				{
-					GtkWidget* button = gtk_button_new_with_label ("Set...");
-					gtk_widget_show (button);
-					gtk_table_attach(GTK_TABLE(table), button, 1, 2, 3, 4,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
-					g_signal_connect(G_OBJECT(button), "clicked",
-					                 G_CALLBACK(OnBtnPatchreset), 0);
-					gtk_widget_set_usize (button, 60, -2);
-				}
-				{
-					GtkWidget* button = gtk_button_new_with_label ("Natural");
-					gtk_widget_show (button);
-					gtk_table_attach(GTK_TABLE(table), button, 2, 3, 3, 4,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
-					g_signal_connect(G_OBJECT(button), "clicked",
-					                 G_CALLBACK(OnBtnPatchnatural), 0);
-					gtk_widget_set_usize (button, 60, -2);
-				}
-				{
-					GtkWidget* button = gtk_button_new_with_label ("Fit");
-					gtk_widget_show (button);
-					gtk_table_attach(GTK_TABLE(table), button, 3, 4, 3, 4,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
-					g_signal_connect(G_OBJECT(button), "clicked",
-					                 G_CALLBACK(OnBtnPatchFit), 0);
 					gtk_widget_set_usize (button, 60, -2);
 				}
 				{
@@ -1088,7 +1012,6 @@ Update
 
 Set the fields to the current texdef (i.e. map/texdef -> dialog widgets)
 if faces selected (instead of brushes) -> will read this face texdef, else current texdef
-if only patches selected, will read the patch texdef
 ===============
 */
 
@@ -1252,20 +1175,6 @@ void Face_setTexture(Face& face, const char* shader, const TextureProjection& pr
 }
 typedef Function4<Face&, const char*, const TextureProjection&, const ContentsFlagsValue&, void, Face_setTexture> FaceSetTexture;
 
-
-void Patch_getTexture(Patch& patch, CopiedString& shader, TextureProjection& projection, ContentsFlagsValue& flags) {
-	shader = patch.GetShader();
-	projection = TextureProjection(texdef_t(), brushprimit_texdef_t(), Vector3(0, 0, 0), Vector3(0, 0, 0));
-	flags = ContentsFlagsValue(0, 0, 0, false);
-}
-typedef Function4<Patch&, CopiedString&, TextureProjection&, ContentsFlagsValue&, void, Patch_getTexture> PatchGetTexture;
-
-void Patch_setTexture(Patch& patch, const char* shader, const TextureProjection& projection, const ContentsFlagsValue& flags) {
-	patch.SetShader(shader);
-}
-typedef Function4<Patch&, const char*, const TextureProjection&, const ContentsFlagsValue&, void, Patch_setTexture> PatchSetTexture;
-
-
 typedef Callback3<CopiedString&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
 typedef Callback3<const char*, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
 
@@ -1328,15 +1237,8 @@ public:
 					bool occluded;
 					OccludeSelector selector(m_bestIntersection, occluded);
 					selectionTestable->testSelect(selector, m_test);
-					if (occluded) {
-						Patch* patch = Node_getPatch(path.top());
-						if (patch != 0) {
-							m_texturable.setTexture = makeCallback3(PatchSetTexture(), *patch);
-							m_texturable.getTexture = makeCallback3(PatchGetTexture(), *patch);
-						} else {
-							m_texturable = Texturable();
-						}
-					}
+					if (occluded)
+						m_texturable = Texturable();
 				}
 			}
 		}
@@ -1478,7 +1380,6 @@ void SurfaceInspector_Construct() {
 	GlobalSelectionSystem().addSelectionChangeCallback(SurfaceInspectorSelectionChangedCaller());
 	typedef FreeCaller<SurfaceInspector_updateSelection> SurfaceInspectorUpdateSelectionCaller;
 	Brush_addTextureChangedCallback(SurfaceInspectorUpdateSelectionCaller());
-	Patch_addTextureChangedCallback(SurfaceInspectorUpdateSelectionCaller());
 
 	SurfaceInspector_registerPreferencesPage();
 }

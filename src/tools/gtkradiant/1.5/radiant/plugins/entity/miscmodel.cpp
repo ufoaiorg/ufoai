@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 ///\file
-///\brief Represents the Quake3 misc_model entity.
+///\brief Represents the misc_model entity.
 ///
 /// This entity displays the model specified in its "model" key.
 /// The "origin", "angles" and "modelscale*" keys directly control the entity's local-to-parent transform.

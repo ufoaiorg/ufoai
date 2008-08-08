@@ -46,51 +46,6 @@ inline bool FaceTexdef_importTokens(FaceTexdef& texdef, Tokeniser& tokeniser) {
 	return true;
 }
 
-inline bool FaceTexdef_BP_importTokens(FaceTexdef& texdef, Tokeniser& tokeniser) {
-	// parse alternate texdef
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-	{
-		RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-		RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_brushprimit_texdef.coords[0][0]));
-		RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_brushprimit_texdef.coords[0][1]));
-		RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_brushprimit_texdef.coords[0][2]));
-		RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-	}
-	{
-		RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-		RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_brushprimit_texdef.coords[1][0]));
-		RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_brushprimit_texdef.coords[1][1]));
-		RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_brushprimit_texdef.coords[1][2]));
-		RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-	}
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-	return true;
-}
-
-inline bool FaceTexdef_HalfLife_importTokens(FaceTexdef& texdef, Tokeniser& tokeniser) {
-	// parse texdef
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "["));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_basis_s.x()));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_basis_s.y()));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_basis_s.z()));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef.shift[0]));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "]"));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "["));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_basis_t.x()));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_basis_t.y()));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_basis_t.z()));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef.shift[1]));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "]"));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef.rotate));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef.scale[0]));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef.scale[1]));
-
-	texdef.m_projection.m_texdef.rotate = -texdef.m_projection.m_texdef.rotate;
-
-	ASSERT_MESSAGE(texdef_sane(texdef.m_projection.m_texdef), "FaceTexdef_importTokens: bad texdef");
-	return true;
-}
-
 inline bool FacePlane_importTokens(FacePlane& facePlane, Tokeniser& tokeniser) {
 	// parse planepts
 	for (std::size_t i = 0; i < 3; i++) {
@@ -138,67 +93,6 @@ public:
 	}
 };
 
-class Quake3FaceTokenImporter {
-	Face& m_face;
-public:
-	Quake3FaceTokenImporter(Face& face) : m_face(face) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(FacePlane_importTokens(m_face.getPlane(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importTokens(m_face.getShader(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceTexdef_importTokens(m_face.getTexdef(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importContentsFlagsValue(m_face.getShader(), tokeniser));
-		m_face.getTexdef().m_scaleApplied = true;
-		return true;
-	}
-};
-
-class Quake3BPFaceTokenImporter {
-	Face& m_face;
-public:
-	Quake3BPFaceTokenImporter(Face& face) : m_face(face) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(FacePlane_importTokens(m_face.getPlane(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceTexdef_BP_importTokens(m_face.getTexdef(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importTokens(m_face.getShader(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importContentsFlagsValue(m_face.getShader(), tokeniser));
-
-		m_face.getTexdef().m_projectionInitialised = true;
-		m_face.getTexdef().m_scaleApplied = true;
-
-		return true;
-	}
-};
-
-class QuakeFaceTokenImporter {
-	Face& m_face;
-public:
-	QuakeFaceTokenImporter(Face& face) : m_face(face) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(FacePlane_importTokens(m_face.getPlane(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importTokens(m_face.getShader(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceTexdef_importTokens(m_face.getTexdef(), tokeniser));
-		m_face.getTexdef().m_scaleApplied = true;
-		return true;
-	}
-};
-
-class HalfLifeFaceTokenImporter {
-	Face& m_face;
-public:
-	HalfLifeFaceTokenImporter(Face& face) : m_face(face) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(FacePlane_importTokens(m_face.getPlane(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importTokens(m_face.getShader(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceTexdef_HalfLife_importTokens(m_face.getTexdef(), tokeniser));
-		m_face.getTexdef().m_scaleApplied = true;
-		return true;
-	}
-};
-
 inline void FacePlane_exportTokens(const FacePlane& facePlane, TokenWriter& writer) {
 	// write planepts
 	for (std::size_t i = 0; i < 3; i++) {
@@ -210,52 +104,12 @@ inline void FacePlane_exportTokens(const FacePlane& facePlane, TokenWriter& writ
 	}
 }
 
-inline void FaceTexdef_BP_exportTokens(const FaceTexdef& faceTexdef, TokenWriter& writer) {
-	// write alternate texdef
-	writer.writeToken("(");
-	{
-		writer.writeToken("(");
-		for (std::size_t i = 0;i < 3;i++) {
-			writer.writeFloat(faceTexdef.m_projection.m_brushprimit_texdef.coords[0][i]);
-		}
-		writer.writeToken(")");
-	}
-	{
-		writer.writeToken("(");
-		for (std::size_t i = 0;i < 3;i++) {
-			writer.writeFloat(faceTexdef.m_projection.m_brushprimit_texdef.coords[1][i]);
-		}
-		writer.writeToken(")");
-	}
-	writer.writeToken(")");
-}
-
 inline void FaceTexdef_exportTokens(const FaceTexdef& faceTexdef, TokenWriter& writer) {
 	ASSERT_MESSAGE(texdef_sane(faceTexdef.m_projection.m_texdef), "FaceTexdef_exportTokens: bad texdef");
 	// write texdef
 	writer.writeFloat(faceTexdef.m_projection.m_texdef.shift[0]);
 	writer.writeFloat(faceTexdef.m_projection.m_texdef.shift[1]);
 	writer.writeFloat(faceTexdef.m_projection.m_texdef.rotate);
-	writer.writeFloat(faceTexdef.m_projection.m_texdef.scale[0]);
-	writer.writeFloat(faceTexdef.m_projection.m_texdef.scale[1]);
-}
-
-inline void FaceTexdef_HalfLife_exportTokens(const FaceTexdef& faceTexdef, TokenWriter& writer) {
-	ASSERT_MESSAGE(texdef_sane(faceTexdef.m_projection.m_texdef), "FaceTexdef_exportTokens: bad texdef");
-	// write texdef
-	writer.writeToken("[");
-	writer.writeFloat(faceTexdef.m_projection.m_basis_s.x());
-	writer.writeFloat(faceTexdef.m_projection.m_basis_s.y());
-	writer.writeFloat(faceTexdef.m_projection.m_basis_s.z());
-	writer.writeFloat(faceTexdef.m_projection.m_texdef.shift[0]);
-	writer.writeToken("]");
-	writer.writeToken("[");
-	writer.writeFloat(faceTexdef.m_projection.m_basis_t.x());
-	writer.writeFloat(faceTexdef.m_projection.m_basis_t.y());
-	writer.writeFloat(faceTexdef.m_projection.m_basis_t.z());
-	writer.writeFloat(faceTexdef.m_projection.m_texdef.shift[1]);
-	writer.writeToken("]");
-	writer.writeFloat(-faceTexdef.m_projection.m_texdef.rotate);
 	writer.writeFloat(faceTexdef.m_projection.m_texdef.scale[0]);
 	writer.writeFloat(faceTexdef.m_projection.m_texdef.scale[1]);
 }
@@ -292,61 +146,6 @@ public:
 	}
 };
 
-class Quake3FaceTokenExporter {
-	const Face& m_face;
-public:
-	Quake3FaceTokenExporter(const Face& face) : m_face(face) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		FacePlane_exportTokens(m_face.getPlane(), writer);
-		FaceShader_exportTokens(m_face.getShader(), writer);
-		FaceTexdef_exportTokens(m_face.getTexdef(), writer);
-		FaceShader_ContentsFlagsValue_exportTokens(m_face.getShader(), writer);
-		writer.nextLine();
-	}
-};
-
-class Quake3BPFaceTokenExporter {
-	const Face& m_face;
-public:
-	Quake3BPFaceTokenExporter(const Face& face) : m_face(face) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		FacePlane_exportTokens(m_face.getPlane(), writer);
-		FaceTexdef_BP_exportTokens(m_face.getTexdef(), writer);
-		FaceShader_exportTokens(m_face.getShader(), writer);
-		FaceShader_ContentsFlagsValue_exportTokens(m_face.getShader(), writer);
-		writer.nextLine();
-	}
-};
-
-class QuakeFaceTokenExporter {
-	const Face& m_face;
-public:
-	QuakeFaceTokenExporter(const Face& face) : m_face(face) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		FacePlane_exportTokens(m_face.getPlane(), writer);
-		FaceShader_exportTokens(m_face.getShader(), writer);
-		FaceTexdef_exportTokens(m_face.getTexdef(), writer);
-		writer.nextLine();
-	}
-};
-
-class HalfLifeFaceTokenExporter {
-	const Face& m_face;
-public:
-	HalfLifeFaceTokenExporter(const Face& face) : m_face(face) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		FacePlane_exportTokens(m_face.getPlane(), writer);
-		FaceShader_exportTokens(m_face.getShader(), writer);
-		FaceTexdef_HalfLife_exportTokens(m_face.getTexdef(), writer);
-		writer.nextLine();
-	}
-};
-
-
 class BrushTokenImporter : public MapImporter {
 	Brush& m_brush;
 
@@ -354,10 +153,6 @@ public:
 	BrushTokenImporter(Brush& brush) : m_brush(brush) {
 	}
 	bool importTokens(Tokeniser& tokeniser) {
-		if (Brush::m_type == eBrushTypeQuake3BP) {
-			tokeniser.nextLine();
-			RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "{"));
-		}
 		while (1) {
 			// check for end of brush
 			tokeniser.nextLine();
@@ -370,43 +165,13 @@ public:
 
 			m_brush.push_back(FaceSmartPointer(new Face(&m_brush)));
 
-			//!todo BP support
 			tokeniser.nextLine();
 
 			Face& face = *m_brush.back();
 
-			switch (Brush::m_type) {
-			case eBrushTypeQuake2: {
-				Quake2FaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
-			case eBrushTypeQuake3: {
-				Quake3FaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
-			case eBrushTypeQuake3BP: {
-				Quake3BPFaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
-			case eBrushTypeQuake: {
-				QuakeFaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
-			case eBrushTypeHalfLife: {
-				HalfLifeFaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
-			}
+			Quake2FaceTokenImporter importer(face);
+			RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
 			face.planeChanged();
-		}
-		if (Brush::m_type == eBrushTypeQuake3BP) {
-			tokeniser.nextLine();
-			RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "}"));
 		}
 
 		m_brush.planeChanged();
@@ -433,50 +198,13 @@ public:
 		writer.writeToken("{");
 		writer.nextLine();
 
-		if (Brush::m_type == eBrushTypeQuake3BP) {
-			writer.writeToken("brushDef");
-			writer.nextLine();
-			writer.writeToken("{");
-			writer.nextLine();
-		}
-
 		for (Brush::const_iterator i = m_brush.begin(); i != m_brush.end(); ++i) {
 			const Face& face = *(*i);
 
 			if (face.contributes()) {
-				switch (Brush::m_type) {
-				case eBrushTypeQuake2: {
-					Quake2FaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
-				case eBrushTypeQuake3: {
-					Quake3FaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
-				case eBrushTypeQuake3BP: {
-					Quake3BPFaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
-				case eBrushTypeQuake: {
-					QuakeFaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
-				case eBrushTypeHalfLife: {
-					HalfLifeFaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
-				}
+				Quake2FaceTokenExporter exporter(face);
+				exporter.exportTokens(writer);
 			}
-		}
-
-		if (Brush::m_type == eBrushTypeQuake3BP) {
-			writer.writeToken("}");
-			writer.nextLine();
 		}
 
 		writer.writeToken("}");

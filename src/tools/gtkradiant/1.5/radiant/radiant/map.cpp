@@ -73,7 +73,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "filetypes.h"
 #include "gtkdlgs.h"
 #include "entityinspector.h"
-#include "points.h"
 #include "qe3.h"
 #include "camwindow.h"
 #include "xywindow.h"
@@ -394,8 +393,6 @@ free all map elements, reinitialize the structures that depend on them
 ================
 */
 void Map_Free() {
-	Pointfile_Clear();
-
 	g_map.m_resource->detach(g_map);
 	GlobalReferenceCache().release(g_map.m_name.c_str());
 	g_map.m_resource = 0;
@@ -1119,8 +1116,6 @@ void Map_Rename(const char* filename) {
 }
 
 bool Map_Save() {
-	Pointfile_Clear();
-
 	ScopeTimer timer("map save");
 	SaveReferences();
 	return true; // assume success..
@@ -1534,7 +1529,7 @@ ENodeType node_get_nodetype(scene::Node& node) {
 }
 
 bool contains_entity(scene::Node& node) {
-	return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isPatch(node) && !Node_isEntity(node);
+	return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isEntity(node);
 }
 
 bool contains_primitive(scene::Node& node) {

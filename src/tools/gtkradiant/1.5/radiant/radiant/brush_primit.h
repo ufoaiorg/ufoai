@@ -114,8 +114,7 @@ void Texdef_normalise(TextureProjection& projection, float width, float height);
 
 enum TexdefTypeId {
 	TEXDEFTYPEID_QUAKE,
-	TEXDEFTYPEID_BRUSHPRIMITIVES,
-	TEXDEFTYPEID_HALFLIFE,
+	TEXDEFTYPEID_BRUSHPRIMITIVES
 };
 
 struct bp_globals_t {

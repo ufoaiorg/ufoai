@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "iscriplib.h"
 #include "ibrush.h"
-#include "ipatch.h"
 #include "ifiletypes.h"
 #include "ieclass.h"
 #include "qerplugin.h"
@@ -41,7 +40,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class MapDependencies :
 			public GlobalRadiantModuleRef,
 			public GlobalBrushModuleRef,
-			public GlobalPatchModuleRef,
 			public GlobalFiletypesModuleRef,
 			public GlobalScripLibModuleRef,
 			public GlobalEntityClassManagerModuleRef,
@@ -49,155 +47,18 @@ class MapDependencies :
 public:
 	MapDependencies() :
 			GlobalBrushModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("brushtypes")),
-			GlobalPatchModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("patchtypes")),
 			GlobalEntityClassManagerModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclass")) {
 	}
 };
 
-class MapQ3API : public TypeSystemRef, public MapFormat, public PrimitiveParser {
+class MapUFOAPI : public TypeSystemRef, public MapFormat, public PrimitiveParser {
 public:
 	typedef MapFormat Type;
-	STRING_CONSTANT(Name, "mapq3");
+	STRING_CONSTANT(Name, "mapufo");
 
-	MapQ3API() {
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("quake3 maps", "*.map"));
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("quake3 region", "*.reg"));
-	}
-	MapFormat* getTable() {
-		return this;
-	}
-
-	scene::Node& parsePrimitive(Tokeniser& tokeniser) const {
-		const char* primitive = tokeniser.getToken();
-		if (primitive != 0) {
-			if (string_equal(primitive, "patchDef2")) {
-				return GlobalPatchModule::getTable().createPatch();
-			}
-			if (GlobalBrushModule::getTable().useAlternativeTextureProjection()) {
-				if (string_equal(primitive, "brushDef")) {
-					return GlobalBrushModule::getTable().createBrush();
-				}
-			} else {
-				if (string_equal(primitive, "(")) {
-					tokeniser.ungetToken(); // (
-					return GlobalBrushModule::getTable().createBrush();
-				}
-			}
-		}
-
-		Tokeniser_unexpectedError(tokeniser, primitive, "#quake3-primitive");
-		return g_nullNode;
-	}
-
-	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
-		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
-		Map_Read(root, tokeniser, entityTable, *this);
-		tokeniser.release();
-	}
-	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
-		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
-		Map_Write(root, traverse, writer, false);
-		writer.release();
-	}
-};
-
-typedef SingletonModule<MapQ3API, MapDependencies> MapQ3Module;
-
-MapQ3Module g_MapQ3Module;
-
-
-class MapQ1API : public TypeSystemRef, public MapFormat, public PrimitiveParser {
-public:
-	typedef MapFormat Type;
-	STRING_CONSTANT(Name, "mapq1");
-
-	MapQ1API() {
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("quake maps", "*.map"));
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("quake region", "*.reg"));
-	}
-	MapFormat* getTable() {
-		return this;
-	}
-
-	scene::Node& parsePrimitive(Tokeniser& tokeniser) const {
-		const char* primitive = tokeniser.getToken();
-		if (primitive != 0) {
-			if (string_equal(primitive, "(")) {
-				tokeniser.ungetToken(); // (
-				return GlobalBrushModule::getTable().createBrush();
-			}
-		}
-
-		Tokeniser_unexpectedError(tokeniser, primitive, "#quake-primitive");
-		return g_nullNode;
-	}
-	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
-		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
-		Map_Read(root, tokeniser, entityTable, *this);
-		tokeniser.release();
-	}
-	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
-		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
-		Map_Write(root, traverse, writer, true);
-		writer.release();
-	}
-};
-
-typedef SingletonModule<MapQ1API, MapDependencies> MapQ1Module;
-
-MapQ1Module g_MapQ1Module;
-
-
-class MapHalfLifeAPI : public TypeSystemRef, public MapFormat, public PrimitiveParser {
-public:
-	typedef MapFormat Type;
-	STRING_CONSTANT(Name, "maphl");
-
-	MapHalfLifeAPI() {
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("half-life maps", "*.map"));
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("half-life region", "*.reg"));
-	}
-	MapFormat* getTable() {
-		return this;
-	}
-
-	scene::Node& parsePrimitive(Tokeniser& tokeniser) const {
-		const char* primitive = tokeniser.getToken();
-		if (primitive != 0) {
-			if (string_equal(primitive, "(")) {
-				tokeniser.ungetToken(); // (
-				return GlobalBrushModule::getTable().createBrush();
-			}
-		}
-
-		Tokeniser_unexpectedError(tokeniser, primitive, "#halflife-primitive");
-		return g_nullNode;
-	}
-	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
-		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
-		Map_Read(root, tokeniser, entityTable, *this);
-		tokeniser.release();
-	}
-	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
-		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
-		Map_Write(root, traverse, writer, true);
-		writer.release();
-	}
-};
-
-typedef SingletonModule<MapHalfLifeAPI, MapDependencies> MapHalfLifeModule;
-
-MapHalfLifeModule g_MapHalfLifeModule;
-
-
-class MapQ2API : public TypeSystemRef, public MapFormat, public PrimitiveParser {
-public:
-	typedef MapFormat Type;
-	STRING_CONSTANT(Name, "mapq2");
-
-	MapQ2API() {
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("quake2 maps", "*.map"));
-		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("quake2 region", "*.reg"));
+	MapUFOAPI() {
+		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("ufo maps", "*.map"));
+		GlobalFiletypesModule::getTable().addType(Type::Name(), Name(), filetype_t("ufo region", "*.reg"));
 	}
 	MapFormat* getTable() {
 		return this;
@@ -211,7 +72,7 @@ public:
 			}
 		}
 
-		Tokeniser_unexpectedError(tokeniser, primitive, "#quake2-primitive");
+		Tokeniser_unexpectedError(tokeniser, primitive, "#ufo-primitive");
 		return g_nullNode;
 	}
 	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
@@ -221,14 +82,14 @@ public:
 	}
 	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
 		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
-		Map_Write(root, traverse, writer, true);
+		Map_Write(root, traverse, writer);
 		writer.release();
 	}
 };
 
-typedef SingletonModule<MapQ2API, MapDependencies> MapQ2Module;
+typedef SingletonModule<MapUFOAPI, MapDependencies> MapUFOModule;
 
-MapQ2Module g_MapQ2Module;
+MapUFOModule g_MapUFOModule;
 
 
 
@@ -383,9 +244,6 @@ MapVMFModule g_MapVMFModule;
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
 	initialiseModule(server);
 
-	g_MapQ3Module.selfRegister();
-	g_MapQ1Module.selfRegister();
-	g_MapQ2Module.selfRegister();
-	g_MapHalfLifeModule.selfRegister();
+	g_MapUFOModule.selfRegister();
 	g_MapVMFModule.selfRegister();
 }

@@ -95,13 +95,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "map.h"
 #include "mru.h"
 #include "multimon.h"
-#include "patchdialog.h"
-#include "patchmanip.h"
 #include "plugin.h"
 #include "pluginmanager.h"
 #include "pluginmenu.h"
 #include "plugintoolbar.h"
-#include "points.h"
 #include "preferences.h"
 #include "qe3.h"
 #include "qgl.h"
@@ -1606,7 +1603,6 @@ void ClipperChangeNotify() {
 
 LatchedInt g_Layout_viewStyle(0, "Window Layout");
 LatchedBool g_Layout_enableDetachableMenus(true, "Detachable Menus");
-LatchedBool g_Layout_enablePatchToolbar(true, "Patch Toolbar");
 LatchedBool g_Layout_enablePluginToolbar(true, "Plugin Toolbar");
 
 
@@ -1640,8 +1636,6 @@ GtkMenuItem* create_file_menu() {
 	create_menu_item_with_mnemonic(menu, "_Refresh models", "RefreshReferences");
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, "Pro_ject settings...", "ProjectSettings");
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "_Pointfile...", "TogglePointfile");
 	menu_separator(menu);
 	MRU_constructMenu(menu);
 	menu_separator(menu);
@@ -1738,9 +1732,6 @@ GtkMenuItem* create_view_menu(MainFrame::EViewStyle style) {
 		menu_separator(camera_menu);
 		create_menu_item_with_mnemonic(camera_menu, "Far Clip Plane In", "CubicClipZoomIn");
 		create_menu_item_with_mnemonic(camera_menu, "Far Clip Plane Out", "CubicClipZoomOut");
-		menu_separator(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, "Next leak spot", "NextLeakSpot");
-		create_menu_item_with_mnemonic(camera_menu, "Previous leak spot", "PrevLeakSpot");
 		menu_separator(camera_menu);
 		create_menu_item_with_mnemonic(camera_menu, "Look Through Selected", "LookThroughSelected");
 		create_menu_item_with_mnemonic(camera_menu, "Look Through Camera", "LookThroughCamera");
@@ -1936,19 +1927,6 @@ GtkMenuItem* create_brush_menu() {
 	return brush_menu_item;
 }
 
-GtkMenuItem* create_patch_menu() {
-	// Curve menu
-	GtkMenuItem* patch_menu_item = new_sub_menu_item_with_mnemonic("_Curve");
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(patch_menu_item));
-	if (g_Layout_enableDetachableMenus.m_value) {
-		menu_tearoff(menu);
-	}
-
-	Patch_constructMenu(menu);
-
-	return patch_menu_item;
-}
-
 GtkMenuItem* create_help_menu() {
 	// Help menu
 	GtkMenuItem* help_menu_item = new_sub_menu_item_with_mnemonic("_Help");
@@ -1982,28 +1960,12 @@ GtkMenuBar* create_main_menu(MainFrame::EViewStyle style) {
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_misc_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_entity_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_brush_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_patch_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_plugins_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_help_menu()));
 
 	return menu_bar;
 }
 
-
-void PatchInspector_registerShortcuts() {
-	command_connect_accelerator("PatchInspector");
-}
-
-void Patch_registerShortcuts() {
-	command_connect_accelerator("InvertCurveTextureX");
-	command_connect_accelerator("InvertCurveTextureY");
-	command_connect_accelerator("IncPatchColumn");
-	command_connect_accelerator("IncPatchRow");
-	command_connect_accelerator("DecPatchColumn");
-	command_connect_accelerator("DecPatchRow");
-	command_connect_accelerator("NaturalizePatch");
-	//command_connect_accelerator("CapCurrentCurve");
-}
 
 void Manipulators_registerShortcuts() {
 	toggle_add_accelerator("MouseRotate");
@@ -2049,8 +2011,6 @@ void SurfaceInspector_registerShortcuts() {
 
 
 void register_shortcuts() {
-	PatchInspector_registerShortcuts();
-	Patch_registerShortcuts();
 	Grid_registerShortcuts();
 	XYWnd_registerShortcuts();
 	CamWnd_registerShortcuts();
@@ -2158,12 +2118,6 @@ GtkToolbar* create_main_toolbar(MainFrame::EViewStyle style) {
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 	Manipulators_constructToolbar(toolbar);
-
-	if (g_Layout_enablePatchToolbar.m_value) {
-		gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-		Patch_constructToolbar(toolbar);
-	}
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
@@ -2570,7 +2524,6 @@ void MainFrame::Create() {
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
 	SurfaceInspector_constructWindow(window);
-	PatchInspector_constructWindow(window);
 
 	SetActiveXY(m_pXYWnd);
 
@@ -2624,7 +2577,6 @@ void MainFrame::Shutdown() {
 	PreferencesDialog_destroyWindow();
 	SurfaceInspector_destroyWindow();
 	FindTextureDialog_destroyWindow();
-	PatchInspector_destroyWindow();
 
 	// destroying group-dialog last because it may contain texture-browser
 	GroupDialog_destroyWindow();
@@ -2732,13 +2684,6 @@ void Layout_constructPreferences(PreferencesPage& page) {
 	    LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
 	    BoolExportCaller(g_Layout_enableDetachableMenus.m_latched)
 	);
-	if (!string_empty(g_pGameDescription->getKeyValue("no_patch"))) {
-		page.appendCheckBox(
-		    "", "Patch Toolbar",
-		    LatchedBoolImportCaller(g_Layout_enablePatchToolbar),
-		    BoolExportCaller(g_Layout_enablePatchToolbar.m_latched)
-		);
-	}
 	page.appendCheckBox(
 	    "", "Plugin Toolbar",
 	    LatchedBoolImportCaller(g_Layout_enablePluginToolbar),
@@ -2872,14 +2817,12 @@ void MainFrame_Construct() {
 	GlobalCommands_insert("SelectNudgeUp", FreeCaller<Selection_NudgeUp>(), Accelerator(GDK_Up, (GdkModifierType)GDK_MOD1_MASK));
 	GlobalCommands_insert("SelectNudgeDown", FreeCaller<Selection_NudgeDown>(), Accelerator(GDK_Down, (GdkModifierType)GDK_MOD1_MASK));
 
-	Patch_registerCommands();
 	XYShow_registerCommands();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
 
 	GlobalPreferenceSystem().registerPreference("DetachableMenus", BoolImportStringCaller(g_Layout_enableDetachableMenus.m_latched), BoolExportStringCaller(g_Layout_enableDetachableMenus.m_latched));
-	GlobalPreferenceSystem().registerPreference("PatchToolBar", BoolImportStringCaller(g_Layout_enablePatchToolbar.m_latched), BoolExportStringCaller(g_Layout_enablePatchToolbar.m_latched));
 	GlobalPreferenceSystem().registerPreference("PluginToolBar", BoolImportStringCaller(g_Layout_enablePluginToolbar.m_latched), BoolExportStringCaller(g_Layout_enablePluginToolbar.m_latched));
 	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched), IntExportStringCaller(g_Layout_viewStyle.m_latched));
 	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight), IntExportStringCaller(g_layout_globals.nXYHeight));
@@ -2919,7 +2862,6 @@ void MainFrame_Construct() {
 
 	g_Layout_viewStyle.useLatched();
 	g_Layout_enableDetachableMenus.useLatched();
-	g_Layout_enablePatchToolbar.useLatched();
 	g_Layout_enablePluginToolbar.useLatched();
 
 	Layout_registerPreferencesPage();

@@ -69,11 +69,7 @@ const unsigned int BRUSH_DETAIL_FLAG = 27;
 const unsigned int BRUSH_DETAIL_MASK = (1 << BRUSH_DETAIL_FLAG);
 
 enum EBrushType {
-	eBrushTypeQuake,
-	eBrushTypeQuake2,
-	eBrushTypeQuake3,
-	eBrushTypeQuake3BP,
-	eBrushTypeHalfLife
+	eBrushTypeQuake2
 };
 
 
@@ -1663,15 +1659,8 @@ class BrushUndoMemento : public UndoMemento {
 		FacePlane::m_type = type;
 
 		g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_QUAKE;
-		if (m_type == eBrushTypeQuake3BP) {
-			g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_BRUSHPRIMITIVES;
-			g_brush_texturelock_enabled = true;
-		} else if (m_type == eBrushTypeHalfLife) {
-			g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_HALFLIFE;
-			g_brush_texturelock_enabled = true;
-		}
 
-		Face::m_quantise = (m_type == eBrushTypeQuake) ? quantiseInteger : quantiseFloating;
+		Face::m_quantise = quantiseFloating;
 
 		m_state_point = GlobalShaderCache().capture("$POINT");
 	}

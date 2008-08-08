@@ -286,27 +286,8 @@ const char* misc_model_dialog(GtkWidget* parent) {
 	}
 	return 0;
 }
-
-void LightRadiiImport(EntityCreator& self, bool value) {
-	self.setLightRadii(value);
-}
-typedef ReferenceCaller1<EntityCreator, bool, LightRadiiImport> LightRadiiImportCaller;
-
-void LightRadiiExport(EntityCreator& self, const BoolImportCallback& importer) {
-	importer(self.getLightRadii());
-}
-typedef ReferenceCaller1<EntityCreator, const BoolImportCallback&, LightRadiiExport> LightRadiiExportCaller;
-
-void Entity_constructPreferences(PreferencesPage& page) {
-	page.appendCheckBox(
-	    "Show", "Light Radii",
-	    LightRadiiImportCaller(GlobalEntityCreator()),
-	    LightRadiiExportCaller(GlobalEntityCreator())
-	);
-}
 void Entity_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Entities", "Entity Display Preferences"));
-	Entity_constructPreferences(page);
 }
 void Entity_registerPreferencesPage() {
 	PreferencesDialog_addDisplayPage(FreeCaller1<PreferenceGroup&, Entity_constructPage>());

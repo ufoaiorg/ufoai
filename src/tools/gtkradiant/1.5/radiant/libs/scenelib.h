@@ -390,24 +390,9 @@ inline bool Node_isBrush(scene::Node& node)
   return NodeTypeCast<BrushUndefined>::cast(node) != 0;
 }
 
-class PatchUndefined
-{
-public:
-  STRING_CONSTANT(Name, "Patch");
-};
-
-inline bool Node_isPatch(scene::Node& node)
-{
-  return NodeTypeCast<PatchUndefined>::cast(node) != 0;
-}
-
 inline bool Node_isPrimitive(scene::Node& node)
 {
-#if 1
-  return Node_isBrush(node) || Node_isPatch(node);
-#else
-  return !node.isRoot();
-#endif
+  return Node_isBrush(node);
 }
 
 class ParentBrushes : public scene::Traversable::Walker

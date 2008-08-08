@@ -25,19 +25,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class EntityCreator;
 EntityCreator& GetEntityCreator();
 
-enum EGameType {
-	eGameTypeQuake3
-};
-
-extern EGameType g_gameType;
-
 class FilterSystem;
-void Entity_Construct(EGameType gameType = eGameTypeQuake3);
+void Entity_Construct();
 void Entity_Destroy();
 
 extern bool g_showNames;
 extern bool g_showAngles;
-extern bool g_newLightDraw;
-extern bool g_lightRadii;
 
 #endif

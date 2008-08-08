@@ -671,17 +671,6 @@ typedef struct {
 } mapBrush_t;
 
 typedef struct {
-	idVec3		xyz;
-	float		st[2];
-} patchVertex_t;
-
-typedef struct {
-	char		material[MAX_QPATH];
-	int			width, height;
-	patchVertex_t	*patchVerts;
-} mapPatch_t;
-
-typedef struct {
 	char		modelName[MAX_QPATH];
 	float		matrix[16];
 } mapModel_t;
@@ -692,7 +681,6 @@ typedef struct mapPrimitive_s {
 
 	// only one of these will be non-NULL
 	mapBrush_t		*brush;
-	mapPatch_t		*patch;
 	mapModel_t		*model;
 } mapPrimitive_t;
 
@@ -734,9 +722,6 @@ typedef struct {
 	drawVert_t	*verts;
 } drawVertMesh_t;
 
-// Tesselate a map patch into smoothed, drawable vertexes
-// MaxError of around 4 is reasonable
-drawVertMesh_t *SubdivideMapPatch( const mapPatch_t *patch, float maxError );
 #endif			// __cplusplus
 
 //=========================================

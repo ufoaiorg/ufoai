@@ -27,7 +27,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 enum {
 	EXCLUDE_WORLD            = 0x00000001,
 	EXCLUDE_ENT              = 0x00000002,
-	EXCLUDE_CURVES           = 0x00000004,
 	EXCLUDE_TRANSLUCENT      = 0x00000008,
 	EXCLUDE_LIQUIDS          = 0x00000010,
 	EXCLUDE_CAULK            = 0x00000020,

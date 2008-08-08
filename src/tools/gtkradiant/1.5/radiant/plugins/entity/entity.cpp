@@ -42,13 +42,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "eclassmodel.h"
 #include "generic.h"
 
-
-EGameType g_gameType;
-
 inline scene::Node& entity_for_eclass(EntityClass* eclass) {
-	if (classname_equal(eclass->name(), "misc_model")
-	        || classname_equal(eclass->name(), "misc_gamemodel")
-	        || classname_equal(eclass->name(), "model_static")) {
+	if (classname_equal(eclass->name(), "misc_model")) {
 		return New_MiscModel(eclass);
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
@@ -86,8 +81,6 @@ Counter* EntityKeyValues::m_counter = 0;
 
 bool g_showNames = true;
 bool g_showAngles = true;
-bool g_newLightDraw = true;
-bool g_lightRadii = false;
 
 class ConnectEntities {
 public:
@@ -156,12 +149,6 @@ public:
 		}
 
 		SceneChangeNotify();
-	}
-	void setLightRadii(bool lightRadii) {
-		g_lightRadii = lightRadii;
-	}
-	bool getLightRadii() {
-		return g_lightRadii;
 	}
 	void setShowNames(bool showNames) {
 		g_showNames = showNames;
@@ -232,15 +219,12 @@ void Entity_InitFilters() {
 
 #include "preferencesystem.h"
 
-void Entity_Construct(EGameType gameType) {
-	g_gameType = gameType;
+void Entity_Construct() {
 	Static<KeyIsName>::instance().m_keyIsName = keyIsNameQuake3;
 	Static<KeyIsName>::instance().m_nameKey = "targetname";
 
 	GlobalPreferenceSystem().registerPreference("SI_ShowNames", BoolImportStringCaller(g_showNames), BoolExportStringCaller(g_showNames));
 	GlobalPreferenceSystem().registerPreference("SI_ShowAngles", BoolImportStringCaller(g_showAngles), BoolExportStringCaller(g_showAngles));
-	GlobalPreferenceSystem().registerPreference("NewLightStyle", BoolImportStringCaller(g_newLightDraw), BoolExportStringCaller(g_newLightDraw));
-	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii), BoolExportStringCaller(g_lightRadii));
 
 	Entity_InitFilters();
 	MiscModel_construct();

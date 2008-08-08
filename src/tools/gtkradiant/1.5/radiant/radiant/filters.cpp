@@ -174,7 +174,6 @@ void Filters_constructMenu(GtkMenu* menu_in_menu) {
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lights", "FilterLights");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Structural", "FilterStructural");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lightgrid", "FilterLightgrid");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Patches", "FilterPatches");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Details", "FilterDetails");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Hints", "FilterHintsSkips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Models", "FilterModels");
@@ -205,7 +204,6 @@ void ConstructFilters() {
 	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('0', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('D', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_LIGHTGRID, "FilterLightgrid", accelerator_null());
-	add_filter_command(EXCLUDE_CURVES, "FilterPatches", Accelerator('P', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_DETAILS, "FilterDetails", Accelerator('D', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_HINTSSKIPS, "FilterHintsSkips", Accelerator('H', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_MODELS, "FilterModels", Accelerator('M', (GdkModifierType)GDK_SHIFT_MASK));

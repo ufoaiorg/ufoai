@@ -58,10 +58,9 @@ void Entity_ExportTokens(const Entity& entity, TokenWriter& writer) {
 class WriteTokensWalker : public scene::Traversable::Walker {
 	mutable Stack<bool> m_stack;
 	TokenWriter& m_writer;
-	bool m_ignorePatches;
 public:
-	WriteTokensWalker(TokenWriter& writer, bool ignorePatches)
-			: m_writer(writer), m_ignorePatches(ignorePatches) {
+	WriteTokensWalker(TokenWriter& writer)
+			: m_writer(writer) {
 	}
 	bool pre(scene::Node& node) const {
 		m_stack.push(false);
@@ -80,8 +79,7 @@ public:
 			Entity_ExportTokens(*entity, m_writer);
 		} else {
 			MapExporter* exporter = Node_getMapExporter(node);
-			if (exporter != 0
-			        && !(m_ignorePatches && Node_isPatch(node))) {
+			if (exporter != 0) {
 				m_writer.writeToken("//");
 				m_writer.writeToken("brush");
 				m_writer.writeUnsigned(g_count_brushes++);
@@ -102,8 +100,8 @@ public:
 	}
 };
 
-void Map_Write(scene::Node& root, GraphTraversalFunc traverse, TokenWriter& writer, bool ignorePatches) {
+void Map_Write(scene::Node& root, GraphTraversalFunc traverse, TokenWriter& writer) {
 	g_count_entities = 0;
-	traverse(root, WriteTokensWalker(writer, ignorePatches));
+	traverse(root, WriteTokensWalker(writer));
 }
 
