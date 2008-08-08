@@ -69,7 +69,7 @@ void R_ModelLoadDPMVertsForFrame (model_t *mod, int frame)
  * @brief Load dpm models from file.
  * @todo Load this into mAliasModel_t structure
  */
-void R_ModLoadAliasDPMModel (model_t *mod, void *buffer, int bufSize)
+void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 {
 	mAliasMesh_t *outMesh;
 	mAliasFrame_t *outFrame;

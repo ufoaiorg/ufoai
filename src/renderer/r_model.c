@@ -92,7 +92,7 @@ void R_ModModellist_f (void)
 static model_t *R_ModForName (const char *name, qboolean crash)
 {
 	model_t *mod;
-	unsigned *buf;
+	byte *buf;
 	int i;
 
 	if (!name[0])
