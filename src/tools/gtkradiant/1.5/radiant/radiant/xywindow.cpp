@@ -517,7 +517,6 @@ void WXY_Print() {
 	if (!filename)
 		return;
 
-	g_pParentWnd->ActiveXY()->SetActive(true);
 	img = (unsigned char*)malloc (width * height * 3);
 	glReadPixels (0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, img);
 

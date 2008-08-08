@@ -89,9 +89,6 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 #include "referencecache.h"
 #include "stacktrace.h"
 
-void show_splash();
-void hide_splash();
-
 void error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data) {
 	gboolean in_recursion;
 	gboolean is_fatal;
@@ -458,8 +455,6 @@ int main (int argc, char* argv[]) {
 
 	paths_init();
 
-	show_splash();
-
 	create_global_pid();
 
 	GlobalPreferences_Init();
@@ -483,7 +478,6 @@ int main (int argc, char* argv[]) {
 		g_GamesDialog.m_bForceLogConsole = false;
 	}
 
-
 	Radiant_Initialise();
 
 	global_accel_init();
@@ -493,10 +487,10 @@ int main (int argc, char* argv[]) {
 	g_pParentWnd = 0;
 	g_pParentWnd = new MainFrame();
 
-	hide_splash();
-
 	if (g_bLoadLastMap && !g_strLastMap.empty()) {
 		Map_LoadFile(g_strLastMap.c_str());
+	} else if (argc == 2) {
+		Map_LoadFile(argv[1]);
 	} else {
 		Map_New();
 	}

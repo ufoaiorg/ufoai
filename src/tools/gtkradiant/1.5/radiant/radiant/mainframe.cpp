@@ -2304,37 +2304,6 @@ void MainFrame::SetActiveXY(XYWnd* p) {
 
 }
 
-GtkWindow* create_splash() {
-	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
-	gtk_window_set_decorated(window, FALSE);
-	gtk_window_set_resizable(window, FALSE);
-	gtk_window_set_modal(window, TRUE);
-	gtk_window_set_default_size(window, -1, -1);
-	gtk_window_set_position(window, GTK_WIN_POS_CENTER);
-	gtk_container_set_border_width(GTK_CONTAINER(window), 0);
-
-	GtkImage* image = new_local_image("splash.bmp");
-	gtk_widget_show(GTK_WIDGET(image));
-	gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(image));
-
-	gtk_widget_set_size_request(GTK_WIDGET(window), -1, -1);
-	gtk_widget_show(GTK_WIDGET(window));
-
-	return window;
-}
-
-static GtkWindow *splash_screen = 0;
-
-void show_splash() {
-	splash_screen = create_splash();
-
-	process_gui();
-}
-
-void hide_splash() {
-	gtk_widget_destroy(GTK_WIDGET(splash_screen));
-}
-
 WindowPositionTracker g_posCamWnd;
 WindowPositionTracker g_posXYWnd;
 WindowPositionTracker g_posXZWnd;
@@ -2352,8 +2321,6 @@ void MainFrame::Create() {
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 
 	GlobalWindowObservers_connectTopLevel(window);
-
-	gtk_window_set_transient_for(splash_screen, window);
 
 #if !defined(WIN32)
 	{
