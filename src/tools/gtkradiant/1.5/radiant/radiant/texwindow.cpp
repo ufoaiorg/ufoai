@@ -1469,34 +1469,19 @@ GtkMenuItem* TextureBrowser_constructViewMenu(GtkMenu* menu) {
 		menu_tearoff (menu);
 
 	create_check_menu_item_with_mnemonic(menu, "Hide _Unused", "ShowInUse");
-	if (string_empty(g_pGameDescription->getKeyValue("show_wads"))) {
-		create_check_menu_item_with_mnemonic(menu, "Hide Image Missing", "FilterNotex");
-	}
+	create_check_menu_item_with_mnemonic(menu, "Hide Image Missing", "FilterNotex");
+
 	menu_separator(menu);
-
 	create_menu_item_with_mnemonic(menu, "Show All", "ShowAllTextures");
-
-	// we always want to show shaders but don't want a "Show Shaders" menu for doom3 and .wad file games
-	if (g_pGameDescription->mGameType == "doom3" || !string_empty(g_pGameDescription->getKeyValue("show_wads"))) {
-		g_TextureBrowser.m_showShaders = true;
-	} else {
-		create_check_menu_item_with_mnemonic(menu, "Show shaders", "ToggleShowShaders");
-	}
-
-	if (g_pGameDescription->mGameType != "doom3" && string_empty(g_pGameDescription->getKeyValue("show_wads"))) {
-		create_check_menu_item_with_mnemonic (menu, "Shaders Only", "ToggleShowShaderlistOnly");
-	}
+	create_check_menu_item_with_mnemonic(menu, "Show shaders", "ToggleShowShaders");
 	if (g_TextureBrowser.m_tags) {
 		create_menu_item_with_mnemonic(menu, "Show Untagged", "ShowUntagged");
 	}
-
 	create_check_menu_item_with_mnemonic(menu, "Fixed Size", "FixedSize");
 
-	if (string_empty(g_pGameDescription->getKeyValue("show_wads"))) {
-		menu_separator(menu);
-		g_TextureBrowser.m_shader_info_item = GTK_WIDGET(create_menu_item_with_mnemonic(menu, "Shader Info", "ShaderInfo"));
-		gtk_widget_set_sensitive(g_TextureBrowser.m_shader_info_item, FALSE);
-	}
+	menu_separator(menu);
+	g_TextureBrowser.m_shader_info_item = GTK_WIDGET(create_menu_item_with_mnemonic(menu, "Shader Info", "ShaderInfo"));
+	gtk_widget_set_sensitive(g_TextureBrowser.m_shader_info_item, FALSE);
 
 	return textures_menu_item;
 }

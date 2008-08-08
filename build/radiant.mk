@@ -158,7 +158,6 @@ RADIANT_PLUGIN_ENTITY_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/entity/group.cpp \
 	$(RADIANT_BASE)/plugins/entity/light.cpp \
 	$(RADIANT_BASE)/plugins/entity/miscmodel.cpp \
-	$(RADIANT_BASE)/plugins/entity/skincache.cpp \
 	$(RADIANT_BASE)/plugins/entity/angle.cpp \
 	$(RADIANT_BASE)/plugins/entity/angles.cpp \
 	$(RADIANT_BASE)/plugins/entity/colour.cpp \
