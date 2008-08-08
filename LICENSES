@@ -209,6 +209,23 @@ base/maps/military_convoy/mc_drop_firebird.map | GNU General Public License 2.0 
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/oilpipes/op_arm01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_arm02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_arm03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_corner01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_corner02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_corner03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_single_end01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_single_end02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_single_end03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_single_straight01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_single_straight02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_single_straight03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_straight01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_straight02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_straight03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_straight04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_straight05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0
 base/maps/oriental/or_drop_firebird.map | GNU General Public License 2.0
