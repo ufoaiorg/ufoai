@@ -301,9 +301,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\error.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\feedback.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\filetypes.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -355,18 +352,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\parse.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patch.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patchdialog.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patchmanip.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\patchmodule.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -380,9 +365,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\plugintoolbar.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\points.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\preferencedictionary.cpp">

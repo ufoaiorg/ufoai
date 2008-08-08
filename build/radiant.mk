@@ -45,16 +45,11 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/multimon.cpp \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
-	$(RADIANT_BASE)/radiant/patch.cpp \
-	$(RADIANT_BASE)/radiant/patchdialog.cpp \
-	$(RADIANT_BASE)/radiant/patchmanip.cpp \
-	$(RADIANT_BASE)/radiant/patchmodule.cpp \
 	$(RADIANT_BASE)/radiant/pluginapi.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/pluginmanager.cpp \
 	$(RADIANT_BASE)/radiant/pluginmenu.cpp \
 	$(RADIANT_BASE)/radiant/plugintoolbar.cpp \
-	$(RADIANT_BASE)/radiant/points.cpp \
 	$(RADIANT_BASE)/radiant/preferencedictionary.cpp \
 	$(RADIANT_BASE)/radiant/preferences.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
