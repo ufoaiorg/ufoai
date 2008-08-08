@@ -41,22 +41,14 @@ class Array : public Allocator {
 	Element* m_data;
 
 	Element* construct(std::size_t size) {
-#if 1
 		return New<Element, Allocator>(*this).vector(size);
-#else
-		return new Element[size];
-#endif
 	}
 	template<typename T1>
 	Element* construct(std::size_t size, const T1& value) {
 		return New<Element, Allocator>(*this).vector(size, value);
 	}
 	void destroy(Element* data, std::size_t size) {
-#if 1
 		Delete<Element, Allocator>(*this).vector(data, size);
-#else
-		delete[] data;
-#endif
 	}
 
 public:

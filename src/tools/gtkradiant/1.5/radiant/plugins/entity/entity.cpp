@@ -213,9 +213,7 @@ filter_entity_classname g_filter_entity_world("worldspawn");
 filter_entity_classname g_filter_entity_func_group("func_group");
 filter_entity_classname g_filter_entity_light("light");
 filter_entity_classname g_filter_entity_misc_model("misc_model");
-filter_entity_classname g_filter_entity_misc_gamemodel("misc_gamemodel");
 filter_entity_classgroup g_filter_entity_trigger("trigger_");
-filter_entity_classgroup g_filter_entity_path("path_");
 
 void Entity_InitFilters() {
 	add_entity_filter(g_filter_entity_world, EXCLUDE_WORLD);
@@ -223,9 +221,7 @@ void Entity_InitFilters() {
 	add_entity_filter(g_filter_entity_world, EXCLUDE_ENT, true);
 	add_entity_filter(g_filter_entity_trigger, EXCLUDE_TRIGGERS);
 	add_entity_filter(g_filter_entity_misc_model, EXCLUDE_MODELS);
-	add_entity_filter(g_filter_entity_misc_gamemodel, EXCLUDE_MODELS);
 	add_entity_filter(g_filter_entity_light, EXCLUDE_LIGHTS);
-	add_entity_filter(g_filter_entity_path, EXCLUDE_PATHS);
 }
 
 

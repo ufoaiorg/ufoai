@@ -307,28 +307,7 @@ inline void matrix4_multiply_by_matrix4(Matrix4& self, const Matrix4& other) {
 
 /// \brief Returns \p self pre-multiplied by \p other.
 inline Matrix4 matrix4_premultiplied_by_matrix4(const Matrix4& self, const Matrix4& other) {
-#if 1
 	return matrix4_multiplied_by_matrix4(other, self);
-#else
-	return Matrix4(
-	           self[0] * other[0] + self[1] * other[4] + self[2] * other[8] + self[3] * other[12],
-	           self[0] * other[1] + self[1] * other[5] + self[2] * other[9] + self[3] * other[13],
-	           self[0] * other[2] + self[1] * other[6] + self[2] * other[10] + self[3] * other[14],
-	           self[0] * other[3] + self[1] * other[7] + self[2] * other[11] + self[3] * other[15],
-	           self[4] * other[0] + self[5] * other[4] + self[6] * other[8] + self[7] * other[12],
-	           self[4] * other[1] + self[5] * other[5] + self[6] * other[9] + self[7] * other[13],
-	           self[4] * other[2] + self[5] * other[6] + self[6] * other[10] + self[7] * other[14],
-	           self[4] * other[3] + self[5] * other[7] + self[6] * other[11] + self[7] * other[15],
-	           self[8] * other[0] + self[9] * other[4] + self[10]* other[8] + self[11]* other[12],
-	           self[8] * other[1] + self[9] * other[5] + self[10]* other[9] + self[11]* other[13],
-	           self[8] * other[2] + self[9] * other[6] + self[10]* other[10] + self[11]* other[14],
-	           self[8] * other[3] + self[9] * other[7] + self[10]* other[11] + self[11]* other[15],
-	           self[12]* other[0] + self[13]* other[4] + self[14]* other[8] + self[15]* other[12],
-	           self[12]* other[1] + self[13]* other[5] + self[14]* other[9] + self[15]* other[13],
-	           self[12]* other[2] + self[13]* other[6] + self[14]* other[10] + self[15]* other[14],
-	           self[12]* other[3] + self[13]* other[7] + self[14]* other[11] + self[15]* other[15]
-	       );
-#endif
 }
 
 /// \brief Pre-multiplies \p self by \p other in-place.
@@ -373,29 +352,7 @@ inline void matrix4_affine_multiply_by_matrix4(Matrix4& self, const Matrix4& oth
 /// \brief Returns \p self pre-multiplied by \p other.
 /// \p self and \p other must be affine.
 inline Matrix4 matrix4_affine_premultiplied_by_matrix4(const Matrix4& self, const Matrix4& other) {
-#if 1
 	return matrix4_affine_multiplied_by_matrix4(other, self);
-#else
-	return Matrix4(
-	           self[0] * other[0] + self[1] * other[4] + self[2] * other[8],
-	           self[0] * other[1] + self[1] * other[5] + self[2] * other[9],
-	           self[0] * other[2] + self[1] * other[6] + self[2] * other[10],
-	           0,
-	           self[4] * other[0] + self[5] * other[4] + self[6] * other[8],
-	           self[4] * other[1] + self[5] * other[5] + self[6] * other[9],
-	           self[4] * other[2] + self[5] * other[6] + self[6] * other[10],
-	           0,
-	           self[8] * other[0] + self[9] * other[4] + self[10]* other[8],
-	           self[8] * other[1] + self[9] * other[5] + self[10]* other[9],
-	           self[8] * other[2] + self[9] * other[6] + self[10]* other[10],
-	           0,
-	           self[12]* other[0] + self[13]* other[4] + self[14]* other[8] + other[12],
-	           self[12]* other[1] + self[13]* other[5] + self[14]* other[9] + other[13],
-	           self[12]* other[2] + self[13]* other[6] + self[14]* other[10] + other[14],
-	           1
-	       )
-	       );
-#endif
 }
 
 /// \brief Pre-multiplies \p self by \p other in-place.
@@ -759,8 +716,6 @@ sx.sy.cz + cx.sz + -sx.cy.0    sx.sy.-sz + cx.cz + -sx.cy.0    sx.sy.0  + cx.0  
 -cx.sy.cz + sx.sz +  cx.cy.0   -cx.sy.-sz + sx.cz +  cx.cy.0   -cx.sy.0  + 0 .0  +  cx.cy.1  |
 \endverbatim */
 inline Matrix4 matrix4_rotation_for_euler_xyz(const Vector3& euler) {
-#if 1
-
 	double cx = cos(euler[0]);
 	double sx = sin(euler[0]);
 	double cy = cos(euler[1]);
@@ -786,18 +741,6 @@ inline Matrix4 matrix4_rotation_for_euler_xyz(const Vector3& euler) {
 	           0,
 	           1
 	       );
-
-#else
-
-	return matrix4_premultiply_by_matrix4(
-	           matrix4_premultiply_by_matrix4(
-	               matrix4_rotation_for_x(euler[0]),
-	               matrix4_rotation_for_y(euler[1])
-	           ),
-	           matrix4_rotation_for_z(euler[2])
-	       );
-
-#endif
 }
 
 /// \brief Constructs a pure-rotation matrix from a set of euler angles (degrees) in the order (x, y, z).
@@ -851,8 +794,6 @@ inline Matrix4 matrix4_rotation_for_euler_xzy_degrees(const Vector3& euler) {
 |  cy.0 + sx.sy.0 + -cx.sy.1      0.0 + cx.0 + sx.1      sy.0 + -sx.cy.0 + cx.cy.1    |
 \endverbatim */
 inline Matrix4 matrix4_rotation_for_euler_yxz(const Vector3& euler) {
-#if 1
-
 	double cx = cos(euler[0]);
 	double sx = sin(euler[0]);
 	double cy = cos(euler[1]);
@@ -878,18 +819,6 @@ inline Matrix4 matrix4_rotation_for_euler_yxz(const Vector3& euler) {
 	           0,
 	           1
 	       );
-
-#else
-
-	return matrix4_premultiply_by_matrix4(
-	           matrix4_premultiply_by_matrix4(
-	               matrix4_rotation_for_y(euler[1]),
-	               matrix4_rotation_for_x(euler[0])
-	           ),
-	           matrix4_rotation_for_z(euler[2])
-	       );
-
-#endif
 }
 
 /// \brief Constructs a pure-rotation matrix from a set of euler angles (degrees) in the order (y, x, z).
@@ -911,7 +840,6 @@ inline void matrix4_rotate_by_euler_yxz_degrees(Matrix4& self, const Vector3& eu
 
 /// \brief Constructs a pure-rotation matrix from a set of euler angles (radians) in the order (z, x, y).
 inline Matrix4 matrix4_rotation_for_euler_zxy(const Vector3& euler) {
-#if 1
 	return matrix4_premultiplied_by_matrix4(
 	           matrix4_premultiplied_by_matrix4(
 	               matrix4_rotation_for_z(euler[2]),
@@ -919,33 +847,6 @@ inline Matrix4 matrix4_rotation_for_euler_zxy(const Vector3& euler) {
 	           ),
 	           matrix4_rotation_for_y(euler[1])
 	       );
-#else
-	double cx = cos(euler[0]);
-	double sx = sin(euler[0]);
-	double cy = cos(euler[1]);
-	double sy = sin(euler[1]);
-	double cz = cos(euler[2]);
-	double sz = sin(euler[2]);
-
-	return Matrix4(
-	           static_cast<float>(cz * cy + sz * sx * sy),
-	           static_cast<float>(sz * cx),
-	           static_cast<float>(cz * -sy + sz * sx * cy),
-	           0,
-	           static_cast<float>(-sz * cy + cz * sx * sy),
-	           static_cast<float>(cz * cx),
-	           static_cast<float>(-sz * -sy + cz * cx * cy),
-	           0,
-	           static_cast<float>(cx* sy),
-	           static_cast<float>(-sx),
-	           static_cast<float>(cx* cy),
-	           0,
-	           0,
-	           0,
-	           0,
-	           1
-	       );
-#endif
 }
 
 /// \brief Constructs a pure-rotation matrix from a set of euler angles (degres=es) in the order (z, x, y).
@@ -967,8 +868,6 @@ inline void matrix4_rotate_by_euler_zxy_degrees(Matrix4& self, const Vector3& eu
 
 /// \brief Constructs a pure-rotation matrix from a set of euler angles (radians) in the order (z, y, x).
 inline Matrix4 matrix4_rotation_for_euler_zyx(const Vector3& euler) {
-#if 1
-
 	double cx = cos(euler[0]);
 	double sx = sin(euler[0]);
 	double cy = cos(euler[1]);
@@ -994,18 +893,6 @@ inline Matrix4 matrix4_rotation_for_euler_zyx(const Vector3& euler) {
 	           0,
 	           1
 	       );
-
-#else
-
-	return matrix4_premultiply_by_matrix4(
-	           matrix4_premultiply_by_matrix4(
-	               matrix4_rotation_for_z(euler[2]),
-	               matrix4_rotation_for_y(euler[1])
-	           ),
-	           matrix4_rotation_for_x(euler[0])
-	       );
-
-#endif
 }
 
 /// \brief Constructs a pure-rotation matrix from a set of euler angles (degrees) in the order (z, y, x).

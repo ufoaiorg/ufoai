@@ -35,19 +35,11 @@ void clicked_closure_callback(GtkWidget* widget, gpointer data) {
 }
 
 void button_connect_callback(GtkButton* button, const Callback& callback) {
-#if 1
 	g_signal_connect_swapped(G_OBJECT(button), "clicked", G_CALLBACK(callback.getThunk()), callback.getEnvironment());
-#else
-	g_signal_connect_closure(G_OBJECT(button), "clicked", create_cclosure(G_CALLBACK(clicked_closure_callback), callback), FALSE);
-#endif
 }
 
 guint toggle_button_connect_callback(GtkToggleButton* button, const Callback& callback) {
-#if 1
 	guint handler = g_signal_connect_swapped(G_OBJECT(button), "toggled", G_CALLBACK(callback.getThunk()), callback.getEnvironment());
-#else
-	guint handler = g_signal_connect_closure(G_OBJECT(button), "toggled", create_cclosure(G_CALLBACK(clicked_closure_callback), callback), TRUE);
-#endif
 	g_object_set_data(G_OBJECT(button), "handler", gint_to_pointer(handler));
 	return handler;
 }

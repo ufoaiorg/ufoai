@@ -214,14 +214,9 @@ public:
 		return new(Allocator::allocate(1)) Type(t1, t2, t3, t4, t5);
 	}
 	Type* vector(std::size_t size) {
-#if 1
 		Type* p = Allocator::allocate(size);
 		std::for_each(p, p + size, DefaultConstruct<Type>());
 		return p;
-#else
-		// this does not work with msvc71 runtime
-		return new(Allocator::allocate(size)) Type[size];
-#endif
 	}
 	template<typename T1>
 	Type* vector(std::size_t size, const T1& t1) {

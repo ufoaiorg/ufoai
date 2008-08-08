@@ -146,14 +146,9 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const int i) {
 	const std::size_t bufferSize = 16;
-#if 1
 	char buf[bufferSize];
 	char* begin = TextOutputDetail::write_signed_decimal_backward(buf + bufferSize, i, false);
 	ostream.write(begin, (buf + bufferSize) - begin);
-#else
-	char buf[bufferSize];
-	ostream.write(buf, snprintf(buf, bufferSize, "%i", i));
-#endif
 	return ostream;
 }
 
@@ -163,14 +158,9 @@ typedef unsigned int Unsigned;
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const Unsigned i) {
 	const std::size_t bufferSize = 16;
-#if 1
 	char buf[bufferSize];
 	char* begin = TextOutputDetail::write_unsigned_decimal_backward(buf + bufferSize, i, false);
 	ostream.write(begin, (buf + bufferSize) - begin);
-#else
-	char buf[bufferSize];
-	ostream.write(buf, snprintf(buf, bufferSize, "%u", i));
-#endif
 	return ostream;
 }
 
@@ -181,14 +171,9 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const size_t i) {
 	// max is 18446744073709551615, buffer of 32 chars should always be enough
 	const std::size_t bufferSize = 32;
-#if 1
 	char buf[bufferSize];
 	char* begin = TextOutputDetail::write_size_t_decimal_backward(buf + bufferSize, i, false);
 	ostream.write(begin, (buf + bufferSize) - begin);
-#else
-	char buf[bufferSize];
-	ostream.write(buf, snprintf(buf, bufferSize, "%u", i));
-#endif
 	return ostream;
 }
 

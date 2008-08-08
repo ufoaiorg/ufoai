@@ -1054,28 +1054,8 @@ public:
 
   void render(RenderStateFlags state) const
   {
-#if 1
     pointvertex_gl_array(m_vertices.data());
     glDrawElements(m_mode, GLsizei(m_indices.size()), RenderIndexTypeID, m_indices.data());
-#else
-    glBegin(m_mode);
-    if(state & RENDER_COLOURARRAY != 0)
-    {
-      for(std::size_t i = 0; i < m_indices.size(); ++i)
-      {
-        glColor4ubv(&m_vertices[m_indices[i]].colour.r);
-        glVertex3fv(&m_vertices[m_indices[i]].vertex.x);
-      }
-    }
-    else
-    {
-      for(std::size_t i = 0; i < m_indices.size(); ++i)
-      {
-        glVertex3fv(&m_vertices[m_indices[i]].vertex.x);
-      }
-    }
-    glEnd();
-#endif
   }
 };
 

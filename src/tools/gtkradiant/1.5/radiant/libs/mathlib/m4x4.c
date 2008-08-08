@@ -100,9 +100,6 @@ void m4x4_rotation_for_vec3(m4x4_t matrix, const vec3_t euler, eulerOrder_t orde
   switch(order)
   {
   case eXYZ:
-
-#if 1
-
     {
       matrix[0]  = (vec_t)(cy*cz);
       matrix[1]  = (vec_t)(cy*sz);
@@ -117,26 +114,6 @@ void m4x4_rotation_for_vec3(m4x4_t matrix, const vec3_t euler, eulerOrder_t orde
 
     matrix[12]  =  matrix[13] = matrix[14] = matrix[3] = matrix[7] = matrix[11] = 0;
     matrix[15] =  1;
-
-#else
-
-    m4x4_identity(matrix);
-    matrix[5] =(vec_t) cx; matrix[6] =(vec_t) sx;
-    matrix[9] =(vec_t)-sx; matrix[10]=(vec_t) cx;
-
-    {
-      m4x4_t temp;
-      m4x4_identity(temp);
-      temp[0] =(vec_t) cy; temp[2] =(vec_t)-sy;
-      temp[8] =(vec_t) sy; temp[10]=(vec_t) cy;
-      m4x4_premultiply_by_m4x4(matrix, temp);
-      m4x4_identity(temp);
-      temp[0] =(vec_t) cz; temp[1] =(vec_t) sz;
-      temp[4] =(vec_t)-sz; temp[5] =(vec_t) cz;
-      m4x4_premultiply_by_m4x4(matrix, temp);
-    }
-#endif
-
     break;
 
   case eYZX:
@@ -201,8 +178,6 @@ void m4x4_rotation_for_vec3(m4x4_t matrix, const vec3_t euler, eulerOrder_t orde
 |  cy.0 + sx.sy.0 + -cx.sy.1      0.0 + cx.0 + sx.1      sy.0 + -sx.cy.0 + cx.cy.1    |
 */
 
-#if 1
-
   {
     matrix[0]  = (vec_t)(cy*cz + sx*sy*-sz);
     matrix[1]  = (vec_t)(cy*sz + sx*sy*cz);
@@ -218,29 +193,9 @@ void m4x4_rotation_for_vec3(m4x4_t matrix, const vec3_t euler, eulerOrder_t orde
   matrix[12]  =  matrix[13] = matrix[14] = matrix[3] = matrix[7] = matrix[11] = 0;
   matrix[15] =  1;
 
-#else
-
-  m4x4_identity(matrix);
-  matrix[0] =(vec_t) cy; matrix[2] =(vec_t)-sy;
-  matrix[8] =(vec_t) sy; matrix[10]=(vec_t) cy;
-
-  {
-    m4x4_t temp;
-    m4x4_identity(temp);
-    temp[5] =(vec_t) cx; temp[6] =(vec_t) sx;
-    temp[9] =(vec_t)-sx; temp[10]=(vec_t) cx;
-    m4x4_premultiply_by_m4x4(matrix, temp);
-    m4x4_identity(temp);
-    temp[0] =(vec_t) cz; temp[1] =(vec_t) sz;
-    temp[4] =(vec_t)-sz; temp[5] =(vec_t) cz;
-    m4x4_premultiply_by_m4x4(matrix, temp);
-  }
-#endif
   break;
 
   case eZYX:
-#if 1
-
   {
     matrix[0]  = (vec_t)(cy*cz);
     matrix[4]  = (vec_t)(cy*-sz);
@@ -255,25 +210,6 @@ void m4x4_rotation_for_vec3(m4x4_t matrix, const vec3_t euler, eulerOrder_t orde
 
   matrix[12]  =  matrix[13] = matrix[14] = matrix[3] = matrix[7] = matrix[11] = 0;
   matrix[15] =  1;
-
-#else
-
-  m4x4_identity(matrix);
-  matrix[0] =(vec_t) cz; matrix[1] =(vec_t) sz;
-  matrix[4] =(vec_t)-sz; matrix[5] =(vec_t) cz;
-  {
-    m4x4_t temp;
-    m4x4_identity(temp);
-    temp[0] =(vec_t) cy; temp[2] =(vec_t)-sy;
-    temp[8] =(vec_t) sy; temp[10]=(vec_t) cy;
-    m4x4_premultiply_by_m4x4(matrix, temp);
-    m4x4_identity(temp);
-    temp[5] =(vec_t) cx; temp[6] =(vec_t) sx;
-    temp[9] =(vec_t)-sx; temp[10]=(vec_t) cx;
-    m4x4_premultiply_by_m4x4(matrix, temp);
-  }
-
-#endif
   break;
 
   }
@@ -615,8 +551,6 @@ void m4x4_multiply_by_m4x4(m4x4_t dst, const m4x4_t src)
 {
 	vec_t dst0, dst1, dst2, dst3;
 
-#if 1
-
   dst0 = src[0] * dst[0] + src[1] * dst[4] + src[2] * dst[8] + src[3] * dst[12];
   dst1 = src[4] * dst[0] + src[5] * dst[4] + src[6] * dst[8] + src[7] * dst[12];
   dst2 = src[8] * dst[0] + src[9] * dst[4] + src[10]* dst[8] + src[11]* dst[12];
@@ -640,37 +574,6 @@ void m4x4_multiply_by_m4x4(m4x4_t dst, const m4x4_t src)
   dst2 = src[8] * dst[3] + src[9] * dst[7] + src[10]* dst[11]+ src[11]* dst[15];
   dst3 = src[12]* dst[3] + src[13]* dst[7] + src[14]* dst[11]+ src[15]* dst[15];
   dst[3] = dst0; dst[7] = dst1; dst[11]= dst2; dst[15]= dst3;
-
-#else
-
-  vec_t * p = dst;
-	for(int i=0;i<4;i++)
-	{
-		dst1 =  src[0]  * p[0];
-		dst1 += src[1]  * p[4];
-		dst1 += src[2]  * p[8];
-		dst1 += src[3]  * p[12];
-		dst2 =  src[4]  * p[0];
-		dst2 += src[5]  * p[4];
-		dst2 += src[6]  * p[8];
-		dst2 += src[7]  * p[12];
-		dst3 =  src[8]  * p[0];
-		dst3 += src[9]  * p[4];
-		dst3 += src[10] * p[8];
-		dst3 += src[11] * p[12];
-		dst4 =  src[12] * p[0];
-		dst4 += src[13] * p[4];
-		dst4 += src[14] * p[8];
-		dst4 += src[15] * p[12];
-
-		p[0] = dst1;
-		p[4] = dst2;
-		p[8] = dst3;
-		p[12] = dst4;
-    p++;
-	}
-
-#endif
 }
 
 /*
@@ -701,8 +604,6 @@ void m4x4_premultiply_by_m4x4(m4x4_t dst, const m4x4_t src)
 {
 	vec_t dst0, dst1, dst2, dst3;
 
-#if 1
-
   dst0 = dst[0] * src[0] + dst[1] * src[4] + dst[2] * src[8] + dst[3] * src[12];
   dst1 = dst[0] * src[1] + dst[1] * src[5] + dst[2] * src[9] + dst[3] * src[13];
   dst2 = dst[0] * src[2] + dst[1] * src[6] + dst[2] * src[10]+ dst[3] * src[14];
@@ -727,35 +628,6 @@ void m4x4_premultiply_by_m4x4(m4x4_t dst, const m4x4_t src)
   dst3 = dst[12]* src[3] + dst[13]* src[7] + dst[14]* src[11]+ dst[15]* src[15];
   dst[12] = dst0; dst[13] = dst1; dst[14] = dst2; dst[15]= dst3;
 
-#else
-
-  vec_t* p = dst;
-	for(int i=0;i<4;i++)
-	{
-		dst1 =  src[0]  * p[0];
-		dst2 =  src[1]  * p[0];
-		dst3 =  src[2]  * p[0];
-		dst4 =  src[3]  * p[0];
-		dst1 += src[4]  * p[1];
-		dst2 += src[5]  * p[1];
-		dst3 += src[6]  * p[1];
-		dst4 += src[7]  * p[1];
-		dst1 += src[8]  * p[2];
-		dst2 += src[9]  * p[2];
-		dst4 += src[11] * p[2];
-		dst3 += src[10] * p[2];
-		dst1 += src[12] * p[3];
-		dst2 += src[13] * p[3];
-		dst3 += src[14] * p[3];
-		dst4 += src[15] * p[3];
-
-		*p++ = dst1;
-		*p++ = dst2;
-		*p++ = dst3;
-		*p++ = dst4;
-	}
-
-#endif
 }
 
 void m4x4_orthogonal_multiply_by_m4x4(m4x4_t dst, const m4x4_t src)

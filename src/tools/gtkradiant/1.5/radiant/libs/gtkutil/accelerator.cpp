@@ -525,7 +525,6 @@ static gboolean override_global_accelerators(GtkWindow* window, GdkEventKey* eve
 }
 
 void global_accel_connect_window(GtkWindow* window) {
-#if 1
 	unsigned int override_handler = g_signal_connect(G_OBJECT(window), "key_press_event", G_CALLBACK(override_global_accelerators), 0);
 	g_object_set_data(G_OBJECT(window), "override_handler", gint_to_pointer(override_handler));
 
@@ -533,25 +532,14 @@ void global_accel_connect_window(GtkWindow* window) {
 	g_object_set_data(G_OBJECT(window), "special_key_press_handler", gint_to_pointer(special_key_press_handler));
 
 	GlobalPressedKeys_connect(window);
-#else
-	unsigned int key_press_handler = g_signal_connect(G_OBJECT(window), "key_press_event", G_CALLBACK(accelerator_key_event), &g_keydown_accelerators);
-	unsigned int key_release_handler = g_signal_connect(G_OBJECT(window), "key_release_event", G_CALLBACK(accelerator_key_event), &g_keyup_accelerators);
-	g_object_set_data(G_OBJECT(window), "key_press_handler", gint_to_pointer(key_press_handler));
-	g_object_set_data(G_OBJECT(window), "key_release_handler", gint_to_pointer(key_release_handler));
-#endif
 	g_accel_windows.insert(window);
 	gtk_window_add_accel_group(window, global_accel);
 }
 void global_accel_disconnect_window(GtkWindow* window) {
-#if 1
 	GlobalPressedKeys_disconnect(window);
 
 	g_signal_handler_disconnect(G_OBJECT(window), gpointer_to_int(g_object_get_data(G_OBJECT(window), "override_handler")));
 	g_signal_handler_disconnect(G_OBJECT(window), gpointer_to_int(g_object_get_data(G_OBJECT(window), "special_key_press_handler")));
-#else
-	g_signal_handler_disconnect(G_OBJECT(window), gpointer_to_int(g_object_get_data(G_OBJECT(window), "key_press_handler")));
-	g_signal_handler_disconnect(G_OBJECT(window), gpointer_to_int(g_object_get_data(G_OBJECT(window), "key_release_handler")));
-#endif
 	gtk_window_remove_accel_group(window, global_accel);
 	std::size_t count = g_accel_windows.erase(window);
 	ASSERT_MESSAGE(count == 1, "failed to remove accel group\n");

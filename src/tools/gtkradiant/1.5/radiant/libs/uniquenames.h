@@ -27,7 +27,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "string/string.h"
 #include "generic/static.h"
 
-#if 1
 class Postfix
 {
   unsigned int m_value;
@@ -61,56 +60,6 @@ public:
     return !operator==(other);
   }
 };
-
-#else
-class Postfix
-{
-  std::pair<unsigned int, unsigned int> m_value;
-public:
-  Postfix(unsigned int number, unsigned int leading_zeros)
-    : m_value(leading_zeros, number)
-  {
-  }
-  Postfix(const char* postfix)
-    : m_value(number_count_leading_zeros(postfix), atoi(postfix))
-  {
-  }
-  unsigned int number() const
-  {
-    return m_value.second;
-  }
-  unsigned int leading_zeros() const
-  {
-    return m_value.first;
-  }
-  void write(char* buffer)
-  {
-    for(unsigned int count = 0; count < m_value.first; ++count, ++buffer)
-      *buffer = '0';
-    sprintf(buffer, "%u", m_value.second);
-  }
-  Postfix& operator++()
-  {
-    ++m_value.second;
-    if(m_value.first != 0 && m_value.second % 10 == 0)
-      --m_value.first;
-    return *this;
-  }
-  bool operator<(const Postfix& other) const
-  {
-    return m_value < other.m_value;
-  }
-  bool operator==(const Postfix& other) const
-  {
-    return m_value == other.m_value;
-  }
-  bool operator!=(const Postfix& other) const
-  {
-    return !operator==(other);
-  }
-};
-
-#endif
 
 typedef std::pair<CopiedString, Postfix> name_t;
 

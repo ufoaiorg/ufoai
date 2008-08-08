@@ -113,17 +113,8 @@ inline void aabb_draw_wire(const Vector3 points[8])
     4, 5, 5, 6, 6, 7, 7, 4,
     0, 4, 1, 5, 2, 6, 3, 7,
   };
-#if 1
   glVertexPointer(3, GL_FLOAT, 0, points);
   glDrawElements(GL_LINES, sizeof(indices)/sizeof(index_t), GL_UNSIGNED_INT, indices);
-#else
-  glBegin(GL_LINES);
-  for(std::size_t i = 0; i < sizeof(indices)/sizeof(index_t); ++i)
-  {
-    glVertex3fv(points[indices[i]]);
-  }
-  glEnd();
-#endif
 }
 
 inline void aabb_draw_flatshade(const Vector3 points[8])

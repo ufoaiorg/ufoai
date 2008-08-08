@@ -362,36 +362,13 @@ inline SquareRoot< VectorLengthSquared<First> > vector_length(const First& first
 	return float_square_root(vector_length_squared(first));
 }
 
-#if 1
 template<typename First>
-inline VectorScalar <
-Multiplied<typename First::value_type, typename First::value_type>,
-First,
-// multiple evaulations of subexpression
-ScalarDivided <
-Literal<typename First::value_type>,
-SquareRoot <
-VectorLengthSquared<First>
->
->
-> vector_normalised(const First& first) {
+inline VectorScalar <Multiplied<typename First::value_type, typename First::value_type>,First,
+	// multiple evaulations of subexpression
+	ScalarDivided <Literal<typename First::value_type>,SquareRoot <VectorLengthSquared<First>>>> vector_normalised(const First& first) {
 	typedef typename First::value_type first_value_type;
 	return vector_scaled(first, float_reciprocal(vector_length(first)));
 }
-#else
-template<typename First>
-inline VectorScalar <
-Multiplied<typename First::value_type, typename First::value_type>,
-First,
-// single evaluation of subexpression
-Literal<typename First::value_type>
->
-vector_normalised(const First& first) {
-	typedef typename First::value_type first_value_type;
-	return vector_scaled(first, float_literal(static_cast<first_value_type>(first_value_type(1.0) / vector_length(first).eval())));
-}
-#endif
-
 
 class Matrix4Literal {
 	const Matrix4 m_value;
@@ -401,7 +378,7 @@ public:
 	typedef IntegralConstant<4> dimension1;
 
 	Matrix4Literal(const Matrix4& value)
-			: m_value(value) {
+		: m_value(value) {
 	}
 	const value_type& eval(unsigned int r, unsigned int c) const {
 		return m_value[r*4+c];
@@ -420,7 +397,7 @@ public:
 	typedef IntegralConstant<4> dimension1;
 
 	Matrix4Identity(const Matrix4& value)
-			: m_value(value) {
+		: m_value(value) {
 	}
 	const value_type& eval(unsigned int r, unsigned int c) const {
 		return m_value[r*4+c];

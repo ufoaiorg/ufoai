@@ -77,7 +77,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //      brush_primit.h be changed to "#if 0". add/removeScale screws this up ATM. :-)
 //      Plus, Radiant seems to work just fine without that stuff. ;-)
 
-#define TEXTOOL_ENABLED 0
+#define TEXTOOL_ENABLED 1
 
 #if TEXTOOL_ENABLED
 
@@ -107,14 +107,7 @@ void queueDraw() {
 #endif
 
 inline void spin_button_set_step(GtkSpinButton* spin, gfloat step) {
-#if 1
 	gtk_spin_button_get_adjustment(spin)->step_increment = step;
-#else
-	GValue gvalue = GValue_default();
-	g_value_init(&gvalue, G_TYPE_DOUBLE);
-	g_value_set_double(&gvalue, step);
-	g_object_set(G_OBJECT(gtk_spin_button_get_adjustment(spin)), "step-increment", &gvalue, NULL);
-#endif
 }
 
 class Increment {

@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <vector>
 #include <algorithm>
 
-class TraversableObserverInsertOutputIterator 
+class TraversableObserverInsertOutputIterator
 {
 protected:
   scene::Traversable::Observer* m_observer;
@@ -43,17 +43,17 @@ public:
   typedef void pointer;
   typedef void reference;
 
-  TraversableObserverInsertOutputIterator(scene::Traversable::Observer* observer) 
+  TraversableObserverInsertOutputIterator(scene::Traversable::Observer* observer)
     : m_observer(observer)
   {
   }
   TraversableObserverInsertOutputIterator& operator=(const NodeReference& node)
-  { 
+  {
     m_observer->insert(node);
     return *this;
   }
   TraversableObserverInsertOutputIterator& operator=(const NodeSmartReference& node)
-  { 
+  {
     m_observer->insert(node);
     return *this;
   }
@@ -62,7 +62,7 @@ public:
   TraversableObserverInsertOutputIterator& operator++(int) { return *this; }
 };
 
-class TraversableObserverEraseOutputIterator 
+class TraversableObserverEraseOutputIterator
 {
 protected:
   scene::Traversable::Observer* m_observer;
@@ -73,17 +73,17 @@ public:
   typedef void pointer;
   typedef void reference;
 
-  TraversableObserverEraseOutputIterator(scene::Traversable::Observer* observer) 
+  TraversableObserverEraseOutputIterator(scene::Traversable::Observer* observer)
     : m_observer(observer)
   {
   }
   TraversableObserverEraseOutputIterator& operator=(const NodeReference& node)
-  { 
+  {
     m_observer->erase(node);
     return *this;
   }
   TraversableObserverEraseOutputIterator& operator=(const NodeSmartReference& node)
-  { 
+  {
     m_observer->erase(node);
     return *this;
   }
@@ -154,16 +154,12 @@ public:
   }
   TraversableNodeSet& operator=(const TraversableNodeSet& other)
   {
-#if 1 // optimised change-tracking using diff algorithm
+	// optimised change-tracking using diff algorithm
     if(m_observer)
     {
       nodeset_diff(m_children, other.m_children, m_observer);
     }
     copy(other);
-#else
-    TraversableNodeSet tmp(other);
-    tmp.swap(*this);
-#endif
     return *this;
   }
   void swap(TraversableNodeSet& other)

@@ -653,15 +653,10 @@ void Scene_BrushGetTexdef_Selected(scene::Graph& graph, TextureProjection& proje
 }
 
 void Scene_BrushGetTexdef_Component_Selected(scene::Graph& graph, TextureProjection& projection) {
-#if 1
 	if (!g_SelectedFaceInstances.empty()) {
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
 		faceInstance.getFace().GetTexdef(projection);
 	}
-#else
-	FaceGetTexdef visitor(projection);
-	Scene_ForEachSelectedBrushFace(graph, visitor);
-#endif
 }
 
 void Scene_BrushGetShaderSize_Component_Selected(scene::Graph& graph, size_t& width, size_t& height) {
@@ -690,27 +685,19 @@ public:
 
 
 void Scene_BrushGetFlags_Selected(scene::Graph& graph, ContentsFlagsValue& flags) {
-#if 1
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		BrushInstance* brush = Instance_getBrush(GlobalSelectionSystem().ultimateSelected());
 		if (brush != 0) {
 			Brush_forEachFace(*brush, FaceGetFlags(flags));
 		}
 	}
-#else
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceGetFlags(flags));
-#endif
 }
 
 void Scene_BrushGetFlags_Component_Selected(scene::Graph& graph, ContentsFlagsValue& flags) {
-#if 1
 	if (!g_SelectedFaceInstances.empty()) {
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
 		faceInstance.getFace().GetFlags(flags);
 	}
-#else
-	Scene_ForEachSelectedBrushFace(graph, FaceGetFlags(flags));
-#endif
 }
 
 
@@ -730,28 +717,19 @@ public:
 };
 
 void Scene_BrushGetShader_Selected(scene::Graph& graph, CopiedString& shader) {
-#if 1
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		BrushInstance* brush = Instance_getBrush(GlobalSelectionSystem().ultimateSelected());
 		if (brush != 0) {
 			Brush_forEachFace(*brush, FaceGetShader(shader));
 		}
 	}
-#else
-	Scene_ForEachSelectedBrush_ForEachFace(graph, FaceGetShader(shader));
-#endif
 }
 
 void Scene_BrushGetShader_Component_Selected(scene::Graph& graph, CopiedString& shader) {
-#if 1
 	if (!g_SelectedFaceInstances.empty()) {
 		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
 		shader = faceInstance.getFace().GetShader();
 	}
-#else
-	FaceGetShader visitor(shader);
-	Scene_ForEachSelectedBrushFace(graph, visitor);
-#endif
 }
 
 
@@ -853,9 +831,6 @@ public:
 filter_face_flags g_filter_face_clip(QER_CLIP);
 filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);
 
-filter_face_shader g_filter_face_clip_q2("textures/clip");
-filter_brush_all_faces g_filter_brush_clip_q2(&g_filter_face_clip_q2);
-
 filter_face_shader g_filter_face_weapclip("textures/common/weapclip");
 filter_brush_all_faces g_filter_brush_weapclip(&g_filter_face_weapclip);
 
@@ -865,29 +840,11 @@ filter_brush_all_faces g_filter_brush_botclip(&g_filter_face_botclip);
 filter_face_shader_prefix g_filter_face_caulk("textures/common/caulk");
 filter_brush_all_faces g_filter_brush_caulk(&g_filter_face_caulk);
 
-filter_face_shader_prefix g_filter_face_caulk_ja("textures/system/caulk");
-filter_brush_all_faces g_filter_brush_caulk_ja(&g_filter_face_caulk_ja);
-
 filter_face_shader_prefix g_filter_face_liquids("textures/liquids/");
 filter_brush_any_face g_filter_brush_liquids(&g_filter_face_liquids);
 
 filter_face_shader g_filter_face_hint("textures/common/hint");
 filter_brush_any_face g_filter_brush_hint(&g_filter_face_hint);
-
-filter_face_shader g_filter_face_hint_q2("textures/hint");
-filter_brush_any_face g_filter_brush_hint_q2(&g_filter_face_hint_q2);
-
-filter_face_shader g_filter_face_hint_ja("textures/system/hint");
-filter_brush_any_face g_filter_brush_hint_ja(&g_filter_face_hint_ja);
-
-filter_face_shader g_filter_face_areaportal("textures/common/areaportal");
-filter_brush_all_faces g_filter_brush_areaportal(&g_filter_face_areaportal);
-
-filter_face_shader g_filter_face_visportal("textures/editor/visportal");
-filter_brush_any_face g_filter_brush_visportal(&g_filter_face_visportal);
-
-filter_face_shader g_filter_face_clusterportal("textures/common/clusterportal");
-filter_brush_all_faces g_filter_brush_clusterportal(&g_filter_face_clusterportal);
 
 filter_face_shader g_filter_face_lightgrid("textures/common/lightgrid");
 filter_brush_all_faces g_filter_brush_lightgrid(&g_filter_face_lightgrid);
@@ -901,16 +858,11 @@ filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 
 void BrushFilters_construct() {
 	add_brush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
-	add_brush_filter(g_filter_brush_clip_q2, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_caulk, EXCLUDE_CAULK);
-	add_brush_filter(g_filter_brush_caulk_ja, EXCLUDE_CAULK);
 	add_face_filter(g_filter_face_caulk, EXCLUDE_CAULK);
-	add_face_filter(g_filter_face_caulk_ja, EXCLUDE_CAULK);
 	add_brush_filter(g_filter_brush_liquids, EXCLUDE_LIQUIDS);
 	add_brush_filter(g_filter_brush_hint, EXCLUDE_HINTSSKIPS);
-	add_brush_filter(g_filter_brush_hint_q2, EXCLUDE_HINTSSKIPS);
-	add_brush_filter(g_filter_brush_hint_ja, EXCLUDE_HINTSSKIPS);
 	add_brush_filter(g_filter_brush_translucent, EXCLUDE_TRANSLUCENT);
 	add_brush_filter(g_filter_brush_detail, EXCLUDE_DETAILS);
 	add_brush_filter(g_filter_brush_detail, EXCLUDE_STRUCTURAL, true);

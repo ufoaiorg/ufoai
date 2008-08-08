@@ -200,7 +200,6 @@ void ConstructFilters() {
 	add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('5', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('6', (GdkModifierType)GDK_MOD1_MASK ));
 	add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_PATHS, "FilterPaths", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('0', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('D', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_LIGHTGRID, "FilterLightgrid", accelerator_null());

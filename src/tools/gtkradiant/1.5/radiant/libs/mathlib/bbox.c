@@ -42,7 +42,6 @@ void aabb_clear(aabb_t *aabb)
 
 void aabb_extend_by_point(aabb_t *aabb, const vec3_t point)
 {
-#if 1
   int i;
   vec_t min, max, displacement;
   for(i=0; i<3; i++)
@@ -68,28 +67,6 @@ void aabb_extend_by_point(aabb_t *aabb, const vec3_t point)
       aabb->extents[i] = max - aabb->origin[i];
     }
   }
-#else
-  unsigned int i;
-  for(i=0; i<3; ++i)
-  {
-    if(aabb->extents[i] < 0) // degenerate
-    {
-      aabb->origin[i] = point[i];
-      aabb->extents[i] = 0;
-    }
-    else
-    {
-      vec_t displacement = point[i] - aabb->origin[i];
-      vec_t increment = (vec_t)fabs(displacement) - aabb->extents[i];
-      if(increment > 0)
-      {
-        increment *= (vec_t)((displacement > 0) ? 0.5 : -0.5);
-        aabb->extents[i] += increment;
-        aabb->origin[i] += increment;
-      }
-    }
-  }
-#endif
 }
 
 void aabb_extend_by_aabb(aabb_t *aabb, const aabb_t *aabb_src)
@@ -161,7 +138,7 @@ int aabb_test_plane(const aabb_t *aabb, const float *plane)
 
   // calc distance of origin from plane
   fDist = DotProduct(plane, aabb->origin) + plane[3];
-  
+
    // calc extents distance relative to plane normal
   fIntersect = (vec_t)(fabs(plane[0] * aabb->extents[0]) + fabs(plane[1] * aabb->extents[1]) + fabs(plane[2] * aabb->extents[2]));
   // accept if origin is less than or equal to this distance
@@ -170,7 +147,7 @@ int aabb_test_plane(const aabb_t *aabb, const float *plane)
   return 0; // totally outside
 }
 
-/* 
+/*
 Fast Ray-Box Intersection
 by Andrew Woo
 from "Graphics Gems", Academic Press, 1990
@@ -189,7 +166,7 @@ int aabb_intersect_ray(const aabb_t *aabb, const ray_t *ray, vec3_t intersection
 	int whichPlane;
 	double maxT[NUMDIM];
 	double candidatePlane[NUMDIM];
-  
+
   const float *origin = ray->origin;
   const float *direction = ray->direction;
 
@@ -262,19 +239,19 @@ int aabb_test_ray(const aabb_t* aabb, const ray_t* ray)
 {
  vec3_t displacement, ray_absolute;
  vec_t f;
- 
+
  displacement[0] = ray->origin[0] - aabb->origin[0];
  if(fabs(displacement[0]) > aabb->extents[0] && displacement[0] * ray->direction[0] >= 0.0f)
    return 0;
- 
+
  displacement[1] = ray->origin[1] - aabb->origin[1];
  if(fabs(displacement[1]) > aabb->extents[1] && displacement[1] * ray->direction[1] >= 0.0f)
    return 0;
- 
+
  displacement[2] = ray->origin[2] - aabb->origin[2];
  if(fabs(displacement[2]) > aabb->extents[2] && displacement[2] * ray->direction[2] >= 0.0f)
    return 0;
- 
+
  ray_absolute[0] = (float)fabs(ray->direction[0]);
  ray_absolute[1] = (float)fabs(ray->direction[1]);
  ray_absolute[2] = (float)fabs(ray->direction[2]);
@@ -290,7 +267,7 @@ int aabb_test_ray(const aabb_t* aabb, const ray_t* ray)
  f = ray->direction[0] * displacement[1] - ray->direction[1] * displacement[0];
  if((float)fabs(f) > aabb->extents[0] * ray_absolute[1] + aabb->extents[1] * ray_absolute[0])
    return 0;
- 
+
  return 1;
 }
 
@@ -399,9 +376,9 @@ void bbox_for_oriented_aabb(bbox_t *bbox, const aabb_t *aabb, const m4x4_t matri
 	double rad[3];
 	double pi_180 = Q_PI / 180;
   double A, B, C, D, E, F, AD, BD;
-  
+
 	VectorCopy(aabb->origin, bbox->aabb.origin);
-	
+
   m4x4_transform_point(matrix, bbox->aabb.origin);
 
 	bbox->aabb.extents[0] = aabb->extents[0] * scale[0];
