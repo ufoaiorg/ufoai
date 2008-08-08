@@ -858,7 +858,7 @@ void thunk_OnSleep() {
 
 void OpenHelpURL() {
 	StringOutputStream help(256);
-	help << AppPath_get() << "docs/index.htm";
+	help << AppPath_get() << "docs/index.html";
 	OpenURL(help.c_str());
 }
 
