@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "undo.h"
 
 #include "debugging/debugging.h"
-#include "warnings.h"
 
 #include "iundo.h"
 #include "preferencesystem.h"

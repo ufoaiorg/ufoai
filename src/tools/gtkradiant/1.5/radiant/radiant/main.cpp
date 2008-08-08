@@ -183,16 +183,6 @@ void error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar 
 	ERROR_MESSAGE("GTK+ error: " << buf);
 }
 
-#if defined (_DEBUG) && defined (WIN32) && defined (_MSC_VER)
-#include "crtdbg.h"
-#endif
-
-void crt_init() {
-#if defined (_DEBUG) && defined (WIN32) && defined (_MSC_VER)
-	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-#endif
-}
-
 class Lock {
 	bool m_locked;
 public:
@@ -444,7 +434,6 @@ void user_shortcuts_init() {
 }
 
 int main (int argc, char* argv[]) {
-	crt_init();
 
 	streams_init();
 

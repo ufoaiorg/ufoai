@@ -46,9 +46,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef WIN32
 #define strcasecmp strcmpi
-#if _MSC_VER < 1400
-#define vsnprintf std::vsnprintf
-#endif
 #else
 #include <cstddef>
 #endif

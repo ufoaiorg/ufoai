@@ -84,12 +84,6 @@ public:
 	}
 };
 
-#ifdef WIN32
-#if _MSC_VER < 1400
-#define vsnprintf std::vsnprintf
-#endif
-#endif
-
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const FormattedVA& formatted) {
 	char buffer[1024];

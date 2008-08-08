@@ -159,7 +159,6 @@ void CGameDescription::Dump() {
 CGameDescription *g_pGameDescription; ///< shortcut to g_GamesDialog.m_pCurrentDescription
 
 
-#include "warnings.h"
 #include "stream/textfilestream.h"
 #include "container/array.h"
 #include "xml/ixml.h"

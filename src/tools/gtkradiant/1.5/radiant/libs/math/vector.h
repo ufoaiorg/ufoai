@@ -27,26 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "generic/vector.h"
 
-#if defined (_MSC_VER)
-
-inline int lrint (double flt) {
-	int i;
-
-	_asm {
-		fld flt
-		fistp i
-	};
-
-	return i;
-}
-
-#elif defined(__FreeBSD__)
-
-inline int lrint(double f) {
-	return static_cast<int>(f + 0.5);
-}
-
-#elif defined(__GNUC__)
+#if defined(__GNUC__)
 
 // lrint is part of ISO C99
 #define	_ISOC9X_SOURCE	1

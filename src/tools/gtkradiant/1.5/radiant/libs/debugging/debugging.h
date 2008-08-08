@@ -26,16 +26,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// \brief Debugging macros for fatal error/assert messages.
 
 #include "stream/textstream.h"
-#include "warnings.h"
 #include "generic/static.h"
 
-#if defined(_MSC_VER) && defined(_M_IX86)
-#define DEBUGGER_BREAKPOINT() __asm { int 3 }
-#elif defined (__i386__) && defined (__GNUC__) && __GNUC__ >= 2
+#if defined (__i386__) && defined (__GNUC__) && __GNUC__ >= 2
 #define DEBUGGER_BREAKPOINT() __asm__ __volatile__ ("int $03")
 #else
 #include <signal.h>
-
 #define DEBUGGER_BREAKPOINT() raise(SIGTRAP);
 #endif
 

@@ -27,10 +27,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ///
 /// Use makeReference() to wrap non-const-reference constructor parameters.
 
-#if _MSC_VER > 1000 && defined(WIN32)
-#pragma warning(disable:4345) // behavior change: an object of POD type constructed with an initializer of the form () will be default-initialized
-#endif
-
 #include <new>
 
 template<typename Type>
