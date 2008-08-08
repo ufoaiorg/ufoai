@@ -45,11 +45,7 @@ void Patch_Construct(EPatchType type) {
 	Patch::constructStatic(type);
 	PatchInstance::constructStatic();
 
-	if (type == ePatchTypeDoom3) {
-		MAX_PATCH_WIDTH = MAX_PATCH_HEIGHT = 99;
-	} else {
-		MAX_PATCH_WIDTH = MAX_PATCH_HEIGHT = 15;
-	}
+	MAX_PATCH_WIDTH = MAX_PATCH_HEIGHT = 15;
 }
 
 void Patch_Destroy() {
@@ -97,32 +93,6 @@ PatchCreator& GetQuake3PatchCreator() {
 	return g_Quake3PatchCreator;
 }
 
-class Doom3PatchCreator : public CommonPatchCreator {
-public:
-	scene::Node& createPatch() {
-		return (new PatchNodeDoom3(true))->node();
-	}
-};
-
-Doom3PatchCreator g_Doom3PatchCreator;
-
-PatchCreator& GetDoom3PatchCreator() {
-	return g_Doom3PatchCreator;
-}
-
-class Doom3PatchDef2Creator : public CommonPatchCreator {
-public:
-	scene::Node& createPatch() {
-		return (new PatchNodeDoom3())->node();
-	}
-};
-
-Doom3PatchDef2Creator g_Doom3PatchDef2Creator;
-
-PatchCreator& GetDoom3PatchDef2Creator() {
-	return g_Doom3PatchDef2Creator;
-}
-
 #include "modulesystem/singletonmodule.h"
 #include "modulesystem/moduleregistry.h"
 
@@ -159,56 +129,3 @@ public:
 typedef SingletonModule<PatchQuake3API, PatchDependencies> PatchQuake3Module;
 typedef Static<PatchQuake3Module> StaticPatchQuake3Module;
 StaticRegisterModule staticRegisterPatchQuake3(StaticPatchQuake3Module::instance());
-
-
-
-class PatchDoom3API : public TypeSystemRef {
-	PatchCreator* m_patchdoom3;
-public:
-	typedef PatchCreator Type;
-	STRING_CONSTANT(Name, "doom3");
-
-	PatchDoom3API() {
-		Patch_Construct(ePatchTypeDoom3);
-
-		m_patchdoom3 = &GetDoom3PatchCreator();
-	}
-	~PatchDoom3API() {
-		Patch_Destroy();
-	}
-	PatchCreator* getTable() {
-		return m_patchdoom3;
-	}
-};
-
-typedef SingletonModule<PatchDoom3API, PatchDependencies> PatchDoom3Module;
-typedef Static<PatchDoom3Module> StaticPatchDoom3Module;
-StaticRegisterModule staticRegisterPatchDoom3(StaticPatchDoom3Module::instance());
-
-
-class PatchDef2Doom3API : public TypeSystemRef {
-	PatchCreator* m_patchdef2doom3;
-public:
-	typedef PatchCreator Type;
-	STRING_CONSTANT(Name, "def2doom3");
-
-	PatchDef2Doom3API() {
-		Patch_Construct(ePatchTypeDoom3);
-
-		m_patchdef2doom3 = &GetDoom3PatchDef2Creator();
-		g_patchCreator = m_patchdef2doom3;
-	}
-	~PatchDef2Doom3API() {
-		Patch_Destroy();
-	}
-	PatchCreator* getTable() {
-		return m_patchdef2doom3;
-	}
-};
-
-typedef SingletonModule<PatchDef2Doom3API, PatchDependencies> PatchDef2Doom3Module;
-typedef Static<PatchDef2Doom3Module> StaticPatchDef2Doom3Module;
-StaticRegisterModule staticRegisterPatchDef2Doom3(StaticPatchDef2Doom3Module::instance());
-
-
-

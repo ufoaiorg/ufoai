@@ -65,8 +65,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dragplanes.h"
 
 enum EPatchType {
-	ePatchTypeQuake3,
-	ePatchTypeDoom3,
+	ePatchTypeQuake3
 };
 
 extern int g_PatchSubdivideThreshold;
@@ -963,21 +962,6 @@ inline bool Patch_importShader(Patch& patch, Tokeniser& tokeniser) {
 	return true;
 }
 
-inline bool PatchDoom3_importShader(Patch& patch, Tokeniser& tokeniser) {
-	// parse shader name
-	tokeniser.nextLine();
-	const char *shader = tokeniser.getToken();
-	if (shader == 0) {
-		Tokeniser_unexpectedError(tokeniser, shader, "#shader-name");
-		return false;
-	}
-	if (string_equal(shader, "_emptyname")) {
-		shader = texdef_name_default();
-	}
-	patch.SetShader(shader);
-	return true;
-}
-
 inline bool Patch_importParams(Patch& patch, Tokeniser& tokeniser) {
 	tokeniser.nextLine();
 	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
@@ -1060,21 +1044,6 @@ public:
 	}
 };
 
-class PatchDoom3TokenImporter : public MapImporter {
-	Patch& m_patch;
-public:
-	PatchDoom3TokenImporter(Patch& patch) : m_patch(patch) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(Patch_importHeader(m_patch, tokeniser));
-		RETURN_FALSE_IF_FAIL(PatchDoom3_importShader(m_patch, tokeniser));
-		RETURN_FALSE_IF_FAIL(Patch_importParams(m_patch, tokeniser));
-		RETURN_FALSE_IF_FAIL(Patch_importMatrix(m_patch, tokeniser));
-		RETURN_FALSE_IF_FAIL(Patch_importFooter(m_patch, tokeniser));
-
-		return true;
-	}
-};
 
 inline void Patch_exportHeader(const Patch& patch, TokenWriter& writer) {
 	writer.writeToken("{");
@@ -1091,16 +1060,6 @@ inline void Patch_exportShader(const Patch& patch, TokenWriter& writer) {
 		writer.writeToken("NULL");
 	} else {
 		writer.writeToken(shader_get_textureName(patch.GetShader()));
-	}
-	writer.nextLine();
-}
-
-inline void PatchDoom3_exportShader(const Patch& patch, TokenWriter& writer) {
-	// write shader name
-	if (*(shader_get_textureName(patch.GetShader())) == '\0') {
-		writer.writeString("_emptyname");
-	} else {
-		writer.writeString(patch.GetShader());
 	}
 	writer.nextLine();
 }
@@ -1160,20 +1119,6 @@ public:
 	void exportTokens(TokenWriter& writer) const {
 		Patch_exportHeader(m_patch, writer);
 		Patch_exportShader(m_patch, writer);
-		Patch_exportParams(m_patch, writer);
-		Patch_exportMatrix(m_patch, writer);
-		Patch_exportFooter(m_patch, writer);
-	}
-};
-
-class PatchDoom3TokenExporter : public MapExporter {
-	const Patch& m_patch;
-public:
-	PatchDoom3TokenExporter(Patch& patch) : m_patch(patch) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		Patch_exportHeader(m_patch, writer);
-		PatchDoom3_exportShader(m_patch, writer);
 		Patch_exportParams(m_patch, writer);
 		Patch_exportMatrix(m_patch, writer);
 		Patch_exportFooter(m_patch, writer);
@@ -1618,7 +1563,6 @@ public:
 
 
 typedef PatchNode<PatchTokenImporter, PatchTokenExporter> PatchNodeQuake3;
-typedef PatchNode<PatchDoom3TokenImporter, PatchDoom3TokenExporter> PatchNodeDoom3;
 
 inline Patch* Node_getPatch(scene::Node& node) {
 	return NodeTypeCast<Patch>::cast(node);

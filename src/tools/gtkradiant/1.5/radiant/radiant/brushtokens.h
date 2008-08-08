@@ -104,34 +104,6 @@ inline bool FacePlane_importTokens(FacePlane& facePlane, Tokeniser& tokeniser) {
 	return true;
 }
 
-inline bool FacePlane_Doom3_importTokens(FacePlane& facePlane, Tokeniser& tokeniser) {
-	Plane3 plane;
-	// parse plane equation
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getDouble(tokeniser, plane.a));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getDouble(tokeniser, plane.b));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getDouble(tokeniser, plane.c));
-	RETURN_FALSE_IF_FAIL(Tokeniser_getDouble(tokeniser, plane.d));
-	plane.d = -plane.d;
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-
-	facePlane.setDoom3Plane(plane);
-	return true;
-}
-
-inline bool FaceShader_Doom3_importTokens(FaceShader& faceShader, Tokeniser& tokeniser) {
-	const char *shader = tokeniser.getToken();
-	if (shader == 0) {
-		Tokeniser_unexpectedError(tokeniser, shader, "#shader-name");
-		return false;
-	}
-	if (string_equal(shader, "_emptyname")) {
-		shader = texdef_name_default();
-	}
-	faceShader.setShader(shader);
-	return true;
-}
-
 inline bool FaceShader_importTokens(FaceShader& faceShader, Tokeniser& tokeniser) {
 	const char* texture = tokeniser.getToken();
 	if (texture == 0) {
@@ -147,44 +119,6 @@ inline bool FaceShader_importTokens(FaceShader& faceShader, Tokeniser& tokeniser
 	}
 	return true;
 }
-
-
-
-
-class Doom3FaceTokenImporter {
-	Face& m_face;
-public:
-	Doom3FaceTokenImporter(Face& face) : m_face(face) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(FacePlane_Doom3_importTokens(m_face.getPlane(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceTexdef_BP_importTokens(m_face.getTexdef(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_Doom3_importTokens(m_face.getShader(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_importContentsFlagsValue(m_face.getShader(), tokeniser));
-
-		m_face.getTexdef().m_projectionInitialised = true;
-		m_face.getTexdef().m_scaleApplied = true;
-
-		return true;
-	}
-};
-
-class Quake4FaceTokenImporter {
-	Face& m_face;
-public:
-	Quake4FaceTokenImporter(Face& face) : m_face(face) {
-	}
-	bool importTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(FacePlane_Doom3_importTokens(m_face.getPlane(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceTexdef_BP_importTokens(m_face.getTexdef(), tokeniser));
-		RETURN_FALSE_IF_FAIL(FaceShader_Doom3_importTokens(m_face.getShader(), tokeniser));
-
-		m_face.getTexdef().m_projectionInitialised = true;
-		m_face.getTexdef().m_scaleApplied = true;
-
-		return true;
-	}
-};
 
 class Quake2FaceTokenImporter {
 	Face& m_face;
@@ -265,17 +199,6 @@ public:
 	}
 };
 
-
-inline void FacePlane_Doom3_exportTokens(const FacePlane& facePlane, TokenWriter& writer) {
-	// write plane equation
-	writer.writeToken("(");
-	writer.writeFloat(facePlane.getDoom3Plane().a);
-	writer.writeFloat(facePlane.getDoom3Plane().b);
-	writer.writeFloat(facePlane.getDoom3Plane().c);
-	writer.writeFloat(-facePlane.getDoom3Plane().d);
-	writer.writeToken(")");
-}
-
 inline void FacePlane_exportTokens(const FacePlane& facePlane, TokenWriter& writer) {
 	// write planepts
 	for (std::size_t i = 0; i < 3; i++) {
@@ -352,42 +275,6 @@ inline void FaceShader_exportTokens(const FaceShader& faceShader, TokenWriter& w
 		writer.writeToken(shader_get_textureName(faceShader.getShader()));
 	}
 }
-
-inline void FaceShader_Doom3_exportTokens(const FaceShader& faceShader, TokenWriter& writer) {
-	// write shader name
-	if (string_empty(shader_get_textureName(faceShader.getShader()))) {
-		writer.writeString("_emptyname");
-	} else {
-		writer.writeString(faceShader.getShader());
-	}
-}
-
-class Doom3FaceTokenExporter {
-	const Face& m_face;
-public:
-	Doom3FaceTokenExporter(const Face& face) : m_face(face) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		FacePlane_Doom3_exportTokens(m_face.getPlane(), writer);
-		FaceTexdef_BP_exportTokens(m_face.getTexdef(), writer);
-		FaceShader_Doom3_exportTokens(m_face.getShader(), writer);
-		FaceShader_ContentsFlagsValue_exportTokens(m_face.getShader(), writer);
-		writer.nextLine();
-	}
-};
-
-class Quake4FaceTokenExporter {
-	const Face& m_face;
-public:
-	Quake4FaceTokenExporter(const Face& face) : m_face(face) {
-	}
-	void exportTokens(TokenWriter& writer) const {
-		FacePlane_Doom3_exportTokens(m_face.getPlane(), writer);
-		FaceTexdef_BP_exportTokens(m_face.getTexdef(), writer);
-		FaceShader_Doom3_exportTokens(m_face.getShader(), writer);
-		writer.nextLine();
-	}
-};
 
 class Quake2FaceTokenExporter {
 	const Face& m_face;
@@ -467,7 +354,7 @@ public:
 	BrushTokenImporter(Brush& brush) : m_brush(brush) {
 	}
 	bool importTokens(Tokeniser& tokeniser) {
-		if (Brush::m_type == eBrushTypeQuake3BP || Brush::m_type == eBrushTypeDoom3 || Brush::m_type == eBrushTypeQuake4) {
+		if (Brush::m_type == eBrushTypeQuake3BP) {
 			tokeniser.nextLine();
 			RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "{"));
 		}
@@ -489,16 +376,6 @@ public:
 			Face& face = *m_brush.back();
 
 			switch (Brush::m_type) {
-			case eBrushTypeDoom3: {
-				Doom3FaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
-			case eBrushTypeQuake4: {
-				Quake4FaceTokenImporter importer(face);
-				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
-			}
-			break;
 			case eBrushTypeQuake2: {
 				Quake2FaceTokenImporter importer(face);
 				RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
@@ -527,7 +404,7 @@ public:
 			}
 			face.planeChanged();
 		}
-		if (Brush::m_type == eBrushTypeQuake3BP || Brush::m_type == eBrushTypeDoom3 || Brush::m_type == eBrushTypeQuake4) {
+		if (Brush::m_type == eBrushTypeQuake3BP) {
 			tokeniser.nextLine();
 			RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "}"));
 		}
@@ -563,28 +440,11 @@ public:
 			writer.nextLine();
 		}
 
-		if (Brush::m_type == eBrushTypeDoom3 || Brush::m_type == eBrushTypeQuake4) {
-			writer.writeToken("brushDef3");
-			writer.nextLine();
-			writer.writeToken("{");
-			writer.nextLine();
-		}
-
 		for (Brush::const_iterator i = m_brush.begin(); i != m_brush.end(); ++i) {
 			const Face& face = *(*i);
 
 			if (face.contributes()) {
 				switch (Brush::m_type) {
-				case eBrushTypeDoom3: {
-					Doom3FaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
-				case eBrushTypeQuake4: {
-					Quake4FaceTokenExporter exporter(face);
-					exporter.exportTokens(writer);
-				}
-				break;
 				case eBrushTypeQuake2: {
 					Quake2FaceTokenExporter exporter(face);
 					exporter.exportTokens(writer);
@@ -614,7 +474,7 @@ public:
 			}
 		}
 
-		if (Brush::m_type == eBrushTypeQuake3BP || Brush::m_type == eBrushTypeDoom3 || Brush::m_type == eBrushTypeQuake4) {
+		if (Brush::m_type == eBrushTypeQuake3BP) {
 			writer.writeToken("}");
 			writer.nextLine();
 		}

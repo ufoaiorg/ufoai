@@ -216,13 +216,9 @@ static int _ase_canload( PM_PARAMS_CANLOAD )
 {
 	picoParser_t *p;
 
-
 	/* quick data length validation */
 	if( bufSize < 80 )
 		return PICO_PMV_ERROR_SIZE;
-
-	/* keep the friggin compiler happy */
-	*fileName = *fileName;
 
 	/* create pico parser */
 	p = _pico_new_parser( (picoByte_t*) buffer, bufSize );

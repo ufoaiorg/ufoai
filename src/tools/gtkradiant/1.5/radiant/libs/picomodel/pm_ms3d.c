@@ -166,10 +166,6 @@ TMsKeyframe;
 static int _ms3d_canload( PM_PARAMS_CANLOAD )
 {
 	TMsHeader *hdr;
-	
-	
-	/* to keep the compiler happy */
-	*fileName = *fileName;
 
 	/* sanity check */
 	if (bufSize < sizeof(TMsHeader))

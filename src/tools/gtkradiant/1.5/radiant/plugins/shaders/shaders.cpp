@@ -320,7 +320,6 @@ public:
 
 	// -----------------------------------------
 
-	bool parseDoom3(Tokeniser& tokeniser);
 	bool parseQuake3(Tokeniser& tokeniser);
 	bool parseTemplate(Tokeniser& tokeniser);
 
@@ -364,49 +363,10 @@ public:
 	MapLayers m_layers;
 };
 
-
-bool Doom3Shader_parseHeightmap(Tokeniser& tokeniser, TextureExpression& bump, ShaderValue& heightmapScale) {
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, bump));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ","));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseString(tokeniser, heightmapScale));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-	return true;
-}
-
-bool Doom3Shader_parseAddnormals(Tokeniser& tokeniser, TextureExpression& bump) {
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, bump));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ","));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "heightmap"));
-	TextureExpression heightmapName;
-	ShaderValue heightmapScale;
-	RETURN_FALSE_IF_FAIL(Doom3Shader_parseHeightmap(tokeniser, heightmapName, heightmapScale));
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-	return true;
-}
-
-bool Doom3Shader_parseBumpmap(Tokeniser& tokeniser, TextureExpression& bump, ShaderValue& heightmapScale) {
-	const char* token = tokeniser.getToken();
-	if (token == 0) {
-		Tokeniser_unexpectedError(tokeniser, token, "#bumpmap");
-		return false;
-	}
-	if (string_equal(token, "heightmap")) {
-		RETURN_FALSE_IF_FAIL(Doom3Shader_parseHeightmap(tokeniser, bump, heightmapScale));
-	} else if (string_equal(token, "addnormals")) {
-		RETURN_FALSE_IF_FAIL(Doom3Shader_parseAddnormals(tokeniser, bump));
-	} else {
-		parseTextureName(bump, token);
-	}
-	return true;
-}
-
 enum LayerTypeId {
 	LAYER_NONE,
 	LAYER_BLEND,
 	LAYER_DIFFUSEMAP,
-	LAYER_BUMPMAP,
 	LAYER_SPECULARMAP
 };
 
@@ -445,184 +405,10 @@ bool parseShaderParameters(Tokeniser& tokeniser, ShaderParameters& params) {
 
 bool ShaderTemplate::parseTemplate(Tokeniser& tokeniser) {
 	m_Name = tokeniser.getToken();
-	if (!parseShaderParameters(tokeniser, m_params)) {
+	if (!parseShaderParameters(tokeniser, m_params))
 		globalErrorStream() << "shader template: " << makeQuoted(m_Name.c_str()) << ": parameter parse failed\n";
-		return false;
-	}
 
-	return parseDoom3(tokeniser);
-}
-
-bool ShaderTemplate::parseDoom3(Tokeniser& tokeniser) {
-	LayerTemplate currentLayer;
-	bool isFog = false;
-
-	// we need to read until we hit a balanced }
-	int depth = 0;
-	for (;;) {
-		tokeniser.nextLine();
-		const char* token = tokeniser.getToken();
-
-		if (token == 0)
-			return false;
-
-		if (string_equal(token, "{")) {
-			++depth;
-			continue;
-		} else if (string_equal(token, "}")) {
-			--depth;
-			if (depth < 0) { // error
-				return false;
-			}
-			if (depth == 0) { // end of shader
-				break;
-			}
-			if (depth == 1) { // end of layer
-				if (currentLayer.m_type == LAYER_DIFFUSEMAP) {
-					m_diffuse = currentLayer.m_texture;
-				} else if (currentLayer.m_type == LAYER_BUMPMAP) {
-					m_bump = currentLayer.m_texture;
-				} else if (currentLayer.m_type == LAYER_SPECULARMAP) {
-					m_specular = currentLayer.m_texture;
-				} else if (!string_empty(currentLayer.m_texture.c_str())) {
-					m_layers.push_back(MapLayerTemplate(
-					                       currentLayer.m_texture.c_str(),
-					                       currentLayer.m_blendFunc,
-					                       currentLayer.m_clampToBorder,
-					                       currentLayer.m_alphaTest
-					                   ));
-				}
-				currentLayer.m_type = LAYER_NONE;
-				currentLayer.m_texture = "";
-			}
-			continue;
-		}
-
-		if (depth == 2) { // in layer
-			if (string_equal_nocase(token, "blend")) {
-				const char* blend = tokeniser.getToken();
-
-				if (blend == 0) {
-					Tokeniser_unexpectedError(tokeniser, blend, "#blend");
-					return false;
-				}
-
-				if (string_equal_nocase(blend, "diffusemap")) {
-					currentLayer.m_type = LAYER_DIFFUSEMAP;
-				} else if (string_equal_nocase(blend, "bumpmap")) {
-					currentLayer.m_type = LAYER_BUMPMAP;
-				} else if (string_equal_nocase(blend, "specularmap")) {
-					currentLayer.m_type = LAYER_SPECULARMAP;
-				} else {
-					currentLayer.m_blendFunc.first = blend;
-
-					const char* comma = tokeniser.getToken();
-
-					if (comma == 0) {
-						Tokeniser_unexpectedError(tokeniser, comma, "#comma");
-						return false;
-					}
-
-					if (string_equal(comma, ",")) {
-						RETURN_FALSE_IF_FAIL(Tokeniser_parseString(tokeniser, currentLayer.m_blendFunc.second));
-					} else {
-						currentLayer.m_blendFunc.second = "";
-						tokeniser.ungetToken();
-					}
-				}
-			} else if (string_equal_nocase(token, "map")) {
-				if (currentLayer.m_type == LAYER_BUMPMAP) {
-					RETURN_FALSE_IF_FAIL(Doom3Shader_parseBumpmap(tokeniser, currentLayer.m_texture, currentLayer.m_heightmapScale));
-				} else {
-					const char* map = tokeniser.getToken();
-
-					if (map == 0) {
-						Tokeniser_unexpectedError(tokeniser, map, "#map");
-						return false;
-					}
-
-					if (string_equal(map, "makealpha")) {
-						RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-						const char* texture = tokeniser.getToken();
-						if (texture == 0) {
-							Tokeniser_unexpectedError(tokeniser, texture, "#texture");
-							return false;
-						}
-						currentLayer.m_texture = texture;
-						RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-					} else {
-						parseTextureName(currentLayer.m_texture, map);
-					}
-				}
-			} else if (string_equal_nocase(token, "zeroclamp")) {
-				currentLayer.m_clampToBorder = true;
-			}
-#if 0
-			else if (string_equal_nocase(token, "alphaTest")) {
-				Tokeniser_getFloat(tokeniser, currentLayer.m_alphaTest);
-			}
-#endif
-		} else if (depth == 1) {
-			if (string_equal_nocase(token, "qer_editorimage")) {
-				RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, m_textureName));
-			} else if (string_equal_nocase(token, "qer_trans")) {
-				m_fTrans = string_read_float(tokeniser.getToken());
-				m_nFlags |= QER_TRANS;
-			} else if (string_equal_nocase(token, "translucent")) {
-				m_fTrans = 1;
-				m_nFlags |= QER_TRANS;
-			} else if (string_equal(token, "DECAL_MACRO")) {
-				m_fTrans = 1;
-				m_nFlags |= QER_TRANS;
-			} else if (string_equal_nocase(token, "bumpmap")) {
-				RETURN_FALSE_IF_FAIL(Doom3Shader_parseBumpmap(tokeniser, m_bump, m_heightmapScale));
-			} else if (string_equal_nocase(token, "diffusemap")) {
-				RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, m_diffuse));
-			} else if (string_equal_nocase(token, "specularmap")) {
-				RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, m_specular));
-			} else if (string_equal_nocase(token, "twosided")) {
-				m_Cull = IShader::eCullNone;
-				m_nFlags |= QER_CULL;
-			} else if (string_equal_nocase(token, "nodraw")) {
-				m_nFlags |= QER_NODRAW;
-			} else if (string_equal_nocase(token, "nonsolid")) {
-				m_nFlags |= QER_NONSOLID;
-			} else if (string_equal_nocase(token, "liquid")) {
-				m_nFlags |= QER_WATER;
-			} else if (string_equal_nocase(token, "areaportal")) {
-				m_nFlags |= QER_AREAPORTAL;
-			} else if (string_equal_nocase(token, "playerclip")
-			           || string_equal_nocase(token, "monsterclip")
-			           || string_equal_nocase(token, "ikclip")
-			           || string_equal_nocase(token, "moveableclip")) {
-				m_nFlags |= QER_CLIP;
-			}
-			if (string_equal_nocase(token, "fogLight")) {
-				isFog = true;
-			} else if (!isFog && string_equal_nocase(token, "lightFalloffImage")) {
-				const char* lightFalloffImage = tokeniser.getToken();
-				if (lightFalloffImage == 0) {
-					Tokeniser_unexpectedError(tokeniser, lightFalloffImage, "#lightFalloffImage");
-					return false;
-				}
-				if (string_equal_nocase(lightFalloffImage, "makeintensity")) {
-					RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "("));
-					TextureExpression name;
-					RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, name));
-					m_lightFalloffImage = name;
-					RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, ")"));
-				} else {
-					m_lightFalloffImage = lightFalloffImage;
-				}
-			}
-		}
-	}
-
-	if (string_empty(m_textureName.c_str())) {
-		m_textureName = m_diffuse;
-	}
-
-	return true;
+	return false;
 }
 
 typedef SmartPointer<ShaderTemplate> ShaderTemplatePointer;
@@ -1266,9 +1052,7 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 
 				g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
 
-				bool result = (g_shaderLanguage == SHADERLANGUAGE_QUAKE3)
-				              ? shaderTemplate->parseQuake3(tokeniser)
-				              : shaderTemplate->parseDoom3(tokeniser);
+				bool result = shaderTemplate->parseQuake3(tokeniser);
 				if (result) {
 					// do we already have this shader?
 					if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
@@ -1518,10 +1302,6 @@ bool shaderlist_findOrInstall(const char* enginePath, const char* toolsPath, con
 }
 
 void Shaders_Load() {
-	if (g_shaderLanguage == SHADERLANGUAGE_QUAKE4) {
-		GlobalFileSystem().forEachFile("guides/", "guide", LoadGuideFileCaller(), 0);
-	}
-
 	const char* shaderPath = GlobalRadiant().getGameDescriptionKeyValue("shaderpath");
 	if (!string_empty(shaderPath)) {
 		StringOutputStream path(256);

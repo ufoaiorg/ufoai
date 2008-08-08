@@ -38,7 +38,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 #include "miscmodel.h"
-#include "light.h"
 #include "group.h"
 #include "eclassmodel.h"
 #include "generic.h"
@@ -51,9 +50,8 @@ inline scene::Node& entity_for_eclass(EntityClass* eclass) {
 	        || classname_equal(eclass->name(), "misc_gamemodel")
 	        || classname_equal(eclass->name(), "model_static")) {
 		return New_MiscModel(eclass);
-	} else if (classname_equal(eclass->name(), "light")
-	           || classname_equal(eclass->name(), "lightJunior")) {
-		return New_Light(eclass);
+/*	} else if (classname_equal(eclass->name(), "light")) {
+		return New_Light(eclass);*/
 	}
 	if (!eclass->fixedsize) {
 		return New_Group(eclass);
@@ -223,17 +221,6 @@ filter_entity_classname g_filter_entity_misc_gamemodel("misc_gamemodel");
 filter_entity_classgroup g_filter_entity_trigger("trigger_");
 filter_entity_classgroup g_filter_entity_path("path_");
 
-class filter_entity_doom3model : public EntityFilter {
-public:
-	bool filter(const Entity& entity) const {
-		return string_equal(entity.getKeyValue("classname"), "func_static")
-		       && !string_equal(entity.getKeyValue("model"), entity.getKeyValue("name"));
-	}
-};
-
-filter_entity_doom3model g_filter_entity_doom3model;
-
-
 void Entity_InitFilters() {
 	add_entity_filter(g_filter_entity_world, EXCLUDE_WORLD);
 	add_entity_filter(g_filter_entity_func_group, EXCLUDE_WORLD);
@@ -241,7 +228,6 @@ void Entity_InitFilters() {
 	add_entity_filter(g_filter_entity_trigger, EXCLUDE_TRIGGERS);
 	add_entity_filter(g_filter_entity_misc_model, EXCLUDE_MODELS);
 	add_entity_filter(g_filter_entity_misc_gamemodel, EXCLUDE_MODELS);
-	add_entity_filter(g_filter_entity_doom3model, EXCLUDE_MODELS);
 	add_entity_filter(g_filter_entity_light, EXCLUDE_LIGHTS);
 	add_entity_filter(g_filter_entity_path, EXCLUDE_PATHS);
 }
@@ -260,11 +246,6 @@ void Entity_Construct(EGameType gameType) {
 	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii), BoolExportStringCaller(g_lightRadii));
 
 	Entity_InitFilters();
-	LightType lightType = LIGHTTYPE_DEFAULT;
-	if (g_gameType == eGameTypeRTCW) {
-		lightType = LIGHTTYPE_RTCW;
-	}
-	Light_Construct(lightType);
 	MiscModel_construct();
 
 	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
@@ -278,5 +259,4 @@ void Entity_Destroy() {
 	GlobalShaderCache().release("$PIVOT");
 
 	MiscModel_destroy();
-	Light_Destroy();
 }

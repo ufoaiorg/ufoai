@@ -203,53 +203,6 @@ class BrushDependencies :
 			public GlobalFilterModuleRef {
 };
 
-class BrushDoom3API : public TypeSystemRef {
-	BrushCreator* m_brushdoom3;
-public:
-	typedef BrushCreator Type;
-	STRING_CONSTANT(Name, "doom3");
-
-	BrushDoom3API() {
-		Brush_Construct(eBrushTypeDoom3);
-
-		m_brushdoom3 = &GetBrushCreator();
-	}
-	~BrushDoom3API() {
-		Brush_Destroy();
-	}
-	BrushCreator* getTable() {
-		return m_brushdoom3;
-	}
-};
-
-typedef SingletonModule<BrushDoom3API, BrushDependencies> BrushDoom3Module;
-typedef Static<BrushDoom3Module> StaticBrushDoom3Module;
-StaticRegisterModule staticRegisterBrushDoom3(StaticBrushDoom3Module::instance());
-
-
-class BrushQuake4API : public TypeSystemRef {
-	BrushCreator* m_brushquake4;
-public:
-	typedef BrushCreator Type;
-	STRING_CONSTANT(Name, "quake4");
-
-	BrushQuake4API() {
-		Brush_Construct(eBrushTypeQuake4);
-
-		m_brushquake4 = &GetBrushCreator();
-	}
-	~BrushQuake4API() {
-		Brush_Destroy();
-	}
-	BrushCreator* getTable() {
-		return m_brushquake4;
-	}
-};
-
-typedef SingletonModule<BrushQuake4API, BrushDependencies> BrushQuake4Module;
-typedef Static<BrushQuake4Module> StaticBrushQuake4Module;
-StaticRegisterModule staticRegisterBrushQuake4(StaticBrushQuake4Module::instance());
-
 
 class BrushQuake3API : public TypeSystemRef {
 	BrushCreator* m_brushquake3;

@@ -168,9 +168,6 @@ static int _3ds_canload( PM_PARAMS_CANLOAD )
 {
 	T3dsChunk *chunk;
 
-	/* to keep the compiler happy */
-	*fileName = *fileName;
-
 	/* sanity check */
 	if (bufSize < sizeof(T3dsChunk))
 		return PICO_PMV_ERROR_SIZE;
@@ -292,7 +289,7 @@ static int GetMeshVertices (T3dsLoaderPers *pers)
 		v[0] = GetFloat( pers );
 		v[1] = GetFloat( pers );	/* ydnar: unflipped */
 		v[2] = GetFloat( pers );	/* ydnar: unflipped and negated */
-		
+
 		/* add current vertex */
 		PicoSetSurfaceXYZ( pers->surface,i,v );
 		PicoSetSurfaceColor( pers->surface,0,i,white );	/* ydnar */
@@ -362,7 +359,7 @@ static int GetMeshTexCoords (T3dsLoaderPers *pers)
 		/* to make sure we don't mess up memory */
 		if (pers->surface == NULL)
 			continue;
-		
+
 		/* add current uv */
 		PicoSetSurfaceST( pers->surface,0,i,uv );
 
@@ -381,7 +378,7 @@ static int GetMeshShader (T3dsLoaderPers *pers)
 	int  numSharedVerts;
 	int  setShaderName = 0;
 	int  i;
-	
+
 	/* the shader is either the color or the texture map of the */
 	/* object. it can also hold other information like the brightness, */
 	/* shine, etc. stuff we don't really care about. we just want the */
@@ -390,10 +387,10 @@ static int GetMeshShader (T3dsLoaderPers *pers)
 	/* get in the shader name */
 	if (!GetASCIIZ(pers,shaderName,sizeof(shaderName)))
 		return 0;
-	
+
 	/* ydnar: trim to first whitespace */
 	_pico_first_token( shaderName );
-	
+
 	/* now that we have the shader name we need to go through all of */
 	/* the shaders and check the name against each shader. when we */
 	/* find a shader in our shader list that matches this name we */
@@ -587,7 +584,7 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 				pers->shader = NULL;
 				return 0; /* this is bad too */
 			}
-			
+
 			/* assign ptr to current shader */
 			pers->shader = shader;
 
@@ -697,7 +694,7 @@ static int DoNextChunk (T3dsLoaderPers *pers, int endofs)
 			}
 			/* store the 3ds file version in pico special field 0 */
 			/* PicoSetSurfaceSpecial(pers->surface,0,version); */		/* ydnar: this was causing a crash accessing uninitialized surface */
-			
+
 			/* rest of chunk is skipped here */
 		}
 		/*** editor data ***/

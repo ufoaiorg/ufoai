@@ -302,9 +302,6 @@ static int _md2_canload( PM_PARAMS_CANLOAD )
 {
 	md2_t	*md2;
 
- 	/* to keep the compiler happy */
-	*fileName = *fileName;
-
 	/* sanity check */
 	if( bufSize < ( sizeof( *md2 ) * 2) )
 		return PICO_PMV_ERROR_SIZE;
@@ -431,12 +428,24 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	// set Skin Name
 	strncpy(skinname, (char*)(bb + md2->ofsSkins), MD2_MAX_SKINNAME );
 
+	// detox Skin name
+	if (skinname[0] == '.') {// special case ufoai skinpath
+		char path[MD2_MAX_SKINNAME];
+		char skinnameRelative[MD2_MAX_SKINNAME];
+		strncpy(path, fileName, MD2_MAX_SKINNAME);
+		strncpy(skinnameRelative, skinname, MD2_MAX_SKINNAME);
+		_pico_unixify( path );
+		for (i = MD2_MAX_SKINNAME; i--;) { // skip filename
+			if (path[i] == '/')
+				break;
+			path[i] = '\0';
+		}
+		snprintf(skinname, MD2_MAX_SKINNAME, "%s%s.jpg", path, &skinnameRelative[1]);
+	}
+	_pico_setfext( skinname, "" );
+
 	// Print out md2 values
 	_pico_printf(PICO_VERBOSE,"Skins: %d  Verts: %d  STs: %d  Triangles: %d  Frames: %d\nSkin Name \"%s\"\n", md2->numSkins, md2->numXYZ, md2->numST, md2->numTris, md2->numFrames, &skinname );
-
-	// detox Skin name
-	_pico_setfext( skinname, "" );
-	_pico_unixify( skinname );
 
 	/* create new pico model */
 	picoModel = PicoNewModel();
@@ -504,7 +513,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 			{	// Add first entry of LL from Main
 				p_index_LUT2 = (index_LUT_t *)_pico_alloc(sizeof(index_LUT_t));
 				if (p_index_LUT2 == NULL)
-					_pico_printf( PICO_ERROR," Couldn't allocate memory!\n");
+					_pico_printf( PICO_ERROR," Couldn't allocate memory for Look Up Table!\n");
 				p_index_LUT[p_md2Triangle->index_xyz[j]].next = (index_LUT_t *)p_index_LUT2;
 				p_index_LUT2->Vert = dups;
 				p_index_LUT2->ST = p_md2Triangle->index_st[j];
@@ -533,7 +542,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 					// Add the Entry
 					p_index_LUT3 = (index_LUT_t *)_pico_alloc(sizeof(index_LUT_t));
 					if (p_index_LUT3 == NULL)
-						_pico_printf( PICO_ERROR," Couldn't allocate memory!\n");
+						_pico_printf( PICO_ERROR," Couldn't allocate memory for Look Up Table from Main Entry!\n");
 					p_index_LUT2->next = (index_LUT_t *)p_index_LUT3;
 					p_index_LUT3->Vert = p_md2Triangle->index_xyz[j];
 					p_index_LUT3->ST = p_md2Triangle->index_st[j];
@@ -545,21 +554,23 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 		}
 	}
 
-	// malloc and build array for Dup STs
-	p_index_LUT_DUPS = (index_DUP_LUT_t *)_pico_alloc(sizeof(index_DUP_LUT_t) * dups);
-	if (p_index_LUT_DUPS == NULL)
-		_pico_printf( PICO_ERROR," Couldn't allocate memory!\n");
+	if (dups) {
+		// malloc and build array for Dup STs
+		p_index_LUT_DUPS = (index_DUP_LUT_t *)_pico_alloc(sizeof(index_DUP_LUT_t) * dups);
+		if (p_index_LUT_DUPS == NULL)
+			_pico_printf( PICO_ERROR," Couldn't allocate memory for finding duplicate STs (%i)!\n", dups);
 
-	dup_index = 0;
-	for(i=0; i<md2->numXYZ; i++)
-	{
-		p_index_LUT2 = p_index_LUT[i].next;
-		while (p_index_LUT2 != NULL)
+		dup_index = 0;
+		for(i=0; i<md2->numXYZ; i++)
 		{
-			p_index_LUT_DUPS[p_index_LUT2->Vert].OldVert = i;
-			p_index_LUT_DUPS[p_index_LUT2->Vert].ST = p_index_LUT2->ST;
-			dup_index++;
-			p_index_LUT2 = p_index_LUT2->next;
+			p_index_LUT2 = p_index_LUT[i].next;
+			while (p_index_LUT2 != NULL)
+			{
+				p_index_LUT_DUPS[p_index_LUT2->Vert].OldVert = i;
+				p_index_LUT_DUPS[p_index_LUT2->Vert].ST = p_index_LUT2->ST;
+				dup_index++;
+				p_index_LUT2 = p_index_LUT2->next;
+			}
 		}
 	}
 
@@ -621,27 +632,29 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	/* set color */
 	PicoSetSurfaceColor( picoSurface, 0, 0, color );
 
-	// Free up malloc'ed LL entries
-	for(i=0; i<md2->numXYZ; i++)
-	{
-		if(p_index_LUT[i].next != NULL)
+	if (dups) {
+		// Free up malloc'ed LL entries
+		for(i=0; i<md2->numXYZ; i++)
 		{
-			p_index_LUT2 = p_index_LUT[i].next;
-			do {
-				p_index_LUT3 = p_index_LUT2->next;
-				_pico_free(p_index_LUT2);
-				p_index_LUT2 = p_index_LUT3;
-				dups--;
-			} while (p_index_LUT2 != NULL);
+			if(p_index_LUT[i].next != NULL)
+			{
+				p_index_LUT2 = p_index_LUT[i].next;
+				do {
+					p_index_LUT3 = p_index_LUT2->next;
+					_pico_free(p_index_LUT2);
+					p_index_LUT2 = p_index_LUT3;
+					dups--;
+				} while (p_index_LUT2 != NULL);
+			}
 		}
-	}
 
-	if (dups)
-		_pico_printf(PICO_WARNING, " Not all LL mallocs freed\n");
+		if (dups)
+			_pico_printf(PICO_WARNING, " Not all LL mallocs freed\n");
+		_pico_free(p_index_LUT_DUPS);
+	}
 
 	// Free malloc'ed LUTs
  	_pico_free(p_index_LUT);
-	_pico_free(p_index_LUT_DUPS);
 
 	/* return the new pico model */
 	return picoModel;

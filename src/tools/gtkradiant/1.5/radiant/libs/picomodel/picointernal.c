@@ -555,7 +555,7 @@ float _pico_big_float( float src )
 /* _pico_stristr:
  *  case-insensitive strstr. -sea
  */
-char *_pico_stristr( char *str, const char *substr )
+const char *_pico_stristr( const char *str, const char *substr )
 {
 	const size_t sublen = strlen(substr);
 	while (*str)

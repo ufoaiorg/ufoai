@@ -81,17 +81,6 @@ public:
   virtual const AABB& localAABB() const = 0;
 };
 
-class BrushDoom3
-{
-public:
-  STRING_CONSTANT(Name, "BrushDoom3");
-
-  virtual void setDoom3GroupOrigin(const Vector3& origin) = 0;
-};
-
-
-
-
 typedef TypeCastTable<NODETYPEID_MAX> NodeTypeCastTable;
 
 template<typename Type>

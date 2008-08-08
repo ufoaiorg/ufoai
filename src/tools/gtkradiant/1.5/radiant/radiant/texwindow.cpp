@@ -714,14 +714,11 @@ void TextureBrowser_ShowDirectory(TextureBrowser& textureBrowser, const char* di
 		GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(directory, shaders_count)));
 		globalOutputStream() << "Showing " << Unsigned(shaders_count) << " shaders.\n";
 
-		if (g_pGameDescription->mGameType != "doom3") {
-			// load remaining texture files
+		// load remaining texture files
+		StringOutputStream dirstring(64);
+		dirstring << "textures/" << directory;
 
-			StringOutputStream dirstring(64);
-			dirstring << "textures/" << directory;
-
-			Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(dirstring.c_str()));
-		}
+		Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(dirstring.c_str()));
 	}
 
 	// we'll display the newly loaded textures + all the ones already in use
@@ -738,15 +735,12 @@ void TextureBrowser_ShowTagSearchResult(TextureBrowser& textureBrowser, const ch
 	GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(directory, shaders_count)));
 	globalOutputStream() << "Showing " << Unsigned(shaders_count) << " shaders.\n";
 
-	if (g_pGameDescription->mGameType != "doom3") {
-		// load remaining texture files
-		StringOutputStream dirstring(64);
-		dirstring << "textures/" << directory;
-
-		{
-			LoadTexturesByTypeVisitor visitor(dirstring.c_str());
-			Radiant_getImageModules().foreachModule(visitor);
-		}
+	// load remaining texture files
+	StringOutputStream dirstring(64);
+	dirstring << "textures/" << directory;
+	{
+		LoadTexturesByTypeVisitor visitor(dirstring.c_str());
+		Radiant_getImageModules().foreachModule(visitor);
 	}
 
 	// we'll display the newly loaded textures + all the ones already in use
@@ -1333,7 +1327,7 @@ TextureGroups TextureGroups_constructTreeView() {
 		GlobalFileSystem().forEachArchive (TextureGroupsAddWadCaller (groups));
 	} else {
 		// scan texture dirs and pak files only if not restricting to shaderlist
-		if (g_pGameDescription->mGameType != "doom3" && !g_TextureBrowser_shaderlistOnly) {
+		if (!g_TextureBrowser_shaderlistOnly) {
 			GlobalFileSystem().forEachDirectory ("textures/", TextureGroupsAddDirectoryCaller(groups));
 		}
 

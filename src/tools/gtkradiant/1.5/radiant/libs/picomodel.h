@@ -1,6 +1,6 @@
 /* -----------------------------------------------------------------------------
 
-PicoModel Library 
+PicoModel Library
 
 Copyright (c) 2002, Randy Reddig & seaw0lf
 All rights reserved.
@@ -17,7 +17,7 @@ other materials provided with the distribution.
 
 Neither the names of the copyright holders nor the names of its contributors may
 be used to endorse or promote products derived from this software without
-specific prior written permission. 
+specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -97,24 +97,24 @@ typedef struct picoModule_s		picoModule_t;
 struct picoSurface_s
 {
 	void						*data;
-	
+
 	picoModel_t					*model;		/* owner model */
-	
+
 	picoSurfaceType_t			type;
 	char					 	*name;		/* sea: surface name */
 	picoShader_t				*shader;	/* ydnar: changed to ptr */
-	
+
 	int							numVertexes, maxVertexes;
 	picoVec3_t					*xyz;
 	picoVec3_t					*normal;
 	picoIndex_t					*smoothingGroup;
-	
+
 	int							numSTArrays, maxSTArrays;
 	picoVec2_t					**st;
-	
+
 	int							numColorArrays, maxColorArrays;
 	picoColor_t					**color;
-	
+
 	int							numIndexes, maxIndexes;
 	picoIndex_t					*index;
 
@@ -151,10 +151,10 @@ struct picoModel_s
 
 	int							numShaders, maxShaders;
 	picoShader_t				**shader;
-	
+
 	int							numSurfaces, maxSurfaces;
 	picoSurface_t				**surface;
-	
+
 	const picoModule_t			*module;		/* sea */
 };
 
@@ -175,16 +175,16 @@ enum
 
 /* convenience (makes it easy to add new params to the callbacks) */
 #define PM_PARAMS_CANLOAD \
-	char *fileName, const void *buffer, int bufSize
+	const char *fileName, const void *buffer, int bufSize
 
 #define PM_PARAMS_LOAD \
-	char *fileName, int frameNum, const void *buffer, int bufSize
+	const char *fileName, int frameNum, const void *buffer, int bufSize
 
 #define PM_PARAMS_CANSAVE \
 	void
 
 #define PM_PARAMS_SAVE \
-	char *fileName, picoModel_t *model
+	const char *fileName, picoModel_t *model
 
 /* pico file format module structure */
 struct picoModule_s
@@ -220,7 +220,7 @@ const picoModule_t			**PicoModuleList( int *numModules );
 picoModel_t					*PicoLoadModel( char *name, int frameNum );
 
 typedef size_t (*PicoInputStreamReadFunc)(void* inputStream, unsigned char* buffer, size_t length);
-picoModel_t* PicoModuleLoadModelStream( const picoModule_t* module, void* inputStream, PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum );
+picoModel_t* PicoModuleLoadModelStream( const picoModule_t* module, const char *fileName, void* inputStream, PicoInputStreamReadFunc inputStreamRead, size_t streamLength, int frameNum );
 
 /* model functions */
 picoModel_t					*PicoNewModel( void );
@@ -242,13 +242,13 @@ int							PicoAdjustSurface( picoSurface_t *surface, int numVertexes, int numSTA
 
 
 /* setter functions */
-void						PicoSetModelName( picoModel_t *model, char *name );
-void						PicoSetModelFileName( picoModel_t *model, char *fileName );
+void						PicoSetModelName( picoModel_t *model, const char *name );
+void						PicoSetModelFileName( picoModel_t *model, const char *fileName );
 void						PicoSetModelFrameNum( picoModel_t *model, int frameNum );
 void						PicoSetModelNumFrames( picoModel_t *model, int numFrames );
 void						PicoSetModelData( picoModel_t *model, void *data );
 
-void 						PicoSetShaderName( picoShader_t *shader, char *name );
+void 						PicoSetShaderName( picoShader_t *shader, const char *name );
 void 						PicoSetShaderMapName( picoShader_t *shader, char *mapName );
 void 						PicoSetShaderAmbientColor( picoShader_t *shader, picoColor_t color );
 void 						PicoSetShaderDiffuseColor( picoShader_t *shader, picoColor_t color );

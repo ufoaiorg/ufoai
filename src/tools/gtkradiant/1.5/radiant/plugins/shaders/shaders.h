@@ -37,9 +37,7 @@ class ShaderSystem;
 ShaderSystem& GetShaderSystem();
 
 enum ShaderLanguage {
-	SHADERLANGUAGE_QUAKE3,
-	SHADERLANGUAGE_DOOM3,
-	SHADERLANGUAGE_QUAKE4
+	SHADERLANGUAGE_QUAKE3
 };
 
 extern const char* g_shadersExtension;

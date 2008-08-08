@@ -1724,26 +1724,13 @@ void Camera_constructPreferences(PreferencesPage& page) {
 	    BoolExportCaller(g_camwindow_globals_private.m_bCubicClipping)
 	);
 
-	if (g_pGameDescription->mGameType == "doom3") {
-		const char* render_mode[] = { "Wireframe", "Flatshade", "Textured", "Lighting" };
+	const char* render_mode[] = { "Wireframe", "Flatshade", "Textured" };
 
-		page.appendCombo(
-		    "Render Mode",
-		    STRING_ARRAY_RANGE(render_mode),
-		    IntImportCallback(RenderModeImportCaller()),
-		    IntExportCallback(RenderModeExportCaller())
-		);
-	} else {
-		const char* render_mode[] = { "Wireframe", "Flatshade", "Textured" };
-
-		page.appendCombo(
-		    "Render Mode",
-		    STRING_ARRAY_RANGE(render_mode),
-		    IntImportCallback(RenderModeImportCaller()),
-		    IntExportCallback(RenderModeExportCaller())
-		);
-	}
+	page.appendCombo("Render Mode", STRING_ARRAY_RANGE(render_mode),
+	    IntImportCallback(RenderModeImportCaller()),
+	    IntExportCallback(RenderModeExportCaller()));
 }
+
 void Camera_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Camera", "Camera View Preferences"));
 	Camera_constructPreferences(page);

@@ -73,9 +73,7 @@ enum EBrushType {
 	eBrushTypeQuake2,
 	eBrushTypeQuake3,
 	eBrushTypeQuake3BP,
-	eBrushTypeDoom3,
-	eBrushTypeQuake4,
-	eBrushTypeHalfLife,
+	eBrushTypeHalfLife
 };
 
 
@@ -590,118 +588,74 @@ public:
 
 	static EBrushType m_type;
 
-	static bool isDoom3Plane() {
-		return FacePlane::m_type == eBrushTypeDoom3 || FacePlane::m_type == eBrushTypeQuake4;
-	}
-
 	class SavedState {
 	public:
 		PlanePoints m_planepts;
 		Plane3 m_plane;
 
 		SavedState(const FacePlane& facePlane) {
-			if (facePlane.isDoom3Plane()) {
-				m_plane = facePlane.m_plane;
-			} else {
-				planepts_assign(m_planepts, facePlane.planePoints());
-			}
+			planepts_assign(m_planepts, facePlane.planePoints());
 		}
 
 		void exportState(FacePlane& facePlane) const {
-			if (facePlane.isDoom3Plane()) {
-				facePlane.m_plane = m_plane;
-				facePlane.updateTranslated();
-			} else {
-				planepts_assign(facePlane.planePoints(), m_planepts);
-				facePlane.MakePlane();
-			}
+			planepts_assign(facePlane.planePoints(), m_planepts);
+			facePlane.MakePlane();
 		}
 	};
 
 	FacePlane() : m_funcStaticOrigin(0, 0, 0) {
 	}
 	FacePlane(const FacePlane& other) : m_funcStaticOrigin(0, 0, 0) {
-		if (!isDoom3Plane()) {
-			planepts_assign(m_planepts, other.m_planepts);
-			MakePlane();
-		} else {
-			m_plane = other.m_plane;
-			updateTranslated();
-		}
+		planepts_assign(m_planepts, other.m_planepts);
+		MakePlane();
 	}
 
 	void MakePlane() {
-		if (!isDoom3Plane()) {
 #if 0
-			if (check_plane_is_integer(m_planepts)) {
-				globalErrorStream() << "non-integer planepts: ";
-				planepts_print(m_planepts, globalErrorStream());
-				globalErrorStream() << "\n";
-			}
-#endif
-			m_planeCached = plane3_for_points(m_planepts);
+		if (check_plane_is_integer(m_planepts)) {
+			globalErrorStream() << "non-integer planepts: ";
+			planepts_print(m_planepts, globalErrorStream());
+			globalErrorStream() << "\n";
 		}
+#endif
+		m_planeCached = plane3_for_points(m_planepts);
 	}
 
 	void reverse() {
-		if (!isDoom3Plane()) {
-			vector3_swap(m_planepts[0], m_planepts[2]);
-			MakePlane();
-		} else {
-			m_planeCached = plane3_flipped(m_plane);
-			updateSource();
-		}
+		vector3_swap(m_planepts[0], m_planepts[2]);
+		MakePlane();
 	}
 	void transform(const Matrix4& matrix, bool mirror) {
-		if (!isDoom3Plane()) {
-
 #if 0
-			bool off = check_plane_is_integer(planePoints());
+		bool off = check_plane_is_integer(planePoints());
 #endif
 
-			matrix4_transform_point(matrix, m_planepts[0]);
-			matrix4_transform_point(matrix, m_planepts[1]);
-			matrix4_transform_point(matrix, m_planepts[2]);
+		matrix4_transform_point(matrix, m_planepts[0]);
+		matrix4_transform_point(matrix, m_planepts[1]);
+		matrix4_transform_point(matrix, m_planepts[2]);
 
-			if (mirror) {
-				reverse();
-			}
-
-#if 0
-			if (check_plane_is_integer(planePoints())) {
-				if (!off) {
-					globalErrorStream() << "caused by transform\n";
-				}
-			}
-#endif
-			MakePlane();
-		} else {
-			m_planeCached = Plane3_applyTransform(m_planeCached, matrix);
-			updateSource();
+		if (mirror) {
+			reverse();
 		}
+
+#if 0
+		if (check_plane_is_integer(planePoints())) {
+			if (!off) {
+				globalErrorStream() << "caused by transform\n";
+			}
+		}
+#endif
+		MakePlane();
 	}
 	void offset(float offset) {
-		if (!isDoom3Plane()) {
-			Vector3 move(vector3_scaled(m_planeCached.normal(), -offset));
+		Vector3 move(vector3_scaled(m_planeCached.normal(), -offset));
 
-			vector3_subtract(m_planepts[0], move);
-			vector3_subtract(m_planepts[1], move);
-			vector3_subtract(m_planepts[2], move);
+		vector3_subtract(m_planepts[0], move);
+		vector3_subtract(m_planepts[1], move);
+		vector3_subtract(m_planepts[2], move);
 
-			MakePlane();
-		} else {
-			m_planeCached.d += offset;
-			updateSource();
-		}
+		MakePlane();
 	}
-
-	void updateTranslated() {
-		m_planeCached = Plane3_applyTranslation(m_plane, m_funcStaticOrigin);
-	}
-	void updateSource() {
-		m_plane = Plane3_applyTranslation(m_planeCached, vector3_negated(m_funcStaticOrigin));
-	}
-
 
 	PlanePoints& planePoints() {
 		return m_planepts;
@@ -712,33 +666,16 @@ public:
 	const Plane3& plane3() const {
 		return m_planeCached;
 	}
-	void setDoom3Plane(const Plane3& plane) {
-		m_plane = plane;
-		updateTranslated();
-	}
-	const Plane3& getDoom3Plane() const {
-		return m_plane;
-	}
 
 	void copy(const FacePlane& other) {
-		if (!isDoom3Plane()) {
-			planepts_assign(m_planepts, other.m_planepts);
-			MakePlane();
-		} else {
-			m_planeCached = other.m_plane;
-			updateSource();
-		}
+		planepts_assign(m_planepts, other.m_planepts);
+		MakePlane();
 	}
 	void copy(const Vector3& p0, const Vector3& p1, const Vector3& p2) {
-		if (!isDoom3Plane()) {
-			m_planepts[0] = p0;
-			m_planepts[1] = p1;
-			m_planepts[2] = p2;
-			MakePlane();
-		} else {
-			m_planeCached = plane3_for_points(p2, p1, p0);
-			updateSource();
-		}
+		m_planepts[0] = p0;
+		m_planepts[1] = p1;
+		m_planepts[2] = p2;
+		MakePlane();
 	}
 };
 
@@ -1376,8 +1313,7 @@ class Brush :
 			public Undoable,
 			public FaceObserver,
 			public Filterable,
-			public Nameable,
-			public BrushDoom3 {
+			public Nameable {
 private:
 	scene::Node* m_node;
 	typedef UniqueSet<BrushObserver*> Observers;
@@ -1463,7 +1399,6 @@ public:
 			FaceObserver(other),
 			Filterable(other),
 			Nameable(other),
-			BrushDoom3(other),
 			m_node(0),
 			m_undoable_observer(0),
 			m_map(0),
@@ -1480,16 +1415,6 @@ public:
 
 	// assignment not supported
 	Brush& operator=(const Brush& other);
-
-	void setDoom3GroupOrigin(const Vector3& origin) {
-		//globalOutputStream() << "func_static origin before: " << m_funcStaticOrigin << " after: " << origin << "\n";
-		for (Faces::iterator i = m_faces.begin(); i != m_faces.end(); ++i) {
-			(*i)->getPlane().m_funcStaticOrigin = origin;
-			(*i)->getPlane().updateTranslated();
-			(*i)->planeChanged();
-		}
-		planeChanged();
-	}
 
 	void attach(BrushObserver& observer) {
 		for (Faces::iterator i = m_faces.begin(); i != m_faces.end(); ++i) {
@@ -1738,7 +1663,7 @@ class BrushUndoMemento : public UndoMemento {
 		FacePlane::m_type = type;
 
 		g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_QUAKE;
-		if (m_type == eBrushTypeQuake3BP || m_type == eBrushTypeDoom3 || m_type == eBrushTypeQuake4) {
+		if (m_type == eBrushTypeQuake3BP) {
 			g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_BRUSHPRIMITIVES;
 			g_brush_texturelock_enabled = true;
 		} else if (m_type == eBrushTypeHalfLife) {

@@ -150,30 +150,6 @@ void Entity_connectSelected() {
 	}
 }
 
-AABB Doom3Light_getBounds(const AABB& workzone) {
-	AABB aabb(workzone);
-
-	Vector3 defaultRadius(300, 300, 300);
-	if (!string_parse_vector3(EntityClass_valueForKey(*GlobalEntityClassManager().findOrInsert("light", false), "light_radius"), defaultRadius)) {
-		globalErrorStream() << "Doom3Light_getBounds: failed to parse default light radius\n";
-	}
-
-	if (aabb.extents[0] == 0) {
-		aabb.extents[0] = defaultRadius[0];
-	}
-	if (aabb.extents[1] == 0) {
-		aabb.extents[1] = defaultRadius[1];
-	}
-	if (aabb.extents[2] == 0) {
-		aabb.extents[2] = defaultRadius[2];
-	}
-
-	if (aabb_valid(aabb)) {
-		return aabb;
-	}
-	return AABB(Vector3(0, 0, 0), Vector3(64, 64, 64));
-}
-
 int g_iLastLightIntensity;
 
 void Entity_createFromSelection(const char* name, const Vector3& origin) {

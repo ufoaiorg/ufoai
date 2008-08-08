@@ -45,7 +45,6 @@ class BrushNode :
 			NodeContainedCast<BrushNode, MapImporter>::install(m_casts);
 			NodeContainedCast<BrushNode, MapExporter>::install(m_casts);
 			NodeContainedCast<BrushNode, Nameable>::install(m_casts);
-			NodeContainedCast<BrushNode, BrushDoom3>::install(m_casts);
 		}
 		NodeTypeCastTable& get() {
 			return m_casts;
@@ -87,9 +86,6 @@ public:
 		return m_mapExporter;
 	}
 	Nameable& get(NullType<Nameable>) {
-		return m_brush;
-	}
-	BrushDoom3& get(NullType<BrushDoom3>) {
 		return m_brush;
 	}
 
