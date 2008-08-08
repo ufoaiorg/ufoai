@@ -61,7 +61,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "mainframe.h"
 #include "preferences.h"
 #include "commands.h"
-#include "feedback.h"
 #include "grid.h"
 #include "windowobservers.h"
 
@@ -2096,8 +2095,6 @@ void XYWnd::XY_Draw() {
 	glTranslatef(-m_vOrigin[nDim1], -m_vOrigin[nDim2], 0);
 
 	DrawCameraIcon (Camera_getOrigin(*g_pParentWnd->GetCamWnd()), Camera_getAngles(*g_pParentWnd->GetCamWnd()));
-
-	Feedback_draw2D( m_viewType );
 
 	if (g_xywindow_globals_private.show_outline) {
 		if (Active()) {

@@ -14,7 +14,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/brushnode.cpp \
 	$(RADIANT_BASE)/radiant/brush_primit.cpp \
 	$(RADIANT_BASE)/radiant/brushtokens.cpp \
-	$(RADIANT_BASE)/radiant/brushxml.cpp \
 	$(RADIANT_BASE)/radiant/build.cpp \
 	$(RADIANT_BASE)/radiant/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/clippertool.cpp \
@@ -29,7 +28,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/error.cpp \
-	$(RADIANT_BASE)/radiant/feedback.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
 	$(RADIANT_BASE)/radiant/filters.cpp \
 	$(RADIANT_BASE)/radiant/findtexturedialog.cpp \

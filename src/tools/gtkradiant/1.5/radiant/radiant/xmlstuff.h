@@ -62,8 +62,6 @@ struct message_info_t {
 	std::size_t m_length;
 };
 
-class IGL2DWindow;
-
 class ISAXHandler {
 public:
 	virtual void Release() {
@@ -73,11 +71,6 @@ public:
 	virtual void saxCharacters(message_info_t* ctx, const xmlChar* ch, int len) = 0;
 	virtual const char* getName() {
 		return NULL;
-	}
-	virtual IGL2DWindow* Highlight() {
-		return 0;
-	}
-	virtual void DropHighlight() {
 	}
 };
 

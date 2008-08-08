@@ -114,10 +114,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "xywindow.h"
 #include "windowobservers.h"
 #include "renderstate.h"
-#include "feedback.h"
 #include "referencecache.h"
-
-
 
 struct layout_globals_t {
 	WindowPosition m_position;
@@ -2772,8 +2769,6 @@ void MainFrame::Shutdown() {
 	SurfaceInspector_destroyWindow();
 	FindTextureDialog_destroyWindow();
 	PatchInspector_destroyWindow();
-
-	g_DbgDlg.destroyWindow();
 
 	// destroying group-dialog last because it may contain texture-browser
 	GroupDialog_destroyWindow();
