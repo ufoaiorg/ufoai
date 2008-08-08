@@ -536,7 +536,7 @@ static void PR_ProductionRollBottom_f (void)
 		return;
 
 	queue = &gd.productions[baseCurrent->idx];
-	
+
 	if (queue->numItems < 2)
 		return;
 
@@ -554,7 +554,6 @@ void PR_ProductionRun (void)
 	const objDef_t *od;
 	const aircraft_t *aircraft;
 	production_t *prod;
-	const aircraft_t *ufocraft;
 
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
@@ -586,7 +585,7 @@ void PR_ProductionRun (void)
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft) {
 				/* Not enough money to produce more items in this base. */
-				if (od->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
+				if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
 						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -607,7 +606,7 @@ void PR_ProductionRun (void)
 				}
 			} else {
 				/* Not enough money to produce more items in this base. */
-				if (aircraft->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
+				if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
 						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
 						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -685,7 +684,7 @@ void PR_ProductionRun (void)
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
 				if (od->tech->type == RS_CRAFT) {
-					ufocraft = AIR_GetAircraft(od->id);
+					const aircraft_t *ufocraft = AIR_GetAircraft(od->id);
 					assert(ufocraft);
 					if (ufocraft->size == AIRCRAFT_LARGE) {
 						/* Large UFOs can only be stored in Large UFO Hangar */
@@ -1194,7 +1193,7 @@ static void PR_ProductionSelect_f (void)
  */
 static void PR_ProductionList_f (void)
 {
-	char tmpbuf[64];
+	char tmpbuf[MAX_VAR];
 	int numWorkshops = 0;
 
 	if (Cmd_Argc() < 2) {
