@@ -41,8 +41,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdio.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 #include <jpeglib.h>
 #include <jerror.h>
+#ifdef __cplusplus
+}
+#endif
 
 #include "ifilesystem.h"
 
