@@ -1906,8 +1906,8 @@ GtkMenuItem* create_misc_menu() {
 
 	create_menu_item_with_mnemonic(menu, "Find brush...", "FindBrush");
 	create_menu_item_with_mnemonic(menu, "Map Info...", "MapInfo");
-	create_menu_item_with_mnemonic(menu, "_Print XY View", FreeCaller<WXY_Print>());
-	create_menu_item_with_mnemonic(menu, "_Benchmark", FreeCaller<GlobalCamera_Benchmark>());
+//	create_menu_item_with_mnemonic(menu, "_Print XY View", FreeCaller<WXY_Print>());
+//	create_menu_item_with_mnemonic(menu, "_Benchmark", FreeCaller<GlobalCamera_Benchmark>());
 
 	return misc_menu_item;
 }
