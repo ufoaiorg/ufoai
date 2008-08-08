@@ -27,28 +27,23 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifdef WIN32
 #include <gdk/gdkwin32.h>
 #include <shellapi.h>
-bool open_url(const char* url) {
+static inline bool open_url(const char* url) {
 	return ShellExecute( (HWND)GDK_WINDOW_HWND (GTK_WIDGET(MainFrame_getWindow())->window), "open", url, 0, 0, SW_SHOW ) > (HINSTANCE)32;
 }
-#endif
-
-#if defined(__linux__) || defined(__FreeBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__)
 #include <stdlib.h>
-bool open_url(const char* url) {
+static inline bool open_url(const char* url) {
 	// \todo FIXME: the way we open URLs on *nix should be improved. A script is good (see how I do on RTCW)
-	char command[2*PATH_MAX];
-	snprintf (command, sizeof(command),
-	          "netscape -remote \"openURL(%s,new-window)\" || netscape \"%s\" &", url, url);
-	return system(command) == 0;
+	char command[2 * PATH_MAX];
+	snprintf (command, sizeof(command), "x-www-browser \"%s\" &", url);
+	return (system(command) == 0);
 }
-#endif
-
-#ifdef __APPLE__
+#elif defined(__APPLE__)
 #include <stdlib.h>
-bool open_url(const char* url) {
+static inline bool open_url(const char* url) {
 	char command[2*PATH_MAX];
 	snprintf (command, sizeof(command), "open \"%s\" &", url);
-	return system(command) == 0;
+	return (system(command) == 0);
 }
 #endif
 
