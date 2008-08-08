@@ -77,7 +77,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //      brush_primit.h be changed to "#if 0". add/removeScale screws this up ATM. :-)
 //      Plus, Radiant seems to work just fine without that stuff. ;-)
 
-#define TEXTOOL_ENABLED 1
+#define TEXTOOL_ENABLED 0
 
 #if TEXTOOL_ENABLED
 
@@ -94,7 +94,6 @@ void flipY(GtkToggleButton *, gpointer);
 
 //End Textool function prototypes
 
-//Shamus: Textool globals
 GtkWidget * g_textoolWin;
 //End Textool globals
 
@@ -272,7 +271,6 @@ void SurfaceInspector_updateSelection() {
 #if TEXTOOL_ENABLED
 	if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_BRUSHPRIMITIVES) {
 		TexTool::queueDraw();
-		//globalOutputStream() << "textool texture changed..\n";
 	}
 #endif
 }
@@ -424,10 +422,9 @@ static void OnBtnAxial(GtkWidget *widget, gpointer data) {
 
 #if TEXTOOL_ENABLED
 
-	//Shamus:
 	if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_BRUSHPRIMITIVES) {
 		// Scale up texture width/height if in BP mode...
-//NOTE: This may not be correct any more! :-P
+		//NOTE: This may not be correct any more! :-P
 		if (!g_SelectedFaceInstances.empty()) {
 			Face & face = g_SelectedFaceInstances.last().getFace();
 			float x = face.getShader().m_state->getTexture().width;
@@ -946,7 +943,7 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 
 #if TEXTOOL_ENABLED
 		if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_BRUSHPRIMITIVES)
-// Shamus: Textool goodies...
+		// Shamus: Textool goodies...
 		{
 			GtkWidget * frame = gtk_frame_new("Textool");
 			gtk_widget_show(frame);
@@ -1385,10 +1382,7 @@ void SurfaceInspector_Destroy() {
 #if TEXTOOL_ENABLED
 
 namespace TexTool { // namespace hides these symbols from other object-files
-//
 //Shamus: Textool functions, including GTK+ callbacks
-//
-
 //NOTE: Black screen when TT first comes up is caused by an uninitialized Extent... !!! FIX !!!
 //      But... You can see down below that it *is* initialized! WTF?
 struct Extent {
@@ -1574,17 +1568,15 @@ const WidgetColor widgetColor[10] = {
 #define COLOR_LT_GREY		9
 
 void DrawControlWidgets(void) {
-//Note that the grid should go *behind* the face outline... !!! FIX !!!
+	//Note that the grid should go *behind* the face outline... !!! FIX !!!
 	// Grid
-	float xStart = center.x() - (gridWidth / 2.0f);
-	float yStart = center.y() - (gridWidth / 2.0f);
 	float xScale = (extents.height() / extents.width()) * (textureSize.y() / textureSize.x());
 
 	glPushMatrix();
-//Small problem with this approach: Changing the center point in the TX code doesn't seem to
-//change anything here--prolly because we load a new identity matrix. A couple of ways to fix
-//this would be to get rid of that code, or change the center to a new point by taking into
-//account the transforms that we toss with the new identity matrix. Dunno which is better.
+	//Small problem with this approach: Changing the center point in the TX code doesn't seem to
+	//change anything here--prolly because we load a new identity matrix. A couple of ways to fix
+	//this would be to get rid of that code, or change the center to a new point by taking into
+	//account the transforms that we toss with the new identity matrix. Dunno which is better.
 	glLoadIdentity();
 	glScalef(xScale, 1.0, 1.0);				// Will that square it up? Yup.
 	glRotatef(static_cast<float>(radians_to_degrees(atan2(-currentBP.coords[0][1], currentBP.coords[0][0]))), 0.0, 0.0, -1.0);
@@ -1693,8 +1685,8 @@ void focus() {
 
 	// Find selected texture's extents...
 
-	extents.minX = extents.maxX = pts[0].x(),
-	                              extents.minY = extents.maxY = pts[0].y();
+	extents.minX = extents.maxX = pts[0].x();
+	extents.minY = extents.maxY = pts[0].y();
 
 	for (int i = 1; i < numPts; i++) {
 		if (pts[i].x() < extents.minX)
@@ -1709,39 +1701,28 @@ void focus() {
 
 	// Do some viewport fitting stuff...
 
-//globalOutputStream() << "--> Center: " << center.x() << ", " << center.y() << "\n";
-//globalOutputStream() << "--> Extents (stage 1): " << extents.minX << ", "
-//	<< extents.maxX << ", " << extents.minY << ", " << extents.maxY << "\n";
 	// TTimo: Apply a ratio to get the area we'll draw.
-	center.x() = 0.5f * (extents.minX + extents.maxX),
-	             center.y() = 0.5f * (extents.minY + extents.maxY);
-	extents.minX = center.x() + VP_PADDING * (extents.minX - center.x()),
-	               extents.minY = center.y() + VP_PADDING * (extents.minY - center.y()),
-	                              extents.maxX = center.x() + VP_PADDING * (extents.maxX - center.x()),
-	                                             extents.maxY = center.y() + VP_PADDING * (extents.maxY - center.y());
-//globalOutputStream() << "--> Extents (stage 2): " << extents.minX << ", "
-//	<< extents.maxX << ", " << extents.minY << ", " << extents.maxY << "\n";
+	center.x() = 0.5f * (extents.minX + extents.maxX);
+	center.y() = 0.5f * (extents.minY + extents.maxY);
+	extents.minX = center.x() + VP_PADDING * (extents.minX - center.x());
+	extents.minY = center.y() + VP_PADDING * (extents.minY - center.y());
+	extents.maxX = center.x() + VP_PADDING * (extents.maxX - center.x());
+	extents.maxY = center.y() + VP_PADDING * (extents.maxY - center.y());
 
 	// TTimo: We want a texture with the same X / Y ratio.
 	// TTimo: Compute XY space / window size ratio.
 	float SSize = extents.width(), TSize = extents.height();
 	float ratioX = textureSize.x() * extents.width() / windowSize.x(),
 	               ratioY = textureSize.y() * extents.height() / windowSize.y();
-//globalOutputStream() << "--> Texture size: " << textureSize.x() << ", " << textureSize.y() << "\n";
-//globalOutputStream() << "--> Window size: " << windowSize.x() << ", " << windowSize.y() << "\n";
 
 	if (ratioX > ratioY) {
 		TSize = (windowSize.y() * ratioX) / textureSize.y();
-//		TSize = extents.width() * (windowSize.y() / windowSize.x()) * (textureSize.x() / textureSize.y());
 	} else {
 		SSize = (windowSize.x() * ratioY) / textureSize.x();
-//		SSize = extents.height() * (windowSize.x() / windowSize.y()) * (textureSize.y() / textureSize.x());
 	}
 
-	extents.minX = center.x() - 0.5f * SSize, extents.maxX = center.x() + 0.5f * SSize,
-	               extents.minY = center.y() - 0.5f * TSize, extents.maxY = center.y() + 0.5f * TSize;
-//globalOutputStream() << "--> Extents (stage 3): " << extents.minX << ", "
-//	<< extents.maxX << ", " << extents.minY << ", " << extents.maxY << "\n";
+	extents.minX = center.x() - 0.5f * SSize, extents.maxX = center.x() + 0.5f * SSize;
+	extents.minY = center.y() - 0.5f * TSize, extents.maxY = center.y() + 0.5f * TSize;
 }
 
 gboolean size_allocate(GtkWidget * win, GtkAllocation * a, gpointer) {
@@ -1752,13 +1733,6 @@ gboolean size_allocate(GtkWidget * win, GtkAllocation * a, gpointer) {
 }
 
 gboolean expose(GtkWidget * win, GdkEventExpose * e, gpointer) {
-//	globalOutputStream() << "--> Textool Window was exposed!\n";
-//	globalOutputStream() << "    (window width/height: " << cc << "/" << e->area.height << ")\n";
-
-//	windowSize.x() = e->area.width, windowSize.y() = e->area.height;
-//This needs to go elsewhere...
-//	InitTextool();
-
 	if (glwidget_make_current(win) == FALSE) {
 		globalOutputStream() << "    FAILED to make current! Oh, the agony! :-(\n";
 		return true;
@@ -1777,7 +1751,7 @@ gboolean expose(GtkWidget * win, GdkEventExpose * e, gpointer) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-//???
+	//???
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
@@ -1822,45 +1796,22 @@ gboolean expose(GtkWidget * win, GdkEventExpose * e, gpointer) {
 
 	DrawControlPoints();
 	DrawControlWidgets();
-//???
-	// reset the current texture
-//  glBindTexture(GL_TEXTURE_2D, 0);
-//  glFinish();
 	glwidget_swap_buffers(win);
 
 	return false;
 }
-
-/*int FindSelectedPoint(int x, int y)
-{
-	for(int i=0; i<numPts; i++)
-	{
-		int nx = (int)(windowSize.x() * (pts[i].x() - extents.minX) / extents.width());
-		int ny = (int)(windowSize.y() * (pts[i].y() - extents.minY) / extents.height());
-
-		if (abs(nx - x) <= 3 && abs(ny - y) <= 3)
-			return i;
-	}
-
-	return -1;
-}//*/
 
 Vector2 trans;
 Vector2 trans2;
 Vector2 dragPoint;	// Defined in terms of window space (+x/-y)
 Vector2 oldTrans;
 gboolean button_press(GtkWidget * win, GdkEventButton * e, gpointer) {
-//	globalOutputStream() << "--> Textool button press...\n";
-
 	if (e->button == 1) {
 		lButtonDown = true;
 		GlobalUndoSystem().start();
 
 		origBP = currentBP;
 
-		//globalOutputStream() << "--> Original BP: [" << origBP.coords[0][0] << "][" << origBP.coords[0][1] << "][" << origBP.coords[0][2] << "]\n";
-		//globalOutputStream() << "                 [" << origBP.coords[1][0] << "][" << origBP.coords[1][1] << "][" << origBP.coords[1][2] << "]\n";
-		//float angle = atan2(origBP.coords[0][1], origBP.coords[0][0]) * 180.0f / 3.141592653589f;
 		origAngle = (origBP.coords[0][1] > 0 ? PI : -PI);	// Could also be -PI... !!! FIX !!! [DONE]
 
 		if (origBP.coords[0][0] != 0.0f)
@@ -1871,16 +1822,6 @@ gboolean button_press(GtkWidget * win, GdkEventButton * e, gpointer) {
 		rotationAngle = origAngle;
 		oldCenter[0] = oldCenter[1] = 0;
 
-		//globalOutputStream() << "--> BP stats: ang=" << origAngle * RAD_TO_DEG << ", scale=" << origScaleX << "/" << origScaleY << "\n";
-		//Should also set the Flip X/Y checkboxes here as well... !!! FIX !!!
-		//Also: should reverse texture left/right up/down instead of flipping the points...
-
-//disnowok
-//float nx = windowSize.x() * (e->x - extents.minX) / (extents.maxX - extents.minX);
-//float ny = windowSize.y() * (e->y - extents.minY) / (extents.maxY - extents.minY);
-//disdoes...
-//But I want it to scroll the texture window, not the points... !!! FIX !!!
-//Actually, should scroll the texture window only when mouse is down on no widgets...
 		float nx = e->x / windowSize.x() * extents.width() + extents.minX;
 		float ny = e->y / windowSize.y() * extents.height() + extents.minY;
 		trans.x() = -tm.coords[0][0] * nx - tm.coords[0][1] * ny;
@@ -1889,8 +1830,6 @@ gboolean button_press(GtkWidget * win, GdkEventButton * e, gpointer) {
 		dragPoint.x() = e->x, dragPoint.y() = e->y;
 		trans2.x() = nx, trans2.y() = ny;
 		oldRotationAngle = rotationAngle;
-//		oldTrans.x() = tm.coords[0][2] - nx * textureSize.x();
-//		oldTrans.y() = tm.coords[1][2] - ny * textureSize.y();
 		oldTrans.x() = tm.coords[0][2];
 		oldTrans.y() = tm.coords[1][2];
 		oldCenter.x() = center.x();
@@ -1900,28 +1839,13 @@ gboolean button_press(GtkWidget * win, GdkEventButton * e, gpointer) {
 
 		return true;
 	}
-	/*	else if (e->button == 3)
-		{
-			rButtonDown = true;
-		}//*/
-
-//globalOutputStream() << "(" << (haveAnchor ? "anchor" : "released") << ")\n";
 
 	return false;
 }
 
 gboolean button_release(GtkWidget * win, GdkEventButton * e, gpointer) {
-//	globalOutputStream() << "--> Textool button release...\n";
 
 	if (e->button == 1) {
-		/*		float ptx = e->x / windowSize.x() * extents.width() + extents.minX;
-				float pty = e->y / windowSize.y() * extents.height() + extents.minY;
-
-		//This prolly should go into the mouse move code...
-		//Doesn't work correctly anyway...
-				if (translatingX || translatingY)
-					center.x() = ptx, center.y() = pty;//*/
-
 		lButtonDown = false;
 
 		if (translatingX || translatingY) {
@@ -1946,54 +1870,25 @@ gboolean button_release(GtkWidget * win, GdkEventButton * e, gpointer) {
 
 	return true;
 }
-
-/*
-void C2DView::GridForWindow( float c[2], int x, int y)
-{
-  SpaceForWindow( c, x, y );
-  if ( !m_bDoGrid )
-    return;
-  c[0] /= m_GridStep[0];
-  c[1] /= m_GridStep[1];
-  c[0] = (float)floor( c[0] + 0.5f );
-  c[1] = (float)floor( c[1] + 0.5f );
-  c[0] *= m_GridStep[0];
-  c[1] *= m_GridStep[1];
-}
-void C2DView::SpaceForWindow( float c[2], int x, int y)
-{
-  c[0] = ((float)(x))/((float)(m_rect.right-m_rect.left))*(m_Maxs[0]-m_Mins[0])+m_Mins[0];
-  c[1] = ((float)(y))/((float)(m_rect.bottom-m_rect.top))*(m_Maxs[1]-m_Mins[1])+m_Mins[1];
-}
-*/
 gboolean motion(GtkWidget * win, GdkEventMotion * e, gpointer) {
-//	globalOutputStream() << "--> Textool motion...\n";
-
 	if (lButtonDown) {
 		if (translatingX || translatingY) {
 			float ptx = e->x / windowSize.x() * extents.width() + extents.minX;
 			float pty = e->y / windowSize.y() * extents.height() + extents.minY;
 
-//Need to fix this to take the rotation angle into account, so that it moves along
-//the rotated X/Y axis...
+			//Need to fix this to take the rotation angle into account, so that it moves along
+			//the rotated X/Y axis...
 			if (translatingX) {
-//				tm.coords[0][2] = (trans.x() + ptx) * textureSize.x();
-//This works, but only when the angle is zero. !!! FIX !!! [DONE]
-//				tm.coords[0][2] = oldCenter.x() + (ptx * textureSize.x());
 				tm.coords[0][2] = oldTrans.x() + (ptx - trans2.x()) * textureSize.x();
-//				center.x() = oldCenter.x() + (ptx - trans2.x());
 			}
 
 			if (translatingY) {
-//				tm.coords[1][2] = (trans.y() + pty) * textureSize.y();
-//				tm.coords[1][2] = oldCenter.y() + (pty * textureSize.y());
 				tm.coords[1][2] = oldTrans.y() + (pty - trans2.y()) * textureSize.y();
-//				center.y() = oldCenter.y() + (pty - trans2.y());
 			}
 
-//Need to update center.x/y() so that the widget translates as well. Also, oldCenter
-//is badly named... Should be oldTrans or something like that... !!! FIX !!!
-//Changing center.x/y() here doesn't seem to change anything... :-/
+			//Need to update center.x/y() so that the widget translates as well. Also, oldCenter
+			//is badly named... Should be oldTrans or something like that... !!! FIX !!!
+			//Changing center.x/y() here doesn't seem to change anything... :-/
 			UpdateControlPoints();
 		} else if (rotating) {
 			// Shamus: New rotate code
@@ -2010,69 +1905,20 @@ gboolean motion(GtkWidget * win, GdkEventMotion * e, gpointer) {
 			if (cross[2] > 0)
 				s = -s;
 
-// Problem with this: arcsin/cos seems to only return -90 to 90 and 0 to 180...
-// Can't derive angle from that!
+			// Problem with this: arcsin/cos seems to only return -90 to 90 and 0 to 180...
+			// Can't derive angle from that!
 
-//rotationAngle = asin(s);// * 180.0f / 3.141592653589f;
 			rotationAngle = acos(c);
-//rotationAngle2 = asin(s);
 			if (cross[2] < 0)
 				rotationAngle = -rotationAngle;
 
-//NO! DOESN'T WORK! rotationAngle -= 45.0f * DEG_TO_RAD;
-//Let's try this:
-//No wok.
-			/*c = cos(rotationAngle - oldRotationAngle);
-			s = sin(rotationAngle - oldRotationAngle);
-			rotationAngle += oldRotationAngle;
-			//c += cos(oldRotationAngle);
-			//s += sin(oldRotationAngle);
-			//rotationAngle += oldRotationAngle;
-			//c %= 2.0 * PI;
-			//s %= 2.0 * PI;
-			//rotationAngle %= 2.0 * PI;//*/
-
-//This is wrong... Hmm...
-//It seems to shear the texture instead of rotating it... !!! FIX !!!
-// Now it rotates correctly. Seems TTimo was overcomplicating things here... ;-)
-
-// Seems like what needs to happen here is multiplying these rotations by tm... !!! FIX !!!
-
-// See brush_primit.cpp line 244 (Texdef_EmitTextureCoordinates()) for where texcoords come from...
-
+			// See brush_primit.cpp line 244 (Texdef_EmitTextureCoordinates()) for where texcoords come from...
 			tm.coords[0][0] =  c;
 			tm.coords[0][1] =  s;
 			tm.coords[1][0] = -s;
 			tm.coords[1][1] =  c;
-//It doesn't work anymore... Dunno why...
-//tm.coords[0][2] = -trans.x();			// This works!!! Yeah!!!
-//tm.coords[1][2] = -trans.y();
-//nope.
-//tm.coords[0][2] = rotationPoint.x();	// This works, but strangely...
-//tm.coords[1][2] = rotationPoint.y();
-//tm.coords[0][2] = 0;// center.x() / 2.0f;
-//tm.coords[1][2] = 0;// center.y() / 2.0f;
-//No.
-//tm.coords[0][2] = -(center.x() * textureSize.x());
-//tm.coords[1][2] = -(center.y() * textureSize.y());
-//Eh? No, but seems to be getting closer...
-			/*float ptx = e->x / windowSize.x() * extents.width() + extents.minX;
-			float pty = e->y / windowSize.y() * extents.height() + extents.minY;
-			tm.coords[0][2] = -c * center.x() - s * center.y() + ptx;
-			tm.coords[1][2] =  s * center.x() - c * center.x() + pty;//*/
-//Kinda works, but center drifts around on non-square textures...
-			/*tm.coords[0][2] = (-c * center.x() - s * center.y()) * textureSize.x();
-			tm.coords[1][2] = ( s * center.x() - c * center.y()) * textureSize.y();//*/
-//Rotates correctly, but not around the actual center of the face's points...
-			/*tm.coords[0][2] = -c * center.x() * textureSize.x() - s * center.y() * textureSize.y();
-			tm.coords[1][2] =  s * center.x() * textureSize.x() - c * center.y() * textureSize.y();//*/
-//Yes!!!
 			tm.coords[0][2] = (-c * center.x() * textureSize.x() - s * center.y() * textureSize.y()) + center.x() * textureSize.x();
 			tm.coords[1][2] = ( s * center.x() * textureSize.x() - c * center.y() * textureSize.y()) + center.y() * textureSize.y();//*/
-//This doesn't work...
-//And this is the wrong place for this anyway (I'm pretty sure).
-			/*tm.coords[0][2] += oldCenter.x();
-			tm.coords[1][2] += oldCenter.y();//*/
 			UpdateControlPoints(); // will cause a redraw
 		}
 
@@ -2088,25 +1934,22 @@ gboolean motion(GtkWidget * win, GdkEventMotion * e, gpointer) {
 
 		tran.x() = tm.coords[0][0] * nx + tm.coords[0][1] * ny;
 		tran.y() = tm.coords[1][0] * nx + tm.coords[1][1] * ny;
-//This doesn't seem to generate a valid distance from the center--for some reason it
-//calculates a fixed number every time
-//Look at nx/y above: they're getting fixed there! !!! FIX !!! [DONE]
+		//This doesn't seem to generate a valid distance from the center--for some reason it
+		//calculates a fixed number every time
+		//Look at nx/y above: they're getting fixed there! !!! FIX !!! [DONE]
 		float dist = sqrt((nx * nx) + (ny * ny));
 		// Normalize to the 2.0 = height standard (for now)
-//globalOutputStream() << "--> Distance before: " << dist;
 		dist = dist * 2.0f / extents.height();
-//globalOutputStream() << ". After: " << dist;
 		tran.x() = tran.x() * 2.0f / extents.height();
 		tran.y() = tran.y() * 2.0f / extents.height();
-//globalOutputStream() << ". Trans: " << tran.x() << ", " << tran.y() << "\n";
 
-//Let's try this instead...
-//Interesting! It seems that e->x/y are rotated
-//(no, they're not--the TM above is what's doing it...)
+		//Let's try this instead...
+		//Interesting! It seems that e->x/y are rotated
+		//(no, they're not--the TM above is what's doing it...)
 		nx = ((e->x / windowSize.y()) * 2.0f) - (windowSize.x() / windowSize.y());
 		ny = ((e->y / windowSize.y()) * 2.0f) - (windowSize.y() / windowSize.y());
 		ny = -ny;
-//Cool! It works! Now just need to do rotation...
+		//Cool! It works! Now just need to do rotation...
 
 		rotating = translatingX = translatingY = scalingX = scalingY
 		                          = resizingX = resizingY = false;
@@ -2137,28 +1980,14 @@ gboolean motion(GtkWidget * win, GdkEventMotion * e, gpointer) {
 //It seems the fake tex coords conversion is screwing this stuff up... !!! FIX !!!
 //This is still wrong... Prolly need to do something with the oldScaleX/Y stuff...
 void flipX(GtkToggleButton *, gpointer) {
-//	globalOutputStream() << "--> Flip X...\n";
-	//Shamus:
-//	SurfaceInspector_GetSelectedBPTexdef();		// Refresh g_selectedBrushPrimitTexdef...
-//	tm.coords[0][0] = -tm.coords[0][0];
-//	tm.coords[1][0] = -tm.coords[1][0];
-//	tm.coords[0][0] = -tm.coords[0][0];			// This should be correct now...Nope.
-//	tm.coords[1][1] = -tm.coords[1][1];
 	tm.coords[0][0] = -tm.coords[0][0];			// This should be correct now...
 	tm.coords[1][0] = -tm.coords[1][0];
-//	tm.coords[2][0] = -tm.coords[2][0];//wil wok? no.
 	UpdateControlPoints();
 }
 
 void flipY(GtkToggleButton *, gpointer) {
-//	globalOutputStream() << "--> Flip Y...\n";
-//	tm.coords[0][1] = -tm.coords[0][1];
-//	tm.coords[1][1] = -tm.coords[1][1];
-//	tm.coords[0][1] = -tm.coords[0][1];			// This should be correct now...Nope.
-//	tm.coords[1][0] = -tm.coords[1][0];
 	tm.coords[0][1] = -tm.coords[0][1];			// This should be correct now...
 	tm.coords[1][1] = -tm.coords[1][1];
-//	tm.coords[2][1] = -tm.coords[2][1];//wil wok? no.
 	UpdateControlPoints();
 }
 
