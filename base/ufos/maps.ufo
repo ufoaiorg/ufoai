@@ -11,42 +11,6 @@
 // valid UFO values:
 // * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
 
-
-/////////////////////
-// DESERT RANDOM MAPS
-/////////////////////
-
-mapdef or_small
-{
-	map				"+desert"
-	param			normal
-	multiplayer		false
-	description		"_The scorching, uninhabitable desert becomes the theatre for combat. Watch out for camels."
-	size			"medium"
-	multiplayer		false
-	maxaliens		15 //TODO: This is an arbitrary value right now.
-
-//	ufos
-//	{
-//	}
-
-	terrains
-	{
-		desert
-	}
-
-	cultures
-	{
-		any
-	}
-
-	populations
-	{
-		rural
-		nonpopulation
-	}
-}
-
 ///////////////////////
 // ORIENTAL RANDOM MAPS
 ///////////////////////
