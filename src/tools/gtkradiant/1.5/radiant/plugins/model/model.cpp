@@ -126,6 +126,7 @@ public:
 	}
 
 	void render(Renderer& renderer, const Matrix4& localToWorld, Shader* state) const {
+		ASSERT_NOTNULL(state);
 		renderer.SetState(state, Renderer::eFullMaterials);
 		renderer.addRenderable(*this, localToWorld);
 	}

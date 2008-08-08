@@ -243,7 +243,7 @@ void P_Entity_Construct() {
 	MiscModel_construct();
 	Light_Construct();
 
-/*	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");*/
+	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");
 
 	GlobalShaderCache().attachRenderable(StaticRenderableConnectionLines::instance());
 }
@@ -251,7 +251,7 @@ void P_Entity_Construct() {
 void P_Entity_Destroy() {
 	GlobalShaderCache().detachRenderable(StaticRenderableConnectionLines::instance());
 
-/*	GlobalShaderCache().release("$PIVOT");*/
+	GlobalShaderCache().release("$PIVOT");
 
 	MiscModel_destroy();
 	Light_Destroy();

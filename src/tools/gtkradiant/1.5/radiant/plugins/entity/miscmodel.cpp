@@ -189,6 +189,7 @@ public:
 			m_renderOrigin.render(renderer, volume, localToWorld);
 		}
 
+		ASSERT_NOTNULL(m_entity.getEntityClass().m_state_wire);
 		renderer.SetState(m_entity.getEntityClass().m_state_wire, Renderer::eWireframeOnly);
 	}
 	void renderWireframe(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld, bool selected) const {
