@@ -62,14 +62,14 @@ public:
 	STRING_CONSTANT(Name, "quake3");
 
 	EntityQ3API() {
-		Entity_Construct();
+		P_Entity_Construct();
 
 		m_entityq3 = &GetEntityCreator();
 
 		GlobalReferenceCache().setEntityCreator(*m_entityq3);
 	}
 	~EntityQ3API() {
-		Entity_Destroy();
+		P_Entity_Destroy();
 	}
 	EntityCreator* getTable() {
 		return m_entityq3;

@@ -26,8 +26,8 @@ class EntityCreator;
 EntityCreator& GetEntityCreator();
 
 class FilterSystem;
-void Entity_Construct();
-void Entity_Destroy();
+void P_Entity_Construct();
+void P_Entity_Destroy();
 
 extern bool g_showNames;
 extern bool g_showAngles;

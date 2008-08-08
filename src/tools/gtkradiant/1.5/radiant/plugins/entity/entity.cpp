@@ -219,7 +219,7 @@ void Entity_InitFilters() {
 
 #include "preferencesystem.h"
 
-void Entity_Construct() {
+void P_Entity_Construct() {
 	Static<KeyIsName>::instance().m_keyIsName = keyIsNameQuake3;
 	Static<KeyIsName>::instance().m_nameKey = "targetname";
 
@@ -234,7 +234,7 @@ void Entity_Construct() {
 	GlobalShaderCache().attachRenderable(StaticRenderableConnectionLines::instance());
 }
 
-void Entity_Destroy() {
+void P_Entity_Destroy() {
 	GlobalShaderCache().detachRenderable(StaticRenderableConnectionLines::instance());
 
 /*	GlobalShaderCache().release("$PIVOT");*/
