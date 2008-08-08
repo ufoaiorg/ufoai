@@ -178,9 +178,9 @@ RADIANT_PLUGIN_IMAGE_TARGET=radiant/modules/image.$(SHARED_EXT)
 
 #map plugin
 RADIANT_PLUGIN_MAP_SRCS_CPP = \
-	$(RADIANT_BASE)/plugins/mapq3/plugin.cpp \
-	$(RADIANT_BASE)/plugins/mapq3/parse.cpp \
-	$(RADIANT_BASE)/plugins/mapq3/write.cpp
+	$(RADIANT_BASE)/plugins/map/plugin.cpp \
+	$(RADIANT_BASE)/plugins/map/parse.cpp \
+	$(RADIANT_BASE)/plugins/map/write.cpp
 
 RADIANT_PLUGIN_MAP_CPP_OBJS=$(RADIANT_PLUGIN_MAP_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_MAP_TARGET=radiant/modules/map.$(SHARED_EXT)
