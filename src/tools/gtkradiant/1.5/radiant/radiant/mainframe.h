@@ -82,10 +82,7 @@ private:
 	ZWnd* m_pZWnd;
 	XYWnd* m_pActiveXY;
 
-	bool m_bSleeping;
-
 	GtkWidget *m_pStatusLabel[c_count_status];
-
 
 	EViewStyle m_nCurrentStyle;
 	WindowPositionTracker m_position_tracker;
@@ -93,12 +90,6 @@ private:
 	IdleDraw m_idleRedrawStatusText;
 
 public:
-
-	bool IsSleeping() {
-		return m_bSleeping;
-	}
-	void OnSleep();
-
 	void SetStatusText(CopiedString& status_text, const char* pText);
 	void UpdateStatusText();
 	void RedrawStatusText();
@@ -126,9 +117,6 @@ public:
 	CamWnd* GetCamWnd() {
 		return m_pCamWnd;
 	}
-
-	void ReleaseContexts();
-	void CreateContexts();
 
 	EViewStyle CurrentStyle() {
 		return m_nCurrentStyle;

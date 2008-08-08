@@ -24,12 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <memory>
 
-#if 0
-
-#define DefaultAllocator std::allocator
-
-#else
-
 /// \brief An allocator that uses c++ new/delete.
 /// Compliant with the std::allocator interface.
 template<typename Type>
@@ -89,8 +83,6 @@ template<typename Type, typename OtherAllocator>
 inline bool operator==(const DefaultAllocator<Type>&, const OtherAllocator&) {
 	return false;
 }
-
-#endif
 
 
 template<typename Type>

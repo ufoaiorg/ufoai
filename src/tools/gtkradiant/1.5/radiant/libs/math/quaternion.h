@@ -95,39 +95,6 @@ inline void quaternion_normalise(Quaternion& quaternion) {
 
 /// \brief Constructs a pure-rotation matrix from \p quaternion.
 inline Matrix4 matrix4_rotation_for_quaternion(const Quaternion& quaternion) {
-#if 0
-	const double xx = quaternion[0] * quaternion[0];
-	const double xy = quaternion[0] * quaternion[1];
-	const double xz = quaternion[0] * quaternion[2];
-	const double xw = quaternion[0] * quaternion[3];
-
-	const double yy = quaternion[1] * quaternion[1];
-	const double yz = quaternion[1] * quaternion[2];
-	const double yw = quaternion[1] * quaternion[3];
-
-	const double zz = quaternion[2] * quaternion[2];
-	const double zw = quaternion[2] * quaternion[3];
-
-	return Matrix4(
-	           static_cast<float>( 1 - 2 * ( yy + zz ) ),
-	           static_cast<float>(     2 * ( xy + zw ) ),
-	           static_cast<float>(     2 * ( xz - yw ) ),
-	           0,
-	           static_cast<float>(     2 * ( xy - zw ) ),
-	           static_cast<float>( 1 - 2 * ( xx + zz ) ),
-	           static_cast<float>(     2 * ( yz + xw ) ),
-	           0,
-	           static_cast<float>(     2 * ( xz + yw ) ),
-	           static_cast<float>(     2 * ( yz - xw ) ),
-	           static_cast<float>( 1 - 2 * ( xx + yy ) ),
-	           0,
-	           0,
-	           0,
-	           0,
-	           1
-	       );
-
-#else
 	const double x2 = quaternion[0] + quaternion[0];
 	const double y2 = quaternion[1] + quaternion[1];
 	const double z2 = quaternion[2] + quaternion[2];
@@ -159,8 +126,6 @@ inline Matrix4 matrix4_rotation_for_quaternion(const Quaternion& quaternion) {
 	           0,
 	           1
 	       );
-
-#endif
 }
 
 const double c_half_sqrt2 = 0.70710678118654752440084436210485;

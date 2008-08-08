@@ -542,11 +542,7 @@ inline Vector4 viewer_from_transformed_viewer(const Vector4& viewer, const Matri
 }
 
 inline bool viewer_test_transformed_plane(const Vector4& viewer, const Plane3& plane, const Matrix4& localToWorld) {
-#if 0
-	return viewer_test_plane(viewer_from_transformed_viewer(viewer, matrix4_affine_inverse(localToWorld)), plane);
-#else
 	return viewer_test_plane(viewer, plane3_transformed(plane, localToWorld));
-#endif
 }
 
 inline Vector4 viewer_from_viewproj(const Matrix4& viewproj) {

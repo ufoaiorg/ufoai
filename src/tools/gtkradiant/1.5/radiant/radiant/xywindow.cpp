@@ -50,6 +50,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/container.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/glwidget.h"
+#include "gtkutil/filechooser.h"
 #include "gtkmisc.h"
 #include "select.h"
 #include "csg.h"
@@ -307,16 +308,16 @@ struct xywindow_globals_private_t {
 	bool  d_showgrid;
 
 	// these are in the View > Show menu with Show coordinates
-	bool  show_names;
-	bool  show_coordinates;
-	bool  show_angles;
-	bool  show_outline;
-	bool  show_axis;
+	bool show_names;
+	bool show_coordinates;
+	bool show_angles;
+	bool show_outline;
+	bool show_axis;
 
 	bool d_show_work;
 
-	bool     show_blocks;
-	int		       blockSize;
+	bool show_blocks;
+	int blockSize;
 
 	bool m_bCamXYUpdate;
 	bool m_bChaseMouse;
@@ -463,7 +464,7 @@ void XYWnd::SetScale(float f) {
 	XYWnd_Update(*this);
 }
 
-void XYWnd_ZoomIn(XYWnd* xy) {
+static void XYWnd_ZoomIn(XYWnd* xy) {
 	float max_scale = 64;
 	float scale = xy->Scale() * 5.0f / 4.0f;
 	if (scale > max_scale) {
@@ -479,7 +480,7 @@ void XYWnd_ZoomIn(XYWnd* xy) {
 // NOTE: the zoom out factor is 4/5, we could think about customizing it
 //  we don't go below a zoom factor corresponding to 10% of the max world size
 //  (this has to be computed against the window size)
-void XYWnd_ZoomOut(XYWnd* xy) {
+static void XYWnd_ZoomOut(XYWnd* xy) {
 	float min_scale = MIN(xy->Width(), xy->Height()) / ( 1.1f * (g_MaxWorldCoord - g_MinWorldCoord));
 	float scale = xy->Scale() * 4.0f / 5.0f;
 	if (scale < min_scale) {
@@ -504,9 +505,7 @@ bool g_bCrossHairs = false;
 
 GtkMenu* XYWnd::m_mnuDrop = 0;
 
-// this is disabled, and broken
-// http://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=394
-#if 0
+// this is maybe broken
 void WXY_Print() {
 	long width, height;
 	width = g_pParentWnd->ActiveXY()->Width();
@@ -514,11 +513,11 @@ void WXY_Print() {
 	unsigned char* img;
 	const char* filename;
 
-	filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, "Save Image", 0, FILTER_BMP);
+	filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, "Save Image", 0, "bmp");
 	if (!filename)
 		return;
 
-	g_pParentWnd->ActiveXY()->MakeCurrent();
+	g_pParentWnd->ActiveXY()->SetActive(true);
 	img = (unsigned char*)malloc (width * height * 3);
 	glReadPixels (0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, img);
 
@@ -601,8 +600,6 @@ void WXY_Print() {
 
 	free (img);
 }
-#endif
-
 
 #include "timer.h"
 

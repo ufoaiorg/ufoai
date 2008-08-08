@@ -166,13 +166,11 @@ void ResetFilters() {
 void Filters_constructMenu(GtkMenu* menu_in_menu) {
 	create_check_menu_item_with_mnemonic(menu_in_menu, "World", "FilterWorldBrushes");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Entities", "FilterEntities");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Areaportals", "FilterAreaportals");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Translucent", "FilterTranslucent");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Liquids", "FilterLiquids");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Caulk", "FilterCaulk");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Clips", "FilterClips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Paths", "FilterPaths");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Clusterportals", "FilterClusterportals");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lights", "FilterLights");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Structural", "FilterStructural");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lightgrid", "FilterLightgrid");
@@ -181,7 +179,6 @@ void Filters_constructMenu(GtkMenu* menu_in_menu) {
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Hints", "FilterHintsSkips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Models", "FilterModels");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Triggers", "FilterTriggers");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Botclips", "FilterBotClips");
 	// filter manipulation
 	menu_separator(menu_in_menu);
 	create_menu_item_with_mnemonic(menu_in_menu, "Invert filters", "InvertFilters");
@@ -200,13 +197,11 @@ void ConstructFilters() {
 
 	add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_AREAPORTALS, "FilterAreaportals", Accelerator('3', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", Accelerator('4', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('5', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('6', (GdkModifierType)GDK_MOD1_MASK ));
 	add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_PATHS, "FilterPaths", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_CLUSTERPORTALS, "FilterClusterportals", Accelerator('9', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('0', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('D', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_LIGHTGRID, "FilterLightgrid", accelerator_null());
@@ -215,7 +210,6 @@ void ConstructFilters() {
 	add_filter_command(EXCLUDE_HINTSSKIPS, "FilterHintsSkips", Accelerator('H', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_MODELS, "FilterModels", Accelerator('M', (GdkModifierType)GDK_SHIFT_MASK));
 	add_filter_command(EXCLUDE_TRIGGERS, "FilterTriggers", Accelerator('T', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	add_filter_command(EXCLUDE_BOTCLIP, "FilterBotClips", Accelerator('M', (GdkModifierType)GDK_MOD1_MASK));
 
 	PerformFiltering();
 }

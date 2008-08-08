@@ -44,7 +44,7 @@ public:
     sprintf(buffer, "%u", m_value);
   }
   Postfix& operator++()
-  { 
+  {
     ++m_value;
     return *this;
   }
@@ -90,7 +90,7 @@ public:
     sprintf(buffer, "%u", m_value.second);
   }
   Postfix& operator++()
-  { 
+  {
     ++m_value.second;
     if(m_value.first != 0 && m_value.second % 10 == 0)
       --m_value.first;
@@ -243,93 +243,5 @@ public:
     return m_names.empty();
   }
 };
-
-
-
-#if 0
-
-#undef ERROR_MESSAGE
-#define ERROR_MESSAGE(message)
-
-class TestUniqueName
-{
-  void name_check_equal(const name_t& name, const char* string, unsigned int postfix)
-  {
-    ASSERT_MESSAGE(strcmp(name.first.c_str(), string) == 0
-      && name.second.number() == postfix,
-      "test failed!");
-  }
-  void test_refcount()
-  {
-    Names names;
-
-    names.insert(name_t("func_bleh_", "100"));
-    names.insert(name_t("func_bleh_", "100"));
-    names.insert(name_t("func_bleh_", "100"));
-
-
-    names.erase(name_t("func_bleh_", "100"));
-    names.erase(name_t("func_bleh_", "100"));
-    names.erase(name_t("func_bleh_", "100"));
-
-    ASSERT_MESSAGE(names.empty(), "test failed!");
-  }
-
-  void test_make_unique()
-  {
-    Names names;
-
-    {
-      name_t name(names.make_unique(name_t("func_bleh_", "01")));
-      name_check_equal(name, "func_bleh_", 1);
-      names.insert(name);
-    }
-    {
-      name_t name(names.make_unique(name_t("func_bleh_", "04")));
-      name_check_equal(name, "func_bleh_", 4);
-      names.insert(name);
-    }
-    {
-      name_t name(names.make_unique(name_t("func_bleh_", "04")));
-      name_check_equal(name, "func_bleh_", 2);
-      names.insert(name);
-    }
-    {
-      name_t name(names.make_unique(name_t("func_bleh_", "1")));
-      name_check_equal(name, "func_bleh_", 3);
-      names.insert(name);
-    }
-    {
-      name_t name(names.make_unique(name_t("func_bleh_", "2")));
-      name_check_equal(name, "func_bleh_", 5);
-      names.insert(name);
-    }
-    {
-      name_t name(names.make_unique(name_t("func_bleh_", "3")));
-      name_check_equal(name, "func_bleh_", 6);
-      names.insert(name);
-    }
-
-    names.erase(name_t("func_bleh_", "1"));
-    names.erase(name_t("func_bleh_", "2"));
-    names.erase(name_t("func_bleh_", "3"));
-    names.erase(name_t("func_bleh_", "4"));
-    names.erase(name_t("func_bleh_", "5"));
-    names.erase(name_t("func_bleh_", "6"));
-
-    ASSERT_MESSAGE(names.empty(), "test failed!");
-  }
-public:
-  TestUniqueName()
-  {
-    test_refcount();
-    test_make_unique();
-  }
-};
-
-const TestUniqueName g_testuniquename;
-
-#endif
-
 
 #endif

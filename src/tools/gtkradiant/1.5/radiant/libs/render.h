@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "igl.h"
 
 #include "container/array.h"
-#include "math/vector.h" 
+#include "math/vector.h"
 #include "math/pi.h"
 
 #include <vector>
@@ -592,7 +592,7 @@ inline Vector2& texcoord2f_to_vector2(TexCoord2f& vertex)
   return vertex;
 }
 
-/// \brief Returns \p normal rescaled to be unit-length. 
+/// \brief Returns \p normal rescaled to be unit-length.
 inline Normal3f normal3f_normalised(const Normal3f& normal)
 {
   return normal3f_for_vector3(vector3_normalised(normal3f_to_vector3(normal)));
@@ -1153,103 +1153,6 @@ inline void draw_circle(const std::size_t segments, const float radius, PointVer
     remap_policy::set(p->vertex, x, y, 0);
   }
 }
-
-#if 0
-class PointVertexArrayIterator
-{
-  PointVertex* m_point;
-public:
-  PointVertexArrayIterator(PointVertex* point)
-    : m_point(point)
-  {
-  }
-  PointVertexArrayIterator& operator++()
-  {
-    ++m_point;
-    return *this;
-  }
-  PointVertexArrayIterator operator++(int)
-  {
-    PointVertexArrayIterator tmp(*this);
-    ++m_point;
-    return tmp;
-  }
-  Vertex3f& operator*()
-  {
-    return m_point.vertex;
-  }
-  Vertex3f* operator->()
-  {
-    return &(operator*());
-  }
-}
-
-template<typename remap_policy, typename iterator_type
-inline void draw_circle(const std::size_t segments, const float radius, iterator_type start, remap_policy remap)
-{
-  const float increment = c_pi / (double)(segments << 2);
-
-  std::size_t count = 0;
-  iterator_type pxpy(start);
-  iterator_type pypx(pxpy + (segments << 1));
-  iterator_type pynx(pxpy + (segments << 1));
-  iterator_type nxpy(pypx + (segments << 1));
-  iterator_type nxny(pypx + (segments << 1));
-  iterator_type nynx(nxpy + (segments << 1));
-  iterator_type nypx(nxpy + (segments << 1));
-  iterator_type pxny(start);
-  while(count < segments)
-  {
-    const float theta = increment * count;
-    const float x = radius * cos(theta);
-    const float y = radius * sin(theta);
-
-    remap_policy::set((*pxpy), x, y, 0);
-    remap_policy::set((*pxny), x,-y, 0);
-    remap_policy::set((*nxpy),-x, y, 0);
-    remap_policy::set((*nxny),-x,-y, 0);
-
-    remap_policy::set((*pypx), y, x, 0);
-    remap_policy::set((*pynx), y,-x, 0);
-    remap_policy::set((*nypx),-y, x, 0);
-    remap_policy::set((*nynx),-y,-x, 0);
-  }
-}
-
-template<typename remap_policy, typename iterator_type
-inline void draw_semicircle(const std::size_t segments, const float radius, iterator_type start, remap_policy remap)
-{
-  const float increment = c_pi / (double)(segments << 2);
-
-  std::size_t count = 0;
-  iterator_type pxpy(start);
-  iterator_type pypx(pxpy + (segments << 1));
-  iterator_type pynx(pxpy + (segments << 1));
-  iterator_type nxpy(pypx + (segments << 1));
-  iterator_type nxny(pypx + (segments << 1));
-  iterator_type nynx(nxpy + (segments << 1));
-  iterator_type nypx(nxpy + (segments << 1));
-  iterator_type pxny(start);
-  while(count < segments)
-  {
-    const float theta = increment * count;
-    const float x = radius * cos(theta);
-    const float y = radius * sin(theta);
-
-    remap_policy::set((*pxpy), x, y, 0);
-    remap_policy::set((*pxny), x,-y, 0);
-    remap_policy::set((*nxpy),-x, y, 0);
-    remap_policy::set((*nxny),-x,-y, 0);
-
-    //remap_policy::set((*pypx), y, x, 0);
-    //remap_policy::set((*pynx), y,-x, 0);
-    //remap_policy::set((*nypx),-y, x, 0);
-    //remap_policy::set((*nynx),-y,-x, 0);
-  }
-}
-
-
-#endif
 
 inline void draw_quad(const float radius, PointVertex* quad)
 {

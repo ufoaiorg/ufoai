@@ -505,16 +505,9 @@ int main (int argc, char* argv[]) {
 	// eviltypeguy
 	TextureBrowser_ShowStartupShaders(GlobalTextureBrowser());
 
-
 	remove_local_pid();
 
 	gtk_main();
-
-	// avoid saving prefs when the app is minimized
-	if (g_pParentWnd->IsSleeping()) {
-		globalOutputStream() << "Shutdown while sleeping, not saving prefs\n";
-		g_preferences_globals.disable_ini = true;
-	}
 
 	Map_Free();
 

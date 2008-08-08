@@ -278,19 +278,9 @@ bool Buttons_press(ButtonMask& buttons, guint button, guint state) {
 			ASSERT_MESSAGE(window_has_accel(toplevel), "ERROR");
 			ASSERT_MESSAGE(GTK_WIDGET_TOPLEVEL(toplevel), "disabling accel for non-toplevel window");
 			gtk_window_remove_accel_group(toplevel,  global_accel);
-#if 0
-			globalOutputStream() << reinterpret_cast<unsigned int>(toplevel) << ": disabled global accelerators\n";
-#endif
-#if 0
-			accel_group_test(toplevel, global_accel);
-#endif
 		}
 	}
 	buttons = bitfield_enable(buttons, ButtonMask_for_event_button(button));
-#if 0
-	globalOutputStream() << "Buttons_press: ";
-	print_buttons(buttons);
-#endif
 	return false;
 }
 
@@ -303,20 +293,11 @@ bool Buttons_release(ButtonMask& buttons, guint button, guint state) {
 			ASSERT_MESSAGE(!window_has_accel(toplevel), "ERROR");
 			ASSERT_MESSAGE(GTK_WIDGET_TOPLEVEL(toplevel), "enabling accel for non-toplevel window");
 			gtk_window_add_accel_group(toplevel, global_accel);
-#if 0
-			globalOutputStream() << reinterpret_cast<unsigned int>(toplevel) << ": enabled global accelerators\n";
-#endif
-#if 0
-			accel_group_test(toplevel, global_accel);
-#endif
 		}
 		globalQueuedAccelerators_commit();
 	}
 	buttons = bitfield_disable(buttons, ButtonMask_for_event_button(button));
-#if 0
-	globalOutputStream() << "Buttons_release: ";
-	print_buttons(buttons);
-#endif
+
 	return false;
 }
 

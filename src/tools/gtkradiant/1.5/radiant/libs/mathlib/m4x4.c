@@ -1393,43 +1393,10 @@ int m4x4_orthogonal_invert(m4x4_t matrix)
   * determine if the matrix is singular.
   */
   {
-#if 0
-  float pos = 0.0f;
-  float neg = 0.0f;
-  float det = src[0] * src[5] * src[10];
-  if (det >= 0.0) pos += det; else neg += det;
-
-  det = src[1] * src[6] * src[8];
-  if (det >= 0.0) pos += det; else neg += det;
-
-  det = src[2] * src[4] * src[9];
-  if (det >= 0.0) pos += det; else neg += det;
-
-  det = -src[2] * src[5] * src[8];
-  if (det >= 0.0) pos += det; else neg += det;
-
-  det = -src[1] * src[4] * src[10];
-  if (det >= 0.0) pos += det; else neg += det;
-
-  det = -src[0] * src[6] * src[9];
-  if (det >= 0.0) pos += det; else neg += det;
-
-  det = pos + neg;
-#elif 0
-  float det
-    = (src[0] * src[5] * src[10])
-    + (src[1] * src[6] * src[8])
-    + (src[2] * src[4] * src[9])
-    - (src[2] * src[5] * src[8])
-    - (src[1] * src[4] * src[10])
-    - (src[0] * src[6] * src[9]);
-#else
   float det
     = src[0] * ( src[5]*src[10] - src[9]*src[6] )
     - src[1] * ( src[4]*src[10] - src[8]*src[6] )
     + src[2] * ( src[4]*src[9] - src[8]*src[5] );
-
-#endif
 
   if (det*det < 1e-25)
     return 1;
@@ -1642,11 +1609,6 @@ int m4x4_invert(m4x4_t matrix)
   int     i, j, sign;
   m4x4_t m4x4_temp;
 
-#if 0
-  if ( fabs( mdet ) < 0.0000000001 )
-    return 1;
-#endif
-
   m4x4_assign(m4x4_temp, matrix);
 
   for ( i = 0; i < 4; i++ )
@@ -1661,81 +1623,6 @@ int m4x4_invert(m4x4_t matrix)
 
   return 0;
 }
-#if 0
-void m4x4_solve_ge(m4x4_t matrix, vec4_t x)
-{
-  int indx[4];
-  int c,r;
-  int i;
-  int best;
-  float scale[4];
-  float f, pivot;
-  float aug[4];
-  float recip, ratio;
-  float* p;
-
-  for(r=0; r<4; r++)
-  {
-    aug[r] = 0;
-    indx[r] = r;
-  }
-
-  for (r=0; r<4; r++)
-  {
-    scale[r] = 0;
-    for (c=0; c<4; c++, p++)
-    {
-      if (fabs(*p) > scale[r])
-      {
-        scale[r] = (float)fabs(*p);
-      }
-    }
-  }
-
-  for (c=0; c<3; c++)
-  {
-    pivot = 0;
-    for (r=c; r<4; r++)
-    {
-      f = (float)fabs(matrix[(indx[r]<<2)+c]) / scale[indx[r]];
-      if (f > pivot)
-      {
-        pivot = f;
-        best = r;
-      }
-    }
-
-    i = indx[c];
-    indx[c] = indx[best];
-    indx[best] = i;
-
-    recip = 1 / matrix[(indx[c]<<2)+c];
-
-    for (r=c+1; r<4; r++)
-    {
-      p = matrix + (indx[r]<<2);
-      ratio = p[c] * recip;
-
-      for (i=c+1; i<4; i++)
-        p[i] -= ratio * matrix[(indx[c]<<2)+i];
-      aug[indx[r]] -= ratio * aug[indx[c]];
-    }
-  }
-
-  x[indx[3]] = aug[indx[3]] / matrix[(indx[3]<<2)+3];
-  for(r=2; r>=0; r--)
-  {
-    f = aug[indx[r]];
-    p = matrix + (indx[r]<<2);
-    recip = 1 / p[r];
-    for(c=(r+1); c<4; c++)
-    {
-      f -= (p[c] * x[indx[c]]);
-    }
-    x[indx[r]] = f * recip;
-  }
-}
-#endif
 
 #define N 3
 

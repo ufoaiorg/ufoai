@@ -33,7 +33,6 @@ static inline bool open_url(const char* url) {
 #elif defined(__linux__) || defined(__FreeBSD__)
 #include <stdlib.h>
 static inline bool open_url(const char* url) {
-	// \todo FIXME: the way we open URLs on *nix should be improved. A script is good (see how I do on RTCW)
 	char command[2 * PATH_MAX];
 	snprintf (command, sizeof(command), "x-www-browser \"%s\" &", url);
 	return (system(command) == 0);
