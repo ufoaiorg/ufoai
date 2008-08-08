@@ -19,18 +19,17 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#if !defined(INCLUDED_ENTITY_H)
-#define INCLUDED_ENTITY_H
+#if !defined(INCLUDED_LIGHT_H)
+#define INCLUDED_LIGHT_H
 
-class EntityCreator;
-EntityCreator& GetEntityCreator();
+namespace scene {
+class Node;
+};
+class EntityClass;
 
-class FilterSystem;
-void P_Entity_Construct();
-void P_Entity_Destroy();
+scene::Node& New_Light(EntityClass* eclass);
 
-extern bool g_showNames;
-extern bool g_showAngles;
-extern bool g_lightRadii;
+void Light_Construct();
+void Light_Destroy();
 
 #endif

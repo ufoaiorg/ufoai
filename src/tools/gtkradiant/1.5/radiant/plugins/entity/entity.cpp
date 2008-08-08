@@ -38,6 +38,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 #include "miscmodel.h"
+#include "light.h"
 #include "group.h"
 #include "eclassmodel.h"
 #include "generic.h"
@@ -45,6 +46,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 inline scene::Node& entity_for_eclass(EntityClass* eclass) {
 	if (classname_equal(eclass->name(), "misc_model")) {
 		return New_MiscModel(eclass);
+	} else if (classname_equal(eclass->name(), "light")) {
+		return New_Light(eclass);
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
 	} else if (!string_empty(eclass->modelpath())) {
@@ -81,6 +84,7 @@ Counter* EntityKeyValues::m_counter = 0;
 
 bool g_showNames = true;
 bool g_showAngles = true;
+bool g_lightRadii = false;
 
 class ConnectEntities {
 public:
@@ -149,6 +153,14 @@ public:
 		}
 
 		SceneChangeNotify();
+	}
+	void setLightRadii(bool lightRadii)
+	{
+		g_lightRadii = lightRadii;
+	}
+	bool getLightRadii()
+	{
+		return g_lightRadii;
 	}
 	void setShowNames(bool showNames) {
 		g_showNames = showNames;
@@ -225,9 +237,11 @@ void P_Entity_Construct() {
 
 	GlobalPreferenceSystem().registerPreference("SI_ShowNames", BoolImportStringCaller(g_showNames), BoolExportStringCaller(g_showNames));
 	GlobalPreferenceSystem().registerPreference("SI_ShowAngles", BoolImportStringCaller(g_showAngles), BoolExportStringCaller(g_showAngles));
+	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii), BoolExportStringCaller(g_lightRadii));
 
 	Entity_InitFilters();
 	MiscModel_construct();
+	Light_Construct();
 
 /*	RenderablePivot::StaticShader::instance() = GlobalShaderCache().capture("$PIVOT");*/
 
@@ -240,4 +254,5 @@ void P_Entity_Destroy() {
 /*	GlobalShaderCache().release("$PIVOT");*/
 
 	MiscModel_destroy();
+	Light_Destroy();
 }

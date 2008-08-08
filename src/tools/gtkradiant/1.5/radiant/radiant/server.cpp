@@ -145,9 +145,9 @@ public:
 
 	DynamicLibrary(const char* filename) {
 		m_library = dlopen(filename, RTLD_NOW);
-		const char* error = reinterpret_cast<const char*>(dlerror());
-		if (error != NULL) {
-			globalErrorStream() << error;
+		if (!m_library) {
+			const char* error = reinterpret_cast<const char*>(dlerror());
+			globalErrorStream() << error << "\n";
 		}
 	}
 	~DynamicLibrary() {
@@ -155,15 +155,13 @@ public:
 			dlclose(m_library);
 	}
 	bool failed() {
-		return m_library == 0;
+		return (m_library == NULL);
 	}
 	FunctionPointer findSymbol(const char* symbol) {
 		FunctionPointer p = (FunctionPointer)dlsym(m_library, symbol);
 		if (p == 0) {
 			const char* error = reinterpret_cast<const char*>(dlerror());
-			if (error != NULL) {
-				globalErrorStream() << error;
-			}
+			globalErrorStream() << error << "\n";
 		}
 		return p;
 	}
