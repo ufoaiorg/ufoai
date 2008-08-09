@@ -40,7 +40,7 @@ protected:
 
 private:
 
-	// "textures/common/caulk" -> "caulk"
+	// "textures/tex_common/caulk" -> "caulk"
 	void GetShaderNameFromShaderPath(const char* path, std::string& name);
 
 	group* current;

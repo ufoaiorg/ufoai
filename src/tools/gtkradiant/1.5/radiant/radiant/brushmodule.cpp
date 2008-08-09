@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 LatchedBool g_useAlternativeTextureProjection(false, "Use alternative texture-projection");
 bool g_showAlternativeTextureProjectionOption = false;
-bool g_brush_always_caulk;
+bool g_brush_always_nodraw = true;
 
 bool getTextureLockEnabled() {
 	return g_brush_texturelock_enabled;
@@ -70,10 +70,7 @@ void Brush_constructPreferences(PreferencesPage& page) {
 		);
 	}
 	// d1223m
-	page.appendCheckBox("",
-	                    "Always use caulk for new brushes",
-	                    g_brush_always_caulk
-	                   );
+	page.appendCheckBox("", "Always use nodraw for new brushes", g_brush_always_nodraw);
 }
 void Brush_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Brush", "Brush Settings"));

@@ -67,7 +67,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 // d1223m
-extern bool g_brush_always_caulk;
+extern bool g_brush_always_nodraw;
 
 //!\todo Rewrite.
 class ClipPoint {
@@ -100,7 +100,7 @@ public:
 
 VIEWTYPE g_clip_viewtype;
 bool g_bSwitch = true;
-bool g_clip_useCaulk = false;
+bool g_clip_useNodraw = false;
 ClipPoint g_Clip1;
 ClipPoint g_Clip2;
 ClipPoint g_Clip3;
@@ -226,7 +226,7 @@ void Clip_Update() {
 }
 
 const char* Clip_getShader() {
-	return g_clip_useCaulk ? "textures/common/caulk" : TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
+	return g_clip_useNodraw ? "textures/tex_common/nodraw" : TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
 }
 
 void Clip() {
@@ -999,8 +999,8 @@ void XYWnd::NewBrushDrag(int x, int y) {
 	// d1223m
 	//Scene_BrushResize_Selected(GlobalSceneGraph(), aabb_for_minmax(mins, maxs), TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
 	Scene_BrushResize_Selected(GlobalSceneGraph(), aabb_for_minmax(mins, maxs),
-	                           g_brush_always_caulk ?
-	                           "textures/common/caulk" : TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
+	                           g_brush_always_nodraw ?
+	                           "textures/tex_common/nodraw" : TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
 }
 
 void entitycreate_activated(GtkWidget* item) {
@@ -2416,7 +2416,7 @@ void Orthographic_registerPreferencesPage() {
 }
 
 void Clipper_constructPreferences(PreferencesPage& page) {
-	page.appendCheckBox("", "Clipper tool uses caulk", g_clip_useCaulk);
+	page.appendCheckBox("", "Clipper tool uses nodraw", g_clip_useNodraw);
 }
 void Clipper_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Clipper", "Clipper Tool Settings"));
@@ -2461,7 +2461,7 @@ void XYWindow_Construct() {
 	GlobalCommands_insert("CenterXYViews", FreeCaller<XY_Split_Focus>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	GlobalCommands_insert("CenterXYView", FreeCaller<XY_Focus>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
-	GlobalPreferenceSystem().registerPreference("ClipCaulk", BoolImportStringCaller(g_clip_useCaulk), BoolExportStringCaller(g_clip_useCaulk));
+	GlobalPreferenceSystem().registerPreference("ClipNoDraw", BoolImportStringCaller(g_clip_useNodraw), BoolExportStringCaller(g_clip_useNodraw));
 
 	GlobalPreferenceSystem().registerPreference("NewRightClick", BoolImportStringCaller(g_xywindow_globals.m_bRightClick), BoolExportStringCaller(g_xywindow_globals.m_bRightClick));
 	GlobalPreferenceSystem().registerPreference("ChaseMouse", BoolImportStringCaller(g_xywindow_globals_private.m_bChaseMouse), BoolExportStringCaller(g_xywindow_globals_private.m_bChaseMouse));

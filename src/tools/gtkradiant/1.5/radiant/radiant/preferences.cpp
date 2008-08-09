@@ -351,15 +351,6 @@ void CGameDialog::ScanForGames() {
 
 	globalOutputStream() << "Scanning for game description files: " << path << '\n';
 
-	/*!
-	\todo FIXME LINUX:
-	do we put game description files below AppPath, or in ~/.radiant
-	i.e. read only or read/write?
-	my guess .. readonly cause it's an install
-	we will probably want to add ~/.radiant/<version>/games/ scanning on top of that for developers
-	(if that's really needed)
-	*/
-
 	Directory_forEach(path, LoadGameFile(mGames, path));
 }
 
@@ -427,23 +418,6 @@ CGameDialog::~CGameDialog() {
 	}
 	if (GetWidget() != 0) {
 		Destroy();
-	}
-}
-
-inline const char* GameDescription_getIdentifier(const CGameDescription& gameDescription) {
-	const char* identifier = gameDescription.getKeyValue("index");
-	if (string_empty(identifier)) {
-		identifier = "1";
-	}
-	return identifier;
-}
-
-void CGameDialog::AddPacksURL(StringOutputStream &URL) {
-	// add the URLs for the list of game packs installed
-	// FIXME: this is kinda hardcoded for now..
-	std::list<CGameDescription *>::iterator iGame;
-	for (iGame = mGames.begin(); iGame != mGames.end(); ++iGame) {
-		URL << "&Games_dlup%5B%5D=" << GameDescription_getIdentifier(*(*iGame));
 	}
 }
 

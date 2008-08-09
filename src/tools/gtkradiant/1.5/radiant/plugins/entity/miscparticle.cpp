@@ -207,6 +207,7 @@ class RenderableParticle : public OpenGLRenderable {
 
 public:
 	RenderableParticle(const char *id) : m_particleID(id) {
+
 	}
 
 	void render(RenderStateFlags state) const {

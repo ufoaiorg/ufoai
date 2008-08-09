@@ -719,11 +719,6 @@ class Light :
 	void destroy() {
 	}
 
-// vc 2k5 compiler fix
-#if _MSC_VER >= 1400
-public:
-#endif
-
 	void updateOrigin() {
 		m_boundsChanged();
 

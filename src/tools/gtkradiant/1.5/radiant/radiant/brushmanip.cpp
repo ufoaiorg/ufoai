@@ -831,22 +831,22 @@ public:
 filter_face_flags g_filter_face_clip(QER_CLIP);
 filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);
 
-filter_face_shader g_filter_face_weapclip("textures/common/weapclip");
+filter_face_shader g_filter_face_weapclip("textures/tex_common/weaponclip");
 filter_brush_all_faces g_filter_brush_weapclip(&g_filter_face_weapclip);
 
-filter_face_shader g_filter_face_botclip("textures/common/botclip");
+filter_face_shader g_filter_face_botclip("textures/tex_common/botclip");
 filter_brush_all_faces g_filter_brush_botclip(&g_filter_face_botclip);
 
-filter_face_shader_prefix g_filter_face_caulk("textures/common/caulk");
+filter_face_shader_prefix g_filter_face_caulk("textures/tex_common/caulk");
 filter_brush_all_faces g_filter_brush_caulk(&g_filter_face_caulk);
 
 filter_face_shader_prefix g_filter_face_liquids("textures/liquids/");
 filter_brush_any_face g_filter_brush_liquids(&g_filter_face_liquids);
 
-filter_face_shader g_filter_face_hint("textures/common/hint");
+filter_face_shader g_filter_face_hint("textures/tex_common/hint");
 filter_brush_any_face g_filter_brush_hint(&g_filter_face_hint);
 
-filter_face_shader g_filter_face_lightgrid("textures/common/lightgrid");
+filter_face_shader g_filter_face_lightgrid("textures/tex_common/lightgrid");
 filter_brush_all_faces g_filter_brush_lightgrid(&g_filter_face_lightgrid);
 
 filter_face_flags g_filter_face_translucent(QER_TRANS);
