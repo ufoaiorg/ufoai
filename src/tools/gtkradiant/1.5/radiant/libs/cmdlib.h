@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 //
 // start of shared cmdlib stuff
-// 
+//
 
 #ifndef __CMDLIB__
 #define __CMDLIB__
@@ -80,22 +80,19 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateCon
 // returns true if succeeded in creating directory
 #ifdef WIN32
 #include <direct.h>
-inline bool Q_mkdir(const char* name)
-{
-  return _mkdir(name) != -1; 
+inline bool Q_mkdir(const char* name) {
+	return _mkdir(name) != -1;
 }
 #else
 #include <sys/stat.h>
-inline bool Q_mkdir(const char* name)
-{
-  return mkdir(name, access_rwxrwxr_x) != -1; 
+inline bool Q_mkdir(const char* name) {
+	return mkdir(name, access_rwxrwxr_x) != -1;
 }
 #endif
 
 
-inline double Sys_DoubleTime(void)
-{
-  return clock()/ 1000.0;
+inline double Sys_DoubleTime(void) {
+	return clock()/ 1000.0;
 }
 
 

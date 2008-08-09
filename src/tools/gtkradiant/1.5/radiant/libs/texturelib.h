@@ -28,17 +28,15 @@ typedef unsigned int GLuint;
 class LoadImageCallback;
 
 // describes a GL texture
-struct qtexture_t
-{
-  qtexture_t(const LoadImageCallback& load, const char* name) : load(load), name(name)
-  {
-  }
-  const LoadImageCallback& load;
-  const char* name;
-  std::size_t width, height;
-  GLuint texture_number; // gl bind number
-  Colour3 color; // for flat shade mode
-  int surfaceFlags, contentFlags, value;
+struct qtexture_t {
+	qtexture_t(const LoadImageCallback& load, const char* name) : load(load), name(name) {
+	}
+	const LoadImageCallback& load;
+	const char* name;
+	std::size_t width, height;
+	GLuint texture_number; // gl bind number
+	Colour3 color; // for flat shade mode
+	int surfaceFlags, contentFlags, value;
 };
 
 #endif

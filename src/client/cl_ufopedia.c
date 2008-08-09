@@ -217,7 +217,6 @@ static const char* CL_AircraftStatToName (int stat)
  * @brief Translate a aircraft size int to a translated string
  * @sa aircraftSize_t
  */
-
 static const char* CL_AircraftSizeToName (int aircraftSize)
 {
 	switch (aircraftSize) {
