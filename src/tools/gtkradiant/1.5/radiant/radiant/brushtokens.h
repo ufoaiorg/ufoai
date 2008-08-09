@@ -124,6 +124,7 @@ inline void FaceShader_ContentsFlagsValue_exportTokens(const FaceShader& faceSha
 inline void FaceShader_exportTokens(const FaceShader& faceShader, TokenWriter& writer) {
 	// write shader name
 	if (string_empty(shader_get_textureName(faceShader.getShader()))) {
+		/// @todo maybe set this to nodraw?
 		writer.writeToken("NULL");
 	} else {
 		writer.writeToken(shader_get_textureName(faceShader.getShader()));

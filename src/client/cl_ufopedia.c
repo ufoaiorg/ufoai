@@ -215,13 +215,13 @@ static const char* CL_AircraftStatToName (int stat)
 
 /**
  * @brief Translate a aircraft size int to a translated string
- * Size is defined in cl_aircraft.à (aircraftSize_t)
+ * @sa aircraftSize_t
  */
 
 static const char* CL_AircraftSizeToName (int aircraftSize)
 {
 	switch (aircraftSize) {
-	case 	AIRCRAFT_SMALL:
+	case AIRCRAFT_SMALL:
 		return _("Small");
 		break;
 	case AIRCRAFT_LARGE:
@@ -703,7 +703,7 @@ void UP_AircraftDescription (const technology_t* t)
 					break;
 				}
 			}
-			Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size) ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
 			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
 	} else if (RS_Collected_(t)) {
