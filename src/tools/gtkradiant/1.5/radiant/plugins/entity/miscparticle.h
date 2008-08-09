@@ -23,5 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_MISCPARTICLE_H
 
 scene::Node& New_MiscParticle(EntityClass* eclass);
+void MiscParticle_destroy();
+void MiscParticle_construct();
 
 #endif

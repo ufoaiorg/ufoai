@@ -252,6 +252,7 @@ void P_Entity_Destroy() {
 
 	GlobalShaderCache().release("$PIVOT");
 
+	MiscParticle_destroy();
 	MiscModel_destroy();
 	Light_Destroy();
 }
