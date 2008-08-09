@@ -1,1 +1,1 @@
-#define RADIANT_ABOUTMSG "GtkRadiant UFO:AI Edition\nBased on 1.5 branch"
+#define RADIANT_ABOUTMSG "UFORadiant based on GtkRadiant 1.5 branch"

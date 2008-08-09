@@ -1,1 +1,1 @@
-#define RADIANT_VERSION "UFO:AI 1.5.0"
+#define RADIANT_VERSION "1.5.0"

@@ -125,7 +125,7 @@ void environment_init(int argc, char* argv[]) {
 
 	{
 		StringOutputStream home(256);
-		home << DirectoryCleaned(g_get_home_dir()) << ".radiant/";
+		home << DirectoryCleaned(g_get_home_dir()) << ".ufoai/radiant/";
 		Q_mkdir(home.c_str());
 		home_path = home.c_str();
 	}
@@ -173,7 +173,7 @@ void environment_init(int argc, char* argv[]) {
 		} else {
 			home << PathCleaned(appdata);
 		}
-		home << "/RadiantSettings/";
+		home << "/UFOAI/RadiantSettings/";
 		Q_mkdir(home.c_str());
 		home_path = home.c_str();
 	}

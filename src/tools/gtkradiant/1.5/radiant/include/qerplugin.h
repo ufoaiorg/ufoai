@@ -62,16 +62,16 @@ enum EMessageBoxReturn {
 
 // simple Message Box, see above for the 'type' flags
 
-typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const char* text, const char* caption/* = "GtkRadiant"*/, EMessageBoxType type/* = eMB_OK*/, EMessageBoxIcon icon/* = eMB_ICONDEFAULT*/);
+typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const char* text, const char* caption, EMessageBoxType type, EMessageBoxIcon icon);
 
 // file and directory selection functions return null if the user hits cancel
 // - 'title' is the dialog title (can be null)
 // - 'path' is used to set the initial directory (can be null)
 // - 'pattern': the first pattern is for the win32 mode, then comes the Gtk pattern list, see Radiant source for samples
-typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const char* title, const char* path/* = 0*/, const char* pattern/* = 0*/);
+typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const char* title, const char* path, const char* pattern);
 
 // returns a gchar* string that must be g_free'd by the user
-typedef char* (* PFN_QERAPP_DIRDIALOG) (GtkWidget *parent, const char* title/* = "Choose Directory"*/, const char* path/* = 0*/);
+typedef char* (* PFN_QERAPP_DIRDIALOG) (GtkWidget *parent, const char* title, const char* path);
 
 // return true if the user closed the dialog with 'Ok'
 // 'color' is used to set the initial value and store the selected value
