@@ -765,7 +765,7 @@ craftitem base_ammo_AA51
 	name		"_AA51 Cicada SAM"
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
-//	price		20000	// no used (not on market)
+	price		20000
 	buytype		dummy
 	notonmarket	true
 	model		"missile"
