@@ -42,12 +42,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "group.h"
 #include "eclassmodel.h"
 #include "generic.h"
+#include "miscparticle.h"
 
 inline scene::Node& entity_for_eclass(EntityClass* eclass) {
 	if (classname_equal(eclass->name(), "misc_model")) {
 		return New_MiscModel(eclass);
 	} else if (classname_equal(eclass->name(), "light")) {
 		return New_Light(eclass);
+	} else if (classname_equal(eclass->name(), "misc_particle")) {
+		return New_MiscParticle(eclass);
 	} else if (!eclass->fixedsize) {
 		return New_Group(eclass);
 	} else if (!string_empty(eclass->modelpath())) {

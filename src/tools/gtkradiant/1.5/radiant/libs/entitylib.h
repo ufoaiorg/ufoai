@@ -45,46 +45,46 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 inline void arrow_draw(const Vector3& origin, const Vector3& direction)
 {
-  Vector3 up(0, 0, 1);
-  Vector3 left(-direction[1], direction[0], 0);
+	Vector3 up(0, 0, 1);
+	Vector3 left(-direction[1], direction[0], 0);
 
 	Vector3 endpoint(vector3_added(origin, vector3_scaled(direction, 32.0)));
 
-  Vector3 tip1(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(up, -4.0)));
+	Vector3 tip1(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(up, -4.0)));
 	Vector3 tip2(vector3_added(tip1, vector3_scaled(up, 8.0)));
-  Vector3 tip3(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(left, -4.0)));
+	Vector3 tip3(vector3_added(vector3_added(endpoint, vector3_scaled(direction, -8.0)), vector3_scaled(left, -4.0)));
 	Vector3 tip4(vector3_added(tip3, vector3_scaled(left, 8.0)));
 
-  glBegin (GL_LINES);
+	glBegin (GL_LINES);
 
-  glVertex3fv(vector3_to_array(origin));
-  glVertex3fv(vector3_to_array(endpoint));
+	glVertex3fv(vector3_to_array(origin));
+	glVertex3fv(vector3_to_array(endpoint));
 
-  glVertex3fv(vector3_to_array(endpoint));
-  glVertex3fv(vector3_to_array(tip1));
+	glVertex3fv(vector3_to_array(endpoint));
+	glVertex3fv(vector3_to_array(tip1));
 
-  glVertex3fv(vector3_to_array(endpoint));
-  glVertex3fv(vector3_to_array(tip2));
+	glVertex3fv(vector3_to_array(endpoint));
+	glVertex3fv(vector3_to_array(tip2));
 
-  glVertex3fv(vector3_to_array(endpoint));
-  glVertex3fv(vector3_to_array(tip3));
+	glVertex3fv(vector3_to_array(endpoint));
+	glVertex3fv(vector3_to_array(tip3));
 
-  glVertex3fv(vector3_to_array(endpoint));
-  glVertex3fv(vector3_to_array(tip4));
+	glVertex3fv(vector3_to_array(endpoint));
+	glVertex3fv(vector3_to_array(tip4));
 
-  glVertex3fv(vector3_to_array(tip1));
-  glVertex3fv(vector3_to_array(tip3));
+	glVertex3fv(vector3_to_array(tip1));
+	glVertex3fv(vector3_to_array(tip3));
 
-  glVertex3fv(vector3_to_array(tip3));
-  glVertex3fv(vector3_to_array(tip2));
+	glVertex3fv(vector3_to_array(tip3));
+	glVertex3fv(vector3_to_array(tip2));
 
-  glVertex3fv(vector3_to_array(tip2));
-  glVertex3fv(vector3_to_array(tip4));
+	glVertex3fv(vector3_to_array(tip2));
+	glVertex3fv(vector3_to_array(tip4));
 
-  glVertex3fv(vector3_to_array(tip4));
-  glVertex3fv(vector3_to_array(tip1));
+	glVertex3fv(vector3_to_array(tip4));
+	glVertex3fv(vector3_to_array(tip1));
 
-  glEnd();
+	glEnd();
 }
 
 class SelectionIntersection;
