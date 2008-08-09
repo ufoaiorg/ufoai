@@ -1188,7 +1188,7 @@ void ToolChanged() {
 	g_clipper_button.update();
 }
 
-const char* const c_ResizeMode_status = "QE4 Drag Tool: move and resize objects";
+const char* const c_ResizeMode_status = "QE4 Drag Tool";
 
 void DragMode() {
 	if (g_currentToolMode == DragMode && g_defaultToolMode != DragMode) {
@@ -1207,7 +1207,7 @@ void DragMode() {
 }
 
 
-const char* const c_TranslateMode_status = "Translate Tool: translate objects and components";
+const char* const c_TranslateMode_status = "Translate Tool";
 
 void TranslateMode() {
 	if (g_currentToolMode == TranslateMode && g_defaultToolMode != TranslateMode) {
@@ -1225,7 +1225,7 @@ void TranslateMode() {
 	}
 }
 
-const char* const c_RotateMode_status = "Rotate Tool: rotate objects and components";
+const char* const c_RotateMode_status = "Rotate Tool";
 
 void RotateMode() {
 	if (g_currentToolMode == RotateMode && g_defaultToolMode != RotateMode) {
@@ -1243,7 +1243,7 @@ void RotateMode() {
 	}
 }
 
-const char* const c_ScaleMode_status = "Scale Tool: scale objects and components";
+const char* const c_ScaleMode_status = "Scale Tool";
 
 void ScaleMode() {
 	if (g_currentToolMode == ScaleMode && g_defaultToolMode != ScaleMode) {
@@ -1262,7 +1262,7 @@ void ScaleMode() {
 }
 
 
-const char* const c_ClipperMode_status = "Clipper Tool: apply clip planes to objects";
+const char* const c_ClipperMode_status = "Clipper Tool";
 
 
 void ClipperMode() {
