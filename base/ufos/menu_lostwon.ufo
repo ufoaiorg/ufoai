@@ -483,7 +483,7 @@ menu popup_recoverynationlist
 	{
 		num	1
 		pos		"150 266"
-		size	"726 128"
+		size	"726 134"
 		format	"16 100"
 //		bgcolor	"1 1 1 0.6"
 		color	"0.60 0.60 0.60 1"
