@@ -41,7 +41,6 @@ static void Check_Printf(const char *format, ...) __attribute__((format(printf, 
 static void Check_Printf (const char *format, ...)
 {
 	static int skippingCheckLine = 0;
-	va_list ap;
 
 	/* some checking/fix functions are called when ufo2map is compiling
 	 * then the check/fix functions should be quiet */
@@ -76,9 +75,16 @@ static void Check_Printf (const char *format, ...)
 			return;
 	}
 
-	va_start(ap, format);
-	Com_Printf(format, ap);
-	va_end(ap);
+	{
+		char out_buffer[4096];
+		va_list argptr;
+
+		va_start(argptr, format);
+		Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+		va_end(argptr);
+
+		printf("%s", out_buffer);
+	}
 }
 
 /**
