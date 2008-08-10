@@ -254,27 +254,6 @@ public:
 	typedef MemberCaller1<ModelAttribute, const BrowsedPathEntry::SetPathCallback&, &ModelAttribute::browse> BrowseCaller;
 };
 
-const char* browse_sound(GtkWidget* parent) {
-	StringOutputStream buffer(1024);
-
-	buffer << g_qeglobals.m_userGamePath.c_str() << "sound/";
-
-	if (!file_readable(buffer.c_str())) {
-		// just go to fsmain
-		buffer.clear();
-		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
-	}
-
-	const char* filename = file_dialog(parent, TRUE, "Open Wav File", buffer.c_str(), "sound");
-	if (filename != 0) {
-		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
-		if (relative == filename) {
-			globalOutputStream() << "WARNING: could not extract the relative path, using full path instead\n";
-		}
-		return relative;
-	}
-	return filename;
-}
 
 class SoundAttribute : public EntityAttribute {
 	CopiedString m_key;
@@ -306,7 +285,7 @@ public:
 	}
 	typedef MemberCaller<SoundAttribute, &SoundAttribute::update> UpdateCaller;
 	void browse(const BrowsedPathEntry::SetPathCallback& setPath) {
-		const char *filename = browse_sound(gtk_widget_get_toplevel(GTK_WIDGET(m_entry.m_entry.m_frame)));
+		const char *filename = misc_sound_dialog(gtk_widget_get_toplevel(GTK_WIDGET(m_entry.m_entry.m_frame)));
 
 		if (filename != 0) {
 			setPath(filename);

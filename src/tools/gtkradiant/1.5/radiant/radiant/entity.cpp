@@ -155,10 +155,8 @@ int g_iLastLightIntensity;
 void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
-	bool isModel = string_equal_nocase(name, "misc_model")
-		|| string_equal_nocase(name, "misc_gamemodel")
-		|| string_equal_nocase(name, "model_static")
-		|| (GlobalSelectionSystem().countSelected() == 0 && string_equal_nocase(name, "func_static"));
+	bool isModel = string_equal_nocase(name, "misc_model");
+	bool isSound = string_equal_nocase(name, "misc_sound");
 
 	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
@@ -213,6 +211,11 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 		if (model != 0) {
 			Node_getEntity(node)->setKeyValue("model", model);
 		}
+	} else if (isSound) {
+		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
+		if (sound != 0) {
+			Node_getEntity(node)->setKeyValue("sound", sound);
+		}
 	}
 }
 
@@ -253,7 +256,7 @@ void Entity_setColour() {
 		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
 		Entity* entity = Node_getEntity(path.top());
 		if (entity != 0) {
-			const char* strColor = entity->getKeyValue("_color");
+			const char* strColor = entity->getKeyValue("color");
 			if (!string_empty(strColor)) {
 				Vector3 rgb;
 				if (string_parse_vector3(strColor, rgb)) {
@@ -286,6 +289,29 @@ const char* misc_model_dialog(GtkWidget* parent) {
 	}
 	return 0;
 }
+
+const char* misc_sound_dialog(GtkWidget* parent) {
+	StringOutputStream buffer(1024);
+
+	buffer << g_qeglobals.m_userGamePath.c_str() << "sound/";
+
+	if (!file_readable(buffer.c_str())) {
+		// just go to fsmain
+		buffer.clear();
+		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
+	}
+
+	const char* filename = file_dialog(parent, TRUE, "Open Wav File", buffer.c_str(), "sound");
+	if (filename != 0) {
+		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
+		if (relative == filename) {
+			globalOutputStream() << "WARNING: could not extract the relative path, using full path instead\n";
+		}
+		return relative;
+	}
+	return filename;
+}
+
 void Entity_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Entities", "Entity Display Preferences"));
 }
@@ -293,15 +319,11 @@ void Entity_registerPreferencesPage() {
 	PreferencesDialog_addDisplayPage(FreeCaller1<PreferenceGroup&, Entity_constructPage>());
 }
 
-
-
 void Entity_constructMenu(GtkMenu* menu) {
 	create_menu_item_with_mnemonic(menu, "_Ungroup", "UngroupSelection");
 	create_menu_item_with_mnemonic(menu, "_Connect", "ConnectSelection");
 	create_menu_item_with_mnemonic(menu, "_Select Color...", "EntityColor");
 }
-
-
 
 #include "preferencesystem.h"
 #include "stringio.h"

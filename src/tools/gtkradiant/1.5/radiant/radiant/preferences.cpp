@@ -64,10 +64,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 
-void Global_constructPreferences(PreferencesPage& page) {
-	page.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
-}
-
 void Interface_constructPreferences(PreferencesPage& page) {
 #ifdef WIN32
 	page.appendCheckBox("", "Default Text Editor", g_TextEditor_useWin32Editor);
@@ -272,17 +268,7 @@ void CGameDialog_GameFileExport(CGameDialog& self, const IntImportCallback& impo
 }
 
 void CGameDialog::CreateGlobalFrame(PreferencesPage& page) {
-	std::vector<const char*> games;
-	games.reserve(mGames.size());
-	for (std::list<CGameDescription *>::iterator i = mGames.begin(); i != mGames.end(); ++i) {
-		games.push_back((*i)->getRequiredKeyValue("name"));
-	}
-	page.appendCombo(
-	    "Select the game",
-	    StringArrayRange(&(*games.begin()), &(*games.end())),
-	    ReferenceCaller1<CGameDialog, int, CGameDialog_GameFileImport>(*this),
-	    ReferenceCaller1<CGameDialog, const IntImportCallback&, CGameDialog_GameFileExport>(*this)
-	);
+	page.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
 	page.appendCheckBox("Startup", "Show Global Preferences", m_bGamePrompt);
 }
 
@@ -294,7 +280,6 @@ GtkWindow* CGameDialog::BuildDialog() {
 
 	{
 		PreferencesPage preferencesPage(*this, GTK_WIDGET(vbox2));
-		Global_constructPreferences(preferencesPage);
 		CreateGlobalFrame(preferencesPage);
 	}
 
@@ -688,10 +673,6 @@ GtkWindow* PrefsDlg::BuildDialog() {
 
 						{
 							GtkWidget* global = PreferencePages_addPage(m_notebook, "Global Preferences");
-							{
-								PreferencesPage preferencesPage(*this, getVBox(global));
-								Global_constructPreferences(preferencesPage);
-							}
 							GtkTreeIter group = PreferenceTree_appendPage(store, 0, "Global", global);
 							{
 								GtkWidget* game = PreferencePages_addPage(m_notebook, "Game");
