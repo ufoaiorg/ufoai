@@ -5330,8 +5330,9 @@ void CL_GameAutoGo (mission_t *mis)
 
 		/* Check for alien containment in aircraft homebase. */
 		if (aircraft->alientypes && !B_GetBuildingStatus(aircraft->homebase, B_ALIEN_CONTAINMENT)) {
-		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
-		 * Popup aircraft transer dialog to choose a better base. */
+			/* We have captured/killed aliens, but the homebase of this aircraft
+			 * does not have alien containment. Popup aircraft transer dialog to
+			 * choose a better base. */
 			TR_TransferAircraftMenu(aircraft);
 		}
 	}

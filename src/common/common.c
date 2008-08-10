@@ -136,14 +136,11 @@ void Com_EndRedirect (void)
  * @note Both client and server can use this, and it will output
  * to the apropriate place.
  */
-void Com_Printf (const char *fmt, ...)
+void Com_vPrintf (const char *fmt, va_list ap)
 {
-	va_list argptr;
 	char msg[MAXPRINTMSG];
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-	va_end(argptr);
+	Q_vsnprintf(msg, MAXPRINTMSG, fmt, ap);
 
 	msg[sizeof(msg)-1] = 0;
 
@@ -180,6 +177,15 @@ void Com_Printf (const char *fmt, ...)
 		if (logfile_active->integer > 1)
 			fflush(logfile);	/* force it to save every time */
 	}
+}
+
+void Com_Printf (const char* const fmt, ...)
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+	Com_vPrintf(fmt, ap);
+	va_end(ap);
 }
 
 /**
