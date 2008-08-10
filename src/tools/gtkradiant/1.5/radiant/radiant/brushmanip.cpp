@@ -852,6 +852,9 @@ filter_brush_all_faces g_filter_brush_nodraw(&g_filter_face_nodraw);
 filter_face_flags g_filter_face_translucent(QER_TRANS);
 filter_brush_all_faces g_filter_brush_translucent(&g_filter_face_translucent);
 
+filter_face_flags g_filter_face_water(BRUSH_WATER_MASK);
+filter_brush_all_faces g_filter_brush_water(&g_filter_face_water);
+
 filter_face_contents g_filter_face_detail(BRUSH_DETAIL_MASK);
 filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 
@@ -863,6 +866,7 @@ void BrushFilters_construct() {
 	add_brush_filter(g_filter_brush_caulk, EXCLUDE_CAULK);
 	add_face_filter(g_filter_face_caulk, EXCLUDE_CAULK);
 	add_brush_filter(g_filter_brush_liquids, EXCLUDE_LIQUIDS);
+	add_brush_filter(g_filter_brush_water, EXCLUDE_LIQUIDS);
 	add_brush_filter(g_filter_brush_hint, EXCLUDE_HINTSSKIPS);
 	add_brush_filter(g_filter_brush_translucent, EXCLUDE_TRANSLUCENT);
 	add_brush_filter(g_filter_brush_detail, EXCLUDE_DETAILS);

@@ -172,7 +172,7 @@ void Filters_constructMenu(GtkMenu* menu_in_menu) {
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Clips", "FilterClips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lights", "FilterLights");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Structural", "FilterStructural");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Lightgrid", "FilterLightgrid");
+	create_check_menu_item_with_mnemonic(menu_in_menu, "Nodraw", "FilterNodraw");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Details", "FilterDetails");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Hints", "FilterHintsSkips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Models", "FilterModels");

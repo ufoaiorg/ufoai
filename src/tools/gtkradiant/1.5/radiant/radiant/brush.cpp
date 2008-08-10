@@ -33,11 +33,8 @@ void Brush_textureChanged() {
 }
 
 QuantiseFunc Face::m_quantise;
-EBrushType Face::m_type;
-EBrushType FacePlane::m_type;
 bool g_brush_texturelock_enabled = false;
 
-EBrushType Brush::m_type;
 double Brush::m_maxWorldCoord = 0;
 Shader* Brush::m_state_point;
 Shader* BrushClipPlane::m_state = 0;

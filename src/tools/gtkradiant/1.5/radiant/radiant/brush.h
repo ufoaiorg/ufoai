@@ -66,12 +66,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brush_primit.h"
 
 const unsigned int BRUSH_DETAIL_FLAG = 27;
-const unsigned int BRUSH_DETAIL_MASK = (1 << BRUSH_DETAIL_FLAG);
-
-enum EBrushType {
-	eBrushTypeUFO
-};
-
+const unsigned int BRUSH_DETAIL_MASK = 0x08000000; // CONTENTS_DETAIL
+const unsigned int BRUSH_WATER_MASK = 0x0020; // CONTENTS_WATER
 
 #define BRUSH_CONNECTIVITY_DEBUG 0
 #define BRUSH_DEGENERATE_DEBUG 0
@@ -582,8 +578,6 @@ class FacePlane {
 public:
 	Vector3 m_funcStaticOrigin;
 
-	static EBrushType m_type;
-
 	class SavedState {
 	public:
 		PlanePoints m_planepts;
@@ -744,7 +738,6 @@ class SavedState : public UndoMemento {
 
 public:
 	static QuantiseFunc m_quantise;
-	static EBrushType m_type;
 
 	PlanePoints m_move_planepts;
 	PlanePoints m_move_planeptsTransformed;
@@ -1348,7 +1341,6 @@ public:
 	static Shader* m_state_point;
 	// ----
 
-	static EBrushType m_type;
 	static double m_maxWorldCoord;
 
 	Brush(scene::Node& node, const Callback& evaluateTransform, const Callback& boundsChanged) :
@@ -1644,11 +1636,7 @@ class BrushUndoMemento : public UndoMemento {
 		return m_faces.back();
 	}
 
-	static void constructStatic(EBrushType type) {
-		m_type = type;
-		Face::m_type = type;
-		FacePlane::m_type = type;
-
+	static void constructStatic() {
 		g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_QUAKE;
 
 		Face::m_quantise = quantiseFloating;

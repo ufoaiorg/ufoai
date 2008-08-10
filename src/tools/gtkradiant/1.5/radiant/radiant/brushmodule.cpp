@@ -81,7 +81,7 @@ void Brush_registerPreferencesPage() {
 }
 
 
-void Brush_Construct(EBrushType type) {
+void Brush_Construct() {
 	Brush_registerCommands();
 	Brush_registerPreferencesPage();
 
@@ -89,7 +89,7 @@ void Brush_Construct(EBrushType type) {
 
 	BrushClipPlane::constructStatic();
 	BrushInstance::constructStatic();
-	Brush::constructStatic(type);
+	Brush::constructStatic();
 
 	Brush::m_maxWorldCoord = g_MaxWorldCoord;
 	BrushInstance::m_counter = &g_brushCount;
@@ -177,7 +177,7 @@ public:
 	STRING_CONSTANT(Name, "ufo");
 
 	BrushUFOAPI() {
-		Brush_Construct(eBrushTypeUFO);
+		Brush_Construct();
 
 		m_brushufo = &GetBrushCreator();
 	}
