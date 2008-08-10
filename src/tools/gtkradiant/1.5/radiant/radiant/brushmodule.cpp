@@ -170,26 +170,26 @@ class BrushDependencies :
 			public GlobalFilterModuleRef {
 };
 
-class BrushQuake2API : public TypeSystemRef {
-	BrushCreator* m_brushquake2;
+class BrushUFOAPI : public TypeSystemRef {
+	BrushCreator* m_brushufo;
 public:
 	typedef BrushCreator Type;
 	STRING_CONSTANT(Name, "ufo");
 
-	BrushQuake2API() {
-		Brush_Construct(eBrushTypeQuake2);
+	BrushUFOAPI() {
+		Brush_Construct(eBrushTypeUFO);
 
-		m_brushquake2 = &GetBrushCreator();
+		m_brushufo = &GetBrushCreator();
 	}
-	~BrushQuake2API() {
+	~BrushUFOAPI() {
 		Brush_Destroy();
 	}
 	BrushCreator* getTable() {
-		return m_brushquake2;
+		return m_brushufo;
 	}
 };
 
-typedef SingletonModule<BrushQuake2API, BrushDependencies> BrushQuake2Module;
-typedef Static<BrushQuake2Module> StaticBrushQuake2Module;
-StaticRegisterModule staticRegisterBrushQuake2(StaticBrushQuake2Module::instance());
+typedef SingletonModule<BrushUFOAPI, BrushDependencies> BrushUFOModule;
+typedef Static<BrushUFOModule> StaticBrushUFOModule;
+StaticRegisterModule staticRegisterBrushUFO(StaticBrushUFOModule::instance());
 

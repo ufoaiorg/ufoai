@@ -75,10 +75,10 @@ inline bool FaceShader_importTokens(FaceShader& faceShader, Tokeniser& tokeniser
 	return true;
 }
 
-class Quake2FaceTokenImporter {
+class UFOFaceTokenImporter {
 	Face& m_face;
 public:
-	Quake2FaceTokenImporter(Face& face) : m_face(face) {
+	UFOFaceTokenImporter(Face& face) : m_face(face) {
 	}
 	bool importTokens(Tokeniser& tokeniser) {
 		RETURN_FALSE_IF_FAIL(FacePlane_importTokens(m_face.getPlane(), tokeniser));
@@ -124,17 +124,16 @@ inline void FaceShader_ContentsFlagsValue_exportTokens(const FaceShader& faceSha
 inline void FaceShader_exportTokens(const FaceShader& faceShader, TokenWriter& writer) {
 	// write shader name
 	if (string_empty(shader_get_textureName(faceShader.getShader()))) {
-		/// @todo maybe set this to nodraw?
-		writer.writeToken("NULL");
+		writer.writeToken("tex_common/nodraw");
 	} else {
 		writer.writeToken(shader_get_textureName(faceShader.getShader()));
 	}
 }
 
-class Quake2FaceTokenExporter {
+class UFOFaceTokenExporter {
 	const Face& m_face;
 public:
-	Quake2FaceTokenExporter(const Face& face) : m_face(face) {
+	UFOFaceTokenExporter(const Face& face) : m_face(face) {
 	}
 	void exportTokens(TokenWriter& writer) const {
 		FacePlane_exportTokens(m_face.getPlane(), writer);
@@ -170,7 +169,7 @@ public:
 
 			Face& face = *m_brush.back();
 
-			Quake2FaceTokenImporter importer(face);
+			UFOFaceTokenImporter importer(face);
 			RETURN_FALSE_IF_FAIL(importer.importTokens(tokeniser));
 			face.planeChanged();
 		}
@@ -203,7 +202,7 @@ public:
 			const Face& face = *(*i);
 
 			if (face.contributes()) {
-				Quake2FaceTokenExporter exporter(face);
+				UFOFaceTokenExporter exporter(face);
 				exporter.exportTokens(writer);
 			}
 		}

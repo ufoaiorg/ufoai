@@ -59,7 +59,7 @@ class EntityQ3API : public TypeSystemRef {
 	EntityCreator* m_entityq3;
 public:
 	typedef EntityCreator Type;
-	STRING_CONSTANT(Name, "quake3");
+	STRING_CONSTANT(Name, "ufo");
 
 	EntityQ3API() {
 		P_Entity_Construct();

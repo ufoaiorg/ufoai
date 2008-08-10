@@ -69,7 +69,7 @@ const unsigned int BRUSH_DETAIL_FLAG = 27;
 const unsigned int BRUSH_DETAIL_MASK = (1 << BRUSH_DETAIL_FLAG);
 
 enum EBrushType {
-	eBrushTypeQuake2
+	eBrushTypeUFO
 };
 
 

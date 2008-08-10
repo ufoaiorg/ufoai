@@ -323,7 +323,7 @@ static int _md2_canload( PM_PARAMS_CANLOAD )
 
 
 
-// _md2_load() loads a quake2 md2 model file.
+// _md2_load() loads a ufo md2 model file.
 
 
 static picoModel_t *_md2_load( PM_PARAMS_LOAD )

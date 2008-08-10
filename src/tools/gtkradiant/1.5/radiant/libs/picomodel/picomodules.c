@@ -64,7 +64,7 @@ const picoModule_t *picoModules[] =
 	&picoModuleASE,		/* autodesk ase */
 	&picoModuleMS3D,	/* milkshape3d */
 	&picoModuleMDC,		/* return to castle wolfenstein mdc */
-	&picoModuleMD2,		/* quake2 md2 */
+	&picoModuleMD2,		/* ufo md2 */
 	&picoModuleTerrain,	/* picoterrain object */
 	&picoModuleOBJ,		/* wavefront object */
 	NULL				/* arnold */

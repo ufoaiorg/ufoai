@@ -51,7 +51,7 @@ class ShadersQ3API {
 	ShaderSystem* m_shadersq3;
 public:
 	typedef ShaderSystem Type;
-	STRING_CONSTANT(Name, "quake3");
+	STRING_CONSTANT(Name, "ufo");
 
 	ShadersQ3API(ShadersDependencies& dependencies) {
 		g_shadersExtension = "shader";

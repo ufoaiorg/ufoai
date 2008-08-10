@@ -307,7 +307,7 @@ class EclassManagerAPI {
 	EntityClassManager m_eclassmanager;
 public:
 	typedef EntityClassManager Type;
-	STRING_CONSTANT(Name, "quake3");
+	STRING_CONSTANT(Name, "ufo");
 
 	EclassManagerAPI() {
 		EntityClassQuake3_construct();

@@ -31,8 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // Rules:
 //
-// - Directories should be searched in the following order: ~/.q3a/baseq3,
-//   install dir (/usr/local/games/quake3/baseq3) and cd_path (/mnt/cdrom/baseq3).
+// - Directories should be searched in the following order: ~/.ufoai/<version>/base,
+//   install dir (/usr/local/games/ufoai/base)
 //
 // - Pak files are searched first inside the directories.
 // - Case insensitive.
