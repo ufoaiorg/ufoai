@@ -834,8 +834,8 @@ filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);
 filter_face_shader g_filter_face_weapclip("textures/tex_common/weaponclip");
 filter_brush_all_faces g_filter_brush_weapclip(&g_filter_face_weapclip);
 
-filter_face_shader g_filter_face_botclip("textures/tex_common/botclip");
-filter_brush_all_faces g_filter_brush_botclip(&g_filter_face_botclip);
+filter_face_shader g_filter_face_actorclip("textures/tex_common/actorclip");
+filter_brush_all_faces g_filter_brush_actorclip(&g_filter_face_actorclip);
 
 filter_face_shader_prefix g_filter_face_caulk("textures/tex_common/caulk");
 filter_brush_all_faces g_filter_brush_caulk(&g_filter_face_caulk);
@@ -846,8 +846,8 @@ filter_brush_any_face g_filter_brush_liquids(&g_filter_face_liquids);
 filter_face_shader g_filter_face_hint("textures/tex_common/hint");
 filter_brush_any_face g_filter_brush_hint(&g_filter_face_hint);
 
-filter_face_shader g_filter_face_lightgrid("textures/tex_common/lightgrid");
-filter_brush_all_faces g_filter_brush_lightgrid(&g_filter_face_lightgrid);
+filter_face_shader g_filter_face_nodraw("textures/tex_common/nodraw");
+filter_brush_all_faces g_filter_brush_nodraw(&g_filter_face_nodraw);
 
 filter_face_flags g_filter_face_translucent(QER_TRANS);
 filter_brush_all_faces g_filter_brush_translucent(&g_filter_face_translucent);
@@ -857,6 +857,7 @@ filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 
 
 void BrushFilters_construct() {
+	/// @todo Move the ufoai filters
 	add_brush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_caulk, EXCLUDE_CAULK);
@@ -866,7 +867,7 @@ void BrushFilters_construct() {
 	add_brush_filter(g_filter_brush_translucent, EXCLUDE_TRANSLUCENT);
 	add_brush_filter(g_filter_brush_detail, EXCLUDE_DETAILS);
 	add_brush_filter(g_filter_brush_detail, EXCLUDE_STRUCTURAL, true);
-	add_brush_filter(g_filter_brush_lightgrid, EXCLUDE_LIGHTGRID);
+	add_brush_filter(g_filter_brush_nodraw, EXCLUDE_NODRAW);
 }
 
 void Select_MakeDetail() {
