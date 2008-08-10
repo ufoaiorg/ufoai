@@ -5295,6 +5295,7 @@ void CL_GameAutoGo (mission_t *mis)
 		while (aliensLeft > 0) {
 			for (i = 0; i < aircraft->alientypes; i++) {
 				assert(i < MAX_CARGO);
+				assert(ccs.battleParameters.alienTeams[i]);
 				cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
 				cargo[i].amount_dead += rand() % aliensLeft;
 				aliensLeft -= cargo[i].amount_dead;

@@ -3517,7 +3517,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
 
 	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
-	* @todo this should be removed when new inventory code will be over */
+	 * @todo this should be removed when new inventory code will be over */
 	assert(aircraft->homebase);
 	INV_UpdateStorageCap(aircraft->homebase);
 
@@ -4091,6 +4091,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
 					aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+					if (!aircraft->aliencargo[l].teamDef)
+						return qfalse;
 					aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
 					aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
 				}
