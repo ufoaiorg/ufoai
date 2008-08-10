@@ -187,23 +187,23 @@ void Com_Printf (const char *fmt, ...)
  */
 void Com_DPrintf (int level, const char *fmt, ...)
 {
-	va_list argptr;
-	char msg[MAXPRINTMSG];
-
 	/* don't confuse non-developers with techie stuff... */
 	if (!developer || developer->integer == 0)
 		return;
-
-	if (developer->integer != DEBUG_ALL && developer->integer & ~level)
+	else if (developer->integer != DEBUG_ALL && developer->integer & ~level)
 		return;
+	else {
+		va_list argptr;
+		char msg[MAXPRINTMSG];
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-	va_end(argptr);
+		va_start(argptr, fmt);
+		Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
+		va_end(argptr);
 
-	msg[sizeof(msg)-1] = 0;
+		msg[sizeof(msg)-1] = 0;
 
-	Com_Printf("%s", msg);
+		Com_Printf("%s", msg);
+	}
 }
 
 /**
