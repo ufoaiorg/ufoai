@@ -36,7 +36,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/groupdialog.cpp \
 	$(RADIANT_BASE)/radiant/gtkdlgs.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
-	$(RADIANT_BASE)/radiant/help.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \

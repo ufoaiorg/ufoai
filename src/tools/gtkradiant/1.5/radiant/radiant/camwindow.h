@@ -81,4 +81,8 @@ extern camwindow_globals_t g_camwindow_globals;
 void CamWnd_Construct();
 void CamWnd_Destroy();
 
+// Constants
+const int CAMWND_MINSIZE_X = 240;
+const int CAMWND_MINSIZE_Y = 200;
+
 #endif

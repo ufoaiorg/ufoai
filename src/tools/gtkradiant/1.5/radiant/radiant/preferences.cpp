@@ -142,7 +142,7 @@ CGameDescription::CGameDescription(xmlDocPtr pDoc, const CopiedString& gameFile)
 		if (i == m_gameDescription.end()) {
 			globalErrorStream() << "Warning, 'type' attribute not found in '" << reinterpret_cast<const char*>(pDoc->URL) << "'\n";
 			// default
-			mGameType = "q3";
+			mGameType = "ufo";
 		} else {
 			mGameType = (*i).second.c_str();
 		}
@@ -215,7 +215,7 @@ typedef FreeCaller1<const char*, LogConsole_importString> LogConsoleImportString
 
 void RegisterGlobalPreferences(PreferenceSystem& preferences) {
 	preferences.registerPreference("gamefile", CopiedStringImportStringCaller(g_GamesDialog.m_sGameFile), CopiedStringExportStringCaller(g_GamesDialog.m_sGameFile));
-	preferences.registerPreference("gamePrompt", BoolImportStringCaller(g_GamesDialog.m_bGamePrompt), BoolExportStringCaller(g_GamesDialog.m_bGamePrompt));
+//	preferences.registerPreference("gamePrompt", BoolImportStringCaller(g_GamesDialog.m_bGamePrompt), BoolExportStringCaller(g_GamesDialog.m_bGamePrompt));
 	preferences.registerPreference("log console", LogConsoleImportStringCaller(), BoolExportStringCaller(g_Console_enableLogging));
 }
 
@@ -626,8 +626,10 @@ public:
 GtkWindow* PrefsDlg::BuildDialog() {
 	PreferencesDialog_addInterfacePreferences(FreeCaller1<PreferencesPage&, Interface_constructPreferences>());
 	Mouse_registerPreferencesPage();
-
+	// Construct the main dialog window. Set a vertical default size as the
+	// size_request is too small.
 	GtkWindow* dialog = create_floating_window("UFORadiant Preferences", m_parent);
+	gtk_window_set_default_size(dialog, -1, 450);
 
 	{
 		GtkWidget* mainvbox = gtk_vbox_new(FALSE, 5);

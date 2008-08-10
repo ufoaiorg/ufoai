@@ -1381,7 +1381,7 @@ public:
 			TransformNode(other),
 			Bounded(other),
 			Cullable(other),
-			Snappable(),
+			Snappable(other),
 			Undoable(other),
 			FaceObserver(other),
 			Filterable(other),

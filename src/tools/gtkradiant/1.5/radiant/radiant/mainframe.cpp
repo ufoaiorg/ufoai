@@ -91,7 +91,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "groupdialog.h"
 #include "gtkdlgs.h"
 #include "gtkmisc.h"
-#include "help.h"
 #include "map.h"
 #include "mru.h"
 #include "multimon.h"
@@ -1601,8 +1600,9 @@ void ClipperChangeNotify() {
 }
 
 
+//LatchedInt g_Layout_viewStyle(MainFrame::eFloating, "Window Layout");
 LatchedInt g_Layout_viewStyle(0, "Window Layout");
-LatchedBool g_Layout_enableDetachableMenus(true, "Detachable Menus");
+LatchedBool g_Layout_enableDetachableMenus(false, "Detachable Menus");
 LatchedBool g_Layout_enablePluginToolbar(true, "Plugin Toolbar");
 
 
@@ -1616,16 +1616,7 @@ GtkMenuItem* create_file_menu() {
 
 	create_menu_item_with_mnemonic(menu, "_New Map", "NewMap");
 	menu_separator(menu);
-
-#if 0
-	//++timo temporary experimental stuff for sleep mode..
-	create_menu_item_with_mnemonic(menu, "_Sleep", "Sleep");
-	menu_separator(menu);
-	// end experimental
-#endif
-
 	create_menu_item_with_mnemonic(menu, "_Open...", "OpenMap");
-
 	create_menu_item_with_mnemonic(menu, "_Import...", "ImportMap");
 	create_menu_item_with_mnemonic(menu, "_Save", "SaveMap");
 	create_menu_item_with_mnemonic(menu, "Save _as...", "SaveMapAs");
@@ -1935,10 +1926,6 @@ GtkMenuItem* create_help_menu() {
 		menu_tearoff (menu);
 
 	create_menu_item_with_mnemonic(menu, "Manual", "OpenManual");
-
-	// this creates all the per-game drop downs for the game pack helps
-	// it will take care of hooking the Sys_OpenURL calls etc.
-	create_game_help_menu(menu);
 
 	create_menu_item_with_mnemonic(menu, "Bug report", FreeCaller<OpenBugReportURL>());
 	create_menu_item_with_mnemonic(menu, "Shortcuts list", FreeCaller<DoCommandListDlg>());

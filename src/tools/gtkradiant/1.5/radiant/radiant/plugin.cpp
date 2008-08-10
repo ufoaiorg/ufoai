@@ -19,6 +19,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include <iostream>
 #include "plugin.h"
 
 #include "debugging/debugging.h"
@@ -292,6 +293,9 @@ bool Radiant_Construct(ModuleServer& server) {
 
 	if (g_RadiantInitialised) {
 		g_Radiant = new Radiant;
+	} else {
+		std::cout << "Unable to construct Radiant, module server failed to initialise." << std::endl;
+		abort();
 	}
 
 	return g_RadiantInitialised;
