@@ -398,5 +398,5 @@ void Com_Printf (const char *format, ...)
 	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
 	va_end(argptr);
 
-	printf(out_buffer);
+	printf("%s", out_buffer);
 }
