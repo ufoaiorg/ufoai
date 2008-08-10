@@ -6,29 +6,34 @@ cd ..\..
 
 if NOT EXIST ufo2map.exe (
 	echo Missing ufo2map
-	goto end
+	goto :EOF
 )
 
 if not "%1"=="" (
-set curpath="base\maps\%1"
-) else (
-set curpath="base\maps"
-)
-
+	if EXIST base\maps\%1 (
+		set curpath=base\maps\%1
+		) else (
+			echo path "base\maps\%1" not found
+			exit
+			)
+	) else (
+		set curpath=base\maps
+	)
 
 for /D %%i in (%curpath%\*) DO (
-	echo "...found dir %%i";
-	for %%j in (%%i\*.map) DO (
+	call :compilemap %%i
+)
+	call :compilemap %curpath%
+
+goto :EOF
+
+
+:compilemap
+	echo ...found dir "%1"
+	for %%j in (%1\*.map) DO (
 		ufo2map.exe %ufo2mapparameters% %%j
+	)
+	echo ...dir "%1" finished
 rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
 rem		if errorlevel 1 echo "TODO"
-	)
-	echo "...dir %%i finished";
-)
-
-for %%i in (%curpath%\*.map) DO (
-	ufo2map.exe -extra %ufo2mapparameters% %%i
-rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
-)
-
-:end
+exit /b
