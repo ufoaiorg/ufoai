@@ -9,16 +9,16 @@ PAK_FILES_OUT = $(addprefix $(BASE_DIR)/,$(PAK_FILES))
 
 pk3: $(PAK_FILES_OUT)
 
-clean_pk3:
+clean-pk3:
 	rm $(PAK_FILES_OUT)
 
 ifeq ($(TARGET_OS),mingw32)
-FIND = dir \S \B $(1) 
+FIND = dir \S \B $(1)
 ZIP = 7za
 ZIP_UP_OPTS = a -tzip
 ZIP_DEL_OPTS = d -tzip
 # bonus points if you can get this to work using 7za
-ZIP_LIST = 
+ZIP_LIST =
 else
 FIND = find $(addprefix $(BASE_DIR)/,$(1)) -type f -print
 ZIP = zip

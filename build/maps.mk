@@ -5,8 +5,8 @@ UFO2MAP = ./ufo2map
 MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
 BSPS = $(MAPSRCS:.map=.bsp)
 
-# Set NUMTHREADS to enable multi-threading in ufo2map. This 
-# setting strongly depends on the OS and hardware, so need to 
+# Set NUMTHREADS to enable multi-threading in ufo2map. This
+# setting strongly depends on the OS and hardware, so need to
 # be chosen appropriately.
 
 ifeq ($(TARGET_OS),darwin)
@@ -32,7 +32,7 @@ maps-fast:
 maps-ents:
 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
-maps-clean:
+clean-maps:
 	find $(MAPSDIR) -name '*.bsp' | xargs rm
 
 $(BSPS): %.bsp: %.map
