@@ -1083,10 +1083,12 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
+	buildingStatus_t oldstatus;
 
 	assert(base);
 	assert(building);
 
+	oldstatus = building->buildingStatus;
 	building->buildingStatus = status;
 
 	/* we update the status of the building (we'll call this building building 1) */
@@ -1109,7 +1111,12 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	}
 
 	/** @todo this should be an user option defined in Game Options. */
-	CL_GameTimeStop();
+	if (oldstatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
+		if (B_CheckBuildingDependencesStatus(base, building))
+			CL_GameTimeStop();
+	} else {
+		CL_GameTimeStop();
+	}
 }
 
 /**
