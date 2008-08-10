@@ -186,6 +186,15 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 			return qfalse;
 		}
 		break;
+	case EMPL_PILOT:
+		/* Is this a pilot assigned to aircraft? */
+		if (CL_PilotInAircraft(employee, NULL)) {
+			Com_sprintf(popupText, sizeof(popupText), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+			employee->chr.name);
+			MN_Popup(_("Pilot in aircraft"), popupText);
+			return qfalse;
+		}
+		break;
 	default:
 		break;
 	}
@@ -305,9 +314,9 @@ static void TR_CargoList (void)
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		for (i = 0; i < gd.numEmployees[emplType]; i++) {
 			if (trEmployeesTmp[emplType][i]) {
-				if (emplType == EMPL_SOLDIER) {
+				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
-					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s\n") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					Q_strcat(cargoList, str, sizeof(cargoList));
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
@@ -322,7 +331,7 @@ static void TR_CargoList (void)
 		}
 	}
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		if (emplType == EMPL_SOLDIER)
+		if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 			continue;
 		if (trempl[emplType] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
@@ -473,8 +482,8 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferTy
 						continue;
 					if (trEmployeesTmp[emplType][i])	/* Already on transfer list. */
 						continue;
-					if (emplType == EMPL_SOLDIER) {
-						Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
+						Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s\n") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 						Q_strcat(transferList, str, sizeof(transferList));
 						cnt++;
 					}
@@ -482,7 +491,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferTy
 				}
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
-				if (i == EMPL_SOLDIER)
+				if (i == EMPL_SOLDIER || i == EMPL_PILOT)
 					continue;
 				if ((trempl[i] > 0) && (numempl[i] > 0))
 					Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), E_GetEmployeeString(i), trempl[i], numempl[i]);
@@ -1132,6 +1141,22 @@ static void TR_TransferListSelect_f (void)
 			}
 			cnt++;
 		}
+		for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+			employee_t *employee = &gd.employees[EMPL_PILOT][i];
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			if (trEmployeesTmp[EMPL_PILOT][i])
+				continue;
+			if (cnt == num) {
+				if (TR_CheckEmployee(employee, transferBase)) {
+					trEmployeesTmp[EMPL_PILOT][employee->idx] = employee;
+					added = qtrue;
+					break;
+				} else
+					return;
+			}
+			cnt++;
+		}
 
 		if (added) /* We already added a soldier, so break. */
 			break;
@@ -1146,7 +1171,7 @@ static void TR_TransferListSelect_f (void)
 		}
 
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			if (emplType == EMPL_SOLDIER)
+			if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 				continue;
 			/* no employee in base or all employees already in the transfer list */
 			if (numempl[emplType] < 1)
@@ -1436,6 +1461,16 @@ static void TR_CargoListSelect_f (void)
 				cnt++;
 			}
 		}
+		for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+			if (trEmployeesTmp[EMPL_PILOT][i]) {
+				if (cnt == num) {
+					trEmployeesTmp[EMPL_PILOT][i] = NULL;
+					removed = qtrue;
+					break;
+				}
+				cnt++;
+			}
+		}
 		if (removed)	/* We already removed soldier, break here. */
 			break;
 
@@ -1451,7 +1486,7 @@ static void TR_CargoListSelect_f (void)
 		}
 
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			if ((numempl[emplType] < 1) || (emplType == EMPL_SOLDIER))
+			if ((numempl[emplType] < 1) || (emplType == EMPL_SOLDIER) || (emplType == EMPL_PILOT))
 				continue;
 			if (cnt == num) {
 				int amount;

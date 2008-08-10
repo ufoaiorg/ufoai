@@ -42,6 +42,7 @@ void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t
 ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
+qboolean CL_PilotInAircraft(const employee_t *employee, const aircraft_t* aircraft);
 qboolean CL_SoldierInAircraft(const employee_t *employee, const aircraft_t* aircraft);
 qboolean CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
 void CL_RemoveSoldiersFromAircraft(aircraft_t* aircraft);
