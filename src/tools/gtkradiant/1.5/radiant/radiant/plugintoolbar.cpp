@@ -37,15 +37,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 GtkImage* new_plugin_image(const char* filename) {
 	{
 		StringOutputStream fullpath(256);
-		fullpath << GameToolsPath_get() << g_pluginsDir << "bitmaps/" << filename;
-		GtkImage* image = image_new_from_file_with_mask(fullpath.c_str());
-		if (image != 0) {
-			return image;
-		}
-	}
-
-	{
-		StringOutputStream fullpath(256);
 		fullpath << AppPath_get() << g_pluginsDir << "bitmaps/" << filename;
 		GtkImage* image = image_new_from_file_with_mask(fullpath.c_str());
 		if (image != 0) {

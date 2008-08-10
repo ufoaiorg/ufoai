@@ -301,22 +301,6 @@ const char* SettingsPath_get() {
 	return g_strSettingsPath.c_str();
 }
 
-
-/*!
-points to the game tools directory, for instance
-C:/Program Files/Quake III Arena/GtkRadiant
-(or other games)
-this is one of the main variables that are configured by the game selection on startup
-[GameToolsPath]/plugins
-[GameToolsPath]/modules
-and also q3map, bspc
-*/
-CopiedString g_strGameToolsPath;           ///< this is set by g_GamesDialog
-
-const char* GameToolsPath_get() {
-	return g_strGameToolsPath.c_str();
-}
-
 void EnginePathImport(CopiedString& self, const char* value) {
 	setEnginePath(value);
 }

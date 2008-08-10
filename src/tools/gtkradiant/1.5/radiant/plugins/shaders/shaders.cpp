@@ -1257,7 +1257,7 @@ void FreeShaderList() {
 
 #include "stream/filestream.h"
 
-bool shaderlist_findOrInstall(const char* enginePath, const char* toolsPath, const char* shaderPath, const char* gamename) {
+bool shaderlist_findOrInstall(const char* enginePath, const char* shaderPath, const char* gamename) {
 	StringOutputStream absShaderList(256);
 	absShaderList << enginePath << gamename << '/' << shaderPath << "shaderlist.txt";
 	if (file_exists(absShaderList.c_str())) {
@@ -1268,13 +1268,6 @@ bool shaderlist_findOrInstall(const char* enginePath, const char* toolsPath, con
 		directory << enginePath << gamename << '/' << shaderPath;
 		if (!file_exists(directory.c_str()) && !Q_mkdir(directory.c_str())) {
 			return false;
-		}
-	}
-	{
-		StringOutputStream defaultShaderList(256);
-		defaultShaderList << toolsPath << gamename << '/' << "default_shaderlist.txt";
-		if (file_exists(defaultShaderList.c_str())) {
-			return file_copy(defaultShaderList.c_str(), absShaderList.c_str());
 		}
 	}
 	return false;
@@ -1291,13 +1284,12 @@ void Shaders_Load() {
 			const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
 			const char* gamename = GlobalRadiant().getGameName();
 			const char* enginePath = GlobalRadiant().getEnginePath();
-			const char* toolsPath = GlobalRadiant().getGameToolsPath();
 
 			bool isMod = !string_equal(basegame, gamename);
 
-			if (!isMod || !shaderlist_findOrInstall(enginePath, toolsPath, path.c_str(), gamename)) {
+			if (!isMod || !shaderlist_findOrInstall(enginePath, path.c_str(), gamename)) {
 				gamename = basegame;
-				shaderlist_findOrInstall(enginePath, toolsPath, path.c_str(), gamename);
+				shaderlist_findOrInstall(enginePath, path.c_str(), gamename);
 			}
 
 			StringOutputStream absShaderList(256);

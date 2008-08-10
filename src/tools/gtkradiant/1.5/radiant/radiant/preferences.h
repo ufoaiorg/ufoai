@@ -167,9 +167,6 @@ public:
 	CopiedString mGameFile; ///< the .game file that describes this game
 	GameDescription m_gameDescription;
 
-	CopiedString mGameToolsPath; ///< the explicit path to the game-dependent modules
-	CopiedString mGameType; ///< the type of the engine
-
 	const char* getKeyValue(const char* key) const {
 		GameDescription::const_iterator i = m_gameDescription.find(key);
 		if (i != m_gameDescription.end()) {

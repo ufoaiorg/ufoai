@@ -201,9 +201,6 @@ const char* LocalRcPath_get(void);
 const char* const g_pluginsDir = "plugins/"; ///< name of plugins directory, always sub-directory of toolspath
 const char* const g_modulesDir = "modules/"; ///< name of modules directory, always sub-directory of toolspath
 
-extern CopiedString g_strGameToolsPath;
-const char* GameToolsPath_get();
-
 void Radiant_Initialise();
 void Radiant_Shutdown();
 

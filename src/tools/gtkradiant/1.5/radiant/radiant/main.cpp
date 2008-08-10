@@ -289,18 +289,11 @@ void paths_init() {
 
 	g_strAppPath = environment_get_app_path();
 
-	// radiant is installed in the parent dir of "tools/"
-	// NOTE: this is not very easy for debugging
-	// maybe add options to lookup in several places?
-	// (for now I had to create symlinks)
 	{
 		StringOutputStream path(256);
 		path << g_strAppPath.c_str() << "bitmaps/";
 		BitmapsPath_set(path.c_str());
 	}
-
-	// we will set this right after the game selection is done
-	g_strGameToolsPath = g_strAppPath;
 }
 
 void create_global_pid() {
@@ -460,8 +453,6 @@ int main (int argc, char* argv[]) {
 	GlobalPreferences_Init();
 
 	g_GamesDialog.Init();
-
-	g_strGameToolsPath = g_pGameDescription->mGameToolsPath;
 
 	remove_global_pid();
 

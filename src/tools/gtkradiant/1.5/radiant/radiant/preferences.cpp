@@ -127,26 +127,7 @@ CGameDescription::CGameDescription(xmlDocPtr pDoc, const CopiedString& gameFile)
 		m_gameDescription.insert(GameDescription::value_type(xmlAttr_getName(attr), xmlAttr_getValue(attr)));
 	}
 
-	{
-		StringOutputStream path(256);
-		path << AppPath_get() << gameFile.c_str() << "/";
-		mGameToolsPath = path.c_str();
-	}
-
-	ASSERT_MESSAGE(file_exists(mGameToolsPath.c_str()), "game directory not found: " << makeQuoted(mGameToolsPath.c_str()));
-
 	mGameFile = gameFile;
-
-	{
-		GameDescription::iterator i = m_gameDescription.find("type");
-		if (i == m_gameDescription.end()) {
-			globalErrorStream() << "Warning, 'type' attribute not found in '" << reinterpret_cast<const char*>(pDoc->URL) << "'\n";
-			// default
-			mGameType = "ufo";
-		} else {
-			mGameType = (*i).second.c_str();
-		}
-	}
 }
 
 void CGameDescription::Dump() {
