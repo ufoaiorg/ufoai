@@ -21,8 +21,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "filters.h"
 
-#include "debugging/debugging.h"
-
 #include "ifilter.h"
 
 #include "scenelib.h"
@@ -40,8 +38,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 struct filters_globals_t {
 	std::size_t exclude;
 
-	filters_globals_t() :
-			exclude(0) {
+	filters_globals_t() : exclude(0) {
 	}
 };
 
