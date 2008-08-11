@@ -40,11 +40,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* dependencies */
 #include "picointernal.h"
 
-/* disable warnings */
-#ifdef WIN32
-#pragma warning( disable:4100 )		/* unref param */
-#endif
-
 /* remarks:
  * - loader seems stable
  * todo:

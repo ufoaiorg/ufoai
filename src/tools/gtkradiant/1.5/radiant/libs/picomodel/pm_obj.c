@@ -40,11 +40,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* dependencies */
 #include "picointernal.h"
 
-/* disable warnings */
-#ifdef WIN32
-#pragma warning( disable:4100 )		/* unref param */
-#endif
-
 /* todo:
  * - '_obj_load' code crashes in a weird way after
  * - process 'mtllib' rather than using <model>.mtl
