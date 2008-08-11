@@ -457,28 +457,17 @@ int Q_strcasecmp (const char *s1, const char *s2)
  */
 qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 {
-	size_t len;
-	va_list argptr;
-	static char bigbuffer[0x10000];
+	va_list ap;
+	int     len;
 
 	if (!fmt)
 		return qfalse;
 
-	va_start(argptr, fmt);
-	len = Q_vsnprintf(bigbuffer, sizeof(bigbuffer), fmt, argptr);
-	va_end(argptr);
+	va_start(ap, fmt);
+	len = Q_vsnprintf(dest, size, fmt, ap);
+	va_end(ap);
 
-	bigbuffer[sizeof(bigbuffer) - 1] = 0;
-
-	Q_strncpyz(dest, bigbuffer, size);
-
-	if (len >= size) {
-#ifdef PARANOID
-		Com_Printf("Com_sprintf: overflow of "UFO_SIZE_T" in "UFO_SIZE_T"\n", len, size);
-#endif
-		return qfalse;
-	}
-	return qtrue;
+	return 0 <= len && (size_t)len < size;
 }
 
 /**
