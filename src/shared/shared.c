@@ -324,25 +324,6 @@ int Q_putenv (const char *var, const char *value)
 }
 
 /**
- * @brief compute the matching length of two zero terminated strings. This only counts right with 8 bit characters.
- */
-int Q_strmatch (const char *s1, const char * s2)
-{
-	int score = 0;
-	if (!s1 || !s2)
-		return 0;
-
-	if (!Q_strcmp(s1, s2))
-		return strlen(s1);
-
-	while (s1[score] && s2[score] && s1[score] == s2[score]) {
-		score++;
-	}
-
-	return score;
-}
-
-/**
  * @sa Q_strncmp
  */
 int Q_strcmp (const char *s1, const char *s2)

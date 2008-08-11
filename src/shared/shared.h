@@ -114,7 +114,6 @@ int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnul
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 /* portable case insensitive compare */
 int Q_strncmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
-int Q_strmatch(const char *s1, const char * s2);
 int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));
