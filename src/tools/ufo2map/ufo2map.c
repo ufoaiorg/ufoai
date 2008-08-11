@@ -497,12 +497,17 @@ int main (int argc, const char **argv)
 		 * console with output, as levelflags are contentflags */
 		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)
 			CheckLevelFlags();
+		/* this must be before mfc check, as otherwise mfc warnings are given
+		* which are auto-fixed based on textures */
+		if (config.chkTextures || config.chkBrushes || config.chkAll)
+			CheckFlagsBasedOnTextures();
 		/* mixed face contents check may remove contentflags. this should be done
-		 * before tex check, as tex may replace tex on the basis of contentflags.*/
+		 * before tex based on flags check, as tex may replace tex on the basis
+		 * of contentflags.*/
 		if (config.chkMixedFaceContents || config.chkBrushes ||config.chkAll )
 			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
-			CheckTextures();
+			CheckTexturesBasedOnFlags();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */

@@ -788,10 +788,9 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 }
 
 /**
- * @brief check that sides have textures and that where content/surface flags are set the texture
- * is correct.
+ * @brief sets content flags based on textures
  */
-void CheckTextures (void)
+void CheckFlagsBasedOnTextures (void)
 {
 	int i, j;
 
@@ -808,6 +807,28 @@ void CheckTextures (void)
 
 			/* set surface and content flags based on texture. */
 			SetImpliedFlags(side, tex, brush);
+		}
+	}
+}
+
+/**
+ * @brief check that sides have textures and that where content/surface flags are set the texture
+ * is correct.
+ */
+void CheckTexturesBasedOnFlags (void)
+{
+	int i, j;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+
+		for (j = 0; j < brush->numsides; j++) {
+			side_t *side = &brush->original_sides[j];
+			const ptrdiff_t index = side - brushsides;
+			brush_texture_t *tex = &side_brushtextures[index];
+
+			assert(side);
+			assert(tex);
 
 			/* set textures based on flags */
 			if (tex->name[0] == '\0') {
