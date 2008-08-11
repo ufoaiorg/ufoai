@@ -96,13 +96,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/libs/cmdlib/cmdlib.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
-	$(RADIANT_BASE)/libs/profile/file.cpp \
-	\
-	$(RADIANT_BASE)/libs/xml/ixml.cpp \
-	$(RADIANT_BASE)/libs/xml/xmlelement.cpp \
-	$(RADIANT_BASE)/libs/xml/xmlparser.cpp \
-	$(RADIANT_BASE)/libs/xml/xmltextags.cpp \
-	$(RADIANT_BASE)/libs/xml/xmlwriter.cpp
+	$(RADIANT_BASE)/libs/profile/file.cpp
 
 RADIANT_OBJS=$(RADIANT_SRCS:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
 RADIANT_TARGET=radiant/radiant$(EXE_EXT)
