@@ -82,58 +82,58 @@
 		</Compiler>
 		<Linker>
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\plugin">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\plugin.cpp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\model">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\model.cpp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picointernal">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picointernal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picomodel">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picomodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picomodules">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picomodules.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_3ds">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_3ds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_ase">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_ase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_md3">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_obj">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_ms3d">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_ms3d.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_mdc">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_mdc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_md2">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_terrain">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_terrain.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\bbox">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\bbox.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\line">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\line.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\m4x4">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\m4x4.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\mathlib">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\ray">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\ray.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
