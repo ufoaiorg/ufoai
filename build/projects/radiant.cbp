@@ -250,16 +250,7 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushnode.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushtokens.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\camwindow.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\clippertool.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\commands.cpp">
@@ -358,9 +349,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\plugintoolbar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\preferencedictionary.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\preferences.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -371,9 +359,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\referencecache.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\renderer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\renderstate.cpp">
@@ -401,9 +386,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\texmanip.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\textureentry.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\textures.cpp">

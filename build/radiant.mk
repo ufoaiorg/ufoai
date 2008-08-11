@@ -11,11 +11,8 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/brush.cpp \
 	$(RADIANT_BASE)/radiant/brushmanip.cpp \
 	$(RADIANT_BASE)/radiant/brushmodule.cpp \
-	$(RADIANT_BASE)/radiant/brushnode.cpp \
 	$(RADIANT_BASE)/radiant/brush_primit.cpp \
-	$(RADIANT_BASE)/radiant/brushtokens.cpp \
 	$(RADIANT_BASE)/radiant/camwindow.cpp \
-	$(RADIANT_BASE)/radiant/clippertool.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
 	$(RADIANT_BASE)/radiant/csg.cpp \
@@ -48,12 +45,10 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/pluginmanager.cpp \
 	$(RADIANT_BASE)/radiant/pluginmenu.cpp \
 	$(RADIANT_BASE)/radiant/plugintoolbar.cpp \
-	$(RADIANT_BASE)/radiant/preferencedictionary.cpp \
 	$(RADIANT_BASE)/radiant/preferences.cpp \
 	$(RADIANT_BASE)/radiant/qe3.cpp \
 	$(RADIANT_BASE)/radiant/qgl.cpp \
 	$(RADIANT_BASE)/radiant/referencecache.cpp \
-	$(RADIANT_BASE)/radiant/renderer.cpp \
 	$(RADIANT_BASE)/radiant/renderstate.cpp \
 	$(RADIANT_BASE)/radiant/scenegraph.cpp \
 	$(RADIANT_BASE)/radiant/select.cpp \
@@ -63,7 +58,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/surfacedialog.cpp \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
-	$(RADIANT_BASE)/radiant/textureentry.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/texwindow.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
