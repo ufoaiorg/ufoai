@@ -14,18 +14,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-I$(GTK_HOME)/include" />
-					<Add option="-I$(GTK_HOME)/include/gtk-2.0" />
-					<Add option="-I$(GTK_HOME)/include/gtkglext-1.0" />
-					<Add option="-I$(GTK_HOME)/include/glib-2.0" />
-					<Add option="-I$(GTK_HOME)/include/pango-1.0" />
-					<Add option="-I$(GTK_HOME)/include/cairo" />
-					<Add option="-I$(GTK_HOME)/include/freetype2" />
-					<Add option="-I$(GTK_HOME)/include/libglade-2.0" />
-					<Add option="-I$(GTK_HOME)/include/atk-1.0" />
-					<Add option="-I$(GTK_HOME)/lib/glib-2.0/include" />
-					<Add option="-I$(GTK_HOME)/lib/gtk-2.0/include" />
-					<Add option="-I$(GTK_HOME)/lib/gtkglext-1.0/include" />
+					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
@@ -61,21 +50,10 @@
 					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
+					<Add option="-Wno-non-virtual-dtor" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DDEBUG" />
-					<Add option="-I$(GTK_HOME)/include" />
-					<Add option="-I$(GTK_HOME)/include/gtk-2.0" />
-					<Add option="-I$(GTK_HOME)/include/glib-2.0" />
-					<Add option="-I$(GTK_HOME)/include/gtkglext-1.0" />
-					<Add option="-I$(GTK_HOME)/include/pango-1.0" />
-					<Add option="-I$(GTK_HOME)/include/cairo" />
-					<Add option="-I$(GTK_HOME)/include/freetype2" />
-					<Add option="-I$(GTK_HOME)/include/libglade-2.0" />
-					<Add option="-I$(GTK_HOME)/include/atk-1.0" />
-					<Add option="-I$(GTK_HOME)/lib/glib-2.0/include" />
-					<Add option="-I$(GTK_HOME)/lib/gtk-2.0/include" />
-					<Add option="-I$(GTK_HOME)/lib/gtkglext-1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
