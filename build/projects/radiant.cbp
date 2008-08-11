@@ -220,21 +220,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\profile\profile.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\ixml.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmlelement.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmlparser.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmltextags.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\xml\xmlwriter.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\autosave.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
