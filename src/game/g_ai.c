@@ -122,6 +122,8 @@ static int AIL_reactionfire(lua_State *L);
 static int AIL_roundsleft(lua_State *L);
 static int AIL_canreload(lua_State *L);
 static int AIL_reload(lua_State *L);
+static int AIL_positionshoot(lua_State *L);
+static int AIL_positionhide(lua_State *L);
 static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
@@ -131,6 +133,8 @@ static const luaL_reg AIL_methods[] = {
 	{"roundsleft", AIL_roundsleft},
 	{"canreload", AIL_canreload},
 	{"reload", AIL_reload},
+	{"positionshoot", AIL_positionshoot},
+	{"positionhide", AIL_positionhide},
 	{0, 0}
 };
 
@@ -443,6 +447,11 @@ static int pos3L_goto (lua_State *L)
 
 	assert(lua_ispos3(L, 1));
 
+	/* Calculate move table. */
+	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize, AIL_ent->TU);
+	gi.MoveStore(gi.routingMap);
+
+	/* Move. */
 	pos = lua_topos3(L, 1);
 	G_ClientMove(AIL_player, AIL_ent->team, AIL_ent->number, *pos, qfalse, QUIET);
 
@@ -668,7 +677,7 @@ static int AIL_roundsleft (lua_State *L)
 }
 
 /**
- * @brief checks to see if the actor can reload.
+ * @brief Checks to see if the actor can reload.
  */
 static int AIL_canreload (lua_State *L)
 {
@@ -701,6 +710,85 @@ static int AIL_reload (lua_State *L)
 	G_ClientReload(AIL_player, AIL_ent->number, weap, QUIET);
 	return 0;
 }
+
+/**
+ * @brief Moves the actor into a position in which he can shoot his target.
+ */
+static int AIL_positionshoot(lua_State *L)
+{
+	pos3_t to, bestPos;
+	vec3_t check;
+	edict_t *ent;
+	int dist;
+	int xl, yl, xh, yh;
+	int tu, min_tu;
+	aiActor_t *target;
+
+	/* We need a target. */
+	assert(lua_isactor(L, 1));
+	target = lua_toactor(L, 1);
+
+	/* Make things more simple. */
+	ent = AIL_ent;
+	dist = ent->TU;
+
+	/* Calculate move table. */
+	G_MoveCalc(0, ent->pos, ent->fieldSize, ent->TU);
+	gi.MoveStore(gi.routingMap);
+
+	/* set borders */
+	xl = (int) ent->pos[0] - dist;
+	if (xl < 0)
+		xl = 0;
+	yl = (int) ent->pos[1] - dist;
+	if (yl < 0)
+		yl = 0;
+	xh = (int) ent->pos[0] + dist;
+	if (xh > PATHFINDING_WIDTH)
+		xl = PATHFINDING_WIDTH;
+	yh = (int) ent->pos[1] + dist;
+	if (yh > PATHFINDING_WIDTH)
+		yh = PATHFINDING_WIDTH;
+
+	/* evaluate moving to every possible location in the search area,
+	 * including combat considerations */
+	tu = 0;
+	min_tu = INT_MAX;
+	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
+		for (to[1] = yl; to[1] < yh; to[1]++)
+			for (to[0] = xl; to[0] < xh; to[0]++) {
+				/* Can we see the target? */
+				gi.GridPosToVec(gi.routingMap, to, check);
+				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
+					tu = gi.MoveLength(gi.routingMap, to, qtrue);
+
+					/* Better spot (easier to get to. */
+					if (tu < min_tu) {
+						VectorCopy(to, bestPos);
+						min_tu = tu;
+					}
+				}
+			}
+
+	/* No position found in range. */
+	if (min_tu > ent->TU) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Return the spot. */
+	lua_pushpos3(L, &bestPos);
+	return 1;
+}
+
+/**
+ * @brief Moves the actor into a position in which he can hide.
+ */
+static int AIL_positionhide(lua_State *L)
+{
+	return 0;
+}
+
 
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
@@ -1332,10 +1420,6 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* Set the global player and edict */
 	AIL_ent = ent;
 	AIL_player = player;
-
-	/* Preperations */
-	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize, AIL_ent->TU);
-	gi.MoveStore(gi.routingMap);
 
 	/* Try to run the function. */
 	lua_getglobal(L, "think");

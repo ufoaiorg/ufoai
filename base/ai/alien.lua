@@ -7,14 +7,20 @@ function think()
 	target = phalanx[1]
 
 	-- Move until target in sight
-	--ai.moveshoot(target) -- Go to a shoot position
-	hide_tu = 4 -- Crouch + face
+	shoot_pos = ai.positionshoot(target) -- Go to a shoot position
+	if shoot_pos then -- We can actually shoot target
 
-	-- Shoot
-	target:shoot(ai.TU() - hide_tu)
+		shoot_pos:goto()
+		hide_tu = 4 -- Crouch + face
 
-	-- Hide
-	--ai.movehide()
-	ai.crouch()
-	target:face()
+		-- Shoot
+		target:shoot(ai.TU() - hide_tu)
+
+		-- Hide
+		-- ai.positionhide()
+		ai.crouch()
+		target:face()
+	else
+		ai.print("Can't get to shoot position.")
+	end
 end
