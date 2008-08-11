@@ -316,22 +316,6 @@ int Q_putenv (const char *var, const char *value)
 #endif /* __APPLE__ */
 }
 
-/**
- * @sa Q_strncmp
- */
-int Q_strcmp (const char *s1, const char *s2)
-{
-	return strncmp(s1, s2, 99999);
-}
-
-/**
- * @sa Q_strcmp
- */
-int Q_strncmp (const char *s1, const char *s2, size_t n)
-{
-	return strncmp(s1, s2, n);
-}
-
 #ifndef HAVE_STRNCASECMP
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
