@@ -383,12 +383,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		*mod++ = animationIndex;
 		*mod++ = 0;
 	} else {
-		Q_strncpyz(mod, anim, length);
-		Q_strcat(mod, "_", length);
-		if (akimbo)
-			Q_strcat(mod, "pistol_d", length);
-		else
-			Q_strcat(mod, type, length);
+		Com_sprintf(mod, length, "%s_%s\n", anim, akimbo ? "pistol_d" : type);
 	}
 
 	return retAnim;

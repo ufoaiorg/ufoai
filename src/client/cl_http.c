@@ -338,11 +338,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 		char listPath[MAX_OSPATH];
 		char filePath[MAX_OSPATH];
 
-		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%s", ufoPath);
-
-		COM_StripExtension(filePath, listPath, sizeof(listPath));
-		Q_strcat(listPath, ".filelist", sizeof(listPath));
-
+		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%.*s.filelist", (int)(len - 4), ufoPath);
 		CL_QueueHTTPDownload(listPath);
 	}
 
