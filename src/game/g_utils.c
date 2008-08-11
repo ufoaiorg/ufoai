@@ -226,7 +226,7 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 		s = *(char **) ((byte *) from + fieldofs);
 		if (!s)
 			continue;
-		if (!Q_stricmp(s, match))
+		if (!Q_strcasecmp(s, match))
 			return from;
 	}
 

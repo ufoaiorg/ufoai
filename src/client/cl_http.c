@@ -334,7 +334,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	/* special case for map file lists */
 	len = strlen(ufoPath);
-	if (cl_http_filelists->integer && len > 4 && !Q_stricmp(ufoPath + len - 4, ".bsp")) {
+	if (cl_http_filelists->integer && len > 4 && !Q_strcasecmp(ufoPath + len - 4, ".bsp")) {
 		char listPath[MAX_OSPATH];
 		char filePath[MAX_OSPATH];
 
@@ -755,7 +755,7 @@ static void CL_StartNextHTTPDownload (void)
 
 			/* ugly hack for pk3 file single downloading */
 			len = strlen(q->ufoPath);
-			if (len > 4 && !Q_stricmp(q->ufoPath + len - 4, ".pk3"))
+			if (len > 4 && !Q_strcasecmp(q->ufoPath + len - 4, ".pk3"))
 				downloading_pak = qtrue;
 
 			break;

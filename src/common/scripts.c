@@ -808,7 +808,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			return;
 
 		for (fdp = fdps; fdp->string; fdp++)
-			if (!Q_stricmp(token, fdp->string)) {
+			if (!Q_strcasecmp(token, fdp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -827,7 +827,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 					return;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
-					if (!Q_stricmp(skillNames[skill - ABILITY_NUM_TYPES], token)) {
+					if (!Q_strcasecmp(skillNames[skill - ABILITY_NUM_TYPES], token)) {
 						fd->weaponSkill = skill;
 						break;
 					}
@@ -972,7 +972,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			break;
 
 		for (val = od_vals, i = 0; val->string; val++, i++) {
-			if (!Q_stricmp(token, val->string)) {
+			if (!Q_strcasecmp(token, val->string)) {
 				/* found a definition */
 				if (val->type != V_NULL) {
 					/* parse a value */
@@ -1060,7 +1060,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				token = COM_EParse(text, errhead, name);
 				/** @todo maybe we could add a check for the old numbers as well here */
 				for (j = 0; j < MAX_BUYTYPES; j++) {
-					if (!Q_stricmp(token, buytypeNames[j])) {
+					if (!Q_strcasecmp(token, buytypeNames[j])) {
 						od->buytype = j;
 						break;
 					}
@@ -1219,7 +1219,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 			return;
 
 		for (idp = idps; idp->string; idp++)
-			if (!Q_stricmp(token, idp->string)) {
+			if (!Q_strcasecmp(token, idp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

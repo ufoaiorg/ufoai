@@ -64,7 +64,7 @@ const char *Info_ValueForKey (const char *s, const char *key)
 			*o++ = *s++;
 		*o = 0;
 
-		if (!Q_stricmp(key, pkey))
+		if (!Q_strcasecmp(key, pkey))
 			return value[valueindex];
 
 		if (!*s)

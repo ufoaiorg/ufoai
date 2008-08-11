@@ -361,7 +361,7 @@ static void CheckNeedPass (void)
 		char *need = "0";
 		password->modified = qfalse;
 
-		if (*password->string && Q_stricmp(password->string, "none"))
+		if (*password->string && Q_strcasecmp(password->string, "none"))
 			need = "1";
 
 		gi.Cvar_Set("sv_needpass", need);

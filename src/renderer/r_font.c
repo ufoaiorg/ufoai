@@ -771,7 +771,7 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
 
 	if (style && style[0] != '\0')
 		for (i = 0; i < NUM_FONT_STYLES; i++)
-			if (!Q_stricmp(fontStyle[i].name, style)) {
+			if (!Q_strcasecmp(fontStyle[i].name, style)) {
 				renderstyle = fontStyle[i].renderStyle;
 				break;
 			}

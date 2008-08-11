@@ -225,7 +225,7 @@ void R_BeginFrame (void)
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
 
-		if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
+		if (Q_strcasecmp(r_drawbuffer->string, "GL_FRONT") == 0)
 			qglDrawBuffer(GL_FRONT);
 		else
 			qglDrawBuffer(GL_BACK);
@@ -668,7 +668,7 @@ static inline void R_EnforceVersion (void)
 static inline void R_VerifyDriver (void)
 {
 #ifdef _WIN32
-	if (!Q_stricmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
+	if (!Q_strcasecmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
 #endif

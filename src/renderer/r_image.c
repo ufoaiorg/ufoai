@@ -1796,7 +1796,7 @@ void R_TextureMode (const char *string)
 	image_t *image;
 
 	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_stricmp(gl_texture_modes[i].name, string))
+		if (!Q_strcasecmp(gl_texture_modes[i].name, string))
 			break;
 	}
 
@@ -1840,7 +1840,7 @@ void R_TextureAlphaMode (const char *string)
 	int i;
 
 	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
-		if (!Q_stricmp(gl_alpha_modes[i].name, string))
+		if (!Q_strcasecmp(gl_alpha_modes[i].name, string))
 			break;
 	}
 
@@ -1871,7 +1871,7 @@ void R_TextureSolidMode (const char *string)
 	int i;
 
 	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
-		if (!Q_stricmp(gl_solid_modes[i].name, string))
+		if (!Q_strcasecmp(gl_solid_modes[i].name, string))
 			break;
 	}
 

@@ -2331,7 +2331,7 @@ technology_t *RS_GetTechByID (const char *id)
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);
 	for (tech = techHash[hash]; tech; tech = tech->hashNext)
-		if (!Q_stricmp(id, tech->id))
+		if (!Q_strcasecmp(id, tech->id))
 			return tech;
 
 	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
@@ -2355,7 +2355,7 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 
 	hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
 	for (tech = techHashProvided[hash]; tech; tech = tech->hashProvidedNext)
-		if (!Q_stricmp(idProvided, tech->provides))
+		if (!Q_strcasecmp(idProvided, tech->provides))
 			return tech;
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", idProvided);
@@ -2438,7 +2438,7 @@ int RS_GetTechIdxByName (const char *name)
 
 	hash = Com_HashKey(name, TECH_HASH_SIZE);
 	for (tech = techHash[hash]; tech; tech = tech->hashNext)
-		if (!Q_stricmp(name, tech->id))
+		if (!Q_strcasecmp(name, tech->id))
 			return tech->idx;
 
 	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);

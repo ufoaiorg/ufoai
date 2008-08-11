@@ -339,15 +339,6 @@ int Q_strncmp (const char *s1, const char *s2, size_t n)
 	return strncmp(s1, s2, n);
 }
 
-int Q_stricmp (const char *s1, const char *s2)
-{
-#ifdef _WIN32
-	return _stricmp(s1, s2);
-#else
-	return stricmp(s1, s2);
-#endif
-}
-
 #ifndef HAVE_STRNCASECMP
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
@@ -426,11 +417,6 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
 	if (dest_length >= destsize)
 		Sys_Error("Q_strcat: already overflowed");
 	Q_strncpyz(dest + dest_length, src, destsize - dest_length);
-}
-
-int Q_strcasecmp (const char *s1, const char *s2)
-{
-	return Q_strncasecmp(s1, s2, 99999);
 }
 
 /**

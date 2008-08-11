@@ -186,7 +186,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 	vec3_t vec;
 
 	for (f = fields; f->name; f++) {
-		if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key)) {
+		if (!(f->flags & FFL_NOSPAWN) && !Q_strcasecmp(f->name, key)) {
 			/* found it */
 			if (f->flags & FFL_SPAWNTEMP)
 				b = (byte *) & st;
@@ -262,7 +262,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		ED_ParseField(keyname, com_token, ent);
 
 #if 0
-		if (!Q_stricmp(keyname, "origin")) {
+		if (!Q_strcasecmp(keyname, "origin")) {
 				Com_Printf("Origin issued: (%i, %i, %i)\n",
 					(int) ent->origin[0], (int) ent->origin[1], (int) ent->origin[2]);
 		}

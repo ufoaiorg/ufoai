@@ -240,26 +240,26 @@ void G_ClientCommand (player_t * player)
 
 	cmd = gi.Cmd_Argv(0);
 
-	if (Q_stricmp(cmd, "players") == 0)
+	if (Q_strcasecmp(cmd, "players") == 0)
 		Cmd_Players_f(player);
-	else if (Q_stricmp(cmd, "playerlist") == 0)
+	else if (Q_strcasecmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(player);
-	else if (Q_stricmp(cmd, "say") == 0)
+	else if (Q_strcasecmp(cmd, "say") == 0)
 		G_Say(player, qfalse, qfalse);
-	else if (Q_stricmp(cmd, "say_team") == 0)
+	else if (Q_strcasecmp(cmd, "say_team") == 0)
 		G_Say(player, qfalse, qtrue);
 #ifdef DEBUG
-	else if (Q_stricmp(cmd, "actorinvlist") == 0)
+	else if (Q_strcasecmp(cmd, "actorinvlist") == 0)
 		Cmd_InvList(player);
-	else if (Q_stricmp(cmd, "killteam") == 0)
+	else if (Q_strcasecmp(cmd, "killteam") == 0)
 		G_KillTeam();
-	else if (Q_stricmp(cmd, "stunteam") == 0)
+	else if (Q_strcasecmp(cmd, "stunteam") == 0)
 		G_StunTeam();
-	else if (Q_stricmp(cmd, "debug_listscore") == 0)
+	else if (Q_strcasecmp(cmd, "debug_listscore") == 0)
 		G_ListMissionScore_f();
-	else if (Q_stricmp(cmd, "debug_edicttouch") == 0)
+	else if (Q_strcasecmp(cmd, "debug_edicttouch") == 0)
 		G_TouchEdict_f();
-	else if (Q_stricmp(cmd, "debug_edictuse") == 0)
+	else if (Q_strcasecmp(cmd, "debug_edictuse") == 0)
 		G_UseEdict_f();
 #endif
 	else

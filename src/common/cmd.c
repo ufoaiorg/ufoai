@@ -727,7 +727,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
 			return;
 		}
-		if (!Q_stricmp(cmd_name, cmd->name)) {
+		if (!Q_strcasecmp(cmd_name, cmd->name)) {
 			*back = cmd->hash_next;
 			break;
 		}

@@ -334,7 +334,7 @@ sfx_t *S_RegisterSound (const char *name)
 
 	hash = Com_HashKey(name, SFX_HASH_SIZE);
 	for (sfx = sfx_hash[hash]; sfx; sfx = sfx->hash_next)
-		if (!Q_stricmp(name, sfx->name))
+		if (!Q_strcasecmp(name, sfx->name))
 			return sfx;
 
 	/* make sure the sound is loaded */

@@ -71,9 +71,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define EXPORT __cdecl
 # define IMPORT __cdecl
 #else
-# ifndef stricmp
-#  define stricmp strcasecmp
-# endif
 # define EXPORT
 # define IMPORT
 #endif
@@ -115,8 +112,13 @@ qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute_
 /* portable case insensitive compare */
 int Q_strncmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
 int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
-int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
-int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));
+
+#if defined _WIN32
+#	define Q_strcasecmp(a, b) _stricmp((a), (b))
+#else
+#	define Q_strcasecmp(a, b) strcasecmp((a), (b))
+#endif
+
 #ifdef HAVE_STRNCASECMP
 # define Q_strncasecmp(s1, s2, n) strncasecmp(s1, s2, n)
 #else
