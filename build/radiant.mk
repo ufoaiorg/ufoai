@@ -73,7 +73,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/view.cpp \
 	$(RADIANT_BASE)/radiant/winding.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
-	$(RADIANT_BASE)/radiant/xmlstuff.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \

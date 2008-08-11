@@ -319,9 +319,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\gtkmisc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\help.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -434,9 +431,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\windowobservers.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\xmlstuff.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\xywindow.cpp">
