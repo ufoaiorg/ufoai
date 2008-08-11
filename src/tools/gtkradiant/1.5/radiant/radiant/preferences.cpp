@@ -25,6 +25,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Leonardo Zide (leo@lokigames.com)
 //
 
+#ifdef _WIN32
+# define xmlFree free
+#endif
 #include "preferences.h"
 
 #include "debugging/debugging.h"
