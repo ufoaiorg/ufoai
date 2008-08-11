@@ -291,7 +291,7 @@ static int actorL_shoot (lua_State *L)
 
 		tu = (int) lua_tonumber(L, 2);
 		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
-		fd = &od->fd[weapFdsIdx][0];                              
+		fd = &od->fd[weapFdsIdx][0];
 		shots = tu / fd->time;
 	}
 
@@ -424,14 +424,14 @@ static pos3_t* lua_pushpos3 (lua_State *L, pos3_t *pos)
 /**
  * @brief Puts the pos3 information in a string.
  */
-static int pos3L_tostring(lua_State *L)
+static int pos3L_tostring (lua_State *L)
 {
 	pos3_t *p;
 	char buf[MAX_VAR];
 
-	assert(lua_ispos3(L,1));
+	assert(lua_ispos3(L, 1));
 
-	p = lua_topos3(L,1);
+	p = lua_topos3(L, 1);
 	Com_sprintf(buf, sizeof(buf), "Pos3( x=%d, y=%d, z=%d )", (*p)[0], (*p)[1], (*p)[2]);
 
 	lua_pushstring(L, buf);
@@ -496,20 +496,20 @@ static int AIL_print (lua_State *L)
 			meta = 1;
 		} else {
 			switch (lua_type(L, -1)) {
-				case LUA_TNUMBER:
-				case LUA_TSTRING:
-					s = lua_tostring(L, -1);
-					break;
-				case LUA_TBOOLEAN:
-					s = lua_toboolean(L, -1) ? "true" : "false";
-					break;
-				case LUA_TNIL:
-					s = "nil";
-					break;
+			case LUA_TNUMBER:
+			case LUA_TSTRING:
+				s = lua_tostring(L, -1);
+				break;
+			case LUA_TBOOLEAN:
+				s = lua_toboolean(L, -1) ? "true" : "false";
+				break;
+			case LUA_TNIL:
+				s = "nil";
+				break;
 
-				default:
-					s = "unknown lua type";
-					break;
+			default:
+				s = "unknown lua type";
+				break;
 			}
 		}
 		Com_Printf("%s%s", (i > 1) ? "\t" : "", s);
@@ -537,7 +537,6 @@ static int AIL_see (lua_State *L)
 
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
-
 		/* Get what to "see" with. */
 		vision = 0;
 		if (lua_isstring(L, 1)) {
@@ -554,8 +553,8 @@ static int AIL_see (lua_State *L)
 				vision = 3;
 			else
 				AIL_invalidparameter(1);
-		}
-		else AIL_invalidparameter(1);
+		} else
+			AIL_invalidparameter(1);
 
 		/* We now check for different teams. */
 		team = TEAM_NONE;
@@ -572,8 +571,8 @@ static int AIL_see (lua_State *L)
 					team = TEAM_PHALANX;
 				else
 					AIL_invalidparameter(2);
-			}
-			else AIL_invalidparameter(2);
+			} else
+				AIL_invalidparameter(2);
 		}
 	}
 
@@ -714,7 +713,7 @@ static int AIL_reload (lua_State *L)
 /**
  * @brief Moves the actor into a position in which he can shoot his target.
  */
-static int AIL_positionshoot(lua_State *L)
+static int AIL_positionshoot (lua_State *L)
 {
 	pos3_t to, bestPos;
 	vec3_t check;
@@ -762,7 +761,7 @@ static int AIL_positionshoot(lua_State *L)
 				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
 					tu = gi.MoveLength(gi.routingMap, to, qtrue);
 
-					/* Better spot (easier to get to. */
+					/* Better spot (easier to get to). */
 					if (tu < min_tu) {
 						VectorCopy(to, bestPos);
 						min_tu = tu;
@@ -784,7 +783,7 @@ static int AIL_positionshoot(lua_State *L)
 /**
  * @brief Moves the actor into a position in which he can hide.
  */
-static int AIL_positionhide(lua_State *L)
+static int AIL_positionhide (lua_State *L)
 {
 	return 0;
 }
