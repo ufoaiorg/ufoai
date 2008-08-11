@@ -14,7 +14,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/brushnode.cpp \
 	$(RADIANT_BASE)/radiant/brush_primit.cpp \
 	$(RADIANT_BASE)/radiant/brushtokens.cpp \
-	$(RADIANT_BASE)/radiant/build.cpp \
 	$(RADIANT_BASE)/radiant/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/clippertool.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
