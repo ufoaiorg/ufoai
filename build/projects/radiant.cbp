@@ -256,12 +256,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushtokens.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\brushxml.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\build.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\camwindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
