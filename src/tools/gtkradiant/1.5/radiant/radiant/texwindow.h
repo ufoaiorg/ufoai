@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "math/vector.h"
 #include "generic/callbackfwd.h"
 #include "signal/signalfwd.h"
-#include "xml/xmltextags.h"
 
 typedef struct _GtkWidget GtkWidget;
 
