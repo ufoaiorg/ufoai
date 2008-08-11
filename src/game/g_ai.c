@@ -79,11 +79,13 @@ static aiActor_t* lua_pushactor(lua_State *L, aiActor_t *actor);
 static int actorL_tostring(lua_State *L);
 static int actorL_pos(lua_State *L);
 static int actorL_shoot(lua_State *L);
+static int actorL_face(lua_State *L);
 static int actorL_team(lua_State *L);
 static const luaL_reg actorL_methods[] = {
 	{"__tostring", actorL_tostring},
 	{"pos", actorL_pos},
 	{"shoot", actorL_shoot},
+	{"face", actorL_face},
 	{"team", actorL_team},
 	{0, 0}
 };
@@ -246,15 +248,74 @@ static int actorL_pos (lua_State *L)
  */
 static int actorL_shoot (lua_State *L)
 {
+	int fm, tu, shots;
+	aiActor_t *target;
+	int weapFdsIdx;
+	const objDef_t *od;     /* Ammo pointer. */
+	const objDef_t *weapon; /* Weapon pointer. */
+	const fireDef_t *fd;    /* Fire-definition pointer. */
+
+	assert(lua_isactor(L, 1));
+
+	/* Target */
+	target = lua_toactor(L, 1);
+
+	/* Figure out weapon to use. */
+	if (IS_SHOT_RIGHT(fm) && RIGHT(AIL_ent)
+			&& RIGHT(AIL_ent)->item.m
+			&& RIGHT(AIL_ent)->item.t->weapon
+			&& (!RIGHT(AIL_ent)->item.t->reload
+				|| RIGHT(AIL_ent)->item.a > 0)) {
+		od = RIGHT(AIL_ent)->item.m;
+		weapon = RIGHT(AIL_ent)->item.t;
+	} else if (IS_SHOT_LEFT(fm) && LEFT(AIL_ent)
+			&& LEFT(AIL_ent)->item.m
+			&& LEFT(AIL_ent)->item.t->weapon
+			&& (!LEFT(AIL_ent)->item.t->reload
+				|| LEFT(AIL_ent)->item.a > 0)) {
+		od = LEFT(AIL_ent)->item.m;
+		weapon = LEFT(AIL_ent)->item.t;
+	} else {
+		/* Failure - no weapon. */
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Number of TU to spend shooting, adjust fire mode to that. */
+	if (lua_gettop(L) > 1) {
+		assert(lua_isnumber(L, 2)); /* Must be a number. */
+
+		tu = (int) lua_tonumber(L, 2);
+		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
+		fd = &od->fd[weapFdsIdx][0];                              
+		shots = tu / fd->time;
+	}
+
+	while (shots > 0) {
+		shots--;
+		/* @todo actually handle fire modes */
+		G_ClientShoot(AIL_player, AIL_ent->number, target->ent->pos,
+				0, 0, NULL, qtrue, 0);
+	}
+
+	/* Success. */
+	lua_pushboolean(L, 1);
+	return 1;
+}
+
+/**
+ * @brief Makes the actor face the position.
+ */
+static int actorL_face (lua_State *L)
+{
 	aiActor_t *target;
 
 	assert(lua_isactor(L, 1));
 
-	target = lua_toactor(L, 1);
-	G_ClientShoot(AIL_player, AIL_ent->number, target->ent->pos,
-		0, 0, NULL, qtrue, 0);
+	AI_TurnIntoDirection(AIL_ent, target->ent->pos);
 
-	return 0;
+	lua_pushboolean(L, 1);
+	return 1;
 }
 
 /**
@@ -331,7 +392,6 @@ static int lua_ispos3 (lua_State *L, int index)
 	return ret;
 }
 
-
 /**
  * @brief Returns the pos3 from the metatable at index.
  */
@@ -386,7 +446,8 @@ static int pos3L_goto (lua_State *L)
 	pos = lua_topos3(L, 1);
 	G_ClientMove(AIL_player, AIL_ent->team, AIL_ent->number, *pos, qfalse, QUIET);
 
-	return 0;
+	lua_pushboolean(L, 1);
+	return 1;
 }
 
 /**
@@ -401,9 +462,9 @@ static int pos3L_face (lua_State *L)
 	pos = lua_topos3(L, 1);
 	AI_TurnIntoDirection(AIL_ent, *pos);
 
-	return 0;
+	lua_pushboolean(L, 1);
+	return 1;
 }
-
 
 /*
  *    A I L
@@ -1271,6 +1332,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* Set the global player and edict */
 	AIL_ent = ent;
 	AIL_player = player;
+
+	/* Preperations */
+	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize, AIL_ent->TU);
+	gi.MoveStore(gi.routingMap);
 
 	/* Try to run the function. */
 	lua_getglobal(L, "think");
