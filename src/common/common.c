@@ -199,16 +199,11 @@ void Com_DPrintf (int level, const char *fmt, ...)
 	else if (developer->integer != DEBUG_ALL && developer->integer & ~level)
 		return;
 	else {
-		va_list argptr;
-		char msg[MAXPRINTMSG];
+		va_list ap;
 
-		va_start(argptr, fmt);
-		Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-		va_end(argptr);
-
-		msg[sizeof(msg)-1] = 0;
-
-		Com_Printf("%s", msg);
+		va_start(ap, fmt);
+		Com_vPrintf(fmt, ap);
+		va_end(ap);
 	}
 }
 

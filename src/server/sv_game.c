@@ -41,14 +41,11 @@ struct dbuffer *sv_msg = NULL;
  */
 static void SV_dprintf (const char *fmt, ...)
 {
-	char msg[1024];
-	va_list argptr;
+	va_list ap;
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	Com_Printf("%s", msg);
+	va_start(ap, fmt);
+	Com_vPrintf(fmt, ap);
+	va_end(ap);
 }
 
 
