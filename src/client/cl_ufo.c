@@ -573,11 +573,9 @@ static void UFO_ListOnGeoscape_f (void)
 			if (w->item) {
 				char const* const state = w->ammo && w->ammoLeft > 0 ?
 					"(loaded)" : "(unloaded)";
-				Com_Printf("%s %s", w->item->id, state);
-			}
-			else
-				Com_Printf("empty");
-			Com_Printf(" / ");
+				Com_Printf("%s %s / ", w->item->id, state);
+			} else
+				Com_Printf("empty / ");
 		}
 		Com_Printf("\n");
 	}
