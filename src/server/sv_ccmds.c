@@ -243,13 +243,15 @@ static void SV_Status_f (void)
 			continue;
 
 		switch (cl->state) {
-			case cs_connected: state = "CONNECT"; break;
-			case cs_spawning:  state = "SPAWNIN"; break;
+		case cs_connected:
+			state = "CONNECT"; break;
+		case cs_spawning:
+			state = "SPAWNIN"; break;
 
-			default:
-				sprintf(state_buf, "%7i", cl->state);
-				state = state_buf;
-				break;
+		default:
+			sprintf(state_buf, "%7i", cl->state);
+			state = state_buf;
+			break;
 		}
 
 		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), qfalse);

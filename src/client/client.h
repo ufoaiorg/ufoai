@@ -108,7 +108,6 @@ typedef enum {
 	ca_sequence,				/**< rendering a sequence */
 	ca_connecting,				/**< sending request packets to the server */
 	ca_connected,				/**< netchan_t established, waiting for svc_serverdata */
-	ca_ptledit,					/**< particles should be rendered */
 	ca_active					/**< game views should be displayed */
 } connstate_t;
 

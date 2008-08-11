@@ -2265,7 +2265,6 @@ void CL_SetClientState (int state)
 	case ca_uninitialized:
 		Sys_Error("CL_SetClientState: Don't set state ca_uninitialized\n");
 		break;
-	case ca_ptledit:
 	case ca_sequence:
 		refdef.ready = qtrue;
 		break;

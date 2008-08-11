@@ -338,7 +338,7 @@ void V_RenderView (void)
 	refdef.brush_count = 0;
 	refdef.alias_count = 0;
 
-	if (cls.state != ca_active && cls.state != ca_sequence && cls.state != ca_ptledit)
+	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
 
 	if (!viddef.viewWidth || !viddef.viewHeight)
@@ -353,10 +353,6 @@ void V_RenderView (void)
 	switch (cls.state) {
 	case ca_sequence:
 		CL_SequenceRender();
-		refdef.rdflags |= RDF_NOWORLDMODEL;
-		break;
-	case ca_ptledit:
-		PE_RenderParticles();
 		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
 	default:
