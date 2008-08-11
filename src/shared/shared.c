@@ -33,15 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 const char *COM_SkipPath (const char *pathname)
 {
-	const char *last;
-
-	last = pathname;
-	while (*pathname) {
-		if (*pathname == '/')
-			last = pathname + 1;
-		pathname++;
-	}
-	return last;
+	char const* const last = strrchr(pathname, '/');
+	return last ? last + 1 : pathname;
 }
 
 /**
