@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="gtkradiant_entity" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="windows">
+				<Option platforms="Windows;" />
+				<Option output="..\..\radiant\plugins\entity" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_entity" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-Wno-non-virtual-dtor" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DNODEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="--export-all-symbols" />
+				</Linker>
+			</Target>
+			<Target title="windows_debug">
+				<Option platforms="Windows;" />
+				<Option output="..\..\radiant\plugins\entity" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_entity" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-Wno-non-virtual-dtor" />
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="--export-all-symbols" />
+				</Linker>
+			</Target>
+			<Target title="linux">
+				<Option platforms="Unix;" />
+				<Option output="..\..\radiant\plugins\entity" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs\radiant_entity" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+				</Compiler>
+				<Linker>
+				</Linker>
+			</Target>
+			<Target title="macosx">
+				<Option platforms="Mac;" />
+				<Option output="..\..\radiant\plugins\entity" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs\radiant_entity" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add directory="\sw\include" />
+				</Compiler>
+				<Linker>
+					<Add directory="\sw\lib" />
+					<Add option="-dynamiclib" />
+					<Add option="-single_module" />
+					<Add option="-compatibility_version 1" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
+			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
+		</Compiler>
+		<Linker>
+		</Linker>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\plugin.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\entity.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\eclassmodel.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\generic.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\group.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\miscmodel.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\miscparticle.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\angle.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\angles.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\colour.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\filters.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\light.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\model.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\namedentity.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\origin.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\scale.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\targetable.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\rotation.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\modelskinkey.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
