@@ -471,27 +471,26 @@ void CL_ResetWeaponButtons (void)
  */
 static void SetWeaponButton (int button, weaponButtonState_t state)
 {
-	char cbufText[MAX_VAR];
 	weaponButtonState_t currentState = weaponButtonState[button];
+	char                cbufText[MAX_VAR];
+	char const*         prefix;
 
 	assert(button < BT_NUM_TYPES);
 
-	/* No "switch" statement possible here for some non-obvious reason (gcc doesn't like constant ints here) :-/ */
-	if ((state == currentState)
-	||  (state == BT_STATE_HIGHLIGHT)) {
+	if (state == currentState || state == BT_STATE_HIGHLIGHT) {
 		/* Don't reset if it already is in current state or if highlighted,
 		 * as HighlightWeaponButton deals with the highlighted state. */
 		return;
 	} else if (state == BT_STATE_DESELECT) {
-		Q_strncpyz(cbufText, "desel", sizeof(cbufText));
+		prefix = "desel";
 	} else if (state == BT_STATE_DISABLE) {
-		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
+		prefix = "dis";
 	} else {
-		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
+		prefix = "dis";
 	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
-	Q_strcat(cbufText, shoot_type_strings[button], sizeof(cbufText));
+	Com_sprintf(cbufText, lengthof(cbufText), "%s%s", prefix, shoot_type_strings[button]);
 
 	Cbuf_AddText(cbufText);
 	weaponButtonState[button] = state;
