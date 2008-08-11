@@ -154,19 +154,10 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\clipboard.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\closure.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\container.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\cursor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\dialog.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\entry.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\filechooser.cpp">
@@ -181,9 +172,6 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\glwidget.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\idledraw.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -193,25 +181,13 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\messagebox.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\nonmodal.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\paned.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\pointer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\toolbar.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\widget.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\window.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\gtkutil\xorrectangle.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\profile\file.cpp">

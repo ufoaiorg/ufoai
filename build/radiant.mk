@@ -72,26 +72,18 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/closure.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/container.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/cursor.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/dialog.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/entry.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/filechooser.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/frame.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/glfont.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/glwidget.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/idledraw.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/image.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/menu.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/messagebox.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/nonmodal.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/paned.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/pointer.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/toolbar.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/widget.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/xorrectangle.cpp \
 	\
 	$(RADIANT_BASE)/libs/cmdlib/cmdlib.cpp \
 	\
