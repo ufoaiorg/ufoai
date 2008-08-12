@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// \brief OS file-system querying and manipulation.
 
 #if defined(WIN32)
-#define S_ISDIR(mode) (mode & _S_IFDIR)
 #include <io.h> // _access()
 #define access(path, mode) _access(path, mode)
 #else
