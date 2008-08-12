@@ -21,6 +21,7 @@
 			<Depends filename="radiant_archivezip.cbp" />
 			<Depends filename="radiant_ufoai.cbp" />
 			<Depends filename="radiant_brushexport.cbp" />
+			<Depends filename="ufo2map.cbp" />
 		</Project>
 		<Project filename="radiant_model.cbp" />
 		<Project filename="radiant_entity.cbp" />
