@@ -86,7 +86,7 @@ SectionGroup /e "Game" SECGROUP01
     SetOverwrite ifnewer
     SetOutPath "$INSTDIR"
     File /nonfatal "..\..\..\src\docs\tex\*.pdf"
-    File "..\..\..\contrib\*.dll"
+    File "..\..\..\contrib\dlls\*.dll"
     File "..\..\..\*.exe"
     SetOutPath "$INSTDIR\base"
     File "..\..\..\base\*.dll"
@@ -193,7 +193,7 @@ SectionGroup /e "Mapping" SECGROUP02
 
   Section "Mapping Tools Shortcuts" SEC02B
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\radiant\radiant.exe" "" "$INSTDIR\radiant\radiant.exe" 0
   SectionEnd
 SectionGroupEnd
 
@@ -282,6 +282,7 @@ Section "Source Code" SEC03
 ; version 1.5
 ; gamepack
   SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5"
+;; FIXME
   SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\games"
   SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\games"
   File "..\..\tools\gtkradiant\1.5\gamepack\games\*.game"
@@ -290,11 +291,6 @@ Section "Source Code" SEC03
   File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\*.xlink"
   SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\ufoai.game\base"
   File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\base\*.def"
-; plugin
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\plugin"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\plugin\ufoai"
-  File "..\..\tools\gtkradiant\1.5\plugin\ufoai\*.cpp"
-  File "..\..\tools\gtkradiant\1.5\plugin\ufoai\*.h"
 
 ; masterserver
   SetOutPath "$INSTDIR\src\tools\masterserver"
