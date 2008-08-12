@@ -49,6 +49,7 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	SERVER_SRCS+=\
+		ports/windows/win_console.c \
 		ports/windows/win_shared.c \
 		ports/windows/win_main.c \
 		ports/windows/ufo.rc
