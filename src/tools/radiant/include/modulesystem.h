@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "debugging/debugging.h"
 
 #if defined(WIN32)
-#define RADIANT_DLLEXPORT cdecl
+#define RADIANT_DLLEXPORT __stdcall
 #else
 #define RADIANT_DLLEXPORT
 #endif

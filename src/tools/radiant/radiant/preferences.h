@@ -329,16 +329,12 @@ public:
 
 	/*!
 	path for global settings
-	win32: AppPath
-	linux: ~/.radiant/[version]/
 	*/
 	GString *m_global_rc_path;
 
 	/*!
 	path to per-game settings
 	used for various game dependant storage
-	win32: GameToolsPath
-	linux: ~/.radiant/[version]/[gamename]/
 	*/
 	GString *m_rc_path;
 

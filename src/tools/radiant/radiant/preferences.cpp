@@ -433,7 +433,6 @@ void PrefsDlg::Init() {
 	// m_rc_path is for game specific preferences
 	// takes the form: global-pref-path/gamename/prefs-file
 
-	// this is common to win32 and Linux init now
 	m_rc_path = g_string_new (m_global_rc_path->str);
 
 	// game sub-dir

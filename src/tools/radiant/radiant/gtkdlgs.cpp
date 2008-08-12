@@ -885,13 +885,8 @@ EMessageBoxReturn DoShaderInfoDlg (const char* name, const char* filename, const
 	return ret;
 }
 
-
-
 #ifdef WIN32
 #include <gdk/gdkwin32.h>
-#endif
-
-#ifdef WIN32
 // use the file associations to open files instead of builtin Gtk editor
 bool g_TextEditor_useWin32Editor = true;
 #else
