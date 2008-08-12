@@ -10,11 +10,12 @@
 				<Option platforms="Windows;" />
 				<Option output="..\..\radiant\radiant" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\radiant" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-Wno-non-virtual-dtor" />
+					<Add option="-mms-bitfields" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
@@ -43,7 +44,7 @@
 				<Option platforms="Windows;" />
 				<Option output="..\..\radiant\radiant" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\radiant" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option host_application="..\..\radiant\radiant.exe" />
 				<Compiler>
@@ -77,9 +78,9 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="..\..\radiant\radiant" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\radiant\radiant.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output=".objs\radiant" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
@@ -94,9 +95,9 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="..\..\radiant\radiant" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\radiant\radiant.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output=".objs\radiant" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
