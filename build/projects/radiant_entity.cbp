@@ -36,7 +36,6 @@
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-Wno-non-virtual-dtor" />
-					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
