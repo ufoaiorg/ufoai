@@ -85,10 +85,10 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shader\plugin.cpp">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shaders\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shader\shaders.cpp">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shaders\shaders.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\cmdlib\cmdlib.cpp">
