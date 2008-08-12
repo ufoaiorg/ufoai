@@ -380,7 +380,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_tooltip.h" />
-		<Unit filename="..\..\src\client\os_types.h" />
 		<Unit filename="..\..\src\client\cl_renderer.h" />
 		<Unit filename="..\..\src\client\cl_video.h" />
 		<Unit filename="..\..\src\common\cmd.c">
@@ -494,10 +493,6 @@
 			<Option target="macosx" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\resource.h" />
-		<Unit filename="..\..\src\ports\windows\ufo.ico">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="windows" />
