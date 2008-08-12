@@ -684,7 +684,7 @@ inline void extension_not_implemented(const char* extension) {
 
 static int g_maxTextureAnisotropy;
 
-static inline int QGL_maxTextureAnisotropy() {
+int QGL_maxTextureAnisotropy() {
 	return g_maxTextureAnisotropy;
 }
 
