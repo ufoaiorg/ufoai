@@ -298,6 +298,11 @@
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\qgl.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\radiant.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\radiant\referencecache.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
