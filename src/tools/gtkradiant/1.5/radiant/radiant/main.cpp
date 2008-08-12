@@ -281,7 +281,7 @@ void paths_init() {
 
 	{
 		StringOutputStream path(256);
-		path << home << '/';
+		path << home;
 		g_strSettingsPath = path.c_str();
 	}
 
@@ -309,14 +309,14 @@ void create_global_pid() {
 	g_pidFile << SettingsPath_get() << "radiant.pid";
 
 	FILE *pid;
-	pid = fopen (g_pidFile.c_str(), "r");
+	pid = fopen(g_pidFile.c_str(), "r");
 	if (pid != 0) {
-		fclose (pid);
+		fclose(pid);
 
-		if (remove (g_pidFile.c_str()) == -1) {
+		if (remove(g_pidFile.c_str()) == -1) {
 			StringOutputStream msg(256);
 			msg << "WARNING: Could not delete " << g_pidFile.c_str();
-			gtk_MessageBox (0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR );
+			gtk_MessageBox(0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR );
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
@@ -326,14 +326,14 @@ void create_global_pid() {
 		"The failure may be related to current global preferences.\n"
 		"Do you want to reset global preferences to defaults?";
 
-		if (gtk_MessageBox (0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
+		if (gtk_MessageBox(0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			g_GamesDialog.Reset();
 		}
 
 		msg.clear();
 		msg << "Logging console output to " << SettingsPath_get() << "radiant.log\nRefer to the log if Radiant fails to start again.";
 
-		gtk_MessageBox (0, msg.c_str(), "Radiant - Console Log", eMB_OK);
+		gtk_MessageBox(0, msg.c_str(), "Radiant - Console Log", eMB_OK);
 #endif
 
 		// set without saving, the class is not in a coherent state yet
@@ -343,9 +343,9 @@ void create_global_pid() {
 	}
 
 	// create a primary .pid for global init run
-	pid = fopen (g_pidFile.c_str(), "w");
+	pid = fopen(g_pidFile.c_str(), "w");
 	if (pid)
-		fclose (pid);
+		fclose(pid);
 }
 
 void remove_global_pid() {
