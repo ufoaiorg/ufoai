@@ -113,8 +113,6 @@
 			<Add library="png" />
 			<Add library="curl" />
 		</Linker>
-		<Unit filename="..\..\src\client\anorms.h" />
-		<Unit filename="..\..\src\client\cdaudio.h" />
 		<Unit filename="..\..\src\client\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -309,7 +307,6 @@
 		</Unit>
 		<Unit filename="..\..\src\client\cl_view.h" />
 		<Unit filename="..\..\src\client\client.h" />
-		<Unit filename="..\..\src\client\console.h" />
 		<Unit filename="..\..\src\client\menu\m_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -384,8 +381,8 @@
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_tooltip.h" />
 		<Unit filename="..\..\src\client\os_types.h" />
-		<Unit filename="..\..\src\client\ref.h" />
-		<Unit filename="..\..\src\client\vid.h" />
+		<Unit filename="..\..\src\client\cl_renderer.h" />
+		<Unit filename="..\..\src\client\cl_video.h" />
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -669,18 +666,6 @@
 		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
 		<Unit filename="..\..\src\shared\vertex_normals.h" />
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\plugin\ufoai\ufoai.h" />
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\plugin\ufoai\ufoai_filters.h" />
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\plugin\ufoai\ufoai_gtk.h" />
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\plugin\ufoai\ufoai_level.h" />
-		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\cmdlib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\imagelib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\polylib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\shared.h" />
-		<Unit filename="..\..\src\tools\ufo2map\radiosity.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
