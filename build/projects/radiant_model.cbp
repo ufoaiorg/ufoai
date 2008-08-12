@@ -82,6 +82,9 @@
 		<Linker>
 			<Add library="m" />
 		</Linker>
+		<Unit filename="..\..\src\tools\radiant\plugins\export.def">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\model\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -85,6 +85,9 @@
 		</Compiler>
 		<Linker>
 		</Linker>
+		<Unit filename="..\..\src\tools\radiant\plugins\export.def">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\entity\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

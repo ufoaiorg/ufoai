@@ -90,6 +90,9 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
+		<Unit filename="..\..\src\tools\radiant\plugins\export.def">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\brushexport\callbacks.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
