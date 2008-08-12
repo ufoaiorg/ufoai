@@ -80,19 +80,19 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
+			<Add option="-I..\..\src\tools\radiant\libs" />
+			<Add option="-I..\..\src\tools\radiant\include" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shaders\plugin.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\shaders\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shaders\shaders.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\shaders\shaders.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\cmdlib\cmdlib.cpp">
+		<Unit filename="..\..\src\tools\radiant\libs\cmdlib\cmdlib.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

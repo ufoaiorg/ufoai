@@ -78,22 +78,22 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
+			<Add option="-I..\..\src\tools\radiant\libs" />
+			<Add option="-I..\..\src\tools\radiant\include" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\image\image.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\image\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\image\bmp.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\image\bmp.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\image\jpeg.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\image\jpeg.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\image\tga.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\image\tga.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

@@ -2,7 +2,7 @@
 # radiant
 ########################################################################################################
 
-RADIANT_BASE = tools/gtkradiant/1.5/radiant
+RADIANT_BASE = tools/radiant
 
 RADIANT_CFLAGS+=-Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include
 

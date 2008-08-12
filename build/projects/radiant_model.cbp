@@ -76,64 +76,64 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
+			<Add option="-I..\..\src\tools\radiant\libs" />
+			<Add option="-I..\..\src\tools\radiant\include" />
 		</Compiler>
 		<Linker>
 			<Add library="m" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\plugin.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\model\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\model.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\model\model.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picointernal.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picointernal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picomodel.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picomodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\picomodules.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\picomodules.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_3ds.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_3ds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_ase.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_ase.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_md3.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_obj.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_ms3d.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_ms3d.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_mdc.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_mdc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_md2.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\pm_terrain.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_terrain.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\bbox.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\bbox.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\line.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\line.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\m4x4.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\m4x4.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\mathlib.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\picomodel\ray.c">
+		<Unit filename="..\..\src\tools\radiant\libs\picomodel\ray.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

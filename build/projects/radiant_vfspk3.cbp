@@ -80,19 +80,19 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
+			<Add option="-I..\..\src\tools\radiant\libs" />
+			<Add option="-I..\..\src\tools\radiant\include" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\vfspk3\vfspk3.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\vfspk3\vfspk3.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\vfspk3\vfs.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\vfspk3\vfs.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\vfspk3\archive.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\vfspk3\archive.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

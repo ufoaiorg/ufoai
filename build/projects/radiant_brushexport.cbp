@@ -84,25 +84,25 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\libs" />
-			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
+			<Add option="-I..\..\src\tools\radiant\libs" />
+			<Add option="-I..\..\src\tools\radiant\include" />
 		</Compiler>
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\callbacks.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\brushexport\callbacks.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\export.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\brushexport\export.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\interface.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\brushexport\interface.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\plugin.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\brushexport\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\support.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\brushexport\support.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

@@ -306,14 +306,8 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\tools\blender"
   File "..\..\tools\blender\*.py"
 
-; gtkradiant
-  SetOutPath "$INSTDIR\src\tools\gtkradiant"
-; version 1.4
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.4"
-  File "..\..\tools\gtkradiant\1.4\*.diff"
-; version 1.5
-; gamepack
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5"
+; radiant
+  SetOutPath "$INSTDIR\src\tools\radiant"
 
 ; masterserver
   SetOutPath "$INSTDIR\src\tools\masterserver"
