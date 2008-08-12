@@ -81,6 +81,7 @@
 			<Add option="-I..\..\src\tools\gtkradiant\1.5\radiant\include" />
 		</Compiler>
 		<Linker>
+			<Add library="m" />
 		</Linker>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\model\plugin.cpp">
 			<Option compilerVar="CC" />
