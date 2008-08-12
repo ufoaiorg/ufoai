@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <gdk/gdkwin32.h>
 #include <shellapi.h>
 static inline bool open_url(const char* url) {
-	return ShellExecute( (HWND)GDK_WINDOW_HWND (GTK_WIDGET(MainFrame_getWindow())->window), "open", url, 0, 0, SW_SHOW ) > (HINSTANCE)32;
+	return ShellExecute((HWND)GDK_WINDOW_HWND (GTK_WIDGET(MainFrame_getWindow())->window), "open", url, 0, 0, SW_SHOW) > (HINSTANCE)32;
 }
 #elif defined(__linux__) || defined(__FreeBSD__)
 #include <stdlib.h>
@@ -40,7 +40,7 @@ static inline bool open_url(const char* url) {
 #elif defined(__APPLE__)
 #include <stdlib.h>
 static inline bool open_url(const char* url) {
-	char command[2*PATH_MAX];
+	char command[2 * PATH_MAX];
 	snprintf (command, sizeof(command), "open \"%s\" &", url);
 	return (system(command) == 0);
 }

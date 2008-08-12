@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #if defined(WIN32)
 #define OS_CASE_INSENSITIVE
+#define PATH_MAX 260
 #endif
 
 /// \brief Returns true if \p path is lexicographically sorted before \p other.

@@ -834,10 +834,6 @@ void PreferencesDialog_showDialog() {
 	}
 }
 
-
-
-
-
 void GameName_importString(const char* value) {
 	gamename_set(value);
 }

@@ -61,16 +61,8 @@ ArchiveModules& FileSystemQ3API_getArchiveModules();
 #include "os/path.h"
 #include "moduleobservers.h"
 
-
 #define VFS_MAXDIRS 8
-
-#if defined(WIN32)
-#define PATH_MAX 260
-#endif
-
 #define gamemode_get GlobalRadiant().getGameMode
-
-
 
 // =============================================================================
 // Global variables
@@ -88,9 +80,9 @@ struct archive_entry_t {
 typedef std::list<archive_entry_t> archives_t;
 
 static archives_t g_archives;
-static char    g_strDirs[VFS_MAXDIRS][PATH_MAX+1];
-static int     g_numDirs;
-static bool    g_bUsePak = true;
+static char g_strDirs[VFS_MAXDIRS][PATH_MAX + 1];
+static int g_numDirs;
+static bool g_bUsePak = true;
 
 ModuleObservers g_observers;
 
@@ -363,7 +355,7 @@ void Shutdown() {
 
 int GetFileCount (const char *filename, int flag) {
 	int count = 0;
-	char fixed[PATH_MAX+1];
+	char fixed[PATH_MAX + 1];
 
 	strncpy(fixed, filename, PATH_MAX);
 	fixed[PATH_MAX] = '\0';
@@ -409,7 +401,7 @@ ArchiveTextFile* OpenTextFile(const char* filename) {
 
 // NOTE: when loading a file, you have to allocate one extra byte and set it to \0
 std::size_t LoadFile (const char *filename, void **bufferptr, int index) {
-	char fixed[PATH_MAX+1];
+	char fixed[PATH_MAX + 1];
 
 	strncpy (fixed, filename, PATH_MAX);
 	fixed[PATH_MAX] = '\0';

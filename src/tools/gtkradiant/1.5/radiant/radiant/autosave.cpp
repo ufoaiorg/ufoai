@@ -34,12 +34,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qe3.h"
 #include "preferences.h"
 
-
-#if defined(WIN32)
-#define PATH_MAX 260
-#endif
-
-
 bool DoesFileExist(const char* name, std::size_t& size) {
 	if (file_exists(name)) {
 		size += file_size(name);
