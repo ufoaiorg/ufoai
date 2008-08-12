@@ -85,7 +85,7 @@ struct texture_globals_t {
 texture_globals_t g_texture_globals(GL_RGBA);
 
 void SetTexParameters(ETexturesMode mode) {
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
 
 	switch (mode) {
 	case eTextures_NEAREST:

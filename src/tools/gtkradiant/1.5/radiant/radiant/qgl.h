@@ -28,6 +28,6 @@ void QGL_sharedContextDestroyed(OpenGLBinding& table);
 
 bool QGL_ExtensionSupported(const char* extension);
 
-float QGL_maxTextureAnisotropy();
+int QGL_maxTextureAnisotropy();
 
 #endif

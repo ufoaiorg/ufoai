@@ -682,9 +682,9 @@ inline void extension_not_implemented(const char* extension) {
 	globalErrorStream() << "WARNING: OpenGL driver reports support for " << extension << " but does not implement it\n";
 }
 
-float g_maxTextureAnisotropy;
+static int g_maxTextureAnisotropy;
 
-float QGL_maxTextureAnisotropy() {
+static inline int QGL_maxTextureAnisotropy() {
 	return g_maxTextureAnisotropy;
 }
 
@@ -1528,7 +1528,7 @@ void QGL_sharedContextCreated(OpenGLBinding& table) {
 	table.support_ARB_shading_language_100 = QGL_ExtensionSupported("GL_ARB_shading_language_100");
 
 	if (QGL_ExtensionSupported("GL_EXT_texture_filter_anisotropic")) {
-		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &g_maxTextureAnisotropy);
+		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &g_maxTextureAnisotropy);
 		globalOutputStream() << "Anisotropic filtering possible (max " << g_maxTextureAnisotropy << "x)\n";
 	} else {
 		globalOutputStream() << "No Anisotropic filtering available\n";
