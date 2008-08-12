@@ -186,9 +186,36 @@ SectionGroup /e "Mapping" SECGROUP02
     File "..\..\tools\*.ms"
     File "..\..\tools\*.pl"
     ; EULA
-    File "..\..\..\contrib\*.doc"
-    File "..\..\..\contrib\*.exe"
+    File "..\..\..\contrib\q3radiant\*.doc"
+    File "..\..\..\contrib\q3radiant\*.exe"
     File "..\..\..\ufo2map.exe"
+    ; RADIANT
+    SetOutPath "$INSTDIR\radiant"
+    file "..\..\..\radiant\radiant.exe"
+    file /nonfatal "..\..\..\radiant\*.dll"
+    file "..\..\..\radiant\*.xlink"
+    SetOutPath "$INSTDIR\radiant\bitmaps"
+    file "..\..\..\radiant\bitmaps\*.bmp"
+    SetOutPath "$INSTDIR\radiant\docs"
+    file "..\..\..\radiant\docs\*.html"
+    SetOutPath "$INSTDIR\radiant\docs\css"
+    file /nonfatal "..\..\..\radiant\docs\css\*.css"
+    SetOutPath "$INSTDIR\radiant\docs\images"
+    file /nonfatal "..\..\..\radiant\docs\css\*.jpg"
+    SetOutPath "$INSTDIR\radiant\games"
+    file "..\..\..\radiant\games\*.game"
+    SetOutPath "$INSTDIR\radiant\gl"
+    file "..\..\..\radiant\gl\*.glp"
+    file "..\..\..\radiant\gl\*.glsl"
+    file "..\..\..\radiant\gl\*.cg"
+    SetOutPath "$INSTDIR\radiant\modules"
+    file "..\..\..\radiant\modules\*.dll"
+    SetOutPath "$INSTDIR\radiant\plugins"
+    file "..\..\..\radiant\plugins\*.a"
+    file "..\..\..\radiant\plugins\*.def"
+    file "..\..\..\radiant\plugins\*.dll"
+    SetOutPath "$INSTDIR\radiant\plugins\bitmaps"
+    file "..\..\..\radiant\plugins\bitmaps\*.bmp"
   SectionEnd
 
   Section "Mapping Tools Shortcuts" SEC02B
@@ -282,15 +309,6 @@ Section "Source Code" SEC03
 ; version 1.5
 ; gamepack
   SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5"
-;; FIXME
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\games"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\games"
-  File "..\..\tools\gtkradiant\1.5\gamepack\games\*.game"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\ufoai.game"
-  File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\*.xml"
-  File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\*.xlink"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\1.5\gamepack\ufoai.game\base"
-  File "..\..\tools\gtkradiant\1.5\gamepack\ufoai.game\base\*.def"
 
 ; masterserver
   SetOutPath "$INSTDIR\src\tools\masterserver"
