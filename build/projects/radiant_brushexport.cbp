@@ -86,20 +86,20 @@
 			<Add library="libjpeg" />
 		</Linker>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\callbacks.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\export.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\interface.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\plugin.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\support.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

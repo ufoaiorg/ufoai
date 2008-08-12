@@ -85,62 +85,62 @@
 		<Linker>
 		</Linker>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\plugin.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\entity.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\eclassmodel.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\generic.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\group.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\miscmodel.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\miscparticle.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\angle.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\angles.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\colour.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\filters.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\light.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\model.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\namedentity.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\origin.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\scale.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\targetable.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\rotation.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\entity\modelskinkey.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

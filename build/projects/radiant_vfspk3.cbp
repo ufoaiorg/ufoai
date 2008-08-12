@@ -86,14 +86,14 @@
 			<Add library="libjpeg" />
 		</Linker>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\vfspk3\vfspk3.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\vfspk3\vfs.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\vfspk3\archive.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

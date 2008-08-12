@@ -86,20 +86,20 @@
 			<Add library="libjpeg" />
 		</Linker>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\archivezip\pkzip.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\archivezip\plugin.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\archivezip\archive.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\archivezip\zlibstream.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\cmdlib\cmdlib.cpp">
-			<Option compilerVar="CC" \>
-		<\Unit>
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
