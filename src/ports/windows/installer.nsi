@@ -162,6 +162,13 @@ SectionGroup /e "Mapping" SECGROUP02
     File "..\..\..\base\maps\b\*.map"
     SetOutPath "$INSTDIR\base\maps\country"
     File "..\..\..\base\maps\country\*.map"
+; still in data_source/maps/unfinished
+;    SetOutPath "$INSTDIR\base\maps\desert"
+;    File "..\..\..\base\maps\desert\*.map"
+;    SetOutPath "$INSTDIR\base\maps\oilpipes"
+;    File "..\..\..\base\maps\oilpipes\*.map"
+;    SetOutPath "$INSTDIR\base\maps\city"
+;    File "..\..\..\base\maps\city\*.map"
     SetOutPath "$INSTDIR\base\maps\frozen"
     File "..\..\..\base\maps\frozen\*.map"
     SetOutPath "$INSTDIR\base\maps\ice"
