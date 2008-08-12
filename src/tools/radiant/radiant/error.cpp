@@ -87,7 +87,7 @@ void Error (const char *error, ...) {
 		do {
 			scan = next;
 			text[strlen(text)+1] = '\0';
-			if ((scan[0] >= 0) && (scan[0] <= 127))
+			if (scan[0] <= 127)
 				text[strlen(text)] = char(scan[0]);
 			else
 				text[strlen(text)] = '?';
