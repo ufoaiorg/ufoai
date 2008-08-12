@@ -2,14 +2,14 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="gtkradiant_shader" />
+		<Option title="gtkradiant_brushexport" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\radiant\modules\shader" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\radiant_shader" />
+				<Option output="..\..\radiant\plugins\brushexport" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_brushexport" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -26,8 +26,8 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="..\..\radiant\plugins\shader" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\radiant_shader" />
+				<Option output="..\..\radiant\plugins\brushexport" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\radiant_brushexport" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -47,8 +47,8 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="..\..\radiant\plugins\shader" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".objs\radiant_shader" />
+				<Option output="..\..\radiant\plugins\brushexport" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs\radiant_brushexport" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -60,8 +60,8 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="..\..\radiant\plugins\shader" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".objs\radiant_shader" />
+				<Option output="..\..\radiant\plugins\brushexport" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objs\radiant_brushexport" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -85,13 +85,19 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shader\plugin.cpp">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\callbacks.cpp">
 			<Option compilerVar="CC" \>
 		<\Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\shader\shaders.cpp">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\export.cpp">
 			<Option compilerVar="CC" \>
 		<\Unit>
-		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\libs\cmdlib\cmdlib.cpp">
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\interface.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\plugin.cpp">
+			<Option compilerVar="CC" \>
+		<\Unit>
+		<Unit filename="..\..\src\tools\gtkradiant\1.5\radiant\plugins\brushexport\support.cpp">
 			<Option compilerVar="CC" \>
 		<\Unit>
 		<Extensions>
