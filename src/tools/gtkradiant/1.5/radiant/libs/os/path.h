@@ -34,8 +34,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "string/string.h"
 
 #if defined(WIN32)
-#define OS_CASE_INSENSITIVE
-#define PATH_MAX 260
+# define OS_CASE_INSENSITIVE
+# ifndef PATH_MAX
+#  define PATH_MAX 260
+# endif
 #endif
 
 /// \brief Returns true if \p path is lexicographically sorted before \p other.
