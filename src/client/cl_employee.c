@@ -948,6 +948,11 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 		 * For this reason we start this loop from the back of the empl-list. toward 0. */
 		for (i = gd.numEmployees[type] - 1; gd.numEmployees[type] >= 0; i--) {
 			employee_t *employee = &gd.employees[type][i];
+
+			/* check if the employee is hired on this base */
+			if (employee->baseHired != base)
+				continue;
+
 			E_DeleteEmployee(employee, type);
 			if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
 				return;
