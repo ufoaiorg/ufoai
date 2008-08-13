@@ -460,6 +460,7 @@ void RS_MarkCollected (technology_t* tech)
 void RS_MarkResearchable (qboolean init, const base_t* base)
 {
 	int i;
+	const base_t *thisBase = base;
 
 	/* Set all entries to initial value. */
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -477,6 +478,8 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 
 				if (tech->base)
 					base = tech->base;
+				else
+					base = thisBase;
 
 				assert(base);
 
