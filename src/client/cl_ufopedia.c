@@ -1725,10 +1725,10 @@ static void UP_OpenMail_f (void)
 /**
  * @brief Marks all mails read in mailclient
  */
-void UP_SetAllMailsRead_f (void)
+static void UP_SetAllMailsRead_f (void)
 {
 	const message_t *m = mn.messageStack;
-	
+
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
@@ -1910,7 +1910,7 @@ void UP_InitStartup (void)
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
-	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, NULL);
+	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
 	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
 	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
 	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);

@@ -44,6 +44,5 @@ void UP_ItemDescription(const objDef_t *item);
 void UP_AircraftItemDescription(const objDef_t *item);
 int UP_GetUnreadMails(void);
 void UP_OpenEventMail(const char *eventMailID);
-void UP_SetAllMailsRead_f(void);
 
 #endif /* CLIENT_CL_UFOPEDIA_H */

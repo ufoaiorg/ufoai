@@ -54,8 +54,8 @@ extern "C" {
 #include "picomodel.h"
 
 
-	/* os dependent replacements */
-#if WIN32 || _WIN32
+/* os dependent replacements */
+#if defined(WIN32)
 #define _pico_stricmp stricmp
 #define _pico_strnicmp strnicmp
 #else
