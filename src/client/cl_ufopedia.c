@@ -1723,6 +1723,43 @@ static void UP_OpenMail_f (void)
 }
 
 /**
+ * @brief Marks all mails read in mailclient
+ */
+void UP_SetAllMailsRead_f (void)
+{
+	const message_t *m = mn.messageStack;
+	
+	while (m) {
+		switch (m->type) {
+		case MSG_RESEARCH_PROPOSAL:
+			assert(m->pedia);
+			m->pedia->mail[TECHMAIL_PRE].read = qtrue;
+			break;
+		case MSG_RESEARCH_FINISHED:
+			assert(m->pedia);
+			m->pedia->mail[TECHMAIL_RESEARCHED].read = qtrue;
+			break;
+		case MSG_NEWS:
+			assert(m->pedia);
+			m->pedia->mail[TECHMAIL_PRE].read = qtrue;
+			m->pedia->mail[TECHMAIL_RESEARCHED].read = qtrue;
+			break;
+		case MSG_EVENT:
+			assert(m->eventMail);
+			m->eventMail->read = qtrue;
+			break;
+		default:
+			break;
+		}
+		m = m->next;
+	}
+
+	gd.numUnreadMails = 0;
+	Cvar_Set("mn_upunreadmail", va("%i", gd.numUnreadMails));
+	UP_OpenMail_f();
+}
+
+/**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
  */
@@ -1873,6 +1910,7 @@ void UP_InitStartup (void)
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
+	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, NULL);
 	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
 	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
 	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);
