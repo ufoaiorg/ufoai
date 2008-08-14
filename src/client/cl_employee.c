@@ -1247,8 +1247,9 @@ employee_t* E_GetEmployeeByMenuIndex (int num)
  */
 static void E_EmployeeDelete_f (void)
 {
-	/* num - menu index (line in text), button - number of button */
-	int num, button;
+	/* num - menu index (line in text) */
+	int num;
+	const int scroll = employeeListNode->textScroll;
 	employee_t* employee;
 
 	if (!baseCurrent)
@@ -1261,7 +1262,7 @@ static void E_EmployeeDelete_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	button = num - employeeListNode->textScroll;
+	num += employeeListNode->textScroll;
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -1276,7 +1277,8 @@ static void E_EmployeeDelete_f (void)
 		}
 	}
 	E_DeleteEmployee(employee, employee->type);
-	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+	MN_ExecuteConfunc(va("employee_init %i\n", employeeCategory));
+	employeeListNode->textScroll = scroll;
 }
 
 /**
