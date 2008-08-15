@@ -206,7 +206,7 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 	case WM_CLOSE:
 		if (SV_CountPlayers()) {
-			int ays = MessageBox(hWnd, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
+			const int ays = MessageBox(hWnd, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
 			if (ays == IDNO)
 				return TRUE;
 		}
