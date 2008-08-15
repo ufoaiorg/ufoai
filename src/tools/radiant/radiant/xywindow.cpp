@@ -762,6 +762,10 @@ XYWnd::XYWnd() :
 	m_nWidth = 0;
 	m_nHeight = 0;
 
+	/* we need this initialized */
+	m_modelview = g_matrix4_identity;
+	m_projection = g_matrix4_identity;
+
 	m_vOrigin[0] = 0;
 	m_vOrigin[1] = 20;
 	m_vOrigin[2] = 46;
@@ -794,9 +798,6 @@ XYWnd::XYWnd() :
 	g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(xywnd_wheel_scroll), this);
 
 	Map_addValidCallback(g_map, DeferredDrawOnMapValidChangedCaller(m_deferredDraw));
-
-	/* new need this initialized */
-	m_modelview = g_matrix4_identity;
 
 	updateProjection();
 	updateModelview();
@@ -1875,6 +1876,9 @@ private:
 };
 
 void XYWnd::updateProjection() {
+	if (m_nWidth == 0 || m_nHeight == 0)
+		return;
+
 	m_projection[0] = 1.0f / static_cast<float>(m_nWidth / 2);
 	m_projection[5] = 1.0f / static_cast<float>(m_nHeight / 2);
 	m_projection[10] = 1.0f / (g_MaxWorldCoord * m_fScale);

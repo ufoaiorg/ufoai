@@ -765,7 +765,9 @@ public:
 		m_observers.detach(observer);
 	}
 	void realise(const CopiedString& name) {
-		construct(name.c_str());
+		const char *shaderName = name.c_str();
+		if (shaderName && shaderName[0] != '\0')
+			construct(shaderName);
 
 		if (m_used != 0 && m_shader != 0) {
 			m_shader->SetInUse(true);

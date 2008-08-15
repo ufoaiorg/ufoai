@@ -163,6 +163,8 @@ struct camera_t {
 			origin(0, 0, 0),
 			angles(0, 0, 0),
 			color(0, 0, 0),
+			projection(g_matrix4_identity),
+			modelview(g_matrix4_identity),
 			movementflags(0),
 			m_keymove_handler(0),
 			fieldOfView(90.0f),
