@@ -1081,6 +1081,13 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	}
 	/* the craft may no longer have any employees assigned */
 	assert(aircraft->teamSize == 0);
+	/* remove the pilot */
+	if (aircraft->pilot) {
+		E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type);
+	} else {
+		/* This shouldn't ever happen. */
+		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
+	}
 
 	aircraft->status = AIR_HOME;
 
