@@ -795,6 +795,9 @@ XYWnd::XYWnd() :
 
 	Map_addValidCallback(g_map, DeferredDrawOnMapValidChangedCaller(m_deferredDraw));
 
+	/* new need this initialized */
+	m_modelview = g_matrix4_identity;
+
 	updateProjection();
 	updateModelview();
 
