@@ -338,7 +338,7 @@ void Sys_UnloadGame(void);
 game_export_t *Sys_GetGameAPI(game_import_t * parms);
 
 #define MAXCMDLINE 256
-char *Sys_ConsoleInput(void);
+const char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(const char *string);
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Sys_Quit(void);

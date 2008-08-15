@@ -66,7 +66,7 @@ static sysConsole_t sys_console;
 
 int SV_CountPlayers(void);
 
-char *Sys_ConsoleInput (void)
+const char *Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
 
@@ -258,6 +258,10 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	case WM_TIMER:
 		sys_console.flashColor = !sys_console.flashColor;
 		InvalidateRect(sys_console.hWndMsg, NULL, TRUE);
+		break;
+
+	case WM_CREATE:
+		SetTimer(sys_console.hWnd, 1, 500, NULL);
 		break;
 	}
 

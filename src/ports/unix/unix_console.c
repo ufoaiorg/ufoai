@@ -55,7 +55,7 @@ void Sys_ConsoleInit (void)
 #endif /* HAVE_CURSES */
 }
 
-char *Sys_ConsoleInput (void)
+const char *Sys_ConsoleInput (void)
 {
 #ifdef HAVE_CURSES
 	return Curses_Input();
