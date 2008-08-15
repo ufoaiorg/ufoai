@@ -983,9 +983,9 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				AII_UpdateAircraftStats(aircraft);
 				MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			} else if (installation) {
-				MN_AddNewMessage(_("Notice"), _("Installation defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Installation defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			}
 		}
 	} else if (slot->installationTime < 0) {
