@@ -43,7 +43,7 @@ void NET_WriteGPos(struct dbuffer *buf, pos3_t pos);
 void NET_WriteAngle(struct dbuffer *buf, float f);
 void NET_WriteAngle16(struct dbuffer *buf, float f);
 void NET_WriteDir(struct dbuffer *buf, const vec3_t vector);
-void NET_V_WriteFormat(struct dbuffer *buf, const char *format, va_list ap);
+void NET_vWriteFormat(struct dbuffer *buf, const char *format, va_list ap);
 void NET_WriteFormat(struct dbuffer *buf, const char *format, ...);
 void NET_VPrintf(struct dbuffer *buf, const char *format, va_list ap);
 void NET_Printf(struct dbuffer *buf, const char *format, ...) __attribute__((format(printf,2,3)));
@@ -73,7 +73,7 @@ float NET_ReadAngle16(struct dbuffer *buf);
 void NET_ReadDir(struct dbuffer *buf, vec3_t vector);
 
 void NET_ReadData(struct dbuffer *buf, void *buffer, int size);
-void NET_V_ReadFormat(struct dbuffer *buf, const char *format, va_list ap);
+void NET_vReadFormat(struct dbuffer *buf, const char *format, va_list ap);
 void NET_ReadFormat(struct dbuffer *buf, const char *format, ...);
 
 struct dbuffer *NET_ReadMsg(struct net_stream *s);

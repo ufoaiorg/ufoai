@@ -142,8 +142,6 @@ void Com_vPrintf (const char *fmt, va_list ap)
 
 	Q_vsnprintf(msg, MAXPRINTMSG, fmt, ap);
 
-	msg[sizeof(msg)-1] = 0;
-
 	/* redirect the output? */
 	if (rd_target) {
 		if ((strlen(msg) + strlen(rd_buffer)) > (rd_buffersize - 1)) {
@@ -224,8 +222,6 @@ void Com_Error (int code, const char *fmt, ...)
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
 	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
 
 	switch (code) {
 	case ERR_DISCONNECT:

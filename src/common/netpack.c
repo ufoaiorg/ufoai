@@ -136,7 +136,7 @@ void NET_WriteDir (struct dbuffer *buf, const vec3_t dir)
  * @brief Writes to buffer according to format; version without syntactic sugar
  * for variable arguments, to call it from other functions with variable arguments
  */
-void NET_V_WriteFormat (struct dbuffer *buf, const char *format, va_list ap)
+void NET_vWriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -210,7 +210,7 @@ void NET_WriteFormat (struct dbuffer *buf, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_V_WriteFormat(buf, format, ap);
+	NET_vWriteFormat(buf, format, ap);
 	va_end(ap);
 }
 
@@ -426,7 +426,7 @@ void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
  * @sa SV_ReadFormat
  * @param[in] format The format string (see e.g. pa_format array) - may not be NULL
  */
-void NET_V_ReadFormat (struct dbuffer *buf, const char *format, va_list ap)
+void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -494,7 +494,7 @@ void NET_ReadFormat (struct dbuffer *buf, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_V_ReadFormat(buf, format, ap);
+	NET_vReadFormat(buf, format, ap);
 	va_end(ap);
 }
 
@@ -513,8 +513,6 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 	va_start(argptr, format);
 	Q_vsnprintf(string, sizeof(string), format, argptr);
 	va_end(argptr);
-
-	string[sizeof(string) - 1] = 0;
 
 	len = LittleLong(strlen(string) + 1);
 	NET_StreamEnqueue(s, (char *)&len, 4);

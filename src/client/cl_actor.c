@@ -123,7 +123,7 @@ void MSG_Write_PA (player_action_t player_action, int num, ...)
 
 	va_start(ap, num);
 	NET_WriteFormat(msg, "bbs", clc_action, player_action, num);
-	NET_V_WriteFormat(msg, pa_format[player_action], ap);
+	NET_vWriteFormat(msg, pa_format[player_action], ap);
 	va_end(ap);
 	NET_WriteMsg(cls.netStream, msg);
 }

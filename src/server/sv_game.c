@@ -217,7 +217,7 @@ static void SV_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_V_WriteFormat(pfe_msg, format, ap);
+	NET_vWriteFormat(pfe_msg, format, ap);
 	va_end(ap);
 }
 
@@ -272,7 +272,7 @@ static void SV_ReadData (void *buffer, int size)
 }
 
 /**
- * @sa NET_V_ReadFormat
+ * @sa NET_vReadFormat
  */
 static void SV_ReadFormat (const char *format, ...)
 {
@@ -282,7 +282,7 @@ static void SV_ReadFormat (const char *format, ...)
 	if (!*format)	/* PA_NULL */
 		return;
 	va_start(ap, format);
-	NET_V_ReadFormat(sv_msg, format, ap);
+	NET_vReadFormat(sv_msg, format, ap);
 	va_end(ap);
 }
 

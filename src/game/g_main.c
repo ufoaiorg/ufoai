@@ -311,8 +311,6 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	text[sizeof(text) - 1] = 0;
-
 	gi.error("%s", text);
 }
 
@@ -324,8 +322,6 @@ void Com_Printf (const char *msg, ...)
 	va_start(argptr, msg);
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
-
-	text[sizeof(text) - 1] = 0;
 
 	gi.dprintf("%s", text);
 }
@@ -345,8 +341,6 @@ void Com_DPrintf (int level, const char *msg, ...)
 	va_start(argptr, msg);
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
-
-	text[sizeof(text) - 1] = 0;
 
 	gi.dprintf("%s", text);
 }

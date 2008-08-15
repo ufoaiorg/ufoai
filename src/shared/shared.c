@@ -282,8 +282,6 @@ char *va (const char *format, ...)
 	Q_vsnprintf(buf, VA_BUFSIZE, format, argptr);
 	va_end(argptr);
 
-	buf[VA_BUFSIZE - 1] = 0;
-
 	return buf;
 }
 

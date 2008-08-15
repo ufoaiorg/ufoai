@@ -90,11 +90,16 @@ void Sys_ConsoleOutput (const char *text)
 
 	/* Change \n to \r\n so it displays properly in the edit box */
 	while (*text) {
-		if (*text == '\n') {
+		if (*text == '\n' && len < MAX_PRINTMSG - 2) {
 			buffer[len++] = '\r';
 			buffer[len++] = '\n';
-		} else
+		} else if (len < MAX_PRINTMSG - 1) {
 			buffer[len++] = *text;
+		} else {
+			/* truncate */
+			buffer[len] = '\0';
+			break;
+		}
 
 		text++;
 	}
