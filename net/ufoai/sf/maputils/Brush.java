@@ -187,6 +187,10 @@ public class Brush {
 		return String.format ("(%5.1f %5.1f,%5.1f %5.1f,%5.1f %5.1f)", xmin, xmax, ymin, ymax, zmin, zmax);
 	}
 
+	public float boundingBoxVolume(){
+	    return (xmax-xmin)*(ymax-ymin)*(zmax-zmin);
+	}
+	
 	/** calculates  level based on vertex coordinates.  level flags are
 	 *  determined by the lowest point on the brush. */
 	public int calculateLevelBasedOnVertexCoordinates() {

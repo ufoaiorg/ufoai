@@ -104,6 +104,10 @@ public class MapUtils {
 					argUseds[i]=true;
 					map.findBrokenBrushes();
 				}
+				if (args[i].equalsIgnoreCase("-volume")) {
+				    argUseds[i]=true;
+				    map.calculateBrushVolume();
+				}
 				if (args[i].equalsIgnoreCase ("-nodraws") ) {
 					argUseds[i]=true;
 					BrushList.go (map);

@@ -296,4 +296,18 @@ public class Map {
 	    TimeCounter.reportf("%d vertices are inside other brushes", numVertsInsideOtherBrushes);
 	}
 
+	void calculateBrushVolume() {
+		TimeCounter.report ("calculating volume");
+		for (Entity ent: entities) {
+			if (ent.hasBrushes() ) {
+				Vector<Brush> brushes = ent.getBrushes();
+				for (Brush b: brushes) {
+					 MapUtils.printf("brush %d of entity %d: bounding box volume %.3g%n",b.getBrushNumber(),b.getParentEntity().getNumber(),b.boundingBoxVolume());
+
+				}
+			}
+		}
+		TimeCounter.report ("finished calculating volume");
+	}
+
 }
