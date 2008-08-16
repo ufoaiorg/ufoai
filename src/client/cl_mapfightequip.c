@@ -323,6 +323,10 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* instal
 		return qfalse;
 	}
 
+	/* no slot somehow */
+	if (!slot)
+		return qfalse;
+
 	/* item is researched? */
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
