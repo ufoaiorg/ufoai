@@ -405,8 +405,7 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 		return 0;
 	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
 		return 1;
-#else
-# ifdef _WIN32
+#elif defined (_WIN32)
 	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
 	HANDLE hMapFile, hBspFile;
 	int retval = 0;
@@ -423,7 +422,7 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 	/** This is done as two if statements to ensure that ftWriteMap and ftWriteBsp are populated first. */
 	if (GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap)
 		&& GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp)) {
-		if(CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1) {
+		if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1) {
 			retval = 1;
 		}
 	}
@@ -432,7 +431,6 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 	CloseHandle(hBspFile);
 
 	return retval;
-# endif
 #endif
 	/* not up-to-date - recompile */
 	return 0;
