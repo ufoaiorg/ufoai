@@ -26,10 +26,10 @@ if EXIST base\maps\%1 (
 			rem parentheses need to be escaped with caret
 			echo   /help  print ^(this^) help and exit
 			echo   path   relative to base\maps. eg foo processes *.map in base\maps\foo
-			exit /b
+			GOTO End
 		) else (
 			echo path "base\maps\%1" not found, %1 argument not understood, try /help
-			exit /b
+			GOTO End
 		)
 	)
 )
@@ -59,4 +59,8 @@ goto :EOF
 	echo ...dir "%1" finished
 rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
 rem		if errorlevel 1 echo "TODO"
+GOTO End
+
+:End
+cd contrib\scripts
 exit /b
