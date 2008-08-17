@@ -66,8 +66,4 @@ goto :EOF
 	echo ...dir "%1" finished
 rem CHECK ERRORLEVEL AND REMOVE MAP IF != 0
 rem		if errorlevel 1 echo "TODO"
-GOTO End
-
-:End
-cd contrib\scripts
 exit /b
