@@ -331,7 +331,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		Com_Printf("Changed camera mode to first-person.\n");
 		camera_mode = CAMERA_MODE_FIRSTPERSON;
 		VectorCopy(selActor->origin, cl.cam.camorg);
-		Cvar_SetValue("cl_worldlevel", map_maxlevel);
+		Cvar_SetValue("cl_worldlevel", cl.map_maxlevel);
 		VectorCopy(selActor->angles, cl.cam.angles);
 		refdef.fov_x = FOV_FPS;
 		cl.cam.zoom = 1.0;
@@ -381,7 +381,7 @@ static void CL_LevelUp_f (void)
 	if (!CL_OnBattlescape())
 		return;
 	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < map_maxlevel - 1) ? cl_worldlevel->integer + 1 : map_maxlevel - 1);
+		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < cl.map_maxlevel - 1) ? cl_worldlevel->integer + 1 : cl.map_maxlevel - 1);
 }
 
 /**
@@ -974,17 +974,17 @@ static void CL_CameraMoveFirstPerson (void)
  * @brief forces the camera to stay within the horizontal bounds of the
  * map plus some border
  */
-static void CL_ClampCamToMap (float border)
+static inline void CL_ClampCamToMap (const float border)
 {
-	if (cl.cam.reforg[0] < map_min[0] - border)
-		cl.cam.reforg[0] = map_min[0] - border;
-	else if (cl.cam.reforg[0] > map_max[0] + border)
-		cl.cam.reforg[0] = map_max[0] + border;
+	if (cl.cam.origin[0] < map_min[0] - border)
+		cl.cam.origin[0] = map_min[0] - border;
+	else if (cl.cam.origin[0] > map_max[0] + border)
+		cl.cam.origin[0] = map_max[0] + border;
 
-	if (cl.cam.reforg[1] < map_min[1] - border)
-		cl.cam.reforg[1] = map_min[1] - border;
-	else if (cl.cam.reforg[1] > map_max[1] + border)
-		cl.cam.reforg[1] = map_max[1] + border;
+	if (cl.cam.origin[1] < map_min[1] - border)
+		cl.cam.origin[1] = map_min[1] - border;
+	else if (cl.cam.origin[1] > map_max[1] + border)
+		cl.cam.origin[1] = map_max[1] + border;
 }
 
 /**
@@ -1047,7 +1047,7 @@ static void CL_CameraMoveRemote (void)
 	if (cameraRoute) {
 		/* camera route */
 		frac = cls.frametime * moveaccel * 2;
-		if (VectorDist(cl.cam.reforg, routeFrom) > routeDist - 200) {
+		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - 200) {
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
@@ -1084,7 +1084,7 @@ static void CL_CameraMoveRemote (void)
 		VectorNormalize(delta);
 		VectorMA(cl.cam.speed, frac, delta, cl.cam.speed);
 
-		/* lerp the level */
+		/* lerp the level change */
 		if (cl.cam.lerplevel < cl_worldlevel->value) {
 			cl.cam.lerplevel += LEVEL_SPEED * (cl_worldlevel->value - cl.cam.lerplevel + LEVEL_MIN) * cls.frametime;
 			if (cl.cam.lerplevel > cl_worldlevel->value)
@@ -1115,18 +1115,17 @@ static void CL_CameraMoveRemote (void)
 	V_CalcFovX();
 
 	/* calc new camera reference and new camera real origin */
-	VectorMA(cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg);
-	cl.cam.reforg[2] = 0.;
+	VectorMA(cl.cam.origin, cls.frametime, cl.cam.speed, cl.cam.origin);
+	cl.cam.origin[2] = 0.;
 	if (cl_isometric->integer) {
 		CL_ClampCamToMap(72.);
-		VectorMA(cl.cam.reforg, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT, cl.cam.axis[0], cl.cam.camorg);
+		VectorMA(cl.cam.origin, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT, cl.cam.axis[0], cl.cam.camorg);
 		cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	} else {
 		CL_ClampCamToMap(min(144. * (cl.cam.zoom - cl_camzoommin->value - 0.4) / cl_camzoommax->value, 86));
-		VectorMA(cl.cam.reforg, -CAMERA_START_DIST / cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
+		VectorMA(cl.cam.origin, -CAMERA_START_DIST / cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
 		cl.cam.camorg[2] += CAMERA_START_HEIGHT / cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	}
-
 }
 
 /**
@@ -1161,11 +1160,16 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 	routeDist = VectorLength(routeDelta);
 	VectorNormalize(routeDelta);
 
-	VectorCopy(routeFrom, cl.cam.reforg);
+	/* center the camera on the route starting position */
+	VectorCopy(routeFrom, cl.cam.origin);
+	/* set the world level to the z axis value of the camera target
+	 * the camera lerp will do a smooth translate from the old level
+	 * to the new one */
 	Cvar_SetValue("cl_worldlevel", target[2]);
 
 	VectorClear(cl.cam.speed);
 	cameraRoute = qtrue;
+	/* no other event should intersect during camera movement */
 	CL_BlockEvents();
 }
 
@@ -1181,6 +1185,8 @@ static void IN_Parse (void)
 		/* rotate a model */
 		rotateAngles[YAW] -= ROTATE_SPEED * (mousePosX - oldMousePosX);
 		rotateAngles[ROLL] += ROTATE_SPEED * (mousePosY - oldMousePosY);
+
+		/* clamp the angles */
 		while (rotateAngles[YAW] > 360.0)
 			rotateAngles[YAW] -= 360.0;
 		while (rotateAngles[YAW] < 0.0)
@@ -1200,6 +1206,7 @@ static void IN_Parse (void)
 		ccs.center[0] -= (float) (mousePosX - oldMousePosX) / (ccs.mapSize[0] * ccs.zoom);
 		ccs.center[1] -= (float) (mousePosY - oldMousePosY) / (ccs.mapSize[1] * ccs.zoom);
 		for (i = 0; i < 2; i++) {
+			/* clamp to min/max values */
 			while (ccs.center[i] < 0.0)
 				ccs.center[i] += 1.0;
 			while (ccs.center[i] > 1.0)
@@ -1217,6 +1224,7 @@ static void IN_Parse (void)
 		ccs.angles[PITCH] += ROTATE_SPEED * (mousePosX - oldMousePosX) / ccs.zoom;
 		ccs.angles[YAW] -= ROTATE_SPEED * (mousePosY - oldMousePosY) / ccs.zoom;
 
+		/* clamp the angles */
 		while (ccs.angles[YAW] > 180.0)
 			ccs.angles[YAW] -= 360.0;
 		while (ccs.angles[YAW] < -180.0)
@@ -1252,13 +1260,15 @@ static void IN_Parse (void)
 	/* repeat the mouse button */
 	case MS_LHOLD:
 		if (cls.realtime >= mn.mouseRepeat.nexttime) {
-			const int DELAY_FACTOR = 3;	/**< how many times delay between 2 consecutive actions other
-				than the 2 first one must be shorter than delay between the 2 first actions. (must be > 1) */
+			/* how many times delay between 2 consecutive actions other
+			 * than the 2 first one must be shorter than delay between the two
+			 * first actions. (must be > 1) */
+			const int DELAY_FACTOR = 3;
 
-			const int repeatDelay = mn.mouseRepeat.clickDelay / DELAY_FACTOR;	/**< delay between 2 actions
-				when mouse button is kept pushed */
+			/* delay between 2 actions when mouse button is kept pushed */
+			const int repeatDelay = mn.mouseRepeat.clickDelay / DELAY_FACTOR;
 
-			/** number of actions to perform since we last reached this part of the code
+			/* number of actions to perform since we last reached this part of the code
 			 * (we don't use cls.realtime to make number of actions independant of FPS) */
 			const int numClickSinceLastCall = 1 + (cls.realtime - mn.mouseRepeat.nexttime) / repeatDelay;
 			int i;
@@ -1298,6 +1308,7 @@ static void IN_Parse (void)
 		if (cl.cmode > M_PEND_MOVE)
 			mouseSpace = MS_WORLD;
 
+		/* we are in tactical missions here - no focus needed */
 		MN_FocusRemove();
 		return;
 	}
@@ -1306,7 +1317,7 @@ static void IN_Parse (void)
 /**
  * @brief Debug function to print sdl key events
  */
-static void IN_PrintKey (const SDL_Event* event, int down)
+static inline void IN_PrintKey (const SDL_Event* event, int down)
 {
 	if (in_debug->integer) {
 		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
@@ -1564,7 +1575,11 @@ void IN_EventEnqueue (int key, qboolean down)
 }
 
 /**
+ * @brief Handle input events like keys presses and joystick movement as well
+ * as window events
  * @sa CL_Frame
+ * @sa IN_Parse
+ * @sa IN_JoystickMove
  */
 void IN_Frame (void)
 {

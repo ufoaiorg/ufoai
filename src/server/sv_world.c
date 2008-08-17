@@ -334,7 +334,7 @@ static int SV_HullForEntity (const edict_t *ent, int *tile)
 
 	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP) {	/* explicit hulls in the BSP model */
-		cBspModel_t *model;
+		const cBspModel_t *model;
 
 		assert(ent->modelindex < MAX_MODELS);
 
@@ -361,7 +361,7 @@ static int SV_HullForEntity (const edict_t *ent, int *tile)
 static void SV_ClipMoveToEntities (moveclip_t *clip)
 {
 	int i, num;
-	edict_t *touchlist[MAX_EDICTS], *touch;
+	edict_t *touchlist[MAX_EDICTS];
 	trace_t trace;
 	const float *angles;
 	int tile = 0, headnode = 0;
@@ -371,7 +371,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
-		touch = touchlist[i];
+		edict_t *touch = touchlist[i];
 		if (touch->solid == SOLID_NOT)
 			continue;
 		if (touch == clip->passedict)

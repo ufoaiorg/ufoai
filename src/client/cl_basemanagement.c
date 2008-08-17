@@ -2968,7 +2968,7 @@ static void B_AssembleMap_f (void)
 			}
 		}
 	/* set maxlevel for base attacks to 5 */
-	map_maxlevel_base = 6;
+	cl.map_maxlevel_base = 6;
 
 	if (curCampaign)
 		SAV_QuickSave();

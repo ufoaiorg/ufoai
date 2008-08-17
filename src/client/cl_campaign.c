@@ -4938,7 +4938,6 @@ static void CL_GameGo (void)
 	}
 
 	mis = selectedMission;
-	map_maxlevel_base = 0;
 	assert(mis);
 	assert(aircraft);
 

@@ -66,9 +66,30 @@ static sysConsole_t sys_console;
 
 int SV_CountPlayers(void);
 
+/**
+ * @brief Dispatch window messages
+ */
+static void Sys_ConsoleLoop (void)
+{
+	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+		if (!GetMessage(&msg, NULL, 0, 0))
+			Sys_Quit();
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
+
 const char *Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
+	MSG msg;
+
+#ifdef DEDICATED_ONLY
+	/* the client console is not visible after init stage and thus this is only
+	 * needed for the server */
+	Sys_ConsoleLoop();
+#endif
 
 	if (!sys_console.cmdBuffer[0])
 		return NULL;
@@ -155,13 +176,7 @@ void Sys_Error (const char *error, ...)
 
 	/* Wait for the user to quit */
 	while (1) {
-		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-			if (!GetMessage(&msg, NULL, 0, 0))
-				Sys_Quit();
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+		Sys_ConsoleLoop();
 		/* Don't hog the CPU */
 		Sys_Sleep(25);
 	}

@@ -40,7 +40,15 @@ static character_t *selChr;
 static int selToHit;
 static pos3_t mousePos;
 
-static qboolean displayRemainingTus[3];	/**< 0=reload_r, 1=reload_l, 2=crouch */
+enum {
+	REMAINING_TU_RELOAD_RIGHT,
+	REMAINING_TU_RELOAD_LEFT,
+	REMAINING_TU_CROUCH,
+
+	REMAINING_TU_MAX
+};
+
+static qboolean displayRemainingTus[REMAINING_TU_MAX];	/**< 0=reload_r, 1=reload_l, 2=crouch */
 
 /**
  * @brief If you want to change the z level of targetting and shooting,
@@ -1775,11 +1783,11 @@ void CL_RemainingTus_f (void)
 	state = atoi(Cmd_Argv(2));
 
 	if (!Q_strncmp(type, "reload_r", 8)) {
-		displayRemainingTus[0] = state;
+		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;
 	} else if (!Q_strncmp(type, "reload_l", 8)) {
-		displayRemainingTus[1] = state;
+		displayRemainingTus[REMAINING_TU_RELOAD_LEFT] = state;
 	} else if (!Q_strncmp(type, "crouch", 6)) {
-		displayRemainingTus[2] = state;
+		displayRemainingTus[REMAINING_TU_CROUCH] = state;
 	}
 	/* Update "remaining TUs" bar in HUD.*/
 	CL_ActorUpdateCVars();
@@ -2118,9 +2126,6 @@ void CL_ActorUpdateCVars (void)
 	qboolean refresh;
 	const char *animName;
 	int time;
-	const fireDef_t *old;
-	const invList_t *weapon;	/**< Used for hovering over buttons. See displayRemainingTus[] */
-	int reloadtime;
 
 	if (cls.state != ca_active)
 		return;
@@ -2208,7 +2213,7 @@ void CL_ActorUpdateCVars (void)
 					}
 				} else {
 					/* This item uses ammo, get the firedefs from ammo. */
-					old = FIRESH_GetFiredef(
+					const fireDef_t *old = FIRESH_GetFiredef(
 						selWeapon->item.m,
 						FIRESH_FiredefsIDXForWeapon(selWeapon->item.m, selWeapon->item.t),
 						cl.cfiremode);
@@ -2228,26 +2233,28 @@ void CL_ActorUpdateCVars (void)
 			Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
 
 		/* update HUD stats etc in more or shoot modes */
-		if (displayRemainingTus[0] || displayRemainingTus[1] || displayRemainingTus[2]) {
+		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
+		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]
+		 || displayRemainingTus[REMAINING_TU_CROUCH]) {
 			/* We are hovering over a "reload" button */
 			/** @sa CL_RefreshWeaponButtons */
-			if (displayRemainingTus[0] && RIGHT(selActor)) {
-				weapon = RIGHT(selActor);
-				reloadtime = CL_CalcReloadTime(weapon->item.t);
+			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
+				const invList_t *weapon = RIGHT(selActor);
+				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
 				if (weapon->item.m
 					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
 				}
-			} else if (displayRemainingTus[1] && LEFT(selActor)) {
-				weapon = LEFT(selActor);
-				reloadtime = CL_CalcReloadTime(weapon->item.t);
+			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
+				const invList_t *weapon = LEFT(selActor);
+				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
 				if (weapon && weapon->item.m
 					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
-					time = 	reloadtime;
+					time = reloadtime;
 				}
-			} else if (displayRemainingTus[2]) {
+			} else if (displayRemainingTus[REMAINING_TU_CROUCH]) {
 				if (CL_UsableTUs(selActor) >= TU_CROUCH)
 					time = TU_CROUCH;
 			}
@@ -2630,7 +2637,7 @@ qboolean CL_ActorSelectList (int num)
 
 	/* center view (if wanted) */
 	if (cl_centerview->integer)
-		VectorCopy(le->origin, cl.cam.reforg);
+		VectorCopy(le->origin, cl.cam.origin);
 	/* change to worldlevel were actor is right now */
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
 
@@ -4723,7 +4730,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = map_maxlevel - 1;
+	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -4811,7 +4818,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = map_maxlevel - 1;
+	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
 	/* paint */
 	vz = v0[2];

@@ -571,8 +571,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	cl_worldlevel->modified = qtrue;
 	if (cl.numTeamList) {
 		const le_t *le = cl.teamList[0];
-		VectorCopy(le->origin, cl.cam.reforg);
-		Cvar_SetValue("cl_worldlevel", le->pos[2]);
+		V_CenterView(le->pos);
 	}
 
 	/* activate the renderer */
@@ -1052,7 +1051,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
-			VectorCopy(le->origin, cl.cam.reforg);
+			VectorCopy(le->origin, cl.cam.origin);
 			Cvar_SetValue("cl_worldlevel", le->pos[2]);
 		}
 

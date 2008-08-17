@@ -98,6 +98,9 @@ typedef struct client_state_s {
 	qboolean radarInited;		/**< every radar image (for every level [1-8]) is loaded */
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
+
+	int map_maxlevel;
+	int map_maxlevel_base;
 } client_state_t;
 
 extern client_state_t cl;

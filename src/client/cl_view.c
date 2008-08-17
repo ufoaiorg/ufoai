@@ -35,9 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
 
-int map_maxlevel;
-int map_maxlevel_base = 0;
-
 /** position in the spawnflags */
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
@@ -59,9 +56,9 @@ static void CL_ParseEntitystring (const char *es)
 	float volume;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 
-	map_maxlevel = 8;
-	if (map_maxlevel_base >= 1)
-		map_maxlevel = maxlevel = map_maxlevel_base;
+	cl.map_maxlevel = 8;
+	if (cl.map_maxlevel_base >= 1)
+		cl.map_maxlevel = maxlevel = cl.map_maxlevel_base;
 
 	/* vid restart? */
 	if (numMPs || numLMs)
@@ -149,7 +146,7 @@ static void CL_ParseEntitystring (const char *es)
 		/* analyze values - there is one worlspawn per maptile */
 		if (!Q_strcmp(classname, "worldspawn")) {
 			/* maximum level */
-			map_maxlevel = maxlevel;
+			cl.map_maxlevel = maxlevel;
 
 			if (!ccs.singleplayer && (cl_teamnum->integer > maxmultiplayerteams
 									|| cl_teamnum->integer <= TEAM_CIVILIAN)) {
@@ -386,11 +383,11 @@ void V_RenderView (void)
  * @brief Centers the camera on a given grid field
  * @sa CL_CameraMove
  */
-void V_CenterView (pos3_t pos)
+void V_CenterView (const pos3_t pos)
 {
 	vec3_t vec;
 
 	PosToVec(pos, vec);
-	VectorCopy(vec, cl.cam.reforg);
+	VectorCopy(vec, cl.cam.origin);
 	Cvar_SetValue("cl_worldlevel", pos[2]);
 }

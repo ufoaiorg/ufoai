@@ -818,10 +818,6 @@ void CL_ParticleCheckRounds (void)
  */
 static void CL_ParticleRun2 (ptl_t *p)
 {
-	qboolean onlyAlpha;
-	trace_t tr;
-	int z, oldLevel;
-
 	/* advance time */
 	p->dt = cls.frametime;
 	p->t = (cl.time - p->startTime) * 0.001f;
@@ -875,7 +871,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* fading */
 	if (p->thinkFade || p->frameFade) {
-		onlyAlpha = (p->blend == BLEND_BLEND);
+		const qboolean onlyAlpha = (p->blend == BLEND_BLEND);
 		if (!onlyAlpha) {
 			Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 		} else
@@ -889,7 +885,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	/* this is useful for particles like weather effects that are on top of
 	 * some other brushes in higher level but should be visible in lower ones */
 	if (p->autohide) {
-		z = (int)p->s[2] / UNIT_HEIGHT;
+		const int z = (int)p->s[2] / UNIT_HEIGHT;
 		if (z > cl_worldlevel->integer) {
 			p->invis = qtrue;
 			return;
@@ -901,8 +897,11 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* basic 'physics' for particles */
 	if (p->physics) {
-		oldLevel = cl_worldlevel->integer;
-		cl_worldlevel->integer = map_maxlevel - 1;
+		trace_t tr;
+		const int oldLevel = cl_worldlevel->integer;
+
+		/* we have to update the worldlevel to let the trace work */
+		cl_worldlevel->integer = cl.map_maxlevel - 1;
 		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
 		cl_worldlevel->integer = oldLevel;
 
