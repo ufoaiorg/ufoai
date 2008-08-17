@@ -409,22 +409,29 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 # ifdef _WIN32
 	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
 	HANDLE hMapFile, hBspFile;
+	int retval = 0;
 	/* open the files */
 	hMapFile = CreateFile(map, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
 	if (hMapFile == INVALID_HANDLE_VALUE)
 		return 0;
 	hBspFile = CreateFile(bsp, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-	if (hBspFile == INVALID_HANDLE_VALUE)
+	if (hBspFile == INVALID_HANDLE_VALUE){
+		CloseHandle(hMapFile);
 		return 0;
+	}
 
-	if (!GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap))
-		return 0;
+	/** This is done as two if statements to ensure that ftWriteMap and ftWriteBsp are populated first. */
+	if (GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap)
+		&& GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp)) {
+		if(CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1) {
+			retval = 1;
+		}
+	}
 
-	if (!GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp))
-		return 0;
+	CloseHandle(hMapFile);
+	CloseHandle(hBspFile);
 
-	if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1)
-		return 1;
+	return retval;
 # endif
 #endif
 	/* not up-to-date - recompile */
