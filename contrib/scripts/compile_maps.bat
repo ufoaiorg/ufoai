@@ -1,9 +1,5 @@
 @echo off
 
-echo "using %NUMBER_OF_PROCESSORS% processors for radiosity calculations"
-
-set ufo2mapparameters=-extra -onlynewer -t %NUMBER_OF_PROCESSORS%
-
 cd ..\..
 
 if NOT EXIST ufo2map.exe (
@@ -11,16 +7,41 @@ if NOT EXIST ufo2map.exe (
 	goto :EOF
 )
 
-if not "%1"=="" (
-	if EXIST base\maps\%1 (
-		set curpath=base\maps\%1
-		) else (
-			echo path "base\maps\%1" not found
-			exit
-			)
+rem defaults
+set curpath=base\maps
+set usecores=%NUMBER_OF_PROCESSORS%
+
+REM loop through args. SHIFT turns %2 into %1 etc
+:Loop
+IF "%1"=="" GOTO Continue
+if EXIST base\maps\%1 (
+	set curpath=base\maps\%1
+) else (
+	if "%1"=="/-t" (
+		set usecores=1
 	) else (
-		set curpath=base\maps
+		if "%1"=="/help" (
+			echo compile_maps [/-t] [/help] [path]
+			echo   /-t    always use -t 1 in call to ufo2map, do not use extra processors
+			rem parentheses need to be escaped with caret
+			echo   /help  print ^(this^) help and exit
+			echo   path   relative to base\maps. eg foo processes *.map in base\maps\foo
+			exit /b
+		) else (
+			echo path "base\maps\%1" not found, %1 argument not understood, try /help
+			exit /b
+		)
 	)
+)
+SHIFT
+GOTO Loop
+:Continue
+
+echo found %NUMBER_OF_PROCESSORS% processors
+echo using %usecores% processors
+echo compiling maps in %curpath%
+
+set ufo2mapparameters=-extra -onlynewer -t %usecores%
 
 for /D %%i in (%curpath%\*) DO (
 	call :compilemap %%i
