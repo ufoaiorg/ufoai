@@ -384,7 +384,7 @@ typedef struct {
 	vec3_t center;
 
 	int		numsurfpt;
-	vec3_t	surfpt[SINGLEMAP];
+	vec3_t	*surfpt;
 
 	vec3_t	modelorg;		/* for origined bmodels */
 
@@ -450,8 +450,6 @@ static void CalcFaceExtents (lightinfo_t *l)
 
 		l->texmins[i] = stmins[i];
 		l->texsize[i] = stmaxs[i] - stmins[i];
-		if (l->texsize[0] * l->texsize[1] > SINGLEMAP)
-			Sys_Error("Surface too large to light %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
 	}
 }
 
@@ -461,7 +459,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 static void CalcFaceVectors (lightinfo_t *l)
 {
 	const dBspTexinfo_t *tex;
-	int i, j, w, h;
+	int i, w, h;
 	vec3_t texnormal;
 	vec_t distscale, dist;
 
@@ -469,8 +467,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 
 	/* convert from float to double */
 	for (i = 0; i < 2; i++)
-		for (j = 0; j < 3; j++)
-			l->worldtotex[i][j] = tex->vecs[i][j];
+		VectorCopy(tex->vecs[i], l->worldtotex[i]);
 
 	/* calculate a normal to the texture axis.  points can be moved along this
 	 * without changing their S/T */
@@ -517,6 +514,9 @@ static void CalcFaceVectors (lightinfo_t *l)
 	h = l->texsize[1] + 1;
 	w = l->texsize[0] + 1;
 	l->numsurfpt = w * h;
+	l->surfpt = malloc(l->numsurfpt * sizeof(*l->surfpt));
+	if (!l->surfpt)
+		Sys_Error("Surface too large to light (%i)", l->numsurfpt * sizeof(*l->surfpt));
 }
 
 /**
@@ -538,7 +538,6 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 
 	h = l->texsize[1] + 1;
 	w = l->texsize[0] + 1;
-	l->numsurfpt = w * h;
 
 	step = 1 << config.lightquant;
 	starts = l->texmins[0] * step;
@@ -1015,7 +1014,7 @@ static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4
 void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
-	lightinfo_t *l;
+	lightinfo_t l[MAX_SAMPLES];
 	float *styletable, lightscale;
 	int i, j, numsamples;
 	patch_t *patch;
@@ -1039,11 +1038,11 @@ void BuildFacelights (unsigned int facenum)
 	else
 		numsamples = 1;
 
-	l = malloc(numsamples * sizeof(*l));
+	memset(l, 0, sizeof(l));
+
 	lightscale = 1.0 / numsamples;
 
 	for (i = 0; i < numsamples; i++) {
-		memset(&l[i], 0, sizeof(l[i]));
 		l[i].surfnum = facenum;
 		l[i].face = f;
 		/* rotate plane */
@@ -1057,8 +1056,9 @@ void BuildFacelights (unsigned int facenum)
 		/* get the origin offset for rotating bmodels */
 		VectorCopy(face_offset[facenum], l[i].modelorg);
 
-		CalcFaceVectors(&l[i]);
 		CalcFaceExtents(&l[i]);
+		/* This function mallocs memory to l[i].surfpt */
+		CalcFaceVectors(&l[i]);
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
 
@@ -1073,14 +1073,20 @@ void BuildFacelights (unsigned int facenum)
 
 	/* add sun light */
 	if (config.compile_for_day) {
-		if (!config.day_sun_intensity)
+		if (!config.day_sun_intensity) {
+			for (i = 0; i < numsamples; i++)
+				free(l[i].surfpt);
 			return;
+		}
 		sun_intensity = config.day_sun_intensity;
 		VectorCopy(config.day_sun_dir, sun_dir);
 		VectorCopy(config.day_sun_color, sun_color);
 	} else {
-		if (!config.night_sun_intensity)
+		if (!config.night_sun_intensity) {
+			for (i = 0; i < numsamples; i++)
+				free(l[i].surfpt);
 			return;
+		}
 		sun_intensity = config.night_sun_intensity;
 		VectorCopy(config.night_sun_dir, sun_dir);
 		VectorCopy(config.night_sun_color, sun_color);
@@ -1105,6 +1111,10 @@ void BuildFacelights (unsigned int facenum)
 			AddSampleToPatch(l[0].surfpt[i], styletable + i * 3, facenum);
 	}
 
+	/* Free the surface pointers for each sample. */
+	for (i = 0; i < numsamples; i++)
+		free(l[i].surfpt);
+
 	/* average up the direct light on each patch for radiosity */
 	for (patch = face_patches[facenum]; patch; patch = patch->next)
 		if (patch->samples)
@@ -1122,8 +1132,6 @@ void BuildFacelights (unsigned int facenum)
 		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
 			VectorAdd(spot, face_patches[facenum]->baselight, spot);
 	}
-
-	free(l);
 }
 
 
