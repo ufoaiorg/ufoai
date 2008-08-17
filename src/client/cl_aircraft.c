@@ -810,9 +810,6 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 	assert(base);
 
-	/* First aircraft in base is default aircraft. */
-	base->aircraftCurrent = 0;
-
 	if (base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy generic aircraft description to individal aircraft in base */
 		/* we do this because every aircraft can have its own parameters */
@@ -844,6 +841,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
+		if (!base->aircraftCurrent)
+			base->aircraftCurrent = aircraft;
 		if (ccs.singleplayer) {
 			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)

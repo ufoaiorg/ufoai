@@ -1199,11 +1199,9 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
 				}
 			}
-			/* this is the aircraft to assign the initial equipment and soldiers to */
-			base->aircraftCurrent = aircraft;
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			const aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
+			aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
 			if (!aircraft)
 				Sys_Error("Could not find craft_inter_stiletto definition");
 			AIR_NewAircraft(base, "craft_inter_stiletto");
