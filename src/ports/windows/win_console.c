@@ -82,6 +82,10 @@ static void Sys_ConsoleLoop (void)
 	}
 }
 
+/**
+ * @brief Handles input for the console window
+ * @returns @c NULL if there is no input in the input box
+ */
 const char *Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
@@ -92,10 +96,14 @@ const char *Sys_ConsoleInput (void)
 	Sys_ConsoleLoop();
 #endif
 
-	if (!sys_console.cmdBuffer[0])
+	/* empty command buffer? */
+	if (sys_console.cmdBuffer[0] == '\0')
 		return NULL;
 
 	Q_strncpyz(buffer, sys_console.cmdBuffer, sizeof(buffer));
+
+	/* now we can clear the cmdBuffer */
+	sys_console.cmdBuffer[0] = '\0';
 
 	return buffer;
 }
