@@ -1,6 +1,8 @@
-echo off
+@echo off
 
-set ufo2mapparameters=-extra -onlynewer
+echo "using %NUMBER_OF_PROCESSORS% processors for radiosity calculations"
+
+set ufo2mapparameters=-extra -onlynewer -t %NUMBER_OF_PROCESSORS%
 
 cd ..\..
 
