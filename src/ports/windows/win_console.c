@@ -71,6 +71,8 @@ int SV_CountPlayers(void);
  */
 static void Sys_ConsoleLoop (void)
 {
+	MSG msg;
+
 	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
 		if (!GetMessage(&msg, NULL, 0, 0))
 			Sys_Quit();
@@ -148,7 +150,6 @@ void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
-	MSG msg;
 
 	CL_Shutdown();
 	Qcommon_Shutdown();
