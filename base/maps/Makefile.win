@@ -2,11 +2,11 @@ MAPSDIR = .
 
 UFO2MAP = ..\..\ufo2map.exe
 
-MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial" | findstr /V "autosave") # Windows version. Excludes "*tutorial*", "*prefab*" and "*autosave*" maps (what about test*?)
+MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial" | findstr /V "autosave") # Windows version. Excludes "*tutorial*", "*prefab*" and "*autosave*" maps
 BSPS = $(MAPSRCS:%.map=%.bsp)
 
-UFO2MAPFLAGS = -extra
-FAST_UFO2MAPFLAGS =
+UFO2MAPFLAGS = -extra -t $(shell echo %NUMBER_OF_PROCESSORS%)
+FAST_UFO2MAPFLAGS = -t $(shell echo %NUMBER_OF_PROCESSORS%)
 ENTS_UFO2MAPFLAGS = -onlyents
 
 all: $(BSPS)
@@ -19,7 +19,7 @@ ents:
 	$(MAKE) -f$(MAKEFILE_LIST) all UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 	
 clean:
-	echo "Deleting all .bsp files in all subdirectories..."
+	@echo "Deleting all .bsp files in all subdirectories..."
 	del /S $(MAPSDIR)\*.bsp
 
 $(BSPS): %.bsp: %.map
