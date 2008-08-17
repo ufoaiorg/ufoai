@@ -85,7 +85,6 @@ static void Sys_ConsoleLoop (void)
 const char *Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
-	MSG msg;
 
 #ifdef DEDICATED_ONLY
 	/* the client console is not visible after init stage and thus this is only
