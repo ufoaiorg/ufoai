@@ -1,6 +1,7 @@
 @echo off
+setlocal
 
-cd ..\..
+pushd ..\..
 
 if NOT EXIST ufo2map.exe (
 	echo Missing ufo2map
@@ -10,6 +11,7 @@ if NOT EXIST ufo2map.exe (
 rem defaults
 set curpath=base\maps
 set usecores=%NUMBER_OF_PROCESSORS%
+set starttime=%TIME%
 
 REM loop through args. SHIFT turns %2 into %1 etc
 :Loop
@@ -48,8 +50,13 @@ for /D %%i in (%curpath%\*) DO (
 )
 	call :compilemap %curpath%
 
-goto :EOF
+echo.
+echo  started at %starttime%
+echo finished at %TIME%
 
+popd
+	
+goto :EOF
 
 :compilemap
 	echo ...found dir "%1"
