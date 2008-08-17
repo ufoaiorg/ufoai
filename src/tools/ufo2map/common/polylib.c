@@ -116,9 +116,9 @@ vec_t WindingArea (winding_t *w)
 		VectorSubtract(w->p[i - 1], w->p[0], d1);
 		VectorSubtract(w->p[i], w->p[0], d2);
 		CrossProduct(d1, d2, cross);
-		total += 0.5 * VectorLength(cross);
+		total += VectorLength(cross);
 	}
-	return total;
+	return total * 0.5f;
 }
 
 /**
