@@ -100,7 +100,6 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	aliensTmp_t *cargo;
 
 	cargo = aircraft->aliencargo;
-	aircraft->alientypes = 0;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse)
