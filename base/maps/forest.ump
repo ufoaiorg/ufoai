@@ -22,7 +22,7 @@ base forest/fr_
 // f: water right-top curve
 
 
-//** drop and crashes tiles 
+//** drop and crashes tiles
 
 tile +drop_firebird
 {
@@ -34,7 +34,7 @@ acd     +a     +a     +a	  acef
 0      abde    abde    abde	  0
 }
 
-tile +áraft_crash_scout
+tile +craft_crash_scout
 {
 4 5
 
@@ -258,7 +258,7 @@ a      +c       a
 //    ,==
 //  . I .
 
-tile +w5 
+tile +w5
 {
 3 3
 
@@ -275,7 +275,7 @@ a      +e       b
 //  .   .
 
 
-tile +w6 
+tile +w6
 {
 3 4
 
