@@ -396,6 +396,8 @@ const char* COM_MacroExpandString(const char *text);
 void COM_Init(void);
 void COM_InitArgv(int argc, const char **argv);
 
+qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, int *pos, int offset);
+
 void Key_Init(void);
 void SCR_EndLoadingPlaque(void);
 

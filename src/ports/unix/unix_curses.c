@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <ncurses.h>
 #include "unix_curses.h"
+#include "../../server/server.h"
 
 #define CURSES_HISTORYSIZE 64
-#define CURSES_LINESIZE 1024
 #define CURSES_SIZE 32768
 
 #define COLOR_DEFAULT 7
@@ -47,7 +47,7 @@ static int inputline;
 static int curses_redraw;
 static int curses_scroll, curses_lastline;
 
-static char input[CURSES_HISTORYSIZE][CURSES_LINESIZE];
+static char input[CURSES_HISTORYSIZE][MAXCMDLINE];
 static int inputpos = 0;
 static char curses_text[CURSES_SIZE];
 
@@ -60,81 +60,6 @@ static int inputInsert = 0;
 static void Curses_Refresh (void)
 {
 	curses_redraw |= 2;
-}
-
-/**
- * @brief Console completion for command and variables
- * @sa Key_CompleteCommand
- * @sa Cmd_CompleteCommand
- * @sa Cvar_CompleteVariable
- */
-static void Curses_ConsoleCompleteCommand (void)
-{
-	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
-	int cntCmd = 0, cntCvar = 0, cntParams = 0;
-	char cmdLine[CURSES_LINESIZE] = "";
-	char cmdBase[CURSES_LINESIZE] = "";
-	qboolean append = qtrue;
-	char *tmp;
-
-	s = input[inputline];
-	if (!*s || *s == ' ')
-		return;
-
-	/* don't try to search a command or cvar if we are already in the
-	 * parameter stage */
-	if (strstr(s, " ")) {
-		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
-		/* remove the last whitespace */
-		cmdLine[strlen(cmdLine) - 1] = '\0';
-
-		tmp = cmdBase;
-		while (*s != ' ')
-			*tmp++ = *s++;
-		/* get rid of the whitespace */
-		s++;
-		/* terminate the string at whitespace position to seperate the cmd */
-		*tmp = '\0';
-
-		/* now strip away that part that is not yet completed */
-		tmp = strrchr(cmdLine, ' ');
-		if (tmp)
-			*tmp = '\0';
-
-		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
-		if (cntParams == 1) {
-			/* append the found parameter */
-			Q_strcat(cmdLine, " ", sizeof(cmdLine));
-			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
-			append = qfalse;
-			use = cmdLine;
-		} else if (cntParams > 1) {
-			append = qfalse;
-			Com_Printf("\n");
-		} else
-			return;
-	} else {
-		cntCmd = Cmd_CompleteCommand(s, &cmd);
-		cntCvar = Cvar_CompleteVariable(s, &cvar);
-
-		if (cntCmd == 1 && !cntCvar)
-			use = cmd;
-		else if (!cntCmd && cntCvar == 1)
-			use = cvar;
-		else
-			Com_Printf("\n");
-	}
-
-	if (use) {
-		Q_strncpyz(input[inputline], use, CURSES_LINESIZE);
-		inputpos = strlen(use);
-		if (append) {
-			input[inputline][inputpos] = ' ';
-			inputpos++;
-		}
-		input[inputline][inputpos] = 0;
-		curses_redraw |= 1;
-	}
 }
 
 /**
@@ -169,7 +94,8 @@ char *Curses_Input (void)
 
 		case '\t':
 		case KEY_STAB:
-			Curses_ConsoleCompleteCommand();
+			if (Com_ConsoleCompleteCommand(input[inputline], input[inputline], MAXCMDLINE, &inputpos, 0))
+				curses_redraw |= 1;
 			break;
 
 		/* Page Down and Page Up - scrolling */
@@ -211,7 +137,7 @@ char *Curses_Input (void)
 			if (*input[(historyline + CURSES_HISTORYSIZE - 1) % CURSES_HISTORYSIZE]) {
 				historyline = (historyline + CURSES_HISTORYSIZE - 1) % CURSES_HISTORYSIZE;
 				inputpos = 0;
-				snprintf(input[inputline], CURSES_LINESIZE - 1, input[historyline]);
+				Com_sprintf(input[inputline], sizeof(input[inputline]), input[historyline]);
 				while (input[inputline][inputpos])
 					inputpos++;
 				curses_redraw |= 1;
@@ -222,7 +148,7 @@ char *Curses_Input (void)
 			if (historyline != inputline) {
 				historyline = (historyline + 1) % CURSES_HISTORYSIZE;
 				inputpos = 0;
-				snprintf(input[inputline], CURSES_LINESIZE - 1, input[historyline]);
+				Com_sprintf(input[inputline], sizeof(input[inputline]), input[historyline]);
 				while (input[inputline][inputpos])
 					inputpos++;
 				curses_redraw |= 1;
@@ -237,7 +163,7 @@ char *Curses_Input (void)
 			break;
 
 		case KEY_RIGHT:
-			if (*input[inputline] && inputpos < CURSES_LINESIZE - 1 && input[inputline][inputpos]) {
+			if (*input[inputline] && inputpos < MAXCMDLINE - 1 && input[inputline][inputpos]) {
 				inputpos++;
 				curses_redraw |= 1;
 			}
@@ -267,7 +193,7 @@ char *Curses_Input (void)
 
 		default:
 			/* Basic character input */
-			if ((key >= ' ') && (key <= '~') && (inputpos < CURSES_LINESIZE - 1)) {
+			if ((key >= ' ') && (key <= '~') && (inputpos < MAXCMDLINE - 1)) {
 				input[inputline][inputpos++] = key;
 				curses_redraw |= 1;
 			}
@@ -332,7 +258,7 @@ static void Curses_DrawInput (void)
 	for (x = 2; x < stdwin->_maxx - 1; x++)
 		mvaddstr(stdwin->_maxy, x, " ");
 
-	mvaddnstr(stdwin->_maxy, 3, input[inputline], stdwin->_maxx - 5 < CURSES_LINESIZE ? stdwin->_maxx - 5 : CURSES_LINESIZE - 1);
+	mvaddnstr(stdwin->_maxy, 3, input[inputline], stdwin->_maxx - 5 < MAXCMDLINE ? stdwin->_maxx - 5 : MAXCMDLINE - 1);
 
 	/* move the cursor to input position */
 	wmove(stdwin, stdwin->_maxy, 3 + inputpos);

@@ -192,85 +192,6 @@ LINE TYPING INTO THE CONSOLE
 */
 
 /**
- * @brief Console completion for command and variables
- * @sa Key_Console
- * @sa Cmd_CompleteCommand
- * @sa Cvar_CompleteVariable
- * @sa Curses_ConsoleCompleteCommand
- */
-static void Key_CompleteCommand (void)
-{
-	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
-	int cntCmd = 0, cntCvar = 0, cntParams = 0;
-	char cmdLine[MAXCMDLINE] = "";
-	char cmdBase[MAXCMDLINE] = "";
-	qboolean append = qtrue;
-	char *tmp;
-
-	s = key_lines[edit_line] + 1;
-	if (*s == '\\' || *s == '/')
-		s++;
-	if (!*s || *s == ' ')
-		return;
-
-	/* don't try to search a command or cvar if we are already in the
-	 * parameter stage */
-	if (strstr(s, " ")) {
-		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
-		/* remove the last whitespace */
-		cmdLine[strlen(cmdLine) - 1] = '\0';
-
-		tmp = cmdBase;
-		while (*s != ' ')
-			*tmp++ = *s++;
-		/* get rid of the whitespace */
-		s++;
-		/* terminate the string at whitespace position to seperate the cmd */
-		*tmp = '\0';
-
-		/* now strip away that part that is not yet completed */
-		tmp = strrchr(cmdLine, ' ');
-		if (tmp)
-			*tmp = '\0';
-
-		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
-		if (cntParams == 1) {
-			/* append the found parameter */
-			Q_strcat(cmdLine, " ", sizeof(cmdLine));
-			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
-			append = qfalse;
-			use = cmdLine;
-		} else if (cntParams > 1) {
-			append = qfalse;
-			Com_Printf("\n");
-		} else
-			return;
-	} else {
-		cntCmd = Cmd_CompleteCommand(s, &cmd);
-		cntCvar = Cvar_CompleteVariable(s, &cvar);
-
-		if (cntCmd == 1 && !cntCvar)
-			use = cmd;
-		else if (!cntCmd && cntCvar == 1)
-			use = cvar;
-		else
-			Com_Printf("\n");
-	}
-
-	if (use) {
-		key_lines[edit_line][1] = '/';
-		Q_strncpyz(key_lines[edit_line] + 2, use, MAXCMDLINE - 2);
-		key_linepos = strlen(use) + 2;
-		if (append) {
-			key_lines[edit_line][key_linepos] = ' ';
-			key_linepos++;
-		}
-		key_lines[edit_line][key_linepos] = 0;
-		return;
-	}
-}
-
-/**
  * @brief Interactive line editing and console scrollback
  * @param[in] key
  */
@@ -335,8 +256,8 @@ static void Key_Console (int key)
 		case 'A':
 			key_linepos = 1;
 			return;
+		/* end of line */
 		case 'E':
-			/* end of line */
 			key_linepos = strlen(key_lines[edit_line]);
 			return;
 		}
@@ -353,7 +274,7 @@ static void Key_Console (int key)
 
 		Cbuf_AddText("\n");
 		Com_Printf("%s\n", key_lines[edit_line]);
-		edit_line = (edit_line + 1) & (MAXKEYLINES-1);
+		edit_line = (edit_line + 1) & (MAXKEYLINES - 1);
 		history_line = edit_line;
 		key_lines[edit_line][0] = ']';
 		/* maybe MAXKEYLINES was reached - we don't want to spawn 'random' strings
@@ -370,11 +291,11 @@ static void Key_Console (int key)
 
 	/* command completion */
 	if (key == K_TAB) {
-		Key_CompleteCommand();
+		Com_ConsoleCompleteCommand(&key_lines[edit_line][1], &key_lines[edit_line][1], MAXCMDLINE, &key_linepos, 1);
 		return;
 	}
 
-	if (key == K_BACKSPACE || ((key == 'h') && (keydown[K_CTRL]))) {
+	if (key == K_BACKSPACE || (key == 'h' && keydown[K_CTRL])) {
 		if (key_linepos > 1) {
 			strcpy(key_lines[edit_line] + key_linepos - 1, key_lines[edit_line] + key_linepos);
 			key_linepos--;
@@ -388,9 +309,9 @@ static void Key_Console (int key)
 		return;
 	}
 
-	if (key == K_UPARROW || key == K_KP_UPARROW || ((tolower(key) == 'p') && keydown[K_CTRL])) {
+	if (key == K_UPARROW || key == K_KP_UPARROW || (tolower(key) == 'p' && keydown[K_CTRL])) {
 		do {
-			history_line = (history_line - 1) & (MAXKEYLINES-1);
+			history_line = (history_line - 1) & (MAXKEYLINES - 1);
 		} while (history_line != edit_line && !key_lines[history_line][1]);
 
 		if (history_line == edit_line)
@@ -399,7 +320,7 @@ static void Key_Console (int key)
 		Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 		key_linepos = strlen(key_lines[edit_line]);
 		return;
-	} else if (key == K_DOWNARROW || key == K_KP_DOWNARROW || ((tolower(key) == 'n') && keydown[K_CTRL])) {
+	} else if (key == K_DOWNARROW || key == K_KP_DOWNARROW || (tolower(key) == 'n' && keydown[K_CTRL])) {
 		if (history_line == edit_line)
 			return;
 		do {
@@ -472,6 +393,7 @@ static void Key_Console (int key)
 		return;
 	}
 
+	/** @todo use isprint here? */
 	if (key < 32 || key > 127)
 		return;					/* non printable */
 
@@ -555,6 +477,8 @@ static void Key_Message (int key)
 		/* cancel the inline cvar editing */
 		switch (msg_mode) {
 		case MSG_IRC:
+			/** @todo Why not use MN_PopMenu directly here? Is there a need to
+			 * execute this in the next frame? And pending command before it? */
 			Cbuf_AddText("mn_pop esc;");
 			/* fall through */
 			Irc_Input_Deactivate();
@@ -566,6 +490,7 @@ static void Key_Message (int key)
 		return;
 	}
 
+	/** @todo use isprint here? */
 	if (key < 32 || key > 127)
 		return;					/* non printable */
 
@@ -636,6 +561,7 @@ const char *Key_KeynumToString (int keynum)
 
 	if (keynum == -1)
 		return "<KEY NOT FOUND>";
+	/** @todo use isprint here? */
 	if (keynum > 32 && keynum < 127) {	/* printable ascii */
 		tinystr[0] = keynum;
 		tinystr[1] = 0;

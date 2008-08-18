@@ -1336,12 +1336,11 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename, sizeof(filename));
-
-						if (strstr(findname, ".ump")) {
-						Com_sprintf(filename, sizeof(filename), "+%s", filename);
-					}
-					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 					fs_numInstalledMaps++;
+					if (strstr(findname, ".ump"))
+						Com_sprintf(fs_maps[fs_numInstalledMaps], MAX_QPATH, "+%s", filename);
+					else
+						Q_strncpyz(fs_maps[fs_numInstalledMaps], filename, MAX_QPATH);
 				}
 			}
 		} else {
@@ -1366,8 +1365,8 @@ void FS_GetMaps (qboolean reset)
 							Mem_Free(dirnames[i]);
 							continue;
 						}
-						Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 						fs_numInstalledMaps++;
+						Q_strncpyz(fs_maps[fs_numInstalledMaps], filename, MAX_QPATH);
 					} else
 						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
 					Mem_Free(dirnames[i]);
@@ -1394,14 +1393,12 @@ void FS_GetMaps (qboolean reset)
 						Mem_Free(dirnames[i]);
 						continue;
 					}
-					Com_sprintf(filename, sizeof(filename), "+%s", filename);
-					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 					fs_numInstalledMaps++;
+					Com_sprintf(fs_maps[fs_numInstalledMaps], MAX_QPATH, "+%s", filename);
 					Mem_Free(dirnames[i]);
 				}
 				Mem_Free(dirnames);
 			}
-
 		}
 	}
 

@@ -526,7 +526,7 @@ static int CL_GetActorNumber (const le_t * le)
  * @brief Returns the character information for an actor in the teamlist.
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
- * @todo We really needs a better way to syn this up.
+ * @todo We really needs a better way to sync this up.
  */
 character_t *CL_GetActorChr (const le_t * le)
 {

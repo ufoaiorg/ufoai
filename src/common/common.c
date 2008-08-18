@@ -497,7 +497,95 @@ const char *COM_MacroExpandString (const char *text)
 		return NULL;
 }
 
-/*======================================================== */
+/**
+ * @brief Console completion for command and variables
+ * @sa Key_CompleteCommand
+ * @sa Cmd_CompleteCommand
+ * @sa Cvar_CompleteVariable
+ * @param[in] s The string to complete
+ * @param[out] target The target buffer of the completed command/cvar
+ * @param[in] bufSize the target buffer size - might not be bigger than MAXCMDLINE
+ * @param[out] pos The position in the buffer after command completion
+ * @param[in] offset The input buffer position to put the completed command to
+ */
+qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, int *pos, int offset)
+{
+	const char *cmd = NULL, *cvar = NULL, *use = NULL;
+	int cntCmd = 0, cntCvar = 0, cntParams = 0;
+	char cmdLine[MAXCMDLINE] = "";
+	char cmdBase[MAXCMDLINE] = "";
+	qboolean append = qtrue;
+	char *tmp;
+
+	if (!s[0] || s[0] == ' ')
+		return qfalse;
+
+	else if (s[0] == '\\' || s[0] == '/') {
+		/* maybe we are using the same buffers - and we want to keep the slashes */
+		if (s == target)
+			offset++;
+		s++;
+	}
+
+	assert(bufSize <= MAXCMDLINE);
+	assert(pos);
+
+	/* don't try to search a command or cvar if we are already in the
+	 * parameter stage */
+	if (strstr(s, " ")) {
+		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
+		/* remove the last whitespace */
+		cmdLine[strlen(cmdLine) - 1] = '\0';
+
+		tmp = cmdBase;
+		while (*s != ' ')
+			*tmp++ = *s++;
+		/* get rid of the whitespace */
+		s++;
+		/* terminate the string at whitespace position to seperate the cmd */
+		*tmp = '\0';
+
+		/* now strip away that part that is not yet completed */
+		tmp = strrchr(cmdLine, ' ');
+		if (tmp)
+			*tmp = '\0';
+
+		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
+		if (cntParams == 1) {
+			/* append the found parameter */
+			Q_strcat(cmdLine, " ", sizeof(cmdLine));
+			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
+			append = qfalse;
+			use = cmdLine;
+		} else if (cntParams > 1) {
+			append = qfalse;
+			Com_Printf("\n");
+		} else
+			return qfalse;
+	} else {
+		cntCmd = Cmd_CompleteCommand(s, &cmd);
+		cntCvar = Cvar_CompleteVariable(s, &cvar);
+
+		if (cntCmd == 1 && !cntCvar)
+			use = cmd;
+		else if (!cntCmd && cntCvar == 1)
+			use = cvar;
+		else
+			Com_Printf("\n");
+	}
+
+	if (use) {
+		Q_strncpyz(&target[offset], use, bufSize - offset);
+		*pos = strlen(target);
+		if (append)
+			target[(*pos)++] = ' ';
+		target[*pos] = '\0';
+
+		return qtrue;
+	}
+
+	return qfalse;
+}
 
 void Com_SetGameType (void)
 {

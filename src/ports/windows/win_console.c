@@ -297,14 +297,26 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 	switch (uMsg) {
 	case WM_CHAR:
 		if (hWnd == sys_console.hWndInput) {
-			if (wParam == VK_RETURN) {
+			switch (wParam) {
+			case VK_RETURN:
 				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
 					SetWindowText(sys_console.hWndInput, "");
 					Com_Printf("]%s\n", sys_console.cmdBuffer);
 				}
-				return 0;	/* Keep it from beeping */
+				break;
+			case VK_TAB:
+				/* command completion */
+				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
+					int inputpos = 0;
+					if (Com_ConsoleCompleteCommand(sys_console.cmdBuffer, sys_console.cmdBuffer, MAXCMDLINE, &inputpos, 0)) {
+						SetWindowText(sys_console.hWndInput, sys_console.cmdBuffer);
+						/* reset again - we don't want to execute yet */
+						sys_console.cmdBuffer[0] = '\0';
+					}
+				}
+				break;
 			}
-			/** @todo add command completion here */
+			return 0;	/* Keep it from beeping */
 		} else if (hWnd == sys_console.hWndOutput)
 			return 0;	/* Read only */
 		break;
