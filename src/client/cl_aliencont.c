@@ -99,12 +99,6 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	le_t *le = NULL;
 	aliensTmp_t *cargo;
 
-	/** @todo Check whether there are already aliens and add the new
-	 * ones without removing the old ones*/
-
-	/* Make sure dropship aliencargo is empty. */
-	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
-
 	cargo = aircraft->aliencargo;
 	aircraft->alientypes = 0;
 
