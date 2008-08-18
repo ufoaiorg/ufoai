@@ -283,17 +283,6 @@ const char* AppPath_get() {
 	return g_strAppPath.c_str();
 }
 
-/// the path to the local rc-dir
-const char* LocalRcPath_get(void) {
-	static CopiedString rc_path;
-	if (rc_path.empty()) {
-		StringOutputStream stream(256);
-		stream << GlobalRadiant().getSettingsPath() << g_pGameDescription->mGameFile.c_str() << "/";
-		rc_path = stream.c_str();
-	}
-	return rc_path.c_str();
-}
-
 /// directory for temp files
 /// NOTE: on *nix this is were we check for .pid
 CopiedString g_strSettingsPath;

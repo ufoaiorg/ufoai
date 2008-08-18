@@ -1277,42 +1277,37 @@ void TextureClipboard_textureSelected(const char* shader) {
 }
 
 class TextureBrowser;
-extern TextureBrowser g_TextureBrowser;
 void TextureBrowser_SetSelectedShader(TextureBrowser& textureBrowser, const char* shader);
 const char* TextureBrowser_GetSelectedShader(TextureBrowser& textureBrowser);
 
 void Scene_copyClosestTexture(SelectionTest& test) {
 	CopiedString shader;
 	if (Scene_getClosestTexture(GlobalSceneGraph(), test, shader, g_faceTextureClipboard.m_projection, g_faceTextureClipboard.m_flags)) {
-		TextureBrowser_SetSelectedShader(g_TextureBrowser, shader.c_str());
+		TextureBrowser_SetSelectedShader(GlobalTextureBrowser(), shader.c_str());
 	}
 }
 
 void Scene_applyClosestTexture(SelectionTest& test) {
 	UndoableCommand command("facePaintTexture");
 
-	Scene_setClosestTexture(GlobalSceneGraph(), test, TextureBrowser_GetSelectedShader(g_TextureBrowser), g_faceTextureClipboard.m_projection, g_faceTextureClipboard.m_flags);
+	Scene_setClosestTexture(GlobalSceneGraph(), test, TextureBrowser_GetSelectedShader(GlobalTextureBrowser()), g_faceTextureClipboard.m_projection, g_faceTextureClipboard.m_flags);
 
 	SceneChangeNotify();
 }
 
-
-
-
-
-void SelectedFaces_copyTexture() {
+void SelectedFaces_copyTexture(void) {
 	if (!g_SelectedFaceInstances.empty()) {
 		Face& face = g_SelectedFaceInstances.last().getFace();
 		face.GetTexdef(g_faceTextureClipboard.m_projection);
 		g_faceTextureClipboard.m_flags = face.getShader().m_flags;
 
-		TextureBrowser_SetSelectedShader(g_TextureBrowser, face.getShader().getShader());
+		TextureBrowser_SetSelectedShader(GlobalTextureBrowser(), face.getShader().getShader());
 	}
 }
 
 void FaceInstance_pasteTexture(FaceInstance& faceInstance) {
 	faceInstance.getFace().SetTexdef(g_faceTextureClipboard.m_projection);
-	faceInstance.getFace().SetShader(TextureBrowser_GetSelectedShader(g_TextureBrowser));
+	faceInstance.getFace().SetShader(TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
 	faceInstance.getFace().SetFlags(g_faceTextureClipboard.m_flags);
 	SceneChangeNotify();
 }

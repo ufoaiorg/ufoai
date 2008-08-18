@@ -86,10 +86,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "shaders.h"
 #include "commands.h"
 
-bool TextureBrowser_showWads() {
-	return !string_empty(g_pGameDescription->getKeyValue("show_wads"));
-}
-
 void TextureBrowser_queueDraw(TextureBrowser& textureBrowser);
 
 bool string_equal_start(const char* string, StringRange start) {
@@ -124,7 +120,6 @@ typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addDirectory>
 namespace {
 bool g_TextureBrowser_shaderlistOnly = false;
 bool g_TextureBrowser_fixedSize = false;
-bool g_TextureBrowser_filterNotex = false;
 }
 
 class DeferredAdjustment {
@@ -189,9 +184,6 @@ typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShaderlistOnly
 void TextureBrowser_fixedSize(const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_fixedSize> TextureBrowserFixedSizeExport;
 
-void TextureBrowser_filterNotex(const BoolImportCallback& importer);
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_filterNotex> TextureBrowserFilterNotexExport;
-
 class TextureBrowser {
 public:
 	int width, height;
@@ -224,7 +216,6 @@ public:
 	ToggleItem m_showshaders_item;
 	ToggleItem m_showshaderlistonly_item;
 	ToggleItem m_fixedsize_item;
-	ToggleItem m_filternotex_item;
 
 	guint m_sizeHandler;
 	guint m_exposeHandler;
@@ -287,7 +278,6 @@ public:
 			m_showshaders_item(TextureBrowserShowShadersExport()),
 			m_showshaderlistonly_item(TextureBrowserShowShaderlistOnlyExport()),
 			m_fixedsize_item(TextureBrowserFixedSizeExport()),
-			m_filternotex_item(TextureBrowserFilterNotexExport()),
 			m_heightChanged(true),
 			m_originInvalid(true),
 			m_scrollAdjustment(TextureBrowser_scrollChanged, this),
@@ -303,29 +293,12 @@ public:
 	}
 };
 
-void(*TextureBrowser_textureSelected)(const char* shader);
+static void (*TextureBrowser_textureSelected)(const char* shader);
 
 
-void TextureBrowser_updateScroll(TextureBrowser& textureBrowser);
+static void TextureBrowser_updateScroll(TextureBrowser& textureBrowser);
 
-
-const char* TextureBrowser_getComonShadersName() {
-	const char* value = g_pGameDescription->getKeyValue("common_shaders_name");
-	if (!string_empty(value)) {
-		return value;
-	}
-	return "Common";
-}
-
-const char* TextureBrowser_getComonShadersDir() {
-	const char* value = g_pGameDescription->getKeyValue("common_shaders_dir");
-	if (!string_empty(value)) {
-		return value;
-	}
-	return "common/";
-}
-
-inline int TextureBrowser_fontHeight(TextureBrowser& textureBrowser) {
+static inline int TextureBrowser_fontHeight(TextureBrowser& textureBrowser) {
 	return GlobalOpenGL().m_fontHeight;
 }
 
@@ -389,13 +362,13 @@ public:
 	int current_x, current_y, current_row;
 };
 
-void Texture_StartPos(TextureLayout& layout) {
+static void Texture_StartPos(TextureLayout& layout) {
 	layout.current_x = 8;
 	layout.current_y = -8;
 	layout.current_row = 0;
 }
 
-void Texture_NextPos(TextureBrowser& textureBrowser, TextureLayout& layout, qtexture_t* current_texture, int *x, int *y) {
+static void Texture_NextPos(TextureBrowser& textureBrowser, TextureLayout& layout, qtexture_t* current_texture, int *x, int *y) {
 	qtexture_t* q = current_texture;
 
 	int nWidth = textureBrowser.getTextureWidth(q);
@@ -420,40 +393,8 @@ void Texture_NextPos(TextureBrowser& textureBrowser, TextureLayout& layout, qtex
 	layout.current_x += 8;
 }
 
-bool TextureSearch_IsShown(const char* name) {
-	std::set<CopiedString>::iterator iter;
-
-	iter = GlobalTextureBrowser().m_found_shaders.find(name);
-
-	if (iter == GlobalTextureBrowser().m_found_shaders.end()) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
-CopiedString g_notex;
-CopiedString g_shadernotex;
-
 // if texture_showinuse jump over non in-use textures
-bool Texture_IsShown(IShader* shader, bool show_shaders, bool hideUnused) {
-	// filter notex / shadernotex images
-	if (g_TextureBrowser_filterNotex && (string_equal(g_notex.c_str(), shader->getTexture()->name) || string_equal(g_shadernotex.c_str(), shader->getTexture()->name))) {
-		return false;
-	}
-
-	if (g_TextureBrowser_currentDirectory == "Untagged") {
-		std::set<CopiedString>::iterator iter;
-
-		iter = GlobalTextureBrowser().m_found_shaders.find(shader->getName());
-
-		if (iter == GlobalTextureBrowser().m_found_shaders.end()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
+static bool Texture_IsShown(IShader* shader, bool show_shaders, bool hideUnused) {
 	if (!shader_equal_prefix(shader->getName(), "textures/"))
 		return false;
 
@@ -595,12 +536,9 @@ bool texture_name_ignore(const char* name) {
 	StringOutputStream strTemp(string_length(name));
 	strTemp << LowerCase(name);
 
-	return strstr(strTemp.c_str(), ".specular") != 0 ||
-	       strstr(strTemp.c_str(), ".glow") != 0 ||
-	       strstr(strTemp.c_str(), ".bump") != 0 ||
-	       strstr(strTemp.c_str(), ".diffuse") != 0 ||
-	       strstr(strTemp.c_str(), ".blend") != 0 ||
-	       strstr(strTemp.c_str(), ".alpha") != 0;
+	/* only show the dummy texture - the other should not be used directly */
+	return strstr(strTemp.c_str(), "tex_terrain") != 0 &&
+	       strstr(strTemp.c_str(), "dummy") == 0;
 }
 
 class LoadShaderVisitor : public Archive::Visitor {
@@ -679,25 +617,18 @@ public:
 };
 
 void TextureBrowser_ShowDirectory(TextureBrowser& textureBrowser, const char* directory) {
-	if (TextureBrowser_showWads()) {
-		Archive* archive = GlobalFileSystem().getArchive(directory);
-		ASSERT_NOTNULL(archive);
-		LoadShaderVisitor visitor;
-		archive->forEachFile(Archive::VisitorFunc(visitor, Archive::eFiles, 0), "textures/");
-	} else {
-		g_TextureBrowser_currentDirectory = directory;
-		TextureBrowser_heightChanged(textureBrowser);
+	g_TextureBrowser_currentDirectory = directory;
+	TextureBrowser_heightChanged(textureBrowser);
 
-		std::size_t shaders_count;
-		GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(directory, shaders_count)));
-		globalOutputStream() << "Showing " << Unsigned(shaders_count) << " shaders.\n";
+	std::size_t shaders_count;
+	GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(directory, shaders_count)));
+	globalOutputStream() << "Showing " << Unsigned(shaders_count) << " shaders.\n";
 
-		// load remaining texture files
-		StringOutputStream dirstring(64);
-		dirstring << "textures/" << directory;
+	// load remaining texture files
+	StringOutputStream dirstring(64);
+	dirstring << "textures/" << directory;
 
-		Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(dirstring.c_str()));
-	}
+	Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(dirstring.c_str()));
 
 	// we'll display the newly loaded textures + all the ones already in use
 	TextureBrowser_SetHideUnused(textureBrowser, false);
@@ -705,7 +636,7 @@ void TextureBrowser_ShowDirectory(TextureBrowser& textureBrowser, const char* di
 	TextureBrowser_updateTitle();
 }
 
-bool TextureBrowser_hideUnused();
+static bool TextureBrowser_hideUnused(void);
 
 void TextureBrowser_hideUnusedExport(const BoolImportCallback& importer) {
 	importer(TextureBrowser_hideUnused());
@@ -727,11 +658,6 @@ void TextureBrowser_fixedSize(const BoolImportCallback& importer) {
 }
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_fixedSize> TextureBrowser_FixedSizeExport;
 
-void TextureBrowser_filterNotex(const BoolImportCallback& importer) {
-	importer(g_TextureBrowser_filterNotex);
-}
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_filterNotex> TextureBrowser_filterNotexExport;
-
 void TextureBrowser_SetHideUnused(TextureBrowser& textureBrowser, bool hideUnused) {
 	if (hideUnused) {
 		textureBrowser.m_hideUnused = true;
@@ -747,7 +673,7 @@ void TextureBrowser_SetHideUnused(TextureBrowser& textureBrowser, bool hideUnuse
 
 void TextureBrowser_ShowStartupShaders(TextureBrowser& textureBrowser) {
 	if (textureBrowser.m_startupShaders == STARTUPSHADERS_COMMON) {
-		TextureBrowser_ShowDirectory(textureBrowser, TextureBrowser_getComonShadersDir());
+		TextureBrowser_ShowDirectory(textureBrowser, "tex_common/");
 	}
 }
 
@@ -1107,7 +1033,7 @@ static void TextureBrowser_verticalScroll(GtkAdjustment *adjustment, TextureBrow
 	textureBrowser->m_scrollAdjustment.value_changed(adjustment->value);
 }
 
-void TextureBrowser_updateScroll(TextureBrowser& textureBrowser) {
+static void TextureBrowser_updateScroll (TextureBrowser& textureBrowser) {
 	if (textureBrowser.m_showTextureScrollbar) {
 		int totalHeight = TextureBrowser_TotalHeight(textureBrowser);
 
@@ -1126,7 +1052,7 @@ void TextureBrowser_updateScroll(TextureBrowser& textureBrowser) {
 	}
 }
 
-gboolean TextureBrowser_size_allocate(GtkWidget* widget, GtkAllocation* allocation, TextureBrowser* textureBrowser) {
+static gboolean TextureBrowser_size_allocate (GtkWidget* widget, GtkAllocation* allocation, TextureBrowser* textureBrowser) {
 	textureBrowser->width = allocation->width;
 	textureBrowser->height = allocation->height;
 	TextureBrowser_heightChanged(*textureBrowser);
@@ -1135,7 +1061,7 @@ gboolean TextureBrowser_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 	return FALSE;
 }
 
-gboolean TextureBrowser_expose(GtkWidget* widget, GdkEventExpose* event, TextureBrowser* textureBrowser) {
+static gboolean TextureBrowser_expose (GtkWidget* widget, GdkEventExpose* event, TextureBrowser* textureBrowser) {
 	if (glwidget_make_current(textureBrowser->m_gl_widget) != FALSE) {
 		GlobalOpenGL_debugAssertNoErrors();
 		TextureBrowser_evaluateHeight(*textureBrowser);
@@ -1146,18 +1072,17 @@ gboolean TextureBrowser_expose(GtkWidget* widget, GdkEventExpose* event, Texture
 	return FALSE;
 }
 
+static TextureBrowser g_TextureBrowser;
 
-TextureBrowser g_TextureBrowser;
-
-TextureBrowser& GlobalTextureBrowser() {
+TextureBrowser& GlobalTextureBrowser (void) {
 	return g_TextureBrowser;
 }
 
-bool TextureBrowser_hideUnused() {
+static bool TextureBrowser_hideUnused (void) {
 	return g_TextureBrowser.m_hideUnused;
 }
 
-void TextureBrowser_ToggleHideUnused() {
+void TextureBrowser_ToggleHideUnused (void) {
 	if (g_TextureBrowser.m_hideUnused) {
 		TextureBrowser_SetHideUnused(g_TextureBrowser, false);
 	} else {
@@ -1165,7 +1090,7 @@ void TextureBrowser_ToggleHideUnused() {
 	}
 }
 
-void TextureGroups_constructTreeModel(TextureGroups groups, GtkTreeStore* store) {
+static void TextureGroups_constructTreeModel (TextureGroups groups, GtkTreeStore* store) {
 	// put the information from the old textures menu into a treeview
 	GtkTreeIter iter, child;
 
@@ -1197,24 +1122,19 @@ void TextureGroups_constructTreeModel(TextureGroups groups, GtkTreeStore* store)
 	}
 }
 
-TextureGroups TextureGroups_constructTreeView() {
+static TextureGroups TextureGroups_constructTreeView (void) {
 	TextureGroups groups;
 
-	if (TextureBrowser_showWads()) {
-		GlobalFileSystem().forEachArchive (TextureGroupsAddWadCaller (groups));
-	} else {
-		// scan texture dirs and pak files only if not restricting to shaderlist
-		if (!g_TextureBrowser_shaderlistOnly) {
-			GlobalFileSystem().forEachDirectory ("textures/", TextureGroupsAddDirectoryCaller(groups));
-		}
-
-		GlobalShaderSystem().foreachShaderName(TextureGroupsAddShaderCaller(groups));
+	// scan texture dirs and pak files only if not restricting to shaderlist
+	if (!g_TextureBrowser_shaderlistOnly) {
+		GlobalFileSystem().forEachDirectory ("textures/", TextureGroupsAddDirectoryCaller(groups));
 	}
+	GlobalShaderSystem().foreachShaderName(TextureGroupsAddShaderCaller(groups));
 
 	return groups;
 }
 
-void TextureBrowser_constructTreeStore() {
+static void TextureBrowser_constructTreeStore (void) {
 	TextureGroups groups = TextureGroups_constructTreeView();
 	GtkTreeStore* store = gtk_tree_store_new(1, G_TYPE_STRING);
 	TextureGroups_constructTreeModel(groups, store);
@@ -1227,7 +1147,7 @@ void TextureBrowser_constructTreeStore() {
 	g_object_unref(G_OBJECT(store));
 }
 
-void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path, GtkTreeViewColumn* col, gpointer userdata) {
+static void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path, GtkTreeViewColumn* col, gpointer userdata) {
 	GtkTreeIter iter;
 
 	GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeview));
@@ -1239,9 +1159,7 @@ void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path, GtkTreeVi
 		gtk_tree_model_get(model, &iter, 0, &buffer, -1);
 		strcpy(dirName, buffer);
 		g_free(buffer);
-
-		if (!TextureBrowser_showWads())
-			strcat(dirName, "/");
+		strcat(dirName, "/");
 
 		ScopeDisableScreenUpdates disableScreenUpdates(dirName, "Loading Textures");
 		TextureBrowser_ShowDirectory(GlobalTextureBrowser (), dirName);
@@ -1249,7 +1167,7 @@ void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path, GtkTreeVi
 	}
 }
 
-void TextureBrowser_createTreeViewTree() {
+static void TextureBrowser_createTreeViewTree (void) {
 	GtkCellRenderer* renderer;
 	g_TextureBrowser.m_treeViewTree = GTK_WIDGET(gtk_tree_view_new());
 	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), FALSE);
@@ -1263,14 +1181,13 @@ void TextureBrowser_createTreeViewTree() {
 	TextureBrowser_constructTreeStore();
 }
 
-GtkMenuItem* TextureBrowser_constructViewMenu(GtkMenu* menu) {
+static GtkMenuItem* TextureBrowser_constructViewMenu (GtkMenu* menu) {
 	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic("_View");
 
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff (menu);
 
 	create_check_menu_item_with_mnemonic(menu, "Hide _Unused", "ShowInUse");
-	create_check_menu_item_with_mnemonic(menu, "Hide Image Missing", "FilterNotex");
 
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, "Show All", "ShowAllTextures");
@@ -1284,7 +1201,7 @@ GtkMenuItem* TextureBrowser_constructViewMenu(GtkMenu* menu) {
 	return textures_menu_item;
 }
 
-GtkMenuItem* TextureBrowser_constructToolsMenu(GtkMenu* menu) {
+static GtkMenuItem* TextureBrowser_constructToolsMenu (GtkMenu* menu) {
 	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic("_Tools");
 
 	if (g_Layout_enableDetachableMenus.m_value)
@@ -1296,28 +1213,7 @@ GtkMenuItem* TextureBrowser_constructToolsMenu(GtkMenu* menu) {
 	return textures_menu_item;
 }
 
-void TextureBrowser_toggleSearchButton() {
-	gint page = gtk_notebook_get_current_page(GTK_NOTEBOOK(g_TextureBrowser.m_tag_notebook));
-
-	if (page == 0) { // tag page
-		gtk_widget_show_all(g_TextureBrowser.m_search_button);
-	} else {
-		gtk_widget_hide_all(g_TextureBrowser.m_search_button);
-	}
-}
-
-void TextureBrowser_SetNotex() {
-	StringOutputStream name(256);
-	name << GlobalRadiant().getAppPath() << "bitmaps/notex.bmp";
-	g_notex = name.c_str();
-
-	name << GlobalRadiant().getAppPath() << "bitmaps/shadernotex.bmp";
-	g_shadernotex = name.c_str();
-}
-
-GtkWidget* TextureBrowser_constructWindow(GtkWindow* toplevel) {
-	TextureBrowser_SetNotex();
-
+GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel) {
 	GlobalShaderSystem().setActiveShadersChangedNotify(ReferenceCaller<TextureBrowser, TextureBrowser_activeShadersChanged>(g_TextureBrowser));
 
 	g_TextureBrowser.m_parent = toplevel;
@@ -1393,7 +1289,7 @@ GtkWidget* TextureBrowser_constructWindow(GtkWindow* toplevel) {
 	return table;
 }
 
-void TextureBrowser_destroyWindow() {
+void TextureBrowser_destroyWindow (void) {
 	GlobalShaderSystem().setActiveShadersChangedNotify(Callback());
 
 	g_signal_handler_disconnect(G_OBJECT(g_TextureBrowser.m_gl_widget), g_TextureBrowser.m_sizeHandler);
@@ -1411,7 +1307,7 @@ void TextureBrowser_setBackgroundColour(TextureBrowser& textureBrowser, const Ve
 	TextureBrowser_queueDraw(textureBrowser);
 }
 
-void TextureBrowser_shaderInfo() {
+void TextureBrowser_shaderInfo(void) {
 	const char* name = TextureBrowser_GetSelectedShader(g_TextureBrowser);
 	IShader* shader = QERApp_Shader_ForName(name);
 
@@ -1420,40 +1316,34 @@ void TextureBrowser_shaderInfo() {
 	shader->DecRef();
 }
 
-void RefreshShaders() {
+void RefreshShaders(void) {
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Shaders");
 	GlobalShaderSystem().refresh();
 	UpdateAllWindows();
 }
 
-void TextureBrowser_ToggleShowShaders() {
+void TextureBrowser_ToggleShowShaders(void) {
 	g_TextureBrowser.m_showShaders ^= 1;
 	g_TextureBrowser.m_showshaders_item.update();
 	TextureBrowser_queueDraw(g_TextureBrowser);
 }
 
-void TextureBrowser_ToggleShowShaderListOnly() {
+void TextureBrowser_ToggleShowShaderListOnly(void) {
 	g_TextureBrowser_shaderlistOnly ^= 1;
 	g_TextureBrowser.m_showshaderlistonly_item.update();
 
 	TextureBrowser_constructTreeStore();
 }
 
-void TextureBrowser_showAll() {
+void TextureBrowser_showAll(void) {
 	g_TextureBrowser_currentDirectory = "";
 	TextureBrowser_heightChanged(g_TextureBrowser);
 	TextureBrowser_updateTitle();
 }
 
-void TextureBrowser_FixedSize() {
+void TextureBrowser_FixedSize(void) {
 	g_TextureBrowser_fixedSize ^= 1;
 	GlobalTextureBrowser().m_fixedsize_item.update();
-	TextureBrowser_activeShadersChanged(GlobalTextureBrowser());
-}
-
-void TextureBrowser_FilterNotex() {
-	g_TextureBrowser_filterNotex ^= 1;
-	GlobalTextureBrowser().m_filternotex_item.update();
 	TextureBrowser_activeShadersChanged(GlobalTextureBrowser());
 }
 
@@ -1469,7 +1359,7 @@ void TextureBrowser_exportTitle(const StringImportCallback& importer) {
 }
 
 
-void TextureScaleImport(TextureBrowser& textureBrowser, int value) {
+void TextureScaleImport (TextureBrowser& textureBrowser, int value) {
 	switch (value) {
 	case 0:
 		TextureBrowser_setScale(textureBrowser, 10);
@@ -1490,7 +1380,7 @@ void TextureScaleImport(TextureBrowser& textureBrowser, int value) {
 }
 typedef ReferenceCaller1<TextureBrowser, int, TextureScaleImport> TextureScaleImportCaller;
 
-void TextureScaleExport(TextureBrowser& textureBrowser, const IntImportCallback& importer) {
+void TextureScaleExport (TextureBrowser& textureBrowser, const IntImportCallback& importer) {
 	switch (textureBrowser.m_textureScale) {
 	case 10:
 		importer(0);
@@ -1511,7 +1401,7 @@ void TextureScaleExport(TextureBrowser& textureBrowser, const IntImportCallback&
 }
 typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureScaleExport> TextureScaleExportCaller;
 
-void TextureBrowser_constructPreferences(PreferencesPage& page) {
+static void TextureBrowser_constructPreferences (PreferencesPage& page) {
 	page.appendCheckBox(
 	    "", "Texture scrollbar",
 	    TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser()),
@@ -1528,15 +1418,17 @@ void TextureBrowser_constructPreferences(PreferencesPage& page) {
 	}
 	page.appendEntry("Mousewheel Increment", GlobalTextureBrowser().m_mouseWheelScrollIncrement);
 	{
-		const char* startup_shaders[] = { "None", TextureBrowser_getComonShadersName() };
+		const char* startup_shaders[] = { "None", "Common" };
 		page.appendCombo("Load Shaders at Startup", reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders), STRING_ARRAY_RANGE(startup_shaders));
 	}
 }
-void TextureBrowser_constructPage(PreferenceGroup& group) {
+
+void TextureBrowser_constructPage (PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Texture Browser", "Texture Browser Preferences"));
 	TextureBrowser_constructPreferences(page);
 }
-void TextureBrowser_registerPreferencesPage() {
+
+static void TextureBrowser_registerPreferencesPage (void) {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, TextureBrowser_constructPage>());
 }
 
@@ -1550,7 +1442,7 @@ typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> T
 
 void TextureClipboard_textureSelected(const char* shader);
 
-void TextureBrowser_Construct() {
+void TextureBrowser_Construct (void) {
 	GlobalCommands_insert("ShaderInfo", FreeCaller<TextureBrowser_shaderInfo>());
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders>());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_hideunused_item), Accelerator('U'));
@@ -1559,7 +1451,6 @@ void TextureBrowser_Construct() {
 	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaders_item));
 	GlobalToggles_insert("ToggleShowShaderlistOnly", FreeCaller<TextureBrowser_ToggleShowShaderListOnly>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaderlistonly_item));
 	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_fixedsize_item));
-	GlobalToggles_insert("FilterNotex", FreeCaller<TextureBrowser_FilterNotex>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_filternotex_item));
 
 	GlobalPreferenceSystem().registerPreference("TextureScale",
 	        makeSizeStringImportCallback(TextureBrowserSetScaleCaller(g_TextureBrowser)),
@@ -1572,7 +1463,6 @@ void TextureBrowser_Construct() {
 	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(GlobalTextureBrowser().m_showShaders));
 	GlobalPreferenceSystem().registerPreference("ShowShaderlistOnly", BoolImportStringCaller(g_TextureBrowser_shaderlistOnly), BoolExportStringCaller(g_TextureBrowser_shaderlistOnly));
 	GlobalPreferenceSystem().registerPreference("FixedSize", BoolImportStringCaller(g_TextureBrowser_fixedSize), BoolExportStringCaller(g_TextureBrowser_fixedSize));
-	GlobalPreferenceSystem().registerPreference("FilterNotex", BoolImportStringCaller(g_TextureBrowser_filterNotex), BoolExportStringCaller(g_TextureBrowser_filterNotex));
 	GlobalPreferenceSystem().registerPreference("LoadShaders", IntImportStringCaller(reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders)), IntExportStringCaller(reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders)));
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement));
 	GlobalPreferenceSystem().registerPreference("SI_Colors0", Vector3ImportStringCaller(GlobalTextureBrowser().color_textureback), Vector3ExportStringCaller(GlobalTextureBrowser().color_textureback));
@@ -1587,7 +1477,8 @@ void TextureBrowser_Construct() {
 
 	TextureBrowser_textureSelected = TextureClipboard_textureSelected;
 }
-void TextureBrowser_Destroy() {
+
+void TextureBrowser_Destroy (void) {
 	GlobalShaderSystem().detach(g_ShadersObserver);
 
 	Textures_setModeChangedNotify(Callback());

@@ -662,7 +662,7 @@ public:
 
 			{
 				StringOutputStream name(256);
-				name << GlobalRadiant().getAppPath() << "bitmaps/" << (IsDefault() ? "notex.bmp" : "shadernotex.bmp");
+				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "textures/tex_common/nodraw";
 				m_pTexture = GlobalTexturesCache().capture(LoadImageCallback(0, loadBitmap), name.c_str());
 			}
 		}
