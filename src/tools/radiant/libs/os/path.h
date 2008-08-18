@@ -236,7 +236,7 @@ TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const Directo
 			ostream << *i;
 		}
 	}
-	char c = *(i - 1);
+	const char c = *(i - 1);
 	if (c != '/' && c != '\\') {
 		ostream << '/';
 	}

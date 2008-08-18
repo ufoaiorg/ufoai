@@ -74,7 +74,7 @@ const char* environment_get_app_path() {
 
 #include <glib/gutils.h>
 
-const char* LINK_NAME =
+static const char* LINK_NAME =
 #if defined (__linux__)
     "/proc/self/exe"
 #else // FreeBSD and OSX
@@ -82,7 +82,7 @@ const char* LINK_NAME =
 #endif
     ;
 
-/// brief Returns the filename of the executable belonging to the current process, or 0 if not found.
+/// \brief Returns the filename of the executable belonging to the current process, or 0 if not found.
 static const char* getexename(char *buf) {
 	/* Now read the symbolic link */
 	int ret = readlink(LINK_NAME, buf, PATH_MAX);

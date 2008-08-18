@@ -2791,6 +2791,7 @@ void MainFrame_Construct() {
 		/// @todo this should not be used - radiant is installed in the ufo dir
 		/// get the exe path (we have a function for this already) and substract
 		/// the radiant dir to get the engine path
+		/// @todo Also use PKGDATADIR
 		const char* ENGINEPATH_ATTRIBUTE =
 #if defined(WIN32)
 		    "enginepath_win32"
