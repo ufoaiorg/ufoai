@@ -917,7 +917,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
 
 	/* parse it */
-	text = (char*)buf;
+	text = (const char*)buf;
 	numTiles = 0;
 	numAssemblies = 0;
 	basePath[0] = 0;
