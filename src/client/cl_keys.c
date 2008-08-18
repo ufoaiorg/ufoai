@@ -291,7 +291,7 @@ static void Key_Console (int key)
 
 	/* command completion */
 	if (key == K_TAB) {
-		Com_ConsoleCompleteCommand(&key_lines[edit_line][1], &key_lines[edit_line][1], MAXCMDLINE, &key_linepos, 1);
+		Com_ConsoleCompleteCommand(&key_lines[edit_line][1], key_lines[edit_line], MAXCMDLINE, &key_linepos, 1);
 		return;
 	}
 
