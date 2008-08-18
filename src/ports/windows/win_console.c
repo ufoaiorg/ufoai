@@ -303,7 +303,8 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 					SetWindowText(sys_console.hWndInput, "");
 					Com_Printf("]%s\n", sys_console.cmdBuffer);
 				}
-				break;
+				/* Keep it from beeping */
+				return 0;
 			case VK_TAB:
 				/* command completion */
 				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
@@ -314,9 +315,9 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 						sys_console.cmdBuffer[0] = '\0';
 					}
 				}
-				break;
+				/* Keep it from beeping */
+				return 0;
 			}
-			return 0;	/* Keep it from beeping */
 		} else if (hWnd == sys_console.hWndOutput)
 			return 0;	/* Read only */
 		break;
