@@ -3779,27 +3779,22 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_Write2Pos(sb, aircraft->route.point[l]);
 			MSG_WriteShort(sb, aircraft->alientypes);
 			MSG_WriteShort(sb, aircraft->itemtypes);
-			/* Save only needed if aircraft returns from a mission. */
-			switch (aircraft->status) {
-			case AIR_RETURNING:
-				/* aliencargo */
-				for (l = 0; l < aircraft->alientypes; l++) {
-					assert(aircraft->aliencargo[l].teamDef);
-					MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->id);
-					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
-					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
-				}
-				/* itemcargo */
-				for (l = 0; l < aircraft->itemtypes; l++) {
-					assert(aircraft->itemcargo[l].item);
-					MSG_WriteString(sb, aircraft->itemcargo[l].item->id);
-					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
-				}
-				break;
-			case AIR_MISSION:
+			/* aliencargo */
+			for (l = 0; l < aircraft->alientypes; l++) {
+				assert(aircraft->aliencargo[l].teamDef);
+				MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->id);
+				MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
+				MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
+			}
+			/* itemcargo */
+			for (l = 0; l < aircraft->itemtypes; l++) {
+				assert(aircraft->itemcargo[l].item);
+				MSG_WriteString(sb, aircraft->itemcargo[l].item->id);
+				MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
+			}
+			if (aircraft->status == AIR_MISSION) {
 				assert(aircraft->mission);
 				MSG_WriteString(sb, aircraft->mission->id);
-				break;
 			}
 			MSG_WritePos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++) {
@@ -4081,36 +4076,30 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->route.distance = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.numPoints; l++)
 				MSG_Read2Pos(sb, aircraft->route.point[l]);
-			/* Load only needed if aircraft returns from a mission. */
 			aircraft->alientypes = MSG_ReadShort(sb);
 			aircraft->itemtypes = MSG_ReadShort(sb);
-			switch (aircraft->status) {
-			case AIR_RETURNING:
-				/* aliencargo */
-				for (l = 0; l < aircraft->alientypes; l++) {
-					aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
-					if (!aircraft->aliencargo[l].teamDef)
-						return qfalse;
-					aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
-					aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
-				}
-				/* itemcargo */
-				for (l = 0; l < aircraft->itemtypes; l++) {
-					const char *const s = MSG_ReadString(sb);
-					const objDef_t *od = INVSH_GetItemByID(s);
-					if (!od) {
-						Com_Printf("B_Load: Could not find aircraftitem '%s'\n", s);
-						MSG_ReadShort(sb);
-					} else {
-						aircraft->itemcargo[l].item = od;
-						aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
-					}
-				}
-				break;
-			case AIR_MISSION:
-				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
-				break;
+			/* aliencargo */
+			for (l = 0; l < aircraft->alientypes; l++) {
+				aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+				if (!aircraft->aliencargo[l].teamDef)
+					return qfalse;
+				aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
+				aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
 			}
+			/* itemcargo */
+			for (l = 0; l < aircraft->itemtypes; l++) {
+				const char *const s = MSG_ReadString(sb);
+				const objDef_t *od = INVSH_GetItemByID(s);
+				if (!od) {
+					Com_Printf("B_Load: Could not find aircraftitem '%s'\n", s);
+					MSG_ReadShort(sb);
+				} else {
+					aircraft->itemcargo[l].item = od;
+					aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
+				}
+			}
+			if (aircraft->status == AIR_MISSION)
+				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
 				aircraft->stats[l] = MSG_ReadLong(sb);
