@@ -1093,6 +1093,12 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions");
 				sh[i] = atoi(token);
 			}
+			if (sh[0] <= -(PATHFINDING_WIDTH / 2) || sh[0] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "CM_LoadMap: invalid x position given: %i\n", sh[0]);
+			if (sh[1] <= -(PATHFINDING_WIDTH / 2) || sh[1] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
+			if (sh[2] >= PATHFINDING_HEIGHT)
+				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
 			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */

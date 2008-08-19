@@ -939,6 +939,12 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
+			if (sh[0] <= -(PATHFINDING_WIDTH / 2) || sh[0] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid x position given: %i\n", sh[0]);
+			if (sh[1] <= -(PATHFINDING_WIDTH / 2) || sh[1] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid y position given: %i\n", sh[1]);
+			if (sh[2] >= PATHFINDING_HEIGHT)
+				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid z position given: %i\n", sh[2]);
 			R_ModAddMapTile(name, day, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */
