@@ -93,7 +93,6 @@ typedef struct {
 	float time;			/**< seconds the game is running already
 						 * calculated through framenum * SERVER_FRAME_SECONDS */
 
-	char level_name[MAX_QPATH];	/**< the descriptive name (Outer Base, etc) */
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
 	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
 	qboolean routed;
@@ -528,7 +527,7 @@ struct edict_s {
 
 	/** delayed reaction fire */
 	edict_t *reactionTarget;
-	float	reactionTUs;
+	float reactionTUs;
 	qboolean reactionNoDraw;
 
 	/** client actions - interact with the world */
@@ -553,7 +552,6 @@ struct edict_s {
 	int speed;	/**< speed of entities - e.g. rotating or actors */
 	const char *target;	/**< name of the entity to trigger or move towards */
 	const char *targetname;	/**< name pointed to by target */
-	const char *message;	/**< message when entity is activated - set via mapeditor */
 	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
 	float wait;		/**< time to wait before platform moves to the next point on its path */

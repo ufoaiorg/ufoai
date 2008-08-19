@@ -975,7 +975,6 @@ static void SP_dummy (edict_t *ent)
  *
  * Only used for the world.
  * "sounds"	music cd track number
- * "message"	text to print at user logon
  * "maxlevel"	max. level to use in the map
  * "maxteams"	max team amount for multiplayergames for the current map
  */
@@ -988,13 +987,6 @@ static void SP_worldspawn (edict_t *ent)
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
-
-	/* make some data visible to the server */
-	if (ent->message && ent->message[0]) {
-		gi.ConfigString(CS_NAME, ent->message);
-		Q_strncpyz(level.level_name, ent->message, sizeof(level.level_name));
-	} else
-		Q_strncpyz(level.level_name, level.mapname, sizeof(level.level_name));
 
 	gi.ConfigString(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 
