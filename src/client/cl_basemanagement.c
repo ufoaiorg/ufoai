@@ -935,7 +935,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_SMALL_HANGAR:
 			if (base->capacities[cap].cur >= base->capacities[cap].max) {
 				MN_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
-					"mn_pop;building_open;", _("Go to hangar"), _("Go to hangar without destroying building"),
+					"mn_pop;mn_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
@@ -945,7 +945,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_QUARTERS:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;building_open;", _("Dismiss"), _("Go to hiring menu without destroying building"),
+					"mn_pop;mn_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
@@ -955,7 +955,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_STORAGE:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				MN_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;building_open;", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
+					"mn_pop;mn_push buy;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
