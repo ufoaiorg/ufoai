@@ -111,6 +111,10 @@ static const field_t fields[] = {
 	{"sounds", offsetof(edict_t, sounds), F_INT, 0},
 	{"material", offsetof(edict_t, material), F_INT, 0},
 	{"light", 0, F_IGNORE, 0},
+	/** @todo This (maxteams) should also be handled server side - currently this is
+	 * only done client side */
+	{"maxteams", 0, F_IGNORE, 0},
+	{"maxlevel", 0, F_IGNORE, 0},
 	{"dmg", offsetof(edict_t, dmg), F_INT, 0},
 	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
 	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
@@ -257,7 +261,8 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		if (keyname[0] == '_')
 			continue;
 
-		Com_DPrintf(DEBUG_GAME, "Entity:%i class:%s key:%s\n", ent->number, ent->classname, keyname);
+		Com_DPrintf(DEBUG_GAME, "Entity:%i class:%s key:%s\n",
+			ent->number, ent->classname, keyname);
 
 		ED_ParseField(keyname, com_token, ent);
 
@@ -363,7 +368,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 		entities = ED_ParseEdict(entities, ent);
 
 		Com_DPrintf(DEBUG_GAME, "entity: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
-			ent->model, ent->mapNum, ent->solid,
+			ent->model ? ent->model : "", ent->mapNum, ent->solid,
 			(int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
 			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
 			(int)ent->absmin[0], (int)ent->absmin[1], (int)ent->absmin[2],
@@ -979,6 +984,7 @@ static void SP_worldspawn (edict_t *ent)
 	ent->solid = SOLID_BSP;
 	/* since the world doesn't use G_Spawn() */
 	ent->inuse = qtrue;
+	ent->classname = "worldspawn";
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
