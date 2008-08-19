@@ -222,7 +222,7 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
  * @sa ProcessWorldModel
  * @sa ConstructLevelNodes_r
  */
-int ProcessLevel (unsigned int levelnum)
+void ProcessLevel (unsigned int levelnum)
 {
 	vec3_t mins, maxs;
 	dBspModel_t *dm;
@@ -256,6 +256,4 @@ int ProcessLevel (unsigned int levelnum)
 /*	if (!dm->numfaces)
 		Com_Printf("level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces);
 */
-
-	return 0;
 }

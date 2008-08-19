@@ -123,7 +123,7 @@ typedef struct mapConfig_s {
 extern mapConfig_t config;
 extern char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
-void U2M_ProgressBar(int (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
+void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
 
 #include "../../../common/qfiles.h"
 

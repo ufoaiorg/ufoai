@@ -95,7 +95,7 @@ dBspLeaf_t *Rad_PointInLeaf (vec3_t point)
 
 
 static int total_transfer;
-static int MakeTransfers (unsigned int i)
+static void MakeTransfers (unsigned int i)
 {
 	unsigned int			j;
 	vec3_t		delta;
@@ -192,8 +192,6 @@ static int MakeTransfers (unsigned int i)
 
 	/* don't bother locking around this.  not that important. */
 	total_transfer += patch->numtransfers;
-
-	return 0;
 }
 
 
@@ -233,7 +231,7 @@ static float CollectLight (void)
 /**
  * @brief Send light out to other patches
  */
-static int ShootLight (unsigned int patchnum)
+static void ShootLight (unsigned int patchnum)
 {
 	int			k, l;
 	transfer_t	*trans;
@@ -255,8 +253,6 @@ static int ShootLight (unsigned int patchnum)
 		for (l = 0; l < 3; l++)
 			illumination[trans->patch][l] += send[l] * trans->transfer;
 	}
-
-	return 0;
 }
 
 static void BounceLight (void)
