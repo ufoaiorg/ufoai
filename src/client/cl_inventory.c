@@ -185,9 +185,14 @@ void INV_CollectingItems (int won)
 	invList_t *item;
 	itemsTmp_t *cargo;
 	aircraft_t *aircraft;
+	itemsTmp_t previtemcargo[MAX_CARGO];
+	int previtemtypes;
 
 	aircraft = cls.missionaircraft;
 
+	/* Save previous cargo */
+	memcpy(previtemcargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
+	previtemtypes = aircraft->itemtypes;
 	/* Make sure itemcargo is empty. */
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 
@@ -284,6 +289,20 @@ void INV_CollectingItems (int won)
 			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
 	}
 #endif
+
+	/* Put previous cargo back */
+	for (i = 0; i < previtemtypes; i++) {
+		for (j = 0; j < aircraft->itemtypes; j++) {
+			if (cargo[j].item == previtemcargo[i].item) {
+				cargo[j].amount += previtemcargo[i].amount;
+				break;
+			}
+		}
+		if (j == aircraft->itemtypes) {
+			cargo[j] = previtemcargo[i];
+			aircraft->itemtypes++;
+		}
+	}
 }
 
 /**
