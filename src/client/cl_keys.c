@@ -903,25 +903,28 @@ void Key_Event (int key, qboolean down, unsigned time)
 	/* track if any key is down for BUTTON_ANY */
 	keydown[key] = down;
 	if (!down) {
+		int i;
 		/* key up events only generate commands if the game key binding is
 		 * a button command (leading + sign).  These will occur even in console mode,
 		 * to keep the character from continuing an action started before a console
 		 * switch.  Button commands include the kenum as a parameter, so multiple
 		 * downs can be matched with ups */
-		if (mouseSpace == MS_MENU)
-			kb = menukeybindings[key];
-		if (!kb)
+		kb = menukeybindings[key];
+		/* this loop ensures, that every down event reaches it's proper kbutton_t */
+		for (i = 0; i < 2; i++) {
+			if (kb && kb[0] == '+') {
+				/* '-' means we have released the key
+				* the key number is used to determine whether the kbutton_t is really
+				* released or whether any other bound key will still ensure that the
+				* kbutton_t is pressed
+				* the time is the msec value when the key was released */
+				Com_Printf("-%s %i %i\n", kb + 1, key, time);
+				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
+				Cbuf_AddText(cmd);
+			}
 			kb = keybindings[key];
-		if (kb && kb[0] == '+') {
-			/* '-' means we have released the key
-			 * the key number is used to determine whether the kbutton_t is really
-			 * released or whether any other bound key will still ensure that the
-			 * kbutton_t is pressed
-			 * the time is the msec value when the key was released */
-			Com_Printf("-%s %i %i\n", kb + 1, key, time);
-			Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
-			Cbuf_AddText(cmd);
-		}
+		};
+
 		return;
 	}
 
