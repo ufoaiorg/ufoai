@@ -50,10 +50,11 @@ typedef enum {
 } messagetype_t;
 
 /** @brief also used for chat message buffer */
-#define MAX_MESSAGE_TEXT 1024
+#define MAX_MESSAGE_TEXT 256
 #define TIMESTAMP_TEXT 21
 typedef struct message_s {
 	char title[MAX_VAR];
+	char timestamp[TIMESTAMP_TEXT];
 	char *text;
 	messagetype_t type;
 	struct technology_s *pedia;		/**< link to UFOpaedia if a research has finished. */
@@ -71,8 +72,6 @@ typedef struct chatMessage_s {
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 void MN_RemoveMessage(const char *title);
 void MN_AddChatMessage(const char *text);
-void MN_TimestampedText(char *text, message_t *message, size_t textsize);
-
 void MN_MessageInit(void);
 
 #endif

@@ -1242,7 +1242,6 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
 	while ((string != NULL) && (list != NULL)) {
 		if (!Q_strcmp((const char*)list->data, string))
 			return list;
-			/* Com_Printf("%.0f: %.0f\n", (float)list->data[0], (float)list->data[1]); */
 		list = list->next;
 	}
 
@@ -1375,9 +1374,9 @@ void LIST_Delete (linkedList_t **list)
  * @sa LIST_Add
  * @sa LIST_Remove
  */
-int LIST_Count (linkedList_t *list)
+int LIST_Count (const linkedList_t *list)
 {
-	linkedList_t *l = list;
+	const linkedList_t *l = list;
 	int count = 0;
 
 	while (l) {

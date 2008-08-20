@@ -220,21 +220,15 @@ void MN_DrawMenus (void)
 						message = mn.messageStack;
 						while (message) {
 							/* get formatted date text */
-							MN_TimestampedText(text, message, sizeof(text));
-							Q_strcat(text, message->text, sizeof(text));
-							for (i = 0; i < (sizeof(text) - 1); i++){
-								if (text[i] == '\n'){
-									text[i] = '\0';
-									break;
-								}
-							}
+							Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
 							/* Make a list */
 							LIST_Add(&messagelist, (byte*) text, sizeof(text));
 							message = message->next;
 						}
-						assert(messagelist);
-						MN_DrawTextNode(NULL, messagelist, font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
-						LIST_Delete(&messagelist);
+						if (messagelist) {
+							MN_DrawTextNode(NULL, messagelist, font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+							LIST_Delete(&messagelist);
+						}
 					}
 					break;
 

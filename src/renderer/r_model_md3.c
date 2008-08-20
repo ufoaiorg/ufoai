@@ -197,8 +197,8 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 				lat = (pinvert->norm >> 8) & 0xff;
 				lng = (pinvert->norm & 0xff);
 
-				lat *= M_PI / 128;
-				lng *= M_PI / 128;
+				lat *= M_PI / 128.0f;
+				lng *= M_PI / 128.0f;
 
 				poutvert->normal[0] = cos(lat) * sin(lng);
 				poutvert->normal[1] = sin(lat) * sin(lng);
