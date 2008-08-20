@@ -115,6 +115,9 @@
 		<Unit filename="..\..\src\tools\radiant\plugins\entity\light.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\plugins\entity\skincache.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\entity\targetable.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

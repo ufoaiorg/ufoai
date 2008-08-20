@@ -130,6 +130,7 @@ RADIANT_PLUGIN_ENTITY_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/entity/miscparticle.cpp \
 	$(RADIANT_BASE)/plugins/entity/filters.cpp \
 	$(RADIANT_BASE)/plugins/entity/light.cpp \
+	$(RADIANT_BASE)/plugins/entity/skincache.cpp \
 	$(RADIANT_BASE)/plugins/entity/targetable.cpp
 
 RADIANT_PLUGIN_ENTITY_CPP_OBJS=$(RADIANT_PLUGIN_ENTITY_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)

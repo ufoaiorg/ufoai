@@ -35,10 +35,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "preferencesystem.h"
 #include "qerplugin.h"
 #include "namespace.h"
+#include "modelskin.h"
 
 #include "typesystem.h"
 
 #include "entity.h"
+#include "skincache.h"
 
 #include "modulesystem/singletonmodule.h"
 
@@ -52,7 +54,8 @@ class EntityDependencies :
 			public GlobalReferenceModuleRef,
 			public GlobalFilterModuleRef,
 			public GlobalPreferenceSystemModuleRef,
-			public GlobalNamespaceModuleRef {
+			public GlobalNamespaceModuleRef,
+			public GlobalModelSkinCacheModuleRef {
 };
 
 class EntityQ3API : public TypeSystemRef {
@@ -84,4 +87,5 @@ extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) 
 	initialiseModule(server);
 
 	g_EntityQ3Module.selfRegister();
+	UFOModelSkinCacheModule_selfRegister(server);
 }
