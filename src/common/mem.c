@@ -176,7 +176,6 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	memBlock_t **prev;
 	uint32_t size;
 
-	assert(ptr);
 	if (!ptr)
 		return 0;
 
