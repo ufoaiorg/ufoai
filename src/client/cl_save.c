@@ -430,10 +430,18 @@ static void SAV_GameReadGameComments_f (void)
 static void SAV_GameLoad_f (void)
 {
 	char *error = NULL;
+	const cvar_t *gamedesc;
 
 	/* get argument */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* try to get game description from "mn_<filename>" as indicator whether file will exist */
+	gamedesc = Cvar_FindVar(va("mn_%s",Cmd_Argv(1)));
+	if (!gamedesc || gamedesc->string[0] == '\0') {
+		Com_DPrintf(DEBUG_CLIENT, "don't load file '%s', there is no description for it\n", Cmd_Argv(1));
 		return;
 	}
 
