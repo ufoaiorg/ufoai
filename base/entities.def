@@ -42,7 +42,7 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]),
 /*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 noday
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
-'+' do it afterwards
+'+' does it afterwards
 noday means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlight.
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
 "particle"	name of the particle definition
