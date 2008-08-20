@@ -220,7 +220,14 @@ void MN_DrawMenus (void)
 						message = mn.messageStack;
 						while (message) {
 							/* get formatted date text */
+							/** @todo this is not utf-8 safe - but the messages are already translated */
 							Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
+							for (i = 0; i < (sizeof(text) - 1); i++) {
+								if (text[i] == '\n') {
+									text[i] = '\0';
+									break;
+								}
+							}
 							/* Make a list */
 							LIST_Add(&messagelist, (byte*) text, sizeof(text));
 							message = message->next;
