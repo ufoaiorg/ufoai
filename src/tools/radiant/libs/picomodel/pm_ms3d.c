@@ -51,7 +51,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define DEBUG_PM_MS3D_EX
 
 /* plain white */
-static picoColor_t white = { 255,255,255,255 };
+static const picoColor_t white = { 255, 255, 255, 255 };
 
 /* ms3d limits */
 #define MS3D_MAX_VERTS		8192

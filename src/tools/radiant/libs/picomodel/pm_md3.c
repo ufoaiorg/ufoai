@@ -57,16 +57,14 @@ typedef struct md3Frame_s {
 	float		localOrigin[ 3 ];
 	float		radius;
 	char		creator[ 16 ];
-}
-md3Frame_t;
+} md3Frame_t;
 
 /* md3 model tag information */
 typedef struct md3Tag_s {
 	char		name[ 64 ];
 	float		origin[ 3 ];
 	float		axis[ 3 ][ 3 ];
-}
-md3Tag_t;
+} md3Tag_t;
 
 /* md3 surface md3 (one object mesh) */
 typedef struct md3Surface_s {
@@ -82,31 +80,25 @@ typedef struct md3Surface_s {
 	int			ofsSt;			/* texture coords are common for all frames */
 	int			ofsVertexes;	/* numVerts * numFrames */
 	int			ofsEnd;			/* next surface follows */
-}
-md3Surface_t;
+} md3Surface_t;
 
 typedef struct md3Shader_s {
 	char		name[ 64 ];
 	int			shaderIndex;	/* for ingame use */
-}
-md3Shader_t;
+} md3Shader_t;
 
 typedef struct md3Triangle_s {
 	int			indexes[ 3 ];
-}
-md3Triangle_t;
+} md3Triangle_t;
 
 typedef struct md3TexCoord_s {
 	float		st[ 2 ];
-}
-md3TexCoord_t;
+} md3TexCoord_t;
 
 typedef struct md3Vertex_s {
 	short		xyz[ 3 ];
 	short		normal;
-}
-md3Vertex_t;
-
+} md3Vertex_t;
 
 /* md3 model file md3 structure */
 typedef struct md3_s {
@@ -122,19 +114,16 @@ typedef struct md3_s {
 	int			ofsTags;		/* numFrames * numTags */
 	int			ofsSurfaces;	/* first surface, others follow */
 	int			ofsEnd;			/* end of file */
-}
-md3_t;
+} md3_t;
 
 
 
 
-/*
-_md3_canload()
-validates a quake3 arena md3 model file. btw, i use the
-preceding underscore cause it's a static func referenced
-by one structure only.
-*/
-
+/**
+ * @brief Validates a quake3 arena md3 model file. btw, i use the
+ * preceding underscore cause it's a static func referenced
+ * by one structure only.
+ */
 static int _md3_canload( PM_PARAMS_CANLOAD ) {
 	md3_t	*md3;
 
@@ -159,11 +148,9 @@ static int _md3_canload( PM_PARAMS_CANLOAD ) {
 
 
 
-/*
-_md3_load()
-loads a quake3 arena md3 model file.
-*/
-
+/**
+ * @brief Loads a quake3 arena md3 model file.
+ */
 static picoModel_t *_md3_load( PM_PARAMS_LOAD ) {
 	int				i, j;
 	picoByte_t		*bb;
@@ -376,8 +363,6 @@ static picoModel_t *_md3_load( PM_PARAMS_LOAD ) {
 	/* return the new pico model */
 	return picoModel;
 }
-
-
 
 /* pico file format module definition */
 const picoModule_t picoModuleMD3 = {

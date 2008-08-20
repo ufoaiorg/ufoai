@@ -897,7 +897,7 @@ void PicoSetSurfaceST( picoSurface_t *surface, int array, int num, picoVec2_t st
 
 
 
-void PicoSetSurfaceColor( picoSurface_t *surface, int array, int num, picoColor_t color ) {
+void PicoSetSurfaceColor( picoSurface_t *surface, int array, int num, const picoColor_t color ) {
 	if ( surface == NULL || num < 0 || color == NULL )
 		return;
 	if ( !PicoAdjustSurface( surface, num + 1, 0, array + 1, 0, 0 ) )

@@ -52,7 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define	MDC_DIST_SCALE		0.05f
 
 /* mdc decoding normal table */
-double mdcNormals[ 256 ][ 3 ] = {
+static const double mdcNormals[ 256 ][ 3 ] = {
 	{ 1.000000, 0.000000, 0.000000 },
 	{ 0.980785, 0.195090, 0.000000 },
 	{ 0.923880, 0.382683, 0.000000 },
@@ -317,15 +317,13 @@ typedef struct mdcFrame_s {
 	float		localOrigin[ 3 ];
 	float		radius;
 	char		creator[ 16 ];
-}
-mdcFrame_t;
+} mdcFrame_t;
 
 /* mdc model tag information */
 typedef struct mdcTag_s {
 	short		xyz[3];
 	short		angles[3];
-}
-mdcTag_t;
+} mdcTag_t;
 
 /* mdc surface mdc (one object mesh) */
 typedef struct mdcSurface_s {
@@ -346,36 +344,29 @@ typedef struct mdcSurface_s {
 	int			ofsFrameBaseFrames;	/* numFrames */
 	int			ofsFrameCompFrames;	/* numFrames */
 	int			ofsEnd;				/* next surface follows */
-}
-mdcSurface_t;
+} mdcSurface_t;
 
 typedef struct mdcShader_s {
 	char		name[ 64 ];
 	int			shaderIndex;	/* for ingame use */
-}
-mdcShader_t;
+} mdcShader_t;
 
 typedef struct mdcTriangle_s {
 	int			indexes[ 3 ];
-}
-mdcTriangle_t;
+} mdcTriangle_t;
 
 typedef struct mdcTexCoord_s {
 	float		st[ 2 ];
-}
-mdcTexCoord_t;
+} mdcTexCoord_t;
 
 typedef struct mdcVertex_s {
 	short		xyz[ 3 ];
 	short		normal;
-}
-mdcVertex_t;
+} mdcVertex_t;
 
 typedef struct mdcXyzCompressed_s {
 	unsigned int	ofsVec;		/* offset direction from the last base frame */
-}
-mdcXyzCompressed_t;
-
+} mdcXyzCompressed_t;
 
 /* mdc model file mdc structure */
 typedef struct mdc_s {
@@ -392,19 +383,13 @@ typedef struct mdc_s {
 	int			ofsTags;		/* numFrames * numTags */
 	int			ofsSurfaces;	/* first surface, others follow */
 	int			ofsEnd;			/* end of file */
-}
-mdc_t;
+} mdc_t;
 
-
-
-
-/*
-_mdc_canload()
-validates a Return to Castle Wolfenstein model file. btw, i use the
-preceding underscore cause it's a static func referenced
-by one structure only.
-*/
-
+/**
+ * @brief Validates a Return to Castle Wolfenstein model file. btw, i use the
+ * preceding underscore cause it's a static func referenced
+ * by one structure only.
+ */
 static int _mdc_canload( PM_PARAMS_CANLOAD ) {
 	mdc_t	*mdc;
 
@@ -427,13 +412,9 @@ static int _mdc_canload( PM_PARAMS_CANLOAD ) {
 	return PICO_PMV_OK;
 }
 
-
-
-/*
-_mdc_load()
-loads a Return to Castle Wolfenstein mdc model file.
-*/
-
+/**
+ * @brief Loads a Return to Castle Wolfenstein mdc model file.
+ */
 static picoModel_t *_mdc_load( PM_PARAMS_LOAD ) {
 	int					i, j;
 	picoByte_t			*bb;
@@ -459,7 +440,6 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD ) {
 	/* -------------------------------------------------
 	mdc loading
 	------------------------------------------------- */
-
 
 	/* set as mdc */
 	bb = (picoByte_t*) buffer;
@@ -692,8 +672,6 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD ) {
 	/* return the new pico model */
 	return picoModel;
 }
-
-
 
 /* pico file format module definition */
 const picoModule_t picoModuleMDC = {
