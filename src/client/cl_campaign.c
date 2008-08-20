@@ -4548,7 +4548,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* stores the select mission on geoscape */
 	missionId = MSG_ReadString(sb);
-	if (missionId[9] != '\0')
+	if (missionId[0] != '\0')
 		selectedMission = CP_GetMissionById(missionId);
 	else
 		selectedMission = NULL;
