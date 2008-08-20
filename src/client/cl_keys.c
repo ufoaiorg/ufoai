@@ -918,7 +918,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 				* released or whether any other bound key will still ensure that the
 				* kbutton_t is pressed
 				* the time is the msec value when the key was released */
-				Com_Printf("-%s %i %i\n", kb + 1, key, time);
 				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
 				Cbuf_AddText(cmd);
 			}
@@ -940,7 +939,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 				/* '+' means we have pressed the key
 				 * the key number is used because the kbutton_t can be 'pressed' by several keys
 				 * the time is the msec value when the key was pressed */
-				Com_Printf("%s %i %i\n", kb, key, time);
 				Com_sprintf(cmd, sizeof(cmd), "%s %i %i\n", kb, key, time);
 				Cbuf_AddText(cmd);
 			} else {
