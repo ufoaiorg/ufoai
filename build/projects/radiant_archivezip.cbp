@@ -89,16 +89,10 @@
 		<Unit filename="..\..\src\tools\radiant\plugins\export.def">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\archivezip\pkzip.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\archivezip\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\archivezip\archive.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\archivezip\zlibstream.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\cmdlib\cmdlib.cpp">

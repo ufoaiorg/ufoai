@@ -177,8 +177,6 @@ RADIANT_PLUGIN_VFSPK3_TARGET=radiant/modules/vfspk3.$(SHARED_EXT)
 RADIANT_PLUGIN_ARCHIVEZIP_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/archivezip/plugin.cpp \
 	$(RADIANT_BASE)/plugins/archivezip/archive.cpp \
-	$(RADIANT_BASE)/plugins/archivezip/pkzip.cpp \
-	$(RADIANT_BASE)/plugins/archivezip/zlibstream.cpp \
 	\
 	$(RADIANT_BASE)/libs/cmdlib/cmdlib.cpp
 
