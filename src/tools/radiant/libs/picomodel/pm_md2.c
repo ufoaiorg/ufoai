@@ -64,13 +64,11 @@ typedef struct index_LUT_s {
 	short	Vert;
 	short	ST;
 	struct	index_LUT_s	*next;
-
 } index_LUT_t;
 
 typedef struct index_DUP_LUT_s {
 	short			ST;
 	short			OldVert;
-
 } index_DUP_LUT_t;
 
 typedef struct {
@@ -93,9 +91,7 @@ typedef struct md2Frame_s {
 	float           translate[3];   // then add this
 	char            name[16];       // frame name from grabbing
 	md2XyzNormal_t  verts[1];       // variable sized
-}
-md2Frame_t;
-
+} md2Frame_t;
 
 /* md2 model file md2 structure */
 typedef struct md2_s {
@@ -119,10 +115,9 @@ typedef struct md2_s {
 	int	ofsFrames;
 	int	ofsGLCmds;
 	int	ofsEnd;
-}
-md2_t;
+} md2_t;
 
-float	md2_normals[ MD2_NUMVERTEXNORMALS ][ 3 ] = {
+static float const md2_normals[ MD2_NUMVERTEXNORMALS ][ 3 ] = {
 	{ -0.525731f, 0.000000f, 0.850651f },
 	{ -0.442863f, 0.238856f, 0.864188f },
 	{ -0.295242f, 0.000000f, 0.955423f },
@@ -287,9 +282,7 @@ float	md2_normals[ MD2_NUMVERTEXNORMALS ][ 3 ] = {
 	{ -0.688191f, -0.587785f, -0.425325f },
 };
 
-
-// _md2_canload()
-
+/// \brief Checks whether this module can load the given file
 static int _md2_canload( PM_PARAMS_CANLOAD ) {
 	md2_t	*md2;
 
@@ -312,11 +305,7 @@ static int _md2_canload( PM_PARAMS_CANLOAD ) {
 	return PICO_PMV_OK;
 }
 
-
-
-// _md2_load() loads a ufo md2 model file.
-
-
+/// \brief Loads a ufo md2 model file.
 static picoModel_t *_md2_load( PM_PARAMS_LOAD ) {
 	int				i, j;
 	short			tot_numVerts;
