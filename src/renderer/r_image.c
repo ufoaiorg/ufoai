@@ -154,16 +154,15 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
  */
 static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
-	int				rowptr;
-	int				samples, color_type, bit_depth;
-	png_structp		png_ptr;
-	png_infop		info_ptr;
-	png_infop		end_info;
-	byte			**row_pointers;
-	byte			*img;
-	uint32_t		i;
-
-	pngBuf_t		PngFileBuffer = {NULL,0};
+	int rowptr;
+	int samples, color_type, bit_depth;
+	png_structp png_ptr;
+	png_infop info_ptr;
+	png_infop end_info;
+	byte **row_pointers;
+	byte *img;
+	uint32_t i;
+	pngBuf_t PngFileBuffer = {NULL, 0};
 
 	if (*pic != NULL)
 		Sys_Error("possible mem leak in LoadPNG\n");
@@ -182,7 +181,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	PngFileBuffer.pos = 0;
 
-	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
+	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
@@ -197,7 +196,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return 0;
 	}
 
-	end_info = png_create_info_struct (png_ptr);
+	end_info = png_create_info_struct(png_ptr);
 	if (!end_info) {
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
@@ -241,11 +240,11 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	if (info_ptr->channels == 4) {
 		for (i = 0; i < info_ptr->height; i++) {
-			memcpy (img + rowptr, row_pointers[i], info_ptr->rowbytes);
+			memcpy(img + rowptr, row_pointers[i], info_ptr->rowbytes);
 			rowptr += info_ptr->rowbytes;
 		}
 	} else {
-		uint32_t	j;
+		uint32_t j;
 
 		memset(img, 255, info_ptr->width * info_ptr->height * 4);
 		for (rowptr = 0, i = 0; i < info_ptr->height; i++) {

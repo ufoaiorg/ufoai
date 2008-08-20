@@ -143,9 +143,9 @@ static void S_Music_Start (const char *file)
 	S_Music_Stop();
 
 	/* load it in */
-	if ((size = FS_LoadFile(va("music/%s.ogg", name), (byte **)&musicBuf)) != -1) {
+	if ((size = FS_LoadFile(va("music/%s.ogg", name), &musicBuf)) != -1) {
 		music.musicSrc = SDL_RWFromMem(musicBuf, size);
-	} else if ((size = FS_LoadFile(va("music/%s.mp3", name), (byte **)&musicBuf)) != -1) {
+	} else if ((size = FS_LoadFile(va("music/%s.mp3", name), &musicBuf)) != -1) {
 		music.musicSrc = SDL_RWFromMem(musicBuf, size);
 	} else {
 		Com_Printf("Could not load '%s' background track\n", name);
@@ -259,12 +259,12 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	}
 
 	/* load it in */
-	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), (byte **)&sfxBuf)) != -1) {
+	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), &sfxBuf)) != -1) {
 		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
 			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' (%s)\n", sound, Mix_GetError());
-	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), (byte **)&sfxBuf)) != -1) {
+	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), &sfxBuf)) != -1) {
 		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
 		mix = Mix_LoadWAV_RW(src, 1);
 		if (!mix)
