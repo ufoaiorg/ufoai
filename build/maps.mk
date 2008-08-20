@@ -12,12 +12,12 @@ BSPS = $(MAPSRCS:.map=.bsp)
 ifeq ($(TARGET_OS),darwin)
 	# Setting for Mac OS X and Darwin OS
 	# \note This should also work for *BSD
-	NUMTHREADS = $(shell sysctl -n hw.ncpu)
+	NUMTHREADS ?= $(shell sysctl -n hw.ncpu)
 else
 	ifeq ($(TARGET_OS),linux-gnu)
-		NUMTHREADS = $(shell grep -c ^processor /proc/cpuinfo)
+		NUMTHREADS ?= $(shell grep -c ^processor /proc/cpuinfo)
 	else
-		NUMTHREADS = 1
+		NUMTHREADS ?= 1
 	endif
 endif
 
