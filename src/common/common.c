@@ -1198,6 +1198,7 @@ LINKED LIST
  * @sa LIST_AddString
  * @sa LIST_Remove
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
 {
@@ -1252,6 +1253,7 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  * @brief Adds an string to a new or to an already existing linked list
  * @sa LIST_Add
  * @sa LIST_Remove
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)
 {
@@ -1283,6 +1285,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
  * @brief Adds just a pointer to a new or to an already existing linked list
  * @sa LIST_Add
  * @sa LIST_Remove
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddPointer (linkedList_t** listDest, void* data)
 {
