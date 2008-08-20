@@ -128,18 +128,9 @@ RADIANT_PLUGIN_ENTITY_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/entity/group.cpp \
 	$(RADIANT_BASE)/plugins/entity/miscmodel.cpp \
 	$(RADIANT_BASE)/plugins/entity/miscparticle.cpp \
-	$(RADIANT_BASE)/plugins/entity/angle.cpp \
-	$(RADIANT_BASE)/plugins/entity/angles.cpp \
-	$(RADIANT_BASE)/plugins/entity/colour.cpp \
 	$(RADIANT_BASE)/plugins/entity/filters.cpp \
 	$(RADIANT_BASE)/plugins/entity/light.cpp \
-	$(RADIANT_BASE)/plugins/entity/model.cpp \
-	$(RADIANT_BASE)/plugins/entity/namedentity.cpp \
-	$(RADIANT_BASE)/plugins/entity/origin.cpp \
-	$(RADIANT_BASE)/plugins/entity/scale.cpp \
-	$(RADIANT_BASE)/plugins/entity/targetable.cpp \
-	$(RADIANT_BASE)/plugins/entity/rotation.cpp \
-	$(RADIANT_BASE)/plugins/entity/modelskinkey.cpp
+	$(RADIANT_BASE)/plugins/entity/targetable.cpp
 
 RADIANT_PLUGIN_ENTITY_CPP_OBJS=$(RADIANT_PLUGIN_ENTITY_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_ENTITY_TARGET=radiant/modules/entity.$(SHARED_EXT)
