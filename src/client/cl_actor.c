@@ -4261,6 +4261,13 @@ void CL_ActorMouseTrace (void)
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	 * playerclip surface (in most cases anyway) */
 	PosToVec(testPos, pA);
+	/* ensure that the cursor is in the world, if this is not done, the tracer box is
+	 * drawn in the void on the first level and the menu key bindings might get executed
+	 * this could result in different problems like the zooming issue (where you can't zoom
+	 * in again, because in_zoomout->state is not resetted). */
+	if (CL_OutsideMap(pA, MAP_SIZE_OFFSET))
+		return;
+
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;

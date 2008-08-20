@@ -1657,7 +1657,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 
 				if (!(flags & SF_BOUNCED)) {
 					/* shooting */
-					if (fd->speed && !CL_OutsideMap(impact)) {
+					if (fd->speed && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
 						impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 					} else {
 						impactTime = shootTime;

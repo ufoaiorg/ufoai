@@ -10,11 +10,6 @@
  * its key number as a parameter to the command so it can be matched up with
  * the release.
  *
- * state bit 0 is the current state of the key
- * state bit 1 is edge triggered on the up to down transition
- * state bit 2 is edge triggered on the down to up transition
- *
- *
  * Key_Event (int key, qboolean down, unsigned time);
  *
  *  +mlook src time
@@ -73,8 +68,6 @@ camera_mode_t camera_mode;
 
 static cvar_t *in_debug;
 
-static unsigned in_frametime;
-
 int mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
@@ -99,9 +92,9 @@ KEY BUTTONS
 
 typedef struct {
 	int down[2];				/**< key nums holding it down */
-	unsigned downtime;			/**< msec timestamp */
-	unsigned msec;				/**< msec down this frame */
-	int state;
+	unsigned downtime;			/**< msec timestamp when the key was pressed down */
+	unsigned msec;				/**< downtime for this key in msec (delta between pressed and released) */
+	int state;					/**< 1 if down, 0 if not down */
 } kbutton_t;
 
 static kbutton_t in_turnleft, in_turnright, in_shiftleft, in_shiftright;
@@ -140,17 +133,17 @@ static void IN_KeyDown (kbutton_t * b)
 	}
 
 	/* still down */
-	if (b->state & 1)
+	if (b->state)
 		return;
 
 	/* save timestamp */
 	c = Cmd_Argv(2);
 	b->downtime = atoi(c);
 	if (!b->downtime)
-		b->downtime = in_frametime - 100;
+		b->downtime = cls.realtime - 100;
 
-	/* down + impulse down */
-	b->state |= 1 + 2;
+	/* down */
+	b->state = 1;
 }
 
 /**
@@ -170,8 +163,6 @@ static void IN_KeyUp (kbutton_t * b)
 	/* typed manually at the console, assume for unsticking, so clear all */
 	else {
 		b->down[0] = b->down[1] = 0;
-		/* impulse up */
-		b->state = 4;
 		return;
 	}
 
@@ -188,7 +179,7 @@ static void IN_KeyUp (kbutton_t * b)
 		return;
 
 	/* still up (this should not happen) */
-	if (!(b->state & 1))
+	if (!b->state)
 		return;
 
 	/* save timestamp */
@@ -200,9 +191,7 @@ static void IN_KeyUp (kbutton_t * b)
 		b->msec += 10;
 
 	/* now up */
-	b->state &= ~1;
-	/* impulse up */
-	b->state |= 4;
+	b->state = 0;
 }
 
 static void IN_TurnLeftDown_f (void)
@@ -420,14 +409,6 @@ static void CL_ZoomInQuant_f (void)
 		/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
 		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 		V_CalcFovX();
-#if 1
-		/* HACK make sure, that the zooming is not reset because another binding is active
-		 * this is needed because the state of in_zoomout is not set back properly. The result
-		 * is, that you can't zoom in with the mouse or the zoominquant binding, because the
-		 * in_zoomout state immediately zooms out again. */
-		IN_KeyUp(&in_zoomin);
-		IN_KeyUp(&in_zoomout);
-#endif
 	}
 }
 
@@ -456,14 +437,6 @@ static void CL_ZoomOutQuant_f (void)
 		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 		V_CalcFovX();
-#if 1
-		/* HACK make sure, that the zooming is not reset because another binding is active
-		 * this is needed because the state of in_zoomout is not set back properly. The result
-		 * is, that you can't zoom in with the mouse or the zoominquant binding, because the
-		 * in_zoomout state immediately zooms out again. */
-		IN_KeyUp(&in_zoomin);
-		IN_KeyUp(&in_zoomout);
-#endif
 	}
 }
 
@@ -1599,10 +1572,7 @@ void IN_EventEnqueue (int key, qboolean down)
 void IN_Frame (void)
 {
 	int key = -1, mouse_buttonstate, p;
-	qboolean down;
 	SDL_Event event;
-
-	in_frametime = cls.realtime;
 
 	IN_Parse();
 
@@ -1710,7 +1680,6 @@ void IN_Frame (void)
 			break;
 
 		case SDL_KEYUP:
-			down = qfalse;
 			IN_PrintKey(&event, 0);
 			p = IN_TranslateKey(&event.key.keysym, &key);
 			if (!key && p)
@@ -1842,7 +1811,7 @@ void IN_Init (void)
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {
-		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, in_frametime);
+		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, cls.realtime);
 		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 	}
 }

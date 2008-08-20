@@ -274,17 +274,16 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	return lm;
 }
 
-static const float mapBorder = UNIT_SIZE * 10;
 static const float mapZBorder = -(UNIT_HEIGHT * 5);
 /**
  * @brief Checks whether give position is still inside the map borders
  */
-qboolean CL_OutsideMap (const vec3_t impact)
+qboolean CL_OutsideMap (const vec3_t impact, const float delta)
 {
-	if (impact[0] < map_min[0] - mapBorder || impact[0] > map_max[0] + mapBorder)
+	if (impact[0] < map_min[0] - delta || impact[0] > map_max[0] + delta)
 		return qtrue;
 
-	if (impact[1] < map_min[1] - mapBorder || impact[1] > map_max[1] + mapBorder)
+	if (impact[1] < map_min[1] - delta || impact[1] > map_max[1] + delta)
 		return qtrue;
 
 	/* if a le is deeper than 5 levels below the latest walkable level (0) then
@@ -737,7 +736,7 @@ static void LET_Projectile (le_t * le)
 			sfx_t *sfx = S_RegisterSound(le->ref2);
 			S_StartSound(impact, sfx, le->fd->relImpactVolume);
 		}
-	} else if (CL_OutsideMap(le->ptl->s)) {
+	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
