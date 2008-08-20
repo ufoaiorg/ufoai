@@ -144,7 +144,7 @@ install: install_exec
 # ready 0maps.pk3 file! So long as 0maps.pk3 is newer than the
 # BSP files this will work correctly even if there are newer
 # map files kicking around.
-pk3 clean_pk3:
+pk3 clean-pk3:
 	$(MAKE) -f build/data.mk $@
 
 #
