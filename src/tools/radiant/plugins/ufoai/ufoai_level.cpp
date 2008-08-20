@@ -144,7 +144,7 @@ const char *assign_default_values_to_worldspawn (bool override) {
 	if (override || string_empty(worldspawn->getKeyValue("maxlevel"))) {
 		// TODO: Get highest brush - a level has 64 units
 		worldspawn->setKeyValue("maxlevel", "5");
-		snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Set maxlevel to: %s", worldspawn->getKeyValue("maxlevel"));
+		strncat(message, "Set maxlevel to: %s\n", worldspawn->getKeyValue("maxlevel"), sizeof(message) - 1);
 	}
 
 	if (override || string_empty(worldspawn->getKeyValue("maxteams"))) {
@@ -152,10 +152,10 @@ const char *assign_default_values_to_worldspawn (bool override) {
 		if (teams) {
 			snprintf(str, sizeof(str) - 1, "%i", teams);
 			worldspawn->setKeyValue("maxteams", str);
-			snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Set maxteams to: %s", worldspawn->getKeyValue("maxteams"));
+			strncat(message, "Set maxteams to: %s\n", worldspawn->getKeyValue("maxteams"), sizeof(message) - 1);
 		}
 		if (count < 16) {
-			snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "You should at least place 16 info_player_start");
+			strncat(message, "You should at least place 16 info_player_start\n", sizeof(message) - 1);
 		}
 	}
 
