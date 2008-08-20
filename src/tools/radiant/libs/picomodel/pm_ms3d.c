@@ -47,8 +47,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * - check for buffer overflows ('bufptr' accesses)
  */
 /* uncomment when debugging this module */
- #define DEBUG_PM_MS3D
- #define DEBUG_PM_MS3D_EX
+#define DEBUG_PM_MS3D
+#define DEBUG_PM_MS3D_EX
 
 /* plain white */
 static picoColor_t white = { 255,255,255,255 };
@@ -71,16 +71,14 @@ static picoColor_t white = { 255,255,255,255 };
 #pragma pack(push, 1)
 
 /* ms3d header */
-typedef struct SMsHeader
-{
+typedef struct SMsHeader {
 	char			magic[10];
 	int				version;
 }
 TMsHeader;
 
 /* ms3d vertex */
-typedef struct SMsVertex
-{
+typedef struct SMsVertex {
 	unsigned char	flags;				/* sel, sel2, or hidden */
 	float			xyz[3];
 	char			boneID;				/* -1 means 'no bone' */
@@ -89,8 +87,7 @@ typedef struct SMsVertex
 TMsVertex;
 
 /* ms3d triangle */
-typedef struct SMsTriangle
-{
+typedef struct SMsTriangle {
 	unsigned short	flags;				/* sel, sel2, or hidden */
 	unsigned short	vertexIndices[3];
 	float			vertexNormals[3][3];
@@ -102,8 +99,7 @@ typedef struct SMsTriangle
 TMsTriangle;
 
 /* ms3d material */
-typedef struct SMsMaterial
-{
+typedef struct SMsMaterial {
 	char			name[32];
 	float			ambient[4];
 	float			diffuse[4];
@@ -119,21 +115,19 @@ TMsMaterial;
 
 // ms3d group (static part)
 // followed by a variable size block (see below)
-typedef struct SMsGroup
-{
+typedef struct SMsGroup {
 	unsigned char	flags;				// sel, hidden
 	char			name[32];
 	unsigned short	numTriangles;
-/*
-	unsigned short	triangleIndices[ numTriangles ];
-	char			materialIndex;		// -1 means 'no material'
-*/
+	/*
+		unsigned short	triangleIndices[ numTriangles ];
+		char			materialIndex;		// -1 means 'no material'
+	*/
 }
 TMsGroup;
 
 // ms3d joint
-typedef struct SMsJoint
-{
+typedef struct SMsJoint {
 	unsigned char	flags;
 	char			name[32];
 	char			parentName[32];
@@ -145,8 +139,7 @@ typedef struct SMsJoint
 TMsJoint;
 
 // ms3d keyframe
-typedef struct SMsKeyframe
-{
+typedef struct SMsKeyframe {
 	float			time;
 	float			parameter[3];
 }
@@ -158,8 +151,7 @@ TMsKeyframe;
 /* _ms3d_canload:
  *	validates a milkshape3d model file.
  */
-static int _ms3d_canload( PM_PARAMS_CANLOAD )
-{
+static int _ms3d_canload( PM_PARAMS_CANLOAD ) {
 	TMsHeader *hdr;
 
 	/* sanity check */
@@ -175,8 +167,7 @@ static int _ms3d_canload( PM_PARAMS_CANLOAD )
 
 	/* check ms3d version */
 	if (_pico_little_long(hdr->version) < 3 ||
-		_pico_little_long(hdr->version) > 4)
-	{
+	        _pico_little_long(hdr->version) > 4) {
 		_pico_printf( PICO_ERROR,"MS3D file ignored. Only MS3D 1.3 and 1.4 is supported." );
 		return PICO_PMV_ERROR_VERSION;
 	}
@@ -184,8 +175,7 @@ static int _ms3d_canload( PM_PARAMS_CANLOAD )
 	return PICO_PMV_OK;
 }
 
-static unsigned char *GetWord( unsigned char *bufptr, int *out )
-{
+static unsigned char *GetWord( unsigned char *bufptr, int *out ) {
 	if (bufptr == NULL) return NULL;
 	*out = _pico_little_short( *(unsigned short *)bufptr );
 	return( bufptr + 2 );
@@ -194,8 +184,7 @@ static unsigned char *GetWord( unsigned char *bufptr, int *out )
 /* _ms3d_load:
  *	loads a milkshape3d model file.
 */
-static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
-{
+static picoModel_t *_ms3d_load( PM_PARAMS_LOAD ) {
 	picoModel_t	   *model;
 	unsigned char  *bufptr;
 	int				shaderRefs[ MS3D_MAX_GROUPS ];
@@ -228,8 +217,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 	printf("NumVertices: %d\n",numVerts);
 #endif
 	/* swap verts */
-	for (i=0; i<numVerts; i++)
-	{
+	for (i=0; i<numVerts; i++) {
 		TMsVertex *vertex;
 		vertex = (TMsVertex *)bufptr;
 		bufptr += sizeof( TMsVertex );
@@ -240,9 +228,9 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 
 #ifdef DEBUG_PM_MS3D_EX_
 		printf("Vertex: x: %f y: %f z: %f\n",
-			msvd[i]->vertex[0],
-			msvd[i]->vertex[1],
-			msvd[i]->vertex[2]);
+		       msvd[i]->vertex[0],
+		       msvd[i]->vertex[1],
+		       msvd[i]->vertex[2]);
 #endif
 	}
 	/* get number of triangles */
@@ -253,8 +241,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 	printf("NumTriangles: %d\n",numTris);
 #endif
 	/* swap tris */
-	for (i=0; i<numTris; i++)
-	{
+	for (i=0; i<numTris; i++) {
 		TMsTriangle *triangle;
 		triangle = (TMsTriangle *)bufptr;
 		bufptr += sizeof( TMsTriangle );
@@ -262,8 +249,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 		triangle->flags = _pico_little_short( triangle->flags );
 
 		/* run through all tri verts */
-		for (k=0; k<3; k++)
-		{
+		for (k=0; k<3; k++) {
 			/* swap tex coords */
 			triangle->s[ k ] = _pico_little_float( triangle->s[ k ] );
 			triangle->t[ k ] = _pico_little_float( triangle->t[ k ] );
@@ -275,8 +261,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 			triangle->vertexNormals[ 2 ][ k ] = _pico_little_float( triangle->vertexNormals[ 2 ][ k ] );
 
 			/* check for out of range indices */
-			if (triangle->vertexIndices[ k ] >= numVerts)
-			{
+			if (triangle->vertexIndices[ k ] >= numVerts) {
 				_pico_printf( PICO_ERROR,"Vertex %d index %d out of range (%d, max %d)",i,k,triangle->vertexIndices[k],numVerts-1);
 				PicoFreeModel( model );
 				return NULL; /* yuck */
@@ -291,8 +276,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 	printf("NumGroups: %d\n",numGroups);
 #endif
 	/* run through all groups in model */
-	for (i=0; i<numGroups && i<MS3D_MAX_GROUPS; i++)
-	{
+	for (i=0; i<numGroups && i<MS3D_MAX_GROUPS; i++) {
 		picoSurface_t *surface;
 		TMsGroup	  *group;
 
@@ -300,8 +284,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 		bufptr += sizeof( TMsGroup );
 
 		/* we ignore hidden groups */
-		if (group->flags & MS3D_HIDDEN)
-		{
+		if (group->flags & MS3D_HIDDEN) {
 			bufptr += (group->numTriangles * 2) + 1;
 			continue;
 		}
@@ -310,8 +293,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 
 		/* create new pico surface */
 		surface = PicoNewSurface( model );
-		if (surface == NULL)
-		{
+		if (surface == NULL) {
 			PicoFreeModel( model );
 			return NULL;
 		}
@@ -320,8 +302,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 		PicoSetSurfaceName( surface,group->name );
 
 		/* process triangle indices */
-		for (k=0; k<group->numTriangles; k++)
-		{
+		for (k=0; k<group->numTriangles; k++) {
 			TMsTriangle *triangle;
 			unsigned int triangleIndex;
 
@@ -332,8 +313,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 			triangle = (TMsTriangle *)(ptrToTris + (sizeof(TMsTriangle) * triangleIndex));
 
 			/* run through triangle vertices */
-			for (m=0; m<3; m++)
-			{
+			for (m=0; m<3; m++) {
 				TMsVertex   *vertex;
 				unsigned int vertexIndex;
 				picoVec2_t   texCoord;
@@ -376,8 +356,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 	printf("NumMaterials: %d\n",numMaterials);
 #endif
 	/* run through all materials in model */
-	for (i=0; i<numMaterials; i++)
-	{
+	for (i=0; i<numMaterials; i++) {
 		picoShader_t *shader;
 		picoColor_t   ambient,diffuse,specular;
 		TMsMaterial  *material;
@@ -403,14 +382,12 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 
 		/* create new pico shader */
 		shader = PicoNewShader( model );
-		if (shader == NULL)
-		{
+		if (shader == NULL) {
 			PicoFreeModel( model );
 			return NULL;
 		}
 		/* scale shader colors */
-		for (k=0; k<4; k++)
-		{
+		for (k=0; k<4; k++) {
 			ambient [ k ] = (picoByte_t) (material->ambient[ k ] * 255);
 			diffuse [ k ] = (picoByte_t) (material->diffuse[ k ] * 255);
 			specular[ k ] = (picoByte_t) (material->specular[ k ] * 255);
@@ -437,14 +414,13 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 #endif
 	}
 	/* assign shaders to surfaces */
-	for (i=0; i<numGroups && i<MS3D_MAX_GROUPS; i++)
-	{
+	for (i=0; i<numGroups && i<MS3D_MAX_GROUPS; i++) {
 		picoSurface_t *surface;
 		picoShader_t  *shader;
 
 		/* sanity check */
 		if (shaderRefs[ i ] >= MS3D_MAX_MATERIALS ||
-			shaderRefs[ i ] < 0)
+		        shaderRefs[ i ] < 0)
 			continue;
 
 		/* get surface */
@@ -460,7 +436,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 
 #ifdef DEBUG_PM_MS3D
 		printf("Mapped: %d ('%s') to %d (%s)\n",
-			shaderRefs[i],shader->name,i,surface->name);
+		       shaderRefs[i],shader->name,i,surface->name);
 #endif
 	}
 	/* return allocated pico model */
@@ -469,8 +445,7 @@ static picoModel_t *_ms3d_load( PM_PARAMS_LOAD )
 }
 
 /* pico file format module definition */
-const picoModule_t picoModuleMS3D =
-{
+const picoModule_t picoModuleMS3D = {
 	"0.4-a",					/* module version string */
 	"Milkshape 3D",				/* module display name */
 	"seaw0lf",					/* author's name */
@@ -480,6 +455,6 @@ const picoModule_t picoModuleMS3D =
 	},
 	_ms3d_canload,				/* validation routine */
 	_ms3d_load,					/* load routine */
-	 NULL,						/* save validation routine */
-	 NULL						/* save routine */
+	NULL,						/* save validation routine */
+	NULL						/* save routine */
 };

@@ -57,55 +57,48 @@ Nurail: Used pm_md3.c (Randy Reddig) as a template.
 #define MD2_MAX_SKINNAME		64
 
 #ifndef byte
-	#define byte unsigned char
+#define byte unsigned char
 #endif
 
-typedef struct index_LUT_s
-{
+typedef struct index_LUT_s {
 	short	Vert;
 	short	ST;
 	struct	index_LUT_s	*next;
 
 } index_LUT_t;
 
-typedef struct index_DUP_LUT_s
-{
+typedef struct index_DUP_LUT_s {
 	short			ST;
 	short			OldVert;
 
 } index_DUP_LUT_t;
 
-typedef struct
-{
-        short   s;
-        short   t;
+typedef struct {
+	short   s;
+	short   t;
 } md2St_t;
 
-typedef struct
-{
-        short   index_xyz[3];
-        short   index_st[3];
+typedef struct {
+	short   index_xyz[3];
+	short   index_st[3];
 } md2Triangle_t;
 
-typedef struct
-{
-        byte	v[3];                   // scaled byte to fit in frame mins/maxs
-        byte	lightnormalindex;
+typedef struct {
+	byte	v[3];                   // scaled byte to fit in frame mins/maxs
+	byte	lightnormalindex;
 } md2XyzNormal_t;
 
-typedef struct md2Frame_s
-{
-        float           scale[3];       // multiply byte verts by this
-        float           translate[3];   // then add this
-        char            name[16];       // frame name from grabbing
-        md2XyzNormal_t  verts[1];       // variable sized
+typedef struct md2Frame_s {
+	float           scale[3];       // multiply byte verts by this
+	float           translate[3];   // then add this
+	char            name[16];       // frame name from grabbing
+	md2XyzNormal_t  verts[1];       // variable sized
 }
 md2Frame_t;
 
 
 /* md2 model file md2 structure */
-typedef struct md2_s
-{
+typedef struct md2_s {
 	char	magic[ 4 ];
 	int	version;
 
@@ -129,8 +122,7 @@ typedef struct md2_s
 }
 md2_t;
 
-float	md2_normals[ MD2_NUMVERTEXNORMALS ][ 3 ] =
-{
+float	md2_normals[ MD2_NUMVERTEXNORMALS ][ 3 ] = {
 	{ -0.525731f, 0.000000f, 0.850651f },
 	{ -0.442863f, 0.238856f, 0.864188f },
 	{ -0.295242f, 0.000000f, 0.955423f },
@@ -298,26 +290,25 @@ float	md2_normals[ MD2_NUMVERTEXNORMALS ][ 3 ] =
 
 // _md2_canload()
 
-static int _md2_canload( PM_PARAMS_CANLOAD )
-{
+static int _md2_canload( PM_PARAMS_CANLOAD ) {
 	md2_t	*md2;
 
 	/* sanity check */
-	if( bufSize < ( sizeof( *md2 ) * 2) )
+	if ( bufSize < ( sizeof( *md2 ) * 2) )
 		return PICO_PMV_ERROR_SIZE;
 
 	/* set as md2 */
 	md2 = (md2_t*) buffer;
 
 	/* check md2 magic */
-	if( *((int*) md2->magic) != *((int*) MD2_MAGIC) )
+	if ( *((int*) md2->magic) != *((int*) MD2_MAGIC) )
 		return PICO_PMV_ERROR_IDENT;
 
 	/* check md2 version */
-	if( _pico_little_long( md2->version ) != MD2_VERSION )
+	if ( _pico_little_long( md2->version ) != MD2_VERSION )
 		return PICO_PMV_ERROR_VERSION;
 
- 	/* file seems to be a valid md2 */
+	/* file seems to be a valid md2 */
 	return PICO_PMV_OK;
 }
 
@@ -326,16 +317,15 @@ static int _md2_canload( PM_PARAMS_CANLOAD )
 // _md2_load() loads a ufo md2 model file.
 
 
-static picoModel_t *_md2_load( PM_PARAMS_LOAD )
-{
+static picoModel_t *_md2_load( PM_PARAMS_LOAD ) {
 	int				i, j;
 	short			tot_numVerts;
 	index_LUT_t		*p_index_LUT;
 	md2Triangle_t	*p_md2Triangle;
 
 	char			skinname[ MD2_MAX_SKINNAME ];
- 	md2_t			*md2;
- 	md2St_t			*texCoord;
+	md2_t			*md2;
+	md2St_t			*texCoord;
 	md2Frame_t		*frame;
 	md2Triangle_t	*triangle;
 	md2XyzNormal_t	*vertex;
@@ -354,8 +344,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	md2	= (md2_t*) buffer;
 
 	/* check ident and version */
-	if( *((int*) md2->magic) != *((int*) MD2_MAGIC) || _pico_little_long( md2->version ) != MD2_VERSION )
-	{
+	if ( *((int*) md2->magic) != *((int*) MD2_MAGIC) || _pico_little_long( md2->version ) != MD2_VERSION ) {
 		/* not an md2 file (todo: set error) */
 		_pico_printf( PICO_ERROR, "%s is not an MD2 File!", fileName );
 		return NULL;
@@ -383,14 +372,12 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	md2->ofsEnd = _pico_little_long( md2->ofsEnd );
 
 	// do frame check
-	if( md2->numFrames < 1 )
-	{
+	if ( md2->numFrames < 1 ) {
 		_pico_printf( PICO_ERROR, "%s has 0 frames!", fileName );
 		return NULL;
 	}
 
-	if( frameNum < 0 || frameNum >= md2->numFrames )
-	{
+	if ( frameNum < 0 || frameNum >= md2->numFrames ) {
 		_pico_printf( PICO_ERROR, "Invalid or out-of-range MD2 frame specified" );
 		return NULL;
 	}
@@ -399,18 +386,15 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	frame = (md2Frame_t *) (bb + md2->ofsFrames + (sizeof(md2Frame_t) * frameNum));
 
 	// swap frame scale and translation
-	for( i = 0; i < 3; i++ )
-	{
+	for ( i = 0; i < 3; i++ ) {
 		frame->scale[ i ] = _pico_little_float( frame->scale[ i ] );
 		frame->translate[ i ] = _pico_little_float( frame->translate[ i ] );
 	}
 
 	// swap triangles
 	triangle = (md2Triangle_t *) ((picoByte_t *) (bb + md2->ofsTris) );
-	for( i = 0; i < md2->numTris; i++, triangle++ )
-	{
-		for( j = 0; j < 3; j++ )
-		{
+	for ( i = 0; i < md2->numTris; i++, triangle++ ) {
+		for ( j = 0; j < 3; j++ ) {
 			triangle->index_xyz[ j ] = _pico_little_short( triangle->index_xyz[ j ] );
 			triangle->index_st[ j ] = _pico_little_short( triangle->index_st[ j ] );
 		}
@@ -418,8 +402,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 
 	// swap st coords
 	texCoord = (md2St_t*) ((picoByte_t *) (bb + md2->ofsST) );
-	for( i = 0; i < md2->numST; i++, texCoord++ )
-	{
+	for ( i = 0; i < md2->numST; i++, texCoord++ ) {
 		texCoord->s = _pico_little_short( texCoord->s );
 		texCoord->t = _pico_little_short( texCoord->t );
 	}
@@ -448,8 +431,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 
 	/* create new pico model */
 	picoModel = PicoNewModel();
-	if( picoModel == NULL )
-	{
+	if ( picoModel == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model" );
 		return NULL;
 	}
@@ -462,8 +444,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 
 	// allocate new pico surface
 	picoSurface = PicoNewSurface( picoModel );
-	if( picoSurface == NULL )
-	{
+	if ( picoSurface == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model surface" );
 		PicoFreeModel( picoModel );
 		return NULL;
@@ -473,8 +454,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	PicoSetSurfaceType( picoSurface, PICO_TRIANGLES );
 	PicoSetSurfaceName( picoSurface, frame->name );
 	picoShader = PicoNewShader( picoModel );
-	if( picoShader == NULL )
-	{
+	if ( picoShader == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model shader" );
 		PicoFreeModel( picoModel );
 		return NULL;
@@ -487,8 +467,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 
 	// Init LUT for Verts
 	p_index_LUT = (index_LUT_t *)_pico_alloc(sizeof(index_LUT_t) * md2->numXYZ);
-	for(i=0; i<md2->numXYZ; i++)
-	{
+	for (i=0; i<md2->numXYZ; i++) {
 		p_index_LUT[i].Vert = -1;
 		p_index_LUT[i].ST = -1;
 		p_index_LUT[i].next = NULL;
@@ -496,11 +475,9 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 
 	// Fill in Look Up Table, and allocate/fill Linked List from vert array as needed for dup STs per Vert.
 	tot_numVerts = md2->numXYZ;
-	for(i=0; i<md2->numTris; i++)
-	{
+	for (i=0; i<md2->numTris; i++) {
 		p_md2Triangle = (md2Triangle_t *) ( bb + md2->ofsTris + (sizeof(md2Triangle_t)*i));
-		for(j=0; j<3; j++)
-		{
+		for (j=0; j<3; j++) {
 			if (p_index_LUT[p_md2Triangle->index_xyz[j]].ST == -1) // No Main Entry
 				p_index_LUT[p_md2Triangle->index_xyz[j]].ST = p_md2Triangle->index_st[j];
 		}
@@ -510,15 +487,13 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	triangle = (md2Triangle_t *) ((picoByte_t *) (bb + md2->ofsTris) );
 	texCoord = (md2St_t*) ((picoByte_t *) (bb + md2->ofsST) );
 	vertex = (md2XyzNormal_t*) ((picoByte_t*) (frame->verts) );
-	for( j = 0; j < md2->numTris; j++, triangle++ )
-	{
+	for ( j = 0; j < md2->numTris; j++, triangle++ ) {
 		PicoSetSurfaceIndex( picoSurface, j*3   , triangle->index_xyz[0] );
 		PicoSetSurfaceIndex( picoSurface, j*3+1 , triangle->index_xyz[1] );
 		PicoSetSurfaceIndex( picoSurface, j*3+2 , triangle->index_xyz[2] );
 	}
 
-	for(i=0; i< md2->numXYZ; i++, vertex++)
-	{
+	for (i=0; i< md2->numXYZ; i++, vertex++) {
 		/* set vertex origin */
 		xyz[ 0 ] = vertex->v[0] * frame->scale[0] + frame->translate[0];
 		xyz[ 1 ] = vertex->v[1] * frame->scale[1] + frame->translate[1];
@@ -540,7 +515,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 	/* set color */
 	PicoSetSurfaceColor( picoSurface, 0, 0, color );
 	// Free malloc'ed LUTs
- 	_pico_free(p_index_LUT);
+	_pico_free(p_index_LUT);
 
 	/* return the new pico model */
 	return picoModel;
@@ -549,8 +524,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD )
 
 
 /* pico file format module definition */
-const picoModule_t picoModuleMD2 =
-{
+const picoModule_t picoModuleMD2 = {
 	"0.875",						/* module version string */
 	"Quake 2 MD2",					/* module display name */
 	"Nurail",						/* author's name */
@@ -560,6 +534,6 @@ const picoModule_t picoModuleMD2 =
 	},
 	_md2_canload,					/* validation routine */
 	_md2_load,						/* load routine */
-	 NULL,							/* save validation routine */
-	 NULL							/* save routine */
+	NULL,							/* save validation routine */
+	NULL							/* save routine */
 };

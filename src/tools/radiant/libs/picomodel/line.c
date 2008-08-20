@@ -21,21 +21,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "mathlib.h"
 
-void line_construct_for_vec3(line_t *line, const vec3_t start, const vec3_t end)
-{
-  VectorMid(start, end, line->origin);
-  VectorSubtract(end, line->origin, line->extents);
+void line_construct_for_vec3(line_t *line, const vec3_t start, const vec3_t end) {
+	VectorMid(start, end, line->origin);
+	VectorSubtract(end, line->origin, line->extents);
 }
 
-int line_test_plane(const line_t* line, const vec4_t plane)
-{
-  float fDist;
+int line_test_plane(const line_t* line, const vec4_t plane) {
+	float fDist;
 
-  // calc distance of origin from plane
-  fDist = DotProduct(plane, line->origin) + plane[3];
-  
-  // accept if origin is less than or equal to this distance
-  if (fabs(fDist) < fabs(DotProduct(plane, line->extents))) return 1; // partially inside
-  else if (fDist < 0) return 2; // totally inside
-  return 0; // totally outside
+	// calc distance of origin from plane
+	fDist = DotProduct(plane, line->origin) + plane[3];
+
+	// accept if origin is less than or equal to this distance
+	if (fabs(fDist) < fabs(DotProduct(plane, line->extents))) return 1; // partially inside
+	else if (fDist < 0) return 2; // totally inside
+	return 0; // totally outside
 }

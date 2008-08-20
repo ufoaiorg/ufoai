@@ -38,8 +38,7 @@ Given a normalized forward vector, create two
 other perpendicular vectors
 ================
 */
-void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
-{
+void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up) {
 	float		d;
 
 	// this rotate and negate guarantees a vector
@@ -54,11 +53,10 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 	CrossProduct (right, forward, up);
 }
 
-vec_t VectorLength(const vec3_t v)
-{
+vec_t VectorLength(const vec3_t v) {
 	int		i;
 	float	length;
-	
+
 	length = 0.0f;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
@@ -67,52 +65,45 @@ vec_t VectorLength(const vec3_t v)
 	return length;
 }
 
-qboolean VectorCompare (const vec3_t v1, const vec3_t v2)
-{
+qboolean VectorCompare (const vec3_t v1, const vec3_t v2) {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 		if (fabs(v1[i]-v2[i]) > EQUAL_EPSILON)
 			return qfalse;
-			
+
 	return qtrue;
 }
 
-void VectorMA( const vec3_t va, vec_t scale, const vec3_t vb, vec3_t vc )
-{
+void VectorMA( const vec3_t va, vec_t scale, const vec3_t vb, vec3_t vc ) {
 	vc[0] = va[0] + scale*vb[0];
 	vc[1] = va[1] + scale*vb[1];
 	vc[2] = va[2] + scale*vb[2];
 }
 
-void _CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
-{
+void _CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross) {
 	cross[0] = v1[1]*v2[2] - v1[2]*v2[1];
 	cross[1] = v1[2]*v2[0] - v1[0]*v2[2];
 	cross[2] = v1[0]*v2[1] - v1[1]*v2[0];
 }
 
-vec_t _DotProduct (vec3_t v1, vec3_t v2)
-{
+vec_t _DotProduct (vec3_t v1, vec3_t v2) {
 	return v1[0]*v2[0] + v1[1]*v2[1] + v1[2]*v2[2];
 }
 
-void _VectorSubtract (vec3_t va, vec3_t vb, vec3_t out)
-{
+void _VectorSubtract (vec3_t va, vec3_t vb, vec3_t out) {
 	out[0] = va[0]-vb[0];
 	out[1] = va[1]-vb[1];
 	out[2] = va[2]-vb[2];
 }
 
-void _VectorAdd (vec3_t va, vec3_t vb, vec3_t out)
-{
+void _VectorAdd (vec3_t va, vec3_t vb, vec3_t out) {
 	out[0] = va[0]+vb[0];
 	out[1] = va[1]+vb[1];
 	out[2] = va[2]+vb[2];
 }
 
-void _VectorCopy (vec3_t in, vec3_t out)
-{
+void _VectorCopy (vec3_t in, vec3_t out) {
 	out[0] = in[0];
 	out[1] = in[1];
 	out[2] = in[2];
@@ -122,8 +113,7 @@ vec_t VectorNormalize( const vec3_t in, vec3_t out ) {
 	vec_t	length, ilength;
 
 	length = (vec_t)sqrt (in[0]*in[0] + in[1]*in[1] + in[2]*in[2]);
-	if (length == 0)
-	{
+	if (length == 0) {
 		VectorClear (out);
 		return 0;
 	}
@@ -157,8 +147,7 @@ vec_t ColorNormalize( const vec3_t in, vec3_t out ) {
 	return max;
 }
 
-void VectorInverse (vec3_t v)
-{
+void VectorInverse (vec3_t v) {
 	v[0] = -v[0];
 	v[1] = -v[1];
 	v[2] = -v[2];
@@ -173,78 +162,69 @@ void VectorScale (vec3_t v, vec_t scale, vec3_t out)
 }
 */
 
-void VectorRotate (vec3_t vIn, vec3_t vRotation, vec3_t out)
-{
-  vec3_t vWork, va;
-  int nIndex[3][2];
-  int i;
+void VectorRotate (vec3_t vIn, vec3_t vRotation, vec3_t out) {
+	vec3_t vWork, va;
+	int nIndex[3][2];
+	int i;
 
-  VectorCopy(vIn, va);
-  VectorCopy(va, vWork);
-  nIndex[0][0] = 1; nIndex[0][1] = 2;
-  nIndex[1][0] = 2; nIndex[1][1] = 0;
-  nIndex[2][0] = 0; nIndex[2][1] = 1;
+	VectorCopy(vIn, va);
+	VectorCopy(va, vWork);
+	nIndex[0][0] = 1;
+	nIndex[0][1] = 2;
+	nIndex[1][0] = 2;
+	nIndex[1][1] = 0;
+	nIndex[2][0] = 0;
+	nIndex[2][1] = 1;
 
-  for (i = 0; i < 3; i++)
-  {
-    if (vRotation[i] != 0)
-    {
-      float dAngle = vRotation[i] * Q_PI / 180.0f;
-	    float c = (vec_t)cos(dAngle);
-      float s = (vec_t)sin(dAngle);
-      vWork[nIndex[i][0]] = va[nIndex[i][0]] * c - va[nIndex[i][1]] * s;
-      vWork[nIndex[i][1]] = va[nIndex[i][0]] * s + va[nIndex[i][1]] * c;
-    }
-    VectorCopy(vWork, va);
-  }
-  VectorCopy(vWork, out);
+	for (i = 0; i < 3; i++) {
+		if (vRotation[i] != 0) {
+			float dAngle = vRotation[i] * Q_PI / 180.0f;
+			float c = (vec_t)cos(dAngle);
+			float s = (vec_t)sin(dAngle);
+			vWork[nIndex[i][0]] = va[nIndex[i][0]] * c - va[nIndex[i][1]] * s;
+			vWork[nIndex[i][1]] = va[nIndex[i][0]] * s + va[nIndex[i][1]] * c;
+		}
+		VectorCopy(vWork, va);
+	}
+	VectorCopy(vWork, out);
 }
 
-void VectorRotateOrigin (vec3_t vIn, vec3_t vRotation, vec3_t vOrigin, vec3_t out)
-{
-  vec3_t vTemp, vTemp2;
+void VectorRotateOrigin (vec3_t vIn, vec3_t vRotation, vec3_t vOrigin, vec3_t out) {
+	vec3_t vTemp, vTemp2;
 
-  VectorSubtract(vIn, vOrigin, vTemp);
-  VectorRotate(vTemp, vRotation, vTemp2);
-  VectorAdd(vTemp2, vOrigin, out);
+	VectorSubtract(vIn, vOrigin, vTemp);
+	VectorRotate(vTemp, vRotation, vTemp2);
+	VectorAdd(vTemp2, vOrigin, out);
 }
 
-void VectorPolar(vec3_t v, float radius, float theta, float phi)
-{
- 	v[0]=(float)(radius * cos(theta) * cos(phi));
+void VectorPolar(vec3_t v, float radius, float theta, float phi) {
+	v[0]=(float)(radius * cos(theta) * cos(phi));
 	v[1]=(float)(radius * sin(theta) * cos(phi));
 	v[2]=(float)(radius * sin(phi));
 }
 
-void VectorSnap(vec3_t v)
-{
-  int i;
-  for (i = 0; i < 3; i++)
-  {
-    v[i] = (vec_t)FLOAT_TO_INTEGER(v[i]);
-  }
+void VectorSnap(vec3_t v) {
+	int i;
+	for (i = 0; i < 3; i++) {
+		v[i] = (vec_t)FLOAT_TO_INTEGER(v[i]);
+	}
 }
 
-void VectorISnap(vec3_t point, int snap)
-{
-  int i;
-	for (i = 0 ;i < 3 ; i++)
-	{
+void VectorISnap(vec3_t point, int snap) {
+	int i;
+	for (i = 0 ;i < 3 ; i++) {
 		point[i] = (vec_t)FLOAT_SNAP(point[i], snap);
 	}
 }
 
-void VectorFSnap(vec3_t point, float snap)
-{
-  int i;
-	for (i = 0 ;i < 3 ; i++)
-	{
+void VectorFSnap(vec3_t point, float snap) {
+	int i;
+	for (i = 0 ;i < 3 ; i++) {
 		point[i] = (vec_t)FLOAT_SNAP(point[i], snap);
 	}
 }
 
-void _Vector5Add (vec5_t va, vec5_t vb, vec5_t out)
-{
+void _Vector5Add (vec5_t va, vec5_t vb, vec5_t out) {
 	out[0] = va[0]+vb[0];
 	out[1] = va[1]+vb[1];
 	out[2] = va[2]+vb[2];
@@ -252,8 +232,7 @@ void _Vector5Add (vec5_t va, vec5_t vb, vec5_t out)
 	out[4] = va[4]+vb[4];
 }
 
-void _Vector5Scale (vec5_t v, vec_t scale, vec5_t out)
-{
+void _Vector5Scale (vec5_t v, vec_t scale, vec5_t out) {
 	out[0] = v[0] * scale;
 	out[1] = v[1] * scale;
 	out[2] = v[2] * scale;
@@ -261,27 +240,23 @@ void _Vector5Scale (vec5_t v, vec_t scale, vec5_t out)
 	out[4] = v[4] * scale;
 }
 
-void _Vector53Copy (vec5_t in, vec3_t out)
-{
+void _Vector53Copy (vec5_t in, vec3_t out) {
 	out[0] = in[0];
 	out[1] = in[1];
 	out[2] = in[2];
 }
 
 // NOTE: added these from Ritual's Q3Radiant
-void ClearBounds (vec3_t mins, vec3_t maxs)
-{
+void ClearBounds (vec3_t mins, vec3_t maxs) {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
 }
 
-void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
-{
+void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs) {
 	int		i;
 	vec_t	val;
-	
-	for (i=0 ; i<3 ; i++)
-	{
+
+	for (i=0 ; i<3 ; i++) {
 		val = v[i];
 		if (val < mins[i])
 			mins[i] = val;
@@ -290,12 +265,11 @@ void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 	}
 }
 
-void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
-{
+void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up) {
 	float		angle;
 	static float		sr, sp, sy, cr, cp, cy;
 	// static to help MS compiler fp bugs
-	
+
 	angle = angles[YAW] * (Q_PI*2.0f / 360.0f);
 	sy = (vec_t)sin(angle);
 	cy = (vec_t)cos(angle);
@@ -305,60 +279,48 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 	angle = angles[ROLL] * (Q_PI*2.0f / 360.0f);
 	sr = (vec_t)sin(angle);
 	cr = (vec_t)cos(angle);
-	
-	if (forward)
-	{
+
+	if (forward) {
 		forward[0] = cp*cy;
 		forward[1] = cp*sy;
 		forward[2] = -sp;
 	}
-	if (right)
-	{
+	if (right) {
 		right[0] = -sr*sp*cy+cr*sy;
 		right[1] = -sr*sp*sy-cr*cy;
 		right[2] = -sr*cp;
 	}
-	if (up)
-	{
+	if (up) {
 		up[0] = cr*sp*cy+sr*sy;
 		up[1] = cr*sp*sy-sr*cy;
 		up[2] = cr*cp;
 	}
 }
 
-void VectorToAngles( vec3_t vec, vec3_t angles )
-{
+void VectorToAngles( vec3_t vec, vec3_t angles ) {
 	float forward;
 	float yaw, pitch;
-	
-	if ( ( vec[ 0 ] == 0 ) && ( vec[ 1 ] == 0 ) )
-	{
+
+	if ( ( vec[ 0 ] == 0 ) && ( vec[ 1 ] == 0 ) ) {
 		yaw = 0;
-		if ( vec[ 2 ] > 0 )
-		{
+		if ( vec[ 2 ] > 0 ) {
 			pitch = 90;
-		}
-		else
-		{
+		} else {
 			pitch = 270;
 		}
-	}
-	else
-	{
+	} else {
 		yaw = (vec_t)atan2( vec[ 1 ], vec[ 0 ] ) * 180 / Q_PI;
-		if ( yaw < 0 )
-		{
+		if ( yaw < 0 ) {
 			yaw += 360;
 		}
-		
+
 		forward = ( float )sqrt( vec[ 0 ] * vec[ 0 ] + vec[ 1 ] * vec[ 1 ] );
 		pitch = (vec_t)atan2( vec[ 2 ], forward ) * 180 / Q_PI;
-		if ( pitch < 0 )
-		{
+		if ( pitch < 0 ) {
 			pitch += 360;
 		}
 	}
-	
+
 	angles[ 0 ] = pitch;
 	angles[ 1 ] = yaw;
 	angles[ 2 ] = 0;
@@ -430,7 +392,7 @@ int	PlaneTypeForNormal (vec3_t normal) {
 		return PLANE_Y;
 	if (normal[2] == 1.0 || normal[2] == -1.0)
 		return PLANE_Z;
-	
+
 	return PLANE_NON_AXIAL;
 }
 
@@ -441,27 +403,26 @@ MatrixMultiply
 */
 void MatrixMultiply(float in1[3][3], float in2[3][3], float out[3][3]) {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] +
-				in1[0][2] * in2[2][0];
+	            in1[0][2] * in2[2][0];
 	out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] +
-				in1[0][2] * in2[2][1];
+	            in1[0][2] * in2[2][1];
 	out[0][2] = in1[0][0] * in2[0][2] + in1[0][1] * in2[1][2] +
-				in1[0][2] * in2[2][2];
+	            in1[0][2] * in2[2][2];
 	out[1][0] = in1[1][0] * in2[0][0] + in1[1][1] * in2[1][0] +
-				in1[1][2] * in2[2][0];
+	            in1[1][2] * in2[2][0];
 	out[1][1] = in1[1][0] * in2[0][1] + in1[1][1] * in2[1][1] +
-				in1[1][2] * in2[2][1];
+	            in1[1][2] * in2[2][1];
 	out[1][2] = in1[1][0] * in2[0][2] + in1[1][1] * in2[1][2] +
-				in1[1][2] * in2[2][2];
+	            in1[1][2] * in2[2][2];
 	out[2][0] = in1[2][0] * in2[0][0] + in1[2][1] * in2[1][0] +
-				in1[2][2] * in2[2][0];
+	            in1[2][2] * in2[2][0];
 	out[2][1] = in1[2][0] * in2[0][1] + in1[2][1] * in2[1][1] +
-				in1[2][2] * in2[2][1];
+	            in1[2][2] * in2[2][1];
 	out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] +
-				in1[2][2] * in2[2][2];
+	            in1[2][2] * in2[2][2];
 }
 
-void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
-{
+void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal ) {
 	float d;
 	vec3_t n;
 	float inv_denom;
@@ -482,8 +443,7 @@ void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
 /*
 ** assumes "src" is normalized
 */
-void PerpendicularVector( vec3_t dst, const vec3_t src )
-{
+void PerpendicularVector( vec3_t dst, const vec3_t src ) {
 	int	pos;
 	int i;
 	vec_t minelem = 1.0F;
@@ -492,10 +452,8 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 	/*
 	** find the smallest magnitude axially aligned vector
 	*/
-	for ( pos = 0, i = 0; i < 3; i++ )
-	{
-		if ( fabs( src[i] ) < minelem )
-		{
+	for ( pos = 0, i = 0; i < 3; i++ ) {
+		if ( fabs( src[i] ) < minelem ) {
 			pos = i;
 			minelem = (vec_t)fabs( src[i] );
 		}
@@ -522,7 +480,7 @@ This is not implemented very well...
 ===============
 */
 void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point,
-							 float degrees ) {
+                              float degrees ) {
 	float	m[3][3];
 	float	im[3][3];
 	float	zrot[3][3];

@@ -44,8 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-typedef struct tga_s
-{
+typedef struct tga_s {
 	unsigned char	id_length, colormap_type, image_type;
 	unsigned short	colormap_index, colormap_length;
 	unsigned char	colormap_size;
@@ -62,8 +61,7 @@ loads a tga image into a newly allocated image buffer
 fixme: replace/clean this function
 */
 
-void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *width, int *height )
-{
+void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *width, int *height ) {
 	int				row, column;
 	int				columns, rows, numPixels;
 	unsigned char	*pixbuf;
@@ -74,7 +72,7 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 
 	*pic = NULL;
 
-	if( buffer == NULL )
+	if ( buffer == NULL )
 		return;
 
 	buf_p = buffer;
@@ -99,21 +97,18 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 	targa_header.pixel_size = *buf_p++;
 	targa_header.attributes = *buf_p++;
 
-	if( targa_header.image_type != 2 && targa_header.image_type != 10 && targa_header.image_type != 3 )
-	{
+	if ( targa_header.image_type != 2 && targa_header.image_type != 10 && targa_header.image_type != 3 ) {
 		_pico_printf( PICO_ERROR, "Only type 2 (RGB), 3 (gray), and 10 (RGB) TGA images supported\n");
 		pic = NULL;
 		return;
 	}
 
-	if( targa_header.colormap_type != 0 )
-	{
+	if ( targa_header.colormap_type != 0 ) {
 		_pico_printf( PICO_ERROR, "Indexed color TGA images not supported\n" );
 		return;
 	}
 
-	if( targa_header.pixel_size != 32 && targa_header.pixel_size != 24 && targa_header.image_type != 3 )
-	{
+	if ( targa_header.pixel_size != 32 && targa_header.pixel_size != 24 && targa_header.image_type != 3 ) {
 		_pico_printf( PICO_ERROR, "Only 32 or 24 bit TGA images supported (not indexed color)\n");
 		pic = NULL;
 		return;
@@ -134,17 +129,13 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 	if (targa_header.id_length != 0)
 		buf_p += targa_header.id_length;  // skip TARGA image comment
 
-	if ( targa_header.image_type==2 || targa_header.image_type == 3 )
-	{
+	if ( targa_header.image_type==2 || targa_header.image_type == 3 ) {
 		// Uncompressed RGB or gray scale image
-		for(row=rows-1; row>=0; row--)
-		{
+		for (row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
-			for(column=0; column<columns; column++)
-			{
+			for (column=0; column<columns; column++) {
 				unsigned char red,green,blue,alphabyte;
-				switch (targa_header.pixel_size)
-				{
+				switch (targa_header.pixel_size) {
 
 				case 8:
 					blue = *buf_p++;
@@ -183,8 +174,7 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 	}
 
 	/* rle encoded pixels */
-	else if( targa_header.image_type == 10 )
-	{
+	else if ( targa_header.image_type == 10 ) {
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
 
 		red = 0;
@@ -192,31 +182,31 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 		blue = 0;
 		alphabyte = 0xff;
 
-		for(row=rows-1; row>=0; row--) {
+		for (row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
-			for(column=0; column<columns; ) {
+			for (column=0; column<columns; ) {
 				packetHeader= *buf_p++;
 				packetSize = 1 + (packetHeader & 0x7f);
 				if (packetHeader & 0x80) {        // run-length packet
 					switch (targa_header.pixel_size) {
-						case 24:
-								blue = *buf_p++;
-								green = *buf_p++;
-								red = *buf_p++;
-								alphabyte = 255;
-								break;
-						case 32:
-								blue = *buf_p++;
-								green = *buf_p++;
-								red = *buf_p++;
-								alphabyte = *buf_p++;
-								break;
-						default:
-							//Error("LoadTGA: illegal pixel_size '%d' in file '%s'\n", targa_header.pixel_size, name );
-							break;
+					case 24:
+						blue = *buf_p++;
+						green = *buf_p++;
+						red = *buf_p++;
+						alphabyte = 255;
+						break;
+					case 32:
+						blue = *buf_p++;
+						green = *buf_p++;
+						red = *buf_p++;
+						alphabyte = *buf_p++;
+						break;
+					default:
+						//Error("LoadTGA: illegal pixel_size '%d' in file '%s'\n", targa_header.pixel_size, name );
+						break;
 					}
 
-					for(j=0;j<packetSize;j++) {
+					for (j=0;j<packetSize;j++) {
 						*pixbuf++=red;
 						*pixbuf++=green;
 						*pixbuf++=blue;
@@ -231,32 +221,31 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 							pixbuf = targa_rgba + row*columns*4;
 						}
 					}
-				}
-				else {                            // non run-length packet
-					for(j=0;j<packetSize;j++) {
+				} else {                           // non run-length packet
+					for (j=0;j<packetSize;j++) {
 						switch (targa_header.pixel_size) {
-							case 24:
-									blue = *buf_p++;
-									green = *buf_p++;
-									red = *buf_p++;
-									*pixbuf++ = red;
-									*pixbuf++ = green;
-									*pixbuf++ = blue;
-									*pixbuf++ = 255;
-									break;
-							case 32:
-									blue = *buf_p++;
-									green = *buf_p++;
-									red = *buf_p++;
-									alphabyte = *buf_p++;
-									*pixbuf++ = red;
-									*pixbuf++ = green;
-									*pixbuf++ = blue;
-									*pixbuf++ = alphabyte;
-									break;
-							default:
-								//Sysprintf("LoadTGA: illegal pixel_size '%d' in file '%s'\n", targa_header.pixel_size, name );
-								break;
+						case 24:
+							blue = *buf_p++;
+							green = *buf_p++;
+							red = *buf_p++;
+							*pixbuf++ = red;
+							*pixbuf++ = green;
+							*pixbuf++ = blue;
+							*pixbuf++ = 255;
+							break;
+						case 32:
+							blue = *buf_p++;
+							green = *buf_p++;
+							red = *buf_p++;
+							alphabyte = *buf_p++;
+							*pixbuf++ = red;
+							*pixbuf++ = green;
+							*pixbuf++ = blue;
+							*pixbuf++ = alphabyte;
+							break;
+						default:
+							//Sysprintf("LoadTGA: illegal pixel_size '%d' in file '%s'\n", targa_header.pixel_size, name );
+							break;
 						}
 						column++;
 						if (column==columns) { // pixel packet run spans across rows
@@ -270,18 +259,16 @@ void _terrain_load_tga_buffer( unsigned char *buffer, unsigned char **pic, int *
 					}
 				}
 			}
-			breakOut:;
+breakOut:
+			;
 		}
 	}
 
 	/* fix vertically flipped image */
-	if( (targa_header.attributes & (1<<5)) )
-	{
+	if ( (targa_header.attributes & (1<<5)) ) {
 		int flip;
-		for (row = 0; row < .5f * rows; row++)
-		{
-			for (column = 0; column < columns; column++)
-			{
+		for (row = 0; row < .5f * rows; row++) {
+			for (column = 0; column < columns; column++) {
 				flip = *( (int*)targa_rgba + row * columns + column);
 				*( (int*)targa_rgba + row * columns + column) = *( (int*)targa_rgba + ( ( rows - 1 ) - row ) * columns + column );
 				*( (int*)targa_rgba + ( ( rows - 1 ) - row ) * columns + column ) = flip;
@@ -297,22 +284,20 @@ _terrain_canload()
 validates a picoterrain file
 */
 
-static int _terrain_canload( PM_PARAMS_CANLOAD )
-{
+static int _terrain_canload( PM_PARAMS_CANLOAD ) {
 	picoParser_t	*p;
 
 	/* create pico parser */
 	p = _pico_new_parser( (picoByte_t*) buffer, bufSize );
-	if( p == NULL )
+	if ( p == NULL )
 		return PICO_PMV_ERROR_MEMORY;
 
 	/* get first token */
-	if( _pico_parse_first( p ) == NULL)
+	if ( _pico_parse_first( p ) == NULL)
 		return PICO_PMV_ERROR_IDENT;
 
 	/* check first token */
-	if( _pico_stricmp( p->token, "picoterrain" ) )
-	{
+	if ( _pico_stricmp( p->token, "picoterrain" ) ) {
 		_pico_free_parser( p );
 		return PICO_PMV_ERROR_IDENT;
 	}
@@ -331,8 +316,7 @@ _terrain_load()
 loads a picoterrain file
 */
 
-static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
-{
+static picoModel_t *_terrain_load( PM_PARAMS_LOAD ) {
 	int				i, j, v, pw[ 5 ], r;
 	picoParser_t	*p;
 
@@ -352,16 +336,15 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 
 	/* create pico parser */
 	p = _pico_new_parser( (picoByte_t*) buffer, bufSize );
-	if( p == NULL )
+	if ( p == NULL )
 		return NULL;
 
 	/* get first token */
-	if( _pico_parse_first( p ) == NULL)
+	if ( _pico_parse_first( p ) == NULL)
 		return NULL;
 
 	/* check first token */
-	if( _pico_stricmp( p->token, "picoterrain" ) )
-	{
+	if ( _pico_stricmp( p->token, "picoterrain" ) ) {
 		_pico_printf( PICO_ERROR, "Invalid PicoTerrain model" );
 		_pico_free_parser( p );
 		return NULL;
@@ -372,52 +355,44 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 	_pico_set_vec( scale, 512, 512, 32 );
 
 	/* parse ase model file */
-	while( 1 )
-	{
+	while ( 1 ) {
 		/* get first token on line */
-		if( !_pico_parse_first( p ) )
+		if ( !_pico_parse_first( p ) )
 			break;
 
 		/* skip empty lines */
-		if( !p->token || !p->token[ 0 ] )
+		if ( !p->token || !p->token[ 0 ] )
 			continue;
 
 		/* shader */
-		if( !_pico_stricmp( p->token, "shader" ) )
-		{
-			if( _pico_parse( p, 0 ) && p->token[ 0 ] )
-			{
-				if( shader != NULL )
+		if ( !_pico_stricmp( p->token, "shader" ) ) {
+			if ( _pico_parse( p, 0 ) && p->token[ 0 ] ) {
+				if ( shader != NULL )
 					_pico_free( shader );
 				shader = _pico_clone_alloc( p->token );
 			}
 		}
 
 		/* heightmap */
-		else if( !_pico_stricmp( p->token, "heightmap" ) )
-		{
-			if( _pico_parse( p, 0 ) && p->token[ 0 ] )
-			{
-				if( heightmapFile != NULL )
+		else if ( !_pico_stricmp( p->token, "heightmap" ) ) {
+			if ( _pico_parse( p, 0 ) && p->token[ 0 ] ) {
+				if ( heightmapFile != NULL )
 					_pico_free( heightmapFile );
 				heightmapFile = _pico_clone_alloc( p->token );
 			}
 		}
 
 		/* colormap */
-		else if( !_pico_stricmp( p->token, "colormap" ) )
-		{
-			if( _pico_parse( p, 0 ) && p->token[ 0 ] )
-			{
-				if( colormapFile != NULL )
+		else if ( !_pico_stricmp( p->token, "colormap" ) ) {
+			if ( _pico_parse( p, 0 ) && p->token[ 0 ] ) {
+				if ( colormapFile != NULL )
 					_pico_free( colormapFile );
 				colormapFile = _pico_clone_alloc( p->token );
 			}
 		}
 
 		/* scale */
-		else if( !_pico_stricmp( p->token, "scale" ) )
-		{
+		else if ( !_pico_stricmp( p->token, "scale" ) ) {
 			_pico_parse_vec( p, scale );
 		}
 
@@ -434,12 +409,11 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 	_pico_free( heightmapFile );
 	_pico_free_file( imageBuffer );
 
-	if( heightmap == NULL || w < 2 || h < 2 )
-	{
+	if ( heightmap == NULL || w < 2 || h < 2 ) {
 		_pico_printf( PICO_ERROR, "PicoTerrain model with invalid heightmap" );
-		if( shader != NULL )
+		if ( shader != NULL )
 			_pico_free( shader );
-		if( colormapFile != NULL )
+		if ( colormapFile != NULL )
 			_pico_free( colormapFile );
 		_pico_free_parser( p );
 		return NULL;
@@ -455,8 +429,7 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 	_pico_free( colormapFile );
 	_pico_free_file( imageBuffer );
 
-	if( cw != w || ch != h )
-	{
+	if ( cw != w || ch != h ) {
 		_pico_printf( PICO_WARNING, "PicoTerrain colormap/heightmap size mismatch" );
 		_pico_free( colormap );
 		colormap = NULL;
@@ -466,8 +439,7 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 
 	/* create new pico model */
 	picoModel = PicoNewModel();
-	if( picoModel == NULL )
-	{
+	if ( picoModel == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model" );
 		return NULL;
 	}
@@ -480,8 +452,7 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 
 	/* allocate new pico surface */
 	picoSurface = PicoNewSurface( picoModel );
-	if( picoSurface == NULL )
-	{
+	if ( picoSurface == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model surface" );
 		PicoFreeModel( picoModel ); /* sea */
 		return NULL;
@@ -495,8 +466,7 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 
 	/* create new pico shader */
 	picoShader = PicoNewShader( picoModel );
-	if( picoShader == NULL )
-	{
+	if ( picoShader == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model shader" );
 		PicoFreeModel( picoModel );
 		_pico_free( shader );
@@ -516,21 +486,19 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 	_pico_set_vec( normal, 0.0f, 0.0f, 0.0f );
 
 	/* create mesh */
-	for( j = 0; j < h; j++ )
-	{
-		for( i = 0; i < w; i++ )
-		{
+	for ( j = 0; j < h; j++ ) {
+		for ( i = 0; i < w; i++ ) {
 			/* get pointers */
 			v = i + (j * w);
 			heightPixel = heightmap + v * 4;
 			colorPixel = colormap
-				? colormap + v * 4
-				: NULL;
+			             ? colormap + v * 4
+			             : NULL;
 
 			/* set xyz */
 			_pico_set_vec( xyz, origin[ 0 ] + scale[ 0 ] * i,
-								origin[ 1 ] + scale[ 1 ] * j,
-								origin[ 2 ] + scale[ 2 ] * heightPixel[ 0 ] );
+			               origin[ 1 ] + scale[ 1 ] * j,
+			               origin[ 2 ] + scale[ 2 ] * heightPixel[ 0 ] );
 			PicoSetSurfaceXYZ( picoSurface, v, xyz );
 
 			/* set normal */
@@ -542,15 +510,14 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 			PicoSetSurfaceST( picoSurface, 0, v, st );
 
 			/* set color */
-			if( colorPixel != NULL )
+			if ( colorPixel != NULL )
 				_pico_set_color( color, colorPixel[ 0 ], colorPixel[ 1 ], colorPixel[ 2 ], colorPixel[ 3 ] );
 			else
 				_pico_set_color( color, 255, 255, 255, 255 );
 			PicoSetSurfaceColor( picoSurface, 0, v, color );
 
 			/* set triangles (zero alpha in heightmap suppresses this quad) */
-			if( i < (w - 1) && j < (h - 1) && heightPixel[ 3 ] >= 128 )
-			{
+			if ( i < (w - 1) && j < (h - 1) && heightPixel[ 3 ] >= 128 ) {
 				/* set indexes */
 				pw[ 0 ] = i + (j * w);
 				pw[ 1 ] = i + ((j + 1) * w);
@@ -586,8 +553,7 @@ static picoModel_t *_terrain_load( PM_PARAMS_LOAD )
 
 
 /* pico file format module definition */
-const picoModule_t picoModuleTerrain =
-{
+const picoModule_t picoModuleTerrain = {
 	"1.3",						/* module version string */
 	"PicoTerrain",				/* module display name */
 	"Randy Reddig",				/* author's name */
@@ -597,6 +563,6 @@ const picoModule_t picoModuleTerrain =
 	},
 	_terrain_canload,			/* validation routine */
 	_terrain_load,				/* load routine */
-	 NULL,						/* save validation routine */
-	 NULL						/* save routine */
+	NULL,						/* save validation routine */
+	NULL						/* save routine */
 };

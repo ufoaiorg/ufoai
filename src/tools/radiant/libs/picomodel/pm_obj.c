@@ -50,8 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* #define DEBUG_PM_OBJ_EX */
 
 /* this holds temporary vertex data read by parser */
-typedef struct SObjVertexData
-{
+typedef struct SObjVertexData {
 	picoVec3_t	v;			/* geometric vertices */
 	picoVec2_t	vt;			/* texture vertices */
 	picoVec3_t	vn;			/* vertex normals (optional) */
@@ -61,8 +60,7 @@ TObjVertexData;
 /* _obj_canload:
  *  validates a wavefront obj model file.
  */
-static int _obj_canload( PM_PARAMS_CANLOAD )
-{
+static int _obj_canload( PM_PARAMS_CANLOAD ) {
 	picoParser_t *p;
 
 	/* check data length */
@@ -72,8 +70,7 @@ static int _obj_canload( PM_PARAMS_CANLOAD )
 	/* first check file extension. we have to do this for objs */
 	/* cause there is no good way to identify the contents */
 	if (_pico_stristr(fileName,".obj") != NULL ||
-		_pico_stristr(fileName,".wf" ) != NULL)
-	{
+	        _pico_stristr(fileName,".wf" ) != NULL) {
 		return PICO_PMV_OK;
 	}
 	/* if the extension check failed we parse through the first */
@@ -86,8 +83,7 @@ static int _obj_canload( PM_PARAMS_CANLOAD )
 		return PICO_PMV_ERROR_MEMORY;
 
 	/* parse obj head line by line for type check */
-	while( 1 )
-	{
+	while ( 1 ) {
 		/* get first token on line */
 		if (_pico_parse_first( p ) == NULL)
 			break;
@@ -102,10 +98,9 @@ static int _obj_canload( PM_PARAMS_CANLOAD )
 
 		/* material library keywords are teh good */
 		if (!_pico_stricmp(p->token,"usemtl") ||
-			!_pico_stricmp(p->token,"mtllib") ||
-			!_pico_stricmp(p->token,"g") ||
-			!_pico_stricmp(p->token,"v"))	/* v,g bit fishy, but uh... */
-		{
+		        !_pico_stricmp(p->token,"mtllib") ||
+		        !_pico_stricmp(p->token,"g") ||
+		        !_pico_stricmp(p->token,"v")) {	/* v,g bit fishy, but uh... */
 			/* free the pico parser thing */
 			_pico_free_parser( p );
 
@@ -130,9 +125,8 @@ static int _obj_canload( PM_PARAMS_CANLOAD )
 #define SIZE_OBJ_STEP  4096
 
 static TObjVertexData *SizeObjVertexData(
-	TObjVertexData *vertexData, int reqEntries,
-	int *entries, int *allocated)
-{
+    TObjVertexData *vertexData, int reqEntries,
+    int *entries, int *allocated) {
 	int newAllocated;
 
 	/* sanity checks */
@@ -142,26 +136,24 @@ static TObjVertexData *SizeObjVertexData(
 		return NULL; /* must have */
 
 	/* no need to grow yet */
-	if (vertexData && (reqEntries < *allocated))
-	{
+	if (vertexData && (reqEntries < *allocated)) {
 		*entries = reqEntries;
 		return vertexData;
 	}
 	/* given vertex data ptr not allocated yet */
-	if (vertexData == NULL)
-	{
+	if (vertexData == NULL) {
 		/* how many entries to allocate */
 		newAllocated = (reqEntries > SIZE_OBJ_STEP) ?
-						reqEntries : SIZE_OBJ_STEP;
+		               reqEntries : SIZE_OBJ_STEP;
 
 		/* throw out an extended debug message */
 #ifdef DEBUG_PM_OBJ_EX
 		printf("SizeObjVertexData: allocate (%d entries)\n",
-			newAllocated);
+		       newAllocated);
 #endif
 		/* first time allocation */
 		vertexData = (TObjVertexData *)
-			_pico_alloc( sizeof(TObjVertexData) * newAllocated );
+		             _pico_alloc( sizeof(TObjVertexData) * newAllocated );
 
 		/* allocation failed */
 		if (vertexData == NULL)
@@ -173,20 +165,19 @@ static TObjVertexData *SizeObjVertexData(
 		return vertexData;
 	}
 	/* given vertex data ptr needs to be resized */
-	if (reqEntries == *allocated)
-	{
+	if (reqEntries == *allocated) {
 		newAllocated = (*allocated + SIZE_OBJ_STEP);
 
 		/* throw out an extended debug message */
 #ifdef DEBUG_PM_OBJ_EX
 		printf("SizeObjVertexData: reallocate (%d entries)\n",
-			newAllocated);
+		       newAllocated);
 #endif
 		/* try to reallocate */
 		vertexData = (TObjVertexData *)
-			_pico_realloc( (void *)&vertexData,
-				sizeof(TObjVertexData) * (*allocated),
-				sizeof(TObjVertexData) * (newAllocated));
+		             _pico_realloc( (void *)&vertexData,
+		                            sizeof(TObjVertexData) * (*allocated),
+		                            sizeof(TObjVertexData) * (newAllocated));
 
 		/* reallocation failed */
 		if (vertexData == NULL)
@@ -201,10 +192,8 @@ static TObjVertexData *SizeObjVertexData(
 	return NULL;
 }
 
-static void FreeObjVertexData( TObjVertexData *vertexData )
-{
-	if (vertexData != NULL)
-	{
+static void FreeObjVertexData( TObjVertexData *vertexData ) {
+	if (vertexData != NULL) {
 		free( (TObjVertexData *)vertexData );
 	}
 }
@@ -212,8 +201,7 @@ static void FreeObjVertexData( TObjVertexData *vertexData )
 /* _obj_load:
  *  loads a wavefront obj model file.
 */
-static picoModel_t *_obj_load( PM_PARAMS_LOAD )
-{
+static picoModel_t *_obj_load( PM_PARAMS_LOAD ) {
 	TObjVertexData *vertexData  = NULL;
 	picoModel_t    *model;
 	picoSurface_t  *curSurface  = NULL;
@@ -227,7 +215,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 	int				curFace		= 0;
 
 	/* helper */
-	#define _obj_error_return(m) \
+#define _obj_error_return(m) \
 	{ \
 		_pico_printf( PICO_ERROR,"%s in OBJ, line %d.",m,p->curLine); \
 		_pico_free_parser( p ); \
@@ -241,8 +229,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 
 	/* create a new pico model */
 	model = PicoNewModel();
-	if (model == NULL)
-	{
+	if (model == NULL) {
 		_pico_free_parser( p );
 		return NULL;
 	}
@@ -252,8 +239,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 	PicoSetModelFileName( model,fileName );
 
 	/* parse obj line by line */
-	while( 1 )
-	{
+	while ( 1 ) {
 		/* get first token on line */
 		if (_pico_parse_first( p ) == NULL)
 			break;
@@ -263,14 +249,12 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 			continue;
 
 		/* skip comment lines */
-		if (p->token[0] == '#')
-		{
+		if (p->token[0] == '#') {
 			_pico_parse_skip_rest( p );
 			continue;
 		}
 		/* vertex */
-		if (!_pico_stricmp(p->token,"v"))
-		{
+		if (!_pico_stricmp(p->token,"v")) {
 			TObjVertexData *data;
 			picoVec3_t v;
 
@@ -291,8 +275,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 #endif
 		}
 		/* uv coord */
-		else if (!_pico_stricmp(p->token,"vt"))
-		{
+		else if (!_pico_stricmp(p->token,"vt")) {
 			TObjVertexData *data;
 			picoVec2_t coord;
 
@@ -313,8 +296,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 #endif
 		}
 		/* vertex normal */
-		else if (!_pico_stricmp(p->token,"vn"))
-		{
+		else if (!_pico_stricmp(p->token,"vn")) {
 			TObjVertexData *data;
 			picoVec3_t n;
 
@@ -335,15 +317,13 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 #endif
 		}
 		/* new group (for us this means a new surface) */
-		else if (!_pico_stricmp(p->token,"g"))
-		{
+		else if (!_pico_stricmp(p->token,"g")) {
 			picoSurface_t *newSurface;
 			char *groupName;
 
 			/* get first group name (ignore 2nd,3rd,etc.) */
 			groupName = _pico_parse( p,0 );
-			if (groupName == NULL || !strlen(groupName))
-			{
+			if (groupName == NULL || !strlen(groupName)) {
 				/* some obj exporters feel like they don't need to */
 				/* supply a group name. so we gotta handle it here */
 				strcpy( p->token,"default" );
@@ -371,8 +351,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 #endif
 		}
 		/* face (oh jesus, hopefully this will do the job right ;) */
-		else if (!_pico_stricmp(p->token,"f"))
-		{
+		else if (!_pico_stricmp(p->token,"f")) {
 			/* okay, this is a mess. some 3d apps seem to try being unique, */
 			/* hello cinema4d & 3d exploration, feel good today?, and save */
 			/* this crap in tons of different formats. gah, those screwed */
@@ -403,15 +382,13 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 			/* vertices (cause we only support triangles) into 'i*[]' */
 			/* store the actual vertex/uv/normal data in three arrays */
 			/* called 'verts','coords' and 'normals'. */
-			for (i=0; i<4; i++)
-			{
+			for (i=0; i<4; i++) {
 				char *str;
 
 				/* get next vertex index string (different */
 				/* formats are handled below) */
 				str = _pico_parse( p,0 );
-				if (str == NULL)
-				{
+				if (str == NULL) {
 					/* just break for quads */
 					if (i == 3) break;
 
@@ -424,26 +401,22 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 					have_quad = 1;
 
 				/* get slash count once */
-				if (i == 0)
-				{
+				if (i == 0) {
 					slashcount  = _pico_strchcount( str,'/' );
 					doubleslash =  strstr(str,"//") != NULL;
 				}
 				/* handle format 'v//vn' */
-				if (doubleslash && (slashcount == 2))
-				{
+				if (doubleslash && (slashcount == 2)) {
 					has_v = has_vn = 1;
 					sscanf( str,"%d//%d",&iv[ i ],&ivn[ i ] );
 				}
 				/* handle format 'v/vt/vn' */
-				else if (!doubleslash && (slashcount == 2))
-				{
+				else if (!doubleslash && (slashcount == 2)) {
 					has_v = has_vt = has_vn = 1;
 					sscanf( str,"%d/%d/%d",&iv[ i ],&ivt[ i ],&ivn[ i ] );
 				}
 				/* handle format 'v/vt' (non-standard fuckage) */
-				else if (!doubleslash && (slashcount == 1))
-				{
+				else if (!doubleslash && (slashcount == 1)) {
 					has_v = has_vt = 1;
 					sscanf( str,"%d/%d",&iv[ i ],&ivt[ i ] );
 				}
@@ -473,8 +446,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 				if (ivn[ i ] < 1) ivn[ i ] = 1;
 				*/
 				/* set vertex origin */
-				if (has_v)
-				{
+				if (has_v) {
 					/* check vertex index range */
 					if (iv[ i ] < 1 || iv[ i ] > numVerts)
 						_obj_error_return("Vertex index out of range");
@@ -485,8 +457,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 					verts[ i ][ 2 ] = vertexData[ iv[ i ] - 1 ].v[ 2 ];
 				}
 				/* set vertex normal */
-				if (has_vn)
-				{
+				if (has_vn) {
 					/* check normal index range */
 					if (ivn[ i ] < 1 || ivn[ i ] > numNormals)
 						_obj_error_return("Normal index out of range");
@@ -497,8 +468,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 					normals[ i ][ 2 ] = vertexData[ ivn[ i ] - 1 ].vn[ 2 ];
 				}
 				/* set texture coordinate */
-				if (has_vt)
-				{
+				if (has_vt) {
 					/* check uv index range */
 					if (ivt[ i ] < 1 || ivt[ i ] > numUVs)
 						_obj_error_return("UV coord index out of range");
@@ -521,17 +491,18 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 			/* now that we have extracted all the indices and have */
 			/* read the actual data we need to assign all the crap */
 			/* to our current pico surface */
-			if (has_v)
-			{
+			if (has_v) {
 				int max = 3;
 				if (have_quad) max = 4;
 
 				/* assign all surface information */
-				for (i=0; i<max; i++)
-				{
-					/*if( has_v  )*/ PicoSetSurfaceXYZ	 ( curSurface,  (curVertex + i), verts  [ i ] );
-					/*if( has_vt )*/ PicoSetSurfaceST	 ( curSurface,0,(curVertex + i), coords [ i ] );
-					/*if( has_vn )*/ PicoSetSurfaceNormal( curSurface,  (curVertex + i), normals[ i ] );
+				for (i=0; i<max; i++) {
+					/*if( has_v  )*/
+					PicoSetSurfaceXYZ	 ( curSurface,  (curVertex + i), verts  [ i ] );
+					/*if( has_vt )*/
+					PicoSetSurfaceST	 ( curSurface,0,(curVertex + i), coords [ i ] );
+					/*if( has_vn )*/
+					PicoSetSurfaceNormal( curSurface,  (curVertex + i), normals[ i ] );
 				}
 				/* add our triangle (A B C) */
 				PicoSetSurfaceIndex( curSurface,(curFace * 3 + 2),(picoIndex_t)( curVertex + 0 ) );
@@ -540,8 +511,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 				curFace++;
 
 				/* if we don't have a simple triangle, but a quad... */
-				if (have_quad)
-				{
+				if (have_quad) {
 					/* we have to add another triangle (2nd half of quad which is A C D) */
 					PicoSetSurfaceIndex( curSurface,(curFace * 3 + 2),(picoIndex_t)( curVertex + 0 ) );
 					PicoSetSurfaceIndex( curSurface,(curFace * 3 + 1),(picoIndex_t)( curVertex + 2 ) );
@@ -564,8 +534,7 @@ static picoModel_t *_obj_load( PM_PARAMS_LOAD )
 }
 
 /* pico file format module definition */
-const picoModule_t picoModuleOBJ =
-{
+const picoModule_t picoModuleOBJ = {
 	"0.6-b",					/* module version string */
 	"Wavefront ASCII",			/* module display name */
 	"seaw0lf",					/* author's name */
@@ -575,6 +544,6 @@ const picoModule_t picoModuleOBJ =
 	},
 	_obj_canload,				/* validation routine */
 	_obj_load,					/* load routine */
-	 NULL,						/* save validation routine */
-	 NULL						/* save routine */
+	NULL,						/* save validation routine */
+	NULL						/* save routine */
 };

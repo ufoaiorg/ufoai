@@ -52,8 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define	MDC_DIST_SCALE		0.05f
 
 /* mdc decoding normal table */
-double mdcNormals[ 256 ][ 3 ] =
-{
+double mdcNormals[ 256 ][ 3 ] = {
 	{ 1.000000, 0.000000, 0.000000 },
 	{ 0.980785, 0.195090, 0.000000 },
 	{ 0.923880, 0.382683, 0.000000 },
@@ -313,8 +312,7 @@ double mdcNormals[ 256 ][ 3 ] =
 };
 
 /* mdc model frame information */
-typedef struct mdcFrame_s
-{
+typedef struct mdcFrame_s {
 	float		bounds[ 2 ][ 3 ];
 	float		localOrigin[ 3 ];
 	float		radius;
@@ -323,16 +321,14 @@ typedef struct mdcFrame_s
 mdcFrame_t;
 
 /* mdc model tag information */
-typedef struct mdcTag_s
-{
+typedef struct mdcTag_s {
 	short		xyz[3];
 	short		angles[3];
 }
 mdcTag_t;
 
 /* mdc surface mdc (one object mesh) */
-typedef struct mdcSurface_s
-{
+typedef struct mdcSurface_s {
 	char		magic[ 4 ];
 	char		name[ 64 ];			/* polyset name */
 	int			flags;
@@ -353,42 +349,36 @@ typedef struct mdcSurface_s
 }
 mdcSurface_t;
 
-typedef struct mdcShader_s
-{
+typedef struct mdcShader_s {
 	char		name[ 64 ];
 	int			shaderIndex;	/* for ingame use */
 }
 mdcShader_t;
 
-typedef struct mdcTriangle_s
-{
+typedef struct mdcTriangle_s {
 	int			indexes[ 3 ];
 }
 mdcTriangle_t;
 
-typedef struct mdcTexCoord_s
-{
+typedef struct mdcTexCoord_s {
 	float		st[ 2 ];
 }
 mdcTexCoord_t;
 
-typedef struct mdcVertex_s
-{
+typedef struct mdcVertex_s {
 	short		xyz[ 3 ];
 	short		normal;
 }
 mdcVertex_t;
 
-typedef struct mdcXyzCompressed_s
-{
+typedef struct mdcXyzCompressed_s {
 	unsigned int	ofsVec;		/* offset direction from the last base frame */
 }
 mdcXyzCompressed_t;
 
 
 /* mdc model file mdc structure */
-typedef struct mdc_s
-{
+typedef struct mdc_s {
 	char		magic[ 4 ];		/* MDC_MAGIC */
 	int			version;
 	char		name[ 64 ];		/* model name */
@@ -415,23 +405,22 @@ preceding underscore cause it's a static func referenced
 by one structure only.
 */
 
-static int _mdc_canload( PM_PARAMS_CANLOAD )
-{
+static int _mdc_canload( PM_PARAMS_CANLOAD ) {
 	mdc_t	*mdc;
 
 	/* sanity check */
-	if( bufSize < ( sizeof( *mdc ) * 2) )
+	if ( bufSize < ( sizeof( *mdc ) * 2) )
 		return PICO_PMV_ERROR_SIZE;
 
 	/* set as mdc */
 	mdc	= (mdc_t*) buffer;
 
 	/* check mdc magic */
-	if( *((int*) mdc->magic) != *((int*) MDC_MAGIC) )
+	if ( *((int*) mdc->magic) != *((int*) MDC_MAGIC) )
 		return PICO_PMV_ERROR_IDENT;
 
 	/* check mdc version */
-	if( _pico_little_long( mdc->version ) != MDC_VERSION )
+	if ( _pico_little_long( mdc->version ) != MDC_VERSION )
 		return PICO_PMV_ERROR_VERSION;
 
 	/* file seems to be a valid mdc */
@@ -445,8 +434,7 @@ _mdc_load()
 loads a Return to Castle Wolfenstein mdc model file.
 */
 
-static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
-{
+static picoModel_t *_mdc_load( PM_PARAMS_LOAD ) {
 	int					i, j;
 	picoByte_t			*bb;
 	mdc_t				*mdc;
@@ -478,8 +466,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 	mdc	= (mdc_t*) buffer;
 
 	/* check ident and version */
-	if( *((int*) mdc->magic) != *((int*) MDC_MAGIC) || _pico_little_long( mdc->version ) != MDC_VERSION )
-	{
+	if ( *((int*) mdc->magic) != *((int*) MDC_MAGIC) || _pico_little_long( mdc->version ) != MDC_VERSION ) {
 		/* not an mdc file (todo: set error) */
 		return NULL;
 	}
@@ -497,25 +484,21 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 	mdc->ofsEnd = _pico_little_long( mdc->ofsEnd );
 
 	/* do frame check */
-	if( mdc->numFrames < 1 )
-	{
+	if ( mdc->numFrames < 1 ) {
 		_pico_printf( PICO_ERROR, "MDC with 0 frames" );
 		return NULL;
 	}
 
-	if( frameNum < 0 || frameNum >= mdc->numFrames )
-	{
+	if ( frameNum < 0 || frameNum >= mdc->numFrames ) {
 		_pico_printf( PICO_ERROR, "Invalid or out-of-range MDC frame specified" );
 		return NULL;
 	}
 
 	/* swap frames */
 	frame = (mdcFrame_t*) (bb + mdc->ofsFrames );
-	for( i = 0; i < mdc->numFrames; i++, frame++ )
-	{
+	for ( i = 0; i < mdc->numFrames; i++, frame++ ) {
 		frame->radius = _pico_little_float( frame->radius );
-		for( j = 0; j < 3; j++ )
-		{
+		for ( j = 0; j < 3; j++ ) {
 			frame->bounds[ 0 ][ j ] = _pico_little_float( frame->bounds[ 0 ][ j ] );
 			frame->bounds[ 1 ][ j ] = _pico_little_float( frame->bounds[ 1 ][ j ] );
 			frame->localOrigin[ j ] = _pico_little_float( frame->localOrigin[ j ] );
@@ -524,8 +507,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 	/* swap surfaces */
 	surface = (mdcSurface_t*) (bb + mdc->ofsSurfaces);
-	for( i = 0; i < mdc->numSurfaces; i++ )
-	{
+	for ( i = 0; i < mdc->numSurfaces; i++ ) {
 		/* swap surface mdc */
 		surface->flags = _pico_little_long( surface->flags );
 		surface->numBaseFrames = _pico_little_long( surface->numBaseFrames );
@@ -544,8 +526,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 		/* swap triangles */
 		triangle = (mdcTriangle_t*) ((picoByte_t*) surface + surface->ofsTriangles);
-		for( j = 0; j < surface->numTriangles; j++, triangle++ )
-		{
+		for ( j = 0; j < surface->numTriangles; j++, triangle++ ) {
 			/* sea: swaps fixed */
 			triangle->indexes[ 0 ] = _pico_little_long( triangle->indexes[ 0 ] );
 			triangle->indexes[ 1 ] = _pico_little_long( triangle->indexes[ 1 ] );
@@ -554,16 +535,14 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 		/* swap st coords */
 		texCoord = (mdcTexCoord_t*) ((picoByte_t*) surface + surface->ofsSt);
-		for( j = 0; j < surface->numVerts; j++, texCoord++ )
-		{
+		for ( j = 0; j < surface->numVerts; j++, texCoord++ ) {
 			texCoord->st[ 0 ] = _pico_little_float( texCoord->st[ 0 ] );
 			texCoord->st[ 1 ] = _pico_little_float( texCoord->st[ 1 ] );
 		}
 
 		/* swap xyz/normals */
 		vertex = (mdcVertex_t*) ((picoByte_t*) surface + surface->ofsXyzNormals);
-		for( j = 0; j < (surface->numVerts * surface->numBaseFrames); j++, vertex++)
-		{
+		for ( j = 0; j < (surface->numVerts * surface->numBaseFrames); j++, vertex++) {
 			vertex->xyz[ 0 ] = _pico_little_short( vertex->xyz[ 0 ] );
 			vertex->xyz[ 1 ] = _pico_little_short( vertex->xyz[ 1 ] );
 			vertex->xyz[ 2 ] = _pico_little_short( vertex->xyz[ 2 ] );
@@ -572,22 +551,19 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 		/* swap xyz/compressed */
 		vertexComp = (mdcXyzCompressed_t*) ((picoByte_t*) surface + surface->ofsXyzCompressed);
-		for( j = 0; j < (surface->numVerts * surface->numCompFrames); j++, vertexComp++)
-		{
+		for ( j = 0; j < (surface->numVerts * surface->numCompFrames); j++, vertexComp++) {
 			vertexComp->ofsVec	= _pico_little_long( vertexComp->ofsVec );
 		}
 
 		/* swap base frames */
 		mdcShort = (short *) ((picoByte_t*) surface + surface->ofsFrameBaseFrames);
-		for( j = 0; j < mdc->numFrames; j++, mdcShort++)
-		{
+		for ( j = 0; j < mdc->numFrames; j++, mdcShort++) {
 			*mdcShort	= _pico_little_short( *mdcShort );
 		}
 
 		/* swap compressed frames */
 		mdcShort = (short *) ((picoByte_t*) surface + surface->ofsFrameCompFrames);
-		for( j = 0; j < mdc->numFrames; j++, mdcShort++)
-		{
+		for ( j = 0; j < mdc->numFrames; j++, mdcShort++) {
 			*mdcShort	= _pico_little_short( *mdcShort );
 		}
 
@@ -601,8 +577,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 	/* create new pico model */
 	picoModel = PicoNewModel();
-	if( picoModel == NULL )
-	{
+	if ( picoModel == NULL ) {
 		_pico_printf( PICO_ERROR, "Unable to allocate a new model" );
 		return NULL;
 	}
@@ -617,12 +592,10 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 	surface = (mdcSurface_t*) (bb + mdc->ofsSurfaces);
 
 	/* run through mdc surfaces */
-	for( i = 0; i < mdc->numSurfaces; i++ )
-	{
+	for ( i = 0; i < mdc->numSurfaces; i++ ) {
 		/* allocate new pico surface */
 		picoSurface = PicoNewSurface( picoModel );
-		if( picoSurface == NULL )
-		{
+		if ( picoSurface == NULL ) {
 			_pico_printf( PICO_ERROR, "Unable to allocate a new model surface" );
 			PicoFreeModel( picoModel ); /* sea */
 			return NULL;
@@ -636,8 +609,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 		/* create new pico shader -sea */
 		picoShader = PicoNewShader( picoModel );
-		if( picoShader == NULL )
-		{
+		if ( picoShader == NULL ) {
 			_pico_printf( PICO_ERROR, "Unable to allocate a new model shader" );
 			PicoFreeModel( picoModel );
 			return NULL;
@@ -655,8 +627,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 		/* copy indexes */
 		triangle = (mdcTriangle_t *) ((picoByte_t*) surface + surface->ofsTriangles);
 
-		for( j = 0; j < surface->numTriangles; j++, triangle++ )
-		{
+		for ( j = 0; j < surface->numTriangles; j++, triangle++ ) {
 			PicoSetSurfaceIndex( picoSurface, (j * 3 + 0), (picoIndex_t) triangle->indexes[ 0 ] );
 			PicoSetSurfaceIndex( picoSurface, (j * 3 + 1), (picoIndex_t) triangle->indexes[ 1 ] );
 			PicoSetSurfaceIndex( picoSurface, (j * 3 + 2), (picoIndex_t) triangle->indexes[ 2 ] );
@@ -664,25 +635,22 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 		/* copy vertexes */
 		texCoord = (mdcTexCoord_t*) ((picoByte_t *) surface + surface->ofsSt);
-    mdcShort = (short *) ((picoByte_t *) surface + surface->ofsXyzNormals) + ((int)*((short *) ((picoByte_t *) surface + surface->ofsFrameBaseFrames) + frameNum) * surface->numVerts * 4);
-		if( surface->numCompFrames > 0 )
-		{
+		mdcShort = (short *) ((picoByte_t *) surface + surface->ofsXyzNormals) + ((int)*((short *) ((picoByte_t *) surface + surface->ofsFrameBaseFrames) + frameNum) * surface->numVerts * 4);
+		if ( surface->numCompFrames > 0 ) {
 			mdcCompVert = (short *) ((picoByte_t *) surface + surface->ofsFrameCompFrames) + frameNum;
-			if( *mdcCompVert >= 0 )
+			if ( *mdcCompVert >= 0 )
 				vertexComp = (mdcXyzCompressed_t *) ((picoByte_t *) surface + surface->ofsXyzCompressed) + (*mdcCompVert * surface->numVerts);
 		}
 		_pico_set_color( color, 255, 255, 255, 255 );
 
-		for( j = 0; j < surface->numVerts; j++, texCoord++, mdcShort+=4 )
-		{
+		for ( j = 0; j < surface->numVerts; j++, texCoord++, mdcShort+=4 ) {
 			/* set vertex origin */
 			xyz[ 0 ] = MDC_SCALE * mdcShort[ 0 ];
 			xyz[ 1 ] = MDC_SCALE * mdcShort[ 1 ];
 			xyz[ 2 ] = MDC_SCALE * mdcShort[ 2 ];
 
 			/* add compressed ofsVec */
-			if( surface->numCompFrames > 0 && *mdcCompVert >= 0 )
-			{
+			if ( surface->numCompFrames > 0 && *mdcCompVert >= 0 ) {
 				xyz[ 0 ] += ((float) ((vertexComp->ofsVec) & 255) - MDC_MAX_OFS) * MDC_DIST_SCALE;
 				xyz[ 1 ] += ((float) ((vertexComp->ofsVec >> 8) & 255) - MDC_MAX_OFS) * MDC_DIST_SCALE;
 				xyz[ 2 ] += ((float) ((vertexComp->ofsVec >> 16) & 255) - MDC_MAX_OFS) * MDC_DIST_SCALE;
@@ -694,9 +662,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 				PicoSetSurfaceNormal( picoSurface, j, normal );
 
 				vertexComp++;
-			}
-			else
-			{
+			} else {
 				PicoSetSurfaceXYZ( picoSurface, j, xyz );
 
 				/* decode lat/lng normal to 3 float normal */
@@ -730,8 +696,7 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD )
 
 
 /* pico file format module definition */
-const picoModule_t picoModuleMDC =
-{
+const picoModule_t picoModuleMDC = {
 	"1.3",							/* module version string */
 	"RtCW MDC",						/* module display name */
 	"Arnout van Meer",				/* author's name */
@@ -741,6 +706,6 @@ const picoModule_t picoModuleMDC =
 	},
 	_mdc_canload,					/* validation routine */
 	_mdc_load,						/* load routine */
-	 NULL,							/* save validation routine */
-	 NULL							/* save routine */
+	NULL,							/* save validation routine */
+	NULL							/* save routine */
 };

@@ -56,8 +56,7 @@ static picoColor_t white = { 255,255,255,255 };
 /* structure holding persistent 3ds loader specific data used */
 /* to store formerly static vars to keep the module reentrant */
 /* safe. put everything that needs to be static in here. */
-typedef struct S3dsLoaderPers
-{
+typedef struct S3dsLoaderPers {
 	picoModel_t	   *model;			/* ptr to output model */
 	picoSurface_t  *surface;		/* ptr to current surface */
 	picoShader_t   *shader;			/* ptr to current shader */
@@ -70,8 +69,8 @@ T3dsLoaderPers;
 
 /* 3ds chunk types that we use */
 enum {
-    /* primary chunk */
-    CHUNK_MAIN				= 0x4D4D,
+	/* primary chunk */
+	CHUNK_MAIN				= 0x4D4D,
 
 	/* main chunks */
 	CHUNK_VERSION       	= 0x0002,
@@ -99,13 +98,11 @@ enum {
 	CHUNK_OBJECT_UV			= 0x4140,
 };
 #ifdef DEBUG_PM_3DS
-static struct
-{
+static struct {
 	int 	id;
 	char   *name;
 }
-debugChunkNames[] =
-{
+debugChunkNames[] = {
 	{ CHUNK_MAIN			, "CHUNK_MAIN" 				},
 	{ CHUNK_VERSION			, "CHUNK_VERSION" 			},
 	{ CHUNK_EDITOR_CONFIG	, "CHUNK_EDITOR_CONFIG" 	},
@@ -124,15 +121,12 @@ debugChunkNames[] =
 	{ CHUNK_OBJECT_UV		, "CHUNK_OBJECT_UV"			},
 	{ 0						,  NULL						}
 };
-static char *DebugGetChunkName (int id)
-{
+static char *DebugGetChunkName (int id) {
 	int i,max;	/* imax? ;) */
 	max = sizeof(debugChunkNames) / sizeof(debugChunkNames[0]);
 
-	for (i=0; i<max; i++)
-	{
-		if (debugChunkNames[i].id == id)
-		{
+	for (i=0; i<max; i++) {
+		if (debugChunkNames[i].id == id) {
 			/* gaynux update -sea */
 			return _pico_strlwr( debugChunkNames[i].name );
 		}
@@ -144,15 +138,13 @@ static char *DebugGetChunkName (int id)
 /* this funky loader needs byte alignment */
 #pragma pack(push, 1)
 
-typedef struct S3dsIndices
-{
+typedef struct S3dsIndices {
 	unsigned short 	a,b,c;
 	unsigned short 	visible;
 }
 T3dsIndices;
 
-typedef struct S3dsChunk
-{
+typedef struct S3dsChunk {
 	unsigned short 	id;
 	unsigned int	len;
 }
@@ -164,8 +156,7 @@ T3dsChunk;
 /* _3ds_canload:
  *  validates an autodesk 3ds model file.
  */
-static int _3ds_canload( PM_PARAMS_CANLOAD )
-{
+static int _3ds_canload( PM_PARAMS_CANLOAD ) {
 	T3dsChunk *chunk;
 
 	/* sanity check */
@@ -187,15 +178,14 @@ static int _3ds_canload( PM_PARAMS_CANLOAD )
 	return PICO_PMV_OK;
 }
 
-static T3dsChunk *GetChunk (T3dsLoaderPers *pers)
-{
+static T3dsChunk *GetChunk (T3dsLoaderPers *pers) {
 	T3dsChunk *chunk;
 
 	/* sanity check */
 	if (pers->cofs > pers->maxofs) return 0;
 
 #ifdef DEBUG_PM_3DS
-/*	printf("GetChunk: pers->cofs %x\n",pers->cofs); */
+	/*	printf("GetChunk: pers->cofs %x\n",pers->cofs); */
 #endif
 	/* fill in pointer to chunk */
 	chunk = (T3dsChunk *)&pers->bufptr[ pers->cofs ];
@@ -211,17 +201,14 @@ static T3dsChunk *GetChunk (T3dsLoaderPers *pers)
 	return chunk;
 }
 
-static int GetASCIIZ (T3dsLoaderPers *pers, char *dest, int max)
-{
+static int GetASCIIZ (T3dsLoaderPers *pers, char *dest, int max) {
 	int pos = 0;
 	int ch;
 
-	for (;;)
-	{
+	for (;;) {
 		ch = pers->bufptr[ pers->cofs++ ];
 		if (ch == '\0') break;
-		if (pers->cofs >= pers->maxofs)
-		{
+		if (pers->cofs >= pers->maxofs) {
 			dest[ pos ] = '\0';
 			return 0;
 		}
@@ -232,8 +219,7 @@ static int GetASCIIZ (T3dsLoaderPers *pers, char *dest, int max)
 	return 1;
 }
 
-static picoByte_t GetByte (T3dsLoaderPers *pers)
-{
+static picoByte_t GetByte (T3dsLoaderPers *pers) {
 	picoByte_t *value;
 
 	/* sanity check */
@@ -245,8 +231,7 @@ static picoByte_t GetByte (T3dsLoaderPers *pers)
 	return *value;
 }
 
-static int GetWord (T3dsLoaderPers *pers)
-{
+static int GetWord (T3dsLoaderPers *pers) {
 	unsigned short *value;
 
 	/* sanity check */
@@ -258,8 +243,7 @@ static int GetWord (T3dsLoaderPers *pers)
 	return _pico_little_short(*value);
 }
 
-static float GetFloat (T3dsLoaderPers *pers)
-{
+static float GetFloat (T3dsLoaderPers *pers) {
 	float *value;
 
 	/* sanity check */
@@ -271,8 +255,7 @@ static float GetFloat (T3dsLoaderPers *pers)
 	return _pico_little_float(*value);
 }
 
-static int GetMeshVertices (T3dsLoaderPers *pers)
-{
+static int GetMeshVertices (T3dsLoaderPers *pers) {
 	int numVerts;
 	int i;
 
@@ -283,8 +266,7 @@ static int GetMeshVertices (T3dsLoaderPers *pers)
 	printf("GetMeshVertices: numverts %d\n",numVerts);
 #endif
 	/* read in vertices for current surface */
-	for (i=0; i<numVerts; i++)
-	{
+	for (i=0; i<numVerts; i++) {
 		picoVec3_t v;
 		v[0] = GetFloat( pers );
 		v[1] = GetFloat( pers );	/* ydnar: unflipped */
@@ -302,8 +284,7 @@ static int GetMeshVertices (T3dsLoaderPers *pers)
 	return 1;
 }
 
-static int GetMeshFaces (T3dsLoaderPers *pers)
-{
+static int GetMeshFaces (T3dsLoaderPers *pers) {
 	int numFaces;
 	int i;
 
@@ -314,8 +295,7 @@ static int GetMeshFaces (T3dsLoaderPers *pers)
 	printf("GetMeshFaces: numfaces %d\n",numFaces);
 #endif
 	/* read in vertex indices for current surface */
-	for (i=0; i<numFaces; i++)
-	{
+	for (i=0; i<numFaces; i++) {
 		/* remember, we only need 3 of 4 values read in for each */
 		/* face. the 4th value is a vis flag for 3dsmax which is */
 		/* being ignored by us here */
@@ -338,8 +318,7 @@ static int GetMeshFaces (T3dsLoaderPers *pers)
 	return 1;
 }
 
-static int GetMeshTexCoords (T3dsLoaderPers *pers)
-{
+static int GetMeshTexCoords (T3dsLoaderPers *pers) {
 	int numTexCoords;
 	int i;
 
@@ -350,8 +329,7 @@ static int GetMeshTexCoords (T3dsLoaderPers *pers)
 	printf("GetMeshTexCoords: numcoords %d\n",numTexCoords);
 #endif
 	/* read in uv coords for current surface */
-	for (i=0; i<numTexCoords; i++)
-	{
+	for (i=0; i<numTexCoords; i++) {
 		picoVec2_t uv;
 		uv[0] =  GetFloat( pers );
 		uv[1] = -GetFloat( pers );	/* ydnar: we use origin at bottom */
@@ -371,8 +349,7 @@ static int GetMeshTexCoords (T3dsLoaderPers *pers)
 	return 1;
 }
 
-static int GetMeshShader (T3dsLoaderPers *pers)
-{
+static int GetMeshShader (T3dsLoaderPers *pers) {
 	char shaderName[255] = { 0 };
 	picoShader_t  *shader;
 	int  numSharedVerts;
@@ -401,8 +378,7 @@ static int GetMeshShader (T3dsLoaderPers *pers)
 	shader = PicoFindShader( pers->model, shaderName, 1 );
 
 	/* we've found a matching shader */
-	if ((shader != NULL) && pers->surface)
-	{
+	if ((shader != NULL) && pers->surface) {
 		char  mapName[1024+1];
 		char *mapNamePtr;
 		memset( mapName,0,sizeof(mapName) );
@@ -411,8 +387,7 @@ static int GetMeshShader (T3dsLoaderPers *pers)
 		mapNamePtr = PicoGetShaderMapName( shader );
 
 		/* we have a valid map name ptr */
-		if (mapNamePtr != NULL)
-		{
+		if (mapNamePtr != NULL) {
 			char  temp[128];
 			const char *name;
 
@@ -444,8 +419,7 @@ static int GetMeshShader (T3dsLoaderPers *pers)
 		}
 	}
 	/* we didn't set a shader name; throw out warning */
-	if (!setShaderName)
-	{
+	if (!setShaderName) {
 		_pico_printf( PICO_WARNING,"3DS mesh is missing shader name");
 	}
 	/* we don't process the list of shared vertices here; there is a */
@@ -460,16 +434,14 @@ static int GetMeshShader (T3dsLoaderPers *pers)
 	printf("GetMeshShader: uses shader '%s' (nsv %d)\n",shaderName,numSharedVerts);
 #endif
 	/* skip list of shared verts */
-	for (i=0; i<numSharedVerts; i++)
-	{
+	for (i=0; i<numSharedVerts; i++) {
 		GetWord(pers);
 	}
 	/* success (no errors occured) */
 	return 1;
 }
 
-static int GetDiffuseColor (T3dsLoaderPers *pers)
-{
+static int GetDiffuseColor (T3dsLoaderPers *pers) {
 	/* todo: support all 3ds specific color formats; */
 	/* that means: rgb,tru,trug,rgbg */
 
@@ -482,8 +454,7 @@ static int GetDiffuseColor (T3dsLoaderPers *pers)
 	color[3] = 255;
 
 	/* store this as the current shader's diffuse color */
-	if( pers->shader )
-	{
+	if ( pers->shader ) {
 		PicoSetShaderDiffuseColor( pers->shader,color );
 	}
 #ifdef DEBUG_PM_3DS
@@ -493,15 +464,13 @@ static int GetDiffuseColor (T3dsLoaderPers *pers)
 	return 1;
 }
 
-static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
-{
+static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs) {
 	T3dsChunk *chunk;
 
 #ifdef DEBUG_PM_3DS_EX
 	printf("DoNextEditorDataChunk: endofs %d\n",endofs);
 #endif
-	while (pers->cofs < endofs)
-	{
+	while (pers->cofs < endofs) {
 		long nextofs = pers->cofs;
 		if ((chunk = GetChunk(pers)) == NULL) return 0;
 		if (!chunk->len) return 0;
@@ -511,13 +480,12 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 		printf("Chunk %04x (%s), len %d pers->cofs %x\n",chunk->id,DebugGetChunkName(chunk->id),chunk->len,pers->cofs);
 #endif
 		/*** meshes ***/
-		if (chunk->id == CHUNK_OBJECT)
-		{
+		if (chunk->id == CHUNK_OBJECT) {
 			picoSurface_t *surface;
 			char surfaceName[ 0xff ] = { 0 };
 
 			/* read in surface name */
-			if( !GetASCIIZ(pers,surfaceName,sizeof(surfaceName)) )
+			if ( !GetASCIIZ(pers,surfaceName,sizeof(surfaceName)) )
 				return 0; /* this is bad */
 
 //PicoGetSurfaceName
@@ -526,8 +494,7 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 
 			/* allocate a pico surface */
 			surface = PicoNewSurface( pers->model );
-			if( surface == NULL )
-			{
+			if ( surface == NULL ) {
 				pers->surface = NULL;
 				return 0; /* this is bad too */
 			}
@@ -544,43 +511,36 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 			DoNextEditorDataChunk(pers,nextofs);
 			continue;
 		}
-		if (chunk->id == CHUNK_OBJECT_MESH)
-		{
+		if (chunk->id == CHUNK_OBJECT_MESH) {
 			/* continue mess with mesh's sub chunks */
 			if (!DoNextEditorDataChunk(pers,nextofs)) return 0;
 			continue;
 		}
-		if (chunk->id == CHUNK_OBJECT_VERTICES)
-		{
+		if (chunk->id == CHUNK_OBJECT_VERTICES) {
 			if (!GetMeshVertices(pers)) return 0;
 			continue;
 		}
-		if (chunk->id == CHUNK_OBJECT_FACES)
-		{
+		if (chunk->id == CHUNK_OBJECT_FACES) {
 			if (!GetMeshFaces(pers)) return 0;
 			continue;
 		}
-		if (chunk->id == CHUNK_OBJECT_UV)
-		{
+		if (chunk->id == CHUNK_OBJECT_UV) {
 			if (!GetMeshTexCoords(pers)) return 0;
 			continue;
 		}
-		if (chunk->id == CHUNK_OBJECT_MATERIAL)
-		{
+		if (chunk->id == CHUNK_OBJECT_MATERIAL) {
 			if (!GetMeshShader(pers)) return 0;
 			continue;
 		}
 		/*** materials ***/
-		if (chunk->id == CHUNK_MATERIAL)
-		{
+		if (chunk->id == CHUNK_MATERIAL) {
 			/* new shader specific things should be */
 			/* initialized right here */
 			picoShader_t *shader;
 
 			/* allocate a pico shader */
 			shader = PicoNewShader( pers->model );	/* ydnar */
-			if( shader == NULL )
-			{
+			if ( shader == NULL ) {
 				pers->shader = NULL;
 				return 0; /* this is bad too */
 			}
@@ -592,14 +552,12 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 			DoNextEditorDataChunk(pers,nextofs);
 			continue;
 		}
-		if (chunk->id == CHUNK_MATNAME)
-		{
+		if (chunk->id == CHUNK_MATNAME) {
 			/* new material's names should be stored here. note that */
 			/* GetMeshMaterial returns the name of the material that */
 			/* is used by the mesh. new material names are set HERE. */
 			/* but for now we skip the new material's name ... */
-			if (pers->shader)
-			{
+			if (pers->shader) {
 				char *name = (char*) (pers->bufptr + pers->cofs);
 				char *cleanedName = _pico_clone_alloc( name );
 				_pico_first_token( cleanedName );
@@ -610,26 +568,22 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 				_pico_free( cleanedName );
 			}
 		}
-		if (chunk->id == CHUNK_MATDIFFUSE)
-		{
+		if (chunk->id == CHUNK_MATDIFFUSE) {
 			/* todo: color for last inserted new material should be */
 			/* stored somewhere by GetDiffuseColor */
 			if (!GetDiffuseColor(pers)) return 0;
 
 			/* rest of chunk is skipped here */
 		}
-		if (chunk->id == CHUNK_MATMAP)
-		{
+		if (chunk->id == CHUNK_MATMAP) {
 			/* continue and process the material map sub chunks */
 			DoNextEditorDataChunk(pers,nextofs);
 			continue;
 		}
-		if (chunk->id == CHUNK_MATMAPFILE)
-		{
+		if (chunk->id == CHUNK_MATMAPFILE) {
 			/* map file name for last inserted new material should */
 			/* be stored here. but for now we skip this too ... */
-			if( pers->shader )
-			{
+			if ( pers->shader ) {
 				char *name = (char *)(pers->bufptr + pers->cofs);
 				PicoSetShaderMapName( pers->shader,name );
 #ifdef DEBUG_PM_3DS
@@ -638,8 +592,7 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 			}
 		}
 		/*** keyframes ***/
-		if (chunk->id == CHUNK_KEYFRAME_DATA)
-		{
+		if (chunk->id == CHUNK_KEYFRAME_DATA) {
 			/* well umm, this is a bit too much since we don't really */
 			/* need model animation sequences right now. we skip this */
 #ifdef DEBUG_PM_3DS
@@ -653,15 +606,13 @@ static int DoNextEditorDataChunk (T3dsLoaderPers *pers, long endofs)
 	return 1;
 }
 
-static int DoNextChunk (T3dsLoaderPers *pers, int endofs)
-{
+static int DoNextChunk (T3dsLoaderPers *pers, int endofs) {
 	T3dsChunk *chunk;
 
 #ifdef DEBUG_PM_3DS
 	printf("DoNextChunk: endofs %d\n",endofs);
 #endif
-	while (pers->cofs < endofs)
-	{
+	while (pers->cofs < endofs) {
 		long nextofs = pers->cofs;
 		if ((chunk = GetChunk(pers)) == NULL) return 0;
 		if (!chunk->len) return 0;
@@ -671,8 +622,7 @@ static int DoNextChunk (T3dsLoaderPers *pers, int endofs)
 		printf("Chunk %04x (%s), len %d pers->cofs %x\n",chunk->id,DebugGetChunkName(chunk->id),chunk->len,pers->cofs);
 #endif
 		/*** version ***/
-		if (chunk->id == CHUNK_VERSION)
-		{
+		if (chunk->id == CHUNK_VERSION) {
 			/* at this point i get the 3ds file version. since there */
 			/* might be new additions to the 3ds file format in 4.0 */
 			/* it might be a good idea to store the version somewhere */
@@ -687,10 +637,9 @@ static int DoNextChunk (T3dsLoaderPers *pers, int endofs)
 #endif
 
 			/* throw out a warning for version 4 models */
-			if (version == 4)
-			{
+			if (version == 4) {
 				_pico_printf( PICO_WARNING,
-					"3DS version is 4. Model might load incorrectly.");
+				              "3DS version is 4. Model might load incorrectly.");
 			}
 			/* store the 3ds file version in pico special field 0 */
 			/* PicoSetSurfaceSpecial(pers->surface,0,version); */		/* ydnar: this was causing a crash accessing uninitialized surface */
@@ -698,8 +647,7 @@ static int DoNextChunk (T3dsLoaderPers *pers, int endofs)
 			/* rest of chunk is skipped here */
 		}
 		/*** editor data ***/
-		if (chunk->id == CHUNK_EDITOR_DATA)
-		{
+		if (chunk->id == CHUNK_EDITOR_DATA) {
 			if (!DoNextEditorDataChunk(pers,nextofs)) return 0;
 			continue;
 		}
@@ -713,16 +661,14 @@ static int DoNextChunk (T3dsLoaderPers *pers, int endofs)
 /* _3ds_load:
  *  loads an autodesk 3ds model file.
 */
-static picoModel_t *_3ds_load( PM_PARAMS_LOAD )
-{
+static picoModel_t *_3ds_load( PM_PARAMS_LOAD ) {
 	T3dsLoaderPers	pers;
 	picoModel_t	   *model;
 	char			basename[128];
 
 	/* create a new pico model */
 	model = PicoNewModel();
-	if (model == NULL)
-	{
+	if (model == NULL) {
 		/* user must have some serious ram problems ;) */
 		return NULL;
 	}
@@ -747,8 +693,7 @@ static picoModel_t *_3ds_load( PM_PARAMS_LOAD )
 	GetChunk(&pers);
 
 	/* process chunks */
-	if (!DoNextChunk(&pers,pers.maxofs))
-	{
+	if (!DoNextChunk(&pers,pers.maxofs)) {
 		/* well, bleh i guess */
 		PicoFreeModel(model);
 		return NULL;
@@ -758,8 +703,7 @@ static picoModel_t *_3ds_load( PM_PARAMS_LOAD )
 }
 
 /* pico file format module definition */
-const picoModule_t picoModule3DS =
-{
+const picoModule_t picoModule3DS = {
 	"0.86-b",					/* module version string */
 	"Autodesk 3Dstudio",		/* module display name */
 	"seaw0lf",					/* author's name */
@@ -769,6 +713,6 @@ const picoModule_t picoModule3DS =
 	},
 	_3ds_canload,				/* validation routine */
 	_3ds_load,					/* load routine */
-	 NULL,						/* save validation routine */
-	 NULL						/* save routine */
+	NULL,						/* save validation routine */
+	NULL						/* save routine */
 };

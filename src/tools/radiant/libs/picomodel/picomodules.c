@@ -57,8 +57,7 @@ extern const picoModule_t picoModuleTerrain;
 
 
 /* list of all supported file format modules */
-const picoModule_t *picoModules[] =
-{
+const picoModule_t *picoModules[] = {
 	&picoModuleMD3,		/* quake3 arena md3 */
 	&picoModule3DS,		/* autodesk 3ds */
 	&picoModuleASE,		/* autodesk ase */
@@ -79,11 +78,10 @@ the number of supported modules in 'numModules'. Note that
 this param can be NULL when the count is not needed.
 */
 
-const picoModule_t **PicoModuleList( int *numModules )
-{
+const picoModule_t **PicoModuleList( int *numModules ) {
 	/* get module count */
-	if( numModules != NULL )
-		for( (*numModules) = 0; picoModules[ *numModules ] != NULL; (*numModules)++ );
+	if ( numModules != NULL )
+		for ( (*numModules) = 0; picoModules[ *numModules ] != NULL; (*numModules)++ );
 
 	/* return list of modules */
 	return (const picoModule_t**) picoModules;
