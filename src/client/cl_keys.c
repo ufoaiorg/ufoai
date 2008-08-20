@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
-qboolean shift_down;
 
 static int key_insert = 1;
 
@@ -45,7 +44,6 @@ size_t msg_bufferlen = 0;
 
 char *keybindings[K_KEY_SIZE];
 char *menukeybindings[K_KEY_SIZE];
-static int keyshift[K_KEY_SIZE];				/* key to map to if shift held down in console */
 qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
@@ -821,35 +819,6 @@ void Key_Init (void)
 	}
 	key_linepos = 1;
 
-	for (i = 0; i < K_LAST_KEY; i++)
-		keyshift[i] = i;
-	for (i = 'a'; i <= 'z'; i++)
-		keyshift[i] = i - 'a' + 'A';
-
-#ifdef _WIN32
-	keyshift['1'] = '!';
-	keyshift['2'] = '@';
-	keyshift['3'] = '#';
-	keyshift['4'] = '$';
-	keyshift['5'] = '%';
-	keyshift['6'] = '^';
-	keyshift['7'] = '&';
-	keyshift['8'] = '*';
-	keyshift['9'] = '(';
-	keyshift['0'] = ')';
-	keyshift['-'] = '_';
-	keyshift['='] = '+';
-	keyshift[','] = '<';
-	keyshift['.'] = '>';
-	keyshift['/'] = '?';
-	keyshift[';'] = ':';
-	keyshift['\''] = '"';
-	keyshift['['] = '{';
-	keyshift[']'] = '}';
-	keyshift['`'] = '~';
-	keyshift['\\'] = '|';
-#endif
-
 	/* register our functions */
 	Cmd_AddCommand("bindmenu", Key_Bind_f, "Bind a key to a console command - only executed when hovering a menu");
 	Cmd_AddCommand("bind", Key_Bind_f, "Bind a key to a console command");
@@ -884,9 +853,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 	/* unbindable key */
 	if (key >= K_KEY_SIZE)
 		return;
-
-	if (key == K_SHIFT)
-		shift_down = down;
 
 	if (cls.key_dest != key_console && down) {
 		switch (key) {
@@ -950,13 +916,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 			Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
 			Cbuf_AddText(cmd);
 		}
-		if (keyshift[key] != key) {
-			kb = keybindings[keyshift[key]];
-			if (kb && kb[0] == '+') {
-				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
-				Cbuf_AddText(cmd);
-			}
-		}
 		return;
 	}
 
@@ -982,12 +941,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 
 	if (!down)
 		return;	/* other systems only care about key down events */
-
-#ifndef _WIN32
-	/* for windows this is done by ToAsciiEx */
-	if (shift_down)
-		key = keyshift[key];
-#endif /* _WIN32 */
 
 	switch (cls.key_dest) {
 	case key_input:

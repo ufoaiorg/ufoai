@@ -127,9 +127,9 @@ void R_ShutdownShaders (void)
  * @param[in] path The shader file path (relative to game-dir)
  * @return fpid - id of shader
  */
-int SH_LoadProgram_ARB_FP (const char *path)
+static int SH_LoadProgram_ARB_FP (const char *path)
 {
-	char *fbuf;
+	byte *fbuf;
 	int size;
 	const unsigned char *errors;
 	int error_pos;
@@ -138,7 +138,7 @@ int SH_LoadProgram_ARB_FP (const char *path)
 	if (!r_state.arb_fragment_program)
 		return -1;
 
-	size = FS_LoadFile(path, (byte **) &fbuf);
+	size = FS_LoadFile(path, &fbuf);
 
 	if (!fbuf) {
 		Com_Printf("Could not load shader %s\n", path);
@@ -154,7 +154,7 @@ int SH_LoadProgram_ARB_FP (const char *path)
 	qglEnable(GL_FRAGMENT_PROGRAM_ARB);
 	qglGenProgramsARB(1, &fpid);
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
-	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
+	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, *(const char **)&fbuf);
 	qglDisable(GL_FRAGMENT_PROGRAM_ARB);
 
 	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
@@ -178,9 +178,9 @@ int SH_LoadProgram_ARB_FP (const char *path)
  * @param[in] path The shader file path (relative to game-dir)
  * @return vpid - id of shader
  */
-int SH_LoadProgram_ARB_VP (const char *path)
+static int SH_LoadProgram_ARB_VP (const char *path)
 {
-	char *fbuf;
+	byte *fbuf;
 	int size, vpid;
 	const unsigned char *errors;
 	int error_pos;
@@ -188,7 +188,7 @@ int SH_LoadProgram_ARB_VP (const char *path)
 	if (!r_state.arb_fragment_program)
 		return -1;
 
-	size = FS_LoadFile(path, (byte **) &fbuf);
+	size = FS_LoadFile(path, &fbuf);
 
 	if (!fbuf) {
 		Com_Printf("Could not load shader %s\n", path);
@@ -204,7 +204,7 @@ int SH_LoadProgram_ARB_VP (const char *path)
 	qglEnable(GL_VERTEX_PROGRAM_ARB);
 	qglGenProgramsARB(1, (unsigned int*)&vpid);
 	qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
-	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
+	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, *(const char**)&fbuf);
 	qglDisable(GL_VERTEX_PROGRAM_ARB);
 
 	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
@@ -230,15 +230,15 @@ int SH_LoadProgram_ARB_VP (const char *path)
  * @param[in] s The shader to load
  * @return vpid - id of shader
  */
-int SH_LoadProgram_GLSL (shader_t* s)
+static int SH_LoadProgram_GLSL (shader_t* s)
 {
-	char *fbuf;
+	byte *fbuf;
 	int size;
 
 	if (!r_state.glsl_program)
 		return -1;
 
-	size = FS_LoadFile(s->filename, (byte **) &fbuf);
+	size = FS_LoadFile(s->filename, &fbuf);
 
 	if (!fbuf) {
 		Com_Printf("Could not load shader %s\n", s->filename);

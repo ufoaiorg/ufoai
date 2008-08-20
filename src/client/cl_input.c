@@ -57,7 +57,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief Grid position on the map for pending events */
 extern pos3_t mousePendPos;
-extern qboolean shift_down;
 
 /* power of two please */
 #define MAX_KEYQ 64
@@ -421,6 +420,14 @@ static void CL_ZoomInQuant_f (void)
 		/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
 		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 		V_CalcFovX();
+#if 1
+		/* HACK make sure, that the zooming is not reset because another binding is active
+		 * this is needed because the state of in_zoomout is not set back properly. The result
+		 * is, that you can't zoom in with the mouse or the zoominquant binding, because the
+		 * in_zoomout state immediately zooms out again. */
+		IN_KeyUp(&in_zoomin);
+		IN_KeyUp(&in_zoomout);
+#endif
 	}
 }
 
@@ -449,6 +456,14 @@ static void CL_ZoomOutQuant_f (void)
 		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 		V_CalcFovX();
+#if 1
+		/* HACK make sure, that the zooming is not reset because another binding is active
+		 * this is needed because the state of in_zoomout is not set back properly. The result
+		 * is, that you can't zoom in with the mouse or the zoominquant binding, because the
+		 * in_zoomout state immediately zooms out again. */
+		IN_KeyUp(&in_zoomin);
+		IN_KeyUp(&in_zoomout);
+#endif
 	}
 }
 
@@ -1105,11 +1120,11 @@ static void CL_CameraMoveRemote (void)
 	frac = CL_GetKeyMouseState(STATE_ZOOM);
 	if (frac > 0.1) {
 		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-		/* ensure zoom not greater than either MAX_ZOOM or cl_camzoommax */
+		/* ensure zoom isn't greater than either MAX_ZOOM or cl_camzoommax */
 		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
 	} else if (frac < -0.1) {
 		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
-		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+		/* ensure zoom isn't less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	}
 	V_CalcFovX();
@@ -1673,11 +1688,6 @@ void IN_Frame (void)
 				break; /* ignore this key */
 			}
 
-			if (event.key.keysym.mod & KMOD_CAPS)
-				shift_down = qtrue;
-			else
-				shift_down = qfalse;
-
 			if (event.key.keysym.mod & KMOD_CTRL && event.key.keysym.sym == SDLK_g) {
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
@@ -1822,7 +1832,6 @@ void IN_Init (void)
 	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 
 	mousePosX = mousePosY = 0.0;
-	shift_down = qfalse;
 
 	IN_StartupJoystick();
 }
