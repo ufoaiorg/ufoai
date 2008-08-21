@@ -554,9 +554,6 @@ struct edict_s {
 	const char *targetname;	/**< name pointed to by target */
 	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
-	float wait;		/**< time to wait before platform moves to the next point on its path */
-	float delay;	/**< time between triggering switch and effect activating */
-	float random;	/**< used to add a bit of time variation of func_timer */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
 	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */
