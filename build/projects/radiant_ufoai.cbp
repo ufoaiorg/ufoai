@@ -22,6 +22,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="--export-all-symbols" />
+					<Add library="libgtk-win32-2.0" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -42,6 +43,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="--export-all-symbols" />
+					<Add library="libgtk-win32-2.0" />
 				</Linker>
 			</Target>
 			<Target title="linux">
@@ -86,16 +88,16 @@
 		</Linker>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_filters.cpp">
 			<Option compilerVar="CC" \>
-		<\Unit>
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_gtk.cpp">
 			<Option compilerVar="CC" \>
-		<\Unit>
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_levels.cpp">
 			<Option compilerVar="CC" \>
-		<\Unit>
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai.cpp">
 			<Option compilerVar="CC" \>
-		<\Unit>
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
