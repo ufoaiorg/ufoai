@@ -55,7 +55,7 @@ Non-displayed light. All lights are for the night version. If you want them to s
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "target"	entity target name (info_null)
-"_cone"
+"_cone"		default is 10
 "origin"
 "angle"		Special values: UP -1; DOWN -2;
 */
@@ -64,7 +64,7 @@ Non-displayed light. All lights are for the night version. If you want them to s
 Non-displayed light. All lights are for the night version. If you want them to show up in the day version, too - mark the day flag
 "_color"	Color for the light RGB
 "light"		intensity 0-255
-"_cone"
+"_cone"		default is 10
 "origin"
 "angle"		Special values: UP -1; DOWN -2;
 */

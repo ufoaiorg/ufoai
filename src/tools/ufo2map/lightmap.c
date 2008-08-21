@@ -651,7 +651,7 @@ void CreateDirectLights (void)
 		target = ValueForKey(e, "target");
 		if (!strcmp(name, "light_spot") || target[0]) {
 			dl->type = emit_spotlight;
-			dl->stopdot = FloatForKey (e, "_cone");
+			dl->stopdot = FloatForKey(e, "_cone");
 			if (!dl->stopdot)
 				dl->stopdot = 10;
 			dl->stopdot = cos(dl->stopdot / 180.0f * M_PI);
