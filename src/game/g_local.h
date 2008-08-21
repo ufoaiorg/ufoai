@@ -309,7 +309,7 @@ qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop, qboolean quiet);
 void G_MoveCalc(int team, pos3_t from, int size, int distance);
-void G_ClientInvMove(player_t * player, int num, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
+void G_ClientInvMove(player_t * player, int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
 int G_DoTurn(edict_t * ent, byte toDV);
 
@@ -536,7 +536,7 @@ struct edict_s {
 	/** only set this for the attacked edict - to know who's shooting */
 	edict_t *reactionAttacker;
 
-	int	reactionFired;	/**< A simple counter that tells us how many times an actor has fired as a reaction (int he current turn). */
+	int	reactionFired;	/**< A simple counter that tells us how many times an actor has fired as a reaction (in the current turn). */
 
 	/** here are the character values */
 	character_t chr;

@@ -8,7 +8,7 @@ item antimatter
 	// Note that antimatter does not have size on purpose.
 	name		"_Antimatter"
 	type		dummy
-	buytype		dummy
+	is_dummy	true
 	weapon		false
 	notonmarket	true
 }
@@ -17,7 +17,7 @@ item brapparatus
 {
 	name		"_Alien Breathing Apparatus"
 	type		dummy
-	buytype		dummy
+	is_dummy	true
 	price		300
 	size		4
 	weapon		false
@@ -27,7 +27,7 @@ item alienmaterials
 {
 	name		"_Alien Materials"
 	type		dummy
-	buytype		dummy
+	is_dummy	true
 	price		3
 	size		1
 	weapon		false
@@ -41,7 +41,7 @@ item craft_ufo_scout
 {
 	name	"_UFO - Scout"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon	false
 	model	objects/alien/disassembled/ufo_scout
 	notonmarket	true
@@ -51,7 +51,7 @@ item craft_ufo_fighter
 {
 	name	"_UFO - Fighter"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon	false
 	model	objects/alien/disassembled/ufo_fighter
 	notonmarket	true
@@ -61,7 +61,7 @@ item craft_ufo_harvester
 {
 	name	"_UFO - Harvester"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon	false
 	model	objects/alien/disassembled/ufo_harvester
 	notonmarket	true
@@ -71,7 +71,7 @@ item craft_ufo_bomber
 {
 	name	"_UFO - Bomber"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon false
 	notonmarket	true
 }
@@ -80,7 +80,7 @@ item craft_ufo_corrupter
 {
 	name	"_UFO - Corrupter"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon false
 	notonmarket	true
 }
@@ -89,7 +89,7 @@ item craft_ufo_carrier
 {
 	name	"_UFO - Carrier"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon false
 	notonmarket	true
 }
@@ -98,7 +98,7 @@ item craft_ufo_supply
 {
 	name	"_UFO - Supply Ship"
 	type	dummy
-	buytype dummy
+	is_dummy	true
 	weapon false
 	notonmarket	true
 }
@@ -116,7 +116,7 @@ item bloodspider_weapon
 	animationindex	2			//FIXME
 	scale	1.0
 	size	6
-	buytype dummy
+	is_dummy	true
 	notonmarket	true
 	firetwohanded   true
 	dmgtype		normal
@@ -141,4 +141,6 @@ item bloodspider_weapon
 		}
 	}
 }
+
+
 

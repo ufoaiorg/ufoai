@@ -752,7 +752,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						}
 						break;
 					case MN_CONTAINER:
-						node->mousefx = C_UNDEFINED;
+						node->container = NULL;
 						break;
 					}
 

@@ -3548,7 +3548,7 @@ void CL_ActorToggleReaction_f (void)
 
 /**
  * @brief Spawns particle effects for a hit actor.
- * @param[in] le The actor to spawn teh particles for.
+ * @param[in] le The actor to spawn the particles for.
  * @param[in] impact The impact location (where the particles are spawned).
  * @param[in] normal The index of the normal vector of the particles (think: impact angle).
  * @todo Get real impact location and direction?

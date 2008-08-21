@@ -38,8 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct buyListEntry_s {
 	const objDef_t *item;			/**< Item pointer (see also csi.ods[] and base->storage.num[] etc...) */
-	const ugv_t *ugv;				/**< Used for mixed UGV (characters) and BUY_HEAVY (items) list.
-							 * If not NULL it's a pointer to the correct UGV-struct (duh) otherwise a BUY_HEAVY-item is set in "item". */
+	const ugv_t *ugv;				/**< Used for mixed UGV (characters) and FILTER_UGVITEM (items) list.
+							 * If not NULL it's a pointer to the correct UGV-struct (duh) otherwise a FILTER_UGVITEM-item is set in "item". */
 	const aircraft_t *aircraft;	/**< Used for aircraft production - aircraft template */
 } buyListEntry_t;
 
@@ -51,7 +51,7 @@ typedef struct buyList_s {
 
 static buyList_t buyList;	/**< Current buylist that is shown in the menu. */
 static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on the list. */
-static int buyCategory = 0;			/**< Category of items in the menu. */
+static itemFilterTypes_t buyCat = 0;			/**< Category of items in the menu. */
 
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
@@ -113,7 +113,7 @@ static void BS_MarketScroll_f (void)
 	menuNode_t* node;
 	int i;
 
-	if (!baseCurrent || buyCategory == -1)
+	if (!baseCurrent || buyCat == MAX_FILTERTYPES)
 		return;
 
 	node = MN_GetNodeFromCurrentMenu("market");
@@ -150,8 +150,8 @@ static void BS_MarketScroll_f (void)
 			break;
 		else {
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
-			/* Check whether the proper buytype, storage in current base and market. */
-			if (od && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
+			/* Check whether the item matches the proper filter, storage in current base and market. */
+			if (od && INV_ItemMatchesFilter(od, buyCat) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
 				Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
 				if (gd.autosell[od->idx])
 					Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
@@ -178,16 +178,16 @@ static void BS_MarketClick_f (void)
 	if (num >= buyList.length || num < 0)
 		return;
 
-	switch (buyCategory) {
-	case BUY_AIRCRAFT:
+	switch (buyCat) {
+	case FILTER_AIRCRAFT:
 		assert(buyList.l[num].aircraft);
 		BS_MarketAircraftDescription(buyList.l[num].aircraft->tpl);
 		break;
-	case BUY_CRAFTITEM:
+	case FILTER_CRAFTITEM:
 		UP_AircraftItemDescription(buyList.l[num].item);
 		Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? */
 		break;
-	case BUY_HEAVY:
+	case FILTER_UGVITEM:
 		if (buyList.l[num].ugv) {
 			UP_UGVDescription(buyList.l[num].ugv);
 			currentSelectedMenuEntry = NULL;
@@ -196,7 +196,7 @@ static void BS_MarketClick_f (void)
 			currentSelectedMenuEntry = buyList.l[num].item;
 		}
 		break;
-	case -1:
+	case MAX_FILTERTYPES:
 		break;
 	default:
 		UP_ItemDescription(buyList.l[num].item);
@@ -284,7 +284,7 @@ static void BS_BuyType (const base_t *base)
 	int i, j = 0;
 	char tmpbuf[MAX_VAR];
 
-	if (!base || buyCategory == -1)
+	if (!base || buyCat == MAX_FILTERTYPES)
 		return;
 
 	CL_UpdateCredits(ccs.credits);
@@ -297,8 +297,8 @@ static void BS_BuyType (const base_t *base)
 	mn.menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
 
 	/* 'normal' items */
-	switch (buyCategory) {
-	case BUY_AIRCRAFT:	/* Aircraft */
+	switch (buyCat) {
+	case FILTER_AIRCRAFT:	/* Aircraft */
 		{
 		const technology_t* tech;
 		for (i = 0, j = 0, air_samp = aircraftTemplates; i < numAircraftTemplates; i++, air_samp++) {
@@ -322,13 +322,13 @@ static void BS_BuyType (const base_t *base)
 		buyList.length = j;
 		}
 		break;
-	case BUY_CRAFTITEM:	/* Aircraft items */
+	case FILTER_CRAFTITEM:	/* Aircraft items */
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			if (od->notOnMarket)
 				continue;
-			/* Check whether the proper buytype, storage in current base and market. */
-			if (od->tech && (od->buytype == BUY_CRAFTITEM)
+			/* Check whether the item matches the proper filter, storage in current base and market. */
+			if (od->tech && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)
 			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
 			 && (base->storage.num[i] || ccs.eMarket.num[i])) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -336,7 +336,7 @@ static void BS_BuyType (const base_t *base)
 				}
 				BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
-					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+					Sys_Error("Increase the MAX_FILTERLIST value to handle that much items\n");
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
@@ -345,7 +345,7 @@ static void BS_BuyType (const base_t *base)
 		}
 		buyList.length = j;
 		break;
-	case BUY_HEAVY:	/* Heavy equipment like UGVs and it's weapons/ammo. */
+	case FILTER_UGVITEM:	/* Heavy equipment like UGVs and it's weapons/ammo. */
 		{
 		/* Get item list. */
 		j = 0;
@@ -376,8 +376,8 @@ static void BS_BuyType (const base_t *base)
 			if (od->notOnMarket)
 				continue;
 
-			/* Check whether the proper buytype, storage in current base and market. */
-			if (od->tech && (od->buytype == BUY_HEAVY) && (base->storage.num[i] || ccs.eMarket.num[i])) {
+			/* Check whether the item matches the proper filter, storage in current base and market. */
+			if (od->tech && INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.num[i] || ccs.eMarket.num[i])) {
 				BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -400,7 +400,7 @@ static void BS_BuyType (const base_t *base)
 		}
 		break;
 	default:	/* Normal items */
-		if (buyCategory < BUY_AIRCRAFT || buyCategory == BUY_DUMMY) {
+		if (buyCat < MAX_SOLDIER_FILTERTYPES || buyCat == FILTER_DUMMY) {
 			/* Add autosell button for every entry. */
 			for (j = 0; j < MAX_MARKET_MENU_ENTRIES; j++)
 				Cbuf_AddText(va("buy_autoselld%i\n", j));
@@ -408,8 +408,8 @@ static void BS_BuyType (const base_t *base)
 			for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 				if (od->notOnMarket)
 					continue;
-				/* Check whether the proper buytype, storage in current base and market. */
-				if (od->tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (base->storage.num[i] || ccs.eMarket.num[i])) {
+				/* Check whether the item matches the proper filter, storage in current base and market. */
+				if (od->tech && INV_ItemMatchesFilter(od, buyCat) && (base->storage.num[i] || ccs.eMarket.num[i])) {
 					BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -446,11 +446,11 @@ static void BS_BuyType (const base_t *base)
 
 	/* select first item */
 	if (buyList.length) {
-		switch (buyCategory) {	/** @sa BS_MarketClick_f */
-		case BUY_AIRCRAFT:
+		switch (buyCat) {	/** @sa BS_MarketClick_f */
+		case FILTER_AIRCRAFT:
 			BS_MarketAircraftDescription(buyList.l[0].aircraft);
 			break;
-		case BUY_CRAFTITEM:
+		case FILTER_CRAFTITEM:
 			Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? See also BS_MarketClick_f */
 			/* Select current item or first one. */
 			if (currentSelectedMenuEntry) {
@@ -459,7 +459,7 @@ static void BS_BuyType (const base_t *base)
 				UP_AircraftItemDescription(buyList.l[0].item);
 			}
 			break;
-		case BUY_HEAVY:
+		case FILTER_UGVITEM:
 			/** @todo select first heavy item */
 			if (currentSelectedMenuEntry) {
 				UP_ItemDescription(currentSelectedMenuEntry);
@@ -468,7 +468,7 @@ static void BS_BuyType (const base_t *base)
 			}
 			break;
 		default:
-			assert(buyCategory != -1);
+			assert(buyCat != MAX_FILTERTYPES);
 			/* Select current item or first one. */
 			if (currentSelectedMenuEntry)
 				UP_ItemDescription(currentSelectedMenuEntry);
@@ -491,41 +491,47 @@ static void BS_BuyType_f (void)
 {
 	if (Cmd_Argc() == 2) {
 		menuNode_t* node = MN_GetNodeFromCurrentMenu("market");
-		buyCategory = atoi(Cmd_Argv(1));
-		if (buyCategory < 0) {
-			buyCategory = MAX_BUYTYPES - 1;
-		} else if (buyCategory >= MAX_BUYTYPES) {
-			buyCategory = 0;
-		}		
-		Cvar_Set("mn_itemtype", va("%d", buyCategory));
-		switch (buyCategory) {
-		case BUY_WEAP_PRI:
+
+		buyCat = atoi(Cmd_Argv(1));
+		/** @todo
+		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
+		*/
+
+		if (buyCat < 0) {
+			buyCat = MAX_FILTERTYPES - 1;
+		} else if (buyCat >= MAX_FILTERTYPES) {
+			buyCat = 0;
+		}
+
+		Cvar_Set("mn_itemtype", va("%d", buyCat));	/**< @todo use a better identifier (i.e. filterTypeNames[]) for mn_itemtype @sa menu_buy.ufo */
+
+		switch (buyCat) {
+		case FILTER_S_PRIMARY:
 			Cvar_Set("mn_itemtypename", _("Primary weapons"));
 			break;
-		case BUY_WEAP_SEC:
+		case FILTER_S_SECONDARY:
 			Cvar_Set("mn_itemtypename", _("Secondary weapons"));
 			break;
-		case BUY_MISC:
+		case FILTER_S_HEAVY:
+			Cvar_Set("mn_itemtypename", _("Heavy weapons"));
+			break;
+		case FILTER_S_MISC:
 			Cvar_Set("mn_itemtypename", _("Miscellaneous"));
 			break;
-		case BUY_ARMOUR:
+		case FILTER_S_ARMOUR:
 			Cvar_Set("mn_itemtypename", _("Personal Armours"));
 			break;
-		case BUY_MULTI_AMMO:
-			/** @todo do we deed this? */
-/*			Cvar_Set("mn_itemtypename", _("Weapons and ammo")); */
-			break;
-		case BUY_AIRCRAFT:
+		case FILTER_AIRCRAFT:
 			Cvar_Set("mn_itemtypename", _("Aircraft"));
 			break;
-		case BUY_DUMMY:
+		case FILTER_DUMMY:
 			Cvar_Set("mn_itemtypename", _("Other"));
 			break;
-		case BUY_CRAFTITEM:
+		case FILTER_CRAFTITEM:
 			Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
 			break;
-		case BUY_HEAVY:
-			Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
+		case FILTER_UGVITEM:
+			Cvar_Set("mn_itemtypename", _("Tanks"));
 			break;
 		default:
 			Cvar_Set("mn_itemtypename", _("Unknown"));
@@ -545,16 +551,18 @@ static void BS_BuyType_f (void)
  */
 static void BS_Prev_BuyType_f (void)
 {
-	buyCategory--;
-	if (buyCategory == BUY_MULTI_AMMO)
-		buyCategory--;
-	if (buyCategory < 0) {
-		buyCategory = MAX_BUYTYPES - 1;
-	} else if (buyCategory >= MAX_BUYTYPES) {
-		buyCategory = 0;
+	buyCat--;
+
+	if (buyCat == MAX_SOLDIER_FILTERTYPES)
+		buyCat--;
+
+	if (buyCat < 0) {
+		buyCat = MAX_FILTERTYPES - 1;
+	} else if (buyCat >= MAX_FILTERTYPES) {
+		buyCat = 0;
 	}
 	currentSelectedMenuEntry = NULL;
-	Cbuf_AddText(va("buy_type %i\n", buyCategory));
+	Cbuf_AddText(va("buy_type %i\n", buyCat));
 }
 
 /**
@@ -562,16 +570,18 @@ static void BS_Prev_BuyType_f (void)
  */
 static void BS_Next_BuyType_f (void)
 {
-	buyCategory++;
-	if (buyCategory == BUY_MULTI_AMMO)
-		buyCategory++;
-	if (buyCategory < 0) {
-		buyCategory = MAX_BUYTYPES - 1;
-	} else if (buyCategory >= MAX_BUYTYPES) {
-		buyCategory = 0;
+	buyCat++;
+
+	if (buyCat == MAX_SOLDIER_FILTERTYPES)
+		buyCat++;
+
+	if (buyCat < 0) {
+		buyCat = MAX_FILTERTYPES - 1;
+	} else if (buyCat >= MAX_FILTERTYPES) {
+		buyCat = 0;
 	}
 	currentSelectedMenuEntry = NULL;
-	Cbuf_AddText(va("buy_type %i\n", buyCategory));
+	Cbuf_AddText(va("buy_type %i\n", buyCat));
 }
 /**
  * @brief Buy items.
@@ -636,7 +646,7 @@ static void BS_BuyAircraft_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	if (buyCategory == BUY_AIRCRAFT) {
+	if (buyCat == FILTER_AIRCRAFT) {
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(baseCurrent, B_POWER)) {
 			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
@@ -667,7 +677,7 @@ static void BS_BuyAircraft_f (void)
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
-				Cbuf_AddText(va("aircraft_new %s %i;buy_type 5;", aircraftTemplate->id, baseCurrent->idx));
+				Cbuf_AddText(va("aircraft_new %s %i;buy_type %i;", aircraftTemplate->id, baseCurrent->idx, FILTER_AIRCRAFT));
 			}
 		}
 	}
@@ -713,7 +723,7 @@ static void BS_SellAircraft_f (void)
 
 	base = baseCurrent;
 
-	if (buyCategory == BUY_AIRCRAFT) {
+	if (buyCat == FILTER_AIRCRAFT) {
 		aircraft_t *aircraft;
 		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
 		if (!aircraftTemplate)
@@ -793,7 +803,7 @@ static void BS_BuyItem_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (buyCategory == BUY_AIRCRAFT) {
+	if (buyCat == FILTER_AIRCRAFT) {
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: Redirects to BS_BuyAircraft_f\n");
 		BS_BuyAircraft_f();
 		return;
@@ -805,7 +815,7 @@ static void BS_BuyItem_f (void)
 
 	Cbuf_AddText(va("market_click %i\n", num + buyList.scroll));
 
-	if ((buyCategory == BUY_HEAVY) && (buyList.l[num + buyList.scroll].ugv)) {
+	if ((buyCat == FILTER_UGVITEM) && (buyList.l[num + buyList.scroll].ugv)) {
 		/* The list entry is an actual ugv/robot */
 		const ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
 		qboolean ugvWeaponBuyable;
@@ -869,7 +879,7 @@ static void BS_SellItem_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (buyCategory == BUY_AIRCRAFT) {
+	if (buyCat == FILTER_AIRCRAFT) {
 		Com_DPrintf(DEBUG_CLIENT, "BS_SellItem_f: Redirects to BS_SellAircraft_f\n");
 		BS_SellAircraft_f();
 		return;
@@ -880,7 +890,7 @@ static void BS_SellItem_f (void)
 		return;
 
 	Cbuf_AddText(va("market_click %i\n", num + buyList.scroll));
-	if (buyCategory == BUY_HEAVY && buyList.l[num + buyList.scroll].ugv) {
+	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		employee_t *employee;
 		/* The list entry is an actual ugv/robot */
 		const ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;

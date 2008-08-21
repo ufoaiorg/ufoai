@@ -690,7 +690,7 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 							if (!strcmp(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
 								G_ClientInvMove(game.players + activator->pnum, activator->number,
-									&gi.csi->ids[j], ic->x, ic->y, &gi.csi->ids[gi.csi->idFloor],
+									&gi.csi->ids[j], ic, &gi.csi->ids[gi.csi->idFloor],
 									NONE, NONE, qfalse, QUIET);
 								gi.bprintf(PRINT_HUD, _("Item was placed\n"));
 								self->owner->count = level.actualRound;

@@ -17,7 +17,7 @@ item laserpistol
 	reload		8
 	price		5400
 	size		10
-	buytype	weap_sec
+	is_secondary	true
 }
 
 // =======================
@@ -40,7 +40,7 @@ item laserrifle
 	reload		12
 	price		9570
 	size		35
-	buytype	weap_pri
+	is_primary	true
 }
 
 
@@ -64,7 +64,8 @@ item heavylaser
 	reload		16
 	price		22540
 	size		50
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item laserrifle_ammo
@@ -78,9 +79,8 @@ item laserrifle_ammo
 	scale		1.8
 	price		210
 	size		7
-	buytype	multi_ammo
-//	buytype	weap_pri
-    dmgtype laser
+	is_primary	true
+	dmgtype laser
 
 	weapon_mod laserpistol	// weap_fds_idx=0
 	{

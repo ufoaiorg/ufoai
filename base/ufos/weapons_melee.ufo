@@ -13,7 +13,7 @@ item knife
 	scale		1.0
 	price		21
 	size		6
-	buytype	weap_sec
+	is_secondary	true
 	thrown		true
 	dmgtype normal
 
@@ -72,7 +72,7 @@ item knifemono
 	scale		1.0
 	price		2100
 	size		12
-	buytype	weap_sec
+	is_secondary	true
 	thrown		true
 	dmgtype normal
 
@@ -132,7 +132,7 @@ item stunrod
 	scale		1.05
 	price		2400
 	size		15
-	buytype	weap_sec
+	is_secondary	true
 	thrown	false
 	oneshot true
 	ammo 4
@@ -212,7 +212,7 @@ item kerrblade
 	scale		1.0
 	price		840
 	size		20
-	buytype	weap_sec
+	is_secondary	true
 	thrown		true
 	dmgtype normal
 
@@ -269,7 +269,7 @@ item plasblade
 	scale  		1.5
 	price		3710
 	size		5
-	buytype	weap_sec
+	is_secondary	true
 	thrown		true
 	reload		1
 	oneshot true

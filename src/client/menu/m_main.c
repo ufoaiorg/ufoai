@@ -630,6 +630,10 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 
+	Cmd_AddCommand("scrollcont_update",MN_ScrollContainerUpdate_f, "Scrolls the current container (forward).");
+	Cmd_AddCommand("scrollcont_next",MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
+	Cmd_AddCommand("scrollcont_prev",MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
+
 	/* 256kb */
 	/** @todo Get rid of adata, curadata and adataize */
 	mn.adataize = MENU_HUNK_SIZE;

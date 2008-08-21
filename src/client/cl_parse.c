@@ -1331,12 +1331,14 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 /**
  * @sa CL_InvAdd
+ * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
  */
 static void CL_InvDel (struct dbuffer *msg)
 {
 	le_t	*le;
 	int		number;
 	int 	container, x, y;
+	invList_t *ic;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_DEL],
 		&number, &container, &x, &y);
@@ -1347,7 +1349,8 @@ static void CL_InvDel (struct dbuffer *msg)
 		return;
 	}
 
-	Com_RemoveFromInventory(&le->i, &csi.ids[container], x, y);
+	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
+	Com_RemoveFromInventory(&le->i, &csi.ids[container], ic);
 	if (container == csi.idRight)
 		le->right = NONE;
 	else if (container == csi.idLeft)
@@ -1368,7 +1371,9 @@ static void CL_InvDel (struct dbuffer *msg)
 	}
 }
 
-
+/**
+ * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
+ */
 static void CL_InvAmmo (struct dbuffer *msg)
 {
 	invList_t	*ic;
@@ -1399,7 +1404,10 @@ static void CL_InvAmmo (struct dbuffer *msg)
 	ic->item.m = &csi.ods[type];
 }
 
-
+/**
+ * @sa CL_InvReload
+ * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
+ */
 static void CL_InvReload (struct dbuffer *msg)
 {
 	invList_t	*ic;

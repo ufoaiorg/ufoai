@@ -18,7 +18,7 @@ item assault
 	reload		12
 	price		2100
 	size		20
-	buytype	weap_pri
+	is_primary	true
 }
 
 item assault_ammo
@@ -32,7 +32,7 @@ item assault_ammo
 	scale		1.25
 	price		70
 	size		3
-	buytype	weap_pri
+	is_primary	true
 	dmgtype normal
 
 	weapon_mod assault
@@ -138,7 +138,8 @@ item machinegun
 	reload		30
 	price		2100
 	size		20
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item machinegun_ammo
@@ -152,7 +153,8 @@ item machinegun_ammo
 	scale		1.9
 	price		65
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype normal
 
 	weapon_mod machinegun
@@ -240,7 +242,7 @@ item sniper
 	reload		10
 	price		2100
 	size		30
-	buytype	weap_pri
+	is_primary	true
 }
 
 item sniper_ammo
@@ -254,7 +256,7 @@ item sniper_ammo
 	scale		1.15
 	price		85
 	size		5
-	buytype	weap_pri
+	is_primary	true
 	dmgtype normal
 
 	weapon_mod sniper
@@ -320,7 +322,7 @@ item coilgun
 	reload		10
 	price		9000
 	size		30
-	buytype	weap_pri
+	is_primary	true
 }
 
 item coilgun_ammo
@@ -334,7 +336,7 @@ item coilgun_ammo
 	scale		1.15
 	price		85
 	size		10
-	buytype	weap_pri
+	is_primary	true
 	dmgtype normal
 
 	weapon_mod coilgun
@@ -399,7 +401,7 @@ item pistol
 	reload		12
 	price		900
 	size		7
-	buytype	weap_sec
+	is_secondary	true
 }
 
 item pistol_ammo
@@ -413,7 +415,7 @@ item pistol_ammo
 	scale		1.5
 	price		20
 	size		1
-	buytype	weap_sec
+	is_secondary	true
 	dmgtype normal
 
 	weapon_mod pistol
@@ -499,7 +501,7 @@ item pistol2
 	reload		12
 	price		900
 	size		7
-	buytype	weap_sec
+	is_secondary	true
 }
 
 item pistol2_ammo
@@ -513,7 +515,7 @@ item pistol2_ammo
 	scale		2.5
 	price		20
 	size		2
-	buytype	weap_sec
+	is_secondary	true
 	dmgtype normal
 
 	weapon_mod pistol2
@@ -600,7 +602,7 @@ item smg
 	reload		12
 	price		1350
 	size		8
-	buytype	weap_sec
+	is_secondary	true
 }
 
 item smg_ammo
@@ -614,7 +616,7 @@ item smg_ammo
 	scale		1.4
 	price		40
 	size		3
-	buytype	weap_sec
+	is_secondary	true
 	dmgtype normal
 
 	weapon_mod smg
@@ -720,7 +722,7 @@ item shotgun2
 	reload		20
 	price		1500
 	size		25
-	buytype	weap_pri
+	is_primary	true
 }
 
 item shotgun2_slug_ammo
@@ -734,7 +736,7 @@ item shotgun2_slug_ammo
 	scale		2.0
 	price		35
 	size		5
-	buytype	weap_pri
+	is_primary	true
 	dmgtype normal
 
 	weapon_mod shotgun2
@@ -805,7 +807,7 @@ item shotgun_micro
 	reload		20
 	price		1350
 	size		10
-	buytype	weap_sec
+	is_secondary	true
 }
 
 item shotgun_micro_ammo
@@ -819,9 +821,8 @@ item shotgun_micro_ammo
 	scale		2.0
 	price		35
 	size		4
-	buytype	multi_ammo
-//	buytype	weap_pri
-    dmgtype blast
+	is_primary	true
+	dmgtype blast
 
 	weapon_mod shotgun_micro	// weap_fds_idx=0
 	{
@@ -959,7 +960,8 @@ item flamer
 	reload		14
 	price		1050
 	size		55
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item flamer_ammo
@@ -973,7 +975,8 @@ item flamer_ammo
 	scale		1.1
 	price		170
 	size		10
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype fire
 
 	weapon_mod flamer
@@ -1065,7 +1068,8 @@ item rpg
 	reload		12
 	price		4130
 	size		250
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item rpg_ammo
@@ -1079,7 +1083,8 @@ item rpg_ammo
 	scale		1.1
 	price		430
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype blast
 
 	weapon_mod rpg
@@ -1121,7 +1126,8 @@ item rpg_incendiary_ammo
 	scale		1.1
 	price		630
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype fire
 
 	weapon_mod rpg
@@ -1172,7 +1178,8 @@ item grenl
 	reload		14
 	price		2450
 	size		60
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item grenl_ammo
@@ -1186,7 +1193,8 @@ item grenl_ammo
 	scale		0.7
 	price		135
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype blast
 
 	weapon_mod grenl
@@ -1372,7 +1380,8 @@ item grenl_incendiary_ammo
 	scale		0.7
 	price		135
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype fire
 
 	weapon_mod grenl
@@ -1559,7 +1568,8 @@ item grenl_fle_ammo
 	scale		0.7
 	price		135
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype normal
 
 	weapon_mod grenl
@@ -1619,7 +1629,8 @@ item grenl_plasma_ammo
 	scale		0.7
 	price		930
 	size		6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype plasma
 
 	weapon_mod grenl
@@ -1809,7 +1820,8 @@ item bolterrifle
 	reload          15
 	price           13240
 	size		45
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item bolterrifle_ammo
@@ -1823,7 +1835,8 @@ item bolterrifle_ammo
 	scale           1.2
 	price           930
 	size		9
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype normal
 
 	weapon_mod bolterrifle

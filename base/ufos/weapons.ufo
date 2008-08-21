@@ -13,7 +13,7 @@ item medikit
 	scale		1.1
 	price		80
 	size		15
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype 	normal
 
@@ -70,7 +70,7 @@ item irgoggles
 	scale		1.5
 	price		100
 	size		15
-	buytype	misc
+	is_misc	true
 	thrown		true
 	headgear		true
 	dmgtype normal
@@ -123,7 +123,7 @@ item fraggrenade
 	scale		1.3
 	price		35
 	size		5
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype blast
 
@@ -199,7 +199,7 @@ item flashbang
 	scale		2.4
 	price		70
 	size		4
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype shock
 
@@ -274,7 +274,7 @@ item smokegrenade
 	scale		1.5
 	price		25
 	size		5
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype normal
 
@@ -349,7 +349,7 @@ item stungrenade
 	scale		1.4
 	price		190
 	size		7
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype stun_gas
 
@@ -425,7 +425,7 @@ item stungrenade_alien
 	scale		1.4
 	price		190
 	size		7
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype stun_gas
 
@@ -501,7 +501,7 @@ item incgrenade
 	scale		1.4
 	price		150
 	size		5
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype fire
 
@@ -576,7 +576,7 @@ item plasmagrenade
 	scale		1.5
 	price		950
 	size		10
-	buytype	misc
+	is_misc	true
 	thrown		true
 	dmgtype blast
 
@@ -654,7 +654,7 @@ item bomb1
 	size		15
 	notonmarket	true
 	thrown		true
-	buytype		misc
+	is_misc	true
 }
 
 /*
@@ -675,6 +675,6 @@ item bomb2
 	notonmarket	true
 	size		15
 	thrown		true
-	buytype		misc
+	is_misc	true
 }
 */

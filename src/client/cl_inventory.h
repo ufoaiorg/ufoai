@@ -63,7 +63,7 @@ void INV_UpdateStorageCap(base_t *base);
 void INV_UpdateAntimatterCap(base_t *base);
 void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
 void INV_RemoveAntimatterExceedingCapacity(base_t *base);
-qboolean INV_MoveItem(base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, int fromX, int fromY);
+qboolean INV_MoveItem(base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
 
 #ifdef DEBUG
 void INV_InventoryList_f(void);

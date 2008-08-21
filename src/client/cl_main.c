@@ -1917,14 +1917,14 @@ static void CL_GlobalDataSizes_f (void)
 		"bases:\n"
 		"alienscont         %10Zu bytes\n"
 		"capacities         %10Zu bytes\n"
-		"equipByBuyType     %10Zu bytes\n"
+		"bEquipment         %10Zu bytes\n"
 		"aircraft           %10Zu bytes\n"
 		"aircraft (single)  %10Zu bytes\n"
 		"radar              %10Zu bytes\n"
 		,
 		sizeof(gd.bases[0].alienscont),
 		sizeof(gd.bases[0].capacities),
-		sizeof(gd.bases[0].equipByBuyType),
+		sizeof(gd.bases[0].bEquipment),
 		sizeof(gd.bases[0].aircraft),
 		sizeof(aircraft_t),
 		sizeof(gd.bases[0].radar)

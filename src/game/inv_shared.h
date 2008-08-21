@@ -187,36 +187,38 @@ typedef struct craftitem_s {
 	qboolean laser;				/**< create laser particles for the projectiles */
 } craftitem_t;
 
-/** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
- ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
- ** @sa scripts.c:buytypeNames
- ** @note Be sure to also update all usages of the buy_type" console function (defined in cl_market.c and mostly used there and in menu_buy.ufo) when changing this.
- **/
+/**
+ * @brief A list of filter types in the market and production view.
+ * @note Run-time only, please do not use this in savegame/structures and the like.
+ * Please also do not use hardcoded numbers to access this (e.g. in a .ufo script).
+ * @todo There are some legacy uses of hardcoded numbers (see the usage of "buy_type"/BS_BuyType_f in the .ufo files).
+ * We better change that so something like in cl_team.c:CL_EquipType_f)
+ * @sa inv_shared.c:INV_ItemMatchesFilter
+ * @sa inv_shared.c:INV_GetFilterTypeID
+ */
 typedef enum {
-	BUY_WEAP_PRI,	/**< All 'Primary' weapons and their ammo for soldiers. */
-	BUY_WEAP_SEC,	/**< All 'Secondary' weapons and their ammo for soldiers. */
-	BUY_MISC,		/**< Misc soldier equipment. */
-	BUY_ARMOUR,		/**< Armour for soldiers. */
-	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
-	/* MAX_SOLDIER_EQU_BUYTYPES */
-	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
-	BUY_DUMMY,		/**< Everything that is not equipment for soldiers except craftitems. */
-	BUY_CRAFTITEM,	/**< Craftitem. */
-	BUY_HEAVY,	/**< Heavy equipment like tanks (i.e. these are actually employees). */
-	MAX_BUYTYPES,
+	/* All types starting with "FILTER_S_" contain items that can used on/with soldiers (i.e. personal equipment). */
+	FILTER_S_PRIMARY,		/**< All 'Primary' weapons and their ammo for soldiers (Except for heavy weapons). */
+	FILTER_S_SECONDARY,		/**< All 'Secondary' weapons and their ammo for soldiers. */
+	FILTER_S_HEAVY,			/**< Heavy weapons for soldiers. */
+	FILTER_S_MISC,			/**< Misc. soldier equipment (i.e. everything else that is not in the other soldier-item filters) */
+	FILTER_S_ARMOUR,		/**< Armour for soldiers. */
+	MAX_SOLDIER_FILTERTYPES,
 
-	ENSURE_32BIT = 0x7FFFFFFF
-} equipmentBuytypes_t;
+	/* Non-soldier items */
+	FILTER_CRAFTITEM,	/**< Aircraft equipment. */
+	FILTER_UGVITEM,	/**< Heavy equipment like tanks (i.e. these are actually employees) and their parts.
+					 * Some of the content are special normal items (like for soldiers).
+					 * The UGVs themself are specially handled.*/
+	FILTER_AIRCRAFT,	/**< Aircrafts. */
+	FILTER_DUMMY,		/**< Everything that is not in _any_ of the other filter types.
+					 * Mostly plot-relevant stuff, unproducable stuff and stuff. */
+	FILTER_DISASSEMBLY,
 
-#define MAX_SOLDIER_EQU_BUYTYPES BUY_MULTI_AMMO
+	MAX_FILTERTYPES,
 
-#define BUY_PRI(type)	( (((type) == BUY_WEAP_PRI) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the primary category. */
-#define BUY_SEC(type)	( (((type) == BUY_WEAP_SEC) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the secondary category. */
-#define BUYTYPE_MATCH(type1,type2) (\
-	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
-	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
-	|| ((type1) == (type2))) \
-	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
+	FILTER_ENSURE_32BIT = 0x7FFFFFFF
+} itemFilterTypes_t;
 
 /**
  * @brief Defines all attributes of obejcts used in the inventory.
@@ -247,7 +249,17 @@ typedef struct objDef_s {
 
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
-	equipmentBuytypes_t buytype;			/**< Category of the item - used in menus. */
+
+	/** Item type used to check agains buyypes.
+	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
+	 * @sa obj.craftitem.type == MAX_ACITEMS	equals "isCraftitem" */
+	qboolean isPrimary;
+	qboolean isSecondary;
+	qboolean isHeavy;
+	qboolean isMisc;
+	qboolean isUGVitem;
+	qboolean isDummy;
+
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
@@ -311,8 +323,16 @@ typedef struct invDef_s {
 	qboolean headgear;	/**< Only headgear items can be stored in this container. */
 	qboolean all;		/**< Every item type can be stored in this container. */
 	qboolean temp;		/**< This is only a pointer to another inventory definitions. */
-	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
-	int in, out;	/**< TU costs for moving items in and out. */
+	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape.
+											 * Also used in MN_FindContainer to calculate the node size. */
+	int in, out;	/**< parsed: TU costs for moving items in and out. */
+
+	/** Scroll information. @sa inventory_t */
+	int scroll;			/**< If set this container is scrollable (i.e. no grid and no single container)
+						 * The number tells us how many pixels (width) the container can display at one time.
+						 * Also used (along with scrollHeight) in MN_FindContainer to calculate the node size. */
+	int scrollHeight;	/**< Tells us how many pixels (height) the conatiner can display. */
+	int scrollVertical;	/**< 0/false=horizontal 1/true=vertical */
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
@@ -346,6 +366,11 @@ typedef struct invList_s {
 /** @brief inventory defintion with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
+
+	/* Scroll information for idEquip. */
+	int scrollCur;		/**< Index of first item that is displayed. */
+	int scrollNum;		/**< Number of items that are displayed. */
+	int scrollTotalNum;	/**< Total number of displayable items. */
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
@@ -461,7 +486,7 @@ typedef struct csi_s {
 */
 typedef enum {
 	KILLED_ALIENS,		/**< Killed aliens @todo maybe generally "enemies" in the future? */
-	KILLED_CIVILIANS,	/**< Civilians, animals @todo maybe also scientists and workers int he future? */
+	KILLED_CIVILIANS,	/**< Civilians, animals @todo maybe also scientists and workers in the future? */
 	KILLED_TEAM,	/**< Friendly fire, own team, partner-teams. */
 
 	KILLED_NUM_TYPES
@@ -705,17 +730,17 @@ void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
 int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
 qboolean Com_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
+itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
+inline qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
+invList_t *INV_SearchInScrollableContainer(const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item, const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, int x, int y) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, const invDef_t * container, int x, int y, qboolean ignore_type) __attribute__((nonnull(1)));
-int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
-int Com_MoveInInventoryIgnore(inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1)));
+int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
 void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
 void Com_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py) __attribute__((nonnull(1)));
 qboolean Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
-int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int buytypeContainer, int amount) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
 void INVSH_EquipActor(inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));

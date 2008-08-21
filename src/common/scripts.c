@@ -680,20 +680,6 @@ enum {
 	OD_RATINGS			/**< parse rating values for displaying in the menus */
 };
 
-
-/** @sa q_shared.h:equipmentBuytypes_t */
-static const char *buytypeNames[MAX_BUYTYPES] = {
-	"weap_pri",
-	"weap_sec",
-	"misc",
-	"armour",
-	"multi_ammo",
-	"aircraft",
-	"dummy",
-	"craftitem",
-	"heavy_equipment"
-};
-
 /**
  * @note Make sure, that you don't change the order of the first entries
  * or you have the change the enum values OD_*, too
@@ -742,6 +728,13 @@ static const value_t od_vals[] = {
 	{"maxspeed", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_MAXSPEED]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SPEED])},
 	{"fuelsize", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE])},
 	{"dmgtype", V_DMGTYPE, offsetof(objDef_t, dmgtype), MEMBER_SIZEOF(objDef_t, dmgtype)},
+
+	{"is_primary", V_BOOL, offsetof(objDef_t, isPrimary), MEMBER_SIZEOF(objDef_t, isPrimary)},
+	{"is_secondary", V_BOOL, offsetof(objDef_t, isSecondary), MEMBER_SIZEOF(objDef_t, isSecondary)},
+	{"is_heavy", V_BOOL, offsetof(objDef_t, isHeavy), MEMBER_SIZEOF(objDef_t, isHeavy)},
+	{"is_misc", V_BOOL, offsetof(objDef_t, isMisc), MEMBER_SIZEOF(objDef_t, isMisc)},
+	{"is_ugvitem", V_BOOL, offsetof(objDef_t, isUGVitem), MEMBER_SIZEOF(objDef_t, isUGVitem)},
+	{"is_dummy", V_BOOL, offsetof(objDef_t, isDummy), MEMBER_SIZEOF(objDef_t, isDummy)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -927,7 +920,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	const value_t *val;
 	objDef_t *od;
 	const char *token;
-	int i,j;
+	int i;
 	int weapFdsIdx, fdIdx;
 
 	/* search for items with same name */
@@ -1053,19 +1046,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			}
 		}
 		if (!val->string) {
-			if (!Q_strcmp(token, "buytype")) {
-				/* Found a buytype option ... checking for the correct string */
-
-				/* parse a value */
-				token = COM_EParse(text, errhead, name);
-				/** @todo maybe we could add a check for the old numbers as well here */
-				for (j = 0; j < MAX_BUYTYPES; j++) {
-					if (!Q_strcasecmp(token, buytypeNames[j])) {
-						od->buytype = j;
-						break;
-					}
-				}
-			} else if (!Q_strcmp(token, "craftweapon")) {
+			if (!Q_strcmp(token, "craftweapon")) {
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
@@ -1123,6 +1104,10 @@ static const value_t idps[] = {
 	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape), 0},
 	/* only a single item */
 	{"single", V_BOOL, offsetof(invDef_t, single), MEMBER_SIZEOF(invDef_t, single)},
+	/* Scrollable container */
+	{"scroll", V_INT, offsetof(invDef_t, scroll), MEMBER_SIZEOF(invDef_t, scroll)},
+	{"scroll_height", V_INT, offsetof(invDef_t, scrollHeight), MEMBER_SIZEOF(invDef_t, scrollHeight)},
+	{"scroll_vertical", V_BOOL, offsetof(invDef_t, scrollVertical), MEMBER_SIZEOF(invDef_t, scrollVertical)},
 	/* only a single item as weapon extension - single should be set, too */
 	{"extension", V_BOOL, offsetof(invDef_t, extension), MEMBER_SIZEOF(invDef_t, extension)},
 	/* this is the armour container */
@@ -2474,13 +2459,13 @@ qboolean Com_ItemsSanityCheck (void)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *item = &csi.ods[i];
 
-		/* warn if item has no size set */
-		if (item->size <= 0 && !(item->buytype == BUY_DUMMY && item->notOnMarket)) {
+		/* Warn if item has no size set. */
+		if (item->size <= 0 && !(INV_ItemMatchesFilter(item, FILTER_DUMMY) && item->notOnMarket)) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
-		/* warn if no price is set */
+		/* Warn if no price is set. */
 		if (item->price <= 0 && !item->notOnMarket) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has zero price set.\n", item->id);

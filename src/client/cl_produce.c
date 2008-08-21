@@ -44,7 +44,7 @@ typedef struct countedLinkedList_s {
 } countedLinkedList_t;
 
 
-static int produceCategory = BUY_WEAP_PRI;	/**< Holds the current active production category (which is buytype). */
+static itemFilterTypes_t produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type. */
 
 static qboolean productionDisassembling;	/**< Are we in disassembling state? */
 static qboolean selectedQueueItem = qfalse;	/**< Did we select something in the queue. */
@@ -273,13 +273,13 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 
 	prod->idx = queue->numItems;	/**< Initialize self-reference. */
 
-	if (produceCategory != BUY_AIRCRAFT)
+	if (produceCategory != FILTER_AIRCRAFT)
 		tech = item->tech;
 	else
 		tech = aircraftTemplate->tech;
 
 	/* We cannot queue new aircraft if no free hangar space. */
-	if (produceCategory == BUY_AIRCRAFT) {
+	if (produceCategory == FILTER_AIRCRAFT) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
@@ -449,13 +449,13 @@ static void PR_UpdateProductionList (const base_t* base)
 	productionItemList.num = 0;
 
 	/* Then go through all object definitions ... */
-	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
+	if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
 		objDef_t *od;
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			assert(od->tech);
 			/* We will not show items with producetime = -1 - these are not producible.
 			 * We can produce what was researched before. */
-			if (BUYTYPE_MATCH(od->buytype, produceCategory)
+			if (INV_ItemMatchesFilter(od, produceCategory)
 			 && RS_IsResearched_ptr(od->tech) && od->name[0] != '\0'
 			 && od->tech->produceTime > 0) {
 				LIST_AddPointer(&productionItemList.list, od);
@@ -891,7 +891,7 @@ static void PR_ProductionListRightClick_f (void)
 		/* Clicked in the item list. */
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
-		if (produceCategory != BUY_AIRCRAFT) {
+		if (produceCategory != FILTER_AIRCRAFT) {
 			objDef_t *od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 #ifdef DEBUG
 			if (!od) {
@@ -904,7 +904,7 @@ static void PR_ProductionListRightClick_f (void)
 #endif
 
 			/* Open up UFOpaedia for this entry. */
-			if (BUYTYPE_MATCH(od->buytype, produceCategory) && RS_IsResearched_ptr(od->tech)) {
+			if (INV_ItemMatchesFilter(od, produceCategory) && RS_IsResearched_ptr(od->tech)) {
 				selectedQueueItem = qfalse;
 				PR_ClearSelected();
 				selectedItem = od;
@@ -969,7 +969,7 @@ static void PR_ProductionListClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (!productionDisassembling) {
-			if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
+			if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
 				objDef_t *od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
 
 #ifdef DEBUG
@@ -982,7 +982,7 @@ static void PR_ProductionListClick_f (void)
 					Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
 #endif
 				/* We can only produce items that fulfill the following conditions... */
-				if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
+				if (INV_ItemMatchesFilter(od, produceCategory)	/* Item is in the current inventory-category */
 				 && RS_IsResearched_ptr(od->tech)		/* Tech is researched */
 				 && od->tech->produceTime >= 0) {		/* Item is producible */
 				 	assert(*od->name);
@@ -1112,47 +1112,46 @@ static void PR_ProductionSelect_f (void)
 	cat = atoi(Cmd_Argv(1));
 
 	/* Check if the given category index is valid. */
-	if (cat < MAX_BUYTYPES && cat >= BUY_WEAP_PRI) {
+	if (cat < MAX_FILTERTYPES && cat >= FILTER_S_PRIMARY) {	/**< Check for valid bounds */
 		produceCategory = cat;
 		Cvar_Set("mn_itemtype", va("%d", produceCategory));
 		switch (produceCategory) {
-		case BUY_WEAP_PRI:
+		case FILTER_S_PRIMARY:
 			Cvar_Set("mn_itemtypename", _("Primary weapons"));
 			break;
-		case BUY_WEAP_SEC:
+		case FILTER_S_SECONDARY:
 			Cvar_Set("mn_itemtypename", _("Secondary weapons"));
 			break;
-		case BUY_MISC:
+		case FILTER_S_HEAVY:
+			Cvar_Set("mn_itemtypename", _("Heavy weapons"));
+			break;
+		case FILTER_S_MISC:
 			Cvar_Set("mn_itemtypename", _("Miscellaneous"));
 			break;
-		case BUY_ARMOUR:
+		case FILTER_S_ARMOUR:
 			Cvar_Set("mn_itemtypename", _("Personal Armours"));
 			break;
-		case BUY_MULTI_AMMO:
-			/** @todo do we deed this? */
-			/* Cvar_Set("mn_itemtypename", _("Weapons and ammo")); */
-			break;
-		case BUY_AIRCRAFT:
+		case FILTER_AIRCRAFT:
 			Cvar_Set("mn_itemtypename", _("Aircraft"));
 			break;
-		case BUY_DUMMY:
+		case FILTER_DUMMY:
 			Cvar_Set("mn_itemtypename", _("Other"));
 			break;
-		case BUY_CRAFTITEM:
+		case FILTER_CRAFTITEM:
 			Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
 			break;
-		case BUY_HEAVY:
+		case FILTER_UGVITEM:
 			Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
 			break;
+		case FILTER_DISASSEMBLY:
+			Cvar_Set("mn_itemtypename", _("Disassembling"));
+			PR_ProductionInfo(baseCurrent, qtrue);
+			PR_UpdateDisassemblingList_f();
+			return;
 		default:
 			Cvar_Set("mn_itemtypename", _("Unknown"));
 			break;
 		}
-	} else if (cat == MAX_BUYTYPES) {
-		Cvar_Set("mn_itemtypename", _("Disassembling"));
-		PR_ProductionInfo(baseCurrent, qtrue);
-		PR_UpdateDisassemblingList_f();
-		return;
 	} else {
 		return;
 	}
@@ -1174,14 +1173,14 @@ static void PR_ProductionSelect_f (void)
 
 	/* Select first entry in the list (if any). */
 	if (productionItemList.num > 0) {
-		if (produceCategory != BUY_AIRCRAFT)
+		if (produceCategory != FILTER_AIRCRAFT)
 			selectedItem = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, 0);
 		else
 			selectedAircraft = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, 0);
 	}
 
 	/* Update displayed info about selected entry (if any). */
-	if (produceCategory != BUY_AIRCRAFT)
+	if (produceCategory != FILTER_AIRCRAFT)
 		PR_ProductionInfo(baseCurrent, qfalse);
 	else
 		PR_AircraftInfo(selectedAircraft);
@@ -1233,13 +1232,17 @@ static void PR_ProductionList_f (void)
 static void BS_Prev_ProduceType_f (void)
 {
 	produceCategory--;
-	if (produceCategory == BUY_MULTI_AMMO)
+
+	/* Skip internal filter types */
+	if (produceCategory == MAX_SOLDIER_FILTERTYPES)
 		produceCategory--;
+
 	if (produceCategory < 0) {
-		produceCategory = MAX_BUYTYPES;
-	} else if (produceCategory > MAX_BUYTYPES) {
-		produceCategory = 0;
+		produceCategory = MAX_FILTERTYPES - 1;
+	} else if (produceCategory >= MAX_FILTERTYPES) {
+		produceCategory = FILTER_S_PRIMARY;	/* First entry of itemFilterTypes_t */
 	}
+
 	selectedItem = NULL;
 	selectedDisassembly = NULL;
 	selectedAircraft = NULL;
@@ -1252,13 +1255,17 @@ static void BS_Prev_ProduceType_f (void)
 static void BS_Next_ProduceType_f (void)
 {
 	produceCategory++;
-	if (produceCategory == BUY_MULTI_AMMO)
+
+	/* Skip internal filter types */
+	if (produceCategory == MAX_SOLDIER_FILTERTYPES)
 		produceCategory++;
+
 	if (produceCategory < 0) {
-		produceCategory = MAX_BUYTYPES;
-	} else if (produceCategory > MAX_BUYTYPES) {
-		produceCategory = 0;
+		produceCategory = MAX_FILTERTYPES - 1;
+	} else if (produceCategory >= MAX_FILTERTYPES) {
+		produceCategory = FILTER_S_PRIMARY;	/* First entry of itemFilterTypes_t */
 	}
+
 	selectedItem = NULL;
 	selectedDisassembly = NULL;
 	selectedAircraft = NULL;
@@ -1436,7 +1443,7 @@ static void PR_ProductionIncrease_f (void)
 			return;
 		}
 
-		if (produceCategory != BUY_AIRCRAFT) {
+		if (produceCategory != FILTER_AIRCRAFT) {
 			/* Get technology of the item in the selected queue-entry. */
 			const objDef_t *od = prod->item;
 			int producibleAmount = amount;
@@ -1491,7 +1498,7 @@ static void PR_ProductionIncrease_f (void)
 	}
 
 	if (!productionDisassembling) {	/* Production. */
-		if (produceCategory != BUY_AIRCRAFT)
+		if (produceCategory != FILTER_AIRCRAFT)
 			PR_ProductionInfo(base, qfalse);
 		else
 			PR_AircraftInfo(selectedAircraft);

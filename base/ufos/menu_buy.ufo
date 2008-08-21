@@ -1278,7 +1278,7 @@ menu buy
 
 	string txt_storage_caption
 	{
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string 		"_Storage (used/all):"
 		pos		"650 80"
 		font		f_small
@@ -1287,7 +1287,7 @@ menu buy
 
 	string txt_storage_value
 	{
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string 		"*cvar mn_bs_storage"
 		pos		"855 80"
 		font		f_small
@@ -1356,7 +1356,7 @@ menu buy
 
 	string itemname
 	{
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string	"*cvar mn_itemname"
 		pos	"793 155"
 		align	uc
@@ -1364,7 +1364,7 @@ menu buy
 
         string aircraftname
         {
-		if "mn_itemtype == 5"
+		if "mn_itemtype == 8"	// Only for aircraft.
                 string  "*cvar mn_aircraftname"
                 pos	"793 155"
                 align   uc
@@ -1373,7 +1373,7 @@ menu buy
 	item itemmodel
 	{
 		// @todo: models for aircraft/craftitems
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string	"*cvar mn_item"
 		pos	"793 250"
 		scale	"7 7 7"

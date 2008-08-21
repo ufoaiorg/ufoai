@@ -3805,7 +3805,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteLong(sb, aircraft->stats[l]);
 			}
 		}
-		MSG_WriteByte(sb, b->equipType);
+		MSG_WriteByte(sb, b->equipType);	/** @todo Do we really need to save this? */
 
 		/* store equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
@@ -4141,7 +4141,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 
 		/* clear the mess of stray loaded pointers */
-		memset(&b->equipByBuyType, 0, sizeof(b->equipByBuyType));
+		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 
 		/* some functions needs the baseCurrent pointer set */
 		/** @todo Is this still the case - the baseCurrent usage was heavily

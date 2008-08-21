@@ -56,7 +56,7 @@ item ugv_chaingun
 	price		0	// @todo maybe we still need this somewhere?
 	size		120
 	notonmarket	true
-	buytype	heavy_equipment
+	is_ugvitem	true
 }
 
 item ugv_chaingun_belt
@@ -69,7 +69,7 @@ item ugv_chaingun_belt
 	center		"-3 -6 0"
 	scale		1.6
 	price		2500
-	buytype	heavy_equipment
+	is_ugvitem	true
 	size		40
 	dmgtype normal
 
@@ -158,10 +158,12 @@ item ugv_weapon_autocannon
 	price		0	// @todo maybe we still need this somewhere?
 	size		120
 	notonmarket	true
-	buytype	heavy_equipment
+	is_ugvitem	true
 }
 
 // TODO:
 // ugv_ammo_ap_rounds_txt 12mm AP Rounds
 // ugv_ammo_fp_rounds_txt 12mm FP Rounds
+
+
 

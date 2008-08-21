@@ -73,7 +73,6 @@ item light
 	scale		0.7
 	price		1400
 	size		60
-	buytype		armour
 	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
@@ -135,7 +134,6 @@ item lightadv
 	scale		0.7
 	price		1600
 	size		60
-	buytype		armour
 	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
@@ -197,7 +195,6 @@ item medium
 	scale		0.7
 	price		7500
 	size		120
-	buytype		armour
 	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
@@ -258,8 +255,7 @@ item power
 	center		"0 0 -5"
 	scale		0.7
 	price		32000
-    size		150
-	buytype		armour
+	size		150
 	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
@@ -319,7 +315,6 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	buytype		armour
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -376,7 +371,6 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	buytype		armour
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -433,7 +427,6 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	buytype		armour
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -490,7 +483,6 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	buytype		armour
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -552,7 +544,6 @@ item light_alien
 	scale		0.7
 	price		1400
 	size		50
-	buytype		armour
 	useable		1
 	//TODO: TU penalty value. No support for this yet.
 
@@ -613,7 +604,6 @@ item medium_alien
 	scale		0.7
 	price		7500
 	size		75
-	buytype		armour
 	useable		1
 	//TODO: TU penalty value. No support for this yet.
 

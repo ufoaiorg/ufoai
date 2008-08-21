@@ -17,7 +17,7 @@ item plaspistol
 	reload		10
 	price		3400
 	size		20
-	buytype	weap_sec
+	is_secondary	true
 }
 
 item plaspistol_ammo
@@ -31,7 +31,7 @@ item plaspistol_ammo
 	scale		1.1
 	price		1700
 	size		3
-	buytype	weap_sec
+	is_secondary	true
 	dmgtype plasma
 
 	weapon_mod plaspistol
@@ -119,7 +119,7 @@ item plasrifle
 	reload		15
 	price		4000
 	size		40
-	buytype	weap_pri
+	is_primary	true
 }
 
 item plasrifle_ammo
@@ -133,7 +133,7 @@ item plasrifle_ammo
 	scale		1.25
 	price		2000
 	size		4
-	buytype	weap_pri
+	is_primary	true
 	dmgtype plasma
 
 	weapon_mod plasrifle
@@ -242,7 +242,8 @@ item plasblaster
 	reload		20
 	price		5800
 	size		80
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item plasblaster_ammo
@@ -256,7 +257,8 @@ item plasblaster_ammo
 	scale		1.4
 	price		4000
 	size		7
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype plasma
 
 	weapon_mod plasblaster
@@ -327,4 +329,6 @@ item plasblaster_ammo
 		}
 	}
 }
+
+
 

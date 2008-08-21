@@ -960,7 +960,7 @@ menu team
 	// additional stuff
 	// ==================
 	confunc toggle_show_heavybutton {
-		*bt_switch_list tooltip	"_Assign heavy equipment"
+		*bt_switch_list tooltip	"_Assign tanks"
 		*bt_switch_list texl	"0 0"
 		*bt_switch_list texh	"64 37"
 	}
@@ -971,7 +971,7 @@ menu team
 	}
 	pic bt_switch_list
 	{
-		tooltip	"_Assign heavy equipment"
+		tooltip	"_Assign tanks"
 		pos	"874 720"
 		image	menu/buttons_team
 		texl	"0 0"
@@ -1291,22 +1291,24 @@ menu equipment
 
 	confunc equip_reset
 	{
-		*s_primary		color "1 1 1 0.6"
+		*s_primary	color "1 1 1 0.6"
 		*s_secondary	color "1 1 1 0.6"
-		*s_misc			color "1 1 1 0.6"
-		*s_armour		color "1 1 1 0.6"
+		*s_heavy	color "1 1 1 0.6"
+		*s_misc		color "1 1 1 0.6"
+		*s_armour	color "1 1 1 0.6"
 	}
-	confunc equip_primary	{ cmd "equip_type 0;" equip_reset *s_primary	color "1 1 1 1" }
-	confunc equip_secondary	{ cmd "equip_type 1;" equip_reset *s_secondary	color "1 1 1 1" }
-	confunc equip_misc		{ cmd "equip_type 2;" equip_reset *s_misc		color "1 1 1 1" }
-	confunc equip_armour	{ cmd "equip_type 3;" equip_reset *s_armour		color "1 1 1 1" }
+	confunc equip_primary	{ cmd "equip_type primary;"	equip_reset *s_primary	color "1 1 1 1" }
+	confunc equip_secondary	{ cmd "equip_type secondary;"	equip_reset *s_secondary	color "1 1 1 1" }
+	confunc equip_heavy	{ cmd "equip_type heavy;"	equip_reset *s_heavy	color "1 1 1 1" }
+	confunc equip_misc	{ cmd "equip_type misc;"	equip_reset *s_misc	color "1 1 1 1" }
+	confunc equip_armour	{ cmd "equip_type armour;"	equip_reset *s_armour	color "1 1 1 1" }
 
 	pic bt_primary
 	{
-		tooltip	"_Show primary weapons in store"
+		tooltip	"_Show available primary weapons"
 		image	menu/button_blue
 		mousefx	true
-		pos		"374 125"
+		pos		"374 70"	//125
 		texl	"0 0"
 		texh	"128 52"
 		click	{ equip_primary }
@@ -1314,7 +1316,7 @@ menu equipment
 
 	string s_primary
 	{
-		pos	"438 151"
+		pos	"438 96"	//151
 		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
@@ -1323,10 +1325,10 @@ menu equipment
 
 	pic bt_secondary
 	{
-		tooltip	"_Show secondary weapons in store"
+		tooltip	"_Show available secondary weapons"
 		image	menu/button_blue
 		mousefx	true
-		pos		"374 180"
+		pos		"374 125"	//180
 		texl	"0 0"
 		texh	"128 52"
 		click	{ equip_secondary }
@@ -1334,16 +1336,36 @@ menu equipment
 
 	string s_secondary
 	{
-		pos	"438 206"
+		pos	"438 151"	//206
 		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Secondary"
 	}
 
+	pic bt_heavy
+	{
+		tooltip	"_Show available heavy weapons"
+		image	menu/button_blue
+		mousefx	true
+		pos		"374 180"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ equip_heavy }
+	}
+
+	string s_heavy
+	{
+		pos	"438 206"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_big"
+		string	"_Heavy"
+	}
+
 	pic bt_misc
 	{
-		tooltip	"_Show miscellaneous equipment in store"
+		tooltip	"_Show available miscellaneous equipment and weapons"
 		image	menu/button_blue
 		mousefx	true
 		pos		"374 235"
@@ -1363,7 +1385,7 @@ menu equipment
 
 	pic bt_armour
 	{
-		tooltip	"_Show armour in store"
+		tooltip	"_Show available armour"
 		image	menu/button_blue
 		mousefx	true
 		pos		"374 290"
@@ -1743,8 +1765,47 @@ menu equipment
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
-	container equip		{ pos "397 370" }
+	container equip		{ pos "422 370" }
 	container headgear	{ pos "678 104" }
+
+	confunc cont_scroll_prev_ina { *container_scroll_prev image menu/container_scroll_ina }
+	confunc cont_scroll_next_ina { *container_scroll_next image menu/container_scroll_ina }
+	
+	confunc cont_scroll_prev_act { *container_scroll_prev image menu/container_scroll }
+	confunc cont_scroll_next_act { *container_scroll_next image menu/container_scroll }
+	
+	confunc cont_scroll_prev_high { *container_scroll_prev image menu/container_scroll_high }
+	confunc cont_scroll_next_high { *container_scroll_next image menu/container_scroll_high }
+	
+	pic container_scroll_prev
+	{
+		tooltip	"_Scroll backward"
+		image	menu/container_scroll
+		blend 1
+		mousefx	false
+		pos		"397 370"
+		texl	"0 0"
+		texh	"31 255"
+		click {	cmd "scrollcont_prev;" }
+		repeat	true
+		in { cmd "set mn_cont_scroll_prev_hover 1;scrollcont_update;" }
+		out { cmd "set mn_cont_scroll_prev_hover 0;scrollcont_update;" }
+	}
+
+	pic container_scroll_next
+	{
+		tooltip	"_Scroll forward"
+		image	menu/container_scroll
+		blend 1
+		mousefx	false
+		pos		"972 370"
+		texl	"32 0"
+		texh	"63 255"
+		click { cmd "scrollcont_next;" }
+		repeat	true
+		in { cmd "set mn_cont_scroll_next_hover 1;scrollcont_update;" }
+		out { cmd "set mn_cont_scroll_next_hover 0;scrollcont_update;" }
+	}
 
 	// ==================
 	// additional stuff

@@ -917,8 +917,7 @@ static void G_PrintFloorToConsole (pos3_t pos)
  * @param[in] player The player the edict/soldier belongs to.
  * @param[in] num The edict number of the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
- * @param[in] fx x position of the item you want to move in the source container
- * @param[in] fy y position of the item you want to move in the source container
+ * @param[in] fItem The item you want to move.
  * @param[in] to The container (-id) the item should be moved to.
  * @param[in] tx x position where you want the item to go in the destination container
  * @param[in] ty y position where you want the item to go in the destination container
@@ -927,7 +926,7 @@ static void G_PrintFloorToConsole (pos3_t pos)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet)
+void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -942,7 +941,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
 
 	/* Store the location of 'from' BEFORE actually moving items with Com_MoveInInventory. */
-	invList = Com_SearchInInventory(&ent->i, from, fx, fy);
+	invList = fItem;
 
 	/* check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
@@ -970,7 +969,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		if (ty != NONE)
 			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 
-		ic = Com_SearchInInventory(&ent->i, from, fx, fy);
+		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
 			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty);
 	}
@@ -982,7 +981,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 	}
 
 	/* Try to actually move the item and check the return value */
-	ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic);
+	ia = Com_MoveInInventory(&ent->i, from, fItem, to, tx, ty, &ent->TU, &ic);
 	switch (ia) {
 	case IA_NONE:
 		/* No action possible - abort */
@@ -1017,8 +1016,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 			gi.WriteShort(floor->number);
 			gi.WriteByte(from->id);
-			gi.WriteByte(fx);
-			gi.WriteByte(fy);
+			gi.WriteByte(fItem->x);
+			gi.WriteByte(fItem->y);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
@@ -1033,8 +1032,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
 		gi.WriteShort(num);
 		gi.WriteByte(from->id);
-		gi.WriteByte(fx);
-		gi.WriteByte(fy);
+		gi.WriteByte(fItem->x);
+		gi.WriteByte(fItem->y);
 	}
 
 	/* send tu's */
@@ -1075,8 +1074,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 			}
 			item = invList->item;
 			to = from;
-			tx = fx;
-			ty = fy;
+			tx = fItem->x;
+			ty = fItem->y;
 		}
 	}
 
@@ -1130,8 +1129,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, int fx,
 			gi.AddEvent(mask, EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(from->id);
-			gi.WriteByte(fx);
-			gi.WriteByte(fy);
+			gi.WriteByte(fItem->x);
+			gi.WriteByte(fItem->y);
 		}
 		if (to->id == gi.csi->idRight || to->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_ADD);
@@ -1249,7 +1248,7 @@ static void G_InventoryToFloor (edict_t * ent)
 #endif
 				if (Q_strncmp(ic->item.t->type, "armour", MAX_VAR))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", ic->item.t->id);
-				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic->x, ic->y))
+				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
 			} else {
 				ic->x = x;
@@ -1790,9 +1789,9 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	/* drop items in hands */
 	if (!sanity && ent->chr.weapons) {
 		if (RIGHT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], 0, 0, &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], 0, 0, &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 	}
 
 	/* get up */
@@ -1946,6 +1945,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 {
 	edict_t *ent;
 	invList_t *ic;
+	invList_t *icFinal;
 	invDef_t * hand;
 	objDef_t *weapon;
 	int x, y, tu;
@@ -1957,6 +1957,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	/* search for clips and select the one that is available easily */
 	x = 0;
 	y = 0;
+	icFinal = NULL;
 	tu = 100;
 	hand = st == ST_RIGHT_RELOAD ? &gi.csi->ids[gi.csi->idRight] : &gi.csi->ids[gi.csi->idLeft];
 	bestContainer = NULL;
@@ -1988,6 +1989,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					x = ic->x;
 					y = ic->y;
+					icFinal = ic;
 					tu = gi.csi->ids[containerID].out;
 					bestContainer = &gi.csi->ids[containerID];
 					break;
@@ -1997,7 +1999,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 
 	/* send request */
 	if (bestContainer)
-		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue, quiet);
+		G_ClientInvMove(player, entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -2046,6 +2048,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 {
 	edict_t *ent;
 	invList_t *ic;
+	invList_t *icFinal;
 	invDef_t * hand;
 	int x, y, tu;
 	int container;
@@ -2074,6 +2077,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
 					x = ic->x;
 					y = ic->y;
+					icFinal = ic;
 					tu = gi.csi->ids[container].out;
 					bestContainer = &gi.csi->ids[container];
 					break;
@@ -2084,7 +2088,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	/* send request */
 	if (bestContainer)
-		G_ClientInvMove(player, entnum, bestContainer, x, y, hand, 0, 0, qtrue, quiet);
+		G_ClientInvMove(player, entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -2303,6 +2307,7 @@ int G_ClientAction (player_t * player)
 	int from, fx, fy, to, tx, ty;
 	invDef_t *fromPtr;
 	invDef_t *toPtr;
+	invList_t *fromItem;
 	int hand, fdIdx, objIdx;
 	int resType, resState, resValue;
 	edict_t *ent;
@@ -2349,8 +2354,13 @@ int G_ClientAction (player_t * player)
 			toPtr = NULL;
 		if (!fromPtr || !toPtr)
 			Com_Printf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
-		else
-			G_ClientInvMove(player, num, fromPtr, fx, fy, toPtr, tx, ty, qtrue, NOISY);
+		else {
+			ent = g_edicts + num;
+			if (ent) {
+				fromItem = Com_SearchInInventory(&ent->i, fromPtr, fx, fy);
+				G_ClientInvMove(player, num, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
+			}
+		}
 		break;
 
 	case PA_USE_DOOR:

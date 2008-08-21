@@ -18,7 +18,7 @@ item needlergun
 	reload          15
 	price           13240
 	size		45
-	buytype	weap_pri
+	is_primary	true
 }
 
 item needlergun_ammo
@@ -32,7 +32,7 @@ item needlergun_ammo
 	scale           1.2
 	price           930
 	size		9
-	buytype	weap_pri
+	is_primary	true
 	dmgtype normal
 
 	weapon_mod needlergun
