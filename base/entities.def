@@ -43,8 +43,8 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]),
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
 '+' does it afterwards
-noday means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlight.
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
+"noday"		particle is not shown at the day version of the map. E.g. useful for flare particles around streetlights
 "particle"	name of the particle definition
 "wait"		wait time
 */
@@ -123,7 +123,7 @@ Defines the alien mission target
 "angle"		determines the opening direction
 "health"	define the needed damage to destroy the door
 "group"		multipart doors can be grouped to open together
-"particle"	particle id
+"particle"	particle id to be spawned after object is destroyed
 */
 
 /*QUAKED func_group (0 0 0) ?
@@ -135,13 +135,13 @@ Only for editor and terrain convenience.
 
 /*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
 "health"	damage until destroyed
-"particle"	particle id
+"particle"	particle id to be spawned after object is destroyed
 "material"	material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3
 */
 
 /*QUAKED func_rotating (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
 "health"	damage until destroyed
-"particle"	particle id
+"particle"	particle id to be spawned after object is destroyed
 "speed"		rotation speed
 "angle"		rotate around this angle - pitch = 0, yaw = 1, roll = 2
 */
