@@ -1805,10 +1805,7 @@ pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouching_state, q
  */
 int Grid_MoveNext (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state)
 {
-	pos_t l;
-
-
-	l = RT_AREA(path, from[0], from[1], from[2], crouching_state); /**< Get TUs for this square */
+	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouching_state); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
 	if (!l && l != ROUTING_NOT_REACHABLE) {
@@ -1911,8 +1908,9 @@ int Grid_Filled (struct routing_s *map, const int actor_size, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
-		Com_Printf("Grid_Filled: Warning: z level is bigger than 7: %i\n", pos[2]);
-		pos[2] &= 7;
+		const int maxHeight = PATHFINDING_HEIGHT - 1;
+		Com_Printf("Grid_Filled: Warning: z level is bigger than %i: %i\n", pos[2], maxHeight);
+		pos[2] &= maxHeight;
 	}
 	return RT_FILLED(map, pos[0], pos[1], pos[2], actor_size);
 }
@@ -1948,9 +1946,9 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
      * If 0 <= z <= 16, then z / 16 = 0, no change.
      */
 	base = RT_FLOOR(map, actor_size, pos[0], pos[1], z);
-    diff = base <0 ? (base - 15) / 16 : base / 16;
+    diff = base < 0 ? (base - 15) / 16 : base / 16;
     z += diff;
-    assert (z >= 0 && z < PATHFINDING_HEIGHT);
+    assert(z >= 0 && z < PATHFINDING_HEIGHT);
 	return z;
 }
 

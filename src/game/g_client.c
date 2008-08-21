@@ -726,7 +726,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 	int status;
 
 	assert(ent->dir < CORE_DIRECTIONS);
-	assert (dir < PATHFINDING_DIRECTIONS);
+	assert(dir < PATHFINDING_DIRECTIONS);
 
 	/*
 	 * If dir is at least CORE_DIRECTIONS but less than FLYING_DIRECTIONS,
@@ -740,7 +740,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 
 	/* Clamp dir between 0 and CORE_DIRECTIONS - 1. */
 	dir &= (CORE_DIRECTIONS - 1);
-	assert (dir < CORE_DIRECTIONS);
+	assert(dir < CORE_DIRECTIONS);
 
 	/* Return if no rotation needs to be done. */
 	if (ent->dir == dir)
