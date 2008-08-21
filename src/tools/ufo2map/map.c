@@ -983,6 +983,8 @@ void WriteMapFile (const char *filename)
 	Com_Printf("writing map: '%s'\n", filename);
 
 	f = fopen(filename, "wb");
+	if (!f)
+		Sys_Error("Could not open %s for writing", filename);
 
 	removed = 0;
 	fprintf(f, "\n");
