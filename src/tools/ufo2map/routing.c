@@ -65,15 +65,15 @@ static int NewCheckUnit (unsigned int unitnum)
 
 	/* Com_Printf("%i %i %i %i\n", x, y, z, size); */
 	/* Call the common CheckUnit function */
-	new_z = RT_NewCheckCell(Nmap, actor_size + 1, x, y, z);
+	new_z = RT_CheckCell(Nmap, actor_size + 1, x, y, z);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 
-	/* new_z should always be above z. */
-	assert(new_z > z);
+	/* new_z should never be above z. */
+	assert(new_z <= z);
 
 	/* Adjust unitnum if this check adjusted multiple cells. */
-	return new_z - z -1;
+	return new_z - z;
 }
 
 /**
@@ -84,7 +84,7 @@ static void NewCheckUnitThread (unsigned int unitnum)
 {
 	int basenum = unitnum * PATHFINDING_HEIGHT;
 	int newnum;
-	for (newnum = basenum; newnum < basenum + PATHFINDING_HEIGHT; newnum++)
+	for (newnum = basenum + PATHFINDING_HEIGHT - 1; newnum >= basenum; newnum--)
 		newnum += NewCheckUnit(newnum);
 }
 
@@ -114,7 +114,7 @@ static int NewCheckConnections (unsigned int unitnum)
 
 	/* Com_Printf("%i %i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, z, dir, size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 
-	new_z = RT_NewUpdateConnection(Nmap, actor_size + 1, x, y, z, dir);
+	new_z = RT_UpdateConnection(Nmap, actor_size + 1, x, y, z, dir);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 
@@ -122,7 +122,7 @@ static int NewCheckConnections (unsigned int unitnum)
 	assert(new_z >= z);
 
 	/* Adjust unitnum if this check adjusted multiple cells. */
-	return new_z - z -1;
+	return new_z - z;
 }
 
 /**
@@ -149,20 +149,18 @@ void DoRouting (void)
 	int i;
 	byte *data;
 
-	/* Record the current mapTiles[0] state so we can remove STEPON when done looking for steps */
+	/* Turn on trace debugging if requested. */
+	if (config.generateDebugTrace)
+		debugTrace = qtrue;
+
+	/* Record the current mapTiles[0] state so we can remove all CLIPS when done. */
 	PushInfo();
-
-	/* Set the model count to LEVEL_STEPON. */
-	curTile->nummodels = LEVEL_MAX; /* must be one more than the last index */
-
-	/* process stepon level */
-	ProcessLevel(LEVEL_STEPON);
 
 	/* build tracing structure */
 	EmitBrushes();
-	EmitPlanes();
+	EmitPlanes(); /** This is needed for tracing to work!!! */
 	/** @note LEVEL_TRACING is not an actual level- LEVEL_MAX comes after LEVEL_STEPON */
-	MakeTracingNodes(LEVEL_MAX);
+	MakeTracingNodes(LEVEL_ACTORCLIP + 1);
 
 	/* Reset the whole block of map data to 0 */
 	memset(Nmap, 0, sizeof(Nmap));
@@ -288,4 +286,7 @@ void DoRouting (void)
 	data = CompressRouting((byte*)Nmap, data, sizeof(Nmap));
 
 	curTile->routedatasize = data - curTile->routedata;
+
+	/* Remove the CLIPS fom the tracing structure by resetting it. */
+	PopInfo();
 }

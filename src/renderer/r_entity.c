@@ -192,7 +192,6 @@ static void R_DrawFloor (const entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;
-	char *string[10];
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
 	qglDisable(GL_TEXTURE_2D);

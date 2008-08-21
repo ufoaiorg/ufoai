@@ -5302,7 +5302,7 @@ void CL_DisplayFloorArrows(void) {
 	base[2] -= QUANT;
 	start[2] += QUANT;
 
-	RT_NewCheckCell(clMap, fieldSize, truePos[0], truePos[1], truePos[2]);
+	RT_CheckCell(clMap, fieldSize, truePos[0], truePos[1], truePos[2]);
 
 	/* Display floor arrow */
 	if(VectorNotEmpty(brushesHit.floor))
@@ -5323,7 +5323,7 @@ void CL_DisplayObstructionArrows(void) {
 	Grid_PosToVec(clMap, fieldSize, truePos, base);
 
 	for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-		RT_NewUpdateConnection(clMap, fieldSize, truePos[0], truePos[1], truePos[2], dir);
+		RT_UpdateConnection(clMap, fieldSize, truePos[0], truePos[1], truePos[2], dir);
 
 		VectorCopy(base, start);
 		start[0] += dvecs[dir][0] * QUANT;

@@ -327,7 +327,8 @@ COLLISION DETECTION
  * server/sv_world.c */
 #define	MASK_ALL			(-1)
 #define	MASK_SOLID			(CONTENTS_SOLID | CONTENTS_WINDOW)
-#define	MASK_VERY_SOLID		(MASK_SOLID | CONTENTS_STEPON | CONTENTS_ACTORCLIP)
+#define	MASK_IMPASSABLE		(MASK_SOLID | CONTENTS_ACTORCLIP)
+#define MASK_PASSABLE		(CONTENTS_PASSABLE | CONTENTS_WATER | CONTENTS_STEPON)
 #define	MASK_SHOT			(CONTENTS_SOLID | CONTENTS_ACTOR | CONTENTS_WEAPONCLIP | CONTENTS_WINDOW | CONTENTS_DEADACTOR)
 #define	MASK_VISIBILILITY	(CONTENTS_SOLID | CONTENTS_WATER)
 #define	MASK_CLIP			(CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON)
@@ -354,8 +355,10 @@ COLLISION DETECTION
 /* Maximum step-up height in step units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
 /* common/routing.c */
-#define	PATHFINDING_STEPUP		5
-/* Minimum height for an opening to be an opening in step units (model units/QUANT)  */
+#define	PATHFINDING_MIN_STEPUP		5
+/* Minimum height for an opening to be an opening in step units (model units/QUANT)
+ * Must be larger than PATHFINDING_MIN_STEPUP!!
+ */
 /* common/routing.c */
 #define	PATHFINDING_MIN_OPENING	6
 

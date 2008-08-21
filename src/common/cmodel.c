@@ -888,7 +888,7 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 			for (x = max(max(wpMins[0] - 1, map_min[0] - 1), 0); x <= x2; x++) {
 				/* z is done last because the tracing code can skip z checks. */
 				for (z = max(max(wpMins[2] - 1, map_min[2] - 1), 0); z <= z2; y++) {
-					new_z = RT_NewCheckCell(clMap, size, x, y, z);
+					new_z = RT_CheckCell(clMap, size, x, y, z);
 					/* new_z should never be below z. */
 					assert(new_z >= z);
 					/* Adjust z if this check adjusted multiple cells. */
@@ -901,7 +901,7 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++)
 					/* z is done last because the tracing code can skip z checks. */
 					for (z = max(max(wpMins[2] - 1, map_min[2] - 1), 0); z <= z2; y++) {
-						new_z = RT_NewUpdateConnection(clMap, size, x, y, z, dir);
+						new_z = RT_UpdateConnection(clMap, size, x, y, z, dir);
 						/* new_z should never be below z. */
 						assert(new_z >= z);
 						/* Adjust z if this check adjusted multiple cells. */
@@ -1571,7 +1571,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		 * Fliers will ignore this rule.  They only need the passage to exist.
 		 */
 		/** @todo stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
-		stepup_height = PATHFINDING_STEPUP;
+		stepup_height = PATHFINDING_MIN_STEPUP;
 		if (height_change > stepup_height) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't step up high enough. change:%i stepup:%i\n", height_change, stepup_height);
 			return;
@@ -1662,9 +1662,9 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 
 	/* If we are moving horizontally, the new z coordinate may need to be adjusted from stepup. */
 	if (dir < CORE_DIRECTIONS && abs(height_change) <= stepup_height) {
-		const new_floor = RT_FLOOR(map, actor_size, x, y, z) + height_change;
+		const int new_floor = RT_FLOOR(map, actor_size, x, y, z) + height_change;
 		/** @note offset by 15 if negative to force nz down */
-		const delta = new_floor < 0 ? (new_floor - 15) / 16 : new_floor / 16;
+		const int delta = new_floor < 0 ? (new_floor - 15) / 16 : new_floor / 16;
 		/* Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Adjusting hight. floor:%i new_floor:%i delta:%i\n", RT_FLOOR(map, actor_size, x, y, z), new_floor, delta); */
 		nz += delta;
 	}
@@ -1885,7 +1885,7 @@ pos_t Grid_StepUp (struct routing_s *map, const int actor_size, const pos3_t pos
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
 	}
-	return PATHFINDING_STEPUP;
+	return PATHFINDING_MIN_STEPUP;
 }
 
 
@@ -2058,8 +2058,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
 		for (y = min[1]; y < max[1] - actor_size; y++)
 			for (x = min[0]; x < max[0] - actor_size; x++)
-				for (z = min[2]; z < max[2]; z++)
-					z += RT_NewCheckCell(map, actor_size, x, y, z);
+				for (z = max[2]; z >= min[2]; z--)
+					z = RT_CheckCell(map, actor_size, x, y, z);
 
 #if 0
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
@@ -2071,7 +2071,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 			for (x = min[0]; x < max[0] - actor_size; x++)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
 					for (z = min[2]; z < max[2]; z++)
-						z += RT_NewUpdateConnection(map, actor_size, x, y, z, dir);
+						z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
 
 #if 0
 	Com_Printf("After:\n");

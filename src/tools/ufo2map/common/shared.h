@@ -89,8 +89,8 @@ typedef struct mapConfig_s {
 	qboolean chkTextures;
 	qboolean chkAll;
 	qboolean fixMap;
-	qboolean generateDebugFile;
 	qboolean generateTraceFile;
+	qboolean generateDebugTrace;
 
 	float day_ambient_red;
 	float day_ambient_green;

@@ -293,16 +293,13 @@ static void SCR_DrawCursor (void)
 				MN_MenuTextReset(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 
-			if (cl_mapDebug->integer & MAPDEBUG_CELLS) {
+			if (cl_mapDebug->integer & MAPDEBUG_TEXT) {
 				/* Display ceiling text */
 				if (mn.menuText[TEXT_MOUSECURSOR_TOP] && cl_show_cursor_tooltips->integer)
 					SCR_DrawString(mousePosX, mousePosY - 64, mn.menuText[TEXT_MOUSECURSOR_TOP], qfalse);
 				/* Display floor text */
 				if (mn.menuText[TEXT_MOUSECURSOR_BOTTOM] && cl_show_cursor_tooltips->integer)
 					SCR_DrawString(mousePosX, mousePosY + 64, mn.menuText[TEXT_MOUSECURSOR_BOTTOM], qfalse);
-			}
-
-			if (cl_mapDebug->integer * MAPDEBUG_WALLS) {
 				/* Display left text */
 				if (mn.menuText[TEXT_MOUSECURSOR_LEFT] && cl_show_cursor_tooltips->integer)
 					SCR_DrawString(mousePosX - 64, mousePosY, mn.menuText[TEXT_MOUSECURSOR_LEFT], qfalse);

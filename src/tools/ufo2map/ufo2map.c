@@ -233,9 +233,9 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-tracefile")) {
 			config.generateTraceFile = qtrue;
 			Com_Printf("generateTraceFile = true\n");
-		} else if (!strcmp(argv[i],"-debugfile")) {
-			config.generateDebugFile = qtrue;
-			Com_Printf("generateDebugFile = true\n");
+		} else if (!strcmp(argv[i],"-debugtrace")) {
+			config.generateDebugTrace = qtrue;
+			Com_Printf("generateDebugTrace = true\n");
 		} else if (!strcmp(argv[i],"-material")) {
 			config.generateMaterialFile = qtrue;
 			Com_Printf("generateMaterialFile = true\n");
@@ -397,8 +397,8 @@ static void U2M_SetDefaultConfigValues (void)
 
 	config.generateFootstepFile = qtrue;
 
-	config.generateDebugFile = qfalse;
 	config.generateTraceFile = qfalse;
+	config.generateDebugTrace = qfalse;
 }
 
 static int CheckTimeDiff (const char *map, const char *bsp)

@@ -714,11 +714,11 @@ void G_ClearVisFlags (int team)
 /**
  * @brief Turns an actor around
  * @param[in] ent the actor (edict) we are talking about
- * @param[in] toDV the direction to turn the edict into = (dir << 3) | z of original cell moved from
+ * @param[in] dir the direction to turn the edict into, might be an action
  * @return Bitmask of visible (VIS_*) values
  * @sa G_CheckVisTeam
  */
-int G_DoTurn (edict_t * ent, byte toDV)
+int G_DoTurn (edict_t * ent, byte dir)
 {
 	float angleDiv;
 	const byte *rot;
@@ -726,31 +726,28 @@ int G_DoTurn (edict_t * ent, byte toDV)
 	int status;
 
 	assert(ent->dir < CORE_DIRECTIONS);
-
-	/* Transform toDV into a direction */
-	toDV >>= 3;
-	assert (toDV < PATHFINDING_DIRECTIONS);
+	assert (dir < PATHFINDING_DIRECTIONS);
 
 	/*
-	 * If toDV is at least CORE_DIRECTIONS but less than FLYING_DIRECTIONS,
+	 * If dir is at least CORE_DIRECTIONS but less than FLYING_DIRECTIONS,
 	 * then the direction is an action.
 	 */
 	/** @todo If performing an action, ensure the actor is facing the direction
 	 *  needed to perform the action if needed (climbing ladders).
 	 */
-	if (toDV >= CORE_DIRECTIONS && toDV < FLYING_DIRECTIONS)
+	if (dir >= CORE_DIRECTIONS && dir < FLYING_DIRECTIONS)
 		return 0;
 
-	/* Clamp toDV between 0 and CORE_DIRECTIONS - 1. */
-	toDV &= (CORE_DIRECTIONS - 1);
-	assert (toDV < CORE_DIRECTIONS);
+	/* Clamp dir between 0 and CORE_DIRECTIONS - 1. */
+	dir &= (CORE_DIRECTIONS - 1);
+	assert (dir < CORE_DIRECTIONS);
 
 	/* Return if no rotation needs to be done. */
-	if (ent->dir == toDV)
+	if (ent->dir == dir)
 		return 0;
 
 	/* calculate angle difference */
-	angleDiv = dangle[toDV] - dangle[ent->dir];
+	angleDiv = dangle[dir] - dangle[ent->dir];
 	if (angleDiv > 180.0)
 		angleDiv -= 360.0;
 	if (angleDiv < -180.0)
@@ -1409,7 +1406,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t *ent;
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
-	int dv, toDV;
+	int dv, dir;
 	int old_z;
 	byte numdv, length, steps;
 	pos3_t pos;
@@ -1495,10 +1492,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* get next dv */
 				numdv--;
 				dv = dvtab[numdv];
-				toDV = dv >> 3; /**< This is the direction */
+				dir = dv >> 3; /**< This is the direction */
 
 				/* turn around first */
-				status = G_DoTurn(ent, dv);
+				status = G_DoTurn(ent, dir);
 				if (status) {
 					/* send the turn */
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
@@ -1518,9 +1515,9 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* decrease TUs */
 				/* moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4); */
-				div = gi.TUsUsed(toDV);
+				div = gi.TUsUsed(dir);
 				truediv = div;
-				if (ent->state & STATE_CROUCHED && toDV < CORE_DIRECTIONS)
+				if (ent->state & STATE_CROUCHED && dir < CORE_DIRECTIONS)
 					div *= TU_CROUCH_MOVING_FACTOR;
 				if ((int) (tu + div) > ent->TU)
 					break;
@@ -1695,6 +1692,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 static void G_ClientTurn (player_t * player, int num, byte dv)
 {
 	edict_t *ent;
+	byte dir = dv >> 3;
 
 	ent = g_edicts + num;
 
@@ -1703,7 +1701,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 		return;
 
 	/* check if we're already facing that direction */
-	if (ent->dir == dv)
+	if (ent->dir == dir)
 		return;
 
 	/* start move */
@@ -1711,7 +1709,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	gi.WriteShort(ent->number);
 
 	/* do the turn */
-	G_DoTurn(ent, dv);
+	G_DoTurn(ent, dir);
 	ent->TU -= TU_TURN;
 
 	/* send the turn */

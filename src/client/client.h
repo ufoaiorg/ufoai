@@ -50,8 +50,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Map debugging constants */
 #define MAPDEBUG_PATHING	(1<<0) /* Turns on pathing tracing. */
-#define MAPDEBUG_CELLS		(1<<1) /* Creates arrows pointing at floors and ceilings at mouse cursor */
-#define MAPDEBUG_WALLS		(1<<2) /* Creates arrows pointing at obstructions in the 8 primary directions */
+#define MAPDEBUG_TEXT		(1<<1) /* Creates arrows pointing at floors and ceilings at mouse cursor */
+#define MAPDEBUG_CELLS		(1<<2) /* Creates arrows pointing at floors and ceilings at mouse cursor */
+#define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
 
 /* Macros for faster access to the inventory-container. */
 #define RIGHT(e) ((e)->i.c[csi.idRight])

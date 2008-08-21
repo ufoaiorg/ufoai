@@ -147,7 +147,7 @@ static void TR_MakeTracingNode (int nodenum)
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
 			contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
-			if ((contentFlags & MASK_VERY_SOLID) && !(contentFlags & CONTENTS_PASSABLE))
+			if ((contentFlags & MASK_IMPASSABLE) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else
 				t->children[i] = (1 << 31);
@@ -914,7 +914,7 @@ static void TR_TestInLeaf (int leafnum)
  *  is perpendicular to the line.  If the node of the tree is a leaf, the leaf is checked.  If
  *  not, it is determined which side(s) of the tree need to be traversed, and this function is
  *  called again.  The bounding box mentioned earlier is set in TR_BoxTrace, and propagated
- *  using trace_extents.  Tracce_extents is specifically how far from the line a bsp node needs
+ *  using trace_extents.  Trace_extents is specifically how far from the line a bsp node needs
  *  to be in order to be included or excluded in the search.
  */
 static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p1, const vec3_t p2)

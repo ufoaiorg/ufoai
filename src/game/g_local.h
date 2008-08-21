@@ -312,7 +312,7 @@ void G_ClientMove(player_t * player, int visTeam, int num, pos3_t to, qboolean s
 void G_MoveCalc(int team, pos3_t from, int actor_size, int crouching_state, int distance);
 void G_ClientInvMove(player_t * player, int num, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
-int G_DoTurn(edict_t * ent, byte toDV);
+int G_DoTurn(edict_t * ent, byte dir);
 
 qboolean G_FrustumVis(const edict_t *from, const vec3_t point);
 float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
