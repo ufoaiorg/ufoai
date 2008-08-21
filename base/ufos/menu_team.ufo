@@ -1765,27 +1765,27 @@ menu equipment
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
-	container equip		{ pos "422 370" }
+	container equip		{ pos "422 397" }
 	container headgear	{ pos "678 104" }
 
-	confunc cont_scroll_prev_ina { *container_scroll_prev image menu/container_scroll_ina }
-	confunc cont_scroll_next_ina { *container_scroll_next image menu/container_scroll_ina }
+	confunc cont_scroll_prev_ina { *container_scroll_prev image menu/container_scrollv_ina }
+	confunc cont_scroll_next_ina { *container_scroll_next image menu/container_scrollv_ina }
 	
-	confunc cont_scroll_prev_act { *container_scroll_prev image menu/container_scroll }
-	confunc cont_scroll_next_act { *container_scroll_next image menu/container_scroll }
+	confunc cont_scroll_prev_act { *container_scroll_prev image menu/container_scrollv }
+	confunc cont_scroll_next_act { *container_scroll_next image menu/container_scrollv }
 	
-	confunc cont_scroll_prev_high { *container_scroll_prev image menu/container_scroll_high }
-	confunc cont_scroll_next_high { *container_scroll_next image menu/container_scroll_high }
+	confunc cont_scroll_prev_high { *container_scroll_prev image menu/container_scrollv_high }
+	confunc cont_scroll_next_high { *container_scroll_next image menu/container_scrollv_high }
 	
 	pic container_scroll_prev
 	{
 		tooltip	"_Scroll backward"
-		image	menu/container_scroll
+		image	menu/container_scrollv
 		blend 1
 		mousefx	false
-		pos		"397 370"
+		pos		"445 364"
 		texl	"0 0"
-		texh	"31 255"
+		texh	"127 31"
 		click {	cmd "scrollcont_prev;" }
 		repeat	true
 		in { cmd "set mn_cont_scroll_prev_hover 1;scrollcont_update;" }
@@ -1795,12 +1795,12 @@ menu equipment
 	pic container_scroll_next
 	{
 		tooltip	"_Scroll forward"
-		image	menu/container_scroll
+		image	menu/container_scrollv
 		blend 1
 		mousefx	false
-		pos		"972 370"
-		texl	"32 0"
-		texh	"63 255"
+		pos		"445 715"
+		texl	"0 32"
+		texh	"127 63"
 		click { cmd "scrollcont_next;" }
 		repeat	true
 		in { cmd "set mn_cont_scroll_next_hover 1;scrollcont_update;" }

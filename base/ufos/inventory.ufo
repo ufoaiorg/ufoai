@@ -110,7 +110,7 @@ inventory equip
 
 // vertical
 	scroll		225	// 9 squares x 25 [C_UNIT]
-	scroll_height	350	// 14 squares x 25 [C_UNIT]
+	scroll_height	325	// 13 squares x 25 [C_UNIT]
 	scroll_vertical 1	// vertical
 }
 
