@@ -130,11 +130,13 @@ void environment_init(int argc, char* argv[]) {
 		home << "radiant/";
 		Q_mkdir(home.c_str());
 		home_path = home.c_str();
+		globalOutputStream() << "HomePath: " << home_path.c_str();
 	}
 	{
 		char real[PATH_MAX];
 		app_path = getexename(real);
 		ASSERT_MESSAGE(!string_empty(app_path.c_str()), "failed to deduce app path");
+		globalOutputStream() << "AppPath: " << app_path.c_str();
 	}
 }
 
@@ -180,6 +182,7 @@ void environment_init(int argc, char* argv[]) {
 		home << "/RadiantSettings/";;
 		Q_mkdir(home.c_str());
 		home_path = home.c_str();
+		globalOutputStream() << "HomePath: " << home_path.c_str();
 	}
 	{
 		// get path to the editor
@@ -194,6 +197,7 @@ void environment_init(int argc, char* argv[]) {
 		StringOutputStream app(256);
 		app << PathCleaned(filename);
 		app_path = app.c_str();
+		globalOutputStream() << "AppPath: " << app_path.c_str();
 	}
 }
 
