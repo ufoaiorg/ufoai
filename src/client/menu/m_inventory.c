@@ -436,6 +436,11 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 			CL_UGVCvars(chrDisplayList.chr[sel]);
 		else
 			CL_CharacterCvars(chrDisplayList.chr[sel]);
+
+		/* Update object info */
+		if (dragInfo.from) {
+			Cvar_Set("mn_item", dragInfo.item.t->id);
+		}
 	}
 }
 
