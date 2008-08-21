@@ -783,6 +783,10 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 	/* Special case for moving an item within the same container. */
 	if (from == to) {
+		/* Do nothing if we move inside a scroll container. */
+		if (from->scroll)
+			return IA_NONE;
+
 		ic = i->c[from->id];
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
