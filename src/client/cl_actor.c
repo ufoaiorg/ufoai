@@ -5248,7 +5248,11 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 	}
 }
 
-void CL_DumpTUs (void) {
+/**
+ * @brief
+ */
+void CL_DumpTUs (void)
+{
 	int x, y, crouching_state;
 	pos3_t pos, loc;
 
@@ -5291,7 +5295,11 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
 	R_AddEntity(&ent);
 }
 
-void CL_DisplayFloorArrows(void) {
+/**
+ * @brief
+ */
+void CL_DisplayFloorArrows (void)
+{
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
@@ -5305,15 +5313,19 @@ void CL_DisplayFloorArrows(void) {
 	RT_CheckCell(clMap, fieldSize, truePos[0], truePos[1], truePos[2]);
 
 	/* Display floor arrow */
-	if(VectorNotEmpty(brushesHit.floor))
+	if (VectorNotEmpty(brushesHit.floor))
 		CL_AddArrow(base, brushesHit.floor, 0.0, 0.5, 1.0);
 
 	/* Display ceiling arrow */
-	if(VectorNotEmpty(brushesHit.ceiling))
+	if (VectorNotEmpty(brushesHit.ceiling))
 		CL_AddArrow(start, brushesHit.ceiling, 1.0, 1.0, 0.0);
 }
 
-void CL_DisplayObstructionArrows(void) {
+/**
+ * @brief
+ */
+void CL_DisplayObstructionArrows (void)
+{
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
@@ -5330,7 +5342,7 @@ void CL_DisplayObstructionArrows(void) {
 		start[1] += dvecs[dir][1] * QUANT;
 
 		/* Display floor arrow */
-		if(VectorNotEmpty(brushesHit.floor)){
+		if (VectorNotEmpty(brushesHit.floor)){
 			if (brushesHit.obstructed) {
 				CL_AddArrow(start, brushesHit.floor, 1.0, 1.0, 1.0);
 			} else {
@@ -5339,14 +5351,17 @@ void CL_DisplayObstructionArrows(void) {
 		}
 
 		/* Display ceiling arrow */
-		if(VectorNotEmpty(brushesHit.ceiling)){
+		if (VectorNotEmpty(brushesHit.ceiling)){
 			CL_AddArrow(start, brushesHit.ceiling, 0.0, 1.0, 1.0);
 		}
 	}
 }
 
-
-void CL_DumpMoveMark(void) {
+/**
+ * @brief
+ */
+void CL_DumpMoveMark (void)
+{
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
@@ -5358,7 +5373,7 @@ void CL_DumpMoveMark(void) {
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc (clMap, fieldSize, &clPathMap, truePos, crouching_state, MAX_ROUTE, fb_list, fb_length);
+	Grid_MoveCalc(clMap, fieldSize, &clPathMap, truePos, crouching_state, MAX_ROUTE, fb_list, fb_length);
 
 	developer->integer ^= DEBUG_PATHING;
 

@@ -75,16 +75,6 @@ typedef struct trace_s{
 } trace_t;
 
 
-
-/*==============================================================
-GLOBAL DIRECTION CONSTANTS
-==============================================================*/
-
-extern const vec3_t dup_vec;
-extern const vec3_t dwn_vec;
-extern const vec3_t testvec[5];
-
-
 /*==============================================================
 BOX AND LINE TRACING
 ==============================================================*/

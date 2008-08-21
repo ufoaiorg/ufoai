@@ -100,22 +100,6 @@ static qboolean trace_ispoint;			/* optimized case */
 tnode_t *tnode_p;
 
 /*
-==============================================================
-GLOBAL DIRECTION CONSTANTS
-==============================================================
-*/
-
-const vec3_t dup_vec = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
-const vec3_t dwn_vec = { 0, 0, -UNIT_HEIGHT / 2 };
-const vec3_t testvec[5] = {
-    {-UNIT_SIZE / 2 + WALL_SIZE, -UNIT_SIZE / 2 + WALL_SIZE, 0},
-    { UNIT_SIZE / 2 - WALL_SIZE,  UNIT_SIZE / 2 - WALL_SIZE, 0},
-    {-UNIT_SIZE / 2 + WALL_SIZE,  UNIT_SIZE / 2 - WALL_SIZE, 0},
-    { UNIT_SIZE / 2 - WALL_SIZE, -UNIT_SIZE / 2 + WALL_SIZE, 0},
-    {0, 0, 0} };
-
-
-/*
 ===============================================================================
 TRACING NODES
 ===============================================================================
@@ -529,7 +513,7 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plan
 	vec_t dist1, dist2;
 
 	/* axial planes are easy */
-	if (plane->type < 3) {
+	if (plane->type <= PLANE_Z) {
 		side = 0;
 		if (maxs[plane->type] > plane->dist + PLANESIDE_EPSILON)
 			side |= PSIDE_FRONT;
@@ -598,7 +582,7 @@ static void TR_BoxLeafnums_r (int nodenum)
 	int s;
 
 	while (1) {
-		if (nodenum < 0) {
+		if (nodenum <= LEAFNODE) {
 			if (leaf_count >= leaf_maxcount) {
 /*				Com_Printf("CM_BoxLeafnums_r: overflow\n"); */
 				return;
@@ -621,7 +605,7 @@ static void TR_BoxLeafnums_r (int nodenum)
 		else if (s == PSIDE_BACK)
 			nodenum = node->children[1];
 		else {					/* go down both */
-			if (leaf_topnode == -1)
+			if (leaf_topnode == LEAFNODE)
 				leaf_topnode = nodenum;
 			TR_BoxLeafnums_r(node->children[0]);
 			nodenum = node->children[1];
@@ -640,7 +624,7 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
 	leaf_mins = mins;
 	leaf_maxs = maxs;
 
-	leaf_topnode = -1;
+	leaf_topnode = LEAFNODE;
 
 	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 	TR_BoxLeafnums_r(headnode);
@@ -863,7 +847,6 @@ void TR_TraceToLeaf (int leafnum)
 		if (!trace_trace.fraction)
 			return;
 	}
-
 }
 
 
@@ -873,9 +856,7 @@ void TR_TraceToLeaf (int leafnum)
 static void TR_TestInLeaf (int leafnum)
 {
 	int k;
-	int brushnum;
-	TR_LEAF_TYPE *leaf;
-	cBspBrush_t *b;
+	const TR_LEAF_TYPE *leaf;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= curTile->numleafs);
@@ -886,8 +867,8 @@ static void TR_TestInLeaf (int leafnum)
 
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
-		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		b = &curTile->brushes[brushnum];
+		const int brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
+		cBspBrush_t *b = &curTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;

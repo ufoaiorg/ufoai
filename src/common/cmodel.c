@@ -1720,7 +1720,6 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	pos4_t epos; /**< Extended position; includes crouching state */
 	pos3_t pos;
 
-
 	/* reset move data */
 	/* ROUTING_NOT_REACHABLE means, not reachable */
 	memset(path->area, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
