@@ -23,6 +23,7 @@
 					<Add option="-s" />
 					<Add option="--export-all-symbols" />
 					<Add library="libgtk-win32-2.0" />
+					<Add library="libglib-2.0" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -44,6 +45,7 @@
 				<Linker>
 					<Add option="--export-all-symbols" />
 					<Add library="libgtk-win32-2.0" />
+					<Add library="libglib-2.0" />
 				</Linker>
 			</Target>
 			<Target title="linux">
