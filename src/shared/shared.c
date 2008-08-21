@@ -33,15 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 const char *COM_SkipPath (const char *pathname)
 {
-	const char *last;
-
-	last = pathname;
-	while (*pathname) {
-		if (*pathname == '/')
-			last = pathname + 1;
-		pathname++;
-	}
-	return last;
+	char const* const last = strrchr(pathname, '/');
+	return last ? last + 1 : pathname;
 }
 
 /**
@@ -235,7 +228,7 @@ const char *COM_EParse (const char **text, const char *errhead, const char *erri
  */
 int Q_FloatSort (const void *float1, const void *float2)
 {
-    return (*(const float *)float1 - *(const float *)float2);
+	return (*(const float *)float1 - *(const float *)float2);
 }
 
 /**
@@ -289,8 +282,6 @@ char *va (const char *format, ...)
 	Q_vsnprintf(buf, VA_BUFSIZE, format, argptr);
 	va_end(argptr);
 
-	buf[VA_BUFSIZE - 1] = 0;
-
 	return buf;
 }
 
@@ -321,50 +312,6 @@ int Q_putenv (const char *var, const char *value)
 
 	return putenv((char *) str);
 #endif /* __APPLE__ */
-}
-
-/**
- * @brief compute the matching length of two zero terminated strings. This only counts right with 8 bit characters.
- */
-int Q_strmatch (const char *s1, const char * s2)
-{
-	int score = 0;
-	if (!s1 || !s2)
-		return 0;
-
-	if (!Q_strcmp(s1, s2))
-		return strlen(s1);
-
-	while (s1[score] && s2[score] && s1[score] == s2[score]) {
-		score++;
-	}
-
-	return score;
-}
-
-/**
- * @sa Q_strncmp
- */
-int Q_strcmp (const char *s1, const char *s2)
-{
-	return strncmp(s1, s2, 99999);
-}
-
-/**
- * @sa Q_strcmp
- */
-int Q_strncmp (const char *s1, const char *s2, size_t n)
-{
-	return strncmp(s1, s2, n);
-}
-
-int Q_stricmp (const char *s1, const char *s2)
-{
-#ifdef _WIN32
-	return _stricmp(s1, s2);
-#else
-	return stricmp(s1, s2);
-#endif
 }
 
 #ifndef HAVE_STRNCASECMP
@@ -447,38 +394,22 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
 	Q_strncpyz(dest + dest_length, src, destsize - dest_length);
 }
 
-int Q_strcasecmp (const char *s1, const char *s2)
-{
-	return Q_strncasecmp(s1, s2, 99999);
-}
-
 /**
  * @return false if overflowed - true otherwise
  */
 qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 {
-	size_t len;
-	va_list argptr;
-	static char bigbuffer[0x10000];
+	va_list ap;
+	int     len;
 
 	if (!fmt)
 		return qfalse;
 
-	va_start(argptr, fmt);
-	len = Q_vsnprintf(bigbuffer, sizeof(bigbuffer), fmt, argptr);
-	va_end(argptr);
+	va_start(ap, fmt);
+	len = Q_vsnprintf(dest, size, fmt, ap);
+	va_end(ap);
 
-	bigbuffer[sizeof(bigbuffer) - 1] = 0;
-
-	Q_strncpyz(dest, bigbuffer, size);
-
-	if (len >= size) {
-#ifdef PARANOID
-		Com_Printf("Com_sprintf: overflow of "UFO_SIZE_T" in "UFO_SIZE_T"\n", len, size);
-#endif
-		return qfalse;
-	}
-	return qtrue;
+	return 0 <= len && (size_t)len < size;
 }
 
 /**

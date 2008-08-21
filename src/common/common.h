@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_DEFINED
 #define _COMMON_DEFINED
 
+#include <stdarg.h>
+
 #include "../game/q_shared.h"
 #include "../game/inv_shared.h"
 #include "../game/game.h"
@@ -244,7 +246,8 @@ MISC
 
 void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *));
 void Com_EndRedirect(void);
-void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_vPrintf(const char *fmt, va_list);
+void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
 void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
 void Com_Drop(void);
@@ -338,7 +341,7 @@ void Sys_UnloadGame(void);
 game_export_t *Sys_GetGameAPI(game_import_t * parms);
 
 #define MAXCMDLINE 256
-char *Sys_ConsoleInput(void);
+const char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(const char *string);
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Sys_Quit(void);
@@ -395,6 +398,8 @@ const char* COM_MacroExpandString(const char *text);
 
 void COM_Init(void);
 void COM_InitArgv(int argc, const char **argv);
+
+qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, int *pos, int offset);
 
 void Key_Init(void);
 void SCR_EndLoadingPlaque(void);

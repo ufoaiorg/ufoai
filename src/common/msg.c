@@ -250,7 +250,7 @@ void MSG_WriteDir (sizebuf_t * sb, vec3_t dir)
 /**
  * @brief Writes to buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_V_WriteFormat (sizebuf_t * sb, const char *format, va_list ap)
+void MSG_vWriteFormat (sizebuf_t * sb, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -328,7 +328,7 @@ void MSG_WriteFormat (sizebuf_t * sb, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	MSG_V_WriteFormat(sb, format, ap);
+	MSG_vWriteFormat(sb, format, ap);
 	va_end(ap);
 }
 
@@ -606,7 +606,7 @@ void MSG_ReadDir (sizebuf_t * sb, vec3_t dir)
  * @sa SV_ReadFormat
  * @param[in] format The format string (see e.g. pa_format array) - may not be NULL
  */
-void MSG_V_ReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
+void MSG_vReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -674,7 +674,7 @@ void MSG_ReadFormat (sizebuf_t * msg_read, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	MSG_V_ReadFormat(msg_read, format, ap);
+	MSG_vReadFormat(msg_read, format, ap);
 	va_end(ap);
 }
 

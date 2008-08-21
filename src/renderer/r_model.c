@@ -38,8 +38,6 @@ int r_numMapTiles;
 model_t r_modelsInline[MAX_MOD_KNOWN];
 int r_numModelsInline;
 
-int registration_sequence;
-
 /**
  * @brief Prints all loaded models
  */
@@ -94,7 +92,7 @@ void R_ModModellist_f (void)
 static model_t *R_ModForName (const char *name, qboolean crash)
 {
 	model_t *mod;
-	unsigned *buf;
+	byte *buf;
 	int i;
 
 	if (!name[0])
@@ -133,7 +131,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 /*	Com_DPrintf(DEBUG_RENDERER, "name: %s\n", name); */
 
 	/* load the file */
-	modfilelen = FS_LoadFile(mod->name, (byte **) &buf);
+	modfilelen = FS_LoadFile(mod->name, &buf);
 	if (!buf) {
 		if (crash)
 			Sys_Error("R_ModForName: %s not found", mod->name);

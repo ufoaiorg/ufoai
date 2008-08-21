@@ -359,24 +359,24 @@ void ServerCommand (void)
 	const char *cmd;
 
 	cmd = gi.Cmd_Argv(1);
-	if (Q_stricmp(cmd, "startgame") == 0)
+	if (Q_strcasecmp(cmd, "startgame") == 0)
 		SVCmd_StartGame_f();
-	else if (Q_stricmp(cmd, "addip") == 0)
+	else if (Q_strcasecmp(cmd, "addip") == 0)
 		SVCmd_AddIP_f();
-	else if (Q_stricmp(cmd, "removeip") == 0)
+	else if (Q_strcasecmp(cmd, "removeip") == 0)
 		SVCmd_RemoveIP_f();
-	else if (Q_stricmp(cmd, "listip") == 0)
+	else if (Q_strcasecmp(cmd, "listip") == 0)
 		SVCmd_ListIP_f();
-	else if (Q_stricmp(cmd, "writeip") == 0)
+	else if (Q_strcasecmp(cmd, "writeip") == 0)
 		SVCmd_WriteIP_f();
-	else if (Q_stricmp(cmd, "ai_add") == 0)
+	else if (Q_strcasecmp(cmd, "ai_add") == 0)
 		SVCmd_AI_Add_f();
-	else if (Q_stricmp(cmd, "win") == 0)
+	else if (Q_strcasecmp(cmd, "win") == 0)
 		SVCmd_Win_f();
 #ifdef DEBUG
-	else if (Q_stricmp(cmd, "showall") == 0)
+	else if (Q_strcasecmp(cmd, "showall") == 0)
 		SVCmd_ShowAll_f();
-	else if (Q_stricmp(cmd, "actorinvlist") == 0)
+	else if (Q_strcasecmp(cmd, "actorinvlist") == 0)
 		SVCmd_ActorInvList_f();
 #endif
 	else

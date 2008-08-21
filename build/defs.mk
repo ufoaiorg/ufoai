@@ -1,7 +1,9 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -Winline -Wcast-qual -Wcast-align -ansi \
+GENERIC_FLAGS+=-Wall
+CPPFLAGS+=$(GENERIC_FLAGS)
+CFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -pipe -Winline -Wcast-qual -Wcast-align -ansi \
 	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations
 #	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses \
@@ -25,10 +27,12 @@ LIBTOOL_CC=$(LIBTOOL) --silent --mode=compile $(CC) -prefer-pic $(CFLAGS)
 ifeq ($(BUILD_DEBUG),1)
     BUILDDIR=debug-$(TARGET_OS)-$(TARGET_CPU)
     CFLAGS+=-ggdb -O0 -DDEBUG -fno-inline
+	CPPFLAGS+=-ggdb -O0 -DDEBUG -fno-inline
 # -fvar-tracking
 else
     BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
     CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS) -O2
+    CPPFLAGS+=-DNDEBUG -O2
 endif
 
 ifeq ($(PROFILING),1)

@@ -618,7 +618,6 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 	float acc;
 	trace_t tr;
 	int bounce;
-/*	int i; */
 	byte flags;
 
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
@@ -675,6 +674,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 		/* trace */
 		tr = gi.trace(oldPos, NULL, NULL, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
+			float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			/* advance time */
 			dt += tr.fraction * GRENADE_DT;
 			time += dt;
@@ -768,7 +768,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 			flags |= SF_BOUNCED;
 
 			/* bounce */
-			VectorScale(curV, fd->bounceFac, curV);
+			VectorScale(curV, fd->bounceFac * bounceFraction, curV);
 			VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, curV), temp);
 			VectorAdd(temp, curV, startV);
 			VectorAdd(temp, startV, curV);

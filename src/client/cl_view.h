@@ -25,12 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_VIEW_H
 #define CLIENT_CL_VIEW_H
 
-extern int map_maxlevel;
-extern int map_maxlevel_base;
-
 void V_RenderView(void);
 void V_UpdateRefDef(void);
-void V_CenterView(pos3_t pos);
+void V_CenterView(const pos3_t pos);
 void V_CalcFovX(void);
 
 #endif

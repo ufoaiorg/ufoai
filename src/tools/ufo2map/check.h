@@ -24,10 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-void CheckTextures(void);
+void CheckTexturesBasedOnFlags(void);
+void CheckFlagsBasedOnTextures(void);
 void CheckLevelFlags(void);
 void CheckBrushes(void);
 void CheckEntities(void);
 void CheckNodraws(void);
+void CheckMixedFaceContents(void);
 void FixErrors(void);
 void DisplayContentFlags(const int flags);
+void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush);
+void CheckPropagateParserContentFlags(mapbrush_t *b);

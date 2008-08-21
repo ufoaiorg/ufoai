@@ -32,8 +32,15 @@ BRUSHMODEL LOADING
 ===============================================================================
 */
 
-static byte *mod_base;
-static int shift[3];
+/**
+ * @brief The model base pointer - bases for the lump offsets
+ */
+static const byte *mod_base;
+/**
+ * @brief The shift array is used for random map assemblies (RMA) to shift
+ * the mins/maxs and stuff like that
+ */
+static ipos3_t shift;
 /**
  * @brief The currently loaded world model for the actual tile
  * @sa r_mapTiles
@@ -43,7 +50,7 @@ static model_t *r_worldmodel;
 /**
  * @brief Load the lightmap data
  */
-static void R_ModLoadLighting (lump_t * l)
+static void R_ModLoadLighting (const lump_t *l)
 {
 	if (!l->filelen) {
 		r_worldmodel->bsp.lightdata = NULL;
@@ -52,17 +59,17 @@ static void R_ModLoadLighting (lump_t * l)
 	}
 
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
-	r_worldmodel->bsp.lightquant = *(byte *) (mod_base + l->fileofs);
+	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
-static void R_ModLoadVertexes (lump_t * l)
+static void R_ModLoadVertexes (const lump_t *l)
 {
-	dBspVertex_t *in;
+	const dBspVertex_t *in;
 	mBspVertex_t *out;
 	int i, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadVertexes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -79,7 +86,7 @@ static void R_ModLoadVertexes (lump_t * l)
 	}
 }
 
-static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
+static inline float RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 	vec3_t corner;
@@ -95,13 +102,13 @@ static inline float RadiusFromBounds (vec3_t mins, vec3_t maxs)
  * @brief Loads brush entities like func_door and func_breakable
  * @sa CMod_LoadSubmodels
  */
-static void R_ModLoadSubmodels (lump_t * l)
+static void R_ModLoadSubmodels (const lump_t *l)
 {
-	dBspModel_t *in;
+	const dBspModel_t *in;
 	mBspHeader_t *out;
 	int i, j, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSubmodels: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -124,13 +131,13 @@ static void R_ModLoadSubmodels (lump_t * l)
 	}
 }
 
-static void R_ModLoadEdges (lump_t * l)
+static void R_ModLoadEdges (const lump_t *l)
 {
-	dBspEdge_t *in;
+	const dBspEdge_t *in;
 	mBspEdge_t *out;
 	int i, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadEdges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -149,14 +156,14 @@ static void R_ModLoadEdges (lump_t * l)
 /**
  * @sa CP_StartMissionMap
  */
-static void R_ModLoadTexinfo (lump_t * l)
+static void R_ModLoadTexinfo (const lump_t *l)
 {
-	dBspTexinfo_t *in;
+	const dBspTexinfo_t *in;
 	mBspTexInfo_t *out;
 	int i, j, count;
 	char name[MAX_QPATH];
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadTexinfo: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -187,14 +194,13 @@ static void R_ModLoadTexinfo (lump_t * l)
 /**
  * @brief Fills in s->stmins[] and s->stmaxs[]
  */
-static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
+static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 {
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
 	int bmins[2], bmaxs[2];
 	int i, j;
-	mBspVertex_t *v;
-	mBspTexInfo_t *tex;
+	const mBspTexInfo_t *tex;
 
 	VectorSet(mins, 999999, 999999, 999999);
 	VectorSet(maxs, -999999, -999999, -999999);
@@ -206,6 +212,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
+		const mBspVertex_t *v;
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
@@ -240,15 +247,15 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 	}
 }
 
-static void R_ModLoadSurfaces (qboolean day, lump_t * l)
+static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 {
-	dBspFace_t *in;
+	const dBspFace_t *in;
 	mBspSurface_t *out;
 	int i, count, surfnum;
 	int planenum, side;
 	int ti;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfaces: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -264,6 +271,7 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 
 		/* resolve plane */
 		planenum = LittleShort(in->planenum);
+		assert(planenum >= 0);
 		out->plane = r_worldmodel->bsp.planes + planenum;
 
 		/* and sideness */
@@ -290,7 +298,7 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 		else
 			i = LittleLong(in->lightofs[LIGHTMAP_NIGHT]);
 
-		if (i == -1 || (out->texinfo->flags & (SURF_WARP)))
+		if (i == -1 || (out->texinfo->flags & SURF_WARP))
 			out->samples = NULL;
 		else {
 			out->samples = r_worldmodel->bsp.lightdata + i;
@@ -303,8 +311,7 @@ static void R_ModLoadSurfaces (qboolean day, lump_t * l)
 	}
 }
 
-
-static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
+static inline void R_ModSetParent (mBspNode_t *node, mBspNode_t *parent)
 {
 	node->parent = parent;
 	if (node->contents != NODE_NO_LEAF)
@@ -313,13 +320,16 @@ static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 	R_ModSetParent(node->children[1], node);
 }
 
-static void R_ModLoadNodes (lump_t * l)
+/**
+ * @sa BuildNodeChildren
+ */
+static void R_ModLoadNodes (const lump_t *l)
 {
 	int i, j, count, p;
-	dBspNode_t *in;
+	const dBspNode_t *in;
 	mBspNode_t *out;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadNodes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -330,16 +340,19 @@ static void R_ModLoadNodes (lump_t * l)
 	r_worldmodel->bsp.numnodes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
+		p = LittleLong(in->planenum);
+		/* skip special pathfinding nodes - they have a negative index */
+		if (p == PLANENUM_LEAF)
+			/* in case of "special" pathfinding nodes (they don't have a plane)
+			 * we have to set this to NULL */
+			out->plane = NULL;
+		else
+			out->plane = r_worldmodel->bsp.planes + p;
+
 		for (j = 0; j < 3; j++) {
 			out->minmaxs[j] = LittleShort(in->mins[j]) + shift[j];
 			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
 		}
-
-		p = LittleLong(in->planenum);
-		if (in->planenum == PLANENUM_LEAF)
-			out->plane = NULL;
-		else
-			out->plane = r_worldmodel->bsp.planes + p;
 
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
@@ -362,13 +375,13 @@ static void R_ModLoadNodes (lump_t * l)
 	R_ModSetParent(r_worldmodel->bsp.nodes, NULL);
 }
 
-static void R_ModLoadLeafs (lump_t * l)
+static void R_ModLoadLeafs (const lump_t *l)
 {
-	dBspLeaf_t *in;
+	const dBspLeaf_t *in;
 	mBspLeaf_t *out;
 	int i, j, count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadLeafs: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -388,12 +401,13 @@ static void R_ModLoadLeafs (lump_t * l)
 	}
 }
 
-static void R_ModLoadSurfedges (lump_t * l)
+static void R_ModLoadSurfedges (const lump_t *l)
 {
 	int i, count;
-	int *in, *out;
+	const int *in;
+	int *out;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -413,14 +427,14 @@ static void R_ModLoadSurfedges (lump_t * l)
 /**
  * @sa CMod_LoadPlanes
  */
-static void R_ModLoadPlanes (lump_t * l)
+static void R_ModLoadPlanes (const lump_t *l)
 {
 	int i, j;
 	cBspPlane_t *out;
-	dBspPlane_t *in;
+	const dBspPlane_t *in;
 	int count;
 
-	in = (void *) (mod_base + l->fileofs);
+	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadPlanes: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
@@ -610,9 +624,9 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
  * @brief Reorders all surfaces arrays for the specified model, grouping the surface
  * pointers by texture.  This dramatically reduces glBindTexture calls.
  */
-static void R_SortSurfacesArrays (model_t *mod)
+static void R_SortSurfacesArrays (const model_t *mod)
 {
-	mBspSurface_t *surf, *s;
+	const mBspSurface_t *surf, *s;
 	int i, ns;
 
 	/* resolve the start surface and total surface count */
@@ -752,11 +766,17 @@ static void R_LoadSurfacesArrays (model_t *mod)
 /**
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
+ * @param[in] name The name of the map. Relative to maps/ and without extension
+ * @param[in] day Load the day lightmap
+ * @param[in] sX Shift x grid units
+ * @param[in] sY Shift y grid units
+ * @param[in] sZ Shift z grid units
+ * @sa UNIT_SIZE
  */
 static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int sZ)
 {
 	int i;
-	unsigned *buffer;
+	byte *buffer;
 	dBspHeader_t *header;
 
 	/* get new model */
@@ -773,7 +793,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	Com_sprintf(r_worldmodel->name, sizeof(r_worldmodel->name), "maps/%s.bsp", name);
 
 	/* load the file */
-	FS_LoadFile(r_worldmodel->name, (byte **) &buffer);
+	FS_LoadFile(r_worldmodel->name, &buffer);
 	if (!buffer)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: %s not found", r_worldmodel->name);
 
@@ -820,6 +840,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 		starmod->bsp.firstmodelsurface = bm->firstface;
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
+		starmod->bsp.maptile = r_numMapTiles - 1;
 		if (starmod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
 			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
 
@@ -836,6 +857,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	R_LoadSurfacesArrays(r_worldmodel);
 
+	/* in case of random map assembly shift some vectors */
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
 
@@ -866,7 +888,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	int sh[3];
+	ipos3_t sh;
 	int i;
 
 	assert(mapName);
@@ -917,6 +939,12 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 					Com_Error(ERR_DROP, "R_ModBeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
+			if (sh[0] <= -(PATHFINDING_WIDTH / 2) || sh[0] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid x position given: %i\n", sh[0]);
+			if (sh[1] <= -(PATHFINDING_WIDTH / 2) || sh[1] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid y position given: %i\n", sh[1]);
+			if (sh[2] >= PATHFINDING_HEIGHT)
+				Com_Error(ERR_DROP, "R_ModBeginLoading: invalid z position given: %i\n", sh[2]);
 			R_ModAddMapTile(name, day, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */

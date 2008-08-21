@@ -202,17 +202,18 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 #endif
 			case RS_LINK_ITEM:
 				assert(req->link);
+				assert(base);
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
-				if (B_ItemInBase(req->link, base) < req->amount) {
+				if (B_ItemInBase(req->link, base) < req->amount)
 					met_AND = qfalse;
-				}
 				break;
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
 				assert(req->link);
+				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) < req->amount)
 					met_AND = qfalse;
 				break;
@@ -262,6 +263,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 #endif
 			case RS_LINK_ITEM:
 				assert(req->link);
+				assert(base);
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) >= req->amount)
@@ -272,6 +274,7 @@ static qboolean RS_RequirementsMet (const requirements_t *required_AND, const re
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
 				assert(req->link);
+				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) >= req->amount)
 					met_OR = qtrue;
 				break;
@@ -454,9 +457,10 @@ void RS_MarkCollected (technology_t* tech)
  * the tree-initialisation (RS_InitTree)
  * @sa RS_MarkResearched
  */
-void RS_MarkResearchable (qboolean init)
+void RS_MarkResearchable (qboolean init, const base_t* base)
 {
 	int i;
+	const base_t *thisBase = base;
 
 	/* Set all entries to initial value. */
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -469,14 +473,15 @@ void RS_MarkResearchable (qboolean init)
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
 			if (tech->statusResearch != RS_FINISH) {
-				const base_t* base;
 				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
 				if (tech->base)
 					base = tech->base;
 				else
-					base = baseCurrent;
+					base = thisBase;
+
+				assert(base);
 
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base)) {
@@ -717,9 +722,10 @@ void RS_InitTree (qboolean load)
 		}
 	}
 
-
-	if (!load)
-		RS_MarkResearchable(qtrue);
+	if (!load) {
+		assert(baseCurrent);
+		RS_MarkResearchable(qtrue, baseCurrent);
+	}
 
 	memset(&curRequiredList, 0, sizeof(curRequiredList));
 
@@ -1092,7 +1098,7 @@ static void RS_ResearchStart_f (void)
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(qfalse);	/* Re-check all other techs in case they depend on the marked one. */
+		RS_MarkResearchable(qfalse, baseCurrent);	/* Re-check all other techs in case they depend on the marked one. */
 	}
 
 	/* statusResearchable might have changed - check it again */
@@ -1214,16 +1220,17 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 
 	/* Make everything the same (predefined in the ufo-file) color. */
 	if (updateMenu)
-		Cmd_ExecuteString("research_clear"); /* confunc */
+		MN_ExecuteConfunc("research_clear");
 
 	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
+		const base_t const *b = B_GetFoundedBaseByIDX(i);
+		if (!b)
 			continue;
-		available[i] = E_CountUnassigned(base, EMPL_SCIENTIST);
+		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
 	}
 
-	RS_MarkResearchable(qfalse);
+	assert(base);
+	RS_MarkResearchable(qfalse, base);
 
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
@@ -1239,7 +1246,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 			Cmd_ExecuteString(va("research_show%i", j));
 		}
 
-		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
+		if (tech->statusCollected && !tech->statusResearchable && tech->statusResearch != RS_FINISH) {
 			/* Item is collected but not yet researchable. */
 
 			if (updateMenu) {
@@ -1257,7 +1264,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 			researchList[j] = tech;
 			/* counting the numbers of display-list entries. */
 			j++;
-		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
+		} else if (tech->statusResearch != RS_FINISH && tech->statusResearchable) {
 			/* An item that can be researched. */
 
 			if (updateMenu) {
@@ -1418,12 +1425,12 @@ static qboolean RS_DependsOn (char *id1, char *id2)
  * @param[in] tech Pointer to a technology_t struct.
  * @sa RS_ResearchRun
  */
-static void RS_MarkResearched (technology_t *tech)
+static void RS_MarkResearched (technology_t *tech, const base_t *base)
 {
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
 	INV_EnableAutosell(tech);
-	RS_MarkResearchable(qfalse);
+	RS_MarkResearchable(qfalse, base);
 }
 
 /**
@@ -1461,7 +1468,7 @@ void RS_ResearchRun (void)
 						while (tech->scientists > 0)
 							RS_RemoveScientist(tech, NULL);
 
-						RS_MarkResearched(tech);
+						RS_MarkResearched(tech, base);
 						researchListLength = 0;
 						researchListPos = 0;
 						newResearch++;
@@ -2327,7 +2334,7 @@ technology_t *RS_GetTechByID (const char *id)
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);
 	for (tech = techHash[hash]; tech; tech = tech->hashNext)
-		if (!Q_stricmp(id, tech->id))
+		if (!Q_strcasecmp(id, tech->id))
 			return tech;
 
 	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
@@ -2351,7 +2358,7 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 
 	hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
 	for (tech = techHashProvided[hash]; tech; tech = tech->hashProvidedNext)
-		if (!Q_stricmp(idProvided, tech->provides))
+		if (!Q_strcasecmp(idProvided, tech->provides))
 			return tech;
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", idProvided);
@@ -2434,7 +2441,7 @@ int RS_GetTechIdxByName (const char *name)
 
 	hash = Com_HashKey(name, TECH_HASH_SIZE);
 	for (tech = techHash[hash]; tech; tech = tech->hashNext)
-		if (!Q_stricmp(name, tech->id))
+		if (!Q_strcasecmp(name, tech->id))
 			return tech->idx;
 
 	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);
@@ -2630,8 +2637,10 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	if (base->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetBuildingStatus(base, B_LAB)
 	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
+		MN_ExecuteConfunc("set_research_enabled");
 		return qtrue;
 	} else {
+		MN_ExecuteConfunc("set_research_disabled");
 		return qfalse;
 	}
 }

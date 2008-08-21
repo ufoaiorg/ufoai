@@ -41,14 +41,11 @@ struct dbuffer *sv_msg = NULL;
  */
 static void SV_dprintf (const char *fmt, ...)
 {
-	char msg[1024];
-	va_list argptr;
+	va_list ap;
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	Com_Printf("%s", msg);
+	va_start(ap, fmt);
+	Com_vPrintf(fmt, ap);
+	va_end(ap);
 }
 
 
@@ -220,7 +217,7 @@ static void SV_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_V_WriteFormat(pfe_msg, format, ap);
+	NET_vWriteFormat(pfe_msg, format, ap);
 	va_end(ap);
 }
 
@@ -275,7 +272,7 @@ static void SV_ReadData (void *buffer, int size)
 }
 
 /**
- * @sa NET_V_ReadFormat
+ * @sa NET_vReadFormat
  */
 static void SV_ReadFormat (const char *format, ...)
 {
@@ -285,7 +282,7 @@ static void SV_ReadFormat (const char *format, ...)
 	if (!*format)	/* PA_NULL */
 		return;
 	va_start(ap, format);
-	NET_V_ReadFormat(sv_msg, format, ap);
+	NET_vReadFormat(sv_msg, format, ap);
 	va_end(ap);
 }
 
@@ -419,6 +416,7 @@ void SV_InitGameProgs (void)
 
 	import.PointContents = SV_PointContents;
 	import.GetFootstepSound = SV_GetFootstepSound;
+	import.GetBounceFraction = SV_GetBounceFraction;
 
 	import.FS_Gamedir = FS_Gamedir;
 

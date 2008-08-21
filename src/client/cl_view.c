@@ -35,9 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
 
-int map_maxlevel;
-int map_maxlevel_base = 0;
-
 /** position in the spawnflags */
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
@@ -59,9 +56,9 @@ static void CL_ParseEntitystring (const char *es)
 	float volume;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 
-	map_maxlevel = 8;
-	if (map_maxlevel_base >= 1)
-		map_maxlevel = maxlevel = map_maxlevel_base;
+	cl.map_maxlevel = 8;
+	if (cl.map_maxlevel_base >= 1)
+		cl.map_maxlevel = maxlevel = cl.map_maxlevel_base;
 
 	/* vid restart? */
 	if (numMPs || numLMs)
@@ -149,7 +146,7 @@ static void CL_ParseEntitystring (const char *es)
 		/* analyze values - there is one worlspawn per maptile */
 		if (!Q_strcmp(classname, "worldspawn")) {
 			/* maximum level */
-			map_maxlevel = maxlevel;
+			cl.map_maxlevel = maxlevel;
 
 			if (!ccs.singleplayer && (cl_teamnum->integer > maxmultiplayerteams
 									|| cl_teamnum->integer <= TEAM_CIVILIAN)) {
@@ -283,7 +280,7 @@ void CL_LoadMedia (void)
 	/* waiting for EV_START */
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();
-	cl.refresh_prepped = qtrue;
+	refdef.ready = qtrue;
 }
 
 /**
@@ -338,14 +335,14 @@ void V_RenderView (void)
 	refdef.brush_count = 0;
 	refdef.alias_count = 0;
 
-	if (cls.state != ca_active && cls.state != ca_sequence && cls.state != ca_ptledit)
+	if (cls.state != ca_active && cls.state != ca_sequence)
 		return;
 
 	if (!viddef.viewWidth || !viddef.viewHeight)
 		return;
 
 	/* still loading */
-	if (!cl.refresh_prepped)
+	if (!refdef.ready)
 		return;
 
 	r_numEntities = 0;
@@ -355,11 +352,9 @@ void V_RenderView (void)
 		CL_SequenceRender();
 		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
-	case ca_ptledit:
-		PE_RenderParticles();
-		refdef.rdflags |= RDF_NOWORLDMODEL;
-		break;
 	default:
+		/* tell the bsp thread to start */
+		r_threadstate.state = THREAD_BSP;
 		/* make sure we are really rendering the world */
 		refdef.rdflags &= ~RDF_NOWORLDMODEL;
 		/* add local models to the renderer chain */
@@ -394,11 +389,11 @@ void V_RenderView (void)
  * @brief Centers the camera on a given grid field
  * @sa CL_CameraMove
  */
-void V_CenterView (pos3_t pos)
+void V_CenterView (const pos3_t pos)
 {
 	vec3_t vec;
 
 	PosToVec(pos, vec);
-	VectorCopy(vec, cl.cam.reforg);
+	VectorCopy(vec, cl.cam.origin);
 	Cvar_SetValue("cl_worldlevel", pos[2]);
 }

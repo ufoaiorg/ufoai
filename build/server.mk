@@ -49,6 +49,7 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	SERVER_SRCS+=\
+		ports/windows/win_console.c \
 		ports/windows/win_shared.c \
 		ports/windows/win_main.c \
 		ports/windows/ufo.rc
@@ -91,7 +92,7 @@ $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
@@ -103,4 +104,4 @@ endif
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)

@@ -43,9 +43,11 @@ winding_t *AllocWinding (int points)
 	winding_t *w;
 	size_t s;
 
-	c_active_windings++;
-	if (c_active_windings > c_peak_windings)
-		c_peak_windings = c_active_windings;
+	if (threadstate.numthreads == 1) {
+		c_active_windings++;
+		if (c_active_windings > c_peak_windings)
+			c_peak_windings = c_active_windings;
+	}
 	s = sizeof(vec3_t) * points + sizeof(int);
 	w = malloc(s);
 	if (!w) {
@@ -66,7 +68,8 @@ void FreeWinding (winding_t *w)
 		Sys_Error("FreeWinding: freed a freed winding");
 	*(unsigned *)w = 0xdeaddead;
 
-	c_active_windings--;
+	if (threadstate.numthreads == 1)
+		c_active_windings--;
 	free(w);
 }
 
@@ -75,13 +78,13 @@ void FreeWinding (winding_t *w)
  */
 void RemoveColinearPoints (winding_t *w)
 {
-	int i, j, k, nump = 0;
+	int i, nump = 0;
 	vec3_t v1, v2;
 	vec3_t p[MAX_POINTS_ON_WINDING];
 
 	for (i = 0; i < w->numpoints; i++) {
-		j = (i + 1) % w->numpoints;
-		k = (i + w->numpoints - 1) % w->numpoints;
+		const int j = (i + 1) % w->numpoints;
+		const int k = (i + w->numpoints - 1) % w->numpoints;
 		VectorSubtract(w->p[j], w->p[i], v1);
 		VectorSubtract(w->p[i], w->p[k], v2);
 		VectorNormalize(v1);
@@ -113,9 +116,9 @@ vec_t WindingArea (winding_t *w)
 		VectorSubtract(w->p[i - 1], w->p[0], d1);
 		VectorSubtract(w->p[i], w->p[0], d2);
 		CrossProduct(d1, d2, cross);
-		total += 0.5 * VectorLength(cross);
+		total += VectorLength(cross);
 	}
-	return total;
+	return total * 0.5f;
 }
 
 /**

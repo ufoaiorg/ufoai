@@ -318,59 +318,59 @@ static void B_BaseMenuInit (const base_t *base)
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
 		Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
-		Cmd_ExecuteString("set_aircraft_enabled");
+		MN_ExecuteConfunc("set_aircraft_enabled");
 	} else {
 		Cvar_SetValue("mn_base_num_aircraft", -1);
-		Cmd_ExecuteString("set_aircraft_disabled");
+		MN_ExecuteConfunc("set_aircraft_disabled");
 	}
 	if (BS_BuySellAllowed(base)) {
 		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
-		Cmd_ExecuteString("set_buysell_enabled");
+		MN_ExecuteConfunc("set_buysell_enabled");
 	} else {
 		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
-		Cmd_ExecuteString("set_buysell_disabled");
+		MN_ExecuteConfunc("set_buysell_disabled");
 	}
 	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK) {
 		Cvar_SetValue("mn_base_transfer_allowed", qtrue);
-		Cmd_ExecuteString("set_transfer_enabled");
+		MN_ExecuteConfunc("set_transfer_enabled");
 	} else {
 		Cvar_SetValue("mn_base_transfer_allowed", qfalse);
-		Cmd_ExecuteString("set_transfer_disabled");
+		MN_ExecuteConfunc("set_transfer_disabled");
 	}
 	if (RS_ResearchAllowed(base)) {
 		Cvar_SetValue("mn_base_research_allowed", qtrue);
-		Cmd_ExecuteString("set_research_enabled");
+		MN_ExecuteConfunc("set_research_enabled");
 	} else {
 		Cvar_SetValue("mn_base_research_allowed", qfalse);
-		Cmd_ExecuteString("set_research_disabled");
+		MN_ExecuteConfunc("set_research_disabled");
 	}
 	if (PR_ProductionAllowed(base)) {
 		Cvar_SetValue("mn_base_prod_allowed", qtrue);
-		Cmd_ExecuteString("set_prod_enabled");
+		MN_ExecuteConfunc("set_prod_enabled");
 	} else {
 		Cvar_SetValue("mn_base_prod_allowed", qfalse);
-		Cmd_ExecuteString("set_prod_disabled");
+		MN_ExecuteConfunc("set_prod_disabled");
 	}
 	if (E_HireAllowed(base)) {
 		Cvar_SetValue("mn_base_hire_allowed", qtrue);
-		Cmd_ExecuteString("set_hire_enabled");
+		MN_ExecuteConfunc("set_hire_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hire_allowed", qfalse);
-		Cmd_ExecuteString("set_hire_disabled");
+		MN_ExecuteConfunc("set_hire_disabled");
 	}
 	if (AC_ContainmentAllowed(base)) {
 		Cvar_SetValue("mn_base_containment_allowed", qtrue);
-		Cmd_ExecuteString("set_containment_enabled");
+		MN_ExecuteConfunc("set_containment_enabled");
 	} else {
 		Cvar_SetValue("mn_base_containment_allowed", qfalse);
-		Cmd_ExecuteString("set_containment_disabled");
+		MN_ExecuteConfunc("set_containment_disabled");
 	}
 	if (HOS_HospitalAllowed(base)) {
 		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
-		Cmd_ExecuteString("set_hospital_enabled");
+		MN_ExecuteConfunc("set_hospital_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
-		Cmd_ExecuteString("set_hospital_disabled");
+		MN_ExecuteConfunc("set_hospital_disabled");
 	}
 }
 
@@ -667,7 +667,7 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
 	for (aircraftIdx = 0, numawayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-		const int aircraftSize = base->aircraft[aircraftIdx].weight;
+		const int aircraftSize = base->aircraft[aircraftIdx].size;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
 			if (buildingType != B_SMALL_HANGAR)
@@ -923,13 +923,19 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 	/* store the pointer to the building you wanna destroy */
 	base->buildingCurrent = building;
 
+	/** @todo: make base destroyable by destroying entrance */
+	if (building->buildingType == B_ENTRANCE){
+		MN_Popup(_("Destroy Entrance"), _("You cannot destroy the entrance of the base!"));
+		return;
+	}
+
 	if (building->buildingStatus == B_STATUS_WORKING) {
 		switch (building->buildingType) {
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (base->capacities[cap].cur >= base->capacities[cap].max) {
 				MN_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
-					"mn_pop;building_open;", _("Go to hangar"), _("Go to hangar without destroying building"),
+					"mn_pop;mn_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
@@ -938,8 +944,8 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 			break;
 		case B_QUARTERS:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarter, every employees inside will be killed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;building_open;", _("Dismiss"), _("Go to hiring menu without destroying building"),
+				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
+					"mn_pop;mn_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
@@ -949,7 +955,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_STORAGE:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				MN_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;building_open;", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
+					"mn_pop;mn_push buy;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
@@ -1077,10 +1083,12 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
+	buildingStatus_t oldstatus;
 
 	assert(base);
 	assert(building);
 
+	oldstatus = building->buildingStatus;
 	building->buildingStatus = status;
 
 	/* we update the status of the building (we'll call this building building 1) */
@@ -1103,7 +1111,12 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	}
 
 	/** @todo this should be an user option defined in Game Options. */
-	CL_GameTimeStop();
+	if (oldstatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
+		if (B_CheckBuildingDependencesStatus(base, building))
+			CL_GameTimeStop();
+	} else {
+		CL_GameTimeStop();
+	}
 }
 
 /**
@@ -1186,11 +1199,9 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
 				}
 			}
-			/* this is the aircraft to assign the initial equipment and soldiers to */
-			base->aircraftCurrent = aircraft;
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			const aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
+			aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
 			if (!aircraft)
 				Sys_Error("Could not find craft_inter_stiletto definition");
 			AIR_NewAircraft(base, "craft_inter_stiletto");
@@ -2375,7 +2386,8 @@ static void B_NextBase_f (void)
 
 	baseID = (base->idx + 1) % gd.numBases;
 	base = B_GetFoundedBaseByIDX(baseID);
-	B_SelectBase(base);
+	if (base)
+		B_SelectBase(base);
 }
 
 /**
@@ -2402,7 +2414,8 @@ static void B_PrevBase_f (void)
 		baseID = gd.numBases - 1;
 
 	base = B_GetFoundedBaseByIDX(baseID);
-	B_SelectBase(base);
+	if (base)
+		B_SelectBase(base);
 }
 
 /**
@@ -2492,6 +2505,9 @@ void B_SelectBase (base_t *base)
 	}
 }
 
+/** @brief Used from menu scripts as parameter for mn_select_base */
+#define CREATE_NEW_BASE_ID -1
+
 /**
  * @brief Called when a base is opened or a new base is created on geoscape.
  * For a new base the baseID is -1.
@@ -2506,12 +2522,18 @@ static void B_SelectBase_f (void)
 		return;
 	}
 	baseID = atoi(Cmd_Argv(1));
-	if (baseID >= 0 && baseID < gd.numBases)
+	/* check against MAX_BASES here! - only -1 will create a new base
+	 * if we would check against gd.numBases here, a click on the base summary
+	 * base nodes would try to select unfounded bases */
+	if (baseID >= 0 && baseID < MAX_BASES) {
 		base = B_GetFoundedBaseByIDX(baseID);
-	else
+		/* don't create a new base if the index was valid */
+		if (base)
+			B_SelectBase(base);
+	} else if (baseID == CREATE_NEW_BASE_ID) {
 		/* create a new base */
-		base = NULL;
-	B_SelectBase(base);
+		B_SelectBase(NULL);
+	}
 }
 
 #undef RIGHT
@@ -2804,6 +2826,10 @@ static void B_BuildBase_f (void)
 	assert(curCampaign);
 
 	if (ccs.credits - curCampaign->basecost > 0) {
+		/** @todo If there is no nation assigned to the current selected position,
+		 * tell this the gamer and give him an option to rechoose the location.
+		 * If we don't do this, any action that is done for this base has no
+		 * influence to any nation happiness/funding/supporting */
 		if (CL_NewBase(base, newBasePos)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
 			base->idx = gd.numBases - 1;
@@ -2940,7 +2966,7 @@ static void B_AssembleMap_f (void)
 			}
 		}
 	/* set maxlevel for base attacks to 5 */
-	map_maxlevel_base = 6;
+	cl.map_maxlevel_base = 6;
 
 	if (curCampaign)
 		SAV_QuickSave();
@@ -3329,7 +3355,7 @@ void B_InitStartup (void)
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
-	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
+	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
@@ -3486,10 +3512,10 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 		return;
 	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
 	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
-	RS_MarkResearchable(qfalse);		/**< Mark new technologies researchable. */
+	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
 
 	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
-	* @todo this should be removed when new inventory code will be over */
+	 * @todo this should be removed when new inventory code will be over */
 	assert(aircraft->homebase);
 	INV_UpdateStorageCap(aircraft->homebase);
 
@@ -3753,27 +3779,22 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_Write2Pos(sb, aircraft->route.point[l]);
 			MSG_WriteShort(sb, aircraft->alientypes);
 			MSG_WriteShort(sb, aircraft->itemtypes);
-			/* Save only needed if aircraft returns from a mission. */
-			switch (aircraft->status) {
-			case AIR_RETURNING:
-				/* aliencargo */
-				for (l = 0; l < aircraft->alientypes; l++) {
-					assert(aircraft->aliencargo[l].teamDef);
-					MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->id);
-					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
-					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
-				}
-				/* itemcargo */
-				for (l = 0; l < aircraft->itemtypes; l++) {
-					assert(aircraft->itemcargo[l].item);
-					MSG_WriteString(sb, aircraft->itemcargo[l].item->id);
-					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
-				}
-				break;
-			case AIR_MISSION:
+			/* aliencargo */
+			for (l = 0; l < aircraft->alientypes; l++) {
+				assert(aircraft->aliencargo[l].teamDef);
+				MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->id);
+				MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
+				MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
+			}
+			/* itemcargo */
+			for (l = 0; l < aircraft->itemtypes; l++) {
+				assert(aircraft->itemcargo[l].item);
+				MSG_WriteString(sb, aircraft->itemcargo[l].item->id);
+				MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
+			}
+			if (aircraft->status == AIR_MISSION) {
 				assert(aircraft->mission);
 				MSG_WriteString(sb, aircraft->mission->id);
-				break;
 			}
 			MSG_WritePos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++) {
@@ -4055,34 +4076,30 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->route.distance = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.numPoints; l++)
 				MSG_Read2Pos(sb, aircraft->route.point[l]);
-			/* Load only needed if aircraft returns from a mission. */
 			aircraft->alientypes = MSG_ReadShort(sb);
 			aircraft->itemtypes = MSG_ReadShort(sb);
-			switch (aircraft->status) {
-			case AIR_RETURNING:
-				/* aliencargo */
-				for (l = 0; l < aircraft->alientypes; l++) {
-					aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
-					aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
-					aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
-				}
-				/* itemcargo */
-				for (l = 0; l < aircraft->itemtypes; l++) {
-					const char *const s = MSG_ReadString(sb);
-					const objDef_t *od = INVSH_GetItemByID(s);
-					if (!od) {
-						Com_Printf("B_Load: Could not find aircraftitem '%s'\n", s);
-						MSG_ReadShort(sb);
-					} else {
-						aircraft->itemcargo[l].item = od;
-						aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
-					}
-				}
-				break;
-			case AIR_MISSION:
-				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
-				break;
+			/* aliencargo */
+			for (l = 0; l < aircraft->alientypes; l++) {
+				aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+				if (!aircraft->aliencargo[l].teamDef)
+					return qfalse;
+				aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
+				aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
 			}
+			/* itemcargo */
+			for (l = 0; l < aircraft->itemtypes; l++) {
+				const char *const s = MSG_ReadString(sb);
+				const objDef_t *od = INVSH_GetItemByID(s);
+				if (!od) {
+					Com_Printf("B_Load: Could not find aircraftitem '%s'\n", s);
+					MSG_ReadShort(sb);
+				} else {
+					aircraft->itemcargo[l].item = od;
+					aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
+				}
+			}
+			if (aircraft->status == AIR_MISSION)
+				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
 				aircraft->stats[l] = MSG_ReadLong(sb);

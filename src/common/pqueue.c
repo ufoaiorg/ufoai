@@ -1,7 +1,7 @@
 /**
  * @file pqueue.c
  * @brief Implementation of a priority queue by using a binary heap.
- * @note Manage a priority queue as a heap - the heap is implemented as a array.
+ * @note Manage a priority queue as a heap - the heap is implemented as an array.
  */
 
 /*

@@ -69,7 +69,7 @@ fi
 echo "========================================"
 echo " LIBPNG"
 echo "========================================"
-version="1.2.8"
+version="1.2.24"
 download http://heanet.dl.sourceforge.net/sourceforge/gnuwin32/ libpng-$version-lib.zip
 any2deb mingw32-libpng12-dev $version libpng-$version-lib.zip /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
@@ -242,7 +242,7 @@ fi
 echo "========================================"
 echo " LIBCURL"
 echo "========================================"
-version="7.17.0"
+version="7.17.1"
 download http://curl.haxx.se/download/ libcurl-$version-win32-nossl.zip
 unzip libcurl-$version-win32-nossl.zip
 cd libcurl-$version

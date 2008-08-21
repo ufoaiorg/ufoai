@@ -66,14 +66,44 @@ static sysConsole_t sys_console;
 
 int SV_CountPlayers(void);
 
-char *Sys_ConsoleInput (void)
+/**
+ * @brief Dispatch window messages
+ */
+static void Sys_ConsoleLoop (void)
+{
+	MSG msg;
+
+	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+		if (!GetMessage(&msg, NULL, 0, 0))
+			Sys_Quit();
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
+
+/**
+ * @brief Handles input for the console window
+ * @returns @c NULL if there is no input in the input box
+ */
+const char *Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
 
-	if (!sys_console.cmdBuffer[0])
+#ifdef DEDICATED_ONLY
+	/* the client console is not visible after init stage and thus this is only
+	 * needed for the server */
+	Sys_ConsoleLoop();
+#endif
+
+	/* empty command buffer? */
+	if (sys_console.cmdBuffer[0] == '\0')
 		return NULL;
 
 	Q_strncpyz(buffer, sys_console.cmdBuffer, sizeof(buffer));
+
+	/* now we can clear the cmdBuffer */
+	sys_console.cmdBuffer[0] = '\0';
 
 	return buffer;
 }
@@ -90,11 +120,16 @@ void Sys_ConsoleOutput (const char *text)
 
 	/* Change \n to \r\n so it displays properly in the edit box */
 	while (*text) {
-		if (*text == '\n') {
+		if (*text == '\n' && len < MAX_PRINTMSG - 2) {
 			buffer[len++] = '\r';
 			buffer[len++] = '\n';
-		} else
+		} else if (len < MAX_PRINTMSG - 1) {
 			buffer[len++] = *text;
+		} else {
+			/* truncate */
+			buffer[len] = '\0';
+			break;
+		}
 
 		text++;
 	}
@@ -122,7 +157,6 @@ void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
-	MSG msg;
 
 	CL_Shutdown();
 	Qcommon_Shutdown();
@@ -150,13 +184,7 @@ void Sys_Error (const char *error, ...)
 
 	/* Wait for the user to quit */
 	while (1) {
-		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-			if (!GetMessage(&msg, NULL, 0, 0))
-				Sys_Quit();
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+		Sys_ConsoleLoop();
 		/* Don't hog the CPU */
 		Sys_Sleep(25);
 	}
@@ -201,7 +229,7 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 	case WM_CLOSE:
 		if (SV_CountPlayers()) {
-			int ays = MessageBox(hWnd, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
+			const int ays = MessageBox(hWnd, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
 			if (ays == IDNO)
 				return TRUE;
 		}
@@ -254,6 +282,10 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 		sys_console.flashColor = !sys_console.flashColor;
 		InvalidateRect(sys_console.hWndMsg, NULL, TRUE);
 		break;
+
+	case WM_CREATE:
+		SetTimer(sys_console.hWnd, 1, 500, NULL);
+		break;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -265,14 +297,27 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 	switch (uMsg) {
 	case WM_CHAR:
 		if (hWnd == sys_console.hWndInput) {
-			if (wParam == VK_RETURN) {
+			switch (wParam) {
+			case VK_RETURN:
 				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
 					SetWindowText(sys_console.hWndInput, "");
 					Com_Printf("]%s\n", sys_console.cmdBuffer);
 				}
-				return 0;	/* Keep it from beeping */
+				/* Keep it from beeping */
+				return 0;
+			case VK_TAB:
+				/* command completion */
+				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
+					int inputpos = 0;
+					if (Com_ConsoleCompleteCommand(sys_console.cmdBuffer, sys_console.cmdBuffer, MAXCMDLINE, &inputpos, 0)) {
+						SetWindowText(sys_console.hWndInput, sys_console.cmdBuffer);
+						/* reset again - we don't want to execute yet */
+						sys_console.cmdBuffer[0] = '\0';
+					}
+				}
+				/* Keep it from beeping */
+				return 0;
 			}
-			/** @todo add command completion here */
 		} else if (hWnd == sys_console.hWndOutput)
 			return 0;	/* Read only */
 		break;

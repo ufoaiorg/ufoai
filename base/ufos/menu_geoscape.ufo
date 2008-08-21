@@ -354,7 +354,7 @@ menu map
 		font 	f_small
 		string	"_Create installation"
 		pos		"896 700"
-		click	{ cmd "mn_select_installation -1;" }
+		click	{ cmd "mn_push popup_newinstallation_type;" }
 		out		{ *bt_installation color "0 0.5 0 1" *bt_highlight invis true  }
 		in		{ *bt_installation color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 692" }
 	}
@@ -443,7 +443,7 @@ menu map
 		click	{
 				*messagesystem size "768 400"
 				*messagesystem scrollbar "true"
-				cmd "set mn_messagesystem 1;" 
+				cmd "set mn_messagesystem 1;"
 		}
 		rclick	{
 				*messagesystem size "768 768"
@@ -467,7 +467,7 @@ menu map
 				cmd "mn_textscroll messagesystem reset"
 				*messagesystem size "768 400"
 				*messagesystem scrollbar "false"
-				cmd "set mn_messagesystem 0;" 
+				cmd "set mn_messagesystem 0;"
 		}
 	}
 
@@ -1127,7 +1127,7 @@ menu popup_newbase
 	string title
 	{
 		string	"_New base"
-		pos		"290 276"
+		pos		"290 280"
 		font	f_big
 	}
 
@@ -1139,21 +1139,69 @@ menu popup_newbase
 	string name
 	{
 		string	"*cvar mn_base_title"
-		pos		"290 330"
+		pos		"310 335"
 		size	"440 32"
 		font	f_big
+	}
+
+	pic bt_nameedit
+	{
+		tooltip "_Rename your base"
+		image   menu/buttons_small
+		pos     "290 340"
+		texl    "0 48"
+		texh    "16 64"
+		mousefx false
+		click {
+			cmd "msgmenu ?mn_base_title"
+			*name mousefx true
+		}
 	}
 
 	string cost_label
 	{
 		string	"_Cost:"
-		pos		"290 380"
+		pos		"290 360"
 	}
 	string cost
 	{
 		string	"*cvar mn_base_newbasecost"
-		pos		"290 390"
+		pos		"290 375"
 		font	f_big
+	}
+
+	// START WITH EMPLOYEES
+	string start_employees_str
+	{
+		if		"mn_base_count <= 0"
+		string	"_Start with employees:"
+		pos		"715 360"
+		align	ur
+	}
+	checkbox start_employees
+	{
+		if		"mn_base_count <= 0"
+		cvar	"*cvar cl_start_employees"
+		pos		"735 360"
+		align	ur
+		tooltip	"_Employees already hired at campaign start"
+	}
+
+	// START WITH BUILDINGS
+	string start_buildings_str
+	{
+		if		"mn_base_count <= 0"
+		string	"_Start with buildings:"
+		pos		"715 385"
+		align	ur
+	}
+	checkbox start_building
+	{
+		if		"mn_base_count <= 0"
+		cvar	"*cvar cl_start_buildings"
+		pos		"735 385"
+		align	ur
+		tooltip	"_Buildings already built in the initial base"
 	}
 
 	pic bt_cancel
@@ -1165,7 +1213,10 @@ menu popup_newbase
 		pos		"290 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
+		click	{
+			*name mousefx false
+			cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;"
+		}
 	}
 	pic bt_build
 	{
@@ -1173,10 +1224,13 @@ menu popup_newbase
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos		"560 450"
-		out		{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
-		in		{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_build_base;" }
+		pos	"560 450"
+		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
+		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
+		click	{
+			*name mousefx false
+			cmd "mn_pop;mn_build_base;"
+		}
 	}
 	string string_cancel
 	{
@@ -1199,6 +1253,115 @@ menu popup_newbase
 // ==================
 // POPUP NEW INSTALLATION
 // ==================
+menu popup_newinstallation_type
+{
+	zone popup
+	{
+		invis	true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos	"256 256"
+	}
+
+	string title
+	{
+		string	"_New installation"
+		pos	"290 280"
+		font	f_big
+	}
+
+	string type_label
+	{
+		string	"_Type"
+		pos	"350 320"
+	}
+	string cost_label
+	{
+		string	"_Cost"
+		pos	"650 320"
+	}
+
+	pic bt_highlight
+	{
+		image	"menu/popup_button_hl"
+		invis	true
+		align	ul
+	}
+
+	string radar_type
+	{
+		string	"_Radar tower"
+		pos	"350 340"
+		size	"389 18"
+		font	f_small
+		in	{ *bt_highlight invis false *bt_highlight pos "290 338" }
+		out	{ *bt_highlight invis true }
+		click	{ cmd "set mn_newinstallation_type radartower; mn_pop; mn_select_installation -1;" }
+	}
+	string radar_cost
+	{
+		string	"*cvar mn_installation_newcost"
+		pos	"650 340"
+		font	f_small
+	}
+
+	string sam_type
+	{
+		string	"_SAM Site"
+		pos	"350 360"
+		size	"389 18"
+		font	f_small
+		in	{ *bt_highlight invis false *bt_highlight pos "290 358" }
+		out	{ *bt_highlight invis true }
+		click	{ cmd "set mn_newinstallation_type samsite; mn_pop; mn_select_installation -1;" }
+	}
+	string sam_cost
+	{
+		string	"*cvar mn_installation_newcost"
+		pos	"650 360"
+		font	f_small
+	}
+
+	string ufoyard_type
+	{
+		string	"_UFO Yard"
+		pos	"350 380"
+		size	"389 18"
+		font	f_small
+		in	{ *bt_highlight invis false *bt_highlight pos "290 378" }
+		out	{ *bt_highlight invis true }
+		click	{ cmd "set mn_newinstallation_type ufoyard; mn_pop; mn_select_installation -1;" }
+	}
+	string ufoyard_cost
+	{
+		string	"*cvar mn_installation_newcost"
+		pos	"650 380"
+		font	f_small
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialogue"
+		image	menu/multi_buttons3
+		pos	"440 450"
+		texh	"256 64"
+		texl	"0 32"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"528 466"
+		align	cc
+	}
+}
+
 menu popup_newinstallation
 {
 	zone popup
@@ -1208,13 +1371,28 @@ menu popup_newinstallation
 	pic back
 	{
 		image	menu/popup
-		pos		"256 256"
+		pos	"256 256"
 	}
 
-	string title
+	string title_radar
 	{
+		if "mn_newinstallation_type eq radartower"
 		string	"_New radar tower"
-		pos		"290 276"
+		pos	"290 280"
+		font	f_big
+	}
+	string title_samsite
+	{
+		if "mn_newinstallation_type eq samsite"
+		string	"_New SAM site"
+		pos	"290 280"
+		font	f_big
+	}
+	string title_ufoyard
+	{
+		if "mn_newinstallation_type eq ufoyard"
+		string	"_New UFO yard"
+		pos	"290 280"
 		font	f_big
 	}
 
@@ -1226,20 +1404,34 @@ menu popup_newinstallation
 	string name
 	{
 		string	"*cvar mn_installation_title"
-		pos		"290 330"
+		pos	"310 335"
 		size	"440 32"
 		font	f_big
+	}
+
+	pic bt_nameedit
+	{
+		tooltip "_Rename installation"
+		image   menu/buttons_small
+		pos     "290 340"
+		texl    "0 48"
+		texh    "16 64"
+		mousefx false
+		click {
+			cmd "msgmenu ?mn_installation_title"
+			*name mousefx true
+		}
 	}
 
 	string cost_label
 	{
 		string	"_Cost:"
-		pos		"290 380"
+		pos	"290 380"
 	}
 	string cost
 	{
 		string	"*cvar mn_installation_newcost"
-		pos		"290 390"
+		pos	"290 395"
 		font	f_big
 	}
 
@@ -1249,9 +1441,9 @@ menu popup_newinstallation
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos		"290 450"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		pos	"290 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	pic bt_build
@@ -1260,17 +1452,17 @@ menu popup_newinstallation
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 32"
-		pos		"560 450"
-		out		{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
-		in		{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_build_installation radartower;" }
+		pos	"560 450"
+		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
+		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_build_installation *mn_newinstallation_type;" }
 	}
 	string string_cancel
 	{
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos		"378 466"
+		pos	"378 466"
 		align	cc
 	}
 	string string_build
@@ -1278,10 +1470,9 @@ menu popup_newinstallation
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Build"
-		pos		"648 466"
+		pos	"648 466"
 		align	cc
 	}
-
 }
 
 // ==================

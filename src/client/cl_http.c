@@ -334,15 +334,11 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	/* special case for map file lists */
 	len = strlen(ufoPath);
-	if (cl_http_filelists->integer && len > 4 && !Q_stricmp(ufoPath + len - 4, ".bsp")) {
+	if (cl_http_filelists->integer && len > 4 && !Q_strcasecmp(ufoPath + len - 4, ".bsp")) {
 		char listPath[MAX_OSPATH];
 		char filePath[MAX_OSPATH];
 
-		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%s", ufoPath);
-
-		COM_StripExtension(filePath, listPath, sizeof(listPath));
-		Q_strcat(listPath, ".filelist", sizeof(listPath));
-
+		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%.*s.filelist", (int)(len - 4), ufoPath);
 		CL_QueueHTTPDownload(listPath);
 	}
 
@@ -577,19 +573,17 @@ void CL_HTTP_Cleanup (void)
  */
 static void CL_FinishHTTPDownload (void)
 {
-	size_t		i;
-	int			msgs_in_queue;
-	CURLcode	result;
-	dlhandle_t	*dl;
-	CURL		*curl;
-	long		responseCode;
-	double		timeTaken;
-	double		fileSize;
-	char		tempName[MAX_OSPATH];
-	qboolean	isFile;
+	int msgs_in_queue, i;
+	CURLcode result;
+	CURL *curl;
+	long responseCode;
+	double timeTaken, fileSize;
+	char tempName[MAX_OSPATH];
+	qboolean isFile;
 
 	do {
 		CURLMsg *msg = curl_multi_info_read(multi, &msgs_in_queue);
+		dlhandle_t *dl = NULL;
 
 		if (!msg) {
 			Com_Printf("CL_FinishHTTPDownload: Odd, no message for us...\n");
@@ -611,7 +605,7 @@ static void CL_FinishHTTPDownload (void)
 			}
 		}
 
-		if (i == 4)
+		if (!dl)
 			Com_Error(ERR_DROP, "CL_FinishHTTPDownload: Handle not found");
 
 		/* we mark everything as done even if it errored to prevent multiple attempts. */
@@ -645,12 +639,13 @@ static void CL_FinishHTTPDownload (void)
 
 				curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 				if (responseCode == 404) {
-					i = strlen(dl->queueEntry->ufoPath);
-					if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
+					const size_t len = strlen(dl->queueEntry->ufoPath);
+					assert(len >= 4);
+					if (!strcmp(dl->queueEntry->ufoPath + len - 4, ".pk3"))
 						downloading_pak = qfalse;
 
 					if (isFile)
-						remove(dl->filePath);
+						FS_RemoveFile(dl->filePath);
 					Com_Printf("HTTP(%s): 404 File Not Found [%d remaining files]\n", dl->queueEntry->ufoPath, pendingCount);
 					curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
 					if (fileSize > 512) {
@@ -687,7 +682,7 @@ static void CL_FinishHTTPDownload (void)
 				if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
 					downloading_pak = qfalse;
 				if (isFile)
-					remove(dl->filePath);
+					FS_RemoveFile(dl->filePath);
 				Com_Printf("HTTP download failed: %s\n", curl_easy_strerror(result));
 				curl_multi_remove_handle(multi, dl->curl);
 				continue;
@@ -756,7 +751,7 @@ static void CL_StartNextHTTPDownload (void)
 
 			/* ugly hack for pk3 file single downloading */
 			len = strlen(q->ufoPath);
-			if (len > 4 && !Q_stricmp(q->ufoPath + len - 4, ".pk3"))
+			if (len > 4 && !Q_strcasecmp(q->ufoPath + len - 4, ".pk3"))
 				downloading_pak = qtrue;
 
 			break;

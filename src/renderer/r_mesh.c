@@ -205,30 +205,55 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_Color(NULL);
 }
 
-#if 0
-/**
- * @brief Check if model is out of view
- */
-static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
+qboolean R_CullMeshModel (entity_t *e)
 {
-	int p, mask, f, aggregatemask = ~0;
-	mAliasModel_t *mod;
-	mAliasFrame_t *frame;
+	int i;
+	int aggregatemask;
+	vec3_t mins, maxs, origin;
+	vec4_t bbox[8];
 
-	mod = &e->model->alias;
-	frame = mod->frames + e->as.frame;
+	if (e->tagent)
+		VectorCopy(e->tagent->origin, origin);
+	else
+		VectorCopy(e->origin, origin);
+
+	/* determine scaled mins/maxs */
+	for (i = 0; i < 3; i++) {
+		if (e->scale[i]) {
+			mins[i] = e->model->mins[i] * e->scale[i];
+			maxs[i] = e->model->maxs[i] * e->scale[i];
+		} else {
+			mins[i] = e->model->mins[i];
+			maxs[i] = e->model->maxs[i];
+		}
+	}
+
+	/* compute translated bounding box */
+	for (i = 0; i < 8; i++) {
+		vec3_t tmp;
+
+		tmp[0] = (i & 1) ? mins[0] : maxs[0];
+		tmp[1] = (i & 2) ? mins[1] : maxs[1];
+		tmp[2] = (i & 4) ? mins[2] : maxs[2];
+
+		VectorAdd(origin, tmp, bbox[i]);
+	}
 
 	/* compute a full bounding box */
-	R_EntityComputeBoundingBox(frame->mins, frame->maxs, bbox);
+	aggregatemask = ~0;
 
-	/* cull */
-	for (p = 0; p < 8; p++) {
-		mask = 0;
+	for (i = 0; i < 8; i++) {
+		int mask = 0;
+		int j;
 
-		for (f = 0; f < 4; f++) {
-			if (DotProduct(r_frustum[f].normal, bbox[p]) < r_frustum[f].dist);
-				mask |= (1 << f);
+		for (j = 0; j < 4; j++) {
+			/* get the distance between the frustom normal vector and the
+			 * current vector of the bounding box */
+			const float f = DotProduct(r_locals.frustum[j].normal, bbox[i]);
+			if ((f - r_locals.frustum[j].dist) < 0)
+				mask |= (1 << j);
 		}
+
 		aggregatemask &= mask;
 	}
 
@@ -237,18 +262,16 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], const entity_t * e)
 
 	return qfalse;
 }
-#endif
-
-static vec3_t r_mesh_verts[MD3_MAX_VERTS];
-static vec3_t r_mesh_norms[MD3_MAX_VERTS];
 
 void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
 {
 	int i, vertind, coordind;
-	mAliasFrame_t *frame, *oldframe;
-	mAliasVertex_t *v, *ov;
+	const mAliasFrame_t *frame, *oldframe;
+	const mAliasVertex_t *v, *ov;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
+	vec3_t r_mesh_verts[MD3_MAX_VERTS];
+	vec3_t r_mesh_norms[MD3_MAX_VERTS];
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
@@ -258,6 +281,8 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 
 	v = &mesh->vertexes[framenum * mesh->num_verts];
 	ov = &mesh->vertexes[oldframenum * mesh->num_verts];
+
+	assert(mesh->num_verts < MD3_MAX_VERTS);
 
 	for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
 		VectorSet(r_mesh_verts[i],
@@ -307,13 +332,8 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
  */
 void R_DrawAliasModel (const entity_t *e)
 {
-	mAliasModel_t *mod;
+	const mAliasModel_t *mod;
 	int i;
-	vec4_t bbox[8];
-
-	/* check if model is out of fov */
-	/** @todo fix culling and reactivate check */
-	/*R_CullAliasModel(bbox, e);*/
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
@@ -327,10 +347,16 @@ void R_DrawAliasModel (const entity_t *e)
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		vec4_t color = {1, 1, 1, 1};
-		vec4_t tmp;
 
-		GLVectorTransform(e->transform.matrix, e->origin, tmp);
-		R_LightPoint(tmp);
+		/* tagged models have an origin relative to the parent entity - so we
+		 * have to transform them */
+		if (e->tagent) {
+			vec4_t tmp;
+			GLVectorTransform(e->transform.matrix, e->origin, tmp);
+			R_LightPoint(tmp);
+		} else {
+			R_LightPoint(e->origin);
+		}
 
 		/* resolve the color, starting with the lighting result */
 		VectorCopy(r_lightmap_sample.color, color);
@@ -362,6 +388,7 @@ void R_DrawAliasModel (const entity_t *e)
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
+		vec3_t bbox[8];
 		R_EntityComputeBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs, bbox);
 		R_EntityDrawBBox(bbox);
 	}

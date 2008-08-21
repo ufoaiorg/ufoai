@@ -892,8 +892,8 @@ static void CL_GenerateEquipment_f (void)
 			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
 
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
-			 * Otherwise just use the container-buytype of the item.
-			 * HACKHACK */
+			 * Otherwise just use the container-buytype of the item. */
+			/** @todo HACKHACK */
 			if (BUY_PRI(csi.ods[i].buytype)) {
 				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI, 1))
 					break; /* no space left in menu */
@@ -1410,6 +1410,36 @@ qboolean CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* air
 	}
 
 	return AIR_IsInAircraftTeam(aircraft, employee);
+}
+
+/**
+ * @brief Tells you if a pilot is assigned to an aircraft.
+ * @param[in] employee The pilot to search for.
+ * @param[in] aircraft The aircraft to search the pilot in. Use @c NULL to
+ * check if the pilot is in @b any aircraft.
+ * @return true if the pilot was found in the aircraft otherwise false.
+ */
+qboolean CL_PilotInAircraft (const employee_t *employee, const aircraft_t* aircraft)
+{
+	int i;
+
+	if (!employee)
+		return qfalse;
+
+	if (employee->transfer)
+		return qfalse;
+
+	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
+	if (!aircraft) {
+		for (i = 0; i < gd.numAircraft; i++) {
+			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIdx(i);
+			if (aircraftByIDX && CL_PilotInAircraft(employee, aircraftByIDX))
+				return qtrue;
+		}
+		return qfalse;
+	}
+
+	return (aircraft->pilot == employee);
 }
 
 /**

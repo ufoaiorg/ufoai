@@ -73,26 +73,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define EXPORT __cdecl
 # define IMPORT __cdecl
 #else
-# ifndef stricmp
-#  define stricmp strcasecmp
-# endif
 # define EXPORT
 # define IMPORT
 #endif
 
-#if defined __STDC_VERSION__
-#  if __STDC_VERSION__ < 199901L
-#    if defined __GNUC__
-/* if we are using ansi - the compiler doesn't know about inline */
-#      define inline __inline__
-#    elif defined _MSVC
-#      define inline __inline
-#    else
-#      define inline
-#    endif
-#  endif
-#else
+#if !defined __STDC_VERSION__
 #  define inline
+#elif __STDC_VERSION__ < 199901L
+/* if we are using ansi - the compiler doesn't know about inline */
+#  if defined __GNUC__
+#    define inline __inline__
+#  elif defined _MSVC
+#    define inline __inline
+#  else
+#    define inline
+#  endif
 #endif
 
 #define	BASEDIRNAME	"base"
@@ -114,12 +109,17 @@ int Q_FloatSort(const void *float1, const void *float2);
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
 
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
-/* portable case insensitive compare */
-int Q_strncmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
-int Q_strmatch(const char *s1, const char * s2);
-int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
-int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
-int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));
+
+/* portable case sensitive compare */
+#define Q_strcmp(a, b)     strcmp((a), (b))
+#define Q_strncmp(a, b, n) strncmp((a), (b), (n))
+
+#if defined _WIN32
+#	define Q_strcasecmp(a, b) _stricmp((a), (b))
+#else
+#	define Q_strcasecmp(a, b) strcasecmp((a), (b))
+#endif
+
 #ifdef HAVE_STRNCASECMP
 # define Q_strncasecmp(s1, s2, n) strncasecmp(s1, s2, n)
 #else

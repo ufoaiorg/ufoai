@@ -586,6 +586,16 @@ menu ufopedia_mail
 		font	f_normal
 	}
 
+	pic mail_allread
+	{
+		image	menu/mailclient
+		tooltip	"_Mark all messages read"
+		pos	"50 50"
+		texl	"0 32"
+		texh	"32 64"
+		click	{ cmd "mn_mail_readall;" }
+	}
+
 	pic mail_icon_0
 	{
 		image "*cvar mn_mail_icon0"
@@ -927,18 +937,18 @@ menu ufopedia_mail
 	}
 	pic mail_button_un_14
 	{
-		if		"mn_mail_read14 == 0"
+		if	"mn_mail_read14 == 0"
 		image 	menu/mail_button
-		pos		"90 656"
+		pos	"90 656"
 		texl	"0 28"
 		texh	"852 56"
 	}
 
 	text mailclient
 	{
-		pos		"100 130"
+		pos	"100 130"
 		size	"870 570"
-		num		33
+		num	33
 		height	"15"
 		font	"f_small"
 		format	"38 700"

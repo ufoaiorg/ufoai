@@ -41,6 +41,20 @@ static void CL_ShowMessagesOnStack_f (void)
 	}
 }
 
+
+/**
+ * @brief Returns formatted text of a message timestamp
+ * @param[in] text Buffer to hold the final result
+ * @param[in] message The message to convert into text
+ */
+static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
+{
+	dateLong_t date;
+	CL_DateConvertLong(&message->date, &date);
+	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), date.year,
+		CL_DateGetMonthName(date.month - 1), date.day, date.hour, date.min);
+}
+
 /**
  * @brief Adds a new message to message stack
  * @note These are the messages that are displayed at geoscape
@@ -74,6 +88,9 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	/** @todo Handle translated text - don't use single byte string copy here */
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
 	mess->text = Mem_PoolStrDup(text, cl_localPool, CL_TAG_NONE);
+
+	/* get formatted date text */
+	MN_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 
 	/* they need to be translated already */
 	if (popup)
@@ -111,18 +128,6 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	}
 
 	return mess;
-}
-
-/**
- * @brief Returns formatted text of a message timestamp
- * @param[in] text Buffer to hold the final result
- * @param[in] message The message to convert into text
- */
-void MN_TimestampedText (char *text, message_t *message, size_t textsize)
-{
-	dateLong_t date;
-	CL_DateConvertLong(&message->date, &date);
-	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), date.year, CL_DateGetMonthName(date.month - 1), date.day, date.hour, date.min);
 }
 
 void MN_RemoveMessage (const char *title)

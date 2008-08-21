@@ -757,7 +757,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 					*TU -= time;
 				if (ic->item.a >= ic->item.t->ammo) {
 					/* exchange ammo */
-					item_t item = {NONE_AMMO, NULL, ic->item.m, 0, 0};
+					const item_t item = {NONE_AMMO, NULL, ic->item.m, 0, 0};
 
 					/* Add the currently used ammo in a free place of the "from" container. */
 					/**

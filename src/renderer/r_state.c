@@ -315,7 +315,7 @@ void R_SetupGL3D (void)
 	qglRotatef(-refdef.viewangles[1], 0, 0, 1);
 	qglTranslatef(-refdef.vieworg[0], -refdef.vieworg[1], -refdef.vieworg[2]);
 
-	qglGetFloatv(GL_MODELVIEW_MATRIX, r_world_matrix);
+	qglGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
 
 	r_state.ortho = qfalse;
 

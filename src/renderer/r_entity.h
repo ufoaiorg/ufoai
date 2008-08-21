@@ -44,7 +44,7 @@ typedef struct entity_s {
 	vec3_t mins, maxs;
 
 	/* tag positioning */
-	struct entity_s *tagent;	/**< pointer to the parent entity */
+	struct entity_s *tagent;	/**< pointer to the parent entity - @todo is this comment correct? */
 	const char *tagname;				/**< name of the tag */
 
 	/* misc */
@@ -60,11 +60,11 @@ typedef struct entity_s {
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
-void R_AddEntity(entity_t * ent);
+void R_AddEntity(entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
-void R_EntityComputeBoundingBox(const vec3_t mins, const vec3_t maxs, vec4_t bbox[8]);
-void R_EntityDrawBBox(vec4_t bbox[8]);
+void R_EntityComputeBoundingBox(const vec3_t mins, const vec3_t maxs, vec3_t bbox[8]);
+void R_EntityDrawBBox(vec3_t bbox[8]);
 
 extern int r_numEntities;
 

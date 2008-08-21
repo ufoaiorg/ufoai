@@ -657,6 +657,7 @@ item bomb1
 	buytype		misc
 }
 
+/*
 // =================================
 // BOMB KIT - only for trigger usage
 // only for in-mission spawning, not produceable or buyable
@@ -676,3 +677,4 @@ item bomb2
 	thrown		true
 	buytype		misc
 }
+*/

@@ -792,6 +792,7 @@ tech rs_weapon_bombkit1
 	producetime	-1
 }
 
+/*
 // only for in-mission spawning, not produceable or buyable
 tech rs_weapon_bombkit2
 {
@@ -808,6 +809,7 @@ tech rs_weapon_bombkit2
 	time	0
 	producetime	-1
 }
+*/
 
 tech rs_weapon_chaingun
 {
@@ -2561,6 +2563,7 @@ tech rs_combat_armour
 	producetime	72
 }
 
+/*
 tech rs_advanced_combat_armour
 {
 	type	armour
@@ -2574,6 +2577,7 @@ tech rs_advanced_combat_armour
 	time	0
 	producetime	72
 }
+*/
 
 tech rs_nano_armour
 {
@@ -4293,6 +4297,28 @@ tech rs_craft_alien_detection
 	producetime	-1
 
 	mdl		"craft_item_detector"
+}
+
+tech rs_craft_weapon_alc
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Aerial Laser Cannon"
+	// pre_description	"_craft_weapon_alc_pre_txt"
+	description {
+		default "_craft_weapon_alc_txt"
+	}
+
+	require_AND {
+		tech rs_laser
+		tech rs_damage_laser
+	}
+
+	provides	craft_weapon_alc
+	time		0
+	producetime	100
+
+	mdl		"aircraft/craft_weapon_alc/alc"
 }
 
 tech rs_craft_weapon_shiva

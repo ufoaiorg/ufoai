@@ -5,11 +5,11 @@
 //
 //	model - Model that is displayed on battlescape. For geoscape models (i.e. menu models) see the research.ufo file ("mdl_top").
 //	size - Maximum number of employees aboard.
-//	weight - 1 for small aircraft (stored in small and large hangars), 2 for large aircraft (stored in large hangar)
+//	size - 1 for small aircraft (stored in small and large hangars), 2 for large aircraft (stored in large hangar)
 //	slot {}	- Any number of entries. Parameters can be the following :
 //		type		- The type of item this slot can contain (See "type "in "craftitem" below)
 //		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.
-//		size		- the Maximum weight of an item fitting this slot (light, medium, heavy) (only for weapon slots).
+//		size		- the Maximum size of an item fitting this slot (light, medium, heavy) (only for weapon slots).
 //		contains	- technology of the item in the slot at the beginning of the game.
 //		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
 //
@@ -40,7 +40,7 @@
 //
 //	price		- Cost of buying one item.
 //	craftweapon	- Only for crafttype: ammo, defines which weapon uses this ammo.
-//	size		- The weight of the item used to see if it fits the slot (only for weapons).
+//	size		- The size of the item used to see if it fits the slot (only for weapons).
 //	installationTime -
 //		The time needed to install/remove the item from the aircraft
 //		any param of aircraft param{}. These values are V_RELABS, and will modifiy
@@ -89,7 +89,7 @@ aircraft craft_drop_firebird
 	price		140000
 	building	building_hangar
 	numteam		8
-	weight		2
+	size		2
 	image		air_dropship
 	slot {
 		type		weapon
@@ -126,7 +126,7 @@ aircraft craft_drop_herakles
 	price		180000
 	building	building_hangar
 	numteam		8
-	weight		2
+	size		2
 	image		air_dropship
 	slot {
 		type		weapon
@@ -163,7 +163,7 @@ aircraft craft_inter_stiletto
 	type		interceptor
 	model		"inter_stiletto"
 	numteam		1
-	weight		1
+	size		1
 	price		40000
 	building	building_intercept
 	image		air_interceptor
@@ -208,7 +208,7 @@ aircraft craft_inter_saracen
 	type		interceptor
 	model		"inter_saracen"
 	numteam		1
-	weight		2
+	size		2
 	price		100000
 	building	building_intercept
 	image		air_interceptor
@@ -248,7 +248,7 @@ aircraft craft_inter_dragon
 	type		interceptor
 	model		"inter_dragon"
 	numteam		1
-	weight		1
+	size		1
 	price		100000
 	building	building_intercept
 	image		air_interceptor
@@ -288,7 +288,7 @@ aircraft craft_inter_stingray
 	type		interceptor
 	model		"inter_stingray"
 	numteam		1
-	weight		1
+	size		1
 	price		200000
 	building	building_intercept
 	image		air_interceptor
@@ -334,7 +334,7 @@ aircraft craft_ufo_harvester
 	shortname	"_Harvester U"
 	type		ufo
 	model		"ufo_harvester"
-	weight		2
+	size		2
 	building	building_big_ufo_hangar
 	price		200000
 	image		air_ufo
@@ -374,10 +374,10 @@ aircraft craft_ufo_carrier
 		fuelsize	100000
 	}
 	name		"_UFO - Carrier"
-	shortname	"Carrier U"
+	shortname	"_Carrier U"
 	type		ufo
 	model		"ufo_carrier"
-	weight		1
+	size		1
 	building	building_small_ufo_hangar
 	price		1000000
 	image		air_ufo
@@ -400,7 +400,7 @@ aircraft craft_ufo_supply
 	shortname	"_Supply U"
 	type		ufo
 	model		"ufo_supply"
-	weight		1
+	size		1
 	building	building_big_ufo_hangar
 	price		250000
 	image		air_ufo
@@ -422,7 +422,7 @@ aircraft craft_ufo_bomber
 	shortname	"_Bomber U"
 	type		ufo
 	model		"ufo_bomber"
-	weight		1
+	size		1
 	building	building_big_ufo_hangar
 	price		250000
 	image		air_ufo
@@ -451,7 +451,7 @@ aircraft craft_ufo_corrupter
 	shortname	"_Corrupter U"
 	type		ufo
 	model		"ufo_corrupter"
-	weight		1
+	size		1
 	building	building_big_ufo_hangar
 	price		230000
 	image		air_ufo
@@ -479,7 +479,7 @@ aircraft craft_ufo_scout
 	shortname	"_Scout U"
 	type		ufo
 	model		"ufo_scout"
-	weight		1
+	size		1
 	building	building_small_ufo_hangar
 	price		150000
 	image		air_ufo
@@ -500,7 +500,7 @@ aircraft craft_ufo_fighter
 	shortname	"_Fighter U"
 	type		ufo
 	model		"ufo_fighter"
-	weight		1
+	size		1
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
 	price		180000
@@ -516,6 +516,17 @@ aircraft craft_ufo_fighter
 // *********************************
 // EQUIPMENT
 // *********************************
+
+craftitem craft_weapon_alc
+{
+	name		"_Aerial Laser Cannon"
+	crafttype		weapon
+	size		40 // light
+	installationTime	2
+	price		12000
+	buytype		craftitem
+	bullets		false
+}
 
 craftitem craft_weapon_shiva
 {
@@ -754,7 +765,7 @@ craftitem base_ammo_AA51
 	name		"_AA51 Cicada SAM"
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
-//	price		20000	// no used (not on market)
+	price		20000
 	buytype		dummy
 	notonmarket	true
 	model		"missile"

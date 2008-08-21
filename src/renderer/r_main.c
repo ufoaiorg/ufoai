@@ -36,19 +36,10 @@ refdef_t refdef;
 
 rconfig_t r_config;
 rstate_t r_state;
+rlocals_t r_locals;
 
 image_t *r_notexture;			/* use for bad textures */
 image_t *r_warptexture;
-
-static cBspPlane_t r_frustum[4];
-
-/* view origin */
-vec3_t r_vup;
-vec3_t r_vpn;
-vec3_t r_vright;
-
-float r_world_matrix[16];
-float r_base_world_matrix[16];
 
 static cvar_t *r_maxtexres;
 
@@ -85,6 +76,7 @@ cvar_t *r_texturealphamode;
 cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
+cvar_t *r_threads;
 cvar_t *r_vertexbuffers;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
@@ -109,15 +101,15 @@ qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 
-	if (r_nocull->integer)
-		return qfalse;
-
 	for (i = 0; i < 4; i++)
-		if (TR_BoxOnPlaneSide(mins, maxs, &r_frustum[i]) == PSIDE_BACK)
+		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
 			return qtrue;
 	return qfalse;
 }
 
+/**
+ * @sa R_ModLoadPlanes
+ */
 static inline int SignbitsForPlane (const cBspPlane_t * out)
 {
 	int bits, j;
@@ -131,48 +123,12 @@ static inline int SignbitsForPlane (const cBspPlane_t * out)
 	return bits;
 }
 
-static void R_SetFrustum (void)
+void R_SetupFrustum (void)
 {
 	int i;
 
-	if (r_isometric->integer) {
-		/* 4 planes of a cube */
-		VectorScale(r_vright, +1, r_frustum[0].normal);
-		VectorScale(r_vright, -1, r_frustum[1].normal);
-		VectorScale(r_vup, +1, r_frustum[2].normal);
-		VectorScale(r_vup, -1, r_frustum[3].normal);
-
-		for (i = 0; i < 4; i++) {
-			r_frustum[i].type = PLANE_ANYZ;
-			r_frustum[i].dist = DotProduct(refdef.vieworg, r_frustum[i].normal);
-			r_frustum[i].signbits = SignbitsForPlane(&r_frustum[i]);
-		}
-		r_frustum[0].dist -= 10 * refdef.fov_x;
-		r_frustum[1].dist -= 10 * refdef.fov_x;
-		r_frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
-		r_frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
-	} else {
-		/* rotate VPN right by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[0].normal, r_vup, r_vpn, -(90 - refdef.fov_x / 2));
-		/* rotate VPN left by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[1].normal, r_vup, r_vpn, 90 - refdef.fov_x / 2);
-		/* rotate VPN up by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[2].normal, r_vright, r_vpn, 90 - refdef.fov_y / 2);
-		/* rotate VPN down by FOV_X/2 degrees */
-		RotatePointAroundVector(r_frustum[3].normal, r_vright, r_vpn, -(90 - refdef.fov_y / 2));
-
-		for (i = 0; i < 4; i++) {
-			r_frustum[i].type = PLANE_ANYZ;
-			r_frustum[i].dist = DotProduct(refdef.vieworg, r_frustum[i].normal);
-			r_frustum[i].signbits = SignbitsForPlane(&r_frustum[i]);
-		}
-	}
-}
-
-static inline void R_SetupFrame (void)
-{
 	/* build the transformation matrix for the given view angles */
-	AngleVectors(refdef.viewangles, r_vpn, r_vright, r_vup);
+	AngleVectors(refdef.viewangles, r_locals.forward, r_locals.right, r_locals.up);
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
@@ -181,6 +137,39 @@ static inline void R_SetupFrame (void)
 		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		R_CheckError();
 		qglDisable(GL_SCISSOR_TEST);
+	}
+
+	if (r_isometric->integer) {
+		/* 4 planes of a cube */
+		VectorScale(r_locals.right, +1, r_locals.frustum[0].normal);
+		VectorScale(r_locals.right, -1, r_locals.frustum[1].normal);
+		VectorScale(r_locals.up, +1, r_locals.frustum[2].normal);
+		VectorScale(r_locals.up, -1, r_locals.frustum[3].normal);
+
+		for (i = 0; i < 4; i++) {
+			r_locals.frustum[i].type = PLANE_ANYZ;
+			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
+			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
+		}
+		r_locals.frustum[0].dist -= 10 * refdef.fov_x;
+		r_locals.frustum[1].dist -= 10 * refdef.fov_x;
+		r_locals.frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		r_locals.frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+	} else {
+		/* rotate VPN right by FOV_X/2 degrees */
+		RotatePointAroundVector(r_locals.frustum[0].normal, r_locals.up, r_locals.forward, -(90 - refdef.fov_x / 2));
+		/* rotate VPN left by FOV_X/2 degrees */
+		RotatePointAroundVector(r_locals.frustum[1].normal, r_locals.up, r_locals.forward, 90 - refdef.fov_x / 2);
+		/* rotate VPN up by FOV_X/2 degrees */
+		RotatePointAroundVector(r_locals.frustum[2].normal, r_locals.right, r_locals.forward, 90 - refdef.fov_y / 2);
+		/* rotate VPN down by FOV_X/2 degrees */
+		RotatePointAroundVector(r_locals.frustum[3].normal, r_locals.right, r_locals.forward, -(90 - refdef.fov_y / 2));
+
+		for (i = 0; i < 4; i++) {
+			r_locals.frustum[i].type = PLANE_ANYZ;
+			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
+			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
+		}
 	}
 }
 
@@ -236,7 +225,7 @@ void R_BeginFrame (void)
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
 
-		if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
+		if (Q_strcasecmp(r_drawbuffer->string, "GL_FRONT") == 0)
 			qglDrawBuffer(GL_FRONT);
 		else
 			qglDrawBuffer(GL_BACK);
@@ -260,6 +249,15 @@ void R_BeginFrame (void)
 		r_texturesolidmode->modified = qfalse;
 	}
 
+	/* threads */
+	if (r_threads->modified) {
+		if (r_threads->integer)
+			R_InitThreads();
+		else
+			R_ShutdownThreads();
+		r_threads->modified = qfalse;
+	}
+
 	R_SetupGL2D();
 
 	/* clear screen if desired */
@@ -272,21 +270,25 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	R_SetupFrame();
-
-	R_SetFrustum();
+	int tile;
 
 	R_SetupGL3D();
 
-	/* activate wire mode */
-	if (r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
-		int tile;
+		if (r_threads->integer) {
+			while (r_threadstate.state != THREAD_RENDERER)
+				Sys_Sleep(0);
 
-		/* draw brushes on current worldlevel */
-		R_GetLevelSurfaceLists();
+			r_threadstate.state = THREAD_CLIENT;
+		} else {
+			R_SetupFrustum();
+
+			/* draw brushes on current worldlevel */
+			R_GetLevelSurfaceLists();
+		}
+		/* activate wire mode */
+		if (r_wire->integer)
+			qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		R_AddLights();
 
@@ -388,11 +390,12 @@ static void R_Register (void)
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
 	r_drawspecialbrushes = Cvar_Get("r_drawspecialbrushes", "0", 0, "Draw stuff like actorclip");
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling");
+	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
+	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
@@ -410,7 +413,7 @@ static void R_Register (void)
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
-	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls usage of OpenGL Vertex Buffer Objects (VBO) versus legacy vertex arrays. Value is bitmapped: 1 -> world 2 -> mesh entites 3-> both.");
+	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls usage of OpenGL Vertex Buffer Objects (VBO) versus legacy vertex arrays.");
 	r_maxlightmap = Cvar_Get("r_maxlightmap", "2048", CVAR_ARCHIVE | CVAR_LATCH, "Reduce this value on older hardware");
 	Cvar_SetCheckFunction("r_maxlightmap", R_CvarCheckMaxLightmap);
 
@@ -665,7 +668,7 @@ static inline void R_EnforceVersion (void)
 static inline void R_VerifyDriver (void)
 {
 #ifdef _WIN32
-	if (!Q_stricmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
+	if (!Q_strcasecmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
 #endif
@@ -682,6 +685,7 @@ qboolean R_Init (void)
 	R_Register();
 
 	memset(&r_state, 0, sizeof(r_state));
+	memset(&r_locals, 0, sizeof(r_locals));
 
 	/* set our "safe" modes */
 	viddef.prev_mode = 6;

@@ -274,17 +274,16 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	return lm;
 }
 
-static const float mapBorder = UNIT_SIZE * 10;
 static const float mapZBorder = -(UNIT_HEIGHT * 5);
 /**
  * @brief Checks whether give position is still inside the map borders
  */
-qboolean CL_OutsideMap (const vec3_t impact)
+qboolean CL_OutsideMap (const vec3_t impact, const float delta)
 {
-	if (impact[0] < map_min[0] - mapBorder || impact[0] > map_max[0] + mapBorder)
+	if (impact[0] < map_min[0] - delta || impact[0] > map_max[0] + delta)
 		return qtrue;
 
-	if (impact[1] < map_min[1] - mapBorder || impact[1] > map_max[1] + mapBorder)
+	if (impact[1] < map_min[1] - delta || impact[1] > map_max[1] + delta)
 		return qtrue;
 
 	/* if a le is deeper than 5 levels below the latest walkable level (0) then
@@ -383,12 +382,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		*mod++ = animationIndex;
 		*mod++ = 0;
 	} else {
-		Q_strncpyz(mod, anim, length);
-		Q_strcat(mod, "_", length);
-		if (akimbo)
-			Q_strcat(mod, "pistol_d", length);
-		else
-			Q_strcat(mod, type, length);
+		Com_sprintf(mod, length, "%s_%s\n", anim, akimbo ? "pistol_d" : type);
 	}
 
 	return retAnim;
@@ -695,7 +689,7 @@ void LET_StartPathMove (le_t *le)
  * @note Think function
  * @sa LET_Projectile
  * @sa CM_TestLine
- * @sa FrustomVis
+ * @sa FrustumVis
  */
 void LET_ProjectileAutoHide (le_t *le)
 {
@@ -755,7 +749,7 @@ static void LET_Projectile (le_t * le)
 			sfx_t *sfx = S_RegisterSound(le->ref2);
 			S_StartSound(impact, sfx, le->fd->relImpactVolume);
 		}
-	} else if (CL_OutsideMap(le->ptl->s)) {
+	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
@@ -1067,7 +1061,7 @@ void LE_AddToScene (void)
 					continue;
 			} else if (le->contents & CONTENTS_DETAIL) {
 				/* show them always */
-			} else if ((le->pos[2] > cl_worldlevel->integer))
+			} else if (le->pos[2] > cl_worldlevel->integer)
 				continue;
 
 			memset(&ent, 0, sizeof(ent));
@@ -1104,7 +1098,8 @@ void LE_AddToScene (void)
 
 			/**
 			 * Offset the model to be inside the cursor box
-			 * @todo Dunno if this is the best place to do it - what happens to shot-origin and stuff? le->origin is never changed.
+			 * @todo Dunno if this is the best place to do it - what happens to
+			 * shot-origin and stuff? le->origin is never changed.
 			 */
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:

@@ -70,7 +70,8 @@ static void FreeTree_r (node_t *node)
 	if (node->volume)
 		FreeBrush(node->volume);
 
-	c_nodes--;
+	if (threadstate.numthreads == 1)
+		c_nodes--;
 	free(node);
 }
 

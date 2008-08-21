@@ -179,11 +179,11 @@ static void CL_SequenceCamera (void)
 	seqCamera.dist += cls.frametime * seqCamera.ddist;
 
 	/* set camera */
-	VectorCopy(seqCamera.origin, cl.cam.reforg);
+	VectorCopy(seqCamera.origin, cl.cam.origin);
 	VectorCopy(seqCamera.angles, cl.cam.angles);
 
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-	VectorMA(cl.cam.reforg, -seqCamera.dist, cl.cam.axis[0], cl.cam.camorg);
+	VectorMA(cl.cam.origin, -seqCamera.dist, cl.cam.axis[0], cl.cam.camorg);
 	cl.cam.zoom = max(seqCamera.zoom, MIN_ZOOM);
 	/* fudge to get isometric and perspective modes looking similar */
 	if (cl_isometric->integer)

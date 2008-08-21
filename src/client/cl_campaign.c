@@ -461,9 +461,6 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	mission->mapDef = &csi.mds[i];
 	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
-	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
-	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
-	Q_strncpyz(gd.oldMis1, mission->mapDef->id, sizeof(gd.oldMis1));
 	return qtrue;
 }
 
@@ -696,6 +693,7 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
  * @param[in] mission Pointer to mission
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed).
  * @note We don't destroy the UFO because we can use later, e.g. if it takes off
+ * @sa UFO_RemoveFromGeoscape
  */
 static void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 {
@@ -2724,61 +2722,46 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 
 /**
  * @brief Return Name of the category of a mission.
+ * @note Not translated yet - only for console usage
  */
-static const char* CP_MissionStageToName (missionStage_t stage)
+static const char* CP_MissionStageToName (const missionStage_t stage)
 {
 	switch (stage) {
 	case STAGE_NOT_ACTIVE:
 		return "Not active yet";
-		break;
 	case STAGE_COME_FROM_ORBIT:
 		return "UFO coming from orbit";
-		break;
 	case STAGE_RECON_AIR:
 		return "Aerial recon underway";
-		break;
 	case STAGE_MISSION_GOTO:
 		return "Going to mission position";
-		break;
 	case STAGE_RECON_GROUND:
 		return "Ground recon mission underway";
-		break;
 	case STAGE_TERROR_MISSION:
 		return "Terror mission underway";
-		break;
 	case STAGE_BUILD_BASE:
 		return "Building base";
-		break;
 	case STAGE_BASE_ATTACK:
 		return "Attacking a base";
-		break;
 	case STAGE_SUBVERT_GOV:
 		return "Subverting a government";
-		break;
 	case STAGE_SUPPLY:
 		return "Supplying";
-		break;
 	case STAGE_SPREAD_XVI:
 		return "Spreading XVI";
-		break;
 	case STAGE_INTERCEPT:
 		return "Intercepting aircraft";
-		break;
 	case STAGE_RETURN_TO_ORBIT:
 		return "Leaving earth";
-		break;
 	case STAGE_BASE_DISCOVERED:
 		return "Base visible";
-		break;
 	case STAGE_HARVEST:
 		return "Harvesting";
-		break;
 	case STAGE_OVER:
 		return "Mission over";
-		break;
+	default:
+		Sys_Error("Unknown state type given: %i", stage);
 	}
-	assert(0);
-	return "";
 }
 
 /**
@@ -3233,23 +3216,27 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	ccs.battleParameters.zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
 	if (selectedMission->ufo) {
+		const char *shortUFOType;
+		const char *missionType;
 		if (CP_UFOIsCrashed(mission)) {
-			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_ufocrashed %i;", mission->ufo->ufotype);
+			shortUFOType = UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype);
+			missionType = "cp_ufocrashed";
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
-				/* set rm_ufo to the ufo type used */
-				Cvar_Set("rm_ufo", va("+%s", UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype)));
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (!Q_strcmp(mission->mapDef->id, "ufocrash"))
-				ccs.battleParameters.param = Mem_PoolStrDup(UFO_CrashedTypeToShortName(mission->ufo->ufotype), cl_localPool, 0);
+					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cl_localPool, 0);
 			}
 		} else {
-			Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
-			/* Set random map UFO if this is a random map */
-			if (mission->mapDef->map[0] == '+') {
-				/* set rm_ufo to the ufo type used */
-				Cvar_Set("rm_ufo", va("+%s", UFO_TypeToShortName(selectedMission->ufo->ufotype)));
-			}
+			shortUFOType = UFO_TypeToShortName(selectedMission->ufo->ufotype);
+			missionType = "cp_uforecovery";
+		}
+
+		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
+		/* Set random map UFO if this is a random map */
+		if (mission->mapDef->map[0] == '+') {
+			/* set rm_ufo to the ufo type used */
+			Cvar_Set("rm_ufo", va("+%s", shortUFOType));
 		}
 	}
 	/** @todo change dropship to any possible aircraft when random assembly tiles will be created */
@@ -3376,6 +3363,9 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 		endCampaign = qtrue;
 	}
 
+	/** @todo Should we make the campaign lost when a player loses all his bases?
+	 * until he has set up a base again, the aliens might have invaded the whole
+	 * world ;) - i mean, removing the credits check here. */
 	if (!gd.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
 		mn.menuText[TEXT_STANDARD] = _("You've lost your bases and don't have enough money to build new ones.");
 		endCampaign = qtrue;
@@ -4443,10 +4433,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* restore the overlay */
 	Cvar_SetValue("r_geoscape_overlay", MSG_ReadShort(sb));
 
-	Q_strncpyz(gd.oldMis1, MSG_ReadString(sb), sizeof(gd.oldMis1));
-	Q_strncpyz(gd.oldMis2, MSG_ReadString(sb), sizeof(gd.oldMis2));
-	Q_strncpyz(gd.oldMis3, MSG_ReadString(sb), sizeof(gd.oldMis3));
-
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
 
@@ -4474,6 +4460,10 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		name = MSG_ReadString(sb);
 		if (name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
+			if (!mission.mapDef) {
+				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
+				return qfalse;
+			}
 			mission.mapDef->timesAlreadyUsed = MSG_ReadLong(sb);
 		} else
 			mission.mapDef = NULL;
@@ -4558,7 +4548,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* stores the select mission on geoscape */
 	missionId = MSG_ReadString(sb);
-	if (missionId[9] != '\0')
+	if (missionId[0] != '\0')
 		selectedMission = CP_GetMissionById(missionId);
 	else
 		selectedMission = NULL;
@@ -4622,10 +4612,6 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 
 	/* save the overlay state */
 	MSG_WriteShort(sb, r_geoscape_overlay->integer);
-
-	MSG_WriteString(sb, gd.oldMis1);
-	MSG_WriteString(sb, gd.oldMis2);
-	MSG_WriteString(sb, gd.oldMis3);
 
 	/* store credits */
 	MSG_WriteLong(sb, ccs.credits);
@@ -4952,7 +4938,6 @@ static void CL_GameGo (void)
 	}
 
 	mis = selectedMission;
-	map_maxlevel_base = 0;
 	assert(mis);
 	assert(aircraft);
 
@@ -5312,6 +5297,7 @@ void CL_GameAutoGo (mission_t *mis)
 		while (aliensLeft > 0) {
 			for (i = 0; i < aircraft->alientypes; i++) {
 				assert(i < MAX_CARGO);
+				assert(ccs.battleParameters.alienTeams[i]);
 				cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
 				cargo[i].amount_dead += rand() % aliensLeft;
 				aliensLeft -= cargo[i].amount_dead;
@@ -5346,8 +5332,9 @@ void CL_GameAutoGo (mission_t *mis)
 
 		/* Check for alien containment in aircraft homebase. */
 		if (aircraft->alientypes && !B_GetBuildingStatus(aircraft->homebase, B_ALIEN_CONTAINMENT)) {
-		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
-		 * Popup aircraft transer dialog to choose a better base. */
+			/* We have captured/killed aliens, but the homebase of this aircraft
+			 * does not have alien containment. Popup aircraft transer dialog to
+			 * choose a better base. */
 			TR_TransferAircraftMenu(aircraft);
 		}
 	}

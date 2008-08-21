@@ -69,19 +69,15 @@ static inline void R_DrawHighlight (const entity_t * e)
  * @brief Compute the bouding box for an entity out of the mins, maxs
  * @sa R_EntityDrawBBox
  */
-void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec4_t bbox[8])
+void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
 {
-	vec4_t tmp;
 	int i;
 
 	/* compute a full bounding box */
 	for (i = 0; i < 8; i++) {
-		tmp[0] = (i & 1) ? mins[0] : maxs[0];
-		tmp[1] = (i & 2) ? mins[1] : maxs[1];
-		tmp[2] = (i & 4) ? mins[2] : maxs[2];
-		tmp[3] = 1.0;
-
-		Vector4Copy(tmp, bbox[i]);
+		bbox[i][0] = (i & 1) ? mins[0] : maxs[0];
+		bbox[i][1] = (i & 2) ? mins[1] : maxs[1];
+		bbox[i][2] = (i & 4) ? mins[2] : maxs[2];
 	}
 }
 
@@ -89,7 +85,7 @@ void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec4_t bb
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
  */
-void R_EntityDrawBBox (vec4_t bbox[8])
+void R_EntityDrawBBox (vec3_t bbox[8])
 {
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -141,7 +137,7 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(color);
 
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
-		vec4_t bbox[8];
+		vec3_t bbox[8];
 		R_EntityComputeBoundingBox(e->mins, e->maxs, bbox);
 		R_EntityDrawBBox(bbox);
 	} else {
@@ -536,9 +532,9 @@ static float *R_CalcTransform (entity_t * e)
 
 		/* tag transformation */
 		if (e->tagent->model && e->tagent->model->alias.tagdata) {
-			dMD2tag_t *taghdr = (dMD2tag_t *) e->tagent->model->alias.tagdata;
+			const dMD2tag_t *taghdr = (const dMD2tag_t *) e->tagent->model->alias.tagdata;
 			/* find the right tag */
-			const char *name = (char *) taghdr + taghdr->ofs_names;
+			const char *name = (const char *) taghdr + taghdr->ofs_names;
 			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
 				if (!strcmp(name, e->tagname)) {
 					float interpolated[16];
@@ -589,6 +585,26 @@ static float *R_CalcTransform (entity_t * e)
 }
 
 /**
+ * @brief Perform a frustum cull check for a given entity
+ * @param[in,out] e The entity to perform the frustum cull check for
+ * @returns qfalse if visible, qtrue is the origin of the entity is outside the
+ * current frustum view
+ */
+static qboolean R_CullEntity (entity_t *e)
+{
+	if (r_nocull->integer)
+		return qfalse;
+
+	if (!e->model)  /* don't bother culling null model ents */
+		return qfalse;
+
+	if (e->model->type == mod_bsp_submodel)
+		return R_CullBspModel(e);
+	else
+		return R_CullMeshModel(e);
+}
+
+/**
  * @brief Draw entities like models and cursor box
  * @sa R_RenderFrame
  */
@@ -608,6 +624,11 @@ void R_DrawEntities (void)
 
 	for (i = 0; i < r_numEntities; i++) {
 		entity_t *e = &r_entities[i];
+
+		/* frustum cull check - but not while we are in e.g. sequence mode */
+		if (!(refdef.rdflags & RDF_NOWORLDMODEL) && R_CullEntity(e))
+			continue;
+
 		R_CalcTransform(e);
 
 		if (!e->model) {
@@ -677,12 +698,16 @@ entity_t *R_GetEntity (int id)
 /**
  * @sa R_GetFreeEntity
  */
-void R_AddEntity (entity_t * ent)
+void R_AddEntity (entity_t *ent)
 {
 	if (r_numEntities >= MAX_ENTITIES) {
 		Com_Printf("R_AddEntity: MAX_ENTITIES exceeded\n");
 		return;
 	}
+
+	/* don't add the bsp tiles from random map assemblies */
+	if (ent->model && ent->model->type == mod_bsp)
+		return;
 
 	r_entities[r_numEntities++] = *ent;
 }

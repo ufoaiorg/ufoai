@@ -64,7 +64,7 @@ const char *Info_ValueForKey (const char *s, const char *key)
 			*o++ = *s++;
 		*o = 0;
 
-		if (!Q_stricmp(key, pkey))
+		if (!Q_strcasecmp(key, pkey))
 			return value[valueindex];
 
 		if (!*s)
@@ -188,39 +188,34 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
  */
 void Info_Print (const char *s)
 {
-	char key[512];
-	char value[512];
-	char *o;
-	int l;
-
 	if (*s == '\\')
 		s++;
 	while (*s) {
-		o = key;
-		while (*s && *s != '\\')
-			*o++ = *s++;
+		char const* key;
+		int         key_len   = 0;
+		char const* value;
+		int         value_len = 0;
 
-		l = o - key;
-		if (l < 20) {
-			memset(o, ' ', 20 - l);
-			key[20] = 0;
-		} else
-			*o = 0;
-		Com_Printf("%s", key);
+		key = s;
+		while (*s && *s != '\\') {
+			++s;
+			++key_len;
+		}
 
 		if (!*s) {
-			Com_Printf("MISSING VALUE\n");
+			Com_Printf("%-20.*sMISSING VALUE\n", key_len, key);
 			return;
 		}
 
-		o = value;
-		s++;
-		while (*s && *s != '\\')
-			*o++ = *s++;
-		*o = 0;
+		value = ++s;
+		while (*s && *s != '\\') {
+			++s;
+			++value_len;
+		}
 
 		if (*s)
 			s++;
-		Com_Printf("%s\n", value);
+
+		Com_Printf("%-20.*s%.*s\n", key_len, key, value_len, value);
 	}
 }

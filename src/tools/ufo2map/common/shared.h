@@ -87,6 +87,7 @@ typedef struct mapConfig_s {
 	qboolean chkBrushes;
 	qboolean chkLevelFlags;
 	qboolean chkTextures;
+	qboolean chkMixedFaceContents;
 	qboolean chkAll;
 	qboolean fixMap;
 	qboolean generateTraceFile;
@@ -120,14 +121,27 @@ typedef struct mapConfig_s {
 
 	int compile_for_day;	/**< set this to 1 if you want to compile the day version of the lightmap */
 } mapConfig_t;
+
 extern mapConfig_t config;
 extern char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
-void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
+typedef struct threadstate_s {
+	int numthreads;		/**< spawned threads */
+	int workindex;		/**< current work cycle */
+	int workcount;		/**< total work cycles */
+	int workfrac;		/**< last fraction of work completed (tenths) */
+	int worktick;		/**< Number of iterations before the progress spinner is spun */
+	qboolean progress;	/**< are we reporting progress */
+} threadstate_t;
+
+extern threadstate_t threadstate;
+
+void ThreadLock(void);
+void ThreadUnlock(void);
+void RunThreadsOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
+void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
 
 #include "../../../common/qfiles.h"
-
-extern qboolean verbose;
 
 #define SYS_VRB 0 /* verbose support (on/off) */
 #define SYS_STD 1 /* standard print level */

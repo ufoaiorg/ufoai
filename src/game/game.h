@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_GAME_H
 #define GAME_GAME_H
 
-#import "../shared/defines.h"
-#import "../shared/typedefs.h"
-#import "../common/tracing.h"
+#include "../shared/defines.h"
+#include "../shared/typedefs.h"
+#include "../common/tracing.h"
 
 #define	GAME_API_VERSION	4
 
@@ -151,6 +151,7 @@ typedef struct {
 
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
+	float (IMPORT *GetBounceFraction) (const char *texture);
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */

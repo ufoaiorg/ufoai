@@ -71,8 +71,6 @@ typedef struct {
  * @sa client_static_t
  */
 typedef struct client_state_s {
-	qboolean refresh_prepped;	/**< false if on new level or vid restart */
-
 	int time;					/**< this is the time value that the client
 								 * is rendering at.  always <= cls.realtime */
 	int eventTime;				/**< similar to time, but not counting if blockEvents is set */
@@ -105,7 +103,10 @@ typedef struct client_state_s {
 	qboolean skipRadarNodes;	/**< maybe the current map doesn't have a radar image */
 	qboolean radarInited;		/**< every radar image (for every level [1-8]) is loaded */
 
-	clientinfo_t clientinfo[MAX_CLIENTS]; /* client info of all connected clients */
+	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
+
+	int map_maxlevel;
+	int map_maxlevel_base;
 } client_state_t;
 
 extern client_state_t cl;
@@ -116,7 +117,6 @@ typedef enum {
 	ca_sequence,				/**< rendering a sequence */
 	ca_connecting,				/**< sending request packets to the server */
 	ca_connected,				/**< netchan_t established, waiting for svc_serverdata */
-	ca_ptledit,					/**< particles should be rendered */
 	ca_active					/**< game views should be displayed */
 } connstate_t;
 
@@ -129,17 +129,17 @@ typedef enum {
 
 
 typedef struct serverList_s {
-	char *node;
-	char *service;
-	qboolean pinged;
-	char sv_hostname[MAX_OSPATH];
-	char mapname[16];
-	char version[8];
-	char gametype[8];
-	qboolean sv_dedicated;
-	int sv_maxclients;
-	int clients;
-	int serverListPos;
+	char *node;						/**< node ip address */
+	char *service;					/**< node port */
+	qboolean pinged;				/**< already pinged */
+	char sv_hostname[MAX_OSPATH];	/**< the server hostname */
+	char mapname[16];				/**< currently running map */
+	char version[8];				/**< the game version */
+	char gametype[8];				/**< the game type */
+	qboolean sv_dedicated;			/**< dedicated server */
+	int sv_maxclients;				/**< max. client amount allowed */
+	int clients;					/**< already connected clients */
+	int serverListPos;				/**< position in the server list array */
 } serverList_t;
 
 #define MAX_SERVERLIST 128
@@ -215,7 +215,7 @@ extern struct memPool_s *cl_ircSysPool;
 extern struct memPool_s *cl_menuSysPool;
 extern struct memPool_s *cl_soundSysPool;
 
-/* TODO: Made use of the tags */
+/** @todo Make use of the tags */
 typedef enum {
 	CL_TAG_NONE,				/**< will be wiped on every new game */
 	CL_TAG_PARSE_ONCE,			/**< will not be wiped on a new game (shaders, fonts) */
@@ -257,7 +257,7 @@ extern cvar_t *cl_teamnum;
 extern cvar_t *cl_camzoommin;
 extern cvar_t *cl_mapzoommax;
 extern cvar_t *cl_mapzoommin;
-extern cvar_t* cl_showCoords;
+extern cvar_t *cl_showCoords;
 extern cvar_t *cl_autostand;
 
 extern cvar_t *mn_active;
@@ -266,7 +266,7 @@ extern cvar_t *mn_main_afterdrop;
 extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
-extern cvar_t* mn_serverday;
+extern cvar_t *mn_serverday;
 extern cvar_t *mn_inputlength;
 
 extern cvar_t *s_language;

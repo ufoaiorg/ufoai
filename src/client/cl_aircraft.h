@@ -27,16 +27,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
-#define LINE_MAXPTS (LINE_MAXSEG+2)
-#define LINE_DPHI	(M_PI/LINE_MAXSEG)
+#define LINE_MAXPTS (LINE_MAXSEG + 2)
+#define LINE_DPHI	(M_PI / LINE_MAXSEG)
 
-#define AIRCRAFT_INVALID -1		/**< Invalid aircraft index (global index). */
-#define AIRCRAFT_INBASE_INVALID -1	/**< Invalid aircraft index in base-list of aircraft. */
+/** Invalid aircraft index (global index). */
+#define AIRCRAFT_INVALID -1
+/** Invalid aircraft index in base-list of aircraft. */
+#define AIRCRAFT_INBASE_INVALID -1
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
-	int numPoints; /**< number of points that make up this path */
-	float distance; /**< the distance between two points of the path - total distance is then (distance * (numPoints - 1)) */
+	int numPoints;		/**< number of points that make up this path */
+	float distance;		/**< the distance between two points of the path - total
+						 * distance is then (distance * (numPoints - 1)) */
 	vec2_t point[LINE_MAXPTS]; /**< array of 2D points that make up this path */
 } mapline_t;
 
@@ -52,7 +55,7 @@ typedef enum {
 /** @brief All different size of aircraft. */
 typedef enum {
 	AIRCRAFT_SMALL = 1,
-	AIRCRAFT_LARGE = 2,
+	AIRCRAFT_LARGE = 2
 } aircraftSize_t;
 
 /** @brief All different Hangar size.
@@ -91,8 +94,8 @@ typedef enum {
 } itemPos_t;
 
 typedef enum {
-	COMBAT_ZOOM_FULL,   /* Zoomed in at max weapons range */
-	COMBAT_ZOOM_HALF,   /* Zoomed out, but still tracking the combat zoomed ufo */
+	COMBAT_ZOOM_FULL,	/**< Zoomed in at max weapons range */
+	COMBAT_ZOOM_HALF	/**< Zoomed out, but still tracking the combat zoomed ufo */
 } combatZoomLevel_t;
 
 
@@ -102,18 +105,18 @@ typedef enum {
 typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
 	struct base_s *base;		/**< A link to the base. (if defined by aircraftItemType_t) */
-	struct installation_s *installation;		/**< A link to the installation. (if defined by aircraftItemType_t) */
+	struct installation_s *installation;	/**< A link to the installation. (if defined by aircraftItemType_t) */
 	struct aircraft_s *aircraftTemplate;	/**< A link to the aircraft template (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
 
-	const objDef_t *item;				/**< Item that is currently in the slot. NULL if empty. */
-	const objDef_t *ammo;				/**< Ammo that is currently in the slot. NULL if empty. */
+	const objDef_t *item;		/**< Item that is currently in the slot. NULL if empty. */
+	const objDef_t *ammo;		/**< Ammo that is currently in the slot. NULL if empty. */
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */
 	int installationTime;		/**< The time (in hours) left before the item is finished to be installed or removed in/from slot
 								  *	This is > 0 if the item is being installed, < 0 if the item is being removed, 0 if the item is in place */
-	const objDef_t *nextItem;			/**< Next item to install when the current item in slot will be removed
+	const objDef_t *nextItem;	/**< Next item to install when the current item in slot will be removed
 								  *	(Should be used only if installationTime is different of 0 */
 	itemPos_t pos;				/**< Position of the slot on the aircraft */
 } aircraftSlot_t;
@@ -153,26 +156,25 @@ typedef struct aircraft_s {
 	struct aircraft_s *tpl;	/**< Self-link in aircraft_sample list (i.e. templates). */
 	char *id;			/**< Internal id from script file. */
 	char *name;			/**< Translateable name. */
-	char *shortname;		/**< Translateable shortname (being used in small popups). */
-	char *image;			/**< Image on geoscape. */
+	char *shortname;	/**< Translateable shortname (being used in small popups). */
+	char *image;		/**< Image on geoscape. */
 	char *model;
-	aircraftType_t type;		/**< Type of aircraft, see aircraftType_t. */
-	ufoType_t ufotype;		/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
+	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
+	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
 	int status;			/**< Status of this aircraft, see aircraftStatus_t. */
 
 	int price;			/**< Price of this aircraft type. */
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
 	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? @note Limited to MAX_ACTIVETEAM */
-	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/** @todo rename me to size. */
+	int size;			/**< Size of the aircraft used in capacity calculations. */
 	vec3_t pos;			/**< Current position on the geoscape. */
-	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
+	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	int point;
 	int time;
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
-						is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
+						 * is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
 
-	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
 	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
 
@@ -185,25 +187,25 @@ typedef struct aircraft_s {
 	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft  (empty or not) */
 
 	mapline_t route;
-	struct base_s *homebase;		/**< Pointer to homebase for faster access. */
+	struct base_s *homebase;			/**< Pointer to homebase for faster access. */
 	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
-	int alientypes;				/**< How many types of aliens we collected. */
+	int alientypes;						/**< How many types of aliens we collected. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
-	int itemtypes;				/**< How many types of items we collected. */
+	int itemtypes;						/**< How many types of items we collected. */
 
 	char *building;		/**< id of the building needed as hangar */
 
-	int numUpgrades;
+	int numUpgrades;	/**< @todo Implement or remove */
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
-									The mission the UFO is involved if this is a UFO */
+								 * The mission the UFO is involved if this is a UFO */
 	char *missionID;			/**< if this is a crashsite, we need the string here
 								 * this is needed because we won't find the ufocrash mission
 								 * in the parsed missions in csi.missions until we loaded the campaign */
-	struct base_s *baseTarget;		/**< Target of the aircraft. NULL if the target is an aircraft */
+	struct base_s *baseTarget;	/**< Target of the aircraft. NULL if the target is an aircraft */
 	struct installation_s *installationTarget;		/**< Target of the aircraft. NULL if the target is an aircraft */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
-	radar_t	radar;			/**< Radar to track ufos */
+	radar_t	radar;				/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on */
 
 	technology_t* tech;		/**< link to the aircraft tech */
@@ -212,10 +214,6 @@ typedef struct aircraft_s {
 	qboolean notOnGeoscape;	/**< don't let this aircraft ever appear on geoscape (e.g. ufo_carrier) */
 } aircraft_t;
 
-/*
-@todo for later, this is used quite a lot in the code.
-#define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
-*/
 extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraftTemplates;
 

@@ -44,9 +44,9 @@ static ipos3_t wpMins, wpMaxs;
 
 
 /**
- * @sa NewCheckUnitThread
+ * @sa CheckUnitThread
  */
-static int NewCheckUnit (unsigned int unitnum)
+static int CheckUnit (unsigned int unitnum)
 {
 	int  new_z;
 
@@ -77,22 +77,22 @@ static int NewCheckUnit (unsigned int unitnum)
 }
 
 /**
- * @brief A wrapper for NewCheckUnit that is thread safe.
+ * @brief A wrapper for CheckUnit that is thread safe.
  * @sa DoRouting
  */
-static void NewCheckUnitThread (unsigned int unitnum)
+static void CheckUnitThread (unsigned int unitnum)
 {
 	int basenum = unitnum * PATHFINDING_HEIGHT;
 	int newnum;
 	for (newnum = basenum + PATHFINDING_HEIGHT - 1; newnum >= basenum; newnum--)
-		newnum += NewCheckUnit(newnum);
+		newnum += CheckUnit(newnum);
 }
 
 
 /**
  * @sa DoRouting
  */
-static int NewCheckConnections (unsigned int unitnum)
+static int CheckConnections (unsigned int unitnum)
 {
 	int  new_z;
 
@@ -126,15 +126,15 @@ static int NewCheckConnections (unsigned int unitnum)
 }
 
 /**
- * @brief A wrapper for NewCheckUnit that is thread safe.
+ * @brief A wrapper for CheckConnections that is thread safe.
  * @sa DoRouting
  */
-static void NewCheckConnectionsThread (unsigned int unitnum)
+static void CheckConnectionsThread (unsigned int unitnum)
 {
 	int basenum = unitnum * PATHFINDING_HEIGHT;
 	int newnum;
 	for (newnum = basenum; newnum < basenum + PATHFINDING_HEIGHT; newnum++)
-		newnum += NewCheckConnections(newnum);
+		newnum += CheckConnections(newnum);
 }
 
 
@@ -181,11 +181,11 @@ void DoRouting (void)
 	if (wpMaxs[2] > PATHFINDING_HEIGHT)
 		wpMaxs[2] = PATHFINDING_HEIGHT;
 
-	/* scan area heights with new code*/
-	U2M_ProgressBar(NewCheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, qtrue, "NUNITCHEK");
+	/* scan area heights */
+	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, qtrue, "UNITCHECK");
 
-	/* scan area heights with new code*/
-	U2M_ProgressBar(NewCheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * CORE_DIRECTIONS * ACTOR_MAX_SIZE, qtrue, "NCONNCHEK");
+	/* scan connections */
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * CORE_DIRECTIONS * ACTOR_MAX_SIZE, qtrue, "CONNCHECK");
 
 	/* Output the floor trace file if set */
 	if (config.generateTraceFile) {

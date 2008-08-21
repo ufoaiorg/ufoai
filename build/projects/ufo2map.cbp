@@ -21,8 +21,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="z" />
-					<Add library="libjpeg" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -44,8 +42,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add library="z" />
-					<Add library="libjpeg" />
 				</Linker>
 			</Target>
 			<Target title="linux">
@@ -54,9 +50,11 @@
 				<Option object_output=".objs\ufo2map" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="`sdl-config --cflags`" />
+				</Compiler>
 				<Linker>
-					<Add library="z" />
-					<Add library="jpeg" />
+					<Add option="`sdl-config --libs`" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
@@ -67,14 +65,19 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add directory="\sw\include" />
+					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
 				</Compiler>
 				<Linker>
-					<Add library="z" />
-					<Add library="libjpeg" />
+					<Add option="-framework SDL" />
 					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
+		<Linker>
+			<Add library="SDL" />
+			<Add library="z" />
+			<Add library="libjpeg" />
+		</Linker>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DCOMPILE_MAP" />
@@ -141,6 +144,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\faces.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\levels.c">

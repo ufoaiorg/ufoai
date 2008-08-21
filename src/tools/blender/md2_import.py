@@ -13,7 +13,7 @@ __url__ = ["Bob's site, http://bane.servebeer.com",
      "Support forum, http://scourage.servebeer.com/phpbb/", "blender", "elysiun"]
 __email__ = ["Bob Holcomb, bob_holcomb:hotmail*com", "scripts"]
 __bpydoc__ = """\
-This script imports a Quake 2 file (MD2), textures, 
+This script imports a Quake 2 file (MD2), textures,
 and animations into blender for editing.  Loader is based on MD2 loader from www.gametutorials.com-Thanks DigiBen! and the md3 blender loader by PhaethonH <phaethon@linux.ucla.edu><br>
 
  Additional help from: Shadwolf, Skandal, Rojo, Cambo<br>
@@ -85,7 +85,7 @@ class md2_alias_triangle:
 	lightnormalindex=0
 
 	binary_format="<3BB" #little-endian (<), 3 Unsigned char
-	
+
 	def __init__(self):
 		self.vertices=[0]*3
 		self.lightnormalindex=0
@@ -112,7 +112,7 @@ class md2_face:
 	texture_index=[]
 
 	binary_format="<3h3h" #little-endian (<), 3 short, 3 short
-	
+
 	def __init__(self):
 		self.vertex_index = [ 0, 0, 0 ]
 		self.texture_index = [ 0, 0, 0]
@@ -374,12 +374,12 @@ def load_textures(md2, texture_filename):
 				result=Blender.Draw.PupMenu("Cannot find texture: "+md2.skins[i].name+"-Continue?%t|OK")
 				if(result==1):
 					return -1
-		return mesh_image 
+		return mesh_image
 	else:
 		result=Blender.Draw.PupMenu("There will be no Texutre"+"-Continue?%t|OK")
 		if(result==1):
 			return -1
-	
+
 
 def animate_md2(md2, mesh_obj):
 	######### Animate the verts through keyframe animation
@@ -400,7 +400,7 @@ def animate_md2(md2, mesh_obj):
 		NMesh.PutRaw(mesh, mesh_obj.name)
 		#absolute keys, need to figure out how to get them working around the 100 frame limitation
 		mesh.insertKey(i,"absolute")
-		
+
 		#not really necissary, but I like playing with the frame counter
 		Blender.Set("curframe", i)
 
@@ -460,18 +460,18 @@ def load_md2 (md2_filename, texture_filename):
 		#set the texture that this face uses if it has one
 		if (mesh_image!=-1):
 			face.image=mesh_image
-		
+
 		#add the face
 		mesh.faces.append(face)
 
 	mesh_obj=NMesh.PutRaw(mesh)
 	animate_md2(md2, mesh_obj)
 	DrawProgressBar(0.999,"Loading Animation Data")
-	
+
 	#locate the Object containing the mesh at the cursor location
 	cursor_pos=Blender.Window.GetCursorPos()
 	mesh_obj.setLocation(float(cursor_pos[0]),float(cursor_pos[1]),float(cursor_pos[2]))
-	DrawProgressBar (1.0, "Finished") 
+	DrawProgressBar (1.0, "Finished")
 
 #***********************************************
 # MAIN
@@ -541,7 +541,7 @@ def draw_gui():
 	Button("Load",EVENT_LOAD_MD2 , 10, 10, 80, 18)
  	Button("Exit",EVENT_EXIT , 170, 10, 80, 18)
 
-def event(evt, val):	
+def event(evt, val):
 	if (evt == QKEY and not val):
 		Blender.Draw.Exit()
 

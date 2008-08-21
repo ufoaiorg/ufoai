@@ -112,7 +112,7 @@ static void TR_MakeTracingNode (int nodenum)
 {
 	tnode_t *t;
 	TR_PLANE_TYPE *plane;
-	int i, contentFlags;
+	int i;
 	TR_NODE_TYPE *node;
 
 	t = tnode_p++;
@@ -130,7 +130,7 @@ static void TR_MakeTracingNode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
+			const int contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
 			if ((contentFlags & MASK_IMPASSABLE) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else
@@ -369,16 +369,10 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
-		front = start[0] - tnode->dist;
-		back = stop[0] - tnode->dist;
-		break;
 	case PLANE_Y:
-		front = start[1] - tnode->dist;
-		back = stop[1] - tnode->dist;
-		break;
 	case PLANE_Z:
-		front = start[2] - tnode->dist;
-		back = stop[2] - tnode->dist;
+		front = start[tnode->type] - tnode->dist;
+		back = stop[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
 		r = TR_TestLineDist_r(tnode->children[0], start, stop);
@@ -904,7 +898,6 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	TR_PLANE_TYPE *plane;
 	float t1, t2, offset;
 	float frac, frac2;
-	float idist;
 	int i;
 	vec3_t mid;
 	int side;
@@ -928,7 +921,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	plane = curTile->planes + node->planenum;
 #endif
 
-	if (plane->type < 3) {
+	if (plane->type <= PLANE_Z) {
 		t1 = p1[plane->type] - plane->dist;
 		t2 = p2[plane->type] - plane->dist;
 		offset = trace_extents[plane->type];
@@ -953,12 +946,12 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 
 	/* put the crosspoint DIST_EPSILON pixels on the near side */
 	if (t1 < t2) {
-		idist = 1.0 / (t1 - t2);
+		const float idist = 1.0 / (t1 - t2);
 		side = 1;
 		frac2 = (t1 + offset + DIST_EPSILON) * idist;
 		frac = (t1 - offset + DIST_EPSILON) * idist;
 	} else if (t1 > t2) {
-		idist = 1.0 / (t1 - t2);
+		const float idist = 1.0 / (t1 - t2);
 		side = 0;
 		frac2 = (t1 - offset - DIST_EPSILON) * idist;
 		frac = (t1 + offset + DIST_EPSILON) * idist;

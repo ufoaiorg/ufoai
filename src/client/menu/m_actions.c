@@ -30,6 +30,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 menuNode_t *focusNode;
 
 /**
+ * @brief Executes confunc - just to identify those confuncs in the code - in
+ * this frame.
+ * @param[in] confunc The confunc id that should be executed
+ */
+void MN_ExecuteConfunc (const char *confunc)
+{
+	Cmd_ExecuteString(confunc);
+}
+
+/**
  * @sa MN_ParseAction
  */
 void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
@@ -44,8 +54,10 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 			break;
 		case EA_CMD:
 			/* execute a command */
-			if (action->data)
-				Cbuf_AddText(va("%s\n", (char*)action->data));
+			if (action->data) {
+				const char *cmd = (const char *)action->data;
+				Cbuf_AddText(va("%s\n", cmd));
+			}
 			break;
 		case EA_CALL:
 			/* call another function */

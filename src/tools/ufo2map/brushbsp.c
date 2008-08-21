@@ -32,7 +32,6 @@ static int c_active_brushes;
 
 /**
  * @brief Sets the mins/maxs based on the windings
- * @returns false if the brush doesn't enclose a valid volume
  */
 static void BoundBrush (bspbrush_t *brush)
 {
@@ -285,7 +284,8 @@ bspbrush_t *AllocBrush (int numsides)
 
 	bb = malloc(c);
 	memset(bb, 0, c);
-	c_active_brushes++;
+	if (threadstate.numthreads == 1)
+		c_active_brushes++;
 	return bb;
 }
 
@@ -297,7 +297,8 @@ void FreeBrush (bspbrush_t *brushes)
 		if (brushes->sides[i].winding)
 			FreeWinding(brushes->sides[i].winding);
 	free(brushes);
-	c_active_brushes--;
+	if (threadstate.numthreads == 1)
+		c_active_brushes--;
 }
 
 
@@ -459,7 +460,7 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 	for (b = brushes; b; b = b->next) {
 		/* if the brush is solid and all of its sides are on nodes,
 		 * it eats everything */
-		if (b->original->contentFlags & CONTENTS_SOLID && !b->original->contentFlags & CONTENTS_PASSABLE) {
+		if (b->original->contentFlags & CONTENTS_SOLID && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
 			for (i = 0; i < b->numsides; i++)
 				if (b->sides[i].texinfo != TEXINFO_NODE)
 					break;
@@ -594,7 +595,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				value =  5 * facing - 5 * splits - abs(front - back);
 /*				value = -5 * splits; */
 /*				value = 5 * facing - 5 * splits; */
-				if (mapplanes[pnum].type < 3)
+				if (mapplanes[pnum].type <= PLANE_Z)
 					value += 5;		/* axial is better */
 				value -= epsilonbrush * 1000;	/* avoid! */
 
@@ -617,8 +618,10 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 		/* if we found a good plane, don't bother trying any other passes */
 		if (bestside) {
-			if (pass > 1)
-				c_nonvis++;
+			if (pass > 1) {
+				if (threadstate.numthreads == 1)
+					c_nonvis++;
+			}
 			break;
 		}
 	}
@@ -662,14 +665,14 @@ static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *b[2];
 	int i, j;
 	winding_t *w, *cw[2], *midwinding;
 	plane_t *plane, *plane2;
 	side_t *cs;
-	float d, d_front, d_back;
+	float d_front, d_back;
 
 	*front = *back = NULL;
 	plane = &mapplanes[planenum];
@@ -681,7 +684,7 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 		if (!w)
 			continue;
 		for (j = 0; j < w->numpoints; j++) {
-			d = DotProduct(w->p[j], plane->normal) - plane->dist;
+			const float d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > 0 && d > d_front)
 				d_front = d;
 			if (d < 0 && d < d_back)
@@ -870,7 +873,8 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	int i;
 	bspbrush_t *children[2];
 
-	c_nodes++;
+	if (threadstate.numthreads == 1)
+		c_nodes++;
 
 	/* find the best plane to use as a splitter */
 	bestside = SelectSplitSide(brushes, node);
@@ -931,8 +935,8 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 
 		volume = BrushVolume(b);
 		if (volume < config.microvolume) {
-			Com_Printf("WARNING: entity %i, brush %i: microbrush\n",
-				b->original->entitynum, b->original->brushnum);
+			Com_Printf("\nWARNING: entity %i, brush %i: microbrush, volume %.3g\n",
+				b->original->entitynum, b->original->brushnum, volume);
 		}
 
 		for (i = 0; i < b->numsides; i++) {

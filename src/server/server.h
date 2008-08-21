@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../shared/infostring.h"
 
-extern struct memPool_s *sv_gameSysPool;
+extern struct memPool_s *sv_gameSysPool;	/**< the mempool for the game lib */
 extern struct memPool_s *sv_genericPool;
 
 /*============================================================================= */
@@ -42,9 +42,6 @@ typedef enum {
 	ss_loading,					/**< spawning level edicts */
 	ss_game						/**< actively running */
 } server_state_t;
-
-/** some qc commands are only valid before the server has finished
- * initializing (precache commands, static sounds / objects, etc) */
 
 typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
@@ -86,10 +83,10 @@ typedef struct client_s {
 
 /**
  * a client can leave the server in one of four ways:
- * dropping properly by quiting or disconnecting
- * timing out if no valid messages are received
- * getting kicked off by the server operator
- * a program error, like an overflowed reliable buffer
+ * @li dropping properly by quiting or disconnecting
+ * @li timing out if no valid messages are received
+ * @li getting kicked off by the server operator
+ * @li a program error, like an overflowed reliable buffer
  */
 
 /*============================================================================= */
@@ -101,7 +98,8 @@ typedef struct {
 	struct datagram_socket *netDatagramSocket;
 	int spawncount;				/**< incremented each server start - used to check late spawns */
 	client_t *clients;			/**< [sv_maxclients->value]; */
-	int last_heartbeat;
+	int last_heartbeat;			/**< time where the last heartbeat was send to the master server
+								 * Set to a huge negative value to send immmediately */
 } server_static_t;
 
 /**
@@ -123,7 +121,7 @@ extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
 
 extern cvar_t *sv_mapname;
-extern cvar_t *sv_public;			/**< should heartbeats be sent */
+extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
 
 extern client_t *sv_client;
@@ -187,6 +185,7 @@ int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int a
 /* returns the CONTENTS_* value from the world at the given point. */
 int SV_PointContents(vec3_t p);
 const char *SV_GetFootstepSound(const char *texture);
+float SV_GetBounceFraction(const char *texture);
 trace_t SV_Trace(vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask);
 
 #endif /* SERVER_SERVER_H */

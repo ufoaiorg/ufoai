@@ -30,6 +30,10 @@ static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
 /* created planes for origin offset */
 static int fakeplanes;
 
+static float totalarea;
+
+extern vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
+
 /*
 ===================================================================
 TEXTURE LIGHT VALUES
@@ -165,8 +169,6 @@ static void BaseLightForFace (dBspFace_t *f, vec3_t color)
 
 	VectorScale(texture_reflectivity[f->texinfo], tx->value, color);
 }
-
-static float totalarea;
 
 static void MakePatchForFace (int facenum, winding_t *w)
 {

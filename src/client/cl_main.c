@@ -2225,11 +2225,11 @@ static void CL_CvarCheck (void)
 			return;
 		}
 
-		if (cl_worldlevel->integer >= map_maxlevel - 1)
-			Cvar_SetValue("cl_worldlevel", map_maxlevel - 1);
+		if (cl_worldlevel->integer >= cl.map_maxlevel - 1)
+			Cvar_SetValue("cl_worldlevel", cl.map_maxlevel - 1);
 		else if (cl_worldlevel->integer < 0)
 			Cvar_SetValue("cl_worldlevel", 0);
-		for (i = 0; i < map_maxlevel; i++)
+		for (i = 0; i < cl.map_maxlevel; i++)
 			Cbuf_AddText(va("deselfloor%i\n", i));
 		for (; i < 8; i++)
 			Cbuf_AddText(va("disfloor%i\n", i));
@@ -2271,9 +2271,8 @@ void CL_SetClientState (int state)
 	case ca_uninitialized:
 		Sys_Error("CL_SetClientState: Don't set state ca_uninitialized\n");
 		break;
-	case ca_ptledit:
 	case ca_sequence:
-		cl.refresh_prepped = qtrue;
+		refdef.ready = qtrue;
 		break;
 	case ca_active:
 		cls.waitingForStart = 0;

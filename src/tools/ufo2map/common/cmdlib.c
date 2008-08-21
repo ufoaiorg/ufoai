@@ -75,58 +75,60 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	unz_global_info gi;
 	char filename_inzip[MAX_QPATH];
 
-	len = strlen(packfile);
-
-	if (!Q_strncasecmp(packfile + len - 4, ".pk3", 4) || !Q_strncasecmp(packfile + len - 4, ".zip", 4)) {
-		uf = unzOpen(packfile);
-		err = unzGetGlobalInfo(uf, &gi);
-
-		if (err != UNZ_OK) {
-			Sys_FPrintf(SYS_VRB, "Could not load '%s' into zlib\n", packfile);
-			return NULL;
-		}
-
-		len = 0;
-		unzGoToFirstFile(uf);
-		for (i = 0; i < gi.number_entry; i++) {
-			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
-			if (err != UNZ_OK) {
-				break;
-			}
-			len += strlen(filename_inzip) + 1;
-			unzGoToNextFile(uf);
-		}
-
-		pack = malloc(sizeof(pack_t));
-		strncpy(pack->filename, packfile, sizeof(pack->filename) - 1);
-		pack->handle.z = uf;
-		pack->handle.f = NULL;
-		pack->numfiles = gi.number_entry;
-		unzGoToFirstFile(uf);
-
-		/* Allocate space for array of packfile structures (filename, offset, length) */
-		newfiles = malloc(i * sizeof(packfile_t));
-
-		for (i = 0; i < gi.number_entry; i++) {
-			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
-			if (err != UNZ_OK)
-				break;
-			Q_strlwr(filename_inzip);
-
-			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
-			strncpy(newfiles[i].name, filename_inzip, sizeof(newfiles[i].name) - 1);
-			newfiles[i].filelen = file_info.compressed_size;
-			unzGoToNextFile(uf);
-		}
-		pack->files = newfiles;
-
-		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
-		return pack;
-	} else {
+	char const* const ext = strrchr(packfile, '.');
+	if (!ext || (
+	      Q_strcasecmp(ext, ".pk3") != 0 &&
+	      Q_strcasecmp(ext, ".zip") != 0
+	    )) {
 		/* Unrecognized file type! */
-		Com_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
+		Com_Printf("Pack file type %s unrecognized\n", ext);
 		return NULL;
 	}
+
+	uf = unzOpen(packfile);
+	err = unzGetGlobalInfo(uf, &gi);
+
+	if (err != UNZ_OK) {
+		Sys_FPrintf(SYS_VRB, "Could not load '%s' into zlib\n", packfile);
+		return NULL;
+	}
+
+	len = 0;
+	unzGoToFirstFile(uf);
+	for (i = 0; i < gi.number_entry; i++) {
+		err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+		if (err != UNZ_OK) {
+			break;
+		}
+		len += strlen(filename_inzip) + 1;
+		unzGoToNextFile(uf);
+	}
+
+	pack = malloc(sizeof(pack_t));
+	strncpy(pack->filename, packfile, sizeof(pack->filename) - 1);
+	pack->handle.z = uf;
+	pack->handle.f = NULL;
+	pack->numfiles = gi.number_entry;
+	unzGoToFirstFile(uf);
+
+	/* Allocate space for array of packfile structures (filename, offset, length) */
+	newfiles = malloc(i * sizeof(packfile_t));
+
+	for (i = 0; i < gi.number_entry; i++) {
+		err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+		if (err != UNZ_OK)
+			break;
+		Q_strlwr(filename_inzip);
+
+		unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
+		strncpy(newfiles[i].name, filename_inzip, sizeof(newfiles[i].name) - 1);
+		newfiles[i].filelen = file_info.compressed_size;
+		unzGoToNextFile(uf);
+	}
+	pack->files = newfiles;
+
+	Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
+	return pack;
 }
 
 /**
@@ -383,7 +385,7 @@ void Sys_FPrintf (int flag, const char *format, ...)
 	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
 	va_end(argptr);
 
-	printf(out_buffer);
+	printf("%s", out_buffer);
 }
 
 /**
@@ -398,5 +400,5 @@ void Com_Printf (const char *format, ...)
 	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
 	va_end(argptr);
 
-	printf(out_buffer);
+	printf("%s", out_buffer);
 }

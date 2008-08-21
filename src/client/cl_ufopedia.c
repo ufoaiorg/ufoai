@@ -123,8 +123,7 @@ static void UP_ChangeDisplay (int newDisplay)
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
-		/* confunc */
-		Cbuf_AddText("mn_upfbig\n");
+		MN_ExecuteConfunc("mn_upfbig");
 		currentChapter = NULL;
 		upCurrentTech = NULL;
 		Cvar_Set("mn_upmodel_top", "");
@@ -139,8 +138,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upimage_top", "base/empty");
 		/* no break here */
 	case UFOPEDIA_ARTICLE:
-		/* confunc */
-		Cbuf_AddText("mn_upfsmall\n");
+		MN_ExecuteConfunc("mn_upfsmall");
 		break;
 	}
 	Cvar_SetValue("mn_updisplay", upDisplay);
@@ -216,6 +214,25 @@ static const char* CL_AircraftStatToName (int stat)
 }
 
 /**
+ * @brief Translate a aircraft size int to a translated string
+ * @sa aircraftSize_t
+ */
+static const char* CL_AircraftSizeToName (int aircraftSize)
+{
+	switch (aircraftSize) {
+	case AIRCRAFT_SMALL:
+		return _("Small");
+		break;
+	case AIRCRAFT_LARGE:
+		return _("Large");
+		break;
+	default:
+		return _("Unknown aircraft size");
+		break;
+	}
+}
+
+/**
  * @brief Diplays the tech tree dependencies in the UFOpaedia
  * @sa UP_DrawEntry
  * @todo Add support for "require_AND"
@@ -285,19 +302,24 @@ void UP_ItemDescription (const objDef_t *od)
 	int up_weapon_id = NONE;
 	const menu_t *activeMenu;
 
-	assert(od);
-
 	activeMenu = MN_GetActiveMenu();
 
-	/* select item */
-	Cvar_Set("mn_itemname", od->name);
-	Cvar_Set("mn_item", od->id);
+	/* reset everything */
+	Cvar_Set("mn_itemname", "");
+	Cvar_Set("mn_item", "");
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+	if (!od)	/* If nothing selected return */
+		return;
+
+	/* select item */
+	Cvar_Set("mn_itemname", od->name);
+	Cvar_Set("mn_item", od->id);
 
 #ifdef DEBUG
 	if (!od->tech && ccs.singleplayer) {
@@ -571,6 +593,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 		Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+		Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+		Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 		Cvar_Set("mn_researchedlinkname", "");
 		Cvar_Set("mn_upresearchedlinknametooltip", "");
 		return;
@@ -584,6 +608,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	Cvar_Set("mn_upmodel_top", item->tech->mdl);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
@@ -635,6 +661,15 @@ void UP_AircraftItemDescription (const objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* t)
 {
+	/* Reset all sort of info for normal items */
+	/** @todo Check if this is all needed. Any better way? */
+	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
 
@@ -667,6 +702,7 @@ void UP_AircraftDescription (const technology_t* t)
 					break;
 				}
 			}
+			Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
 			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
 	} else if (RS_Collected_(t)) {
@@ -698,7 +734,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
 
-	/* REset all sort of info for normal items */
+	/* Reset all sort of info for normal items */
 	/** @todo Check if this is all needed. Any better way? */
 	Cvar_Set("mn_item", "");
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
@@ -1173,10 +1209,7 @@ static void UP_Index_f (void)
 			/* Add this tech to the index - it gets dsiplayed. */
 			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
 		}
-		if (t->upNext >= 0)
-			t = t->upNext;
-		else
-			t = NULL;
+		t = t->upNext;
 	}
 }
 
@@ -1249,11 +1282,10 @@ static void UP_Next_f (void)
 	t = upCurrentTech;
 
 	/* get next entry */
-	if (t && (t->upNext >= 0)) {
+	if (t && t->upNext) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
 			t = t->upNext;
-			assert(upCurrentTech);
 			if (t == t->upNext)
 				Sys_Error("UP_Next_f: The 'next':%s entry is equal to '%s'.\n", t->upNext->id, t->id);
 		} while (t->upNext && !UP_TechGetsDisplayed(t));
@@ -1310,7 +1342,7 @@ static void UP_Click_f (void)
 		}
 		break;
 	case UFOPEDIA_INDEX:
-		assert(currentChapter >= 0);
+		assert(currentChapter);
 		t = currentChapter->first;
 
 		/* get next entry */
@@ -1322,10 +1354,7 @@ static void UP_Click_f (void)
 				else
 					break;
 			}
-			if (t->upNext >= 0)
-				t = t->upNext;
-			else
-				t = NULL;
+			t = t->upNext;
 		}
 		upCurrentTech = t;
 		if (upCurrentTech)
@@ -1367,12 +1396,12 @@ static void UP_TechTreeClick_f (void)
 	for (i = 0; i <= num; i++) {
 #if 1
 		if (required_AND->links[i].type != RS_LINK_TECH
-		&& required_AND->links[i].type != RS_LINK_TECH_NOT)
+		 && required_AND->links[i].type != RS_LINK_TECH_NOT)
 #else
 		if (required_AND->links[i].type != RS_LINK_TECH
-		&& required_AND->links[i].type != RS_LINK_TECH_NOT
-		&& required_AND->links[i].type != RS_LINK_TECH_BEFORE
-		&& required_AND->links[i].type != RS_LINK_TECH_XOR)
+		 && required_AND->links[i].type != RS_LINK_TECH_NOT
+		 && required_AND->links[i].type != RS_LINK_TECH_BEFORE
+		 && required_AND->links[i].type != RS_LINK_TECH_XOR)
 #endif
 			num++;
 	}
@@ -1694,6 +1723,43 @@ static void UP_OpenMail_f (void)
 }
 
 /**
+ * @brief Marks all mails read in mailclient
+ */
+static void UP_SetAllMailsRead_f (void)
+{
+	const message_t *m = mn.messageStack;
+
+	while (m) {
+		switch (m->type) {
+		case MSG_RESEARCH_PROPOSAL:
+			assert(m->pedia);
+			m->pedia->mail[TECHMAIL_PRE].read = qtrue;
+			break;
+		case MSG_RESEARCH_FINISHED:
+			assert(m->pedia);
+			m->pedia->mail[TECHMAIL_RESEARCHED].read = qtrue;
+			break;
+		case MSG_NEWS:
+			assert(m->pedia);
+			m->pedia->mail[TECHMAIL_PRE].read = qtrue;
+			m->pedia->mail[TECHMAIL_RESEARCHED].read = qtrue;
+			break;
+		case MSG_EVENT:
+			assert(m->eventMail);
+			m->eventMail->read = qtrue;
+			break;
+		default:
+			break;
+		}
+		m = m->next;
+	}
+
+	gd.numUnreadMails = 0;
+	Cvar_Set("mn_upunreadmail", va("%i", gd.numUnreadMails));
+	UP_OpenMail_f();
+}
+
+/**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
  */
@@ -1844,6 +1910,7 @@ void UP_InitStartup (void)
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, "Open the UFOpaedia with the given article");
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
 	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
+	Cmd_AddCommand("mn_mail_readall", UP_SetAllMailsRead_f, "Mark all mails read");
 	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
 	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
 	Cmd_AddCommand("ufopedia_scrollmail", UP_SetMailButtons_f, NULL);

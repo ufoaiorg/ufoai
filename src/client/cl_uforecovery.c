@@ -599,7 +599,7 @@ void UR_UpdateUFOHangarCapForAll (base_t *base)
 		}
 
 		/* Update base capacity. */
-		if (ufocraft->weight == AIRCRAFT_LARGE)
+		if (ufocraft->size == AIRCRAFT_LARGE)
 			base->capacities[CAP_UFOHANGARS_LARGE].cur += base->storage.num[i];
 		else
 			base->capacities[CAP_UFOHANGARS_SMALL].cur += base->storage.num[i];
@@ -661,7 +661,7 @@ void UR_Prepare (base_t *base)
 	recovery->event = event;
 
 	/* Update base capacity. */
-	if (ufocraft->weight == AIRCRAFT_LARGE) {
+	if (ufocraft->size == AIRCRAFT_LARGE) {
 		/* Large UFOs can only fit in large UFO hangars */
 		if (base->capacities[CAP_UFOHANGARS_LARGE].max > base->capacities[CAP_UFOHANGARS_LARGE].cur)
 			base->capacities[CAP_UFOHANGARS_LARGE].cur++;
@@ -734,7 +734,7 @@ qboolean UR_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraft
 {
 	assert(base && ufocraft);
 
-	if (ufocraft->weight == AIRCRAFT_LARGE) {
+	if (ufocraft->size == AIRCRAFT_LARGE) {
 		/* Large UFOs can only fit large UFO hangars */
 		if (!B_GetBuildingStatus(base, B_UFO_HANGAR))
 			return qfalse;

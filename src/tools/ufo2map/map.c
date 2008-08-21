@@ -54,11 +54,11 @@ PLANE FINDING
 /**
  * @brief Set the type of the plane according to it's normal vector
  */
-static inline int PlaneTypeForNormal (vec3_t normal)
+static inline int PlaneTypeForNormal (const vec3_t normal)
 {
 	vec_t ax, ay, az;
 
-	/* NOTE: should these have an epsilon around 1.0?		 */
+	/* NOTE: should these have an epsilon around 1.0? */
 	if (normal[0] == 1.0 || normal[0] == -1.0)
 		return PLANE_X;
 	if (normal[1] == 1.0 || normal[1] == -1.0)
@@ -77,7 +77,7 @@ static inline int PlaneTypeForNormal (vec3_t normal)
 	return PLANE_ANYZ;
 }
 
-static inline qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
+static inline qboolean PlaneEqual (const plane_t *p, const vec3_t normal, const vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
 	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
@@ -236,7 +236,7 @@ static int BrushContents (mapbrush_t *b)
 	/* if any side is translucent, mark the contents
 	 * and change solid to window */
 	if (trans & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST)) {
-		contentFlags |= CONTENTS_TRANSLUCENT; /** @todo Don't do this in fix mode - this is only for ufo2map */
+		contentFlags |= CONTENTS_TRANSLUCENT;
 		if (contentFlags & CONTENTS_SOLID) {
 			contentFlags &= ~CONTENTS_SOLID;
 			contentFlags |= CONTENTS_WINDOW;
@@ -587,7 +587,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	int planenum;
 	brush_texture_t td;
 	vec3_t planepts[3];
-	int notInformedMixedFace = 1;
 	const int checkOrFix = config.performMapCheck || config.fixMap ;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
@@ -729,6 +728,10 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			&td, vec3_origin, b->isTerrain);
 		side->brush = b;
 
+		/* if in check or fix mode, let them choose to do this, and the call is made elsewhere */
+		if (!checkOrFix)
+			SetImpliedFlags(side, &td, b);
+
 		/* save the td off in case there is an origin brush and we
 		 * have to recalculate the texinfo */
 		side_brushtextures[nummapbrushsides] = td;
@@ -744,17 +747,10 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	for (m = 0; m < b->numsides; m++)
 		b->contentFlags |= b->original_sides[m].contentFlags;
 
-	/* set the contentflags on all faces to avoid problems in check/fix code */
-	for (m = 0; m < b->numsides; m++) {
-		/* only tell them once per brush */
-		if (notInformedMixedFace && checkOrFix && b->original_sides[m].contentFlags != b->contentFlags) {
-			Com_Printf("* Brush %i (entity %i): mixed face contents setting ", b->brushnum, b->entitynum);
-			DisplayContentFlags(b->contentFlags & ~b->original_sides[m].contentFlags);
-			Com_Printf("\n");
-			notInformedMixedFace = 0;
-		}
-		b->original_sides[m].contentFlags |= b->contentFlags ;
-	}
+	/* set DETAIL, TRANSLUCENT contentflags on all faces, if they have been set on any.
+	 * called separately, if in check/fix mode*/
+	if (!checkOrFix)
+		CheckPropagateParserContentFlags(b);
 
 	/* allow detail brushes to be removed  */
 	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
@@ -869,7 +865,7 @@ static void AdjustBrushesForOrigin (const entity_t *ent)
  */
 static inline qboolean IsInlineModelEntity (const char *entName)
 {
-	qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
+	const qboolean inlineModelEntity = (!strcmp("func_breakable", entName)
 			|| !strcmp("func_door", entName)
 			|| !strcmp("func_rotating", entName));
 	return inlineModelEntity;
@@ -900,6 +896,7 @@ static qboolean ParseMapEntity (const char *filename)
 	const char *entName;
 	int startbrush, startsides;
 	static int worldspawnCount = 0;
+	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
 	if (!GetToken(qtrue))
 		return qfalse;
@@ -946,9 +943,9 @@ static qboolean ParseMapEntity (const char *filename)
 		mapent->numbrushes = 0;
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
-		if (mapent->numbrushes == 0) {
+		if (mapent->numbrushes == 0 && notCheckOrFix) {
 			num_entities--;
-			Com_Printf("Warning: %s has no brushes assigned\n", entName);
+			Com_Printf("Warning: %s has no brushes assigned (entnum: %i)\n", entName, num_entities + 1);
 		}
 	} else if (!strcmp("worldspawn", entName)) {
 		worldspawnCount++;

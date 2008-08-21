@@ -137,10 +137,16 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	}
 	projectile->time = 0;
 	projectile->angle = 0.0f;
-	projectile->bullets = qfalse;
 
 	if (weaponSlot->item->craftitem.bullets)
 		projectile->bullets = qtrue;
+	else
+		projectile->bullets = qfalse;
+
+	if (weaponSlot->item->craftitem.laser)
+		projectile->laser = qtrue;
+	else
+		projectile->laser = qfalse;
 
 	weaponSlot->ammoLeft -= 1;
 
@@ -512,15 +518,15 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *pr
 	}
 
 	/* projectile reaches its target */
-	if (distance < movement) {
+	if (distance < movement)
 		return qtrue;
-	}
+
+	assert(projectile->aircraftItem);
 
 	/* check if the projectile went farther than it's range */
 	distance = (float) projectile->time * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
-	if (distance > projectile->aircraftItem->craftitem.stats[AIR_STATS_WRANGE]) {
+	if (distance > projectile->aircraftItem->craftitem.stats[AIR_STATS_WRANGE])
 		return qtrue;
-	}
 
 	return qfalse;
 }

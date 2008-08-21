@@ -306,207 +306,6 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, char type)
 	return a;
 }
 
-/*==============================================================================
-PARTICLE EDITOR
-==============================================================================*/
-
-static ptlDef_t *activeParticle = NULL;
-static char ptledit_ptlName[MAX_VAR];
-static ptl_t* ptledit_ptl = NULL;
-static cvar_t* ptledit_loop;
-
-/** @brief Menu nodes that should be updated */
-static struct ptleditMenu_s {
-	menuNode_t* ptlName;
-	menuNode_t* renderZone;
-} ptleditMenu;
-
-/**
- * @brief Set the camera values for the particle editor
- * @sa CL_SequenceRender
- */
-static void PE_SetCamera (void)
-{
-	if (!viddef.width || !viddef.height)
-		return;
-
-	/* set camera */
-	VectorClear(cl.cam.reforg);
-	cl.cam.angles[0] = 20;
-
-	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-	VectorMA(cl.cam.reforg, -100, cl.cam.axis[0], cl.cam.camorg);
-	cl.cam.zoom = MIN_ZOOM;
-
-	/* fudge to get isometric and perspective modes looking similar */
-	if (cl_isometric->integer)
-		cl.cam.zoom /= 1.35;
-
-	V_CalcFovX();
-}
-
-void PE_RenderParticles (void)
-{
-	PE_SetCamera();
-}
-
-/**
- * @brief Updates menu nodes with current particle values
- */
-static void PE_UpdateMenu (ptlDef_t* p)
-{
-	const char *type, *name, *text;
-	static char ptlList[1024];
-
-	FS_BuildFileList("ufos/*.ufo");
-	FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
-
-	memset(ptlList, 0, sizeof(ptlList));
-	memset(ptledit_ptlName, 0, sizeof(ptledit_ptlName));
-
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
-		if (!Q_strncmp(type, "particle", 8))
-			Q_strcat(ptlList, va("%s\n", name), sizeof(ptlList));
-
-	if (p)
-		Q_strncpyz(ptledit_ptlName, p->name, sizeof(ptledit_ptlName));
-
-	/* link them */
-	ptleditMenu.ptlName->data[0] = ptledit_ptlName;
-	mn.menuText[TEXT_LIST] = ptlList;
-}
-
-
-static void PE_LoadParticle_f (void)
-{
-	int i;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <particleid>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (ptledit_ptl)
-		CL_ParticleFree(ptledit_ptl);
-	ptledit_ptl = NULL;
-
-	/* free any active particle (some don't have a kill function) */
-	for (i = 0; i < r_numParticles; i++)
-		r_particles[i].inuse = qfalse;
-	r_numParticles = 0;
-
-	activeParticle = NULL;
-	for (i = 0; i < numPtlDefs; i++)
-		if (!Q_strncmp(ptlDef[i].name, Cmd_Argv(1), sizeof(ptlDef[i].name)))
-			activeParticle = &ptlDef[i];
-
-	if (activeParticle) {
-		PE_UpdateMenu(activeParticle);
-		ptledit_ptl = CL_ParticleSpawn(activeParticle->name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
-	} else
-		PE_UpdateMenu(NULL);
-}
-
-/**
- * @brief Event function that will be called every frame
- */
-static void PE_Frame_f (void)
-{
-	if (ptledit_ptl) {
-		if (ptledit_ptl->inuse) {
-			CL_ParticleRun2(ptledit_ptl);
-			PE_UpdateMenu(activeParticle);
-		} else {
-			/* let main particles respawn if the ptledit_loop cvar is set */
-			if (ptledit_loop->integer && !ptledit_ptl->parent) {
-				ptledit_ptl = CL_ParticleSpawn(activeParticle->name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
-			} else {
-				if (ptledit_ptl->parent)
-					Com_Printf("particle '%s' - lifetime exceeded\n", activeParticle->name);
-				PE_UpdateMenu(NULL);
-				ptledit_ptl = NULL;
-			}
-		}
-	}
-}
-
-static void PE_ListClick_f (void)
-{
-	int num, i;
-
-	if (Cmd_Argc() < 2)
-		return;
-
-	/* which particle? */
-	num = atoi(Cmd_Argv(1));
-
-	if (num < 0 || num >= numPtlDefs)
-		return;
-
-	for (i = 0; i <= num; i++) {
-		/* pre defined internal particles */
-		if (*ptlDef[i].name == '*')
-			num++;
-		if (num >= numPtlDefs)
-			return;
-	}
-	Cmd_ExecuteString(va("ptledit_load %s", ptlDef[num].name));
-}
-
-/**
- * @brief particle editor commands - use particle_editor_open to activate them
- * and particle_editor_close to remove them again
- */
-static const cmdList_t ptl_edit[] = {
-	{"ptledit_frame", PE_Frame_f, "Renders the particle editor menu frame"},
-	{"ptledit_load", PE_LoadParticle_f, "Loads the particle from buffer"},
-	{"ptledit_list_click", PE_ListClick_f, "Click callback for particle list"},
-
-	{NULL, NULL, NULL}
-};
-
-/**
- * @brief This will open up the particle editor
- */
-static void CL_ParticleEditor_f (void)
-{
-	const cmdList_t *commands;
-
-	if (!Q_strncmp(Cmd_Argv(0), "particle_editor_open", MAX_VAR)) {
-		for (commands = ptl_edit; commands->name; commands++)
-			Cmd_AddCommand(commands->name, commands->function, commands->description);
-		MN_PushMenu("particle_editor");
-
-		/* now init the menu nodes */
-		ptleditMenu.ptlName = MN_GetNodeFromCurrentMenu("ptledit_name");
-		if (!ptleditMenu.ptlName)
-			Sys_Error("Could not find the menu node ptledit_name in particle_editor menu\n");
-		ptleditMenu.ptlName->data[0] = _("No particle loaded");
-
-		ptleditMenu.renderZone = MN_GetNodeFromCurrentMenu("render");
-		if (!ptleditMenu.renderZone)
-			Sys_Error("Could not find the menu node render in particle_editor menu\n");
-
-		/* If running a local server, kill it */
-		SV_Shutdown("Server quit", qfalse);
-		/* if still connected - disconnect */
-		CL_Disconnect();
-
-		/* init sequence state */
-		CL_SetClientState(ca_ptledit);
-
-		PE_UpdateMenu(NULL);
-	} else {
-		MN_PopMenu(qfalse);
-		for (commands = ptl_edit; commands->name; commands++)
-			Cmd_RemoveCommand(commands->name);
-		CL_ClearState();
-	}
-
-	ptledit_loop = Cvar_Get("ptledit_loop", "1", 0, "Should particles automatically respawn in editor mode");
-}
-
 /**
  * @sa CL_InitLocal
  */
@@ -518,9 +317,6 @@ void PTL_InitStartup (void)
 
 	r_numParticlesArt = 0;
 	pcmdPos = 0;
-
-	Cmd_AddCommand("particle_editor_open", CL_ParticleEditor_f, "Open the particle editor");
-	Cmd_AddCommand("particle_editor_close", CL_ParticleEditor_f, "Open the particle editor");
 }
 
 
@@ -1022,10 +818,6 @@ void CL_ParticleCheckRounds (void)
  */
 static void CL_ParticleRun2 (ptl_t *p)
 {
-	qboolean onlyAlpha;
-	trace_t tr;
-	int z, oldLevel;
-
 	/* advance time */
 	p->dt = cls.frametime;
 	p->t = (cl.time - p->startTime) * 0.001f;
@@ -1079,7 +871,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* fading */
 	if (p->thinkFade || p->frameFade) {
-		onlyAlpha = (p->blend == BLEND_BLEND);
+		const qboolean onlyAlpha = (p->blend == BLEND_BLEND);
 		if (!onlyAlpha) {
 			Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 		} else
@@ -1093,7 +885,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	/* this is useful for particles like weather effects that are on top of
 	 * some other brushes in higher level but should be visible in lower ones */
 	if (p->autohide) {
-		z = (int)p->s[2] / UNIT_HEIGHT;
+		const int z = (int)p->s[2] / UNIT_HEIGHT;
 		if (z > cl_worldlevel->integer) {
 			p->invis = qtrue;
 			return;
@@ -1105,8 +897,11 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* basic 'physics' for particles */
 	if (p->physics) {
-		oldLevel = cl_worldlevel->integer;
-		cl_worldlevel->integer = map_maxlevel - 1;
+		trace_t tr;
+		const int oldLevel = cl_worldlevel->integer;
+
+		/* we have to update the worldlevel to let the trace work */
+		cl_worldlevel->integer = cl.map_maxlevel - 1;
 		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
 		cl_worldlevel->integer = oldLevel;
 

@@ -35,22 +35,23 @@ MD3 ALIAS MODELS
  * @brief Load MD3 models from file.
  * @note Some Vic code here not fully used
  */
-void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
+void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 {
-	int					version, i, j, l;
-	dmd3_t				*md3;
-	dmd3frame_t			*pinframe;
-	dmd3tag_t			*pintag;
-	dmd3mesh_t			*pinmesh;
-	dmd3skin_t			*pinskin;
-	dmd3coord_t			*pincoord;
-	dmd3vertex_t		*pinvert;
-	int32_t				*pinindex, *poutindex;
-	mAliasVertex_t		*poutvert;
-	mAliasMesh_t		*poutmesh;
-	mAliasTag_t			*pouttag;
-	mAliasFrame_t		*poutframe;
-	float				lat, lng;
+	int version, i, j, l;
+	const dmd3_t *md3;
+	const dmd3frame_t *pinframe;
+	const dmd3tag_t *pintag;
+	const dmd3mesh_t *pinmesh;
+	const dmd3skin_t *pinskin;
+	const dmd3coord_t *pincoord;
+	const dmd3vertex_t *pinvert;
+	const int32_t *pinindex;
+	int32_t *poutindex;
+	mAliasVertex_t *poutvert;
+	mAliasMesh_t *poutmesh;
+	mAliasTag_t *pouttag;
+	mAliasFrame_t *poutframe;
+	float lat, lng;
 
 	md3 = (dmd3_t *)buffer;
 	version = LittleLong(md3->version);
@@ -82,7 +83,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		Com_Error(ERR_DROP, "model %s has too many meshes", mod->name);
 
 	/* load the frames */
-	pinframe = (dmd3frame_t *)((byte *)md3 + LittleLong(md3->ofs_frames));
+	pinframe = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
 	poutframe = mod->alias.frames = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
 
 	mod->radius = 0;
@@ -103,7 +104,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 	/* load the tags */
 	if (mod->alias.num_tags) {
-		pintag = (dmd3tag_t *)((byte *)md3 + LittleLong(md3->ofs_tags));
+		pintag = (const dmd3tag_t *)((const byte *)md3 + LittleLong(md3->ofs_tags));
 		pouttag = mod->alias.tags = Mem_PoolAlloc(sizeof(mAliasTag_t) * mod->alias.num_frames * mod->alias.num_tags, vid_modelPool, 0);
 
 		for (i = 0; i < mod->alias.num_frames; i++) {
@@ -124,7 +125,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	}
 
 	/* load the meshes */
-	pinmesh = (dmd3mesh_t *)((byte *)md3 + LittleLong(md3->ofs_meshes));
+	pinmesh = (const dmd3mesh_t *)((const byte *)md3 + LittleLong(md3->ofs_meshes));
 	poutmesh = mod->alias.meshes = Mem_PoolAlloc(sizeof(mAliasMesh_t) * mod->alias.num_meshes, vid_modelPool, 0);
 
 	for (i = 0; i < mod->alias.num_meshes; i++, poutmesh++) {
@@ -155,7 +156,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 			Com_Error(ERR_DROP, "mesh %i in model %s has too many vertices", i, mod->name);
 
 		/* register all skins */
-		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
+		pinskin = (const dmd3skin_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
 		poutmesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * poutmesh->num_skins, vid_modelPool, 0);
 
 		for (j = 0; j < mod->alias.meshes[i].num_skins; j++) {
@@ -165,7 +166,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 
 		/* load the indexes */
-		pinindex = (int32_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
+		pinindex = (const int32_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
 		poutindex = poutmesh->indexes = Mem_PoolAlloc(sizeof(int32_t) * poutmesh->num_tris * 3, vid_modelPool, 0);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
@@ -175,7 +176,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 
 		/* load the texture coordinates */
-		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
+		pincoord = (const dmd3coord_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
 		poutmesh->stcoords = Mem_PoolAlloc(sizeof(mAliasCoord_t) * poutmesh->num_verts, vid_modelPool, 0);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++) {
@@ -184,7 +185,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 
 		/* load the vertexes and normals */
-		pinvert = (dmd3vertex_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_verts));
+		pinvert = (const dmd3vertex_t *)((const byte *)pinmesh + LittleLong(pinmesh->ofs_verts));
 		poutvert = poutmesh->vertexes = Mem_PoolAlloc(mod->alias.num_frames * poutmesh->num_verts * sizeof(mAliasVertex_t), vid_modelPool, 0);
 
 		for (l = 0; l < mod->alias.num_frames; l++) {
@@ -196,14 +197,14 @@ void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 				lat = (pinvert->norm >> 8) & 0xff;
 				lng = (pinvert->norm & 0xff);
 
-				lat *= M_PI / 128;
-				lng *= M_PI / 128;
+				lat *= M_PI / 128.0f;
+				lng *= M_PI / 128.0f;
 
 				poutvert->normal[0] = cos(lat) * sin(lng);
 				poutvert->normal[1] = sin(lat) * sin(lng);
 				poutvert->normal[2] = cos(lng);
 			}
 		}
-		pinmesh = (dmd3mesh_t *)((byte *)pinmesh + LittleLong(pinmesh->meshsize));
+		pinmesh = (const dmd3mesh_t *)((const byte *)pinmesh + LittleLong(pinmesh->meshsize));
 	}
 }

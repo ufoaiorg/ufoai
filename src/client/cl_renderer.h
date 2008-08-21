@@ -158,6 +158,8 @@ typedef struct ptl_s {
 } ptl_t;
 
 typedef struct {
+	qboolean ready;	/**< false if on new level or vid restart */
+
 	int x, y, width, height;	/**< in virtual screen coordinates */
 	float fov_x, fov_y;
 	float vieworg[3];
@@ -171,6 +173,22 @@ typedef struct {
 } refdef_t;
 
 extern refdef_t refdef;
+
+/* threading state */
+typedef enum {
+	THREAD_DEAD,
+	THREAD_IDLE,
+	THREAD_CLIENT,
+	THREAD_BSP,
+	THREAD_RENDERER
+} threadstate_t;
+
+typedef struct renderer_threadstate_s {
+	SDL_Thread *thread;
+	threadstate_t state;
+} renderer_threadstate_t;
+
+extern renderer_threadstate_t r_threadstate;
 
 struct model_s *R_RegisterModelShort(const char *name);
 struct image_s *R_RegisterPic(const char *name);

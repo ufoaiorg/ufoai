@@ -143,7 +143,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
 	} else if (list) {
-		Q_strncpyz(textCopy, (char*)list->data, sizeof(textCopy));
+		Q_strncpyz(textCopy, (const char*)list->data, sizeof(textCopy));
 	} else
 		Sys_Error("MN_DrawTextNode: Called without text or linkedList pointer");
 	cur = textCopy;
@@ -154,7 +154,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 	/* Hover darkening effect for selected text lines. */
 	VectorScale(node->selectedColor, 0.8, colorSelectedHover);
-	colorSelectedHover[3] =  node->selectedColor[3];
+	colorSelectedHover[3] = node->selectedColor[3];
 
 	/* scrollbar space */
 	if (node->scrollbar) {
@@ -266,7 +266,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		if (!cur && list) {
 			list = list->next;
 			if (list) {
-				Q_strncpyz(textCopy, (char*)list->data, sizeof(textCopy));
+				Q_strncpyz(textCopy, (const char*)list->data, sizeof(textCopy));
 				cur = textCopy;
 			}
 		}

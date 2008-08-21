@@ -112,7 +112,7 @@ static void MN_CheckboxClick (menuNode_t * node)
 	if (Q_strncmp(node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
 		return;
 
-	cvarName = &((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+	cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
 	value = Cvar_VariableInteger(cvarName) ^ 1;
 	MN_SetCvar(cvarName, NULL, value);
 }
@@ -144,7 +144,7 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+	if (Q_strncmp((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
 		return;
 
 	/* only execute the click stuff if the selectbox is active */
@@ -154,7 +154,7 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 			clickedAtOption--;
 		}
 		if (selectBoxOption) {
-			const char *cvarName = &((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+			const char *cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
 			MN_SetCvar(cvarName, selectBoxOption->value, 0);
 			if (*selectBoxOption->action) {
 #ifdef DEBUG
@@ -220,7 +220,7 @@ void MN_TextClick (menuNode_t * node, int mouseOver)
 		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
 	else if (node->click && node->click->type == EA_CMD) {
 		assert(node->click->data);
-		Cbuf_AddText(va("%s %i\n", (char*)node->click->data, mouseOver - 1));
+		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, mouseOver - 1));
 	}
 }
 
@@ -238,25 +238,82 @@ static void MN_TextRightClick (menuNode_t * node, int mouseOver)
 }
 
 /**
- * @brief Right click on the basemap
+ * @brief Left click on the basemap
+ * @sa MN_BaseMapRightClick
+ * @param[in] node The menu node definition for the base map
+ * @param[in,out] base The base we are just viewing (and clicking)
+ * @param[in] x The x screen coordinate
+ * @param[in] y The y screen coordinate
  */
-static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
+static void MN_BaseMapClick (const menuNode_t *node, base_t *base, int x, int y)
 {
 	int row, col;
-	building_t	*entry;
 
-	assert(baseCurrent);
+	assert(base);
+
+	if (gd.baseAction == BA_NEWBUILDING) {
+		assert(base->buildingCurrent);
+		for (row = 0; row < BASE_SIZE; row++)
+			for (col = 0; col < BASE_SIZE; col++) {
+				if (x >= base->map[row][col].posX
+				 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE
+				 && y >= base->map[row][col].posY
+				 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+					/* we're on the tile the player clicked */
+					if (!base->map[row][col].building && !base->map[row][col].blocked) {
+						if (!base->buildingCurrent->needs
+						 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
+						 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
+						/* Set position for a new building */
+						B_SetBuildingByClick(base, base->buildingCurrent, row, col);
+					}
+					return;
+				}
+			}
+	}
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (baseCurrent->map[row][col].building && x >= baseCurrent->map[row][col].posX
-				&& x < baseCurrent->map[row][col].posX + node->size[0] / BASE_SIZE && y >= baseCurrent->map[row][col].posY
-				&& y < baseCurrent->map[row][col].posY + node->size[1] / BASE_SIZE) {
-				assert(!baseCurrent->map[row][col].blocked);
-				entry = baseCurrent->map[row][col].building;
+			if (base->map[row][col].building && x >= base->map[row][col].posX
+			 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
+			 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+				const building_t *entry = base->map[row][col].building;
 				if (!entry)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
-				B_MarkBuildingDestroy(baseCurrent, entry);
+
+				assert(!base->map[row][col].blocked);
+
+				B_BuildingOpenAfterClick(base, entry);
+				gd.baseAction = BA_NONE;
+				return;
+			}
+}
+
+/**
+ * @brief Right click on the basemap
+ * @sa MN_BaseMapClick
+ * @param[in] node The menu node definition for the base map
+ * @param[in,out] base The base we are just viewing (and clicking)
+ * @param[in] x The x screen coordinate
+ * @param[in] y The y screen coordinate
+ */
+static void MN_BaseMapRightClick (const menuNode_t *node, base_t *base, int x, int y)
+{
+	int row, col;
+
+	assert(base);
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (base->map[row][col].building && x >= base->map[row][col].posX
+			 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
+			 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+				building_t *entry = base->map[row][col].building;
+				if (!entry)
+					Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);
+
+				assert(!base->map[row][col].blocked);
+				B_MarkBuildingDestroy(base, entry);
 				return;
 			}
 }
@@ -316,7 +373,6 @@ void MN_Click (int x, int y)
 			} else {
 				mouseOver = MN_CheckNodeZone(node, x, y);
 			}
-
 
 			if (!mouseOver)
 				continue;
@@ -428,7 +484,7 @@ void MN_RightClick (int x, int y)
 				MN_Drag(node, baseCurrent, x, y, qtrue);
 				break;
 			case MN_BASEMAP:
-				MN_BaseMapRightClick(node, x, y);
+				MN_BaseMapRightClick(node, baseCurrent, x, y);
 				break;
 			case MN_MAP:
 				if (!gd.combatZoomOn || !gd.combatZoomedUfo) {

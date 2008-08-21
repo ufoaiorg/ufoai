@@ -948,6 +948,11 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 		 * For this reason we start this loop from the back of the empl-list. toward 0. */
 		for (i = gd.numEmployees[type] - 1; gd.numEmployees[type] >= 0; i--) {
 			employee_t *employee = &gd.employees[type][i];
+
+			/* check if the employee is hired on this base */
+			if (employee->baseHired != base)
+				continue;
+
 			E_DeleteEmployee(employee, type);
 			if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
 				return;
@@ -1242,8 +1247,9 @@ employee_t* E_GetEmployeeByMenuIndex (int num)
  */
 static void E_EmployeeDelete_f (void)
 {
-	/* num - menu index (line in text), button - number of button */
-	int num, button;
+	/* num - menu index (line in text) */
+	int num;
+	const int scroll = employeeListNode->textScroll;
 	employee_t* employee;
 
 	if (!baseCurrent)
@@ -1256,7 +1262,7 @@ static void E_EmployeeDelete_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	button = num - employeeListNode->textScroll;
+	num += employeeListNode->textScroll;
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -1271,7 +1277,8 @@ static void E_EmployeeDelete_f (void)
 		}
 	}
 	E_DeleteEmployee(employee, employee->type);
-	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
+	MN_ExecuteConfunc(va("employee_init %i\n", employeeCategory));
+	employeeListNode->textScroll = scroll;
 }
 
 /**

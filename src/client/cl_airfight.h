@@ -64,6 +64,7 @@ typedef struct aircraftProjectile_s {
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
 	qboolean bullets;		/**< projectile has active bullets on geoscape */
+	qboolean laser;			/**< projectile has an active laser on geoscape */
 } aircraftProjectile_t;
 
 void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);

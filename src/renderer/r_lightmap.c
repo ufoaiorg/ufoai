@@ -116,7 +116,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 
 	size = smax * tmax;
-	stride -= (smax << 2);
+	stride -= (smax * 4);
 
 	for (i = 0; i < tmax; i++, dest += stride) {
 		for (j = 0; j < smax; j++) {
@@ -139,7 +139,6 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
 static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 {
 	int smax, tmax;
-	int r, g, b, max;
 	unsigned int i, j, size;
 	byte *lightmap, *lm, *l;
 	float *bl;
@@ -161,7 +160,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	}
 
 	/* put into texture format */
-	stride -= (smax << 2);
+	stride -= (smax * 4);
 	bl = r_lightmaps.fbuffer;
 
 	/* first into an rgba linear block for softening */
@@ -170,9 +169,10 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 
 	for (i = 0; i < tmax; i++) {
 		for (j = 0; j < smax; j++) {
-			r = Q_ftol(bl[0]);
-			g = Q_ftol(bl[1]);
-			b = Q_ftol(bl[2]);
+			int r = Q_ftol(bl[0]);
+			int g = Q_ftol(bl[1]);
+			int b = Q_ftol(bl[2]);
+			int max;
 
 			/* catch negative lights */
 			if (r < 0)
@@ -303,8 +303,10 @@ lightmap_sample_t r_lightmap_sample;
 
 /**
  * @brief for resolving static lighting for mesh ents
+ * @todo This is not yet working because we are using some special nodes for
+ * pathfinding @sa BuildNodeChildren - and these nodes don't have a plane assigned
  */
-static qboolean R_LightPoint_ (model_t *mapTile, mBspNode_t *node, vec3_t start, vec3_t end)
+static qboolean R_LightPoint_ (const model_t *mapTile, const mBspNode_t *node, vec3_t start, vec3_t end)
 {
 	float front, back;
 	int i, side, sample;
@@ -315,10 +317,11 @@ static qboolean R_LightPoint_ (model_t *mapTile, mBspNode_t *node, vec3_t start,
 
 begin:
 
+	/* special pathfinding node */
 	if (!node->plane)
 		return qfalse;
 
-	if (node->contents != NODE_NO_LEAF)  /* didn't hit anything */
+	if (node->contents != NODE_NO_LEAF) /* didn't hit anything */
 		return qfalse;
 
 	VectorCopy(end, mid);
@@ -342,7 +345,6 @@ begin:
 		back = front = start[0] * node->plane->normal[0] + start[1] * node->plane->normal[1];
 		front += start[2] * node->plane->normal[2];
 		back += end[2] * node->plane->normal[2];
-
 		side = front < node->plane->dist;
 		if ((back < node->plane->dist) == side) {
 			node = node->children[side];
@@ -357,8 +359,6 @@ begin:
 		return qtrue;
 
 	/* check for impact on this node */
-	VectorCopy(mid, r_lightmap_sample.point);
-
 	surf = mapTile->bsp.surfaces + node->firstsurface;
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
 		if (!(surf->flags & MSURF_LIGHTMAP))
@@ -382,6 +382,8 @@ begin:
 			continue;
 
 		/* we've hit, so find the sample */
+		VectorCopy(mid, r_lightmap_sample.point);
+
 		ds /= surf->lightmap_scale;
 		dt /= surf->lightmap_scale;
 
@@ -389,6 +391,7 @@ begin:
 		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
 
 		/* and normalize it to floating point */
+		/** @todo What about r_modulate? */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
 				surf->lightmap[sample + 1] / 255.0, surf->lightmap[sample + 2] / 255.0);
 
@@ -402,7 +405,7 @@ begin:
 /**
  * @sa R_LightPoint_
  */
-void R_LightPoint (vec3_t p)
+void R_LightPoint (const vec3_t p)
 {
 	lightmap_sample_t lms;
 	vec3_t start, end, dest;
@@ -429,18 +432,50 @@ void R_LightPoint (vec3_t p)
 	VectorCopy(p, start);	/* while start and end are transformed according */
 	VectorCopy(dest, end);	/* to the entity being traced */
 
+	/* check world */
 	for (j = 0; j < r_numMapTiles; j++) {
+		const mBspNode_t *node = r_mapTiles[j]->bsp.nodes;
 		if (!r_mapTiles[j]->bsp.lightdata) {
-			Com_Printf("No light data in maptile %i (%s)\n", j, r_mapTiles[j]->name);
+			Com_Printf("R_LightPoint: No light data in maptile %i (%s)\n", j, r_mapTiles[j]->name);
 			continue;
 		}
-		/* check world */
-		if (!R_LightPoint_(r_mapTiles[j], r_mapTiles[j]->bsp.nodes, start, end))
+
+		if (!node->plane) {
+			Com_Printf("R_LightPoint: Called with pathfinding node\n");
+			continue;
+		}
+
+		if (!R_LightPoint_(r_mapTiles[j], node, start, end))
 			continue;
 
 		if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
 			dist = start[2] - r_lightmap_sample.point[2];
 			lms = r_lightmap_sample;
+		}
+	}
+
+
+
+	/* check inline bsp models */
+	for (j = 0; j < r_numEntities; j++) {
+		const entity_t *ent = R_GetEntity(j);
+		model_t *m = ent->model;
+		mBspModel_t *bsp = &m->bsp;
+
+		if (!m || m->type != mod_bsp_submodel)
+			continue;
+
+		VectorSubtract(p, ent->origin, start);
+		VectorSubtract(dest, ent->origin, end);
+
+		if (!R_LightPoint_(r_mapTiles[bsp->maptile], &r_mapTiles[bsp->maptile]->bsp.nodes[m->bsp.firstnode], start, end))
+			continue;
+
+		if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
+			lms = r_lightmap_sample;
+			dist = d;
+
+			VectorAdd(lms.point, ent->origin, lms.point);
 		}
 	}
 

@@ -175,7 +175,6 @@ menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 
 void MN_InitNodes(void);
 
-#include "m_node_bar.h"
 #include "m_node_image.h"
 #include "m_node_model.h"
 #include "m_node_string.h"

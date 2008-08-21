@@ -136,16 +136,11 @@ void Com_EndRedirect (void)
  * @note Both client and server can use this, and it will output
  * to the apropriate place.
  */
-void Com_Printf (const char *fmt, ...)
+void Com_vPrintf (const char *fmt, va_list ap)
 {
-	va_list argptr;
 	char msg[MAXPRINTMSG];
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
+	Q_vsnprintf(msg, MAXPRINTMSG, fmt, ap);
 
 	/* redirect the output? */
 	if (rd_target) {
@@ -182,28 +177,32 @@ void Com_Printf (const char *fmt, ...)
 	}
 }
 
+void Com_Printf (const char* const fmt, ...)
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+	Com_vPrintf(fmt, ap);
+	va_end(ap);
+}
+
 /**
  * @brief A Com_Printf that only shows up if the "developer" cvar is set
  */
 void Com_DPrintf (int level, const char *fmt, ...)
 {
-	va_list argptr;
-	char msg[MAXPRINTMSG];
-
 	/* don't confuse non-developers with techie stuff... */
 	if (!developer || developer->integer == 0)
 		return;
-
-	if (developer->integer != DEBUG_ALL && developer->integer & ~level)
+	else if (developer->integer != DEBUG_ALL && developer->integer & ~level)
 		return;
+	else {
+		va_list ap;
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
-
-	Com_Printf("%s", msg);
+		va_start(ap, fmt);
+		Com_vPrintf(fmt, ap);
+		va_end(ap);
+	}
 }
 
 /**
@@ -223,8 +222,6 @@ void Com_Error (int code, const char *fmt, ...)
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
 	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
 
 	switch (code) {
 	case ERR_DISCONNECT:
@@ -500,7 +497,95 @@ const char *COM_MacroExpandString (const char *text)
 		return NULL;
 }
 
-/*======================================================== */
+/**
+ * @brief Console completion for command and variables
+ * @sa Key_CompleteCommand
+ * @sa Cmd_CompleteCommand
+ * @sa Cvar_CompleteVariable
+ * @param[in] s The string to complete
+ * @param[out] target The target buffer of the completed command/cvar
+ * @param[in] bufSize the target buffer size - might not be bigger than MAXCMDLINE
+ * @param[out] pos The position in the buffer after command completion
+ * @param[in] offset The input buffer position to put the completed command to
+ */
+qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, int *pos, int offset)
+{
+	const char *cmd = NULL, *cvar = NULL, *use = NULL;
+	int cntCmd = 0, cntCvar = 0, cntParams = 0;
+	char cmdLine[MAXCMDLINE] = "";
+	char cmdBase[MAXCMDLINE] = "";
+	qboolean append = qtrue;
+	char *tmp;
+
+	if (!s[0] || s[0] == ' ')
+		return qfalse;
+
+	else if (s[0] == '\\' || s[0] == '/') {
+		/* maybe we are using the same buffers - and we want to keep the slashes */
+		if (s == target)
+			offset++;
+		s++;
+	}
+
+	assert(bufSize <= MAXCMDLINE);
+	assert(pos);
+
+	/* don't try to search a command or cvar if we are already in the
+	 * parameter stage */
+	if (strstr(s, " ")) {
+		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
+		/* remove the last whitespace */
+		cmdLine[strlen(cmdLine) - 1] = '\0';
+
+		tmp = cmdBase;
+		while (*s != ' ')
+			*tmp++ = *s++;
+		/* get rid of the whitespace */
+		s++;
+		/* terminate the string at whitespace position to seperate the cmd */
+		*tmp = '\0';
+
+		/* now strip away that part that is not yet completed */
+		tmp = strrchr(cmdLine, ' ');
+		if (tmp)
+			*tmp = '\0';
+
+		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
+		if (cntParams == 1) {
+			/* append the found parameter */
+			Q_strcat(cmdLine, " ", sizeof(cmdLine));
+			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
+			append = qfalse;
+			use = cmdLine;
+		} else if (cntParams > 1) {
+			append = qfalse;
+			Com_Printf("\n");
+		} else
+			return qfalse;
+	} else {
+		cntCmd = Cmd_CompleteCommand(s, &cmd);
+		cntCvar = Cvar_CompleteVariable(s, &cvar);
+
+		if (cntCmd == 1 && !cntCvar)
+			use = cmd;
+		else if (!cntCmd && cntCvar == 1)
+			use = cvar;
+		else
+			Com_Printf("\n");
+	}
+
+	if (use) {
+		Q_strncpyz(&target[offset], use, bufSize - offset);
+		*pos = strlen(target);
+		if (append)
+			target[(*pos)++] = ' ';
+		target[*pos] = '\0';
+
+		return qtrue;
+	}
+
+	return qfalse;
+}
 
 void Com_SetGameType (void)
 {
@@ -556,8 +641,8 @@ static void Com_DebugHelp_f (void)
 			" * g_notu\n"
 			" * mn_debugmenu\n"
 			"------------------------------\n"
-			"\n"
-			"Listing commands:\n"
+			"\n");
+	Com_Printf("Listing commands:\n"
 			"------------------------------\n"
 			" * debug_listaircraft\n"
 			" * debug_listalienbase\n"
@@ -575,8 +660,8 @@ static void Com_DebugHelp_f (void)
 			" * debug_listufo\n"
 			" * mem_stats\n"
 			"------------------------------\n"
-			"\n"
-			"Debugging commands:\n"
+			"\n");
+	Com_Printf("Debugging commands:\n"
 			"------------------------------\n"
 			" * debug_addalientocont\n"
 			" * debug_addemployees\n"
@@ -593,8 +678,8 @@ static void Com_DebugHelp_f (void)
 			"   prints forbidden list to console\n"
 			" * debug_error\n"
 			"   throw and error to test the Com_Error function\n"
-			" * debug_fullcredits\n"
-			"   restore to full credits\n"
+			" * debug_fullcredits\n");
+	Com_Printf("   restore to full credits\n"
 			" * debug_hosp_hurt_all\n"
 			" * debug_hosp_heal_all\n"
 			" * debug_menueditnode\n"
@@ -604,8 +689,8 @@ static void Com_DebugHelp_f (void)
 			"   mark all techs as researchable\n"
 			" * debug_statsupdate\n"
 			"------------------------------\n"
-			"\n"
-			"Network debugging:\n"
+			"\n");
+	Com_Printf("Network debugging:\n"
 			"------------------------------\n"
 			" * net_showdrop"
 			"   console message if we have to drop a packet\n"
@@ -616,8 +701,8 @@ static void Com_DebugHelp_f (void)
 			" * net_showpacketsdata"
 			"   also print the received and sent data packets to console\n"
 			"------------------------------\n"
-			"\n"
-			"Other useful commands:\n"
+			"\n");
+	Com_Printf("Other useful commands:\n"
 			"------------------------------\n"
 			" * cl_configstrings\n"
 			" * cl_userinfo\n"
@@ -1113,6 +1198,7 @@ LINKED LIST
  * @sa LIST_AddString
  * @sa LIST_Remove
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
 {
@@ -1157,7 +1243,6 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
 	while ((string != NULL) && (list != NULL)) {
 		if (!Q_strcmp((const char*)list->data, string))
 			return list;
-			/* Com_Printf("%.0f: %.0f\n", (float)list->data[0], (float)list->data[1]); */
 		list = list->next;
 	}
 
@@ -1168,6 +1253,7 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  * @brief Adds an string to a new or to an already existing linked list
  * @sa LIST_Add
  * @sa LIST_Remove
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)
 {
@@ -1199,6 +1285,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
  * @brief Adds just a pointer to a new or to an already existing linked list
  * @sa LIST_Add
  * @sa LIST_Remove
+ * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddPointer (linkedList_t** listDest, void* data)
 {
@@ -1290,9 +1377,9 @@ void LIST_Delete (linkedList_t **list)
  * @sa LIST_Add
  * @sa LIST_Remove
  */
-int LIST_Count (linkedList_t *list)
+int LIST_Count (const linkedList_t *list)
 {
-	linkedList_t *l = list;
+	const linkedList_t *l = list;
 	int count = 0;
 
 	while (l) {

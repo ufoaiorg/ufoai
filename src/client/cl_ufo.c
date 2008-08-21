@@ -569,16 +569,13 @@ static void UFO_ListOnGeoscape_f (void)
 		Com_Printf("... damage: %i\n", ufo->damage);
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
-			if (ufo->weapons[k].item) {
-				Com_Printf("%s", ufo->weapons[k].item->id);
-				if (ufo->weapons[k].ammo && ufo->weapons[k].ammoLeft > 0)
-					Com_Printf(" (loaded)");
-				else
-					Com_Printf(" (unloaded)");
-			}
-			else
-				Com_Printf("empty");
-			Com_Printf(" / ");
+			aircraftSlot_t const* const w = &ufo->weapons[k];
+			if (w->item) {
+				char const* const state = w->ammo && w->ammoLeft > 0 ?
+					"(loaded)" : "(unloaded)";
+				Com_Printf("%s %s / ", w->item->id, state);
+			} else
+				Com_Printf("empty / ");
 		}
 		Com_Printf("\n");
 	}

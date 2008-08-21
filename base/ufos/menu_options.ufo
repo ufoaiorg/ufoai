@@ -318,15 +318,15 @@ menu options_video
 	string light_str
 	{
 		if "mn_rlight == 1"
-		string  "_Per pixel lighting:"
-		pos             "500 365"
+		string	"_Realtime lighting:"
+		pos		"500 365"
 	}
 	checkbox light
 	{
 		if "mn_rlight == 1"
-		cvar    "*cvar r_light"
-		pos             "840 365"
-		align   ur
+		cvar	"*cvar r_light"
+		pos		"840 365"
+		align	ur
 	}
 
 	string ptlweather_str
@@ -858,22 +858,6 @@ menu options_game
 	}
 
 	// ===================
-	// PRECACHE
-	// ===================
-	string precache_str
-	{
-		string	"_Precache models:"
-		pos		"500 455"
-	}
-	checkbox precache
-	{
-		cvar	"*cvar cl_precache"
-		pos		"840 455"
-		align	ur
-		tooltip	"_Precache models (faster menus)"
-	}
-
-	// ===================
 	// TOOLTIPS
 	// ===================
 	string tooltip_str
@@ -954,36 +938,20 @@ menu options_game
 		align	ur
 	}
 
-	// =====================
-	// START WITH EMPLOYEES
-	// =====================
-	string start_employees_str
+	// ===================
+	// PRECACHE
+	// ===================
+	string precache_str
 	{
-		string	"_Start with employees:"
-		pos		"500 405"
+		string	"_Precache models:"
+		pos	"500 405"
 	}
-	checkbox start_employees
+	checkbox precache
 	{
-		cvar	"*cvar cl_start_employees"
-		pos		"840 405"
+		cvar	"*cvar cl_precache"
+		pos	"840 405"
 		align	ur
-		tooltip	"_Employees already hired at campaign start"
-	}
-
-	// =====================
-	// START WITH BUILDINGS
-	// =====================
-	string start_buildings_str
-	{
-		string	"_Start with buildings:"
-		pos		"500 430"
-	}
-	checkbox start_building
-	{
-		cvar	"*cvar cl_start_buildings"
-		pos		"840 430"
-		align	ur
-		tooltip	"_Buildings already built in the initial base"
+		tooltip	"_Precache models (faster menus)"
 	}
 
 	// ===================

@@ -32,8 +32,6 @@ void MN_SetViewRect(const menu_t* menu);
 
 void MN_InitStartup(void);
 
-void MN_BaseMapClick(menuNode_t *node, struct base_s *base, int x, int y);
-void MN_BaseMapRighTClick(menuNode_t *node, int x, int y);
 void MN_BaseMapDraw(const menuNode_t * node);
 void MN_BaseMapLayout(const menuNode_t * node);
 

@@ -555,7 +555,7 @@ menu load
 		pos		"640 200"
 		out		{ *slot0 image menu/save_slot }
 		in		{ *slot0 image menu/save_slota }
-		click	{ cmd "game_load slot0;" }
+		click	{ cmd "game_load slot0; game_timestop;" }
 	}
 	pic slot1
 	{
@@ -563,7 +563,7 @@ menu load
 		pos		"640 235"
 		out		{ *slot1 image menu/save_slot }
 		in		{ *slot1 image menu/save_slota }
-		click	{ cmd "game_load slot1;" }
+		click	{ cmd "game_load slot1; game_timestop;" }
 	}
 	pic slot2
 	{
@@ -571,7 +571,7 @@ menu load
 		pos		"640 270"
 		out		{ *slot2 image menu/save_slot }
 		in		{ *slot2 image menu/save_slota }
-		click	{ cmd "game_load slot2;" }
+		click	{ cmd "game_load slot2; game_timestop;" }
 	}
 	pic slot3
 	{
@@ -579,7 +579,7 @@ menu load
 		pos		"640 305"
 		out		{ *slot3 image menu/save_slot }
 		in		{ *slot3 image menu/save_slota }
-		click	{ cmd "game_load slot3;" }
+		click	{ cmd "game_load slot3; game_timestop;" }
 	}
 	pic slot4
 	{
@@ -587,7 +587,7 @@ menu load
 		pos		"640 340"
 		out		{ *slot4 image menu/save_slot }
 		in		{ *slot4 image menu/save_slota }
-		click	{ cmd "game_load slot4;" }
+		click	{ cmd "game_load slot4; game_timestop;" }
 	}
 	pic slot5
 	{
@@ -595,7 +595,7 @@ menu load
 		pos		"640 375"
 		out		{ *slot5 image menu/save_slot }
 		in		{ *slot5 image menu/save_slota }
-		click	{ cmd "game_load slot5;" }
+		click	{ cmd "game_load slot5; game_timestop;" }
 	}
 	pic slot6
 	{
@@ -603,7 +603,7 @@ menu load
 		pos		"640 410"
 		out		{ *slot6 image menu/save_slot }
 		in		{ *slot6 image menu/save_slota }
-		click	{ cmd "game_load slot6;" }
+		click	{ cmd "game_load slot6; game_timestop;" }
 	}
 	pic slot7
 	{
@@ -611,7 +611,7 @@ menu load
 		pos		"640 445"
 		out		{ *slot7 image menu/save_slot }
 		in		{ *slot7 image menu/save_slota }
-		click	{ cmd "game_load slot7;" }
+		click	{ cmd "game_load slot7; game_timestop;" }
 	}
 
 	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "648 210" size "240 11" color "0 .78 0 1" }

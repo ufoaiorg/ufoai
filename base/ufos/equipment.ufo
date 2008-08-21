@@ -71,14 +71,11 @@ equipment campaign_initial_market
 	shotgun2_slug_ammo	40
 	shotgun_micro			4
 	shotgun_micro_ammo		20
-//	chaingun				1
-//	chaingun_ammo			5
 	flamer					3
 	flamer_ammo				40
 	rpg						3
 	rpg_ammo				50
 	rpg_incendiary_ammo		20
-//	rpg_particle_ammo		10
 	grenl					2
 	grenl_ammo				20
 	fraggrenade				40
@@ -89,7 +86,6 @@ equipment campaign_initial_market
 	medikit					4
 	flashbang				10
 	light					20
-//	heavy					1
 	craft_weapon_shiva	6
 	craft_ammo_shiva_API	100
 	craft_ammo_shiva_HEI	100
@@ -113,8 +109,6 @@ equipment campaign_asymptotic_market
 	power							3
 	coilgun							2
 	coilgun_ammo					20
-//	xaw95							2
-//	xaw95_ammo						20
 	rpg_incendiary_ammo				10
 	bolterrifle						3
 	bolterrifle_ammo				30

@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
-qboolean shift_down;
 
 static int key_insert = 1;
 
@@ -45,7 +44,6 @@ size_t msg_bufferlen = 0;
 
 char *keybindings[K_KEY_SIZE];
 char *menukeybindings[K_KEY_SIZE];
-static int keyshift[K_KEY_SIZE];				/* key to map to if shift held down in console */
 qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
@@ -192,138 +190,12 @@ LINE TYPING INTO THE CONSOLE
 */
 
 /**
- * @brief Console completion for command and variables
- * @sa Key_Console
- * @sa Cmd_CompleteCommand
- * @sa Cvar_CompleteVariable
- * @sa Curses_ConsoleCompleteCommand
- */
-static void Key_CompleteCommand (void)
-{
-	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
-	int cntCmd = 0, cntCvar = 0, cntParams = 0;
-	char cmdLine[MAXCMDLINE] = "";
-	char cmdBase[MAXCMDLINE] = "";
-	qboolean append = qtrue;
-	char *tmp;
-
-	s = key_lines[edit_line] + 1;
-	if (*s == '\\' || *s == '/')
-		s++;
-	if (!*s || *s == ' ')
-		return;
-
-	/* don't try to search a command or cvar if we are already in the
-	 * parameter stage */
-	if (strstr(s, " ")) {
-		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
-		/* remove the last whitespace */
-		cmdLine[strlen(cmdLine) - 1] = '\0';
-
-		tmp = cmdBase;
-		while (*s != ' ')
-			*tmp++ = *s++;
-		/* get rid of the whitespace */
-		s++;
-		/* terminate the string at whitespace position to seperate the cmd */
-		*tmp = '\0';
-
-		/* now strip away that part that is not yet completed */
-		tmp = strrchr(cmdLine, ' ');
-		if (tmp)
-			*tmp = '\0';
-
-		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
-		if (cntParams == 1) {
-			/* append the found parameter */
-			Q_strcat(cmdLine, " ", sizeof(cmdLine));
-			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
-			append = qfalse;
-			use = cmdLine;
-		} else if (cntParams > 1) {
-			append = qfalse;
-			Com_Printf("\n");
-		} else
-			return;
-	} else {
-		cntCmd = Cmd_CompleteCommand(s, &cmd);
-		cntCvar = Cvar_CompleteVariable(s, &cvar);
-
-		if (cntCmd == 1 && !cntCvar)
-			use = cmd;
-		else if (!cntCmd && cntCvar == 1)
-			use = cvar;
-		else
-			Com_Printf("\n");
-	}
-
-	if (use) {
-		key_lines[edit_line][1] = '/';
-		Q_strncpyz(key_lines[edit_line] + 2, use, MAXCMDLINE - 2);
-		key_linepos = strlen(use) + 2;
-		if (append) {
-			key_lines[edit_line][key_linepos] = ' ';
-			key_linepos++;
-		}
-		key_lines[edit_line][key_linepos] = 0;
-		return;
-	}
-}
-
-/**
  * @brief Interactive line editing and console scrollback
  * @param[in] key
  */
 static void Key_Console (int key)
 {
 	int i;
-
-	switch (key) {
-	case K_KP_SLASH:
-		key = '/';
-		break;
-	case K_KP_MINUS:
-		key = '-';
-		break;
-	case K_KP_PLUS:
-		key = '+';
-		break;
-	case K_KP_HOME:
-		key = '7';
-		break;
-	case K_KP_UPARROW:
-		key = '8';
-		break;
-	case K_KP_PGUP:
-		key = '9';
-		break;
-	case K_KP_LEFTARROW:
-		key = '4';
-		break;
-	case K_KP_5:
-		key = '5';
-		break;
-	case K_KP_RIGHTARROW:
-		key = '6';
-		break;
-	case K_KP_END:
-		key = '1';
-		break;
-	case K_KP_DOWNARROW:
-		key = '2';
-		break;
-	case K_KP_PGDN:
-		key = '3';
-		break;
-	case K_KP_INS:
-		key = '0';
-		break;
-	case K_KP_DEL:
-		key = '.';
-		break;
-	default:
-		break;
-	}
 
 	if (keydown[K_CTRL]) {
 		switch (toupper(key)) {
@@ -335,8 +207,8 @@ static void Key_Console (int key)
 		case 'A':
 			key_linepos = 1;
 			return;
+		/* end of line */
 		case 'E':
-			/* end of line */
 			key_linepos = strlen(key_lines[edit_line]);
 			return;
 		}
@@ -353,7 +225,7 @@ static void Key_Console (int key)
 
 		Cbuf_AddText("\n");
 		Com_Printf("%s\n", key_lines[edit_line]);
-		edit_line = (edit_line + 1) & (MAXKEYLINES-1);
+		edit_line = (edit_line + 1) & (MAXKEYLINES - 1);
 		history_line = edit_line;
 		key_lines[edit_line][0] = ']';
 		/* maybe MAXKEYLINES was reached - we don't want to spawn 'random' strings
@@ -370,11 +242,11 @@ static void Key_Console (int key)
 
 	/* command completion */
 	if (key == K_TAB) {
-		Key_CompleteCommand();
+		Com_ConsoleCompleteCommand(&key_lines[edit_line][1], key_lines[edit_line], MAXCMDLINE, &key_linepos, 1);
 		return;
 	}
 
-	if (key == K_BACKSPACE || ((key == 'h') && (keydown[K_CTRL]))) {
+	if (key == K_BACKSPACE || (key == 'h' && keydown[K_CTRL])) {
 		if (key_linepos > 1) {
 			strcpy(key_lines[edit_line] + key_linepos - 1, key_lines[edit_line] + key_linepos);
 			key_linepos--;
@@ -388,9 +260,9 @@ static void Key_Console (int key)
 		return;
 	}
 
-	if (key == K_UPARROW || key == K_KP_UPARROW || ((tolower(key) == 'p') && keydown[K_CTRL])) {
+	if (key == K_UPARROW || key == K_KP_UPARROW || (tolower(key) == 'p' && keydown[K_CTRL])) {
 		do {
-			history_line = (history_line - 1) & (MAXKEYLINES-1);
+			history_line = (history_line - 1) & (MAXKEYLINES - 1);
 		} while (history_line != edit_line && !key_lines[history_line][1]);
 
 		if (history_line == edit_line)
@@ -399,7 +271,7 @@ static void Key_Console (int key)
 		Q_strncpyz(key_lines[edit_line], key_lines[history_line], MAXCMDLINE);
 		key_linepos = strlen(key_lines[edit_line]);
 		return;
-	} else if (key == K_DOWNARROW || key == K_KP_DOWNARROW || ((tolower(key) == 'n') && keydown[K_CTRL])) {
+	} else if (key == K_DOWNARROW || key == K_KP_DOWNARROW || (tolower(key) == 'n' && keydown[K_CTRL])) {
 		if (history_line == edit_line)
 			return;
 		do {
@@ -472,6 +344,54 @@ static void Key_Console (int key)
 		return;
 	}
 
+	switch (key) {
+	case K_KP_SLASH:
+		key = '/';
+		break;
+	case K_KP_MINUS:
+		key = '-';
+		break;
+	case K_KP_PLUS:
+		key = '+';
+		break;
+	case K_KP_HOME:
+		key = '7';
+		break;
+	case K_KP_UPARROW:
+		key = '8';
+		break;
+	case K_KP_PGUP:
+		key = '9';
+		break;
+	case K_KP_LEFTARROW:
+		key = '4';
+		break;
+	case K_KP_5:
+		key = '5';
+		break;
+	case K_KP_RIGHTARROW:
+		key = '6';
+		break;
+	case K_KP_END:
+		key = '1';
+		break;
+	case K_KP_DOWNARROW:
+		key = '2';
+		break;
+	case K_KP_PGDN:
+		key = '3';
+		break;
+	case K_KP_INS:
+		key = '0';
+		break;
+	case K_KP_DEL:
+		key = '.';
+		break;
+	default:
+		break;
+	}
+
+	/** @todo use isprint here? */
 	if (key < 32 || key > 127)
 		return;					/* non printable */
 
@@ -555,6 +475,8 @@ static void Key_Message (int key)
 		/* cancel the inline cvar editing */
 		switch (msg_mode) {
 		case MSG_IRC:
+			/** @todo Why not use MN_PopMenu directly here? Is there a need to
+			 * execute this in the next frame? And pending command before it? */
 			Cbuf_AddText("mn_pop esc;");
 			/* fall through */
 			Irc_Input_Deactivate();
@@ -566,6 +488,7 @@ static void Key_Message (int key)
 		return;
 	}
 
+	/** @todo use isprint here? */
 	if (key < 32 || key > 127)
 		return;					/* non printable */
 
@@ -636,6 +559,7 @@ const char *Key_KeynumToString (int keynum)
 
 	if (keynum == -1)
 		return "<KEY NOT FOUND>";
+	/** @todo use isprint here? */
 	if (keynum > 32 && keynum < 127) {	/* printable ascii */
 		tinystr[0] = keynum;
 		tinystr[1] = 0;
@@ -816,6 +740,8 @@ static void Key_Bind_f (void)
 void Key_WriteBindings (const char* filename)
 {
 	int i;
+	/* this gets true in case of an error */
+	qboolean delete = qfalse;
 	qFILE f;
 
 	memset(&f, 0, sizeof(f));
@@ -831,12 +757,19 @@ void Key_WriteBindings (const char* filename)
 	fprintf(f.f, "unbindall\n");
 	for (i = 0; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
-			fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
+			if (fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
+				delete = qtrue;
 	for (i = 0; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
-			fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
+			if (fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
+				delete = qtrue;
+
 	FS_CloseFile(&f);
-	Com_Printf("Wrote %s\n", filename);
+	if (!delete)
+		Com_Printf("Wrote %s\n", filename);
+	else
+		/* error in writing the keys.cfg - remove the file again */
+		FS_RemoveFile(va("%s/%s", FS_Gamedir(), filename));
 }
 
 /**
@@ -886,35 +819,6 @@ void Key_Init (void)
 	}
 	key_linepos = 1;
 
-	for (i = 0; i < K_LAST_KEY; i++)
-		keyshift[i] = i;
-	for (i = 'a'; i <= 'z'; i++)
-		keyshift[i] = i - 'a' + 'A';
-
-#ifdef _WIN32
-	keyshift['1'] = '!';
-	keyshift['2'] = '@';
-	keyshift['3'] = '#';
-	keyshift['4'] = '$';
-	keyshift['5'] = '%';
-	keyshift['6'] = '^';
-	keyshift['7'] = '&';
-	keyshift['8'] = '*';
-	keyshift['9'] = '(';
-	keyshift['0'] = ')';
-	keyshift['-'] = '_';
-	keyshift['='] = '+';
-	keyshift[','] = '<';
-	keyshift['.'] = '>';
-	keyshift['/'] = '?';
-	keyshift[';'] = ':';
-	keyshift['\''] = '"';
-	keyshift['['] = '{';
-	keyshift[']'] = '}';
-	keyshift['`'] = '~';
-	keyshift['\\'] = '|';
-#endif
-
 	/* register our functions */
 	Cmd_AddCommand("bindmenu", Key_Bind_f, "Bind a key to a console command - only executed when hovering a menu");
 	Cmd_AddCommand("bind", Key_Bind_f, "Bind a key to a console command");
@@ -949,9 +853,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 	/* unbindable key */
 	if (key >= K_KEY_SIZE)
 		return;
-
-	if (key == K_SHIFT)
-		shift_down = down;
 
 	if (cls.key_dest != key_console && down) {
 		switch (key) {
@@ -1002,26 +903,27 @@ void Key_Event (int key, qboolean down, unsigned time)
 	/* track if any key is down for BUTTON_ANY */
 	keydown[key] = down;
 	if (!down) {
+		int i;
 		/* key up events only generate commands if the game key binding is
 		 * a button command (leading + sign).  These will occur even in console mode,
 		 * to keep the character from continuing an action started before a console
 		 * switch.  Button commands include the kenum as a parameter, so multiple
 		 * downs can be matched with ups */
-		if (mouseSpace != MS_WORLD)
-			kb = menukeybindings[key];
-		if (!kb)
-			kb = keybindings[key];
-		if (kb && kb[0] == '+') {
-			Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
-			Cbuf_AddText(cmd);
-		}
-		if (keyshift[key] != key) {
-			kb = keybindings[keyshift[key]];
+		kb = menukeybindings[key];
+		/* this loop ensures, that every down event reaches it's proper kbutton_t */
+		for (i = 0; i < 2; i++) {
 			if (kb && kb[0] == '+') {
+				/* '-' means we have released the key
+				* the key number is used to determine whether the kbutton_t is really
+				* released or whether any other bound key will still ensure that the
+				* kbutton_t is pressed
+				* the time is the msec value when the key was released */
 				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
 				Cbuf_AddText(cmd);
 			}
-		}
+			kb = keybindings[key];
+		};
+
 		return;
 	}
 
@@ -1034,6 +936,9 @@ void Key_Event (int key, qboolean down, unsigned time)
 			kb = keybindings[key];
 		if (kb) {
 			if (kb[0] == '+') {	/* button commands add keynum and time as a parm */
+				/* '+' means we have pressed the key
+				 * the key number is used because the kbutton_t can be 'pressed' by several keys
+				 * the time is the msec value when the key was pressed */
 				Com_sprintf(cmd, sizeof(cmd), "%s %i %i\n", kb, key, time);
 				Cbuf_AddText(cmd);
 			} else {
@@ -1047,12 +952,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 
 	if (!down)
 		return;	/* other systems only care about key down events */
-
-#ifndef _WIN32
-	/* for windows this is done by ToAsciiEx */
-	if (shift_down)
-		key = keyshift[key];
-#endif /* _WIN32 */
 
 	switch (cls.key_dest) {
 	case key_input:

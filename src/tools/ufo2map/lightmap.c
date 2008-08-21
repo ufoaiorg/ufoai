@@ -29,13 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int facelinks[MAX_MAP_FACES];
 static int planelinks[2][MAX_MAP_PLANES];
 
+vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
+
 /**
  * @sa RadWorld
  */
 void LinkPlaneFaces (void)
 {
 	int i;
-	dBspFace_t *f;
+	const dBspFace_t *f;
 
 	f = curTile->faces;
 	for (i = 0; i < curTile->numfaces; i++, f++) {
@@ -156,7 +158,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
 	int i, bestp = 0;
 	vec3_t v1, v2;
-	vec_t *p0, *p1, *p;
+	vec_t *p0, *p1;
 	vec_t best, ang;
 	triangle_t *nt;
 
@@ -168,7 +170,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	p1 = trian->points[e->p1]->origin;
 	best = 1.1;
 	for (i = 0; i < trian->numpoints; i++) {
-		p = trian->points[i]->origin;
+		const vec_t *p = trian->points[i]->origin;
 		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist <= 0)
 			continue;	/* behind edge */
@@ -242,9 +244,15 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 	trian->numpoints++;
 }
 
-static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
+/**
+ * @param[in] trian
+ * @param[in] t
+ * @param[in] point
+ * @param[out] color
+ */
+static void LerpTriangle (const triangulation_t *trian, const triangle_t *t, const vec3_t point, vec3_t color)
 {
-	patch_t *p1, *p2, *p3;
+	const patch_t *p1, *p2, *p3;
 	vec3_t base, d1, d2;
 	float x, y, x1, y1, x2, y2;
 
@@ -274,15 +282,13 @@ static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, v
 	VectorMA(color, y / y1, d1, color);
 }
 
-static qboolean PointInTriangle (vec3_t point, triangle_t *t)
+static qboolean PointInTriangle (const vec3_t point, const triangle_t *t)
 {
 	int i;
-	const triedge_t *e;
-	vec_t d;
 
 	for (i = 0; i < 3; i++) {
-		e = t->edges[i];
-		d = DotProduct(e->normal, point) - e->dist;
+		const triedge_t *e = t->edges[i];
+		const vec_t d = DotProduct(e->normal, point) - e->dist;
 		if (d < 0)
 			return qfalse;	/* not inside */
 	}
@@ -290,9 +296,9 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 	return qtrue;
 }
 
-static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
+static void SampleTriangulation (const vec3_t point, const triangulation_t *trian, vec3_t color)
 {
-	triangle_t *t;
+	const triangle_t *t;
 	const triedge_t *e;
 	vec_t d, best;
 	patch_t *p0, *p1;
@@ -378,15 +384,13 @@ typedef struct {
 	vec3_t center;
 
 	int		numsurfpt;
-	vec3_t	surfpt[SINGLEMAP];
+	vec3_t	*surfpt;
 
 	vec3_t	modelorg;		/* for origined bmodels */
 
 	vec3_t	texorg;
 	vec3_t	worldtotex[2];	/* s = (world - texorg) . worldtotex[0] */
 	vec3_t	textoworld[2];	/* world = texorg + s * textoworld[0] */
-
-	vec2_t	exactmins, exactmaxs;
 
 	int		texmins[2], texsize[2];
 	int		surfnum;
@@ -395,16 +399,16 @@ typedef struct {
 
 
 /**
- * @brief Fills in s->texmins[] and s->texsize[], also sets exactmins[] and exactmaxs[]
+ * @brief Fills in s->texmins[] and s->texsize[]
  */
 static void CalcFaceExtents (lightinfo_t *l)
 {
-	dBspFace_t *s;
+	const dBspFace_t *s;
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
 	int i, j;
-	dBspVertex_t *v;
-	dBspTexinfo_t *tex;
+	const dBspVertex_t *v;
+	const dBspTexinfo_t *tex;
 
 	s = l->face;
 
@@ -416,7 +420,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 	tex = &curTile->texinfo[s->texinfo];
 
 	for (i = 0; i < s->numedges; i++) {
-		const int e = curTile->surfedges[s->firstedge+i];
+		const int e = curTile->surfedges[s->firstedge + i];
 		if (e >= 0)
 			v = curTile->vertexes + curTile->edges[e].v[0];
 		else
@@ -441,16 +445,11 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->center[i] = (mins[i] + maxs[i]) / 2;
 
 	for (i = 0; i < 2; i++) {
-		l->exactmins[i] = stmins[i];
-		l->exactmaxs[i] = stmaxs[i];
-
 		stmins[i] = floor(stmins[i] / (1 << config.lightquant));
 		stmaxs[i] = ceil(stmaxs[i] / (1 << config.lightquant));
 
 		l->texmins[i] = stmins[i];
 		l->texsize[i] = stmaxs[i] - stmins[i];
-		if (l->texsize[0] * l->texsize[1] > SINGLEMAP)
-			Sys_Error("Surface too large to light %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
 	}
 }
 
@@ -459,8 +458,8 @@ static void CalcFaceExtents (lightinfo_t *l)
  */
 static void CalcFaceVectors (lightinfo_t *l)
 {
-	dBspTexinfo_t *tex;
-	int i, j, w, h;
+	const dBspTexinfo_t *tex;
+	int i, w, h;
 	vec3_t texnormal;
 	vec_t distscale, dist;
 
@@ -468,8 +467,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 
 	/* convert from float to double */
 	for (i = 0; i < 2; i++)
-		for (j = 0; j < 3; j++)
-			l->worldtotex[i][j] = tex->vecs[i][j];
+		VectorCopy(tex->vecs[i], l->worldtotex[i]);
 
 	/* calculate a normal to the texture axis.  points can be moved along this
 	 * without changing their S/T */
@@ -516,6 +514,9 @@ static void CalcFaceVectors (lightinfo_t *l)
 	h = l->texsize[1] + 1;
 	w = l->texsize[0] + 1;
 	l->numsurfpt = w * h;
+	l->surfpt = malloc(l->numsurfpt * sizeof(*l->surfpt));
+	if (!l->surfpt)
+		Sys_Error("Surface too large to light (%i)", l->numsurfpt * sizeof(*l->surfpt));
 }
 
 /**
@@ -528,7 +529,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	vec_t starts, startt;
 	vec_t *surf;
 	vec3_t pos;
-	dBspLeaf_t *leaf;
+	const dBspLeaf_t *leaf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
@@ -537,7 +538,6 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 
 	h = l->texsize[1] + 1;
 	w = l->texsize[0] + 1;
-	l->numsurfpt = w * h;
 
 	step = 1 << config.lightquant;
 	starts = l->texmins[0] * step;
@@ -583,7 +583,7 @@ void CreateDirectLights (void)
 	int i;
 	patch_t *p;
 	directlight_t *dl;
-	dBspLeaf_t *leaf;
+	const dBspLeaf_t *leaf;
 
 	/* surfaces */
 	for (i = 0, p = patches; i < num_patches; i++, p++) {
@@ -886,6 +886,7 @@ nextpatch:;
 	}
 }
 
+#define MAX_VERT_FACES 256
 
 /**
  * @brief Populate faces with indexes of all dBspFace_t's referencing the specified edge.
@@ -911,6 +912,8 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 			/* compare using surfedge reference or point equality */
 			if (v == vert || VectorCompareEps(curTile->vertexes[v].point, curTile->vertexes[vert].point, EQUAL_EPSILON)) {
 				faces[k++] = i;
+				if (k >= MAX_VERT_FACES)
+					Sys_Error("MAX_VERT_FACES");
 				break;
 			}
 		}
@@ -927,7 +930,7 @@ static vec3_t vertexnormals[MAX_MAP_VERTS];
  */
 void BuildVertexNormals (void)
 {
-	int vert_faces[256];
+	int vert_faces[MAX_VERT_FACES];
 	int num_vert_faces;
 	vec3_t norm;
 	int i, j;
@@ -957,12 +960,12 @@ void BuildVertexNormals (void)
  * @brief For Phong-shaded samples, interpolate the vertex normals for the surface,
  * weighting them according to their proximity to pos.
  */
-static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
+static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
 	vec3_t temp;
 	float dist, neardist, fardist;
 	int nearEdge, farEdge;
-	int i, v, e;
+	int i, v;
 
 	neardist = 999999;
 	fardist = -999999;
@@ -970,7 +973,7 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 	nearEdge = farEdge = 0;
 
 	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
-		e = curTile->surfedges[l->face->firstedge + i];
+		const int e = curTile->surfedges[l->face->firstedge + i];
 		if (e >= 0)
 			v = curTile->edges[e].v[0];
 		else
@@ -1002,7 +1005,9 @@ static void SampleNormal (lightinfo_t *l, vec3_t pos, vec3_t normal)
 
 
 #define MAX_SAMPLES 5
-static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
+static const float sampleofs[MAX_SAMPLES][2] = {
+	{0, 0}, {-0.25, -0.25}, {0.25, -0.25}, {0.25, 0.25}, {-0.25, 0.25}
+};
 
 /**
  * @brief
@@ -1011,7 +1016,7 @@ static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4
 void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
-	lightinfo_t *l;
+	lightinfo_t l[MAX_SAMPLES];
 	float *styletable, lightscale;
 	int i, j, numsamples;
 	patch_t *patch;
@@ -1035,11 +1040,11 @@ void BuildFacelights (unsigned int facenum)
 	else
 		numsamples = 1;
 
-	l = malloc(numsamples * sizeof(*l));
+	memset(l, 0, sizeof(l));
+
 	lightscale = 1.0 / numsamples;
 
 	for (i = 0; i < numsamples; i++) {
-		memset(&l[i], 0, sizeof(l[i]));
 		l[i].surfnum = facenum;
 		l[i].face = f;
 		/* rotate plane */
@@ -1053,8 +1058,9 @@ void BuildFacelights (unsigned int facenum)
 		/* get the origin offset for rotating bmodels */
 		VectorCopy(face_offset[facenum], l[i].modelorg);
 
-		CalcFaceVectors(&l[i]);
 		CalcFaceExtents(&l[i]);
+		/* This function mallocs memory to l[i].surfpt */
+		CalcFaceVectors(&l[i]);
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
 
@@ -1069,14 +1075,20 @@ void BuildFacelights (unsigned int facenum)
 
 	/* add sun light */
 	if (config.compile_for_day) {
-		if (!config.day_sun_intensity)
+		if (!config.day_sun_intensity) {
+			for (i = 0; i < numsamples; i++)
+				free(l[i].surfpt);
 			return;
+		}
 		sun_intensity = config.day_sun_intensity;
 		VectorCopy(config.day_sun_dir, sun_dir);
 		VectorCopy(config.day_sun_color, sun_color);
 	} else {
-		if (!config.night_sun_intensity)
+		if (!config.night_sun_intensity) {
+			for (i = 0; i < numsamples; i++)
+				free(l[i].surfpt);
 			return;
+		}
 		sun_intensity = config.night_sun_intensity;
 		VectorCopy(config.night_sun_dir, sun_dir);
 		VectorCopy(config.night_sun_color, sun_color);
@@ -1101,6 +1113,10 @@ void BuildFacelights (unsigned int facenum)
 			AddSampleToPatch(l[0].surfpt[i], styletable + i * 3, facenum);
 	}
 
+	/* Free the surface pointers for each sample. */
+	for (i = 0; i < numsamples; i++)
+		free(l[i].surfpt);
+
 	/* average up the direct light on each patch for radiosity */
 	for (patch = face_patches[facenum]; patch; patch = patch->next)
 		if (patch->samples)
@@ -1118,8 +1134,6 @@ void BuildFacelights (unsigned int facenum)
 		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
 			VectorAdd(spot, face_patches[facenum]->baselight, spot);
 	}
-
-	free(l);
 
 }
 
@@ -1147,12 +1161,16 @@ void FinalLightFace (unsigned int facenum)
 	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;
 
+	ThreadLock();
+
 	f->lightofs[config.compile_for_day] = curTile->lightdatasize[config.compile_for_day];
 	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
 
 	if (curTile->lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
 		Sys_Error("MAX_MAP_LIGHTING (%i exceeded %i) - try to reduce the brush size",
 			curTile->lightdatasize[config.compile_for_day], MAX_MAP_LIGHTING);
+
+	ThreadUnlock();
 
 	/* set up the triangulation */
 	if (config.numbounce > 0) {

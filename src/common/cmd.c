@@ -178,25 +178,24 @@ void Cbuf_InsertFromDefer (void)
 
 /**
  * @sa Cmd_ExecuteString
- * Pulls off \n terminated lines of text from the command buffer and sends them through Cmd_ExecuteString, stopping when the buffer is empty.
+ * Pulls off \n terminated lines of text from the command buffer and sends them
+ * through Cmd_ExecuteString, stopping when the buffer is empty.
  * Normally called once per frame, but may be explicitly invoked.
  * @note Do not call inside a command function!
  */
 void Cbuf_Execute (void)
 {
 	unsigned int i;
-	char *text;
 	char line[1024];
-	int quotes;
 
 	/* don't allow infinite alias loops */
 	alias_count = 0;
 
 	while (cmd_text.cursize) {
 		/* find a \n or ; line break */
-		text = (char *) cmd_text.data;
+		char *text = (char *) cmd_text.data;
+		int quotes = 0;
 
-		quotes = 0;
 		for (i = 0; i < cmd_text.cursize; i++) {
 			if (text[i] == '"')
 				quotes++;
@@ -214,10 +213,9 @@ void Cbuf_Execute (void)
 		memcpy(line, text, i);
 		line[i] = 0;
 
-		/* delete the text from the command buffer and move remaining commands down */
-		/* this is necessary because commands (exec, alias) can insert data at the */
-		/* beginning of the text buffer */
-
+		/* delete the text from the command buffer and move remaining commands down
+		 * this is necessary because commands (exec, alias) can insert data at the
+		 * beginning of the text buffer */
 		if (i == cmd_text.cursize)
 			cmd_text.cursize = 0;
 		else {
@@ -238,14 +236,14 @@ void Cbuf_Execute (void)
  * Set commands are added early, so they are guaranteed to be set before
  * the client and server initialize for the first time.
  * Other commands are added late, after all initialization is complete.
+ * @sa Cbuf_AddLateCommands
  */
 void Cbuf_AddEarlyCommands (qboolean clear)
 {
 	int i;
-	const char *s;
 
 	for (i = 0; i < COM_Argc(); i++) {
-		s = COM_Argv(i);
+		const char *s = COM_Argv(i);
 		if (Q_strncmp(s, "+set", 4))
 			continue;
 		Cbuf_AddText(va("set %s %s\n", COM_Argv(i + 1), COM_Argv(i + 2)));
@@ -262,6 +260,7 @@ void Cbuf_AddEarlyCommands (qboolean clear)
  * @brief Adds command line parameters as script statements
  * @note Commands lead with a + and continue until another + or -
  * @return true if any late commands were added, which will keep the demoloop from immediately starting
+ * @sa Cbuf_AddEarlyCommands
  */
 qboolean Cbuf_AddLateCommands (void)
 {
@@ -728,7 +727,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
 			return;
 		}
-		if (!Q_stricmp(cmd_name, cmd->name)) {
+		if (!Q_strcasecmp(cmd_name, cmd->name)) {
 			*back = cmd->hash_next;
 			break;
 		}
@@ -865,7 +864,7 @@ void Cmd_ExecuteString (const char *text)
 
 	/* check functions */
 	hash = Com_HashKey(str, CMD_HASH_SIZE);
-	for (cmd = cmd_functions_hash[hash]; cmd; cmd=cmd->hash_next) {
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString(va("cmd %s", text));

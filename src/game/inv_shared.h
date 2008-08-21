@@ -184,6 +184,7 @@ typedef struct craftitem_s {
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
 	qboolean bullets;			/**< create bullets for the projectiles */
+	qboolean laser;				/**< create laser particles for the projectiles */
 } craftitem_t;
 
 /** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
@@ -204,7 +205,7 @@ typedef enum {
 	BUY_HEAVY,	/**< Heavy equipment like tanks (i.e. these are actually employees). */
 	MAX_BUYTYPES,
 
-	ENSURE_32BIT = 0xFFFFFFFF
+	ENSURE_32BIT = 0x7FFFFFFF
 } equipmentBuytypes_t;
 
 #define MAX_SOLDIER_EQU_BUYTYPES BUY_MULTI_AMMO
@@ -515,15 +516,16 @@ extern int numRanks;			/**< The number of entries in the list above. */
 
 /**
  * @brief Structure of all stats collected in a mission.
- * @todo Will replace chrScoreOLD_s at some point.
  * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
  * @note Mostly collected in g_client.c and not used anywhere else (at least that's the plan ;)).
  * The result is parsed into chrScoreGlobal_t which is stored in savegames.
- * @note
-BTAxis about "hit" count:
-"But yeah, what we want is a counter per skill. This counter should start at 0 every battle, and then be intreased by 1 everytime
-- a direct fire weapon hits (or deals damage, same thing) the actor the weapon was fired at. If it wasn't fired at an actor, nothing should happen.
-- a splash weapon deals damage to any enemy actor. If multiple actors are hit, increase the counter multiple times."
+ * @note BTAxis about "hit" count:
+ * "But yeah, what we want is a counter per skill. This counter should start at 0
+ * every battle, and then be intreased by 1 everytime:
+ * - a direct fire weapon hits (or deals damage, same thing) the actor the weapon
+ *   was fired at. If it wasn't fired at an actor, nothing should happen.
+ * - a splash weapon deals damage to any enemy actor. If multiple actors are hit,
+ *   increase the counter multiple times."
  */
 typedef struct chrScoreMission_s {
 
@@ -565,7 +567,6 @@ typedef struct chrScoreMission_s {
 
 /**
  * @brief Structure of all stats collected for an actor over time.
- * @todo Will replace chrScoreOLD_s at some point.
  * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
  * @note This information is stored in savegames (in contract to chrScoreMission_t).
  * @note WARNING: if you change something here you'll have to make sure all the network and savegame stuff is updated as well!

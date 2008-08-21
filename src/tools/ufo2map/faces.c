@@ -66,12 +66,12 @@ static unsigned HashVec (const vec3_t vec)
 }
 
 /**
+ * @brief Returns the number of an existing vertex or allocates a new one
  * @note Uses hashing
  */
-static int GetVertexnum (vec3_t in)
+static int GetVertexnum (const vec3_t in)
 {
 	int h, i, vnum;
-	float *p;
 	vec3_t vert;
 
 	c_totalverts++;
@@ -86,10 +86,10 @@ static int GetVertexnum (vec3_t in)
 	h = HashVec(vert);
 
 	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
-		p = curTile->vertexes[vnum].point;
-		if (fabs(p[0]-vert[0]) < POINT_EPSILON
-		 && fabs(p[1]-vert[1]) < POINT_EPSILON
-		 && fabs(p[2]-vert[2]) < POINT_EPSILON)
+		const float *p = curTile->vertexes[vnum].point;
+		if (fabs(p[0] - vert[0]) < POINT_EPSILON
+		 && fabs(p[1] - vert[1]) < POINT_EPSILON
+		 && fabs(p[2] - vert[2]) < POINT_EPSILON)
 			return vnum;
 	}
 
@@ -122,7 +122,7 @@ static face_t *AllocFace (void)
 	return f;
 }
 
-static face_t *NewFaceFromFace (face_t *f)
+static face_t *NewFaceFromFace (const face_t *f)
 {
 	face_t	*newf;
 
@@ -266,7 +266,7 @@ static void FindEdgeVerts (const vec3_t v1, const vec3_t v2)
  */
 static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 {
-	int j, k;
+	int k;
 	vec_t dist, error;
 	vec3_t	delta, exact, off, p;
 
@@ -276,7 +276,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 	}
 
 	for (k = startvert; k < num_edge_verts; k++) {
-		j = edge_verts[k];
+		const int j = edge_verts[k];
 		if (j == p1 || j == p2)
 			continue;
 
@@ -309,7 +309,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 
 static void FixFaceEdges (node_t *node, face_t *f)
 {
-	int i, p1, p2, base;
+	int i, base;
 	vec3_t e2;
 	vec_t len;
 	int count[MAX_SUPERVERTS], start[MAX_SUPERVERTS];
@@ -320,8 +320,8 @@ static void FixFaceEdges (node_t *node, face_t *f)
 	numsuperverts = 0;
 
 	for (i = 0; i < f->numpoints; i++) {
-		p1 = f->vertexnums[i];
-		p2 = f->vertexnums[(i + 1) % f->numpoints];
+		const int p1 = f->vertexnums[i];
+		const int p2 = f->vertexnums[(i + 1) % f->numpoints];
 
 		VectorCopy(curTile->vertexes[p1].point, edge_start);
 		VectorCopy(curTile->vertexes[p2].point, e2);
@@ -386,7 +386,7 @@ void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
 	Sys_FPrintf(SYS_VRB, "---- snap verts ----\n");
-	memset (hashverts, 0, sizeof(hashverts));
+	memset(hashverts, 0, sizeof(hashverts));
 	c_totalverts = 0;
 	c_uniqueverts = 0;
 	c_faceoverflows = 0;
@@ -611,8 +611,6 @@ static void MergeNodeFaces (node_t *node)
  */
 static void SubdivideFace (node_t *node, face_t *f)
 {
-	float mins, maxs;
-	vec_t v;
 	int axis, i;
 	const dBspTexinfo_t *tex;
 	vec3_t temp;
@@ -628,14 +626,13 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 	for (axis = 0; axis < 2; axis++) {
 		while (1) {
-			const winding_t *w;
+			const winding_t *w = f->w;
 			winding_t *frontw, *backw;
-
-			mins = 999999;
-			maxs = -999999;
+			float mins = 999999;
+			float maxs = -999999;
+			vec_t v;
 
 			VectorCopy(tex->vecs[axis], temp);
-			w = f->w;
 			for (i = 0; i < w->numpoints; i++) {
 				v = DotProduct(w->p[i], temp);
 				if (v < mins)
@@ -657,7 +654,8 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 			ClipWindingEpsilon(w, temp, dist, ON_EPSILON, &frontw, &backw);
 			if (!frontw || !backw)
-				Sys_Error("SubdivideFace: didn't split the polygon");
+				Sys_Error("SubdivideFace: didn't split the polygon (texture: '%s')",
+					tex->texture);
 
 			f->split[0] = NewFaceFromFace(f);
 			f->split[0]->w = frontw;

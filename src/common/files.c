@@ -1322,7 +1322,7 @@ void FS_GetMaps (qboolean reset)
 				} else
 					continue;
 
-				if (strstr(pak->files[i].name, ".bsp")) {
+				if (strstr(pak->files[i].name, ".bsp") || strstr(pak->files[i].name, ".ump") ) {
 					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
@@ -1336,8 +1336,11 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename, sizeof(filename));
-					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 					fs_numInstalledMaps++;
+					if (strstr(findname, ".ump"))
+						Com_sprintf(fs_maps[fs_numInstalledMaps], MAX_QPATH, "+%s", filename);
+					else
+						Q_strncpyz(fs_maps[fs_numInstalledMaps], filename, MAX_QPATH);
 				}
 			}
 		} else {
@@ -1362,10 +1365,36 @@ void FS_GetMaps (qboolean reset)
 							Mem_Free(dirnames[i]);
 							continue;
 						}
-						Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 						fs_numInstalledMaps++;
+						Q_strncpyz(fs_maps[fs_numInstalledMaps], filename, MAX_QPATH);
 					} else
 						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
+					Mem_Free(dirnames[i]);
+				}
+				Mem_Free(dirnames);
+			}
+			/* +RMA to maplisting */
+			Com_sprintf(findname, sizeof(findname), "%s/maps/*.ump", search->filename);
+			FS_NormPath(findname);
+
+			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
+			if (dirnames != NULL) {
+				for (i = 0; i < ndirs - 1; i++) {
+					Com_DPrintf(DEBUG_ENGINE, "... found rma: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
+					baseMapName = COM_SkipPath(dirnames[i]);
+					COM_StripExtension(baseMapName, filename, sizeof(filename));
+					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
+						Com_Printf("FS_GetMaps: Max maps limit hit\n");
+						break;
+					}
+					fs_maps[fs_numInstalledMaps + 1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
+						Com_Printf("Could not allocate memory in FS_GetMaps\n");
+						Mem_Free(dirnames[i]);
+						continue;
+					}
+					fs_numInstalledMaps++;
+					Com_sprintf(fs_maps[fs_numInstalledMaps], MAX_QPATH, "+%s", filename);
 					Mem_Free(dirnames[i]);
 				}
 				Mem_Free(dirnames);

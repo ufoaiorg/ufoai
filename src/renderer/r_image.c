@@ -36,6 +36,7 @@ static char glerrortex[MAX_GL_ERRORTEX];
 static char *glerrortexend;
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
+int registration_sequence;
 
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
@@ -153,16 +154,15 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
  */
 static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
-	int				rowptr;
-	int				samples, color_type, bit_depth;
-	png_structp		png_ptr;
-	png_infop		info_ptr;
-	png_infop		end_info;
-	byte			**row_pointers;
-	byte			*img;
-	uint32_t		i;
-
-	pngBuf_t		PngFileBuffer = {NULL,0};
+	int rowptr;
+	int samples, color_type, bit_depth;
+	png_structp png_ptr;
+	png_infop info_ptr;
+	png_infop end_info;
+	byte **row_pointers;
+	byte *img;
+	uint32_t i;
+	pngBuf_t PngFileBuffer = {NULL, 0};
 
 	if (*pic != NULL)
 		Sys_Error("possible mem leak in LoadPNG\n");
@@ -181,7 +181,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	PngFileBuffer.pos = 0;
 
-	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
+	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
@@ -196,7 +196,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return 0;
 	}
 
-	end_info = png_create_info_struct (png_ptr);
+	end_info = png_create_info_struct(png_ptr);
 	if (!end_info) {
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
@@ -240,11 +240,11 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	if (info_ptr->channels == 4) {
 		for (i = 0; i < info_ptr->height; i++) {
-			memcpy (img + rowptr, row_pointers[i], info_ptr->rowbytes);
+			memcpy(img + rowptr, row_pointers[i], info_ptr->rowbytes);
 			rowptr += info_ptr->rowbytes;
 		}
 	} else {
-		uint32_t	j;
+		uint32_t j;
 
 		memset(img, 255, info_ptr->width * info_ptr->height * 4);
 		for (rowptr = 0, i = 0; i < info_ptr->height; i++) {
@@ -598,6 +598,7 @@ void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
 	Mem_Free(out);
 }
 
+#define TGA_CHANNELS 3
 
 /**
  * @sa R_LoadTGA
@@ -605,9 +606,8 @@ void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
  */
 void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 {
-	const int channels = 3;
-	byte pixel_data[channels];
-	byte block_data[channels * 128];
+	byte pixel_data[TGA_CHANNELS];
+	byte block_data[TGA_CHANNELS * 128];
 	byte rle_packet;
 	int compress = 0;
 	size_t block_length = 0;
@@ -639,21 +639,21 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 
 	for (y = height - 1; y >= 0; y--) {
 		for (x = 0; x < width; x++) {
-			const size_t index = y * width * channels + x * channels;
+			const size_t index = y * width * TGA_CHANNELS + x * TGA_CHANNELS;
 			pixel_data[0] = buffer[index + 2];
 			pixel_data[1] = buffer[index + 1];
 			pixel_data[2] = buffer[index];
 
 			if (block_length == 0) {
-				memcpy(block_data, pixel_data, channels);
+				memcpy(block_data, pixel_data, TGA_CHANNELS);
 				block_length++;
 				compress = 0;
 			} else {
 				if (!compress) {
 					/* uncompressed block and pixel_data differs from the last pixel */
-					if (memcmp(&block_data[(block_length - 1) * channels], pixel_data, channels) != 0) {
+					if (memcmp(&block_data[(block_length - 1) * TGA_CHANNELS], pixel_data, TGA_CHANNELS) != 0) {
 						/* append pixel */
-						memcpy(&block_data[block_length * channels], pixel_data, channels);
+						memcpy(&block_data[block_length * TGA_CHANNELS], pixel_data, TGA_CHANNELS);
 
 						block_length++;
 					} else {
@@ -662,16 +662,16 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 							/* write the uncompressed block */
 							rle_packet = block_length - 2;
 							FS_Write(&rle_packet,1, f);
-							FS_Write(block_data, (block_length - 1) * channels, f);
+							FS_Write(block_data, (block_length - 1) * TGA_CHANNELS, f);
 							block_length = 1;
 						}
-						memcpy(block_data, pixel_data, channels);
+						memcpy(block_data, pixel_data, TGA_CHANNELS);
 						block_length++;
 						compress = 1;
 					}
 				} else {
 					/* compressed block and pixel data is identical */
-					if (memcmp(block_data, pixel_data, channels) == 0) {
+					if (memcmp(block_data, pixel_data, TGA_CHANNELS) == 0) {
 						block_length++;
 					} else {
 						/* compressed block and pixel data differs */
@@ -679,10 +679,10 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 							/* write the compressed block */
 							rle_packet = block_length + 127;
 							FS_Write(&rle_packet, 1, f);
-							FS_Write(block_data, channels, f);
+							FS_Write(block_data, TGA_CHANNELS, f);
 							block_length = 0;
 						}
-						memcpy(&block_data[block_length * channels], pixel_data, channels);
+						memcpy(&block_data[block_length * TGA_CHANNELS], pixel_data, TGA_CHANNELS);
 						block_length++;
 						compress = 0;
 					}
@@ -693,11 +693,11 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 				rle_packet = block_length - 1;
 				if (!compress) {
 					FS_Write(&rle_packet, 1, f);
-					FS_Write(block_data, 128 * channels, f);
+					FS_Write(block_data, 128 * TGA_CHANNELS, f);
 				} else {
 					rle_packet += 128;
 					FS_Write(&rle_packet, 1, f);
-					FS_Write(block_data, channels, f);
+					FS_Write(block_data, TGA_CHANNELS, f);
 				}
 
 				block_length = 0;
@@ -711,11 +711,11 @@ void R_WriteCompressedTGA (qFILE *f, byte *buffer, int width, int height)
 		rle_packet = block_length - 1;
 		if (!compress) {
 			FS_Write(&rle_packet, 1, f);
-			FS_Write(block_data, block_length * channels, f);
+			FS_Write(block_data, block_length * TGA_CHANNELS, f);
 		} else {
 			rle_packet += 128;
 			FS_Write(&rle_packet, 1, f);
-			FS_Write(block_data, channels, f);
+			FS_Write(block_data, TGA_CHANNELS, f);
 		}
 	}
 
@@ -1795,7 +1795,7 @@ void R_TextureMode (const char *string)
 	image_t *image;
 
 	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_stricmp(gl_texture_modes[i].name, string))
+		if (!Q_strcasecmp(gl_texture_modes[i].name, string))
 			break;
 	}
 
@@ -1839,7 +1839,7 @@ void R_TextureAlphaMode (const char *string)
 	int i;
 
 	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
-		if (!Q_stricmp(gl_alpha_modes[i].name, string))
+		if (!Q_strcasecmp(gl_alpha_modes[i].name, string))
 			break;
 	}
 
@@ -1870,7 +1870,7 @@ void R_TextureSolidMode (const char *string)
 	int i;
 
 	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
-		if (!Q_stricmp(gl_solid_modes[i].name, string))
+		if (!Q_strcasecmp(gl_solid_modes[i].name, string))
 			break;
 	}
 

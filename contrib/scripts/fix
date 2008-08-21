@@ -20,21 +20,21 @@ mime () {
         find "$DIR" -name "*.$1" -exec svn ps svn:mime-type $2 {} \;
 }
 
-mime bmp image/bmp
-mime jpg image/jpeg
-mime ogg application/ogg
+mime 3ds   application/x-3ds
 mime blend application/x-blender
-mime exe application/x-executable
-mime png image/png
-mime tga image/x-tga
-mime wav audio/x-wav
-mime xcf image/x-xcf
-mime xbm image/x-xbitmap
-mime xpm image/x-xpixmap
-mime 3ds application/x-3ds
-mime psd image/psd
-mime dll application/octet-stream
-mime pdf application/pdf
-mime doc application/msword
-mime zip application/zip
-mime ico image/x-icon
+mime bmp   image/bmp
+mime dll   application/x-msdownload
+mime doc   application/msword
+mime exe   application/x-executable
+mime ico   image/x-icon
+mime jpg   image/jpeg
+mime ogg   application/ogg
+mime pdf   application/pdf
+mime png   image/png
+mime psd   image/psd
+mime tga   image/x-tga
+mime wav   audio/x-wav
+mime xbm   image/x-xbitmap
+mime xcf   image/x-xcf
+mime xpm   image/x-xpixmap
+mime zip   application/zip

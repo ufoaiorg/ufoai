@@ -704,7 +704,7 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
  * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
  * @sa TR_TransformedBoxTrace
  */
-inline trace_t CM_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, int brushrejects, const vec3_t origin, const vec3_t angles)
+trace_t CM_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, int brushrejects, const vec3_t origin, const vec3_t angles)
 {
 	return TR_TransformedBoxTrace(start, end, mins, maxs, &mapTiles[tile], headnode, brushmask, brushrejects, origin, angles);
 }
@@ -724,7 +724,7 @@ GAME RELATED TRACING
  * @sa map_max
  * @sa CMod_LoadRouting
  */
-static void CMod_GetMapSize ()
+static void CMod_GetMapSize (void)
 {
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	pos3_t start, end, test;
@@ -1110,7 +1110,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	int sh[3];
+	ipos3_t sh;
 	int i;
 
 	Mem_FreePool(com_cmodelSysPool);
@@ -1155,6 +1155,12 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions");
 				sh[i] = atoi(token);
 			}
+			if (sh[0] <= -(PATHFINDING_WIDTH / 2) || sh[0] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "CM_LoadMap: invalid x position given: %i\n", sh[0]);
+			if (sh[1] <= -(PATHFINDING_WIDTH / 2) || sh[1] >= PATHFINDING_WIDTH / 2)
+				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
+			if (sh[2] >= PATHFINDING_HEIGHT)
+				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
 			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */

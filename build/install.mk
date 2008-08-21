@@ -2,33 +2,24 @@ VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \
 
 installer: wininstaller linuxinstaller sourcearchive mappack
 
-mappack:
-	$(MAKE) maps
+mappack: maps
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ./base/maps
 	scp ufoai-$(VERSION)-mappack.tar.bz2 ufo:~/public_html/download
 
-wininstaller:
-	$(MAKE) lang
-	$(MAKE) maps
-	cd base; ./archives.sh
+wininstaller: lang maps pk3
 	makensis src/ports/windows/installer.nsi
 	md5sum src/ports/windows/ufoai-$(VERSION)-win32.exe > src/ports/windows/ufoai-$(VERSION)-win32.md5
 
-dataarchive:
+dataarchive: pk3
 	tar -cvp -f ufoai-$(VERSION)-data.tar base/*.pk3
 
-linuxinstaller:
-	$(MAKE) lang
-	$(MAKE) maps
-	cd base; ./archives.sh
+linuxinstaller: lang maps pk3
 	cd src/ports/linux/installer; $(MAKE) packdata; $(MAKE)
 
-macinstaller:
-	$(MAKE) lang
+macinstaller: lang pk3
 	# Replacing existing compiled maps with downloaded precompiled maps,
 	# otherwise multiplayer won't work due to mismatching checksums
 	# FIXME: Use the maps from the current release at sourceforge.net
-	cd base; ./archives.sh
 	# The mapfile in the address below is not recent enough to be useful in trunk.
 	# Removed for trunk builds but should be added for branch builds with the
 	# correct 0maps.pk3 linked.
@@ -75,12 +66,3 @@ sourcearchive:
 	mv ./tarsrc/ufoai-$(VERSION)-source.tar.bz2 ./
 	rm -rf ./tarsrc
 
-# this done by base/archives.sh
-#packfiles:
-#	cd base; zip -r 0textures.zip textures -x \*.svn\*
-#	cd base; zip -r 0sounds.zip sound -x \*.svn\*
-#	cd base; zip -r 0pics.zip pics -x \*.svn\*
-#	cd base; zip -r 0music.zip music -x \*.svn\*
-#	cd base; zip -r 0maps.zip maps -x \*.svn\*
-#	cd base; zip -r 0models.zip models -x \*.svn\*
-#	cd base; zip -r 0ufos.zip ufos -x \*.svn\*

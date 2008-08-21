@@ -42,7 +42,15 @@ static int selToHit;
 static pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 static pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
 
-static qboolean displayRemainingTus[3];	/**< 0=reload_r, 1=reload_l, 2=crouch */
+enum {
+	REMAINING_TU_RELOAD_RIGHT,
+	REMAINING_TU_RELOAD_LEFT,
+	REMAINING_TU_CROUCH,
+
+	REMAINING_TU_MAX
+};
+
+static qboolean displayRemainingTus[REMAINING_TU_MAX];	/**< 0=reload_r, 1=reload_l, 2=crouch */
 
 /**
  * @brief If you want to change the z level of targetting and shooting,
@@ -125,7 +133,7 @@ void MSG_Write_PA (player_action_t player_action, int num, ...)
 
 	va_start(ap, num);
 	NET_WriteFormat(msg, "bbs", clc_action, player_action, num);
-	NET_V_WriteFormat(msg, pa_format[player_action], ap);
+	NET_vWriteFormat(msg, pa_format[player_action], ap);
 	va_end(ap);
 	NET_WriteMsg(cls.netStream, msg);
 }
@@ -473,27 +481,26 @@ void CL_ResetWeaponButtons (void)
  */
 static void SetWeaponButton (int button, weaponButtonState_t state)
 {
-	char cbufText[MAX_VAR];
 	weaponButtonState_t currentState = weaponButtonState[button];
+	char                cbufText[MAX_VAR];
+	char const*         prefix;
 
 	assert(button < BT_NUM_TYPES);
 
-	/* No "switch" statement possible here for some non-obvious reason (gcc doesn't like constant ints here) :-/ */
-	if ((state == currentState)
-	||  (state == BT_STATE_HIGHLIGHT)) {
+	if (state == currentState || state == BT_STATE_HIGHLIGHT) {
 		/* Don't reset if it already is in current state or if highlighted,
 		 * as HighlightWeaponButton deals with the highlighted state. */
 		return;
 	} else if (state == BT_STATE_DESELECT) {
-		Q_strncpyz(cbufText, "desel", sizeof(cbufText));
+		prefix = "desel";
 	} else if (state == BT_STATE_DISABLE) {
-		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
+		prefix = "dis";
 	} else {
-		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
+		prefix = "dis";
 	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
-	Q_strcat(cbufText, shoot_type_strings[button], sizeof(cbufText));
+	Com_sprintf(cbufText, lengthof(cbufText), "%s%s", prefix, shoot_type_strings[button]);
 
 	Cbuf_AddText(cbufText);
 	weaponButtonState[button] = state;
@@ -521,7 +528,7 @@ static int CL_GetActorNumber (const le_t * le)
  * @brief Returns the character information for an actor in the teamlist.
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
- * @todo We really needs a better way to syn this up.
+ * @todo We really needs a better way to sync this up.
  */
 character_t *CL_GetActorChr (const le_t * le)
 {
@@ -1778,11 +1785,11 @@ void CL_RemainingTus_f (void)
 	state = atoi(Cmd_Argv(2));
 
 	if (!Q_strncmp(type, "reload_r", 8)) {
-		displayRemainingTus[0] = state;
+		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;
 	} else if (!Q_strncmp(type, "reload_l", 8)) {
-		displayRemainingTus[1] = state;
+		displayRemainingTus[REMAINING_TU_RELOAD_LEFT] = state;
 	} else if (!Q_strncmp(type, "crouch", 6)) {
-		displayRemainingTus[2] = state;
+		displayRemainingTus[REMAINING_TU_CROUCH] = state;
 	}
 	/* Update "remaining TUs" bar in HUD.*/
 	CL_ActorUpdateCVars();
@@ -2124,9 +2131,6 @@ void CL_ActorUpdateCVars (void)
 	qboolean refresh;
 	const char *animName;
 	int time;
-	const fireDef_t *old;
-	const invList_t *weapon;	/**< Used for hovering over buttons. See displayRemainingTus[] */
-	int reloadtime;
 	pos3_t pos;
 	int dv;
 
@@ -2220,7 +2224,7 @@ void CL_ActorUpdateCVars (void)
 					}
 				} else {
 					/* This item uses ammo, get the firedefs from ammo. */
-					old = FIRESH_GetFiredef(
+					const fireDef_t *old = FIRESH_GetFiredef(
 						selWeapon->item.m,
 						FIRESH_FiredefsIDXForWeapon(selWeapon->item.m, selWeapon->item.t),
 						cl.cfiremode);
@@ -2240,26 +2244,28 @@ void CL_ActorUpdateCVars (void)
 			Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
 
 		/* update HUD stats etc in more or shoot modes */
-		if (displayRemainingTus[0] || displayRemainingTus[1] || displayRemainingTus[2]) {
+		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
+		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]
+		 || displayRemainingTus[REMAINING_TU_CROUCH]) {
 			/* We are hovering over a "reload" button */
 			/** @sa CL_RefreshWeaponButtons */
-			if (displayRemainingTus[0] && RIGHT(selActor)) {
-				weapon = RIGHT(selActor);
-				reloadtime = CL_CalcReloadTime(weapon->item.t);
+			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
+				const invList_t *weapon = RIGHT(selActor);
+				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
 				if (weapon->item.m
 					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
 				}
-			} else if (displayRemainingTus[1] && LEFT(selActor)) {
-				weapon = LEFT(selActor);
-				reloadtime = CL_CalcReloadTime(weapon->item.t);
+			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
+				const invList_t *weapon = LEFT(selActor);
+				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
 				if (weapon && weapon->item.m
 					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
-					time = 	reloadtime;
+					time = reloadtime;
 				}
-			} else if (displayRemainingTus[2]) {
+			} else if (displayRemainingTus[REMAINING_TU_CROUCH]) {
 				if (CL_UsableTUs(selActor) >= TU_CROUCH)
 					time = TU_CROUCH;
 			}
@@ -2662,7 +2668,7 @@ qboolean CL_ActorSelectList (int num)
 
 	/* center view (if wanted) */
 	if (cl_centerview->integer)
-		VectorCopy(le->origin, cl.cam.reforg);
+		VectorCopy(le->origin, cl.cam.origin);
 	/* change to worldlevel were actor is right now */
 	Cvar_SetValue("cl_worldlevel", le->pos[2]);
 
@@ -2949,7 +2955,7 @@ static qboolean CL_TraceMove (pos3_t to)
 static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 {
 	int length;
-	vec3_t vec;
+	/* vec3_t vec; */
 	int dv;
 	int crouching_state;
 
@@ -4166,7 +4172,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 	if (cls.team == cl.actTeam) {
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
-		Cbuf_AddText("startround\n");  /* confunc */
+		MN_ExecuteConfunc("startround");
 		SCR_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
@@ -4300,6 +4306,13 @@ void CL_ActorMouseTrace (void)
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	 * playerclip surface (in most cases anyway) */
 	PosToVec(testPos, pA);
+	/* ensure that the cursor is in the world, if this is not done, the tracer box is
+	 * drawn in the void on the first level and the menu key bindings might get executed
+	 * this could result in different problems like the zooming issue (where you can't zoom
+	 * in again, because in_zoomout->state is not resetted). */
+	if (CL_OutsideMap(pA, MAP_SIZE_OFFSET))
+		return;
+
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
@@ -4388,7 +4401,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
-	/* add the weapons it the actor's hand */
+	/* add the weapons to the actor's hands */
 	if (!(le->state & STATE_DEAD)) {
 		/* add left hand weapon */
 		if (le->left != NONE) {
@@ -4397,9 +4410,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.model = cls.model_weapons[le->left];
 			assert(add.model);
 
-			/* +2 (resp. +3) because the body and the head are already
-			 * (and maybe the right weapon will be)
-			 * at the previous location */
+			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
@@ -4414,8 +4425,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.model = cls.model_weapons[le->right];
 			assert(add.model);
 
-			/* +2 because the body and the head are already
-			 * at the previous location */
+			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
 
@@ -4440,7 +4450,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	assert(add.model);
 	add.skinnum = le->skinnum;
 
-	/* +1 because the body is already at the previous location */
+	/* point to the body ent which will be added last */
 	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
 
@@ -4779,7 +4789,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = map_maxlevel - 1;
+	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -4818,9 +4828,6 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
  * @brief Shows targetting for a grenade.
  * @param[in] fromPos The (grid-) position of the aiming actor.
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
- * @todo Find out why the ceiling is not checked against the parabola when calculating obstacles.
- * i.e. the line is drawn green even if a ceiling prevents the shot.
- * https://sourceforge.net/tracker/index.php?func=detail&aid=1701263&group_id=157793&atid=805242
  * @sa CL_TargetingStraight
  */
 static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
@@ -4871,7 +4878,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = map_maxlevel - 1;
+	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
 	/* paint */
 	vz = v0[2];

@@ -48,72 +48,74 @@ char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions
 /**
  * @brief print usage information.
  */
-static void Usage (void) {
+static void Usage (void)
+{
 	Com_Printf("Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]\n"
 #ifdef _WIN32
 		"Even on Windows, use / slashes in the path\n"
 #endif
 		"\nGeneral options:\n"
-		" -h --help                : print (this) help and exit\n"
+		" -h --help                  : print (this) help and exit\n"
 #ifndef _WIN32
-		" -nice <prio>             : priority level [unix nice level from -20 to 19 where 19 is the lowest priority]\n"
+		" -nice <prio>               : priority level [unix nice level from -20 to 19 where 19 is the lowest priority]\n"
 #else
-		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
+		" -nice <prio>               : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
 #endif
-		" -nofootstep              : don't generate a footstep file\n"
-		" -tracefile               : generate two csv files describing the floors and walls found by the trace functions\n"
-		" -debugfile (TODO)        : generate a trace debug file.  The client can load the file to highlight map obstructions\n"
-		" -onlynewer               : only proceed when the map is newer than the bsp\n"
-		" -v                       : verbose output\n"
+		" -nofootstep                : don't generate a footstep file\n"
+		" -tracefile                 : generate two csv files describing the floors and walls found by the trace functions\n"
+		" -debugfile (TODO)          : generate a trace debug file.  The client can load the file to highlight map obstructions\n"
+		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
+		" -v                         : verbose output\n"
 		"\nRadiosity options:\n"
-		" -bounce <num>            : light bounces\n"
-		" -extra                   : extra light samples\n"
-		" -maxlight                : \n"
-		" -noradiosity TYPE        : don't perform the radiosity calculations, where TYPE is one of day, night, all\n"
-		"                          : default is all\n"
-		" -quant                   : lightquant\n"
-		" -radchop                 : \n"
-		" -scale                   : lightscale\n"
+		" -bounce <num>              : light bounces\n"
+		" -extra                     : extra light samples\n"
+		" -maxlight                  : \n"
+		" -noradiosity TYPE          : don't perform the radiosity calculations, where TYPE is one of day, night, all\n"
+		"                            : default is all\n"
+		" -quant                     : lightquant\n"
+		" -radchop                   : \n"
+		" -scale                     : lightscale\n"
+		" -t --threads               : thread amount\n"
 		"\nBinary space partitioning (BSPing) options:\n"
-		" -block num num           : \n"
-		" -blocks num num num num  : \n"
-		" -chop                    : \n"
-		" -direct                  : \n"
-		" -draw                    : \n"
-		" -dump                    : \n"
-		" -entity                  : \n"
-		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
-		" -info                    : print bsp file info\n"
-		" -material                : generate a material file\n"
-		" -micro <float>           : warn if a brush has a volume lower than the specified float.\n"
-		" -nobackclip              : draw downward pointing faces. (so actors cannot see up through floors\n"
-		"                            in first person view). default is to set SURF_NODRAW to downard faces.\n"
-		" -nocsg                   : \n"
-		" -nodetail                : \n"
-		" -nofill                  : \n"
-		" -nomerge                 : \n"
-		" -noprune                 : \n"
-		" -nosubdiv                : \n"
-		" -noshare                 : \n"
-		" -notjunc                 : \n"
-		" -nowater                 : \n"
-		" -noweld                  : \n"
-		" -onlyents                : only update entities\n"
-		" -verboseentities         : also be verbose about submodels (entities)\n"
+		" -block <xl> <yl>           : \n"
+		" -blocks <xl> <yl> <xh> <yh>: \n"
+		" -chop                      : \n"
+		" -direct                    : \n"
+		" -dump                      : \n"
+		" -entity                    : \n"
+		" -fulldetail                : don't treat details (and trans surfaces) as details\n"
+		" -info                      : print bsp file info\n"
+		" -material                  : generate a material file\n"
+		" -micro <float>             : warn if a brush has a volume lower than the specified float.\n"
+		" -nobackclip                : draw downward pointing faces. (so actors cannot see up through floors\n"
+		"                              in first person view). default is to set SURF_NODRAW to downard faces.\n"
+		" -nocsg                     : \n"
+		" -nodetail                  : \n"
+		" -nofill                    : \n"
+		" -nomerge                   : \n"
+		" -noprune                   : \n"
+		" -nosubdiv                  : \n"
+		" -noshare                   : \n"
+		" -notjunc                   : \n"
+		" -nowater                   : \n"
+		" -noweld                    : \n"
+		" -onlyents                  : modify existing bsp file with entities from map file\n"
+		" -verboseentities           : also be verbose about submodels (entities)\n"
 		"\nMapping options:\n"
 		"\n These options operate on map file only. No bsp file is created.\n"
-		" Output prepended by an asterisk (*) indicates operations that would change the map file.\n"
-		" \n -check                   : check source map, only print information.\n"
-		" -fix                     : same subparameters as -check, changes the source map file.\n"
+		" Output prefixed by an asterisk (*) indicates operations that would change the map file.\n"
+		" \n -check                     : check source map, only print information.\n"
+		" -fix                       : same subparameters as -check, changes the source map file.\n"
 		" \n subparameters for -check and -fix\n"
-		"     all                  : includes 'brushes entities'. Performs all checks and fixes. This is the default.\n"
-		"     bru    brushes       : includes 'levelflags textures'. Performs all checks and fixes associated with brushes.\n"
-		"     ent    entities      : performs all checks and fixes associated with entities.\n"
-		"     lvl    levelflags    : if no levelflags for a brush or entity are set, all of them are set\n"
-		"     ndr    nodraws       : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
-		"                            may have it incorrectly assigned. ***not working properly, do not included in 'all'.\n"
-		"     tex    textures      : warns when no texture or error texture is assigned.\n"
-		"                            ensures special textures and content/surface flags are consistent.\n"
+		"    all                     : Performs all checks and fixes. This is the default.\n"
+		"    bru brushes             : includes 'lvl tex mfc'. Performs all checks and fixes associated with brushes.\n"
+		"    ent entities            : performs all checks and fixes associated with entities.\n"
+		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
+		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
+		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
+		"    tex textures            : warns when no texture or error texture is assigned.\n"
+		"                              ensures special textures and content/surface flags are consistent.\n"
+		"    mfc mixedfacecontents   : ensures the contentflags are the same on each face of each brush.\n"
 	);
 }
 
@@ -162,6 +164,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "nodraws") || !strcmp(argv[i], "ndr")) {
 					Com_Printf("  %s nodraws\n", config.fixMap ? "fixing" : "checking");
 					config.chkNodraws = qtrue;
+				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
+					Com_Printf("  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
+					config.chkMixedFaceContents = qtrue;
 				} else if (!strcmp(argv[i], "all")) {
 					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
@@ -178,6 +183,9 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			Usage();
 			exit(0);
+		} else if (!strcmp(argv[i], "-t") || !strcmp(argv[i], "-threads")) {
+			threadstate.numthreads = atoi(argv[++i]);
+			Com_Printf("threads: #%i\n", threadstate.numthreads);
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
@@ -197,13 +205,13 @@ static void U2M_Parameter (int argc, const char **argv)
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
 #ifdef HAVE_SETPRIORITY
-			config.nice = atoi(argv[i + 1]);
+			config.nice = atoi(argv[++i]);
 			Com_Printf("nice = %i\n", config.nice);
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
 				Com_Printf("failed to set nice level of %i\n", config.nice);
 #elif defined _WIN32
 			HANDLE proc = GetCurrentProcess();
-			config.nice = atoi(argv[i + 1]);
+			config.nice = atoi(argv[++i]);
 			Com_Printf("nice = %i\n", config.nice);
 			switch (config.nice) {
 			case 0:
@@ -222,8 +230,8 @@ static void U2M_Parameter (int argc, const char **argv)
 			CloseHandle(proc);
 #else
 			Com_Printf("nice not implemented for this arch\n");
-#endif
 			i++;
+#endif
 		} else if (!strcmp(argv[i], "-noprune")) {
 			Com_Printf("noprune = true\n");
 			config.noprune = qtrue;
@@ -411,27 +419,32 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 		return 0;
 	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
 		return 1;
-#else
-# ifdef _WIN32
+#elif defined (_WIN32)
 	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
 	HANDLE hMapFile, hBspFile;
+	int retval = 0;
 	/* open the files */
 	hMapFile = CreateFile(map, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
 	if (hMapFile == INVALID_HANDLE_VALUE)
 		return 0;
 	hBspFile = CreateFile(bsp, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-	if (hBspFile == INVALID_HANDLE_VALUE)
+	if (hBspFile == INVALID_HANDLE_VALUE){
+		CloseHandle(hMapFile);
 		return 0;
+	}
 
-	if (!GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap))
-		return 0;
+	/** This is done as two if statements to ensure that ftWriteMap and ftWriteBsp are populated first. */
+	if (GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap)
+		&& GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp)) {
+		if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1) {
+			retval = 1;
+		}
+	}
 
-	if (!GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp))
-		return 0;
+	CloseHandle(hMapFile);
+	CloseHandle(hBspFile);
 
-	if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1)
-		return 1;
-# endif
+	return retval;
 #endif
 	/* not up-to-date - recompile */
 	return 0;
@@ -444,6 +457,9 @@ int main (int argc, const char **argv)
 	double begin, start, end;
 
 	memset(&config, 0, sizeof(config));
+	/* init thread state */
+	memset(&threadstate, 0, sizeof(threadstate_t));
+
 	U2M_SetDefaultConfigValues();
 
 	Com_Printf("---- ufo2map "VERSION" ----\n");
@@ -475,7 +491,7 @@ int main (int argc, const char **argv)
 	}
 
 	Com_Printf("...map: '%s'\n", mapFilename);
-	if(!(config.performMapCheck || config.fixMap))
+	if (!(config.performMapCheck || config.fixMap))
 		Com_Printf("...bsp: '%s'\n", bspFilename);
 
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
@@ -497,10 +513,21 @@ int main (int argc, const char **argv)
 	} else if (config.performMapCheck || config.fixMap) {
 		Com_Printf("Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
-		if (config.chkTextures || config.chkBrushes || config.chkAll)
-			CheckTextures();
+		/* level flags must be fixed before mixed face contents, or they swamp the
+		 * console with output, as levelflags are contentflags */
 		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)
 			CheckLevelFlags();
+		/* this must be before mfc check, as otherwise mfc warnings are given
+		* which are auto-fixed based on textures */
+		if (config.chkTextures || config.chkBrushes || config.chkAll)
+			CheckFlagsBasedOnTextures();
+		/* mixed face contents check may remove contentflags. this should be done
+		 * before tex based on flags check, as tex may replace tex on the basis
+		 * of contentflags.*/
+		if (config.chkMixedFaceContents || config.chkBrushes ||config.chkAll )
+			CheckMixedFaceContents();
+		if (config.chkTextures || config.chkBrushes || config.chkAll)
+			CheckTexturesBasedOnFlags();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */

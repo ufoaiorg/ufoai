@@ -315,43 +315,9 @@ ac     +u     +u     +u     ad    0
 // crashed UFOs
 // *********************************
 
-//assembly craft_crash_bomber
-//{
-//title "_UFO - Bomber"
-//size "7 5"
-//+h01 "0 10"
-//+h02 "0 10"
-//+h03 "0 10"
-//+h04 "0 1"
-//+h05 "0 2"
-//+h06 "0 2"
-//+h07 "0 2"
-//+d01 "0 2"
-//+d03 "0 2"
-//+craft_crash_bomber "1 1"
-//*rm_drop +drop_firebird "1 1"
-//}
-
-assembly craft_crash_corrupter
+assembly craft_crash_normal
 {
-title "_UFO - Corrupter"
-size "12 10"
-+h01 "0 16"
-+h02 "0 14"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+h07 "0 2"
-+d01 "0 2"
-+d03 "0 2"
-+craft_crash_corrupter "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_crash_fighter
-{
-title "_UFO - Fighter"
+title "_Crashed UFO"
 size "7 5"
 +h01 "0 10"
 +h02 "0 10"
@@ -362,56 +328,6 @@ size "7 5"
 +h07 "0 2"
 +d01 "0 2"
 +d03 "0 2"
-+craft_crash_fighter "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_crash_harvester
-{
-title "_UFO - Harvester"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+h07 "0 2"
-+d02_harvester "1 2"
-+craft_crash_harvester "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_crash_scout
-{
-title "_UFO - Scout"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+h07 "0 2"
-+d01 "0 2"
-+d03 "0 2"
-+craft_crash_scout "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_crash_supply
-{
-title "_UFO - Supply Ship"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
-+h04 "0 1"
-+h05 "0 2"
-+h06 "0 2"
-+h07 "0 2"
-+d01 "0 2"
-+d03 "0 2"
-+craft_crash_supply "1 1"
+*rm_ufo +craft_crash_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }

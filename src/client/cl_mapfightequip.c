@@ -128,6 +128,8 @@ static void AIM_CheckAirequipID (void)
  */
 static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
+	if (!slot)
+		return;
 	/* You can choose an ammo only if a weapon has already been selected */
 	if (airequipID >= AC_ITEM_AMMO && !slot->item) {
 		airequipSelectedZone = ZONE_MAIN;
@@ -320,6 +322,10 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* instal
 		Com_Printf("AIM_SelectableAircraftItem: no aircraft, no base and no installation given\n");
 		return qfalse;
 	}
+
+	/* no slot somehow */
+	if (!slot)
+		return qfalse;
 
 	/* item is researched? */
 	if (!RS_IsResearched_ptr(tech))
@@ -983,9 +989,9 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				AII_UpdateAircraftStats(aircraft);
 				MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			} else if (installation) {
-				MN_AddNewMessage(_("Notice"), _("Installation defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Installation defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
 			}
 		}
 	} else if (slot->installationTime < 0) {
@@ -1394,7 +1400,6 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	if (aircraftMenu) {
-		assert(baseCurrent->aircraftCurrent >= 0);
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		/* Select slot */
@@ -1697,7 +1702,7 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	/* proceed only if an item has been selected */
 	if ((!airequipSelectedTechnology && airequipID != AC_ITEM_PILOT) ||
-	    (!airequipSelectedPilot && airequipID == AC_ITEM_PILOT))
+		(!airequipSelectedPilot && airequipID == AC_ITEM_PILOT))
 		return;
 
 	/* check in which menu we are */
@@ -1933,7 +1938,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	activeMenu = MN_GetActiveMenu();
 	/* check in which menu we are */
 	if (!Q_strncmp(activeMenu->name, "aircraft_equip", 14)) {
-		if (baseCurrent->aircraftCurrent < 0)
+		if (baseCurrent->aircraftCurrent == NULL)
 			return;
 		aircraft = baseCurrent->aircraftCurrent;
 		base = NULL;

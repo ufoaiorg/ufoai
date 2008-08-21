@@ -64,13 +64,14 @@ void PopInfo (void)
  * @param[in] mins
  * @param[in] maxs
  * @param[in] n The node nums
+ * @sa R_ModLoadNodes
  */
-static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
+static int BuildNodeChildren (vec3_t mins, vec3_t maxs, const int n[3])
 {
 	int node = LEAFNODE, i;
 
 	for (i = 0; i < 3; i++) {
-		dBspNode_t	 *newnode;
+		dBspNode_t *newnode;
 		vec3_t newmins, newmaxs, addvec;
 
 		if (n[i] == LEAFNODE)
@@ -240,9 +241,11 @@ void ProcessLevel (unsigned int levelnum)
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
 	/* Com_Printf("Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels); */
 
+	/** @note Should be reentrant as each thread has a unique levelnum at any given time */
 	dm = &curTile->models[levelnum];
 	memset(dm, 0, sizeof(*dm));
 
+	/** @todo Check what happens if two threads do the memcpy */
 	/* back copy backup brush sides structure */
 	/* to reset all the changed values (especialy "finished") */
 	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t) * nummapbrushes);

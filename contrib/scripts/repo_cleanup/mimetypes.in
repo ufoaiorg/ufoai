@@ -12,7 +12,7 @@ xbm image/x-xbitmap
 xpm image/x-xpixmap
 3ds application/x-3ds
 psd image/psd
-dll application/octet-stream
+dll application/x-msdownload
 pdf application/pdf
 doc application/msword
 zip application/zip
@@ -23,4 +23,9 @@ ttf application/x-truetype-font
 html text/html
 txt text/plain
 po text/x-gettext-translation
-py text/plain
+py text/x-python
+sh text/x-sh
+pl text/x-perl
+svg image/svg+xml
+gif image/gif
+tif image/tiff

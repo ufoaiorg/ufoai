@@ -48,14 +48,14 @@ typedef enum {
 #define CAMERA_LEVEL_HEIGHT UNIT_HEIGHT
 
 typedef struct {
-	vec3_t reforg;		/**< the reference origin used for rotating around */
-	vec3_t camorg;		/**< origin of the camera */
+	vec3_t origin;		/**< the reference origin used for rotating around and to look at */
+	vec3_t camorg;		/**< origin of the camera (look from) */
 	vec3_t speed;		/**< speed of camera movement */
 	vec3_t angles;		/**< current camera angle */
 	vec3_t omega;		/**< speed of rotation */
 	vec3_t axis[3];		/**< set when refdef.angles is set */
 
-	float lerplevel;	/**< linear interpolation between frames */
+	float lerplevel;	/**< linear interpolation between frames while changing the world level */
 	float zoom;			/**< the current zoom level (see MIN_ZOOM and MAX_ZOOM) */
 } camera_t;
 

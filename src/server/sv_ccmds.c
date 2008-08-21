@@ -221,7 +221,7 @@ static void SV_Kick_f (void)
  */
 static void SV_Status_f (void)
 {
-	int i, j, l;
+	int i;
 	client_t *cl;
 	const char *s;
 	char buf[256];
@@ -236,29 +236,26 @@ static void SV_Status_f (void)
 	Com_Printf("num status  name            address              \n");
 	Com_Printf("--- ------- --------------- ---------------------\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (!cl->state)
+		char        state_buf[16];
+		char const* state;
+
+		if (cl->state == cs_free)
 			continue;
-		Com_Printf("%3i ", i);
 
-		if (cl->state == cs_connected)
-			Com_Printf("CONNECT ");
-		else if (cl->state == cs_spawning)
-			Com_Printf("SPAWNIN ");
-		else
-			Com_Printf("%7i ", cl->state);
+		switch (cl->state) {
+		case cs_connected:
+			state = "CONNECT"; break;
+		case cs_spawning:
+			state = "SPAWNIN"; break;
 
-		Com_Printf("%s", cl->name);
-		l = 16 - strlen(cl->name);
-		for (j = 0; j < l; j++)
-			Com_Printf(" ");
+		default:
+			sprintf(state_buf, "%7i", cl->state);
+			state = state_buf;
+			break;
+		}
 
 		s = NET_StreamPeerToName(cl->stream, buf, sizeof(buf), qfalse);
-		Com_Printf("%s", s);
-		l = 22 - strlen(s);
-		for (j = 0; j < l; j++)
-			Com_Printf(" ");
-
-		Com_Printf("\n");
+		Com_Printf("%3i %s %-15s %-21s\n", i, state, cl->name, s);
 	}
 	Com_Printf("\n");
 }
@@ -411,7 +408,7 @@ static void SV_ListMaps_f (void)
 
 	for (i = 0; i <= fs_numInstalledMaps; i++)
 		Com_Printf("%s\n", fs_maps[i]);
-	Com_Printf("-----\n %i installed maps\n", fs_numInstalledMaps + 1);
+	Com_Printf("-----\n %i installed maps\n+name means random map assembly", fs_numInstalledMaps + 1);
 }
 
 static void SV_MapcycleList_f (void)

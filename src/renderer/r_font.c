@@ -486,10 +486,6 @@ static void R_FontConvertChars (char *buffer)
 		*replace++ = ' ';
 		replace = strstr(replace, "\t");
 	}
-
-	replace = strstr(buffer, "\n\0");
-	if (replace)
-		*replace = '\n';	/** @todo Could be removed ... Doesn't change anything, no? */
 }
 
 static fontCacheList_t cacheList;
@@ -775,7 +771,7 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
 
 	if (style && style[0] != '\0')
 		for (i = 0; i < NUM_FONT_STYLES; i++)
-			if (!Q_stricmp(fontStyle[i].name, style)) {
+			if (!Q_strcasecmp(fontStyle[i].name, style)) {
 				renderstyle = fontStyle[i].renderStyle;
 				break;
 			}

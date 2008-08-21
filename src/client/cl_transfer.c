@@ -62,18 +62,16 @@ static const int MAX_TR_FACTORS = 500;
 /**
  * @brief Checks condition for item transfer.
  * @param[in] od Pointer to object definition.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @param[in] amount Number of items to transfer.
  * @return Number of items that can be transfered.
  */
-static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t *destbase, int amount)
+static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 {
 	int i, intransfer = 0, amtransfer = 0;
 	int smallufotransfer = 0, bigufotransfer = 0;
 
 	assert(od);
-	assert(srcbase);
 	assert(destbase);
 
 	/* Count size of all items already on the transfer list. */
@@ -84,7 +82,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t
 			if (od->tech->type == RS_CRAFT) {
 				aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 				assert(ufocraft);
-				if (ufocraft->weight == AIRCRAFT_LARGE)
+				if (ufocraft->size == AIRCRAFT_LARGE)
 					bigufotransfer++;
 				else
 					smallufotransfer++;
@@ -113,7 +111,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t
 	} else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 		aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 		assert(ufocraft);
-		if (ufocraft->weight == AIRCRAFT_LARGE) {
+		if (ufocraft->size == AIRCRAFT_LARGE) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_HANGAR)) {
 				MN_Popup(_("Missing Large UFO Hangar"), _("Destination base does not have functional Large UFO Hangar.\n"));
 				return 0;
@@ -124,7 +122,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t
 					return 0;
 				}
 			}
-		} else if (ufocraft->weight == AIRCRAFT_SMALL) {
+		} else if (ufocraft->size == AIRCRAFT_SMALL) {
 			if (!B_GetBuildingStatus(destbase, B_UFO_SMALL_HANGAR)) {
 				MN_Popup(_("Missing Small UFO Hangar"), _("Destination base does not have functional Small UFO Hangar.\n"));
 				return qfalse;
@@ -154,16 +152,15 @@ static int TR_CheckItem (const objDef_t *od, const base_t *srcbase, const base_t
 /**
  * @brief Checks condition for employee transfer.
  * @param[in] employee Pointer to employee for transfer.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of employee is possible.
  */
-static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *srcbase, const base_t *destbase)
+static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
 {
 	int i, intransfer = 0;
 	employeeType_t emplType;
 
-	assert(employee && srcbase && destbase);
+	assert(employee && destbase);
 
 	/* Count amount of all employees already on the transfer list. */
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
@@ -189,6 +186,15 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *srcb
 			return qfalse;
 		}
 		break;
+	case EMPL_PILOT:
+		/* Is this a pilot assigned to aircraft? */
+		if (CL_PilotInAircraft(employee, NULL)) {
+			Com_sprintf(popupText, sizeof(popupText), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+			employee->chr.name);
+			MN_Popup(_("Pilot in aircraft"), popupText);
+			return qfalse;
+		}
+		break;
 	default:
 		break;
 	}
@@ -199,15 +205,14 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *srcb
 /**
  * @brief Checks condition for alive alien transfer.
  * @param[in] alienidx Index of an alien type.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
-static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
 {
 	int i, intransfer = 0;
 
-	assert(srcbase && destbase);
+	assert(destbase);
 
 	/* Count amount of alive aliens already on the transfer list. */
 	for (i = 0; i < gd.numAliensTD; i++) {
@@ -230,15 +235,13 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 /**
  * @brief Checks condition for aircraft transfer.
  * @param[in] aircraft Pointer to aircraft which is going to be added to transferlist.
- * @param[in] srcbase Pointer to current base.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this aircraft is possible.
  */
-static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *srcbase, const base_t *destbase)
+static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *destbase)
 {
 	int i, hangarStorage, numAircraftTransfer = 0;
 	assert(aircraft);
-	assert(srcbase);
 	assert(destbase);
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
@@ -247,7 +250,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *srcb
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIdx(i);
 			assert(aircraftTemp);
-			if (aircraftTemp->weight == aircraft->weight)
+			if (aircraftTemp->size == aircraft->size)
 				numAircraftTransfer++;
 		}
 
@@ -311,9 +314,9 @@ static void TR_CargoList (void)
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		for (i = 0; i < gd.numEmployees[emplType]; i++) {
 			if (trEmployeesTmp[emplType][i]) {
-				if (emplType == EMPL_SOLDIER) {
+				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
-					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s\n") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					Q_strcat(cargoList, str, sizeof(cargoList));
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
@@ -328,7 +331,7 @@ static void TR_CargoList (void)
 		}
 	}
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		if (emplType == EMPL_SOLDIER)
+		if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 			continue;
 		if (trempl[emplType] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
@@ -479,8 +482,8 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferTy
 						continue;
 					if (trEmployeesTmp[emplType][i])	/* Already on transfer list. */
 						continue;
-					if (emplType == EMPL_SOLDIER) {
-						Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
+						Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s\n") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 						Q_strcat(transferList, str, sizeof(transferList));
 						cnt++;
 					}
@@ -488,7 +491,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferTy
 				}
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
-				if (i == EMPL_SOLDIER)
+				if (i == EMPL_SOLDIER || i == EMPL_PILOT)
 					continue;
 				if ((trempl[i] > 0) && (numempl[i] > 0))
 					Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), E_GetEmployeeString(i), trempl[i], numempl[i]);
@@ -609,7 +612,7 @@ static void TR_TransferListClear_f (void)
 				assert(ufocraft);
 				/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 				baseCurrent->storage.num[i] += trItemsTmp[i];
-				if (ufocraft->weight == AIRCRAFT_LARGE)
+				if (ufocraft->size == AIRCRAFT_LARGE)
 					baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
 				else
 					baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
@@ -667,7 +670,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 							if (UR_ConditionsForStoring(destination, ufocraft)) {
 								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 								baseCurrent->storage.num[i]++; /** @todo Why aren't we using 'destination' here? */
-								if (ufocraft->weight == AIRCRAFT_LARGE)
+								if (ufocraft->size == AIRCRAFT_LARGE)
 									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
 								else
 									destination->capacities[CAP_UFOHANGARS_SMALL].cur++;
@@ -839,8 +842,12 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+#if 0
+	MN_PopMenu(qfalse);
+#else
 	/** @todo Why don't we use MN_PopMenu directly here? */
 	Cbuf_AddText("mn_pop\n");
+#endif
 }
 
 /**
@@ -1035,6 +1042,10 @@ static void TR_TransferStart_f (void)
 	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
+	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
+	PR_ProductionAllowed(baseCurrent);
+	RS_ResearchAllowed(baseCurrent);
+
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	MN_PopMenu(qfalse);
@@ -1093,7 +1104,7 @@ static void TR_TransferListSelect_f (void)
 					/* you can't transfer more item than you have */
 					amount = min(amount, baseCurrent->storage.num[i]);
 					/* you can only transfer items that destination base can accept */
-					amount = TR_CheckItem(od, baseCurrent, transferBase, amount);
+					amount = TR_CheckItem(od, transferBase, amount);
 					if (amount) {
 						trItemsTmp[i] += amount;
 						if (!Q_strncmp(od->id, "antimatter", 10))
@@ -1103,7 +1114,7 @@ static void TR_TransferListSelect_f (void)
 							assert(ufocraft);
 							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 							baseCurrent->storage.num[i] -= amount;
-							if (ufocraft->weight == AIRCRAFT_LARGE)
+							if (ufocraft->size == AIRCRAFT_LARGE)
 								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur -= amount;
 							else
 								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur -= amount;
@@ -1125,8 +1136,24 @@ static void TR_TransferListSelect_f (void)
 			if (trEmployeesTmp[EMPL_SOLDIER][i])
 				continue;
 			if (cnt == num) {
-				if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
+				if (TR_CheckEmployee(employee, transferBase)) {
 					trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee;
+					added = qtrue;
+					break;
+				} else
+					return;
+			}
+			cnt++;
+		}
+		for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+			employee_t *employee = &gd.employees[EMPL_PILOT][i];
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			if (trEmployeesTmp[EMPL_PILOT][i])
+				continue;
+			if (cnt == num) {
+				if (TR_CheckEmployee(employee, transferBase)) {
+					trEmployeesTmp[EMPL_PILOT][employee->idx] = employee;
 					added = qtrue;
 					break;
 				} else
@@ -1148,7 +1175,7 @@ static void TR_TransferListSelect_f (void)
 		}
 
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			if (emplType == EMPL_SOLDIER)
+			if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 				continue;
 			/* no employee in base or all employees already in the transfer list */
 			if (numempl[emplType] < 1)
@@ -1161,7 +1188,7 @@ static void TR_TransferListSelect_f (void)
 						continue;
 					if (trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
-					if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
+					if (TR_CheckEmployee(employee, transferBase)) {
 						trEmployeesTmp[emplType][employee->idx] = employee;
 						amount--;
 						if (amount == 0)
@@ -1188,7 +1215,7 @@ static void TR_TransferListSelect_f (void)
 			}
 			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
-					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
+					if (TR_CheckAlien(i, transferBase)) {
 						trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
 						AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), -1);
@@ -1209,7 +1236,7 @@ static void TR_TransferListSelect_f (void)
 				return;
 			if (aircraft->homebase == baseCurrent && TR_AircraftListSelect(i)) {
 				if (cnt == num) {
-					if (TR_CheckAircraft(aircraft, baseCurrent, transferBase)) {
+					if (TR_CheckAircraft(aircraft, transferBase)) {
 						trAircraftsTmp[i] = i;
 						break;
 					} else
@@ -1404,7 +1431,7 @@ static void TR_CargoListSelect_f (void)
 						assert(ufocraft);
 						/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
 						baseCurrent->storage.num[i] += amount;
-						if (ufocraft->weight == AIRCRAFT_LARGE)
+						if (ufocraft->size == AIRCRAFT_LARGE)
 							baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur += amount;
 						else
 							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur += amount;
@@ -1438,6 +1465,16 @@ static void TR_CargoListSelect_f (void)
 				cnt++;
 			}
 		}
+		for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+			if (trEmployeesTmp[EMPL_PILOT][i]) {
+				if (cnt == num) {
+					trEmployeesTmp[EMPL_PILOT][i] = NULL;
+					removed = qtrue;
+					break;
+				}
+				cnt++;
+			}
+		}
 		if (removed)	/* We already removed soldier, break here. */
 			break;
 
@@ -1453,7 +1490,7 @@ static void TR_CargoListSelect_f (void)
 		}
 
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			if ((numempl[emplType] < 1) || (emplType == EMPL_SOLDIER))
+			if ((numempl[emplType] < 1) || (emplType == EMPL_SOLDIER) || (emplType == EMPL_PILOT))
 				continue;
 			if (cnt == num) {
 				int amount;

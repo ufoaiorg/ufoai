@@ -684,9 +684,14 @@ HAVE_SDL_CONFIG
 SDL_CFLAGS
 SDL_LIBS
 HAVE_CURSES
+PKG_CONFIG
+RADIANT_CFLAGS
+RADIANT_LIBS
+HAVE_XML2_CONFIG
 BUILD_CLIENT
 BUILD_DEDICATED
 BUILD_UFO2MAP
+BUILD_GTKRADIANT
 BUILD_DEBUG
 PARANOID
 PROFILING
@@ -708,7 +713,10 @@ CFLAGS
 LDFLAGS
 LIBS
 CPPFLAGS
-CPP'
+CPP
+PKG_CONFIG
+RADIANT_CFLAGS
+RADIANT_LIBS'
 
 
 # Initialize some variables set by options.
@@ -1285,6 +1293,7 @@ Optional Features:
   --disable-dedicated     build dedicated server [default=enabled]
   --disable-client        build client [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
+  --enable-gtkradiant     build gtkradiant [default=disabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
@@ -1297,6 +1306,7 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-sdl-config=FILE  using the given sdl-config [default=sdl-config]
   --with-curl-config=FILE using the given curl-config [default=curl-config]
+  --with-xml2-config=FILE using the given xml2-config [default=xml2-config]
   --with-curses           compile with curses console support [default=check]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
@@ -1310,6 +1320,11 @@ Some influential environment variables:
   CPPFLAGS    C/C++/Objective C preprocessor flags, e.g. -I<include dir> if
               you have headers in a nonstandard directory <include dir>
   CPP         C preprocessor
+  PKG_CONFIG  path to pkg-config utility
+  RADIANT_CFLAGS
+              C compiler flags for RADIANT, overriding pkg-config
+  RADIANT_LIBS
+              linker flags for RADIANT, overriding pkg-config
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -1735,8 +1750,13 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
+# check build/host/target systems
+# (build  = system we're building on,
+#  host   = system we're building for,
+#  target = system the program we're building will build for)
 ac_aux_dir=
-for ac_dir in . "$srcdir"/.; do
+for ac_dir in "$srcdir" "$srcdir/.." "$srcdir/../.."; do
   if test -f "$ac_dir/install-sh"; then
     ac_aux_dir=$ac_dir
     ac_install_sh="$ac_aux_dir/install-sh -c"
@@ -1752,8 +1772,8 @@ for ac_dir in . "$srcdir"/.; do
   fi
 done
 if test -z "$ac_aux_dir"; then
-  { { echo "$as_me:$LINENO: error: cannot find install-sh or install.sh in . \"$srcdir\"/." >&5
-echo "$as_me: error: cannot find install-sh or install.sh in . \"$srcdir\"/." >&2;}
+  { { echo "$as_me:$LINENO: error: cannot find install-sh or install.sh in \"$srcdir\" \"$srcdir/..\" \"$srcdir/../..\"" >&5
+echo "$as_me: error: cannot find install-sh or install.sh in \"$srcdir\" \"$srcdir/..\" \"$srcdir/../..\"" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -1766,11 +1786,6 @@ ac_config_sub="$SHELL $ac_aux_dir/config.sub"  # Please don't use this var.
 ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
-
-# check build/host/target systems
-# (build  = system we're building on,
-#  host   = system we're building for,
-#  target = system the program we're building will build for)
 # Make sure we can run config.sub.
 $SHELL "$ac_aux_dir/config.sub" sun4 >/dev/null 2>&1 ||
   { { echo "$as_me:$LINENO: error: cannot run $SHELL $ac_aux_dir/config.sub" >&5
@@ -1950,6 +1965,15 @@ fi
 
 
 
+# Check whether --with-xml2_config was given.
+if test "${with_xml2_config+set}" = set; then
+  withval=$with_xml2_config;
+else
+  with_xml2_config=xml2-config
+fi
+
+
+
 # Check whether --with-curses was given.
 if test "${with_curses+set}" = set; then
   withval=$with_curses;
@@ -1988,6 +2012,14 @@ if test "${enable_ufo2map+set}" = set; then
   enableval=$enable_ufo2map;
 else
   enable_ufo2map=yes
+fi
+
+
+# Check whether --enable-gtkradiant was given.
+if test "${enable_gtkradiant+set}" = set; then
+  enableval=$enable_gtkradiant;
+else
+  enable_gtkradiant=no
 fi
 
 
@@ -8134,6 +8166,7 @@ fi
 
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+RADIANT_LIBS="$RADIANT_LIBS $LIBS"
 
 if test "$enable_client" = "yes"
 then
@@ -9624,6 +9657,223 @@ _ACEOF
 	CLIENT_CFLAGS="$CFLAGS"
 
 # end of client only checks
+else
+	#---------------------------------------------------------------------------------------------
+	# Check SDL
+	#---------------------------------------------------------------------------------------------
+	sdl_config=$with_sdl_config
+
+	OLD_CPPFLAGS=$CPPFLAGS
+	OLD_CFLAGS=$CFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+
+	if test $TARGET_OS != "darwin"
+	then
+		# Extract the first word of "$sdl_config", so it can be a program name with args.
+set dummy $sdl_config; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_prog_HAVE_SDL_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_SDL_CONFIG"; then
+  ac_cv_prog_HAVE_SDL_CONFIG="$HAVE_SDL_CONFIG" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_HAVE_SDL_CONFIG="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+HAVE_SDL_CONFIG=$ac_cv_prog_HAVE_SDL_CONFIG
+if test -n "$HAVE_SDL_CONFIG"; then
+  { echo "$as_me:$LINENO: result: $HAVE_SDL_CONFIG" >&5
+echo "${ECHO_T}$HAVE_SDL_CONFIG" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+		then
+			CPPFLAGS=`$sdl_config --cflags`
+			LDFLAGS=`$sdl_config --libs`
+			SDL_CFLAGS=$CPPFLAGS
+
+			SDL_LIBS=$LDFLAGS
+
+		else
+			{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+		fi
+	else
+		# mac is special...again
+		CFLAGS="$CFLAGS $sdl_mac_cflags"
+		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+		SDL_CFLAGS="$sdl_mac_cflags"
+		SDL_LIBS="$sdl_mac_ldflags"
+	fi
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL headers and libraries
+	#---------------------------------------------------------------------------------------------
+
+for ac_header in SDL.h
+do
+as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  { echo "$as_me:$LINENO: checking for $ac_header" >&5
+echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+fi
+ac_res=`eval echo '${'$as_ac_Header'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+else
+  # Is the header compilable?
+{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
+echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+$ac_includes_default
+#include <$ac_header>
+_ACEOF
+rm -f conftest.$ac_objext
+if { (ac_try="$ac_compile"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_compile") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest.$ac_objext; then
+  ac_header_compiler=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_header_compiler=no
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
+echo "${ECHO_T}$ac_header_compiler" >&6; }
+
+# Is the header present?
+{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
+echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <$ac_header>
+_ACEOF
+if { (ac_try="$ac_cpp conftest.$ac_ext"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } >/dev/null && {
+	 test -z "$ac_c_preproc_warn_flag$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       }; then
+  ac_header_preproc=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+  ac_header_preproc=no
+fi
+
+rm -f conftest.err conftest.$ac_ext
+{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
+echo "${ECHO_T}$ac_header_preproc" >&6; }
+
+# So?  What about this header?
+case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
+  yes:no: )
+    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
+echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
+    ac_header_preproc=yes
+    ;;
+  no:yes:* )
+    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
+echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
+echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
+echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
+echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
+
+    ;;
+esac
+{ echo "$as_me:$LINENO: checking for $ac_header" >&5
+echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  eval "$as_ac_Header=\$ac_header_preproc"
+fi
+ac_res=`eval echo '${'$as_ac_Header'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+
+fi
+if test `eval echo '${'$as_ac_Header'}'` = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_SDL_h" != "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the SDL development headers" >&5
+echo "$as_me: error: You must have the SDL development headers" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -9743,6 +9993,303 @@ fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
+# Check for radiant
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_gtkradiant" = "yes"
+then
+	LIBS=
+	OLD_RADIANT_LIBS="$RADIANT_LIBS"
+	RADIANT_LIBS=
+	{ echo "$as_me:$LINENO: GtkRadiant dependencies: gtk2, gtkglext, glib2 and libxml2" >&5
+echo "$as_me: GtkRadiant dependencies: gtk2, gtkglext, glib2 and libxml2" >&6;}
+
+
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_path_PKG_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { echo "$as_me:$LINENO: result: $PKG_CONFIG" >&5
+echo "${ECHO_T}$PKG_CONFIG" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+
+fi
+if test -z "$ac_cv_path_PKG_CONFIG"; then
+  ac_pt_PKG_CONFIG=$PKG_CONFIG
+  # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_path_ac_pt_PKG_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $ac_pt_PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ac_pt_PKG_CONFIG="$ac_pt_PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_ac_pt_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+ac_pt_PKG_CONFIG=$ac_cv_path_ac_pt_PKG_CONFIG
+if test -n "$ac_pt_PKG_CONFIG"; then
+  { echo "$as_me:$LINENO: result: $ac_pt_PKG_CONFIG" >&5
+echo "${ECHO_T}$ac_pt_PKG_CONFIG" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+  if test "x$ac_pt_PKG_CONFIG" = x; then
+    PKG_CONFIG=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ echo "$as_me:$LINENO: WARNING: In the future, Autoconf will not detect cross-tools
+whose name does not start with the host triplet.  If you think this
+configuration is useful to you, please write to autoconf@gnu.org." >&5
+echo "$as_me: WARNING: In the future, Autoconf will not detect cross-tools
+whose name does not start with the host triplet.  If you think this
+configuration is useful to you, please write to autoconf@gnu.org." >&2;}
+ac_tool_warned=yes ;;
+esac
+    PKG_CONFIG=$ac_pt_PKG_CONFIG
+  fi
+else
+  PKG_CONFIG="$ac_cv_path_PKG_CONFIG"
+fi
+
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=0.9.0
+	{ echo "$as_me:$LINENO: checking pkg-config is at least version $_pkg_min_version" >&5
+echo $ECHO_N "checking pkg-config is at least version $_pkg_min_version... $ECHO_C" >&6; }
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		{ echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6; }
+	else
+		{ echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+		PKG_CONFIG=""
+	fi
+
+fi
+
+pkg_failed=no
+{ echo "$as_me:$LINENO: checking for RADIANT" >&5
+echo $ECHO_N "checking for RADIANT... $ECHO_C" >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$RADIANT_CFLAGS"; then
+        pkg_cv_RADIANT_CFLAGS="$RADIANT_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"gtk+-2.0 gtkglext-1.0 glib-2.0\"") >&5
+  ($PKG_CONFIG --exists --print-errors "gtk+-2.0 gtkglext-1.0 glib-2.0") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_RADIANT_CFLAGS=`$PKG_CONFIG --cflags "gtk+-2.0 gtkglext-1.0 glib-2.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$RADIANT_LIBS"; then
+        pkg_cv_RADIANT_LIBS="$RADIANT_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"gtk+-2.0 gtkglext-1.0 glib-2.0\"") >&5
+  ($PKG_CONFIG --exists --print-errors "gtk+-2.0 gtkglext-1.0 glib-2.0") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_RADIANT_LIBS=`$PKG_CONFIG --libs "gtk+-2.0 gtkglext-1.0 glib-2.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        RADIANT_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gtk+-2.0 gtkglext-1.0 glib-2.0"`
+        else
+	        RADIANT_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gtk+-2.0 gtkglext-1.0 glib-2.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$RADIANT_PKG_ERRORS" >&5
+
+	{ { echo "$as_me:$LINENO: error: Package requirements (gtk+-2.0 gtkglext-1.0 glib-2.0) were not met:
+
+$RADIANT_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables RADIANT_CFLAGS
+and RADIANT_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" >&5
+echo "$as_me: error: Package requirements (gtk+-2.0 gtkglext-1.0 glib-2.0) were not met:
+
+$RADIANT_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables RADIANT_CFLAGS
+and RADIANT_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" >&2;}
+   { (exit 1); exit 1; }; }
+elif test $pkg_failed = untried; then
+	{ { echo "$as_me:$LINENO: error: The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables RADIANT_CFLAGS
+and RADIANT_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details." >&5
+echo "$as_me: error: The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables RADIANT_CFLAGS
+and RADIANT_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details." >&2;}
+   { (exit 1); exit 1; }; }
+else
+	RADIANT_CFLAGS=$pkg_cv_RADIANT_CFLAGS
+	RADIANT_LIBS=$pkg_cv_RADIANT_LIBS
+        { echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6; }
+	:
+fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check for libxml2
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	# Extract the first word of "$with_xml2_config", so it can be a program name with args.
+set dummy $with_xml2_config; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_prog_HAVE_XML2_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_XML2_CONFIG"; then
+  ac_cv_prog_HAVE_XML2_CONFIG="$HAVE_XML2_CONFIG" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_HAVE_XML2_CONFIG="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+HAVE_XML2_CONFIG=$ac_cv_prog_HAVE_XML2_CONFIG
+if test -n "$HAVE_XML2_CONFIG"; then
+  { echo "$as_me:$LINENO: result: $HAVE_XML2_CONFIG" >&5
+echo "${ECHO_T}$HAVE_XML2_CONFIG" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+
+	if test "$ac_cv_prog_HAVE_XML2_CONFIG" = "yes"
+	then
+		RADIANT_LIBS="$RADIANT_LIBS `$with_xml2_config --libs`"
+		RADIANT_CFLAGS="$RADIANT_CFLAGS `$with_xml2_config --cflags`"
+	else
+		{ { echo "$as_me:$LINENO: error: You must have the libxml2 development headers" >&5
+echo "$as_me: error: You must have the libxml2 development headers" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
+
+	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
+fi
+
+#---------------------------------------------------------------------------------------------
 # Wipe the LIBS string
 #---------------------------------------------------------------------------------------------
 
@@ -9787,6 +10334,18 @@ then
 	{ echo "$as_me:$LINENO: Enabling ufo2map" >&5
 echo "$as_me: Enabling ufo2map" >&6;}
 	BUILD_UFO2MAP=1
+
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for gtkradiant
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_gtkradiant" = "yes"
+then
+	{ echo "$as_me:$LINENO: Enabling GtkRadiant" >&5
+echo "$as_me: Enabling GtkRadiant" >&6;}
+	BUILD_GTKRADIANT=1
 
 fi
 
@@ -9877,10 +10436,14 @@ GAME_LIBS="$GAME_LIBS"
 
 TOOLS_LIBS="$TOOLS_LIBS"
 
+RADIANT_LIBS="$RADIANT_LIBS"
+
+RADIANT_CFLAGS="$RADIANT_CFLAGS"
+
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
 #AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
-#AC_MSG_NOTICE(Link against:   $LIBS")
+#AC_MSG_NOTICE(Link against:   $LIBS)
 
 ac_config_headers="$ac_config_headers config.h:config.h.in"
 
@@ -10572,9 +11135,14 @@ HAVE_SDL_CONFIG!$HAVE_SDL_CONFIG$ac_delim
 SDL_CFLAGS!$SDL_CFLAGS$ac_delim
 SDL_LIBS!$SDL_LIBS$ac_delim
 HAVE_CURSES!$HAVE_CURSES$ac_delim
+PKG_CONFIG!$PKG_CONFIG$ac_delim
+RADIANT_CFLAGS!$RADIANT_CFLAGS$ac_delim
+RADIANT_LIBS!$RADIANT_LIBS$ac_delim
+HAVE_XML2_CONFIG!$HAVE_XML2_CONFIG$ac_delim
 BUILD_CLIENT!$BUILD_CLIENT$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
+BUILD_GTKRADIANT!$BUILD_GTKRADIANT$ac_delim
 BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
@@ -10589,7 +11157,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 86; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 91; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

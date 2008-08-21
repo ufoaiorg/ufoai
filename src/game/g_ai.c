@@ -128,14 +128,15 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
  * @returns true if the AI wants to use (open/close) that door, false otherwise
  * @note Don't start any new events in here, don't change the actor state
  * @sa Touch_DoorTrigger
- * @todo Implement me
+ * @todo Finish implementation
  */
 qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 {
+	/* don't try to use the door in every case */
 	if (frand() < 0.3)
 		return qfalse;
 
-	Com_Printf("%f: %f: %f\n", ent->origin[0], ent->origin[1], ent->origin[2]);
+	/* not in the view frustom - don't use the door while not seeing it */
 	if (!G_FrustumVis(door, ent->origin))
 		return qfalse;
 
@@ -161,7 +162,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 				/* if it's an actor and he's still living */
 				if (G_IsLivingActor(check)) {
 					/* check whether the origin of the enemy is inside the
-					 * AI actors view frustom */
+					 * AI actors view frustum */
 					float actorVis;
 					qboolean frustum = G_FrustumVis(check, ent->origin);
 					if (!frustum)
@@ -210,7 +211,7 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 		/* if it's an actor and he's still living */
 		if (G_IsLivingActor(check)) {
 			/* check whether the origin of the enemy is inside the
-			 * AI actors view frustom */
+			 * AI actors view frustum */
 			float actorVis;
 			qboolean frustum = G_FrustumVis(check, ent->origin);
 			if (!frustum)

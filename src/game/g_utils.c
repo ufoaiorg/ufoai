@@ -226,7 +226,7 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 		s = *(char **) ((byte *) from + fieldofs);
 		if (!s)
 			continue;
-		if (!Q_stricmp(s, match))
+		if (!Q_strcasecmp(s, match))
 			return from;
 	}
 
@@ -317,10 +317,12 @@ void G_CompleteRecalcRouting (void)
 	/* generate entity list */
 	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
 		if (ent->inuse && ent->model && *ent->model == '*' && ent->solid == SOLID_BSP) {
-			Com_DPrintf(DEBUG_GAME, "Processing entity %i: inuse:%i model:%s solid:%i\n", ent->number, ent->inuse, ent->model, ent->solid);
+			Com_DPrintf(DEBUG_GAME, "Processing entity %i: inuse:%i model:%s solid:%i\n",
+				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
 			G_RecalcRouting(ent);
 		} else {
-			Com_DPrintf(DEBUG_GAME, "Did not process entity %i: inuse:%i model:%s solid:%i\n", ent->number, ent->inuse, ent->model, ent->solid);
+			Com_DPrintf(DEBUG_GAME, "Did not process entity %i: inuse:%i model:%s solid:%i\n",
+				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
 		}
 }
 

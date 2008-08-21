@@ -1,4 +1,4 @@
-The original model "heli_parented.blend" has be released under the GPL and CC-by-sa.
+The original model "heli_parented.blend" has been released under the GPL and CC-by-sa.
 
 Author: Ingo Ruhnke <grumbel@gmx.de>
 

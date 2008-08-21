@@ -11,7 +11,6 @@
 // valid UFO values:
 // * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
 
-
 ///////////////////////
 // ORIENTAL RANDOM MAPS
 ///////////////////////
@@ -129,9 +128,7 @@ mapdef farm_small
 	ufos
 	{
 		craft_ufo_scout
-//		craft_crash_scout
 		craft_ufo_fighter
-//		craft_crash_fighter
 	}
 
 	terrains
@@ -166,7 +163,6 @@ mapdef farm_medium
 	ufos
 	{
 		craft_ufo_harvester
-//		craft_crash_harvester
 	}
 
 	terrains
@@ -201,7 +197,6 @@ mapdef farm_large
 	ufos
 	{
 		craft_ufo_bomber
-//		craft_crash_bomber
 	}
 
 	terrains
@@ -2233,7 +2228,7 @@ mapdef forest_small
 	map				"+forest"
 	param			small
 	multiplayer		false
-	description		"_A suburban district of an oriental area."
+	description		"_Aliens are up to no good in this sparsely populated forest region."
 	size			"small"
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
@@ -2260,37 +2255,37 @@ mapdef forest_small
 	}
 }
 
-//mapdef condor_crash // The Condor is not used.
-//{
-//	map				condor_crash
-//	multiplayer		true
-//	teams			2
-//	gametypes {
-//		1on1
-//		1on1on1
-//		2on2
-//		2on2on2
-//		coop2
-//		coop3
-//		coop4
-//	}
-//	terrains
-//	{
-//		grass
-//		mountain
-//	}
-//
-//	cultures
-//	{
-//		western
-//	}
-//
-//	populations
-//	{
-//		village
-//	}
-//}
+mapdef forest_large
+{
+	map				"+forest"
+	param			large
+	multiplayer		false
+	description		"_Aliens are up to no good in this sparsely populated forest region."
+	size			"large"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
 
 ///////////////////////
 // UFOCRASH RANDOM MAPS
@@ -2303,6 +2298,14 @@ mapdef ufocrash
 	description		"_UFO Crashsite."
 	storyrelated	true
 	maxaliens		8
+	ufos
+	{
+		craft_crash_scout
+		craft_crash_fighter
+		craft_crash_corrupter
+		craft_crash_harvester
+		craft_crash_supply
+	}
 }
 
 ///////////////////////

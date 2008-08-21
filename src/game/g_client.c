@@ -343,7 +343,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 
 /**
  * @brief Checks whether a point is "visible" from the edicts position
- * @sa FrustomVis
+ * @sa FrustumVis
  */
 qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
 {
@@ -1345,6 +1345,7 @@ static void G_BuildForbiddenList (int team)
 /**
  * @brief Wrapper for Grid_MoveCalc that prepares the forbidden list first.
  * @param[in] team The current team (see G_BuildForbiddenList)
+ * @param[in] size The actorsize
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] crouching_state The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance to calculate the move for.
@@ -1390,7 +1391,8 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 }
 
 /**
- * @brief @todo writeme
+ * @brief Generates the client events that are send over the netchannel to move
+ * an actor
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam
  * @param[in] num Edict index to move

@@ -58,7 +58,6 @@ CLIENT_SRCS = \
 	client/menu/m_main.c \
 	client/menu/m_messages.c \
 	client/menu/m_nodes.c \
-	client/menu/m_node_bar.c \
 	client/menu/m_node_checkbox.c \
 	client/menu/m_node_image.c \
 	client/menu/m_node_model.c \
@@ -124,6 +123,7 @@ CLIENT_SRCS = \
 	renderer/r_state.c \
 	renderer/r_sphere.c \
 	renderer/r_particle.c \
+	renderer/r_thread.c \
 	renderer/qgl.c \
 	renderer/r_sdl.c \
 	\
@@ -142,6 +142,7 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
+		ports/windows/win_console.c \
 		ports/windows/win_shared.c \
 		ports/windows/win_main.c \
 		ports/windows/ufo.rc
@@ -183,12 +184,12 @@ $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module

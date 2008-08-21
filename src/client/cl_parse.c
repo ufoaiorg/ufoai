@@ -347,7 +347,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 		/* seperate the printfs so the server message can have a color */
 		/*Com_Printf("%c%s\n", COLORED_GREEN, str);*/
 		/* need to prep refresh at next oportunity */
-		cl.refresh_prepped = qfalse;
+		refdef.ready = qfalse;
 	}
 }
 
@@ -370,12 +370,8 @@ static void CL_LoadClientinfo (clientinfo_t *ci, const char *s)
  */
 static void CL_ParseClientinfo (int player)
 {
-	char *s;
-	clientinfo_t *ci;
-
-	s = cl.configstrings[player+CS_PLAYERNAMES];
-
-	ci = &cl.clientinfo[player];
+	clientinfo_t *ci = &cl.clientinfo[player];
+	const char *s = cl.configstrings[player + CS_PLAYERNAMES];
 
 	CL_LoadClientinfo(ci, s);
 }
@@ -411,7 +407,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 
 	/* do something apropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
-		if (cl.refresh_prepped) {
+		if (refdef.ready) {
 			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
 			/* inline models are marked with * as first char followed by the
 			 * number */
@@ -517,7 +513,7 @@ static void CL_Reset (struct dbuffer *msg)
 {
 	selActor = NULL;
 	cl.numTeamList = 0;
-	Cbuf_AddText("numonteam1\n"); /* confunc */
+	MN_ExecuteConfunc("numonteam1");
 
 	CL_EventReset();
 	parsedDeath = qfalse;
@@ -540,7 +536,7 @@ static void CL_Reset (struct dbuffer *msg)
 		Cvar_Set("mn_main", "multiplayerInGame");
 	}
 	if (cls.team == cl.actTeam)
-		Cbuf_AddText("startround\n"); /* confunc */
+		MN_ExecuteConfunc("startround");
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }
@@ -575,8 +571,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	cl_worldlevel->modified = qtrue;
 	if (cl.numTeamList) {
 		const le_t *le = cl.teamList[0];
-		VectorCopy(le->origin, cl.cam.reforg);
-		Cvar_SetValue("cl_worldlevel", le->pos[2]);
+		V_CenterView(le->pos);
 	}
 
 	/* activate the renderer */
@@ -632,9 +627,9 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 				/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
 				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
 					CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-					Cbuf_AddText("crouch_checkbox_check\n"); /* confunc */
+					MN_ExecuteConfunc("crouch_checkbox_check");
 				} else {
-					Cbuf_AddText("crouch_checkbox_disable\n"); /* confunc */
+					MN_ExecuteConfunc("crouch_checkbox_disable");
 				}
 			}
 		} else {
@@ -1056,7 +1051,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
-			VectorCopy(le->origin, cl.cam.reforg);
+			VectorCopy(le->origin, cl.cam.origin);
 			Cvar_SetValue("cl_worldlevel", le->pos[2]);
 		}
 
@@ -1662,7 +1657,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 
 				if (!(flags & SF_BOUNCED)) {
 					/* shooting */
-					if (fd->speed && !CL_OutsideMap(impact)) {
+					if (fd->speed && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
 						impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 					} else {
 						impactTime = shootTime;

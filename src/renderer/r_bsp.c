@@ -82,6 +82,29 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 	R_EnableBlend(qfalse);
 }
 
+qboolean R_CullBspModel (const entity_t *e)
+{
+	vec3_t mins, maxs;
+
+	if (e->model->bsp.nummodelsurfaces == 0)
+		return qfalse;
+
+	if (VectorNotEmpty(e->angles)) {
+		int i;
+		for (i = 0; i < 3; i++) {
+			mins[i] = e->origin[i] - e->model->radius;
+			maxs[i] = e->origin[i] + e->model->radius;
+		}
+	} else {
+		VectorAdd(e->origin, e->model->mins, mins);
+		VectorAdd(e->origin, e->model->maxs, maxs);
+	}
+
+	if (R_CullBox(mins, maxs))
+		return qfalse;
+
+	return qtrue;
+}
 
 /**
  * @brief Draws a brush model
@@ -91,30 +114,9 @@ void R_DrawBrushModel (const entity_t * e)
 {
 	/* relative to viewpoint */
 	vec3_t modelorg;
-	vec3_t mins, maxs;
-	int i;
-	qboolean rotated;
-
-	if (e->model->bsp.nummodelsurfaces == 0)
-		return;
-
-	if (VectorNotEmpty(e->angles)) {
-		rotated = qtrue;
-		for (i = 0; i < 3; i++) {
-			mins[i] = e->origin[i] - e->model->radius;
-			maxs[i] = e->origin[i] + e->model->radius;
-		}
-	} else {
-		rotated = qfalse;
-		VectorAdd(e->origin, e->model->mins, mins);
-		VectorAdd(e->origin, e->model->maxs, maxs);
-	}
-
-	if (R_CullBox(mins, maxs))
-		return;
 
 	VectorCopy(refdef.vieworg, modelorg);
-	if (rotated) {
+	if (VectorNotEmpty(e->angles)) {
 		vec3_t temp;
 		vec3_t forward, right, up;
 
@@ -133,17 +135,14 @@ void R_DrawBrushModel (const entity_t * e)
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
-		vec4_t bbox[8];
-		vec4_t tmp;
+		vec3_t bbox[8];
+		int i;
 
 		/* compute a full bounding box */
 		for (i = 0; i < 8; i++) {
-			tmp[0] = (i & 1) ? e->model->mins[0] : e->model->maxs[0];
-			tmp[1] = (i & 2) ? e->model->mins[1] : e->model->maxs[1];
-			tmp[2] = (i & 4) ? e->model->mins[2] : e->model->maxs[2];
-			tmp[3] = 1.0;
-
-			Vector4Copy(tmp, bbox[i]);
+			bbox[i][0] = (i & 1) ? e->model->mins[0] : e->model->maxs[0];
+			bbox[i][1] = (i & 2) ? e->model->mins[1] : e->model->maxs[1];
+			bbox[i][2] = (i & 4) ? e->model->mins[2] : e->model->maxs[2];
 		}
 		R_EntityDrawBBox(bbox);
 	}
@@ -172,7 +171,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (node->contents == CONTENTS_SOLID)
 		return;					/* solid */
 
-	if (R_CullBox(node->minmaxs, node->minmaxs + 3))
+	if (!r_nocull->integer && R_CullBox(node->minmaxs, node->minmaxs + 3))
 		return;
 
 	/* if a leaf node, draw stuff */
@@ -183,7 +182,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	 * find which side of the node we are on */
 
 	if (r_isometric->integer) {
-		dot = -DotProduct(r_vpn, node->plane->normal);
+		dot = -DotProduct(r_locals.forward, node->plane->normal);
 	} else if (node->plane->type > PLANE_Z) {
 		dot = DotProduct(refdef.vieworg, node->plane->normal) - node->plane->dist;
 	} else {

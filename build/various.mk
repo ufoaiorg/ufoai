@@ -1,10 +1,7 @@
 # sync sourceforget.net svn to local svn dir
-LOCAL_SVN_DIR=/var/lib/svn
+LOCAL_SVN_DIR ?= /var/lib/svn
 rsync:
-	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* $(LOCAL_SVN_DIR)
-
-update-maps:
-	rsync -avz rsync://mattn.ninex.info/ufo base/maps
+	rsync -avz ufoai.svn.sourceforge.net::svn/ufoai/* $(LOCAL_SVN_DIR)
 
 # generate doxygen docs
 doxygen-docs:
@@ -23,3 +20,17 @@ deb:
 
 pdf-manual:
 	$(MAKE) -C src/docs/tex
+
+help:
+	@echo "Makefile targets:"
+	@echo " -----"
+	@echo " * deb          - Builds a debian package"
+	@echo " * lang         - Compiles the language files"
+	@echo " * maps         - Compiles the maps"
+	@echo " * pk3          - Generate the pk3 archives for the installers"
+	@echo " * rsync        - Creates a local copy of the whole svn (no checkout)"
+	@echo " * update-po    - Updates the po files with latest source and script files"
+	@echo " -----"
+	@echo " * clean        - Removes binaries, no datafiles (e.g. maps)"
+	@echo " * clean-maps   - Removes compiled maps (bsp files)"
+	@echo " * clean-pk3    - Removes the pk3 archives"

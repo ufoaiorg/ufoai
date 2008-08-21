@@ -65,7 +65,7 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	aircraftSize = aircraftTemplate->weight;
+	aircraftSize = aircraftTemplate->size;
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG
@@ -810,9 +810,6 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 	assert(base);
 
-	/* First aircraft in base is default aircraft. */
-	base->aircraftCurrent = 0;
-
 	if (base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy generic aircraft description to individal aircraft in base */
 		/* we do this because every aircraft can have its own parameters */
@@ -842,8 +839,10 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
-		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->weight);
+		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
+		if (!base->aircraftCurrent)
+			base->aircraftCurrent = aircraft;
 		if (ccs.singleplayer) {
 			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
@@ -858,13 +857,13 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
-	switch (aircraft->weight) {
+	switch (aircraft->size) {
 	case AIRCRAFT_SMALL:
 		return CAP_AIRCRAFTS_SMALL;
 	case AIRCRAFT_LARGE:
 		return CAP_AIRCRAFTS_BIG;
 	}
-	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->weight);
+	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
 
 const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
@@ -1081,6 +1080,13 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	}
 	/* the craft may no longer have any employees assigned */
 	assert(aircraft->teamSize == 0);
+	/* remove the pilot */
+	if (aircraft->pilot) {
+		E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type);
+	} else {
+		/* This shouldn't ever happen. */
+		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
+	}
 
 	aircraft->status = AIR_HOME;
 
@@ -1393,7 +1399,7 @@ static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, name), 0},
 	{"shortname", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, shortname), 0},
 	{"numteam", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
-	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
+	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 
 	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
@@ -2090,10 +2096,9 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 {
 	int idxSlot;
 	int idxAllWeap;
-	float allWeaponRanges[maxSlot];
+	float allWeaponRanges[MAX_AIRCRAFTSLOT];
 	int numAllWeaponRanges = 0;
 	int numUniqueWeaponRanges = 0;
-
 
 	assert(slot);
 
@@ -2246,6 +2251,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, gd.projectiles[i].time);
 		MSG_WriteFloat(sb, gd.projectiles[i].angle);
 		MSG_WriteByte(sb, gd.projectiles[i].bullets);
+		MSG_WriteByte(sb, gd.projectiles[i].laser);
 	}
 
 	/* Save recoveries. */
@@ -2442,6 +2448,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			gd.projectiles[i].time = MSG_ReadShort(sb);
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
 			gd.projectiles[i].bullets = MSG_ReadByte(sb);
+			gd.projectiles[i].laser = MSG_ReadByte(sb);
 		} else
 			Sys_Error("AIR_Load: Could not get technology of projectile %i\n", i);
 	}
@@ -2553,7 +2560,7 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	aircraftSize = aircraftTemplate->weight;
+	aircraftSize = aircraftTemplate->size;
 
 	if (aircraftSize < AIRCRAFT_SMALL) {
 #ifdef DEBUG

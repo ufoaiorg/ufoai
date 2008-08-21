@@ -151,18 +151,23 @@ base/maps/farm/f_stables_a.map | GNU General Public License 2.0
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0
 base/maps/fighter_crash.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_crash_scout.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_drop_firebird.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f1.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f2.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f3.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f4.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f5.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f6.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f7.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_f8.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_w1.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
-base/maps/forest/forest_w2.map | GNU General Public License 2.0 | Kostia "Kildor" Romanov
+base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_craft_ufo_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f4.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f6.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f7.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_f8.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_w1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_w2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_w3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_w4.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_w5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/frozen.ump | GNU General Public License 2.0
 base/maps/frozen/st_craft_ufo_fighter.map | GNU General Public License 2.0
 base/maps/frozen/st_drop_firebird.map | GNU General Public License 2.0
@@ -344,6 +349,8 @@ base/models/aircraft/craft_item_raven_ecm/ecm.md2 | GNU General Public License 2
 base/models/aircraft/craft_item_raven_ecm/ecm.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_weapon_alc/alc.md2 | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
+base/models/aircraft/craft_weapon_alc/alc.tga | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
 base/models/aircraft/craft_weapon_antim/antimatter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_antim/antimatter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_antim/launcher_a.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -496,6 +503,9 @@ base/models/animals/crocodile/croc.tga | GNU General Public License 2.0 or later
 base/models/animals/dog/dog.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/dog/dog.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/dog/dog_death.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/fish2/fish.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/fish2/fish.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/penguin/penguin.anm |  | hullbr3ach
 base/models/animals/penguin/penguin.jpg |  | hullbr3ach
 base/models/animals/penguin/penguin.md2 |  | hullbr3ach
@@ -696,6 +706,10 @@ base/models/objects/base/radar/radar_b.jpg | GNU General Public License 2.0 | Lu
 base/models/objects/base/radar/radar_b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/radar/radar_c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret2/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
@@ -915,7 +929,6 @@ base/models/objects/tanker/tanker_a.md2 | GNU General Public License 2.0 or late
 base/models/objects/tanker/tanker_b.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tent/tent.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tent/tent.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/truck/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/cement_trailer.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/cement_trailer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/container.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -929,17 +942,14 @@ base/models/objects/trucks/truck/trees.md2 | GNU General Public License 2.0 or l
 base/models/objects/trucks/truck/truck.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/truck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/truck_old.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/truck2/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/fuel.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/fuel.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/load.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/load.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/truck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/truck.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/watertruck/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/watertruck/watertruck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/watertruck/watertruck.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/banana/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/banana/banana.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/banana/banana.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/buxus/buxus.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -956,10 +966,8 @@ base/models/objects/vegi/chestnut/leaves4.tga | GNU General Public License 2.0 o
 base/models/objects/vegi/corn/corn1.jpg |  | hullbr3ach
 base/models/objects/vegi/corn/corn1.mb |  | hullbr3ach
 base/models/objects/vegi/corn/corn1.md2 |  | hullbr3ach
-base/models/objects/vegi/fern/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/fern/fern.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/fern/fern.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/fir/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/fir/fir.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/fir/fir.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/palm_v1/palm_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
@@ -968,7 +976,6 @@ base/models/objects/vegi/palm_v2/palm_v2.md2 | Creative Commons Attribution-Shar
 base/models/objects/vegi/palm_v2/palm_v2.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v3/palm_v3.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v3/palm_v3.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/plant/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant/plant.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant/plant.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant/plant2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -987,10 +994,16 @@ base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Yo
 base/models/objects/vegi/plants/plants.tga | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/bicycle/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/tree04/bark.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/tree04/leafs.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/tree04/tree04.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/water_lily/lily_bloom.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/models/objects/vegi/water_lily/lily_bloom.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily/lily_leaf.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily/lily_leaf.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/forktruck/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/barrel1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/barrel2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/box.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1007,7 +1020,6 @@ base/models/objects/vehicles/motorbike/motorbike.md2 | GNU General Public Licens
 base/models/objects/vehicles/motorbike/motorbike.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/puma/puma.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/puma/puma.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/tractor/Readme.txt | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1466,10 +1478,8 @@ base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas "
 base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flare/flare.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flare/flare.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flashbang/flashbang.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/fraggren/fraggren.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1485,7 +1495,6 @@ base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | L
 base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/incgren/incgren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -1579,7 +1588,6 @@ base/models/weapons/smg/smg.jpg | GNU General Public License 2.0 | Lukas "Rastam
 base/models/weapons/smg/smg.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/smg/smg_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/smg/smg_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/smokegren/smoke_gren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_r.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_w.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/smokegren/smoke_y.jpg | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
@@ -1963,20 +1971,23 @@ base/pics/menu/buttons_team.tga | GNU General Public License 2.0 |  | Based on o
 base/pics/menu/buttons_time.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buy_buttons1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buy_buttons1a.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buy_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buy_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buy_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buy_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buya_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buya_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buya_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buya_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/buy_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/buy_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/buy_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/buy_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/checkbox_checked.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/menu/checkbox_disabled.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/menu/checkbox_green_checked.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_disabled.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_unchecked.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_unchecked.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
+base/pics/menu/container_scroll.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/menu/container_scroll_1.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/menu/container_scroll_high.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/menu/container_scroll_ina.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/menu/container_scrollv.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/menu/container_scrollv_high.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/menu/container_scrollv_ina.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/pics/menu/del.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/empl_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/empl_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
@@ -2813,6 +2824,9 @@ base/textures/tex_mattn/door053.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/door054.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/door055.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/door056.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/door057.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/door058.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/door059.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/drawer.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/dung.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/dung2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2874,6 +2888,8 @@ base/textures/tex_mattn/roof005.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/roof006.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof007.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/roof008.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/roof009.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/roof010.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/rust.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/rust2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2971,8 +2987,14 @@ base/textures/tex_mattn/wall076.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wall077.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall078.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall079.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall080.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall081.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall082.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall083.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall_bricks003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wall_bricks004.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wall_grates.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/warning.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/window001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3005,6 +3027,10 @@ base/textures/tex_mattn/wood016.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wood017.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood018.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood019.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood020.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood021.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood022.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood023.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/barrel1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel_top.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
@@ -3096,6 +3122,7 @@ base/textures/tex_nature/grass003_way_x_fork.jpg | GNU General Public License 2.
 base/textures/tex_nature/grass004.jpg | GNU General Public License 2.0 | wotwot
 base/textures/tex_nature/grass_lush.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/grass_mowed_dry_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
+base/textures/tex_nature/grass_mowed_dry_a_k1.jpg | GNU General Public License 2.0 | Kostia "Kildor" Romanov | grass_mowed_dry_a.jpg
 base/textures/tex_nature/grass_mowed_dry_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_dry_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_green_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
@@ -3284,7 +3311,6 @@ base/ufos/menu_nohud.ufo | GNU General Public License 2.0
 base/ufos/menu_options.ufo | GNU General Public License 2.0
 base/ufos/menu_physdat.ufo | GNU General Public License 2.0
 base/ufos/menu_production.ufo | GNU General Public License 2.0
-base/ufos/menu_ptleditor.ufo | GNU General Public License 2.0
 base/ufos/menu_research.ufo | GNU General Public License 2.0
 base/ufos/menu_singleplayer.ufo | GNU General Public License 2.0
 base/ufos/menu_stats.ufo | GNU General Public License 2.0

@@ -301,7 +301,6 @@ game_export_t *GetGameAPI (game_import_t * import)
 	return &globals;
 }
 
-#ifndef GAME_HARD_LINKED
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
 void Sys_Error (const char *error, ...)
 {
@@ -311,8 +310,6 @@ void Sys_Error (const char *error, ...)
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
-
-	text[sizeof(text) - 1] = 0;
 
 	gi.error("%s", text);
 }
@@ -325,8 +322,6 @@ void Com_Printf (const char *msg, ...)
 	va_start(argptr, msg);
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
-
-	text[sizeof(text) - 1] = 0;
 
 	gi.dprintf("%s", text);
 }
@@ -347,13 +342,8 @@ void Com_DPrintf (int level, const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	text[sizeof(text) - 1] = 0;
-
 	gi.dprintf("%s", text);
 }
-#endif
-
-/*====================================================================== */
 
 
 /**
@@ -365,7 +355,7 @@ static void CheckNeedPass (void)
 		char *need = "0";
 		password->modified = qfalse;
 
-		if (*password->string && Q_stricmp(password->string, "none"))
+		if (*password->string && Q_strcasecmp(password->string, "none"))
 			need = "1";
 
 		gi.Cvar_Set("sv_needpass", need);

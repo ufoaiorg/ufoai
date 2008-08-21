@@ -35,7 +35,6 @@ unsigned num_patches;
 static vec3_t radiosity[MAX_PATCHES];		/**< light leaving a patch */
 static vec3_t illumination[MAX_PATCHES];	/**< light arriving at a patch */
 
-vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
 dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 /*
@@ -52,6 +51,7 @@ static void MakeBackplanes (void)
 	int i;
 
 	for (i = 0; i < curTile->numplanes; i++) {
+		backplanes[i].dist = PLANE_X;
 		backplanes[i].dist = -curTile->planes[i].dist;
 		VectorSubtract(vec3_origin, curTile->planes[i].normal, backplanes[i].normal);
 	}
@@ -63,18 +63,15 @@ TRANSFER SCALES
 ===================================================================
 */
 
-static int PointInLeafnum (vec3_t point)
+static inline int PointInLeafnum (const vec3_t point)
 {
 	int nodenum;
-	vec_t dist;
-	dBspNode_t *node;
-	dBspPlane_t *plane;
 
 	nodenum = 0;
 	while (nodenum >= 0) {
-		node = &curTile->nodes[nodenum];
-		plane = &curTile->planes[node->planenum];
-		dist = DotProduct (point, plane->normal) - plane->dist;
+		const dBspNode_t *node = &curTile->nodes[nodenum];
+		const dBspPlane_t *plane = &curTile->planes[node->planenum];
+		const vec_t dist = DotProduct(point, plane->normal) - plane->dist;
 		if (dist > 0)
 			nodenum = node->children[0];
 		else
@@ -85,11 +82,11 @@ static int PointInLeafnum (vec3_t point)
 }
 
 
-dBspLeaf_t *Rad_PointInLeaf (vec3_t point)
+dBspLeaf_t *Rad_PointInLeaf (const vec3_t point)
 {
-	int num;
-
-	num = PointInLeafnum(point);
+	const int num = PointInLeafnum(point);
+	assert(num >= 0);
+	assert(num < MAX_MAP_LEAFS);
 	return &curTile->leafs[num];
 }
 
@@ -116,8 +113,7 @@ static void MakeTransfers (unsigned int i)
 	VectorCopy(patch->origin, origin);
 	plane = *patch->plane;
 
-	/* find out which patch2s will collect light */
-	/* from patch */
+	/* find out which patches will collect light from patch */
 
 	all_transfers = transfers;
 	patch->numtransfers = 0;
@@ -160,11 +156,11 @@ static void MakeTransfers (unsigned int i)
 		}
 	}
 
-	/* copy the transfers out and normalize */
-	/* total should be somewhere near PI if everything went right */
-	/* because partial occlusion isn't accounted for, and nearby */
-	/* patches have underestimated form factors, it will usually */
-	/* be higher than PI */
+	/* copy the transfers out and normalize
+	 * total should be somewhere near PI if everything went right
+	 * because partial occlusion isn't accounted for, and nearby
+	 * patches have underestimated form factors, it will usually
+	 * be higher than PI */
 	if (patch->numtransfers) {
 		transfer_t *t;
 
@@ -239,9 +235,9 @@ static void ShootLight (unsigned int patchnum)
 	patch_t		*patch;
 	vec3_t		send;
 
-	/* this is the amount of light we are distributing */
-	/* prescale it so that multiplying by the 16 bit */
-	/* transfer values gives a proper output value */
+	/* this is the amount of light we are distributing
+	 * prescale it so that multiplying by the 16 bit
+	 * transfer values gives a proper output value */
 	for (k = 0; k < 3; k++)
 		send[k] = radiosity[patchnum][k] / 0x10000;
 	patch = &patches[patchnum];
@@ -258,20 +254,20 @@ static void ShootLight (unsigned int patchnum)
 static void BounceLight (void)
 {
 	unsigned int i, j;
-	float	added;
-	patch_t	*p;
-	char buf[12];
 
 	for (i = 0; i < num_patches; i++) {
-		p = &patches[i];
+		const patch_t *p = &patches[i];
 		for (j = 0; j < 3; j++) {
 			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
 		}
 	}
 
 	for (i = 0; i < config.numbounce; i++) {
+		float added;
+		char buf[12];
+
 		snprintf(buf, sizeof(buf), " %i LGHTBNCE", i);
-		U2M_ProgressBar(ShootLight, num_patches, qtrue, buf);
+		RunThreadsOn(ShootLight, num_patches, qtrue, buf);
 		added = CollectLight();
 
 		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
@@ -285,10 +281,9 @@ static void BounceLight (void)
 static void CheckPatches (void)
 {
 	unsigned int i;
-	patch_t *patch;
 
 	for (i = 0; i < num_patches; i++) {
-		patch = &patches[i];
+		const patch_t *patch = &patches[i];
 		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
 			Sys_Error("negative patch totallight\n");
 	}
@@ -320,11 +315,11 @@ void RadWorld (void)
 	BuildVertexNormals();
 
 	/* build initial facelights */
-	U2M_ProgressBar(BuildFacelights, curTile->numfaces, qtrue, "FACELIGHTS");
+	RunThreadsOn(BuildFacelights, curTile->numfaces, qtrue, "FACELIGHTS");
 
 	if (config.numbounce > 0) {
 		/* build transfer lists */
-		U2M_ProgressBar(MakeTransfers, num_patches, qtrue, "TRANSFERS");
+		RunThreadsOn(MakeTransfers, num_patches, qtrue, "TRANSFERS");
 		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
 			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
@@ -339,6 +334,6 @@ void RadWorld (void)
 	/* blend bounced light into direct light and save */
 	LinkPlaneFaces();
 
-	U2M_ProgressBar(FinalLightFace, curTile->numfaces, qtrue, "FINALLIGHT");
+	RunThreadsOn(FinalLightFace, curTile->numfaces, qtrue, "FINALLIGHT");
 	CloseTracingNodes();
 }

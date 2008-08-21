@@ -123,7 +123,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push buyaircraft;"
+			cmd "set mn_itemtype 5; mn_push buy;"
 		}
 		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
 		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
@@ -234,7 +234,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push air_production;"
+			cmd "set mn_itemtype 5; mn_push production;"
 		}
 		out		{ *txt_produce color "0 0.8 0 1" *button_produce texl "0 0" *button_produce texh "230 64" }
 		in		{ *txt_produce color "1 1 1 1" *button_produce texl "230 0" *button_produce texh "460 64" }
@@ -1035,7 +1035,7 @@ menu aircraft_action
 	pic back
 	{
 		image	menu/popup
-		pos		"256 256"
+		pos	"256 256"
 	}
 
 	string title
@@ -1083,7 +1083,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_buy image menu/multi_buttons3 *string_buy color "0 0.5 0 1" }
 		in	{ *bt_buy image menu/multi_buttons3a *string_buy color "1 1 1 1" }
-		click	{ cmd "mn_pop;mn_push buyaircraft;" }
+		click	{ cmd "mn_pop; set mn_itemtype 5; mn_push buy;" }
 	}
 	string string_buy
 	{
@@ -1104,7 +1104,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_prod image menu/multi_buttons3 *string_prod color "0 0.5 0 1" }
 		in	{ *bt_prod image menu/multi_buttons3a *string_prod color "1 1 1 1" }
-		click	{ cmd "mn_pop;mn_push air_production;" }
+		click	{ cmd "mn_pop; set mn_itemtype 5; mn_push production;" }
 	}
 	string string_prod
 	{

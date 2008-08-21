@@ -201,7 +201,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 			/* standard function execution */
 			for (i = 0; i < EA_CALL; i++)
-				if (!Q_stricmp(*token, ea_strings[i])) {
+				if (!Q_strcasecmp(*token, ea_strings[i])) {
 /*					Com_Printf("   %s", *token); */
 
 					/* add the action */
@@ -268,7 +268,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 /*				Com_Printf(" %s", *token); */
 
 				for (val = nps, i = 0; val->type; val++, i++)
-					if (!Q_stricmp(*token, val->string))
+					if (!Q_strcasecmp(*token, val->string))
 						break;
 
 				action->scriptValues = val;
@@ -1058,7 +1058,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 
 			/* get the property */
 			for (val = nps; val->type; val++)
-				if (!Q_stricmp(token, val->string))
+				if (!Q_strcasecmp(token, val->string))
 					break;
 
 			if (!val->type)
@@ -1112,7 +1112,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 
 			/* get the property */
 			for (val = nps; val->type; val++)
-				if (!Q_stricmp(token, val->string))
+				if (!Q_strcasecmp(token, val->string))
 					break;
 
 			if (val->type != V_FLOAT)
