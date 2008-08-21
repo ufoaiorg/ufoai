@@ -516,7 +516,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	l->numsurfpt = w * h;
 	l->surfpt = malloc(l->numsurfpt * sizeof(*l->surfpt));
 	if (!l->surfpt)
-		Sys_Error("Surface too large to light (%i)", l->numsurfpt * sizeof(*l->surfpt));
+		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
 }
 
 /**
