@@ -94,7 +94,7 @@
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_gtk.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_levels.cpp">
+		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_level.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai.cpp">
