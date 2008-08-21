@@ -87,16 +87,16 @@
 			<Add library="libjpeg" />
 		</Linker>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_filters.cpp">
-			<Option compilerVar="CC" \>
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_gtk.cpp">
-			<Option compilerVar="CC" \>
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai_levels.cpp">
-			<Option compilerVar="CC" \>
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\plugins\ufoai\ufoai.cpp">
-			<Option compilerVar="CC" \>
+			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<code_completion />
