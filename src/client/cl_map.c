@@ -1152,14 +1152,6 @@ void MAP_CenterOnPoint_f (void)
  */
 void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
 {
-	const menu_t *activeMenu;
-
-	/* this function only concerns maps */
-	activeMenu = MN_GetActiveMenu();
-	assert(activeMenu);
-	if (Q_strncmp(activeMenu->name, "map", 3))
-		return;
-
 	if (cl_3dmap->integer) {
 		/* case 3D geoscape */
 		vec3_t diff;
