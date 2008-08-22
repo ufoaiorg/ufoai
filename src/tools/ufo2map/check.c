@@ -620,6 +620,63 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 }
 
 /**
+ * @sa BrushVolume
+ */
+static vec_t Check_MapBrushVolume (mapbrush_t *brush)
+{
+	int i;
+	winding_t *w;
+	vec3_t corner;
+	vec_t d, area, volume;
+	plane_t *plane;
+
+	if (!brush)
+		return 0;
+
+	/* grab the first valid point as the corner */
+	w = NULL;
+	for (i = 0; i < brush->numsides; i++) {
+		w = brush->original_sides[i].winding;
+		if (w)
+			break;
+	}
+	if (!w)
+		return 0;
+	VectorCopy(w->p[0], corner);
+
+	/* make tetrahedrons to all other faces */
+	volume = 0;
+	for (; i < brush->numsides; i++) {
+		w = brush->original_sides[i].winding;
+		if (!w)
+			continue;
+		plane = &mapplanes[brush->original_sides[i].planenum];
+		d = -(DotProduct(corner, plane->normal) - plane->dist);
+		area = WindingArea(w);
+		volume += d * area;
+	}
+
+	return volume / 3;
+}
+
+/**
+ * @brief report brushes from the map below 1 unit^3
+ */
+ void CheckMapMicro (void)
+ {
+	int i;
+	float vol;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+		vol = Check_MapBrushVolume(brush);
+		if (vol < config.mapMicrovol)
+			Check_Printf("  Brush %i (entity %i) volume %f\n", brush->brushnum, brush->entitynum, vol);
+
+	}
+ }
+
+/**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
  */
 void DisplayContentFlags (const int flags)

@@ -82,6 +82,7 @@ static void Usage (void)
 		" -info                      : print bsp file info\n"
 		" -material                  : generate a material file\n"
 		" -micro <float>             : warn if a brush has a volume lower than the specified float.\n"
+		"                            : brushes are tested after CSG.\n"
 		" -nobackclip                : draw downward pointing faces. (so actors cannot see up through floors\n"
 		"                              in first person view). default is to set SURF_NODRAW to downard faces.\n"
 		" -nocsg                     : \n"
@@ -103,8 +104,10 @@ static void Usage (void)
 		" -fix                       : same subparameters as -check, changes the source map file.\n"
 		" \n subparameters for -check and -fix\n"
 		"    all                     : Performs all checks and fixes. This is the default.\n"
-		"    bru brushes             : includes 'lvl tex mfc'. Performs all checks and fixes associated with brushes.\n"
+		"    bru brushes             : includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes.\n"
 		"    ent entities            : performs all checks and fixes associated with entities.\n"
+		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
+		"                            : step, unlike the bsp -micro option. default 1 unit^3.\n"
 		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
 		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
@@ -162,6 +165,15 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
 					Com_Printf("  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
 					config.chkMixedFaceContents = qtrue;
+				} else if (!strcmp(argv[i], "microbrush") || !strcmp(argv[i], "mbr")) {
+					config.chkMMicro = qtrue;
+					config.mapMicrovol = atof(argv[i+1]);
+					if (config.mapMicrovol > 0.00001f) {
+						i++;
+					} else {
+						config.mapMicrovol = 1.0f; /* default value */
+					}
+					Com_Printf("  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
 				} else if (!strcmp(argv[i], "all")) {
 					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
@@ -513,6 +525,8 @@ int main (int argc, const char **argv)
 			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckTexturesBasedOnFlags();
+		if (config.chkMMicro || config.chkBrushes || config.chkAll)
+			CheckMapMicro();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */
