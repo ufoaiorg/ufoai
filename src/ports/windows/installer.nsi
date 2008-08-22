@@ -198,6 +198,7 @@ SectionGroup /e "Mapping" SECGROUP02
     File "..\..\..\ufo2map.exe"
     ; RADIANT
     SetOutPath "$INSTDIR\radiant"
+    file "..\..\..\contrib\dlls\jpeg62.dll"
     file "..\..\..\radiant\radiant.exe"
     file /nonfatal "..\..\..\radiant\*.dll"
     file "..\..\..\radiant\*.xlink"
