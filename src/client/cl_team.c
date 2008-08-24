@@ -880,7 +880,7 @@ static void CL_GenerateEquipment_f (void)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armours for other teams in the menu. */
+		/* Don't allow to show armour for other teams in the menu. */
 		if ((Q_strncmp(csi.ods[i].type, "armour", MAX_VAR) == 0) && (csi.ods[i].useable != team))
 			continue;
 

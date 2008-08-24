@@ -503,7 +503,7 @@ char *BS_BuyTypeName(const int buyCat)
 		return "Miscellaneous";
 		break;
 	case FILTER_S_ARMOUR:
-		return "Personal Armours";
+		return "Personal Armour";
 		break;
 	case FILTER_AIRCRAFT:
 		return "Aircraft";

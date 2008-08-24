@@ -504,7 +504,7 @@ void UP_ItemDescription (const objDef_t *od)
 }
 
 /**
- * @brief Prints the UFOpaedia description for armours
+ * @brief Prints the UFOpaedia description for armour
  * @sa UP_DrawEntry
  */
 static void UP_ArmourDescription (const technology_t* t)
