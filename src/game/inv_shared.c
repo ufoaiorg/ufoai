@@ -475,6 +475,11 @@ inline qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterType
 			return qtrue;
 		break;
 
+	case FILTER_AIRCRAFT:
+		if (!Q_strncmp(obj->type, "aircraft", MAX_VAR))
+			return qtrue;
+		break;
+
 	case FILTER_DISASSEMBLY:
 		/** @todo I guess we should search for components matching this item here. */
 		break;

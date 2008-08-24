@@ -44,7 +44,7 @@ typedef struct countedLinkedList_s {
 } countedLinkedList_t;
 
 
-static itemFilterTypes_t produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type. */
+static int produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type. */
 
 static qboolean productionDisassembling;	/**< Are we in disassembling state? */
 static qboolean selectedQueueItem = qfalse;	/**< Did we select something in the queue. */
@@ -1115,42 +1115,11 @@ static void PR_ProductionSelect_f (void)
 	if (cat < MAX_FILTERTYPES && cat >= FILTER_S_PRIMARY) {	/**< Check for valid bounds */
 		produceCategory = cat;
 		Cvar_Set("mn_itemtype", va("%d", produceCategory));
-		switch (produceCategory) {
-		case FILTER_S_PRIMARY:
-			Cvar_Set("mn_itemtypename", _("Primary weapons"));
-			break;
-		case FILTER_S_SECONDARY:
-			Cvar_Set("mn_itemtypename", _("Secondary weapons"));
-			break;
-		case FILTER_S_HEAVY:
-			Cvar_Set("mn_itemtypename", _("Heavy weapons"));
-			break;
-		case FILTER_S_MISC:
-			Cvar_Set("mn_itemtypename", _("Miscellaneous"));
-			break;
-		case FILTER_S_ARMOUR:
-			Cvar_Set("mn_itemtypename", _("Personal Armours"));
-			break;
-		case FILTER_AIRCRAFT:
-			Cvar_Set("mn_itemtypename", _("Aircraft"));
-			break;
-		case FILTER_DUMMY:
-			Cvar_Set("mn_itemtypename", _("Other"));
-			break;
-		case FILTER_CRAFTITEM:
-			Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
-			break;
-		case FILTER_UGVITEM:
-			Cvar_Set("mn_itemtypename", _("Heavy Weapons"));
-			break;
-		case FILTER_DISASSEMBLY:
-			Cvar_Set("mn_itemtypename", _("Disassembling"));
+		Cvar_Set("mn_itemtypename", _(BS_BuyTypeName(produceCategory)));
+		if (produceCategory == FILTER_DISASSEMBLY) {
 			PR_ProductionInfo(baseCurrent, qtrue);
 			PR_UpdateDisassemblingList_f();
 			return;
-		default:
-			Cvar_Set("mn_itemtypename", _("Unknown"));
-			break;
 		}
 	} else {
 		return;

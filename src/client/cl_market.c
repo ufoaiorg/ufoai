@@ -51,7 +51,7 @@ typedef struct buyList_s {
 
 static buyList_t buyList;	/**< Current buylist that is shown in the menu. */
 static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on the list. */
-static itemFilterTypes_t buyCat = 0;			/**< Category of items in the menu. */
+static int buyCat = 0;			/**< Category of items in the menu. */
 
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;
@@ -113,7 +113,7 @@ static void BS_MarketScroll_f (void)
 	menuNode_t* node;
 	int i;
 
-	if (!baseCurrent || buyCat == MAX_FILTERTYPES)
+	if (!baseCurrent || buyCat == MAX_FILTERTYPES || buyCat < 0)
 		return;
 
 	node = MN_GetNodeFromCurrentMenu("market");
@@ -284,7 +284,7 @@ static void BS_BuyType (const base_t *base)
 	int i, j = 0;
 	char tmpbuf[MAX_VAR];
 
-	if (!base || buyCat == MAX_FILTERTYPES)
+	if (!base || buyCat == MAX_FILTERTYPES || buyCat < 0)
 		return;
 
 	CL_UpdateCredits(ccs.credits);
@@ -484,6 +484,49 @@ static void BS_BuyType (const base_t *base)
 	}
 }
 
+/*
+ * @brief Function gives the user friendly name of a buyCategory
+ */
+char *BS_BuyTypeName(const int buyCat)
+{
+	switch (buyCat) {
+	case FILTER_S_PRIMARY:
+		return "Primary weapons";
+		break;
+	case FILTER_S_SECONDARY:
+		return "Secondary weapons";
+		break;
+	case FILTER_S_HEAVY:
+		return "Heavy weapons";
+		break;
+	case FILTER_S_MISC:
+		return "Miscellaneous";
+		break;
+	case FILTER_S_ARMOUR:
+		return "Personal Armours";
+		break;
+	case FILTER_AIRCRAFT:
+		return "Aircraft";
+		break;
+	case FILTER_DUMMY:
+		return "Other";
+		break;
+	case FILTER_CRAFTITEM:
+		return "Aircraft equipment";
+		break;
+	case FILTER_UGVITEM:
+		return "Tanks";
+		break;
+	case FILTER_DISASSEMBLY:
+		return "Disassembling";
+		break;
+	default:
+		return "Unknown";
+		break;
+	}
+	return "Unknown";
+}
+
 /**
  * @brief Init function for Buy/Sell menu.
  */
@@ -497,46 +540,18 @@ static void BS_BuyType_f (void)
 		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
 		*/
 
+		if (buyCat == FILTER_DISASSEMBLY)
+			buyCat--;
 		if (buyCat < 0) {
 			buyCat = MAX_FILTERTYPES - 1;
+			if (buyCat == FILTER_DISASSEMBLY)
+				buyCat--;
 		} else if (buyCat >= MAX_FILTERTYPES) {
 			buyCat = 0;
 		}
 
 		Cvar_Set("mn_itemtype", va("%d", buyCat));	/**< @todo use a better identifier (i.e. filterTypeNames[]) for mn_itemtype @sa menu_buy.ufo */
-
-		switch (buyCat) {
-		case FILTER_S_PRIMARY:
-			Cvar_Set("mn_itemtypename", _("Primary weapons"));
-			break;
-		case FILTER_S_SECONDARY:
-			Cvar_Set("mn_itemtypename", _("Secondary weapons"));
-			break;
-		case FILTER_S_HEAVY:
-			Cvar_Set("mn_itemtypename", _("Heavy weapons"));
-			break;
-		case FILTER_S_MISC:
-			Cvar_Set("mn_itemtypename", _("Miscellaneous"));
-			break;
-		case FILTER_S_ARMOUR:
-			Cvar_Set("mn_itemtypename", _("Personal Armours"));
-			break;
-		case FILTER_AIRCRAFT:
-			Cvar_Set("mn_itemtypename", _("Aircraft"));
-			break;
-		case FILTER_DUMMY:
-			Cvar_Set("mn_itemtypename", _("Other"));
-			break;
-		case FILTER_CRAFTITEM:
-			Cvar_Set("mn_itemtypename", _("Aircraft equipment"));
-			break;
-		case FILTER_UGVITEM:
-			Cvar_Set("mn_itemtypename", _("Tanks"));
-			break;
-		default:
-			Cvar_Set("mn_itemtypename", _("Unknown"));
-			break;
-		}
+		Cvar_Set("mn_itemtypename", _(BS_BuyTypeName(buyCat)));
 		buyList.scroll = 0;
 		if (node)
 			node->textScroll = 0;
@@ -558,6 +573,8 @@ static void BS_Prev_BuyType_f (void)
 
 	if (buyCat < 0) {
 		buyCat = MAX_FILTERTYPES - 1;
+		if (buyCat == FILTER_DISASSEMBLY)
+			buyCat--;
 	} else if (buyCat >= MAX_FILTERTYPES) {
 		buyCat = 0;
 	}
@@ -574,9 +591,13 @@ static void BS_Next_BuyType_f (void)
 
 	if (buyCat == MAX_SOLDIER_FILTERTYPES)
 		buyCat++;
+	if (buyCat == FILTER_DISASSEMBLY)
+		buyCat++;
 
 	if (buyCat < 0) {
 		buyCat = MAX_FILTERTYPES - 1;
+		if (buyCat == FILTER_DISASSEMBLY)
+			buyCat--;
 	} else if (buyCat >= MAX_FILTERTYPES) {
 		buyCat = 0;
 	}
