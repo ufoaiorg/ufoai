@@ -2172,12 +2172,12 @@ void CL_ActorUpdateCVars (void)
 			Cvar_Set("mn_anim", animName);
 		if (RIGHT(selActor)) {
 			const invList_t *i = RIGHT(selActor);
-			assert(i->item.t >= &csi.ods[0] && i->item.t >= &csi.ods[MAX_OBJDEFS]);
+			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
 			Cvar_Set("mn_rweapon", i->item.t->model);
 		}
 		if (LEFT(selActor)) {
 			const invList_t *i = LEFT(selActor);
-			assert(i->item.t >= &csi.ods[0] && i->item.t >= &csi.ods[MAX_OBJDEFS]);
+			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
 			Cvar_Set("mn_lweapon", i->item.t->model);
 		}
 
