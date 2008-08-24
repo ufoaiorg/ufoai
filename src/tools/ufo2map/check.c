@@ -567,13 +567,24 @@ void CheckEntities (void)
 
 
 /**
- * @return zero for brushes that do not move, disappear, are not seethrough.
- * return nonzero for brushes in func_group or worldspawn entities.
+ * @return qtrue for brushes that do not move, are not breakable, are not seethrough, etc
  */
-static inline int Check_IsImmutable (const mapbrush_t *b) {
+static qboolean Check_IsOptimisable (const mapbrush_t *b) {
 	const entity_t *e = &entities[b->entitynum];
 	const char *name = ValueForKey(e, "classname");
-	return !strcmp(name, "func_group") || !strcmp(name, "worldspawn");
+	int i;
+
+	if (strcmp(name, "func_group") && strcmp(name, "worldspawn"))
+		return qfalse;/* other entities, eg func_breakable are no use */
+
+	/* content flags should be the same on all faces, but we shall be suspicious */
+	for (i = 0; i < b->numsides; i++) {
+		const side_t *side = &b->original_sides[i];
+		if (side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP | CONTENTS_TRANSLUCENT))
+			return qfalse;
+	}
+
+	return qtrue;
 }
 
 /**
@@ -587,9 +598,6 @@ static qboolean Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush
 		if (a->mins[i] - NDR_EPSILON >= b->maxs[i] || a->maxs[i] <= b->mins[i] - NDR_EPSILON)
 			return qfalse;
 
-	#if 0 /* only use this with maps with around 3 brushes in */
-	Check_Printf("Check_BoundingBoxIntersects: Brush %i is near brush %i.\n",a->brushnum, b->brushnum);
-	#endif
 	return qtrue;
 }
 
@@ -613,7 +621,7 @@ static void Check_NearList (void)
 		mapbrush_t *iBrush = &mapbrushes[i];
 
 		/* skip changeable brushes - they are not useful for map optimisation */
-		if (!Check_IsImmutable(iBrush))
+		if (!Check_IsOptimisable(iBrush))
 			continue;
 
 		/* test all brushes for nearness to iBrush */
@@ -623,7 +631,7 @@ static void Check_NearList (void)
 			if (i == j) /* do not list a brush as being near itself - not useful!*/
 				continue;
 
-			if (!Check_IsImmutable(jBrush))
+			if (!Check_IsOptimisable(jBrush))
 				continue;
 
 			if (!Check_BoundingBoxIntersects(iBrush, jBrush))
