@@ -2170,10 +2170,14 @@ void CL_ActorUpdateCVars (void)
 		animName = R_AnimGetName(&selActor->as, selActor->model1);
 		if (animName)
 			Cvar_Set("mn_anim", animName);
-		if (RIGHT(selActor))
+		if (RIGHT(selActor)) {
+			assert(RIGHT(selActor)->item);
 			Cvar_Set("mn_rweapon", RIGHT(selActor)->item.t->model);
-		if (LEFT(selActor))
+		}
+		if (LEFT(selActor)) {
+			assert(LEFT(selActor)->item);
 			Cvar_Set("mn_lweapon", LEFT(selActor)->item.t->model);
+		}
 
 		/* get weapon */
 		if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
