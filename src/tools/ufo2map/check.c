@@ -565,6 +565,17 @@ void CheckEntities (void)
 	}
 }
 
+
+/**
+ * @return zero for brushes that do not move, disappear, are not seethrough.
+ * return nonzero for brushes in func_group or worldspawn entities.
+ */
+static inline int Check_IsImmutable (const mapbrush_t *b) {
+	const entity_t *e = &entities[b->entitynum];
+	const char *name = ValueForKey(e, "classname");
+	return !strcmp(name, "func_group") || !strcmp(name, "worldspawn");
+}
+
 /**
  * @return qtrue if the bounding boxes intersect or are within NDR_EPSILON of intersecting
  */
@@ -584,7 +595,8 @@ static qboolean Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush
 
 /**
  * @brief add a list of near brushes to each mapbrush. near meaning that the bounding boxes
- * are intersecting or within NDR_EPSILON of touching
+ * are intersecting or within NDR_EPSILON of touching. excludes changeable brushes: ie
+ * only includes brushes from worldspawn or fun_group entities/
  */
 static void Check_NearList (void)
 {
@@ -600,11 +612,18 @@ static void Check_NearList (void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
+		/* skip changeable brushes - they are not useful for map optimisation */
+		if (!Check_IsImmutable(iBrush))
+			continue;
+
 		/* test all brushes for nearness to iBrush */
 		for (j = 0, numNear = 0 ; j < nummapbrushes; j++) {
 			mapbrush_t *jBrush = &mapbrushes[j];
 
-			if (i == j) /*do not list a brush as being near itself - not useful!*/
+			if (i == j) /* do not list a brush as being near itself - not useful!*/
+				continue;
+
+			if (!Check_IsImmutable(jBrush))
 				continue;
 
 			if (!Check_BoundingBoxIntersects(iBrush, jBrush))
@@ -633,7 +652,7 @@ static void Check_NearList (void)
 		const mapbrush_t *iBrush = &mapbrushes[i];
 		for (j = 0; j < iBrush->numNear; j++) {
 			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
-			Check_Printf("Check_NearList: results: Brush %i has brush %i near.\n",iBrush->brushnum, jBrush->brushnum);
+			Check_Printf("Check_NearList: results: e%i.b%i has e%i.b%i near.\n",iBrush->entitynum, iBrush->brushnum, jBrush->entitynum, jBrush->brushnum);
 		}
 	}
 	#endif
