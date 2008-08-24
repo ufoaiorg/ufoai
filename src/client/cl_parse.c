@@ -1350,6 +1350,12 @@ static void CL_InvDel (struct dbuffer *msg)
 	}
 
 	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
+
+	if (!ic) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvDel: No item found at loction x/y=%i/%i.\n", x, y);
+		return;
+	}
+
 	Com_RemoveFromInventory(&le->i, &csi.ids[container], ic);
 	if (container == csi.idRight)
 		le->right = NONE;

@@ -678,6 +678,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 
 	assert(i);
 	assert(container);
+	assert(fItem);
 
 	ic = i->c[container->id];
 	if (!ic) {

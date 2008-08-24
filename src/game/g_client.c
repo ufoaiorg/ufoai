@@ -935,15 +935,18 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	int mask;
 	inventory_action_t ia;
 	int msglevel;
-	const invList_t* invList;
+	invList_t fItemBackup;
+	const invList_t* fItemBackupPtr;
 
 	ent = g_edicts + num;
 	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
 
-	/* Store the location of 'from' BEFORE actually moving items with Com_MoveInInventory. */
-	invList = fItem;
+	/* Store the location/item of 'from' BEFORE actually moving items with Com_MoveInInventory. */
+	fItemBackup = *fItem;
+	fItemBackupPtr = fItem;
 
-	/* check if action is possible */
+
+	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
 		return;
@@ -1016,8 +1019,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 			gi.WriteShort(floor->number);
 			gi.WriteByte(from->id);
-			gi.WriteByte(fItem->x);
-			gi.WriteByte(fItem->y);
+			gi.WriteByte(fItemBackup.x);
+			gi.WriteByte(fItemBackup.y);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
@@ -1032,8 +1035,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
 		gi.WriteShort(num);
 		gi.WriteByte(from->id);
-		gi.WriteByte(fItem->x);
-		gi.WriteByte(fItem->y);
+		gi.WriteByte(fItemBackup.x);
+		gi.WriteByte(fItemBackup.y);
 	}
 
 	/* send tu's */
@@ -1067,15 +1070,15 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			gi.EndEvents();
 			return;
 		} else { /* ia == IA_RELOAD_SWAP */
-			if (!invList) {
-				Com_Printf("G_ClientInvMove: Didn't found invList of the item you're moving\n");
+			if (!fItemBackupPtr) {
+				Com_Printf("G_ClientInvMove: Didn't find invList of the item you're moving\n");
 				gi.EndEvents();
 				return;
 			}
-			item = invList->item;
+			item = fItemBackup.item;
 			to = from;
-			tx = fItem->x;
-			ty = fItem->y;
+			tx = fItemBackup.x;
+			ty = fItemBackup.y;
 		}
 	}
 
@@ -1129,8 +1132,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			gi.AddEvent(mask, EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(from->id);
-			gi.WriteByte(fItem->x);
-			gi.WriteByte(fItem->y);
+			gi.WriteByte(fItemBackup.x);
+			gi.WriteByte(fItemBackup.y);
 		}
 		if (to->id == gi.csi->idRight || to->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_ADD);
