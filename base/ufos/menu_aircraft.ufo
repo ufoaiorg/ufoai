@@ -1083,7 +1083,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_buy image menu/multi_buttons3 *string_buy color "0 0.5 0 1" }
 		in	{ *bt_buy image menu/multi_buttons3a *string_buy color "1 1 1 1" }
-		click	{ cmd "mn_pop; set mn_itemtype 5; mn_push buy;" }
+		click	{ cmd "mn_pop; set mn_itemtype 8; mn_push buy;" }
 	}
 	string string_buy
 	{
@@ -1104,7 +1104,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_prod image menu/multi_buttons3 *string_prod color "0 0.5 0 1" }
 		in	{ *bt_prod image menu/multi_buttons3a *string_prod color "1 1 1 1" }
-		click	{ cmd "mn_pop; set mn_itemtype 5; mn_push production;" }
+		click	{ cmd "mn_pop; set mn_itemtype 8; mn_push production;" }
 	}
 	string string_prod
 	{
