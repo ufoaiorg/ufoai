@@ -271,7 +271,7 @@ typedef struct objDef_s {
 						 * If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
 	int useable;		/**< Defines which team can use this item: 0 - human, 1 - alien.
-						 * Used in checking the right team when filling the containers with available armours. */
+						 * Used in checking the right team when filling the containers with available armour. */
 
 	struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */
 	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */

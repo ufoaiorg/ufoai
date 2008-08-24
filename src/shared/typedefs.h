@@ -295,6 +295,12 @@ typedef struct mapbrush_s {
 	int		numsides;
 	side_t	*original_sides;
 
+	/**list of brushes that are near to this one.
+	 * not necessarily initialised. call Check_NearList() to make sure it has been initialised
+	 * this will return quickly if it has already been done. */
+	struct	mapbrush_s **nearBrushes;
+	int	numNear;
+
 	qboolean finished;
 	qboolean isTerrain;
 	qboolean isGenSurf;

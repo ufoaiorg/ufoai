@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MANDATORY_KEY 1
 #define NON_MANDATORY_KEY 0
 
+/* how close faces have to be in order for one to be hidden and set to SURF_NODRAW */
+#define NDR_EPSILON 0.0001f
+
 static void Check_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
 
 /**
@@ -563,6 +566,82 @@ void CheckEntities (void)
 }
 
 /**
+ * @return qtrue if the bounding boxes intersect or are within NDR_EPSILON of intersecting
+ */
+static qboolean Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush_t *b)
+{
+	int i;
+
+	for (i = 0; i < 3; i++)
+		if (a->mins[i] - NDR_EPSILON >= b->maxs[i] || a->maxs[i] <= b->mins[i] - NDR_EPSILON)
+			return qfalse;
+
+	#if 0 /* only use this with maps with around 3 brushes in */
+	Check_Printf("Check_BoundingBoxIntersects: Brush %i is near brush %i.\n",a->brushnum, b->brushnum);
+	#endif
+	return qtrue;
+}
+
+/**
+ * @brief add a list of near brushes to each mapbrush. near meaning that the bounding boxes
+ * are intersecting or within NDR_EPSILON of touching
+ */
+static void Check_NearList (void)
+{
+	/* this function may be called more than once, but we only want this done once */
+	static qboolean done = qfalse;
+	mapbrush_t *bbuf[MAX_MAP_BRUSHES];/*< store pointers to brushes here and then malloc them when we know how many */
+	int i, j, numNear;
+
+	if (done)
+		return;
+
+	/* make a list for iBrush*/
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+
+		/* test all brushes for nearness to iBrush */
+		for (j = 0, numNear = 0 ; j < nummapbrushes; j++) {
+			mapbrush_t *jBrush = &mapbrushes[j];
+
+			if (i == j) /*do not list a brush as being near itself - not useful!*/
+				continue;
+
+			if (!Check_BoundingBoxIntersects(iBrush, jBrush))
+				continue;
+
+			/* near, therefore add to temp list for iBrush */
+			assert(numNear < nummapbrushes);
+			bbuf[numNear++] = jBrush;
+		}
+
+		/* now we know how many, we can malloc. then copy the pointers */
+		iBrush->nearBrushes = (mapbrush_t **)malloc(numNear * sizeof(mapbrush_t *));
+
+		if (!iBrush->nearBrushes)
+			Sys_Error("Check_Nearlist: out of memory");
+
+		iBrush->numNear = numNear;
+		for (j = 0; j < numNear; j++) {
+			iBrush->nearBrushes[j] = bbuf[j];
+		}
+	}
+
+	#if 0
+	/* output all brushes listed as close to other brushes - only use for maps with around 3 brushes */
+	for (i = 0;i < nummapbrushes;i++) {
+		const mapbrush_t *iBrush = &mapbrushes[i];
+		for (j = 0; j < iBrush->numNear; j++) {
+			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			Check_Printf("Check_NearList: results: Brush %i has brush %i near.\n",iBrush->brushnum, jBrush->brushnum);
+		}
+	}
+	#endif
+
+	done = qtrue;
+}
+
+/**
  * @brief Check for SURF_NODRAW which might be exposed, and check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes.
@@ -571,6 +650,8 @@ void CheckEntities (void)
 void CheckNodraws (void)
 {
 	int i;
+
+	Check_NearList();
 
 	/* 0 is the world - start at 1 */
 	for (i = 0; i < num_entities; i++) {
