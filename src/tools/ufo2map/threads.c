@@ -189,7 +189,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 	end = time(NULL);
 
 	if (threadstate.progress) {
-		Com_Printf(" (time: %6is, count: %i)\n", end - start, workcount);
+		Com_Printf(" (time: %6is, #: %i)\n", end - start, workcount);
 	}
 }
 
