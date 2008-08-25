@@ -39,7 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct buyListEntry_s {
 	const objDef_t *item;			/**< Item pointer (see also csi.ods[] and base->storage.num[] etc...) */
 	const ugv_t *ugv;				/**< Used for mixed UGV (characters) and FILTER_UGVITEM (items) list.
-							 * If not NULL it's a pointer to the correct UGV-struct (duh) otherwise a FILTER_UGVITEM-item is set in "item". */
+									 * If not NULL it's a pointer to the correct UGV-struct (duh)
+									 * otherwise a FILTER_UGVITEM-item is set in "item". */
 	const aircraft_t *aircraft;	/**< Used for aircraft production - aircraft template */
 } buyListEntry_t;
 
@@ -51,7 +52,8 @@ typedef struct buyList_s {
 
 static buyList_t buyList;	/**< Current buylist that is shown in the menu. */
 static const objDef_t *currentSelectedMenuEntry;	/**< Current selected entry on the list. */
-static int buyCat = 0;			/**< Category of items in the menu. */
+static int buyCat = FILTER_S_PRIMARY;	/**< Category of items in the menu.
+										 * @sa itemFilterTypes_t */
 
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;

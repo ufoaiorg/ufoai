@@ -44,7 +44,8 @@ typedef struct countedLinkedList_s {
 } countedLinkedList_t;
 
 
-static int produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type. */
+static int produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type.
+												 * @sa itemFilterTypes_t */
 
 static qboolean productionDisassembling;	/**< Are we in disassembling state? */
 static qboolean selectedQueueItem = qfalse;	/**< Did we select something in the queue. */
