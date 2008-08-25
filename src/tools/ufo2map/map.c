@@ -837,6 +837,10 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	mapent->numbrushes = 0;
 }
 
+/**
+ * @brief If there was an origin brush, offset all of the planes and texinfo
+ * @note Used for e.g. func_door or func_rotating
+ */
 static void AdjustBrushesForOrigin (const entity_t *ent)
 {
 	int i, j;
@@ -871,6 +875,12 @@ static inline qboolean IsInlineModelEntity (const char *entName)
 	return inlineModelEntity;
 }
 
+/**
+ * @brief Searches the entities array for an entity with the parameter targetname
+ * that matches the searched target parameter
+ * @param[in] target The targetname value that the entity should have that we are
+ * looking for
+ */
 entity_t *FindTargetEntity (const char *target)
 {
 	int i;
@@ -931,7 +941,7 @@ static qboolean ParseMapEntity (const char *filename)
 
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
-	/* if there was an origin brush, offset all of the planes and texinfo - e.g. func_door or func_rotating */
+	/* offset all of the planes and texinfo if needed */
 	if (VectorNotEmpty(mapent->origin))
 		AdjustBrushesForOrigin(mapent);
 
