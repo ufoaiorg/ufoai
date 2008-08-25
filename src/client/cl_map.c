@@ -590,7 +590,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 			costheta = cos(angles[0] * torad);
 			sintheta = sin(angles[0] * torad);
 
-			angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
+			angles[1] = 180.0f - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
 			angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 		} else {
 			VectorSet(angles, theta, 180, 0);
@@ -865,7 +865,8 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		qboolean draw = qfalse;
-		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
+		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
+		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
 			draw = qtrue;

@@ -33,17 +33,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "inv_shared.h"
 #include "../shared/infostring.h"
 
-/** @todo no gettext support for game lib - but we must be able to mark the strings */
+/** no gettext support for game lib - but we must be able to mark the strings */
 # define _(String) String
 # define ngettext(x, y, cnt) x
 
-/* define GAME_INCLUDE so that game.h does not define the */
-/* short, server-visible player_t and edict_t structures, */
-/* because we define the full size ones in this file */
+/** @note define GAME_INCLUDE so that game.h does not define the
+ * short, server-visible player_t and edict_t structures,
+ * because we define the full size ones in this file */
 #define	GAME_INCLUDE
 #include "game.h"
 
-/* the "gameversion" client command will print this plus compile date */
+/** the "gameversion" client command will print this plus compile date */
 #define	GAMEVERSION	"baseufo"
 
 /*================================================================== */
@@ -55,29 +55,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define NO_ACTIVE_TEAM -1
 
-/* server is running at 10 fps */
+/** server is running at 10 fps */
 #define	SERVER_FRAME_SECONDS		0.1
 
-/* memory tags to allow dynamic memory to be cleaned up */
+/** memory tags to allow dynamic memory to be cleaned up */
 #define	TAG_GAME	765			/* clear when unloading the dll */
 #define	TAG_LEVEL	766			/* clear when loading a new level */
 
-/* Macros for faster access to the inventory-container. */
+/** Macros for faster access to the inventory-container. */
 #define RIGHT(e) (e->i.c[gi.csi->idRight])
 #define LEFT(e)  (e->i.c[gi.csi->idLeft])
 #define EXTENSION(e)  (e->i.c[gi.csi->idExtension])
 #define HEADGEAR(e)  (e->i.c[gi.csi->idHeadgear])
 #define FLOOR(e) (e->i.c[gi.csi->idFloor])
 
-/* Actor visiblitly constants */
+/** Actor visiblitly constants */
 #define ACTOR_VIS_100	1.0
 #define ACTOR_VIS_50	0.5
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
-/* this structure is left intact through an entire game */
-/* it should be initialized at dll load time, and read/written to */
-/* the server.ssv file for savegames */
+/** @brief this structure is left intact through an entire game
+ * it should be initialized at dll load time, and read/written to
+ * the server.ssv file for savegames */
 typedef struct {
 	player_t *players;			/* [maxplayers] */
 
@@ -86,8 +86,8 @@ typedef struct {
 	int sv_maxentities;
 } game_locals_t;
 
-/* this structure is cleared as each map is entered */
-/* it is read/written to the level.sav file for savegames */
+/** @brief this structure is cleared as each map is entered
+ * it is read/written to the level.sav file for savegames */
 typedef struct {
 	int framenum;		/**< the current frame (10fps) */
 	float time;			/**< seconds the game is running already
@@ -198,13 +198,13 @@ extern cvar_t *mor_pain;
 /*everyone gets this times morale damage */
 extern cvar_t *mor_default;
 
-/*at this distance the following two get halfed (exponential scale) */
+/* at this distance the following two get halfed (exponential scale) */
 extern cvar_t *mor_distance;
 
-/*at this distance the following two get halfed (exponential scale) */
+/* at this distance the following two get halfed (exponential scale) */
 extern cvar_t *mor_victim;
 
-/*at this distance the following two get halfed (exponential scale) */
+/* at this distance the following two get halfed (exponential scale) */
 extern cvar_t *mor_attacker;
 
 /* how much the morale depends on the size of the damaged team */
@@ -230,7 +230,6 @@ extern cvar_t *flood_waitdelay;
 extern cvar_t *difficulty;
 
 /* fields are needed for spawning from the entity string */
-/* and saving / loading games */
 #define FFL_SPAWNTEMP		1
 #define FFL_NOSPAWN			2
 
@@ -265,11 +264,11 @@ void G_RecalcRouting(const edict_t * ent);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 /* g_client.c */
-/* the visibile changed - if it was visible - it's (the edict) now invisible */
+/** the visibile changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
-/* actor visible? */
+/** actor visible? */
 #define VIS_YES		2
-/* stop the current action if actor appears */
+/** stop the current action if actor appears */
 #define VIS_STOP	4
 
 /** check whether edict is still visible - it maybe is currently visible but this
@@ -396,16 +395,7 @@ typedef struct {
 	int			state;
 } moveinfo_t;
 
-/* client_t->anim_priority */
-#define	ANIM_BASIC		0		/* stand / run */
-#define	ANIM_WAVE		1
-#define	ANIM_JUMP		2
-#define	ANIM_PAIN		3
-#define	ANIM_ATTACK		4
-#define	ANIM_DEATH		5
-#define	ANIM_REVERSE	6
-
-/* client data that stays across multiple level loads */
+/** @brief client data that stays across multiple level loads */
 typedef struct {
 	char userinfo[MAX_INFO_STRING];
 	char netname[16];
@@ -423,9 +413,9 @@ typedef struct {
 	int			flood_whenhead;		/**< head pointer for when said */
 } client_persistant_t;
 
-/* this structure is cleared on each PutClientInServer(),
+/** @brief this structure is cleared on each PutClientInServer(),
  * except for 'client->pers'
- */
+ * @note shared between game and server - but server doesn't know all the fields */
 struct player_s {
 	/* known to server */
 	qboolean inuse;
@@ -458,14 +448,18 @@ struct player_s {
  */
 #define FL_TRIGGERED	0x00000100
 
+/**
+ * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
+ * the actors, the misc_models, the weapons and so on.
+ */
 struct edict_s {
 	qboolean inuse;
 	int linkcount;
 
-	int number;
+	int number;			/**< the number in the global edict array */
 
-	vec3_t origin;
-	vec3_t angles;
+	vec3_t origin;		/**< the position in the world */
+	vec3_t angles;		/**< the rotation in the world */
 
 	/** @todo move these fields to a server private sv_entity_t */
 	link_t area;				/**< linked to a division node or leaf */
