@@ -525,8 +525,11 @@ int main (int argc, const char **argv)
 			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckTexturesBasedOnFlags();
-		if (config.chkMMicro || config.chkBrushes || config.chkAll)
+		if (config.chkMMicro || config.chkBrushes || config.chkAll) {
+			if (!config.chkMMicro)
+				config.mapMicrovol = 1.0f;/* set default */
 			CheckMapMicro();
+		}
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */

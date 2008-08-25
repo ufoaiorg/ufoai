@@ -335,9 +335,12 @@ static const entityCheck_t checkArray[] = {
 /**
  * @brief distance from a point to a plane.
  * @note the sign of the result depends on which side of the plane the point is
+ * @return a negative distance if the point is on the inside of the plane
  */
 static inline float Check_PointPlaneDistance(const vec3_t point, const plane_t *plane)
 {
+	assert( abs(VectorLengthSqr(plane->normal) - 1.0f) < NDR_EPSILON ); /* normal should have a magnitude of one */
+
 	return DotProduct(point, plane->normal) - plane->dist;
 }
 
@@ -380,7 +383,8 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 
 	/* if the point is on the wrong side of any face, then it is outside */
 	for (i = 0; i < brush->numsides; i++) {
-		const plane_t *plane = &mapplanes[brush->original_sides->planenum];
+		const plane_t *plane = &mapplanes[brush->original_sides[i].planenum];
+
 		if (Check_PointPlaneDistance(point, plane) > NDR_EPSILON)
 			return qfalse;
 	}
@@ -514,6 +518,8 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 	int i;
 	const winding_t *w = side->winding;
 
+	assert(w->numpoints > 0);
+
 	for (i = 0; i < w->numpoints ; i++)
 		if (!Check_IsPointInsideBrush(w->p[i], brush))
 			return qfalse;
@@ -531,12 +537,14 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 void CheckNodraws (void)
 {
 	int i, j, is, js;
+
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
+		int numSet = 0;
 
 		/* check each brush, j, for having a side that hides one of i's faces */
 		for (j = 0; j < iBrush->numNear; j++) {
@@ -554,16 +562,18 @@ void CheckNodraws (void)
 						if(Check_SideIsInBrush(iSide, jBrush)) {
 							const ptrdiff_t index = iSide - brushsides;
 							brush_texture_t *tex = &side_brushtextures[index];
-							Check_Printf("* Brush %i (entity %i): set nodraw flag and texture to face %i (face is abutted and entirely covered by another face).\n", iBrush->brushnum, iBrush->entitynum, is);
 							Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 							iSide->surfaceFlags |= SURF_NODRAW;
 							tex->surfaceFlags |= SURF_NODRAW;
+							numSet++;
 						}
 
 					}
 				}
 			}
 		}
+		if (numSet)
+			Check_Printf("* Brush %i (entity %i): set nodraw on %i sides (covered by another brush).\n", iBrush->brushnum, iBrush->entitynum, numSet);
 	}
 
 }
@@ -654,7 +664,7 @@ static vec_t Check_MapBrushVolume (mapbrush_t *brush)
 		mapbrush_t *brush = &mapbrushes[i];
 		vol = Check_MapBrushVolume(brush);
 		if (vol < config.mapMicrovol)
-			Check_Printf("  Brush %i (entity %i) volume %f\n", brush->brushnum, brush->entitynum, vol);
+			Check_Printf("  Brush %i (entity %i): warning, microbrush: volume %f\n", brush->brushnum, brush->entitynum, vol);
 
 	}
  }
