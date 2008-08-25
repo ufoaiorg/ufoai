@@ -1388,3 +1388,31 @@ int LIST_Count (const linkedList_t *list)
 	}
 	return count;
 }
+
+/**
+ * @brief Get an entry of a linked list by its index in the list.
+ * @param[in] list (Counted) list of pointers.
+ * @param[in] num The index of the list entry.
+ * @return A void pointer of the content in the list-entry.
+ */
+void *LIST_GetByIdx (linkedList_t *list, int index)
+{
+	int i;
+	const int count = LIST_Count(list);
+
+	if (!count || !list)
+		return NULL;
+
+	if (num >= count || num < 0)
+		return NULL;
+
+	i = 0;
+	while (list) {
+		if (i == num)
+			return (void *)list->data;
+		i++;
+		list = list->next;
+	}
+
+	return NULL;
+}

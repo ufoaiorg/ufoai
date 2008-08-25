@@ -31,19 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Maximum number of produced/disassembled items. */
 #define MAX_PRODUCTION_AMOUNT 500
 
-/**
- * @brief A Linked list with a pointer inside and a counter.
- * @note Each entry _must_ only contain one pointer.
- */
-typedef struct countedLinkedList_s {
-	linkedList_t *list;	/**< The linked list itself. (only one pointer per entry) */
-	int num;			/**< Number of entries. */
-#if 0
-	linkedList_t *cur;	/**< Currently selected entry. */
-#endif
-} countedLinkedList_t;
-
-
 static int produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type.
 												 * @sa itemFilterTypes_t */
 
@@ -52,7 +39,7 @@ static qboolean selectedQueueItem = qfalse;	/**< Did we select something in the 
 static production_t *selectedProduction = NULL;	/**< Holds the current active selected queue entry. */
 
 /** A list if all producable items. */
-static countedLinkedList_t productionItemList;
+static linkedList_t *productionItemList;
 
 /** Currently selected entry in the productionItemList (depends on content) */
 static objDef_t *selectedItem = NULL;
@@ -446,8 +433,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 	}
 
-	LIST_Delete(&productionItemList.list);
-	productionItemList.num = 0;
+	LIST_Delete(&productionItemList);
 
 	/* Then go through all object definitions ... */
 	if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
@@ -459,8 +445,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			if (INV_ItemMatchesFilter(od, produceCategory)
 			 && RS_IsResearched_ptr(od->tech) && od->name[0] != '\0'
 			 && od->tech->produceTime > 0) {
-				LIST_AddPointer(&productionItemList.list, od);
-				productionItemList.num++;
+				LIST_AddPointer(&productionItemList, od);
 
 				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
@@ -479,8 +464,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			}
 			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraftTemplate->id, aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
-				LIST_AddPointer(&productionItemList.list, aircraftTemplate);
-				productionItemList.num++;
+				LIST_AddPointer(&productionItemList, aircraftTemplate);
 
 				Q_strcat(productionList, va("%s\n", _(aircraftTemplate->name)), sizeof(productionList));
 				for (j = 0, counter = 0; j < gd.numAircraft; j++) {
@@ -828,36 +812,6 @@ static void PR_AircraftInfo (const aircraft_t * aircraftTemplate)
 	}
 }
 
-
-/**
- * @brief Get an entry of a linked list by its index in the list.
- * @param[in] list (Counted) list of pointers.
- * @param[in] num The index from the menu screen (index productionList).
- * @return A void pointer of the content in the list-entry.
- */
-static inline void* PR_GetLISTPointerByIndex (countedLinkedList_t *list, int num)
-{
-	int i;
-	linkedList_t *tempList = list->list;
-
-	if (!list || !list->list)
-		return NULL;
-
-	if (num >= list->num || num < 0)
-		return NULL;
-
-	i = 0;
-	while (tempList) {
-		void *ptr = (void*)tempList->data;
-		if (i == num)
-			return ptr;
-		i++;
-		tempList = tempList->next;
-	}
-
-	return NULL;
-}
-
 /**
  * @brief Click function for production list
  * @note Opens the UFOpaedia - by right clicking an item
@@ -893,7 +847,7 @@ static void PR_ProductionListRightClick_f (void)
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory != FILTER_AIRCRAFT) {
-			objDef_t *od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
 #ifdef DEBUG
 			if (!od) {
 				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: No item found at the list-position %i!\n", idx);
@@ -913,7 +867,7 @@ static void PR_ProductionListRightClick_f (void)
 				return;
 			}
 		} else {
-			const aircraft_t *aircraftTemplate = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+			const aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
 			/* ufo research definition must not have a tech assigned
 			 * only RS_CRAFT types have
 			 * @sa RS_InitTree */
@@ -971,7 +925,7 @@ static void PR_ProductionListClick_f (void)
 
 		if (!productionDisassembling) {
 			if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
-				objDef_t *od = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+				objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
 
 #ifdef DEBUG
 				if (!od) {
@@ -995,7 +949,7 @@ static void PR_ProductionListClick_f (void)
 					return;
 				 }
 			} else {	/* Aircraft. */
-				aircraft_t *aircraftTemplate = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+				aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
 				/* ufo research definition must not have a tech assigned
 				 * only RS_CRAFT types have
 				 * @sa RS_InitTree */
@@ -1012,7 +966,7 @@ static void PR_ProductionListClick_f (void)
 				}
 			}
 		} else {	/* Disassembling. */
-			components_t *comp = (components_t*)PR_GetLISTPointerByIndex(&productionItemList, idx);
+			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
 
 			selectedQueueItem = qfalse;
 			PR_ClearSelected();
@@ -1066,8 +1020,7 @@ static void PR_UpdateDisassemblingList_f (void)
 		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 	}
 
-	LIST_Delete(&productionItemList.list);
-	productionItemList.num = 0;
+	LIST_Delete(&productionItemList);
 
 	for (i = 0; i < gd.numComponents; i++) {
 		const objDef_t *asOd = gd.components[i].asItem;
@@ -1075,8 +1028,7 @@ static void PR_UpdateDisassemblingList_f (void)
 		if (!asOd)
 			continue;
 		if (PR_ConditionsDisassembly(base, comp)) {
-			LIST_AddPointer(&productionItemList.list, comp);
-			productionItemList.num++;
+			LIST_AddPointer(&productionItemList, comp);
 
 			Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
@@ -1142,11 +1094,11 @@ static void PR_ProductionSelect_f (void)
 	PR_ClearSelected();
 
 	/* Select first entry in the list (if any). */
-	if (productionItemList.num > 0) {
+	if (LIST_Count(productionItemList) > 0) {
 		if (produceCategory != FILTER_AIRCRAFT)
-			selectedItem = (objDef_t*)PR_GetLISTPointerByIndex(&productionItemList, 0);
+			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
 		else
-			selectedAircraft = (aircraft_t*)PR_GetLISTPointerByIndex(&productionItemList, 0);
+			selectedAircraft = (aircraft_t*)LIST_GetByIdx(productionItemList, 0);
 	}
 
 	/* Update displayed info about selected entry (if any). */

@@ -77,6 +77,7 @@ const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* st
 void LIST_Delete(linkedList_t **list);
 void LIST_Remove(linkedList_t **list, linkedList_t *entry);
 int LIST_Count(const linkedList_t *list);
+void *LIST_GetByIdx(linkedList_t *list, int index);
 
 /*============================================= */
 
