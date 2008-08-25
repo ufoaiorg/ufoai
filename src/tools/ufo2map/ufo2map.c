@@ -519,7 +519,7 @@ int main (int argc, const char **argv)
 		/* mixed face contents check may remove contentflags. this should be done
 		 * before tex based on flags check, as tex may replace tex on the basis
 		 * of contentflags.*/
-		if (config.chkMixedFaceContents || config.chkBrushes ||config.chkAll )
+		if (config.chkMixedFaceContents || config.chkBrushes || config.chkAll)
 			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckTexturesBasedOnFlags();
@@ -527,7 +527,8 @@ int main (int argc, const char **argv)
 			CheckMapMicro();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
-		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */
+		/** @todo include in chkAll when it works */
+		if (config.chkNodraws /* || config.chkAll */)
 			CheckNodraws();
 		if (config.chkEntities || config.chkAll)
 			CheckEntities();
