@@ -481,7 +481,10 @@ int main (int argc, char* argv[]) {
 	if (g_bLoadLastMap && !g_strLastMap.empty()) {
 		Map_LoadFile(g_strLastMap.c_str());
 	} else if (argc == 2) {
-		Map_LoadFile(argv[1]);
+		if (file_readable(argv[1]))
+			Map_LoadFile(argv[1]);
+		else
+			Map_New();
 	} else {
 		Map_New();
 	}
