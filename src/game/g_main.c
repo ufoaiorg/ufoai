@@ -592,6 +592,15 @@ void G_EndGame (int team)
 	}
 
 	gi.EndEvents();
+
+	if (level.nextmap[0] != '\0') {
+		char command[MAX_VAR];
+		/** @todo We have to make sure, that the teaminfo is not completly resent
+		 * otherwise we would have the same team again and died actors are not taken
+		 * into account */
+		Com_sprintf(command, sizeof(command), "map %s\n", level.nextmap);
+		gi.AddCommandString(command);
+	}
 }
 
 /**

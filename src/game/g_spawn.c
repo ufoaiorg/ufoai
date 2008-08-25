@@ -984,6 +984,10 @@ static void SP_worldspawn (edict_t *ent)
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
+#ifdef DEBUG
+	else
+		Q_strncpyz(level.nextmap, gi.Cvar_String("nextmap"), sizeof(level.nextmap));
+#endif
 
 	gi.ConfigString(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 

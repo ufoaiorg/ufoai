@@ -2156,7 +2156,7 @@ void CL_ParseCharacterData (struct dbuffer *msg)
 
 /**
  * @brief Reads mission result data from server
- * See EV_RESULTS
+ * @sa EV_RESULTS
  * @sa G_EndGame
  * @sa CL_GameResults_f
  */
