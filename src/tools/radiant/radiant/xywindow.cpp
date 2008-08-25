@@ -1510,8 +1510,6 @@ void XYWnd::XY_DrawBackground(void)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glPopAttrib();
-
-	XYWnd::XY_DrawAxis();
 }
 
 void XYWnd::XY_DrawGrid(void) {
@@ -2111,8 +2109,7 @@ void XYWnd::XY_Draw(void) {
 
 	if (m_backgroundActivated)
 		XY_DrawBackground();
-	else
-		XY_DrawGrid();
+	XY_DrawGrid();
 
 	if ( g_xywindow_globals_private.show_blocks)
 		XY_DrawBlockGrid();
