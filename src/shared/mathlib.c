@@ -500,7 +500,7 @@ static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const ve
 }
 
 /**
- * @brief Calculated the normal vector for a given vec3_t
+ * @brief Calculate unit vector for a given vec3_t
  * @param[in] v Vector to normalize
  * @sa VectorNormalize2
  * @return vector length as vec_t
@@ -823,44 +823,4 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 		if (val > maxs[i])
 			maxs[i] = val;
 	}
-}
-
-/**
- * @brief calculates the distance from a point to a plane
- * @param[in] normal the hessian normal to calculate from
- * @param[in] p
- * @param[in] point the point to calculate the distance to, from the given side.
- * @return the distance. If the vector pointing from @c point to the
- * plane is in the same direction as the normal then the distance is positive.
- * Put another way: If the point is in the half-space to which the unit normal
- * points, then the distance will be negative.
- */
-float HessianDistance (const vec3_t point, const vec3_t normal, const float p)
-{
-	return DotProduct(normal, point) + p;
-}
-
-/**
- * @brief Calculate Hessian Normal Form from 3 points on the plane.
- * If the points on the plane go clockwise when you look at the plane, then
- * the unit normal will point towards you.
- * @note this function has been tested by comparing to maputils java. blondandy.
- * @param[in] p1 Planevector 1
- * @param[in] p2 Planevector 2
- * @param[in] p3 Planevector 3
- * @param[out] normal The calculated normal vector
- */
-float HessianNormalPlane (const vec3_t p1, const vec3_t p2, const vec3_t p3, vec3_t normal)
-{
-	vec3_t inPlane1;
-	vec3_t inPlane2;
-
-	VectorSubtract(p1, p2, inPlane1);
-	VectorSubtract(p3, p2, inPlane2);
-
-	/* cross product gives vector normal to plane */
-	CrossProduct(inPlane1, inPlane2, normal);
-	VectorNormalize(normal);
-
-	return -DotProduct(normal, p1);
 }

@@ -35,8 +35,9 @@ int			nummapbrushsides;
 side_t		brushsides[MAX_MAP_SIDES];
 brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
-int			nummapplanes;
+/** an index of the planes containing the faces of the brushes */
 plane_t		mapplanes[MAX_MAP_PLANES];
+int			nummapplanes;
 
 #define	PLANE_HASHES	1024
 static plane_t *planehash[PLANE_HASHES];

@@ -35,6 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* how close faces have to be in order for one to be hidden and set to SURF_NODRAW */
 #define NDR_EPSILON 0.0001f
 
+/* if the cosine of an angle (in radians) is greater than this, then the angle is negligibly different from zero */
+#define COS_EPSILON 0.9999f
+
 static void Check_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
 
 /**
@@ -318,25 +321,13 @@ static const entityCheck_t checkArray[] = {
 	{NULL, NULL}
 };
 
-static inline void AddBrushToList (mapbrush_t ***list, mapbrush_t *brush, int n)
+/**
+ * @brief distance from a point to a plane.
+ * @note the sign of the result depends on which side of the plane the point is
+ */
+static inline float Check_PointPlaneDistance(const vec3_t point, const plane_t *plane)
 {
-	*list = (mapbrush_t **)realloc(*list, (n + 1) * sizeof(mapbrush_t **));
-	(*list)[n] = brush;
-}
-
-static inline qboolean CheckIntersect (const mapbrush_t *b1, const mapbrush_t *b2)
-{
-	const boolean zNoOverlap = b1->maxs[2] < b2->mins[2] || b1->mins[2] > b2->maxs[2];
-	const boolean yNoOverlap = b1->maxs[1] < b2->mins[1] || b1->mins[1] > b2->maxs[1];
-	const boolean xNoOverlap = b1->maxs[0] < b2->mins[0] || b1->mins[0] > b2->maxs[0];
-	return (!zNoOverlap && !yNoOverlap && !xNoOverlap);
-}
-
-static inline qboolean SidesAreAntiparallel (const side_t *side1, const side_t *side2, const float epsilon)
-{
-	/* calculate the cosine of the angle between side1 and side2 (dihedral angle) */
-	float dot = DotProduct(side1->hessianNormal, side2->hessianNormal);
-	return (dot <= -cos(epsilon));
+	return DotProduct(point, plane->normal) - plane->dist;
 }
 
 /**
@@ -345,198 +336,44 @@ static inline qboolean SidesAreAntiparallel (const side_t *side1, const side_t *
  * to the origin must be such that they occupy the same region of
  * space, to within a distance of epsilon. These are based on consideration of
  * the planes of the faces only - they could be offset by a long way.
- * @note epsilon is used as a distance in map units and an angle in radians.
+ * @note carefully tested around r18537 by blondandy
  * @return true if the sides face and touch
  */
-static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2, const float epsilon)
+static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
 {
-	vec3_t point;
-	float distance;
+	plane_t *plane1 = &mapplanes[side1->planenum];
+	plane_t *plane2 = &mapplanes[side2->planenum];
+	float distance, dihedralCos;
 
-	VectorMul(side2->hessianP, side2->hessianNormal, point);
-	distance = abs(HessianDistance(point, side1->hessianNormal, side1->hessianP));
-	return (distance < epsilon && SidesAreAntiparallel(side1, side2, epsilon));
+	dihedralCos = DotProduct(plane1->normal, plane2->normal);
+	if (dihedralCos >= -COS_EPSILON)
+		return qfalse; /* not facing each other */
+
+	/* calculate the distance of point from plane2. as we have established that the
+	 * plane's normals are antiparallel, and plane1->planeVector[0] is a point on plane1
+	 * (that was supplied in the map file), this is the distance
+	 * between the planes */
+	distance = Check_PointPlaneDistance(plane1->planeVector[0], plane2);
+
+	return abs(distance) < NDR_EPSILON;
 }
 
 /**
- * @brief Grows the brush by epsilon tolerance. this will only work for convex polyhedra.
+ * @brief Grows the brush by epsilon tolerance.
  * @param[in] point The point to check whether it's inside the brush boundaries or not
- * @param[in] epsilon The epsilon tolerance
- * @return true if the supplied point is inside the brush
+ * @return qtrue if the supplied point is inside the brush
  */
-static inline qboolean CheckPointInsideBrush (vec3_t point, const mapbrush_t *brush, const float epsilon)
+static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbrush_t *brush)
 {
 	int i;
 
 	/* if the point is on the wrong side of any face, then it is outside */
 	for (i = 0; i < brush->numsides; i++) {
-		const side_t *side = &brush->original_sides[i];
-		if (HessianDistance(point, side->hessianNormal, side->hessianP) > epsilon)
+		const plane_t *plane = &mapplanes[brush->original_sides->planenum];
+		if (Check_PointPlaneDistance(point, plane) > NDR_EPSILON)
 			return qfalse;
 	}
 	return qtrue;
-}
-
-static void GetIntersection (const side_t *side1, const side_t *side2, const side_t *side3, vec3_t out, const float epsilon)
-{
-	vec3_t cross;
-	vec3_t IntersectionDirSide2Side3;
-	float sinAngle;
-	float atobcintersection;
-	float divisor;
-	vec3_t term1, term2, term3;
-
-	CrossProduct(side2->hessianNormal, side3->hessianNormal, IntersectionDirSide2Side3);
-	/* sin of angle between side 2 and 3 (approx equal to angle: small angle approx) */
-	sinAngle = 1.0; /** @todo use this one: IntersectionDirSide2Side3.magnitude();*/
-	/* planes parallel, cannot intersect */
-	if (sinAngle < epsilon)
-		return;
-	/* make it into a unit vector */
-	VectorDiv(IntersectionDirSide2Side3, sinAngle, IntersectionDirSide2Side3);
-	/* calculate cos of angle to normal of side 1. */
-	atobcintersection = DotProduct(side1->hessianNormal, IntersectionDirSide2Side3);
-	/* this is equal to sin of angle to side 1. if bc intersection line is parallel to side 1, then
-	 * it can not intersect. */
-	if (atobcintersection < 0) /** @todo Use this: Epsilon.angle */
-		return;
-
-	/* see http://geometryalgorithms.com/Archive/algorithm_0104/algorithm_0104B.htm */
-	CrossProduct(side2->hessianNormal, side3->hessianNormal, cross);
-	VectorMul(-side1->hessianP, cross, term1);
-	CrossProduct(side3->hessianNormal, side1->hessianNormal, cross);
-	VectorMul(-side2->hessianP, cross, term2);
-	CrossProduct(side1->hessianNormal, side2->hessianNormal, cross);
-	VectorMul(-side3->hessianP, cross, term3);
-
-	CrossProduct(side2->hessianNormal, side3->hessianNormal, cross);
-	divisor = DotProduct(side1->hessianNormal, cross);
-
-	VectorAdd(term1, term2, out);
-	VectorAdd(out, term3, out);
-	VectorDiv(out, divisor, out);
-}
-
-static int CalculateVerticesForBrush (const mapbrush_t *brush, vec3_t *list, const float epsilon)
-{
-	int i, j, k, n;
-
-	n = 0;
-	for (i = 1; i < brush->numsides; i++)
-		for (j = 0; j < i; j++)
-			for (k = j + 1; k < brush->numsides; k++) {
-				const side_t *sideI = &brush->original_sides[i];
-				const side_t *sideJ = &brush->original_sides[j];
-				const side_t *sideK = &brush->original_sides[k];
-				vec3_t candidate = {0, 0, 0};
-
-				GetIntersection(sideI, sideJ, sideK, candidate, epsilon);
-				/* if 3 faces do not intersect at point
-				 * and in case 3 planes of faces intersect away from brush */
-				if (VectorNotEmpty(candidate) && CheckPointInsideBrush(candidate, brush, epsilon)) {
-					VectorCopy(candidate, list[n]);
-					n++;
-				}
-			}
-
-	return n;
-}
-
-static qboolean BrushSidesAreInside (const mapbrush_t *brush1, const mapbrush_t *brush2)
-{
-	int i;
-	const float epsilon = 0.001;
-	vec3_t vectorList[4096];
-	const int n = CalculateVerticesForBrush(brush2, vectorList, epsilon);
-
-	for (i = 0; i < brush2->numsides; i++) {
-		const side_t *side = &brush2->original_sides[i];
-		int j;
-
-		for (j = 0; j < n; j++) {
-			vec3_t point;
-			if (abs(HessianDistance(vectorList[j], side->hessianNormal, side->hessianP)) < epsilon) {
-				if (!CheckPointInsideBrush(point, brush1, epsilon))
-					return qfalse;
-			}
-		}
-	}
-	return qtrue;
-}
-
-/**
- * @brief Generate a list of brushes that intersects with the given brush
- * @return A list of brushes
- * @param[in] entity The entity to check the intersecting brushes for
- */
-static void CheckInteractionList (const entity_t *entity)
-{
-	int i, j, k, l, n;
-	mapbrush_t **list;
-
-	list = NULL;
-	n = 0;
-
-	for (i = 0; i < entity->numbrushes; i++) {
-		const int brushNum = entity->firstbrush + i;
-		mapbrush_t *brush = &mapbrushes[brushNum];
-
-		/* skip translucent brushes */
-		if (brush->contentFlags & CONTENTS_TRANSLUCENT)
-			continue;
-
-		for (j = 0; j < brush->numsides; j++) {
-			const side_t *side = &brush->original_sides[j];
-			/* skip brushes that have some special faces - note that these face
-			 * flags should be the same for every face but one never knows */
-			if (side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP))
-				break;
-		}
-		/* now we can go on with the intersection calculation */
-		if (j == brush->numsides) {
-			for (j = 0; j < brush->numsides; j++) {
-				side_t *side = &brush->original_sides[j];
-				const plane_t *p = &mapplanes[side->planenum];
-				/* we only have to calculate these values for potential sides */
-				side->hessianP = HessianNormalPlane(p->planeVector[0], p->planeVector[1], p->planeVector[2], side->hessianNormal);
-			}
-
-			AddBrushToList(&list, brush, n);
-			n++;
-		}
-	}
-
-	Sys_FPrintf(SYS_VRB, "Added %i brushes to interact with entity: %d\n", n, (int) (entity - entities));
-
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < n; j++) {
-			const int levelFlagsI = GetLevelFlagsFromBrush(list[i]);
-			const int levelFlagsJ = GetLevelFlagsFromBrush(list[j]);
-
-			if (i != j && levelFlagsI == levelFlagsJ && CheckIntersect(list[i], list[j])) {
-				for (k = 0; k < list[i]->numsides; k++) {
-					side_t *sideI = &list[i]->original_sides[k];
-					for (l = 0; l < list[j]->numsides; l++) {
-						side_t *sideJ = &list[j]->original_sides[l];
-						if (FacingAndCoincidentTo(sideI, sideJ, 0.001)) {
-							if (BrushSidesAreInside(list[j], list[i])) {
-								if (!(sideI->surfaceFlags & SURF_NODRAW)) {
-									brush_texture_t *tex = &side_brushtextures[sideI - brushsides];
-									Check_Printf("* Brush %i (entity %i): set nodraw flag and texture (face is abutted and entirely covered by another face).\n", list[i]->brushnum, list[i]->entitynum);
-									Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
-									sideI->surfaceFlags |= SURF_NODRAW;
-									tex->surfaceFlags |= SURF_NODRAW;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	if (n)
-		free(list);
 }
 
 /**
@@ -654,43 +491,70 @@ static void Check_NearList (void)
 		}
 	}
 
-	#if 0
-	/* output all brushes listed as close to other brushes - only use for maps with around 3 brushes */
-	for (i = 0;i < nummapbrushes;i++) {
-		const mapbrush_t *iBrush = &mapbrushes[i];
-		for (j = 0; j < iBrush->numNear; j++) {
-			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
-			Check_Printf("Check_NearList: results: e%i.b%i has e%i.b%i near.\n",iBrush->entitynum, iBrush->brushnum, jBrush->entitynum, jBrush->brushnum);
-		}
-	}
-	#endif
-
 	done = qtrue;
+}
+
+/**
+ * @brief tests the vertices in the winding of side s.
+ * @return qtrue if they are all in or on (within epsilon) brush b
+ */
+static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush)
+{
+	int i;
+	const winding_t *w = side->winding;
+
+	for (i = 0; i < w->numpoints ; i++)
+		if (!Check_IsPointInsideBrush(w->p[i], brush))
+			return qfalse;
+
+	return qtrue;
 }
 
 /**
  * @brief Check for SURF_NODRAW which might be exposed, and check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes.
- * @todo make it work, by porting from maputils java
+ * @todo test for sides hidden by composite faces
+ * @todo warn about faces which are nodraw, but might be visible
  */
 void CheckNodraws (void)
 {
-	int i;
-
+	int i, j, is, js;
+	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
 
-	/* 0 is the world - start at 1 */
-	for (i = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
+	/* check each brush, i, for hidden sides */
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
 
-		/* check only these entities for interaction - all the others may be
-		 * rotated, removed or moved */
-		if (!strcmp(name, "func_group") || !strcmp(name, "worldspawn")) {
-			CheckInteractionList(e);
+		/* check each brush, j, for having a side that hides one of i's faces */
+		for (j = 0; j < iBrush->numNear; j++) {
+			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+
+			/* check each side of i for being hidden */
+			for (is = 0; is < iBrush->numsides; is++) {
+			side_t *iSide = &iBrush->original_sides[is];
+
+				/* check each side of brush j for doing the hiding */
+				for (js = 0; js < jBrush->numsides; js++) {
+					side_t *jSide = &jBrush->original_sides[js];
+
+					if (FacingAndCoincidentTo(iSide, jSide)) {
+						if(Check_SideIsInBrush(iSide, jBrush)) {
+							const ptrdiff_t index = iSide - brushsides;
+							brush_texture_t *tex = &side_brushtextures[index];
+							Check_Printf("* Brush %i (entity %i): set nodraw flag and texture to face %i (face is abutted and entirely covered by another face).\n", iBrush->brushnum, iBrush->entitynum, is);
+							Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
+							iSide->surfaceFlags |= SURF_NODRAW;
+							tex->surfaceFlags |= SURF_NODRAW;
+						}
+
+					}
+				}
+			}
 		}
 	}
+
 }
 
 /**
@@ -834,10 +698,6 @@ void CheckLevelFlags (void)
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
 			assert(side);
-
-#if 0
-			("CheckLevelFlags: contentflags before changes %i\n", side->contentFlags);
-#endif
 
 			if (!(side->surfaceFlags & SURF_NODRAW)) {
 				allNodraw = qfalse;
