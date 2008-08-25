@@ -79,7 +79,7 @@ typedef struct {
  * @brief contains the animate sequence of a single surface using a single material
  */
 typedef struct {
-	char name[128];
+	char name[MAX_QPATH];
 
 	int materialRef;
 	int numAnimations;
@@ -353,11 +353,18 @@ static void ASE_KeyMAP_DIFFUSE (const char *token)
 	strcpy(filename, gl_filename);
 
 	if (!strcmp(token, "*BITMAP")) {
+		const char *bitmap;
+		size_t len;
+
 		ASE_GetToken(qfalse);
 
-		/** @todo convert to relative paths */
-		strcpy(ase.materials[ase.numMaterials].name, s_token);
-		Com_Printf("material name: \'%s\'\n", s_token);
+		/* skip the " */
+		bitmap = &s_token[1];
+		len = strlen(bitmap) - 1;
+		s_token[len] = '\0';
+
+		COM_StripExtension(bitmap, ase.materials[ase.numMaterials].name, MAX_QPATH);
+		Sys_FPrintf(SYS_VRB, "ase material name: \'%s\'\n", ase.materials[ase.numMaterials].name);
 	}
 }
 

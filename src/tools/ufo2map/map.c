@@ -440,7 +440,8 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 
 	for (i = 0; i < 3; i++) {
 		if (brush->mins[0] < -MAX_WORLD_WIDTH || brush->maxs[0] > MAX_WORLD_WIDTH)
-			Com_Printf("entity %i, brush %i: bounds out of world range\n", brush->entitynum, brush->brushnum);
+			Com_Printf("entity %i, brush %i: bounds out of world range (%f:%f)\n",
+				brush->entitynum, brush->brushnum, brush->mins[0], brush->maxs[0]);
 		if (brush->mins[0] > MAX_WORLD_WIDTH || brush->maxs[0] < -MAX_WORLD_WIDTH) {
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
 			VectorClear(brush->mins);
@@ -844,6 +845,8 @@ static void MoveBrushesToWorld (entity_t *mapent)
  * @brief Generates planes from a given mesh entity
  * @note Used by misc_inline
  * @sa MoveBrushesToWorld
+ * @todo This function is not yet working - we can't convert the ase information
+ * into plane vectors like it is done here. Find the proper way in doing this
  */
 static void MoveModelToWorld (entity_t *mapent)
 {
@@ -852,39 +855,118 @@ static void MoveModelToWorld (entity_t *mapent)
 		return;
 
 	if (strstr(model, ".ase")) {
-#if 0
 		int i, num;
+		const int spawnflags = atoi(ValueForKey(mapent, "spawnflags"));
+		const int beforeBrushes = nummapbrushes;
+		const int beforeSides = nummapbrushsides;
 
 		ASE_Load(model, qfalse);
 
 		num = ASE_GetNumSurfaces();
 
+		Com_Printf("ase with %i surfaces\n", num);
 		for (i = 0; i < num; i++) {
 			polyset_t *modelPolySet = ASE_GetSurfaceAnimation(i);
-			int j;
+			mapbrush_t *b;
+			int j, k;
+
 			if (!modelPolySet)
 				Sys_Error("Could not get the model polyset for '%s'", model);
+
+			if (nummapbrushes == MAX_MAP_BRUSHES)
+				Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
+
+			b = &mapbrushes[nummapbrushes];
+			memset(b, 0, sizeof(*b));
+			b->original_sides = &brushsides[nummapbrushsides];
+			b->entitynum = num_entities - 1;
+			b->brushnum = nummapbrushes - mapent->firstbrush;
+
 			for (j = 0; j < modelPolySet->numtriangles; j++) {
 				triangle_t* tri = &modelPolySet->triangles[j];
-				mapbrush_t *b;
+				int mt;
+				side_t *side;
+				int planenum;
+				brush_texture_t td;
 
-				if (nummapbrushes == MAX_MAP_BRUSHES)
-					Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
+				if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
+					Sys_Error("nummapbrushsides == MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
+				side = &brushsides[nummapbrushsides];
 
-				b = &mapbrushes[nummapbrushes];
-				memset(b, 0, sizeof(*b));
-				b->original_sides = &brushsides[nummapbrushsides];
-				b->entitynum = num_entities - 1;
-				b->brushnum = nummapbrushes - mapent->firstbrush;
+				Q_strncpyz(td.name, modelPolySet->materialname, sizeof(td.name));
 
-				/** @todo Add the triangle_t data as new mapbrush.
-				 * use the materialname as texture
-				 * shift the vectors by the ent origin of the misc_inline */
+				/** @todo use correct values here - not random ones */
+				td.shift[0] = tri->texcoords[0][0];
+				td.shift[1] = tri->texcoords[0][1];
+				td.rotate = 0.0f;
+				td.scale[0] = tri->texcoords[1][0];
+				td.scale[1] = tri->texcoords[1][1];
+
+				/* find default flags and values */
+				mt = FindMiptex(td.name);
+				if (mt >= 0) {
+					td.value = textureref[mt].value;
+					side->contentFlags = textureref[mt].contentFlags;
+					side->surfaceFlags = td.surfaceFlags = textureref[mt].surfaceFlags;
+				} else {
+					side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
+				}
+
+				side->surfaceFlags = 0;
+				td.value = 0;
+
+				/* find the plane number */
+				planenum = PlaneFromPoints(b, tri->verts[0], tri->verts[1], tri->verts[2]);
+				if (planenum == PLANENUM_LEAF) {
+					Com_Printf("Entity %i, Brush %i: plane with no normal in ase model\n", b->entitynum, b->brushnum);
+					continue;
+				}
+
+				/* copy the three point plane definition */
+				for (k = 0; k < 3; k++) {
+					VectorScale(tri->verts[k], 0.1, tri->verts[k]);
+					VectorCopy(tri->verts[k], mapplanes[planenum].planeVector[k]);
+				}
+
+				side = b->original_sides + b->numsides;
+				side->planenum = planenum;
+				side->texinfo = TexinfoForBrushTexture(&mapplanes[planenum],
+					&td, vec3_origin, b->isTerrain);
+				side->brush = b;
+
+				/* if in check or fix mode, let them choose to do this, and the call is made elsewhere */
+				SetImpliedFlags(side, &td, b);
+
+				/* save the td off in case there is an origin brush and we
+				 * have to recalculate the texinfo */
+				side_brushtextures[nummapbrushsides] = td;
+
+				nummapbrushsides++;
+				b->numsides++;
 			}
+
+			/* get the content for the entire brush */
+			b->contentFlags = BrushContents(b);
+			/* use the entity spawnflags as new contentflags */
+			b->contentFlags |= (spawnflags << 8);
+
+			/* copy all set face contentflags to the brush contentflags */
+			for (k = 0; k < b->numsides; k++)
+				b->contentFlags |= b->original_sides[k].contentFlags;
+
+			/* create windings for sides and bounds for brush */
+			MakeBrushWindings(b);
+
+			AddBrushBevels(b);
+
+			nummapbrushes++;
+			mapent->numbrushes++;
 		}
 
+		Sys_FPrintf(SYS_VRB, "added %i new brushes from ase\n", nummapbrushes - beforeBrushes);
+		Sys_FPrintf(SYS_VRB, "added %i new sides from ase\n", nummapbrushsides - beforeSides);
+
 		ASE_Free();
-#endif
 	} else
 		Com_Printf("Ignoring unknown model type for misc_inline (use ase models)\n");
 }
