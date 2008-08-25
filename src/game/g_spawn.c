@@ -119,6 +119,7 @@ static const field_t fields[] = {
 
 	/* need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
+	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
 };
@@ -984,10 +985,7 @@ static void SP_worldspawn (edict_t *ent)
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
-#ifdef DEBUG
-	else
-		Q_strncpyz(level.nextmap, gi.Cvar_String("nextmap"), sizeof(level.nextmap));
-#endif
+	level.randomSpawn = st.randomSpawn;
 
 	gi.ConfigString(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 

@@ -110,6 +110,8 @@ typedef struct {
 
 	int actualRound;
 
+	int randomSpawn;
+
 	byte num_alive[MAX_TEAMS];
 	byte num_spawned[MAX_TEAMS];
 	byte num_spawnpoints[MAX_TEAMS];
@@ -119,12 +121,14 @@ typedef struct {
 } level_locals_t;
 
 
-/* spawn_temp_t is only used to hold entity field values that */
-/* can be set from the editor, but aren't actualy present */
-/* in edict_t during gameplay */
+/**
+ * @brief this is only used to hold entity field values that can be set from
+ * the editor, but aren't actualy present in edict_t during gameplay
+ */
 typedef struct {
 	/* world vars */
-	char *nextmap;
+	char *nextmap;	/**< the next map that is started after the current one has finished */
+	int randomSpawn;	/**< spawn the actors on random spawnpoints */
 } spawn_temp_t;
 
 /** @brief used in shot probability calculations (pseudo shots) */

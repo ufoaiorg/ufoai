@@ -2644,10 +2644,21 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 	/* Abort for non-spawnpoints */
 	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if ((ent->type == spawnType)
-		 && (player->pers.team == ent->team))
-			return ent;
+	if (level.randomSpawn) {
+		edict_t *list[MAX_EDICTS];
+		int count = 0;
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+			if (ent->type == spawnType && player->pers.team == ent->team)
+				list[count++] = ent;
+		if (count)
+			return list[rand() % count];
+		else
+			return NULL;
+	} else {
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+			if (ent->type == spawnType && player->pers.team == ent->team)
+				return ent;
+	}
 
 	return NULL;
 }
