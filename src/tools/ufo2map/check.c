@@ -196,6 +196,16 @@ static int checkMiscModel (entity_t *e, int entnum)
 	return 0;
 }
 
+static int checkMiscInline (entity_t *e, int entnum)
+{
+	checkEntityLevelFlags(e, entnum);
+
+	if (checkEntityKey(e, entnum, "model", MANDATORY_KEY))
+		return 1;
+
+	return 0;
+}
+
 static int checkMiscParticle (entity_t *e, int entnum)
 {
 	checkEntityLevelFlags(e, entnum);
@@ -304,6 +314,7 @@ static const entityCheck_t checkArray[] = {
 	{"func_group", checkFuncGroup},
 	{"misc_item", checkMiscItem},
 	{"misc_model", checkMiscModel},
+	{"misc_inline", checkMiscInline},
 	{"misc_particle", checkMiscParticle},
 	{"misc_sound", checkMiscSound},
 	{"misc_mission", checkMiscMission},

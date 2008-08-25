@@ -806,6 +806,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 /**
  * @brief Takes all of the brushes from the current entity and adds them to the world's brush list.
  * @note Used by func_group
+ * @sa MoveModelToWorld
  */
 static void MoveBrushesToWorld (entity_t *mapent)
 {
@@ -836,6 +837,16 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	free(temp);
 
 	mapent->numbrushes = 0;
+}
+
+/**
+ * @brief Generates planes from a given mesh entity
+ * @note Used by misc_include
+ * @sa MoveBrushesToWorld
+ */
+static void MoveModelToWorld (entity_t *mapent)
+{
+
 }
 
 /**
@@ -951,7 +962,10 @@ static qboolean ParseMapEntity (const char *filename)
 	entName = ValueForKey(mapent, "classname");
 	if (!config.performMapCheck && !config.fixMap && !strcmp("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
-		mapent->numbrushes = 0;
+		num_entities--;
+	/* not used in the game, just to include static meshes into the bsp tree */
+	} else if (!config.performMapCheck && !config.fixMap && !strcmp("misc_include", entName)) {
+		MoveModelToWorld(mapent);
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
 		if (mapent->numbrushes == 0 && notCheckOrFix) {
