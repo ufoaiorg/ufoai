@@ -1395,14 +1395,13 @@ int m3_inverse( m3x3_t mr, m3x3_t ma ) {
 }
 
 void m4_submat( m4x4_t mr, m3x3_t mb, int i, int j ) {
-	int ti, tj, idst, jdst;
+	int ti, tj, idst = 0, jdst = 0;
 
 	for ( ti = 0; ti < 4; ti++ ) {
 		if ( ti < i )
 			idst = ti;
-		else
-			if ( ti > i )
-				idst = ti-1;
+		else if ( ti > i )
+			idst = ti-1;
 
 		for ( tj = 0; tj < 4; tj++ ) {
 			if ( tj < j )

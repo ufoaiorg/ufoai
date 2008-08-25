@@ -425,8 +425,8 @@ static picoModel_t *_mdc_load( PM_PARAMS_LOAD ) {
 	mdcFrame_t			*frame;
 	mdcTriangle_t		*triangle;
 	mdcVertex_t			*vertex;
-	mdcXyzCompressed_t	*vertexComp;
-	short				*mdcShort, *mdcCompVert;
+	mdcXyzCompressed_t	*vertexComp = NULL;
+	short				*mdcShort, *mdcCompVert = NULL;
 	double				lat, lng;
 
 	picoModel_t			*picoModel;
