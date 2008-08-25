@@ -596,13 +596,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 			VectorSet(angles, theta, 180, 0);
 		}
 		/* Set zoomed scale of markers. */
-		/** @todo the model for missile_tr20 is too small.
-		 * I have hard coded these values as a quick fix, but a better way to vary
-		 * the zoom scale needs to be worked out. */
-		if (Q_strcmp(model, "missile_tr20") == 0)
-			zoom = 0.8f;
-		else
-			zoom = 0.4f;
+		zoom = 0.4f;
 
 		/* Draw */
 		R_Draw3DMapMarkers(angles, zoom, screenPos, model, skin);
@@ -1177,7 +1171,7 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 	} else {
 		/* case 2D geoscape */
 		vec2_t diff;
-		
+
 		/** @todo check why disabling combatzoom moves the viewpoint to the southpole
 		 *	  then this can be re-enabled maybe for map menu too
 		 */
