@@ -194,8 +194,6 @@ typedef FreeCaller1<const char*, LogConsole_importString> LogConsoleImportString
 
 
 void RegisterGlobalPreferences(PreferenceSystem& preferences) {
-	preferences.registerPreference("gamefile", CopiedStringImportStringCaller(g_GamesDialog.m_sGameFile), CopiedStringExportStringCaller(g_GamesDialog.m_sGameFile));
-//	preferences.registerPreference("gamePrompt", BoolImportStringCaller(g_GamesDialog.m_bGamePrompt), BoolExportStringCaller(g_GamesDialog.m_bGamePrompt));
 	preferences.registerPreference("log console", LogConsoleImportStringCaller(), BoolExportStringCaller(g_Console_enableLogging));
 }
 
@@ -209,7 +207,7 @@ void GlobalPreferences_Init() {
 void CGameDialog::LoadPrefs() {
 	// load global .pref file
 	StringOutputStream strGlobalPref(256);
-	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.pref";
+	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
 
 	globalOutputStream() << "loading global preferences from " << makeQuoted(strGlobalPref.c_str()) << "\n";
 
@@ -220,7 +218,7 @@ void CGameDialog::LoadPrefs() {
 
 void CGameDialog::SavePrefs() {
 	StringOutputStream strGlobalPref(256);
-	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.pref";
+	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
 
 	globalOutputStream() << "saving global preferences to " << strGlobalPref.c_str() << "\n";
 
@@ -235,39 +233,6 @@ void CGameDialog::DoGameDialog() {
 
 	// we save the prefs file
 	SavePrefs();
-}
-
-void CGameDialog::GameFileImport(int value) {
-	m_nComboSelect = value;
-	// use value to set m_sGameFile
-	std::list<CGameDescription *>::iterator iGame = mGames.begin();
-	int i;
-	for (i = 0; i < value; i++) {
-		++iGame;
-	}
-	m_sGameFile = (*iGame)->mGameFile;
-}
-
-void CGameDialog::GameFileExport(const IntImportCallback& importCallback) const {
-	// use m_sGameFile to set value
-	std::list<CGameDescription *>::const_iterator iGame;
-	int i = 0;
-	for (iGame = mGames.begin(); iGame != mGames.end(); ++iGame) {
-		if ((*iGame)->mGameFile == m_sGameFile) {
-			m_nComboSelect = i;
-			break;
-		}
-		i++;
-	}
-	importCallback(m_nComboSelect);
-}
-
-void CGameDialog_GameFileImport(CGameDialog& self, int value) {
-	self.GameFileImport(value);
-}
-
-void CGameDialog_GameFileExport(CGameDialog& self, const IntImportCallback& importCallback) {
-	self.GameFileExport(importCallback);
 }
 
 void CGameDialog::CreateGlobalFrame(PreferencesPage& page) {
@@ -289,49 +254,21 @@ GtkWindow* CGameDialog::BuildDialog() {
 	return create_simple_modal_dialog_window("Global Preferences", m_modal, GTK_WIDGET(frame));
 }
 
-class LoadGameFile {
-	std::list<CGameDescription*>& mGames;
-	const char* mPath;
-public:
-	LoadGameFile(std::list<CGameDescription*>& games, const char* path) : mGames(games), mPath(path) {
-	}
-	void operator()(const char* name) const {
-		if (!extension_equal(path_get_extension(name), "game")) {
-			return;
-		}
-		StringOutputStream strPath(256);
-		strPath << mPath << name;
-		globalOutputStream() << strPath.c_str() << '\n';
-
-		xmlDocPtr pDoc = xmlParseFile(strPath.c_str());
-		if (pDoc) {
-			mGames.push_front(new CGameDescription(pDoc, name));
-			xmlFreeDoc(pDoc);
-		} else {
-			globalErrorStream() << "XML parser failed on '" << strPath.c_str() << "'\n";
-		}
-	}
-};
-
-void CGameDialog::ScanForGames() {
-	StringOutputStream strGamesPath(256);
-	strGamesPath << AppPath_get() << "games/";
-	const char *path = strGamesPath.c_str();
+static void ScanForGameDefinition() {
+	StringOutputStream strGameFilename(256);
+	strGameFilename << AppPath_get() << "games/ufoai.game";
+	const char *path = strGameFilename.c_str();
 
 	globalOutputStream() << "Scanning for game description files: " << path << '\n';
 
-	Directory_forEach(path, LoadGameFile(mGames, path));
-}
-
-CGameDescription* CGameDialog::GameDescriptionForComboItem() {
-	std::list<CGameDescription *>::iterator iGame;
-	int i = 0;
-	for (iGame = mGames.begin(); iGame != mGames.end(); ++iGame, i++) {
-		if (i == m_nComboSelect) {
-			return (*iGame);
-		}
+	xmlDocPtr pDoc = xmlParseFile(path);
+	if (pDoc) {
+		g_pGameDescription = new CGameDescription(pDoc, path);
+		xmlFreeDoc(pDoc);
+	} else {
+		globalErrorStream() << "XML parser failed on '" << path << "'\n";
+		g_pGameDescription = NULL;
 	}
-	return 0; // not found
 }
 
 void CGameDialog::InitGlobalPrefPath() {
@@ -342,49 +279,21 @@ void CGameDialog::Reset() {
 	if (!g_Preferences.m_global_rc_path)
 		InitGlobalPrefPath();
 	StringOutputStream strGlobalPref(256);
-	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.pref";
+	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
 	file_remove(strGlobalPref.c_str());
 }
 
 void CGameDialog::Init() {
 	InitGlobalPrefPath();
 	LoadPrefs();
-	ScanForGames();
-	if (mGames.empty()) {
-		Error("Didn't find any valid game file descriptions, aborting\n");
-	}
+	ScanForGameDefinition();
 
-	CGameDescription* currentGameDescription = 0;
-
-	if (!m_bGamePrompt) {
-		// search by .game name
-		std::list<CGameDescription *>::iterator iGame;
-		for (iGame = mGames.begin(); iGame != mGames.end(); ++iGame) {
-			if ((*iGame)->mGameFile == m_sGameFile) {
-				currentGameDescription = (*iGame);
-				break;
-			}
-		}
-	}
-	if (m_bGamePrompt || !currentGameDescription) {
-		Create();
-		DoGameDialog();
-		// use m_nComboSelect to identify the game to run as and set the globals
-		currentGameDescription = GameDescriptionForComboItem();
-		ASSERT_NOTNULL(currentGameDescription);
-	}
-	g_pGameDescription = currentGameDescription;
+	ASSERT_NOTNULL(g_pGameDescription);
 
 	g_pGameDescription->Dump();
 }
 
 CGameDialog::~CGameDialog() {
-	// free all the game descriptions
-	std::list<CGameDescription *>::iterator iGame;
-	for (iGame = mGames.begin(); iGame != mGames.end(); ++iGame) {
-		delete (*iGame);
-		*iGame = 0;
-	}
 	if (GetWidget() != 0) {
 		Destroy();
 	}
@@ -415,33 +324,20 @@ static void OnButtonClean (GtkWidget *widget, gpointer data) {
 
 /*
 ========
-
-very first prefs init deals with selecting the game and the game tools path
+very first prefs init deals the game tools path
 then we can load .ini stuff
 
 using prefs / ini settings:
-those are per-game
 
-look in ~/.radiant/<version>/gamename
+look in ~/.ufoai/radiant
 ========
 */
 
-#define PREFS_LOCAL_FILENAME "local.pref"
+#define PREFS_LOCAL_FILENAME "settings.ini"
 
 void PrefsDlg::Init() {
-	// m_global_rc_path has been set above
-	// m_rc_path is for game specific preferences
-	// takes the form: global-pref-path/gamename/prefs-file
-
-	m_rc_path = g_string_new (m_global_rc_path->str);
-
-	// game sub-dir
-	g_string_append (m_rc_path, g_pGameDescription->mGameFile.c_str());
-	g_string_append (m_rc_path, "/");
-	Q_mkdir (m_rc_path->str);
-
 	// then the ini file
-	m_inipath = g_string_new (m_rc_path->str);
+	m_inipath = g_string_new (m_global_rc_path->str);
 	g_string_append (m_inipath, PREFS_LOCAL_FILENAME);
 }
 
@@ -781,10 +677,10 @@ StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule
 void Preferences_Load() {
 	g_GamesDialog.LoadPrefs();
 
-	globalOutputStream() << "loading local preferences from " << g_Preferences.m_inipath->str << "\n";
+	globalOutputStream() << "loading ini from " << g_Preferences.m_inipath->str << "\n";
 
 	if (!Preferences_Load(g_preferences, g_Preferences.m_inipath->str)) {
-		globalOutputStream() << "failed to load local preferences from " << g_Preferences.m_inipath->str << "\n";
+		globalOutputStream() << "failed to load ini from " << g_Preferences.m_inipath->str << "\n";
 	}
 }
 
@@ -794,10 +690,10 @@ void Preferences_Save() {
 
 	g_GamesDialog.SavePrefs();
 
-	globalOutputStream() << "saving local preferences to " << g_Preferences.m_inipath->str << "\n";
+	globalOutputStream() << "saving ini to " << g_Preferences.m_inipath->str << "\n";
 
 	if (!Preferences_Save_Safe(g_preferences, g_Preferences.m_inipath->str)) {
-		globalOutputStream() << "failed to save local preferences to " << g_Preferences.m_inipath->str << "\n";
+		globalOutputStream() << "failed to save ini to " << g_Preferences.m_inipath->str << "\n";
 	}
 }
 
