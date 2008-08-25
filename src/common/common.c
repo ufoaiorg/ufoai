@@ -1392,7 +1392,7 @@ int LIST_Count (const linkedList_t *list)
 /**
  * @brief Get an entry of a linked list by its index in the list.
  * @param[in] list Linked list to get the entry from.
- * @param[in] num The index of the entry in the linked list.
+ * @param[in] index The index of the entry in the linked list.
  * @return A void pointer of the content in the list-entry.
  */
 void *LIST_GetByIdx (linkedList_t *list, int index)
