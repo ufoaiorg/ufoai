@@ -144,8 +144,8 @@ static inline float fDiff(float f1, float f2) {
 }
 
 inline double ClipPoint_Intersect(const ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale) {
-	int nDim1 = (viewtype == YZ) ? 1 : 0;
-	int nDim2 = (viewtype == XY) ? 1 : 2;
+	const int nDim1 = (viewtype == YZ) ? 1 : 0;
+	const int nDim2 = (viewtype == XY) ? 1 : 2;
 	double screenDistanceSquared(vector2_length_squared(Vector2(fDiff(clip.m_ptClip[nDim1], point[nDim1]) * scale, fDiff(clip.m_ptClip[nDim2], point[nDim2])  * scale)));
 	if (screenDistanceSquared < 8*8) {
 		return screenDistanceSquared;
@@ -856,8 +856,8 @@ void XYWnd::SetOrigin(const Vector3& origin) {
 }
 
 void XYWnd::Scroll(int x, int y) {
-	int nDim1 = (m_viewType == YZ) ? 1 : 0;
-	int nDim2 = (m_viewType == XY) ? 1 : 2;
+	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
+	const int nDim2 = (m_viewType == XY) ? 1 : 2;
 	m_vOrigin[nDim1] += x / m_fScale;
 	m_vOrigin[nDim2] += y / m_fScale;
 	updateModelview();
@@ -1185,8 +1185,8 @@ void XYWnd::Zoom_End(void) {
 
 // makes sure the selected brush or camera is in view
 void XYWnd::PositionView(const Vector3& position) {
-	int nDim1 = (m_viewType == YZ) ? 1 : 0;
-	int nDim2 = (m_viewType == XY) ? 1 : 2;
+	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
+	const int nDim2 = (m_viewType == XY) ? 1 : 2;
 
 	m_vOrigin[nDim1] = position[nDim1];
 	m_vOrigin[nDim2] = position[nDim2];
@@ -1435,7 +1435,50 @@ static inline double two_to_the_power(int power) {
 	return pow(2.0f, power);
 }
 
-void XYWnd::XY_DrawBackground(void) {
+void XYWnd::XY_DrawAxis(void)
+{
+	if ( g_xywindow_globals_private.show_axis) {
+		const char g_AxisName[3] = { 'X', 'Y', 'Z' };
+		const int nDim1 = (m_viewType == YZ) ? 1 : 0;
+		const int nDim2 = (m_viewType == XY) ? 1 : 2;
+		const int w = (m_nWidth / 2 / m_fScale);
+		const int h = (m_nHeight / 2 / m_fScale);
+
+		const Vector3& colourX = (m_viewType == YZ) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorX;
+		const Vector3& colourY = (m_viewType == XY) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorZ;
+
+		// draw two lines with corresponding axis colors to highlight current view
+		// horizontal line: nDim1 color
+		glLineWidth(2);
+		glBegin( GL_LINES );
+		glColor3fv (vector3_to_array(colourX));
+		glVertex2f( m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale );
+		glVertex2f( m_vOrigin[nDim1] - w + 65 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale );
+		glVertex2f( 0, 0 );
+		glVertex2f( 32 / m_fScale, 0 );
+		glColor3fv (vector3_to_array(colourY));
+		glVertex2f( m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale );
+		glVertex2f( m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 20 / m_fScale );
+		glVertex2f( 0, 0 );
+		glVertex2f( 0, 32 / m_fScale );
+		glEnd();
+		glLineWidth(1);
+		// now print axis symbols
+		glColor3fv (vector3_to_array(colourX));
+		glRasterPos2f ( m_vOrigin[nDim1] - w + 55 / m_fScale, m_vOrigin[nDim2] + h - 55 / m_fScale );
+		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
+		glRasterPos2f (28 / m_fScale, -10 / m_fScale );
+		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
+		glColor3fv (vector3_to_array(colourY));
+		glRasterPos2f ( m_vOrigin[nDim1] - w + 25 / m_fScale, m_vOrigin[nDim2] + h - 30 / m_fScale );
+		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
+		glRasterPos2f ( -10 / m_fScale, 28 / m_fScale );
+		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
+	}
+}
+
+void XYWnd::XY_DrawBackground(void)
+{
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glEnable(GL_TEXTURE_2D);
@@ -1467,6 +1510,8 @@ void XYWnd::XY_DrawBackground(void) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glPopAttrib();
+
+	XYWnd::XY_DrawAxis();
 }
 
 void XYWnd::XY_DrawGrid(void) {
@@ -1504,8 +1549,8 @@ void XYWnd::XY_DrawGrid(void) {
 	w = (m_nWidth / 2 / m_fScale);
 	h = (m_nHeight / 2 / m_fScale);
 
-	int nDim1 = (m_viewType == YZ) ? 1 : 0;
-	int nDim2 = (m_viewType == XY) ? 1 : 2;
+	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
+	const int nDim2 = (m_viewType == XY) ? 1 : 2;
 
 	xb = m_vOrigin[nDim1] - w;
 	if (xb < region_mins[nDim1])
@@ -1599,41 +1644,7 @@ void XYWnd::XY_DrawGrid(void) {
 		}
 	}
 
-	if ( g_xywindow_globals_private.show_axis) {
-		const char g_AxisName[3] = { 'X', 'Y', 'Z' };
-
-		const Vector3& colourX = (m_viewType == YZ) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorX;
-		const Vector3& colourY = (m_viewType == XY) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorZ;
-
-		// draw two lines with corresponding axis colors to highlight current view
-		// horizontal line: nDim1 color
-		glLineWidth(2);
-		glBegin( GL_LINES );
-		glColor3fv (vector3_to_array(colourX));
-		glVertex2f( m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale );
-		glVertex2f( m_vOrigin[nDim1] - w + 65 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale );
-		glVertex2f( 0, 0 );
-		glVertex2f( 32 / m_fScale, 0 );
-		glColor3fv (vector3_to_array(colourY));
-		glVertex2f( m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 45 / m_fScale );
-		glVertex2f( m_vOrigin[nDim1] - w + 40 / m_fScale, m_vOrigin[nDim2] + h - 20 / m_fScale );
-		glVertex2f( 0, 0 );
-		glVertex2f( 0, 32 / m_fScale );
-		glEnd();
-		glLineWidth(1);
-		// now print axis symbols
-		glColor3fv (vector3_to_array(colourX));
-		glRasterPos2f ( m_vOrigin[nDim1] - w + 55 / m_fScale, m_vOrigin[nDim2] + h - 55 / m_fScale );
-		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
-		glRasterPos2f (28 / m_fScale, -10 / m_fScale );
-		GlobalOpenGL().drawChar(g_AxisName[nDim1]);
-		glColor3fv (vector3_to_array(colourY));
-		glRasterPos2f ( m_vOrigin[nDim1] - w + 25 / m_fScale, m_vOrigin[nDim2] + h - 30 / m_fScale );
-		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
-		glRasterPos2f ( -10 / m_fScale, 28 / m_fScale );
-		GlobalOpenGL().drawChar(g_AxisName[nDim2]);
-
-	}
+	XYWnd::XY_DrawAxis();
 
 	// show current work zone?
 	// the work zone is used to place dropped points and brushes
@@ -1681,8 +1692,8 @@ void XYWnd::XY_DrawBlockGrid(void) {
 	w = (m_nWidth / 2 / m_fScale);
 	h = (m_nHeight / 2 / m_fScale);
 
-	int nDim1 = (m_viewType == YZ) ? 1 : 0;
-	int nDim2 = (m_viewType == XY) ? 1 : 2;
+	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
+	const int nDim2 = (m_viewType == XY) ? 1 : 2;
 
 	xb = m_vOrigin[nDim1] - w;
 	if (xb < region_mins[nDim1])
@@ -2084,8 +2095,8 @@ void XYWnd::XY_Draw(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glScalef(m_fScale, m_fScale, 1);
-	int nDim1 = (m_viewType == YZ) ? 1 : 0;
-	int nDim2 = (m_viewType == XY) ? 1 : 2;
+	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
+	const int nDim2 = (m_viewType == XY) ? 1 : 2;
 	glTranslatef(-m_vOrigin[nDim1], -m_vOrigin[nDim2], 0);
 
 	glDisable (GL_LINE_STIPPLE);

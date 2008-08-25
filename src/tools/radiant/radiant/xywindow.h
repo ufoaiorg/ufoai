@@ -101,6 +101,7 @@ public:
 	void XY_Draw();
 	void DrawCameraIcon(const Vector3& origin, const Vector3& angles);
 	void XY_DrawBlockGrid();
+	void XY_DrawAxis();
 	void XY_DrawGrid();
 	void XY_DrawBackground();
 	void XY_LoadBackgroundImage(const char *name);
