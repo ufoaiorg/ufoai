@@ -94,13 +94,6 @@ bool string_equal_start(const char* string, StringRange start) {
 
 typedef std::set<CopiedString> TextureGroups;
 
-void TextureGroups_addWad(TextureGroups& groups, const char* archive) {
-	if (extension_equal(path_get_extension(archive), "wad")) {
-		groups.insert(archive);
-	}
-}
-typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addWad> TextureGroupsAddWadCaller;
-
 void TextureGroups_addShader(TextureGroups& groups, const char* shaderName) {
 	const char* texture = path_make_relative(shaderName, "textures/");
 	if (texture != shaderName) {
