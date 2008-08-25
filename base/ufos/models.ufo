@@ -18,7 +18,7 @@
 //			You can skip any of these values by replacing the '"x y z"' part with a '#'
 //			See "scale" "origin" and "angles" definitions for for info on the values.
 //			The downside the menutransform settings right now is that the models can't
-//			be rotated in-game (e.g. in the ufopedia) anymore and that the rotatioon
+//			be rotated in-game (e.g. in the ufopedia) anymore and that the rotation
 //			values are kinda hard to get.
 // color	(color)
 // =================================================

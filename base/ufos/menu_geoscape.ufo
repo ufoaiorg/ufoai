@@ -284,8 +284,8 @@ menu map
 		pos		"896 536"
 		size	"220 20"
 		click	{ cmd "mn_push ufopedia_mail;" }
-		out		{ *bt_mailclient color "0 0.5 0 1" *bt_highlight invis true  }
-		in		{ *bt_mailclient color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 530" }
+		out		{ *bt_mailclient_nomail color "0 0.5 0 1" *bt_highlight invis true  }
+		in		{ *bt_mailclient_nomail color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 530" }
 	}
 
 	string bt_stats
