@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bsp.h"
 #include "check.h"
+#include "common/aselib.h"
 
 extern qboolean onlyents;
 
@@ -841,12 +842,51 @@ static void MoveBrushesToWorld (entity_t *mapent)
 
 /**
  * @brief Generates planes from a given mesh entity
- * @note Used by misc_include
+ * @note Used by misc_inline
  * @sa MoveBrushesToWorld
  */
 static void MoveModelToWorld (entity_t *mapent)
 {
+	const char *model = ValueForKey(mapent, "model");
+	if (!model)
+		return;
 
+	if (strstr(model, ".ase")) {
+#if 0
+		int i, num;
+
+		ASE_Load(model, qfalse);
+
+		num = ASE_GetNumSurfaces();
+
+		for (i = 0; i < num; i++) {
+			polyset_t *modelPolySet = ASE_GetSurfaceAnimation(i);
+			int j;
+			if (!modelPolySet)
+				Sys_Error("Could not get the model polyset for '%s'", model);
+			for (j = 0; j < modelPolySet->numtriangles; j++) {
+				triangle_t* tri = &modelPolySet->triangles[j];
+				mapbrush_t *b;
+
+				if (nummapbrushes == MAX_MAP_BRUSHES)
+					Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
+
+				b = &mapbrushes[nummapbrushes];
+				memset(b, 0, sizeof(*b));
+				b->original_sides = &brushsides[nummapbrushsides];
+				b->entitynum = num_entities - 1;
+				b->brushnum = nummapbrushes - mapent->firstbrush;
+
+				/** @todo Add the triangle_t data as new mapbrush.
+				 * use the materialname as texture
+				 * shift the vectors by the ent origin of the misc_inline */
+			}
+		}
+
+		ASE_Free();
+#endif
+	} else
+		Com_Printf("Ignoring unknown model type for misc_inline (use ase models)\n");
 }
 
 /**
@@ -964,7 +1004,7 @@ static qboolean ParseMapEntity (const char *filename)
 		MoveBrushesToWorld(mapent);
 		num_entities--;
 	/* not used in the game, just to include static meshes into the bsp tree */
-	} else if (!config.performMapCheck && !config.fixMap && !strcmp("misc_include", entName)) {
+	} else if (!config.performMapCheck && !config.fixMap && !strcmp("misc_inline", entName)) {
 		MoveModelToWorld(mapent);
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {

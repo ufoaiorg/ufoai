@@ -140,6 +140,9 @@
 		<Unit filename="..\..\src\tools\ufo2map\common\trace.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\aselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\csg.c">
 			<Option compilerVar="CC" />
 		</Unit>
