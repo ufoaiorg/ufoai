@@ -113,6 +113,10 @@ void TextureGroups_addShader(TextureGroups& groups, const char* shaderName) {
 typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addShader> TextureGroupsAddShaderCaller;
 
 void TextureGroups_addDirectory(TextureGroups& groups, const char* directory) {
+	// skip svn subdirs
+	if (strstr(directory, ".svn") != 0)
+		return;
+
 	groups.insert(directory);
 }
 typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addDirectory> TextureGroupsAddDirectoryCaller;
@@ -538,7 +542,7 @@ bool texture_name_ignore(const char* name) {
 
 	/* only show the dummy texture - the other should not be used directly */
 	return strstr(strTemp.c_str(), "tex_terrain") != 0 &&
-	       strstr(strTemp.c_str(), "dummy") == 0;
+			strstr(strTemp.c_str(), "dummy") == 0;
 }
 
 class LoadShaderVisitor : public Archive::Visitor {
