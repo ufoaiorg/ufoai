@@ -876,12 +876,11 @@ public:
 	}
 };
 
-/*
-================
-Map_LoadFile
-================
-*/
-
+/**
+ * @brief Loads a map file
+ * @param[in] filename The filename of the map to load
+ * @note The file must be checked for existence and readability already
+ */
 void Map_LoadFile (const char *filename) {
 	globalOutputStream() << "Loading map from " << filename << "\n";
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
