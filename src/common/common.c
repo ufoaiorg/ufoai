@@ -1403,12 +1403,12 @@ void *LIST_GetByIdx (linkedList_t *list, int index)
 	if (!count || !list)
 		return NULL;
 
-	if (num >= count || num < 0)
+	if (index >= count || index < 0)
 		return NULL;
 
 	i = 0;
 	while (list) {
-		if (i == num)
+		if (i == index)
 			return (void *)list->data;
 		i++;
 		list = list->next;
