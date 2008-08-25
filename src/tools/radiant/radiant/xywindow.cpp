@@ -1358,13 +1358,6 @@ void XYWnd::XY_SnapToGrid(Vector3& point) {
 
 void XYWnd::XY_LoadBackgroundImage(const char *name)
 {
-	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
-	if (!brushesSelected) {
-		gtk_MessageBox(0, "You have to select some brushes to get the bounding box for.\n",
-					"No selection", eMB_OK, eMB_ICONERROR);
-		return;
-	}
-
 	const char* relative = path_make_relative(name, GlobalFileSystem().findRoot(name));
 	if (relative == name)
 		globalOutputStream() << "WARNING: could not extract the relative path, using full path instead\n";
@@ -1419,6 +1412,13 @@ void XYWnd::XY_DisableBackground (void)
 
 void WXY_BackgroundSelect(void)
 {
+	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
+	if (!brushesSelected) {
+		gtk_MessageBox(0, "You have to select some brushes to get the bounding box for.\n",
+					"No selection", eMB_OK, eMB_ICONERROR);
+		return;
+	}
+
 	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, "Background Image", NULL, NULL);
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
