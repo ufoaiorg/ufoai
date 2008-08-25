@@ -44,7 +44,7 @@ void AddGridChangeCallback(const SignalHandler& handler) {
 	handler();
 }
 
-void GridChangeNotify() {
+static void GridChangeNotify() {
 	g_gridChange_callbacks();
 }
 
@@ -66,7 +66,7 @@ enum GridPower {
 
 typedef const char* GridName;
 // this must match the GridPower enumeration
-const GridName g_gridnames[] = {
+static const GridName g_gridnames[] = {
 	"0.125",
 	"0.25",
 	"0.5",
@@ -81,34 +81,34 @@ const GridName g_gridnames[] = {
 	"256",
 };
 
-inline GridPower GridPower_forGridDefault(int gridDefault) {
+static inline GridPower GridPower_forGridDefault(int gridDefault) {
 	return static_cast<GridPower>(gridDefault - 3);
 }
 
-inline int GridDefault_forGridPower(GridPower gridPower) {
+static inline int GridDefault_forGridPower(GridPower gridPower) {
 	return gridPower + 3;
 }
 
-int g_grid_default = GridDefault_forGridPower(GRIDPOWER_8);
+static int g_grid_default = GridDefault_forGridPower(GRIDPOWER_8);
 
-int g_grid_power = GridPower_forGridDefault(g_grid_default);
+static int g_grid_power = GridPower_forGridDefault(g_grid_default);
 
 int Grid_getPower() {
 	return g_grid_power;
 }
 
-inline float GridSize_forGridPower(int gridPower) {
+static inline float GridSize_forGridPower(int gridPower) {
 	return pow(2.0f, gridPower);
 }
 
-float g_gridsize = GridSize_forGridPower(g_grid_power);
+static float g_gridsize = GridSize_forGridPower(g_grid_power);
 
 float GetGridSize() {
 	return g_gridsize;
 }
 
 
-void setGridPower(GridPower power);
+static void setGridPower(GridPower power);
 
 class GridMenuItem {
 	GridPower m_id;
@@ -145,7 +145,7 @@ GridMenuItem g_gridMenu64(GRIDPOWER_64);
 GridMenuItem g_gridMenu128(GRIDPOWER_128);
 GridMenuItem g_gridMenu256(GRIDPOWER_256);
 
-void setGridPower(GridPower power) {
+static void setGridPower(GridPower power) {
 	g_gridsize = GridSize_forGridPower(power);
 
 	g_gridMenu0125.m_item.update();
@@ -216,7 +216,7 @@ void Grid_registerShortcuts() {
 	command_connect_accelerator("GridUp");
 }
 
-void Grid_constructPreferences(PreferencesPage& page) {
+static void Grid_constructPreferences(PreferencesPage& page) {
 	page.appendCombo(
 	    "Default grid spacing",
 	    g_grid_default,

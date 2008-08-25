@@ -1184,40 +1184,6 @@ void CamWnd::Cam_ChangeFloor(bool up) {
 	CameraMovedNotify();
 }
 
-
-#if 0
-
-// button_press
-Sys_GetCursorPos(&m_PositionDragCursorX, &m_PositionDragCursorY);
-
-// motion
-if ( (m_bFreeMove && (buttons == (RAD_CONTROL | RAD_SHIFT)))
-        || (!m_bFreeMove && (buttons == (RAD_RBUTTON | RAD_CONTROL))) ) {
-	Cam_PositionDrag();
-	CamWnd_Update(camwnd);
-	CameraMovedNotify();
-	return;
-}
-
-void CamWnd::Cam_PositionDrag() {
-	int x, y;
-
-	Sys_GetCursorPos(GTK_WINDOW(m_gl_widget), &x, &y);
-	if (x != m_PositionDragCursorX || y != m_PositionDragCursorY) {
-		x -= m_PositionDragCursorX;
-		vector3_add(m_Camera.origin, vector3_scaled(m_Camera.vright, x));
-		y -= m_PositionDragCursorY;
-		m_Camera.origin[2] -= y;
-		Camera_updateModelview();
-		CamWnd_Update(camwnd);
-		CameraMovedNotify();
-
-		Sys_SetCursorPos(GTK_WINDOW(m_parent), m_PositionDragCursorX, m_PositionDragCursorY);
-	}
-}
-#endif
-
-
 // NOTE TTimo if there's an OS-level focus out of the application
 //   then we can release the camera cursor grab
 static gboolean camwindow_freemove_focusout(GtkWidget* widget, GdkEventFocus* event, gpointer data) {
