@@ -2052,7 +2052,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	edict_t *ent;
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t * hand;
+	invDef_t *hand;
 	int x, y, tu;
 	int container;
 	invDef_t *bestContainer;
@@ -2068,6 +2068,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	tu = 100;
 	hand = &gi.csi->ids[gi.csi->idRight];
 	bestContainer = NULL;
+	icFinal = NULL;
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
