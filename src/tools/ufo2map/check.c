@@ -337,9 +337,10 @@ static const entityCheck_t checkArray[] = {
  * @note the sign of the result depends on which side of the plane the point is
  * @return a negative distance if the point is on the inside of the plane
  */
-static inline float Check_PointPlaneDistance(const vec3_t point, const plane_t *plane)
+static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t *plane)
 {
-	assert( abs(VectorLengthSqr(plane->normal) - 1.0f) < NDR_EPSILON ); /* normal should have a magnitude of one */
+	/* normal should have a magnitude of one */
+	assert(abs(VectorLengthSqr(plane->normal) - 1.0f) < NDR_EPSILON);
 
 	return DotProduct(point, plane->normal) - plane->dist;
 }

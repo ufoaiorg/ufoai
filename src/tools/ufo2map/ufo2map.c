@@ -167,12 +167,9 @@ static void U2M_Parameter (int argc, const char **argv)
 					config.chkMixedFaceContents = qtrue;
 				} else if (!strcmp(argv[i], "microbrush") || !strcmp(argv[i], "mbr")) {
 					config.chkMMicro = qtrue;
-					config.mapMicrovol = atof(argv[i+1]);
-					if (config.mapMicrovol > 0.00001f) {
+					config.mapMicrovol = atof(argv[i + 1]);
+					if (config.mapMicrovol > 0.00001f)
 						i++;
-					} else {
-						config.mapMicrovol = 1.0f; /* default value */
-					}
 					Com_Printf("  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
 				} else if (!strcmp(argv[i], "all")) {
 					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
@@ -371,6 +368,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
 	config.subdiv = 256.0f; /* rad chop/subdiv */
+	config.mapMicrovol = 1.0f;
 
 	config.night_ambient_red = 0.0;
 	config.night_ambient_green = 0.0;
@@ -525,11 +523,8 @@ int main (int argc, const char **argv)
 			CheckMixedFaceContents();
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckTexturesBasedOnFlags();
-		if (config.chkMMicro || config.chkBrushes || config.chkAll) {
-			if (!config.chkMMicro)
-				config.mapMicrovol = 1.0f;/* set default */
+		if (config.chkMMicro || config.chkBrushes || config.chkAll)
 			CheckMapMicro();
-		}
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		if (config.chkNodraws /* || config.chkAll */) /** @todo include in chkAll when it works */
