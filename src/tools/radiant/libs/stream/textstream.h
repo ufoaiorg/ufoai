@@ -221,7 +221,7 @@ class CountingOutputStream {
 	TextOutputStreamType& m_ostream;
 public:
 	std::size_t m_count;
-	CountingOutputStream(TextOutputStreamType& ostream) : m_ostream(ostream) {
+	CountingOutputStream(TextOutputStreamType& ostream) : m_ostream(ostream), m_count(0) {
 	}
 	std::size_t write(const char* buffer, std::size_t length) {
 		m_count += length;
