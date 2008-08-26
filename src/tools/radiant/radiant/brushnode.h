@@ -30,6 +30,7 @@ class BrushNode :
 			public scene::Node::Symbiot,
 			public scene::Instantiable,
 			public scene::Cloneable {
+	// The typecast class (needed to cast this node onto other types)
 	class TypeCasts {
 		NodeTypeCastTable m_casts;
 	public:
@@ -48,10 +49,13 @@ class BrushNode :
 		}
 	};
 
-
+	// The contained node
 	scene::Node m_node;
+	// The instances of this node
 	InstanceSet m_instances;
+	// The actual contained brush (NO reference)
 	Brush m_brush;
+	// The map importer/exporters
 	BrushTokenImporter m_mapImporter;
 	BrushTokenExporter m_mapExporter;
 
@@ -59,6 +63,7 @@ public:
 
 	typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
+	// greebo: Returns the casted types of this node
 	Snappable& get(NullType<Snappable>) {
 		return m_brush;
 	}
@@ -77,13 +82,14 @@ public:
 	Nameable& get(NullType<Nameable>) {
 		return m_brush;
 	}
-
+	// Constructor
 	BrushNode() :
 			m_node(this, this, StaticTypeCasts::instance().get()),
 			m_brush(m_node, InstanceSetEvaluateTransform<BrushInstance>::Caller(m_instances), InstanceSet::BoundsChangedCaller(m_instances)),
 			m_mapImporter(m_brush),
 			m_mapExporter(m_brush) {
 	}
+	// Copy Constructor
 	BrushNode(const BrushNode& other) :
 			scene::Node::Symbiot(other),
 			scene::Instantiable(other),
@@ -93,9 +99,11 @@ public:
 			m_mapImporter(m_brush),
 			m_mapExporter(m_brush) {
 	}
+	// Deletes this node from the heap
 	void release() {
 		delete this;
 	}
+	// Returns the actual scene node
 	scene::Node& node() {
 		return m_node;
 	}
@@ -103,13 +111,15 @@ public:
 	scene::Node& clone() const {
 		return (new BrushNode(*this))->node();
 	}
-
+	// Creates a new instance on the heap
 	scene::Instance* create(const scene::Path& path, scene::Instance* parent) {
 		return new BrushInstance(path, parent, m_brush);
 	}
+	// Loops through all instances with the given visitor class
 	void forEachInstance(const scene::Instantiable::Visitor& visitor) {
 		m_instances.forEachInstance(visitor);
 	}
+	// Inserts / erases an instance
 	void insert(scene::Instantiable::Observer* observer, const scene::Path& path, scene::Instance* instance) {
 		m_instances.insert(observer, path, instance);
 	}
@@ -118,6 +128,7 @@ public:
 	}
 };
 
+// Casts the node onto a Brush and returns the pointer to it
 inline Brush* Node_getBrush(scene::Node& node) {
 	return NodeTypeCast<Brush>::cast(node);
 }
