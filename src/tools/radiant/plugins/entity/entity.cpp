@@ -110,7 +110,7 @@ inline Entity* ScenePath_getEntity(const scene::Path& path) {
 	return entity;
 }
 
-class Quake3EntityCreator : public EntityCreator {
+class UFOEntityCreator : public EntityCreator {
 public:
 	scene::Node& createEntity(EntityClass* eclass) {
 		return node_for_eclass(eclass);
@@ -183,10 +183,10 @@ public:
 	}
 };
 
-Quake3EntityCreator g_Quake3EntityCreator;
+UFOEntityCreator g_UFOEntityCreator;
 
 EntityCreator& GetEntityCreator() {
-	return g_Quake3EntityCreator;
+	return g_UFOEntityCreator;
 }
 
 
@@ -233,7 +233,7 @@ void Entity_InitFilters() {
 #include "preferencesystem.h"
 
 void P_Entity_Construct() {
-	Static<KeyIsName>::instance().m_keyIsName = keyIsNameQuake3;
+	Static<KeyIsName>::instance().m_keyIsName = keyIsNameUFO;
 	Static<KeyIsName>::instance().m_nameKey = "targetname";
 
 	GlobalPreferenceSystem().registerPreference("SI_ShowNames", BoolImportStringCaller(g_showNames), BoolExportStringCaller(g_showNames));

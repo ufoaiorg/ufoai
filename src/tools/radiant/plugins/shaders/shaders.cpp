@@ -299,7 +299,7 @@ public:
 
 	// -----------------------------------------
 
-	bool parseQuake3(Tokeniser& tokeniser);
+	bool parseUFO(Tokeniser& tokeniser);
 	bool parseTemplate(Tokeniser& tokeniser);
 
 
@@ -844,7 +844,7 @@ void FreeShaders() {
 	g_ActiveShadersChangedNotify();
 }
 
-bool ShaderTemplate::parseQuake3(Tokeniser& tokeniser) {
+bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
 	// name of the qtexture_t we'll use to represent this shader (this one has the "textures\" before)
 	m_textureName = m_Name.c_str();
 
@@ -1031,7 +1031,7 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 
 				g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
 
-				bool result = shaderTemplate->parseQuake3(tokeniser);
+				bool result = shaderTemplate->parseUFO(tokeniser);
 				if (result) {
 					// do we already have this shader?
 					if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
@@ -1352,7 +1352,7 @@ void Shaders_Refresh() {
 	Shaders_Realise();
 }
 
-class Quake3ShaderSystem : public ShaderSystem, public ModuleObserver {
+class UFOShaderSystem : public ShaderSystem, public ModuleObserver {
 public:
 	void realise() {
 		Shaders_Realise();
@@ -1414,17 +1414,17 @@ public:
 	}
 };
 
-Quake3ShaderSystem g_Quake3ShaderSystem;
+UFOShaderSystem g_UFOShaderSystem;
 
 ShaderSystem& GetShaderSystem() {
-	return g_Quake3ShaderSystem;
+	return g_UFOShaderSystem;
 }
 
 void Shaders_Construct() {
-	GlobalFileSystem().attach(g_Quake3ShaderSystem);
+	GlobalFileSystem().attach(g_UFOShaderSystem);
 }
 void Shaders_Destroy() {
-	GlobalFileSystem().detach(g_Quake3ShaderSystem);
+	GlobalFileSystem().detach(g_UFOShaderSystem);
 
 	if (Shaders_realised()) {
 		Shaders_Free();

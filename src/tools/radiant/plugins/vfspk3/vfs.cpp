@@ -52,7 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "qerplugin.h"
 #include "idatastream.h"
 #include "iarchive.h"
-ArchiveModules& FileSystemQ3API_getArchiveModules();
+ArchiveModules& FileSystemAPI_getArchiveModules();
 #include "ifilesystem.h"
 
 #include "generic/callback.h"
@@ -236,8 +236,6 @@ static int string_compare_nocase_upper(const char* a, const char* b) {
 // returns a filehandle to the first file it can find (while it should
 // return the filehandle to the file in the most overriding pakfile, the
 // last one in the list that is).
-
-//!\todo Analyse the code in rtcw/q3 to see which order it sorts pak files.
 class PakLess {
 public:
 	bool operator()(const CopiedString& self, const CopiedString& other) const {
@@ -463,10 +461,10 @@ const char* FindPath(const char* absolute) {
 }
 
 
-class Quake3FileSystem : public VirtualFileSystem {
+class UFOFileSystem : public VirtualFileSystem {
 public:
 	void initDirectory(const char *path) {
-		InitDirectory(path, FileSystemQ3API_getArchiveModules());
+		InitDirectory(path, FileSystemAPI_getArchiveModules());
 	}
 	void initialise() {
 		globalOutputStream() << "filesystem initialised\n";
@@ -558,7 +556,7 @@ public:
 	}
 };
 
-Quake3FileSystem g_Quake3FileSystem;
+UFOFileSystem g_UFOFileSystem;
 
 void FileSystem_Init() {
 }
@@ -567,5 +565,5 @@ void FileSystem_Shutdown() {
 }
 
 VirtualFileSystem& GetFileSystem() {
-	return g_Quake3FileSystem;
+	return g_UFOFileSystem;
 }

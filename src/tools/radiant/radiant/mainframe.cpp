@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 //
-// Main Window for Q3Radiant
+// Main Window for UFORadiant
 //
 // Leonardo Zide (leo@lokigames.com)
 //

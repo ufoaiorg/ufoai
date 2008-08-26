@@ -347,9 +347,8 @@ void light_draw(const AABB& aabb_light, RenderStateFlags state) {
 	}
 }
 
-// These variables are tweakable on the q3map2 console, setting to q3map2
-// default here as there is no way to find out what the user actually uses
-// right now. Maybe move them to worldspawn?
+/// setting to default here as there is no way to find out what the user actually
+/// uses right now. \todo Maybe move them to worldspawn?
 float fPointScale = 7500.f;
 float fLinearScale = 1.f / 8000.f;
 

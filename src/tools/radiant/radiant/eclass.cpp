@@ -149,7 +149,7 @@ public:
 		}
 
 		// for a given name, we grab the first .def in the vfs
-		// this allows to override baseq3/scripts/entities.def for instance
+		// this allows to override base/entities.def for instance
 		StringOutputStream relPath(256);
 		relPath << m_directory << name;
 
@@ -177,13 +177,13 @@ public:
 };
 
 
-void EntityClassQuake3_constructDirectory(const char* directory, const char* extension, Paths& paths) {
+void EntityClassUFO_constructDirectory(const char* directory, const char* extension, Paths& paths) {
 	globalOutputStream() << "EntityClass: searching " << makeQuoted(directory) << " for *." << extension << '\n';
 	Directory_forEach(directory, matchFileExtension(extension, PathsInsert(paths, directory)));
 }
 
 
-void EntityClassQuake3_Construct() {
+void EntityClassUFO_Construct() {
 	StringOutputStream baseDirectory(256);
 	StringOutputStream gameDirectory(256);
 	const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
@@ -200,9 +200,9 @@ void EntityClassQuake3_Construct() {
 		}
 		void visit(const char* name, const EntityClassScanner& table) const {
 			Paths paths;
-			EntityClassQuake3_constructDirectory(baseDirectory, table.getExtension(), paths);
+			EntityClassUFO_constructDirectory(baseDirectory, table.getExtension(), paths);
 			if (!string_equal(baseDirectory, gameDirectory)) {
-				EntityClassQuake3_constructDirectory(gameDirectory, table.getExtension(), paths);
+				EntityClassUFO_constructDirectory(gameDirectory, table.getExtension(), paths);
 			}
 
 			for (Paths::iterator i = paths.begin(); i != paths.end(); ++i) {
@@ -230,16 +230,16 @@ EntityClass *Eclass_ForName(const char *name, bool has_brushes) {
 	return Eclass_InsertAlphabetized(e);
 }
 
-class EntityClassQuake3 : public ModuleObserver {
+class EntityClassUFO : public ModuleObserver {
 	std::size_t m_unrealised;
 	ModuleObservers m_observers;
 public:
-	EntityClassQuake3() : m_unrealised(4) {
+	EntityClassUFO() : m_unrealised(4) {
 	}
 	void realise() {
 		if (--m_unrealised == 0) {
 			//globalOutputStream() << "Entity Classes: realise\n";
-			EntityClassQuake3_Construct();
+			EntityClassUFO_Construct();
 			m_observers.realise();
 		}
 	}
@@ -258,30 +258,30 @@ public:
 	}
 };
 
-EntityClassQuake3 g_EntityClassQuake3;
+EntityClassUFO g_EntityClassUFO;
 
 void EntityClass_attach(ModuleObserver& observer) {
-	g_EntityClassQuake3.attach(observer);
+	g_EntityClassUFO.attach(observer);
 }
 void EntityClass_detach(ModuleObserver& observer) {
-	g_EntityClassQuake3.detach(observer);
+	g_EntityClassUFO.detach(observer);
 }
 
 void EntityClass_realise() {
-	g_EntityClassQuake3.realise();
+	g_EntityClassUFO.realise();
 }
 void EntityClass_unrealise() {
-	g_EntityClassQuake3.unrealise();
+	g_EntityClassUFO.unrealise();
 }
 
-void EntityClassQuake3_construct() {
+void EntityClassUFO_construct() {
 	// start by creating the default unknown eclass
 	eclass_bad = EClass_Create("UNKNOWN_CLASS", Vector3(0.0f, 0.5f, 0.0f), "");
 
 	EntityClass_realise();
 }
 
-void EntityClassQuake3_destroy() {
+void EntityClassUFO_destroy() {
 	EntityClass_unrealise();
 
 	eclass_bad->free(eclass_bad);
@@ -289,13 +289,13 @@ void EntityClassQuake3_destroy() {
 
 #include "modulesystem/modulesmap.h"
 
-class EntityClassQuake3Dependencies :
+class EntityClassUFODependencies :
 			public GlobalRadiantModuleRef,
 			public GlobalFileSystemModuleRef,
 			public GlobalShaderCacheModuleRef {
 	EClassModulesRef m_eclass_modules;
 public:
-	EntityClassQuake3Dependencies() :
+	EntityClassUFODependencies() :
 			m_eclass_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclasstype")) {
 	}
 	EClassModules& getEClassModules() {
@@ -310,7 +310,7 @@ public:
 	STRING_CONSTANT(Name, "ufo");
 
 	EclassManagerAPI() {
-		EntityClassQuake3_construct();
+		EntityClassUFO_construct();
 
 		m_eclassmanager.findOrInsert = &Eclass_ForName;
 		m_eclassmanager.findListType = &EntityClass_findListType;
@@ -320,16 +320,16 @@ public:
 		m_eclassmanager.realise = &EntityClass_realise;
 		m_eclassmanager.unrealise = &EntityClass_unrealise;
 
-		GlobalRadiant().attachGameToolsPathObserver(g_EntityClassQuake3);
-		GlobalRadiant().attachGameModeObserver(g_EntityClassQuake3);
-		GlobalRadiant().attachGameNameObserver(g_EntityClassQuake3);
+		GlobalRadiant().attachGameToolsPathObserver(g_EntityClassUFO);
+		GlobalRadiant().attachGameModeObserver(g_EntityClassUFO);
+		GlobalRadiant().attachGameNameObserver(g_EntityClassUFO);
 	}
 	~EclassManagerAPI() {
-		GlobalRadiant().detachGameNameObserver(g_EntityClassQuake3);
-		GlobalRadiant().detachGameModeObserver(g_EntityClassQuake3);
-		GlobalRadiant().detachGameToolsPathObserver(g_EntityClassQuake3);
+		GlobalRadiant().detachGameNameObserver(g_EntityClassUFO);
+		GlobalRadiant().detachGameModeObserver(g_EntityClassUFO);
+		GlobalRadiant().detachGameToolsPathObserver(g_EntityClassUFO);
 
-		EntityClassQuake3_destroy();
+		EntityClassUFO_destroy();
 	}
 	EntityClassManager* getTable() {
 		return &m_eclassmanager;
@@ -339,7 +339,7 @@ public:
 #include "modulesystem/singletonmodule.h"
 #include "modulesystem/moduleregistry.h"
 
-typedef SingletonModule<EclassManagerAPI, EntityClassQuake3Dependencies> EclassManagerModule;
+typedef SingletonModule<EclassManagerAPI, EntityClassUFODependencies> EclassManagerModule;
 typedef Static<EclassManagerModule> StaticEclassManagerModule;
 StaticRegisterModule staticRegisterEclassManager(StaticEclassManagerModule::instance());
 
