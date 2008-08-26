@@ -6232,6 +6232,7 @@ void CL_GameExit (void)
 		CL_ResetSinglePlayerData();
 	}
 	curCampaign = NULL;
+	selActor = NULL;
 	cls.missionaircraft = NULL;
 
 	/* maybe this is not the best place - but it is needed */
