@@ -529,6 +529,15 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 }
 
 /**
+ * @return nonzero if for any level selection the coveree will only be hidden when the coverer is too.
+ * so the coveree may safely be set to nodraw, as far as levelflags are concerned.
+ */
+static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
+{
+	return !(CONTENTS_LEVEL_ALL & ~coverer->contentFlags & coveree->contentFlags);
+}
+
+/**
  * @brief Check for SURF_NODRAW which might be exposed, and check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes.
@@ -559,15 +568,16 @@ void CheckNodraws (void)
 				for (js = 0; js < jBrush->numsides; js++) {
 					side_t *jSide = &jBrush->original_sides[js];
 
-					if (FacingAndCoincidentTo(iSide, jSide)) {
-						if(Check_SideIsInBrush(iSide, jBrush)) {
-							const ptrdiff_t index = iSide - brushsides;
-							brush_texture_t *tex = &side_brushtextures[index];
-							Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
-							iSide->surfaceFlags |= SURF_NODRAW;
-							tex->surfaceFlags |= SURF_NODRAW;
-							numSet++;
-						}
+					if (Check_LevelForNodraws(jSide, iSide) &&
+						FacingAndCoincidentTo(iSide, jSide) &&
+						Check_SideIsInBrush(iSide, jBrush)) {
+
+						const ptrdiff_t index = iSide - brushsides;
+						brush_texture_t *tex = &side_brushtextures[index];
+						Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
+						iSide->surfaceFlags |= SURF_NODRAW;
+						tex->surfaceFlags |= SURF_NODRAW;
+						numSet++;
 
 					}
 				}
