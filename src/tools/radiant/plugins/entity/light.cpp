@@ -53,7 +53,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
-#include "rotation.h"
 
 #include "entity.h"
 
@@ -564,7 +563,6 @@ class Light :
 	IdentityTransform m_transform;
 
 	OriginKey m_originKey;
-	Float9 m_rotation;
 	Colour m_colour;
 
 	ClassnameFilter m_filter;
@@ -580,7 +578,6 @@ class Light :
 	RenderableNamedEntity m_renderName;
 
 	Vector3 m_lightOrigin;
-	Float9 m_lightRotation;
 
 	Vector3 m_lightTarget;
 	bool m_useLightTarget;
@@ -602,7 +599,6 @@ class Light :
 	Callback m_evaluateTransform;
 
 	void construct() {
-		default_rotation(m_rotation);
 		m_aabb_light.origin = Vector3(0, 0, 0);
 		default_extents(m_aabb_light.extents);
 
@@ -813,7 +809,6 @@ public:
 		m_aabb_light.origin = origin_translated(m_aabb_light.origin, translation);
 	}
 	void rotate(const Quaternion& rotation) {
-		rotation_rotate(m_rotation, rotation);
 	}
 	void snapto(float snap) {
 		m_originKey.m_origin = origin_snapped(m_originKey.m_origin, snap);
@@ -841,7 +836,7 @@ public:
 
 	mutable Matrix4 m_localPivot;
 	const Matrix4& getLocalPivot() const {
-		m_localPivot = rotation_toMatrix(m_rotation);
+		m_localPivot = g_matrix4_identity;
 		vector4_to_vector3(m_localPivot.t()) = m_aabb_light.origin;
 		return m_localPivot;
 	}
