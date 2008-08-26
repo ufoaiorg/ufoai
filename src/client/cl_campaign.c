@@ -3483,9 +3483,6 @@ static void CP_CheckEvents (void)
 		}
 	}
 
-	/* Check UFOs events. */
-	UFO_CampaignCheckEvents(qtrue);
-
 	/* Humans start to attacking player. */
 	if (ccs.overallInterest > 450) {
 		ccs.humansAttackActivated = qtrue;
@@ -4162,11 +4159,33 @@ static void CL_CampaignRunMarket (void)
  */
 void CL_CampaignRun (void)
 {
+	/** @todo detection interval could maybe be made scriptable */
+	const int detectioninterval = (SECONDS_PER_HOUR / 2);
+	const int currentinterval = (int)floor(ccs.date.sec) % detectioninterval;
+	int checks, dt, i;
+
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
+	checks = currentinterval + (int)floor(ccs.timer);
+	checks = (int)(checks / detectioninterval);
+	dt = detectioninterval - currentinterval;
+
+	/* Run UFOs and craft at least every detectioninterval. If detection occurred, break. */
+	for (i = 0; i < checks; i++) {
+		qboolean detection;
+		UFO_CampaignRunUFOs(dt);
+		CL_CampaignRunAircraft(dt);
+		detection = UFO_CampaignCheckEvents(qtrue);
+		if (detection) {
+			ccs.timer = (i + 1) * detectioninterval - currentinterval;
+			break;
+		}
+		dt = detectioninterval;
+	}
+
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
-		int dt, currenthour;
+		int currenthour;
 		dateLong_t date;
 
 		dt = (int)floor(ccs.timer);
@@ -4205,6 +4224,7 @@ void CL_CampaignRun (void)
 		/* check for campaign events */
 		CL_CampaignRunAircraft(dt);
 		UFO_CampaignRunUFOs(dt);
+		UFO_CampaignCheckEvents(qfalse);
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();
 		CP_CheckLostCondition(qtrue, NULL, 0);

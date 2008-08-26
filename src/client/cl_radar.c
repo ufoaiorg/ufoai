@@ -168,10 +168,13 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 	pts[0].x = x;
 	pts[0].y = y;
 	for (i = radar->numUFOs - 1; i >= 0; i--)
-		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z < 0) {
-			pts[1].x = x;
-			pts[1].y = y;
-			R_DrawLineStrip(2, (int*)pts); /** @todo */
+		/* Only draw the line if the UFO is visible. It might not be - UFOs may go undetected even within radar range */
+		if ((gd.ufos + radar->ufos[i])->visible) {
+			if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z < 0) {
+				pts[1].x = x;
+				pts[1].y = y;
+				R_DrawLineStrip(2, (int*)pts); /** @todo */
+			}
 		}
 
 	R_ColorBlend(NULL);
@@ -380,7 +383,7 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 
 /**
  * @brief Check if the specified UFO is inside the sensor range of base
- * @return true if the aircraft is inside sensor
+ * @return true if the aircraft is inside sensor and was sensored
  * @sa UFO_CampaignCheckEvents
  */
 qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
@@ -401,11 +404,15 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 
 	if (!ufo->notOnGeoscape && (radar->range + (wasUFOSensored ? radar->range * RADAR_OUTER_CIRCLE_RATIO : 0) > dist)) {
 		/* UFO is inside the radar range */
-		if (numAircraftSensored < 0) {
-			/* UFO was not sensored by the radar */
-			RADAR_AddUFO(radar, num);
+		/** @todo There is a hardcoded detection probability here - this should be scripted. Probability should be a function of UFO type and maybe radar type too. */
+		if (frand() <= 0.40) {
+			if (numAircraftSensored < 0) {
+				/* UFO was not sensored by the radar */
+				RADAR_AddUFO(radar, num);
+			}
+			return qtrue;
 		}
-		return qtrue;
+		return qfalse;
 	}
 
 	/* UFO is not in the sensor range */
