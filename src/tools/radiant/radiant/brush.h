@@ -69,9 +69,6 @@ const unsigned int BRUSH_DETAIL_FLAG = 27;
 const unsigned int BRUSH_DETAIL_MASK = 0x08000000; // CONTENTS_DETAIL
 const unsigned int BRUSH_WATER_MASK = 0x0020; // CONTENTS_WATER
 
-#define BRUSH_CONNECTIVITY_DEBUG 0
-#define BRUSH_DEGENERATE_DEBUG 0
-
 template<typename TextOuputStreamType>
 inline TextOuputStreamType& ostream_write(TextOuputStreamType& ostream, const Matrix4& m) {
 	return ostream << "(" << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << ", "
@@ -1755,40 +1752,17 @@ class BrushUndoMemento : public UndoMemento {
 
 				buffer[!swap].clear();
 
-#if BRUSH_CONNECTIVITY_DEBUG
-				globalOutputStream() << "clip vs face: " << i << "\n";
-#endif
 				{
 					// flip the plane, because we want to keep the back side
 					Plane3 clipPlane(vector3_negated(clip.plane3().normal()), -clip.plane3().dist());
 					Winding_Clip(buffer[swap], plane, clipPlane, i, buffer[!swap]);
 				}
 
-#if BRUSH_CONNECTIVITY_DEBUG
-				for (FixedWinding::Points::iterator k = buffer[!swap].points.begin(), j = buffer[!swap].points.end() - 1; k != buffer[!swap].points.end(); j = k, ++k) {
-					if (vector3_length_squared(vector3_subtracted((*k).vertex, (*j).vertex)) < 1) {
-						globalOutputStream() << "v: " << std::distance(buffer[!swap].points.begin(), j) << " tiny edge adjacent to face " << (*j).adjacent << "\n";
-					}
-				}
-#endif
-
-				//ASSERT_MESSAGE(buffer[!swap].numpoints != 1, "created single-point winding");
-
 				swap = !swap;
 			}
 		}
 
 		Winding_forFixedWinding(winding, buffer[swap]);
-
-#if BRUSH_CONNECTIVITY_DEBUG
-		Winding_printConnectivity(winding);
-
-		for (Winding::iterator i = winding.begin(), j = winding.end() - 1; i != winding.end(); j = i, ++i) {
-			if (vector3_length_squared(vector3_subtracted((*i).vertex, (*j).vertex)) < 1) {
-				globalOutputStream() << "v: " << std::distance(winding.begin(), j) << " tiny edge adjacent to face " << (*j).adjacent << "\n";
-			}
-		}
-#endif
 	}
 
 	void update_wireframe(RenderableWireframe& wire, const bool* faces_visible) const {
@@ -1874,9 +1848,6 @@ private:
 				std::size_t index = std::distance(winding.begin(), j);
 				std::size_t next = Winding_next(winding, index);
 				if (Edge_isDegenerate(winding[index].vertex, winding[next].vertex)) {
-#if BRUSH_DEGENERATE_DEBUG
-					globalOutputStream() << "Brush::buildWindings: face " << i << ": degenerate edge adjacent to " << winding[index].adjacent << "\n";
-#endif
 					Winding& other = m_faces[winding[index].adjacent]->getWinding();
 					std::size_t adjacent = Winding_FindAdjacent(other, i);
 					if (adjacent != c_brush_maxFaces) {
@@ -1897,17 +1868,11 @@ private:
 			Winding& degen = m_faces[i]->getWinding();
 
 			if (degen.numpoints == 2) {
-#if BRUSH_DEGENERATE_DEBUG
-				globalOutputStream() << "Brush::buildWindings: face " << i << ": degenerate winding adjacent to " << degen[0].adjacent << ", " << degen[1].adjacent << "\n";
-#endif
 				// this is an "edge" face, where the plane touches the edge of the brush
 				{
 					Winding& winding = m_faces[degen[0].adjacent]->getWinding();
 					std::size_t index = Winding_FindAdjacent(winding, i);
 					if (index != c_brush_maxFaces) {
-#if BRUSH_DEGENERATE_DEBUG
-						globalOutputStream() << "Brush::buildWindings: face " << degen[0].adjacent << ": remapping adjacent " << winding[index].adjacent << " to " << degen[1].adjacent << "\n";
-#endif
 						winding[index].adjacent = degen[1].adjacent;
 					}
 				}
@@ -1915,9 +1880,6 @@ private:
 					Winding& winding = m_faces[degen[1].adjacent]->getWinding();
 					std::size_t index = Winding_FindAdjacent(winding, i);
 					if (index != c_brush_maxFaces) {
-#if BRUSH_DEGENERATE_DEBUG
-						globalOutputStream() << "Brush::buildWindings: face " << degen[1].adjacent << ": remapping adjacent " << winding[index].adjacent << " to " << degen[0].adjacent << "\n";
-#endif
 						winding[index].adjacent = degen[0].adjacent;
 					}
 				}
@@ -1937,9 +1899,6 @@ private:
 				for (std::size_t j = 0; j != winding.numpoints;) {
 					std::size_t next = Winding_next(winding, j);
 					if (winding[j].adjacent == winding[next].adjacent) {
-#if BRUSH_DEGENERATE_DEBUG
-						globalOutputStream() << "Brush::buildWindings: face " << i << ": removed duplicate edge adjacent to face " << winding[j].adjacent << "\n";
-#endif
 						winding.erase(winding.begin() + next);
 					} else {
 						++j;
@@ -1957,15 +1916,9 @@ private:
 			{
 				Winding& winding = m_faces[i]->getWinding();
 				for (Winding::iterator j = winding.begin(); j != winding.end();) {
-#if BRUSH_CONNECTIVITY_DEBUG
-					globalOutputStream() << "Brush::buildWindings: face " << i << ": adjacent to face " << (*j).adjacent << "\n";
-#endif
 					// remove unidirectional graph edges
 					if ((*j).adjacent == c_brush_maxFaces
 					        || Winding_FindAdjacent(m_faces[(*j).adjacent]->getWinding(), i) == c_brush_maxFaces) {
-#if BRUSH_CONNECTIVITY_DEBUG
-						globalOutputStream() << "Brush::buildWindings: face " << i << ": removing unidirectional connectivity graph edge adjacent to face " << (*j).adjacent << "\n";
-#endif
 						winding.erase(j);
 					} else {
 						++j;
@@ -1997,9 +1950,6 @@ private:
 				if (!plane3_valid(f.plane3()) || !plane_unique(i)) {
 					f.getWinding().resize(0);
 				} else {
-#if BRUSH_CONNECTIVITY_DEBUG
-					globalOutputStream() << "face: " << i << "\n";
-#endif
 					windingForClipPlane(f.getWinding(), f.plane3());
 
 					// update brush bounds
