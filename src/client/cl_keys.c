@@ -806,6 +806,34 @@ static void Key_Bindlist_f (void)
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
 }
 
+static int Key_CompleteKeyName (const char *partial, const char **match)
+{
+	int matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	size_t len;
+	const keyname_t *kn;
+
+	len = strlen(partial);
+	if (!len) {
+		for (kn = keynames; kn->name; kn++) {
+			Com_Printf("%s\n", kn->name);
+		}
+		return 0;
+	}
+
+	/* check for partial matches */
+	for (kn = keynames; kn->name; kn++) {
+		if (!Q_strncmp(partial, kn->name, len)) {
+			Com_Printf("%s\n", kn->name);
+			localMatch[matches++] = kn->name;
+			if (matches >= MAX_COMPLETE)
+				break;
+		}
+	}
+
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+}
+
 /**
  * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
  */
@@ -824,6 +852,10 @@ void Key_Init (void)
 	Cmd_AddCommand("bind", Key_Bind_f, "Bind a key to a console command");
 	Cmd_AddCommand("unbindmenu", Key_Unbind_f, "Unind a key");
 	Cmd_AddCommand("unbind", Key_Unbind_f, "Unbind a key");
+	Cmd_AddParamCompleteFunction("bind", Key_CompleteKeyName);
+	Cmd_AddParamCompleteFunction("unbind", Key_CompleteKeyName);
+	Cmd_AddParamCompleteFunction("bindmenu", Key_CompleteKeyName);
+	Cmd_AddParamCompleteFunction("unbindmenu", Key_CompleteKeyName);
 	Cmd_AddCommand("unbindallmenu", Key_Unbindall_f, "Delete all key bindings for the menu");
 	Cmd_AddCommand("unbindall", Key_Unbindall_f, "Delete all key bindings");
 	Cmd_AddCommand("bindlist", Key_Bindlist_f, "Show all bindings on the game console");
