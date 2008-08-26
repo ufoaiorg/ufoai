@@ -1636,6 +1636,8 @@ GtkMenuItem* create_edit_menu() {
 	create_menu_item_with_mnemonic(convert_menu, "To Whole _Entities", "ExpandSelectionToEntities");
 
 	menu_separator(menu);
+
+	create_menu_item_with_mnemonic(menu, "Shortcuts list", FreeCaller<DoCommandListDlg>());
 	create_menu_item_with_mnemonic(menu, "Pre_ferences...", "Preferences");
 
 	return edit_menu_item;
@@ -1888,7 +1890,6 @@ GtkMenuItem* create_help_menu() {
 	create_menu_item_with_mnemonic(menu, "Manual", "OpenManual");
 
 	create_menu_item_with_mnemonic(menu, "Bug report", FreeCaller<OpenBugReportURL>());
-	create_menu_item_with_mnemonic(menu, "Shortcuts list", FreeCaller<DoCommandListDlg>());
 	create_menu_item_with_mnemonic(menu, "_About", FreeCaller<DoAbout>());
 
 	return help_menu_item;

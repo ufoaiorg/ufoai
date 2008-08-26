@@ -302,7 +302,6 @@ void create_global_pid() {
 	we need to catch when it happens, to cleanup the stateful prefs which might be killing it
 	and to turn on console logging for lookup of the problem
 	this is the first part of the two step .pid system
-	http://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=297
 	*/
 	StringOutputStream g_pidFile(256); ///< the global .pid file (only for global part of the startup)
 
@@ -362,7 +361,6 @@ void remove_global_pid() {
 
 /*!
 now the secondary game dependant .pid file
-http://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=297
 */
 void create_local_pid() {
 	StringOutputStream g_pidGameFile(256); ///< the game-specific .pid file
@@ -408,7 +406,6 @@ void create_local_pid() {
 
 /*!
 now the secondary game dependant .pid file
-http://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=297
 */
 void remove_local_pid() {
 	StringOutputStream g_pidGameFile(256);
