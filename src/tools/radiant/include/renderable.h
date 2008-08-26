@@ -29,6 +29,22 @@ class OpenGLRenderable;
 class LightList;
 class Matrix4;
 
+/** This is a proxy class used in the first (sorting) stage of rendering, which
+ * accepts OpenGLRenderables and adds them to a suitable data structure for
+ * rendering in the second stage. Despite its name, this class does not
+ * actually render anything.
+ *
+ * Each Renderable in the scenegraph is passed a reference to a
+ * RenderableSortProxy, on which the Renderable sets that necessary state
+ * variables and then submits its OpenGLRenderable for later rendering. A
+ * single Renderable may submit more than one OpenGLRenderable, with a
+ * different state each time -- for instance a Renderable model class may
+ * submit each of its material surfaces separately with the respective shaders
+ * set beforehand.
+ *
+ * @todo
+ * This class probably doesn't need to be a state machine, convert it to a
+ * single submit method with necessary parameters. */
 class Renderer {
 public:
 	enum EHighlightMode {
@@ -54,11 +70,17 @@ public:
 
 class VolumeTest;
 
+/** Interface class for Renderable objects. All objects which wish to be
+ * rendered need to implement this interface. During the scenegraph traversal
+ * for rendering, each Renderable object is passed a Renderer object
+ * which it can use to submit its geometry and state parameters. */
 class Renderable {
 public:
 	STRING_CONSTANT(Name, "Renderable");
 
+	/** Submit renderable geometry when rendering takes place in Solid mode. */
 	virtual void renderSolid(Renderer& renderer, const VolumeTest& volume) const = 0;
+	/** Submit renderable geometry when rendering takes place in Wireframe mode */
 	virtual void renderWireframe(Renderer& renderer, const VolumeTest& volume) const = 0;
 	virtual void renderComponents(Renderer&, const VolumeTest&) const {
 	}

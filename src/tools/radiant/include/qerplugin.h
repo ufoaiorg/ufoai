@@ -19,9 +19,10 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// QERadiant PlugIns
-//
-//
+/* greebo: This is where the interface for other plugins is defined.
+ * Functions that should be accessible via GlobalRadiant() are defined here
+ * as function pointers. The class RadiantCoreAPI in plugin.cpp makes sure
+ * that these variables are pointing to the correct functions. */
 
 #ifndef __QERPLUGIN_H__
 #define __QERPLUGIN_H__
@@ -87,8 +88,9 @@ typedef GtkImage* (* PFN_QERAPP_NEWIMAGE) (const char* filename);
 
 // ========================================
 
+// Forward declarations
 namespace scene {
-class Node;
+  class Node;
 }
 
 class ModuleObserver;
@@ -100,6 +102,7 @@ class ModuleObserver;
 typedef SignalHandler3<const WindowVector&, ButtonIdentifier, ModifierFlags> MouseEventHandler;
 typedef SignalFwd<MouseEventHandler>::handler_id_type MouseEventHandlerId;
 
+// Possible types of the orthogonal view window
 enum VIEWTYPE {
 	YZ = 0,
 	XZ = 1,
@@ -107,6 +110,7 @@ enum VIEWTYPE {
 };
 
 // the radiant core API
+// This contains pointers to all the core functions that should be available via GlobalRadiant()
 struct _QERFuncTable_1 {
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "radiant");
@@ -152,6 +156,7 @@ struct _QERFuncTable_1 {
 
 };
 
+// _QERFuncTable_1 Module Definitions
 #include "modulesystem.h"
 
 template<typename Type>
