@@ -1641,6 +1641,19 @@ GtkMenuItem* create_edit_menu() {
 	return edit_menu_item;
 }
 
+GtkMenuItem* create_filter_menu() {
+	// Edit menu
+	GtkMenuItem* filter_menu_item = new_sub_menu_item_with_mnemonic("Filter");
+	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(filter_menu_item));
+	if (g_Layout_enableDetachableMenus.m_value)
+		menu_tearoff (menu);
+
+	Filters_constructMenu(menu);
+
+	return filter_menu_item;
+}
+
+
 void fill_view_xy_top_menu(GtkMenu* menu) {
 	create_check_menu_item_with_mnemonic(menu, "XY (Top) View", "ToggleView");
 }
@@ -1733,12 +1746,6 @@ GtkMenuItem* create_view_menu(MainFrame::EViewStyle style) {
 		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Stats", "ShowStats");
 	}
 
-	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic (menu, "Filter");
-		if (g_Layout_enableDetachableMenus.m_value)
-			menu_tearoff (menu_in_menu);
-		Filters_constructMenu(menu_in_menu);
-	}
 	menu_separator(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic (menu, "Hide/Show");
@@ -1894,6 +1901,7 @@ GtkMenuBar* create_main_menu(MainFrame::EViewStyle style) {
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_file_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_edit_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_view_menu(style)));
+	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_filter_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_misc_menu()));

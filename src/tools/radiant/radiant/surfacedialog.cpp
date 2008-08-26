@@ -493,7 +493,6 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 
 	window_connect_focus_in_clear_focus_widget(window);
 
-
 	{
 		// replaced by only the vbox:
 		GtkWidget* vbox = gtk_vbox_new (FALSE, 5);
@@ -848,6 +847,7 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 						for (int c = 0; c != 4; ++c) {
 							for (int r = 0; r != 8; ++r) {
 								GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getContentFlagName(c * 8 + r)));
+								gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON(check), FALSE);
 								gtk_widget_show(GTK_WIDGET(check));
 								gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
 								                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
@@ -858,6 +858,7 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 							}
 						}
 
+						// TODO: Why?
 						// not allowed to modify detail flag using Surface Inspector
 						gtk_widget_set_sensitive(GTK_WIDGET(m_contentFlags[BRUSH_DETAIL_FLAG]), FALSE);
 					}
@@ -971,14 +972,9 @@ void SurfaceInspector::Update() {
 	}
 }
 
-/*
-==============
-Apply
-
-Reads the fields to get the current texdef (i.e. widgets -> MAP)
-in brush primitive mode, grab the fake shift scale rot and compute a new texture matrix
-===============
-*/
+/**
+ * @brief Reads the fields to get the current texdef (i.e. widgets -> MAP)
+ */
 void SurfaceInspector::ApplyShader() {
 	StringOutputStream name(256);
 	name << GlobalTexturePrefix_get() << gtk_entry_get_text(m_texture);
@@ -1004,9 +1000,6 @@ void SurfaceInspector::ApplyTexdef() {
 	shiftScaleRotate.rotate = static_cast<float>(gtk_spin_button_get_value_as_float(m_rotateIncrement.m_spin));
 
 	TextureProjection projection;
-//Shamus: This is the other place that screws up, it seems, since it doesn't seem to do the
-//conversion from the face (I think) and so bogus values end up in the thing... !!! FIX !!!
-//This is actually OK. :-P
 	ShiftScaleRotate_toFace(shiftScaleRotate, projection);
 
 	UndoableCommand undo("textureProjectionSetSelected");
@@ -1031,6 +1024,7 @@ void SurfaceInspector::ApplyFlags() {
 	int value = entry_get_int(m_valueEntryWidget);
 
 	UndoableCommand undo("flagsSetSelected");
+	/* set flags to the selection */
 	Select_SetFlags(ContentsFlagsValue(surfaceflags, contentflags, value, true));
 }
 

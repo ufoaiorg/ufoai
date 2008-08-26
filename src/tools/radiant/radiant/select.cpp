@@ -481,7 +481,6 @@ void Select_ShiftTexture(float x, float y) {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushShiftTexdef_Selected(GlobalSceneGraph(), x, y);
 	}
-	//globalOutputStream() << "shift selected face textures: s=" << x << " t=" << y << '\n';
 	Scene_BrushShiftTexdef_Component_Selected(GlobalSceneGraph(), x, y);
 }
 
