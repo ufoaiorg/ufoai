@@ -834,9 +834,6 @@ static int Key_CompleteKeyName (const char *partial, const char **match)
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
-/**
- * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
- */
 void Key_Init (void)
 {
 	int i;
