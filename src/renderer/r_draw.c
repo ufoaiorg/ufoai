@@ -459,27 +459,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
-	/* draw nation overlay */
-	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
-		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
-		if (gl == r_notexture)
-			Sys_Error("Could not load geoscape nation overlay image");
-
-		R_EnableBlend(qtrue);
-		/* draw day image */
-		R_BindTexture(gl->texnum);
-		qglBegin(GL_QUADS);
-		qglTexCoord2f(cx - iz, cy - iz);
-		qglVertex2f(nx, ny);
-		qglTexCoord2f(cx + iz, cy - iz);
-		qglVertex2f(nx + nw, ny);
-		qglTexCoord2f(cx + iz, cy + iz);
-		qglVertex2f(nx + nw, ny + nh);
-		qglTexCoord2f(cx - iz, cy + iz);
-		qglVertex2f(nx, ny + nh);
-		qglEnd();
-		R_EnableBlend(qfalse);
-	}
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		assert(r_xviTexture);
 
@@ -519,47 +498,67 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
-	if (gl == r_notexture)
-		return;
+	if (gl != r_notexture) {
+		/* init combiner */
+		R_EnableBlend(qtrue);
 
-	/* init combiner */
-	R_EnableBlend(qtrue);
+		R_SelectTexture(&texunit_diffuse);
+		R_BindTexture(gl->texnum);
 
-	R_SelectTexture(&texunit_diffuse);
-	R_BindTexture(gl->texnum);
+		R_SelectTexture(&texunit_lightmap);
+		if (!r_dayandnighttexture || lastQ != q) {
+			R_CalcDayAndNight(q);
+			lastQ = q;
+		}
 
-	R_SelectTexture(&texunit_lightmap);
-	if (!r_dayandnighttexture || lastQ != q) {
-		R_CalcDayAndNight(q);
-		lastQ = q;
+		assert(r_dayandnighttexture);
+
+		R_BindTexture(r_dayandnighttexture->texnum);
+		qglEnable(GL_TEXTURE_2D);
+
+		/* draw night image */
+		qglBegin(GL_QUADS);
+		qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy - iz);
+		qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy - iz);
+		qglVertex2f(nx, ny);
+		qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy - iz);
+		qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy - iz);
+		qglVertex2f(nx + nw, ny);
+		qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy + iz);
+		qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy + iz);
+		qglVertex2f(nx + nw, ny + nh);
+		qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy + iz);
+		qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy + iz);
+		qglVertex2f(nx, ny + nh);
+		qglEnd();
+
+		/* reset mode */
+		qglDisable(GL_TEXTURE_2D);
+		R_SelectTexture(&texunit_diffuse);
+
+		R_EnableBlend(qfalse);
 	}
+	/* draw nation overlay */
+	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
+		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
+		if (gl == r_notexture)
+			Sys_Error("Could not load geoscape nation overlay image");
 
-	assert(r_dayandnighttexture);
-
-	R_BindTexture(r_dayandnighttexture->texnum);
-	qglEnable(GL_TEXTURE_2D);
-
-	/* draw night image */
-	qglBegin(GL_QUADS);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy - iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy - iz);
-	qglVertex2f(nx, ny);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy - iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy - iz);
-	qglVertex2f(nx + nw, ny);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy + iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy + iz);
-	qglVertex2f(nx + nw, ny + nh);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy + iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy + iz);
-	qglVertex2f(nx, ny + nh);
-	qglEnd();
-
-	/* reset mode */
-	qglDisable(GL_TEXTURE_2D);
-	R_SelectTexture(&texunit_diffuse);
-
-	R_EnableBlend(qfalse);
+		R_EnableBlend(qtrue);
+		/* draw day image */
+		R_BindTexture(gl->texnum);
+		qglBegin(GL_QUADS);
+		qglTexCoord2f(cx - iz, cy - iz);
+		qglVertex2f(nx, ny);
+		qglTexCoord2f(cx + iz, cy - iz);
+		qglVertex2f(nx + nw, ny);
+		qglTexCoord2f(cx + iz, cy + iz);
+		qglVertex2f(nx + nw, ny + nh);
+		qglTexCoord2f(cx - iz, cy + iz);
+		qglVertex2f(nx, ny + nh);
+		qglEnd();
+		R_EnableBlend(qfalse);
+	}
 }
 
 /**
