@@ -58,9 +58,7 @@ inline void read_angles(Vector3& angles, const char* value) {
 	}
 }
 inline void write_angles(const Vector3& angles, Entity* entity) {
-	if (angles[0] == 0
-	        && angles[1] == 0
-	        && angles[2] == 0) {
+	if (angles[0] == 0 && angles[1] == 0 && angles[2] == 0) {
 		entity->setKeyValue("angle", "");
 		entity->setKeyValue("angles", "");
 	} else {
