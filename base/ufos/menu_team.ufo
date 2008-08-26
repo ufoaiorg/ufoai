@@ -911,10 +911,17 @@ menu team
 	}
 
 	pic hp_bdr    { pos "704 374" image menu/bar_border align ul_rsl }
-	tbar hp_bar
+	bar hp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "707 374"  align ul_rsl texl "3 0" image menu/bar_health
+		current	"*cvar mn_vhp"
+		max	"*cvar mn_vhpmax"
+		size "242 5"
+		pos "718 380"
+		align ul_rsl
+		color   "1 0 0 1"
+		// texl "3 0"
+		// image menu/bar_health
 	}
 
 	string	missions_lbl { pos "700 394" string "_Missions Performed:" }
@@ -994,7 +1001,7 @@ menu team
 	func init
 	{
 		team_clear
-		cmd "team_mark;team_select 0;"
+		cmd "team_mark;team_select 0;set mn_show_employe 1;"
 	}
 }
 
