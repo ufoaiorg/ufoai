@@ -42,7 +42,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkspinbutton.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkcheckbutton.h>	//Shamus: For Textool
 
 #include "signal/isignal.h"
 #include "generic/object.h"
@@ -56,7 +55,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/entry.h"
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/pointer.h"
-#include "gtkutil/glwidget.h"			//Shamus: For Textool
 #include "gtkutil/button.h"
 #include "map.h"
 #include "select.h"
@@ -67,7 +65,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "mainframe.h"
 #include "gtkdlgs.h"
 #include "dialog.h"
-#include "brush.h"				//Shamus: for Textool
+#include "brush.h"
 #include "commands.h"
 #include "stream/stringstream.h"
 #include "grid.h"
@@ -246,8 +244,6 @@ void SurfaceInspector_SetCurrent_FromSelected() {
 		s_texture_selection_dirty = false;
 		if (!g_SelectedFaceInstances.empty()) {
 			TextureProjection projection;
-//This *may* be the point before it fucks up... Let's see!
-//Yep, there was a call to removeScale in there...
 			Scene_BrushGetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 
 			SurfaceInspector_SetSelectedTexdef(projection);
@@ -311,17 +307,17 @@ const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags() {
 si_globals_t g_si_globals;
 
 
-// make the shift increments match the grid settings
-// the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
-// this depends on a scale value if you have selected a particular texture on which you want it to work:
-// we move the textures in pixels, not world units. (i.e. increment values are in pixel)
-// depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
-// increment * scale = gridsize
-// hscale and vscale are optional parameters, if they are zero they will be set to the default scale
-// NOTE: the default scale depends if you are using BP mode or regular.
-// For regular it's 0.5f (128 pixels cover 64 world units), for BP it's simply 1.0f
-// see fenris #2810
-void DoSnapTToGrid(float hscale, float vscale) {
+/**
+ * @brief make the shift increments match the grid settings
+ * the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
+ * this depends on a scale value if you have selected a particular texture on which you want it to work:
+ * we move the textures in pixels, not world units. (i.e. increment values are in pixel)
+ * depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
+ * @code increment * scale = gridsize @endcode
+ * hscale and vscale are optional parameters, if they are zero they will be set to the default scale
+ * @note the default scale is 0.5f (128 pixels cover 64 world units)
+ */
+static void DoSnapTToGrid(float hscale, float vscale) {
 	g_si_globals.shift[0] = static_cast<float>(float_to_integer(static_cast<float>(GetGridSize()) / hscale));
 	g_si_globals.shift[1] = static_cast<float>(float_to_integer(static_cast<float>(GetGridSize()) / vscale));
 	getSurfaceInspector().queueDraw();
@@ -332,12 +328,14 @@ void SurfaceInspector_GridChange() {
 		DoSnapTToGrid(Texdef_getDefaultTextureScale(), Texdef_getDefaultTextureScale());
 }
 
-// make the shift increments match the grid settings
-// the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
-// this depends on the current texture scale used?
-// we move the textures in pixels, not world units. (i.e. increment values are in pixel)
-// depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
-// increment * scale = gridsize
+/**
+ * @brief make the shift increments match the grid settings
+ * the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
+ * this depends on the current texture scale used?
+ * we move the textures in pixels, not world units. (i.e. increment values are in pixel)
+ * depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
+ * @code increment * scale = gridsize @endcode
+ */
 static void OnBtnMatchGrid(GtkWidget *widget, gpointer data) {
 	float hscale, vscale;
 	hscale = static_cast<float>(gtk_spin_button_get_value_as_float(getSurfaceInspector().m_hscaleIncrement.m_spin));
@@ -351,9 +349,11 @@ static void OnBtnMatchGrid(GtkWidget *widget, gpointer data) {
 	DoSnapTToGrid (hscale, vscale);
 }
 
-// DoSurface will always try to show the surface inspector
-// or update it because something new has been selected
-// Shamus: It does get called when the SI is hidden, but not when you select something new. ;-)
+/**
+ * @brief DoSurface will always try to show the surface inspector
+ * or update it because something new has been selected
+ * @note Shamus: It does get called when the SI is hidden, but not when you select something new. ;-)
+ */
 void DoSurface (void) {
 	if (getSurfaceInspector().GetWidget() == 0) {
 		getSurfaceInspector().Create();
@@ -390,9 +390,7 @@ static void OnBtnFaceFit(GtkWidget *widget, gpointer data) {
 	SurfaceInspector_FitTexture();
 }
 
-typedef const char* FlagName;
-
-const FlagName surfaceflagNamesDefault[32] = {
+static const char* surfaceflagNamesDefault[32] = {
 	"surf1",
 	"surf2",
 	"surf3",
@@ -427,7 +425,7 @@ const FlagName surfaceflagNamesDefault[32] = {
 	"surf32"
 };
 
-const FlagName contentflagNamesDefault[32] = {
+static const char* contentflagNamesDefault[32] = {
 	"cont1",
 	"cont2",
 	"cont3",
