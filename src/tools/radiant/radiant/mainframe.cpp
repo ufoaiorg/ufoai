@@ -1998,8 +1998,14 @@ void ComponentModes_constructToolbar(GtkToolbar* toolbar) {
 }
 
 void Clipper_constructToolbar(GtkToolbar* toolbar) {
-
 	toolbar_append_toggle_button(toolbar, "Clipper (X)", "view_clipper.bmp", "ToggleClipper");
+}
+
+void Filters_constructToolbar(GtkToolbar* toolbar) {
+	toolbar_append_toggle_button(toolbar, "Filter nodraw", "filter_nodraw.bmp", "FilterNodraw");
+	toolbar_append_toggle_button(toolbar, "Filter actorclip", "filter_actorclip.bmp", "FilterActorClips");
+	toolbar_append_toggle_button(toolbar, "Filter weaponclip", "filter_weaponclip.bmp", "FilterWeaponClips");
+	toolbar_append_toggle_button(toolbar, "Filter stepon", "filter_stepon.bmp", "FilterStepon");
 }
 
 void XYWnd_constructToolbar(GtkToolbar* toolbar) {
@@ -2068,6 +2074,8 @@ GtkToolbar* create_main_toolbar(MainFrame::EViewStyle style) {
 	GtkButton* g_view_console_button = toolbar_append_button(toolbar, "Console (O)", "console.bmp", "ToggleConsole");
 	GtkButton* g_view_textures_button = toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
 	GtkButton* g_view_background_button = toolbar_append_button(toolbar, "Background image", "background.bmp", "ToggleBackground");
+
+	Filters_constructToolbar(toolbar);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	toolbar_append_button(toolbar, "Refresh Models", "refresh_models.bmp", "RefreshReferences");

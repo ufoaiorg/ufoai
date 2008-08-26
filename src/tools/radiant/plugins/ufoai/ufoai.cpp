@@ -68,7 +68,7 @@ const char* getName() {
 }
 const char* getCommandList() {
 	/*GlobalRadiant().getGameName()*/
-	return "About;-;Worldspawn reset;Worldspawn;Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8;-;StepOn;ActorClip;WeaponClip;Nodraw";
+	return "About;-;Worldspawn reset;Worldspawn;Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8";
 }
 const char* getCommandTitleList() {
 	return "";
@@ -101,14 +101,6 @@ void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush) 
 		filter_level(CONTENTS_LEVEL7);
 	} else if (string_equal(command, "Level 8")) {
 		filter_level(CONTENTS_LEVEL8);
-	} else if (string_equal(command, "StepOn")) {
-		filter_stepon();
-	} else if (string_equal(command, "ActorClip")) {
-		filter_actorclip();
-	} else if (string_equal(command, "WeaponClip")) {
-		filter_weaponclip();
-	} else if (string_equal(command, "NoDraw")) {
-		filter_nodraw();
 	}
 
 	if (message != NULL) {
