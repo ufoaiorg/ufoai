@@ -44,36 +44,6 @@ inline void default_rotation(Float9 rotation) {
 	rotation[7] = 0;
 	rotation[8] = 1;
 }
-inline void write_rotation(const Float9 rotation, Entity* entity, const char* key = "rotation") {
-	if (rotation[0] == 1
-	        && rotation[1] == 0
-	        && rotation[2] == 0
-	        && rotation[3] == 0
-	        && rotation[4] == 1
-	        && rotation[5] == 0
-	        && rotation[6] == 0
-	        && rotation[7] == 0
-	        && rotation[8] == 1) {
-		entity->setKeyValue(key, "");
-	} else {
-		StringOutputStream value(256);
-		value << rotation[0] << ' '
-		<< rotation[1] << ' '
-		<< rotation[2] << ' '
-		<< rotation[3] << ' '
-		<< rotation[4] << ' '
-		<< rotation[5] << ' '
-		<< rotation[6] << ' '
-		<< rotation[7] << ' '
-		<< rotation[8];
-		entity->setKeyValue(key, value.c_str());
-	}
-}
-inline void read_rotation(Float9 rotation, const char* value) {
-	if (!string_parse_vector(value, rotation, rotation + 9)) {
-		default_rotation(rotation);
-	}
-}
 
 inline Matrix4 rotation_toMatrix(const Float9 rotation) {
 	return Matrix4(
@@ -156,20 +126,11 @@ public:
 	typedef MemberCaller1<RotationKey, const char*, &RotationKey::angleChanged> AngleChangedCaller;
 
 	void rotationChanged(const char* value) {
-		read_rotation(m_rotation, value);
 		m_rotationChanged();
 	}
 	typedef MemberCaller1<RotationKey, const char*, &RotationKey::rotationChanged> RotationChangedCaller;
 
 	void write(Entity* entity) const {
-		Vector3 euler = matrix4_get_rotation_euler_xyz_degrees(rotation_toMatrix(m_rotation));
-		if (euler[0] == 0 && euler[1] == 0) {
-			entity->setKeyValue("rotation", "");
-			write_angle(euler[2], entity);
-		} else {
-			entity->setKeyValue("angle", "");
-			write_rotation(m_rotation, entity);
-		}
 	}
 };
 

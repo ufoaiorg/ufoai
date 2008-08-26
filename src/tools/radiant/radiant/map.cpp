@@ -466,24 +466,10 @@ void FocusViews(const Vector3& point, float angle) {
 
 #include "stringio.h"
 
-void Map_StartPosition() {
-	Entity* entity = Scene_FindPlayerStart();
-
-	if (entity) {
-		Vector3 origin;
-		string_parse_vector3(entity->getKeyValue("origin"), origin);
-		FocusViews(origin, string_read_float(entity->getKeyValue("angle")));
-	} else {
-		FocusViews(g_vector3_identity, 0);
-	}
-}
-
-
 inline bool node_is_worldspawn(scene::Node& node) {
 	Entity* entity = Node_getEntity(node);
 	return entity != 0 && string_equal(entity->getKeyValue("classname"), "worldspawn");
 }
-
 
 // use first worldspawn
 class entity_updateworldspawn : public scene::Traversable::Walker {
@@ -905,10 +891,8 @@ void Map_LoadFile (const char *filename) {
 
 	//GlobalEntityCreator().printStatistics();
 
-	//
 	// move the view to a start position
-	//
-	Map_StartPosition();
+	FocusViews(g_vector3_identity, 0);
 
 	g_currentMap = &g_map;
 }
@@ -1147,35 +1131,9 @@ void Map_New() {
 
 extern void ConstructRegionBrushes(scene::Node* brushes[6], const Vector3& region_mins, const Vector3& region_maxs);
 
-void ConstructRegionStartpoint(scene::Node* startpoint, const Vector3& region_mins, const Vector3& region_maxs) {
-	/*!
-	\todo we need to make sure that the player start IS inside the region and bail out if it's not
-	the compiler will refuse to compile a map with a player_start somewhere in empty space..
-	for now, let's just print an error
-	*/
-
-	Vector3 vOrig(Camera_getOrigin(*g_pParentWnd->GetCamWnd()));
-
-	for (int i = 0 ; i < 3 ; i++) {
-		if (vOrig[i] > region_maxs[i] || vOrig[i] < region_mins[i]) {
-			globalErrorStream() << "Camera is NOT in the region, it's likely that the region won't compile correctly\n";
-			break;
-		}
-	}
-
-	// write the info_playerstart
-	char sTmp[1024];
-	sprintf(sTmp, "%d %d %d", (int)vOrig[0], (int)vOrig[1], (int)vOrig[2]);
-	Node_getEntity(*startpoint)->setKeyValue("origin", sTmp);
-	sprintf(sTmp, "%d", (int)Camera_getAngles(*g_pParentWnd->GetCamWnd())[CAMERA_YAW]);
-	Node_getEntity(*startpoint)->setKeyValue("angle", sTmp);
-}
-
 /*
 ===========================================================
-
-  REGION
-
+REGION
 ===========================================================
 */
 bool	region_active;
@@ -1205,7 +1163,6 @@ void AddRegionBrushes (void) {
 	region_startpoint = &GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert("info_player_start", false));
 
 	ConstructRegionBrushes(region_sides, region_mins, region_maxs);
-	ConstructRegionStartpoint(region_startpoint, region_mins, region_maxs);
 
 	Node_getTraversable(GlobalSceneGraph().root())->insert(NodeSmartReference(*region_startpoint));
 }

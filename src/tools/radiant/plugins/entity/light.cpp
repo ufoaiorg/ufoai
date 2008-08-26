@@ -29,10 +29,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// Doom3 special behaviour:
 /// The entity behaves as a group.
 /// The "origin" key is the translation to be applied to all brushes (not patches) grouped under this entity.
-/// The "light_center" and "light_radius" keys are visualised with a point and a box when the light is selected.
-/// The "rotation" key directly controls the orientation of the light bounding box in local space.
-/// The "light_origin" key controls the position of the light independently of the "origin" key if it is specified.
-/// The "light_rotation" key duplicates the behaviour of the "rotation" key if it is specified. This appears to be an unfinished feature in Doom3.
 
 #include "light.h"
 
@@ -669,9 +665,7 @@ class Light :
 	RenderableNamedEntity m_renderName;
 
 	Vector3 m_lightOrigin;
-	bool m_useLightOrigin;
 	Float9 m_lightRotation;
-	bool m_useLightRotation;
 
 	Vector3 m_lightTarget;
 	bool m_useLightTarget;
@@ -727,16 +721,12 @@ class Light :
 	}
 
 	void originChanged() {
-		m_aabb_light.origin = m_useLightOrigin ? m_lightOrigin : m_originKey.m_origin;
+		m_aabb_light.origin = m_originKey.m_origin;
 		updateOrigin();
 	}
 	typedef MemberCaller<Light, &Light::originChanged> OriginChangedCaller;
 
 	void lightOriginChanged(const char* value) {
-		m_useLightOrigin = !string_empty(value);
-		if (m_useLightOrigin) {
-			read_origin(m_lightOrigin, value);
-		}
 		originChanged();
 	}
 	typedef MemberCaller1<Light, const char*, &Light::lightOriginChanged> LightOriginChangedCaller;
@@ -782,10 +772,6 @@ class Light :
 	}
 	typedef MemberCaller1<Light, const char*, &Light::lightEndChanged> LightEndChangedCaller;
 
-	void writeLightOrigin() {
-		write_origin(m_lightOrigin, &m_entity, "light_origin");
-	}
-
 	void updateLightRadiiBox() const {
 		const Matrix4& rotation = rotation_toMatrix(m_rotation);
 		aabb_corners(AABB(Vector3(0, 0, 0), m_doom3Radius.m_radiusTransformed), m_radii_box.m_points);
@@ -808,16 +794,12 @@ class Light :
 	}
 
 	void rotationChanged() {
-		rotation_assign(m_rotation, m_useLightRotation ? m_lightRotation : m_rotationKey.m_rotation);
+		rotation_assign(m_rotation, m_rotationKey.m_rotation);
 		GlobalSelectionSystem().pivotChanged();
 	}
 	typedef MemberCaller<Light, &Light::rotationChanged> RotationChangedCaller;
 
 	void lightRotationChanged(const char* value) {
-		m_useLightRotation = !string_empty(value);
-		if (m_useLightRotation) {
-			read_rotation(m_lightRotation, value);
-		}
 		rotationChanged();
 	}
 	typedef MemberCaller1<Light, const char*, &Light::lightRotationChanged> LightRotationChangedCaller;
@@ -838,8 +820,6 @@ public:
 			m_radii_box(m_aabb_light.origin),
 			m_render_center(m_doom3Radius.m_center, m_entity.getEntityClass()),
 			m_renderName(m_named, m_aabb_light.origin),
-			m_useLightOrigin(false),
-			m_useLightRotation(false),
 			m_renderProjection(m_doom3Projection),
 			m_transformChanged(transformChanged),
 			m_boundsChanged(boundsChanged),
@@ -860,8 +840,6 @@ public:
 			m_radii_box(m_aabb_light.origin),
 			m_render_center(m_doom3Radius.m_center, m_entity.getEntityClass()),
 			m_renderName(m_named, m_aabb_light.origin),
-			m_useLightOrigin(false),
-			m_useLightRotation(false),
 			m_renderProjection(m_doom3Projection),
 			m_transformChanged(transformChanged),
 			m_boundsChanged(boundsChanged),
@@ -973,13 +951,8 @@ public:
 		rotation_rotate(m_rotation, rotation);
 	}
 	void snapto(float snap) {
-		if (m_useLightOrigin) {
-			m_lightOrigin = origin_snapped(m_lightOrigin, snap);
-			writeLightOrigin();
-		} else {
-			m_originKey.m_origin = origin_snapped(m_originKey.m_origin, snap);
-			m_originKey.write(&m_entity);
-		}
+		m_originKey.m_origin = origin_snapped(m_originKey.m_origin, snap);
+		m_originKey.write(&m_entity);
 	}
 	void setLightRadius(const AABB& aabb) {
 		m_aabb_light.origin = aabb.origin;
@@ -989,18 +962,13 @@ public:
 		matrix4_transform_point(transform, m_aabb_light.origin);
 	}
 	void revertTransform() {
-		m_aabb_light.origin = m_useLightOrigin ? m_lightOrigin : m_originKey.m_origin;
-		rotation_assign(m_rotation, m_useLightRotation ? m_lightRotation : m_rotationKey.m_rotation);
+		m_aabb_light.origin = m_originKey.m_origin;
+		rotation_assign(m_rotation, m_rotationKey.m_rotation);
 		m_doom3Radius.m_radiusTransformed = m_doom3Radius.m_radius;
 	}
 	void freezeTransform() {
-		if (m_useLightOrigin) {
-			m_lightOrigin = m_aabb_light.origin;
-			writeLightOrigin();
-		} else {
-			m_originKey.m_origin = m_aabb_light.origin;
-			m_originKey.write(&m_entity);
-		}
+		m_originKey.m_origin = m_aabb_light.origin;
+		m_originKey.write(&m_entity);
 	}
 	void transformChanged() {
 		revertTransform();

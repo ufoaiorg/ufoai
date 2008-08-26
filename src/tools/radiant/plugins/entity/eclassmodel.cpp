@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ///
 /// This entity displays the model specified in its entity-definition.
 /// The "origin" and "angle" keys directly control the entity's local-to-parent transform.
-/// The "rotation" key directly controls the entity's local-to-parent transform for Doom3 only.
 
 #include "eclassmodel.h"
 
