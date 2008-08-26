@@ -768,15 +768,6 @@ gboolean disable_freelook_button_press(GtkWidget* widget, GdkEventButton* event,
 	return FALSE;
 }
 
-#if 0
-gboolean mousecontrol_button_press(GtkWidget* widget, GdkEventButton* event, CamWnd* camwnd) {
-	if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
-		Cam_MouseControl(camwnd->getCamera(), event->x, widget->allocation.height - 1 - event->y);
-	}
-	return FALSE;
-}
-#endif
-
 void camwnd_update_xor_rectangle(CamWnd& self, rect_t area) {
 	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getCamera().width, self.getCamera().height));

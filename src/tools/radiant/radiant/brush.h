@@ -1637,8 +1637,6 @@ class BrushUndoMemento : public UndoMemento {
 	}
 
 	static void constructStatic() {
-		g_bp_globals.m_texdefTypeId = TEXDEFTYPEID_QUAKE;
-
 		Face::m_quantise = quantiseFloating;
 
 		m_state_point = GlobalShaderCache().capture("$POINT");

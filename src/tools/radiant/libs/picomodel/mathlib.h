@@ -102,11 +102,6 @@ extern "C" {
 // TTimo: renaming to VectorFSnap for C implementation
 	void VectorFSnap(vec3_t point, float snap);
 
-// NOTE: added these from Ritual's Q3Radiant
-	void ClearBounds (vec3_t mins, vec3_t maxs);
-	void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs);
-
-
 #define	PITCH				0		// up / down
 #define	YAW					1		// left / right
 #define	ROLL				2		// fall over
