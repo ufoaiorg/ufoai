@@ -167,9 +167,10 @@ static void U2M_Parameter (int argc, const char **argv)
 					config.chkMixedFaceContents = qtrue;
 				} else if (!strcmp(argv[i], "microbrush") || !strcmp(argv[i], "mbr")) {
 					config.chkMMicro = qtrue;
-					config.mapMicrovol = atof(argv[i + 1]);
-					if (config.mapMicrovol > 0.00001f)
+					if (atof(argv[i + 1]) > 0.0001) {
+						config.mapMicrovol = atof(argv[i + 1]);
 						i++;
+					}
 					Com_Printf("  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
 				} else if (!strcmp(argv[i], "all")) {
 					Com_Printf("  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
