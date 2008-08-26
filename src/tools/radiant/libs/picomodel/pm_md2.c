@@ -63,7 +63,6 @@ Nurail: Used pm_md3.c (Randy Reddig) as a template.
 typedef struct index_LUT_s {
 	short	Vert;
 	short	ST;
-	struct	index_LUT_s	*next;
 } index_LUT_t;
 
 typedef struct index_DUP_LUT_s {
@@ -411,7 +410,7 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD ) {
 				break;
 			path[i] = '\0';
 		}
-		snprintf(skinname, MD2_MAX_SKINNAME, "%s%s.jpg", path, &skinnameRelative[1]);
+		snprintf(skinname, MD2_MAX_SKINNAME, "%s%s", path, &skinnameRelative[1]);
 	}
 	_pico_setfext( skinname, "" );
 
@@ -459,7 +458,6 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD ) {
 	for (i=0; i<md2->numXYZ; i++) {
 		p_index_LUT[i].Vert = -1;
 		p_index_LUT[i].ST = -1;
-		p_index_LUT[i].next = NULL;
 	}
 
 	// Fill in Look Up Table, and allocate/fill Linked List from vert array as needed for dup STs per Vert.
@@ -482,6 +480,8 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD ) {
 		PicoSetSurfaceIndex( picoSurface, j*3+2 , triangle->index_xyz[2] );
 	}
 
+	_pico_set_color( color, 255, 255, 255, 255 );
+
 	for (i=0; i< md2->numXYZ; i++, vertex++) {
 		/* set vertex origin */
 		xyz[ 0 ] = vertex->v[0] * frame->scale[0] + frame->translate[0];
@@ -496,13 +496,14 @@ static picoModel_t *_md2_load( PM_PARAMS_LOAD ) {
 		PicoSetSurfaceNormal( picoSurface, i , normal );
 
 		/* set st coords */
-		st[ 0 ] =  ((texCoord[p_index_LUT[i].ST].s) / ((float)md2->skinWidth));
-		st[ 1 ] =  (texCoord[p_index_LUT[i].ST].t / ((float)md2->skinHeight));
+		st[ 0 ] =  ((float)texCoord[p_index_LUT[i].ST].s / (float)md2->skinWidth);
+		st[ 1 ] =  ((float)texCoord[p_index_LUT[i].ST].t / (float)md2->skinHeight);
 		PicoSetSurfaceST( picoSurface, 0, i , st );
+
+		/* set color */
+		PicoSetSurfaceColor( picoSurface, 0, i, color );
 	}
 
-	/* set color */
-	PicoSetSurfaceColor( picoSurface, 0, 0, color );
 	// Free malloc'ed LUTs
 	_pico_free(p_index_LUT);
 

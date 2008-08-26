@@ -943,10 +943,10 @@ void Key_Event (int key, qboolean down, unsigned time)
 		for (i = 0; i < 2; i++) {
 			if (kb && kb[0] == '+') {
 				/* '-' means we have released the key
-				* the key number is used to determine whether the kbutton_t is really
-				* released or whether any other bound key will still ensure that the
-				* kbutton_t is pressed
-				* the time is the msec value when the key was released */
+				 * the key number is used to determine whether the kbutton_t is really
+				 * released or whether any other bound key will still ensure that the
+				 * kbutton_t is pressed
+				 * the time is the msec value when the key was released */
 				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
 				Cbuf_AddText(cmd);
 			}
