@@ -308,18 +308,6 @@ void ShiftScaleRotate_toFace(const texdef_t& shiftScaleRotate, TextureProjection
 	projection.m_texdef = shiftScaleRotate;
 }
 
-
-inline void print_vector3(const Vector3& v) {
-	globalOutputStream() << "( " << v.x() << " " << v.y() << " " << v.z() << " )\n";
-}
-
-inline void print_3x3(const Matrix4& m) {
-	globalOutputStream() << "( " << m.xx() << " " << m.xy() << " " << m.xz() << " ) "
-	<< "( " << m.yx() << " " << m.yy() << " " << m.yz() << " ) "
-	<< "( " << m.zx() << " " << m.zy() << " " << m.zz() << " )\n";
-}
-
-
 inline Matrix4 matrix4_rotation_for_vector3(const Vector3& x, const Vector3& y, const Vector3& z) {
 	return Matrix4(
 	           x.x(), x.y(), x.z(), 0,

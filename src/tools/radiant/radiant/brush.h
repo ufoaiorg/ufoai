@@ -80,18 +80,6 @@ inline TextOuputStreamType& ostream_write(TextOuputStreamType& ostream, const Ma
 	       << m[12] << " " << m[13] << " " << m[14] << " " << m[15] << ")";
 }
 
-inline void print_vector3(const Vector3& v) {
-	globalOutputStream() << "( " << v.x() << " " << v.y() << " " << v.z() << " )\n";
-}
-
-inline void print_3x3(const Matrix4& m) {
-	globalOutputStream() << "( " << m.xx() << " " << m.xy() << " " << m.xz() << " ) "
-	<< "( " << m.yx() << " " << m.yy() << " " << m.yz() << " ) "
-	<< "( " << m.zx() << " " << m.zy() << " " << m.zz() << " )\n";
-}
-
-
-
 inline bool texdef_sane(const texdef_t& texdef) {
 	return fabs(texdef.shift[0]) < (1 << 16)
 	       && fabs(texdef.shift[1]) < (1 << 16);

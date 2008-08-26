@@ -921,15 +921,7 @@ void SurfaceInspector::Update() {
 	}
 
 	texdef_t shiftScaleRotate;
-//Shamus: This is where we get into trouble--the BP code tries to convert to a "faked"
-//shift, rotate & scale values from the brush face, which seems to screw up for some reason.
-//!!! FIX !!!
-	/*globalOutputStream() << "--> SI::Update. About to do ShiftScaleRotate_fromFace()...\n";
-	SurfaceInspector_GetSelectedBPTexdef();
-	globalOutputStream() << "BP: (" << g_selectedBrushPrimitTexdef.coords[0][0] << ", " << g_selectedBrushPrimitTexdef.coords[0][1] << ")("
-		<< g_selectedBrushPrimitTexdef.coords[1][0] << ", " << g_selectedBrushPrimitTexdef.coords[1][1] << ")("
-		<< g_selectedBrushPrimitTexdef.coords[0][2] << ", " << g_selectedBrushPrimitTexdef.coords[1][2] << ") SurfaceInspector::Update\n";//*/
-//Ok, it's screwed up *before* we get here...
+
 	ShiftScaleRotate_fromFace(shiftScaleRotate, SurfaceInspector_GetSelectedTexdef());
 
 	// normalize again to hide the ridiculously high scale values that get created when using texlock
