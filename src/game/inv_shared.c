@@ -193,7 +193,7 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
  * @param[in] od The item to check in the inventory.
  * @param[in] container The index of the container in the inventory to theck the item in.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
- * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @sa Com_CheckToInventory_mask
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
@@ -293,36 +293,29 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
 /**
  * @brief Check if a position in a container is used by an item (i.e. collides with the shape).
  * @param[in] ic A pointer to an invList_t struct. The position is checked against its contained item.
- * @param[in] x The x location in the container.
- * @param[in] y The x location in the container.
+ * @param[in] x The x location inside the item.
+ * @param[in] y The y location inside the item.
  */
 static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const int y)
 {
 	assert(ic);
 
-	/* Check if the given location is inside the (max) bounds of the items. */
-	if (x >= ic->x
-	 && y >= ic->y
-	 && x < ic->x + SHAPE_SMALL_MAX_WIDTH
-	 && y < ic->y + SHAPE_SMALL_MAX_HEIGHT) {
-	 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
-		if (ic->item.rotated) {
-	 		if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-	 			return qtrue;
-		} else {
-	 		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-	 			return qtrue;
-	 	}
-	}
+ 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
+	if (ic->item.rotated) {
+ 		if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+ 			return qtrue;
+	} else {
+ 		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+ 			return qtrue;
+ 	}
 
 	/* Position is out of bounds or position not inside item-shape. */
 	return qfalse;
 }
 
-#if 0
 /**
  * @brief Calculates the first "true" bit in the shape and returns its position in the container.
- * @note Use this got get the first "grab-able" grid-location of an item.
+ * @note Use this to get the first "grab-able" grid-location (in the container) of an item.
  * @param[in] ic A pointer to an invList_t struct.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
@@ -331,21 +324,19 @@ static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const i
 void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 {
 	int tempX, tempY;
-	int checkedTo = 0;
 
 	assert(ic);
 
-	for (tempX = 0; tempX < SHAPE_SMALL_MAX_WIDTH; tempY++)
-		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempX++)
-			if (Com_ShapeCheckPosition(ic, tempX, tempY) {
-				*px = tempX;
-				*py = tempY;
+	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
+		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
+			if (Com_ShapeCheckPosition(ic, tempX, tempY)) {
+				*x = tempX;
+				*y = tempY;
 				return;
 			}
 
-	*px = *py = NONE;
+	*x = *y = NONE;
 }
-#endif
 
 /**
  * @brief Searches if there is a specific item already in the inventory&container.
@@ -543,7 +534,7 @@ invList_t *INV_SearchInScrollableContainer (const inventory_t* const i, const in
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
  * @sa INV_SearchInScrollableContainer
  */
-invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * container, int x, int y)
+invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * container, const int x, const int y)
 {
 	invList_t *ic;
 
@@ -558,7 +549,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
-		if (Com_ShapeCheckPosition(ic, x, y))
+		if (Com_ShapeCheckPosition(ic, x - ic->x, y - ic->y))
 			return ic;
 
 	/* Found nothing. */
@@ -719,8 +710,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 	}
 
 	for (previous = i->c[container->id]; ic; ic = ic->next) {
-		if ((container->scroll && ic == fItem)
-		|| (!container->scroll && Com_ShapeCheckPosition(ic, fItem->x, fItem->y))) {
+		if (ic == fItem) {
 			cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
 			if (ic->item.amount > 1 && container->temp) {
@@ -943,10 +933,6 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: move fireTwoHanded item to container: %s\n", to->name);
 #endif
 
-	/* successful */
-	if (TU)
-		*TU -= time;
-
 	if (checkedTo == INV_FITS_ONLY_ROTATED) {
 		/* Set rotated tag */
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: setting rotate tag.\n");
@@ -958,9 +944,14 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 	}
 
 
-	/* Actually remove the ammo from the 'from' container (if it wasn't already removed). */
-	if (!alreadyRemovedSource && !Com_RemoveFromInventory(i, from, fItem))
-		return IA_NONE;
+	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
+	if (!alreadyRemovedSource)
+		if (!Com_RemoveFromInventory(i, from, fItem))
+			return IA_NONE;
+
+	/* successful */
+	if (TU)
+		*TU -= time;
 
 	assert(cacheItem.t);
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty, 1);
