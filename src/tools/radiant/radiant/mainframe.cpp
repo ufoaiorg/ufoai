@@ -2079,21 +2079,21 @@ GtkToolbar* create_main_toolbar(MainFrame::EViewStyle style) {
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 	toolbar_append_button(toolbar, "Entities (N)", "entities.bmp", "ToggleEntityInspector");
-	GtkButton* g_view_console_button = toolbar_append_button(toolbar, "Console (O)", "console.bmp", "ToggleConsole");
-	GtkButton* g_view_textures_button = toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
-	GtkButton* g_view_background_button = toolbar_append_button(toolbar, "Background image", "background.bmp", "ToggleBackground");
+	toolbar_append_button(toolbar, "Surface Inspector (S)", "si.bmp", "SurfaceInspector");
+
+	// disable the console and texture button in the regular layouts because they are already visible there
+	if (style != MainFrame::eRegular && style != MainFrame::eRegularLeft) {
+		toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
+		toolbar_append_button(toolbar, "Console (O)", "console.bmp", "ToggleConsole");
+	}
+
+	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
 	Filters_constructToolbar(toolbar);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	toolbar_append_button(toolbar, "Refresh Models", "refresh_models.bmp", "RefreshReferences");
-
-	// disable the console and texture button in the regular layouts
-	if (style == MainFrame::eRegular || style == MainFrame::eRegularLeft) {
-		gtk_widget_set_sensitive(GTK_WIDGET(g_view_console_button), FALSE);
-		gtk_widget_set_sensitive(GTK_WIDGET(g_view_textures_button), FALSE);
-		gtk_widget_set_sensitive(GTK_WIDGET(g_view_background_button), FALSE);
-	}
+	toolbar_append_button(toolbar, "Background image", "background.bmp", "ToggleBackground");
 
 	return toolbar;
 }
