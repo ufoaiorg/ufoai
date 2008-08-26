@@ -13,7 +13,7 @@
   unknowngamename="Custom UFO:AI modification"
   archivetypes="pk3"
   texturetypes="tga jpg"
-  modeltypes="md2 md3"
+  modeltypes="md2 md3 ase"
   maptypes="mapufo"
   shaders="ufo"
   shaderpath="scripts"

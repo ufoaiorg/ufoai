@@ -85,6 +85,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "preferences.h"
 #include "shaders.h"
 #include "commands.h"
+#include "xywindow.h"
 
 void TextureBrowser_queueDraw(TextureBrowser& textureBrowser);
 
@@ -1444,6 +1445,7 @@ void TextureBrowser_Construct (void) {
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_hideunused_item), Accelerator('U'));
 	GlobalCommands_insert("ShowAllTextures", FreeCaller<TextureBrowser_showAll>(), Accelerator('A', (GdkModifierType)GDK_CONTROL_MASK));
 	GlobalCommands_insert("ToggleTextures", FreeCaller<TextureBrowser_toggleShow>(), Accelerator('T'));
+	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect>());
 	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaders_item));
 	GlobalToggles_insert("ToggleShowShaderlistOnly", FreeCaller<TextureBrowser_ToggleShowShaderListOnly>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaderlistonly_item));
 	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_fixedsize_item));

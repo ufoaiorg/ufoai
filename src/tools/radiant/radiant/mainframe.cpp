@@ -2067,6 +2067,7 @@ GtkToolbar* create_main_toolbar(MainFrame::EViewStyle style) {
 	toolbar_append_button(toolbar, "Entities (N)", "entities.bmp", "ToggleEntityInspector");
 	GtkButton* g_view_console_button = toolbar_append_button(toolbar, "Console (O)", "console.bmp", "ToggleConsole");
 	GtkButton* g_view_textures_button = toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
+	GtkButton* g_view_background_button = toolbar_append_button(toolbar, "Background image", "background.bmp", "ToggleBackground");
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 	toolbar_append_button(toolbar, "Refresh Models", "refresh_models.bmp", "RefreshReferences");
@@ -2075,6 +2076,7 @@ GtkToolbar* create_main_toolbar(MainFrame::EViewStyle style) {
 	if (style == MainFrame::eRegular || style == MainFrame::eRegularLeft) {
 		gtk_widget_set_sensitive(GTK_WIDGET(g_view_console_button), FALSE);
 		gtk_widget_set_sensitive(GTK_WIDGET(g_view_textures_button), FALSE);
+		gtk_widget_set_sensitive(GTK_WIDGET(g_view_background_button), FALSE);
 	}
 
 	return toolbar;
