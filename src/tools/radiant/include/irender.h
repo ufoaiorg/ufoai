@@ -67,18 +67,12 @@ class Shader;
 class RendererLight {
 public:
 	virtual Shader* getShader() const = 0;
-	virtual const AABB& aabb() const = 0;
-	virtual bool testAABB(const AABB& other) const = 0;
-	virtual const Matrix4& rotation() const = 0;
-	virtual const Vector3& offset() const = 0;
 	virtual const Vector3& colour() const = 0;
 	virtual bool isProjected() const = 0;
-	virtual const Matrix4& projection() const = 0;
 };
 
 class LightCullable {
 public:
-	virtual bool testLight(const RendererLight& light) const = 0;
 	virtual void insertLight(const RendererLight& light) {
 	}
 	virtual void clearLights() {
@@ -137,7 +131,6 @@ public:
 	virtual void unrealise() = 0;
 
 	virtual bool lightingSupported() const = 0;
-	virtual bool useShaderLanguage() const = 0;
 
 	virtual const LightList& attach(LightCullable& cullable) = 0;
 	virtual void detach(LightCullable& cullable) = 0;

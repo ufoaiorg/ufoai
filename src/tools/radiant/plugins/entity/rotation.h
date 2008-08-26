@@ -125,11 +125,6 @@ public:
 	}
 	typedef MemberCaller1<RotationKey, const char*, &RotationKey::angleChanged> AngleChangedCaller;
 
-	void rotationChanged(const char* value) {
-		m_rotationChanged();
-	}
-	typedef MemberCaller1<RotationKey, const char*, &RotationKey::rotationChanged> RotationChangedCaller;
-
 	void write(Entity* entity) const {
 	}
 };

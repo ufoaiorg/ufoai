@@ -99,17 +99,10 @@ inline void Winding_Draw(const Winding& winding, const Vector3& normal, RenderSt
 		for (Vector3Iter i = normals, end = normals + winding.numpoints; i != end; ++i) {
 			*i = normal;
 		}
-		if (GlobalShaderCache().useShaderLanguage()) {
-			glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
-			glVertexAttribPointerARB(c_attr_TexCoord0, 2, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->texcoord);
-			glVertexAttribPointerARB(c_attr_Tangent, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->tangent);
-			glVertexAttribPointerARB(c_attr_Binormal, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->bitangent);
-		} else {
-			glVertexAttribPointerARB(11, 3, GL_FLOAT, 0, sizeof(Vector3), normals);
-			glVertexAttribPointerARB(8, 2, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->texcoord);
-			glVertexAttribPointerARB(9, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->tangent);
-			glVertexAttribPointerARB(10, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->bitangent);
-		}
+		glVertexAttribPointerARB(11, 3, GL_FLOAT, 0, sizeof(Vector3), normals);
+		glVertexAttribPointerARB(8, 2, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->texcoord);
+		glVertexAttribPointerARB(9, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->tangent);
+		glVertexAttribPointerARB(10, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->bitangent);
 	} else {
 		if (state & RENDER_LIGHTING) {
 			Vector3 normals[c_brush_maxFaces];
@@ -2555,18 +2548,6 @@ public:
 	}
 };
 
-inline void Face_addLight(const FaceInstance& face, const Matrix4& localToWorld, const RendererLight& light) {
-	const Plane3& facePlane = face.getFace().plane3();
-	const Vector3& origin = light.aabb().origin;
-	Plane3 tmp(plane3_transformed(Plane3(facePlane.normal(), -facePlane.dist()), localToWorld));
-	if (!plane3_test_point(tmp, origin)
-	        || !plane3_test_point(tmp, vector3_added(origin, light.offset()))) {
-		face.m_lights.addLight(light);
-	}
-}
-
-
-
 typedef std::vector<FaceInstance> FaceInstances;
 
 class EdgeInstance : public Selectable {
@@ -3103,21 +3084,6 @@ public:
 
 	void setClipPlane(const Plane3& plane) {
 		m_clipPlane.setPlane(m_brush, plane);
-	}
-
-	bool testLight(const RendererLight& light) const {
-		return light.testAABB(worldAABB());
-	}
-	void insertLight(const RendererLight& light) {
-		const Matrix4& localToWorld = Instance::localToWorld();
-		for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-			Face_addLight(*i, localToWorld, light);
-		}
-	}
-	void clearLights() {
-		for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-			(*i).m_lights.clear();
-		}
 	}
 };
 

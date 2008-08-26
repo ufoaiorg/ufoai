@@ -253,7 +253,7 @@ const char *check_map_values (void) {
 	if (ent_flags)
 		snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Found %i info_player_start with no team assigned\n!!Teamcount may change after you've fixed this\n", ent_flags);
 	ent_flags = check_entity_flags("light", "color");
-	ent_flags = check_entity_flags("light", "_color");
+	ent_flags += check_entity_flags("light", "_color");
 	if (ent_flags)
 		snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Found %i lights with no color value\n", ent_flags);
 
