@@ -937,7 +937,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	int msglevel;
 	invList_t fItemBackup;
 	const invList_t* fItemBackupPtr;
-	int relativeFx, relativeFy;
+	int fx, fy;
 
 	ent = g_edicts + num;
 	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
@@ -950,7 +950,10 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	fItemBackupPtr = fItem;
 
 	/* Get first used bit in item. */
-	Com_GetFirstShapePosition(fItem, &relativeFx, &relativeFy);
+	Com_GetFirstShapePosition(fItem, &fx, &fy);
+	fx += fItem->x;
+	fy += fItem->y;
+
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
@@ -1025,8 +1028,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 			gi.WriteShort(floor->number);
 			gi.WriteByte(from->id);
-			gi.WriteByte(relativeFx);
-			gi.WriteByte(relativeFy);
+			gi.WriteByte(fx);
+			gi.WriteByte(fy);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
@@ -1041,8 +1044,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
 		gi.WriteShort(num);
 		gi.WriteByte(from->id);
-		gi.WriteByte(relativeFx);
-		gi.WriteByte(relativeFy);
+		gi.WriteByte(fx);
+		gi.WriteByte(fy);
 	}
 
 	/* send tu's */
@@ -1138,8 +1141,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			gi.AddEvent(mask, EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(from->id);
-			gi.WriteByte(relativeFx);
-			gi.WriteByte(relativeFy);
+			gi.WriteByte(fx);
+			gi.WriteByte(fy);
 		}
 		if (to->id == gi.csi->idRight || to->id == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_ADD);

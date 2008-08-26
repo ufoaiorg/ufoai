@@ -293,8 +293,8 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
 /**
  * @brief Check if a position in a container is used by an item (i.e. collides with the shape).
  * @param[in] ic A pointer to an invList_t struct. The position is checked against its contained item.
- * @param[in] x The x location inside the item.
- * @param[in] y The y location inside the item.
+ * @param[in] x The x location in the container.
+ * @param[in] y The y location in the container.
  */
 static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const int y)
 {
@@ -317,8 +317,8 @@ static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const i
  * @brief Calculates the first "true" bit in the shape and returns its position in the container.
  * @note Use this to get the first "grab-able" grid-location (in the container) of an item.
  * @param[in] ic A pointer to an invList_t struct.
- * @param[in] x The x location in the container.
- * @param[in] y The x location in the container.
+ * @param[out] x The x location inside the item.
+ * @param[out] y The x location inside the item.
  * @sa Com_CheckToInventory
  */
 void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
@@ -329,7 +329,7 @@ void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (Com_ShapeCheckPosition(ic, tempX, tempY)) {
+			if (Com_ShapeCheckPosition(ic, ic->x + tempX, ic->y + tempY)) {
 				*x = tempX;
 				*y = tempY;
 				return;
@@ -549,7 +549,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
-		if (Com_ShapeCheckPosition(ic, x - ic->x, y - ic->y))
+		if (Com_ShapeCheckPosition(ic, x, y))
 			return ic;
 
 	/* Found nothing. */
