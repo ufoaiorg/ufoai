@@ -42,4 +42,5 @@ endif
 
 ifeq ($(PARANOID),1)
     CFLAGS+=-DPARANOID
+	CPPFLAGS+=-DPARANOID
 endif

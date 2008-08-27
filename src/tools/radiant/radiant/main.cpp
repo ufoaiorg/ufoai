@@ -253,7 +253,7 @@ public:
 		globalErrorStream() << m_buffer.c_str();
 		if (!m_lock.locked()) {
 			ScopedLock lock(m_lock);
-#if defined _DEBUG
+#if defined DEBUG
 			m_buffer << "Break into the debugger?\n";
 			bool handled = gtk_MessageBox(0, m_buffer.c_str(), "Radiant - Runtime Error", eMB_YESNO, eMB_ICONERROR) == eIDNO;
 			m_buffer.clear();
@@ -319,7 +319,7 @@ void create_global_pid() {
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
-#if !defined(_DEBUG)
+#if !defined(DEBUG)
 		StringOutputStream msg(256);
 		msg << "Radiant failed to start properly the last time it was run.\n"
 		"The failure may be related to current global preferences.\n"
@@ -376,7 +376,7 @@ void create_local_pid() {
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
-#if !defined(_DEBUG)
+#if !defined(DEBUG)
 		StringOutputStream msg;
 		msg << "Radiant failed to start properly the last time it was run.\n"
 		"The failure may be caused by current preferences.\n"

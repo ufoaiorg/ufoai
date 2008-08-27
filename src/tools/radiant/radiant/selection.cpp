@@ -143,7 +143,7 @@ inline float angle_between(const Vector3& a, const Vector3& b) {
 }
 
 
-#if defined(_DEBUG)
+#if defined(DEBUG)
 class test_quat {
 public:
 	test_quat(const Vector3& from, const Vector3& to) {
@@ -437,7 +437,7 @@ private:
 	}
 };
 
-#if defined(_DEBUG)
+#if defined(DEBUG)
 #define DEBUG_SELECTION
 #endif
 

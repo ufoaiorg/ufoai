@@ -98,7 +98,7 @@ public:
 		}
 		glVertexPointer(3, GL_FLOAT, sizeof(ArbitraryMeshVertex), &m_vertices.data()->vertex);
 		glDrawElements(GL_TRIANGLES, GLsizei(m_indices.size()), RenderIndexTypeID, m_indices.data());
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		glBegin(GL_LINES);
 
 		for (Array<ArbitraryMeshVertex>::const_iterator i = m_vertices.begin(); i != m_vertices.end(); ++i) {

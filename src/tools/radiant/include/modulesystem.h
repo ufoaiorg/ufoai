@@ -134,7 +134,7 @@ public:
 		}
 	}
 	Type* getTable() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(m_table != 0, "ModuleRef::getTable: type=" << makeQuoted(typename Type::Name()) << " version=" << makeQuoted(typename Type::Version()) << " - module-reference used without being initialised");
 #endif
 		return m_table;
@@ -164,7 +164,7 @@ public:
 	}
 
 	Type* getTable() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(m_table != 0, "SingletonModuleRef::getTable: type=" << makeQuoted(typename Type::Name()) << " version=" << makeQuoted(typename Type::Version()) << " - module-reference used without being initialised");
 #endif
 		return m_table;

@@ -40,7 +40,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
 	char fullcmd[2048];
 	char *pCmd;
-#ifdef _DEBUG
+#ifdef DEBUG
 	printf("Q_Exec damnit\n");
 #endif
 	switch (fork()) {
@@ -60,12 +60,12 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
 		pCmd = fullcmd;
 		while (*pCmd == ' ')
 			pCmd++;
-#ifdef _DEBUG
+#ifdef DEBUG
 		printf("Running system...\n");
 		printf("Command: %s\n", pCmd);
 #endif
 		system( pCmd );
-#ifdef _DEBUG
+#ifdef DEBUG
 		printf ("system() returned\n");
 #endif
 		_exit (0);

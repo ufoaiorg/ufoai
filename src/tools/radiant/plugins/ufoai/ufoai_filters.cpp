@@ -96,7 +96,7 @@ public:
 	}
 
 	void visit(Face& face) const {
-#if _DEBUG
+#if DEBUG
 		if (m_surfaceFlagsVis < 0)
 			m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
 		else if (m_surfaceFlagsVis >= 0 && m_surfaceFlagsVis != face.getShader().m_flags.m_surfaceFlags)
@@ -205,7 +205,7 @@ void filter_level(int flag) {
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
 
-#ifdef _DEBUG
+#ifdef DEBUG
 	if (brushes.empty()) {
 		globalOutputStream() << "UFO:AI: No brushes.\n";
 	} else {

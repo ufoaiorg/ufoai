@@ -65,7 +65,7 @@ public:
 	enum EMode {
 		eEntity,
 		ePrimitive,
-		eComponent,
+		eComponent,	/**< vertex, edge or face editing */
 	};
 
 	enum EComponentMode {
