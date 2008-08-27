@@ -30,7 +30,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/glwidget.cpp \
 	$(RADIANT_BASE)/radiant/grid.cpp \
 	$(RADIANT_BASE)/radiant/groupdialog.cpp \
-	$(RADIANT_BASE)/radiant/gtkdlgs.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
@@ -67,6 +66,12 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/winding.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/texteditor.cpp \
+	$(RADIANT_BASE)/radiant/ui/about.cpp \
+	$(RADIANT_BASE)/radiant/ui/findbrush.cpp \
+	$(RADIANT_BASE)/radiant/ui/prism.cpp \
+	$(RADIANT_BASE)/radiant/ui/light.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \

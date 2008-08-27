@@ -37,7 +37,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <unistd.h>
 
-bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
+bool Q_Exec (const char *cmd, char *cmdline, const char *, bool)
+{
 	char fullcmd[2048];
 	char *pCmd;
 #ifdef DEBUG
@@ -46,9 +47,8 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
 	switch (fork()) {
 	case - 1:
 		return true;
-		break;
 	case 0:
-		// always concat the command on linux
+		/* always concat the command on linux */
 		if (cmd) {
 			strcpy(fullcmd, cmd);
 		} else
@@ -64,11 +64,11 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
 		printf("Running system...\n");
 		printf("Command: %s\n", pCmd);
 #endif
-		system( pCmd );
+		system(pCmd);
 #ifdef DEBUG
-		printf ("system() returned\n");
+		printf("system() returned\n");
 #endif
-		_exit (0);
+		_exit(0);
 		break;
 	}
 	return true;
@@ -79,11 +79,12 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
 #include <windows.h>
 
 // NOTE TTimo windows is VERY nitpicky about the syntax in CreateProcess
-bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole) {
+bool Q_Exec (const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole)
+{
 	PROCESS_INFORMATION ProcessInformation;
 	STARTUPINFO startupinfo = {0};
 	DWORD dwCreationFlags;
-	GetStartupInfo (&startupinfo);
+	GetStartupInfo(&startupinfo);
 	if (bCreateConsole)
 		dwCreationFlags = CREATE_NEW_CONSOLE | NORMAL_PRIORITY_CLASS;
 	else
@@ -101,18 +102,8 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateCon
 			pCmdline++;
 	}
 
-	if (CreateProcess(
-	            pCmd,
-	            pCmdline,
-	            NULL,
-	            NULL,
-	            FALSE,
-	            dwCreationFlags,
-	            NULL,
-	            execdir,
-	            &startupinfo,
-	            &ProcessInformation
-	        ))
+	if (CreateProcess(pCmd, pCmdline, NULL, NULL, FALSE, dwCreationFlags,
+		NULL, execdir, &startupinfo, &ProcessInformation))
 		return true;
 	return false;
 }

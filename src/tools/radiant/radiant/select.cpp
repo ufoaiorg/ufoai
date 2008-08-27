@@ -795,7 +795,6 @@ void Selection_destroy (void)
 }
 
 
-#include "gtkdlgs.h"
 #include <gtk/gtkbox.h>
 #include <gtk/gtkspinbutton.h>
 #include <gtk/gtktable.h>

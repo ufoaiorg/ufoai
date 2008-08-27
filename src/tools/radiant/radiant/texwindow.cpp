@@ -76,7 +76,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brushmanip.h"
 #include "plugin.h"
 #include "qe3.h"
-#include "gtkdlgs.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "findtexturedialog.h"
@@ -1181,10 +1180,6 @@ static GtkMenuItem* TextureBrowser_constructViewMenu (GtkMenu* menu) {
 	create_check_menu_item_with_mnemonic(menu, "Show shaders", "ToggleShowShaders");
 	create_check_menu_item_with_mnemonic(menu, "Fixed Size", "FixedSize");
 
-	menu_separator(menu);
-	g_TextureBrowser.m_shader_info_item = GTK_WIDGET(create_menu_item_with_mnemonic(menu, "Shader Info", "ShaderInfo"));
-	gtk_widget_set_sensitive(g_TextureBrowser.m_shader_info_item, FALSE);
-
 	return textures_menu_item;
 }
 
@@ -1292,15 +1287,6 @@ const Vector3& TextureBrowser_getBackgroundColour(TextureBrowser& textureBrowser
 void TextureBrowser_setBackgroundColour(TextureBrowser& textureBrowser, const Vector3& colour) {
 	textureBrowser.color_textureback = colour;
 	TextureBrowser_queueDraw(textureBrowser);
-}
-
-void TextureBrowser_shaderInfo(void) {
-	const char* name = TextureBrowser_GetSelectedShader(g_TextureBrowser);
-	IShader* shader = QERApp_Shader_ForName(name);
-
-	DoShaderInfoDlg(name, shader->getShaderFileName(), "Shader Info");
-
-	shader->DecRef();
 }
 
 void RefreshShaders(void) {
@@ -1430,7 +1416,6 @@ typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> T
 void TextureClipboard_textureSelected(const char* shader);
 
 void TextureBrowser_Construct (void) {
-	GlobalCommands_insert("ShaderInfo", FreeCaller<TextureBrowser_shaderInfo>());
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders>());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_hideunused_item), Accelerator('U'));
 	GlobalCommands_insert("ShowAllTextures", FreeCaller<TextureBrowser_showAll>(), Accelerator('A', (GdkModifierType)GDK_CONTROL_MASK));
