@@ -96,9 +96,7 @@ typedef struct installation_s {
 installation_t *installationCurrent;
 
 installation_t* INS_GetInstallationByIDX(int instIdx);
-installation_t* INS_GetFoundedInstallationByIDX(int instIdx);
 void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate);
-void INS_NewInstallations(void);
 void INS_ResetInstallation(void);
 
 /** Coordinates to place the new installation at (long, lat) */
