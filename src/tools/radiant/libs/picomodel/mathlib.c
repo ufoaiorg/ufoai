@@ -21,14 +21,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /* mathlib.c -- math primitives */
 #include "mathlib.h"
-/* we use memcpy and memset */
-#include <memory.h>
-
-const vec3_t vec3_origin = {0.0f,0.0f,0.0f};
-
-const vec3_t g_vec3_axis_x = { 1, 0, 0, };
-const vec3_t g_vec3_axis_y = { 0, 1, 0, };
-const vec3_t g_vec3_axis_z = { 0, 0, 1, };
 
 vec_t VectorLength(const vec3_t v) {
 	int		i;

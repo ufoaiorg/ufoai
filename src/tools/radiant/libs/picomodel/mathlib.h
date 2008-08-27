@@ -37,12 +37,6 @@ extern "C" {
 	typedef vec_t vec5_t[5];
 	typedef vec_t vec4_t[4];
 
-	extern const vec3_t vec3_origin;
-
-	extern const vec3_t g_vec3_axis_x;
-	extern const vec3_t g_vec3_axis_y;
-	extern const vec3_t g_vec3_axis_z;
-
 #define DotProduct(x,y) ((x)[0]*(y)[0]+(x)[1]*(y)[1]+(x)[2]*(y)[2])
 #define VectorSubtract(a,b,c) ((c)[0]=(a)[0]-(b)[0],(c)[1]=(a)[1]-(b)[1],(c)[2]=(a)[2]-(b)[2])
 #define VectorAdd(a,b,c) ((c)[0]=(a)[0]+(b)[0],(c)[1]=(a)[1]+(b)[1],(c)[2]=(a)[2]+(b)[2])
