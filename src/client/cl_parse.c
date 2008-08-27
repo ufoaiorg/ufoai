@@ -1264,12 +1264,19 @@ static void CL_PlaceItem (le_t *le)
 	} else {
 		/* If no items in floor inventory, don't draw this le - the container is
 		 * maybe empty because an actor picked up the last items here */
-		/** @todo This might prevent LE_Add to get a floor-edict when in
+		/** @todo This will prevent LE_Add to get a floor-edict when in
 		 * mid-move. @sa g_client.c:G_ClientInvMove.
+		 * (It will cause asserts/segfaults in e.g. MN_DrawContainerNode)
 		 * mattn: But why do we want to get an empty container? If we don't set
 		 * this to qfalse we get the null model rendered, because the le->model
-		 * is @c NULL, too */
+		 * is @c NULL, too.
+		 * ---
+		 * I disabled the line again, because I really like having no segfauls/asserts.
+		 * There has to be a better solution/fix for the lila/null dummy models. --Hoehrer 2008-08-27
+		 * See the following link for details:
+		 * https://sourceforge.net/tracker/index.php?func=detail&aid=2071463&group_id=157793&atid=805242
 		le->inuse = qfalse;
+		*/
 	}
 }
 
