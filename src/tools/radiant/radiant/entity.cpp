@@ -150,7 +150,7 @@ void Entity_connectSelected() {
 	}
 }
 
-int g_iLastLightIntensity;
+static int g_iLastLightIntensity = 100;
 
 void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);

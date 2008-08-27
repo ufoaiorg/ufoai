@@ -34,15 +34,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "qerplugin.h"
 #include "string/string.h"
 
-EMessageBoxReturn DoLightIntensityDlg (int *intensity);
-EMessageBoxReturn DoShaderTagDlg (CopiedString *tag, const char* title);
-EMessageBoxReturn DoShaderInfoDlg (const char* name, const char* filename, const char* title);
-void DoTextEditor (const char* filename, int cursorpos);
+EMessageBoxReturn DoLightIntensityDlg(int *intensity);
+EMessageBoxReturn DoShaderInfoDlg(const char* name, const char* filename, const char* title);
+void DoTextEditor(const char* filename, int cursorpos);
 
 void DoFind();
 void DoSides(int type, int axis);
 void DoAbout();
-
 
 #ifdef WIN32
 extern bool g_TextEditor_useWin32Editor;
@@ -51,6 +49,5 @@ extern bool g_TextEditor_useWin32Editor;
 extern bool g_TextEditor_useCustomEditor;
 extern CopiedString g_TextEditor_editorCommand;
 #endif
-
 
 #endif

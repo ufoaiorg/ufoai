@@ -54,7 +54,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/selection.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
-	$(RADIANT_BASE)/radiant/shaders.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/surfacedialog.cpp \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \

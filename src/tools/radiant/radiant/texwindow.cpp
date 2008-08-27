@@ -83,7 +83,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "surfacedialog.h"
 #include "groupdialog.h"
 #include "preferences.h"
-#include "shaders.h"
 #include "commands.h"
 #include "xywindow.h"
 
@@ -751,29 +750,15 @@ IShader* Texture_At(TextureBrowser& textureBrowser, int mx, int my) {
 	return 0;
 }
 
-/*
-==============
-SelectTexture
-
-  By mouse click
-==============
-*/
-void SelectTexture(TextureBrowser& textureBrowser, int mx, int my, bool bShift) {
+static void SelectTexture(TextureBrowser& textureBrowser, int mx, int my) {
 	IShader* shader = Texture_At(textureBrowser, mx, my);
 	if (shader != 0) {
-		if (bShift) {
-			if (shader->IsDefault())
-				globalOutputStream() << "ERROR: " << shader->getName() << " is not a shader, it's a texture.\n";
-			else
-				ViewShader( shader->getShaderFileName(), shader->getName() );
-		} else {
-			TextureBrowser_SetSelectedShader(textureBrowser, shader->getName());
-			TextureBrowser_textureSelected(shader->getName());
+		TextureBrowser_SetSelectedShader(textureBrowser, shader->getName());
+		TextureBrowser_textureSelected(shader->getName());
 
-			if (!FindTextureDialog_isOpen() && !textureBrowser.m_rmbSelected) {
-				UndoableCommand undo("textureNameSetSelected");
-				Select_SetShader(shader->getName());
-			}
+		if (!FindTextureDialog_isOpen() && !textureBrowser.m_rmbSelected) {
+			UndoableCommand undo("textureNameSetSelected");
+			Select_SetShader(shader->getName());
 		}
 	}
 }
@@ -809,7 +794,7 @@ void TextureBrowser_Tracking_MouseUp(TextureBrowser& textureBrowser) {
 }
 
 void TextureBrowser_Selection_MouseDown(TextureBrowser& textureBrowser, guint32 flags, int pointx, int pointy) {
-	SelectTexture(textureBrowser, pointx, textureBrowser.height - 1 - pointy, (flags & GDK_SHIFT_MASK) != 0);
+	SelectTexture(textureBrowser, pointx, textureBrowser.height - 1 - pointy);
 }
 
 /*

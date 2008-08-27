@@ -275,16 +275,18 @@ void DoAbout() {
 static GtkWidget *text_editor = 0;
 static GtkWidget *text_widget; // slave, text widget from the gtk editor
 
-static gint editor_delete (GtkWidget *widget, gpointer data) {
-	if (gtk_MessageBox (widget, "Close the shader editor ?", "Radiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
+static gint editor_delete (GtkWidget *widget, gpointer data)
+{
+	if (gtk_MessageBox(widget, "Close the editor?", "UFORadiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return TRUE;
 
-	gtk_widget_hide (text_editor);
+	gtk_widget_hide(text_editor);
 
 	return TRUE;
 }
 
-static void editor_save (GtkWidget *widget, gpointer data) {
+static void editor_save (GtkWidget *widget, gpointer data)
+{
 	FILE *f = fopen ((char*)g_object_get_data (G_OBJECT (data), "filename"), "w");
 	gpointer text = g_object_get_data (G_OBJECT (data), "text");
 
@@ -298,14 +300,16 @@ static void editor_save (GtkWidget *widget, gpointer data) {
 	fclose (f);
 }
 
-static void editor_close (GtkWidget *widget, gpointer data) {
+static void editor_close (GtkWidget *widget, gpointer data)
+{
 	if (gtk_MessageBox (text_editor, "Close the shader editor ?", "Radiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return;
 
 	gtk_widget_hide (text_editor);
 }
 
-static void CreateGtkTextEditor() {
+static void CreateGtkTextEditor(void)
+{
 	GtkWidget *dlg;
 	GtkWidget *vbox, *hbox, *button, *scr, *text;
 
@@ -359,32 +363,32 @@ static void DoGtkTextEditor (const char* filename, guint cursorpos) {
 		CreateGtkTextEditor(); // build it the first time we need it
 
 	// Load file
-	FILE *f = fopen (filename, "r");
+	FILE *f = fopen(filename, "r");
 
 	if (f == 0) {
 		globalOutputStream() << "Unable to load file " << filename << " in shader editor.\n";
 		gtk_widget_hide (text_editor);
 	} else {
-		fseek (f, 0, SEEK_END);
-		int len = ftell (f);
-		void *buf = malloc (len);
+		fseek(f, 0, SEEK_END);
+		int len = ftell(f);
+		void *buf = malloc(len);
 		void *old_filename;
 
-		rewind (f);
-		fread (buf, 1, len, f);
+		rewind(f);
+		fread(buf, 1, len, f);
 
-		gtk_window_set_title (GTK_WINDOW (text_editor), filename);
+		gtk_window_set_title(GTK_WINDOW (text_editor), filename);
 
 		GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
 		gtk_text_buffer_set_text(text_buffer, (char*)buf, len);
 
-		old_filename = g_object_get_data (G_OBJECT (text_editor), "filename");
+		old_filename = g_object_get_data(G_OBJECT(text_editor), "filename");
 		if (old_filename)
 			free(old_filename);
-		g_object_set_data (G_OBJECT (text_editor), "filename", strdup (filename));
+		g_object_set_data(G_OBJECT(text_editor), "filename", strdup(filename));
 
 		// trying to show later
-		gtk_widget_show (text_editor);
+		gtk_widget_show(text_editor);
 
 #ifdef WIN32
 		process_gui();
@@ -405,8 +409,8 @@ static void DoGtkTextEditor (const char* filename, guint cursorpos) {
 		gtk_widget_queue_draw(text_widget);
 #endif
 
-		free (buf);
-		fclose (f);
+		free(buf);
+		fclose(f);
 	}
 }
 
@@ -476,70 +480,6 @@ EMessageBoxReturn DoLightIntensityDlg (int *intensity) {
 	return ret;
 }
 
-// =============================================================================
-// Add new shader tag dialog
-
-EMessageBoxReturn DoShaderTagDlg (CopiedString* tag, const char* title) {
-	ModalDialog dialog;
-	GtkEntry* textentry;
-	ModalDialogButton ok_button(dialog, eIDOK);
-	ModalDialogButton cancel_button(dialog, eIDCANCEL);
-
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), title, dialog, -1, -1);
-
-	GtkAccelGroup *accel_group = gtk_accel_group_new();
-	gtk_window_add_accel_group(window, accel_group);
-
-	{
-		GtkHBox* hbox = create_dialog_hbox(4, 4);
-		gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(hbox));
-		{
-			GtkVBox* vbox = create_dialog_vbox(4);
-			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), TRUE, TRUE, 0);
-			{
-				//GtkLabel* label = GTK_LABEL(gtk_label_new("Enter one ore more tags separated by spaces"));
-				GtkLabel* label = GTK_LABEL(gtk_label_new("ESC to cancel, ENTER to validate"));
-				gtk_widget_show(GTK_WIDGET(label));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(label), FALSE, FALSE, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(entry), TRUE, TRUE, 0);
-
-				gtk_widget_grab_focus(GTK_WIDGET(entry));
-
-				textentry = entry;
-			}
-		}
-		{
-			GtkVBox* vbox = create_dialog_vbox(4);
-			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), FALSE, FALSE, 0);
-
-			{
-				GtkButton* button = create_modal_dialog_button("OK", ok_button);
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-				widget_make_default(GTK_WIDGET(button));
-				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, GDK_Return, (GdkModifierType)0, GTK_ACCEL_VISIBLE);
-			}
-			{
-				GtkButton* button = create_modal_dialog_button("Cancel", cancel_button);
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, GDK_Escape, (GdkModifierType)0, GTK_ACCEL_VISIBLE);
-			}
-		}
-	}
-
-	EMessageBoxReturn ret = modal_dialog_show(window, dialog);
-	if (ret == eIDOK) {
-		*tag = gtk_entry_get_text(textentry);
-	}
-
-	gtk_widget_destroy(GTK_WIDGET(window));
-
-	return ret;
-}
-
 EMessageBoxReturn DoShaderInfoDlg (const char* name, const char* filename, const char* title) {
 	ModalDialog dialog;
 	ModalDialogButton ok_button(dialog, eIDOK);
@@ -591,6 +531,7 @@ EMessageBoxReturn DoShaderInfoDlg (const char* name, const char* filename, const
 	return ret;
 }
 
+
 #ifdef WIN32
 #include <gdk/gdkwin32.h>
 // use the file associations to open files instead of builtin Gtk editor
@@ -601,7 +542,8 @@ bool g_TextEditor_useCustomEditor = false;
 CopiedString g_TextEditor_editorCommand("");
 #endif
 
-void DoTextEditor (const char* filename, int cursorpos) {
+void DoTextEditor (const char* filename, int cursorpos)
+{
 #ifdef WIN32
 	if (g_TextEditor_useWin32Editor) {
 		globalOutputStream() << "opening file '" << filename << "' (line " << cursorpos << " info ignored)\n";
@@ -609,21 +551,21 @@ void DoTextEditor (const char* filename, int cursorpos) {
 		return;
 	}
 #else
-	// check if a custom editor is set
+	/* check if a custom editor is set */
 	if (g_TextEditor_useCustomEditor && !g_TextEditor_editorCommand.empty()) {
 		StringOutputStream strEditCommand(256);
 		strEditCommand << g_TextEditor_editorCommand.c_str() << " \"" << filename << "\"";
 
 		globalOutputStream() << "Launching: " << strEditCommand.c_str() << "\n";
-		// note: linux does not return false if the command failed so it will assume success
+		/* note: linux does not return false if the command failed so it will assume success */
 		if (Q_Exec(0, const_cast<char*>(strEditCommand.c_str()), 0, true) == false) {
 			globalOutputStream() << "Failed to execute " << strEditCommand.c_str() << ", using default\n";
 		} else {
-			// the command (appeared) to run successfully, no need to do anything more
+			/* the command (appeared) to run successfully, no need to do anything more */
 			return;
 		}
 	}
 #endif
 
-	DoGtkTextEditor (filename, cursorpos);
+	DoGtkTextEditor(filename, cursorpos);
 }
