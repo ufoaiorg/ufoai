@@ -155,7 +155,7 @@ int g_iLastLightIntensity;
 void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
-	bool isModel = string_equal_nocase(name, "misc_model") || string_equal_nocase(name, "misc_inline");
+	bool isModel = string_equal_nocase(name, "misc_model");
 	bool isSound = string_equal_nocase(name, "misc_sound");
 
 	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;

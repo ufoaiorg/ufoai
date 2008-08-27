@@ -331,7 +331,7 @@ struct xywindow_globals_private_t {
 	xywindow_globals_private_t() :
 			d_showgrid(true),
 
-			show_names(false),
+			show_names(true),
 			show_coordinates(true),
 			show_angles(true),
 			show_outline(false),
@@ -343,7 +343,7 @@ struct xywindow_globals_private_t {
 
 			m_bCamXYUpdate(true),
 			m_bChaseMouse(true),
-			m_bSizePaint(false) {
+			m_bSizePaint(true) {
 	}
 
 };

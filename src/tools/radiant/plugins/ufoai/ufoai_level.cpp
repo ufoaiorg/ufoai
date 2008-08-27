@@ -243,9 +243,6 @@ const char *check_map_values (void) {
 	ent_flags = check_entity_flags("misc_model", "spawnflags");
 	if (ent_flags)
 		snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Found %i misc_model with no spawnflags\n", ent_flags);
-	ent_flags = check_entity_flags("misc_inline", "spawnflags");
-	if (ent_flags)
-		snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Found %i misc_inline with no spawnflags\n", ent_flags);
 	ent_flags = check_entity_flags("misc_particle", "spawnflags");
 	if (ent_flags)
 		snprintf(&message[strlen(message)], sizeof(message) - 1 - strlen(message), "Found %i misc_particle with no spawnflags\n", ent_flags);

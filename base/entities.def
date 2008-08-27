@@ -38,15 +38,6 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]),
 "anim"		is this an animated model (default empty otherwise fill the animname)
 */
 
-/*QUAKED misc_inline (1 1 0) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
-Includes a static model into the bsp tree.
-Set the level flags correctly!
-Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360]) and roll (fall over)
-"model"		file to display
-"angles"	direction of the model [pitch yaw roll]
-"angle"		direction of the model [yaw]
-*/
-
 /*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 noday
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function

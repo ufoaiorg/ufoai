@@ -184,7 +184,6 @@ void filter_level(int flag) {
 		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level_active, false));
 		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level_active, false));
 		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level_active, false));
-		GlobalSceneGraph().traverse(EntityFindByName("misc_inline", entities, level_active, false));
 		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level_active, false));
 		entities.erase(entities.begin(), entities.end());
 		brushes.erase(brushes.begin(), brushes.end());
@@ -204,7 +203,6 @@ void filter_level(int flag) {
 	GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
-	GlobalSceneGraph().traverse(EntityFindByName("misc_inline", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
 
 #ifdef _DEBUG
