@@ -117,6 +117,9 @@ Defines the alien mission target
 "time"	if set the entity has to be occupied x rounds to win the mission
 "radius"	if the entity has to be occupied this defines the radius that is needed
 "health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+"group"         allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match
+"target"        the target that is triggered once the round time was hit
+"message"       a message that is show when the mission is completed
 */
 
 /*QUAKED func_door (0 .5 .8) ? level1 level2 level3 level4 level5 level6 level7 level8 opened
