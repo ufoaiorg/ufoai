@@ -305,13 +305,10 @@ typedef struct picoVertexCombinationData_s {
 typedef struct picoVertexCombinationHash_s {
 	picoVertexCombinationData_t	vcd;
 	picoIndex_t index;
-
-	void 	*data;
-
-	struct picoVertexCombinationHash_s	*next;
+	void *data;
+	struct picoVertexCombinationHash_s *next;
 } picoVertexCombinationHash_t;
 
-int PicoGetHashTableSize( void );
 unsigned int PicoVertexCoordGenerateHash( picoVec3_t xyz );
 picoVertexCombinationHash_t **PicoNewVertexCombinationHashTable( void );
 void PicoFreeVertexCombinationHashTable( picoVertexCombinationHash_t **hashTable );
