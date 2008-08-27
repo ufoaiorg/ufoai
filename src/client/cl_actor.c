@@ -3080,8 +3080,9 @@ void CL_ActorReload (int hand)
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
 				 && RS_IsResearched_ptr(ic->item.t->tech)) {
-					x = ic->x;
-					y = ic->y;
+					Com_GetFirstShapePosition(ic, &x, &y);
+					x += ic->x;
+					y += ic->y;
 					tu = csi.ids[container].out;
 					bestContainer = container;
 					break;
