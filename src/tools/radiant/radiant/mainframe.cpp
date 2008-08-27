@@ -90,6 +90,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "groupdialog.h"
 #include "dialogs/about.h"
 #include "dialogs/findbrush.h"
+#include "dialogs/maptools.h"
+#include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map.h"
 #include "mru.h"
@@ -1643,7 +1645,8 @@ static GtkMenuItem* create_edit_menu (void) {
 	return edit_menu_item;
 }
 
-static GtkMenuItem* create_filter_menu (void) {
+static GtkMenuItem* create_filter_menu (void)
+{
 	// Edit menu
 	GtkMenuItem* filter_menu_item = new_sub_menu_item_with_mnemonic("Filter");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(filter_menu_item));
@@ -1655,7 +1658,8 @@ static GtkMenuItem* create_filter_menu (void) {
 	return filter_menu_item;
 }
 
-static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style) {
+static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
+{
 	// View menu
 	GtkMenuItem* view_menu_item = new_sub_menu_item_with_mnemonic("Vie_w");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(view_menu_item));
@@ -1755,7 +1759,8 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style) {
 	return view_menu_item;
 }
 
-static GtkMenuItem* create_selection_menu (void) {
+static GtkMenuItem* create_selection_menu (void)
+{
 	// Selection menu
 	GtkMenuItem* selection_menu_item = new_sub_menu_item_with_mnemonic("M_odify");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(selection_menu_item));
@@ -1805,7 +1810,8 @@ static GtkMenuItem* create_selection_menu (void) {
 	return selection_menu_item;
 }
 
-static GtkMenuItem* create_grid_menu (void) {
+static GtkMenuItem* create_grid_menu (void)
+{
 	// Grid menu
 	GtkMenuItem* grid_menu_item = new_sub_menu_item_with_mnemonic("_Grid");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(grid_menu_item));
@@ -1817,7 +1823,8 @@ static GtkMenuItem* create_grid_menu (void) {
 	return grid_menu_item;
 }
 
-static GtkMenuItem* create_misc_menu (void) {
+static GtkMenuItem* create_misc_menu (void)
+{
 	// Misc menu
 	GtkMenuItem* misc_menu_item = new_sub_menu_item_with_mnemonic("M_isc");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(misc_menu_item));
@@ -1835,7 +1842,23 @@ static GtkMenuItem* create_misc_menu (void) {
 	return misc_menu_item;
 }
 
-static GtkMenuItem* create_entity_menu (void) {
+static GtkMenuItem* create_tools_menu (void)
+{
+	// Tools menu
+	GtkMenuItem* tools_menu_item = new_sub_menu_item_with_mnemonic("Tools");
+	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(tools_menu_item));
+	if (g_Layout_enableDetachableMenus.m_value)
+		menu_tearoff(menu);
+
+	create_menu_item_with_mnemonic(menu, "Check for errors", "ToolsCheckErrors");
+	create_menu_item_with_mnemonic(menu, "Compile the map", "ToolsCompile");
+	create_menu_item_with_mnemonic(menu, "Show pathfinding info", "ShowPathfinding");
+
+	return tools_menu_item;
+}
+
+static GtkMenuItem* create_entity_menu (void)
+{
 	// Brush menu
 	GtkMenuItem* entity_menu_item = new_sub_menu_item_with_mnemonic("E_ntity");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(entity_menu_item));
@@ -1885,6 +1908,7 @@ static GtkMenuBar* create_main_menu(MainFrame::EViewStyle style) {
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_misc_menu()));
+	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_tools_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_entity_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_brush_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_plugins_menu()));
@@ -2697,6 +2721,10 @@ void MainFrame_Construct (void) {
 	GlobalCommands_insert("ArbitraryScale", FreeCaller<DoScaleDlg>());
 
 	GlobalCommands_insert("FindBrush", FreeCaller<DoFind>());
+
+	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors>());
+	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile>());
+	GlobalCommands_insert("ShowPathfinding", FreeCaller<ShowPathfinding>());
 
 	GlobalCommands_insert("MapInfo", FreeCaller<DoMapInfo>(), Accelerator('M'));
 

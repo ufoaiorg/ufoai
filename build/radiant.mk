@@ -39,6 +39,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/multimon.cpp \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
+	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/pluginapi.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/pluginmanager.cpp \
@@ -72,6 +73,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
