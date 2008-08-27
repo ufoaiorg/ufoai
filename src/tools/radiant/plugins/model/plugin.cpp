@@ -159,7 +159,7 @@ extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) 
 	while (*modules != 0) {
 		const picoModule_t* module = *modules++;
 		if (module->canload && module->load) {
-			for (char*const* ext = module->defaultExts; *ext != 0; ++ext) {
+			for (const char* const* ext = module->defaultExts; *ext != 0; ++ext) {
 				g_PicoModelModules.push_back(PicoModelModule(PicoModelAPIConstructor(*ext, module)));
 				g_PicoModelModules.back().selfRegister();
 			}
