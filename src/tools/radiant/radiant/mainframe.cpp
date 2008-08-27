@@ -2521,6 +2521,10 @@ void MainFrame::Shutdown() {
 	GroupDialog_destroyWindow();
 }
 
+/**
+ * @brief Updates the statusbar text with command, position, texture and so on
+ * @sa TextureBrowser_SetStatus
+ */
 void MainFrame::RedrawStatusText() {
 	gtk_label_set_text(GTK_LABEL(m_pStatusLabel[c_command_status]), m_command_status.c_str());
 	gtk_label_set_text(GTK_LABEL(m_pStatusLabel[c_position_status]), m_position_status.c_str());

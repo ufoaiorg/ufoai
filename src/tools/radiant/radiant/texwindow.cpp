@@ -304,13 +304,18 @@ const char* TextureBrowser_GetSelectedShader(TextureBrowser& textureBrowser) {
 	return textureBrowser.shader.c_str();
 }
 
+/**
+ * @brief Updates statusbar with texture information
+ * @sa MainFrame::RedrawStatusText
+ * @sa MainFrame::SetStatusText
+ */
 void TextureBrowser_SetStatus(TextureBrowser& textureBrowser, const char* name) {
 	IShader* shader = QERApp_Shader_ForName( name);
 	qtexture_t* q = shader->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);
 	shader->DecRef();
-	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.c_str());
+	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.c_str() + strlen("textures/"));
 }
 
 void TextureBrowser_Focus(TextureBrowser& textureBrowser, const char* name);
