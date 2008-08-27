@@ -30,23 +30,32 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../map.h"
 #include "../preferences.h"
 
+/**
+ * @todo Implement me
+ */
 void ToolsCheckErrors (void)
 {
+#if 0
 	const char* path = getMapsPath();
 	const char* fullname = Map_Name(g_map);
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
 	const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
+	Q_Exec(fullname, NULL, NULL, true);
+#endif
 }
 
+/**
+ * @todo Implement me
+ */
 void ToolsCompile (void)
 {
+#if 0
 	const char* path = getMapsPath();
 	const char* fullname = Map_Name(g_map);
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
 	const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param");
 
-
-
 	Q_Exec(fullname, NULL, NULL, true);
+#endif
 }
