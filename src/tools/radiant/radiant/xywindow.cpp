@@ -1441,8 +1441,8 @@ void XYWnd::XY_DrawAxis(void)
 		const char g_AxisName[3] = { 'X', 'Y', 'Z' };
 		const int nDim1 = (m_viewType == YZ) ? 1 : 0;
 		const int nDim2 = (m_viewType == XY) ? 1 : 2;
-		const int w = (m_nWidth / 2 / m_fScale);
-		const int h = (m_nHeight / 2 / m_fScale);
+		const int w = (int)(m_nWidth / 2 / m_fScale);
+		const int h = (int)(m_nHeight / 2 / m_fScale);
 
 		const Vector3& colourX = (m_viewType == YZ) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorX;
 		const Vector3& colourY = (m_viewType == XY) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorZ;
