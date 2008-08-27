@@ -87,13 +87,13 @@ class NameObserver {
 	UniqueNames& m_names;
 	CopiedString m_name;
 
-	void construct() {
+	void construct (void) {
 		if (!empty()) {
 			//globalOutputStream() << "construct " << makeQuoted(c_str()) << "\n";
 			m_names.insert(name_read(c_str()));
 		}
 	}
-	void destroy() {
+	void destroy (void) {
 		if (!empty()) {
 			//globalOutputStream() << "destroy " << makeQuoted(c_str()) << "\n";
 			m_names.erase(name_read(c_str()));
@@ -108,7 +108,7 @@ public:
 	NameObserver(const NameObserver& other) : m_names(other.m_names), m_name(other.m_name) {
 		construct();
 	}
-	~NameObserver() {
+	~NameObserver (void) {
 		destroy();
 	}
 	bool empty() const {
@@ -130,7 +130,7 @@ class BasicNamespace : public Namespace {
 	Names m_names;
 	UniqueNames m_uniqueNames;
 public:
-	~BasicNamespace() {
+	~BasicNamespace (void) {
 		ASSERT_MESSAGE(m_names.empty(), "namespace: names still registered at shutdown");
 	}
 	void attach(const NameCallback& setName, const NameCallbackCallback& attachObserver) {
@@ -191,10 +191,10 @@ public:
 	typedef Namespace Type;
 	STRING_CONSTANT(Name, "*");
 
-	NamespaceAPI() {
+	NamespaceAPI (void) {
 		m_namespace = &g_defaultNamespace;
 	}
-	Namespace* getTable() {
+	Namespace* getTable (void) {
 		return m_namespace;
 	}
 };
@@ -229,7 +229,7 @@ void Map_gatherNamespaced(scene::Node& root) {
 	Node_traverseSubgraph(root, GatherNamespaced());
 }
 
-void Map_mergeClonedNames() {
+void Map_mergeClonedNames (void) {
 	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
 		(*i)->setNamespace(g_cloneNamespace);
 	}
@@ -281,7 +281,7 @@ public:
 	Map() : m_resource(0), m_valid(false), m_modified_changed(Map_UpdateTitle) {
 	}
 
-	void realise() {
+	void realise (void) {
 		if (m_resource != 0) {
 			if (Map_Unnamed(*this)) {
 				g_map.m_resource->setNode(NewMapRoot("").get_pointer());
@@ -300,7 +300,7 @@ public:
 			Map_SetValid(g_map, true);
 		}
 	}
-	void unrealise() {
+	void unrealise (void) {
 		if (m_resource != 0) {
 			Map_SetValid(g_map, false);
 			Map_SetWorldspawn(g_map, 0);
@@ -392,7 +392,7 @@ Map_Free
 free all map elements, reinitialize the structures that depend on them
 ================
 */
-void Map_Free() {
+void Map_Free (void) {
 	g_map.m_resource->detach(g_map);
 	GlobalReferenceCache().release(g_map.m_name.c_str());
 	g_map.m_resource = 0;
@@ -427,7 +427,7 @@ Entity* Scene_FindEntityByClass(const char* name) {
 	return entity;
 }
 
-Entity *Scene_FindPlayerStart() {
+Entity *Scene_FindPlayerStart (void) {
 	typedef const char* StaticString;
 	StaticString strings[] = {
 		"info_player_start",
@@ -516,7 +516,7 @@ void Node_insertChildFirst(scene::Node& parent, scene::Node& child) {
 	}
 }
 
-scene::Node& createWorldspawn() {
+scene::Node& createWorldspawn (void) {
 	NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert("worldspawn", true)));
 	Node_insertChildFirst(GlobalSceneGraph().root(), worldspawn);
 	return worldspawn;
@@ -589,10 +589,10 @@ class BasicContainer : public scene::Node::Symbiot {
 	class TypeCasts {
 		NodeTypeCastTable m_casts;
 	public:
-		TypeCasts() {
+		TypeCasts (void) {
 			NodeContainedCast<BasicContainer, scene::Traversable>::install(m_casts);
 		}
-		NodeTypeCastTable& get() {
+		NodeTypeCastTable& get (void) {
 			return m_casts;
 		}
 	};
@@ -609,10 +609,10 @@ public:
 
 	BasicContainer() : m_node(this, this, StaticTypeCasts::instance().get()) {
 	}
-	void release() {
+	void release (void) {
 		delete this;
 	}
-	scene::Node& node() {
+	scene::Node& node (void) {
 		return m_node;
 	}
 };
@@ -707,7 +707,7 @@ void Scene_EntityBreakdown(EntityBreakdown& entitymap) {
 
 WindowPosition g_posMapInfoWnd(c_default_window_pos);
 
-void DoMapInfo() {
+void DoMapInfo (void) {
 	ModalDialog dialog;
 	GtkEntry* brushes_entry;
 	GtkEntry* entities_entry;
@@ -856,7 +856,7 @@ public:
 			: m_message(message) {
 		m_timer.start();
 	}
-	~ScopeTimer() {
+	~ScopeTimer (void) {
 		double elapsed_time = m_timer.elapsed_msec() / 1000.f;
 		globalOutputStream() << m_message << " timer: " << FloatFormat(elapsed_time, 5, 2) << " second(s) elapsed\n";
 	}
@@ -1098,7 +1098,7 @@ void Map_Rename(const char* filename) {
 	}
 }
 
-bool Map_Save() {
+bool Map_Save (void) {
 	ScopeTimer timer("map save");
 	SaveReferences();
 	return true; // assume success..
@@ -1110,7 +1110,7 @@ Map_New
 
 ===========
 */
-void Map_New() {
+void Map_New (void) {
 	//globalOutputStream() << "Map_New\n";
 
 	g_map.m_name = "unnamed.map";
@@ -1143,16 +1143,15 @@ Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
 scene::Node* region_sides[6];
 scene::Node* region_startpoint = 0;
 
-/*
-===========
-AddRegionBrushes
-a regioned map will have temp walls put up at the region boundary
-\todo TODO TTimo old implementation of region brushes
-  we still add them straight in the worldspawn and take them out after the map is saved
-  with the new implementation we should be able to append them in a temporary manner to the data we pass to the map module
-===========
-*/
-void AddRegionBrushes (void) {
+/**
+ * @brief a regioned map will have temp walls put up at the region boundary
+ * @todo old implementation of region brushes
+ * we still add them straight in the worldspawn and take them out after the map is saved
+ * with the new implementation we should be able to append them in a temporary manner
+ * to the data we pass to the map module
+ */
+void AddRegionBrushes (void)
+{
 	int		i;
 
 	for (i = 0; i < 6; i++) {
@@ -1167,17 +1166,20 @@ void AddRegionBrushes (void) {
 	Node_getTraversable(GlobalSceneGraph().root())->insert(NodeSmartReference(*region_startpoint));
 }
 
-void RemoveRegionBrushes (void) {
+void RemoveRegionBrushes (void)
+{
 	for (std::size_t i = 0; i < 6; i++) {
 		Node_getTraversable(*Map_GetWorldspawn(g_map))->erase(*region_sides[i]);
 	}
 	Node_getTraversable(GlobalSceneGraph().root())->erase(*region_startpoint);
 }
 
-inline void exclude_node(scene::Node& node, bool exclude) {
-	exclude
-	? node.enable(scene::Node::eExcluded)
-	: node.disable(scene::Node::eExcluded);
+inline void exclude_node(scene::Node& node, bool exclude)
+{
+	if (exclude)
+		node.enable(scene::Node::eExcluded);
+	else
+		node.disable(scene::Node::eExcluded);
 }
 
 class ExcludeAllWalker : public scene::Graph::Walker {
@@ -1193,11 +1195,13 @@ public:
 	}
 };
 
-void Scene_Exclude_All(bool exclude) {
+void Scene_Exclude_All (bool exclude)
+{
 	GlobalSceneGraph().traverse(ExcludeAllWalker(exclude));
 }
 
-bool Instance_isSelected(const scene::Instance& instance) {
+bool Instance_isSelected (const scene::Instance& instance)
+{
 	const Selectable* selectable = Instance_getSelectable(instance);
 	return selectable != 0 && selectable->isSelected();
 }
@@ -1214,7 +1218,8 @@ public:
 	}
 };
 
-void Scene_Exclude_Selected(bool exclude) {
+void Scene_Exclude_Selected (bool exclude)
+{
 	GlobalSceneGraph().traverse(ExcludeSelectedWalker(exclude));
 }
 
@@ -1241,18 +1246,16 @@ public:
 	}
 };
 
-void Scene_Exclude_Region(bool exclude) {
+void Scene_Exclude_Region (bool exclude)
+{
 	GlobalSceneGraph().traverse(ExcludeRegionedWalker(exclude));
 }
 
-/*
-===========
-Map_RegionOff
-
-Other filtering options may still be on
-===========
-*/
-void Map_RegionOff() {
+/**
+ * @note Other filtering options may still be on
+ */
+void Map_RegionOff (void)
+{
 	region_active = false;
 
 	region_maxs[0] = g_MaxWorldCoord - 64;
@@ -1265,19 +1268,15 @@ void Map_RegionOff() {
 	Scene_Exclude_All(false);
 }
 
-void Map_ApplyRegion (void) {
+void Map_ApplyRegion (void)
+{
 	region_active = true;
 
 	Scene_Exclude_Region(false);
 }
 
-
-/*
-========================
-Map_RegionSelectedBrushes
-========================
-*/
-void Map_RegionSelectedBrushes (void) {
+void Map_RegionSelectedBrushes (void)
+{
 	Map_RegionOff();
 
 	if (GlobalSelectionSystem().countSelected() != 0
@@ -1291,13 +1290,8 @@ void Map_RegionSelectedBrushes (void) {
 	}
 }
 
-
-/*
-===========
-Map_RegionXY
-===========
-*/
-void Map_RegionXY(float x_min, float y_min, float x_max, float y_max) {
+void Map_RegionXY (float x_min, float y_min, float x_max, float y_max)
+{
 	Map_RegionOff();
 
 	region_mins[0] = x_min;
@@ -1310,7 +1304,8 @@ void Map_RegionXY(float x_min, float y_min, float x_max, float y_max) {
 	Map_ApplyRegion();
 }
 
-void Map_RegionBounds(const AABB& bounds) {
+void Map_RegionBounds (const AABB& bounds)
+{
 	Map_RegionOff();
 
 	region_mins = vector3_subtracted(bounds.origin, bounds.extents);
@@ -1321,37 +1316,25 @@ void Map_RegionBounds(const AABB& bounds) {
 	Map_ApplyRegion();
 }
 
-/*
-===========
-Map_RegionBrush
-===========
-*/
-void Map_RegionBrush (void) {
+void Map_RegionBrush (void)
+{
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		scene::Instance& instance = GlobalSelectionSystem().ultimateSelected();
 		Map_RegionBounds(instance.worldAABB());
 	}
 }
 
-//
-//================
-//Map_ImportFile
-//================
-//
-bool Map_ImportFile(const char* filename) {
+bool Map_ImportFile (const char* filename)
+{
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
 
 	bool success = false;
 	{
 		Resource* resource = GlobalReferenceCache().capture(filename);
-		resource->refresh(); // avoid loading old version if map has changed on disk since last import
+		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
 		if (resource->load()) {
 			NodeSmartReference clone(NewMapRoot(""));
-
-			{
-				//ScopeTimer timer("clone subgraph");
-				Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
-			}
+			Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
 
 			Map_gatherNamespaced(clone);
 			Map_mergeClonedNames();
@@ -1366,24 +1349,17 @@ bool Map_ImportFile(const char* filename) {
 	return success;
 }
 
-/*
-===========
-Map_SaveFile
-===========
-*/
-bool Map_SaveFile(const char* filename) {
+bool Map_SaveFile (const char* filename)
+{
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Saving Map");
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename);
 }
 
-//
-//===========
-//Map_SaveSelected
-//===========
-//
-// Saves selected world brushes and whole entities with partial/full selections
-//
-bool Map_SaveSelected(const char* filename) {
+/**
+ * @brief Saves selected world brushes and whole entities with partial/full selections
+ */
+bool Map_SaveSelected (const char* filename)
+{
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Selected, filename);
 }
 
@@ -1423,7 +1399,8 @@ public:
 	}
 };
 
-void Scene_parentSelectedBrushesToEntity(scene::Graph& graph, scene::Node& parent) {
+void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
+{
 	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
 }
 
@@ -1451,7 +1428,8 @@ public:
 	}
 };
 
-std::size_t Scene_countSelectedBrushes(scene::Graph& graph) {
+std::size_t Scene_countSelectedBrushes (scene::Graph& graph)
+{
 	std::size_t count;
 	graph.traverse(CountSelectedBrushes(count));
 	return count;
@@ -1464,7 +1442,8 @@ enum ENodeType {
 	eNodePrimitive,
 };
 
-const char* nodetype_get_name(ENodeType type) {
+static inline const char* nodetype_get_name (ENodeType type)
+{
 	if (type == eNodeMap)
 		return "map";
 	if (type == eNodeEntity)
@@ -1474,7 +1453,8 @@ const char* nodetype_get_name(ENodeType type) {
 	return "unknown";
 }
 
-ENodeType node_get_nodetype(scene::Node& node) {
+ENodeType node_get_nodetype (scene::Node& node)
+{
 	if (Node_isEntity(node)) {
 		return eNodeEntity;
 	}
@@ -1484,15 +1464,18 @@ ENodeType node_get_nodetype(scene::Node& node) {
 	return eNodeUnknown;
 }
 
-bool contains_entity(scene::Node& node) {
+bool contains_entity (scene::Node& node)
+{
 	return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isEntity(node);
 }
 
-bool contains_primitive(scene::Node& node) {
+bool contains_primitive (scene::Node& node)
+{
 	return Node_isEntity(node) && Node_getTraversable(node) != 0 && Node_getEntity(node)->isContainer();
 }
 
-ENodeType node_get_contains(scene::Node& node) {
+ENodeType node_get_contains (scene::Node& node)
+{
 	if (contains_entity(node)) {
 		return eNodeEntity;
 	}
@@ -1502,7 +1485,8 @@ ENodeType node_get_contains(scene::Node& node) {
 	return eNodeUnknown;
 }
 
-void Path_parent(const scene::Path& parent, const scene::Path& child) {
+static void Path_parent (const scene::Path& parent, const scene::Path& child)
+{
 	ENodeType contains = node_get_contains(parent.top());
 	ENodeType type = node_get_nodetype(child.top());
 
@@ -1516,7 +1500,8 @@ void Path_parent(const scene::Path& parent, const scene::Path& child) {
 	}
 }
 
-void Scene_parentSelected() {
+void Scene_parentSelected (void)
+{
 	UndoableCommand undo("parentSelected");
 
 	if (GlobalSelectionSystem().countSelected() > 1) {
@@ -1539,9 +1524,8 @@ void Scene_parentSelected() {
 	}
 }
 
-
-
-void NewMap() {
+void NewMap (void)
+{
 	if (ConfirmModified("New Map")) {
 		Map_RegionOff();
 		Map_Free();
@@ -1549,21 +1533,25 @@ void NewMap() {
 	}
 }
 
-CopiedString g_mapsPath;
+static CopiedString g_mapsPath;
 
-const char* getMapsPath() {
+const char* getMapsPath (void)
+{
 	return g_mapsPath.c_str();
 }
 
-const char* map_open(const char* title) {
+const char* map_open (const char* title)
+{
 	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, title, getMapsPath(), MapFormat::Name());
 }
 
-const char* map_save(const char* title) {
+const char* map_save (const char* title)
+{
 	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, title, getMapsPath(), MapFormat::Name());
 }
 
-void OpenMap() {
+void OpenMap (void)
+{
 	if (!ConfirmModified("Open Map"))
 		return;
 
@@ -1577,7 +1565,8 @@ void OpenMap() {
 	}
 }
 
-void ImportMap() {
+void ImportMap (void)
+{
 	const char* filename = map_open("Import Map");
 
 	if (filename != 0) {
@@ -1586,7 +1575,8 @@ void ImportMap() {
 	}
 }
 
-bool Map_SaveAs() {
+bool Map_SaveAs (void)
+{
 	const char* filename = map_save("Save Map");
 
 	if (filename != 0) {
@@ -1597,11 +1587,13 @@ bool Map_SaveAs() {
 	return false;
 }
 
-void SaveMapAs() {
+void SaveMapAs (void)
+{
 	Map_SaveAs();
 }
 
-void SaveMap() {
+void SaveMap (void)
+{
 	if (Map_Unnamed(g_map)) {
 		SaveMapAs();
 	} else if (Map_Modified(g_map)) {
@@ -1609,7 +1601,8 @@ void SaveMap() {
 	}
 }
 
-void ExportMap() {
+void ExportMap (void)
+{
 	const char* filename = map_save("Export Selection");
 
 	if (filename != 0) {
@@ -1617,7 +1610,8 @@ void ExportMap() {
 	}
 }
 
-void SaveRegion() {
+void SaveRegion (void)
+{
 	const char* filename = map_save("Export Region");
 
 	if (filename != 0) {
@@ -1626,12 +1620,14 @@ void SaveRegion() {
 }
 
 
-void RegionOff() {
+void RegionOff (void)
+{
 	Map_RegionOff();
 	SceneChangeNotify();
 }
 
-void RegionXY() {
+void RegionXY (void)
+{
 	Map_RegionXY(
 	    g_pParentWnd->GetXYWnd()->GetOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->Width() / g_pParentWnd->GetXYWnd()->Scale(),
 	    g_pParentWnd->GetXYWnd()->GetOrigin()[1] - 0.5f * g_pParentWnd->GetXYWnd()->Height() / g_pParentWnd->GetXYWnd()->Scale(),
@@ -1641,12 +1637,14 @@ void RegionXY() {
 	SceneChangeNotify();
 }
 
-void RegionBrush() {
+void RegionBrush (void)
+{
 	Map_RegionBrush();
 	SceneChangeNotify();
 }
 
-void RegionSelected() {
+void RegionSelected (void)
+{
 	Map_RegionSelectedBrushes();
 	SceneChangeNotify();
 }
@@ -1685,7 +1683,8 @@ public:
 	}
 };
 
-void Scene_FindEntityBrush(std::size_t entity, std::size_t brush, scene::Path& path) {
+static void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
+{
 	path.push(makeReference(GlobalSceneGraph().root()));
 	{
 		Node_getTraversable(path.top())->traverse(EntityFindByIndexWalker(entity, path));
@@ -1698,12 +1697,14 @@ void Scene_FindEntityBrush(std::size_t entity, std::size_t brush, scene::Path& p
 	}
 }
 
-inline bool Node_hasChildren(scene::Node& node) {
+static inline bool Node_hasChildren (scene::Node& node)
+{
 	scene::Traversable* traversable = Node_getTraversable(node);
 	return traversable != 0 && !traversable->empty();
 }
 
-void SelectBrush (int entitynum, int brushnum) {
+void SelectBrush (int entitynum, int brushnum)
+{
 	scene::Path path;
 	Scene_FindEntityBrush(entitynum, brushnum, path);
 	if (path.size() == 3 || (path.size() == 2 && !Node_hasChildren(path.top()))) {
@@ -1770,7 +1771,7 @@ static void GetSelectionIndex (int *ent, int *brush) {
 	*ent = int(count_entity);
 }
 
-void DoFind() {
+void DoFind (void) {
 	ModalDialog dialog;
 	GtkEntry* entity;
 	GtkEntry* brush;
@@ -1865,7 +1866,7 @@ class MapEntityClasses : public ModuleObserver {
 public:
 	MapEntityClasses() : m_unrealised(1) {
 	}
-	void realise() {
+	void realise (void) {
 		if (--m_unrealised == 0) {
 			if (g_map.m_resource != 0) {
 				ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
@@ -1873,7 +1874,7 @@ public:
 			}
 		}
 	}
-	void unrealise() {
+	void unrealise (void) {
 		if (++m_unrealised == 1) {
 			if (g_map.m_resource != 0) {
 				g_map.m_resource->flush();
@@ -1891,7 +1892,7 @@ class MapModuleObserver : public ModuleObserver {
 public:
 	MapModuleObserver() : m_unrealised(1) {
 	}
-	void realise() {
+	void realise (void) {
 		if (--m_unrealised == 0) {
 			ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "maps_directory: user-game-path is empty");
 			StringOutputStream buffer(256);
@@ -1900,7 +1901,7 @@ public:
 			g_mapsPath = buffer.c_str();
 		}
 	}
-	void unrealise() {
+	void unrealise (void) {
 		if (++m_unrealised == 1) {
 			g_mapsPath = "";
 		}
@@ -1914,7 +1915,7 @@ MapModuleObserver g_MapModuleObserver;
 CopiedString g_strLastMap;
 bool g_bLoadLastMap = false;
 
-void Map_Construct() {
+void Map_Construct (void) {
 	GlobalCommands_insert("RegionOff", FreeCaller<RegionOff>());
 	GlobalCommands_insert("RegionSetXY", FreeCaller<RegionXY>());
 	GlobalCommands_insert("RegionSetBrush", FreeCaller<RegionBrush>());
@@ -1930,7 +1931,7 @@ void Map_Construct() {
 	Radiant_attachHomePathsObserver(g_MapModuleObserver);
 }
 
-void Map_Destroy() {
+void Map_Destroy (void) {
 	Radiant_detachHomePathsObserver(g_MapModuleObserver);
 	GlobalEntityClassManager().detach(g_MapEntityClasses);
 }

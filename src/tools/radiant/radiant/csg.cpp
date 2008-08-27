@@ -134,7 +134,8 @@ CSG_MakeHollow
 =============
 */
 
-void CSG_MakeHollow (void) {
+void CSG_MakeHollow (void)
+{
 	UndoableCommand undo("brushHollow");
 
 	Scene_BrushMakeHollow_Selected(GlobalSceneGraph());

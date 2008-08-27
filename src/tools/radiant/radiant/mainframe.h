@@ -43,8 +43,7 @@ const int c_command_status = 0;
 const int c_position_status = 1;
 const int c_brushcount_status = 2;
 const int c_texture_status = 3;
-const int c_grid_status = 4;
-const int c_count_status = 5;
+const int c_count_status = 4;
 
 class MainFrame {
 public:
@@ -64,7 +63,6 @@ public:
 	CopiedString m_position_status;
 	CopiedString m_brushcount_status;
 	CopiedString m_texture_status;
-	CopiedString m_grid_status;
 private:
 
 	void Create();
@@ -94,9 +92,6 @@ public:
 	void UpdateStatusText();
 	void RedrawStatusText();
 	typedef MemberCaller<MainFrame, &MainFrame::RedrawStatusText> RedrawStatusTextCaller;
-
-	void SetGridStatus();
-	typedef MemberCaller<MainFrame, &MainFrame::SetGridStatus> SetGridStatusCaller;
 
 	void SetActiveXY(XYWnd* p);
 	XYWnd* ActiveXY() {
@@ -236,13 +231,6 @@ void Radiant_detachHomePathsObserver(ModuleObserver& observer);
 
 void MainFrame_Construct();
 void MainFrame_Destroy();
-
-
-extern float (*GridStatus_getGridSize)();
-extern int (*GridStatus_getRotateIncrement)();
-extern int (*GridStatus_getFarClipDistance)();
-extern bool (*GridStatus_getTextureLockEnabled)();
-void GridStatus_onTextureLockEnabledChanged();
 
 SignalHandlerId XYWindowDestroyed_connect(const SignalHandler& handler);
 void XYWindowDestroyed_disconnect(SignalHandlerId id);

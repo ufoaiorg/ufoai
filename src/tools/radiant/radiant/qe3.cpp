@@ -59,7 +59,7 @@ please contact Id Software immediately at info@idsoftware.com.
 
 QEGlobals_t  g_qeglobals;
 
-void QE_InitVFS() {
+void QE_InitVFS (void) {
 	// VFS initialization -----------------------
 	// we will call GlobalFileSystem().initDirectory, giving the directories to look in (for files in pk3's and for standalone files)
 	// we need to call in order, the mod ones first, then the base ones .. they will be searched in this order
@@ -108,30 +108,34 @@ void QE_InitVFS() {
 	}
 }
 
-int g_numbrushes = 0;
-int g_numentities = 0;
-
-void QE_UpdateStatusBar() {
+/**
+ * @brief Updates statusbar with brush and entity count
+ * @sa MainFrame::RedrawStatusText
+ * @sa MainFrame::SetStatusText
+ */
+void QE_UpdateStatusBar (void)
+{
 	char buffer[128];
-	sprintf(buffer, "Brushes: %d Entities: %d", g_numbrushes, g_numentities);
+	sprintf(buffer, "Brushes: %d Entities: %d", int(g_brushCount.get()), int(g_entityCount.get()));
 	g_pParentWnd->SetStatusText(g_pParentWnd->m_brushcount_status, buffer);
 }
 
 SimpleCounter g_brushCount;
 
-void QE_brushCountChanged() {
-	g_numbrushes = int(g_brushCount.get());
+void QE_brushCountChanged (void)
+{
 	QE_UpdateStatusBar();
 }
 
 SimpleCounter g_entityCount;
 
-void QE_entityCountChanged() {
-	g_numentities = int(g_entityCount.get());
+void QE_entityCountChanged (void)
+{
 	QE_UpdateStatusBar();
 }
 
-bool ConfirmModified(const char* title) {
+bool ConfirmModified(const char* title)
+{
 	if (!Map_Modified(g_map))
 		return true;
 
@@ -149,7 +153,7 @@ bool ConfirmModified(const char* title) {
 	return true;
 }
 
-bool Region_cameraValid() {
+bool Region_cameraValid (void) {
 	Vector3 vOrig(vector3_snapped(Camera_getOrigin(*g_pParentWnd->GetCamWnd())));
 
 	for (int i = 0 ; i < 3 ; i++) {

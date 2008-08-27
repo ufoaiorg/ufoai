@@ -1011,9 +1011,12 @@ void CamWnd_Move_Discrete_Import(bool value) {
 	}
 }
 
-
-
-void CamWnd_Add_Handlers_Move(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Remove_Handlers_Move
+ * @sa CamWnd_Add_Handlers_FreeMove
+ */
+static void CamWnd_Add_Handlers_Move (CamWnd& camwnd)
+{
 	camwnd.m_selection_button_press_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press), camwnd.m_window_observer);
 	camwnd.m_selection_button_release_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release), camwnd.m_window_observer);
 	camwnd.m_selection_motion_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "motion_notify_event", G_CALLBACK(DeferredMotion::gtk_motion), &camwnd.m_deferred_motion);
@@ -1027,7 +1030,11 @@ void CamWnd_Add_Handlers_Move(CamWnd& camwnd) {
 	}
 }
 
-void CamWnd_Remove_Handlers_Move(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Add_Handlers_Move
+ */
+static void CamWnd_Remove_Handlers_Move (CamWnd& camwnd)
+{
 	g_signal_handler_disconnect(G_OBJECT(camwnd.m_gl_widget), camwnd.m_selection_button_press_handler);
 	g_signal_handler_disconnect(G_OBJECT(camwnd.m_gl_widget), camwnd.m_selection_button_release_handler);
 	g_signal_handler_disconnect(G_OBJECT(camwnd.m_gl_widget), camwnd.m_selection_motion_handler);
@@ -1041,7 +1048,12 @@ void CamWnd_Remove_Handlers_Move(CamWnd& camwnd) {
 	}
 }
 
-void CamWnd_Add_Handlers_FreeMove(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Remove_Handlers_FreeMove
+ * @sa CamWnd_Add_Handlers_Move
+ */
+static void CamWnd_Add_Handlers_FreeMove (CamWnd& camwnd)
+{
 	camwnd.m_selection_button_press_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press_freemove), camwnd.m_window_observer);
 	camwnd.m_selection_button_release_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release_freemove), camwnd.m_window_observer);
 	camwnd.m_selection_motion_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "motion_notify_event", G_CALLBACK(selection_motion_freemove), camwnd.m_window_observer);
@@ -1056,7 +1068,11 @@ void CamWnd_Add_Handlers_FreeMove(CamWnd& camwnd) {
 	KeyEvent_connect("CameraFreeMoveDown");
 }
 
-void CamWnd_Remove_Handlers_FreeMove(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Add_Handlers_FreeMove
+ */
+static void CamWnd_Remove_Handlers_FreeMove (CamWnd& camwnd)
+{
 	KeyEvent_disconnect("CameraFreeMoveForward");
 	KeyEvent_disconnect("CameraFreeMoveBack");
 	KeyEvent_disconnect("CameraFreeMoveLeft");
@@ -1517,7 +1533,6 @@ void Camera_CubeIn() {
 		g_camwindow_globals.m_nCubicScale = 1;
 	Camera_updateProjection(camwnd.getCamera());
 	CamWnd_Update(camwnd);
-	g_pParentWnd->SetGridStatus();
 }
 
 void Camera_CubeOut() {
@@ -1527,7 +1542,6 @@ void Camera_CubeOut() {
 		g_camwindow_globals.m_nCubicScale = 23;
 	Camera_updateProjection(camwnd.getCamera());
 	CamWnd_Update(camwnd);
-	g_pParentWnd->SetGridStatus();
 }
 
 bool Camera_GetFarClip() {
