@@ -357,19 +357,19 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\xywindow.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\about.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\prism.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\prism.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\light.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\light.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\findbrush.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\ui\texteditor.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\texteditor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

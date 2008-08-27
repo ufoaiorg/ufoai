@@ -63,7 +63,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "xywindow.h"
 #include "mainframe.h"
 #include "qe3.h"
-#include "ui/texteditor.h"
+#include "dialogs/texteditor.h"
 
 void Interface_constructPreferences (PreferencesPage& page)
 {

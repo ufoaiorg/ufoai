@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brushnode.h"
 #include "map.h"
 #include "texwindow.h"
-#include "ui/prism.h"
+#include "dialogs/prism.h"
 #include "commands.h"
 #include "mainframe.h"
 #include "dialog.h"

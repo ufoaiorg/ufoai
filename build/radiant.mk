@@ -67,11 +67,11 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	\
-	$(RADIANT_BASE)/radiant/ui/texteditor.cpp \
-	$(RADIANT_BASE)/radiant/ui/about.cpp \
-	$(RADIANT_BASE)/radiant/ui/findbrush.cpp \
-	$(RADIANT_BASE)/radiant/ui/prism.cpp \
-	$(RADIANT_BASE)/radiant/ui/light.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
