@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+For a list of contributors, see the accompanying CONTRIBUTORS file.
 
 This file is part of GtkRadiant.
 
@@ -19,21 +19,14 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "mathlib.h"
+#ifndef __BYTEBOOL__
+#define __BYTEBOOL__
 
-void line_construct_for_vec3(line_t *line, const vec3_t start, const vec3_t end) {
-	VectorMid(start, end, line->origin);
-	VectorSubtract(end, line->origin, line->extents);
-}
+/* defines boolean and byte types usable in both c and c++ code
+ * this header is not really meant for direct inclusion,
+ * it is used by mathlib and cmdlib */
 
-int line_test_plane(const line_t* line, const vec4_t plane) {
-	float fDist;
+typedef enum { qfalse, qtrue } qboolean;
+typedef unsigned char byte;
 
-	// calc distance of origin from plane
-	fDist = DotProduct(plane, line->origin) + plane[3];
-
-	// accept if origin is less than or equal to this distance
-	if (fabs(fDist) < fabs(DotProduct(plane, line->extents))) return 1; // partially inside
-	else if (fDist < 0) return 2; // totally inside
-	return 0; // totally outside
-}
+#endif

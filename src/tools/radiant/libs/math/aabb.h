@@ -131,12 +131,6 @@ inline void aabb_extend_by_aabb_safe(AABB& aabb, const AABB& other) {
 	}
 }
 
-inline void aabb_extend_by_vec3(AABB& aabb, const Vector3& extension) {
-	vector3_add(aabb.extents, extension);
-}
-
-
-
 
 template<typename Index>
 inline bool aabb_intersects_point_dimension(const AABB& aabb, const Vector3& point) {

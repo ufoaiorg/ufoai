@@ -101,11 +101,6 @@ inline Ray ray_for_points(const Vector3& origin, const Vector3& p2) {
 	return Ray(origin, vector3_normalised(vector3_subtracted(p2, origin)));
 }
 
-inline void ray_transform(Ray& ray, const Matrix4& matrix) {
-	matrix4_transform_point(matrix, ray.origin);
-	matrix4_transform_direction(matrix, ray.direction);
-}
-
 // closest-point-on-line
 inline double ray_squared_distance_to_point(const Ray& ray, const Vector3& point) {
 	return vector3_length_squared(
