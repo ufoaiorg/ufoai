@@ -2,9 +2,8 @@
 
 #include "support.h"
 
-GtkWidget*
-lookup_widget                          (GtkWidget       *widget,
-                                        const gchar     *widget_name) {
+GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
+{
 	GtkWidget *parent, *found_widget;
 
 	for (;;) {
