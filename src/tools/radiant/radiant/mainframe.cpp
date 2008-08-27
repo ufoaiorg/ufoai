@@ -1968,6 +1968,7 @@ static void RotateFlip_constructToolbar(GtkToolbar* toolbar) {
 static void Select_constructToolbar(GtkToolbar* toolbar) {
 	toolbar_append_button(toolbar, "Select touching", "selection_selecttouching.bmp", "SelectTouching");
 	toolbar_append_button(toolbar, "Select inside", "selection_selectinside.bmp", "SelectInside");
+	toolbar_append_button(toolbar, "Select whole entity", "selection_selectentities.bmp", "ExpandSelectionToEntities");
 }
 
 static void CSG_constructToolbar(GtkToolbar* toolbar) {
