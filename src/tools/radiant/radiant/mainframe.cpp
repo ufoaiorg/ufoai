@@ -2475,7 +2475,7 @@ void MainFrame::Create() {
 
 	EverySecondTimer_enable();
 
-	//GlobalShortcuts_reportUnregistered();
+	GlobalShortcuts_reportUnregistered();
 }
 
 void MainFrame::SaveWindowInfo() {

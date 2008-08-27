@@ -53,6 +53,9 @@ public:
 	TextOutputStream& getErrorStream() {
 		return globalErrorStream();
 	}
+	TextOutputStream& getWarningStream() {
+		return globalWarningStream();
+	}
 	DebugMessageHandler& getDebugMessageHandler() {
 		return globalDebugMessageHandler();
 	}

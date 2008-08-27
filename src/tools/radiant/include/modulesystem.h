@@ -58,6 +58,7 @@ public:
 
 	virtual TextOutputStream& getOutputStream() = 0;
 	virtual TextOutputStream& getErrorStream() = 0;
+	virtual TextOutputStream& getWarningStream() = 0;
 	virtual DebugMessageHandler& getDebugMessageHandler() = 0;
 
 	virtual void registerModule(const char* type, int version, const char* name, Module& module) = 0;
@@ -89,6 +90,7 @@ inline ModuleServer& globalModuleServer() {
 inline void initialiseModule(ModuleServer& server) {
 	GlobalErrorStream::instance().setOutputStream(server.getErrorStream());
 	GlobalOutputStream::instance().setOutputStream(server.getOutputStream());
+	GlobalWarningStream::instance().setOutputStream(server.getWarningStream());
 	GlobalDebugMessageHandler::instance().setHandler(server.getDebugMessageHandler());
 	GlobalModuleServer::instance().set(server);
 }

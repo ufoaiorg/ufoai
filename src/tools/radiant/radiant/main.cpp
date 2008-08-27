@@ -273,6 +273,7 @@ typedef Static<PopupDebugMessageHandler> GlobalPopupDebugMessageHandler;
 void streams_init() {
 	GlobalErrorStream::instance().setOutputStream(getSysPrintErrorStream());
 	GlobalOutputStream::instance().setOutputStream(getSysPrintOutputStream());
+	GlobalWarningStream::instance().setOutputStream(getSysPrintWarningStream());
 }
 
 void paths_init() {
