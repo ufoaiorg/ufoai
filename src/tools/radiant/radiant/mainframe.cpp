@@ -1572,8 +1572,7 @@ void ClipperChangeNotify() {
 }
 
 
-//LatchedInt g_Layout_viewStyle(MainFrame::eFloating, "Window Layout");
-static LatchedInt g_Layout_viewStyle(0, "Window Layout");
+static LatchedInt g_Layout_viewStyle(2, "Window Layout");
 LatchedBool g_Layout_enableDetachableMenus(false, "Detachable Menus");
 static LatchedBool g_Layout_enablePluginToolbar(true, "Plugin Toolbar");
 
