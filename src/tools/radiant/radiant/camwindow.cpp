@@ -1492,11 +1492,6 @@ void CamWnd::BenchMark() {
 	globalOutputStream() << FloatFormat(dEnd - dStart, 5, 2) << " seconds\n";
 }
 
-
-void fill_view_camera_menu(GtkMenu* menu) {
-	create_check_menu_item_with_mnemonic(menu, "Camera View", "ToggleCamera");
-}
-
 void GlobalCamera_ResetAngles() {
 	CamWnd& camwnd = *g_camwnd;
 	Vector3 angles;
@@ -1553,7 +1548,6 @@ void Camera_SetFarClip(bool value) {
 void Camera_ToggleFarClip() {
 	Camera_SetFarClip(!Camera_GetFarClip());
 }
-
 
 void CamWnd_constructToolbar(GtkToolbar* toolbar) {
 	toolbar_append_toggle_button(toolbar, "Cubic clip the camera view (\\)", "view_cubicclipping.bmp", "ToggleCubicClip");

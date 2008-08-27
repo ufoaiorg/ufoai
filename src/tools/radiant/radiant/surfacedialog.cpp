@@ -294,13 +294,9 @@ const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags() {
 	return g_selectedFlags;
 }
 
-
-
 /*
 ===================================================
-
-  SURFACE INSPECTOR
-
+SURFACE INSPECTOR
 ===================================================
 */
 
@@ -357,7 +353,6 @@ static void OnBtnMatchGrid(GtkWidget *widget, gpointer data) {
 void DoSurface (void) {
 	if (getSurfaceInspector().GetWidget() == 0) {
 		getSurfaceInspector().Create();
-
 	}
 	getSurfaceInspector().Update();
 	getSurfaceInspector().importData();
