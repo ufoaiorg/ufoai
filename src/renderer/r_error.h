@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define R_CheckError() R_CheckErrorDebug(__FILE__, __LINE__, __PRETTY_FUNCTION__)
 
-static const char* inline R_TranslateError (GLenum error)
+static inline const char* R_TranslateError (GLenum error)
 {
 	switch (error) {
 	case GL_INVALID_ENUM:
