@@ -21,21 +21,3 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /* mathlib.c -- math primitives */
 #include "mathlib.h"
-
-vec_t VectorLength(const vec3_t v) {
-	int		i;
-	float	length;
-
-	length = 0.0f;
-	for (i=0 ; i< 3 ; i++)
-		length += v[i]*v[i];
-	length = (float)sqrt (length);
-
-	return length;
-}
-
-void VectorMA(const vec3_t va, vec_t scale, const vec3_t vb, vec3_t vc) {
-	vc[0] = va[0] + scale*vb[0];
-	vc[1] = va[1] + scale*vb[1];
-	vc[2] = va[2] + scale*vb[2];
-}
