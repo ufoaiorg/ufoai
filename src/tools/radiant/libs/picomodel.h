@@ -162,10 +162,10 @@ enum {
 
 /* convenience (makes it easy to add new params to the callbacks) */
 #define PM_PARAMS_CANLOAD \
- const char *fileName, const void *buffer, int bufSize
+ const char *fileName, void *buffer, int bufSize
 
 #define PM_PARAMS_LOAD \
- const char *fileName, int frameNum, const void *buffer, int bufSize
+ const char *fileName, int frameNum, void *buffer, int bufSize
 
 #define PM_PARAMS_CANSAVE \
  void
