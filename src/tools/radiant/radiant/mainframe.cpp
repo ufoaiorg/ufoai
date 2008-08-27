@@ -792,19 +792,6 @@ GtkMenuItem* create_colours_menu() {
 	return colours_menu_item;
 }
 
-
-void Restart() {
-	PluginsMenu_clear();
-	PluginToolbar_clear();
-
-	Radiant_Shutdown();
-	Radiant_Initialise();
-
-	PluginsMenu_populate();
-
-	PluginToolbar_populate();
-}
-
 void OpenHelpURL() {
 	OpenURL("http://ufoai.ninex.info/wiki/index.php/Category:Mapping");
 }
@@ -813,23 +800,19 @@ void OpenBugReportURL() {
 	OpenURL("http://sourceforge.net/tracker/?func=add&group_id=157793&atid=805242");
 }
 
-
-GtkWidget* g_page_console;
+static GtkWidget* g_page_console;
 
 void Console_ToggleShow() {
 	GroupDialog_showPage(g_page_console);
 }
 
-GtkWidget* g_page_entity;
+static GtkWidget* g_page_entity;
 
 void EntityInspector_ToggleShow() {
 	GroupDialog_showPage(g_page_entity);
 }
 
-
-
-void SetClipMode(bool enable);
-void ModeChangeNotify();
+static void ModeChangeNotify();
 
 typedef void(*ToolMode)();
 ToolMode g_currentToolMode = 0;
@@ -1518,7 +1501,7 @@ void ScreenUpdates_Enable() {
 
 
 
-void GlobalCamera_UpdateWindow() {
+static void GlobalCamera_UpdateWindow() {
 	if (g_pParentWnd != 0) {
 		CamWnd_Update(*g_pParentWnd->GetCamWnd());
 	}
@@ -1560,7 +1543,7 @@ void UpdateAllWindows() {
 }
 
 
-void ModeChangeNotify() {
+static void ModeChangeNotify() {
 	SceneChangeNotify();
 }
 
