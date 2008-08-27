@@ -592,7 +592,7 @@ static qboolean SND_Init (void)
 		}
 	}
 
-	MIX_VERSION(&version);
+	MIX_VERSION(&version)
 	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
 
 	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, snd_channels->integer, 1024) == -1) {

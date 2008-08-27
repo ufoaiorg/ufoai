@@ -208,7 +208,7 @@ static char *R_FontGetLineWrap (const font_t * f, char *buffer, int maxWidth, in
 		oldW = w;
 		*space++ = ' ';
 		/* maybe there is space for one more word? */
-	};
+	}
 
 	TTF_SizeUTF8(f->font, buffer, &w, &h);
 	if (w > maxWidth) {
@@ -393,8 +393,8 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 	}
 
 	/* convert to power of two */
-	for (w = 2; w < textSurface->w; w <<= 1);
-	for (h = 2; h < textSurface->h; h <<= 1);
+	for (w = 2; w < textSurface->w; w <<= 1) {}
+	for (h = 2; h < textSurface->h; h <<= 1) {}
 
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
@@ -743,7 +743,7 @@ void R_FontInit (void)
 #ifdef SDL_TTF_VERSION
 	SDL_version version;
 
-	SDL_TTF_VERSION(&version);
+	SDL_TTF_VERSION(&version)
 	Com_Printf("SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
 		version.major,
 		version.minor,

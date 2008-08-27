@@ -256,7 +256,7 @@ menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *dat
 	newAction->type = type;
 	switch (type) {
 	case EA_CMD:
-		newAction->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, CL_TAG_MENU);;
+		newAction->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, CL_TAG_MENU);
 		break;
 	default:
 		Sys_Error("Action type %i is not yet implemented", type);

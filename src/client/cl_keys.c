@@ -951,7 +951,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 				Cbuf_AddText(cmd);
 			}
 			kb = keybindings[key];
-		};
+		}
 
 		return;
 	}

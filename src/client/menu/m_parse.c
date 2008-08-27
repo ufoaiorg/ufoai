@@ -375,7 +375,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		/* add new actions to end of list */
 		action = &node->click;
-		for (; *action; action = &(*action)->next);
+		for (; *action; action = &(*action)->next) {}
 
 		if (mn.numActions >= MAX_MENUACTIONS)
 			Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
@@ -460,7 +460,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 					/* add new actions to end of list */
 					action = (menuAction_t **) ((byte *) node + ne_values[i]);
-					for (; *action; action = &(*action)->next);
+					for (; *action; action = &(*action)->next) {}
 
 					if (mn.numActions >= MAX_MENUACTIONS)
 						Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);

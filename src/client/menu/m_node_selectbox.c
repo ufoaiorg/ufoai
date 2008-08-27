@@ -52,7 +52,7 @@ selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 		node->options = &mn.menuSelectBoxes[mn.numSelectBoxes];
 	else {
 		/* link it in */
-		for (selectBoxOption = node->options; selectBoxOption->next; selectBoxOption = selectBoxOption->next);
+		for (selectBoxOption = node->options; selectBoxOption->next; selectBoxOption = selectBoxOption->next) {}
 		selectBoxOption->next = &mn.menuSelectBoxes[mn.numSelectBoxes];
 		selectBoxOption->next->next = NULL;
 	}

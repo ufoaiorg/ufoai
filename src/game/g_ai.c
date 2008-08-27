@@ -286,7 +286,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		const objDef_t *weapon;	/* Weapon pointer. */
 		const fireDef_t *fd;	/* Fire-definition pointer. */
 
-		/* optimization: reaction fire is automatic */;
+		/* optimization: reaction fire is automatic */
 		if (IS_SHOT_REACTION(fm))
 			continue;
 

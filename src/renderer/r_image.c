@@ -1086,8 +1086,8 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
 	qboolean clamp = (image->type == it_pic);
 
-	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
-	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
+	for (scaled_width  = 1; scaled_width  < width;  scaled_width  <<= 1) {}
+	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1) {}
 
 	while (scaled_width > r_config.maxTextureSize || scaled_height > r_config.maxTextureSize) {
 		scaled_width >>= 1;

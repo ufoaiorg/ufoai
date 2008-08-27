@@ -85,7 +85,7 @@ qboolean Rimp_Init (void)
 			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
 	}
 
-	SDL_VERSION(&version);
+	SDL_VERSION(&version)
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
 	info = SDL_GetVideoInfo();

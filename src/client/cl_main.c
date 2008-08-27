@@ -803,7 +803,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 			teamData.teamCount[n]++;
 		s = value;
 		cnt++;
-	};
+	}
 
 	/* no players are connected atm */
 	if (!cnt)
