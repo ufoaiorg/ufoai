@@ -16,26 +16,19 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "ufoai.h"
 #include "ufoai_gtk.h"
 #include "ufoai_filters.h"
-
-#include "debugging/debugging.h"
 
 #include "iplugin.h"
 
 #include "version.h"
 
-#include "string/string.h"
 #include "modulesystem/singletonmodule.h"
 
 #include <gtk/gtk.h>
 
-#define PLUGIN_VERSION "0.4"
+#define PLUGIN_VERSION "0.5"
 
-#include "ifilter.h"
-#include "ibrush.h"
-#include "iundo.h"       // declaration of undo system
 #include "ientity.h"     // declaration of entity system
 #include "iscenegraph.h" // declaration of datastructure of the map
 #include "scenelib.h"    // declaration of datastructure of the map
@@ -44,7 +37,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class UFOAIPluginDependencies :
 			public GlobalRadiantModuleRef,    // basic class for all other module refs
-			public GlobalUndoModuleRef,       // used to say radiant that something has changed and to undo that
 			public GlobalSceneGraphModuleRef, // necessary to handle data in the mapfile (change, retrieve data)
 			public GlobalEntityModuleRef,     // to access and modify the entities
 			public GlobalEntityClassManagerModuleRef {
