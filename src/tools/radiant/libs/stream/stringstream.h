@@ -105,6 +105,9 @@ public:
 	}
 	StringOutputStream(std::size_t capacity) : m_string(capacity) {
 	}
+	virtual ~StringOutputStream() {
+	}
+
 	std::size_t write(const char* buffer, std::size_t length) {
 		m_string.push_range(buffer, buffer + length);
 		return length;

@@ -386,7 +386,7 @@ class SingleCharacterOutputStream : public TextOutputStream {
 public:
 	SingleCharacterOutputStream(TextOutputStream& ostream) : m_ostream(ostream), m_pos(m_buffer), m_end(m_buffer + m_bufsize) {
 	}
-	~SingleCharacterOutputStream() {
+	virtual ~SingleCharacterOutputStream() {
 		flush();
 	}
 	void write(const char c) {

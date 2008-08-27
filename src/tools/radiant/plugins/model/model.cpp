@@ -46,6 +46,8 @@ class VectorLightList : public LightList {
 	typedef std::vector<const RendererLight*> Lights;
 	Lights m_lights;
 public:
+	virtual ~VectorLightList() {
+	}
 	void addLight(const RendererLight& light) {
 		m_lights.push_back(&light);
 	}
@@ -82,7 +84,7 @@ public:
 		CopyPicoSurface(surface);
 		CaptureShader();
 	}
-	~PicoSurface() {
+	virtual ~PicoSurface() {
 		ReleaseShader();
 	}
 
@@ -291,7 +293,7 @@ public:
 	PicoModel(picoModel_t* model) {
 		CopyPicoModel(model);
 	}
-	~PicoModel() {
+	virtual ~PicoModel() {
 		for (surfaces_t::iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i)
 			delete *i;
 	}
@@ -525,6 +527,8 @@ public:
 	PicoModelNode() : m_node(this, this, StaticTypeCasts::instance().get()) {
 	}
 	PicoModelNode(picoModel_t* model) : m_node(this, this, StaticTypeCasts::instance().get()), m_picomodel(model) {
+	}
+	virtual ~PicoModelNode() {
 	}
 
 	void release() {

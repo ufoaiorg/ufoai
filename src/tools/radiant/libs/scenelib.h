@@ -207,6 +207,8 @@ class NullNode : public Node::Symbiot {
 public:
 	NullNode() : m_node(this, 0, m_casts) {
 	}
+	virtual ~NullNode() {
+	}
 	void release() {
 		delete this;
 	}
@@ -817,6 +819,8 @@ class SelectChildren : public scene::Traversable::Walker {
 public:
 	SelectChildren(const scene::Path& root)
 			: m_path(root) {
+	}
+	virtual ~SelectChildren() {
 	}
 	bool pre(scene::Node& node) const {
 		m_path.push(makeReference(node));

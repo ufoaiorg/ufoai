@@ -141,7 +141,7 @@ public:
 		copy(other);
 		notifyInsertAll();
 	}
-	~TraversableNodeSet() {
+	virtual ~TraversableNodeSet() {
 		notifyEraseAll();
 	}
 	TraversableNodeSet& operator=(const TraversableNodeSet& other) {
@@ -336,6 +336,8 @@ public:
 
 class TraversableObserverRelay : public ReferenceSet<scene::Traversable::Observer>, public scene::Traversable::Observer {
 public:
+	virtual ~TraversableObserverRelay() {
+	}
 	void insert(scene::Node& node) {
 		forEach(TraversableObserverInsert(node));
 	}

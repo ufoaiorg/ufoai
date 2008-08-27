@@ -101,7 +101,7 @@ class UndoableObject : public Undoable {
 public:
 	UndoableObject(Copyable& object)
 			: m_object(object), m_undoQueue(0), m_map(0) {}
-	~UndoableObject() {
+	virtual ~UndoableObject() {
 	}
 
 	void instanceAttach(MapFile* map) {
