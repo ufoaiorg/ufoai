@@ -1551,7 +1551,7 @@ public:
 		}
 	}
 
-	/// \brief The undo memento for a brush stores only the list of face references - the faces are not copied.
+/// \brief The undo memento for a brush stores only the list of face references - the faces are not copied.
 class BrushUndoMemento : public UndoMemento {
 	public:
 		BrushUndoMemento(const Faces& faces) : m_faces(faces) {
@@ -1981,8 +1981,6 @@ private:
 	/// \brief Constructs the face windings and updates anything that depends on them.
 	void buildBRep();
 };
-
-
 
 class FaceInstance;
 

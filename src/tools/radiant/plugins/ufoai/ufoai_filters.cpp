@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // believe me, i'm sorry
 #include "../../radiant/brush.h"
+#include "../../radiant/brushnode.h"
 
 #include "generic/callback.h"
 
@@ -35,14 +36,7 @@ bool nodraw_active = false;
 bool weaponclip_active = false;
 int level_active = 0;
 
-// TODO: This should be added to ibrush.h
-// like already done for Node_getEntity in ientity.h
-// FIXME: Doesn't belong here
-inline Brush* Node_getBrush(scene::Node& node) {
-	return NodeTypeCast<Brush>::cast(node);
-}
-
-void hide_node(scene::Node& node, bool hide) {
+static inline void hide_node(scene::Node& node, bool hide) {
 	hide
 	? node.enable(scene::Node::eHidden)
 	: node.disable(scene::Node::eHidden);
@@ -96,19 +90,8 @@ public:
 	}
 
 	void visit(Face& face) const {
-#if DEBUG
-		if (m_surfaceFlagsVis < 0)
-			m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
-		else if (m_surfaceFlagsVis >= 0 && m_surfaceFlagsVis != face.getShader().m_flags.m_surfaceFlags)
-			globalOutputStream() << "Faces with different surfaceflags at brush\n";
-		if (m_contentFlagsVis < 0)
-			m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
-		else if (m_contentFlagsVis >= 0 && m_contentFlagsVis != face.getShader().m_flags.m_contentFlags)
-			globalOutputStream() << "Faces with different contentflags at brush\n";
-#else
 		m_surfaceFlagsVis = face.getShader().m_flags.m_surfaceFlags;
 		m_contentFlagsVis = face.getShader().m_flags.m_contentFlags;
-#endif
 	}
 };
 
@@ -204,20 +187,5 @@ void filter_level(int flag) {
 	GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
-
-#ifdef DEBUG
-	if (brushes.empty()) {
-		globalOutputStream() << "UFO:AI: No brushes.\n";
-	} else {
-		globalOutputStream() << "UFO:AI: Found " << Unsigned(brushes.size()) << " brushes.\n";
-	}
-
-	// now let's filter all entities like misc_model, func_breakable and func_door that have the spawnflags set
-	if (entities.empty()) {
-		globalOutputStream() << "UFO:AI: No entities.\n";
-	} else {
-		globalOutputStream() << "UFO:AI: Found " << Unsigned(entities.size()) << " entities.\n";
-	}
-#endif
 }
 
