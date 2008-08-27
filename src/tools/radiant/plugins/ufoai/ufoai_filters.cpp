@@ -30,11 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <list>
 
-bool actorclip_active = false;
-bool stepon_active = false;
-bool nodraw_active = false;
-bool weaponclip_active = false;
-int level_active = 0;
+static int level_active = 0;
 
 static inline void hide_node(scene::Node& node, bool hide) {
 	hide

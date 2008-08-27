@@ -17,7 +17,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "ufoai.h"
-#include "ufoai_level.h"
 #include "ufoai_gtk.h"
 #include "ufoai_filters.h"
 
@@ -68,7 +67,7 @@ const char* getName() {
 }
 const char* getCommandList() {
 	/*GlobalRadiant().getGameName()*/
-	return "About;-;Worldspawn reset;Worldspawn;Perform check;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8";
+	return "About;-;Level 1;Level 2;Level 3;Level 4;Level 5;Level 6;Level 7;Level 8";
 }
 const char* getCommandTitleList() {
 	return "";
@@ -85,12 +84,6 @@ void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush) 
 		filter_level(CONTENTS_LEVEL2);
 	} else if (string_equal(command, "Level 3")) {
 		filter_level(CONTENTS_LEVEL3);
-	} else if (string_equal(command, "Worldspawn")) {
-		message = assign_default_values_to_worldspawn(false);
-	} else if (string_equal(command, "Worldspawn reset")) {
-		message = assign_default_values_to_worldspawn(true);
-	} else if (string_equal(command, "Perform check")) {
-		message = check_map_values();
 	} else if (string_equal(command, "Level 4")) {
 		filter_level(CONTENTS_LEVEL4);
 	} else if (string_equal(command, "Level 5")) {

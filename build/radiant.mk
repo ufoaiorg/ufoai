@@ -190,8 +190,7 @@ RADIANT_PLUGIN_ARCHIVEZIP_TARGET=radiant/modules/archivezip.$(SHARED_EXT)
 RADIANT_PLUGIN_UFOAI_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/ufoai/ufoai.cpp \
 	$(RADIANT_BASE)/plugins/ufoai/ufoai_filters.cpp \
-	$(RADIANT_BASE)/plugins/ufoai/ufoai_gtk.cpp \
-	$(RADIANT_BASE)/plugins/ufoai/ufoai_level.cpp
+	$(RADIANT_BASE)/plugins/ufoai/ufoai_gtk.cpp
 
 RADIANT_PLUGIN_UFOAI_CPP_OBJS=$(RADIANT_PLUGIN_UFOAI_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_UFOAI_TARGET=radiant/plugins/ufoai.$(SHARED_EXT)
