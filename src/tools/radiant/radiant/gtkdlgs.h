@@ -39,8 +39,6 @@ EMessageBoxReturn DoShaderTagDlg (CopiedString *tag, const char* title);
 EMessageBoxReturn DoShaderInfoDlg (const char* name, const char* filename, const char* title);
 void DoTextEditor (const char* filename, int cursorpos);
 
-void DoProjectSettings();
-
 void DoFind();
 void DoSides(int type, int axis);
 void DoAbout();

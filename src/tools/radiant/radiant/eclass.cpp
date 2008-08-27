@@ -186,8 +186,8 @@ void EntityClassUFO_constructDirectory(const char* directory, const char* extens
 void EntityClassUFO_Construct() {
 	StringOutputStream baseDirectory(256);
 	StringOutputStream gameDirectory(256);
-	const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-	const char* gamename = GlobalRadiant().getGameName();
+	const char* basegame = basegame_get();
+	const char* gamename = gamename_get();
 	baseDirectory << GlobalRadiant().getEnginePath() << basegame << '/';
 	gameDirectory << GlobalRadiant().getEnginePath() << gamename << '/';
 

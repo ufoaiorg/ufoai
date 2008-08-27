@@ -362,7 +362,11 @@ void Map_SetModified(Map& map, bool modified) {
 	}
 }
 
-void Map_UpdateTitle(const Map& map) {
+/**
+ * @sa Sys_SetTitle
+ */
+void Map_UpdateTitle (const Map& map)
+{
 	Sys_SetTitle(map.m_name.c_str(), Map_Modified(map));
 }
 

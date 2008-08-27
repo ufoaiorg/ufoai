@@ -26,35 +26,14 @@ GtkRadiant. If you did not receive a LIMITED USE SOFTWARE LICENSE AGREEMENT,
 please contact Id Software immediately at info@idsoftware.com.
 */
 
-//
-// Linux stuff
-//
-// Leonardo Zide (leo@lokigames.com)
-//
-
 #include "qe3.h"
 
-#include "debugging/debugging.h"
-
 #include "ifilesystem.h"
-
-#include <map>
-
-#include <gtk/gtktearoffmenuitem.h>
-
-#include "stream/textfilestream.h"
-#include "cmdlib.h"
 #include "stream/stringstream.h"
-#include "os/path.h"
 #include "scenelib.h"
-
 #include "gtkutil/messagebox.h"
-#include "error.h"
 #include "map.h"
-#include "camwindow.h"
 #include "mainframe.h"
-#include "preferences.h"
-#include "autosave.h"
 #include "convert.h"
 
 QEGlobals_t  g_qeglobals;
@@ -66,7 +45,7 @@ void QE_InitVFS (void) {
 	// *nix systems have a dual filesystem in ~/.ufoai, which is searched first .. so we need to add that too
 
 	const char* gamename = gamename_get();
-	const char* basegame = basegame_get();
+	const char* basegame = gamename_get();
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	const char* userRoot = g_qeglobals.m_userEnginePath.c_str();
 #endif
@@ -112,6 +91,8 @@ void QE_InitVFS (void) {
  * @brief Updates statusbar with brush and entity count
  * @sa MainFrame::RedrawStatusText
  * @sa MainFrame::SetStatusText
+ * @todo Let his also count the filtered brushes and entities - to be able to
+ * use this counter for level optimizations
  */
 void QE_UpdateStatusBar (void)
 {
@@ -134,40 +115,32 @@ void QE_entityCountChanged (void)
 	QE_UpdateStatusBar();
 }
 
-bool ConfirmModified(const char* title)
+bool ConfirmModified (const char* title)
 {
 	if (!Map_Modified(g_map))
 		return true;
 
-	EMessageBoxReturn result = gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), "The current map has changed since it was last saved.\nDo you want to save the current map before continuing?", title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
-	if (result == eIDCANCEL) {
+	EMessageBoxReturn result = gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()),
+		"The current map has changed since it was last saved.\nDo you want to save the current map before continuing?",
+		title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
+	if (result == eIDCANCEL)
 		return false;
-	}
+
 	if (result == eIDYES) {
-		if (Map_Unnamed(g_map)) {
+		if (Map_Unnamed(g_map))
 			return Map_SaveAs();
-		} else {
+		else
 			return Map_Save();
-		}
 	}
 	return true;
 }
 
-bool Region_cameraValid (void) {
-	Vector3 vOrig(vector3_snapped(Camera_getOrigin(*g_pParentWnd->GetCamWnd())));
-
-	for (int i = 0 ; i < 3 ; i++) {
-		if (vOrig[i] > region_maxs[i] || vOrig[i] < region_mins[i]) {
-			return false;
-		}
-	}
-	return true;
-}
-
-// =============================================================================
-// Sys_ functions
-
-void Sys_SetTitle(const char *text, bool modified) {
+/**
+ * @brief Sets the window title for UFORadiant
+ * @sa Map_UpdateTitle
+ */
+void Sys_SetTitle (const char *text, bool modified)
+{
 	StringOutputStream title;
 	title << ConvertLocaleToUTF8(text);
 
@@ -177,24 +150,3 @@ void Sys_SetTitle(const char *text, bool modified) {
 
 	gtk_window_set_title(MainFrame_getWindow(), title.c_str());
 }
-
-bool g_bWaitCursor = false;
-
-void Sys_BeginWait (void) {
-	ScreenUpdates_Disable("Processing...", "Please Wait");
-	GdkCursor *cursor = gdk_cursor_new (GDK_WATCH);
-	gdk_window_set_cursor(GTK_WIDGET(MainFrame_getWindow())->window, cursor);
-	gdk_cursor_unref (cursor);
-	g_bWaitCursor = true;
-}
-
-void Sys_EndWait (void) {
-	ScreenUpdates_Enable();
-	gdk_window_set_cursor(GTK_WIDGET(MainFrame_getWindow())->window, 0);
-	g_bWaitCursor = false;
-}
-
-void Sys_Beep (void) {
-	gdk_beep();
-}
-

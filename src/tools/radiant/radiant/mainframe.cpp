@@ -114,7 +114,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 struct layout_globals_t {
 	WindowPosition m_position;
 
-
 	int nXYHeight;
 	int nXYWidth;
 	int nCamWidth;
@@ -136,7 +135,7 @@ layout_globals_t g_layout_globals;
 glwindow_globals_t g_glwindow_globals;
 
 
-// VFS
+// Virtual file system
 class VFSModuleObserver : public ModuleObserver {
 	std::size_t m_unrealised;
 public:
@@ -166,7 +165,8 @@ void VFS_Destroy (void) {
 
 // Home Paths
 
-void HomePaths_Realise (void) {
+void HomePaths_Realise (void)
+{
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	const char* prefix = g_pGameDescription->getKeyValue("prefix");
 	if (!string_empty(prefix)) {
@@ -191,11 +191,13 @@ void HomePaths_Realise (void) {
 
 ModuleObservers g_homePathObservers;
 
-void Radiant_attachHomePathsObserver(ModuleObserver& observer) {
+void Radiant_attachHomePathsObserver (ModuleObserver& observer)
+{
 	g_homePathObservers.attach(observer);
 }
 
-void Radiant_detachHomePathsObserver(ModuleObserver& observer) {
+void Radiant_detachHomePathsObserver (ModuleObserver& observer)
+{
 	g_homePathObservers.detach(observer);
 }
 
@@ -219,10 +221,12 @@ public:
 
 HomePathsModuleObserver g_HomePathsModuleObserver;
 
-void HomePaths_Construct (void) {
+void HomePaths_Construct (void)
+{
 	Radiant_attachEnginePathObserver(g_HomePathsModuleObserver);
 }
-void HomePaths_Destroy (void) {
+void HomePaths_Destroy (void)
+{
 	Radiant_detachEnginePathObserver(g_HomePathsModuleObserver);
 }
 
@@ -233,7 +237,8 @@ CopiedString g_strEnginePath;
 ModuleObservers g_enginePathObservers;
 std::size_t g_enginepath_unrealised = 1;
 
-void Radiant_attachEnginePathObserver(ModuleObserver& observer) {
+void Radiant_attachEnginePathObserver (ModuleObserver& observer)
+{
 	g_enginePathObservers.attach(observer);
 }
 
@@ -242,25 +247,29 @@ void Radiant_detachEnginePathObserver(ModuleObserver& observer) {
 }
 
 
-void EnginePath_Realise (void) {
+void EnginePath_Realise (void)
+{
 	if (--g_enginepath_unrealised == 0) {
 		g_enginePathObservers.realise();
 	}
 }
 
 
-const char* EnginePath_get (void) {
+const char* EnginePath_get (void)
+{
 	ASSERT_MESSAGE(g_enginepath_unrealised == 0, "EnginePath_get: engine path not realised");
 	return g_strEnginePath.c_str();
 }
 
-void EnginePath_Unrealise (void) {
+void EnginePath_Unrealise (void)
+{
 	if (++g_enginepath_unrealised == 1) {
 		g_enginePathObservers.unrealise();
 	}
 }
 
-void setEnginePath(const char* path) {
+void setEnginePath (const char* path)
+{
 	StringOutputStream buffer(256);
 	buffer << DirectoryCleaned(path);
 	if (!path_equal(buffer.c_str(), g_strEnginePath.c_str())) {
@@ -279,33 +288,41 @@ void setEnginePath(const char* path) {
 
 CopiedString g_strAppPath;                 ///< holds the full path of the executable
 
-const char* AppPath_get (void) {
+const char* AppPath_get (void)
+{
 	return g_strAppPath.c_str();
 }
 
 /// directory for temp files
 /// NOTE: on *nix this is were we check for .pid
 CopiedString g_strSettingsPath;
-const char* SettingsPath_get (void) {
+
+const char* SettingsPath_get (void)
+{
 	return g_strSettingsPath.c_str();
 }
 
-void EnginePathImport(CopiedString& self, const char* value) {
+void EnginePathImport(CopiedString& self, const char* value)
+{
 	setEnginePath(value);
 }
 typedef ReferenceCaller1<CopiedString, const char*, EnginePathImport> EnginePathImportCaller;
 
-void Paths_constructPreferences(PreferencesPage& page) {
+void Paths_constructPreferences (PreferencesPage& page)
+{
 	page.appendPathEntry("Engine Path", true,
 	                     StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
 	                     StringExportCallback(StringExportCaller(g_strEnginePath))
 	                    );
 }
-void Paths_constructPage(PreferenceGroup& group) {
+void Paths_constructPage (PreferenceGroup& group)
+{
 	PreferencesPage page(group.createPage("Paths", "Path Settings"));
 	Paths_constructPreferences(page);
 }
-void Paths_registerPreferencesPage (void) {
+
+void Paths_registerPreferencesPage (void)
+{
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Paths_constructPage>());
 }
 
@@ -329,7 +346,8 @@ public:
 
 PathsDialog g_PathsDialog;
 
-void EnginePath_verify (void) {
+void EnginePath_verify (void)
+{
 	if (!file_exists(g_strEnginePath.c_str())) {
 		g_PathsDialog.Create();
 		g_PathsDialog.DoModal();
@@ -344,15 +362,18 @@ ModuleObservers g_gameNameObservers;
 ModuleObservers g_gameModeObservers;
 }
 
-void Radiant_attachGameNameObserver(ModuleObserver& observer) {
+void Radiant_attachGameNameObserver (ModuleObserver& observer)
+{
 	g_gameNameObservers.attach(observer);
 }
 
-void Radiant_detachGameNameObserver(ModuleObserver& observer) {
+void Radiant_detachGameNameObserver (ModuleObserver& observer)
+{
 	g_gameNameObservers.detach(observer);
 }
 
-const char* basegame_get (void) {
+const char* basegame_get (void)
+{
 	return g_pGameDescription->getRequiredKeyValue("basegame");
 }
 
@@ -1578,8 +1599,6 @@ static GtkMenuItem* create_file_menu (void) {
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, "_Refresh models", "RefreshReferences");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Pro_ject settings...", "ProjectSettings");
-	menu_separator(menu);
 	MRU_constructMenu(menu);
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, "E_xit", "Exit");
@@ -2638,7 +2657,6 @@ void MainFrame_Construct (void) {
 	GlobalCommands_insert("SaveSelected", FreeCaller<ExportMap>());
 	GlobalCommands_insert("SaveRegion", FreeCaller<SaveRegion>());
 	GlobalCommands_insert("RefreshReferences", FreeCaller<RefreshReferences>());
-	GlobalCommands_insert("ProjectSettings", FreeCaller<DoProjectSettings>());
 	GlobalCommands_insert("Exit", FreeCaller<Exit>());
 
 	GlobalCommands_insert("Undo", FreeCaller<Undo>(), Accelerator('Z', (GdkModifierType)GDK_CONTROL_MASK));
