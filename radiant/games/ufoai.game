@@ -52,4 +52,5 @@
   cont26="weaponclip"
   cont28="detail"
   cont31="stepon"
+  show_gamenode="1"
 />

@@ -806,9 +806,7 @@ void Restart() {
 }
 
 void OpenHelpURL() {
-	StringOutputStream help(256);
-	help << AppPath_get() << "docs/index.html";
-	OpenURL(help.c_str());
+	OpenURL("http://ufoai.ninex.info/wiki/index.php/Category:Mapping");
 }
 
 void OpenBugReportURL() {
