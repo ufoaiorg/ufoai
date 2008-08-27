@@ -105,26 +105,6 @@ const ListAttributeType* EntityClass_findListType(const char* name) {
 	return 0;
 }
 
-
-class EntityClassFilterMode {
-public:
-	bool filter_mp_sp;
-	const char* mp_ignore_prefix;
-	const char* sp_ignore_prefix;
-
-	EntityClassFilterMode() :
-			filter_mp_sp(!string_empty(g_pGameDescription->getKeyValue("eclass_filter_gamemode"))),
-			mp_ignore_prefix(g_pGameDescription->getKeyValue("eclass_sp_prefix")),
-			sp_ignore_prefix(g_pGameDescription->getKeyValue("eclass_mp_prefix")) {
-		if (string_empty(mp_ignore_prefix)) {
-			mp_ignore_prefix = "sp_";
-		}
-		if (string_empty(sp_ignore_prefix)) {
-			sp_ignore_prefix = "mp_";
-		}
-	}
-};
-
 class EntityClassesLoadFile {
 	const EntityClassScanner& scanner;
 	const char* m_directory;
@@ -132,22 +112,6 @@ public:
 	EntityClassesLoadFile(const EntityClassScanner& scanner, const char* directory) : scanner(scanner), m_directory(directory) {
 	}
 	void operator()(const char* name) const {
-		EntityClassFilterMode filterMode;
-
-		if (filterMode.filter_mp_sp) {
-			if (string_empty(GlobalRadiant().getGameMode()) || string_equal(GlobalRadiant().getGameMode(), "sp")) {
-				if (string_equal_n(name, filterMode.sp_ignore_prefix, strlen(filterMode.sp_ignore_prefix))) {
-					globalOutputStream() << "Ignoring '" << name << "'\n";
-					return;
-				}
-			} else {
-				if (string_equal_n(name, filterMode.mp_ignore_prefix, strlen(filterMode.mp_ignore_prefix))) {
-					globalOutputStream() << "Ignoring '" << name << "'\n";
-					return;
-				}
-			}
-		}
-
 		// for a given name, we grab the first .def in the vfs
 		// this allows to override base/entities.def for instance
 		StringOutputStream relPath(256);
@@ -296,7 +260,7 @@ class EntityClassUFODependencies :
 	EClassModulesRef m_eclass_modules;
 public:
 	EntityClassUFODependencies() :
-			m_eclass_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclasstype")) {
+			m_eclass_modules("def") {
 	}
 	EClassModules& getEClassModules() {
 		return m_eclass_modules.get();

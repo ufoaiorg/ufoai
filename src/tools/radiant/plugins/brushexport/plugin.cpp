@@ -89,7 +89,7 @@ class BrushExportDependencies :
 			public GlobalSelectionModuleRef {
 public:
 	BrushExportDependencies(void)
-			: GlobalBrushModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("brushtypes")) {}
+			: GlobalBrushModuleRef("ufo") {}
 };
 
 class BrushExportModule : public TypeSystemRef {

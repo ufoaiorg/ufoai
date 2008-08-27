@@ -187,12 +187,12 @@ class RadiantDependencies :
 
 public:
 	RadiantDependencies() :
-			GlobalEntityModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entities")),
-			GlobalShadersModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("shaders")),
-			GlobalBrushModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("brushtypes")),
-			GlobalEntityClassManagerModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclass")),
+			GlobalEntityModuleRef("ufo"),
+			GlobalShadersModuleRef("ufo"),
+			GlobalBrushModuleRef("ufo"),
+			GlobalEntityClassManagerModuleRef("ufo"),
 			m_image_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
-			m_map_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("maptypes")),
+			m_map_modules("mapufo"),
 			m_toolbar_modules("*"),
 			m_plugin_modules("*") {
 	}

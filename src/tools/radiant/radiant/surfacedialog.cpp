@@ -785,96 +785,94 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				}
 			}
 		}
-		if (!string_empty(g_pGameDescription->getKeyValue("si_flags"))) {
+		{
+			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Surface Flags"));
+			gtk_widget_show(GTK_WIDGET(frame));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 			{
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new("Surface Flags"));
-				gtk_widget_show(GTK_WIDGET(frame));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show(GTK_WIDGET(vbox3));
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
 				{
-					GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-					//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-					gtk_widget_show(GTK_WIDGET(vbox3));
-					gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-					{
-						GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-						gtk_widget_show(GTK_WIDGET(table));
-						gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-						gtk_table_set_row_spacings(table, 0);
-						gtk_table_set_col_spacings(table, 0);
+					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+					gtk_widget_show(GTK_WIDGET(table));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+					gtk_table_set_row_spacings(table, 0);
+					gtk_table_set_col_spacings(table, 0);
 
-						GtkCheckButton** p = m_surfaceFlags;
+					GtkCheckButton** p = m_surfaceFlags;
 
-						for (int c = 0; c != 4; ++c) {
-							for (int r = 0; r != 8; ++r) {
-								GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getSurfaceFlagName(c * 8 + r)));
-								gtk_widget_show(GTK_WIDGET(check));
-								gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-								                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-								                 (GtkAttachOptions)(0), 0, 0);
-								*p++ = check;
-								guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-								g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-							}
+					for (int c = 0; c != 4; ++c) {
+						for (int r = 0; r != 8; ++r) {
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getSurfaceFlagName(c * 8 + r)));
+							gtk_widget_show(GTK_WIDGET(check));
+							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+												(GtkAttachOptions)(0), 0, 0);
+							*p++ = check;
+							guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
+							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
 						}
 					}
 				}
 			}
+		}
+		{
+			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Content Flags"));
+			gtk_widget_show(GTK_WIDGET(frame));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 			{
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new("Content Flags"));
-				gtk_widget_show(GTK_WIDGET(frame));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show(GTK_WIDGET(vbox3));
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
 				{
-					GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-					//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-					gtk_widget_show(GTK_WIDGET(vbox3));
-					gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-					{
 
-						GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-						gtk_widget_show(GTK_WIDGET(table));
-						gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-						gtk_table_set_row_spacings(table, 0);
-						gtk_table_set_col_spacings(table, 0);
+					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+					gtk_widget_show(GTK_WIDGET(table));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+					gtk_table_set_row_spacings(table, 0);
+					gtk_table_set_col_spacings(table, 0);
 
-						GtkCheckButton** p = m_contentFlags;
+					GtkCheckButton** p = m_contentFlags;
 
-						for (int c = 0; c != 4; ++c) {
-							for (int r = 0; r != 8; ++r) {
-								GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getContentFlagName(c * 8 + r)));
-								gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON(check), FALSE);
-								gtk_widget_show(GTK_WIDGET(check));
-								gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-								                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-								                 (GtkAttachOptions)(0), 0, 0);
-								*p++ = check;
-								guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-								g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-							}
+					for (int c = 0; c != 4; ++c) {
+						for (int r = 0; r != 8; ++r) {
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getContentFlagName(c * 8 + r)));
+							gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON(check), FALSE);
+							gtk_widget_show(GTK_WIDGET(check));
+							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+												(GtkAttachOptions)(0), 0, 0);
+							*p++ = check;
+							guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
+							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
 						}
-
-						// TODO: Why?
-						// not allowed to modify detail flag using Surface Inspector
-						gtk_widget_set_sensitive(GTK_WIDGET(m_contentFlags[BRUSH_DETAIL_FLAG]), FALSE);
 					}
+
+					// TODO: Why?
+					// not allowed to modify detail flag using Surface Inspector
+					gtk_widget_set_sensitive(GTK_WIDGET(m_contentFlags[BRUSH_DETAIL_FLAG]), FALSE);
 				}
 			}
+		}
+		{
+			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
+			gtk_widget_show(GTK_WIDGET(frame));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 			{
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
-				gtk_widget_show(GTK_WIDGET(frame));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
-				{
-					GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-					gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-					gtk_widget_show(GTK_WIDGET(vbox3));
-					gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show(GTK_WIDGET(vbox3));
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
 
-					{
-						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-						gtk_widget_show(GTK_WIDGET(entry));
-						gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
-						m_valueEntryWidget = entry;
-						m_valueEntry.connect(entry);
-					}
+				{
+					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+					gtk_widget_show(GTK_WIDGET(entry));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
+					m_valueEntryWidget = entry;
+					m_valueEntry.connect(entry);
 				}
 			}
 		}
@@ -951,18 +949,16 @@ void SurfaceInspector::Update() {
 		entry_set_float(m_rotateIncrement.m_entry, g_si_globals.rotate);
 	}
 
-	if (!string_empty(g_pGameDescription->getKeyValue("si_flags"))) {
-		ContentsFlagsValue flags(SurfaceInspector_GetSelectedFlags());
+	ContentsFlagsValue flags(SurfaceInspector_GetSelectedFlags());
 
-		entry_set_int(m_valueEntryWidget, flags.m_value);
+	entry_set_int(m_valueEntryWidget, flags.m_value);
 
-		for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
-			toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_surfaceFlags & (1 << (p - m_surfaceFlags)));
-		}
+	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
+		toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_surfaceFlags & (1 << (p - m_surfaceFlags)));
+	}
 
-		for (GtkCheckButton** p = m_contentFlags; p != m_contentFlags + 32; ++p) {
-			toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_contentFlags & (1 << (p - m_contentFlags)));
-		}
+	for (GtkCheckButton** p = m_contentFlags; p != m_contentFlags + 32; ++p) {
+		toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_contentFlags & (1 << (p - m_contentFlags)));
 	}
 }
 

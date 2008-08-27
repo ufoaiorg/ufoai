@@ -46,8 +46,8 @@ class MapDependencies :
 			public GlobalSceneGraphModuleRef {
 public:
 	MapDependencies() :
-			GlobalBrushModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("brushtypes")),
-			GlobalEntityClassManagerModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclass")) {
+			GlobalBrushModuleRef("ufo"),
+			GlobalEntityClassManagerModuleRef("ufo") {
 	}
 };
 

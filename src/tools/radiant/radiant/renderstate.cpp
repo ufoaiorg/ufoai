@@ -1683,7 +1683,7 @@ StaticRegisterModule staticRegisterOpenGLStateLibrary(StaticOpenGLStateLibraryMo
 class ShaderCacheDependencies : public GlobalShadersModuleRef, public GlobalTexturesModuleRef, public GlobalOpenGLStateLibraryModuleRef {
 public:
 	ShaderCacheDependencies() :
-			GlobalShadersModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("shaders")) {
+			GlobalShadersModuleRef("ufo") {
 	}
 };
 
