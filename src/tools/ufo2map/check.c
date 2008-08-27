@@ -703,6 +703,50 @@ void DisplayContentFlags (const int flags)
 }
 
 /**
+ * @brief calculate the bits that have to be set to fill levelflags such that they are contiguous
+ */
+static int Check_CalculateLevelFlagFill(int contentFlags)
+{
+	int firstSetLevel = 0, lastSetLevel=0;
+	int scanLevel, flagFill = 0;
+	for (scanLevel = CONTENTS_LEVEL_1; scanLevel <= CONTENTS_LEVEL_8; scanLevel <<= 1) {
+		if (scanLevel & contentFlags) {
+			if (!firstSetLevel) {
+				firstSetLevel = scanLevel;
+			} else {
+				lastSetLevel = scanLevel;
+			}
+		}
+	}
+	for (scanLevel = firstSetLevel << 1 ; scanLevel < lastSetLevel; scanLevel <<= 1)
+		flagFill |= scanLevel & ~contentFlags;
+	return flagFill;
+}
+
+/**
+ * @brief ensures set levelflags are in one contiguous block
+ */
+void CheckFillLevelFlags (void)
+{
+	int i, j, flagFill;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+
+		/* CheckLevelFlags should be done first, so we will boldly
+		 * assume that levelflags are the same on each face */
+		flagFill = Check_CalculateLevelFlagFill(brush->original_sides[0].contentFlags);
+		if (flagFill) {
+			Check_Printf("* Brush %i (entity %i): making set levelflags continuous by setting", brush->brushnum, brush->entitynum);
+			DisplayContentFlags(flagFill);
+			Check_Printf("\n");
+			for (j = 0; j < brush->numsides; j++)
+					brush->original_sides[0].contentFlags |= flagFill;
+		}
+	}
+}
+
+/**
  * @brief sets all levelflags, if none are set.
  */
 void CheckLevelFlags (void)

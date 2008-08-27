@@ -74,7 +74,7 @@ typedef struct mapConfig_s {
 	qboolean nobackclip;
 	int noradiosity;
 	int block_xl, block_xh, block_yl, block_yh;
-	float microvolume; /** < -micro test after CSG */
+	float microvolume; /**< -micro test after CSG */
 	unsigned int numbounce;
 	qboolean extrasamples;
 	float subdiv;
@@ -84,13 +84,14 @@ typedef struct mapConfig_s {
 
 	qboolean performMapCheck;
 	qboolean chkEntities;
+	qboolean chkFillLevelFlags;
 	qboolean chkNodraws;
 	qboolean chkBrushes;
 	qboolean chkLevelFlags;
 	qboolean chkTextures;
 	qboolean chkMixedFaceContents;
 	qboolean chkMMicro;
-	float mapMicrovol; /** < micro test before CSG */
+	float mapMicrovol; /**< -check mbr micro test before CSG */
 	qboolean chkAll;
 	qboolean fixMap;
 

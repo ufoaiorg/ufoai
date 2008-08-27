@@ -109,6 +109,7 @@ static void Usage (void)
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
 		"                            : step, unlike the bsp -micro option. default 1 unit^3.\n"
 		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
+		"    flv filllevelflags      : ensure set levelflag bits are uninterrupted\n"
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
 		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
 		"    tex textures            : warns when no texture or error texture is assigned.\n"
@@ -153,6 +154,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
 					Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkBrushes = qtrue;
+				} else if (!strcmp(argv[i], "filllevelflags") || !strcmp(argv[i], "flv")) {
+					Com_Printf("  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
+					config.chkFillLevelFlags = qtrue;
 				} else if (!strcmp(argv[i], "levelflags") || !strcmp(argv[i], "lvl")) {
 					Com_Printf("  %s levelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkLevelFlags = qtrue;
@@ -513,6 +517,8 @@ int main (int argc, const char **argv)
 		 * console with output, as levelflags are contentflags */
 		if (config.chkLevelFlags || config.chkBrushes || config.chkAll)
 			CheckLevelFlags();
+		if (config.chkFillLevelFlags || config.chkBrushes || config.chkAll)
+			CheckFillLevelFlags();
 		/* this must be before mfc check, as otherwise mfc warnings are given
 		* which are auto-fixed based on textures */
 		if (config.chkTextures || config.chkBrushes || config.chkAll)

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CheckTexturesBasedOnFlags(void);
 void CheckFlagsBasedOnTextures(void);
 void CheckLevelFlags(void);
+void CheckFillLevelFlags(void);
 void CheckBrushes(void);
 void CheckEntities(void);
 void CheckNodraws(void);
