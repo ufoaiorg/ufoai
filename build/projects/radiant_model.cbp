@@ -124,9 +124,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_terrain.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\mathlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

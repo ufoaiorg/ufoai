@@ -108,8 +108,7 @@ RADIANT_PLUGIN_MODEL_SRCS_C = \
 	$(RADIANT_BASE)/libs/picomodel/pm_ms3d.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_mdc.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_md2.c \
-	$(RADIANT_BASE)/libs/picomodel/pm_terrain.c \
-	$(RADIANT_BASE)/libs/picomodel/mathlib.c
+	$(RADIANT_BASE)/libs/picomodel/pm_terrain.c
 
 RADIANT_PLUGIN_MODEL_C_OBJS=$(RADIANT_PLUGIN_MODEL_SRCS_C:%.c=$(BUILDDIR)/tools/radiant/plugins_c/%.o)
 RADIANT_PLUGIN_MODEL_CPP_OBJS=$(RADIANT_PLUGIN_MODEL_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
