@@ -1,6 +1,6 @@
 /**
  * @file maptools.cpp
- * @brief Creates the maptools checkDialogs - like checking for errors and compiling
+ * @brief Creates the maptools dialogs - like checking for errors and compiling
  * a map
  */
 
@@ -80,8 +80,6 @@ static void CreateCheckDialog (void)
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked",
 			G_CALLBACK(editor_hide), NULL);
-	gtk_widget_set_usize(button, 60, -2);
-
 	gtk_widget_set_usize(button, 60, -2);
 
 	checkDialog = dlg;
