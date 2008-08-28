@@ -5439,7 +5439,7 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 
 	assert(aircraft);
 
-	/** @todo What about UGVs/Tanks? */
+	/* only soldiers have stats and ranks, ugvs not */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
 			character_t *chr = &gd.employees[EMPL_SOLDIER][i].chr;
@@ -5461,7 +5461,6 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 
 			/* Check if the soldier meets the requirements for a higher rank
 			 * and do a promotion. */
-			/** @todo use param[in] in some way. */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = &gd.ranks[j];
@@ -5694,7 +5693,7 @@ static void CL_GameResults_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
 
 		if (employee->hired && employee->baseHired == base) {
-			character_t *chr = &(employee->chr);
+			const character_t *chr = &(employee->chr);
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
@@ -5737,8 +5736,6 @@ static void CL_GameResults_f (void)
 			CP_MissionIsOver(selectedMission);
 	}
 }
-
-/* =========================================================== */
 
 /**
  * @return Alien Team Type
@@ -5813,8 +5810,6 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 		gd.numAlienTeams[alienType]++;
 	} while (*text);
 }
-
-/* =========================================================== */
 
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
@@ -6603,9 +6598,7 @@ static void CP_CampaignsClick_f (void)
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
-		"%s\n"),
-			campaigns[num].name,
-			racetype,
+		"%s\n"), campaigns[num].name, racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
@@ -6617,7 +6610,6 @@ static void CP_CampaignsClick_f (void)
 	/* Highlight currently selected entry */
 	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
 	campaignlist->textLineSelected = num;
-
 }
 
 /**
