@@ -122,13 +122,13 @@ const char *Q_Exec (const char *cmd, char *cmdline, const char *execdir, bool bC
 		NULL, execdir, &startupinfo, &ProcessInformation)) {
 
 		startupinfo.dwFlags = 0;
-		cbuf = malloc(OUTPUTBUFSIZE + 1);
+		cbuff = (char *)malloc(OUTPUTBUFSIZE + 1);
 
 		// capture output
 		while (readfh) {
 			if (!ReadFile(readfh, cbuff + startupinfo.dwFlags, OUTPUTBUFSIZE - startupinfo.dwFlags, &ProcessInformation.dwProcessId, 0) || !ProcessInformation.dwProcessId) {
 				if (GetLastError() != ERROR_BROKEN_PIPE && ProcessInformation.dwProcessId) {
-					free(cbuf);
+					free(cbuff);
 					return NULL;
 				}
 
@@ -139,7 +139,7 @@ const char *Q_Exec (const char *cmd, char *cmdline, const char *execdir, bool bC
 
 			startupinfo.dwFlags += ProcessInformation.dwProcessId;
 		}
-		return cbuf;
+		return cbuff;
 	}
 	return NULL;
 }
