@@ -37,7 +37,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <unistd.h>
 
-bool Q_Exec (const char *cmd, char *cmdline, const char *, bool)
+const char *Q_Exec (const char *cmd, char *cmdline, const char *, bool)
 {
 	char fullcmd[2048];
 	char *pCmd;
@@ -46,7 +46,7 @@ bool Q_Exec (const char *cmd, char *cmdline, const char *, bool)
 #endif
 	switch (fork()) {
 	case - 1:
-		return true;
+		return NULL; /* FIXME: true */
 	case 0:
 		/* always concat the command on linux */
 		if (cmd) {
@@ -71,20 +71,33 @@ bool Q_Exec (const char *cmd, char *cmdline, const char *, bool)
 		_exit(0);
 		break;
 	}
-	return true;
+	return NULL;
 }
 
 #elif defined(WIN32)
 
 #include <windows.h>
 
+#define OUTPUTBUFSIZE 8192
+
 // NOTE TTimo windows is VERY nitpicky about the syntax in CreateProcess
-bool Q_Exec (const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole)
+const char *Q_Exec (const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole)
 {
 	PROCESS_INFORMATION ProcessInformation;
 	STARTUPINFO startupinfo = {0};
 	DWORD dwCreationFlags;
+	SECURITY_ATTRIBUTES sattr;
+	HANDLE readfh;
+	char *cbuff;
+
+	// get handles and
 	GetStartupInfo(&startupinfo);
+
+	// initialize the security struct - to get the output handle
+	sattr.nLength = sizeof(SECURITY_ATTRIBUTES);
+	sattr.lpSecurityDescriptor = 0;
+	sattr.bInheritHandle = TRUE;
+
 	if (bCreateConsole)
 		dwCreationFlags = CREATE_NEW_CONSOLE | NORMAL_PRIORITY_CLASS;
 	else
@@ -101,11 +114,34 @@ bool Q_Exec (const char *cmd, char *cmdline, const char *execdir, bool bCreateCo
 		while (*pCmdline == ' ')
 			pCmdline++;
 	}
+	// create a pipe to read the system output from
+	if (!CreatePipe(&readfh, &startupinfo.hStdOutput, &sattr, 0))
+		return NULL;
 
-	if (CreateProcess(pCmd, pCmdline, NULL, NULL, FALSE, dwCreationFlags,
-		NULL, execdir, &startupinfo, &ProcessInformation))
-		return true;
-	return false;
+	if (CreateProcess(pCmd, pCmdline, NULL, NULL, TRUE, dwCreationFlags,
+		NULL, execdir, &startupinfo, &ProcessInformation)) {
+
+		startupinfo.dwFlags = 0;
+		cbuf = malloc(OUTPUTBUFSIZE + 1);
+
+		// capture output
+		while (readfh) {
+			if (!ReadFile(readfh, cbuff + startupinfo.dwFlags, OUTPUTBUFSIZE - startupinfo.dwFlags, &ProcessInformation.dwProcessId, 0) || !ProcessInformation.dwProcessId) {
+				if (GetLastError() != ERROR_BROKEN_PIPE && ProcessInformation.dwProcessId) {
+					free(cbuf);
+					return NULL;
+				}
+
+				// Close the pipe
+				CloseHandle(readfh);
+				readfh = 0;
+			}
+
+			startupinfo.dwFlags += ProcessInformation.dwProcessId;
+		}
+		return cbuf;
+	}
+	return NULL;
 }
 
 #endif

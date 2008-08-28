@@ -42,7 +42,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //   if the spawn was fine
 //   TODO TTimo add functionality to track the process until it dies
 
-bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole);
+const char *Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole);
 
 // some easy portability crap
 
