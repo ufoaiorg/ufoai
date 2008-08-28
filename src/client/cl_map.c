@@ -1805,7 +1805,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  */
 void MAP_DrawMap (const menuNode_t* node)
 {
-	float q = 0.0f;
 	float distance;
 	qboolean disableSolarRender = qfalse;
 
@@ -1822,9 +1821,9 @@ void MAP_DrawMap (const menuNode_t* node)
 		R_Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, curCampaign->map, disableSolarRender);
 	} else {
+		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		if (smoothRotation)
 			MAP_SmoothTranslate();
-		q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		R_DrawFlatGeoscape(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 	}
