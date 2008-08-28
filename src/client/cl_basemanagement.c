@@ -2212,7 +2212,7 @@ void MN_BaseMapLayout (const menuNode_t * node)
 	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
 	vec2_t size;
 
-	if (node->num >= MAX_BASES || node->num < 0)
+	if (node->baseid >= MAX_BASES || node->baseid < 0)
 		return;
 
 	height = node->size[1] / BASE_SIZE;
@@ -2223,7 +2223,7 @@ void MN_BaseMapLayout (const menuNode_t * node)
 	size[1] += (BASE_SIZE + 1) * node->padding;
 	R_DrawFill(node->pos[0], node->pos[1], size[0], size[1], node->align, node->bgcolor);
 
-	base = B_GetBaseByIDX(node->num);
+	base = B_GetBaseByIDX(node->baseid);
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {

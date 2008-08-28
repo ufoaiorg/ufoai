@@ -59,7 +59,8 @@ const char *vt_names[] = {
 	"relabs",
 	"client_hunk", /* 25 */
 	"client_hunk_string",
-	"num"
+	"num",
+	"baseid"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -161,7 +162,8 @@ static const size_t vt_sizes[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
-	sizeof(int)	/* V_CLIENT_HUNK_STRING */
+	sizeof(int),	/* V_MENUTEXTID */
+	sizeof(int)		/* V_BASEID */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -230,6 +232,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (num == MAX_MENUTEXTS)
 			Sys_Error("Could not find menutext id '%s'", token);
 		*(int *) b = num;
+		return ALIGN(sizeof(int));
+
+	case V_BASEID:
+		*(int *) b = atoi(token);
+		if (*(int *) b < 0 || *(int *) b >= MAX_BASES)
+			Sys_Error("Invalid baseid given %i", *(int *) b);
 		return ALIGN(sizeof(int));
 
 	case V_INT:
@@ -479,6 +487,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return ALIGN(sizeof(char));
 
 	case V_MENUTEXTID:
+	case V_BASEID:
 	case V_INT:
 		*(int *) b = *(const int *) set;
 		return ALIGN(sizeof(int));
@@ -599,6 +608,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		Q_strncpyz(valuestr, menutextid_names[*(int *)b], sizeof(valuestr));
 		return valuestr;
 
+	case V_BASEID:
 	case V_INT:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(int *) b);
 		return valuestr;

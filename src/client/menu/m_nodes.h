@@ -145,6 +145,7 @@ typedef struct menuNode_s {
 	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
 	int height;					/**< textfields: max. rows to show
 								 * select box: options count */
+	int baseid;					/**< the baseid - e.g. for baselayout nodes */
 	struct selectBoxOptions_s *options;	/**< pointer to select box options when type is MN_SELECTBOX */
 	vec4_t color;				/**< rgba */
 	vec4_t bgcolor;				/**< rgba */

@@ -98,13 +98,15 @@ typedef enum {
 	V_CLIENT_HUNK = 25,			/**< only for client side data - not handled in Com_ParseValue */
 	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
 	V_MENUTEXTID,
+	V_BASEID,
 
 	V_NUM_TYPES
 } valueTypes_t;
 
 extern const char *vt_names[];
 
-#define MENU_TEXT_TO_ID(x) #x
+/** @brief We need this here for checking the boundaries from script values */
+#define MAX_BASES 8
 
 /** @brief linked into mn.menuText - defined in menu scripts via num */
 typedef enum {
