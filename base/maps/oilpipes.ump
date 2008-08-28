@@ -1,0 +1,424 @@
+// base/maps/industrial.ump
+
+// *********************************
+// INDUSTRIAL THEME
+// *********************************
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: double oilpipes
+// b: double pilpipes left end
+// c: double oilpipes corner
+// d: oilpipe arm
+// e: single oilpipe
+// f: single oilpipe end
+// g: gapfillers
+// 0: no spec
+
+// Side notes:
+// A: Alien spawnpoint(s)
+// C: Civilian spawnpoint(s)
+
+
+base industrial/
+
+//---------------------------------
+//Dropships
+tile +drop_firebird
+{
+5 3
+0    0    0    0    0
+0    +g   +g   +g   0
+0    0    0    0    0
+}
+
+//---------------------------------
+//Interceptors
+
+tile +inter_stiletto
+{
+3 4
+0    0    0
+0    +g   0
+0    +g   0
+0    0    0
+}
+
+tile +inter_saracen
+{
+5 4
+0    0    0    0    0
+0    +g   +g   +g   0
+0    +g   +g   +g   0
+0    0    0    0    0
+}
+
+//---------------------------------
+//UFOs
+tile +craft_ufo_scout //A(3)
+{
+4 5
+0    0    0    0
+0    +g   +g   0
+0    +g   +g   0
+0    +g   +g   0
+0    0    0    0
+}
+
+tile +craft_ufo_fighter //A(5)
+{
+4 5
+0    0    0    0
+0    +g   +g   0
+0    +g   +g   0
+0    +g   +g   0
+0    0    0    0
+}
+
+tile +craft_ufo_supply //A(12)
+{
+6 5
+0    0    0    0     0    0
+0    +g   +g   +g    +g   0
+0    +g   +g   +g    +g   0
+0    +g   +g   +g    +g   0
+0    0    0    0     0    0   
+}
+
+//---------------------------------
+//Two [S]traight [O]il[P]ipes running from left to right
+tile +op_s1
+{
+3 3
+0    0     0
+ab   +a    ac
+0    0     0
+}
+
+tile +op_s2
+{
+3 3
+0    0     0
+ab   +a    ac
+0    0     0
+}
+
+tile +op_s3
+{
+3 3
+0    0     0
+ab   +a    ac
+0    0     0
+}
+
+tile +op_s4 //C(1)
+{
+3 3
+0    0     0
+ab   +a    ac
+0    0     0
+}
+
+tile +op_s5
+{
+3 3
+0    0     0
+ab   +a    ac
+0    0     0
+}
+
+tile +op_s6
+{
+3 3
+0    0     0
+ab   +a    ac
+0    0     0
+}
+
+//---------------------------------
+//Two [O]il[P]ipes running around a [C]orner
+tile +op_c1
+{
+3 3
+0    0     0
+ab   +c    0
+0    d     0
+}
+
+tile +op_c2
+{
+3 3
+0    0     0
+ab   +c    0
+0    d     0
+}
+
+tile +op_c3 //C(1)
+{
+3 3
+0    0     0
+ab   +c    0
+0    d     0
+}
+
+//---------------------------------
+//Two [O]il[P]ipes -> [E]nd
+tile +op_e1_1x3 //C(1) A(1)
+{
+3 5
+0    0    0
+0    +g   0
+0    +b   ac
+g    +g   0   
+0    0    0
+}
+
+tile +op_e2
+{
+3 3
+0    0    0
+0    +b   ac
+0    0    0
+}
+
+//--------------------------------- 
+//[O]il[P]ipe splitting up in 2 single ones [A]
+tile +op_a1
+{
+3 3
+0    c    0
+0    +d   ef
+0    ef   0
+}
+
+tile +op_a2
+{
+3 3
+0    c    0
+0    +d   ef
+0    ef   0
+}
+
+tile +op_a3
+{
+3 3
+0    c    0
+0    +d   f
+0    ef   0
+}
+
+//---------------------------------
+//[S]ingle [O]il[P]ipes
+tile +op_s_s1
+{
+3 3
+0    de   0
+0    +e   0
+0    e    0
+}
+
+tile +op_s_s2
+{
+3 3
+0    de   0
+0    +e   0
+0    e    0
+}
+
+tile +op_s_s3 //A(1)
+{
+3 3
+0    de   0
+0    +e   0
+0    e    0
+}
+
+tile +op_s_s4
+{
+3 3
+0    de   0
+0    +e   0
+0    e    0
+}
+
+//---------------------------------
+//[S]ingle [O]il[P]ipe [E]nd right
+tile +op_s_e1
+{
+3 3
+0    0    0
+d    +f   0
+0    0    0
+}
+
+tile +op_s_e2
+{
+3 3
+0    0    0
+d    +f   0
+0    0    0
+}
+
+tile +op_s_e3 //C(1)
+{
+3 3
+0    0    0
+d    +f   0
+0    0    0
+}
+
+//---------------------------------
+//[S]ingle [O]il[P]ipe [E]nd [B]ottom
+tile +op_s_eb1
+{
+3 3
+0    de   0
+0    +f   0
+0    0    0
+}
+
+tile +op_s_eb2
+{
+3 3
+0    de   0
+0    +f   0
+0    0    0
+}
+
+//---------------------------------
+//Gapfillers [fr]
+tile +fr01
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr02
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr03 //C(1)
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr04
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr05
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr06_2x3 //A(2) C(2)
+{
+4 5
+0    0    0    0
+0    +g   +g   0
+0    +g   +g   0
+0    +g   +g   0
+0    0    0    0
+}
+
+tile +fr07
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr08
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr09
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr10
+{
+3 3
+0    0    0
+0    +g   0
+0    0    0
+}
+
+tile +fr11_1x2 //C(1)
+{
+3 4
+0    0    0
+0    +g   0
+0    +g   0
+0    0    0
+}
+
+//Test shows the frequency of the maps how they should/can appear
+//A: Alien spawnpoint; C: Civilian spawnpoint
+assembly small
+{
+title "_UFO Landed"
+size "6 6"
+*rm_drop +drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1" //Enough Alien spawnpoints for Max Crew capacity
++op_s1 "0 2"
++op_s2 "0 3"
++op_s3 "0 3"
++op_s4 "1 2" //C(1)
++op_s5 "0 3"
++op_s6 "1 4"
++op_c1 "0 1"
++op_c2 "0 1"
++op_c3 "0 1" //C(1)
++op_e1_1x3 "0 1" //A(1) C(1)
++op_e2 "0 1"
++op_a1 "0 1"
++op_a2 "0 1"
++op_a3 "0 1"
++op_s_s1 "0 2"
++op_s_s2 "0 2"
++op_s_s3 "0 2" //A(1)
++op_s_s4 "0 3"
++op_s_e1 "0 1"
++op_s_e2 "0 1"
++op_s_e3 "0 1" //C(1)
++op_s_eb1 "0 1"
++op_s_eb1 "0 1"
++fr01 "0 1"
++fr02 "0 2"
++fr03 "0 2" //C(1)
++fr04 "0 2"
++fr05 "0 1"
++fr06_2x3 "0 1" //C(2) A(2)
++fr07 "0 2"
++fr08 "0 2"
++fr09 "0 1"
++fr10 "0 3"
++fr11_1x2 "0 1" //C(1)
+}
