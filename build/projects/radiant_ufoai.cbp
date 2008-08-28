@@ -47,6 +47,7 @@
 					<Add option="--export-all-symbols" />
 					<Add library="libgtk-win32-2.0" />
 					<Add library="libglib-2.0" />
+					<Add library="libgobject-2.0" />
 				</Linker>
 			</Target>
 			<Target title="linux">
