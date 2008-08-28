@@ -696,7 +696,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			continue;
 
 		/* visible tells us whether or not a UFO is visible NOW, whereas ufo->visible tells us whether or not the UFO was visible PREVIOUSLY. */
-		visible = ufo->visible;
+		visible = qfalse;
 
 		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -705,8 +705,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			if (!B_GetBuildingStatus(base, B_POWER))
 				continue;
 
-			/* maybe the ufo is already visible, don't reset it */
-			visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
+			visible = RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
 		}
 
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
