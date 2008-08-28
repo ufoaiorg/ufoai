@@ -575,7 +575,7 @@ menu_model craft_item_target
 	model	"aircraft/craft_item_target/craft_item_target"
 	menutransform {
 		ufopedia	"5 5 5"	"-120 120 -30"	"10 0 0"
-		aircraft_equip	"4 4 4"	"-120 120 -30"	"10 30 0"
+		aircraft_equip	"2.5 2.5 2.5"	"-120 120 -30"	"10 10 00"
 	}
 }
 
