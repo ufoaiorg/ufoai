@@ -966,18 +966,15 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
-/**
- * @todo Fix this for none power of two
- */
 static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
-	unsigned *inrow, *inrow2;
-	unsigned frac, fracstep;
-	unsigned p1[1024], p2[1024];
-	byte *pix1, *pix2, *pix3, *pix4;
+	unsigned frac;
+	unsigned *p1, *p2;
+	const unsigned fracstep = inwidth * 0x10000 / outwidth;
 
-	fracstep = inwidth * 0x10000 / outwidth;
+	p1 = (unsigned *)Mem_PoolAlloc(outwidth * outheight * sizeof(unsigned), vid_imagePool, 0);
+	p2 = (unsigned *)Mem_PoolAlloc(outwidth * outheight * sizeof(unsigned), vid_imagePool, 0);
 
 	frac = fracstep >> 2;
 	for (i = 0; i < outwidth; i++) {
@@ -990,21 +987,24 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 		frac += fracstep;
 	}
 
+	frac = fracstep >> 1;
+
 	for (i = 0; i < outheight; i++, out += outwidth) {
-		inrow = in + inwidth * (int) ((i + 0.25) * inheight / outheight);
-		inrow2 = in + inwidth * (int) ((i + 0.75) * inheight / outheight);
-		frac = fracstep >> 1;
+		const unsigned *inrow = in + inwidth * (int) ((i + 0.25) * inheight / outheight);
+		const unsigned *inrow2 = in + inwidth * (int) ((i + 0.75) * inheight / outheight);
 		for (j = 0; j < outwidth; j++) {
-			pix1 = (byte *) inrow + p1[j];
-			pix2 = (byte *) inrow + p2[j];
-			pix3 = (byte *) inrow2 + p1[j];
-			pix4 = (byte *) inrow2 + p2[j];
+			const byte *pix1 = (const byte *) inrow + p1[j];
+			const byte *pix2 = (const byte *) inrow + p2[j];
+			const byte *pix3 = (const byte *) inrow2 + p1[j];
+			const byte *pix4 = (const byte *) inrow2 + p2[j];
 			((byte *) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
 			((byte *) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
 			((byte *) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
 			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
+	Mem_Free(p1);
+	Mem_Free(p2);
 }
 
 /**
