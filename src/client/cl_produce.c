@@ -957,6 +957,12 @@ static void PR_ProductionListClick_f (void)
 				 }
 			} else {	/* Aircraft. */
 				aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
+				if (!aircraftTemplate) {
+					Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
+					return;
+				}
+				if (!aircraftTemplate->tech)
+					Sys_Error("PR_ProductionListClick_f: No tech pointer for aircraftTemplate '%s'\n", aircraftTemplate->id);
 				/* ufo research definition must not have a tech assigned
 				 * only RS_CRAFT types have
 				 * @sa RS_InitTree */
