@@ -513,7 +513,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
 	side_t *side, *bestside;
-	int i, j, pass, numpasses, s, pnum;
+	int i, j, pass, numpasses, pnum;
 	int front, back, both, facing, splits;
 	int bsplits, bestsplits, epsilonbrush;
 	qboolean hintsplit = qfalse;
@@ -566,7 +566,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				epsilonbrush = 0;
 
 				for (test = brushes; test; test = test->next) {
-					s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
+					const int s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
 
 					splits += bsplits;
 					if (bsplits && (s & PSIDE_FACING))

@@ -270,7 +270,7 @@ typedef struct {
 typedef struct {
 	int		numpoints;
 	vec3_t	p[4];		/**< variable sized array of points. minimum numpoints is 3,
-						* but most brushes have rectangular faces, so default is 4.*/
+						 * but most brushes have rectangular faces, so default is 4.*/
 } winding_t;
 
 typedef struct side_s {
