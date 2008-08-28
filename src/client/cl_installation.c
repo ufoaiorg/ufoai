@@ -47,6 +47,17 @@ static cvar_t *mn_installation_title;
 static cvar_t *mn_installation_count;
 static cvar_t *mn_installation_id;
 
+installationType_t INS_GetType (const installation_t *installation)
+{
+	if (installation->installationTemplate->maxBatteries > 0)
+		return INSTALLATION_DEFENSE;
+	else if (installation->numAircraftInInstallation > 0)
+		return INSTALLATION_UFOYARD;
+
+	/* default is radar */
+	return INSTALLATION_RADAR;
+}
+
 /**
  * @brief Array bound check for the installation index.
  * @param[in] instIdx  Instalation's index
@@ -137,9 +148,9 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	installation->storage.num[od->idx] = 3;
 
-	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id,
-		installation->installationTemplate->radarRange, installation->installationTemplate->maxBatteries,
-		installation->installationTemplate->maxUfoStored);
+	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %f, batteries = %i, ufos = %i\n",
+		installation->installationTemplate->id, installation->installationTemplate->radarRange,
+		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);

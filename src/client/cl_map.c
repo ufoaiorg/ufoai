@@ -1454,7 +1454,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (!selectedMission->active)
 						MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
 				} else
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selectedMission->active ? "circleactive" : "circle");
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selectedMission->active ? "geoscape/circleactive" : "geoscape/circle");
 			}
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
@@ -1462,7 +1462,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
 				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
 			} else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/cross");
 
 			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse);
 		}
@@ -1470,6 +1470,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw installations */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		const char *symbol;
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (!installation)
 			continue;
@@ -1490,12 +1491,24 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			RADAR_DrawInMap(node, &installation->radar, installation->pos);
 
+		switch (INS_GetType(installation)) {
+		case INSTALLATION_RADAR:
+			symbol = "radar";
+			break;
+		/** @todo Create models for defense and ufoyard, too */
+		case INSTALLATION_UFOYARD:
+		case INSTALLATION_DEFENSE:
+		default:
+			symbol = "base";
+			break;
+		}
+
 		/* Draw installation */
 		if (cl_3dmap->integer) {
 			const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
-			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, "base", 0);
+			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, symbol, 0);
 		} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, va("geoscape/%s", symbol));
 		}
 
 		/* Draw base names */
@@ -1537,9 +1550,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 0);
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/baseattack");
 			else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/base");
 		}
 
 		/* Draw base names */
@@ -1610,14 +1623,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (cl_3dmap->integer)
 						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 					else
-						R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+						R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
 
 					/* Draw a circle around ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 						if (cl_3dmap->integer)
 							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 						else
-							R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+							R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
 					}
 				}
 
@@ -1712,12 +1725,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (cl_3dmap->integer && !gd.combatZoomedUfo)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
 			if (aircraft == selectedUFO && !gd.combatZoomedUfo) {
-				if (cl_3dmap->integer) {
+				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-				}
-				else {
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
-				}
+				else
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/circle");
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 		}

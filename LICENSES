@@ -1649,9 +1649,6 @@ base/music/van_mission2.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethi
 base/music/van_mission3.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/pics/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/althud/bar_floor.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/bar_right.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/bar_selbox.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
@@ -1678,7 +1675,6 @@ base/pics/armour/ortnok_medium.tga | GNU General Public License 2.0
 base/pics/armour/power.tga | GNU General Public License 2.0
 base/pics/armour/taman_light.tga | GNU General Public License 2.0
 base/pics/armour/taman_medium.tga | GNU General Public License 2.0
-base/pics/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/base/adrop.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1706,13 +1702,17 @@ base/pics/base/storage.tga | GNU General Public License 2.0 or later | Martin Ge
 base/pics/base/teamroom.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop1.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop2.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/circle.tga | GNU General Public License 2.0
-base/pics/circleactive.tga | GNU General Public License 2.0
 base/pics/conback.jpg | GNU General Public License 2.0
-base/pics/cross.tga | GNU General Public License 2.0
 base/pics/envmaps/envmap_0.tga | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/envmaps/envmap_1.tga | GNU General Public License 2.0 | Jay Dolan (Quake2World)
+base/pics/geoscape/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/circle.tga | GNU General Public License 2.0
+base/pics/geoscape/circleactive.tga | GNU General Public License 2.0
+base/pics/geoscape/cross.tga | GNU General Public License 2.0
 base/pics/geoscape/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
 base/pics/geoscape/map_earth_nations_overlay.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
