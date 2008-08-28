@@ -6127,7 +6127,7 @@ void CL_ParseCampaign (const char *name, const char **text)
  * @brief Check whether we are in a tactical mission as server or as client
  * @note handles multiplayer and singleplayer
  *
- * @return true when we are not in battlefield
+ * @return true when we are in battlefield
  * @todo Check cvar mn_main for value
  */
 qboolean CL_OnBattlescape (void)
