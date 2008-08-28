@@ -61,14 +61,22 @@ void ToolsCheckErrors (void)
  */
 void ToolsCompile (void)
 {
-#if 0
-	const char* path = getMapsPath();
-	const char* fullname = Map_Name(g_map);
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
-	const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param");
 
-	char* output = Q_Exec(mapcompiler, compiler_parameter, NULL, false);
-	if (output)
-		free(output);
-#endif
+	if (file_exists(mapcompiler)) {
+		char buf[1024];
+		const char* fullname = Map_Name(g_map);
+		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param");
+
+		snprintf(buf, sizeof(buf) - 1, "%s %s", compiler_parameter, fullname);
+		buf[sizeof(buf) - 1] = '\0';
+
+		/** @todo thread this and update the main window */
+		char* output = Q_Exec(mapcompiler, buf, NULL, false);
+		if (output) {
+			/** @todo parse and display this in a gtk window */
+			globalOutputStream() << output;
+			free(output);
+		}
+	}
 }
