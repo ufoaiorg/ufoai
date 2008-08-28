@@ -5094,7 +5094,7 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
+void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
@@ -5124,15 +5124,12 @@ static void CL_GameAutoCheck_f (void)
 		return;
 	}
 
-	switch (selectedMission->mapDef->storyRelated) {
-	case qtrue:
+	if (selectedMission->mapDef->storyRelated) {
 		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
 		Cvar_Set("game_autogo", "0");
-		break;
-	default:
+	} else {
 		Com_DPrintf(DEBUG_CLIENT, "auto mission is enabled\n");
 		Cvar_Set("game_autogo", "1");
-		break;
 	}
 }
 
