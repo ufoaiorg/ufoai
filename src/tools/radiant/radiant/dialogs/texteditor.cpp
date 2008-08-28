@@ -31,6 +31,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "string/string.h"
 #include "stream/stringstream.h"
 #include "cmdlib.h"
+#ifdef WIN32
+#include "../gtkmisc.h"
+#include "../mainframe.h"
+#endif
 
 // master window widget
 static GtkWidget *text_editor = 0;
