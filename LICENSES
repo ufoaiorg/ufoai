@@ -636,6 +636,8 @@ base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner 
 base/models/geoscape/missile_tr20.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/mission.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/mission.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/geoscape/radar.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
+base/models/geoscape/radar.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/models/geoscape/ufo_carrier.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/ufo_carrier.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/ufo_condor.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
