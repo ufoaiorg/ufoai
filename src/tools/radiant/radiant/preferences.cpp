@@ -737,16 +737,6 @@ void GameName_exportString(const StringImportCallback& importer) {
 }
 typedef FreeCaller1<const StringImportCallback&, GameName_exportString> GameNameExportStringCaller;
 
-void GameMode_importString(const char* value) {
-	gamemode_set(value);
-}
-typedef FreeCaller1<const char*, GameMode_importString> GameModeImportStringCaller;
-void GameMode_exportString(const StringImportCallback& importer) {
-	importer(gamemode_get());
-}
-typedef FreeCaller1<const StringImportCallback&, GameMode_exportString> GameModeExportStringCaller;
-
-
 void RegisterPreferences(PreferenceSystem& preferences) {
 #ifdef WIN32
 	preferences.registerPreference("UseCustomShaderEditor", BoolImportStringCaller(g_TextEditor_useWin32Editor), BoolExportStringCaller(g_TextEditor_useWin32Editor));
@@ -756,7 +746,6 @@ void RegisterPreferences(PreferenceSystem& preferences) {
 #endif
 
 	preferences.registerPreference("GameName", GameNameImportStringCaller(), GameNameExportStringCaller());
-	preferences.registerPreference("GameMode", GameModeImportStringCaller(), GameModeExportStringCaller());
 }
 
 void Preferences_Init() {

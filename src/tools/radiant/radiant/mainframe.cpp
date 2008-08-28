@@ -360,7 +360,6 @@ void EnginePath_verify (void)
 
 namespace {
 CopiedString g_gamename;
-CopiedString g_gamemode;
 ModuleObservers g_gameNameObservers;
 ModuleObservers g_gameModeObservers;
 }
@@ -402,18 +401,6 @@ void Radiant_attachGameModeObserver(ModuleObserver& observer) {
 
 void Radiant_detachGameModeObserver(ModuleObserver& observer) {
 	g_gameModeObservers.detach(observer);
-}
-
-const char* gamemode_get (void) {
-	return g_gamemode.c_str();
-}
-
-void gamemode_set(const char* gamemode) {
-	if (!string_equal(gamemode, g_gamemode.c_str())) {
-		g_gameModeObservers.unrealise();
-		g_gamemode = gamemode;
-		g_gameModeObservers.realise();
-	}
 }
 
 #include "os/dir.h"

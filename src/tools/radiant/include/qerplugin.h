@@ -121,8 +121,6 @@ struct _QERFuncTable_1 {
 	const char* (*getMapsPath)();
 
 	const char* (*getGameName)();
-	const char* (*getGameMode)();
-
 	const char* (*getMapName)();
 	scene::Node& (*getMapWorldEntity)();
 	float (*getGridSize)();

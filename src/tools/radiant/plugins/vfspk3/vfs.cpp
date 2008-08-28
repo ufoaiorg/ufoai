@@ -62,7 +62,6 @@ ArchiveModules& FileSystemAPI_getArchiveModules();
 #include "moduleobservers.h"
 
 #define VFS_MAXDIRS 8
-#define gamemode_get GlobalRadiant().getGameMode
 
 // =============================================================================
 // Global variables
@@ -276,22 +275,6 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 		if (dir != 0) {
 			globalOutputStream() << "vfs directory: " << path << "\n";
 
-			const char* ignore_prefix = "";
-			const char* override_prefix = "";
-
-			{
-				// See if we are in "sp" or "mp" mapping mode
-				const char* gamemode = gamemode_get();
-
-				if (strcmp (gamemode, "sp") == 0) {
-					ignore_prefix = "mp_";
-					override_prefix = "sp_";
-				} else if (strcmp (gamemode, "mp") == 0) {
-					ignore_prefix = "sp_";
-					override_prefix = "mp_";
-				}
-			}
-
 			Archives archives;
 			Archives archivesOverride;
 			for (;;) {
@@ -302,15 +285,6 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 				const char *ext = strrchr (name, '.');
 				if ((ext == 0) || *(++ext) == '\0' || GetArchiveTable(archiveModules, ext) == 0)
 					continue;
-
-				// using the same kludge as in engine to ensure consistency
-				if (!string_empty(ignore_prefix) && strncmp(name, ignore_prefix, strlen(ignore_prefix)) == 0) {
-					continue;
-				}
-				if (!string_empty(override_prefix) && strncmp(name, override_prefix, strlen(override_prefix)) == 0) {
-					archivesOverride.insert(name);
-					continue;
-				}
 
 				archives.insert(name);
 			}

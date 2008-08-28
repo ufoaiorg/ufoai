@@ -122,7 +122,6 @@ public:
 		m_radiantcore.getMapsPath = &getMapsPath;
 
 		m_radiantcore.getGameName = &gamename_get;
-		m_radiantcore.getGameMode = &gamemode_get;
 
 		m_radiantcore.getMapName = &getMapName;
 		m_radiantcore.getMapWorldEntity = getMapWorldEntity;

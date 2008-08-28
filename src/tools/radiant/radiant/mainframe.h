@@ -213,8 +213,6 @@ const char* gamename_get();
 void gamename_set(const char* gamename);
 void Radiant_attachGameNameObserver(ModuleObserver& observer);
 void Radiant_detachGameNameObserver(ModuleObserver& observer);
-const char* gamemode_get();
-void gamemode_set(const char* gamemode);
 void Radiant_attachGameModeObserver(ModuleObserver& observer);
 void Radiant_detachGameModeObserver(ModuleObserver& observer);
 
