@@ -934,7 +934,6 @@ static void PR_ProductionListClick_f (void)
 			if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
 				objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
 
-#ifdef DEBUG
 				if (!od) {
 					Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
 					return;
@@ -942,7 +941,6 @@ static void PR_ProductionListClick_f (void)
 
 				if (!od->tech)
 					Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
-#endif
 				/* We can only produce items that fulfill the following conditions... */
 				if (INV_ItemMatchesFilter(od, produceCategory)	/* Item is in the current inventory-category */
 				 && RS_IsResearched_ptr(od->tech)		/* Tech is researched */
@@ -961,8 +959,6 @@ static void PR_ProductionListClick_f (void)
 					Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
 					return;
 				}
-				if (!aircraftTemplate->tech)
-					Sys_Error("PR_ProductionListClick_f: No tech pointer for aircraftTemplate '%s'\n", aircraftTemplate->id);
 				/* ufo research definition must not have a tech assigned
 				 * only RS_CRAFT types have
 				 * @sa RS_InitTree */
