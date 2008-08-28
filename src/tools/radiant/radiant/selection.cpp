@@ -142,20 +142,6 @@ inline float angle_between(const Vector3& a, const Vector3& b) {
 	                          ));
 }
 
-
-#if defined(DEBUG)
-class test_quat {
-public:
-	test_quat(const Vector3& from, const Vector3& to) {
-		Vector4 quaternion(quaternion_for_unit_vectors(from, to));
-		Matrix4 matrix(matrix4_rotation_for_quaternion(quaternion_multiplied_by_quaternion(quaternion, c_quaternion_identity)));
-	}
-private:
-};
-
-static test_quat bleh(g_vector3_axis_x, g_vector3_axis_y);
-#endif
-
 //! axis is a unit vector
 inline void constrain_to_axis(Vector3& vec, const Vector3& axis) {
 	vec = vector3_normalised(vector3_added(vec, vector3_scaled(axis, -vector3_dot(vec, axis))));
