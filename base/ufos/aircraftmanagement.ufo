@@ -90,7 +90,7 @@ aircraft craft_drop_firebird
 	building	building_hangar
 	numteam		8
 	size		2
-	image		air_dropship
+	image		geoscape/air_dropship
 	slot {
 		type		weapon
 		position	nose_center
@@ -127,7 +127,7 @@ aircraft craft_drop_herakles
 	building	building_hangar
 	numteam		8
 	size		2
-	image		air_dropship
+	image		geoscape/air_dropship
 	slot {
 		type		weapon
 		position	nose_center
@@ -166,7 +166,7 @@ aircraft craft_inter_stiletto
 	size		1
 	price		40000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	nose_center
@@ -211,7 +211,7 @@ aircraft craft_inter_saracen
 	size		2
 	price		100000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	wing_left
@@ -251,7 +251,7 @@ aircraft craft_inter_dragon
 	size		1
 	price		100000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	wing_left
@@ -291,7 +291,7 @@ aircraft craft_inter_stingray
 	size		1
 	price		200000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	wing_left
@@ -337,7 +337,7 @@ aircraft craft_ufo_harvester
 	size		2
 	building	building_big_ufo_hangar
 	price		200000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		heavy
@@ -380,7 +380,7 @@ aircraft craft_ufo_carrier
 	size		1
 	building	building_small_ufo_hangar
 	price		1000000
-	image		air_ufo
+	image		geoscape/air_ufo
 	nogeoscape	true
 }
 
@@ -403,7 +403,7 @@ aircraft craft_ufo_supply
 	size		1
 	building	building_big_ufo_hangar
 	price		250000
-	image		air_ufo
+	image		geoscape/air_ufo
 }
 
 // FIXME
@@ -425,7 +425,7 @@ aircraft craft_ufo_bomber
 	size		1
 	building	building_big_ufo_hangar
 	price		250000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		light
@@ -454,7 +454,7 @@ aircraft craft_ufo_corrupter
 	size		1
 	building	building_big_ufo_hangar
 	price		230000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		light
@@ -482,7 +482,7 @@ aircraft craft_ufo_scout
 	size		1
 	building	building_small_ufo_hangar
 	price		150000
-	image		air_ufo
+	image		geoscape/air_ufo
 }
 
 aircraft craft_ufo_fighter
@@ -504,7 +504,7 @@ aircraft craft_ufo_fighter
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
 	price		180000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		heavy
@@ -596,7 +596,7 @@ craftitem craft_ammo_sparrowhawk
 	craftweapon		craft_weapon_sparrowhawk
 	price		1000
 	size	40	// light
-	model		"missile"
+	model		"missile_sparrow"
 
 	ammo		7
 	wdamage		20

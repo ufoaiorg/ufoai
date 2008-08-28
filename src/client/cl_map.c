@@ -1495,9 +1495,12 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		case INSTALLATION_RADAR:
 			symbol = "radar";
 			break;
-		/** @todo Create models for defense and ufoyard, too */
 		case INSTALLATION_UFOYARD:
+			symbol = "ufoyard";
+			break;
 		case INSTALLATION_DEFENSE:
+			symbol = "defense";
+			break;
 		default:
 			symbol = "base";
 			break;
