@@ -410,20 +410,23 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 		if (selActor) {
 			assert(node->container);
 			assert(dragInfo.from);
-			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragInfo.from->id,
-				dragInfo.fromX, dragInfo.fromY, node->container->id, dragInfo.toX, dragInfo.toY);
+			MSG_Write_PA(PA_INVMOVE, selActor->entnum,
+				dragInfo.from->id, dragInfo.fromX, dragInfo.fromY,
+				node->container->id, dragInfo.toX, dragInfo.toY);
 
 			return;
-		/* menu */
 		}
 
+		/* menu */
 		if (dragInfo.from->scroll)
 			fItem = INV_SearchInScrollableContainer(menuInventory, dragInfo.from, NONE, NONE, dragInfo.item.t, baseCurrent->equipType);
 		else
 			fItem = Com_SearchInInventory(menuInventory, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
 
-		INV_MoveItem(base, menuInventory, node->container,	/**< Can we use dragInfo.to here? */
-			dragInfo.toX, dragInfo.toY, dragInfo.from, fItem);
+		assert(node->container == dragInfo.to);
+		INV_MoveItem(base, menuInventory,
+			dragInfo.to, dragInfo.toX, dragInfo.toY,
+			dragInfo.from, fItem);
 	}
 
 	/* Update display of scroll buttons. */
