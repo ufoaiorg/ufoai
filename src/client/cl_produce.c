@@ -701,6 +701,7 @@ void PR_ProductionRun (void)
  * @brief Prints information about the selected item (no aircraft) in production.
  * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] disassembly True, if we are trying to display disassembly info.
+ * @sa PR_AircraftInfo
  */
 static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
@@ -741,7 +742,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 					sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
-				UP_ItemDescription(od);
+				Cvar_Set("mn_item", od->id);
 			}
 		} else {
 			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
@@ -787,8 +788,9 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 			Q_strcat(productionInfo, "\n", sizeof(productionInfo));
 			Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
 				sizeof(productionInfo));
-		}
-		UP_ItemDescription(od);
+			Cvar_Set("mn_item", od->id);
+		} else
+			Cvar_Set("mn_item", "");
 	}
 	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
@@ -796,6 +798,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 /**
  * @brief Prints information about the selected aircraft in production.
  * @param[in] aircraftTemplate The aircraft to print the information for
+ * @sa PR_ProductionInfo
  */
 static void PR_AircraftInfo (const aircraft_t * aircraftTemplate)
 {
@@ -810,6 +813,10 @@ static void PR_AircraftInfo (const aircraft_t * aircraftTemplate)
 	} else {
 		mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
 	}
+	/** @todo Draw aircraft model in production view
+	 * maybe use a special model node underlying the item node in the production menu
+	 * @note The same counts for the market menu, too */
+	Cvar_Set("mn_item", "");
 }
 
 /**
@@ -1573,11 +1580,11 @@ void PR_InitStartup (void)
 	Cmd_AddCommand("prod_disassemble", PR_UpdateDisassemblingList_f, "List of items ready for disassembling");
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
-	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, NULL);
-	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, NULL);
-	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, NULL);
-	Cmd_AddCommand("prod_up", PR_ProductionUp_f, NULL);
-	Cmd_AddCommand("prod_down", PR_ProductionDown_f, NULL);
+	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
+	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
+	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
+	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
+	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
 	Cmd_AddCommand("prev_prod_type", BS_Prev_ProduceType_f, NULL);
 	Cmd_AddCommand("next_prod_type", BS_Next_ProduceType_f, NULL);
 }

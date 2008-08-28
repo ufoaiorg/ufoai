@@ -81,7 +81,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* check if the model exists */
 	if (!mi->model) {
-		Com_Printf("No model given\n");
+		Com_Printf("No model given '%s'\n", mi->name);
 		return;
 	}
 

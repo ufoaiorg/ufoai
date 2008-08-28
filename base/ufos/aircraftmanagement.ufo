@@ -740,7 +740,6 @@ craftitem base_AA51_launcher
 	installationTime	48
 	price		50000
 	is_dummy	true
-
 }
 
 craftitem base_ammo_AA51

@@ -616,7 +616,7 @@ menu_model craft_item_raven_ecm
 	}
 }
 
-menu_model craft_armour_polymer
+menu_model craft_shield_polymer
 {
 	model	"aircraft/craft_arm_poly/polymer"
 	menutransform {
@@ -625,7 +625,7 @@ menu_model craft_armour_polymer
 	}
 }
 
-menu_model craft_armour_plating
+menu_model craft_shield_plating
 {
 	model	"aircraft/craft_arm_plate/plating"
 	menutransform {
