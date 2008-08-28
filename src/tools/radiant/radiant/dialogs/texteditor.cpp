@@ -123,7 +123,8 @@ static void CreateGtkTextEditor(void)
 	text_widget = text;
 }
 
-static void DoGtkTextEditor (const char* filename, guint cursorpos) {
+static void DoGtkTextEditor (const char* filename, guint cursorpos)
+{
 	if (!text_editor)
 		CreateGtkTextEditor(); // build it the first time we need it
 
@@ -194,20 +195,23 @@ void DoTextEditor (const char* filename, int cursorpos)
 #ifdef WIN32
 	if (g_TextEditor_useWin32Editor) {
 		globalOutputStream() << "opening file '" << filename << "' (line " << cursorpos << " info ignored)\n";
-		ShellExecute((HWND)GDK_WINDOW_HWND (GTK_WIDGET(MainFrame_getWindow())->window), "open", filename, 0, 0, SW_SHOW );
+		ShellExecute((HWND)GDK_WINDOW_HWND (GTK_WIDGET(MainFrame_getWindow())->window), "open", filename, 0, 0, SW_SHOW);
 		return;
 	}
 #else
 	/* check if a custom editor is set */
 	if (g_TextEditor_useCustomEditor && !g_TextEditor_editorCommand.empty()) {
+		char *output;
 		StringOutputStream strEditCommand(256);
 		strEditCommand << g_TextEditor_editorCommand.c_str() << " \"" << filename << "\"";
 
 		globalOutputStream() << "Launching: " << strEditCommand.c_str() << "\n";
 		/* note: linux does not return false if the command failed so it will assume success */
-		if (Q_Exec(0, const_cast<char*>(strEditCommand.c_str()), 0, true) == false) {
+		output = Q_Exec(0, const_cast<char*>(strEditCommand.c_str()), 0, true);
+		if (!output) {
 			globalOutputStream() << "Failed to execute " << strEditCommand.c_str() << ", using default\n";
 		} else {
+			free((void*)output);
 			/* the command (appeared) to run successfully, no need to do anything more */
 			return;
 		}

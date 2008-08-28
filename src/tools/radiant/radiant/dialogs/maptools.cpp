@@ -27,22 +27,33 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "maptools.h"
 #include "cmdlib.h"
+#include "os/file.h"
 #include "../map.h"
 #include "../preferences.h"
 
-/**
- * @todo Implement me
- */
 void ToolsCheckErrors (void)
 {
-#if 0
-	const char* path = getMapsPath();
-	const char* fullname = Map_Name(g_map);
+/*	const char* path = getMapsPath(); */
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
-	const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
-	Q_Exec(fullname, NULL, NULL, true);
-#endif
+	if (file_exists(mapcompiler)) {
+		char buf[1024];
+		const char* fullname = Map_Name(g_map);
+		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
+
+		snprintf(buf, sizeof(buf) - 1, "%s %s", compiler_parameter, fullname);
+		buf[sizeof(buf) - 1] = '\0';
+
+		char* output = Q_Exec(mapcompiler, buf, NULL, false);
+		if (output) {
+			/** @todo parse and display this in a gtk window */
+			globalOutputStream() << output;
+			free(output);
+		} else
+			globalOutputStream() << "No output for checking " << fullname << "\n";
+	} else {
+		globalOutputStream() << "Could not find " << mapcompiler << "\n";
+	}
 }
 
 /**
@@ -56,6 +67,8 @@ void ToolsCompile (void)
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
 	const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param");
 
-	Q_Exec(fullname, NULL, NULL, true);
+	char* output = Q_Exec(mapcompiler, compiler_parameter, NULL, false);
+	if (output)
+		free(output);
 #endif
 }
