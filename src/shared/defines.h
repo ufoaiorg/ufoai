@@ -126,10 +126,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * 16 bit short limits
  */
 #define MAX_MAP_MODELS		1024
-#define MAX_MAP_BRUSHES		8192
+#define MAX_MAP_BRUSHES		16384
 #define MAX_MAP_ENTITIES	2048
 #define MAX_MAP_ENTSTRING	0x40000
-#define MAX_MAP_TEXINFO		8192
+#define MAX_MAP_TEXINFO		16384
 
 #define MAX_MAP_PLANES		65536
 #define MAX_MAP_NODES		65536

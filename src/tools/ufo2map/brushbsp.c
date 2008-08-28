@@ -888,6 +888,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 
 	/* this is a splitplane node */
 	node->side = bestside;
+	assert(bestside->planenum < MAX_MAP_PLANES);
 	node->planenum = bestside->planenum & ~1;	/* always use front facing */
 
 	SplitBrushList(brushes, node, &children[0], &children[1]);

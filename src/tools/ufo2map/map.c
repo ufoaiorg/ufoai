@@ -27,18 +27,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check.h"
 #include "common/aselib.h"
 
-extern qboolean onlyents;
+mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
+int nummapbrushes;
 
-int			nummapbrushes;
-mapbrush_t	mapbrushes[MAX_MAP_BRUSHES];
+side_t brushsides[MAX_MAP_SIDES];
+int nummapbrushsides;
 
-int			nummapbrushsides;
-side_t		brushsides[MAX_MAP_SIDES];
 brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 /** an index of the planes containing the faces of the brushes */
-plane_t		mapplanes[MAX_MAP_PLANES];
-int			nummapplanes;
+plane_t mapplanes[MAX_MAP_PLANES];
+int nummapplanes;
 
 #define	PLANE_HASHES	1024
 static plane_t *planehash[PLANE_HASHES];
@@ -1052,7 +1051,16 @@ void LoadMapFile (const char *filename)
 
 	LoadScriptFile(filename);
 
+	memset(mapbrushes, 0, sizeof(mapbrush_t) * MAX_MAP_BRUSHES);
+	nummapbrushes = 0;
+
+	memset(brushsides, 0, sizeof(side_t) * MAX_MAP_SIDES);
 	nummapbrushsides = 0;
+
+	memset(side_brushtextures, 0, sizeof(brush_texture_t) * MAX_MAP_SIDES);
+
+	memset(mapplanes, 0, sizeof(plane_t) * MAX_MAP_PLANES);
+
 	num_entities = 0;
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles[0];
