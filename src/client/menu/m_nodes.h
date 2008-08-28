@@ -46,7 +46,7 @@ typedef enum mn_s {
 	MN_TBAR,
 	MN_MODEL,
 	MN_CONTAINER,
-	MN_ITEM,
+	MN_ITEM,	/**< used to display the model of the objDef_t items */
 	MN_MAP,
 	MN_BASEMAP,
 	MN_BASELAYOUT,
