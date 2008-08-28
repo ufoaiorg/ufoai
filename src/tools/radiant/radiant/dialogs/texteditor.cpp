@@ -52,25 +52,25 @@ static gint editor_delete (GtkWidget *widget, gpointer data)
 
 static void editor_save (GtkWidget *widget, gpointer data)
 {
-	FILE *f = fopen ((char*)g_object_get_data (G_OBJECT (data), "filename"), "w");
-	gpointer text = g_object_get_data (G_OBJECT (data), "text");
+	FILE *f = fopen((char*)g_object_get_data(G_OBJECT(data), "filename"), "w");
+	gpointer text = g_object_get_data(G_OBJECT(data), "text");
 
-	if (f == 0) {
-		gtk_MessageBox (GTK_WIDGET(data), "Error saving file !");
+	if (f == NULL) {
+		gtk_MessageBox(GTK_WIDGET(data), "Error saving file !");
 		return;
 	}
 
-	char *str = gtk_editable_get_chars (GTK_EDITABLE (text), 0, -1);
-	fwrite (str, 1, strlen (str), f);
-	fclose (f);
+	char *str = gtk_editable_get_chars(GTK_EDITABLE(text), 0, -1);
+	fwrite(str, 1, strlen(str), f);
+	fclose(f);
 }
 
 static void editor_close (GtkWidget *widget, gpointer data)
 {
-	if (gtk_MessageBox (text_editor, "Close the shader editor ?", "Radiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
+	if (gtk_MessageBox(text_editor, "Close the editor?", "UFORadiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return;
 
-	gtk_widget_hide (text_editor);
+	gtk_widget_hide(text_editor);
 }
 
 static void CreateGtkTextEditor(void)
