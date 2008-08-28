@@ -705,7 +705,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			if (!B_GetBuildingStatus(base, B_POWER))
 				continue;
 
-			visible = RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
+			visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
 		}
 
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
