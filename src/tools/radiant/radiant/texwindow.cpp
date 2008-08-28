@@ -201,7 +201,6 @@ public:
 	GtkWidget* m_scr_win_tags;
 	GtkWidget* m_tag_notebook;
 	GtkWidget* m_search_button;
-	GtkWidget* m_shader_info_item;
 
 	std::set<CopiedString> m_all_tags;
 	GtkListStore* m_all_tags_list;
@@ -329,15 +328,6 @@ void TextureBrowser_SetSelectedShader(TextureBrowser& textureBrowser, const char
 
 	// disable the menu item "shader info" if no shader was selected
 	IShader* ishader = QERApp_Shader_ForName(shader);
-	CopiedString filename = ishader->getShaderFileName();
-
-	if (filename.empty()) {
-		if (textureBrowser.m_shader_info_item != NULL) {
-			gtk_widget_set_sensitive(textureBrowser.m_shader_info_item, FALSE);
-		}
-	} else {
-		gtk_widget_set_sensitive(textureBrowser.m_shader_info_item, TRUE);
-	}
 
 	ishader->DecRef();
 }
