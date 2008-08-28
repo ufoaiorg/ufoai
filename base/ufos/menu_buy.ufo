@@ -48,10 +48,10 @@ menu buy
 	text market
 	{
 		color	"0 .78 0 1"
-		num	"36"
+		num		TEXT_MARKET_NAMES
 		height	"28"
 		format	"25 0"
-		pos	"55 40"
+		pos		"55 40"
 		size	"265 700"
 		click
 		wheel	{ cmd "market_scroll" }
@@ -62,7 +62,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"37"
+		num		TEXT_MARKET_STORAGE
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -73,7 +73,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"38"
+		num		TEXT_MARKET_MARKET
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -84,11 +84,11 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"39"
+		num		TEXT_MARKET_PRICES
 		height	"28"
 		size	"80 700"
 		format	"25 0"
-		pos	"542 40"
+		pos		"542 40"
 		wheel	{ cmd "market_scroll" }
 	}
 

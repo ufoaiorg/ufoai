@@ -94,7 +94,7 @@ menu basedefence
 		format	"22 0"
 		wheel
 		height	"27"
-		num 44
+		num		TEXT_BASEDEFENSE_LIST
 		mousefx	true
 		click
 	}
@@ -199,7 +199,7 @@ menu basedefence
 		format	"20 0"
 		wheel
 		height	"11"
-		num 1
+		num TEXT_LIST
 		mousefx	true
 		click
 	}
@@ -288,17 +288,17 @@ menu basedefence
 
 	text basedef_text_zone1
 	{
-		pos	"546 70"
+		pos		"546 70"
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 41
+		num		TEXT_AIREQUIP_1
 		height	"2"
 	}
 
 	pic airequip_zone_select2
 	{
-		invis false
+		invis	false
 		tooltip	"_Choose defence system to build after removing current one"
 		mousefx	true
 		pos		"534 164"
@@ -310,11 +310,11 @@ menu basedefence
 
 	text basedef_text_zone2
 	{
-		pos	"546 204"
+		pos		"546 204"
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 42
+		num		TEXT_AIREQUIP_2
 		height	"2"
 	}
 
@@ -336,7 +336,7 @@ menu basedefence
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 43
+		num		TEXT_AIREQUIP_3
 		height	"2"
 	}
 

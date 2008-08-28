@@ -140,7 +140,7 @@ menu althud
 		size	"690 48"
 		font	"f_verysmall"
 		wheel
-		num	"40"
+		num		TEXT_CHAT_WINDOW
 		height	"3"
 		format	"16 0"
 		padding	5

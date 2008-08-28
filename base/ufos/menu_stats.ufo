@@ -71,7 +71,7 @@ menu stats
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
-		num		"22"
+		num		TEXT_STATS_1
 		height	"6"
 	}
 
@@ -88,7 +88,7 @@ menu stats
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
-		num		"23"
+		num		TEXT_STATS_2
 		height	"6"
 	}
 
@@ -105,7 +105,7 @@ menu stats
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
-		num		"25"
+		num		TEXT_STATS_4
 		height	"6"
 	}
 
@@ -122,7 +122,7 @@ menu stats
 		size	"470 400"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 340"
-		num		"26"
+		num		TEXT_STATS_5
 		height	"18"
 	}
 
@@ -140,7 +140,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		size	"470 240"
 		format  "22 360"
-		num		"24"
+		num		TEXT_STATS_3
 		height	"10"
 		click
 		mousefx	true
@@ -160,7 +160,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		size	"470 110"
 		format  "22 360"
-		num		"46"
+		num		TEXT_GENERIC
 		height	"5"
 	}
 

@@ -58,7 +58,8 @@ const char *vt_names[] = {
 	"if",
 	"relabs",
 	"client_hunk", /* 25 */
-	"client_hunk_string"
+	"client_hunk_string",
+	"num"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -71,6 +72,21 @@ const char *blend_names[] = {
 	"replace", "blend", "add", "filter", "invfilter"
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
+
+const char *menutextid_names[] = {
+	"TEXT_STANDARD", "TEXT_LIST", "TEXT_UFOPEDIA", "TEXT_BUILDINGS", "TEXT_BUILDING_INFO",
+	"TEXT_RESEARCH", "TEXT_POPUP", "TEXT_POPUP_INFO", "TEXT_AIRCRAFT_LIST",
+	"TEXT_AIRCRAFT_INFO", "TEXT_MESSAGESYSTEM", "TEXT_CAMPAIGN_LIST",
+	"TEXT_MULTISELECTION", "TEXT_PRODUCTION_LIST", "TEXT_PRODUCTION_AMOUNT", "TEXT_PRODUCTION_INFO",
+	"TEXT_EMPLOYEE", "TEXT_MOUSECURSOR_RIGHT", "TEXT_PRODUCTION_QUEUED",
+	"TEXT_STATS_1", "TEXT_STATS_2", "TEXT_STATS_3", "TEXT_STATS_4", "TEXT_STATS_5", "TEXT_STATS_6",
+	"TEXT_STATS_7", "TEXT_BASE_LIST", "TEXT_BASE_INFO", "TEXT_TRANSFER_LIST", "TEXT_MOUSECURSOR_PLAYERNAMES",
+	"TEXT_CARGO_LIST", "TEXT_UFOPEDIA_MAILHEADER", "TEXT_UFOPEDIA_MAIL", "TEXT_MARKET_NAMES",
+	"TEXT_MARKET_STORAGE", "TEXT_MARKET_MARKET", "TEXT_MARKET_PRICES", "TEXT_CHAT_WINDOW",
+	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_AIREQUIP_3", "TEXT_BASEDEFENSE_LIST", "TEXT_TIPOFTHEDAY",
+	"TEXT_GENERIC", "TEXT_XVI"
+};
+CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 
 const char *style_names[] = {
 	"facing", "rotated", "beam", "line", "axis", "circle"
@@ -144,7 +160,8 @@ static const size_t vt_sizes[] = {
 	0,	/* V_IF */
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
-	0	/* V_CLIENT_HUNK_STRING */
+	0,	/* V_CLIENT_HUNK_STRING */
+	sizeof(int)	/* V_CLIENT_HUNK_STRING */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -205,6 +222,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_CHAR:
 		*(char *) b = *token;
 		return ALIGN(sizeof(char));
+
+	case V_MENUTEXTID:
+		for (num = 0; num < MAX_MENUTEXTS; num++)
+			if (!Q_strcmp(token, menutextid_names[num]))
+				break;
+		if (num == MAX_MENUTEXTS)
+			Sys_Error("Could not find menutext id '%s'", token);
+		*(int *) b = num;
+		return ALIGN(sizeof(int));
 
 	case V_INT:
 		*(int *) b = atoi(token);
@@ -452,6 +478,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		*(char *) b = *(const char *) set;
 		return ALIGN(sizeof(char));
 
+	case V_MENUTEXTID:
 	case V_INT:
 		*(int *) b = *(const int *) set;
 		return ALIGN(sizeof(int));
@@ -566,6 +593,11 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 	case V_CHAR:
 		return (char *) b;
 		break;
+
+	case V_MENUTEXTID:
+		assert(*(int *)b < MAX_MENUTEXTS);
+		Q_strncpyz(valuestr, menutextid_names[*(int *)b], sizeof(valuestr));
+		return valuestr;
 
 	case V_INT:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(int *) b);

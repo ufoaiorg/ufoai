@@ -120,11 +120,11 @@ menu campaigns
 
 	text campaignlist
 	{
-		pos	"500 80"
+		pos		"500 80"
 		size	"420 200"
 		mousefx	true
 		format	"20 0"
-		num	13
+		num		TEXT_CAMPAIGN_LIST
 		click	{ }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
@@ -138,7 +138,7 @@ menu campaigns
 		pos	"500 300"
 		format	"20 0"
 		size	"420 380"
-		num		0
+		num		TEXT_STANDARD
 		height	19
 		wheel
 		scrollbar true

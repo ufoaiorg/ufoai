@@ -97,11 +97,66 @@ typedef enum {
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_CLIENT_HUNK = 25,			/**< only for client side data - not handled in Com_ParseValue */
 	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
+	V_MENUTEXTID,
 
 	V_NUM_TYPES
 } valueTypes_t;
 
 extern const char *vt_names[];
+
+#define MENU_TEXT_TO_ID(x) #x
+
+/** @brief linked into mn.menuText - defined in menu scripts via num */
+typedef enum {
+	TEXT_STANDARD,
+	TEXT_LIST,
+	TEXT_UFOPEDIA,
+	TEXT_BUILDINGS,
+	TEXT_BUILDING_INFO,
+	TEXT_RESEARCH,
+	TEXT_POPUP,
+	TEXT_POPUP_INFO,
+	TEXT_AIRCRAFT_LIST,
+	TEXT_AIRCRAFT_INFO,
+	TEXT_MESSAGESYSTEM,			/**< just a dummy for messagesystem - we use the stack */
+	TEXT_CAMPAIGN_LIST,
+	TEXT_MULTISELECTION,
+	TEXT_PRODUCTION_LIST,
+	TEXT_PRODUCTION_AMOUNT,
+	TEXT_PRODUCTION_INFO,
+	TEXT_EMPLOYEE,
+	TEXT_MOUSECURSOR_RIGHT,
+	TEXT_PRODUCTION_QUEUED,
+	TEXT_STATS_1,
+	TEXT_STATS_2,
+	TEXT_STATS_3,
+	TEXT_STATS_4,
+	TEXT_STATS_5,
+	TEXT_STATS_6,
+	TEXT_STATS_7,
+	TEXT_BASE_LIST,
+	TEXT_BASE_INFO,
+	TEXT_TRANSFER_LIST,
+	TEXT_MOUSECURSOR_PLAYERNAMES,
+	TEXT_CARGO_LIST, /* unused, why? */
+	TEXT_UFOPEDIA_MAILHEADER,
+	TEXT_UFOPEDIA_MAIL,
+	TEXT_MARKET_NAMES,
+	TEXT_MARKET_STORAGE,
+	TEXT_MARKET_MARKET,
+	TEXT_MARKET_PRICES,
+	TEXT_CHAT_WINDOW,
+	TEXT_AIREQUIP_1,
+	TEXT_AIREQUIP_2,
+	TEXT_AIREQUIP_3,
+	TEXT_BASEDEFENSE_LIST,
+	TEXT_TIPOFTHEDAY,
+	TEXT_GENERIC,
+	TEXT_XVI,
+
+	MAX_MENUTEXTS
+} menuTextIDs_t;
+
 
 /** possible align values - see also align_names */
 typedef enum {

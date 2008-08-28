@@ -393,7 +393,7 @@ menu employees
 		height	"19"
 		pos	"60 32"
 		size	"280 722"
-		num		1
+		num		TEXT_LIST
 //		bgcolor	"1 1 1 0.5"
 		click
 		wheel	{ cmd "employee_scroll;" }
@@ -506,7 +506,7 @@ menu employees
 	tbar spd_bar
 	{
 		if "mn_show_employee == 1"
-		pos "707 124" align ul_rsl current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute 
+		pos "707 124" align ul_rsl current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string acc_lbl
@@ -711,7 +711,7 @@ menu employees
 //		bgcolor "1 1 1 0.5"
 		size	"366 80"
 		format	"20 260"
-		num	18
+		num		TEXT_EMPLOYEE
 		height	"4"
 	}
 

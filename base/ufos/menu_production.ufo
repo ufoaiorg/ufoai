@@ -194,7 +194,7 @@ menu production
 		size	"376 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
-		num	15
+		num		TEXT_PRODUCTION_LIST
 		click
 		rclick
 		wheel	{ cmd "prod_scroll;" }
@@ -208,7 +208,7 @@ menu production
 		size	"30 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
-		num	16
+		num		TEXT_PRODUCTION_AMOUNT
 		height "30"
 		mousefx	true
 	}
@@ -219,7 +219,7 @@ menu production
 		size	"30 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
-		num	20
+		num		TEXT_PRODUCTION_QUEUED
 		height	"30"
 		mousefx true
 	}
@@ -324,7 +324,7 @@ menu production
 //		bgcolor "1 1 1 0.5"
 		size	"366 100"
 		format	"20 260"
-		num 17
+		num		TEXT_PRODUCTION_INFO
 		height	"5"
 		wheel
 		scrollbar true

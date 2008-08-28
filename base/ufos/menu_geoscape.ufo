@@ -69,8 +69,7 @@ menu map
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
 		height	1
-		// TEXT_MESSAGESYSTEM
-		num		12
+		num		TEXT_MESSAGESYSTEM
 		wheel
 		scrollbar false
 	}
@@ -545,8 +544,7 @@ menu map_combatzoom
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
 		height	1
-		// TEXT_MESSAGESYSTEM
-		num		12
+		num		TEXT_MESSAGESYSTEM
 		wheel
 	}
 
@@ -697,13 +695,13 @@ menu popup_list
 		align	uc
 		size	"446 20"
 		height	"1"
-		num		7
+		num		TEXT_POPUP
 	}
 
 	text popup_text
 	{
 		pos		"290 320"
-		num		8
+		num		TEXT_POPUP_INFO
 		format	"16 100"
 		size	"446 32"
 //		bgcolor	"1 1 1 0.5"
@@ -712,7 +710,7 @@ menu popup_list
 	text popup_list
 	{
 		pos		"290 358"
-		num		1
+		num		TEXT_LIST
 		format	"16 100"
 		size	"446 96"
 //		bgcolor	"1 1 1 0.5"
@@ -780,14 +778,14 @@ menu popup_button
 		align	uc
 		size	"446 20"
 		height	"1"
-		num		7
+		num		TEXT_POPUP
 		align cc
 	}
 
 	text popup_text
 	{
 		pos		"290 320"
-		num		8
+		num		TEXT_POPUP_INFO
 		format	"16 100"
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"
@@ -1076,7 +1074,7 @@ menu popup_transferbaselist
 
 	text trans_baselist
 	{
-		num		1
+		num		TEXT_LIST
 		pos		"290 336"
 		size	"450 144"
 //		bgcolor	"1 1 1 0.5"
@@ -1556,7 +1554,7 @@ menu popup_intercept
 		size	"460 260"
 		format	"20 150"
 		mousefx	true
-		num		9
+		num		TEXT_AIRCRAFT_LIST
 		wheel
 		height	"13"
 		click
@@ -1570,7 +1568,7 @@ menu popup_intercept
 		size	"250 260"
 		format	"20 175"
 		mousefx	true
-		num		29
+		num		TEXT_BASE_LIST
 		height	"13"
 		wheel
 		click
@@ -1709,7 +1707,7 @@ menu popup_multi_selection
 		pos		"290 340"
 		size	"420 100"
 		format	"20 150"
-		num		14
+		num		TEXT_MULTISELECTION
 		wheel
 		height	5
 		mousefx	true
@@ -1779,7 +1777,7 @@ menu popup_aircraft
 		pos		"290 340"
 		size	"420 100"
 		format	"20 150"
-		num		7
+		num		TEXT_POPUP
 		height	5
 		mousefx	true
 		click
@@ -1833,13 +1831,13 @@ menu popup
 		align	uc
 		size	"446 20"
 		height	"1"
-		num		7
+		num		TEXT_POPUP
 	}
 
 	text popup_text
 	{
 		pos		"290 320"
-		num		8
+		num		TEXT_POPUP_INFO
 		format	"16 100"
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"

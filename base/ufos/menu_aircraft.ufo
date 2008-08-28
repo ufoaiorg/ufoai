@@ -366,7 +366,7 @@ menu aircraft
 		pos		"480 540"
 		size	"510 200"
 		format	"20 220"
-		num	11
+		num		TEXT_AIRCRAFT_INFO
 		height	"10"
 	}
 
@@ -669,7 +669,7 @@ menu aircraft_equip
 		format	"20 0"
 		wheel
 		height	"11"
-		num 1
+		num TEXT_LIST
 		mousefx	true
 		click
 	}
@@ -758,7 +758,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 41
+		num		TEXT_AIREQUIP_1
 		height	"2"
 	}
 
@@ -780,7 +780,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 42
+		num		TEXT_AIREQUIP_2
 		height	"2"
 	}
 
@@ -802,7 +802,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 43
+		num		TEXT_AIREQUIP_3
 		height	"2"
 	}
 

@@ -801,7 +801,7 @@ menu options_keys
 		size	"460 560"
 		pos	"480 110"
 		height	"28"
-		num	1
+		num	TEXT_LIST
 		wheel
 		format	"20 0"
 		scrollbar	true
