@@ -827,7 +827,7 @@ public:
 	RenderablePointVector(GLenum mode)
 			: m_mode(mode) {
 	}
-	virtual ~RenderablePointVector() {
+	~RenderablePointVector() {
 	}
 
 	void render(RenderStateFlags state) const {

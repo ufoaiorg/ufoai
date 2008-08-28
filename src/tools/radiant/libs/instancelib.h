@@ -39,7 +39,7 @@ public:
 	InstanceSubgraphWalker(scene::Instantiable::Observer* observer, const scene::Path& path, scene::Instance* parent)
 			: m_observer(observer), m_path(path), m_parent(parent) {
 	}
-	virtual ~InstanceSubgraphWalker() {
+	~InstanceSubgraphWalker() {
 	}
 	bool pre(scene::Node& node) const {
 		m_path.push(makeReference(node));
@@ -62,7 +62,7 @@ public:
 	UninstanceSubgraphWalker(scene::Instantiable::Observer* observer, const scene::Path& parent)
 			: m_observer(observer), m_path(parent) {
 	}
-	virtual ~UninstanceSubgraphWalker() {
+	~UninstanceSubgraphWalker() {
 	}
 	bool pre(scene::Node& node) const {
 		m_path.push(makeReference(node));
@@ -87,7 +87,7 @@ public:
 
 	typedef InstanceMap::iterator iterator;
 
-	virtual ~InstanceSet() {
+	~InstanceSet() {
 	}
 	iterator begin() {
 		return m_instances.begin();
