@@ -4375,7 +4375,7 @@ static void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	if (ccs.credits < 0) {
-		float interest = ccs.credits * SALARY_DEBT_INTEREST;
+		const float interest = ccs.credits * SALARY_DEBT_INTEREST;
 
 		costs = (int)ceil(interest);
 		Q_strcat(pos, va(_("Debt:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -5023,7 +5023,7 @@ static void CP_AddItemAsCollected_f (void)
 
 	/* i = item index */
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *item = &csi.ods[i];
+		const objDef_t *item = &csi.ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			gd.bases[baseID].storage.num[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);

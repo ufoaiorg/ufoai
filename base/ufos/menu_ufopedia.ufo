@@ -154,7 +154,7 @@ menu ufopedia
 		if "mn_up_mail == 1"
 		pos		"50 80"
 		size	"660 134"
-		num		32
+		num		34
 		format	"24 0"
 		height	"5"
 		font	"f_small_bold"
@@ -948,7 +948,7 @@ menu ufopedia_mail
 	{
 		pos	"100 130"
 		size	"870 570"
-		num	33
+		num	35
 		height	"15"
 		font	"f_small"
 		format	"38 700"

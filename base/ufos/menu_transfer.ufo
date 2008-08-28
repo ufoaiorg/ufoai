@@ -99,7 +99,7 @@ menu transfer
 
 	text t_baseinfo
 	{
-		num	28
+		num	30
 		pos	"60 80"
 		size	"460 240"
 		format	"20 0"
@@ -118,7 +118,7 @@ menu transfer
 
 	text trans_list
 	{
-		num 29
+		num 31
 		pos	"60 370"
 		size	"460 360"
 		mousefx	true

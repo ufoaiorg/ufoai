@@ -758,7 +758,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 39
+		num 41
 		height	"2"
 	}
 
@@ -780,7 +780,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 40
+		num 42
 		height	"2"
 	}
 
@@ -802,7 +802,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 41
+		num 43
 		height	"2"
 	}
 

@@ -94,7 +94,7 @@ menu basedefence
 		format	"22 0"
 		wheel
 		height	"27"
-		num 42
+		num 44
 		mousefx	true
 		click
 	}
@@ -292,7 +292,7 @@ menu basedefence
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 39
+		num 41
 		height	"2"
 	}
 
@@ -314,7 +314,7 @@ menu basedefence
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 40
+		num 42
 		height	"2"
 	}
 
@@ -336,7 +336,7 @@ menu basedefence
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 41
+		num 43
 		height	"2"
 	}
 

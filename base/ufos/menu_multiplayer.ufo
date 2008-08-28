@@ -1584,7 +1584,7 @@ menu multiplayer_selectteam
 		size	"690 160"
 		font	"f_verysmall"
 		wheel
-		num	"38"
+		num	"40"
 		height	"10"
 		format	"16 0"
 		padding	5
@@ -1792,7 +1792,7 @@ menu chat_popup
 		format	"20 150"
 		font	"f_verysmall"
 		wheel
-		num		"38"
+		num		"40"
 		wheel
 		height	6
 	}

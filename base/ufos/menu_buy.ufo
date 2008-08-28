@@ -22,7 +22,7 @@ menu buy
 		image	menu/buy_ul
 		pos	"0 0"
 	}
-	
+
 	pic back_ll
 	{
 		image	menu/buy_ll
@@ -34,7 +34,7 @@ menu buy
 		image	menu/buy_ur
 		pos	"512 0"
 	}
-	
+
 	pic back_lr
 	{
 		image	menu/buy_lr
@@ -48,7 +48,7 @@ menu buy
 	text market
 	{
 		color	"0 .78 0 1"
-		num	"34"
+		num	"36"
 		height	"28"
 		format	"25 0"
 		pos	"55 40"
@@ -62,7 +62,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"35"
+		num	"37"
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -73,7 +73,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"36"
+		num	"38"
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -84,7 +84,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"37"
+		num	"39"
 		height	"28"
 		size	"80 700"
 		format	"25 0"
@@ -1302,10 +1302,10 @@ menu buy
 		pos	"650 627"
 		size	"270 59"
 		whup	{
-			cmd "prev_buy_type;" 
+			cmd "prev_buy_type;"
 		}
 		whdown	{
-			cmd "next_buy_type;" 
+			cmd "next_buy_type;"
 		}
 	}
 

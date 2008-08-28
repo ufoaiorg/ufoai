@@ -160,7 +160,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		size	"470 110"
 		format  "22 360"
-		num		"44"
+		num		"46"
 		height	"5"
 	}
 
