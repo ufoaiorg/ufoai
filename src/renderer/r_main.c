@@ -627,7 +627,8 @@ static void R_InitExtension (void)
 		if (r_maxtexres->integer > r_config.maxTextureSize) {
 			Com_Printf("downgrading from %i\n", r_maxtexres->integer);
 			Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
-		} else if (r_maxtexres->integer < r_config.maxTextureSize) {
+		/* check for a minimum */
+		} else if (r_maxtexres->integer >= 128 && r_maxtexres->integer < r_config.maxTextureSize) {
 			Com_Printf("but using %i as requested\n", r_maxtexres->integer);
 			r_config.maxTextureSize = r_maxtexres->integer;
 		}
