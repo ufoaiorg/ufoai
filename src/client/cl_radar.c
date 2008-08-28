@@ -382,7 +382,7 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 }
 
 /**
- * @brief Check if the specified UFO is inside the sensor range of base
+ * @brief Check if the specified UFO is inside the sensor range of the given radar
  * @return true if the aircraft is inside sensor and was sensored
  * @sa UFO_CampaignCheckEvents
  */
@@ -405,7 +405,7 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	if (!ufo->notOnGeoscape && (radar->range + (wasUFOSensored ? radar->range * RADAR_OUTER_CIRCLE_RATIO : 0) > dist)) {
 		/* UFO is inside the radar range */
 		/** @todo There is a hardcoded detection probability here - this should be scripted. Probability should be a function of UFO type and maybe radar type too. */
-		if (frand() <= 0.40) {
+		if (frand() <= 0.40 || wasUFOSensored) {
 			if (numAircraftSensored < 0) {
 				/* UFO was not sensored by the radar */
 				RADAR_AddUFO(radar, num);

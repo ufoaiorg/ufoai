@@ -705,7 +705,8 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			if (!B_GetBuildingStatus(base, B_POWER))
 				continue;
 
-			visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
+			/* maybe the ufo is already visible, don't reset it */
+			visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, ufo->visible);
 		}
 
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
@@ -714,7 +715,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				continue;
 
 			/* maybe the ufo is already visible, don't reset it */
-			visible |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, visible);
+			visible |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, ufo->visible);
 		}
 
 		/* Check for ufo tracking by aircraft */
@@ -725,7 +726,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 					continue;
 				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 					/* maybe the ufo is already visible, don't reset it */
-					visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, qtrue);
+					visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, ufo->visible);
 			}
 
 		/* Check if ufo appears or disappears on radar */
