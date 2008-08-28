@@ -34,6 +34,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../qe3.h" // g_brushCount
 #include "../map.h"
 #include "../preferences.h"
+#ifdef WIN32
+#include "../gtkmisc.h"
+#include "../mainframe.h"
+#endif
 
 // master window widget
 static GtkWidget *checkDialog = NULL;
@@ -52,14 +56,13 @@ static void CreateCheckDialog (void)
 
 	dlg = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-	g_signal_connect(G_OBJECT(dlg), "delete_event",
-			G_CALLBACK(editor_hide), NULL);
-	gtk_window_set_default_size (GTK_WINDOW (dlg), 600, 300);
+	g_signal_connect(G_OBJECT(dlg), "delete_event", G_CALLBACK(editor_hide), NULL);
+	gtk_window_set_default_size(GTK_WINDOW(dlg), 600, 300);
 
 	vbox = gtk_vbox_new(FALSE, 5);
 	gtk_widget_show(vbox);
 	gtk_container_add(GTK_CONTAINER(dlg), GTK_WIDGET(vbox));
-	gtk_container_set_border_width(GTK_CONTAINER (vbox), 5);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), 5);
 
 	scr = gtk_scrolled_window_new(0, 0);
 	gtk_widget_show(scr);
@@ -78,8 +81,7 @@ static void CreateCheckDialog (void)
 	button = gtk_button_new_with_label("Close");
 	gtk_widget_show(button);
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	g_signal_connect(G_OBJECT(button), "clicked",
-			G_CALLBACK(editor_hide), NULL);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editor_hide), NULL);
 	gtk_widget_set_usize(button, 60, -2);
 
 	checkDialog = dlg;
@@ -97,7 +99,7 @@ void ToolsCheckErrors (void)
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox (0, "Nothing to check in this map\n", "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, "Nothing to check in this map\n", "Map compiling", eMB_OK, eMB_ICONERROR);
 		return;
 	}
 
@@ -158,7 +160,7 @@ void ToolsCompile (void)
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox (0, "Nothing to compile in this map\n", "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, "Nothing to compile in this map\n", "Map compiling", eMB_OK, eMB_ICONERROR);
 		return;
 	}
 
