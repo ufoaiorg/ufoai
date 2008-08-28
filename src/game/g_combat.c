@@ -1310,6 +1310,8 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			mask |= 1 << i;
 
 	if (!mock) {
+		qboolean itemAlreadyRemoved = qfalse;	/**< State info so we can check if an item was already removed. */
+
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
 			G_ReactToPreFire(ent);
@@ -1362,6 +1364,8 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 				gi.WriteByte(container);
 				assert(gi.csi->ids[container].single);
 				INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
+
+				itemAlreadyRemoved = qtrue;	/**<for assert only */
 			}
 			/* x and y value */
 			gi.WriteByte(0);
@@ -1370,6 +1374,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 
 		/* remove throwable oneshot && deplete weapon from inventory */
 		if (weapon->t->thrown && weapon->t->oneshot && weapon->t->deplete) {
+			assert(!itemAlreadyRemoved);
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 			gi.WriteShort(num);
 			gi.WriteByte(container);
