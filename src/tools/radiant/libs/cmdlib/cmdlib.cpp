@@ -87,6 +87,10 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 	SECURITY_ATTRIBUTES sattr;
 	HANDLE readfh;
 	char *cbuff;
+    char cmdlineBuf[1024];
+
+    strncpy(cmdlineBuf, cmdline, sizeof(cmdlineBuf) - 1);
+    cmdlineBuf[sizeof(cmdlineBuf) - 1] = '\0';
 
 	// get handles and
 	GetStartupInfo(&startupinfo);
@@ -107,7 +111,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 		while (*pCmd == ' ')
 			pCmd++;
 	}
-	pCmdline = cmdline;
+	pCmdline = cmdlineBuf;
 	if (pCmdline) {
 		while (*pCmdline == ' ')
 			pCmdline++;
