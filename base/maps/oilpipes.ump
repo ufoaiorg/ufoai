@@ -1,7 +1,7 @@
-// base/maps/industrial.ump
+// base/maps/oilpipes.ump
 
 // *********************************
-// INDUSTRIAL THEME
+// OILPIPES THEME
 // *********************************
 
 // Tiletypes:
@@ -21,7 +21,7 @@
 // C: Civilian spawnpoint(s)
 
 
-base industrial/
+base oilpipes/
 
 //---------------------------------
 //Dropships
@@ -83,7 +83,7 @@ tile +craft_ufo_supply //A(12)
 0    +g   +g   +g    +g   0
 0    +g   +g   +g    +g   0
 0    +g   +g   +g    +g   0
-0    0    0    0     0    0   
+0    0    0    0     0    0
 }
 
 //---------------------------------
@@ -170,7 +170,7 @@ tile +op_e1_1x3 //C(1) A(1)
 0    0    0
 0    +g   0
 0    +b   ac
-g    +g   0   
+g    +g   0
 0    0    0
 }
 
@@ -182,7 +182,7 @@ tile +op_e2
 0    0    0
 }
 
-//--------------------------------- 
+//---------------------------------
 //[O]il[P]ipe splitting up in 2 single ones [A]
 tile +op_a1
 {
