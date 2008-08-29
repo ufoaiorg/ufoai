@@ -4124,7 +4124,9 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
 		/* Alien Containment. */
-		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */
+
+		/* Fill Alien Containment with default values like the tech pointer. */
+		AL_FillInContainment(b);
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			const char *const s = MSG_ReadString(sb);
 			b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
@@ -4136,17 +4138,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				b->alienscont[k].amount_alive = MSG_ReadShort(sb);
 				b->alienscont[k].amount_dead = MSG_ReadShort(sb);
 			}
-			/** @todo What about the "tech" pointer? */
 		}
-
 
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
-
-		/* some functions needs the baseCurrent pointer set */
-		/** @todo Is this still the case - the baseCurrent usage was heavily
-		 * cleaned up */
-		baseCurrent = b;
 	}
 	gd.numBases = B_GetFoundedBaseCount();
 	Cvar_Set("mn_base_count", va("%i", gd.numBases));
