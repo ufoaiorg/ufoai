@@ -797,14 +797,14 @@ void DoMapInfo (void) {
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Entity", renderer, "text", 0, NULL);
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Entity", renderer, "text", 0, (char const*)0);
 					gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 					gtk_tree_view_column_set_sort_column_id(column, 0);
 				}
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Count", renderer, "text", 1, NULL);
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Count", renderer, "text", 1, (char const*)0);
 					gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 					gtk_tree_view_column_set_sort_column_id(column, 1);
 				}

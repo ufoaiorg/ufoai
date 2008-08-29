@@ -1152,7 +1152,7 @@ static void TextureBrowser_createTreeViewTree (void) {
 	g_signal_connect(g_TextureBrowser.m_treeViewTree, "row-activated", (GCallback) TreeView_onRowActivated, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), -1, "", renderer, "text", 0, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), -1, "", renderer, "text", 0, (char const*)0);
 
 	TextureBrowser_constructTreeStore();
 }
