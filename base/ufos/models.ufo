@@ -20,6 +20,7 @@
 //			The downside the menutransform settings right now is that the models can't
 //			be rotated in-game (e.g. in the ufopedia) anymore and that the rotation
 //			values are kinda hard to get.
+//			use debug_mnangles, debug_mnorigin and debug_mnscale to find the best values
 // color	(color)
 // =================================================
 // NOTE: The entries have to be ordered (top-down) to start with children and end with parents (e.g. head, then body)
@@ -245,11 +246,9 @@ menu_model drop_herakles
 {
 	model	"models/aircraft/drop_herakles/herakles_carryall.md2"
 	menutransform {
-		// FIXME: These values are just copied from drop_firebird and
-		// needs tweaking
-		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-20 0 0"
-		aircraft	"1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"	#
+		ufopedia "0.3 0.3 0.3"	"180 0 -120"	"-20 0 0"
+		aircraft	"0.8 0.8 0.8"	"-20 120 70"	"60 60 0"
+		aircraft_equip	"0.5 0.5 0.5"	"-90 0 180"	#
 	}
 }
 
