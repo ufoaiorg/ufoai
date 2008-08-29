@@ -1875,7 +1875,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		default:
@@ -1887,7 +1887,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			if (selectedAircraft->status != AIR_IDLE) {
 				distance = MAP_GetDistance(selectedAircraft->pos,
 					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
-				Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+				Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			}
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
