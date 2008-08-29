@@ -3328,9 +3328,6 @@ public:
 
 	RadiantWindowObserver() : m_mouse_down(false) {
 	}
-	void release() {
-		delete this;
-	}
 	void setView(const View& view) {
 		m_selector.m_view = &view;
 		m_manipulator.m_view = &view;

@@ -1143,7 +1143,7 @@ CamWnd::~CamWnd() {
 
 	gtk_widget_unref(m_gl_widget);
 
-	m_window_observer->release();
+	delete m_window_observer;
 }
 
 class FloorHeightWalker : public scene::Graph::Walker {

@@ -835,7 +835,7 @@ XYWnd::~XYWnd(void) {
 
 	gtk_widget_unref(m_gl_widget);
 
-	m_window_observer->release();
+	delete m_window_observer;
 }
 
 void XYWnd::captureStates(void) {
