@@ -49,6 +49,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <glib/gdir.h>
 #include <glib/gstrfuncs.h>
 
+#include "autoptr.h"
 #include "qerplugin.h"
 #include "idatastream.h"
 #include "iarchive.h"
@@ -379,15 +380,13 @@ std::size_t LoadFile (const char *filename, void **bufferptr, int index) {
 	fixed[PATH_MAX] = '\0';
 	FixDOSName (fixed);
 
-	ArchiveFile* file = OpenFile(fixed);
-
-	if (file != 0) {
+	AutoPtr<ArchiveFile> file(OpenFile(fixed));
+	if (file) {
 		*bufferptr = malloc (file->size() + 1);
 		// we need to end the buffer with a 0
 		((char*) (*bufferptr))[file->size()] = 0;
 
 		std::size_t length = file->getInputStream().read((InputStream::byte_type*) * bufferptr, file->size());
-		file->release();
 		return length;
 	}
 

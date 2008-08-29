@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "debugging/debugging.h"
 
+#include "autoptr.h"
 #include "iscenegraph.h"
 #include "iselection.h"
 #include "iundo.h"
@@ -177,12 +178,10 @@ NodeSmartReference ModelResource_load(ModelLoader* loader, const char* name) {
 	NodeSmartReference model(g_nullModel);
 
 	{
-		ArchiveFile* file = GlobalFileSystem().openFile(name);
-
-		if (file != 0) {
+		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name));
+		if (file) {
 			globalOutputStream() << "Loaded Model: \"" << name << "\"\n";
 			model = loader->loadModel(*file);
-			file->release();
 		} else {
 			globalErrorStream() << "Model load failed: \"" << name << "\"\n";
 		}

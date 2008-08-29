@@ -106,9 +106,6 @@ public:
 		return New<StoredArchiveFile>().scalar(name, archiveName, position, stream_size, file_size);
 	}
 
-	void release() {
-		Delete<StoredArchiveFile>().scalar(this);
-	}
 	size_type size() const {
 		return m_size;
 	}
@@ -171,9 +168,6 @@ public:
 		return m_istream.failed();
 	}
 
-	void release() {
-		delete this;
-	}
 	size_type size() const {
 		return m_size;
 	}

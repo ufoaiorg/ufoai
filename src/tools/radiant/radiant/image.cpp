@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "image.h"
 
+#include "autoptr.h"
 #include "modulesystem.h"
 #include "iimage.h"
 #include "ifilesystem.h"
@@ -48,10 +49,9 @@ Image* QERApp_LoadImage(void* environment, const char* name) {
 			if (m_image == 0) {
 				StringOutputStream fullname(256);
 				fullname << m_name << '.' << name;
-				ArchiveFile* file = GlobalFileSystem().openFile(fullname.c_str());
-				if (file != 0) {
+				AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(fullname.c_str()));
+				if (file) {
 					m_image = table.loadImage(*file);
-					file->release();
 				}
 			}
 		}

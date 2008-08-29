@@ -30,8 +30,7 @@ class InputStream;
 /// \brief A file opened in binary mode.
 class ArchiveFile {
 public:
-	/// \brief Destroys the file object.
-	virtual void release() = 0;
+	virtual ~ArchiveFile() {}
 	/// \brief Returns the size of the file data in bytes.
 	virtual std::size_t size() const = 0;
 	/// \brief Returns the path to this file (relative to the filesystem root)
@@ -63,7 +62,7 @@ public:
 	ScopedArchiveFile(ArchiveFile& file) : m_file(file) {
 	}
 	~ScopedArchiveFile() {
-		m_file.release();
+		delete &m_file;
 	}
 };
 
