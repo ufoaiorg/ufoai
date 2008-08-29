@@ -1159,6 +1159,35 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
 }
 
 /**
+ * @brief Returns the userfriendly name for craftitem types (shown in aircraft equip menu)
+ */
+const char *AIM_AircraftItemtypeName (const int equiptype)
+{
+	switch (equiptype) {
+	case AC_ITEM_WEAPON:
+		return "Weapons";
+		break;
+	case AC_ITEM_SHIELD:
+		return "Armour";
+		break;
+	case AC_ITEM_ELECTRONICS:
+		return "Items";
+		break;
+	case AC_ITEM_AMMO:
+		/* ammo - only available from weapons */
+		return "Ammo";
+		break;
+	case AC_ITEM_PILOT:
+		return "Pilot";
+		break;
+	default:
+		return "Unknown";
+		break;
+	}
+	return "Unknown";
+}
+
+/**
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa AIM_AircraftEquipMenuClick_f
  */
@@ -1194,32 +1223,29 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 		type = atoi(Cmd_Argv(1));
 		switch (type) {
-		case 1:
-			/* shield/armour */
-			airequipID = AC_ITEM_SHIELD;
-			break;
-		case 2:
-			/* items */
-			airequipID = AC_ITEM_ELECTRONICS;
-			break;
-		case 3:
-			/* ammo - only available from weapons */
+		case AC_ITEM_AMMO:
 			if (airequipID == AC_ITEM_WEAPON)
 				airequipID = AC_ITEM_AMMO;
 			break;
-		case 4:
-			/* crew */
-			airequipID = AC_ITEM_PILOT;
+		case AC_ITEM_PILOT:
 			/*  mn_equip_pilot" = "1" means the pilot model (model has different dimensions for a pilots portrait)
 			 *  will be used in the descripion box */
 			Cvar_Set("mn_equip_pilot", "1");
+		case AC_ITEM_ELECTRONICS:
+		case AC_ITEM_SHIELD:
+			airequipID = type;
+			Cbuf_AddText("airequip_zone3_off;");
 			break;
-
+		case AC_ITEM_WEAPON:
+			airequipID = type;
+			Cbuf_AddText("airequip_zone3_on;");
+			break;
 		default:
 			airequipID = AC_ITEM_WEAPON;
 			break;
 		}
 	}
+	Cvar_Set("mn_equip_itemtype_name", _(AIM_AircraftItemtypeName(airequipID)));
 
 	/* Reset value of noparams */
 	noparams = qfalse;
@@ -1314,6 +1340,36 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone();
+}
+
+/**
+ * @brief Selects the next aircraft item category
+ */
+static void AIM_NextItemtype_f (void)
+{
+        airequipID++;
+        if (airequipID > AC_ITEM_PILOT){
+                airequipID = AC_ITEM_WEAPON;
+        }
+        else if (airequipID < AC_ITEM_WEAPON){
+                airequipID = AC_ITEM_PILOT;
+        }
+        Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+}
+
+/**
+ * @brief Selects the previous aircraft item category
+ */
+static void AIM_PreviousItemtype_f (void)
+{
+        airequipID--;
+        if (airequipID > AC_ITEM_PILOT){
+                airequipID = AC_ITEM_WEAPON;
+        }
+        else if (airequipID < AC_ITEM_WEAPON){
+                airequipID = AC_ITEM_PILOT;
+        }
+        Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
 /**
@@ -2353,4 +2409,10 @@ const char* AII_WeightToName (itemWeight_t weight)
 		return _("Unknown weight");
 		break;
 	}
+}
+
+void AIM_InitStartup (void)
+{
+	Cmd_AddCommand("mn_next_equiptype", AIM_NextItemtype_f, "Shows the next aircraft equip category.");
+	Cmd_AddCommand("mn_prev_equiptype", AIM_PreviousItemtype_f, "Shows the previous aircraft equip category.");
 }

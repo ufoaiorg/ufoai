@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_installation.h"
 #include "cl_hospital.h"
 #include "cl_map.h"
+#include "cl_mapfightequip.h"
 #include "cl_ufo.h"
 #include "cl_alienbase.h"
 #include "cl_sequence.h"
@@ -2031,6 +2032,7 @@ static void CL_InitLocal (void)
 	SEQ_InitStartup();
 	TEAM_InitStartup();
 	TOTD_InitStartup();
+	AIM_InitStartup();
 
 	/* register our variables */
 	for (i = 0; i < MAX_BOOKMARKS; i++)
