@@ -1317,27 +1317,27 @@ menu buy
 		align	uc
 	}
 
-        pic bt_previtemtype
-        {
-                tooltip	"_Previous category"
-                mousefx	true
-                image	menu/button_aliencont1
-                pos	"650 623"
-                texl	"0 0"
-                texh	"32 64"
+	pic bt_previtemtype
+	{
+		tooltip	"_Previous category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"650 623"
+		texl	"0 0"
+		texh	"32 64"
 		click	{ cmd "prev_buy_type;" }
-        }
+	}
 
-        pic bt_nextitemtype
-        {
-                tooltip	"_Next category"
-                mousefx	true
-                image	menu/button_aliencont1
-                pos	"882 623"
-                texl	"32 0"
-                texh	"64 64"
+	pic bt_nextitemtype
+	{
+		tooltip	"_Next category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"882 623"
+		texl	"32 0"
+		texh	"64 64"
 		click	{ cmd "next_buy_type;" }
-        }
+	}
 
 	pic bt_continue
 	{
@@ -1362,18 +1362,16 @@ menu buy
 		align	uc
 	}
 
-        string aircraftname
-        {
+	string aircraftname
+	{
 		if "mn_itemtype == 8"	// Only for aircraft.
-                string  "*cvar mn_aircraftname"
-                pos	"793 155"
-                align   uc
-        }
+		string  "*cvar mn_aircraftname"
+		pos	"793 155"
+		align   uc
+	}
 
 	item itemmodel
 	{
-		// @todo: models for aircraft/craftitems
-		if "mn_itemtype != 8"	// for everything except aircraft
 		string	"*cvar mn_item"
 		pos	"793 250"
 		scale	"7 7 7"
@@ -1392,8 +1390,8 @@ menu buy
 	{
 		pos	"745 498"
 		size	"226 16"
-		whup	{ cmd mn_increaseweapon }
-		whdown	{ cmd mn_decreaseweapon }
+		whup	{ cmd "mn_increaseweapon;" }
+		whdown	{ cmd "mn_decreaseweapon;" }
 	}
 
 
@@ -1408,7 +1406,7 @@ menu buy
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 
@@ -1423,7 +1421,7 @@ menu buy
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 
