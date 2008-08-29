@@ -422,8 +422,8 @@ base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_int.jpg | GNU General Public License 2.0 | Herakles (outside) texture by Willem "Sitters", interiour from GPLed Nexuiz Textures
 base/models/aircraft/drop_herakles/herakles_int.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/herakles_int.png | GNU General Public License 2.0 | Herakles (outside) texture by Willem "Sitters", interiour from GPLed Nexuiz Textures
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_top.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
