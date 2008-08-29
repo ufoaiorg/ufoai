@@ -47,7 +47,7 @@ void write_stack_trace(TextOutputStream& outputStream) {
 		free(symbol_names);
 	}
 }
-#elif defined (WIN32)
+#else
 void write_stack_trace(TextOutputStream& outputStream) {
 	outputStream << "\nStacktrace is disabled in release-builds\n";
 }
