@@ -669,7 +669,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 						for (j = 0; j < transfer->itemAmount[i]; j++) {
 							if (UR_ConditionsForStoring(destination, ufocraft)) {
 								/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-								baseCurrent->storage.num[i]++; /** @todo Why aren't we using 'destination' here? */
+								destination->storage.num[i]++;
 								if (ufocraft->size == AIRCRAFT_LARGE)
 									destination->capacities[CAP_UFOHANGARS_LARGE].cur++;
 								else
