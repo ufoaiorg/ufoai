@@ -301,6 +301,7 @@ typedef struct ccs_s {
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
 	qboolean XVISpreadActivated;	/**< should the XVI spread over the globe already */
+	qboolean XVIShowMap;			/**< spread was activated and the map is activated now */
 	qboolean humansAttackActivated;	/**< humans start to attack player */
 	float timer;
 

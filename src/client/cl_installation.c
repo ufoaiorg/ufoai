@@ -643,7 +643,6 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 {
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-#if 0
 		int j;
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		MSG_WriteByte(sb, inst->founded);
@@ -667,7 +666,6 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 
 		/** @todo aircraft (don't save capacities, they should
 		 * be recalculated after loading) */
-#endif
 	}
 	return qtrue;
 }

@@ -2616,7 +2616,8 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
 }
 
-static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;		/* Number of days between events are spawned */
+/** @brief Number of days between events are spawned */
+static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;
 
 /**
  * @brief Spawn new missions.
@@ -2661,11 +2662,12 @@ static void CP_StartXVISpreading_f (void)
 {
 	int i, numAlienBases;
 
+	/** @todo ccs.XVIShowMap should not be enabled at the same time than
+	 * ccs.XVISpreadActivated: ccs.XVIShowMap means that PHALANX has a map of
+	 * XVI, whereas ccs.XVISpreadActivated  means that aliens started
+	 * spreading XVI */
 	ccs.XVISpreadActivated = qtrue;
-	/** @todo mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
-	mn_xvimap means that PHALANX has a map of XVI, whereas ccs.XVISpreadActivated means that aliens started spreading XVI
-	 @todo mn_xvimap should probably be saved, and restored when a game is loaded */
-	Cvar_Set("mn_xvimap", "1");
+	ccs.XVIShowMap = qtrue;
 
 	/* Spawn a few alien bases depending on difficulty level */
 	if (difficulty->integer > 0)
@@ -4241,6 +4243,7 @@ void CL_CampaignRun (void)
 		} else if (date.day > 1)
 			gd.fund = qtrue;
 
+		Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 		UP_GetUnreadMails();
 		CL_UpdateTime();
 	}
@@ -4473,6 +4476,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.civiliansKilled = MSG_ReadShort(sb);
 	ccs.aliensKilled = MSG_ReadShort(sb);
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
+	/*ccs.XVIShowMap = MSG_ReadByte(sb);*/
 	ccs.humansAttackActivated = MSG_ReadByte(sb);
 
 	/* read missions */
@@ -4653,6 +4657,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteShort(sb, ccs.civiliansKilled);
 	MSG_WriteShort(sb, ccs.aliensKilled);
 	MSG_WriteByte(sb, ccs.XVISpreadActivated);
+	MSG_WriteByte(sb, ccs.XVIShowMap);
 	MSG_WriteByte(sb, ccs.humansAttackActivated);
 
 	/* store missions */
@@ -6485,7 +6490,6 @@ static void CL_GameNew_f (void)
 
 	/* Initialize XVI overlay */
 	R_InitializeXVIOverlay(curCampaign->map, NULL, 0, 0);
-	Cvar_Set("mn_xvimap", "0");
 
 	/* Reset alien bases */
 	AB_ResetAlienBases();
