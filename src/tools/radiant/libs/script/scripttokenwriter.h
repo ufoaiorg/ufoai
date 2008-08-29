@@ -32,9 +32,7 @@ public:
 	~SimpleTokenWriter() {
 		writeSeparator();
 	}
-	void release() {
-		delete this;
-	}
+
 	void nextLine() {
 		m_separator = '\n';
 	}

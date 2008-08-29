@@ -83,7 +83,7 @@ public:
 	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
 		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
 		Map_Write(root, traverse, writer);
-		writer.release();
+		delete &writer;
 	}
 };
 

@@ -44,7 +44,7 @@ class TextInputStream;
 
 class TokenWriter {
 public:
-	virtual void release() = 0;
+	virtual ~TokenWriter() {}
 	virtual void nextLine() = 0;
 	virtual void writeToken(const char* token) = 0;
 	virtual void writeString(const char* string) = 0;
