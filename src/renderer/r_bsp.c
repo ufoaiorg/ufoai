@@ -63,6 +63,8 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
 			/* visible flag for rendering */
 			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
+		else
+			surf->levelflagToRenderIn = 0;
 	}
 
 	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
@@ -205,6 +207,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 		/* visible (front) side */
 		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
 			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
+		else
+			surf->levelflagToRenderIn = 0;
 	}
 
 	/* recurse down the back side */
