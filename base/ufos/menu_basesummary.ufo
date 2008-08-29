@@ -96,7 +96,7 @@ menu basesummary
 	// ===================
 	text txt_base_summary
 	{
-		num			TEXT_STATS_1
+		num			TEXT_STATS_BASESUMMARY
 		pos			"30 66"
 		size		"500 672"
 		format		"16 38"

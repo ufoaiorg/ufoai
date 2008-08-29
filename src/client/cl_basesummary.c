@@ -155,7 +155,7 @@ static void BaseSummary_Init_f (void)
 			Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
 
 		/* link into the menu */
-		mn.menuText[TEXT_STATS_1] = textStatsBuffer;
+		mn.menuText[TEXT_STATS_BASESUMMARY] = textStatsBuffer;
 	}
 }
 

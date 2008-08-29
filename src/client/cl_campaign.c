@@ -4273,7 +4273,7 @@ static void CL_StatsUpdate_f (void)
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
 	int hired[MAX_EMPL];
-	int i = 0, j, costs = 0, sum = 0;
+	int i, j, costs = 0, sum = 0;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -4282,20 +4282,26 @@ static void CL_StatsUpdate_f (void)
 	pos = statsBuffer;
 
 	/* missions */
-	mn.menuText[TEXT_STATS_1] = pos;
+	mn.menuText[TEXT_STATS_MISSION] = pos;
 	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), campaignStats.missionsWon, campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_2] = pos;
+	mn.menuText[TEXT_STATS_BASES] = pos;
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		campaignStats.basesBuild, gd.numBases, campaignStats.basesAttacked),
 
-	/** @todo installation_t stats */
+	/* installations */
+	pos += (strlen(pos) + 1);
+	mn.menuText[TEXT_STATS_INSTALLATIONS] = pos;
+	for (i = 0; i < gd.numInstallations; i++) {
+		const installation_t *inst = &gd.installations[i];
+		Q_strcat(pos, va(_("%s\n"), inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	}
 
 	/* nations */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_3] = pos;
+	mn.menuText[TEXT_STATS_NATIONS] = pos;
 	for (i = 0; i < gd.numNations; i++) {
 		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), NAT_GetHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
@@ -4334,14 +4340,14 @@ static void CL_StatsUpdate_f (void)
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_4] = pos;
+	mn.menuText[TEXT_STATS_EMPLOYEES] = pos;
 	for (i = 0; i < MAX_EMPL; i++) {
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_5] = pos;
+	mn.menuText[TEXT_STATS_COSTS] = pos;
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
