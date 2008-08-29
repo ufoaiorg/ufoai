@@ -51,7 +51,7 @@ installationType_t INS_GetType (const installation_t *installation)
 {
 	if (installation->installationTemplate->maxBatteries > 0)
 		return INSTALLATION_DEFENCE;
-	else if (installation->numAircraftInInstallation > 0)
+	else if (installation->installationTemplate->maxUfoStored > 0)
 		return INSTALLATION_UFOYARD;
 
 	/* default is radar */
