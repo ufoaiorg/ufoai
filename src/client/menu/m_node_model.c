@@ -79,13 +79,14 @@ void MN_ListMenuModels_f (void)
 
 #ifdef DEBUG
 /**
- * @brief This function allows you inline transforming of mdoels.
+ * @brief This function allows you inline transforming of models.
  * @note Changes you made are lost on quit
  */
 static void MN_SetModelTransform_f (void)
 {
 	menuNode_t *node;
-	const char *command, *nodeID;
+	menuModel_t *model;
+	const char *command, *nodeOrMenuID, *menuModel;
 	float x, y ,z;
 	vec3_t value;
 
@@ -94,33 +95,76 @@ static void MN_SetModelTransform_f (void)
 		return;
 
 	if (Cmd_Argc() < 5) {
-		Com_Printf("Usage: %s <node> <x> <y> <z>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s [<model> <menu>] | [<node>] <x> <y> <z>\n", Cmd_Argv(0));
+		Com_Printf("<model> <menu> is needed for menumodel definitions\n");
+		Com_Printf("<node> is needed for 'normal' models\n");
 		return;
 	}
 
-	command = Cmd_Argv(0);
-	nodeID = Cmd_Argv(1);
-	x = atof(Cmd_Argv(2));
-	y = atof(Cmd_Argv(3));
-	z = atof(Cmd_Argv(4));
+	if (Cmd_Argc() == 5) {
+		command = Cmd_Argv(0);
+		menuModel = NULL;
+		nodeOrMenuID = Cmd_Argv(1);
+		x = atof(Cmd_Argv(2));
+		y = atof(Cmd_Argv(3));
+		z = atof(Cmd_Argv(4));
+	} else {
+		command = Cmd_Argv(0);
+		menuModel = Cmd_Argv(1);
+		nodeOrMenuID = Cmd_Argv(2);
+		x = atof(Cmd_Argv(3));
+		y = atof(Cmd_Argv(4));
+		z = atof(Cmd_Argv(5));
+	}
 
 	VectorSet(value, x, y, z);
 
-	/* search the node */
-	node = MN_GetNode(MN_GetActiveMenu(), nodeID);
-	if (!node) {
-		/* didn't find node -> "kill" action and print error */
-		Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeID);
-		return;
-	} else if (node->type != MN_MODEL) {
-		Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeID);
-		return;
-	}
+	if (menuModel) {
+		model = MN_GetMenuModel(menuModel);
+		if (!model) {
+			Com_Printf("MN_SetModelTransform_f: model \"%s\" wasn't found\n", menuModel);
+			return;
+		}
 
-	if (!Q_strcmp(command, "debug_mnscale")) {
-		VectorCopy(value, node->scale);
-	} else if (!Q_strcmp(command, "debug_mnangles")) {
-		VectorCopy(value, node->angles);
+		if (model->menuTransformCnt) {
+			const menu_t *menu = MN_GetActiveMenu();
+			int i;
+
+			for (i = 0; i < model->menuTransformCnt; i++) {
+				if (menu == model->menuTransform[i].menuPtr) {
+					if (!Q_strcmp(command, "debug_mnscale")) {
+						VectorCopy(value, model->menuTransform[i].scale);
+					} else if (!Q_strcmp(command, "debug_mnangles")) {
+						VectorCopy(value, model->menuTransform[i].angles);
+					} else if (!Q_strcmp(command, "debug_mnorigin")) {
+						VectorCopy(value, model->menuTransform[i].origin);
+					}
+					break;
+				}
+			}
+		} else {
+			Com_Printf("MN_SetModelTransform_f: no entry in menumodel '%s' for menu '%s'\n", menuModel, nodeOrMenuID);
+			return;
+		}
+	} else {
+		/* search the node */
+		node = MN_GetNode(MN_GetActiveMenu(), nodeOrMenuID);
+		if (!node) {
+			/* didn't find node -> "kill" action and print error */
+			Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeOrMenuID);
+			return;
+		} else if (node->type != MN_MODEL) {
+			Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeOrMenuID);
+			return;
+		}
+
+		if (!Q_strcmp(command, "debug_mnscale")) {
+			VectorCopy(value, node->scale);
+		} else if (!Q_strcmp(command, "debug_mnangles")) {
+			VectorCopy(value, node->angles);
+		} else if (!Q_strcmp(command, "debug_mnorigin")) {
+			VectorCopy(value, node->origin);
+		}
 	}
 }
 #endif
@@ -130,6 +174,7 @@ void MN_NodeModelInit (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
 	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
+	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }
