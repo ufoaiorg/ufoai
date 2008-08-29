@@ -37,14 +37,6 @@ class ShadersDependencies :
 			public GlobalTexturesModuleRef,
 			public GlobalScripLibModuleRef,
 			public GlobalRadiantModuleRef {
-	ImageModuleRef m_bitmapModule;
-public:
-	ShadersDependencies() :
-			m_bitmapModule("bmp") {
-	}
-	ImageModuleRef& getBitmapModule() {
-		return m_bitmapModule;
-	}
 };
 
 class ShadersAPI {
@@ -56,7 +48,6 @@ public:
 	ShadersAPI(ShadersDependencies& dependencies) {
 		g_shadersExtension = "shader";
 		g_shadersDirectory = "scripts/";
-		g_bitmapModule = dependencies.getBitmapModule().getTable();
 		Shaders_Construct();
 		m_shaders = &GetShaderSystem();
 	}
