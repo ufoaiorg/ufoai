@@ -810,13 +810,11 @@ static void PR_AircraftInfo (const aircraft_t * aircraftTemplate)
 		assert(aircraftTemplate->tech);
 		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftTemplate->tech->produceTime), sizeof(productionInfo));
 		mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+		Cvar_Set("mn_item", aircraftTemplate->id);
 	} else {
 		mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
+		Cvar_Set("mn_item", "");
 	}
-	/** @todo Draw aircraft model in production view
-	 * maybe use a special model node underlying the item node in the production menu
-	 * @note The same counts for the market menu, too */
-	Cvar_Set("mn_item", "");
 }
 
 /**

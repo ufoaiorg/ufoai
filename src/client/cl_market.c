@@ -103,6 +103,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 	assert(tech);
 	UP_AircraftDescription(tech);
 	Cvar_Set("mn_aircraftname", _(aircraftTemplate->name));
+	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
 /**
@@ -179,6 +180,8 @@ static void BS_MarketClick_f (void)
 	num = atoi(Cmd_Argv(1));
 	if (num >= buyList.length || num < 0)
 		return;
+
+	Cvar_Set("mn_item", "");
 
 	switch (buyCat) {
 	case FILTER_AIRCRAFT:

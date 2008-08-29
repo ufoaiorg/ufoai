@@ -1375,6 +1375,7 @@ menu buy
 		string	"*cvar mn_item"
 		pos	"793 250"
 		scale	"7 7 7"
+		origin	"793 250"
 	}
 
 	text description

@@ -179,6 +179,9 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }
 
+/**
+ * @todo Menu models should inherit the node values from their parent
+ */
 void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, const char *source)
 {
 	int i;

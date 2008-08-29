@@ -1918,13 +1918,34 @@ void INVSH_PrintItemDescription (const objDef_t *od)
 
 /**
  * @brief Returns the index of this item in the inventory.
+ * @note check that id is a none empty string
+ * @note previously known as RS_GetItem
+ * @param[in] id the item id in our object definition array (csi.ods)
+ * @sa INVSH_GetItemByID
+ */
+objDef_t *INVSH_GetItemByIDSilent (const char *id)
+{
+	int i;
+
+	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
+		objDef_t *item = &CSI->ods[i];
+		if (!Q_strncmp(id, item->id, MAX_VAR)) {
+			return item;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Returns the index of this item in the inventory.
  * @note id may not be null or empty
  * @note previously known as RS_GetItem
  * @param[in] id the item id in our object definition array (csi.ods)
+ * @sa INVSH_GetItemByIDSilent
  */
 objDef_t *INVSH_GetItemByID (const char *id)
 {
-	int i;
+	objDef_t *od;
 
 #ifdef DEBUG
 	if (!id || !*id) {
@@ -1933,12 +1954,9 @@ objDef_t *INVSH_GetItemByID (const char *id)
 	}
 #endif
 
-	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
-		objDef_t *item = &CSI->ods[i];
-		if (!Q_strncmp(id, item->id, MAX_VAR)) {
-			return item;
-		}
-	}
+	od = INVSH_GetItemByIDSilent(id);
+	if (od)
+		return od;
 
 	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 	return NULL;
