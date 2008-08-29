@@ -686,11 +686,11 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->founded = MSG_ReadByte(sb);
 		if (!inst->founded)
 			continue;
-/*		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(MSG_ReadString(sb));
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(MSG_ReadString(sb));
 		if (!inst->installationTemplate) {
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
-		}*/
+		}
 		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
 		MSG_ReadPos(sb, inst->pos);
 		inst->installationStatus = MSG_ReadByte(sb);
