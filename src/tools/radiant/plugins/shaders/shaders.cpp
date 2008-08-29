@@ -1087,9 +1087,8 @@ void LoadShaderFile(const char* filename) {
 	if (file) {
 		globalOutputStream() << "Parsing shaderfile " << filename << "\n";
 
-		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-		ParseShaderFile(tokeniser, filename);
-		delete &tokeniser;
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		ParseShaderFile(*tokeniser, filename);
 	} else {
 		globalOutputStream() << "Unable to read shaderfile " << filename << "\n";
 	}
@@ -1105,9 +1104,8 @@ void loadGuideFile(const char* filename) {
 	if (file) {
 		globalOutputStream() << "Parsing guide file " << fullname.c_str() << "\n";
 
-		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-		parseGuideFile(tokeniser, fullname.c_str());
-		delete &tokeniser;
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		parseGuideFile(*tokeniser, fullname.c_str());
 	} else {
 		globalOutputStream() << "Unable to read guide file " << fullname.c_str() << "\n";
 	}
@@ -1222,9 +1220,9 @@ build a CStringList of shader names
 ==================
 */
 void BuildShaderList(TextInputStream& shaderlist) {
-	Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewSimpleTokeniser(shaderlist);
-	tokeniser.nextLine();
-	const char* token = tokeniser.getToken();
+	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(shaderlist));
+	tokeniser->nextLine();
+	const char* token = tokeniser->getToken();
 	StringOutputStream shaderFile(64);
 	while (token != 0) {
 		// each token should be a shader filename
@@ -1232,12 +1230,11 @@ void BuildShaderList(TextInputStream& shaderlist) {
 
 		ShaderList_addShaderFile(shaderFile.c_str());
 
-		tokeniser.nextLine();
-		token = tokeniser.getToken();
+		tokeniser->nextLine();
+		token = tokeniser->getToken();
 
 		shaderFile.clear();
 	}
-	delete &tokeniser;
 }
 
 void FreeShaderList() {

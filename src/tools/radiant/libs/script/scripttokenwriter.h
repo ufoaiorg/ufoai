@@ -67,8 +67,8 @@ private:
 	char m_separator;
 };
 
-inline TokenWriter& NewSimpleTokenWriter(TextOutputStream& ostream) {
-	return *(new SimpleTokenWriter(ostream));
+inline TokenWriter* NewSimpleTokenWriter(TextOutputStream& ostream) {
+	return new SimpleTokenWriter(ostream);
 }
 
 #endif

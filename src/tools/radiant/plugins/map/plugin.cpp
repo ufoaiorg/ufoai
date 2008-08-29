@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "plugin.h"
 
+#include "autoptr.h"
 #include "iscriplib.h"
 #include "ibrush.h"
 #include "ifiletypes.h"
@@ -76,14 +77,12 @@ public:
 		return g_nullNode;
 	}
 	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
-		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
-		Map_Read(root, tokeniser, entityTable, *this);
-		delete &tokeniser;
+		AutoPtr<Tokeniser> tokeniser(GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream));
+		Map_Read(root, *tokeniser, entityTable, *this);
 	}
 	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
-		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
-		Map_Write(root, traverse, writer);
-		delete &writer;
+		AutoPtr<TokenWriter> writer(GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream));
+		Map_Write(root, traverse, *writer);
 	}
 };
 
@@ -227,9 +226,8 @@ public:
 	}
 
 	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
-		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
-		VMF_Read(root, tokeniser, entityTable);
-		delete &tokeniser;
+		AutoPtr<Tokeniser> tokeniser(GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream));
+		VMF_Read(root, *tokeniser, entityTable);
 	}
 	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
 	}
