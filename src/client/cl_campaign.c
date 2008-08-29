@@ -4476,7 +4476,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.civiliansKilled = MSG_ReadShort(sb);
 	ccs.aliensKilled = MSG_ReadShort(sb);
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
-	/*ccs.XVIShowMap = MSG_ReadByte(sb);*/
+	ccs.XVIShowMap = MSG_ReadByte(sb);
 	ccs.humansAttackActivated = MSG_ReadByte(sb);
 
 	/* read missions */

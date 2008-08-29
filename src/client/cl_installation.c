@@ -680,7 +680,6 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 {
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-#if 0
 		int j;
 		installation_t *inst = INS_GetInstallationByIDX(i);
 		inst->founded = MSG_ReadByte(sb);
@@ -711,7 +710,6 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
-#endif
 	}
 	return qtrue;
 }
