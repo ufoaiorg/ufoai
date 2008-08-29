@@ -427,9 +427,6 @@ struct state_type : public UndoMemento {
 		}
 		state_type(const state_type& other) : UndoMemento(other), test_data(other.test_data) {
 		}
-		void release() {
-			delete this;
-		}
 
 		int test_data;
 	};

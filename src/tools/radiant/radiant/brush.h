@@ -1552,9 +1552,6 @@ class BrushUndoMemento : public UndoMemento {
 	public:
 		BrushUndoMemento(const Faces& faces) : m_faces(faces) {
 		}
-		void release() {
-			delete this;
-		}
 
 		Faces m_faces;
 	};
