@@ -1760,6 +1760,7 @@ base/pics/geoscape/base.tga | Creative Commons Attribution-Share Alike 3.0 | Wer
 base/pics/geoscape/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/geoscape/circle.tga | GNU General Public License 2.0
 base/pics/geoscape/circleactive.tga | GNU General Public License 2.0
+base/pics/geoscape/defence.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/pics/geoscape/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
 base/pics/geoscape/map_earth_nations_overlay.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
@@ -1768,6 +1769,7 @@ base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_xvi_overlay.tga | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/map_sun.tga | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/mission.tga | GNU General Public License 2.0
+base/pics/geoscape/radar.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/pics/hud/bar_chat.tga | GNU General Public License 2.0
 base/pics/hud/bar_chat_choice.tga | GNU General Public License 2.0
 base/pics/hud/bar_floor.tga | GNU General Public License 2.0
