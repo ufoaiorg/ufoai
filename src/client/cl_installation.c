@@ -648,6 +648,7 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, inst->founded);
 		if (!inst->founded)
 			continue;
+		MSG_WriteString(sb, inst->installationTemplate->id);
 		MSG_WriteString(sb, inst->name);
 		MSG_WritePos(sb, inst->pos);
 		MSG_WriteByte(sb, inst->installationStatus);
@@ -685,6 +686,11 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->founded = MSG_ReadByte(sb);
 		if (!inst->founded)
 			continue;
+/*		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(MSG_ReadString(sb));
+		if (!inst->installationTemplate) {
+			Com_Printf("Could not find installation template\n");
+			return qfalse;
+		}*/
 		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
 		MSG_ReadPos(sb, inst->pos);
 		inst->installationStatus = MSG_ReadByte(sb);
