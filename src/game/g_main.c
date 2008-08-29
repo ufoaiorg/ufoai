@@ -113,7 +113,7 @@ cvar_t *flood_waitdelay;
 
 cvar_t *difficulty;
 
-invList_t invChain[MAX_INVLIST];
+static invList_t invChain[MAX_INVLIST];
 
 
 /*=================================================================== */

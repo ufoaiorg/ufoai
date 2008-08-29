@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "unix_curses.h"
 #endif /* HAVE_CURSES */
 
-qboolean stdin_active = qtrue;
+static qboolean stdin_active = qtrue;
 
 void Sys_ShowConsole (qboolean show)
 {

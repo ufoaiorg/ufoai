@@ -33,7 +33,7 @@ static cvar_t *in_joystickNo;
 static cvar_t *in_joystickThreshold;
 static cvar_t *in_joystickSpeed;
 
-struct {
+static struct {
 	qboolean buttons[16];
 	unsigned int oldaxes;
 	unsigned int oldhats;

@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "cl_installation.h"
 
-void R_CreateRadarOverlay(void);
+installation_t *installationCurrent;
 
 vec3_t newInstallationPos;
 static cvar_t *mn_installation_title;

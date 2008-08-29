@@ -75,8 +75,6 @@ typedef struct memPool_s {
 static memPool_t m_poolList[MEM_MAX_POOLCOUNT];
 static uint32_t m_numPools;
 
-memPool_t *m_genericPool;
-
 /*==============================================================================
 POOL MANAGEMENT
 ==============================================================================*/

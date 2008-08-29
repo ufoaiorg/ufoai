@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_FONTS 16
 static int numFonts = 0;
-font_t fonts[MAX_FONTS];
+static font_t fonts[MAX_FONTS];
 
 font_t *fontBig;
 font_t *fontSmall;

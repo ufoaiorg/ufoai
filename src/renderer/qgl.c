@@ -340,10 +340,6 @@ void (APIENTRY * qglTexImage1D) (GLenum target, GLint level, GLenum internalform
 			GLenum format, GLenum type, const GLvoid *pixels);
 void (APIENTRY * qglTexImage2D) (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height,
 			GLint border, GLenum format, GLenum type, const GLvoid *pixels);
-void (APIENTRY * qglTexImageProxy1D) (GLenum target, GLint level, GLenum internalformat, GLsizei width,
-			GLint border, GLenum format, GLenum type, const GLvoid *pixels);
-void (APIENTRY * qglTexImageProxy2D) (GLenum target, GLint level, GLenum internalformat, GLsizei width,
-			GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
 void (APIENTRY * qglTexParameterf) (GLenum target, GLenum pname, GLfloat param);
 void (APIENTRY * qglTexParameterfv) (GLenum target, GLenum pname, const GLfloat *params);
 void (APIENTRY * qglTexParameteri) (GLenum target, GLenum pname, GLint param);
@@ -386,7 +382,6 @@ void (APIENTRY * qglUnlockArraysEXT) (void);
 
 void (APIENTRY * qglPointParameterfEXT) (GLenum param, GLfloat value);
 void (APIENTRY * qglPointParameterfvEXT) (GLenum param, const GLfloat *value);
-void (APIENTRY * qglColorTableEXT)(int, int, int, int, int, const void *);
 void (APIENTRY * qglMultiTexCoord2f) (GLenum, GLfloat, GLfloat);
 void (APIENTRY * qglActiveTexture) (GLenum);
 void (APIENTRY * qglClientActiveTexture) (GLenum);

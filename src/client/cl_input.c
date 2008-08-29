@@ -56,7 +56,7 @@ extern pos3_t mousePendPos;
 /* power of two please */
 #define MAX_KEYQ 64
 
-struct {
+static struct {
 	unsigned char key;
 	int down;
 } keyq[MAX_KEYQ];

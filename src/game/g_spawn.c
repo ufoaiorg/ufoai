@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-spawn_temp_t st;
+static spawn_temp_t st;
 
 static void SP_light(edict_t *ent);
 static void SP_dummy(edict_t *ent);

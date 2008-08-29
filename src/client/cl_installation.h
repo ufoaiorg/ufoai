@@ -101,7 +101,7 @@ typedef struct installation_s {
 } installation_t;
 
 /** Currently displayed/accessed base. */
-installation_t *installationCurrent;
+extern installation_t *installationCurrent;
 
 installation_t* INS_GetInstallationByIDX(int instIdx);
 void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate);

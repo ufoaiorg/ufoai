@@ -97,7 +97,7 @@ static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to chang
 static float smoothAcceleration = 0.0f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 static qboolean smoothNewClick = qfalse;		/**< New click on control panel to make geoscape rotate */
 
-const float safeAcceleration = 0.06f;
+static const float safeAcceleration = 0.06f;
 
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */

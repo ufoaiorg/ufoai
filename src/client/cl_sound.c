@@ -67,8 +67,9 @@ static cvar_t *snd_music_volume;
 /* HACK: Remove this as soon as the reason was found */
 static cvar_t *snd_music_crackleWorkaround;
 
-static int audio_rate, audio_channels;
-uint16_t audio_format;
+static int      audio_rate;
+static int      audio_channels;
+static uint16_t audio_format;
 
 /*
 MUSIC FUNCTIONS

@@ -44,7 +44,7 @@ size_t msg_bufferlen = 0;
 
 char *keybindings[K_KEY_SIZE];
 char *menukeybindings[K_KEY_SIZE];
-qboolean keydown[K_KEY_SIZE];
+static qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
 	const char *name;

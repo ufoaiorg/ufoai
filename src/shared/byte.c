@@ -31,12 +31,12 @@ static qboolean bigendien = qfalse;
 
 /* can't just use function pointers, or dll linkage can */
 /* mess up when common is included in multiple places */
-short (*_BigShort)(short l);
-short (*_LittleShort)(short l);
-int (*_BigLong)(int l);
-int (*_LittleLong)(int l);
-float (*_BigFloat)(float l);
-float (*_LittleFloat)(float l);
+static short (*_BigShort)(short l);
+static short (*_LittleShort)(short l);
+static int   (*_BigLong)(int l);
+static int   (*_LittleLong)(int l);
+static float (*_BigFloat)(float l);
+static float (*_LittleFloat)(float l);
 
 short BigShort (short l)
 {

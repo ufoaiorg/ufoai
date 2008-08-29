@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *cl_isometric;
 
-cvar_t *rcon_client_password;
+static cvar_t *rcon_client_password;
 
 cvar_t *cl_fps;
 cvar_t *cl_particleweather;

@@ -52,7 +52,6 @@ cvar_t *r_drawworld;
 cvar_t *r_drawspecialbrushes;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
-cvar_t *r_lerpmodels;
 cvar_t *r_anisotropic;
 cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot;
