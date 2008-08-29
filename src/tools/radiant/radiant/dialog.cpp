@@ -263,9 +263,6 @@ public:
 	CallbackDialogData(const ImportCallback& importWidget, const ExportCallback& exportWidget, const ImportCallback& importViewer, const ExportCallback& exportViewer)
 			: m_importWidget(importWidget), m_exportWidget(exportWidget), m_importViewer(importViewer), m_exportViewer(exportViewer) {
 	}
-	void release() {
-		delete this;
-	}
 	void importData() const {
 		m_exportViewer(m_importWidget);
 	}
@@ -322,7 +319,7 @@ Dialog::Dialog() : m_window(0), m_parent(0) {
 
 Dialog::~Dialog() {
 	for (DialogDataList::iterator i = m_data.begin(); i != m_data.end(); ++i) {
-		(*i)->release();
+		delete *i;
 	}
 
 	ASSERT_MESSAGE(m_window == 0, "dialog window not destroyed");
