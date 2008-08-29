@@ -92,8 +92,8 @@ typedef enum {
 	B_COMMAND,		/**< this building is command centre */
 	B_ANTIMATTER,		/**< this building is antimatter storage */
 	B_ENTRANCE,		/**< this building is an entrance */
-	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
-	B_DEFENSE_LASER,		/**< this building is a laser battery */
+	B_DEFENCE_MISSILE,		/**< this building is a missile rack */
+	B_DEFENCE_LASER,		/**< this building is a laser battery */
 	B_RADAR,			/**< this building is a radar */
 	B_TEAMROOM,			/**< this building is a Team Room */
 
