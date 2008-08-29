@@ -378,11 +378,11 @@ menu production
 	// ITEMS
 	item itemmodel
 	{
-		// @todo: models for aircraft/craftitems
 		if "mn_itemtype != 5"
 		string	"*cvar mn_item"
 		pos	"793 288"
 		scale	"7 7 7"
+		origin	"793 288"
 	}
 
 	pic bt_continue

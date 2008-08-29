@@ -219,6 +219,7 @@ menu_model drop_firebird_glass
 		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"0 0 120"		#
+		production		"0.5 0.5 0.5"	"0 0 120"		#
 	}
 }
 menu_model drop_firebird_top
@@ -230,6 +231,7 @@ menu_model drop_firebird_top
 		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"0 0 120"		#
+		production		"0.5 0.5 0.5"	"0 0 120"		#
 	}
 }
 menu_model drop_firebird
@@ -241,6 +243,7 @@ menu_model drop_firebird
 		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"0 0 120"		#
+		production		"0.5 0.5 0.5"	"0 0 120"		#
 	}
 }
 
@@ -249,10 +252,11 @@ menu_model drop_herakles
 {
 	model	"models/aircraft/drop_herakles/herakles_carryall.md2"
 	menutransform {
-		ufopedia		"0.3 0.3 0.3"	"180 0 -120"	"-20 0 0"
-		aircraft		"0.8 0.8 0.8"	"-20 120 70"	"60 60 0"
-		aircraft_equip	"0.5 0.5 0.5"	"-90 0 180"		#
-		buy		 		"0.3 0.3 0.3"	"180 0 -120"	#
+		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
+		aircraft		"0.8 0.8 0.8"		"-20 120 70"	"60 60 0"
+		aircraft_equip	"0.5 0.5 0.5"		"-90 0 180"		#
+		buy		 		"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
+		production		"0.25 0.25 0.25"	"180 0 -120"	"0 30 0"
 	}
 }
 
@@ -266,6 +270,7 @@ menu_model inter_stingray
 		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"		#
 		team			"1.1 1.1 1.1"   "160 20 -120"	"0 -30 0"
 		buy		 		"0.5 0.5 0.5"	"-45 135 45"	#
+		production 		"0.5 0.5 0.5"	"-45 135 45"	#
 	}
 }
 
@@ -279,6 +284,7 @@ menu_model inter_saracen
 		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"		"0 -30 0"
 		team			"0.8 1.1 1.1"	"160 20 -120"	"0 60 0"
 		buy				"0.4 0.4 0.4"	"180 0 -120"	#
+		production		"0.4 0.4 0.4"	"180 0 -120"	#
 	}
 }
 
@@ -292,6 +298,7 @@ menu_model inter_dragon
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		"0 20 0"
 		team			"0.9 0.8 0.9"	"160 20 -120"	"80 -60 0"
 		buy				"0.4 0.4 0.4"	"180 0 -120"	#
+		production		"0.4 0.4 0.4"	"180 0 -120"	#
 	}
 }
 
@@ -305,6 +312,7 @@ menu_model inter_stiletto_glass
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		team			"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
 		buy				"0.8 0.8 0.8"	"180 0 -120"	#
+		production		"0.8 0.8 0.8"	"180 0 -120"	#
 	}
 }
 menu_model inter_stiletto_top
@@ -317,6 +325,7 @@ menu_model inter_stiletto_top
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		team			"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
 		buy				"0.8 0.8 0.8"	"180 0 -120"	#
+		production		"0.8 0.8 0.8"	"180 0 -120"	#
 	}
 }
 menu_model inter_stiletto
@@ -329,6 +338,7 @@ menu_model inter_stiletto
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
 		team			"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
 		buy				"0.8 0.8 0.8"	"180 0 -120"	#
+		production		"0.8 0.8 0.8"	"180 0 -120"	#
 	}
 }
 
@@ -341,6 +351,7 @@ menu_model ufo_carrier
 		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"3 3 3"			"-45 135 45"	#
+		production		"3 3 3"			"-45 135 45"	#
 	}
 }
 
@@ -353,6 +364,7 @@ menu_model ufo_harvester
 		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"20 20 20"		"-45 135 45"	#
+		production		"20 20 20"		"-45 135 45"	#
 	}
 }
 
@@ -365,6 +377,7 @@ menu_model ufo_bomber
 		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"9 9 9"			"-45 135 45"	#
+		production		"9 9 9"			"-45 135 45"	#
 	}
 }
 
@@ -377,6 +390,7 @@ menu_model ufo_corrupter
 		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"9 9 9"			"-45 135 45"	#
+		production		"9 9 9"			"-45 135 45"	#
 	}
 }
 
@@ -389,6 +403,7 @@ menu_model ufo_fighter_upper
 		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter_engines_2
@@ -400,6 +415,7 @@ menu_model ufo_fighter_engines_2
 		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter_engines_1
@@ -411,6 +427,7 @@ menu_model ufo_fighter_engines_1
 		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter_wings
@@ -422,6 +439,7 @@ menu_model ufo_fighter_wings
 		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter
@@ -433,6 +451,7 @@ menu_model ufo_fighter
 		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
 		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 
@@ -445,6 +464,7 @@ menu_model ufo_scout_upper
 		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_scout_engines
@@ -456,6 +476,7 @@ menu_model ufo_scout_engines
 		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_scout
@@ -467,6 +488,7 @@ menu_model ufo_scout
 		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
 		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 
