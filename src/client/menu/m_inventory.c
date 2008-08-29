@@ -525,7 +525,7 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 			if (item->rotated) {
 				imgOrg[0] += item->t->sy * C_UNIT / 2.0;
 				imgOrg[1] += item->t->sx * C_UNIT / 2.0;
-				/** @todo Image size calculation depends on handling of image-roation.
+				/** @todo Image size calculation depends on handling of image-rotation.
 				imgWidth = item->t->sy * C_UNIT;
 				imgHeight = item->t->sx * C_UNIT;
 				*/

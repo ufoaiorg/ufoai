@@ -762,7 +762,3 @@ craftitem base_ammo_AA51
 	delay		500
 	size	10	// light
 }
-
-
-
-

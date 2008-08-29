@@ -950,8 +950,11 @@ const char *air_slot_type_strings[] = {
 CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
 
-static linkedList_t *parseItemWeapons = NULL;	/**< Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
-										 * in Com_ParseItem and used in Com_AddObjectLinks. */
+/**
+ * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
+ * in Com_ParseItem and used in Com_AddObjectLinks.
+ */
+static linkedList_t *parseItemWeapons = NULL;
 
 /**
  * @brief Parses weapon, equipment, craft items and armour
@@ -1029,7 +1032,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 							LIST_AddPointer(&parseItemWeapons, od);
 							LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
 							LIST_AddString(&parseItemWeapons, token);
-							/** @todo delete me Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons])); */
 
 							/* get it's body */
 							token = COM_Parse(text);
@@ -1064,11 +1066,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
 									}
 								}
-								/*
-								else {
-									Bad syntax.
-								}
-								*/
 							} while (*text);
 							od->numWeapons++;
 						} else {
@@ -1097,8 +1094,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 					LIST_AddPointer(&parseItemWeapons, od);
 					LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
 					LIST_AddString(&parseItemWeapons, token);
-					/** @todo delete me Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons])); */
-
 					od->numWeapons++;
 				} else {
 					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);

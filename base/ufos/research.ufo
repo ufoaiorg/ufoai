@@ -4110,7 +4110,6 @@ tech rs_base_AA51_launcher
 }
 
 tech rs_base_ammo_AA51
-
 {
 	type		tech
 	up_chapter	equipment
