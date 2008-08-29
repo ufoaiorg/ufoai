@@ -1473,9 +1473,9 @@ menu popup_newinstallation
 	}
 }
 
-// ==================
-// POPUP INTERCEPT
-// ==================
+// ====================
+// POPUP INTERCEPT BASE
+// ====================
 
 menu popup_intercept
 {
@@ -1483,7 +1483,7 @@ menu popup_intercept
 	{
 		invis	true
 	}
-	pic back
+	pic back_no_base
 	{
 		image	menu/popup_big
 		pos		"116 186"
@@ -1491,7 +1491,6 @@ menu popup_intercept
 
 	pic vertical_bar
 	{
-		if "mn_displaybaselist == 1"
 		mousefx	true
 		pos		"610 186"
 		image	menu/vertical_bar
@@ -1509,7 +1508,6 @@ menu popup_intercept
 
 	string title2
 	{
-		if "mn_displaybaselist == 1"
 		string	"_Select base"
 		pos		"750 210"
 		font	f_big
@@ -1534,16 +1532,8 @@ menu popup_intercept
 		pos		"450 240"
 	}
 
-	string ETA_label
-	{
-		if "mn_displaybaselist == 0"
-		string	"_ETA:"
-		pos		"600 240"
-	}
-
 	string base2_label
 	{
-		if "mn_displaybaselist == 1"
 		string	"_Base:"
 		pos		"625 240"
 	}
@@ -1563,7 +1553,6 @@ menu popup_intercept
 
 	text bases
 	{
-		if "mn_displaybaselist == 1"
 		pos		"625 266"
 		size	"250 260"
 		format	"20 175"
@@ -1571,6 +1560,89 @@ menu popup_intercept
 		num		TEXT_BASE_LIST
 		height	"13"
 		wheel
+		click
+		rclick
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialogue"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 32"
+		pos		"690 530"
+		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos		"778 546"
+		align	cc
+	}
+}
+
+// ===================
+// POPUP MISSION
+// ===================
+
+menu popup_mission
+{
+	zone popup
+	{
+		invis	true
+	}
+	pic back
+	{
+		image	menu/popup_big
+		pos		"116 186"
+	}
+
+	string title
+	{
+		string	"_Select aircraft"
+		pos		"370 210"
+		font	f_big
+		align	uc
+	}
+
+	string name_label
+	{
+		string	"_Name:"
+		pos		"150 240"
+	}
+
+	string status_label
+	{
+		string	"_Status:"
+		pos		"340 240"
+	}
+
+	string base_label
+	{
+		string	"_Base:"
+		pos		"530 240"
+	}
+
+	string ETA_label
+	{
+		string	"_ETA:"
+		pos		"720 240"
+	}
+
+	text ships
+	{
+		pos		"150 266"
+		size	"640 260"
+//		bgcolor	"1 1 1 0.6"
+		format	"20 190"
+		mousefx	true
+		num		TEXT_AIRCRAFT_LIST
+		wheel
+		height	"13"
 		click
 		rclick
 	}

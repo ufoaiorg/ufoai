@@ -388,10 +388,13 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			if (!notEnoughFuel)
 				Q_strcat(aircraftListText, "^B", sizeof(aircraftListText));
 			if (ufo)
-				s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name);
+				s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize,
+					air->maxTeamSize, AIR_AircraftStatusToName(air), base->name);
 			else {
 				const float distance = MAP_GetDistance(air->pos, mission->pos);
-				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), base->name, CL_SecondConvert((float)SECONDS_PER_HOUR * distance / air->stats[AIR_STATS_SPEED]));
+				s = va("%s (%i/%i)\t%s\t%s\t%s\n", _(air->shortname), air->teamSize,
+					air->maxTeamSize, AIR_AircraftStatusToName(air), base->name,
+					CL_SecondConvert((float)SECONDS_PER_HOUR * distance / air->stats[AIR_STATS_SPEED]));
 			}
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			assert(air->homebase == base);
@@ -445,17 +448,16 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			mn.menuText[TEXT_BASE_LIST] = baseListText;
 		else
 			mn.menuText[TEXT_BASE_LIST] = _("No defence system operational or no weapon or ammo equipped.");
-		/* Display base list in popup */
-		Cvar_Set("mn_displaybaselist", "1");
-	} else
-		/* Don't display base list in popup */
-		Cvar_Set("mn_displaybaselist", "0");
+	}
 
 	/* Stop time */
 	CL_GameTimeStop();
 
 	/* Display the popup */
-	MN_PushMenu("popup_intercept");
+	if (ufo)
+		MN_PushMenu("popup_intercept");
+	else
+		MN_PushMenu("popup_mission");
 }
 
 /**
