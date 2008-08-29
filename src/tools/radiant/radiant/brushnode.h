@@ -99,10 +99,7 @@ public:
 			m_mapImporter(m_brush),
 			m_mapExporter(m_brush) {
 	}
-	// Deletes this node from the heap
-	void release() {
-		delete this;
-	}
+
 	// Returns the actual scene node
 	scene::Node& node() {
 		return m_node;
