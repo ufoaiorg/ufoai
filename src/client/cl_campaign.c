@@ -766,7 +766,7 @@ static void CP_MissionRemove (mission_t *mission)
 /**
  * @brief Notify that a base has been removed.
  */
-void CP_MissionNotifyBaseDestroyed (base_t *base)
+void CP_MissionNotifyBaseDestroyed (const base_t *base)
 {
 	linkedList_t *list = ccs.missions;
 
@@ -1356,7 +1356,8 @@ static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	cls.missionaircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	/* Restore some alien interest for base attacks that has been removed when mission has been created */
+	/* Restore some alien interest for base attacks that has been removed when
+	 * mission has been created */
 	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BASE_ATTACK);
 
 	/* reset selectedMission */
@@ -2604,10 +2605,11 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	mission.finalDate = mission.startDate;
 	CP_SetMissionName(&mission);
 
-	/* Lower alien interest in base building if a base building mission is started to avoid several bases at the same time */
+	/* Lower alien interest in base building if a base building mission is
+	 * started to avoid several bases at the same time */
 	if (mission.category == INTERESTCATEGORY_BUILDING)
 		CP_BuildBaseMissionStart(&mission);
-	else if (mission.category == INTERESTCATEGORY_BUILDING)
+	else if (mission.category == INTERESTCATEGORY_BASE_ATTACK)
 		CP_BaseAttackMissionStart(&mission);
 
 	/* Add mission to global array */
@@ -2623,7 +2625,6 @@ static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;		/* Number of days between 
  */
 static void CP_SpawnNewMissions (void)
 {
-
 	int i;
 
 	ccs.lastMissionSpawnedDelay++;
@@ -4409,7 +4410,6 @@ static void CL_StatsUpdate_f (void)
  * @brief Load callback for campaign data
  * @sa CP_Save
  * @sa SAV_GameSave
- * @sa CP_SpawnBaseAttackMission
  * @sa CP_SpawnCrashSiteMission
  */
 qboolean CP_Load (sizebuf_t *sb, void *data)

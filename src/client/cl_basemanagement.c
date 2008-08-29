@@ -870,8 +870,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 /**
  * @brief Destroy a base.
  * @param[in] base Pointer to base to be destroyed.
- * @note If you want to sell items or unhire employees, you should do it before calling this function
- *	they are going to be killed / destroyed.
+ * @note If you want to sell items or unhire employees, you should do it before
+ * calling this function - they are going to be killed / destroyed.
  */
 void CL_BaseDestroy (base_t *base)
 {
