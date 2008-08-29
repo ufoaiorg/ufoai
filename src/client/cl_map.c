@@ -1498,8 +1498,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		case INSTALLATION_UFOYARD:
 			symbol = "ufoyard";
 			break;
-		case INSTALLATION_DEFENSE:
-			symbol = "defense";
+		case INSTALLATION_DEFENCE:
+			symbol = "defence";
 			break;
 		default:
 			symbol = "base";

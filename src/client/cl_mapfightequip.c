@@ -654,11 +654,11 @@ void BDEF_RemoveBattery_f (void)
 
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
-			type = B_DEFENSE_MISSILE;
+			type = B_DEFENCE_MISSILE;
 			max = base->numBatteries;
 			break;
 		case BASEDEF_LASER:
-			type = B_DEFENSE_MISSILE;
+			type = B_DEFENCE_MISSILE;
 			max = base->numLasers;
 			break;
 		default:
@@ -747,7 +747,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	menuNode_t *node;
 
 	/* don't let old links appear on this menu */
-	MN_MenuTextReset(TEXT_BASEDEFENSE_LIST);
+	MN_MenuTextReset(TEXT_BASEDEFENCE_LIST);
 	MN_MenuTextReset(TEXT_AIREQUIP_1);
 	MN_MenuTextReset(TEXT_AIREQUIP_2);
 	MN_MenuTextReset(TEXT_AIREQUIP_3);
@@ -879,7 +879,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
 		return;
 	}
-	mn.menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
+	mn.menuText[TEXT_BASEDEFENCE_LIST] = defBuffer;
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
@@ -2301,12 +2301,12 @@ int AII_BaseCanShoot (const base_t *base)
 {
 	assert(base);
 
-	if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE)) {
+	if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE)) {
 		/* base has missile battery and any needed building */
 		return AII_WeaponsCanShoot(base->batteries, &base->numBatteries);
 	}
 
-	if (B_GetBuildingStatus(base, B_DEFENSE_LASER)) {
+	if (B_GetBuildingStatus(base, B_DEFENCE_LASER)) {
 		/* base has laser battery and any needed building */
 		return AII_WeaponsCanShoot(base->lasers, &base->numLasers);
 	}

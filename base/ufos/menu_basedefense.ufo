@@ -1,5 +1,5 @@
 // ==================
-// BASE DEFENSE MENU
+// BASE DEFENCE MENU
 // ==================
 menu basedefence
 {
@@ -18,25 +18,25 @@ menu basedefence
 
 	pic back_ul
 	{
-		image	menu/basedefense_ul
+		image	menu/basedefence_ul
 		pos		"0 0"
 	}
 
 	pic back_ur
 	{
-		image	menu/basedefense_ur
+		image	menu/basedefence_ur
 		pos		"512 0"
 	}
 
 	pic back_ll
 	{
-		image	menu/basedefense_ll
+		image	menu/basedefence_ll
 		pos		"0 512"
 	}
 
 	pic back_lr
 	{
-		image	menu/basedefense_lr
+		image	menu/basedefence_lr
 		pos		"512 512"
 	}
 
@@ -94,7 +94,7 @@ menu basedefence
 		format	"22 0"
 		wheel
 		height	"27"
-		num		TEXT_BASEDEFENSE_LIST
+		num		TEXT_BASEDEFENCE_LIST
 		mousefx	true
 		click
 	}

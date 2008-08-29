@@ -1745,7 +1745,7 @@ void AIR_ListAircraftSamples_f (void)
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
  * @todo this should costs credits
- * @sa AIRFIGHT_AddProjectile for the basedefense reload code
+ * @sa AIRFIGHT_AddProjectile for the basedefence reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
 {

@@ -1813,7 +1813,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
 		return B_ENTRANCE;
 	} else if (!Q_strncmp(buildingID, "missile", MAX_VAR)) {
-		return B_DEFENSE_MISSILE;
+		return B_DEFENCE_MISSILE;
 	} else if (!Q_strncmp(buildingID, "radar", MAX_VAR)) {
 		return B_RADAR;
 	} else if (!Q_strncmp(buildingID, "teamroom", MAX_VAR)) {
@@ -3274,8 +3274,8 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 			else
 				UP_OpenWith(building->pedia);
 			break;
-		case B_DEFENSE_LASER:
-		case B_DEFENSE_MISSILE:
+		case B_DEFENCE_LASER:
+		case B_DEFENCE_MISSILE:
 			MN_PushMenu("basedefence");
 			break;
 		case B_HANGAR:

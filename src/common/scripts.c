@@ -85,7 +85,7 @@ const char *menutextid_names[] = {
 	"TEXT_TRANSFER_LIST", "TEXT_MOUSECURSOR_PLAYERNAMES",
 	"TEXT_CARGO_LIST", "TEXT_UFOPEDIA_MAILHEADER", "TEXT_UFOPEDIA_MAIL", "TEXT_MARKET_NAMES",
 	"TEXT_MARKET_STORAGE", "TEXT_MARKET_MARKET", "TEXT_MARKET_PRICES", "TEXT_CHAT_WINDOW",
-	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_AIREQUIP_3", "TEXT_BASEDEFENSE_LIST", "TEXT_TIPOFTHEDAY",
+	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_AIREQUIP_3", "TEXT_BASEDEFENCE_LIST", "TEXT_TIPOFTHEDAY",
 	"TEXT_GENERIC", "TEXT_XVI"
 };
 CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
@@ -2242,7 +2242,7 @@ void Com_AddObjectLinks (void)
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->numAmmos = 0;	/* Default value */
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
-			/* this is a weapon, an aircraft weapon, or a base defense system */
+			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (n = 0; n < csi.numODs; n++) {
 				for (m = 0; m < csi.ods[n].numWeapons; m++) {
 					if (csi.ods[n].weapons[m] == &csi.ods[i]) {
