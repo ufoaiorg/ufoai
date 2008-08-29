@@ -47,8 +47,7 @@ class TextInputStream;
 /// \brief A file opened in text mode.
 class ArchiveTextFile {
 public:
-	/// \brief Destroys the file object.
-	virtual void release() = 0;
+	virtual ~ArchiveTextFile() {}
 	/// \brief Returns the stream associated with this file.
 	/// Subsequent calls return the same stream.
 	/// The stream may be read forwards until it is exhausted.

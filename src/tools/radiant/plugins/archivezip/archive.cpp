@@ -74,9 +74,6 @@ public:
 			: m_name(name), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream) {
 	}
 
-	void release() {
-		delete this;
-	}
 	TextInputStream& getInputStream() {
 		return m_textStream;
 	}

@@ -1083,9 +1083,8 @@ void parseGuideFile(Tokeniser& tokeniser, const char* filename) {
 }
 
 void LoadShaderFile(const char* filename) {
-	ArchiveTextFile* file = GlobalFileSystem().openTextFile(filename);
-
-	if (file != 0) {
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+	if (file) {
 		globalOutputStream() << "Parsing shaderfile " << filename << "\n";
 
 		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
@@ -1093,7 +1092,6 @@ void LoadShaderFile(const char* filename) {
 		ParseShaderFile(tokeniser, filename);
 
 		tokeniser.release();
-		file->release();
 	} else {
 		globalOutputStream() << "Unable to read shaderfile " << filename << "\n";
 	}
@@ -1105,9 +1103,8 @@ typedef FreeCaller1<const char*, LoadShaderFile> LoadShaderFileCaller;
 void loadGuideFile(const char* filename) {
 	StringOutputStream fullname(256);
 	fullname << "guides/" << filename;
-	ArchiveTextFile* file = GlobalFileSystem().openTextFile(fullname.c_str());
-
-	if (file != 0) {
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullname.c_str()));
+	if (file) {
 		globalOutputStream() << "Parsing guide file " << fullname.c_str() << "\n";
 
 		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
@@ -1115,7 +1112,6 @@ void loadGuideFile(const char* filename) {
 		parseGuideFile(tokeniser, fullname.c_str());
 
 		tokeniser.release();
-		file->release();
 	} else {
 		globalOutputStream() << "Unable to read guide file " << fullname.c_str() << "\n";
 	}

@@ -62,11 +62,10 @@ public:
 	virtual ArchiveTextFile* openTextFile(const char* name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);
-		DirectoryArchiveTextFile* file = new DirectoryArchiveTextFile(name, path.c_str());
+		AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path.c_str()));
 		if (!file->failed()) {
-			return file;
+			return file.release();
 		}
-		file->release();
 		return 0;
 	}
 	virtual bool containsFile(const char* name) {
