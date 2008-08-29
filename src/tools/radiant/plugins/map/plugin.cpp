@@ -78,7 +78,7 @@ public:
 	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
 		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
 		Map_Read(root, tokeniser, entityTable, *this);
-		tokeniser.release();
+		delete &tokeniser;
 	}
 	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
 		TokenWriter& writer = GlobalScripLibModule::getTable().m_pfnNewSimpleTokenWriter(outputStream);
@@ -229,7 +229,7 @@ public:
 	void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const {
 		Tokeniser& tokeniser = GlobalScripLibModule::getTable().m_pfnNewSimpleTokeniser(inputStream);
 		VMF_Read(root, tokeniser, entityTable);
-		tokeniser.release();
+		delete &tokeniser;
 	}
 	void writeGraph(scene::Node& root, GraphTraversalFunc traverse, TextOutputStream& outputStream) const {
 	}

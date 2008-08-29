@@ -302,9 +302,7 @@ public:
 		m_eof = !m_istream.readChar(m_current);
 		m_token[MAXTOKEN - 1] = '\0';
 	}
-	void release() {
-		delete this;
-	}
+
 	void nextLine() {
 		m_crossline = true;
 	}

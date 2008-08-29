@@ -1088,10 +1088,8 @@ void LoadShaderFile(const char* filename) {
 		globalOutputStream() << "Parsing shaderfile " << filename << "\n";
 
 		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-
 		ParseShaderFile(tokeniser, filename);
-
-		tokeniser.release();
+		delete &tokeniser;
 	} else {
 		globalOutputStream() << "Unable to read shaderfile " << filename << "\n";
 	}
@@ -1108,10 +1106,8 @@ void loadGuideFile(const char* filename) {
 		globalOutputStream() << "Parsing guide file " << fullname.c_str() << "\n";
 
 		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-
 		parseGuideFile(tokeniser, fullname.c_str());
-
-		tokeniser.release();
+		delete &tokeniser;
 	} else {
 		globalOutputStream() << "Unable to read guide file " << fullname.c_str() << "\n";
 	}
@@ -1241,7 +1237,7 @@ void BuildShaderList(TextInputStream& shaderlist) {
 
 		shaderFile.clear();
 	}
-	tokeniser.release();
+	delete &tokeniser;
 }
 
 void FreeShaderList() {

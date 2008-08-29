@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class Tokeniser {
 public:
-	virtual void release() = 0;
+	virtual ~Tokeniser() {}
 	virtual void nextLine() = 0;
 	virtual const char* getToken() = 0;
 	virtual void ungetToken() = 0;

@@ -156,10 +156,8 @@ void LoadUFOFile(const char* filename) {
 		globalOutputStream() << "Parsing ufo script file " << filename << "\n";
 
 		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-
 		ParseUFOFile(tokeniser, filename);
-
-		tokeniser.release();
+		delete &tokeniser;
 	} else {
 		globalOutputStream() << "Unable to read ufo script file " << filename << "\n";
 	}
