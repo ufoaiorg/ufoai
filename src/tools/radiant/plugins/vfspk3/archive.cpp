@@ -47,9 +47,6 @@ public:
 	DirectoryArchive(const char* root) : m_root(root) {
 	}
 
-	void release() {
-		delete this;
-	}
 	virtual ArchiveFile* openFile(const char* name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);

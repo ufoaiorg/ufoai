@@ -316,7 +316,7 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 //   (for instance when modifying the project settings)
 void Shutdown() {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		(*i).archive->release();
+		delete i->archive;
 	}
 	g_archives.clear();
 

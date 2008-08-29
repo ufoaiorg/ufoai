@@ -199,9 +199,6 @@ public:
 		return m_istream.failed();
 	}
 
-	void release() {
-		delete this;
-	}
 	ArchiveFile* openFile(const char* name) {
 		ZipFileSystem::iterator i = m_filesystem.find(name);
 		if (i != m_filesystem.end() && !i->second.is_directory()) {

@@ -85,7 +85,7 @@ public:
 
 	/// \brief Destroys the archive object.
 	/// Any unreleased file object associated with the archive remains valid. */
-	virtual void release() = 0;
+	virtual ~Archive() {}
 	/// \brief Returns a new object associated with the file identified by \p name, or 0 if the file cannot be opened.
 	/// Name comparisons are case-insensitive.
 	virtual ArchiveFile* openFile(const char* name) = 0;
