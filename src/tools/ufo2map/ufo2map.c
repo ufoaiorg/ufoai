@@ -106,7 +106,7 @@ static void Usage (void)
 		"    bru brushes             : includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes.\n"
 		"    ent entities            : performs all checks and fixes associated with entities.\n"
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
-		"                            : step, unlike the bsp -micro option. default 1 unit^3.\n"
+		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
 		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
 		"    flv filllevelflags      : ensure set levelflag bits are uninterrupted\n"
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
