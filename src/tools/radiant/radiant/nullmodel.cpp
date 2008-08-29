@@ -149,9 +149,6 @@ public:
 		m_node.m_isRoot = true;
 	}
 
-	void release() {
-		delete this;
-	}
 	scene::Node& node() {
 		return m_node;
 	}

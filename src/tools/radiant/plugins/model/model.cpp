@@ -528,12 +528,7 @@ public:
 	}
 	PicoModelNode(picoModel_t* model) : m_node(this, this, StaticTypeCasts::instance().get()), m_picomodel(model) {
 	}
-	~PicoModelNode() {
-	}
 
-	void release() {
-		delete this;
-	}
 	scene::Node& node() {
 		return m_node;
 	}

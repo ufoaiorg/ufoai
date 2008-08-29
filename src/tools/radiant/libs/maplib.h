@@ -171,12 +171,8 @@ public:
 		GlobalUndoSystem().trackerAttach(m_changeTracker);
 	}
 	~MapRoot() {
-	}
-	void release() {
 		GlobalUndoSystem().trackerDetach(m_changeTracker);
-
 		m_traverse.detach(this);
-		delete this;
 	}
 	scene::Node& node() {
 		return m_node;

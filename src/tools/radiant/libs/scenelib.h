@@ -141,7 +141,7 @@ public:
 
 	class Symbiot {
 	public:
-		virtual void release() = 0;
+		virtual ~Symbiot() {}
 	};
 
 private:
@@ -176,7 +176,7 @@ public:
 	void DecRef() {
 		ASSERT_MESSAGE(m_refcount < (1 << 24), "Node::decref: uninitialised refcount");
 		if (--m_refcount == 0) {
-			m_symbiot->release();
+			delete m_symbiot;
 		}
 	}
 	std::size_t getReferenceCount() const {
@@ -207,11 +207,7 @@ class NullNode : public Node::Symbiot {
 public:
 	NullNode() : m_node(this, 0, m_casts) {
 	}
-	~NullNode() {
-	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}

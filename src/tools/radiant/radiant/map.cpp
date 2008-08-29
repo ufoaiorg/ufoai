@@ -612,9 +612,7 @@ public:
 
 	BasicContainer() : m_node(this, this, StaticTypeCasts::instance().get()) {
 	}
-	void release (void) {
-		delete this;
-	}
+
 	scene::Node& node (void) {
 		return m_node;
 	}
