@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "preferencesystem.h"
 #include "qgl.h"
 
+#include "autoptr.h"
 #include "texturelib.h"
 #include "container/hashfunc.h"
 #include "container/cache.h"
@@ -241,13 +242,12 @@ typedef std::pair<LoadImageCallback, CopiedString> TextureKey;
 void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 	texture.texture_number = 0;
 	if (!string_empty(key.second.c_str())) {
-		Image* image = key.first.loadImage(key.second.c_str());
-		if (image != 0) {
+		AutoPtr<Image> image(key.first.loadImage(key.second.c_str()));
+		if (image) {
 			LoadTextureRGBA(&texture, image->getRGBAPixels(), image->getWidth(), image->getHeight());
 			texture.surfaceFlags = image->getSurfaceFlags();
 			texture.contentFlags = image->getContentFlags();
 			texture.value = image->getValue();
-			image->release();
 			globalOutputStream() << "Loaded Texture: \"" << key.second.c_str() << "\"\n";
 			GlobalOpenGL_debugAssertNoErrors();
 		} else {

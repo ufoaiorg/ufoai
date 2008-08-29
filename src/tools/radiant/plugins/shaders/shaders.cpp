@@ -50,6 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <glib/gslist.h>
 
+#include "autoptr.h"
 #include "debugging/debugging.h"
 #include "string/pooledstring.h"
 #include "math/vector.h"
@@ -168,10 +169,9 @@ Image& convertHeightmapToNormalmap(Image& heightmap, float scale) {
 }
 
 Image* loadHeightmap(void* environment, const char* name) {
-	Image* heightmap = GlobalTexturesCache().loadImage(name);
-	if (heightmap != 0) {
+	AutoPtr<Image> heightmap(GlobalTexturesCache().loadImage(name));
+	if (heightmap) {
 		Image& normalmap = convertHeightmapToNormalmap(*heightmap, *reinterpret_cast<float*>(environment));
-		heightmap->release();
 		return &normalmap;
 	}
 	return 0;
