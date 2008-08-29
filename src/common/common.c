@@ -35,13 +35,13 @@ csi_t csi;
 static int com_argc;
 static const char *com_argv[MAX_NUM_ARGVS + 1];
 
-jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
+static jmp_buf abortframe; /* an ERR_DROP occured, exit the entire frame */
 
 cvar_t *s_language;
 cvar_t *developer;
 cvar_t *http_proxy;
 cvar_t *http_timeout;
-cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
+static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
 cvar_t *sv_gametype;
