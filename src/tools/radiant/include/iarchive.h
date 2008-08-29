@@ -55,16 +55,6 @@ public:
 	virtual TextInputStream& getInputStream() = 0;
 };
 
-class ScopedArchiveFile {
-	ArchiveFile& m_file;
-public:
-	ScopedArchiveFile(ArchiveFile& file) : m_file(file) {
-	}
-	~ScopedArchiveFile() {
-		delete &m_file;
-	}
-};
-
 class CustomArchiveVisitor;
 
 class Archive {
