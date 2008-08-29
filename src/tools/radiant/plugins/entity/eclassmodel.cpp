@@ -369,9 +369,7 @@ public:
 	~EclassModelNode() {
 		destroy();
 	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}

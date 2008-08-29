@@ -394,9 +394,7 @@ public:
 			m_node(this, this, StaticTypeCasts::instance().get()),
 			m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances)) {
 	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}

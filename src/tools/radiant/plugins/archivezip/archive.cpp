@@ -46,9 +46,6 @@ public:
 			: m_name(name), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_size(file_size) {
 	}
 
-	void release() {
-		delete this;
-	}
 	size_type size() const {
 		return m_size;
 	}
