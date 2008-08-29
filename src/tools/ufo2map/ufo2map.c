@@ -86,14 +86,13 @@ static void Usage (void)
 		" -nobackclip                : draw downward pointing faces. (so actors cannot see up through floors\n"
 		"                              in first person view). default is to set SURF_NODRAW to downard faces.\n"
 		" -nocsg                     : \n"
-		" -nodetail                  : \n"
-		" -nofill                    : \n"
-		" -nomerge                   : \n"
-		" -noprune                   : \n"
+		" -nodetail                  : skip detail brushes\n"
+		" -nomerge                   : skip node face merging\n"
+		" -noprune                   : don't prune (or cut) nodes\n"
 		" -nosubdiv                  : don't subdivide (less polycount, but crappy light effects)\n"
 		" -noshare                   : \n"
 		" -notjunc                   : \n"
-		" -nowater                   : \n"
+		" -nowater                   : skip water brushes in compilation\n"
 		" -noweld                    : \n"
 		" -onlyents                  : modify existing bsp file with entities from map file\n"
 		" -verboseentities           : also be verbose about submodels (entities)\n"
@@ -250,9 +249,6 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-material")) {
 			config.generateMaterialFile = qtrue;
 			Com_Printf("generateMaterialFile = true\n");
-		} else if (!strcmp(argv[i], "-nofill")) {
-			Com_Printf("nofill = true\n");
-			config.nofill = qtrue;
 		} else if (!strcmp(argv[i], "-nomerge")) {
 			Com_Printf("nomerge = true\n");
 			config.nomerge = qtrue;

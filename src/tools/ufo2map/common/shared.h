@@ -64,7 +64,6 @@ typedef struct mapConfig_s {
 	qboolean onlyents;
 	qboolean nomerge;
 	qboolean nowater;
-	qboolean nofill;
 	qboolean nocsg;
 	qboolean noweld;
 	qboolean noshare;
