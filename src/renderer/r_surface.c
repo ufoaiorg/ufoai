@@ -155,7 +155,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	int i;
 
 	for (i = 0; i < surfs->count; i++) {
-		if (surfs->surfaces[i]->levelflagToRenderIn != (1 << refdef.worldlevel))
+		if (surfs->surfaces[i]->frame != r_locals.frame)
 			continue;
 
 		R_SetSurfaceState(surfs->surfaces[i]);

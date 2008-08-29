@@ -120,6 +120,8 @@ typedef struct rlocals_s {
 	/* for box culling */
 	cBspPlane_t frustum[4];
 
+	int frame;
+
 	float world_matrix[16];
 } rlocals_t;
 

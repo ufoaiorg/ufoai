@@ -253,7 +253,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 		material_t *m = &surf->texinfo->image->material;
 		int j = -1;
 
-		if (surf->levelflagToRenderIn != (1 << refdef.worldlevel))
+		if (surf->frame != r_locals.frame)
 			continue;
 
 		R_UpdateMaterial(m);

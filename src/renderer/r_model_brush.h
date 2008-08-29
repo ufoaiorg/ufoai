@@ -64,7 +64,7 @@ typedef struct mBspSurface_s {
 	int flags;
 	int tile;				/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
-	int levelflagToRenderIn;	/**< used to decide whether this surface should be drawn */
+	int frame;	/**< used to decide whether this surface should be drawn */
 
 	/** look up in model->surfedges[], negative numbers are backwards edges */
 	int firstedge;
