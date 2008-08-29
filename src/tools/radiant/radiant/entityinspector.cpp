@@ -114,9 +114,9 @@ void Scene_EntitySetKeyValue_Selected_Undoable(const char* key, const char* valu
 
 class EntityAttribute {
 public:
+	virtual ~EntityAttribute() {}
 	virtual GtkWidget* getWidget() const = 0;
 	virtual void update() = 0;
-	virtual void release() = 0;
 };
 
 class BooleanAttribute : public EntityAttribute {
@@ -144,9 +144,7 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_check);
 	}
-	void release() {
-		delete this;
-	}
+
 	void apply() {
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(m_check)) ? "1" : "0");
 	}
@@ -187,9 +185,6 @@ public:
 		return m_entry;
 	}
 
-	void release() {
-		delete this;
-	}
 	void apply() {
 		StringOutputStream value(64);
 		value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
@@ -224,9 +219,7 @@ public:
 			m_nonModal(ApplyCaller(*this), UpdateCaller(*this)) {
 		m_nonModal.connect(m_entry.m_entry.m_entry);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
@@ -265,9 +258,7 @@ public:
 			m_nonModal(ApplyCaller(*this), UpdateCaller(*this)) {
 		m_nonModal.connect(m_entry.m_entry.m_entry);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
@@ -311,9 +302,7 @@ public:
 		m_entry = entry;
 		m_nonModal.connect(m_entry);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry);
 	}
@@ -368,9 +357,7 @@ public:
 		gtk_box_pack_start(GTK_BOX(m_hbox), GTK_WIDGET(m_radio.m_hbox), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(m_hbox), GTK_WIDGET(m_entry), TRUE, TRUE, 0);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
@@ -461,9 +448,7 @@ public:
 			m_nonModal.connect(m_angles.m_roll);
 		}
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
@@ -544,9 +529,7 @@ public:
 			m_nonModal.connect(m_vector3.m_z);
 		}
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
@@ -632,9 +615,7 @@ public:
 
 		m_combo = combo;
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_combo);
 	}
@@ -693,7 +674,7 @@ EntityAttributes g_entityAttributes;
 
 void GlobalEntityAttributes_clear() {
 	for (EntityAttributes::iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
-		(*i)->release();
+		delete *i;
 	}
 	g_entityAttributes.clear();
 }
