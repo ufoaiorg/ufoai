@@ -1161,30 +1161,23 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
 /**
  * @brief Returns the userfriendly name for craftitem types (shown in aircraft equip menu)
  */
-const char *AIM_AircraftItemtypeName (const int equiptype)
+static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 {
 	switch (equiptype) {
 	case AC_ITEM_WEAPON:
-		return "Weapons";
-		break;
+		return _("Weapons");
 	case AC_ITEM_SHIELD:
-		return "Armour";
-		break;
+		return _("Armour");
 	case AC_ITEM_ELECTRONICS:
-		return "Items";
-		break;
+		return _("Items");
 	case AC_ITEM_AMMO:
 		/* ammo - only available from weapons */
-		return "Ammo";
-		break;
+		return _("Ammo");
 	case AC_ITEM_PILOT:
-		return "Pilot";
-		break;
+		return _("Pilot");
 	default:
-		return "Unknown";
-		break;
+		return _("Unknown");
 	}
-	return "Unknown";
 }
 
 /**
@@ -1245,7 +1238,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			break;
 		}
 	}
-	Cvar_Set("mn_equip_itemtype_name", _(AIM_AircraftItemtypeName(airequipID)));
+	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 
 	/* Reset value of noparams */
 	noparams = qfalse;
@@ -1347,14 +1340,14 @@ void AIM_AircraftEquipMenuUpdate_f (void)
  */
 static void AIM_NextItemtype_f (void)
 {
-        airequipID++;
-        if (airequipID > AC_ITEM_PILOT){
-                airequipID = AC_ITEM_WEAPON;
-        }
-        else if (airequipID < AC_ITEM_WEAPON){
-                airequipID = AC_ITEM_PILOT;
-        }
-        Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+	airequipID++;
+
+	if (airequipID > AC_ITEM_PILOT)
+		airequipID = AC_ITEM_WEAPON;
+	else if (airequipID < AC_ITEM_WEAPON)
+		airequipID = AC_ITEM_PILOT;
+
+	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
 /**
@@ -1362,14 +1355,14 @@ static void AIM_NextItemtype_f (void)
  */
 static void AIM_PreviousItemtype_f (void)
 {
-        airequipID--;
-        if (airequipID > AC_ITEM_PILOT){
-                airequipID = AC_ITEM_WEAPON;
-        }
-        else if (airequipID < AC_ITEM_WEAPON){
-                airequipID = AC_ITEM_PILOT;
-        }
-        Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+	airequipID--;
+
+	if (airequipID > AC_ITEM_PILOT)
+		airequipID = AC_ITEM_WEAPON;
+	else if (airequipID < AC_ITEM_WEAPON)
+		airequipID = AC_ITEM_PILOT;
+
+	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
 /**

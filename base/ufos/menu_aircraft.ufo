@@ -417,11 +417,11 @@ menu aircraft_equip
 		image	menu/airequip_lr
 		pos		"512 512"
 	}
-	
+
 	pic aircraftequipblackbox
 	{
-		pos     "76 665"
-		image   menu/airequip_typebox
+		pos		"76 665"
+		image	menu/airequip_typebox
 	}
 
 	// ==================
@@ -516,19 +516,19 @@ menu aircraft_equip
 			airequip_zone1
 		}
 	}
-	
+
 	string aircraftname
 	{
-    		pos     "224 686"
-		size    "300 16"
-		align   cc
-		string  "*cvar mn_aircraftname"
+    	pos		"224 686"
+		size	"300 16"
+		align	cc
+		string	"*cvar mn_aircraftname"
 		whup	{
-			cmd "mn_next_aircraft;"
+			cmd	"mn_next_aircraft;"
 			airequip_zone1
 		}
 		whdown	{
-			cmd "mn_prev_aircraft;"
+			cmd	"mn_prev_aircraft;"
 			airequip_zone1
 		}
 	}
@@ -617,7 +617,7 @@ menu aircraft_equip
 
 	string craftitemtype
 	{
-		pos	"224 730"
+		pos		"224 730"
 		size	"300 16"
 		align	cc
 		string	"*cvar mn_equip_itemtype_name"
@@ -631,7 +631,7 @@ menu aircraft_equip
 
 	text airequip_list
 	{
-		pos	"472 480"
+		pos		"472 480"
 		size	"252 220"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"

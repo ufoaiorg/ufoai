@@ -89,7 +89,6 @@ itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
 
-const char *AIM_AircraftItemtypeName (const int equiptype);
-void AIM_InitStartup (void);
+void AIM_InitStartup(void);
 
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */
