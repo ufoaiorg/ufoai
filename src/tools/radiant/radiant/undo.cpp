@@ -71,7 +71,7 @@ class RadiantUndoSystem : public UndoSystem {
 				m_undoable->importState(m_data);
 			}
 			void release() {
-				m_data->release();
+				delete m_data;
 			}
 		};
 

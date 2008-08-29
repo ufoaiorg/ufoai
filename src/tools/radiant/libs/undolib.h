@@ -34,10 +34,6 @@ public:
 			: m_data(data) {
 	}
 
-	void release() {
-		delete this;
-	}
-
 	const Copyable& get() const {
 		return m_data;
 	}

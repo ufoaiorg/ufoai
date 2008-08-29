@@ -708,10 +708,6 @@ class SavedState : public UndoMemento {
 			m_shaderState.exportState(face.getShader());
 			m_texdefState.exportState(face.getTexdef());
 		}
-
-		void release() {
-			delete this;
-		}
 	};
 
 public:
