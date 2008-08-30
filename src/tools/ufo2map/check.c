@@ -618,9 +618,11 @@ void Check_BrushIntersection (void)
 
 /**
  * @brief tests the vertices in the winding of side s.
+ * @param[in] mode determines how epsilon is applied
  * @return qtrue if they are all in or on (within epsilon) brush b
+ * @sa Check_IsPointInsideBrush
  */
-static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush)
+static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
 {
 	int i;
 	const winding_t *w = side->winding;
@@ -628,10 +630,45 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 	assert(w->numpoints > 0);
 
 	for (i = 0; i < w->numpoints ; i++)
-		if (!Check_IsPointInsideBrush(w->p[i], brush, PIB_INCL_SURF))
+		if (!Check_IsPointInsideBrush(w->p[i], brush, mode))
 			return qfalse;
 
 	return qtrue;
+}
+
+/**
+ * @brief find duplicated brushes and brushes contained inside brushes
+ */
+void Check_ContainedBrushes (void)
+{
+	int i, j, js;
+
+	/* initialise mapbrush_t.nearBrushes */
+	Check_NearList();
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+
+		for (j = 0; j < iBrush->numNear; j++) {
+			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			int numSidesInside = 0;
+
+			for (js = 0; js < jBrush->numsides; js++) {
+				side_t *jSide = &jBrush->original_sides[js];
+
+				if (Check_SideIsInBrush(jSide, iBrush, PIB_INCL_SURF))
+					numSidesInside++;
+			}
+
+			if (numSidesInside == jBrush->numsides) {
+				Check_Printf("  Brush %i (entity %i): is inside brush %i (entity %i)%s\n",
+							jBrush->brushnum, jBrush->entitynum,
+							iBrush->brushnum, iBrush->entitynum,
+							Check_IsOptimisable(iBrush) ? "" : " - changeable, clip, translucent or origin");
+
+			}
+		}
+	}
 }
 
 /**
@@ -684,7 +721,7 @@ void CheckNodraws (void)
 
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
-						Check_SideIsInBrush(iSide, jBrush)) {
+						Check_SideIsInBrush(iSide, jBrush, PIB_INCL_SURF)) {
 
 						const ptrdiff_t index = iSide - brushsides;
 						brush_texture_t *tex = &side_brushtextures[index];

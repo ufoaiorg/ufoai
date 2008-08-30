@@ -83,6 +83,7 @@ typedef struct mapConfig_s {
 
 	qboolean performMapCheck;
 	qboolean chkEntities;
+	qboolean chkContained;
 	qboolean chkFillLevelFlags;
 	qboolean chkIntersection;
 	qboolean chkNodraws;

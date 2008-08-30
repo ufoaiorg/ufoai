@@ -102,9 +102,10 @@ static void Usage (void)
 		" \n -check                     : check source map, only print information.\n"
 		" -fix                       : same subparameters as -check, changes the source map file.\n"
 		" \n subparameters for -check and -fix\n"
-		"    all                     : Performs all checks and fixes. This is the default.\n"
+		"    all                     : performs all checks and fixes. This is the default.\n"
 		"    bru brushes             : includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes.\n"
 		"    ent entities            : performs all checks and fixes associated with entities.\n"
+		"    con contained           : checks for brushes contained entirely within other brushes. includes coincident duplicates.\n"
 		"    isc intersection        : report intersection between optimisable brushes from worldspawn and func_group entities\n"
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
 		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
@@ -154,6 +155,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
 					Com_Printf("  %s brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkBrushes = qtrue;
+				} else if (!strcmp(argv[i], "contained") || !strcmp(argv[i], "con")) {
+					Com_Printf("  %s contained brushes\n", config.fixMap ? "fixing" : "checking");
+					config.chkContained = qtrue;
 				} else if (!strcmp(argv[i], "filllevelflags") || !strcmp(argv[i], "flv")) {
 					Com_Printf("  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkFillLevelFlags = qtrue;
@@ -532,6 +536,8 @@ int main (int argc, const char **argv)
 			CheckTexturesBasedOnFlags();
 		if (config.chkMMicro || config.chkBrushes || config.chkAll)
 			CheckMapMicro();
+		if (config.chkContained || config.chkBrushes || config.chkAll)
+			Check_ContainedBrushes();
 		if (config.chkIntersection|| config.chkBrushes || config.chkAll)
 			Check_BrushIntersection();
 		if (config.chkBrushes || config.chkAll)
