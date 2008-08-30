@@ -74,10 +74,6 @@ public:
 	/// Use "*" as \p extension to match all file extensions.
 	virtual void forEachFile(const char* basedir, const char* extension, const FileNameCallback& callback, std::size_t depth = 1) = 0;
 
-	/// \brief Returns a list containing the relative names of all the directories under \p basedir.
-	/// The caller must free the returned list by calling \c clearFileDirList;
-	/// \deprecated Deprecated - use \c forEachDirectory.
-	virtual GSList* getDirList(const char *basedir) = 0;
 	/// \brief Returns a list containing the relative names of the files under \p basedir (\p extension can be "*" for all files).
 	/// The caller must free the returned list by calling \c clearFileDirList.
 	/// \deprecated Deprecated - use \c forEachFile.

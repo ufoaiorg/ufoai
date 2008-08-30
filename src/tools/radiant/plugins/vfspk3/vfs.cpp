@@ -402,10 +402,6 @@ GSList* GetFileList (const char *dir, const char *ext, std::size_t depth) {
 	return GetListInternal (dir, ext, false, depth);
 }
 
-GSList* GetDirList (const char *dir, std::size_t depth) {
-	return GetListInternal (dir, 0, true, depth);
-}
-
 void ClearFileDirList (GSList **lst) {
 	while (*lst) {
 		g_free ((*lst)->data);
@@ -466,7 +462,7 @@ public:
 	}
 
 	void forEachDirectory(const char* basedir, const FileNameCallback& callback, std::size_t depth) {
-		GSList* list = GetDirList(basedir, depth);
+		GSList* list = GetListInternal(basedir, 0, true, depth);
 
 		for (GSList* i = list; i != 0; i = g_slist_next(i)) {
 			callback(reinterpret_cast<const char*>((*i).data));
@@ -485,9 +481,6 @@ public:
 		}
 
 		ClearFileDirList(&list);
-	}
-	GSList* getDirList(const char *basedir) {
-		return GetDirList(basedir, 1);
 	}
 	GSList* getFileList(const char *basedir, const char *extension) {
 		return GetFileList(basedir, extension, 1);
