@@ -480,8 +480,9 @@ static qboolean Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush
 
 /**
  * @brief add a list of near brushes to each mapbrush. near meaning that the bounding boxes
- * are intersecting or within CH_DIST_EPSILON of touching. excludes changeable brushes: ie
- * only includes brushes from worldspawn or fun_group entities/
+ * are intersecting or within CH_DIST_EPSILON of touching.
+ * @warning includes changeable brushes: mostly non-optimisable brushes will need to be excluded.
+ * @sa Check_IsOptimisable
  */
 static void Check_NearList (void)
 {
@@ -497,18 +498,11 @@ static void Check_NearList (void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
-		/* skip changeable brushes - they are not useful for map optimisation */
-		if (!Check_IsOptimisable(iBrush))
-			continue;
-
 		/* test all brushes for nearness to iBrush */
 		for (j = 0, numNear = 0 ; j < nummapbrushes; j++) {
 			mapbrush_t *jBrush = &mapbrushes[j];
 
 			if (i == j) /* do not list a brush as being near itself - not useful!*/
-				continue;
-
-			if (!Check_IsOptimisable(jBrush))
 				continue;
 
 			if (!Check_BoundingBoxIntersects(iBrush, jBrush))
@@ -601,8 +595,14 @@ void Check_BrushIntersection (void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
+		if(!Check_IsOptimisable(iBrush))
+			continue;
+
 		for (j = 0; j < iBrush->numNear; j++) {
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+
+			if(!Check_IsOptimisable(jBrush))
+				continue;
 
 			/* check each side of i for intersection with brush j */
 			for (is = 0; is < iBrush->numsides; is++) {
@@ -662,9 +662,17 @@ void CheckNodraws (void)
 		mapbrush_t *iBrush = &mapbrushes[i];
 		int numSet = 0;
 
+		/* skip moving brushes, clips etc */
+		if (!Check_IsOptimisable(iBrush))
+			continue;
+
 		/* check each brush, j, for having a side that hides one of i's faces */
 		for (j = 0; j < iBrush->numNear; j++) {
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+
+			/* skip moving brushes, clips etc */
+			if (!Check_IsOptimisable(jBrush))
+				continue;
 
 			/* check each side of i for being hidden */
 			for (is = 0; is < iBrush->numsides; is++) {
