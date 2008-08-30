@@ -121,7 +121,7 @@ static int checkEntityKey (entity_t *e, const int entnum, const char* key, int m
 			Check_Printf("* Entity %i: %s with no %s given - will be deleted\n", entnum, name, key);
 			return 1;
 		} else {
-			Check_Printf("* Entity %i: %s with no %s given\n", entnum, name, key);
+			Check_Printf("  Entity %i: %s with no %s given\n", entnum, name, key);
 			return 0;
 		}
 	}
