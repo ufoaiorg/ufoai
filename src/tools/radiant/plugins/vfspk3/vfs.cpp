@@ -480,10 +480,6 @@ public:
 		ClearFileDirList(&list);
 	}
 
-	void clearFileDirList(GSList **lst) {
-		ClearFileDirList(lst);
-	}
-
 	const char* findFile(const char *name) {
 		return FindFile(name);
 	}
