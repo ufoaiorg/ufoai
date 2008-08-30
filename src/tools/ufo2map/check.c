@@ -1,6 +1,6 @@
 /**
  * @file check.c
- * @brief Performs check on a loaded mapfile
+ * @brief Some checks during compile, warning on -check and changes .map on -fix
  */
 
 /*
@@ -32,11 +32,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MANDATORY_KEY 1
 #define NON_MANDATORY_KEY 0
 
-/* how close faces have to be in order for one to be hidden and set to SURF_NODRAW */
-#define NDR_EPSILON 0.0001f
+/** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
+ *  the margin for abutting brushes to be considered not intersecting */
+#define CH_DIST_EPSILON 0.001f
 
-/* if the cosine of an angle (in radians) is greater than this, then the angle is negligibly different from zero */
+/** if the cosine of an angle is greater than this, then the angle is negligibly different from zero */
 #define COS_EPSILON 0.9999f
+
+/** if the sine of an angle is less than this, then the angle is negligibly different from zero */
+#define SIN_EPSILON 0.0001f
+
+/**
+ * @brief wether the surface of a brush is included when testing if a point is in a brush
+ * determines how epsilon is applied.
+ * @sa Check_IsPointInsideBrush
+ */
+typedef enum {
+	PIB_EXCL_SURF, 				/**< surface is excluded */
+	PIB_INCL_SURF_EXCL_EDGE,	/**< surface is included, but edges of brush are excluded */
+	PIB_INCL_SURF,				/**< surface is included */
+	PIB_ON_SURFACE_ONLY			/**< point on the surface, and the inside of the brush is excluded */
+} pointInBrush_t;
 
 static void Check_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
 
@@ -329,13 +345,14 @@ static const entityCheck_t checkArray[] = {
 static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t *plane)
 {
 	/* normal should have a magnitude of one */
-	assert(abs(VectorLengthSqr(plane->normal) - 1.0f) < NDR_EPSILON);
+	assert(abs(VectorLengthSqr(plane->normal) - 1.0f) < CH_DIST_EPSILON);
 
 	return DotProduct(point, plane->normal) - plane->dist;
 }
 
 /**
- * @brief calculates whether side1 faces side2. The surface unit normals
+ * @brief calculates whether side1 faces side2 and touches.
+ * @details The surface unit normals
  * must be antiparallel (i.e. they face each other), and the distance
  * to the origin must be such that they occupy the same region of
  * space, to within a distance of epsilon. These are based on consideration of
@@ -359,25 +376,43 @@ static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
 	 * between the planes */
 	distance = Check_PointPlaneDistance(plane1->planeVector[0], plane2);
 
-	return abs(distance) < NDR_EPSILON;
+	return abs(distance) < CH_DIST_EPSILON;
 }
 
 /**
- * @brief Grows the brush by epsilon tolerance.
+ * @brief tests if a point is in a map brush.
  * @param[in] point The point to check whether it's inside the brush boundaries or not
+ * @param[in] mode determines how epsilons are applied
  * @return qtrue if the supplied point is inside the brush
  */
-static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbrush_t *brush)
+static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbrush_t *brush, const pointInBrush_t mode)
 {
 	int i;
+	float dist; /* distance to one of the planes of the sides, negative implies the point is inside this plane */
+	int numPlanes = 0; /* how many of the sides the point is on. on 2 sides, means on an edge. on 3 a vertex */
+	float epsilon = CH_DIST_EPSILON;
 
-	/* if the point is on the wrong side of any face, then it is outside */
+	/* PIB_INCL_SURF is the default */
+	epsilon *= mode == PIB_EXCL_SURF ? -1.0f : 1.0f;/* apply epsilon the other way if the surface is excluded */
+
 	for (i = 0; i < brush->numsides; i++) {
 		const plane_t *plane = &mapplanes[brush->original_sides[i].planenum];
 
-		if (Check_PointPlaneDistance(point, plane) > NDR_EPSILON)
+			/* if the point is on the wrong side of any face, then it is outside */
+		dist = Check_PointPlaneDistance(point, plane);
+		if (dist > epsilon)
 			return qfalse;
+
+		numPlanes += abs(dist) < CH_DIST_EPSILON ? 1 : 0;
 	}
+
+	if (mode == PIB_ON_SURFACE_ONLY && numPlanes == 0)
+		return qfalse; /* must be on at least one surface */
+
+	if (mode == PIB_INCL_SURF_EXCL_EDGE && numPlanes > 1)
+		return qfalse; /* must not be on more than one side, that would be an edge */
+
+	/* inside all planes, therefore inside the brush */
 	return qtrue;
 }
 
@@ -430,14 +465,14 @@ static qboolean Check_IsOptimisable (const mapbrush_t *b) {
 }
 
 /**
- * @return qtrue if the bounding boxes intersect or are within NDR_EPSILON of intersecting
+ * @return qtrue if the bounding boxes intersect or are within CH_DIST_EPSILON of intersecting
  */
 static qboolean Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush_t *b)
 {
 	int i;
 
 	for (i = 0; i < 3; i++)
-		if (a->mins[i] - NDR_EPSILON >= b->maxs[i] || a->maxs[i] <= b->mins[i] - NDR_EPSILON)
+		if (a->mins[i] - CH_DIST_EPSILON >= b->maxs[i] || a->maxs[i] <= b->mins[i] - CH_DIST_EPSILON)
 			return qfalse;
 
 	return qtrue;
@@ -445,7 +480,7 @@ static qboolean Check_BoundingBoxIntersects (const mapbrush_t *a, const mapbrush
 
 /**
  * @brief add a list of near brushes to each mapbrush. near meaning that the bounding boxes
- * are intersecting or within NDR_EPSILON of touching. excludes changeable brushes: ie
+ * are intersecting or within CH_DIST_EPSILON of touching. excludes changeable brushes: ie
  * only includes brushes from worldspawn or fun_group entities/
  */
 static void Check_NearList (void)
@@ -500,6 +535,88 @@ static void Check_NearList (void)
 }
 
 /**
+ * @brief 	calculate where an edge (defined by the vertices) intersects a plane.
+ *			http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
+ * @param[out] the position of the intersection, if the edge is not too close to parallel.
+ * @return 	zero if the edge is within an epsilon angle of parallel to the plane
+ * @note	an epsilon is used to exclude the actual vertices from passing the test.
+ */
+static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, const plane_t *plane, vec3_t intersection)
+{
+	vec3_t direction; /*< a vector in the direction of the line */
+	vec3_t lineToPlane; /*< a line from vert1 on the line to a point on the plane */
+	float sin; /*< sine of angle to plane, cosine of angle to normal */
+	float param; /*< param in line equation  line = vert1 + param * (vert2 - vert1) */
+	float length; /*< length of the edge */
+
+	VectorSubtract(vert2, vert1, direction);/*< direction points from vert1 to vert2 */
+	length = VectorLength(direction);
+	assert(length > 0.0f);
+	sin = DotProduct(direction, plane->normal) / length;
+	if (abs(sin) < SIN_EPSILON)
+		return qfalse;
+	VectorSubtract(plane->planeVector[0], vert1, lineToPlane);
+	param = DotProduct(plane->normal, lineToPlane) / DotProduct(plane->normal, direction);
+	VectorMul(param, direction, direction);/*< now direction points from vert1 to intersection */
+	VectorAdd(vert1, direction, intersection);
+	param = param * length;/*< param is now the distance along the edge from vert1 */
+	return (param > CH_DIST_EPSILON) && (param < (length - CH_DIST_EPSILON));
+}
+
+/**
+ * @brief tests the lines joining the vertices in the winding
+ * @return qtrue if the any lines intersect the brush
+ */
+static qboolean Check_WindingIntersects (const winding_t *winding, const mapbrush_t *brush)
+{
+	vec3_t intersection;
+	int vi, vj, bi;
+	for (bi = 0; bi < brush->numsides; bi++) {
+		for (vi = 0; vi < winding->numpoints; vi++) {
+			vj = vi + 1;
+			vj = vj == winding->numpoints ? 0 : vj;
+			if (Check_EdgePlaneIntersection(winding->p[vi], winding->p[vj], &mapplanes[brush->original_sides[bi].planenum], intersection))
+				if (Check_IsPointInsideBrush(intersection, brush, PIB_INCL_SURF_EXCL_EDGE)) {
+					#if 0
+					Print3Vector(intersection);
+					#else
+					return qtrue;
+					#endif
+			}
+		}
+	}
+	return qfalse;
+}
+
+/**
+ * @brief reports intersection between optimisable map brushes
+ */
+void Check_BrushIntersection (void)
+{
+	int i, j, is;
+
+	/* initialise mapbrush_t.nearBrushes */
+	Check_NearList();
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+
+		for (j = 0; j < iBrush->numNear; j++) {
+			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+
+			/* check each side of i for intersection with brush j */
+			for (is = 0; is < iBrush->numsides; is++) {
+				winding_t *winding = (iBrush->original_sides[is].winding);
+				if (Check_WindingIntersects(winding, jBrush)) {
+					Check_Printf("  Brush %i (entity %i): intersects with brush %i (entity %i)\n", iBrush->brushnum, iBrush->entitynum, jBrush->brushnum, jBrush->entitynum);
+					break;
+				}
+			}
+		}
+	}
+}
+
+/**
  * @brief tests the vertices in the winding of side s.
  * @return qtrue if they are all in or on (within epsilon) brush b
  */
@@ -511,7 +628,7 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 	assert(w->numpoints > 0);
 
 	for (i = 0; i < w->numpoints ; i++)
-		if (!Check_IsPointInsideBrush(w->p[i], brush))
+		if (!Check_IsPointInsideBrush(w->p[i], brush, PIB_INCL_SURF))
 			return qfalse;
 
 	return qtrue;

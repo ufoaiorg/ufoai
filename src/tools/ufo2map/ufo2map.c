@@ -105,6 +105,7 @@ static void Usage (void)
 		"    all                     : Performs all checks and fixes. This is the default.\n"
 		"    bru brushes             : includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes.\n"
 		"    ent entities            : performs all checks and fixes associated with entities.\n"
+		"    isc intersection        : report intersection between optimisable brushes from worldspawn and func_group entities\n"
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
 		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
 		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
@@ -165,6 +166,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "nodraws") || !strcmp(argv[i], "ndr")) {
 					Com_Printf("  %s nodraws\n", config.fixMap ? "fixing" : "checking");
 					config.chkNodraws = qtrue;
+				} else if (!strcmp(argv[i], "intersection") || !strcmp(argv[i], "isc")) {
+					Com_Printf("  %s intersection\n", config.fixMap ? "fixing" : "checking");
+					config.chkIntersection = qtrue;
 				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
 					Com_Printf("  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
 					config.chkMixedFaceContents = qtrue;
@@ -528,6 +532,8 @@ int main (int argc, const char **argv)
 			CheckTexturesBasedOnFlags();
 		if (config.chkMMicro || config.chkBrushes || config.chkAll)
 			CheckMapMicro();
+		if (config.chkIntersection|| config.chkBrushes || config.chkAll)
+			Check_BrushIntersection();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		/** @todo include in chkAll when it works */
