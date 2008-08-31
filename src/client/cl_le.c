@@ -382,7 +382,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		*mod++ = animationIndex;
 		*mod++ = 0;
 	} else {
-		Com_sprintf(mod, length, "%s_%s\n", anim, akimbo ? "pistol_d" : type);
+		Com_sprintf(mod, length, "%s_%s", anim, akimbo ? "pistol_d" : type);
 	}
 
 	return retAnim;
