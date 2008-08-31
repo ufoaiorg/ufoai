@@ -1608,11 +1608,13 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 		/* skip non active transfer */
 		if (!transfer->active)
 			continue;
-
-		memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
-			(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
+		if (!transfer->hasAircraft)
+			continue;
+		if (aircraft->idx < MAX_AIRCRAFT - 1)
+			memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
+				(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
 		/* wipe the now vacant last slot */
-		memset(&transfer->aircraftArray[MAX_AIRCRAFT], 0, sizeof(transfer->aircraftArray[MAX_AIRCRAFT]));
+		memset(&transfer->aircraftArray[MAX_AIRCRAFT - 1], 0, sizeof(transfer->aircraftArray[MAX_AIRCRAFT - 1]));
 	}
 }
 

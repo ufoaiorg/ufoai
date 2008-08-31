@@ -990,8 +990,12 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
 
+	/** @todo This might be duplicate, see TR_NotifyAircraftRemoved() call
+	 * on the top of this function */
 	for (i = 0, transfer = gd.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
 		if (!transfer->active)
+			continue;
+		if (!transfer->hasAircraft)
 			continue;
 		for (j = 0; j < MAX_AIRCRAFT; j++) {
 			if (transfer->aircraftArray[j] > aircraft->idx)

@@ -645,7 +645,7 @@ static qboolean CP_CheckMissionVisibleOnGeoscape (const mission_t *mission)
  */
 static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 {
-	if (!mission->onGeoscape)
+	if ( (!mission->onGeoscape) && (mission->category != INTERESTCATEGORY_BASE_ATTACK) )
 		return;
 
 	mission->onGeoscape = qfalse;
@@ -1396,20 +1396,8 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	/* we really don't want to use the fake aircraft anywhere */
 	cls.missionaircraft = NULL;
 
+	/* This hack only needed until base will be really destroyed */
 	base->baseStatus = BASE_WORKING;
-	gd.mapAction = MA_NONE;
-	mission->data = NULL;
-
-	CP_MissionDisableTimeLimit(mission);
-	if (mission->ufo) {
-		CP_MissionDisableTimeLimit(mission);
-		UFO_SetRandomDest(mission->ufo);
-		/* Display UFO on geoscape if it is visible */
-		mission->ufo->notOnGeoscape = qfalse;
-	} else {
-		/* Go to next stage on next frame */
-		mission->finalDate = ccs.date;
-	}
 }
 
 /**

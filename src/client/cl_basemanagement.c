@@ -681,6 +681,8 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 			Sys_Error("B_RemoveAircraftExceedingCapacity: Unkown type of aircraft '%i'\n", aircraftSize);
 		}
 
+		/** @todo move aircraft being transfered to the destBase */ 
+
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
 		if (!AIR_IsAircraftInBase(&base->aircraft[aircraftIdx])) {
 			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
@@ -694,6 +696,8 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 		return;
 	}
 
+	if (!numawayAircraft)
+		return;
 	/* All aircraft are away from base, pick up one and change it's homebase */
 	randomNum = rand() % numawayAircraft;
 	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {

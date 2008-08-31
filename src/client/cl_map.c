@@ -1896,6 +1896,8 @@ void MAP_DrawMap (const menuNode_t* node)
 		Com_sprintf(text_standard, sizeof(text_standard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
 		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 		mn.menuText[TEXT_STANDARD] = text_standard;
+	} else {
+		mn.menuText[TEXT_STANDARD] = "";
 	}
 }
 
