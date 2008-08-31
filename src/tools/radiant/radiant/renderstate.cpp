@@ -1709,5 +1709,3 @@ public:
 typedef SingletonModule<ShaderCacheAPI, ShaderCacheDependencies> ShaderCacheModule;
 typedef Static<ShaderCacheModule> StaticShaderCacheModule;
 StaticRegisterModule staticRegisterShaderCache(StaticShaderCacheModule::instance());
-
-

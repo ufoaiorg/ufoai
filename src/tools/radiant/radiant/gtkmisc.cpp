@@ -147,5 +147,3 @@ void button_clicked_entry_browse_directory(GtkWidget* widget, GtkEntry* entry) {
 		g_free(converted);
 	}
 }
-
-

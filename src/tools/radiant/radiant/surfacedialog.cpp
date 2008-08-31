@@ -1239,4 +1239,3 @@ void SurfaceInspector_Construct() {
 void SurfaceInspector_Destroy() {
 	delete g_SurfaceInspector;
 }
-

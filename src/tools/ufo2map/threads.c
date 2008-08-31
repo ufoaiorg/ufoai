@@ -206,4 +206,3 @@ void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboo
 
 	threadstate.numthreads = saved_numthreads;
 }
-

@@ -31,4 +31,3 @@ GtkFrame* create_framed_widget(GtkWidget* widget) {
 	gtk_widget_show(GTK_WIDGET(widget));
 	return frame;
 }
-

@@ -261,4 +261,3 @@ public:
 typedef SingletonModule<SceneGraphAPI> SceneGraphModule;
 typedef Static<SceneGraphModule> StaticSceneGraphModule;
 StaticRegisterModule staticRegisterSceneGraph(StaticSceneGraphModule::instance());
-

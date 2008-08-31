@@ -147,4 +147,3 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 }
 
 #endif
-

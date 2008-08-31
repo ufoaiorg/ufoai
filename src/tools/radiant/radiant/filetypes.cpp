@@ -116,5 +116,3 @@ public:
 typedef SingletonModule<FiletypesAPI> FiletypesModule;
 typedef Static<FiletypesModule> StaticFiletypesModule;
 StaticRegisterModule staticRegisterFiletypes(StaticFiletypesModule::instance());
-
-

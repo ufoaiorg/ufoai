@@ -719,4 +719,3 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 	}
 	return qtrue;
 }
-

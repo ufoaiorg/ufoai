@@ -242,5 +242,3 @@ public:
 typedef SingletonModule<FilterAPI> FilterModule;
 typedef Static<FilterModule> StaticFilterModule;
 StaticRegisterModule staticRegisterFilter(StaticFilterModule::instance());
-
-

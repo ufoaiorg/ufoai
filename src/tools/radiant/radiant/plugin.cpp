@@ -314,5 +314,3 @@ ToolbarModules& Radiant_getToolbarModules() {
 PluginModules& Radiant_getPluginModules() {
 	return g_RadiantDependencies->getPluginModules();
 }
-
-

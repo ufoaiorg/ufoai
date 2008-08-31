@@ -1497,4 +1497,3 @@ void EntityInspector_construct() {
 void EntityInspector_destroy() {
 	GlobalEntityClassManager().detach(g_EntityInspector);
 }
-

@@ -79,4 +79,3 @@ GtkImage* new_local_image(const char* filename) {
 	fullPath << g_bitmapsPath.c_str() << filename;
 	return new_image(fullPath.c_str());
 }
-

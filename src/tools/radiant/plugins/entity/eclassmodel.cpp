@@ -402,5 +402,3 @@ public:
 scene::Node& New_EclassModel(EntityClass* eclass) {
 	return (new EclassModelNode(eclass))->node();
 }
-
-

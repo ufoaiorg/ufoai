@@ -222,4 +222,3 @@ UFOModelSkinCacheModule g_UFOModelSkinCacheModule;
 void UFOModelSkinCacheModule_selfRegister(ModuleServer& server) {
 	g_UFOModelSkinCacheModule.selfRegister();
 }
-

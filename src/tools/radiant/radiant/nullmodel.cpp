@@ -175,4 +175,3 @@ void NullModel_construct() {
 }
 void NullModel_destroy() {
 }
-

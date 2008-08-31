@@ -715,6 +715,3 @@ StaticRegisterModule staticRegisterTextures(StaticTexturesModule::instance());
 ImageModules& Textures_getImageModules() {
 	return StaticTexturesModule::instance().getDependencies().getImageModules();
 }
-
-
-

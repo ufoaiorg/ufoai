@@ -310,4 +310,3 @@ StaticRegisterModule staticRegisterEclassManager(StaticEclassManagerModule::inst
 EClassModules& EntityClassManager_getEClassModules() {
 	return StaticEclassManagerModule::instance().getDependencies().getEClassModules();
 }
-

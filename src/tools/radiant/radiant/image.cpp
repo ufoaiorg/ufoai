@@ -61,4 +61,3 @@ Image* QERApp_LoadImage(void* environment, const char* name) {
 
 	return image;
 }
-

@@ -158,4 +158,3 @@ GtkMenuItem* create_plugins_menu() {
 
 	return plugins_menu_item;
 }
-

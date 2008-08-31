@@ -250,4 +250,3 @@ gboolean glwidget_make_current (GtkWidget *widget) {
 	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
 	return gdk_gl_drawable_gl_begin (gldrawable, glcontext);
 }
-

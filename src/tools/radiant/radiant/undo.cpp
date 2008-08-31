@@ -452,4 +452,3 @@ public:
 		m_state.test_data = data;
 	}
 };
-

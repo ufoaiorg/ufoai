@@ -434,4 +434,3 @@ void Texdef_transformLocked(TextureProjection& projection, std::size_t width, st
 	Texdef_fromTransform(projection, (float)width, (float)height, stTransformed2stOriginal);
 	Texdef_normalise(projection, (float)width, (float)height);
 }
-

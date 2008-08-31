@@ -49,4 +49,3 @@ public:
 typedef SingletonModule<GtkGLAPI> GtkGLModule;
 typedef Static<GtkGLModule> StaticGtkGLModule;
 StaticRegisterModule staticRegisterGtkGL(StaticGtkGLModule::instance());
-

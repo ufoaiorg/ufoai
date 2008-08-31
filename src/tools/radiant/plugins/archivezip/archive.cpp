@@ -252,4 +252,3 @@ public:
 Archive* OpenArchive(const char* name) {
 	return new ZipArchive(name);
 }
-

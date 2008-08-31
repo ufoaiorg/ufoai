@@ -65,4 +65,3 @@ sourcearchive:
 		-f ./tarsrc/ufoai-$(VERSION)-source.tar.bz2
 	mv ./tarsrc/ufoai-$(VERSION)-source.tar.bz2 ./
 	rm -rf ./tarsrc
-

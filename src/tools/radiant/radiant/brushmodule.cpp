@@ -185,4 +185,3 @@ public:
 typedef SingletonModule<BrushUFOAPI, BrushDependencies> BrushUFOModule;
 typedef Static<BrushUFOModule> StaticBrushUFOModule;
 StaticRegisterModule staticRegisterBrushUFO(StaticBrushUFOModule::instance());
-

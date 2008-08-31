@@ -354,5 +354,3 @@ bool brush_filtered(Brush& brush) {
 	}
 	return false;
 }
-
-

@@ -681,7 +681,7 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 			Sys_Error("B_RemoveAircraftExceedingCapacity: Unkown type of aircraft '%i'\n", aircraftSize);
 		}
 
-		/** @todo move aircraft being transfered to the destBase */ 
+		/** @todo move aircraft being transfered to the destBase */
 
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
 		if (!AIR_IsAircraftInBase(&base->aircraft[aircraftIdx])) {

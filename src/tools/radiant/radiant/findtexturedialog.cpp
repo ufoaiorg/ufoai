@@ -257,4 +257,3 @@ void FindTextureDialog_Construct() {
 
 void FindTextureDialog_Destroy() {
 }
-

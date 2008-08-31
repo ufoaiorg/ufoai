@@ -196,4 +196,3 @@ EMessageBoxReturn gtk_MessageBox (GtkWidget *parent, const char* text, const cha
 
 	return dialog.ret;
 }
-

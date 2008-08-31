@@ -184,4 +184,3 @@ void filter_level(int flag) {
 	GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, level, true));
 	GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, level, true));
 }
-

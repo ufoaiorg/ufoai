@@ -151,5 +151,3 @@ GtkScrolledWindow* create_scrolled_window(GtkPolicyType hscrollbar_policy, GtkPo
 	gtk_container_set_border_width(GTK_CONTAINER(scr), border);
 	return scr;
 }
-
-

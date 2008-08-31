@@ -342,4 +342,3 @@ void R_InitPrograms (void)
 
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 }
-

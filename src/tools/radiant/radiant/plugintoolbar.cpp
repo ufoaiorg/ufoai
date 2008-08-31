@@ -123,5 +123,3 @@ GtkToolbar* create_plugin_toolbar() {
 
 	return toolbar;
 }
-
-

@@ -90,4 +90,3 @@ GtkHPaned* create_split_views(GtkWidget* topleft, GtkWidget* topright, GtkWidget
 	}
 	return hsplit;
 }
-

@@ -258,7 +258,3 @@ GtkCheckMenuItem* create_check_menu_item_with_mnemonic(GtkMenu* menu, const char
 	toggle.m_exportCallback(CheckMenuItemSetActiveCaller(*item));
 	return item;
 }
-
-
-
-

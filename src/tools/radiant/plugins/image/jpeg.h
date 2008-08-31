@@ -37,4 +37,3 @@ class ArchiveFile;
 Image* LoadJPG(ArchiveFile& file);
 
 #endif
-
