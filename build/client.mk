@@ -162,12 +162,6 @@ ifeq ($(TARGET_OS),solaris)
 		ports/unix/unix_glob.c
 endif
 
-ifeq ($(TARGET_OS),mingw32)
-	CLIENT_LIBS+=-lopengl32
-else
-	CLIENT_LIBS+=-lGL
-endif
-
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
 	$(patsubst %.m, $(BUILDDIR)/client/%.o, $(filter %.m, $(CLIENT_SRCS))) \
