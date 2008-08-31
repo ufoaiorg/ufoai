@@ -186,6 +186,9 @@ static inline void R_Clear (void)
 	R_CheckError();
 }
 
+/**
+ * @sa CL_ClearState
+ */
 static inline void R_ClearScene (void)
 {
 	r_numEntities = r_numLights = 0;
