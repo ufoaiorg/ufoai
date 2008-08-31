@@ -433,31 +433,46 @@ static float lastQ;
 void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
 	image_t *gl;
-	float nx, ny, nw, nh;
+	float geoscape_texcoords[4 * 2];
+	short geoscape_verts[4 * 2];
+	int geoscape_index = 0;
 
 	/* normalize */
-	nx = x * viddef.rx;
-	ny = y * viddef.ry;
-	nw = w * viddef.rx;
-	nh = h * viddef.ry;
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
 
 	/* load day image */
 	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
 	if (gl == r_notexture)
 		Sys_Error("Could not load geoscape day image");
 
+	/* alter the array pointers */
+	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, geoscape_texcoords);
+
+	geoscape_texcoords[geoscape_index + 0] = cx - iz;
+	geoscape_texcoords[geoscape_index + 1] = cy - iz;
+	geoscape_texcoords[geoscape_index + 2] = cx + iz;
+	geoscape_texcoords[geoscape_index + 3] = cy - iz;
+	geoscape_texcoords[geoscape_index + 4] = cx + iz;
+	geoscape_texcoords[geoscape_index + 5] = cy + iz;
+	geoscape_texcoords[geoscape_index + 6] = cx - iz;
+	geoscape_texcoords[geoscape_index + 7] = cy + iz;
+
+	geoscape_verts[geoscape_index + 0] = nx;
+	geoscape_verts[geoscape_index + 1] = ny;
+	geoscape_verts[geoscape_index + 2] = nx + nw;
+	geoscape_verts[geoscape_index + 3] = ny;
+	geoscape_verts[geoscape_index + 4] = nx + nw;
+	geoscape_verts[geoscape_index + 5] = ny + nh;
+	geoscape_verts[geoscape_index + 6] = nx;
+	geoscape_verts[geoscape_index + 7] = ny + nh;
+
 	/* draw day image */
 	R_BindTexture(gl->texnum);
-	glBegin(GL_QUADS);
-	glTexCoord2f(cx - iz, cy - iz);
-	glVertex2f(nx, ny);
-	glTexCoord2f(cx + iz, cy - iz);
-	glVertex2f(nx + nw, ny);
-	glTexCoord2f(cx + iz, cy + iz);
-	glVertex2f(nx + nw, ny + nh);
-	glTexCoord2f(cx - iz, cy + iz);
-	glVertex2f(nx, ny + nh);
-	glEnd();
+	glDrawArrays(GL_QUADS, 0, 4);
 
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		assert(r_xviTexture);
@@ -465,16 +480,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_EnableBlend(qtrue);
 		/* draw XVI image */
 		R_BindTexture(r_xviTexture->texnum);
-		glBegin(GL_QUADS);
-		glTexCoord2f(cx - iz, cy - iz);
-		glVertex2f(nx, ny);
-		glTexCoord2f(cx + iz, cy - iz);
-		glVertex2f(nx + nw, ny);
-		glTexCoord2f(cx + iz, cy + iz);
-		glVertex2f(nx + nw, ny + nh);
-		glTexCoord2f(cx - iz, cy + iz);
-		glVertex2f(nx, ny + nh);
-		glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 		R_EnableBlend(qfalse);
 	}
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
@@ -483,16 +489,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_EnableBlend(qtrue);
 		/* draw radar image */
 		R_BindTexture(r_radarTexture->texnum);
-		glBegin(GL_QUADS);
-		glTexCoord2f(cx - iz, cy - iz);
-		glVertex2f(nx, ny);
-		glTexCoord2f(cx + iz, cy - iz);
-		glVertex2f(nx + nw, ny);
-		glTexCoord2f(cx + iz, cy + iz);
-		glVertex2f(nx + nw, ny + nh);
-		glTexCoord2f(cx - iz, cy + iz);
-		glVertex2f(nx, ny + nh);
-		glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 		R_EnableBlend(qfalse);
 	}
 
@@ -515,6 +512,10 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 		R_BindTexture(r_dayandnighttexture->texnum);
 		glEnable(GL_TEXTURE_2D);
+
+		/* alter the array pointers */
+		glVertexPointer(2, GL_SHORT, 0, char_verts);
+		glTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
 
 		/* draw night image */
 		glBegin(GL_QUADS);
@@ -547,18 +548,13 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_EnableBlend(qtrue);
 		/* draw day image */
 		R_BindTexture(gl->texnum);
-		glBegin(GL_QUADS);
-		glTexCoord2f(cx - iz, cy - iz);
-		glVertex2f(nx, ny);
-		glTexCoord2f(cx + iz, cy - iz);
-		glVertex2f(nx + nw, ny);
-		glTexCoord2f(cx + iz, cy + iz);
-		glVertex2f(nx + nw, ny + nh);
-		glTexCoord2f(cx - iz, cy + iz);
-		glVertex2f(nx, ny + nh);
-		glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 		R_EnableBlend(qfalse);
 	}
+
+	/* and restore them */
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 }
 
 /**
