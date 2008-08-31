@@ -816,18 +816,16 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		base->buildingCurrent = NULL;
 
 	{
-		building_t* const buildings = gd.buildings[base->idx];
-		const int         cntBldgs = gd.numBuildings[base->idx] - 1;
-		const int         idx       = building->idx;
+		int         const base_idx  = base->idx;
+		building_t* const buildings = gd.buildings[base_idx];
+		int         const idx       = building->idx;
+		int               cntBldgs;
 		int               i;
 
-		gd.numBuildings[base->idx] = cntBldgs;
+		REMOVE_ELEM(buildings, idx, gd.numBuildings[base_idx]);
 
-		assert(idx <= cntBldgs);
-		memmove(building, building + 1, (cntBldgs - idx) * sizeof(*building));
-		/* wipe the now vacant last slot */
-		memset(&buildings[cntBldgs], 0, sizeof(buildings[cntBldgs]));
 		/* Update the link of other buildings */
+		cntBldgs = gd.numBuildings[base_idx];
 		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;

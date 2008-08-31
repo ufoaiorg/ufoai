@@ -578,9 +578,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		assert(base->numBatteries > 0);
 		if (idx < 0)
 			idx = rand() % base->numBatteries;
-		if (idx < base->numBatteries - 1)
-			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->numBatteries - idx - 1));
-		base->numBatteries--;
+		REMOVE_ELEM(base->batteries, idx, base->numBatteries);
 		/* just for security */
 		AII_InitialiseSlot(&base->batteries[base->numBatteries].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
 		break;
@@ -589,9 +587,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		assert(base->numLasers > 0);
 		if (idx < 0)
 			idx = rand() % base->numLasers;
-		if (idx < base->numLasers - 1)
-			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->numLasers - idx - 1));
-		base->numLasers--;
+		REMOVE_ELEM(base->lasers, idx, base->numLasers);
 		/* just for security */
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
 		break;

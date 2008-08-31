@@ -401,4 +401,29 @@ qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize,
 void Key_Init(void);
 void SCR_EndLoadingPlaque(void);
 
+
+/** Remove element at index from array of size n.  n gets adjusted to the new
+ * array size, so must be an lvalue */
+#define REMOVE_ELEM(array, index, n)                                               \
+do {                                                                               \
+	size_t idx__ = (index);                                                          \
+	size_t n__   = --(n);                                                            \
+	assert(idx__ <= n__);                                                            \
+	memmove((array) + idx__, (array) + idx__ + 1, (n__ - idx__) * sizeof(*(array))); \
+	memset((array) + n__, 0, sizeof(*(array)));                                      \
+} while (0)
+
+/** Same as REMOVE_ELEM() and also updates the idx attribute of every moved
+ * element */
+#define REMOVE_ELEM_ADJUST_IDX(array, index, n) \
+do {                                            \
+	size_t idx__ = (index);                       \
+	size_t n__;                                   \
+	size_t i__;                                   \
+	REMOVE_ELEM(array, index, n);                 \
+	n__ = (n);                                    \
+	for (i__ = idx__; i__ < n__; ++i__)           \
+		--(array)[i__].idx;                         \
+} while (0)
+
 #endif

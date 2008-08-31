@@ -643,8 +643,7 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 			int idx = objIdx[randNumber];
 			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
 		}
-		numObj--;
-		memmove(&objIdx[randNumber], &objIdx[randNumber + 1], (numObj - randNumber) * sizeof(objIdx[randNumber]));
+		REMOVE_ELEM(objIdx, randNumber, numObj);
 
 		/* Make sure that we don't have an infinite loop */
 		if (numObj <= 0)

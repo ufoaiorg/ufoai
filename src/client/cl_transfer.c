@@ -1604,17 +1604,14 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer_t *transfer = &gd.alltransfers[i];
+		size_t      n        = MAX_AIRCRAFT;
 
 		/* skip non active transfer */
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
 			continue;
-		/* moving the last one would result in moving zero bytes => nop */
-		memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
-			(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
-		/* wipe the now vacant last slot */
-		memset(&transfer->aircraftArray[MAX_AIRCRAFT - 1], 0, sizeof(transfer->aircraftArray[MAX_AIRCRAFT - 1]));
+		REMOVE_ELEM(transfer->aircraftArray, aircraft->idx, n);
 	}
 }
 
