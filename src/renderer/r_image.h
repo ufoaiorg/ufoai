@@ -91,7 +91,7 @@ void R_InitImages(void);
 void R_ShutdownImages(void);
 void R_FreeUnusedImages(void);
 void R_ImageClearMaterials(void);
-void R_CalcDayAndNight(float q);
+void R_CalcAndUploadDayAndNightTexture(float q);
 void R_FilterTexture(unsigned *in, int width, int height, imagetype_t type);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
@@ -117,9 +117,9 @@ extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *blood[MAX_DEATH]; /**< draw this when actor is dead */
-extern image_t *r_notexture;
-extern image_t *r_warptexture;
-extern image_t *r_dayandnighttexture;
+extern image_t *r_noTexture;
+extern image_t *r_warpTexture;
+extern image_t *r_dayandnightTexture;
 extern image_t *r_xviTexture;
 extern image_t *r_radarTexture;
 

@@ -1207,14 +1207,16 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 #define DAWN		0.03
 
-static byte r_dayandnightalpha[DAN_WIDTH * DAN_HEIGHT];
-image_t *r_dayandnighttexture;
+/** this is the data that is used with r_dayandnightTexture */
+static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
+/** this is the mask that is used to display day/night on (2d-)geoscape */
+image_t *r_dayandnightTexture;
 
 /**
  * @brief Applies alpha values to the night overlay image for 2d geoscape
  * @param[in] q
  */
-void R_CalcDayAndNight (float q)
+void R_CalcAndUploadDayAndNightTexture (float q)
 {
 	int x, y;
 	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
@@ -1224,22 +1226,6 @@ void R_CalcDayAndNight (float q)
 	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
 	byte *px;
 
-	/* get image */
-	if (!r_dayandnighttexture) {
-		if (r_numImages >= MAX_GL_TEXTURES)
-			Com_Error(ERR_DROP, "MAX_GL_TEXTURES");
-		r_dayandnighttexture = &r_images[r_numImages];
-		r_dayandnighttexture->index = r_numImages;
-		Q_strncpyz(r_dayandnighttexture->name, "day_and_night_mask", sizeof(r_dayandnighttexture->name));
-		r_dayandnighttexture->width = DAN_WIDTH;
-		r_dayandnighttexture->height = DAN_HEIGHT;
-		r_dayandnighttexture->type = it_pic;
-		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - r_images);
-		r_numImages++;
-	}
-	assert(r_dayandnighttexture->texnum);
-	R_BindTexture(r_dayandnighttexture->texnum);
-
 	for (x = 0; x < DAN_WIDTH; x++) {
 		const float phi = x * dphi - q;
 		sin_phi[x] = sin(phi);
@@ -1247,7 +1233,7 @@ void R_CalcDayAndNight (float q)
 	}
 
 	/* calculate */
-	px = r_dayandnightalpha;
+	px = r_dayandnightAlpha;
 	for (y = 0; y < DAN_HEIGHT; y++) {
 		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
 		const float root = sqrt(1 - a * a);
@@ -1263,13 +1249,10 @@ void R_CalcDayAndNight (float q)
 		}
 	}
 
-	/* upload alpha map */
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightalpha);
-	R_CheckError();
+	/* upload alpha map into the r_dayandnighttexture */
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightAlpha);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
-	R_CheckError();
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
-	R_CheckError();
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	R_CheckError();
 }
@@ -1539,7 +1522,7 @@ void R_UploadRadarCoverage (qboolean smooth)
 /**
  * @brief Creates a new image from RGBA data. Stores it in the gltextures array
  * and also uploads it.
- * @note This is also used as an entry point for the generated r_notexture
+ * @note This is also used as an entry point for the generated r_noTexture
  * @param[in] name The name of the newly created image
  * @param[in] pic The RGBA data of the image
  * @param[in] width The width of the image (power of two, please)
@@ -1618,7 +1601,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		Sys_Error("R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
-		return r_notexture;
+		return r_noTexture;
 
 	/* drop extension */
 	Q_strncpyz(lname, pname, MAX_QPATH);
@@ -1639,7 +1622,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	while ((len = strlen(etex)) != 0) {
 		if (!Q_strncmp(lname, etex, MAX_QPATH))
 			/* it's in the error list */
-			return r_notexture;
+			return r_noTexture;
 
 		etex += len + 1;
 	}
@@ -1678,7 +1661,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 	/* no fitting texture found */
 	/* add to error list */
-	image = r_notexture;
+	image = r_noTexture;
 
 	*ename = 0;
 #ifdef DEBUG
@@ -1736,11 +1719,15 @@ void R_InitImages (void)
 	r_numImages = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
-	r_dayandnighttexture = NULL;
+	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
+	if (!r_dayandnightTexture)
+		Sys_Error("Could not create daynight image for the geoscape");
+
+	/** @todo move r_radarTexture r_xviTexture here */
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_effect);
-		if (r_envmaptextures[i] == r_notexture)
+		if (r_envmaptextures[i] == r_noTexture)
 			Sys_Error("Could not load environment map %i", i);
 	}
 }

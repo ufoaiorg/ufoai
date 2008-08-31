@@ -38,8 +38,8 @@ rconfig_t r_config;
 rstate_t r_state;
 rlocals_t r_locals;
 
-image_t *r_notexture;			/* use for bad textures */
-image_t *r_warptexture;
+image_t *r_noTexture;			/* use for bad textures */
+image_t *r_warpTexture;
 
 static cvar_t *r_maxtexres;
 

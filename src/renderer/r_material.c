@@ -336,7 +336,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 	for (i = 1; i < s->anim.num_frames; i++) {
 		const char *c = va("textures/%s%d", name, i);
 		s->anim.images[i] = R_FindImage(c, it_material);
-		if (s->anim.images[i] == r_notexture) {
+		if (s->anim.images[i] == r_noTexture) {
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
 			return -1;
 		}
@@ -364,7 +364,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			c = COM_Parse(buffer);
 			s->image = R_FindImage(va("textures/%s", c), it_material);
 
-			if (s->image == r_notexture) {
+			if (s->image == r_noTexture) {
 				Com_Printf("R_ParseStage: Failed to resolve texture: %s\n", c);
 				return -1;
 			}
@@ -382,7 +382,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			else
 				s->image = R_FindImage(va("pics/envmaps/%s", c), it_material);
 
-			if (s->image == r_notexture) {
+			if (s->image == r_noTexture) {
 				Com_Printf("R_ParseStage: Failed to resolve envmap: %s\n", c);
 				return -1;
 			}
@@ -647,7 +647,7 @@ void R_LoadMaterials (const char *map)
 			c = COM_Parse(&buffer);
 			image = R_FindImage(va("textures/%s", c), it_world);
 
-			if (image == r_notexture) {
+			if (image == r_noTexture) {
 				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
 				image = NULL;
 			}

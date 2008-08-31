@@ -45,16 +45,16 @@ void R_DrawInitLocal (void)
 	int i;
 
 	shadow = R_FindImage("pics/sfx/shadow", it_effect);
-	if (shadow == r_notexture)
+	if (shadow == r_noTexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	for (i = 0; i < MAX_DEATH; i++) {
 		blood[i] = R_FindImage(va("pics/sfx/blood_%i", i), it_effect);
-		if (blood[i] == r_notexture)
+		if (blood[i] == r_noTexture)
 			Com_Printf("Could not find blood_%i image in game pics/sfx directory!\n", i);
 	}
 
 	draw_chars = R_FindImage("pics/conchars", it_chars);
-	if (draw_chars == r_notexture)
+	if (draw_chars == r_noTexture)
 		Sys_Error("Could not find conchars image in game pics directory!\n");
 }
 
@@ -148,7 +148,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	image_t *img;
 
 	img = R_FindImage(name, it_pic);
-	if (img == r_notexture)
+	if (img == r_noTexture)
 		Sys_Error("Could not find the searched image: %s\n", name);
 
 	R_BindTexture(img->texnum);
@@ -161,9 +161,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 		img->height = height;
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
 	}
-	R_CheckError();
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 
@@ -192,7 +190,7 @@ image_t *R_RegisterPic (const char *name)
 		Q_strncpyz(fullname, name, MAX_QPATH);
 
 	gl = R_FindImage(fullname, it_pic);
-	if (gl == r_notexture)
+	if (gl == r_noTexture)
 		return NULL;
 	return gl;
 }
@@ -414,7 +412,6 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	glEnable(GL_TEXTURE_2D);
 }
 
-static float lastQ;
 /**
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
@@ -432,6 +429,7 @@ static float lastQ;
  */
 void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
+	static float lastQ = 0.0f;
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
 	short geoscape_verts[4 * 2];
@@ -445,7 +443,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	/* load day image */
 	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
-	if (gl == r_notexture)
+	if (gl == r_noTexture)
 		Sys_Error("Could not load geoscape day image");
 
 	/* alter the array pointers */
@@ -474,79 +472,65 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	R_BindTexture(gl->texnum);
 	glDrawArrays(GL_QUADS, 0, 4);
 
-	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
-		assert(r_xviTexture);
+	R_EnableBlend(qtrue);
 
-		R_EnableBlend(qtrue);
-		/* draw XVI image */
-		R_BindTexture(r_xviTexture->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
-		R_EnableBlend(qfalse);
-	}
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
-		assert(r_radarTexture);
-
-		R_EnableBlend(qtrue);
-		/* draw radar image */
-		R_BindTexture(r_radarTexture->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
-		R_EnableBlend(qfalse);
-	}
-
+	/* draw night map */
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
-	if (gl != r_notexture) {
-		/* init combiner */
-		R_EnableBlend(qtrue);
-
-		R_SelectTexture(&texunit_diffuse);
+	if (gl != r_noTexture) {
 		R_BindTexture(gl->texnum);
+		R_EnableMultitexture(&texunit_lightmap, qtrue);
+
+		texunit_lightmap.texcoord_array[0] = geoscape_texcoords[0] + q;
+		texunit_lightmap.texcoord_array[1] = geoscape_texcoords[1];
+		texunit_lightmap.texcoord_array[2] = geoscape_texcoords[2] + q;
+		texunit_lightmap.texcoord_array[3] = geoscape_texcoords[3];
+		texunit_lightmap.texcoord_array[4] = geoscape_texcoords[4] + q;
+		texunit_lightmap.texcoord_array[5] = geoscape_texcoords[5];
+		texunit_lightmap.texcoord_array[6] = geoscape_texcoords[6] + q;
+		texunit_lightmap.texcoord_array[7] = geoscape_texcoords[7];
 
 		R_SelectTexture(&texunit_lightmap);
-		if (!r_dayandnighttexture || lastQ != q) {
-			R_CalcDayAndNight(q);
+
+		glTexCoordPointer(2, GL_FLOAT, 0, texunit_lightmap.texcoord_array);
+
+		R_BindTexture(r_dayandnightTexture->texnum);
+		if (lastQ != q) {
+			R_CalcAndUploadDayAndNightTexture(q);
 			lastQ = q;
 		}
 
-		assert(r_dayandnighttexture);
-
-		R_BindTexture(r_dayandnighttexture->texnum);
-		glEnable(GL_TEXTURE_2D);
-
-		/* draw night image */
-		glBegin(GL_QUADS);
-		glMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy - iz);
-		glMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy - iz);
-		glVertex2f(nx, ny);
-		glMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy - iz);
-		glMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy - iz);
-		glVertex2f(nx + nw, ny);
-		glMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy + iz);
-		glMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy + iz);
-		glVertex2f(nx + nw, ny + nh);
-		glMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy + iz);
-		glMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy + iz);
-		glVertex2f(nx, ny + nh);
-		glEnd();
-
-		/* reset mode */
-		glDisable(GL_TEXTURE_2D);
 		R_SelectTexture(&texunit_diffuse);
 
-		R_EnableBlend(qfalse);
+		glDrawArrays(GL_QUADS, 0, 4);
+
+		R_EnableMultitexture(&texunit_lightmap, qfalse);
 	}
+
+	/* draw XVI image */
+	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
+		R_BindTexture(r_xviTexture->texnum);
+		glDrawArrays(GL_QUADS, 0, 4);
+	}
+
+	/* draw radar image */
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
+		R_BindTexture(r_radarTexture->texnum);
+		glDrawArrays(GL_QUADS, 0, 4);
+	}
+
 	/* draw nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
-		if (gl == r_notexture)
+		if (gl == r_noTexture)
 			Sys_Error("Could not load geoscape nation overlay image");
 
-		R_EnableBlend(qtrue);
 		/* draw day image */
 		R_BindTexture(gl->texnum);
 		glDrawArrays(GL_QUADS, 0, 4);
-		R_EnableBlend(qfalse);
 	}
+
+	R_EnableBlend(qfalse);
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
@@ -812,13 +796,13 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	centery = ny + nh / 2;
 
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
-	if (starfield != r_notexture  && !disableSolarRender) {
+	if (starfield != r_noTexture  && !disableSolarRender) {
 		/* TODO: this should be a box that is rotated, too */
 		R_DrawTexture(starfield->texnum, nx, ny, nw, nh);
 	}
 
 	background = R_FindImage("pics/geoscape/map_background", it_pic);
-	if (background != r_notexture) {
+	if (background != r_noTexture) {
 		const float bgZoom = zoom;
 		/* Force height to make sure the image is a circle (and not an ellipse) */
 		const int halfHeight = 768.0f * viddef.ry;
@@ -844,7 +828,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	/* load sun image */
 	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
-	if (sun != r_notexture && v[2] < 0 && !disableSolarRender) {
+	if (sun != r_noTexture && v[2] < 0 && !disableSolarRender) {
 		const float sunZoom = 1000.0f;
 		glEnable(GL_BLEND);
 		R_DrawTexture(sun->texnum, centerx - 64 * viddef.rx + sunZoom * v[1] * viddef.rx , centery - 64 * viddef.ry + sunZoom * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
@@ -853,7 +837,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
-	if (r_globeEarth.texture == r_notexture) {
+	if (r_globeEarth.texture == r_noTexture) {
 		Com_Printf("Could not find pics/geoscape/%s_day\n", map);
 		return;
 	}
@@ -897,7 +881,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	/* load nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
-		if (r_globeEarth.overlay == r_notexture)
+		if (r_globeEarth.overlay == r_noTexture)
 			Sys_Error("Could not load geoscape nation overlay image");
 		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
@@ -922,7 +906,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	}
 
 	/* draw the moon */
-	if (r_globeMoon.texture != r_notexture && moonPos[2] > 0 && !disableSolarRender)
+	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
 		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
 
 	/* Disable depth */
