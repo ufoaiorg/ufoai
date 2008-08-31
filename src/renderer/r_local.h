@@ -128,6 +128,13 @@ qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
 
+typedef enum {
+	GLHW_GENERIC,
+	GLHW_INTEL,
+	GLHW_ATI,
+	GLHW_NVIDIA
+} hardwareType_t;
+
 /** @brief GL config stuff */
 typedef struct {
 	const char *rendererString;
@@ -154,6 +161,8 @@ typedef struct {
 	int gl_filter_max;
 
 	qboolean lod_bias;
+
+	hardwareType_t hardwareType;
 } rconfig_t;
 
 extern rconfig_t r_config;

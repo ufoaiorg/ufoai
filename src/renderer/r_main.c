@@ -663,6 +663,11 @@ static inline void R_VerifyDriver (void)
 		Com_Printf("Activate texture compression for Intel chips\n");
 		Cvar_Set("r_ext_texture_compression", "1");
 		r_ext_texture_compression->modified = qfalse;
+		r_config.hardwareType = GLHW_INTEL;
+	} else if (strstr(r_config.vendorString, "NVIDIA")) {
+		r_config.hardwareType = GLHW_NVIDIA;
+	} else if (strstr(r_config.vendorString, "ATI")) {
+		r_config.hardwareType = GLHW_ATI;
 	}
 }
 
