@@ -164,7 +164,7 @@ void R_ScreenShot_f (void)
 	}
 
 	/* Read the framebuffer into our storage */
-	qglReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	glReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 	R_CheckError();
 
 	/* Write */

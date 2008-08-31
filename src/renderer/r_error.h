@@ -47,14 +47,10 @@ static inline const char* R_TranslateError (GLenum error)
  */
 static inline void R_CheckErrorDebug (const char *file, int line, const char *function)
 {
-	/* binding are not yet initialized */
-	if (!qglGetError)
-		return;
-
 	if (r_checkerror && r_checkerror->integer) {
-		GLenum error = qglGetError();
+		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 			Com_Printf("OpenGL err: %s (%d): %s %s (0x%X)\n", file, line, function, R_TranslateError(error), error);
 	} else
-		qglGetError();
+		glGetError();
 }

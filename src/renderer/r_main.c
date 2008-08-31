@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
-#include "r_shader.h"
+#include "r_program.h"
 #include "r_sphere.h"
 #include "r_font.h"
 #include "r_light.h"
@@ -76,7 +76,10 @@ cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
 cvar_t *r_threads;
-cvar_t *r_vertexbuffers;
+static cvar_t *r_vertexbuffers;
+cvar_t *r_warp;
+cvar_t *r_lights;
+cvar_t *r_programs;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
 
@@ -131,11 +134,11 @@ void R_SetupFrustum (void)
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
-		qglEnable(GL_SCISSOR_TEST);
-		qglScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
-		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_SCISSOR_TEST);
+		glScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		R_CheckError();
-		qglDisable(GL_SCISSOR_TEST);
+		glDisable(GL_SCISSOR_TEST);
 	}
 
 	if (r_isometric->integer) {
@@ -174,13 +177,18 @@ void R_SetupFrustum (void)
 
 static inline void R_Clear (void)
 {
-	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	R_CheckError();
-	qglDepthFunc(GL_LEQUAL);
+	glDepthFunc(GL_LEQUAL);
 	R_CheckError();
 
-	qglDepthRange(0.0f, 1.0f);
+	glDepthRange(0.0f, 1.0f);
 	R_CheckError();
+}
+
+static inline void R_ClearScene (void)
+{
+	r_numEntities = r_numLights = 0;
 }
 
 /**
@@ -200,21 +208,10 @@ void R_BeginFrame (void)
 	if (r_ext_texture_compression->modified)
 		VID_Restart_f();
 
-	if (r_light->modified) {
-		if (r_light->integer && !r_state.arb_fragment_program) {
-			Cvar_Set("r_light", "0");
-			Cvar_Get("mn_rlight", "0", CVAR_NOSET, NULL);
-			Com_Printf("Your graphic card doesn't support fragment shaders\n");
-		} else
-			Cvar_Get("mn_rlight", "1", CVAR_NOSET, NULL);
-
-		r_light->modified = qfalse;
-	}
-
 	if (r_anisotropic->modified) {
-		if (r_anisotropic->integer > r_state.maxAnisotropic) {
-			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
-			Cvar_SetValue("r_anisotropic", r_state.maxAnisotropic);
+		if (r_anisotropic->integer > r_config.maxAnisotropic) {
+			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_config.maxAnisotropic);
+			Cvar_SetValue("r_anisotropic", r_config.maxAnisotropic);
 		}
 		/*R_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
@@ -225,9 +222,9 @@ void R_BeginFrame (void)
 		r_drawbuffer->modified = qfalse;
 
 		if (Q_strcasecmp(r_drawbuffer->string, "GL_FRONT") == 0)
-			qglDrawBuffer(GL_FRONT);
+			glDrawBuffer(GL_FRONT);
 		else
-			qglDrawBuffer(GL_BACK);
+			glDrawBuffer(GL_BACK);
 		R_CheckError();
 	}
 
@@ -287,9 +284,9 @@ void R_RenderFrame (void)
 		}
 		/* activate wire mode */
 		if (r_wire->integer)
-			qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		R_AddLights();
+		R_MarkLights();
 
 		R_CheckError();
 
@@ -324,7 +321,7 @@ void R_RenderFrame (void)
 
 	/* leave wire mode again */
 	if (r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	/* go back into 2D mode for hud and the like */
 	R_SetupGL2D();
@@ -342,6 +339,9 @@ void R_EndFrame (void)
 		const float g = vid_gamma->value;
 		SDL_SetGamma(g, g, g);
 	}
+
+	R_ClearScene();
+
 	SDL_GL_SwapBuffers();
 }
 
@@ -419,6 +419,9 @@ static void R_Register (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
+	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE, "Activates or deactivates hardware lighting");
+	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
+	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE, "Use GLSL shaders");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -471,138 +474,113 @@ qboolean R_SetMode (void)
  * @brief Check and load all needed and supported opengl extensions
  * @sa R_Init
  */
-static void R_InitExtension (void)
+static qboolean R_InitExtensions (void)
 {
 	GLenum err;
+
+	/* multitexture */
+	qglActiveTexture = NULL;
+	qglClientActiveTexture = NULL;
+
+	/* vertex buffer */
+	qglGenBuffers = NULL;
+	qglDeleteBuffers = NULL;
+	qglBindBuffer = NULL;
+	qglBufferData = NULL;
+
+	/* glsl */
+	qglCreateShader = NULL;
+	qglDeleteShader = NULL;
+	qglShaderSource = NULL;
+	qglCompileShader = NULL;
+	qglGetShaderiv = NULL;
+	qglGetShaderInfoLog = NULL;
+	qglCreateProgram = NULL;
+	qglDeleteProgram = NULL;
+	qglAttachShader = NULL;
+	qglDetachShader = NULL;
+	qglLinkProgram = NULL;
+	qglUseProgram = NULL;
+	qglGetProgramiv = NULL;
+	qglGetProgramInfoLog = NULL;
+	qglGetUniformLocation = NULL;
+	qglUniform1i = NULL;
+	qglUniform1f = NULL;
+	qglUniform3fv = NULL;
+	qglUniform4fv = NULL;
+
+	/* multitexture */
+	if (strstr(r_config.extensionsString, "GL_ARB_multitexture")) {
+		qglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
+		qglClientActiveTexture = SDL_GL_GetProcAddress("glClientActiveTexture");
+	}
 
 	if (strstr(r_config.extensionsString, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
 			Com_Printf("using GL_ARB_texture_compression\n");
 			if (r_ext_s3tc_compression->integer && strstr(r_config.extensionsString, "GL_EXT_texture_compression_s3tc")) {
-				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+				r_config.gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+				r_config.gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			} else {
-				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
-				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
+				r_config.gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
+				r_config.gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}
-		} else {
-			Com_Printf("ignoring GL_ARB_texture_compression\n");
-			gl_compressed_solid_format = 0;
-			gl_compressed_alpha_format = 0;
 		}
-	} else {
-		Com_Printf("GL_ARB_texture_compression not found\n");
-		gl_compressed_solid_format = 0;
-		gl_compressed_alpha_format = 0;
 	}
 
 	/* anisotropy */
-	r_state.anisotropic = qfalse;
-	r_state.maxAnisotropic = 0;
-
 	if (strstr(r_config.extensionsString, "GL_EXT_texture_filter_anisotropic")) {
 		if (r_anisotropic->integer) {
-			qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &r_state.maxAnisotropic);
+			glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &r_config.maxAnisotropic);
 			R_CheckError();
-			if (r_anisotropic->integer > r_state.maxAnisotropic) {
-				Com_Printf("max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
-				Cvar_SetValue("r_anisotropic", r_state.maxAnisotropic);
+			if (r_anisotropic->integer > r_config.maxAnisotropic) {
+				Com_Printf("max GL_EXT_texture_filter_anisotropic value is %i\n", r_config.maxAnisotropic);
+				Cvar_SetValue("r_anisotropic", r_config.maxAnisotropic);
 			}
 
-			Com_Printf("using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", r_state.maxAnisotropic, r_anisotropic->integer);
-			if (r_state.maxAnisotropic)
-				r_state.anisotropic = qtrue;
-		} else
-			Com_Printf("ignoring GL_EXT_texture_filter_anisotropic\n");
-	} else {
-		Com_Printf("GL_EXT_texture_filter_anisotropic not found\n");
-		Cvar_Set("r_anisotropic", "0");
+			if (r_config.maxAnisotropic)
+				r_config.anisotropic = qtrue;
+		}
 	}
 
-	if (strstr(r_config.extensionsString, "GL_EXT_texture_lod_bias")) {
-		Com_Printf("using GL_EXT_texture_lod_bias\n");
-		r_state.lod_bias = qtrue;
-	} else {
-		Com_Printf("GL_EXT_texture_lod_bias not found\n");
-		r_state.lod_bias = qfalse;
-	}
-
-	r_state.glsl_program = qfalse;
-	r_state.arb_fragment_program = qfalse;
-	if (strstr(r_config.extensionsString, "GL_ARB_fragment_program")) {
-		Com_Printf("using GL_ARB_fragment_program\n");
-		r_state.arb_fragment_program = qtrue;
-
-		qglProgramStringARB = SDL_GL_GetProcAddress("glProgramStringARB");
-		qglBindProgramARB = SDL_GL_GetProcAddress("glBindProgramARB");
-		qglDeleteProgramsARB = SDL_GL_GetProcAddress("glDeleteProgramsARB");
-		qglGenProgramsARB = SDL_GL_GetProcAddress("glGenProgramsARB");
-		qglProgramEnvParameter4dARB = SDL_GL_GetProcAddress("glProgramEnvParameter4dARB");
-		qglProgramEnvParameter4dvARB = SDL_GL_GetProcAddress("glProgramEnvParameter4dvARB");
-		qglProgramEnvParameter4fARB = SDL_GL_GetProcAddress("glProgramEnvParameter4fARB");
-		qglProgramEnvParameter4fvARB = SDL_GL_GetProcAddress("glProgramEnvParameter4fvARB");
-		qglProgramLocalParameter4dARB = SDL_GL_GetProcAddress("glProgramLocalParameter4dARB");
-		qglProgramLocalParameter4dvARB = SDL_GL_GetProcAddress("glProgramLocalParameter4dvARB");
-		qglProgramLocalParameter4fARB = SDL_GL_GetProcAddress("glProgramLocalParameter4fARB");
-		qglProgramLocalParameter4fvARB = SDL_GL_GetProcAddress("glProgramLocalParameter4fvARB");
-		qglGetProgramEnvParameterdvARB = SDL_GL_GetProcAddress("glGetProgramEnvParameterdvARB");
-		qglGetProgramEnvParameterfvARB = SDL_GL_GetProcAddress("glGetProgramEnvParameterfvARB");
-		qglGetProgramLocalParameterdvARB = SDL_GL_GetProcAddress("glGetProgramLocalParameterdvARB");
-		qglGetProgramLocalParameterfvARB = SDL_GL_GetProcAddress("glGetProgramLocalParameterfvARB");
-		qglGetProgramivARB = SDL_GL_GetProcAddress("glGetProgramivARB");
-		qglGetProgramStringARB = SDL_GL_GetProcAddress("glGetProgramStringARB");
-		qglIsProgramARB = SDL_GL_GetProcAddress("glIsProgramARB");
-	} else {
-		Com_Printf("GL_ARB_fragment_program not found\n");
-		r_state.arb_fragment_program = qfalse;
-	}
-
-	/** @todo Is this the right extension to check for? */
-	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100")) {
-		Com_Printf("using GL_ARB_shading_language_100\n");
-		qglCreateShader  = SDL_GL_GetProcAddress("glCreateShaderObjectARB");
-		qglShaderSource  = SDL_GL_GetProcAddress("glShaderSourceARB");
-		qglCompileShader = SDL_GL_GetProcAddress("glCompileShaderARB");
-		qglCreateProgram = SDL_GL_GetProcAddress("glCreateProgramObjectARB");
-		qglAttachShader  = SDL_GL_GetProcAddress("glAttachObjectARB");
-		qglLinkProgram   = SDL_GL_GetProcAddress("glLinkProgramARB");
-		qglUseProgram    = SDL_GL_GetProcAddress("glUseProgramObjectARB");
-		qglDeleteShader  = SDL_GL_GetProcAddress("glDeleteObjectARB");
-		qglDeleteProgram = SDL_GL_GetProcAddress("glDeleteObjectARB");
-		if (!qglCreateShader)
-			Sys_Error("Could not load all needed GLSL functions\n");
-		r_state.glsl_program = qtrue;
-	} else {
-		Com_Printf("GL_ARB_shading_language_100 not found\n");
-		r_state.glsl_program = qfalse;
-	}
+	if (strstr(r_config.extensionsString, "GL_EXT_texture_lod_bias"))
+		r_config.lod_bias = qtrue;
 
 	/* vertex buffer objects */
 	if (strstr(r_config.extensionsString, "GL_ARB_vertex_buffer_object")) {
-		if (r_vertexbuffers->integer) {
-			qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
-			qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
-			qglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
-			qglBufferData = SDL_GL_GetProcAddress("glBufferData");
-			if (qglGenBuffers && qglDeleteBuffers && qglBindBuffer && qglBufferData) {
-				r_state.vertex_buffers = qtrue;
-				Com_Printf("using GL_ARB_vertex_buffer_object\n");
-			} else {
-				Com_Printf("could not use GL_ARB_vertex_buffer_object\n");
-			}
-		} else {
-			Com_Printf("ignoring GL_ARB_vertex_buffer_object\n");
-			r_state.vertex_buffers = qfalse;
-		}
-	} else {
-		Com_Printf("GL_ARB_vertex_buffer_object not found\n");
-		r_state.vertex_buffers = qfalse;
+		qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
+		qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
+		qglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
+		qglBufferData = SDL_GL_GetProcAddress("glBufferData");
+	}
+
+	/* glsl vertex and fragment shaders and programs */
+	if (strstr(r_config.extensionsString, "GL_ARB_fragment_shader")) {
+		qglCreateShader = SDL_GL_GetProcAddress("glCreateShader");
+		qglDeleteShader = SDL_GL_GetProcAddress("glDeleteShader");
+		qglShaderSource = SDL_GL_GetProcAddress("glShaderSource");
+		qglCompileShader = SDL_GL_GetProcAddress("glCompileShader");
+		qglGetShaderiv = SDL_GL_GetProcAddress("glGetShaderiv");
+		qglGetShaderInfoLog = SDL_GL_GetProcAddress("glGetShaderInfoLog");
+		qglCreateProgram = SDL_GL_GetProcAddress("glCreateProgram");
+		qglDeleteProgram = SDL_GL_GetProcAddress("glDeleteProgram");
+		qglAttachShader = SDL_GL_GetProcAddress("glAttachShader");
+		qglDetachShader = SDL_GL_GetProcAddress("glDetachShader");
+		qglLinkProgram = SDL_GL_GetProcAddress("glLinkProgram");
+		qglUseProgram = SDL_GL_GetProcAddress("glUseProgram");
+		qglGetProgramiv = SDL_GL_GetProcAddress("glGetProgramiv");
+		qglGetProgramInfoLog = SDL_GL_GetProcAddress("glGetProgramInfoLog");
+		qglGetUniformLocation = SDL_GL_GetProcAddress("glGetUniformLocation");
+		qglUniform1i = SDL_GL_GetProcAddress("glUniform1i");
+		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
+		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
+		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
 	}
 
 	/* reset gl error state */
 	R_CheckError();
 
-	qglGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
+	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
 	if (r_config.maxTextureUnits < 2)
 		Sys_Error("You need at least 2 texture units to run "GAME_TITLE);
@@ -612,13 +590,12 @@ static void R_InitExtension (void)
 
 	/* check max texture size */
 	Com_Printf("max texture size: ");
-	r_config.maxTextureSize = 256;
-	qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &r_config.maxTextureSize);
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &r_config.maxTextureSize);
 	/* stubbed or broken drivers may have reported 0 */
 	if (r_config.maxTextureSize <= 0)
 		r_config.maxTextureSize = 256;
 
-	if ((err = qglGetError()) != GL_NO_ERROR) {
+	if ((err = glGetError()) != GL_NO_ERROR) {
 		Com_Printf("cannot detect - using %i! (%s)\n", r_config.maxTextureSize, R_TranslateError(err));
 		Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
 	} else {
@@ -632,6 +609,12 @@ static void R_InitExtension (void)
 			r_config.maxTextureSize = r_maxtexres->integer;
 		}
 	}
+
+	/* multitexture is the only one we absolutely need */
+	if (!qglActiveTexture || !qglClientActiveTexture)
+		return qfalse;
+
+	return qtrue;
 }
 
 /**
@@ -668,7 +651,7 @@ static inline void R_EnforceVersion (void)
 static inline void R_VerifyDriver (void)
 {
 #ifdef _WIN32
-	if (!Q_strcasecmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
+	if (!Q_strcasecmp((const char*)glGetString(GL_RENDERER), "gdi generic"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
 #endif
@@ -686,6 +669,14 @@ qboolean R_Init (void)
 
 	memset(&r_state, 0, sizeof(r_state));
 	memset(&r_locals, 0, sizeof(r_locals));
+	memset(&r_config, 0, sizeof(r_config));
+
+	/* some config default values */
+	r_config.gl_solid_format = GL_RGB;
+	r_config.gl_alpha_format = GL_RGBA;
+	r_config.gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
+	r_config.gl_filter_max = GL_LINEAR;
+	r_config.maxTextureSize = 256;
 
 	/* set our "safe" modes */
 	viddef.prev_mode = 6;
@@ -694,25 +685,23 @@ qboolean R_Init (void)
 	if (!Rimp_Init())
 		return qfalse;
 
-	/* initialize our QGL dynamic bindings */
-	QR_Link();
-
 	/* get our various GL strings */
-	r_config.vendorString = (const char *)qglGetString(GL_VENDOR);
+	r_config.vendorString = (const char *)glGetString(GL_VENDOR);
 	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
-	r_config.rendererString = (const char *)qglGetString(GL_RENDERER);
+	r_config.rendererString = (const char *)glGetString(GL_RENDERER);
 	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
-	r_config.versionString = (const char *)qglGetString(GL_VERSION);
+	r_config.versionString = (const char *)glGetString(GL_VERSION);
 	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
-	r_config.extensionsString = (const char *)qglGetString(GL_EXTENSIONS);
+	r_config.extensionsString = (const char *)glGetString(GL_EXTENSIONS);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
 
 	/* sanity checks and card specific hacks */
 	R_VerifyDriver();
 	R_EnforceVersion();
 
-	R_InitExtension();
+	R_InitExtensions();
 	R_SetDefaultState();
+	R_InitPrograms();
 	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();
@@ -737,15 +726,12 @@ void R_Shutdown (void)
 	R_ShutdownModels();
 	R_ShutdownImages();
 
-	R_ShutdownShaders();
+	R_ShutdownPrograms();
 	R_SphereShutdown();
 	R_FontShutdown();
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	Rimp_Shutdown();
-
-	/* shutdown our QGL subsystem */
-	QR_UnLink();
 
 	if (developer->integer & DEBUG_RENDERER)
 		R_StatePrint();

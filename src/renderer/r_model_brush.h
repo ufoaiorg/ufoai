@@ -88,6 +88,9 @@ typedef struct mBspSurface_s {
 	byte style;
 	byte *samples;				/**< lightmap samples - only used at loading time */
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
+
+	int lightframe;				/**< dynamic lighting frame */
+	int lights;					/**< bitmask of dynamic light sources */
 } mBspSurface_t;
 
 /* surfaces are assigned to arrays based on their primary rendering type

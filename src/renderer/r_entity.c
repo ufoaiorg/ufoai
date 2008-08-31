@@ -58,11 +58,11 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
  */
 static inline void R_DrawHighlight (const entity_t * e)
 {
-	qglDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 	R_Color(NULL);
 	memcpy(r_state.vertex_array_3d, r_highlightVertices, sizeof(r_highlightVertices));
-	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
-	qglEnable(GL_TEXTURE_2D);
+	glDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
+	glEnable(GL_TEXTURE_2D);
 }
 
 /**
@@ -87,35 +87,35 @@ void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bb
  */
 void R_EntityDrawBBox (vec3_t bbox[8])
 {
-	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* Draw top and sides */
-	qglBegin(GL_TRIANGLE_STRIP);
-	qglVertex3fv(bbox[2]);
-	qglVertex3fv(bbox[1]);
-	qglVertex3fv(bbox[0]);
-	qglVertex3fv(bbox[1]);
-	qglVertex3fv(bbox[4]);
-	qglVertex3fv(bbox[5]);
-	qglVertex3fv(bbox[1]);
-	qglVertex3fv(bbox[7]);
-	qglVertex3fv(bbox[3]);
-	qglVertex3fv(bbox[2]);
-	qglVertex3fv(bbox[7]);
-	qglVertex3fv(bbox[6]);
-	qglVertex3fv(bbox[2]);
-	qglVertex3fv(bbox[4]);
-	qglVertex3fv(bbox[0]);
-	qglEnd();
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex3fv(bbox[2]);
+	glVertex3fv(bbox[1]);
+	glVertex3fv(bbox[0]);
+	glVertex3fv(bbox[1]);
+	glVertex3fv(bbox[4]);
+	glVertex3fv(bbox[5]);
+	glVertex3fv(bbox[1]);
+	glVertex3fv(bbox[7]);
+	glVertex3fv(bbox[3]);
+	glVertex3fv(bbox[2]);
+	glVertex3fv(bbox[7]);
+	glVertex3fv(bbox[6]);
+	glVertex3fv(bbox[2]);
+	glVertex3fv(bbox[4]);
+	glVertex3fv(bbox[0]);
+	glEnd();
 
 	/* Draw bottom */
-	qglBegin(GL_TRIANGLE_STRIP);
-	qglVertex3fv(bbox[4]);
-	qglVertex3fv(bbox[6]);
-	qglVertex3fv(bbox[7]);
-	qglEnd();
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex3fv(bbox[4]);
+	glVertex3fv(bbox[6]);
+	glVertex3fv(bbox[7]);
+	glEnd();
 
-	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 /**
@@ -129,10 +129,10 @@ static void R_DrawBox (const entity_t * e)
 	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
-	qglDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 	if (!r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	qglEnable(GL_LINE_SMOOTH);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(color);
 
@@ -148,33 +148,33 @@ static void R_DrawBox (const entity_t * e)
 		dx = e->oldorigin[0] - e->origin[0];
 		dy = e->oldorigin[1] - e->origin[1];
 
-		qglBegin(GL_QUAD_STRIP);
-		qglVertex3fv(lower);
-		qglVertex3fv(upper);
+		glBegin(GL_QUAD_STRIP);
+		glVertex3fv(lower);
+		glVertex3fv(upper);
 		lower[0] += dx;
 		upper[0] += dx;
-		qglVertex3fv(lower);
-		qglVertex3fv(upper);
+		glVertex3fv(lower);
+		glVertex3fv(upper);
 		lower[1] += dy;
 		upper[1] += dy;
-		qglVertex3fv(lower);
-		qglVertex3fv(upper);
+		glVertex3fv(lower);
+		glVertex3fv(upper);
 		lower[0] -= dx;
 		upper[0] -= dx;
-		qglVertex3fv(lower);
-		qglVertex3fv(upper);
+		glVertex3fv(lower);
+		glVertex3fv(upper);
 		lower[1] -= dy;
 		upper[1] -= dy;
-		qglVertex3fv(lower);
-		qglVertex3fv(upper);
-		qglEnd();
+		glVertex3fv(lower);
+		glVertex3fv(upper);
+		glEnd();
 	}
 
-	qglDisable(GL_LINE_SMOOTH);
+	glDisable(GL_LINE_SMOOTH);
 	if (!r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	qglEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
 }
@@ -190,8 +190,8 @@ static void R_DrawFloor (const entity_t * e)
 	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
-	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_LINE_SMOOTH);
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(color);
 
@@ -203,41 +203,41 @@ static void R_DrawFloor (const entity_t * e)
 
 	upper[2] += dy;
 
-	qglBegin(GL_QUAD_STRIP);
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
+	glBegin(GL_QUAD_STRIP);
+	glVertex3fv(lower);
+	glVertex3fv(upper);
 	lower[0] += dx;
 	upper[0] += dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
+	glVertex3fv(lower);
+	glVertex3fv(upper);
 	lower[1] += dx;
 	upper[1] += dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
+	glVertex3fv(lower);
+	glVertex3fv(upper);
 	lower[0] -= dx;
 	upper[0] -= dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
+	glVertex3fv(lower);
+	glVertex3fv(upper);
 	lower[1] -= dx;
 	upper[1] -= dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	qglEnd();
+	glVertex3fv(lower);
+	glVertex3fv(upper);
+	glEnd();
 
 	lower[2] += dy;
 	upper[1] += dx;
 
-	qglBegin(GL_QUAD_STRIP);
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
+	glBegin(GL_QUAD_STRIP);
+	glVertex3fv(lower);
+	glVertex3fv(upper);
 	lower[0] += dx;
 	upper[0] += dx;
-	qglVertex3fv(lower);
-	qglVertex3fv(upper);
-	qglEnd();
-	qglDisable(GL_LINE_SMOOTH);
+	glVertex3fv(lower);
+	glVertex3fv(upper);
+	glEnd();
+	glDisable(GL_LINE_SMOOTH);
 
-	qglEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
 }
@@ -256,8 +256,8 @@ static void R_DrawEntityEffects (void)
 		if (e->flags <= RF_BOX)
 			continue;
 
-		qglPushMatrix();
-		qglMultMatrixf(e->transform.matrix);
+		glPushMatrix();
+		glMultMatrixf(e->transform.matrix);
 
 		/* draw a highlight icon over this entity */
 		if (e->flags & RF_HIGHLIGHT)
@@ -270,16 +270,16 @@ static void R_DrawEntityEffects (void)
 			else
 				R_BindTexture(blood[e->state % STATE_DEAD]->texnum);
 
-			qglBegin(GL_QUADS);
-			qglTexCoord2f(0.0, 1.0);
-			qglVertex3f(-18.0, 14.0, -28.5);
-			qglTexCoord2f(1.0, 1.0);
-			qglVertex3f(10.0, 14.0, -28.5);
-			qglTexCoord2f(1.0, 0.0);
-			qglVertex3f(10.0, -14.0, -28.5);
-			qglTexCoord2f(0.0, 0.0);
-			qglVertex3f(-18.0, -14.0, -28.5);
-			qglEnd();
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 1.0);
+			glVertex3f(-18.0, 14.0, -28.5);
+			glTexCoord2f(1.0, 1.0);
+			glVertex3f(10.0, 14.0, -28.5);
+			glTexCoord2f(1.0, 0.0);
+			glVertex3f(10.0, -14.0, -28.5);
+			glTexCoord2f(0.0, 0.0);
+			glVertex3f(-18.0, -14.0, -28.5);
+			glEnd();
 
 			R_CheckError();
 		}
@@ -287,9 +287,9 @@ static void R_DrawEntityEffects (void)
 		if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
 			/* draw the circles for team-members and allied troops */
 			vec4_t color = {1, 1, 1, 1};
-			qglDisable(GL_DEPTH_TEST);
-			qglDisable(GL_TEXTURE_2D);
-			qglEnable(GL_LINE_SMOOTH);
+			glDisable(GL_DEPTH_TEST);
+			glDisable(GL_TEXTURE_2D);
+			glEnable(GL_LINE_SMOOTH);
 
 			if (e->flags & RF_MEMBER) {
 				if (e->flags & RF_SELECTED)
@@ -304,34 +304,34 @@ static void R_DrawEntityEffects (void)
 			R_Color(color);
 
 #if 0
-			qglLineWidth(10.0f);
-			qglLineStipple(2, 0x00FF);
-			qglEnable(GL_LINE_STIPPLE);
+			glLineWidth(10.0f);
+			glLineStipple(2, 0x00FF);
+			glEnable(GL_LINE_STIPPLE);
 #endif
 
 			/* circle points */
-			qglBegin(GL_LINE_STRIP);
-			qglVertex3f(10.0, 0.0, -27.0);
-			qglVertex3f(7.0, -7.0, -27.0);
-			qglVertex3f(0.0, -10.0, -27.0);
-			qglVertex3f(-7.0, -7.0, -27.0);
-			qglVertex3f(-10.0, 0.0, -27.0);
-			qglVertex3f(-7.0, 7.0, -27.0);
-			qglVertex3f(0.0, 10.0, -27.0);
-			qglVertex3f(7.0, 7.0, -27.0);
-			qglVertex3f(10.0, 0.0, -27.0);
-			qglEnd();
+			glBegin(GL_LINE_STRIP);
+			glVertex3f(10.0, 0.0, -27.0);
+			glVertex3f(7.0, -7.0, -27.0);
+			glVertex3f(0.0, -10.0, -27.0);
+			glVertex3f(-7.0, -7.0, -27.0);
+			glVertex3f(-10.0, 0.0, -27.0);
+			glVertex3f(-7.0, 7.0, -27.0);
+			glVertex3f(0.0, 10.0, -27.0);
+			glVertex3f(7.0, 7.0, -27.0);
+			glVertex3f(10.0, 0.0, -27.0);
+			glEnd();
 			R_CheckError();
 
 #if 0
-			qglLineWidth(1.0f);
-			qglDisable(GL_LINE_STIPPLE);
+			glLineWidth(1.0f);
+			glDisable(GL_LINE_STIPPLE);
 #endif
-			qglDisable(GL_LINE_SMOOTH);
-			qglEnable(GL_TEXTURE_2D);
-			qglEnable(GL_DEPTH_TEST);
+			glDisable(GL_LINE_SMOOTH);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_DEPTH_TEST);
 		}
-		qglPopMatrix();
+		glPopMatrix();
 	}
 
 	R_Color(NULL);
@@ -394,10 +394,10 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
-		R_EnableLighting(qtrue);
+		R_EnableLighting(r_state.default_program, qtrue);
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
-		R_EnableLighting(qfalse);
+		R_EnableLighting(NULL, qfalse);
 }
 
 /**
@@ -421,26 +421,26 @@ static void R_DrawNullModel (const entity_t *e)
 {
 	int i;
 
-	qglPushMatrix();
-	qglMultMatrixf(e->transform.matrix);
+	glPushMatrix();
+	glMultMatrixf(e->transform.matrix);
 
-	qglDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 
-	qglBegin(GL_TRIANGLE_FAN);
-	qglVertex3f(0, 0, -16);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(0, 0, -16);
 	for (i = 0; i <= 4; i++)
-		qglVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
-	qglEnd();
+		glVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
+	glEnd();
 
-	qglBegin(GL_TRIANGLE_FAN);
-	qglVertex3f(0, 0, 16);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(0, 0, 16);
 	for (i = 4; i >= 0; i--)
-		qglVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
-	qglEnd();
+		glVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
+	glEnd();
 
-	qglPopMatrix();
+	glPopMatrix();
 
-	qglEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 }
 
 /**

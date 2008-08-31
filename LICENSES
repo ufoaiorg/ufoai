@@ -2288,9 +2288,6 @@ base/pics/tutorial/gameplay8a.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
-base/shaders/lighting.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
-base/shaders/lighting_mtex.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
-base/shaders/warp.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project

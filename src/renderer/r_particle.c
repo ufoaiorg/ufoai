@@ -119,24 +119,24 @@ static void R_DrawSprite (const ptl_t * p)
 
 	R_Color(p->color);
 	/* draw it */
-	qglBegin(GL_TRIANGLE_FAN);
+	glBegin(GL_TRIANGLE_FAN);
 
-	qglTexCoord2f(0, 0);
-	qglVertex3fv(pos);
+	glTexCoord2f(0, 0);
+	glVertex3fv(pos);
 
 	VectorAdd(pos, up, pos);
-	qglTexCoord2f(0, 1);
-	qglVertex3fv(pos);
+	glTexCoord2f(0, 1);
+	glVertex3fv(pos);
 
 	VectorAdd(pos, right, pos);
-	qglTexCoord2f(1, 1);
-	qglVertex3fv(pos);
+	glTexCoord2f(1, 1);
+	glVertex3fv(pos);
 
 	VectorSubtract(pos, up, pos);
-	qglTexCoord2f(1, 0);
-	qglVertex3fv(pos);
+	glTexCoord2f(1, 0);
+	glVertex3fv(pos);
 
-	qglEnd();
+	glEnd();
 }
 
 
@@ -172,39 +172,39 @@ static void R_DrawPtlCircle (const ptl_t* p)
 	float theta;
 	const float accuracy = 5.0f;
 
-	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_LINE_SMOOTH);
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(p->color);
 
 	if (p->stipplePattern) {
-		qglLineStipple(1, p->stipplePattern);
-		qglEnable(GL_LINE_STIPPLE);
+		glLineStipple(1, p->stipplePattern);
+		glEnable(GL_LINE_STIPPLE);
 	}
 
 	assert(radius > thickness);
 	if (thickness <= 1) {
-		qglBegin(GL_LINE_LOOP);
+		glBegin(GL_LINE_LOOP);
 		for (theta = 0.0f; theta < 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
-			qglVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
+			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
 		}
-		qglEnd();
+		glEnd();
 	} else {
-		qglBegin(GL_TRIANGLE_STRIP);
+		glBegin(GL_TRIANGLE_STRIP);
 		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
-			qglVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
-			qglVertex3f(p->s[0] + radius * cos(theta - M_PI / (radius * accuracy)), p->s[1] + radius * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
-			qglVertex3f(p->s[0] + (radius - thickness) * cos(theta - M_PI / (radius * accuracy)), p->s[1] + (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
-			qglVertex3f(p->s[0] + (radius - thickness) * cos(theta), p->s[1] + (radius - thickness) * sin(theta), p->s[2]);
+			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
+			glVertex3f(p->s[0] + radius * cos(theta - M_PI / (radius * accuracy)), p->s[1] + radius * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
+			glVertex3f(p->s[0] + (radius - thickness) * cos(theta - M_PI / (radius * accuracy)), p->s[1] + (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
+			glVertex3f(p->s[0] + (radius - thickness) * cos(theta), p->s[1] + (radius - thickness) * sin(theta), p->s[2]);
 		}
-		qglEnd();
+		glEnd();
 	}
 
 	if (p->stipplePattern)
-		qglDisable(GL_LINE_STIPPLE);
+		glDisable(GL_LINE_STIPPLE);
 
-	qglDisable(GL_LINE_SMOOTH);
-	qglEnable(GL_TEXTURE_2D);
+	glDisable(GL_LINE_SMOOTH);
+	glEnable(GL_TEXTURE_2D);
 }
 
 /**
@@ -212,27 +212,27 @@ static void R_DrawPtlCircle (const ptl_t* p)
  */
 static void R_DrawPtlLine (const ptl_t * p)
 {
-	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_LINE_SMOOTH);
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(p->color);
 
 	if (p->stipplePattern) {
-		qglLineStipple(1, p->stipplePattern);
-		qglEnable(GL_LINE_STIPPLE);
+		glLineStipple(1, p->stipplePattern);
+		glEnable(GL_LINE_STIPPLE);
 	}
 
 	/* draw line from s to v */
-	qglBegin(GL_LINE_STRIP);
-	qglVertex3fv(p->s);
-	qglVertex3fv(p->v);
-	qglEnd();
+	glBegin(GL_LINE_STRIP);
+	glVertex3fv(p->s);
+	glVertex3fv(p->v);
+	glEnd();
 
 	if (p->stipplePattern)
-		qglDisable(GL_LINE_STIPPLE);
+		glDisable(GL_LINE_STIPPLE);
 
-	qglDisable(GL_LINE_SMOOTH);
-	qglEnable(GL_TEXTURE_2D);
+	glDisable(GL_LINE_SMOOTH);
+	glEnable(GL_TEXTURE_2D);
 }
 
 

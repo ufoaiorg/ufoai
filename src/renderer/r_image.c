@@ -41,15 +41,6 @@ int registration_sequence;
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
-int gl_solid_format = GL_RGB;
-int gl_alpha_format = GL_RGBA;
-
-int gl_compressed_solid_format = 0;
-int gl_compressed_alpha_format = 0;
-
-int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
-int gl_filter_max = GL_LINEAR;
-
 /**
  * @brief Free previously loaded materials and their stages
  * @sa R_LoadMaterials
@@ -1101,10 +1092,10 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaled_width == width && scaled_height == height) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 
-		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
 
@@ -1121,50 +1112,50 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
-	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
+	samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((byte *) scaled) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
-			samples = gl_compressed_alpha_format ? gl_compressed_alpha_format : gl_alpha_format;
+			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 			break;
 		}
 	}
 
-	image->has_alpha = (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
+	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
 	image->upload_width = scaled_width;	/* after power of 2 and scales */
 	image->upload_height = scaled_height;
 
 	/* and mipmapped */
 	if (mipmap) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-		qglTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-		if (r_state.anisotropic) {
-			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_min);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
+		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+		if (r_config.anisotropic) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 			R_CheckError();
 		}
-		if (r_texture_lod->integer && r_state.lod_bias) {
-			qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
+		if (r_texture_lod->integer && r_config.lod_bias) {
+			glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 			R_CheckError();
 		}
 	} else {
-		if (r_state.anisotropic) {
-			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
+		if (r_config.anisotropic) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
 			R_CheckError();
 		}
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 	}
 	R_CheckError();
 
 	if (clamp) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		R_CheckError();
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		R_CheckError();
 	}
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
 
 	if (scaled != data)
@@ -1273,13 +1264,13 @@ void R_CalcDayAndNight (float q)
 	}
 
 	/* upload alpha map */
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightalpha);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightalpha);
 	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
 	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	R_CheckError();
 }
 
@@ -1731,7 +1722,7 @@ void R_FreeUnusedImages (void)
 			continue;			/* used this sequence */
 
 		/* free it */
-		qglDeleteTextures(1, (GLuint *) &image->texnum);
+		glDeleteTextures(1, (GLuint *) &image->texnum);
 		R_CheckError();
 		memset(image, 0, sizeof(*image));
 	}
@@ -1767,7 +1758,7 @@ void R_ShutdownImages (void)
 		if (!image->texnum)
 			continue;			/* free image_t slot */
 		/* free it */
-		qglDeleteTextures(1, (GLuint *) &image->texnum);
+		glDeleteTextures(1, (GLuint *) &image->texnum);
 		R_CheckError();
 		memset(image, 0, sizeof(*image));
 	}
@@ -1809,11 +1800,11 @@ void R_TextureMode (const char *string)
 			continue;
 
 		R_BindTexture(image->texnum);
-		if (r_state.anisotropic)
-			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
+		if (r_config.anisotropic)
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
 		R_CheckError();
 	}
 }
@@ -1848,7 +1839,7 @@ void R_TextureAlphaMode (const char *string)
 		return;
 	}
 
-	gl_alpha_format = gl_alpha_modes[i].mode;
+	r_config.gl_alpha_format = gl_alpha_modes[i].mode;
 }
 
 static const gltmode_t gl_solid_modes[] = {
@@ -1879,5 +1870,5 @@ void R_TextureSolidMode (const char *string)
 		return;
 	}
 
-	gl_solid_format = gl_solid_modes[i].mode;
+	r_config.gl_solid_format = gl_solid_modes[i].mode;
 }

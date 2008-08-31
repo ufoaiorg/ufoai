@@ -203,7 +203,7 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	int i;
 
 	if (stage->flags & STAGE_TERRAIN)
-		qglEnableClientState(GL_COLOR_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 
 	if (surf->numedges >= MAX_GL_ARRAY_LENGTH)
 		Com_Error(ERR_DROP, "R_DrawMaterialSurface: Exceeded MAX_GL_ARRAY_LENGTH\n");
@@ -225,10 +225,10 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 		}
 	}
 
-	qglDrawArrays(GL_POLYGON, 0, i);
+	glDrawArrays(GL_POLYGON, 0, i);
 
 	if (stage->flags & STAGE_TERRAIN)
-		qglDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
 
 	R_CheckError();
 }
@@ -245,7 +245,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	assert(r_state.blend_enabled);
 
-	qglEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
+	glEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
 
 	for (i = 0; i < surfs->count; i++) {
 		materialStage_t *s;
@@ -262,7 +262,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 			if (!(s->flags & STAGE_RENDER))
 				continue;
 
-			qglPolygonOffset(-1, j);  /* increase depth offset for each stage */
+			glPolygonOffset(-1, j);  /* increase depth offset for each stage */
 
 			R_SetMaterialSurfaceState(surf, s);
 
@@ -273,15 +273,15 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	R_Color(NULL);
 
 	/* polygon offset parameters */
-	qglPolygonOffset(0, 0);
-	qglDisable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(0, 0);
+	glDisable(GL_POLYGON_OFFSET_FILL);
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	R_EnableMultitexture(&texunit_lightmap, qfalse);
 
 #ifdef DEBUG
-	if (qglIsEnabled(GL_COLOR_ARRAY))
+	if (glIsEnabled(GL_COLOR_ARRAY))
 		Com_Printf("R_DrawMaterialSurfaces: state leak - GL_COLOR_ARRAY\n");
 #endif
 }

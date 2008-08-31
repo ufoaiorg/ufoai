@@ -573,7 +573,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	mod->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
 	memcpy(mod->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
 
-	if (r_state.vertex_buffers) {
+	if (qglBindBuffer) {
 		/* and also the vertex buffer objects */
 		qglGenBuffers(1, &mod->bsp.vertex_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.vertex_buffer);

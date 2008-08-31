@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_lightmap.h"
-#include "r_shader.h"
+#include "r_light.h"
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
 #include "r_error.h"
@@ -35,17 +35,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void R_TransformModelDirect (modelInfo_t * mi)
 {
 	/* translate and rotate */
-	qglTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
+	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
 
-	qglRotatef(mi->angles[0], 0, 0, 1);
-	qglRotatef(mi->angles[1], 0, 1, 0);
-	qglRotatef(mi->angles[2], 1, 0, 0);
+	glRotatef(mi->angles[0], 0, 0, 1);
+	glRotatef(mi->angles[1], 0, 1, 0);
+	glRotatef(mi->angles[2], 1, 0, 0);
 
 	if (mi->scale) {
 		/* scale by parameters */
-		qglScalef(mi->scale[0], mi->scale[1], mi->scale[2]);
+		glScalef(mi->scale[0], mi->scale[1], mi->scale[2]);
 		if (mi->center)
-			qglTranslatef(-mi->center[0], -mi->center[1], -mi->center[2]);
+			glTranslatef(-mi->center[0], -mi->center[1], -mi->center[2]);
 	} else if (mi->center) {
 		/* autoscale */
 		float max, size;
@@ -63,8 +63,8 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 				max = size;
 		}
 		size = (mi->center[0] < mi->center[1] ? mi->center[0] : mi->center[1]) / max;
-		qglScalef(size, size, size);
-		qglTranslatef(center[0], center[1], center[2]);
+		glScalef(size, size, size);
+		glTranslatef(center[0], center[1], center[2]);
 	}
 }
 
@@ -91,8 +91,8 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		return;
 	}
 
-	qglPushMatrix();
-	qglScalef(viddef.rx, viddef.ry, (viddef.rx + viddef.ry) / 2);
+	glPushMatrix();
+	glScalef(viddef.rx, viddef.ry, (viddef.rx + viddef.ry) / 2);
 
 	R_Color(mi->color);
 
@@ -125,7 +125,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 					R_InterpolateTransform(&as, taghdr->num_frames, tag, interpolated);
 
 					/* transform */
-					qglMultMatrixf(interpolated);
+					glMultMatrixf(interpolated);
 					R_CheckError();
 					break;
 				}
@@ -137,7 +137,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	R_TransformModelDirect(mi);
 
 	/* we have to reenable this here - we are in 2d mode here already */
-	qglEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	/* draw it */
 	R_BindTexture(skin->texnum);
@@ -155,9 +155,9 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
 		R_EnableBlend(qfalse);
 
-	qglDisable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
 
-	qglPopMatrix();
+	glPopMatrix();
 
 	R_Color(NULL);
 }
@@ -183,12 +183,12 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_Color(mi->color);
 
 	/* draw all the triangles */
-	qglPushMatrix();
+	glPushMatrix();
 
-	qglTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
-	qglRotatef(mi->angles[1], 0, 0, 1);
-	qglRotatef(mi->angles[0], 0, 1, 0);
-	qglRotatef(-mi->angles[2], 1, 0, 0);
+	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
+	glRotatef(mi->angles[1], 0, 0, 1);
+	glRotatef(mi->angles[0], 0, 1, 0);
+	glRotatef(-mi->angles[2], 1, 0, 0);
 
 	/* draw it */
 	R_BindTexture(skin->texnum);
@@ -200,7 +200,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 	}
 
-	qglPopMatrix();
+	glPopMatrix();
 
 	R_Color(NULL);
 }
@@ -320,7 +320,7 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 		vertind += 9;
 	}
 
-	qglDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 
 	R_CheckError();
 }
@@ -337,12 +337,12 @@ void R_DrawAliasModel (const entity_t *e)
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
-	qglPushMatrix();
+	glPushMatrix();
 
-	qglMultMatrixf(e->transform.matrix);
+	glMultMatrixf(e->transform.matrix);
 
 	if (VectorNotEmpty(e->scale))
-		qglScalef(e->scale[0], e->scale[1], e->scale[2]);
+		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
@@ -371,10 +371,10 @@ void R_DrawAliasModel (const entity_t *e)
 		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
 			color[1] = color[2] = 0.0;
 
-		if (r_state.lighting_enabled && r_state.arb_fragment_program)
-			R_ShaderFragmentParameter(0, color);
-		else
-			R_Color(color);
+		R_Color(color);
+
+		if (r_state.lighting_enabled)
+			R_EnableLightsByRadius(e->origin);
 	}
 
 	/* the values are sane here already - see R_DrawEntities */
@@ -393,7 +393,7 @@ void R_DrawAliasModel (const entity_t *e)
 		R_EntityDrawBBox(bbox);
 	}
 
-	qglPopMatrix();
+	glPopMatrix();
 
 	R_Color(NULL);
 }

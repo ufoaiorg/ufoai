@@ -128,8 +128,8 @@ void R_DrawBrushModel (const entity_t * e)
 	}
 	VectorSubtract(modelorg, e->origin, modelorg);
 
-	qglPushMatrix();
-	qglMultMatrixf(e->transform.matrix);
+	glPushMatrix();
+	glMultMatrixf(e->transform.matrix);
 
 	R_DrawInlineBrushModel(e, modelorg);
 
@@ -147,7 +147,7 @@ void R_DrawBrushModel (const entity_t * e)
 		R_EntityDrawBBox(bbox);
 	}
 
-	qglPopMatrix();
+	glPopMatrix();
 }
 
 
@@ -178,9 +178,11 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (node->contents != LEAFNODE)
 		return;
 
+	/* pathfinding nodes are invalid here */
+	assert(node->plane);
+
 	/* node is just a decision point, so go down the apropriate sides
 	 * find which side of the node we are on */
-
 	if (r_isometric->integer) {
 		dot = -DotProduct(r_locals.forward, node->plane->normal);
 	} else if (node->plane->type > PLANE_Z) {

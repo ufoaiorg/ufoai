@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_STATE_H
 #define R_STATE_H
 
+#include "r_program.h"
+
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
 extern const float default_texcoords[];
@@ -62,12 +64,16 @@ typedef struct {
 	/* texunit in use */
 	gltexunit_t *active_texunit;
 
+	r_shader_t shaders[MAX_SHADERS];
+	r_program_t programs[MAX_PROGRAMS];
+	r_program_t *default_program;
+	r_program_t *warp_program;
+	r_program_t *active_program;
+
 	vec4_t color;
 
 	/* blend function */
 	GLenum blend_src, blend_dest;
-
-	int32_t maxAnisotropic;
 
 	qboolean ortho;
 
@@ -76,13 +82,6 @@ typedef struct {
 	qboolean alpha_test_enabled;
 	qboolean lighting_enabled;
 	qboolean warp_enabled;
-
-	qboolean hwgamma;
-	qboolean anisotropic;
-	qboolean lod_bias;
-	qboolean arb_fragment_program;
-	qboolean glsl_program;
-	qboolean vertex_buffers;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -99,8 +98,8 @@ void R_TexEnv(GLenum value);
 void R_BlendFunc(GLenum src, GLenum dest);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
-void R_EnableLighting(qboolean enable);
-void R_EnableWarp(qboolean enable);
+void R_EnableLighting(r_program_t *program, qboolean enable);
+void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_BindArray(GLenum target, GLenum type, void *array);
 void R_BindDefaultArray(GLenum target);
 void R_StatePrint(void);

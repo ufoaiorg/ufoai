@@ -93,22 +93,10 @@ extern cvar_t *r_texturealphamode;
 extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_threads;
 extern cvar_t *r_wire;
-extern cvar_t *r_vertexbuffers;
 extern cvar_t *r_maxlightmap;
-
-extern int gl_solid_format;
-extern int gl_alpha_format;
-extern int gl_compressed_solid_format;
-extern int gl_compressed_alpha_format;
-extern int gl_filter_min;
-extern int gl_filter_max;
-
-/*==================================================================== */
-
-void QR_UnLink(void);
-void QR_Link(void);
-
-/*==================================================================== */
+extern cvar_t *r_warp;
+extern cvar_t *r_lights;
+extern cvar_t *r_programs;
 
 /* private renderer variables */
 typedef struct rlocals_s {
@@ -151,6 +139,22 @@ typedef struct {
 	int maxTextureUnits;
 
 	int videoMemory;
+
+	qboolean hwgamma;
+
+	int32_t maxAnisotropic;
+	qboolean anisotropic;
+
+	int gl_solid_format;
+	int gl_alpha_format;
+
+	int gl_compressed_solid_format;
+	int gl_compressed_alpha_format;
+
+	int gl_filter_min;
+	int gl_filter_max;
+
+	qboolean lod_bias;
 } rconfig_t;
 
 extern rconfig_t r_config;

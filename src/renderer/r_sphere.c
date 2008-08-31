@@ -108,42 +108,42 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	texespos = 0;
 
 	/* build the sphere display list */
-	sphere->list = qglGenLists(1);
+	sphere->list = glGenLists(1);
 	R_CheckError();
 
-	qglNewList(sphere->list, GL_COMPILE);
+	glNewList(sphere->list, GL_COMPILE);
 	R_CheckError();
 
-	qglEnable(GL_NORMALIZE);
+	glEnable(GL_NORMALIZE);
 
 	for (i = 0; i < tris; i++) {
-		qglBegin(GL_TRIANGLE_STRIP);
+		glBegin(GL_TRIANGLE_STRIP);
 
 		for (j = 0; j <= tris; j++) {
-			qglNormal3fv(&sphere->normals[vertspos]);
-			qglTexCoord2fv(&sphere->texes[texespos]);
-			qglVertex3fv(&sphere->verts[vertspos]);
+			glNormal3fv(&sphere->normals[vertspos]);
+			glTexCoord2fv(&sphere->texes[texespos]);
+			glVertex3fv(&sphere->verts[vertspos]);
 
 			texespos += 2;
 			vertspos += 3;
 
-			qglNormal3fv(&sphere->normals[vertspos]);
-			qglTexCoord2fv(&sphere->texes[texespos]);
-			qglVertex3fv(&sphere->verts[vertspos]);
+			glNormal3fv(&sphere->normals[vertspos]);
+			glTexCoord2fv(&sphere->texes[texespos]);
+			glVertex3fv(&sphere->verts[vertspos]);
 
 			texespos += 2;
 			vertspos += 3;
 		}
 
-		qglEnd();
+		glEnd();
 		R_CheckError();
 	}
 
-	qglDisable(GL_NORMALIZE);
+	glDisable(GL_NORMALIZE);
 
 	sphere->num_tris = tris * tris;
 
-	qglEndList();
+	glEndList();
 }
 
 /**
@@ -157,21 +157,21 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos)
 {
 	/* go to a new matrix */
-	qglPushMatrix();
+	glPushMatrix();
 
-	qglTranslatef(pos[0], pos[1], pos[2]);
+	glTranslatef(pos[0], pos[1], pos[2]);
 
 	/* flatten the sphere */
-	qglScalef(scale * viddef.rx, scale * viddef.ry, scale);
+	glScalef(scale * viddef.rx, scale * viddef.ry, scale);
 	R_CheckError();
 
 	/* rotate the globe as given in ccs.angles */
-	qglRotatef(rotate[YAW], 1, 0, 0);
-	qglRotatef(rotate[ROLL], 0, 1, 0);
-	qglRotatef(rotate[PITCH], 0, 0, 1);
+	glRotatef(rotate[YAW], 1, 0, 0);
+	glRotatef(rotate[ROLL], 0, 1, 0);
+	glRotatef(rotate[PITCH], 0, 0, 1);
 
 	if (lightPos)
-		qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	R_CheckError();
 
@@ -181,14 +181,14 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	else
 		R_BindTexture(sphere->texture->texnum);
 
-	qglEnable(GL_CULL_FACE);
-	qglCallList(sphere->list);
-	qglDisable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
+	glCallList(sphere->list);
+	glDisable(GL_CULL_FACE);
 
 	R_CheckError();
 
 	/* restore the previous matrix */
-	qglPopMatrix();
+	glPopMatrix();
 
 	refdef.alias_count += sphere->num_tris;
 }
@@ -218,7 +218,7 @@ void R_SphereInit (void)
 void R_SphereShutdown (void)
 {
 	if (sphereInit) {
-		qglDeleteLists(r_globeEarth.list, 1);
-		qglDeleteLists(r_globeMoon.list, 1);
+		glDeleteLists(r_globeEarth.list, 1);
+		glDeleteLists(r_globeMoon.list, 1);
 	}
 }

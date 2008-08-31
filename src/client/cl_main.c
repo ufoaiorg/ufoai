@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_tutorials.h"
-#include "cl_shader.h"
 #include "cl_global.h"
 #include "cl_tip.h"
 #include "cl_team.h"
@@ -47,7 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_joystick.h"
 #include "../shared/infostring.h"
 #include "../renderer/r_main.h"
-#include "../renderer/r_shader.h"
 #include "../renderer/r_particle.h"
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
@@ -1647,8 +1645,6 @@ void CL_InitAfter (void)
 		Cbuf_AddText("cinematic intro;");
 		Cvar_Set("cl_introshown", "1");
 	}
-
-	R_ShaderInit();
 }
 
 /**
@@ -1667,9 +1663,7 @@ void CL_InitAfter (void)
  */
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
-	if (!Q_strncmp(type, "shader", 6))
-		CL_ParseShaders(name, text);
-	else if (!Q_strncmp(type, "font", 4))
+	if (!Q_strncmp(type, "font", 4))
 		MN_ParseFont(name, text);
 	else if (!Q_strncmp(type, "tutorial", 8))
 		TUT_ParseTutorials(name, text);
