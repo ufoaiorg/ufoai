@@ -279,14 +279,7 @@ void MemStream::GrowFile(size_type nNewLen) {
 		while (nNewBufferSize < nNewLen)
 			nNewBufferSize += m_nGrowBytes;
 
-		// allocate new buffer
-		unsigned char* lpNew;
-		if (m_pBuffer == NULL)
-			lpNew = static_cast<unsigned char*>(malloc(nNewBufferSize));
-		else
-			lpNew = static_cast<unsigned char*>(realloc(m_pBuffer, nNewBufferSize));
-
-		m_pBuffer = lpNew;
+		m_pBuffer     = static_cast<unsigned char*>(realloc(m_pBuffer, nNewBufferSize));
 		m_nBufferSize = nNewBufferSize;
 	}
 }
