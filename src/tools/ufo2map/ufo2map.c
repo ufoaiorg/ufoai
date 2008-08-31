@@ -370,13 +370,13 @@ static void U2M_Parameter (int argc, const char **argv)
  */
 static void U2M_SetDefaultConfigValues (void)
 {
-	config.subdivideSize = 256.0f; /* bsp subdiv */
+	config.subdivideSize = 2048.0f; /* bsp subdiv */
 	config.block_xl = -8;
 	config.block_xh = 7;
 	config.block_yl = -8;
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
-	config.subdiv = 256.0f; /* rad chop/subdiv */
+	config.subdiv = 2048.0f; /* rad chop/subdiv */
 	config.mapMicrovol = 1.0f;
 
 	config.night_ambient_red = 0.0;
