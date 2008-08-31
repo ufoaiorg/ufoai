@@ -76,7 +76,7 @@ cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
 cvar_t *r_threads;
-static cvar_t *r_vertexbuffers;
+cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
 cvar_t *r_lights;
 cvar_t *r_programs;
