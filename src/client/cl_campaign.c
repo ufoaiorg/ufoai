@@ -645,7 +645,7 @@ static qboolean CP_CheckMissionVisibleOnGeoscape (const mission_t *mission)
  */
 static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 {
-	if ( (!mission->onGeoscape) && (mission->category != INTERESTCATEGORY_BASE_ATTACK) )
+	if (!mission->onGeoscape && mission->category != INTERESTCATEGORY_BASE_ATTACK)
 		return;
 
 	mission->onGeoscape = qfalse;
@@ -1396,7 +1396,7 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	/* we really don't want to use the fake aircraft anywhere */
 	cls.missionaircraft = NULL;
 
-	/* This hack only needed until base will be really destroyed */
+	/* HACK This hack only needed until base will be really destroyed */
 	base->baseStatus = BASE_WORKING;
 }
 
