@@ -513,10 +513,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_BindTexture(r_dayandnighttexture->texnum);
 		glEnable(GL_TEXTURE_2D);
 
-		/* alter the array pointers */
-		glVertexPointer(2, GL_SHORT, 0, char_verts);
-		glTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
-
 		/* draw night image */
 		glBegin(GL_QUADS);
 		glMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy - iz);
