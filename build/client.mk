@@ -166,6 +166,7 @@ ifeq ($(TARGET_OS),mingw32)
 	CLIENT_LIBS+=-lopengl32
 else
 	CLIENT_LIBS+=-lGL
+endif
 
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
