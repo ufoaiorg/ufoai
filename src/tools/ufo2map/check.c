@@ -449,7 +449,7 @@ void CheckEntities (void)
 static qboolean Check_IsOptimisable (const mapbrush_t *b) {
 	const entity_t *e = &entities[b->entitynum];
 	const char *name = ValueForKey(e, "classname");
-	int i;
+	int i, numNodraws = 0;
 
 	if (strcmp(name, "func_group") && strcmp(name, "worldspawn"))
 		return qfalse;/* other entities, eg func_breakable are no use */
@@ -459,9 +459,11 @@ static qboolean Check_IsOptimisable (const mapbrush_t *b) {
 		const side_t *side = &b->original_sides[i];
 		if (side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP | CONTENTS_TRANSLUCENT))
 			return qfalse;
+		numNodraws += side->surfaceFlags & SURF_NODRAW ? 1 : 0;
 	}
 
-	return qtrue;
+	/* all nodraw brushes are special too */
+	return numNodraws == b->numsides ? qfalse : qtrue;
 }
 
 /**
@@ -648,6 +650,10 @@ void Check_ContainedBrushes (void)
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
+
+		/* do not check for brushes inside special (clip etc) brushes */
+		if (!Check_IsOptimisable(iBrush))
+			continue;
 
 		for (j = 0; j < iBrush->numNear; j++) {
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
