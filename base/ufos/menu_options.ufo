@@ -315,50 +315,40 @@ menu options_video
 		align	ur
 	}
 
+	string glsl_str
+	{
+		string	"_GLSL shaders:"
+		pos		"500 365"
+	}
+	checkbox glsl
+	{
+		cvar	"*cvar r_programs"
+		pos		"840 365"
+		align	ur
+	}
+
 	string light_str
 	{
 		string	"_Realtime lighting:"
-		pos		"500 365"
+		pos		"500 390"
 	}
 	checkbox light
 	{
 		cvar	"*cvar r_light"
-		pos		"840 365"
+		pos		"840 390"
 		align	ur
 	}
 
 	string ptlweather_str
 	{
 		string	"_Weather effects:"
-		pos		"500 390"
+		pos		"500 415"
 	}
 	checkbox ptlweather
 	{
 		cvar	"*cvar cl_particleweather"
-		pos		"840 390"
+		pos		"840 415"
 		align	ur
-	}
-
-	string swapcontrol_str
-	{
-		string	"_Swap interval:"
-		pos		"500 415"
-	}
-	pic swapcontrol_rahmen
-	{
-		image	menu/bar_rahmen
-		pos		"659 420"
-	}
-	bar swapcontrol_bar
-	{
-		pos		"668 425"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar r_swapinterval"
-		max		2
-		align	ul
-		mousefx	true
-		click	{ }
 	}
 
 	string vbo_str
@@ -403,19 +393,49 @@ menu options_video
 		click	{ cmd "mn_modify r_multisample +1 0 4;" }
 	}
 
+	string swapcontrol_str
+	{
+		string	"_Swap interval:"
+		pos		"500 485"
+	}
+	string swapcontrol_value
+	{
+		string	"*cvar r_multisample"
+		pos		"840 485"
+		align	ur
+	}
+	pic swapinterval_dec
+	{
+		image	menu/buttons_small
+		pos		"868 489"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify r_swapinterval -1 0 2;" }
+	}
+	pic swapinterval_inc
+	{
+		image	menu/buttons_small
+		pos		"884 489"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify r_swapinterval +1 0 2;" }
+	}
+
 	string gamma_str
 	{
 		string	"_Gamma:"
-		pos		"500 490"
+		pos		"500 515"
 	}
 	pic gamma_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 495"
+		pos		"659 520"
 	}
 	bar gamma_bar
 	{
-		pos		"668 500"
+		pos		"668 525"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"
@@ -428,16 +448,16 @@ menu options_video
 	string contrast_str
 	{
 		string	"_Contrast:"
-		pos		"500 515"
+		pos		"500 540"
 	}
 	pic contrast_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 520"
+		pos		"659 545"
 	}
 	bar contrast_bar
 	{
-		pos		"668 525"
+		pos		"668 550"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar r_contrast"
@@ -450,16 +470,16 @@ menu options_video
 	string brightness_str
 	{
 		string	"_Brightness:"
-		pos		"500 540"
+		pos		"500 565"
 	}
 	pic brightness_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 545"
+		pos		"659 570"
 	}
 	bar brightness_bar
 	{
-		pos		"668 550"
+		pos		"668 575"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar r_brightness"
@@ -472,16 +492,16 @@ menu options_video
 	string lightmap_str
 	{
 		string	"_Lightmap scale:"
-		pos		"500 565"
+		pos		"500 590"
 	}
 	pic lightmap_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 570"
+		pos		"659 595"
 	}
 	bar lightmap_bar
 	{
-		pos		"668 575"
+		pos		"668 600"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar r_modulate"
