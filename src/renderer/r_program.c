@@ -155,6 +155,31 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, siz
 	char path[MAX_QPATH];
 	byte *buf;
 	int i;
+	const char *hwHack;
+
+	switch (r_config.hardwareType) {
+	case GLHW_ATI:
+		hwHack = "#ifndef ATI\n#define ATI\n#endif\n";
+		break;
+	case GLHW_INTEL:
+		hwHack = "#ifndef INTEL\n#define INTEL\n#endif\n";
+		break;
+	case GLHW_NVIDIA:
+		hwHack = "#ifndef NVIDIA\n#define NVIDIA\n#endif\n";
+		break;
+	case GLHW_GENERIC:
+		hwHack = NULL;
+		break;
+	}
+
+	if (hwHack) {
+		size_t hwHackLength = strlen(hwHack);
+		strcpy(out, hwHack);
+		out += hwHackLength;
+		len -= hwHackLength;
+		if (len < 0)
+			Sys_Error("overflow in shader loading '%s'", name);
+	}
 
 	i = 0;
 	while (*in) {

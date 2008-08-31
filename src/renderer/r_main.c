@@ -668,6 +668,8 @@ static inline void R_VerifyDriver (void)
 		r_config.hardwareType = GLHW_NVIDIA;
 	} else if (strstr(r_config.vendorString, "ATI")) {
 		r_config.hardwareType = GLHW_ATI;
+	} else {
+		r_config.hardwareType = GLHW_GENERIC;
 	}
 }
 
