@@ -61,6 +61,7 @@ static void Usage (void)
 		" -nofootstep                : don't generate a footstep file\n"
 		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
 		" -v --verbosity <int>       : set verbosity. higher <int> gives more output\n"
+	); Com_Printf(
 		"\nRadiosity options:\n"
 		" -bounce <num>              : light bounces\n"
 		" -extra                     : extra light samples\n"
@@ -71,6 +72,7 @@ static void Usage (void)
 		" -radchop                   : subdivide for better looking lightmap\n"
 		" -scale                     : lightscale\n"
 		" -t --threads               : thread amount\n"
+	); Com_Printf(
 		"\nBinary space partitioning (BSPing) options:\n"
 		" -block <xl> <yl>           : \n"
 		" -blocks <xl> <yl> <xh> <yh>: \n"
@@ -80,12 +82,14 @@ static void Usage (void)
 		" -entity                    : \n"
 		" -fulldetail                : don't treat details (and trans surfaces) as details\n"
 		" -info                      : print bsp file info\n"
+	); Com_Printf(
 		" -material                  : generate a material file\n"
 		" -micro <float>             : warn if a brush has a volume lower than the specified float.\n"
 		"                            : brushes are tested after CSG.\n"
 		" -nobackclip                : draw downward pointing faces. (so actors cannot see up through floors\n"
 		"                              in first person view). default is to set SURF_NODRAW to downard faces.\n"
 		" -nocsg                     : \n"
+	); Com_Printf(
 		" -nodetail                  : skip detail brushes\n"
 		" -nomerge                   : skip node face merging\n"
 		" -noprune                   : don't prune (or cut) nodes\n"
@@ -93,25 +97,31 @@ static void Usage (void)
 		" -noshare                   : \n"
 		" -notjunc                   : \n"
 		" -nowater                   : skip water brushes in compilation\n"
+	); Com_Printf(
 		" -noweld                    : \n"
 		" -onlyents                  : modify existing bsp file with entities from map file\n"
 		" -verboseentities           : also be verbose about submodels (entities)\n"
 		"\nMapping options:\n"
 		"\n These options operate on map file only. No bsp file is created.\n"
+	); Com_Printf(
 		" Output prefixed by an asterisk (*) indicates operations that would change the map file.\n"
 		" \n -check                     : check source map, only print information.\n"
 		" -fix                       : same subparameters as -check, changes the source map file.\n"
+	); Com_Printf(
 		" \n subparameters for -check and -fix\n"
 		"    all                     : performs all checks and fixes. This is the default.\n"
 		"    bru brushes             : includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes.\n"
 		"    ent entities            : performs all checks and fixes associated with entities.\n"
+	); Com_Printf(
 		"    con contained           : checks for brushes contained entirely within other brushes. includes coincident duplicates.\n"
 		"    isc intersection        : report intersection between optimisable brushes from worldspawn and func_group entities\n"
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
+	); Com_Printf(
 		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
 		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
 		"    flv filllevelflags      : ensure set levelflag bits are uninterrupted\n"
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
+	); Com_Printf(
 		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
 		"    tex textures            : warns when no texture or error texture is assigned.\n"
 		"                              ensures special textures and content/surface flags are consistent.\n"
