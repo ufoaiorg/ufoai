@@ -1,4 +1,3 @@
-CLIENT_LIBS+=-lGL
 CLIENT_CFLAGS+=-DCOMPILE_UFO
 
 CLIENT_SRCS = \
@@ -162,6 +161,11 @@ ifeq ($(TARGET_OS),solaris)
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
 endif
+
+ifeq ($(TARGET_OS),mingw32)
+	CLIENT_LIBS+=-lopengl32
+else
+	CLIENT_LIBS+=-lGL
 
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
