@@ -114,6 +114,9 @@ void R_BindBuffer (GLenum target, GLenum type, GLuint id)
 	if (!qglBindBuffer)
 		return;
 
+	if (!r_vertexbuffers->integer)
+		return;
+
 	qglBindBuffer(GL_ARRAY_BUFFER, id);
 
 	if (type && id)  /* assign the array pointer as well */
@@ -426,15 +429,6 @@ void R_SetDefaultState (void)
 	R_SelectTexture(&texunit_diffuse);
 	/* alpha test parameters */
 	glAlphaFunc(GL_GREATER, 0.01f);
-
-	/* lighting parameters */
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material);
-
-	for (i = 0; i < MAX_GL_LIGHTS; i++) {
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.05);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0001);
-	}
 
 	/* polygon offset parameters */
 	glPolygonOffset(1, 1);
