@@ -25,10 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LIGHT_H
 #define R_LIGHT_H
 
-void R_MarkLights(void);
 void R_AddLight(vec3_t origin, float radius, vec3_t color);
-void R_EnableLightsByRadius(const vec3_t p);
-void R_EnableLights(int mask);
+void R_EnableLights(void);
 
 extern int r_numLights;
 

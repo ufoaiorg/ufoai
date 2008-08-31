@@ -512,10 +512,7 @@
 			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\anormtab.h" />
-		<Unit filename="..\..\src\renderer\qgl.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\qgl.h" />
+		<Unit filename="..\..\src\renderer\r_gl.h" />
 		<Unit filename="..\..\src\renderer\r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -125,7 +125,6 @@ CLIENT_SRCS = \
 	renderer/r_state.c \
 	renderer/r_sphere.c \
 	renderer/r_thread.c \
-	renderer/qgl.c \
 	\
 	shared/byte.c \
 	shared/mathlib.c \

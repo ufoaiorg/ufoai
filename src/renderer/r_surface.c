@@ -131,9 +131,6 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	if (texunit_lightmap.enabled)  /* lightmap */
 		R_BindLightmapTexture(surf->lightmaptexturenum);
 
-	if (r_state.lighting_enabled && surf->lightframe == r_locals.frame)
-		R_EnableLights(surf->lights);  /* hardware lighting */
-
 	R_CheckError();
 }
 

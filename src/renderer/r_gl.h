@@ -1,5 +1,5 @@
 /**
- * @file qgl.h
+ * @file r_gl.h
  * @brief OpenGL bindings
  */
 
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __QR_H__
-#define __QR_H__
+#ifndef __R_GL_H__
+#define __R_GL_H__
 
 #include <SDL_opengl.h>
 

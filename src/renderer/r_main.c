@@ -286,7 +286,7 @@ void R_RenderFrame (void)
 		if (r_wire->integer)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		R_MarkLights();
+		R_EnableLights();
 
 		R_CheckError();
 

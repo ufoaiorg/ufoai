@@ -317,13 +317,11 @@ menu options_video
 
 	string light_str
 	{
-		if "mn_rlight == 1"
 		string	"_Realtime lighting:"
 		pos		"500 365"
 	}
 	checkbox light
 	{
-		if "mn_rlight == 1"
 		cvar	"*cvar r_light"
 		pos		"840 365"
 		align	ur

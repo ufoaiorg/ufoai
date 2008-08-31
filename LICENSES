@@ -3381,7 +3381,6 @@ base/ufos/seq_ingame.ufo | GNU General Public License 2.0
 base/ufos/seq_intro.ufo | GNU General Public License 2.0
 base/ufos/seq_modelview.ufo | GNU General Public License 2.0
 base/ufos/seq_tutorials.ufo | GNU General Public License 2.0
-base/ufos/shaders.ufo | GNU General Public License 2.0
 base/ufos/team_aliens.ufo | GNU General Public License 2.0
 base/ufos/team_civilians.ufo | GNU General Public License 2.0
 base/ufos/team_humans.ufo | GNU General Public License 2.0

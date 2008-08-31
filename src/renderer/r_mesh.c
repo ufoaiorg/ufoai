@@ -372,9 +372,6 @@ void R_DrawAliasModel (const entity_t *e)
 			color[1] = color[2] = 0.0;
 
 		R_Color(color);
-
-		if (r_state.lighting_enabled)
-			R_EnableLightsByRadius(e->origin);
 	}
 
 	/* the values are sane here already - see R_DrawEntities */
