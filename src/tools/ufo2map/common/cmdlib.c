@@ -372,13 +372,14 @@ int TryLoadFile (const char *filename, void **bufferptr)
 
 /**
  * @brief
+ * @todo Logfile writing
  */
 void Sys_FPrintf (int flag, const char *format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;
 
-	if ((flag == SYS_VRB) && (config.verbose == qfalse))
+	if (flag == SYS_VRB && config.verbose == qfalse)
 		return;
 
 	va_start(argptr, format);
