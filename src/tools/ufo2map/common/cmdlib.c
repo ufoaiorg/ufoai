@@ -402,3 +402,24 @@ void Com_Printf (const char *format, ...)
 
 	printf("%s", out_buffer);
 }
+
+/**
+ * @brief decides wether to proceed with output verbosity level
+ * @sa Com_Printf, Check_Printf
+ */
+void Verb_Printf (const int importance, const char *format, ...)
+{
+	if (config.verbosity <= VERB_NUM - importance+1)
+		return;
+
+	{
+		char out_buffer[4096];
+		va_list argptr;
+
+		va_start(argptr, format);
+		Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+		va_end(argptr);
+
+		printf("%s", out_buffer);
+	}
+}

@@ -60,7 +60,7 @@ static void Usage (void)
 #endif
 		" -nofootstep                : don't generate a footstep file\n"
 		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
-		" -v                         : verbose output\n"
+		" -v --verbosity <int>       : set verbosity. higher <int> gives more output\n"
 		"\nRadiosity options:\n"
 		" -bounce <num>              : light bounces\n"
 		" -extra                     : extra light samples\n"
@@ -127,9 +127,13 @@ static void U2M_Parameter (int argc, const char **argv)
 	int i;
 
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i], "-v")) {
-			Com_Printf("verbose = true\n");
-			config.verbose = qtrue;
+		if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "-verbosity")) {
+			/* arg to -v should be a single digit. if it is not a number
+			 * atoi will return 0, and no warning will be given. so check that
+			 * it looks like the arg for -v first */
+			if(strlen(argv[i+1]) == 1)
+				config.verbosity = atoi(argv[++i]);
+			Verb_Printf(VERB_NORMAL, "verbosity = %i\n", config.verbosity);
 		} else if (!strcmp(argv[i], "-noweld")) {
 			/* make every point unique */
 			Com_Printf("noweld = true\n");
@@ -370,6 +374,8 @@ static void U2M_Parameter (int argc, const char **argv)
  */
 static void U2M_SetDefaultConfigValues (void)
 {
+	config.verbosity = VERB_NORMAL;
+
 	config.subdivideSize = 2048.0f; /* bsp subdiv */
 	config.block_xl = -8;
 	config.block_xh = 7;
@@ -467,9 +473,9 @@ int main (int argc, const char **argv)
 
 	U2M_SetDefaultConfigValues();
 
-	Com_Printf("---- ufo2map "VERSION" ----\n");
-
 	U2M_Parameter(argc, argv);
+
+	Verb_Printf(VERB_NORMAL, "---- ufo2map "VERSION" ----\n");
 
 	if (argc < 2) {
 		Usage();
