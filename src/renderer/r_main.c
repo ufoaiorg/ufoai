@@ -385,7 +385,10 @@ static void R_Register (void)
 	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
 	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2");
 	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2");
-	r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
+	if (r_config.hardwareType == GLHW_NVIDIA)
+		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
+	else
+		r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
 	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
@@ -675,8 +678,6 @@ static inline void R_VerifyDriver (void)
 
 qboolean R_Init (void)
 {
-	R_Register();
-
 	memset(&r_state, 0, sizeof(r_state));
 	memset(&r_locals, 0, sizeof(r_locals));
 	memset(&r_config, 0, sizeof(r_config));
@@ -708,6 +709,8 @@ qboolean R_Init (void)
 	/* sanity checks and card specific hacks */
 	R_VerifyDriver();
 	R_EnforceVersion();
+
+	R_Register();
 
 	R_InitExtensions();
 	R_SetDefaultState();
