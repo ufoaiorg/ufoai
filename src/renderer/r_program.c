@@ -214,7 +214,7 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, siz
 static r_shader_t *R_LoadShader (GLenum type, const char *name)
 {
 	r_shader_t *sh;
-	char path[MAX_QPATH], *src[1], log[MAX_STRING_CHARS];
+	char path[MAX_QPATH], *src[1];
 	unsigned e, len, length[1];
 	char *source;
 	byte *buf;
@@ -260,6 +260,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 
 	qglGetShaderiv(sh->id, GL_COMPILE_STATUS, &e);
 	if (!e) {
+		char log[MAX_STRING_CHARS];
 		qglGetShaderInfoLog(sh->id, sizeof(log) - 1, NULL, log);
 		Com_Printf("R_LoadShader: %s: %s\n", sh->name, log);
 

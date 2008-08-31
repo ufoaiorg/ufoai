@@ -376,21 +376,11 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
 }
 
-static void R_Register (void)
+static void R_RegisterSystemVars (void)
 {
 	const cmdList_t *commands;
 
-	/** image cvars - @sa R_FilterTexture */
-	r_brightness = Cvar_Get("r_brightness", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Brightness for images");
-	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
-	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2");
-	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2");
-	if (r_config.hardwareType == GLHW_NVIDIA)
-		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
-	else
-		r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
-	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
-
+	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, "Draw the local entities");
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, "Draw the world brushes");
 	r_drawspecialbrushes = Cvar_Get("r_drawspecialbrushes", "0", 0, "Draw stuff like actorclip");
@@ -408,7 +398,6 @@ static void R_Register (void)
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_IMAGES, "The maximum texture resolution UFO should use");
-	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE | CVAR_CONTEXT, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
@@ -431,6 +420,23 @@ static void R_Register (void)
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
+}
+
+/**
+ * @note image cvars
+ * @sa R_FilterTexture
+ */
+static void R_RegisterImageVars (void)
+{
+	r_brightness = Cvar_Get("r_brightness", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Brightness for images");
+	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
+	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2");
+	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2");
+	if (r_config.hardwareType == GLHW_NVIDIA)
+		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
+	else
+		r_modulate = Cvar_Get("r_modulate", "2.0", CVAR_ARCHIVE | CVAR_IMAGES, "Scale lightmap values");
+	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 }
 
 qboolean R_SetMode (void)
@@ -678,6 +684,8 @@ static inline void R_VerifyDriver (void)
 
 qboolean R_Init (void)
 {
+	R_RegisterSystemVars();
+
 	memset(&r_state, 0, sizeof(r_state));
 	memset(&r_locals, 0, sizeof(r_locals));
 	memset(&r_config, 0, sizeof(r_config));
@@ -710,7 +718,7 @@ qboolean R_Init (void)
 	R_VerifyDriver();
 	R_EnforceVersion();
 
-	R_Register();
+	R_RegisterImageVars();
 
 	R_InitExtensions();
 	R_SetDefaultState();
