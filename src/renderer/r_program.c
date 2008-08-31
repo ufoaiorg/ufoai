@@ -172,6 +172,8 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, siz
 		break;
 	}
 
+	i = 0;
+
 	if (hwHack) {
 		size_t hwHackLength = strlen(hwHack);
 		strcpy(out, hwHack);
@@ -179,9 +181,9 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, siz
 		len -= hwHackLength;
 		if (len < 0)
 			Sys_Error("overflow in shader loading '%s'", name);
+		i += hwHackLength;
 	}
 
-	i = 0;
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
 			size_t inc_len;
