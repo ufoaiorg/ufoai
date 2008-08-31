@@ -477,21 +477,23 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
 	if (gl != r_noTexture) {
+		float geoscape_nighttexcoords[4 * 2];
+
 		R_BindTexture(gl->texnum);
 		R_EnableMultitexture(&texunit_lightmap, qtrue);
 
-		texunit_lightmap.texcoord_array[0] = geoscape_texcoords[0] + q;
-		texunit_lightmap.texcoord_array[1] = geoscape_texcoords[1];
-		texunit_lightmap.texcoord_array[2] = geoscape_texcoords[2] + q;
-		texunit_lightmap.texcoord_array[3] = geoscape_texcoords[3];
-		texunit_lightmap.texcoord_array[4] = geoscape_texcoords[4] + q;
-		texunit_lightmap.texcoord_array[5] = geoscape_texcoords[5];
-		texunit_lightmap.texcoord_array[6] = geoscape_texcoords[6] + q;
-		texunit_lightmap.texcoord_array[7] = geoscape_texcoords[7];
+		geoscape_nighttexcoords[0] = geoscape_texcoords[0] + q;
+		geoscape_nighttexcoords[1] = geoscape_texcoords[1];
+		geoscape_nighttexcoords[2] = geoscape_texcoords[2] + q;
+		geoscape_nighttexcoords[3] = geoscape_texcoords[3];
+		geoscape_nighttexcoords[4] = geoscape_texcoords[4] + q;
+		geoscape_nighttexcoords[5] = geoscape_texcoords[5];
+		geoscape_nighttexcoords[6] = geoscape_texcoords[6] + q;
+		geoscape_nighttexcoords[7] = geoscape_texcoords[7];
 
 		R_SelectTexture(&texunit_lightmap);
 
-		glTexCoordPointer(2, GL_FLOAT, 0, texunit_lightmap.texcoord_array);
+		glTexCoordPointer(2, GL_FLOAT, 0, geoscape_nighttexcoords);
 
 		R_BindTexture(r_dayandnightTexture->texnum);
 		if (lastQ != q) {
