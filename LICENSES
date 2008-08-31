@@ -2384,12 +2384,12 @@ base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
-base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/geoscape_ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/attack.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/info.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/newmission.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/geoscape/standard.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/lobbyprivmsg.wav | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/misc/newmission.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/popup.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/talk.wav | GNU General Public License 2.0 | Karen Rei Pease

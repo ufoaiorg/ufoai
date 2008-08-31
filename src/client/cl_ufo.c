@@ -732,7 +732,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 		/* Check if ufo appears or disappears on radar */
 		if (visible != ufo->visible) {
 			if (checkStatusChanged && visible) {
-				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_UFOSPOTTED, NULL);
 				/* Make this UFO visible */
 				ufo->visible = qtrue;
 				/* Set detection to qtrue if any ufo was detected */
@@ -744,7 +744,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 					MAP_SetOverlay("radar");
 				CL_GameTimeStop();
 			} else if (!visible) {
-				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOSPOTTED, NULL);
 				/* Make this UFO invisible */
 				ufo->visible = qfalse;
 				/* Notify that ufo disappeared */
