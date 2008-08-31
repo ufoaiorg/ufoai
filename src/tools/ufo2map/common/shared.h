@@ -62,13 +62,13 @@ typedef enum {
 	VERB_NORMAL,
 	VERB_EXTRA, /**< the highest verbosity level */
 	VERB_NUM /**< the number of verbosity levels */
-} verbosityLevels_t;
+} verbosityLevel_t;
 
 typedef struct mapConfig_s {
 	float subdivideSize;
 	int nice;
 	qboolean verbose;
-	int verbosity;
+	verbosityLevel_t verbosity;
 	qboolean noprune;
 	qboolean nodetail;
 	qboolean fulldetail;

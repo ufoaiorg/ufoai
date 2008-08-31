@@ -405,12 +405,12 @@ void Com_Printf (const char *format, ...)
 }
 
 /**
- * @brief decides wether to proceed with output verbosity level
- * @sa Com_Printf, Check_Printf
+ * @brief decides wether to proceed with output based on verbosity level
+ * @sa Com_Printf, Check_Printf,
  */
-void Verb_Printf (const int importance, const char *format, ...)
+void Verb_Printf (const verbosityLevel_t importance, const char *format, ...)
 {
-	if (config.verbosity <= VERB_NUM - importance+1)
+	if (config.verbosity <= VERB_NUM - importance + 1)
 		return;
 
 	{
