@@ -433,7 +433,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
 	short geoscape_verts[4 * 2];
-	int geoscape_index = 0;
 
 	/* normalize */
 	const float nx = x * viddef.rx;
@@ -450,23 +449,23 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
 	glTexCoordPointer(2, GL_FLOAT, 0, geoscape_texcoords);
 
-	geoscape_texcoords[geoscape_index + 0] = cx - iz;
-	geoscape_texcoords[geoscape_index + 1] = cy - iz;
-	geoscape_texcoords[geoscape_index + 2] = cx + iz;
-	geoscape_texcoords[geoscape_index + 3] = cy - iz;
-	geoscape_texcoords[geoscape_index + 4] = cx + iz;
-	geoscape_texcoords[geoscape_index + 5] = cy + iz;
-	geoscape_texcoords[geoscape_index + 6] = cx - iz;
-	geoscape_texcoords[geoscape_index + 7] = cy + iz;
+	geoscape_texcoords[0] = cx - iz;
+	geoscape_texcoords[1] = cy - iz;
+	geoscape_texcoords[2] = cx + iz;
+	geoscape_texcoords[3] = cy - iz;
+	geoscape_texcoords[4] = cx + iz;
+	geoscape_texcoords[5] = cy + iz;
+	geoscape_texcoords[6] = cx - iz;
+	geoscape_texcoords[7] = cy + iz;
 
-	geoscape_verts[geoscape_index + 0] = nx;
-	geoscape_verts[geoscape_index + 1] = ny;
-	geoscape_verts[geoscape_index + 2] = nx + nw;
-	geoscape_verts[geoscape_index + 3] = ny;
-	geoscape_verts[geoscape_index + 4] = nx + nw;
-	geoscape_verts[geoscape_index + 5] = ny + nh;
-	geoscape_verts[geoscape_index + 6] = nx;
-	geoscape_verts[geoscape_index + 7] = ny + nh;
+	geoscape_verts[0] = nx;
+	geoscape_verts[1] = ny;
+	geoscape_verts[2] = nx + nw;
+	geoscape_verts[3] = ny;
+	geoscape_verts[4] = nx + nw;
+	geoscape_verts[5] = ny + nh;
+	geoscape_verts[6] = nx;
+	geoscape_verts[7] = ny + nh;
 
 	/* draw day image */
 	R_BindTexture(gl->texnum);
