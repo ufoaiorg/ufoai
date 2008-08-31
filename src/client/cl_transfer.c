@@ -1600,7 +1600,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 {
 	int i;
 
-	assert((aircraft->idx >= 0) && (aircraft->idx < MAX_AIRCRAFT));
+	assert(aircraft->idx >= 0 && aircraft->idx < MAX_AIRCRAFT);
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer_t *transfer = &gd.alltransfers[i];
@@ -1610,9 +1610,9 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 			continue;
 		if (!transfer->hasAircraft)
 			continue;
-		if (aircraft->idx < MAX_AIRCRAFT - 1)
-			memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
-				(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
+		/* moving the last one would result in moving zero bytes => nop */
+		memmove(&transfer->aircraftArray[aircraft->idx], &transfer->aircraftArray[aircraft->idx + 1],
+			(MAX_AIRCRAFT - 1 - aircraft->idx) * sizeof(transfer->aircraftArray[aircraft->idx]));
 		/* wipe the now vacant last slot */
 		memset(&transfer->aircraftArray[MAX_AIRCRAFT - 1], 0, sizeof(transfer->aircraftArray[MAX_AIRCRAFT - 1]));
 	}
