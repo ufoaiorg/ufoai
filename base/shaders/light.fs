@@ -29,7 +29,7 @@ void LightFragment(vec4 diffuse, vec4 lightmap){
 			if (d > 0.0) {
 				atten = 0.5 / (dist / gl_LightSource[0].constantAttenuation);
 
-				l = gl_LightSource[0].diffuse * d;
+				l = gl_LightSource[0].diffuse.rgb * d;
 				l *= atten;
 				l *= atten * atten;
 
@@ -48,7 +48,7 @@ void LightFragment(vec4 diffuse, vec4 lightmap){
 			if (d > 0.0) {
 				atten = 0.5 / (dist / gl_LightSource[1].constantAttenuation);
 
-				l = gl_LightSource[1].diffuse * d;
+				l = gl_LightSource[1].diffuse.rgb * d;
 				l *= atten;
 				l *= atten * atten;
 
