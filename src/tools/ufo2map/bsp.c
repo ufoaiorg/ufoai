@@ -43,7 +43,7 @@ static void ProcessWorldModel (void)
 	curTile->nummodels = NUM_REGULAR_MODELS;
 
 	/* process levels */
-	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, qtrue, "LEVEL");
+	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, config.verbosity >= VERB_NORMAL, "LEVEL");
 
 	/* calculate routing */
 	DoRouting();

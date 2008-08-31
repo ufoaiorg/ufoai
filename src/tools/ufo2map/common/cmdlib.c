@@ -158,7 +158,7 @@ const char* FS_GameDir (void)
 	if (gamedir[0] == '\0') {
 		FS_getwd(gamedir, sizeof(gamedir));
 		strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir));
-		Com_Printf("gamedir: %s\n", gamedir);
+		Verb_Printf(VERB_NORMAL, "gamedir: %s\n", gamedir);
 	}
 	return gamedir;
 }
@@ -178,7 +178,7 @@ void FS_Init (const char *path)
 
 	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
 	if (!pak)
-		Com_Printf("Could not load image pk3, searching in directories for images instead\n");
+		Verb_Printf(VERB_NORMAL, "Could not load image pk3, searching in directories for images instead\n");
 }
 
 /**

@@ -146,10 +146,10 @@ void DoRouting (void)
 	/*	Com_Printf("(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 
 	/* scan area heights */
-	RunSingleThreadOn(CheckUnit, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "UNITCHECK");
+	RunSingleThreadOn(CheckUnit, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
 	/* scan connections */
-	RunSingleThreadOn(CheckConnections, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, qtrue, "CONNCHECK");
+	RunSingleThreadOn(CheckConnections, PATHFINDING_HEIGHT * PATHFINDING_WIDTH * PATHFINDING_WIDTH, config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* store the data */
 	data = curTile->routedata;

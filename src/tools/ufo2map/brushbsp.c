@@ -1019,7 +1019,7 @@ void WriteBSPBrushMap (const char *name, const bspbrush_t *list)
 	FILE *f;
 
 	/* note it */
-	Com_Printf("Writing %s\n", name);
+	Verb_Printf(VERB_NORMAL, "Writing %s\n", name);
 
 	/* open the map file */
 	f = fopen(name, "wb");

@@ -338,7 +338,7 @@ void EndBSPFile (const char *filename)
 	UnparseEntities();
 
 	/* write the map */
-	Com_Printf("Writing %s\n", filename);
+	Verb_Printf(VERB_NORMAL, "Writing %s\n", filename);
 	WriteBSPFile(filename);
 }
 

@@ -992,7 +992,7 @@ void WriteMapFile (const char *filename)
 	int i, j, k;
 	int removed;
 
-	Com_Printf("writing map: '%s'\n", filename);
+	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
 
 	f = fopen(filename, "wb");
 	if (!f)

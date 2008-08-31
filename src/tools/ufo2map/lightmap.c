@@ -763,7 +763,7 @@ void CreateDirectLights (void)
 		config.night_ambient_blue *= 128;
 	}
 
-	Com_Printf("%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
+	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
 

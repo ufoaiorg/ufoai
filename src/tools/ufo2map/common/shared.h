@@ -156,8 +156,6 @@ void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, qbool
 
 #include "../../../common/qfiles.h"
 
-/** @todo when the Verb_Printf stuff works, the compile-time
- * verbosity setting should be removed */
 #define SYS_VRB 0 /* verbose support (on/off) */
 #define SYS_STD 1 /* standard print level */
 #define SYS_WRN 2 /* warnings */
