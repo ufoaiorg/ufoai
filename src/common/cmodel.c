@@ -792,7 +792,7 @@ static void CMod_GetMapSize (void)
  * @param[in] sY The y position on the world plane (grid position) - values from -(PATHFINDING_WIDTH/2) up to PATHFINDING_WIDTH/2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 - PATHFINDING_HEIGHT are allowed
  * @sa CM_AddMapTile
- * @todo Fix z-level routing
+ * @todo TEST z-level routing
  */
 static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int sZ)
 {
@@ -1409,7 +1409,6 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
- * @todo Add height/fall checks for actor size (2x2).
  */
 void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue)
 {
@@ -1525,26 +1524,28 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		return;
 		}
 
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i to (%i %i %i)\n", x, y, z, actor_size, nx, ny, nz);
+
 	/* This value is worthless if it is CORE_DIRECTIONS through FLYING_DIRECTIONS:
 	 * these are actions or climbing.
 	 */
 	core_dir = dir % CORE_DIRECTIONS;
 
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
-	/** @todo actor_height is currently the height of a standing 1x1 actor.  This needs to be adjusted
+	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS){
 		if (dz > 0) {
 			/* If the actor is moving up, check the passage at the current cell.
 			 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-			actor_height = (UNIT_HEIGHT + PLAYER_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, x, y, z));
+			actor_height = (UNIT_HEIGHT + PLAYER_STANDING_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, x, y, z));
 			RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
 			passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
 		} else {
 			/* If the actor is moving down, check from the destination cell back. *
 			 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-			actor_height = (UNIT_HEIGHT + PLAYER_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, nx, ny, nz));
+			actor_height = (UNIT_HEIGHT + PLAYER_STANDING_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, nx, ny, nz));
 			RT_CONN_TEST(map, actor_size, nx, ny, nz, core_dir ^ 1);
 			passage_height = RT_CONN(map, actor_size, nx, ny, nz, core_dir ^ 1);
 		}
@@ -1554,7 +1555,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		}
 	} else if (dir < CORE_DIRECTIONS) {
 		/* This is the standard passage height for all units trying to move horizontally. */
-		actor_height = PLAYER_HEIGHT / QUANT;
+		actor_height = ceil(((float)(crouching_state ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)) / QUANT);
 		RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
 		passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
 		if (passage_height < actor_height) {
@@ -1565,9 +1566,25 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	/* else there is no movement that uses passages. */
 
 
+	/** @todo stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
+	stepup_height = PATHFINDING_MIN_STEPUP;
 	/* If we are moving horizontally, get the height difference of the floors. */
-	if (dir < CORE_DIRECTIONS)
-		height_change = RT_FLOOR(map, actor_size, nx, ny, nz) - RT_FLOOR(map, actor_size, x, y, z);
+	if (dir < CORE_DIRECTIONS) {
+		/* Here's the catch: if we can possibly move up, then do so. */
+		if (z < PATHFINDING_HEIGHT - 1 /* Not at the top */
+			/* The floor is in the target cell */
+			&& RT_FLOOR(map, actor_size, nx, ny, nz + 1) >= 0
+			/* We can make the step into the cell */
+			&& stepup_height + RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1)) {
+				/* Use the adjusted calculation. */
+				height_change = UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1) - RT_FLOOR(map, actor_size, x, y, z);
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
+			} else {
+				/* Use the default calculation. */
+				height_change = RT_FLOOR(map, actor_size, nx, ny, nz) - RT_FLOOR(map, actor_size, x, y, z);
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
+			}
+	}
 	/* If we are falling, the height difference is the floor value. */
 	if (dir == DIRECTION_FALL)
 		height_change = RT_FLOOR(map, actor_size, x, y, z);
@@ -1576,8 +1593,6 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		/* If the destination cell is higher than this actor can walk, then return.
 		 * Fliers will ignore this rule.  They only need the passage to exist.
 		 */
-		/** @todo stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
-		stepup_height = PATHFINDING_MIN_STEPUP;
 		if (height_change > stepup_height) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't step up high enough. change:%i stepup:%i\n", height_change, stepup_height);
 			return;
@@ -2073,7 +2088,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		for (y = min[1]; y < max[1] - actor_size; y++)
 			for (x = min[0]; x < max[0] - actor_size; x++)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
-					for (z = min[2]; z < max[2]; z++)
+					/** @note This update MUST go from the bottom to the top of the model. */
+					for (z = 0; z < PATHFINDING_HEIGHT; z++)
 						z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
 
 #if 0

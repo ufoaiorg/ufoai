@@ -149,7 +149,10 @@ void TR_BuildTracingNode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
-	/** @todo should this be a == -1 check? */
+	/**
+	 *  We are checking for a leaf in the tracing node.  For ufo2map, planenum == PLANENUMLEAF.
+	 *  For the game, plane will be NULL.
+	 */
 #ifdef COMPILE_UFO
 	if (!curTile->nodes[node].plane) {
 #else
@@ -1166,6 +1169,11 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 		for (i = 0, h = curTile->cheads; i < curTile->numcheads; i++, h++) {
 			/** @todo Is this levelmask supposed to limit by game level (1-8)
 			 *  or map level (0-LEVEL_ACTORCLIP)?
+			 * @brief This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
+			 * are bitmasks of game levels 1-8.  0 is a special case repeat fo 255.
+			 * However a levelmask including 0x100 is usually included so the CLIP levels are
+			 * examined.  Note that LEVEL_STEPON should not be available at this point, but may be erroneously
+			 * included in another level, requiring the addition ot the brushreject parameter.
 			 */
 			if (h->level && levelmask && !(h->level & levelmask))
 				continue;

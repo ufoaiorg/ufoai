@@ -238,7 +238,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
-				RT_FLOOR(map, actor_size, x, y, i) = 0; /* There is no floor in this cell. */
+				RT_FLOOR(map, actor_size, x, y, i) = 16; /* There is no floor in this cell. */
 				RT_CEILING(map, actor_size, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
@@ -284,7 +284,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_FLOOR(map, actor_size, x, y, i) = 0; /* There is no floor in this cell. */
+					RT_FLOOR(map, actor_size, x, y, i) = 16; /* There is no floor in this cell. */
 					RT_CEILING(map, actor_size, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
@@ -402,15 +402,13 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	pos3_t pos;
 	int i;
 	int h, c; /**< height, ceiling */
+	int dz = z; /**< destination z, changed if the floor in the starting cell is high enough. */
 	int ah, ac; /**< attributes of the destination cell */
 	int fz, cz; /**< Floor and celing Z cell coordinates */
 	int floor_p, ceil_p; /**< floor of the passage, ceiling of the passage. */
 	int hi, lo, worst; /**< used to find floor and ceiling of passage */
 	int maxh; /**< The higher value of h and ah */
 	qboolean obstructed;
-	/** 127 <= y <= 134, z=0, 129 <= x <= 135 */
-	/* qboolean debugTrace = 127 <= y && y <= 134 && z==0 && 129 <= x && x <= 135 && actor_size == 1 && dir < 4; */
-	qboolean debugTrace = qfalse; /**< If true causes debug output for wall checks */
 
 	/* get the neighbor cell's coordinates */
 	const int ax = x + dvecs[dir][0];
@@ -460,19 +458,35 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	RT_CONN_TEST(map, actor_size, ax, ay, z, dir);
 
 	/* get the originating floor's absolute height */
-	h = RT_FLOOR(map, actor_size, x, y, z) + z * (UNIT_HEIGHT / QUANT);
+	h = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * (UNIT_HEIGHT / QUANT);
 
 	/* get the originating ceiling's absolute height */
 	c = RT_CEILING(map, actor_size, x, y, z) + z * (UNIT_HEIGHT / QUANT);
 
+	/* Check if we can step up into a higher cell.  Criteria are:
+	 * 1. The floor in the current cell is high enough to stepup into the next cell.
+	 * 2. The floor in the cell above the destination cell is low enough to be steped onto.
+	 * 3. The floor in the cell above the destination cell is in that cell.
+	 * 4. We are not at the highest z.
+	 */
+	if (z < PATHFINDING_HEIGHT - 1
+		&& h < (z + 1) * (UNIT_HEIGHT / QUANT)
+		&& RT_FLOOR(map, actor_size, ax, ay, z + 1) >= 0
+		&& h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * (UNIT_HEIGHT / QUANT) ) {
+		dz++;
+		if (debugTrace)
+			Com_Printf("Adjusting dz for stepup. z = %i, dz = %i\n", z, dz);
+	}
+
 	/* get the destination floor's absolute height */
-	ah = RT_FLOOR(map, actor_size, ax, ay, z) + z * (UNIT_HEIGHT / QUANT);
+	ah = max(0, RT_FLOOR(map, actor_size, ax, ay, dz)) + dz * (UNIT_HEIGHT / QUANT);
 
 	/* get the destination ceiling's absolute height */
-	ac = RT_CEILING(map, actor_size, ax, ay, z) + z * (UNIT_HEIGHT / QUANT);
+	ac = RT_CEILING(map, actor_size, ax, ay, dz) + dz * (UNIT_HEIGHT / QUANT);
 
 	/* Set maxh to the larger of h and ah. */
 	maxh = max(h, ah);
+
 
 	/* Calculate tracing coordinates */
 	VectorSet(pos, x, y, z);
@@ -480,9 +494,10 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	start[2] = maxh * QUANT; /** start is now at the center of the floor of the originating cell and as high as the higher of the two floors. */
 
 	/* Locate the destination point. */
-	VectorSet(pos, ax, ay, z);
+	VectorSet(pos, ax, ay, dz);
 	SizedPosToVec(pos, actor_size, end);
 	end[2] = start[2]; /** end is now at the center of the destination cell and at the same height as the starting point. */
+
 
 	/* Test to see if c <= h or ac <= ah - indicates a filled cell. */
 	if (c <= h || ac <= ah) {
@@ -506,9 +521,9 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		return z;
 	}
 
-	/* If the destination floor is more than PATHFINDING_MIN_STEPUP higher than the base of the current floor
-	 * AND the base of the current cell, then we can't go there. */
-	if (RT_FLOOR(map, actor_size, ax, ay, z) - max(0, RT_FLOOR(map, actor_size, x, y, z)) > PATHFINDING_MIN_STEPUP) {
+	/* If the destination floor is more than PATHFINDING_MIN_STEPUP higher than the base of the current cell
+	 * then we can't go there. */
+	if (ah - h > PATHFINDING_MIN_STEPUP) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Point to where we can't be. */
@@ -525,7 +540,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	VectorCopy(brushesHit.floor, brushesHit.ceiling);
 
 	/* test if the destination cell is blocked by a loaded model */
-	if (RT_CEILING(map, actor_size, ax, ay, z) - RT_FLOOR(map, actor_size, ax, ay, z) < PATHFINDING_MIN_OPENING) {
+	if (ac - h < PATHFINDING_MIN_OPENING) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Point to where we can't be. */
@@ -709,10 +724,12 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	/* RT_CONN(map, actor_size, ax, ay, z, dir) = ceil_p - floor_p; */
 
 	/*
-	 * Return the highest z coordinate scanned- cz if fz==cz or z==cz,
-	 * otherwise cz - 1 to recheck cz in case there is a floor in cz with its own ceiling.
+	 * Return the highest z coordinate scanned- cz if fz==cz, z==cz, or the floor in cz is negative.
+	 * Otherwise cz - 1 to recheck cz in case there is a floor in cz with its own ceiling.
 	 */
-	if (fz == cz || z == cz)
+	/** @todo: Ensure that walls that can be moved OVER by fliers in fact can be moved over.
+	* Current code always goes to the floor of the source cell.*/
+	if (fz == cz || z == cz || RT_FLOOR(map, actor_size, x, y, cz) < 0)
 		return cz;
 	return cz - 1;
 }

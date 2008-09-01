@@ -4649,7 +4649,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	else
 		pseudosin = distance / disty;
 	width = 2 * PLAYER_WIDTH * pseudosin;
-	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
+	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT);
 
 	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
 			selFD->weaponSkill ? selChr->score.skills[selFD->weaponSkill] : 0);
@@ -4754,7 +4754,7 @@ static void CL_Targeting_Radius (vec3_t center)
  * @sa CL_AddTargeting
  * @sa CL_Trace
  */
-static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
+static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid;
@@ -4764,13 +4764,27 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	qboolean crossNo;
 	le_t *le;
 	le_t *target = NULL;
-	int actor_size = 1; /** @todo set to actor size (don't know which one) */
+	int to_actor_size;
 
 	if (!selActor || !selFD)
 		return;
 
-	Grid_PosToVec(clMap, actor_size, fromPos, start);
-	Grid_PosToVec(clMap, actor_size, toPos, end);
+	/* search for an actor at target */
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
+			target = le;
+			break;
+		}
+
+	/* Determine the target's size. */
+	to_actor_size = target /**< Get size of selected actor or fall back to 1x1. */
+		? target->fieldSize
+		: ACTOR_SIZE_NORMAL;
+
+	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
+
+	Grid_PosToVec(clMap, from_actor_size, fromPos, start);
+	Grid_PosToVec(clMap, to_actor_size, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
@@ -4791,12 +4805,6 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	oldLevel = cl_worldlevel->integer;
 	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
-	/* search for an actor at target */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
-			target = le;
-			break;
-		}
 
 	tr = CL_Trace(start, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
@@ -4830,7 +4838,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
-static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
+static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;
@@ -4841,21 +4849,10 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	int i;
 	le_t *le;
 	le_t *target = NULL;
-	int actor_size = 1; /** @todo set to actor size (don't know which one) */
+	int to_actor_size;
 
 	if (!selActor || Vector2Compare(fromPos, toPos))
 		return;
-
-	/* get vectors, paint cross */
-	Grid_PosToVec(clMap, actor_size, fromPos, from);
-	Grid_PosToVec(clMap, actor_size, toPos, at);
-	from[2] += selFD->shotOrg[1];
-
-	/* prefer to aim grenades at the ground */
-	at[2] -= GROUND_DELTA;
-	if (mousePosTargettingAlign)
-		at[2] -= mousePosTargettingAlign;
-	VectorCopy(at, cross);
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -4863,6 +4860,24 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 			target = le;
 			break;
 		}
+
+	/* Determine the target's size. */
+	to_actor_size = target /**< Get size of selected actor or fall back to 1x1. */
+		? target->fieldSize
+		: ACTOR_SIZE_NORMAL;
+
+	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
+
+	/* get vectors, paint cross */
+	Grid_PosToVec(clMap, from_actor_size, fromPos, from);
+	Grid_PosToVec(clMap, to_actor_size, toPos, at);
+	from[2] += selFD->shotOrg[1];
+
+	/* prefer to aim grenades at the ground */
+	at[2] -= GROUND_DELTA;
+	if (mousePosTargettingAlign)
+		at[2] -= mousePosTargettingAlign;
+	VectorCopy(at, cross);
 
 	/* calculate parabola */
 	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, selFD->rolled, v0);
@@ -4913,7 +4928,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
 	if (selFD->splrad) {
-		Grid_PosToVec(clMap, actor_size, toPos, at);
+		Grid_PosToVec(clMap, to_actor_size, toPos, at);
 		CL_Targeting_Radius(at);
 	}
 
@@ -5140,9 +5155,9 @@ void CL_AddTargeting (void)
 			return;
 
 		if (!selFD->gravity)
-			CL_TargetingStraight(selActor->pos, mousePos);
+			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePos);
 		else
-			CL_TargetingGrenade(selActor->pos, mousePos);
+			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePos);
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
@@ -5156,9 +5171,9 @@ void CL_AddTargeting (void)
 		CL_AddTargetingBox(mousePendPos, qtrue);
 
 		if (!selFD->gravity)
-			CL_TargetingStraight(selActor->pos, mousePendPos);
+			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePendPos);
 		else
-			CL_TargetingGrenade(selActor->pos, mousePendPos);
+			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePendPos);
 		break;
 	default:
 		break;
