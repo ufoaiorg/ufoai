@@ -76,15 +76,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brushmanip.h"
 #include "plugin.h"
 #include "qe3.h"
-#include "gtkdlgs.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "findtexturedialog.h"
 #include "surfacedialog.h"
 #include "groupdialog.h"
 #include "preferences.h"
-#include "shaders.h"
 #include "commands.h"
+#include "xywindow.h"
 
 void TextureBrowser_queueDraw(TextureBrowser& textureBrowser);
 
@@ -93,13 +92,6 @@ bool string_equal_start(const char* string, StringRange start) {
 }
 
 typedef std::set<CopiedString> TextureGroups;
-
-void TextureGroups_addWad(TextureGroups& groups, const char* archive) {
-	if (extension_equal(path_get_extension(archive), "wad")) {
-		groups.insert(archive);
-	}
-}
-typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addWad> TextureGroupsAddWadCaller;
 
 void TextureGroups_addShader(TextureGroups& groups, const char* shaderName) {
 	const char* texture = path_make_relative(shaderName, "textures/");
@@ -113,6 +105,10 @@ void TextureGroups_addShader(TextureGroups& groups, const char* shaderName) {
 typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addShader> TextureGroupsAddShaderCaller;
 
 void TextureGroups_addDirectory(TextureGroups& groups, const char* directory) {
+	// skip svn subdirs
+	if (strstr(directory, ".svn") != 0)
+		return;
+
 	groups.insert(directory);
 }
 typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addDirectory> TextureGroupsAddDirectoryCaller;
@@ -205,7 +201,6 @@ public:
 	GtkWidget* m_scr_win_tags;
 	GtkWidget* m_tag_notebook;
 	GtkWidget* m_search_button;
-	GtkWidget* m_shader_info_item;
 
 	std::set<CopiedString> m_all_tags;
 	GtkListStore* m_all_tags_list;
@@ -306,13 +301,18 @@ const char* TextureBrowser_GetSelectedShader(TextureBrowser& textureBrowser) {
 	return textureBrowser.shader.c_str();
 }
 
+/**
+ * @brief Updates statusbar with texture information
+ * @sa MainFrame::RedrawStatusText
+ * @sa MainFrame::SetStatusText
+ */
 void TextureBrowser_SetStatus(TextureBrowser& textureBrowser, const char* name) {
 	IShader* shader = QERApp_Shader_ForName( name);
 	qtexture_t* q = shader->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);
 	shader->DecRef();
-	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.c_str());
+	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.c_str() + strlen("textures/"));
 }
 
 void TextureBrowser_Focus(TextureBrowser& textureBrowser, const char* name);
@@ -328,15 +328,6 @@ void TextureBrowser_SetSelectedShader(TextureBrowser& textureBrowser, const char
 
 	// disable the menu item "shader info" if no shader was selected
 	IShader* ishader = QERApp_Shader_ForName(shader);
-	CopiedString filename = ishader->getShaderFileName();
-
-	if (filename.empty()) {
-		if (textureBrowser.m_shader_info_item != NULL) {
-			gtk_widget_set_sensitive(textureBrowser.m_shader_info_item, FALSE);
-		}
-	} else {
-		gtk_widget_set_sensitive(textureBrowser.m_shader_info_item, TRUE);
-	}
 
 	ishader->DecRef();
 }
@@ -538,7 +529,7 @@ bool texture_name_ignore(const char* name) {
 
 	/* only show the dummy texture - the other should not be used directly */
 	return strstr(strTemp.c_str(), "tex_terrain") != 0 &&
-	       strstr(strTemp.c_str(), "dummy") == 0;
+			strstr(strTemp.c_str(), "dummy") == 0;
 }
 
 class LoadShaderVisitor : public Archive::Visitor {
@@ -748,29 +739,15 @@ IShader* Texture_At(TextureBrowser& textureBrowser, int mx, int my) {
 	return 0;
 }
 
-/*
-==============
-SelectTexture
-
-  By mouse click
-==============
-*/
-void SelectTexture(TextureBrowser& textureBrowser, int mx, int my, bool bShift) {
+static void SelectTexture(TextureBrowser& textureBrowser, int mx, int my) {
 	IShader* shader = Texture_At(textureBrowser, mx, my);
 	if (shader != 0) {
-		if (bShift) {
-			if (shader->IsDefault())
-				globalOutputStream() << "ERROR: " << shader->getName() << " is not a shader, it's a texture.\n";
-			else
-				ViewShader( shader->getShaderFileName(), shader->getName() );
-		} else {
-			TextureBrowser_SetSelectedShader(textureBrowser, shader->getName());
-			TextureBrowser_textureSelected(shader->getName());
+		TextureBrowser_SetSelectedShader(textureBrowser, shader->getName());
+		TextureBrowser_textureSelected(shader->getName());
 
-			if (!FindTextureDialog_isOpen() && !textureBrowser.m_rmbSelected) {
-				UndoableCommand undo("textureNameSetSelected");
-				Select_SetShader(shader->getName());
-			}
+		if (!FindTextureDialog_isOpen() && !textureBrowser.m_rmbSelected) {
+			UndoableCommand undo("textureNameSetSelected");
+			Select_SetShader(shader->getName());
 		}
 	}
 }
@@ -806,7 +783,7 @@ void TextureBrowser_Tracking_MouseUp(TextureBrowser& textureBrowser) {
 }
 
 void TextureBrowser_Selection_MouseDown(TextureBrowser& textureBrowser, guint32 flags, int pointx, int pointy) {
-	SelectTexture(textureBrowser, pointx, textureBrowser.height - 1 - pointy, (flags & GDK_SHIFT_MASK) != 0);
+	SelectTexture(textureBrowser, pointx, textureBrowser.height - 1 - pointy);
 }
 
 /*
@@ -1138,7 +1115,6 @@ static void TextureBrowser_constructTreeStore (void) {
 	TextureGroups groups = TextureGroups_constructTreeView();
 	GtkTreeStore* store = gtk_tree_store_new(1, G_TYPE_STRING);
 	TextureGroups_constructTreeModel(groups, store);
-	std::set<CopiedString>::iterator iter;
 
 	GtkTreeModel* model = GTK_TREE_MODEL(store);
 
@@ -1176,7 +1152,7 @@ static void TextureBrowser_createTreeViewTree (void) {
 	g_signal_connect(g_TextureBrowser.m_treeViewTree, "row-activated", (GCallback) TreeView_onRowActivated, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), -1, "", renderer, "text", 0, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), -1, "", renderer, "text", 0, (char const*)0);
 
 	TextureBrowser_constructTreeStore();
 }
@@ -1193,10 +1169,6 @@ static GtkMenuItem* TextureBrowser_constructViewMenu (GtkMenu* menu) {
 	create_menu_item_with_mnemonic(menu, "Show All", "ShowAllTextures");
 	create_check_menu_item_with_mnemonic(menu, "Show shaders", "ToggleShowShaders");
 	create_check_menu_item_with_mnemonic(menu, "Fixed Size", "FixedSize");
-
-	menu_separator(menu);
-	g_TextureBrowser.m_shader_info_item = GTK_WIDGET(create_menu_item_with_mnemonic(menu, "Shader Info", "ShaderInfo"));
-	gtk_widget_set_sensitive(g_TextureBrowser.m_shader_info_item, FALSE);
 
 	return textures_menu_item;
 }
@@ -1305,15 +1277,6 @@ const Vector3& TextureBrowser_getBackgroundColour(TextureBrowser& textureBrowser
 void TextureBrowser_setBackgroundColour(TextureBrowser& textureBrowser, const Vector3& colour) {
 	textureBrowser.color_textureback = colour;
 	TextureBrowser_queueDraw(textureBrowser);
-}
-
-void TextureBrowser_shaderInfo(void) {
-	const char* name = TextureBrowser_GetSelectedShader(g_TextureBrowser);
-	IShader* shader = QERApp_Shader_ForName(name);
-
-	DoShaderInfoDlg(name, shader->getShaderFileName(), "Shader Info");
-
-	shader->DecRef();
 }
 
 void RefreshShaders(void) {
@@ -1443,11 +1406,11 @@ typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> T
 void TextureClipboard_textureSelected(const char* shader);
 
 void TextureBrowser_Construct (void) {
-	GlobalCommands_insert("ShaderInfo", FreeCaller<TextureBrowser_shaderInfo>());
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders>());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_hideunused_item), Accelerator('U'));
 	GlobalCommands_insert("ShowAllTextures", FreeCaller<TextureBrowser_showAll>(), Accelerator('A', (GdkModifierType)GDK_CONTROL_MASK));
 	GlobalCommands_insert("ToggleTextures", FreeCaller<TextureBrowser_toggleShow>(), Accelerator('T'));
+	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect>());
 	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaders_item));
 	GlobalToggles_insert("ToggleShowShaderlistOnly", FreeCaller<TextureBrowser_ToggleShowShaderListOnly>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaderlistonly_item));
 	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_fixedsize_item));

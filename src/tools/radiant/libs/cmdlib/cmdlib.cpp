@@ -32,46 +32,46 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "os/path.h"
 #include "container/array.h"
 
+#define OUTPUTBUFSIZE 8192
 
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 
 #include <unistd.h>
 
-bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
-	char fullcmd[2048];
-	char *pCmd;
-#ifdef _DEBUG
-	printf("Q_Exec damnit\n");
-#endif
-	switch (fork()) {
-	case - 1:
-		return true;
-		break;
-	case 0:
-		// always concat the command on linux
-		if (cmd) {
-			strcpy(fullcmd, cmd);
-		} else
-			fullcmd[0] = '\0';
-		if (cmdline) {
-			strcat(fullcmd, " ");
-			strcat(fullcmd, cmdline);
-		}
-		pCmd = fullcmd;
-		while (*pCmd == ' ')
-			pCmd++;
-#ifdef _DEBUG
-		printf("Running system...\n");
-		printf("Command: %s\n", pCmd);
-#endif
-		system( pCmd );
-#ifdef _DEBUG
-		printf ("system() returned\n");
-#endif
-		_exit (0);
-		break;
+char *Q_Exec (const char *cmd, const char *cmdline, const char *, bool)
+{
+	FILE *pipe;
+	char *cbuff;
+	char fullcmd[1024];
+	char temp[128];
+	int read = 0;
+
+	snprintf(fullcmd, sizeof(fullcmd) - 1, "%s %s", cmd, cmdline);
+	fullcmd[sizeof(fullcmd) - 1] = '\0';
+
+	pipe = popen(fullcmd, "r");
+	if (!pipe)
+		return strdup("Could not open pipe\n");
+
+	cbuff = (char *)malloc(OUTPUTBUFSIZE + 1);
+	if (!cbuff) {
+		pclose(pipe);
+		return strdup("Could not alocate memory\n");
 	}
-	return true;
+
+	cbuff[0] = '\0';
+
+	while (fgets(temp, sizeof(temp), pipe)) {
+		strncat(cbuff, temp, OUTPUTBUFSIZE - 1);
+		read++;
+	}
+
+	pclose(pipe);
+	if (!read) {
+		free(cbuff);
+		cbuff = NULL;
+	}
+	return cbuff;
 }
 
 #elif defined(WIN32)
@@ -79,11 +79,27 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *, bool) {
 #include <windows.h>
 
 // NOTE TTimo windows is VERY nitpicky about the syntax in CreateProcess
-bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole) {
+char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bCreateConsole)
+{
 	PROCESS_INFORMATION ProcessInformation;
 	STARTUPINFO startupinfo = {0};
 	DWORD dwCreationFlags;
-	GetStartupInfo (&startupinfo);
+	SECURITY_ATTRIBUTES sattr;
+	HANDLE readfh;
+	char *cbuff;
+    char cmdlineBuf[1024];
+
+    strncpy(cmdlineBuf, cmdline, sizeof(cmdlineBuf) - 1);
+    cmdlineBuf[sizeof(cmdlineBuf) - 1] = '\0';
+
+	// get handles and
+	GetStartupInfo(&startupinfo);
+
+	// initialize the security struct - to get the output handle
+	sattr.nLength = sizeof(SECURITY_ATTRIBUTES);
+	sattr.lpSecurityDescriptor = 0;
+	sattr.bInheritHandle = TRUE;
+
 	if (bCreateConsole)
 		dwCreationFlags = CREATE_NEW_CONSOLE | NORMAL_PRIORITY_CLASS;
 	else
@@ -95,27 +111,39 @@ bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateCon
 		while (*pCmd == ' ')
 			pCmd++;
 	}
-	pCmdline = cmdline;
+	pCmdline = cmdlineBuf;
 	if (pCmdline) {
 		while (*pCmdline == ' ')
 			pCmdline++;
 	}
+	// create a pipe to read the system output from
+	if (!CreatePipe(&readfh, &startupinfo.hStdOutput, &sattr, 0))
+		return NULL;
 
-	if (CreateProcess(
-	            pCmd,
-	            pCmdline,
-	            NULL,
-	            NULL,
-	            FALSE,
-	            dwCreationFlags,
-	            NULL,
-	            execdir,
-	            &startupinfo,
-	            &ProcessInformation
-	        ))
-		return true;
-	return false;
+	if (CreateProcess(pCmd, pCmdline, NULL, NULL, TRUE, dwCreationFlags,
+		NULL, execdir, &startupinfo, &ProcessInformation)) {
+
+		startupinfo.dwFlags = 0;
+		cbuff = (char *)malloc(OUTPUTBUFSIZE + 1);
+
+		// capture output
+		while (readfh) {
+			if (!ReadFile(readfh, cbuff + startupinfo.dwFlags, OUTPUTBUFSIZE - startupinfo.dwFlags, &ProcessInformation.dwProcessId, 0) || !ProcessInformation.dwProcessId) {
+				if (GetLastError() != ERROR_BROKEN_PIPE && ProcessInformation.dwProcessId) {
+					free(cbuff);
+					return NULL;
+				}
+
+				// Close the pipe
+				CloseHandle(readfh);
+				readfh = 0;
+			}
+
+			startupinfo.dwFlags += ProcessInformation.dwProcessId;
+		}
+		return cbuff;
+	}
+	return NULL;
 }
 
 #endif
-

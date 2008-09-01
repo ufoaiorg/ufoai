@@ -36,7 +36,6 @@ CLIENT_SRCS = \
 	client/cl_radar.c \
 	client/cl_research.c \
 	client/cl_save.c \
-	client/cl_shader.c \
 	client/cl_screen.c \
 	client/cl_sound.c \
 	client/cl_sequence.c \
@@ -101,14 +100,15 @@ CLIENT_SRCS = \
 	game/inv_shared.c \
 	\
 	renderer/r_bsp.c \
-	renderer/r_entity.c \
-	renderer/r_shader.c \
 	renderer/r_draw.c \
+	renderer/r_entity.c \
 	renderer/r_font.c \
 	renderer/r_image.c \
 	renderer/r_light.c \
 	renderer/r_lightmap.c \
+	renderer/r_main.c \
 	renderer/r_material.c \
+	renderer/r_misc.c \
 	renderer/r_mesh.c \
 	renderer/r_mesh_anim.c \
 	renderer/r_model.c \
@@ -117,15 +117,13 @@ CLIENT_SRCS = \
 	renderer/r_model_dpm.c \
 	renderer/r_model_md2.c \
 	renderer/r_model_md3.c \
-	renderer/r_main.c \
-	renderer/r_misc.c \
+	renderer/r_particle.c \
+	renderer/r_program.c \
+	renderer/r_sdl.c \
 	renderer/r_surface.c \
 	renderer/r_state.c \
 	renderer/r_sphere.c \
-	renderer/r_particle.c \
 	renderer/r_thread.c \
-	renderer/qgl.c \
-	renderer/r_sdl.c \
 	\
 	shared/byte.c \
 	shared/mathlib.c \

@@ -108,13 +108,13 @@ public:
 	}
 
 	value_type& operator[](std::size_t index) {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(index < size(), "array index out of bounds");
 #endif
 		return m_data[index];
 	}
 	const value_type& operator[](std::size_t index) const {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(index < size(), "array index out of bounds");
 #endif
 		return m_data[index];

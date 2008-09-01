@@ -448,16 +448,16 @@ menu serverinfo
 	}
 	text server_info
 	{
-		pos	"500 200"
+		pos		"500 200"
 		size	"420 550"
 		format	"20 200"
-		num	0
+		num		TEXT_STANDARD
 		height	"27"
 	}
 
 	string user_list_str
 	{
-		pos	"200 128"
+		pos		"200 128"
 		color	"1 1 1 1"
 		font	"f_normal_bold"
 		string	"_Userlist"
@@ -492,7 +492,7 @@ menu serverinfo
 		bgcolor	"0.3 0.3 0.3 0.4"
 		wheel
 		height	"19"
-		num	1
+		num	TEXT_LIST
 	}
 
 	string mapstring
@@ -680,7 +680,7 @@ menu mp_serverbrowser
 		bgcolor	"0.3 0.3 0.3 0.4"
 		wheel
 		height	"17"
-		num	1
+		num	TEXT_LIST
 		click	{ }
 		rclick	{ cmd "pingservers;" }
 	}
@@ -1480,7 +1480,7 @@ menu multiplayer_selectteam
 		format	"16 60"
 //		bgcolor	"1 1 1 0.5"
 		height	20
-		num		1
+		num		TEXT_LIST
 	}
 
 	text teamnum_status
@@ -1489,7 +1489,7 @@ menu multiplayer_selectteam
 		size	"422 16"
 		format	"16 60"
 //		bgcolor	"1 1 1 0.5"
-		num		0
+		num		TEXT_STANDARD
 		height	1
 	}
 
@@ -1584,7 +1584,7 @@ menu multiplayer_selectteam
 		size	"690 160"
 		font	"f_verysmall"
 		wheel
-		num	"38"
+		num		TEXT_CHAT_WINDOW
 		height	"10"
 		format	"16 0"
 		padding	5
@@ -1792,7 +1792,7 @@ menu chat_popup
 		format	"20 150"
 		font	"f_verysmall"
 		wheel
-		num		"38"
+		num		TEXT_CHAT_WINDOW
 		wheel
 		height	6
 	}

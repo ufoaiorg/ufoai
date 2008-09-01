@@ -17,7 +17,7 @@ item pbeampistol
 	reload		14
 	price		38000
 	size		20
-	buytype	weap_sec
+	is_secondary	true
 }
 
 item pbeampistol_ammo
@@ -31,7 +31,7 @@ item pbeampistol_ammo
 	scale		0.97
 	price		2500
 	size		3
-	buytype	weap_sec
+	is_secondary	true
 	dmgtype particlebeam
 
 	weapon_mod pbeampistol
@@ -98,7 +98,7 @@ item pbeamrifle
 	reload		14
 	price		59000
 	size		40
-	buytype	weap_pri
+	is_primary	true
 }
 
 item pbeamrifle_ammo
@@ -112,7 +112,7 @@ item pbeamrifle_ammo
 	scale		1.1
 	price		3500
 	size		5
-	buytype	weap_pri
+	is_primary	true
 	dmgtype particlebeam
 
 	weapon_mod pbeamrifle
@@ -198,7 +198,8 @@ item pbeamcannon
 	reload		16
 	price		44000
 	size		70
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item pbeamcannon_ammo
@@ -212,7 +213,8 @@ item pbeamcannon_ammo
 	scale		1.0
 	price		3000
 	size		8
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype particlebeam
 
 	weapon_mod pbeamcannon
@@ -280,5 +282,6 @@ item pbeamcannon_ammo
 		}
 	}
 }
+
 
 

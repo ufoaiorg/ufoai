@@ -241,7 +241,7 @@ void INV_CollectingItems (int won)
 			break;
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
-			/* First of all collect armours of dead or stunned actors (if won). */
+			/* First of all collect armour of dead or stunned actors (if won). */
 			if (won) {
 				/* (le->state & STATE_DEAD) includes STATE_STUN */
 				if (le->state & STATE_DEAD) {
@@ -403,7 +403,7 @@ void INV_EnableAutosell (const technology_t *tech)
 		if ((tech->type == RS_WEAPON) && (obj->reload)) {
 			for (i = 0; i < obj->numAmmos; i++) {
 				const objDef_t *ammo = obj->ammos[i];
-				const technology_t *ammotech = RS_GetTechByProvided(ammo->id);
+				const technology_t *ammotech = ammo->tech;
 				if (ammotech && (ammotech->produceTime < 0))
 					continue;
 				gd.autosell[ammo->idx] = qtrue;
@@ -643,8 +643,7 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 			int idx = objIdx[randNumber];
 			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
 		}
-		numObj--;
-		memmove(&objIdx[randNumber], &objIdx[randNumber + 1], (numObj - randNumber) * sizeof(objIdx[randNumber]));
+		REMOVE_ELEM(objIdx, randNumber, numObj);
 
 		/* Make sure that we don't have an infinite loop */
 		if (numObj <= 0)
@@ -793,15 +792,13 @@ void INV_InventoryList_f (void)
  * @param[in] fromContainer Container the item is in
  * @param[in] fromX X position of the item to move (in container fromContainer)
  * @param[in] fromY y position of the item to move (in container fromContainer)
- * @note If you set px or py to -1 the item is automatically placed on a free
+ * @note If you set px or py to -1/NONE the item is automatically placed on a free
  * spot in the targetContainer
- * @return qtrue if the move was successful
+ * @return qtrue if the move was successful.
  */
 qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py,
-	const invDef_t * fromContainer, int fromX, int fromY)
+	const invDef_t * fromContainer, invList_t *fItem)
 {
-	const invList_t *ic = NULL;
-	int et = -1;
 	int moved;
 
 	assert(base);
@@ -809,70 +806,16 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContai
 	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
 
+	if (!fItem)
+		return qfalse;
+
 	/** @todo this case should be removed as soon as right clicking in equip container
 	 * will try to put the item in a reasonable container automatically */
 	if ((px == -1 || py == -1) && toContainer == fromContainer)
 		return qtrue;
 
-	if (toContainer->id == csi.idEquip) {
-		/* a hack to add the equipment correctly into buy categories;
-		 * it is valid only due to the following property: */
-		assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
-
-		ic = Com_SearchInInventory(inv, fromContainer, fromX, fromY);
-		if (ic) {
-			et = ic->item.t->buytype;
-			if (et == BUY_MULTI_AMMO) {
-				et = (base->equipType == BUY_WEAP_SEC)
-					? BUY_WEAP_SEC
-					: BUY_WEAP_PRI;
-			}
-
-			/* If the 'to'-container is not the one that is currently shown or auto-placement is wanted ...*/
-			if (!BUYTYPE_MATCH(et, base->equipType) || px == -1 || py == -1) {
-				inv->c[csi.idEquip] = base->equipByBuyType.c[et];
-				Com_FindSpace(inv, &ic->item, &csi.ids[csi.idEquip], &px, &py);
-				if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
-					inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
-					return qfalse;
-				}
-			}
-		}
-	}
-
 	/* move the item */
-	moved = Com_MoveInInventory(inv, fromContainer, fromX, fromY, toContainer, px, py, NULL, NULL);
-
-	if (moved == IA_RELOAD_SWAP) {
-		/**
-		 * The ammo in the target-weapon was swapped out of it and added to the current container.
-		 * If the container is of type idEquip and the last added (by the swap) item in it has a wrong buytype then move it to the correct one.
-		 * Currently it assumes that there is only ONE item of this type (since weapons can only use one ammo which is swapped out).
-		 * @sa Com_MoveInInventoryIgnore (return IA_RELOAD_SWAP)
-		 */
-		if (fromContainer->id == csi.idEquip) {
-			/* Check buytype of first (last added) item */
-			if (!BUYTYPE_MATCH(et, base->equipType)) {
-				item_t itemTemp = {NONE_AMMO, NULL, inv->c[csi.idEquip]->item.t, 0, 0};
-				et = inv->c[csi.idEquip]->item.t->buytype;
-				if (BUY_PRI(et)) {
-					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
-					Com_TryAddToBuyType(&base->equipByBuyType, itemTemp, BUY_WEAP_PRI, 1);
-				} else if (BUY_SEC(et)) {
-					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
-					Com_TryAddToBuyType(&base->equipByBuyType, itemTemp, BUY_WEAP_SEC, 1);
-				}
-			}
-		}
-	}
-
-	/* end of hack */
-	if (ic && !BUYTYPE_MATCH(et, base->equipType)) {
-		base->equipByBuyType.c[et] = inv->c[csi.idEquip];
-		inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
-	} else {
-		base->equipByBuyType.c[base->equipType] = inv->c[csi.idEquip];
-	}
+	moved = Com_MoveInInventory(inv, fromContainer, fItem, toContainer, px, py, NULL, NULL);
 
 	switch (moved) {
 	case IA_MOVE:

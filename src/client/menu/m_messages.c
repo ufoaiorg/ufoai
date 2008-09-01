@@ -98,11 +98,15 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 
 	switch (type) {
 	case MSG_DEBUG:
-	case MSG_INFO:
+		break;
 	case MSG_STANDARD:
+		S_StartLocalSound("geoscape/standard");
+		break;
+	case MSG_INFO:
 	case MSG_TRANSFERFINISHED:
 	case MSG_PROMOTION:
 	case MSG_DEATH:
+		S_StartLocalSound("geoscape/info");
 		break;
 	case MSG_RESEARCH_PROPOSAL:
 	case MSG_RESEARCH_FINISHED:
@@ -111,13 +115,17 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
 		gd.numUnreadMails = -1;
-		/*S_StartLocalSound("misc/mail");*/
+		S_StartLocalSound("geoscape/mail");
 		break;
 	case MSG_UFOSPOTTED:
-	case MSG_TERRORSITE:
+		S_StartLocalSound("geoscape/ufo_spotted");
+		break;
 	case MSG_BASEATTACK:
+		S_StartLocalSound("geoscape/attack");
+		break;
+	case MSG_TERRORSITE:
 	case MSG_CRASHSITE:
-		S_StartLocalSound("misc/newmission");
+		S_StartLocalSound("geoscape/newmission");
 		break;
 	case MSG_CONSTRUCTION:
 		break;

@@ -93,4 +93,7 @@ void MN_Shutdown(void);
 qboolean MN_CheckCondition(menuNode_t *node);
 int MN_GetVisibleMenuCount(void);
 
+void MN_ScrollContainerUpdate_f(void);
+void MN_ScrollContainerNext_f(void);
+void MN_ScrollContainerPrev_f(void);
 #endif

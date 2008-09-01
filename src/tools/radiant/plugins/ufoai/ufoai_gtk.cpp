@@ -35,7 +35,7 @@ public:
 	}
 };
 
-#define NUM_TOOLBARBUTTONS 12
+#define NUM_TOOLBARBUTTONS 8
 
 /**
  * @brief
@@ -74,28 +74,12 @@ public:
 			return "ufoai_level7.bmp";
 		case 7:
 			return "ufoai_level8.bmp";
-		case 8:
-			return "ufoai_stepon.bmp";
-		case 9:
-			return "ufoai_actorclip.bmp";
-		case 10:
-			return "ufoai_weaponclip.bmp";
-		case 11:
-			return "ufoai_nodraw.bmp";
 		}
 		return NULL;
 	}
 	virtual EType getType() const {
 		switch ( mIndex ) {
 			/*		case 3: return eButton;*/
-		case 8:
-			return eToggleButton;
-		case 9:
-			return eToggleButton;
-		case 10:
-			return eToggleButton;
-		case 11:
-			return eToggleButton;
 		default:
 			return eButton;
 		}
@@ -118,14 +102,6 @@ public:
 			return "Level 7";
 		case 7:
 			return "Level 8";
-		case 8:
-			return "Stepon";
-		case 9:
-			return "Actorclip";
-		case 10:
-			return "Weaponclip";
-		case 11:
-			return "Nodraw";
 		}
 		return NULL;
 	}
@@ -147,14 +123,6 @@ public:
 			return "Show only level 7";
 		case 7:
 			return "Show only level 8";
-		case 8:
-			return "Hide stepon brushes";
-		case 9:
-			return "Hide actorclip brushes";
-		case 10:
-			return "Hide weaponclip brushes";
-		case 11:
-			return "Hide nodraw brushes";
 		}
 		return NULL;
 	}
@@ -184,18 +152,6 @@ public:
 			break;
 		case 7:
 			filter_level(CONTENTS_LEVEL8);
-			break;
-		case 8:
-			filter_stepon();
-			break;
-		case 9:
-			filter_actorclip();
-			break;
-		case 10:
-			filter_weaponclip();
-			break;
-		case 11:
-			filter_nodraw();
 			break;
 		}
 		SceneChangeNotify();

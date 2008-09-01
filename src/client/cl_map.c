@@ -97,7 +97,7 @@ static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to chang
 static float smoothAcceleration = 0.0f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
 static qboolean smoothNewClick = qfalse;		/**< New click on control panel to make geoscape rotate */
 
-const float safeAcceleration = 0.06f;
+static const float safeAcceleration = 0.06f;
 
 static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */
@@ -590,19 +590,13 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 			costheta = cos(angles[0] * torad);
 			sintheta = sin(angles[0] * torad);
 
-			angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
+			angles[1] = 180.0f - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
 			angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 		} else {
 			VectorSet(angles, theta, 180, 0);
 		}
 		/* Set zoomed scale of markers. */
-		/** @todo the model for missile_tr20 is too small.
-		 * I have hard coded these values as a quick fix, but a better way to vary
-		 * the zoom scale needs to be worked out. */
-		if (Q_strcmp(model, "missile_tr20") == 0)
-			zoom = 0.8f;
-		else
-			zoom = 0.4f;
+		zoom = 0.4f;
 
 		/* Draw */
 		R_Draw3DMapMarkers(angles, zoom, screenPos, model, skin);
@@ -871,7 +865,8 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		qboolean draw = qfalse;
-		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
+		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
+		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
 			draw = qtrue;
@@ -1156,7 +1151,8 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 
 	/* this function only concerns maps */
 	activeMenu = MN_GetActiveMenu();
-	assert(activeMenu);
+	if (!activeMenu)
+		return;
 	if (Q_strncmp(activeMenu->name, "map", 3))
 		return;
 
@@ -1176,6 +1172,12 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 	} else {
 		/* case 2D geoscape */
 		vec2_t diff;
+
+		/** @todo check why disabling combatzoom moves the viewpoint to the southpole
+		 *	  then this can be re-enabled maybe for map menu too
+		 */
+		if (Q_strncmp(activeMenu->name, "map_combatzoom", 13))
+			return;
 
 		Vector2Set(smoothFinal2DGeoscapeCenter, pointOnGeoscape[0], pointOnGeoscape[1]);
 		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
@@ -1452,7 +1454,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (!selectedMission->active)
 						MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
 				} else
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selectedMission->active ? "circleactive" : "circle");
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selectedMission->active ? "geoscape/circleactive" : "geoscape/circle");
 			}
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
@@ -1460,7 +1462,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
 				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
 			} else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/mission");
 
 			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse);
 		}
@@ -1468,6 +1470,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw installations */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		const char *symbol;
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (!installation)
 			continue;
@@ -1488,12 +1491,27 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			RADAR_DrawInMap(node, &installation->radar, installation->pos);
 
+		switch (INS_GetType(installation)) {
+		case INSTALLATION_RADAR:
+			symbol = "radar";
+			break;
+		case INSTALLATION_UFOYARD:
+			symbol = "ufoyard";
+			break;
+		case INSTALLATION_DEFENCE:
+			symbol = "defence";
+			break;
+		default:
+			symbol = "base";
+			break;
+		}
+
 		/* Draw installation */
 		if (cl_3dmap->integer) {
 			const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
-			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, "base", 0);
+			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, symbol, 0);
 		} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, va("geoscape/%s", symbol));
 		}
 
 		/* Draw base names */
@@ -1535,9 +1553,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 0);
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/baseattack");
 			else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/base");
 		}
 
 		/* Draw base names */
@@ -1608,14 +1626,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (cl_3dmap->integer)
 						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 					else
-						R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+						R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
 
 					/* Draw a circle around ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 						if (cl_3dmap->integer)
 							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 						else
-							R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+							R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
 					}
 				}
 
@@ -1710,12 +1728,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (cl_3dmap->integer && !gd.combatZoomedUfo)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
 			if (aircraft == selectedUFO && !gd.combatZoomedUfo) {
-				if (cl_3dmap->integer) {
+				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-				}
-				else {
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
-				}
+				else
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/circle");
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 		}
@@ -1789,7 +1805,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  */
 void MAP_DrawMap (const menuNode_t* node)
 {
-	float q = 0.0f;
 	float distance;
 	qboolean disableSolarRender = qfalse;
 
@@ -1806,9 +1821,9 @@ void MAP_DrawMap (const menuNode_t* node)
 		R_Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, curCampaign->map, disableSolarRender);
 	} else {
+		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		if (smoothRotation)
 			MAP_SmoothTranslate();
-		q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		R_DrawFlatGeoscape(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 	}
@@ -1860,7 +1875,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		default:
@@ -1872,7 +1887,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			if (selectedAircraft->status != AIR_IDLE) {
 				distance = MAP_GetDistance(selectedAircraft->pos,
 					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
-				Q_strcat(text_standard, va(_("ETA:\t%s\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
+				Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			}
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
@@ -1881,6 +1896,8 @@ void MAP_DrawMap (const menuNode_t* node)
 		Com_sprintf(text_standard, sizeof(text_standard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
 		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 		mn.menuText[TEXT_STANDARD] = text_standard;
+	} else {
+		mn.menuText[TEXT_STANDARD] = "";
 	}
 }
 

@@ -13,7 +13,7 @@ CFLAGS_M_OPTS=-MD -MT $@ -MP
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
-	CLIENT_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
+	CLIENT_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32 -lopengl32
 	SERVER_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
 	SHARED_EXT=dll
 	SHARED_LDFLAGS=-shared
@@ -24,6 +24,8 @@ ifeq ($(TARGET_OS),mingw32)
 	CFLAGS+=-DWINVER=0x501
 #	GAME_LIBS+=
 #	TOOLS_LIBS=
+else
+	CLIENT_LIBS+=-lGL
 endif
 
 # Linux like

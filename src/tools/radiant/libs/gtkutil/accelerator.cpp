@@ -571,5 +571,3 @@ void global_accel_group_disconnect(const Accelerator& accelerator, const Callbac
 		global_accel_group_remove_accelerator(accelerator);
 	}
 }
-
-

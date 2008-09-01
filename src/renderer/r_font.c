@@ -61,7 +61,7 @@ static void R_FontCleanCache (void)
 	for (i = 0; i < numInCache; i++) {
 		if (!fontCache[i].texPos)
 			continue;
-		qglDeleteTextures(1, &(fontCache[i].texPos));
+		glDeleteTextures(1, &(fontCache[i].texPos));
 		count++;
 		R_CheckError();
 	}
@@ -208,7 +208,7 @@ static char *R_FontGetLineWrap (const font_t * f, char *buffer, int maxWidth, in
 		oldW = w;
 		*space++ = ' ';
 		/* maybe there is space for one more word? */
-	};
+	}
 
 	TTF_SizeUTF8(f->font, buffer, &w, &h);
 	if (w > maxWidth) {
@@ -311,9 +311,9 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 	/* use a fixed texture number allocation scheme, starting offset at TEXNUM_FONTS */
 	cache->texPos = TEXNUM_FONTS + numInCache;
 	R_BindTexture(cache->texPos);
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixel->pixels);
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixel->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 }
 
@@ -393,8 +393,8 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 	}
 
 	/* convert to power of two */
-	for (w = 2; w < textSurface->w; w <<= 1);
-	for (h = 2; h < textSurface->h; h <<= 1);
+	for (w = 2; w < textSurface->w; w <<= 1) {}
+	for (h = 2; h < textSurface->h; h <<= 1) {}
 
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
@@ -445,7 +445,7 @@ static int R_FontGenerateGLSurface (const fontCache_t *cache, int x, int y, int 
 	/* draw it */
 	R_EnableBlend(qtrue);
 
-	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
+	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
 	memcpy(&texunit_diffuse.texcoord_array, default_texcoords, sizeof(float) * 8);
 
@@ -459,10 +459,10 @@ static int R_FontGenerateGLSurface (const fontCache_t *cache, int x, int y, int 
 	r_state.vertex_array_2d[6] = nx + nw;
 	r_state.vertex_array_2d[7] = ny + nh;
 
-	qglDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	/* set back to standard 3d pointer */
-	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 
 	R_EnableBlend(qfalse);
 
@@ -743,7 +743,7 @@ void R_FontInit (void)
 #ifdef SDL_TTF_VERSION
 	SDL_version version;
 
-	SDL_TTF_VERSION(&version);
+	SDL_TTF_VERSION(&version)
 	Com_Printf("SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
 		version.major,
 		version.minor,

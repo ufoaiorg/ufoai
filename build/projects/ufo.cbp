@@ -105,6 +105,7 @@
 			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
 		<Linker>
+			<Add library="GL" />
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
 			<Add library="SDL_mixer" />
@@ -262,10 +263,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_sequence.h" />
-		<Unit filename="..\..\src\client\cl_shader.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_shader.h" />
 		<Unit filename="..\..\src\client\cl_sound.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -515,10 +512,7 @@
 			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\anormtab.h" />
-		<Unit filename="..\..\src\renderer\qgl.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\qgl.h" />
+		<Unit filename="..\..\src\renderer\r_gl.h" />
 		<Unit filename="..\..\src\renderer\r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -599,7 +593,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_sdl.h" />
-		<Unit filename="..\..\src\renderer\r_shader.c">
+		<Unit filename="..\..\src\renderer\r_program.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_shader.h" />

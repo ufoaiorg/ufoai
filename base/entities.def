@@ -15,7 +15,7 @@ Starting point for a single player alien.
 
 
 /*QUAKED info_2x2_start (1 1 0) (-32 -32 -24) (32 32 32)
-Starting point for a ugv 2x2 units.
+Starting point for a ugv 2x2 unit.
 "team"	the number of the team for this player starting point. Only for multiplayer teams.
 */
 
@@ -38,13 +38,12 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]),
 "anim"		is this an animated model (default empty otherwise fill the animname)
 */
 
-
 /*QUAKED misc_particle (0 0 1) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8 noday
 Creates a particle. Particle properties can be set here with a preceding '-' or '+'.
 '-' property is set before calling the particle init function
 '+' does it afterwards
-noday means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlight.
 Wait times are of the format "a b". It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start.
+"noday"		particle is not shown at the day version of the map. E.g. useful for flare particles around streetlights
 "particle"	name of the particle definition
 "wait"		wait time
 */
@@ -55,8 +54,7 @@ Non-displayed light. All lights are for the night version. If you want them to s
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "target"	entity target name (info_null)
-"_cone"
-"origin"
+"_cone"		default is 10
 "angle"		Special values: UP -1; DOWN -2;
 */
 
@@ -64,8 +62,7 @@ Non-displayed light. All lights are for the night version. If you want them to s
 Non-displayed light. All lights are for the night version. If you want them to show up in the day version, too - mark the day flag
 "_color"	Color for the light RGB
 "light"		intensity 0-255
-"_cone"
-"origin"
+"_cone"		default is 10
 "angle"		Special values: UP -1; DOWN -2;
 */
 
@@ -74,6 +71,8 @@ Only used for the world.
 pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])
 "maxteams"	max. teams for multiplayer
 "maxlevel"	highest selectable level [1-8]
+"nextmap"	the map that should be started after this one was finished
+"randomspawn"	use random spawn positions for the actors to spawn them
 "light_night"	light intensity [e.g. 10 or 100]
 "angles_night"	light angle [pitch yaw 0]
 "color_night"	light color (RGB) [0.0-1.0]
@@ -103,6 +102,7 @@ Used to play ambient sounds (looped sounds)
 /*QUAKED misc_mission (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8
 Defines a mission target
 "particle"	display a particle
+"item"	item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity)
 "time"	if set the entity has to be occupied x rounds to win the mission
 "radius"	if the entity has to be occupied this defines the radius that is needed
 "health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
@@ -117,15 +117,16 @@ Defines the alien mission target
 "time"	if set the entity has to be occupied x rounds to win the mission
 "radius"	if the entity has to be occupied this defines the radius that is needed
 "health"	if set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)
+"group"         allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match
+"target"        the target that is triggered once the round time was hit
+"message"       a message that is show when the mission is completed
 */
 
 /*QUAKED func_door (0 .5 .8) ? level1 level2 level3 level4 level5 level6 level7 level8 opened
 "angle"		determines the opening direction
-"health"	if set, door must be shot open
+"health"	define the needed damage to destroy the door
 "group"		multipart doors can be grouped to open together
-"speed"		movement speed (100 default)
-"wait"		wait before returning (3 default, -1 = never return)
-"lip"		lip remaining at end of move (8 default)
+"particle"	particle id to be spawned after object is destroyed
 */
 
 /*QUAKED func_group (0 0 0) ?
@@ -137,13 +138,13 @@ Only for editor and terrain convenience.
 
 /*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
 "health"	damage until destroyed
-"particle"	particle id
+"particle"	particle id to be spawned after object is destroyed
 "material"	material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3
 */
 
 /*QUAKED func_rotating (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
 "health"	damage until destroyed
-"particle"	particle id
+"particle"	particle id to be spawned after object is destroyed
 "speed"		rotation speed
 "angle"		rotate around this angle - pitch = 0, yaw = 1, roll = 2
 */

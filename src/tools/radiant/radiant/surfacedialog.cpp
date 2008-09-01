@@ -42,7 +42,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkspinbutton.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkcheckbutton.h>	//Shamus: For Textool
 
 #include "signal/isignal.h"
 #include "generic/object.h"
@@ -56,7 +55,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/entry.h"
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/pointer.h"
-#include "gtkutil/glwidget.h"			//Shamus: For Textool
 #include "gtkutil/button.h"
 #include "map.h"
 #include "select.h"
@@ -65,45 +63,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "brush_primit.h"
 #include "xywindow.h"
 #include "mainframe.h"
-#include "gtkdlgs.h"
 #include "dialog.h"
-#include "brush.h"				//Shamus: for Textool
+#include "brush.h"
 #include "commands.h"
 #include "stream/stringstream.h"
 #include "grid.h"
 #include "textureentry.h"
-
-//NOTE: Proper functioning of Textool currently requires that the "#if 1" lines in
-//      brush_primit.h be changed to "#if 0". add/removeScale screws this up ATM. :-)
-//      Plus, Radiant seems to work just fine without that stuff. ;-)
-
-#define TEXTOOL_ENABLED 0
-
-#if TEXTOOL_ENABLED
-
-namespace TexTool {
-
-//Shamus: Textool function prototypes
-gboolean size_allocate(GtkWidget *, GtkAllocation *, gpointer);
-gboolean expose(GtkWidget *, GdkEventExpose *, gpointer);
-gboolean button_press(GtkWidget *, GdkEventButton *, gpointer);
-gboolean button_release(GtkWidget *, GdkEventButton *, gpointer);
-gboolean motion(GtkWidget *, GdkEventMotion *, gpointer);
-void flipX(GtkToggleButton *, gpointer);
-void flipY(GtkToggleButton *, gpointer);
-
-//End Textool function prototypes
-
-GtkWidget * g_textoolWin;
-//End Textool globals
-
-void queueDraw() {
-	gtk_widget_queue_draw(g_textoolWin);
-}
-
-}
-
-#endif
 
 inline void spin_button_set_step(GtkSpinButton* spin, gfloat step) {
 	gtk_spin_button_get_adjustment(spin)->step_increment = step;
@@ -267,12 +232,6 @@ static bool s_texture_selection_dirty = false;
 void SurfaceInspector_updateSelection() {
 	s_texture_selection_dirty = true;
 	SurfaceInspector_queueDraw();
-
-#if TEXTOOL_ENABLED
-	if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_BRUSHPRIMITIVES) {
-		TexTool::queueDraw();
-	}
-#endif
 }
 
 void SurfaceInspector_SelectionChanged(const Selectable& selectable) {
@@ -284,8 +243,6 @@ void SurfaceInspector_SetCurrent_FromSelected() {
 		s_texture_selection_dirty = false;
 		if (!g_SelectedFaceInstances.empty()) {
 			TextureProjection projection;
-//This *may* be the point before it fucks up... Let's see!
-//Yep, there was a call to removeScale in there...
 			Scene_BrushGetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 
 			SurfaceInspector_SetSelectedTexdef(projection);
@@ -336,30 +293,26 @@ const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags() {
 	return g_selectedFlags;
 }
 
-
-
 /*
 ===================================================
-
-  SURFACE INSPECTOR
-
+SURFACE INSPECTOR
 ===================================================
 */
 
 si_globals_t g_si_globals;
 
 
-// make the shift increments match the grid settings
-// the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
-// this depends on a scale value if you have selected a particular texture on which you want it to work:
-// we move the textures in pixels, not world units. (i.e. increment values are in pixel)
-// depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
-// increment * scale = gridsize
-// hscale and vscale are optional parameters, if they are zero they will be set to the default scale
-// NOTE: the default scale depends if you are using BP mode or regular.
-// For regular it's 0.5f (128 pixels cover 64 world units), for BP it's simply 1.0f
-// see fenris #2810
-void DoSnapTToGrid(float hscale, float vscale) {
+/**
+ * @brief make the shift increments match the grid settings
+ * the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
+ * this depends on a scale value if you have selected a particular texture on which you want it to work:
+ * we move the textures in pixels, not world units. (i.e. increment values are in pixel)
+ * depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
+ * @code increment * scale = gridsize @endcode
+ * hscale and vscale are optional parameters, if they are zero they will be set to the default scale
+ * @note the default scale is 0.5f (128 pixels cover 64 world units)
+ */
+static void DoSnapTToGrid(float hscale, float vscale) {
 	g_si_globals.shift[0] = static_cast<float>(float_to_integer(static_cast<float>(GetGridSize()) / hscale));
 	g_si_globals.shift[1] = static_cast<float>(float_to_integer(static_cast<float>(GetGridSize()) / vscale));
 	getSurfaceInspector().queueDraw();
@@ -370,12 +323,14 @@ void SurfaceInspector_GridChange() {
 		DoSnapTToGrid(Texdef_getDefaultTextureScale(), Texdef_getDefaultTextureScale());
 }
 
-// make the shift increments match the grid settings
-// the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
-// this depends on the current texture scale used?
-// we move the textures in pixels, not world units. (i.e. increment values are in pixel)
-// depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
-// increment * scale = gridsize
+/**
+ * @brief make the shift increments match the grid settings
+ * the objective being that the shift+arrows shortcuts move the texture by the corresponding grid size
+ * this depends on the current texture scale used?
+ * we move the textures in pixels, not world units. (i.e. increment values are in pixel)
+ * depending on the texture scale it doesn't take the same amount of pixels to move of GetGridSize()
+ * @code increment * scale = gridsize @endcode
+ */
 static void OnBtnMatchGrid(GtkWidget *widget, gpointer data) {
 	float hscale, vscale;
 	hscale = static_cast<float>(gtk_spin_button_get_value_as_float(getSurfaceInspector().m_hscaleIncrement.m_spin));
@@ -389,13 +344,14 @@ static void OnBtnMatchGrid(GtkWidget *widget, gpointer data) {
 	DoSnapTToGrid (hscale, vscale);
 }
 
-// DoSurface will always try to show the surface inspector
-// or update it because something new has been selected
-// Shamus: It does get called when the SI is hidden, but not when you select something new. ;-)
+/**
+ * @brief DoSurface will always try to show the surface inspector
+ * or update it because something new has been selected
+ * @note Shamus: It does get called when the SI is hidden, but not when you select something new. ;-)
+ */
 void DoSurface (void) {
 	if (getSurfaceInspector().GetWidget() == 0) {
 		getSurfaceInspector().Create();
-
 	}
 	getSurfaceInspector().Update();
 	getSurfaceInspector().importData();
@@ -420,23 +376,6 @@ static void OnBtnAxial(GtkWidget *widget, gpointer data) {
 	TextureProjection projection;
 	TexDef_Construct_Default(projection);
 
-#if TEXTOOL_ENABLED
-
-	if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_BRUSHPRIMITIVES) {
-		// Scale up texture width/height if in BP mode...
-		//NOTE: This may not be correct any more! :-P
-		if (!g_SelectedFaceInstances.empty()) {
-			Face & face = g_SelectedFaceInstances.last().getFace();
-			float x = face.getShader().m_state->getTexture().width;
-			float y = face.getShader().m_state->getTexture().height;
-			projection.m_brushprimit_texdef.coords[0][0] /= x;
-			projection.m_brushprimit_texdef.coords[0][1] /= y;
-			projection.m_brushprimit_texdef.coords[1][0] /= x;
-			projection.m_brushprimit_texdef.coords[1][1] /= y;
-		}
-	}
-#endif
-
 	Select_SetTexdef(projection);
 }
 
@@ -445,9 +384,7 @@ static void OnBtnFaceFit(GtkWidget *widget, gpointer data) {
 	SurfaceInspector_FitTexture();
 }
 
-typedef const char* FlagName;
-
-const FlagName surfaceflagNamesDefault[32] = {
+static const char* surfaceflagNamesDefault[32] = {
 	"surf1",
 	"surf2",
 	"surf3",
@@ -482,7 +419,7 @@ const FlagName surfaceflagNamesDefault[32] = {
 	"surf32"
 };
 
-const FlagName contentflagNamesDefault[32] = {
+static const char* contentflagNamesDefault[32] = {
 	"cont1",
 	"cont2",
 	"cont3",
@@ -549,7 +486,6 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 	global_accel_connect_window(window);
 
 	window_connect_focus_in_clear_focus_widget(window);
-
 
 	{
 		// replaced by only the vbox:
@@ -849,148 +785,97 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				}
 			}
 		}
-		if (!string_empty(g_pGameDescription->getKeyValue("si_flags"))) {
-			{
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new("Surface Flags"));
-				gtk_widget_show(GTK_WIDGET(frame));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
-				{
-					GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-					//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-					gtk_widget_show(GTK_WIDGET(vbox3));
-					gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-					{
-						GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-						gtk_widget_show(GTK_WIDGET(table));
-						gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-						gtk_table_set_row_spacings(table, 0);
-						gtk_table_set_col_spacings(table, 0);
-
-						GtkCheckButton** p = m_surfaceFlags;
-
-						for (int c = 0; c != 4; ++c) {
-							for (int r = 0; r != 8; ++r) {
-								GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getSurfaceFlagName(c * 8 + r)));
-								gtk_widget_show(GTK_WIDGET(check));
-								gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-								                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-								                 (GtkAttachOptions)(0), 0, 0);
-								*p++ = check;
-								guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-								g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-							}
-						}
-					}
-				}
-			}
-			{
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new("Content Flags"));
-				gtk_widget_show(GTK_WIDGET(frame));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
-				{
-					GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-					//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-					gtk_widget_show(GTK_WIDGET(vbox3));
-					gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-					{
-
-						GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-						gtk_widget_show(GTK_WIDGET(table));
-						gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-						gtk_table_set_row_spacings(table, 0);
-						gtk_table_set_col_spacings(table, 0);
-
-						GtkCheckButton** p = m_contentFlags;
-
-						for (int c = 0; c != 4; ++c) {
-							for (int r = 0; r != 8; ++r) {
-								GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getContentFlagName(c * 8 + r)));
-								gtk_widget_show(GTK_WIDGET(check));
-								gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-								                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-								                 (GtkAttachOptions)(0), 0, 0);
-								*p++ = check;
-								guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-								g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-							}
-						}
-
-						// not allowed to modify detail flag using Surface Inspector
-						gtk_widget_set_sensitive(GTK_WIDGET(m_contentFlags[BRUSH_DETAIL_FLAG]), FALSE);
-					}
-				}
-			}
-			{
-				GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
-				gtk_widget_show(GTK_WIDGET(frame));
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
-				{
-					GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-					gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-					gtk_widget_show(GTK_WIDGET(vbox3));
-					gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-
-					{
-						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-						gtk_widget_show(GTK_WIDGET(entry));
-						gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
-						m_valueEntryWidget = entry;
-						m_valueEntry.connect(entry);
-					}
-				}
-			}
-		}
-
-#if TEXTOOL_ENABLED
-		if (g_bp_globals.m_texdefTypeId == TEXDEFTYPEID_BRUSHPRIMITIVES)
-		// Shamus: Textool goodies...
 		{
-			GtkWidget * frame = gtk_frame_new("Textool");
-			gtk_widget_show(frame);
-			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
+			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Surface Flags"));
+			gtk_widget_show(GTK_WIDGET(frame));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 			{
-				//Prolly should make this a member or global var, so the SI can draw on it...
-				TexTool::g_textoolWin = glwidget_new(FALSE);
-				// --> Dunno, but this stuff may be necessary... (Looks like it!)
-				gtk_widget_ref(TexTool::g_textoolWin);
-				gtk_widget_set_events(TexTool::g_textoolWin, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK);
-				GTK_WIDGET_SET_FLAGS(TexTool::g_textoolWin, GTK_CAN_FOCUS);
-				// <-- end stuff...
-				gtk_widget_show(TexTool::g_textoolWin);
-				gtk_widget_set_usize(TexTool::g_textoolWin, -1, 240);	//Yeah!
-				gtk_container_add(GTK_CONTAINER(frame), TexTool::g_textoolWin);
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show(GTK_WIDGET(vbox3));
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
+				{
+					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+					gtk_widget_show(GTK_WIDGET(table));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+					gtk_table_set_row_spacings(table, 0);
+					gtk_table_set_col_spacings(table, 0);
 
-				g_signal_connect(G_OBJECT(TexTool::g_textoolWin), "size_allocate", G_CALLBACK(TexTool::size_allocate), NULL);
-				g_signal_connect(G_OBJECT(TexTool::g_textoolWin), "expose_event", G_CALLBACK(TexTool::expose), NULL);
-				g_signal_connect(G_OBJECT(TexTool::g_textoolWin), "button_press_event", G_CALLBACK(TexTool::button_press), NULL);
-				g_signal_connect(G_OBJECT(TexTool::g_textoolWin), "button_release_event", G_CALLBACK(TexTool::button_release), NULL);
-				g_signal_connect(G_OBJECT(TexTool::g_textoolWin), "motion_notify_event", G_CALLBACK(TexTool::motion), NULL);
-			}
-			{
-				GtkWidget * hbox = gtk_hbox_new(FALSE, 5);
-				gtk_widget_show(hbox);
-				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), FALSE, FALSE, 0);
-				// Checkboxes go here... (Flip X/Y)
-				GtkWidget * flipX = gtk_check_button_new_with_label("Flip X axis");
-				GtkWidget * flipY = gtk_check_button_new_with_label("Flip Y axis");
-				gtk_widget_show(flipX);
-				gtk_widget_show(flipY);
-				gtk_box_pack_start(GTK_BOX(hbox), flipX, FALSE, FALSE, 0);
-				gtk_box_pack_start(GTK_BOX(hbox), flipY, FALSE, FALSE, 0);
+					GtkCheckButton** p = m_surfaceFlags;
 
-//Instead of this, we probably need to create a vbox to put into the frame, then the
-//window, then the hbox. !!! FIX !!!
-//        gtk_container_add(GTK_CONTAINER(frame), hbox);
-
-//Hmm. Do we really need g_object_set_data? Mebbe not... And we don't! :-)
-//        g_object_set_data(G_OBJECT(flipX), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(flipX), "toggled", G_CALLBACK(TexTool::flipX), 0)));
-//        g_object_set_data(G_OBJECT(flipY), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(flipY), "toggled", G_CALLBACK(TexTool::flipY), 0)));
-//Instead, just do:
-				g_signal_connect(G_OBJECT(flipX), "toggled", G_CALLBACK(TexTool::flipX), NULL);
-				g_signal_connect(G_OBJECT(flipY), "toggled", G_CALLBACK(TexTool::flipY), NULL);
+					for (int c = 0; c != 4; ++c) {
+						for (int r = 0; r != 8; ++r) {
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getSurfaceFlagName(c * 8 + r)));
+							gtk_widget_show(GTK_WIDGET(check));
+							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+												(GtkAttachOptions)(0), 0, 0);
+							*p++ = check;
+							guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
+							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						}
+					}
+				}
 			}
 		}
-#endif
+		{
+			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Content Flags"));
+			gtk_widget_show(GTK_WIDGET(frame));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
+			{
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show(GTK_WIDGET(vbox3));
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
+				{
+
+					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+					gtk_widget_show(GTK_WIDGET(table));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+					gtk_table_set_row_spacings(table, 0);
+					gtk_table_set_col_spacings(table, 0);
+
+					GtkCheckButton** p = m_contentFlags;
+
+					for (int c = 0; c != 4; ++c) {
+						for (int r = 0; r != 8; ++r) {
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getContentFlagName(c * 8 + r)));
+							gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON(check), FALSE);
+							gtk_widget_show(GTK_WIDGET(check));
+							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+												(GtkAttachOptions)(0), 0, 0);
+							*p++ = check;
+							guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
+							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						}
+					}
+
+					// TODO: Why?
+					// not allowed to modify detail flag using Surface Inspector
+					gtk_widget_set_sensitive(GTK_WIDGET(m_contentFlags[BRUSH_DETAIL_FLAG]), FALSE);
+				}
+			}
+		}
+		{
+			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
+			gtk_widget_show(GTK_WIDGET(frame));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
+			{
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show(GTK_WIDGET(vbox3));
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
+
+				{
+					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+					gtk_widget_show(GTK_WIDGET(entry));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
+					m_valueEntryWidget = entry;
+					m_valueEntry.connect(entry);
+				}
+			}
+		}
 	}
 
 	return window;
@@ -1027,15 +912,7 @@ void SurfaceInspector::Update() {
 	}
 
 	texdef_t shiftScaleRotate;
-//Shamus: This is where we get into trouble--the BP code tries to convert to a "faked"
-//shift, rotate & scale values from the brush face, which seems to screw up for some reason.
-//!!! FIX !!!
-	/*globalOutputStream() << "--> SI::Update. About to do ShiftScaleRotate_fromFace()...\n";
-	SurfaceInspector_GetSelectedBPTexdef();
-	globalOutputStream() << "BP: (" << g_selectedBrushPrimitTexdef.coords[0][0] << ", " << g_selectedBrushPrimitTexdef.coords[0][1] << ")("
-		<< g_selectedBrushPrimitTexdef.coords[1][0] << ", " << g_selectedBrushPrimitTexdef.coords[1][1] << ")("
-		<< g_selectedBrushPrimitTexdef.coords[0][2] << ", " << g_selectedBrushPrimitTexdef.coords[1][2] << ") SurfaceInspector::Update\n";//*/
-//Ok, it's screwed up *before* we get here...
+
 	ShiftScaleRotate_fromFace(shiftScaleRotate, SurfaceInspector_GetSelectedTexdef());
 
 	// normalize again to hide the ridiculously high scale values that get created when using texlock
@@ -1072,29 +949,22 @@ void SurfaceInspector::Update() {
 		entry_set_float(m_rotateIncrement.m_entry, g_si_globals.rotate);
 	}
 
-	if (!string_empty(g_pGameDescription->getKeyValue("si_flags"))) {
-		ContentsFlagsValue flags(SurfaceInspector_GetSelectedFlags());
+	ContentsFlagsValue flags(SurfaceInspector_GetSelectedFlags());
 
-		entry_set_int(m_valueEntryWidget, flags.m_value);
+	entry_set_int(m_valueEntryWidget, flags.m_value);
 
-		for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
-			toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_surfaceFlags & (1 << (p - m_surfaceFlags)));
-		}
+	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
+		toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_surfaceFlags & (1 << (p - m_surfaceFlags)));
+	}
 
-		for (GtkCheckButton** p = m_contentFlags; p != m_contentFlags + 32; ++p) {
-			toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_contentFlags & (1 << (p - m_contentFlags)));
-		}
+	for (GtkCheckButton** p = m_contentFlags; p != m_contentFlags + 32; ++p) {
+		toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(*p), flags.m_contentFlags & (1 << (p - m_contentFlags)));
 	}
 }
 
-/*
-==============
-Apply
-
-Reads the fields to get the current texdef (i.e. widgets -> MAP)
-in brush primitive mode, grab the fake shift scale rot and compute a new texture matrix
-===============
-*/
+/**
+ * @brief Reads the fields to get the current texdef (i.e. widgets -> MAP)
+ */
 void SurfaceInspector::ApplyShader() {
 	StringOutputStream name(256);
 	name << GlobalTexturePrefix_get() << gtk_entry_get_text(m_texture);
@@ -1120,9 +990,6 @@ void SurfaceInspector::ApplyTexdef() {
 	shiftScaleRotate.rotate = static_cast<float>(gtk_spin_button_get_value_as_float(m_rotateIncrement.m_spin));
 
 	TextureProjection projection;
-//Shamus: This is the other place that screws up, it seems, since it doesn't seem to do the
-//conversion from the face (I think) and so bogus values end up in the thing... !!! FIX !!!
-//This is actually OK. :-P
 	ShiftScaleRotate_toFace(shiftScaleRotate, projection);
 
 	UndoableCommand undo("textureProjectionSetSelected");
@@ -1147,6 +1014,7 @@ void SurfaceInspector::ApplyFlags() {
 	int value = entry_get_int(m_valueEntryWidget);
 
 	UndoableCommand undo("flagsSetSelected");
+	/* set flags to the selection */
 	Select_SetFlags(ContentsFlagsValue(surfaceflags, contentflags, value, true));
 }
 
@@ -1371,621 +1239,3 @@ void SurfaceInspector_Construct() {
 void SurfaceInspector_Destroy() {
 	delete g_SurfaceInspector;
 }
-
-
-
-#if TEXTOOL_ENABLED
-
-namespace TexTool { // namespace hides these symbols from other object-files
-//Shamus: Textool functions, including GTK+ callbacks
-//NOTE: Black screen when TT first comes up is caused by an uninitialized Extent... !!! FIX !!!
-//      But... You can see down below that it *is* initialized! WTF?
-struct Extent {
-	float minX, minY, maxX, maxY;
-	float width(void) {
-		return fabs(maxX - minX);
-	}
-	float height(void) {
-		return fabs(maxY - minY);
-	}
-};
-
-//This seems to control the texture scale... (Yep! ;-)
-Extent extents = { -2.0f, -2.0f, + 2.0f, + 2.0f };
-brushprimit_texdef_t tm;						// Texture transform matrix
-Vector2 pts[c_brush_maxFaces];
-Vector2 center;
-int numPts;
-int textureNum;
-Vector2 textureSize;
-Vector2 windowSize;
-#define VP_PADDING	1.2
-#define PI			3.14159265358979
-bool lButtonDown = false;
-bool rButtonDown = false;
-//int dragPoint;
-//int anchorPoint;
-bool haveAnchor = false;
-brushprimit_texdef_t currentBP;
-brushprimit_texdef_t origBP;					// Original brush primitive (before we muck it up)
-float controlRadius = 5.0f;
-float rotationAngle = 0.0f;
-float rotationAngle2 = 0.0f;
-float oldRotationAngle;
-Vector2 rotationPoint;
-bool translatingX = false;						// Widget state variables
-bool translatingY = false;
-bool scalingX = false;
-bool scalingY = false;
-bool rotating = false;
-bool resizingX = false;							// Not sure what this means... :-/
-bool resizingY = false;
-float origAngle, origScaleX, origScaleY;
-Vector2 oldCenter;
-
-
-// Function prototypes (move up to top later...)
-
-void DrawCircularArc(Vector2 ctr, float startAngle, float endAngle, float radius);
-
-
-void CopyPointsFromSelectedFace(void) {
-	// Make sure that there's a face and winding to get!
-
-	if (g_SelectedFaceInstances.empty()) {
-		numPts = 0;
-		return;
-	}
-
-	Face & face = g_SelectedFaceInstances.last().getFace();
-	textureNum = face.getShader().m_state->getTexture().texture_number;
-	textureSize.x() = face.getShader().m_state->getTexture().width;
-	textureSize.y() = face.getShader().m_state->getTexture().height;
-//globalOutputStream() << "--> Texture #" << textureNum << ": " << textureSize.x() << " x " << textureSize.y() << "...\n";
-
-	currentBP = SurfaceInspector_GetSelectedTexdef().m_brushprimit_texdef;
-
-	face.EmitTextureCoordinates();
-	Winding & w = face.getWinding();
-	int count = 0;
-
-	for (Winding::const_iterator i = w.begin(); i != w.end(); i++) {
-		//globalOutputStream() << (*i).texcoord.x() << " " << (*i).texcoord.y() << ", ";
-		pts[count].x() = (*i).texcoord.x();
-		pts[count].y() = (*i).texcoord.y();
-		count++;
-	}
-
-	numPts = count;
-
-	//globalOutputStream() << " ..copied points\n";
-}
-
-brushprimit_texdef_t bp;
-//This approach is probably wrongheaded and just not right anyway. So, !!! FIX !!! [DONE]
-void CommitChanges(void) {
-	texdef_t t;									// Throwaway, since this is BP only
-
-	bp.coords[0][0] = tm.coords[0][0] * origBP.coords[0][0] + tm.coords[0][1] * origBP.coords[1][0];
-	bp.coords[0][1] = tm.coords[0][0] * origBP.coords[0][1] + tm.coords[0][1] * origBP.coords[1][1];
-	bp.coords[0][2] = tm.coords[0][0] * origBP.coords[0][2] + tm.coords[0][1] * origBP.coords[1][2] + tm.coords[0][2];
-//Ok, this works for translation...
-//	bp.coords[0][2] = tm.coords[0][0] * origBP.coords[0][2] + tm.coords[0][1] * origBP.coords[1][2] + tm.coords[0][2] * textureSize.x();
-	bp.coords[1][0] = tm.coords[1][0] * origBP.coords[0][0] + tm.coords[1][1] * origBP.coords[1][0];
-	bp.coords[1][1] = tm.coords[1][0] * origBP.coords[0][1] + tm.coords[1][1] * origBP.coords[1][1];
-	bp.coords[1][2] = tm.coords[1][0] * origBP.coords[0][2] + tm.coords[1][1] * origBP.coords[1][2] + tm.coords[1][2];
-//	bp.coords[1][2] = tm.coords[1][0] * origBP.coords[0][2] + tm.coords[1][1] * origBP.coords[1][2] + tm.coords[1][2] * textureSize.y();
-
-//This doesn't work:	g_brush_texture_changed();
-// Let's try this:
-//Note: We should only set an undo *after* the button has been released... !!! FIX !!!
-//Definitely *should* have an undo, though!
-//  UndoableCommand undo("textureProjectionSetSelected");
-	Select_SetTexdef(TextureProjection(t, bp, Vector3(0, 0, 0), Vector3(0, 0, 0)));
-//This is working, but for some reason the translate is causing the rest of the SI
-//widgets to yield bad readings... !!! FIX !!!
-//I.e., click on textool window, translate face wireframe, then controls go crazy. Dunno why.
-//It's because there were some uncommented out add/removeScale functions in brush.h and a
-//removeScale in brushmanip.cpp... :-/
-//Translate isn't working at all now... :-(
-//It's because we need to multiply in some scaling factor (prolly the texture width/height)
-//Yep. :-P
-}
-
-void UpdateControlPoints(void) {
-	CommitChanges();
-
-	// Init texture transform matrix
-
-	tm.coords[0][0] = 1.0f;
-	tm.coords[0][1] = 0.0f;
-	tm.coords[0][2] = 0.0f;
-	tm.coords[1][0] = 0.0f;
-	tm.coords[1][1] = 1.0f;
-	tm.coords[1][2] = 0.0f;
-}
-
-
-/*
-For shifting we have:
-*/
-/*
-The code that should provide reasonable defaults, but doesn't for some reason:
-It's scaling the BP by 128 for some reason, between the time it's created and the
-time we get back to the SI widgets:
-
-static void OnBtnAxial(GtkWidget *widget, gpointer data)
-{
-  UndoableCommand undo("textureDefault");
-  TextureProjection projection;
-  TexDef_Construct_Default(projection);
-  Select_SetTexdef(projection);
-}
-
-Select_SetTexdef() calls Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection)
-which is in brushmanip.h: This eventually calls
-Texdef_Assign(m_texdef, texdef, m_brushprimit_texdef, brushprimit_texdef) in class Face...
-which just copies from brushpr to m_brushpr...
-*/
-
-//Small problem with this thing: It's scaled to the texture which is all screwed up... !!! FIX !!! [DONE]
-//Prolly should separate out the grid drawing so that we can draw it behind the polygon.
-const float gridWidth = 1.3f;// Let's try an absolute height... WORKS!!!
-// NOTE that 2.0 is the height of the viewport. Dunno why... Should make collision
-//      detection easier...
-const float gridRadius = gridWidth * 0.5f;
-
-typedef const float WidgetColor[3];
-const WidgetColor widgetColor[10] = {
-	{ 1.0000f, 0.2000f, 0.0000f },			// Red
-	{ 0.9137f, 0.9765f, 0.4980f },			// Yellow
-	{ 0.0000f, 0.6000f, 0.3216f },			// Green
-	{ 0.6157f, 0.7726f, 0.8196f },			// Cyan
-	{ 0.4980f, 0.5000f, 0.4716f },			// Grey
-
-	// Highlight colors
-	{ 1.0000f, 0.6000f, 0.4000f },			// Light Red
-	{ 1.0000f, 1.0000f, 0.8980f },			// Light Yellow
-	{ 0.4000f, 1.0000f, 0.7216f },			// Light Green
-	{ 1.0000f, 1.0000f, 1.0000f },			// Light Cyan
-	{ 0.8980f, 0.9000f, 0.8716f }			// Light Grey
-};
-
-#define COLOR_RED			0
-#define COLOR_YELLOW		1
-#define COLOR_GREEN			2
-#define COLOR_CYAN			3
-#define COLOR_GREY			4
-#define COLOR_LT_RED		5
-#define COLOR_LT_YELLOW		6
-#define COLOR_LT_GREEN		7
-#define COLOR_LT_CYAN		8
-#define COLOR_LT_GREY		9
-
-void DrawControlWidgets(void) {
-	//Note that the grid should go *behind* the face outline... !!! FIX !!!
-	// Grid
-	float xScale = (extents.height() / extents.width()) * (textureSize.y() / textureSize.x());
-
-	glPushMatrix();
-	//Small problem with this approach: Changing the center point in the TX code doesn't seem to
-	//change anything here--prolly because we load a new identity matrix. A couple of ways to fix
-	//this would be to get rid of that code, or change the center to a new point by taking into
-	//account the transforms that we toss with the new identity matrix. Dunno which is better.
-	glLoadIdentity();
-	glScalef(xScale, 1.0, 1.0);				// Will that square it up? Yup.
-	glRotatef(static_cast<float>(radians_to_degrees(atan2(-currentBP.coords[0][1], currentBP.coords[0][0]))), 0.0, 0.0, -1.0);
-	glTranslatef(-center.x(), -center.y(), 0.0);
-
-	// Circle
-	glColor3fv(translatingX && translatingY ? widgetColor[COLOR_LT_YELLOW] : widgetColor[COLOR_YELLOW]);
-	glBegin(GL_LINE_LOOP);
-	DrawCircularArc(center, 0, 2.0f * PI, gridRadius * 0.16);
-
-	glEnd();
-
-	// Axes
-	glBegin(GL_LINES);
-	glColor3fv(translatingY && !translatingX ? widgetColor[COLOR_LT_GREEN] : widgetColor[COLOR_GREEN]);
-	glVertex2f(center.x(), center.y() + (gridRadius * 0.16));
-	glVertex2f(center.x(), center.y() + (gridRadius * 1.00));
-	glColor3fv(translatingX && !translatingY ? widgetColor[COLOR_LT_RED] : widgetColor[COLOR_RED]);
-	glVertex2f(center.x() + (gridRadius * 0.16), center.y());
-	glVertex2f(center.x() + (gridRadius * 1.00), center.y());
-	glEnd();
-
-	// Arrowheads
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glBegin(GL_TRIANGLES);
-	glColor3fv(translatingY && !translatingX ? widgetColor[COLOR_LT_GREEN] : widgetColor[COLOR_GREEN]);
-	glVertex2f(center.x(), center.y() + (gridRadius * 1.10));
-	glVertex2f(center.x() + (gridRadius * 0.06), center.y() + (gridRadius * 0.94));
-	glVertex2f(center.x() - (gridRadius * 0.06), center.y() + (gridRadius * 0.94));
-	glColor3fv(translatingX && !translatingY ? widgetColor[COLOR_LT_RED] : widgetColor[COLOR_RED]);
-	glVertex2f(center.x() + (gridRadius * 1.10), center.y());
-	glVertex2f(center.x() + (gridRadius * 0.94), center.y() + (gridRadius * 0.06));
-	glVertex2f(center.x() + (gridRadius * 0.94), center.y() - (gridRadius * 0.06));
-	glEnd();
-
-	// Arc
-	glBegin(GL_LINE_STRIP);
-	glColor3fv(rotating ? widgetColor[COLOR_LT_CYAN] : widgetColor[COLOR_CYAN]);
-	DrawCircularArc(center, 0.03f * PI, 0.47f * PI, gridRadius * 0.90);
-	glEnd();
-
-	// Boxes
-	glColor3fv(scalingY && !scalingX ? widgetColor[COLOR_LT_GREEN] : widgetColor[COLOR_GREEN]);
-	glBegin(GL_LINES);
-	glVertex2f(center.x() + (gridRadius * 0.20), center.y() + (gridRadius * 1.50));
-	glVertex2f(center.x() - (gridRadius * 0.20), center.y() + (gridRadius * 1.50));
-	glEnd();
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(center.x() + (gridRadius * 0.10), center.y() + (gridRadius * 1.40));
-	glVertex2f(center.x() - (gridRadius * 0.10), center.y() + (gridRadius * 1.40));
-	glVertex2f(center.x() - (gridRadius * 0.10), center.y() + (gridRadius * 1.20));
-	glVertex2f(center.x() + (gridRadius * 0.10), center.y() + (gridRadius * 1.20));
-	glEnd();
-
-	glColor3fv(scalingX && !scalingY ? widgetColor[COLOR_LT_RED] : widgetColor[COLOR_RED]);
-	glBegin(GL_LINES);
-	glVertex2f(center.x() + (gridRadius * 1.50), center.y() + (gridRadius * 0.20));
-	glVertex2f(center.x() + (gridRadius * 1.50), center.y() - (gridRadius * 0.20));
-	glEnd();
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(center.x() + (gridRadius * 1.40), center.y() + (gridRadius * 0.10));
-	glVertex2f(center.x() + (gridRadius * 1.40), center.y() - (gridRadius * 0.10));
-	glVertex2f(center.x() + (gridRadius * 1.20), center.y() - (gridRadius * 0.10));
-	glVertex2f(center.x() + (gridRadius * 1.20), center.y() + (gridRadius * 0.10));
-	glEnd();
-
-	glColor3fv(scalingX && scalingY ? widgetColor[COLOR_LT_CYAN] : widgetColor[COLOR_CYAN]);
-	glBegin(GL_LINE_STRIP);
-	glVertex2f(center.x() + (gridRadius * 1.50), center.y() + (gridRadius * 1.10));
-	glVertex2f(center.x() + (gridRadius * 1.50), center.y() + (gridRadius * 1.50));
-	glVertex2f(center.x() + (gridRadius * 1.10), center.y() + (gridRadius * 1.50));
-	glEnd();
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(center.x() + (gridRadius * 1.40), center.y() + (gridRadius * 1.40));
-	glVertex2f(center.x() + (gridRadius * 1.40), center.y() + (gridRadius * 1.20));
-	glVertex2f(center.x() + (gridRadius * 1.20), center.y() + (gridRadius * 1.20));
-	glVertex2f(center.x() + (gridRadius * 1.20), center.y() + (gridRadius * 1.40));
-	glEnd();
-
-	glPopMatrix();
-}
-
-void DrawControlPoints(void) {
-	glColor3f(1, 1, 1);
-	glBegin(GL_LINE_LOOP);
-
-	for (int i = 0; i < numPts; i++)
-		glVertex2f(pts[i].x(), pts[i].y());
-
-	glEnd();
-}
-
-// Note: Setup and all that jazz must be done by the caller!
-
-void DrawCircularArc(Vector2 ctr, float startAngle, float endAngle, float radius) {
-	float stepSize = (2.0f * PI) / 200.0f;
-
-	for (float angle = startAngle; angle <= endAngle; angle += stepSize)
-		glVertex2f(ctr.x() + radius * cos(angle), ctr.y() + radius * sin(angle));
-}
-
-
-void focus() {
-	if (numPts == 0)
-		return;
-
-	// Find selected texture's extents...
-
-	extents.minX = extents.maxX = pts[0].x();
-	extents.minY = extents.maxY = pts[0].y();
-
-	for (int i = 1; i < numPts; i++) {
-		if (pts[i].x() < extents.minX)
-			extents.minX = pts[i].x();
-		if (pts[i].x() > extents.maxX)
-			extents.maxX = pts[i].x();
-		if (pts[i].y() < extents.minY)
-			extents.minY = pts[i].y();
-		if (pts[i].y() > extents.maxY)
-			extents.maxY = pts[i].y();
-	}
-
-	// Do some viewport fitting stuff...
-
-	// TTimo: Apply a ratio to get the area we'll draw.
-	center.x() = 0.5f * (extents.minX + extents.maxX);
-	center.y() = 0.5f * (extents.minY + extents.maxY);
-	extents.minX = center.x() + VP_PADDING * (extents.minX - center.x());
-	extents.minY = center.y() + VP_PADDING * (extents.minY - center.y());
-	extents.maxX = center.x() + VP_PADDING * (extents.maxX - center.x());
-	extents.maxY = center.y() + VP_PADDING * (extents.maxY - center.y());
-
-	// TTimo: We want a texture with the same X / Y ratio.
-	// TTimo: Compute XY space / window size ratio.
-	float SSize = extents.width(), TSize = extents.height();
-	float ratioX = textureSize.x() * extents.width() / windowSize.x(),
-	               ratioY = textureSize.y() * extents.height() / windowSize.y();
-
-	if (ratioX > ratioY) {
-		TSize = (windowSize.y() * ratioX) / textureSize.y();
-	} else {
-		SSize = (windowSize.x() * ratioY) / textureSize.x();
-	}
-
-	extents.minX = center.x() - 0.5f * SSize, extents.maxX = center.x() + 0.5f * SSize;
-	extents.minY = center.y() - 0.5f * TSize, extents.maxY = center.y() + 0.5f * TSize;
-}
-
-gboolean size_allocate(GtkWidget * win, GtkAllocation * a, gpointer) {
-	windowSize.x() = a->width;
-	windowSize.y() = a->height;
-	queueDraw();
-	return false;
-}
-
-gboolean expose(GtkWidget * win, GdkEventExpose * e, gpointer) {
-	if (glwidget_make_current(win) == FALSE) {
-		globalOutputStream() << "    FAILED to make current! Oh, the agony! :-(\n";
-		return true;
-	}
-
-	CopyPointsFromSelectedFace();
-
-	if (!lButtonDown) {
-		focus();
-	}
-
-	// Probably should init button/anchor states here as well...
-//	rotationAngle = 0.0f;
-	glClearColor(0, 0, 0, 0);
-	glViewport(0, 0, e->area.width, e->area.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	//???
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
-
-	glOrtho(extents.minX, extents.maxX, extents.maxY, extents.minY, -1, 1);
-
-	glColor3f(1, 1, 1);
-	// draw the texture background
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glBindTexture(GL_TEXTURE_2D, textureNum);
-
-	glEnable(GL_TEXTURE_2D);
-	glBegin(GL_QUADS);
-	glTexCoord2f(extents.minX, extents.minY);
-	glVertex2f(extents.minX, extents.minY);
-	glTexCoord2f(extents.maxX, extents.minY);
-	glVertex2f(extents.maxX, extents.minY);
-	glTexCoord2f(extents.maxX, extents.maxY);
-	glVertex2f(extents.maxX, extents.maxY);
-	glTexCoord2f(extents.minX, extents.maxY);
-	glVertex2f(extents.minX, extents.maxY);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-
-	// draw the texture-space grid
-	glColor3fv(widgetColor[COLOR_GREY]);
-	glBegin(GL_LINES);
-
-	const int gridSubdivisions = 8;
-	const float gridExtents = 4.0f;
-
-	for (int i = 0; i < gridSubdivisions + 1; ++i) {
-		float y = i * (gridExtents / float(gridSubdivisions));
-		float x = i * (gridExtents / float(gridSubdivisions));
-		glVertex2f(0, y);
-		glVertex2f(gridExtents, y);
-		glVertex2f(x, 0);
-		glVertex2f(x, gridExtents);
-	}
-
-	glEnd();
-
-	DrawControlPoints();
-	DrawControlWidgets();
-	glwidget_swap_buffers(win);
-
-	return false;
-}
-
-Vector2 trans;
-Vector2 trans2;
-Vector2 dragPoint;	// Defined in terms of window space (+x/-y)
-Vector2 oldTrans;
-gboolean button_press(GtkWidget * win, GdkEventButton * e, gpointer) {
-	if (e->button == 1) {
-		lButtonDown = true;
-		GlobalUndoSystem().start();
-
-		origBP = currentBP;
-
-		origAngle = (origBP.coords[0][1] > 0 ? PI : -PI);	// Could also be -PI... !!! FIX !!! [DONE]
-
-		if (origBP.coords[0][0] != 0.0f)
-			origAngle = atan(origBP.coords[0][1] / origBP.coords[0][0]);
-
-		origScaleX = origBP.coords[0][0] / cos(origAngle);
-		origScaleY = origBP.coords[1][1] / cos(origAngle);
-		rotationAngle = origAngle;
-		oldCenter[0] = oldCenter[1] = 0;
-
-		float nx = e->x / windowSize.x() * extents.width() + extents.minX;
-		float ny = e->y / windowSize.y() * extents.height() + extents.minY;
-		trans.x() = -tm.coords[0][0] * nx - tm.coords[0][1] * ny;
-		trans.y() = -tm.coords[1][0] * nx - tm.coords[1][1] * ny;
-
-		dragPoint.x() = e->x, dragPoint.y() = e->y;
-		trans2.x() = nx, trans2.y() = ny;
-		oldRotationAngle = rotationAngle;
-		oldTrans.x() = tm.coords[0][2];
-		oldTrans.y() = tm.coords[1][2];
-		oldCenter.x() = center.x();
-		oldCenter.y() = center.y();
-
-		queueDraw();
-
-		return true;
-	}
-
-	return false;
-}
-
-gboolean button_release(GtkWidget * win, GdkEventButton * e, gpointer) {
-
-	if (e->button == 1) {
-		lButtonDown = false;
-
-		if (translatingX || translatingY) {
-			GlobalUndoSystem().finish("translateTexture");
-		} else if (rotating) {
-			GlobalUndoSystem().finish("rotateTexture");
-		} else if (scalingX || scalingY) {
-			GlobalUndoSystem().finish("scaleTexture");
-		} else if (resizingX || resizingY) {
-			GlobalUndoSystem().finish("resizeTexture");
-		} else {
-			GlobalUndoSystem().finish("textoolUnknown");
-		}
-
-		rotating = translatingX = translatingY = scalingX = scalingY
-		                          = resizingX = resizingY = false;
-
-		queueDraw();
-	} else if (e->button == 3) {
-		rButtonDown = false;
-	}
-
-	return true;
-}
-gboolean motion(GtkWidget * win, GdkEventMotion * e, gpointer) {
-	if (lButtonDown) {
-		if (translatingX || translatingY) {
-			float ptx = e->x / windowSize.x() * extents.width() + extents.minX;
-			float pty = e->y / windowSize.y() * extents.height() + extents.minY;
-
-			//Need to fix this to take the rotation angle into account, so that it moves along
-			//the rotated X/Y axis...
-			if (translatingX) {
-				tm.coords[0][2] = oldTrans.x() + (ptx - trans2.x()) * textureSize.x();
-			}
-
-			if (translatingY) {
-				tm.coords[1][2] = oldTrans.y() + (pty - trans2.y()) * textureSize.y();
-			}
-
-			//Need to update center.x/y() so that the widget translates as well. Also, oldCenter
-			//is badly named... Should be oldTrans or something like that... !!! FIX !!!
-			//Changing center.x/y() here doesn't seem to change anything... :-/
-			UpdateControlPoints();
-		} else if (rotating) {
-			// Shamus: New rotate code
-			int cx = (int)(windowSize.x() * (center.x() - extents.minX) / extents.width());
-			int cy = (int)(windowSize.y() * (center.y() - extents.minY) / extents.height());
-			Vector3 v1(dragPoint.x() - cx, dragPoint.y() - cy, 0), v2(e->x - cx, e->y - cy, 0);
-
-			vector3_normalise(v1);
-			vector3_normalise(v2);
-			float c = vector3_dot(v1, v2);
-			Vector3 cross = vector3_cross(v1, v2);
-			float s = vector3_length(cross);
-
-			if (cross[2] > 0)
-				s = -s;
-
-			// Problem with this: arcsin/cos seems to only return -90 to 90 and 0 to 180...
-			// Can't derive angle from that!
-
-			rotationAngle = acos(c);
-			if (cross[2] < 0)
-				rotationAngle = -rotationAngle;
-
-			// See brush_primit.cpp line 244 (Texdef_EmitTextureCoordinates()) for where texcoords come from...
-			tm.coords[0][0] =  c;
-			tm.coords[0][1] =  s;
-			tm.coords[1][0] = -s;
-			tm.coords[1][1] =  c;
-			tm.coords[0][2] = (-c * center.x() * textureSize.x() - s * center.y() * textureSize.y()) + center.x() * textureSize.x();
-			tm.coords[1][2] = ( s * center.x() * textureSize.x() - c * center.y() * textureSize.y()) + center.y() * textureSize.y();//*/
-			UpdateControlPoints(); // will cause a redraw
-		}
-
-		return true;
-	} else {								// Check for widget mouseovers
-		Vector2 tran;
-		float nx = e->x / windowSize.x() * extents.width() + extents.minX;
-		float ny = e->y / windowSize.y() * extents.height() + extents.minY;
-		// Translate nx/y to the "center" point...
-		nx -= center.x();
-		ny -= center.y();
-		ny = -ny;	// Flip Y-axis so that increasing numbers move up
-
-		tran.x() = tm.coords[0][0] * nx + tm.coords[0][1] * ny;
-		tran.y() = tm.coords[1][0] * nx + tm.coords[1][1] * ny;
-		//This doesn't seem to generate a valid distance from the center--for some reason it
-		//calculates a fixed number every time
-		//Look at nx/y above: they're getting fixed there! !!! FIX !!! [DONE]
-		float dist = sqrt((nx * nx) + (ny * ny));
-		// Normalize to the 2.0 = height standard (for now)
-		dist = dist * 2.0f / extents.height();
-		tran.x() = tran.x() * 2.0f / extents.height();
-		tran.y() = tran.y() * 2.0f / extents.height();
-
-		//Let's try this instead...
-		//Interesting! It seems that e->x/y are rotated
-		//(no, they're not--the TM above is what's doing it...)
-		nx = ((e->x / windowSize.y()) * 2.0f) - (windowSize.x() / windowSize.y());
-		ny = ((e->y / windowSize.y()) * 2.0f) - (windowSize.y() / windowSize.y());
-		ny = -ny;
-		//Cool! It works! Now just need to do rotation...
-
-		rotating = translatingX = translatingY = scalingX = scalingY
-		                          = resizingX = resizingY = false;
-
-		if (dist < (gridRadius * 0.16f)) {
-			translatingX = translatingY = true;
-		} else if (dist > (gridRadius * 0.16f) && dist < (gridRadius * 1.10f)
-		           && fabs(ny) < (gridRadius * 0.05f) && nx > 0) {
-			translatingX = true;
-		} else if (dist > (gridRadius * 0.16f) && dist < (gridRadius * 1.10f)
-		           && fabs(nx) < (gridRadius * 0.05f) && ny > 0) {
-			translatingY = true;
-		}
-		// Should tighten up the angle on this, or put this test after the axis tests...
-		else if (tran.x() > 0 && tran.y() > 0
-		         && (dist > (gridRadius * 0.82f) && dist < (gridRadius * 0.98f))) {
-			rotating = true;
-		}
-
-		queueDraw();
-
-		return true;
-	}
-
-	return false;
-}
-
-//It seems the fake tex coords conversion is screwing this stuff up... !!! FIX !!!
-//This is still wrong... Prolly need to do something with the oldScaleX/Y stuff...
-void flipX(GtkToggleButton *, gpointer) {
-	tm.coords[0][0] = -tm.coords[0][0];			// This should be correct now...
-	tm.coords[1][0] = -tm.coords[1][0];
-	UpdateControlPoints();
-}
-
-void flipY(GtkToggleButton *, gpointer) {
-	tm.coords[0][1] = -tm.coords[0][1];			// This should be correct now...
-	tm.coords[1][1] = -tm.coords[1][1];
-	UpdateControlPoints();
-}
-
-} // end namespace TexTool
-
-#endif

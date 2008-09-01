@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_lightmap.h"
+#include "r_light.h"
 #include "r_error.h"
 
 /**
@@ -119,7 +120,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	if (bufferMapTile != mod) {
 		bufferMapTile = mod;
 
-		if (r_state.vertex_buffers)
+		if (qglBindBuffer)
 			R_SetVertexBufferState(mod);
 		else
 			R_SetVertexArrayState(mod);
@@ -139,7 +140,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
  */
 static inline void R_DrawSurface (const mBspSurface_t *surf)
 {
-	qglDrawArrays(GL_POLYGON, surf->index, surf->numedges);
+	glDrawArrays(GL_POLYGON, surf->index, surf->numedges);
 
 	refdef.brush_count++;
 }
@@ -155,7 +156,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	int i;
 
 	for (i = 0; i < surfs->count; i++) {
-		if (surfs->surfaces[i]->levelflagToRenderIn != (1 << refdef.worldlevel))
+		if (surfs->surfaces[i]->frame != r_locals.frame)
 			continue;
 
 		R_SetSurfaceState(surfs->surfaces[i]);
@@ -179,9 +180,9 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 
 	R_EnableMultitexture(&texunit_lightmap, qtrue);
 
-	R_EnableLighting(qtrue);
+	R_EnableLighting(r_state.default_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableLighting(qfalse);
+	R_EnableLighting(NULL, qfalse);
 
 	R_EnableMultitexture(&texunit_lightmap, qfalse);
 }
@@ -195,9 +196,9 @@ void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 	if (!surfs->count)
 		return;
 
-	R_EnableWarp(qtrue);
+	R_EnableWarp(r_state.warp_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableWarp(qfalse);
+	R_EnableWarp(NULL, qfalse);
 }
 
 void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
@@ -206,9 +207,9 @@ void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
 		return;
 
 	R_EnableAlphaTest(qtrue);
-	R_EnableLighting(qtrue);
+	R_EnableLighting(r_state.default_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableLighting(qfalse);
+	R_EnableLighting(NULL, qfalse);
 	R_EnableAlphaTest(qfalse);
 }
 
@@ -237,7 +238,7 @@ void R_DrawBlendWarpSurfaces (mBspSurfaces_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
-	R_EnableWarp(qtrue);
+	R_EnableWarp(r_state.warp_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableWarp(qfalse);
+	R_EnableWarp(NULL, qfalse);
 }

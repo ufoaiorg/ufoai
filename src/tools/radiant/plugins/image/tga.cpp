@@ -29,6 +29,7 @@ typedef unsigned char byte;
 
 #include <stdlib.h>
 
+#include "autoptr.h"
 #include "generic/bitfield.h"
 #include "imagelib.h"
 #include "bytestreamutils.h"
@@ -265,7 +266,7 @@ public:
 
 template<typename Flip>
 Image* Targa_decodeImageData(const TargaHeader& targa_header, PointerInputStream& istream, const Flip& flip) {
-	RGBAImage* image = new RGBAImage(targa_header.width, targa_header.height);
+	AutoPtr<RGBAImage> image(new RGBAImage(targa_header.width, targa_header.height));
 
 	if (targa_header.image_type == 2 || targa_header.image_type == 3) {
 		switch (targa_header.pixel_size) {
@@ -280,7 +281,6 @@ Image* Targa_decodeImageData(const TargaHeader& targa_header, PointerInputStream
 			break;
 		default:
 			globalErrorStream() << "LoadTGA: illegal pixel_size '" << targa_header.pixel_size << "'\n";
-			image->release();
 			return 0;
 		}
 	} else if (targa_header.image_type == 10) {
@@ -293,12 +293,11 @@ Image* Targa_decodeImageData(const TargaHeader& targa_header, PointerInputStream
 			break;
 		default:
 			globalErrorStream() << "LoadTGA: illegal pixel_size '" << targa_header.pixel_size << "'\n";
-			image->release();
 			return 0;
 		}
 	}
 
-	return image;
+	return image.release();
 }
 
 const unsigned int TGA_FLIP_HORIZONTAL = 0x10;

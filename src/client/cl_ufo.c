@@ -678,13 +678,16 @@ static void UFO_RemoveFromGeoscape_f (void)
 
 /**
  * @brief Check events for UFOs: Appears or disappears on radars
- * @param[in] checkStatusChanged True if you want to check if UFO status changed from visible to non visible (and opposite)
+ * @param[in] checkStatusChanged qtrue if you want to make a check for UFO detection. qfalse means UFOs can only disappear from the radar.
+ * @return qtrue if any ufo was detected during this iteration, qfalse otherwise
  */
-void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
+qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 {
-	qboolean visible;
+	qboolean visible, detection;
 	int baseIdx, installationIdx;
 	aircraft_t *ufo, *aircraft;
+
+	detection = qfalse;
 
 	/* For each ufo in geoscape */
 	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
@@ -692,8 +695,8 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 		if (ufo->notOnGeoscape)
 			continue;
 
-		visible = ufo->visible;
-		ufo->visible = qfalse;
+		/* visible tells us whether or not a UFO is visible NOW, whereas ufo->visible tells us whether or not the UFO was visible PREVIOUSLY. */
+		visible = qfalse;
 
 		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -703,7 +706,7 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				continue;
 
 			/* maybe the ufo is already visible, don't reset it */
-			ufo->visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, visible);
+			visible |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, ufo->visible);
 		}
 
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
@@ -712,7 +715,7 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				continue;
 
 			/* maybe the ufo is already visible, don't reset it */
-			ufo->visible |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, visible);
+			visible |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, ufo->visible);
 		}
 
 		/* Check for ufo tracking by aircraft */
@@ -723,22 +726,27 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 					continue;
 				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 					/* maybe the ufo is already visible, don't reset it */
-					ufo->visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, qtrue);
+					visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, ufo->visible);
 			}
 
 		/* Check if ufo appears or disappears on radar */
-		if (checkStatusChanged && visible != ufo->visible) {
-			if (ufo->visible) {
-				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_STANDARD, NULL);
+		if (visible != ufo->visible) {
+			if (checkStatusChanged && visible) {
+				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_UFOSPOTTED, NULL);
+				/* Make this UFO visible */
+				ufo->visible = qtrue;
+				/* Set detection to qtrue if any ufo was detected */
+				detection = qtrue;
 				/* Store configuration of radar overlay to be able to set it back */
 				radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 				/* If this is the first UFO on geoscape, activate radar */
 				if (!radarOverlayWasSet)
 					MAP_SetOverlay("radar");
 				CL_GameTimeStop();
-			} else {
-				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_STANDARD, NULL);
-
+			} else if (!visible) {
+				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOSPOTTED, NULL);
+				/* Make this UFO invisible */
+				ufo->visible = qfalse;
 				/* Notify that ufo disappeared */
 				AIR_AircraftsUFODisappear(ufo);
 				MAP_NotifyUFODisappear(ufo);
@@ -749,6 +757,7 @@ void UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 			}
 		}
 	}
+	return detection;
 }
 
 /**

@@ -27,5 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_MARKET_H
 
 void BS_InitStartup(void);
+char *BS_BuyTypeName(const int buyCat);
 
 #endif /* CLIENT_CL_MARKET_H */

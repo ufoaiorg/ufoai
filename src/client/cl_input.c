@@ -56,7 +56,7 @@ extern pos3_t mousePendPos;
 /* power of two please */
 #define MAX_KEYQ 64
 
-struct {
+static struct {
 	unsigned char key;
 	int down;
 } keyq[MAX_KEYQ];
@@ -445,10 +445,10 @@ static void CL_ZoomOutQuant_f (void)
  */
 static invList_t* CL_GetLeftHandWeapon (le_t *actor)
 {
-	invList_t *weapon = LEFT(selActor);
+	invList_t *weapon = LEFT(actor);
 
 	if (!weapon || !weapon->item.m) {
-		weapon = RIGHT(selActor);
+		weapon = RIGHT(actor);
 		if (!weapon->item.t->holdTwoHanded)
 			weapon = NULL;
 	}

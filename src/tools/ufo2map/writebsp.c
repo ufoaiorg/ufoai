@@ -138,7 +138,7 @@ static void EmitFace (const face_t *f)
 static int EmitDrawNode_r (node_t *node)
 {
 	dBspNode_t *n;
-	face_t *f;
+	const face_t *f;
 	int i;
 
 	if (node->planenum == PLANENUM_LEAF) {
@@ -338,7 +338,7 @@ void EndBSPFile (const char *filename)
 	UnparseEntities();
 
 	/* write the map */
-	Com_Printf("Writing %s\n", filename);
+	Verb_Printf(VERB_NORMAL, "Writing %s\n", filename);
 	WriteBSPFile(filename);
 }
 
@@ -353,7 +353,7 @@ void BeginModel (int entityNum)
 	dBspModel_t *mod;
 	int start, end;
 	int j;
-	entity_t *e;
+	const entity_t *e;
 	vec3_t mins, maxs;
 
 	if (curTile->nummodels == MAX_MAP_MODELS)

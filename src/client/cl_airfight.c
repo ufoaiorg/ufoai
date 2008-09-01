@@ -60,18 +60,7 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
-	int i;
-	const int idx = projectile->idx;
-
-	gd.numProjectiles--;
-	assert(gd.numProjectiles >= idx);
-	memmove(projectile, projectile + 1, (gd.numProjectiles - idx) * sizeof(*projectile));
-	/* wipe the now vacant last slot */
-	memset(&gd.projectiles[gd.numProjectiles], 0, sizeof(gd.projectiles[gd.numProjectiles]));
-
-	for (i = idx; i < gd.numProjectiles; i++)
-		gd.projectiles[i].idx--;
-
+	REMOVE_ELEM_ADJUST_IDX(gd.projectiles, projectile->idx, gd.numProjectiles);
 	return qtrue;
 }
 
@@ -475,7 +464,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
-			CP_MissionIsOverByUfo(aircraft);;
+			CP_MissionIsOverByUfo(aircraft);
 		}
 	} else {
 		/* change destination of other projectiles aiming aircraft */
@@ -628,7 +617,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			/* Add message to message-system. */
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_MISSILE) {
+				if (gd.buildings[base->idx][i].buildingType == B_DEFENCE_MISSILE) {
 					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defence station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
@@ -640,7 +629,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			/* Add message to message-system. */
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_LASER) {
+				if (gd.buildings[base->idx][i].buildingType == B_DEFENCE_LASER) {
 					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defence station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
@@ -882,9 +871,9 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		}
 
 		if (AII_BaseCanShoot(base)) {
-			if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE))
+			if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE))
 				AIRFIGHT_BaseShoot(base, base->batteries, base->numBatteries);
-			if (B_GetBuildingStatus(base, B_DEFENSE_LASER))
+			if (B_GetBuildingStatus(base, B_DEFENCE_LASER))
 				AIRFIGHT_BaseShoot(base, base->lasers, base->numLasers);
 		}
 	}

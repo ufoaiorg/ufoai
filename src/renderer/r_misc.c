@@ -51,7 +51,7 @@ void R_InitMiscTexture (void)
 			data[y][x][3] = 255;
 		}
 	}
-	r_notexture = R_LoadImageData("***r_notexture***", (byte *) data, 8, 8, it_effect);
+	r_noTexture = R_LoadImageData("***r_notexture***", (byte *) data, 8, 8, it_effect);
 
 	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
 		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
@@ -61,7 +61,7 @@ void R_InitMiscTexture (void)
 			data[y][x][3] = rand() % 48;
 		}
 	}
-	r_warptexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
+	r_warpTexture = R_LoadImageData("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_effect);
 
 	/* empty pic in the texture chain for cinematic frames */
 	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_effect);
@@ -164,7 +164,7 @@ void R_ScreenShot_f (void)
 	}
 
 	/* Read the framebuffer into our storage */
-	qglReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	glReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 	R_CheckError();
 
 	/* Write */

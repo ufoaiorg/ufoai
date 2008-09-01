@@ -45,9 +45,6 @@ public:
 		delete pixels;
 	}
 
-	void release() {
-		delete this;
-	}
 	byte* getRGBAPixels() const {
 		return reinterpret_cast<byte*>(pixels);
 	}

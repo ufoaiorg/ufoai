@@ -40,10 +40,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "select.h"
 #include "map.h"
 #include "preferences.h"
-#include "gtkdlgs.h"
 #include "mainframe.h"
 #include "qe3.h"
 #include "commands.h"
+#include "dialogs/light.h"
 
 struct entity_globals_t {
 	Vector3 color_entity;
@@ -150,7 +150,7 @@ void Entity_connectSelected() {
 	}
 }
 
-int g_iLastLightIntensity;
+static int g_iLastLightIntensity = 100;
 
 void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
@@ -341,4 +341,3 @@ void Entity_Construct() {
 
 void Entity_Destroy() {
 }
-

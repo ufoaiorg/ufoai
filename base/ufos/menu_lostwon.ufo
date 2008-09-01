@@ -371,7 +371,7 @@ menu popup_recoverybaselist
 
 	text cp_uforecovery_baselist
 	{
-		num 1
+		num TEXT_LIST
 		pos	"290 320"
 		size "440 96"
 //		bgcolor "1 1 1 0.5"
@@ -481,7 +481,7 @@ menu popup_recoverynationlist
 
 	text cp_uforecovery_nationlist
 	{
-		num	1
+		num	TEXT_LIST
 		pos		"150 266"
 		size	"726 134"
 		format	"16 100"

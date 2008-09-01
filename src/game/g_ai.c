@@ -287,7 +287,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		const objDef_t *weapon;	/* Weapon pointer. */
 		const fireDef_t *fd;	/* Fire-definition pointer. */
 
-		/* optimization: reaction fire is automatic */;
+		/* optimization: reaction fire is automatic */
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
@@ -837,14 +837,14 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
 				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
 			} else {
-				G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], 0, 0, &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
+				G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
 				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
 			} else {
-				G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], 0, 0, &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
+				G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
 			}
 		}
 	}
@@ -863,8 +863,11 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		const int fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
+			G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
 			bestAia.shots--;
+			/* dies by our own shot? */
+			if (ent->state & STATE_DEAD)
+				return;
 			/* check for target's death */
 			if (bestAia.target->state & STATE_DEAD) {
 				/* search another target now */

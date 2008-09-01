@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class UndoMemento {
 public:
-	virtual void release() = 0;
+	virtual ~UndoMemento() {}
 };
 
 class Undoable {

@@ -176,13 +176,13 @@ const int TUs_used[PATHFINDING_DIRECTIONS];
 /* ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_MODELS		1024
 /* ufo2map/bsp.h, ufo2map/common/bspfile.c, ufo2map/map.c, ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
-#define	MAX_MAP_BRUSHES		8192
+#define	MAX_MAP_BRUSHES		16384
 /* ufo2map/common/bspfile.c, ufo2map/map.c, common/cmodel.c, shared/typedefs.h, ufo2map/common/bspfile.h */
 #define	MAX_MAP_ENTITIES	2048
 /* common/cmodel.c, common/common.h, shared/typedefs.h */
 #define	MAX_MAP_ENTSTRING	0x40000
 /* ufo2map/patches.c, common/cmodel.c, shared/typedefs.h */
-#define	MAX_MAP_TEXINFO		8192
+#define	MAX_MAP_TEXINFO		16384
 /* {ufo2map}, common/cmodel.c shared/typedefs.h */
 #define	MAX_MAP_PLANES		65536
 /* common/tracing.c, ufo2map/writebsp.c, client/cl_le.c, common/cmodel.c, server/sv_world.c, shared/typedefs.h */

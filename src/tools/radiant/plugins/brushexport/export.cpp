@@ -118,7 +118,7 @@ void ExportData::AddBrushFace(Face& f) {
 	// add face to current group
 	current->faces.push_back(&f);
 
-#ifdef _DEBUG
+#ifdef DEBUG
 	globalOutputStream() << "Added Face to group " << current->name.c_str() << "\n";
 #endif
 }
@@ -133,7 +133,7 @@ void ExportData::GetShaderNameFromShaderPath(const char* path, std::string& name
 	else
 		name = tmp.substr(last_slash + 1, tmp.length() - last_slash);
 
-#ifdef _DEBUG
+#ifdef DEBUG
 	globalOutputStream() << "Last: " << last_slash << " " << "length: " << (const unsigned int)tmp.length() << "Name: " << name.c_str() << "\n";
 #endif
 }

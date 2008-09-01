@@ -106,9 +106,6 @@ public:
 		return New<StoredArchiveFile>().scalar(name, archiveName, position, stream_size, file_size);
 	}
 
-	void release() {
-		Delete<StoredArchiveFile>().scalar(this);
-	}
 	size_type size() const {
 		return m_size;
 	}
@@ -138,9 +135,6 @@ public:
 		return New<StoredArchiveTextFile>().scalar(name, archiveName, position, stream_size);
 	}
 
-	void release() {
-		Delete<StoredArchiveTextFile>().scalar(this);
-	}
 	const char* getName() const {
 		return m_name.c_str();
 	}
@@ -171,9 +165,6 @@ public:
 		return m_istream.failed();
 	}
 
-	void release() {
-		delete this;
-	}
 	size_type size() const {
 		return m_size;
 	}
@@ -198,9 +189,6 @@ public:
 		return m_inputStream.failed();
 	}
 
-	void release() {
-		delete this;
-	}
 	const char* getName() const {
 		return m_name.c_str();
 	}

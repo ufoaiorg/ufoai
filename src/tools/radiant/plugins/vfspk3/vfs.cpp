@@ -49,10 +49,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <glib/gdir.h>
 #include <glib/gstrfuncs.h>
 
+#include "autoptr.h"
 #include "qerplugin.h"
 #include "idatastream.h"
 #include "iarchive.h"
-ArchiveModules& FileSystemQ3API_getArchiveModules();
+ArchiveModules& FileSystemAPI_getArchiveModules();
 #include "ifilesystem.h"
 
 #include "generic/callback.h"
@@ -62,7 +63,6 @@ ArchiveModules& FileSystemQ3API_getArchiveModules();
 #include "moduleobservers.h"
 
 #define VFS_MAXDIRS 8
-#define gamemode_get GlobalRadiant().getGameMode
 
 // =============================================================================
 // Global variables
@@ -236,8 +236,6 @@ static int string_compare_nocase_upper(const char* a, const char* b) {
 // returns a filehandle to the first file it can find (while it should
 // return the filehandle to the file in the most overriding pakfile, the
 // last one in the list that is).
-
-//!\todo Analyse the code in rtcw/q3 to see which order it sorts pak files.
 class PakLess {
 public:
 	bool operator()(const CopiedString& self, const CopiedString& other) const {
@@ -278,22 +276,6 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 		if (dir != 0) {
 			globalOutputStream() << "vfs directory: " << path << "\n";
 
-			const char* ignore_prefix = "";
-			const char* override_prefix = "";
-
-			{
-				// See if we are in "sp" or "mp" mapping mode
-				const char* gamemode = gamemode_get();
-
-				if (strcmp (gamemode, "sp") == 0) {
-					ignore_prefix = "mp_";
-					override_prefix = "sp_";
-				} else if (strcmp (gamemode, "mp") == 0) {
-					ignore_prefix = "sp_";
-					override_prefix = "mp_";
-				}
-			}
-
 			Archives archives;
 			Archives archivesOverride;
 			for (;;) {
@@ -304,15 +286,6 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 				const char *ext = strrchr (name, '.');
 				if ((ext == 0) || *(++ext) == '\0' || GetArchiveTable(archiveModules, ext) == 0)
 					continue;
-
-				// using the same kludge as in engine to ensure consistency
-				if (!string_empty(ignore_prefix) && strncmp(name, ignore_prefix, strlen(ignore_prefix)) == 0) {
-					continue;
-				}
-				if (!string_empty(override_prefix) && strncmp(name, override_prefix, strlen(override_prefix)) == 0) {
-					archivesOverride.insert(name);
-					continue;
-				}
 
 				archives.insert(name);
 			}
@@ -343,7 +316,7 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 //   (for instance when modifying the project settings)
 void Shutdown() {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		(*i).archive->release();
+		delete i->archive;
 	}
 	g_archives.clear();
 
@@ -407,15 +380,13 @@ std::size_t LoadFile (const char *filename, void **bufferptr, int index) {
 	fixed[PATH_MAX] = '\0';
 	FixDOSName (fixed);
 
-	ArchiveFile* file = OpenFile(fixed);
-
-	if (file != 0) {
+	AutoPtr<ArchiveFile> file(OpenFile(fixed));
+	if (file) {
 		*bufferptr = malloc (file->size() + 1);
 		// we need to end the buffer with a 0
 		((char*) (*bufferptr))[file->size()] = 0;
 
 		std::size_t length = file->getInputStream().read((InputStream::byte_type*) * bufferptr, file->size());
-		file->release();
 		return length;
 	}
 
@@ -425,14 +396,6 @@ std::size_t LoadFile (const char *filename, void **bufferptr, int index) {
 
 void FreeFile (void *p) {
 	free(p);
-}
-
-GSList* GetFileList (const char *dir, const char *ext, std::size_t depth) {
-	return GetListInternal (dir, ext, false, depth);
-}
-
-GSList* GetDirList (const char *dir, std::size_t depth) {
-	return GetListInternal (dir, 0, true, depth);
 }
 
 void ClearFileDirList (GSList **lst) {
@@ -463,10 +426,10 @@ const char* FindPath(const char* absolute) {
 }
 
 
-class Quake3FileSystem : public VirtualFileSystem {
+class UFOFileSystem : public VirtualFileSystem {
 public:
 	void initDirectory(const char *path) {
-		InitDirectory(path, FileSystemQ3API_getArchiveModules());
+		InitDirectory(path, FileSystemAPI_getArchiveModules());
 	}
 	void initialise() {
 		globalOutputStream() << "filesystem initialised\n";
@@ -495,7 +458,7 @@ public:
 	}
 
 	void forEachDirectory(const char* basedir, const FileNameCallback& callback, std::size_t depth) {
-		GSList* list = GetDirList(basedir, depth);
+		GSList* list = GetListInternal(basedir, 0, true, depth);
 
 		for (GSList* i = list; i != 0; i = g_slist_next(i)) {
 			callback(reinterpret_cast<const char*>((*i).data));
@@ -503,8 +466,9 @@ public:
 
 		ClearFileDirList(&list);
 	}
+
 	void forEachFile(const char* basedir, const char* extension, const FileNameCallback& callback, std::size_t depth) {
-		GSList* list = GetFileList(basedir, extension, depth);
+		GSList* list = GetListInternal(basedir, extension, false, depth);
 
 		for (GSList* i = list; i != 0; i = g_slist_next(i)) {
 			const char* name = reinterpret_cast<const char*>((*i).data);
@@ -514,15 +478,6 @@ public:
 		}
 
 		ClearFileDirList(&list);
-	}
-	GSList* getDirList(const char *basedir) {
-		return GetDirList(basedir, 1);
-	}
-	GSList* getFileList(const char *basedir, const char *extension) {
-		return GetFileList(basedir, extension, 1);
-	}
-	void clearFileDirList(GSList **lst) {
-		ClearFileDirList(lst);
 	}
 
 	const char* findFile(const char *name) {
@@ -558,7 +513,7 @@ public:
 	}
 };
 
-Quake3FileSystem g_Quake3FileSystem;
+UFOFileSystem g_UFOFileSystem;
 
 void FileSystem_Init() {
 }
@@ -567,5 +522,5 @@ void FileSystem_Shutdown() {
 }
 
 VirtualFileSystem& GetFileSystem() {
-	return g_Quake3FileSystem;
+	return g_UFOFileSystem;
 }

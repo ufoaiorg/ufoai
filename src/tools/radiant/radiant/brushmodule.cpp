@@ -38,10 +38,6 @@ LatchedBool g_useAlternativeTextureProjection(false, "Use alternative texture-pr
 bool g_showAlternativeTextureProjectionOption = false;
 bool g_brush_always_nodraw = true;
 
-bool getTextureLockEnabled() {
-	return g_brush_texturelock_enabled;
-}
-
 void Face_importSnapPlanes(bool value) {
 	Face::m_quantise = value ? quantiseInteger : quantiseFloating;
 }
@@ -99,9 +95,6 @@ void Brush_Construct() {
 	GlobalPreferenceSystem().registerPreference("TextureLock", BoolImportStringCaller(g_brush_texturelock_enabled), BoolExportStringCaller(g_brush_texturelock_enabled));
 	GlobalPreferenceSystem().registerPreference("BrushSnapPlanes", makeBoolStringImportCallback(FaceImportSnapPlanesCaller()), makeBoolStringExportCallback(FaceExportSnapPlanesCaller()));
 	GlobalPreferenceSystem().registerPreference("TexdefDefaultScale", FloatImportStringCaller(g_texdef_default_scale), FloatExportStringCaller(g_texdef_default_scale));
-
-	GridStatus_getTextureLockEnabled = getTextureLockEnabled;
-	g_texture_lock_status_changed = FreeCaller<GridStatus_onTextureLockEnabledChanged>();
 }
 
 void Brush_Destroy() {
@@ -192,4 +185,3 @@ public:
 typedef SingletonModule<BrushUFOAPI, BrushDependencies> BrushUFOModule;
 typedef Static<BrushUFOModule> StaticBrushUFOModule;
 StaticRegisterModule staticRegisterBrushUFO(StaticBrushUFOModule::instance());
-

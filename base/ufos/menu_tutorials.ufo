@@ -73,7 +73,7 @@ menu tutorials
 		pos	"640 220"
 		format	"20 0"
 		size	"260 280"
-		num	1
+		num		TEXT_LIST
 		height	"14"
 		mousefx true
 		wheel

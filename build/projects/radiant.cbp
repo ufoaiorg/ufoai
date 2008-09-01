@@ -52,6 +52,7 @@
 					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-Wno-non-virtual-dtor" />
+					<Add option="-mms-bitfields" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DDEBUG" />
@@ -244,9 +245,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\groupdialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\gtkdlgs.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\gtkmisc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -272,6 +270,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\parse.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\pathfinding.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.cpp">
@@ -321,9 +322,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\server.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\shaders.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\stacktrace.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -361,6 +359,24 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\xywindow.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\about.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\prism.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\light.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findbrush.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\texteditor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

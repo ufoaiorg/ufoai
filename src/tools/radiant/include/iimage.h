@@ -28,7 +28,7 @@ typedef unsigned char byte;
 
 class Image {
 public:
-	virtual void release() = 0;
+	virtual ~Image() {}
 	virtual byte* getRGBAPixels() const = 0;
 	virtual unsigned int getWidth() const = 0;
 	virtual unsigned int getHeight() const = 0;

@@ -339,8 +339,20 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_ITEM:
-					if (ref && *ref)
-						MN_DrawItemNode(node, ref);
+					if (ref && *ref) {
+						const objDef_t *od = INVSH_GetItemByIDSilent(ref);
+						if (od) {
+							MN_DrawItemNode(node, ref);
+						} else {
+							const aircraft_t *aircraft = AIR_GetAircraft(ref);
+							if (aircraft) {
+								assert(aircraft->tech);
+								MN_DrawModelNode(menu, node, ref, aircraft->tech->mdl);
+							} else {
+								Com_Printf("Unknown item: '%s'\n", ref);
+							}
+						}
+					}
 					break;
 
 				case MN_MODEL:
@@ -400,7 +412,10 @@ void MN_DrawMenus (void)
 
 				/* Get name and info about item */
 				MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-
+#ifdef DEBUG
+				/* Display stored container-coordinates of the item. */
+				Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
+#endif
 				MN_DrawTooltip("f_small", tooltiptext, mousePosX, mousePosY, itemToolTipWidth, 0);
 			} else {
 				MN_Tooltip(menu, menu->hoverNode, mousePosX, mousePosY);

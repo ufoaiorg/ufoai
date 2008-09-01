@@ -34,8 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL_ttf.h>
 
-#include "qgl.h"
-
+#include "r_gl.h"
 #include "r_state.h"
 #include "r_material.h"
 #include "r_image.h"
@@ -95,20 +94,9 @@ extern cvar_t *r_threads;
 extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
 extern cvar_t *r_maxlightmap;
-
-extern int gl_solid_format;
-extern int gl_alpha_format;
-extern int gl_compressed_solid_format;
-extern int gl_compressed_alpha_format;
-extern int gl_filter_min;
-extern int gl_filter_max;
-
-/*==================================================================== */
-
-void QR_UnLink(void);
-void QR_Link(void);
-
-/*==================================================================== */
+extern cvar_t *r_warp;
+extern cvar_t *r_lights;
+extern cvar_t *r_programs;
 
 /* private renderer variables */
 typedef struct rlocals_s {
@@ -119,6 +107,8 @@ typedef struct rlocals_s {
 
 	/* for box culling */
 	cBspPlane_t frustum[4];
+
+	int frame;
 
 	float world_matrix[16];
 } rlocals_t;
@@ -139,6 +129,13 @@ qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
 
+typedef enum {
+	GLHW_GENERIC,
+	GLHW_INTEL,
+	GLHW_ATI,
+	GLHW_NVIDIA
+} hardwareType_t;
+
 /** @brief GL config stuff */
 typedef struct {
 	const char *rendererString;
@@ -149,6 +146,24 @@ typedef struct {
 	int maxTextureUnits;
 
 	int videoMemory;
+
+	qboolean hwgamma;
+
+	int32_t maxAnisotropic;
+	qboolean anisotropic;
+
+	int gl_solid_format;
+	int gl_alpha_format;
+
+	int gl_compressed_solid_format;
+	int gl_compressed_alpha_format;
+
+	int gl_filter_min;
+	int gl_filter_max;
+
+	qboolean lod_bias;
+
+	hardwareType_t hardwareType;
 } rconfig_t;
 
 extern rconfig_t r_config;

@@ -516,7 +516,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	l->numsurfpt = w * h;
 	l->surfpt = malloc(l->numsurfpt * sizeof(*l->surfpt));
 	if (!l->surfpt)
-		Sys_Error("Surface too large to light (%i)", l->numsurfpt * sizeof(*l->surfpt));
+		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
 }
 
 /**
@@ -651,7 +651,7 @@ void CreateDirectLights (void)
 		target = ValueForKey(e, "target");
 		if (!strcmp(name, "light_spot") || target[0]) {
 			dl->type = emit_spotlight;
-			dl->stopdot = FloatForKey (e, "_cone");
+			dl->stopdot = FloatForKey(e, "_cone");
 			if (!dl->stopdot)
 				dl->stopdot = 10;
 			dl->stopdot = cos(dl->stopdot / 180.0f * M_PI);
@@ -763,7 +763,7 @@ void CreateDirectLights (void)
 		config.night_ambient_blue *= 128;
 	}
 
-	Com_Printf("%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
+	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
 

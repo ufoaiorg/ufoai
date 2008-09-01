@@ -191,9 +191,6 @@ static void MakeHeadnodePortals (tree_t *tree)
 	}
 }
 
-/*=================================================== */
-
-
 #define	BASE_WINDING_EPSILON	0.001
 #define	SPLIT_WINDING_EPSILON	0.001
 
@@ -407,9 +404,6 @@ void MakeTreePortals (tree_t *tree)
 	MakeTreePortals_r(tree->headnode);
 }
 
-
-/*============================================================== */
-
 /**
  * @brief Finds a brush side to use for texturing the given portal
  */
@@ -421,8 +415,8 @@ static void FindPortalSide (portal_t *p)
 	side_t *bestside;
 	float bestdot;
 
-	/* decide which content change is strongest */
-	/* solid > water, etc */
+	/* decide which content change is strongest
+	 * solid > water, etc */
 	viscontents = VisibleContents(p->nodes[0]->contentFlags ^ p->nodes[1]->contentFlags);
 	if (!viscontents)
 		return;

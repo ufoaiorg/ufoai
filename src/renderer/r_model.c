@@ -340,6 +340,8 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 	if (*skin < 0 || *skin >= mod->alias.meshes[*mesh].num_skins)
 		*skin = 0;
 
+	if (!mod->alias.meshes[*mesh].num_skins)
+		Com_Error(ERR_DROP, "Model with no skins");
 	return mod->alias.meshes[*mesh].skins[*skin].skin;
 }
 

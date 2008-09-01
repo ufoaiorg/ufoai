@@ -166,7 +166,10 @@ void Filters_constructMenu(GtkMenu* menu_in_menu) {
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Translucent", "FilterTranslucent");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Liquids", "FilterLiquids");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Caulk", "FilterCaulk");
+	create_check_menu_item_with_mnemonic(menu_in_menu, "Stepon", "FilterStepon");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Clips", "FilterClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu, "ActorClips", "FilterActorClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu, "WeaponClips", "FilterWeaponClips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lights", "FilterLights");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Structural", "FilterStructural");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Nodraw", "FilterNodraw");
@@ -192,10 +195,13 @@ void ConstructFilters() {
 
 	add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2', (GdkModifierType)GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_STEPON, "FilterStepon", Accelerator('3', (GdkModifierType)GDK_MOD1_MASK ));
 	add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", Accelerator('4', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('5', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('6', (GdkModifierType)GDK_MOD1_MASK ));
 	add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_ACTORCLIP, "FilterActorClips", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_WEAPONCLIP, "FilterWeaponClips", Accelerator('9', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('0', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('D', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_NODRAW, "FilterNodraw", accelerator_null());
@@ -236,5 +242,3 @@ public:
 typedef SingletonModule<FilterAPI> FilterModule;
 typedef Static<FilterModule> StaticFilterModule;
 StaticRegisterModule staticRegisterFilter(StaticFilterModule::instance());
-
-

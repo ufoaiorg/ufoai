@@ -112,6 +112,7 @@ GtkToolbar* create_plugin_toolbar() {
 	GtkToolbar *toolbar;
 
 	toolbar = GTK_TOOLBAR(gtk_toolbar_new());
+	gtk_toolbar_set_show_arrow(toolbar, TRUE);
 	gtk_toolbar_set_orientation(toolbar, GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(toolbar, GTK_TOOLBAR_ICONS);
 	gtk_widget_show(GTK_WIDGET(toolbar));
@@ -122,5 +123,3 @@ GtkToolbar* create_plugin_toolbar() {
 
 	return toolbar;
 }
-
-

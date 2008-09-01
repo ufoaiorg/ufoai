@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "archive.h"
 
+#include "autoptr.h"
 #include "idatastream.h"
 #include "iarchive.h"
 
@@ -46,27 +47,22 @@ public:
 	DirectoryArchive(const char* root) : m_root(root) {
 	}
 
-	void release() {
-		delete this;
-	}
 	virtual ArchiveFile* openFile(const char* name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);
-		DirectoryArchiveFile* file = new DirectoryArchiveFile(name, path.c_str());
+		AutoPtr<DirectoryArchiveFile> file(new DirectoryArchiveFile(name, path.c_str()));
 		if (!file->failed()) {
-			return file;
+			return file.release();
 		}
-		file->release();
 		return 0;
 	}
 	virtual ArchiveTextFile* openTextFile(const char* name) {
 		UnixPath path(m_root.c_str());
 		path.push_filename(name);
-		DirectoryArchiveTextFile* file = new DirectoryArchiveTextFile(name, path.c_str());
+		AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path.c_str()));
 		if (!file->failed()) {
-			return file;
+			return file.release();
 		}
-		file->release();
 		return 0;
 	}
 	virtual bool containsFile(const char* name) {

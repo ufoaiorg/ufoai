@@ -144,5 +144,3 @@ void GlobalWindowObservers_connectWidget(GtkWidget* widget) {
 	g_signal_connect(G_OBJECT(widget), "button_release_event", G_CALLBACK(modifiers_button_release), &g_window_observers);
 	g_signal_connect(G_OBJECT(widget), "motion_notify_event", G_CALLBACK(modifiers_motion), &g_window_observers);
 }
-
-

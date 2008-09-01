@@ -25,18 +25,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bsp.h"
 #include "check.h"
+#include "common/aselib.h"
 
-extern qboolean onlyents;
+mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
+int nummapbrushes;
 
-int			nummapbrushes;
-mapbrush_t	mapbrushes[MAX_MAP_BRUSHES];
+side_t brushsides[MAX_MAP_SIDES];
+int nummapbrushsides;
 
-int			nummapbrushsides;
-side_t		brushsides[MAX_MAP_SIDES];
 brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
-int			nummapplanes;
-plane_t		mapplanes[MAX_MAP_PLANES];
+/** an index of the planes containing the faces of the brushes */
+plane_t mapplanes[MAX_MAP_PLANES];
+int nummapplanes;
 
 #define	PLANE_HASHES	1024
 static plane_t *planehash[PLANE_HASHES];
@@ -438,7 +439,8 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
 
 	for (i = 0; i < 3; i++) {
 		if (brush->mins[0] < -MAX_WORLD_WIDTH || brush->maxs[0] > MAX_WORLD_WIDTH)
-			Com_Printf("entity %i, brush %i: bounds out of world range\n", brush->entitynum, brush->brushnum);
+			Com_Printf("entity %i, brush %i: bounds out of world range (%f:%f)\n",
+				brush->entitynum, brush->brushnum, brush->mins[0], brush->maxs[0]);
 		if (brush->mins[0] > MAX_WORLD_WIDTH || brush->maxs[0] < -MAX_WORLD_WIDTH) {
 			Com_Printf("entity %i, brush %i: no visible sides on brush\n", brush->entitynum, brush->brushnum);
 			VectorClear(brush->mins);
@@ -771,7 +773,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 	 * the rotation origin for the rest of the brushes (like func_door)
 	 * in the entity. After the entire entity is parsed, the planenums
 	 * and texinfos will be adjusted for the origin brush */
-	if (!config.fixMap && b->contentFlags & CONTENTS_ORIGIN) {
+	if (!checkOrFix && b->contentFlags & CONTENTS_ORIGIN) {
 		char string[32];
 		vec3_t origin;
 
@@ -805,6 +807,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 /**
  * @brief Takes all of the brushes from the current entity and adds them to the world's brush list.
  * @note Used by func_group
+ * @sa MoveModelToWorld
  */
 static void MoveBrushesToWorld (entity_t *mapent)
 {
@@ -837,6 +840,10 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	mapent->numbrushes = 0;
 }
 
+/**
+ * @brief If there was an origin brush, offset all of the planes and texinfo
+ * @note Used for e.g. func_door or func_rotating
+ */
 static void AdjustBrushesForOrigin (const entity_t *ent)
 {
 	int i, j;
@@ -871,6 +878,12 @@ static inline qboolean IsInlineModelEntity (const char *entName)
 	return inlineModelEntity;
 }
 
+/**
+ * @brief Searches the entities array for an entity with the parameter targetname
+ * that matches the searched target parameter
+ * @param[in] target The targetname value that the entity should have that we are
+ * looking for
+ */
 entity_t *FindTargetEntity (const char *target)
 {
 	int i;
@@ -931,7 +944,7 @@ static qboolean ParseMapEntity (const char *filename)
 
 	GetVectorForKey(mapent, "origin", mapent->origin);
 
-	/* if there was an origin brush, offset all of the planes and texinfo - e.g. func_door or func_rotating */
+	/* offset all of the planes and texinfo if needed */
 	if (VectorNotEmpty(mapent->origin))
 		AdjustBrushesForOrigin(mapent);
 
@@ -940,7 +953,6 @@ static qboolean ParseMapEntity (const char *filename)
 	entName = ValueForKey(mapent, "classname");
 	if (!config.performMapCheck && !config.fixMap && !strcmp("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
-		mapent->numbrushes = 0;
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
 		if (mapent->numbrushes == 0 && notCheckOrFix) {
@@ -980,9 +992,11 @@ void WriteMapFile (const char *filename)
 	int i, j, k;
 	int removed;
 
-	Com_Printf("writing map: '%s'\n", filename);
+	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
 
 	f = fopen(filename, "wb");
+	if (!f)
+		Sys_Error("Could not open %s for writing", filename);
 
 	removed = 0;
 	fprintf(f, "\n");
@@ -1037,7 +1051,16 @@ void LoadMapFile (const char *filename)
 
 	LoadScriptFile(filename);
 
+	memset(mapbrushes, 0, sizeof(mapbrush_t) * MAX_MAP_BRUSHES);
+	nummapbrushes = 0;
+
+	memset(brushsides, 0, sizeof(side_t) * MAX_MAP_SIDES);
 	nummapbrushsides = 0;
+
+	memset(side_brushtextures, 0, sizeof(brush_texture_t) * MAX_MAP_SIDES);
+
+	memset(mapplanes, 0, sizeof(plane_t) * MAX_MAP_PLANES);
+
 	num_entities = 0;
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles[0];

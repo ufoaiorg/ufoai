@@ -990,8 +990,12 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
 
+	/** @todo This might be duplicate, see TR_NotifyAircraftRemoved() call
+	 * on the top of this function */
 	for (i = 0, transfer = gd.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
 		if (!transfer->active)
+			continue;
+		if (!transfer->hasAircraft)
 			continue;
 		for (j = 0; j < MAX_AIRCRAFT; j++) {
 			if (transfer->aircraftArray[j] > aircraft->idx)
@@ -1254,7 +1258,7 @@ objDef_t *AII_GetAircraftItemByID (const char *id)
 	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
 		if (!Q_strncmp(id, csi.ods[i].id, MAX_VAR)) {
 			if (csi.ods[i].craftitem.type < 0)
-				Sys_Error("Same name for a none aircraft item object or not the correct buytype for this object (%s)\n", id);
+				Sys_Error("Same name for a none aircraft item object or not the correct filter-type for this object (%s)\n", id);
 			return &csi.ods[i];
 		}
 	}
@@ -1745,7 +1749,7 @@ void AIR_ListAircraftSamples_f (void)
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
  * @todo this should costs credits
- * @sa AIRFIGHT_AddProjectile for the basedefense reload code
+ * @sa AIRFIGHT_AddProjectile for the basedefence reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
 {

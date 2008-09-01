@@ -122,23 +122,12 @@ alienBase_t* AB_BuildBase (vec2_t pos)
  */
 void AB_DestroyBase (alienBase_t *base)
 {
-	int i;
-	int idx;
-
 	assert(base);
 
-	idx = base->idx;
-	numAlienBases--;
-	assert(numAlienBases >= idx);
-	memmove(base, base + 1, (numAlienBases - idx) * sizeof(*base));
-	/* wipe the now vacant last slot */
-	memset(&alienBases[numAlienBases], 0, sizeof(alienBases[numAlienBases]));
-
-	for (i = idx; i < numAlienBases; i++)
-		alienBases[i].idx--;
+	REMOVE_ELEM_ADJUST_IDX(alienBases, base->idx, numAlienBases);
 
 	/* Alien loose all their interest in supply if there's no base to send the supply */
-	if (!numAlienBases)
+	if (numAlienBases == 0)
 		ccs.interest[INTERESTCATEGORY_SUPPLY] = 0;
 }
 

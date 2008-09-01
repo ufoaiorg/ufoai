@@ -91,7 +91,7 @@ public:
 	}
 	typedef MemberCaller<NodeType<Type>, &NodeType<Type>::initialise> InitialiseCaller;
 	TypeId getTypeId() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(m_typeId != NODETYPEID_NONE, "node-type " << makeQuoted(Name()) << " used before being initialised");
 #endif
 		return m_typeId;
@@ -141,7 +141,7 @@ public:
 
 	class Symbiot {
 	public:
-		virtual void release() = 0;
+		virtual ~Symbiot() {}
 	};
 
 private:
@@ -176,7 +176,7 @@ public:
 	void DecRef() {
 		ASSERT_MESSAGE(m_refcount < (1 << 24), "Node::decref: uninitialised refcount");
 		if (--m_refcount == 0) {
-			m_symbiot->release();
+			delete m_symbiot;
 		}
 	}
 	std::size_t getReferenceCount() const {
@@ -207,9 +207,7 @@ class NullNode : public Node::Symbiot {
 public:
 	NullNode() : m_node(this, 0, m_casts) {
 	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}
@@ -394,7 +392,7 @@ public:
 	}
 	typedef MemberCaller<InstanceType<Type>, &InstanceType<Type>::initialise> InitialiseCaller;
 	TypeId getTypeId() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(m_typeId != INSTANCETYPEID_NONE, "instance-type " << makeQuoted(Name()) << " used before being initialised");
 #endif
 		return m_typeId;
@@ -817,6 +815,8 @@ class SelectChildren : public scene::Traversable::Walker {
 public:
 	SelectChildren(const scene::Path& root)
 			: m_path(root) {
+	}
+	~SelectChildren() {
 	}
 	bool pre(scene::Node& node) const {
 		m_path.push(makeReference(node));

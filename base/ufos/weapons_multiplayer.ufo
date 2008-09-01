@@ -20,7 +20,8 @@ item chaingun
 	scale		1.25
 	ammo		200
 	reload		20
-	buytype		weap_pri
+	is_primary	true
+	is_heavy	true
 	notonmarket	true
 	size		1
 }
@@ -34,7 +35,8 @@ item chaingun_ammo
 	shape		"0 0 4 2"
 	center		"-3 -6 0"
 	scale		1.6
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype normal
 	notonmarket	true
 	size		1
@@ -124,7 +126,7 @@ item shotgun
 	reload		20
 	price		1500
 	size		25
-	buytype	weap_pri
+	is_primary	true
 }
 
 item shotgun_ammo
@@ -138,7 +140,7 @@ item shotgun_ammo
 	scale		1.5
 	price		35
 	size		4
-	buytype	weap_pri
+	is_primary	true
 	dmgtype blast
 
 	weapon_mod shotgun
@@ -211,7 +213,8 @@ item xaw95
 	reload		25
 	price		50000
 	size		40
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 }
 
 item xaw95_ammo
@@ -225,7 +228,8 @@ item xaw95_ammo
 	scale		.5
 	price		7500
 	size		10
-	buytype	weap_pri
+	is_primary	true
+	is_heavy	true
 	dmgtype normal
 
 	weapon_mod xaw95
@@ -292,4 +296,5 @@ item xaw95_ammo
 		}
 	}
 }
+
 

@@ -32,9 +32,7 @@ public:
 	~SimpleTokenWriter() {
 		writeSeparator();
 	}
-	void release() {
-		delete this;
-	}
+
 	void nextLine() {
 		m_separator = '\n';
 	}
@@ -69,8 +67,8 @@ private:
 	char m_separator;
 };
 
-inline TokenWriter& NewSimpleTokenWriter(TextOutputStream& ostream) {
-	return *(new SimpleTokenWriter(ostream));
+inline TokenWriter* NewSimpleTokenWriter(TextOutputStream& ostream) {
+	return new SimpleTokenWriter(ostream);
 }
 
 #endif

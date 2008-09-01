@@ -109,7 +109,7 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 	CL_UpdateTime();
 
 	/* Update visible status of UFO and detected UFO on radar */
-	UFO_CampaignCheckEvents(qtrue);
+	UFO_CampaignCheckEvents(qfalse);
 
 	return qtrue;
 }

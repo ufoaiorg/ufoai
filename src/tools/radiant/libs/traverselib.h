@@ -224,7 +224,7 @@ inline void swap(TraversableNodeSet& self, TraversableNodeSet& other) {
 }
 }
 
-
+/** Single traversable node. */
 class TraversableNode : public scene::Traversable {
 public:
 	TraversableNode() : m_node(0), m_observer(0) {
@@ -245,7 +245,9 @@ public:
 		}
 		m_observer = 0;
 	}
+	/** Insert a contained node. */
 	void insert(scene::Node& node) {
+		// Throw an exception if there is already a contained node
 		ASSERT_MESSAGE(m_node == 0, "TraversableNode::insert - element already exists");
 
 		m_node = &node;
@@ -334,6 +336,11 @@ public:
 
 class TraversableObserverRelay : public ReferenceSet<scene::Traversable::Observer>, public scene::Traversable::Observer {
 public:
+	TraversableObserverRelay() {
+	}
+	~TraversableObserverRelay() {
+	}
+
 	void insert(scene::Node& node) {
 		forEach(TraversableObserverInsert(node));
 	}

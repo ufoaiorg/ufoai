@@ -781,7 +781,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 						ic->item = CL_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						Com_RemoveFromInventory(chr->inv, &csi.ids[container], ic->x, ic->y);
+						Com_RemoveFromInventory(chr->inv, &csi.ids[container], ic);
 					}
 				}
 			}
@@ -803,7 +803,7 @@ void CL_CleanTempInventory (base_t* base)
 	if (!base)
 		return;
 
-	INVSH_DestroyInventory(&base->equipByBuyType);
+	INVSH_DestroyInventory(&base->bEquipment);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (csi.ids[k].temp) {
@@ -814,7 +814,7 @@ void CL_CleanTempInventory (base_t* base)
 }
 
 /**
- * @brief Displays actor equipment and unused items in proper buytype category.
+ * @brief Displays actor equipment and unused items in proper (filter) category.
  * @note This function is called everytime the equipment screen for the team pops up.
  * @sa CL_UpdatePointersInGlobalData
  * @todo Do we allow EMPL_ROBOTs to be equipable? Or is simple buying of ammo enough (similar to original UFO/XCOM)?
@@ -877,10 +877,10 @@ static void CL_GenerateEquipment_f (void)
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	 * correctly into buy categories, reloading at the same time;
 	 * it is valid only due to the following property: */
-	assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
+	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armours for other teams in the menu. */
+		/* Don't allow to show armour for other teams in the menu. */
 		if ((Q_strncmp(csi.ods[i].type, "armour", MAX_VAR) == 0) && (csi.ods[i].useable != team))
 			continue;
 
@@ -891,93 +891,47 @@ static void CL_GenerateEquipment_f (void)
 		while (unused.num[i]) {
 			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
 
-			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
-			 * Otherwise just use the container-buytype of the item. */
-			/** @todo HACKHACK */
-			if (BUY_PRI(csi.ods[i].buytype)) {
-				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI, 1))
-					break; /* no space left in menu */
-			} else {
-				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype, 1))
-					break; /* no space left in menu */
-			}
+			if (!Com_AddToInventory(&baseCurrent->bEquipment, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
+				break; /* no space left in menu */
 		}
 	}
 }
 
 /**
- * @brief Moves all  items marked with "buytype multi_ammo" to the currently used equipment-container (pri or sec)
- * @note This is a WORKAROUND, it is by no means efficient or sane, but currently the only way to display these items in the (multiple) correct categories.
- * Should be executed on a change of the equipemnt-category to either PRI or SEC items .. and only there.
- * @param[in,out] inv This is always the used equipByBuyType in the base.
- * @param[in] buytypeContainer The container we just switched to (where all the items should be moved to).
- * @sa CL_GenerateEquipment_f
- * @sa Com_MoveInInventoryIgnore
- * @note Some ic->next and ic will be modified by Com_MoveInInventoryIgnore.
- * @note HACKHACK
- */
-static void CL_MoveMultiEquipment (inventory_t* const inv, int buytypeContainer)
-{
-	/* Set source container to the one that is not the destination container. */
-	const int container = (buytypeContainer == BUY_WEAP_PRI)
-			? BUY_WEAP_SEC : BUY_WEAP_PRI;
-	invList_t *ic;
-	invList_t *ic_temp;
-
-	if (!inv)
-		return;
-
-	/* Do nothing if no pri/sec category is shown. */
-	if ((buytypeContainer != BUY_WEAP_PRI) && (buytypeContainer != BUY_WEAP_SEC))
-		return;
-
-	/* This is a container that might hold some of the affected items.
-	 * Move'em to the target (buytypeContainer) container (if there are any) */
-	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytypeContainer:%i container: %i\n",
-		buytypeContainer, container);
-
-	assert(container >= 0);
-	assert(container < MAX_INVDEFS);
-
-	ic = inv->c[container];
-	while (ic) {
-		if (ic->item.t->buytype == BUY_MULTI_AMMO) {
-			ic_temp = ic->next;
-			Com_MoveInInventoryIgnore(inv, &csi.ids[container], ic->x, ic->y, &csi.ids[buytypeContainer], NONE, NONE, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
-			ic = ic_temp;
-		} else {
-			ic = ic->next;
-		}
-	}
-}
-
-/**
- * @brief Sets buytype category for equip menu.
- * @note num = buytype/equipment category.
+ * @brief Sets (filter type) category for equip menu.
  */
 static void CL_EquipType_f (void)
 {
-	int num;
+	itemFilterTypes_t num;	/**< filter type/equipment category. */
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <category name>\n", Cmd_Argv(0));
 		return;
 	}
 
 	if (!baseCurrent)
 		return;
 
-	/* read and range check */
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 && num >= BUY_MULTI_AMMO)
+	/* Read filter type and check range. */
+	num = INV_GetFilterTypeID(Cmd_Argv(1));
+	if (num < 0 || num >= MAX_SOLDIER_FILTERTYPES)
 		return;
 
-	/* display new items */
-	baseCurrent->equipType = num;
-	if (menuInventory) {
-		CL_MoveMultiEquipment(&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
-		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
+	/* Reset scroll info for a new filter type/category. */
+	if (menuInventory && (baseCurrent->equipType != num || !menuInventory->c[csi.idEquip])) {
+		menuInventory->scrollCur = 0;
+		menuInventory->scrollNum = 0;
+		menuInventory->scrollTotalNum = 0;
 	}
+
+	/* Display new items. */
+	baseCurrent->equipType = num;
+
+	/* First-time linking of menuInventory. */
+	if (menuInventory && !menuInventory->c[csi.idEquip]) {
+		menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
+	}
+
 }
 
 typedef enum {
@@ -2202,7 +2156,7 @@ void CL_ParseCharacterData (struct dbuffer *msg)
 
 /**
  * @brief Reads mission result data from server
- * See EV_RESULTS
+ * @sa EV_RESULTS
  * @sa G_EndGame
  * @sa CL_GameResults_f
  */

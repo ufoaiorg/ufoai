@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-spawn_temp_t st;
+static spawn_temp_t st;
 
 static void SP_light(edict_t *ent);
 static void SP_dummy(edict_t *ent);
@@ -102,9 +102,6 @@ static const field_t fields[] = {
 	{"team", offsetof(edict_t, team), F_INT, 0},
 	{"group", offsetof(edict_t, group), F_LSTRING, 0},
 	{"size", offsetof(edict_t, fieldSize), F_INT, 0},
-	{"wait", offsetof(edict_t, wait), F_FLOAT, 0},
-	{"delay", offsetof(edict_t, delay), F_FLOAT, 0},
-	{"random", offsetof(edict_t, random), F_FLOAT, 0},
 	{"count", offsetof(edict_t, count), F_INT, 0},
 	{"time", offsetof(edict_t, time), F_INT, 0},
 	{"health", offsetof(edict_t, HP), F_INT, 0},
@@ -122,6 +119,7 @@ static const field_t fields[] = {
 
 	/* need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
+	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
 };
@@ -694,7 +692,7 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 							if (!strcmp(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
 								G_ClientInvMove(game.players + activator->pnum, activator->number,
-									&gi.csi->ids[j], ic->x, ic->y, &gi.csi->ids[gi.csi->idFloor],
+									&gi.csi->ids[j], ic, &gi.csi->ids[gi.csi->idFloor],
 									NONE, NONE, qfalse, QUIET);
 								gi.bprintf(PRINT_HUD, _("Item was placed\n"));
 								self->owner->count = level.actualRound;
@@ -988,6 +986,7 @@ static void SP_worldspawn (edict_t *ent)
 
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
+	level.randomSpawn = st.randomSpawn;
 
 	gi.ConfigString(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 

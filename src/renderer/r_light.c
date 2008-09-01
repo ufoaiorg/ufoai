@@ -23,13 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
-#include "r_error.h"
 #include "r_light.h"
+#include "r_entity.h"
 
-static int r_numLights;
-static light_t r_lights[MAX_GL_LIGHTS];
+#define LIGHT_RADIUS_FACTOR 100.0
 
-void R_AddLight (vec3_t origin, float intensity, vec3_t color)
+int r_numLights;
+static light_t r_lightsArray[MAX_GL_LIGHTS];
+
+void R_AddLight (vec3_t origin, float radius, vec3_t color)
 {
 	int i;
 
@@ -41,39 +43,28 @@ void R_AddLight (vec3_t origin, float intensity, vec3_t color)
 
 	i = r_numLights++;
 
-	VectorCopy(origin, r_lights[i].origin);
-	r_lights[i].intensity = intensity;
-	VectorCopy(color, r_lights[i].color);
+	VectorCopy(origin, r_lightsArray[i].origin);
+	r_lightsArray[i].radius = radius;
+	VectorCopy(color, r_lightsArray[i].color);
 }
 
-/**
- * @brief Set light parameters
- * @sa R_RenderFrame
- */
-void R_AddLights (void)
+void R_EnableLights (void)
 {
+	light_t *l;
 	vec4_t position;
-	vec3_t diffuse;
+	vec4_t diffuse;
 	int i;
 
-	if (!r_light->integer)
-		return;
+	position[3] = diffuse[3] = 1.0;
 
-	for (i = 0; i < r_numLights; i++) {  /* now add all lights */
-		VectorCopy(r_lights[i].origin, position);
-		position[3] = 1;
-
-		VectorScale(r_lights[i].color, r_lights[i].intensity, diffuse);
-
-		qglLightfv(GL_LIGHT0 + i, GL_POSITION, position);
-		qglLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
-		qglEnable(GL_LIGHT0 + i);
+	for (i = 0, l = r_lightsArray; i < r_numLights; i++, l++) {
+		VectorCopy(l->origin, position);
+		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
+		VectorCopy(l->color, diffuse);
+		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->radius * LIGHT_RADIUS_FACTOR);
 	}
 
-	for (; i < MAX_GL_LIGHTS; i++)
-		qglDisable(GL_LIGHT0 + i);
-
-	R_CheckError();
-
-	r_numLights = 0;
+	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
 }

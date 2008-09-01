@@ -123,7 +123,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "set mn_itemtype 5; mn_push buy;"
+			cmd "set mn_itemtype 8; mn_push buy;"
 		}
 		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
 		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
@@ -234,7 +234,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "set mn_itemtype 5; mn_push production;"
+			cmd "set mn_itemtype 8; mn_push production;"
 		}
 		out		{ *txt_produce color "0 0.8 0 1" *button_produce texl "0 0" *button_produce texh "230 64" }
 		in		{ *txt_produce color "1 1 1 1" *button_produce texl "230 0" *button_produce texh "460 64" }
@@ -366,7 +366,7 @@ menu aircraft
 		pos		"480 540"
 		size	"510 200"
 		format	"20 220"
-		num	11
+		num		TEXT_AIRCRAFT_INFO
 		height	"10"
 	}
 
@@ -418,42 +418,23 @@ menu aircraft_equip
 		pos		"512 512"
 	}
 
+	pic aircraftequipblackbox
+	{
+		pos		"76 665"
+		image	menu/airequip_typebox
+	}
+
 	// ==================
 	// aircraft model
 	// ==================
 
-	func airequip_reset
+	confunc airequip_zone3_off
 	{
-		*airequip_button_weapons_str		color "1 1 1 0.6"
-		*airequip_button_shields_str		color "1 1 1 0.6"
-		*airequip_button_items_str			color "1 1 1 0.6"
-		*airequip_button_pilot_str			color "1 1 1 0.6"
-		*airequip_header3					invis true
+		*airequip_header3	invis true
 	}
-	func airequip_weapons
+	confunc airequip_zone3_on
 	{
-		cmd "airequip_updatemenu 0;"
-		airequip_reset
-		*airequip_button_weapons_str color "1 1 1 1"
-		*airequip_header3 invis false
-	}
-	func airequip_shields
-	{
-		cmd "airequip_updatemenu 1;"
-		airequip_reset
-		*airequip_button_shields_str color "1 1 1 1"
-	}
-	func airequip_items
-	{
-		cmd "airequip_updatemenu 2;"
-		airequip_reset
-		*airequip_button_items_str color "1 1 1 1"
-	}
-	func airequip_pilot
-	{
-		cmd "airequip_updatemenu 4;"
-		airequip_reset
-		*airequip_button_pilot_str color "1 1 1 1"
+		*airequip_header3	invis false
 	}
 
 	func airequip_zone1
@@ -466,12 +447,12 @@ menu aircraft_equip
 	}
 	func airequip_zone3
 	{
-		cmd "airequip_zone_select 3;airequip_updatemenu 3;"
+		cmd "airequip_zone_select 3;airequip_updatemenu 6;"
 	}
 
 	model aircraftequip
 	{
-		md2		"*cvar mn_aircraft_model"
+		md2	"*cvar mn_aircraft_model"
 		origin	"228 318 0"
 		pos	"20 20"
 		size	"415 728"
@@ -496,7 +477,7 @@ menu aircraft_equip
 	{
 		tooltip "_Previous aircraft"
 		image	menu/ufopedia_buttons1
-		pos		"10 665"
+		pos	"10 665"
 		texl	"0 37"
 		texh	"64 73"
 		mousefx true
@@ -518,7 +499,7 @@ menu aircraft_equip
 	{
 		tooltip "_Next aircraft"
 		image	menu/ufopedia_buttons1
-		pos		"382 665"
+		pos	"382 665"
 		texl	"0 0"
 		texh	"64 36"
 		mousefx true
@@ -536,10 +517,26 @@ menu aircraft_equip
 		}
 	}
 
+	string aircraftname
+	{
+    	pos		"224 686"
+		size	"300 16"
+		align	cc
+		string	"*cvar mn_aircraftname"
+		whup	{
+			cmd	"mn_next_aircraft;"
+			airequip_zone1
+		}
+		whdown	{
+			cmd	"mn_prev_aircraft;"
+			airequip_zone1
+		}
+	}
+
 	string airequip_available
 	{
 		string	"_Available equipment:"
-		pos		"594 440"
+		pos	"594 440"
 		font	f_big
 		align	uc
 	}
@@ -556,10 +553,10 @@ menu aircraft_equip
 	model mdl_top
 	{
 		if "mn_equip_pilot != 1"
-		md2		"*cvar mn_upmodel_top"
+		md2	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		origin	"886 545 0"
-		pos		"786 500"
+		pos	"786 500"
 		size	"200 200"
 		mousefx	true
 		click
@@ -568,10 +565,10 @@ menu aircraft_equip
 	model mdl_top_pilot
 	{
 		if "mn_equip_pilot == 1"
-		md2		"*cvar mn_upmodel_top"
+		md2	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
 		origin	"886 555 0"
-		pos		"786 500"
+		pos	"786 500"
 		size	"100 100"
 		mousefx	true
 		click
@@ -580,96 +577,67 @@ menu aircraft_equip
 	string airequip_item_name
 	{
 		string	"*cvar mn_itemname"
-		pos		"880 475"
+		pos	"880 475"
 		align	uc
 	}
 
 	string airequip_description
 	{
 		string	"_Selected item:"
-		pos		"880 440"
+		pos	"880 440"
 		font	f_big
 		align	uc
 	}
 
-	pic airequip_button_weapons
+	pic bt_prev_craftitemtype
 	{
-		tooltip	"_Weapons"
+		tooltip	"_Previous category"
+		image	menu/ufopedia_buttons1
+		pos	"10 712"
+		texl	"0 37"
+		texh	"64 73"
 		mousefx	true
-		pos		"10 710"
-		image	menu/button_blue_equip
-		texl	"0 0"
-		texh	"91 52"
-		click	{ airequip_weapons }
-	}
-	string airequip_button_weapons_str
-	{
-		string "_Weapons"
-		pos		"55 736"
-		align	cc
+		click	{
+			cmd "mn_prev_equiptype;"
+		}
 	}
 
-	pic airequip_button_shields
+	pic bt_next_craftitemtype
 	{
-		tooltip	"_Armour"
-		mousefx	true
-		pos		"121 710"
-		image	menu/button_blue_equip
+		tooltip	"_Next category"
+		image	menu/ufopedia_buttons1
+		pos	"382 712"
 		texl	"0 0"
-		texh	"91 52"
-		click	{ airequip_shields }
-	}
-	string airequip_button_shields_str
-	{
-		string "_Armour"
-		pos		"171 736"
-		align	cc
+		texh	"64 36"
+		mousefx	true
+		click	{
+			cmd "mn_next_equiptype;"
+		}
 	}
 
-	pic airequip_button_items
+	string craftitemtype
 	{
-		tooltip	"_Items"
-		mousefx	true
-		pos		"232 710"
-		image	menu/button_blue_equip
-		texl	"0 0"
-		texh	"91 52"
-		click	{ airequip_items }
-	}
-	string airequip_button_items_str
-	{
-		string "_Items"
-		pos		"282 736"
+		pos		"224 730"
+		size	"300 16"
 		align	cc
+		string	"*cvar mn_equip_itemtype_name"
+		whup	{
+			cmd "mn_prev_equiptype;"
+		}
+		whdown	{
+			cmd "mn_next_equiptype;"
+		}
 	}
-
-	pic airequip_button_pilot
-	{
-		tooltip	"_Pilot"
-		mousefx	true
-		pos		"343 710"
-		image	menu/button_blue_equip
-		texl	"0 0"
-		texh	"91 52"
-		click	{ airequip_pilot }
-	}
-	string airequip_button_pilot_str
-	{
-		string "_Pilot"
-		pos		"393 736"
-		align	cc
-	}
-
 
 	text airequip_list
 	{
-		pos	"472 480"
+		pos		"472 480"
 		size	"252 220"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
 		wheel
 		height	"11"
-		num 1
+		num TEXT_LIST
 		mousefx	true
 		click
 	}
@@ -678,7 +646,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Add selected item"
 		mousefx	true
-		pos		"467 40"
+		pos	"467 40"
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
@@ -689,7 +657,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Remove item from slot"
 		mousefx	true
-		pos		"467 75"
+		pos	"467 75"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
@@ -700,7 +668,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Add selected item"
 		mousefx	true
-		pos		"467 174"
+		pos	"467 174"
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
@@ -711,7 +679,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Remove item from slot"
 		mousefx	true
-		pos		"467 209"
+		pos	"467 209"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
@@ -733,7 +701,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Remove item from slot"
 		mousefx	true
-		pos		"467 343"
+		pos	"467 343"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
@@ -745,7 +713,7 @@ menu aircraft_equip
 		invis false
 		tooltip	"_Select this zone"
 		mousefx	true
-		pos		"534 30"
+		pos	"534 30"
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
@@ -758,7 +726,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 39
+		num	TEXT_AIREQUIP_1
 		height	"2"
 	}
 
@@ -767,7 +735,7 @@ menu aircraft_equip
 		invis false
 		tooltip	"_Select this zone"
 		mousefx	true
-		pos		"534 164"
+		pos	"534 164"
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
@@ -780,7 +748,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 40
+		num	TEXT_AIREQUIP_2
 		height	"2"
 	}
 
@@ -802,7 +770,7 @@ menu aircraft_equip
 		size	"430 35"
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 41
+		num	TEXT_AIREQUIP_3
 		height	"2"
 	}
 
@@ -1010,7 +978,8 @@ menu aircraft_equip
 
 	func init
 	{
-		airequip_weapons
+		// default is weapons @sa aircraftItemType_t (inv_shared.h)
+		cmd "airequip_updatemenu 2;"
 		airequip_zone1
 	}
 	func close
@@ -1083,7 +1052,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_buy image menu/multi_buttons3 *string_buy color "0 0.5 0 1" }
 		in	{ *bt_buy image menu/multi_buttons3a *string_buy color "1 1 1 1" }
-		click	{ cmd "mn_pop; set mn_itemtype 5; mn_push buy;" }
+		click	{ cmd "mn_pop; set mn_itemtype 8; mn_push buy;" }
 	}
 	string string_buy
 	{
@@ -1104,7 +1073,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_prod image menu/multi_buttons3 *string_prod color "0 0.5 0 1" }
 		in	{ *bt_prod image menu/multi_buttons3a *string_prod color "1 1 1 1" }
-		click	{ cmd "mn_pop; set mn_itemtype 5; mn_push production;" }
+		click	{ cmd "mn_pop; set mn_itemtype 8; mn_push production;" }
 	}
 	string string_prod
 	{

@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/xorrectangle.h"
 #include "view.h"
 #include "map.h"
+#include "texturelib.h"
 
 // Constants
 const int XYWND_MINSIZE_X = 200;
@@ -100,7 +101,11 @@ public:
 	void XY_Draw();
 	void DrawCameraIcon(const Vector3& origin, const Vector3& angles);
 	void XY_DrawBlockGrid();
+	void XY_DrawAxis();
 	void XY_DrawGrid();
+	void XY_DrawBackground();
+	void XY_LoadBackgroundImage(const char *name);
+	void XY_DisableBackground();
 
 	void XY_MouseUp(int x, int y, unsigned int buttons);
 	void XY_MouseDown(int x, int y, unsigned int buttons);
@@ -156,10 +161,15 @@ public:
 
 	int m_nWidth;
 	int m_nHeight;
+
+	// background image stuff
+	qtexture_t *m_tex;
+	bool m_backgroundActivated;
+	float m_alpha; // vertex alpha
+	float m_xmin, m_ymin, m_xmax, m_ymax;
 private:
 	float	m_fScale;
 	Vector3 m_vOrigin;
-
 
 	View m_view;
 	static Shader* m_state_selected;
@@ -280,6 +290,7 @@ void XZ_Front_Shown_Construct(GtkWindow* parent);
 void XYWindow_Construct();
 void XYWindow_Destroy();
 void WXY_Print();
+void WXY_BackgroundSelect();
 void XYShow_registerCommands();
 void XYWnd_registerShortcuts();
 

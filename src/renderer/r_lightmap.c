@@ -55,10 +55,10 @@ static void R_UploadLightmapBlock (void)
 
 	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
 
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_maxlightmap->integer, r_maxlightmap->integer,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_maxlightmap->integer, r_maxlightmap->integer,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.buffer);
 
 	R_CheckError();

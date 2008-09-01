@@ -158,7 +158,7 @@ const char* FS_GameDir (void)
 	if (gamedir[0] == '\0') {
 		FS_getwd(gamedir, sizeof(gamedir));
 		strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir));
-		Com_Printf("gamedir: %s\n", gamedir);
+		Verb_Printf(VERB_NORMAL, "gamedir: %s\n", gamedir);
 	}
 	return gamedir;
 }
@@ -178,7 +178,7 @@ void FS_Init (const char *path)
 
 	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
 	if (!pak)
-		Com_Printf("Could not load image pk3, searching in directories for images instead\n");
+		Verb_Printf(VERB_NORMAL, "Could not load image pk3, searching in directories for images instead\n");
 }
 
 /**
@@ -372,13 +372,14 @@ int TryLoadFile (const char *filename, void **bufferptr)
 
 /**
  * @brief
+ * @todo Logfile writing
  */
 void Sys_FPrintf (int flag, const char *format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;
 
-	if ((flag == SYS_VRB) && (config.verbose == qfalse))
+	if (flag == SYS_VRB && config.verbose == qfalse)
 		return;
 
 	va_start(argptr, format);
@@ -401,4 +402,25 @@ void Com_Printf (const char *format, ...)
 	va_end(argptr);
 
 	printf("%s", out_buffer);
+}
+
+/**
+ * @brief decides wether to proceed with output based on verbosity level
+ * @sa Com_Printf, Check_Printf,
+ */
+void Verb_Printf (const verbosityLevel_t importance, const char *format, ...)
+{
+	if (config.verbosity <= VERB_NUM - importance + 1)
+		return;
+
+	{
+		char out_buffer[4096];
+		va_list argptr;
+
+		va_start(argptr, format);
+		Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+		va_end(argptr);
+
+		printf("%s", out_buffer);
+	}
 }

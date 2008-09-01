@@ -90,7 +90,7 @@ aircraft craft_drop_firebird
 	building	building_hangar
 	numteam		8
 	size		2
-	image		air_dropship
+	image		geoscape/air_dropship
 	slot {
 		type		weapon
 		position	nose_center
@@ -127,7 +127,7 @@ aircraft craft_drop_herakles
 	building	building_hangar
 	numteam		8
 	size		2
-	image		air_dropship
+	image		geoscape/air_dropship
 	slot {
 		type		weapon
 		position	nose_center
@@ -166,7 +166,7 @@ aircraft craft_inter_stiletto
 	size		1
 	price		40000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	nose_center
@@ -211,7 +211,7 @@ aircraft craft_inter_saracen
 	size		2
 	price		100000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	wing_left
@@ -251,7 +251,7 @@ aircraft craft_inter_dragon
 	size		1
 	price		100000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	wing_left
@@ -291,7 +291,7 @@ aircraft craft_inter_stingray
 	size		1
 	price		200000
 	building	building_intercept
-	image		air_interceptor
+	image		geoscape/air_interceptor
 	slot {
 		type		weapon
 		position	wing_left
@@ -337,7 +337,7 @@ aircraft craft_ufo_harvester
 	size		2
 	building	building_big_ufo_hangar
 	price		200000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		heavy
@@ -380,7 +380,7 @@ aircraft craft_ufo_carrier
 	size		1
 	building	building_small_ufo_hangar
 	price		1000000
-	image		air_ufo
+	image		geoscape/air_ufo
 	nogeoscape	true
 }
 
@@ -403,7 +403,7 @@ aircraft craft_ufo_supply
 	size		1
 	building	building_big_ufo_hangar
 	price		250000
-	image		air_ufo
+	image		geoscape/air_ufo
 }
 
 // FIXME
@@ -425,7 +425,7 @@ aircraft craft_ufo_bomber
 	size		1
 	building	building_big_ufo_hangar
 	price		250000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		light
@@ -454,7 +454,7 @@ aircraft craft_ufo_corrupter
 	size		1
 	building	building_big_ufo_hangar
 	price		230000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		light
@@ -482,7 +482,7 @@ aircraft craft_ufo_scout
 	size		1
 	building	building_small_ufo_hangar
 	price		150000
-	image		air_ufo
+	image		geoscape/air_ufo
 }
 
 aircraft craft_ufo_fighter
@@ -504,7 +504,7 @@ aircraft craft_ufo_fighter
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
 	price		180000
-	image		air_ufo
+	image		geoscape/air_ufo
 	slot {
 		type		weapon
 		size		heavy
@@ -524,7 +524,6 @@ craftitem craft_weapon_alc
 	size		40 // light
 	installationTime	2
 	price		12000
-	buytype		craftitem
 	bullets		false
 }
 
@@ -535,7 +534,6 @@ craftitem craft_weapon_shiva
 	size		40 // light
 	installationTime	2
 	price		12000
-	buytype		craftitem
 	bullets		true
 }
 
@@ -545,7 +543,6 @@ craftitem craft_ammo_shiva_API
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
 	price		600
-	buytype		craftitem
 
 	ammo		20
 	wdamage		10
@@ -562,7 +559,6 @@ craftitem craft_ammo_shiva_HEI
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
 	price		640
-	buytype		craftitem
 
 	ammo		20
 	wdamage		14
@@ -580,7 +576,6 @@ craftitem craft_el_raven
 	size	20	// light
 	installationTime	1
 	price		20000
-	buytype		craftitem
 
 	ecm		1.25
 }
@@ -592,7 +587,6 @@ craftitem craft_weapon_sparrowhawk
 	size	90	// medium
 	installationTime	3
 	price		27000
-	buytype		craftitem
 }
 
 craftitem craft_ammo_sparrowhawk
@@ -602,8 +596,7 @@ craftitem craft_ammo_sparrowhawk
 	craftweapon		craft_weapon_sparrowhawk
 	price		1000
 	size	40	// light
-	buytype		craftitem
-	model		"missile"
+	model		"missile_sparrow"
 
 	ammo		7
 	wdamage		20
@@ -620,7 +613,6 @@ craftitem craft_weapon_tr20
 	size	90	// medium
 	installationTime	2
 	price		25000
-	buytype		craftitem
 
 	speed		.9
 	maxspeed	.9
@@ -632,7 +624,6 @@ craftitem craft_ammo_tr20
 	crafttype	ammo
 	craftweapon		craft_weapon_tr20
 	price		840
-	buytype		craftitem
 	model		"missile_tr20"
 
 //	ammo		152
@@ -653,7 +644,6 @@ craftitem craft_weapon_particle_beam
 	size	90	// medium
 	installationTime	4
 	price		45000
-	buytype		craftitem
 
 	wdamage		25
 	speed		0.8
@@ -667,7 +657,6 @@ craftitem craft_el_targeting
 	crafttype	electronics
 	installationTime	1
 	price		25600
-	buytype		craftitem
 	size	20	// light
 
 	accuracy	1.25
@@ -679,7 +668,6 @@ craftitem craft_el_fuelpod
 	crafttype	electronics
 	installationTime	2
 	price		4000
-	buytype		craftitem
 	size	20	// light
 
 	fuelsize	+7000
@@ -693,7 +681,6 @@ craftitem craft_shield_polymer
 	crafttype	shield
 	installationTime	24
 	price		33600
-	buytype		craftitem
 	size	40	// light
 
 	shield		+5
@@ -707,7 +694,6 @@ craftitem craft_shield_plating
 	crafttype	shield
 	installationTime	36
 	price		50000
-	buytype		craftitem
 	size	50	// light
 
 	shield		+10
@@ -721,7 +707,6 @@ craftitem craft_alien_astrogation
 	crafttype	electronics
 	installationTime	-1
 	price		32000
-	buytype		craftitem
 	size	20	// light
 }
 
@@ -731,7 +716,6 @@ craftitem craft_alien_propulsion
 	crafttype	electronics
 	installationTime	-1
 	price		40000
-	buytype		craftitem
 	size	50	// light
 }
 
@@ -741,7 +725,6 @@ craftitem craft_alien_detection
 	crafttype	electronics
 	installationTime	-1
 	price		32000
-	buytype		craftitem
 	size	20	// light
 }
 
@@ -756,8 +739,7 @@ craftitem base_AA51_launcher
 	size	90	// medium
 	installationTime	48
 	price		50000
-	buytype		dummy
-
+	is_dummy	true
 }
 
 craftitem base_ammo_AA51
@@ -766,7 +748,7 @@ craftitem base_ammo_AA51
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
 	price		20000
-	buytype		dummy
+	is_dummy	true
 	notonmarket	true
 	model		"missile"
 
@@ -780,6 +762,3 @@ craftitem base_ammo_AA51
 	delay		500
 	size	10	// light
 }
-
-
-

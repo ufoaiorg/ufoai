@@ -252,9 +252,7 @@ int Q_StringSort (const void *string1, const void *string2)
 			s2++;
 			if (*s1 < *s2)
 				return -1;
-			else if (*s1 == *s2) {
-				;
-			} else
+			if (*s1 > *s2)
 				return 1;
 		}
 		return 0;
@@ -424,13 +422,13 @@ int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 	str[size - 1] = '\0';
 #ifdef DEBUG
 	if (len == -1)
-		Com_Printf("Q_vsnprintf: string was truncated - target buffer too small\n");
+		Com_Printf("Q_vsnprintf: string (%s) was truncated (%i) - target buffer too small ("UFO_SIZE_T")\n", str, len, size);
 #endif
 #else
 	len = vsnprintf(str, size, format, ap);
 #ifdef DEBUG
 	if ((size_t)len >= size)
-		Com_Printf("Q_vsnprintf: string was truncated - target buffer too small\n");
+		Com_Printf("Q_vsnprintf: string (%s) was truncated (%i) - target buffer too small ("UFO_SIZE_T")\n", str, len, size);
 #endif
 #endif
 

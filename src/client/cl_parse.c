@@ -1264,12 +1264,19 @@ static void CL_PlaceItem (le_t *le)
 	} else {
 		/* If no items in floor inventory, don't draw this le - the container is
 		 * maybe empty because an actor picked up the last items here */
-		/** @todo This might prevent LE_Add to get a floor-edict when in
+		/** @todo This will prevent LE_Add to get a floor-edict when in
 		 * mid-move. @sa g_client.c:G_ClientInvMove.
+		 * (It will cause asserts/segfaults in e.g. MN_DrawContainerNode)
 		 * mattn: But why do we want to get an empty container? If we don't set
 		 * this to qfalse we get the null model rendered, because the le->model
-		 * is @c NULL, too */
+		 * is @c NULL, too.
+		 * ---
+		 * I disabled the line again, because I really like having no segfauls/asserts.
+		 * There has to be a better solution/fix for the lila/null dummy models. --Hoehrer 2008-08-27
+		 * See the following link for details:
+		 * https://sourceforge.net/tracker/index.php?func=detail&aid=2071463&group_id=157793&atid=805242
 		le->inuse = qfalse;
+		*/
 	}
 }
 
@@ -1331,12 +1338,14 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 /**
  * @sa CL_InvAdd
+ * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
  */
 static void CL_InvDel (struct dbuffer *msg)
 {
 	le_t	*le;
 	int		number;
 	int 	container, x, y;
+	invList_t *ic;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_DEL],
 		&number, &container, &x, &y);
@@ -1347,7 +1356,14 @@ static void CL_InvDel (struct dbuffer *msg)
 		return;
 	}
 
-	Com_RemoveFromInventory(&le->i, &csi.ids[container], x, y);
+	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
+
+	if (!ic) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvDel: No item found at loction x/y=%i/%i.\n", x, y);
+		return;
+	}
+
+	Com_RemoveFromInventory(&le->i, &csi.ids[container], ic);
 	if (container == csi.idRight)
 		le->right = NONE;
 	else if (container == csi.idLeft)
@@ -1368,7 +1384,9 @@ static void CL_InvDel (struct dbuffer *msg)
 	}
 }
 
-
+/**
+ * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
+ */
 static void CL_InvAmmo (struct dbuffer *msg)
 {
 	invList_t	*ic;
@@ -1399,7 +1417,10 @@ static void CL_InvAmmo (struct dbuffer *msg)
 	ic->item.m = &csi.ods[type];
 }
 
-
+/**
+ * @sa CL_InvReload
+ * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
+ */
 static void CL_InvReload (struct dbuffer *msg)
 {
 	invList_t	*ic;

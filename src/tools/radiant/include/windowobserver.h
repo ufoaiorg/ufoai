@@ -74,7 +74,7 @@ typedef Vector2 WindowVector;
 
 class WindowObserver {
 public:
-	virtual void release() = 0;
+	virtual ~WindowObserver() {}
 	virtual void onSizeChanged(int width, int height) = 0;
 	virtual void onMouseDown(const WindowVector& position, ButtonIdentifier button, ModifierFlags modifiers) = 0;
 	virtual void onMouseUp(const WindowVector& position, ButtonIdentifier button, ModifierFlags modifiers) = 0;

@@ -37,44 +37,35 @@ class ShadersDependencies :
 			public GlobalTexturesModuleRef,
 			public GlobalScripLibModuleRef,
 			public GlobalRadiantModuleRef {
-	ImageModuleRef m_bitmapModule;
-public:
-	ShadersDependencies() :
-			m_bitmapModule("bmp") {
-	}
-	ImageModuleRef& getBitmapModule() {
-		return m_bitmapModule;
-	}
 };
 
-class ShadersQ3API {
-	ShaderSystem* m_shadersq3;
+class ShadersAPI {
+	ShaderSystem* m_shaders;
 public:
 	typedef ShaderSystem Type;
 	STRING_CONSTANT(Name, "ufo");
 
-	ShadersQ3API(ShadersDependencies& dependencies) {
+	ShadersAPI(ShadersDependencies& dependencies) {
 		g_shadersExtension = "shader";
 		g_shadersDirectory = "scripts/";
-		g_bitmapModule = dependencies.getBitmapModule().getTable();
 		Shaders_Construct();
-		m_shadersq3 = &GetShaderSystem();
+		m_shaders = &GetShaderSystem();
 	}
-	~ShadersQ3API() {
+	~ShadersAPI() {
 		Shaders_Destroy();
 	}
 	ShaderSystem* getTable() {
-		return m_shadersq3;
+		return m_shaders;
 	}
 };
 
-typedef SingletonModule<ShadersQ3API, ShadersDependencies, DependenciesAPIConstructor<ShadersQ3API, ShadersDependencies> > ShadersQ3Module;
+typedef SingletonModule<ShadersAPI, ShadersDependencies, DependenciesAPIConstructor<ShadersAPI, ShadersDependencies> > ShadersModule;
 
-ShadersQ3Module g_ShadersQ3Module;
+ShadersModule g_ShadersModule;
 
 
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
 	initialiseModule(server);
 
-	g_ShadersQ3Module.selfRegister();
+	g_ShadersModule.selfRegister();
 }

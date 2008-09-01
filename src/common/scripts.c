@@ -58,7 +58,9 @@ const char *vt_names[] = {
 	"if",
 	"relabs",
 	"client_hunk", /* 25 */
-	"client_hunk_string"
+	"client_hunk_string",
+	"num",
+	"baseid"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -71,6 +73,22 @@ const char *blend_names[] = {
 	"replace", "blend", "add", "filter", "invfilter"
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
+
+const char *menutextid_names[] = {
+	"TEXT_STANDARD", "TEXT_LIST", "TEXT_UFOPEDIA", "TEXT_BUILDINGS", "TEXT_BUILDING_INFO",
+	"TEXT_RESEARCH", "TEXT_POPUP", "TEXT_POPUP_INFO", "TEXT_AIRCRAFT_LIST",
+	"TEXT_AIRCRAFT_INFO", "TEXT_MESSAGESYSTEM", "TEXT_CAMPAIGN_LIST",
+	"TEXT_MULTISELECTION", "TEXT_PRODUCTION_LIST", "TEXT_PRODUCTION_AMOUNT", "TEXT_PRODUCTION_INFO",
+	"TEXT_EMPLOYEE", "TEXT_MOUSECURSOR_RIGHT", "TEXT_PRODUCTION_QUEUED", "TEXT_STATS_BASESUMMARY",
+	"TEXT_STATS_MISSION", "TEXT_STATS_BASES", "TEXT_STATS_NATIONS", "TEXT_STATS_EMPLOYEES", "TEXT_STATS_COSTS",
+	"TEXT_STATS_INSTALLATIONS", "TEXT_STATS_7", "TEXT_BASE_LIST", "TEXT_BASE_INFO",
+	"TEXT_TRANSFER_LIST", "TEXT_MOUSECURSOR_PLAYERNAMES",
+	"TEXT_CARGO_LIST", "TEXT_UFOPEDIA_MAILHEADER", "TEXT_UFOPEDIA_MAIL", "TEXT_MARKET_NAMES",
+	"TEXT_MARKET_STORAGE", "TEXT_MARKET_MARKET", "TEXT_MARKET_PRICES", "TEXT_CHAT_WINDOW",
+	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_AIREQUIP_3", "TEXT_BASEDEFENCE_LIST", "TEXT_TIPOFTHEDAY",
+	"TEXT_GENERIC", "TEXT_XVI", "TEXT_MOUSECURSOR_TOP", "TEXT_MOUSECURSOR_BOTTOM", "TEXT_MOUSECURSOR_LEFT"
+};
+CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 
 const char *style_names[] = {
 	"facing", "rotated", "beam", "line", "axis", "circle"
@@ -144,7 +162,9 @@ static const size_t vt_sizes[] = {
 	0,	/* V_IF */
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
-	0	/* V_CLIENT_HUNK_STRING */
+	0,	/* V_CLIENT_HUNK_STRING */
+	sizeof(int),	/* V_MENUTEXTID */
+	sizeof(int)		/* V_BASEID */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -205,6 +225,21 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_CHAR:
 		*(char *) b = *token;
 		return ALIGN(sizeof(char));
+
+	case V_MENUTEXTID:
+		for (num = 0; num < MAX_MENUTEXTS; num++)
+			if (!Q_strcmp(token, menutextid_names[num]))
+				break;
+		if (num == MAX_MENUTEXTS)
+			Sys_Error("Could not find menutext id '%s'", token);
+		*(int *) b = num;
+		return ALIGN(sizeof(int));
+
+	case V_BASEID:
+		*(int *) b = atoi(token);
+		if (*(int *) b < 0 || *(int *) b >= MAX_BASES)
+			Sys_Error("Invalid baseid given %i", *(int *) b);
+		return ALIGN(sizeof(int));
 
 	case V_INT:
 		*(int *) b = atoi(token);
@@ -452,6 +487,8 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		*(char *) b = *(const char *) set;
 		return ALIGN(sizeof(char));
 
+	case V_MENUTEXTID:
+	case V_BASEID:
 	case V_INT:
 		*(int *) b = *(const int *) set;
 		return ALIGN(sizeof(int));
@@ -567,6 +604,12 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return (char *) b;
 		break;
 
+	case V_MENUTEXTID:
+		assert(*(int *)b < MAX_MENUTEXTS);
+		Q_strncpyz(valuestr, menutextid_names[*(int *)b], sizeof(valuestr));
+		return valuestr;
+
+	case V_BASEID:
 	case V_INT:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(int *) b);
 		return valuestr;
@@ -680,20 +723,6 @@ enum {
 	OD_RATINGS			/**< parse rating values for displaying in the menus */
 };
 
-
-/** @sa q_shared.h:equipmentBuytypes_t */
-static const char *buytypeNames[MAX_BUYTYPES] = {
-	"weap_pri",
-	"weap_sec",
-	"misc",
-	"armour",
-	"multi_ammo",
-	"aircraft",
-	"dummy",
-	"craftitem",
-	"heavy_equipment"
-};
-
 /**
  * @note Make sure, that you don't change the order of the first entries
  * or you have the change the enum values OD_*, too
@@ -742,6 +771,13 @@ static const value_t od_vals[] = {
 	{"maxspeed", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_MAXSPEED]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SPEED])},
 	{"fuelsize", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE])},
 	{"dmgtype", V_DMGTYPE, offsetof(objDef_t, dmgtype), MEMBER_SIZEOF(objDef_t, dmgtype)},
+
+	{"is_primary", V_BOOL, offsetof(objDef_t, isPrimary), MEMBER_SIZEOF(objDef_t, isPrimary)},
+	{"is_secondary", V_BOOL, offsetof(objDef_t, isSecondary), MEMBER_SIZEOF(objDef_t, isSecondary)},
+	{"is_heavy", V_BOOL, offsetof(objDef_t, isHeavy), MEMBER_SIZEOF(objDef_t, isHeavy)},
+	{"is_misc", V_BOOL, offsetof(objDef_t, isMisc), MEMBER_SIZEOF(objDef_t, isMisc)},
+	{"is_ugvitem", V_BOOL, offsetof(objDef_t, isUGVitem), MEMBER_SIZEOF(objDef_t, isUGVitem)},
+	{"is_dummy", V_BOOL, offsetof(objDef_t, isDummy), MEMBER_SIZEOF(objDef_t, isDummy)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -914,8 +950,11 @@ const char *air_slot_type_strings[] = {
 CASSERT(lengthof(air_slot_type_strings) == MAX_ACITEMS);
 
 
-static linkedList_t *parseItemWeapons = NULL;	/**< Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
-										 * in Com_ParseItem and used in Com_AddObjectLinks. */
+/**
+ * @brief Temporary list of weapon ids as parsed from the ufo file "weapon_mod <id>"
+ * in Com_ParseItem and used in Com_AddObjectLinks.
+ */
+static linkedList_t *parseItemWeapons = NULL;
 
 /**
  * @brief Parses weapon, equipment, craft items and armour
@@ -927,7 +966,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	const value_t *val;
 	objDef_t *od;
 	const char *token;
-	int i,j;
+	int i;
 	int weapFdsIdx, fdIdx;
 
 	/* search for items with same name */
@@ -993,7 +1032,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 							LIST_AddPointer(&parseItemWeapons, od);
 							LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
 							LIST_AddString(&parseItemWeapons, token);
-							/** @todo delete me Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons])); */
 
 							/* get it's body */
 							token = COM_Parse(text);
@@ -1028,11 +1066,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
 									}
 								}
-								/*
-								else {
-									Bad syntax.
-								}
-								*/
 							} while (*text);
 							od->numWeapons++;
 						} else {
@@ -1053,19 +1086,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			}
 		}
 		if (!val->string) {
-			if (!Q_strcmp(token, "buytype")) {
-				/* Found a buytype option ... checking for the correct string */
-
-				/* parse a value */
-				token = COM_EParse(text, errhead, name);
-				/** @todo maybe we could add a check for the old numbers as well here */
-				for (j = 0; j < MAX_BUYTYPES; j++) {
-					if (!Q_strcasecmp(token, buytypeNames[j])) {
-						od->buytype = j;
-						break;
-					}
-				}
-			} else if (!Q_strcmp(token, "craftweapon")) {
+			if (!Q_strcmp(token, "craftweapon")) {
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
@@ -1073,8 +1094,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 					LIST_AddPointer(&parseItemWeapons, od);
 					LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
 					LIST_AddString(&parseItemWeapons, token);
-					/** @todo delete me Q_strncpyz(od->weapId[od->numWeapons], token, sizeof(od->weapId[od->numWeapons])); */
-
 					od->numWeapons++;
 				} else {
 					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
@@ -1123,6 +1142,10 @@ static const value_t idps[] = {
 	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape), 0},
 	/* only a single item */
 	{"single", V_BOOL, offsetof(invDef_t, single), MEMBER_SIZEOF(invDef_t, single)},
+	/* Scrollable container */
+	{"scroll", V_INT, offsetof(invDef_t, scroll), MEMBER_SIZEOF(invDef_t, scroll)},
+	{"scroll_height", V_INT, offsetof(invDef_t, scrollHeight), MEMBER_SIZEOF(invDef_t, scrollHeight)},
+	{"scroll_vertical", V_BOOL, offsetof(invDef_t, scrollVertical), MEMBER_SIZEOF(invDef_t, scrollVertical)},
 	/* only a single item as weapon extension - single should be set, too */
 	{"extension", V_BOOL, offsetof(invDef_t, extension), MEMBER_SIZEOF(invDef_t, extension)},
 	/* this is the armour container */
@@ -2214,7 +2237,7 @@ void Com_AddObjectLinks (void)
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->numAmmos = 0;	/* Default value */
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
-			/* this is a weapon, an aircraft weapon, or a base defense system */
+			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (n = 0; n < csi.numODs; n++) {
 				for (m = 0; m < csi.ods[n].numWeapons; m++) {
 					if (csi.ods[n].weapons[m] == &csi.ods[i]) {
@@ -2474,13 +2497,13 @@ qboolean Com_ItemsSanityCheck (void)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *item = &csi.ods[i];
 
-		/* warn if item has no size set */
-		if (item->size <= 0 && !(item->buytype == BUY_DUMMY && item->notOnMarket)) {
+		/* Warn if item has no size set. */
+		if (item->size <= 0 && !(INV_ItemMatchesFilter(item, FILTER_DUMMY) && item->notOnMarket)) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
-		/* warn if no price is set */
+		/* Warn if no price is set. */
 		if (item->price <= 0 && !item->notOnMarket) {
 			result = qfalse;
 			Com_Printf("Com_ItemsSanityCheck: Item %s has zero price set.\n", item->id);

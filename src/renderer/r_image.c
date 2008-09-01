@@ -41,15 +41,6 @@ int registration_sequence;
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
-int gl_solid_format = GL_RGB;
-int gl_alpha_format = GL_RGBA;
-
-int gl_compressed_solid_format = 0;
-int gl_compressed_alpha_format = 0;
-
-int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
-int gl_filter_max = GL_LINEAR;
-
 /**
  * @brief Free previously loaded materials and their stages
  * @sa R_LoadMaterials
@@ -966,18 +957,15 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
-/**
- * @todo Fix this for none power of two
- */
 static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
-	unsigned *inrow, *inrow2;
-	unsigned frac, fracstep;
-	unsigned p1[1024], p2[1024];
-	byte *pix1, *pix2, *pix3, *pix4;
+	unsigned frac;
+	unsigned *p1, *p2;
+	const unsigned fracstep = inwidth * 0x10000 / outwidth;
 
-	fracstep = inwidth * 0x10000 / outwidth;
+	p1 = (unsigned *)Mem_PoolAlloc(outwidth * outheight * sizeof(unsigned), vid_imagePool, 0);
+	p2 = (unsigned *)Mem_PoolAlloc(outwidth * outheight * sizeof(unsigned), vid_imagePool, 0);
 
 	frac = fracstep >> 2;
 	for (i = 0; i < outwidth; i++) {
@@ -990,21 +978,24 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 		frac += fracstep;
 	}
 
+	frac = fracstep >> 1;
+
 	for (i = 0; i < outheight; i++, out += outwidth) {
-		inrow = in + inwidth * (int) ((i + 0.25) * inheight / outheight);
-		inrow2 = in + inwidth * (int) ((i + 0.75) * inheight / outheight);
-		frac = fracstep >> 1;
+		const unsigned *inrow = in + inwidth * (int) ((i + 0.25) * inheight / outheight);
+		const unsigned *inrow2 = in + inwidth * (int) ((i + 0.75) * inheight / outheight);
 		for (j = 0; j < outwidth; j++) {
-			pix1 = (byte *) inrow + p1[j];
-			pix2 = (byte *) inrow + p2[j];
-			pix3 = (byte *) inrow2 + p1[j];
-			pix4 = (byte *) inrow2 + p2[j];
+			const byte *pix1 = (const byte *) inrow + p1[j];
+			const byte *pix2 = (const byte *) inrow + p2[j];
+			const byte *pix3 = (const byte *) inrow2 + p1[j];
+			const byte *pix4 = (const byte *) inrow2 + p2[j];
 			((byte *) (out + j))[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0]) >> 2;
 			((byte *) (out + j))[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1]) >> 2;
 			((byte *) (out + j))[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2]) >> 2;
 			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
+	Mem_Free(p1);
+	Mem_Free(p2);
 }
 
 /**
@@ -1086,8 +1077,8 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
 	qboolean clamp = (image->type == it_pic);
 
-	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
-	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
+	for (scaled_width  = 1; scaled_width  < width;  scaled_width  <<= 1) {}
+	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1) {}
 
 	while (scaled_width > r_config.maxTextureSize || scaled_height > r_config.maxTextureSize) {
 		scaled_width >>= 1;
@@ -1101,10 +1092,10 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaled_width == width && scaled_height == height) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 
-		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
 
@@ -1121,50 +1112,50 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
-	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
+	samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((byte *) scaled) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
-			samples = gl_compressed_alpha_format ? gl_compressed_alpha_format : gl_alpha_format;
+			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 			break;
 		}
 	}
 
-	image->has_alpha = (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
+	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
 	image->upload_width = scaled_width;	/* after power of 2 and scales */
 	image->upload_height = scaled_height;
 
 	/* and mipmapped */
 	if (mipmap) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-		qglTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-		if (r_state.anisotropic) {
-			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_min);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
+		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+		if (r_config.anisotropic) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 			R_CheckError();
 		}
-		if (r_texture_lod->integer && r_state.lod_bias) {
-			qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
+		if (r_texture_lod->integer && r_config.lod_bias) {
+			glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 			R_CheckError();
 		}
 	} else {
-		if (r_state.anisotropic) {
-			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
+		if (r_config.anisotropic) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
 			R_CheckError();
 		}
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 	}
 	R_CheckError();
 
 	if (clamp) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		R_CheckError();
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		R_CheckError();
 	}
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
 
 	if (scaled != data)
@@ -1216,14 +1207,16 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 #define DAWN		0.03
 
-static byte r_dayandnightalpha[DAN_WIDTH * DAN_HEIGHT];
-image_t *r_dayandnighttexture;
+/** this is the data that is used with r_dayandnightTexture */
+static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
+/** this is the mask that is used to display day/night on (2d-)geoscape */
+image_t *r_dayandnightTexture;
 
 /**
  * @brief Applies alpha values to the night overlay image for 2d geoscape
  * @param[in] q
  */
-void R_CalcDayAndNight (float q)
+void R_CalcAndUploadDayAndNightTexture (float q)
 {
 	int x, y;
 	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
@@ -1233,22 +1226,6 @@ void R_CalcDayAndNight (float q)
 	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
 	byte *px;
 
-	/* get image */
-	if (!r_dayandnighttexture) {
-		if (r_numImages >= MAX_GL_TEXTURES)
-			Com_Error(ERR_DROP, "MAX_GL_TEXTURES");
-		r_dayandnighttexture = &r_images[r_numImages];
-		r_dayandnighttexture->index = r_numImages;
-		Q_strncpyz(r_dayandnighttexture->name, "day_and_night_mask", sizeof(r_dayandnighttexture->name));
-		r_dayandnighttexture->width = DAN_WIDTH;
-		r_dayandnighttexture->height = DAN_HEIGHT;
-		r_dayandnighttexture->type = it_pic;
-		r_dayandnighttexture->texnum = TEXNUM_IMAGES + (r_dayandnighttexture - r_images);
-		r_numImages++;
-	}
-	assert(r_dayandnighttexture->texnum);
-	R_BindTexture(r_dayandnighttexture->texnum);
-
 	for (x = 0; x < DAN_WIDTH; x++) {
 		const float phi = x * dphi - q;
 		sin_phi[x] = sin(phi);
@@ -1256,7 +1233,7 @@ void R_CalcDayAndNight (float q)
 	}
 
 	/* calculate */
-	px = r_dayandnightalpha;
+	px = r_dayandnightAlpha;
 	for (y = 0; y < DAN_HEIGHT; y++) {
 		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
 		const float root = sqrt(1 - a * a);
@@ -1272,14 +1249,11 @@ void R_CalcDayAndNight (float q)
 		}
 	}
 
-	/* upload alpha map */
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightalpha);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	/* upload alpha map into the r_dayandnighttexture */
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightAlpha);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	R_CheckError();
 }
 
@@ -1548,7 +1522,7 @@ void R_UploadRadarCoverage (qboolean smooth)
 /**
  * @brief Creates a new image from RGBA data. Stores it in the gltextures array
  * and also uploads it.
- * @note This is also used as an entry point for the generated r_notexture
+ * @note This is also used as an entry point for the generated r_noTexture
  * @param[in] name The name of the newly created image
  * @param[in] pic The RGBA data of the image
  * @param[in] width The width of the image (power of two, please)
@@ -1627,7 +1601,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		Sys_Error("R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
-		return r_notexture;
+		return r_noTexture;
 
 	/* drop extension */
 	Q_strncpyz(lname, pname, MAX_QPATH);
@@ -1648,7 +1622,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	while ((len = strlen(etex)) != 0) {
 		if (!Q_strncmp(lname, etex, MAX_QPATH))
 			/* it's in the error list */
-			return r_notexture;
+			return r_noTexture;
 
 		etex += len + 1;
 	}
@@ -1687,7 +1661,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 	/* no fitting texture found */
 	/* add to error list */
-	image = r_notexture;
+	image = r_noTexture;
 
 	*ename = 0;
 #ifdef DEBUG
@@ -1731,7 +1705,7 @@ void R_FreeUnusedImages (void)
 			continue;			/* used this sequence */
 
 		/* free it */
-		qglDeleteTextures(1, (GLuint *) &image->texnum);
+		glDeleteTextures(1, (GLuint *) &image->texnum);
 		R_CheckError();
 		memset(image, 0, sizeof(*image));
 	}
@@ -1745,11 +1719,15 @@ void R_InitImages (void)
 	r_numImages = 0;
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
-	r_dayandnighttexture = NULL;
+	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
+	if (!r_dayandnightTexture)
+		Sys_Error("Could not create daynight image for the geoscape");
+
+	/** @todo move r_radarTexture r_xviTexture here */
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_effect);
-		if (r_envmaptextures[i] == r_notexture)
+		if (r_envmaptextures[i] == r_noTexture)
 			Sys_Error("Could not load environment map %i", i);
 	}
 }
@@ -1767,7 +1745,7 @@ void R_ShutdownImages (void)
 		if (!image->texnum)
 			continue;			/* free image_t slot */
 		/* free it */
-		qglDeleteTextures(1, (GLuint *) &image->texnum);
+		glDeleteTextures(1, (GLuint *) &image->texnum);
 		R_CheckError();
 		memset(image, 0, sizeof(*image));
 	}
@@ -1809,11 +1787,11 @@ void R_TextureMode (const char *string)
 			continue;
 
 		R_BindTexture(image->texnum);
-		if (r_state.anisotropic)
-			qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_state.maxAnisotropic);
+		if (r_config.anisotropic)
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
 		R_CheckError();
 	}
 }
@@ -1848,7 +1826,7 @@ void R_TextureAlphaMode (const char *string)
 		return;
 	}
 
-	gl_alpha_format = gl_alpha_modes[i].mode;
+	r_config.gl_alpha_format = gl_alpha_modes[i].mode;
 }
 
 static const gltmode_t gl_solid_modes[] = {
@@ -1879,5 +1857,5 @@ void R_TextureSolidMode (const char *string)
 		return;
 	}
 
-	gl_solid_format = gl_solid_modes[i].mode;
+	r_config.gl_solid_format = gl_solid_modes[i].mode;
 }

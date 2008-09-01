@@ -382,4 +382,3 @@ Image* LoadJPG(ArchiveFile& file) {
 	ScopedArchiveBuffer buffer(file);
 	return LoadJPGBuff_(buffer.buffer, static_cast<int>(buffer.length));
 }
-

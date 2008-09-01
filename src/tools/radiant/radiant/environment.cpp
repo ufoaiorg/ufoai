@@ -29,10 +29,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "cmdlib.h"
 
 
-int g_argc;
-char** g_argv;
+static int g_argc;
+static char** g_argv;
 
-void args_init(int argc, char* argv[]) {
+void args_init (int argc, char* argv[])
+{
 	int i, j, k;
 
 	for (i = 1; i < argc; i++) {
@@ -57,11 +58,13 @@ CopiedString home_path;
 CopiedString app_path;
 }
 
-const char* environment_get_home_path() {
+const char* environment_get_home_path (void)
+{
 	return home_path.c_str();
 }
 
-const char* environment_get_app_path() {
+const char* environment_get_app_path (void)
+{
 	return app_path.c_str();
 }
 
@@ -83,7 +86,7 @@ static const char* LINK_NAME =
     ;
 
 /// \brief Returns the filename of the executable belonging to the current process, or 0 if not found.
-static const char* getexename(char *buf) {
+static const char* getexename (char *buf) {
 	/* Now read the symbolic link */
 	int ret = readlink(LINK_NAME, buf, PATH_MAX);
 
@@ -111,14 +114,14 @@ static const char* getexename(char *buf) {
 	return buf;
 }
 
-void environment_init(int argc, char* argv[]) {
+void environment_init (int argc, char* argv[])
+{
 	// Give away unnecessary root privileges.
 	// Important: must be done before calling gtk_init().
 	char *loginname;
 	struct passwd *pw;
 	seteuid(getuid());
-	if (geteuid() == 0 && (loginname = getlogin()) != 0 &&
-	        (pw = getpwnam(loginname)) != 0)
+	if (geteuid() == 0 && (loginname = getlogin()) != 0 && (pw = getpwnam(loginname)) != 0)
 		setuid(pw->pw_uid);
 
 	args_init(argc, argv);
@@ -130,11 +133,13 @@ void environment_init(int argc, char* argv[]) {
 		home << "radiant/";
 		Q_mkdir(home.c_str());
 		home_path = home.c_str();
+		globalOutputStream() << "HomePath: " << home_path.c_str();
 	}
 	{
 		char real[PATH_MAX];
 		app_path = getexename(real);
 		ASSERT_MESSAGE(!string_empty(app_path.c_str()), "failed to deduce app path");
+		globalOutputStream() << "AppPath: " << app_path.c_str();
 	}
 }
 
@@ -145,11 +150,12 @@ void environment_init(int argc, char* argv[]) {
 
 typedef HRESULT (WINAPI *folderPath_sh) (IN HWND, IN int, IN HANDLE, IN DWORD, OUT char *);
 
-void environment_init(int argc, char* argv[]) {
+void environment_init (int argc, char* argv[])
+{
 	args_init(argc, argv);
 
 	{
-		char appdata[MAX_PATH+1];
+		char appdata[MAX_PATH + 1];
 		HMODULE shfolder;
 
 		shfolder = LoadLibrary("shfolder.dll");
@@ -169,8 +175,8 @@ void environment_init(int argc, char* argv[]) {
 		StringOutputStream home(256);
 		if (string_empty(appdata)) {
 			ERROR_MESSAGE("Application Data folder not available.\n"
-			              "Please install shfolder redistributable package.\n"
-			              "Radiant will use C:\\ for user preferences.\n");
+					"Please install shfolder redistributable package.\n"
+					"Radiant will use C:\\ for user preferences.\n");
 			home << "C:";
 		} else {
 			home << PathCleaned(appdata);
@@ -180,6 +186,7 @@ void environment_init(int argc, char* argv[]) {
 		home << "/RadiantSettings/";;
 		Q_mkdir(home.c_str());
 		home_path = home.c_str();
+		globalOutputStream() << "HomePath: " << home_path.c_str();
 	}
 	{
 		// get path to the editor
@@ -194,6 +201,7 @@ void environment_init(int argc, char* argv[]) {
 		StringOutputStream app(256);
 		app << PathCleaned(filename);
 		app_path = app.c_str();
+		globalOutputStream() << "AppPath: " << app_path.c_str();
 	}
 }
 

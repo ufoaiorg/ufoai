@@ -182,10 +182,10 @@ void DoRouting (void)
 		wpMaxs[2] = PATHFINDING_HEIGHT;
 
 	/* scan area heights */
-	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, qtrue, "UNITCHECK");
+	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
 	/* scan connections */
-	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * CORE_DIRECTIONS * ACTOR_MAX_SIZE, qtrue, "CONNCHECK");
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * CORE_DIRECTIONS * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* Output the floor trace file if set */
 	if (config.generateTraceFile) {

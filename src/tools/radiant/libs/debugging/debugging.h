@@ -39,9 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STR2(x)	STR(x)
 #define FILE_LINE __FILE__ ":" STR2(__LINE__)
 
-#if defined(_DEBUG) || 1
 #define DEBUG_ASSERTS
-#endif
 
 class DebugMessageHandler {
 public:
@@ -65,7 +63,7 @@ public:
 		return globalErrorStream();
 	}
 	virtual bool handleMessage() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		return false; // send debug-break
 #else
 		return true;

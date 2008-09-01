@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_main.h"
+#include "r_sdl.h"
 
 SDL_Surface *r_surface;
 
@@ -85,7 +86,7 @@ qboolean Rimp_Init (void)
 			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
 	}
 
-	SDL_VERSION(&version);
+	SDL_VERSION(&version)
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
 	info = SDL_GetVideoInfo();

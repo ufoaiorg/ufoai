@@ -51,20 +51,12 @@ inline void read_scalevec(Vector3& scale, const char* value) {
 }
 inline void write_scale(const Vector3& scale, Entity* entity) {
 	if (scale[0] == 1 && scale[1] == 1 && scale[2] == 1) {
-		entity->setKeyValue("modelscale", "");
 		entity->setKeyValue("modelscale_vec", "");
 	} else {
 		char value[64];
 
-		if (scale[0] == scale[1] && scale[0] == scale[2]) {
-			sprintf(value, "%g", scale[0]);
-			entity->setKeyValue("modelscale_vec", "");
-			entity->setKeyValue("modelscale", value);
-		} else {
-			sprintf(value, "%g %g %g", scale[0], scale[1], scale[2]);
-			entity->setKeyValue("modelscale", "");
-			entity->setKeyValue("modelscale_vec", value);
-		}
+		sprintf(value, "%g %g %g", scale[0], scale[1], scale[2]);
+		entity->setKeyValue("modelscale_vec", value);
 	}
 }
 
@@ -87,12 +79,6 @@ public:
 	ScaleKey(const Callback& scaleChanged)
 			: m_scaleChanged(scaleChanged), m_scale(SCALEKEY_IDENTITY) {
 	}
-
-	void uniformScaleChanged(const char* value) {
-		read_scale(m_scale, value);
-		m_scaleChanged();
-	}
-	typedef MemberCaller1<ScaleKey, const char*, &ScaleKey::uniformScaleChanged> UniformScaleChangedCaller;
 
 	void scaleChanged(const char* value) {
 		read_scalevec(m_scale, value);

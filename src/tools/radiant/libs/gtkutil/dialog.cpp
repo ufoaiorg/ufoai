@@ -272,4 +272,3 @@ GtkTable* DialogRow_new(const char* name, GtkWidget* widget) {
 void DialogVBox_packRow(GtkVBox* vbox, GtkWidget* row) {
 	gtk_box_pack_start(GTK_BOX(vbox), row, FALSE, FALSE, 0);
 }
-

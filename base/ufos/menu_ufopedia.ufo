@@ -128,7 +128,7 @@ menu ufopedia
 		if "mn_up_mail == 0"
 		pos		"40 85"
 		size	"670 368"
-		num		2
+		num		TEXT_UFOPEDIA
 		format	"23 100"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
@@ -141,7 +141,7 @@ menu ufopedia
 		if "mn_up_mail == 1"
 		pos		"50 208"
 		size	"660 240"
-		num		2
+		num		TEXT_UFOPEDIA
 		format	"24 100"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
@@ -154,7 +154,7 @@ menu ufopedia
 		if "mn_up_mail == 1"
 		pos		"50 80"
 		size	"660 134"
-		num		32
+		num		TEXT_UFOPEDIA_MAILHEADER
 		format	"24 0"
 		height	"5"
 		font	"f_small_bold"
@@ -235,7 +235,7 @@ menu ufopedia
 		pos		"550 495"
 		size	"354 246"
 		format	"20 0"
-		num	1
+		num	TEXT_LIST
 		height	"12"
 		click
 		mousefx true
@@ -937,25 +937,25 @@ menu ufopedia_mail
 	}
 	pic mail_button_un_14
 	{
-		if	"mn_mail_read14 == 0"
+		if		"mn_mail_read14 == 0"
 		image 	menu/mail_button
-		pos	"90 656"
+		pos		"90 656"
 		texl	"0 28"
 		texh	"852 56"
 	}
 
 	text mailclient
 	{
-		pos	"100 130"
+		pos		"100 130"
 		size	"870 570"
-		num	33
+		num		TEXT_UFOPEDIA_MAIL
 		height	"15"
 		font	"f_small"
 		format	"38 700"
-		click rclick wheel
+		click	rclick wheel
 		mousefx	true
-//		bgcolor " 0 1 0 0.5"
-		scrollbar true
+//		bgcolor	" 0 1 0 0.5"
+		scrollbar	true
 		wheel	{ cmd "ufopedia_scrollmail;" }
 	}
 

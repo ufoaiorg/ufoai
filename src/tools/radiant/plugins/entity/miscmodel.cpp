@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ///\brief Represents the misc_model entity.
 ///
 /// This entity displays the model specified in its "model" key.
-/// The "origin", "angles" and "modelscale*" keys directly control the entity's local-to-parent transform.
+/// The "origin", "angles" and "modelscale_vec" keys directly control the entity's local-to-parent transform.
 
 #include "cullable.h"
 #include "renderable.h"
@@ -82,7 +82,6 @@ class MiscModel :
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 		m_keyObservers.insert("angle", AnglesKey::AngleChangedCaller(m_anglesKey));
 		m_keyObservers.insert("angles", AnglesKey::AnglesChangedCaller(m_anglesKey));
-		m_keyObservers.insert("modelscale", ScaleKey::UniformScaleChangedCaller(m_scaleKey));
 		m_keyObservers.insert("modelscale_vec", ScaleKey::ScaleChangedCaller(m_scaleKey));
 	}
 
@@ -362,9 +361,6 @@ public:
 		destroy();
 	}
 
-	void release() {
-		delete this;
-	}
 	scene::Node& node() {
 		return m_node;
 	}

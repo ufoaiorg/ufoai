@@ -827,6 +827,8 @@ public:
 	RenderablePointVector(GLenum mode)
 			: m_mode(mode) {
 	}
+	~RenderablePointVector() {
+	}
 
 	void render(RenderStateFlags state) const {
 		pointvertex_gl_array(&m_vector.front());

@@ -72,7 +72,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "qe3.h"
 #include "gtkmisc.h"
-#include "gtkdlgs.h"
 #include "entity.h"
 #include "mainframe.h"
 #include "textureentry.h"
@@ -115,9 +114,9 @@ void Scene_EntitySetKeyValue_Selected_Undoable(const char* key, const char* valu
 
 class EntityAttribute {
 public:
+	virtual ~EntityAttribute() {}
 	virtual GtkWidget* getWidget() const = 0;
 	virtual void update() = 0;
-	virtual void release() = 0;
 };
 
 class BooleanAttribute : public EntityAttribute {
@@ -145,9 +144,7 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_check);
 	}
-	void release() {
-		delete this;
-	}
+
 	void apply() {
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(m_check)) ? "1" : "0");
 	}
@@ -188,9 +185,6 @@ public:
 		return m_entry;
 	}
 
-	void release() {
-		delete this;
-	}
 	void apply() {
 		StringOutputStream value(64);
 		value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
@@ -225,9 +219,7 @@ public:
 			m_nonModal(ApplyCaller(*this), UpdateCaller(*this)) {
 		m_nonModal.connect(m_entry.m_entry.m_entry);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
@@ -266,9 +258,7 @@ public:
 			m_nonModal(ApplyCaller(*this), UpdateCaller(*this)) {
 		m_nonModal.connect(m_entry.m_entry.m_entry);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
@@ -312,9 +302,7 @@ public:
 		m_entry = entry;
 		m_nonModal.connect(m_entry);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry);
 	}
@@ -369,9 +357,7 @@ public:
 		gtk_box_pack_start(GTK_BOX(m_hbox), GTK_WIDGET(m_radio.m_hbox), TRUE, TRUE, 0);
 		gtk_box_pack_start(GTK_BOX(m_hbox), GTK_WIDGET(m_entry), TRUE, TRUE, 0);
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
@@ -462,9 +448,7 @@ public:
 			m_nonModal.connect(m_angles.m_roll);
 		}
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
@@ -545,9 +529,7 @@ public:
 			m_nonModal.connect(m_vector3.m_z);
 		}
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
@@ -633,9 +615,7 @@ public:
 
 		m_combo = combo;
 	}
-	void release() {
-		delete this;
-	}
+
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_combo);
 	}
@@ -694,7 +674,7 @@ EntityAttributes g_entityAttributes;
 
 void GlobalEntityAttributes_clear() {
 	for (EntityAttributes::iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
-		(*i)->release();
+		delete *i;
 	}
 	g_entityAttributes.clear();
 }
@@ -1255,7 +1235,7 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 					{
 						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 0, NULL);
+						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 0, (char const*)0);
 						gtk_tree_view_append_column(view, column);
 					}
 
@@ -1336,13 +1316,13 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 						{
 							GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("", renderer, "text", 0, NULL);
+							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("", renderer, "text", 0, (char const*)0);
 							gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 						}
 
 						{
 							GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("", renderer, "text", 1, NULL);
+							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("", renderer, "text", 1, (char const*)0);
 							gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 						}
 
@@ -1517,4 +1497,3 @@ void EntityInspector_construct() {
 void EntityInspector_destroy() {
 	GlobalEntityClassManager().detach(g_EntityInspector);
 }
-

@@ -207,13 +207,15 @@ static bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
 	return b;
 }
 
+/**
+ * @brief Returns the volume of the given brush
+ */
 static vec_t BrushVolume (bspbrush_t *brush)
 {
 	int i;
 	winding_t *w;
 	vec3_t corner;
-	vec_t d, area, volume;
-	plane_t *plane;
+	vec_t volume;
 
 	if (!brush)
 		return 0;
@@ -233,18 +235,21 @@ static vec_t BrushVolume (bspbrush_t *brush)
 	volume = 0;
 	for (; i < brush->numsides; i++) {
 		w = brush->sides[i].winding;
-		if (!w)
-			continue;
-		plane = &mapplanes[brush->sides[i].planenum];
-		d = -(DotProduct(corner, plane->normal) - plane->dist);
-		area = WindingArea(w);
-		volume += d * area;
+		if (w) {
+			const plane_t *plane = &mapplanes[brush->sides[i].planenum];
+			const vec_t d = -(DotProduct(corner, plane->normal) - plane->dist);
+			const vec_t area = WindingArea(w);
+			volume += d * area;
+		}
 	}
 
 	volume /= 3;
 	return volume;
 }
 
+/**
+ * @brief Returns the amount of brushes in the the given brushlist
+ */
 int CountBrushList (bspbrush_t *brushes)
 {
 	int c;
@@ -255,6 +260,10 @@ int CountBrushList (bspbrush_t *brushes)
 	return c;
 }
 
+/**
+ * @sa AllocBrush
+ * @sa AllocNode
+ */
 static tree_t *AllocTree (void)
 {
 	tree_t *tree;
@@ -266,6 +275,10 @@ static tree_t *AllocTree (void)
 	return tree;
 }
 
+/**
+ * @sa AllocBrush
+ * @sa AllocTree
+ */
 static node_t *AllocNode (void)
 {
 	node_t *node;
@@ -276,7 +289,10 @@ static node_t *AllocNode (void)
 	return node;
 }
 
-
+/**
+ * @sa AllocTree
+ * @sa AllocNode
+ */
 bspbrush_t *AllocBrush (int numsides)
 {
 	bspbrush_t *bb;
@@ -289,6 +305,9 @@ bspbrush_t *AllocBrush (int numsides)
 	return bb;
 }
 
+/**
+ * @sa AllocBrush
+ */
 void FreeBrush (bspbrush_t *brushes)
 {
 	int i;
@@ -301,7 +320,10 @@ void FreeBrush (bspbrush_t *brushes)
 		c_active_brushes--;
 }
 
-
+/**
+ * @sa AllocBrush
+ * @sa CountBrushList
+ */
 void FreeBrushList (bspbrush_t *brushes)
 {
 	bspbrush_t *next;
@@ -314,6 +336,7 @@ void FreeBrushList (bspbrush_t *brushes)
 
 /**
  * @brief Duplicates the brush, the sides, and the windings
+ * @sa AllocBrush
  */
 bspbrush_t *CopyBrush (const bspbrush_t *brush)
 {
@@ -346,8 +369,8 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	*numsplits = 0;
 	*hintsplit = qfalse;
 
-	/* if the brush actually uses the planenum, */
-	/* we can tell the side for sure */
+	/* if the brush actually uses the planenum,
+	 * we can tell the side for sure */
 	for (i = 0; i < brush->numsides; i++) {
 		num = brush->sides[i].planenum;
 		if (num >= 0x10000)
@@ -403,27 +426,27 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		}
 	}
 
-	if ((d_front > 0.0 && d_front < 1.0)
-		|| (d_back < 0.0 && d_back > -1.0))
+	if ((d_front > 0.0 && d_front < 1.0) || (d_back < 0.0 && d_back > -1.0))
 		(*epsilonbrush)++;
 
 	return s;
 }
 
 
-#define	EDGE_LENGTH	0.2
+#define EDGE_LENGTH 0.2
 /**
- * @brief Returns true if the winding would be crunched out of existance by the vertex snapping.
+ * @brief Returns true if the winding would be crunched out of existance by the
+ * vertex snapping.
  */
 qboolean WindingIsTiny (winding_t *w)
 {
-	int i, j, edges;
+	int i, edges;
 	vec_t len;
 	vec3_t delta;
 
 	edges = 0;
 	for (i = 0; i < w->numpoints; i++) {
-		j = ((i == w->numpoints - 1) ? 0 : i) + 1;
+		const int j = ((i == w->numpoints - 1) ? 0 : i) + 1;
 		VectorSubtract(w->p[j], w->p[i], delta);
 		len = VectorLength(delta);
 		if (len > EDGE_LENGTH) {
@@ -435,7 +458,8 @@ qboolean WindingIsTiny (winding_t *w)
 }
 
 /**
- * @brief Returns true if the winding still has one of the points from basewinding for plane
+ * @brief Returns true if the winding still has one of the points from
+ * basewinding for plane
  */
 static qboolean WindingIsHuge (const winding_t *w)
 {
@@ -443,7 +467,7 @@ static qboolean WindingIsHuge (const winding_t *w)
 
 	for (i = 0; i < w->numpoints; i++) {
 		for (j = 0; j < 3; j++)
-			if (w->p[i][j] < -8000 || w->p[i][j] > 8000)
+			if (w->p[i][j] < -MAX_WORLD_WIDTH || w->p[i][j] > MAX_WORLD_WIDTH)
 				return qtrue;
 	}
 	return qfalse;
@@ -513,7 +537,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
 	side_t *side, *bestside;
-	int i, j, pass, numpasses, s, pnum;
+	int i, j, pass, numpasses, pnum;
 	int front, back, both, facing, splits;
 	int bsplits, bestsplits, epsilonbrush;
 	qboolean hintsplit = qfalse;
@@ -536,6 +560,8 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 			if (!(pass & 1) && (brush->original->contentFlags & CONTENTS_DETAIL))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
+				/** @todo This will overflow if numsides is bigger than 6
+				 * @sa bspbrush_t */
 				side = brush->sides + i;
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */
@@ -566,7 +592,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				epsilonbrush = 0;
 
 				for (test = brushes; test; test = test->next) {
-					s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
+					const int s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
 
 					splits += bsplits;
 					if (bsplits && (s & PSIDE_FACING))
@@ -592,9 +618,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 				/* give a value estimate for using this plane */
 
-				value =  5 * facing - 5 * splits - abs(front - back);
-/*				value = -5 * splits; */
-/*				value = 5 * facing - 5 * splits; */
+				value = 5 * facing - 5 * splits - abs(front - back);
 				if (mapplanes[pnum].type <= PLANE_Z)
 					value += 5;		/* axial is better */
 				value -= epsilonbrush * 1000;	/* avoid! */
@@ -635,7 +659,10 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	return bestside;
 }
 
-
+/**
+ * @brief Checks on which side a of plane the brush is
+ * @todo Or vice versa?
+ */
 static int BrushMostlyOnSide (const bspbrush_t *brush, const plane_t *plane)
 {
 	int i, j, side;
@@ -719,8 +746,11 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 		return;
 	}
 
-	if (WindingIsHuge(w))
+	if (WindingIsHuge(w)) {
+		/** @todo Print brush and entnum either of the brush that was splitted
+		 * or the plane that was used as splitplane */
 		Com_Printf("WARNING: Large winding\n");
+	}
 
 	midwinding = w;
 
@@ -756,6 +786,8 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 		BoundBrush(b[i]);
 		for (j = 0; j < 3; j++) {
 			if (b[i]->mins[j] < -MAX_WORLD_WIDTH || b[i]->maxs[j] > MAX_WORLD_WIDTH) {
+				/** @todo Print brush and entnum either of the brush that was splitted
+				 * or the plane that was used as splitplane */
 				Sys_FPrintf(SYS_VRB, "bogus brush after clip\n");
 				break;
 			}
@@ -768,6 +800,8 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 	}
 
 	if (!(b[0] && b[1])) {
+		/** @todo Print brush and entnum either of the brush that was splitted
+		 * or the plane that was used as splitplane */
 		if (!b[0] && !b[1])
 			Sys_FPrintf(SYS_VRB, "split removed brush\n");
 		else
@@ -799,13 +833,13 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 	}
 
 	{
-		vec_t v1;
-
 		for (i = 0; i < 2; i++) {
-			v1 = BrushVolume(b[i]);
+			const vec_t v1 = BrushVolume(b[i]);
 			if (v1 < 1.0) {
 				FreeBrush(b[i]);
 				b[i] = NULL;
+				/** @todo Print brush and entnum either of the brush that was splitted
+				 * or the plane that was used as splitplane */
 				Sys_FPrintf(SYS_VRB, "tiny volume after clip\n");
 			}
 		}
@@ -888,6 +922,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 
 	/* this is a splitplane node */
 	node->side = bestside;
+	assert(bestside->planenum < MAX_MAP_PLANES);
 	node->planenum = bestside->planenum & ~1;	/* always use front facing */
 
 	SplitBrushList(brushes, node, &children[0], &children[1]);
@@ -984,7 +1019,7 @@ void WriteBSPBrushMap (const char *name, const bspbrush_t *list)
 	FILE *f;
 
 	/* note it */
-	Com_Printf("Writing %s\n", name);
+	Verb_Printf(VERB_NORMAL, "Writing %s\n", name);
 
 	/* open the map file */
 	f = fopen(name, "wb");

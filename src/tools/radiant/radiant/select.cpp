@@ -106,17 +106,14 @@ public:
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		Selectable* selectable = Instance_getSelectable(instance);
 
-		// ignore worldspawn
+		/* ignore worldspawn */
 		Entity* entity = Node_getEntity(path.top());
 		if (entity) {
 			if (string_equal(entity->getKeyValue("classname"), "worldspawn"))
 				return true;
 		}
 
-		if ( (path.size() > 1) &&
-		        (!path.top().get().isRoot()) &&
-		        (selectable != 0)
-		   ) {
+		if (path.size() > 1 && !path.top().get().isRoot() && selectable != 0) {
 			for (Unsigned i = 0; i < m_count; ++i) {
 				if (policy.Evaluate(m_aabbs[i], instance)) {
 					selectable->setSelected(true);
@@ -206,13 +203,11 @@ public:
 		m_removedChild = false;
 
 		Selectable* selectable = Instance_getSelectable(instance);
-		if (selectable != 0
-		        && selectable->isSelected()
-		        && path.size() > 1
-		        && !path.top().get().isRoot()) {
+		if (selectable != 0 && selectable->isSelected() && path.size() > 1 &&
+			!path.top().get().isRoot()) {
 			m_remove = true;
-
-			return false;// dont traverse into child elements
+			/* dont traverse into child elements */
+			return false;
 		}
 		return true;
 	}
@@ -223,9 +218,8 @@ public:
 
 			// delete empty entities
 			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0
-			        && path.top().get_pointer() != Map_FindWorldspawn(g_map)
-			        && Node_getTraversable(path.top())->empty()) {
+			if (entity != 0 && path.top().get_pointer() != Map_FindWorldspawn(g_map)
+				&& Node_getTraversable(path.top())->empty()) {
 				Path_deleteTop(path);
 			}
 		}
@@ -242,12 +236,14 @@ public:
 	}
 };
 
-void Scene_DeleteSelected(scene::Graph& graph) {
+void Scene_DeleteSelected(scene::Graph& graph)
+{
 	graph.traverse(DeleteSelected());
 	SceneChangeNotify();
 }
 
-void Select_Delete (void) {
+void Select_Delete (void)
+{
 	Scene_DeleteSelected(GlobalSceneGraph());
 }
 
@@ -284,25 +280,27 @@ public:
 	}
 };
 
-void Scene_Invert_Selection(scene::Graph& graph) {
+void Scene_Invert_Selection(scene::Graph& graph)
+{
 	graph.traverse(InvertSelectionWalker(GlobalSelectionSystem().Mode()));
 }
 
-void Select_Invert() {
+void Select_Invert (void)
+{
 	Scene_Invert_Selection(GlobalSceneGraph());
 }
 
 class ExpandSelectionToEntitiesWalker : public scene::Graph::Walker {
 	mutable std::size_t m_depth;
 public:
-	ExpandSelectionToEntitiesWalker() : m_depth(0) {
+	ExpandSelectionToEntitiesWalker(void): m_depth(0) {
 	}
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		++m_depth;
-		if (m_depth == 2) { // entity depth
-			// traverse and select children if any one is selected
+		if (m_depth == 2) { /* entity depth */
+			/* traverse and select children if any one is selected */
 			return Node_getEntity(path.top())->isContainer() && instance.childSelected();
-		} else if (m_depth == 3) { // primitive depth
+		} else if (m_depth == 3) { /* primitive depth */
 			Instance_setSelected(instance, true);
 			return false;
 		}
@@ -313,13 +311,15 @@ public:
 	}
 };
 
-void Scene_ExpandSelectionToEntities() {
+void Scene_ExpandSelectionToEntities (void)
+{
 	GlobalSceneGraph().traverse(ExpandSelectionToEntitiesWalker());
 }
 
 
 namespace {
-void Selection_UpdateWorkzone() {
+void Selection_UpdateWorkzone (void)
+{
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		Select_GetBounds(g_select_workzone.d_work_min, g_select_workzone.d_work_max);
 	}
@@ -329,65 +329,75 @@ typedef FreeCaller<Selection_UpdateWorkzone> SelectionUpdateWorkzoneCaller;
 IdleDraw g_idleWorkzone = IdleDraw(SelectionUpdateWorkzoneCaller());
 }
 
-const select_workzone_t& Select_getWorkZone() {
+const select_workzone_t& Select_getWorkZone (void)
+{
 	g_idleWorkzone.flush();
 	return g_select_workzone;
 }
 
-void UpdateWorkzone_ForSelection() {
+void UpdateWorkzone_ForSelection (void)
+{
 	g_idleWorkzone.queueDraw();
 }
 
 // update the workzone to the current selection
-void UpdateWorkzone_ForSelectionChanged(const Selectable& selectable) {
+void UpdateWorkzone_ForSelectionChanged (const Selectable& selectable)
+{
 	if (selectable.isSelected()) {
 		UpdateWorkzone_ForSelection();
 	}
 }
 
-void Select_SetShader(const char* shader) {
+void Select_SetShader (const char* shader)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetShader_Selected(GlobalSceneGraph(), shader);
 	}
 	Scene_BrushSetShader_Component_Selected(GlobalSceneGraph(), shader);
 }
 
-void Select_SetTexdef(const TextureProjection& projection) {
+void Select_SetTexdef (const TextureProjection& projection)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetTexdef_Selected(GlobalSceneGraph(), projection);
 	}
 	Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 }
 
-void Select_SetFlags(const ContentsFlagsValue& flags) {
+void Select_SetFlags (const ContentsFlagsValue& flags)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushSetFlags_Selected(GlobalSceneGraph(), flags);
 	}
 	Scene_BrushSetFlags_Component_Selected(GlobalSceneGraph(), flags);
 }
 
-void Select_GetBounds (Vector3& mins, Vector3& maxs) {
+void Select_GetBounds (Vector3& mins, Vector3& maxs)
+{
 	AABB bounds;
 	Scene_BoundsSelected(GlobalSceneGraph(), bounds);
 	maxs = vector3_added(bounds.origin, bounds.extents);
 	mins = vector3_subtracted(bounds.origin, bounds.extents);
 }
 
-void Select_GetMid (Vector3& mid) {
+void Select_GetMid (Vector3& mid)
+{
 	AABB bounds;
 	Scene_BoundsSelected(GlobalSceneGraph(), bounds);
 	mid = vector3_snapped(bounds.origin);
 }
 
 
-void Select_FlipAxis (int axis) {
+void Select_FlipAxis (int axis)
+{
 	Vector3 flip(1, 1, 1);
 	flip[axis] = -1;
 	GlobalSelectionSystem().scaleSelected(flip);
 }
 
 
-void Select_Scale(float x, float y, float z) {
+void Select_Scale (float x, float y, float z)
+{
 	GlobalSelectionSystem().scaleSelected(Vector3(x, y, z));
 }
 
@@ -402,7 +412,8 @@ enum sign_t {
 	eSignNegative = -1,
 };
 
-inline Matrix4 matrix4_rotation_for_axis90(axis_t axis, sign_t sign) {
+inline Matrix4 matrix4_rotation_for_axis90 (axis_t axis, sign_t sign)
+{
 	switch (axis) {
 	case eAxisX:
 		if (sign == eSignPositive) {
@@ -425,17 +436,20 @@ inline Matrix4 matrix4_rotation_for_axis90(axis_t axis, sign_t sign) {
 	}
 }
 
-inline void matrix4_rotate_by_axis90(Matrix4& matrix, axis_t axis, sign_t sign) {
+inline void matrix4_rotate_by_axis90 (Matrix4& matrix, axis_t axis, sign_t sign)
+{
 	matrix4_multiply_by_matrix4(matrix, matrix4_rotation_for_axis90(axis, sign));
 }
 
-inline void matrix4_pivoted_rotate_by_axis90(Matrix4& matrix, axis_t axis, sign_t sign, const Vector3& pivotpoint) {
+inline void matrix4_pivoted_rotate_by_axis90 (Matrix4& matrix, axis_t axis, sign_t sign, const Vector3& pivotpoint)
+{
 	matrix4_translate_by_vec3(matrix, pivotpoint);
 	matrix4_rotate_by_axis90(matrix, axis, sign);
 	matrix4_translate_by_vec3(matrix, vector3_negated(pivotpoint));
 }
 
-inline Quaternion quaternion_for_axis90(axis_t axis, sign_t sign) {
+inline Quaternion quaternion_for_axis90 (axis_t axis, sign_t sign)
+{
 	switch (axis) {
 	case eAxisX:
 		if (sign == eSignPositive) {
@@ -458,7 +472,8 @@ inline Quaternion quaternion_for_axis90(axis_t axis, sign_t sign) {
 	}
 }
 
-void Select_RotateAxis (int axis, float deg) {
+void Select_RotateAxis (int axis, float deg)
+{
 	if (fabs(deg) == 90.f) {
 		GlobalSelectionSystem().rotateSelected(quaternion_for_axis90((axis_t)axis, (deg > 0) ? eSignPositive : eSignNegative));
 	} else {
@@ -477,31 +492,36 @@ void Select_RotateAxis (int axis, float deg) {
 }
 
 
-void Select_ShiftTexture(float x, float y) {
+void Select_ShiftTexture (float x, float y)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushShiftTexdef_Selected(GlobalSceneGraph(), x, y);
 	}
-	//globalOutputStream() << "shift selected face textures: s=" << x << " t=" << y << '\n';
 	Scene_BrushShiftTexdef_Component_Selected(GlobalSceneGraph(), x, y);
 }
 
-void Select_ScaleTexture(float x, float y) {
+void Select_ScaleTexture (float x, float y)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushScaleTexdef_Selected(GlobalSceneGraph(), x, y);
 	}
 	Scene_BrushScaleTexdef_Component_Selected(GlobalSceneGraph(), x, y);
 }
 
-void Select_RotateTexture(float amt) {
+void Select_RotateTexture (float amt)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushRotateTexdef_Selected(GlobalSceneGraph(), amt);
 	}
 	Scene_BrushRotateTexdef_Component_Selected(GlobalSceneGraph(), amt);
 }
 
-// TTimo modified to handle shader architecture:
-// expects shader names at input, comparison relies on shader names .. texture names no longer relevant
-void FindReplaceTextures(const char* pFind, const char* pReplace, bool bSelected) {
+/**
+ * @note TTimo modified to handle shader architecture:
+ * expects shader names at input, comparison relies on shader names .. texture names no longer relevant
+ */
+void FindReplaceTextures (const char* pFind, const char* pReplace, bool bSelected)
+{
 	if (!texdef_name_valid(pFind)) {
 		globalErrorStream() << "FindReplaceTextures: invalid texture name: '" << pFind << "', aborted\n";
 		return;
@@ -527,7 +547,8 @@ void FindReplaceTextures(const char* pFind, const char* pReplace, bool bSelected
 
 typedef std::vector<const char*> Classnames;
 
-bool classnames_match_entity(const Classnames& classnames, Entity* entity) {
+bool classnames_match_entity (const Classnames& classnames, Entity* entity)
+{
 	for (Classnames::const_iterator i = classnames.begin(); i != classnames.end(); ++i) {
 		if (string_equal(entity->getKeyValue("classname"), *i)) {
 			return true;
@@ -575,11 +596,13 @@ public:
 	}
 };
 
-void Scene_EntityGetClassnames(scene::Graph& graph, Classnames& classnames) {
+void Scene_EntityGetClassnames(scene::Graph& graph, Classnames& classnames)
+{
 	graph.traverse(EntityGetSelectedClassnamesWalker(classnames));
 }
 
-void Select_AllOfType() {
+void Select_AllOfType (void)
+{
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		if (GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace) {
 			GlobalSelectionSystem().setSelectedAllComponents(false);
@@ -597,15 +620,18 @@ void Select_AllOfType() {
 	}
 }
 
-void Select_Inside(void) {
+void Select_Inside (void)
+{
 	SelectByBounds<SelectionPolicy_Inside>::DoSelection();
 }
 
-void Select_Touching(void) {
+void Select_Touching (void)
+{
 	SelectByBounds<SelectionPolicy_Touching>::DoSelection(false);
 }
 
-void Select_FitTexture(float horizontal, float vertical) {
+void Select_FitTexture (float horizontal, float vertical)
+{
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
 		Scene_BrushFitTexture_Selected(GlobalSceneGraph(), horizontal, vertical);
 	}
@@ -614,10 +640,12 @@ void Select_FitTexture(float horizontal, float vertical) {
 	SceneChangeNotify();
 }
 
-inline void hide_node(scene::Node& node, bool hide) {
-	hide
-	? node.enable(scene::Node::eHidden)
-	: node.disable(scene::Node::eHidden);
+inline void hide_node (scene::Node& node, bool hide)
+{
+	if (hide)
+		node.enable(scene::Node::eHidden);
+	else
+		node.disable(scene::Node::eHidden);
 }
 
 class HideSelectedWalker : public scene::Graph::Walker {
@@ -636,16 +664,19 @@ public:
 	}
 };
 
-void Scene_Hide_Selected(bool hide) {
+void Scene_Hide_Selected (bool hide)
+{
 	GlobalSceneGraph().traverse(HideSelectedWalker(hide));
 }
 
-void Select_Hide() {
+void Select_Hide (void)
+{
 	Scene_Hide_Selected(true);
 	SceneChangeNotify();
 }
 
-void HideSelected() {
+void HideSelected (void)
+{
 	Select_Hide();
 	GlobalSelectionSystem().setSelectedAll(false);
 }
@@ -663,57 +694,67 @@ public:
 	}
 };
 
-void Scene_Hide_All(bool hide) {
+void Scene_Hide_All (bool hide)
+{
 	GlobalSceneGraph().traverse(HideAllWalker(hide));
 }
 
-void Select_ShowAllHidden() {
+void Select_ShowAllHidden (void)
+{
 	Scene_Hide_All(false);
 	SceneChangeNotify();
 }
 
 
 
-void Selection_Flipx() {
+void Selection_Flipx (void)
+{
 	UndoableCommand undo("mirrorSelected -axis x");
 	Select_FlipAxis(0);
 }
 
-void Selection_Flipy() {
+void Selection_Flipy (void)
+{
 	UndoableCommand undo("mirrorSelected -axis y");
 	Select_FlipAxis(1);
 }
 
-void Selection_Flipz() {
+void Selection_Flipz (void)
+{
 	UndoableCommand undo("mirrorSelected -axis z");
 	Select_FlipAxis(2);
 }
 
-void Selection_Rotatex() {
+void Selection_Rotatex (void)
+{
 	UndoableCommand undo("rotateSelected -axis x -angle -90");
 	Select_RotateAxis(0, -90);
 }
 
-void Selection_Rotatey() {
+void Selection_Rotatey (void)
+{
 	UndoableCommand undo("rotateSelected -axis y -angle 90");
 	Select_RotateAxis(1, 90);
 }
 
-void Selection_Rotatez() {
+void Selection_Rotatez (void)
+{
 	UndoableCommand undo("rotateSelected -axis z -angle -90");
 	Select_RotateAxis(2, -90);
 }
 
 
 
-void Nudge(int nDim, float fNudge) {
+void Nudge (int nDim, float fNudge)
+{
 	Vector3 translate(0, 0, 0);
 	translate[nDim] = fNudge;
 
 	GlobalSelectionSystem().translateSelected(translate);
 }
 
-void Selection_NudgeZ(float amount) {
+void Selection_NudgeZ (float amount)
+{
 	StringOutputStream command;
 	command << "nudgeSelected -axis z -amount " << amount;
 	UndoableCommand undo(command.c_str());
@@ -721,21 +762,25 @@ void Selection_NudgeZ(float amount) {
 	Nudge(2, amount);
 }
 
-void Selection_MoveDown() {
+void Selection_MoveDown (void)
+{
 	Selection_NudgeZ(-GetGridSize());
 }
 
-void Selection_MoveUp() {
+void Selection_MoveUp (void)
+{
 	Selection_NudgeZ(GetGridSize());
 }
 
-void SceneSelectionChange(const Selectable& selectable) {
+void SceneSelectionChange (const Selectable& selectable)
+{
 	SceneChangeNotify();
 }
 
 SignalHandlerId Selection_boundsChanged;
 
-void Selection_construct() {
+void Selection_construct (void)
+{
 	typedef FreeCaller1<const Selectable&, SceneSelectionChange> SceneSelectionChangeCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(SceneSelectionChangeCaller());
 	typedef FreeCaller1<const Selectable&, UpdateWorkzone_ForSelectionChanged> UpdateWorkzoneForSelectionChangedCaller;
@@ -744,12 +789,12 @@ void Selection_construct() {
 	Selection_boundsChanged = GlobalSceneGraph().addBoundsChangedCallback(UpdateWorkzoneForSelectionCaller());
 }
 
-void Selection_destroy() {
+void Selection_destroy (void)
+{
 	GlobalSceneGraph().removeBoundsChangedCallback(Selection_boundsChanged);
 }
 
 
-#include "gtkdlgs.h"
 #include <gtk/gtkbox.h>
 #include <gtk/gtkspinbutton.h>
 #include <gtk/gtktable.h>
@@ -757,13 +802,14 @@ void Selection_destroy() {
 #include <gdk/gdkkeysyms.h>
 
 
-inline Quaternion quaternion_for_euler_xyz_degrees(const Vector3& eulerXYZ) {
-	double cx = cos(degrees_to_radians(eulerXYZ[0] * 0.5));
-	double sx = sin(degrees_to_radians(eulerXYZ[0] * 0.5));
-	double cy = cos(degrees_to_radians(eulerXYZ[1] * 0.5));
-	double sy = sin(degrees_to_radians(eulerXYZ[1] * 0.5));
-	double cz = cos(degrees_to_radians(eulerXYZ[2] * 0.5));
-	double sz = sin(degrees_to_radians(eulerXYZ[2] * 0.5));
+inline Quaternion quaternion_for_euler_xyz_degrees (const Vector3& eulerXYZ)
+{
+	const double cx = cos(degrees_to_radians(eulerXYZ[0] * 0.5));
+	const double sx = sin(degrees_to_radians(eulerXYZ[0] * 0.5));
+	const double cy = cos(degrees_to_radians(eulerXYZ[1] * 0.5));
+	const double sy = sin(degrees_to_radians(eulerXYZ[1] * 0.5));
+	const double cz = cos(degrees_to_radians(eulerXYZ[2] * 0.5));
+	const double sz = sin(degrees_to_radians(eulerXYZ[2] * 0.5));
 
 	return Quaternion(
 	           cz * cy * sx - sz * sy * cx,
@@ -779,7 +825,8 @@ struct RotateDialog {
 	GtkSpinButton* z;
 };
 
-static void rotatedlg_apply (GtkWidget *widget, RotateDialog* rotateDialog) {
+static void rotatedlg_apply (GtkWidget *widget, RotateDialog* rotateDialog)
+{
 	Vector3 eulerXYZ;
 
 	eulerXYZ[0] = static_cast<float>(gtk_spin_button_get_value(rotateDialog->x));
@@ -798,7 +845,8 @@ static void rotatedlg_apply (GtkWidget *widget, RotateDialog* rotateDialog) {
 	GlobalSelectionSystem().rotateSelected(quaternion_for_euler_xyz_degrees(eulerXYZ));
 }
 
-void DoRotateDlg() {
+void DoRotateDlg (void)
+{
 	ModalDialog dialog;
 	RotateDialog rotateDialog;
 
@@ -901,7 +949,8 @@ void DoRotateDlg() {
 	gtk_widget_destroy(GTK_WIDGET(window));
 }
 
-void DoScaleDlg() {
+void DoScaleDlg (void)
+{
 	ModalDialog dialog;
 	GtkWidget* x;
 	GtkWidget* y;

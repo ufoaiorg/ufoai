@@ -26,8 +26,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "jpeg.h"
 #include "tga.h"
-#include "bmp.h"
-
 
 #include "modulesystem/singletonmodule.h"
 
@@ -71,30 +69,9 @@ typedef SingletonModule<ImageJPGAPI, ImageDependencies> ImageJPGModule;
 
 ImageJPGModule g_ImageJPGModule;
 
-
-class ImageBMPAPI {
-	_QERPlugImageTable m_imagebmp;
-public:
-	typedef _QERPlugImageTable Type;
-	STRING_CONSTANT(Name, "bmp");
-
-	ImageBMPAPI() {
-		m_imagebmp.loadImage = LoadBMP;
-	}
-	_QERPlugImageTable* getTable() {
-		return &m_imagebmp;
-	}
-};
-
-typedef SingletonModule<ImageBMPAPI, ImageDependencies> ImageBMPModule;
-
-ImageBMPModule g_ImageBMPModule;
-
-
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
 	initialiseModule(server);
 
 	g_ImageTGAModule.selfRegister();
 	g_ImageJPGModule.selfRegister();
-	g_ImageBMPModule.selfRegister();
 }

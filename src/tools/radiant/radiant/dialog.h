@@ -86,7 +86,7 @@ typedef ReferenceCaller1<CopiedString, const StringImportCallback&, StringExport
 
 
 struct DLG_DATA {
-	virtual void release() = 0;
+	virtual ~DLG_DATA() {}
 	virtual void importData() const = 0;
 	virtual void exportData() const = 0;
 };

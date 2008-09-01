@@ -53,6 +53,9 @@ public:
 	TextOutputStream& getErrorStream() {
 		return globalErrorStream();
 	}
+	TextOutputStream& getWarningStream() {
+		return globalWarningStream();
+	}
 	DebugMessageHandler& getDebugMessageHandler() {
 		return globalDebugMessageHandler();
 	}
@@ -197,7 +200,9 @@ class Libraries {
 
 public:
 	~Libraries() {
-		release();
+		for (libraries_t::iterator i = m_libraries.begin(); i != m_libraries.end(); ++i) {
+			delete *i;
+		}
 	}
 	void registerLibrary(const char* filename, ModuleServer& server) {
 		DynamicLibraryModule* library = new DynamicLibraryModule(filename);
@@ -209,11 +214,7 @@ public:
 			library->registerModules(server);
 		}
 	}
-	void release() {
-		for (libraries_t::iterator i = m_libraries.begin(); i != m_libraries.end(); ++i) {
-			delete *i;
-		}
-	}
+
 	void clear() {
 		m_libraries.clear();
 	}

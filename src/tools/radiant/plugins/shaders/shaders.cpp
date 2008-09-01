@@ -50,6 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <glib/gslist.h>
 
+#include "autoptr.h"
 #include "debugging/debugging.h"
 #include "string/pooledstring.h"
 #include "math/vector.h"
@@ -168,10 +169,9 @@ Image& convertHeightmapToNormalmap(Image& heightmap, float scale) {
 }
 
 Image* loadHeightmap(void* environment, const char* name) {
-	Image* heightmap = GlobalTexturesCache().loadImage(name);
-	if (heightmap != 0) {
+	AutoPtr<Image> heightmap(GlobalTexturesCache().loadImage(name));
+	if (heightmap) {
 		Image& normalmap = convertHeightmapToNormalmap(*heightmap, *reinterpret_cast<float*>(environment));
-		heightmap->release();
 		return &normalmap;
 	}
 	return 0;
@@ -299,7 +299,7 @@ public:
 
 	// -----------------------------------------
 
-	bool parseQuake3(Tokeniser& tokeniser);
+	bool parseUFO(Tokeniser& tokeniser);
 	bool parseTemplate(Tokeniser& tokeniser);
 
 
@@ -491,7 +491,7 @@ qtexture_t* evaluateTexture(const TextureExpression& texture, const ShaderParame
 
 float evaluateFloat(const ShaderValue& value, const ShaderParameters& params, const ShaderArguments& args) {
 	const char* result = evaluateShaderValue(value.c_str(), params, args);
-	float f;
+	float f = 0.0f;
 	if (!string_parse_float(result, f)) {
 		globalErrorStream() << "parsing float value failed: " << makeQuoted(result) << "\n";
 	}
@@ -844,7 +844,7 @@ void FreeShaders() {
 	g_ActiveShadersChangedNotify();
 }
 
-bool ShaderTemplate::parseQuake3(Tokeniser& tokeniser) {
+bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
 	// name of the qtexture_t we'll use to represent this shader (this one has the "textures\" before)
 	m_textureName = m_Name.c_str();
 
@@ -1031,11 +1031,11 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 
 				g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
 
-				bool result = shaderTemplate->parseQuake3(tokeniser);
+				bool result = shaderTemplate->parseUFO(tokeniser);
 				if (result) {
 					// do we already have this shader?
 					if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
-#ifdef _DEBUG
+#ifdef DEBUG
 						globalOutputStream() << "WARNING: shader " << shaderTemplate->getName() << " is already in memory, definition in " << filename << " ignored.\n";
 #endif
 					}
@@ -1083,17 +1083,12 @@ void parseGuideFile(Tokeniser& tokeniser, const char* filename) {
 }
 
 void LoadShaderFile(const char* filename) {
-	ArchiveTextFile* file = GlobalFileSystem().openTextFile(filename);
-
-	if (file != 0) {
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+	if (file) {
 		globalOutputStream() << "Parsing shaderfile " << filename << "\n";
 
-		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-
-		ParseShaderFile(tokeniser, filename);
-
-		tokeniser.release();
-		file->release();
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		ParseShaderFile(*tokeniser, filename);
 	} else {
 		globalOutputStream() << "Unable to read shaderfile " << filename << "\n";
 	}
@@ -1105,17 +1100,12 @@ typedef FreeCaller1<const char*, LoadShaderFile> LoadShaderFileCaller;
 void loadGuideFile(const char* filename) {
 	StringOutputStream fullname(256);
 	fullname << "guides/" << filename;
-	ArchiveTextFile* file = GlobalFileSystem().openTextFile(fullname.c_str());
-
-	if (file != 0) {
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullname.c_str()));
+	if (file) {
 		globalOutputStream() << "Parsing guide file " << fullname.c_str() << "\n";
 
-		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-
-		parseGuideFile(tokeniser, fullname.c_str());
-
-		tokeniser.release();
-		file->release();
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		parseGuideFile(*tokeniser, fullname.c_str());
 	} else {
 		globalOutputStream() << "Unable to read guide file " << fullname.c_str() << "\n";
 	}
@@ -1230,9 +1220,9 @@ build a CStringList of shader names
 ==================
 */
 void BuildShaderList(TextInputStream& shaderlist) {
-	Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewSimpleTokeniser(shaderlist);
-	tokeniser.nextLine();
-	const char* token = tokeniser.getToken();
+	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(shaderlist));
+	tokeniser->nextLine();
+	const char* token = tokeniser->getToken();
 	StringOutputStream shaderFile(64);
 	while (token != 0) {
 		// each token should be a shader filename
@@ -1240,12 +1230,11 @@ void BuildShaderList(TextInputStream& shaderlist) {
 
 		ShaderList_addShaderFile(shaderFile.c_str());
 
-		tokeniser.nextLine();
-		token = tokeniser.getToken();
+		tokeniser->nextLine();
+		token = tokeniser->getToken();
 
 		shaderFile.clear();
 	}
-	tokeniser.release();
 }
 
 void FreeShaderList() {
@@ -1352,7 +1341,7 @@ void Shaders_Refresh() {
 	Shaders_Realise();
 }
 
-class Quake3ShaderSystem : public ShaderSystem, public ModuleObserver {
+class UFOShaderSystem : public ShaderSystem, public ModuleObserver {
 public:
 	void realise() {
 		Shaders_Realise();
@@ -1414,17 +1403,17 @@ public:
 	}
 };
 
-Quake3ShaderSystem g_Quake3ShaderSystem;
+UFOShaderSystem g_UFOShaderSystem;
 
 ShaderSystem& GetShaderSystem() {
-	return g_Quake3ShaderSystem;
+	return g_UFOShaderSystem;
 }
 
 void Shaders_Construct() {
-	GlobalFileSystem().attach(g_Quake3ShaderSystem);
+	GlobalFileSystem().attach(g_UFOShaderSystem);
 }
 void Shaders_Destroy() {
-	GlobalFileSystem().detach(g_Quake3ShaderSystem);
+	GlobalFileSystem().detach(g_UFOShaderSystem);
 
 	if (Shaders_realised()) {
 		Shaders_Free();

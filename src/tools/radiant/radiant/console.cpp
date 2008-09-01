@@ -72,18 +72,18 @@ void Sys_LogFile(bool enable) {
 		time(&localtime);
 		globalOutputStream() << "Closing log file at " << ctime(&localtime) << "\n";
 		fclose( g_hLogFile );
-		g_hLogFile = 0;
+		g_hLogFile = NULL;
 	}
 }
 
-GtkWidget* g_console = 0;
+static GtkWidget* g_console = NULL;
 
-void console_clear() {
+static void console_clear() {
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(g_console));
 	gtk_text_buffer_set_text(buffer, "", -1);
 }
 
-void console_populate_popup(GtkTextView* textview, GtkMenu* menu, gpointer user_data) {
+static void console_populate_popup(GtkTextView* textview, GtkMenu* menu, gpointer user_data) {
 	menu_separator(menu);
 
 	GtkWidget* item = gtk_menu_item_new_with_label ("Clear");
@@ -92,12 +92,10 @@ void console_populate_popup(GtkTextView* textview, GtkMenu* menu, gpointer user_
 	container_add_widget(GTK_CONTAINER(menu), item);
 }
 
-gboolean destroy_set_null(GtkWindow* widget, GtkWidget** p) {
-	*p = 0;
+static gboolean destroy_set_null(GtkWindow* widget, GtkWidget** p) {
+	*p = NULL;
 	return FALSE;
 }
-
-WidgetFocusPrinter g_consoleWidgetFocusPrinter("console");
 
 GtkWidget* Console_constructWindow(GtkWindow* toplevel) {
 	GtkWidget* scr = gtk_scrolled_window_new (0, 0);
@@ -114,11 +112,7 @@ GtkWidget* Console_constructWindow(GtkWindow* toplevel) {
 		gtk_widget_show(text);
 		g_console = text;
 
-		//globalExtendedASCIICharacterSet().print();
-
 		widget_connect_escape_clear_focus_widget(g_console);
-
-		//g_consoleWidgetFocusPrinter.connect(g_console);
 
 		g_signal_connect(G_OBJECT(g_console), "populate-popup", G_CALLBACK(console_populate_popup), 0);
 		g_signal_connect(G_OBJECT(g_console), "destroy", G_CALLBACK(destroy_set_null), &g_console);
@@ -137,7 +131,7 @@ public:
 	GtkTextBufferOutputStream(GtkTextBuffer* textBuffer, GtkTextIter* iter, GtkTextTag* tag) : textBuffer(textBuffer), iter(iter), tag(tag) {
 	}
 	std::size_t write(const char* buffer, std::size_t length) {
-		gtk_text_buffer_insert_with_tags(textBuffer, iter, buffer, gint(length), tag, NULL);
+		gtk_text_buffer_insert_with_tags(textBuffer, iter, buffer, gint(length), tag, (char const*)0);
 		return length;
 	}
 };
@@ -226,16 +220,27 @@ public:
 	}
 };
 
-SysPrintOutputStream g_outputStream;
+class SysPrintWarningStream : public TextOutputStream {
+public:
+	std::size_t write(const char* buffer, std::size_t length) {
+		return Sys_Print(SYS_WRN, buffer, length);
+	}
+};
+
+static SysPrintOutputStream g_outputStream;
 
 TextOutputStream& getSysPrintOutputStream() {
 	return g_outputStream;
 }
 
-SysPrintErrorStream g_errorStream;
+static SysPrintErrorStream g_errorStream;
 
 TextOutputStream& getSysPrintErrorStream() {
 	return g_errorStream;
 }
 
+static SysPrintWarningStream g_warningStream;
 
+TextOutputStream& getSysPrintWarningStream() {
+	return g_warningStream;
+}

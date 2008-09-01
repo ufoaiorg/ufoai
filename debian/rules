@@ -44,7 +44,7 @@ debtar: clean
 
 config.status:
 	dh_testdir
-	./configure --without-curses --prefix=/usr
+	./configure --without-curses --enable-gtkradiant --prefix=/usr
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
@@ -59,8 +59,7 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	$(MAKE) BUILDDIR=$(CURDIR)/BUILD lang maps
-	cd base && ./archives.sh
+	$(MAKE) BUILDDIR=$(CURDIR)/BUILD lang maps pk3
 	$(MAKE) -C src/docs/tex
 
 	mkdir -p stamps

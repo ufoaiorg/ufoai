@@ -209,6 +209,51 @@ base/maps/military_convoy/mc_drop_firebird.map | GNU General Public License 2.0 
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/oilpipes/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr06_2x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr_07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr_08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr_09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr_10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/fr_11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_a1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_a2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_a3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_c1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_c2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_c3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_e1_1x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_e2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s4.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s5.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s6.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_e1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_e2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_e3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_eb1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_eb2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_s1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_s2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_s3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/oilpipes/op_s_s4.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0
 base/maps/oriental/or_drop_firebird.map | GNU General Public License 2.0
@@ -377,7 +422,10 @@ base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_int.jpg | GNU General Public License 2.0 | Herakles (outside) texture by Willem "Sitters", interiour from GPLed Nexuiz Textures
+base/models/aircraft/drop_herakles/herakles_int.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_top.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -618,6 +666,8 @@ base/models/geoscape/base.md2 | GNU General Public License 2.0 or later | Willem
 base/models/geoscape/base.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/drop_firebird.jpg | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/drop_firebird.md2 | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/drop_herakles.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
+base/models/geoscape/drop_herakles.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
 base/models/geoscape/inter_dragon.jpg | GNU General Public License 2.0
 base/models/geoscape/inter_dragon.md2 | GNU General Public License 2.0
 base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
@@ -628,10 +678,14 @@ base/models/geoscape/inter_stingray.md2 | GNU General Public License 2.0 or late
 base/models/geoscape/inter_stingray.tga | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/missile.md2 | GNU General Public License 2.0
 base/models/geoscape/missile.tga | GNU General Public License 2.0
+base/models/geoscape/missile_sparrow.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
+base/models/geoscape/missile_sparrow.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/models/geoscape/missile_tr20.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/mission.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/mission.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/geoscape/radar.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
+base/models/geoscape/radar.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/models/geoscape/ufo_carrier.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/ufo_carrier.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/ufo_condor.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
@@ -1643,9 +1697,6 @@ base/music/van_mission2.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethi
 base/music/van_mission3.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/pics/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/althud/bar_floor.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/bar_right.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/bar_selbox.tga | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
@@ -1672,7 +1723,6 @@ base/pics/armour/ortnok_medium.tga | GNU General Public License 2.0
 base/pics/armour/power.tga | GNU General Public License 2.0
 base/pics/armour/taman_light.tga | GNU General Public License 2.0
 base/pics/armour/taman_medium.tga | GNU General Public License 2.0
-base/pics/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/base/adrop.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1700,13 +1750,17 @@ base/pics/base/storage.tga | GNU General Public License 2.0 or later | Martin Ge
 base/pics/base/teamroom.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop1.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop2.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/circle.tga | GNU General Public License 2.0
-base/pics/circleactive.tga | GNU General Public License 2.0
 base/pics/conback.jpg | GNU General Public License 2.0
-base/pics/cross.tga | GNU General Public License 2.0
 base/pics/envmaps/envmap_0.tga | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/envmaps/envmap_1.tga | GNU General Public License 2.0 | Jay Dolan (Quake2World)
+base/pics/geoscape/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/circle.tga | GNU General Public License 2.0
+base/pics/geoscape/circleactive.tga | GNU General Public License 2.0
+base/pics/geoscape/defence.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/pics/geoscape/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
 base/pics/geoscape/map_earth_nations_overlay.tga | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
@@ -1714,6 +1768,9 @@ base/pics/geoscape/map_earth_night.jpg |  |  | Blue Marble Next generation - NAS
 base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/map_earth_xvi_overlay.tga | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/map_sun.tga | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
+base/pics/geoscape/mission.tga | GNU General Public License 2.0
+base/pics/geoscape/radar.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
+base/pics/geoscape/ufoyard.tga | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/pics/hud/bar_chat.tga | GNU General Public License 2.0
 base/pics/hud/bar_chat_choice.tga | GNU General Public License 2.0
 base/pics/hud/bar_floor.tga | GNU General Public License 2.0
@@ -1933,10 +1990,10 @@ base/pics/menu/bar_skill.tga | GNU General Public License 2.0 | Wojtek Ruszczews
 base/pics/menu/base_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/base_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/base_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/basedefense_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/basedefense_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/basedefense_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/basedefense_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/basedefence_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/basedefence_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/basedefence_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/basedefence_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/basesummary_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/basesummary_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/basesummary_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
@@ -2115,7 +2172,6 @@ base/pics/nations/middle.png | GNU General Public License 2.0 | John W. Bjerk (e
 base/pics/nations/oceania.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/russia.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/states.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/pics/pause.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/ranks/rank_01.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -2205,10 +2261,6 @@ base/pics/sfx/smoke_puff5.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/tesla1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/techs/alien_breathing.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/antimatter.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/techs/craftshield_hard.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/techs/craftshield_light.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/techs/craftshield_medium.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/techs/craftweapon_flac.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/techs/laser.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/pics/techs/ortnok_autopsy.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/ortnok_dead.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
@@ -2236,9 +2288,6 @@ base/pics/tutorial/gameplay8a.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
-base/shaders/lighting.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
-base/shaders/lighting_mtex.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
-base/shaders/warp.fp | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
@@ -2335,12 +2384,12 @@ base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
-base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/geoscape_ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/attack.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/info.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/newmission.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/geoscape/standard.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/lobbyprivmsg.wav | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/misc/newmission.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/popup.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/talk.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -3290,7 +3339,7 @@ base/ufos/medals.ufo | GNU General Public License 2.0
 base/ufos/menu_aircraft.ufo | GNU General Public License 2.0
 base/ufos/menu_aliencont.ufo | GNU General Public License 2.0
 base/ufos/menu_althud.ufo | GNU General Public License 2.0
-base/ufos/menu_basedefense.ufo | GNU General Public License 2.0
+base/ufos/menu_basedefence.ufo | GNU General Public License 2.0
 base/ufos/menu_bases.ufo | GNU General Public License 2.0
 base/ufos/menu_basesummary.ufo | GNU General Public License 2.0
 base/ufos/menu_buildings.ufo | GNU General Public License 2.0
@@ -3332,7 +3381,6 @@ base/ufos/seq_ingame.ufo | GNU General Public License 2.0
 base/ufos/seq_intro.ufo | GNU General Public License 2.0
 base/ufos/seq_modelview.ufo | GNU General Public License 2.0
 base/ufos/seq_tutorials.ufo | GNU General Public License 2.0
-base/ufos/shaders.ufo | GNU General Public License 2.0
 base/ufos/team_aliens.ufo | GNU General Public License 2.0
 base/ufos/team_civilians.ufo | GNU General Public License 2.0
 base/ufos/team_humans.ufo | GNU General Public License 2.0

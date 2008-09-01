@@ -318,7 +318,7 @@ static void SCR_DrawCursor (void)
 		dragInfo.item.rotated = qfalse;
 
 		/* Draw "preview" of placed (&rotated) item. */
-		if (dragInfo.toNode) {
+		if (dragInfo.toNode && !dragInfo.to->scroll) {
 			const int oldRotated = dragInfo.item.rotated;
 
 			checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY);
@@ -334,7 +334,7 @@ static void SCR_DrawCursor (void)
 						-40);
 				} else {
 					/* This is a "grid" container - we need to calculate the item-position
-					 * (on the screen) from stored placement int h4e container and the
+					 * (on the screen) from stored placement in the container and the
 					 * calculated rotation info. */
 					if (dragInfo.item.rotated)
 						VectorSet(org,

@@ -124,21 +124,6 @@
 		<Unit filename="..\..\src\tools\radiant\libs\picomodel\pm_terrain.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\bbox.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\line.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\m4x4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\mathlib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\picomodel\ray.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

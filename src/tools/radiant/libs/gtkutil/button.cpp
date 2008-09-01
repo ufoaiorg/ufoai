@@ -109,4 +109,3 @@ int radio_button_get_active(GtkRadioButton* radio) {
 	}
 	return index;
 }
-

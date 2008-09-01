@@ -11,6 +11,46 @@
 // valid UFO values:
 // * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
 
+////////////////////////
+// OILPIPES RANDOM MAPS
+////////////////////////
+
+mapdef oilpipes_small
+{
+	map				"+oilpipes"
+	param			small
+	description		"_Industrial theme."
+	size			"small"
+	teams			4
+	multiplayer		false
+	maxaliens		6
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+
 ///////////////////////
 // ORIENTAL RANDOM MAPS
 ///////////////////////

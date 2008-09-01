@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "debugging/debugging.h"
 
 #if defined(WIN32)
-#define RADIANT_DLLEXPORT __stdcall
+#define RADIANT_DLLEXPORT __declspec(dllexport)
 #else
 #define RADIANT_DLLEXPORT
 #endif
@@ -58,6 +58,7 @@ public:
 
 	virtual TextOutputStream& getOutputStream() = 0;
 	virtual TextOutputStream& getErrorStream() = 0;
+	virtual TextOutputStream& getWarningStream() = 0;
 	virtual DebugMessageHandler& getDebugMessageHandler() = 0;
 
 	virtual void registerModule(const char* type, int version, const char* name, Module& module) = 0;
@@ -89,6 +90,7 @@ inline ModuleServer& globalModuleServer() {
 inline void initialiseModule(ModuleServer& server) {
 	GlobalErrorStream::instance().setOutputStream(server.getErrorStream());
 	GlobalOutputStream::instance().setOutputStream(server.getOutputStream());
+	GlobalWarningStream::instance().setOutputStream(server.getWarningStream());
 	GlobalDebugMessageHandler::instance().setHandler(server.getDebugMessageHandler());
 	GlobalModuleServer::instance().set(server);
 }
@@ -134,7 +136,7 @@ public:
 		}
 	}
 	Type* getTable() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(m_table != 0, "ModuleRef::getTable: type=" << makeQuoted(typename Type::Name()) << " version=" << makeQuoted(typename Type::Version()) << " - module-reference used without being initialised");
 #endif
 		return m_table;
@@ -164,7 +166,7 @@ public:
 	}
 
 	Type* getTable() {
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		ASSERT_MESSAGE(m_table != 0, "SingletonModuleRef::getTable: type=" << makeQuoted(typename Type::Name()) << " version=" << makeQuoted(typename Type::Version()) << " - module-reference used without being initialised");
 #endif
 		return m_table;

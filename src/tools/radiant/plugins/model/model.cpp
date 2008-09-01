@@ -46,6 +46,8 @@ class VectorLightList : public LightList {
 	typedef std::vector<const RendererLight*> Lights;
 	Lights m_lights;
 public:
+	~VectorLightList() {
+	}
 	void addLight(const RendererLight& light) {
 		m_lights.push_back(&light);
 	}
@@ -88,24 +90,17 @@ public:
 
 	void render(RenderStateFlags state) const {
 		if ((state & RENDER_BUMP) != 0) {
-			if (GlobalShaderCache().useShaderLanguage()) {
-				glNormalPointer(GL_FLOAT, sizeof(ArbitraryMeshVertex), &m_vertices.data()->normal);
-				glVertexAttribPointerARB(c_attr_TexCoord0, 2, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->texcoord);
-				glVertexAttribPointerARB(c_attr_Tangent, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->tangent);
-				glVertexAttribPointerARB(c_attr_Binormal, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->bitangent);
-			} else {
-				glVertexAttribPointerARB(11, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->normal);
-				glVertexAttribPointerARB(8, 2, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->texcoord);
-				glVertexAttribPointerARB(9, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->tangent);
-				glVertexAttribPointerARB(10, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->bitangent);
-			}
+			glVertexAttribPointerARB(11, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->normal);
+			glVertexAttribPointerARB(8, 2, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->texcoord);
+			glVertexAttribPointerARB(9, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->tangent);
+			glVertexAttribPointerARB(10, 3, GL_FLOAT, 0, sizeof(ArbitraryMeshVertex), &m_vertices.data()->bitangent);
 		} else {
 			glNormalPointer(GL_FLOAT, sizeof(ArbitraryMeshVertex), &m_vertices.data()->normal);
 			glTexCoordPointer(2, GL_FLOAT, sizeof(ArbitraryMeshVertex), &m_vertices.data()->texcoord);
 		}
 		glVertexPointer(3, GL_FLOAT, sizeof(ArbitraryMeshVertex), &m_vertices.data()->vertex);
 		glDrawElements(GL_TRIANGLES, GLsizei(m_indices.size()), RenderIndexTypeID, m_indices.data());
-#if defined(_DEBUG)
+#if defined(DEBUG)
 		glBegin(GL_LINES);
 
 		for (Array<ArbitraryMeshVertex>::const_iterator i = m_vertices.begin(); i != m_vertices.end(); ++i) {
@@ -371,12 +366,6 @@ private:
 	}
 };
 
-inline void Surface_addLight(PicoSurface& surface, VectorLightList& lights, const Matrix4& localToWorld, const RendererLight& light) {
-	if (light.testAABB(aabb_for_oriented_aabb(surface.localAABB(), localToWorld))) {
-		lights.addLight(light);
-	}
-}
-
 class PicoModelInstance :
 			public scene::Instance,
 			public Renderable,
@@ -509,20 +498,9 @@ public:
 		m_picomodel.testSelect(selector, test, Instance::localToWorld());
 	}
 
-	bool testLight(const RendererLight& light) const {
-		return light.testAABB(worldAABB());
-	}
 	void insertLight(const RendererLight& light) {
-		const Matrix4& localToWorld = Instance::localToWorld();
-		SurfaceLightLists::iterator j = m_surfaceLightLists.begin();
-		for (PicoModel::const_iterator i = m_picomodel.begin(); i != m_picomodel.end(); ++i) {
-			Surface_addLight(*(*i), *j++, localToWorld, light);
-		}
 	}
 	void clearLights() {
-		for (SurfaceLightLists::iterator i = m_surfaceLightLists.begin(); i != m_surfaceLightLists.end(); ++i) {
-			(*i).clear();
-		}
 	}
 };
 
@@ -551,9 +529,6 @@ public:
 	PicoModelNode(picoModel_t* model) : m_node(this, this, StaticTypeCasts::instance().get()), m_picomodel(model) {
 	}
 
-	void release() {
-		delete this;
-	}
 	scene::Node& node() {
 		return m_node;
 	}

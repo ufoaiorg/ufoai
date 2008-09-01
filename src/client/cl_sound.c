@@ -67,8 +67,9 @@ static cvar_t *snd_music_volume;
 /* HACK: Remove this as soon as the reason was found */
 static cvar_t *snd_music_crackleWorkaround;
 
-static int audio_rate, audio_channels;
-uint16_t audio_format;
+static int      audio_rate;
+static int      audio_channels;
+static uint16_t audio_format;
 
 /*
 MUSIC FUNCTIONS
@@ -592,7 +593,7 @@ static qboolean SND_Init (void)
 		}
 	}
 
-	MIX_VERSION(&version);
+	MIX_VERSION(&version)
 	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
 
 	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, snd_channels->integer, 1024) == -1) {

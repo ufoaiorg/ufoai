@@ -96,7 +96,7 @@ menu basesummary
 	// ===================
 	text txt_base_summary
 	{
-		num			22
+		num			TEXT_STATS_BASESUMMARY
 		pos			"30 66"
 		size		"500 672"
 		format		"16 38"
@@ -120,7 +120,7 @@ menu basesummary
 		wheel
 		scrollbar	yes
 		height		"25"
-		num			0
+		num			TEXT_STANDARD
 	}
 
 	func resetbaselayout
@@ -144,7 +144,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"654 62"
-		num			0
+		baseid		0
 		click 		{
 			resetbaselayout
 			*base0 bgcolor "1 1 1 1"
@@ -158,7 +158,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"724 62"
-		num			1
+		baseid		1
 		click		{
 			resetbaselayout
 			*base1 bgcolor "1 1 1 1"
@@ -172,7 +172,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"794 62"
-		num			2
+		baseid		2
 		click		{
 			resetbaselayout
 			*base2 bgcolor "1 1 1 1"
@@ -186,7 +186,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"864 62"
-		num			3
+		baseid		3
 		click		{
 			resetbaselayout
 			*base3 bgcolor "1 1 1 1"
@@ -200,7 +200,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"654 137"
-		num			4
+		baseid		4
 		click		{
 			resetbaselayout
 			*base4 bgcolor "1 1 1 1"
@@ -214,7 +214,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"724 137"
-		num			5
+		baseid		5
 		click		{
 			resetbaselayout
 			*base5 bgcolor "1 1 1 1"
@@ -228,7 +228,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"794 137"
-		num			6
+		baseid		6
 		click		{
 			resetbaselayout
 			*base6 bgcolor "1 1 1 1"
@@ -242,7 +242,7 @@ menu basesummary
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"864 137"
-		num			7
+		baseid		7
 		click		{
 			resetbaselayout
 			*base7 bgcolor "1 1 1 1"

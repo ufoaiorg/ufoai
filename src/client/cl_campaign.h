@@ -301,6 +301,7 @@ typedef struct ccs_s {
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
 	qboolean XVISpreadActivated;	/**< should the XVI spread over the globe already */
+	qboolean XVIShowMap;			/**< spread was activated and the map is activated now */
 	qboolean humansAttackActivated;	/**< humans start to attack player */
 	float timer;
 
@@ -390,7 +391,7 @@ int CP_CountMission(void);
 int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
-void CP_MissionNotifyBaseDestroyed(base_t *base);
+void CP_MissionNotifyBaseDestroyed(const base_t *base);
 mission_t *CP_GetMissionById(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
 base_t* CP_PositionCloseToBase(const vec2_t pos);

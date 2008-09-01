@@ -18,8 +18,9 @@
 //			You can skip any of these values by replacing the '"x y z"' part with a '#'
 //			See "scale" "origin" and "angles" definitions for for info on the values.
 //			The downside the menutransform settings right now is that the models can't
-//			be rotated in-game (e.g. in the ufopedia) anymore and that the rotatioon
+//			be rotated in-game (e.g. in the ufopedia) anymore and that the rotation
 //			values are kinda hard to get.
+//			use debug_mnangles, debug_mnorigin and debug_mnscale to find the best values
 // color	(color)
 // =================================================
 // NOTE: The entries have to be ordered (top-down) to start with children and end with parents (e.g. head, then body)
@@ -214,9 +215,11 @@ menu_model drop_firebird_glass
 {
 	model	"models/aircraft/drop_firebird/firebird_glass.md2"
 	menutransform {
-		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-20 0 0"
-		aircraft	"1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"	#
+		ufopedia 		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"0 0 120"		#
+		production		"0.5 0.5 0.5"	"0 0 120"		#
 	}
 }
 menu_model drop_firebird_top
@@ -224,9 +227,11 @@ menu_model drop_firebird_top
 	model	"models/aircraft/drop_firebird/firebird_top.md2"
 	need	"drop_firebird_glass"
 	menutransform {
-		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-20 0 0"
-		aircraft	"1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"	#
+		ufopedia 		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"0 0 120"		#
+		production		"0.5 0.5 0.5"	"0 0 120"		#
 	}
 }
 menu_model drop_firebird
@@ -234,22 +239,39 @@ menu_model drop_firebird
 	model	"models/aircraft/drop_firebird/firebird.md2"
 	need	"drop_firebird_top"
 	menutransform {
-		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-20 0 0"
-		aircraft	"1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"	#
+		ufopedia 		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"0 0 120"		#
+		production		"0.5 0.5 0.5"	"0 0 120"		#
 	}
 }
 
 // ============== Dropship Herakles =========================
+menu_model drop_herakles_pod
+{
+	model	"models/aircraft/drop_herakles/herakles_pod.md2"
+	menutransform {
+		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
+		aircraft		"0.8 0.8 0.8"		"-20 120 70"	"60 60 0"
+		aircraft_equip	"0.5 0.5 0.5"		"-90 0 180"		#
+		team			"0.8 0.8 0.8"		"-20 120 70"	"60 40 0"
+		buy		 		"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
+		production		"0.25 0.25 0.25"	"180 0 -120"	"0 30 0"
+	}
+}
+
 menu_model drop_herakles
 {
 	model	"models/aircraft/drop_herakles/herakles_carryall.md2"
+	need	"drop_herakles_pod"
 	menutransform {
-		// FIXME: These values are just copied from drop_firebird and
-		// needs tweaking
-		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-20 0 0"
-		aircraft	"1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"0.7 0.7 0.7"	"90 0 180"	#
+		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
+		aircraft		"0.8 0.8 0.8"		"-20 120 70"	"60 60 0"
+		aircraft_equip	"0.5 0.5 0.5"		"-90 0 180"		#
+		team			"0.8 0.8 0.8"		"-20 120 70"	"60 40 0"
+		buy		 		"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
+		production		"0.25 0.25 0.25"	"180 0 -120"	"0 30 0"
 	}
 }
 
@@ -258,10 +280,12 @@ menu_model inter_stingray
 {
 	model	"models/aircraft/inter_stingray/stingray_landed.md2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"
-		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
-		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"   "160 20 -120"	"0 -30 0"
+		ufopedia		"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"
+		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"		#
+		team			"1.1 1.1 1.1"   "160 20 -120"	"0 -30 0"
+		buy		 		"0.5 0.5 0.5"	"-45 135 45"	#
+		production 		"0.5 0.5 0.5"	"-45 135 45"	#
 	}
 }
 
@@ -270,10 +294,12 @@ menu_model inter_saracen
 {
 	model	"models/aircraft/inter_saracen/saracen.md2"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 0 -120"	"-50 0 0"
-		aircraft	"0.8 1.1 1.1"	"160 20 -120"	"-10 70 0"
-		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"	"0 -30 0"
-		team		"0.8 1.1 1.1"	"160 20 -120"	"0 60 0"
+		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"-50 0 0"
+		aircraft		"0.8 1.1 1.1"	"160 20 -120"	"-10 70 0"
+		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"		"0 -30 0"
+		team			"0.8 1.1 1.1"	"160 20 -120"	"0 60 0"
+		buy				"0.4 0.4 0.4"	"180 0 -120"	#
+		production		"0.4 0.4 0.4"	"180 0 -120"	#
 	}
 }
 
@@ -282,10 +308,12 @@ menu_model inter_dragon
 {
 	model	"models/aircraft/inter_dragon/inter_dragon.md2"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 0 -120"	"10 0 0"
-		aircraft	"0.8 1.1 1.1"	"160 20 -120"	"60 0 0"
-		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	"0 20 0"
-		team		"0.9 0.8 0.9"	"160 20 -120"	"80 -60 0"
+		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"10 0 0"
+		aircraft		"0.8 1.1 1.1"	"160 20 -120"	"60 0 0"
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		"0 20 0"
+		team			"0.9 0.8 0.9"	"160 20 -120"	"80 -60 0"
+		buy				"0.4 0.4 0.4"	"180 0 -120"	#
+		production		"0.4 0.4 0.4"	"180 0 -120"	#
 	}
 }
 
@@ -294,11 +322,12 @@ menu_model inter_stiletto_glass
 {
 	model	"models/aircraft/inter_stiletto/stiletto_glass.md2"
 	menutransform {
-		// menu	scale	angles	origin
-		ufopedia	"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
-		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
+		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
+		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
+		team			"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
+		buy				"0.8 0.8 0.8"	"180 0 -120"	#
+		production		"0.8 0.8 0.8"	"180 0 -120"	#
 	}
 }
 menu_model inter_stiletto_top
@@ -306,10 +335,12 @@ menu_model inter_stiletto_top
 	model	"models/aircraft/inter_stiletto/stiletto_engines.md2"
 	need	"inter_stiletto_glass"
 	menutransform {
-		ufopedia	"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
-		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
+		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
+		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
+		team			"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
+		buy				"0.8 0.8 0.8"	"180 0 -120"	#
+		production		"0.8 0.8 0.8"	"180 0 -120"	#
 	}
 }
 menu_model inter_stiletto
@@ -317,10 +348,12 @@ menu_model inter_stiletto
 	model	"models/aircraft/inter_stiletto/stiletto.md2"
 	need	"inter_stiletto_top"
 	menutransform {
-		ufopedia	"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
-		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
+		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
+		aircraft		"1.1 1.1 1.1"   "160 20 -120"   #
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		#
+		team			"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
+		buy				"0.8 0.8 0.8"	"180 0 -120"	#
+		production		"0.8 0.8 0.8"	"180 0 -120"	#
 	}
 }
 
@@ -329,9 +362,11 @@ menu_model ufo_carrier
 {
 	model	"models/aircraft/ufo_carrier/ufo_carrier.md2"
 	menutransform {
-		ufopedia	"3 3 3"	"-45 135 45"	#
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"3 3 3"			"-45 135 45"	#
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"3 3 3"			"-45 135 45"	#
+		production		"3 3 3"			"-45 135 45"	#
 	}
 }
 
@@ -340,9 +375,11 @@ menu_model ufo_harvester
 {
 	model	"models/aircraft/ufo_harvester/ufo_harvester.md2"
 	menutransform {
-		ufopedia	"20 20 20"	"-45 135 45"	#
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"20 20 20"		"-45 135 45"	#
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"20 20 20"		"-45 135 45"	#
+		production		"20 20 20"		"-45 135 45"	#
 	}
 }
 
@@ -351,9 +388,11 @@ menu_model ufo_bomber
 {
 	model	"models/aircraft/ufo_bomber/ufo_bomber.md2"
 	menutransform {
-		ufopedia	"9 9 9"	"-45 135 45"	"-20 0 0"
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"9 9 9"			"-45 135 45"	"-20 0 0"
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"9 9 9"			"-45 135 45"	#
+		production		"9 9 9"			"-45 135 45"	#
 	}
 }
 
@@ -362,9 +401,11 @@ menu_model ufo_corrupter
 {
 	model	"models/aircraft/ufo_corrupter/ufo_corrupter.md2"
 	menutransform {
-		ufopedia	"9 9 9"	"-45 135 45"	"-20 0 0"
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"9 9 9"			"-45 135 45"	"-20 0 0"
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"9 9 9"			"-45 135 45"	#
+		production		"9 9 9"			"-45 135 45"	#
 	}
 }
 
@@ -373,9 +414,11 @@ menu_model ufo_fighter_upper
 {
 	model	"models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"	//rotation similar to "supply" ufo: "0 -150 60"
-		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter_engines_2
@@ -383,9 +426,11 @@ menu_model ufo_fighter_engines_2
 	model	"models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
 	need	"ufo_fighter_upper"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter_engines_1
@@ -393,9 +438,11 @@ menu_model ufo_fighter_engines_1
 	model	"models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
 	need	"ufo_fighter_engines_2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter_wings
@@ -403,9 +450,11 @@ menu_model ufo_fighter_wings
 	model	"models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
 	need	"ufo_fighter_engines_1"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_fighter
@@ -413,9 +462,11 @@ menu_model ufo_fighter
 	model	"models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
 	need	"ufo_fighter_wings"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 1.1 1.1"	"-20 -40 120"	#
-		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 1.1 1.1"	"-20 -40 120"	#
+		aircraft_equip	"1.1 1.1 1.1"	"90 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 
@@ -424,9 +475,11 @@ menu_model ufo_scout_upper
 {
 	model	"models/aircraft/ufo_scout/ufo_scout_upper.md2"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_scout_engines
@@ -434,9 +487,11 @@ menu_model ufo_scout_engines
 	model	"models/aircraft/ufo_scout/ufo_scout_engines_1.md2"
 	need	"ufo_scout_upper"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 menu_model ufo_scout
@@ -444,9 +499,11 @@ menu_model ufo_scout
 	model	"models/aircraft/ufo_scout/ufo_scout_hull.md2"
 	need	"ufo_scout_engines"
 	menutransform {
-		ufopedia	"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
+		aircraft 		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
+		buy				"0.5 0.5 0.5"	"-135 -30 -150"	#
+		production		"0.5 0.5 0.5"	"-135 -30 -150"	#
 	}
 }
 
@@ -456,9 +513,9 @@ menu_model ufo_supply_engine_left
 {
 	model	"models/aircraft/ufo_supply/ufo_supply_engine_left.md2"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 	}
 }
 menu_model ufo_supply_engine_right
@@ -466,9 +523,9 @@ menu_model ufo_supply_engine_right
 	model	"models/aircraft/ufo_supply/ufo_supply_engine_right.md2"
 	need	"ufo_supply_engine_left"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 	}
 }
 menu_model ufo_supply_wing_left
@@ -476,9 +533,9 @@ menu_model ufo_supply_wing_left
 	model	"models/aircraft/ufo_supply/ufo_supply_wing_left.md2"
 	need	"ufo_supply_engine_right"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 	}
 }
 menu_model ufo_supply_wing_right
@@ -486,9 +543,9 @@ menu_model ufo_supply_wing_right
 	model	"models/aircraft/ufo_supply/ufo_supply_wing_right.md2"
 	need	"ufo_supply_wing_left"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 	}
 }
 menu_model ufo_supply
@@ -496,9 +553,9 @@ menu_model ufo_supply
 	model	"models/aircraft/ufo_supply/ufo_supply_body_closed.md2"
 	need	"ufo_supply_wing_right"
 	menutransform {
-		ufopedia	"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
+		aircraft		"1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"		#
 	}
 }
 
@@ -574,8 +631,8 @@ menu_model craft_item_target
 {
 	model	"aircraft/craft_item_target/craft_item_target"
 	menutransform {
-		ufopedia	"5 5 5"	"-120 120 -30"	"10 0 0"
-		aircraft_equip	"4 4 4"	"-120 120 -30"	"10 30 0"
+		ufopedia		"5 5 5"			"-120 120 -30"	"10 0 0"
+		aircraft_equip	"2.5 2.5 2.5"	"-120 120 -30"	"10 10 00"
 	}
 }
 
@@ -583,7 +640,7 @@ menu_model craft_item_astrogation
 {
 	model	"aircraft/craft_item_astro/craft_item_astrogation"
 	menutransform {
-		ufopedia	"6 6 6"	"-120 120 -30"	#
+		ufopedia		"6 6 6"	"-120 120 -30"	#
 		aircraft_equip	"6 6 6"	"-120 120 -30"	#	// fixme?
 	}
 }
@@ -592,7 +649,7 @@ menu_model craft_item_propulsion
 {
 	model	"aircraft/craft_item_prop/propulsion"
 	menutransform {
-		ufopedia	"5 5 5"	"-120 120 -30"	"-40 0 0"
+		ufopedia		"5 5 5"	"-120 120 -30"	"-40 0 0"
 		aircraft_equip	"5 5 5"	"-120 120 -30"	#
 	}
 }
@@ -602,8 +659,8 @@ menu_model craft_item_detector
 	model	"aircraft/craft_item_det/detection"
 
 	menutransform {
-		ufopedia	"6 6 6"	"-120 120 -30"	"-40 40 0"
-		aircraft_equip	"6 6 6"	#	#
+		ufopedia		"6 6 6"	"-120 120 -30"	"-40 40 0"
+		aircraft_equip	"6 6 6"	#				#
 	}
 }
 
@@ -611,25 +668,25 @@ menu_model craft_item_raven_ecm
 {
 	model	"aircraft/craft_item_raven_ecm/ecm"
 	menutransform {
-		ufopedia	"6 6 6"	"-120 120 -30"	"0 40 0"
+		ufopedia		"6 6 6"	"-120 120 -30"	"0 40 0"
 		aircraft_equip	"4 4 4"	"-120 120 -30"	"20 60 0"
 	}
 }
 
-menu_model craft_armour_polymer
+menu_model craft_shield_polymer
 {
 	model	"aircraft/craft_arm_poly/polymer"
 	menutransform {
-		ufopedia	"2 2 2"	"-120 120 -30"	"-20 0 0"
+		ufopedia		"2 2 2"	"-120 120 -30"	"-20 0 0"
 		aircraft_equip	"2 2 2"	"-120 120 -30"	"-20 15 0"
 	}
 }
 
-menu_model craft_armour_plating
+menu_model craft_shield_plating
 {
 	model	"aircraft/craft_arm_plate/plating"
 	menutransform {
-		ufopedia	"2 2 2"	"-120 120 -30"	"-20 0 0"
+		ufopedia		"2 2 2"	"-120 120 -30"	"-20 0 0"
 		aircraft_equip	"2 2 2"	"-120 120 -30"	"-20 15 0"
 	}
 }

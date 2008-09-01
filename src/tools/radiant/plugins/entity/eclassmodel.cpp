@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ///
 /// This entity displays the model specified in its entity-definition.
 /// The "origin" and "angle" keys directly control the entity's local-to-parent transform.
-/// The "rotation" key directly controls the entity's local-to-parent transform for Doom3 only.
 
 #include "eclassmodel.h"
 
@@ -44,7 +43,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "targetable.h"
 #include "origin.h"
 #include "angle.h"
-#include "rotation.h"
 #include "model.h"
 #include "filters.h"
 #include "namedentity.h"
@@ -64,8 +62,6 @@ class EclassModel :
 	Vector3 m_origin;
 	AngleKey m_angleKey;
 	float m_angle;
-	RotationKey m_rotationKey;
-	Float9 m_rotation;
 	SingletonModel m_model;
 
 	ClassnameFilter m_filter;
@@ -79,8 +75,6 @@ class EclassModel :
 	Callback m_evaluateTransform;
 
 	void construct() {
-		default_rotation(m_rotation);
-
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 		m_keyObservers.insert(Static<KeyIsName>::instance().m_nameKey, NamedEntity::IdentifierChangedCaller(m_named));
 		m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
@@ -107,11 +101,6 @@ class EclassModel :
 		updateTransform();
 	}
 	typedef MemberCaller<EclassModel, &EclassModel::angleChanged> AngleChangedCaller;
-	void rotationChanged() {
-		rotation_assign(m_rotation, m_rotationKey.m_rotation);
-		updateTransform();
-	}
-	typedef MemberCaller<EclassModel, &EclassModel::rotationChanged> RotationChangedCaller;
 
 	void skinChanged() {
 		scene::Node* node = m_model.getNode();
@@ -129,7 +118,6 @@ public:
 			m_origin(ORIGINKEY_IDENTITY),
 			m_angleKey(AngleChangedCaller(*this)),
 			m_angle(ANGLEKEY_IDENTITY),
-			m_rotationKey(RotationChangedCaller(*this)),
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
@@ -145,7 +133,6 @@ public:
 			m_origin(ORIGINKEY_IDENTITY),
 			m_angleKey(AngleChangedCaller(*this)),
 			m_angle(ANGLEKEY_IDENTITY),
-			m_rotationKey(RotationChangedCaller(*this)),
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
@@ -382,9 +369,7 @@ public:
 	~EclassModelNode() {
 		destroy();
 	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}
@@ -417,5 +402,3 @@ public:
 scene::Node& New_EclassModel(EntityClass* eclass) {
 	return (new EclassModelNode(eclass))->node();
 }
-
-

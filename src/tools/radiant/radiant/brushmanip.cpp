@@ -21,14 +21,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "brushmanip.h"
 
-
 #include "gtkutil/widget.h"
 #include "gtkutil/menu.h"
 #include "gtkmisc.h"
 #include "brushnode.h"
 #include "map.h"
 #include "texwindow.h"
-#include "gtkdlgs.h"
+#include "dialogs/prism.h"
 #include "commands.h"
 #include "mainframe.h"
 #include "dialog.h"
@@ -849,6 +848,9 @@ filter_brush_any_face g_filter_brush_hint(&g_filter_face_hint);
 filter_face_shader g_filter_face_nodraw("textures/tex_common/nodraw");
 filter_brush_all_faces g_filter_brush_nodraw(&g_filter_face_nodraw);
 
+filter_face_shader g_filter_face_stepon("textures/tex_common/stepon");
+filter_brush_all_faces g_filter_brush_stepon(&g_filter_face_stepon);
+
 filter_face_flags g_filter_face_translucent(QER_TRANS);
 filter_brush_all_faces g_filter_brush_translucent(&g_filter_face_translucent);
 
@@ -860,9 +862,12 @@ filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 
 
 void BrushFilters_construct() {
-	/// @todo Move the ufoai filters
 	add_brush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
+	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_WEAPONCLIP);
+	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_ACTORCLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_CLIP);
+	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_CLIP);
+	add_brush_filter(g_filter_brush_stepon, EXCLUDE_STEPON);
 	add_brush_filter(g_filter_brush_caulk, EXCLUDE_CAULK);
 	add_face_filter(g_filter_face_caulk, EXCLUDE_CAULK);
 	add_brush_filter(g_filter_brush_liquids, EXCLUDE_LIQUIDS);

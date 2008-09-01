@@ -32,7 +32,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // TTimo started adding portability code:
 // return true if spawning was successful, false otherwise
 // on win32 we have a bCreateConsole flag to create a new console or run inside the current one
-//boolean Q_Exec(const char* pCmd, boolean bCreateConsole);
 // execute a system command:
 //   cmd: the command to run
 //   cmdline: the command line
@@ -43,7 +42,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //   if the spawn was fine
 //   TODO TTimo add functionality to track the process until it dies
 
-bool Q_Exec(const char *cmd, char *cmdline, const char *execdir, bool bCreateConsole);
+char *Q_Exec(const char *cmd, const char *cmdline, const char *execdir, bool bCreateConsole);
 
 // some easy portability crap
 

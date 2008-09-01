@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_tutorials.h"
-#include "cl_shader.h"
 #include "cl_global.h"
 #include "cl_tip.h"
 #include "cl_team.h"
@@ -39,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_installation.h"
 #include "cl_hospital.h"
 #include "cl_map.h"
+#include "cl_mapfightequip.h"
 #include "cl_ufo.h"
 #include "cl_alienbase.h"
 #include "cl_sequence.h"
@@ -46,7 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_joystick.h"
 #include "../shared/infostring.h"
 #include "../renderer/r_main.h"
-#include "../renderer/r_shader.h"
 #include "../renderer/r_particle.h"
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
@@ -54,7 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *cl_isometric;
 
-cvar_t *rcon_client_password;
+static cvar_t *rcon_client_password;
 
 cvar_t *cl_fps;
 cvar_t *cl_particleweather;
@@ -445,6 +444,7 @@ static void CL_Rcon_f (void)
 /**
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
+ * @sa R_ClearScene
  */
 void CL_ClearState (void)
 {
@@ -456,6 +456,7 @@ void CL_ClearState (void)
 	numLEs = 0;
 	numLMs = 0;
 	numMPs = 0;
+	/* wipe the particles with every new map */
 	r_numParticles = 0;
 }
 
@@ -804,7 +805,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 			teamData.teamCount[n]++;
 		s = value;
 		cnt++;
-	};
+	}
 
 	/* no players are connected atm */
 	if (!cnt)
@@ -1647,8 +1648,6 @@ void CL_InitAfter (void)
 		Cbuf_AddText("cinematic intro;");
 		Cvar_Set("cl_introshown", "1");
 	}
-
-	R_ShaderInit();
 }
 
 /**
@@ -1667,9 +1666,7 @@ void CL_InitAfter (void)
  */
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
-	if (!Q_strncmp(type, "shader", 6))
-		CL_ParseShaders(name, text);
-	else if (!Q_strncmp(type, "font", 4))
+	if (!Q_strncmp(type, "font", 4))
 		MN_ParseFont(name, text);
 	else if (!Q_strncmp(type, "tutorial", 8))
 		TUT_ParseTutorials(name, text);
@@ -1918,14 +1915,14 @@ static void CL_GlobalDataSizes_f (void)
 		"bases:\n"
 		"alienscont         %10Zu bytes\n"
 		"capacities         %10Zu bytes\n"
-		"equipByBuyType     %10Zu bytes\n"
+		"bEquipment         %10Zu bytes\n"
 		"aircraft           %10Zu bytes\n"
 		"aircraft (single)  %10Zu bytes\n"
 		"radar              %10Zu bytes\n"
 		,
 		sizeof(gd.bases[0].alienscont),
 		sizeof(gd.bases[0].capacities),
-		sizeof(gd.bases[0].equipByBuyType),
+		sizeof(gd.bases[0].bEquipment),
 		sizeof(gd.bases[0].aircraft),
 		sizeof(aircraft_t),
 		sizeof(gd.bases[0].radar)
@@ -2032,6 +2029,7 @@ static void CL_InitLocal (void)
 	SEQ_InitStartup();
 	TEAM_InitStartup();
 	TOTD_InitStartup();
+	AIM_InitStartup();
 
 	/* register our variables */
 	for (i = 0; i < MAX_BOOKMARKS; i++)

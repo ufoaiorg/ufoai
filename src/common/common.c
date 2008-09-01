@@ -35,13 +35,13 @@ csi_t csi;
 static int com_argc;
 static const char *com_argv[MAX_NUM_ARGVS + 1];
 
-jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
+static jmp_buf abortframe; /* an ERR_DROP occured, exit the entire frame */
 
 cvar_t *s_language;
 cvar_t *developer;
 cvar_t *http_proxy;
 cvar_t *http_timeout;
-cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
+static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
 cvar_t *sv_gametype;
@@ -1387,4 +1387,32 @@ int LIST_Count (const linkedList_t *list)
 		l = l->next;
 	}
 	return count;
+}
+
+/**
+ * @brief Get an entry of a linked list by its index in the list.
+ * @param[in] list Linked list to get the entry from.
+ * @param[in] index The index of the entry in the linked list.
+ * @return A void pointer of the content in the list-entry.
+ */
+void *LIST_GetByIdx (linkedList_t *list, int index)
+{
+	int i;
+	const int count = LIST_Count(list);
+
+	if (!count || !list)
+		return NULL;
+
+	if (index >= count || index < 0)
+		return NULL;
+
+	i = 0;
+	while (list) {
+		if (i == index)
+			return (void *)list->data;
+		i++;
+		list = list->next;
+	}
+
+	return NULL;
 }

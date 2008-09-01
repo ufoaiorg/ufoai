@@ -4110,7 +4110,6 @@ tech rs_base_AA51_launcher
 }
 
 tech rs_base_ammo_AA51
-
 {
 	type		tech
 	up_chapter	equipment
@@ -4162,7 +4161,7 @@ tech rs_craft_shield_polymer
 	time		0
 	producetime	140
 
-	mdl	"craft_armour_polymer"
+	mdl	"craft_shield_polymer"
 }
 
 tech rs_craft_shield_plating
@@ -4184,7 +4183,7 @@ tech rs_craft_shield_plating
 	time		620
 	producetime	240
 
-	mdl	"craft_armour_plating"
+	mdl	"craft_shield_plating"
 }
 
 tech rs_craft_alien_astrogation

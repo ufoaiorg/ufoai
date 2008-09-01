@@ -64,7 +64,7 @@ typedef struct mBspSurface_s {
 	int flags;
 	int tile;				/**< index in r_mapTiles (loaded bsp map index) this surface belongs, to */
 
-	int levelflagToRenderIn;	/**< used to decide whether this surface should be drawn */
+	int frame;	/**< used to decide whether this surface should be drawn */
 
 	/** look up in model->surfedges[], negative numbers are backwards edges */
 	int firstedge;
@@ -88,6 +88,9 @@ typedef struct mBspSurface_s {
 	byte style;
 	byte *samples;				/**< lightmap samples - only used at loading time */
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
+
+	int lightframe;				/**< dynamic lighting frame */
+	int lights;					/**< bitmask of dynamic light sources */
 } mBspSurface_t;
 
 /* surfaces are assigned to arrays based on their primary rendering type

@@ -46,9 +46,6 @@ public:
 			: m_name(name), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_size(file_size) {
 	}
 
-	void release() {
-		delete this;
-	}
 	size_type size() const {
 		return m_size;
 	}
@@ -74,9 +71,6 @@ public:
 			: m_name(name), m_istream(archiveName), m_substream(m_istream, position, stream_size), m_zipstream(m_substream), m_textStream(m_zipstream) {
 	}
 
-	void release() {
-		delete this;
-	}
 	TextInputStream& getInputStream() {
 		return m_textStream;
 	}
@@ -202,9 +196,6 @@ public:
 		return m_istream.failed();
 	}
 
-	void release() {
-		delete this;
-	}
 	ArchiveFile* openFile(const char* name) {
 		ZipFileSystem::iterator i = m_filesystem.find(name);
 		if (i != m_filesystem.end() && !i->second.is_directory()) {
@@ -261,4 +252,3 @@ public:
 Archive* OpenArchive(const char* name) {
 	return new ZipArchive(name);
 }
-

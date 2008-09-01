@@ -122,7 +122,6 @@ public:
 		m_radiantcore.getMapsPath = &getMapsPath;
 
 		m_radiantcore.getGameName = &gamename_get;
-		m_radiantcore.getGameMode = &gamemode_get;
 
 		m_radiantcore.getMapName = &getMapName;
 		m_radiantcore.getMapWorldEntity = getMapWorldEntity;
@@ -187,12 +186,12 @@ class RadiantDependencies :
 
 public:
 	RadiantDependencies() :
-			GlobalEntityModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entities")),
-			GlobalShadersModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("shaders")),
-			GlobalBrushModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("brushtypes")),
-			GlobalEntityClassManagerModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("entityclass")),
+			GlobalEntityModuleRef("ufo"),
+			GlobalShadersModuleRef("ufo"),
+			GlobalBrushModuleRef("ufo"),
+			GlobalEntityClassManagerModuleRef("ufo"),
 			m_image_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("texturetypes")),
-			m_map_modules(GlobalRadiant().getRequiredGameDescriptionKeyValue("maptypes")),
+			m_map_modules("mapufo"),
 			m_toolbar_modules("*"),
 			m_plugin_modules("*") {
 	}
@@ -315,5 +314,3 @@ ToolbarModules& Radiant_getToolbarModules() {
 PluginModules& Radiant_getPluginModules() {
 	return g_RadiantDependencies->getPluginModules();
 }
-
-

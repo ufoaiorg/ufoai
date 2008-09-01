@@ -40,12 +40,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "cl_installation.h"
 
-void R_CreateRadarOverlay(void);
+installation_t *installationCurrent;
 
 vec3_t newInstallationPos;
 static cvar_t *mn_installation_title;
 static cvar_t *mn_installation_count;
 static cvar_t *mn_installation_id;
+
+installationType_t INS_GetType (const installation_t *installation)
+{
+	if (installation->installationTemplate->maxBatteries > 0)
+		return INSTALLATION_DEFENCE;
+	else if (installation->installationTemplate->maxUfoStored > 0)
+		return INSTALLATION_UFOYARD;
+
+	/* default is radar */
+	return INSTALLATION_RADAR;
+}
 
 /**
  * @brief Array bound check for the installation index.
@@ -137,9 +148,9 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	installation->storage.num[od->idx] = 3;
 
-	Com_Printf("id = %s range = %f batteries = %i ufo's = %i", installation->installationTemplate->id,
-		installation->installationTemplate->radarRange, installation->installationTemplate->maxBatteries,
-		installation->installationTemplate->maxUfoStored);
+	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %f, batteries = %i, ufos = %i\n",
+		installation->installationTemplate->id, installation->installationTemplate->radarRange,
+		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
@@ -632,12 +643,12 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 {
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-#if 0
 		int j;
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		MSG_WriteByte(sb, inst->founded);
 		if (!inst->founded)
 			continue;
+		MSG_WriteString(sb, inst->installationTemplate->id);
 		MSG_WriteString(sb, inst->name);
 		MSG_WritePos(sb, inst->pos);
 		MSG_WriteByte(sb, inst->installationStatus);
@@ -656,7 +667,6 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 
 		/** @todo aircraft (don't save capacities, they should
 		 * be recalculated after loading) */
-#endif
 	}
 	return qtrue;
 }
@@ -671,12 +681,16 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 {
 	int i;
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-#if 0
 		int j;
 		installation_t *inst = INS_GetInstallationByIDX(i);
 		inst->founded = MSG_ReadByte(sb);
 		if (!inst->founded)
 			continue;
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(MSG_ReadString(sb));
+		if (!inst->installationTemplate) {
+			Com_Printf("Could not find installation template\n");
+			return qfalse;
+		}
 		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
 		MSG_ReadPos(sb, inst->pos);
 		inst->installationStatus = MSG_ReadByte(sb);
@@ -702,8 +716,6 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
-#endif
 	}
 	return qtrue;
 }
-

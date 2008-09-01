@@ -82,5 +82,3 @@ public:
 typedef SingletonModule<CameraAPI> CameraModule;
 typedef Static<CameraModule> StaticCameraModule;
 StaticRegisterModule staticRegisterCamera(StaticCameraModule::instance());
-
-

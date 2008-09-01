@@ -136,7 +136,7 @@ menu buildings
 		size	"210 600"
 		format	"30 700"
 		mousefx	true
-		num	3
+		num		TEXT_BUILDINGS
 		height	"20"
 		click
 	}
@@ -145,7 +145,7 @@ menu buildings
 	{
 		image		menu/buttons_small
 		tooltip 	"_UFOpaedia"
-		pos		"320 720"
+		pos			"320 720"
 		texl		"32 0"
 		texh		"47 16"
 		click
@@ -160,7 +160,7 @@ menu buildings
 		size	"300 140"
 		mousefx false
 		format	"20 140"
-		num		4
+		num		TEXT_BUILDING_INFO
 		height	"7"
 		click
 	}

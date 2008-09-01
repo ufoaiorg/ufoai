@@ -53,9 +53,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "xywindow.h"
 
 
-
-#define DEBUG_RENDER 0
-
 inline void debug_string(const char* string) {
 #if(DEBUG_RENDER)
 	globalOutputStream() << string << "\n";
@@ -122,250 +119,6 @@ const char* Renderer_GetStats() {
 	<< " | msec: " << g_timer.elapsed_msec();
 	return g_renderer_stats.c_str();
 }
-
-
-void printShaderLog(GLhandleARB object) {
-	GLint log_length = 0;
-	glGetObjectParameterivARB(object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &log_length);
-
-	Array<char> log(log_length);
-	glGetInfoLogARB(object, log_length, &log_length, log.data());
-
-	globalErrorStream() << StringRange(log.begin(), log.begin() + log_length) << "\n";
-}
-
-void createShader(GLhandleARB program, const char* filename, GLenum type) {
-	GLhandleARB shader = glCreateShaderObjectARB(type);
-	GlobalOpenGL_debugAssertNoErrors();
-
-	// load shader
-	{
-		std::size_t size = file_size(filename);
-		FileInputStream file(filename);
-		ASSERT_MESSAGE(!file.failed(), "failed to open " << makeQuoted(filename));
-		Array<GLcharARB> buffer(size);
-		size = file.read(reinterpret_cast<StreamBase::byte_type*>(buffer.data()), size);
-
-		const GLcharARB* string = buffer.data();
-		GLint length = GLint(size);
-		glShaderSourceARB(shader, 1, &string, &length);
-	}
-
-	// compile shader
-	{
-		glCompileShaderARB(shader);
-
-		GLint compiled = 0;
-		glGetObjectParameterivARB(shader, GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
-
-		if (!compiled) {
-			printShaderLog(shader);
-		}
-
-		ASSERT_MESSAGE(compiled, "shader compile failed: " << makeQuoted(filename));
-	}
-
-	// attach shader
-	glAttachObjectARB(program, shader);
-
-	glDeleteObjectARB(shader);
-
-	GlobalOpenGL_debugAssertNoErrors();
-}
-
-void GLSLProgram_link(GLhandleARB program) {
-	glLinkProgramARB(program);
-
-	GLint linked = false;
-	glGetObjectParameterivARB(program, GL_OBJECT_LINK_STATUS_ARB, &linked);
-
-	if (!linked) {
-		printShaderLog(program);
-	}
-
-	ASSERT_MESSAGE(linked, "program link failed");
-}
-
-void GLSLProgram_validate(GLhandleARB program) {
-	glValidateProgramARB(program);
-
-	GLint validated = false;
-	glGetObjectParameterivARB(program, GL_OBJECT_VALIDATE_STATUS_ARB, &validated);
-
-	if (!validated) {
-		printShaderLog(program);
-	}
-
-	ASSERT_MESSAGE(validated, "program validation failed");
-}
-
-bool g_bumpGLSLPass_enabled = false;
-bool g_depthfillPass_enabled = false;
-
-class GLSLBumpProgram : public GLProgram {
-public:
-	GLhandleARB m_program;
-	qtexture_t* m_light_attenuation_xy;
-	qtexture_t* m_light_attenuation_z;
-	GLint u_view_origin;
-	GLint u_light_origin;
-	GLint u_light_color;
-	GLint u_bump_scale;
-	GLint u_specular_exponent;
-
-	GLSLBumpProgram() : m_program(0), m_light_attenuation_xy(0), m_light_attenuation_z(0) {
-	}
-
-	void create() {
-		// create program
-		m_program = glCreateProgramObjectARB();
-
-		// create shader
-		{
-			StringOutputStream filename(256);
-			filename << GlobalRadiant().getAppPath() << "gl/lighting_DBS_omni_vp.glsl";
-			createShader(m_program, filename.c_str(), GL_VERTEX_SHADER_ARB);
-			filename.clear();
-			filename << GlobalRadiant().getAppPath() << "gl/lighting_DBS_omni_fp.glsl";
-			createShader(m_program, filename.c_str(), GL_FRAGMENT_SHADER_ARB);
-		}
-
-		GLSLProgram_link(m_program);
-		GLSLProgram_validate(m_program);
-
-		glUseProgramObjectARB(m_program);
-
-		glBindAttribLocationARB(m_program, c_attr_TexCoord0, "attr_TexCoord0");
-		glBindAttribLocationARB(m_program, c_attr_Tangent, "attr_Tangent");
-		glBindAttribLocationARB(m_program, c_attr_Binormal, "attr_Binormal");
-
-		glUniform1iARB(glGetUniformLocationARB(m_program, "u_diffusemap"), 0);
-		glUniform1iARB(glGetUniformLocationARB(m_program, "u_bumpmap"), 1);
-		glUniform1iARB(glGetUniformLocationARB(m_program, "u_specularmap"), 2);
-		glUniform1iARB(glGetUniformLocationARB(m_program, "u_attenuationmap_xy"), 3);
-		glUniform1iARB(glGetUniformLocationARB(m_program, "u_attenuationmap_z"), 4);
-
-		u_view_origin = glGetUniformLocationARB(m_program, "u_view_origin");
-		u_light_origin = glGetUniformLocationARB(m_program, "u_light_origin");
-		u_light_color = glGetUniformLocationARB(m_program, "u_light_color");
-		u_bump_scale = glGetUniformLocationARB(m_program, "u_bump_scale");
-		u_specular_exponent = glGetUniformLocationARB(m_program, "u_specular_exponent");
-
-		glUseProgramObjectARB(0);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void destroy() {
-		glDeleteObjectARB(m_program);
-		m_program = 0;
-	}
-
-	void enable() {
-		glUseProgramObjectARB(m_program);
-
-		glEnableVertexAttribArrayARB(c_attr_TexCoord0);
-		glEnableVertexAttribArrayARB(c_attr_Tangent);
-		glEnableVertexAttribArrayARB(c_attr_Binormal);
-
-		GlobalOpenGL_debugAssertNoErrors();
-
-		debug_string("enable bump");
-		g_bumpGLSLPass_enabled = true;
-	}
-
-	void disable() {
-		glUseProgramObjectARB(0);
-
-		glDisableVertexAttribArrayARB(c_attr_TexCoord0);
-		glDisableVertexAttribArrayARB(c_attr_Tangent);
-		glDisableVertexAttribArrayARB(c_attr_Binormal);
-
-		GlobalOpenGL_debugAssertNoErrors();
-
-		debug_string("disable bump");
-		g_bumpGLSLPass_enabled = false;
-	}
-
-	void setParameters(const Vector3& viewer, const Matrix4& localToWorld, const Vector3& origin, const Vector3& colour, const Matrix4& world2light) {
-		Matrix4 world2local(localToWorld);
-		matrix4_affine_invert(world2local);
-
-		Vector3 localLight(origin);
-		matrix4_transform_point(world2local, localLight);
-
-		Vector3 localViewer(viewer);
-		matrix4_transform_point(world2local, localViewer);
-
-		Matrix4 local2light(world2light);
-		matrix4_multiply_by_matrix4(local2light, localToWorld); // local->world->light
-
-		glUniform3fARB(u_view_origin, localViewer.x(), localViewer.y(), localViewer.z());
-		glUniform3fARB(u_light_origin, localLight.x(), localLight.y(), localLight.z());
-		glUniform3fARB(u_light_color, colour.x(), colour.y(), colour.z());
-		glUniform1fARB(u_bump_scale, 1.0);
-		glUniform1fARB(u_specular_exponent, 32.0);
-
-		glActiveTexture(GL_TEXTURE3);
-		glClientActiveTexture(GL_TEXTURE3);
-
-		glMatrixMode(GL_TEXTURE);
-		glLoadMatrixf(reinterpret_cast<const float*>(&local2light));
-		glMatrixMode(GL_MODELVIEW);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-};
-
-GLSLBumpProgram g_bumpGLSL;
-
-
-class GLSLDepthFillProgram : public GLProgram {
-public:
-	GLhandleARB m_program;
-
-	void create() {
-		// create program
-		m_program = glCreateProgramObjectARB();
-
-		// create shader
-		{
-			StringOutputStream filename(256);
-			filename << GlobalRadiant().getAppPath() << "gl/zfill_vp.glsl";
-			createShader(m_program, filename.c_str(), GL_VERTEX_SHADER_ARB);
-			filename.clear();
-			filename << GlobalRadiant().getAppPath() << "gl/zfill_fp.glsl";
-			createShader(m_program, filename.c_str(), GL_FRAGMENT_SHADER_ARB);
-		}
-
-		GLSLProgram_link(m_program);
-		GLSLProgram_validate(m_program);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void destroy() {
-		glDeleteObjectARB(m_program);
-		m_program = 0;
-	}
-	void enable() {
-		glUseProgramObjectARB(m_program);
-		GlobalOpenGL_debugAssertNoErrors();
-		debug_string("enable depthfill");
-		g_depthfillPass_enabled = true;
-	}
-	void disable() {
-		glUseProgramObjectARB(0);
-		GlobalOpenGL_debugAssertNoErrors();
-		debug_string("disable depthfill");
-		g_depthfillPass_enabled = false;
-	}
-	void setParameters(const Vector3& viewer, const Matrix4& localToWorld, const Vector3& origin, const Vector3& colour, const Matrix4& world2light) {
-	}
-};
-
-GLSLDepthFillProgram g_depthFillGLSL;
-
 
 // ARB path
 
@@ -808,11 +561,6 @@ public:
 	}
 };
 
-
-inline bool lightEnabled(const RendererLight& light, const LightCullable& cullable) {
-	return cullable.testLight(light);
-}
-
 typedef std::set<RendererLight*> RendererLights;
 
 #define DEBUG_LIGHT_SYNC 0
@@ -838,27 +586,10 @@ public:
 			m_lights.clear();
 			m_cullable.clearLights();
 			for (RendererLights::const_iterator i = m_allLights.begin(); i != m_allLights.end(); ++i) {
-				if (lightEnabled(*(*i), m_cullable)) {
-					m_lights.push_back(*i);
-					m_cullable.insertLight(*(*i));
-				}
+				m_lights.push_back(*i);
+				m_cullable.insertLight(*(*i));
 			}
 		}
-#if(DEBUG_LIGHT_SYNC)
-		else {
-			Lights lights;
-			for (RendererLights::const_iterator i = m_allLights.begin(); i != m_allLights.end(); ++i) {
-				if (lightEnabled(*(*i), m_cullable)) {
-					lights.push_back(*i);
-				}
-			}
-			ASSERT_MESSAGE(
-			    !std::lexicographical_compare(lights.begin(), lights.end(), m_lights.begin(), m_lights.end())
-			    && !std::lexicographical_compare(m_lights.begin(), m_lights.end(), lights.begin(), lights.end()),
-			    "lights out of sync"
-			);
-		}
-#endif
 	}
 	void forEachLight(const RendererLightCallback& callback) const {
 		evaluateLights();
@@ -911,7 +642,6 @@ class OpenGLShaderCache : public ShaderCache, public TexturesCacheObserver, publ
 
 	bool m_lightingEnabled;
 	bool m_lightingSupported;
-	bool m_useShaderLanguage;
 
 public:
 	OpenGLShaderCache()
@@ -919,7 +649,6 @@ public:
 			m_unrealised(3), // wait until shaders, gl-context and textures are realised before creating any render-states
 			m_lightingEnabled(true),
 			m_lightingSupported(false),
-			m_useShaderLanguage(false),
 			m_lightsChanged(true),
 			m_traverseRenderablesMutex(false) {
 	}
@@ -1049,13 +778,8 @@ public:
 	void realise() {
 		if (--m_unrealised == 0) {
 			if (lightingSupported() && lightingEnabled()) {
-				if (useShaderLanguage()) {
-					g_bumpGLSL.create();
-					g_depthFillGLSL.create();
-				} else {
-					g_bumpARB.create();
-					g_depthFillARB.create();
-				}
+				g_bumpARB.create();
+				g_depthFillARB.create();
 			}
 
 			for (Shaders::iterator i = m_shaders.begin(); i != m_shaders.end(); ++i) {
@@ -1073,13 +797,8 @@ public:
 				}
 			}
 			if (GlobalOpenGL().contextValid && lightingSupported() && lightingEnabled()) {
-				if (useShaderLanguage()) {
-					g_bumpGLSL.destroy();
-					g_depthFillGLSL.destroy();
-				} else {
-					g_bumpARB.destroy();
-					g_depthFillARB.destroy();
-				}
+				g_bumpARB.destroy();
+				g_depthFillARB.destroy();
 			}
 		}
 	}
@@ -1093,9 +812,6 @@ public:
 	}
 	bool lightingSupported() const {
 		return m_lightingSupported;
-	}
-	bool useShaderLanguage() const {
-		return m_useShaderLanguage;
 	}
 	void setLighting(bool supported, bool enabled) {
 		bool refresh = (m_lightingSupported && m_lightingEnabled) != (supported && enabled);
@@ -1230,7 +946,6 @@ void ShaderCache_setBumpEnabled(bool enabled) {
 
 
 Vector3 g_DebugShaderColours[256];
-Shader* g_defaultPointLight = 0;
 
 void ShaderCache_Construct() {
 	g_ShaderCache = new OpenGLShaderCache;
@@ -1368,11 +1083,11 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 	}
 
 	if (delta & state & RENDER_BLEND) {
-// FIXME: some .TGA are buggy, have a completely empty alpha channel
-// if such brushes are rendered in this loop they would be totally transparent with GL_MODULATE
-// so I decided using GL_DECAL instead
-// if an empty-alpha-channel or nearly-empty texture is used. It will be blank-transparent.
-// this could get better if you can get glTexEnviv (GL_TEXTURE_ENV, to work .. patches are welcome
+		// FIXME: some .TGA are buggy, have a completely empty alpha channel
+		// if such brushes are rendered in this loop they would be totally transparent with GL_MODULATE
+		// so I decided using GL_DECAL instead
+		// if an empty-alpha-channel or nearly-empty texture is used. It will be blank-transparent.
+		// this could get better if you can get glTexEnviv (GL_TEXTURE_ENV, to work .. patches are welcome
 
 		glEnable(GL_BLEND);
 		if (GlobalOpenGL().GL_1_3()) {
@@ -1590,49 +1305,6 @@ void Renderables_flush(OpenGLStateBucket::Renderables& renderables, OpenGLState&
 
 		count_prim();
 
-		if (current.m_program != 0 && (*i).m_light != 0) {
-			const IShader& lightShader = static_cast<OpenGLShader*>((*i).m_light->getShader())->getShader();
-			if (lightShader.firstLayer() != 0) {
-				GLuint attenuation_xy = lightShader.firstLayer()->texture()->texture_number;
-				GLuint attenuation_z = lightShader.lightFalloffImage() != 0
-				                       ? lightShader.lightFalloffImage()->texture_number
-				                       : static_cast<OpenGLShader*>(g_defaultPointLight)->getShader().lightFalloffImage()->texture_number;
-
-				setTextureState(current.m_texture3, attenuation_xy, GL_TEXTURE3);
-				glActiveTexture(GL_TEXTURE3);
-				glBindTexture(GL_TEXTURE_2D, attenuation_xy);
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-
-				setTextureState(current.m_texture4, attenuation_z, GL_TEXTURE4);
-				glActiveTexture(GL_TEXTURE4);
-				glBindTexture(GL_TEXTURE_2D, attenuation_z);
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-
-				AABB lightBounds((*i).m_light->aabb());
-
-				Matrix4 world2light(g_matrix4_identity);
-
-				if ((*i).m_light->isProjected()) {
-					world2light = (*i).m_light->projection();
-					matrix4_multiply_by_matrix4(world2light, matrix4_transposed((*i).m_light->rotation()));
-					matrix4_translate_by_vec3(world2light, vector3_negated(lightBounds.origin)); // world->lightBounds
-				}
-				if (!(*i).m_light->isProjected()) {
-					matrix4_translate_by_vec3(world2light, Vector3(0.5f, 0.5f, 0.5f));
-					matrix4_scale_by_vec3(world2light, Vector3(0.5f, 0.5f, 0.5f));
-					matrix4_scale_by_vec3(world2light, Vector3(1.0f / lightBounds.extents.x(), 1.0f / lightBounds.extents.y(), 1.0f / lightBounds.extents.z()));
-					matrix4_multiply_by_matrix4(world2light, matrix4_transposed((*i).m_light->rotation()));
-					matrix4_translate_by_vec3(world2light, vector3_negated(lightBounds.origin)); // world->lightBounds
-				}
-
-				current.m_program->setParameters(viewer, *(*i).m_transform, lightBounds.origin + (*i).m_light->offset(), (*i).m_light->colour(), world2light);
-				debug_string("set lightBounds parameters");
-			}
-		}
-
 		(*i).m_renderable->render(current.m_state);
 	}
 	glPopMatrix();
@@ -1778,10 +1450,6 @@ void OpenGLShader::construct(const char* name) {
 		state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 		state.m_sort = OpenGLState::eSortControlFirst + 1;
 		state.m_pointsize = 4;
-	} else if (string_equal(name + 1, "BIGPOINT")) {
-		state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
-		state.m_sort = OpenGLState::eSortControlFirst;
-		state.m_pointsize = 6;
 	} else if (string_equal(name + 1, "PIVOT")) {
 		state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHTEST | RENDER_DEPTHWRITE;
 		state.m_sort = OpenGLState::eSortGUI1;
@@ -1921,11 +1589,7 @@ void OpenGLShader::construct(const char* name) {
 			state.m_colour[3] = 1;
 			state.m_sort = OpenGLState::eSortOpaque;
 
-			if (g_ShaderCache->useShaderLanguage()) {
-				state.m_program = &g_depthFillGLSL;
-			} else {
-				state.m_program = &g_depthFillARB;
-			}
+			state.m_program = &g_depthFillARB;
 
 			OpenGLState& bumpPass = appendDefaultPass();
 			bumpPass.m_texture = m_shader->getDiffuse()->texture_number;
@@ -1934,12 +1598,7 @@ void OpenGLShader::construct(const char* name) {
 
 			bumpPass.m_state = RENDER_BLEND | RENDER_FILL | RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_SMOOTH | RENDER_BUMP | RENDER_PROGRAM;
 
-			if (g_ShaderCache->useShaderLanguage()) {
-				bumpPass.m_state |= RENDER_LIGHTING;
-				bumpPass.m_program = &g_bumpGLSL;
-			} else {
-				bumpPass.m_program = &g_bumpARB;
-			}
+			bumpPass.m_program = &g_bumpARB;
 
 			bumpPass.m_depthfunc = GL_LEQUAL;
 			bumpPass.m_sort = OpenGLState::eSortMultiFirst;
@@ -2024,7 +1683,7 @@ StaticRegisterModule staticRegisterOpenGLStateLibrary(StaticOpenGLStateLibraryMo
 class ShaderCacheDependencies : public GlobalShadersModuleRef, public GlobalTexturesModuleRef, public GlobalOpenGLStateLibraryModuleRef {
 public:
 	ShaderCacheDependencies() :
-			GlobalShadersModuleRef(GlobalRadiant().getRequiredGameDescriptionKeyValue("shaders")) {
+			GlobalShadersModuleRef("ufo") {
 	}
 };
 
@@ -2050,5 +1709,3 @@ public:
 typedef SingletonModule<ShaderCacheAPI, ShaderCacheDependencies> ShaderCacheModule;
 typedef Static<ShaderCacheModule> StaticShaderCacheModule;
 StaticRegisterModule staticRegisterShaderCache(StaticShaderCacheModule::instance());
-
-

@@ -2181,10 +2181,16 @@ void CL_ActorUpdateCVars (void)
 		animName = R_AnimGetName(&selActor->as, selActor->model1);
 		if (animName)
 			Cvar_Set("mn_anim", animName);
-		if (RIGHT(selActor))
-			Cvar_Set("mn_rweapon", RIGHT(selActor)->item.t->model);
-		if (LEFT(selActor))
-			Cvar_Set("mn_lweapon", LEFT(selActor)->item.t->model);
+		if (RIGHT(selActor)) {
+			const invList_t *i = RIGHT(selActor);
+			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
+			Cvar_Set("mn_rweapon", i->item.t->model);
+		}
+		if (LEFT(selActor)) {
+			const invList_t *i = LEFT(selActor);
+			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
+			Cvar_Set("mn_lweapon", i->item.t->model);
+		}
 
 		/* get weapon */
 		if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
@@ -3119,8 +3125,9 @@ void CL_ActorReload (int hand)
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
 				 && RS_IsResearched_ptr(ic->item.t->tech)) {
-					x = ic->x;
-					y = ic->y;
+					Com_GetFirstShapePosition(ic, &x, &y);
+					x += ic->x;
+					y += ic->y;
 					tu = csi.ids[container].out;
 					bestContainer = container;
 					break;

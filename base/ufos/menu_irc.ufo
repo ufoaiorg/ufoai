@@ -93,7 +93,7 @@ menu irc
 		size	"240 594"
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 0"
-		num		"1"
+		num		TEXT_LIST
 		height	"27"
 		wheel
 		mousefx		true
@@ -109,7 +109,7 @@ menu irc
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		height	"24"
 		format  "22 0"
-		num		"0"
+		num		TEXT_STANDARD
 		wheel
 		scrollbar	true
 	}
@@ -241,7 +241,7 @@ menu irc_popup
 		align	uc
 		size	"446 20"
 		height	"1"
-		num	7
+		num	TEXT_POPUP
 	}
 
 	string popup_text

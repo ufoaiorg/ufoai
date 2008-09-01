@@ -277,6 +277,9 @@ void SP_func_rotating (edict_t *ent)
 	if (!ent->speed)
 		ent->speed = 50;
 
+	if (ent->HP)
+		ent->flags |= FL_DESTROYABLE;
+
 	Com_DPrintf(DEBUG_GAME, "func_rotating: model (%s) num: %i mins: %i %i %i maxs: %i %i %i origin: %i %i %i\n",
 			ent->model, ent->mapNum, (int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
 			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],

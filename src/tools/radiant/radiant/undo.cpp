@@ -71,7 +71,7 @@ class RadiantUndoSystem : public UndoSystem {
 				m_undoable->importState(m_data);
 			}
 			void release() {
-				m_data->release();
+				delete m_data;
 			}
 		};
 
@@ -79,6 +79,12 @@ class RadiantUndoSystem : public UndoSystem {
 		states_t m_states;
 
 	public:
+		~Snapshot() {
+			for (states_t::iterator i = m_states.begin(); i != m_states.end(); ++i) {
+				(*i).release();
+			}
+		}
+
 		bool empty() const {
 			return m_states.empty();
 		}
@@ -93,11 +99,6 @@ class RadiantUndoSystem : public UndoSystem {
 				(*i).restore();
 			}
 		}
-		void release() {
-			for (states_t::iterator i = m_states.begin(); i != m_states.end(); ++i) {
-				(*i).release();
-			}
-		}
 	};
 
 	struct Operation {
@@ -106,9 +107,6 @@ class RadiantUndoSystem : public UndoSystem {
 
 		Operation(const char* command)
 				: m_command(command) {
-		}
-		~Operation() {
-			m_snapshot.release();
 		}
 	};
 
@@ -427,9 +425,6 @@ struct state_type : public UndoMemento {
 		}
 		state_type(const state_type& other) : UndoMemento(other), test_data(other.test_data) {
 		}
-		void release() {
-			delete this;
-		}
 
 		int test_data;
 	};
@@ -457,4 +452,3 @@ public:
 		m_state.test_data = data;
 	}
 };
-

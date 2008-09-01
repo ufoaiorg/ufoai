@@ -302,8 +302,6 @@ void UP_ItemDescription (const objDef_t *od)
 	int up_weapon_id = NONE;
 	const menu_t *activeMenu;
 
-	activeMenu = MN_GetActiveMenu();
-
 	/* reset everything */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
@@ -316,6 +314,8 @@ void UP_ItemDescription (const objDef_t *od)
 
 	if (!od)	/* If nothing selected return */
 		return;
+
+	activeMenu = MN_GetActiveMenu();
 
 	/* select item */
 	Cvar_Set("mn_itemname", od->name);
@@ -504,7 +504,7 @@ void UP_ItemDescription (const objDef_t *od)
 }
 
 /**
- * @brief Prints the UFOpaedia description for armours
+ * @brief Prints the UFOpaedia description for armour
  * @sa UP_DrawEntry
  */
 static void UP_ArmourDescription (const technology_t* t)

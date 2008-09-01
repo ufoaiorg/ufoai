@@ -30,7 +30,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/glwidget.cpp \
 	$(RADIANT_BASE)/radiant/grid.cpp \
 	$(RADIANT_BASE)/radiant/groupdialog.cpp \
-	$(RADIANT_BASE)/radiant/gtkdlgs.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
@@ -40,6 +39,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/multimon.cpp \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
+	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/pluginapi.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/pluginmanager.cpp \
@@ -54,7 +54,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/select.cpp \
 	$(RADIANT_BASE)/radiant/selection.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
-	$(RADIANT_BASE)/radiant/shaders.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
 	$(RADIANT_BASE)/radiant/surfacedialog.cpp \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
@@ -68,6 +67,13 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/winding.cpp \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
+	\
+	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
@@ -108,12 +114,7 @@ RADIANT_PLUGIN_MODEL_SRCS_C = \
 	$(RADIANT_BASE)/libs/picomodel/pm_ms3d.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_mdc.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_md2.c \
-	$(RADIANT_BASE)/libs/picomodel/pm_terrain.c \
-	$(RADIANT_BASE)/libs/picomodel/bbox.c \
-	$(RADIANT_BASE)/libs/picomodel/line.c \
-	$(RADIANT_BASE)/libs/picomodel/m4x4.c \
-	$(RADIANT_BASE)/libs/picomodel/mathlib.c \
-	$(RADIANT_BASE)/libs/picomodel/ray.c
+	$(RADIANT_BASE)/libs/picomodel/pm_terrain.c
 
 RADIANT_PLUGIN_MODEL_C_OBJS=$(RADIANT_PLUGIN_MODEL_SRCS_C:%.c=$(BUILDDIR)/tools/radiant/plugins_c/%.o)
 RADIANT_PLUGIN_MODEL_CPP_OBJS=$(RADIANT_PLUGIN_MODEL_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
@@ -139,7 +140,6 @@ RADIANT_PLUGIN_ENTITY_TARGET=radiant/modules/entity.$(SHARED_EXT)
 #image plugin
 RADIANT_PLUGIN_IMAGE_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/image/image.cpp \
-	$(RADIANT_BASE)/plugins/image/bmp.cpp \
 	$(RADIANT_BASE)/plugins/image/jpeg.cpp \
 	$(RADIANT_BASE)/plugins/image/tga.cpp
 
@@ -190,8 +190,7 @@ RADIANT_PLUGIN_ARCHIVEZIP_TARGET=radiant/modules/archivezip.$(SHARED_EXT)
 RADIANT_PLUGIN_UFOAI_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/ufoai/ufoai.cpp \
 	$(RADIANT_BASE)/plugins/ufoai/ufoai_filters.cpp \
-	$(RADIANT_BASE)/plugins/ufoai/ufoai_gtk.cpp \
-	$(RADIANT_BASE)/plugins/ufoai/ufoai_level.cpp
+	$(RADIANT_BASE)/plugins/ufoai/ufoai_gtk.cpp
 
 RADIANT_PLUGIN_UFOAI_CPP_OBJS=$(RADIANT_PLUGIN_UFOAI_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_UFOAI_TARGET=radiant/plugins/ufoai.$(SHARED_EXT)
@@ -225,7 +224,7 @@ $(BUILDDIR)/tools/radiant/%.o: $(SRCDIR)/%.cpp $(BUILDDIR)/.dirs
 # Say how to build .o files from .cpp/.c files for this module
 $(BUILDDIR)/tools/radiant/plugins_c/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [RAD] $<"; \
-		$(CC) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 $(BUILDDIR)/tools/radiant/plugins_cpp/%.o: $(SRCDIR)/%.cpp $(BUILDDIR)/.dirs
 	@echo " * [RAD] $<"; \
 		$(CC) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)

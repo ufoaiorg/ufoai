@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class Tokeniser {
 public:
-	virtual void release() = 0;
+	virtual ~Tokeniser() {}
 	virtual void nextLine() = 0;
 	virtual const char* getToken() = 0;
 	virtual void ungetToken() = 0;
@@ -44,7 +44,7 @@ class TextInputStream;
 
 class TokenWriter {
 public:
-	virtual void release() = 0;
+	virtual ~TokenWriter() {}
 	virtual void nextLine() = 0;
 	virtual void writeToken(const char* token) = 0;
 	virtual void writeString(const char* string) = 0;
@@ -59,9 +59,9 @@ struct _QERScripLibTable {
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "scriptlib");
 
-	Tokeniser& (* m_pfnNewScriptTokeniser)(TextInputStream& istream);
-	Tokeniser& (* m_pfnNewSimpleTokeniser)(TextInputStream& istream);
-	TokenWriter& (* m_pfnNewSimpleTokenWriter)(TextOutputStream& ostream);
+	Tokeniser*   (*m_pfnNewScriptTokeniser)(TextInputStream& istream);
+	Tokeniser*   (*m_pfnNewSimpleTokeniser)(TextInputStream& istream);
+	TokenWriter* (*m_pfnNewSimpleTokenWriter)(TextOutputStream& ostream);
 };
 
 #include "modulesystem.h"

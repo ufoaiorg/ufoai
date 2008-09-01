@@ -142,7 +142,7 @@ static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t i
 }
 
 /**
- * @brief Checks if an item-shape can be put into a container at a certain position... ignores any 'special' types.
+ * @brief Checks if an item-shape can be put into a container at a certain position... ignores any 'special' types of containers.
  * @param[in] i
  * @param[in] container The container (index) to look into.
  * @param[in] itemShape The shape info of an item to fit into the container.
@@ -158,6 +158,9 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 
 	assert(container);
+
+	if (container->scroll)
+		Sys_Error("Com_CheckToInventory_shape: No scrollable container will ever use this. This type does not support grid-packing!");
 
 	/* check bounds */
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT)
@@ -190,7 +193,7 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
  * @param[in] od The item to check in the inventory.
  * @param[in] container The index of the container in the inventory to theck the item in.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
- * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
+ * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @sa Com_CheckToInventory_mask
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
@@ -255,6 +258,10 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 		}
 	}
 
+	/* Scrolling container have endless room, the item always fits. */
+	if (container->scroll)
+		return INV_FITS;
+
 	/* Check 'grid' containers. */
 	fits = INV_DOES_NOT_FIT; /* equals 0 */
 	if (Com_CheckToInventory_shape(i, container, od->shape, x, y))
@@ -284,61 +291,52 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
 }
 
 /**
- * @brief Check if a position in a conteiner is used by an item (i.e. collides with the shape).
+ * @brief Check if a position in a container is used by an item (i.e. collides with the shape).
  * @param[in] ic A pointer to an invList_t struct. The position is checked against its contained item.
  * @param[in] x The x location in the container.
- * @param[in] y The x location in the container.
+ * @param[in] y The y location in the container.
  */
 static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const int y)
 {
 	assert(ic);
 
-	/* Check if the given location is inside the (max) bounds of the items. */
-	if (x >= ic->x
-	 && y >= ic->y
-	 && x < ic->x + SHAPE_SMALL_MAX_WIDTH
-	 && y < ic->y + SHAPE_SMALL_MAX_HEIGHT) {
-	 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
-		if (ic->item.rotated) {
-	 		if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-	 			return qtrue;
-		} else {
-	 		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
-	 			return qtrue;
-	 	}
-	}
+ 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
+	if (ic->item.rotated) {
+ 		if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+ 			return qtrue;
+	} else {
+ 		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+ 			return qtrue;
+ 	}
 
 	/* Position is out of bounds or position not inside item-shape. */
 	return qfalse;
 }
 
-#if 0
 /**
  * @brief Calculates the first "true" bit in the shape and returns its position in the container.
- * @note Use this got get the first "grab-able" grid-location of an item.
+ * @note Use this to get the first "grab-able" grid-location (in the container) of an item.
  * @param[in] ic A pointer to an invList_t struct.
- * @param[in] x The x location in the container.
- * @param[in] y The x location in the container.
+ * @param[out] x The x location inside the item.
+ * @param[out] y The x location inside the item.
  * @sa Com_CheckToInventory
  */
 void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 {
 	int tempX, tempY;
-	int checkedTo = 0;
 
 	assert(ic);
 
-	for (tempX = 0; tempX < SHAPE_SMALL_MAX_WIDTH; tempY++)
-		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempX++)
-			if (Com_ShapeCheckPosition(ic, tempX, tempY) {
-				*px = tempX;
-				*py = tempY;
+	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
+		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
+			if (Com_ShapeCheckPosition(ic, ic->x + tempX, ic->y + tempY)) {
+				*x = tempX;
+				*y = tempY;
 				return;
 			}
 
-	*px = *py = NONE;
+	*x = *y = NONE;
 }
-#endif
 
 /**
  * @brief Searches if there is a specific item already in the inventory&container.
@@ -359,15 +357,184 @@ qboolean Com_ExistsInInventory (const inventory_t* const inv, const invDef_t * c
 	return qfalse;
 }
 
+/** Names of the filter types as used in console fucntion. e.g. in .ufo files.
+ * @sa inv_shared.h:itemFilterTypes_t */
+static const char *fiterTypeNames[MAX_FILTERTYPES] = {
+	"primary",		/**< FILTER_S_PRIMARY */
+	"secondary",	/**< FILTER_S_SECONDARY */
+	"heavy",		/**< FILTER_S_HEAVY */
+	"misc",			/**< FILTER_S_MISC */
+	"armour",		/**< FILTER_S_ARMOUR */
+	NULL,			/**< MAX_SOLDIER_FILTERTYPES */
+	"craftitem",	/**< FILTER_CRAFTITEM */
+	"ugvitem",		/**< FILTER_UGVITEM */
+	"aircraft",		/**< FILTER_AIRCRAFT */
+	"dummy"			/**< FILTER_DUMMY */
+	"disassembly"	/**< FILTER_DISASSEMBLY */
+};
+
+/**
+ * @brief Searches for a filter type name (as used in console functions) and returns the matching itemFilterTypes_t enum.
+ * @param[in] filterTypeID Filter type name so search for. @sa fiterTypeNames.
+ */
+itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
+{
+	itemFilterTypes_t i;
+
+	if (!filterTypeID)
+		return MAX_FILTERTYPES;
+
+	for (i = 0; i < MAX_FILTERTYPES; i++) {
+		if (fiterTypeNames[i] && !Q_strncmp(fiterTypeNames[i], filterTypeID, MAX_VAR))
+			return i;
+	}
+
+	/* No matching filter type found, returning max value. */
+	return MAX_FILTERTYPES;
+}
+
+/**
+ * @brief Checks if the given object/item matched the giben filter type.
+ * @param[in] obj	A pointer to an objDef_t item.
+ * @param[in] filterType	Filter type to check against.
+ * @return qtrue if obj is in filterType
+ */
+inline qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
+{
+	int i;
+
+	if (!obj)
+		return qfalse;
+
+	switch (filterType) {
+	case FILTER_S_PRIMARY:
+		if (obj->isPrimary && !obj->isHeavy)
+			return qtrue;
+
+		/* Check if one of the items that uses this ammo matches this filter type. */
+		for (i = 0; i < obj->numAmmos; i++) {
+			if (obj->weapons[i] && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+				return qtrue;
+		}
+		break;
+
+	case FILTER_S_SECONDARY:
+		if (obj->isSecondary && !obj->isHeavy)
+			return qtrue;
+
+		/* Check if one of the items that uses this ammo matches this filter type. */
+		for (i = 0; i < obj->numAmmos; i++) {
+			if (obj->weapons[i] && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+				return qtrue;
+		}
+		break;
+
+	case FILTER_S_HEAVY:
+		if (obj->isHeavy)
+			return qtrue;
+
+		/* Check if one of the items that uses this ammo matches this filter type. */
+		for (i = 0; i < obj->numAmmos; i++) {
+			if (obj->weapons[i] && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+				return qtrue;
+		}
+		break;
+
+	case FILTER_S_ARMOUR:
+		if (!Q_strncmp(obj->type, "armour", MAX_VAR))
+			return qtrue;
+		break;
+
+	case FILTER_S_MISC:
+		if (obj->isMisc)
+			return qtrue;
+		break;
+
+	case FILTER_CRAFTITEM:
+		/** @todo Should we handle FILTER_AIRCRAFT here as well? */
+		if (obj->craftitem.type != MAX_ACITEMS)
+			return qtrue;
+		break;
+
+	case FILTER_UGVITEM:
+		if (obj->isUGVitem)
+			return qtrue;
+		break;
+
+	case FILTER_DUMMY:
+		if (obj->isDummy || !Q_strncmp(obj->type, "dummy", MAX_VAR))
+			return qtrue;
+		break;
+
+	case FILTER_AIRCRAFT:
+		if (!Q_strncmp(obj->type, "aircraft", MAX_VAR))
+			return qtrue;
+		break;
+
+	case FILTER_DISASSEMBLY:
+		/** @todo I guess we should search for components matching this item here. */
+		break;
+
+	default:
+		Com_Printf("INV_ItemMatchesFilter: Unknown filter type for items: %i\n", filterType);
+		break;
+	}
+
+	/* The given filter type is unknown. */
+	return qfalse;
+}
+
+/**
+ * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
+ * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
+ * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @sa Com_SearchInInventory
+ */
+invList_t *INV_SearchInScrollableContainer (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+{
+	invList_t *ic;
+	int curItem = 0;	/**< Current (visible) item in the container. */
+	int curDispItem = 0;	/**< Item counter for all items that actually get displayed. */
+
+	for (ic = i->c[container->id]; ic; ic = ic->next) {
+		/* Search only in the items that could get displayed. */
+		if (ic && ic->item.t && (INV_ItemMatchesFilter(ic->item.t, filterType) || filterType == MAX_FILTERTYPES)) {
+			if (item) {
+				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
+				if (item == ic->item.t)
+					return ic;
+			} else if (curItem >= i->scrollCur
+			&& curDispItem < i->scrollNum) {
+				/* We search only in actually visible items. */
+				if (ic->x == x && ic->y == y)
+					return ic;
+
+				/* Count displayed/visible items. */
+				curDispItem++;
+			}
+
+			/* Count all items that could get displayed. */
+			curItem++;
+		}
+	}
+
+	/* No item with these coordinates (or matching item) found. */
+	return NULL;
+}
+
 /**
  * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
- * @param[in] x X position that you want to check.
- * @param[in] y Y position that you want to check.
- * @return invList_t Pointer to the container in given inventory, where we can place new item.
+ * @param[in] x/y Position in the container that you want to check.
+ * @return invList_t Pointer to the invList_t/item that is located at x/y.
+ * @sa INV_SearchInScrollableContainer
  */
-invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * container, int x, int y)
+invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * container, const int x, const int y)
 {
 	invList_t *ic;
 
@@ -377,12 +544,15 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 	if (container->single)
 		return i->c[container->id];
 
+	if (container->scroll)
+		Sys_Error("Com_SearchInInventory: Scrollable container are not supported by this function.\nUse INV_SearchInScrollableContainer instead!");
+
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
-		if (Com_ShapeCheckPosition(ic, x ,y))
+		if (Com_ShapeCheckPosition(ic, x, y))
 			return ic;
 
-	/* Found nothing */
+	/* Found nothing. */
 	return NULL;
 }
 
@@ -397,7 +567,6 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
  * @param[in] y The x location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa Com_RemoveFromInventory
- * @sa Com_RemoveFromInventoryIgnore
  */
 invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_t * container, int x, int y, int amount)
 {
@@ -489,39 +658,23 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 /**
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
- * @param[in] x The x position of the item to be removed.
- * @param[in] y The y position of the item to be removed.
+ * @param[in] fItem The item to be removed.
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
- * @sa Com_RemoveFromInventoryIgnore
  * @sa Com_AddToInventory
  */
-qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * container, int x, int y)
-{
-	return Com_RemoveFromInventoryIgnore(i, container, x, y, qfalse);
-}
-
-/**
- * @param[in] i The inventory the container is in.
- * @param[in] container The container where the item should be removed.
- * @param[in] x The x position of the item to be removed.
- * @param[in] y The y position of the item to be removed.
- * @param[in] ignore_type Ignores the type of container (only used for a workaround in the base-equipment see CL_MoveMultiEquipment) HACKHACK
- * @return qtrue If removal was successful.
- * @return qfalse If nothing was removed or an error occured.
- * @sa Com_RemoveFromInventory
- */
-qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * container, int x, int y, qboolean ignore_type)
+qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
 {
 	invList_t *ic, *oldUnused, *previous;
 
 	assert(i);
 	assert(container);
+	assert(fItem);
 
 	ic = i->c[container->id];
 	if (!ic) {
 #ifdef PARANOID
-		Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore - empty container %s\n", container->name);
+		Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventory - empty container %s\n", container->name);
 #endif
 		return qfalse;
 	}
@@ -531,36 +684,38 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * c
 	 * one of the items => crap - maybe we have to change the inv move function
 	 * to check for this case of move and only update the x and y coords instead
 	 * of calling the add and remove functions */
-	if (!ignore_type && (container->single || (ic->x == x && ic->y == y))) {
+	if (container->single || ic == fItem) {
 		cacheItem = ic->item;
 		/* temp container like idEquip and idFloor */
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
-			Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
+			Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventory: Amount of '%s': %i\n",
 				ic->item.t->name, ic->item.amount);
 			return qtrue;
 		}
-		/* an item in other containers as idFloor and idEquip should always
-		 * have an amount value of 1 */
+
+		/* An item in other containers than idFloor or idEquip should
+		 * always have an amount value of 1.
+		 * The other container types do not support stacking.*/
 		assert(ic->item.amount == 1);
 		oldUnused = invUnused;
 		invUnused = ic;
 		i->c[container->id] = ic->next;
 
 		if (container->single && ic->next)
-			Com_Printf("Com_RemoveFromInventoryIgnore: Error: single container %s has many items.\n", container->name);
+			Com_Printf("Com_RemoveFromInventory: Error: single container %s has many items.\n", container->name);
 
 		invUnused->next = oldUnused;
 		return qtrue;
 	}
 
 	for (previous = i->c[container->id]; ic; ic = ic->next) {
-		if (Com_ShapeCheckPosition(ic, x ,y)) {
+		if (ic == fItem) {
 			cacheItem = ic->item;
 			/* temp container like idEquip and idFloor */
-			if (!ignore_type && ic->item.amount > 1 && container->temp) {
+			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
-				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
+				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventory: Amount of '%s': %i\n",
 					ic->item.t->name, ic->item.amount);
 				return qtrue;
 			}
@@ -581,55 +736,29 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, const invDef_t * c
 
 /**
  * @brief Conditions for moving items between containers.
- * @param[in] i an item
- * @param[in] from source container
- * @param[in] fx x for source container
- * @param[in] fy y for source container
- * @param[in] to destination container
- * @param[in] tx x for destination container
- * @param[in] ty y for destination container
- * @param[in] TU amount of TU needed to move an item
+ * @param[in] i Inventory to move in.
+ * @param[in] from Source container.
+ * @param[in] fItem The item to be moved.
+ * @param[in] to Destination container.
+ * @param[in] tx X coordinate in destination container.
+ * @param[in] ty Y coordinate in destination container.
+ * @param[in,out] TU Amount of TU needed to move an item.
  * @param[out] icp
- * @return IA_NOTIME when not enough TU
- * @return IA_NONE if no action possible
- * @return IA_NORELOAD if you cannot reload a weapon
- * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon
- * @return IA_RELOAD when reloading
- * @return IA_ARMOUR when placing an armour on the actor
- * @return IA_MOVE when just moving an item
+ * @return IA_NOTIME when not enough TU.
+ * @return IA_NONE if no action possible.
+ * @return IA_NORELOAD if you cannot reload a weapon.
+ * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon.
+ * @return IA_RELOAD when reloading.
+ * @return IA_ARMOUR when placing an armour on the actor.
+ * @return IA_MOVE when just moving an item.
  */
-int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
-{
-	return Com_MoveInInventoryIgnore(i, from, fx, fy, to, tx, ty, TU, icp, qfalse);
-}
-
-/**
- * @brief Conditions for moving items between containers.
- * @param[in] i
- * @param[in] from source container
- * @param[in] fx x for source container (This is actually the mouse coordinate, not the origin of the item.)
- * @param[in] fy y for source container (This is actually the mouse coordinate. not the origin of the item.)
- * @param[in] to destination container
- * @param[in] tx x for destination container
- * @param[in] ty y for destination container
- * @param[in] TU amount of TU needed to move an item
- * @param[out] icp
- * @param[in] ignore_type Ignores the type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
- * @return IA_NOTIME when not enough TU
- * @return IA_NONE if no action possible
- * @return IA_NORELOAD if you cannot reload a weapon
- * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon
- * @return IA_RELOAD when reloading
- * @return IA_ARMOUR when placing an armour on the actor
- * @return IA_MOVE when just moving an item
- */
-int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int fx, int fy, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
+int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
-	const invList_t *icFrom;
-	int cacheFromX, cacheFromY;
+
 	int time;
 	int checkedTo = INV_DOES_NOT_FIT;
+	qboolean alreadyRemovedSource = qfalse;
 
 	assert(to);
 	assert(from);
@@ -637,7 +766,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 	if (icp)
 		*icp = NULL;
 
-	if (from == to && fx == tx && fy == ty)
+	if (from == to && fItem->x == tx && fItem->y == ty)
 		return IA_NONE;
 
 	time = from->out + to->in;
@@ -648,16 +777,15 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 
 	assert(i);
 
-	/* Break if source item is not removeable. */
-
-	/** @todo imo in tactical missions (idFloor) there should be not packing of items
-	 * they should be available one by one */
-
-	/* special case for moving an item within the same container */
+	/* Special case for moving an item within the same container. */
 	if (from == to) {
+		/* Do nothing if we move inside a scroll container. */
+		if (from->scroll)
+			return IA_NONE;
+
 		ic = i->c[from->id];
 		for (; ic; ic = ic->next) {
-			if (ic->x == fx && ic->y == fy) {
+			if (ic == fItem) {
 				if (ic->item.amount > 1) {
 					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty);
 					if (checkedTo & INV_FITS) {
@@ -673,69 +801,61 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 		}
 	}
 
-	/** Store x/y origin coordinates of removed (source) item. If we need to
-	 * re-add it we can use this. We can't use fx/fy in that case, because it's
-	 * the mouse coordinate, not the item-origin. */
-	icFrom = Com_SearchInInventory(i, from, fx, fy);	/* Get the source-invlist (e.g. a weapon) */
-	if (icFrom) {
-		cacheFromX = icFrom->x;
-		cacheFromY = icFrom->y;
-	} else {
-		cacheFromX = -1;
-		cacheFromY = -1;
-	}
-
-	/* Actually remove the source item from its container. */
-	if (!Com_RemoveFromInventoryIgnore(i, from, fx, fy, ignore_type))
-		return IA_NONE;
-
-	if (!cacheItem.t)
-		return IA_NONE;
-
-	/* We are in base-equip screen (multi-ammo workaround) and can skip a lot of checks. */
-	if (ignore_type) {
-		Com_TryAddToBuyType(i, cacheItem, to->id, cacheItem.amount); /* get target coordinates */
-		/* return data */
-		/*if (icp)
-			*icp = ic;*/
-		return IA_NONE;
-	}
-
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
 	/* Twohanded weapon are only in CSI->idRight. */
-	if (cacheItem.t->fireTwoHanded && to->id == CSI->idLeft && from->id == CSI->idRight) {
-		Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
+	if (fItem->item.t->fireTwoHanded && to->id == CSI->idLeft && from->id == CSI->idRight) {
 		return IA_NONE;
 	}
 
-	/* If non-armour moved to an armour slot then
-	 * move item back to source location and break.
+	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && Q_strcmp(cacheItem.t->type, "armour"))
-	 || (to->extension && !cacheItem.t->extension)
-	 || (to->headgear && !cacheItem.t->headgear)) {
-		Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
+	if ((to->armour && Q_strcmp(fItem->item.t->type, "armour"))
+	 || (to->extension && !fItem->item.t->extension)
+	 || (to->headgear && !fItem->item.t->headgear)) {
 		return IA_NONE;
 	}
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, 0, 0);
-	else
-		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
+		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, 0, 0);
+	else {
+		if (tx == NONE || ty == NONE)
+			Com_FindSpace(i, &fItem->item, to, &tx, &ty);
+		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, tx, ty);
+	}
 
 	if (to->armour && from != to && !checkedTo) {
-		const item_t cacheItem2 = cacheItem; /* Save/cache (source) item. */
+		item_t cacheItem2;
+		invList_t *icTo;
+		/* Store x/y origin coordinates of removed (source) item.
+		 * When we re-add it we can use this. */
+	 	const int cacheFromX = fItem->x;
+	 	const int cacheFromY = fItem->y;
 
-		/* Move the destination item to the source */
-		Com_MoveInInventory(i, to, tx, ty, from, cacheFromX, cacheFromY, TU, icp);
+		/* Check if destination/blocking item is the same as source/from item.
+		 * In that case the move is not needed -> abort. */
+		icTo = Com_SearchInInventory(i, to, tx, ty);
+		if (fItem->item.t == icTo->item.t)
+			return IA_NONE;
+
+		/* Actually remove the ammo from the 'from' container. */
+		if (!Com_RemoveFromInventory(i, from, fItem))
+			return IA_NONE;
+		else
+			alreadyRemovedSource = qtrue;	/**< Removal successful - store this info. */
+
+		cacheItem2 = cacheItem; /* Save/cache (source) item. The cacheItem is modified in Com_MoveInInventory. */
+
+		/* Move the destination item to the source. */
+		Com_MoveInInventory(i, to, icTo, from, cacheFromX, cacheFromY, TU, icp);
 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		cacheItem = cacheItem2;
 	} else if (!checkedTo) {
-		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon) */
+		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon)
+													 * We don't need to check for scroll because checkedTo is always true here. */
 
-		if (ic && INVSH_LoadableInWeapon(cacheItem.t, ic->item.t)) {
+		if (ic && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t) && to->id != CSI->idEquip) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
 
@@ -745,10 +865,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 				return IA_NORELOAD;
 			} */
 			if (ic->item.a >= ic->item.t->ammo
-				&& ic->item.m == cacheItem.t) {
-				/* Weapon already fully loaded with the same ammunition.
-				 * => back to source location. */
-				Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
+				&& ic->item.m == fItem->item.t) {
+				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
 			time += ic->item.t->reload;
@@ -759,14 +877,11 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 					/* exchange ammo */
 					const item_t item = {NONE_AMMO, NULL, ic->item.m, 0, 0};
 
+					/* Actually remove the ammo from the 'from' container. */
+					if (!Com_RemoveFromInventory(i, from, fItem))
+						return IA_NONE;
+
 					/* Add the currently used ammo in a free place of the "from" container. */
-					/**
-					 * @note If 'from' is idEquip OR idFloor AND the item is of buytype BUY_MULTI_AMMO:
-					 * We need to make sure it goes into the correct display: PRIMARY _OR_ SECONDARY only (e.g. no saboted slugs in SEC).
-					 * This is currently done via the IA_RELOAD_SWAP return-value in cl_inventory.c:INV_MoveItem (ONLY there).
-					 * It checks and moved the last-added item (1 item) only.
-					 * @sa The BUY_MULTI_AMMO stuff in cl_inventory.c:INV_MoveItem.
-					 */
 					Com_AddToInventory(i, item, from, -1, -1, 1);
 
 					ic->item.m = cacheItem.t;
@@ -774,6 +889,10 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 						*icp = ic;
 					return IA_RELOAD_SWAP;
 				} else {
+					/* Actually remove the ammo from the 'from' container. */
+					if (!Com_RemoveFromInventory(i, from, fItem))
+						return IA_NONE;
+
 					ic->item.m = cacheItem.t;
 					/* loose ammo of type ic->item.m saved on server side */
 					ic->item.a = ic->item.t->ammo;
@@ -782,53 +901,57 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, const invDef_t * from, int 
 					return IA_RELOAD;
 				}
 			}
-			/* not enough time - back to source location */
-			Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
+			/* Not enough time -> abort. */
 			return IA_NOTIME;
 		}
 
 		/* temp container like idEquip and idFloor */
 		if (ic && to->temp) {
-			/** We are moving to a blocked location container but it's the base-equipment loor of a battlsecape floor
+			/** We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * @todo change the other code to browse trough these things. */
-			Com_FindSpace(i, &cacheItem, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
+			Com_FindSpace(i, &fItem->item, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
 												 * This is then used in Com_AddToInventory below.*/
 			if (tx == NONE || ty == NONE) {
 				Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - item will be added non-visible\n");
 			}
 		} else {
-			/* impossible move - back to source location */
-			Com_AddToInventory(i, cacheItem, from, cacheFromX, cacheFromY, 1);
+			/* Impossible move -> abort. */
 			return IA_NONE;
 		}
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (cacheItem.t->fireTwoHanded && to->id == CSI->idLeft) {
+	if (fItem->item.t->fireTwoHanded && to->id == CSI->idLeft) {
 #ifdef DEBUG
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - don't move the item to CSI->idLeft it's fireTwoHanded\n");
 #endif
 		to = &CSI->ids[CSI->idRight];
 	}
 #ifdef PARANOID
-	else if (cacheItem.t->fireTwoHanded)
+	else if (fItem->item.t->fireTwoHanded)
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: move fireTwoHanded item to container: %s\n", to->name);
 #endif
+
+	if (checkedTo == INV_FITS_ONLY_ROTATED) {
+		/* Set rotated tag */
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: setting rotate tag.\n");
+		fItem->item.rotated = qtrue;
+	} else if (fItem->item.rotated) {
+		/* Remove rotated tag */
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: removing rotate tag.\n");
+		fItem->item.rotated = qfalse;
+	}
+
+
+	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
+	if (!alreadyRemovedSource)
+		if (!Com_RemoveFromInventory(i, from, fItem))
+			return IA_NONE;
 
 	/* successful */
 	if (TU)
 		*TU -= time;
-
-	if (checkedTo == INV_FITS_ONLY_ROTATED) {
-		/* Set rotated tag */
-		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventoryIgnore: setting rotate tag.\n");
-		cacheItem.rotated = qtrue;
-	} else if (cacheItem.rotated) {
-		/* Remove rotated tag */
-		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventoryIgnore: removing rotate tag.\n");
-		cacheItem.rotated = qfalse;
-	}
 
 	assert(cacheItem.t);
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty, 1);
@@ -926,6 +1049,12 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 	assert(container);
 	assert(!cache_Com_CheckToInventory);
 
+	/* Scrollable container always have room. We return a dummy location. */
+	if (container->scroll) {
+		*px = *py = 0;
+		return;
+	}
+
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y);
@@ -975,37 +1104,6 @@ qboolean Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDe
 
 		Com_AddToInventory(inv, item, container, x, y, 1);
 		return qtrue;
-	}
-}
-
-/**
- * @brief Tries to add item to buytype inventory inv at container
- * @param[in] inv Inventory pointer to add the item
- * @param[in] item Item to add to inventory
- * @param[in] buytypeContainer The "Container" id. The container-id is equal to the buytype in this case (buytype hack).
- * @param[in] amount How many items to add.
- * @sa Com_FindSpace
- * @sa Com_AddToInventory
- */
-int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int buytypeContainer, int amount)
-{
-	int x, y;
-	inventory_t hackInv;
-
-	if (amount <= 0)
-		return 0;
-
-	/* link the temp container */
-	hackInv.c[CSI->idEquip] = inv->c[buytypeContainer];
-
-	Com_FindSpace(&hackInv, &item, &CSI->ids[CSI->idEquip], &x, &y);
-	if (x == NONE) {
-		assert(y == NONE);
-		return 0;
-	} else {
-		Com_AddToInventory(&hackInv, item, &CSI->ids[CSI->idEquip], x, y, amount);
-		inv->c[buytypeContainer] = hackInv.c[CSI->idEquip];
-		return 1;
 	}
 }
 
@@ -1255,7 +1353,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			weapon = NULL;
 			for (i = lastPos; i >= 0; i--) {
 				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon && BUY_PRI(obj->buytype) && obj->fireTwoHanded) {
+				if (equip[i] && obj->weapon && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)) && obj->fireTwoHanded) {
 					if (frand() < 0.15) { /* Small chance to pick any weapon. */
 						weapon = obj;
 						maxPrice = obj->price;
@@ -1315,7 +1413,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
 					if (equip[i] && obj->weapon
-						&& BUY_SEC(obj->buytype) && obj->reload) {
+						&& INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload) {
 						if (primary
 							? obj->price > maxPrice && obj->price < prevPrice
 							: obj->price < maxPrice && obj->price > prevPrice) {
@@ -1355,8 +1453,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				weapon = NULL;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
-					if (equip[i] && ((obj->weapon && BUY_SEC(obj->buytype) && !obj->reload)
-							|| obj->buytype == BUY_MISC)) {
+					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload)
+							|| INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 						if (obj->price > maxPrice && obj->price < prevPrice) {
 							maxPrice = obj->price;
 							weapon = obj;
@@ -1379,7 +1477,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			maxPrice = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon && BUY_SEC(obj->buytype) && !obj->reload) {
+				if (equip[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
 					if (obj->price > maxPrice && obj->price < prevPrice) {
 						maxPrice = obj->price;
 						weapon = obj;
@@ -1413,7 +1511,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			maxPrice = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
-				if (equip[i] && obj->buytype == BUY_ARMOUR) {
+				if (equip[i] && INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR)) {
 					if (obj->price > maxPrice && obj->price < prevPrice) {
 						maxPrice = obj->price;
 						weapon = obj;
@@ -1820,13 +1918,34 @@ void INVSH_PrintItemDescription (const objDef_t *od)
 
 /**
  * @brief Returns the index of this item in the inventory.
+ * @note check that id is a none empty string
+ * @note previously known as RS_GetItem
+ * @param[in] id the item id in our object definition array (csi.ods)
+ * @sa INVSH_GetItemByID
+ */
+objDef_t *INVSH_GetItemByIDSilent (const char *id)
+{
+	int i;
+
+	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
+		objDef_t *item = &CSI->ods[i];
+		if (!Q_strncmp(id, item->id, MAX_VAR)) {
+			return item;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Returns the index of this item in the inventory.
  * @note id may not be null or empty
  * @note previously known as RS_GetItem
  * @param[in] id the item id in our object definition array (csi.ods)
+ * @sa INVSH_GetItemByIDSilent
  */
 objDef_t *INVSH_GetItemByID (const char *id)
 {
-	int i;
+	objDef_t *od;
 
 #ifdef DEBUG
 	if (!id || !*id) {
@@ -1835,12 +1954,9 @@ objDef_t *INVSH_GetItemByID (const char *id)
 	}
 #endif
 
-	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
-		objDef_t *item = &CSI->ods[i];
-		if (!Q_strncmp(id, item->id, MAX_VAR)) {
-			return item;
-		}
-	}
+	od = INVSH_GetItemByIDSilent(id);
+	if (od)
+		return od;
 
 	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 	return NULL;

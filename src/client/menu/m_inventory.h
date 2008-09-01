@@ -29,9 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct base_s;
 
-/* one unit in the containers is 25x25 */
+/* One unit in the containers is 25x25. */
 #define C_UNIT				25
-#define C_UNDEFINED			0xFE
+#define	C_ROW_OFFSET		15	/**< Offset between two rows (and the top of the container to
+								 * the first row) of items in a scrollable container.
+								 * Right now only used for vertical containers.
+								 */
 
 extern inventory_t *menuInventory;
 

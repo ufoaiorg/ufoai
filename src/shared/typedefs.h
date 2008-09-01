@@ -263,11 +263,16 @@ typedef struct old_routing_s {
 	int fblength;	/**< length of forbidden list (amount of entries) */
 } old_routing_t;
 
+/** @sa mapplanes */
 typedef struct plane_s {
-	vec3_t	normal;
-	vec_t	dist;
+	vec3_t	normal;			/**< unit (magnitude == 1) normal defining the direction of the plane */
+	vec_t	dist;			/**< distance from the origin to the plane. unit normal and distance
+							 * description is http://mathworld.wolfram.com/HessianNormalForm.html
+							 * though the sign of the distance seems to differ from the standard definition.
+							 * (or the direction of the normal differs, the effect is the same when calculating
+							 * the distance of a point from the plane.)*/
 	int		type;
-	vec3_t	planeVector[3];
+	vec3_t	planeVector[3]; /**< 3 points on the plane, from the map file */
 	struct plane_s	*hash_chain;
 } plane_t;
 
@@ -280,10 +285,11 @@ typedef struct {
 	int		value;
 } brush_texture_t;
 
-/** @brief Polygon orientations */
+/** @brief for storing the vertices of the side of a brush or other polygon */
 typedef struct {
 	int		numpoints;
-	vec3_t	p[4];		/**< variable sized - @todo - but why 4? */
+	vec3_t	p[4];		/**< variable sized array of points. minimum numpoints is 3,
+						 * but most brushes have rectangular faces, so default is 4.*/
 } winding_t;
 
 typedef struct side_s {
@@ -296,9 +302,6 @@ typedef struct side_s {
 	qboolean	visible;		/**< choose visible planes first */
 	qboolean	tested;			/**< this plane already checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
-
-	vec3_t		hessianNormal;
-	float		hessianP;
 
 	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
 } side_t;
@@ -313,6 +316,12 @@ typedef struct mapbrush_s {
 
 	int		numsides;
 	side_t	*original_sides;
+
+	/**list of brushes that are near to this one.
+	 * not necessarily initialised. call Check_NearList() to make sure it has been initialised
+	 * this will return quickly if it has already been done. */
+	struct	mapbrush_s **nearBrushes;
+	int	numNear;
 
 	qboolean finished;
 	qboolean isTerrain;

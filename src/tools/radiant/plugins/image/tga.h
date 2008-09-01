@@ -28,4 +28,3 @@ class ArchiveFile;
 Image* LoadTGA(ArchiveFile& file);
 
 #endif
-

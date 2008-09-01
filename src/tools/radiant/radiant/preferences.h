@@ -215,11 +215,6 @@ public:
 	*/
 	/*@{*/
 	/*!
-	what game has been selected
-	this is the name of the .game file
-	*/
-	CopiedString m_sGameFile;
-	/*!
 	prompt which game to load on startup
 	*/
 	bool m_bGamePrompt;
@@ -230,13 +225,7 @@ public:
 	bool m_bForceLogConsole;
 	/*@}*/
 
-	/*!
-	the list of game descriptions we scanned from the game/ dir
-	*/
-	std::list<CGameDescription*> mGames;
-
 	CGameDialog() :
-			m_sGameFile(""),
 			m_bGamePrompt(false),
 			m_bForceLogConsole(false) {
 	}
@@ -264,9 +253,6 @@ public:
 	*/
 	GtkWindow* BuildDialog();
 
-	void GameFileImport(int value);
-	void GameFileExport(const IntImportCallback& importCallback) const;
-
 	/*!
 	construction of the dialog frame
 	this is the part to be re-used in prefs dialog
@@ -290,11 +276,6 @@ public:
 
 private:
 	/*!
-	scan for .game files, load them
-	*/
-	void ScanForGames();
-
-	/*!
 	inits g_Preferences.m_global_rc_path
 	*/
 	void InitGlobalPrefPath();
@@ -315,16 +296,11 @@ class texdef_t;
 
 class PrefsDlg : public Dialog {
 public:
-protected:
-	std::list<CGameDescription *> mGames;
-
-public:
 
 	GtkWidget *m_notebook;
 
 	virtual ~PrefsDlg() {
-		g_string_free (m_rc_path, true );
-		g_string_free (m_inipath, true );
+		g_string_free(m_inipath, true);
 	}
 
 	/*!
@@ -333,14 +309,7 @@ public:
 	GString *m_global_rc_path;
 
 	/*!
-	path to per-game settings
-	used for various game dependant storage
-	*/
-	GString *m_rc_path;
-
-	/*!
 	holds per-game settings
-	m_rc_path+"local.pref"
 	\todo FIXME at some point this should become XML property bag code too
 	*/
 	GString *m_inipath;

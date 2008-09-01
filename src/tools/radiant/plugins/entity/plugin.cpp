@@ -58,34 +58,34 @@ class EntityDependencies :
 			public GlobalModelSkinCacheModuleRef {
 };
 
-class EntityQ3API : public TypeSystemRef {
-	EntityCreator* m_entityq3;
+class EntityAPI : public TypeSystemRef {
+	EntityCreator* m_entity;
 public:
 	typedef EntityCreator Type;
 	STRING_CONSTANT(Name, "ufo");
 
-	EntityQ3API() {
+	EntityAPI() {
 		P_Entity_Construct();
 
-		m_entityq3 = &GetEntityCreator();
+		m_entity = &GetEntityCreator();
 
-		GlobalReferenceCache().setEntityCreator(*m_entityq3);
+		GlobalReferenceCache().setEntityCreator(*m_entity);
 	}
-	~EntityQ3API() {
+	~EntityAPI() {
 		P_Entity_Destroy();
 	}
 	EntityCreator* getTable() {
-		return m_entityq3;
+		return m_entity;
 	}
 };
 
-typedef SingletonModule<EntityQ3API, EntityDependencies> EntityQ3Module;
+typedef SingletonModule<EntityAPI, EntityDependencies> EntityModule;
 
-EntityQ3Module g_EntityQ3Module;
+EntityModule g_EntityModule;
 
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
 	initialiseModule(server);
 
-	g_EntityQ3Module.selfRegister();
+	g_EntityModule.selfRegister();
 	UFOModelSkinCacheModule_selfRegister(server);
 }

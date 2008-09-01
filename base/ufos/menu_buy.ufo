@@ -22,7 +22,7 @@ menu buy
 		image	menu/buy_ul
 		pos	"0 0"
 	}
-	
+
 	pic back_ll
 	{
 		image	menu/buy_ll
@@ -34,7 +34,7 @@ menu buy
 		image	menu/buy_ur
 		pos	"512 0"
 	}
-	
+
 	pic back_lr
 	{
 		image	menu/buy_lr
@@ -48,10 +48,10 @@ menu buy
 	text market
 	{
 		color	"0 .78 0 1"
-		num	"34"
+		num		TEXT_MARKET_NAMES
 		height	"28"
 		format	"25 0"
-		pos	"55 40"
+		pos		"55 40"
 		size	"265 700"
 		click
 		wheel	{ cmd "market_scroll" }
@@ -62,7 +62,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"35"
+		num		TEXT_MARKET_STORAGE
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -73,7 +73,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"36"
+		num		TEXT_MARKET_MARKET
 		height	"28"
 		size	"40 700"
 		format	"25 0"
@@ -84,11 +84,11 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num	"37"
+		num		TEXT_MARKET_PRICES
 		height	"28"
 		size	"80 700"
 		format	"25 0"
-		pos	"542 40"
+		pos		"542 40"
 		wheel	{ cmd "market_scroll" }
 	}
 
@@ -1278,7 +1278,7 @@ menu buy
 
 	string txt_storage_caption
 	{
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string 		"_Storage (used/all):"
 		pos		"650 80"
 		font		f_small
@@ -1287,7 +1287,7 @@ menu buy
 
 	string txt_storage_value
 	{
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string 		"*cvar mn_bs_storage"
 		pos		"855 80"
 		font		f_small
@@ -1302,10 +1302,10 @@ menu buy
 		pos	"650 627"
 		size	"270 59"
 		whup	{
-			cmd "prev_buy_type;" 
+			cmd "prev_buy_type;"
 		}
 		whdown	{
-			cmd "next_buy_type;" 
+			cmd "next_buy_type;"
 		}
 	}
 
@@ -1317,27 +1317,27 @@ menu buy
 		align	uc
 	}
 
-        pic bt_previtemtype
-        {
-                tooltip	"_Previous category"
-                mousefx	true
-                image	menu/button_aliencont1
-                pos	"650 623"
-                texl	"0 0"
-                texh	"32 64"
+	pic bt_previtemtype
+	{
+		tooltip	"_Previous category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"650 623"
+		texl	"0 0"
+		texh	"32 64"
 		click	{ cmd "prev_buy_type;" }
-        }
+	}
 
-        pic bt_nextitemtype
-        {
-                tooltip	"_Next category"
-                mousefx	true
-                image	menu/button_aliencont1
-                pos	"882 623"
-                texl	"32 0"
-                texh	"64 64"
+	pic bt_nextitemtype
+	{
+		tooltip	"_Next category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"882 623"
+		texl	"32 0"
+		texh	"64 64"
 		click	{ cmd "next_buy_type;" }
-        }
+	}
 
 	pic bt_continue
 	{
@@ -1356,27 +1356,26 @@ menu buy
 
 	string itemname
 	{
-		if "mn_itemtype != 5"
+		if "mn_itemtype != 8"	// for everything except aircraft
 		string	"*cvar mn_itemname"
 		pos	"793 155"
 		align	uc
 	}
 
-        string aircraftname
-        {
-		if "mn_itemtype == 5"
-                string  "*cvar mn_aircraftname"
-                pos	"793 155"
-                align   uc
-        }
+	string aircraftname
+	{
+		if "mn_itemtype == 8"	// Only for aircraft.
+		string  "*cvar mn_aircraftname"
+		pos	"793 155"
+		align   uc
+	}
 
 	item itemmodel
 	{
-		// @todo: models for aircraft/craftitems
-		if "mn_itemtype != 5"
 		string	"*cvar mn_item"
 		pos	"793 250"
 		scale	"7 7 7"
+		origin	"793 250"
 	}
 
 	text description
@@ -1392,8 +1391,8 @@ menu buy
 	{
 		pos	"745 498"
 		size	"226 16"
-		whup	{ cmd mn_increaseweapon }
-		whdown	{ cmd mn_decreaseweapon }
+		whup	{ cmd "mn_increaseweapon;" }
+		whdown	{ cmd "mn_decreaseweapon;" }
 	}
 
 
@@ -1408,7 +1407,7 @@ menu buy
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 
@@ -1423,7 +1422,7 @@ menu buy
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 

@@ -92,8 +92,8 @@ inventory floor
 	shape	"0 1 15 4"
 	shape	"15 0 3 3"
 	temp	true
-	in		1
-	out		2
+	in	1
+	out	2
 }
 
 // Base equipment place
@@ -102,6 +102,25 @@ inventory equip
 	shape	"0 0 24 13"
 	shape	"0 13 20 2"
 	temp	true
-	all		true
+	all	true
+
+// horizontal
+//	scroll		550	// 22 squares x 25 [C_UNIT]
+//	scroll_height	225	// 9 squares x 25 [C_UNIT]
+
+// vertical
+	scroll		225	// 9 squares x 25 [C_UNIT]
+	scroll_height	325	// 13 squares x 25 [C_UNIT]
+	scroll_vertical 1	// vertical
 }
+
+
+
+
+
+
+
+
+
+
 

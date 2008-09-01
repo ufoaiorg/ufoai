@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// This entity displays the particle specified in its "particle" key.
 /// The "origin" key directly controls the entity's local-to-parent transform.
 
+#include "autoptr.h"
 #include "cullable.h"
 #include "renderable.h"
 #include "editable.h"
@@ -150,17 +151,12 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 }
 
 void LoadUFOFile(const char* filename) {
-	ArchiveTextFile* file = GlobalFileSystem().openTextFile(filename);
-
-	if (file != 0) {
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+	if (file) {
 		globalOutputStream() << "Parsing ufo script file " << filename << "\n";
 
-		Tokeniser& tokeniser = GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream());
-
-		ParseUFOFile(tokeniser, filename);
-
-		tokeniser.release();
-		file->release();
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		ParseUFOFile(*tokeniser, filename);
 	} else {
 		globalOutputStream() << "Unable to read ufo script file " << filename << "\n";
 	}
@@ -519,9 +515,7 @@ public:
 			m_node(this, this, StaticTypeCasts::instance().get()),
 			m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<MiscParticleInstance>::Caller(m_instances)) {
 	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}

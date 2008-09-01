@@ -73,7 +73,7 @@ static void CL_GetTipOfTheDay_f (void)
 	while (rnd) {
 		tip = tip->next;
 		rnd--;
-	};
+	}
 
 	mn.menuText[TEXT_TIPOFTHEDAY] = _(tip->tipString);
 }

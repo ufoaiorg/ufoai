@@ -578,9 +578,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		assert(base->numBatteries > 0);
 		if (idx < 0)
 			idx = rand() % base->numBatteries;
-		if (idx < base->numBatteries - 1)
-			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->numBatteries - idx - 1));
-		base->numBatteries--;
+		REMOVE_ELEM(base->batteries, idx, base->numBatteries);
 		/* just for security */
 		AII_InitialiseSlot(&base->batteries[base->numBatteries].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
 		break;
@@ -589,9 +587,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		assert(base->numLasers > 0);
 		if (idx < 0)
 			idx = rand() % base->numLasers;
-		if (idx < base->numLasers - 1)
-			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->numLasers - idx - 1));
-		base->numLasers--;
+		REMOVE_ELEM(base->lasers, idx, base->numLasers);
 		/* just for security */
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
 		break;
@@ -654,11 +650,11 @@ void BDEF_RemoveBattery_f (void)
 
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
-			type = B_DEFENSE_MISSILE;
+			type = B_DEFENCE_MISSILE;
 			max = base->numBatteries;
 			break;
 		case BASEDEF_LASER:
-			type = B_DEFENSE_MISSILE;
+			type = B_DEFENCE_MISSILE;
 			max = base->numLasers;
 			break;
 		default:
@@ -747,7 +743,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	menuNode_t *node;
 
 	/* don't let old links appear on this menu */
-	MN_MenuTextReset(TEXT_BASEDEFENSE_LIST);
+	MN_MenuTextReset(TEXT_BASEDEFENCE_LIST);
 	MN_MenuTextReset(TEXT_AIREQUIP_1);
 	MN_MenuTextReset(TEXT_AIREQUIP_2);
 	MN_MenuTextReset(TEXT_AIREQUIP_3);
@@ -879,7 +875,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
 		return;
 	}
-	mn.menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
+	mn.menuText[TEXT_BASEDEFENCE_LIST] = defBuffer;
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
@@ -1159,6 +1155,28 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
 }
 
 /**
+ * @brief Returns the userfriendly name for craftitem types (shown in aircraft equip menu)
+ */
+static inline const char *AIM_AircraftItemtypeName (const int equiptype)
+{
+	switch (equiptype) {
+	case AC_ITEM_WEAPON:
+		return _("Weapons");
+	case AC_ITEM_SHIELD:
+		return _("Armour");
+	case AC_ITEM_ELECTRONICS:
+		return _("Items");
+	case AC_ITEM_AMMO:
+		/* ammo - only available from weapons */
+		return _("Ammo");
+	case AC_ITEM_PILOT:
+		return _("Pilot");
+	default:
+		return _("Unknown");
+	}
+}
+
+/**
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa AIM_AircraftEquipMenuClick_f
  */
@@ -1194,32 +1212,29 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 		type = atoi(Cmd_Argv(1));
 		switch (type) {
-		case 1:
-			/* shield/armour */
-			airequipID = AC_ITEM_SHIELD;
-			break;
-		case 2:
-			/* items */
-			airequipID = AC_ITEM_ELECTRONICS;
-			break;
-		case 3:
-			/* ammo - only available from weapons */
+		case AC_ITEM_AMMO:
 			if (airequipID == AC_ITEM_WEAPON)
 				airequipID = AC_ITEM_AMMO;
 			break;
-		case 4:
-			/* crew */
-			airequipID = AC_ITEM_PILOT;
+		case AC_ITEM_PILOT:
 			/*  mn_equip_pilot" = "1" means the pilot model (model has different dimensions for a pilots portrait)
 			 *  will be used in the descripion box */
 			Cvar_Set("mn_equip_pilot", "1");
+		case AC_ITEM_ELECTRONICS:
+		case AC_ITEM_SHIELD:
+			airequipID = type;
+			Cbuf_AddText("airequip_zone3_off;");
 			break;
-
+		case AC_ITEM_WEAPON:
+			airequipID = type;
+			Cbuf_AddText("airequip_zone3_on;");
+			break;
 		default:
 			airequipID = AC_ITEM_WEAPON;
 			break;
 		}
 	}
+	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 
 	/* Reset value of noparams */
 	noparams = qfalse;
@@ -1314,6 +1329,36 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone();
+}
+
+/**
+ * @brief Selects the next aircraft item category
+ */
+static void AIM_NextItemtype_f (void)
+{
+	airequipID++;
+
+	if (airequipID > AC_ITEM_PILOT)
+		airequipID = AC_ITEM_WEAPON;
+	else if (airequipID < AC_ITEM_WEAPON)
+		airequipID = AC_ITEM_PILOT;
+
+	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+}
+
+/**
+ * @brief Selects the previous aircraft item category
+ */
+static void AIM_PreviousItemtype_f (void)
+{
+	airequipID--;
+
+	if (airequipID > AC_ITEM_PILOT)
+		airequipID = AC_ITEM_WEAPON;
+	else if (airequipID < AC_ITEM_WEAPON)
+		airequipID = AC_ITEM_PILOT;
+
+	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
 /**
@@ -2301,12 +2346,12 @@ int AII_BaseCanShoot (const base_t *base)
 {
 	assert(base);
 
-	if (B_GetBuildingStatus(base, B_DEFENSE_MISSILE)) {
+	if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE)) {
 		/* base has missile battery and any needed building */
 		return AII_WeaponsCanShoot(base->batteries, &base->numBatteries);
 	}
 
-	if (B_GetBuildingStatus(base, B_DEFENSE_LASER)) {
+	if (B_GetBuildingStatus(base, B_DEFENCE_LASER)) {
 		/* base has laser battery and any needed building */
 		return AII_WeaponsCanShoot(base->lasers, &base->numLasers);
 	}
@@ -2353,4 +2398,10 @@ const char* AII_WeightToName (itemWeight_t weight)
 		return _("Unknown weight");
 		break;
 	}
+}
+
+void AIM_InitStartup (void)
+{
+	Cmd_AddCommand("mn_next_equiptype", AIM_NextItemtype_f, "Shows the next aircraft equip category.");
+	Cmd_AddCommand("mn_prev_equiptype", AIM_PreviousItemtype_f, "Shows the previous aircraft equip category.");
 }

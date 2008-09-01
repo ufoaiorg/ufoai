@@ -46,7 +46,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
-#include "rotation.h"
 
 #include "entity.h"
 
@@ -395,9 +394,7 @@ public:
 			m_node(this, this, StaticTypeCasts::instance().get()),
 			m_contained(other.m_contained, m_node, InstanceSet::TransformChangedCaller(m_instances), InstanceSetEvaluateTransform<GenericEntityInstance>::Caller(m_instances)) {
 	}
-	void release() {
-		delete this;
-	}
+
 	scene::Node& node() {
 		return m_node;
 	}

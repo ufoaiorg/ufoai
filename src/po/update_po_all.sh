@@ -5,4 +5,3 @@ for i in $(find . -regex "\./..\(_..\)?\.po"); do
 	j=${i%.*}
 	./update_po_from_wiki.sh $(basename $j)
 done
-

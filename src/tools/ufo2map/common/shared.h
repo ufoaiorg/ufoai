@@ -52,19 +52,29 @@ extern int errno;
 The .pak files are just a linear collapse of a directory tree
 ========================================================================*/
 
-
+/** @brief verbosity levels for use in calls to Verb_Printf
+ *  and on the command line -v <int> */
+typedef enum {
+	VERB_SILENT_EXCEPT_ERROR,
+	VERB_CHECK, /**< print nothing, except check/fix messages */
+	VERB_MAPNAME, /**< print mapname only. in check/fix, only do this if a problem is found */
+	VERB_LESS,
+	VERB_NORMAL,
+	VERB_EXTRA, /**< the highest verbosity level */
+	VERB_NUM /**< the number of verbosity levels */
+} verbosityLevel_t;
 
 typedef struct mapConfig_s {
 	float subdivideSize;
 	int nice;
 	qboolean verbose;
+	verbosityLevel_t verbosity;
 	qboolean noprune;
 	qboolean nodetail;
 	qboolean fulldetail;
 	qboolean onlyents;
 	qboolean nomerge;
 	qboolean nowater;
-	qboolean nofill;
 	qboolean nocsg;
 	qboolean noweld;
 	qboolean noshare;
@@ -74,20 +84,26 @@ typedef struct mapConfig_s {
 	qboolean nobackclip;
 	int noradiosity;
 	int block_xl, block_xh, block_yl, block_yh;
-	float microvolume;
+	float microvolume; /**< -micro test after CSG */
 	unsigned int numbounce;
 	qboolean extrasamples;
 	float subdiv;
 	qboolean info;
 	qboolean generateFootstepFile;
 	qboolean generateMaterialFile;
+
 	qboolean performMapCheck;
 	qboolean chkEntities;
+	qboolean chkContained;
+	qboolean chkFillLevelFlags;
+	qboolean chkIntersection;
 	qboolean chkNodraws;
 	qboolean chkBrushes;
 	qboolean chkLevelFlags;
 	qboolean chkTextures;
 	qboolean chkMixedFaceContents;
+	qboolean chkMMicro;
+	float mapMicrovol; /**< -check mbr micro test before CSG */
 	qboolean chkAll;
 	qboolean fixMap;
 	qboolean generateTraceFile;

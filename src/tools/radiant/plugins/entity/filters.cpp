@@ -60,4 +60,3 @@ bool entity_filtered(Entity& entity) {
 	}
 	return false;
 }
-

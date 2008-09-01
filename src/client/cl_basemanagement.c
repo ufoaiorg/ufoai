@@ -681,6 +681,8 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 			Sys_Error("B_RemoveAircraftExceedingCapacity: Unkown type of aircraft '%i'\n", aircraftSize);
 		}
 
+		/** @todo move aircraft being transfered to the destBase */
+
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
 		if (!AIR_IsAircraftInBase(&base->aircraft[aircraftIdx])) {
 			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
@@ -694,6 +696,8 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 		return;
 	}
 
+	if (!numawayAircraft)
+		return;
 	/* All aircraft are away from base, pick up one and change it's homebase */
 	randomNum = rand() % numawayAircraft;
 	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {
@@ -812,18 +816,16 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		base->buildingCurrent = NULL;
 
 	{
-		building_t* const buildings = gd.buildings[base->idx];
-		const int         cntBldgs = gd.numBuildings[base->idx] - 1;
-		const int         idx       = building->idx;
+		int         const base_idx  = base->idx;
+		building_t* const buildings = gd.buildings[base_idx];
+		int         const idx       = building->idx;
+		int               cntBldgs;
 		int               i;
 
-		gd.numBuildings[base->idx] = cntBldgs;
+		REMOVE_ELEM(buildings, idx, gd.numBuildings[base_idx]);
 
-		assert(idx <= cntBldgs);
-		memmove(building, building + 1, (cntBldgs - idx) * sizeof(*building));
-		/* wipe the now vacant last slot */
-		memset(&buildings[cntBldgs], 0, sizeof(buildings[cntBldgs]));
 		/* Update the link of other buildings */
+		cntBldgs = gd.numBuildings[base_idx];
 		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;
@@ -870,8 +872,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 /**
  * @brief Destroy a base.
  * @param[in] base Pointer to base to be destroyed.
- * @note If you want to sell items or unhire employees, you should do it before calling this function
- *	they are going to be killed / destroyed.
+ * @note If you want to sell items or unhire employees, you should do it before
+ * calling this function - they are going to be killed / destroyed.
  */
 void CL_BaseDestroy (base_t *base)
 {
@@ -1813,7 +1815,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
 		return B_ENTRANCE;
 	} else if (!Q_strncmp(buildingID, "missile", MAX_VAR)) {
-		return B_DEFENSE_MISSILE;
+		return B_DEFENCE_MISSILE;
 	} else if (!Q_strncmp(buildingID, "radar", MAX_VAR)) {
 		return B_RADAR;
 	} else if (!Q_strncmp(buildingID, "teamroom", MAX_VAR)) {
@@ -2212,7 +2214,7 @@ void MN_BaseMapLayout (const menuNode_t * node)
 	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
 	vec2_t size;
 
-	if (node->num >= MAX_BASES || node->num < 0)
+	if (node->baseid >= MAX_BASES || node->baseid < 0)
 		return;
 
 	height = node->size[1] / BASE_SIZE;
@@ -2223,7 +2225,7 @@ void MN_BaseMapLayout (const menuNode_t * node)
 	size[1] += (BASE_SIZE + 1) * node->padding;
 	R_DrawFill(node->pos[0], node->pos[1], size[0], size[1], node->align, node->bgcolor);
 
-	base = B_GetBaseByIDX(node->num);
+	base = B_GetBaseByIDX(node->baseid);
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
@@ -3274,8 +3276,8 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 			else
 				UP_OpenWith(building->pedia);
 			break;
-		case B_DEFENSE_LASER:
-		case B_DEFENSE_MISSILE:
+		case B_DEFENCE_LASER:
+		case B_DEFENCE_MISSILE:
 			MN_PushMenu("basedefence");
 			break;
 		case B_HANGAR:
@@ -3805,7 +3807,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteLong(sb, aircraft->stats[l]);
 			}
 		}
-		MSG_WriteByte(sb, b->equipType);
+		MSG_WriteByte(sb, b->equipType);	/** @todo Do we really need to save this? */
 
 		/* store equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
@@ -4124,7 +4126,9 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
 		/* Alien Containment. */
-		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */
+
+		/* Fill Alien Containment with default values like the tech pointer. */
+		AL_FillInContainment(b);
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			const char *const s = MSG_ReadString(sb);
 			b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
@@ -4136,17 +4140,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				b->alienscont[k].amount_alive = MSG_ReadShort(sb);
 				b->alienscont[k].amount_dead = MSG_ReadShort(sb);
 			}
-			/** @todo What about the "tech" pointer? */
 		}
 
-
 		/* clear the mess of stray loaded pointers */
-		memset(&b->equipByBuyType, 0, sizeof(b->equipByBuyType));
-
-		/* some functions needs the baseCurrent pointer set */
-		/** @todo Is this still the case - the baseCurrent usage was heavily
-		 * cleaned up */
-		baseCurrent = b;
+		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
 	gd.numBases = B_GetFoundedBaseCount();
 	Cvar_Set("mn_base_count", va("%i", gd.numBases));

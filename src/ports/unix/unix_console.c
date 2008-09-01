@@ -29,8 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "unix_curses.h"
 #endif /* HAVE_CURSES */
 
-qboolean stdin_active = qtrue;
-
 void Sys_ShowConsole (qboolean show)
 {
 }
@@ -60,6 +58,7 @@ const char *Sys_ConsoleInput (void)
 #ifdef HAVE_CURSES
 	return Curses_Input();
 #else
+	static qboolean stdin_active = qtrue;
 	static char text[256];
 	int len;
 	fd_set fdset;

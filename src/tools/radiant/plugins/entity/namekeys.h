@@ -108,7 +108,7 @@ public:
 	}
 };
 
-inline bool keyIsNameQuake3(const char* key) {
+inline bool keyIsNameUFO(const char* key) {
 	return string_equal(key, "target")
 	       || string_equal(key, "targetname");
 }

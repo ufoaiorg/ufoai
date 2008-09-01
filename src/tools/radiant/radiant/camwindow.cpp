@@ -768,15 +768,6 @@ gboolean disable_freelook_button_press(GtkWidget* widget, GdkEventButton* event,
 	return FALSE;
 }
 
-#if 0
-gboolean mousecontrol_button_press(GtkWidget* widget, GdkEventButton* event, CamWnd* camwnd) {
-	if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
-		Cam_MouseControl(camwnd->getCamera(), event->x, widget->allocation.height - 1 - event->y);
-	}
-	return FALSE;
-}
-#endif
-
 void camwnd_update_xor_rectangle(CamWnd& self, rect_t area) {
 	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getCamera().width, self.getCamera().height));
@@ -1020,9 +1011,12 @@ void CamWnd_Move_Discrete_Import(bool value) {
 	}
 }
 
-
-
-void CamWnd_Add_Handlers_Move(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Remove_Handlers_Move
+ * @sa CamWnd_Add_Handlers_FreeMove
+ */
+static void CamWnd_Add_Handlers_Move (CamWnd& camwnd)
+{
 	camwnd.m_selection_button_press_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press), camwnd.m_window_observer);
 	camwnd.m_selection_button_release_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release), camwnd.m_window_observer);
 	camwnd.m_selection_motion_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "motion_notify_event", G_CALLBACK(DeferredMotion::gtk_motion), &camwnd.m_deferred_motion);
@@ -1036,7 +1030,11 @@ void CamWnd_Add_Handlers_Move(CamWnd& camwnd) {
 	}
 }
 
-void CamWnd_Remove_Handlers_Move(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Add_Handlers_Move
+ */
+static void CamWnd_Remove_Handlers_Move (CamWnd& camwnd)
+{
 	g_signal_handler_disconnect(G_OBJECT(camwnd.m_gl_widget), camwnd.m_selection_button_press_handler);
 	g_signal_handler_disconnect(G_OBJECT(camwnd.m_gl_widget), camwnd.m_selection_button_release_handler);
 	g_signal_handler_disconnect(G_OBJECT(camwnd.m_gl_widget), camwnd.m_selection_motion_handler);
@@ -1050,7 +1048,12 @@ void CamWnd_Remove_Handlers_Move(CamWnd& camwnd) {
 	}
 }
 
-void CamWnd_Add_Handlers_FreeMove(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Remove_Handlers_FreeMove
+ * @sa CamWnd_Add_Handlers_Move
+ */
+static void CamWnd_Add_Handlers_FreeMove (CamWnd& camwnd)
+{
 	camwnd.m_selection_button_press_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_press_event", G_CALLBACK(selection_button_press_freemove), camwnd.m_window_observer);
 	camwnd.m_selection_button_release_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "button_release_event", G_CALLBACK(selection_button_release_freemove), camwnd.m_window_observer);
 	camwnd.m_selection_motion_handler = g_signal_connect(G_OBJECT(camwnd.m_gl_widget), "motion_notify_event", G_CALLBACK(selection_motion_freemove), camwnd.m_window_observer);
@@ -1065,7 +1068,11 @@ void CamWnd_Add_Handlers_FreeMove(CamWnd& camwnd) {
 	KeyEvent_connect("CameraFreeMoveDown");
 }
 
-void CamWnd_Remove_Handlers_FreeMove(CamWnd& camwnd) {
+/**
+ * @sa CamWnd_Add_Handlers_FreeMove
+ */
+static void CamWnd_Remove_Handlers_FreeMove (CamWnd& camwnd)
+{
 	KeyEvent_disconnect("CameraFreeMoveForward");
 	KeyEvent_disconnect("CameraFreeMoveBack");
 	KeyEvent_disconnect("CameraFreeMoveLeft");
@@ -1136,7 +1143,7 @@ CamWnd::~CamWnd() {
 
 	gtk_widget_unref(m_gl_widget);
 
-	m_window_observer->release();
+	delete m_window_observer;
 }
 
 class FloorHeightWalker : public scene::Graph::Walker {
@@ -1183,40 +1190,6 @@ void CamWnd::Cam_ChangeFloor(bool up) {
 	CamWnd_Update(*this);
 	CameraMovedNotify();
 }
-
-
-#if 0
-
-// button_press
-Sys_GetCursorPos(&m_PositionDragCursorX, &m_PositionDragCursorY);
-
-// motion
-if ( (m_bFreeMove && (buttons == (RAD_CONTROL | RAD_SHIFT)))
-        || (!m_bFreeMove && (buttons == (RAD_RBUTTON | RAD_CONTROL))) ) {
-	Cam_PositionDrag();
-	CamWnd_Update(camwnd);
-	CameraMovedNotify();
-	return;
-}
-
-void CamWnd::Cam_PositionDrag() {
-	int x, y;
-
-	Sys_GetCursorPos(GTK_WINDOW(m_gl_widget), &x, &y);
-	if (x != m_PositionDragCursorX || y != m_PositionDragCursorY) {
-		x -= m_PositionDragCursorX;
-		vector3_add(m_Camera.origin, vector3_scaled(m_Camera.vright, x));
-		y -= m_PositionDragCursorY;
-		m_Camera.origin[2] -= y;
-		Camera_updateModelview();
-		CamWnd_Update(camwnd);
-		CameraMovedNotify();
-
-		Sys_SetCursorPos(GTK_WINDOW(m_parent), m_PositionDragCursorX, m_PositionDragCursorY);
-	}
-}
-#endif
-
 
 // NOTE TTimo if there's an OS-level focus out of the application
 //   then we can release the camera cursor grab
@@ -1535,11 +1508,6 @@ void CamWnd::BenchMark() {
 	globalOutputStream() << FloatFormat(dEnd - dStart, 5, 2) << " seconds\n";
 }
 
-
-void fill_view_camera_menu(GtkMenu* menu) {
-	create_check_menu_item_with_mnemonic(menu, "Camera View", "ToggleCamera");
-}
-
 void GlobalCamera_ResetAngles() {
 	CamWnd& camwnd = *g_camwnd;
 	Vector3 angles;
@@ -1565,7 +1533,6 @@ void Camera_CubeIn() {
 		g_camwindow_globals.m_nCubicScale = 1;
 	Camera_updateProjection(camwnd.getCamera());
 	CamWnd_Update(camwnd);
-	g_pParentWnd->SetGridStatus();
 }
 
 void Camera_CubeOut() {
@@ -1575,7 +1542,6 @@ void Camera_CubeOut() {
 		g_camwindow_globals.m_nCubicScale = 23;
 	Camera_updateProjection(camwnd.getCamera());
 	CamWnd_Update(camwnd);
-	g_pParentWnd->SetGridStatus();
 }
 
 bool Camera_GetFarClip() {
@@ -1596,7 +1562,6 @@ void Camera_SetFarClip(bool value) {
 void Camera_ToggleFarClip() {
 	Camera_SetFarClip(!Camera_GetFarClip());
 }
-
 
 void CamWnd_constructToolbar(GtkToolbar* toolbar) {
 	toolbar_append_toggle_button(toolbar, "Cubic clip the camera view (\\)", "view_cubicclipping.bmp", "ToggleCubicClip");

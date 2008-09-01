@@ -25,14 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// This entity dislays a special 'light' model.
 /// The "origin" key directly controls the position of the light model in local space.
 /// The "_color" key controls the colour of the light model.
-/// The "light" key is visualised with a sphere representing the approximate coverage of the light (except Doom3).
-/// Doom3 special behaviour:
-/// The entity behaves as a group.
-/// The "origin" key is the translation to be applied to all brushes (not patches) grouped under this entity.
-/// The "light_center" and "light_radius" keys are visualised with a point and a box when the light is selected.
-/// The "rotation" key directly controls the orientation of the light bounding box in local space.
-/// The "light_origin" key controls the position of the light independently of the "origin" key if it is specified.
-/// The "light_rotation" key duplicates the behaviour of the "rotation" key if it is specified. This appears to be an unfinished feature in Doom3.
+/// The "light" key is visualised with a sphere representing the approximate coverage of the light
 
 #include "light.h"
 
@@ -52,7 +45,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "render.h"
 #include "stringio.h"
 #include "traverselib.h"
-#include "dragplanes.h"
 
 #include "targetable.h"
 #include "origin.h"
@@ -61,7 +53,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
-#include "rotation.h"
 
 #include "entity.h"
 
@@ -347,9 +338,8 @@ void light_draw(const AABB& aabb_light, RenderStateFlags state) {
 	}
 }
 
-// These variables are tweakable on the q3map2 console, setting to q3map2
-// default here as there is no way to find out what the user actually uses
-// right now. Maybe move them to worldspawn?
+/// setting to default here as there is no way to find out what the user actually
+/// uses right now. \todo Maybe move them to worldspawn?
 float fPointScale = 7500.f;
 float fLinearScale = 1.f / 8000.f;
 
@@ -426,42 +416,6 @@ public:
 	typedef MemberCaller1<LightRadii, const char*, &LightRadii::flagsChanged> FlagsChangedCaller;
 };
 
-class Doom3LightRadius {
-public:
-	Vector3 m_defaultRadius;
-	Vector3 m_radius;
-	Vector3 m_radiusTransformed;
-	Vector3 m_center;
-	Callback m_changed;
-	bool m_useCenterKey;
-
-	Doom3LightRadius(const char* defaultRadius) : m_defaultRadius(300, 300, 300), m_center(0, 0, 0), m_useCenterKey(false) {
-		if (!string_parse_vector3(defaultRadius, m_defaultRadius)) {
-			globalErrorStream() << "Doom3LightRadius: failed to parse default light radius\n";
-		}
-		m_radius = m_defaultRadius;
-	}
-
-	void lightRadiusChanged(const char* value) {
-		if (!string_parse_vector3(value, m_radius)) {
-			m_radius = m_defaultRadius;
-		}
-		m_radiusTransformed = m_radius;
-		m_changed();
-		SceneChangeNotify();
-	}
-	typedef MemberCaller1<Doom3LightRadius, const char*, &Doom3LightRadius::lightRadiusChanged> LightRadiusChangedCaller;
-
-	void lightCenterChanged(const char* value) {
-		m_useCenterKey = string_parse_vector3(value, m_center);
-		if (!m_useCenterKey) {
-			m_center = Vector3(0, 0, 0);
-		}
-		SceneChangeNotify();
-	}
-	typedef MemberCaller1<Doom3LightRadius, const char*, &Doom3LightRadius::lightCenterChanged> LightCenterChangedCaller;
-};
-
 class RenderLightRadiiWire : public OpenGLRenderable {
 	LightRadii& m_radii;
 	const Vector3& m_origin;
@@ -509,48 +463,6 @@ public:
 };
 
 Shader* RenderLightRadiiFill::m_state = 0;
-
-class RenderLightCenter : public OpenGLRenderable {
-	const Vector3& m_center;
-	EntityClass& m_eclass;
-public:
-	static Shader* m_state;
-
-	RenderLightCenter(const Vector3& center, EntityClass& eclass) : m_center(center), m_eclass(eclass) {
-	}
-	void render(RenderStateFlags state) const {
-		glBegin(GL_POINTS);
-		glColor3fv(vector3_to_array(m_eclass.color));
-		glVertex3fv(vector3_to_array(m_center));
-		glEnd();
-	}
-};
-
-Shader* RenderLightCenter::m_state = 0;
-
-class RenderLightProjection : public OpenGLRenderable {
-	const Matrix4& m_projection;
-public:
-
-	RenderLightProjection(const Matrix4& projection) : m_projection(projection) {
-	}
-	void render(RenderStateFlags state) const {
-		Matrix4 unproject(matrix4_full_inverse(m_projection));
-		Vector3 points[8];
-		aabb_corners(AABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(0.5f, 0.5f, 0.5f)), points);
-		points[0] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[0], 1)));
-		points[1] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[1], 1)));
-		points[2] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[2], 1)));
-		points[3] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[3], 1)));
-		points[4] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[4], 1)));
-		points[5] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[5], 1)));
-		points[6] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[6], 1)));
-		points[7] = vector4_projected(matrix4_transformed_vector4(unproject, Vector4(points[7], 1)));
-		Vector4 test1 = matrix4_transformed_vector4(unproject, Vector4(0.5f, 0.5f, 0.5f, 1));
-		Vector3 test2 = vector4_projected(test1);
-		aabb_draw_wire(points);
-	}
-};
 
 inline void default_extents(Vector3& extents) {
 	extents = Vector3(8, 8, 8);
@@ -651,8 +563,6 @@ class Light :
 	IdentityTransform m_transform;
 
 	OriginKey m_originKey;
-	RotationKey m_rotationKey;
-	Float9 m_rotation;
 	Colour m_colour;
 
 	ClassnameFilter m_filter;
@@ -661,18 +571,13 @@ class Light :
 	TraversableObserverPairRelay m_traverseObservers;
 
 	LightRadii m_radii;
-	Doom3LightRadius m_doom3Radius;
 
 	RenderLightRadiiWire m_radii_wire;
 	RenderLightRadiiFill m_radii_fill;
 	RenderLightRadiiBox m_radii_box;
-	RenderLightCenter m_render_center;
 	RenderableNamedEntity m_renderName;
 
 	Vector3 m_lightOrigin;
-	bool m_useLightOrigin;
-	Float9 m_lightRotation;
-	bool m_useLightRotation;
 
 	Vector3 m_lightTarget;
 	bool m_useLightTarget;
@@ -685,14 +590,6 @@ class Light :
 	Vector3 m_lightEnd;
 	bool m_useLightEnd;
 
-	mutable AABB m_doom3AABB;
-	mutable Matrix4 m_doom3Rotation;
-	mutable Matrix4 m_doom3Projection;
-	mutable Frustum m_doom3Frustum;
-	mutable bool m_doom3ProjectionChanged;
-
-	RenderLightProjection m_renderProjection;
-
 	LightShader m_shader;
 
 	AABB m_aabb_light;
@@ -702,7 +599,6 @@ class Light :
 	Callback m_evaluateTransform;
 
 	void construct() {
-		default_rotation(m_rotation);
 		m_aabb_light.origin = Vector3(0, 0, 0);
 		default_extents(m_aabb_light.extents);
 
@@ -722,22 +618,16 @@ class Light :
 	void updateOrigin() {
 		m_boundsChanged();
 
-		m_doom3Radius.m_changed();
-
 		GlobalSelectionSystem().pivotChanged();
 	}
 
 	void originChanged() {
-		m_aabb_light.origin = m_useLightOrigin ? m_lightOrigin : m_originKey.m_origin;
+		m_aabb_light.origin = m_originKey.m_origin;
 		updateOrigin();
 	}
 	typedef MemberCaller<Light, &Light::originChanged> OriginChangedCaller;
 
 	void lightOriginChanged(const char* value) {
-		m_useLightOrigin = !string_empty(value);
-		if (m_useLightOrigin) {
-			read_origin(m_lightOrigin, value);
-		}
 		originChanged();
 	}
 	typedef MemberCaller1<Light, const char*, &Light::lightOriginChanged> LightOriginChangedCaller;
@@ -783,65 +673,19 @@ class Light :
 	}
 	typedef MemberCaller1<Light, const char*, &Light::lightEndChanged> LightEndChangedCaller;
 
-	void writeLightOrigin() {
-		write_origin(m_lightOrigin, &m_entity, "light_origin");
-	}
-
-	void updateLightRadiiBox() const {
-		const Matrix4& rotation = rotation_toMatrix(m_rotation);
-		aabb_corners(AABB(Vector3(0, 0, 0), m_doom3Radius.m_radiusTransformed), m_radii_box.m_points);
-		matrix4_transform_point(rotation, m_radii_box.m_points[0]);
-		vector3_add(m_radii_box.m_points[0], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[1]);
-		vector3_add(m_radii_box.m_points[1], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[2]);
-		vector3_add(m_radii_box.m_points[2], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[3]);
-		vector3_add(m_radii_box.m_points[3], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[4]);
-		vector3_add(m_radii_box.m_points[4], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[5]);
-		vector3_add(m_radii_box.m_points[5], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[6]);
-		vector3_add(m_radii_box.m_points[6], m_aabb_light.origin);
-		matrix4_transform_point(rotation, m_radii_box.m_points[7]);
-		vector3_add(m_radii_box.m_points[7], m_aabb_light.origin);
-	}
-
-	void rotationChanged() {
-		rotation_assign(m_rotation, m_useLightRotation ? m_lightRotation : m_rotationKey.m_rotation);
-		GlobalSelectionSystem().pivotChanged();
-	}
-	typedef MemberCaller<Light, &Light::rotationChanged> RotationChangedCaller;
-
-	void lightRotationChanged(const char* value) {
-		m_useLightRotation = !string_empty(value);
-		if (m_useLightRotation) {
-			read_rotation(m_lightRotation, value);
-		}
-		rotationChanged();
-	}
-	typedef MemberCaller1<Light, const char*, &Light::lightRotationChanged> LightRotationChangedCaller;
-
 public:
 
 	Light(EntityClass* eclass, scene::Node& node, const Callback& transformChanged, const Callback& boundsChanged, const Callback& evaluateTransform) :
 			m_entity(eclass),
 			m_originKey(OriginChangedCaller(*this)),
-			m_rotationKey(RotationChangedCaller(*this)),
 			m_colour(Callback()),
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
-			m_doom3Radius(EntityClass_valueForKey(m_entity.getEntityClass(), "light_radius")),
 			m_radii_wire(m_radii, m_aabb_light.origin),
 			m_radii_fill(m_radii, m_aabb_light.origin),
 			m_radii_box(m_aabb_light.origin),
-			m_render_center(m_doom3Radius.m_center, m_entity.getEntityClass()),
 			m_renderName(m_named, m_aabb_light.origin),
-			m_useLightOrigin(false),
-			m_useLightRotation(false),
-			m_renderProjection(m_doom3Projection),
 			m_transformChanged(transformChanged),
 			m_boundsChanged(boundsChanged),
 			m_evaluateTransform(evaluateTransform) {
@@ -850,20 +694,14 @@ public:
 	Light(const Light& other, scene::Node& node, const Callback& transformChanged, const Callback& boundsChanged, const Callback& evaluateTransform) :
 			m_entity(other.m_entity),
 			m_originKey(OriginChangedCaller(*this)),
-			m_rotationKey(RotationChangedCaller(*this)),
 			m_colour(Callback()),
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
-			m_doom3Radius(EntityClass_valueForKey(m_entity.getEntityClass(), "light_radius")),
 			m_radii_wire(m_radii, m_aabb_light.origin),
 			m_radii_fill(m_radii, m_aabb_light.origin),
 			m_radii_box(m_aabb_light.origin),
-			m_render_center(m_doom3Radius.m_center, m_entity.getEntityClass()),
 			m_renderName(m_named, m_aabb_light.origin),
-			m_useLightOrigin(false),
-			m_useLightRotation(false),
-			m_renderProjection(m_doom3Projection),
 			m_transformChanged(transformChanged),
 			m_boundsChanged(boundsChanged),
 			m_evaluateTransform(evaluateTransform) {
@@ -971,37 +809,23 @@ public:
 		m_aabb_light.origin = origin_translated(m_aabb_light.origin, translation);
 	}
 	void rotate(const Quaternion& rotation) {
-		rotation_rotate(m_rotation, rotation);
 	}
 	void snapto(float snap) {
-		if (m_useLightOrigin) {
-			m_lightOrigin = origin_snapped(m_lightOrigin, snap);
-			writeLightOrigin();
-		} else {
-			m_originKey.m_origin = origin_snapped(m_originKey.m_origin, snap);
-			m_originKey.write(&m_entity);
-		}
+		m_originKey.m_origin = origin_snapped(m_originKey.m_origin, snap);
+		m_originKey.write(&m_entity);
 	}
 	void setLightRadius(const AABB& aabb) {
 		m_aabb_light.origin = aabb.origin;
-		m_doom3Radius.m_radiusTransformed = aabb.extents;
 	}
 	void transformLightRadius(const Matrix4& transform) {
 		matrix4_transform_point(transform, m_aabb_light.origin);
 	}
 	void revertTransform() {
-		m_aabb_light.origin = m_useLightOrigin ? m_lightOrigin : m_originKey.m_origin;
-		rotation_assign(m_rotation, m_useLightRotation ? m_lightRotation : m_rotationKey.m_rotation);
-		m_doom3Radius.m_radiusTransformed = m_doom3Radius.m_radius;
+		m_aabb_light.origin = m_originKey.m_origin;
 	}
 	void freezeTransform() {
-		if (m_useLightOrigin) {
-			m_lightOrigin = m_aabb_light.origin;
-			writeLightOrigin();
-		} else {
-			m_originKey.m_origin = m_aabb_light.origin;
-			m_originKey.write(&m_entity);
-		}
+		m_originKey.m_origin = m_aabb_light.origin;
+		m_originKey.write(&m_entity);
 	}
 	void transformChanged() {
 		revertTransform();
@@ -1012,52 +836,11 @@ public:
 
 	mutable Matrix4 m_localPivot;
 	const Matrix4& getLocalPivot() const {
-		m_localPivot = rotation_toMatrix(m_rotation);
+		m_localPivot = g_matrix4_identity;
 		vector4_to_vector3(m_localPivot.t()) = m_aabb_light.origin;
 		return m_localPivot;
 	}
 
-	void setLightChangedCallback(const Callback& callback) {
-		m_doom3Radius.m_changed = callback;
-	}
-
-	const AABB& aabb() const {
-		m_doom3AABB = AABB(m_aabb_light.origin, m_doom3Radius.m_radiusTransformed);
-		return m_doom3AABB;
-	}
-	bool testAABB(const AABB& other) const {
-		if (isProjected()) {
-			Matrix4 transform = rotation();
-			vector4_to_vector3(transform.t()) = localAABB().origin;
-			projection();
-			Frustum frustum(frustum_transformed(m_doom3Frustum, transform));
-			return frustum_test_aabb(frustum, other) != c_volumeOutside;
-		}
-		// test against an AABB which contains the rotated bounds of this light.
-		const AABB& bounds = aabb();
-		return aabb_intersects_aabb(other, AABB(
-		                                bounds.origin,
-		                                Vector3(
-		                                    static_cast<float>(fabs(m_rotation[0] * bounds.extents[0])
-		                                                       + fabs(m_rotation[3] * bounds.extents[1])
-		                                                       + fabs(m_rotation[6] * bounds.extents[2])),
-		                                    static_cast<float>(fabs(m_rotation[1] * bounds.extents[0])
-		                                                       + fabs(m_rotation[4] * bounds.extents[1])
-		                                                       + fabs(m_rotation[7] * bounds.extents[2])),
-		                                    static_cast<float>(fabs(m_rotation[2] * bounds.extents[0])
-		                                                       + fabs(m_rotation[5] * bounds.extents[1])
-		                                                       + fabs(m_rotation[8] * bounds.extents[2]))
-		                                )
-		                            ));
-	}
-
-	const Matrix4& rotation() const {
-		m_doom3Rotation = rotation_toMatrix(m_rotation);
-		return m_doom3Rotation;
-	}
-	const Vector3& offset() const {
-		return m_doom3Radius.m_center;
-	}
 	const Vector3& colour() const {
 		return m_colour.m_colour;
 	}
@@ -1066,140 +849,10 @@ public:
 		return m_useLightTarget && m_useLightUp && m_useLightRight;
 	}
 	void projectionChanged() {
-		m_doom3ProjectionChanged = true;
-		m_doom3Radius.m_changed();
 		SceneChangeNotify();
 	}
-
-	const Matrix4& projection() const {
-		if (!m_doom3ProjectionChanged) {
-			return m_doom3Projection;
-		}
-		m_doom3ProjectionChanged = false;
-		m_doom3Projection = g_matrix4_identity;
-		matrix4_translate_by_vec3(m_doom3Projection, Vector3(0.5f, 0.5f, 0));
-		matrix4_scale_by_vec3(m_doom3Projection, Vector3(0.5f, 0.5f, 1));
-
-#if 0
-		Vector3 right = vector3_cross(m_lightUp, vector3_normalised(m_lightTarget));
-		Vector3 up = vector3_cross(vector3_normalised(m_lightTarget), m_lightRight);
-		Vector3 target = m_lightTarget;
-		Matrix4 test(
-		    -right.x(), -right.y(), -right.z(), 0,
-		    -up.x(), -up.y(), -up.z(), 0,
-		    -target.x(), -target.y(), -target.z(), 0,
-		    0, 0, 0, 1
-		);
-		Matrix4 frustum = matrix4_frustum(-0.01, 0.01, -0.01, 0.01, 0.01, 1.0);
-		test = matrix4_full_inverse(test);
-		matrix4_premultiply_by_matrix4(test, frustum);
-		matrix4_multiply_by_matrix4(m_doom3Projection, test);
-#elif 0
-		const float nearFar = 1 / 49.5f;
-		Vector3 right = vector3_cross(m_lightUp, vector3_normalised(m_lightTarget + m_lightRight));
-		Vector3 up = vector3_cross(vector3_normalised(m_lightTarget + m_lightUp), m_lightRight);
-		Vector3 target = vector3_negated(m_lightTarget * (1 + nearFar));
-		float scale = -1 / vector3_length(m_lightTarget);
-		Matrix4 test(
-		    -inverse(right.x()), -inverse(up.x()), -inverse(target.x()), 0,
-		    -inverse(right.y()), -inverse(up.y()), -inverse(target.y()), 0,
-		    -inverse(right.z()), -inverse(up.z()), -inverse(target.z()), scale,
-		    0, 0, -nearFar, 0
-		);
-		matrix4_multiply_by_matrix4(m_doom3Projection, test);
-#elif 0
-		Vector3 leftA(m_lightTarget - m_lightRight);
-		Vector3 leftB(m_lightRight + m_lightUp);
-		Plane3 left(vector3_normalised(vector3_cross(leftA, leftB)) * (1.0 / 128), 0);
-		Vector3 rightA(m_lightTarget + m_lightRight);
-		Vector3 rightB(vector3_cross(rightA, m_lightTarget));
-		Plane3 right(vector3_normalised(vector3_cross(rightA, rightB)) * (1.0 / 128), 0);
-		Vector3 bottomA(m_lightTarget - m_lightUp);
-		Vector3 bottomB(vector3_cross(bottomA, m_lightTarget));
-		Plane3 bottom(vector3_normalised(vector3_cross(bottomA, bottomB)) * (1.0 / 128), 0);
-		Vector3 topA(m_lightTarget + m_lightUp);
-		Vector3 topB(vector3_cross(topA, m_lightTarget));
-		Plane3 top(vector3_normalised(vector3_cross(topA, topB)) * (1.0 / 128), 0);
-		Plane3 front(vector3_normalised(m_lightTarget) * (1.0 / 128), 1);
-		Plane3 back(vector3_normalised(vector3_negated(m_lightTarget)) * (1.0 / 128), 0);
-		Matrix4 test(matrix4_from_planes(plane3_flipped(left), plane3_flipped(right), plane3_flipped(bottom), plane3_flipped(top), plane3_flipped(front), plane3_flipped(back)));
-		matrix4_multiply_by_matrix4(m_doom3Projection, test);
-#else
-
-		Plane3 lightProject[4];
-
-		Vector3 start = m_useLightStart && m_useLightEnd ? m_lightStart : vector3_normalised(m_lightTarget);
-		Vector3 stop = m_useLightStart && m_useLightEnd ? m_lightEnd : m_lightTarget;
-
-		float rLen = vector3_length(m_lightRight);
-		Vector3 right = vector3_divided(m_lightRight, rLen);
-		float uLen = vector3_length(m_lightUp);
-		Vector3 up = vector3_divided(m_lightUp, uLen);
-		Vector3 normal = vector3_normalised(vector3_cross(up, right));
-
-		float dist = vector3_dot(m_lightTarget, normal);
-		if ( dist < 0 ) {
-			dist = -dist;
-			normal = vector3_negated(normal);
-		}
-
-		right *= ( 0.5f * dist ) / rLen;
-		up *= -( 0.5f * dist ) / uLen;
-
-		lightProject[2] = Plane3(normal, 0);
-		lightProject[0] = Plane3(right, 0);
-		lightProject[1] = Plane3(up, 0);
-
-		// now offset to center
-		Vector4 targetGlobal(m_lightTarget, 1);
-		{
-			float a = vector4_dot(targetGlobal, plane3_to_vector4(lightProject[0]));
-			float b = vector4_dot(targetGlobal, plane3_to_vector4(lightProject[2]));
-			float ofs = 0.5f - a / b;
-			plane3_to_vector4(lightProject[0]) += plane3_to_vector4(lightProject[2]) * ofs;
-		}
-		{
-			float a = vector4_dot(targetGlobal, plane3_to_vector4(lightProject[1]));
-			float b = vector4_dot(targetGlobal, plane3_to_vector4(lightProject[2]));
-			float ofs = 0.5f - a / b;
-			plane3_to_vector4(lightProject[1]) += plane3_to_vector4(lightProject[2]) * ofs;
-		}
-
-		// set the falloff vector
-		Vector3 falloff = stop - start;
-		float length = vector3_length(falloff);
-		falloff = vector3_divided(falloff, length);
-		if ( length <= 0 ) {
-			length = 1;
-		}
-		falloff *= (1.0f / length);
-		lightProject[3] = Plane3(falloff, -vector3_dot(start, falloff));
-
-		// we want the planes of s=0, s=q, t=0, and t=q
-		m_doom3Frustum.left = lightProject[0];
-		m_doom3Frustum.bottom = lightProject[1];
-		m_doom3Frustum.right = Plane3(lightProject[2].normal() - lightProject[0].normal(), lightProject[2].dist() - lightProject[0].dist());
-		m_doom3Frustum.top = Plane3(lightProject[2].normal() - lightProject[1].normal(), lightProject[2].dist() - lightProject[1].dist());
-
-		// we want the planes of s=0 and s=1 for front and rear clipping planes
-		m_doom3Frustum.front = lightProject[3];
-
-		m_doom3Frustum.back = lightProject[3];
-		m_doom3Frustum.back.dist() -= 1.0f;
-		m_doom3Frustum.back = plane3_flipped(m_doom3Frustum.back);
-
-		Matrix4 test(matrix4_from_planes(m_doom3Frustum.left, m_doom3Frustum.right, m_doom3Frustum.bottom, m_doom3Frustum.top, m_doom3Frustum.front, m_doom3Frustum.back));
-		matrix4_multiply_by_matrix4(m_doom3Projection, test);
-
-		m_doom3Frustum.left = plane3_normalised(m_doom3Frustum.left);
-		m_doom3Frustum.right = plane3_normalised(m_doom3Frustum.right);
-		m_doom3Frustum.bottom = plane3_normalised(m_doom3Frustum.bottom);
-		m_doom3Frustum.top = plane3_normalised(m_doom3Frustum.top);
-		m_doom3Frustum.back = plane3_normalised(m_doom3Frustum.back);
-		m_doom3Frustum.front = plane3_normalised(m_doom3Frustum.front);
-#endif
-		//matrix4_scale_by_vec3(m_doom3Projection, Vector3(1.0 / 128, 1.0 / 128, 1.0 / 128));
-		return m_doom3Projection;
+	const AABB& aabb() const {
+		return m_aabb_light;
 	}
 
 	Shader* getShader() const {
@@ -1212,21 +865,16 @@ class LightInstance :
 			public TransformModifier,
 			public Renderable,
 			public SelectionTestable,
-			public RendererLight,
-			public PlaneSelectable,
-			public ComponentSelectionTestable {
+			public RendererLight {
 	class TypeCasts {
 		InstanceTypeCastTable m_casts;
 	public:
 		TypeCasts() {
 			m_casts = TargetableInstance::StaticTypeCasts::instance().get();
 			InstanceContainedCast<LightInstance, Bounded>::install(m_casts);
-			//InstanceContainedCast<LightInstance, Cullable>::install(m_casts);
 			InstanceStaticCast<LightInstance, Renderable>::install(m_casts);
 			InstanceStaticCast<LightInstance, SelectionTestable>::install(m_casts);
 			InstanceStaticCast<LightInstance, Transformable>::install(m_casts);
-			InstanceStaticCast<LightInstance, PlaneSelectable>::install(m_casts);
-			InstanceStaticCast<LightInstance, ComponentSelectionTestable>::install(m_casts);
 			InstanceIdentityCast<LightInstance>::install(m_casts);
 		}
 		InstanceTypeCastTable& get() {
@@ -1235,7 +883,6 @@ class LightInstance :
 	};
 
 	Light& m_contained;
-	DragPlanes m_dragPlanes;// dragplanes for lightresizing using mousedrag
 public:
 	typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
@@ -1248,8 +895,7 @@ public:
 	LightInstance(const scene::Path& path, scene::Instance* parent, Light& contained) :
 			TargetableInstance(path, parent, this, StaticTypeCasts::instance().get(), contained.getEntity(), *this),
 			TransformModifier(Light::TransformChangedCaller(contained), ApplyTransformCaller(*this)),
-			m_contained(contained),
-			m_dragPlanes(SelectedChangedComponentCaller(*this)) {
+			m_contained(contained) {
 		m_contained.instanceAttach(Instance::path());
 
 		StaticRenderableConnectionLines::instance().attach(*this);
@@ -1269,41 +915,13 @@ public:
 		m_contained.testSelect(selector, test, Instance::localToWorld());
 	}
 
-	void selectPlanes(Selector& selector, SelectionTest& test, const PlaneCallback& selectedPlaneCallback) {
-		test.BeginMesh(localToWorld());
-		m_dragPlanes.selectPlanes(m_contained.aabb(), selector, test, selectedPlaneCallback, rotation());
+	void testSelect(Selector& selector, SelectionTest& test, const Matrix4& localToWorld) {
+		m_contained.testSelect(selector, test, localToWorld);
 	}
-	void selectReversedPlanes(Selector& selector, const SelectedPlanes& selectedPlanes) {
-		m_dragPlanes.selectReversedPlanes(m_contained.aabb(), selector, selectedPlanes, rotation());
-	}
-
-	bool isSelectedComponents() const {
-		return m_dragPlanes.isSelected();
-	}
-	void setSelectedComponents(bool select, SelectionSystem::EComponentMode mode) {
-		if (mode == SelectionSystem::eFace) {
-			m_dragPlanes.setSelected(false);
-		}
-	}
-	void testSelectComponents(Selector& selector, SelectionTest& test, SelectionSystem::EComponentMode mode) {
-	}
-
-	void selectedChangedComponent(const Selectable& selectable) {
-		GlobalSelectionSystem().getObserver(SelectionSystem::eComponent)(selectable);
-		GlobalSelectionSystem().onComponentSelection(*this, selectable);
-	}
-	typedef MemberCaller1<LightInstance, const Selectable&, &LightInstance::selectedChangedComponent> SelectedChangedComponentCaller;
 
 	void evaluateTransform() {
-		if (getType() == TRANSFORM_PRIMITIVE) {
-			m_contained.translate(getTranslation());
-			m_contained.rotate(getRotation());
-		} else {
-			//globalOutputStream() << getTranslation() << "\n";
-
-			m_dragPlanes.m_bounds = m_contained.aabb();
-			m_contained.setLightRadius(m_dragPlanes.evaluateResize(getTranslation(), rotation()));
-		}
+		m_contained.translate(getTranslation());
+		m_contained.rotate(getRotation());
 	}
 	void applyTransform() {
 		m_contained.revertTransform();
@@ -1320,27 +938,12 @@ public:
 	Shader* getShader() const {
 		return m_contained.getShader();
 	}
-	const AABB& aabb() const {
-		return m_contained.aabb();
-	}
-	bool testAABB(const AABB& other) const {
-		return m_contained.testAABB(other);
-	}
-	const Matrix4& rotation() const {
-		return m_contained.rotation();
-	}
-	const Vector3& offset() const {
-		return m_contained.offset();
-	}
 	const Vector3& colour() const {
 		return m_contained.colour();
 	}
 
 	bool isProjected() const {
 		return m_contained.isProjected();
-	}
-	const Matrix4& projection() const {
-		return m_contained.projection();
 	}
 };
 
@@ -1419,9 +1022,6 @@ public:
 		destroy();
 	}
 
-	void release() {
-		delete this;
-	}
 	scene::Node& node() {
 		return m_node;
 	}
@@ -1453,11 +1053,9 @@ public:
 
 void Light_Construct() {
 	RenderLightRadiiFill::m_state = GlobalShaderCache().capture("$Q3MAP2_LIGHT_SPHERE");
-	RenderLightCenter::m_state = GlobalShaderCache().capture("$BIGPOINT");
 }
 void Light_Destroy() {
 	GlobalShaderCache().release("$Q3MAP2_LIGHT_SPHERE");
-	GlobalShaderCache().release("$BIGPOINT");
 }
 
 scene::Node& New_Light(EntityClass* eclass) {

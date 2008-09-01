@@ -45,16 +45,16 @@ void R_DrawInitLocal (void)
 	int i;
 
 	shadow = R_FindImage("pics/sfx/shadow", it_effect);
-	if (shadow == r_notexture)
+	if (shadow == r_noTexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	for (i = 0; i < MAX_DEATH; i++) {
 		blood[i] = R_FindImage(va("pics/sfx/blood_%i", i), it_effect);
-		if (blood[i] == r_notexture)
+		if (blood[i] == r_noTexture)
 			Com_Printf("Could not find blood_%i image in game pics/sfx directory!\n", i);
 	}
 
 	draw_chars = R_FindImage("pics/conchars", it_chars);
-	if (draw_chars == r_notexture)
+	if (draw_chars == r_noTexture)
 		Sys_Error("Could not find conchars image in game pics directory!\n");
 }
 
@@ -121,10 +121,10 @@ void R_DrawChars (void)
 	R_EnableBlend(qtrue);
 
 	/* alter the array pointers */
-	qglVertexPointer(2, GL_SHORT, 0, char_verts);
-	qglTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
+	glVertexPointer(2, GL_SHORT, 0, char_verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
 
-	qglDrawArrays(GL_QUADS, 0, char_index / 2);
+	glDrawArrays(GL_QUADS, 0, char_index / 2);
 
 	char_index = 0;
 
@@ -148,23 +148,21 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	image_t *img;
 
 	img = R_FindImage(name, it_pic);
-	if (img == r_notexture)
+	if (img == r_noTexture)
 		Sys_Error("Could not find the searched image: %s\n", name);
 
 	R_BindTexture(img->texnum);
 
 	if (img->width == width && img->height == height) {
-		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
 	} else {
 		/* Reallocate the texture */
 		img->width = width;
 		img->height = height;
-		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
 	}
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 
 	return img->texnum;
@@ -192,7 +190,7 @@ image_t *R_RegisterPic (const char *name)
 		Q_strncpyz(fullname, name, MAX_QPATH);
 
 	gl = R_FindImage(fullname, it_pic);
-	if (gl == r_notexture)
+	if (gl == r_noTexture)
 		return NULL;
 	return gl;
 }
@@ -229,16 +227,16 @@ void R_DrawGetPicSize (int *w, int *h, const char *pic)
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
 	R_BindTexture(texnum);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(0, 0);
-	qglVertex2f(x, y);
-	qglTexCoord2f(1, 0);
-	qglVertex2f(x + w, y);
-	qglTexCoord2f(1, 1);
-	qglVertex2f(x + w, y + h);
-	qglTexCoord2f(0, 1);
-	qglVertex2f(x, y + h);
-	qglEnd();
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex2f(x, y);
+	glTexCoord2f(1, 0);
+	glVertex2f(x + w, y);
+	glTexCoord2f(1, 1);
+	glVertex2f(x + w, y + h);
+	glTexCoord2f(0, 1);
+	glVertex2f(x, y + h);
+	glEnd();
 }
 
 /**
@@ -348,16 +346,16 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 		R_EnableBlend(qtrue);
 
 	R_BindTexture(gl->texnum);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(sl, tl);
-	qglVertex2f(x1, y1);
-	qglTexCoord2f(sh, tl);
-	qglVertex2f(x2, y2);
-	qglTexCoord2f(sh, th);
-	qglVertex2f(x3, y3);
-	qglTexCoord2f(sl, th);
-	qglVertex2f(x4, y4);
-	qglEnd();
+	glBegin(GL_QUADS);
+	glTexCoord2f(sl, tl);
+	glVertex2f(x1, y1);
+	glTexCoord2f(sh, tl);
+	glVertex2f(x2, y2);
+	glTexCoord2f(sh, th);
+	glVertex2f(x3, y3);
+	glTexCoord2f(sl, th);
+	glVertex2f(x4, y4);
+	glEnd();
 
 	if (blend)
 		R_EnableBlend(qfalse);
@@ -379,42 +377,41 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 
 	R_ColorBlend(color);
 
-	qglDisable(GL_TEXTURE_2D);
-	qglBegin(GL_QUADS);
+	glDisable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
 
 	switch (align) {
 	case ALIGN_CL:
-		qglVertex2f(nx, ny);
-		qglVertex2f(nx + nh, ny);
-		qglVertex2f(nx + nh, ny - nw);
-		qglVertex2f(nx, ny - nw);
+		glVertex2f(nx, ny);
+		glVertex2f(nx + nh, ny);
+		glVertex2f(nx + nh, ny - nw);
+		glVertex2f(nx, ny - nw);
 		break;
 	case ALIGN_CC:
-		qglVertex2f(nx, ny);
-		qglVertex2f(nx + nh, ny - nh);
-		qglVertex2f(nx + nh, ny - nw - nh);
-		qglVertex2f(nx, ny - nw);
+		glVertex2f(nx, ny);
+		glVertex2f(nx + nh, ny - nh);
+		glVertex2f(nx + nh, ny - nw - nh);
+		glVertex2f(nx, ny - nw);
 		break;
 	case ALIGN_UC:
-		qglVertex2f(nx, ny);
-		qglVertex2f(nx + nw, ny);
-		qglVertex2f(nx + nw - nh, ny + nh);
-		qglVertex2f(nx - nh, ny + nh);
+		glVertex2f(nx, ny);
+		glVertex2f(nx + nw, ny);
+		glVertex2f(nx + nw - nh, ny + nh);
+		glVertex2f(nx - nh, ny + nh);
 		break;
 	default:
-		qglVertex2f(nx, ny);
-		qglVertex2f(nx + nw, ny);
-		qglVertex2f(nx + nw, ny + nh);
-		qglVertex2f(nx, ny + nh);
+		glVertex2f(nx, ny);
+		glVertex2f(nx + nw, ny);
+		glVertex2f(nx + nw, ny + nh);
+		glVertex2f(nx, ny + nh);
 		break;
 	}
 
-	qglEnd();
+	glEnd();
 	R_ColorBlend(NULL);
-	qglEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 }
 
-static float lastQ;
 /**
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
@@ -432,134 +429,113 @@ static float lastQ;
  */
 void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
+	static float lastQ = 0.0f;
 	image_t *gl;
-	float nx, ny, nw, nh;
+	float geoscape_texcoords[4 * 2];
+	short geoscape_verts[4 * 2];
 
 	/* normalize */
-	nx = x * viddef.rx;
-	ny = y * viddef.ry;
-	nw = w * viddef.rx;
-	nh = h * viddef.ry;
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
 
 	/* load day image */
 	gl = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
-	if (gl == r_notexture)
+	if (gl == r_noTexture)
 		Sys_Error("Could not load geoscape day image");
+
+	/* alter the array pointers */
+	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, geoscape_texcoords);
+
+	geoscape_texcoords[0] = cx - iz;
+	geoscape_texcoords[1] = cy - iz;
+	geoscape_texcoords[2] = cx + iz;
+	geoscape_texcoords[3] = cy - iz;
+	geoscape_texcoords[4] = cx + iz;
+	geoscape_texcoords[5] = cy + iz;
+	geoscape_texcoords[6] = cx - iz;
+	geoscape_texcoords[7] = cy + iz;
+
+	geoscape_verts[0] = nx;
+	geoscape_verts[1] = ny;
+	geoscape_verts[2] = nx + nw;
+	geoscape_verts[3] = ny;
+	geoscape_verts[4] = nx + nw;
+	geoscape_verts[5] = ny + nh;
+	geoscape_verts[6] = nx;
+	geoscape_verts[7] = ny + nh;
 
 	/* draw day image */
 	R_BindTexture(gl->texnum);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(cx - iz, cy - iz);
-	qglVertex2f(nx, ny);
-	qglTexCoord2f(cx + iz, cy - iz);
-	qglVertex2f(nx + nw, ny);
-	qglTexCoord2f(cx + iz, cy + iz);
-	qglVertex2f(nx + nw, ny + nh);
-	qglTexCoord2f(cx - iz, cy + iz);
-	qglVertex2f(nx, ny + nh);
-	qglEnd();
+	glDrawArrays(GL_QUADS, 0, 4);
+
+	R_EnableBlend(qtrue);
+
+	/* draw night map */
+	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
+	/* maybe the campaign map doesn't have a night image */
+	if (gl != r_noTexture) {
+		float geoscape_nighttexcoords[4 * 2];
+
+		R_BindTexture(gl->texnum);
+		R_EnableMultitexture(&texunit_lightmap, qtrue);
+
+		geoscape_nighttexcoords[0] = geoscape_texcoords[0] + p;
+		geoscape_nighttexcoords[1] = geoscape_texcoords[1];
+		geoscape_nighttexcoords[2] = geoscape_texcoords[2] + p;
+		geoscape_nighttexcoords[3] = geoscape_texcoords[3];
+		geoscape_nighttexcoords[4] = geoscape_texcoords[4] + p;
+		geoscape_nighttexcoords[5] = geoscape_texcoords[5];
+		geoscape_nighttexcoords[6] = geoscape_texcoords[6] + p;
+		geoscape_nighttexcoords[7] = geoscape_texcoords[7];
+
+		R_SelectTexture(&texunit_lightmap);
+
+		glTexCoordPointer(2, GL_FLOAT, 0, geoscape_nighttexcoords);
+
+		R_BindTexture(r_dayandnightTexture->texnum);
+		if (lastQ != q) {
+			R_CalcAndUploadDayAndNightTexture(q);
+			lastQ = q;
+		}
+
+		R_SelectTexture(&texunit_diffuse);
+
+		glDrawArrays(GL_QUADS, 0, 4);
+
+		R_EnableMultitexture(&texunit_lightmap, qfalse);
+	}
+
+	/* draw XVI image */
+	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
+		R_BindTexture(r_xviTexture->texnum);
+		glDrawArrays(GL_QUADS, 0, 4);
+	}
+
+	/* draw radar image */
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
+		R_BindTexture(r_radarTexture->texnum);
+		glDrawArrays(GL_QUADS, 0, 4);
+	}
 
 	/* draw nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
-		if (gl == r_notexture)
+		if (gl == r_noTexture)
 			Sys_Error("Could not load geoscape nation overlay image");
 
-		R_EnableBlend(qtrue);
 		/* draw day image */
 		R_BindTexture(gl->texnum);
-		qglBegin(GL_QUADS);
-		qglTexCoord2f(cx - iz, cy - iz);
-		qglVertex2f(nx, ny);
-		qglTexCoord2f(cx + iz, cy - iz);
-		qglVertex2f(nx + nw, ny);
-		qglTexCoord2f(cx + iz, cy + iz);
-		qglVertex2f(nx + nw, ny + nh);
-		qglTexCoord2f(cx - iz, cy + iz);
-		qglVertex2f(nx, ny + nh);
-		qglEnd();
-		R_EnableBlend(qfalse);
+		glDrawArrays(GL_QUADS, 0, 4);
 	}
-	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
-		assert(r_xviTexture);
-
-		R_EnableBlend(qtrue);
-		/* draw XVI image */
-		R_BindTexture(r_xviTexture->texnum);
-		qglBegin(GL_QUADS);
-		qglTexCoord2f(cx - iz, cy - iz);
-		qglVertex2f(nx, ny);
-		qglTexCoord2f(cx + iz, cy - iz);
-		qglVertex2f(nx + nw, ny);
-		qglTexCoord2f(cx + iz, cy + iz);
-		qglVertex2f(nx + nw, ny + nh);
-		qglTexCoord2f(cx - iz, cy + iz);
-		qglVertex2f(nx, ny + nh);
-		qglEnd();
-		R_EnableBlend(qfalse);
-	}
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
-		assert(r_radarTexture);
-
-		R_EnableBlend(qtrue);
-		/* draw radar image */
-		R_BindTexture(r_radarTexture->texnum);
-		qglBegin(GL_QUADS);
-		qglTexCoord2f(cx - iz, cy - iz);
-		qglVertex2f(nx, ny);
-		qglTexCoord2f(cx + iz, cy - iz);
-		qglVertex2f(nx + nw, ny);
-		qglTexCoord2f(cx + iz, cy + iz);
-		qglVertex2f(nx + nw, ny + nh);
-		qglTexCoord2f(cx - iz, cy + iz);
-		qglVertex2f(nx, ny + nh);
-		qglEnd();
-		R_EnableBlend(qfalse);
-	}
-
-	gl = R_FindImage(va("pics/geoscape/%s_night", map), it_wrappic);
-	/* maybe the campaign map doesn't have a night image */
-	if (gl == r_notexture)
-		return;
-
-	/* init combiner */
-	R_EnableBlend(qtrue);
-
-	R_SelectTexture(&texunit_diffuse);
-	R_BindTexture(gl->texnum);
-
-	R_SelectTexture(&texunit_lightmap);
-	if (!r_dayandnighttexture || lastQ != q) {
-		R_CalcDayAndNight(q);
-		lastQ = q;
-	}
-
-	assert(r_dayandnighttexture);
-
-	R_BindTexture(r_dayandnighttexture->texnum);
-	qglEnable(GL_TEXTURE_2D);
-
-	/* draw night image */
-	qglBegin(GL_QUADS);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy - iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy - iz);
-	qglVertex2f(nx, ny);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy - iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy - iz);
-	qglVertex2f(nx + nw, ny);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy + iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy + iz);
-	qglVertex2f(nx + nw, ny + nh);
-	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy + iz);
-	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy + iz);
-	qglVertex2f(nx, ny + nh);
-	qglEnd();
-
-	/* reset mode */
-	qglDisable(GL_TEXTURE_2D);
-	R_SelectTexture(&texunit_diffuse);
 
 	R_EnableBlend(qfalse);
+
+	/* and restore them */
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 }
 
 /**
@@ -575,8 +551,8 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	float theta;
 	const float accuracy = 5.0f;
 
-	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_LINE_SMOOTH);
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
 	R_EnableBlend(qtrue);
 
 	R_Color(color);
@@ -588,35 +564,35 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	thickness *= viddef.rx;
 
 	/* store the matrix - we are using glTranslate */
-	qglPushMatrix();
+	glPushMatrix();
 
 	/* translate the position */
-	qglTranslated(mid[0], mid[1], mid[2]);
+	glTranslated(mid[0], mid[1], mid[2]);
 
 	if (thickness <= 1) {
-		qglBegin(GL_LINE_STRIP);
+		glBegin(GL_LINE_STRIP);
 		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
-			qglVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
+			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
 		}
-		qglEnd();
+		glEnd();
 	} else {
-		qglBegin(GL_TRIANGLE_STRIP);
+		glBegin(GL_TRIANGLE_STRIP);
 		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
-			qglVertex3f(radius * cos(theta), radius * sin(theta), 0);
-			qglVertex3f(radius * cos(theta - M_PI / (radius * accuracy)), radius * sin(theta - M_PI / (radius * accuracy)), 0);
-			qglVertex3f((radius - thickness) * cos(theta - M_PI / (radius * accuracy)), (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), 0);
-			qglVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0);
+			glVertex3f(radius * cos(theta), radius * sin(theta), 0);
+			glVertex3f(radius * cos(theta - M_PI / (radius * accuracy)), radius * sin(theta - M_PI / (radius * accuracy)), 0);
+			glVertex3f((radius - thickness) * cos(theta - M_PI / (radius * accuracy)), (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), 0);
+			glVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0);
 		}
-		qglEnd();
+		glEnd();
 	}
 
-	qglPopMatrix();
+	glPopMatrix();
 
 	R_Color(NULL);
 
 	R_EnableBlend(qfalse);
-	qglDisable(GL_LINE_SMOOTH);
-	qglEnable(GL_TEXTURE_2D);
+	glDisable(GL_LINE_SMOOTH);
+	glEnable(GL_TEXTURE_2D);
 }
 
 #define CIRCLE_LINE_COUNT	40
@@ -636,41 +612,41 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 {
 	int i;
 
-	qglPushAttrib(GL_ALL_ATTRIB_BITS);
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-	qglDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 	R_EnableBlend(qtrue);
 	R_Color(color);
 
 	if (thickness > 0.0)
-		qglLineWidth(thickness);
+		glLineWidth(thickness);
 
 	if (fill)
-		qglBegin(GL_TRIANGLE_STRIP);
+		glBegin(GL_TRIANGLE_STRIP);
 	else
-		qglBegin(GL_LINE_LOOP);
+		glBegin(GL_LINE_LOOP);
 
 	/* Create a vertex at the exact position specified by the start angle. */
-	qglVertex2f(x + radius, y);
+	glVertex2f(x + radius, y);
 
 	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
 		const float angle = (i * 2 * M_PI) / CIRCLE_LINE_COUNT;
-		qglVertex2f(x + radius * cos(angle), y - radius * sin(angle));
+		glVertex2f(x + radius * cos(angle), y - radius * sin(angle));
 
 		/* When filling we're drawing triangles so we need to
 		 * create a vertex in the middle of the vertex to fill
 		 * the entire pie slice/circle. */
 		if (fill)
-			qglVertex2f(x, y);
+			glVertex2f(x, y);
 	}
 
-	qglVertex2f(x + radius * cos(2 * M_PI), y - radius * sin(2 * M_PI));
-	qglEnd();
-	qglEnable(GL_TEXTURE_2D);
+	glVertex2f(x + radius * cos(2 * M_PI), y - radius * sin(2 * M_PI));
+	glEnd();
+	glEnable(GL_TEXTURE_2D);
 	R_EnableBlend(qfalse);
 	R_Color(NULL);
 
-	qglPopAttrib();
+	glPopAttrib();
 }
 
 #define MAX_LINEVERTS 256
@@ -684,17 +660,17 @@ static void inline R_Draw2DArray (int points, int *verts, GLenum mode)
 		points = MAX_LINEVERTS * 2;
 
 	/* set vertex array pointer */
-	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
+	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
 	for (i = 0; i < points * 2; i += 2) {
 		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
 		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
-	qglDisable(GL_TEXTURE_2D);
-	qglDrawArrays(mode, 0, points);
-	qglEnable(GL_TEXTURE_2D);
-	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
+	glDisable(GL_TEXTURE_2D);
+	glDrawArrays(mode, 0, points);
+	glEnable(GL_TEXTURE_2D);
+	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 }
 
 /**
@@ -724,12 +700,12 @@ void R_DrawLineLoop (int points, int *verts)
 void R_DrawLine (int *verts, float thickness)
 {
 	if (thickness > 0.0)
-		qglLineWidth(thickness);
+		glLineWidth(thickness);
 
 	R_Draw2DArray(2, verts, GL_LINES);
 
 	if (thickness > 0.0)
-		qglLineWidth(1.0);
+		glLineWidth(1.0);
 }
 
 /**
@@ -821,19 +797,19 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	centery = ny + nh / 2;
 
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
-	if (starfield != r_notexture  && !disableSolarRender) {
+	if (starfield != r_noTexture  && !disableSolarRender) {
 		/* TODO: this should be a box that is rotated, too */
 		R_DrawTexture(starfield->texnum, nx, ny, nw, nh);
 	}
 
 	background = R_FindImage("pics/geoscape/map_background", it_pic);
-	if (background != r_notexture) {
+	if (background != r_noTexture) {
 		const float bgZoom = zoom;
 		/* Force height to make sure the image is a circle (and not an ellipse) */
 		const int halfHeight = 768.0f * viddef.ry;
-		qglEnable(GL_BLEND);
+		glEnable(GL_BLEND);
 		R_DrawTexture(background->texnum,  centerx - nw / 2 * bgZoom, centery - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
-		qglDisable(GL_BLEND);
+		glDisable(GL_BLEND);
 	}
 
 	/* add the light */
@@ -853,16 +829,16 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	/* load sun image */
 	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
-	if (sun != r_notexture && (v[2] < 0) && !disableSolarRender) {
+	if (sun != r_noTexture && v[2] < 0 && !disableSolarRender) {
 		const float sunZoom = 1000.0f;
-		qglEnable(GL_BLEND);
+		glEnable(GL_BLEND);
 		R_DrawTexture(sun->texnum, centerx - 64 * viddef.rx + sunZoom * v[1] * viddef.rx , centery - 64 * viddef.ry + sunZoom * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
-		qglDisable(GL_BLEND);
+		glDisable(GL_BLEND);
 	}
 
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
-	if (r_globeEarth.texture == r_notexture) {
+	if (r_globeEarth.texture == r_noTexture) {
 		Com_Printf("Could not find pics/geoscape/%s_day\n", map);
 		return;
 	}
@@ -871,11 +847,11 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	r_globeMoon.texture = R_FindImage(va("pics/geoscape/%s_moon", map), it_wrappic);
 
 	/* globe texture scaling */
-	qglMatrixMode(GL_TEXTURE);
-	qglLoadIdentity();
+	glMatrixMode(GL_TEXTURE);
+	glLoadIdentity();
 	/* scale the textures */
-	qglScalef(2, 1, 1);
-	qglMatrixMode(GL_MODELVIEW);
+	glScalef(2, 1, 1);
+	glMatrixMode(GL_MODELVIEW);
 
 	/* center earth */
 	VectorSet(earthPos, centerx, centery, 0);
@@ -893,20 +869,20 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	VectorSet(moonPos, centerx + moonDist * v[1], centery + moonDist * v[0], -moonDist * v[2]);
 
 	/* enable the lighting */
-	qglEnable(GL_LIGHTING);
-	qglEnable(GL_LIGHT0);
-	qglLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
-	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 
 	/* Enable depth (to draw the moon behind the earth if needed) */
-	qglEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* load nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
-		if (r_globeEarth.overlay == r_notexture)
+		if (r_globeEarth.overlay == r_noTexture)
 			Sys_Error("Could not load geoscape nation overlay image");
 		R_EnableBlend(qtrue);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
@@ -931,17 +907,17 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	}
 
 	/* draw the moon */
-	if (r_globeMoon.texture != r_notexture && moonPos[2] > 0 && !disableSolarRender)
+	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
 		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
 
 	/* Disable depth */
-	qglDisable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
 
 	/* disable 3d geoscape lighting */
-	qglDisable(GL_LIGHTING);
+	glDisable(GL_LIGHTING);
 
 	/* restore the previous matrix */
-	qglMatrixMode(GL_TEXTURE);
-	qglLoadIdentity();
-	qglMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_TEXTURE);
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
 }

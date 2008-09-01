@@ -71,7 +71,8 @@ static const value_t nps[] = {
 	{"center", V_VECTOR, offsetof(menuNode_t, center), MEMBER_SIZEOF(menuNode_t, center)},
 	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
 	{"angles", V_VECTOR, offsetof(menuNode_t, angles), MEMBER_SIZEOF(menuNode_t, angles)},
-	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
+	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
+	{"baseid", V_BASEID, offsetof(menuNode_t, baseid), MEMBER_SIZEOF(menuNode_t, baseid)},
 	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
 	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll), MEMBER_SIZEOF(menuNode_t, textScroll)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
@@ -375,7 +376,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		/* add new actions to end of list */
 		action = &node->click;
-		for (; *action; action = &(*action)->next);
+		for (; *action; action = &(*action)->next) {}
 
 		if (mn.numActions >= MAX_MENUACTIONS)
 			Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
@@ -460,7 +461,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 					/* add new actions to end of list */
 					action = (menuAction_t **) ((byte *) node + ne_values[i]);
-					for (; *action; action = &(*action)->next);
+					for (; *action; action = &(*action)->next) {}
 
 					if (mn.numActions >= MAX_MENUACTIONS)
 						Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
@@ -752,7 +753,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						}
 						break;
 					case MN_CONTAINER:
-						node->mousefx = C_UNDEFINED;
+						node->container = NULL;
 						break;
 					}
 

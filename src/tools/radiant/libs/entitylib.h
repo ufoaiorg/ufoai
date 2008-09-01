@@ -597,14 +597,11 @@ public:
 		return *this;
 	}
 	~ResourceReference() {
-		release();
+		GlobalReferenceCache().release(m_name.c_str());
 	}
 
 	void capture() {
 		m_resource = GlobalReferenceCache().capture(m_name.c_str());
-	}
-	void release() {
-		GlobalReferenceCache().release(m_name.c_str());
 	}
 
 	const char* getName() const {

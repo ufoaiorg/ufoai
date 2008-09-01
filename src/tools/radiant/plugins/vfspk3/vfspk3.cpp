@@ -41,36 +41,34 @@ public:
 	}
 };
 
-class FileSystemQ3API {
-	VirtualFileSystem* m_filesystemq3;
+class FileSystemAPI {
+	VirtualFileSystem* m_filesystem;
 public:
 	typedef VirtualFileSystem Type;
 	STRING_CONSTANT(Name, "*");
 
-	FileSystemQ3API() {
+	FileSystemAPI() {
 		FileSystem_Init();
-		m_filesystemq3 = &GetFileSystem();
+		m_filesystem = &GetFileSystem();
 	}
-	~FileSystemQ3API() {
+	~FileSystemAPI() {
 		FileSystem_Shutdown();
 	}
 	VirtualFileSystem* getTable() {
-		return m_filesystemq3;
+		return m_filesystem;
 	}
 };
 
-typedef SingletonModule<FileSystemQ3API, FileSystemDependencies> FileSystemQ3Module;
+typedef SingletonModule<FileSystemAPI, FileSystemDependencies> FileSystemModule;
 
-FileSystemQ3Module g_FileSystemQ3Module;
+FileSystemModule g_FileSystemModule;
 
-ArchiveModules& FileSystemQ3API_getArchiveModules() {
-	return g_FileSystemQ3Module.getDependencies().getArchiveModules();
+ArchiveModules& FileSystemAPI_getArchiveModules() {
+	return g_FileSystemModule.getDependencies().getArchiveModules();
 }
-
-
 
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
 	initialiseModule(server);
 
-	g_FileSystemQ3Module.selfRegister();
+	g_FileSystemModule.selfRegister();
 }

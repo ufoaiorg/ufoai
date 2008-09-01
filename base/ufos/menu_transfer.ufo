@@ -90,17 +90,17 @@ menu transfer
 
 	string s_baseinfo
 	{
-		pos	"290 50"
+		pos		"290 50"
 		align	uc
-		color "1 1 1 1"
+		color 	"1 1 1 1"
 		font	"f_normal"
 		string	"_Baseinfo"
 	}
 
 	text t_baseinfo
 	{
-		num	28
-		pos	"60 80"
+		num		TEXT_BASE_INFO
+		pos		"60 80"
 		size	"460 240"
 		format	"20 0"
 		height	"12"
@@ -109,17 +109,17 @@ menu transfer
 
 	string s_transferlist
 	{
-		pos	"290 340"
+		pos		"290 340"
 		align	uc
-		color "1 1 1 1"
+		color	"1 1 1 1"
 		font	"f_normal"
 		string	"_Transfer"
 	}
 
 	text trans_list
 	{
-		num 29
-		pos	"60 370"
+		num 	TEXT_TRANSFER_LIST
+		pos		"60 370"
 		size	"460 360"
 		mousefx	true
 		click
@@ -160,17 +160,17 @@ menu transfer
 
 	string s_trans_cargolist
 	{
-		pos	"790 130"
+		pos		"790 130"
 		align	uc
-		color "1 1 1 1"
+		color	"1 1 1 1"
 		font	"f_normal"
 		string	"_Cargo onboard"
 	}
 
 	text trans_cargolist
 	{
-		num	31
-		pos	"607 150"
+		num		TEXT_CARGO_LIST
+		pos		"607 150"
 		size	"400 400"
 		mousefx	true
 		click

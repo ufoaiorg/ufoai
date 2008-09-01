@@ -645,7 +645,7 @@ static qboolean CP_CheckMissionVisibleOnGeoscape (const mission_t *mission)
  */
 static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 {
-	if (!mission->onGeoscape)
+	if (!mission->onGeoscape && mission->category != INTERESTCATEGORY_BASE_ATTACK)
 		return;
 
 	mission->onGeoscape = qfalse;
@@ -766,7 +766,7 @@ static void CP_MissionRemove (mission_t *mission)
 /**
  * @brief Notify that a base has been removed.
  */
-void CP_MissionNotifyBaseDestroyed (base_t *base)
+void CP_MissionNotifyBaseDestroyed (const base_t *base)
 {
 	linkedList_t *list = ccs.missions;
 
@@ -1356,7 +1356,8 @@ static void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	cls.missionaircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	/* Restore some alien interest for base attacks that has been removed when mission has been created */
+	/* Restore some alien interest for base attacks that has been removed when
+	 * mission has been created */
 	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BASE_ATTACK);
 
 	/* reset selectedMission */
@@ -1395,20 +1396,8 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	/* we really don't want to use the fake aircraft anywhere */
 	cls.missionaircraft = NULL;
 
+	/* HACK This hack only needed until base will be really destroyed */
 	base->baseStatus = BASE_WORKING;
-	gd.mapAction = MA_NONE;
-	mission->data = NULL;
-
-	CP_MissionDisableTimeLimit(mission);
-	if (mission->ufo) {
-		CP_MissionDisableTimeLimit(mission);
-		UFO_SetRandomDest(mission->ufo);
-		/* Display UFO on geoscape if it is visible */
-		mission->ufo->notOnGeoscape = qfalse;
-	} else {
-		/* Go to next stage on next frame */
-		mission->finalDate = ccs.date;
-	}
 }
 
 /**
@@ -2604,17 +2593,19 @@ static void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	mission.finalDate = mission.startDate;
 	CP_SetMissionName(&mission);
 
-	/* Lower alien interest in base building if a base building mission is started to avoid several bases at the same time */
+	/* Lower alien interest in base building if a base building mission is
+	 * started to avoid several bases at the same time */
 	if (mission.category == INTERESTCATEGORY_BUILDING)
 		CP_BuildBaseMissionStart(&mission);
-	else if (mission.category == INTERESTCATEGORY_BUILDING)
+	else if (mission.category == INTERESTCATEGORY_BASE_ATTACK)
 		CP_BaseAttackMissionStart(&mission);
 
 	/* Add mission to global array */
 	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
 }
 
-static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;		/* Number of days between events are spawned */
+/** @brief Number of days between events are spawned */
+static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;
 
 /**
  * @brief Spawn new missions.
@@ -2623,7 +2614,6 @@ static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;		/* Number of days between 
  */
 static void CP_SpawnNewMissions (void)
 {
-
 	int i;
 
 	ccs.lastMissionSpawnedDelay++;
@@ -2660,11 +2650,12 @@ static void CP_StartXVISpreading_f (void)
 {
 	int i, numAlienBases;
 
+	/** @todo ccs.XVIShowMap should not be enabled at the same time than
+	 * ccs.XVISpreadActivated: ccs.XVIShowMap means that PHALANX has a map of
+	 * XVI, whereas ccs.XVISpreadActivated  means that aliens started
+	 * spreading XVI */
 	ccs.XVISpreadActivated = qtrue;
-	/** @todo mn_xvimap should not be enabled at the same time than ccs.XVISpreadActivated:
-	mn_xvimap means that PHALANX has a map of XVI, whereas ccs.XVISpreadActivated means that aliens started spreading XVI
-	 @todo mn_xvimap should probably be saved, and restored when a game is loaded */
-	Cvar_Set("mn_xvimap", "1");
+	ccs.XVIShowMap = qtrue;
 
 	/* Spawn a few alien bases depending on difficulty level */
 	if (difficulty->integer > 0)
@@ -3483,9 +3474,6 @@ static void CP_CheckEvents (void)
 		}
 	}
 
-	/* Check UFOs events. */
-	UFO_CampaignCheckEvents(qtrue);
-
 	/* Humans start to attacking player. */
 	if (ccs.overallInterest > 450) {
 		ccs.humansAttackActivated = qtrue;
@@ -4162,11 +4150,33 @@ static void CL_CampaignRunMarket (void)
  */
 void CL_CampaignRun (void)
 {
+	/** @todo detection interval could maybe be made scriptable */
+	const int detectioninterval = (SECONDS_PER_HOUR / 2);
+	const int currentinterval = (int)floor(ccs.date.sec) % detectioninterval;
+	int checks, dt, i;
+
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
+	checks = currentinterval + (int)floor(ccs.timer);
+	checks = (int)(checks / detectioninterval);
+	dt = detectioninterval - currentinterval;
+
+	/* Run UFOs and craft at least every detectioninterval. If detection occurred, break. */
+	for (i = 0; i < checks; i++) {
+		qboolean detection;
+		UFO_CampaignRunUFOs(dt);
+		CL_CampaignRunAircraft(dt);
+		detection = UFO_CampaignCheckEvents(qtrue);
+		if (detection) {
+			ccs.timer = (i + 1) * detectioninterval - currentinterval;
+			break;
+		}
+		dt = detectioninterval;
+	}
+
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
-		int dt, currenthour;
+		int currenthour;
 		dateLong_t date;
 
 		dt = (int)floor(ccs.timer);
@@ -4205,6 +4215,7 @@ void CL_CampaignRun (void)
 		/* check for campaign events */
 		CL_CampaignRunAircraft(dt);
 		UFO_CampaignRunUFOs(dt);
+		UFO_CampaignCheckEvents(qfalse);
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();
 		CP_CheckLostCondition(qtrue, NULL, 0);
@@ -4220,6 +4231,7 @@ void CL_CampaignRun (void)
 		} else if (date.day > 1)
 			gd.fund = qtrue;
 
+		Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 		UP_GetUnreadMails();
 		CL_UpdateTime();
 	}
@@ -4253,7 +4265,7 @@ static void CL_StatsUpdate_f (void)
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
 	int hired[MAX_EMPL];
-	int i = 0, j, costs = 0, sum = 0;
+	int i, j, costs = 0, sum = 0;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -4262,20 +4274,26 @@ static void CL_StatsUpdate_f (void)
 	pos = statsBuffer;
 
 	/* missions */
-	mn.menuText[TEXT_STATS_1] = pos;
+	mn.menuText[TEXT_STATS_MISSION] = pos;
 	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), campaignStats.missionsWon, campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_2] = pos;
+	mn.menuText[TEXT_STATS_BASES] = pos;
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		campaignStats.basesBuild, gd.numBases, campaignStats.basesAttacked),
 
-	/** @todo installation_t stats */
+	/* installations */
+	pos += (strlen(pos) + 1);
+	mn.menuText[TEXT_STATS_INSTALLATIONS] = pos;
+	for (i = 0; i < gd.numInstallations; i++) {
+		const installation_t *inst = &gd.installations[i];
+		Q_strcat(pos, va(_("%s\n"), inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	}
 
 	/* nations */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_3] = pos;
+	mn.menuText[TEXT_STATS_NATIONS] = pos;
 	for (i = 0; i < gd.numNations; i++) {
 		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), NAT_GetHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
@@ -4314,14 +4332,14 @@ static void CL_StatsUpdate_f (void)
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_4] = pos;
+	mn.menuText[TEXT_STATS_EMPLOYEES] = pos;
 	for (i = 0; i < MAX_EMPL; i++) {
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_5] = pos;
+	mn.menuText[TEXT_STATS_COSTS] = pos;
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -4355,7 +4373,7 @@ static void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	if (ccs.credits < 0) {
-		float interest = ccs.credits * SALARY_DEBT_INTEREST;
+		const float interest = ccs.credits * SALARY_DEBT_INTEREST;
 
 		costs = (int)ceil(interest);
 		Q_strcat(pos, va(_("Debt:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -4383,7 +4401,6 @@ static void CL_StatsUpdate_f (void)
  * @brief Load callback for campaign data
  * @sa CP_Save
  * @sa SAV_GameSave
- * @sa CP_SpawnBaseAttackMission
  * @sa CP_SpawnCrashSiteMission
  */
 qboolean CP_Load (sizebuf_t *sb, void *data)
@@ -4447,6 +4464,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.civiliansKilled = MSG_ReadShort(sb);
 	ccs.aliensKilled = MSG_ReadShort(sb);
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
+	ccs.XVIShowMap = MSG_ReadByte(sb);
 	ccs.humansAttackActivated = MSG_ReadByte(sb);
 
 	/* read missions */
@@ -4627,6 +4645,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteShort(sb, ccs.civiliansKilled);
 	MSG_WriteShort(sb, ccs.aliensKilled);
 	MSG_WriteByte(sb, ccs.XVISpreadActivated);
+	MSG_WriteByte(sb, ccs.XVIShowMap);
 	MSG_WriteByte(sb, ccs.humansAttackActivated);
 
 	/* store missions */
@@ -5003,7 +5022,7 @@ static void CP_AddItemAsCollected_f (void)
 
 	/* i = item index */
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *item = &csi.ods[i];
+		const objDef_t *item = &csi.ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			gd.bases[baseID].storage.num[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
@@ -5074,7 +5093,7 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
+void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
@@ -5104,15 +5123,12 @@ static void CL_GameAutoCheck_f (void)
 		return;
 	}
 
-	switch (selectedMission->mapDef->storyRelated) {
-	case qtrue:
+	if (selectedMission->mapDef->storyRelated) {
 		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
 		Cvar_Set("game_autogo", "0");
-		break;
-	default:
+	} else {
 		Com_DPrintf(DEBUG_CLIENT, "auto mission is enabled\n");
 		Cvar_Set("game_autogo", "1");
-		break;
 	}
 }
 
@@ -5419,7 +5435,7 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 
 	assert(aircraft);
 
-	/** @todo What about UGVs/Tanks? */
+	/* only soldiers have stats and ranks, ugvs not */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
 			character_t *chr = &gd.employees[EMPL_SOLDIER][i].chr;
@@ -5441,7 +5457,6 @@ static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft
 
 			/* Check if the soldier meets the requirements for a higher rank
 			 * and do a promotion. */
-			/** @todo use param[in] in some way. */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = &gd.ranks[j];
@@ -5674,7 +5689,7 @@ static void CL_GameResults_f (void)
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
 
 		if (employee->hired && employee->baseHired == base) {
-			character_t *chr = &(employee->chr);
+			const character_t *chr = &(employee->chr);
 			assert(chr);
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
@@ -5717,8 +5732,6 @@ static void CL_GameResults_f (void)
 			CP_MissionIsOver(selectedMission);
 	}
 }
-
-/* =========================================================== */
 
 /**
  * @return Alien Team Type
@@ -5793,8 +5806,6 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 		gd.numAlienTeams[alienType]++;
 	} while (*text);
 }
-
-/* =========================================================== */
 
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
@@ -6115,7 +6126,7 @@ void CL_ParseCampaign (const char *name, const char **text)
  * @brief Check whether we are in a tactical mission as server or as client
  * @note handles multiplayer and singleplayer
  *
- * @return true when we are not in battlefield
+ * @return true when we are in battlefield
  * @todo Check cvar mn_main for value
  */
 qboolean CL_OnBattlescape (void)
@@ -6232,6 +6243,7 @@ void CL_GameExit (void)
 		CL_ResetSinglePlayerData();
 	}
 	curCampaign = NULL;
+	selActor = NULL;
 	cls.missionaircraft = NULL;
 
 	/* maybe this is not the best place - but it is needed */
@@ -6466,7 +6478,6 @@ static void CL_GameNew_f (void)
 
 	/* Initialize XVI overlay */
 	R_InitializeXVIOverlay(curCampaign->map, NULL, 0, 0);
-	Cvar_Set("mn_xvimap", "0");
 
 	/* Reset alien bases */
 	AB_ResetAlienBases();
@@ -6582,9 +6593,7 @@ static void CP_CampaignsClick_f (void)
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
-		"%s\n"),
-			campaigns[num].name,
-			racetype,
+		"%s\n"), campaigns[num].name, racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
@@ -6596,7 +6605,6 @@ static void CP_CampaignsClick_f (void)
 	/* Highlight currently selected entry */
 	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
 	campaignlist->textLineSelected = num;
-
 }
 
 /**

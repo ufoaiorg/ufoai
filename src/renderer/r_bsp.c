@@ -62,7 +62,7 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
 			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
 			/* visible flag for rendering */
-			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
+			surf->frame = r_locals.frame;
 	}
 
 	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
@@ -128,8 +128,8 @@ void R_DrawBrushModel (const entity_t * e)
 	}
 	VectorSubtract(modelorg, e->origin, modelorg);
 
-	qglPushMatrix();
-	qglMultMatrixf(e->transform.matrix);
+	glPushMatrix();
+	glMultMatrixf(e->transform.matrix);
 
 	R_DrawInlineBrushModel(e, modelorg);
 
@@ -147,7 +147,7 @@ void R_DrawBrushModel (const entity_t * e)
 		R_EntityDrawBBox(bbox);
 	}
 
-	qglPopMatrix();
+	glPopMatrix();
 }
 
 
@@ -164,7 +164,7 @@ WORLD MODEL
  */
 static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 {
-	int c, side, sidebit;
+	int i, side, sidebit;
 	mBspSurface_t *surf;
 	float dot;
 
@@ -178,9 +178,11 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (node->contents != LEAFNODE)
 		return;
 
+	/* pathfinding nodes are invalid here */
+	assert(node->plane);
+
 	/* node is just a decision point, so go down the apropriate sides
 	 * find which side of the node we are on */
-
 	if (r_isometric->integer) {
 		dot = -DotProduct(r_locals.forward, node->plane->normal);
 	} else if (node->plane->type > PLANE_Z) {
@@ -200,11 +202,11 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	/* recurse down the children, front side first */
 	R_RecursiveWorldNode(node->children[side], tile);
 
-	/* draw stuff */
-	for (c = node->numsurfaces, surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface; c; c--, surf++) {
+	surf = r_mapTiles[tile]->bsp.surfaces + node->firstsurface;
+	for (i = 0; i < node->numsurfaces; i++, surf++) {
 		/* visible (front) side */
 		if ((surf->flags & MSURF_PLANEBACK) == sidebit)
-			surf->levelflagToRenderIn = (1 << refdef.worldlevel);
+			surf->frame = r_locals.frame;
 	}
 
 	/* recurse down the back side */
@@ -214,9 +216,11 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 /**
  * @sa R_GetLevelSurfaceLists
  * @param[in] tile The maptile (map assembly)
+ * @sa R_ModLoadNodes about pathfinding nodes
  */
 static void R_RecurseWorld (mBspNode_t * node, int tile)
 {
+	/* skip special pathfinding nodes */
 	if (!node->plane) {
 		R_RecurseWorld(node->children[0], tile);
 		R_RecurseWorld(node->children[1], tile);
@@ -238,6 +242,7 @@ void R_GetLevelSurfaceLists (void)
 		return;
 
 	mask = 1 << refdef.worldlevel;
+	r_locals.frame++;
 
 	for (tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weaponclip, actorclip and stepon */

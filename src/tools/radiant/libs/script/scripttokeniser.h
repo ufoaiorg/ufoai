@@ -302,9 +302,7 @@ public:
 		m_eof = !m_istream.readChar(m_current);
 		m_token[MAXTOKEN - 1] = '\0';
 	}
-	void release() {
-		delete this;
-	}
+
 	void nextLine() {
 		m_crossline = true;
 	}
@@ -329,12 +327,12 @@ public:
 };
 
 
-inline Tokeniser& NewScriptTokeniser(TextInputStream& istream) {
-	return *(new ScriptTokeniser(istream, true));
+inline Tokeniser* NewScriptTokeniser(TextInputStream& istream) {
+	return new ScriptTokeniser(istream, true);
 }
 
-inline Tokeniser& NewSimpleTokeniser(TextInputStream& istream) {
-	return *(new ScriptTokeniser(istream, false));
+inline Tokeniser* NewSimpleTokeniser(TextInputStream& istream) {
+	return new ScriptTokeniser(istream, false);
 }
 
 #endif

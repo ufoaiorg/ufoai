@@ -61,6 +61,14 @@ typedef struct installationWeapon_s {
 	aircraft_t *target;		/**< Aimed target for the weapon. */
 } installationWeapon_t;
 
+typedef enum {
+	INSTALLATION_RADAR,
+	INSTALLATION_DEFENCE,
+	INSTALLATION_UFOYARD,
+
+	INSTALLATION_TYPE_MAX
+} installationType_t;
+
 /** @brief A installation with all it's data */
 typedef struct installation_s {
 	int idx;					/**< Self link. Index in the global installation-list. */
@@ -93,13 +101,13 @@ typedef struct installation_s {
 } installation_t;
 
 /** Currently displayed/accessed base. */
-installation_t *installationCurrent;
+extern installation_t *installationCurrent;
 
 installation_t* INS_GetInstallationByIDX(int instIdx);
-installation_t* INS_GetFoundedInstallationByIDX(int instIdx);
 void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate);
-void INS_NewInstallations(void);
 void INS_ResetInstallation(void);
+
+installationType_t INS_GetType(const installation_t *installation);
 
 /** Coordinates to place the new installation at (long, lat) */
 extern vec3_t newInstallationPos;

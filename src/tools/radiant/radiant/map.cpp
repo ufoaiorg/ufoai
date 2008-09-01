@@ -71,7 +71,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "select.h"
 #include "plugin.h"
 #include "filetypes.h"
-#include "gtkdlgs.h"
 #include "entityinspector.h"
 #include "qe3.h"
 #include "camwindow.h"
@@ -87,13 +86,13 @@ class NameObserver {
 	UniqueNames& m_names;
 	CopiedString m_name;
 
-	void construct() {
+	void construct (void) {
 		if (!empty()) {
 			//globalOutputStream() << "construct " << makeQuoted(c_str()) << "\n";
 			m_names.insert(name_read(c_str()));
 		}
 	}
-	void destroy() {
+	void destroy (void) {
 		if (!empty()) {
 			//globalOutputStream() << "destroy " << makeQuoted(c_str()) << "\n";
 			m_names.erase(name_read(c_str()));
@@ -108,7 +107,7 @@ public:
 	NameObserver(const NameObserver& other) : m_names(other.m_names), m_name(other.m_name) {
 		construct();
 	}
-	~NameObserver() {
+	~NameObserver (void) {
 		destroy();
 	}
 	bool empty() const {
@@ -130,7 +129,7 @@ class BasicNamespace : public Namespace {
 	Names m_names;
 	UniqueNames m_uniqueNames;
 public:
-	~BasicNamespace() {
+	~BasicNamespace (void) {
 		ASSERT_MESSAGE(m_names.empty(), "namespace: names still registered at shutdown");
 	}
 	void attach(const NameCallback& setName, const NameCallbackCallback& attachObserver) {
@@ -191,10 +190,10 @@ public:
 	typedef Namespace Type;
 	STRING_CONSTANT(Name, "*");
 
-	NamespaceAPI() {
+	NamespaceAPI (void) {
 		m_namespace = &g_defaultNamespace;
 	}
-	Namespace* getTable() {
+	Namespace* getTable (void) {
 		return m_namespace;
 	}
 };
@@ -229,7 +228,7 @@ void Map_gatherNamespaced(scene::Node& root) {
 	Node_traverseSubgraph(root, GatherNamespaced());
 }
 
-void Map_mergeClonedNames() {
+void Map_mergeClonedNames (void) {
 	for (std::list<Namespaced*>::const_iterator i = g_cloned.begin(); i != g_cloned.end(); ++i) {
 		(*i)->setNamespace(g_cloneNamespace);
 	}
@@ -281,7 +280,7 @@ public:
 	Map() : m_resource(0), m_valid(false), m_modified_changed(Map_UpdateTitle) {
 	}
 
-	void realise() {
+	void realise (void) {
 		if (m_resource != 0) {
 			if (Map_Unnamed(*this)) {
 				g_map.m_resource->setNode(NewMapRoot("").get_pointer());
@@ -300,7 +299,7 @@ public:
 			Map_SetValid(g_map, true);
 		}
 	}
-	void unrealise() {
+	void unrealise (void) {
 		if (m_resource != 0) {
 			Map_SetValid(g_map, false);
 			Map_SetWorldspawn(g_map, 0);
@@ -362,7 +361,11 @@ void Map_SetModified(Map& map, bool modified) {
 	}
 }
 
-void Map_UpdateTitle(const Map& map) {
+/**
+ * @sa Sys_SetTitle
+ */
+void Map_UpdateTitle (const Map& map)
+{
 	Sys_SetTitle(map.m_name.c_str(), Map_Modified(map));
 }
 
@@ -392,7 +395,7 @@ Map_Free
 free all map elements, reinitialize the structures that depend on them
 ================
 */
-void Map_Free() {
+void Map_Free (void) {
 	g_map.m_resource->detach(g_map);
 	GlobalReferenceCache().release(g_map.m_name.c_str());
 	g_map.m_resource = 0;
@@ -427,7 +430,7 @@ Entity* Scene_FindEntityByClass(const char* name) {
 	return entity;
 }
 
-Entity *Scene_FindPlayerStart() {
+Entity *Scene_FindPlayerStart (void) {
 	typedef const char* StaticString;
 	StaticString strings[] = {
 		"info_player_start",
@@ -466,24 +469,10 @@ void FocusViews(const Vector3& point, float angle) {
 
 #include "stringio.h"
 
-void Map_StartPosition() {
-	Entity* entity = Scene_FindPlayerStart();
-
-	if (entity) {
-		Vector3 origin;
-		string_parse_vector3(entity->getKeyValue("origin"), origin);
-		FocusViews(origin, string_read_float(entity->getKeyValue("angle")));
-	} else {
-		FocusViews(g_vector3_identity, 0);
-	}
-}
-
-
 inline bool node_is_worldspawn(scene::Node& node) {
 	Entity* entity = Node_getEntity(node);
 	return entity != 0 && string_equal(entity->getKeyValue("classname"), "worldspawn");
 }
-
 
 // use first worldspawn
 class entity_updateworldspawn : public scene::Traversable::Walker {
@@ -530,7 +519,7 @@ void Node_insertChildFirst(scene::Node& parent, scene::Node& child) {
 	}
 }
 
-scene::Node& createWorldspawn() {
+scene::Node& createWorldspawn (void) {
 	NodeSmartReference worldspawn(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert("worldspawn", true)));
 	Node_insertChildFirst(GlobalSceneGraph().root(), worldspawn);
 	return worldspawn;
@@ -603,10 +592,10 @@ class BasicContainer : public scene::Node::Symbiot {
 	class TypeCasts {
 		NodeTypeCastTable m_casts;
 	public:
-		TypeCasts() {
+		TypeCasts (void) {
 			NodeContainedCast<BasicContainer, scene::Traversable>::install(m_casts);
 		}
-		NodeTypeCastTable& get() {
+		NodeTypeCastTable& get (void) {
 			return m_casts;
 		}
 	};
@@ -623,10 +612,8 @@ public:
 
 	BasicContainer() : m_node(this, this, StaticTypeCasts::instance().get()) {
 	}
-	void release() {
-		delete this;
-	}
-	scene::Node& node() {
+
+	scene::Node& node (void) {
 		return m_node;
 	}
 };
@@ -721,7 +708,7 @@ void Scene_EntityBreakdown(EntityBreakdown& entitymap) {
 
 WindowPosition g_posMapInfoWnd(c_default_window_pos);
 
-void DoMapInfo() {
+void DoMapInfo (void) {
 	ModalDialog dialog;
 	GtkEntry* brushes_entry;
 	GtkEntry* entities_entry;
@@ -808,14 +795,14 @@ void DoMapInfo() {
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Entity", renderer, "text", 0, NULL);
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Entity", renderer, "text", 0, (char const*)0);
 					gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 					gtk_tree_view_column_set_sort_column_id(column, 0);
 				}
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Count", renderer, "text", 1, NULL);
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Count", renderer, "text", 1, (char const*)0);
 					gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 					gtk_tree_view_column_set_sort_column_id(column, 1);
 				}
@@ -870,18 +857,17 @@ public:
 			: m_message(message) {
 		m_timer.start();
 	}
-	~ScopeTimer() {
+	~ScopeTimer (void) {
 		double elapsed_time = m_timer.elapsed_msec() / 1000.f;
 		globalOutputStream() << m_message << " timer: " << FloatFormat(elapsed_time, 5, 2) << " second(s) elapsed\n";
 	}
 };
 
-/*
-================
-Map_LoadFile
-================
-*/
-
+/**
+ * @brief Loads a map file
+ * @param[in] filename The filename of the map to load
+ * @note The file must be checked for existence and readability already
+ */
 void Map_LoadFile (const char *filename) {
 	globalOutputStream() << "Loading map from " << filename << "\n";
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
@@ -906,10 +892,8 @@ void Map_LoadFile (const char *filename) {
 
 	//GlobalEntityCreator().printStatistics();
 
-	//
 	// move the view to a start position
-	//
-	Map_StartPosition();
+	FocusViews(g_vector3_identity, 0);
 
 	g_currentMap = &g_map;
 }
@@ -1115,7 +1099,7 @@ void Map_Rename(const char* filename) {
 	}
 }
 
-bool Map_Save() {
+bool Map_Save (void) {
 	ScopeTimer timer("map save");
 	SaveReferences();
 	return true; // assume success..
@@ -1127,7 +1111,7 @@ Map_New
 
 ===========
 */
-void Map_New() {
+void Map_New (void) {
 	//globalOutputStream() << "Map_New\n";
 
 	g_map.m_name = "unnamed.map";
@@ -1148,35 +1132,9 @@ void Map_New() {
 
 extern void ConstructRegionBrushes(scene::Node* brushes[6], const Vector3& region_mins, const Vector3& region_maxs);
 
-void ConstructRegionStartpoint(scene::Node* startpoint, const Vector3& region_mins, const Vector3& region_maxs) {
-	/*!
-	\todo we need to make sure that the player start IS inside the region and bail out if it's not
-	the compiler will refuse to compile a map with a player_start somewhere in empty space..
-	for now, let's just print an error
-	*/
-
-	Vector3 vOrig(Camera_getOrigin(*g_pParentWnd->GetCamWnd()));
-
-	for (int i = 0 ; i < 3 ; i++) {
-		if (vOrig[i] > region_maxs[i] || vOrig[i] < region_mins[i]) {
-			globalErrorStream() << "Camera is NOT in the region, it's likely that the region won't compile correctly\n";
-			break;
-		}
-	}
-
-	// write the info_playerstart
-	char sTmp[1024];
-	sprintf(sTmp, "%d %d %d", (int)vOrig[0], (int)vOrig[1], (int)vOrig[2]);
-	Node_getEntity(*startpoint)->setKeyValue("origin", sTmp);
-	sprintf(sTmp, "%d", (int)Camera_getAngles(*g_pParentWnd->GetCamWnd())[CAMERA_YAW]);
-	Node_getEntity(*startpoint)->setKeyValue("angle", sTmp);
-}
-
 /*
 ===========================================================
-
-  REGION
-
+REGION
 ===========================================================
 */
 bool	region_active;
@@ -1186,16 +1144,15 @@ Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
 scene::Node* region_sides[6];
 scene::Node* region_startpoint = 0;
 
-/*
-===========
-AddRegionBrushes
-a regioned map will have temp walls put up at the region boundary
-\todo TODO TTimo old implementation of region brushes
-  we still add them straight in the worldspawn and take them out after the map is saved
-  with the new implementation we should be able to append them in a temporary manner to the data we pass to the map module
-===========
-*/
-void AddRegionBrushes (void) {
+/**
+ * @brief a regioned map will have temp walls put up at the region boundary
+ * @todo old implementation of region brushes
+ * we still add them straight in the worldspawn and take them out after the map is saved
+ * with the new implementation we should be able to append them in a temporary manner
+ * to the data we pass to the map module
+ */
+void AddRegionBrushes (void)
+{
 	int		i;
 
 	for (i = 0; i < 6; i++) {
@@ -1206,22 +1163,24 @@ void AddRegionBrushes (void) {
 	region_startpoint = &GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert("info_player_start", false));
 
 	ConstructRegionBrushes(region_sides, region_mins, region_maxs);
-	ConstructRegionStartpoint(region_startpoint, region_mins, region_maxs);
 
 	Node_getTraversable(GlobalSceneGraph().root())->insert(NodeSmartReference(*region_startpoint));
 }
 
-void RemoveRegionBrushes (void) {
+void RemoveRegionBrushes (void)
+{
 	for (std::size_t i = 0; i < 6; i++) {
 		Node_getTraversable(*Map_GetWorldspawn(g_map))->erase(*region_sides[i]);
 	}
 	Node_getTraversable(GlobalSceneGraph().root())->erase(*region_startpoint);
 }
 
-inline void exclude_node(scene::Node& node, bool exclude) {
-	exclude
-	? node.enable(scene::Node::eExcluded)
-	: node.disable(scene::Node::eExcluded);
+inline void exclude_node(scene::Node& node, bool exclude)
+{
+	if (exclude)
+		node.enable(scene::Node::eExcluded);
+	else
+		node.disable(scene::Node::eExcluded);
 }
 
 class ExcludeAllWalker : public scene::Graph::Walker {
@@ -1237,11 +1196,13 @@ public:
 	}
 };
 
-void Scene_Exclude_All(bool exclude) {
+void Scene_Exclude_All (bool exclude)
+{
 	GlobalSceneGraph().traverse(ExcludeAllWalker(exclude));
 }
 
-bool Instance_isSelected(const scene::Instance& instance) {
+bool Instance_isSelected (const scene::Instance& instance)
+{
 	const Selectable* selectable = Instance_getSelectable(instance);
 	return selectable != 0 && selectable->isSelected();
 }
@@ -1258,7 +1219,8 @@ public:
 	}
 };
 
-void Scene_Exclude_Selected(bool exclude) {
+void Scene_Exclude_Selected (bool exclude)
+{
 	GlobalSceneGraph().traverse(ExcludeSelectedWalker(exclude));
 }
 
@@ -1285,18 +1247,16 @@ public:
 	}
 };
 
-void Scene_Exclude_Region(bool exclude) {
+void Scene_Exclude_Region (bool exclude)
+{
 	GlobalSceneGraph().traverse(ExcludeRegionedWalker(exclude));
 }
 
-/*
-===========
-Map_RegionOff
-
-Other filtering options may still be on
-===========
-*/
-void Map_RegionOff() {
+/**
+ * @note Other filtering options may still be on
+ */
+void Map_RegionOff (void)
+{
 	region_active = false;
 
 	region_maxs[0] = g_MaxWorldCoord - 64;
@@ -1309,19 +1269,15 @@ void Map_RegionOff() {
 	Scene_Exclude_All(false);
 }
 
-void Map_ApplyRegion (void) {
+void Map_ApplyRegion (void)
+{
 	region_active = true;
 
 	Scene_Exclude_Region(false);
 }
 
-
-/*
-========================
-Map_RegionSelectedBrushes
-========================
-*/
-void Map_RegionSelectedBrushes (void) {
+void Map_RegionSelectedBrushes (void)
+{
 	Map_RegionOff();
 
 	if (GlobalSelectionSystem().countSelected() != 0
@@ -1335,13 +1291,8 @@ void Map_RegionSelectedBrushes (void) {
 	}
 }
 
-
-/*
-===========
-Map_RegionXY
-===========
-*/
-void Map_RegionXY(float x_min, float y_min, float x_max, float y_max) {
+void Map_RegionXY (float x_min, float y_min, float x_max, float y_max)
+{
 	Map_RegionOff();
 
 	region_mins[0] = x_min;
@@ -1354,7 +1305,8 @@ void Map_RegionXY(float x_min, float y_min, float x_max, float y_max) {
 	Map_ApplyRegion();
 }
 
-void Map_RegionBounds(const AABB& bounds) {
+void Map_RegionBounds (const AABB& bounds)
+{
 	Map_RegionOff();
 
 	region_mins = vector3_subtracted(bounds.origin, bounds.extents);
@@ -1365,37 +1317,25 @@ void Map_RegionBounds(const AABB& bounds) {
 	Map_ApplyRegion();
 }
 
-/*
-===========
-Map_RegionBrush
-===========
-*/
-void Map_RegionBrush (void) {
+void Map_RegionBrush (void)
+{
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		scene::Instance& instance = GlobalSelectionSystem().ultimateSelected();
 		Map_RegionBounds(instance.worldAABB());
 	}
 }
 
-//
-//================
-//Map_ImportFile
-//================
-//
-bool Map_ImportFile(const char* filename) {
+bool Map_ImportFile (const char* filename)
+{
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
 
 	bool success = false;
 	{
 		Resource* resource = GlobalReferenceCache().capture(filename);
-		resource->refresh(); // avoid loading old version if map has changed on disk since last import
+		resource->refresh(); /* avoid loading old version if map has changed on disk since last import */
 		if (resource->load()) {
 			NodeSmartReference clone(NewMapRoot(""));
-
-			{
-				//ScopeTimer timer("clone subgraph");
-				Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
-			}
+			Node_getTraversable(*resource->getNode())->traverse(CloneAll(clone));
 
 			Map_gatherNamespaced(clone);
 			Map_mergeClonedNames();
@@ -1410,24 +1350,17 @@ bool Map_ImportFile(const char* filename) {
 	return success;
 }
 
-/*
-===========
-Map_SaveFile
-===========
-*/
-bool Map_SaveFile(const char* filename) {
+bool Map_SaveFile (const char* filename)
+{
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Saving Map");
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename);
 }
 
-//
-//===========
-//Map_SaveSelected
-//===========
-//
-// Saves selected world brushes and whole entities with partial/full selections
-//
-bool Map_SaveSelected(const char* filename) {
+/**
+ * @brief Saves selected world brushes and whole entities with partial/full selections
+ */
+bool Map_SaveSelected (const char* filename)
+{
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Selected, filename);
 }
 
@@ -1467,7 +1400,8 @@ public:
 	}
 };
 
-void Scene_parentSelectedBrushesToEntity(scene::Graph& graph, scene::Node& parent) {
+void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& parent)
+{
 	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
 }
 
@@ -1495,7 +1429,8 @@ public:
 	}
 };
 
-std::size_t Scene_countSelectedBrushes(scene::Graph& graph) {
+std::size_t Scene_countSelectedBrushes (scene::Graph& graph)
+{
 	std::size_t count;
 	graph.traverse(CountSelectedBrushes(count));
 	return count;
@@ -1508,7 +1443,8 @@ enum ENodeType {
 	eNodePrimitive,
 };
 
-const char* nodetype_get_name(ENodeType type) {
+static inline const char* nodetype_get_name (ENodeType type)
+{
 	if (type == eNodeMap)
 		return "map";
 	if (type == eNodeEntity)
@@ -1518,7 +1454,8 @@ const char* nodetype_get_name(ENodeType type) {
 	return "unknown";
 }
 
-ENodeType node_get_nodetype(scene::Node& node) {
+ENodeType node_get_nodetype (scene::Node& node)
+{
 	if (Node_isEntity(node)) {
 		return eNodeEntity;
 	}
@@ -1528,15 +1465,18 @@ ENodeType node_get_nodetype(scene::Node& node) {
 	return eNodeUnknown;
 }
 
-bool contains_entity(scene::Node& node) {
+bool contains_entity (scene::Node& node)
+{
 	return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isEntity(node);
 }
 
-bool contains_primitive(scene::Node& node) {
+bool contains_primitive (scene::Node& node)
+{
 	return Node_isEntity(node) && Node_getTraversable(node) != 0 && Node_getEntity(node)->isContainer();
 }
 
-ENodeType node_get_contains(scene::Node& node) {
+ENodeType node_get_contains (scene::Node& node)
+{
 	if (contains_entity(node)) {
 		return eNodeEntity;
 	}
@@ -1546,7 +1486,8 @@ ENodeType node_get_contains(scene::Node& node) {
 	return eNodeUnknown;
 }
 
-void Path_parent(const scene::Path& parent, const scene::Path& child) {
+static void Path_parent (const scene::Path& parent, const scene::Path& child)
+{
 	ENodeType contains = node_get_contains(parent.top());
 	ENodeType type = node_get_nodetype(child.top());
 
@@ -1560,7 +1501,8 @@ void Path_parent(const scene::Path& parent, const scene::Path& child) {
 	}
 }
 
-void Scene_parentSelected() {
+void Scene_parentSelected (void)
+{
 	UndoableCommand undo("parentSelected");
 
 	if (GlobalSelectionSystem().countSelected() > 1) {
@@ -1583,9 +1525,8 @@ void Scene_parentSelected() {
 	}
 }
 
-
-
-void NewMap() {
+void NewMap (void)
+{
 	if (ConfirmModified("New Map")) {
 		Map_RegionOff();
 		Map_Free();
@@ -1593,21 +1534,25 @@ void NewMap() {
 	}
 }
 
-CopiedString g_mapsPath;
+static CopiedString g_mapsPath;
 
-const char* getMapsPath() {
+const char* getMapsPath (void)
+{
 	return g_mapsPath.c_str();
 }
 
-const char* map_open(const char* title) {
+const char* map_open (const char* title)
+{
 	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, title, getMapsPath(), MapFormat::Name());
 }
 
-const char* map_save(const char* title) {
+const char* map_save (const char* title)
+{
 	return file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, title, getMapsPath(), MapFormat::Name());
 }
 
-void OpenMap() {
+void OpenMap (void)
+{
 	if (!ConfirmModified("Open Map"))
 		return;
 
@@ -1621,7 +1566,8 @@ void OpenMap() {
 	}
 }
 
-void ImportMap() {
+void ImportMap (void)
+{
 	const char* filename = map_open("Import Map");
 
 	if (filename != 0) {
@@ -1630,7 +1576,8 @@ void ImportMap() {
 	}
 }
 
-bool Map_SaveAs() {
+bool Map_SaveAs (void)
+{
 	const char* filename = map_save("Save Map");
 
 	if (filename != 0) {
@@ -1641,11 +1588,13 @@ bool Map_SaveAs() {
 	return false;
 }
 
-void SaveMapAs() {
+void SaveMapAs (void)
+{
 	Map_SaveAs();
 }
 
-void SaveMap() {
+void SaveMap (void)
+{
 	if (Map_Unnamed(g_map)) {
 		SaveMapAs();
 	} else if (Map_Modified(g_map)) {
@@ -1653,7 +1602,8 @@ void SaveMap() {
 	}
 }
 
-void ExportMap() {
+void ExportMap (void)
+{
 	const char* filename = map_save("Export Selection");
 
 	if (filename != 0) {
@@ -1661,7 +1611,8 @@ void ExportMap() {
 	}
 }
 
-void SaveRegion() {
+void SaveRegion (void)
+{
 	const char* filename = map_save("Export Region");
 
 	if (filename != 0) {
@@ -1670,12 +1621,14 @@ void SaveRegion() {
 }
 
 
-void RegionOff() {
+void RegionOff (void)
+{
 	Map_RegionOff();
 	SceneChangeNotify();
 }
 
-void RegionXY() {
+void RegionXY (void)
+{
 	Map_RegionXY(
 	    g_pParentWnd->GetXYWnd()->GetOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->Width() / g_pParentWnd->GetXYWnd()->Scale(),
 	    g_pParentWnd->GetXYWnd()->GetOrigin()[1] - 0.5f * g_pParentWnd->GetXYWnd()->Height() / g_pParentWnd->GetXYWnd()->Scale(),
@@ -1685,12 +1638,14 @@ void RegionXY() {
 	SceneChangeNotify();
 }
 
-void RegionBrush() {
+void RegionBrush (void)
+{
 	Map_RegionBrush();
 	SceneChangeNotify();
 }
 
-void RegionSelected() {
+void RegionSelected (void)
+{
 	Map_RegionSelectedBrushes();
 	SceneChangeNotify();
 }
@@ -1729,7 +1684,8 @@ public:
 	}
 };
 
-void Scene_FindEntityBrush(std::size_t entity, std::size_t brush, scene::Path& path) {
+static void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
+{
 	path.push(makeReference(GlobalSceneGraph().root()));
 	{
 		Node_getTraversable(path.top())->traverse(EntityFindByIndexWalker(entity, path));
@@ -1742,12 +1698,20 @@ void Scene_FindEntityBrush(std::size_t entity, std::size_t brush, scene::Path& p
 	}
 }
 
-inline bool Node_hasChildren(scene::Node& node) {
+static inline bool Node_hasChildren (scene::Node& node)
+{
 	scene::Traversable* traversable = Node_getTraversable(node);
 	return traversable != 0 && !traversable->empty();
 }
 
-void SelectBrush (int entitynum, int brushnum) {
+/**
+ * @brief Selects a brush given by entity- and brushnumber
+ * @param[in] entitynum The entity number (0 for worldspawn, every other for
+ * bmodels)
+ * @param[in] brushnum The brush number to select
+ */
+void SelectBrush (int entitynum, int brushnum)
+{
 	scene::Path path;
 	Scene_FindEntityBrush(entitynum, brushnum, path);
 	if (path.size() == 3 || (path.size() == 2 && !Node_hasChildren(path.top()))) {
@@ -1760,145 +1724,6 @@ void SelectBrush (int entitynum, int brushnum) {
 	}
 }
 
-
-class BrushFindIndexWalker : public scene::Graph::Walker {
-	mutable const scene::Node* m_node;
-	std::size_t& m_count;
-public:
-	BrushFindIndexWalker(const scene::Node& node, std::size_t& count)
-			: m_node(&node), m_count(count) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (Node_isPrimitive(path.top())) {
-			if (m_node == path.top().get_pointer()) {
-				m_node = 0;
-			}
-			if (m_node) {
-				++m_count;
-			}
-		}
-		return true;
-	}
-};
-
-class EntityFindIndexWalker : public scene::Graph::Walker {
-	mutable const scene::Node* m_node;
-	std::size_t& m_count;
-public:
-	EntityFindIndexWalker(const scene::Node& node, std::size_t& count)
-			: m_node(&node), m_count(count) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (Node_isEntity(path.top())) {
-			if (m_node == path.top().get_pointer()) {
-				m_node = 0;
-			}
-			if (m_node) {
-				++m_count;
-			}
-		}
-		return true;
-	}
-};
-
-static void GetSelectionIndex (int *ent, int *brush) {
-	std::size_t count_brush = 0;
-	std::size_t count_entity = 0;
-	if (GlobalSelectionSystem().countSelected() != 0) {
-		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
-
-		GlobalSceneGraph().traverse(BrushFindIndexWalker(path.top(), count_brush));
-		GlobalSceneGraph().traverse(EntityFindIndexWalker(path.parent(), count_entity));
-	}
-	*brush = int(count_brush);
-	*ent = int(count_entity);
-}
-
-void DoFind() {
-	ModalDialog dialog;
-	GtkEntry* entity;
-	GtkEntry* brush;
-
-	GtkWindow* window = create_dialog_window(MainFrame_getWindow(), "Find Brush", G_CALLBACK(dialog_delete_callback), &dialog);
-
-	GtkAccelGroup* accel = gtk_accel_group_new();
-	gtk_window_add_accel_group(window, accel);
-
-	{
-		GtkVBox* vbox = create_dialog_vbox(4, 4);
-		gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(vbox));
-		{
-			GtkTable* table = create_dialog_table(2, 2, 4, 4);
-			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(table), TRUE, TRUE, 0);
-			{
-				GtkWidget* label = gtk_label_new ("Entity number");
-				gtk_widget_show (label);
-				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-				                  (GtkAttachOptions) (0),
-				                  (GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkWidget* label = gtk_label_new ("Brush number");
-				gtk_widget_show (label);
-				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-				                  (GtkAttachOptions) (0),
-				                  (GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-				                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
-				gtk_widget_grab_focus(GTK_WIDGET(entry));
-				entity = entry;
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-				                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
-
-				brush = entry;
-			}
-		}
-		{
-			GtkHBox* hbox = create_dialog_hbox(4);
-			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), TRUE, TRUE, 0);
-			{
-				GtkButton* button = create_dialog_button("Find", G_CALLBACK(dialog_button_ok), &dialog);
-				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-				widget_make_default(GTK_WIDGET(button));
-				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
-			}
-			{
-				GtkButton* button = create_dialog_button("Close", G_CALLBACK(dialog_button_cancel), &dialog);
-				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
-			}
-		}
-	}
-
-	// Initialize dialog
-	char buf[16];
-	int ent, br;
-
-	GetSelectionIndex (&ent, &br);
-	sprintf (buf, "%i", ent);
-	gtk_entry_set_text(entity, buf);
-	sprintf (buf, "%i", br);
-	gtk_entry_set_text(brush, buf);
-
-	if (modal_dialog_show(window, dialog) == eIDOK) {
-		const char *entstr = gtk_entry_get_text(entity);
-		const char *brushstr = gtk_entry_get_text(brush);
-		SelectBrush (atoi(entstr), atoi(brushstr));
-	}
-
-	gtk_widget_destroy(GTK_WIDGET(window));
-}
-
 void Map_constructPreferences(PreferencesPage& page) {
 	page.appendCheckBox("", "Load last map on open", g_bLoadLastMap);
 }
@@ -1909,7 +1734,7 @@ class MapEntityClasses : public ModuleObserver {
 public:
 	MapEntityClasses() : m_unrealised(1) {
 	}
-	void realise() {
+	void realise (void) {
 		if (--m_unrealised == 0) {
 			if (g_map.m_resource != 0) {
 				ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
@@ -1917,7 +1742,7 @@ public:
 			}
 		}
 	}
-	void unrealise() {
+	void unrealise (void) {
 		if (++m_unrealised == 1) {
 			if (g_map.m_resource != 0) {
 				g_map.m_resource->flush();
@@ -1935,7 +1760,7 @@ class MapModuleObserver : public ModuleObserver {
 public:
 	MapModuleObserver() : m_unrealised(1) {
 	}
-	void realise() {
+	void realise (void) {
 		if (--m_unrealised == 0) {
 			ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "maps_directory: user-game-path is empty");
 			StringOutputStream buffer(256);
@@ -1944,7 +1769,7 @@ public:
 			g_mapsPath = buffer.c_str();
 		}
 	}
-	void unrealise() {
+	void unrealise (void) {
 		if (++m_unrealised == 1) {
 			g_mapsPath = "";
 		}
@@ -1958,7 +1783,7 @@ MapModuleObserver g_MapModuleObserver;
 CopiedString g_strLastMap;
 bool g_bLoadLastMap = false;
 
-void Map_Construct() {
+void Map_Construct (void) {
 	GlobalCommands_insert("RegionOff", FreeCaller<RegionOff>());
 	GlobalCommands_insert("RegionSetXY", FreeCaller<RegionXY>());
 	GlobalCommands_insert("RegionSetBrush", FreeCaller<RegionBrush>());
@@ -1974,7 +1799,7 @@ void Map_Construct() {
 	Radiant_attachHomePathsObserver(g_MapModuleObserver);
 }
 
-void Map_Destroy() {
+void Map_Destroy (void) {
 	Radiant_detachHomePathsObserver(g_MapModuleObserver);
 	GlobalEntityClassManager().detach(g_MapEntityClasses);
 }
