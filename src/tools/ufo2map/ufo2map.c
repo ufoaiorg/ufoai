@@ -115,6 +115,7 @@ static void Usage (void)
 	); Com_Printf(
 		"    con contained           : checks for brushes contained entirely within other brushes. includes coincident duplicates.\n"
 		"    isc intersection        : report intersection between optimisable brushes from worldspawn and func_group entities\n"
+		"                              this is not included in all or bru as it is not always a bad thing\n"
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
 	); Com_Printf(
 		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
@@ -554,7 +555,8 @@ int main (int argc, const char **argv)
 			CheckMapMicro();
 		if (config.chkContained || config.chkBrushes || config.chkAll)
 			Check_ContainedBrushes();
-		if (config.chkIntersection|| config.chkBrushes || config.chkAll)
+		/* not included in bru or all by design */
+		if (config.chkIntersection)
 			Check_BrushIntersection();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
