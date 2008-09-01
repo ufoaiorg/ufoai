@@ -534,7 +534,7 @@ static void Check_NearList (void)
  * @brief 	calculate where an edge (defined by the vertices) intersects a plane.
  *			http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
  * @param[out] the position of the intersection, if the edge is not too close to parallel.
- * @return 	zero if the edge is within an epsilon angle of parallel to the plane
+ * @return 	zero if the edge is within an epsilon angle of parallel to the plane, or the edge is near zero length.
  * @note	an epsilon is used to exclude the actual vertices from passing the test.
  */
 static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, const plane_t *plane, vec3_t intersection)
@@ -547,7 +547,8 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
 
 	VectorSubtract(vert2, vert1, direction);/*< direction points from vert1 to vert2 */
 	length = VectorLength(direction);
-	assert(length > 0.0f);
+	if (length < DIST_EPSILON)
+		return qfalse;
 	sin = DotProduct(direction, plane->normal) / length;
 	if (abs(sin) < SIN_EPSILON)
 		return qfalse;
