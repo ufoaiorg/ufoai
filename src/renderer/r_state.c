@@ -45,8 +45,8 @@ qboolean R_SelectTexture (gltexunit_t *texunit)
 
 	r_state.active_texunit = texunit;
 
-	glActiveTexture(texunit->texture);
-	glClientActiveTexture(texunit->texture);
+	qglActiveTexture(texunit->texture);
+	qglClientActiveTexture(texunit->texture);
 	return qtrue;
 }
 

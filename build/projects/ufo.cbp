@@ -22,6 +22,7 @@
 					<Add option="-DNODEBUG" />
 				</Compiler>
 				<Linker>
+					<Add library="opengl32" />
 					<Add option="-s" />
 					<Add library="intl" />
 					<Add library="winmm" />
@@ -49,6 +50,7 @@
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
+					<Add library="opengl32" />
 					<Add option="-pg -lgmon" />
 					<Add library="intl" />
 					<Add library="winmm" />
@@ -72,6 +74,7 @@
 					<Add option="`curl-config --cflags`" />
 				</Compiler>
 				<Linker>
+					<Add library="GL" />
 					<Add option="`sdl-config --libs`" />
 					<Add option="`curl-config --libs`" />
 				</Linker>
@@ -89,6 +92,7 @@
 					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
 				</Compiler>
 				<Linker>
+					<Add option="-framework OpenGL" />
 					<Add option="-framework SDL" />
 					<Add option="-framework SDL_ttf" />
 					<Add option="-framework SDL_mixer" />
@@ -105,7 +109,6 @@
 			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
 		<Linker>
-			<Add library="GL" />
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
 			<Add library="SDL_mixer" />
