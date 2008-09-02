@@ -157,6 +157,7 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 
 	bool isModel = string_equal_nocase(name, "misc_model");
 	bool isSound = string_equal_nocase(name, "misc_sound");
+	bool isParticle = string_equal_nocase(name, "misc_particle");
 
 	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
@@ -215,6 +216,11 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (sound != 0) {
 			Node_getEntity(node)->setKeyValue("sound", sound);
+		}
+	} else if (isParticle) {
+		const char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));
+		if (particle != 0) {
+			Node_getEntity(node)->setKeyValue("particle", particle);
 		}
 	}
 }
@@ -288,6 +294,10 @@ const char* misc_model_dialog(GtkWidget* parent) {
 		return relative;
 	}
 	return 0;
+}
+
+const char* misc_particle_dialog(GtkWidget* parent) {
+	return NULL;
 }
 
 const char* misc_sound_dialog(GtkWidget* parent) {
