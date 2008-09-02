@@ -162,8 +162,8 @@ typedef struct {
 
 	int x, y, width, height;	/**< in virtual screen coordinates */
 	float fov_x, fov_y;
-	float vieworg[3];
-	float viewangles[3];
+	vec3_t vieworg;
+	vec3_t viewangles;
 	float time;					/**< time is used to auto animate */
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
