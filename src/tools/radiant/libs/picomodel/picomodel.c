@@ -119,8 +119,6 @@ void PicoSetPrintFunc (void (*func)(int, const char*))
 
 static picoModel_t *PicoModuleLoadModel (const picoModule_t* pm, const char* fileName, picoByte_t* buffer, int bufSize, int frameNum)
 {
-	char *modelFileName, *remapFileName;
-
 	/* see whether this module can load the model file or not */
 	if (pm->canload(fileName, buffer, bufSize) == PICO_PMV_OK) {
 		/* use loader provided by module to read the model data */
