@@ -266,7 +266,7 @@ static void BounceLight (void)
 		float added;
 		char buf[12];
 
-		snprintf(buf, sizeof(buf), " %i LGHTBNCE", i);
+		snprintf(buf, sizeof(buf), "%i LGHTBNCE", i);
 		RunThreadsOn(ShootLight, num_patches, config.verbosity >= VERB_NORMAL, buf);
 		added = CollectLight();
 
