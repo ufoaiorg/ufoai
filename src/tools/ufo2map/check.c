@@ -54,17 +54,17 @@ typedef enum {
 	PIB_ON_SURFACE_ONLY			/**< point on the surface, and the inside of the brush is excluded */
 } pointInBrush_t;
 
-static void Check_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));
+static void Check_Printf(const verbosityLevel_t msgVerbLevel, const char *format, ...) __attribute__((format(printf, 2, 3)));
 
 /**
  * @brief decides wether to proceed with output based on ufo2map's mode: check/fix/compile
  * @sa Com_Printf, Verb_Printf
  */
-static void Check_Printf (const verbosityLevel_t importance, const char *format, ...)
+static void Check_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
 
-	if (AbortPrint(importance))
+	if (AbortPrint(msgVerbLevel))
 		return;
 
 	/* some checking/fix functions are called when ufo2map is compiling

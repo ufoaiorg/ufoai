@@ -407,19 +407,22 @@ void Com_Printf (const char *format, ...)
 /**
  * @brief return nonzero if printing should be aborted based on the command line
  * level and the importance of the message
+ * @param msgVerbLevel insignificance of the message. Larger numbers mean the message is
+ * less important. The message will first be printed if the msgVerbLevel is equal to the config.verbosity.
+ * @sa verbosityLevel_t
  */
-qboolean AbortPrint (const verbosityLevel_t importance)
+qboolean AbortPrint (const verbosityLevel_t msgVerbLevel)
 {
-	return (importance > config.verbosity);
+	return (msgVerbLevel > config.verbosity);
 }
 
 /**
  * @brief decides wether to proceed with output based on verbosity level
- * @sa Com_Printf, Check_Printf,
+ * @sa Com_Printf, Check_Printf
  */
-void Verb_Printf (const verbosityLevel_t importance, const char *format, ...)
+void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
 {
-	if (AbortPrint(importance))
+	if (AbortPrint(msgVerbLevel))
 		return;
 
 	{
