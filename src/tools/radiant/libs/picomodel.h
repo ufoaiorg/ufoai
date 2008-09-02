@@ -317,8 +317,6 @@ picoVertexCombinationHash_t *PicoAddVertexCombinationToHashTable(picoVertexCombi
 /* specialized functions */
 int PicoFindSurfaceVertexNum(picoSurface_t *surface, picoVec3_t xyz, picoVec3_t normal, int numSTs, picoVec2_t *st, int numColors, picoColor_t *color, picoIndex_t smoothingGroup);
 void PicoFixSurfaceNormals(picoSurface_t *surface);
-int PicoRemapModel(picoModel_t *model, char *remapFile);
-
 
 void PicoAddTriangleToModel(picoModel_t *model, picoVec3_t** xyz, picoVec3_t** normals, int numSTs, picoVec2_t **st, int numColors, picoColor_t **colors, picoShader_t* shader, picoIndex_t* smoothingGroup);
 
