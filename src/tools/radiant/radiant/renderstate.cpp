@@ -1581,76 +1581,51 @@ void OpenGLShader::construct(const char* name) {
 		// construction from IShader
 		m_shader = QERApp_Shader_ForName(name);
 
-		if (g_ShaderCache->lightingSupported() && g_ShaderCache->lightingEnabled() && m_shader->getBump() != 0 && m_shader->getBump()->texture_number != 0) { // is a bump shader
-			state.m_state = RENDER_FILL | RENDER_CULLFACE | RENDER_TEXTURE | RENDER_DEPTHTEST | RENDER_DEPTHWRITE | RENDER_COLOURWRITE | RENDER_PROGRAM;
-			state.m_colour[0] = 0;
-			state.m_colour[1] = 0;
-			state.m_colour[2] = 0;
-			state.m_colour[3] = 1;
-			state.m_sort = OpenGLState::eSortOpaque;
+		state.m_texture = m_shader->getTexture()->texture_number;
 
-			state.m_program = &g_depthFillARB;
-
-			OpenGLState& bumpPass = appendDefaultPass();
-			bumpPass.m_texture = m_shader->getDiffuse()->texture_number;
-			bumpPass.m_texture1 = m_shader->getBump()->texture_number;
-			bumpPass.m_texture2 = m_shader->getSpecular()->texture_number;
-
-			bumpPass.m_state = RENDER_BLEND | RENDER_FILL | RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_SMOOTH | RENDER_BUMP | RENDER_PROGRAM;
-
-			bumpPass.m_program = &g_bumpARB;
-
-			bumpPass.m_depthfunc = GL_LEQUAL;
-			bumpPass.m_sort = OpenGLState::eSortMultiFirst;
-			bumpPass.m_blend_src = GL_ONE;
-			bumpPass.m_blend_dst = GL_ONE;
-		} else {
-			state.m_texture = m_shader->getTexture()->texture_number;
-
-			state.m_state = RENDER_FILL | RENDER_TEXTURE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_LIGHTING | RENDER_SMOOTH;
-			if ((m_shader->getFlags() & QER_CULL) != 0) {
-				if (m_shader->getCull() == IShader::eCullBack) {
-					state.m_state |= RENDER_CULLFACE;
-				}
-			} else {
+		state.m_state = RENDER_FILL | RENDER_TEXTURE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_LIGHTING | RENDER_SMOOTH;
+		if ((m_shader->getFlags() & QER_CULL) != 0) {
+			if (m_shader->getCull() == IShader::eCullBack) {
 				state.m_state |= RENDER_CULLFACE;
 			}
-			if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
-				state.m_state |= RENDER_ALPHATEST;
-				IShader::EAlphaFunc alphafunc;
-				m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
-				switch (alphafunc) {
-				case IShader::eAlways:
-					state.m_alphafunc = GL_ALWAYS;
-				case IShader::eEqual:
-					state.m_alphafunc = GL_EQUAL;
-				case IShader::eLess:
-					state.m_alphafunc = GL_LESS;
-				case IShader::eGreater:
-					state.m_alphafunc = GL_GREATER;
-				case IShader::eLEqual:
-					state.m_alphafunc = GL_LEQUAL;
-				case IShader::eGEqual:
-					state.m_alphafunc = GL_GEQUAL;
-				}
+		} else {
+			state.m_state |= RENDER_CULLFACE;
+		}
+		if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
+			state.m_state |= RENDER_ALPHATEST;
+			IShader::EAlphaFunc alphafunc;
+			m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
+			switch (alphafunc) {
+			case IShader::eAlways:
+				state.m_alphafunc = GL_ALWAYS;
+			case IShader::eEqual:
+				state.m_alphafunc = GL_EQUAL;
+			case IShader::eLess:
+				state.m_alphafunc = GL_LESS;
+			case IShader::eGreater:
+				state.m_alphafunc = GL_GREATER;
+			case IShader::eLEqual:
+				state.m_alphafunc = GL_LEQUAL;
+			case IShader::eGEqual:
+				state.m_alphafunc = GL_GEQUAL;
 			}
-			reinterpret_cast<Vector3&>(state.m_colour) = m_shader->getTexture()->color;
-			state.m_colour[3] = 1.0f;
+		}
+		reinterpret_cast<Vector3&>(state.m_colour) = m_shader->getTexture()->color;
+		state.m_colour[3] = 1.0f;
 
-			if ((m_shader->getFlags() & QER_TRANS) != 0) {
-				state.m_state |= RENDER_BLEND;
-				state.m_colour[3] = m_shader->getTrans();
-				state.m_sort = OpenGLState::eSortTranslucent;
-				BlendFunc blendFunc = m_shader->getBlendFunc();
-				state.m_blend_src = convertBlendFactor(blendFunc.m_src);
-				state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
-				if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
-					state.m_state |= RENDER_DEPTHWRITE;
-				}
-			} else {
+		if ((m_shader->getFlags() & QER_TRANS) != 0) {
+			state.m_state |= RENDER_BLEND;
+			state.m_colour[3] = m_shader->getTrans();
+			state.m_sort = OpenGLState::eSortTranslucent;
+			BlendFunc blendFunc = m_shader->getBlendFunc();
+			state.m_blend_src = convertBlendFactor(blendFunc.m_src);
+			state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
+			if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
 				state.m_state |= RENDER_DEPTHWRITE;
-				state.m_sort = OpenGLState::eSortFullbright;
 			}
+		} else {
+			state.m_state |= RENDER_DEPTHWRITE;
+			state.m_sort = OpenGLState::eSortFullbright;
 		}
 	}
 }

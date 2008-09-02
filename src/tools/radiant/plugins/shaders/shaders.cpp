@@ -550,10 +550,7 @@ class CShader : public IShader {
 
 	qtexture_t* m_pTexture;
 	qtexture_t* m_notfound;
-	qtexture_t* m_pDiffuse;
 	float m_heightmapScale;
-	qtexture_t* m_pBump;
-	qtexture_t* m_pSpecular;
 	qtexture_t* m_pLightFalloffImage;
 	BlendFunc m_blendFunc;
 
@@ -571,9 +568,6 @@ public:
 			m_blendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA),
 			m_bInUse(false) {
 		m_pTexture = 0;
-		m_pDiffuse = 0;
-		m_pBump = 0;
-		m_pSpecular = 0;
 
 		m_notfound = 0;
 
@@ -603,15 +597,6 @@ public:
 	// get/set the qtexture_t* Radiant uses to represent this shader object
 	qtexture_t* getTexture() const {
 		return m_pTexture;
-	}
-	qtexture_t* getDiffuse() const {
-		return m_pDiffuse;
-	}
-	qtexture_t* getBump() const {
-		return m_pBump;
-	}
-	qtexture_t* getSpecular() const {
-		return m_pSpecular;
 	}
 	// get shader name
 	const char* getName() const {
@@ -687,9 +672,6 @@ public:
 				m_heightmapScale = evaluateFloat(m_template.m_heightmapScale, m_template.m_params, m_args);
 				loader = LoadImageCallback(&m_heightmapScale, loadHeightmap);
 			}
-			m_pDiffuse = evaluateTexture(m_template.m_diffuse, m_template.m_params, m_args);
-			m_pBump = evaluateTexture(m_template.m_bump, m_template.m_params, m_args, loader);
-			m_pSpecular = evaluateTexture(m_template.m_specular, m_template.m_params, m_args);
 			m_pLightFalloffImage = evaluateTexture(m_template.m_lightFalloffImage, m_template.m_params, m_args);
 
 			for (ShaderTemplate::MapLayers::const_iterator i = m_template.m_layers.begin(); i != m_template.m_layers.end(); ++i) {
@@ -722,10 +704,6 @@ public:
 
 	void unrealiseLighting() {
 		if (m_lightingEnabled) {
-			GlobalTexturesCache().release(m_pDiffuse);
-			GlobalTexturesCache().release(m_pBump);
-			GlobalTexturesCache().release(m_pSpecular);
-
 			GlobalTexturesCache().release(m_pLightFalloffImage);
 
 			for (MapLayers::iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
