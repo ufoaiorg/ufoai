@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/scriplib.h"
 #include "check.h"
 #include "bsp.h"
+#include "ufo2map.h"
 
 #define MANDATORY_KEY 1
 #define NON_MANDATORY_KEY 0
@@ -63,6 +64,7 @@ static void Check_Printf(const verbosityLevel_t msgVerbLevel, const char *format
 static void Check_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
+	static qboolean firstSuccessfulPrint = qtrue;
 
 	if (AbortPrint(msgVerbLevel))
 		return;
@@ -98,6 +100,11 @@ static void Check_Printf (const verbosityLevel_t msgVerbLevel, const char *forma
 		/* middle of multi-call skip mode */
 		if (skippingCheckLine)
 			return;
+	}
+
+	if (firstSuccessfulPrint && config.verbosity == VERB_MAPNAME) {
+		PrintName();
+		firstSuccessfulPrint = qfalse;
 	}
 
 	{

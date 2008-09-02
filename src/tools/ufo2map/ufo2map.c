@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 #include "check.h"
 #include "../../shared/shared.h"
+#include "ufo2map.h"
 
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -41,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 mapConfig_t config;
+static char mapFilename[MAX_OSPATH];
 
 /**
  * @brief print usage information.
@@ -472,9 +474,27 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 	return 0;
 }
 
+/**
+ * @brief print name in concise form for lower verbosity levels.
+ * verbosity check done before calling this function.
+ */
+void PrintName (void)
+{
+	const char *mode = NULL;
+
+	if (config.performMapCheck) {
+		mode = "[check]";
+	} else if (config.fixMap) {
+		mode = "[fix]";
+	} else {
+		mode = "[compile]";
+	}
+	Com_Printf("%s %s\n", mode, mapFilename);
+}
+
+
 int main (int argc, const char **argv)
 {
-	char mapFilename[MAX_OSPATH];
 	char bspFilename[MAX_OSPATH];
 	double begin, start, end;
 
@@ -514,6 +534,9 @@ int main (int argc, const char **argv)
 	Verb_Printf(VERB_NORMAL, "...map: '%s'\n", mapFilename);
 	if (!(config.performMapCheck || config.fixMap))
 		Verb_Printf(VERB_NORMAL, "...bsp: '%s'\n", bspFilename);
+
+	if(config.verbosity == VERB_MAPNAME && !(config.performMapCheck || config.fixMap))
+		PrintName();
 
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
 		Verb_Printf(VERB_NORMAL, "bsp file is up-to-date\n");
