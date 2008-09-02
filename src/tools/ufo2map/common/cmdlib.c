@@ -405,12 +405,20 @@ void Com_Printf (const char *format, ...)
 }
 
 /**
+ * @brief return nonzero if printing should be aborted based on the command line
+ * level and the importance of the message
+ */
+inline int AbortPrint (const verbosityLevel_t importance) {
+	return importance > config.verbosity;
+}
+
+/**
  * @brief decides wether to proceed with output based on verbosity level
  * @sa Com_Printf, Check_Printf,
  */
 void Verb_Printf (const verbosityLevel_t importance, const char *format, ...)
 {
-	if (config.verbosity <= VERB_NUM - importance + 1)
+	if (AbortPrint(importance))
 		return;
 
 	{
