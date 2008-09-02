@@ -229,11 +229,10 @@ static float CollectLight (void)
  */
 static void ShootLight (unsigned int patchnum)
 {
-	int			k, l;
-	transfer_t	*trans;
-	int			num;
-	patch_t		*patch;
-	vec3_t		send;
+	int k, l, num;
+	const transfer_t *trans;
+	const patch_t *patch;
+	vec3_t send;
 
 	/* this is the amount of light we are distributing
 	 * prescale it so that multiplying by the 16 bit
