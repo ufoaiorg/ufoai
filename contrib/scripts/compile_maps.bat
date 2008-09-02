@@ -80,8 +80,8 @@ goto :EOF
 :compilemap
 	echo ...found dir "%1"
 	for %%j in (%1\*.map) DO (
-		echo ufo2map.exe %ufo2mapparameters% %%j
-		ufo2map.exe %ufo2mapparameters% %%j || (
+		echo ufo2map.exe -v 2 %ufo2mapparameters% %%j
+		ufo2map.exe -v 2 %ufo2mapparameters% %%j || (
 			echo.
 			echo interrupt or ufo2map returned nonzero, deleting .bsp
 			Del %%~dpnj.bsp

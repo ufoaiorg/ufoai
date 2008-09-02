@@ -22,9 +22,9 @@ else
 endif
 
 NICE = 19
-UFO2MAPFLAGS = -nice $(NICE) -extra -t $(NUMTHREADS)
-FAST_UFO2MAPFLAGS = -nice $(NICE) -t $(NUMTHREADS)
-ENTS_UFO2MAPFLAGS = -nice $(NICE) -onlyents
+UFO2MAPFLAGS = -v 2 -nice $(NICE) -extra -t $(NUMTHREADS)
+FAST_UFO2MAPFLAGS = -v 2 -nice $(NICE) -t $(NUMTHREADS)
+ENTS_UFO2MAPFLAGS = -v 2 -nice $(NICE) -onlyents
 
 maps: $(UFO2MAP_TARGET) $(BSPS)
 
