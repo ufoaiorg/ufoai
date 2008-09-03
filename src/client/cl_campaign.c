@@ -5219,6 +5219,10 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 
 			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i - UGVs: %i -- probability to win: %.02f\n",
 				ccs.battleParameters.aliens, numSoldiers, numUGVs, winProbability);
+
+			LIST_Delete(&hiredSoldiers);
+			LIST_Delete(&ugvs);
+
 			return winProbability;
 		} else {
 			/* No soldier to defend the base */
