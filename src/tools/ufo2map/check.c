@@ -734,7 +734,7 @@ void CheckNodraws (void)
 
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
-					side_t *jSide = &jBrush->original_sides[js];
+					const side_t *jSide = &jBrush->original_sides[js];
 
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
@@ -746,7 +746,6 @@ void CheckNodraws (void)
 						iSide->surfaceFlags |= SURF_NODRAW;
 						tex->surfaceFlags |= SURF_NODRAW;
 						numSet++;
-
 					}
 				}
 			}
@@ -754,7 +753,6 @@ void CheckNodraws (void)
 		if (numSet)
 			Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set nodraw on %i sides (covered by another brush).\n", iBrush->brushnum, iBrush->entitynum, numSet);
 	}
-
 }
 
 /**
@@ -794,13 +792,13 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 /**
  * @sa BrushVolume
  */
-static vec_t Check_MapBrushVolume (mapbrush_t *brush)
+static vec_t Check_MapBrushVolume (const mapbrush_t *brush)
 {
 	int i;
-	winding_t *w;
+	const winding_t *w;
 	vec3_t corner;
 	vec_t d, area, volume;
-	plane_t *plane;
+	const plane_t *plane;
 
 	if (!brush)
 		return 0;
@@ -834,19 +832,17 @@ static vec_t Check_MapBrushVolume (mapbrush_t *brush)
 /**
  * @brief report brushes from the map below 1 unit^3
  */
- void CheckMapMicro (void)
- {
+void CheckMapMicro (void)
+{
 	int i;
-	float vol;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
-		vol = Check_MapBrushVolume(brush);
+		const mapbrush_t *brush = &mapbrushes[i];
+		const float vol = Check_MapBrushVolume(brush);
 		if (vol < config.mapMicrovol)
 			Check_Printf(VERB_CHECK, "  Brush %i (entity %i): warning, microbrush: volume %f\n", brush->brushnum, brush->entitynum, vol);
-
 	}
- }
+}
 
 /**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
@@ -884,10 +880,11 @@ void DisplayContentFlags (const int flags)
 /**
  * @brief calculate the bits that have to be set to fill levelflags such that they are contiguous
  */
-static int Check_CalculateLevelFlagFill(int contentFlags)
+static int Check_CalculateLevelFlagFill (int contentFlags)
 {
-	int firstSetLevel = 0, lastSetLevel=0;
+	int firstSetLevel = 0, lastSetLevel = 0;
 	int scanLevel, flagFill = 0;
+
 	for (scanLevel = CONTENTS_LEVEL_1; scanLevel <= CONTENTS_LEVEL_8; scanLevel <<= 1) {
 		if (scanLevel & contentFlags) {
 			if (!firstSetLevel) {
@@ -920,7 +917,7 @@ void CheckFillLevelFlags (void)
 			DisplayContentFlags(flagFill);
 			Check_Printf(VERB_CHECK, "\n");
 			for (j = 0; j < brush->numsides; j++)
-					brush->original_sides[j].contentFlags |= flagFill;
+				brush->original_sides[j].contentFlags |= flagFill;
 		}
 	}
 }
@@ -940,7 +937,7 @@ void CheckLevelFlags (void)
 		/* test if all faces are nodraw */
 		allNodraw = qtrue;
 		for (j = 0; j < brush->numsides; j++) {
-			side_t *side = &brush->original_sides[j];
+			const side_t *side = &brush->original_sides[j];
 			assert(side);
 
 			if (!(side->surfaceFlags & SURF_NODRAW)) {
@@ -957,7 +954,7 @@ void CheckLevelFlags (void)
 			/* test if some faces do not have levelflags and remember
 			 * all levelflags which are set. */
 			for (j = 0; j < brush->numsides; j++) {
-				side_t *side = &brush->original_sides[j];
+				const side_t *side = &brush->original_sides[j];
 
 				allLevelFlagsForBrush |= (side->contentFlags & CONTENTS_LEVEL_ALL);
 

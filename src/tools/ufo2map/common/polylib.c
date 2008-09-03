@@ -105,7 +105,7 @@ void RemoveColinearPoints (winding_t *w)
 /**
  * @brief
  */
-vec_t WindingArea (winding_t *w)
+vec_t WindingArea (const winding_t *w)
 {
 	int i;
 	vec3_t d1, d2, cross;
@@ -145,7 +145,7 @@ void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 /**
  * @brief
  */
-void WindingCenter (winding_t *w, vec3_t center)
+void WindingCenter (const winding_t *w, vec3_t center)
 {
 	int i;
 	float scale;
