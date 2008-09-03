@@ -756,4 +756,6 @@ void R_Shutdown (void)
 
 	if (developer->integer & DEBUG_RENDERER)
 		R_StatePrint();
+
+	R_ShutdownThreads();
 }
