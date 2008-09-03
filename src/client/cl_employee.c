@@ -508,7 +508,6 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
- * @sa E_EmployeesInBase
  * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
  */
 employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type)
@@ -530,7 +529,6 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
- * @sa E_EmployeesInBase
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
 employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t type)

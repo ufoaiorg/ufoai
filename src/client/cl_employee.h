@@ -85,7 +85,6 @@ void E_ResetEmployee(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type);
-int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean free_only);
 
 employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
 employee_t* E_GetUnhiredRobot(const ugv_t *ugvType);
