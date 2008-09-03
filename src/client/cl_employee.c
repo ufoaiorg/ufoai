@@ -534,12 +534,10 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type
 employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
-		if (employee->baseHired == base
-			&& E_EmployeeIsUnassigned(employee))
+		employee_t *employee = &gd.employees[type][i];
+		if (employee->baseHired == base && E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -689,7 +687,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
 void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
 
 	if (!base)
 		return;
@@ -698,7 +695,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	assert(type < MAX_EMPL);
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		employee_t *employee = &gd.employees[type][i];
 		if (employee->hired && employee->baseHired == base)
 			E_UnhireEmployee(employee);
 	}
@@ -1341,7 +1338,7 @@ static void E_EmployeeHire_f (void)
 static void E_EmployeeSelect_f (void)
 {
 	int num;
-	employee_t* employee;
+	const employee_t* employee;
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
