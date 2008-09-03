@@ -245,7 +245,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase(aircraft_t *aircraft, struct base_s *ba
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
 qboolean AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_s* employee);
-aircraft_t *AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
+qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);

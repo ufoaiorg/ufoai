@@ -1343,7 +1343,7 @@ static void CL_ToggleTeamList_f (void)
  * check if the soldier is in @b any aircraft.
  * @return true if the soldier was found in the aircraft otherwise false.
  */
-aircraft_t *CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* aircraft)
+const aircraft_t *CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* aircraft)
 {
 	int i;
 
@@ -1363,7 +1363,10 @@ aircraft_t *CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* 
 		return NULL;
 	}
 
-	return AIR_IsInAircraftTeam(aircraft, employee);
+	if (AIR_IsInAircraftTeam(aircraft, employee))
+		return aircraft;
+	else
+		return NULL;
 }
 
 /**
