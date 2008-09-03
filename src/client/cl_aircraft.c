@@ -1984,18 +1984,18 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
  * @param[in] employee Employee to check.
  * @return qtrue if an employee with given index is assigned to given aircraft.
  */
-qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
+aircraft_t *AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
 {
 	int i;
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: No aircraft given\n");
-		return qfalse;
+		return NULL;
 	}
 
 	if (!employee) {
 		Com_Printf("AIR_IsInAircraftTeam: No employee given.\n");
-		return qfalse;
+		return NULL;
 	}
 
 	if (!aircraft->homebase)
@@ -2013,12 +2013,12 @@ qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *emp
 			Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n",
 				employee->idx, aircraft->homebase->name, baseCurrent ? baseCurrent->name : "");
 #endif
-			return qtrue;
+			return aircraft;
 		}
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: not found idx '%d' \n", employee->idx);
-	return qfalse;
+	return NULL;
 }
 
 /**

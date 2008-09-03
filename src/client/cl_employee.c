@@ -503,6 +503,27 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 }
 
 /**
+ * @brief Returns true if the employee is in the homebase and not on mission or transfer
+ * @param[in] employee The employee_t pointer to check
+ * @return qboolean
+ */
+qboolean E_EmployeeIsInBase (const employee_t * employee)
+{
+	if (!employee)
+		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
+
+	if (employee->transfer)
+		return qfalse;
+	else {
+		const aircraft_t *aircraft = CL_SoldierInAircraft(employee, NULL);
+		if (aircraft && aircraft->status > AIR_HOME)
+			return qfalse;
+
+		return qtrue;
+	}
+}
+
+/**
  * @brief Gets an unassigned employee of a given type from the given base.
  *
  * @param[in] type The type of employee to search.

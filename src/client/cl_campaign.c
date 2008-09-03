@@ -5183,7 +5183,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 			while (listPos) {
 				const employee_t *employee = (employee_t *)listPos->data;
 				/* don't use an employee that is currently being transfered */
-				if (!employee->transfer) {
+				if (E_EmployeeIsInBase(employee)) {
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					/* if the soldier was ever on a mission */
@@ -5202,7 +5202,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 			while (listPos) {
 				const employee_t *employee = (employee_t *)listPos->data;
 				/* don't use an employee that is currently being transfered */
-				if (!employee->transfer) {
+				if (E_EmployeeIsInBase(employee)) {
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					const rank_t *rank = &gd.ranks[score->rank];
