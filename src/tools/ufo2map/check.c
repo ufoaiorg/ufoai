@@ -920,7 +920,7 @@ void CheckFillLevelFlags (void)
 			DisplayContentFlags(flagFill);
 			Check_Printf(VERB_CHECK, "\n");
 			for (j = 0; j < brush->numsides; j++)
-					brush->original_sides[0].contentFlags |= flagFill;
+					brush->original_sides[j].contentFlags |= flagFill;
 		}
 	}
 }
