@@ -314,6 +314,21 @@ menu production
 		whdown	{ cmd "prod_down;" }
 	}
 
+	// ==========================================
+	// confunc to enable/disable priority buttons
+	// ==========================================
+	confunc prod_priority_off
+	{
+		*prod_down	invis true
+		*prod_up	invis true
+	}
+
+	confunc prod_priority_on
+	{
+		*prod_down	invis false
+		*prod_up	invis false
+	}
+
 	// ==================
 	// item description
 	// ==================
