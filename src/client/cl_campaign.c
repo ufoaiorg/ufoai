@@ -545,7 +545,7 @@ int CP_CountMission (void)
 
 #ifdef DEBUG
 	if (counterInvalidMission)
-	Com_Printf("CP_CountMission: Warning, there are %i mission that should have been removed from global mission array\n", counterInvalidMission);
+		Com_Printf("CP_CountMission: Warning, there are %i mission that should have been removed from global mission array\n", counterInvalidMission);
 #endif
 	return counterMission;
 }
@@ -5147,6 +5147,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 
 	if (mis->stage != STAGE_BASE_ATTACK) {
 		assert(aircraft);
+
 		switch (mis->category) {
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */

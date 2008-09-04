@@ -256,7 +256,8 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 			if (tempMission->pos) {
 				popupAircraft.itemsId[popupAircraft.nbItems] = MAP_GetIdxByMission(tempMission);
 				popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
-				Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), CP_MissionToTypeString(tempMission), 	_(tempMission->location)), POPUP_AIRCRAFT_MAX_TEXT);
+				Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"),
+					CP_MissionToTypeString(tempMission), _(tempMission->location)), POPUP_AIRCRAFT_MAX_TEXT);
 			}
 		}
 	}
