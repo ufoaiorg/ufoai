@@ -218,7 +218,6 @@ base/maps/oilpipes/fr02.map | GNU General Public License 2.0 or later | Manuel "
 base/maps/oilpipes/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr06_2x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
@@ -226,29 +225,6 @@ base/maps/oilpipes/fr10.map | GNU General Public License 2.0 or later | Manuel "
 base/maps/oilpipes/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oilpipes/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_a1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_a2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_a3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_c1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_c2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_c3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_e1_1x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_e2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s4.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s5.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s6.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_e1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_e2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_e3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_eb1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_eb2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s4.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0
 base/maps/oriental/or_drop_firebird.map | GNU General Public License 2.0
