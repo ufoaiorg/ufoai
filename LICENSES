@@ -199,6 +199,22 @@ base/maps/ice/ice_r01.map | GNU General Public License 2.0
 base/maps/ice/ice_r02.map | GNU General Public License 2.0
 base/maps/ice/ice_r03.map | GNU General Public License 2.0
 base/maps/industrial.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/industrial/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/italy/it_main.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/japan/ja_main.map | GNU General Public License 2.0
 base/maps/laboratory/lab_main.map | GPL version 2
@@ -209,22 +225,6 @@ base/maps/military_convoy/mc_drop_firebird.map | GNU General Public License 2.0 
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/oilpipes/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0
 base/maps/oriental/or_drop_firebird.map | GNU General Public License 2.0
