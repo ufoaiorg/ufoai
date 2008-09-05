@@ -677,6 +677,12 @@ void Check_BrushIntersection (void)
 				}
 			}
 		}
+		if (iBrush->numNear) {
+			assert(iBrush->nearBrushes);
+			free(iBrush->nearBrushes);
+			iBrush->numNear = 0;
+			iBrush->nearBrushes = NULL;
+		}
 	}
 }
 
