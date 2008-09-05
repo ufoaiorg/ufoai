@@ -249,6 +249,9 @@ static int checkMiscMission (entity_t *e, int entnum)
 	return 0;
 }
 
+/**
+ * @todo Replace magic number with self speaking constants
+ */
 static int checkFuncGroup (entity_t *e, int entnum)
 {
 	const char *name = ValueForKey(e, "classname");
@@ -264,21 +267,23 @@ static int checkFuncGroup (entity_t *e, int entnum)
 	return 0;
 }
 
-/** @brief single brushes in func_groups are moved to worldspawn. this function allocates space
- *  pointers to those brushes.
- *  @return a pointer to the array of pointers
- *  @param[out] the number of brushes
+/**
+ * @brief single brushes in func_groups are moved to worldspawn. this function allocates space
+ * pointers to those brushes.
+ * @return a pointer to the array of pointers
+ * @param[out] the number of brushes
  */
-mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes) {
+mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes) 
+{
 	int i, j, tmpVerb = config.verbosity;
 	mapbrush_t **brushesToMove = (mapbrush_t **)malloc(numToMoveToWorldspawn * sizeof(mapbrush_t *));
 
-	if(!brushesToMove)
+	if (!brushesToMove)
 		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
 
 	*numBrushes = numToMoveToWorldspawn;
 
-	if(!numToMoveToWorldspawn)
+	if (!numToMoveToWorldspawn)
 		return brushesToMove;
 
 	/* temporarily drop verbosity as checkFuncGroup should not repeat messages */
@@ -286,7 +291,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes) {
 
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
-		entity_t *e = &entities[i];
+		const entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
 		if (!strncmp(name, "func_group", 10)) {
