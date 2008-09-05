@@ -39,7 +39,7 @@ static aircraft_t *transferStartAircraft = NULL;
 static base_t *transferBase = NULL;
 
 /** @brief Current transfer type (item, employee, alien, aircraft). */
-static int currentTransferType = TRANS_TYPE_INVALID;
+static int currentTransferType = TRANS_TYPE_ITEM;
 
 /** @brief Current cargo onboard. */
 static transferCargo_t cargo[MAX_CARGO];
@@ -285,7 +285,8 @@ static void TR_CargoList (void)
 	int i, cnt = 0;
 	employeeType_t emplType;
 	int trempl[MAX_EMPL];
-	static char cargoList[1024];
+	/** @todo make cargolist a likedList */
+	static char cargoList[MAX_MENUTEXTLEN];
 	char str[128];
 
 	cargoList[0] = '\0';
@@ -413,6 +414,32 @@ static qboolean TR_AircraftListSelect (int i)
 		return qfalse;
 
 	return qtrue;
+}
+
+/*
+ * @brief Function gives the user friendly name of a transfer category
+ */
+char *TR_CategoryName(const int cat)
+{
+	switch (cat) {
+	case TRANS_TYPE_INVALID:
+		/* shouldn't happen */
+		return _("Invalid");
+		break;
+	case TRANS_TYPE_ITEM:
+		return _("Equipment");
+		break;
+	case TRANS_TYPE_EMPLOYEE:
+		return _("Employees");
+		break;
+	case TRANS_TYPE_ALIEN:
+		return _("Aliens");
+		break;
+	case TRANS_TYPE_AIRCRAFT:
+		return _("Aircraft");
+		break;
+	}
+	return _("Unknown");
 }
 
 /**
@@ -568,6 +595,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferTy
 	TR_CargoList();
 
 	currentTransferType = transferType;
+	Cvar_Set("mn_transcat_name", TR_CategoryName(currentTransferType));
 	mn.menuText[TEXT_TRANSFER_LIST] = transferList;
 }
 
@@ -590,6 +618,36 @@ static void TR_TransferSelect_f (void)
 		type = atoi(Cmd_Argv(1));
 
 	TR_TransferSelect(baseCurrent, transferBase, type);
+}
+
+/**
+ * @brief Rolls Category left in Transfer menu.
+ */
+static void TR_Prev_Category_f (void)
+{
+	currentTransferType--;
+
+	if (currentTransferType < 0) {
+		currentTransferType = TRANS_TYPE_MAX - 1;
+	} else if (currentTransferType >= TRANS_TYPE_MAX) {
+		currentTransferType = 0;
+	}
+	Cbuf_AddText(va("trans_resetscroll; trans_select %i;\n", currentTransferType));
+}
+
+/**
+ * @brief Rolls Category right in Transfer menu.
+ */
+static void TR_Next_Category_f (void)
+{
+	currentTransferType++;
+
+	if (currentTransferType < 0) {
+		currentTransferType = TRANS_TYPE_MAX - 1;
+	} else if (currentTransferType >= TRANS_TYPE_MAX) {
+		currentTransferType = 0;
+	}
+	Cbuf_AddText(va("trans_resetscroll;trans_select %i;\n", currentTransferType));
 }
 
 /**
@@ -1650,17 +1708,13 @@ static void TR_Init_f (void)
 
 	transferBase = NULL;
 
-	if (Cmd_Argc() < 2)
-		Com_Printf("TR_Init_f: warning: you should call trans_init with parameter 0\n");
-
 	/* Clear employees temp array. */
 	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
 
 	/* Clear aircraft temp array. */
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
-	/* Select first available item - forward the command line parameters to this
-	 * function */
+	/* Select first available item */
 	TR_TransferSelect_f();
 
 	/* Select first available base. */
@@ -1794,4 +1848,6 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
+	Cmd_AddCommand("trans_prevcat", TR_Prev_Category_f, "Callback for selecting previous transfer category");
+	Cmd_AddCommand("trans_nextcat", TR_Next_Category_f, "Callback for selecting next transfer category");
 }

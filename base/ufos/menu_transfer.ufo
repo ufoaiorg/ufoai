@@ -40,6 +40,18 @@ menu transfer
 		pos		"512 512"
 	}
 
+	pic transtypebox
+	{
+		pos	"657 610"
+		image	menu/transtypebox
+		whup	{
+			cmd "trans_prevcat;"
+		}
+		whdown	{
+			cmd "trans_nextcat;"
+		}
+	}
+
 	zone wz_base
 	{
 		pos	"576 12"
@@ -182,127 +194,53 @@ menu transfer
 	}
 
 	// ==================
+	// category selector
+	// =================
+
+	string txt_category
+	{
+		font	"f_small"
+		string	"*cvar mn_transcat_name"
+		pos	"786 627"
+		align	cc
+	}
+
+	pic bt_previtemtype
+	{
+		tooltip	"_Previous category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"620 595"
+		texl	"0 0"
+		texh	"32 64"
+		click	{ cmd "trans_prevcat;" }
+		whup	{ cmd "trans_prevcat;" }
+		whdown	{ cmd "trans_nextcat;" }
+	}
+
+	pic bt_nextitemtype
+	{
+		tooltip	"_Next category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"940 595"
+		texl	"32 0"
+		texh	"64 64"
+		click	{ cmd "trans_nextcat;" }
+		whup	{ cmd "trans_prevcat;" }
+		whdown	{ cmd "trans_nextcat;" }
+	}
+
+	// ==================
 	// buttons
 	// ==================
-
-	func trans_reset
-	{
-		*s_items	color "1 1 1 0.6"
-		*s_humans	color "1 1 1 0.6"
-		*s_aliens	color "1 1 1 0.6"
-		*s_crafts	color "1 1 1 0.6"
-	}
-	func trans_items
-	{
-		cmd "trans_resetscroll; trans_select 0;"
-		trans_reset
-		*s_items	color "1 1 1 1"
-	}
-	func trans_humans
-	{
-		cmd "trans_resetscroll; trans_select 1;"
-		trans_reset
-		*s_humans	color "1 1 1 1"
-	}
-	func trans_aliens
-	{
-		cmd "trans_resetscroll; trans_select 2;"
-		trans_reset
-		*s_aliens	color "1 1 1 1"
-	}
-	func trans_crafts
-	{
-		cmd "trans_resetscroll; trans_select 3;"
-		trans_reset
-		*s_crafts	color "1 1 1 1"
-	}
-
-	pic bt_items
-	{
-		tooltip	"_Show only items"
-		image	menu/button_blue
-		mousefx	true
-		pos	"635 590"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ trans_items }
-	}
-
-	string s_items
-	{
-		pos	"699 616"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_normal"
-		string	"_Equipment"
-	}
-
-	pic bt_humans
-	{
-		tooltip	"_Show only employees"
-		image	menu/button_blue
-		mousefx	true
-		pos	"635 650"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ trans_humans }
-	}
-
-	string s_humans
-	{
-		pos	"699 676"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_normal"
-		string	"_Employees"
-	}
-
-	pic bt_aliens
-	{
-		tooltip	"_Show only aliens"
-		image	menu/button_blue
-		mousefx	true
-		pos	"820 590"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ trans_aliens }
-	}
-
-	string s_aliens
-	{
-		pos	"884 616"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_normal"
-		string	"_Aliens"
-	}
-
-	pic bt_crafts
-	{
-		tooltip	"_Show only aircraft"
-		image	menu/button_blue
-		mousefx	true
-		pos	"820 650"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ trans_crafts }
-	}
-
-	string s_crafts
-	{
-		pos	"884 676"
-		align	cc
-		color "1 1 1 0.6"
-		font	"f_normal"
-		string	"_Aircraft"
-	}
 
 	pic bt_emptycraftstorage
 	{
 		tooltip	"_Empty the aircraft storage"
 		image	menu/button_blue
 		mousefx	true
-		pos	"655 715"
+		pos	"605 678"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ cmd "trans_emptyairstorage;" }
@@ -310,7 +248,7 @@ menu transfer
 
 	string s_emptycraftstorage
 	{
-		pos	"719 741"
+		pos	"670 705"
 		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -322,7 +260,7 @@ menu transfer
 		tooltip	"_Start the transfer"
 		image	menu/button_blue
 		mousefx	true
-		pos	"800 715"
+		pos	"750 678"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ cmd "trans_start;" }
@@ -330,9 +268,9 @@ menu transfer
 
 	string s_starttrans
 	{
-		pos	"864 741"
+		pos	"815 705"
 		align	cc
-		color "1 1 1 0.6"
+		color	"1 1 1 0.6"
 		font	"f_normal"
 		string	"_Transfer"
 	}
@@ -342,7 +280,7 @@ menu transfer
 		tooltip	"_Back to baseview"
 		image	hud/buttons2
 		mousefx	true
-		pos	"940 725"
+		pos	"933 710"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd "mn_pop;" }
@@ -354,8 +292,7 @@ menu transfer
 
 	func init
 	{
-		cmd "trans_init 0;"
-		trans_items
+		cmd "trans_init;"
 	}
 	func close
 	{
