@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** if the sine of an angle is less than this, then the angle is negligibly different from zero */
 #define SIN_EPSILON 0.0001f
 
+static int numToMoveToWorldspawn = 0;
+
 /**
  * @brief wether the surface of a brush is included when testing if a point is in a brush
  * determines how epsilon is applied.
@@ -249,10 +251,54 @@ static int checkMiscMission (entity_t *e, int entnum)
 
 static int checkFuncGroup (entity_t *e, int entnum)
 {
-	if (checkEntityZeroBrushes(e, entnum))
+	const char *name = ValueForKey(e, "classname");
+	if (e->numbrushes == 1) {
+		Check_Printf(VERB_CHECK, "* Entity %i: %s with one brush only - will be moved to worldspawn\n", entnum, name);
+		numToMoveToWorldspawn++;
+		/* returning 1 ensures the entity will be skipped on writing back, the
+		 * map writer will check and tack them onto the end of the worldspawn */
 		return 1;
-
+	}
+	if (checkEntityZeroBrushes(e, entnum))
+		return 2;/* make this 2, then 1 means single brush to be moved to worldspawn */
 	return 0;
+}
+
+/** @brief single brushes in func_groups are moved to worldspawn. this function allocates space
+ *  pointers to those brushes.
+ *  @return a pointer to the array of pointers
+ *  @param[out] the number of brushes
+ */
+mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes) {
+	int i, j, tmpVerb = config.verbosity;
+	mapbrush_t **brushesToMove = (mapbrush_t **)malloc(numToMoveToWorldspawn * sizeof(mapbrush_t *));
+
+	if(!brushesToMove)
+		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
+
+	*numBrushes = numToMoveToWorldspawn;
+
+	if(!numToMoveToWorldspawn)
+		return brushesToMove;
+
+	/* temporarily drop verbosity as checkFuncGroup should not repeat messages */
+	config.verbosity = VERB_SILENT_EXCEPT_ERROR;
+
+	/* 0 is the world - start at 1 */
+	for (i = 1, j = 0; i < num_entities; i++) {
+		entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
+
+		if (!strncmp(name, "func_group", 10)) {
+			if (checkFuncGroup(e, i) == 1)
+				brushesToMove[j++] = &mapbrushes[e->firstbrush];
+		}
+	}
+
+	/* restore */
+	config.verbosity = tmpVerb;
+
+	return brushesToMove;
 }
 
 static int checkStartPosition (entity_t *e, int entnum)

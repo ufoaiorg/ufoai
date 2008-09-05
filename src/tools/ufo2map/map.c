@@ -982,6 +982,33 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 	fprintf(f, "\"%s\" \"%s\"\n", e->key, e->value);
 }
 
+
+/**
+ * @brief write a brush to the .map file
+ * @param j the index of the brush in the entiry, to label the brush in the comment in the map file
+ * @param f file to write to
+ */
+static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
+{
+	int k = 0;
+	fprintf(f, "// brush %i\n{\n", j);
+	for (k = 0; k < brush->numsides; k++) {
+		const side_t *side = &brush->original_sides[k];
+		const ptrdiff_t index = side - brushsides;
+		const brush_texture_t *t = &side_brushtextures[index];
+		const plane_t *p = &mapplanes[side->planenum];
+		int l;
+
+		for (l = 0; l < 3; l++)
+			fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
+		fprintf(f, "%s ", t->name);
+		fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
+		fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
+		fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
+	}
+	fprintf(f, "}\n");
+}
+
 /**
  * @sa LoadMapFile
  * @sa FixErrors
@@ -989,7 +1016,7 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 void WriteMapFile (const char *filename)
 {
 	FILE *f;
-	int i, j, k;
+	int i, j;
 	int removed;
 
 	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
@@ -1014,28 +1041,22 @@ void WriteMapFile (const char *filename)
 
 		for (j = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
-			fprintf(f, "// brush %i\n{\n", j);
-			for (k = 0; k < brush->numsides; k++) {
-				const side_t *side = &brush->original_sides[k];
-				const ptrdiff_t index = side - brushsides;
-				const brush_texture_t *t = &side_brushtextures[index];
-				const plane_t *p = &mapplanes[side->planenum];
-				int l;
+			WriteMapBrush(brush, j, f);
+		}
 
-				for (l = 0; l < 3; l++)
-					fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
-				fprintf(f, "%s ", t->name);
-				fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
-				fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
-				fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
-			}
-			fprintf(f, "}\n");
+		/* add brushes from func_groups with single members to worldspawn */
+		if (i == 0) {
+			int numToAdd, k;
+			mapbrush_t **brushesToAdd;
+			brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
+			for (k = 0; k < numToAdd; k++)
+				WriteMapBrush(brushesToAdd[k], j++, f);
 		}
 		fprintf(f, "}\n");
 	}
 
 	if (removed)
-		Com_Printf("removed %i entities\n", removed);
+		Verb_Printf(VERB_NORMAL, "removed %i entities\n", removed);
 	fclose(f);
 }
 
