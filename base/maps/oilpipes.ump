@@ -16,7 +16,7 @@
 // C: Civilian spawnpoint(s)
 
 
-base oilpipes/
+base industrial/
 
 //---------------------------------
 //Dropships
@@ -222,8 +222,11 @@ tile +fr16_5x1 //A(2) C(1)
 0    0    0    0    0    0    0
 }
 
+
+
 //Test shows the frequency of the maps how they should/can appear
 //A: Alien spawnpoint; C: Civilian spawnpoint
+
 assembly small
 {
 title "_UFO Landed"
