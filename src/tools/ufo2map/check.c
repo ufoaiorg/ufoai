@@ -273,7 +273,7 @@ static int checkFuncGroup (entity_t *e, int entnum)
  * @return a pointer to the array of pointers
  * @param[out] the number of brushes
  */
-mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes) 
+mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 {
 	int i, j, tmpVerb = config.verbosity;
 	mapbrush_t **brushesToMove = (mapbrush_t **)malloc(numToMoveToWorldspawn * sizeof(mapbrush_t *));
@@ -676,12 +676,6 @@ void Check_BrushIntersection (void)
 					break;
 				}
 			}
-		}
-		if (iBrush->numNear) {
-			assert(iBrush->nearBrushes);
-			free(iBrush->nearBrushes);
-			iBrush->numNear = 0;
-			iBrush->nearBrushes = NULL;
 		}
 	}
 }
