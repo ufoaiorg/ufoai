@@ -1047,10 +1047,10 @@ void WriteMapFile (const char *filename)
 		/* add brushes from func_groups with single members to worldspawn */
 		if (i == 0) {
 			int numToAdd, k;
-			mapbrush_t **brushesToAdd;
-			brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
+			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
 			for (k = 0; k < numToAdd; k++)
 				WriteMapBrush(brushesToAdd[k], j++, f);
+			free(brushesToAdd);
 		}
 		fprintf(f, "}\n");
 	}

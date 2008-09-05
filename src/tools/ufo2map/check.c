@@ -291,7 +291,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
+		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
 		if (!strncmp(name, "func_group", 10)) {
