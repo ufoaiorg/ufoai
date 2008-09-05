@@ -285,22 +285,18 @@ static void TR_CargoList (void)
 	int i, cnt = 0;
 	employeeType_t emplType;
 	int trempl[MAX_EMPL];
-	/** @todo make cargolist a likedList */
-	static char cargoList[MAX_MENUTEXTLEN];
+	linkedList_t *cargoList = NULL;
 	char str[128];
 
-	cargoList[0] = '\0';
 	memset(cargo, 0, sizeof(cargo));
 	memset(trempl, 0, sizeof(trempl));
-
-	mn.menuText[TEXT_CARGO_LIST] = cargoList;
 
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (trItemsTmp[i] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				csi.ods[i].name, trItemsTmp[i]);
-			Q_strcat(cargoList, str, sizeof(cargoList));
+			LIST_AddString(&cargoList, str);
 			cargo[cnt].type = CARGO_TYPE_ITEM;
 			cargo[cnt].itemidx = i;
 			cnt++;
@@ -317,8 +313,8 @@ static void TR_CargoList (void)
 			if (trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
-					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s\n") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
-					Q_strcat(cargoList, str, sizeof(cargoList));
+					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+					LIST_AddString(&cargoList, str);
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
 					cnt++;
@@ -335,9 +331,9 @@ static void TR_CargoList (void)
 		if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 			continue;
 		if (trempl[emplType] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				E_GetEmployeeString(emplType), trempl[emplType]);
-			Q_strcat(cargoList, str, sizeof(cargoList));
+			LIST_AddString(&cargoList, str);
 			cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 			cnt++;
 			if (cnt >= MAX_CARGO) {
@@ -350,9 +346,9 @@ static void TR_CargoList (void)
 	/* Show aliens. */
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
-			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
+			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)"),
 				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
-			Q_strcat(cargoList, str, sizeof(cargoList));
+			LIST_AddString(&cargoList, str);
 			cargo[cnt].type = CARGO_TYPE_ALIEN_DEAD;
 			cargo[cnt].itemidx = i;
 			cnt++;
@@ -364,9 +360,9 @@ static void TR_CargoList (void)
 	}
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
-			Q_strcat(cargoList, str, sizeof(cargoList));
+			LIST_AddString(&cargoList, str);
 			cargo[cnt].type = CARGO_TYPE_ALIEN_ALIVE;
 			cargo[cnt].itemidx = i;
 			cnt++;
@@ -382,8 +378,8 @@ static void TR_CargoList (void)
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
 			assert(aircraft);
-			Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), _(aircraft->name));
-			Q_strcat(cargoList, str, sizeof(cargoList));
+			Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
+			LIST_AddString(&cargoList, str);
 			cargo[cnt].type = CARGO_TYPE_AIRCRAFT;
 			cargo[cnt].itemidx = i;
 			cnt++;
@@ -394,7 +390,7 @@ static void TR_CargoList (void)
 		}
 	}
 
-	mn.menuText[TEXT_CARGO_LIST] = cargoList;
+	mn.menuTextLinkedList[TEXT_CARGO_LIST] = cargoList;
 }
 
 /**
