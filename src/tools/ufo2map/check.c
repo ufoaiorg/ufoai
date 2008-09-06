@@ -758,6 +758,7 @@ static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
 void CheckNodraws (void)
 {
 	int i, j, is, js;
+	int globalNumSet = 0;
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
@@ -797,13 +798,16 @@ void CheckNodraws (void)
 						iSide->surfaceFlags |= SURF_NODRAW;
 						tex->surfaceFlags |= SURF_NODRAW;
 						numSet++;
+						globalNumSet++;
 					}
 				}
 			}
 		}
 		if (numSet)
-			Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set nodraw on %i sides (covered by another brush).\n", iBrush->brushnum, iBrush->entitynum, numSet);
+			Check_Printf(VERB_EXTRA, "* Brush %i (entity %i): set nodraw on %i sides (covered by another brush).\n", iBrush->brushnum, iBrush->entitynum, numSet);
 	}
+	if (globalNumSet)
+		Check_Printf(VERB_CHECK, "* Total of %i nodraws set (covered by another brush).\n", globalNumSet);
 }
 
 /**
