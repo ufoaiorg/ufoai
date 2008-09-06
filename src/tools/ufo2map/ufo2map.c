@@ -149,7 +149,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			/* arg to -v should be a single digit. if it is not a number
 			 * atoi will return 0, and no warning will be given. so check that
 			 * it looks like the arg for -v first */
-			if(strlen(argv[i+1]) == 1)
+			if (strlen(argv[i+1]) == 1)
 				config.verbosity = atoi(argv[++i]);
 			Verb_Printf(VERB_NORMAL, "verbosity = %i\n", config.verbosity);
 		} else if (!strcmp(argv[i], "-noweld")) {
@@ -540,7 +540,7 @@ int main (int argc, const char **argv)
 	if (!(config.performMapCheck || config.fixMap))
 		Verb_Printf(VERB_NORMAL, "...bsp: '%s'\n", bspFilename);
 
-	if(config.verbosity == VERB_MAPNAME && !(config.performMapCheck || config.fixMap))
+	if (config.verbosity == VERB_MAPNAME && !(config.performMapCheck || config.fixMap))
 		PrintName();
 
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {

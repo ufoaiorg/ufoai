@@ -659,13 +659,13 @@ void Check_BrushIntersection (void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
-		if(!Check_IsOptimisable(iBrush))
+		if (!Check_IsOptimisable(iBrush))
 			continue;
 
 		for (j = 0; j < iBrush->numNear; j++) {
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
 
-			if(!Check_IsOptimisable(jBrush))
+			if (!Check_IsOptimisable(jBrush))
 				continue;
 
 			/* check each side of i for intersection with brush j */
