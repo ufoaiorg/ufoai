@@ -313,7 +313,8 @@ static void TR_CargoList (void)
 			if (trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
-					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s\n"), gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s\n"), 
+						gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					LIST_AddString(&cargoList, str);
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
@@ -390,6 +391,7 @@ static void TR_CargoList (void)
 		}
 	}
 
+/*	MN_MenuTextReset(TEXT_CARGO_LIST); */
 	mn.menuTextLinkedList[TEXT_CARGO_LIST] = cargoList;
 }
 

@@ -453,41 +453,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	}
 }
 
-#ifdef DEBUG
-/**
- * @brief Stun all members of a giben team.
- */
-void G_StunTeam (void)
-{
-	/* default is to kill all teams */
-	int teamToKill = -1, i;
-	edict_t *ent;
-
-	/* with a parameter we will be able to kill a specific team */
-	if (gi.Cmd_Argc() == 2)
-		teamToKill = atoi(gi.Cmd_Argv(1));
-
-	Com_DPrintf(DEBUG_GAME, "G_StunTeam: stun team %i\n", teamToKill);
-
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent)) {
-			if (teamToKill >= 0 && ent->team != teamToKill)
-				continue;
-
-			/* die */
-			G_ActorDie(ent, STATE_STUN, NULL);
-
-			if (teamToKill == TEAM_ALIEN)
-				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
-			else
-				level.num_stuns[TEAM_ALIEN][teamToKill]++;
-		}
-
-	/* check for win conditions */
-	G_CheckEndGame();
-}
-#endif
-
 /**
  * @returns True if the surface has the fireaffected flag set and the firedef
  * might produce fire (e.g. flamer)

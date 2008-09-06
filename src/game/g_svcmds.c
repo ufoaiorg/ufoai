@@ -295,7 +295,7 @@ static void SVCmd_ActorInvList_f (void)
 	for (i = 0, player = game.players; i < game.sv_maxplayersperteam * 2; i++, player++) {
 		if (!player->inuse)
 			continue;
-		Cmd_InvList(player);
+		G_InvList_f(player);
 	}
 }
 #endif

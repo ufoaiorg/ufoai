@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-static void Cmd_Players_f (player_t * player)
+static void G_Players_f (const player_t *player)
 {
 	int i;
 	int count = 0;
@@ -39,10 +39,12 @@ static void Cmd_Players_f (player_t * player)
 	largeBuf[0] = 0;
 
 	for (i = 0; i < game.sv_maxplayersperteam; i++) {
-		if (!game.players[i].pers.team)
+		const player_t *p = &game.players[i];
+		if (!p->inuse)
 			continue;
 
-		Com_sprintf(smallBuf, sizeof(smallBuf), "Team %i %s\n", game.players[i].pers.team, game.players[i].pers.netname);
+		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->num,
+				p->pers.team, p->pers.netname, (p->ready ? "waiting" : "playing"));
 
 		/* can't print all of them in one packet */
 		if (strlen(smallBuf) + strlen(largeBuf) > sizeof(largeBuf) - 100) {
@@ -85,7 +87,7 @@ static qboolean G_CheckFlood (player_t *player)
 	return qfalse;
 }
 
-static void G_Say (player_t *player, qboolean arg0, qboolean team)
+static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 {
 	int j;
 	const char *p, *token;
@@ -132,37 +134,170 @@ static void G_Say (player_t *player, qboolean arg0, qboolean team)
 	}
 }
 
-static void Cmd_PlayerList_f (player_t * player)
+#ifdef DEBUG
+/**
+ * @brief This function does not add statistical values. Because there is no attacker.
+ * The same counts for morale states - they are not affected.
+ * @note: This is a debug function to let a hole team die
+ */
+static void G_KillTeam_f (void)
 {
-	int i;
-	char st[80];
-	char text[1400];
-	player_t *e2;
+	/* default is to kill all teams */
+	int teamToKill = -1, i;
+	edict_t *ent;
 
-	/* team, ping, name */
-	*text = 0;
-	/* list all human controlled players here */
-	for (i = 0, e2 = game.players; i < game.sv_maxplayersperteam; i++, e2++) {
-		if (!e2->inuse)
-			continue;
+	/* with a parameter we will be able to kill a specific team */
+	if (gi.Cmd_Argc() == 2)
+		teamToKill = atoi(gi.Cmd_Argv(1));
 
-		Com_sprintf(st, sizeof(st), "(%i) Team %i %s status: %s\n", e2->num,
-				e2->pers.team, e2->pers.netname, (e2->ready ? "waiting" : "playing"));
-		if (strlen(text) + strlen(st) > sizeof(text) - 50) {
-			Q_strcat(text, "And more...\n", sizeof(text));
-			gi.cprintf(player, PRINT_CONSOLE, "%s", text);
-			return;
+	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && G_IsLivingActor(ent)) {
+			if (teamToKill >= 0 && ent->team != teamToKill)
+				continue;
+
+			/* die */
+			G_ActorDie(ent, STATE_DEAD, NULL);
 		}
-		Q_strcat(text, st, sizeof(text));
-	}
-	gi.cprintf(player, PRINT_CONSOLE, "%s", text);
+
+	/* check for win conditions */
+	G_CheckEndGame();
 }
 
-#ifdef DEBUG
+/**
+ * @brief Stun all members of a giben team.
+ */
+static void G_StunTeam_f (void)
+{
+	/* default is to kill all teams */
+	int teamToKill = -1, i;
+	edict_t *ent;
+
+	/* with a parameter we will be able to kill a specific team */
+	if (gi.Cmd_Argc() == 2)
+		teamToKill = atoi(gi.Cmd_Argv(1));
+
+	Com_DPrintf(DEBUG_GAME, "G_StunTeam: stun team %i\n", teamToKill);
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && G_IsLivingActor(ent)) {
+			if (teamToKill >= 0 && ent->team != teamToKill)
+				continue;
+
+			/* die */
+			G_ActorDie(ent, STATE_STUN, NULL);
+
+			if (teamToKill == TEAM_ALIEN)
+				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
+			else
+				level.num_stuns[TEAM_ALIEN][teamToKill]++;
+		}
+
+	/* check for win conditions */
+	G_CheckEndGame();
+}
+
+/**
+ * @brief Prints all mission-score entries of all team members.
+ * @note Console command: debug_listscore
+ */
+static void G_ListMissionScore_f (void)
+{
+	int team = -1;
+	edict_t *ent;
+	int entIdx, i, j;
+
+	/* With a parameter we will be able to get the info for a specific team */
+	if (gi.Cmd_Argc() == 2) {
+		team = atoi(gi.Cmd_Argv(1));
+	} else {
+		Com_Printf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
+		return;
+	}
+
+	for (entIdx = 0, ent = g_edicts; entIdx < globals.num_edicts; entIdx++, ent++) {
+		if (ent->inuse && G_IsLivingActor(ent)) {
+			if (team >= 0 && ent->team != team)
+				continue;
+
+			assert(ent->chr.scoreMission);
+
+			Com_Printf("Soldier: %s\n", ent->chr.name);
+
+			/* ===================== */
+			Com_Printf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
+
+			Com_Printf("  Kills:");
+			for (i = 0; i < KILLED_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->kills[i]);
+			}
+			Com_Printf("\n");
+
+			Com_Printf("  Stuns:");
+			for (i = 0; i < KILLED_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->stuns[i]);
+			}
+			Com_Printf("\n");
+
+			/* ===================== */
+			Com_Printf("  Fired:");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->fired[i]);
+			}
+			Com_Printf("\n");
+
+			Com_Printf("  Hits:\n");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf("    Skill%i: ",i);
+				for (j = 0; j < KILLED_NUM_TYPES; j++) {
+					Com_Printf(" %i", ent->chr.scoreMission->hits[i][j]);
+				}
+				Com_Printf("\n");
+			}
+
+			/* ===================== */
+			Com_Printf("  Fired Splash:");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->firedSplash[i]);
+			}
+			Com_Printf("\n");
+
+			Com_Printf("  Hits Splash:\n");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf("    Skill%i: ",i);
+				for (j = 0; j < KILLED_NUM_TYPES; j++) {
+					Com_Printf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
+				}
+				Com_Printf("\n");
+			}
+
+			Com_Printf("  Splash Damage:\n");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf("    Skill%i: ",i);
+				for (j = 0; j < KILLED_NUM_TYPES; j++) {
+					Com_Printf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
+				}
+				Com_Printf("\n");
+			}
+
+			/* ===================== */
+			Com_Printf("  Kills per skill:");
+			for (i = 0; i < SKILL_NUM_TYPES; i++) {
+				Com_Printf(" %i", ent->chr.scoreMission->skillKills[i]);
+			}
+			Com_Printf("\n");
+
+			/* ===================== */
+			Com_Printf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
+		}
+	}
+}
+
 /**
  * @brief Debug function to print a player's inventory
  */
-void Cmd_InvList (player_t *player)
+void G_InvList_f (const player_t *player)
 {
 	edict_t *ent;
 	int i;
@@ -241,20 +376,18 @@ void G_ClientCommand (player_t * player)
 	cmd = gi.Cmd_Argv(0);
 
 	if (Q_strcasecmp(cmd, "players") == 0)
-		Cmd_Players_f(player);
-	else if (Q_strcasecmp(cmd, "playerlist") == 0)
-		Cmd_PlayerList_f(player);
+		G_Players_f(player);
 	else if (Q_strcasecmp(cmd, "say") == 0)
-		G_Say(player, qfalse, qfalse);
+		G_Say_f(player, qfalse, qfalse);
 	else if (Q_strcasecmp(cmd, "say_team") == 0)
-		G_Say(player, qfalse, qtrue);
+		G_Say_f(player, qfalse, qtrue);
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "actorinvlist") == 0)
-		Cmd_InvList(player);
+		G_InvList_f(player);
 	else if (Q_strcasecmp(cmd, "killteam") == 0)
-		G_KillTeam();
+		G_KillTeam_f();
 	else if (Q_strcasecmp(cmd, "stunteam") == 0)
-		G_StunTeam();
+		G_StunTeam_f();
 	else if (Q_strcasecmp(cmd, "debug_listscore") == 0)
 		G_ListMissionScore_f();
 	else if (Q_strcasecmp(cmd, "debug_edicttouch") == 0)
@@ -264,5 +397,5 @@ void G_ClientCommand (player_t * player)
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
-		G_Say(player, qtrue, qfalse);
+		G_Say_f(player, qtrue, qfalse);
 }

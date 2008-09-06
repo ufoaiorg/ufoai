@@ -2111,9 +2111,7 @@ static void CL_InitLocal (void)
 	 * forwarded to the server */
 	Cmd_AddCommand("say", NULL, NULL);
 	Cmd_AddCommand("say_team", NULL, NULL);
-	Cmd_AddCommand("info", NULL, NULL);
-	Cmd_AddCommand("playerlist", NULL, NULL);
-	Cmd_AddCommand("players", NULL, NULL);
+	Cmd_AddCommand("players", NULL, "List of team and player name");
 
 	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
 #ifdef DEBUG
