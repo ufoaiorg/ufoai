@@ -3344,6 +3344,27 @@ static void B_PrintCapacities_f (void)
 		}
 	}
 }
+
+/**
+ * @brief Finishes the construction of every building in the base
+ */
+static void B_BuildingConstructionFinished_f (void)
+{
+	int i;
+	base_t *base;
+
+	if (!baseCurrent)
+		return;
+
+	base = baseCurrent;
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		building_t *building = &gd.buildings[base->idx][i];
+		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+	}
+	/* update menu */
+	B_SelectBase(base);
+}
+
 #endif
 
 /**
@@ -3378,6 +3399,7 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
 	Cmd_AddCommand("debug_listcapacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
 	Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
+	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 #endif
 
 	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
@@ -3444,15 +3466,14 @@ void B_UpdateBaseData (void)
 
 /**
  * @brief Checks whether the construction of a building is finished.
- *
  * Calls the onConstruct functions and assign workers, too.
  */
-int B_CheckBuildingConstruction (building_t * building, base_t* base)
+int B_CheckBuildingConstruction (building_t *building, base_t *base)
 {
 	int newBuilding = 0;
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
+		if (building->timeStart && building->timeStart + building->buildTime <= ccs.date.day) {
 			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 
 			if (*building->onConstruct) {
