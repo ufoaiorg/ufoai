@@ -1,14 +1,14 @@
-// base/maps/oilpipes.ump
+// base/maps/industrial.ump
 
 // *********************************
-// OILPIPES THEME
+// INDUSTRIAL THEME
 // *********************************
 
 // Tiletypes:
 // ----------
 // +: tile contains something
 // g: gapfillers
-// z: attached to border of map
+// z: not available tile to attach to corner
 // 0: no spec
 
 // Side notes:
@@ -34,7 +34,7 @@ tile +drop_firebird
 tile +inter_stiletto
 {
 3 4
-0    0    z
+0    0    0
 0    +g   0
 0    +g   0
 0    0    0
@@ -43,7 +43,7 @@ tile +inter_stiletto
 tile +inter_saracen
 {
 5 4
-0    0    0    0    z
+0    0    0    0    0
 0    +g   +g   +g   0
 0    +g   +g   +g   0
 0    0    0    0    0
@@ -57,8 +57,8 @@ tile +craft_ufo_scout //A(3)
 0    0    0    0
 0    +g   +g   0
 0    +g   +g   0
-z    +g   +g   0
-z    0    0    0
+0    +g   +g   0
+z    z    0    0
 }
 
 tile +craft_ufo_fighter //A(5)
@@ -67,8 +67,8 @@ tile +craft_ufo_fighter //A(5)
 0    0    0    0
 0    +g   +g   0
 0    +g   +g   0
-z    +g   +g   0
-z    0    0    0
+0    +g   +g   0
+z    z    0    0
 }
 
 tile +craft_ufo_supply //A(12)
@@ -78,9 +78,8 @@ tile +craft_ufo_supply //A(12)
 0    +g   +g   +g    +g   0
 0    +g   +g   +g    +g   0
 0    +g   +g   +g    +g   0
-z    z    0    0     0    0
+z    z    0    0     0    0   
 }
-
 
 
 //---------------------------------
@@ -125,7 +124,6 @@ tile +fr05
 0    0    0
 }
 
-//Building
 tile +fr06_3x2 //A(2) C(2)
 {
 5 4
@@ -133,6 +131,7 @@ tile +fr06_3x2 //A(2) C(2)
 0    +g   +g   +g   0
 0    +g   +g   +g   0
 0    0    0    0    0
+
 }
 
 tile +fr07
@@ -176,8 +175,7 @@ tile +fr11_1x2 //C(1)
 0    0    0
 }
 
-//Refinery
-tile +fr12_3x3 //C(3) A(3)
+tile +fr12_3x3
 {
 5 5
 0    0    0    0    0
@@ -187,15 +185,15 @@ tile +fr12_3x3 //C(3) A(3)
 0    0    0    0    0
 }
 
-tile +fr13_2x1 //C(1)
+tile +fr13_2x1
 {
 4 3
 0    0    0    0
-0    +g   +g   0
+0    +g   +g   0    
 0    0    0    0
 }
 
-tile +fr14_1x3 //C(1) A(1)
+tile +fr14_1x3
 {
 3 5
 0    0    0
@@ -205,7 +203,7 @@ tile +fr14_1x3 //C(1) A(1)
 0    0    0
 }
 
-tile +fr15_2x1 //C(1)
+tile +fr15_2x1
 {
 4 3
 0    0    0    0
@@ -213,8 +211,7 @@ tile +fr15_2x1 //C(1)
 0    0    0    0
 }
 
-//Two straight oilpipes running from left to right
-tile +fr16_5x1 //A(2) C(1)
+tile +fr16_5x1
 {
 7 3
 0    0    0    0    0    0    0
@@ -222,32 +219,28 @@ tile +fr16_5x1 //A(2) C(1)
 0    0    0    0    0    0    0
 }
 
-
-
 //Test shows the frequency of the maps how they should/can appear
 //A: Alien spawnpoint; C: Civilian spawnpoint
-
 assembly small
 {
 title "_UFO Landed"
 size "6 6"
 *rm_drop +drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1" //Enough Alien spawnpoints for Max Crew capacity
-+fr16_5x1 "0 1" //C(1) A(2)
 +fr01 "0 1"
-+fr02 "0 2"
-+fr03 "0 2" //C(1)
-+fr04 "0 2"
-+fr05 "1 1"
++fr02 "0 1"
++fr03 "0 1" //C(1)
++fr04 "0 1"
++fr05 "0 1"
 +fr06_3x2 "1 1" //C(2) A(2)
-+fr07 "0 2"
-+fr08 "0 2"
++fr07 "0 1"
++fr08 "0 1"
 +fr09 "0 1"
 +fr10 "0 10"
-+fr11_1x2 "0 2" //C(1)
-+fr12_3x3 "1 1" //C(3) A(3)
-+fr13_2x1 "0 1" //C(1)
-+fr14_1x3 "0 1" //C(1) A(1)
-+fr15_2x1 "0 1" //C(1)
-+fr16_5x1 "0 1" //C(1) A(2)
++fr11_1x2 "0 1" //C(1)
++fr12_3x3 "1 1"
++fr13_2x1 "0 1"
++fr14_1x3 "0 1"
++fr15_2x1 "0 1"
++fr16_5x1 "0 1"
 }
