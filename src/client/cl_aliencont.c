@@ -208,7 +208,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					B_UpdateStorageAndCapacity(tobase, alBrOd, cargo[i].amount_alive, qfalse, qfalse);
 					/* only once */
 					if (!messageAlreadySet) {
-						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_STANDARD, NULL);
+						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
 						messageAlreadySet = qtrue;
 					}
 				} else {
