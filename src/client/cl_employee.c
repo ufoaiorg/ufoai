@@ -228,6 +228,7 @@ EMPLOYEE BACKEND STUFF
 
 /**
  * @brief Checks whether the given employee is in the given base
+ * @sa E_EmployeeIsCurrentlyInBase
  */
 qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
 {
@@ -506,12 +507,16 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
  * @brief Returns true if the employee is in the homebase and not on mission or transfer
  * @param[in] employee The employee_t pointer to check
  * @return qboolean
+ * @note It's assumed that the employee is already hired
+ * @sa E_IsInBase
  */
-qboolean E_EmployeeIsInBase (const employee_t * employee)
+qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
 {
 	if (!employee)
 		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
 
+	assert(employee->hired);
+	
 	if (employee->transfer)
 		return qfalse;
 	else {
