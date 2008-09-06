@@ -151,10 +151,10 @@ static void U2M_Parameter (int argc, const char **argv)
 			 * it looks like the arg for -v first */
 			if (strlen(argv[i+1]) == 1)
 				config.verbosity = atoi(argv[++i]);
-			Verb_Printf(VERB_NORMAL, "verbosity = %i\n", config.verbosity);
+			Verb_Printf(VERB_LESS, "verbosity = %i\n", config.verbosity);
 		} else if (!strcmp(argv[i], "-noweld")) {
 			/* make every point unique */
-			Verb_Printf(VERB_NORMAL, "noweld = true\n");
+			Verb_Printf(VERB_LESS, "noweld = true\n");
 			config.noweld = qtrue;
 		} else if (!strcmp(argv[i], "-check") || !strcmp(argv[i], "-fix")) {
 			/* check for subparameters terminate loop before last arg (path) or
@@ -163,40 +163,40 @@ static void U2M_Parameter (int argc, const char **argv)
 			const int iInitial = i;
 
 			if (!strcmp(argv[i], "-check")) {
-				Verb_Printf(VERB_NORMAL, "check = true\n");
+				Verb_Printf(VERB_LESS, "check = true\n");
 				config.performMapCheck = qtrue;
 			}
 			if (!strcmp(argv[i], "-fix")) {
-				Verb_Printf(VERB_NORMAL, "fix = true\n");
+				Verb_Printf(VERB_LESS, "fix = true\n");
 				config.fixMap = qtrue;
 			}
 			while (++i < (argc - 1) && argv[i][0] != '-') {
 				if (!strcmp(argv[i], "entities") || !strcmp(argv[i], "ent")) {
-					Verb_Printf(VERB_NORMAL, "  %s entities\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s entities\n", config.fixMap ? "fixing" : "checking");
 					config.chkEntities = qtrue;
 				} else if (!strcmp(argv[i], "brushes") || !strcmp(argv[i], "bru")) {
-					Verb_Printf(VERB_NORMAL, "  %s brushes\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkBrushes = qtrue;
 				} else if (!strcmp(argv[i], "contained") || !strcmp(argv[i], "con")) {
-					Verb_Printf(VERB_NORMAL, "  %s contained brushes\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s contained brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkContained = qtrue;
 				} else if (!strcmp(argv[i], "filllevelflags") || !strcmp(argv[i], "flv")) {
-					Verb_Printf(VERB_NORMAL, "  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkFillLevelFlags = qtrue;
 				} else if (!strcmp(argv[i], "levelflags") || !strcmp(argv[i], "lvl")) {
-					Verb_Printf(VERB_NORMAL, "  %s levelflags\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s levelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkLevelFlags = qtrue;
 				} else if (!strcmp(argv[i], "textures") || !strcmp(argv[i], "tex")) {
-					Verb_Printf(VERB_NORMAL, "  %s textures\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s textures\n", config.fixMap ? "fixing" : "checking");
 					config.chkTextures = qtrue;
 				} else if (!strcmp(argv[i], "nodraws") || !strcmp(argv[i], "ndr")) {
-					Verb_Printf(VERB_NORMAL, "  %s nodraws\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s nodraws\n", config.fixMap ? "fixing" : "checking");
 					config.chkNodraws = qtrue;
 				} else if (!strcmp(argv[i], "intersection") || !strcmp(argv[i], "isc")) {
-					Verb_Printf(VERB_NORMAL, "  %s intersection\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s intersection\n", config.fixMap ? "fixing" : "checking");
 					config.chkIntersection = qtrue;
 				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
-					Verb_Printf(VERB_NORMAL, "  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
 					config.chkMixedFaceContents = qtrue;
 				} else if (!strcmp(argv[i], "microbrush") || !strcmp(argv[i], "mbr")) {
 					config.chkMMicro = qtrue;
@@ -204,18 +204,18 @@ static void U2M_Parameter (int argc, const char **argv)
 						config.mapMicrovol = atof(argv[i + 1]);
 						i++;
 					}
-					Verb_Printf(VERB_NORMAL, "  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
+					Verb_Printf(VERB_LESS, "  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
 				} else if (!strcmp(argv[i], "all")) {
-					Verb_Printf(VERB_NORMAL, "  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
+					Verb_Printf(VERB_LESS, "  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
 				} else {
-					Verb_Printf(VERB_NORMAL, "  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
+					Verb_Printf(VERB_LESS, "  WARNING: %s subparameter not understood:%s  try --help for more info\n", config.fixMap ? "fix" : "check", argv[i]);
 				}
 			}
 			i--;
 			/* if no subparams set, assume all */
 			if (i == iInitial) {
-				Verb_Printf(VERB_NORMAL, "  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
+				Verb_Printf(VERB_LESS, "  no %s subparameters set, assuming all\n", config.fixMap ? "fix" : "check");
 				config.chkAll = qtrue;
 			}
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
@@ -223,120 +223,120 @@ static void U2M_Parameter (int argc, const char **argv)
 			exit(0);
 		} else if (!strcmp(argv[i], "-t") || !strcmp(argv[i], "-threads")) {
 			threadstate.numthreads = atoi(argv[++i]);
-			Verb_Printf(VERB_NORMAL, "threads: #%i\n", threadstate.numthreads);
+			Verb_Printf(VERB_LESS, "threads: #%i\n", threadstate.numthreads);
 		} else if (!strcmp(argv[i], "-info")) {
 			config.info = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
-			Verb_Printf(VERB_NORMAL, "nocsg = true\n");
+			Verb_Printf(VERB_LESS, "nocsg = true\n");
 			config.nocsg = qtrue;
 		} else if (!strcmp(argv[i], "-noshare")) {
-			Verb_Printf(VERB_NORMAL, "noshare = true\n");
+			Verb_Printf(VERB_LESS, "noshare = true\n");
 			config.noshare = qtrue;
 		} else if (!strcmp(argv[i], "-onlynewer")) {
-			Verb_Printf(VERB_NORMAL, "onlynewer = true\n");
+			Verb_Printf(VERB_LESS, "onlynewer = true\n");
 			config.onlynewer = qtrue;
 		} else if (!strcmp(argv[i], "-notjunc")) {
-			Verb_Printf(VERB_NORMAL, "notjunc = true\n");
+			Verb_Printf(VERB_LESS, "notjunc = true\n");
 			config.notjunc = qtrue;
 		} else if (!strcmp(argv[i], "-nowater")) {
-			Verb_Printf(VERB_NORMAL, "nowater = true\n");
+			Verb_Printf(VERB_LESS, "nowater = true\n");
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
 #ifdef HAVE_SETPRIORITY
 			config.nice = atoi(argv[++i]);
-			Verb_Printf(VERB_NORMAL, "nice = %i\n", config.nice);
+			Verb_Printf(VERB_LESS, "nice = %i\n", config.nice);
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
-				Verb_Printf(VERB_NORMAL, "failed to set nice level of %i\n", config.nice);
+				Verb_Printf(VERB_LESS, "failed to set nice level of %i\n", config.nice);
 #elif defined _WIN32
 			HANDLE proc = GetCurrentProcess();
 			config.nice = atoi(argv[++i]);
-			Verb_Printf(VERB_NORMAL, "nice = %i\n", config.nice);
+			Verb_Printf(VERB_LESS, "nice = %i\n", config.nice);
 			switch (config.nice) {
 			case 0:
 				SetPriorityClass(proc, HIGH_PRIORITY_CLASS);
-				Verb_Printf(VERB_NORMAL, "Priority changed to HIGH\n");
+				Verb_Printf(VERB_LESS, "Priority changed to HIGH\n");
 				break;
 			case 1:
 				SetPriorityClass(proc, NORMAL_PRIORITY_CLASS);
-				Verb_Printf(VERB_NORMAL, "Priority changed to NORMAL\n");
+				Verb_Printf(VERB_LESS, "Priority changed to NORMAL\n");
 				break;
 			default:
 				SetPriorityClass(proc, IDLE_PRIORITY_CLASS);
-				Verb_Printf(VERB_NORMAL, "Priority changed to IDLE\n");
+				Verb_Printf(VERB_LESS, "Priority changed to IDLE\n");
 				break;
 			}
 			CloseHandle(proc);
 #else
-			Verb_Printf(VERB_NORMAL, "nice not implemented for this arch\n");
+			Verb_Printf(VERB_LESS, "nice not implemented for this arch\n");
 			i++;
 #endif
 		} else if (!strcmp(argv[i], "-noprune")) {
-			Verb_Printf(VERB_NORMAL, "noprune = true\n");
+			Verb_Printf(VERB_LESS, "noprune = true\n");
 			config.noprune = qtrue;
 		} else if (!strcmp(argv[i],"-nofootstep")) {
 			config.generateFootstepFile = qfalse;
-			Verb_Printf(VERB_NORMAL, "generateFootstepFile = false\n");
+			Verb_Printf(VERB_LESS, "generateFootstepFile = false\n");
 		} else if (!strcmp(argv[i],"-material")) {
 			config.generateMaterialFile = qtrue;
-			Verb_Printf(VERB_NORMAL, "generateMaterialFile = true\n");
+			Verb_Printf(VERB_LESS, "generateMaterialFile = true\n");
 		} else if (!strcmp(argv[i], "-nomerge")) {
-			Verb_Printf(VERB_NORMAL, "nomerge = true\n");
+			Verb_Printf(VERB_LESS, "nomerge = true\n");
 			config.nomerge = qtrue;
 		} else if (!strcmp(argv[i], "-nosubdiv")) {
-			Verb_Printf(VERB_NORMAL, "nosubdiv = true\n");
+			Verb_Printf(VERB_LESS, "nosubdiv = true\n");
 			config.nosubdiv = qtrue;
 		} else if (!strcmp(argv[i], "-nodetail")) {
-			Verb_Printf(VERB_NORMAL, "nodetail = true\n");
+			Verb_Printf(VERB_LESS, "nodetail = true\n");
 			config.nodetail = qtrue;
 		} else if (!strcmp(argv[i], "-fulldetail")) {
-			Verb_Printf(VERB_NORMAL, "fulldetail = true\n");
+			Verb_Printf(VERB_LESS, "fulldetail = true\n");
 			config.fulldetail = qtrue;
 		} else if (!strcmp(argv[i], "-onlyents")) {
-			Verb_Printf(VERB_NORMAL, "onlyents = true\n");
+			Verb_Printf(VERB_LESS, "onlyents = true\n");
 			config.onlyents = qtrue;
 		} else if (!strcmp(argv[i], "-micro")) {
 			config.microvolume = atof(argv[i + 1]);
-			Verb_Printf(VERB_NORMAL, "microvolume = %f\n", config.microvolume);
+			Verb_Printf(VERB_LESS, "microvolume = %f\n", config.microvolume);
 			i++;
 		} else if (!strcmp(argv[i], "-verboseentities")) {
-			Verb_Printf(VERB_NORMAL, "verboseentities = true\n");
+			Verb_Printf(VERB_LESS, "verboseentities = true\n");
 			config.verboseentities = qtrue;
 		} else if (!strcmp(argv[i], "-chop")) {
 			config.subdivideSize = atof(argv[i + 1]);
-			Verb_Printf(VERB_NORMAL, "subdivide_size = %f\n", config.subdivideSize);
+			Verb_Printf(VERB_LESS, "subdivide_size = %f\n", config.subdivideSize);
 			i++;
 		} else if (!strcmp(argv[i], "-block")) {
 			config.block_xl = config.block_xh = atoi(argv[i + 1]);
 			config.block_yl = config.block_yh = atoi(argv[i + 2]);
-			Verb_Printf(VERB_NORMAL, "block: %i,%i\n", config.block_xl, config.block_yl);
+			Verb_Printf(VERB_LESS, "block: %i,%i\n", config.block_xl, config.block_yl);
 			i += 2;
 		} else if (!strcmp(argv[i], "-blocks")) {
 			config.block_xl = atoi(argv[i + 1]);
 			config.block_yl = atoi(argv[i + 2]);
 			config.block_xh = atoi(argv[i + 3]);
 			config.block_yh = atoi(argv[i + 4]);
-			Verb_Printf(VERB_NORMAL, "blocks: %i,%i to %i,%i\n",
+			Verb_Printf(VERB_LESS, "blocks: %i,%i to %i,%i\n",
 				config.block_xl, config.block_yl, config.block_xh, config.block_yh);
 			i += 4;
 		} else if (!strcmp(argv[i], "-nobackclip")) {
-			Verb_Printf(VERB_NORMAL, "nobackclip = true\n");
+			Verb_Printf(VERB_LESS, "nobackclip = true\n");
 			config.nobackclip = qtrue;
 		} else if (!strcmp(argv[i],"-bounce")) {
 			config.numbounce = atoi(argv[i + 1]);
-			Verb_Printf(VERB_NORMAL, "light bounces = %i\n", config.numbounce);
+			Verb_Printf(VERB_LESS, "light bounces = %i\n", config.numbounce);
 			i++;
 		} else if (!strcmp(argv[i],"-extra")) {
 			config.extrasamples = qtrue;
-			Verb_Printf(VERB_NORMAL, "extrasamples = true\n");
+			Verb_Printf(VERB_LESS, "extrasamples = true\n");
 		} else if (!strcmp(argv[i],"-radchop")) {
-			Verb_Printf(VERB_NORMAL, "radiosity subdivide size = %s\n", argv[i + 1]);
+			Verb_Printf(VERB_LESS, "radiosity subdivide size = %s\n", argv[i + 1]);
 			config.subdiv = atoi(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
 			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {
 				config.lightquant = 4;
-				Verb_Printf(VERB_NORMAL, "lightquant must be between 1 and 6\n");
+				Verb_Printf(VERB_LESS, "lightquant must be between 1 and 6\n");
 			}
 			i++;
 		} else if (!strcmp(argv[i],"-scale")) {
@@ -344,11 +344,11 @@ static void U2M_Parameter (int argc, const char **argv)
 			i++;
 		} else if (!strcmp(argv[i],"-direct")) {
 			config.direct_scale *= atof(argv[i + 1]);
-			Verb_Printf(VERB_NORMAL, "direct light scaling at %f\n", config.direct_scale);
+			Verb_Printf(VERB_LESS, "direct light scaling at %f\n", config.direct_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-entity")) {
 			config.entity_scale *= atof(argv[i + 1]);
-			Verb_Printf(VERB_NORMAL, "entity light scaling at %f\n", config.entity_scale);
+			Verb_Printf(VERB_LESS, "entity light scaling at %f\n", config.entity_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-maxlight")) {
 			config.maxlight = atof(argv[i + 1]) * 128;
@@ -356,15 +356,15 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-noradiosity")) {
 			if (argc > i + 1) {
 				if (!strcmp(argv[i + 1], "day")) {
-					Verb_Printf(VERB_NORMAL, "noradiosity = day\n");
+					Verb_Printf(VERB_LESS, "noradiosity = day\n");
 					config.noradiosity = RADIOSITY_NIGHT_ONLY;
 					i++;
 				} else if (!strcmp(argv[i + 1], "night")) {
-					Verb_Printf(VERB_NORMAL, "noradiosity = night\n");
+					Verb_Printf(VERB_LESS, "noradiosity = night\n");
 					config.noradiosity = RADIOSITY_DAY_ONLY;
 					i++;
 				} else {
-					Verb_Printf(VERB_NORMAL, "noradiosity = none\n");
+					Verb_Printf(VERB_LESS, "noradiosity = none\n");
 					config.noradiosity = RADIOSITY_NONE;
 				}
 			} else {
@@ -372,7 +372,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			}
 		} else if (i < (argc - 1)) {
 			/* Last param is the map path, every other param should have been caught by now. */
-			Verb_Printf(VERB_NORMAL, "*** parameter not understood: %s try --help for more info\n", argv[i]);
+			Verb_Printf(VERB_LESS, "*** parameter not understood: %s try --help for more info\n", argv[i]);
 		}
 	}
 
@@ -544,7 +544,7 @@ int main (int argc, const char **argv)
 		PrintName();
 
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
-		Verb_Printf(VERB_NORMAL, "bsp file is up-to-date\n");
+		Verb_Printf(VERB_LESS, "bsp file is up-to-date\n");
 		return 0;
 	}
 
@@ -622,12 +622,12 @@ int main (int argc, const char **argv)
 	}
 
 	end = time(NULL);
-	Verb_Printf(VERB_NORMAL, "%5.0f seconds elapsed\n", end - start);
+	Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
 		long size;
 
-		Verb_Printf(VERB_NORMAL, "----- Radiosity ----\n");
+		Verb_Printf(VERB_LESS, "----- Radiosity ----\n");
 
 		begin = start;
 
@@ -638,7 +638,7 @@ int main (int argc, const char **argv)
 			start = time(NULL);
 			RadWorld();
 			end = time(NULL);
-			Verb_Printf(VERB_NORMAL, "%5.0f seconds elapsed\n", end - start);
+			Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 		}
 
 		if (config.noradiosity != RADIOSITY_NIGHT_ONLY) {
@@ -647,13 +647,13 @@ int main (int argc, const char **argv)
 			start = time(NULL);
 			RadWorld();
 			end = time(NULL);
-			Verb_Printf(VERB_NORMAL, "%5.0f seconds elapsed\n", end - start);
+			Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 		}
 
-		Verb_Printf(VERB_NORMAL, "writing %s\n", bspFilename);
+		Verb_Printf(VERB_LESS, "writing %s\n", bspFilename);
 		size = WriteBSPFile(bspFilename);
 
-		Verb_Printf(VERB_NORMAL, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
+		Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 	}
 
 	return 0;
