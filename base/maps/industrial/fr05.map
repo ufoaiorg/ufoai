@@ -2,11 +2,12 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "2"
+"maxlevel" "5"
 "light" "190"
 "_color" "0.9 0.9 1"
 "angles" "0.032285 225"
 "ambient" "0.45 0.45 0.45"
+"maxteams" "0"
 // brush 0
 {
 ( 256 144 4 ) ( 256 0 4 ) ( -8 144 4 ) tex_buildings/floor015 0 0 0 0.25 0.25 65280 0 0
@@ -785,6 +786,7 @@
 // entity 1
 {
 "classname" "func_group"
+"maxlevel" "5"
 // brush 0
 {
 ( 98.3587036133 132.1132049561 36.5454101563 ) ( 94.4462127686 8.0992431641 67.9972991943 ) ( 92.5785675049 130.9255981445 31.1436004639 ) tex_misc/sign_flammable 10 -16 0 0.1800000072 0.1800000072 65280 0 0
@@ -880,6 +882,7 @@
 // entity 2
 {
 "classname" "func_group"
+"maxlevel" "5"
 // brush 0
 {
 ( 150.1114959717 128 1.566192627 ) ( 150.1114959717 64 1.566192627 ) ( 160 64 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
