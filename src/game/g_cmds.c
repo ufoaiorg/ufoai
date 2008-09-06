@@ -382,11 +382,11 @@ void G_ClientCommand (player_t * player)
 	else if (Q_strcasecmp(cmd, "say_team") == 0)
 		G_Say_f(player, qfalse, qtrue);
 #ifdef DEBUG
-	else if (Q_strcasecmp(cmd, "actorinvlist") == 0)
+	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		G_InvList_f(player);
-	else if (Q_strcasecmp(cmd, "killteam") == 0)
+	else if (Q_strcasecmp(cmd, "debug_killteam") == 0)
 		G_KillTeam_f();
-	else if (Q_strcasecmp(cmd, "stunteam") == 0)
+	else if (Q_strcasecmp(cmd, "debug_stunteam") == 0)
 		G_StunTeam_f();
 	else if (Q_strcasecmp(cmd, "debug_listscore") == 0)
 		G_ListMissionScore_f();

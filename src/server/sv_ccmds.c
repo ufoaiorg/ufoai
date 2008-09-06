@@ -467,8 +467,8 @@ static const char *serverCommandList[] = {
 	"ai_add", "Used to add ai opponents to a game - but no civilians",
 	"win", "Call the end game function with the given team",
 #ifdef DEBUG
-	"showall", "Debug function: Reveal all items to all sides",
-	"actorinvlist", "Debug function to show the hole inventory of all connected clients on the server",
+	"debug_showall", "Debug function: Reveal all items to all sides",
+	"debug_actorinvlist", "Debug function to show the whole inventory of all connected clients on the server",
 #endif
 	NULL
 };
