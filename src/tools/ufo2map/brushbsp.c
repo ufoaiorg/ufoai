@@ -170,7 +170,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 
 			/* fix broken windings that would generate trifans */
 			if (!FixWinding(w))
-				Sys_FPrintf(SYS_VRB, "removed degenerated edge(s) from winding\n");
+				Verb_Printf(VERB_EXTRA, "removed degenerated edge(s) from winding\n");
 		}
 
 		side->winding = w;
@@ -786,9 +786,9 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 		BoundBrush(b[i]);
 		for (j = 0; j < 3; j++) {
 			if (b[i]->mins[j] < -MAX_WORLD_WIDTH || b[i]->maxs[j] > MAX_WORLD_WIDTH) {
-				/** @todo Print brush and entnum either of the brush that was splitted
+				/** @todo Print brush and entnum either of the brush that was split
 				 * or the plane that was used as splitplane */
-				Sys_FPrintf(SYS_VRB, "bogus brush after clip\n");
+				Verb_Printf(VERB_EXTRA, "bogus brush after clip\n");
 				break;
 			}
 		}
@@ -803,9 +803,9 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 		/** @todo Print brush and entnum either of the brush that was splitted
 		 * or the plane that was used as splitplane */
 		if (!b[0] && !b[1])
-			Sys_FPrintf(SYS_VRB, "split removed brush\n");
+			Verb_Printf(VERB_EXTRA, "split removed brush\n");
 		else
-			Sys_FPrintf(SYS_VRB, "split not on both sides\n");
+			Verb_Printf(VERB_EXTRA, "split not on both sides\n");
 		if (b[0]) {
 			FreeBrush(b[0]);
 			*front = CopyBrush(brush);
@@ -840,7 +840,7 @@ void SplitBrush (const bspbrush_t *brush, int planenum, bspbrush_t **front, bspb
 				b[i] = NULL;
 				/** @todo Print brush and entnum either of the brush that was splitted
 				 * or the plane that was used as splitplane */
-				Sys_FPrintf(SYS_VRB, "tiny volume after clip\n");
+				Verb_Printf(VERB_EXTRA, "tiny volume after clip\n");
 			}
 		}
 	}
@@ -958,7 +958,7 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	int i;
 	vec_t volume;
 
-	Sys_FPrintf(SYS_VRB, "--- BrushBSP ---\n");
+	Verb_Printf(VERB_EXTRA, "--- BrushBSP ---\n");
 
 	tree = AllocTree();
 
@@ -991,9 +991,9 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		AddPointToBounds(b->maxs, tree->mins, tree->maxs);
 	}
 
-	Sys_FPrintf(SYS_VRB, "%5i brushes\n", c_brushes);
-	Sys_FPrintf(SYS_VRB, "%5i visible faces\n", c_faces);
-	Sys_FPrintf(SYS_VRB, "%5i nonvisible faces\n", c_nonvisfaces);
+	Verb_Printf(VERB_EXTRA, "%5i brushes\n", c_brushes);
+	Verb_Printf(VERB_EXTRA, "%5i visible faces\n", c_faces);
+	Verb_Printf(VERB_EXTRA, "%5i nonvisible faces\n", c_nonvisfaces);
 
 	c_nodes = 0;
 	c_nonvis = 0;
@@ -1004,9 +1004,9 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	tree->headnode = node;
 
 	node = BuildTree_r(node, brushlist);
-	Sys_FPrintf(SYS_VRB, "%5i visible nodes\n", c_nodes / 2 - c_nonvis);
-	Sys_FPrintf(SYS_VRB, "%5i nonvis nodes\n", c_nonvis);
-	Sys_FPrintf(SYS_VRB, "%5i leafs\n", (c_nodes + 1) / 2);
+	Verb_Printf(VERB_EXTRA, "%5i visible nodes\n", c_nodes / 2 - c_nonvis);
+	Verb_Printf(VERB_EXTRA, "%5i nonvis nodes\n", c_nonvis);
+	Verb_Printf(VERB_EXTRA, "%5i leafs\n", (c_nodes + 1) / 2);
 	return tree;
 }
 

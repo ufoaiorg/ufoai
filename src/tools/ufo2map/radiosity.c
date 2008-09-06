@@ -269,7 +269,7 @@ static void BounceLight (void)
 		RunThreadsOn(ShootLight, num_patches, config.verbosity >= VERB_NORMAL, buf);
 		added = CollectLight();
 
-		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
+		Verb_Printf(VERB_EXTRA, "bounce:%i added:%f\n", i, added);
 	}
 }
 
@@ -319,7 +319,7 @@ void RadWorld (void)
 	if (config.numbounce > 0) {
 		/* build transfer lists */
 		RunThreadsOn(MakeTransfers, num_patches, config.verbosity >= VERB_NORMAL, "TRANSFERS");
-		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
+		Verb_Printf(VERB_EXTRA, "transfer lists: %5.1f megs\n",
 			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
 		/* spread light around */

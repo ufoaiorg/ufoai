@@ -479,7 +479,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	/* flip it towards plane normal */
 	distscale = DotProduct(texnormal, l->facenormal);
 	if (!distscale) {
-		Sys_FPrintf(SYS_VRB, "WARNING: Texture axis perpendicular to face\n");
+		Verb_Printf(VERB_EXTRA, "WARNING: Texture axis perpendicular to face\n");
 		distscale = 1;
 	}
 	if (distscale < 0) {

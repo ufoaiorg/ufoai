@@ -238,7 +238,7 @@ void ProcessLevel (unsigned int levelnum)
 	maxs[1] = (config.block_yh + 1.0) * 512.0 - 1.0f;
 	maxs[2] = MAX_WORLD_WIDTH - 1.0;
 
-	Sys_FPrintf(SYS_VRB, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
+	Verb_Printf(VERB_EXTRA, "Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels);
 	/* Com_Printf("Process levelnum %i (curTile->nummodels: %i)\n", levelnum, curTile->nummodels); */
 
 	/** @note Should be reentrant as each thread has a unique levelnum at any given time */

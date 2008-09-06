@@ -228,7 +228,7 @@ static int BrushContents (mapbrush_t *b)
 	for (i = 1; i < b->numsides; i++, s++) {
 		trans |= curTile->texinfo[s->texinfo].surfaceFlags;
 		if (s->contentFlags != contentFlags) {
-			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
+			Verb_Printf(VERB_EXTRA, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
 				, b->entitynum, b->brushnum, s->contentFlags, contentFlags);
 			break;
 		}
@@ -787,7 +787,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		Com_sprintf(string, sizeof(string), "%i %i %i", (int)origin[0], (int)origin[1], (int)origin[2]);
 		SetKeyValue(&entities[b->entitynum], "origin", string);
-		Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: set origin to %s\n", b->entitynum, b->brushnum, string);
+		Verb_Printf(VERB_EXTRA, "Entity %i, Brush %i: set origin to %s\n", b->entitynum, b->brushnum, string);
 
 		VectorCopy(origin, entities[b->entitynum].origin);
 
@@ -1068,7 +1068,7 @@ void LoadMapFile (const char *filename)
 {
 	int i;
 
-	Sys_FPrintf(SYS_VRB, "--- LoadMapFile ---\n");
+	Verb_Printf(VERB_EXTRA, "--- LoadMapFile ---\n");
 
 	LoadScriptFile(filename);
 
@@ -1106,12 +1106,12 @@ void LoadMapFile (const char *filename)
 	/* save a copy of the brushes */
 	memcpy(mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t) * nummapbrushes);
 
-	Sys_FPrintf(SYS_VRB, "%5i brushes\n", nummapbrushes);
-	Sys_FPrintf(SYS_VRB, "%5i total sides\n", nummapbrushsides);
-	Sys_FPrintf(SYS_VRB, "%5i boxbevels\n", c_boxbevels);
-	Sys_FPrintf(SYS_VRB, "%5i edgebevels\n", c_edgebevels);
-	Sys_FPrintf(SYS_VRB, "%5i entities\n", num_entities);
-	Sys_FPrintf(SYS_VRB, "%5i planes\n", nummapplanes);
-	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
+	Verb_Printf(VERB_EXTRA, "%5i brushes\n", nummapbrushes);
+	Verb_Printf(VERB_EXTRA, "%5i total sides\n", nummapbrushsides);
+	Verb_Printf(VERB_EXTRA, "%5i boxbevels\n", c_boxbevels);
+	Verb_Printf(VERB_EXTRA, "%5i edgebevels\n", c_edgebevels);
+	Verb_Printf(VERB_EXTRA, "%5i entities\n", num_entities);
+	Verb_Printf(VERB_EXTRA, "%5i planes\n", nummapplanes);
+	Verb_Printf(VERB_EXTRA, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
 		map_mins[0], map_mins[1], map_mins[2], map_maxs[0], map_maxs[1], map_maxs[2]);
 }

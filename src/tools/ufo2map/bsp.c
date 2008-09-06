@@ -106,7 +106,7 @@ void ProcessModels (const char *filename)
 		if (!entities[entity_num].numbrushes)
 			continue;
 
-		Sys_FPrintf(SYS_VRB, "############### model %i ###############\n", curTile->nummodels);
+		Verb_Printf(VERB_EXTRA, "############### model %i ###############\n", curTile->nummodels);
 
 		if (entity_num == 0)
 			ProcessWorldModel();

@@ -384,7 +384,7 @@ bspbrush_t *ChopBrushes (bspbrush_t *head)
 	const int originalBrushes = CountBrushList(head);
 	int keepBrushes;
 
-	Sys_FPrintf(SYS_VRB, "---- ChopBrushes ----\n");
+	Verb_Printf(VERB_EXTRA, "---- ChopBrushes ----\n");
 
 	keep = NULL;
 
@@ -464,8 +464,8 @@ newlist:
 
 	keepBrushes = CountBrushList(keep);
 	if (keepBrushes != originalBrushes) {
-		Sys_FPrintf(SYS_VRB, "original brushes: %i\n", originalBrushes);
-		Sys_FPrintf(SYS_VRB, "output brushes: %i\n", keepBrushes);
+		Verb_Printf(VERB_EXTRA, "original brushes: %i\n", originalBrushes);
+		Verb_Printf(VERB_EXTRA, "output brushes: %i\n", keepBrushes);
 	}
 	return keep;
 }
