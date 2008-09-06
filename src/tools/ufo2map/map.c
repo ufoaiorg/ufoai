@@ -985,7 +985,7 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 
 /**
  * @brief write a brush to the .map file
- * @param j the index of the brush in the entiry, to label the brush in the comment in the map file
+ * @param j the index of the brush in the entity, to label the brush in the comment in the map file
  * @param f file to write to
  */
 static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
@@ -1016,7 +1016,7 @@ static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
 void WriteMapFile (const char *filename)
 {
 	FILE *f;
-	int i, j;
+	int i, j, jc;
 	int removed;
 
 	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
@@ -1039,17 +1039,25 @@ void WriteMapFile (const char *filename)
 		fprintf(f, "// entity %i\n{\n", i - removed);
 		WriteMapEntities(f, e);
 
-		for (j = 0; j < mapent->numbrushes; j++) {
+		/* need 2 counters. j counts the brushes in the source entity.
+		 * jc counts the brushes written back. they may differ if some are skipped,
+		 * eg they are microbrushes */
+		for (j = 0, jc = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
-			WriteMapBrush(brush, j, f);
+			if (brush->skipWriteBack)
+				continue;
+			WriteMapBrush(brush, jc++, f);
 		}
 
 		/* add brushes from func_groups with single members to worldspawn */
 		if (i == 0) {
 			int numToAdd, k;
 			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
-			for (k = 0; k < numToAdd; k++)
+			for (k = 0; k < numToAdd; k++) {
+				if (brushesToAdd[k]->skipWriteBack)
+					continue;
 				WriteMapBrush(brushesToAdd[k], j++, f);
+			}
 			free(brushesToAdd);
 		}
 		fprintf(f, "}\n");

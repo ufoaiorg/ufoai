@@ -649,7 +649,7 @@ static qboolean Check_WindingIntersects (const winding_t *winding, const mapbrus
 /**
  * @brief reports intersection between optimisable map brushes
  */
-void Check_BrushIntersection (void)
+void Check_BrushIntersection(void)
 {
 	int i, j, is;
 
@@ -888,10 +888,12 @@ void CheckMapMicro (void)
 	int i;
 
 	for (i = 0; i < nummapbrushes; i++) {
-		const mapbrush_t *brush = &mapbrushes[i];
+		mapbrush_t *brush = &mapbrushes[i];
 		const float vol = Check_MapBrushVolume(brush);
-		if (vol < config.mapMicrovol)
-			Check_Printf(VERB_CHECK, "  Brush %i (entity %i): warning, microbrush: volume %f\n", brush->brushnum, brush->entitynum, vol);
+		if (vol < config.mapMicrovol) {
+			Check_Printf(VERB_CHECK, "* Brush %i (entity %i): microbrush: volume %f will be deleted\n", brush->brushnum, brush->entitynum, vol);
+			brush->skipWriteBack = qtrue;
+		}
 	}
 }
 

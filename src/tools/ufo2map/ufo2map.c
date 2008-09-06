@@ -401,7 +401,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
 	config.subdiv = 2048.0f; /* rad chop/subdiv */
-	config.mapMicrovol = 1.0f;
+	config.mapMicrovol = 1.0f;/* this value is up for debate blondandy */
 
 	config.night_ambient_red = 0.0;
 	config.night_ambient_green = 0.0;
