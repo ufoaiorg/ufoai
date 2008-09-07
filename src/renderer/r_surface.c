@@ -144,7 +144,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 	if (r_state.lighting_enabled) {
-		if (surf->texinfo->image->normalmap) {
+		if (r_bumpmap->integer && surf->texinfo->image->normalmap) {
 			R_BindDeluxemapTexture(surf->deluxemap_texnum);
 			R_BindNormalmapTexture(surf->texinfo->image->normalmap->texnum);
 
