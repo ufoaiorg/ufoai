@@ -205,13 +205,13 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 	if (!surfs->count)
 		return;
 
-	R_EnableMultitexture(&texunit_lightmap, qtrue);
+	R_EnableTexture(&texunit_lightmap, qtrue);
 
 	R_EnableLighting(r_state.default_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(NULL, qfalse);
 
-	R_EnableMultitexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
 /**
@@ -250,9 +250,9 @@ void R_DrawBlendSurfaces (const mBspSurfaces_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
-	R_EnableMultitexture(&texunit_lightmap, qtrue);
+	R_EnableTexture(&texunit_lightmap, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableMultitexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
 /**

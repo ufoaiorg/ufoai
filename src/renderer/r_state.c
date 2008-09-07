@@ -194,7 +194,7 @@ void R_EnableAlphaTest (qboolean enable)
 		glDisable(GL_ALPHA_TEST);
 }
 
-void R_EnableMultitexture (gltexunit_t *texunit, qboolean enable)
+void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
 {
 	if (enable == texunit->enabled)
 		return;
@@ -459,12 +459,12 @@ void R_SetDefaultState (void)
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
 
-		R_EnableMultitexture(tex, qtrue);
+		R_EnableTexture(tex, qtrue);
 
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 
 		if (i > 0)  /* turn them off for now */
-			R_EnableMultitexture(tex, qfalse);
+			R_EnableTexture(tex, qfalse);
 
 		R_CheckError();
 	}

@@ -170,10 +170,10 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 
 	/* and optionally the lightmap */
 	if (stage->flags & STAGE_LIGHTMAP) {
-		R_EnableMultitexture(&texunit_lightmap, qtrue);
+		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(surf->lightmap_texnum);
 	} else
-		R_EnableMultitexture(&texunit_lightmap, qfalse);
+		R_EnableTexture(&texunit_lightmap, qfalse);
 
 	/* set the blend function, ensuring a good default */
 	if (stage->flags & STAGE_BLEND)
@@ -278,7 +278,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_EnableMultitexture(&texunit_lightmap, qfalse);
+	R_EnableTexture(&texunit_lightmap, qfalse);
 
 #ifdef DEBUG
 	if (glIsEnabled(GL_COLOR_ARRAY))

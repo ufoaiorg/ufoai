@@ -109,7 +109,7 @@ void R_BindBuffer(GLenum target, GLenum type, GLuint id);
 void R_BindArray(GLenum target, GLenum type, void *array);
 void R_BindDefaultArray(GLenum target);
 
-void R_EnableMultitexture(gltexunit_t *texunit, qboolean enable);
+void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
