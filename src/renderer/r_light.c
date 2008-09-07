@@ -35,7 +35,7 @@ void R_AddLight (vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
 
-	if (!r_light->integer)
+	if (!r_lighting->integer)
 		return;
 
 	if (r_numLights == MAX_GL_LIGHTS)

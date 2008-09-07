@@ -60,7 +60,6 @@ cvar_t *r_lightmap;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
-cvar_t *r_light;
 cvar_t *r_materials;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
@@ -397,7 +396,6 @@ static void R_RegisterSystemVars (void)
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
-	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
