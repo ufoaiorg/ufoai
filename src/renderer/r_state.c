@@ -263,10 +263,10 @@ void R_EnableBumpmap (qboolean enable)
 
 void R_EnableWarp (r_program_t *program, qboolean enable)
 {
-	if (!r_programs->value || (enable && !program))
+	if (!r_programs->integer || (enable && !program))
 		return;
 
-	if (!r_warp->value || r_state.warp_enabled == enable)
+	if (!r_warp->integer || r_state.warp_enabled == enable)
 		return;
 
 	r_state.warp_enabled = enable;

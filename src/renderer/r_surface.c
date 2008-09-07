@@ -83,7 +83,7 @@ static inline void R_SetVertexBufferState (const model_t* mod)
 	}
 }
 
-static void R_ResetVertexArrayState (void)
+static void R_ResetArrayState (void)
 {
 	R_BindBuffer(0, 0, 0);
 
@@ -189,7 +189,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 		R_EnableBumpmap(qfalse);
 
 	/* and restore array pointers */
-	R_ResetVertexArrayState();
+	R_ResetArrayState();
 
 	R_Color(NULL);
 }

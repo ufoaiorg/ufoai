@@ -60,7 +60,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	}
 
 	if (i == MAX_PROGRAM_VARS) {
-		Com_Printf("R_ProgramVariable: MAX_UNIFORMS reached.\n");
+		Com_Printf("R_ProgramVariable: MAX_PROGRAM_VARS reached.\n");
 		return NULL;
 	}
 
@@ -361,6 +361,8 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use, void
 	prog->use = use;
 	prog->think = think;
 
+	Com_Printf("R_LoadProgram: '%s' loaded.\n", name);
+
 	return prog;
 }
 
@@ -372,7 +374,7 @@ static void R_InitDefaultProgram (void)
 	R_ProgramParameter1i("SAMPLER3", 3);
 
 	R_ProgramParameter1i("LIGHTMAP", 0);
-	R_ProgramParameter1i("NORMALMAP", 0);
+	R_ProgramParameter1i("BUMPMAP", 0);
 }
 
 static void R_UseDefaultProgram (void)
@@ -411,6 +413,10 @@ void R_InitPrograms (void)
 		Com_Printf("R_InitPrograms: glCreateProgram not found\n");
 		return;
 	}
+
+	memset(r_state.shaders, 0, sizeof(r_state.shaders));
+
+	memset(r_state.programs, 0, sizeof(r_state.programs));
 
 	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram,
 		R_UseDefaultProgram, R_ThinkDefaultProgram);
