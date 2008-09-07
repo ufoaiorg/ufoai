@@ -435,10 +435,6 @@ void R_SetDefaultState (void)
 {
 	int i;
 
-	R_SelectTexture(&texunit_diffuse);
-
-	glEnable(GL_TEXTURE_2D);
-	R_Color(NULL);
 	glClearColor(0, 0, 0, 0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
