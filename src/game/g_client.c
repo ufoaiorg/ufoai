@@ -1397,10 +1397,10 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
  * @brief Sends the EV_ACTOR_START_MOVE event to the client
  * the ent belongs, too
  */
-static inline void G_ClientStartMove (edict_t *ent)
+static inline void G_ClientStartMove (edict_t *ent, int player_mask)
 {
 	/* start move */
-	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
+	gi.AddEvent(player_mask, EV_ACTOR_START_MOVE);
 	gi.WriteShort(ent->number);
 	/* slower if crouched */
 	if (ent->state & STATE_CROUCHED)
@@ -1467,7 +1467,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
-		G_ClientStartMove(ent);
+		G_ClientStartMove(ent, G_VisToPM(ent->visflags));
 
 		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
@@ -1593,15 +1593,17 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.WriteByte(dvtab[numdv]);
 				gi.WriteShort(contentFlags);
 
+				oldState = ent->visflags;
 				/* check if player appears/perishes, seen from other teams */
-				G_CheckVis(ent, qtrue);
+				status = G_CheckVis(ent, qtrue);
+				if (status & VIS_APPEAR) {
+					/* the player appear in mid move, so we have to inform the players
+					 * that are now able to see the actor */
+					G_ClientStartMove(ent, G_VisToPM(oldState ^ ent->visflags));
+				}
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
-				if (status & VIS_CHANGE) {
-					if (status & VIS_YES)
-						G_ClientStartMove(ent);
-				}
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);
@@ -1706,7 +1708,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	if (ent->dir == dv)
 		return;
 
-	G_ClientStartMove(ent);
+	G_ClientStartMove(ent, G_VisToPM(ent->visflags));
 
 	/* do the turn */
 	G_DoTurn(ent, dv);
