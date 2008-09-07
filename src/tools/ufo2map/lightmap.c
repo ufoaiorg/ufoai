@@ -1035,7 +1035,6 @@ void BuildFacelights (unsigned int facenum)
 	float lightscale;
 	int i, j, numsamples;
 	patch_t *patch;
-	size_t tablesize;
 	facelight_t *fl;
 	vec3_t sun_color, sun_dir;
 	float sun_intensity;
@@ -1098,14 +1097,15 @@ void BuildFacelights (unsigned int facenum)
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
 
-	tablesize = l[0].numsurfpt * sizeof(vec3_t);
 	fl = &facelight[config.compile_for_day][facenum];
-	memset(fl, 0, sizeof(*fl));
 	fl->numsamples = l[0].numsurfpt;
-	fl->origins = malloc(tablesize);
-	memcpy(fl->origins, l[0].surfpt, tablesize);
-	fl->samples = malloc(tablesize);
-	fl->directions = malloc(tablesize);
+
+	fl->origins = malloc(fl->numsamples * sizeof(vec3_t));
+	memcpy(fl->origins, l[0].surfpt, fl->numsamples * sizeof(vec3_t));
+	fl->samples = malloc(fl->numsamples * sizeof(vec3_t));
+	memset(fl->samples, 0, fl->numsamples * sizeof(vec3_t));
+	fl->directions = malloc(fl->numsamples * sizeof(vec3_t));
+	memset(fl->directions, 0, fl->numsamples * sizeof(vec3_t));
 
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {

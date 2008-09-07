@@ -36,7 +36,7 @@ static void R_UploadLightmapBlock (void)
 		return;
 	}
 
-	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.lightmap_texnum);
+	R_BindTexture(r_lightmaps.lightmap_texnum);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

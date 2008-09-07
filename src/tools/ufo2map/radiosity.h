@@ -82,7 +82,7 @@ typedef struct patch_s {
 	vec3_t		reflectivity;
 	vec3_t		baselight;			/**< emissivity only */
 
-	/** each style 0 lightmap sample in the patch will be
+	/** each lightmap sample in the patch will be
 	 * added up to get the average illuminance of the entire patch */
 	vec3_t		samplelight;
 	int			samples;		/**< for averaging direct light */
