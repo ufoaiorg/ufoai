@@ -54,7 +54,8 @@ static inline void R_SetVertexArrayState (const model_t* mod)
 	if (r_state.lighting_enabled) { /* normal vectors for lighting */
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
 
-		if (r_bumpmap->integer && mod->bsp.tangents)	/* tangent vectors for bump mapping */
+		/* tangent vectors for bump mapping */
+		if (r_bumpmap->integer)
 			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
 	}
 }

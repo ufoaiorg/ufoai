@@ -455,14 +455,12 @@ void R_SetDefaultState (void)
 	R_CheckError();
 
 	/* setup texture units */
-	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
+	for (i = 0; i < r_config.maxTextureUnits && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
 
-		if (i >= r_config.maxTextureUnits)
-			continue;
-
 		R_EnableMultitexture(tex, qtrue);
+
 		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 
 		if (i > 0)  /* turn them off for now */
