@@ -102,8 +102,7 @@ static void R_ResetArrayState (void)
 	if (r_state.lighting_enabled) {
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
-		if (r_bumpmap->integer)
-			R_BindDefaultArray(GL_TANGENT_ARRAY);
+		R_BindDefaultArray(GL_TANGENT_ARRAY);
 	}
 	bufferMapTile = NULL;
 }

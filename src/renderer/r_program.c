@@ -70,6 +70,11 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	else
 		v->location = qglGetAttribLocation(r_state.active_program->id, name);
 
+	if (v->location == -1) {
+		Com_Printf("R_ProgramVariable: Could not find %s in shader\n", name);
+		return NULL;
+	}
+
 	v->type = type;
 	Q_strncpyz(v->name, name, sizeof(v->name));
 
