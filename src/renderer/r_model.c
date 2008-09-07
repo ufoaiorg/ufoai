@@ -307,6 +307,8 @@ void R_ShutdownModels (void)
 			qglDeleteBuffers(1, &mod->bsp.lmtexcoord_buffer);
 		if (mod->bsp.normal_buffer)
 			qglDeleteBuffers(1, &mod->bsp.normal_buffer);
+		if (mod->bsp.tangent_buffer)
+			qglDeleteBuffers(1, &mod->bsp.tangent_buffer);
 	}
 
 	/* don't free the static models with the tag MEM_TAG_STATIC_MODELS */

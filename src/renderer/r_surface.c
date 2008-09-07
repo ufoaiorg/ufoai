@@ -78,7 +78,8 @@ static inline void R_SetVertexBufferState (const model_t* mod)
 	if (r_state.lighting_enabled) { /* normal vectors for lighting */
 		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
 
-		if (r_bumpmap->integer && mod->bsp.tangent_buffer)	/* tangent vectors for bump mapping */
+		/* tangent vectors for bump mapping */
+		if (r_bumpmap->integer)
 			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
 	}
 }
