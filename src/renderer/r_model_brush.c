@@ -527,7 +527,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	int vertind, coordind, tangind;
 	float *vecShifted;
 	float soff, toff, s, t;
-	float *point, *normal, *sdir, *tdir;
+	float *point, *sdir, *tdir;
 	vec4_t tangent;
 	mBspSurface_t *surf;
 	mBspVertex_t *vert;
@@ -610,7 +610,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			memcpy(&mod->bsp.normals[vertind], vert->normal, sizeof(vec3_t));
 
 			/* tangent vector */
-			TangentVector(normal, sdir, tdir, tangent);
+			TangentVector(vert->normal, sdir, tdir, tangent);
 			memcpy(&mod->bsp.tangents[tangind], tangent, sizeof(vec4_t));
 
 			vertind += 3;
