@@ -1029,7 +1029,7 @@ void BuildFacelights (unsigned int facenum)
 	dBspFace_t *f;
 	lightinfo_t l[MAX_SAMPLES];
 	dBspTexinfo_t *tex;
-	float *sample, *direction, *sdir, *tdir, scale;
+	float *sdir, *tdir;
 	vec3_t normal, binormal;
 	vec4_t tangent;
 	float lightscale;
@@ -1053,6 +1053,21 @@ void BuildFacelights (unsigned int facenum)
 
 	if (tex->surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
+
+	/* sun light options */
+	if (config.compile_for_day) {
+		if (!config.day_sun_intensity)
+			return;
+		sun_intensity = config.day_sun_intensity;
+		VectorCopy(config.day_sun_dir, sun_dir);
+		VectorCopy(config.day_sun_color, sun_color);
+	} else {
+		if (!config.night_sun_intensity)
+			return;
+		sun_intensity = config.night_sun_intensity;
+		VectorCopy(config.night_sun_dir, sun_dir);
+		VectorCopy(config.night_sun_color, sun_color);
+	}
 
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
@@ -1083,27 +1098,6 @@ void BuildFacelights (unsigned int facenum)
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
 
-	/* add sun light */
-	if (config.compile_for_day) {
-		if (!config.day_sun_intensity) {
-			for (i = 0; i < fl->numsamples; i++)
-				free(l[i].surfpt);
-			return;
-		}
-		sun_intensity = config.day_sun_intensity;
-		VectorCopy(config.day_sun_dir, sun_dir);
-		VectorCopy(config.day_sun_color, sun_color);
-	} else {
-		if (!config.night_sun_intensity) {
-			for (i = 0; i < numsamples; i++)
-				free(l[i].surfpt);
-			return;
-		}
-		sun_intensity = config.night_sun_intensity;
-		VectorCopy(config.night_sun_dir, sun_dir);
-		VectorCopy(config.night_sun_color, sun_color);
-	}
-
 	tablesize = l[0].numsurfpt * sizeof(vec3_t);
 	fl = &facelight[config.compile_for_day][facenum];
 	memset(fl, 0, sizeof(*fl));
@@ -1115,9 +1109,8 @@ void BuildFacelights (unsigned int facenum)
 
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
-		sample = fl->samples + i * 3;			/* accumulate lighting here */
-		direction = fl->directions + i * 3;		/* accumulate direction here */
-		scale = 1.0f / numsamples;				/* each sample contributes this much */
+		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
+		float *direction = fl->directions + i * 3;		/* accumulate direction here */
 
 		for (j = 0; j < numsamples; j++) {
 			vec3_t dir;
