@@ -33,8 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 winding_t *AllocWinding(int points);
-vec_t WindingArea(winding_t *w);
-void WindingCenter(winding_t *w, vec3_t center);
+vec_t WindingArea(const winding_t *w);
+void WindingCenter(const winding_t *w, vec3_t center);
 void ClipWindingEpsilon(const winding_t *in, const vec3_t normal, const vec_t dist,
 	const vec_t epsilon, winding_t **front, winding_t **back);
 winding_t *ChopWinding(winding_t *in, vec3_t normal, vec_t dist);

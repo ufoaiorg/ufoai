@@ -104,8 +104,9 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 		break;
 	case MSG_INFO:
 	case MSG_TRANSFERFINISHED:
-	case MSG_PROMOTION:
 	case MSG_DEATH:
+	case MSG_CONSTRUCTION:
+	case MSG_PRODUCTION:
 		S_StartLocalSound("geoscape/info");
 		break;
 	case MSG_RESEARCH_PROPOSAL:
@@ -118,7 +119,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 		S_StartLocalSound("geoscape/mail");
 		break;
 	case MSG_UFOSPOTTED:
-		S_StartLocalSound("geoscape/ufo_spotted");
+		S_StartLocalSound("geoscape/ufospotted");
 		break;
 	case MSG_BASEATTACK:
 		S_StartLocalSound("geoscape/attack");
@@ -127,9 +128,8 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_CRASHSITE:
 		S_StartLocalSound("geoscape/newmission");
 		break;
-	case MSG_CONSTRUCTION:
-		break;
-	case MSG_PRODUCTION:
+	case MSG_PROMOTION:
+		S_StartLocalSound("geoscape/promotion");
 		break;
 	case MSG_MAX:
 		break;

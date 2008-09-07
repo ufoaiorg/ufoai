@@ -283,7 +283,7 @@ static void jpg_null (j_decompress_ptr cinfo)
  */
 static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
-	Sys_FPrintf(SYS_VRB, "Premature end of JPEG data\n");
+	Verb_Printf(VERB_EXTRA, "Premature end of JPEG data\n");
 	return 1;
 }
 
@@ -293,7 +293,7 @@ static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
-		Sys_FPrintf(SYS_VRB, "Premature end of JPEG data\n");
+		Verb_Printf(VERB_EXTRA, "Premature end of JPEG data\n");
 
 	cinfo->src->next_input_byte += (size_t) num_bytes;
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;

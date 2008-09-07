@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/scriplib.h"
 #include "check.h"
 #include "bsp.h"
+#include "ufo2map.h"
 
 #define MANDATORY_KEY 1
 #define NON_MANDATORY_KEY 0
@@ -42,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** if the sine of an angle is less than this, then the angle is negligibly different from zero */
 #define SIN_EPSILON 0.0001f
 
+static int numToMoveToWorldspawn = 0;
+
 /**
  * @brief wether the surface of a brush is included when testing if a point is in a brush
  * determines how epsilon is applied.
@@ -54,15 +57,19 @@ typedef enum {
 	PIB_ON_SURFACE_ONLY			/**< point on the surface, and the inside of the brush is excluded */
 } pointInBrush_t;
 
-static void Check_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+static void Check_Printf(const verbosityLevel_t msgVerbLevel, const char *format, ...) __attribute__((format(printf, 2, 3)));
 
 /**
  * @brief decides wether to proceed with output based on ufo2map's mode: check/fix/compile
- * @sa Com_Printf
+ * @sa Com_Printf, Verb_Printf
  */
-static void Check_Printf (const char *format, ...)
+static void Check_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
+	static qboolean firstSuccessfulPrint = qtrue;
+
+	if (AbortPrint(msgVerbLevel))
+		return;
 
 	/* some checking/fix functions are called when ufo2map is compiling
 	 * then the check/fix functions should be quiet */
@@ -97,6 +104,11 @@ static void Check_Printf (const char *format, ...)
 			return;
 	}
 
+	if (firstSuccessfulPrint && config.verbosity == VERB_MAPNAME) {
+		PrintName();
+		firstSuccessfulPrint = qfalse;
+	}
+
 	{
 		char out_buffer[4096];
 		va_list argptr;
@@ -118,10 +130,10 @@ static int checkEntityKey (entity_t *e, const int entnum, const char* key, int m
 	const char *name = ValueForKey(e, "classname");
 	if (!*val) {
 		if (mandatory == MANDATORY_KEY) {
-			Check_Printf("* Entity %i: %s with no %s given - will be deleted\n", entnum, name, key);
+			Check_Printf(VERB_CHECK, "* Entity %i: %s with no %s given - will be deleted\n", entnum, name, key);
 			return 1;
 		} else {
-			Check_Printf("  Entity %i: %s with no %s given\n", entnum, name, key);
+			Check_Printf(VERB_CHECK, "  Entity %i: %s with no %s given\n", entnum, name, key);
 			return 0;
 		}
 	}
@@ -135,7 +147,7 @@ static void checkEntityLevelFlags (entity_t *e, const int entnum)
 	const char *name = ValueForKey(e, "classname");
 	if (!*val) {
 		char buf[16];
-		Check_Printf("* Entity %i: %s with no levelflags given - setting all\n", entnum, name);
+		Check_Printf(VERB_CHECK, "* Entity %i: %s with no levelflags given - setting all\n", entnum, name);
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
 		SetKeyValue(e, "spawnflags", buf);
 	}
@@ -145,7 +157,7 @@ static int checkEntityZeroBrushes (entity_t *e, int entnum)
 {
 	const char *name = ValueForKey(e, "classname");
 	if (!e->numbrushes) {
-		Check_Printf("* Entity %i: %s with no brushes given - will be deleted\n", entnum, name);
+		Check_Printf(VERB_CHECK, "* Entity %i: %s with no brushes given - will be deleted\n", entnum, name);
 		return 1;
 	}
 	return 0;
@@ -188,7 +200,7 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 	if (checkEntityZeroBrushes(e, entnum)) {
 		return 1;
 	} else if (e->numbrushes > 1) {
-		Check_Printf("  Entity %i: func_breakable with more than one brush given (might break pathfinding)\n", entnum);
+		Check_Printf(VERB_CHECK, "  Entity %i: func_breakable with more than one brush given (might break pathfinding)\n", entnum);
 	}
 
 	return 0;
@@ -230,19 +242,68 @@ static int checkMiscMission (entity_t *e, int entnum)
 	if (!*val) {
 		val = ValueForKey(e, "target");
 		if (*val && !FindTargetEntity(val))
-			Check_Printf("  ERROR: misc_mission could not find specified target: '%s' - entnum: %i\n", val, entnum);
+			Check_Printf(VERB_CHECK, "  ERROR: misc_mission could not find specified target: '%s' - entnum: %i\n", val, entnum);
 	}
 	if (!*val)
-		Check_Printf("  ERROR: misc_mission with no objectives given - entnum: %i\n", entnum);
+		Check_Printf(VERB_CHECK, "  ERROR: misc_mission with no objectives given - entnum: %i\n", entnum);
 	return 0;
 }
 
+/**
+ * @todo Replace magic number with self speaking constants
+ */
 static int checkFuncGroup (entity_t *e, int entnum)
 {
-	if (checkEntityZeroBrushes(e, entnum))
+	const char *name = ValueForKey(e, "classname");
+	if (e->numbrushes == 1) {
+		Check_Printf(VERB_CHECK, "* Entity %i: %s with one brush only - will be moved to worldspawn\n", entnum, name);
+		numToMoveToWorldspawn++;
+		/* returning 1 ensures the entity will be skipped on writing back, the
+		 * map writer will check and tack them onto the end of the worldspawn */
 		return 1;
-
+	}
+	if (checkEntityZeroBrushes(e, entnum))
+		return 2;/* make this 2, then 1 means single brush to be moved to worldspawn */
 	return 0;
+}
+
+/**
+ * @brief single brushes in func_groups are moved to worldspawn. this function allocates space
+ * pointers to those brushes.
+ * @return a pointer to the array of pointers
+ * @param[out] the number of brushes
+ */
+mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
+{
+	int i, j, tmpVerb = config.verbosity;
+	mapbrush_t **brushesToMove = (mapbrush_t **)malloc(numToMoveToWorldspawn * sizeof(mapbrush_t *));
+
+	if (!brushesToMove)
+		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
+
+	*numBrushes = numToMoveToWorldspawn;
+
+	if (!numToMoveToWorldspawn)
+		return brushesToMove;
+
+	/* temporarily drop verbosity as checkFuncGroup should not repeat messages */
+	config.verbosity = VERB_SILENT_EXCEPT_ERROR;
+
+	/* 0 is the world - start at 1 */
+	for (i = 1, j = 0; i < num_entities; i++) {
+		entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
+
+		if (!strncmp(name, "func_group", 10)) {
+			if (checkFuncGroup(e, i) == 1)
+				brushesToMove[j++] = &mapbrushes[e->firstbrush];
+		}
+	}
+
+	/* restore */
+	config.verbosity = tmpVerb;
+
+	return brushesToMove;
 }
 
 static int checkStartPosition (entity_t *e, int entnum)
@@ -254,7 +315,7 @@ static int checkStartPosition (entity_t *e, int entnum)
 		align = 32;
 
 	if (((int)e->origin[0] - align) % UNIT_SIZE || ((int)e->origin[1] - align) % UNIT_SIZE) {
-		Check_Printf("* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
+		Check_Printf(VERB_CHECK, "* ERROR: misaligned starting position - entnum: %i (%i: %i). The %s will be deleted\n", entnum, (int)e->origin[0], (int)e->origin[1], val);
 		return 1; /** @todo auto-align entity and check for intersection with brush */
 	}
 	return 0;
@@ -299,9 +360,9 @@ static int checkTriggerTouch (entity_t *e, int entnum)
 {
 	const char *val = ValueForKey(e, "target");
 	if (!*val)
-		Check_Printf("  ERROR: trigger_touch with no target given - entnum: %i\n", entnum);
+		Check_Printf(VERB_CHECK, "  ERROR: trigger_touch with no target given - entnum: %i\n", entnum);
 	else if (!FindTargetEntity(val))
-		Check_Printf("  ERROR: trigger_touch could not find specified target: '%s' - entnum: %i\n", val, entnum);
+		Check_Printf(VERB_CHECK, "  ERROR: trigger_touch could not find specified target: '%s' - entnum: %i\n", val, entnum);
 	return 0;
 }
 
@@ -437,7 +498,7 @@ void CheckEntities (void)
 				break;
 			}
 		if (!v->name) {
-			Check_Printf("No check for '%s' implemented\n", name);
+			Check_Printf(VERB_CHECK, "No check for '%s' implemented\n", name);
 		}
 	}
 }
@@ -534,7 +595,7 @@ static void Check_NearList (void)
  * @brief 	calculate where an edge (defined by the vertices) intersects a plane.
  *			http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
  * @param[out] the position of the intersection, if the edge is not too close to parallel.
- * @return 	zero if the edge is within an epsilon angle of parallel to the plane
+ * @return 	zero if the edge is within an epsilon angle of parallel to the plane, or the edge is near zero length.
  * @note	an epsilon is used to exclude the actual vertices from passing the test.
  */
 static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, const plane_t *plane, vec3_t intersection)
@@ -547,7 +608,8 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
 
 	VectorSubtract(vert2, vert1, direction);/*< direction points from vert1 to vert2 */
 	length = VectorLength(direction);
-	assert(length > 0.0f);
+	if (length < DIST_EPSILON)
+		return qfalse;
 	sin = DotProduct(direction, plane->normal) / length;
 	if (abs(sin) < SIN_EPSILON)
 		return qfalse;
@@ -587,7 +649,7 @@ static qboolean Check_WindingIntersects (const winding_t *winding, const mapbrus
 /**
  * @brief reports intersection between optimisable map brushes
  */
-void Check_BrushIntersection (void)
+void Check_BrushIntersection(void)
 {
 	int i, j, is;
 
@@ -597,20 +659,20 @@ void Check_BrushIntersection (void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
-		if(!Check_IsOptimisable(iBrush))
+		if (!Check_IsOptimisable(iBrush))
 			continue;
 
 		for (j = 0; j < iBrush->numNear; j++) {
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
 
-			if(!Check_IsOptimisable(jBrush))
+			if (!Check_IsOptimisable(jBrush))
 				continue;
 
 			/* check each side of i for intersection with brush j */
 			for (is = 0; is < iBrush->numsides; is++) {
 				winding_t *winding = (iBrush->original_sides[is].winding);
 				if (Check_WindingIntersects(winding, jBrush)) {
-					Check_Printf("  Brush %i (entity %i): intersects with brush %i (entity %i)\n", iBrush->brushnum, iBrush->entitynum, jBrush->brushnum, jBrush->entitynum);
+					Check_Printf(VERB_CHECK, "  Brush %i (entity %i): intersects with brush %i (entity %i)\n", iBrush->brushnum, iBrush->entitynum, jBrush->brushnum, jBrush->entitynum);
 					break;
 				}
 			}
@@ -667,7 +729,7 @@ void Check_ContainedBrushes (void)
 			}
 
 			if (numSidesInside == jBrush->numsides) {
-				Check_Printf("  Brush %i (entity %i): is inside brush %i (entity %i)%s\n",
+				Check_Printf(VERB_CHECK, "  Brush %i (entity %i): is inside brush %i (entity %i)%s\n",
 							jBrush->brushnum, jBrush->entitynum,
 							iBrush->brushnum, iBrush->entitynum,
 							Check_IsOptimisable(iBrush) ? "" : " - changeable, clip, translucent or origin");
@@ -696,6 +758,7 @@ static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
 void CheckNodraws (void)
 {
 	int i, j, is, js;
+	int globalNumSet = 0;
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
@@ -723,7 +786,7 @@ void CheckNodraws (void)
 
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
-					side_t *jSide = &jBrush->original_sides[js];
+					const side_t *jSide = &jBrush->original_sides[js];
 
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
@@ -735,15 +798,16 @@ void CheckNodraws (void)
 						iSide->surfaceFlags |= SURF_NODRAW;
 						tex->surfaceFlags |= SURF_NODRAW;
 						numSet++;
-
+						globalNumSet++;
 					}
 				}
 			}
 		}
 		if (numSet)
-			Check_Printf("* Brush %i (entity %i): set nodraw on %i sides (covered by another brush).\n", iBrush->brushnum, iBrush->entitynum, numSet);
+			Check_Printf(VERB_EXTRA, "* Brush %i (entity %i): set nodraw on %i sides (covered by another brush).\n", iBrush->brushnum, iBrush->entitynum, numSet);
 	}
-
+	if (globalNumSet)
+		Check_Printf(VERB_CHECK, "* Total of %i nodraws set (covered by another brush).\n", globalNumSet);
 }
 
 /**
@@ -759,7 +823,7 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 	for (i = 1; i < b->numsides; i++) {
 		/* check for a degenerate plane */
 		if (sides[i].planenum == -1) {
-			Check_Printf("  Brush %i (entity %i): degenerated plane\n", b->brushnum, b->entitynum);
+			Check_Printf(VERB_CHECK, "  Brush %i (entity %i): degenerated plane\n", b->brushnum, b->entitynum);
 			continue;
 		}
 
@@ -767,12 +831,12 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 		for (j = 0; j < i; j++) {
 			if (sides[i].planenum == sides[j].planenum) {
 				/* remove the second duplicate */
-				Check_Printf("  Brush %i (entity %i): mirrored or duplicated\n", b->brushnum, b->entitynum);
+				Check_Printf(VERB_CHECK, "  Brush %i (entity %i): mirrored or duplicated\n", b->brushnum, b->entitynum);
 				break;
 			}
 
 			if (sides[i].planenum == (sides[j].planenum ^ 1)) {
-				Check_Printf("  Brush %i (entity %i): mirror plane - brush is invalid\n", b->brushnum, b->entitynum);
+				Check_Printf(VERB_CHECK, "  Brush %i (entity %i): mirror plane - brush is invalid\n", b->brushnum, b->entitynum);
 				return qfalse;
 			}
 		}
@@ -783,13 +847,13 @@ static qboolean Check_DuplicateBrushPlanes (const mapbrush_t *b)
 /**
  * @sa BrushVolume
  */
-static vec_t Check_MapBrushVolume (mapbrush_t *brush)
+static vec_t Check_MapBrushVolume (const mapbrush_t *brush)
 {
 	int i;
-	winding_t *w;
+	const winding_t *w;
 	vec3_t corner;
 	vec_t d, area, volume;
-	plane_t *plane;
+	const plane_t *plane;
 
 	if (!brush)
 		return 0;
@@ -823,19 +887,19 @@ static vec_t Check_MapBrushVolume (mapbrush_t *brush)
 /**
  * @brief report brushes from the map below 1 unit^3
  */
- void CheckMapMicro (void)
- {
+void CheckMapMicro (void)
+{
 	int i;
-	float vol;
 
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *brush = &mapbrushes[i];
-		vol = Check_MapBrushVolume(brush);
-		if (vol < config.mapMicrovol)
-			Check_Printf("  Brush %i (entity %i): warning, microbrush: volume %f\n", brush->brushnum, brush->entitynum, vol);
-
+		const float vol = Check_MapBrushVolume(brush);
+		if (vol < config.mapMicrovol) {
+			Check_Printf(VERB_CHECK, "* Brush %i (entity %i): microbrush: volume %f will be deleted\n", brush->brushnum, brush->entitynum, vol);
+			brush->skipWriteBack = qtrue;
+		}
 	}
- }
+}
 
 /**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
@@ -843,10 +907,10 @@ static vec_t Check_MapBrushVolume (mapbrush_t *brush)
 void DisplayContentFlags (const int flags)
 {
 	if (!flags) {
-		Check_Printf(" no contentflags");
+		Check_Printf(VERB_CHECK, " no contentflags");
 		return;
 	}
-#define M(x) if (flags & CONTENTS_##x) Check_Printf(" " #x)
+#define M(x) if (flags & CONTENTS_##x) Check_Printf(VERB_CHECK, " " #x)
 	M(SOLID);
 	M(WINDOW);
 	M(WATER);
@@ -873,10 +937,11 @@ void DisplayContentFlags (const int flags)
 /**
  * @brief calculate the bits that have to be set to fill levelflags such that they are contiguous
  */
-static int Check_CalculateLevelFlagFill(int contentFlags)
+static int Check_CalculateLevelFlagFill (int contentFlags)
 {
-	int firstSetLevel = 0, lastSetLevel=0;
+	int firstSetLevel = 0, lastSetLevel = 0;
 	int scanLevel, flagFill = 0;
+
 	for (scanLevel = CONTENTS_LEVEL_1; scanLevel <= CONTENTS_LEVEL_8; scanLevel <<= 1) {
 		if (scanLevel & contentFlags) {
 			if (!firstSetLevel) {
@@ -905,11 +970,11 @@ void CheckFillLevelFlags (void)
 		 * assume that levelflags are the same on each face */
 		flagFill = Check_CalculateLevelFlagFill(brush->original_sides[0].contentFlags);
 		if (flagFill) {
-			Check_Printf("* Brush %i (entity %i): making set levelflags continuous by setting", brush->brushnum, brush->entitynum);
+			Check_Printf(VERB_CHECK, "* Brush %i (entity %i): making set levelflags continuous by setting", brush->brushnum, brush->entitynum);
 			DisplayContentFlags(flagFill);
-			Check_Printf("\n");
+			Check_Printf(VERB_CHECK, "\n");
 			for (j = 0; j < brush->numsides; j++)
-					brush->original_sides[0].contentFlags |= flagFill;
+				brush->original_sides[j].contentFlags |= flagFill;
 		}
 	}
 }
@@ -929,7 +994,7 @@ void CheckLevelFlags (void)
 		/* test if all faces are nodraw */
 		allNodraw = qtrue;
 		for (j = 0; j < brush->numsides; j++) {
-			side_t *side = &brush->original_sides[j];
+			const side_t *side = &brush->original_sides[j];
 			assert(side);
 
 			if (!(side->surfaceFlags & SURF_NODRAW)) {
@@ -946,7 +1011,7 @@ void CheckLevelFlags (void)
 			/* test if some faces do not have levelflags and remember
 			 * all levelflags which are set. */
 			for (j = 0; j < brush->numsides; j++) {
-				side_t *side = &brush->original_sides[j];
+				const side_t *side = &brush->original_sides[j];
 
 				allLevelFlagsForBrush |= (side->contentFlags & CONTENTS_LEVEL_ALL);
 
@@ -962,7 +1027,7 @@ void CheckLevelFlags (void)
 			/* set the same flags for each face */
 			if (setFlags) {
 				const int flagsToSet = allLevelFlagsForBrush ? allLevelFlagsForBrush : CONTENTS_LEVEL_ALL;
-				Check_Printf("* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, flagsToSet);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): at least one face has no levelflags, setting %i on all faces\n", brush->brushnum, brush->entitynum, flagsToSet);
 				for (j = 0; j < brush->numsides; j++) {
 					side_t *side = &brush->original_sides[j];
 					side->contentFlags |= flagsToSet;
@@ -1031,7 +1096,7 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 
 	/* If in check/fix mode and we have made a change, give output. */
 	if ((side->contentFlags != initCont) || (tex->surfaceFlags != initSurf)) {
-		Check_Printf("* Brush %i (entity %i): %s implied by %s texture has been set\n",
+		Check_Printf(VERB_CHECK, "* Brush %i (entity %i): %s implied by %s texture has been set\n",
 			brush->brushnum, brush->entitynum, flagsDescription ? flagsDescription : "-", texname);
 	}
 
@@ -1040,7 +1105,7 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 		/* nodraw never has phong set */
 		side->surfaceFlags &= ~SURF_PHONG;
 		tex->surfaceFlags &= ~SURF_PHONG;
-		Check_Printf("* Brush %i (entity %i): SURF_PHONG unset, as it has SURF_NODRAW set\n",
+		Check_Printf(VERB_CHECK, "* Brush %i (entity %i): SURF_PHONG unset, as it has SURF_NODRAW set\n",
 				brush->brushnum, brush->entitynum);
 	}
 }
@@ -1090,51 +1155,51 @@ void CheckTexturesBasedOnFlags (void)
 
 			/* set textures based on flags */
 			if (tex->name[0] == '\0') {
-				Check_Printf("  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "  Brush %i (entity %i): no texture assigned\n", brush->brushnum, brush->entitynum);
 			}
 
 			if (!Q_strcmp(tex->name, "tex_common/error")) {
-				Check_Printf("  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "  Brush %i (entity %i): error texture assigned - check this brush\n", brush->brushnum, brush->entitynum);
 			}
 
 			if (!Q_strcmp(tex->name, "NULL")) {
-				Check_Printf("* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): replaced NULL with nodraw texture\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 				tex->surfaceFlags |= SURF_NODRAW;
 			}
 			if (tex->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
-				Check_Printf("* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set nodraw texture for SURF_NODRAW\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 			}
 			if (tex->surfaceFlags & SURF_HINT && Q_strcmp(tex->name, "tex_common/hint")) {
-				Check_Printf("* Brush %i (entity %i): set hint texture for SURF_HINT\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set hint texture for SURF_HINT\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/hint", sizeof(tex->name));
 			}
 
 			if (side->contentFlags & CONTENTS_ACTORCLIP && side->contentFlags & CONTENTS_STEPON) {
 				if (!Q_strcmp(tex->name, "tex_common/actorclip")) {
-					Check_Printf("* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
+					Check_Printf(VERB_CHECK, "* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
 					side->contentFlags &= ~CONTENTS_STEPON;
 				} else {
-					Check_Printf("* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
+					Check_Printf(VERB_CHECK, "* Brush %i (entity %i): mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
 					side->contentFlags &= ~CONTENTS_ACTORCLIP;
 				}
 			}
 
 			if (side->contentFlags & CONTENTS_WEAPONCLIP && Q_strcmp(tex->name, "tex_common/weaponclip")) {
-				Check_Printf("* Brush %i (entity %i): set weaponclip texture for CONTENTS_WEAPONCLIP\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set weaponclip texture for CONTENTS_WEAPONCLIP\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/weaponclip", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ACTORCLIP && Q_strcmp(tex->name, "tex_common/actorclip")) {
-				Check_Printf("* Brush %i (entity %i): set actorclip texture for CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set actorclip texture for CONTENTS_ACTORCLIP\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_STEPON && Q_strcmp(tex->name, "tex_common/stepon")) {
-				Check_Printf("* Brush %i (entity %i): set stepon texture for CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set stepon texture for CONTENTS_STEPON\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/stepon", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ORIGIN && Q_strcmp(tex->name, "tex_common/origin")) {
-				Check_Printf("* Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): set origin texture for CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				Q_strncpyz(tex->name, "tex_common/origin", sizeof(tex->name));
 			}
 		}
@@ -1158,9 +1223,9 @@ void CheckPropagateParserContentFlags(mapbrush_t *b)
 		if (contentFlagDiff) {
 			/* only tell them once per brush */
 			if (notInformedMixedFace) {
-				Check_Printf("* Brush %i (entity %i): transferring contentflags to all faces:", b->brushnum, b->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): transferring contentflags to all faces:", b->brushnum, b->entitynum);
 				DisplayContentFlags(contentFlagDiff);
-				Check_Printf("\n");
+				Check_Printf(VERB_CHECK, "\n");
 				notInformedMixedFace = 0;
 			}
 			b->original_sides[m].contentFlags |= b->contentFlags ;
@@ -1204,30 +1269,30 @@ void CheckMixedFaceContents (void)
 			if (side0->contentFlags != side->contentFlags) {
 				const int jNotZero = side->contentFlags & ~side0->contentFlags;
 				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
-				Check_Printf("  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "  Brush %i (entity %i): mixed face contents (", brush->brushnum, brush->entitynum);
 				if (jNotZero) {
-					Check_Printf("face %i has and face 0 has not", j);
+					Check_Printf(VERB_CHECK, "face %i has and face 0 has not", j);
 					DisplayContentFlags(jNotZero);
 					if (zeroNotJ)
-						Check_Printf(", ");
+						Check_Printf(VERB_CHECK, ", ");
 				}
 				if (zeroNotJ) {
-					Check_Printf("face 0 has and face %i has not", j);
+					Check_Printf(VERB_CHECK, "face 0 has and face %i has not", j);
 					DisplayContentFlags(zeroNotJ);
 				}
-				Check_Printf(")\n");
+				Check_Printf(VERB_CHECK, ")\n");
 			}
 		}
 
 		if (nfActorclip && nfActorclip <  brush->numsides / 2) {
-			Check_Printf("* Brush %i (entity %i): ACTORCLIP set on less than half of the faces: removing.\n", brush->brushnum, brush->entitynum );
+			Check_Printf(VERB_CHECK, "* Brush %i (entity %i): ACTORCLIP set on less than half of the faces: removing.\n", brush->brushnum, brush->entitynum );
 			for (j = 0; j < brush->numsides; j++) {
 				side_t *side = &brush->original_sides[j];
 				const ptrdiff_t index = side - brushsides;
 				brush_texture_t *tex = &side_brushtextures[index];
 
 				if (side->contentFlags & CONTENTS_ACTORCLIP && !Q_strcmp(tex->name, "tex_common/actorclip")) {
-					Check_Printf("* Brush %i (entity %i): removing tex_common/actorclip, setting tex_common/error\n", brush->brushnum, brush->entitynum );
+					Check_Printf(VERB_CHECK, "* Brush %i (entity %i): removing tex_common/actorclip, setting tex_common/error\n", brush->brushnum, brush->entitynum );
 					Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
 				}
 
@@ -1259,21 +1324,21 @@ void CheckBrushes (void)
 			/* the old footstep value */
 			if (side->contentFlags & 0x00040000) {
 				side->contentFlags &= ~0x00040000;
-				Check_Printf("* Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): converted old footstep content to new footstep surface value\n", brush->brushnum, brush->entitynum);
 				side->surfaceFlags |= SURF_FOOTSTEP;
 				tex->surfaceFlags |= SURF_FOOTSTEP;
 			}
 			/* the old fireaffected value */
 			if (side->contentFlags & 0x0008) {
 				side->contentFlags &= ~0x0008;
-				Check_Printf("* Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): converted old fireaffected content to new fireaffected surface value\n", brush->brushnum, brush->entitynum);
 				side->surfaceFlags |= SURF_BURN;
 				tex->surfaceFlags |= SURF_BURN;
 			}
 #endif
 
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
-				Check_Printf("* Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
+				Check_Printf(VERB_CHECK, "* Brush %i (entity %i): origin brush inside worldspawn - removed CONTENTS_ORIGIN\n", brush->brushnum, brush->entitynum);
 				side->contentFlags &= ~CONTENTS_ORIGIN;
 			}
 		}

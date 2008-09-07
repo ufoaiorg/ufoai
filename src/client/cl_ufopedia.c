@@ -474,9 +474,9 @@ void UP_ItemDescription (const objDef_t *od)
 
 			/* We check if the wanted firemode to display exists. */
 			if (upFireMode > odAmmo->numFiredefs[up_weapon_id] - 1)
-				upFireMode = odAmmo->numFiredefs[up_weapon_id] - 1;
-			if (upFireMode < 0)
 				upFireMode = 0;
+			if (upFireMode < 0)
+				upFireMode = odAmmo->numFiredefs[up_weapon_id] - 1;
 
 			/* We always display the name of the firemode for an ammo */
 			Cvar_Set("mn_displayfiremode", "1"); /* use strings here - no int */
@@ -1781,8 +1781,10 @@ static void UP_IncreaseWeapon_f (void)
 	upResearchedLinkTemp = upResearchedLink;
 	upResearchedLinkTemp++;
 	/* We only try to change the value of upResearchedLink if this is possible */
-	if (upResearchedLink < od->numWeapons - 1) {
+	if (upResearchedLink < od->numWeapons) {
 		/* this is an ammo */
+		if (upResearchedLinkTemp >= od->numWeapons)
+			upResearchedLinkTemp = 0;
 		while (!RS_IsResearched_ptr(od->weapons[upResearchedLinkTemp]->tech)) {
 			upResearchedLinkTemp++;
 			if (upResearchedLinkTemp >= od->numWeapons)
@@ -1793,8 +1795,10 @@ static void UP_IncreaseWeapon_f (void)
 			upResearchedLink = upResearchedLinkTemp;
 			UP_ItemDescription(od);
 		}
-	} else if (upResearchedLink < od->numAmmos - 1) {
+	} else if (upResearchedLink < od->numAmmos) {
 		/* this is a weapon */
+		if (upResearchedLinkTemp >= od->numAmmos)
+			upResearchedLinkTemp = 0;
 		while (!RS_IsResearched_ptr(od->ammos[upResearchedLinkTemp]->tech)) {
 			upResearchedLinkTemp++;
 			if (upResearchedLinkTemp >= od->numAmmos)
@@ -1831,8 +1835,10 @@ static void UP_DecreaseWeapon_f (void)
 	upResearchedLinkTemp = upResearchedLink;
 	upResearchedLinkTemp--;
 	/* We only try to change the value of upResearchedLink if this is possible */
-	if (upResearchedLink > 0 && od->numWeapons > 0) {
+	if (upResearchedLink >= 0 && od->numWeapons > 0) {
 		/* this is an ammo */
+		if (upResearchedLinkTemp < 0)
+			upResearchedLinkTemp = od->numWeapons - 1;
 		while (!RS_IsResearched_ptr(od->weapons[upResearchedLinkTemp]->tech)) {
 			upResearchedLinkTemp--;
 			if (upResearchedLinkTemp < 0)
@@ -1843,8 +1849,10 @@ static void UP_DecreaseWeapon_f (void)
 			upResearchedLink = upResearchedLinkTemp;
 			UP_ItemDescription(od);
 		}
-	} else if (upResearchedLink > 0 && od->numAmmos > 0) {
+	} else if (upResearchedLink >= 0 && od->numAmmos > 0) {
 		/* this is a weapon */
+		if (upResearchedLinkTemp < 0)
+			upResearchedLinkTemp = od->numAmmos - 1;
 		while (!RS_IsResearched_ptr(od->ammos[upResearchedLinkTemp]->tech)) {
 			upResearchedLinkTemp--;
 			if (upResearchedLinkTemp < 0)

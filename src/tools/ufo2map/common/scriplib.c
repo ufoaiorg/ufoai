@@ -71,7 +71,7 @@ static void AddScriptToStack (const char *filename)
 
 	size = LoadFile(script->filename, (void **)&script->buffer);
 
-	Verb_Printf(VERB_NORMAL, "entering %s\n", script->filename);
+	Verb_Printf(VERB_LESS, "entering %s\n", script->filename);
 
 	script->line = 1;
 

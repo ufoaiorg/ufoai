@@ -545,7 +545,7 @@ int CP_CountMission (void)
 
 #ifdef DEBUG
 	if (counterInvalidMission)
-	Com_Printf("CP_CountMission: Warning, there are %i mission that should have been removed from global mission array\n", counterInvalidMission);
+		Com_Printf("CP_CountMission: Warning, there are %i mission that should have been removed from global mission array\n", counterInvalidMission);
 #endif
 	return counterMission;
 }
@@ -5147,6 +5147,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 
 	if (mis->stage != STAGE_BASE_ATTACK) {
 		assert(aircraft);
+
 		switch (mis->category) {
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */
@@ -5183,7 +5184,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 			while (listPos) {
 				const employee_t *employee = (employee_t *)listPos->data;
 				/* don't use an employee that is currently being transfered */
-				if (!employee->transfer) {
+				if (E_EmployeeIsCurrentlyInBase(employee)) {
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					/* if the soldier was ever on a mission */
@@ -5202,7 +5203,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 			while (listPos) {
 				const employee_t *employee = (employee_t *)listPos->data;
 				/* don't use an employee that is currently being transfered */
-				if (!employee->transfer) {
+				if (E_EmployeeIsCurrentlyInBase(employee)) {
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					const rank_t *rank = &gd.ranks[score->rank];
@@ -5219,6 +5220,10 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 
 			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i - UGVs: %i -- probability to win: %.02f\n",
 				ccs.battleParameters.aliens, numSoldiers, numUGVs, winProbability);
+
+			LIST_Delete(&hiredSoldiers);
+			LIST_Delete(&ugvs);
+
 			return winProbability;
 		} else {
 			/* No soldier to defend the base */

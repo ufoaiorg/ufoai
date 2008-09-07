@@ -19,8 +19,6 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "eclass_def.h"
-
 #include "iscriplib.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
@@ -70,13 +68,9 @@ StaticRegisterModule staticRegisterEclassDef(StaticEclassDefModule::instance());
 char		com_token[1024];
 bool	com_eof;
 
-/*
-==============
-COM_Parse
-
-Parse a token out of a string
-==============
-*/
+/**
+ * @brief Parse a token out of a string
+ */
 const char *COM_Parse (const char *data) {
 	int		c;
 	int		len;
@@ -97,7 +91,7 @@ skipwhite:
 		data++;
 	}
 
-// skip // comments
+	// skip // comments
 	if (c == '/' && data[1] == '/') {
 		while (*data && *data != '\n')
 			data++;
@@ -105,7 +99,7 @@ skipwhite:
 	}
 
 
-// handle quoted strings specially
+	// handle quoted strings specially
 	if (c == '\"') {
 		data++;
 		do {
@@ -119,7 +113,7 @@ skipwhite:
 		} while (1);
 	}
 
-// parse single characters
+	// parse single characters
 	if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ':') {
 		com_token[len] = c;
 		len++;
@@ -127,7 +121,7 @@ skipwhite:
 		return data + 1;
 	}
 
-// parse a regular word
+	// parse a regular word
 	do {
 		com_token[len] = c;
 		data++;
@@ -234,7 +228,7 @@ EntityClass *Eclass_InitFromText (const char *text) {
 	}
 
 	char	parms[256];
-	// get the flags
+	// get the flags that are shown in the entity inspector
 	{
 		// copy to the first /n
 		char* p = parms;
@@ -268,6 +262,7 @@ EntityClass *Eclass_InitFromText (const char *text) {
 		EntityClass_insertAttribute(*e, "angle", EntityClassAttribute("angle", "Yaw Angle", "0"));
 	}
 	EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
+	EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
 	EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("sound", "Sound"));
 
 	return e;

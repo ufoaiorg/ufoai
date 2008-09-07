@@ -716,10 +716,13 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 		if (selectedQueueItem) {
 			assert(selectedProduction);
 			od = selectedProduction->item;
+			MN_ExecuteConfunc("prod_priority_on");
 		} else if (selectedItem) {
 			od = selectedItem;
+			MN_ExecuteConfunc("prod_priority_off");
 		} else {
 			od = NULL;
+			MN_ExecuteConfunc("prod_priority_off");
 		}
 
 		if (od) {
@@ -802,6 +805,11 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
  */
 static void PR_AircraftInfo (const aircraft_t * aircraftTemplate)
 {
+	if (selectedQueueItem)
+		MN_ExecuteConfunc("prod_priority_on");
+	else
+		MN_ExecuteConfunc("prod_priority_off");
+
 	if (aircraftTemplate) {
 		static char productionInfo[512];
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));

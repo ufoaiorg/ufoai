@@ -12,12 +12,12 @@
 // * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
 
 ////////////////////////
-// OILPIPES RANDOM MAPS
+// INDUSTRIAL RANDOM MAPS
 ////////////////////////
 
 mapdef oilpipes_small
 {
-	map				"+oilpipes"
+	map				"+industrial"
 	param			small
 	description		"_Industrial theme."
 	size			"small"
@@ -275,6 +275,7 @@ mapdef frozen_alienlandingindustrial
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
@@ -329,7 +330,7 @@ mapdef frozen_small
 	}
 }
 
-mapdef frozen_landingnature
+mapdef frozen_alienlandingnature
 {
 	map				"+frozen"
 	param			alienlandingnature
@@ -340,6 +341,7 @@ mapdef frozen_landingnature
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
@@ -1214,7 +1216,7 @@ mapdef industrial
 
 	ufos
 	{
-		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains

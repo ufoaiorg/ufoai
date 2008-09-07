@@ -228,6 +228,7 @@ EMPLOYEE BACKEND STUFF
 
 /**
  * @brief Checks whether the given employee is in the given base
+ * @sa E_EmployeeIsCurrentlyInBase
  */
 qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
 {
@@ -503,12 +504,36 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 }
 
 /**
+ * @brief Returns true if the employee is in the homebase and not on mission or transfer
+ * @param[in] employee The employee_t pointer to check
+ * @return qboolean
+ * @note It's assumed that the employee is already hired
+ * @sa E_IsInBase
+ */
+qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
+{
+	if (!employee)
+		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
+
+	assert(employee->hired);
+	
+	if (employee->transfer)
+		return qfalse;
+	else {
+		const aircraft_t *aircraft = CL_SoldierInAircraft(employee, NULL);
+		if (aircraft && aircraft->status > AIR_HOME)
+			return qfalse;
+
+		return qtrue;
+	}
+}
+
+/**
  * @brief Gets an unassigned employee of a given type from the given base.
  *
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
- * @sa E_EmployeesInBase
  * @note assigned is not hired - they are already hired in a base, in a quarter _and_ working in another building.
  */
 employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type)
@@ -530,18 +555,15 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type
  * @param[in] type The type of employee to search.
  * @return employee_t
  * @sa E_EmployeeIsUnassigned
- * @sa E_EmployeesInBase
  * @note unassigned is not unhired - they are already hired in a base but are at quarters
  */
 employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
-		if (employee->baseHired == base
-			&& E_EmployeeIsUnassigned(employee))
+		employee_t *employee = &gd.employees[type][i];
+		if (employee->baseHired == base && E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -691,7 +713,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
 void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
 
 	if (!base)
 		return;
@@ -700,7 +721,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	assert(type < MAX_EMPL);
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
-		employee = &gd.employees[type][i];
+		employee_t *employee = &gd.employees[type][i];
 		if (employee->hired && employee->baseHired == base)
 			E_UnhireEmployee(employee);
 	}
@@ -1343,7 +1364,7 @@ static void E_EmployeeHire_f (void)
 static void E_EmployeeSelect_f (void)
 {
 	int num;
-	employee_t* employee;
+	const employee_t* employee;
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {

@@ -119,7 +119,9 @@ const int TUs_used[PATHFINDING_DIRECTIONS];
 #define	MAX_TOKEN_CHARS     256 /* max length of an individual token */
 
 /* ALL */
-#define	MAX_QPATH           64  /* max length of a quake game pathname */
+#define MAX_QPATH           64  /**< max length of the ufo virtual filesystem */
+#define MAX_TEXPATH         32  /**< max length of filename relative to gamedir, any longer makes the bsp files unecessarily long */
+
 /* windows + linux 256, macosx 32 */
 #define	MAX_OSPATH          256 /* max length of a filesystem pathname */
 /* common/flies.c */

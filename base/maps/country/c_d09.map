@@ -1,14 +1,4 @@
-//Entities:10
-//  000: worldspawn: 8 brushes
-//  001: func_group: 1 brushes
-//  002: misc_model(432 406 28) models/objects/vegi/bush/bush01.md2
-//  003: misc_model(388 374 22) models/objects/vegi/bush/bush01.md2
-//  004: misc_model(130 324 18) models/objects/vegi/bush/bush01.md2
-//  005: misc_model(62 72 20) models/objects/vegi/bush/bush01.md2
-//  006: misc_model(370 438 30) models/objects/vegi/bush/bush01.md2
-//  007: misc_model(90 98 32) models/objects/vegi/bush/bush01.md2
-//  008: misc_model(134 128 28) models/objects/vegi/bush/bush01.md2
-//  009: misc_model(72 160 28) models/objects/vegi/bush/bush01.md2
+
 // entity 0
 {
 "classname" "worldspawn"
@@ -23,15 +13,6 @@
 }
 // brush 1
 {
-( 82 226 4 ) ( 102 226 4 ) ( 102 246 4 ) tex_common/nodraw 48 149 90 0.375 0.375 65282 128 0
-( 102 226 6 ) ( 82 226 6 ) ( 102 246 6 ) tex_material/s_wood003 48 149 90 0.375 0.375 65282 0 0
-( 382 454 6 ) ( 382 454 4 ) ( 366 444 4 ) tex_material/s_wood003 250 149 -90 0.375 -0.375 65282 0 0
-( 382 454 4 ) ( 382 454 6 ) ( 386 462 6 ) tex_material/s_wood003 250 48 -90 0.375 -0.375 65282 0 0
-( 378 458 6 ) ( 378 458 4 ) ( 386 462 4 ) tex_material/s_wood003 250 149 -90 0.375 -0.375 65282 0 0
-( 378 458 4 ) ( 378 458 6 ) ( 366 444 6 ) tex_material/s_wood003 250 48 -90 0.375 -0.375 65282 0 0
-}
-// brush 2
-{
 ( 82 226 4 ) ( 102 226 4 ) ( 102 246 4 ) tex_common/nodraw 149 32 90 0.375 0.375 65282 128 0
 ( 102 226 6 ) ( 82 226 6 ) ( 102 246 6 ) tex_material/s_wood003 149 32 90 0.375 0.375 65282 0 0
 ( 374 90 6 ) ( 374 90 4 ) ( 368 96 4 ) tex_material/s_wood003 10 240 0 0.375 0.375 65282 0 0
@@ -39,7 +20,7 @@
 ( 394 98 6 ) ( 394 98 4 ) ( 402 92 4 ) tex_material/s_wood003 223 240 0 -0.375 0.375 65282 0 0
 ( 394 98 4 ) ( 394 98 6 ) ( 368 96 6 ) tex_material/s_wood003 223 240 0 -0.375 0.375 65282 0 0
 }
-// brush 3
+// brush 2
 {
 ( 0 910 4 ) ( 0 814 4 ) ( 0 814 0 ) tex_nature/dirt_se01 252 8 0 0.5 0.5 65280 0 0
 ( 512 350 0 ) ( 512 350 4 ) ( 512 798 4 ) tex_nature/dirt_se01 136 0 0 0.25 0.25 65280 0 0
@@ -48,7 +29,7 @@
 ( 352 480 0 ) ( 352 416 0 ) ( 416 480 0 ) tex_nature/dirt_se01 0 0 0 0.5 0.5 65280 0 0
 ( 500 800 4 ) ( 500 896 4 ) ( 704 896 4 ) tex_nature/dirt_se01 0 0 0 0.5 0.5 65280 0 0
 }
-// brush 4
+// brush 3
 {
 ( 352 480 0 ) ( 352 416 0 ) ( 416 480 0 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 ( 416 480 -64 ) ( 480 416 -64 ) ( 416 480 64 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
@@ -68,7 +49,7 @@
 ( 352 352 64 ) ( 416 352 64 ) ( 352 352 0 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 ( 352 352 4 ) ( 352 416 24 ) ( 416 352 4 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 }
-// brush 5
+// brush 4
 {
 ( 96 128 24 ) ( 96 160 16 ) ( 96 160 0 ) tex_common/nodraw 0 0 0 1 1 65281 128 0
 ( 352 480 0 ) ( 352 416 0 ) ( 416 480 0 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
@@ -80,7 +61,7 @@
 ( 32 128 4 ) ( 32 192 4 ) ( 96 128 24 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 ( 96 128 24 ) ( 96 96 20 ) ( 32 96 4 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 }
-// brush 6
+// brush 5
 {
 ( 96 128 24 ) ( 96 160 0 ) ( 96 160 16 ) tex_common/nodraw 0 0 0 1 1 65281 128 0
 ( 96 160 16 ) ( 192 160 0 ) ( 192 160 4 ) tex_common/nodraw 0 0 0 1 1 65281 128 0
@@ -94,7 +75,7 @@
 ( 96 32 0 ) ( 160 64 4 ) ( 160 64 0 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 ( 96 96 20 ) ( 160 64 4 ) ( 96 32 4 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 }
-// brush 7
+// brush 6
 {
 ( 352 480 0 ) ( 352 416 0 ) ( 416 480 0 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 ( 96 160 16 ) ( 32 192 0 ) ( 32 192 4 ) tex_common/nodraw 0 0 0 1 1 65281 128 0

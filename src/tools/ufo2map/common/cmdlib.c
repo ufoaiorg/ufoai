@@ -89,7 +89,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	err = unzGetGlobalInfo(uf, &gi);
 
 	if (err != UNZ_OK) {
-		Sys_FPrintf(SYS_VRB, "Could not load '%s' into zlib\n", packfile);
+		Verb_Printf(VERB_EXTRA, "Could not load '%s' into zlib\n", packfile);
 		return NULL;
 	}
 
@@ -371,23 +371,8 @@ int TryLoadFile (const char *filename, void **bufferptr)
 }
 
 /**
- * @brief
  * @todo Logfile writing
  */
-void Sys_FPrintf (int flag, const char *format, ...)
-{
-	char out_buffer[4096];
-	va_list argptr;
-
-	if (flag == SYS_VRB && config.verbose == qfalse)
-		return;
-
-	va_start(argptr, format);
-	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
-	va_end(argptr);
-
-	printf("%s", out_buffer);
-}
 
 /**
  * @brief
@@ -405,12 +390,24 @@ void Com_Printf (const char *format, ...)
 }
 
 /**
- * @brief decides wether to proceed with output based on verbosity level
- * @sa Com_Printf, Check_Printf,
+ * @brief return nonzero if printing should be aborted based on the command line verbosity
+ * level and the importance of the message
+ * @param msgVerbLevel insignificance of the message. Larger numbers mean the message is
+ * less important. The message will first be printed if the msgVerbLevel is equal to the config.verbosity.
+ * @sa verbosityLevel_t
  */
-void Verb_Printf (const verbosityLevel_t importance, const char *format, ...)
+qboolean AbortPrint (const verbosityLevel_t msgVerbLevel)
 {
-	if (config.verbosity <= VERB_NUM - importance + 1)
+	return (msgVerbLevel > config.verbosity);
+}
+
+/**
+ * @brief decides wether to proceed with output based on verbosity level
+ * @sa Com_Printf, Check_Printf, AbortPrint
+ */
+void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
+{
+	if (AbortPrint(msgVerbLevel))
 		return;
 
 	{

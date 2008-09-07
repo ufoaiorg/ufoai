@@ -197,14 +197,14 @@ int WriteBSP (node_t *headnode)
 	c_nofaces = 0;
 	c_facenodes = 0;
 
-	Sys_FPrintf(SYS_VRB, "--- WriteBSP ---\n");
+	Verb_Printf(VERB_EXTRA, "--- WriteBSP ---\n");
 
 	oldfaces = curTile->numfaces;
 	emittedHeadnode = EmitDrawNode_r(headnode);
 
-	Sys_FPrintf(SYS_VRB, "%5i nodes with faces\n", c_facenodes);
-	Sys_FPrintf(SYS_VRB, "%5i nodes without faces\n", c_nofaces);
-	Sys_FPrintf(SYS_VRB, "%5i faces\n", curTile->numfaces-oldfaces);
+	Verb_Printf(VERB_EXTRA, "%5i nodes with faces\n", c_facenodes);
+	Verb_Printf(VERB_EXTRA, "%5i nodes without faces\n", c_nofaces);
+	Verb_Printf(VERB_EXTRA, "%5i faces\n", curTile->numfaces-oldfaces);
 
 	return emittedHeadnode;
 }
@@ -338,7 +338,7 @@ void EndBSPFile (const char *filename)
 	UnparseEntities();
 
 	/* write the map */
-	Verb_Printf(VERB_NORMAL, "Writing %s\n", filename);
+	Verb_Printf(VERB_LESS, "Writing %s\n", filename);
 	WriteBSPFile(filename);
 }
 

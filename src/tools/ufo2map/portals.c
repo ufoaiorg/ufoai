@@ -459,7 +459,7 @@ static void FindPortalSide (portal_t *p)
 
 gotit:
 	if (!bestside)
-		Sys_FPrintf(SYS_VRB, "WARNING: side not found for portal\n");
+		Verb_Printf(VERB_EXTRA, "WARNING: side not found for portal\n");
 
 	p->sidefound = qtrue;
 	p->side = bestside;
@@ -497,7 +497,7 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 {
 	int i;
 
-	Sys_FPrintf(SYS_VRB, "--- MarkVisibleSides ---\n");
+	Verb_Printf(VERB_EXTRA, "--- MarkVisibleSides ---\n");
 
 	/* clear all the visible flags */
 	for (i = startbrush; i < endbrush; i++) {

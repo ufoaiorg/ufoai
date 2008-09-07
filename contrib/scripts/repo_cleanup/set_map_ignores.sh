@@ -3,6 +3,12 @@
 MAPDIRS="../../../base/maps ../../../../data_source/maps"
 PROPFILE=/tmp/map.properties
 
+# set this to report directories where no action will be performed
+#REPORTNEGATIVES=yes
+
+# set this to report target settings
+#REPORTTARGET
+
 cd "$(dirname $0)"
 SCRIPTDIR="$PWD"
 . ../scripts_common
@@ -19,8 +25,10 @@ echo "*.bsp
 *.footsteps
 *.map.original*" > $PROPFILE || fail "failed to write $PROPFILE"
 
-echo "svn:ignore will be set to:"
-cat "$PROPFILE"
+[[ $REPORTTARGET ]] && {
+    echo "svn:ignore will be set to:"
+    cat "$PROPFILE"
+}
 
 for MAPDIR in $MAPDIRS; do
     [ -d "$MAPDIR" ] || {
@@ -29,7 +37,7 @@ for MAPDIR in $MAPDIRS; do
     }
     while read DIRECTORY; do
 	if [ "$(diff "$PROPFILE" <(svn pg svn:ignore "$DIRECTORY" | strings))" == "" ]; then
-	    echo "not setting svn:ignore property for $DIRECTORY, already correct"
+	    [[ $REPORTNEGATIVES ]] && echo "not setting svn:ignore property for $DIRECTORY, already correct"
 	else
 	    echo "*** setting svn:ignore property for $DIRECTORY"
     	    $SVN ps svn:ignore --file "$PROPFILE" "$DIRECTORY" || fail "failed to set property on $DIRECTORY"

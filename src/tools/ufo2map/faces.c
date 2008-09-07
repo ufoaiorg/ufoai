@@ -385,26 +385,26 @@ static void FixEdges_r (node_t *node)
 void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
-	Sys_FPrintf(SYS_VRB, "---- snap verts ----\n");
+	Verb_Printf(VERB_EXTRA, "---- snap verts ----\n");
 	memset(hashverts, 0, sizeof(hashverts));
 	c_totalverts = 0;
 	c_uniqueverts = 0;
 	c_faceoverflows = 0;
 	EmitVertexes_r(headnode);
-	Sys_FPrintf(SYS_VRB, "%i unique from %i\n", c_uniqueverts, c_totalverts);
+	Verb_Printf(VERB_EXTRA, "%i unique from %i\n", c_uniqueverts, c_totalverts);
 
 	/* break edges on tjunctions */
-	Sys_FPrintf(SYS_VRB, "---- tjunc ----\n");
+	Verb_Printf(VERB_EXTRA, "---- tjunc ----\n");
 	c_degenerate = 0;
 	c_facecollapse = 0;
 	c_tjunctions = 0;
 	if (!config.notjunc)
 		FixEdges_r(headnode);
-	Sys_FPrintf(SYS_VRB, "%5i edges degenerated\n", c_degenerate);
-	Sys_FPrintf(SYS_VRB, "%5i faces degenerated\n", c_facecollapse);
-	Sys_FPrintf(SYS_VRB, "%5i edges added by tjunctions\n", c_tjunctions);
-	Sys_FPrintf(SYS_VRB, "%5i faces added by tjunctions\n", c_faceoverflows);
-	Sys_FPrintf(SYS_VRB, "%5i bad start verts\n", c_badstartverts);
+	Verb_Printf(VERB_EXTRA, "%5i edges degenerated\n", c_degenerate);
+	Verb_Printf(VERB_EXTRA, "%5i faces degenerated\n", c_facecollapse);
+	Verb_Printf(VERB_EXTRA, "%5i edges added by tjunctions\n", c_tjunctions);
+	Verb_Printf(VERB_EXTRA, "%5i faces added by tjunctions\n", c_faceoverflows);
+	Verb_Printf(VERB_EXTRA, "%5i bad start verts\n", c_badstartverts);
 }
 
 /**
@@ -779,14 +779,14 @@ static void MakeFaces_r (node_t *node)
 
 void MakeFaces (node_t *node)
 {
-	Sys_FPrintf(SYS_VRB, "--- MakeFaces ---\n");
+	Verb_Printf(VERB_EXTRA, "--- MakeFaces ---\n");
 	c_merge = 0;
 	c_subdivide = 0;
 	c_nodefaces = 0;
 
 	MakeFaces_r(node);
 
-	Sys_FPrintf(SYS_VRB, "%5i makefaces\n", c_nodefaces);
-	Sys_FPrintf(SYS_VRB, "%5i merged\n", c_merge);
-	Sys_FPrintf(SYS_VRB, "%5i subdivided\n", c_subdivide);
+	Verb_Printf(VERB_EXTRA, "%5i makefaces\n", c_nodefaces);
+	Verb_Printf(VERB_EXTRA, "%5i merged\n", c_merge);
+	Verb_Printf(VERB_EXTRA, "%5i subdivided\n", c_subdivide);
 }

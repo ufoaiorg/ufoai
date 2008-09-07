@@ -983,14 +983,20 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			/* Update stats values */
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
-				MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+					_("%s was successfully installed into aircraft %s at base %s."),
+					_(slot->item->name), _(aircraft->name), aircraft->homebase->name);
 			} else if (installation) {
-				MN_AddNewMessage(_("Notice"), _("Installation defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully installed at installation %s."),
+					_(slot->item->name), installation->name);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("Base defence item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully installed at base %s."), _(slot->item->name), base->name);
 			}
+			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		}
 	} else if (slot->installationTime < 0) {
+		const objDef_t *olditem;
+
 		/* the item is being removed */
 		slot->installationTime++;
 		if (slot->installationTime >= 0) {
@@ -998,19 +1004,32 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			if (aircraft && aircraft->homebase != base)
 				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
 #endif
+			olditem = slot->item;
 			AII_RemoveItemFromSlot(base, slot, qfalse);
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
 				/* Only stop time and post a notice, if no new item to install is assigned */
 				if (!slot->item) {
-					MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+						_("%s was successfully removed from aircraft %s at base %s."),
+						_(olditem->name), _(aircraft->name), base->name);
 					CL_GameTimeStop();
+				} else {
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+						_ ("%s was successfully removed, starting installation of %s into aircraft %s at base %s"),
+						_(olditem->name), _(slot->item->name), _(aircraft->name), base->name);
 				}
+				MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			} else if (!slot->item) {
-				if (installation)
-					MN_AddNewMessage(_("Notice"), _("Installation defence item was successfully removed."), qfalse, MSG_STANDARD, NULL);
-				else
-					MN_AddNewMessage(_("Notice"), _("Base defence item was successfully removed."), qfalse, MSG_STANDARD, NULL);
+				if (installation) {
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+						_("%s was successfully removed from installation %s."),
+						_(olditem->name), installation->name);
+				} else {
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully removed from base %s."), 
+						_(olditem->name), base->name);
+				}
+				MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
 			}
 		}
@@ -1026,7 +1045,6 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 void AII_UpdateInstallationDelay (void)
 {
 	int i, j, k;
-	aircraft_t *aircraft;
 
 	for (j = 0; j < MAX_INSTALLATIONS; j++) {
 		installation_t *installation = INS_GetFoundedInstallationByIDX(j);
@@ -1039,6 +1057,7 @@ void AII_UpdateInstallationDelay (void)
 	}
 
 	for (j = 0; j < MAX_BASES; j++) {
+		aircraft_t *aircraft;
 		base_t *base = B_GetFoundedBaseByIDX(j);
 		if (!base)
 			continue;
@@ -1283,6 +1302,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."),
 				AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 		} else {
+			assert(slot->item->tech);
 			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", _(slot->item->tech->name));
 			if (!slot->installationTime)
 				Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));

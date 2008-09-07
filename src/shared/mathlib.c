@@ -198,7 +198,7 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 	length = sqrt(length);		/** @todo */
 
 	if (length) {
-		const float ilength = 1 / length;
+		const float ilength = 1.0 / length;
 		out[0] = v[0] * ilength;
 		out[1] = v[1] * ilength;
 		out[2] = v[2] * ilength;
@@ -347,15 +347,7 @@ int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
  */
 vec_t VectorLength (const vec3_t v)
 {
-	int i;
-	float length;
-
-	length = 0;
-	for (i = 0; i < 3; i++)
-		length += v[i] * v[i];
-	length = sqrt(length);		/** @todo */
-
-	return length;
+	return sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 
 void VectorInverse (vec3_t v)
@@ -550,7 +542,7 @@ vec_t VectorNormalize (vec3_t v)
 	length = sqrt(length);		/** @todo */
 
 	if (length) {
-		const float ilength = 1 / length;
+		const float ilength = 1.0 / length;
 		v[0] *= ilength;
 		v[1] *= ilength;
 		v[2] *= ilength;

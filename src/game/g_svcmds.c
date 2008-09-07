@@ -295,7 +295,7 @@ static void SVCmd_ActorInvList_f (void)
 	for (i = 0, player = game.players; i < game.sv_maxplayersperteam * 2; i++, player++) {
 		if (!player->inuse)
 			continue;
-		Cmd_InvList(player);
+		G_InvList_f(player);
 	}
 }
 #endif
@@ -374,9 +374,9 @@ void ServerCommand (void)
 	else if (Q_strcasecmp(cmd, "win") == 0)
 		SVCmd_Win_f();
 #ifdef DEBUG
-	else if (Q_strcasecmp(cmd, "showall") == 0)
+	else if (Q_strcasecmp(cmd, "debug_showall") == 0)
 		SVCmd_ShowAll_f();
-	else if (Q_strcasecmp(cmd, "actorinvlist") == 0)
+	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		SVCmd_ActorInvList_f();
 #endif
 	else

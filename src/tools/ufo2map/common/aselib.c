@@ -143,7 +143,7 @@ void ASE_Load (const char *filename, qboolean verbose)
 	if (!ase.curpos)
 		Sys_Error("Could not allocate memory for ase loading");
 
-	Sys_FPrintf(SYS_VRB, "Processing '%s'\n", filename);
+	Verb_Printf(VERB_EXTRA, "Processing '%s'\n", filename);
 
 	if (fread(ase.buffer, ase.len, 1, fp) != 1) {
 		fclose(fp);
@@ -364,7 +364,7 @@ static void ASE_KeyMAP_DIFFUSE (const char *token)
 		s_token[len] = '\0';
 
 		COM_StripExtension(bitmap, ase.materials[ase.numMaterials].name, MAX_QPATH);
-		Sys_FPrintf(SYS_VRB, "ase material name: \'%s\'\n", ase.materials[ase.numMaterials].name);
+		Verb_Printf(VERB_EXTRA, "ase material name: \'%s\'\n", ase.materials[ase.numMaterials].name);
 	}
 }
 

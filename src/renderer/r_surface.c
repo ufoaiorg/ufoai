@@ -120,7 +120,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	if (bufferMapTile != mod) {
 		bufferMapTile = mod;
 
-		if (qglBindBuffer)
+		if (qglBindBuffer && r_vertexbuffers->integer)
 			R_SetVertexBufferState(mod);
 		else
 			R_SetVertexArrayState(mod);

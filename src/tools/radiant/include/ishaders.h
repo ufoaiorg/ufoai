@@ -98,9 +98,6 @@ public:
 	virtual void DecRef() = 0;
 	// get/set the qtexture_t* Radiant uses to represent this shader object
 	virtual qtexture_t* getTexture() const = 0;
-	virtual qtexture_t* getDiffuse() const = 0;
-	virtual qtexture_t* getBump() const = 0;
-	virtual qtexture_t* getSpecular() const = 0;
 	// get shader name
 	virtual const char* getName() const = 0;
 	virtual bool IsInUse() const = 0;

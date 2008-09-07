@@ -332,10 +332,7 @@ void G_SpawnEntities(const char *mapname, const char *entities);
 qboolean G_RunFrame(void);
 
 #ifdef DEBUG
-void Cmd_InvList(player_t *player);
-void G_KillTeam(void);
-void G_StunTeam(void);
-void G_ListMissionScore_f(void);
+void G_InvList_f(const player_t *player);
 #endif
 
 extern int turnTeam;

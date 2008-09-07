@@ -82,7 +82,7 @@ void CalcTextureReflectivity (void)
 			}
 			free(mt);
 			loaded = qtrue;
-			Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use tga colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+			Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use tga colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
 		}
 
 		if (!loaded) {
@@ -101,7 +101,7 @@ void CalcTextureReflectivity (void)
 				}
 				free(mt);
 				loaded = qtrue;
-				Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use jpeg colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+				Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use jpeg colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
 			}
 		}
 
@@ -261,7 +261,7 @@ void MakePatches (void)
 	int i, j, k;
 	vec3_t origin;
 
-	Sys_FPrintf(SYS_VRB, "%i faces\n", curTile->numfaces);
+	Verb_Printf(VERB_EXTRA, "%i faces\n", curTile->numfaces);
 
 	for (i = 0; i < curTile->nummodels; i++) {
 		const dBspModel_t *mod = &curTile->models[i];
@@ -284,7 +284,7 @@ void MakePatches (void)
 		}
 	}
 
-	Sys_FPrintf(SYS_VRB, "%i square feet\n", (int)(totalarea / 64));
+	Verb_Printf(VERB_EXTRA, "%i square feet\n", (int)(totalarea / 64));
 }
 
 /*
@@ -376,5 +376,5 @@ void SubdividePatches (const int num)
 
 	for (i = 0; i < num; i++)
 		DicePatch(&patches[i]);
-	Sys_FPrintf(SYS_VRB, "%i patches after subdivision\n", num_patches);
+	Verb_Printf(VERB_EXTRA, "%i patches after subdivision\n", num_patches);
 }

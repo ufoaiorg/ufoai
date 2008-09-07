@@ -24,8 +24,49 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "pathfinding.h"
+#include "mainframe.h"
+#include "os/path.h"
+#include "os/file.h"
+#include "gtkutil/filechooser.h"
+#include "autoptr.h"
+#include "ifilesystem.h"
+#include "archivelib.h"
+#include "script/scripttokeniser.h"
 
+/**
+ * @brief Parses the ufo2map pathfinding output to be able to display it afterwards
+ * @returns 0 on success
+ */
+static int ParsePathfindingLogFile (const char *filename)
+{
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+	if (file) {
+		AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(file->getInputStream()));
+	
+		for (;;) {
+			const char* token = tokeniser->getToken();
+
+			if (token == 0) {
+				break;
+			}
+			
+			/** @todo parse the data */
+		}
+	}
+	
+	return 0;
+}
+
+/**
+ * @todo Maybe also use the ufo2map output directly
+ * @sa ToolsCompile
+ */
 void ShowPathfinding (void)
 {
-
+	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, "Pathfinding log file", NULL, NULL);
+	const int retVal = ParsePathfindingLogFile(filename);
+	if (retVal)
+		return;
+		
+	/** @todo render the parsed data */
 }

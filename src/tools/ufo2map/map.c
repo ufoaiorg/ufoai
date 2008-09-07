@@ -228,7 +228,7 @@ static int BrushContents (mapbrush_t *b)
 	for (i = 1; i < b->numsides; i++, s++) {
 		trans |= curTile->texinfo[s->texinfo].surfaceFlags;
 		if (s->contentFlags != contentFlags) {
-			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
+			Verb_Printf(VERB_EXTRA, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
 				, b->entitynum, b->brushnum, s->contentFlags, contentFlags);
 			break;
 		}
@@ -634,8 +634,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		/* read the texturedef */
 		GetToken(qfalse);
-		if (strlen(parsedToken) >= sizeof(td.name)) {
-			Com_Printf("ParseBrush: texture name too long (limit "UFO_SIZE_T"): %s\n", sizeof(td.name), parsedToken);
+		if (strlen(parsedToken) >= MAX_TEXPATH) {
+			Com_Printf("ParseBrush: texture name too long (limit %i): %s\n", MAX_TEXPATH, parsedToken);
 			if (config.fixMap)
 				Sys_Error("Exiting, as -fix is active and saving might corrupt *.map by truncating texture name");
 		}
@@ -787,7 +787,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		Com_sprintf(string, sizeof(string), "%i %i %i", (int)origin[0], (int)origin[1], (int)origin[2]);
 		SetKeyValue(&entities[b->entitynum], "origin", string);
-		Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: set origin to %s\n", b->entitynum, b->brushnum, string);
+		Verb_Printf(VERB_EXTRA, "Entity %i, Brush %i: set origin to %s\n", b->entitynum, b->brushnum, string);
 
 		VectorCopy(origin, entities[b->entitynum].origin);
 
@@ -982,6 +982,33 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 	fprintf(f, "\"%s\" \"%s\"\n", e->key, e->value);
 }
 
+
+/**
+ * @brief write a brush to the .map file
+ * @param j the index of the brush in the entity, to label the brush in the comment in the map file
+ * @param f file to write to
+ */
+static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
+{
+	int k = 0;
+	fprintf(f, "// brush %i\n{\n", j);
+	for (k = 0; k < brush->numsides; k++) {
+		const side_t *side = &brush->original_sides[k];
+		const ptrdiff_t index = side - brushsides;
+		const brush_texture_t *t = &side_brushtextures[index];
+		const plane_t *p = &mapplanes[side->planenum];
+		int l;
+
+		for (l = 0; l < 3; l++)
+			fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
+		fprintf(f, "%s ", t->name);
+		fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
+		fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
+		fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
+	}
+	fprintf(f, "}\n");
+}
+
 /**
  * @sa LoadMapFile
  * @sa FixErrors
@@ -989,7 +1016,7 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 void WriteMapFile (const char *filename)
 {
 	FILE *f;
-	int i, j, k;
+	int i, j, jc;
 	int removed;
 
 	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
@@ -1012,30 +1039,32 @@ void WriteMapFile (const char *filename)
 		fprintf(f, "// entity %i\n{\n", i - removed);
 		WriteMapEntities(f, e);
 
-		for (j = 0; j < mapent->numbrushes; j++) {
+		/* need 2 counters. j counts the brushes in the source entity.
+		 * jc counts the brushes written back. they may differ if some are skipped,
+		 * eg they are microbrushes */
+		for (j = 0, jc = 0; j < mapent->numbrushes; j++) {
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
-			fprintf(f, "// brush %i\n{\n", j);
-			for (k = 0; k < brush->numsides; k++) {
-				const side_t *side = &brush->original_sides[k];
-				const ptrdiff_t index = side - brushsides;
-				const brush_texture_t *t = &side_brushtextures[index];
-				const plane_t *p = &mapplanes[side->planenum];
-				int l;
+			if (brush->skipWriteBack)
+				continue;
+			WriteMapBrush(brush, jc++, f);
+		}
 
-				for (l = 0; l < 3; l++)
-					fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
-				fprintf(f, "%s ", t->name);
-				fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
-				fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
-				fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
+		/* add brushes from func_groups with single members to worldspawn */
+		if (i == 0) {
+			int numToAdd, k;
+			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
+			for (k = 0; k < numToAdd; k++) {
+				if (brushesToAdd[k]->skipWriteBack)
+					continue;
+				WriteMapBrush(brushesToAdd[k], j++, f);
 			}
-			fprintf(f, "}\n");
+			free(brushesToAdd);
 		}
 		fprintf(f, "}\n");
 	}
 
 	if (removed)
-		Com_Printf("removed %i entities\n", removed);
+		Verb_Printf(VERB_NORMAL, "removed %i entities\n", removed);
 	fclose(f);
 }
 
@@ -1047,7 +1076,7 @@ void LoadMapFile (const char *filename)
 {
 	int i;
 
-	Sys_FPrintf(SYS_VRB, "--- LoadMapFile ---\n");
+	Verb_Printf(VERB_EXTRA, "--- LoadMapFile ---\n");
 
 	LoadScriptFile(filename);
 
@@ -1085,12 +1114,12 @@ void LoadMapFile (const char *filename)
 	/* save a copy of the brushes */
 	memcpy(mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t) * nummapbrushes);
 
-	Sys_FPrintf(SYS_VRB, "%5i brushes\n", nummapbrushes);
-	Sys_FPrintf(SYS_VRB, "%5i total sides\n", nummapbrushsides);
-	Sys_FPrintf(SYS_VRB, "%5i boxbevels\n", c_boxbevels);
-	Sys_FPrintf(SYS_VRB, "%5i edgebevels\n", c_edgebevels);
-	Sys_FPrintf(SYS_VRB, "%5i entities\n", num_entities);
-	Sys_FPrintf(SYS_VRB, "%5i planes\n", nummapplanes);
-	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
+	Verb_Printf(VERB_EXTRA, "%5i brushes\n", nummapbrushes);
+	Verb_Printf(VERB_EXTRA, "%5i total sides\n", nummapbrushsides);
+	Verb_Printf(VERB_EXTRA, "%5i boxbevels\n", c_boxbevels);
+	Verb_Printf(VERB_EXTRA, "%5i edgebevels\n", c_edgebevels);
+	Verb_Printf(VERB_EXTRA, "%5i entities\n", num_entities);
+	Verb_Printf(VERB_EXTRA, "%5i planes\n", nummapplanes);
+	Verb_Printf(VERB_EXTRA, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n",
 		map_mins[0], map_mins[1], map_mins[2], map_maxs[0], map_maxs[1], map_maxs[2]);
 }

@@ -329,7 +329,8 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		if ((tempMission->stage == STAGE_NOT_ACTIVE) || !tempMission->onGeoscape)
 			continue;
 		if (tempMission->pos && MAP_IsMapPositionSelected(node, tempMission->pos, x, y))
-			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MAP_GetIdxByMission(tempMission), CP_MissionToTypeString(tempMission), _(tempMission->location));
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MAP_GetIdxByMission(tempMission),
+				CP_MissionToTypeString(tempMission), _(tempMission->location));
 	}
 
 	/* Get selected bases */
@@ -1859,7 +1860,8 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (selectedMission) {
-		mn.menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selectedMission->location, CP_MissionToTypeString(selectedMission), _(selectedMission->mapDef->description));
+		mn.menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selectedMission->location,
+			CP_MissionToTypeString(selectedMission), _(selectedMission->mapDef->description));
 	} else if (selectedAircraft) {
 		switch (selectedAircraft->status) {
 		case AIR_HOME:

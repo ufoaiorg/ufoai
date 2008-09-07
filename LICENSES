@@ -199,6 +199,22 @@ base/maps/ice/ice_r01.map | GNU General Public License 2.0
 base/maps/ice/ice_r02.map | GNU General Public License 2.0
 base/maps/ice/ice_r03.map | GNU General Public License 2.0
 base/maps/industrial.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/industrial/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/italy/it_main.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/japan/ja_main.map | GNU General Public License 2.0
 base/maps/laboratory/lab_main.map | GPL version 2
@@ -209,51 +225,6 @@ base/maps/military_convoy/mc_drop_firebird.map | GNU General Public License 2.0 
 base/maps/military_convoy/mc_main.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/mine.map | GNU General Public License 2.0
 base/maps/office.map | GNU General Public License 2.0 or later | Martin Gerhardy
-base/maps/oilpipes/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr02.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr03.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr04.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr05.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr06_2x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr_07.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr_08.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr_09.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr_10.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/fr_11_1x2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/inter_saracen.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/inter_stiletto.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_a1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_a2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_a3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_c1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_c2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_c3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_e1_1x3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_e2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s4.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s5.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s6.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_e1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_e2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_e3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_eb1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_eb2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s1.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s2.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s3.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/maps/oilpipes/op_s_s4.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/oriental.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/oriental.ump | GNU General Public License 2.0
 base/maps/oriental/or_drop_firebird.map | GNU General Public License 2.0
@@ -2386,9 +2357,11 @@ base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 20
 base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
 base/sound/geoscape/attack.wav | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/info.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/mail.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/geoscape/newmission.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/geoscape/promotion.wav |  |  | ambience/jingle.ogg
 base/sound/geoscape/standard.wav | GNU General Public License 2.0 | BlakeD
-base/sound/geoscape/ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/ufospotted.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/lobbyprivmsg.wav | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/misc/popup.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -2582,8 +2555,8 @@ base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0
 base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/metal_duct_rust.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/metalbridge06.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_buildings/metalbridge06broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/metalbridge6broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/metceil1d.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/mtl_fnce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_fnce2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2591,7 +2564,7 @@ base/textures/tex_buildings/mtl_fnce4.jpg | GNU General Public License 2.0 | Nex
 base/textures/tex_buildings/mtl_gray.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_gray4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_midwrn.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/pent_metalbridge06.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/pent_metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/pewter.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/q1metal7_99.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/q1metal7_99_broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2610,9 +2583,9 @@ base/textures/tex_buildings/surface2.jpg | GNU General Public License 2.0 | Open
 base/textures/tex_buildings/t_wll_fnctrm.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_ow.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/t_wll_fnctrm_sign.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/t_wll_fnctrm_sign2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_buildings/tile_teracota_blue.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/t_wll_fnctrm_sgn.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/t_wll_fnctrm_sgn2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/tile_teracotablue.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/tin_floor04ach.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/wall035.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/wall036.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -2632,7 +2605,7 @@ base/textures/tex_buildings/window021.jpg | GNU General Public License 2.0 | Wer
 base/textures/tex_buildings/wizwood1_2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/woodceiling1a.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/woodceiling1b.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_buildings/woodceiling1b_dark.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/woodceiling1bdark.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/xred1_2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/yellow_rustb.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/yellow_rustb_v1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -3219,18 +3192,18 @@ base/textures/tex_pics/art_abstract003.jpg | GNU General Public License 2.0 | Jo
 base/textures/tex_pics/art_abstract004.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract006.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_abstract_ceramics01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_abstract_ceramics02.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_abstract_ceramics03.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_design001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_design002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_abstract_design003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_abstractceramics01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_abstractceramics02.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_abstractceramics03.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_cactus.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_floral_scrollwork.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_flower.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_bw_lady.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_girl001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_pics/art_portrait_madonna001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_pics/art_portrait_madonna01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_portrait_maiden.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_runner.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art_textile01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)

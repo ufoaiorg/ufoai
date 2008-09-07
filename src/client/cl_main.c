@@ -2108,18 +2108,15 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
+	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
 
 	/* forward to server commands
 	 * the only thing this does is allow command completion
 	 * to work -- all unknown commands are automatically
 	 * forwarded to the server */
-	Cmd_AddCommand("say", NULL, NULL);
-	Cmd_AddCommand("say_team", NULL, NULL);
-	Cmd_AddCommand("info", NULL, NULL);
-	Cmd_AddCommand("playerlist", NULL, NULL);
-	Cmd_AddCommand("players", NULL, NULL);
-
-	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
+	Cmd_AddCommand("say", NULL, "Chat command");
+	Cmd_AddCommand("say_team", NULL, "Team chat command");
+	Cmd_AddCommand("players", NULL, "List of team and player name");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_aircraftsamplelist", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
 	Cmd_AddCommand("debug_gddump", CL_DumpGlobalDataToFile_f, "Dumps gd to a file");
@@ -2128,12 +2125,15 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap, "Shows the whole server side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_tus", CL_DumpTUs, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");
 	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark, "Triggers Grid_MoveMark in every direction at the current truePos.");
-	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
+	Cmd_AddCommand("debug_actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
-	Cmd_AddCommand("killteam", NULL, NULL);
-	Cmd_AddCommand("stunteam", NULL, NULL);
-	Cmd_AddCommand("debug_listscore", NULL, NULL);
+	/* forward commands again */
+	Cmd_AddCommand("debug_edictuse", NULL, "Call the 'use' function of a given edict");
+	Cmd_AddCommand("debug_edicttouch", NULL, "Call the 'touch' function of a given edict");
+	Cmd_AddCommand("debug_killteam", NULL, "Kills a given team");
+	Cmd_AddCommand("debug_stunteam", NULL, "Stuns a given team");
+	Cmd_AddCommand("debug_listscore", NULL, "Shows mission-score entries of all team members");
 #endif
 
 	memset(&teamData, 0, sizeof(teamData));

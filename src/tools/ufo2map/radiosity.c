@@ -229,11 +229,10 @@ static float CollectLight (void)
  */
 static void ShootLight (unsigned int patchnum)
 {
-	int			k, l;
-	transfer_t	*trans;
-	int			num;
-	patch_t		*patch;
-	vec3_t		send;
+	int k, l, num;
+	const transfer_t *trans;
+	const patch_t *patch;
+	vec3_t send;
 
 	/* this is the amount of light we are distributing
 	 * prescale it so that multiplying by the 16 bit
@@ -266,11 +265,11 @@ static void BounceLight (void)
 		float added;
 		char buf[12];
 
-		snprintf(buf, sizeof(buf), " %i LGHTBNCE", i);
+		snprintf(buf, sizeof(buf), "%i LGHTBNCE", i);
 		RunThreadsOn(ShootLight, num_patches, config.verbosity >= VERB_NORMAL, buf);
 		added = CollectLight();
 
-		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
+		Verb_Printf(VERB_EXTRA, "bounce:%i added:%f\n", i, added);
 	}
 }
 
@@ -320,7 +319,7 @@ void RadWorld (void)
 	if (config.numbounce > 0) {
 		/* build transfer lists */
 		RunThreadsOn(MakeTransfers, num_patches, config.verbosity >= VERB_NORMAL, "TRANSFERS");
-		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
+		Verb_Printf(VERB_EXTRA, "transfer lists: %5.1f megs\n",
 			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
 		/* spread light around */

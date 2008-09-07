@@ -285,6 +285,45 @@ public:
 	typedef MemberCaller1<SoundAttribute, const BrowsedPathEntry::SetPathCallback&, &SoundAttribute::browse> BrowseCaller;
 };
 
+
+class ParticleAttribute : public EntityAttribute {
+	CopiedString m_key;
+	BrowsedPathEntry m_entry;
+	NonModalEntry m_nonModal;
+public:
+	ParticleAttribute(const char* key) :
+			m_key(key),
+			m_entry(BrowseCaller(*this)),
+			m_nonModal(ApplyCaller(*this), UpdateCaller(*this)) {
+		m_nonModal.connect(m_entry.m_entry.m_entry);
+	}
+
+	GtkWidget* getWidget() const {
+		return GTK_WIDGET(m_entry.m_entry.m_frame);
+	}
+	void apply() {
+		StringOutputStream value(64);
+		value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
+		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
+	}
+	typedef MemberCaller<ParticleAttribute, &ParticleAttribute::apply> ApplyCaller;
+	void update() {
+		StringOutputStream value(64);
+		value << ConvertLocaleToUTF8(SelectedEntity_getValueForKey(m_key.c_str()));
+		gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
+	}
+	typedef MemberCaller<ParticleAttribute, &ParticleAttribute::update> UpdateCaller;
+	void browse(const BrowsedPathEntry::SetPathCallback& setPath) {
+		const char *filename = misc_particle_dialog(gtk_widget_get_toplevel(GTK_WIDGET(m_entry.m_entry.m_frame)));
+
+		if (filename != 0) {
+			setPath(filename);
+			apply();
+		}
+	}
+	typedef MemberCaller1<ParticleAttribute, const BrowsedPathEntry::SetPathCallback&, &ParticleAttribute::browse> BrowseCaller;
+};
+
 inline double angle_normalised(double angle) {
 	return float_mod(angle, 360.0);
 }
@@ -863,6 +902,7 @@ public:
 		m_creators.insert(Creators::value_type("angle", &StatelessAttributeCreator<AngleAttribute>::create));
 		m_creators.insert(Creators::value_type("direction", &StatelessAttributeCreator<DirectionAttribute>::create));
 		m_creators.insert(Creators::value_type("angles", &StatelessAttributeCreator<AnglesAttribute>::create));
+		m_creators.insert(Creators::value_type("particle", &StatelessAttributeCreator<ParticleAttribute>::create));
 		m_creators.insert(Creators::value_type("model", &StatelessAttributeCreator<ModelAttribute>::create));
 		m_creators.insert(Creators::value_type("sound", &StatelessAttributeCreator<SoundAttribute>::create));
 		m_creators.insert(Creators::value_type("vector3", &StatelessAttributeCreator<Vector3Attribute>::create));

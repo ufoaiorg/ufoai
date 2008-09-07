@@ -265,7 +265,9 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 	return ostream;
 }
 
-// never displays exponent, prints up to 10 decimal places
+/// \brief HACK: I reduced sig fig from 10 to 7, because ufo2map only uses float
+/// no point in more than 7 sig fig. any change here must also be made in ufo2map
+/// *.map writing code. blondandy
 class Decimal {
 public:
 	double m_f;
@@ -278,17 +280,8 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const Decimal& decimal) {
 	const int bufferSize = 22;
 	char buf[bufferSize];
-	std::size_t length = snprintf(buf, bufferSize, "%10.10lf", decimal.m_f);
-	const char* first = buf;
-	for (; *first == ' '; ++first) {
-	}
-	const char* last = buf + length - 1;
-	for (; *last == '0'; --last) {
-	}
-	if (*last == '.') {
-		--last;
-	}
-	ostream.write(first, last - first + 1);
+	std::size_t length = snprintf(buf, bufferSize, "%.7g", decimal.m_f);
+	ostream.write(buf, length + 1);
 	return ostream;
 }
 

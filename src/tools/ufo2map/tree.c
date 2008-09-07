@@ -133,8 +133,8 @@ static void PruneNodes_r (node_t *node)
  */
 void PruneNodes (node_t *node)
 {
-	Sys_FPrintf(SYS_VRB, "--- PruneNodes ---\n");
+	Verb_Printf(VERB_EXTRA, "--- PruneNodes ---\n");
 	c_pruned = 0;
 	PruneNodes_r(node);
-	Sys_FPrintf(SYS_VRB, "%5i pruned nodes\n", c_pruned);
+	Verb_Printf(VERB_EXTRA, "%5i pruned nodes\n", c_pruned);
 }

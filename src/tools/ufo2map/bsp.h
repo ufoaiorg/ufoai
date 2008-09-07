@@ -61,7 +61,7 @@ int FindFloatPlane(vec3_t normal, vec_t dist);
 /* textures.c */
 
 typedef struct {
-	char	name[MAX_QPATH];
+	char	name[MAX_TEXPATH];
 	int		surfaceFlags;
 	int		value;
 	int		contentFlags;
