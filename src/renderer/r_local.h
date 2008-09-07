@@ -70,7 +70,6 @@ extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
-extern cvar_t *r_light;
 extern cvar_t *r_materials;
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;

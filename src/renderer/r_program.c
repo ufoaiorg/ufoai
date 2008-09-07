@@ -201,6 +201,8 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, siz
 	case GLHW_GENERIC:
 		hwHack = NULL;
 		break;
+	default:
+		Sys_Error("R_ShaderIncludes: Unknown hardwaretype");
 	}
 
 	i = 0;

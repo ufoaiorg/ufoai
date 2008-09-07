@@ -171,7 +171,7 @@ void R_DrawBspNormals (void)
 
 	k = 0;
 	for (tile = 0; tile < r_numMapTiles; tile++) {
-		const mBspSurface_t *surf = r_mapTiles[i]->bsp.surfaces;
+		const mBspSurface_t *surf = r_mapTiles[tile]->bsp.surfaces;
 		for (i = 0; i < r_mapTiles[i]->bsp.numsurfaces; i++, surf++) {
 			if (surf->frame != r_locals.frame)
 				continue; /* not visible */
