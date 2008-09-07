@@ -78,10 +78,12 @@ cvar_t *r_showbox;
 cvar_t *r_threads;
 cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
-cvar_t *r_lights;
+cvar_t *r_lighting;
 cvar_t *r_programs;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
+cvar_t *r_bumpmap;
+cvar_t *r_shownormals;
 
 /**
  * @brief Prints some OpenGL strings
@@ -308,6 +310,8 @@ void R_RenderFrame (void)
 		}
 	}
 
+	R_DrawBspNormals();
+
 	R_DrawEntities();
 
 	R_CheckError();
@@ -414,9 +418,11 @@ static void R_RegisterSystemVars (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
-	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE, "Activates or deactivates hardware lighting");
+	r_lighting = Cvar_Get("r_lighting", "1", CVAR_ARCHIVE, "Activates or deactivates hardware lighting");
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE, "Use GLSL shaders");
+	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
+	r_bumpmap = Cvar_Get("r_bumpmap", "0", CVAR_ARCHIVE, "Activate bump mapping");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -587,6 +593,12 @@ static qboolean R_InitExtensions (void)
 		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
 		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
 		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
+		qglGetAttribLocation = SDL_GL_GetProcAddress("glGetAttribLocation");
+
+		/* vertex attribute arrays */
+		qglEnableVertexAttribArray = SDL_GL_GetProcAddress("glEnableVertexAttribArray");
+		qglDisableVertexAttribArray = SDL_GL_GetProcAddress("glDisableVertexAttribArray");
+		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
 	}
 
 	/* reset gl error state */

@@ -97,6 +97,9 @@ void R_ImageList_f (void)
 		case it_static:
 			Com_Printf("ST");
 			break;
+		case it_normalmap:
+			Com_Printf("NM");
+			break;
 		case it_material:
 			Com_Printf("MA");
 			break;
@@ -873,6 +876,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
  * @param[out] pic Image data.
  * @param[out] width Width of the loaded image.
  * @param[out] height Height of the loaded image.
+ * @sa R_FindImage
  */
 void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 {
@@ -1109,6 +1113,11 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
 		R_FilterTexture(scaled, scaled_width, scaled_height, image->type);
+	if (image->type == it_world) {
+		image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
+		if (image->normalmap == r_noTexture)
+			image->normalmap = NULL;
+	}
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
@@ -1664,10 +1673,8 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	image = r_noTexture;
 
 	*ename = 0;
-#ifdef DEBUG
+#ifdef PARANOID
 	Com_Printf("R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
-#else
-	Com_Printf("R_FindImage: Can't find %s (%s)\n", lname, pname);
 #endif
 
 	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GL_ERRORTEX) {

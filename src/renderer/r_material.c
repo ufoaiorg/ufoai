@@ -171,7 +171,7 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 	/* and optionally the lightmap */
 	if (stage->flags & STAGE_LIGHTMAP) {
 		R_EnableMultitexture(&texunit_lightmap, qtrue);
-		R_BindLightmapTexture(surf->lightmaptexturenum);
+		R_BindLightmapTexture(surf->lightmap_texnum);
 	} else
 		R_EnableMultitexture(&texunit_lightmap, qfalse);
 
@@ -646,7 +646,6 @@ void R_LoadMaterials (const char *map)
 		if (!strcmp(c, "material")) {
 			c = COM_Parse(&buffer);
 			image = R_FindImage(va("textures/%s", c), it_world);
-
 			if (image == r_noTexture) {
 				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
 				image = NULL;

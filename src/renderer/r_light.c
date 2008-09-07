@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int r_numLights;
 static light_t r_lightsArray[MAX_GL_LIGHTS];
 
-void R_AddLight (vec3_t origin, float radius, vec3_t color)
+void R_AddLight (vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
 
@@ -48,6 +48,20 @@ void R_AddLight (vec3_t origin, float radius, vec3_t color)
 	VectorCopy(color, r_lightsArray[i].color);
 }
 
+static void R_AddBumpmapLight (void)
+{
+	const vec3_t color = {0.0, 0.0, 0.0};
+	vec3_t org;
+
+	if (!r_bumpmap->integer)
+		return;
+
+	VectorCopy(refdef.vieworg, org);
+	org[2] -= 16;
+
+	R_AddLight(org, r_bumpmap->value, color);
+}
+
 void R_EnableLights (void)
 {
 	light_t *l;
@@ -56,6 +70,8 @@ void R_EnableLights (void)
 	int i;
 
 	position[3] = diffuse[3] = 1.0;
+
+	R_AddBumpmapLight();
 
 	for (i = 0, l = r_lightsArray; i < r_numLights; i++, l++) {
 		VectorCopy(l->origin, position);

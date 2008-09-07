@@ -38,82 +38,114 @@ void R_UseProgram  (r_program_t *prog)
 	}
 }
 
-
-/*
-R_ResolveUniform
-*/
-static r_uniform_t *R_ResolveUniform (const char *name)
+static r_progvar_t *R_ProgramVariable (int type, const char *name)
 {
-	r_uniform_t *u;
+	r_progvar_t *v;
 	int i;
 
 	if (!r_state.active_program) {
-		Com_Printf("R_ResolveUniform: No program bound.\n");
+		Com_Printf("R_ProgramVariable: No program bound.\n");
 		return NULL;
 	}
 
-	/* find the location */
-	for (i = 0; i < MAX_UNIFORMS; i++) {
-		u = &r_state.active_program->u[i];
+	/* find the variable */
+	for (i = 0; i < MAX_PROGRAM_VARS; i++) {
+		v = &r_state.active_program->vars[i];
 
-		if (!u->location)
+		if (!v->location)
 			break;
 
-		if (!strcmp(u->name, name))
-			return u;
+		if (v->type == type && !strcmp(v->name, name))
+			return v;
 	}
 
-	if (i == MAX_UNIFORMS) {
-		Com_Printf("R_ResolveUniform: MAX_UNIFORMS reached.\n");
+	if (i == MAX_PROGRAM_VARS) {
+		Com_Printf("R_ProgramVariable: MAX_UNIFORMS reached.\n");
 		return NULL;
 	}
 
-	u->location = qglGetUniformLocation(r_state.active_program->id, name);
-	Q_strncpyz(u->name, name, sizeof(u->name));
+	/* or query for it */
+	if (type == GL_UNIFORM)
+		v->location = qglGetUniformLocation(r_state.active_program->id, name);
+	else
+		v->location = qglGetAttribLocation(r_state.active_program->id, name);
 
-	return u;
+	v->type = type;
+	Q_strncpyz(v->name, name, sizeof(v->name));
+
+	return v;
 }
 
 static void R_ProgramParameter1i (const char *name, GLint value)
 {
-	r_uniform_t *u;
+	r_progvar_t *v;
 
-	if (!(u = R_ResolveUniform(name)))
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniform1i(u->location, value);
+	qglUniform1i(v->location, value);
 }
 
 #if 0
 static void R_ProgramParameter1f (const char *name, GLfloat value)
 {
-	r_uniform_t *u;
+	r_progvar_t *v;
 
-	if (!(u = R_ResolveUniform(name)))
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniform1f(u->location, value);
+	qglUniform1f(v->location, value);
 }
 
 static void R_ProgramParameter3fv (const char *name, GLfloat *value)
 {
-	r_uniform_t *u;
+	r_progvar_t *v;
 
-	if (!(u = R_ResolveUniform(name)))
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniform3fv(u->location, 1, value);
+	qglUniform3fv(v->location, 1, value);
 }
 #endif
 
 static void R_ProgramParameter4fv (const char *name, GLfloat *value)
 {
-	r_uniform_t *u;
+	r_progvar_t *v;
 
-	if (!(u = R_ResolveUniform(name)))
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniform4fv(u->location, 1, value);
+	qglUniform4fv(v->location, 1, value);
+}
+
+void R_AttributePointer (const char *name, GLuint size, GLvoid *array)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_ATTRIBUTE, name)))
+		return;
+
+	qglVertexAttribPointer(v->location, size, GL_FLOAT, GL_FALSE, 0, array);
+}
+
+void R_EnableAttribute (const char *name)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_ATTRIBUTE, name)))
+		return;
+
+	qglEnableVertexAttribArray(v->location);
+}
+
+void R_DisableAttribute (const char *name)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_ATTRIBUTE, name)))
+		return;
+
+	qglDisableVertexAttribArray(v->location);
 }
 
 static void R_ShutdownShader (r_shader_t *sh)
@@ -124,7 +156,6 @@ static void R_ShutdownShader (r_shader_t *sh)
 
 static void R_ShutdownProgram (r_program_t *prog)
 {
-
 	if (prog->v)
 		R_ShutdownShader(prog->v);
 	if (prog->f)
@@ -275,7 +306,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	return sh;
 }
 
-static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
+static r_program_t *R_LoadProgram (const char *name, void *init, void *use, void *think)
 {
 	r_program_t *prog;
 	char log[MAX_STRING_CHARS];
@@ -328,14 +359,20 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	}
 
 	prog->use = use;
+	prog->think = think;
 
 	return prog;
 }
 
 static void R_InitDefaultProgram (void)
 {
+	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER3", 3);
+
+	R_ProgramParameter1i("LIGHTMAP", 0);
+	R_ProgramParameter1i("NORMALMAP", 0);
 }
 
 static void R_UseDefaultProgram (void)
@@ -346,8 +383,17 @@ static void R_UseDefaultProgram (void)
 		R_ProgramParameter1i("LIGHTMAP", 0);
 }
 
+static void R_ThinkDefaultProgram (void)
+{
+	if (r_state.bumpmap_enabled)
+		R_ProgramParameter1i("BUMPMAP", 1);
+	else
+		R_ProgramParameter1i("BUMPMAP", 0);
+}
+
 static void R_InitWarpProgram (void)
 {
+	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 }
 
@@ -366,7 +412,9 @@ void R_InitPrograms (void)
 		return;
 	}
 
-	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram, R_UseDefaultProgram);
+	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram,
+		R_UseDefaultProgram, R_ThinkDefaultProgram);
 
-	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
+	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram,
+			R_UseWarpProgram, NULL);
 }

@@ -73,6 +73,31 @@ void R_BindLightmapTexture (GLuint texnum)
 	R_SelectTexture(&texunit_diffuse);
 }
 
+void R_BindDeluxemapTexture (GLuint texnum)
+{
+	if (texnum == texunit_deluxemap.texnum)
+		return;  /* small optimization to save state changes */
+
+	R_SelectTexture(&texunit_deluxemap);
+
+	R_BindTexture(texnum);
+
+	R_SelectTexture(&texunit_diffuse);
+}
+
+void R_BindNormalmapTexture (GLuint texnum)
+{
+	/* small optimization to save state changes  */
+	if (texnum == texunit_normalmap.texnum)
+		return;
+
+	R_SelectTexture(&texunit_normalmap);
+
+	R_BindTexture(texnum);
+
+	R_SelectTexture(&texunit_diffuse);
+}
+
 void R_BindArray (GLenum target, GLenum type, void *array)
 {
 	switch (target) {
@@ -87,6 +112,9 @@ void R_BindArray (GLenum target, GLenum type, void *array)
 		break;
 	case GL_NORMAL_ARRAY:
 		glNormalPointer(type, 0, array);
+		break;
+	case GL_TANGENT_ARRAY:
+		R_AttributePointer("TANGENT", 4, array);
 		break;
 	}
 }
@@ -105,6 +133,9 @@ void R_BindDefaultArray (GLenum target)
 		break;
 	case GL_NORMAL_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.normal_array);
+		break;
+	case GL_TANGENT_ARRAY:
+		R_BindArray(target, GL_FLOAT, r_state.tangent_array);
 		break;
 	}
 }
@@ -152,7 +183,7 @@ void R_EnableBlend (qboolean enable)
 
 void R_EnableAlphaTest (qboolean enable)
 {
-	if (enable == r_state.alpha_test_enabled)
+	if (r_state.alpha_test_enabled == enable)
 		return;
 
 	r_state.alpha_test_enabled = enable;
@@ -193,23 +224,41 @@ void R_EnableMultitexture (gltexunit_t *texunit, qboolean enable)
 
 void R_EnableLighting (r_program_t *program, qboolean enable)
 {
-	if (!r_programs->value || (enable && !program))
+	if (!r_programs->integer || (enable && !program))
 		return;
 
-	if (!r_lights->value || r_state.lighting_enabled == enable)
+	if (!r_lighting->integer || r_state.lighting_enabled == enable)
 		return;
 
 	r_state.lighting_enabled = enable;
 
 	if (enable) {  /* toggle state */
+		R_UseProgram(program);
+
 		glEnableClientState(GL_NORMAL_ARRAY);
 
-		R_UseProgram(program);
+		R_EnableAttribute("TANGENT");
 	} else {
+		R_DisableAttribute("TANGENT");
+
 		glDisableClientState(GL_NORMAL_ARRAY);
 
 		R_UseProgram(NULL);
 	}
+}
+
+void R_EnableBumpmap (qboolean enable)
+{
+	if (!r_state.lighting_enabled)
+		return;
+
+	if (!r_bumpmap->integer || r_state.bumpmap_enabled == enable)
+		return;
+
+	/* toggle state */
+	r_state.bumpmap_enabled = enable;
+
+	r_state.default_program->think();
 }
 
 void R_EnableWarp (r_program_t *program, qboolean enable)

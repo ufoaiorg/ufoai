@@ -172,7 +172,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LUMP_MODELS			13
 #define LUMP_BRUSHES		14
 #define LUMP_BRUSHSIDES		15
-#define HEADER_LUMPS		16
+#define LUMP_NORMALS		16
+#define HEADER_LUMPS		17
 
 #define	SIDE_FRONT		0
 #define	SIDE_ON			2

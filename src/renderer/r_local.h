@@ -95,8 +95,10 @@ extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
 extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
-extern cvar_t *r_lights;
+extern cvar_t *r_lighting;
 extern cvar_t *r_programs;
+extern cvar_t *r_shownormals;
+extern cvar_t *r_bumpmap;
 
 /* private renderer variables */
 typedef struct rlocals_s {
@@ -120,6 +122,7 @@ qboolean R_CullMeshModel(entity_t *e);
 void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);
+void R_DrawBspNormals(void);
 qboolean R_CullBspModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);

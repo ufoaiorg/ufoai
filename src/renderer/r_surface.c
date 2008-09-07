@@ -51,8 +51,12 @@ static inline void R_SetVertexArrayState (const model_t* mod)
 		R_SelectTexture(&texunit_diffuse);
 	}
 
-	if (r_state.lighting_enabled)  /* normal vectors for lighting */
+	if (r_state.lighting_enabled) { /* normal vectors for lighting */
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
+
+		if (r_bumpmap->integer && mod->bsp.tangents)	/* tangent vectors for bump mapping */
+			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
+	}
 }
 
 /**
@@ -71,8 +75,12 @@ static inline void R_SetVertexBufferState (const model_t* mod)
 		R_SelectTexture(&texunit_diffuse);
 	}
 
-	if (r_state.lighting_enabled)  /* normal vectors for lighting */
+	if (r_state.lighting_enabled) { /* normal vectors for lighting */
 		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
+
+		if (r_bumpmap->integer && mod->bsp.tangents)	/* tangent vectors for bump mapping */
+			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
+	}
 }
 
 static void R_ResetVertexArrayState (void)
@@ -89,9 +97,12 @@ static void R_ResetVertexArrayState (void)
 		R_SelectTexture(&texunit_diffuse);
 	}
 
-	if (r_state.lighting_enabled)
+	if (r_state.lighting_enabled) {
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
+		if (r_bumpmap->integer)
+			R_BindDefaultArray(GL_TANGENT_ARRAY);
+	}
 	bufferMapTile = NULL;
 }
 
@@ -129,7 +140,17 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	R_BindTexture(surf->texinfo->image->texnum);  /* texture */
 
 	if (texunit_lightmap.enabled)  /* lightmap */
-		R_BindLightmapTexture(surf->lightmaptexturenum);
+		R_BindLightmapTexture(surf->lightmap_texnum);
+
+	if (r_state.lighting_enabled) {
+		if (surf->texinfo->image->normalmap) {
+			R_BindDeluxemapTexture(surf->deluxemap_texnum);
+			R_BindNormalmapTexture(surf->texinfo->image->normalmap->texnum);
+
+			R_EnableBumpmap(qtrue);
+		} else
+			R_EnableBumpmap(qfalse);
+	}
 
 	R_CheckError();
 }
@@ -162,6 +183,10 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 		R_SetSurfaceState(surfs->surfaces[i]);
 		R_DrawSurface(surfs->surfaces[i]);
 	}
+
+	/* reset state */
+	if (r_state.lighting_enabled)
+		R_EnableBumpmap(qfalse);
 
 	/* and restore array pointers */
 	R_ResetVertexArrayState();

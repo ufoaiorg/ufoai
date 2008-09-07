@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL_opengl.h>
 
+/* internally defined convenience constant */
+#define GL_TANGENT_ARRAY -1
+
 /* multitexture */
 void (APIENTRY *qglActiveTexture)(GLenum texture);
 void (APIENTRY *qglClientActiveTexture)(GLenum texture);
@@ -37,6 +40,11 @@ void (APIENTRY *qglGenBuffers)  (GLuint count, GLuint *id);
 void (APIENTRY *qglDeleteBuffers)  (GLuint count, GLuint *id);
 void (APIENTRY *qglBindBuffer)  (GLenum target, GLuint id);
 void (APIENTRY *qglBufferData)  (GLenum target, GLsizei size, const GLvoid *data, GLenum usage);
+
+/* vertex attribute arrays */
+void (APIENTRY *qglEnableVertexAttribArray)(GLuint index);
+void (APIENTRY *qglDisableVertexAttribArray)(GLuint index);
+void (APIENTRY *qglVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
 
 /* glsl vertex and fragment shaders and programs */
 GLuint (APIENTRY *qglCreateShader)(GLenum type);
@@ -58,5 +66,6 @@ void (APIENTRY *qglUniform1i)(GLint location, GLint i);
 void (APIENTRY *qglUniform1f)(GLint location, GLfloat f);
 void (APIENTRY *qglUniform3fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform4fv)(GLint location, int count, GLfloat *f);
+GLint(APIENTRY *qglGetAttribLocation)(GLuint id, const GLchar *name);
 
 #endif

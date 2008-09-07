@@ -31,13 +31,16 @@ typedef struct r_shader_s {
 
 #define MAX_SHADERS 16
 
-/* uniform variables */
-typedef struct r_uniform_s {
-	char name[64];
+#define GL_UNIFORM 1
+#define GL_ATTRIBUTE 2
+/* program variables */
+typedef struct r_progvar_s {
+	GLint type;
+	char name[MAX_QPATH];
 	GLint location;
-} r_uniform_t;
+} r_progvar_t;
 
-#define MAX_UNIFORMS 8
+#define MAX_PROGRAM_VARS 12
 
 /* and glsl programs */
 typedef struct r_program_s {
@@ -45,14 +48,18 @@ typedef struct r_program_s {
 	char name[MAX_VAR];
 	r_shader_t *v;
 	r_shader_t *f;
-	r_uniform_t u[MAX_UNIFORMS];
+	r_progvar_t vars[MAX_PROGRAM_VARS];
 	void (*init)(void);
 	void (*use)(void);
+	void (*think)(void);
 } r_program_t;
 
 #define MAX_PROGRAMS 8
 
 void R_UseProgram(r_program_t *prog);
+void R_AttributePointer(const char *name, GLuint size, GLvoid *array);
+void R_EnableAttribute(const char *name);
+void R_DisableAttribute(const char *name);
 void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
 

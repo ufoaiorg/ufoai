@@ -398,19 +398,28 @@ typedef struct {
 } lightinfo_t;
 
 
+typedef struct extents_s {
+	vec3_t mins, maxs;
+} extents_t;
+
+static extents_t face_extents[MAX_MAP_FACES];
+
 /**
  * @brief Fills in s->texmins[] and s->texsize[]
  */
 static void CalcFaceExtents (lightinfo_t *l)
 {
 	const dBspFace_t *s;
-	vec3_t mins, maxs;
+	float *mins, *maxs;
 	vec2_t stmins, stmaxs;
 	int i, j;
 	const dBspVertex_t *v;
 	const dBspTexinfo_t *tex;
 
 	s = l->face;
+
+	mins = face_extents[s - curTile->faces].mins;
+	maxs = face_extents[s - curTile->faces].maxs;
 
 	VectorSet(mins, 999999, 999999, 999999);
 	VectorSet(maxs, -999999, -999999, -999999);
@@ -442,7 +451,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 	}
 
 	for (i = 0; i < 3; i++)
-		l->center[i] = (mins[i] + maxs[i]) / 2;
+		l->center[i] = (mins[i] + maxs[i]) / 2.0f;
 
 	for (i = 0; i < 2; i++) {
 		stmins[i] = floor(stmins[i] / (1 << config.lightquant));
@@ -495,7 +504,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 		const vec_t len = VectorLength(l->worldtotex[i]);
 		const vec_t distance = DotProduct(l->worldtotex[i], l->facenormal) * distscale;
 		VectorMA(l->worldtotex[i], -distance, texnormal, l->textoworld[i]);
-		VectorScale(l->textoworld[i], (1 / len) * (1 / len), l->textoworld[i]);
+		VectorScale(l->textoworld[i], (1.0f / len) * (1.0f / len), l->textoworld[i]);
 	}
 
 	/* calculate texorg on the texture plane */
@@ -562,16 +571,16 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 }
 
 typedef struct {
-	int			numsamples;
-	float		*origins;
-	float		*samples;
+	int numsamples;
+	float *origins;
+	float *samples;
+	float *directions;
 } facelight_t;
 
 static directlight_t *directlights[2];
 static facelight_t facelight[2][MAX_MAP_FACES];
 static int numdlights[2];
 
-/*#define	DIRECT_LIGHT	3000 */
 #define	DIRECT_LIGHT	3
 
 /**
@@ -771,14 +780,13 @@ void CreateDirectLights (void)
  * @param[in] lightscale is the normalizer for multisampling
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t center,
-	float *styletable, int offset, int mapsize, float lightscale,
+	float *sample, float *direction, float lightscale,
 	const float sun_intensity, const vec3_t sun_color, const vec3_t sun_dir)
 {
 	directlight_t *l;
 	vec3_t dir, delta;
 	float dot, dot2, dist;
 	float scale = 0.0f;
-	float *dest;
 
 	/* move into the level using the normal and surface center */
 	VectorSubtract(pos, center, dir);
@@ -824,9 +832,9 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
 			continue;	/* occluded */
 
-		dest = styletable + offset;
 		/* add some light to it */
-		VectorMA(dest, scale * lightscale, l->color, dest);
+		VectorMA(sample, scale * lightscale, l->color, sample);
+		VectorMA(direction, scale * lightscale, delta, direction);
 	}
 
 	/* add sun light */
@@ -844,11 +852,9 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 	if (TR_TestLine(pos, delta, TL_FLAG_NONE))
 		return; /* occluded */
 
-	assert(styletable);
-	dest = styletable + offset;
-
 	/* add some light to it */
-	VectorMA(dest, sun_intensity * dot * lightscale, sun_color, dest);
+	VectorMA(sample, sun_intensity * dot * lightscale, sun_color, sample);
+	VectorMA(direction, sun_intensity * dot * lightscale, delta, direction);
 }
 
 /**
@@ -873,9 +879,9 @@ static inline void AddSampleToPatch (const vec3_t pos, const vec3_t color, const
 		/* see if the point is in this patch (roughly) */
 		WindingBounds(patch->winding, mins, maxs);
 		for (i = 0; i < 3; i++) {
-			if (mins[i] > pos[i] + 8)
+			if (mins[i] > pos[i] + ((1 << config.lightquant) / 2.0))
 				goto nextpatch;
-			if (maxs[i] < pos[i] - 8)
+			if (maxs[i] < pos[i] - ((1 << config.lightquant) / 2.0))
 				goto nextpatch;
 		}
 
@@ -909,10 +915,10 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 			const int e = curTile->surfedges[face->firstedge + j];
 			const int v = e >= 0 ? curTile->edges[e].v[0] : curTile->edges[-e].v[1];
 
-			/* compare using surfedge reference or point equality */
-			if (v == vert || VectorCompareEps(curTile->vertexes[v].point, curTile->vertexes[vert].point, EQUAL_EPSILON)) {
+			/* face references vert */
+			if (v == vert) {
 				faces[k++] = i;
-				if (k >= MAX_VERT_FACES)
+				if (k == MAX_VERT_FACES)
 					Sys_Error("MAX_VERT_FACES");
 				break;
 			}
@@ -921,10 +927,8 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 	*nfaces = k;
 }
 
-static vec3_t vertexnormals[MAX_MAP_VERTS];
-
 /**
- * @brief Calculate per-vertex (instead of per-plane) normal vectors.  This is done by
+ * @brief Calculate per-vertex (instead of per-plane) normal vectors. This is done by
  * finding all of the faces which use a given vertex, and calculating an average
  * of their normal vectors.
  */
@@ -932,27 +936,33 @@ void BuildVertexNormals (void)
 {
 	int vert_faces[MAX_VERT_FACES];
 	int num_vert_faces;
-	vec3_t norm;
+	vec3_t norm, delta;
+	float scale;
 	int i, j;
 
 	for (i = 0; i < curTile->numvertexes; i++) {
-		VectorSet(vertexnormals[i], 0, 0, 0);
+		VectorClear(curTile->normals[i].normal);
 		FacesWithVert(i, vert_faces, &num_vert_faces);
 
 		for (j = 0; j < num_vert_faces; j++) {
 			const dBspFace_t *face = &curTile->faces[vert_faces[j]];
 			const dBspPlane_t *plane = &curTile->planes[face->planenum];
 
-			if (face->side)
-				VectorNegate(plane->normal, norm);
-			else
-				VectorCopy(plane->normal, norm);
+			/* scale the contribution of each face based on size */
+			VectorSubtract(face_extents[vert_faces[j]].maxs, face_extents[vert_faces[j]].mins, delta);
+			scale = VectorLength(delta);
 
-			VectorAdd(vertexnormals[i], norm, vertexnormals[i]);
+ 			if (face->side)
+				VectorScale(plane->normal, -scale, norm);
+			else
+				VectorScale(plane->normal, scale, norm);
+
+			VectorAdd(curTile->normals[i].normal, norm, curTile->normals[i].normal);
 		}
-		VectorScale(vertexnormals[i], 1.0 / num_vert_faces, vertexnormals[i]);
-		VectorNormalize(vertexnormals[i]);
+		VectorNormalize(curTile->normals[i].normal);
 	}
+
+	curTile->numnormals = curTile->numvertexes;
 }
 
 
@@ -995,12 +1005,13 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 #if 0
 	/* interpolate between nearest and farthest verts */
-	VectorScale(vertexnormals[near], fardist / (neardist + fardist), temp);
-	VectorScale(vertexnormals[far], neardist / (neardist + fardist), temp2);
+	VectorScale(curTile->normals[nearEdge], neardist / (neardist + fardist), temp);
+	VectorScale(curTile->normals[farEdge], fardist / (neardist + fardist), temp2);
 	VectorAdd(temp, temp2, normal);
+	VectorNormalize(normal);
 #endif
 
-	VectorCopy(vertexnormals[nearEdge], normal);
+	VectorCopy(curTile->normals[nearEdge].normal, normal);
 }
 
 
@@ -1017,12 +1028,16 @@ void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
 	lightinfo_t l[MAX_SAMPLES];
-	float *styletable, lightscale;
+	dBspTexinfo_t *tex;
+	float *sample, *direction, *sdir, *tdir, scale;
+	vec3_t normal, binormal;
+	vec4_t tangent;
+	float lightscale;
 	int i, j, numsamples;
 	patch_t *patch;
 	size_t tablesize;
 	facelight_t *fl;
-	vec3_t normal, sun_color, sun_dir;
+	vec3_t sun_color, sun_dir;
 	float sun_intensity;
 
 	if (facenum >= MAX_MAP_FACES) {
@@ -1031,8 +1046,12 @@ void BuildFacelights (unsigned int facenum)
 	}
 
 	f = &curTile->faces[facenum];
+	tex = &curTile->texinfo[f->texinfo];
 
-	if (curTile->texinfo[f->texinfo].surfaceFlags & SURF_WARP)
+	sdir = tex->vecs[0];
+	tdir = tex->vecs[1];
+
+	if (tex->surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
 	if (config.extrasamples)
@@ -1064,19 +1083,10 @@ void BuildFacelights (unsigned int facenum)
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
 
-	tablesize = l[0].numsurfpt * sizeof(vec3_t);
-	styletable = malloc(tablesize);
-	memset(styletable, 0, tablesize);
-
-	fl = &facelight[config.compile_for_day][facenum];
-	fl->numsamples = l[0].numsurfpt;
-	fl->origins = malloc(tablesize);
-	memcpy(fl->origins, l[0].surfpt, tablesize);
-
 	/* add sun light */
 	if (config.compile_for_day) {
 		if (!config.day_sun_intensity) {
-			for (i = 0; i < numsamples; i++)
+			for (i = 0; i < fl->numsamples; i++)
 				free(l[i].surfpt);
 			return;
 		}
@@ -1094,9 +1104,24 @@ void BuildFacelights (unsigned int facenum)
 		VectorCopy(config.night_sun_color, sun_color);
 	}
 
+	tablesize = l[0].numsurfpt * sizeof(vec3_t);
+	fl = &facelight[config.compile_for_day][facenum];
+	memset(fl, 0, sizeof(*fl));
+	fl->numsamples = l[0].numsurfpt;
+	fl->origins = malloc(tablesize);
+	memcpy(fl->origins, l[0].surfpt, tablesize);
+	fl->samples = malloc(tablesize);
+	fl->directions = malloc(tablesize);
+
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
+		sample = fl->samples + i * 3;			/* accumulate lighting here */
+		direction = fl->directions + i * 3;		/* accumulate direction here */
+		scale = 1.0f / numsamples;				/* each sample contributes this much */
+
 		for (j = 0; j < numsamples; j++) {
+			vec3_t dir;
+
 			/* calculate interpolated normal for phong shading */
 			if (curTile->texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
 				SampleNormal(&l[0], l[j].surfpt[i], normal);
@@ -1104,16 +1129,28 @@ void BuildFacelights (unsigned int facenum)
 				VectorCopy(l[0].facenormal, normal);
 
 			GatherSampleLight(l[j].surfpt[i], normal, l[0].center,
-				styletable, i * 3, tablesize, lightscale, sun_intensity,
-				sun_color, sun_dir);
+				sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
+
+			/* transform it into tangent space */
+			TangentVector(normal, sdir, tdir, tangent);
+			CrossProduct(normal, tangent, binormal);
+			VectorScale(binormal, tangent[3], binormal);
+
+			dir[0] = DotProduct(direction, tangent);
+			dir[1] = DotProduct(direction, binormal);
+			dir[2] = DotProduct(direction, normal);
+
+			/* and normalize it */
+			VectorCopy(dir, direction);
+			VectorNormalize(direction);
 		}
 
-		/* contribute the sample to one or more patches */
+		/* contribute the sample to one or more patches for radiosity */
 		if (config.numbounce > 0)
-			AddSampleToPatch(l[0].surfpt[i], styletable + i * 3, facenum);
+			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
 	}
 
-	/* Free the surface pointers for each sample. */
+	/* free the surface pointers for each sample. */
 	for (i = 0; i < numsamples; i++)
 		free(l[i].surfpt);
 
@@ -1121,8 +1158,6 @@ void BuildFacelights (unsigned int facenum)
 	for (patch = face_patches[facenum]; patch; patch = patch->next)
 		if (patch->samples)
 			VectorScale(patch->samplelight, 1.0 / patch->samples, patch->samplelight);
-
-	fl->samples = styletable;
 
 	/* the light from DIRECT_LIGHTS is sent out, but the
 	 * texture itself should still be full bright */
@@ -1146,6 +1181,7 @@ void FinalLightFace (unsigned int facenum)
 {
 	dBspFace_t *f;
 	int i, j, k, pfacenum;
+	vec3_t dir;
 	patch_t *patch;
 	triangulation_t *trian = NULL;
 	facelight_t	*fl;
@@ -1164,10 +1200,13 @@ void FinalLightFace (unsigned int facenum)
 
 	f->lightofs[config.compile_for_day] = curTile->lightdatasize[config.compile_for_day];
 	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
+	/* account for light direction data as well */
+	curTile->lightdatasize[config.compile_for_day] += fl->numsamples * 3;
 
 	if (curTile->lightdatasize[config.compile_for_day] > MAX_MAP_LIGHTING)
-		Sys_Error("MAX_MAP_LIGHTING (%i exceeded %i) - try to reduce the brush size",
-			curTile->lightdatasize[config.compile_for_day], MAX_MAP_LIGHTING);
+		Sys_Error("MAX_MAP_LIGHTING (%i exceeded %i) - try to reduce the brush size (%s)",
+			curTile->lightdatasize[config.compile_for_day], MAX_MAP_LIGHTING,
+			curTile->texinfo[f->texinfo].texture);
 
 	ThreadUnlock();
 
@@ -1211,9 +1250,11 @@ void FinalLightFace (unsigned int facenum)
 	for (j = 0; j < fl->numsamples; j++) {
 		vec3_t lb;
 
+		/* start with raw sample data */
 		VectorCopy((fl->samples + j * 3), lb);
 		if (config.numbounce > 0) {
 			vec3_t add;
+			/* add radiosity bounces */
 			SampleTriangulation(fl->origins + j * 3, trian, add);
 			VectorAdd(lb, add, lb);
 		}
@@ -1228,9 +1269,10 @@ void FinalLightFace (unsigned int facenum)
 			lb[2] += config.night_ambient_blue;
 		}
 
+		/* apply global scale factor */
 		VectorScale(lb, config.lightscale, lb);
 
-		/* we need to clamp without allowing hue to change */
+		/* clamp without hue change */
 		for (k = 0; k < 3; k++)
 			if (lb[k] < 1)
 				lb[k] = 1;
@@ -1244,9 +1286,16 @@ void FinalLightFace (unsigned int facenum)
 			newmax = 0;		/* roundoff problems */
 		if (newmax > config.maxlight)
 			newmax = config.maxlight;
+
+		/* write the lightmap sample data */
 		for (k = 0; k < 3; k++) {
 			*dest++ = lb[k] * newmax / max;
 		}
+
+		/* also write the directional data */
+		VectorCopy((fl->directions + j * 3), dir);
+		for (k = 0; k < 3; k++)
+			*dest++ = (byte)(dir[k] * 255.0);
 	}
 
 	if (config.numbounce > 0)

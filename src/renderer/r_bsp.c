@@ -158,6 +158,43 @@ WORLD MODEL
 */
 
 /**
+ * @brief Draw normals for bsp surfaces
+ */
+void R_DrawBspNormals (void)
+{
+	int i, j, tile;
+
+	if (!r_shownormals->integer)
+		return;
+
+	glBegin(GL_LINES);
+	glColor3f(1.0, 0.0, 0.0);
+
+	for (tile = 0; tile < r_numMapTiles; tile++) {
+		const mBspSurface_t *surf = r_mapTiles[i]->bsp.surfaces;
+		for (i = 0; i < r_mapTiles[i]->bsp.numsurfaces; i++, surf++) {
+			if (surf->frame != r_locals.frame)
+				continue; /* not visible */
+			if (surf->texinfo->flags & SURF_WARP)
+				continue;  /* don't care */
+
+			for (j = 0; j < surf->numedges; j++) {
+				const GLfloat *vertex = &r_mapTiles[i]->bsp.verts[(surf->index + j) * 3];
+				const GLfloat *normal = &r_mapTiles[i]->bsp.normals[(surf->index + j) * 3];
+				vec3_t end;
+
+				VectorMA(vertex, 12.0, normal, end);
+
+				glVertex3fv(vertex);
+				glVertex3fv(end);
+			}
+		}
+	}
+	R_Color(NULL);
+	glEnd();
+}
+
+/**
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
  * @param[in] tile The maptile (map assembly)

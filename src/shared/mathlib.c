@@ -816,3 +816,30 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 			maxs[i] = val;
 	}
 }
+
+/**
+ * @brief Projects the normalized directional vector dir to the normal's plane.
+ * The fourth component of the resulting tangent vector represents sidedness.
+ */
+void TangentVector (const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent)
+{
+	vec3_t s, t, binormal;
+
+	/* normalize the directional vectors */
+	VectorCopy(sdir, s);
+	VectorNormalize(s);
+
+	VectorCopy(tdir, t);
+	VectorNormalize(t);
+
+	/* project the directional vector onto the plane */
+	VectorMA(s, -DotProduct(s, normal), normal, tangent);
+	VectorNormalize(tangent);
+
+	/* resolve sidedness, encode as fourth tangent component */
+	CrossProduct(normal, tangent, binormal);
+	if(DotProduct(t, binormal) < 0.0)
+		tangent[3] = -1.0;
+	else
+		tangent[3] = 1.0;
+}

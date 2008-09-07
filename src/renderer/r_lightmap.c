@@ -27,46 +27,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_lightmap.h"
 
-/* in video memory, lightmaps are chunked into rgba blocks */
-#define LIGHTMAP_BUFFER_SIZE \
-	(LIGHTMAP_BLOCK_WIDTH * LIGHTMAP_BLOCK_HEIGHT * LIGHTMAP_BLOCK_BYTES)
-
-/* in the bsp, they are just rgb, and we work with floats */
-#define LIGHTMAP_FBUFFER_SIZE \
-	(LIGHTMAP_WIDTH * LIGHTMAP_HEIGHT * LIGHTMAP_BYTES)
-
-typedef struct lightmaps_s {
-	GLuint texnum;
-
-	unsigned allocated[LIGHTMAP_BLOCK_WIDTH];
-
-	byte buffer[LIGHTMAP_BUFFER_SIZE];
-	float fbuffer[LIGHTMAP_FBUFFER_SIZE];
-} lightmaps_t;
-
-static lightmaps_t r_lightmaps;
+lightmaps_t r_lightmaps;
 
 static void R_UploadLightmapBlock (void)
 {
-	if (r_lightmaps.texnum == MAX_GL_LIGHTMAPS) {
+	if (r_lightmaps.lightmap_texnum == MAX_GL_LIGHTMAPS) {
 		Com_Printf("R_UploadLightmapBlock: MAX_GL_LIGHTMAPS reached.\n");
 		return;
 	}
 
-	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.texnum);
+	R_BindTexture(TEXNUM_LIGHTMAPS + r_lightmaps.lightmap_texnum);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_maxlightmap->integer, r_maxlightmap->integer,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.buffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_lightmaps.size, r_lightmaps.size,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.sample_buffer);
 
 	R_CheckError();
 
-	/* clear the allocation block */
-	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
+	r_lightmaps.lightmap_texnum++;
 
-	r_lightmaps.texnum++;
+	if (r_lightmaps.deluxemap_texnum == MAX_GL_DELUXEMAPS) {
+		Com_Printf("R_UploadLightmapBlock: MAX_GL_DELUXEMAPS reached.\n");
+		return;
+	}
+
+	R_BindTexture(r_lightmaps.deluxemap_texnum);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_lightmaps.size, r_lightmaps.size,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.direction_buffer);
+
+	r_lightmaps.deluxemap_texnum++;
+
+	/* clear the allocation block and buffers */
+	memset(r_lightmaps.allocated, 0, r_lightmaps.size * sizeof(unsigned));
+	memset(r_lightmaps.sample_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
+	memset(r_lightmaps.direction_buffer, 0, r_lightmaps.size * r_lightmaps.size * sizeof(unsigned));
 }
 
 /**
@@ -77,9 +77,9 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 	int i, j;
 	int best, best2;
 
-	best = r_maxlightmap->integer;
+	best = r_lightmaps.size;
 
-	for (i = 0; i < r_maxlightmap->integer - w; i++) {
+	for (i = 0; i < r_lightmaps.size - w; i++) {
 		best2 = 0;
 
 		for (j = 0; j < w; j++) {
@@ -95,7 +95,7 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 		}
 	}
 
-	if (best + h > r_maxlightmap->integer)
+	if (best + h > r_lightmaps.size)
 		return qfalse;
 
 	for (i = 0; i < w; i++)
@@ -108,7 +108,7 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
  * @brief Fullbridght lightmap
  * @sa R_BuildLightmap
  */
-static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
+static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
 	int i, j, smax, tmax, size;
 
@@ -118,30 +118,38 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *dest, int stride)
 	size = smax * tmax;
 	stride -= (smax * 4);
 
-	for (i = 0; i < tmax; i++, dest += stride) {
+	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
 		for (j = 0; j < smax; j++) {
-			dest[0] = 255;
-			dest[1] = 255;
-			dest[2] = 255;
-			dest[3] = 255;
+			sout[0] = 255;
+			sout[1] = 255;
+			sout[2] = 255;
+			sout[3] = 255;
 
-			dest += 4;
+			sout += 4;
+
+			dout[0] = 128;
+			dout[1] = 128;
+			dout[2] = 255;
+			dout[3] = 0;
+
+			dout += 4;
 		}
 	}
 
-	VectorSet(surf->color, 1, 1, 1);
+	Vector4Set(surf->color, 1, 1, 1, 1);
 }
 
 /**
- * @brief Combine and scale multiple lightmaps into the floating format in blocklights
+ * @brief Consume raw lightmap and deluxemap RGB/XYZ data from the surface samples,
+ * writing processed lightmap and deluxemap RGBA to the specified destinations.
  * @sa R_BuildDefaultLightmap
  */
-static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
+static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
 	int smax, tmax;
 	unsigned int i, j, size;
-	byte *lightmap, *lm, *l;
-	float *bl;
+	byte *lightmap, *lm, *l, *d;
+	float *fb;
 
 	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
@@ -151,27 +159,35 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 
 	lightmap = surf->samples;
 
-	bl = r_lightmaps.fbuffer;
+	d = r_lightmaps.direction_buffer;
+	fb = r_lightmaps.fbuffer;
 
-	for (i = 0; i < size; i++, bl += LIGHTMAP_BYTES) {
-		bl[0] = lightmap[i * LIGHTMAP_BYTES + 0] * r_modulate->value;
-		bl[1] = lightmap[i * LIGHTMAP_BYTES + 1] * r_modulate->value;
-		bl[2] = lightmap[i * LIGHTMAP_BYTES + 2] * r_modulate->value;
+	/* convert the raw lightmap samples to floating point and scale them */
+	for (i = j = 0; i < size; i++, fb += 3, d += 4) {
+		fb[0] = surf->samples[j++] * r_modulate->value;
+		fb[1] = surf->samples[j++] * r_modulate->value;
+		fb[2] = surf->samples[j++] * r_modulate->value;
+
+		/* read in directional samples for deluxe mapping as well */
+		d[0] = surf->samples[j++] = 128;
+		d[1] = surf->samples[j++] = 128;
+		d[2] = surf->samples[j++] = 255;
+		d[3] = 0;
 	}
 
 	/* put into texture format */
 	stride -= (smax * 4);
-	bl = r_lightmaps.fbuffer;
+	fb = r_lightmaps.fbuffer;
 
-	/* first into an rgba linear block for softening */
+	/* first into an RGBA linear block for softening */
 	lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);
 	lm = lightmap;
 
 	for (i = 0; i < tmax; i++) {
 		for (j = 0; j < smax; j++) {
-			int r = Q_ftol(bl[0]);
-			int g = Q_ftol(bl[1]);
-			int b = Q_ftol(bl[2]);
+			int r = Q_ftol(fb[0]);
+			int g = Q_ftol(fb[1]);
+			int b = Q_ftol(fb[2]);
 			int max;
 
 			/* catch negative lights */
@@ -205,7 +221,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 			lm[2] = b;
 			lm[3] = 255; /* pad alpha */
 
-			bl += LIGHTMAP_BYTES;
+			fb += LIGHTMAP_BYTES;
 			lm += LIGHTMAP_BLOCK_BYTES;
 		}
 	}
@@ -224,22 +240,33 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 	surf->lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BYTES, vid_lightPool, 0);
 	l = surf->lightmap;
 	lm = lightmap;
-	for (i = 0; i < tmax; i++, dest += stride) {
-		for (j = 0; j < smax; j++) {
-			/* copy to the strided block */
-			dest[0] = lm[0];
-			dest[1] = lm[1];
-			dest[2] = lm[2];
-			dest[3] = lm[3];
-			dest += LIGHTMAP_BLOCK_BYTES;
+	d = r_lightmaps.direction_buffer;
 
-			/* and to the surface */
+	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
+		for (j = 0; j < smax; j++) {
+			/* copy the lightmap to the strided block */
+			sout[0] = lm[0];
+			sout[1] = lm[1];
+			sout[2] = lm[2];
+			sout[3] = lm[3];
+			sout += LIGHTMAP_BLOCK_BYTES;
+
+			/* and to the surface, discarding alpha */
 			l[0] = lm[0];
 			l[1] = lm[1];
 			l[2] = lm[2];
 			l += LIGHTMAP_BYTES;
 
 			lm += LIGHTMAP_BLOCK_BYTES;
+
+			/* lastly copy the deluxemap to the strided block */
+			dout[0] = d[0];
+			dout[1] = d[1];
+			dout[2] = d[2];
+			dout[3] = d[3];
+			dout += DELUXEMAP_BLOCK_BYTES;
+
+			d += DELUXEMAP_BLOCK_BYTES;
 		}
 	}
 
@@ -252,7 +279,7 @@ static void R_BuildLightmap (mBspSurface_t * surf, byte * dest, int stride)
 void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 {
 	int smax, tmax;
-	byte *base;
+	byte *samples, *directions;
 
 	if (!(surf->flags & MSURF_LIGHTMAP))
 		return;
@@ -261,20 +288,25 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 
 	if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
+		/* upload the last block */
 		R_UploadLightmapBlock();
 		if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t))
 			Com_Error(ERR_DROP, "Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lightmap_scale: %i)\n", smax, tmax, surf->lightmap_scale);
 	}
 
-	surf->lightmaptexturenum = TEXNUM_LIGHTMAPS + r_lightmaps.texnum;
+	surf->lightmap_texnum = r_lightmaps.lightmap_texnum;
+	surf->deluxemap_texnum = r_lightmaps.deluxemap_texnum;
 
-	base = r_lightmaps.buffer;
-	base += (surf->light_t * r_maxlightmap->integer + surf->light_s) * LIGHTMAP_BLOCK_BYTES;
+	samples = r_lightmaps.sample_buffer;
+	samples += (surf->light_t * r_lightmaps.size + surf->light_s) * LIGHTMAP_BLOCK_BYTES;
+
+	directions = r_lightmaps.direction_buffer;
+	directions += (surf->light_t * r_lightmaps.size + surf->light_s) * DELUXEMAP_BLOCK_BYTES;
 
 	if (!surf->samples)  /* make it fullbright */
-		R_BuildDefaultLightmap(surf, base, r_maxlightmap->integer * LIGHTMAP_BLOCK_BYTES);
+		R_BuildDefaultLightmap(surf, samples, directions, r_lightmaps.size * LIGHTMAP_BLOCK_BYTES);
 	else  /* or light it properly */
-		R_BuildLightmap(surf, base, r_maxlightmap->integer * LIGHTMAP_BLOCK_BYTES);
+		R_BuildLightmap(surf, samples, directions, r_lightmaps.size * LIGHTMAP_BLOCK_BYTES);
 }
 
 /**
@@ -283,9 +315,20 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
  */
 void R_BeginBuildingLightmaps (void)
 {
-	memset(r_lightmaps.allocated, 0, sizeof(r_lightmaps.allocated));
+	/* users can tune lightmap size for their card */
+	r_lightmaps.size = r_maxlightmap->integer;
 
-	r_lightmaps.texnum = 0;
+	r_lightmaps.allocated = (unsigned *)Mem_PoolAlloc(r_lightmaps.size *
+		sizeof(unsigned), vid_lightPool, 0);
+
+	r_lightmaps.sample_buffer = (byte *)Mem_PoolAlloc(
+		r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
+
+	r_lightmaps.direction_buffer = (byte *)Mem_PoolAlloc(
+		r_lightmaps.size * r_lightmaps.size * sizeof(unsigned), vid_lightPool, 0);
+
+	r_lightmaps.lightmap_texnum = TEXNUM_LIGHTMAPS;
+	r_lightmaps.deluxemap_texnum = TEXNUM_DELUXEMAPS;
 }
 
 /**
@@ -294,8 +337,8 @@ void R_BeginBuildingLightmaps (void)
  */
 void R_EndBuildingLightmaps (void)
 {
+	/* upload the pending lightmap block */
 	R_UploadLightmapBlock();
-	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", r_lightmaps.texnum);
 }
 
 /** @brief for resolving static lighting for mesh ents */
@@ -317,6 +360,8 @@ static qboolean R_LightPoint_ (const model_t *mapTile, const mBspNode_t *node, v
 
 begin:
 
+	/** @todo Due to the pathfinding nodes the lighting is not working
+	 * not every node is touched */
 	/* special pathfinding node */
 	if (!node->plane)
 		return qfalse;
@@ -391,7 +436,6 @@ begin:
 		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
 
 		/* and normalize it to floating point */
-		/** @todo What about r_modulate? */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
 				surf->lightmap[sample + 1] / 255.0, surf->lightmap[sample + 2] / 255.0);
 

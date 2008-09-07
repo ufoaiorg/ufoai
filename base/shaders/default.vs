@@ -1,9 +1,15 @@
 // default vertex shader
 
 #include "light.vs"
+#include "bump.vs"
 
 uniform int LIGHTMAP;
+uniform int BUMPMAP;
 
+
+/*
+main
+*/
 void main(void){
 
 	// mvp transform into clip space
@@ -18,4 +24,7 @@ void main(void){
 		gl_FrontColor = gl_Color;
 
 	LightVertex();
+
+	if(BUMPMAP > 0)
+		BumpVertex();
 }

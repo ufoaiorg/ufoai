@@ -86,6 +86,34 @@ static void R_ModLoadVertexes (const lump_t *l)
 	}
 }
 
+static void R_ModLoadNormals (const lump_t *l)
+{
+	const dBspNormal_t *in;
+	mBspVertex_t *out;
+	int i, count;
+
+	in = (const void *)(mod_base + l->fileofs);
+	if (l->filelen % sizeof(*in)) {
+		Com_Error(ERR_DROP, "R_LoadNormals: Funny lump size in %s.", r_worldmodel->name);
+		return;
+	}
+	count = l->filelen / sizeof(*in);
+
+	if (count != r_worldmodel->bsp.numvertexes) {  /* ensure sane normals count */
+		Com_Error(ERR_DROP, "R_LoadNormals: unexpected normals count in %s: (%d != %d).",
+				r_worldmodel->name, count, r_worldmodel->bsp.numvertexes);
+		return;
+	}
+
+	out = r_worldmodel->bsp.vertexes;
+
+	for (i = 0; i < count; i++, in++, out++) {
+		out->normal[0] = LittleFloat(in->normal[0]);
+		out->normal[1] = LittleFloat(in->normal[1]);
+		out->normal[2] = LittleFloat(in->normal[2]);
+	}
+}
+
 static inline float RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
@@ -496,12 +524,29 @@ static void R_ModShiftTile (void)
 static void R_LoadBspVertexArrays (model_t *mod)
 {
 	int i, j;
-	int vertind, coordind;
-	float *vec, *vecShifted, s, t;
+	int vertind, coordind, tangind;
+	float *vecShifted;
+	float soff, toff, s, t;
+	float *point, *normal, *sdir, *tdir;
+	vec4_t tangent;
 	mBspSurface_t *surf;
+	mBspVertex_t *vert;
+	int vertexcount;
 
-	vertind = coordind = 0;
+	vertind = coordind = tangind = vertexcount = 0;
+
+	for (i = 0, surf = mod->bsp.surfaces; i < mod->bsp.numsurfaces; i++, surf++)
+		for (j = 0; j < surf->numedges; j++)
+			vertexcount++;
+
 	surf = mod->bsp.surfaces;
+
+	/* allocate the vertex arrays */
+	mod->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(vertexcount * 2 * sizeof(GLfloat), vid_modelPool, 0);
+	mod->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(vertexcount * 2 * sizeof(GLfloat), vid_modelPool, 0);
+	mod->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertexcount * 3 * sizeof(GLfloat), vid_modelPool, 0);
+	mod->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertexcount * 3 * sizeof(GLfloat), vid_modelPool, 0);
+	mod->bsp.tangents = (GLfloat *)Mem_PoolAlloc(vertexcount * 4 * sizeof(GLfloat), vid_modelPool, 0);
 
 	for (i = 0; i < mod->bsp.numsurfaces; i++, surf++) {
 		surf->index = vertind / 3;
@@ -515,63 +560,62 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
 				const mBspEdge_t *edge = &mod->bsp.edges[index];
-				vec = mod->bsp.vertexes[edge->v[0]].position;
+				point = mod->bsp.vertexes[edge->v[0]].position;
 			} else {
 				const mBspEdge_t *edge = &mod->bsp.edges[-index];
-				vec = mod->bsp.vertexes[edge->v[1]].position;
+				point = mod->bsp.vertexes[edge->v[1]].position;
 			}
 
 			/* shift it for assembled maps */
-			vecShifted = &r_state.vertex_array_3d[vertind];
-			VectorAdd(vec, shift, vecShifted);
+			vecShifted = &mod->bsp.verts[vertind];
+			VectorAdd(point, shift, vecShifted);
+
+			/* texture directional vectors and offsets */
+			sdir = surf->texinfo->vecs[0];
+			soff = surf->texinfo->vecs[0][3];
+
+			tdir = surf->texinfo->vecs[1];
+			toff = surf->texinfo->vecs[1][3];
 
 			/* texture coordinates */
-			s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
+			s = DotProduct(point, sdir) + soff;
 			s /= surf->texinfo->image->width;
 
-			t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
+			t = DotProduct(point, tdir) + toff;
 			t /= surf->texinfo->image->height;
 
-			texunit_diffuse.texcoord_array[coordind + 0] = s;
-			texunit_diffuse.texcoord_array[coordind + 1] = t;
+			mod->bsp.texcoords[coordind + 0] = s;
+			mod->bsp.texcoords[coordind + 1] = t;
 
 			if (surf->flags & MSURF_LIGHTMAP) {  /* lightmap coordinates */
-				s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
+				s = DotProduct(point, sdir) + soff;
 				s -= surf->stmins[0];
 				s += surf->light_s * surf->lightmap_scale;
 				s += 1 * (surf->lightmap_scale / 2);
-				s /= r_maxlightmap->integer * surf->lightmap_scale;
+				s /= r_lightmaps.size * surf->lightmap_scale;
 
-				t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
+				t = DotProduct(point, tdir) + toff;
 				t -= surf->stmins[1];
 				t += surf->light_t * surf->lightmap_scale;
 				t += 1 * (surf->lightmap_scale / 2);
-				t /= r_maxlightmap->integer * surf->lightmap_scale;
+				t /= r_lightmaps.size * surf->lightmap_scale;
 			}
 
-			texunit_lightmap.texcoord_array[coordind + 0] = s;
-			texunit_lightmap.texcoord_array[coordind + 1] = t;
+			mod->bsp.lmtexcoords[coordind + 0] = s;
+			mod->bsp.lmtexcoords[coordind + 1] = t;
 
 			/* normal vectors */
-			memcpy(&r_state.normal_array[vertind], surf->normal, sizeof(vec3_t));
+			memcpy(&mod->bsp.normals[vertind], vert->normal, sizeof(vec3_t));
+
+			/* tangent vector */
+			TangentVector(normal, sdir, tdir, tangent);
+			memcpy(&mod->bsp.tangents[tangind], tangent, sizeof(vec4_t));
 
 			vertind += 3;
 			coordind += 2;
+			tangind += 4;
 		}
 	}
-
-	/* populate the vertex arrays */
-	mod->bsp.verts = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(mod->bsp.verts, r_state.vertex_array_3d, vertind * sizeof(GLfloat));
-
-	mod->bsp.texcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(mod->bsp.texcoords, texunit_diffuse.texcoord_array, coordind * sizeof(GLfloat));
-
-	mod->bsp.lmtexcoords = (GLfloat *)Mem_PoolAlloc(coordind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(mod->bsp.lmtexcoords, texunit_lightmap.texcoord_array, coordind * sizeof(GLfloat));
-
-	mod->bsp.normals = (GLfloat *)Mem_PoolAlloc(vertind * sizeof(GLfloat), vid_modelPool, 0);
-	memcpy(mod->bsp.normals, r_state.normal_array, vertind * sizeof(GLfloat));
 
 	if (qglBindBuffer) {
 		/* and also the vertex buffer objects */
@@ -590,6 +634,10 @@ static void R_LoadBspVertexArrays (model_t *mod)
 		qglGenBuffers(1, &mod->bsp.normal_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.normal_buffer);
 		qglBufferData(GL_ARRAY_BUFFER, vertind * sizeof(GLfloat), mod->bsp.normals, GL_STATIC_DRAW);
+
+		qglGenBuffers(1, &mod->bsp.tangent_buffer);
+		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
+		qglBufferData(GL_ARRAY_BUFFER, tangind, mod->bsp.tangents, GL_STATIC_DRAW);
 
 		qglBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -817,6 +865,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	/* load into heap */
 	R_ModLoadVertexes(&header->lumps[LUMP_VERTEXES]);
+	R_ModLoadNormals(&header->lumps[LUMP_NORMALS]);
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
 	if (day)
