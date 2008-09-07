@@ -639,7 +639,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 
 		qglGenBuffers(1, &mod->bsp.tangent_buffer);
 		qglBindBuffer(GL_ARRAY_BUFFER, mod->bsp.tangent_buffer);
-		qglBufferData(GL_ARRAY_BUFFER, tangind, mod->bsp.tangents, GL_STATIC_DRAW);
+		qglBufferData(GL_ARRAY_BUFFER, tangind * sizeof(GLfloat), mod->bsp.tangents, GL_STATIC_DRAW);
 
 		qglBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
