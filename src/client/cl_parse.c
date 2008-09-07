@@ -93,7 +93,7 @@ const char *ev_format[] =
 
 	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
-	"s",				/* EV_ACTOR_START_MOVE */
+	"ss",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!sbbs",			/* EV_ACTOR_MOVE: Don't use this format string - see CL_ActorDoMove for more info */
 
@@ -900,11 +900,13 @@ void CL_SetLastMoving (le_t *le)
  */
 static void CL_ActorDoStartMove (struct dbuffer *msg)
 {
-	int	entnum;
+	int entnum, speed;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_MOVE], &entnum);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_MOVE], &entnum, &speed);
 
 	CL_SetLastMoving(LE_Get(entnum));
+	if (lastMoving)
+		lastMoving->speed = speed;
 }
 
 /**

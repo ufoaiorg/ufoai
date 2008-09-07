@@ -3284,12 +3284,6 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->startTime = cl.time;
 	le->endTime = cl.time;
 
-	/** @todo speed should somehow depend on strength of character */
-	if (le->state & STATE_CROUCHED)
-		le->speed = 50;
-	else
-		le->speed = 100;
-
 	CL_BlockEvents();
 }
 

@@ -1389,6 +1389,9 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	return qfalse;
 }
 
+#define ACTOR_SPEED_NORMAL 100
+#define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
+
 /**
  * @brief Generates the client events that are send over the netchannel to move
  * an actor
@@ -1451,7 +1454,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
 		/* slower if crouched */
-		ent->speed = (ent->state & STATE_CROUCHED) ? 50 : 100;
+		if (ent->state & STATE_CROUCHED)
+			ent->speed = ACTOR_SPEED_CROUCHED;
+		else
+			ent->speed = ACTOR_SPEED_NORMAL;
+		/* client and server are using the same speed value */
+		gi.WriteShort(ent->speed);
 
 		/* assemble dv-encoded move data */
 		VectorCopy(to, pos);
