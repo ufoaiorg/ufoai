@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <jpeglib.h>
 #include <png.h>
 
-static char glerrortex[MAX_GL_ERRORTEX];
+static char glerrortex[MAX_GL_ERRORTEX * MAX_QPATH];
 static char *glerrortexend;
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
@@ -1681,7 +1681,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		Q_strncpyz(glerrortexend, lname, MAX_QPATH);
 		glerrortexend += strlen(lname) + 1;
 	} else {
-		Com_Error(ERR_DROP, "MAX_GL_ERRORTEX");
+		Com_Error(ERR_DROP, "R_FindImage: MAX_GL_ERRORTEX hit (last texture: %s)", pname);
 	}
 
   end:
