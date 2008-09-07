@@ -149,8 +149,8 @@ static void R_ModLoadSubmodels (const lump_t *l)
 	for (i = 0; i < count; i++, in++, out++) {
 		/* spread the mins / maxs by a pixel */
 		for (j = 0; j < 3; j++) {
-			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
-			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
+			out->mins[j] = LittleFloat(in->mins[j]) - 1.0f + (float)shift[j];
+			out->maxs[j] = LittleFloat(in->maxs[j]) + 1.0f + (float)shift[j];
 		}
 		out->radius = RadiusFromBounds(out->mins, out->maxs);
 		out->headnode = LittleLong(in->headnode);
@@ -378,8 +378,8 @@ static void R_ModLoadNodes (const lump_t *l)
 			out->plane = r_worldmodel->bsp.planes + p;
 
 		for (j = 0; j < 3; j++) {
-			out->minmaxs[j] = LittleShort(in->mins[j]) + shift[j];
-			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
+			out->minmaxs[j] = LittleShort(in->mins[j]) + (float)shift[j];
+			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + (float)shift[j];
 		}
 
 		out->firstsurface = LittleShort(in->firstface);
@@ -421,8 +421,8 @@ static void R_ModLoadLeafs (const lump_t *l)
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
-			out->minmaxs[j] = LittleShort(in->mins[j]) + shift[j];
-			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
+			out->minmaxs[j] = LittleShort(in->mins[j]) + (float)shift[j];
+			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + (float)shift[j];
 		}
 
 		out->contents = LittleLong(in->contentFlags);
@@ -560,11 +560,13 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			/* vertex */
 			if (index > 0) {  /* negative indices to differentiate which end of the edge */
 				const mBspEdge_t *edge = &mod->bsp.edges[index];
-				point = mod->bsp.vertexes[edge->v[0]].position;
+				vert = &mod->bsp.vertexes[edge->v[0]];
 			} else {
 				const mBspEdge_t *edge = &mod->bsp.edges[-index];
-				point = mod->bsp.vertexes[edge->v[1]].position;
+				vert = &mod->bsp.vertexes[edge->v[1]];
 			}
+
+			point = vert->position;
 
 			/* shift it for assembled maps */
 			vecShifted = &mod->bsp.verts[vertind];
