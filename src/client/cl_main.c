@@ -821,8 +821,8 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		CL_SpawnSoldiers_f();
 }
 
-static char serverInfoText[MAX_MESSAGE_TEXT];
-static char userInfoText[MAX_MESSAGE_TEXT];
+static char serverInfoText[1024];
+static char userInfoText[256];
 /**
  * @brief Serverbrowser text
  * @sa CL_PingServer

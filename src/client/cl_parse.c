@@ -897,6 +897,7 @@ void CL_SetLastMoving (le_t *le)
 
 /**
  * @sa EV_ACTOR_START_MOVE
+ * @note Only send to all the players that see the actual actor behind the entnum
  */
 static void CL_ActorDoStartMove (struct dbuffer *msg)
 {
