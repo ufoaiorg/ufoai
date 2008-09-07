@@ -334,7 +334,7 @@ menu options_video
 	}
 	checkbox light
 	{
-		cvar	"*cvar r_light"
+		cvar	"*cvar r_lighting"
 		pos		"840 390"
 		align	ur
 	}
