@@ -3264,6 +3264,9 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
+	/* speed is set in the EV_ACTOR_START_MOVE event */
+	assert(le->speed);
+
 #ifdef DEBUG
 	/* get length/steps */
 	if (le->pathLength || le->pathPos)

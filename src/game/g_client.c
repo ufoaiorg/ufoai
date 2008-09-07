@@ -1393,6 +1393,24 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 #define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
 
 /**
+ * @brief Sends the EV_ACTOR_START_MOVE event to the client
+ * the ent belongs, too
+ */
+static inline void G_ClientStartMove (edict_t *ent)
+{
+	/* start move */
+	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
+	gi.WriteShort(ent->number);
+	/* slower if crouched */
+	if (ent->state & STATE_CROUCHED)
+		ent->speed = ACTOR_SPEED_CROUCHED;
+	else
+		ent->speed = ACTOR_SPEED_NORMAL;
+	/* client and server are using the same speed value */
+	gi.WriteShort(ent->speed);
+}
+
+/**
  * @brief Generates the client events that are send over the netchannel to move
  * an actor
  * @param[in] player Player who is moving an actor
@@ -1447,19 +1465,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
-		/* start move */
-		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
-		gi.WriteShort(ent->number);
+		G_ClientStartMove(ent);
+
 		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
-		/* slower if crouched */
-		if (ent->state & STATE_CROUCHED)
-			ent->speed = ACTOR_SPEED_CROUCHED;
-		else
-			ent->speed = ACTOR_SPEED_NORMAL;
-		/* client and server are using the same speed value */
-		gi.WriteShort(ent->speed);
 
 		/* assemble dv-encoded move data */
 		VectorCopy(to, pos);
@@ -1690,9 +1700,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	if (ent->dir == dv)
 		return;
 
-	/* start move */
-	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
-	gi.WriteShort(ent->number);
+	G_ClientStartMove(ent);
 
 	/* do the turn */
 	G_DoTurn(ent, dv);
