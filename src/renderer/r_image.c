@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <jpeglib.h>
 #include <png.h>
 
-static char glerrortex[MAX_GL_ERRORTEX * MAX_QPATH];
-static char *glerrortexend;
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
 int registration_sequence;
@@ -1599,7 +1597,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	char *ename;
-	char *etex;
 	image_t *image;
 	int i;
 	size_t len;
@@ -1625,16 +1622,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			image->registration_sequence = registration_sequence;
 			return image;
 		}
-
-	/* look for it in the error list */
-	etex = glerrortex;
-	while ((len = strlen(etex)) != 0) {
-		if (!Q_strncmp(lname, etex, MAX_QPATH))
-			/* it's in the error list */
-			return r_noTexture;
-
-		etex += len + 1;
-	}
 
 	/* load the pic from disk */
 	image = NULL;
@@ -1672,17 +1659,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	/* add to error list */
 	image = r_noTexture;
 
-	*ename = 0;
 #ifdef PARANOID
 	Com_Printf("R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
 #endif
-
-	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GL_ERRORTEX) {
-		Q_strncpyz(glerrortexend, lname, MAX_QPATH);
-		glerrortexend += strlen(lname) + 1;
-	} else {
-		Com_Error(ERR_DROP, "R_FindImage: MAX_GL_ERRORTEX hit (last texture: %s)", pname);
-	}
 
   end:
 	if (pic)
@@ -1724,8 +1703,6 @@ void R_InitImages (void)
 
 	registration_sequence = 1;
 	r_numImages = 0;
-	glerrortex[0] = 0;
-	glerrortexend = glerrortex;
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 	if (!r_dayandnightTexture)
 		Sys_Error("Could not create daynight image for the geoscape");
