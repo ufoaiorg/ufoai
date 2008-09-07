@@ -3264,8 +3264,17 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
-	/* speed is set in the EV_ACTOR_START_MOVE event */
-	assert(le->speed);
+	/* speed is set in the EV_ACTOR_START_MOVE event
+	 * HACK (at least for visible actors)
+	 * if it's not set, this actor appeared in mid move
+	 * find a way to send the speed for EV_ACTOR_APPEAR while
+	 * in mid move, too */
+	if (!le->speed) {
+		if (le->state & STATE_CROUCHED)
+			le->speed = 50;
+		else
+			le->speed = 100;
+	}
 
 #ifdef DEBUG
 	/* get length/steps */

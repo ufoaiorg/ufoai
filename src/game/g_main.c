@@ -107,6 +107,7 @@ cvar_t *m_panic_stop;
 cvar_t *g_aidebug;
 cvar_t *g_nodamage;
 cvar_t *g_notu;
+cvar_t *g_actorspeed;
 cvar_t *flood_msgs;
 cvar_t *flood_persecond;
 cvar_t *flood_waitdelay;
@@ -209,6 +210,7 @@ static void G_Init (void)
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER, "No TU costs while moving around (e.g. for map testing)");
+	g_actorspeed = gi.Cvar_Get("g_actorspeed", "1.0", CVAR_SERVERINFO, "Moving speed of the actor");
 
 	/* flood control */
 	flood_msgs = gi.Cvar_Get("flood_msgs", "4", 0, NULL);

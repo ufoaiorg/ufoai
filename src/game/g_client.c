@@ -287,6 +287,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
+
 			gi.WriteByte(check->team);
 			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
 			gi.WriteByte(check->chr.gender);
@@ -1406,6 +1407,7 @@ static inline void G_ClientStartMove (edict_t *ent)
 		ent->speed = ACTOR_SPEED_CROUCHED;
 	else
 		ent->speed = ACTOR_SPEED_NORMAL;
+	ent->speed *= g_actorspeed->value;
 	/* client and server are using the same speed value */
 	gi.WriteShort(ent->speed);
 }
@@ -1596,6 +1598,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
+				if (status & VIS_CHANGE) {
+					if (status & VIS_YES)
+						G_ClientStartMove(ent);
+				}
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);

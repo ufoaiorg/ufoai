@@ -154,7 +154,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 	size = smax * tmax;
-	if (size * LIGHTMAP_BYTES > (sizeof(r_lightmaps.fbuffer)))
+	if (size * LIGHTMAP_BYTES > sizeof(r_lightmaps.fbuffer))
 		Com_Error(ERR_DROP, "R_BuildLightmap: Surface too large: %d.\n", size);
 
 	lightmap = surf->samples;
