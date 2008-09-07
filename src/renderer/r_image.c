@@ -1776,7 +1776,7 @@ static const glTextureMode_t gl_texture_modes[] = {
 
 void R_TextureMode (const char *string)
 {
-	int i;
+	int i, texturemode;
 	image_t *image;
 
 	for (i = 0; i < NUM_R_MODES; i++) {
@@ -1789,6 +1789,8 @@ void R_TextureMode (const char *string)
 		return;
 	}
 
+	texturemode = i;
+
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
 			continue;
@@ -1797,8 +1799,8 @@ void R_TextureMode (const char *string)
 		if (r_config.anisotropic)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[texturemode].minimize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[texturemode].maximize);
 		R_CheckError();
 	}
 }
