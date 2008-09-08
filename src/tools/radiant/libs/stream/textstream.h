@@ -125,6 +125,7 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, char c
 }
 
 /// \brief Writes a double-precision floating point value \p d to \p ostream.
+/// HACK changed from %g to %.7g to reduce pointless extra places - ufo2map only uses float for tex scale
 /// The value will be formatted either as decimal with trailing zeros removed, or with scientific 'e' notation, whichever is shorter.
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const double d) {
