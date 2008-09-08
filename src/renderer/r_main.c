@@ -54,7 +54,7 @@ cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_anisotropic;
 cvar_t *r_texture_lod;			/* lod_bias */
-cvar_t *r_screenshot;
+cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
 cvar_t *r_ext_texture_compression;
@@ -354,9 +354,9 @@ void R_EndFrame (void)
 static const cmdList_t r_commands[] = {
 	{"r_listimages", R_ImageList_f, "Show all loaded images on game console"},
 	{"r_listfontcache", R_FontListCache_f, "Show information about font cache"},
-	{"screenshot", R_ScreenShot_f, "Take a screenshot"},
+	{"r_screenshot", R_ScreenShot_f, "Take a screenshot"},
 	{"r_listmodels", R_ModModellist_f, "Show all loaded models on game console"},
-	{"r_strings", R_Strings_f, NULL},
+	{"r_strings", R_Strings_f, "Print openGL vendor and other strings"},
 	{"r_state", R_StatePrint, "Print the gl state to game console"},
 	{"r_restartprograms", R_RestartPrograms_f, "Reloads the shaders"},
 
@@ -392,7 +392,7 @@ static void R_RegisterSystemVars (void)
 	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
-	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
+	r_screenshot_format = Cvar_Get("r_screenshot_format", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
