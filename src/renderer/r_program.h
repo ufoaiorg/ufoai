@@ -63,4 +63,6 @@ void R_DisableAttribute(const char *name);
 void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
 
+void R_RestartPrograms_f(void);
+
 #endif

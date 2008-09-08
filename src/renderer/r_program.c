@@ -431,3 +431,12 @@ void R_InitPrograms (void)
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram,
 			R_UseWarpProgram, NULL);
 }
+
+/**
+ * @brief Reloads the glsl shaders
+ */
+void R_RestartPrograms_f (void)
+{
+	R_ShutdownPrograms();
+	R_InitPrograms();
+}

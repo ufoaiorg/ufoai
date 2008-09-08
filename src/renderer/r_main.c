@@ -352,12 +352,13 @@ void R_EndFrame (void)
 }
 
 static const cmdList_t r_commands[] = {
-	{"imagelist", R_ImageList_f, NULL},
-	{"fontcachelist", R_FontListCache_f, NULL},
+	{"r_listimages", R_ImageList_f, "Show all loaded images on game console"},
+	{"r_listfontcache", R_FontListCache_f, "Show information about font cache"},
 	{"screenshot", R_ScreenShot_f, "Take a screenshot"},
-	{"modellist", R_ModModellist_f, NULL},
+	{"r_listmodels", R_ModModellist_f, "Show all loaded models on game console"},
 	{"r_strings", R_Strings_f, NULL},
-	{"r_state", R_StatePrint, NULL},
+	{"r_state", R_StatePrint, "Print the gl state to game console"},
+	{"r_restartprograms", R_RestartPrograms_f, "Reloads the shaders"},
 
 	{NULL, NULL, NULL}
 };
