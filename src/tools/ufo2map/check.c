@@ -753,7 +753,8 @@ static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes.
  * @todo test for sides hidden by composite faces
- * @todo warn about faces which are nodraw, but might be visible
+ * @note probably cannot warn about faces which are nodraw, but might be visible, as there will
+ * always be planty of optimisations beyond faces being hidden by one brush, or composite faces.
  */
 void CheckNodraws (void)
 {
@@ -782,7 +783,11 @@ void CheckNodraws (void)
 
 			/* check each side of i for being hidden */
 			for (is = 0; is < iBrush->numsides; is++) {
-			side_t *iSide = &iBrush->original_sides[is];
+				side_t *iSide = &iBrush->original_sides[is];
+
+				/* skip those that are already nodraw */
+				if (iSide->surfaceFlags & SURF_NODRAW)
+					continue;
 
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
@@ -794,6 +799,7 @@ void CheckNodraws (void)
 
 						const ptrdiff_t index = iSide - brushsides;
 						brush_texture_t *tex = &side_brushtextures[index];
+
 						Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 						iSide->surfaceFlags |= SURF_NODRAW;
 						tex->surfaceFlags |= SURF_NODRAW;
