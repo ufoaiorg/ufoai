@@ -57,17 +57,16 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 		float dist = length(delta);
 
 		// if the light is too far away, skip it
-		if(dist > gl_LightSource[i].constantAttenuation)
-			continue;
+		if(dist <= gl_LightSource[i].constantAttenuation){
 
-		vec3 dir = normalize(delta);
-		float d = dot(normal, dir);
+			vec3 dir = normalize(delta);
+			float d = dot(normal, dir);
 
-		if(d <= 0.0)
-			continue;
-
-		float atten = gl_LightSource[i].constantAttenuation / dist - 1.0;
-		light += gl_LightSource[i].diffuse.rgb * d * atten * atten;
+			if(d > 0.0){
+				float atten = gl_LightSource[i].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[i].diffuse.rgb * d * atten * atten;
+			}
+		}
 	}
 #endif
 	// now modulate the diffuse sample with the modified lightmap
