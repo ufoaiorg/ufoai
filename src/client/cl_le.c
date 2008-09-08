@@ -599,12 +599,16 @@ static void LET_PathMove (le_t * le)
 			} else
 				LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
 
-			le->dir = dv & (DIRECTIONS - 1);
+			le->dir = dv;
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			assert(le->speed);
-			le->endTime += ((dv & (DIRECTIONS - 1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
+			if (le->dir >= BASE_DIRECTIONS)
+				/* sqrt(2) for diagonal movement */
+				le->endTime += UNIT_SIZE * 1.41f * 1000 / le->speed;
+			else
+				le->endTime += UNIT_SIZE * 1000 / le->speed;
 
 			le->positionContents = le->pathContents[le->pathPos];
 			le->pathPos++;

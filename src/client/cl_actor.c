@@ -3276,7 +3276,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->pathLength = NET_ReadByte(msg);
 	assert(le->pathLength <= MAX_LE_PATHLENGTH);
 	for (i = 0; i < le->pathLength; i++) {
-		le->path[i] = NET_ReadByte(msg);
+		le->path[i] = NET_ReadByte(msg) & (DIRECTIONS - 1);
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
 
