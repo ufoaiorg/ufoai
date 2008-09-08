@@ -201,7 +201,6 @@ SectionGroup /e "Mapping" SECGROUP02
     file "..\..\..\contrib\dlls\jpeg62.dll"
     file "..\..\..\radiant\radiant.exe"
     file /nonfatal "..\..\..\radiant\*.dll"
-    file "..\..\..\radiant\*.xlink"
     SetOutPath "$INSTDIR\radiant\bitmaps"
     file "..\..\..\radiant\bitmaps\*.bmp"
     SetOutPath "$INSTDIR\radiant\docs"
