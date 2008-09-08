@@ -85,74 +85,70 @@
 ( 128 224 4 ) ( 192 160 0 ) ( 192 160 4 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 ( 128 224 4 ) ( 192 160 4 ) ( 96 160 16 ) tex_nature/dirt_se01 0 0 0 1 1 65281 0 0
 }
+// brush 7
+{
+( 83 232 30 ) ( 83 232 6 ) ( 83 240 6 ) tex_misc/barrel_top 13 47 0 -0.416667 0.416667 65282 0 0
+( 101 232 6 ) ( 101 232 30 ) ( 101 240 30 ) tex_misc/barrel_top 13 47 0 -0.416667 0.416667 65282 0 0
+( 96 227 30 ) ( 96 227 6 ) ( 88 227 6 ) tex_misc/barrel_top 4 47 0 -0.416667 0.416667 65282 0 0
+( 96 245 6 ) ( 96 245 30 ) ( 88 245 30 ) tex_misc/barrel_top 4 47 0 -0.416667 0.416667 65282 0 0
+( 82 226 4 ) ( 102 226 4 ) ( 102 246 4 ) tex_common/nodraw 95 95 0 0.26 0.1875 65282 128 0
+( 102 226 6 ) ( 82 226 6 ) ( 102 246 6 ) tex_misc/barrel_top 4 13 0 -0.416667 0.416667 65282 0 0
+( 88 227 30 ) ( 88 227 6 ) ( 83 232 6 ) tex_misc/barrel_top 13 47 0 -0.416667 0.416667 65282 0 0
+( 101 240 6 ) ( 101 240 30 ) ( 96 245 30 ) tex_misc/barrel_top 13 47 0 -0.416667 0.416667 65282 0 0
+( 96 227 6 ) ( 96 227 30 ) ( 101 232 30 ) tex_misc/barrel_top 13 47 0 -0.416667 0.416667 65282 0 0
+( 88 245 6 ) ( 88 245 30 ) ( 83 240 30 ) tex_misc/barrel_top 13 47 0 -0.416667 0.416667 65282 0 0
+}
 }
 // entity 1
-{
-"classname" "func_group"
-// brush 0
-{
-( 83 232 30 ) ( 83 232 6 ) ( 83 240 6 ) tex_misc/barrel_top 13 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 101 232 6 ) ( 101 232 30 ) ( 101 240 30 ) tex_misc/barrel_top 13 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 96 227 30 ) ( 96 227 6 ) ( 88 227 6 ) tex_misc/barrel_top 4 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 96 245 6 ) ( 96 245 30 ) ( 88 245 30 ) tex_misc/barrel_top 4 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 82 226 4 ) ( 102 226 4 ) ( 102 246 4 ) tex_common/nodraw 95 95 0 0.2599999905 0.1875 65282 128 0
-( 102 226 6 ) ( 82 226 6 ) ( 102 246 6 ) tex_misc/barrel_top 4 13 0 -0.4166670144 0.4166670144 65282 0 0
-( 88 227 30 ) ( 88 227 6 ) ( 83 232 6 ) tex_misc/barrel_top 13 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 101 240 6 ) ( 101 240 30 ) ( 96 245 30 ) tex_misc/barrel_top 13 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 96 227 6 ) ( 96 227 30 ) ( 101 232 30 ) tex_misc/barrel_top 13 47 0 -0.4166670144 0.4166670144 65282 0 0
-( 88 245 6 ) ( 88 245 30 ) ( 83 240 30 ) tex_misc/barrel_top 13 47 0 -0.4166670144 0.4166670144 65282 0 0
-}
-}
-// entity 2
 {
 "classname" "misc_model"
 "origin" "432 406 28"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 3
+// entity 2
 {
 "classname" "misc_model"
 "origin" "388 374 22"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 4
+// entity 3
 {
 "classname" "misc_model"
 "origin" "130 324 18"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 5
+// entity 4
 {
 "classname" "misc_model"
 "origin" "62 72 20"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 6
+// entity 5
 {
 "classname" "misc_model"
 "origin" "370 438 30"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 7
+// entity 6
 {
 "classname" "misc_model"
 "origin" "90 98 32"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 8
+// entity 7
 {
 "classname" "misc_model"
 "origin" "134 128 28"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
 }
-// entity 9
+// entity 8
 {
 "classname" "misc_model"
 "origin" "72 160 28"
