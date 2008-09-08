@@ -329,8 +329,6 @@ Section "Source Code" SEC03
   File "..\..\tools\radiant\libs\gtkutil\*.cpp"
   SetOutPath "$INSTDIR\src\tools\radiant\libs\math"
   File "..\..\tools\radiant\libs\math\*.h"
-  SetOutPath "$INSTDIR\src\tools\radiant\libs\md5lib"
-  File "..\..\tools\radiant\libs\md5lib\*.c"
   SetOutPath "$INSTDIR\src\tools\radiant\libs\memory"
   File "..\..\tools\radiant\libs\memory\*.h"
   SetOutPath "$INSTDIR\src\tools\radiant\libs\modulesystem"
