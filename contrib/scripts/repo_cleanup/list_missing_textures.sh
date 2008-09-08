@@ -1,7 +1,8 @@
 #!/bin/bash
 
 DIR="${1:-../../../base/maps}"
-echo "using directory $DIR"
+#silent=no
+[[ $silent ]] && echo "using directory $DIR"
 
 TRUNKDIR=../../..
 

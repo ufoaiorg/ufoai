@@ -1,7 +1,8 @@
 #!/bin/bash
 
 DIR="${1:-.}"
-echo "using directory $DIR"
+#silent=no
+[[ $silent ]] && echo "using directory $DIR"
 
 EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py map xml html"
 # define REPORTNEGATIVES to report all files that had no modifications performed
@@ -10,7 +11,7 @@ EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py map xml html"
 # define REPORTPOSITIVES to report action on svn setting
 #REPORTPOSITIVES=yes
 
-echo "setting eol style to native"
+[[ $silent ]] && echo "setting eol style to native"
 set -f
 for i in $EXT; do
     [[ $NOTFIRST ]] && {
