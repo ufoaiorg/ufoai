@@ -394,10 +394,13 @@ static void R_UseDefaultProgram (void)
 
 static void R_ThinkDefaultProgram (void)
 {
-	if (r_state.bumpmap_enabled)
+	if (r_state.bumpmap_enabled) {
+		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
-	else
+	} else {
+		R_DisableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 0);
+	}
 }
 
 static void R_InitWarpProgram (void)

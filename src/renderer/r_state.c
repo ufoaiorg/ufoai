@@ -236,11 +236,7 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 		R_UseProgram(program);
 
 		glEnableClientState(GL_NORMAL_ARRAY);
-
-		R_EnableAttribute("TANGENT");
 	} else {
-		R_DisableAttribute("TANGENT");
-
 		glDisableClientState(GL_NORMAL_ARRAY);
 
 		R_UseProgram(NULL);
@@ -252,7 +248,7 @@ void R_EnableBumpmap (qboolean enable)
 	if (!r_state.lighting_enabled)
 		return;
 
-	if (!r_bumpmap->integer || r_state.bumpmap_enabled == enable)
+	if (!r_bumpmap->value || r_state.bumpmap_enabled == enable)
 		return;
 
 	/* toggle state */

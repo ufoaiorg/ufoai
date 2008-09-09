@@ -55,7 +55,7 @@ static inline void R_SetVertexArrayState (const model_t* mod)
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->integer)
+		if (r_bumpmap->value)
 			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
 	}
 }
@@ -80,7 +80,7 @@ static inline void R_SetVertexBufferState (const model_t* mod)
 		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->integer)
+		if (r_bumpmap->value)
 			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
 	}
 }
@@ -144,7 +144,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 	if (r_state.lighting_enabled) {
-		if (r_bumpmap->integer && surf->texinfo->image->normalmap) {
+		if (r_bumpmap->value && surf->texinfo->image->normalmap) {
 			R_BindDeluxemapTexture(surf->deluxemap_texnum);
 			R_BindNormalmapTexture(surf->texinfo->image->normalmap->texnum);
 
@@ -186,7 +186,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	}
 
 	/* reset state */
-	if (r_state.lighting_enabled)
+	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(qfalse);
 
 	/* and restore array pointers */

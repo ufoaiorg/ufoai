@@ -53,7 +53,7 @@ static void R_AddBumpmapLight (void)
 	const vec3_t color = {0.0, 0.0, 0.0};
 	vec3_t org;
 
-	if (!r_bumpmap->integer)
+	if (!r_bumpmap->value)
 		return;
 
 	VectorCopy(refdef.vieworg, org);
