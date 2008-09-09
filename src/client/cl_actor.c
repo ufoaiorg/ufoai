@@ -550,7 +550,7 @@ character_t *CL_GetActorChr (const le_t * le)
 
 	/* Search in the aircraft team (we skip unused entries) for this actor. */
 	for (i = 0, p = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[p]) {
+		if (aircraft->acTeam[i]) {
 			if (actorIdx == p) {
 				return &aircraft->acTeam[p]->chr;
 			}
@@ -2633,7 +2633,7 @@ qboolean CL_ActorSelectList (int num)
 	le_t *le;
 
 	/* check if actor exists */
-	if (num >= cl.numTeamList)
+	if (num >= cl.numTeamList || num < 0)
 		return qfalse;
 
 	/* select actor */
