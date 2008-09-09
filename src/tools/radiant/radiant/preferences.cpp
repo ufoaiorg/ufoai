@@ -203,7 +203,7 @@ void GlobalPreferences_Init() {
 	RegisterGlobalPreferences(g_global_preferences);
 }
 
-void CGameDialog::LoadPrefs() {
+static void LoadPrefs(void) {
 	// load global .pref file
 	StringOutputStream strGlobalPref(256);
 	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
@@ -215,7 +215,7 @@ void CGameDialog::LoadPrefs() {
 	}
 }
 
-void CGameDialog::SavePrefs() {
+static void SavePrefs(void) {
 	StringOutputStream strGlobalPref(256);
 	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
 
@@ -226,31 +226,8 @@ void CGameDialog::SavePrefs() {
 	}
 }
 
-void CGameDialog::DoGameDialog() {
-	// show the UI
-	DoModal();
-
-	// we save the prefs file
-	SavePrefs();
-}
-
-void CGameDialog::CreateGlobalFrame(PreferencesPage& page) {
-	page.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
-	page.appendCheckBox("Startup", "Show Global Preferences", m_bGamePrompt);
-}
-
 GtkWindow* CGameDialog::BuildDialog() {
-	GtkFrame* frame = create_dialog_frame("Game settings", GTK_SHADOW_ETCHED_IN);
-
-	GtkVBox* vbox2 = create_dialog_vbox(0, 4);
-	gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
-
-	{
-		PreferencesPage preferencesPage(*this, GTK_WIDGET(vbox2));
-		CreateGlobalFrame(preferencesPage);
-	}
-
-	return create_simple_modal_dialog_window("Global Preferences", m_modal, GTK_WIDGET(frame));
+	return NULL;
 }
 
 static void ScanForGameDefinition() {
@@ -574,7 +551,7 @@ GtkWindow* PrefsDlg::BuildDialog() {
 							{
 								GtkWidget* game = PreferencePages_addPage(m_notebook, "Game");
 								PreferencesPage preferencesPage(*this, getVBox(game));
-								g_GamesDialog.CreateGlobalFrame(preferencesPage);
+								preferencesPage.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
 
 								PreferenceTree_appendPage(store, &group, "Game", game);
 							}
@@ -674,7 +651,7 @@ typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
 StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
 
 void Preferences_Load() {
-	g_GamesDialog.LoadPrefs();
+	LoadPrefs();
 
 	globalOutputStream() << "loading ini from " << g_Preferences.m_inipath->str << "\n";
 
@@ -687,7 +664,7 @@ void Preferences_Save() {
 	if (g_preferences_globals.disable_ini)
 		return;
 
-	g_GamesDialog.SavePrefs();
+	SavePrefs();
 
 	globalOutputStream() << "saving ini to " << g_Preferences.m_inipath->str << "\n";
 

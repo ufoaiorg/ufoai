@@ -31,12 +31,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "os/file.h"  // file_exists
 #include "scenelib.h" // g_brushCount
 #include "gtkutil/messagebox.h"  // gtk_MessageBox
+#include "stream/stringstream.h"
 #include "../qe3.h" // g_brushCount
 #include "../map.h"
 #include "../preferences.h"
+#include "../mainframe.h"
 #ifdef WIN32
 #include "../gtkmisc.h"
-#include "../mainframe.h"
 #endif
 
 // master window widget
@@ -103,14 +104,18 @@ void ToolsCheckErrors (void)
 		return;
 	}
 
-	if (file_exists(mapcompiler)) {
+	StringOutputStream fullpath(256);
+	fullpath << CompilerPath_get() << mapcompiler;
+
+
+	if (file_exists(fullpath.c_str())) {
 		char buf[1024];
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
 		snprintf(buf, sizeof(buf) - 1, "%s %s", compiler_parameter, fullname);
 		buf[sizeof(buf) - 1] = '\0';
 
-		char* output = Q_Exec(mapcompiler, buf, NULL, false);
+		char* output = Q_Exec(mapcompiler, buf, CompilerPath_get(), false);
 		if (output) {
 			if (!checkDialog)
 				CreateCheckDialog();
@@ -144,7 +149,9 @@ void ToolsCheckErrors (void)
 		} else
 			globalOutputStream() << "No output for checking " << fullname << "\n";
 	} else {
-		globalOutputStream() << "Could not find " << mapcompiler << "\n";
+		StringOutputStream message(256);
+		message << "Could not find the mapcompiler (" << fullpath.c_str() << ") check your path settings\n";
+		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
 	}
 }
 

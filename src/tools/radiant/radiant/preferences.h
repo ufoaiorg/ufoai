@@ -215,10 +215,6 @@ public:
 	*/
 	/*@{*/
 	/*!
-	prompt which game to load on startup
-	*/
-	bool m_bGamePrompt;
-	/*!
 	log console to radiant.log
 	m_bForceLogConsole is an obscure forced latching situation
 	*/
@@ -226,7 +222,6 @@ public:
 	/*@}*/
 
 	CGameDialog() :
-			m_bGamePrompt(false),
 			m_bForceLogConsole(false) {
 	}
 	virtual ~CGameDialog();
@@ -243,11 +238,6 @@ public:
 	void Reset();
 
 	/*!
-	run the dialog UI for the list of games
-	*/
-	void DoGameDialog();
-
-	/*!
 	Dialog API
 	this is only called when the dialog is built at startup for main engine select
 	*/
@@ -261,18 +251,6 @@ public:
 	build the frame on-demand (only once)
 	*/
 	void CreateGlobalFrame(PreferencesPage& page);
-
-	/*!
-	global preferences subsystem
-	XML-based this time, hopefully this will generalize to other prefs
-	LoadPrefs has hardcoded defaults
-	NOTE: it may not be strictly 'CGameDialog' to put the global prefs here
-	  could have named the class differently I guess
-	*/
-	/*@{*/
-	void LoadPrefs(); ///< load from file into variables
-	void SavePrefs(); ///< save pref variables to file
-	/*@}*/
 
 private:
 	/*!
