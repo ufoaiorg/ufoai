@@ -226,10 +226,6 @@ public:
 	}
 	virtual ~CGameDialog();
 
-	/*!
-	intialize the game dialog, called at CPrefsDlg::Init
-	will scan for games, load prefs, and do game selection dialog if needed
-	*/
 	void Init();
 
 	/*!
@@ -253,10 +249,6 @@ public:
 	void CreateGlobalFrame(PreferencesPage& page);
 
 private:
-	/*!
-	inits g_Preferences.m_global_rc_path
-	*/
-	void InitGlobalPrefPath();
 
 	/*!
 	uses m_nComboItem to find the right mGames
@@ -278,19 +270,7 @@ public:
 	GtkWidget *m_notebook;
 
 	virtual ~PrefsDlg() {
-		g_string_free(m_inipath, true);
 	}
-
-	/*!
-	path for global settings
-	*/
-	GString *m_global_rc_path;
-
-	/*!
-	holds per-game settings
-	\todo FIXME at some point this should become XML property bag code too
-	*/
-	GString *m_inipath;
 
 	// initialize the above paths
 	void Init();

@@ -450,8 +450,6 @@ int main (int argc, char* argv[]) {
 
 	GlobalPreferences_Init();
 
-	g_GamesDialog.Init();
-
 	remove_global_pid();
 
 	g_Preferences.Init(); // must occur before create_local_pid() to allow preferences to be reset
