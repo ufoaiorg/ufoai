@@ -552,7 +552,7 @@ character_t *CL_GetActorChr (const le_t * le)
 	for (i = 0, p = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
 			if (actorIdx == p) {
-				return &aircraft->acTeam[p]->chr;
+				return &aircraft->acTeam[i]->chr;
 			}
 			p++;
 		}
