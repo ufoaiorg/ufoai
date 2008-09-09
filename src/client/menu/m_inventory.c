@@ -423,7 +423,20 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 		else
 			fItem = Com_SearchInInventory(menuInventory, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
 
-		assert(node->container == dragInfo.to);
+
+		if (node->container->id == csi.idArmour) {
+			/** hackhack @todo This is only because armour containers (and their nodes) are
+			 * handled differently than normal containers somehow.
+			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
+			 * In a perfect world node->container would always be the same as dragInfo.to here. */
+			dragInfo.toNode = (menuNode_t *)node;
+			dragInfo.to = node->container;
+			dragInfo.toX = 0;
+			dragInfo.toY = 0;
+		} else {
+			assert(node->container == dragInfo.to);
+		}
+
 		INV_MoveItem(base, menuInventory,
 			dragInfo.to, dragInfo.toX, dragInfo.toY,
 			dragInfo.from, fItem);
