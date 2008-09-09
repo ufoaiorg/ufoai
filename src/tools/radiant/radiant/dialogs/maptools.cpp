@@ -94,6 +94,7 @@ void ToolsCheckErrors (void)
 /*	const char* path = getMapsPath(); */
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
 	const char* fullname = Map_Name(g_map);
+	StringOutputStream fullpath(256);
 
 	if (!ConfirmModified("Check Map"))
 		return;
@@ -104,9 +105,7 @@ void ToolsCheckErrors (void)
 		return;
 	}
 
-	StringOutputStream fullpath(256);
 	fullpath << CompilerPath_get() << mapcompiler;
-
 
 	if (file_exists(fullpath.c_str())) {
 		char buf[1024];
@@ -161,6 +160,7 @@ void ToolsCheckErrors (void)
 void ToolsCompile (void)
 {
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
+	StringOutputStream fullpath(256);
 
 	if (!ConfirmModified("Compile Map"))
 		return;
@@ -171,7 +171,9 @@ void ToolsCompile (void)
 		return;
 	}
 
-	if (file_exists(mapcompiler)) {
+	fullpath << CompilerPath_get() << mapcompiler;
+
+	if (file_exists(fullpath.c_str())) {
 		char buf[1024];
 		const char* fullname = Map_Name(g_map);
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param");
@@ -180,7 +182,7 @@ void ToolsCompile (void)
 		buf[sizeof(buf) - 1] = '\0';
 
 		/** @todo thread this and update the main window */
-		char* output = Q_Exec(mapcompiler, buf, NULL, false);
+		char* output = Q_Exec(mapcompiler, buf, CompilerPath_get(), false);
 		if (output) {
 			/** @todo parse and display this in a gtk window */
 			globalOutputStream() << output;
