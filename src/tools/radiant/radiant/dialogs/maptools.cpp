@@ -42,7 +42,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // master window widget
 static GtkWidget *checkDialog = NULL;
-static GtkWidget *text_widget; // slave, text widget from the gtk editor
+static GtkWidget *tableWidget; // slave, text widget from the gtk editor
 
 static gint editor_hide (GtkWidget *widget, gpointer data)
 {
@@ -52,28 +52,26 @@ static gint editor_hide (GtkWidget *widget, gpointer data)
 
 static void CreateCheckDialog (void)
 {
-	GtkWidget *dlg;
-	GtkWidget *vbox, *hbox, *button, *scr, *text;
+	GtkWidget *vbox, *hbox, *button;
 
-	dlg = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	checkDialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-	g_signal_connect(G_OBJECT(dlg), "delete_event", G_CALLBACK(editor_hide), NULL);
-	gtk_window_set_default_size(GTK_WINDOW(dlg), 600, 300);
+	g_signal_connect(G_OBJECT(checkDialog), "delete_event", G_CALLBACK(editor_hide), NULL);
+	gtk_window_set_default_size(GTK_WINDOW(checkDialog), 600, 300);
 
 	vbox = gtk_vbox_new(FALSE, 5);
 	gtk_widget_show(vbox);
-	gtk_container_add(GTK_CONTAINER(dlg), GTK_WIDGET(vbox));
+	gtk_container_add(GTK_CONTAINER(checkDialog), GTK_WIDGET(vbox));
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 5);
 
-	scr = gtk_scrolled_window_new(0, 0);
-	gtk_widget_show(scr);
-	gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
+	{
+		GtkScrolledWindow* scr = create_scrolled_window(GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(scr), TRUE, TRUE, 0);
 
-	text = gtk_text_view_new();
-	gtk_container_add(GTK_CONTAINER(scr), text);
-	gtk_widget_show(text);
+		tableWidget = gtk_table_new(0, 3, FALSE);
+		gtk_widget_show(tableWidget);
+		gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scr), tableWidget);
+	}
 
 	hbox = gtk_hbox_new(FALSE, 5);
 	gtk_widget_show(hbox);
@@ -84,9 +82,6 @@ static void CreateCheckDialog (void)
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editor_hide), NULL);
 	gtk_widget_set_usize(button, 60, -2);
-
-	checkDialog = dlg;
-	text_widget = text;
 }
 
 void ToolsCheckErrors (void)
@@ -109,6 +104,7 @@ void ToolsCheckErrors (void)
 
 	if (file_exists(fullpath.c_str())) {
 		char buf[1024];
+		int rows;
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
 		snprintf(buf, sizeof(buf) - 1, "%s %s", compiler_parameter, fullname);
@@ -129,12 +125,67 @@ void ToolsCheckErrors (void)
 
 			gtk_window_set_title(GTK_WINDOW(checkDialog), "Check output");
 
-			/* skip the header */
-			char *checkstart = strstr(output, "Starting map checks\n");
-			checkstart = strstr(checkstart, "\n");
+			StringTokeniser outputTokeniser(output, "\n");
 
-			GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
-			gtk_text_buffer_set_text(text_buffer, checkstart, strlen(checkstart));
+			do {
+				char entnumbuf[32] = "";
+				char brushnumbuf[32] = "";
+				const char *line = outputTokeniser.getToken();
+				if (string_empty(line))
+					break;
+
+				while (*line) {
+					if (!strncmp(line, "ent:", 4)) {
+						char *bufPos;
+
+						line += 4;
+
+						bufPos = entnumbuf;
+						while (*line >= '0' && *line <= '9')
+							*bufPos++ = *line++;
+						*bufPos = '\0';
+
+						// the next should be a brush
+						if (!strncmp(line, " brush:", 7)) {
+							line += 7;
+
+							bufPos = brushnumbuf;
+							while (*line >= '0' && *line <= '9')
+								*bufPos++ = *line++;
+							*bufPos = '\0';
+
+							rows++;
+							gtk_table_resize(GTK_TABLE(tableWidget), rows, 3);
+
+							{
+								GtkWidget *label = gtk_label_new(entnumbuf);
+								gtk_widget_show(label);
+								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 0, 1, rows - 1, rows);
+							}
+							{
+								GtkWidget *label = gtk_label_new(brushnumbuf);
+								gtk_widget_show(label);
+								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 1, 2, rows - 1, rows);
+							}
+							{
+								GtkWidget *label = gtk_label_new(line);
+								gtk_widget_show(label);
+								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 2, 3, rows - 1, rows);
+							}
+
+						} else
+							// no valid check output line
+							break;
+					}
+					line++;
+				}
+			} while (1);
 
 			/* trying to show later */
 			gtk_widget_show(checkDialog);
