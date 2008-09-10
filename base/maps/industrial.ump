@@ -28,6 +28,15 @@ tile +drop_firebird
 0    0    0    0    0
 }
 
+tile +drop_herakles
+{
+5 4
+0    0    0    0    z
+0    +g   +g   +g   0
+0    +g   +g   +g   0
+0    0    0    0    0
+}
+
 //---------------------------------
 //Interceptors
 
