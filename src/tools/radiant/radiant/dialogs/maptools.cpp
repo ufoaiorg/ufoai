@@ -141,41 +141,69 @@ void ToolsCheckErrors (void)
 						line += 4;
 
 						bufPos = entnumbuf;
-						while (*line >= '0' && *line <= '9')
+						while (*line == '-' || *line == '+' || (*line >= '0' && *line <= '9'))
 							*bufPos++ = *line++;
 						*bufPos = '\0';
 
 						// the next should be a brush
 						if (!strncmp(line, " brush:", 7)) {
+							const char *color;
+
+							globalOutputStream() << "line b: " << line << "\n";
 							line += 7;
+							globalOutputStream() << "line a: " << line << "\n";
 
 							bufPos = brushnumbuf;
-							while (*line >= '0' && *line <= '9')
+							while (*line == '-' || *line == '+' || (*line >= '0' && *line <= '9'))
 								*bufPos++ = *line++;
 							*bufPos = '\0';
+
+							// skip seperator
+							globalOutputStream() << "line b2: " << line << "\n";
+							line += 3;
+							globalOutputStream() << "line a2: " << line << "\n";
+							if (*line == '*') {
+								// automatically fixable - show green
+								color = "#000000";
+							} else {
+								// show red - manually
+								color = "#ff0000";
+							}
 
 							rows++;
 							gtk_table_resize(GTK_TABLE(tableWidget), rows, 3);
 
 							{
-								GtkWidget *label = gtk_label_new(entnumbuf);
+								char *markup;
+								GtkWidget *label = gtk_label_new(NULL);
 								gtk_widget_show(label);
+								markup = g_markup_printf_escaped("<span foreground=\"%s\">%s</span>", color, entnumbuf);
+								gtk_label_set_markup(GTK_LABEL(label), markup);
+								g_free(markup);
 								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+								gtk_misc_set_padding(GTK_MISC(label), 5, 0);
 
 								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 0, 1, rows - 1, rows);
 							}
 							{
-								GtkWidget *label = gtk_label_new(brushnumbuf);
+								char *markup;
+								GtkWidget *label = gtk_label_new(NULL);
 								gtk_widget_show(label);
+								markup = g_markup_printf_escaped("<span foreground=\"%s\">%s</span>", color, brushnumbuf);
+								gtk_label_set_markup(GTK_LABEL(label), markup);
+								g_free(markup);
 								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+								gtk_misc_set_padding(GTK_MISC(label), 5, 0);
 
 								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 1, 2, rows - 1, rows);
 							}
 							{
-								GtkWidget *label = gtk_label_new(line);
+								char *markup;
+								GtkWidget *label = gtk_label_new(NULL);
 								gtk_widget_show(label);
-								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-
+								markup = g_markup_printf_escaped("<span foreground=\"%s\">%s</span>", color, line);
+								gtk_label_set_markup(GTK_LABEL(label), markup);
+								g_free(markup);
 								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 2, 3, rows - 1, rows);
 							}
 
