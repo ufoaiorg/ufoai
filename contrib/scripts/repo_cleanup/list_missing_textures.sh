@@ -4,7 +4,7 @@ DIR="${1:-../../../base/maps}"
 #silent=no
 [[ $silent ]] && echo "using directory $DIR"
 
-TRUNKDIR=../../..
+TRUNKDIR=$(cd $(dirname $0)/../../..; pwd)
 
 while read MAP; do
     for TEXTURE in $(grep tex_ $MAP | cut -d" " -f 16 | sort -u); do
