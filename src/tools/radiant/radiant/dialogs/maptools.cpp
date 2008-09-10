@@ -50,6 +50,17 @@ static gint editor_hide (GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
+static void selectCheckItemCallback (GtkWidget *widget, gpointer data)
+{
+	int entnum = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "entnum"));
+	int brushnum = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), "brushnum"));
+	if (entnum < 0)
+		entnum = 0;
+	if (brushnum < 0)
+		brushnum = 0;
+	SelectBrush(entnum, brushnum);
+}
+
 static void CreateCheckDialog (void)
 {
 	GtkWidget *vbox, *hbox, *button;
@@ -68,7 +79,7 @@ static void CreateCheckDialog (void)
 		GtkScrolledWindow* scr = create_scrolled_window(GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(scr), TRUE, TRUE, 0);
 
-		tableWidget = gtk_table_new(0, 3, FALSE);
+		tableWidget = gtk_table_new(0, 4, FALSE);
 		gtk_widget_show(tableWidget);
 		gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scr), tableWidget);
 	}
@@ -149,9 +160,7 @@ void ToolsCheckErrors (void)
 						if (!strncmp(line, " brush:", 7)) {
 							const char *color;
 
-							globalOutputStream() << "line b: " << line << "\n";
 							line += 7;
-							globalOutputStream() << "line a: " << line << "\n";
 
 							bufPos = brushnumbuf;
 							while (*line == '-' || *line == '+' || (*line >= '0' && *line <= '9'))
@@ -159,9 +168,7 @@ void ToolsCheckErrors (void)
 							*bufPos = '\0';
 
 							// skip seperator
-							globalOutputStream() << "line b2: " << line << "\n";
 							line += 3;
-							globalOutputStream() << "line a2: " << line << "\n";
 							if (*line == '*') {
 								// automatically fixable - show green
 								color = "#000000";
@@ -171,8 +178,17 @@ void ToolsCheckErrors (void)
 							}
 
 							rows++;
-							gtk_table_resize(GTK_TABLE(tableWidget), rows, 3);
+							gtk_table_resize(GTK_TABLE(tableWidget), rows, 4);
 
+							{
+								GtkWidget *button = gtk_button_new();
+								gtk_widget_show(button);
+								gtk_button_set_label(GTK_BUTTON(button), "Select");
+								g_object_set_data(G_OBJECT(button), "entnum", GINT_TO_POINTER(atoi(entnumbuf)));
+								g_object_set_data(G_OBJECT(button), "brushnum", GINT_TO_POINTER(atoi(brushnumbuf)));
+								gtk_signal_connect(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(selectCheckItemCallback), NULL);
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), button, 0, 1, rows - 1, rows);
+							}
 							{
 								char *markup;
 								GtkWidget *label = gtk_label_new(NULL);
@@ -182,8 +198,7 @@ void ToolsCheckErrors (void)
 								g_free(markup);
 								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 								gtk_misc_set_padding(GTK_MISC(label), 5, 0);
-
-								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 0, 1, rows - 1, rows);
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 1, 2, rows - 1, rows);
 							}
 							{
 								char *markup;
@@ -194,17 +209,12 @@ void ToolsCheckErrors (void)
 								g_free(markup);
 								gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 								gtk_misc_set_padding(GTK_MISC(label), 5, 0);
-
-								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 1, 2, rows - 1, rows);
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 2, 3, rows - 1, rows);
 							}
 							{
-								char *markup;
-								GtkWidget *label = gtk_label_new(NULL);
+								GtkWidget *label = gtk_label_new(line);
 								gtk_widget_show(label);
-								markup = g_markup_printf_escaped("<span foreground=\"%s\">%s</span>", color, line);
-								gtk_label_set_markup(GTK_LABEL(label), markup);
-								g_free(markup);
-								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 2, 3, rows - 1, rows);
+								gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 3, 4, rows - 1, rows);
 							}
 
 						} else
