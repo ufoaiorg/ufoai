@@ -7,7 +7,7 @@ DIR="${1:-../../../base/maps}"
 TRUNKDIR=$(cd $(dirname $0)/../../..; pwd)
 
 while read MAP; do
-    for TEXTURE in $(grep tex_ $MAP | cut -d" " -f 16 | sort -u); do
+    for TEXTURE in $(grep "^( " $MAP | cut -d" " -f 16 | sort -u); do
         [[ $(ls "$TRUNKDIR"/base/textures/"$TEXTURE."* 2>/dev/null) ]] || {
     	    ((HASMISSINGTEXTS++))
     	    MISSINGTEXTURE[$HASMISSINGTEXTS]=$TEXTURE
