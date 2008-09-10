@@ -70,20 +70,20 @@ static void Check_Printf (const verbosityLevel_t msgVerbLevel, qboolean change, 
  * @param brushnum the brush that the report is about. send NUM_NONE, if the report only regards an entity
  * @param entnum the entity the brush is from.send NUM_NONE if the report is a summary, not regarding a specific entity or brush
  * @note for brushnum or entnum send NUM_SAME in multi-call messages to indicate that the message still regards the same brush or entity
- * @note the start of a report on a particulat item (eg brush) is specially prefixed. The function looks for changes
+ * @note the start of a report on a particular item (eg brush) is specially prefixed. The function looks for changes
  * in entum and brushnum so it knows when to insert these.
- * @sa Com_Printf, Verb_Printf
+ * @note if entnum is set to NUM_SAME, then msgVerbLevel and change are also carried over from the previous call.
+ * @sa Com_Printf, Verb_Printf, DisplayContentFlags
  */
-static void Check_Printf (const verbosityLevel_t msgVerbLevel, const qboolean change,
+static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 							int entnum, int brushnum, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
 	static int lastBrushnum = NUM_DIFF, lastEntnum = NUM_DIFF;
+	static int lastMsgVerbLevel = VERB_NORMAL, lastChange = qfalse;
 	static qboolean firstSuccessfulPrint = qtrue;
 	qboolean startOfLine = qfalse;
-
-	if (AbortPrint(msgVerbLevel))
-		return;
+	const qboolean containsNewline = strchr(format, '\n') != NULL;
 
 	/* some checking/fix functions are called when ufo2map is compiling
 	 * then the check/fix functions should be quiet */
@@ -91,20 +91,27 @@ static void Check_Printf (const verbosityLevel_t msgVerbLevel, const qboolean ch
 		return;
 
 	brushnum = (brushnum == NUM_SAME) ? lastBrushnum : brushnum;
-	entnum = (entnum == NUM_SAME) ? lastEntnum : entnum;
+	if (entnum == NUM_SAME) {
+		entnum = lastEntnum;
+		change = lastChange;
+		msgVerbLevel = lastMsgVerbLevel;
+	}
 
 	if (brushnum != lastBrushnum || entnum != lastEntnum)
 		startOfLine = qtrue;
 
 	lastBrushnum = brushnum;
 	lastEntnum = entnum;
+	lastChange = change;
+	lastMsgVerbLevel = msgVerbLevel;
+
+	if (AbortPrint(msgVerbLevel))
+		return;
 
 	/* output prefixed with "  " is only a warning, should not be
 	 * be displayed in fix mode. may be sent here in several function calls.
 	 * skip everything from start of line "  " to \n */
 	if (config.fixMap) {
-		const qboolean containsNewline = strchr(format, '\n') != NULL;
-
 		/* skip warning output sent in single call */
 		if (!skippingCheckLine && startOfLine && !change && containsNewline)
 			return;
@@ -141,22 +148,22 @@ static void Check_Printf (const verbosityLevel_t msgVerbLevel, const qboolean ch
 			va_end(argptr);
 		}
 
-		{
-			char out_buffer2[4096];
+		if (startOfLine) {
+			char *prefix;
+			prefix = change ? "* " : "  ";
+			prefix = (brushnum == -1 && entnum == -1) ? "//" : prefix;
 
-			if (startOfLine) {
-				char *prefix;
-				prefix = change ? "* " : "  ";
-				prefix = (brushnum == -1 && entnum == -1) ? "//" : prefix;
+			printf("%sent:%i brush:%i - %s", prefix, entnum, brushnum, out_buffer1);
 
-				Com_sprintf(out_buffer2, sizeof(out_buffer2), "%sent:%i brush:%i - %s", prefix, entnum, brushnum, out_buffer1);
-
-			} else {
-				Com_sprintf(out_buffer2, sizeof(out_buffer2), "%s", out_buffer1);
-			}
-
-			printf("%s", out_buffer2);
+		} else {
+			printf("%s", out_buffer1);
 		}
+
+	}
+
+	/* ensure next call gets brushnum and entnum printed */
+	if (containsNewline) {
+		lastEntnum = NUM_DIFF;
 	}
 }
 
