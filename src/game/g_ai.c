@@ -1697,7 +1697,12 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 	}
 
 	/* initialize the AI now */
-	AI_InitActor(ent, "alien", "test");
+	if (team == TEAM_CIVILIAN)
+		AI_InitActor(ent, "civilian", "default");
+	else if (team == TEAM_ALIEN)
+		AI_InitActor(ent, "alien", "default");
+	else
+		Com_Printf("G_SpawnAIPlayer: unknown team AI\n");
 
 	/* link the new actor entity */
 	gi.LinkEdict(ent);
