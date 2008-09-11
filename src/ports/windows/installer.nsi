@@ -215,8 +215,6 @@ SectionGroup /e "Mapping" SECGROUP02
     SetOutPath "$INSTDIR\radiant\gl"
     file "..\..\..\radiant\gl\*.glp"
     file "..\..\..\radiant\gl\*.cg"
-    SetOutPath "$INSTDIR\radiant\modules"
-    file "..\..\..\radiant\modules\*.dll"
     SetOutPath "$INSTDIR\radiant\plugins"
     file "..\..\..\radiant\plugins\*.dll"
     SetOutPath "$INSTDIR\radiant\plugins\bitmaps"
