@@ -686,7 +686,7 @@ menu popup_list
 	{
 		image	hud/close
 		pos		"722 284"
-		click	{ cmd "bindingstoggle;mn_pop;" }	// Toggle key-bindings on again and close the popup.
+		click	{ cmd "mn_pop;" }
 	}
 
 	text title
@@ -727,7 +727,8 @@ menu popup_list
 		pos		"560 454"
 		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
 		in		{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
-		click	{ cmd "bindingstoggle;mn_pop;" }	// Toggle key-bindings on again and close the popup.
+		click	{ cmd "mn_pop;" }
+		
 	}
 	string string_ok
 	{
@@ -736,14 +737,6 @@ menu popup_list
 		string	"_OK"
 		pos		"648 470"
 		align	cc
-	}
-	func init
-	{
-		cmd 	"bindingstoggle;"	// Toggle key-bindings off.
-	}
-	func leave
-	{
-		cmd		"bindingstoggle;mn_pop;"	// Toggle key-bindings on again and close the popup.
 	}
 }
 
