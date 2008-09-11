@@ -972,6 +972,31 @@ menu options_game
 		tooltip	"_Precache models (faster menus)"
 	}
 
+	// ==================
+	// ACTOR SPEED
+	// ==================
+	string actorsspeed_str
+	{
+		string	"_Actors speed:"
+		pos		"500 430"
+	}
+	pic actorsspeed_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"645 435"
+	}
+	bar actorsspeed_bar
+	{
+		pos		"654 440"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar g_actorspeed"
+		max		9
+		align	ul
+		mousefx	true
+		click	{ }
+	}
+
 	// ===================
 	// NAME
 	// ===================
