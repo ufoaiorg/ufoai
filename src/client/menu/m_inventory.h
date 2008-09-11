@@ -40,8 +40,8 @@ extern inventory_t *menuInventory;
 
 typedef struct dragInfo_s {
 	item_t item;	/**< The item that is currently dragged. */
-	invList_t *ic;
-	const invDef_t * from;		/**< The container the items is dragged out of (i.e. from). */
+	const invList_t *ic;	/**< The current invList pointer (only used for ignoring the dragged item for finding free space right now) */
+	const invDef_t * from;	/**< The container the items is dragged out of (i.e. from). */
 	int fromX;		/**< The X position in the container the item was/is located.
 					 * More exactly this is the position the user clicked on. (i.e. NOT necessarily invList_t->x) */
 	int fromY;		/**< The Y position in the container the item was/is located. */
