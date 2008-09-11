@@ -41,6 +41,20 @@ static void CL_ShowMessagesOnStack_f (void)
 	}
 }
 
+/**
+ * @brief Script command to delete all messages */
+static void CL_DeleteMessages_f (void)
+{
+	message_t *m = mn.messageStack;
+	message_t *mtmp;
+
+	while (m) {
+		mtmp = m->next;
+		Mem_Free(m);
+		m = mtmp;
+	}
+	mn.messageStack = NULL;
+}
 
 /**
  * @brief Returns formatted text of a message timestamp
@@ -320,4 +334,7 @@ void MN_MessageInit (void)
 {
 	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_clear_messagelist", CL_DeleteMessages_f, "Clears messagelist");
+#endif
 }
