@@ -12,5 +12,7 @@ void BumpFragment(in vec3 deluxemap, in vec3 normalmap){
 
 	float spec = max(-dot(eyedir, reflect(deluxemap, normalmap)), 0.0);
 
-	gl_FragColor = gl_FragColor * diffuse + pow(spec, 6.0) * 0.001;
+	float bump = diffuse + clamp(pow(spec, 2.0), 0.0, 2.0);
+
+	gl_FragColor.rgb = gl_FragColor.rgb * vec3(bump, bump, bump);
 }

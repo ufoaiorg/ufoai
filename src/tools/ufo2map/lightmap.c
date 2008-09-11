@@ -972,7 +972,7 @@ void BuildVertexNormals (void)
  */
 static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
-	vec3_t temp;
+	vec3_t temp, temp2;
 	float dist, neardist, fardist;
 	int nearEdge, farEdge;
 	int i, v;
@@ -1003,15 +1003,11 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 		}
 	}
 
-#if 0
 	/* interpolate between nearest and farthest verts */
-	VectorScale(curTile->normals[nearEdge], neardist / (neardist + fardist), temp);
-	VectorScale(curTile->normals[farEdge], fardist / (neardist + fardist), temp2);
+	VectorScale(curTile->normals[nearEdge].normal, neardist / (neardist + fardist), temp);
+	VectorScale(curTile->normals[farEdge].normal, fardist / (neardist + fardist), temp2);
 	VectorAdd(temp, temp2, normal);
 	VectorNormalize(normal);
-#endif
-
-	VectorCopy(curTile->normals[nearEdge].normal, normal);
 }
 
 
@@ -1288,7 +1284,7 @@ void FinalLightFace (unsigned int facenum)
 		/* also write the directional data */
 		VectorCopy((fl->directions + j * 3), dir);
 		for (k = 0; k < 3; k++)
-			*dest++ = (byte)(dir[k] * 255.0);
+			*dest++ = (byte)((dir[k] +1.0f) * 127.0f);
 	}
 
 	if (config.numbounce > 0)

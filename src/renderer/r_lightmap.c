@@ -129,7 +129,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 
 			dout[0] = 128;
 			dout[1] = 128;
-			dout[2] = 255;
+			dout[2] = 128;
 			dout[3] = 0;
 
 			dout += 4;
@@ -169,9 +169,9 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 		fb[2] = surf->samples[j++] * r_modulate->value;
 
 		/* read in directional samples for deluxe mapping as well */
-		d[0] = surf->samples[j++] = 128;
-		d[1] = surf->samples[j++] = 128;
-		d[2] = surf->samples[j++] = 255;
+		d[0] = surf->samples[j++];
+		d[1] = surf->samples[j++];
+		d[2] = surf->samples[j++];
 		d[3] = 0;
 	}
 

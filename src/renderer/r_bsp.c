@@ -167,6 +167,8 @@ void R_DrawBspNormals (void)
 	if (!r_shownormals->integer)
 		return;
 
+	R_EnableTexture(&texunit_diffuse, qfalse);
+
 	glColor3f(1.0, 0.0, 0.0);
 
 	k = 0;
@@ -201,6 +203,8 @@ void R_DrawBspNormals (void)
 	}
 
 	glDrawArrays(GL_LINES, 0, k / 3);
+
+	R_EnableTexture(&texunit_diffuse, qtrue);
 
 	R_Color(NULL);
 }
