@@ -58,7 +58,11 @@ static void selectCheckItemCallback (GtkWidget *widget, gpointer data)
 		entnum = 0;
 	if (brushnum < 0)
 		brushnum = 0;
-	SelectBrush(entnum, brushnum);
+
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
+		SelectBrush(entnum, brushnum, true);
+	else
+		SelectBrush(entnum, brushnum, false);
 }
 
 static void CreateCheckDialog (void)
@@ -126,14 +130,6 @@ void ToolsCheckErrors (void)
 			if (!checkDialog)
 				CreateCheckDialog();
 
-#if 0
-			/** @todo later when fixing is implemented */
-			/* reload the map */
-			Map_RegionOff();
-			Map_Free();
-			Map_LoadFile(fullname);
-#endif
-
 			gtk_window_set_title(GTK_WINDOW(checkDialog), "Check output");
 
 			StringTokeniser outputTokeniser(output, "\n");
@@ -181,9 +177,8 @@ void ToolsCheckErrors (void)
 							gtk_table_resize(GTK_TABLE(tableWidget), rows, 4);
 
 							{
-								GtkWidget *button = gtk_button_new();
+								GtkWidget *button = gtk_toggle_button_new_with_label("X");
 								gtk_widget_show(button);
-								gtk_button_set_label(GTK_BUTTON(button), "Select");
 								g_object_set_data(G_OBJECT(button), "entnum", GINT_TO_POINTER(atoi(entnumbuf)));
 								g_object_set_data(G_OBJECT(button), "brushnum", GINT_TO_POINTER(atoi(brushnumbuf)));
 								gtk_signal_connect(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(selectCheckItemCallback), NULL);
