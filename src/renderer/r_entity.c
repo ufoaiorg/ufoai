@@ -261,20 +261,20 @@ static void R_DrawArrow (const entity_t * e)
 	VectorCopy(e->origin, lower);
 	lower[2] += 2;
 
-	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_LINE_SMOOTH);
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(color);
 
-	qglBegin(GL_TRIANGLE_FAN);
-	qglVertex3fv(e->oldorigin);
-	qglVertex3fv(upper);
-	qglVertex3fv(mid);
-	qglVertex3fv(lower);
-	qglEnd();
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3fv(e->oldorigin);
+	glVertex3fv(upper);
+	glVertex3fv(mid);
+	glVertex3fv(lower);
+	glEnd();
 
-	qglDisable(GL_LINE_SMOOTH);
-	qglEnable(GL_TEXTURE_2D);
+	glDisable(GL_LINE_SMOOTH);
+	glEnable(GL_TEXTURE_2D);
 
 	R_Color(NULL);
 }
