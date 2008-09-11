@@ -44,10 +44,49 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 static GtkWidget *checkDialog = NULL;
 static GtkWidget *tableWidget; // slave, text widget from the gtk editor
 
-static gint editor_hide (GtkWidget *widget, gpointer data)
+static gint editorHideCallback (GtkWidget *widget, gpointer data)
 {
 	gtk_widget_hide(checkDialog);
-	return TRUE;
+	return 1;
+}
+
+static gint fixCallback (GtkWidget *widget, gpointer data)
+{
+	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
+	const char* fullname = Map_Name(g_map);
+	StringOutputStream fullpath(256);
+
+	if (!ConfirmModified("Check Map"))
+		return 0;
+
+	/* empty map? */
+	if (!g_brushCount.get()) {
+		gtk_MessageBox(0, "Nothing to fix in this map\n", "Map fixing", eMB_OK, eMB_ICONERROR);
+		return 0;
+	}
+
+	fullpath << CompilerPath_get() << mapcompiler;
+
+	if (file_exists(fullpath.c_str())) {
+		char buf[1024];
+		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
+
+		snprintf(buf, sizeof(buf) - 1, "%s %s", compiler_parameter, fullname);
+		buf[sizeof(buf) - 1] = '\0';
+
+		char* output = Q_Exec(mapcompiler, buf, CompilerPath_get(), false);
+		if (output) {
+			// reload after fix
+			Map_Reload();
+			// refill popup
+			ToolsCheckErrors();
+			globalOutputStream() << "-------------------\n" << output << "-------------------\n";
+			free(output);
+		} else {
+			return 0;
+		}
+	}
+	return 1;
 }
 
 static void selectCheckItemCallback (GtkWidget *widget, gpointer data)
@@ -71,7 +110,7 @@ static void CreateCheckDialog (void)
 
 	checkDialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-	g_signal_connect(G_OBJECT(checkDialog), "delete_event", G_CALLBACK(editor_hide), NULL);
+	g_signal_connect(G_OBJECT(checkDialog), "delete_event", G_CALLBACK(editorHideCallback), NULL);
 	gtk_window_set_default_size(GTK_WINDOW(checkDialog), 600, 300);
 
 	vbox = gtk_vbox_new(FALSE, 5);
@@ -95,13 +134,18 @@ static void CreateCheckDialog (void)
 	button = gtk_button_new_with_label("Close");
 	gtk_widget_show(button);
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editor_hide), NULL);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editorHideCallback), NULL);
+	gtk_widget_set_usize(button, 60, -2);
+
+	button = gtk_button_new_with_label("Fix");
+	gtk_widget_show(button);
+	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(fixCallback), NULL);
 	gtk_widget_set_usize(button, 60, -2);
 }
 
 void ToolsCheckErrors (void)
 {
-/*	const char* path = getMapsPath(); */
 	const char* mapcompiler = g_pGameDescription->getRequiredKeyValue("mapcompiler");
 	const char* fullname = Map_Name(g_map);
 	StringOutputStream fullpath(256);
@@ -119,7 +163,7 @@ void ToolsCheckErrors (void)
 
 	if (file_exists(fullpath.c_str())) {
 		char buf[1024];
-		int rows;
+		int rows = 0;
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
 		snprintf(buf, sizeof(buf) - 1, "%s %s", compiler_parameter, fullname);
@@ -220,12 +264,20 @@ void ToolsCheckErrors (void)
 				}
 			} while (1);
 
+			if (rows == 0) {
+				GtkWidget *label = gtk_label_new("No warnings/errors found in this map");
+				gtk_widget_show(label);
+				// FIXME: The table is not freed before - either use a treeview or hack
+				// around the removal of all attached children
+				gtk_table_resize(GTK_TABLE(tableWidget), 1, 4);
+				gtk_table_attach_defaults(GTK_TABLE(tableWidget), label, 0, 4, 0, 1);
+			}
 			/* trying to show later */
 			gtk_widget_show(checkDialog);
 
 #ifdef WIN32
 			process_gui();
-			gtk_widget_queue_draw(text_widget);
+			gtk_widget_queue_draw(tableWidget);
 #endif
 
 			free(output);
