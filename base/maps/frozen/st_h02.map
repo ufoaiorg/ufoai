@@ -994,7 +994,7 @@
 {
 "classname" "light"
 "_color" "1 0.95 0.75"
-"light" "100"
+"light" "120"
 "origin" "384 384 52"
 "spawnflags" "1"
 }
@@ -1002,7 +1002,7 @@
 {
 "classname" "light"
 "origin" "512 384 52"
-"light" "100"
+"light" "120"
 "_color" "1 0.95 0.75"
 "spawnflags" "1"
 }
@@ -1010,7 +1010,7 @@
 {
 "classname" "light"
 "origin" "384 304 52"
-"light" "100"
+"light" "120"
 "_color" "1 0.95 0.75"
 "spawnflags" "1"
 }
@@ -1018,7 +1018,7 @@
 {
 "classname" "light"
 "_color" "1 0.95 0.75"
-"light" "100"
+"light" "120"
 "origin" "512 304 52"
 "spawnflags" "1"
 }
@@ -1069,4 +1069,20 @@
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 "angles" "0 300 0"
+}
+// entity 15
+{
+"classname" "light"
+"origin" "120 416 52"
+"light" "120"
+"_color" "1 0.95 0.75"
+"spawnflags" "1"
+}
+// entity 16
+{
+"classname" "light"
+"_color" "1 0.95 0.75"
+"light" "120"
+"origin" "120 224 52"
+"spawnflags" "1"
 }

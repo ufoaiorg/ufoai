@@ -499,7 +499,7 @@
 // entity 2
 {
 "classname" "light"
-"light" "100"
+"light" "130"
 "_color" "1 1 1"
 "origin" "88 296 56"
 "spawnflags" "1"
@@ -541,7 +541,7 @@
 "classname" "light"
 "origin" "192 312 56"
 "_color" "1 1 1"
-"light" "100"
+"light" "130"
 "spawnflags" "1"
 }
 // entity 8
