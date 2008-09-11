@@ -36,6 +36,7 @@ BRUSH MODELS
 /** in memory representation */
 typedef struct mBspVertex_s {
 	vec3_t position;
+	vec3_t normal;
 } mBspVertex_t;
 
 typedef struct mBspHeader_s {
@@ -74,7 +75,7 @@ typedef struct mBspSurface_s {
 	short stmaxs[2];			/**< st max coordinates */
 
 	vec3_t center;
-	vec3_t color;
+	vec4_t color;
 	vec3_t normal;
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
@@ -84,7 +85,8 @@ typedef struct mBspSurface_s {
 
 	mBspTexInfo_t *texinfo;
 
-	int lightmaptexturenum;
+	int lightmap_texnum;
+	int deluxemap_texnum;
 	byte style;
 	byte *samples;				/**< lightmap samples - only used at loading time */
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
@@ -176,12 +178,14 @@ typedef struct mBspModel_s {
 	GLfloat *verts;
 	GLfloat *texcoords;
 	GLfloat *lmtexcoords;
+	GLfloat *tangents;
 	GLfloat *normals;
 
 	/* vertex buffer objects */
 	GLuint vertex_buffer;
 	GLuint texcoord_buffer;
 	GLuint lmtexcoord_buffer;
+	GLuint tangent_buffer;
 	GLuint normal_buffer;
 
 	byte lightquant;

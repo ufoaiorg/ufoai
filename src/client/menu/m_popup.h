@@ -25,6 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_POPUP_H
 #define CLIENT_MENU_M_POPUP_H
 
+#define POPUPLIST_MENU_NAME "popup_list"
+#define POPUPLIST_NODE_NAME "popup_list"
+
 extern char popupText[MAX_SMALLMENUTEXTLEN];
 extern char popupAction1[MAX_SMALLMENUTEXTLEN];
 extern char popupAction2[MAX_SMALLMENUTEXTLEN];

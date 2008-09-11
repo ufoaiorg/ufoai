@@ -1,12 +1,13 @@
 #!/bin/bash
 
 DIR="${1:-../../../base/maps}"
-echo "using directory $DIR"
+#silent=no
+[[ $silent ]] && echo "using directory $DIR"
 
-TRUNKDIR=../../..
+TRUNKDIR=$(cd $(dirname $0)/../../..; pwd)
 
 while read MAP; do
-    for TEXTURE in $(grep tex_ $MAP | cut -d" " -f 16 | sort -u); do
+    for TEXTURE in $(grep "^( " $MAP | cut -d" " -f 16 | sort -u); do
         [[ $(ls "$TRUNKDIR"/base/textures/"$TEXTURE."* 2>/dev/null) ]] || {
     	    ((HASMISSINGTEXTS++))
     	    MISSINGTEXTURE[$HASMISSINGTEXTS]=$TEXTURE

@@ -898,6 +898,17 @@ void Map_LoadFile (const char *filename) {
 	g_currentMap = &g_map;
 }
 
+void Map_Reload (void)
+{
+	if (!Map_Name(g_map))
+		return;
+
+	/* reload the map */
+	Map_RegionOff();
+	Map_Free();
+	Map_LoadFile(Map_Name(g_map));
+}
+
 class Excluder {
 public:
 	virtual bool excluded(scene::Node& node) const = 0;
@@ -1525,6 +1536,11 @@ void Scene_parentSelected (void)
 	}
 }
 
+/**
+ * @sa Map_Reload
+ * @sa Map_New
+ * @sa Map_Load
+ */
 void NewMap (void)
 {
 	if (ConfirmModified("New Map")) {
@@ -1710,7 +1726,7 @@ static inline bool Node_hasChildren (scene::Node& node)
  * bmodels)
  * @param[in] brushnum The brush number to select
  */
-void SelectBrush (int entitynum, int brushnum)
+void SelectBrush (int entitynum, int brushnum, int select)
 {
 	scene::Path path;
 	Scene_FindEntityBrush(entitynum, brushnum, path);
@@ -1719,7 +1735,7 @@ void SelectBrush (int entitynum, int brushnum)
 		ASSERT_MESSAGE(instance != 0, "SelectBrush: path not found in scenegraph");
 		Selectable* selectable = Instance_getSelectable(*instance);
 		ASSERT_MESSAGE(selectable != 0, "SelectBrush: path not selectable");
-		selectable->setSelected(true);
+		selectable->setSelected(select);
 		g_pParentWnd->GetXYWnd()->PositionView(instance->worldAABB().origin);
 	}
 }

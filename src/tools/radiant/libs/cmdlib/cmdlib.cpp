@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <unistd.h>
 
-char *Q_Exec (const char *cmd, const char *cmdline, const char *, bool)
+char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool)
 {
 	FILE *pipe;
 	char *cbuff;
@@ -46,7 +46,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *, bool)
 	char temp[128];
 	int read = 0;
 
-	snprintf(fullcmd, sizeof(fullcmd) - 1, "%s %s", cmd, cmdline);
+	snprintf(fullcmd, sizeof(fullcmd) - 1, "%s%s %s", (execdir ? execdir : ""), cmd, cmdline);
 	fullcmd[sizeof(fullcmd) - 1] = '\0';
 
 	pipe = popen(fullcmd, "r");
@@ -56,7 +56,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *, bool)
 	cbuff = (char *)malloc(OUTPUTBUFSIZE + 1);
 	if (!cbuff) {
 		pclose(pipe);
-		return strdup("Could not alocate memory\n");
+		return strdup("Could not allocate memory\n");
 	}
 
 	cbuff[0] = '\0';

@@ -41,6 +41,7 @@ static character_t *selChr;
 static int selToHit;
 static pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 static pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
+static qboolean popupReload = qfalse;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
@@ -552,9 +553,9 @@ character_t *CL_GetActorChr (const le_t * le)
 
 	/* Search in the aircraft team (we skip unused entries) for this actor. */
 	for (i = 0, p = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[p]) {
+		if (aircraft->acTeam[i]) {
 			if (actorIdx == p) {
-				return &aircraft->acTeam[p]->chr;
+				return &aircraft->acTeam[i]->chr;
 			}
 			p++;
 		}
@@ -1166,12 +1167,13 @@ void CL_PopupFiremodeReservation_f (void)
 		}
 	} while (hand != 0);
 
-	if (popupNum > 1) {
+	if (popupNum > 1 || popupReload) {
 		/* We have more entries that the "0 TUs" one. */
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
 		popupListNode->textLineSelected = selectedEntry;
+		popupReload = qfalse;
 	}
 }
 
@@ -2043,6 +2045,21 @@ static void CL_RefreshWeaponButtons (int time)
 	} else {
 		SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 	}
+
+	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
+	{
+		const menu_t* menu = MN_GetActiveMenu();
+		if (menu)
+			Com_Printf("CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
+
+		if (menu && strstr(menu->name, POPUPLIST_MENU_NAME)) {
+			Com_Printf("CL_ActorToggleReaction_f: reloadfresh popup\n");
+			popupReload = qtrue;
+			MN_PopMenu(qfalse);
+			CL_PopupFiremodeReservation_f();
+		}
+
+	}
 }
 
 /**
@@ -2664,7 +2681,7 @@ qboolean CL_ActorSelectList (int num)
 	le_t *le;
 
 	/* check if actor exists */
-	if (num >= cl.numTeamList)
+	if (num >= cl.numTeamList || num < 0)
 		return qfalse;
 
 	/* select actor */
@@ -3309,6 +3326,9 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
+	/* speed is set in the EV_ACTOR_START_MOVE event */
+	assert(le->speed);
+
 #ifdef DEBUG
 	/* get length/steps */
 	if (le->pathLength || le->pathPos)
@@ -3318,7 +3338,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->pathLength = NET_ReadByte(msg);
 	assert(le->pathLength <= MAX_LE_PATHLENGTH);
 	for (i = 0; i < le->pathLength; i++) {
-		le->path[i] = NET_ReadByte(msg);
+		le->path[i] = NET_ReadByte(msg) & (DIRECTIONS - 1);
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
 
@@ -3328,12 +3348,6 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
-
-	/** @todo speed should somehow depend on strength of character */
-	if (le->state & STATE_CROUCHED)
-		le->speed = 50;
-	else
-		le->speed = 100;
 
 	CL_BlockEvents();
 }

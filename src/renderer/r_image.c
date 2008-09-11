@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <jpeglib.h>
 #include <png.h>
 
-static char glerrortex[MAX_GL_ERRORTEX];
-static char *glerrortexend;
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
 int registration_sequence;
@@ -96,6 +94,9 @@ void R_ImageList_f (void)
 			break;
 		case it_static:
 			Com_Printf("ST");
+			break;
+		case it_normalmap:
+			Com_Printf("NM");
 			break;
 		case it_material:
 			Com_Printf("MA");
@@ -873,6 +874,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
  * @param[out] pic Image data.
  * @param[out] width Width of the loaded image.
  * @param[out] height Height of the loaded image.
+ * @sa R_FindImage
  */
 void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 {
@@ -1109,6 +1111,11 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
 		R_FilterTexture(scaled, scaled_width, scaled_height, image->type);
+	if (image->type == it_world) {
+		image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
+		if (image->normalmap == r_noTexture)
+			image->normalmap = NULL;
+	}
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
@@ -1590,7 +1597,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	char *ename;
-	char *etex;
 	image_t *image;
 	int i;
 	size_t len;
@@ -1616,16 +1622,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			image->registration_sequence = registration_sequence;
 			return image;
 		}
-
-	/* look for it in the error list */
-	etex = glerrortex;
-	while ((len = strlen(etex)) != 0) {
-		if (!Q_strncmp(lname, etex, MAX_QPATH))
-			/* it's in the error list */
-			return r_noTexture;
-
-		etex += len + 1;
-	}
 
 	/* load the pic from disk */
 	image = NULL;
@@ -1663,19 +1659,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	/* add to error list */
 	image = r_noTexture;
 
-	*ename = 0;
-#ifdef DEBUG
+#ifdef PARANOID
 	Com_Printf("R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
-#else
-	Com_Printf("R_FindImage: Can't find %s (%s)\n", lname, pname);
 #endif
-
-	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GL_ERRORTEX) {
-		Q_strncpyz(glerrortexend, lname, MAX_QPATH);
-		glerrortexend += strlen(lname) + 1;
-	} else {
-		Com_Error(ERR_DROP, "MAX_GL_ERRORTEX");
-	}
 
   end:
 	if (pic)
@@ -1717,8 +1703,6 @@ void R_InitImages (void)
 
 	registration_sequence = 1;
 	r_numImages = 0;
-	glerrortex[0] = 0;
-	glerrortexend = glerrortex;
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 	if (!r_dayandnightTexture)
 		Sys_Error("Could not create daynight image for the geoscape");
@@ -1769,7 +1753,7 @@ static const glTextureMode_t gl_texture_modes[] = {
 
 void R_TextureMode (const char *string)
 {
-	int i;
+	int i, texturemode;
 	image_t *image;
 
 	for (i = 0; i < NUM_R_MODES; i++) {
@@ -1782,6 +1766,8 @@ void R_TextureMode (const char *string)
 		return;
 	}
 
+	texturemode = i;
+
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
 			continue;
@@ -1790,8 +1776,8 @@ void R_TextureMode (const char *string)
 		if (r_config.anisotropic)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[i].minimize);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[i].maximize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[texturemode].minimize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[texturemode].maximize);
 		R_CheckError();
 	}
 }

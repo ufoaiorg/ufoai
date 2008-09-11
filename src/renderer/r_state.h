@@ -43,11 +43,13 @@ typedef struct gltexunit_s {
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 } gltexunit_t;
 
-#define MAX_GL_TEXUNITS		2
+#define MAX_GL_TEXUNITS		4
 
 /* these are defined for convenience */
 #define texunit_diffuse		r_state.texunits[0]
 #define texunit_lightmap	r_state.texunits[1]
+#define texunit_normalmap	r_state.texunits[2]
+#define texunit_deluxemap	r_state.texunits[3]
 
 typedef struct {
 	qboolean fullscreen;
@@ -57,6 +59,7 @@ typedef struct {
 	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
 	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
 	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
+	GLfloat tangent_array[MAX_GL_ARRAY_LENGTH * 3];
 
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];
@@ -81,26 +84,36 @@ typedef struct {
 	qboolean blend_enabled;
 	qboolean alpha_test_enabled;
 	qboolean lighting_enabled;
+	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
 
+void R_StatePrint(void);
+
 void R_SetDefaultState(void);
 void R_SetupGL2D(void);
 void R_SetupGL3D(void);
-void R_EnableMultitexture(gltexunit_t *texunit, qboolean enable);
-qboolean R_SelectTexture(gltexunit_t *texunit);
-void R_BindTexture(int texnum);
-void R_BindLightmapTexture(GLuint texnum);
-void R_BindBuffer(GLenum target, GLenum type, GLuint id);
+
 void R_TexEnv(GLenum value);
 void R_BlendFunc(GLenum src, GLenum dest);
+
+qboolean R_SelectTexture(gltexunit_t *texunit);
+
+void R_BindTexture(int texnum);
+void R_BindLightmapTexture(GLuint texnum);
+void R_BindDeluxemapTexture(GLuint texnum);
+void R_BindNormalmapTexture(GLuint texnum);
+void R_BindBuffer(GLenum target, GLenum type, GLuint id);
+void R_BindArray(GLenum target, GLenum type, void *array);
+void R_BindDefaultArray(GLenum target);
+
+void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
+void R_EnableBumpmap(qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
-void R_BindArray(GLenum target, GLenum type, void *array);
-void R_BindDefaultArray(GLenum target);
-void R_StatePrint(void);
+
 #endif

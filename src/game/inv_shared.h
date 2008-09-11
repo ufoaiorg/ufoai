@@ -728,7 +728,7 @@ char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
-int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y);
+int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
 void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean Com_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
@@ -741,7 +741,7 @@ qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * containe
 int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
 void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
-void Com_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py) __attribute__((nonnull(1)));
+void Com_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 qboolean Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));

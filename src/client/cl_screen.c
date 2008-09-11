@@ -321,7 +321,7 @@ static void SCR_DrawCursor (void)
 		if (dragInfo.toNode && !dragInfo.to->scroll) {
 			const int oldRotated = dragInfo.item.rotated;
 
-			checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY);
+			checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY, dragInfo.ic);
 
 			if (checkedTo == INV_FITS_ONLY_ROTATED)
 				dragInfo.item.rotated = qtrue;

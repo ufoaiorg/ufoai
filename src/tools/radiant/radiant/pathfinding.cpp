@@ -42,18 +42,18 @@ static int ParsePathfindingLogFile (const char *filename)
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (file) {
 		AutoPtr<Tokeniser> tokeniser(NewScriptTokeniser(file->getInputStream()));
-	
+
 		for (;;) {
 			const char* token = tokeniser->getToken();
 
 			if (token == 0) {
 				break;
 			}
-			
+
 			/** @todo parse the data */
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -64,9 +64,11 @@ static int ParsePathfindingLogFile (const char *filename)
 void ShowPathfinding (void)
 {
 	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, "Pathfinding log file", NULL, NULL);
+	if (!filename)
+		return;
 	const int retVal = ParsePathfindingLogFile(filename);
 	if (retVal)
 		return;
-		
+
 	/** @todo render the parsed data */
 }

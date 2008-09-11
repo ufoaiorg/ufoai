@@ -222,6 +222,7 @@ extern cvar_t *m_panic_stop;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_nodamage;
 extern cvar_t *g_notu;
+extern cvar_t *g_actorspeed;
 
 extern cvar_t *flood_msgs;
 extern cvar_t *flood_persecond;

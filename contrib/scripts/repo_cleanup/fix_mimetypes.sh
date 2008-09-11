@@ -1,7 +1,8 @@
 #!/bin/bash
 
 DIR="${1:-.}"
-echo "using directory $DIR"
+#silent=no
+[[ $silent ]] && echo "using directory $DIR"
 
 # define REPORTNEGATIVES to report all files that had no modifications performed
 #REPORTNEGATIVES=yes
@@ -10,8 +11,7 @@ echo "using directory $DIR"
 #REPORTPOSITIVES=yes
 
 set -f
-
-echo "setting mime types"
+[[ $silent ]] && echo "setting mime types"
 
 # we use order created by sort_mimetypes.sh
 

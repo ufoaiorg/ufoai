@@ -511,6 +511,29 @@ static void PR_QueueNext (base_t *base)
 }
 
 /**
+ * @brief clears the production queue on a base
+ */
+static void PR_EmptyQueue (base_t *base)
+{
+	production_queue_t *queue;
+
+	if (!base)
+		return;
+
+	queue = &gd.productions[base->idx];
+
+	/* #ifdef PARANOID ? */
+	if (!queue)
+		return;
+	/* #endif */
+
+	while (queue->numItems)
+		PR_QueueDelete(base, queue, 0);
+	selectedQueueItem = qfalse;
+	PR_ClearSelected();
+}
+
+/**
  * @brief moves the first production to the bottom of the list
  */
 static void PR_ProductionRollBottom_f (void)
@@ -1276,10 +1299,13 @@ void PR_UpdateProductionCap (base_t *base)
 {
 	assert(base);
 
-	if (base->capacities[CAP_WORKSPACE].max >= E_CountHired(base, EMPL_WORKER))
+	if (base->capacities[CAP_WORKSPACE].max <= 0) {
+		PR_EmptyQueue(base);
+	} else if (base->capacities[CAP_WORKSPACE].max >= E_CountHired(base, EMPL_WORKER)) {
 		base->capacities[CAP_WORKSPACE].cur = E_CountHired(base, EMPL_WORKER);
-	else
+	} else {
 		base->capacities[CAP_WORKSPACE].cur = base->capacities[CAP_WORKSPACE].max;
+	}
 }
 
 /**

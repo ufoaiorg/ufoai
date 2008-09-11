@@ -44,7 +44,8 @@ typedef const char* MRU_key_t;
 MRU_key_t MRU_keys[MRU_MAX] = { "File0", "File1", "File2", "File3" };
 }
 
-inline const char* MRU_GetText(std::size_t index) {
+static inline const char* MRU_GetText (std::size_t index)
+{
 	return MRU_filenames[index].c_str();
 }
 
@@ -78,18 +79,21 @@ inline EscapedMnemonic& operator<<(EscapedMnemonic& ostream, const T& t) {
 }
 
 
-void MRU_updateWidget(std::size_t index, const char *filename) {
+void MRU_updateWidget (std::size_t index, const char *filename)
+{
 	EscapedMnemonic mnemonic(64);
 	mnemonic << Unsigned(index + 1) << "- " << ConvertLocaleToUTF8(filename);
 	gtk_label_set_text_with_mnemonic(GTK_LABEL(gtk_bin_get_child(GTK_BIN(MRU_items[index]))), mnemonic.c_str());
 }
 
-void MRU_SetText(std::size_t index, const char *filename) {
+void MRU_SetText (std::size_t index, const char *filename)
+{
 	MRU_filenames[index] = filename;
 	MRU_updateWidget(index, filename);
 }
 
-void MRU_AddFile (const char *str) {
+void MRU_AddFile (const char *str)
+{
 	std::size_t i;
 	const char* text;
 
@@ -120,12 +124,14 @@ void MRU_AddFile (const char *str) {
 	gtk_widget_show(GTK_WIDGET(MRU_items[MRU_used-1]));
 }
 
-void MRU_Init() {
+void MRU_Init (void)
+{
 	if (MRU_used > MRU_MAX)
 		MRU_used = MRU_MAX;
 }
 
-void MRU_AddWidget(GtkMenuItem *widget, std::size_t pos) {
+void MRU_AddWidget (GtkMenuItem *widget, std::size_t pos)
+{
 	if (pos < MRU_MAX) {
 		MRU_items[pos] = widget;
 		if (pos < MRU_used) {
@@ -136,15 +142,16 @@ void MRU_AddWidget(GtkMenuItem *widget, std::size_t pos) {
 	}
 }
 
-void MRU_Activate (std::size_t index) {
+void MRU_Activate (std::size_t index)
+{
 	char text[1024];
 	strcpy(text, MRU_GetText(index));
 
 	if (file_readable(text)) { //\todo Test 'map load succeeds' instead of 'file is readable'.
-		MRU_AddFile (text);
+		MRU_AddFile(text);
 		Map_RegionOff();
 		Map_Free();
-		Map_LoadFile (text);
+		Map_LoadFile(text);
 	} else {
 		MRU_used--;
 
@@ -176,12 +183,13 @@ public:
 
 typedef MemberCaller<LoadMRU, &LoadMRU::load> LoadMRUCaller;
 
-LoadMRU g_load_mru1(1);
-LoadMRU g_load_mru2(2);
-LoadMRU g_load_mru3(3);
-LoadMRU g_load_mru4(4);
+static LoadMRU g_load_mru1(1);
+static LoadMRU g_load_mru2(2);
+static LoadMRU g_load_mru3(3);
+static LoadMRU g_load_mru4(4);
 
-void MRU_constructMenu(GtkMenu* menu) {
+void MRU_constructMenu (GtkMenu* menu)
+{
 	{
 		GtkMenuItem* item = create_menu_item_with_mnemonic(menu, "_1", LoadMRUCaller(g_load_mru1));
 		gtk_widget_set_sensitive(GTK_WIDGET(item), FALSE);
@@ -207,7 +215,8 @@ void MRU_constructMenu(GtkMenu* menu) {
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void MRU_Construct() {
+void MRU_Construct (void)
+{
 	GlobalPreferenceSystem().registerPreference("Count", SizeImportStringCaller(MRU_used), SizeExportStringCaller(MRU_used));
 
 	for (std::size_t i = 0; i != MRU_MAX; ++i) {
@@ -216,5 +225,6 @@ void MRU_Construct() {
 
 	MRU_Init();
 }
-void MRU_Destroy() {
+void MRU_Destroy (void)
+{
 }

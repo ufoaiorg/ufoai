@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_popup.h"
 
-#define POPUPLIST_MENU_NAME "popup_list"
-#define POPUPLIST_NODE_NAME "popup_list"
 #define POPUPBUTTON_MENU_NAME "popup_button"
 #define POPUPBUTTON_NODE_NAME "popup_button_"
 #define POPUPBUTTON_NODE_STRING_NAME "popup_button_string_"

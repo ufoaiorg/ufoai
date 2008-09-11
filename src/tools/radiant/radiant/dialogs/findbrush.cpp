@@ -164,7 +164,7 @@ void DoFind (void) {
 	if (modal_dialog_show(window, dialog) == eIDOK) {
 		const char *entstr = gtk_entry_get_text(entity);
 		const char *brushstr = gtk_entry_get_text(brush);
-		SelectBrush (atoi(entstr), atoi(brushstr));
+		SelectBrush (atoi(entstr), atoi(brushstr), true);
 	}
 
 	gtk_widget_destroy(GTK_WIDGET(window));

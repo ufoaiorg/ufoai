@@ -158,6 +158,58 @@ WORLD MODEL
 */
 
 /**
+ * @brief Draw normals for bsp surfaces
+ */
+void R_DrawBspNormals (void)
+{
+	int i, j, k, tile;
+
+	if (!r_shownormals->integer)
+		return;
+
+	R_EnableTexture(&texunit_diffuse, qfalse);
+
+	glColor3f(1.0, 0.0, 0.0);
+
+	k = 0;
+	for (tile = 0; tile < r_numMapTiles; tile++) {
+		const mBspSurface_t *surf = r_mapTiles[tile]->bsp.surfaces;
+		for (i = 0; i < r_mapTiles[i]->bsp.numsurfaces; i++, surf++) {
+			if (surf->frame != r_locals.frame)
+				continue; /* not visible */
+			if (surf->texinfo->flags & SURF_WARP)
+				continue;  /* don't care */
+
+			/* avoid overflows, draw in batches */
+			if (k > MAX_GL_ARRAY_LENGTH - 512) {
+				glDrawArrays(GL_LINES, 0, k / 3);
+				k = 0;
+			}
+
+			for (j = 0; j < surf->numedges; j++) {
+				vec3_t end;
+				const GLfloat *vertex = &r_mapTiles[i]->bsp.verts[(surf->index + j) * 3];
+				const GLfloat *normal = &r_mapTiles[i]->bsp.normals[(surf->index + j) * 3];
+
+				VectorMA(vertex, 12.0, normal, end);
+
+				memcpy(&r_state.vertex_array_3d[k], vertex, sizeof(vec3_t));
+				memcpy(&r_state.vertex_array_3d[k + 3], end, sizeof(vec3_t));
+				k += sizeof(vec3_t) / sizeof(vec_t) * 2;
+				if (k > MAX_GL_ARRAY_LENGTH)
+					Com_Error(ERR_DROP, "R_DrawBspNormals: Overflow in array buffer");
+			}
+		}
+	}
+
+	glDrawArrays(GL_LINES, 0, k / 3);
+
+	R_EnableTexture(&texunit_diffuse, qtrue);
+
+	R_Color(NULL);
+}
+
+/**
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
  * @param[in] tile The maptile (map assembly)

@@ -96,6 +96,7 @@ extern bool region_active;
 extern float g_MaxWorldCoord;
 extern float g_MinWorldCoord;
 
+void Map_Reload(void);
 void Map_LoadFile(const char* filename);
 bool Map_SaveFile(const char* filename);
 
@@ -141,7 +142,7 @@ void SaveRegion();
 void Map_Traverse(scene::Node& root, const scene::Traversable::Walker& walker);
 
 
-void SelectBrush (int entitynum, int brushnum);
+void SelectBrush (int entitynum, int brushnum, int select);
 
 extern CopiedString g_strLastMap;
 extern bool g_bLoadLastMap;

@@ -480,7 +480,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		float geoscape_nighttexcoords[4 * 2];
 
 		R_BindTexture(gl->texnum);
-		R_EnableMultitexture(&texunit_lightmap, qtrue);
+		R_EnableTexture(&texunit_lightmap, qtrue);
 
 		geoscape_nighttexcoords[0] = geoscape_texcoords[0] + p;
 		geoscape_nighttexcoords[1] = geoscape_texcoords[1];
@@ -505,7 +505,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 		glDrawArrays(GL_QUADS, 0, 4);
 
-		R_EnableMultitexture(&texunit_lightmap, qfalse);
+		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
 	/* draw XVI image */

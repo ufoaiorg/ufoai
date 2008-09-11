@@ -50,6 +50,8 @@ typedef enum {
 	/** the following are freed with every mapchange */
 	it_world,
 	it_lightmap,
+	it_deluxemap,
+	it_normalmap,
 	it_material,
 	it_skin
 } imagetype_t;
@@ -65,16 +67,18 @@ typedef struct image_s {
 	int index;							/**< index in gltexture array */
 	qboolean has_alpha;
 	material_t material;
+	struct image_s *normalmap;			/**< normalmap texture  */
 } image_t;
 
 extern int registration_sequence;
 
-#define MAX_GL_ERRORTEX		4096
 #define MAX_GL_TEXTURES		1024
 #define MAX_GL_LIGHTMAPS 	256
+#define MAX_GL_DELUXEMAPS	256
 
 #define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES
-#define TEXNUM_IMAGES		(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
+#define TEXNUM_DELUXEMAPS	(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
+#define TEXNUM_IMAGES		(TEXNUM_DELUXEMAPS + MAX_GL_DELUXEMAPS)
 
 extern image_t r_images[MAX_GL_TEXTURES];
 extern int r_numImages;

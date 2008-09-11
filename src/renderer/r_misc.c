@@ -93,7 +93,7 @@ void R_ScreenShot_f (void)
 	if (Cmd_Argc() > 1)
 		ext = Cmd_Argv(1);
 	else
-		ext = r_screenshot->string;
+		ext = r_screenshot_format->string;
 
 	if (!Q_strcasecmp (ext, "png"))
 		type = SSHOTTYPE_PNG;

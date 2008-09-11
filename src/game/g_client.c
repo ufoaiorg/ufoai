@@ -287,6 +287,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
+
 			gi.WriteByte(check->team);
 			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
 			gi.WriteByte(check->chr.gender);
@@ -996,7 +997,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
-			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty);
+			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
 	}
 	if (tx == NONE) {
 /*		assert(ty == NONE); */
@@ -1230,7 +1231,7 @@ static void G_InventoryToFloor (edict_t * ent)
 			 * unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
-			Com_FindSpace(&floor->i, &ic->item, &gi.csi->ids[gi.csi->idFloor], &x, &y);
+			Com_FindSpace(&floor->i, &ic->item, &gi.csi->ids[gi.csi->idFloor], &x, &y, ic);
 			if (x == NONE) {
 				assert(y == NONE);
 				/* Run out of space on the floor or the item is armour
@@ -1401,6 +1402,28 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	return qfalse;
 }
 
+#define ACTOR_SPEED_NORMAL 100
+#define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
+
+/**
+ * @brief Sends the EV_ACTOR_START_MOVE event to the client
+ * the ent belongs, too
+ */
+static inline void G_ClientStartMove (edict_t *ent, int player_mask)
+{
+	/* start move */
+	gi.AddEvent(player_mask, EV_ACTOR_START_MOVE);
+	gi.WriteShort(ent->number);
+	/* slower if crouched */
+	if (ent->state & STATE_CROUCHED)
+		ent->speed = ACTOR_SPEED_CROUCHED;
+	else
+		ent->speed = ACTOR_SPEED_NORMAL;
+	ent->speed *= g_actorspeed->value;
+	/* client and server are using the same speed value */
+	gi.WriteShort(ent->speed);
+}
+
 /**
  * @brief Generates the client events that are send over the netchannel to move
  * an actor
@@ -1459,14 +1482,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
-		/* start move */
-		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
-		gi.WriteShort(ent->number);
+		G_ClientStartMove(ent, G_VisToPM(ent->visflags));
+
 		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
-		/* slower if crouched */
-		ent->speed = (ent->state & STATE_CROUCHED) ? 50 : 100;
 
 		/* assemble dv-encoded move data */
 		VectorCopy(to, pos);
@@ -1598,8 +1618,16 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					gi.WriteByte(dv);
 					gi.WriteShort(contentFlags);
 
+					oldState = ent->visflags;
 					/* check if player appears/perishes, seen from other teams */
-					G_CheckVis(ent, qtrue);
+					status = G_CheckVis(ent, qtrue);
+					if (status & VIS_APPEAR) {
+						const int deltaVisMask = (oldState ^ ent->visflags) & ent->visflags;
+						const int playerMask = G_VisToPM(deltaVisMask);
+						/* the player appear in mid move, so we have to inform the players
+						* that are now able to see the actor */
+						G_ClientStartMove(ent, playerMask);
+					}
 
 					/* check for anything appearing, seen by "the moving one" */
 					status = G_CheckVisTeam(ent->team, NULL, qfalse);
@@ -1717,9 +1745,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	if (ent->dir == dir)
 		return;
 
-	/* start move */
-	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
-	gi.WriteShort(ent->number);
+	G_ClientStartMove(ent, G_VisToPM(ent->visflags));
 
 	/* do the turn */
 	G_DoTurn(ent, dir);

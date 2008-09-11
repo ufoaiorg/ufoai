@@ -220,23 +220,24 @@ const int TUs_used[PATHFINDING_DIRECTIONS];
 
 /** Lump ID constants (directory in the bsp header) */
 /* ufo2map/bspfile.c, common/cmodel.c, common/qfiles.h, renderer/r_model_brush.c */
-#define	LUMP_ENTITIES		0
-#define	LUMP_PLANES			1
-#define	LUMP_VERTEXES		2
-#define	LUMP_ROUTING		3
-#define	LUMP_NODES			4
-#define	LUMP_TEXINFO		5
-#define	LUMP_FACES			6
-#define	LUMP_LIGHTING_NIGHT	7
-#define	LUMP_LIGHTING_DAY	8
-#define	LUMP_LEAFS			9
-#define	LUMP_LEAFBRUSHES	10
-#define	LUMP_EDGES			11
-#define	LUMP_SURFEDGES		12
-#define	LUMP_MODELS			13
-#define	LUMP_BRUSHES		14
-#define	LUMP_BRUSHSIDES		15
-#define	HEADER_LUMPS		16
+#define LUMP_ENTITIES		0
+#define LUMP_PLANES			1
+#define LUMP_VERTEXES		2
+#define LUMP_ROUTING		3
+#define LUMP_NODES			4
+#define LUMP_TEXINFO		5
+#define LUMP_FACES			6
+#define LUMP_LIGHTING_NIGHT	7
+#define LUMP_LIGHTING_DAY	8
+#define LUMP_LEAFS			9
+#define LUMP_LEAFBRUSHES	10
+#define LUMP_EDGES			11
+#define LUMP_SURFEDGES		12
+#define LUMP_MODELS			13
+#define LUMP_BRUSHES		14
+#define LUMP_BRUSHSIDES		15
+#define LUMP_NORMALS		16
+#define HEADER_LUMPS		17
 
 /* ufo2map/common/polylib.c */
 #define	SIDE_FRONT		0

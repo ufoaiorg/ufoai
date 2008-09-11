@@ -215,10 +215,6 @@ public:
 	*/
 	/*@{*/
 	/*!
-	prompt which game to load on startup
-	*/
-	bool m_bGamePrompt;
-	/*!
 	log console to radiant.log
 	m_bForceLogConsole is an obscure forced latching situation
 	*/
@@ -226,26 +222,16 @@ public:
 	/*@}*/
 
 	CGameDialog() :
-			m_bGamePrompt(false),
 			m_bForceLogConsole(false) {
 	}
 	virtual ~CGameDialog();
 
-	/*!
-	intialize the game dialog, called at CPrefsDlg::Init
-	will scan for games, load prefs, and do game selection dialog if needed
-	*/
 	void Init();
 
 	/*!
 	reset the global settings by removing the file
 	*/
 	void Reset();
-
-	/*!
-	run the dialog UI for the list of games
-	*/
-	void DoGameDialog();
 
 	/*!
 	Dialog API
@@ -262,23 +248,7 @@ public:
 	*/
 	void CreateGlobalFrame(PreferencesPage& page);
 
-	/*!
-	global preferences subsystem
-	XML-based this time, hopefully this will generalize to other prefs
-	LoadPrefs has hardcoded defaults
-	NOTE: it may not be strictly 'CGameDialog' to put the global prefs here
-	  could have named the class differently I guess
-	*/
-	/*@{*/
-	void LoadPrefs(); ///< load from file into variables
-	void SavePrefs(); ///< save pref variables to file
-	/*@}*/
-
 private:
-	/*!
-	inits g_Preferences.m_global_rc_path
-	*/
-	void InitGlobalPrefPath();
 
 	/*!
 	uses m_nComboItem to find the right mGames
@@ -300,19 +270,7 @@ public:
 	GtkWidget *m_notebook;
 
 	virtual ~PrefsDlg() {
-		g_string_free(m_inipath, true);
 	}
-
-	/*!
-	path for global settings
-	*/
-	GString *m_global_rc_path;
-
-	/*!
-	holds per-game settings
-	\todo FIXME at some point this should become XML property bag code too
-	*/
-	GString *m_inipath;
 
 	// initialize the above paths
 	void Init();

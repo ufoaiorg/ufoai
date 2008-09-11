@@ -148,10 +148,11 @@ static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t i
  * @param[in] itemShape The shape info of an item to fit into the container.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
  * @sa Com_CheckToInventory
  * @return qfalse if the item does not fit, qtrue if it fits.
  */
-static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y)
+static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
 {
 	int j;
 	invList_t *ic;
@@ -173,6 +174,9 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
 		for (ic = i->c[container->id]; ic; ic = ic->next) {
+			if (ignoredItem && ignoredItem == ic)
+				continue;
+
 			if (ic->item.rotated)
 				Com_MergeShapes(mask, Com_ShapeRotate(ic->item.t->shape), ic->x, ic->y);
 			else
@@ -194,13 +198,14 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
  * @param[in] container The index of the container in the inventory to theck the item in.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
  * @sa Com_CheckToInventory_mask
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const invDef_t * container, const int x, const int y)
+int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem)
 {
 	int fits;
 	assert(i);
@@ -245,9 +250,9 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 		} else {
 			fits = INV_DOES_NOT_FIT; /* equals 0 */
 
-			if (Com_CheckToInventory_shape(i, container, od->shape, x, y))
+			if (Com_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 				fits |= INV_FITS;
-			if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y))
+			if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y, ignoredItem))
 				fits |= INV_FITS_ONLY_ROTATED;
 
 			if (fits != INV_DOES_NOT_FIT)
@@ -264,9 +269,9 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 
 	/* Check 'grid' containers. */
 	fits = INV_DOES_NOT_FIT; /* equals 0 */
-	if (Com_CheckToInventory_shape(i, container, od->shape, x, y))
+	if (Com_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
-	if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y)
+	if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y, ignoredItem)
 		&& container->id != CSI->idEquip
 		&& container->id != CSI->idFloor)
 		fits |= INV_FITS_ONLY_ROTATED;
@@ -586,7 +591,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
-		Com_FindSpace(i, &item, container, &x, &y);
+		Com_FindSpace(i, &item, container, &x, &y, NULL);
 	}
 
 	/**
@@ -787,7 +792,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
-					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty);
+					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
@@ -817,11 +822,11 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, 0, 0);
+		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
-			Com_FindSpace(i, &fItem->item, to, &tx, &ty);
-		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, tx, ty);
+			Com_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
+		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -910,7 +915,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 			/** We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * @todo change the other code to browse trough these things. */
-			Com_FindSpace(i, &fItem->item, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
+			Com_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
 												 * This is then used in Com_AddToInventory below.*/
 			if (tx == NONE || ty == NONE) {
 				Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - item will be added non-visible\n");
@@ -1038,9 +1043,10 @@ void INVSH_DestroyInventory (inventory_t* const i)
  * @param[in] container The container to search in
  * @param[out] px The x position in the container
  * @param[out] py The y position in the container
+ * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
  * @sa Com_CheckToInventory
  */
-void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t * container, int* const px, int* const py)
+void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t * container, int* const px, int* const py, const invList_t *ignoredItem)
 {
 	int x, y;
 	int checkedTo = 0;
@@ -1057,7 +1063,7 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y);
+			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
 			if (checkedTo) {
 				cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
@@ -1088,13 +1094,13 @@ qboolean Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDe
 {
 	int x, y;
 
-	Com_FindSpace(inv, &item, container, &x, &y);
+	Com_FindSpace(inv, &item, container, &x, &y, NULL);
 
 	if (x == NONE) {
 		assert(y == NONE);
 		return qfalse;
 	} else {
-		const int checkedTo = Com_CheckToInventory(inv, item.t, container, x, y);
+		const int checkedTo = Com_CheckToInventory(inv, item.t, container, x, y, NULL);
 		if (!checkedTo)
 			return qfalse;
 		else if (checkedTo == INV_FITS_ONLY_ROTATED)

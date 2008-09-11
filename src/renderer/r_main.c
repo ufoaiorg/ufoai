@@ -54,13 +54,12 @@ cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_anisotropic;
 cvar_t *r_texture_lod;			/* lod_bias */
-cvar_t *r_screenshot;
+cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
-cvar_t *r_light;
 cvar_t *r_materials;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
@@ -78,10 +77,12 @@ cvar_t *r_showbox;
 cvar_t *r_threads;
 cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
-cvar_t *r_lights;
+cvar_t *r_lighting;
 cvar_t *r_programs;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
+cvar_t *r_bumpmap;
+cvar_t *r_shownormals;
 
 /**
  * @brief Prints some OpenGL strings
@@ -308,6 +309,8 @@ void R_RenderFrame (void)
 		}
 	}
 
+	R_DrawBspNormals();
+
 	R_DrawEntities();
 
 	R_CheckError();
@@ -349,12 +352,13 @@ void R_EndFrame (void)
 }
 
 static const cmdList_t r_commands[] = {
-	{"imagelist", R_ImageList_f, NULL},
-	{"fontcachelist", R_FontListCache_f, NULL},
-	{"screenshot", R_ScreenShot_f, "Take a screenshot"},
-	{"modellist", R_ModModellist_f, NULL},
-	{"r_strings", R_Strings_f, NULL},
-	{"r_state", R_StatePrint, NULL},
+	{"r_listimages", R_ImageList_f, "Show all loaded images on game console"},
+	{"r_listfontcache", R_FontListCache_f, "Show information about font cache"},
+	{"r_screenshot", R_ScreenShot_f, "Take a screenshot"},
+	{"r_listmodels", R_ModModellist_f, "Show all loaded models on game console"},
+	{"r_strings", R_Strings_f, "Print openGL vendor and other strings"},
+	{"r_state", R_StatePrint, "Print the gl state to game console"},
+	{"r_restartprograms", R_RestartPrograms_f, "Reloads the shaders"},
 
 	{NULL, NULL, NULL}
 };
@@ -388,12 +392,11 @@ static void R_RegisterSystemVars (void)
 	r_nocull = Cvar_Get("r_nocull", "0", 0, "Don't perform culling for brushes and entities");
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
-	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
+	r_screenshot_format = Cvar_Get("r_screenshot_format", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
 	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
-	r_light = Cvar_Get("r_light", "1", CVAR_ARCHIVE, "Activate harware lighting");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
@@ -414,9 +417,11 @@ static void R_RegisterSystemVars (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls swap interval synchronization (V-Sync). Values between 0 and 2");
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
-	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE, "Activates or deactivates hardware lighting");
+	r_lighting = Cvar_Get("r_lighting", "1", CVAR_ARCHIVE, "Activates or deactivates hardware lighting");
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE, "Use GLSL shaders");
+	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
+	r_bumpmap = Cvar_Get("r_bumpmap", "0", CVAR_ARCHIVE, "Activate bump mapping");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -587,6 +592,12 @@ static qboolean R_InitExtensions (void)
 		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
 		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
 		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
+		qglGetAttribLocation = SDL_GL_GetProcAddress("glGetAttribLocation");
+
+		/* vertex attribute arrays */
+		qglEnableVertexAttribArray = SDL_GL_GetProcAddress("glEnableVertexAttribArray");
+		qglDisableVertexAttribArray = SDL_GL_GetProcAddress("glDisableVertexAttribArray");
+		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
 	}
 
 	/* reset gl error state */

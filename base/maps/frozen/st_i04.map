@@ -1578,7 +1578,7 @@
 {
 "classname" "light"
 "_color" "1 1 0.7"
-"light" "140"
+"light" "180"
 "origin" "152 152 104"
 "spawnflags" "1"
 }
@@ -1586,7 +1586,7 @@
 {
 "classname" "light"
 "origin" "296 152 104"
-"light" "140"
+"light" "180"
 "_color" "1 1 0.7"
 "spawnflags" "1"
 }
@@ -1594,7 +1594,7 @@
 {
 "classname" "light"
 "origin" "152 344 104"
-"light" "140"
+"light" "200"
 "_color" "1 1 0.7"
 "spawnflags" "1"
 }
@@ -1602,7 +1602,7 @@
 {
 "classname" "light"
 "_color" "1 1 0.7"
-"light" "140"
+"light" "200"
 "origin" "296 344 104"
 "spawnflags" "1"
 }

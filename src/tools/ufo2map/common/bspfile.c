@@ -242,6 +242,7 @@ void LoadBSPFile (const char *filename)
 	curTile->numvertexes = CopyLump(LUMP_VERTEXES, curTile->vertexes, sizeof(dBspVertex_t));
 	curTile->numplanes = CopyLump(LUMP_PLANES, curTile->planes, sizeof(dBspPlane_t));
 	curTile->numleafs = CopyLump(LUMP_LEAFS, curTile->leafs, sizeof(dBspLeaf_t));
+	curTile->numnormals = CopyLump(LUMP_NORMALS, curTile->normals, sizeof(dBspNormal_t));
 	curTile->numnodes = CopyLump(LUMP_NODES, curTile->nodes, sizeof(dBspNode_t));
 	curTile->numtexinfo = CopyLump(LUMP_TEXINFO, curTile->texinfo, sizeof(dBspTexinfo_t));
 	curTile->numfaces = CopyLump(LUMP_FACES, curTile->faces, sizeof(dBspFace_t));
@@ -312,6 +313,7 @@ long WriteBSPFile (const char *filename)
 	AddLump(&bspfile, &outheader, LUMP_PLANES, curTile->planes, curTile->numplanes * sizeof(dBspPlane_t));
 	AddLump(&bspfile, &outheader, LUMP_LEAFS, curTile->leafs, curTile->numleafs * sizeof(dBspLeaf_t));
 	AddLump(&bspfile, &outheader, LUMP_VERTEXES, curTile->vertexes, curTile->numvertexes * sizeof(dBspVertex_t));
+	AddLump(&bspfile, &outheader, LUMP_NORMALS, curTile->normals, curTile->numnormals * sizeof(dBspNormal_t));
 	AddLump(&bspfile, &outheader, LUMP_NODES, curTile->nodes, curTile->numnodes * sizeof(dBspNode_t));
 	AddLump(&bspfile, &outheader, LUMP_TEXINFO, curTile->texinfo, curTile->numtexinfo * sizeof(dBspTexinfo_t));
 	AddLump(&bspfile, &outheader, LUMP_FACES, curTile->faces, curTile->numfaces * sizeof(dBspFace_t));

@@ -203,10 +203,10 @@ void GlobalPreferences_Init() {
 	RegisterGlobalPreferences(g_global_preferences);
 }
 
-void CGameDialog::LoadPrefs() {
+static void LoadPrefs(void) {
 	// load global .pref file
 	StringOutputStream strGlobalPref(256);
-	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
+	strGlobalPref << SettingsPath_get() << "global.xml";
 
 	globalOutputStream() << "loading global preferences from " << makeQuoted(strGlobalPref.c_str()) << "\n";
 
@@ -215,9 +215,9 @@ void CGameDialog::LoadPrefs() {
 	}
 }
 
-void CGameDialog::SavePrefs() {
+static void SavePrefs(void) {
 	StringOutputStream strGlobalPref(256);
-	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
+	strGlobalPref << SettingsPath_get() << "global.xml";
 
 	globalOutputStream() << "saving global preferences to " << strGlobalPref.c_str() << "\n";
 
@@ -226,31 +226,8 @@ void CGameDialog::SavePrefs() {
 	}
 }
 
-void CGameDialog::DoGameDialog() {
-	// show the UI
-	DoModal();
-
-	// we save the prefs file
-	SavePrefs();
-}
-
-void CGameDialog::CreateGlobalFrame(PreferencesPage& page) {
-	page.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
-	page.appendCheckBox("Startup", "Show Global Preferences", m_bGamePrompt);
-}
-
 GtkWindow* CGameDialog::BuildDialog() {
-	GtkFrame* frame = create_dialog_frame("Game settings", GTK_SHADOW_ETCHED_IN);
-
-	GtkVBox* vbox2 = create_dialog_vbox(0, 4);
-	gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
-
-	{
-		PreferencesPage preferencesPage(*this, GTK_WIDGET(vbox2));
-		CreateGlobalFrame(preferencesPage);
-	}
-
-	return create_simple_modal_dialog_window("Global Preferences", m_modal, GTK_WIDGET(frame));
+	return NULL;
 }
 
 static void ScanForGameDefinition() {
@@ -270,20 +247,13 @@ static void ScanForGameDefinition() {
 	}
 }
 
-void CGameDialog::InitGlobalPrefPath() {
-	g_Preferences.m_global_rc_path = g_string_new(SettingsPath_get());
-}
-
 void CGameDialog::Reset() {
-	if (!g_Preferences.m_global_rc_path)
-		InitGlobalPrefPath();
 	StringOutputStream strGlobalPref(256);
-	strGlobalPref << g_Preferences.m_global_rc_path->str << "global.xml";
+	strGlobalPref << SettingsPath_get() << "global.xml";
 	file_remove(strGlobalPref.c_str());
 }
 
 void CGameDialog::Init() {
-	InitGlobalPrefPath();
 	LoadPrefs();
 	ScanForGameDefinition();
 
@@ -304,6 +274,9 @@ CGameDialog g_GamesDialog;
 // =============================================================================
 // Widget callbacks for PrefsDlg
 
+/**
+ * @sa Preferences_Save
+ */
 static void OnButtonClean (GtkWidget *widget, gpointer data) {
 	// make sure this is what the user wants
 	if (gtk_MessageBox(GTK_WIDGET(g_Preferences.GetWidget()), "This will close Radiant and clean the corresponding registry entries.\n"
@@ -333,12 +306,6 @@ look in ~/.ufoai/radiant
 */
 
 #define PREFS_LOCAL_FILENAME "settings.ini"
-
-void PrefsDlg::Init() {
-	// then the ini file
-	m_inipath = g_string_new (m_global_rc_path->str);
-	g_string_append (m_inipath, PREFS_LOCAL_FILENAME);
-}
 
 void notebook_set_page(GtkWidget* notebook, GtkWidget* page) {
 	int pagenum = gtk_notebook_page_num(GTK_NOTEBOOK(notebook), page);
@@ -574,7 +541,7 @@ GtkWindow* PrefsDlg::BuildDialog() {
 							{
 								GtkWidget* game = PreferencePages_addPage(m_notebook, "Game");
 								PreferencesPage preferencesPage(*this, getVBox(game));
-								g_GamesDialog.CreateGlobalFrame(preferencesPage);
+								preferencesPage.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
 
 								PreferenceTree_appendPage(store, &group, "Game", game);
 							}
@@ -674,32 +641,45 @@ typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
 StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
 
 void Preferences_Load() {
-	g_GamesDialog.LoadPrefs();
+	StringOutputStream filename(256);
+	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
 
-	globalOutputStream() << "loading ini from " << g_Preferences.m_inipath->str << "\n";
+	LoadPrefs();
 
-	if (!Preferences_Load(g_preferences, g_Preferences.m_inipath->str)) {
-		globalOutputStream() << "failed to load ini from " << g_Preferences.m_inipath->str << "\n";
+	globalOutputStream() << "loading ini from " << filename.c_str() << "\n";
+
+	if (!Preferences_Load(g_preferences, filename.c_str())) {
+		globalOutputStream() << "failed to load ini from " << filename.c_str() << "\n";
 	}
 }
 
+/**
+ * @sa OnButtonClean
+ */
 void Preferences_Save() {
+	// we might want to skip the ini settings due to an error
 	if (g_preferences_globals.disable_ini)
 		return;
 
-	g_GamesDialog.SavePrefs();
+	SavePrefs();
 
-	globalOutputStream() << "saving ini to " << g_Preferences.m_inipath->str << "\n";
+	StringOutputStream filename(256);
+	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
+	globalOutputStream() << "saving ini to " << filename.c_str() << "\n";
 
-	if (!Preferences_Save_Safe(g_preferences, g_Preferences.m_inipath->str)) {
-		globalOutputStream() << "failed to save ini to " << g_Preferences.m_inipath->str << "\n";
+	if (!Preferences_Save_Safe(g_preferences, filename.c_str())) {
+		globalOutputStream() << "failed to save ini to " << filename.c_str() << "\n";
 	}
 }
 
 void Preferences_Reset() {
-	file_remove(g_Preferences.m_inipath->str);
+	StringOutputStream filename(256);
+	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
+	file_remove(filename.c_str());
 }
 
+void PrefsDlg::Init (void) {
+}
 
 void PrefsDlg::PostModal (EMessageBoxReturn code) {
 	if (code == eIDOK) {

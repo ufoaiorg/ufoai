@@ -406,6 +406,13 @@ typedef struct {
 } dBspVertex_t;
 
 typedef struct {
+	vec3_t normal;
+} dBspNormal_t;
+
+/**
+ * @note 0-2 are axial planes
+ */
+typedef struct {
 	vec3_t normal;	/**< normal vector */
 	float dist;		/**< distance from origin */
 	int type;		/**< PLANE_X - PLANE_ANYZ */
@@ -509,6 +516,9 @@ typedef struct {
 
 	int				numplanes;
 	dBspPlane_t		planes[MAX_MAP_PLANES];
+
+	int				numnormals;
+	dBspNormal_t	normals[MAX_MAP_VERTS];
 
 	int				numvertexes;
 	dBspVertex_t	vertexes[MAX_MAP_VERTS];
