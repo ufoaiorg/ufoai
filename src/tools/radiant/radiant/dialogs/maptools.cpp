@@ -160,6 +160,9 @@ void ToolsCheckErrors (void)
 	}
 
 	fullpath << CompilerPath_get() << mapcompiler;
+#ifdef WIN32
+    fullpath << ".exe";
+#endif
 
 	if (file_exists(fullpath.c_str())) {
 		char buf[1024];
