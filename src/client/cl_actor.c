@@ -2048,15 +2048,14 @@ static void CL_RefreshWeaponButtons (int time)
 	{
 		const menu_t* menu = MN_GetActiveMenu();
 		if (menu)
-			Com_Printf("CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
+			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
 
 		if (menu && strstr(menu->name, POPUPLIST_MENU_NAME)) {
-			Com_Printf("CL_ActorToggleReaction_f: reloadfresh popup\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: reloadfresh popup\n");
 			popupReload = qtrue;
 			MN_PopMenu(qfalse);
 			CL_PopupFiremodeReservation_f();
 		}
-
 	}
 }
 
