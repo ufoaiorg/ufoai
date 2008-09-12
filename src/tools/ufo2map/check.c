@@ -65,24 +65,23 @@ typedef enum {
 static void Check_Printf (const verbosityLevel_t msgVerbLevel, qboolean change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
 
 /**
- * @brief decides wether to proceed with output based on ufo2map's mode: check/fix/compile
+ * @brief decides wether to proceed with output based on verbosity and ufo2map's mode: check/fix/compile
  * @param change true if there will an automatic change on -fix
  * @param brushnum the brush that the report is about. send NUM_NONE, if the report only regards an entity
  * @param entnum the entity the brush is from.send NUM_NONE if the report is a summary, not regarding a specific entity or brush
- * @note for brushnum or entnum send NUM_SAME in multi-call messages to indicate that the message still regards the same brush or entity
- * @note the start of a report on a particular item (eg brush) is specially prefixed. The function looks for changes
- * in entum and brushnum so it knows when to insert these.
- * @note if entnum is set to NUM_SAME, then msgVerbLevel and change are also carried over from the previous call.
+ * @note for brushnum and entnum send NUM_SAME in multi-call messages to indicate that the message still regards the same brush or entity
+ * @note the start of a report on a particular item (eg brush) is specially prefixed. The function notes newlines in the previous
+ * call, and prefixes this message with a string depending on wether the message indicates a change and the entity and brush number.
+ * @note if entnum is set to NUM_SAME, then msgVerbLevel is carried over from the previous call.
  * @sa Com_Printf, Verb_Printf, DisplayContentFlags
  */
 static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 							int entnum, int brushnum, const char *format, ...)
 {
 	static int skippingCheckLine = 0;
-	static int lastBrushnum = NUM_DIFF, lastEntnum = NUM_DIFF;
-	static int lastMsgVerbLevel = VERB_NORMAL, lastChange = qfalse;
+	static int lastMsgVerbLevel = VERB_NORMAL;
 	static qboolean firstSuccessfulPrint = qtrue;
-	qboolean startOfLine = qfalse;
+	static qboolean startOfLine = qtrue;
 	const qboolean containsNewline = strchr(format, '\n') != NULL;
 
 	/* some checking/fix functions are called when ufo2map is compiling
@@ -90,19 +89,9 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 	if (!(config.performMapCheck || config.fixMap))
 		return;
 
-	brushnum = (brushnum == NUM_SAME) ? lastBrushnum : brushnum;
-	if (entnum == NUM_SAME) {
-		entnum = lastEntnum;
-		change = lastChange;
+	if (entnum == NUM_SAME)
 		msgVerbLevel = lastMsgVerbLevel;
-	}
 
-	if (brushnum != lastBrushnum || entnum != lastEntnum)
-		startOfLine = qtrue;
-
-	lastBrushnum = brushnum;
-	lastEntnum = entnum;
-	lastChange = change;
 	lastMsgVerbLevel = msgVerbLevel;
 
 	if (AbortPrint(msgVerbLevel))
@@ -151,7 +140,7 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 		if (startOfLine) {
 			char *prefix;
 			prefix = change ? "* " : "  ";
-			prefix = (brushnum == -1 && entnum == -1) ? "//" : prefix;
+			prefix = (brushnum == NUM_NONE && entnum == NUM_NONE) ? "//" : prefix;
 
 			printf("%sent:%i brush:%i - %s", prefix, entnum, brushnum, out_buffer1);
 
@@ -161,10 +150,8 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 
 	}
 
-	/* ensure next call gets brushnum and entnum printed */
-	if (containsNewline) {
-		lastEntnum = NUM_DIFF;
-	}
+	/* ensure next call gets brushnum and entnum printed if this is the end of the previous*/
+	startOfLine = containsNewline ? qtrue : qfalse;
 }
 
 /**
@@ -1321,16 +1308,16 @@ void CheckMixedFaceContents (void)
 				const int zeroNotJ = side0->contentFlags & ~side->contentFlags;
 				Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, "mixed face contents (");
 				if (jNotZero) {
-					Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, "face %i has and face 0 has not", j);
+					Check_Printf(VERB_CHECK, qfalse, NUM_SAME, NUM_SAME, "face %i has and face 0 has not", j);
 					DisplayContentFlags(jNotZero);
 					if (zeroNotJ)
-						Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, ", ");
+						Check_Printf(VERB_CHECK, qfalse, NUM_SAME, NUM_SAME, ", ");
 				}
 				if (zeroNotJ) {
-					Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, "face 0 has and face %i has not", j);
+					Check_Printf(VERB_CHECK, qfalse, NUM_SAME, NUM_SAME, "face 0 has and face %i has not", j);
 					DisplayContentFlags(zeroNotJ);
 				}
-				Check_Printf(VERB_CHECK, qfalse, brush->entitynum, brush->brushnum, ")\n");
+				Check_Printf(VERB_CHECK, qfalse, NUM_SAME, NUM_SAME, ")\n");
 			}
 		}
 
