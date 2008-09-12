@@ -10,6 +10,7 @@ uniform sampler2D SAMPLER1;
 uniform sampler2D SAMPLER2;
 uniform sampler2D SAMPLER3;
 
+const vec3 norm = vec3(-0.5, -0.5, -0.5);
 
 /*
 main
@@ -29,7 +30,7 @@ void main(void){
 
 	if(BUMPMAP > 0){
 		vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
-		vec3 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st).rgb;
+		vec3 normalmap = normalize(texture2D(SAMPLER3, gl_TexCoord[0].st).rgb + norm);
 
 		BumpFragment(deluxemap, normalmap);
 	}

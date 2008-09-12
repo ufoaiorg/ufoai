@@ -91,7 +91,6 @@ static void R_ProgramParameter1i (const char *name, GLint value)
 	qglUniform1i(v->location, value);
 }
 
-#if 0
 static void R_ProgramParameter1f (const char *name, GLfloat value)
 {
 	r_progvar_t *v;
@@ -102,6 +101,7 @@ static void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
+#if 0
 static void R_ProgramParameter3fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;
@@ -382,6 +382,8 @@ static void R_InitDefaultProgram (void)
 
 	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
+
+	R_ProgramParameter1f("SPECULAR", r_bumpmap->value);
 }
 
 static void R_UseDefaultProgram (void)
@@ -397,6 +399,11 @@ static void R_ThinkDefaultProgram (void)
 	if (r_state.bumpmap_enabled) {
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
+		/* update bumpiness */
+		if (r_bumpmap->modified) {
+			R_ProgramParameter1f("SPECULAR", r_bumpmap->value);
+			r_bumpmap->modified = qfalse;
+		}
 	} else {
 		R_DisableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 0);
