@@ -282,8 +282,12 @@ static int checkMiscMission (entity_t *e, int entnum)
 	return 0;
 }
 
+#define FUNC_GROUP_NO_PROBLEM 0
+#define FUNC_GROUP_MOVE_TO_WORLD 1
+#define FUNC_GROUP_EMPTY_DELETE 2
+
 /**
- * @todo Replace magic number with self speaking constants
+ * @return one of FUNC_GROUP_NO_PROBLEM, FUNC_GROUP_MOVE_TO_WORLD, FUNC_GROUP_EMPTY_DELETE
  */
 static int checkFuncGroup (entity_t *e, int entnum)
 {
@@ -293,15 +297,15 @@ static int checkFuncGroup (entity_t *e, int entnum)
 		numToMoveToWorldspawn++;
 		/* returning 1 ensures the entity will be skipped on writing back, the
 		 * map writer will check and tack them onto the end of the worldspawn */
-		return 1;
+		return FUNC_GROUP_MOVE_TO_WORLD;
 	}
 	if (checkEntityZeroBrushes(e, entnum))
-		return 2;/* make this 2, then 1 means single brush to be moved to worldspawn */
-	return 0;
+		return FUNC_GROUP_EMPTY_DELETE;/* make this 2, then 1 means single brush to be moved to worldspawn */
+	return FUNC_GROUP_NO_PROBLEM;
 }
 
 /**
- * @brief single brushes in func_groups are moved to worldspawn. this function allocates space
+ * @brief single brushes in func_groups are moved to worldspawn. this function allocates space for
  * pointers to those brushes.
  * @return a pointer to the array of pointers
  * @param[out] the number of brushes
@@ -328,7 +332,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 		const char *name = ValueForKey(e, "classname");
 
 		if (!strncmp(name, "func_group", 10)) {
-			if (checkFuncGroup(e, i) == 1)
+			if (checkFuncGroup(e, i) == FUNC_GROUP_MOVE_TO_WORLD)
 				brushesToMove[j++] = &mapbrushes[e->firstbrush];
 		}
 	}
