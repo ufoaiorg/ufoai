@@ -115,8 +115,6 @@ typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;
 
 void PreferencesDialog_addInterfacePreferences(const PreferencesPageCallback& callback);
 void PreferencesDialog_addInterfacePage(const PreferenceGroupCallback& callback);
-void PreferencesDialog_addDisplayPreferences(const PreferencesPageCallback& callback);
-void PreferencesDialog_addDisplayPage(const PreferenceGroupCallback& callback);
 void PreferencesDialog_addSettingsPreferences(const PreferencesPageCallback& callback);
 void PreferencesDialog_addSettingsPage(const PreferenceGroupCallback& callback);
 
@@ -301,7 +299,6 @@ void PreferencesDialog_destroyWindow();
 
 void PreferencesDialog_showDialog();
 
-void GlobalPreferences_Init();
 void Preferences_Init();
 
 void Preferences_Load();

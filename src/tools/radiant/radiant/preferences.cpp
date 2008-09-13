@@ -76,6 +76,8 @@ void Interface_constructPreferences (PreferencesPage& page)
 		Widget_connectToggleDependency(custom_editor, use_custom);
 	}
 #endif
+	page.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
+	page.appendCheckBox("", "Load last map on open", g_bLoadLastMap);
 }
 
 void Mouse_constructPreferences(PreferencesPage& page) {
@@ -183,48 +185,11 @@ bool Preferences_Save_Safe(PreferenceDictionary& preferences, const char* filena
 	       && file_move(tmpName.data(), filename);
 }
 
-
-
 void LogConsole_importString(const char* string) {
 	g_Console_enableLogging = string_equal(string, "true");
 	Sys_LogFile(g_Console_enableLogging);
 }
 typedef FreeCaller1<const char*, LogConsole_importString> LogConsoleImportStringCaller;
-
-
-void RegisterGlobalPreferences(PreferenceSystem& preferences) {
-	preferences.registerPreference("log console", LogConsoleImportStringCaller(), BoolExportStringCaller(g_Console_enableLogging));
-}
-
-
-PreferenceDictionary g_global_preferences;
-
-void GlobalPreferences_Init() {
-	RegisterGlobalPreferences(g_global_preferences);
-}
-
-static void LoadPrefs(void) {
-	// load global .pref file
-	StringOutputStream strGlobalPref(256);
-	strGlobalPref << SettingsPath_get() << "global.xml";
-
-	globalOutputStream() << "loading global preferences from " << makeQuoted(strGlobalPref.c_str()) << "\n";
-
-	if (!Preferences_Load(g_global_preferences, strGlobalPref.c_str())) {
-		globalOutputStream() << "failed to load global preferences from " << strGlobalPref.c_str() << "\n";
-	}
-}
-
-static void SavePrefs(void) {
-	StringOutputStream strGlobalPref(256);
-	strGlobalPref << SettingsPath_get() << "global.xml";
-
-	globalOutputStream() << "saving global preferences to " << strGlobalPref.c_str() << "\n";
-
-	if (!Preferences_Save_Safe(g_global_preferences, strGlobalPref.c_str())) {
-		globalOutputStream() << "failed to save global preferences to " << strGlobalPref.c_str() << "\n";
-	}
-}
 
 GtkWindow* CGameDialog::BuildDialog() {
 	return NULL;
@@ -248,13 +213,9 @@ static void ScanForGameDefinition() {
 }
 
 void CGameDialog::Reset() {
-	StringOutputStream strGlobalPref(256);
-	strGlobalPref << SettingsPath_get() << "global.xml";
-	file_remove(strGlobalPref.c_str());
 }
 
 void CGameDialog::Init() {
-	LoadPrefs();
 	ScanForGameDefinition();
 
 	ASSERT_NOTNULL(g_pGameDescription);
@@ -280,8 +241,8 @@ CGameDialog g_GamesDialog;
 static void OnButtonClean (GtkWidget *widget, gpointer data) {
 	// make sure this is what the user wants
 	if (gtk_MessageBox(GTK_WIDGET(g_Preferences.GetWidget()), "This will close Radiant and clean the corresponding registry entries.\n"
-	                   "Next time you start Radiant it will be good as new. Do you wish to continue?",
-	                   "Reset Registry", eMB_YESNO, eMB_ICONASTERISK) == eIDYES) {
+					"Next time you start Radiant it will be good as new. Do you wish to continue?",
+					"Reset Registry", eMB_YESNO, eMB_ICONASTERISK) == eIDYES) {
 		PrefsDlg *dlg = (PrefsDlg*)data;
 		dlg->EndModal (eIDCANCEL);
 
@@ -293,19 +254,6 @@ static void OnButtonClean (GtkWidget *widget, gpointer data) {
 
 // =============================================================================
 // PrefsDlg class
-
-/*
-========
-very first prefs init deals the game tools path
-then we can load .ini stuff
-
-using prefs / ini settings:
-
-look in ~/.ufoai/radiant
-========
-*/
-
-#define PREFS_LOCAL_FILENAME "settings.ini"
 
 void notebook_set_page(GtkWidget* notebook, GtkWidget* page) {
 	int pagenum = gtk_notebook_page_num(GTK_NOTEBOOK(notebook), page);
@@ -363,15 +311,6 @@ void PreferencesDialog_addInterfacePreferences(const PreferencesPageCallback& ca
 PreferenceGroupCallbacks g_interfaceCallbacks;
 void PreferencesDialog_addInterfacePage(const PreferenceGroupCallback& callback) {
 	PreferenceGroupCallbacks_pushBack(g_interfaceCallbacks, callback);
-}
-
-PreferencesPageCallbacks g_displayPreferences;
-void PreferencesDialog_addDisplayPreferences(const PreferencesPageCallback& callback) {
-	PreferencesPageCallbacks_pushBack(g_displayPreferences, callback);
-}
-PreferenceGroupCallbacks g_displayCallbacks;
-void PreferencesDialog_addDisplayPage(const PreferenceGroupCallback& callback) {
-	PreferenceGroupCallbacks_pushBack(g_displayCallbacks, callback);
 }
 
 PreferencesPageCallbacks g_settingsPreferences;
@@ -531,21 +470,7 @@ GtkWindow* PrefsDlg::BuildDialog() {
 						/********************************************************************/
 						/* Add preference tree options                                      */
 						/********************************************************************/
-						// Front page...
-						//GtkWidget* front =
 						PreferencePages_addPage(m_notebook, "Front Page");
-
-						{
-							GtkWidget* global = PreferencePages_addPage(m_notebook, "Global Preferences");
-							GtkTreeIter group = PreferenceTree_appendPage(store, 0, "Global", global);
-							{
-								GtkWidget* game = PreferencePages_addPage(m_notebook, "Game");
-								PreferencesPage preferencesPage(*this, getVBox(game));
-								preferencesPage.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
-
-								PreferenceTree_appendPage(store, &group, "Game", game);
-							}
-						}
 
 						{
 							GtkWidget* interfacePage = PreferencePages_addPage(m_notebook, "Interface Preferences");
@@ -558,18 +483,6 @@ GtkWindow* PrefsDlg::BuildDialog() {
 							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
 
 							PreferenceGroupCallbacks_constructGroup(g_interfaceCallbacks, preferenceGroup);
-						}
-
-						{
-							GtkWidget* display = PreferencePages_addPage(m_notebook, "Display Preferences");
-							{
-								PreferencesPage preferencesPage(*this, getVBox(display));
-								PreferencesPageCallbacks_constructPage(g_displayPreferences, preferencesPage);
-							}
-							GtkTreeIter group = PreferenceTree_appendPage(store, 0, "Display", display);
-							PreferenceTreeGroup preferenceGroup(*this, m_notebook, store, group);
-
-							PreferenceGroupCallbacks_constructGroup(g_displayCallbacks, preferenceGroup);
 						}
 
 						{
@@ -640,39 +553,39 @@ typedef SingletonModule<PreferenceSystemAPI> PreferenceSystemModule;
 typedef Static<PreferenceSystemModule> StaticPreferenceSystemModule;
 StaticRegisterModule staticRegisterPreferenceSystem(StaticPreferenceSystemModule::instance());
 
+#define PREFS_LOCAL_FILENAME "settings.xml"
+
 void Preferences_Load() {
 	StringOutputStream filename(256);
 	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
 
-	LoadPrefs();
-
-	globalOutputStream() << "loading ini from " << filename.c_str() << "\n";
+	globalOutputStream() << "loading settings from " << filename.c_str() << "\n";
 
 	if (!Preferences_Load(g_preferences, filename.c_str())) {
-		globalOutputStream() << "failed to load ini from " << filename.c_str() << "\n";
+		globalOutputStream() << "failed to load settings from " << filename.c_str() << "\n";
 	}
 }
 
 /**
  * @sa OnButtonClean
  */
-void Preferences_Save() {
+void Preferences_Save (void)
+{
 	// we might want to skip the ini settings due to an error
 	if (g_preferences_globals.disable_ini)
 		return;
 
-	SavePrefs();
-
 	StringOutputStream filename(256);
 	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
-	globalOutputStream() << "saving ini to " << filename.c_str() << "\n";
+	globalOutputStream() << "saving settings to " << filename.c_str() << "\n";
 
 	if (!Preferences_Save_Safe(g_preferences, filename.c_str())) {
-		globalOutputStream() << "failed to save ini to " << filename.c_str() << "\n";
+		globalOutputStream() << "failed to save settings to " << filename.c_str() << "\n";
 	}
 }
 
-void Preferences_Reset() {
+void Preferences_Reset (void)
+{
 	StringOutputStream filename(256);
 	filename << SettingsPath_get() << PREFS_LOCAL_FILENAME;
 	file_remove(filename.c_str());
@@ -717,7 +630,8 @@ void GameName_exportString(const StringImportCallback& importer) {
 }
 typedef FreeCaller1<const StringImportCallback&, GameName_exportString> GameNameExportStringCaller;
 
-void RegisterPreferences(PreferenceSystem& preferences) {
+static void RegisterPreferences(PreferenceSystem& preferences) {
+	preferences.registerPreference("log console", LogConsoleImportStringCaller(), BoolExportStringCaller(g_Console_enableLogging));
 #ifdef WIN32
 	preferences.registerPreference("UseCustomShaderEditor", BoolImportStringCaller(g_TextEditor_useWin32Editor), BoolExportStringCaller(g_TextEditor_useWin32Editor));
 #else

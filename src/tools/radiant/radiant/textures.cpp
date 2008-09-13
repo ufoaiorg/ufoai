@@ -642,7 +642,7 @@ void Textures_constructPage(PreferenceGroup& group) {
 	Textures_constructPreferences(page);
 }
 void Textures_registerPreferencesPage() {
-	PreferencesDialog_addDisplayPage(FreeCaller1<PreferenceGroup&, Textures_constructPage>());
+	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Textures_constructPage>());
 }
 
 void TextureCompression_importString(const char* string) {

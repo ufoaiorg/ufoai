@@ -1740,10 +1740,6 @@ void SelectBrush (int entitynum, int brushnum, int select)
 	}
 }
 
-void Map_constructPreferences(PreferencesPage& page) {
-	page.appendCheckBox("", "Load last map on open", g_bLoadLastMap);
-}
-
 
 class MapEntityClasses : public ModuleObserver {
 	std::size_t m_unrealised;
@@ -1808,8 +1804,6 @@ void Map_Construct (void) {
 	GlobalPreferenceSystem().registerPreference("LastMap", CopiedStringImportStringCaller(g_strLastMap), CopiedStringExportStringCaller(g_strLastMap));
 	GlobalPreferenceSystem().registerPreference("LoadLastMap", BoolImportStringCaller(g_bLoadLastMap), BoolExportStringCaller(g_bLoadLastMap));
 	GlobalPreferenceSystem().registerPreference("MapInfoDlg", WindowPositionImportStringCaller(g_posMapInfoWnd), WindowPositionExportStringCaller(g_posMapInfoWnd));
-
-	PreferencesDialog_addSettingsPreferences(FreeCaller1<PreferencesPage&, Map_constructPreferences>());
 
 	GlobalEntityClassManager().attach(g_MapEntityClasses);
 	Radiant_attachHomePathsObserver(g_MapModuleObserver);

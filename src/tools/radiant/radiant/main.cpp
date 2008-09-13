@@ -446,8 +446,6 @@ int main (int argc, char* argv[]) {
 
 	create_global_pid();
 
-	GlobalPreferences_Init();
-
 	g_GamesDialog.Init();
 
 	remove_global_pid();
