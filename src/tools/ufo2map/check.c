@@ -289,7 +289,7 @@ static int checkFuncGroup (entity_t *e, int entnum)
 {
 	const char *name = ValueForKey(e, "classname");
 	if (e->numbrushes == 1) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "*%s with one brush only - will be moved to worldspawn\n", name);
+		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", name);
 		numToMoveToWorldspawn++;
 		/* returning 1 ensures the entity will be skipped on writing back, the
 		 * map writer will check and tack them onto the end of the worldspawn */
