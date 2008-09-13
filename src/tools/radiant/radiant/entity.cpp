@@ -44,7 +44,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qe3.h"
 #include "commands.h"
 #include "dialogs/light.h"
-#include "particles.h"
+#include "dialogs/particle.h"
 
 struct entity_globals_t {
 	Vector3 color_entity;
@@ -196,7 +196,7 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 		Scene_forEachChildSelectable(SelectableSetSelected(true), instance.path());
 	}
 
-	// tweaking: when right clic dropping a light entity, ask for light value in a custom dialog box
+	// tweaking: when right click dropping a light entity, ask for light value in a custom dialog box
 	if (string_equal_nocase(name, "light")) {
 		int intensity = g_iLastLightIntensity;
 
@@ -219,9 +219,10 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 			Node_getEntity(node)->setKeyValue("sound", sound);
 		}
 	} else if (isParticle) {
-		const char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));
+		char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (particle != 0) {
 			Node_getEntity(node)->setKeyValue("particle", particle);
+			free(particle);
 		}
 	}
 }
@@ -297,11 +298,10 @@ const char* misc_model_dialog(GtkWidget* parent) {
 	return 0;
 }
 
-const char* misc_particle_dialog(GtkWidget* parent) {
-	// reload the particles every time you open the dialog
-	Particles_Init();
-	Particles_Shutdown();
-	const char* particle = NULL; //particle_dialog(parent, TRUE, "Choose Particle");
+char* misc_particle_dialog (GtkWidget* parent)
+{
+	char* particle = NULL;
+	DoParticleDlg(&particle);
 	return particle;
 }
 

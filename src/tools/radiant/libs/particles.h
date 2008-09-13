@@ -4,6 +4,11 @@
 
 #include "archivelib.h"
 #include "autoptr.h"
+#include "stringio.h"
+#include "ifilesystem.h"
+#include "stream/stringstream.h"
+#include <map>
+#include <list>
 
 // the list of ufos/*.ufo files we need to work with
 GSList *l_ufofiles = 0;
@@ -19,12 +24,14 @@ class ParticleDefinition {
 public:
 	ParticleDefinition(const char* id, const char *model, const char *image)
 		: m_id(id), m_model(model), m_image(image) {
+#if 0
 		globalOutputStream() << "particle " << id << "with: ";
 		if (model)
 			globalOutputStream() << "model: " << model << " ";
 		if (image)
 			globalOutputStream() << "image: " << image << " ";
 		globalOutputStream() << "\n";
+#endif
 	}
 	const char *m_id;
 	const char *m_model;
@@ -123,8 +130,6 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 				// do we already have this particle?
 				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image))).second)
 					globalOutputStream() << "WARNING: particle " << pID << " is already in memory, definition in " << filename << " ignored.\n";
-				else
-					globalOutputStream() << "adding particle " << pID << "\n";
 			}
 		}
 	}
@@ -133,8 +138,6 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 void LoadUFOFile(const char* filename) {
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (file) {
-		globalOutputStream() << "Parsing ufo script file " << filename << "\n";
-
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
 		ParseUFOFile(*tokeniser, filename);
 	} else {
@@ -170,7 +173,6 @@ void Particles_Init (void)
 
 void Particles_Shutdown (void)
 {
-	globalOutputStream() << "Unload UFO script files\n";
 	while (l_ufofiles != 0) {
 		free(l_ufofiles->data);
 		l_ufofiles = g_slist_remove(l_ufofiles, l_ufofiles->data);
