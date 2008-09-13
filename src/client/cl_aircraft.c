@@ -1199,10 +1199,12 @@ void CL_CampaignRunAircraft (int dt)
 					radarOverlayReset = qtrue;
 				} else if (aircraft->status == AIR_REFUEL) {
 					/* Aircraft is refueling at base */
-					aircraft->fuel += dt;
+					aircraft->fuel += dt * AIRCRAFT_REFUEL_FACTOR;
 					if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
 						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 						aircraft->status = AIR_HOME;
+						assert(aircraft->homebase);
+						MN_AddNewMessage(_("Notice"), va(_("Your %s is refueled at base %s."), aircraft->name, aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 					}
 				}
 

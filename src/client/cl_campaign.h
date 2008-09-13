@@ -323,21 +323,6 @@ typedef enum mapAction_s {
 	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
 
-/** possible aircraft states */
-typedef enum aircraftStatus_s {
-	AIR_NONE = 0,
-	AIR_REFUEL,				/**< refill fuel */
-	AIR_HOME,				/**< in homebase */
-	AIR_IDLE,				/**< just sit there on geoscape */
-	AIR_TRANSIT,			/**< moving */
-	AIR_MISSION,			/**< moving to a mission */
-	AIR_UFO,				/**< pursuing a UFO - also used for ufos that are pursuing an aircraft */
-	AIR_DROP,				/**< ready to drop down */
-	AIR_INTERCEPT,			/**< ready to intercept */
-	AIR_TRANSFER,			/**< being transfered */
-	AIR_RETURNING			/**< returning to homebase */
-} aircraftStatus_t;
-
 extern mission_t *selectedMission;
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
