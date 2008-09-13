@@ -39,7 +39,7 @@ static aircraft_t *transferStartAircraft = NULL;
 static base_t *transferBase = NULL;
 
 /** @brief Current transfer type (item, employee, alien, aircraft). */
-static int currentTransferType = TRANS_TYPE_ITEM;
+static transferType_t currentTransferType = TRANS_TYPE_ITEM;
 
 /** @brief Current cargo onboard. */
 static transferCargo_t cargo[MAX_CARGO];
@@ -313,7 +313,7 @@ static void TR_CargoList (void)
 			if (trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
-					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s"), 
+					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s"),
 						gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					LIST_AddString(&cargoList, str);
 					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
@@ -414,30 +414,26 @@ static qboolean TR_AircraftListSelect (int i)
 	return qtrue;
 }
 
-/*
+/**
  * @brief Function gives the user friendly name of a transfer category
  */
-char *TR_CategoryName(const int cat)
+static inline const char *TR_CategoryName (const transferType_t cat)
 {
 	switch (cat) {
-	case TRANS_TYPE_INVALID:
-		/* shouldn't happen */
-		return _("Invalid");
-		break;
 	case TRANS_TYPE_ITEM:
 		return _("Equipment");
-		break;
 	case TRANS_TYPE_EMPLOYEE:
 		return _("Employees");
-		break;
 	case TRANS_TYPE_ALIEN:
 		return _("Aliens");
-		break;
 	case TRANS_TYPE_AIRCRAFT:
 		return _("Aircraft");
+	case TRANS_TYPE_MAX:
+	case TRANS_TYPE_INVALID:
+		/* shouldn't happen */
 		break;
 	}
-	return _("Unknown");
+	Sys_Error("TR_CategoryName: invalid transfer type %i", cat);
 }
 
 /**
@@ -458,7 +454,7 @@ static void TR_ResetScrolling_f (void)
 	}
 }
 
-static void TR_TransferSelect (base_t *srcbase, base_t *destbase, int transferType)
+static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t transferType)
 {
 	static char transferList[2048];
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
@@ -615,6 +611,9 @@ static void TR_TransferSelect_f (void)
 	else
 		type = atoi(Cmd_Argv(1));
 
+	if (type < TRANS_TYPE_ITEM || type >= TRANS_TYPE_MAX)
+		return;
+
 	TR_TransferSelect(baseCurrent, transferBase, type);
 }
 
@@ -625,11 +624,9 @@ static void TR_Prev_Category_f (void)
 {
 	currentTransferType--;
 
-	if (currentTransferType < 0) {
+	if (currentTransferType < TRANS_TYPE_ITEM)
 		currentTransferType = TRANS_TYPE_MAX - 1;
-	} else if (currentTransferType >= TRANS_TYPE_MAX) {
-		currentTransferType = 0;
-	}
+
 	Cbuf_AddText(va("trans_resetscroll; trans_select %i;\n", currentTransferType));
 }
 
@@ -640,11 +637,9 @@ static void TR_Next_Category_f (void)
 {
 	currentTransferType++;
 
-	if (currentTransferType < 0) {
-		currentTransferType = TRANS_TYPE_MAX - 1;
-	} else if (currentTransferType >= TRANS_TYPE_MAX) {
-		currentTransferType = 0;
-	}
+	if (currentTransferType >= TRANS_TYPE_MAX)
+		currentTransferType = TRANS_TYPE_ITEM;
+
 	Cbuf_AddText(va("trans_resetscroll;trans_select %i;\n", currentTransferType));
 }
 

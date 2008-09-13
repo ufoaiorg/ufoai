@@ -40,7 +40,7 @@ enum {
 	CARGO_TYPE_MAX
 };
 
-enum {
+typedef enum {
 	TRANS_TYPE_INVALID = -1,
 	TRANS_TYPE_ITEM,
 	TRANS_TYPE_EMPLOYEE,
@@ -48,7 +48,7 @@ enum {
 	TRANS_TYPE_AIRCRAFT,
 
 	TRANS_TYPE_MAX
-};
+} transferType_t;
 
 enum {
 	TRANS_ALIEN_ALIVE,
@@ -83,7 +83,6 @@ typedef struct transferCargo_s {
 void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
-char *TR_CategoryName(const int cat);
 
 void TR_InitStartup(void);
 
