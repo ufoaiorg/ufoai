@@ -684,9 +684,13 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			if (!(side->contentFlags & (LAST_VISIBLE_CONTENTS - 1)))
 				side->contentFlags |= CONTENTS_SOLID;
 
-		/* hints and skips are never detail, and have no content */
-		if (side->surfaceFlags & (SURF_HINT | SURF_SKIP)) {
+		/* hints are never detail */
+		if (side->surfaceFlags & SURF_HINT) {
+			/**@todo i just defed this out. i think it can probably be deleted
+			  * messes up levelflags. legacy q2 stuff? blondandy. */
+			#if 0
 			side->contentFlags = 0;
+			#endif
 			side->surfaceFlags &= ~CONTENTS_DETAIL;
 		}
 
