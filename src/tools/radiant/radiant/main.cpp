@@ -365,7 +365,7 @@ now the secondary game dependant .pid file
 */
 void create_local_pid() {
 	StringOutputStream g_pidGameFile(256); ///< the game-specific .pid file
-	g_pidGameFile << SettingsPath_get() << g_pGameDescription->mGameFile.c_str() << "/radiant-game.pid";
+	g_pidGameFile << SettingsPath_get() << "/radiant-game.pid";
 
 	FILE *pid = fopen (g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
@@ -410,15 +410,13 @@ now the secondary game dependant .pid file
 */
 void remove_local_pid() {
 	StringOutputStream g_pidGameFile(256);
-	g_pidGameFile << SettingsPath_get() << g_pGameDescription->mGameFile.c_str() << "/radiant-game.pid";
+	g_pidGameFile << SettingsPath_get() << "/radiant-game.pid";
 	remove(g_pidGameFile.c_str());
 }
 
-void user_shortcuts_init() {
-	StringOutputStream path(256);
-	path << SettingsPath_get() << g_pGameDescription->mGameFile.c_str() << '/';
-	LoadCommandMap(path.c_str());
-	SaveCommandMap(path.c_str());
+static void user_shortcuts_init() {
+	LoadCommandMap(SettingsPath_get());
+	SaveCommandMap(SettingsPath_get());
 }
 
 int main (int argc, char* argv[]) {
@@ -471,8 +469,6 @@ int main (int argc, char* argv[]) {
 
 	global_accel_init();
 
-	user_shortcuts_init();
-
 	g_pParentWnd = 0;
 	g_pParentWnd = new MainFrame();
 
@@ -492,6 +488,8 @@ int main (int argc, char* argv[]) {
 	TextureBrowser_ShowStartupShaders(GlobalTextureBrowser());
 
 	remove_local_pid();
+
+	user_shortcuts_init();
 
 	gtk_main();
 

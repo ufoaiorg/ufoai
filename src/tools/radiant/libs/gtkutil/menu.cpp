@@ -165,6 +165,9 @@ void menu_item_set_accelerator(GtkMenuItem* item, GClosure* closure) {
 	gtk_accel_label_set_accel_closure(accel_label, closure);
 }
 
+/**
+ * @sa
+ */
 void accelerator_name(const Accelerator& accelerator, GString* gstring) {
 	gboolean had_mod = FALSE;
 	if (accelerator.modifiers & GDK_SHIFT_MASK) {

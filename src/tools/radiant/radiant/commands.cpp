@@ -27,34 +27,40 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "string/string.h"
 #include "versionlib.h"
 #include "gtkutil/accelerator.h"
+#include "preferences.h"
+#include "stringio.h"
 
 typedef std::pair<Accelerator, bool> ShortcutValue; // accelerator, isRegistered
 typedef std::map<CopiedString, ShortcutValue> Shortcuts;
 
-void Shortcuts_foreach(Shortcuts& shortcuts, CommandVisitor& visitor) {
+void Shortcuts_foreach (Shortcuts& shortcuts, CommandVisitor& visitor)
+{
 	for (Shortcuts::iterator i = shortcuts.begin(); i != shortcuts.end(); ++i) {
 		visitor.visit((*i).first.c_str(), (*i).second.first);
 	}
 }
 
-Shortcuts g_shortcuts;
+static Shortcuts g_shortcuts;
 
 const Accelerator& GlobalShortcuts_insert(const char* name, const Accelerator& accelerator) {
 	return (*g_shortcuts.insert(Shortcuts::value_type(name, ShortcutValue(accelerator, false))).first).second.first;
 }
 
-void GlobalShortcuts_foreach(CommandVisitor& visitor) {
+void GlobalShortcuts_foreach (CommandVisitor& visitor)
+{
 	Shortcuts_foreach(g_shortcuts, visitor);
 }
 
-void GlobalShortcuts_register(const char* name) {
+void GlobalShortcuts_register (const char* name)
+{
 	Shortcuts::iterator i = g_shortcuts.find(name);
 	if (i != g_shortcuts.end()) {
 		(*i).second.second = true;
 	}
 }
 
-void GlobalShortcuts_reportUnregistered() {
+void GlobalShortcuts_reportUnregistered (void)
+{
 	for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
 		if ((*i).second.first.key != 0 && !(*i).second.second) {
 			globalOutputStream() << "shortcut not registered: " << (*i).first.c_str() << "\n";
@@ -64,14 +70,16 @@ void GlobalShortcuts_reportUnregistered() {
 
 typedef std::map<CopiedString, Command> Commands;
 
-Commands g_commands;
+static Commands g_commands;
 
-void GlobalCommands_insert(const char* name, const Callback& callback, const Accelerator& accelerator) {
+void GlobalCommands_insert (const char* name, const Callback& callback, const Accelerator& accelerator)
+{
 	bool added = g_commands.insert(Commands::value_type(name, Command(callback, GlobalShortcuts_insert(name, accelerator)))).second;
 	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name));
 }
 
-const Command& GlobalCommands_find(const char* command) {
+const Command& GlobalCommands_find (const char* command)
+{
 	Commands::iterator i = g_commands.find(command);
 	ASSERT_MESSAGE(i != g_commands.end(), "failed to lookup command " << makeQuoted(command));
 	return (*i).second;
@@ -80,13 +88,16 @@ const Command& GlobalCommands_find(const char* command) {
 typedef std::map<CopiedString, Toggle> Toggles;
 
 
-Toggles g_toggles;
+static Toggles g_toggles;
 
-void GlobalToggles_insert(const char* name, const Callback& callback, const BoolExportCallback& exportCallback, const Accelerator& accelerator) {
+void GlobalToggles_insert (const char* name, const Callback& callback, const BoolExportCallback& exportCallback, const Accelerator& accelerator)
+{
 	bool added = g_toggles.insert(Toggles::value_type(name, Toggle(callback, GlobalShortcuts_insert(name, accelerator), exportCallback))).second;
 	ASSERT_MESSAGE(added, "toggle already registered: " << makeQuoted(name));
 }
-const Toggle& GlobalToggles_find(const char* name) {
+
+const Toggle& GlobalToggles_find (const char* name)
+{
 	Toggles::iterator i = g_toggles.find(name);
 	ASSERT_MESSAGE(i != g_toggles.end(), "failed to lookup toggle " << makeQuoted(name));
 	return (*i).second;
@@ -95,13 +106,16 @@ const Toggle& GlobalToggles_find(const char* name) {
 typedef std::map<CopiedString, KeyEvent> KeyEvents;
 
 
-KeyEvents g_keyEvents;
+static KeyEvents g_keyEvents;
 
-void GlobalKeyEvents_insert(const char* name, const Accelerator& accelerator, const Callback& keyDown, const Callback& keyUp) {
+void GlobalKeyEvents_insert (const char* name, const Accelerator& accelerator, const Callback& keyDown, const Callback& keyUp)
+{
 	bool added = g_keyEvents.insert(KeyEvents::value_type(name, KeyEvent(GlobalShortcuts_insert(name, accelerator), keyDown, keyUp))).second;
 	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name));
 }
-const KeyEvent& GlobalKeyEvents_find(const char* name) {
+
+const KeyEvent& GlobalKeyEvents_find (const char* name)
+{
 	KeyEvents::iterator i = g_keyEvents.find(name);
 	ASSERT_MESSAGE(i != g_keyEvents.end(), "failed to lookup keyEvent " << makeQuoted(name));
 	return (*i).second;
@@ -124,6 +138,61 @@ const KeyEvent& GlobalKeyEvents_find(const char* name) {
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
 
+static inline const char* stringrange_find (const char* first, const char* last, char c)
+{
+	const char* p = strchr(first, '+');
+	if (p == 0) {
+		return last;
+	}
+	return p;
+}
+
+static void keyShortcutEdited (GtkCellRendererText *renderer, gchar* path, gchar *newText, GtkTreeView *treeview)
+{
+	GtkTreeIter iter;
+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+	if (gtk_tree_model_get_iter_from_string(model, &iter, path)) {
+		char *name;
+		gtk_tree_model_get(model, &iter, 0, &name, -1);
+		globalOutputStream() << "name: "<< name<<"\n";
+		Shortcuts::iterator i = g_shortcuts.find(name);
+		if (i != g_shortcuts.end()) {
+			Accelerator& accelerator = (*i).second.first;
+			if (string_empty(newText)) {
+				// remove binding
+				accelerator.key = 0;
+				accelerator.modifiers = (GdkModifierType)0;
+			} else {
+				int modifiers = 0;
+				StringTokeniser outputTokeniser(newText, " +");
+				do {
+					const char *key = outputTokeniser.getToken();
+					if (string_empty(key))
+						break;
+					if (!strcmp(key, "Alt"))
+						modifiers |= GDK_MOD1_MASK;
+					else if (!strcmp(key, "Shift"))
+						modifiers |= GDK_SHIFT_MASK;
+					else if (!strcmp(key, "Control"))
+						modifiers |= GDK_CONTROL_MASK;
+					else {
+						// only one key
+						if (strlen(key) == 1)
+							accelerator.key = std::toupper(key[0]);
+						else
+							accelerator.key = global_keys_find(key);
+						break;
+					}
+				} while (1);
+				accelerator.modifiers = (GdkModifierType)modifiers;
+			}
+		}
+		gtk_list_store_set(GTK_LIST_STORE(model), &iter, 1, newText, -1);
+	}
+
+	SaveCommandMap(SettingsPath_get());
+	LoadCommandMap(SettingsPath_get());
+}
 
 struct command_list_dialog_t : public ModalDialog {
 	command_list_dialog_t()
@@ -132,7 +201,8 @@ struct command_list_dialog_t : public ModalDialog {
 	ModalDialogButton m_close_button;
 };
 
-void DoCommandListDlg() {
+void DoCommandListDlg (void)
+{
 	command_list_dialog_t dialog;
 
 	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), "Mapped Commands", dialog, -1, 400);
@@ -161,40 +231,20 @@ void DoCommandListDlg() {
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 1, (char const*)0);
+				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, NULL);
+				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(keyShortcutEdited), (gpointer)view);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 			}
 
 			gtk_widget_show(view);
 			gtk_container_add(GTK_CONTAINER (scr), view);
 
-			{
-				// Initialize dialog
-				StringOutputStream path(256);
-				path << SettingsPath_get() << "commandlist.txt";
-				globalOutputStream() << "Writing the command list to " << path.c_str() << "\n";
-				class BuildCommandList : public CommandVisitor {
-					TextFileOutputStream m_commandList;
-					GtkListStore* m_store;
-				public:
-					BuildCommandList(const char* filename, GtkListStore* store) : m_commandList(filename), m_store(store) {
-					}
-					void visit(const char* name, Accelerator& accelerator) {
-						StringOutputStream modifiers;
-						modifiers << accelerator;
-
-						{
-							GtkTreeIter iter;
-							gtk_list_store_append(m_store, &iter);
-							gtk_list_store_set(m_store, &iter, 0, name, 1, modifiers.c_str(), -1);
-						}
-
-						if (!m_commandList.failed()) {
-							m_commandList << makeLeftJustified(name, 25) << " " << modifiers.c_str() << '\n';
-						}
-					}
-				} visitor(path.c_str(), store);
-
-				GlobalShortcuts_foreach(visitor);
+			for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
+				GtkTreeIter iter;
+				StringOutputStream modifiers;
+				modifiers << (*i).second.first;
+				gtk_list_store_append(store, &iter);
+				gtk_list_store_set(store, &iter, 0, (*i).first.c_str(), 1, modifiers.c_str(), -1);
 			}
 
 			g_object_unref(G_OBJECT(store));
@@ -206,10 +256,6 @@ void DoCommandListDlg() {
 	{
 		GtkButton* button = create_modal_dialog_button("Close", dialog.m_close_button);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-		widget_make_default(GTK_WIDGET(button));
-		gtk_widget_grab_focus(GTK_WIDGET(button));
-		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
-		gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
 	}
 
 	modal_dialog_show(window, dialog);
@@ -218,8 +264,11 @@ void DoCommandListDlg() {
 
 #include "profile/profile.h"
 
-const char* const COMMANDS_VERSION = "1.0";
+static const char* const COMMANDS_VERSION = "1.0";
 
+/**
+ * @sa LoadCommandMap
+ */
 void SaveCommandMap(const char* path) {
 	StringOutputStream strINI(256);
 	strINI << path << "shortcuts.ini";
@@ -260,14 +309,6 @@ void SaveCommandMap(const char* path) {
 		} visitor(file);
 		GlobalShortcuts_foreach(visitor);
 	}
-}
-
-const char* stringrange_find(const char* first, const char* last, char c) {
-	const char* p = strchr(first, '+');
-	if (p == 0) {
-		return last;
-	}
-	return p;
 }
 
 class ReadCommandMap : public CommandVisitor {
@@ -327,7 +368,11 @@ public:
 	}
 };
 
-void LoadCommandMap(const char* path) {
+/**
+ * @sa SaveCommandMap
+ */
+void LoadCommandMap (const char* path)
+{
 	StringOutputStream strINI(256);
 	strINI << path << "shortcuts.ini";
 

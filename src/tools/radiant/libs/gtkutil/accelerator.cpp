@@ -535,7 +535,9 @@ void global_accel_connect_window(GtkWindow* window) {
 	g_accel_windows.insert(window);
 	gtk_window_add_accel_group(window, global_accel);
 }
-void global_accel_disconnect_window(GtkWindow* window) {
+
+void global_accel_disconnect_window (GtkWindow* window)
+{
 	GlobalPressedKeys_disconnect(window);
 
 	g_signal_handler_disconnect(G_OBJECT(window), gpointer_to_int(g_object_get_data(G_OBJECT(window), "override_handler")));
@@ -546,7 +548,8 @@ void global_accel_disconnect_window(GtkWindow* window) {
 }
 
 
-GClosure* global_accel_group_find(Accelerator accelerator) {
+GClosure* global_accel_group_find (Accelerator accelerator)
+{
 	guint numEntries = 0;
 	GtkAccelGroupEntry* entry = gtk_accel_group_query(global_accel, accelerator.key, accelerator.modifiers, &numEntries);
 	if (numEntries != 0) {
