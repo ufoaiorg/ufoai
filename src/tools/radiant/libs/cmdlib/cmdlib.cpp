@@ -158,7 +158,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 			if (!ReadFile(readfh, cbuff + startupinfo.dwFlags, OUTPUTBUFSIZE - startupinfo.dwFlags, &ProcessInformation.dwProcessId, 0) || !ProcessInformation.dwProcessId) {
 				if (GetLastError() != ERROR_BROKEN_PIPE && ProcessInformation.dwProcessId) {
 					free(cbuff);
-					return FormatGetLastError();
+					return strdup(FormatGetLastError());
 				}
 
 				// Close the pipe
