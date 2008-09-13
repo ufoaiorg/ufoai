@@ -132,7 +132,9 @@ void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
 	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, "Choose File", gtk_entry_get_text(entry));
 
 	if (filename != 0) {
-		gtk_entry_set_text(entry, filename);
+		gchar* converted = g_filename_to_utf8(filename, -1, 0, 0, 0);
+		gtk_entry_set_text(entry, converted);
+		g_free(converted);
 	}
 }
 
