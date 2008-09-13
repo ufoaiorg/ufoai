@@ -119,7 +119,7 @@ public:
 
 static char g_file_dialog_file[1024];
 
-const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
+static const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
 {
 	filetype_t type;
 
@@ -157,21 +157,7 @@ const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, c
 		if (strstr(g_file_dialog_file, path)) {
 			gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), g_file_dialog_file);
 		} else {
-			Array<char> new_path(strlen(path) + 1);
-
-			// copy path, replacing dir separators as appropriate
-			Array<char>::iterator w = new_path.begin();
-			for (const char* r = path; *r != '\0'; ++r) {
-				*w++ = (*r == '/') ? G_DIR_SEPARATOR : *r;
-			}
-			// remove separator from end of path if required
-			if (*(w - 1) == G_DIR_SEPARATOR) {
-				--w;
-			}
-			// terminate string
-			*w = '\0';
-
-			gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), new_path.data());
+			gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
 		}
 	}
 
@@ -202,12 +188,6 @@ const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, c
 				}
 			}
 		}
-		// convert back to unix format
-		for (char* w = g_file_dialog_file; *w != '\0'; w++) {
-			if (*w == '\\') {
-				*w = '/';
-			}
-		}
 	} else {
 		g_file_dialog_file[0] = '\0';
 	}
@@ -215,7 +195,8 @@ const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, c
 	gtk_widget_destroy(dialog);
 
 	// don't return an empty filename
-	if (g_file_dialog_file[0] == '\0') return NULL;
+	if (g_file_dialog_file[0] == '\0')
+		return NULL;
 
 	return g_file_dialog_file;
 }

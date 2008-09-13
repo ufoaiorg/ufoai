@@ -129,7 +129,15 @@ bool color_dialog (GtkWidget *parent, Vector3& color, const char* title) {
 }
 
 void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
-	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, "Choose File", gtk_entry_get_text(entry));
+	const char *file = gtk_entry_get_text(entry);
+	char bufPath[1024];
+	if (file) {
+		const char *filename = path_get_filename_start(file);
+		strncpy(bufPath, file, filename - file);
+		bufPath[filename - file] = '\0';
+		file = bufPath;
+	}
+	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, "Choose File", file);
 
 	if (filename != 0) {
 		gchar* converted = g_filename_to_utf8(filename, -1, 0, 0, 0);

@@ -72,7 +72,7 @@ void Interface_constructPreferences (PreferencesPage& page)
 #else
 	{
 		GtkWidget* use_custom = page.appendCheckBox("Text Editor", "Custom", g_TextEditor_useCustomEditor);
-		GtkWidget* custom_editor = page.appendPathEntry("Text Editor Command", g_TextEditor_editorCommand, true);
+		GtkWidget* custom_editor = page.appendPathEntry("Text Editor Command", g_TextEditor_editorCommand, false);
 		Widget_connectToggleDependency(custom_editor, use_custom);
 	}
 #endif

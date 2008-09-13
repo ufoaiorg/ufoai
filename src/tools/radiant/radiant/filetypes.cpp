@@ -50,7 +50,11 @@ private:
 	std::map<CopiedString, filetype_list_t> m_typelists;
 public:
 	RadiantFileTypeRegistry() {
+#ifdef WIN32
 		addType("*", "*", filetype_t("All Files", "*.*"));
+#else
+		addType("*", "*", filetype_t("All Files", "*"));
+#endif
 	}
 	void addType(const char* moduleType, const char* moduleName, filetype_t type) {
 		m_typelists[moduleType].push_back(filetype_copy_t(moduleName, type));

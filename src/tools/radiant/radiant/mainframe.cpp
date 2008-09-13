@@ -289,16 +289,11 @@ void setEnginePath (const char* path)
 
 // Compiler Path
 
-CopiedString g_strCompilerBinaryWithPath;
+CopiedString g_strCompilerBinaryWithPath("");
 
 const char* CompilerBinaryWithPath_get (void)
 {
 	return g_strCompilerBinaryWithPath.c_str();
-}
-
-void setCompilerBinaryWithPath (const char* path)
-{
-	g_strCompilerBinaryWithPath = path;
 }
 
 // App Path
@@ -325,22 +320,13 @@ void EnginePathImport(CopiedString& self, const char* value)
 }
 typedef ReferenceCaller1<CopiedString, const char*, EnginePathImport> EnginePathImportCaller;
 
-void CompilerBinaryWithPathImport(CopiedString& self, const char* value)
-{
-	setCompilerBinaryWithPath(value);
-}
-typedef ReferenceCaller1<CopiedString, const char*, CompilerBinaryWithPathImport> CompilerBinaryWithPathImportCaller;
-
 void Paths_constructPreferences (PreferencesPage& page)
 {
 	page.appendPathEntry("Engine Path", true,
 			StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
 			StringExportCallback(StringExportCaller(g_strEnginePath))
 		);
-	page.appendPathEntry("Compiler Binary", false,
-			StringImportCallback(CompilerBinaryWithPathImportCaller(g_strCompilerBinaryWithPath)),
-			StringExportCallback(StringExportCaller(g_strCompilerBinaryWithPath))
-		);
+	page.appendPathEntry("Compiler Binary", g_strCompilerBinaryWithPath, false);
 }
 void Paths_constructPage (PreferenceGroup& group)
 {
