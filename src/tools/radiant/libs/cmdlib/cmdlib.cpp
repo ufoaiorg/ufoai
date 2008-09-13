@@ -87,11 +87,20 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 	SECURITY_ATTRIBUTES sattr;
 	HANDLE readfh;
 	char *cbuff;
-    char cmdlineBuf[1024];
+	char cmdlineBuf[1024];
+	char execdirBuf[1024];
 
-    strncpy(cmdlineBuf, cmdline, sizeof(cmdlineBuf) - 1);
-    cmdlineBuf[sizeof(cmdlineBuf) - 1] = '\0';
+	strncpy(cmdlineBuf, cmdline, sizeof(cmdlineBuf) - 1);
+	cmdlineBuf[sizeof(cmdlineBuf) - 1] = '\0';
 
+	strncpy(execdirBuf, execdir, sizeof(execdirBuf) - 1);
+	execdirBuf[sizeof(execdirBuf) - 1] = '\0';
+
+	for (char* w = execdirBuf; *w != '\0'; w++) {
+		if (*w == '/') {
+			*w = '\\';
+		}
+	}
 	// get handles and
 	GetStartupInfo(&startupinfo);
 
@@ -121,7 +130,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 		return NULL;
 
 	if (CreateProcess(pCmd, pCmdline, NULL, NULL, TRUE, dwCreationFlags,
-		NULL, execdir, &startupinfo, &ProcessInformation)) {
+		NULL, execdirBuf, &startupinfo, &ProcessInformation)) {
 
 		startupinfo.dwFlags = 0;
 		cbuff = (char *)malloc(OUTPUTBUFSIZE + 1);

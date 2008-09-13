@@ -202,7 +202,6 @@ const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, c
 				}
 			}
 		}
-
 		// convert back to unix format
 		for (char* w = g_file_dialog_file; *w != '\0'; w++) {
 			if (*w == '\\') {
