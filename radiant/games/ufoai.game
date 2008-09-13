@@ -15,7 +15,7 @@
   shaderpath="scripts"
   mapcompiler="ufo2map"
   mapcompiler_param="-extra"
-  mapcompiler_param_check="-check -silent"
+  mapcompiler_param_check="-v 1 -check"
   surf1="light"
   surf2="slick"
   surf4="warp"
