@@ -654,6 +654,7 @@ int main (int argc, const char **argv)
 		/* build per-vertex normals for phong shading */
 		BuildVertexNormals();
 		size = WriteBSPFile(bspFilename);
+		end = time(NULL);
 	}
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 
