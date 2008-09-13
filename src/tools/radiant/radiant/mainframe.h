@@ -184,8 +184,8 @@ void EnginePath_verify();
 const char* EnginePath_get();
 const char* QERApp_GetGamePath();
 
-extern CopiedString g_strCompilerPath;
-const char* CompilerPath_get();
+extern CopiedString g_strCompilerBinaryWithPath;
+const char* CompilerBinaryWithPath_get();
 
 extern CopiedString g_strAppPath;
 const char* AppPath_get();

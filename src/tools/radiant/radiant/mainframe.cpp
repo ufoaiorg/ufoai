@@ -289,19 +289,16 @@ void setEnginePath (const char* path)
 
 // Compiler Path
 
-CopiedString g_strCompilerPath;
+CopiedString g_strCompilerBinaryWithPath;
 
-const char* CompilerPath_get (void)
+const char* CompilerBinaryWithPath_get (void)
 {
-	return g_strCompilerPath.c_str();
+	return g_strCompilerBinaryWithPath.c_str();
 }
 
-void setCompilerPath (const char* path)
+void setCompilerBinaryWithPath (const char* path)
 {
-	StringOutputStream buffer(256);
-	buffer << DirectoryCleaned(path);
-	if (!path_equal(buffer.c_str(), g_strCompilerPath.c_str()))
-		g_strCompilerPath = buffer.c_str();
+	g_strCompilerBinaryWithPath = path;
 }
 
 // App Path
@@ -328,11 +325,11 @@ void EnginePathImport(CopiedString& self, const char* value)
 }
 typedef ReferenceCaller1<CopiedString, const char*, EnginePathImport> EnginePathImportCaller;
 
-void CompilerPathImport(CopiedString& self, const char* value)
+void CompilerBinaryWithPathImport(CopiedString& self, const char* value)
 {
-	setCompilerPath(value);
+	setCompilerBinaryWithPath(value);
 }
-typedef ReferenceCaller1<CopiedString, const char*, CompilerPathImport> CompilerPathImportCaller;
+typedef ReferenceCaller1<CopiedString, const char*, CompilerBinaryWithPathImport> CompilerBinaryWithPathImportCaller;
 
 void Paths_constructPreferences (PreferencesPage& page)
 {
@@ -340,9 +337,9 @@ void Paths_constructPreferences (PreferencesPage& page)
 			StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
 			StringExportCallback(StringExportCaller(g_strEnginePath))
 		);
-	page.appendPathEntry("Compiler Path", true,
-			StringImportCallback(CompilerPathImportCaller(g_strCompilerPath)),
-			StringExportCallback(StringExportCaller(g_strCompilerPath))
+	page.appendPathEntry("Compiler Binary", false,
+			StringImportCallback(CompilerBinaryWithPathImportCaller(g_strCompilerBinaryWithPath)),
+			StringExportCallback(StringExportCaller(g_strCompilerBinaryWithPath))
 		);
 }
 void Paths_constructPage (PreferenceGroup& group)
@@ -2844,7 +2841,7 @@ void MainFrame_Construct (void) {
 	}
 
 	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerPath", CopiedStringImportStringCaller(g_strCompilerPath), CopiedStringExportStringCaller(g_strCompilerPath));
+	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
 
 	g_Layout_viewStyle.useLatched();
 	g_Layout_enableDetachableMenus.useLatched();
