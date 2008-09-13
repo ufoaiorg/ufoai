@@ -502,6 +502,7 @@ int main (int argc, const char **argv)
 {
 	char bspFilename[MAX_OSPATH];
 	double begin, start, end;
+	long size;
 
 	memset(&config, 0, sizeof(config));
 	/* init thread state */
@@ -570,7 +571,7 @@ int main (int argc, const char **argv)
 		if (config.chkFillLevelFlags || config.chkBrushes || config.chkAll)
 			CheckFillLevelFlags();
 		/* this must be before mfc check, as otherwise mfc warnings are given
-		* which are auto-fixed based on textures */
+		 * which are auto-fixed based on textures */
 		if (config.chkTextures || config.chkBrushes || config.chkAll)
 			CheckFlagsBasedOnTextures();
 		/* mixed face contents check may remove contentflags. this should be done
@@ -623,13 +624,10 @@ int main (int argc, const char **argv)
 
 	end = time(NULL);
 	Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
+	begin = start;
 
 	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
-		long size;
-
 		Verb_Printf(VERB_LESS, "----- Radiosity ----\n");
-
-		begin = start;
 
 		CalcTextureReflectivity();
 
@@ -652,9 +650,12 @@ int main (int argc, const char **argv)
 
 		Verb_Printf(VERB_LESS, "writing %s\n", bspFilename);
 		size = WriteBSPFile(bspFilename);
-
-		Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
+	} else {
+		/* build per-vertex normals for phong shading */
+		BuildVertexNormals();
+		size = WriteBSPFile(bspFilename);
 	}
+	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 
 	return 0;
 }
