@@ -115,12 +115,12 @@ public:
 		}
 		return filetype_pair_t();
 	}
-
 };
 
 static char g_file_dialog_file[1024];
 
-const char* file_dialog_show(GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern) {
+const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
+{
 	filetype_t type;
 
 	if (pattern == 0) {
@@ -137,19 +137,13 @@ const char* file_dialog_show(GtkWidget* parent, bool open, const char* title, co
 
 	GtkWidget* dialog;
 	if (open) {
-		dialog = gtk_file_chooser_dialog_new(title,
-		                                     GTK_WINDOW(parent),
-		                                     GTK_FILE_CHOOSER_ACTION_OPEN,
-		                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		                                     GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-		                                     (char const*)0);
+		dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
+			GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, (char const*)0);
 	} else {
-		dialog = gtk_file_chooser_dialog_new(title,
-		                                     GTK_WINDOW(parent),
-		                                     GTK_FILE_CHOOSER_ACTION_SAVE,
-		                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		                                     GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-		                                     (char const*)0);
+		dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
+			GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT, (char const*)0);
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), "unnamed");
 	}
 
@@ -183,7 +177,6 @@ const char* file_dialog_show(GtkWidget* parent, bool open, const char* title, co
 
 	// we should add all important paths as shortcut folder...
 	// gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), "/tmp/", NULL);
-
 
 	for (std::size_t i = 0; i < masks.m_filters.size(); ++i) {
 		GtkFileFilter* filter = gtk_file_filter_new();
@@ -228,13 +221,11 @@ const char* file_dialog_show(GtkWidget* parent, bool open, const char* title, co
 	return g_file_dialog_file;
 }
 
-char* dir_dialog(GtkWidget* parent, const char* title, const char* path) {
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(title,
-	                    GTK_WINDOW(parent),
-	                    GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-	                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-	                    GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-	                    (char const*)0);
+char* dir_dialog (GtkWidget* parent, const char* title, const char* path)
+{
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
+		GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, (char const*)0);
 
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER_ON_PARENT);
@@ -253,14 +244,13 @@ char* dir_dialog(GtkWidget* parent, const char* title, const char* path) {
 	return filename;
 }
 
-const char* file_dialog(GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern) {
+const char* file_dialog (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
+{
 	for (;;) {
 		const char* file = file_dialog_show(parent, open, title, path, pattern);
 
-		if (open
-		        || file == 0
-		        || !file_exists(file)
-		        || gtk_MessageBox(parent, "The file specified already exists.\nDo you want to replace it?", title, eMB_NOYES, eMB_ICONQUESTION) == eIDYES) {
+		if (open || file == 0 || !file_exists(file)
+			|| gtk_MessageBox(parent, "The file specified already exists.\nDo you want to replace it?", title, eMB_NOYES, eMB_ICONQUESTION) == eIDYES) {
 			return file;
 		}
 	}

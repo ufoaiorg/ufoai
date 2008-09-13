@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qe3.h"
 #include "commands.h"
 #include "dialogs/light.h"
+#include "particles.h"
 
 struct entity_globals_t {
 	Vector3 color_entity;
@@ -297,7 +298,11 @@ const char* misc_model_dialog(GtkWidget* parent) {
 }
 
 const char* misc_particle_dialog(GtkWidget* parent) {
-	return NULL;
+	// reload the particles every time you open the dialog
+	Particles_Init();
+	Particles_Shutdown();
+	const char* particle = NULL; //particle_dialog(parent, TRUE, "Choose Particle");
+	return particle;
 }
 
 const char* misc_sound_dialog(GtkWidget* parent) {
