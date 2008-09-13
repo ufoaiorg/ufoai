@@ -78,7 +78,25 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool)
 
 #include <windows.h>
 
-// NOTE TTimo windows is VERY nitpicky about the syntax in CreateProcess
+#define FORMAT_BUFSIZE 2048
+static const char* FormatGetLastError() {
+	static char buf[FORMAT_BUFSIZE];
+	FormatMessage(
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		GetLastError(),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+		buf,
+		FORMAT_BUFSIZE,
+		NULL
+	);
+	return buf;
+}
+
+/**
+ * @note windows is VERY nitpicky about the syntax in @c CreateProcess
+ */
 char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bCreateConsole)
 {
 	PROCESS_INFORMATION ProcessInformation;
@@ -140,7 +158,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 			if (!ReadFile(readfh, cbuff + startupinfo.dwFlags, OUTPUTBUFSIZE - startupinfo.dwFlags, &ProcessInformation.dwProcessId, 0) || !ProcessInformation.dwProcessId) {
 				if (GetLastError() != ERROR_BROKEN_PIPE && ProcessInformation.dwProcessId) {
 					free(cbuff);
-					return NULL;
+					return FormatGetLastError();
 				}
 
 				// Close the pipe

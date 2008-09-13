@@ -296,7 +296,9 @@ void ToolsCheckErrors (void)
 
 			if (rows == 0) {
 				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, "No problems found", CHECK_SELECT, NULL, -1);
+				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, "No problems in your map found. Output was:", CHECK_SELECT, NULL, -1);
+				gtk_list_store_append(store, &iter);
+				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, output, CHECK_SELECT, NULL, -1);
 			}
 
 			/* trying to show later */
