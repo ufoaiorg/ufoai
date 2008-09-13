@@ -49,6 +49,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 
 		if (string_equal(token, "particle")) {
 			char pID[64];
+			int kill = 0;
 			token = tokeniser.getToken();
 			if (token == 0) {
 				Tokeniser_unexpectedError(tokeniser, 0, "#id-name");
@@ -69,7 +70,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 				token = tokeniser.getToken();
 				if (string_equal(token, "init")) {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
-						globalOutputStream() << "ERROR: expected {.\n";
+						globalOutputStream() << "ERROR: expected { in init.\n";
 						return;
 					}
 					for (;;) {
@@ -86,11 +87,39 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 							break;
 						}
 					}
+				} else if (string_equal(token, "think")) {
+					if (!Tokeniser_parseToken(tokeniser, "{")) {
+						globalOutputStream() << "ERROR: expected { in think.\n";
+						return;
+					}
+					for (;;) {
+						const char* option = tokeniser.getToken();
+						if (string_equal(option, "}")) {
+							break;
+						} else if (string_equal(option, "kill")) {
+							kill = 1;
+							break;
+						}
+					}
+				} else if (string_equal(token, "run")) {
+					if (!Tokeniser_parseToken(tokeniser, "{")) {
+						globalOutputStream() << "ERROR: expected { in run.\n";
+						return;
+					}
+					for (;;) {
+						const char* option = tokeniser.getToken();
+						if (string_equal(option, "}")) {
+							break;
+						} else if (string_equal(option, "kill")) {
+							kill = 1;
+							break;
+						}
+					}
 				}
 				if (string_equal(token, "}"))
 					break;
 			}
-			if (model || image) {
+			if (!kill && (model || image)) {
 				// do we already have this particle?
 				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image))).second)
 					globalOutputStream() << "WARNING: particle " << pID << " is already in memory, definition in " << filename << " ignored.\n";
