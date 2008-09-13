@@ -240,8 +240,7 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 {
 	if (trian->numpoints == MAX_TRI_POINTS)
 		Sys_Error("trian->numpoints == MAX_TRI_POINTS (%i)", trian->numpoints);
-	trian->points[trian->numpoints] = patch;
-	trian->numpoints++;
+	trian->points[trian->numpoints++] = patch;
 }
 
 /**
@@ -301,7 +300,7 @@ static void SampleTriangulation (const vec3_t point, const triangulation_t *tria
 	const triangle_t *t;
 	const triedge_t *e;
 	vec_t d, best;
-	patch_t *p0, *p1;
+	const patch_t *p0, *p1;
 	vec3_t v1, v2;
 	int i, j;
 
@@ -375,7 +374,7 @@ LIGHTMAP SAMPLE GENERATION
 */
 
 
-#define	SINGLEMAP	(256 * 256 * 4)
+#define	SINGLEMAP	(512 * 512 * 4)
 
 typedef struct {
 	vec_t	facedist;
@@ -459,6 +458,10 @@ static void CalcFaceExtents (lightinfo_t *l)
 
 		l->texmins[i] = stmins[i];
 		l->texsize[i] = stmaxs[i] - stmins[i];
+
+		/* div 4 for extrasamples */
+		if (l->texsize[0] * l->texsize[1] > SINGLEMAP / 4)
+			Sys_Error("Surface too large to light (%dx%d)", l->texsize[0], l->texsize[1]);
 	}
 }
 
@@ -647,7 +650,7 @@ void CreateDirectLights (void)
 
 		intensity = FloatForKey(e, "light");
 		if (!intensity)
-			intensity = 100;
+			intensity = 300;
 		color = ValueForKey(e, "_color");
 		if (color[1]) {
 			sscanf(color, "%f %f %f", &dl->color[0], &dl->color[1], &dl->color[2]);
@@ -786,7 +789,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 	directlight_t *l;
 	vec3_t dir, delta;
 	float dot, dot2, dist;
-	float scale = 0.0f;
+	float light = 0.0f;
 
 	/* move into the level using the normal and surface center */
 	VectorSubtract(pos, center, dir);
@@ -805,14 +808,14 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		switch (l->type) {
 		case emit_point:
 			/* linear falloff */
-			scale = (l->intensity - dist) * dot;
+			light = (l->intensity - dist) * dot;
 			break;
 
 		case emit_surface:
 			dot2 = -DotProduct(delta, l->normal);
 			if (dot2 <= 0.001)
-				continue;	/* outside light cone */
-			scale = (l->intensity / (dist * dist)) * dot * dot2;
+				continue;	/* behind light surface */
+			light = (l->intensity / (dist * dist)) * dot * dot2;
 			break;
 
 		case emit_spotlight:
@@ -820,21 +823,21 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 			dot2 = -DotProduct(delta, l->normal);
 			if (dot2 <= l->stopdot)
 				continue;	/* outside light cone */
-			scale = (l->intensity - dist) * dot;
+			light = (l->intensity - dist) * dot;
 			break;
 		default:
 			Sys_Error("Bad l->type");
 		}
 
-		if (scale <= 0)
+		if (light <= 0)
 			continue;
 
 		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
 			continue;	/* occluded */
 
 		/* add some light to it */
-		VectorMA(sample, scale * lightscale, l->color, sample);
-		VectorMA(direction, scale * lightscale, delta, direction);
+		VectorMA(sample, light * lightscale, l->color, sample);
+		VectorMA(direction, light * lightscale, delta, direction);
 	}
 
 	/* add sun light */
@@ -1023,11 +1026,11 @@ static const float sampleofs[MAX_SAMPLES][2] = {
 void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
-	lightinfo_t l[MAX_SAMPLES];
 	dBspTexinfo_t *tex;
 	float *sdir, *tdir;
 	vec3_t normal, binormal;
 	vec4_t tangent;
+	lightinfo_t l[MAX_SAMPLES];
 	float lightscale;
 	int i, j, numsamples;
 	patch_t *patch;
@@ -1120,7 +1123,8 @@ void BuildFacelights (unsigned int facenum)
 			GatherSampleLight(l[j].surfpt[i], normal, l[0].center,
 				sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
 
-			/* transform it into tangent space */
+			/* finalize the lighting direction for the sample and
+			 * transform it into tangent space */
 			TangentVector(normal, sdir, tdir, tangent);
 			CrossProduct(normal, tangent, binormal);
 			VectorScale(binormal, tangent[3], binormal);
@@ -1135,7 +1139,7 @@ void BuildFacelights (unsigned int facenum)
 		}
 
 		/* contribute the sample to one or more patches for radiosity */
-		if (config.numbounce > 0)
+/*		if (config.numbounce > 0)*/
 			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
 	}
 
@@ -1147,16 +1151,18 @@ void BuildFacelights (unsigned int facenum)
 	for (patch = face_patches[facenum]; patch; patch = patch->next)
 		if (patch->samples)
 			VectorScale(patch->samplelight, 1.0 / patch->samples, patch->samplelight);
+		else
+			Verb_Printf(VERB_EXTRA, "patch with no samples\n");
 
+	assert(face_patches[facenum]);
 	/* the light from DIRECT_LIGHTS is sent out, but the
 	 * texture itself should still be full bright */
-	if (face_patches[facenum] &&
-		(face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
+	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
-		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT)) {
-		float *spot = fl->samples;
-		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
-			VectorAdd(spot, face_patches[facenum]->baselight, spot);
+		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT) {
+		float *sample = fl->samples;
+		for (i = 0; i < l[0].numsurfpt; i++, sample += 3)
+			VectorAdd(sample, face_patches[facenum]->baselight, sample);
 	}
 }
 
