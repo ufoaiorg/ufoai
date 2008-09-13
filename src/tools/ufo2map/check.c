@@ -838,6 +838,8 @@ void CheckNodraws (void)
 						Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 						iSide->surfaceFlags |= SURF_NODRAW;
 						tex->surfaceFlags |= SURF_NODRAW;
+						iSide->surfaceFlags &= ~SURF_PHONG;
+						tex->surfaceFlags &= ~SURF_PHONG;
 						numSet++;
 						globalNumSet++;
 					}
