@@ -188,8 +188,10 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	}
 
 	/* reset state */
-	if (r_state.bumpmap_enabled)
-		R_EnableBumpmap(qfalse, NULL);
+	if (r_state.lighting_enabled) {
+		if (r_state.bumpmap_enabled)
+			R_EnableBumpmap(qfalse, NULL);
+	}
 
 	/* and restore array pointers */
 	R_ResetArrayState();

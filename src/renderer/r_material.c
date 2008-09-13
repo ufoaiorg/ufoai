@@ -69,7 +69,7 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
-static void R_StageTexcoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
+static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
 {
 	vec3_t tmp;
 	float s, t, s0, t0;
@@ -196,14 +196,17 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 		color[3] = 1.0;
 
 	R_Color(color);
+
+	/* for terrain, enable the color array */
+	if (stage->flags & STAGE_TERRAIN)
+		glEnableClientState(GL_COLOR_ARRAY);
+	else
+		glDisableClientState(GL_COLOR_ARRAY);
 }
 
 static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i;
-
-	if (stage->flags & STAGE_TERRAIN)
-		glEnableClientState(GL_COLOR_ARRAY);
 
 	if (surf->numedges >= MAX_GL_ARRAY_LENGTH)
 		Com_Error(ERR_DROP, "R_DrawMaterialSurface: Exceeded MAX_GL_ARRAY_LENGTH\n");
@@ -214,7 +217,7 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
-		R_StageTexcoord(stage, v, st, &texunit_diffuse.texcoord_array[i * 2]);
+		R_StageTexCoord(stage, v, st, &texunit_diffuse.texcoord_array[i * 2]);
  		if (stage->flags & STAGE_TERRAIN)
 			R_StageColor(stage, v, &r_state.color_array[i * 4]);
 
@@ -226,9 +229,6 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	}
 
 	glDrawArrays(GL_POLYGON, 0, i);
-
-	if (stage->flags & STAGE_TERRAIN)
-		glDisableClientState(GL_COLOR_ARRAY);
 
 	R_CheckError();
 }
@@ -280,10 +280,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
-#ifdef DEBUG
-	if (glIsEnabled(GL_COLOR_ARRAY))
-		Com_Printf("R_DrawMaterialSurfaces: state leak - GL_COLOR_ARRAY\n");
-#endif
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 
 /**
@@ -293,6 +290,8 @@ static GLenum R_ConstByName (const char *c)
 {
 	if (!strcmp(c, "GL_ONE"))
 		return GL_ONE;
+	if (!strcmp(c, "GL_ZERO"))
+		return GL_ZERO;
 	if (!strcmp(c, "GL_SRC_ALPHA"))
 		return GL_SRC_ALPHA;
 	if (!strcmp(c, "GL_ONE_MINUS_SRC_ALPHA"))
@@ -301,8 +300,6 @@ static GLenum R_ConstByName (const char *c)
 		return GL_SRC_COLOR;
 	if (!strcmp(c, "GL_DST_COLOR"))
 		return GL_DST_COLOR;
-	if (!strcmp(c, "GL_ZERO"))
-		return GL_ZERO;
 
 	Com_Printf("R_ConstByName: Failed to resolve: %s\n", c);
 	return GL_ZERO;
