@@ -31,7 +31,7 @@ void NET_WriteChar (struct dbuffer *buf, char c)
 	dbuffer_add(buf, &c, 1);
 }
 
-void NET_WriteByte (struct dbuffer *buf, unsigned char c)
+void NET_WriteByte (struct dbuffer *buf, byte c)
 {
 	dbuffer_add(buf, (char *)&c, 1);
 }

@@ -163,7 +163,7 @@ static void SV_WriteChar (char c)
 	NET_WriteChar(pfe_msg, c);
 }
 
-static void SV_WriteByte (unsigned char c)
+static void SV_WriteByte (byte c)
 {
 	NET_WriteByte(pfe_msg, c);
 }
@@ -171,7 +171,7 @@ static void SV_WriteByte (unsigned char c)
 /**
  * @brief Use this if the value might change and you need the position in the buffer
  */
-static char* SV_WriteDummyByte (unsigned char c)
+static char* SV_WriteDummyByte (byte c)
 {
 	char *pos = pfe_msg->end;
 	NET_WriteByte(pfe_msg, c);

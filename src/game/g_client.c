@@ -1435,7 +1435,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	float div, tu;
 	int contentFlags;
 	vec3_t pointTrace;
-	char* stepAmount = NULL;
+	byte* stepAmount = NULL;
 	qboolean triggers = qfalse;
 	edict_t* client_action;
 	int oldState;

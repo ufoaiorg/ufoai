@@ -177,8 +177,8 @@ typedef struct {
 	/* network messaging (writing) */
 	void (IMPORT *WriteChar) (char c);
 
-	void (IMPORT *WriteByte) (unsigned char c);
-	char* (IMPORT *WriteDummyByte) (unsigned char c);
+	void (IMPORT *WriteByte) (byte c);
+	char* (IMPORT *WriteDummyByte) (byte c);
 	void (IMPORT *WriteShort) (int c);
 
 	void (IMPORT *WriteLong) (int c);

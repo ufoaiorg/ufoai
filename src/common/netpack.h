@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "dbuffer.h"
 
 void NET_WriteChar(struct dbuffer *buf, char c);
-void NET_WriteByte(struct dbuffer *buf, unsigned char c);
+void NET_WriteByte(struct dbuffer *buf, byte c);
 void NET_WriteShort(struct dbuffer *buf, int c);
 void NET_WriteLong(struct dbuffer *buf, int c);
 void NET_WriteString(struct dbuffer *buf, const char *str);
