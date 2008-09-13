@@ -1086,6 +1086,7 @@ void CheckLevelFlags (void)
  * @sa CheckFlags
  * @note surfaceFlags are set in side_t for map compiling and in brush_texture_t
  * because this is saved back on -fix.
+ * @note also removes phongs from nodraws. also removes legacy flags.
  */
 void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brush)
 {
@@ -1143,13 +1144,19 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 			"%s implied by %s texture has been set\n", flagsDescription ? flagsDescription : "-", texname);
 	}
 
-	/*one additional test, which does not directly depend on tex. */
+	/* additional test, which does not directly depend on tex. */
 	if ((tex->surfaceFlags & SURF_NODRAW) && (tex->surfaceFlags & SURF_PHONG)) {
 		/* nodraw never has phong set */
 		side->surfaceFlags &= ~SURF_PHONG;
 		tex->surfaceFlags &= ~SURF_PHONG;
 		Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,
 				"SURF_PHONG unset, as it has SURF_NODRAW set\n");
+	}
+
+	if (side->surfaceFlags & SURF_SKIP) {
+		side->surfaceFlags &= ~SURF_SKIP;
+		Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,
+				"removing legacy flag, SURF_SKIP\n");
 	}
 }
 
