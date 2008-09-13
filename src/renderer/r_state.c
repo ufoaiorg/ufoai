@@ -416,7 +416,7 @@ void R_StatePrint (void)
 		Com_Printf("%c..... enabled: %i\n", COLORED_GREEN, tex->enabled);
 		Com_Printf("%c..... texture: %i\n", COLORED_GREEN, tex->texture);
 		Com_Printf("%c..... texture env: %i\n", COLORED_GREEN, tex->texenv);
-		Com_Printf("%c..... texture num: %i\n", COLORED_GREEN, tex->texnum);s
+		Com_Printf("%c..... texture num: %i\n", COLORED_GREEN, tex->texnum);
 	}
 }
 
