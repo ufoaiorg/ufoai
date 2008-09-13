@@ -410,15 +410,13 @@ void R_StatePrint (void)
 	Com_Printf("%c... filter min: %i\n", COLORED_GREEN, r_config.gl_filter_min);
 	Com_Printf("%c... filter max: %i\n", COLORED_GREEN, r_config.gl_filter_max);
 
-	for (i = 0; i < MAX_GL_TEXUNITS; i++) {
+	for (i = 0; i < r_config.maxTextureUnits; i++) {
 		const gltexunit_t *tex = &r_state.texunits[i];
-		if (i >= r_config.maxTextureUnits)
-			continue;
 		Com_Printf("%c... texunit: %i\n", COLORED_GREEN, i);
 		Com_Printf("%c..... enabled: %i\n", COLORED_GREEN, tex->enabled);
 		Com_Printf("%c..... texture: %i\n", COLORED_GREEN, tex->texture);
 		Com_Printf("%c..... texture env: %i\n", COLORED_GREEN, tex->texenv);
-		Com_Printf("%c..... texture num: %i\n", COLORED_GREEN, tex->texnum);
+		Com_Printf("%c..... texture num: %i\n", COLORED_GREEN, tex->texnum);s
 	}
 }
 
