@@ -282,7 +282,7 @@ inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const 
 	const int bufferSize = 22;
 	char buf[bufferSize];
 	std::size_t length = snprintf(buf, bufferSize, "%.7g", decimal.m_f);
-	ostream.write(buf, length + 1);
+	ostream.write(buf, length);
 	return ostream;
 }
 
