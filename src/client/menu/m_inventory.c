@@ -431,7 +431,7 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 			 * handled differently than normal containers somehow.
 			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
 			 * In a perfect world node->container would always be the same as dragInfo.to here. */
-			dragInfo.toNode = (menuNode_t *)node;
+			dragInfo.toNode = node;
 			dragInfo.to = node->container;
 			dragInfo.toX = 0;
 			dragInfo.toY = 0;

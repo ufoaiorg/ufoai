@@ -47,7 +47,7 @@ typedef struct dragInfo_s {
 	int fromY;		/**< The Y position in the container the item was/is located. */
 
 	/* The "to" variables are only used in cl_screen.c to draw the preview. */
-	menuNode_t *toNode;
+	const menuNode_t *toNode;
 	const invDef_t * to;
 	int toX;
 	int toY;
