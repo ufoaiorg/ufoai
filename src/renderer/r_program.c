@@ -397,7 +397,7 @@ static void R_UseDefaultProgram (void)
 
 static void R_ThinkDefaultProgram (void)
 {
-	static float last_b, last_s;
+	static float last_b = 0.0f, last_s = 0.0f;
 
 	if (r_state.bumpmap_enabled) {
 		const float b = r_state.active_material->bump * r_bumpmap->value;
@@ -424,7 +424,7 @@ static void R_InitWarpProgram (void)
 
 static void R_UseWarpProgram (void)
 {
-	static vec4_t offset;
+	static vec4_t offset = {0, 0, 0, 0};
 
 	offset[0] = offset[1] = refdef.time / 8.0;
 	R_ProgramParameter4fv("OFFSET", offset);
@@ -445,7 +445,7 @@ void R_InitPrograms (void)
 		R_UseDefaultProgram, R_ThinkDefaultProgram);
 
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram,
-			R_UseWarpProgram, NULL);
+		R_UseWarpProgram, NULL);
 }
 
 /**
