@@ -82,6 +82,7 @@ cvar_t *r_programs;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
 cvar_t *r_bumpmap;
+cvar_t *r_specular;
 cvar_t *r_shownormals;
 
 /**
@@ -421,7 +422,8 @@ static void R_RegisterSystemVars (void)
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE, "Use GLSL shaders");
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
-	r_bumpmap = Cvar_Get("r_bumpmap", "0", CVAR_ARCHIVE, "Activate bump mapping");
+	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE, "Activate bump mapping");
+	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

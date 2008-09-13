@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_STATE_H
 
 #include "r_program.h"
+#include "r_material.h"
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
@@ -80,6 +81,8 @@ typedef struct {
 
 	qboolean ortho;
 
+	material_t *active_material;
+
 	/* states */
 	qboolean blend_enabled;
 	qboolean alpha_test_enabled;
@@ -113,7 +116,7 @@ void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
-void R_EnableBumpmap(qboolean enable);
+void R_EnableBumpmap(qboolean enable, material_t *material);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 
 #endif

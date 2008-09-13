@@ -114,6 +114,7 @@ static void R_ResetArrayState (void)
 static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
 	const model_t* mod = r_mapTiles[surf->tile];
+	image_t *image;
 
 	if (r_state.blend_enabled) {  /* alpha blend */
 		vec4_t color = {1.0, 1.0, 1.0, 1.0};
@@ -138,19 +139,20 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 			R_SetVertexArrayState(mod);
 	}
 
-	R_BindTexture(surf->texinfo->image->texnum);  /* texture */
+	image = surf->texinfo->image;
+	R_BindTexture(image->texnum);  /* texture */
 
 	if (texunit_lightmap.enabled)  /* lightmap */
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 	if (r_state.lighting_enabled) {
-		if (r_bumpmap->value && surf->texinfo->image->normalmap) {
+		if (r_bumpmap->value && image->normalmap) {
 			R_BindDeluxemapTexture(surf->deluxemap_texnum);
-			R_BindNormalmapTexture(surf->texinfo->image->normalmap->texnum);
+			R_BindNormalmapTexture(image->normalmap->texnum);
 
-			R_EnableBumpmap(qtrue);
+			R_EnableBumpmap(qtrue, &image->material);
 		} else
-			R_EnableBumpmap(qfalse);
+			R_EnableBumpmap(qfalse, NULL);
 	}
 
 	R_CheckError();
@@ -187,7 +189,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 
 	/* reset state */
 	if (r_state.bumpmap_enabled)
-		R_EnableBumpmap(qfalse);
+		R_EnableBumpmap(qfalse, NULL);
 
 	/* and restore array pointers */
 	R_ResetArrayState();

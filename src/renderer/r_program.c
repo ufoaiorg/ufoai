@@ -383,7 +383,8 @@ static void R_InitDefaultProgram (void)
 	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
 
-	R_ProgramParameter1f("SPECULAR", r_bumpmap->value);
+	R_ProgramParameter1f("BUMP", 1.0);
+	R_ProgramParameter1f("SPECULAR", 1.0);
 }
 
 static void R_UseDefaultProgram (void)
@@ -396,14 +397,19 @@ static void R_UseDefaultProgram (void)
 
 static void R_ThinkDefaultProgram (void)
 {
+	static float last_b, last_s;
+
 	if (r_state.bumpmap_enabled) {
+		const float b = r_state.active_material->bump * r_bumpmap->value;
+		const float s = r_state.active_material->specular * r_specular->value;
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
-		/* update bumpiness */
-		if (r_bumpmap->modified) {
-			R_ProgramParameter1f("SPECULAR", r_bumpmap->value);
-			r_bumpmap->modified = qfalse;
-		}
+		if (b != last_b)
+			R_ProgramParameter1f("BUMP", b);
+		if (s != last_s)
+			R_ProgramParameter1f("SPECULAR", s);
+		last_b = b;
+		last_s = s;
 	} else {
 		R_DisableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 0);

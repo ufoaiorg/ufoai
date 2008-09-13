@@ -111,6 +111,8 @@ typedef struct materialStage_s {
 typedef struct material_s {
 	unsigned flags;
 	float time;
+	float bump;
+	float specular;
 	materialStage_t *stages;
 	int num_stages;
 } material_t;

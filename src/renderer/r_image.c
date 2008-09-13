@@ -60,6 +60,7 @@ void R_ImageClearMaterials (void)
 		}
 
 		memset(m, 0, sizeof(*m));
+		m->bump = m->specular = 1.0;
 	}
 }
 

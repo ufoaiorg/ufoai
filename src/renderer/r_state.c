@@ -243,16 +243,21 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 	}
 }
 
-void R_EnableBumpmap (qboolean enable)
+void R_EnableBumpmap (qboolean enable, material_t *material)
 {
 	if (!r_state.lighting_enabled)
 		return;
 
-	if (!r_bumpmap->value || r_state.bumpmap_enabled == enable)
+	if (!r_bumpmap->value)
+		return;
+
+	/* same state, same material, no change */
+	if (r_state.bumpmap_enabled == enable && r_state.active_material == material)
 		return;
 
 	/* toggle state */
 	r_state.bumpmap_enabled = enable;
+	r_state.active_material = material;
 
 	r_state.default_program->think();
 }

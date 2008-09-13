@@ -658,6 +658,21 @@ void R_LoadMaterials (const char *map)
 			continue;
 
 		m = &image->material;
+		if (!strcmp(c, "bump")) {
+			m->bump = atof(COM_Parse(&buffer));
+			if (m->bump < 0.5) {
+				Com_Printf("R_LoadMaterials: Invalid bump value for %s\n", image->name);
+				m->bump = 0.5;
+			}
+		}
+
+		if (!strcmp(c, "specular")) {
+			m->specular = atof(COM_Parse(&buffer));
+			if (m->specular < 0.5) {
+				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
+				m->specular = 0.5;
+			}
+		}
 
 		if (*c == '{' && inmaterial) {
 			s = (materialStage_t *)Mem_PoolAlloc(sizeof(materialStage_t), vid_imagePool, 0);
