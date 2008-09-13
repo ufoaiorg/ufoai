@@ -344,7 +344,7 @@ void ToolsCompile (void)
 		char bufParam[1024];
 		char bufPath[1024];
 		const char* fullname = Map_Name(g_map);
-		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param");
+		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
 
 		snprintf(bufParam, sizeof(bufParam) - 1, "%s %s", compiler_parameter, fullname);
 		bufParam[sizeof(bufParam) - 1] = '\0';
