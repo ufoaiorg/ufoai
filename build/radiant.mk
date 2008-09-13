@@ -74,6 +74,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \

@@ -364,6 +364,9 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\particles.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\maptools.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
