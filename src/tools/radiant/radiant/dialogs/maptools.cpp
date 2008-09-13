@@ -89,10 +89,8 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 		const char *mapcompiler = path_get_filename_start(compilerBinaryWithPath);
 		strncpy(bufPath, compilerBinaryWithPath, mapcompiler - compilerBinaryWithPath);
 		bufPath[mapcompiler - compilerBinaryWithPath] = '\0';
-		StringOutputStream cleanDir(256);
-		cleanDir << DirectoryCleaned(bufPath);
 
-		char* output = Q_Exec(mapcompiler, bufParam, cleanDir.c_str(), false);
+		char* output = Q_Exec(mapcompiler, bufParam, bufPath, false);
 		if (output) {
 			// reload after fix
 			Map_Reload();
@@ -229,10 +227,8 @@ void ToolsCheckErrors (void)
 		const char *mapcompiler = path_get_filename_start(compilerBinaryWithPath);
 		strncpy(bufPath, compilerBinaryWithPath, mapcompiler - compilerBinaryWithPath);
 		bufPath[mapcompiler - compilerBinaryWithPath] = '\0';
-		StringOutputStream cleanDir(256);
-		cleanDir << DirectoryCleaned(bufPath);
 
-		char* output = Q_Exec(mapcompiler, bufParam, cleanDir.c_str(), false);
+		char* output = Q_Exec(mapcompiler, bufParam, bufPath, false);
 		if (output) {
 			if (!checkDialog)
 				CreateCheckDialog();
@@ -353,11 +349,9 @@ void ToolsCompile (void)
 		const char *mapcompiler = path_get_filename_start(compilerBinaryWithPath);
 		strncpy(bufPath, compilerBinaryWithPath, mapcompiler - compilerBinaryWithPath);
 		bufPath[mapcompiler - compilerBinaryWithPath] = '\0';
-		StringOutputStream cleanDir(256);
-		cleanDir << DirectoryCleaned(bufPath);
 
 		/** @todo thread this and update the main window */
-		char* output = Q_Exec(mapcompiler, bufParam, cleanDir.c_str(), false);
+		char* output = Q_Exec(mapcompiler, bufParam, bufPath, false);
 		if (output) {
 			/** @todo parse and display this in a gtk window */
 			globalOutputStream() << output;
