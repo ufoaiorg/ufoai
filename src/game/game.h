@@ -178,7 +178,7 @@ typedef struct {
 	void (IMPORT *WriteChar) (char c);
 
 	void (IMPORT *WriteByte) (byte c);
-	char* (IMPORT *WriteDummyByte) (byte c);
+	byte* (IMPORT *WriteDummyByte) (byte c);
 	void (IMPORT *WriteShort) (int c);
 
 	void (IMPORT *WriteLong) (int c);
