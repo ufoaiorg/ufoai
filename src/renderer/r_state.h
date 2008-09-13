@@ -49,8 +49,8 @@ typedef struct gltexunit_s {
 /* these are defined for convenience */
 #define texunit_diffuse		r_state.texunits[0]
 #define texunit_lightmap	r_state.texunits[1]
-#define texunit_normalmap	r_state.texunits[2]
-#define texunit_deluxemap	r_state.texunits[3]
+#define texunit_deluxemap	r_state.texunits[2]
+#define texunit_normalmap	r_state.texunits[3]
 
 typedef struct {
 	qboolean fullscreen;
