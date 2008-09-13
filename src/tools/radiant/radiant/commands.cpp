@@ -184,6 +184,11 @@ static void keyShortcutEdited (GtkCellRendererText *renderer, gchar* path, gchar
 						break;
 					}
 				} while (1);
+
+				// modifiers only is not allowed
+				if (!accelerator.key)
+					modifiers = 0;
+
 				accelerator.modifiers = (GdkModifierType)modifiers;
 			}
 		}
@@ -359,6 +364,8 @@ public:
 					++m_count;
 				} else {
 					globalOutputStream() << "WARNING: failed to parse user command " << makeQuoted(value) << ": unknown key " << makeQuoted(keyName.c_str()) << "\n";
+					// modifier only bindings are not allowed
+					accelerator.modifiers = (GdkModifierType)0;
 				}
 			}
 		}
