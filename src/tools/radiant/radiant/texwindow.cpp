@@ -1366,17 +1366,17 @@ typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureScaleE
 
 static void TextureBrowser_constructPreferences (PreferencesPage& page) {
 	page.appendCheckBox(
-	    "", "Texture scrollbar",
-	    TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser()),
-	    BoolExportCaller(GlobalTextureBrowser().m_showTextureScrollbar)
+		"", "Texture scrollbar",
+		TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser()),
+		BoolExportCaller(GlobalTextureBrowser().m_showTextureScrollbar)
 	);
 	{
 		const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
 		page.appendCombo(
-		    "Texture Thumbnail Scale",
-		    STRING_ARRAY_RANGE(texture_scale),
-		    IntImportCallback(TextureScaleImportCaller(GlobalTextureBrowser())),
-		    IntExportCallback(TextureScaleExportCaller(GlobalTextureBrowser()))
+			"Texture Thumbnail Scale",
+			STRING_ARRAY_RANGE(texture_scale),
+			IntImportCallback(TextureScaleImportCaller(GlobalTextureBrowser())),
+			IntExportCallback(TextureScaleExportCaller(GlobalTextureBrowser()))
 		);
 	}
 	page.appendEntry("Mousewheel Increment", GlobalTextureBrowser().m_mouseWheelScrollIncrement);
@@ -1401,11 +1401,10 @@ static void TextureBrowser_registerPreferencesPage (void) {
 
 typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> TextureBrowserSetScaleCaller;
 
-
-
 void TextureClipboard_textureSelected(const char* shader);
 
-void TextureBrowser_Construct (void) {
+void TextureBrowser_Construct (void)
+{
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders>());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_hideunused_item), Accelerator('U'));
 	GlobalCommands_insert("ShowAllTextures", FreeCaller<TextureBrowser_showAll>(), Accelerator('A', (GdkModifierType)GDK_CONTROL_MASK));
@@ -1416,13 +1415,11 @@ void TextureBrowser_Construct (void) {
 	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_fixedsize_item));
 
 	GlobalPreferenceSystem().registerPreference("TextureScale",
-	        makeSizeStringImportCallback(TextureBrowserSetScaleCaller(g_TextureBrowser)),
-	        SizeExportStringCaller(g_TextureBrowser.m_textureScale)
-	                                           );
+		makeSizeStringImportCallback(TextureBrowserSetScaleCaller(g_TextureBrowser)),
+		SizeExportStringCaller(g_TextureBrowser.m_textureScale));
 	GlobalPreferenceSystem().registerPreference("TextureScrollbar",
-	        makeBoolStringImportCallback(TextureBrowserImportShowScrollbarCaller(g_TextureBrowser)),
-	        BoolExportStringCaller(GlobalTextureBrowser().m_showTextureScrollbar)
-	                                           );
+		makeBoolStringImportCallback(TextureBrowserImportShowScrollbarCaller(g_TextureBrowser)),
+		BoolExportStringCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(GlobalTextureBrowser().m_showShaders));
 	GlobalPreferenceSystem().registerPreference("ShowShaderlistOnly", BoolImportStringCaller(g_TextureBrowser_shaderlistOnly), BoolExportStringCaller(g_TextureBrowser_shaderlistOnly));
 	GlobalPreferenceSystem().registerPreference("FixedSize", BoolImportStringCaller(g_TextureBrowser_fixedSize), BoolExportStringCaller(g_TextureBrowser_fixedSize));
@@ -1441,7 +1438,8 @@ void TextureBrowser_Construct (void) {
 	TextureBrowser_textureSelected = TextureClipboard_textureSelected;
 }
 
-void TextureBrowser_Destroy (void) {
+void TextureBrowser_Destroy (void)
+{
 	GlobalShaderSystem().detach(g_ShadersObserver);
 
 	Textures_setModeChangedNotify(Callback());

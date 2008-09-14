@@ -33,22 +33,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 typedef std::pair<Accelerator, bool> ShortcutValue; // accelerator, isRegistered
 typedef std::map<CopiedString, ShortcutValue> Shortcuts;
 
-void Shortcuts_foreach (Shortcuts& shortcuts, CommandVisitor& visitor)
-{
-	for (Shortcuts::iterator i = shortcuts.begin(); i != shortcuts.end(); ++i) {
-		visitor.visit((*i).first.c_str(), (*i).second.first);
-	}
-}
-
 static Shortcuts g_shortcuts;
 
-const Accelerator& GlobalShortcuts_insert(const char* name, const Accelerator& accelerator) {
+const Accelerator& GlobalShortcuts_insert (const char* name, const Accelerator& accelerator)
+{
 	return (*g_shortcuts.insert(Shortcuts::value_type(name, ShortcutValue(accelerator, false))).first).second.first;
 }
 
 void GlobalShortcuts_foreach (CommandVisitor& visitor)
 {
-	Shortcuts_foreach(g_shortcuts, visitor);
+	for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
+		visitor.visit((*i).first.c_str(), (*i).second.first);
+	}
 }
 
 void GlobalShortcuts_register (const char* name)

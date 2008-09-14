@@ -34,7 +34,6 @@ void SurfaceInspector_destroyWindow();
 bool SelectedFaces_empty();
 void SelectedFaces_copyTexture();
 void SelectedFaces_pasteTexture();
-void FaceTextureClipboard_setDefault();
 
 
 // the increment we are using for the surface inspector (this is saved in the prefs)

@@ -81,11 +81,11 @@ public:
 	GtkEntry* m_entry;
 	Increment(float& f) : m_f(f), m_spin(0), m_entry(0) {
 	}
-	void cancel() {
+	void cancel (void) {
 		entry_set_float(m_entry, m_f);
 	}
 	typedef MemberCaller<Increment, &Increment::cancel> CancelCaller;
-	void apply() {
+	void apply (void) {
 		m_f = static_cast<float>(entry_get_float(m_entry));
 		spin_button_set_step(m_spin, m_f);
 	}
@@ -163,13 +163,13 @@ public:
 		Create();
 		AddGridChangeCallback(FreeCaller<SurfaceInspector_GridChange>());
 	}
-	void destroyWindow() {
+	void destroyWindow (void) {
 		Destroy();
 	}
 	bool visible() const {
 		return GTK_WIDGET_VISIBLE(const_cast<GtkWindow*>(GetWidget()));
 	}
-	void queueDraw() {
+	void queueDraw (void) {
 		if (visible()) {
 			m_idleDraw.queueDraw();
 		}
@@ -188,7 +188,7 @@ public:
 namespace {
 SurfaceInspector* g_SurfaceInspector;
 
-inline SurfaceInspector& getSurfaceInspector() {
+inline SurfaceInspector& getSurfaceInspector (void) {
 	ASSERT_NOTNULL(g_SurfaceInspector);
 	return *g_SurfaceInspector;
 }
@@ -197,11 +197,11 @@ inline SurfaceInspector& getSurfaceInspector() {
 void SurfaceInspector_constructWindow(GtkWindow* main_window) {
 	getSurfaceInspector().constructWindow(main_window);
 }
-void SurfaceInspector_destroyWindow() {
+void SurfaceInspector_destroyWindow (void) {
 	getSurfaceInspector().destroyWindow();
 }
 
-void SurfaceInspector_queueDraw() {
+void SurfaceInspector_queueDraw (void) {
 	getSurfaceInspector().queueDraw();
 }
 
@@ -229,7 +229,7 @@ void SurfaceInspector_SetSelectedFlags(const ContentsFlagsValue& flags) {
 
 static bool s_texture_selection_dirty = false;
 
-void SurfaceInspector_updateSelection() {
+void SurfaceInspector_updateSelection (void) {
 	s_texture_selection_dirty = true;
 	SurfaceInspector_queueDraw();
 }
@@ -238,7 +238,7 @@ void SurfaceInspector_SelectionChanged(const Selectable& selectable) {
 	SurfaceInspector_updateSelection();
 }
 
-void SurfaceInspector_SetCurrent_FromSelected() {
+void SurfaceInspector_SetCurrent_FromSelected (void) {
 	if (s_texture_selection_dirty == true) {
 		s_texture_selection_dirty = false;
 		if (!g_SelectedFaceInstances.empty()) {
@@ -278,17 +278,17 @@ void SurfaceInspector_SetCurrent_FromSelected() {
 	}
 }
 
-const char* SurfaceInspector_GetSelectedShader() {
+const char* SurfaceInspector_GetSelectedShader (void) {
 	SurfaceInspector_SetCurrent_FromSelected();
 	return g_selectedShader.c_str();
 }
 
-const TextureProjection& SurfaceInspector_GetSelectedTexdef() {
+const TextureProjection& SurfaceInspector_GetSelectedTexdef (void) {
 	SurfaceInspector_SetCurrent_FromSelected();
 	return g_selectedTexdef;
 }
 
-const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags() {
+const ContentsFlagsValue& SurfaceInspector_GetSelectedFlags (void) {
 	SurfaceInspector_SetCurrent_FromSelected();
 	return g_selectedFlags;
 }
@@ -318,7 +318,7 @@ static void DoSnapTToGrid(float hscale, float vscale) {
 	getSurfaceInspector().queueDraw();
 }
 
-void SurfaceInspector_GridChange() {
+void SurfaceInspector_GridChange (void) {
 	if (g_si_globals.m_bSnapTToGrid)
 		DoSnapTToGrid(Texdef_getDefaultTextureScale(), Texdef_getDefaultTextureScale());
 }
@@ -358,7 +358,7 @@ void DoSurface (void) {
 	getSurfaceInspector().ShowDlg();
 }
 
-void SurfaceInspector_toggleShown() {
+void SurfaceInspector_toggleShown (void) {
 	if (getSurfaceInspector().visible()) {
 		getSurfaceInspector().HideDlg();
 	} else {
@@ -366,7 +366,7 @@ void SurfaceInspector_toggleShown() {
 	}
 }
 
-void SurfaceInspector_FitTexture() {
+void SurfaceInspector_FitTexture (void) {
 	UndoableCommand undo("textureAutoFit");
 	Select_FitTexture(getSurfaceInspector().m_fitHorizontal, getSurfaceInspector().m_fitVertical);
 }
@@ -474,11 +474,12 @@ const char* getContentFlagName(std::size_t bit) {
 // =============================================================================
 // SurfaceInspector class
 
-guint togglebutton_connect_toggled(GtkToggleButton* button, const Callback& callback) {
+static guint togglebutton_connect_toggled(GtkToggleButton* button, const Callback& callback) {
 	return g_signal_connect_swapped(G_OBJECT(button), "toggled", G_CALLBACK(callback.getThunk()), callback.getEnvironment());
 }
 
-GtkWindow* SurfaceInspector::BuildDialog() {
+GtkWindow* SurfaceInspector::BuildDialog (void)
+{
 	GtkWindow* window = create_floating_window("Surface Inspector", m_parent);
 
 	m_positionTracker.connect(window);
@@ -514,7 +515,6 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 			}
 		}
 
-
 		{
 			GtkWidget* table = gtk_table_new (6, 4, FALSE);
 			gtk_widget_show (table);
@@ -526,8 +526,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
@@ -535,8 +535,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				m_hshiftSpinner.connect(spin);
 				gtk_widget_show(GTK_WIDGET(spin));
 				gtk_table_attach (GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 0, 1,
-				                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                  (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
 			}
 			{
@@ -544,15 +544,15 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 0, 1,
-				                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
 				m_hshiftIncrement.m_entry = entry;
 				m_hshiftEntry.connect(entry);
@@ -562,8 +562,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
@@ -571,8 +571,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				m_vshiftSpinner.connect(spin);
 				gtk_widget_show(GTK_WIDGET(spin));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 1, 2,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
 			}
 			{
@@ -580,15 +580,15 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 1, 2,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
 				m_vshiftIncrement.m_entry = entry;
 				m_vshiftEntry.connect(entry);
@@ -598,8 +598,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
@@ -607,8 +607,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				m_hscaleSpinner.connect(spin);
 				gtk_widget_show(GTK_WIDGET(spin));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 2, 3,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
 			}
 			{
@@ -616,15 +616,15 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 2, 3,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 2, 3);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 2, 3);
 			}
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 2, 3,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 2, 3);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 2, 3);
 				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
 				m_hscaleIncrement.m_entry = entry;
 				m_hscaleEntry.connect(entry);
@@ -634,8 +634,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
@@ -643,8 +643,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				m_vscaleSpinner.connect(spin);
 				gtk_widget_show(GTK_WIDGET(spin));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 3, 4,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
 			}
 			{
@@ -652,15 +652,15 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 3, 4,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 3, 4,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
 				m_vscaleIncrement.m_entry = entry;
 				m_vscaleEntry.connect(entry);
@@ -670,8 +670,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 4, 5,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
@@ -679,8 +679,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				m_rotateSpinner.connect(spin);
 				gtk_widget_show(GTK_WIDGET(spin));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 4, 5,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
 				gtk_spin_button_set_wrap(spin, TRUE);
 			}
@@ -689,15 +689,15 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show (label);
 				gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 4, 5,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 4, 5,
-				                 (GtkAttachOptions) (GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
 				m_rotateIncrement.m_entry = entry;
 				m_rotateEntry.connect(entry);
@@ -707,8 +707,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				GtkWidget* button = gtk_button_new_with_label ("Match Grid");
 				gtk_widget_show (button);
 				gtk_table_attach(GTK_TABLE(table), button, 2, 4, 5, 6,
-				                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(OnBtnMatchGrid), 0);
 			}
 		}
@@ -728,49 +728,49 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 					GtkWidget* label = gtk_label_new ("Brush");
 					gtk_widget_show (label);
 					gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 				}
 				{
 					GtkWidget* label = gtk_label_new ("Width");
 					gtk_widget_show (label);
 					gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 				}
 				{
 					GtkWidget* label = gtk_label_new ("Height");
 					gtk_widget_show (label);
 					gtk_table_attach(GTK_TABLE(table), label, 3, 4, 0, 1,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 				}
 				{
 					GtkWidget* button = gtk_button_new_with_label ("Axial");
 					gtk_widget_show (button);
 					gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					g_signal_connect(G_OBJECT(button), "clicked",
-					                 G_CALLBACK(OnBtnAxial), 0);
+									G_CALLBACK(OnBtnAxial), 0);
 					gtk_widget_set_usize (button, 60, -2);
 				}
 				{
 					GtkWidget* button = gtk_button_new_with_label ("Fit");
 					gtk_widget_show (button);
 					gtk_table_attach(GTK_TABLE(table), button, 1, 2, 1, 2,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					g_signal_connect(G_OBJECT(button), "clicked",
-					                 G_CALLBACK(OnBtnFaceFit), 0);
+									G_CALLBACK(OnBtnFaceFit), 0);
 					gtk_widget_set_usize (button, 60, -2);
 				}
 				{
 					GtkWidget* spin = gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
 					gtk_widget_show (spin);
 					gtk_table_attach(GTK_TABLE(table), spin, 2, 3, 1, 2,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_widget_set_usize (spin, 60, -2);
 					AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
 				}
@@ -778,8 +778,8 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 					GtkWidget* spin = gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
 					gtk_widget_show (spin);
 					gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_widget_set_usize (spin, 60, -2);
 					AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
 				}
@@ -828,7 +828,6 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 				gtk_widget_show(GTK_WIDGET(vbox3));
 				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
 				{
-
 					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
 					gtk_widget_show(GTK_WIDGET(table));
 					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
@@ -840,7 +839,7 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 					for (int c = 0; c != 4; ++c) {
 						for (int r = 0; r != 8; ++r) {
 							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(getContentFlagName(c * 8 + r)));
-							gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON(check), FALSE);
+							gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
 							gtk_widget_show(GTK_WIDGET(check));
 							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
 												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
@@ -881,28 +880,23 @@ GtkWindow* SurfaceInspector::BuildDialog() {
 	return window;
 }
 
-/*
-==============
-Update
-
-Set the fields to the current texdef (i.e. map/texdef -> dialog widgets)
-if faces selected (instead of brushes) -> will read this face texdef, else current texdef
-===============
-*/
-
-void spin_button_set_value_no_signal(GtkSpinButton* spin, gdouble value) {
+static void spin_button_set_value_no_signal(GtkSpinButton* spin, gdouble value) {
 	guint handler_id = gpointer_to_int(g_object_get_data(G_OBJECT(spin), "handler"));
 	g_signal_handler_block(G_OBJECT(gtk_spin_button_get_adjustment(spin)), handler_id);
 	gtk_spin_button_set_value(spin, value);
 	g_signal_handler_unblock(G_OBJECT(gtk_spin_button_get_adjustment(spin)), handler_id);
 }
 
-void spin_button_set_step_increment(GtkSpinButton* spin, gdouble value) {
+static void spin_button_set_step_increment(GtkSpinButton* spin, gdouble value) {
 	GtkAdjustment* adjust = gtk_spin_button_get_adjustment(spin);
 	adjust->step_increment = value;
 }
 
-void SurfaceInspector::Update() {
+/**
+ * @brief Set the fields to the current texdef (i.e. map/texdef -> dialog widgets)
+ * if faces selected (instead of brushes) -> will read this face texdef, else current texdef
+ */
+void SurfaceInspector::Update (void) {
 	const char * name = SurfaceInspector_GetSelectedShader();
 
 	if (shader_is_texture(name)) {
@@ -965,7 +959,7 @@ void SurfaceInspector::Update() {
 /**
  * @brief Reads the fields to get the current texdef (i.e. widgets -> MAP)
  */
-void SurfaceInspector::ApplyShader() {
+void SurfaceInspector::ApplyShader (void) {
 	StringOutputStream name(256);
 	name << GlobalTexturePrefix_get() << gtk_entry_get_text(m_texture);
 
@@ -980,7 +974,7 @@ void SurfaceInspector::ApplyShader() {
 	Select_SetShader(name.c_str());
 }
 
-void SurfaceInspector::ApplyTexdef() {
+void SurfaceInspector::ApplyTexdef (void) {
 	texdef_t shiftScaleRotate;
 
 	shiftScaleRotate.shift[0] = static_cast<float>(gtk_spin_button_get_value_as_float(m_hshiftIncrement.m_spin));
@@ -996,7 +990,7 @@ void SurfaceInspector::ApplyTexdef() {
 	Select_SetTexdef(projection);
 }
 
-void SurfaceInspector::ApplyFlags() {
+void SurfaceInspector::ApplyFlags (void) {
 	unsigned int surfaceflags = 0;
 	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
 		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(*p))) {
@@ -1042,7 +1036,7 @@ struct Texturable {
 };
 
 
-void Face_getClosest(Face& face, SelectionTest& test, SelectionIntersection& bestIntersection, Texturable& texturable) {
+static void Face_getClosest(Face& face, SelectionTest& test, SelectionIntersection& bestIntersection, Texturable& texturable) {
 	SelectionIntersection intersection;
 	face.testSelect(test, intersection);
 	if (intersection.valid()
@@ -1063,7 +1057,7 @@ public:
 	}
 	void pushSelectable(Selectable& selectable) {
 	}
-	void popSelectable() {
+	void popSelectable (void) {
 	}
 	void addIntersection(const SelectionIntersection& intersection) {
 		if (SelectionIntersection_closer(intersection, m_bestIntersection)) {
@@ -1110,7 +1104,7 @@ Texturable Scene_getClosestTexturable(scene::Graph& graph, SelectionTest& test) 
 	return texturable;
 }
 
-bool Scene_getClosestTexture(scene::Graph& graph, SelectionTest& test, CopiedString& shader, TextureProjection& projection, ContentsFlagsValue& flags) {
+static bool Scene_getClosestTexture(scene::Graph& graph, SelectionTest& test, CopiedString& shader, TextureProjection& projection, ContentsFlagsValue& flags) {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
 	if (texturable.getTexture != GetTextureCallback()) {
 		texturable.getTexture(shader, projection, flags);
@@ -1119,7 +1113,7 @@ bool Scene_getClosestTexture(scene::Graph& graph, SelectionTest& test, CopiedStr
 	return false;
 }
 
-void Scene_setClosestTexture(scene::Graph& graph, SelectionTest& test, const char* shader, const TextureProjection& projection, const ContentsFlagsValue& flags) {
+static void Scene_setClosestTexture(scene::Graph& graph, SelectionTest& test, const char* shader, const TextureProjection& projection, const ContentsFlagsValue& flags) {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
 	if (texturable.setTexture != SetTextureCallback()) {
 		texturable.setTexture(shader, projection, flags);
@@ -1135,7 +1129,7 @@ public:
 
 FaceTexture g_faceTextureClipboard;
 
-void FaceTextureClipboard_setDefault() {
+static void FaceTextureClipboard_setDefault (void) {
 	g_faceTextureClipboard.m_flags = ContentsFlagsValue(0, 0, 0, false);
 	TexDef_Construct_Default(g_faceTextureClipboard.m_projection);
 }
@@ -1180,11 +1174,11 @@ void FaceInstance_pasteTexture(FaceInstance& faceInstance) {
 	SceneChangeNotify();
 }
 
-bool SelectedFaces_empty() {
+bool SelectedFaces_empty (void) {
 	return g_SelectedFaceInstances.empty();
 }
 
-void SelectedFaces_pasteTexture() {
+void SelectedFaces_pasteTexture (void) {
 	UndoableCommand command("facePasteTexture");
 	g_SelectedFaceInstances.foreach(FaceInstance_pasteTexture);
 }
@@ -1198,11 +1192,11 @@ void SurfaceInspector_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Surface Inspector", "Surface Inspector Preferences"));
 	SurfaceInspector_constructPreferences(page);
 }
-void SurfaceInspector_registerPreferencesPage() {
+void SurfaceInspector_registerPreferencesPage (void) {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, SurfaceInspector_constructPage>());
 }
 
-void SurfaceInspector_registerCommands() {
+void SurfaceInspector_registerCommands (void) {
 	GlobalCommands_insert("FitTexture", FreeCaller<SurfaceInspector_FitTexture>(), Accelerator('B', (GdkModifierType)GDK_SHIFT_MASK));
 	GlobalCommands_insert("SurfaceInspector", FreeCaller<SurfaceInspector_toggleShown>(), Accelerator('S'));
 
@@ -1214,7 +1208,7 @@ void SurfaceInspector_registerCommands() {
 #include "preferencesystem.h"
 
 
-void SurfaceInspector_Construct() {
+void SurfaceInspector_Construct (void) {
 	g_SurfaceInspector = new SurfaceInspector;
 
 	SurfaceInspector_registerCommands();
@@ -1236,6 +1230,6 @@ void SurfaceInspector_Construct() {
 
 	SurfaceInspector_registerPreferencesPage();
 }
-void SurfaceInspector_Destroy() {
+void SurfaceInspector_Destroy (void) {
 	delete g_SurfaceInspector;
 }
