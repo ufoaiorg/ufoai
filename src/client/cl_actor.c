@@ -2934,8 +2934,9 @@ static qboolean CL_TraceMove (pos3_t to)
 	pos3_t pos;
 	int dv;
 	int crouching_state;
-
+#ifdef DEBUG
 	int counter = 0;
+#endif
 
 	if (!selActor)
 		return qfalse;
@@ -2952,7 +2953,9 @@ static qboolean CL_TraceMove (pos3_t to)
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
 	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
+#ifdef DEBUG
 		assert(++counter < 100);
+#endif
 		length = CL_MoveLength(pos);
 		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
