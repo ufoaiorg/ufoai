@@ -1620,16 +1620,16 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					gi.WriteByte(dv);
 					gi.WriteShort(contentFlags);
 
-				oldState = ent->visflags;
-				/* check if player appears/perishes, seen from other teams */
-				status = G_CheckVis(ent, qtrue);
-				if (status & VIS_APPEAR) {
-					const int deltaVisMask = (oldState ^ ent->visflags) & ent->visflags;
-					const int playerMask = G_VisToPM(deltaVisMask);
-					/* the player appear in mid move, so we have to inform the players
-					 * that are now able to see the actor */
-					G_ClientStartMove(ent, playerMask);
-				}
+					oldState = ent->visflags;
+					/* check if player appears/perishes, seen from other teams */
+					status = G_CheckVis(ent, qtrue);
+					if (status & VIS_APPEAR) {
+						const int deltaVisMask = (oldState ^ ent->visflags) & ent->visflags;
+						const int playerMask = G_VisToPM(deltaVisMask);
+						/* the player appear in mid move, so we have to inform the players
+						 * that are now able to see the actor */
+						G_ClientStartMove(ent, playerMask);
+					}
 
 					/* check for anything appearing, seen by "the moving one" */
 					status = G_CheckVisTeam(ent->team, NULL, qfalse);
