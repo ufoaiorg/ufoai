@@ -10,12 +10,12 @@ base frozen/st_
 // Small building (team 2)
 tile +mp_t2
 {
-4 4
+3 4
 
-0      a      a      0
-a      +a     +a     a
-a      +a     +a     a
-0      a      a      0
+0      a      0
+a      +a     a
+a      +a     a
+0      a      0
 }
 
 // ########################################
@@ -357,4 +357,25 @@ title "_Multiplayer Deathmatch"
 +i06 "0 3"
 +mp_t2 "1 1"
 +drop_firebird "1 1"
+}
+
+//Assembly to replace industrial.map
+assembly industrial_static
+{
+size "7 6"
+fix +n02 "0 0"
+fix +n05 "1 1"
+fix +craft_ufo_fighter "2 0"
+fix +n01 "4 0"
+fix +i03 "4 1"
+fix +mp_t2 "6 1"
+fix +n05 "6 0"
+fix +i01 "0 2"
+fix +i02 "4 2"
+fix +n01 "5 3"
+fix +drop_firebird "0 4"
+fix +h02 "4 4"
+fix +h05 "3 4"
++n05 "0 10" //These Mapparts are just here to fill gaps that may appear after
++n04 "0 10" //someone changes the size of the used maps
 }
