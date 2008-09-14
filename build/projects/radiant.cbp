@@ -215,7 +215,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entity.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\entityinspector.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\entityinspector\entityinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\entitylist.cpp">
@@ -233,7 +233,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\filters.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\findtexturedialog.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findtextures.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\glwidget.cpp">
@@ -325,7 +325,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\stacktrace.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\surfacedialog.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\surfaceinspector\surfaceinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\texmanip.cpp">

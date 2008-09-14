@@ -20,13 +20,11 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/eclass.cpp \
 	$(RADIANT_BASE)/radiant/eclass_def.cpp \
 	$(RADIANT_BASE)/radiant/entity.cpp \
-	$(RADIANT_BASE)/radiant/entityinspector.cpp \
 	$(RADIANT_BASE)/radiant/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/error.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
 	$(RADIANT_BASE)/radiant/filters.cpp \
-	$(RADIANT_BASE)/radiant/findtexturedialog.cpp \
 	$(RADIANT_BASE)/radiant/glwidget.cpp \
 	$(RADIANT_BASE)/radiant/grid.cpp \
 	$(RADIANT_BASE)/radiant/groupdialog.cpp \
@@ -55,7 +53,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/selection.cpp \
 	$(RADIANT_BASE)/radiant/server.cpp \
 	$(RADIANT_BASE)/radiant/stacktrace.cpp \
-	$(RADIANT_BASE)/radiant/surfacedialog.cpp \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/texwindow.cpp \
@@ -75,6 +72,11 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/dialogs/light.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
+	\
+	$(RADIANT_BASE)/radiant/surfaceinspector/surfaceinspector.cpp \
+	\
+	$(RADIANT_BASE)/radiant/entityinspector/entityinspector.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \

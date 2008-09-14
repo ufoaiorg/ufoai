@@ -70,11 +70,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/entry.h"
 #include "gtkutil/container.h"
 
-#include "qe3.h"
-#include "gtkmisc.h"
-#include "entity.h"
-#include "mainframe.h"
-#include "textureentry.h"
+#include "../qe3.h"
+#include "../gtkmisc.h"
+#include "../entity.h"
+#include "../mainframe.h"
+#include "../textureentry.h"
 
 GtkEntry* numeric_entry_new() {
 	GtkEntry* entry = GTK_ENTRY(gtk_entry_new());

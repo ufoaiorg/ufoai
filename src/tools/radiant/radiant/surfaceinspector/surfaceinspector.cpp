@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Leonardo Zide (leo@lokigames.com)
 //
 
-#include "surfacedialog.h"
+#include "surfaceinspector.h"
 
 #include "debugging/debugging.h"
 
@@ -56,19 +56,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/pointer.h"
 #include "gtkutil/button.h"
-#include "map.h"
-#include "select.h"
-#include "brushmanip.h"
-#include "preferences.h"
-#include "brush_primit.h"
-#include "xywindow.h"
-#include "mainframe.h"
-#include "dialog.h"
-#include "brush.h"
-#include "commands.h"
+#include "../map.h"
+#include "../select.h"
+#include "../brushmanip.h"
+#include "../preferences.h"
+#include "../brush_primit.h"
+#include "../xywindow.h"
+#include "../mainframe.h"
+#include "../dialog.h"
+#include "../brush.h"
+#include "../commands.h"
 #include "stream/stringstream.h"
-#include "grid.h"
-#include "textureentry.h"
+#include "../grid.h"
+#include "../textureentry.h"
 
 inline void spin_button_set_step(GtkSpinButton* spin, gfloat step) {
 	gtk_spin_button_get_adjustment(spin)->step_increment = step;

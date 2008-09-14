@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Leonardo Zide (leo@lokigames.com)
 //
 
-#include "findtexturedialog.h"
+#include "findtextures.h"
 
 #include "debugging/debugging.h"
 
@@ -46,10 +46,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/window.h"
 #include "stream/stringstream.h"
 
-#include "commands.h"
-#include "dialog.h"
-#include "select.h"
-#include "textureentry.h"
+#include "../commands.h"
+#include "../dialog.h"
+#include "../select.h"
+#include "../textureentry.h"
 
 
 
