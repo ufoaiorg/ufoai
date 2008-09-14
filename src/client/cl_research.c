@@ -2463,7 +2463,7 @@ int RS_CountInBase (const base_t *base)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = gd.technologies + i;
 		assert(tech);
-		if (tech->statusResearchable && tech->base == base) {
+		if (tech->base == base) {
 			/* Get a free lab from the base. */
 			counter += tech->scientists;
 		}

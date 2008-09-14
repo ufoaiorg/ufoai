@@ -1301,7 +1301,9 @@ void PR_UpdateProductionCap (base_t *base)
 
 	if (base->capacities[CAP_WORKSPACE].max <= 0) {
 		PR_EmptyQueue(base);
-	} else if (base->capacities[CAP_WORKSPACE].max >= E_CountHired(base, EMPL_WORKER)) {
+	}
+
+	if (base->capacities[CAP_WORKSPACE].max >= E_CountHired(base, EMPL_WORKER)) {
 		base->capacities[CAP_WORKSPACE].cur = E_CountHired(base, EMPL_WORKER);
 	} else {
 		base->capacities[CAP_WORKSPACE].cur = base->capacities[CAP_WORKSPACE].max;
