@@ -71,7 +71,7 @@ void CL_CompleteRecalcRouting (void)
 		 * traced against.
 		 */
 		if (le->model1 && le->inlineModelName[0] == '*')
-			Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
+			Grid_RecalcRouting(clMap, le->inlineModelName, leInlineModelList);
 }
 
 /**
@@ -86,7 +86,7 @@ void CL_RecalcRouting (const le_t* le)
 	 * traced against.
 	 */
 	if (le->model1 && le->inlineModelName[0] == '*')
-		Grid_RecalcRouting(&clMap, le->inlineModelName, leInlineModelList);
+		Grid_RecalcRouting(clMap, le->inlineModelName, leInlineModelList);
 }
 
 /**
@@ -183,7 +183,7 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 	CM_SetInlineModelOrientation(le->inlineModelName, le->origin, le->angles);
 	CL_RecalcRouting(le);
 
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 }
 
 /**
@@ -219,7 +219,7 @@ void LE_Explode (struct dbuffer *msg)
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
 	CL_RecalcRouting(le);
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 }
 
 /**
@@ -573,11 +573,17 @@ static void LET_PathMove (le_t * le)
 
 		if (le->pathPos < le->pathLength) {
 			/* next part */
-			const byte dv = le->path[le->pathPos];
-			PosAddDV(le->pos, dv);
-			tuCost = Grid_MoveLength(&clMap, le->pos, qfalse) - Grid_MoveLength(&clMap, le->oldPos, qfalse);
+			const byte fulldv = le->path[le->pathPos];
+			const byte dv = fulldv >> 3;
+			int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
+			int new_crouching_state = crouching_state;
+			PosAddDV(le->pos, new_crouching_state, fulldv);
+			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dv, le->pos[0], le->pos[1], le->pos[2]);
+			tuCost = Grid_MoveLength(&clPathMap, le->pos, new_crouching_state, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouching_state, qfalse);
+			/*
 			if (le->state & STATE_CROUCHED)
-				tuCost *= TU_CROUCH_WALKING_FACTOR;
+				tuCost *= TU_CROUCH_MOVING_FACTOR;
+			*/
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
@@ -599,16 +605,19 @@ static void LET_PathMove (le_t * le)
 			} else
 				LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
 
-			le->dir = dv;
+			/* only change the direction if the actor moves horizontally. */
+			if (dv < CORE_DIRECTIONS || dv >= FLYING_DIRECTIONS)
+				le->dir = dv & (CORE_DIRECTIONS - 1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			assert(le->speed);
-			if (le->dir >= BASE_DIRECTIONS)
-				/* sqrt(2) for diagonal movement */
-				le->endTime += UNIT_SIZE * 1.41f * 1000 / le->speed;
-			else
-				le->endTime += UNIT_SIZE * 1000 / le->speed;
+			if (dv != DIRECTION_FALL) {
+				le->endTime += (le->dir >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
+			} else {
+				le->speed = 1000;
+				le->endTime += UNIT_HEIGHT * 1000 / le->speed;
+			}
 
 			le->positionContents = le->pathContents[le->pathPos];
 			le->pathPos++;
@@ -630,7 +639,7 @@ static void LET_PathMove (le_t * le)
 			}
 #endif
 
-			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
+			CL_ConditionalMoveCalc(clMap, &clPathMap, le, MAX_ROUTE);
 
 			/* link any floor container into the actor temp floor container */
 			floor = LE_Find(ET_ITEM, le->pos);
@@ -647,9 +656,9 @@ static void LET_PathMove (le_t * le)
 	}
 
 	/* interpolate the position */
-	Grid_PosToVec(&clMap, le->pos, le->origin);
-	Grid_PosToVec(&clMap, le->oldPos, start);
-	Grid_PosToVec(&clMap, le->pos, dest);
+	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
+	Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
 	VectorSubtract(dest, start, delta);
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
@@ -663,7 +672,7 @@ static void LET_PathMove (le_t * le)
  * @brief Change the actors animation to walking
  * @note See the *.anm files in the models dir
  */
-void LET_StartPathMove (le_t * le)
+void LET_StartPathMove (le_t *le)
 {
 	/* initial animation or animation change */
 	R_AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
@@ -1252,7 +1261,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		VectorCopy(le->origin, origin);
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, origin, angles);
+		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, 0, origin, angles);
 
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;
@@ -1320,7 +1329,7 @@ trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs
 	moveclip_t clip;
 
 	/* clip to world */
-	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, (1 << (cl_worldlevel->integer + 1)) - 1, contentmask);
+	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, (1 << (cl_worldlevel->integer + 1)) - 1, contentmask, 0);
 	clip.trace.le = NULL;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

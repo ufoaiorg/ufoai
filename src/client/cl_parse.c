@@ -679,7 +679,7 @@ static void CL_EntAppear (struct dbuffer *msg)
 	le->type = type;
 
 	VectorCopy(pos, le->pos);
-	Grid_PosToVec(&clMap, le->pos, le->origin);
+	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 }
 
 
@@ -971,7 +971,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 
 	le->type = ET_ACTORHIDDEN;
 
-	Grid_PosToVec(&clMap, le->pos, le->origin);
+	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 	le->invis = qtrue;
 }
 
@@ -1034,7 +1034,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	le->modelnum2 = modelnum2;
 	le->model1 = cl.model_draw[modelnum1];
 	le->model2 = cl.model_draw[modelnum2];
-	Grid_PosToVec(&clMap, le->pos, le->origin);
+	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 	le->angles[YAW] = dangle[le->dir];
 
 	le->contents = CONTENTS_ACTOR;
@@ -1082,7 +1082,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 			/* update pathing as new actor could block path */
 			if (newActor)
-				CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+				CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 		}
 	}
 
@@ -1189,7 +1189,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 		le->think = NULL;
 		VectorCopy(player_dead_maxs, le->maxs);
 		CL_RemoveActorFromTeamList(le);
-		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+		CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 		return;
 	} else {
 		le->state = state;
@@ -1259,7 +1259,7 @@ static void CL_PlaceItem (le_t *le)
 		const objDef_t *biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cls.model_weapons[biggest->idx];
 		assert(le->model1);
-		Grid_PosToVec(&clMap, le->pos, le->origin);
+		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
 		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */

@@ -345,7 +345,7 @@ void Sys_SetAffinityAndPriority (void)
 		GetSystemInfo(&sysInfo);
 		Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
 		sys_affinity->modified = qfalse;
-		if (sysInfo.dwNumberOfProcessors > 1) {
+		if (sysInfo.dwNumberOfProcessors == 2) {
 			switch (sys_affinity->integer) {
 			case 1:
 				Com_Printf("Only use the first core\n");
@@ -359,6 +359,21 @@ void Sys_SetAffinityAndPriority (void)
 				Com_Printf("Use both cores\n");
 				Cvar_SetValue("r_threads", 1);
 				procAffinity = 3;
+				break;
+			}
+		} else if (sysInfo.dwNumberOfProcessors > 2) {
+			switch (sys_affinity->integer) {
+			case 1:
+				Com_Printf("Use all cores\n");
+				procAffinity = (1 << sysInfo.dwNumberOfProcessors) - 1;
+				break;
+			case 2:
+				Com_Printf("Only use two cores\n");
+				procAffinity = 3;
+				break;
+			case 3:
+				Com_Printf("Only use one core\n");
+				procAffinity = 1;
 				break;
 			}
 		} else {

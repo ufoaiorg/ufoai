@@ -378,7 +378,7 @@ typedef struct miptex_s {
 /** little-endian "IBSP" */
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
 
-#define BSPVERSION	75
+#define BSPVERSION	76
 
 /** @brief Directory of the different data blocks */
 typedef struct {

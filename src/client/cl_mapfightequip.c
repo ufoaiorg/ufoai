@@ -2134,8 +2134,8 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
  */
 void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, base_t *base, installation_t *installation, aircraftItemType_t type)
 {
-	assert ((!base && aircraftTemplate) || (base && !aircraftTemplate) || (installation && !aircraftTemplate));	/* Only one of them is allowed. */
-	assert ((!base && installation) || (base && !installation) || (!base && !installation)); /* Only one of them is allowed or neither. */
+	assert((!base && aircraftTemplate) || (base && !aircraftTemplate) || (installation && !aircraftTemplate));	/* Only one of them is allowed. */
+	assert((!base && installation) || (base && !installation) || (!base && !installation)); /* Only one of them is allowed or neither. */
 	assert(!aircraftTemplate || aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */

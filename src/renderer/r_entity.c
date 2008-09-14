@@ -243,6 +243,43 @@ static void R_DrawFloor (const entity_t * e)
 }
 
 /**
+ * @brief Draws an arrow between two points
+ * @sa CL_AddArrow
+ * @sa RF_BOX
+ */
+static void R_DrawArrow (const entity_t * e)
+{
+	vec3_t upper, mid, lower;
+	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+
+	VectorCopy(e->origin, upper);
+	upper[0] += 2;
+
+	VectorCopy(e->origin, mid);
+	mid[1] += 2;
+
+	VectorCopy(e->origin, lower);
+	lower[2] += 2;
+
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LINE_SMOOTH);
+
+	R_Color(color);
+
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3fv(e->oldorigin);
+	glVertex3fv(upper);
+	glVertex3fv(mid);
+	glVertex3fv(lower);
+	glEnd();
+
+	glDisable(GL_LINE_SMOOTH);
+	glEnable(GL_TEXTURE_2D);
+
+	R_Color(NULL);
+}
+
+/**
  * @brief Draws shadow and highlight effects for the entities (actors)
  * @note The origins are already transformed
  */
@@ -370,6 +407,8 @@ static void R_DrawMeshEntities (const entity_t *ents)
 			R_DrawBox(e);
 		} else if (e->flags & RF_PATH) {
 			R_DrawFloor(e);
+		} else if (e->flags & RF_ARROW) {
+			R_DrawArrow(e);
 		} else {
 			switch (e->model->type) {
 			case mod_alias_dpm:
@@ -593,7 +632,7 @@ void R_DrawEntities (void)
 		R_CalcTransform(e);
 
 		if (!e->model) {
-			if (e->flags & RF_BOX || e->flags & RF_PATH)
+			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
 				chain = &r_blend_mesh_entities;
 			else
 				chain = &r_null_entities;

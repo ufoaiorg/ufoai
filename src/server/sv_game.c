@@ -399,7 +399,8 @@ void SV_InitGameProgs (void)
 	import.MoveStore = Grid_MoveStore;
 	import.MoveLength = Grid_MoveLength;
 	import.MoveNext = Grid_MoveNext;
-	import.GridHeight = Grid_Height;
+	import.GridFloor = Grid_Floor;
+	import.TUsUsed = Grid_TUsUsed;
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = Grid_RecalcRouting;
@@ -466,6 +467,8 @@ void SV_InitGameProgs (void)
 
 	/* import the server routing table */
 	import.routingMap = (void *) &svMap;
+	/* import the server pathing table */
+	import.pathingMap = (void *) &svPathMap;
 
 	ge = Sys_GetGameAPI(&import);
 

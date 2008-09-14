@@ -362,8 +362,14 @@ void V_RenderView (void)
 		/* add local entities to the renderer chain */
 		LE_AddToScene();
 		/* adds pathing data */
-		if (developer->integer & DEBUG_CLIENT)
+		if (cl_mapDebug->integer & MAPDEBUG_PATHING)
 			CL_AddPathing();
+		/* adds floor arrows */
+		if (cl_mapDebug->integer & MAPDEBUG_CELLS)
+			CL_DisplayFloorArrows();
+		/* adds wall arrows */
+		if (cl_mapDebug->integer & MAPDEBUG_WALLS)
+			CL_DisplayObstructionArrows();
 		/* adds target cursor */
 		CL_AddTargeting();
 		break;

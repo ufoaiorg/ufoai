@@ -715,27 +715,40 @@ void G_ClearVisFlags (int team)
 /**
  * @brief Turns an actor around
  * @param[in] ent the actor (edict) we are talking about
- * @param[in] toDV the direction to turn the edict into
+ * @param[in] dir the direction to turn the edict into, might be an action
  * @return Bitmask of visible (VIS_*) values
  * @sa G_CheckVisTeam
  */
-int G_DoTurn (edict_t * ent, byte toDV)
+int G_DoTurn (edict_t * ent, byte dir)
 {
 	float angleDiv;
 	const byte *rot;
 	int i, num;
 	int status;
 
-	assert(ent->dir < DIRECTIONS);
+	assert(ent->dir < CORE_DIRECTIONS);
+	assert(dir < PATHFINDING_DIRECTIONS);
 
-	toDV &= (DIRECTIONS - 1);
+	/*
+	 * If dir is at least CORE_DIRECTIONS but less than FLYING_DIRECTIONS,
+	 * then the direction is an action.
+	 */
+	/** @todo If performing an action, ensure the actor is facing the direction
+	 *  needed to perform the action if needed (climbing ladders).
+	 */
+	if (dir >= CORE_DIRECTIONS && dir < FLYING_DIRECTIONS)
+		return 0;
 
-	/* return if no rotation needs to be done */
-	if (ent->dir == toDV)
+	/* Clamp dir between 0 and CORE_DIRECTIONS - 1. */
+	dir &= (CORE_DIRECTIONS - 1);
+	assert(dir < CORE_DIRECTIONS);
+
+	/* Return if no rotation needs to be done. */
+	if (ent->dir == dir)
 		return 0;
 
 	/* calculate angle difference */
-	angleDiv = dangle[toDV] - dangle[ent->dir];
+	angleDiv = dangle[dir] - dangle[ent->dir];
 	if (angleDiv > 180.0)
 		angleDiv -= 360.0;
 	if (angleDiv < -180.0)
@@ -852,8 +865,8 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	floor->type = ET_ITEM;
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
-	floor->pos[2] = gi.GridFall(gi.routingMap, floor->pos, floor->fieldSize);
-	gi.GridPosToVec(gi.routingMap, floor->pos, floor->origin);
+	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
+	gi.GridPosToVec(gi.routingMap, floor->fieldSize, floor->pos, floor->origin);
 	return floor;
 }
 
@@ -1348,13 +1361,14 @@ static void G_BuildForbiddenList (int team)
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] size The actorsize
  * @param[in] from Position in the map to start the move-calculation from.
+ * @param[in] crouching_state The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalc (int team, pos3_t from, int size, int distance)
+void G_MoveCalc (int team, pos3_t from, int actor_size, int crouching_state, int distance)
 {
 	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.routingMap, from, size, distance, fb_list, fb_length);
+	gi.MoveCalc(gi.routingMap, actor_size, gi.pathingMap, from, crouching_state, distance, fb_list, fb_length);
 }
 
 
@@ -1378,7 +1392,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	VectorCopy(from, pos);
 
 	/* Calculate the field in the given direction. */
-	PosAddDV(pos, dv);
+	PosAddDV(pos, i, dv);
 
 	/* Search for blocker. */
 	/** @todo 2x2 support needed? */
@@ -1430,32 +1444,35 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t *ent;
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
-	byte dv, numdv, length, steps;
+	int dv, dir;
+	int old_z;
+	byte numdv, length, steps;
 	pos3_t pos;
-	float div, tu;
+	float div, truediv, tu;
 	int contentFlags;
 	vec3_t pointTrace;
 	byte* stepAmount = NULL;
 	qboolean triggers = qfalse;
 	edict_t* client_action;
 	int oldState;
-	qboolean moveDiagonal;
 	qboolean autoCrouchRequired = qfalse;
+	int crouching_state;
 
 	ent = g_edicts + num;
+	crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT, quiet))
 		return;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, MAX_ROUTE);
-	length = gi.MoveLength(gi.routingMap, to, qfalse);
+	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouching_state, MAX_ROUTE);
+	length = gi.MoveLength(gi.pathingMap, to, crouching_state, qfalse);
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if ((ent->state & STATE_CROUCHED) && player->autostand) {
 		/* ...and if this is a long walk... */
-		if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
+		if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
 			/* ...make them stand first. If the player really wants them to walk a long
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
@@ -1479,12 +1496,17 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		tu = 0;
 		initTU = ent->TU;
 
-		while ((dv = gi.MoveNext(gi.routingMap, pos)) < ROUTING_NOT_REACHABLE) {
-			/* store the inverted dv */
-			/* (invert by flipping the first bit and add the old height) */
+		Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
+
+		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
+			/* dv indicates the direction traveled to get to the new cell and the original cell height.
+			 * dv = (dir << 3) | z
+			 */
 			assert(numdv < MAX_DVTAB);
-			dvtab[numdv++] = ((dv ^ 1) & (DIRECTIONS - 1)) | (pos[2] << 3);
-			PosAddDV(pos, dv);
+			old_z = pos[2];
+			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
+			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
+			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
 		}
 
 		if (VectorCompare(pos, ent->pos)) {
@@ -1504,9 +1526,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
+				dv = dvtab[numdv];
+				dir = dv >> 3; /**< This is the direction */
 
 				/* turn around first */
-				status = G_DoTurn(ent, dvtab[numdv]);
+				status = G_DoTurn(ent, dir);
 				if (status) {
 					/* send the turn */
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
@@ -1521,77 +1545,80 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				}
 
 				/* check for "blockers" */
-				if (G_CheckMoveBlock(ent->pos, dvtab[numdv]))
+				if (G_CheckMoveBlock(ent->pos, dv))
 					break;
 
 				/* decrease TUs */
-				moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4);
-				div = moveDiagonal ? TU_MOVE_DIAGONAL : TU_MOVE_STRAIGHT;
-				if (ent->state & STATE_CROUCHED)
-					div *= TU_CROUCH_WALKING_FACTOR;
+				/* moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4); */
+				div = gi.TUsUsed(dir);
+				truediv = div;
+				if (ent->state & STATE_CROUCHED && dir < CORE_DIRECTIONS)
+					div *= TU_CROUCH_MOVING_FACTOR;
 				if ((int) (tu + div) > ent->TU)
 					break;
 				tu += div;
 
 				/* move */
-				PosAddDV(ent->pos, dvtab[numdv]);
-				gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
-				VectorCopy(ent->origin, pointTrace);
-				pointTrace[2] += PLAYER_MIN;
+				crouching_state = 0; /**< This is now a flag to indicate a change in crouching */
+				PosAddDV(ent->pos, crouching_state, dv);
+				if (crouching_state == 0) { /* No change in crouch */
+					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+					VectorCopy(ent->origin, pointTrace);
+					pointTrace[2] += PLAYER_MIN;
 
-				contentFlags = gi.PointContents(pointTrace);
+					contentFlags = gi.PointContents(pointTrace);
 
-				/* link it at new position - this must be done for every edict
-				 * movement - to let the server know about it. */
-				gi.LinkEdict(ent);
+					/* link it at new position - this must be done for every edict
+					 * movement - to let the server know about it. */
+					gi.LinkEdict(ent);
 
-				/** Count move for stats
-				 * @todo Add support for armoured walking (movedPowered). */
-				if (ent->chr.scoreMission) { /**< Only the PHALANX team has these stats right now. */
-					if (ent->state & STATE_CROUCHED) {
-						ent->chr.scoreMission->movedCrouched += (moveDiagonal) ? 3 : 2;	/* Diagonal or straight move. */
-					} else {
-						ent->chr.scoreMission->movedNormal += (moveDiagonal) ? 3 : 2;	/* Diagonal or straight move. */
+					/** Count move for stats
+					 * @todo Add support for armoured walking (movedPowered). */
+					if (ent->chr.scoreMission) { /**< Only the PHALANX team has these stats right now. */
+						if (ent->state & STATE_CROUCHED) {
+							ent->chr.scoreMission->movedCrouched += truediv;	/* Diagonal or straight move. */
+						} else {
+							ent->chr.scoreMission->movedNormal += truediv;	/* Diagonal or straight move. */
+						}
 					}
-				}
 
-				/* write move header if not yet done */
-				if (!steps) {
-					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-					gi.WriteShort(num);
-					/* stepAmount is a pointer to a location in the netchannel
-					 * the value of this pointer depends on how far the actor walks
-					 * and this might be influenced at a later stage inside this
-					 * loop. That's why we can modify the value of this byte
-					 * if e.g. a VIS_STOP occured and no more steps should be made.
-					 * But keep in mind, that no other events might be between
-					 * this event and its successful end - otherwise the
-					 * stepAmount pointer would no longer be valid and you would
-					 * modify data in the new event. */
-					stepAmount = gi.WriteDummyByte(0);
-				}
+					/* write move header if not yet done */
+					if (!steps) {
+						gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
+						gi.WriteShort(num);
+						/* stepAmount is a pointer to a location in the netchannel
+						 * the value of this pointer depends on how far the actor walks
+						 * and this might be influenced at a later stage inside this
+						 * loop. That's why we can modify the value of this byte
+						 * if e.g. a VIS_STOP occured and no more steps should be made.
+						 * But keep in mind, that no other events might be between
+						 * this event and its successful end - otherwise the
+						 * stepAmount pointer would no longer be valid and you would
+						 * modify data in the new event. */
+						stepAmount = gi.WriteDummyByte(0);
+					}
 
-				assert(stepAmount);
+					assert(stepAmount);
 
-				/* the moveinfo stuff is used inside the G_PhysicsStep think function */
-				if (ent->moveinfo.steps >= MAX_DVTAB) {
-					ent->moveinfo.steps = 0;
-					ent->moveinfo.currentStep = 0;
-				}
-				ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
-				ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
-				ent->moveinfo.steps++;
+					/* the moveinfo stuff is used inside the G_PhysicsStep think function */
+					if (ent->moveinfo.steps >= MAX_DVTAB) {
+						ent->moveinfo.steps = 0;
+						ent->moveinfo.currentStep = 0;
+					}
+					ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
+					ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
+					ent->moveinfo.steps++;
 
-				/* we are using another steps here, because the steps
-				 * in the moveinfo maybe are not 0 again */
-				steps++;
-				/* store steps in netchannel */
-				*stepAmount = steps;
+					/* we are using another steps here, because the steps
+					 * in the moveinfo maybe are not 0 again */
+					steps++;
+					/* store steps in netchannel */
+					*stepAmount = steps;
 
-				/* write move header and always one step after another - because the next step
-				 * might already be the last one due to some stop event */
-				gi.WriteByte(dvtab[numdv]);
-				gi.WriteShort(contentFlags);
+					/* write move header and always one step after another - because the next step
+					 * might already be the last one due to some stop event */
+					gi.WriteByte(dv);
+					gi.WriteShort(contentFlags);
 
 				oldState = ent->visflags;
 				/* check if player appears/perishes, seen from other teams */
@@ -1604,30 +1631,36 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					G_ClientStartMove(ent, playerMask);
 				}
 
-				/* check for anything appearing, seen by "the moving one" */
-				status = G_CheckVisTeam(ent->team, NULL, qfalse);
+					/* check for anything appearing, seen by "the moving one" */
+					status = G_CheckVisTeam(ent->team, NULL, qfalse);
 
-				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
-				ent->TU = max(0, initTU - (int) tu);
+					/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
+					ent->TU = max(0, initTU - (int) tu);
 
-				client_action = ent->client_action;
-				oldState = ent->state;
-				/* check triggers at new position but only if no actor appeared */
-				if (G_TouchTriggers(ent)) {
-					triggers = qtrue;
-					Com_DPrintf(DEBUG_GAME, "G_ClientMove: Touching trigger\n");
-					if (!client_action) {
+					client_action = ent->client_action;
+					oldState = ent->state;
+					/* check triggers at new position but only if no actor appeared */
+					if (G_TouchTriggers(ent)) {
+						triggers = qtrue;
+						Com_DPrintf(DEBUG_GAME, "G_ClientMove: Touching trigger\n");
+						if (!client_action) {
+							status |= VIS_STOP;
+							steps = 0;
+							sentAppearPerishEvent = qfalse;
+						}
+					}
+					/* state has changed - maybe we walked on a trigger_hurt */
+					if (oldState != ent->state) {
 						status |= VIS_STOP;
 						steps = 0;
 						sentAppearPerishEvent = qfalse;
 					}
+				} else if (crouching_state == 1) { /* Actor is standing */
+					G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+				} else { /* Actor is crouching */
+					G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);
 				}
-				/* state has changed - maybe we walked on a trigger_hurt */
-				if (oldState != ent->state) {
-					status |= VIS_STOP;
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
-				}
+
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)) {
 					if (G_ReactToMove(ent, qfalse))
@@ -1667,8 +1700,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
 
 			/* submit the TUs / round down */
-			if (g_notu != NULL && !g_notu->integer)
+			if (g_notu != NULL && !g_notu->integer) {
 				ent->TU = max(0, initTU - (int) tu);
+			} else {
+				Com_Printf("TUs reset because of developer flag.\n");
+			}
 			G_SendStats(ent);
 
 			/* only if triggers are touched - there was a client
@@ -1699,6 +1735,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 static void G_ClientTurn (player_t * player, int num, byte dv)
 {
 	edict_t *ent;
+	byte dir = dv >> 3;
 
 	ent = g_edicts + num;
 
@@ -1707,13 +1744,13 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 		return;
 
 	/* check if we're already facing that direction */
-	if (ent->dir == dv)
+	if (ent->dir == dir)
 		return;
 
 	G_ClientStartMove(ent, G_VisToPM(ent->visflags));
 
 	/* do the turn */
-	G_DoTurn(ent, dv);
+	G_DoTurn(ent, dir);
 	ent->TU -= TU_TURN;
 
 	/* send the turn */
@@ -2676,7 +2713,7 @@ void G_ClientTeamInfo (player_t * player)
 				ent->morale = 100;
 				break;
 			default:
-				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (size: %i, actor num: %i)\n", dummyFieldSize, i);
+				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actor_size: %i, actor num: %i)\n", dummyFieldSize, i);
 			}
 
 			level.num_alive[ent->team]++;

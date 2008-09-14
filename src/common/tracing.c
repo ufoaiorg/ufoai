@@ -94,20 +94,10 @@ static vec3_t trace_extents;
 
 static trace_t trace_trace;
 static int trace_contents;
+static int trace_rejects;
 static qboolean trace_ispoint;			/* optimized case */
 
 tnode_t *tnode_p;
-
-/*
-==============================================================
-GLOBAL DIRECTION CONSTANTS
-==============================================================
-*/
-
-const vec3_t dup_vec = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
-const vec3_t dwn_vec = { 0, 0, -UNIT_HEIGHT / 2 };
-const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
-
 
 /*
 ===============================================================================
@@ -141,7 +131,7 @@ static void TR_MakeTracingNode (int nodenum)
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
 			const int contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
-			if ((contentFlags & MASK_VERY_SOLID) && !(contentFlags & CONTENTS_PASSABLE))
+			if ((contentFlags & MASK_IMPASSABLE) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else
 				t->children[i] = (1 << 31);
@@ -159,7 +149,10 @@ void TR_BuildTracingNode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
-	/** @todo should this be a == -1 check? */
+	/**
+	 *  We are checking for a leaf in the tracing node.  For ufo2map, planenum == PLANENUMLEAF.
+	 *  For the game, plane will be NULL.
+	 */
 #ifdef COMPILE_UFO
 	if (!curTile->nodes[node].plane) {
 #else
@@ -493,7 +486,7 @@ qboolean TR_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const
 		}
 	}
 
-	if (VectorCompare(end, stop))
+	if (VectorCompareEps(end, stop, EQUAL_EPSILON))
 		return qfalse;
 	else
 		return qtrue;
@@ -586,7 +579,7 @@ static void TR_BoxLeafnums_r (int nodenum)
 	int s;
 
 	while (1) {
-		if (nodenum < 0) {
+		if (nodenum <= LEAFNODE) {
 			if (leaf_count >= leaf_maxcount) {
 /*				Com_Printf("CM_BoxLeafnums_r: overflow\n"); */
 				return;
@@ -609,7 +602,7 @@ static void TR_BoxLeafnums_r (int nodenum)
 		else if (s == PSIDE_BACK)
 			nodenum = node->children[1];
 		else {					/* go down both */
-			if (leaf_topnode == -1)
+			if (leaf_topnode == LEAFNODE)
 				leaf_topnode = nodenum;
 			TR_BoxLeafnums_r(node->children[0]);
 			nodenum = node->children[1];
@@ -628,7 +621,7 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
 	leaf_mins = mins;
 	leaf_maxs = maxs;
 
-	leaf_topnode = -1;
+	leaf_topnode = LEAFNODE;
 
 	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 	TR_BoxLeafnums_r(headnode);
@@ -655,6 +648,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 {
 	int i, j;
 	TR_PLANE_TYPE *clipplane;
+	int clipplanenum;
 	float dist;
 	float enterfrac, leavefrac;
 	vec3_t ofs;
@@ -674,6 +668,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 	getout = qfalse;
 	startout = qfalse;
 	leadside = NULL;
+	clipplanenum = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
 		TR_BRUSHSIDE_TYPE *side = &curTile->brushsides[brush->firstbrushside + i];
@@ -720,6 +715,9 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 			if (f > enterfrac) {
 				enterfrac = f;
 				clipplane = plane;
+#ifdef COMPILE_MAP
+				clipplanenum = side->planenum;
+#endif
 				leadside = side;
 			}
 		} else {				/* leave */
@@ -744,6 +742,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 				enterfrac = 0;
 			trace->fraction = enterfrac;
 			trace->plane = *clipplane;
+			trace->planenum = clipplanenum;
 #ifdef COMPILE_UFO
 			trace->surface = leadside->surface;
 #endif
@@ -827,7 +826,7 @@ void TR_TraceToLeaf (int leafnum)
 	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents))
+	if (!(leaf->contentFlags & trace_contents) || (leaf->contentFlags & trace_rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
@@ -838,14 +837,13 @@ void TR_TraceToLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_contents))
+		if (!(b->contentFlags & trace_contents) || (b->contentFlags & trace_rejects))
 			continue;
 
 		TR_ClipBoxToBrush(trace_mins, trace_maxs, trace_start, trace_end, &trace_trace, b);
 		if (!trace_trace.fraction)
 			return;
 	}
-
 }
 
 
@@ -855,26 +853,24 @@ void TR_TraceToLeaf (int leafnum)
 static void TR_TestInLeaf (int leafnum)
 {
 	int k;
-	int brushnum;
-	TR_LEAF_TYPE *leaf;
-	cBspBrush_t *b;
+	const TR_LEAF_TYPE *leaf;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents))
+	if (!(leaf->contentFlags & trace_contents) || (leaf->contentFlags & trace_rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
-		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		b = &curTile->brushes[brushnum];
+		const int brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
+		cBspBrush_t *b = &curTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_contents))
+		if (!(b->contentFlags & trace_contents) || (b->contentFlags & trace_rejects))
 			continue;
 		TR_TestBoxInBrush(trace_mins, trace_maxs, trace_start, &trace_trace, b);
 		if (!trace_trace.fraction)
@@ -896,7 +892,7 @@ static void TR_TestInLeaf (int leafnum)
  *  is perpendicular to the line.  If the node of the tree is a leaf, the leaf is checked.  If
  *  not, it is determined which side(s) of the tree need to be traversed, and this function is
  *  called again.  The bounding box mentioned earlier is set in TR_BoxTrace, and propagated
- *  using trace_extents.  Tracce_extents is specifically how far from the line a bsp node needs
+ *  using trace_extents.  Trace_extents is specifically how far from the line a bsp node needs
  *  to be in order to be included or excluded in the search.
  */
 static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
@@ -1013,7 +1009,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
  *  the bounding box is returned.
  *  There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  */
-trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask)
+trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject)
 {
 	int i;
 
@@ -1034,6 +1030,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 		return trace_trace;
 
 	trace_contents = brushmask;
+	trace_rejects = brushreject;
 	VectorCopy(start, trace_start);
 	VectorCopy(end, trace_end);
 	VectorCopy(mins, trace_mins);
@@ -1091,7 +1088,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, const vec3_t origin, const vec3_t angles)
+trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject, const vec3_t origin, const vec3_t angles)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -1134,7 +1131,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	}
 
 	/* sweep the box through the model */
-	trace = TR_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask);
+	trace = TR_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask, brushreject);
 
 	if (rotated && trace.fraction != 1.0) {
 		/** @todo figure out how to do this with existing angles */
@@ -1157,7 +1154,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 /**
  * @brief Handles all 255 level specific submodels too
  */
-trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask)
+trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
 {
 	trace_t newtr, tr;
 	int tile, i;
@@ -1172,12 +1169,17 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 		for (i = 0, h = curTile->cheads; i < curTile->numcheads; i++, h++) {
 			/** @todo Is this levelmask supposed to limit by game level (1-8)
 			 *  or map level (0-LEVEL_ACTORCLIP)?
+			 * @brief This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
+			 * are bitmasks of game levels 1-8.  0 is a special case repeat fo 255.
+			 * However a levelmask including 0x100 is usually included so the CLIP levels are
+			 * examined.  Note that LEVEL_STEPON should not be available at this point, but may be erroneously
+			 * included in another level, requiring the addition ot the brushreject parameter.
 			 */
 			if (h->level && levelmask && !(h->level & levelmask))
 				continue;
 
 			assert(h->cnode < curTile->numnodes + 6); /* +6 => bbox */
-			newtr = TR_BoxTrace(start, end, mins, maxs, &mapTiles[tile], h->cnode, brushmask);
+			newtr = TR_BoxTrace(start, end, mins, maxs, &mapTiles[tile], h->cnode, brushmask, brushreject);
 
 			/* memorize the trace with the minimal fraction */
 			if (newtr.fraction == 0.0)

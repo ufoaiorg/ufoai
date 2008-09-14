@@ -241,13 +241,14 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	float bestActionPoints, dmg, maxDmg, best_time = -1, vis;
 	const objDef_t *ad;
 	int still_searching = 1;
+	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	int weapFdsIdx; /* Weapon-Firedefs index in fd[x] */
 	int fdIdx;	/* firedef index fd[][x]*/
 
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
-	move = gi.MoveLength(gi.routingMap, to, qtrue);
+	move = gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -277,7 +278,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.routingMap, to, ent->origin);
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
 
 	/* shooting */
 	maxDmg = 0.0;
@@ -442,7 +443,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, to, ent->fieldSize, HIDE_DIST);
+			G_MoveCalc(0, to, ent->fieldSize, crouching_state, HIDE_DIST);
+			Com_DPrintf(DEBUG_ENGINE, "AI_FighterCalcBestAction: Called MoveMark.\n");
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
@@ -452,12 +454,12 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
-					delta = gi.MoveLength(gi.routingMap, ent->pos, qfalse);
+					delta = gi.MoveLength(gi.pathingMap, ent->pos, crouching_state, qfalse);
 					if (delta > tu)
 						continue;
 
 					/* visibility */
-					gi.GridPosToVec(gi.routingMap, ent->pos, ent->origin);
+					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 
@@ -472,7 +474,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		if (still_searching) {
 			/* nothing found */
 			VectorCopy(to, ent->pos);
-			gi.GridPosToVec(gi.routingMap, to, ent->origin);
+			gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
 			/** @todo Try to crouch if no hiding spot was found - randomized */
 		} else {
 			/* found a hiding spot */
@@ -509,6 +511,7 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 	float bestActionPoints;
 	float reaction_trap = 0.0;
 	float delta = 0.0;
+	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -516,9 +519,9 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.routingMap, to, ent->origin);
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
 
-	move = gi.MoveLength(gi.routingMap, to, qtrue);
+	move = gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -638,6 +641,7 @@ void G_AddToWayPointList (edict_t *ent)
 static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
+	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
@@ -661,7 +665,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 					i++;
 					Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
 					/* test for time and distance */
-					length = ent->TU - gi.MoveLength(gi.routingMap, checkPoint->pos, qtrue);
+					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos, crouching_state, qtrue);
 					bestActionPoints = GUETE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
@@ -713,10 +717,12 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	float bestActionPoints, best;
+	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, MAX_ROUTE);
-	gi.MoveStore(gi.routingMap);
+	G_MoveCalc(0, ent->pos, ent->fieldSize, crouching_state, MAX_ROUTE);
+	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
+	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
 	xl = (int) ent->pos[0] - AI_MAX_DIST;
@@ -742,7 +748,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.routingMap, to, qtrue) <= ent->TU) {
+				if (gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue) <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
 					else
@@ -793,12 +799,16 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
  */
 static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 {
-	byte dv;
+	int dv;
+	const int crouching_state = aiActor->state & STATE_CROUCHED ? 1 : 0;
 
-	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, MAX_ROUTE);
-	dv = gi.MoveNext(gi.routingMap, pos);
-	if (dv < ROUTING_NOT_REACHABLE) {
-		const int status = G_DoTurn(aiActor, dv);
+	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouching_state, MAX_ROUTE);
+
+	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouching_state);
+
+	if (dv != ROUTING_UNREACHABLE) {
+		const byte dir = dv >> 3;
+		const int status = G_DoTurn(aiActor, dir);
 		if (status) {
 			/* send the turn */
 			gi.AddEvent(G_VisToPM(aiActor->visflags), EV_ACTOR_TURN);

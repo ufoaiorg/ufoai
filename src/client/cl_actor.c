@@ -32,13 +32,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_mesh_anim.h"
 #include "menu/m_inventory.h"
 #include "menu/m_popup.h"
+#include "../common/routing.h"
 
 /* public */
 le_t *selActor;
 static const fireDef_t *selFD;
 static character_t *selChr;
 static int selToHit;
-static pos3_t mousePos;
+static pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
+static pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
 static qboolean popupReload = qfalse;
 
 enum {
@@ -211,7 +213,7 @@ static int CL_MoveMode (int length)
 {
 	if (selActor->state & STATE_CROUCHED) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
-			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_WALKING_FACTOR - 1.0f)) {
+			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
 				return WALKTYPE_AUTOSTAND_BEING_USED;
 			} else {
 				return WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH;
@@ -2048,14 +2050,15 @@ static void CL_RefreshWeaponButtons (int time)
 	{
 		const menu_t* menu = MN_GetActiveMenu();
 		if (menu)
-			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
+			Com_Printf("CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
 
 		if (menu && strstr(menu->name, POPUPLIST_MENU_NAME)) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: reloadfresh popup\n");
+			Com_Printf("CL_ActorToggleReaction_f: reloadfresh popup\n");
 			popupReload = qtrue;
 			MN_PopMenu(qfalse);
 			CL_PopupFiremodeReservation_f();
 		}
+
 	}
 }
 
@@ -2138,10 +2141,19 @@ void CL_ActorUpdateCVars (void)
 {
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
+	static char topText[MAX_SMALLMENUTEXTLEN];
+	static char bottomText[MAX_SMALLMENUTEXTLEN];
+	static char leftText[MAX_SMALLMENUTEXTLEN];
 	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
 	qboolean refresh;
 	const char *animName;
 	int time;
+	pos3_t pos;
+	int dv;
+
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
 
 	if (cls.state != ca_active)
 		return;
@@ -2352,6 +2364,26 @@ void CL_ActorUpdateCVars (void)
 			Com_sprintf(infoText, sizeof(infoText), _("Currently panics!\n"));
 			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 		}
+
+		/* Find the coordiantes of the ceiling and floor we want. */
+		VectorCopy(mousePos, pos);
+		pos[2] = cl_worldlevel->integer;
+
+		/* Display the floor and ceiling values for the current cell. */
+		Com_sprintf(topText, sizeof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
+		/* Save the text for later display next to the cursor. */
+		mn.menuText[TEXT_MOUSECURSOR_TOP] = topText;
+
+		/* Display the floor and ceiling values for the current cell. */
+		Com_sprintf(bottomText, sizeof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
+		/* Save the text for later display next to the cursor. */
+		mn.menuText[TEXT_MOUSECURSOR_BOTTOM] = bottomText;
+
+		/* Display the floor and ceiling values for the current cell. */
+		dv = Grid_MoveNext(clMap, fieldSize, &clPathMap, mousePos, 0);
+		Com_sprintf(leftText, sizeof(leftText), "%i-%i\n", dv >> 3, dv & 7);
+		/* Save the text for later display next to the cursor. */
+		mn.menuText[TEXT_MOUSECURSOR_LEFT] = leftText;
 
 		/* Calculate remaining TUs. */
 		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
@@ -2616,7 +2648,7 @@ qboolean CL_ActorSelect (le_t * le)
 	Cvar_SetValue("hud_refresh", 1);
 	CL_ActorUpdateCVars();
 
-	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
+	CL_ConditionalMoveCalc(clMap, &clPathMap, le, MAX_ROUTE);
 
 	/* move first person camera to new actor */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -2777,7 +2809,7 @@ void CL_DisplayBlockedPaths_f (void)
 		case ET_ACTOR2x2:
 			/* draw blocking cursor at le->pos */
 			if (!(le->state & STATE_DEAD))
-				Grid_PosToVec(&clMap, le->pos, s);
+				Grid_PosToVec(clMap, le->fieldSize, le->pos, s);
 			break;
 		case ET_DOOR:
 		case ET_BREAKABLE:
@@ -2818,11 +2850,12 @@ void CL_DisplayBlockedPaths_f (void)
  * @param[in] le Calculate the move for this actor (if he's the selected actor)
  * @param[in] distance
  */
-void CL_ConditionalMoveCalc (struct routing_s * map, le_t * le, int distance)
+void CL_ConditionalMoveCalc (routing_t *map, pathing_t *path, le_t * le, int distance)
 {
+	const int crouching_state = selActor && (le->state & STATE_CROUCHED) ? 1 : 0;
 	if (selActor && selActor == le) {
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(map, le->pos, le->fieldSize, distance, fb_list, fb_length);
+		Grid_MoveCalc(map, le->fieldSize, path, le->pos, crouching_state, distance, fb_list, fb_length);
 		CL_ResetActorMoveLength();
 	}
 }
@@ -2862,15 +2895,16 @@ static int CL_CheckAction (void)
  */
 static int CL_MoveLength (pos3_t to)
 {
-	const float length = Grid_MoveLength(&clMap, to, qfalse);
+	const int crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	const float length = Grid_MoveLength(&clPathMap, to, crouching_state, qfalse);
 	assert(selActor);
 
 	switch (CL_MoveMode(length)) {
 	case WALKTYPE_AUTOSTAND_BEING_USED:
-		return length + 2 * TU_CROUCH;
+		return length /* + 2 * TU_CROUCH */;
 	case WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH:
 	case WALKTYPE_CROUCH_WALKING:
-		return length * TU_CROUCH_WALKING_FACTOR;
+		return length /* * TU_CROUCH_MOVING_FACTOR */;
 	default:
 		Com_DPrintf(DEBUG_CLIENT,"CL_MoveLength: MoveMode not recognised.\n");
 	case WALKTYPE_WALKING:
@@ -2899,6 +2933,9 @@ static qboolean CL_TraceMove (pos3_t to)
 	vec3_t vec, oldVec;
 	pos3_t pos;
 	int dv;
+	int crouching_state;
+
+	int counter = 0;
 
 	if (!selActor)
 		return qfalse;
@@ -2907,13 +2944,19 @@ static qboolean CL_TraceMove (pos3_t to)
 	if (!length || length >= 0x3F)
 		return qfalse;
 
-	Grid_PosToVec(&clMap, to, oldVec);
+	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+
+	Grid_PosToVec(clMap, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
+	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
+
+	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
+		assert(++counter < 100);
 		length = CL_MoveLength(pos);
-		PosAddDV(pos, dv);
-		Grid_PosToVec(&clMap, pos, vec);
+		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
+		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
+		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
 		if (length > CL_UsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
 		else if (selActor->state & STATE_CROUCHED)
@@ -2935,11 +2978,14 @@ static qboolean CL_TraceMove (pos3_t to)
 static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 {
 	int length;
-	vec3_t vec;
+	/* vec3_t vec; */
 	int dv;
+	int crouching_state;
 
 	if (!selActor)
 		return;
+
+	crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
 
 	length = CL_MoveLength(to);
 	if (!length || length >= 0x3F)
@@ -2947,12 +2993,12 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
+	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
 		length = CL_MoveLength(pos);
 		if (length <= tus)
 			return;
-		PosAddDV(pos, dv);
-		Grid_PosToVec(&clMap, pos, vec);
+		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
+		/* Grid_PosToVec(clMap, selActor->fieldSize, pos, vec); */
 	}
 }
 
@@ -3973,7 +4019,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
 
-	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 }
 
 
@@ -4150,7 +4196,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		MN_ExecuteConfunc("startround");
 		SCR_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart");
-		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+		CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 
 		for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 			if (cl.teamList[actorIdx]) {
@@ -4215,7 +4261,7 @@ void CL_ActorMouseTrace (void)
 		AngleVectors(cl.cam.angles, forward, right, up);
 		/* set the intersection level to that of the selected actor */
 		VecToPos(from, testPos);
-		intersectionLevel = Grid_Fall(&clMap, testPos, fieldSize);
+		intersectionLevel = Grid_Fall(clMap, fieldSize, testPos);
 
  		/* if looking up, raise the intersection level */
 		if (cur[1] < 0.0f)
@@ -4276,7 +4322,7 @@ void CL_ActorMouseTrace (void)
 	}
 
 	VecToPos(end, testPos);
-	restingLevel = Grid_Fall(&clMap, testPos, fieldSize);
+	restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	 * playerclip surface (in most cases anyway) */
@@ -4296,7 +4342,7 @@ void CL_ActorMouseTrace (void)
 	 * of traces */
 	TR_TestLineDM(pA, pB, pC, TL_FLAG_ACTORCLIP);
 	VecToPos(pC, testPos);
-	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, fieldSize));
+	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < intersectionLevel) {
@@ -4304,15 +4350,21 @@ void CL_ActorMouseTrace (void)
 		from[2] -= CURSOR_OFFSET;
 		TR_TestLineDM(from, stop, end, TL_FLAG_ACTORCLIP);
 		VecToPos(end, testPos);
-		restingLevel = Grid_Fall(&clMap, testPos, fieldSize);
+		restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 	}
 
 	/* test if the selected grid is out of the world */
 	if (restingLevel < 0 || restingLevel >= PATHFINDING_HEIGHT)
 		return;
 
+	/* Set truePos- test pos is under the cursor. */
+	VectorCopy(testPos, truePos);
+	truePos[2] = intersectionLevel;
+
+	/* Set mousePos to the position that the actor will move to. */
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
+
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
@@ -4618,7 +4670,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	else
 		pseudosin = distance / disty;
 	width = 2 * PLAYER_WIDTH * pseudosin;
-	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
+	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT);
 
 	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
 			selFD->weaponSkill ? selChr->score.skills[selFD->weaponSkill] : 0);
@@ -4723,7 +4775,7 @@ static void CL_Targeting_Radius (vec3_t center)
  * @sa CL_AddTargeting
  * @sa CL_Trace
  */
-static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
+static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid;
@@ -4733,12 +4785,27 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	qboolean crossNo;
 	le_t *le;
 	le_t *target = NULL;
+	int to_actor_size;
 
 	if (!selActor || !selFD)
 		return;
 
-	Grid_PosToVec(&clMap, fromPos, start);
-	Grid_PosToVec(&clMap, toPos, end);
+	/* search for an actor at target */
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
+			target = le;
+			break;
+		}
+
+	/* Determine the target's size. */
+	to_actor_size = target /**< Get size of selected actor or fall back to 1x1. */
+		? target->fieldSize
+		: ACTOR_SIZE_NORMAL;
+
+	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
+
+	Grid_PosToVec(clMap, from_actor_size, fromPos, start);
+	Grid_PosToVec(clMap, to_actor_size, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
@@ -4759,12 +4826,6 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	oldLevel = cl_worldlevel->integer;
 	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
-	/* search for an actor at target */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
-			target = le;
-			break;
-		}
 
 	tr = CL_Trace(start, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
@@ -4798,7 +4859,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
-static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
+static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;
@@ -4809,20 +4870,10 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	int i;
 	le_t *le;
 	le_t *target = NULL;
+	int to_actor_size;
 
 	if (!selActor || Vector2Compare(fromPos, toPos))
 		return;
-
-	/* get vectors, paint cross */
-	Grid_PosToVec(&clMap, fromPos, from);
-	Grid_PosToVec(&clMap, toPos, at);
-	from[2] += selFD->shotOrg[1];
-
-	/* prefer to aim grenades at the ground */
-	at[2] -= GROUND_DELTA;
-	if (mousePosTargettingAlign)
-		at[2] -= mousePosTargettingAlign;
-	VectorCopy(at, cross);
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -4830,6 +4881,24 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 			target = le;
 			break;
 		}
+
+	/* Determine the target's size. */
+	to_actor_size = target /**< Get size of selected actor or fall back to 1x1. */
+		? target->fieldSize
+		: ACTOR_SIZE_NORMAL;
+
+	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
+
+	/* get vectors, paint cross */
+	Grid_PosToVec(clMap, from_actor_size, fromPos, from);
+	Grid_PosToVec(clMap, to_actor_size, toPos, at);
+	from[2] += selFD->shotOrg[1];
+
+	/* prefer to aim grenades at the ground */
+	at[2] -= GROUND_DELTA;
+	if (mousePosTargettingAlign)
+		at[2] -= mousePosTargettingAlign;
+	VectorCopy(at, cross);
 
 	/* calculate parabola */
 	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, selFD->rolled, v0);
@@ -4880,7 +4949,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
 	if (selFD->splrad) {
-		Grid_PosToVec(&clMap, toPos, at);
+		Grid_PosToVec(clMap, to_actor_size, toPos, at);
 		CL_Targeting_Radius(at);
 	}
 
@@ -4909,10 +4978,14 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
 
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;
 
-	Grid_PosToVec(&clMap, pos, ent.origin);
+	Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
 
 	/**
 	 * Paint the green box if move is possible ...
@@ -5103,9 +5176,9 @@ void CL_AddTargeting (void)
 			return;
 
 		if (!selFD->gravity)
-			CL_TargetingStraight(selActor->pos, mousePos);
+			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePos);
 		else
-			CL_TargetingGrenade(selActor->pos, mousePos);
+			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePos);
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
@@ -5119,9 +5192,9 @@ void CL_AddTargeting (void)
 		CL_AddTargetingBox(mousePendPos, qtrue);
 
 		if (!selFD->gravity)
-			CL_TargetingStraight(selActor->pos, mousePendPos);
+			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePendPos);
 		else
-			CL_TargetingGrenade(selActor->pos, mousePendPos);
+			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePendPos);
 		break;
 	default:
 		break;
@@ -5137,38 +5210,48 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
 static void CL_AddPathingBox (pos3_t pos)
 {
 	entity_t ent;
-	int height;
+	int height; /**< The total opening size */
+	int base; /**< The floor relative to this cell */
+
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+
+	const int crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
+	const int TUneed = Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse);
+	const int TUhave = CL_UsableTUs(selActor);
 
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_PATH;
 
-	Grid_PosToVec(&clMap, pos, ent.origin);
+	Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
 	VectorSubtract(ent.origin, boxShift, ent.origin);
+
+	base = Grid_Floor(clMap, fieldSize, pos);
 
 	/**
 	 * Paint the box green if it is reachable,
 	 * yellow if it can be entered but is too far,
 	 * or red if it cannot be entered ever.
 	 */
-	if ((Grid_Fall(&clMap, pos, ACTOR_SIZE_NORMAL) < pos[2] - 1)) {
-		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - grey */
+	if (base < -PATHFINDING_MAX_FALL * QUANT) {
+		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - black */
 	} else {
 		/**
 		 * Can reach - green
 		 * Passable but unreachable - yellow
 		 * Not passable - red
 		 */
-		const int TUs = Grid_MoveLength(&clMap, pos, qfalse);
-		VectorSet(ent.angles, (TUs > CL_UsableTUs(selActor)), (TUs != ROUTING_NOT_REACHABLE), 0);
+		VectorSet(ent.angles, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
 	}
 
 	/**
-	 * Set the box height to the STEPON value of the cell.
-	 * Also tint the cell more blue the larger the value.
+	 * Set the box height to the ceiling value of the cell.
 	 */
-	height = Grid_StepUp(&clMap, pos);
+	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
 	ent.oldorigin[2] = height;
-	ent.angles[2] = (float)height / (UNIT_HEIGHT / 4);
+	ent.oldorigin[0] = TUneed;
+	ent.oldorigin[1] = TUhave;
 
 	ent.alpha = 0.25;
 
@@ -5196,7 +5279,7 @@ void CL_AddPathing (void)
  * @param[in] le The actor
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
-void CL_PlayActorSound (const le_t * le, actorSound_t soundType)
+void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 {
 	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
@@ -5206,4 +5289,137 @@ void CL_PlayActorSound (const le_t * le, actorSound_t soundType)
 			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME);
 		}
 	}
+}
+
+/**
+ * @brief
+ */
+void CL_DumpTUs (void)
+{
+	int x, y, crouching_state;
+	pos3_t pos, loc;
+
+	if (!selActor)
+		return;
+
+	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	VectorCopy(selActor->pos, pos);
+
+	Com_Printf("TUs around (%i, %i, %i)\n", pos[0], pos[1], pos[2]);
+
+	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
+		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
+			VectorSet(loc, x, y, pos[2]);
+			Com_Printf("%3i ", Grid_MoveLength(&clPathMap, loc, crouching_state, qfalse));
+		}
+		Com_Printf("\n");
+	}
+	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
+}
+
+/**
+ * @brief create an arrow between from and to with the specified color ratios
+ */
+static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float blue)
+{
+	entity_t ent;
+
+	/* Com_Printf("Adding arrow (%f, %f, %f) to (%f, %f, %f).\n", from[0], from[1], from[2], to[0], to[1], to[2]); */
+
+	memset(&ent, 0, sizeof(ent));
+	ent.flags = RF_ARROW;
+	VectorCopy(from, ent.origin);
+	VectorCopy(to, ent.oldorigin);
+	VectorSet(ent.angles, red, green, blue);
+
+	ent.alpha = 0.25;
+
+	/* add it */
+	R_AddEntity(&ent);
+}
+
+/**
+ * @brief
+ */
+void CL_DisplayFloorArrows (void)
+{
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	vec3_t base, start;
+
+	Grid_PosToVec(clMap, fieldSize, truePos, base);
+	VectorCopy(base, start);
+	base[2] -= QUANT;
+	start[2] += QUANT;
+
+	RT_CheckCell(clMap, fieldSize, truePos[0], truePos[1], truePos[2]);
+
+	/* Display floor arrow */
+	if (VectorNotEmpty(brushesHit.floor))
+		CL_AddArrow(base, brushesHit.floor, 0.0, 0.5, 1.0);
+
+	/* Display ceiling arrow */
+	if (VectorNotEmpty(brushesHit.ceiling))
+		CL_AddArrow(start, brushesHit.ceiling, 1.0, 1.0, 0.0);
+}
+
+/**
+ * @brief
+ */
+void CL_DisplayObstructionArrows (void)
+{
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	int dir;
+	vec3_t base, start;
+
+	Grid_PosToVec(clMap, fieldSize, truePos, base);
+
+	for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+		RT_UpdateConnection(clMap, fieldSize, truePos[0], truePos[1], truePos[2], dir);
+
+		VectorCopy(base, start);
+		start[0] += dvecs[dir][0] * QUANT;
+		start[1] += dvecs[dir][1] * QUANT;
+
+		/* Display floor arrow */
+		if (VectorNotEmpty(brushesHit.floor)){
+			if (brushesHit.obstructed) {
+				CL_AddArrow(start, brushesHit.floor, 1.0, 1.0, 1.0);
+			} else {
+				CL_AddArrow(start, brushesHit.floor, 1.0, 0.5, 0.0);
+			}
+		}
+
+		/* Display ceiling arrow */
+		if (VectorNotEmpty(brushesHit.ceiling)){
+			CL_AddArrow(start, brushesHit.ceiling, 0.0, 1.0, 1.0);
+		}
+	}
+}
+
+/**
+ * @brief
+ */
+void CL_DumpMoveMark (void)
+{
+	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	const int crouching_state = selActor
+		? (selActor->state & STATE_CROUCHED ? 1 : 0)
+		: 0;
+	const int temp = developer->integer;
+
+	developer->integer |= DEBUG_PATHING;
+
+	CL_BuildForbiddenList();
+	Grid_MoveCalc(clMap, fieldSize, &clPathMap, truePos, crouching_state, MAX_ROUTE, fb_list, fb_length);
+
+	developer->integer ^= DEBUG_PATHING;
+
+	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
+	developer->integer = temp;
 }

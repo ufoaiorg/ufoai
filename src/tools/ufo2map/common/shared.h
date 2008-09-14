@@ -106,6 +106,8 @@ typedef struct mapConfig_s {
 	float mapMicrovol; /**< -check mbr micro test before CSG */
 	qboolean chkAll;
 	qboolean fixMap;
+	qboolean generateTraceFile;
+	qboolean generateDebugTrace;
 
 	float day_ambient_red;
 	float day_ambient_green;
@@ -137,6 +139,7 @@ typedef struct mapConfig_s {
 } mapConfig_t;
 
 extern mapConfig_t config;
+extern char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
 typedef struct threadstate_s {
 	int numthreads;		/**< spawned threads */

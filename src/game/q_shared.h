@@ -173,6 +173,7 @@ extern cvar_t* sys_os;
 #define RF_TRANSLUCENT      0x00000001
 #define RF_BOX              0x00000002	/**< actor selection box */
 #define RF_PATH             0x01000000	/**< pathing marker, debugging only */
+#define RF_ARROW            0x02000000	/**< arrow, debugging only */
 
 /** the following ent flags also draw entity effects */
 #define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
@@ -411,6 +412,9 @@ typedef enum {
 #define PLAYER_DEAD			-12
 #define PLAYER_MIN			-24
 #define PLAYER_WIDTH		9
+
+#define PLAYER_STANDING_HEIGHT		(PLAYER_STAND - PLAYER_MIN)
+#define PLAYER_CROUCHING_HEIGHT		(PLAYER_CROUCH - PLAYER_MIN)
 
 #if 0
 #define EYE2x2_STAND		15

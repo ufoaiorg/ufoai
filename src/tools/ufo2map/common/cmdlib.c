@@ -178,7 +178,7 @@ void FS_Init (const char *path)
 
 	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
 	if (!pak)
-		Verb_Printf(VERB_EXTRA, "Could not load image pk3, searching in directories for images instead\n");
+		Verb_Printf(VERB_NORMAL, "Could not load image pk3, searching in directories for images instead\n");
 }
 
 /**

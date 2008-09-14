@@ -398,7 +398,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, angles);
+		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, 0, touch->origin, angles);
 
 #ifdef PARANOID
 		Com_DPrintf(DEBUG_SERVER, "SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
@@ -439,7 +439,7 @@ int SV_PointContents (vec3_t p)
 	memset(&trace, 0, sizeof(trace));
 
 	/* clip to world - 0x1FF = all levels */
-	trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL);
+	trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL, 0);
 	trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
@@ -498,7 +498,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	memset(&clip, 0, sizeof(clip));
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
+	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly */
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)

@@ -1112,6 +1112,11 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
 		R_FilterTexture(scaled, scaled_width, scaled_height, image->type);
+	if (image->type == it_world) {
+		image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
+		if (image->normalmap == r_noTexture)
+			image->normalmap = NULL;
+	}
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;

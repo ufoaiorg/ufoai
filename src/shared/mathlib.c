@@ -43,14 +43,51 @@ const vec4_t vec4_origin = { 0, 0, 0, 0 };
  * 5 = x-1, y-1
  * 6 = x-1, y+1
  * 7 = x+1, y-1
+ * @note (change in x, change in y, change in z, change in height status)
  */
-const int dvecs[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
-const float dvecsn[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
-/** @note if you change dangle[DIRECTIONS], you must also change function AngleToDV */
-const float dangle[DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
+const vec4_t dvecs[PATHFINDING_DIRECTIONS] = {
+	{ 1,  0,  0,  0},	/* E */
+	{-1,  0,  0,  0},	/* W */
+	{ 0,  1,  0,  0},	/* N */
+	{ 0, -1,  0,  0},	/* S */
+	{ 1,  1,  0,  0},	/* NE */
+	{-1, -1,  0,  0},	/* SW */
+	{-1,  1,  0,  0},	/* NW */
+	{ 1, -1,  0,  0},	/* SE */
+	{ 0,  0,  1,  0},	/* CLIMB UP */
+	{ 0,  0, -1,  0}, 	/* CLIMB DOWN */
+	{ 0,  0,  0, -1},	/* STAND UP */
+	{ 0,  0,  0,  1},	/* STAND DOWN */
+	{ 0,  0,  0,  0},	/* UNDEFINED OPPOSITE OF FALL DOWN */
+	{ 0,  0, -1,  0},	/* FALL DOWN */
+	{ 0,  0,  0,  0},	/* UNDEFINED */
+	{ 0,  0,  0,  0},	/* UNDEFINED */
+	{ 1,  0,  1,  0},	/* UP E (Fliers only)*/
+	{-1,  0,  1,  0},	/* UP W (Fliers only) */
+	{ 0,  1,  1,  0},	/* UP N (Fliers only) */
+	{ 0, -1,  1,  0},	/* UP S (Fliers only) */
+	{ 1,  1,  1,  0},	/* UP NE (Fliers only) */
+	{-1, -1,  1,  0},	/* UP SW (Fliers only) */
+	{-1,  1,  1,  0},	/* UP NW (Fliers only) */
+	{ 1, -1,  1,  0},	/* UP SE (Fliers only) */
+	{ 1,  0, -1,  0},	/* DOWN E (Fliers only) */
+	{-1,  0, -1,  0},	/* DOWN W (Fliers only) */
+	{ 0,  1, -1,  0},	/* DOWN N (Fliers only) */
+	{ 0, -1, -1,  0},	/* DOWN S (Fliers only) */
+	{ 1,  1, -1,  0},	/* DOWN NE (Fliers only) */
+	{-1, -1, -1,  0},	/* DOWN SW (Fliers only) */
+	{-1,  1, -1,  0},	/* DOWN NW (Fliers only) */
+	{ 1, -1, -1,  0},	/* DOWN SE (Fliers only) */
+	};
 
-const byte dvright[DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
-const byte dvleft[DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
+/*                   		                0:E     1:W      2:N     3:S      4:NE        5:SW          6:NW         7:SE  */
+const float dvecsn[CORE_DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
+/** @note if you change dangle[PATHFINDING_DIRECTIONS], you must also change function AngleToDV */
+/*                                     0:E 1: W    2:N    3:S     4:NE   5:SW    6:NW    7:SE  */
+const float dangle[CORE_DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
+
+const byte dvright[CORE_DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
+const byte dvleft[CORE_DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
 
 /**

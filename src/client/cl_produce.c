@@ -786,7 +786,7 @@ static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 		} else if (selectedDisassembly) {
 			comp = selectedDisassembly;
 			od = comp->asItem;
-			assert (comp->asItem);
+			assert(comp->asItem);
 		} else {
 			od = NULL;
 		}

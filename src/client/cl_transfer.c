@@ -39,7 +39,7 @@ static aircraft_t *transferStartAircraft = NULL;
 static base_t *transferBase = NULL;
 
 /** @brief Current transfer type (item, employee, alien, aircraft). */
-static transferType_t currentTransferType = TRANS_TYPE_ITEM;
+static int currentTransferType = TRANS_TYPE_ITEM;
 
 /** @brief Current cargo onboard. */
 static transferCargo_t cargo[MAX_CARGO];
@@ -414,10 +414,11 @@ static qboolean TR_AircraftListSelect (int i)
 	return qtrue;
 }
 
+
 /**
  * @brief Function gives the user friendly name of a transfer category
  */
-static inline const char *TR_CategoryName (const transferType_t cat)
+inline const char *TR_CategoryName (const transferType_t cat)
 {
 	switch (cat) {
 	case TRANS_TYPE_ITEM:

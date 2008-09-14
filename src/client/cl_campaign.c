@@ -3304,7 +3304,7 @@ technology_t *CP_IsXVIResearched (void)
  * @brief Backs up each nation's relationship values.
  * @note Right after the copy the stats for the current month are the same as the ones from the (end of the) previous month.
  * They will change while the curent month is running of course :)
- * @todo otehr stuff to back up?
+ * @todo other stuff to back up?
  */
 static void CL_BackupMonthlyData (void)
 {
