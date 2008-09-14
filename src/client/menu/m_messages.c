@@ -41,6 +41,7 @@ static void CL_ShowMessagesOnStack_f (void)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Script command to delete all messages */
 static void CL_DeleteMessages_f (void)
@@ -55,6 +56,7 @@ static void CL_DeleteMessages_f (void)
 	}
 	mn.messageStack = NULL;
 }
+#endif
 
 /**
  * @brief Returns formatted text of a message timestamp

@@ -83,7 +83,6 @@ typedef struct transferCargo_s {
 void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
-const char *TR_CategoryName(const int cat);
 
 void TR_InitStartup(void);
 
