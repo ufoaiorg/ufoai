@@ -458,6 +458,10 @@ static void CalcFaceExtents (lightinfo_t *l)
 
 		l->texmins[i] = stmins[i];
 		l->texsize[i] = stmaxs[i] - stmins[i];
+
+		/* div 4 for extrasamples */
+		if (l->texsize[0] * l->texsize[1] > SINGLEMAP / 4)
+			Sys_Error("Surface too large to light (%dx%d)", l->texsize[0], l->texsize[1]);
 	}
 }
 
