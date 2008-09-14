@@ -172,7 +172,6 @@ void AL_AddAliens (aircraft_t *aircraft)
 	const aliensTmp_t *cargo;
 	qboolean messageAlreadySet = qfalse;
 	qboolean alienBreathing = qfalse;
-	technology_t *tech;
 	qboolean limit = qfalse;
 
 	assert(aircraft);
@@ -242,11 +241,11 @@ void AL_AddAliens (aircraft_t *aircraft)
 	}
 
 	for (i = 0; i < gd.numAliensTD; i++) {
+		technology_t *tech = tobase->alienscont[i].tech;
 #ifdef DEBUG
-		if (!tobase->alienscont[i].tech)
+		if (!tech)
 			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", tobase->alienscont[i].teamDef->name);
 #endif
-		tech = tobase->alienscont[i].tech;
 		/* we need this to let RS_Collected_ return true */
 		if (tobase->alienscont[i].amount_alive + tobase->alienscont[i].amount_dead > 0)
 			RS_MarkCollected(tech);
