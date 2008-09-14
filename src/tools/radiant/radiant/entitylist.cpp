@@ -80,7 +80,7 @@ public:
 namespace {
 EntityList* g_EntityList;
 
-inline EntityList& getEntityList() {
+inline EntityList& getEntityList (void) {
 	ASSERT_NOTNULL(g_EntityList);
 	return *g_EntityList;
 }
@@ -197,7 +197,7 @@ void EntityList_UpdateSelection(GtkTreeModel* model, GtkTreeView* view) {
 }
 
 
-void RedrawEntityList() {
+void RedrawEntityList (void) {
 	switch (getEntityList().m_dirty) {
 	case EntityList::eInsertRemove:
 	case EntityList::eSelection:
@@ -208,11 +208,11 @@ void RedrawEntityList() {
 	getEntityList().m_dirty = EntityList::eDefault;
 }
 
-void entitylist_queue_draw() {
+void entitylist_queue_draw (void) {
 	getEntityList().m_idleDraw.queueDraw();
 }
 
-void EntityList_SelectionUpdate() {
+void EntityList_SelectionUpdate (void) {
 	if (getEntityList().m_selection_disabled)
 		return;
 
@@ -237,7 +237,7 @@ void EntityList_SetShown(bool shown) {
 	widget_set_visible(GTK_WIDGET(getEntityList().m_window), shown);
 }
 
-void EntityList_toggleShown() {
+void EntityList_toggleShown (void) {
 	EntityList_SetShown(!getEntityList().visible());
 }
 
@@ -257,18 +257,21 @@ gint graph_tree_model_compare_name(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 }
 
 extern GraphTreeModel* scene_graph_get_tree_model();
-void AttachEntityTreeModel() {
+void AttachEntityTreeModel (void) {
 	getEntityList().m_tree_model = scene_graph_get_tree_model();
 
 	gtk_tree_view_set_model(getEntityList().m_tree_view, GTK_TREE_MODEL(getEntityList().m_tree_model));
 }
 
-void DetachEntityTreeModel() {
+void DetachEntityTreeModel (void) {
 	getEntityList().m_tree_model = 0;
 
 	gtk_tree_view_set_model(getEntityList().m_tree_view, 0);
 }
 
+/**
+ * @sa EntityList_destroyWindow
+ */
 void EntityList_constructWindow(GtkWindow* main_window) {
 	ASSERT_MESSAGE(getEntityList().m_window == 0, "error");
 
@@ -312,7 +315,10 @@ void EntityList_constructWindow(GtkWindow* main_window) {
 	AttachEntityTreeModel();
 }
 
-void EntityList_destroyWindow() {
+/**
+ * @sa EntityList_constructWindow
+ */
+void EntityList_destroyWindow (void) {
 	DetachEntityTreeModel();
 	EntityList_DisconnectSignals(getEntityList().m_tree_view);
 	destroy_floating_window(getEntityList().m_window);
@@ -330,10 +336,10 @@ class NullSelectedInstance : public scene::Instance, public Selectable {
 	class TypeCasts {
 		InstanceTypeCastTable m_casts;
 	public:
-		TypeCasts() {
+		TypeCasts (void) {
 			InstanceStaticCast<NullSelectedInstance, Selectable>::install(m_casts);
 		}
-		InstanceTypeCastTable& get() {
+		InstanceTypeCastTable& get (void) {
 			return m_casts;
 		}
 	};
@@ -355,7 +361,10 @@ public:
 typedef LazyStatic<NullSelectedInstance> StaticNullSelectedInstance;
 
 
-void EntityList_Construct() {
+/**
+ * @sa EntityList_Destroy
+ */
+void EntityList_Construct (void) {
 	graph_tree_model_insert(scene_graph_get_tree_model(), StaticNullSelectedInstance::instance());
 
 	g_EntityList = new EntityList;
@@ -367,7 +376,11 @@ void EntityList_Construct() {
 	typedef FreeCaller1<const Selectable&, EntityList_SelectionChanged> EntityListSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityListSelectionChangedCaller());
 }
-void EntityList_Destroy() {
+
+/**
+ * @sa EntityList_Construct
+ */
+void EntityList_Destroy (void) {
 	delete g_EntityList;
 
 	graph_tree_model_erase(scene_graph_get_tree_model(), StaticNullSelectedInstance::instance());

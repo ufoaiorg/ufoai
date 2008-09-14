@@ -990,6 +990,10 @@ void SurfaceInspector::ApplyTexdef (void) {
 	Select_SetTexdef(projection);
 }
 
+/**
+ * @brief Sets the flags for all selected faces/brushes
+ * @todo Change this to only update those, that were changed
+ */
 void SurfaceInspector::ApplyFlags (void) {
 	unsigned int surfaceflags = 0;
 	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
