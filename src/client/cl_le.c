@@ -575,15 +575,15 @@ static void LET_PathMove (le_t * le)
 			/* next part */
 			const byte fulldv = le->path[le->pathPos];
 			const byte dv = fulldv >> 3;
-			int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
-			int new_crouching_state = crouching_state;
+			const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
+			const int new_crouching_state = crouching_state;
 			PosAddDV(le->pos, new_crouching_state, fulldv);
 			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dv, le->pos[0], le->pos[1], le->pos[2]);
 			tuCost = Grid_MoveLength(&clPathMap, le->pos, new_crouching_state, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouching_state, qfalse);
-			/*
+#if 0
 			if (le->state & STATE_CROUCHED)
 				tuCost *= TU_CROUCH_MOVING_FACTOR;
-			*/
+#endif
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
@@ -613,6 +613,7 @@ static void LET_PathMove (le_t * le)
 			/* check for straight movement or diagonal movement */
 			assert(le->speed);
 			if (dv != DIRECTION_FALL) {
+				/* sqrt(2) for diagonal movement */
 				le->endTime += (le->dir >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 			} else {
 				le->speed = 1000;
