@@ -728,7 +728,6 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 	trace_t trace, newtr;
 	cBspModel_t *model;
 	const char **name;
-	int blocked;
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
@@ -1800,7 +1799,12 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	PQueueInitialise(&pqueue, 1024);
 	Vector4Set(epos, from[0], from[1], from[2], crouching_state);
 	PQueuePush(&pqueue, epos, 0);
-	RT_AREA_TEST(path, from[0], from[1], from[2], crouching_state);
+
+	/* Confirm bounds */
+	assert((from[2]) < PATHFINDING_HEIGHT);
+	assert((crouching_state) >= 0);
+	assert((crouching_state) < ACTOR_MAX_STATES);
+
 	RT_AREA(path, from[0], from[1], from[2], crouching_state) = 0;
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveCalc: Start at (%i %i %i) c:%i\n", from[0], from[1], from[2], crouching_state);
@@ -1853,7 +1857,10 @@ pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouching_state, q
 		return ROUTING_NOT_REACHABLE;
 	}
 #endif
-	RT_AREA_TEST(path, to[0], to[1], to[2], crouching_state);
+	/* Confirm bounds */
+	assert((to[2]) < PATHFINDING_HEIGHT);
+	assert((crouching_state) >= 0);
+	assert((crouching_state) < ACTOR_MAX_STATES);
 
 	if (!stored)
 		return RT_AREA(path, to[0], to[1], to[2], crouching_state);
