@@ -253,13 +253,6 @@ void R_EnableBumpmap (qboolean enable, material_t *material)
 
 	/* same state, same material, no change */
 	if (r_state.bumpmap_enabled == enable && r_state.active_material == material)
-
-
-
-
-
-
-
 		return;
 
 	/* toggle state */
