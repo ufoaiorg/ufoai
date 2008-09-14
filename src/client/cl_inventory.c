@@ -315,7 +315,6 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 	int i, j, numitems = 0, gained = 0, sold = 0;
 	char str[128];
 	itemsTmp_t *cargo;
-	technology_t *tech;
 	base_t *base;
 	qboolean notenoughspace = qfalse;
 
@@ -327,7 +326,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 	cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemtypes; i++) {
-		tech = cargo[i].item->tech;
+		technology_t *tech = cargo[i].item->tech;
 		if (!tech)
 			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
 		/* If the related technology is NOT researched, don't sell items. */
@@ -599,13 +598,12 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
 	int numObj;
-	objDef_t *obj;
 
 	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
 		return;
 
 	for (i = 0, numObj = 0; i < csi.numODs; i++) {
-		obj = &csi.ods[i];
+		const objDef_t *obj = &csi.ods[i];
 		/* don't count antimatter */
 		if (!Q_strncmp(obj->id, "antimatter", 10))
 			continue;
@@ -640,7 +638,9 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 		} else {
 			/* items are destroyed. We guess that all items of a given type are stored in the same location
 			 *	=> destroy all items of this type */
-			int idx = objIdx[randNumber];
+			const int idx = objIdx[randNumber];
+			assert(idx >= 0);
+			assert(idx < MAX_OBJDEFS);
 			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
 		}
 		REMOVE_ELEM(objIdx, randNumber, numObj);
