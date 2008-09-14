@@ -480,6 +480,27 @@ static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
 }
 
 /**
+ * @brief calculates whether side1 and side2 are on a common plane
+ * @details normals must be parallel, planes must touch
+ * @return true if the side1 and side2 are on a common plane
+ * @sa CheckZFighting, FacingAndCoincidentTo
+ */
+static qboolean ParallelAndCoincidentTo (const side_t *side1, const side_t *side2)
+{
+	plane_t *plane1 = &mapplanes[side1->planenum];
+	plane_t *plane2 = &mapplanes[side2->planenum];
+	float distance, dihedralCos;
+
+	dihedralCos = DotProduct(plane1->normal, plane2->normal);
+	if (dihedralCos <= COS_EPSILON)
+		return qfalse; /* not parallel */
+
+	distance = Check_PointPlaneDistance(plane1->planeVector[0], plane2);
+
+	return abs(distance) < CH_DIST_EPSILON;
+}
+
+/**
  * @brief tests if a point is in a map brush.
  * @param[in] point The point to check whether it's inside the brush boundaries or not
  * @param[in] mode determines how epsilons are applied
@@ -737,6 +758,88 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 			return qfalse;
 
 	return qtrue;
+}
+
+/**
+ * @brief tests the vertices in the winding of side s.
+ * @param[in] mode determines how epsilon is applied
+ * @return qtrue if at least one is in or on (within epsilon) brush b
+ * @sa Check_IsPointInsideBrush
+ */
+static qboolean Check_SideVertexIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
+{
+	int i;
+	const winding_t *w = side->winding;
+
+	assert(w->numpoints > 0);
+
+	for (i = 0; i < w->numpoints ; i++)
+		if (Check_IsPointInsideBrush(w->p[i], brush, mode))
+			return qtrue;
+
+	return qfalse;
+}
+
+void CheckZFighting(void)
+{
+	int i, j, is, js;
+
+	/* initialise mapbrush_t.nearBrushes */
+	Check_NearList();
+
+	/* check each brush, i, for hidden sides */
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+
+		/* skip moving brushes, clips etc */
+		if (!Check_IsOptimisable(iBrush))
+			continue;
+
+		for (j = 0; j < iBrush->numNear; j++) {
+			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+
+			if ((iBrush->contentFlags & CONTENTS_LEVEL_ALL) != (jBrush->contentFlags & CONTENTS_LEVEL_ALL))
+				continue; /* must be on the same level */
+
+			if (!Check_IsOptimisable(jBrush))
+				continue; /* skip moving brushes, clips etc */
+
+			for (is = 0; is < iBrush->numsides; is++) {
+				side_t *iSide = &iBrush->original_sides[is];
+
+				if (iSide->surfaceFlags & SURF_NODRAW)
+					continue; /* skip nodraws */
+
+				/* check each side of brush j for doing the hiding */
+				for (js = 0; js < jBrush->numsides; js++) {
+					const side_t *jSide = &jBrush->original_sides[js];
+
+					/* skip nodraws */
+					if (jSide->surfaceFlags & SURF_NODRAW)
+						continue;
+
+					#if 0
+					/** @todo see if plane index is a reliable way of testing for common planes. */
+					if (ParallelAndCoincidentTo(iSide, jSide)) {
+						int minIndex = min(iSide->planenum, jSide->planenum);
+						int maxIndex = max(iSide->planenum, jSide->planenum);
+						if (minIndex != maxIndex) {
+							Com_Printf("CheckZFighting: plane indices %i %i \n",
+								iSide->planenum, jSide->planenum);
+						}
+					}
+					#endif
+
+					if (ParallelAndCoincidentTo(iSide, jSide) ) {
+						if (Check_SideVertexIsInBrush(iSide, jBrush, PIB_INCL_SURF_EXCL_EDGE)) {
+							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
+								"z-fighting with brush %i (entity %i)\n", jBrush->entitynum, jBrush->brushnum);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 /**

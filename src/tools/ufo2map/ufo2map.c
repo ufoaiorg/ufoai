@@ -139,6 +139,7 @@ static void Usage (void)
 		"    tex textures            : warns when no texture or error texture is assigned.\n"
 		"                              ensures special textures and content/surface flags are consistent.\n"
 		"    mfc mixedfacecontents   : ensures the contentflags are the same on each face of each brush.\n"
+		"    zft zfighting           : intersecting brushes with a common face: prevent textures shimmering together.\n"
 	);
 }
 
@@ -210,6 +211,9 @@ static void U2M_Parameter (int argc, const char **argv)
 						i++;
 					}
 					Verb_Printf(VERB_LESS, "  checking map for microbrushes smaller than %f unit^3\n", config.mapMicrovol);
+				} else if (!strcmp(argv[i], "zfighting") || !strcmp(argv[i], "zft")) {
+					Verb_Printf(VERB_LESS, "  %s for z-fighting\n", config.fixMap ? "fixing" : "checking");
+					config.chkZFight = qtrue;
 				} else if (!strcmp(argv[i], "all")) {
 					Verb_Printf(VERB_LESS, "  %s all (entites brushes)\n", config.fixMap ? "fixing" : "checking");
 					config.chkAll = qtrue;
@@ -608,6 +612,8 @@ int main (int argc, const char **argv)
 		/** @todo include in chkAll when it works */
 		if (config.chkNodraws /* || config.chkAll */)
 			CheckNodraws();
+		if (config.chkZFight  || config.chkAll || config.chkBrushes)
+			CheckZFighting();
 		if (config.chkEntities || config.chkAll)
 			CheckEntities();
 		if (config.fixMap) {
