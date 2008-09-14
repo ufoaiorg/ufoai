@@ -64,6 +64,7 @@ void INV_UpdateAntimatterCap(base_t *base);
 void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
 void INV_RemoveAntimatterExceedingCapacity(base_t *base);
 qboolean INV_MoveItem(base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
+void INV_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingType);
 
 #ifdef DEBUG
 void INV_InventoryList_f(void);

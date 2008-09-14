@@ -758,7 +758,7 @@ static void B_BuildingOnDestroy_f (void)
 			break;
 		case B_UFO_HANGAR:
 		case B_UFO_SMALL_HANGAR:
-			/** @todo implement me */
+			INV_RemoveUFOsExceedingCapacity(base, buildingType);
 			break;
 		case B_QUARTERS:
 			E_DeleteEmployeesExceedingCapacity(base);
