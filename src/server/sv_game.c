@@ -173,7 +173,7 @@ static void SV_WriteByte (byte c)
  */
 static byte* SV_WriteDummyByte (byte c)
 {
-	char *pos = pfe_msg->end;
+	byte *pos = (byte*)pfe_msg->end;
 	NET_WriteByte(pfe_msg, c);
 	return pos;
 }
