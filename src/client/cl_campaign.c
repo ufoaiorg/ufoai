@@ -1388,9 +1388,9 @@ static void CP_BaseAttackMissionLeave (mission_t *mission)
 	base = (base_t *)mission->data;
 	assert(base);
 	/* Base attack is over, alien won */
-	CL_BaseDestroy(base);
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
 	MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	CL_BaseDestroy(base);
 	CL_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */

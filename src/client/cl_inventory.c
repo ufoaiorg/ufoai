@@ -628,7 +628,7 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 		objIdx[numObj++] = MAX_OBJDEFS;
 	}
 
-	while (base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
+	while (numObj && base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
 		/* Select the item to remove */
 		const int randNumber = rand() % numObj;
 		if (objIdx[randNumber] >= MAX_OBJDEFS) {
