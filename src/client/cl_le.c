@@ -576,7 +576,7 @@ static void LET_PathMove (le_t * le)
 			const byte fulldv = le->path[le->pathPos];
 			const byte dv = fulldv >> 3;
 			const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
-			const int new_crouching_state = crouching_state;
+			int new_crouching_state = crouching_state;
 			PosAddDV(le->pos, new_crouching_state, fulldv);
 			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dv, le->pos[0], le->pos[1], le->pos[2]);
 			tuCost = Grid_MoveLength(&clPathMap, le->pos, new_crouching_state, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouching_state, qfalse);
