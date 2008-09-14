@@ -85,8 +85,6 @@ extern TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 extern int numTiles;
 extern tnode_t *tnode_p;
 
-
-/* int BoxOnPlaneSide(vec3_t mins, vec3_t maxs, plane_t *plane); */
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plane);
 int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 

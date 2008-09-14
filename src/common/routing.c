@@ -39,14 +39,6 @@ MAP TRACING DEBUGGING TABLES
 crossPoints_t brushesHit;
 qboolean debugTrace = qfalse;
 
-/*
-===============================================================================
-GAME RELATED TRACING
-===============================================================================
-*/
-
-
-
 
 /*
 ==========================================================
@@ -121,7 +113,7 @@ void Grid_DumpWholeMap (routing_t *map)
 			PosToVec(end, maxs);
 			VectorAdd(maxs, normal, maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = TR_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
+			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -139,7 +131,7 @@ void Grid_DumpWholeMap (routing_t *map)
 			PosToVec(test, maxs);
 			VectorAdd(maxs, normal, maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = TR_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
+			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
@@ -229,7 +221,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		if (debugTrace)
 			Com_Printf("[(%i, %i, %i)]Casting (%f, %f, %f) to (%f, %f, %f)- i:%f\n",
 				x, y, z, start[0], start[1], start[2], end[0], end[1], end[2], base);
-		tr = TR_CompleteBoxTrace (start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE (start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
@@ -265,7 +257,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		if (debugTrace)
 			Com_Printf("    Casting (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
-		tr = TR_CompleteBoxTrace (tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE (tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
 		if (tr.fraction < 1.0) {
 			if (debugTrace)
@@ -304,7 +296,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		tstart[2] = tend[2]; /* The box trace for height starts at stepup height. */
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
 
-		tr = TR_CompleteBoxTrace(tstart, tend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
 
 		/*
@@ -382,7 +374,7 @@ static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int ac
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	tr_obstruction = TR_CompleteBoxTrace (start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr_obstruction = RT_COMPLETEBOXTRACE (start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 	return tr_obstruction.fraction < 1.0;
 }
 

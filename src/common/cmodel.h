@@ -54,6 +54,7 @@ trace_t CM_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 qboolean CM_TestLineWithEnt(const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 qboolean CM_EntTestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean CM_EntTestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
+trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
 
 /*==========================================================
 GRID ORIENTED MOVEMENT AND SCANNING

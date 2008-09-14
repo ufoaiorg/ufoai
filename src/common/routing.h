@@ -32,10 +32,12 @@ GLOBAL TYPES
 #if defined(COMPILE_MAP)
   #define RT_TESTLINE  			TR_TestLine
   #define RT_TESTLINEDM			TR_TestLineDM
+  #define RT_COMPLETEBOXTRACE	TR_CompleteBoxTrace
 
 #elif defined(COMPILE_UFO)
   #define RT_TESTLINE  			CM_EntTestLine
   #define RT_TESTLINEDM			CM_EntTestLineDM
+  #define RT_COMPLETEBOXTRACE	CM_EntCompleteBoxTrace
 
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.

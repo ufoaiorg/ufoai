@@ -710,6 +710,51 @@ trace_t CM_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 }
 
 
+/**
+ * @brief Performs box traces against the world and all inline models, gives the hit position back
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[in] mins The minimum extents of the collision box that is projected.
+ * @param[in] maxs The maximum extents of the collision box that is projected.
+ * @param[in] levelmask A mask of the game levels to trace against. Mask 0x100 filters clips.
+ * @param[in] brushmask Any brush detected must at least have one of these contents.
+ * @param[in] brushreject Any brush detected with any of these contents will be ignored.
+ * @return a trace_t with the information of the closest brush intersected.
+ * @sa TR_CompleteBoxTrace
+ * @sa CM_TransformedBoxTrace
+ */
+trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+{
+	trace_t trace, newtr;
+	cBspModel_t *model;
+	const char **name;
+	int blocked;
+
+	/* trace against world first */
+	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
+	if (!inlineList)
+		return trace;
+
+	for (name = inlineList; *name; name++) {
+		/* check whether this is really an inline model */
+		assert(**name == '*');
+		model = CM_InlineModel(*name);
+		assert(model);
+		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
+			continue;
+
+		newtr = CM_TransformedBoxTrace(start, end, mins, maxs, model->tile, model->headnode, brushmask, brushreject, model->origin, model->angles);
+
+		/* memorize the trace with the minimal fraction */
+		if (newtr.fraction == 0.0)
+			return newtr;
+		if (newtr.fraction < trace.fraction)
+			trace = newtr;
+	}
+	return trace;
+}
+
+
 /*
 ===============================================================================
 GAME RELATED TRACING
@@ -2088,7 +2133,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		for (y = min[1]; y < max[1] - actor_size; y++)
 			for (x = min[0]; x < max[0] - actor_size; x++)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
-					/** @note This update MUST go from the bottom to the top of the model. */
+					/** @note This update MUST go from the bottom to the top of the model.
+					 *  RT_UpdateConnection expects it and breaks otherwise. */
 					for (z = 0; z < PATHFINDING_HEIGHT; z++)
 						z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
 
