@@ -1460,6 +1460,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 	ent = g_edicts + num;
 	crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
+	oldState = 0;
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT, quiet))
