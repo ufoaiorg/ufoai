@@ -695,7 +695,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 		return NULL;
 
 	/* nodraw/caulk faces */
-	if ((side->surfaceFlags & SURF_NODRAW) && !(side->surfaceFlags & SURF_SKIP))
+	if (side->surfaceFlags & SURF_NODRAW)
 		return NULL;
 
 	f = AllocFace();

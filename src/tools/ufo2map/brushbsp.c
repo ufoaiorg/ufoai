@@ -418,11 +418,9 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 				back = 1;
 		}
 		if (front && back) {
-			if (!(brush->sides[i].surfaceFlags & SURF_SKIP)) {
-				(*numsplits)++;
-				if (brush->sides[i].surfaceFlags & SURF_HINT)
-					*hintsplit = qtrue;
-			}
+			(*numsplits)++;
+			if (brush->sides[i].surfaceFlags & SURF_HINT)
+				*hintsplit = qtrue;
 		}
 	}
 
@@ -571,8 +569,6 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					continue;	/* already a node splitter */
 				if (side->tested)
 					continue;	/* we already have metrics for this plane */
-				if (side->surfaceFlags & SURF_SKIP)
-					continue;	/* skip surfaces are never chosen */
 				if (side->visible ^ (pass < 2))
 					continue;	/* only check visible faces on first pass */
 
