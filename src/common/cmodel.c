@@ -1465,7 +1465,8 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	qboolean has_ladder_support = qfalse; /**< Indicates if there is a ladder present providing support. */
 	qboolean has_ladder_climb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
-	int actor_height, passage_height, height_change, stepup_height, falling_height;
+	int actor_height, passage_height, stepup_height, falling_height;
+	int height_change = 0;
 	int core_dir;
 
 	/* Ensure that dir is in bounds. */

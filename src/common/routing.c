@@ -169,10 +169,10 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	vec3_t start, end; /* Start and end of the traces */
 	vec3_t bmin, bmax; /* Extents of the ceiling box being traced */
 	vec3_t bmin2, bmax2; /* Extents of the floor box being traced */
-	vec3_t tstart, tend, temp;
+	vec3_t tstart, tend;
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. */
-	float base, initial; /* Cell floor and ceiling z coordinate. */
+	float initial; /* Cell floor and ceiling z coordinate. */
 	int i;
 	int fz, cz; /* Floor and celing Z cell coordinates */
 	trace_t tr;
@@ -219,8 +219,8 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	 */
 	while (qtrue) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
 		if (debugTrace)
-			Com_Printf("[(%i, %i, %i)]Casting (%f, %f, %f) to (%f, %f, %f)- i:%f\n",
-				x, y, z, start[0], start[1], start[2], end[0], end[1], end[2], base);
+			Com_Printf("[(%i, %i, %i)]Casting (%f, %f, %f) to (%f, %f, %f)\n",
+				x, y, z, start[0], start[1], start[2], end[0], end[1], end[2]);
 		tr = RT_COMPLETEBOXTRACE (start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
 		if (tr.fraction >= 1.0) {
@@ -261,7 +261,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
 		if (tr.fraction < 1.0) {
 			if (debugTrace)
-				Com_Printf("Cannot use found surface- stepup obstruction found at %f.\n", temp[2]);
+				Com_Printf("Cannot use found surface- stepup obstruction found at %f.\n", tr.endpos[2]);
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
