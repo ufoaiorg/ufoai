@@ -617,7 +617,7 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	/* Check that current capacity is possible -- if we changed values in *.ufo */
 	for (i = 0; i < MAX_CAP; i++)
 		if (base->capacities[i].cur > base->capacities[i].max)
-			Com_Printf("B_ResetAllStatusAndCapacities_f: Warning, capacity of %i is bigger than maximum capacity\n", i);
+			Com_Printf("B_ResetAllStatusAndCapacities: Warning, capacity of %i is bigger than maximum capacity\n", i);
 }
 
 #ifdef DEBUG
@@ -894,7 +894,7 @@ void CL_BaseDestroy (base_t *base)
  * @brief Debug command for destroying a base.
  * @param[in] base index to be destroyed.
  */
-void CL_BaseDestroy_f (void)
+static void CL_BaseDestroy_f (void)
 {
 	int baseIdx;
 	base_t *base;
@@ -912,7 +912,7 @@ void CL_BaseDestroy_f (void)
 	}
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
-        if (!base) {
+	if (!base) {
 		Com_Printf("CL_BaseDestroy_f: Base %i not founded\n", baseIdx);
 		return;
 	}
