@@ -455,8 +455,10 @@ static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t 
  * to the origin must be such that they occupy the same region of
  * space, to within a distance of epsilon. These are based on consideration of
  * the planes of the faces only - they could be offset by a long way.
- * @note carefully tested around r18537 by blondandy
- * @return true if the sides face and touch
+ * @note i did some experiments that show that the plane indices alone cannot
+ * cannot be relied on to test for 2 planes facing each other. blondandy
+ * @return true if the planes of the sides face and touch
+ * @sa CheckNodraws
  */
 static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
 {
@@ -827,6 +829,20 @@ void CheckNodraws (void)
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
 					const side_t *jSide = &jBrush->original_sides[js];
+
+					#if 0
+					/* run on a largish map, this section proves that the plane indices alone cannot
+					   cannot be relied on to test for 2 planes facing each other. */
+					if (FacingAndCoincidentTo(iSide, jSide)) {
+						int minIndex = min(iSide->planenum, jSide->planenum);
+						int maxIndex = max(iSide->planenum, jSide->planenum);
+						int diff = maxIndex - minIndex, minOdd = (minIndex & 1);
+						if ((diff != 1) || minOdd) {
+							Com_Printf("CheckNodraws: facing and coincident plane indices %i %i diff:%i minOdd:%i\n",
+								iSide->planenum, jSide->planenum, diff, minOdd);
+						}
+					}
+					#endif
 
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
