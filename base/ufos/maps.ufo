@@ -298,6 +298,7 @@ mapdef frozen_alienlandingindustrial
 	}
 }
 
+
 mapdef frozen_small
 {
 	map				"+frozen"
@@ -390,6 +391,50 @@ mapdef frozen_industrial
 	populations
 	{
 		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+//Mapdef to replace industrial.map
+mapdef alienlandingindustrial_fix
+{
+	map				"+frozen"
+	param			industrial_static
+	description		"_An industrial compound."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		20
+
+	ufos
+	{
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		arctic
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nonpopulation
 		rural
 		village
 		suburban
@@ -1197,47 +1242,7 @@ mapdef farm
 	}
 }
 
-mapdef industrial
-{
-	map				industrial
-	description		"_An industrial compound."
-	multiplayer		true
-	teams			2
-	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		coop2
-		coop3
-		coop4
-	}
-	maxaliens		20
 
-	ufos
-	{
-		craft_ufo_fighter
-	}
-
-	terrains
-	{
-		arctic
-		cold
-	}
-
-	cultures
-	{
-		//any
-	}
-
-	populations
-	{
-		nonpopulation
-		rural
-		village
-		suburban
-	}
-}
 
 mapdef rivertown
 {
