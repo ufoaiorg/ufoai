@@ -853,7 +853,6 @@ void INV_InventoryList_f (void)
 #endif
 
 /**
- * @param[in] base the base all this happens into
  * @param[in] inv list where the item is currently in
  * @param[in] toContainer target container to place the item in
  * @param[in] px target x position in the toContainer container
@@ -865,12 +864,10 @@ void INV_InventoryList_f (void)
  * spot in the targetContainer
  * @return qtrue if the move was successful.
  */
-qboolean INV_MoveItem (base_t* base, inventory_t* inv, const invDef_t * toContainer, int px, int py,
+qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, int py,
 	const invDef_t * fromContainer, invList_t *fItem)
 {
 	int moved;
-
-	assert(base);
 
 	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
