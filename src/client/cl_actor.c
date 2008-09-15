@@ -5313,9 +5313,10 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 }
 
 /**
- * @brief
+ * @brief Shows a table of the TUs that would be used by the current actor to move
+ * relative to its current location
  */
-void CL_DumpTUs (void)
+void CL_DumpTUs_f (void)
 {
 	int x, y, crouching_state;
 	pos3_t pos, loc;
@@ -5422,9 +5423,9 @@ void CL_DisplayObstructionArrows (void)
 }
 
 /**
- * @brief
+ * @brief Triggers @c Grid_MoveMark in every direction at the current truePos.
  */
-void CL_DumpMoveMark (void)
+void CL_DumpMoveMark_f (void)
 {
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize

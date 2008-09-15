@@ -139,8 +139,8 @@ void CL_ActorInventoryOpen_f(void);
 void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
 void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
 
-void CL_DumpTUs(void);
-void CL_DumpMoveMark(void);
+void CL_DumpTUs_f(void);
+void CL_DumpMoveMark_f(void);
 
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);

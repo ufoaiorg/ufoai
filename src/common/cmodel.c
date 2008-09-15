@@ -1381,7 +1381,7 @@ int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @sa CL_InitLocal
  */
-void Grid_DumpWholeClientMap (void)
+void Grid_DumpWholeClientMap_f (void)
 {
 	Grid_DumpWholeMap(&clMap[0]);
 	Grid_DumpWholeMap(&clMap[1]);
@@ -1392,7 +1392,7 @@ void Grid_DumpWholeClientMap (void)
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @sa CL_InitLocal
  */
-void Grid_DumpWholeServerMap (void)
+void Grid_DumpWholeServerMap_f (void)
 {
 	Grid_DumpWholeMap(&svMap[0]);
 	Grid_DumpWholeMap(&svMap[1]);
