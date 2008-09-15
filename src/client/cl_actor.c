@@ -1062,11 +1062,11 @@ static menuNode_t* popupListNode = NULL;
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
- * @note console command: cl_input.c:sel_shotreservation
  * @todo Fix the usage of LIST_Add with constant values like 0,1 and -1. See also the "tempxxx" variables.
+ * @sa CL_PopupFiremodeReservation_f
  * @sa CL_CheckFiremodeReservation
  */
-void CL_PopupFiremodeReservation_f (void)
+static void CL_PopupFiremodeReservation (qboolean reset)
 {
 	int tempInvalid = -1;
 	int tempZero = 0;
@@ -1082,9 +1082,7 @@ void CL_PopupFiremodeReservation_f (void)
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
 
-	if (Cmd_Argc() == 2) {
-		/* A second parameter (the value itself will be ignored) was given.
-		 * This is used to reset the shot-reservation.*/
+	if (reset) {
 		CL_ReserveTUs(selActor, RES_SHOT, 0);
 		CL_CharacterSetShotSettings(selChr, -1, -1, -1);
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
@@ -1114,7 +1112,7 @@ void CL_PopupFiremodeReservation_f (void)
 	popupNum++;
 	selectedEntry = 0;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation_f\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation\n");
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
 		objDef_t *ammo = NULL;
@@ -1151,7 +1149,7 @@ void CL_PopupFiremodeReservation_f (void)
 					 && (selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx))
 						selectedEntry = popupNum;
 
-					Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation_f: hand %i, fm %i, wp %i -- hand %i, fm %i, wp %i\n",
+					Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation: hand %i, fm %i, wp %i -- hand %i, fm %i, wp %i\n",
 						selChr->reservedTus.shotSettings.hand, selChr->reservedTus.shotSettings.fmIdx, selChr->reservedTus.shotSettings.wpIdx,
 						((hand == 'r') ? 0 : 1), i, ammo->weapons[weapFdsIdx]->idx);
 					popupNum++;
@@ -1168,13 +1166,29 @@ void CL_PopupFiremodeReservation_f (void)
 	} while (hand != 0);
 
 	if (popupNum > 1 || popupReload) {
-		/* We have more entries that the "0 TUs" one. */
+		/* We have more entries than the "0 TUs" one
+		 * or we want ot simply refresh/display the popup content (no matter how many TUs are left). */
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
 		popupListNode->textLineSelected = selectedEntry;
 		popupReload = qfalse;
 	}
+}
+
+/**
+ * @brief Creates a (text) list of all firemodes of the currently selected actor.
+ * @todo Fix the usage of LIST_Add with constant values like 0,1 and -1. See also the "tempxxx" variables.
+ * @sa CL_PopupFiremodeReservation
+ */
+void CL_PopupFiremodeReservation_f (void)
+{
+	/* A second parameter (the value itself will be ignored) was given.
+	 * This is used to reset the shot-reservation.*/
+	if (Cmd_Argc() == 2)
+		CL_PopupFiremodeReservation(qtrue);
+	else
+		CL_PopupFiremodeReservation(qfalse);
 }
 
 /**
@@ -2053,12 +2067,16 @@ static void CL_RefreshWeaponButtons (int time)
 			Com_Printf("CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
 
 		if (menu && strstr(menu->name, POPUPLIST_MENU_NAME)) {
-			Com_Printf("CL_ActorToggleReaction_f: reloadfresh popup\n");
-			popupReload = qtrue;
-			MN_PopMenu(qfalse);
-			CL_PopupFiremodeReservation_f();
-		}
+			Com_Printf("CL_ActorToggleReaction_f: reload popup\n");
 
+			/* Prevent firemode reservation popup from being closed if
+			 * no firemode is available because of insufficient TUs. */
+			popupReload = qtrue;
+
+			/* Close and reload firemode reservation popup. */
+			MN_PopMenu(qfalse);
+			CL_PopupFiremodeReservation(qfalse);
+		}
 	}
 }
 
