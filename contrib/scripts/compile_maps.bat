@@ -79,6 +79,10 @@ goto :EOF
 
 :compilemap
 	echo ...found dir "%1"
+	if "%~n1" == "prefabs" (
+		echo [skipping prefabs]
+		exit /b
+	)
 	for %%j in (%1\*.map) DO (
 		echo ufo2map.exe -v 2 %ufo2mapparameters% %%j
 		ufo2map.exe -v 2 %ufo2mapparameters% %%j || (
