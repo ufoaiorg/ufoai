@@ -2064,10 +2064,10 @@ static void CL_RefreshWeaponButtons (int time)
 	{
 		const menu_t* menu = MN_GetActiveMenu();
 		if (menu)
-			Com_Printf("CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
+			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
 
 		if (menu && strstr(menu->name, POPUPLIST_MENU_NAME)) {
-			Com_Printf("CL_ActorToggleReaction_f: reload popup\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: reload popup\n");
 
 			/* Prevent firemode reservation popup from being closed if
 			 * no firemode is available because of insufficient TUs. */

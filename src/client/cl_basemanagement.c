@@ -2999,7 +2999,7 @@ static void B_AssembleMap_f (void)
 				Q_strcat(coords, va("%i %i %i ", col * 16, (BASE_SIZE - row - 1) * 16, 0), sizeof(coords));
 			}
 		}
-	/* set maxlevel for base attacks to 5 */
+	/* set maxlevel for base attacks */
 	cl.map_maxlevel_base = 6;
 
 	if (curCampaign)
