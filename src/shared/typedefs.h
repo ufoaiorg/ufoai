@@ -249,20 +249,6 @@ typedef struct pathing_s {
 	int fblength;	/**< length of forbidden list (amount of entries) */
 } pathing_t;
 
-typedef struct old_routing_s {
-	byte route[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte fall[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte step[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte filled[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	byte area[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-	byte areaStored[PATHFINDING_HEIGHT][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	/* forbidden list */
-	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
-	int fblength;	/**< length of forbidden list (amount of entries) */
-} old_routing_t;
-
 /** @sa mapplanes */
 typedef struct plane_s {
 	vec3_t	normal;			/**< unit (magnitude == 1) normal defining the direction of the plane */
