@@ -157,7 +157,7 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 /**
  * @param[in] mandatory if this key is missing the entity will be deleted, else just a warning
  */
-static int checkEntityKey (entity_t *e, const int entnum, const char* key, int mandatory)
+static int checkEntityKey (entity_t *e, const int entnum, const char* key, const qboolean mandatory)
 {
 	const char *val = ValueForKey(e, key);
 	const char *name = ValueForKey(e, "classname");
@@ -196,14 +196,18 @@ static int checkEntityZeroBrushes (entity_t *e, int entnum)
 	return 0;
 }
 
+/** @brief a slightly pointless test, but nice to have one, as it
+ * stops a compiler warning */
 static int checkWorld (entity_t *e, int entnum)
 {
+	if (!e->numbrushes)
+		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "worldspawn with no brushes given - unusual, but may be OK if there are func_groups\n");
 	return 0;
 }
 
 static int checkLight (entity_t *e, int entnum)
 {
-	return 0;
+	return checkEntityKey(e, entnum, "origin", qtrue);
 }
 
 static int checkFuncRotating (entity_t *e, int entnum)
@@ -791,9 +795,8 @@ void CheckZFighting(void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
-		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
-			continue;
+			continue; /* skip moving brushes, clips etc */
 
 		for (j = 0; j < iBrush->numNear; j++) {
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
@@ -833,7 +836,7 @@ void CheckZFighting(void)
 					if (ParallelAndCoincidentTo(iSide, jSide) ) {
 						if (Check_SideVertexIsInBrush(iSide, jBrush, PIB_INCL_SURF_EXCL_EDGE)) {
 							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
-								"z-fighting with brush %i (entity %i)\n", jBrush->entitynum, jBrush->brushnum);
+								"z-fighting with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
 						}
 					}
 				}
