@@ -439,6 +439,20 @@ static const entityCheck_t checkArray[] = {
 	{NULL, NULL}
 };
 
+/** faces close to pointing down may be set to nodraw.
+ * this is the cosine of the angle of how close it has to be. around 10 degrees */
+#define NEARDOWN_COS 0.985
+
+/** @brief faces that are near pointing down may be set nodraw,
+ *  as views are always slightly down */
+static qboolean Check_SidePointsDown(const side_t *s)
+{
+	const vec3_t down = {0.0f, 0.0f, -1.0f};
+	const plane_t *plane = &mapplanes[s->planenum];
+	float dihedralCos = DotProduct(plane->normal, down);
+	return dihedralCos >= NEARDOWN_COS;
+}
+
 /**
  * @brief distance from a point to a plane.
  * @note the sign of the result depends on which side of the plane the point is
@@ -784,6 +798,8 @@ static qboolean Check_SideVertexIsInBrush (const side_t *side, const mapbrush_t 
 	return qfalse;
 }
 
+
+/** @todo improve this test, it misses several cases */
 void CheckZFighting(void)
 {
 	int i, j, is, js;
@@ -813,6 +829,9 @@ void CheckZFighting(void)
 				if (iSide->surfaceFlags & SURF_NODRAW)
 					continue; /* skip nodraws */
 
+				if (Check_SidePointsDown(iSide))
+					continue; /* can't see these, view is always from above */
+
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
 					const side_t *jSide = &jBrush->original_sides[js];
@@ -822,15 +841,12 @@ void CheckZFighting(void)
 						continue;
 
 					#if 0
-					/** @todo see if plane index is a reliable way of testing for common planes. */
-					if (ParallelAndCoincidentTo(iSide, jSide)) {
-						int minIndex = min(iSide->planenum, jSide->planenum);
-						int maxIndex = max(iSide->planenum, jSide->planenum);
-						if (minIndex != maxIndex) {
+					/** running this chunk on a large map proves that plane indices
+					  * cannot be relied on to test sides are from a common plane */
+					if (ParallelAndCoincidentTo(iSide, jSide))
+						if (jSide->planenum != jSide->planenum)
 							Com_Printf("CheckZFighting: plane indices %i %i \n",
 								iSide->planenum, jSide->planenum);
-						}
-					}
 					#endif
 
 					if (ParallelAndCoincidentTo(iSide, jSide) ) {
@@ -891,10 +907,22 @@ static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
 	return !(CONTENTS_LEVEL_ALL & ~coverer->contentFlags & coveree->contentFlags);
 }
 
+static void Check_SetNodraw(side_t *s)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *tex = &side_brushtextures[index];
+
+	Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
+	s->surfaceFlags |= SURF_NODRAW;
+	tex->surfaceFlags |= SURF_NODRAW;
+	s->surfaceFlags &= ~SURF_PHONG;
+	tex->surfaceFlags &= ~SURF_PHONG;
+}
+
 /**
  * @brief Check for SURF_NODRAW which might be exposed, and check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
- * the faces of other brushes.
+ * the faces of other brushes. Also set faces pointing near straight down nodraw.
  * @todo test for sides hidden by composite faces
  * @note probably cannot warn about faces which are nodraw, but might be visible, as there will
  * always be planty of optimisations beyond faces being hidden by one brush, or composite faces.
@@ -906,6 +934,37 @@ void CheckNodraws (void)
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
+
+	/* check each brush, i, for downward sides */
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+		int numSet = 0;
+
+		/* skip moving brushes, clips etc */
+		if (!Check_IsOptimisable(iBrush))
+			continue;
+
+		/* check each side of i for pointing down */
+		for (is = 0; is < iBrush->numsides; is++) {
+			side_t *iSide = &iBrush->original_sides[is];
+
+			/* skip those that are already nodraw */
+			if (iSide->surfaceFlags & SURF_NODRAW)
+				continue;
+
+			if (Check_SidePointsDown(iSide)) {
+				Check_SetNodraw(iSide);
+				globalNumSet++;
+				numSet++;
+			}
+
+		}
+		if (numSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (point down, or are close to pointing down).\n", numSet);
+	}
+	if (globalNumSet)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (point down, or are close to pointing down)\n", globalNumSet);
+	globalNumSet = 0;
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
@@ -953,15 +1012,7 @@ void CheckNodraws (void)
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
 						Check_SideIsInBrush(iSide, jBrush, PIB_INCL_SURF)) {
-
-						const ptrdiff_t index = iSide - brushsides;
-						brush_texture_t *tex = &side_brushtextures[index];
-
-						Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
-						iSide->surfaceFlags |= SURF_NODRAW;
-						tex->surfaceFlags |= SURF_NODRAW;
-						iSide->surfaceFlags &= ~SURF_PHONG;
-						tex->surfaceFlags &= ~SURF_PHONG;
+						Check_SetNodraw(iSide);
 						numSet++;
 						globalNumSet++;
 					}
