@@ -122,7 +122,7 @@ qboolean R_CullMeshModel(entity_t *e);
 void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);
-void R_DrawBspNormals(void);
+void R_DrawBspNormals(int tile);
 qboolean R_CullBspModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);

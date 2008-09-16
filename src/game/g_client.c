@@ -1735,10 +1735,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
  */
 static void G_ClientTurn (player_t * player, int num, byte dv)
 {
-	edict_t *ent;
-	byte dir = dv >> 3;
-
-	ent = g_edicts + num;
+	const int dir = dv >> 3;
+	edict_t *ent = g_edicts + num;
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, TU_TURN, NOISY))

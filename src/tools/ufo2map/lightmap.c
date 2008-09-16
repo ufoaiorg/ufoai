@@ -380,8 +380,6 @@ typedef struct {
 	vec_t	facedist;
 	vec3_t	facenormal;
 
-	vec3_t center;
-
 	int		numsurfpt;
 	vec3_t	*surfpt;
 
@@ -396,73 +394,97 @@ typedef struct {
 	dBspFace_t	*face;
 } lightinfo_t;
 
-
 typedef struct extents_s {
 	vec3_t mins, maxs;
+	vec3_t center;
+	vec2_t stmins, stmaxs;
 } extents_t;
 
 static extents_t face_extents[MAX_MAP_FACES];
 
 /**
- * @brief Fills in s->texmins[] and s->texsize[]
+ * @brief Populates face_extents for all dBspSurface_t, prior to light creation.
+ */
+static void BuildFaceExtents (void)
+{
+	int k;
+
+	for (k = 0; k < curTile->numfaces; k++) {
+		const dBspFace_t *s = &curTile->faces[k];
+		const dBspTexinfo_t *tex = &curTile->texinfo[s->texinfo];
+		float *mins = face_extents[s - curTile->faces].mins;
+		float *maxs = face_extents[s - curTile->faces].maxs;
+		float *center = face_extents[s - curTile->faces].center;
+		float *stmins = face_extents[s - curTile->faces].stmins;
+		float *stmaxs = face_extents[s - curTile->faces].stmaxs;
+		int i;
+
+		VectorSet(mins, 999999, 999999, 999999);
+		VectorSet(maxs, -999999, -999999, -999999);
+
+		stmins[0] = stmins[1] = 999999;
+		stmaxs[0] = stmaxs[1] = -999999;
+
+		for (i = 0; i < s->numedges; i++) {
+			const int e = curTile->surfedges[s->firstedge + i];
+			const dBspVertex_t *v;
+			int j;
+
+			if (e >= 0)
+				v = curTile->vertexes + curTile->edges[e].v[0];
+			else
+				v = curTile->vertexes + curTile->edges[-e].v[1];
+
+			for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
+				if (v->point[j] > maxs[j])
+					maxs[j] = v->point[j];
+				if (v->point[j] < mins[j])
+					mins[j] = v->point[j];
+			}
+
+			for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
+				const float val = DotProduct(v->point, tex->vecs[j]) + tex->vecs[j][3];
+				if (val < stmins[j])
+					stmins[j] = val;
+				if (val > stmaxs[j])
+					stmaxs[j] = val;
+			}
+		}
+
+		for (i = 0; i < 3; i++)
+			center[i] = (mins[i] + maxs[i]) / 2.0f;
+	}
+}
+
+/**
+ * @sa BuildFaceExtents
  */
 static void CalcFaceExtents (lightinfo_t *l)
 {
 	const dBspFace_t *s;
 	float *mins, *maxs;
-	vec2_t stmins, stmaxs;
-	int i, j;
-	const dBspVertex_t *v;
-	const dBspTexinfo_t *tex;
+	float *stmins, *stmaxs;
+	vec2_t lm_mins, lm_maxs;
+	int i;
 
 	s = l->face;
 
 	mins = face_extents[s - curTile->faces].mins;
 	maxs = face_extents[s - curTile->faces].maxs;
-
-	VectorSet(mins, 999999, 999999, 999999);
-	VectorSet(maxs, -999999, -999999, -999999);
-	Vector2Set(stmins, 999999, 999999);
-	Vector2Set(stmaxs, -999999, -999999);
-
-	tex = &curTile->texinfo[s->texinfo];
-
-	for (i = 0; i < s->numedges; i++) {
-		const int e = curTile->surfedges[s->firstedge + i];
-		if (e >= 0)
-			v = curTile->vertexes + curTile->edges[e].v[0];
-		else
-			v = curTile->vertexes + curTile->edges[-e].v[1];
-		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
-			if (v->point[j] > maxs[j])
-				maxs[j] = v->point[j];
-			if (v->point[j] < mins[j])
-				mins[j] = v->point[j];
-		}
-
-		for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
-			const float val = DotProduct(v->point, tex->vecs[j]) + tex->vecs[j][3];
-			if (val < stmins[j])
-				stmins[j] = val;
-			if (val > stmaxs[j])
-				stmaxs[j] = val;
-		}
-	}
-
-	for (i = 0; i < 3; i++)
-		l->center[i] = (mins[i] + maxs[i]) / 2.0f;
+	stmins = face_extents[s - curTile->faces].stmins;
+	stmaxs = face_extents[s - curTile->faces].stmaxs;
 
 	for (i = 0; i < 2; i++) {
-		stmins[i] = floor(stmins[i] / (1 << config.lightquant));
-		stmaxs[i] = ceil(stmaxs[i] / (1 << config.lightquant));
+		lm_mins[i] = floor(stmins[i] / (1 << config.lightquant));
+		lm_maxs[i] = ceil(stmaxs[i] / (1 << config.lightquant));
 
-		l->texmins[i] = stmins[i];
-		l->texsize[i] = stmaxs[i] - stmins[i];
-
-		/* div 4 for extrasamples */
-		if (l->texsize[0] * l->texsize[1] > SINGLEMAP / 4)
-			Sys_Error("Surface too large to light (%dx%d)", l->texsize[0], l->texsize[1]);
+		l->texmins[i] = lm_mins[i];
+		l->texsize[i] = lm_maxs[i] - lm_mins[i];
 	}
+
+	/* div 4 for extrasamples */
+	if (l->texsize[0] * l->texsize[1] > SINGLEMAP / 4)
+		Sys_Error("Surface too large to light (%dx%d)", l->texsize[0], l->texsize[1]);
 }
 
 /**
@@ -580,8 +602,26 @@ typedef struct {
 	float *directions;
 } facelight_t;
 
-static directlight_t *directlights[2];
 static facelight_t facelight[2][MAX_MAP_FACES];
+
+typedef enum {
+	emit_surface,
+	emit_point,
+	emit_spotlight
+} emittype_t;
+
+typedef struct directlight_s {
+	struct directlight_s *next;
+	emittype_t	type;
+
+	float		intensity;
+	vec3_t		origin;
+	vec3_t		color;
+	vec3_t		normal;		/**< for surfaces and spotlights */
+	float		stopdot;	/**< for spotlights */
+} directlight_t;
+
+static directlight_t *directlights[2];
 static int numdlights[2];
 
 #define	DIRECT_LIGHT	3
@@ -943,9 +983,14 @@ void BuildVertexNormals (void)
 	float scale;
 	int i, j;
 
+	BuildFaceExtents();
+
 	for (i = 0; i < curTile->numvertexes; i++) {
 		VectorClear(curTile->normals[i].normal);
 		FacesWithVert(i, vert_faces, &num_vert_faces);
+
+		if (!num_vert_faces)  /* rely on plane normal only */
+			continue;
 
 		for (j = 0; j < num_vert_faces; j++) {
 			const dBspFace_t *face = &curTile->faces[vert_faces[j]];
@@ -970,21 +1015,19 @@ void BuildVertexNormals (void)
 
 
 /**
- * @brief For Phong-shaded samples, interpolate the vertex normals for the surface,
- * weighting them according to their proximity to pos.
+ * @brief For Phong-shaded samples, interpolate the vertex normals for the surface in
+ * question, weighting them according to their proximity to the sample position.
  */
 static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
-	vec3_t temp, temp2;
-	float dist, neardist, fardist;
-	int nearEdge, farEdge;
+	vec3_t temp;
+	float dist[MAX_VERT_FACES];
+	float total;
 	int i, v;
 
-	neardist = 999999;
-	fardist = -999999;
+	total = 0.0;
 
-	nearEdge = farEdge = 0;
-
+	/* calculate the distance to each vertex */
 	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
 		const int e = curTile->surfedges[l->face->firstedge + i];
 		if (e >= 0)
@@ -993,23 +1036,24 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 			v = curTile->edges[-e].v[1];
 
 		VectorSubtract(pos, curTile->vertexes[v].point, temp);
-		dist = VectorLength(temp);
+		dist[i] = VectorLength(temp);
 
-		if (dist < neardist) {
-			neardist = dist;
-			nearEdge = v;
-		}
-
-		if (dist > fardist) {
-			fardist = dist;
-			farEdge = v;
-		}
+		total += dist[i];
 	}
 
-	/* interpolate between nearest and farthest verts */
-	VectorScale(curTile->normals[nearEdge].normal, neardist / (neardist + fardist), temp);
-	VectorScale(curTile->normals[farEdge].normal, fardist / (neardist + fardist), temp2);
-	VectorAdd(temp, temp2, normal);
+	VectorClear(normal);
+
+	/* interpolate between them */
+	for (i = 0; i < l->face->numedges; i++) {
+		const int e = curTile->surfedges[l->face->firstedge + i];
+		if (e >= 0)
+			v = curTile->edges[e].v[0];
+		else
+			v = curTile->edges[-e].v[1];
+
+		VectorMA(normal, (total - dist[i]) / total, curTile->normals[v].normal, normal);
+	}
+
 	VectorNormalize(normal);
 }
 
@@ -1027,6 +1071,7 @@ void BuildFacelights (unsigned int facenum)
 {
 	dBspFace_t *f;
 	dBspTexinfo_t *tex;
+	float *center;
 	float *sdir, *tdir;
 	vec3_t normal, binormal;
 	vec4_t tangent;
@@ -1048,6 +1093,8 @@ void BuildFacelights (unsigned int facenum)
 
 	sdir = tex->vecs[0];
 	tdir = tex->vecs[1];
+
+	center = face_extents[facenum].center;
 
 	if (tex->surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
@@ -1120,7 +1167,7 @@ void BuildFacelights (unsigned int facenum)
 			else /* or just use the plane normal */
 				VectorCopy(l[0].facenormal, normal);
 
-			GatherSampleLight(l[j].surfpt[i], normal, l[0].center,
+			GatherSampleLight(l[j].surfpt[i], normal, center,
 				sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
 
 			/* finalize the lighting direction for the sample and
@@ -1133,11 +1180,13 @@ void BuildFacelights (unsigned int facenum)
 			dir[1] = DotProduct(direction, binormal);
 			dir[2] = DotProduct(direction, normal);
 
-			/* and normalize it */
 			VectorCopy(dir, direction);
-			VectorNormalize(direction);
-		}
 
+			/* and normalize it, providing a default value when necessary */
+			if (VectorNormalize(direction) < 0.33) {
+				VectorSet(direction, 0.0, 0.0, 1.0);
+			}
+		}
 		/* contribute the sample to one or more patches for radiosity */
 /*		if (config.numbounce > 0)*/
 			AddSampleToPatch(l[0].surfpt[i], sample, facenum);

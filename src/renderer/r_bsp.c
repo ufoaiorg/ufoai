@@ -160,45 +160,51 @@ WORLD MODEL
 /**
  * @brief Draw normals for bsp surfaces
  */
-void R_DrawBspNormals (void)
+void R_DrawBspNormals (int tile)
 {
-	int i, j, k, tile;
+	int i, j, k;
+	const mBspSurface_t *surf;
+	const mBspModel_t *bsp;
+	const vec4_t color = {1.0, 0.0, 0.0, 1.0};
 
 	if (!r_shownormals->integer)
 		return;
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
-	glColor3f(1.0, 0.0, 0.0);
+	R_Color(color);
 
 	k = 0;
-	for (tile = 0; tile < r_numMapTiles; tile++) {
-		const mBspSurface_t *surf = r_mapTiles[tile]->bsp.surfaces;
-		for (i = 0; i < r_mapTiles[i]->bsp.numsurfaces; i++, surf++) {
-			if (surf->frame != r_locals.frame)
-				continue; /* not visible */
-			if (surf->texinfo->flags & SURF_WARP)
-				continue;  /* don't care */
+	bsp = &r_mapTiles[tile]->bsp;
+	surf = bsp->surfaces;
+	for (i = 0; i < bsp->numsurfaces; i++, surf++) {
+		if (surf->frame != r_locals.frame)
+			continue; /* not visible */
 
-			/* avoid overflows, draw in batches */
-			if (k > MAX_GL_ARRAY_LENGTH - 512) {
-				glDrawArrays(GL_LINES, 0, k / 3);
-				k = 0;
-			}
+		if (surf->texinfo->flags & SURF_WARP)
+			continue;  /* don't care */
 
-			for (j = 0; j < surf->numedges; j++) {
-				vec3_t end;
-				const GLfloat *vertex = &r_mapTiles[i]->bsp.verts[(surf->index + j) * 3];
-				const GLfloat *normal = &r_mapTiles[i]->bsp.normals[(surf->index + j) * 3];
+		if (r_shownormals->integer > 1 && !(surf->texinfo->flags & SURF_PHONG))
+			continue;  /* don't care */
 
-				VectorMA(vertex, 12.0, normal, end);
+		/* avoid overflows, draw in batches */
+		if (k > MAX_GL_ARRAY_LENGTH - 512) {
+			glDrawArrays(GL_LINES, 0, k / 3);
+			k = 0;
+		}
 
-				memcpy(&r_state.vertex_array_3d[k], vertex, sizeof(vec3_t));
-				memcpy(&r_state.vertex_array_3d[k + 3], end, sizeof(vec3_t));
-				k += sizeof(vec3_t) / sizeof(vec_t) * 2;
-				if (k > MAX_GL_ARRAY_LENGTH)
-					Com_Error(ERR_DROP, "R_DrawBspNormals: Overflow in array buffer");
-			}
+		for (j = 0; j < surf->numedges; j++) {
+			vec3_t end;
+			const GLfloat *vertex = &bsp->verts[(surf->index + j) * 3];
+			const GLfloat *normal = &bsp->normals[(surf->index + j) * 3];
+
+			VectorMA(vertex, 12.0, normal, end);
+
+			memcpy(&r_state.vertex_array_3d[k], vertex, sizeof(vec3_t));
+			memcpy(&r_state.vertex_array_3d[k + 3], end, sizeof(vec3_t));
+			k += sizeof(vec3_t) / sizeof(vec_t) * 2;
+			if (k > MAX_GL_ARRAY_LENGTH)
+				Com_Error(ERR_DROP, "R_DrawBspNormals: Overflow in array buffer");
 		}
 	}
 

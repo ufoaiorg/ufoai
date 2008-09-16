@@ -307,10 +307,10 @@ void R_RenderFrame (void)
 			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
 
 			R_EnableBlend(qfalse);
+
+			R_DrawBspNormals(tile);
 		}
 	}
-
-	R_DrawBspNormals();
 
 	R_DrawEntities();
 

@@ -33,24 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <windows.h>
 #endif
 
-typedef enum {
-	emit_surface,
-	emit_point,
-	emit_spotlight
-} emittype_t;
-
-typedef struct directlight_s {
-	struct directlight_s *next;
-	emittype_t	type;
-
-	float		intensity;
-	vec3_t		origin;
-	vec3_t		color;
-	vec3_t		normal;		/**< for surfaces and spotlights */
-	float		stopdot;	/**< for spotlights */
-} directlight_t;
-
-
 /**
  * @note the sum of all tranfer->transfer values for a given patch
  * should equal exactly 0x10000, showing that all radiance
