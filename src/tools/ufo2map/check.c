@@ -727,7 +727,7 @@ static qboolean Check_WindingIntersects (const winding_t *winding, const mapbrus
 /**
  * @brief reports intersection between optimisable map brushes
  */
-void Check_BrushIntersection(void)
+void Check_BrushIntersection (void)
 {
 	int i, j, is;
 
@@ -735,20 +735,20 @@ void Check_BrushIntersection(void)
 	Check_NearList();
 
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		const mapbrush_t *iBrush = &mapbrushes[i];
 
 		if (!Check_IsOptimisable(iBrush))
 			continue;
 
 		for (j = 0; j < iBrush->numNear; j++) {
-			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
 
 			if (!Check_IsOptimisable(jBrush))
 				continue;
 
 			/* check each side of i for intersection with brush j */
 			for (is = 0; is < iBrush->numsides; is++) {
-				winding_t *winding = (iBrush->original_sides[is].winding);
+				const winding_t *winding = (iBrush->original_sides[is].winding);
 				if (Check_WindingIntersects(winding, jBrush)) {
 					Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum, "intersects with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
 					break;
@@ -799,8 +799,10 @@ static qboolean Check_SideVertexIsInBrush (const side_t *side, const mapbrush_t 
 }
 
 
-/** @todo improve this test, it misses several cases */
-void CheckZFighting(void)
+/**
+ * @todo improve this test, it misses several cases
+ */
+void CheckZFighting (void)
 {
 	int i, j, is, js;
 
@@ -809,13 +811,13 @@ void CheckZFighting(void)
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
+		const mapbrush_t *iBrush = &mapbrushes[i];
 
 		if (!Check_IsOptimisable(iBrush))
 			continue; /* skip moving brushes, clips etc */
 
 		for (j = 0; j < iBrush->numNear; j++) {
-			mapbrush_t *jBrush = iBrush->nearBrushes[j];
+			const mapbrush_t *jBrush = iBrush->nearBrushes[j];
 
 			if ((iBrush->contentFlags & CONTENTS_LEVEL_ALL) != (jBrush->contentFlags & CONTENTS_LEVEL_ALL))
 				continue; /* must be on the same level */
@@ -824,7 +826,7 @@ void CheckZFighting(void)
 				continue; /* skip moving brushes, clips etc */
 
 			for (is = 0; is < iBrush->numsides; is++) {
-				side_t *iSide = &iBrush->original_sides[is];
+				const side_t *iSide = &iBrush->original_sides[is];
 
 				if (iSide->surfaceFlags & SURF_NODRAW)
 					continue; /* skip nodraws */
