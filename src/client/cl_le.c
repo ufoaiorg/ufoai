@@ -574,12 +574,12 @@ static void LET_PathMove (le_t * le)
 		if (le->pathPos < le->pathLength) {
 			/* next part */
 			const byte fulldv = le->path[le->pathPos];
-			const byte dv = getDVdir(fulldv);
+			const byte dir = getDVdir(fulldv);
 			const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
 			/** @note new_crouching_state needs to be set to the current crouching state and is possibly updated by PosAddDV. */
 			int new_crouching_state = crouching_state;
 			PosAddDV(le->pos, new_crouching_state, fulldv);
-			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dv, le->pos[0], le->pos[1], le->pos[2]);
+			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dir, le->pos[0], le->pos[1], le->pos[2]);
 			/** @note we no longer need to adjust the value from Grid_MoveLength for crouching:
 			 *  the function now accounts for crouching. */
 			tuCost = Grid_MoveLength(&clPathMap, le->pos, new_crouching_state, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouching_state, qfalse);
@@ -606,13 +606,13 @@ static void LET_PathMove (le_t * le)
 				LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
 
 			/* only change the direction if the actor moves horizontally. */
-			if (dv < CORE_DIRECTIONS || dv >= FLYING_DIRECTIONS)
-				le->dir = dv & (CORE_DIRECTIONS - 1);
+			if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
+				le->dir = dir & (CORE_DIRECTIONS - 1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			assert(le->speed);
-			if (dv != DIRECTION_FALL) {
+			if (dir != DIRECTION_FALL) {
 				/* sqrt(2) for diagonal movement */
 				le->endTime += (le->dir >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 			} else {
