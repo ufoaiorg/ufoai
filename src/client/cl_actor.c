@@ -2399,7 +2399,7 @@ void CL_ActorUpdateCVars (void)
 
 		/* Display the floor and ceiling values for the current cell. */
 		dv = Grid_MoveNext(clMap, fieldSize, &clPathMap, mousePos, 0);
-		Com_sprintf(leftText, sizeof(leftText), "%i-%i\n", dv >> 3, dv & 7);
+		Com_sprintf(leftText, sizeof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
 		/* Save the text for later display next to the cursor. */
 		mn.menuText[TEXT_MOUSECURSOR_LEFT] = leftText;
 

@@ -98,6 +98,7 @@ const byte dvleft[CORE_DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
  */
 int AngleToDV (int angle)
 {
+	static int anglesToDV[8] = {0, 4, 2, 6, 1, 5, 3, 7};
 	angle += 22;
 	/* set angle between 0 <= angle < 360 */
 	angle %= 360;
@@ -109,28 +110,12 @@ int AngleToDV (int angle)
 	/* get an integer quotient */
 	angle /= 45;
 
-	/* return the corresponding indice in dangle[DIRECTIONS] */
-	switch (angle) {
-		case 0:
-			return 0;
-		case 1:
-			return 4;
-		case 2:
-			return 2;
-		case 3:
-			return 6;
-		case 4:
-			return 1;
-		case 5:
-			return 5;
-		case 6:
-			return 3;
-		case 7:
-			return 7;
-		default:
-			Com_Printf("Error in AngleToDV: shouldn't have reached this line\n");
-			return 0;
-	}
+	if (angle >= 0 && angle < CORE_DIRECTIONS)
+		return anglesToDV[angle] << 3; /** @note converting into new DV format */
+
+	/* This is the default for unknown values. */
+	Com_Printf("Error in AngleToDV: shouldn't have reached this line\n");
+	return 0;
 }
 
 /**

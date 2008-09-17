@@ -1507,7 +1507,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			old_z = pos[2];
 			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
 			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
-			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
+			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i->%i].\n", pos[0], pos[1], pos[2], crouching_state, dv, dvtab[numdv - 1]);
 		}
 
 		if (VectorCompare(pos, ent->pos)) {
@@ -1528,7 +1528,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* get next dv */
 				numdv--;
 				dv = dvtab[numdv];
-				dir = dv >> 3; /**< This is the direction */
+				dir = getDVdir(dv); /**< This is the direction */
 
 				/* turn around first */
 				status = G_DoTurn(ent, dir);
@@ -1735,7 +1735,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
  */
 static void G_ClientTurn (player_t * player, int num, byte dv)
 {
-	const int dir = dv >> 3;
+	const int dir = getDVdir(dv);
 	edict_t *ent = g_edicts + num;
 
 	/* check if action is possible */

@@ -807,7 +807,7 @@ static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouching_state);
 
 	if (dv != ROUTING_UNREACHABLE) {
-		const byte dir = dv >> 3;
+		const byte dir = getDVdir(dv);
 		const int status = G_DoTurn(aiActor, dir);
 		if (status) {
 			/* send the turn */

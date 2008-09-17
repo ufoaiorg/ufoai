@@ -147,9 +147,20 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 #define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
 
-#define PosAddDV(p, crouch, dv)          (p[0]+=dvecs[(dv)>>3][0], p[1]+=dvecs[(dv)>>3][1], p[2]=dv&7, crouch+=dvecs[(dv)>>3][3])
-#define PosSubDV(p, crouch, dv)          (p[0]-=dvecs[(dv)>>3][0], p[1]-=dvecs[(dv)>>3][1], p[2]=dv&7, crouch-=dvecs[(dv)>>3][3])
-#define NewDVZ(dv, z)					 ((dv & (~7)) | (z & 7))
+/** @note  This works because the dv value is a byte value.
+ *  The lowest three bits now hold the z value and the high five bits hold the direction.
+ *  If the z range for cells exceed 7 (we have more than 8 levels), then we need to write
+ *  a huge overhaul for this.
+ */
+#define DV_Z_BIT_SHIFT	3	/**< This is the bit shift needed to store the z component of a DV value */
+#define DV_Z_BIT_MASK	((1 << DV_Z_BIT_SHIFT) - 1)  /**< This is the mask to retreive the z component of a  DV value */
+
+#define getDVdir(dv)				(dv >> DV_Z_BIT_SHIFT)
+#define getDVz(dv)					(dv & DV_Z_BIT_MASK)
+
+#define PosAddDV(p, crouch, dv)     (p[0]+=dvecs[getDVdir(dv)][0], p[1]+=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch+=dvecs[getDVdir(dv)][3])
+#define PosSubDV(p, crouch, dv)     (p[0]-=dvecs[getDVdir(dv)][0], p[1]-=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch-=dvecs[getDVdir(dv)][3])
+#define NewDVZ(dv, z)				((dv & (~DV_Z_BIT_MASK)) | (z & DV_Z_BIT_MASK))
 int AngleToDV(int angle);
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
