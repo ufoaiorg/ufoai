@@ -305,12 +305,11 @@ void BeginBSPFile (void)
 	/* Set the number of tiles to 1. */
 	numTiles = 1;
 
-	/* these values may actually be initialized */
-	/* if the file existed when loaded, so clear them explicitly */
+	/* these values may actually be initialized
+	 * if the file existed when loaded, so clear them explicitly */
 	curTile->nummodels = 0;
 	curTile->numfaces = 0;
 	curTile->numbrushsides = 0;
-	curTile->numvertexes = 0;
 	curTile->numleafbrushes = 0;
 	curTile->numsurfedges = 0;
 	curTile->numnodes = 0;
@@ -320,6 +319,7 @@ void BeginBSPFile (void)
 
 	/* leave vertex 0 as an error */
 	curTile->numvertexes = 1;
+	curTile->numnormals = 1;
 
 	/* leave leaf 0 as an error */
 	curTile->numleafs = 1;

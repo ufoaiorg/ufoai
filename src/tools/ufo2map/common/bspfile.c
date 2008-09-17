@@ -355,6 +355,7 @@ void PrintBSPFileSizes (void)
 
 	Com_Printf("\n");
 
+	Com_Printf("%5i normales          %7i\n", curTile->numnormals, (int)(curTile->numnormals * sizeof(dBspNormal_t)));
 	Com_Printf("%5i vertexes          %7i\n", curTile->numvertexes, (int)(curTile->numvertexes * sizeof(dBspVertex_t)));
 	Com_Printf("%5i nodes             %7i\n", curTile->numnodes, (int)(curTile->numnodes * sizeof(dBspNode_t)));
 	Com_Printf("%5i faces             %7i\n", curTile->numfaces, (int)(curTile->numfaces * sizeof(dBspFace_t)));

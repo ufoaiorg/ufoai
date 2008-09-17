@@ -156,7 +156,7 @@ static inline triangle_t *AllocTriangle (triangulation_t *trian)
 
 static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
-	int i, bestp = 0;
+	int i, bestp;
 	vec3_t v1, v2;
 	vec_t *p0, *p1;
 	vec_t best, ang;
@@ -169,18 +169,25 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	p0 = trian->points[e->p0]->origin;
 	p1 = trian->points[e->p1]->origin;
 	best = 1.1;
+	bestp = 0;
 	for (i = 0; i < trian->numpoints; i++) {
 		const vec_t *p = trian->points[i]->origin;
+
 		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist <= 0)
 			continue;	/* behind edge */
+
 		VectorSubtract(p0, p, v1);
 		VectorSubtract(p1, p, v2);
+
 		if (!VectorNormalize(v1))
 			continue;
+
 		if (!VectorNormalize(v2))
 			continue;
+
 		ang = DotProduct(v1, v2);
+
 		if (ang < best) {
 			best = ang;
 			bestp = i;
@@ -207,7 +214,7 @@ static void TriangulatePoints (triangulation_t *trian)
 {
 	vec_t d, bestd;
 	vec3_t v1;
-	int bp1 = 0, bp2 = 0, i, j;
+	int bp1, bp2, i, j;
 	vec_t *p1, *p2;
 	triedge_t *e, *e2;
 
@@ -216,6 +223,7 @@ static void TriangulatePoints (triangulation_t *trian)
 
 	/* find the two closest points */
 	bestd = 9999;
+	bp1 = bp2 = 0;
 	for (i = 0; i < trian->numpoints; i++) {
 		p1 = trian->points[i]->origin;
 		for (j = i + 1; j < trian->numpoints; j++) {
@@ -312,7 +320,6 @@ static void SampleTriangulation (const vec3_t point, const triangulation_t *tria
 		VectorCopy(trian->points[0]->totallight, color);
 		return;
 	}
-
 	/* search for triangles */
 	for (t = trian->tris, j = 0; j < trian->numtris; t++, j++) {
 		if (!PointInTriangle(point, t))
@@ -412,9 +419,12 @@ static void BuildFaceExtents (void)
 	for (k = 0; k < curTile->numfaces; k++) {
 		const dBspFace_t *s = &curTile->faces[k];
 		const dBspTexinfo_t *tex = &curTile->texinfo[s->texinfo];
+
 		float *mins = face_extents[s - curTile->faces].mins;
 		float *maxs = face_extents[s - curTile->faces].maxs;
+
 		float *center = face_extents[s - curTile->faces].center;
+
 		float *stmins = face_extents[s - curTile->faces].stmins;
 		float *stmaxs = face_extents[s - curTile->faces].stmaxs;
 		int i;
@@ -505,9 +515,12 @@ static void CalcFaceVectors (lightinfo_t *l)
 
 	/* calculate a normal to the texture axis.  points can be moved along this
 	 * without changing their S/T */
-	texnormal[0] = tex->vecs[1][1] * tex->vecs[0][2] - tex->vecs[1][2] * tex->vecs[0][1];
-	texnormal[1] = tex->vecs[1][2] * tex->vecs[0][0] - tex->vecs[1][0] * tex->vecs[0][2];
-	texnormal[2] = tex->vecs[1][0] * tex->vecs[0][1] - tex->vecs[1][1] * tex->vecs[0][0];
+	texnormal[0] = tex->vecs[1][1] * tex->vecs[0][2]
+					- tex->vecs[1][2] * tex->vecs[0][1];
+	texnormal[1] = tex->vecs[1][2] * tex->vecs[0][0]
+					- tex->vecs[1][0] * tex->vecs[0][2];
+	texnormal[2] = tex->vecs[1][0] * tex->vecs[0][1]
+					- tex->vecs[1][1] * tex->vecs[0][0];
 	VectorNormalize(texnormal);
 
 	/* flip it towards plane normal */
@@ -534,7 +547,9 @@ static void CalcFaceVectors (lightinfo_t *l)
 
 	/* calculate texorg on the texture plane */
 	for (i = 0; i < 3; i++)
-		l->texorg[i] = -tex->vecs[0][3] * l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
+		l->texorg[i] =
+			-tex->vecs[0][3] * l->textoworld[0][i] -
+			tex->vecs[1][3] * l->textoworld[1][i];
 
 	/* project back to the face plane */
 	dist = DotProduct(l->texorg, l->facenormal) - l->facedist - 1;
@@ -559,7 +574,8 @@ static void CalcFaceVectors (lightinfo_t *l)
  */
 static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
-	int s, t, j, w, h, step;
+	int s, t, j;
+	int w, h, step;
 	vec_t starts, startt;
 	vec_t *surf;
 	vec3_t pos;
@@ -633,14 +649,16 @@ static int numdlights[2];
 void CreateDirectLights (void)
 {
 	int i;
-	patch_t *p;
 	directlight_t *dl;
 	const dBspLeaf_t *leaf;
 
 	/* surfaces */
-	for (i = 0, p = patches; i < num_patches; i++, p++) {
-		if (p->totallight[0] < DIRECT_LIGHT && p->totallight[1] < DIRECT_LIGHT
-			&& p->totallight[2] < DIRECT_LIGHT)
+	for (i = 0; i < num_patches; i++) {
+		patch_t *p = &patches[i];
+
+		if (p->totallight[0] < DIRECT_LIGHT &&
+				p->totallight[1] < DIRECT_LIGHT &&
+				p->totallight[2] < DIRECT_LIGHT)
 			continue;
 
 		numdlights[config.compile_for_day]++;
@@ -661,7 +679,7 @@ void CreateDirectLights (void)
 		VectorClear(p->totallight);	/* all sent now */
 	}
 
-	/* entities (without world) */
+	/* entities (skip the world) */
 	for (i = 1; i < num_entities; i++) {
 		float intensity;
 		const char *color;
@@ -692,7 +710,7 @@ void CreateDirectLights (void)
 		if (!intensity)
 			intensity = 300;
 		color = ValueForKey(e, "_color");
-		if (color[1]) {
+		if (color && color[0]){
 			sscanf(color, "%f %f %f", &dl->color[0], &dl->color[1], &dl->color[2]);
 			ColorNormalize(dl->color, dl->color);
 		} else
@@ -986,9 +1004,7 @@ void BuildVertexNormals (void)
 	BuildFaceExtents();
 
 	for (i = 0; i < curTile->numvertexes; i++) {
-		VectorClear(curTile->normals[i].normal);
 		FacesWithVert(i, vert_faces, &num_vert_faces);
-
 		if (!num_vert_faces)  /* rely on plane normal only */
 			continue;
 
@@ -1009,8 +1025,6 @@ void BuildVertexNormals (void)
 		}
 		VectorNormalize(curTile->normals[i].normal);
 	}
-
-	curTile->numnormals = curTile->numvertexes;
 }
 
 
@@ -1283,7 +1297,8 @@ void FinalLightFace (unsigned int facenum)
 			}
 		}
 		for (i = 0; i < trian->numpoints; i++)
-			memset(trian->edgematrix[i], 0, trian->numpoints * sizeof(trian->edgematrix[0][0]));
+			memset(trian->edgematrix[i], 0,
+				trian->numpoints * sizeof(trian->edgematrix[0][0]));
 		TriangulatePoints(trian);
 	}
 

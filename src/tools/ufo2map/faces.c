@@ -107,6 +107,7 @@ static int GetVertexnum (const vec3_t in)
 	c_uniqueverts++;
 
 	curTile->numvertexes++;
+	curTile->numnormals++;
 
 	return curTile->numvertexes - 1;
 }
@@ -204,6 +205,7 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 			superverts[i] = curTile->numvertexes;
 			VectorCopy(w->p[i], curTile->vertexes[curTile->numvertexes].point);
 			curTile->numvertexes++;
+			curTile->numnormals++;
 			c_uniqueverts++;
 			c_totalverts++;
 		} else
@@ -239,10 +241,10 @@ static void FindEdgeVerts (const vec3_t v1, const vec3_t v2)
 	int x1, x2, y1, y2, t;
 	int x, y, vnum;
 
-	x1 = (4096 + (int)(v1[0] + 0.5)) >> 7;
-	y1 = (4096 + (int)(v1[1] + 0.5)) >> 7;
-	x2 = (4096 + (int)(v2[0] + 0.5)) >> 7;
-	y2 = (4096 + (int)(v2[1] + 0.5)) >> 7;
+	x1 = (MAX_WORLD_WIDTH + (int)(v1[0] + 0.5)) >> 7;
+	y1 = (MAX_WORLD_WIDTH + (int)(v1[1] + 0.5)) >> 7;
+	x2 = (MAX_WORLD_WIDTH + (int)(v2[0] + 0.5)) >> 7;
+	y2 = (MAX_WORLD_WIDTH + (int)(v2[1] + 0.5)) >> 7;
 
 	if (x1 > x2) {
 		t = x1;

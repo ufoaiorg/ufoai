@@ -30,7 +30,7 @@ int brush_start, brush_end;
 
 vec3_t worldMins, worldMaxs;
 
-static int oldmodels, oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
+static int oldmodels, oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnormals, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
 
 void PushInfo (void)
 {
@@ -39,6 +39,7 @@ void PushInfo (void)
 	oldleafbrushes = curTile->numleafbrushes;
 	oldplanes = curTile->numplanes;
 	oldvertexes = curTile->numvertexes;
+	oldnormals = curTile->numnormals;
 	oldnodes = curTile->numnodes;
 	oldtexinfo = curTile->numtexinfo;
 	oldfaces = curTile->numfaces;
@@ -53,6 +54,7 @@ void PopInfo (void)
 	curTile->numleafbrushes = oldleafbrushes;
 	curTile->numplanes = oldplanes;
 	curTile->numvertexes = oldvertexes;
+	curTile->numnormals = oldnormals;
 	curTile->numnodes = oldnodes;
 	curTile->numtexinfo = oldtexinfo;
 	curTile->numfaces = oldfaces;
