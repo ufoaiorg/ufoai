@@ -219,7 +219,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	 */
 	while (qtrue) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
 		if (debugTrace)
-			Com_Printf("[(%i, %i, %i)]Casting (%f, %f, %f) to (%f, %f, %f)\n",
+			Com_Printf("[(%i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, start[0], start[1], start[2], end[0], end[1], end[2]);
 		tr = RT_COMPLETEBOXTRACE (start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
@@ -255,7 +255,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; /* tend is now STEPUP above tstart */
 
 		if (debugTrace)
-			Com_Printf("    Casting (%f, %f, %f) to (%f, %f, %f)\n",
+			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 		tr = RT_COMPLETEBOXTRACE (tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		assert(!(tr.contentFlags & CONTENTS_STEPON));
@@ -329,7 +329,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	assert(bottom <= top);
 
 	/* top and bottom are absolute model heights.  Find the actual cell z coordinates for these heights. */
-	fz = (int)(floor((bottom + QUANT) / UNIT_HEIGHT));
+	fz = (int)(floor(bottom / UNIT_HEIGHT));
 	cz = min(z, (int)(ceil(top / UNIT_HEIGHT) - 1)); /* Use the lower of z or the calculated ceiling */
 
 	assert(fz <= cz);
