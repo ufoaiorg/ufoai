@@ -472,6 +472,7 @@ static void G_ActorSpawn (edict_t *ent)
 
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
+	assert(ent->dir < CORE_DIRECTIONS);
 	ent->solid = SOLID_BBOX;
 
 	/* Set bounding box. Maybe this is already set in one of the spawn functions? */
@@ -502,6 +503,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 
 	/* link it for collision detection */
 	ent->dir = AngleToDV(ent->angle);
+	assert(ent->dir < CORE_DIRECTIONS);
 	ent->solid = SOLID_BBOX;
 
 	/* Set bounding box. Maybe this is already set in one of the spawn functions? */

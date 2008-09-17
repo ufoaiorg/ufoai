@@ -769,6 +769,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 	/* check every angle in the rotation whether something becomes visible */
 	for (i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
+		assert(ent->dir < CORE_DIRECTIONS);
 		status |= G_CheckVisTeam(ent->team, NULL, qfalse);
 #if 0
 		/* stop turning if a new living player (which is not in our team) appears */

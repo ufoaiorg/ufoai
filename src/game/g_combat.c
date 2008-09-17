@@ -1256,6 +1256,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 
 	VectorSubtract(at, ent->pos, dir);
 	ent->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * todeg));
+	assert(ent->dir < CORE_DIRECTIONS);
 
 	if (!mock) {
 		G_CheckVisTeam(ent->team, NULL, qfalse);
@@ -1378,6 +1379,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			G_ReactToPostFire(ent);
 	} else {
 		ent->dir = prev_dir;
+		assert(ent->dir < CORE_DIRECTIONS);
 	}
 	return qtrue;
 }
