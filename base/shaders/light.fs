@@ -12,7 +12,7 @@ LightFragment
 */
 void LightFragment(in vec4 diffuse, in vec3 lightmap){
 
-	vec3 light = vec3(0.0, 0.0, 0.0);
+	vec3 light = vec3(0.0);
 #if defined(ATI)
 	// ATI can't handle for loops and array access in fragment shaders - use at least two lights
 	if(gl_LightSource[0].constantAttenuation > 0.0){
