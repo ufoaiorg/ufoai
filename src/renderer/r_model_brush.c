@@ -607,7 +607,10 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			mod->bsp.lmtexcoords[coordind + 1] = t;
 
 			/* normal vectors */
-			memcpy(&mod->bsp.normals[vertind], vert->normal, sizeof(vec3_t));
+			if (!VectorCompare(vert->normal, vec3_origin))
+				memcpy(&mod->bsp.normals[vertind], vert->normal, sizeof(vec3_t));
+			else
+				memcpy(&mod->bsp.normals[vertind], surf->normal, sizeof(vec3_t));
 
 			/* tangent vector */
 			TangentVector(vert->normal, sdir, tdir, tangent);
