@@ -1086,7 +1086,7 @@ void BuildFacelights (unsigned int facenum)
 	dBspFace_t *f;
 	dBspTexinfo_t *tex;
 	float *center;
-	float *sdir, *tdir;
+	float *sdir, *tdir, *last_direction;
 	vec3_t normal, binormal;
 	vec4_t tangent;
 	lightinfo_t l[MAX_SAMPLES];
@@ -1167,14 +1167,15 @@ void BuildFacelights (unsigned int facenum)
 	fl->directions = malloc(fl->numsamples * sizeof(vec3_t));
 	memset(fl->directions, 0, fl->numsamples * sizeof(vec3_t));
 
+	last_direction = NULL;
+
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
 		float *direction = fl->directions + i * 3;		/* accumulate direction here */
+		vec3_t dir;
 
 		for (j = 0; j < numsamples; j++) {
-			vec3_t dir;
-
 			/* calculate interpolated normal for phong shading */
 			if (curTile->texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
 				SampleNormal(&l[0], l[j].surfpt[i], normal);
@@ -1183,24 +1184,29 @@ void BuildFacelights (unsigned int facenum)
 
 			GatherSampleLight(l[j].surfpt[i], normal, center,
 				sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
-
-			/* finalize the lighting direction for the sample and
-			 * transform it into tangent space */
-			TangentVector(normal, sdir, tdir, tangent);
-			CrossProduct(normal, tangent, binormal);
-			VectorScale(binormal, tangent[3], binormal);
-
-			dir[0] = DotProduct(direction, tangent);
-			dir[1] = DotProduct(direction, binormal);
-			dir[2] = DotProduct(direction, normal);
-
-			VectorCopy(dir, direction);
-
-			/* and normalize it, providing a default value when necessary */
-			if (VectorNormalize(direction) < 0.33) {
-				VectorSet(direction, 0.0, 0.0, 1.0);
-			}
 		}
+		/* finalize the lighting direction for the sample and
+		 * transform it into tangent space */
+		TangentVector(normal, sdir, tdir, tangent);
+		CrossProduct(normal, tangent, binormal);
+		VectorScale(binormal, tangent[3], binormal);
+
+		dir[0] = DotProduct(direction, tangent);
+		dir[1] = DotProduct(direction, binormal);
+		dir[2] = DotProduct(direction, normal);
+
+		VectorCopy(dir, direction);
+
+		/* normalize it, falling back on the last good direction when underlit */
+		if (VectorNormalize(direction) < 0.33) {
+			if (last_direction)
+				VectorCopy(last_direction, direction);
+			else
+				VectorSet(direction, 0.0, 0.0, 1.0);
+		} else { /* save it for the next underlit sample */
+			last_direction = direction;
+		}
+
 		/* contribute the sample to one or more patches for radiosity */
 /*		if (config.numbounce > 0)*/
 			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
