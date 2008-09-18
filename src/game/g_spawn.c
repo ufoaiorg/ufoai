@@ -471,7 +471,7 @@ static void G_ActorSpawn (edict_t *ent)
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 
 	/* link it for collision detection */
-	ent->dir = AngleToDV(ent->angle);
+	ent->dir = AngleToDir(ent->angle);
 	assert(ent->dir < CORE_DIRECTIONS);
 	ent->solid = SOLID_BBOX;
 
@@ -502,7 +502,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 
 	/* link it for collision detection */
-	ent->dir = AngleToDV(ent->angle);
+	ent->dir = AngleToDir(ent->angle);
 	assert(ent->dir < CORE_DIRECTIONS);
 	ent->solid = SOLID_BBOX;
 

@@ -1255,7 +1255,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		prev_dir = 0;
 
 	VectorSubtract(at, ent->pos, dir);
-	ent->dir = AngleToDV((int) (atan2(dir[1], dir[0]) * todeg));
+	ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
 	assert(ent->dir < CORE_DIRECTIONS);
 
 	if (!mock) {

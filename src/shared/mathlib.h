@@ -161,7 +161,8 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define PosAddDV(p, crouch, dv)     (p[0]+=dvecs[getDVdir(dv)][0], p[1]+=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch+=dvecs[getDVdir(dv)][3])
 #define PosSubDV(p, crouch, dv)     (p[0]-=dvecs[getDVdir(dv)][0], p[1]-=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch-=dvecs[getDVdir(dv)][3])
 #define NewDVZ(dv, z)				((dv & (~DV_Z_BIT_MASK)) | (z & DV_Z_BIT_MASK))
-int AngleToDV(int angle);
+int AngleToDir(int angle);
+#define AngleToDV(x)	(AngleToDir(x) << DV_Z_BIT_SHIFT)
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
 void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);

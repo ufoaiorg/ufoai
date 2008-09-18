@@ -96,7 +96,7 @@ const byte dvleft[CORE_DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
  * @param[in] angle The angle (in degrees) which is tested.
  * @return Corresponding indice of array dangle[DIRECTIONS].
  */
-int AngleToDV (int angle)
+int AngleToDir (int angle)
 {
 	static int anglesToDV[8] = {0, 4, 2, 6, 1, 5, 3, 7};
 	angle += 22;
@@ -111,7 +111,7 @@ int AngleToDV (int angle)
 	angle /= 45;
 
 	if (angle >= 0 && angle < CORE_DIRECTIONS)
-		return anglesToDV[angle] << 3; /** @note converting into new DV format */
+		return anglesToDV[angle];
 
 	/* This is the default for unknown values. */
 	Com_Printf("Error in AngleToDV: shouldn't have reached this line\n");
