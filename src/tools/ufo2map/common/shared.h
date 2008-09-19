@@ -104,6 +104,7 @@ typedef struct mapConfig_s {
 	qboolean chkMixedFaceContents;
 	qboolean chkMMicro;
 	qboolean chkZFight;
+	qboolean chkRemoveStepons;
 	float mapMicrovol; /**< -check mbr micro test before CSG */
 	qboolean chkAll;
 	qboolean fixMap;

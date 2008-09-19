@@ -136,8 +136,10 @@ static void Usage (void)
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
 	); Com_Printf(
 		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
+		"    rst removestepons       : removes stepon brushes (not included in all or bru)\n"
 		"    tex textures            : warns when no texture or error texture is assigned.\n"
 		"                              ensures special textures and content/surface flags are consistent.\n"
+	); Com_Printf(
 		"    mfc mixedfacecontents   : ensures the contentflags are the same on each face of each brush.\n"
 		"    zft zfighting           : intersecting brushes with a common face: prevent textures shimmering together.\n"
 	);
@@ -204,6 +206,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "mixedfacecontents") || !strcmp(argv[i], "mfc")) {
 					Verb_Printf(VERB_LESS, "  %s mixedfacecontents\n", config.fixMap ? "fixing" : "checking");
 					config.chkMixedFaceContents = qtrue;
+				} else if (!strcmp(argv[i], "removestepons") || !strcmp(argv[i], "rst")) {
+					Verb_Printf(VERB_LESS, "  %s stepon brushes\n", config.fixMap ? "fixing (removing)" : "checking for");
+					config.chkRemoveStepons = qtrue;
 				} else if (!strcmp(argv[i], "microbrush") || !strcmp(argv[i], "mbr")) {
 					config.chkMMicro = qtrue;
 					if (atof(argv[i + 1]) > 0.0001) {
@@ -604,9 +609,6 @@ int main (int argc, const char **argv)
 			CheckMapMicro();
 		if (config.chkContained || config.chkBrushes || config.chkAll)
 			Check_ContainedBrushes();
-		/* not included in bru or all by design */
-		if (config.chkIntersection)
-			Check_BrushIntersection();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
 		/** @todo include in chkAll when it works */
@@ -616,6 +618,13 @@ int main (int argc, const char **argv)
 			CheckZFighting();
 		if (config.chkEntities || config.chkAll)
 			CheckEntities();
+
+		/* not included in bru or all by design */
+		if (config.chkIntersection)
+			Check_BrushIntersection();
+		if (config.chkRemoveStepons)
+			Check_RemoveSteponBrushes();
+
 		if (config.fixMap) {
 			/* update dentdata */
 			UnparseEntities();
