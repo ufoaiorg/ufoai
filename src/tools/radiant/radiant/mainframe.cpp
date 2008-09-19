@@ -2015,7 +2015,6 @@ static void Filters_constructToolbar(GtkToolbar* toolbar) {
 	toolbar_append_toggle_button(toolbar, "Filter nodraw", "filter_nodraw.bmp", "FilterNodraw");
 	toolbar_append_toggle_button(toolbar, "Filter actorclip", "filter_actorclip.bmp", "FilterActorClips");
 	toolbar_append_toggle_button(toolbar, "Filter weaponclip", "filter_weaponclip.bmp", "FilterWeaponClips");
-	toolbar_append_toggle_button(toolbar, "Filter stepon", "filter_stepon.bmp", "FilterStepon");
 }
 
 static void XYWnd_constructToolbar(GtkToolbar* toolbar) {

@@ -848,9 +848,6 @@ filter_brush_any_face g_filter_brush_hint(&g_filter_face_hint);
 filter_face_shader g_filter_face_nodraw("textures/tex_common/nodraw");
 filter_brush_all_faces g_filter_brush_nodraw(&g_filter_face_nodraw);
 
-filter_face_shader g_filter_face_stepon("textures/tex_common/stepon");
-filter_brush_all_faces g_filter_brush_stepon(&g_filter_face_stepon);
-
 filter_face_flags g_filter_face_translucent(QER_TRANS);
 filter_brush_all_faces g_filter_brush_translucent(&g_filter_face_translucent);
 
@@ -867,7 +864,6 @@ void BrushFilters_construct() {
 	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_ACTORCLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_CLIP);
-	add_brush_filter(g_filter_brush_stepon, EXCLUDE_STEPON);
 	add_brush_filter(g_filter_brush_caulk, EXCLUDE_CAULK);
 	add_face_filter(g_filter_face_caulk, EXCLUDE_CAULK);
 	add_brush_filter(g_filter_brush_liquids, EXCLUDE_LIQUIDS);
