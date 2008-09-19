@@ -199,7 +199,7 @@ void DoRouting (void)
 		handle = fopen(filename, "w");
 		fprintf(handle, ",");
 		for (x = wpMins[0]; x <= wpMaxs[0]; x++)
-				fprintf(handle, "x:%i,", x);
+			fprintf(handle, "x:%i,", x);
 		for (z = wpMaxs[2]; z >= wpMins[2]; z--) {
 			for (y = wpMaxs[1]; y >= wpMins[1]; y--) {
 				fprintf(handle, "z:%i  y:%i,", z ,y);
@@ -219,7 +219,7 @@ void DoRouting (void)
 		handle = fopen(filename, "w");
 		fprintf(handle, ",");
 		for (x = wpMins[0]; x <= wpMaxs[0]; x++)
-				fprintf(handle, "x:%i,", x);
+			fprintf(handle, "x:%i,", x);
 		fprintf(handle, "\n");
 		for (z = wpMaxs[2]; z >= wpMins[2]; z--) {
 			for (y = wpMaxs[1]; y >= wpMins[1]; y--) {
@@ -270,17 +270,6 @@ void DoRouting (void)
 
 	/* store the data */
 	data = curTile->routedata;
-	/*
-	*data++ = SH_LOW;
-	*data++ = SH_BIG;
-	data = CompressRouting(&(map.route[0][0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT);
-	Com_Printf("map.route: %i\n", sizeof(map.route));
-	data = CompressRouting(&(map.fall[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
-	Com_Printf("map.fall: %i\n", sizeof(map.fall));
-	data = CompressRouting(&(map.step[0][0]), data, PATHFINDING_WIDTH * PATHFINDING_WIDTH);
-	Com_Printf("map.step: %i\n", sizeof(map.step));
-	*/
-
 	data = CompressRouting((byte*)wpMins, data, sizeof(wpMins));
 	data = CompressRouting((byte*)wpMaxs, data, sizeof(wpMaxs));
 	data = CompressRouting((byte*)Nmap, data, sizeof(Nmap));
