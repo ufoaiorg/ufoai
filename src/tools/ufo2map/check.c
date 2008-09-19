@@ -778,30 +778,141 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 	return qtrue;
 }
 
-/**
- * @brief tests the vertices in the winding of side s.
- * @param[in] mode determines how epsilon is applied
- * @return qtrue if at least one is in or on (within epsilon) brush b
- * @sa Check_IsPointInsideBrush
+/** @brief finds point of intersection of two finite lines, if one exists
+ *  @param[in] e1p1 first point defining line 1
+ *  @param[in] e1p2 second point defining line 1
+ *  @paran[out] intersection will be set to the point of intersection, if one exists
+ *  @return qtrue if the lines intersect between the given points
+ *  @note http://mathworld.wolfram.com/Line-LineDistance.html
  */
-static qboolean Check_SideVertexIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
+static qboolean Check_EdgeEdgeIntersection(const vec3_t e1p1, const vec3_t e1p2,
+											const vec3_t e2p1, const vec3_t e2p2, vec3_t intersection)
 {
-	int i;
-	const winding_t *w = side->winding;
+	vec3_t dir1, dir2, unitDir1, unitDir2;
+	vec3_t dirClosestApproach, from1To2, e1p1ToIntersection, e2p1ToIntersection;
+	vec3_t cross1, cross2;
+	float cosAngle, length1, length2, dist, magCross2, param1;
+	float e1p1Dist, e2p1Dist;
 
-	assert(w->numpoints > 0);
+	VectorSubtract(e1p2, e1p1, dir1);
+	VectorSubtract(e2p2, e2p1, dir2);
+	length1 = VectorLength(dir1);
+	length2 = VectorLength(dir2);
 
-	for (i = 0; i < w->numpoints ; i++)
-		if (Check_IsPointInsideBrush(w->p[i], brush, mode))
-			return qtrue;
+	if (length1 < CH_DIST_EPSILON || length2 < CH_DIST_EPSILON)
+		return qfalse; /* edges with no length cannot intersect */
 
-	return qfalse;
+	VectorScale(dir1, 1.0f / length1, unitDir1);
+	VectorScale(dir2, 1.0f / length2, unitDir2);
+
+	cosAngle = abs(DotProduct(unitDir1, unitDir2));
+
+	if (cosAngle >= COS_EPSILON)
+		return qfalse; /* parallel lines either do not intersect, or are coincident */
+
+	CrossProduct(unitDir1, unitDir2, dirClosestApproach);
+	VectorNormalize(dirClosestApproach);
+
+	VectorSubtract(e2p1, e1p1, from1To2);
+	dist = abs(DotProduct(dirClosestApproach, from1To2));
+
+	if (dist > CH_DIST_EPSILON)
+		return qfalse; /* closest approach of skew lines is nonzero: no intersection */
+
+	CrossProduct(from1To2, dir2, cross1);
+	CrossProduct(dir1, dir2, cross2);
+	magCross2 = VectorLength(cross2);
+	param1 = DotProduct(cross1, cross2) / (magCross2 * magCross2);
+	VectorScale(dir1, param1, e1p1ToIntersection);
+	VectorAdd(e1p1, e1p1ToIntersection, intersection);
+	e1p1Dist = DotProduct(e1p1ToIntersection, unitDir1);
+
+	if (e1p1Dist < 0 || e1p1Dist > length1)
+		return qfalse; /* intersection is not between vertices of edge 1 */
+
+	VectorSubtract(intersection, e2p1, e2p1ToIntersection);
+	e2p1Dist = DotProduct(e2p1ToIntersection, unitDir2);
+	if (e2p1Dist < 0 || e2p1Dist > length2)
+		return qfalse; /* intersection is not between vertices of edge 1 */
+
+	return qtrue;
 }
 
 
-/**
- * @todo improve this test, it misses several cases
+#define VERT_BUF_SIZE_DISJOINT_SIDES 21
+
+/** @brief tests if sides overlap, for z-fighting check
+ *  @note the sides must be on a common plane. if they are not, the result is unspecified
+ *  @note http://mathworld.wolfram.com/Collinear.html
  */
+static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
+{
+	vec3_t vertbuf[VERT_BUF_SIZE_DISJOINT_SIDES];/* vertices of intersection of sides. arbitrary choice of size: more than 4 is unusual */
+	int numVert = 0, i, j, k, l;
+	winding_t *w[2];
+	mapbrush_t *b[2];
+	w[0] = s1->winding; w[1] = s2->winding;
+	b[0] = s1->brush; b[1] = s2->brush;
+	/* test if points from first winding are in (or on) brush that is parent of second winding
+	 * and vice - versa. i ^ 1 toggles */
+	for (i = 0; i < 2; i++) {
+		for (j = 0; j < w[i]->numpoints ; j++) {
+			if (Check_IsPointInsideBrush(w[i]->p[j], b[i ^ 1], PIB_INCL_SURF)) {
+				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
+					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
+					return qfalse;
+				}
+				VectorCopy(w[i]->p[j], vertbuf[numVert]);
+				numVert++;
+			}
+		}
+	}
+
+	/* test for intersections between windings*/
+	for (i = 0; i < w[0]->numpoints ; i++) {
+		j = (i + 1) % w[0]->numpoints;
+		for (k = 0; k < w[1]->numpoints ;k++) {
+			l = (k + 1) % w[1]->numpoints;
+			if (Check_EdgeEdgeIntersection(w[0]->p[i], w[0]->p[j], w[1]->p[k], w[1]->p[l], vertbuf[numVert])) {
+				numVert++; /* if intersection, keep it */
+				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
+					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
+					return qfalse;
+				}
+			}
+
+		}
+	}
+
+	if (numVert < 3)
+		return qfalse; /* must be at least 3 points to be not in a line */
+
+	{
+		vec3_t from0to1, fromito0, linearCross;
+
+		/* skip past elements 0, 1, ... if they are coincident - to avoid division by zero */
+		i = 0;
+		do {
+			i++;
+			VectorSubtract(vertbuf[i], vertbuf[i - 1], from0to1);
+		} while (abs(VectorLength(from0to1)) < CH_DIST_EPSILON);
+
+		/*check we have enough points left */
+		if (numVert - 2 < i)
+			return qfalse;
+
+		for (i++; i < numVert; i++) {
+			VectorSubtract(vertbuf[0], vertbuf[i], fromito0);
+			CrossProduct(from0to1, fromito0, linearCross);
+			if (abs(VectorLength(linearCross) / VectorLength(from0to1)) > CH_DIST_EPSILON)
+				return qtrue; /* 3 points not in a line, there is overlap */
+		}
+	}
+
+	return qfalse; /* all points are collinear */
+}
+
+/** @todo improve this test, it misses several cases */
 void CheckZFighting (void)
 {
 	int i, j, is, js;
@@ -809,7 +920,7 @@ void CheckZFighting (void)
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
 
-	/* check each brush, i, for hidden sides */
+	/* loop through all pairs of near brushes */
 	for (i = 0; i < nummapbrushes; i++) {
 		const mapbrush_t *iBrush = &mapbrushes[i];
 
@@ -852,7 +963,7 @@ void CheckZFighting (void)
 					#endif
 
 					if (ParallelAndCoincidentTo(iSide, jSide) ) {
-						if (Check_SideVertexIsInBrush(iSide, jBrush, PIB_INCL_SURF_EXCL_EDGE)) {
+						if (Check_SidesOverlap(iSide, jSide)) {
 							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
 								"z-fighting with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
 						}
