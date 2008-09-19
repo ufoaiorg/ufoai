@@ -178,6 +178,9 @@ typedef struct {
 
 	int numcheads;
 	cBspHead_t cheads[MAX_MAP_NODES];
+
+	ipos3_t wpMins;
+	ipos3_t wpMaxs;
 } mapTile_t;
 
 /**

@@ -840,22 +840,15 @@ static void CMod_GetMapSize (void)
  */
 static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int sZ)
 {
-	static byte reroute[PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-	static vec3_t wpMins, wpMaxs;
 	static routing_t temp_map[ACTOR_MAX_SIZE];
 	byte *source;
 	int length;
 	int x, y, z, size, dir;
-	int x2, y2, z2;
+	int tile;
+	int minX, minY, minZ;
 	int maxX, maxY, maxZ;
-	int new_z;
 	unsigned int i;
-#ifdef DEBUG
-	/* count all reachable fields of the map for debugging */
-	qboolean route_available = qfalse;
-#endif
-	const int targetLength = sizeof(wpMins) + sizeof(wpMaxs) + sizeof(temp_map);
+	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(temp_map);
 
 	inlineList = NULL;
 
@@ -869,19 +862,12 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
 	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
 
-
-	/* calculate existing border to determine overlay */
-	CMod_GetMapSize();
-
-	/* routing must be redone for overlapping tiles and borders */
-	memset(reroute, 0, sizeof(reroute));
-
 	source = cmod_base + l->fileofs;
 
-	i = CMod_DeCompressRouting(&source, (byte*)wpMins);
+	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMins);
 	/* Com_Printf("wpMins: %i %i\n", i, sizeof(wpMins)); */
 	length = i;
-	i = CMod_DeCompressRouting(&source, (byte*)wpMaxs);
+	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMaxs);
 	/* Com_Printf("wpMaxs: %i %i\n", i, sizeof(wpMaxs)); */
 	length += i;
 	i = CMod_DeCompressRouting(&source, (byte*)temp_map);
@@ -891,16 +877,20 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	if (length != targetLength)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has BAD routing lump; expected %i got %i", targetLength, length);
 
+	Com_Printf("Map:%s  Offset:(%i, %i, %i)\n", name, sX, sY, sZ);
+	Com_Printf("wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
+
+	curTile = &mapTiles[numTiles - 1];
 
 	/* wpMin and wpMax have the map size data from the initial build.
-	 * Crop this if any part of the model is shifted off the playing field.
+	 * Offset this by the given parameters so teh stored values are in real coordinates.
 	 */
-	if (wpMins[0] + sX < 0) wpMins[0] = -sX;
-	if (wpMins[1] + sY < 0) wpMins[1] = -sY;
-	if (wpMins[2] + sZ < 0) wpMins[2] = -sZ;
-	if (wpMaxs[0] + sX >= PATHFINDING_WIDTH) wpMaxs[0] = PATHFINDING_WIDTH - sX - 1;
-	if (wpMaxs[1] + sY >= PATHFINDING_WIDTH) wpMaxs[1] = PATHFINDING_WIDTH - sY - 1;
-	if (wpMaxs[2] + sZ >= PATHFINDING_HEIGHT) wpMaxs[2] = PATHFINDING_HEIGHT - sZ - 1;
+	 curTile->wpMins[0] += sX;
+	 curTile->wpMins[1] += sY;
+	 curTile->wpMins[2] += sZ;
+	 curTile->wpMaxs[0] += sX;
+	 curTile->wpMaxs[1] += sY;
+	 curTile->wpMaxs[2] += sZ;
 
 	/* Things that need to be done:
 	 * The floor, ceiling, and route data can be copied over from the map.
@@ -909,65 +899,55 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	 */
 
 	/* Copy the routing information into our master table */
-	maxX = sX > 0 ? PATHFINDING_WIDTH - sX : PATHFINDING_WIDTH;
-	maxY = sY > 0 ? PATHFINDING_WIDTH - sY : PATHFINDING_WIDTH;
-	maxZ = sZ > 0 ? PATHFINDING_HEIGHT - sZ : PATHFINDING_HEIGHT;
+	minX = max(curTile->wpMins[0], 0);
+	minY = max(curTile->wpMins[1], 0);
+	minZ = max(curTile->wpMins[2], 0);
+	maxX = min(curTile->wpMaxs[0], PATHFINDING_WIDTH - 1);
+	maxY = min(curTile->wpMaxs[1], PATHFINDING_WIDTH - 1);
+	maxZ = min(curTile->wpMaxs[2], PATHFINDING_HEIGHT - 1);
+
+	assert(minX <= maxX);
+	assert(minY <= maxY);
+	assert(minZ <= maxZ);
+
+	Com_Printf("Tile bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX, minY, minZ, maxX, maxY, maxZ);
 
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
-		for (z = sZ < 0 ? -sZ : 0; z < maxZ; z++)
-			for (y = sY < 0 ? -sY : 0; y < maxY; y++)
-				for (x = sX < 0 ? -sX : 0; x < maxX; x++) {
-					clMap[size].floor[z + sZ][y + sY][x + sX] = temp_map[size].floor[z][y][x];
-					clMap[size].ceil[z + sZ][y + sY][x + sX] = temp_map[size].ceil[z][y][x];
+		for (z = minZ; z < maxZ; z++)
+			for (y = minY; y < maxY; y++)
+				for (x = minX; x < maxX; x++) {
+					clMap[size].floor[z][y][x] = temp_map[size].floor[z - sZ][y - sY][x - sX];
+					clMap[size].ceil[z][y][x] = temp_map[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++)
-						clMap[size].route[z + sZ][y + sY][x + sX][dir] = temp_map[size].route[z][y][x][dir];
+						clMap[size].route[z][y][x][dir] = temp_map[size].route[z - sZ][y - sY][x - sX][dir];
 					}
 
-	/* look for adjacent and overlapping data to regenerate */
-	for (size = 1; size <= ACTOR_MAX_SIZE; size++) {
-		z2 = min(min(wpMaxs[2], map_max[2]) + 1, PATHFINDING_HEIGHT - 1);
-		y2 = min(min(wpMaxs[1], map_max[1]) + 1, PATHFINDING_WIDTH - 1) - size;
-		x2 = min(min(wpMaxs[0], map_max[0]) + 1, PATHFINDING_WIDTH - 1) - size;
-		for (y = max(max(wpMins[1] - 1, map_min[1] - 1), 0); y <= y2; y++)
-			for (x = max(max(wpMins[0] - 1, map_min[0] - 1), 0); x <= x2; x++) {
-				/* z is done last because the tracing code can skip z checks. */
-				for (z = max(max(wpMins[2] - 1, map_min[2] - 1), 0); z <= z2; y++) {
-					new_z = RT_CheckCell(clMap, size, x, y, z);
-					/* new_z should never be below z. */
-					assert(new_z >= z);
-					/* Adjust z if this check adjusted multiple cells. */
-					z += new_z - z -1;
-#ifdef DEBUG
-					route_available = qtrue;
-#endif
-				}
-				/* Check for walls separate- z can also jump here */
-				for (dir = 0; dir < CORE_DIRECTIONS; dir++)
-					/* z is done last because the tracing code can skip z checks. */
-					for (z = max(max(wpMins[2] - 1, map_min[2] - 1), 0); z <= z2; y++) {
-						new_z = RT_UpdateConnection(clMap, size, x, y, z, dir);
-						/* new_z should never be below z. */
-						assert(new_z >= z);
-						/* Adjust z if this check adjusted multiple cells. */
-						z += new_z - z -1;
-#ifdef DEBUG
-						route_available = qtrue;
-#endif
-					}
-			}
+	Com_Printf("Done copying data.\n");
+
+	/* Check each tile to look for overlaps and such */
+	for (tile = 0; tile < numTiles - 1; tile++) {
+		/* look for adjacent and overlapping data to regenerate */
+		pos3_t min, max;
+		VectorSet(min,
+			max(max(minX, mapTiles[tile].wpMins[0]), 0),
+			max(max(minY, mapTiles[tile].wpMins[1]), 0),
+			max(max(minZ, mapTiles[tile].wpMins[2]), 0)
+			);
+		VectorSet(max,
+			min(min(maxX, mapTiles[tile].wpMaxs[0]), PATHFINDING_WIDTH - 1),
+				min(min(maxY, mapTiles[tile].wpMaxs[1]), PATHFINDING_WIDTH - 1),
+				min(min(maxZ, mapTiles[tile].wpMaxs[2]), PATHFINDING_HEIGHT - 1)
+			);
+
+		Com_Printf("Overlap: (%i, %i, %i) to (%i, %i, %i)\n", min[0], min[1], min[2], max[0], max[1], max[2]);
+		/* Call the recalc function */
+		Grid_RecalcBoxRouting(clMap, min, max);
 	}
-
-#ifdef DEBUG
-	if (!route_available && numTiles > 1)
-		Com_Error(ERR_DROP, "CMod_LoadRouting: Map '%s' has NO reachable field", curTile->name);
-#endif
 
 	/* calculate new border after merge */
 	CMod_GetMapSize();
 
-/*	Com_Printf("route: (%i %i) fall: %i step: %i\n", */
-/*		(int)map->route[0][0][0], (int)map->route[1][0][0], (int)map->fall[0][0], (int)map->step[0][0]); */
-	Com_Printf("Loaded Routing\n");
+	Com_Printf("Loaded routing for tile %s\n", name);
 }
 
 
@@ -2044,21 +2024,84 @@ void Grid_PosToVec (struct routing_s *map, const int actor_size, pos3_t pos, vec
 	vec[2] += max(0, min(UNIT_HEIGHT, Grid_Floor(map, actor_size, pos)));
 }
 
+
 /**
+ * @brief This function recalculates the routing in the box bounded by min and max.
+ * @sa CMod_LoadRouting
+ * @sa Grid_RecalcRouting
+ * @param[in] map The routing map (either server or client map)
+ * @param[in] min The lower extents of the box to recalc routing for
+ * @param[in] max The upper extents of the box to recalc routing for
+ */
+void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
+{
+	int x, y, z, actor_size, dir, new_z;
+
+#if 0
+	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
+		(int)min[0], (int)min[1], (int)min[2],
+		(int)max[0], (int)max[1], (int)max[2]);
+#endif
+
+#if 0
+	Com_Printf("Before:\n");
+	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+#endif
+
+	/* check unit heights */
+	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
+		/* Offset the initial X and Y to compensate for larger actors when needed. */
+		for (y = max(min[1] - actor_size + 1, 0); y < max[1] - actor_size; y++)
+			for (x = max(min[0] - actor_size + 1, 0); x < max[0] - actor_size; x++)
+				/** @note RT_CheckCell goes from top (7) to bottom (0) */
+				for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
+					new_z = RT_CheckCell(map, actor_size, x, y, z);
+					assert(new_z <= z);
+					z = new_z;
+				}
+
+#if 0
+	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+#endif
+
+	/* check connections */
+	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
+		/* Offset the initial X and Y to compensate for larger actors when needed.
+		 * Also sweep further out to catch the walls back into our box.
+		 */
+		for (y = max(min[1] - actor_size, 0); y < min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1); y++)
+			for (x = max(min[0] - actor_size, 0); x < min(max[0] - actor_size + 1, PATHFINDING_WIDTH - 1); x++)
+				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
+					/** @note This update MUST go from the bottom (0) to the top (7) of the model.
+					 *  RT_UpdateConnection expects it and breaks otherwise. */
+					for (z = 0; z < PATHFINDING_HEIGHT; z++) {
+						new_z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
+						assert(new_z >= z);
+						z = new_z;
+					}
+
+#if 0
+	Com_Printf("After:\n");
+	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+#endif
+}
+
+
+/**
+ * @brief This function recalculates the routing surrounding the entity name.
  * @sa CM_InlineModel
  * @sa CM_CheckUnit
  * @sa CM_UpdateConnection
  * @sa CMod_LoadSubmodels
+ * @sa Grid_RecalcBoxRouting
  * @param[in] map The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-
 void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;
-	int x, y, z, actor_size, dir;
 	unsigned int i;
 
 	assert(list);
@@ -2075,7 +2118,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	}
 	inlineList = list;
 
-	/* get dimensions */
+	/* get the target model's dimensions */
 	if (VectorNotEmpty(model->angles)) {
 		vec3_t minVec, maxVec;
 		float maxF, v;
@@ -2114,43 +2157,10 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	for (i = 0; i < 3; i++)
 		min[i] = max(min[i] - 2, 0);
 
-#if 0
-	Com_Printf("routing: %s (%i %i %i) (%i %i %i)\n", name,
-		(int)min[0], (int)min[1], (int)min[2],
-		(int)max[0], (int)max[1], (int)max[2]);
-#endif
+	/* We now have the dimensions, call the generic rerouting function. */
+	Grid_RecalcBoxRouting(map, min, max);
 
-#if 0
-	Com_Printf("Before:\n");
-	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
-#endif
-
-	/* check unit heights */
-	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
-		for (y = min[1]; y < max[1] - actor_size; y++)
-			for (x = min[0]; x < max[0] - actor_size; x++)
-				for (z = max[2]; z >= min[2]; z--)
-					z = RT_CheckCell(map, actor_size, x, y, z);
-
-#if 0
-	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
-#endif
-
-	/* check connections */
-	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
-		for (y = min[1]; y < max[1] - actor_size; y++)
-			for (x = min[0]; x < max[0] - actor_size; x++)
-				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
-					/** @note This update MUST go from the bottom to the top of the model.
-					 *  RT_UpdateConnection expects it and breaks otherwise. */
-					for (z = 0; z < PATHFINDING_HEIGHT; z++)
-						z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
-
-#if 0
-	Com_Printf("After:\n");
-	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
-#endif
-
+	/* Reset the inlineList variable */
 	inlineList = NULL;
 }
 
