@@ -1086,12 +1086,12 @@ void BuildFacelights (unsigned int facenum)
 	dBspFace_t *f;
 	dBspTexinfo_t *tex;
 	float *center;
-	float *sdir, *tdir, *last_direction;
-	vec3_t normal, binormal;
+	float *sdir, *tdir;
+	vec3_t normal, binormal, avg_direction;
 	vec4_t tangent;
 	lightinfo_t l[MAX_SAMPLES];
 	float lightscale;
-	int i, j, numsamples;
+	int i, j, numsamples, numdirsamples;
 	patch_t *patch;
 	facelight_t *fl;
 	vec3_t sun_color, sun_dir;
@@ -1133,6 +1133,9 @@ void BuildFacelights (unsigned int facenum)
 	else
 		numsamples = 1;
 
+	VectorClear(avg_direction);
+	numdirsamples = 0;
+
 	memset(l, 0, sizeof(l));
 
 	lightscale = 1.0 / numsamples;
@@ -1167,8 +1170,6 @@ void BuildFacelights (unsigned int facenum)
 	fl->directions = malloc(fl->numsamples * sizeof(vec3_t));
 	memset(fl->directions, 0, fl->numsamples * sizeof(vec3_t));
 
-	last_direction = NULL;
-
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
@@ -1185,34 +1186,47 @@ void BuildFacelights (unsigned int facenum)
 			GatherSampleLight(l[j].surfpt[i], normal, center,
 				sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
 		}
-		/* finalize the lighting direction for the sample and
-		 * transform it into tangent space */
-		TangentVector(normal, sdir, tdir, tangent);
-		CrossProduct(normal, tangent, binormal);
-		VectorScale(binormal, tangent[3], binormal);
+		if (!VectorCompare(direction, vec3_origin)) {
+			/* finalize the lighting direction for the sample and
+			 * transform it into tangent space */
+			TangentVector(normal, sdir, tdir, tangent);
+			CrossProduct(normal, tangent, binormal);
+			VectorScale(binormal, tangent[3], binormal);
 
-		dir[0] = DotProduct(direction, tangent);
-		dir[1] = DotProduct(direction, binormal);
-		dir[2] = DotProduct(direction, normal);
+			dir[0] = DotProduct(direction, tangent);
+			dir[1] = DotProduct(direction, binormal);
+			dir[2] = DotProduct(direction, normal);
 
-		VectorCopy(dir, direction);
+			VectorCopy(dir, direction);
 
-		/* normalize it, falling back on the last good direction when underlit */
-		if (VectorNormalize(direction) < 0.33) {
-			if (last_direction)
-				VectorCopy(last_direction, direction);
-			else
-				VectorSet(direction, 0.0, 0.0, 1.0);
-		} else { /* save it for the next underlit sample */
-			last_direction = direction;
+			/* normalize it, falling back on the last good direction when underlit */
+			VectorNormalize(direction);
+
+			if (direction[2] < 0.33) {  /* clamp it */
+				direction[2] = 0.33;
+				VectorNormalize(direction);
+			}
+
+			VectorAdd(avg_direction, direction, avg_direction);
+			numdirsamples++;
 		}
-
 		/* contribute the sample to one or more patches for radiosity */
 /*		if (config.numbounce > 0)*/
 			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
 	}
 
-	/* free the surface pointers for each sample. */
+	/* determine the average light direction for the face */
+	if (!numdirsamples)
+		VectorSet(avg_direction, 0.0, 0.0, 1.0);
+	else
+		VectorScale(avg_direction, 1.0 / numdirsamples, avg_direction);
+	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
+		float *direction = fl->directions + i * 3;
+		if (VectorCompare(direction, vec3_origin))
+			VectorCopy(avg_direction, direction);
+	}
+
+	/* free the sample positions for the face */
 	for (i = 0; i < numsamples; i++)
 		free(l[i].surfpt);
 
