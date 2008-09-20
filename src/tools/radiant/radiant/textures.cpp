@@ -83,9 +83,9 @@ struct texture_globals_t {
 	}
 };
 
-texture_globals_t g_texture_globals(GL_RGBA);
+static texture_globals_t g_texture_globals(GL_RGBA);
 
-void SetTexParameters(ETexturesMode mode) {
+static void SetTexParameters(ETexturesMode mode) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
 
 	switch (mode) {
@@ -121,13 +121,10 @@ void SetTexParameters(ETexturesMode mode) {
 	}
 }
 
-ETexturesMode g_texture_mode = eTextures_LINEAR_MIPMAP_LINEAR;
+static ETexturesMode g_texture_mode = eTextures_LINEAR_MIPMAP_LINEAR;
 
-
-
-
-byte g_gammatable[256];
-void ResampleGamma(float fGamma) {
+static byte g_gammatable[256];
+static void ResampleGamma(float fGamma) {
 	int i, inf;
 	if (fGamma == 1.0) {
 		for (i = 0; i < 256; i++)
@@ -144,16 +141,18 @@ void ResampleGamma(float fGamma) {
 	}
 }
 
-inline const int& min_int(const int& left, const int& right) {
+static inline const int& min_int(const int& left, const int& right) {
 	return std::min(left, right);
 }
 
-int max_tex_size = 0;
-const int max_texture_quality = 3;
-LatchedInt g_Textures_textureQuality(3, "Texture Quality");
+static int max_tex_size = 0;
+static const int max_texture_quality = 3;
+static LatchedInt g_Textures_textureQuality(3, "Texture Quality");
 
-/// \brief This function does the actual processing of raw RGBA data into a GL texture.
-/// It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
+/**
+ * @brief This function does the actual processing of raw RGBA data into a GL texture.
+ * @note It will also resample to power-of-two dimensions, generate the mipmaps and adjust gamma.
+ */
 void LoadTextureRGBA(qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight) {
 	static float fGamma = -1;
 	float total[3];
@@ -592,27 +591,27 @@ void Textures_constructPreferences(PreferencesPage& page) {
 	{
 		const char* percentages[] = { "12.5%", "25%", "50%", "100%", };
 		page.appendRadio(
-		    "Texture Quality",
-		    STRING_ARRAY_RANGE(percentages),
-		    LatchedIntImportCaller(g_Textures_textureQuality),
-		    IntExportCaller(g_Textures_textureQuality.m_latched)
+			"Texture Quality",
+			STRING_ARRAY_RANGE(percentages),
+			LatchedIntImportCaller(g_Textures_textureQuality),
+			IntExportCaller(g_Textures_textureQuality.m_latched)
 		);
 	}
 	page.appendSpinner(
-	    "Texture Gamma",
-	    1.0,
-	    0.0,
-	    1.0,
-	    FloatImportCallback(TextureGammaImportCaller(g_texture_globals.fGamma)),
-	    FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma))
+		"Texture Gamma",
+		1.0,
+		0.0,
+		1.0,
+		FloatImportCallback(TextureGammaImportCaller(g_texture_globals.fGamma)),
+		FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma))
 	);
 	{
 		const char* texture_mode[] = { "Nearest", "Nearest Mipmap", "Linear", "Bilinear", "Bilinear Mipmap", "Trilinear", "Anisotropy" };
 		page.appendCombo(
-		    "Texture Render Mode",
-		    STRING_ARRAY_RANGE(texture_mode),
-		    IntImportCallback(TextureModeImportCaller(g_texture_mode)),
-		    IntExportCallback(TextureModeExportCaller(g_texture_mode))
+			"Texture Render Mode",
+			STRING_ARRAY_RANGE(texture_mode),
+			IntImportCallback(TextureModeImportCaller(g_texture_mode)),
+			IntExportCallback(TextureModeExportCaller(g_texture_mode))
 		);
 	}
 	{
@@ -621,19 +620,19 @@ void Textures_constructPreferences(PreferencesPage& page) {
 		const char* compression_s3tc[] = { "None", "S3TC DXT1", "S3TC DXT3", "S3TC DXT5" };
 		const char* compression_opengl_s3tc[] = { "None", "OpenGL ARB", "S3TC DXT1", "S3TC DXT3", "S3TC DXT5" };
 		StringArrayRange compression(
-		    (g_texture_globals.m_bOpenGLCompressionSupported)
-		    ? (g_texture_globals.m_bS3CompressionSupported)
-		    ? STRING_ARRAY_RANGE(compression_opengl_s3tc)
-		    : STRING_ARRAY_RANGE(compression_opengl)
-				    : (g_texture_globals.m_bS3CompressionSupported)
-				    ? STRING_ARRAY_RANGE(compression_s3tc)
-				    : STRING_ARRAY_RANGE(compression_none)
+			(g_texture_globals.m_bOpenGLCompressionSupported)
+			? (g_texture_globals.m_bS3CompressionSupported)
+			? STRING_ARRAY_RANGE(compression_opengl_s3tc)
+			: STRING_ARRAY_RANGE(compression_opengl)
+					: (g_texture_globals.m_bS3CompressionSupported)
+					? STRING_ARRAY_RANGE(compression_s3tc)
+					: STRING_ARRAY_RANGE(compression_none)
 				);
 		page.appendCombo(
-		    "Hardware Texture Compression",
-		    compression,
-		    TextureCompressionImportCaller(g_texture_globals.m_nTextureCompressionFormat),
-		    IntExportCaller(reinterpret_cast<int&>(g_texture_globals.m_nTextureCompressionFormat))
+			"Hardware Texture Compression",
+			compression,
+			TextureCompressionImportCaller(g_texture_globals.m_nTextureCompressionFormat),
+			IntExportCaller(reinterpret_cast<int&>(g_texture_globals.m_nTextureCompressionFormat))
 		);
 	}
 }

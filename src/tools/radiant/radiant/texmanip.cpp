@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 static byte *row1 = NULL, *row2 = NULL;
 static int rowsize = 0;
 
-void R_ResampleTextureLerpLine (const byte *in, byte *out, int inwidth, int outwidth, int bytesperpixel) {
+static void R_ResampleTextureLerpLine (const byte *in, byte *out, int inwidth, int outwidth, int bytesperpixel) {
 	int   j, xi, oldx = 0, f, fstep, endx, lerp;
 #define LERPBYTE(i) out[i] = (byte) ((((row2[i] - row1[i]) * lerp) >> 16) + row1[i])
 
@@ -88,11 +88,6 @@ void R_ResampleTextureLerpLine (const byte *in, byte *out, int inwidth, int outw
 	}
 }
 
-/*
-================
-R_ResampleTexture
-================
-*/
 void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *outdata,  int outwidth, int outheight, int bytesperpixel) {
 	if (rowsize < outwidth * bytesperpixel) {
 		if (row1)

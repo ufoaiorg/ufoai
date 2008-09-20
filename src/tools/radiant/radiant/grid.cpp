@@ -36,15 +36,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "preferences.h"
 
 
-
-Signal0 g_gridChange_callbacks;
+static Signal0 g_gridChange_callbacks;
 
 void AddGridChangeCallback(const SignalHandler& handler) {
 	g_gridChange_callbacks.connectLast(handler);
 	handler();
 }
 
-static void GridChangeNotify() {
+static inline void GridChangeNotify() {
 	g_gridChange_callbacks();
 }
 
@@ -62,7 +61,6 @@ enum GridPower {
 	GRIDPOWER_128 = 7,
 	GRIDPOWER_256 = 8,
 };
-
 
 typedef const char* GridName;
 // this must match the GridPower enumeration
@@ -218,9 +216,9 @@ void Grid_registerShortcuts() {
 
 static void Grid_constructPreferences(PreferencesPage& page) {
 	page.appendCombo(
-	    "Default grid spacing",
-	    g_grid_default,
-	    ARRAY_RANGE(g_gridnames)
+		"Default grid spacing",
+		g_grid_default,
+		ARRAY_RANGE(g_gridnames)
 	);
 }
 void Grid_constructPage(PreferenceGroup& group) {
