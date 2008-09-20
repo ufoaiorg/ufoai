@@ -234,7 +234,9 @@ void ColorScheme_Black (void) {
 	XY_UpdateAllWindows();
 }
 
-/* ydnar: to emulate maya/max/lightwave color schemes */
+/**
+ * @brief ydnar: to emulate maya/max/lightwave color schemes
+ */
 void ColorScheme_Ydnar (void) {
 	TextureBrowser_setBackgroundColour(GlobalTextureBrowser(), Vector3(0.25f, 0.25f, 0.25f));
 
@@ -247,9 +249,9 @@ void ColorScheme_Ydnar (void) {
 	g_xywindow_globals.color_gridmajor = Vector3(0.89f, 0.89f, 0.89f);
 	g_xywindow_globals.color_gridblock = Vector3(1.0f, 1.0f, 1.0f);
 	g_xywindow_globals.color_gridtext = Vector3(0.0f, 0.0f, 0.0f);
+	g_xywindow_globals.color_brushes = Vector3(0.0f, 0.0f, 0.0f);
 	g_xywindow_globals.color_selbrushes = Vector3(1.0f, 0.0f, 0.0f);
 	g_xywindow_globals.color_clipper = Vector3(0.0f, 0.0f, 1.0f);
-	g_xywindow_globals.color_brushes = Vector3(0.0f, 0.0f, 0.0f);
 	SetWorldspawnColour(g_xywindow_globals.color_brushes);
 	g_xywindow_globals.color_viewname = Vector3(0.5f, 0.0f, 0.75f);
 	XY_UpdateAllWindows();
