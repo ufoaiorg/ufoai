@@ -88,8 +88,8 @@ class GenericEntity :
 	Ray m_ray;
 
 	RenderableArrow m_arrow;
-	RenderableSolidAABB m_aabb_solid;
-	RenderableWireframeAABB m_aabb_wire;
+	RenderableSolidAABB m_renderAABBSolid;
+	RenderableWireframeAABB m_renderAABBWire;
 	RenderableNamedEntity m_renderName;
 
 	Callback m_transformChanged;
@@ -103,7 +103,7 @@ class GenericEntity :
 		m_ray.direction[2] = 0;
 
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
-		m_keyObservers.insert(Static<KeyIsName>::instance().m_nameKey, NamedEntity::IdentifierChangedCaller(m_named));
+		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 		m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 	}
@@ -137,8 +137,8 @@ public:
 			m_named(m_entity),
 			m_nameKeys(m_entity),
 			m_arrow(m_ray),
-			m_aabb_solid(m_aabb_local),
-			m_aabb_wire(m_aabb_local),
+			m_renderAABBSolid(m_aabb_local),
+			m_renderAABBWire(m_aabb_local),
 			m_renderName(m_named, g_vector3_identity),
 			m_transformChanged(transformChanged),
 			m_evaluateTransform(evaluateTransform) {
@@ -154,8 +154,8 @@ public:
 			m_named(m_entity),
 			m_nameKeys(m_entity),
 			m_arrow(m_ray),
-			m_aabb_solid(m_aabb_local),
-			m_aabb_wire(m_aabb_local),
+			m_renderAABBSolid(m_aabb_local),
+			m_renderAABBWire(m_aabb_local),
 			m_renderName(m_named, g_vector3_identity),
 			m_transformChanged(transformChanged),
 			m_evaluateTransform(evaluateTransform) {
@@ -210,12 +210,12 @@ public:
 	}
 	void renderSolid(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const {
 		renderer.SetState(m_entity.getEntityClass().m_state_fill, Renderer::eFullMaterials);
-		renderer.addRenderable(m_aabb_solid, localToWorld);
+		renderer.addRenderable(m_renderAABBSolid, localToWorld);
 		renderArrow(renderer, volume, localToWorld);
 	}
 	void renderWireframe(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const {
 		renderer.SetState(m_entity.getEntityClass().m_state_wire, Renderer::eWireframeOnly);
-		renderer.addRenderable(m_aabb_wire, localToWorld);
+		renderer.addRenderable(m_renderAABBWire, localToWorld);
 		renderArrow(renderer, volume, localToWorld);
 		if (g_showNames) {
 			renderer.addRenderable(m_renderName, localToWorld);

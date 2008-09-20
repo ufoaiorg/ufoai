@@ -33,17 +33,11 @@ inline bool string_is_integer(const char* string) {
 	return *string == '\0';
 }
 
-typedef bool (*KeyIsNameFunc)(const char* key);
 
-class KeyIsName {
-public:
-	KeyIsNameFunc m_keyIsName;
-	const char* m_nameKey;
-
-	KeyIsName() {
-	}
-};
-
+static inline bool keyIsName (const char* key)
+{
+	return string_equal(key, "target") || string_equal(key, "targetname");
+}
 
 typedef MemberCaller1<EntityKeyValue, const char*, &EntityKeyValue::assign> KeyValueAssignCaller;
 typedef MemberCaller1<EntityKeyValue, const KeyObserver&, &EntityKeyValue::attach> KeyValueAttachCaller;
@@ -52,7 +46,6 @@ typedef MemberCaller1<EntityKeyValue, const KeyObserver&, &EntityKeyValue::detac
 class NameKeys : public Entity::Observer, public Namespaced {
 	Namespace* m_namespace;
 	EntityKeyValues& m_entity;
-	KeyIsNameFunc m_keyIsName;
 	NameKeys(const NameKeys& other);
 	NameKeys& operator=(const NameKeys& other);
 
@@ -60,13 +53,13 @@ class NameKeys : public Entity::Observer, public Namespaced {
 	KeyValues m_keyValues;
 
 	void insertName(const char* key, EntityKeyValue& value) {
-		if (m_namespace != 0 && m_keyIsName(key)) {
+		if (m_namespace != 0 && keyIsName(key)) {
 			//globalOutputStream() << "insert " << key << "\n";
 			m_namespace->attach(KeyValueAssignCaller(value), KeyValueAttachCaller(value));
 		}
 	}
 	void eraseName(const char* key, EntityKeyValue& value) {
-		if (m_namespace != 0 && m_keyIsName(key)) {
+		if (m_namespace != 0 && keyIsName(key)) {
 			//globalOutputStream() << "erase " << key << "\n";
 			m_namespace->detach(KeyValueAssignCaller(value), KeyValueDetachCaller(value));
 		}
@@ -82,7 +75,7 @@ class NameKeys : public Entity::Observer, public Namespaced {
 		}
 	}
 public:
-	NameKeys(EntityKeyValues& entity) : m_namespace(0), m_entity(entity), m_keyIsName(Static<KeyIsName>::instance().m_keyIsName) {
+	NameKeys(EntityKeyValues& entity) : m_namespace(0), m_entity(entity) {
 		m_entity.attach(*this);
 	}
 	~NameKeys() {
@@ -91,11 +84,6 @@ public:
 	void setNamespace(Namespace& space) {
 		eraseAll();
 		m_namespace = &space;
-		insertAll();
-	}
-	void setKeyIsName(KeyIsNameFunc keyIsName) {
-		eraseAll();
-		m_keyIsName = keyIsName;
 		insertAll();
 	}
 	void insert(const char* key, EntityKeyValue& value) {
@@ -107,10 +95,5 @@ public:
 		m_keyValues.erase(key);
 	}
 };
-
-inline bool keyIsNameUFO(const char* key) {
-	return string_equal(key, "target")
-	       || string_equal(key, "targetname");
-}
 
 #endif

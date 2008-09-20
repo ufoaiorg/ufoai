@@ -76,7 +76,7 @@ class EclassModel :
 
 	void construct() {
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
-		m_keyObservers.insert(Static<KeyIsName>::instance().m_nameKey, NamedEntity::IdentifierChangedCaller(m_named));
+		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 		m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 	}

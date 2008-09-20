@@ -59,23 +59,39 @@ void MiscParticle_destroy() {
 	Particles_Shutdown();
 }
 
-// Todo get the particle image/model and render it
-class RenderableParticle : public OpenGLRenderable {
-	const char* m_particleID;
-
+/**
+ * @brief Render class for the grid windows
+ */
+class RenderableParticleID : public OpenGLRenderable {
+	const ParticleDefinition &m_particle;
+	const Vector3 &m_origin;
 public:
-	RenderableParticle(const char *id) : m_particleID(id) {
-
+	RenderableParticleID(const ParticleDefinition &particle, const Vector3 &origin) : m_particle(particle), m_origin(origin) {
 	}
 
 	void render(RenderStateFlags state) const {
+		glRasterPos3fv(vector3_to_array(m_origin));
+		GlobalOpenGL().drawString(m_particle.m_id);
+	}
+};
+
+/**
+ * @brief Render class for the 3d view
+ */
+class RenderableParticle : public OpenGLRenderable {
+	const ParticleDefinition &m_particle;
+public:
+	RenderableParticle(const ParticleDefinition &particle) : m_particle(particle) {
+	}
+
+	void render(RenderStateFlags state) const {
+
 	}
 };
 
 inline void read_aabb(AABB& aabb, const EntityClass& eclass) {
 	aabb = aabb_for_minmax(eclass.mins, eclass.maxs);
 }
-
 
 class MiscParticle :
 			public Cullable,
@@ -91,13 +107,16 @@ class MiscParticle :
 	ClassnameFilter m_filter;
 	NamedEntity m_named;
 	NameKeys m_nameKeys;
+	ParticleDefinition m_particle;
+	mutable Vector3 m_id_origin;
 
+	// bounding box
 	AABB m_aabb_local;
-	char *m_particleID;
 
-	RenderableParticle m_particle;
-	RenderableSolidAABB m_aabb_solid;
-	RenderableWireframeAABB m_aabb_wire;
+	RenderableSolidAABB m_renderAABBSolid;
+	RenderableParticle m_renderParticle;
+	RenderableParticleID m_renderParticleID;
+	RenderableWireframeAABB m_renderAABBWire;
 	RenderableNamedEntity m_renderName;
 
 	Callback m_transformChanged;
@@ -107,9 +126,9 @@ class MiscParticle :
 		read_aabb(m_aabb_local, m_entity.getEntityClass());
 
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
-		m_keyObservers.insert(Static<KeyIsName>::instance().m_nameKey, NamedEntity::IdentifierChangedCaller(m_named));
+		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
-		// todo: particle watchdog
+		m_keyObservers.insert("particle", ParticleDefinition::ParticleChangedCaller(m_particle));
 	}
 
 	void updateTransform() {
@@ -123,6 +142,8 @@ class MiscParticle :
 		updateTransform();
 	}
 	typedef MemberCaller<MiscParticle, &MiscParticle::originChanged> OriginChangedCaller;
+
+
 public:
 
 	MiscParticle(EntityClass* eclass, scene::Node& node, const Callback& transformChanged, const Callback& evaluateTransform) :
@@ -132,9 +153,12 @@ public:
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
-			m_particle(m_particleID),
-			m_aabb_solid(m_aabb_local),
-			m_aabb_wire(m_aabb_local),
+			m_particle("unset"),
+			m_id_origin(g_vector3_identity),
+			m_renderAABBSolid(m_aabb_local),
+			m_renderParticle(m_particle),
+			m_renderParticleID(m_particle, m_id_origin),
+			m_renderAABBWire(m_aabb_local),
 			m_renderName(m_named, g_vector3_identity),
 			m_transformChanged(transformChanged),
 			m_evaluateTransform(evaluateTransform) {
@@ -147,9 +171,12 @@ public:
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
-			m_particle(m_particleID),
-			m_aabb_solid(m_aabb_local),
-			m_aabb_wire(m_aabb_local),
+			m_particle("unset"),
+			m_id_origin(g_vector3_identity),
+			m_renderAABBSolid(m_aabb_local),
+			m_renderParticle(m_particle),
+			m_renderParticleID(m_particle, m_id_origin),
+			m_renderAABBWire(m_aabb_local),
 			m_renderName(m_named, g_vector3_identity),
 			m_transformChanged(transformChanged),
 			m_evaluateTransform(evaluateTransform) {
@@ -199,13 +226,18 @@ public:
 
 	void renderSolid(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const {
 		renderer.SetState(m_entity.getEntityClass().m_state_fill, Renderer::eFullMaterials);
-		renderer.addRenderable(m_aabb_solid, localToWorld);
+		if (m_particle.m_image)
+			renderer.addRenderable(m_renderParticle, localToWorld);
+		else
+			renderer.addRenderable(m_renderAABBSolid, localToWorld);
 	}
 	void renderWireframe(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const {
 		renderer.SetState(m_entity.getEntityClass().m_state_wire, Renderer::eWireframeOnly);
-		renderer.addRenderable(m_aabb_wire, localToWorld);
+		renderer.addRenderable(m_renderAABBWire, localToWorld);
 		if (g_showNames) {
 			renderer.addRenderable(m_renderName, localToWorld);
+			m_id_origin = Vector3(-10, -10, -10);
+			renderer.addRenderable(m_renderParticleID, localToWorld);
 		}
 	}
 

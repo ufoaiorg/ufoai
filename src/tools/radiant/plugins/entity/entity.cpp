@@ -231,9 +231,6 @@ void Entity_InitFilters() {
 #include "preferencesystem.h"
 
 void P_Entity_Construct() {
-	Static<KeyIsName>::instance().m_keyIsName = keyIsNameUFO;
-	Static<KeyIsName>::instance().m_nameKey = "targetname";
-
 	GlobalPreferenceSystem().registerPreference("SI_ShowNames", BoolImportStringCaller(g_showNames), BoolExportStringCaller(g_showNames));
 	GlobalPreferenceSystem().registerPreference("SI_ShowAngles", BoolImportStringCaller(g_showAngles), BoolExportStringCaller(g_showAngles));
 	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii), BoolExportStringCaller(g_lightRadii));

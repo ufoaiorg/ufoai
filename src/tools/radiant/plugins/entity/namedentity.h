@@ -1,3 +1,8 @@
+/**
+ * @file namedentitiy.h
+ * @brief Renders the entity classname
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -84,6 +89,10 @@ public:
 	RenderableNamedEntity(const NamedEntity& named, const Vector3& position)
 			: m_named(named), m_position(position) {
 	}
+
+	/**
+	 * @brief Renders the name of the entitiy
+	 */
 	void render(RenderStateFlags state) const {
 		glRasterPos3fv(vector3_to_array(m_position));
 		GlobalOpenGL().drawString(m_named.name());

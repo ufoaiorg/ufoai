@@ -252,26 +252,33 @@ class ContentsFlagsValue {
 public:
 	ContentsFlagsValue() {
 	}
-	ContentsFlagsValue(int surfaceFlags, int contentFlags, int value, bool specified) :
+	ContentsFlagsValue(int surfaceFlags, int contentFlags, int value, bool specified, int surfaceFlagsDirty = 0, int contentFlagsDirty = 0) :
 			m_surfaceFlags(surfaceFlags),
 			m_contentFlags(contentFlags),
 			m_value(value),
-			m_specified(specified) {
+			m_specified(specified),
+			m_surfaceFlagsDirty(surfaceFlagsDirty),
+			m_contentFlagsDirty(contentFlagsDirty),
+			m_markDirty(0) {
 	}
 	int m_surfaceFlags;
 	int m_contentFlags;
 	int m_value;
 	bool m_specified;
+	int m_surfaceFlagsDirty;
+	int m_contentFlagsDirty;
+	int m_markDirty;
 };
 
-inline void ContentsFlagsValue_assignMasked(ContentsFlagsValue& flags, const ContentsFlagsValue& other) {
-	bool detail = bitfield_enabled(flags.m_contentFlags, BRUSH_DETAIL_MASK);
+static inline void ContentsFlagsValue_assignMasked(ContentsFlagsValue& flags, const ContentsFlagsValue& other) {
+	unsigned int noChangeContentFlags = (flags.m_contentFlags & flags.m_contentFlagsDirty);
+	unsigned int noChangeSurfaceFlags = (flags.m_surfaceFlags & flags.m_surfaceFlagsDirty);
 	flags = other;
-	if (detail) {
-		flags.m_contentFlags = bitfield_enable(flags.m_contentFlags, BRUSH_DETAIL_MASK);
-	} else {
-		flags.m_contentFlags = bitfield_disable(flags.m_contentFlags, BRUSH_DETAIL_MASK);
-	}
+	flags.m_contentFlags |= noChangeContentFlags;
+	flags.m_surfaceFlags |= noChangeSurfaceFlags;
+//	flags.m_contentFlagsDirty = 0;
+//	flags.m_surfaceFlagsDirty = 0;
+//	flags.m_markDirty = 0;
 }
 
 
@@ -379,11 +386,10 @@ public:
 		ASSERT_MESSAGE(m_realised, "FaceShader::getFlags: flags not valid when unrealised");
 		if (!m_flags.m_specified) {
 			return ContentsFlagsValue(
-			           m_state->getTexture().surfaceFlags,
-			           m_state->getTexture().contentFlags,
-			           m_state->getTexture().value,
-			           true
-			       );
+				m_state->getTexture().surfaceFlags,
+				m_state->getTexture().contentFlags,
+				m_state->getTexture().value,
+				true);
 		}
 		return m_flags;
 	}
@@ -981,9 +987,28 @@ public:
 		texdefChanged();
 	}
 
+	/**
+	 * @brief Get the content and surface flags from a given face
+	 * @note Also generates a diff bitmask of the flag variable given to store
+	 * the flag values in and the current face flags
+	 * @param[in,out] flags The content and surface flag container
+	 * @sa ContentsFlagsValue_assignMasked
+	 */
 	void GetFlags(ContentsFlagsValue& flags) const {
+		ContentsFlagsValue oldFlags = flags;
 		flags = m_shader.getFlags();
+
+		// rescue the mark dirty value
+		flags.m_markDirty = oldFlags.m_markDirty;
+
+		if (flags.m_markDirty) {
+			// Figure out which buttons are inconsistent
+			flags.m_contentFlagsDirty |= (oldFlags.m_contentFlags ^ flags.m_contentFlags);
+			flags.m_surfaceFlagsDirty |= (oldFlags.m_surfaceFlags ^ flags.m_surfaceFlags);
+		}
+		flags.m_markDirty = 1;
 	}
+	/** @sa ContentsFlagsValue_assignMasked */
 	void SetFlags(const ContentsFlagsValue& flags) {
 		undoSave();
 		m_shader.setFlags(flags);

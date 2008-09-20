@@ -64,7 +64,7 @@ class Group {
 
 	void construct() {
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
-		m_keyObservers.insert(Static<KeyIsName>::instance().m_nameKey, NamedEntity::IdentifierChangedCaller(m_named));
+		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 	}
 
 public:

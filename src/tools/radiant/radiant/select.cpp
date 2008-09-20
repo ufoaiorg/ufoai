@@ -364,6 +364,9 @@ void Select_SetTexdef (const TextureProjection& projection)
 	Scene_BrushSetTexdef_Component_Selected(GlobalSceneGraph(), projection);
 }
 
+/**
+ * @todo Set contentflags for whole brush when we are in face selection mode
+ */
 void Select_SetFlags (const ContentsFlagsValue& flags)
 {
 	if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {

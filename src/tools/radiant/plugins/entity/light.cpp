@@ -401,14 +401,6 @@ public:
 		calculateRadii();
 	}
 	typedef MemberCaller1<LightRadii, const char*, &LightRadii::scaleChanged> ScaleChangedCaller;
-	void fadeChanged(const char* value) {
-		m_fade = string_read_float(value);
-		if (m_fade <= 0.0f) {
-			m_fade = 1.0f;
-		}
-		calculateRadii();
-	}
-	typedef MemberCaller1<LightRadii, const char*, &LightRadii::fadeChanged> FadeChangedCaller;
 	void flagsChanged(const char* value) {
 		m_flags = string_read_int(value);
 		calculateRadii();
@@ -603,12 +595,11 @@ class Light :
 		default_extents(m_aabb_light.extents);
 
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
-		m_keyObservers.insert(Static<KeyIsName>::instance().m_nameKey, NamedEntity::IdentifierChangedCaller(m_named));
+		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 		m_keyObservers.insert("_color", Colour::ColourChangedCaller(m_colour));
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 		m_keyObservers.insert("_light", LightRadii::PrimaryIntensityChangedCaller(m_radii));
 		m_keyObservers.insert("light", LightRadii::SecondaryIntensityChangedCaller(m_radii));
-		m_keyObservers.insert("fade", LightRadii::FadeChangedCaller(m_radii));
 		m_keyObservers.insert("scale", LightRadii::ScaleChangedCaller(m_radii));
 		m_keyObservers.insert("spawnflags", LightRadii::FlagsChangedCaller(m_radii));
 	}

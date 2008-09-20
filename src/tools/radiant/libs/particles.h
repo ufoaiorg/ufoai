@@ -2,11 +2,14 @@
 #ifndef PARTICLES_H
 #define PARTICLES_H
 
+#include "imagelib.h"
 #include "archivelib.h"
 #include "autoptr.h"
 #include "stringio.h"
 #include "ifilesystem.h"
+#include "itextures.h"
 #include "stream/stringstream.h"
+#include "qerplugin.h"
 #include <map>
 #include <list>
 
@@ -19,23 +22,69 @@ GSList* getUFOFileList() {
 
 std::list<CopiedString> g_ufoFilenames;
 
-
 class ParticleDefinition {
-public:
-	ParticleDefinition(const char* id, const char *model, const char *image)
-		: m_id(id), m_model(model), m_image(image) {
+
+private:
+	void loadParticleTexture (void) {
+		if (m_image)
+			return;
+
+		if (m_imageName) {
 #if 0
-		globalOutputStream() << "particle " << id << "with: ";
-		if (model)
-			globalOutputStream() << "model: " << model << " ";
-		if (image)
-			globalOutputStream() << "image: " << image << " ";
-		globalOutputStream() << "\n";
+			StringOutputStream name(256);
+			name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".tga";
+			m_image = GlobalTexturesCache().capture(name.c_str());
+			if (!m_image) {
+				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".jpg";
+				m_image = GlobalTexturesCache().capture(name.c_str());
+				if (!m_image)
+					globalOutputStream() << "Particle image: " << m_imageName << " wasn't found\n";
+			}
 #endif
+		}
 	}
+
+	void freeParticleTexture (void) {
+		if (m_image) {
+#if 0
+			GlobalTexturesCache().release(m_image);
+#endif
+			m_image = NULL;
+		}
+	}
+public:
+	ParticleDefinition(const char *id) : m_id(id), m_modelName(NULL), m_imageName(NULL), m_image(NULL) {
+		reloadParticleTextureName();
+		loadParticleTexture();
+	}
+
+	ParticleDefinition(const char* id, const char *modelName, const char *imageName)
+		: m_id(id), m_modelName(modelName), m_imageName(imageName), m_image(NULL) {
+		loadParticleTexture();
+	}
+
+	~ParticleDefinition () {
+		freeParticleTexture();
+	}
+
 	const char *m_id;
-	const char *m_model;
-	const char *m_image;
+	const char *m_modelName;
+	const char *m_imageName;
+	qtexture_t *m_image;
+
+	void reloadParticleTextureName (void) {
+		// TODO: Reload particle def and parse image name
+		m_imageName = NULL;
+	}
+
+	void particleChanged(const char* id) {
+		m_id = id;
+		globalOutputStream() << "ID is now: " << m_id << "\n";
+		freeParticleTexture();
+		reloadParticleTextureName();
+		loadParticleTexture();
+	}
+	typedef MemberCaller1<ParticleDefinition, const char*, &ParticleDefinition::particleChanged> ParticleChangedCaller;
 };
 
 typedef std::map<CopiedString, ParticleDefinition> ParticleDefinitionMap;

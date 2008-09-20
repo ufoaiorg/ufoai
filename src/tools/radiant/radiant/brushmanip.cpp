@@ -669,36 +669,32 @@ void Scene_BrushGetShaderSize_Component_Selected(scene::Graph& graph, size_t& wi
 
 class FaceGetFlags {
 	ContentsFlagsValue& m_flags;
-	mutable bool m_done;
 public:
 	FaceGetFlags(ContentsFlagsValue& flags)
-			: m_flags(flags), m_done(false) {
+			: m_flags(flags) {
 	}
 	void operator()(Face& face) const {
-		if (!m_done) {
-			m_done = true;
-			face.GetFlags(m_flags);
-		}
+		face.GetFlags(m_flags);
 	}
 };
 
-
+/**
+ * @sa SurfaceInspector_SetCurrent_FromSelected
+ */
 void Scene_BrushGetFlags_Selected(scene::Graph& graph, ContentsFlagsValue& flags) {
 	if (GlobalSelectionSystem().countSelected() != 0) {
-		BrushInstance* brush = Instance_getBrush(GlobalSelectionSystem().ultimateSelected());
-		if (brush != 0) {
-			Brush_forEachFace(*brush, FaceGetFlags(flags));
-		}
+		Scene_ForEachSelectedBrush_ForEachFace(graph, FaceGetFlags(flags));
 	}
 }
 
+/**
+ * @sa SurfaceInspector_SetCurrent_FromSelected
+ */
 void Scene_BrushGetFlags_Component_Selected(scene::Graph& graph, ContentsFlagsValue& flags) {
-	if (!g_SelectedFaceInstances.empty()) {
-		FaceInstance& faceInstance = g_SelectedFaceInstances.last();
-		faceInstance.getFace().GetFlags(flags);
+	if (GlobalSelectionSystem().countSelectedComponents() != 0) {
+		Scene_ForEachSelectedBrushFace(graph, FaceGetFlags(flags));
 	}
 }
-
 
 class FaceGetShader {
 	CopiedString& m_shader;

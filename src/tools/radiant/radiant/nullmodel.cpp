@@ -44,10 +44,10 @@ class NullModel :
 			public Cullable {
 	Shader* m_state;
 	AABB m_aabb_local;
-	RenderableSolidAABB m_aabb_solid;
-	RenderableWireframeAABB m_aabb_wire;
+	RenderableSolidAABB m_renderAABBSolid;
+	RenderableWireframeAABB m_renderAABBWire;
 public:
-	NullModel() : m_aabb_local(Vector3(0, 0, 0), Vector3(8, 8, 8)), m_aabb_solid(m_aabb_local), m_aabb_wire(m_aabb_local) {
+	NullModel() : m_aabb_local(Vector3(0, 0, 0), Vector3(8, 8, 8)), m_renderAABBSolid(m_aabb_local), m_renderAABBWire(m_aabb_local) {
 		m_state = GlobalShaderCache().capture("");
 	}
 	~NullModel() {
@@ -64,10 +64,10 @@ public:
 
 	void renderSolid(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const {
 		renderer.SetState(m_state, Renderer::eFullMaterials);
-		renderer.addRenderable(m_aabb_solid, localToWorld);
+		renderer.addRenderable(m_renderAABBSolid, localToWorld);
 	}
 	void renderWireframe(Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const {
-		renderer.addRenderable(m_aabb_wire, localToWorld);
+		renderer.addRenderable(m_renderAABBWire, localToWorld);
 	}
 
 	void testSelect(Selector& selector, SelectionTest& test, const Matrix4& localToWorld) {

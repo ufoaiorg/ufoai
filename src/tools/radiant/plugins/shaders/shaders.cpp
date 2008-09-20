@@ -73,9 +73,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 const char* g_shadersExtension = "";
 const char* g_shadersDirectory = "";
 bool g_enableDefaultShaders = true;
-ShaderLanguage g_shaderLanguage = SHADERLANGUAGE_QUAKE3;
 bool g_useShaderList = true;
-_QERPlugImageTable* g_bitmapModule = 0;
 const char* g_texturePrefix = "textures/";
 
 void ActiveShaders_IteratorBegin();
@@ -95,14 +93,6 @@ SHADER_NOT_FOUND means we didn't find the raw texture or the shader for this
 SHADER_NOTEX means we recognize this as a shader script, but we are missing the texture to represent it
 this was in the initial design of the shader code since early GtkRadiant alpha, and got sort of foxed in 1.2 and put back in
 */
-
-Image* loadBitmap(void* environment, const char* name) {
-	DirectoryArchiveFile file(name, name);
-	if (!file.failed()) {
-		return g_bitmapModule->loadImage(file);
-	}
-	return 0;
-}
 
 inline byte* getPixel(byte* pixels, int width, int height, int x, int y) {
 	return pixels + (((((y + height) % height) * width) + ((x + width) % width)) * 4);
@@ -175,19 +165,6 @@ Image* loadHeightmap(void* environment, const char* name) {
 		return &normalmap;
 	}
 	return 0;
-}
-
-
-Image* loadSpecial(void* environment, const char* name) {
-	if (*name == '_') { // special image
-		StringOutputStream bitmapName(256);
-		bitmapName << GlobalRadiant().getAppPath() << "bitmaps/" << name + 1 << ".bmp";
-		Image* image = loadBitmap(environment, bitmapName.c_str());
-		if (image != 0) {
-			return image;
-		}
-	}
-	return GlobalTexturesCache().loadImage(name);
 }
 
 class ShaderPoolContext {
@@ -647,8 +624,8 @@ public:
 
 			{
 				StringOutputStream name(256);
-				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "textures/tex_common/nodraw";
-				m_pTexture = GlobalTexturesCache().capture(LoadImageCallback(0, loadBitmap), name.c_str());
+				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") <<  "/textures/tex_common/nodraw.tga";
+				m_pTexture = GlobalTexturesCache().capture(name.c_str());
 			}
 		}
 
