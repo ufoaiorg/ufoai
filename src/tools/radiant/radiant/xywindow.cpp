@@ -367,7 +367,7 @@ static const unsigned int RAD_LBUTTON = 0x10;
 static const unsigned int RAD_MBUTTON = 0x20;
 static const unsigned int RAD_RBUTTON = 0x40;
 
-inline ButtonIdentifier button_for_flags(unsigned int flags) {
+static inline ButtonIdentifier button_for_flags(unsigned int flags) {
 	if (flags & RAD_LBUTTON)
 		return c_buttonLeft;
 	if (flags & RAD_RBUTTON)
@@ -377,7 +377,7 @@ inline ButtonIdentifier button_for_flags(unsigned int flags) {
 	return c_buttonInvalid;
 }
 
-inline ModifierFlags modifiers_for_flags(unsigned int flags) {
+static inline ModifierFlags modifiers_for_flags(unsigned int flags) {
 	ModifierFlags modifiers = c_modifierNone;
 	if (flags & RAD_SHIFT)
 		modifiers |= c_modifierShift;
@@ -388,7 +388,7 @@ inline ModifierFlags modifiers_for_flags(unsigned int flags) {
 	return modifiers;
 }
 
-inline unsigned int buttons_for_button_and_modifiers(ButtonIdentifier button, ModifierFlags flags) {
+static inline unsigned int buttons_for_button_and_modifiers(ButtonIdentifier button, ModifierFlags flags) {
 	unsigned int buttons = 0;
 
 	switch (button.get()) {
@@ -417,7 +417,7 @@ inline unsigned int buttons_for_button_and_modifiers(ButtonIdentifier button, Mo
 	return buttons;
 }
 
-inline unsigned int buttons_for_event_button(GdkEventButton* event) {
+static inline unsigned int buttons_for_event_button(GdkEventButton* event) {
 	unsigned int flags = 0;
 
 	switch (event->button) {
@@ -444,7 +444,7 @@ inline unsigned int buttons_for_event_button(GdkEventButton* event) {
 	return flags;
 }
 
-inline unsigned int buttons_for_state(guint state) {
+static inline unsigned int buttons_for_state(guint state) {
 	unsigned int flags = 0;
 
 	if ((state & GDK_BUTTON1_MASK) != 0)
@@ -590,7 +590,7 @@ void WXY_Print(void) {
 		unsigned long widthDW = (((width * 24) + 31) / 32 * 4);
 		long row, row_size = width * 3;
 		for (row = 0; row < height; row++) {
-			unsigned char* buf = img + row * row_size;
+			const unsigned char* buf = img + row * row_size;
 
 			// write a row
 			int col;
