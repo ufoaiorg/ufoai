@@ -29,10 +29,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "modulesystem/moduleregistry.h"
 #include "os/path.h"
 
-const char* EClass_GetExtension() {
+static const char* EClass_GetExtension() {
 	return "def";
 }
-void Eclass_ScanFile (EntityClassCollector& collector, const char *filename);
+static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename);
 
 
 #include "modulesystem/singletonmodule.h"
@@ -65,17 +65,17 @@ StaticRegisterModule staticRegisterEclassDef(StaticEclassDefModule::instance());
 #include <stdlib.h>
 
 
-char		com_token[1024];
-bool	com_eof;
+static char com_token[1024];
+static bool com_eof;
+static const char *debugname;
 
 /**
  * @brief Parse a token out of a string
  */
-const char *COM_Parse (const char *data) {
-	int		c;
-	int		len;
+static const char *COM_Parse (const char *data) {
+	int c;
+	int len = 0;
 
-	len = 0;
 	com_token[0] = 0;
 
 	if (!data)
@@ -135,21 +135,9 @@ skipwhite:
 	return data;
 }
 
-const char* Get_COM_Token() {
-	return com_token;
-}
-
-
-const char *debugname;
-
-void setSpecialLoad(EntityClass *e, const char* pWhat, CopiedString& p) {
-	// Hydra: removed some amazingly bad cstring usage, whoever wrote that
-	// needs to be taken out and shot.
-
-	const char *pText = 0;
-	const char *where = 0;
-
-	where = strstr(e->comments(), pWhat);
+static void setSpecialLoad(EntityClass *e, const char* pWhat, CopiedString& p) {
+	const char *pText;
+	const char *where = strstr(e->comments(), pWhat);
 	if (!where)
 		return;
 
@@ -181,18 +169,18 @@ Flag names can follow the size description:
 
 */
 
-EntityClass *Eclass_InitFromText (const char *text) {
+static EntityClass *Eclass_InitFromText (const char *text) {
 	EntityClass* e = Eclass_Alloc();
 	e->free = &Eclass_Free;
 
 	// grab the name
 	text = COM_Parse (text);
-	e->m_name = Get_COM_Token();
+	e->m_name = com_token;
 	debugname = e->name();
 
 	{
 		// grab the color, reformat as texture name
-		int r = sscanf (text, " (%f %f %f)", &e->color[0], &e->color[1], &e->color[2]);
+		const int r = sscanf(text, " (%f %f %f)", &e->color[0], &e->color[1], &e->color[2]);
 		if (r != 3)
 			return e;
 		eclass_capture_state(e);
@@ -208,10 +196,10 @@ EntityClass *Eclass_InitFromText (const char *text) {
 
 	// get the size
 	text = COM_Parse (text);
-	if (Get_COM_Token()[0] == '(') {	// parse the size as two vectors
+	if (com_token[0] == '(') {	// parse the size as two vectors
 		e->fixedsize = true;
-		int r = sscanf (text, "%f %f %f) (%f %f %f)", &e->mins[0], &e->mins[1], &e->mins[2],
-		                &e->maxs[0], &e->maxs[1], &e->maxs[2]);
+		const int r = sscanf(text, "%f %f %f) (%f %f %f)", &e->mins[0], &e->mins[1], &e->mins[2],
+			&e->maxs[0], &e->maxs[1], &e->maxs[2]);
 		if (r != 6) {
 			return 0;
 		}
@@ -227,7 +215,7 @@ EntityClass *Eclass_InitFromText (const char *text) {
 		}
 	}
 
-	char	parms[256];
+	char parms[256];
 	// get the flags that are shown in the entity inspector
 	{
 		// copy to the first /n
@@ -245,7 +233,7 @@ EntityClass *Eclass_InitFromText (const char *text) {
 			p = COM_Parse (p);
 			if (!p)
 				break;
-			strcpy (e->flagnames[i], Get_COM_Token());
+			strcpy (e->flagnames[i], com_token);
 		}
 	}
 
@@ -268,7 +256,7 @@ EntityClass *Eclass_InitFromText (const char *text) {
 	return e;
 }
 
-void Eclass_ScanFile (EntityClassCollector& collector, const char *filename) {
+static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename) {
 	EntityClass	*e;
 
 	TextFileInputStream inputFile(filename);
