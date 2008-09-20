@@ -115,8 +115,7 @@ void GroupDlg::Create(GtkWindow* parent) {
 	{
 		GtkWidget* notebook = gtk_notebook_new();
 		gtk_widget_show(notebook);
-		gtk_container_add (GTK_CONTAINER (window), notebook);
-		gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_BOTTOM);
+		gtk_container_add(GTK_CONTAINER (window), notebook);
 		m_pNotebook = notebook;
 
 		g_signal_connect(G_OBJECT(notebook), "switch_page", G_CALLBACK(switch_page), window);
