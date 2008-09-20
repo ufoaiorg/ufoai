@@ -30,7 +30,7 @@ textures/tex_common/slick
 	qer_trans 0.40
 }
 
-textures/tex_common/stepon
+textures/tex_common/ladder
 {
 	qer_trans 0.40
 }
