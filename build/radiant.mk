@@ -38,7 +38,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
-	$(RADIANT_BASE)/radiant/pluginapi.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
 	$(RADIANT_BASE)/radiant/pluginmanager.cpp \
 	$(RADIANT_BASE)/radiant/pluginmenu.cpp \

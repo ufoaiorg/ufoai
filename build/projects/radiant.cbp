@@ -281,9 +281,6 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\plugin.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\pluginapi.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\pluginmanager.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

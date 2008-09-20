@@ -32,7 +32,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "iscenegraph.h"
 #include "irender.h"
 #include "igl.h"
-#include "icamera.h"
 #include "cullable.h"
 #include "renderable.h"
 #include "preferencesystem.h"
