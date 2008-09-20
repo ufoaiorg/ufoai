@@ -1,3 +1,9 @@
+/**
+ * @file dialog.cpp
+ * @brief Base dialog class, provides a way to run modal dialogs and
+ * set/get the widget values in member variables.
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -19,12 +25,6 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-//
-// Base dialog class, provides a way to run modal dialogs and
-// set/get the widget values in member variables.
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "dialog.h"
 
@@ -279,12 +279,12 @@ public:
 	}
 	void apply(typename Widget::Type& widget, typename Viewer::Type& viewer) const {
 		m_data.push_back(
-		    new CallbackDialogData<typename Widget::Other>(
-		        typename Widget::ImportCaller(widget),
-		        typename Widget::ExportCaller(widget),
-		        typename Viewer::ImportCaller(viewer),
-		        typename Viewer::ExportCaller(viewer)
-		    )
+			new CallbackDialogData<typename Widget::Other>(
+				typename Widget::ImportCaller(widget),
+				typename Widget::ExportCaller(widget),
+				typename Viewer::ImportCaller(viewer),
+				typename Viewer::ExportCaller(viewer)
+			)
 		);
 	}
 };
@@ -296,17 +296,17 @@ public:
 	AddCustomData(DialogDataList& data) : m_data(data) {
 	}
 	void apply(
-	    typename Widget::Type& widget,
-	    const Callback1<typename Widget::Other>& importViewer,
-	    const Callback1<const Callback1<typename Widget::Other>&>& exportViewer
+		typename Widget::Type& widget,
+		const Callback1<typename Widget::Other>& importViewer,
+		const Callback1<const Callback1<typename Widget::Other>&>& exportViewer
 	) const {
 		m_data.push_back(
-		    new CallbackDialogData<typename Widget::Other>(
-		        typename Widget::ImportCaller(widget),
-		        typename Widget::ExportCaller(widget),
-		        importViewer,
-		        exportViewer
-		    )
+			new CallbackDialogData<typename Widget::Other>(
+				typename Widget::ImportCaller(widget),
+				typename Widget::ExportCaller(widget),
+				importViewer,
+				exportViewer
+			)
 		);
 	}
 };
@@ -517,8 +517,8 @@ void Dialog::addSlider(GtkWidget* vbox, const char* name, int& data, gboolean dr
 	gtk_widget_show(scale);
 	gtk_container_add(GTK_CONTAINER(alignment), scale);
 
-	gtk_scale_set_draw_value(GTK_SCALE (scale), draw_value);
-	gtk_scale_set_digits(GTK_SCALE (scale), 0);
+	gtk_scale_set_draw_value(GTK_SCALE(scale), draw_value);
+	gtk_scale_set_digits(GTK_SCALE(scale), 0);
 
 	GtkTable* row = DialogRow_new(name, alignment);
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
@@ -555,14 +555,14 @@ void Dialog::addRadioIcons(GtkWidget* vbox, const char* name, StringArrayRange i
 		GtkImage* image = new_local_image(*icon);
 		gtk_widget_show(GTK_WIDGET(image));
 		gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(image), pos, pos + 1, 0, 1,
-		                 (GtkAttachOptions) (0),
-		                 (GtkAttachOptions) (0), 0, 0);
+						(GtkAttachOptions) (0),
+						(GtkAttachOptions) (0), 0, 0);
 
 		radio = gtk_radio_button_new(group);
-		gtk_widget_show (radio);
-		gtk_table_attach (GTK_TABLE (table), radio, pos, pos + 1, 1, 2,
-		                  (GtkAttachOptions) (0),
-		                  (GtkAttachOptions) (0), 0, 0);
+		gtk_widget_show(radio);
+		gtk_table_attach(GTK_TABLE (table), radio, pos, pos + 1, 1, 2,
+						(GtkAttachOptions) (0),
+						(GtkAttachOptions) (0), 0, 0);
 
 		group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio));
 	}

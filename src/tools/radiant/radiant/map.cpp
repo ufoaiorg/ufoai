@@ -693,9 +693,10 @@ public:
 		Entity* entity = Node_getEntity(path.top());
 		if (entity != 0) {
 			const EntityClass& eclass = entity->getEntityClass();
-			if (m_entitymap.find(eclass.name()) == m_entitymap.end()) {
+			if (m_entitymap.find(eclass.name()) == m_entitymap.end())
 				m_entitymap[eclass.name()] = 1;
-			} else ++m_entitymap[eclass.name()];
+			else
+				++m_entitymap[eclass.name()];
 		}
 		return true;
 	}
@@ -734,8 +735,8 @@ void DoMapInfo (void) {
 					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 					gtk_widget_show(GTK_WIDGET(entry));
 					gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_entry_set_editable(entry, FALSE);
 
 					brushes_entry = entry;
@@ -744,26 +745,26 @@ void DoMapInfo (void) {
 					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 					gtk_widget_show(GTK_WIDGET(entry));
 					gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-					                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_entry_set_editable(entry, FALSE);
 
 					entities_entry = entry;
 				}
 				{
-					GtkWidget* label = gtk_label_new ("Total Brushes");
+					GtkWidget* label = gtk_label_new("Total Brushes");
 					gtk_widget_show (label);
-					gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-					                  (GtkAttachOptions) (GTK_FILL),
-					                  (GtkAttachOptions) (0), 0, 0);
+					gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
-					GtkWidget* label = gtk_label_new ("Total Entities");
+					GtkWidget* label = gtk_label_new("Total Entities");
 					gtk_widget_show (label);
-					gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-					                  (GtkAttachOptions) (GTK_FILL),
-					                  (GtkAttachOptions) (0), 0, 0);
+					gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 			}
@@ -778,7 +779,7 @@ void DoMapInfo (void) {
 			}
 		}
 		{
-			GtkWidget* label = gtk_label_new ("Entity breakdown");
+			GtkWidget* label = gtk_label_new("Entity breakdown");
 			gtk_widget_show (label);
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(label), FALSE, TRUE, 0);
 			gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
@@ -1328,7 +1329,7 @@ void Map_RegionBounds (const AABB& bounds)
 	Map_ApplyRegion();
 }
 
-void Map_RegionBrush (void)
+void Map_RegionBrush(void)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		scene::Instance& instance = GlobalSelectionSystem().ultimateSelected();
@@ -1552,7 +1553,7 @@ void NewMap (void)
 
 static CopiedString g_mapsPath;
 
-const char* getMapsPath (void)
+const char* getMapsPath(void)
 {
 	return g_mapsPath.c_str();
 }
@@ -1654,7 +1655,7 @@ void RegionXY (void)
 	SceneChangeNotify();
 }
 
-void RegionBrush (void)
+void RegionBrush(void)
 {
 	Map_RegionBrush();
 	SceneChangeNotify();
@@ -1700,7 +1701,7 @@ public:
 	}
 };
 
-static void Scene_FindEntityBrush (std::size_t entity, std::size_t brush, scene::Path& path)
+static void Scene_FindEntityBrush(std::size_t entity, std::size_t brush, scene::Path& path)
 {
 	path.push(makeReference(GlobalSceneGraph().root()));
 	{
@@ -1726,7 +1727,7 @@ static inline bool Node_hasChildren (scene::Node& node)
  * bmodels)
  * @param[in] brushnum The brush number to select
  */
-void SelectBrush (int entitynum, int brushnum, int select)
+void SelectBrush(int entitynum, int brushnum, int select)
 {
 	scene::Path path;
 	Scene_FindEntityBrush(entitynum, brushnum, path);

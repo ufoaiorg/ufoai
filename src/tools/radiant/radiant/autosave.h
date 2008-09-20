@@ -22,11 +22,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_AUTOSAVE_H)
 #define INCLUDED_AUTOSAVE_H
 
-extern bool g_SnapShots_Enabled;
-
 void AutoSave_clear();
-void QE_CheckAutoSave( void );
-void Map_Snapshot();
+void QE_CheckAutoSave(void);
 
 void Autosave_Construct();
 void Autosave_Destroy();

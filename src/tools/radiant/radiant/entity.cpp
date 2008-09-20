@@ -200,7 +200,7 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	if (string_equal_nocase(name, "light")) {
 		int intensity = g_iLastLightIntensity;
 
-		if (DoLightIntensityDlg (&intensity) == eIDOK) {
+		if (DoLightIntensityDlg(&intensity) == eIDOK) {
 			g_iLastLightIntensity = intensity;
 			char buf[10];
 			sprintf(buf, "%d", intensity);

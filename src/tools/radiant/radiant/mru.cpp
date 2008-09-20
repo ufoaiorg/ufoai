@@ -1,5 +1,10 @@
+/**
+ * @file mru.cpp
+ * @brief Handles last used files
+ */
+
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+Copyright(C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
 
 This file is part of GtkRadiant.
@@ -44,7 +49,7 @@ typedef const char* MRU_key_t;
 MRU_key_t MRU_keys[MRU_MAX] = { "File0", "File1", "File2", "File3" };
 }
 
-static inline const char* MRU_GetText (std::size_t index)
+static inline const char* MRU_GetText(std::size_t index)
 {
 	return MRU_filenames[index].c_str();
 }
@@ -79,14 +84,14 @@ inline EscapedMnemonic& operator<<(EscapedMnemonic& ostream, const T& t) {
 }
 
 
-void MRU_updateWidget (std::size_t index, const char *filename)
+static void MRU_updateWidget(std::size_t index, const char *filename)
 {
 	EscapedMnemonic mnemonic(64);
 	mnemonic << Unsigned(index + 1) << "- " << ConvertLocaleToUTF8(filename);
 	gtk_label_set_text_with_mnemonic(GTK_LABEL(gtk_bin_get_child(GTK_BIN(MRU_items[index]))), mnemonic.c_str());
 }
 
-void MRU_SetText (std::size_t index, const char *filename)
+static void MRU_SetText(std::size_t index, const char *filename)
 {
 	MRU_filenames[index] = filename;
 	MRU_updateWidget(index, filename);
@@ -99,12 +104,12 @@ void MRU_AddFile (const char *str)
 
 	// check if file is already in our list
 	for (i = 0; i < MRU_used; i++) {
-		text = MRU_GetText (i);
+		text = MRU_GetText(i);
 
-		if (strcmp (text, str) == 0) {
+		if (strcmp(text, str) == 0) {
 			// reorder menu
 			for (; i > 0; i--)
-				MRU_SetText(i, MRU_GetText (i - 1));
+				MRU_SetText(i, MRU_GetText(i - 1));
 
 			MRU_SetText(0, str);
 
@@ -117,20 +122,20 @@ void MRU_AddFile (const char *str)
 
 	// move items down
 	for (i = MRU_used - 1; i > 0; i--)
-		MRU_SetText (i, MRU_GetText (i - 1));
+		MRU_SetText(i, MRU_GetText(i - 1));
 
-	MRU_SetText (0, str);
+	MRU_SetText(0, str);
 	gtk_widget_set_sensitive(GTK_WIDGET(MRU_items[0]), TRUE);
 	gtk_widget_show(GTK_WIDGET(MRU_items[MRU_used-1]));
 }
 
-void MRU_Init (void)
+static void MRU_Init(void)
 {
 	if (MRU_used > MRU_MAX)
 		MRU_used = MRU_MAX;
 }
 
-void MRU_AddWidget (GtkMenuItem *widget, std::size_t pos)
+static void MRU_AddWidget(GtkMenuItem *widget, std::size_t pos)
 {
 	if (pos < MRU_MAX) {
 		MRU_items[pos] = widget;
@@ -142,12 +147,13 @@ void MRU_AddWidget (GtkMenuItem *widget, std::size_t pos)
 	}
 }
 
-void MRU_Activate (std::size_t index)
+static void MRU_Activate (std::size_t index)
 {
 	char text[1024];
 	strcpy(text, MRU_GetText(index));
 
-	if (file_readable(text)) { //\todo Test 'map load succeeds' instead of 'file is readable'.
+	/** @todo Test 'map load succeeds' instead of 'file is readable'. */
+	if (file_readable(text)) {
 		MRU_AddFile(text);
 		Map_RegionOff();
 		Map_Free();
@@ -156,7 +162,7 @@ void MRU_Activate (std::size_t index)
 		MRU_used--;
 
 		for (std::size_t i = index; i < MRU_used; i++)
-			MRU_SetText (i, MRU_GetText (i + 1));
+			MRU_SetText(i, MRU_GetText(i + 1));
 
 		if (MRU_used == 0) {
 			gtk_label_set_text(GTK_LABEL(GTK_BIN(MRU_items[0])->child), "Recent Files");
@@ -215,7 +221,7 @@ void MRU_constructMenu (GtkMenu* menu)
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void MRU_Construct (void)
+void MRU_Construct(void)
 {
 	GlobalPreferenceSystem().registerPreference("Count", SizeImportStringCaller(MRU_used), SizeExportStringCaller(MRU_used));
 

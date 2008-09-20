@@ -68,9 +68,7 @@ public:
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		if (path.top().get().visible()) {
 			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0
-			        && Instance_getSelectable(instance)->isSelected()
-			        && path.size() > 1) {
+			if (brush != 0 && Instance_getSelectable(instance)->isSelected() && path.size() > 1) {
 				brush_vector_t out;
 				Brush_makeHollow(*brush, out, m_offset);
 				for (brush_vector_t::const_iterator i = out.begin(); i != out.end(); ++i) {
@@ -97,8 +95,7 @@ public:
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		if (path.top().get().visible()) {
 			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0
-			        && Instance_getSelectable(instance)->isSelected()) {
+			if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
 				m_brushlist.push_back(brush);
 			}
 		}
@@ -114,9 +111,7 @@ public:
 	void post(const scene::Path& path, scene::Instance& instance) const {
 		if (path.top().get().visible()) {
 			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0
-			        && Instance_getSelectable(instance)->isSelected()
-			        && path.size() > 1) {
+			if (brush != 0 && Instance_getSelectable(instance)->isSelected() && path.size() > 1) {
 				Path_deleteTop(path);
 			}
 		}
@@ -127,12 +122,6 @@ void Scene_BrushMakeHollow_Selected(scene::Graph& graph) {
 	GlobalSceneGraph().traverse(BrushHollowSelectedWalker(GetGridSize()));
 	GlobalSceneGraph().traverse(BrushDeleteSelected());
 }
-
-/*
-=============
-CSG_MakeHollow
-=============
-*/
 
 void CSG_MakeHollow (void)
 {
@@ -226,9 +215,11 @@ typedef Function3<const Face&, const Plane3&, bool, bool, Face_testPlane> FaceTe
 
 
 
-/// \brief Returns true if
-/// \li !flipped && brush is BACK or ON
-/// \li flipped && brush is FRONT or ON
+/**
+ * @brief Returns true if
+ * @li !flipped && brush is BACK or ON
+ * @li flipped && brush is FRONT or ON
+ */
 bool Brush_testPlane(const Brush& brush, const Plane3& plane, bool flipped) {
 	brush.evaluateBRep();
 	for (Brush::const_iterator i(brush.begin()); i != brush.end(); ++i) {
@@ -306,7 +297,7 @@ public:
 					for (brush_vector_t::const_iterator i(m_brushlist.begin()); i != m_brushlist.end(); ++i) {
 						for (brush_vector_t::iterator j(buffer[static_cast<std::size_t>(swap)].begin()); j != buffer[static_cast<std::size_t>(swap)].end(); ++j) {
 							if (Brush_subtract(*(*j), *(*i), buffer[static_cast<std::size_t>(!swap)])) {
-								delete (*j);
+								delete(*j);
 							} else {
 								buffer[static_cast<std::size_t>(!swap)].push_back((*j));
 							}
@@ -354,8 +345,8 @@ void CSG_Subtract() {
 		std::size_t after = 0;
 		GlobalSceneGraph().traverse(SubtractBrushesFromUnselected(selected_brushes, before, after));
 		globalOutputStream() << "CSG Subtract: Result: "
-		<< Unsigned(after) << " fragment" << (after == 1 ? "" : "s")
-		<< " from " << Unsigned(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
+			<< Unsigned(after) << " fragment" << (after == 1 ? "" : "s")
+			<< " from " << Unsigned(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
 
 		SceneChangeNotify();
 	}
@@ -378,8 +369,7 @@ public:
 	void post(const scene::Path& path, scene::Instance& instance) const {
 		if (path.top().get().visible()) {
 			Brush* brush = Node_getBrush(path.top());
-			if (brush != 0
-			        && Instance_getSelectable(instance)->isSelected()) {
+			if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
 				Plane3 plane(plane3_for_points(m_p0, m_p1, m_p2));
 				if (plane3_valid(plane)) {
 					brushsplit_t split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane) : plane);
@@ -438,9 +428,7 @@ public:
 	}
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		BrushInstance* brush = Instance_getBrush(instance);
-		if (brush != 0
-		        && path.top().get().visible()
-		        && brush->isSelected()) {
+		if (brush != 0 && path.top().get().visible() && brush->isSelected()) {
 			BrushInstance& brushInstance = *brush;
 			brushInstance.setClipPlane(m_plane);
 		}
@@ -474,7 +462,7 @@ bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) {
 
 				bool skip = false;
 				// test faces of all input brushes
-				//!\todo SPEEDUP: Flag already-skip faces and only test brushes from i+1 upwards.
+				/** @todo SPEEDUP: Flag already-skip faces and only test brushes from i+1 upwards. */
 				for (brush_vector_t::const_iterator k(in.begin()); !skip && k != in.end(); ++k) {
 					if (k != i) { // don't test a brush against itself
 						for (Brush::const_iterator l((*k)->begin()); !skip && l != (*k)->end(); ++l) {
@@ -483,7 +471,7 @@ bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) {
 							// face opposes another face
 							if (plane3_opposing(face1.plane3(), face2.plane3())) {
 								// skip opposing planes
-								skip  = true;
+								skip = true;
 								break;
 							}
 						}
@@ -496,7 +484,7 @@ bool Brush_merge(Brush& brush, const brush_vector_t& in, bool onlyshape) {
 
 					// face equals another face
 					if (plane3_equal(face1.plane3(), face2.plane3())) {
-						//if the texture/shader references should be the same but are not
+						// if the texture/shader references should be the same but are not
 						if (!onlyshape && !shader_equal(face1.getShader().getShader(), face2.getShader().getShader())) {
 							return false;
 						}

@@ -1,3 +1,8 @@
+/**
+ * @file autosave.cpp
+ * @brief Handles the autosave mechanism and the affected preference handling
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -34,7 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qe3.h"
 #include "preferences.h"
 
-bool DoesFileExist(const char* name, std::size_t& size) {
+static inline bool DoesFileExist(const char* name, std::size_t& size) {
 	if (file_exists(name)) {
 		size += file_size(name);
 		return true;
@@ -42,7 +47,7 @@ bool DoesFileExist(const char* name, std::size_t& size) {
 	return false;
 }
 
-void Map_Snapshot() {
+static void Map_Snapshot() {
 	// we need to do the following
 	// 1. make sure the snapshot directory exists (create it if it doesn't)
 	// 2. find out what the lastest save is based on number
@@ -85,18 +90,10 @@ void Map_Snapshot() {
 		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), strMsg.c_str());
 	}
 }
-/*
-===============
-QE_CheckAutoSave
 
-If five minutes have passed since making a change
-and the map hasn't been saved, save it out.
-===============
-*/
-
-bool g_AutoSave_Enabled = true;
-int m_AutoSave_Frequency = 5;
-bool g_SnapShots_Enabled = false;
+static bool g_AutoSave_Enabled = true;
+static int m_AutoSave_Frequency = 5;
+static bool g_SnapShots_Enabled = false;
 
 namespace {
 time_t s_start = 0;
@@ -107,11 +104,15 @@ void AutoSave_clear() {
 	s_changes = 0;
 }
 
-scene::Node& Map_Node() {
+static inline scene::Node& Map_Node() {
 	return GlobalSceneGraph().root();
 }
 
-void QE_CheckAutoSave( void ) {
+/**
+ * @brief If five minutes have passed since making a change
+ * and the map hasn't been saved, save it out.
+ */
+void QE_CheckAutoSave (void) {
 	if (!Map_Valid(g_map) || !ScreenUpdates_Enabled()) {
 		return;
 	}
@@ -152,12 +153,12 @@ void QE_CheckAutoSave( void ) {
 			}
 		} else {
 			globalOutputStream() << "Autosave skipped...\n";
-			//Sys_Status ("Autosave skipped...");
+			//Sys_Status("Autosave skipped...");
 		}
 	}
 }
 
-void Autosave_constructPreferences(PreferencesPage& page) {
+static void Autosave_constructPreferences(PreferencesPage& page) {
 	GtkWidget* autosave_enabled = page.appendCheckBox("Autosave", "Enable Autosave", g_AutoSave_Enabled);
 	GtkWidget* autosave_frequency = page.appendSpinner("Autosave Frequency (minutes)", m_AutoSave_Frequency, 1, 1, 60);
 	Widget_connectToggleDependency(autosave_frequency, autosave_enabled);

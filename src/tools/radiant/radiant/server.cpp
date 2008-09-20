@@ -95,14 +95,14 @@ public:
 const char* FormatGetLastError() {
 	static char buf[FORMAT_BUFSIZE];
 	FormatMessage(
-	    FORMAT_MESSAGE_FROM_SYSTEM |
-	    FORMAT_MESSAGE_IGNORE_INSERTS,
-	    NULL,
-	    GetLastError(),
-	    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-	    buf,
-	    FORMAT_BUFSIZE,
-	    NULL
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		GetLastError(),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+		buf,
+		FORMAT_BUFSIZE,
+		NULL
 	);
 	return buf;
 }
