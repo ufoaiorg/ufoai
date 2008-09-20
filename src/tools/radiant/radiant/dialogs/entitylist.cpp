@@ -45,7 +45,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/accelerator.h"
 #include "gtkutil/closure.h"
 
-#include "treemodel.h"
+#include "../treemodel.h"
 
 void RedrawEntityList();
 typedef FreeCaller<RedrawEntityList> RedrawEntityListCaller;

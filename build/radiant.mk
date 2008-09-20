@@ -21,7 +21,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/eclass.cpp \
 	$(RADIANT_BASE)/radiant/eclass_def.cpp \
 	$(RADIANT_BASE)/radiant/entity.cpp \
-	$(RADIANT_BASE)/radiant/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/error.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
@@ -68,6 +67,7 @@ RADIANT_SRCS = \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
+	$(RADIANT_BASE)/radiant/dialogs/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/light.cpp \

@@ -221,7 +221,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\entityinspector\entityinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\entitylist.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\entitylist.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\environment.cpp">
