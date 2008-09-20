@@ -82,10 +82,30 @@ static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
  * @return message_t pointer
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
+ * @note this method forwards to @c MN_AddNewMessageSound with @code playSound = qtrue @endcode
  */
 message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia)
 {
+	return MN_AddNewMessageSound(title, text, popup, type, pedia, qtrue);
+}
+
+/**
+ * @brief Adds a new message to message stack
+ * @note These are the messages that are displayed at geoscape
+ * @param[in] title Already translated message/mail title
+ * @param[in] text Already translated message/mail body
+ * @param[in] popup Show this as a popup, too?
+ * @param[in] type The message type
+ * @param[in] pedia Pointer to technology (only if needed)
+ * @param[in] playSound Play notification sound?
+ * @return message_t pointer
+ * @sa UP_OpenMail_f
+ * @sa CL_EventAddMail_f
+ */
+message_t *MN_AddNewMessageSound (const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound)
+{
 	message_t *mess;
+	const char *sound = NULL;
 
 	assert(type < MSG_MAX);
 
@@ -116,14 +136,14 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_DEBUG:
 		break;
 	case MSG_STANDARD:
-		S_StartLocalSound("geoscape/standard");
+		sound = "geoscape/standard";
 		break;
 	case MSG_INFO:
 	case MSG_TRANSFERFINISHED:
 	case MSG_DEATH:
 	case MSG_CONSTRUCTION:
 	case MSG_PRODUCTION:
-		S_StartLocalSound("geoscape/info");
+		sound = "geoscape/info";
 		break;
 	case MSG_RESEARCH_PROPOSAL:
 	case MSG_RESEARCH_FINISHED:
@@ -132,24 +152,27 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
 		gd.numUnreadMails = -1;
-		S_StartLocalSound("geoscape/mail");
+		sound = "geoscape/mail";
 		break;
 	case MSG_UFOSPOTTED:
-		S_StartLocalSound("geoscape/ufospotted");
+		sound = "geoscape/ufospotted";
 		break;
 	case MSG_BASEATTACK:
-		S_StartLocalSound("geoscape/attack");
+		sound = "geoscape/attack";
 		break;
 	case MSG_TERRORSITE:
 	case MSG_CRASHSITE:
-		S_StartLocalSound("geoscape/newmission");
+		sound = "geoscape/newmission";
 		break;
 	case MSG_PROMOTION:
-		S_StartLocalSound("geoscape/promotion");
+		sound = "geoscape/promotion";
 		break;
 	case MSG_MAX:
 		break;
 	}
+
+	if (playSound)
+		S_StartLocalSound(sound);
 
 	return mess;
 }
@@ -323,7 +346,7 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadLong(sb);
 			MSG_ReadLong(sb);
 		} else {
-			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
+			mess = MN_AddNewMessageSound(title, text, qfalse, mtype, RS_GetTechByIDX(idx), qfalse);
 			mess->eventMail = mail;
 			mess->date.day = MSG_ReadLong(sb);
 			mess->date.sec = MSG_ReadLong(sb);

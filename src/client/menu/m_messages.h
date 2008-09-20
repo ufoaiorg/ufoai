@@ -70,6 +70,7 @@ typedef struct chatMessage_s {
 } chatMessage_t;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
+message_t *MN_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
 void MN_RemoveMessage(const char *title);
 void MN_AddChatMessage(const char *text);
 void MN_MessageInit(void);
