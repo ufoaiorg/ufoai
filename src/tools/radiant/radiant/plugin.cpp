@@ -261,7 +261,6 @@ public:
 		Map_Destroy();
 		GLWindow_Destroy();
 		MRU_Destroy();
-		MultiMon_Destroy();
 		Grid_destroy();
 		VFS_Destroy();
 		HomePaths_Destroy();

@@ -33,11 +33,9 @@ LatchedBool g_Multimon_enableSysMenuPopups(false, "Floating windows sysmenu icon
 
 void MultiMonitor_constructPreferences(PreferencesPage& page) {
 	GtkWidget* primary_monitor = page.appendCheckBox("Multi Monitor", "Start on Primary Monitor", g_multimon_globals.m_bStartOnPrimMon);
-	GtkWidget* popup = page.appendCheckBox(
-	                       "", "Disable system menu on popup windows",
-	                       LatchedBoolImportCaller(g_Multimon_enableSysMenuPopups),
-	                       BoolExportCaller(g_Multimon_enableSysMenuPopups.m_latched)
-	                   );
+	GtkWidget* popup = page.appendCheckBox("", "Disable system menu on popup windows",
+			LatchedBoolImportCaller(g_Multimon_enableSysMenuPopups),
+			BoolExportCaller(g_Multimon_enableSysMenuPopups.m_latched));
 	Widget_connectToggleDependency(popup, primary_monitor);
 }
 
@@ -51,22 +49,22 @@ GdkRectangle primaryMonitor;
 }
 
 void PositionWindowOnPrimaryScreen(WindowPosition& position) {
-	if ( position.w >= primaryMonitor.width - 12 ) {
+	if (position.w >= primaryMonitor.width - 12) {
 		position.w = primaryMonitor.width - 12;
 	}
-	if ( position.h >= primaryMonitor.height - 24 ) {
+	if (position.h >= primaryMonitor.height - 24) {
 		position.h = primaryMonitor.height - 48;
 	}
-	if ( position.x <= primaryMonitor.x || position.x + position.w >= (primaryMonitor.x + primaryMonitor.width) - 12 ) {
+	if (position.x <= primaryMonitor.x || position.x + position.w >= (primaryMonitor.x + primaryMonitor.width) - 12) {
 		position.x = primaryMonitor.x + 6;
 	}
-	if ( position.y <= primaryMonitor.y || position.y + position.h >= (primaryMonitor.y + primaryMonitor.height) - 48 ) {
+	if (position.y <= primaryMonitor.y || position.y + position.h >= (primaryMonitor.y + primaryMonitor.height) - 48) {
 		position.y = primaryMonitor.y + 24;
 	}
 }
 
-#if defined(WIN32)
 void MultiMon_Construct() {
+#if defined(WIN32)
 	// detect multiple monitors
 
 	GdkScreen* screen = gdk_display_get_default_screen(gdk_display_get_default());
@@ -92,8 +90,6 @@ void MultiMon_Construct() {
 	g_Multimon_enableSysMenuPopups.useLatched();
 
 	PreferencesDialog_addInterfacePreferences(FreeCaller1<PreferencesPage&, MultiMonitor_constructPreferences>());
+#endif
 }
 
-void MultiMon_Destroy() {
-}
-#endif
