@@ -59,7 +59,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkmisc.h"
 #include "texwindow.h"
 #include "mainframe.h"
-#include "mru.h"
+#include "lastused.h"
 #include "multimon.h"
 #include "surfaceinspector/surfaceinspector.h"
 #include "groupdialog.h"

@@ -263,7 +263,7 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\mru.cpp">
+		<Unit filename="..\..\src\tools\radiant\radiant\lastused.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\multimon.cpp">

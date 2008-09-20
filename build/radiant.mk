@@ -30,10 +30,10 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/groupdialog.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
+	$(RADIANT_BASE)/radiant/lastused.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/map.cpp \
-	$(RADIANT_BASE)/radiant/mru.cpp \
 	$(RADIANT_BASE)/radiant/multimon.cpp \
 	$(RADIANT_BASE)/radiant/nullmodel.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \

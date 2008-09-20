@@ -95,7 +95,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "pathfinding.h"
 #include "gtkmisc.h"
 #include "map.h"
-#include "mru.h"
+#include "lastused.h"
 #include "multimon.h"
 #include "plugin.h"
 #include "pluginmanager.h"

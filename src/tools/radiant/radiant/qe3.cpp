@@ -142,6 +142,7 @@ bool ConfirmModified (const char* title)
 void Sys_SetTitle (const char *text, bool modified)
 {
 	StringOutputStream title;
+	title << "UFORadiant ";
 	title << ConvertLocaleToUTF8(text);
 
 	if (modified) {
