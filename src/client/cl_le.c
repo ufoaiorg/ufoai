@@ -569,6 +569,10 @@ static void LET_PathMove (le_t * le)
 
 	/* move ahead */
 	while (cl.time > le->endTime) {
+		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */
+		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+
+		/* Record the last postition of movement calculations. */
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
@@ -616,8 +620,11 @@ static void LET_PathMove (le_t * le)
 				/* sqrt(2) for diagonal movement */
 				le->endTime += (le->dir >= BASE_DIRECTIONS ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 			} else {
-				le->speed = 1000; /**< Set the speed very high to simulate falling. */
-				le->endTime += UNIT_HEIGHT * 1000 / le->speed;
+				/* This needs to account for the distance of the fall. */
+				Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
+				Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
+				/** 1/1000th of a second per model unit in height change */
+				le->endTime += (start[2] - dest[2]);
 			}
 
 			le->positionContents = le->pathContents[le->pathPos];
@@ -657,7 +664,6 @@ static void LET_PathMove (le_t * le)
 	}
 
 	/* interpolate the position */
-	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 	Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
 	Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
 	VectorSubtract(dest, start, delta);
