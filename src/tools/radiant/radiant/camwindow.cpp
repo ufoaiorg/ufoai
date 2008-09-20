@@ -566,13 +566,12 @@ void Camera_PitchDown_Discrete(camera_t& camera) {
 	Camera_setAngles(camera, angles);
 }
 
-
-class RadiantCameraView : public CameraView {
+class CameraView {
 	camera_t& m_camera;
 	View* m_view;
 	Callback m_update;
 public:
-	RadiantCameraView(camera_t& camera, View* view, const Callback& update) : m_camera(camera), m_view(view), m_update(update) {
+	CameraView(camera_t& camera, View* view, const Callback& update) : m_camera(camera), m_view(view), m_update(update) {
 	}
 	void update() {
 		m_view->Construct(m_camera.projection, m_camera.modelview, m_camera.width, m_camera.height);
@@ -608,7 +607,7 @@ void Camera_motionDelta(int x, int y, unsigned int state, void* data) {
 class CamWnd {
 	View m_view;
 	camera_t m_Camera;
-	RadiantCameraView m_cameraview;
+	CameraView m_cameraview;
 #if 0
 	int m_PositionDragCursorX;
 	int m_PositionDragCursorY;
@@ -1596,7 +1595,13 @@ void CamWnd_SetMode(camera_draw_mode mode) {
 	}
 }
 
-CameraModel* g_camera_model = 0;
+class CameraModel {
+public:
+	STRING_CONSTANT(Name, "CameraModel");
+	virtual void setCameraView(CameraView* view, const Callback& disconnect) = 0;
+};
+
+static CameraModel* g_camera_model = 0;
 
 void CamWnd_LookThroughCamera(CamWnd& camwnd) {
 	if (g_camera_model != 0) {
@@ -1681,22 +1686,20 @@ void Camera_constructPreferences(PreferencesPage& page) {
 	page.appendCheckBox("", "Link strafe speed to movement speed", g_camwindow_globals_private.m_bCamLinkSpeed);
 	page.appendSlider("Rotation Speed", g_camwindow_globals_private.m_nAngleSpeed, TRUE, 0, 0, 3, 1, 180, 1, 10, 10);
 	page.appendCheckBox("", "Invert mouse vertical axis", g_camwindow_globals_private.m_bCamInverseMouse);
-	page.appendCheckBox(
-	    "", "Discrete movement",
-	    FreeCaller1<bool, CamWnd_Move_Discrete_Import>(),
-	    BoolExportCaller(g_camwindow_globals_private.m_bCamDiscrete)
+	page.appendCheckBox("", "Discrete movement",
+		FreeCaller1<bool, CamWnd_Move_Discrete_Import>(),
+		BoolExportCaller(g_camwindow_globals_private.m_bCamDiscrete)
 	);
-	page.appendCheckBox(
-	    "", "Enable far-clip plane",
-	    FreeCaller1<bool, Camera_SetFarClip>(),
-	    BoolExportCaller(g_camwindow_globals_private.m_bCubicClipping)
+	page.appendCheckBox("", "Enable far-clip plane",
+		FreeCaller1<bool, Camera_SetFarClip>(),
+		BoolExportCaller(g_camwindow_globals_private.m_bCubicClipping)
 	);
 
-	const char* render_mode[] = { "Wireframe", "Flatshade", "Textured" };
+	const char* render_mode[] = {"Wireframe", "Flatshade", "Textured"};
 
 	page.appendCombo("Render Mode", STRING_ARRAY_RANGE(render_mode),
-	    IntImportCallback(RenderModeImportCaller()),
-	    IntExportCallback(RenderModeExportCaller()));
+		IntImportCallback(RenderModeImportCaller()),
+		IntExportCallback(RenderModeExportCaller()));
 }
 
 void Camera_constructPage(PreferenceGroup& group) {
