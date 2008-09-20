@@ -280,6 +280,7 @@ COLLISION DETECTION
 /* {game}, {ufo2map}, client/cl_le.c, client/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_SOLID	0x0001 /**< an eye is never valid in a solid */
 #define	CONTENTS_WINDOW	0x0002 /**< translucent, but not watery */
+#define	CONTENTS_LADDER	0x0004
 #define	CONTENTS_WATER	0x0020
 /** max 16 bit please - otherwise change EV_ACTOR_MOVE to send a long and not a short */
 
