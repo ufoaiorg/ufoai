@@ -981,7 +981,10 @@ void XYWnd::NewBrushDrag_End(int x, int y) {
 
 static inline const char* NewBrushDragGetTexture (void)
 {
-	return g_brush_always_nodraw ? "textures/tex_common/nodraw" : TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
+	const char *selectedTexture = TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
+	if (g_brush_always_nodraw || !strcmp(selectedTexture, "textures/"))
+		return "textures/tex_common/nodraw";
+	return selectedTexture;
 }
 
 void XYWnd::NewBrushDrag(int x, int y) {
@@ -1778,9 +1781,9 @@ void XYWnd::DrawCameraIcon(const Vector3& origin, const Vector3& angles) {
 	glEnd();
 
 	glBegin(GL_LINE_STRIP);
-	glVertex3f(x + static_cast<float>(fov*cos(a + c_pi / 4)), y + static_cast<float>(fov*sin(a + c_pi / 4)), 0);
+	glVertex3f(x + static_cast<float>(fov * cos(a + c_pi / 4)), y + static_cast<float>(fov * sin(a + c_pi / 4)), 0);
 	glVertex3f(x, y, 0);
-	glVertex3f(x + static_cast<float>(fov*cos(a - c_pi / 4)), y + static_cast<float>(fov*sin(a - c_pi / 4)), 0);
+	glVertex3f(x + static_cast<float>(fov * cos(a - c_pi / 4)), y + static_cast<float>(fov * sin(a - c_pi / 4)), 0);
 	glEnd();
 
 }
@@ -2353,19 +2356,19 @@ void ToggleShowGrid(void) {
 	XY_UpdateAllWindows();
 }
 
-ToggleShown g_xy_top_shown(true);
+static ToggleShown g_xy_top_shown(true);
 
 void XY_Top_Shown_Construct(GtkWindow* parent) {
 	g_xy_top_shown.connect(GTK_WIDGET(parent));
 }
 
-ToggleShown g_yz_side_shown(false);
+static ToggleShown g_yz_side_shown(false);
 
 void YZ_Side_Shown_Construct(GtkWindow* parent) {
 	g_yz_side_shown.connect(GTK_WIDGET(parent));
 }
 
-ToggleShown g_xz_front_shown(false);
+static ToggleShown g_xz_front_shown(false);
 
 void XZ_Front_Shown_Construct(GtkWindow* parent) {
 	g_xz_front_shown.connect(GTK_WIDGET(parent));

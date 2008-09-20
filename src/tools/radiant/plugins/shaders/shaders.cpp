@@ -624,7 +624,7 @@ public:
 
 			{
 				StringOutputStream name(256);
-				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") <<  "/textures/tex_common/nodraw.tga";
+				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") <<  "/textures/tex_common/nodraw";
 				m_pTexture = GlobalTexturesCache().capture(name.c_str());
 			}
 		}

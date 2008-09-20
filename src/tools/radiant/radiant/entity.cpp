@@ -203,7 +203,7 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 		if (DoLightIntensityDlg (&intensity) == eIDOK) {
 			g_iLastLightIntensity = intensity;
 			char buf[10];
-			sprintf( buf, "%d", intensity );
+			sprintf(buf, "%d", intensity);
 			Node_getEntity(node)->setKeyValue("light", buf);
 		}
 	}
@@ -237,14 +237,14 @@ bool DoNormalisedColor(Vector3& color) {
 
 	float largest = 0.0F;
 
-	if ( color[0] > largest )
+	if (color[0] > largest)
 		largest = color[0];
-	if ( color[1] > largest )
+	if (color[1] > largest)
 		largest = color[1];
-	if ( color[2] > largest )
+	if (color[2] > largest)
 		largest = color[2];
 
-	if ( largest == 0.0F ) {
+	if (largest == 0.0F) {
 		color[0] = 1.0F;
 		color[1] = 1.0F;
 		color[2] = 1.0F;
