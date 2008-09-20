@@ -13,6 +13,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/brushmodule.cpp \
 	$(RADIANT_BASE)/radiant/brush_primit.cpp \
 	$(RADIANT_BASE)/radiant/camwindow.cpp \
+	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
 	$(RADIANT_BASE)/radiant/csg.cpp \

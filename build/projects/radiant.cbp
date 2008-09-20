@@ -200,6 +200,9 @@
 		<Unit filename="..\..\src\tools\radiant\radiant\console.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\radiant\colorscheme.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\csg.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
