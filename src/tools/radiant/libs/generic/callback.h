@@ -1,3 +1,8 @@
+/**
+ * @file callback.h
+ * @brief Type-safe techniques for binding the first argument of an opaque callback.
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -21,9 +26,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #if !defined(INCLUDED_GENERIC_CLOSURE_H)
 #define INCLUDED_GENERIC_CLOSURE_H
-
-/// \file
-/// \brief Type-safe techniques for binding the first argument of an opaque callback.
 
 #include <cstddef>
 #include "functional.h"
@@ -209,9 +211,10 @@ inline bool operator<(const CallbackBase<Thunk>& self, const CallbackBase<Thunk>
 }
 
 
-/// \brief Combines a void pointer with a pointer to a function which operates on a void pointer.
-///
-/// Use with the callback constructors MemberCaller, ConstMemberCaller, ReferenceCaller, ConstReferenceCaller, PointerCaller, ConstPointerCaller and FreeCaller.
+/**
+ * @brief Combines a void pointer with a pointer to a function which operates on a void pointer.
+ * Use with the callback constructors MemberCaller, ConstMemberCaller, ReferenceCaller, ConstReferenceCaller, PointerCaller, ConstPointerCaller and FreeCaller.
+ */
 template<typename Result>
 class Callback0 : public CallbackBase < Result (*)(void*) > {
 	typedef CallbackBase < Result (*)(void*) > Base;
@@ -246,9 +249,10 @@ typedef Callback0<void> Callback;
 
 
 
-/// \brief Combines a void pointer with a pointer to a function which operates on a void pointer and one other argument.
-///
-/// Use with the callback constructors MemberCaller1, ConstMemberCaller1, ReferenceCaller1, ConstReferenceCaller1, PointerCaller1, ConstPointerCaller1 and FreeCaller1.
+/**
+ * @brief Combines a void pointer with a pointer to a function which operates on a void pointer and one other argument.
+ * Use with the callback constructors MemberCaller1, ConstMemberCaller1, ReferenceCaller1, ConstReferenceCaller1, PointerCaller1, ConstPointerCaller1 and FreeCaller1.
+ */
 template<typename FirstArgument, typename Result>
 class Callback1 : public CallbackBase < Result (*)(void*, FirstArgument) > {
 	typedef CallbackBase < Result (*)(void*, FirstArgument) > Base;
@@ -280,9 +284,9 @@ inline Callback1<typename Caller::second_argument_type, typename Caller::result_
 	return makeCallback1(Caller1To2<Caller>(), 0);
 }
 
-
-/// \brief Combines a void pointer with a pointer to a function which operates on a void pointer and two other arguments.
-///
+/**
+ * @brief Combines a void pointer with a pointer to a function which operates on a void pointer and two other arguments.
+ */
 template<typename FirstArgument, typename SecondArgument, typename Result>
 class Callback2 : public CallbackBase < Result (*)(void*, FirstArgument, SecondArgument) > {
 	typedef CallbackBase < Result (*)(void*, FirstArgument, SecondArgument) > Base;
@@ -328,8 +332,9 @@ typename Caller::result_type
 }
 
 
-/// \brief Combines a void pointer with a pointer to a function which operates on a void pointer and three other arguments.
-///
+/**
+ * @brief Combines a void pointer with a pointer to a function which operates on a void pointer and three other arguments.
+ */
 template<typename FirstArgument, typename SecondArgument, typename ThirdArgument, typename Result>
 class Callback3 : public CallbackBase < Result (*)(void*, FirstArgument, SecondArgument, ThirdArgument) > {
 	typedef CallbackBase < Result (*)(void*, FirstArgument, SecondArgument, ThirdArgument) > Base;
@@ -379,11 +384,12 @@ typename Caller::result_type
 }
 
 
-/// \brief Forms a Callback from a non-const Environment reference and a non-const Environment member-function.
-///
-/// \dontinclude generic/callback.cpp
-/// \skipline MemberCaller example
-/// \until end example
+/**
+ * @brief Forms a Callback from a non-const Environment reference and a non-const Environment member-function.
+ * @dontinclude generic/callback.cpp
+ * @skipline MemberCaller example
+ * @until end example
+ */
 template < typename Environment, void (Environment::*member)() >
 class MemberCaller : public BindFirstOpaque< Member<Environment, void, member> > {
 public:
@@ -391,11 +397,12 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a const Environment reference and a const Environment member-function.
-///
-/// \dontinclude generic/callback.cpp
-/// \skipline MemberCaller example
-/// \until end example
+/**
+ * @brief Forms a Callback from a const Environment reference and a const Environment member-function.
+ * @dontinclude generic/callback.cpp
+ * @skipline MemberCaller example
+ * @until end example
+ */
 template < typename Environment, void (Environment::*member)() const >
 class ConstMemberCaller : public BindFirstOpaque< ConstMember<Environment, void, member> > {
 public:
@@ -403,7 +410,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a non-const Environment reference and a const Environment member-function which takes one argument.
+/**
+ * @brief Forms a Callback from a non-const Environment reference and a const Environment member-function which takes one argument.
+ */
 template < typename Environment, typename FirstArgument, void (Environment::*member)(FirstArgument) >
 class MemberCaller1 : public BindFirstOpaque1< Member1<Environment, FirstArgument, void, member> > {
 public:
@@ -411,7 +420,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a const Environment reference and a const Environment member-function which takes one argument.
+/**
+ * @brief Forms a Callback from a const Environment reference and a const Environment member-function which takes one argument.
+ */
 template < typename Environment, typename FirstArgument, void (Environment::*member)(FirstArgument) const >
 class ConstMemberCaller1 : public BindFirstOpaque1< ConstMember1<Environment, FirstArgument, void, member> > {
 public:
@@ -419,11 +430,12 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a non-const Environment reference and a free function which operates on a non-const Environment reference.
-///
-/// \dontinclude generic/callback.cpp
-/// \skipline ReferenceCaller example
-/// \until end example
+/**
+ * @brief Forms a Callback from a non-const Environment reference and a free function which operates on a non-const Environment reference.
+ * @dontinclude generic/callback.cpp
+ * @skipline ReferenceCaller example
+ * @until end example
+ */
 template < typename Environment, void (*func)(Environment&) >
 class ReferenceCaller : public BindFirstOpaque< Function1<Environment&, void, func> > {
 public:
@@ -431,11 +443,12 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a const Environment reference and a free function which operates on a const Environment reference.
-///
-/// \dontinclude generic/callback.cpp
-/// \skipline ReferenceCaller example
-/// \until end example
+/**
+ * @brief Forms a Callback from a const Environment reference and a free function which operates on a const Environment reference.
+ * @dontinclude generic/callback.cpp
+ * @skipline ReferenceCaller example
+ * @until end example
+ */
 template < typename Environment, void (*func)(const Environment&) >
 class ConstReferenceCaller : public BindFirstOpaque< Function1<const Environment&, void, func> > {
 public:
@@ -443,7 +456,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a non-const Environment reference and a free function which operates on a non-const Environment reference and one other argument.
+/**
+ * @brief Forms a Callback from a non-const Environment reference and a free function which operates on a non-const Environment reference and one other argument.
+ */
 template < typename Environment, typename FirstArgument, void (*func)(Environment&, FirstArgument) >
 class ReferenceCaller1 : public BindFirstOpaque1< Function2<Environment&, FirstArgument, void, func> > {
 public:
@@ -451,7 +466,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a const Environment reference and a free function which operates on a const Environment reference and one other argument.
+/**
+ * @brief Forms a Callback from a const Environment reference and a free function which operates on a const Environment reference and one other argument.
+ */
 template < typename Environment, typename FirstArgument, void (*func)(const Environment&, FirstArgument) >
 class ConstReferenceCaller1 : public BindFirstOpaque1< Function2<const Environment&, FirstArgument, void, func> > {
 public:
@@ -459,7 +476,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a non-const Environment pointer and a free function which operates on a non-const Environment pointer.
+/**
+ * @brief Forms a Callback from a non-const Environment pointer and a free function which operates on a non-const Environment pointer.
+ */
 template < typename Environment, void (*func)(Environment*) >
 class PointerCaller : public BindFirstOpaque< Function1<Environment*, void, func> > {
 public:
@@ -467,7 +486,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a const Environment pointer and a free function which operates on a const Environment pointer.
+/**
+ * @brief Forms a Callback from a const Environment pointer and a free function which operates on a const Environment pointer.
+ */
 template < typename Environment, void (*func)(const Environment*) >
 class ConstPointerCaller : public BindFirstOpaque< Function1<const Environment*, void, func> > {
 public:
@@ -475,7 +496,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a non-const Environment pointer and a free function which operates on a non-const Environment pointer and one other argument.
+/**
+ * @brief Forms a Callback from a non-const Environment pointer and a free function which operates on a non-const Environment pointer and one other argument.
+ */
 template < typename Environment, typename FirstArgument, void (*func)(Environment*, FirstArgument) >
 class PointerCaller1 : public BindFirstOpaque1< Function2<Environment*, FirstArgument, void, func> > {
 public:
@@ -483,7 +506,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a const Environment pointer and a free function which operates on a const Environment pointer and one other argument.
+/**
+ * @brief Forms a Callback from a const Environment pointer and a free function which operates on a const Environment pointer and one other argument.
+ */
 template < typename Environment, typename FirstArgument, void (*func)(const Environment*, FirstArgument) >
 class ConstPointerCaller1 : public BindFirstOpaque1< Function2<const Environment*, FirstArgument, void, func> > {
 public:
@@ -491,7 +516,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a free function which takes no arguments.
+/**
+ * @brief Forms a Callback from a free function which takes no arguments.
+ */
 template < void (*func)() >
 class FreeCaller : public BindFirstOpaque< Caller0To1< Function0<void, func> > > {
 public:
@@ -499,7 +526,9 @@ public:
 	}
 };
 
-/// \brief Forms a Callback from a free function which takes a single argument.
+/**
+ * @brief Forms a Callback from a free function which takes a single argument.
+ */
 template < typename FirstArgument, void (*func)(FirstArgument) >
 class FreeCaller1 : public BindFirstOpaque1< Caller1To2< Function1<FirstArgument, void, func> > > {
 public:
@@ -508,34 +537,38 @@ public:
 };
 
 
-/// \brief Constructs a Callback from a non-const \p functor with zero arguments.
-///
-/// \param Functor Must define \c operator()().
+/**
+ * @brief Constructs a Callback from a non-const \p functor with zero arguments.
+ * @param Functor Must define \c operator()().
+ */
 template<typename Functor>
 inline Callback makeCallback(Functor& functor) {
 	return Callback(MemberCaller < Functor, &Functor::operator()>(functor));
 }
 
-/// \brief  Constructs a Callback from a const \p functor with zero arguments.
-///
-/// \param Functor Must define const \c operator()().
+/**
+ * @brief Constructs a Callback from a const \p functor with zero arguments.
+ * @param Functor Must define const \c operator()().
+ */
 template<typename Functor>
 inline Callback makeCallback(const Functor& functor) {
 	return Callback(ConstMemberCaller < Functor, &Functor::operator()>(functor));
 }
 
-/// \brief  Constructs a Callback1 from a non-const \p functor with one argument.
-///
-/// \param Functor Must define \c first_argument_type and \c operator()(first_argument_type).
+/**
+ * @brief Constructs a Callback1 from a non-const \p functor with one argument.
+ * @param Functor Must define \c first_argument_type and \c operator()(first_argument_type).
+ */
 template<typename Functor>
 inline Callback1<typename Functor::first_argument_type> makeCallback1(Functor& functor) {
 	typedef typename Functor::first_argument_type FirstArgument;
 	return Callback1<FirstArgument>(MemberCaller1 < Functor, FirstArgument, &Functor::operator()>(functor));
 }
 
-/// \brief  Constructs a Callback1 from a const \p functor with one argument.
-///
-/// \param Functor Must define \c first_argument_type and const \c operator()(first_argument_type).
+/**
+ * @brief  Constructs a Callback1 from a const \p functor with one argument.
+ * @param Functor Must define \c first_argument_type and const \c operator()(first_argument_type).
+ */
 template<typename Functor>
 inline Callback1<typename Functor::first_argument_type> makeCallback1(const Functor& functor) {
 	typedef typename Functor::first_argument_type FirstArgument;
