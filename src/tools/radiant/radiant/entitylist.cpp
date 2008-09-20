@@ -1,3 +1,8 @@
+/**
+ * @file entitylist.cpp
+ * @brief Entitylist dialog
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -93,9 +98,7 @@ inline Nameable* Node_getNameable(scene::Node& node) {
 
 const char* node_get_name(scene::Node& node) {
 	Nameable* nameable = Node_getNameable(node);
-	return (nameable != 0)
-	       ? nameable->name()
-	       : "node";
+	return (nameable != 0) ? nameable->name() : "node";
 }
 
 template<typename value_type>
@@ -280,8 +283,6 @@ void EntityList_constructWindow(GtkWindow* main_window) {
 	gtk_window_add_accel_group(window, global_accel);
 
 	getEntityList().m_positionTracker.connect(window);
-
-
 	getEntityList().m_window = window;
 
 	{

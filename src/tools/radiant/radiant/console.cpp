@@ -47,7 +47,9 @@ FILE* g_hLogFile;
 
 bool g_Console_enableLogging = false;
 
-// called whenever we need to open/close/check the console log file
+/**
+ * @note called whenever we need to open/close/check the console log file
+ */
 void Sys_LogFile(bool enable) {
 	if (enable && !g_hLogFile) {
 		// settings say we should be logging and we don't have a log file .. so create it
@@ -56,22 +58,22 @@ void Sys_LogFile(bool enable) {
 		// the log file is erased
 		StringOutputStream name(256);
 		name << SettingsPath_get() << "radiant.log";
-		g_hLogFile = fopen( name.c_str(), "w" );
+		g_hLogFile = fopen(name.c_str(), "w");
 		if (g_hLogFile != 0) {
 			globalOutputStream() << "Started logging to " << name.c_str() << "\n";
 			time_t localtime;
 			time(&localtime);
 			globalOutputStream() << "Today is: " << ctime(&localtime)
-			<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
+				<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
 		} else
-			gtk_MessageBox (0, "Failed to create log file, check write permissions in Radiant directory.\n",
-			                "Console logging", eMB_OK, eMB_ICONERROR );
+			gtk_MessageBox(0, "Failed to create log file, check write permissions in Radiant directory.\n",
+						"Console logging", eMB_OK, eMB_ICONERROR);
 	} else if (!enable && g_hLogFile != 0) {
 		// settings say we should not be logging but still we have an active logfile .. close it
 		time_t localtime;
 		time(&localtime);
 		globalOutputStream() << "Closing log file at " << ctime(&localtime) << "\n";
-		fclose( g_hLogFile );
+		fclose(g_hLogFile);
 		g_hLogFile = NULL;
 	}
 }
@@ -86,9 +88,9 @@ static void console_clear() {
 static void console_populate_popup(GtkTextView* textview, GtkMenu* menu, gpointer user_data) {
 	menu_separator(menu);
 
-	GtkWidget* item = gtk_menu_item_new_with_label ("Clear");
+	GtkWidget* item = gtk_menu_item_new_with_label("Clear");
 	g_signal_connect(G_OBJECT (item), "activate", G_CALLBACK(console_clear), 0);
-	gtk_widget_show (item);
+	gtk_widget_show(item);
 	container_add_widget(GTK_CONTAINER(menu), item);
 }
 
@@ -159,13 +161,13 @@ std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
 
 			static GtkTextMark* end = gtk_text_buffer_create_mark(buffer, "end", &iter, FALSE);
 
-			const GdkColor yellow = { 0, 0xb0ff, 0xb0ff, 0x0000 };
-			const GdkColor red = { 0, 0xffff, 0x0000, 0x0000 };
-			const GdkColor black = { 0, 0x0000, 0x0000, 0x0000 };
+			const GdkColor yellow = {0, 0xb0ff, 0xb0ff, 0x0000};
+			const GdkColor red = {0, 0xffff, 0x0000, 0x0000};
+			const GdkColor black = {0, 0x0000, 0x0000, 0x0000};
 
-			static GtkTextTag* error_tag = gtk_text_buffer_create_tag (buffer, "red_foreground", "foreground-gdk", &red, 0);
-			static GtkTextTag* warning_tag = gtk_text_buffer_create_tag (buffer, "yellow_foreground", "foreground-gdk", &yellow, 0);
-			static GtkTextTag* standard_tag = gtk_text_buffer_create_tag (buffer, "black_foreground", "foreground-gdk", &black, 0);
+			static GtkTextTag* error_tag = gtk_text_buffer_create_tag(buffer, "red_foreground", "foreground-gdk", &red, 0);
+			static GtkTextTag* warning_tag = gtk_text_buffer_create_tag(buffer, "yellow_foreground", "foreground-gdk", &yellow, 0);
+			static GtkTextTag* standard_tag = gtk_text_buffer_create_tag(buffer, "black_foreground", "foreground-gdk", &black, 0);
 			GtkTextTag* tag;
 			switch (level) {
 			case SYS_WRN:
@@ -180,7 +182,6 @@ std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
 				tag = standard_tag;
 				break;
 			}
-
 
 			{
 				GtkTextBufferOutputStream textBuffer(buffer, &iter, tag);

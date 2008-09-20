@@ -1,3 +1,8 @@
+/**
+ * @file xywindow.cpp
+ * @brief XY Window rendering and input code
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -18,12 +23,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-//
-// XY Window
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "xywindow.h"
 
@@ -1357,6 +1356,9 @@ void XYWnd::XY_SnapToGrid(Vector3& point) {
 	}
 }
 
+/**
+ * @todo Use @code m_image = GlobalTexturesCache().capture(name) @endcode
+ */
 void XYWnd::XY_LoadBackgroundImage(const char *name)
 {
 	const char* relative = path_make_relative(name, GlobalFileSystem().findRoot(name));

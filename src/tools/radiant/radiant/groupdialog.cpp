@@ -1,3 +1,8 @@
+/**
+ * @file groupdialog.cpp
+ * @brief Floating dialog that contains a notebook with at least Entities and Group tabs
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -18,13 +23,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-//
-// Floating dialog that contains a notebook with at least Entities and Group tabs
-// I merged the 2 MS Windows dialogs in a single class
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "groupdialog.h"
 
@@ -58,7 +56,8 @@ public:
 	void Create(GtkWindow* parent);
 
 	void Show() {
-		// workaround for strange gtk behaviour - modifying the contents of a window while it is not visible causes the window position to change without sending a configure_event
+		// workaround for strange gtk behaviour - modifying the contents of a window while it is not
+		// visible causes the window position to change without sending a configure_event
 		m_position_tracker.sync(m_window);
 		gtk_widget_show(GTK_WIDGET(m_window));
 	}
@@ -105,7 +104,7 @@ void GroupDlg::Create(GtkWindow* parent) {
 	m_window = window;
 
 #ifdef WIN32
-	if ( g_multimon_globals.m_bStartOnPrimMon ) {
+	if (g_multimon_globals.m_bStartOnPrimMon) {
 		WindowPosition pos(m_position_tracker.getPosition());
 		PositionWindowOnPrimaryScreen(pos);
 		m_position_tracker.setPosition(pos);
