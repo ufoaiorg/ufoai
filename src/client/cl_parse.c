@@ -243,12 +243,13 @@ static void (*ev_func[])(struct dbuffer *msg) =
 };
 
 typedef struct evTimes_s {
-	int when;
-	int eType;
-	struct dbuffer *msg;
-	struct evTimes_s *next;
+	int when;					/**< timestamp (msec) that is used to determine when the event should be executed */
+	int eType;					/**< event type to handle */
+	struct dbuffer *msg;		/**< the parsed network channel data */
+	struct evTimes_s *next;		/**< the next event in the queue */
 } evTimes_t;
 
+/** @brief linked list of battlescape events */
 static evTimes_t *events = NULL;
 
 qboolean blockEvents;	/**< block network events - see CL_Events */
