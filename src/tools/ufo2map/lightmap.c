@@ -1220,6 +1220,9 @@ void BuildFacelights (unsigned int facenum)
 		VectorSet(avg_direction, 0.0, 0.0, 1.0);
 	else
 		VectorScale(avg_direction, 1.0 / numdirsamples, avg_direction);
+
+	VectorNormalize(avg_direction);
+
 	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
 		float *direction = fl->directions + i * 3;
 		if (VectorCompare(direction, vec3_origin))
