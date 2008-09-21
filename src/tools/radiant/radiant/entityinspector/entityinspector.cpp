@@ -1245,23 +1245,23 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 	{
 		GtkWidget* split1 = gtk_vpaned_new();
 		gtk_box_pack_start(GTK_BOX(vbox), split1, TRUE, TRUE, 0);
-		gtk_widget_show (split1);
+		gtk_widget_show(split1);
 
 		g_entity_split1 = split1;
 
 		{
 			GtkWidget* split2 = gtk_vpaned_new();
-			gtk_paned_add1 (GTK_PANED (split1), split2);
-			gtk_widget_show (split2);
+			gtk_paned_add1(GTK_PANED (split1), split2);
+			gtk_widget_show(split2);
 
 			g_entity_split2 = split2;
 
 			{
 				// class list
-				GtkWidget* scr = gtk_scrolled_window_new (0, 0);
-				gtk_widget_show (scr);
-				gtk_paned_add1 (GTK_PANED (split2), scr);
-				gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+				gtk_widget_show(scr);
+				gtk_paned_add1(GTK_PANED(split2), scr);
+				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 				{
@@ -1296,9 +1296,9 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 			{
 				GtkWidget* scr = gtk_scrolled_window_new (0, 0);
-				gtk_widget_show (scr);
-				gtk_paned_add2 (GTK_PANED (split2), scr);
-				gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+				gtk_widget_show(scr);
+				gtk_paned_add2(GTK_PANED(split2), scr);
+				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 				{
@@ -1315,18 +1315,18 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 		{
 			GtkWidget* split2 = gtk_vpaned_new();
-			gtk_paned_add2 (GTK_PANED (split1), split2);
+			gtk_paned_add2(GTK_PANED(split1), split2);
 			gtk_widget_show(split2);
 
 			{
-				GtkWidget* vbox2 = gtk_vbox_new (FALSE, 2);
-				gtk_widget_show (vbox2);
+				GtkWidget* vbox2 = gtk_vbox_new(FALSE, 2);
+				gtk_widget_show(vbox2);
 				gtk_paned_pack1(GTK_PANED(split2), vbox2, FALSE, FALSE);
 
 				{
 					// Spawnflags (4 colums wide max, or window gets too wide.)
 					GtkTable* table = GTK_TABLE(gtk_table_new(4, 4, FALSE));
-					gtk_box_pack_start (GTK_BOX (vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
+					gtk_box_pack_start(GTK_BOX (vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
 					gtk_widget_show(GTK_WIDGET(table));
 
 					g_spawnflagsTable = table;
@@ -1342,9 +1342,9 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 				{
 					// key/value list
 					GtkWidget* scr = gtk_scrolled_window_new (0, 0);
-					gtk_widget_show (scr);
-					gtk_box_pack_start (GTK_BOX (vbox2), scr, TRUE, TRUE, 0);
-					gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+					gtk_widget_show(scr);
+					gtk_box_pack_start(GTK_BOX (vbox2), scr, TRUE, TRUE, 0);
+					gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 					gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 					{
@@ -1393,8 +1393,8 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 						gtk_widget_show(GTK_WIDGET(entry));
 						gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-						                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-						                 (GtkAttachOptions)(0), 0, 0);
+										(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+										(GtkAttachOptions)(0), 0, 0);
 						gtk_widget_set_events(GTK_WIDGET(entry), GDK_KEY_PRESS_MASK);
 						g_signal_connect(G_OBJECT(entry), "key_press_event", G_CALLBACK(EntityEntry_keypress), 0);
 						g_entityKeyEntry = entry;
@@ -1404,8 +1404,8 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 						gtk_widget_show(GTK_WIDGET(entry));
 						gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-						                 (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-						                 (GtkAttachOptions)(0), 0, 0);
+										(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+										(GtkAttachOptions)(0), 0, 0);
 						gtk_widget_set_events(GTK_WIDGET(entry), GDK_KEY_PRESS_MASK);
 						g_signal_connect(G_OBJECT(entry), "key_press_event", G_CALLBACK(EntityEntry_keypress), 0);
 						g_entityValueEntry = entry;
@@ -1415,8 +1415,8 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 						GtkLabel* label = GTK_LABEL(gtk_label_new("Value"));
 						gtk_widget_show(GTK_WIDGET(label));
 						gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
-						                 (GtkAttachOptions)(GTK_FILL),
-						                 (GtkAttachOptions)(0), 0, 0);
+										(GtkAttachOptions)(GTK_FILL),
+										(GtkAttachOptions)(0), 0, 0);
 						gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 					}
 
@@ -1424,8 +1424,8 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 						GtkLabel* label = GTK_LABEL(gtk_label_new("Key"));
 						gtk_widget_show(GTK_WIDGET(label));
 						gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
-						                 (GtkAttachOptions)(GTK_FILL),
-						                 (GtkAttachOptions)(0), 0, 0);
+										(GtkAttachOptions)(GTK_FILL),
+										(GtkAttachOptions)(0), 0, 0);
 						gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 					}
 				}
@@ -1473,15 +1473,15 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 	{
 		// show the sliders in any case
 		if (g_entitysplit2_position > 22) {
-			gtk_paned_set_position (GTK_PANED(g_entity_split2), g_entitysplit2_position);
+			gtk_paned_set_position(GTK_PANED(g_entity_split2), g_entitysplit2_position);
 		} else {
 			g_entitysplit2_position = 22;
-			gtk_paned_set_position (GTK_PANED(g_entity_split2), 22);
+			gtk_paned_set_position(GTK_PANED(g_entity_split2), 22);
 		}
 		if ((g_entitysplit1_position - g_entitysplit2_position) > 27) {
-			gtk_paned_set_position (GTK_PANED(g_entity_split1), g_entitysplit1_position);
+			gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit1_position);
 		} else {
-			gtk_paned_set_position (GTK_PANED(g_entity_split1), g_entitysplit2_position + 27);
+			gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit2_position + 27);
 		}
 	}
 

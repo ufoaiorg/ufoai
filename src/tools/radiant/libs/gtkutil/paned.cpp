@@ -33,7 +33,7 @@ public:
 	int size;
 };
 
-gboolean hpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedState* paned) {
+static gboolean hpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedState* paned) {
 	if (paned->size != allocation->width) {
 		paned->size = allocation->width;
 		gtk_paned_set_position (GTK_PANED (widget), static_cast<int>(paned->size * paned->position));
@@ -41,7 +41,7 @@ gboolean hpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedStat
 	return FALSE;
 }
 
-gboolean vpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedState* paned) {
+static gboolean vpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedState* paned) {
 	if (paned->size != allocation->height) {
 		paned->size = allocation->height;
 		gtk_paned_set_position (GTK_PANED (widget), static_cast<int>(paned->size * paned->position));
@@ -49,15 +49,15 @@ gboolean vpaned_allocate(GtkWidget* widget, GtkAllocation* allocation, PanedStat
 	return FALSE;
 }
 
-gboolean paned_position(GtkWidget* widget, gpointer dummy, PanedState* paned) {
+static gboolean paned_position(GtkWidget* widget, gpointer dummy, PanedState* paned) {
 	if (paned->size != -1)
 		paned->position = gtk_paned_get_position (GTK_PANED (widget)) / static_cast<float>(paned->size);
 	return FALSE;
 }
 
-PanedState g_hpaned = { 0.5f, -1, };
-PanedState g_vpaned1 = { 0.5f, -1, };
-PanedState g_vpaned2 = { 0.5f, -1, };
+static PanedState g_hpaned = { 0.5f, -1, };
+static PanedState g_vpaned1 = { 0.5f, -1, };
+static PanedState g_vpaned2 = { 0.5f, -1, };
 
 GtkHPaned* create_split_views(GtkWidget* topleft, GtkWidget* topright, GtkWidget* botleft, GtkWidget* botright) {
 	GtkHPaned* hsplit = GTK_HPANED(gtk_hpaned_new());

@@ -1877,7 +1877,7 @@ static GtkWidget* create_main_statusbar(GtkWidget *pStatusLabel[c_count_status])
 	gtk_widget_show(GTK_WIDGET(table));
 
 	{
-		GtkLabel* label = GTK_LABEL(gtk_label_new ("Label"));
+		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 		gtk_misc_set_padding(GTK_MISC(label), 4, 2);
 		gtk_widget_show(GTK_WIDGET(label));
@@ -1891,7 +1891,7 @@ static GtkWidget* create_main_statusbar(GtkWidget *pStatusLabel[c_count_status])
 		gtk_table_attach_defaults(table, GTK_WIDGET(frame), i, i + 1, 0, 1);
 		gtk_frame_set_shadow_type(frame, GTK_SHADOW_IN);
 
-		GtkLabel* label = GTK_LABEL(gtk_label_new ("Label"));
+		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
 		gtk_label_set_ellipsize( label, PANGO_ELLIPSIZE_END);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 		gtk_misc_set_padding(GTK_MISC(label), 4, 2);
@@ -1947,7 +1947,7 @@ GtkWindow* MainFrame_getWindow (void) {
 	return g_pParentWnd->m_window;
 }
 
-std::vector<GtkWidget*> g_floating_windows;
+static std::vector<GtkWidget*> g_floating_windows;
 
 MainFrame::MainFrame() : m_window(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this)) {
 	m_pXYWnd = 0;
@@ -1989,10 +1989,10 @@ void MainFrame::SetActiveXY(XYWnd* p) {
 
 }
 
-WindowPositionTracker g_posCamWnd;
-WindowPositionTracker g_posXYWnd;
-WindowPositionTracker g_posXZWnd;
-WindowPositionTracker g_posYZWnd;
+static WindowPositionTracker g_posCamWnd;
+static WindowPositionTracker g_posXYWnd;
+static WindowPositionTracker g_posXZWnd;
+static WindowPositionTracker g_posYZWnd;
 
 static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data) {
 	if (ConfirmModified("Exit Radiant")) {
@@ -2002,6 +2002,9 @@ static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
 	return TRUE;
 }
 
+/**
+ * @brief Create the user settable window layout
+ */
 void MainFrame::Create (void) {
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 
@@ -2026,7 +2029,7 @@ void MainFrame::Create (void) {
 
 	GetPlugInMgr().Init(GTK_WIDGET(window));
 
-	GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 	gtk_widget_show(vbox);
 
@@ -2051,7 +2054,7 @@ void MainFrame::Create (void) {
 	GtkWidget* main_statusbar = create_main_statusbar(m_pStatusLabel);
 	gtk_box_pack_end(GTK_BOX(vbox), main_statusbar, FALSE, TRUE, 2);
 
-	GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
+	GtkWidget* hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), TRUE, TRUE, 0);
 	gtk_widget_show(hbox);
 
@@ -2083,12 +2086,15 @@ void MainFrame::Create (void) {
 
 	gtk_widget_show(GTK_WIDGET(window));
 
-	if (CurrentStyle() == eRegular || CurrentStyle() == eRegularLeft) {
+	// create edit windows according to user setable style
+	switch (CurrentStyle()) {
+	case eRegular:
+	case eRegularLeft:
 		{
 			GtkWidget* vsplit = gtk_vpaned_new();
 			m_vSplit = vsplit;
 			gtk_box_pack_start(GTK_BOX(hbox), vsplit, TRUE, TRUE, 0);
-			gtk_widget_show (vsplit);
+			gtk_widget_show(vsplit);
 
 			// console
 			GtkWidget* console_window = Console_constructWindow(window);
@@ -2096,7 +2102,7 @@ void MainFrame::Create (void) {
 
 			{
 				GtkWidget* hsplit = gtk_hpaned_new();
-				gtk_widget_show (hsplit);
+				gtk_widget_show(hsplit);
 				m_hSplit = hsplit;
 				gtk_paned_add1(GTK_PANED(vsplit), hsplit);
 
@@ -2144,7 +2150,9 @@ void MainFrame::Create (void) {
 		}
 
 		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
-	} else if (CurrentStyle() == eFloating) {
+		break;
+
+	case eFloating:
 		{
 			GtkWindow* window = create_persistent_floating_window("Camera", m_window);
 			global_accel_connect_window(window);
@@ -2227,7 +2235,9 @@ void MainFrame::Create (void) {
 		}
 
 		GroupDialog_show();
-	} else { // 4 way
+		break;
+	case eSplit:
+		// 4 way
 		m_pCamWnd = NewCamWnd();
 		GlobalCamera_setCamWnd(*m_pCamWnd);
 		CamWnd_setParent(*m_pCamWnd, window);
@@ -2256,6 +2266,7 @@ void MainFrame::Create (void) {
 			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
 			g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
 		}
+		break;
 	}
 
 	EntityList_constructWindow(window);
