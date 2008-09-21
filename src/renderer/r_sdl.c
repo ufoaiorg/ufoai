@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_main.h"
 #include "r_sdl.h"
 
-SDL_Surface *r_surface;
-
 #ifndef _WIN32
 static void R_SetSDLIcon (void)
 {
@@ -68,8 +66,6 @@ qboolean Rimp_Init (void)
 	int attrValue;
 	const SDL_VideoInfo* info;
 	char videoDriverName[MAX_VAR] = "";
-
-	r_surface = NULL;
 
 	Com_Printf("\n------- video initialization -------\n");
 
@@ -146,22 +142,6 @@ qboolean R_InitGraphics (void)
 	vid_mode->modified = qfalse;
 	r_ext_texture_compression->modified = qfalse;
 
-	/* Just toggle fullscreen if that's all that has been changed */
-	if (r_surface && (r_surface->w == viddef.width) && (r_surface->h == viddef.height)) {
-		qboolean isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
-		if (viddef.fullscreen != isfullscreen)
-			if (!SDL_WM_ToggleFullScreen(r_surface))
-				Com_Printf("R_InitGraphics: Could not set to fullscreen mode\n");
-
-		isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
-		if (viddef.fullscreen == isfullscreen)
-			return qtrue;
-	}
-
-	/* free resources in use */
-	if (r_surface)
-		SDL_FreeSurface(r_surface);
-
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -182,7 +162,7 @@ qboolean R_InitGraphics (void)
 	if (viddef.fullscreen)
 		flags |= SDL_FULLSCREEN;
 
-	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
+	if (!SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) {
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		return qfalse;
@@ -195,10 +175,6 @@ qboolean R_InitGraphics (void)
 
 void Rimp_Shutdown (void)
 {
-	if (r_surface)
-		SDL_FreeSurface(r_surface);
-	r_surface = NULL;
-
 	SDL_ShowCursor(SDL_ENABLE);
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_INIT_VIDEO)
