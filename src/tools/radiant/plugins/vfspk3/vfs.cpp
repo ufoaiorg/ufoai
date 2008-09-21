@@ -93,7 +93,7 @@ static void AddSlash (char *str) {
 	std::size_t n = strlen (str);
 	if (n > 0) {
 		if (str[n-1] != '\\' && str[n-1] != '/') {
-			globalErrorStream() << "WARNING: directory path does not end with separator: " << str << "\n";
+			globalWarningStream() << "Directory path does not end with separator: " << str << "\n";
 			strcat (str, "/");
 		}
 	}
@@ -103,7 +103,7 @@ static void FixDOSName (char *src) {
 	if (src == 0 || strchr(src, '\\') == 0)
 		return;
 
-	globalErrorStream() << "WARNING: invalid path separator '\\': " << src << "\n";
+	globalWarningStream() << "Invalid path separator '\\': " << src << "\n";
 
 	while (*src) {
 		if (*src == '\\')

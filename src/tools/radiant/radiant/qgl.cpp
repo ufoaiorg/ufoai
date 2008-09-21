@@ -679,7 +679,7 @@ void QGL_InitVersion() {
 
 
 inline void extension_not_implemented(const char* extension) {
-	globalErrorStream() << "WARNING: OpenGL driver reports support for " << extension << " but does not implement it\n";
+	globalWarningStream() << "OpenGL driver reports support for " << extension << " but does not implement it\n";
 }
 
 static int g_maxTextureAnisotropy;

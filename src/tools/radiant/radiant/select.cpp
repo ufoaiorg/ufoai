@@ -1059,7 +1059,7 @@ void DoScaleDlg (void)
 
 			Select_Scale(sx, sy, sz);
 		} else {
-			globalOutputStream() << "Warning.. Tried to scale by a zero value.";
+			globalWarningStream() << "Warning.. Tried to scale by a zero value.";
 		}
 	}
 

@@ -117,7 +117,7 @@ static void SetTexParameters(ETexturesMode mode) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, QGL_maxTextureAnisotropy());
 		break;
 	default:
-		globalOutputStream() << "invalid texture mode\n";
+		globalErrorStream() << "invalid texture mode\n";
 	}
 }
 

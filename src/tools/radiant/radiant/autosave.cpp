@@ -82,7 +82,7 @@ static void Map_Snapshot() {
 		Map_SaveFile(snapshotFilename.c_str());
 
 		if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
-			globalOutputStream() << "The snapshot files in " << snapshotsDir.c_str() << " total more than 50 megabytes. You might consider cleaning up.";
+			globalWarningStream() << "The snapshot files in " << snapshotsDir.c_str() << " total more than 50 megabytes. You might consider cleaning up.";
 		}
 	} else {
 		StringOutputStream strMsg(256);

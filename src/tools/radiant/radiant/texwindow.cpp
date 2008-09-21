@@ -586,7 +586,7 @@ void TextureDirectory_loadTexture(const char* directory, const char* texture) {
 	}
 
 	if (!shader_valid(name.c_str())) {
-		globalOutputStream() << "Skipping invalid texture name: [" << name.c_str() << "]\n";
+		globalWarningStream() << "Skipping invalid texture name: [" << name.c_str() << "]\n";
 		return;
 	}
 

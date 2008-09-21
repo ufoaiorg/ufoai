@@ -991,7 +991,7 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 					// do we already have this shader?
 					if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
 #ifdef DEBUG
-						globalOutputStream() << "WARNING: shader " << shaderTemplate->getName() << " is already in memory, definition in " << filename << " ignored.\n";
+						globalWarningStream() << "Shader " << shaderTemplate->getName() << " is already in memory, definition in " << filename << " ignored.\n";
 #endif
 					}
 				} else {

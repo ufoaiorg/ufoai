@@ -209,7 +209,7 @@ void DoTextEditor (const char* filename, int cursorpos)
 		/* note: linux does not return false if the command failed so it will assume success */
 		output = Q_Exec(0, const_cast<char*>(strEditCommand.c_str()), 0, true);
 		if (!output) {
-			globalOutputStream() << "Failed to execute " << strEditCommand.c_str() << ", using default\n";
+			globalWarningStream() << "Failed to execute " << strEditCommand.c_str() << ", using default\n";
 		} else {
 			free((void*)output);
 			/* the command (appeared) to run successfully, no need to do anything more */

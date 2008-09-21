@@ -84,7 +84,7 @@ static void R_ResampleTextureLerpLine (const byte *in, byte *out, int inwidth, i
 			}
 		}
 	} else {
-		globalOutputStream() << "R_ResampleTextureLerpLine: unsupported bytesperpixel " << bytesperpixel << "\n";
+		globalWarningStream() << "R_ResampleTextureLerpLine: unsupported bytesperpixel " << bytesperpixel << "\n";
 	}
 }
 
@@ -265,7 +265,7 @@ void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *out
 			}
 		}
 	} else {
-		globalOutputStream() << "R_ResampleTexture: unsupported bytesperpixel " << bytesperpixel << "\n";
+		globalWarningStream() << "R_ResampleTexture: unsupported bytesperpixel " << bytesperpixel << "\n";
 	}
 }
 

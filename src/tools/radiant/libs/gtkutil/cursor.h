@@ -124,7 +124,6 @@ public:
 		int dx = current_x - self->recorded_x;
 		int dy = current_y - self->recorded_y;
 		if (dx != 0 || dy != 0) {
-			//globalOutputStream() << "motion x: " << dx << ", y: " << dy << "\n";
 			Sys_SetCursorPos(GTK_WINDOW(widget), self->recorded_x, self->recorded_y);
 			self->m_function(dx, dy, event->state, self->m_data);
 		}
@@ -135,14 +134,14 @@ public:
 		ASSERT_MESSAGE(m_function == 0, "can't freeze pointer");
 
 		const GdkEventMask mask = static_cast<GdkEventMask>(GDK_POINTER_MOTION_MASK
-		                          | GDK_POINTER_MOTION_HINT_MASK
-		                          | GDK_BUTTON_MOTION_MASK
-		                          | GDK_BUTTON1_MOTION_MASK
-		                          | GDK_BUTTON2_MOTION_MASK
-		                          | GDK_BUTTON3_MOTION_MASK
-		                          | GDK_BUTTON_PRESS_MASK
-		                          | GDK_BUTTON_RELEASE_MASK
-		                          | GDK_VISIBILITY_NOTIFY_MASK);
+				| GDK_POINTER_MOTION_HINT_MASK
+				| GDK_BUTTON_MOTION_MASK
+				| GDK_BUTTON1_MOTION_MASK
+				| GDK_BUTTON2_MOTION_MASK
+				| GDK_BUTTON3_MOTION_MASK
+				| GDK_BUTTON_PRESS_MASK
+				| GDK_BUTTON_RELEASE_MASK
+				| GDK_VISIBILITY_NOTIFY_MASK);
 
 		GdkCursor* cursor = create_blank_cursor();
 		//GdkGrabStatus status =

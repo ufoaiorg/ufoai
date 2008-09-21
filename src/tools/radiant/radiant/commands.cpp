@@ -59,7 +59,7 @@ void GlobalShortcuts_reportUnregistered (void)
 {
 	for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
 		if ((*i).second.first.key != 0 && !(*i).second.second) {
-			globalOutputStream() << "shortcut not registered: " << (*i).first.c_str() << "\n";
+			globalWarningStream() << "Shortcut not registered: " << (*i).first.c_str() << "\n";
 		}
 	}
 }
@@ -341,7 +341,7 @@ public:
 				           && string_equal_nocase_n(modifier, "+shift", 6) != 0) {
 					modifiers |= GDK_SHIFT_MASK;
 				} else {
-					globalOutputStream() << "WARNING: failed to parse user command " << makeQuoted(value) << ": unknown modifier " << makeQuoted(StringRange(modifier, next)) << "\n";
+					globalWarningStream() << "failed to parse user command " << makeQuoted(value) << ": unknown modifier " << makeQuoted(StringRange(modifier, next)) << "\n";
 				}
 				modifier = next;
 			}
@@ -359,7 +359,7 @@ public:
 				if (accelerator.key != 0) {
 					++m_count;
 				} else {
-					globalOutputStream() << "WARNING: failed to parse user command " << makeQuoted(value) << ": unknown key " << makeQuoted(keyName.c_str()) << "\n";
+					globalWarningStream() << "Failed to parse user command " << makeQuoted(value) << ": unknown key " << makeQuoted(keyName.c_str()) << "\n";
 					// modifier only bindings are not allowed
 					accelerator.modifiers = (GdkModifierType)0;
 				}
@@ -400,9 +400,9 @@ void LoadCommandMap (const char* path)
 			GlobalShortcuts_foreach(visitor);
 			globalOutputStream() << "parsed " << Unsigned(visitor.count()) << " custom shortcuts\n";
 		} else {
-			globalOutputStream() << "commands import: data version " << dataVersion << " is not compatible with code version " << version << "\n";
+			globalWarningStream() << "commands import: data version " << dataVersion << " is not compatible with code version " << version << "\n";
 		}
 	} else {
-		globalOutputStream() << "failed to load custom shortcuts from " << makeQuoted(strINI.c_str()) << "\n";
+		globalWarningStream() << "failed to load custom shortcuts from " << makeQuoted(strINI.c_str()) << "\n";
 	}
 }

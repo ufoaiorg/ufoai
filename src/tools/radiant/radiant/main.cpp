@@ -102,56 +102,55 @@ void error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar 
 		message = "(0) message";
 
 	if (domain)
-		strcpy (buf, domain);
+		strcpy(buf, domain);
 	else
-		strcpy (buf, "**");
-	strcat (buf, "-");
+		strcpy(buf, "**");
+	strcat(buf, "-");
 
 	switch (log_level) {
 	case G_LOG_LEVEL_ERROR:
 		if (in_recursion)
-			strcat (buf, "ERROR (recursed) **: ");
+			strcat(buf, "ERROR (recursed) **: ");
 		else
-			strcat (buf, "ERROR **: ");
+			strcat(buf, "ERROR **: ");
 		break;
 	case G_LOG_LEVEL_CRITICAL:
 		if (in_recursion)
-			strcat (buf, "CRITICAL (recursed) **: ");
+			strcat(buf, "CRITICAL (recursed) **: ");
 		else
-			strcat (buf, "CRITICAL **: ");
+			strcat(buf, "CRITICAL **: ");
 		break;
 	case G_LOG_LEVEL_WARNING:
 		if (in_recursion)
-			strcat (buf, "WARNING (recursed) **: ");
+			strcat(buf, "WARNING (recursed) **: ");
 		else
-			strcat (buf, "WARNING **: ");
+			strcat(buf, "WARNING **: ");
 		break;
 	case G_LOG_LEVEL_MESSAGE:
 		if (in_recursion)
-			strcat (buf, "Message (recursed): ");
+			strcat(buf, "Message (recursed): ");
 		else
-			strcat (buf, "Message: ");
+			strcat(buf, "Message: ");
 		break;
 	case G_LOG_LEVEL_INFO:
 		if (in_recursion)
-			strcat (buf, "INFO (recursed): ");
+			strcat(buf, "INFO (recursed): ");
 		else
-			strcat (buf, "INFO: ");
+			strcat(buf, "INFO: ");
 		break;
 	case G_LOG_LEVEL_DEBUG:
 		if (in_recursion)
-			strcat (buf, "DEBUG (recursed): ");
+			strcat(buf, "DEBUG (recursed): ");
 		else
-			strcat (buf, "DEBUG: ");
+			strcat(buf, "DEBUG: ");
 		break;
 	default:
 		/* we are used for a log level that is not defined by GLib itself,
-		 * try to make the best out of it.
-		 */
+		 * try to make the best out of it. */
 		if (in_recursion)
-			strcat (buf, "LOG (recursed:");
+			strcat(buf, "LOG (recursed:");
 		else
-			strcat (buf, "LOG (");
+			strcat(buf, "LOG (");
 		if (log_level) {
 			gchar string[] = "0x00): ";
 			gchar *p = string + 2;
@@ -164,18 +163,18 @@ void error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar 
 			if (*p > '9')
 				*p += 'A' - '9' - 1;
 
-			strcat (buf, string);
+			strcat(buf, string);
 		} else
-			strcat (buf, "): ");
+			strcat(buf, "): ");
 	}
 
-	strcat (buf, message);
+	strcat(buf, message);
 	if (is_fatal)
-		strcat (buf, "\naborting...\n");
+		strcat(buf, "\naborting...\n");
 	else
-		strcat (buf, "\n");
+		strcat(buf, "\n");
 
-	printf ("%s\n", buf);
+	printf("%s\n", buf);
 
 	ERROR_MESSAGE("GTK+ error: " << buf);
 }
@@ -323,8 +322,8 @@ void create_global_pid() {
 #if !defined(DEBUG)
 		StringOutputStream msg(256);
 		msg << "Radiant failed to start properly the last time it was run.\n"
-		"The failure may be related to current global preferences.\n"
-		"Do you want to reset global preferences to defaults?";
+			"The failure may be related to current global preferences.\n"
+			"Do you want to reset global preferences to defaults?";
 
 		if (gtk_MessageBox(0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			g_GamesDialog.Reset();

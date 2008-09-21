@@ -562,7 +562,7 @@ void Preferences_Load() {
 	globalOutputStream() << "loading settings from " << filename.c_str() << "\n";
 
 	if (!Preferences_Load(g_preferences, filename.c_str())) {
-		globalOutputStream() << "failed to load settings from " << filename.c_str() << "\n";
+		globalWarningStream() << "failed to load settings from " << filename.c_str() << "\n";
 	}
 }
 
@@ -580,7 +580,7 @@ void Preferences_Save (void)
 	globalOutputStream() << "saving settings to " << filename.c_str() << "\n";
 
 	if (!Preferences_Save_Safe(g_preferences, filename.c_str())) {
-		globalOutputStream() << "failed to save settings to " << filename.c_str() << "\n";
+		globalWarningStream() << "failed to save settings to " << filename.c_str() << "\n";
 	}
 }
 

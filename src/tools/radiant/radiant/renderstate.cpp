@@ -840,7 +840,7 @@ public:
 		           );
 
 		if (!lightingSupported()) {
-			globalOutputStream() << "Lighting mode requires OpenGL features not supported by your graphics drivers:\n";
+			globalWarningStream() << "Lighting mode requires OpenGL features not supported by your graphics drivers:\n";
 			if (!GlobalOpenGL().GL_1_3()) {
 				globalOutputStream() << "  GL version 1.3 or better\n";
 			}

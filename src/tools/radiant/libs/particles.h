@@ -38,7 +38,7 @@ private:
 				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".jpg";
 				m_image = GlobalTexturesCache().capture(name.c_str());
 				if (!m_image)
-					globalOutputStream() << "Particle image: " << m_imageName << " wasn't found\n";
+					globalWarningStream() << "Particle image: " << m_imageName << " wasn't found\n";
 			}
 #endif
 		}
@@ -80,6 +80,7 @@ public:
 	void particleChanged(const char* id) {
 		m_id = id;
 		globalOutputStream() << "ID is now: " << m_id << "\n";
+		globalWarningStream() << "TODO: Implement particle changing\n";
 		freeParticleTexture();
 		reloadParticleTextureName();
 		loadParticleTexture();
@@ -116,7 +117,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 			pID[sizeof(pID) - 1] = '\0';
 
 			if (!Tokeniser_parseToken(tokeniser, "{")) {
-				globalOutputStream() << "ERROR: expected {.\n";
+				globalErrorStream() << "ERROR: expected {.\n";
 				return;
 			}
 
@@ -126,7 +127,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 				token = tokeniser.getToken();
 				if (string_equal(token, "init")) {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
-						globalOutputStream() << "ERROR: expected { in init.\n";
+						globalErrorStream() << "ERROR: expected { in init.\n";
 						return;
 					}
 					for (;;) {
@@ -145,7 +146,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 					}
 				} else if (string_equal(token, "think")) {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
-						globalOutputStream() << "ERROR: expected { in think.\n";
+						globalErrorStream() << "ERROR: expected { in think.\n";
 						return;
 					}
 					for (;;) {
@@ -159,7 +160,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 					}
 				} else if (string_equal(token, "run")) {
 					if (!Tokeniser_parseToken(tokeniser, "{")) {
-						globalOutputStream() << "ERROR: expected { in run.\n";
+						globalErrorStream() << "ERROR: expected { in run.\n";
 						return;
 					}
 					for (;;) {
@@ -178,7 +179,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 			if (!kill && (model || image)) {
 				// do we already have this particle?
 				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image))).second)
-					globalOutputStream() << "WARNING: particle " << pID << " is already in memory, definition in " << filename << " ignored.\n";
+					globalWarningStream() << "Particle " << pID << " is already in memory, definition in " << filename << " ignored.\n";
 			}
 		}
 	}
@@ -190,7 +191,7 @@ void LoadUFOFile(const char* filename) {
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
 		ParseUFOFile(*tokeniser, filename);
 	} else {
-		globalOutputStream() << "Unable to read ufo script file " << filename << "\n";
+		globalWarningStream() << "Unable to read ufo script file " << filename << "\n";
 	}
 }
 
