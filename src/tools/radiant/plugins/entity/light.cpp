@@ -1,3 +1,12 @@
+/**
+ * @file light.cpp
+ * @brief Represents any light entity (e.g. light).
+ * This entity displays a special 'light' model.
+ * The "origin" key directly controls the position of the light model in local space.
+ * The "_color" key controls the colour of the light model.
+ * The "light" key is visualised with a sphere representing the approximate coverage of the light
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -18,14 +27,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-///\file
-///\brief Represents any light entity (e.g. light).
-///
-/// This entity dislays a special 'light' model.
-/// The "origin" key directly controls the position of the light model in local space.
-/// The "_color" key controls the colour of the light model.
-/// The "light" key is visualised with a sphere representing the approximate coverage of the light
 
 #include "light.h"
 
@@ -131,13 +132,13 @@ void sphere_draw_wire(const Vector3& origin, float radius, int sides) {
 		glBegin(GL_LINE_LOOP);
 
 		for (int i = 0; i <= sides; i++) {
-			double ds = sin((i * 2 * c_pi) / sides);
-			double dc = cos((i * 2 * c_pi) / sides);
+			const double ds = sin((i * 2 * c_pi) / sides);
+			const double dc = cos((i * 2 * c_pi) / sides);
 
 			glVertex3f(
-			    static_cast<float>(origin[0] + radius * dc),
-			    static_cast<float>(origin[1] + radius * ds),
-			    origin[2]
+				static_cast<float>(origin[0] + radius * dc),
+				static_cast<float>(origin[1] + radius * ds),
+				origin[2]
 			);
 		}
 
@@ -148,13 +149,13 @@ void sphere_draw_wire(const Vector3& origin, float radius, int sides) {
 		glBegin(GL_LINE_LOOP);
 
 		for (int i = 0; i <= sides; i++) {
-			double ds = sin((i * 2 * c_pi) / sides);
-			double dc = cos((i * 2 * c_pi) / sides);
+			const double ds = sin((i * 2 * c_pi) / sides);
+			const double dc = cos((i * 2 * c_pi) / sides);
 
 			glVertex3f(
-			    static_cast<float>(origin[0] + radius * dc),
-			    origin[1],
-			    static_cast<float>(origin[2] + radius * ds)
+				static_cast<float>(origin[0] + radius * dc),
+				origin[1],
+				static_cast<float>(origin[2] + radius * ds)
 			);
 		}
 
@@ -165,13 +166,13 @@ void sphere_draw_wire(const Vector3& origin, float radius, int sides) {
 		glBegin(GL_LINE_LOOP);
 
 		for (int i = 0; i <= sides; i++) {
-			double ds = sin((i * 2 * c_pi) / sides);
-			double dc = cos((i * 2 * c_pi) / sides);
+			const double ds = sin((i * 2 * c_pi) / sides);
+			const double dc = cos((i * 2 * c_pi) / sides);
 
 			glVertex3f(
-			    origin[0],
-			    static_cast<float>(origin[1] + radius * dc),
-			    static_cast<float>(origin[2] + radius * ds)
+				origin[0],
+				static_cast<float>(origin[1] + radius * dc),
+				static_cast<float>(origin[2] + radius * ds)
 			);
 		}
 
