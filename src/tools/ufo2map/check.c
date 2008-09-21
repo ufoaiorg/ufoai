@@ -1641,34 +1641,6 @@ void CheckMixedFaceContents (void)
 	}
 }
 
-/**
- * @brief remove stepon brushes
- * @note only removes brushes where all sides are flagged stepon, leave the mfc check
- * to catch others
- * @todo remove this code (and associated parts from ufo2map.c) once it has been used on all maps
- */
-void Check_RemoveSteponBrushes (void)
-{
-	int i, j;
-
-	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *brush = &mapbrushes[i];
-		qboolean allSidesStepon = qtrue;
-
-		for (j = 0; j < brush->numsides; j++)
-			if (!(brush->original_sides[j].contentFlags & CONTENTS_STEPON)) {
-				allSidesStepon = qfalse;
-				break;
-			}
-
-		if (allSidesStepon) {
-			Check_Printf(VERB_NORMAL, qtrue, brush->entitynum, brush->brushnum, "deleting legacy brush: all sides CONTENTS_STEPON\n");
-			brush->skipWriteBack = qtrue;
-		}
-
-	}
-}
-
 void CheckBrushes (void)
 {
 	int i, j;
