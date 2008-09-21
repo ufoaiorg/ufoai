@@ -1,7 +1,4 @@
-//Entities:3
-//  000: worldspawn: 15 brushes
-//  001: info_civilian_start(272 400 32)
-//  002: info_civilian_start(336 48 32)
+
 // entity 0
 {
 "classname" "worldspawn"

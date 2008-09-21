@@ -1,11 +1,4 @@
-//Entities:7
-//  000: worldspawn: 8 brushes
-//  001: misc_model(234 220 18) models/objects/vegi/bush/bush01.md2
-//  002: misc_model(62 96 18) models/objects/vegi/bush/bush01.md2
-//  003: misc_model(96 128 36) models/objects/vegi/bush/bush01.md2
-//  004: misc_model(150 50 22) models/objects/vegi/bush/bush01.md2
-//  005: misc_model(188 108 16) models/objects/vegi/bush/bush01.md2
-//  006: misc_model(98 192 18) models/objects/vegi/bush/bush01.md2
+
 // entity 0
 {
 "classname" "worldspawn"

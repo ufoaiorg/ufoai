@@ -1,6 +1,4 @@
-//Entities:2
-//  000: worldspawn: 4 brushes
-//  001: misc_model(66 56 14) models/objects/vegi/bush/bush01.md2
+
 // entity 0
 {
 "classname" "worldspawn"
