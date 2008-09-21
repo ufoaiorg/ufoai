@@ -142,7 +142,7 @@ static inline float fDiff(float f1, float f2) {
 		return f2 - f1;
 }
 
-inline double ClipPoint_Intersect(const ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale) {
+static inline double ClipPoint_Intersect(const ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale) {
 	const int nDim1 = (viewtype == YZ) ? 1 : 0;
 	const int nDim2 = (viewtype == XY) ? 1 : 2;
 	double screenDistanceSquared(vector2_length_squared(Vector2(fDiff(clip.m_ptClip[nDim1], point[nDim1]) * scale, fDiff(clip.m_ptClip[nDim2], point[nDim2])  * scale)));
@@ -152,7 +152,7 @@ inline double ClipPoint_Intersect(const ClipPoint& clip, const Vector3& point, V
 	return FLT_MAX;
 }
 
-inline void ClipPoint_testSelect(ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale, double& bestDistance, ClipPoint*& bestClip) {
+static inline void ClipPoint_testSelect(ClipPoint& clip, const Vector3& point, VIEWTYPE viewtype, float scale, double& bestDistance, ClipPoint*& bestClip) {
 	if (clip.Set()) {
 		double distance = ClipPoint_Intersect(clip, point, viewtype, scale);
 		if (distance < bestDistance) {
@@ -162,7 +162,7 @@ inline void ClipPoint_testSelect(ClipPoint& clip, const Vector3& point, VIEWTYPE
 	}
 }
 
-inline ClipPoint* GlobalClipPoints_Find(const Vector3& point, VIEWTYPE viewtype, float scale) {
+static inline ClipPoint* GlobalClipPoints_Find(const Vector3& point, VIEWTYPE viewtype, float scale) {
 	double bestDistance = FLT_MAX;
 	ClipPoint* bestClip = 0;
 	ClipPoint_testSelect(g_Clip1, point, viewtype, scale, bestDistance, bestClip);
@@ -171,7 +171,7 @@ inline ClipPoint* GlobalClipPoints_Find(const Vector3& point, VIEWTYPE viewtype,
 	return bestClip;
 }
 
-inline void GlobalClipPoints_Draw(float scale) {
+static inline void GlobalClipPoints_Draw(float scale) {
 	// Draw clip points
 	if (g_Clip1.Set())
 		g_Clip1.Draw(1, scale);
@@ -181,7 +181,7 @@ inline void GlobalClipPoints_Draw(float scale) {
 		g_Clip3.Draw(3, scale);
 }
 
-inline bool GlobalClipPoints_valid(void) {
+static inline bool GlobalClipPoints_valid(void) {
 	return g_Clip1.Set() && g_Clip2.Set();
 }
 

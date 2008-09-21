@@ -939,7 +939,7 @@ void DragMode (void) {
 }
 
 
-const char* const c_TranslateMode_status = "Translate Tool";
+static const char* const c_TranslateMode_status = "Translate Tool";
 
 void TranslateMode (void) {
 	if (g_currentToolMode == TranslateMode && g_defaultToolMode != TranslateMode) {
@@ -957,7 +957,7 @@ void TranslateMode (void) {
 	}
 }
 
-const char* const c_RotateMode_status = "Rotate Tool";
+static const char* const c_RotateMode_status = "Rotate Tool";
 
 void RotateMode (void) {
 	if (g_currentToolMode == RotateMode && g_defaultToolMode != RotateMode) {
@@ -975,7 +975,7 @@ void RotateMode (void) {
 	}
 }
 
-const char* const c_ScaleMode_status = "Scale Tool";
+static const char* const c_ScaleMode_status = "Scale Tool";
 
 void ScaleMode (void) {
 	if (g_currentToolMode == ScaleMode && g_defaultToolMode != ScaleMode) {
@@ -994,7 +994,7 @@ void ScaleMode (void) {
 }
 
 
-const char* const c_ClipperMode_status = "Clipper Tool";
+static const char* const c_ClipperMode_status = "Clipper Tool";
 
 
 void ClipperMode (void) {
