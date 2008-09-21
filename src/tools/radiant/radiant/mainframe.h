@@ -50,9 +50,7 @@ public:
 	/** @brief The style of the window layout */
 	enum EViewStyle {
 		eRegular = 0,		/**< one view, console and texture on the right side */
-		eFloating = 1,		/**< floating windows */
-		eSplit = 2,			/**< 4 views */
-		eRegularLeft = 3,	/**< one view, console and texture on the left side */
+		eSplit = 1			/**< 4 views */
 	};
 
 	MainFrame();
@@ -116,9 +114,6 @@ public:
 
 	EViewStyle CurrentStyle() {
 		return m_nCurrentStyle;
-	};
-	bool FloatingGroupDialog() {
-		return CurrentStyle() == eFloating || CurrentStyle() == eSplit;
 	};
 };
 

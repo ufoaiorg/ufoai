@@ -100,7 +100,7 @@ static gboolean destroy_set_null(GtkWindow* widget, GtkWidget** p) {
 }
 
 GtkWidget* Console_constructWindow(GtkWindow* toplevel) {
-	GtkWidget* scr = gtk_scrolled_window_new (0, 0);
+	GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 	gtk_widget_show(scr);

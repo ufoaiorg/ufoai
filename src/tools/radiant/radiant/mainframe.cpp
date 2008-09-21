@@ -1422,13 +1422,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	if (style == MainFrame::eFloating) {
-		create_check_menu_item_with_mnemonic(menu, "Camera View", "ToggleCamera");
-		create_check_menu_item_with_mnemonic(menu, "XY (Top) View", "ToggleView");
-		create_check_menu_item_with_mnemonic(menu, "YZ (Side) View", "ToggleSideView");
-		create_check_menu_item_with_mnemonic(menu, "XZ (Front) View", "ToggleFrontView");
-	}
-	if (style == MainFrame::eFloating || style == MainFrame::eSplit) {
+	if (style == MainFrame::eSplit) {
 		create_menu_item_with_mnemonic(menu, "Console View", "ToggleConsole");
 		create_menu_item_with_mnemonic(menu, "Texture Browser", "ToggleTextures");
 		create_menu_item_with_mnemonic(menu, "Entity Inspector", "ToggleEntityInspector");
@@ -1458,7 +1452,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, "Orthographic");
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(orthographic_menu);
-		if (style == MainFrame::eRegular || style == MainFrame::eRegularLeft || style == MainFrame::eFloating) {
+		if (style == MainFrame::eRegular) {
 			create_menu_item_with_mnemonic(orthographic_menu, "_Next (XY, YZ, XY)", "NextView");
 			create_menu_item_with_mnemonic(orthographic_menu, "XY (Top)", "ViewTop");
 			create_menu_item_with_mnemonic(orthographic_menu, "YZ", "ViewSide");
@@ -1506,7 +1500,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu_in_menu, "Set Se_lected Brushes", "RegionSetSelection");
 	}
 
-	if (style == MainFrame::eSplit || style == MainFrame::eFloating) {
+	if (style == MainFrame::eSplit) {
 		command_connect_accelerator("CenterXYViews");
 	} else {
 		command_connect_accelerator("CenterXYView");
@@ -1807,16 +1801,16 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 
 	RotateFlip_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 	Select_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 	ComponentModes_constructToolbar(toolbar);
 
-	if (style == MainFrame::eRegular || style == MainFrame::eRegularLeft || style == MainFrame::eFloating) {
-		gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+	if (style == MainFrame::eRegular) {
+		gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
 		XYWnd_constructToolbar(toolbar);
 	}
@@ -1824,7 +1818,7 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 	// disable the console and texture button in the regular layouts because they are already visible there
-	if (style != MainFrame::eRegular && style != MainFrame::eRegularLeft) {
+	if (style != MainFrame::eRegular) {
 		toolbar_append_button(toolbar, "Console (O)", "console.bmp", "ToggleConsole");
 	}
 
@@ -1863,7 +1857,7 @@ static GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style) {
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	if (style != MainFrame::eRegular && style != MainFrame::eRegularLeft) {
+	if (style != MainFrame::eRegular) {
 		toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
 	}
 	toolbar_append_button(toolbar, "Entities (N)", "entities.bmp", "ToggleEntityInspector");
@@ -1892,7 +1886,7 @@ static GtkWidget* create_main_statusbar(GtkWidget *pStatusLabel[c_count_status])
 		gtk_frame_set_shadow_type(frame, GTK_SHADOW_IN);
 
 		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
-		gtk_label_set_ellipsize( label, PANGO_ELLIPSIZE_END);
+		gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 		gtk_misc_set_padding(GTK_MISC(label), 4, 2);
 		gtk_widget_show(GTK_WIDGET(label));
@@ -1947,8 +1941,6 @@ GtkWindow* MainFrame_getWindow (void) {
 	return g_pParentWnd->m_window;
 }
 
-static std::vector<GtkWidget*> g_floating_windows;
-
 MainFrame::MainFrame() : m_window(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this)) {
 	m_pXYWnd = 0;
 	m_pCamWnd = 0;
@@ -1970,10 +1962,6 @@ MainFrame::~MainFrame (void) {
 	gtk_widget_hide(GTK_WIDGET(m_window));
 
 	Shutdown();
-
-	for (std::vector<GtkWidget*>::iterator i = g_floating_windows.begin(); i != g_floating_windows.end(); ++i) {
-		gtk_widget_destroy(*i);
-	}
 
 	gtk_widget_destroy(GTK_WIDGET(m_window));
 }
@@ -2029,7 +2017,7 @@ void MainFrame::Create (void) {
 
 	GetPlugInMgr().Init(GTK_WIDGET(window));
 
-	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
+	GtkWidget* vbox = gtk_vbox_new(FALSE, 4);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 	gtk_widget_show(vbox);
 
@@ -2064,10 +2052,6 @@ void MainFrame::Create (void) {
 	GroupDialog_constructWindow(window);
 	g_page_entity = GroupDialog_addPage("Entities", EntityInspector_constructWindow(GroupDialog_getWindow()), RawStringExportCaller("Entities"));
 
-	if (FloatingGroupDialog()) {
-		g_page_console = GroupDialog_addPage("Console", Console_constructWindow(GroupDialog_getWindow()), RawStringExportCaller("Console"));
-	}
-
 #ifdef WIN32
 	if (g_multimon_globals.m_bStartOnPrimMon) {
 		PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
@@ -2089,7 +2073,6 @@ void MainFrame::Create (void) {
 	// create edit windows according to user setable style
 	switch (CurrentStyle()) {
 	case eRegular:
-	case eRegularLeft:
 		{
 			GtkWidget* vsplit = gtk_vpaned_new();
 			m_vSplit = vsplit;
@@ -2124,7 +2107,6 @@ void MainFrame::Create (void) {
 						gtk_paned_add2(GTK_PANED(hsplit), xy_window);
 					}
 
-
 					// camera
 					m_pCamWnd = NewCamWnd();
 					GlobalCamera_setCamWnd(*m_pCamWnd);
@@ -2152,90 +2134,6 @@ void MainFrame::Create (void) {
 		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
 		break;
 
-	case eFloating:
-		{
-			GtkWindow* window = create_persistent_floating_window("Camera", m_window);
-			global_accel_connect_window(window);
-			g_posCamWnd.connect(window);
-
-			gtk_widget_show(GTK_WIDGET(window));
-
-			m_pCamWnd = NewCamWnd();
-			GlobalCamera_setCamWnd(*m_pCamWnd);
-
-			{
-				GtkFrame* frame = create_framed_widget(CamWnd_getWidget(*m_pCamWnd));
-				gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(frame));
-			}
-			CamWnd_setParent(*m_pCamWnd, window);
-
-			g_floating_windows.push_back(GTK_WIDGET(window));
-		}
-
-		{
-			GtkWindow* window = create_persistent_floating_window(ViewType_getTitle(XY), m_window);
-			global_accel_connect_window(window);
-			g_posXYWnd.connect(window);
-
-			m_pXYWnd = new XYWnd();
-			m_pXYWnd->m_parent = window;
-			m_pXYWnd->SetViewType(XY);
-
-
-			{
-				GtkFrame* frame = create_framed_widget(m_pXYWnd->GetWidget());
-				gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(frame));
-			}
-			XY_Top_Shown_Construct(window);
-
-			g_floating_windows.push_back(GTK_WIDGET(window));
-		}
-
-		{
-			GtkWindow* window = create_persistent_floating_window(ViewType_getTitle(XZ), m_window);
-			global_accel_connect_window(window);
-			g_posXZWnd.connect(window);
-
-			m_pXZWnd = new XYWnd();
-			m_pXZWnd->m_parent = window;
-			m_pXZWnd->SetViewType(XZ);
-
-			{
-				GtkFrame* frame = create_framed_widget(m_pXZWnd->GetWidget());
-				gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(frame));
-			}
-
-			XZ_Front_Shown_Construct(window);
-
-			g_floating_windows.push_back(GTK_WIDGET(window));
-		}
-
-		{
-			GtkWindow* window = create_persistent_floating_window(ViewType_getTitle(YZ), m_window);
-			global_accel_connect_window(window);
-			g_posYZWnd.connect(window);
-
-			m_pYZWnd = new XYWnd();
-			m_pYZWnd->m_parent = window;
-			m_pYZWnd->SetViewType(YZ);
-
-			{
-				GtkFrame* frame = create_framed_widget(m_pYZWnd->GetWidget());
-				gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(frame));
-			}
-
-			YZ_Side_Shown_Construct(window);
-
-			g_floating_windows.push_back(GTK_WIDGET(window));
-		}
-
-		{
-			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(GroupDialog_getWindow()));
-			g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
-		}
-
-		GroupDialog_show();
-		break;
 	case eSplit:
 		// 4 way
 		m_pCamWnd = NewCamWnd();
@@ -2266,6 +2164,12 @@ void MainFrame::Create (void) {
 			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
 			g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
 		}
+
+		{
+			GtkWidget* console_window = Console_constructWindow(window);
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(console_window), TRUE, TRUE, 0);
+		}
+
 		break;
 	}
 
@@ -2288,20 +2192,13 @@ void MainFrame::Create (void) {
 }
 
 void MainFrame::SaveWindowInfo (void) {
-	if (!FloatingGroupDialog()) {
+	if (CurrentStyle() == eRegular) {
 		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
-
-		if (CurrentStyle() != eRegular) {
-			g_layout_globals.nCamWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
-		} else {
-			g_layout_globals.nXYWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
-		}
-
+		g_layout_globals.nXYWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
 		g_layout_globals.nCamHeight = gtk_paned_get_position(GTK_PANED(m_vSplit2));
 	}
 
 	g_layout_globals.m_position = m_position_tracker.getPosition();
-
 	g_layout_globals.nState = gdk_window_get_state(GTK_WIDGET(m_window)->window);
 }
 
@@ -2404,7 +2301,7 @@ void GlobalGL_sharedContextDestroyed (void) {
 
 void Layout_constructPreferences(PreferencesPage& page) {
 	{
-		const char* layouts[] = {"window1.bmp", "window2.bmp", "window3.bmp", "window4.bmp"};
+		const char* layouts[] = {"window_regular.bmp", "window_split.bmp",};
 		page.appendRadioIcons(
 			"Window Layout",
 			STRING_ARRAY_RANGE(layouts),

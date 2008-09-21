@@ -30,6 +30,7 @@
   surf26="alphatest"
   cont1="solid"
   cont2="window"
+  cont3="ladder"
   cont6="water"
   cont9="level1"
   cont10="level2"
