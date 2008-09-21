@@ -2017,7 +2017,7 @@ void MainFrame::Create (void) {
 
 	GetPlugInMgr().Init(GTK_WIDGET(window));
 
-	GtkWidget* vbox = gtk_vbox_new(FALSE, 4);
+	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 	gtk_widget_show(vbox);
 
@@ -2124,18 +2124,18 @@ void MainFrame::Create (void) {
 		}
 
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
-
-		if (CurrentStyle() == eRegular) {
-			gtk_paned_set_position(GTK_PANED(m_hSplit), g_layout_globals.nXYWidth);
-		} else {
-			gtk_paned_set_position(GTK_PANED(m_hSplit), g_layout_globals.nCamWidth);
-		}
-
+		gtk_paned_set_position(GTK_PANED(m_hSplit), g_layout_globals.nXYWidth);
 		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
 		break;
 
 	case eSplit:
-		// 4 way
+		{
+			GtkWidget* vsplit = gtk_vpaned_new();
+			m_vSplit = vsplit;
+			gtk_box_pack_start(GTK_BOX(hbox), vsplit, TRUE, TRUE, 0);
+			gtk_widget_show(vsplit);
+		}
+
 		m_pCamWnd = NewCamWnd();
 		GlobalCamera_setCamWnd(*m_pCamWnd);
 		CamWnd_setParent(*m_pCamWnd, window);
@@ -2158,7 +2158,7 @@ void MainFrame::Create (void) {
 		GtkWidget* xz = m_pXZWnd->GetWidget();
 
 		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
-		gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(split), TRUE, TRUE, 0);
+		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
 
 		{
 			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
@@ -2167,8 +2167,10 @@ void MainFrame::Create (void) {
 
 		{
 			GtkWidget* console_window = Console_constructWindow(window);
-			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(console_window), TRUE, TRUE, 0);
+			gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
 		}
+
+		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
 
 		break;
 	}
@@ -2193,9 +2195,11 @@ void MainFrame::Create (void) {
 
 void MainFrame::SaveWindowInfo (void) {
 	if (CurrentStyle() == eRegular) {
-		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
 		g_layout_globals.nXYWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
+		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
 		g_layout_globals.nCamHeight = gtk_paned_get_position(GTK_PANED(m_vSplit2));
+	} else {
+		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
 	}
 
 	g_layout_globals.m_position = m_position_tracker.getPosition();
