@@ -514,7 +514,6 @@ static void UP_ArmourDescription (const technology_t* t)
 
 	/* select item */
 	od = INVSH_GetItemByID(t->provides);
-	assert(od);
 
 #ifdef DEBUG
 	if (od == NULL)
@@ -524,6 +523,8 @@ static void UP_ArmourDescription (const technology_t* t)
 	else
 #endif
 	{
+		if (!od)
+			Sys_Error("Could not find armour definition '%s' which should have been provided by '%s'\n", t->provides, t->id);
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upimage_top", t->image);
