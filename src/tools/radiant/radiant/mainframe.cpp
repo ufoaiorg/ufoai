@@ -1817,13 +1817,6 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	// disable the console and texture button in the regular layouts because they are already visible there
-	if (style != MainFrame::eRegular) {
-		toolbar_append_button(toolbar, "Console (O)", "console.bmp", "ToggleConsole");
-	}
-
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-
 	Filters_constructToolbar(toolbar);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
