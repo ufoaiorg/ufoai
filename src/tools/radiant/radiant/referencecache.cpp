@@ -1,3 +1,8 @@
+/**
+ * @file referencecache.cpp
+ * @brief
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -56,14 +61,14 @@ ModelModules& ReferenceAPI_getModelModules();
 #include "filetypes.h"
 
 
-bool References_Saved();
+static bool References_Saved();
 
 void MapChanged() {
 	Map_SetModified(g_map, !References_Saved());
 }
 
 
-EntityCreator* g_entityCreator = 0;
+static EntityCreator* g_entityCreator = 0;
 
 bool MapResource_loadFile(const MapFormat& format, scene::Node& root, const char* filename) {
 	globalOutputStream() << "Open file " << filename << " for read...";
@@ -110,7 +115,7 @@ bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTrave
 	return false;
 }
 
-bool file_saveBackup(const char* path) {
+static bool file_saveBackup(const char* path) {
 	if (file_writeable(path)) {
 		StringOutputStream backup(256);
 		backup << StringRange(path, path_get_extension(path)) << "bak";
@@ -157,8 +162,10 @@ NullModelLoader g_NullModelLoader;
 }
 
 
-/// \brief Returns the model loader for the model \p type or 0 if the model \p type has no loader module
-ModelLoader* ModelLoader_forType(const char* type) {
+/**
+ * @brief Returns the model loader for the model \p type or 0 if the model \p type has no loader module
+ */
+static ModelLoader* ModelLoader_forType(const char* type) {
 	const char* moduleName = findModuleName(&GlobalFiletypes(), ModelLoader::Name(), type);
 	if (string_not_empty(moduleName)) {
 		ModelLoader* table = ReferenceAPI_getModelModules().findModule(moduleName);
@@ -193,7 +200,7 @@ NodeSmartReference ModelResource_load(ModelLoader* loader, const char* name) {
 }
 
 
-inline hash_t path_hash(const char* path, hash_t previous = 0) {
+static inline hash_t path_hash(const char* path, hash_t previous = 0) {
 #if defined(WIN32)
 	return string_hash_nocase(path, previous);
 #else // UNIX
@@ -230,17 +237,17 @@ struct ModelKeyHash {
 };
 
 typedef HashTable<ModelKey, NodeSmartReference, ModelKeyHash, ModelKeyEqual> ModelCache;
-ModelCache g_modelCache;
-bool g_modelCache_enabled = true;
+static ModelCache g_modelCache;
+static bool g_modelCache_enabled = true;
 
-ModelCache::iterator ModelCache_find(const char* path, const char* name) {
+static ModelCache::iterator ModelCache_find(const char* path, const char* name) {
 	if (g_modelCache_enabled) {
 		return g_modelCache.find(ModelKey(path, name));
 	}
 	return g_modelCache.end();
 }
 
-ModelCache::iterator ModelCache_insert(const char* path, const char* name, scene::Node& node) {
+static ModelCache::iterator ModelCache_insert(const char* path, const char* name, scene::Node& node) {
 	if (g_modelCache_enabled) {
 		return g_modelCache.insert(ModelKey(path, name), NodeSmartReference(node));
 	}
@@ -288,11 +295,7 @@ bool g_realised = false;
 
 // name may be absolute or relative
 const char* rootPath(const char* name) {
-	return GlobalFileSystem().findRoot(
-	           path_is_absolute(name)
-	           ? name
-	           : GlobalFileSystem().findFile(name)
-	       );
+	return GlobalFileSystem().findRoot(path_is_absolute(name) ? name : GlobalFileSystem().findFile(name));
 }
 }
 
@@ -343,11 +346,8 @@ struct ModelResource : public Resource {
 			// cache lookup
 			ModelCache::iterator i = ModelCache_find(m_path.c_str(), m_name.c_str());
 			if (i == g_modelCache.end()) {
-				i = ModelCache_insert(
-				        m_path.c_str(),
-				        m_name.c_str(),
-				        Model_load(m_loader, m_path.c_str(), m_name.c_str(), m_type.c_str())
-				    );
+				i = ModelCache_insert(m_path.c_str(), m_name.c_str(),
+					Model_load(m_loader, m_path.c_str(), m_name.c_str(), m_type.c_str()));
 			}
 
 			setModel((*i).value);
@@ -600,7 +600,7 @@ void SaveReferences() {
 	MapChanged();
 }
 
-bool References_Saved() {
+static bool References_Saved() {
 	for (HashtableReferenceCache::iterator i = g_referenceCache.begin(); i != g_referenceCache.end(); ++i) {
 		scene::Node* node = (*i).value->getNode();
 		if (node != 0) {

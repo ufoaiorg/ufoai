@@ -1,3 +1,8 @@
+/**
+ * @file pluginmenu.cpp
+ * @brief Generates the plugin menu entries
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -34,9 +39,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "preferences.h"
 
 
-int m_nNextPlugInID = 0;
+static int m_nNextPlugInID = 0;
 
-void plugin_activated(GtkWidget* widget, gpointer data) {
+static void plugin_activated(GtkWidget* widget, gpointer data) {
 	const char* str = (const char*)g_object_get_data(G_OBJECT(widget), "command");
 	GetPlugInMgr().Dispatch(gpointer_to_int(data), str);
 }
@@ -44,7 +49,7 @@ void plugin_activated(GtkWidget* widget, gpointer data) {
 #include <stack>
 typedef std::stack<GtkWidget*> WidgetStack;
 
-void PlugInMenu_Add(GtkMenu* plugin_menu, IPlugIn* pPlugIn) {
+static void PlugInMenu_Add(GtkMenu* plugin_menu, IPlugIn* pPlugIn) {
 	GtkWidget *menu, *item, *parent, *subMenu;
 	const char *menuText, *menuCommand;
 	WidgetStack menuStack;
@@ -116,10 +121,9 @@ void PlugInMenu_Add(GtkMenu* plugin_menu, IPlugIn* pPlugIn) {
 	}
 }
 
-GtkMenu* g_plugins_menu = 0;
-GtkMenuItem* g_plugins_menu_separator = 0;
+static GtkMenu* g_plugins_menu = 0;
 
-void PluginsMenu_populate() {
+static void PluginsMenu_populate() {
 	class PluginsMenuConstructor : public PluginsVisitor {
 		GtkMenu* m_menu;
 	public:
@@ -132,16 +136,6 @@ void PluginsMenu_populate() {
 
 	PluginsMenuConstructor constructor(g_plugins_menu);
 	GetPlugInMgr().constructMenu(constructor);
-}
-
-void PluginsMenu_clear() {
-	m_nNextPlugInID = 0;
-
-	GList* lst = g_list_find (gtk_container_children(GTK_CONTAINER(g_plugins_menu)), GTK_WIDGET(g_plugins_menu_separator));
-	while (lst->next) {
-		gtk_container_remove (GTK_CONTAINER(g_plugins_menu), GTK_WIDGET (lst->next->data));
-		lst = g_list_find (gtk_container_children(GTK_CONTAINER(g_plugins_menu)),  GTK_WIDGET(g_plugins_menu_separator));
-	}
 }
 
 GtkMenuItem* create_plugins_menu() {

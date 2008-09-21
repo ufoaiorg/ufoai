@@ -27,7 +27,5 @@ GtkMenuItem* create_plugins_menu();
 
 typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkMenuItem GtkMenuItem;
-void PluginsMenu_populate();
-void PluginsMenu_clear();
 
 #endif

@@ -47,11 +47,12 @@ const int c_count_status = 4;
 
 class MainFrame {
 public:
+	/** @brief The style of the window layout */
 	enum EViewStyle {
-		eRegular = 0,
-		eFloating = 1,
-		eSplit = 2,
-		eRegularLeft = 3,
+		eRegular = 0,		/**< one view, console and texture on the right side */
+		eFloating = 1,		/**< floating windows */
+		eSplit = 2,			/**< 4 views */
+		eRegularLeft = 3,	/**< one view, console and texture on the left side */
 	};
 
 	MainFrame();
