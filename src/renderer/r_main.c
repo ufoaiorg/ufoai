@@ -691,8 +691,14 @@ static inline void R_VerifyDriver (void)
 #endif
 	if (r_intel_hack->integer && R_SearchForVendor("Intel")) {
 		/* HACK: */
-		Com_Printf("Activate texture compression for Intel chips\n");
+		Com_Printf("Activate texture compression for Intel chips - see cvar r_intel_hack\n");
 		Cvar_Set("r_ext_texture_compression", "1");
+		r_ext_texture_compression->modified = qfalse;
+#define INTEL_TEXTURE_RESOLUTION 1024
+		if (r_maxtexres->integer > INTEL_TEXTURE_RESOLUTION) {
+			Com_Printf("Set max. texture resolution to %i - see cvar r_intel_hack\n", INTEL_TEXTURE_RESOLUTION);
+			Cvar_SetValue("r_maxtexres", INTEL_TEXTURE_RESOLUTION);
+		}
 		r_ext_texture_compression->modified = qfalse;
 		r_config.hardwareType = GLHW_INTEL;
 	} else if (R_SearchForVendor("NVIDIA")) {
