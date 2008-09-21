@@ -671,6 +671,15 @@ static inline void R_EnforceVersion (void)
 }
 
 /**
+ * @brief Searches vendor and renderer GL strings for the given vendor id
+ */
+static inline qboolean R_SearchForVendor (const char *vendor)
+{
+	return Q_stristr(r_config.vendorString, vendor)
+		|| Q_stristr(r_config.rendererString, vendor);
+}
+
+/**
  * @brief Checks whether we have hardware acceleration
  */
 static inline void R_VerifyDriver (void)
@@ -680,15 +689,15 @@ static inline void R_VerifyDriver (void)
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
 #endif
-	if (r_intel_hack->integer && strstr(r_config.vendorString, "Intel")) {
+	if (r_intel_hack->integer && R_SearchForVendor("Intel")) {
 		/* HACK: */
 		Com_Printf("Activate texture compression for Intel chips\n");
 		Cvar_Set("r_ext_texture_compression", "1");
 		r_ext_texture_compression->modified = qfalse;
 		r_config.hardwareType = GLHW_INTEL;
-	} else if (strstr(r_config.vendorString, "NVIDIA")) {
+	} else if (R_SearchForVendor("NVIDIA")) {
 		r_config.hardwareType = GLHW_NVIDIA;
-	} else if (strstr(r_config.vendorString, "ATI")) {
+	} else if (R_SearchForVendor("ATI")) {
 		r_config.hardwareType = GLHW_ATI;
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;

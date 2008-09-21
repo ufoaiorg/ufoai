@@ -1641,10 +1641,12 @@ void CheckMixedFaceContents (void)
 	}
 }
 
-/** @brief remove stepon brushes
- *  @note only removes brushes where all sides are flagged stepon, leave the mfc check
- *  to catch others
- *  @todo remove this code (and associated parts from ufo2map.c) once it has been used on all maps*/
+/**
+ * @brief remove stepon brushes
+ * @note only removes brushes where all sides are flagged stepon, leave the mfc check
+ * to catch others
+ * @todo remove this code (and associated parts from ufo2map.c) once it has been used on all maps
+ */
 void Check_RemoveSteponBrushes (void)
 {
 	int i, j;

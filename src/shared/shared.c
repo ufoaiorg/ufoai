@@ -434,3 +434,16 @@ int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 
 	return len;
 }
+
+const char *Q_stristr (const char *str, const char *substr)
+{
+	const size_t sublen = strlen(substr);
+	while (*str) {
+		if (!Q_strncasecmp(str, substr, sublen))
+			break;
+		str++;
+	}
+	if (!(*str))
+		str = NULL;
+	return str;
+}
