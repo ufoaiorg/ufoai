@@ -93,7 +93,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Timeunits for the various actions. */
 /* game/g_client.c, client/cl_actor.c, client/cl_le.c, client/cl_parse.c, common/cmodel.c */
-const int TUs_used[PATHFINDING_DIRECTIONS];
+extern const int TUs_used[PATHFINDING_DIRECTIONS];
 #define	TU_CROUCH			3	/**< Time units for crouching and standing up */
 #define	TU_TURN				1	/**< Time units for turning (no matter how far). */
 #define	TU_MOVE_STRAIGHT	2	/**< Time units used to move straight to the next field/square. */
