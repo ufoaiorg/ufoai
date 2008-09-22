@@ -88,6 +88,9 @@ void R_FontShutdown (void)
 			SDL_RWclose(fonts[i].rw);
 		}
 
+	memset(fonts, 0, sizeof(fonts));
+	numFonts = 0;
+
 	/* now quit SDL_ttf, too */
 	TTF_Quit();
 }

@@ -213,6 +213,6 @@ void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev
 vec_t Q_rint(const vec_t in);
 vec_t ColorNormalize(const vec3_t in, vec3_t out);
 
-void TangentVector(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent);
+void TangentVector(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent, vec3_t binormal);
 
 #endif

@@ -529,6 +529,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 	float soff, toff, s, t;
 	float *point, *sdir, *tdir;
 	vec4_t tangent;
+	vec3_t binormal;
 	mBspSurface_t *surf;
 	mBspVertex_t *vert;
 	int vertexcount;
@@ -607,13 +608,14 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			mod->bsp.lmtexcoords[coordind + 1] = t;
 
 			/* normal vectors */
-			if (!VectorCompare(vert->normal, vec3_origin))
+			if (surf->texinfo->flags & SURF_PHONG &&
+					!VectorCompare(vert->normal, vec3_origin))
 				memcpy(&mod->bsp.normals[vertind], vert->normal, sizeof(vec3_t));
 			else
 				memcpy(&mod->bsp.normals[vertind], surf->normal, sizeof(vec3_t));
 
 			/* tangent vector */
-			TangentVector(vert->normal, sdir, tdir, tangent);
+			TangentVector(vert->normal, sdir, tdir, tangent, binormal);
 			memcpy(&mod->bsp.tangents[tangind], tangent, sizeof(vec4_t));
 
 			vertind += 3;
