@@ -63,13 +63,10 @@ GtkImage* image_new_missing() {
 	return GTK_IMAGE(gtk_image_new_from_stock(GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_SMALL_TOOLBAR));
 }
 
-GtkImage* new_image(const char* filename) {
-	{
-		GtkImage* image = image_new_from_file_with_mask(filename);
-		if (image != 0) {
-			return image;
-		}
-	}
+static inline GtkImage* new_image(const char* filename) {
+	GtkImage* image = image_new_from_file_with_mask(filename);
+	if (image != 0)
+		return image;
 
 	return image_new_missing();
 }
