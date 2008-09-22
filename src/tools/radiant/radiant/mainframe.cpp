@@ -1937,7 +1937,6 @@ GtkWindow* MainFrame_getWindow (void) {
 MainFrame::MainFrame() : m_window(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this)) {
 	m_pXYWnd = 0;
 	m_pCamWnd = 0;
-	m_pZWnd = 0;
 	m_pYZWnd = 0;
 	m_pXZWnd = 0;
 	m_pActiveXY = 0;

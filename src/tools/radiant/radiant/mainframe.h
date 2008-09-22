@@ -34,7 +34,6 @@ class IToolbarButton;
 
 class XYWnd;
 class CamWnd;
-class ZWnd;
 
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
@@ -76,7 +75,6 @@ private:
 	XYWnd* m_pYZWnd;
 	XYWnd* m_pXZWnd;
 	CamWnd* m_pCamWnd;
-	ZWnd* m_pZWnd;
 	XYWnd* m_pActiveXY;
 
 	GtkWidget *m_pStatusLabel[c_count_status];
@@ -105,10 +103,8 @@ public:
 	XYWnd* GetYZWnd() {
 		return m_pYZWnd;
 	}
-	ZWnd* GetZWnd() {
-		return m_pZWnd;
-	}
 	CamWnd* GetCamWnd() {
+		ASSERT_NOTNULL(m_pCamWnd);
 		return m_pCamWnd;
 	}
 

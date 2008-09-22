@@ -456,6 +456,7 @@ Entity *Scene_FindPlayerStart (void) {
 
 
 void FocusViews(const Vector3& point, float angle) {
+	ASSERT_NOTNULL(g_pParentWnd);
 	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
 	Camera_setOrigin(camwnd, point);
 	Vector3 angles(Camera_getAngles(camwnd));
