@@ -831,9 +831,7 @@ static void CL_CamSetZoom_f (void)
 
 /**
  * @brief Makes a mapshot - called by basemapshot script command
- * @note Execute basemapshot in console and load a basemap
- * after this all you have to do is hit the screenshot button (F12)
- * to make a new screenshot of the basetile
+ * @note Load a basemap and execute 'basemapshot' in console
  */
 static void CL_MakeBaseMapShot_f (void)
 {
