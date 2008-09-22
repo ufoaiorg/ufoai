@@ -850,7 +850,7 @@ static void CL_MakeBaseMapShot_f (void)
 	MN_PushMenu("nohud");
 	/* hide any active console */
 	Key_SetDest(key_game);
-	Cmd_ExecuteString("screenshot tga");
+	Cmd_ExecuteString("r_screenshot tga");
 }
 
 #define STATE_FORWARD	1
