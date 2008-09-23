@@ -1189,7 +1189,7 @@ void BuildFacelights (unsigned int facenum)
 		if (!VectorCompare(direction, vec3_origin)) {
 			/* finalize the lighting direction for the sample and
 			 * transform it into tangent space */
-			TangentVector(normal, sdir, tdir, tangent, binormal);
+			TangentVectors(normal, sdir, tdir, tangent, binormal);
 
 			dir[0] = DotProduct(direction, tangent);
 			dir[1] = DotProduct(direction, binormal);

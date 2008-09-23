@@ -843,7 +843,7 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
  * @brief Projects the normalized directional vectors on to the normal's plane.
  * The fourth component of the resulting tangent vector represents sidedness.
  */
-void TangentVector (const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent, vec3_t binormal)
+void TangentVectors (const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent, vec3_t binormal)
 {
 	vec3_t s, t;
 

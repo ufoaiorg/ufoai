@@ -615,7 +615,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 				memcpy(&mod->bsp.normals[vertind], surf->normal, sizeof(vec3_t));
 
 			/* tangent vector */
-			TangentVector(vert->normal, sdir, tdir, tangent, binormal);
+			TangentVectors(vert->normal, sdir, tdir, tangent, binormal);
 			memcpy(&mod->bsp.tangents[tangind], tangent, sizeof(vec4_t));
 
 			vertind += 3;
