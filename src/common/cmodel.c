@@ -69,8 +69,7 @@ static pos3_t exclude_from_forbiddenlist;
 static cBspSurface_t nullsurface;
 
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
-/*                                            E  W  N  S NE SW NW SE UP DN  ST         KN        -- FA -- -- (Fliers up             )(Fliers down           ) */
-const int TUs_used[PATHFINDING_DIRECTIONS] = {
+static const int TUs_used[PATHFINDING_DIRECTIONS] = {
 	TU_MOVE_STRAIGHT, /* E  */
 	TU_MOVE_STRAIGHT, /* W  */
 	TU_MOVE_STRAIGHT, /* N  */
