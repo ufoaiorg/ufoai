@@ -67,10 +67,10 @@ public:
 	TextureProjection() {
 	}
 	TextureProjection(
-	    const texdef_t& texdef,
-	    const brushprimit_texdef_t& brushprimit_texdef,
-	    const Vector3& basis_s,
-	    const Vector3& basis_t
+		const texdef_t& texdef,
+		const brushprimit_texdef_t& brushprimit_texdef,
+		const Vector3& basis_s,
+		const Vector3& basis_t
 	) :
 			m_texdef(texdef),
 			m_brushprimit_texdef(brushprimit_texdef),

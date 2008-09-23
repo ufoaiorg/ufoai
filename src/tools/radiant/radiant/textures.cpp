@@ -240,7 +240,7 @@ typedef std::pair<LoadImageCallback, CopiedString> TextureKey;
 
 void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 	texture.texture_number = 0;
-	if (!string_empty(key.second.c_str())) {
+	if (!string_empty(key.second.c_str()) && !strstr(key.second.c_str(), "_nm")) {
 		AutoPtr<Image> image(key.first.loadImage(key.second.c_str()));
 		if (image) {
 			LoadTextureRGBA(&texture, image->getRGBAPixels(), image->getWidth(), image->getHeight());

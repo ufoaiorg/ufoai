@@ -298,6 +298,8 @@ static inline int TextureBrowser_fontHeight(TextureBrowser& textureBrowser) {
 }
 
 const char* TextureBrowser_GetSelectedShader(TextureBrowser& textureBrowser) {
+	if (!strcmp(textureBrowser.shader.c_str(), "textures/"))
+		return "textures/tex_common/nodraw";
 	return textureBrowser.shader.c_str();
 }
 

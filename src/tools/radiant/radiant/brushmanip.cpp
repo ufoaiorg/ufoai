@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <list>
 
-void Brush_ConstructCuboid(Brush& brush, const AABB& bounds, const char* shader, const TextureProjection& projection) {
+static void Brush_ConstructCuboid(Brush& brush, const AABB& bounds, const char* shader, const TextureProjection& projection) {
 	const unsigned char box[3][2] = { { 0, 1 }, { 2, 0 }, { 1, 2 } };
 	Vector3 mins(vector3_subtracted(bounds.origin, bounds.extents));
 	Vector3 maxs(vector3_added(bounds.origin, bounds.extents));
@@ -66,11 +66,11 @@ void Brush_ConstructCuboid(Brush& brush, const AABB& bounds, const char* shader,
 	}
 }
 
-inline float max_extent(const Vector3& extents) {
+static inline float max_extent(const Vector3& extents) {
 	return std::max(std::max(extents[0], extents[1]), extents[2]);
 }
 
-inline float max_extent_2d(const Vector3& extents, int axis) {
+static inline float max_extent_2d(const Vector3& extents, int axis) {
 	switch (axis) {
 	case 0:
 		return std::max(extents[1], extents[2]);
@@ -81,11 +81,11 @@ inline float max_extent_2d(const Vector3& extents, int axis) {
 	}
 }
 
-const std::size_t c_brushPrism_minSides = 3;
-const std::size_t c_brushPrism_maxSides = c_brush_maxFaces - 2;
-const char* const c_brushPrism_name = "brushPrism";
+static const std::size_t c_brushPrism_minSides = 3;
+static const std::size_t c_brushPrism_maxSides = c_brush_maxFaces - 2;
+static const char* const c_brushPrism_name = "brushPrism";
 
-void Brush_ConstructPrism(Brush& brush, const AABB& bounds, std::size_t sides, int axis, const char* shader, const TextureProjection& projection) {
+static void Brush_ConstructPrism(Brush& brush, const AABB& bounds, std::size_t sides, int axis, const char* shader, const TextureProjection& projection) {
 	if (sides < c_brushPrism_minSides) {
 		globalErrorStream() << c_brushPrism_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is " << Unsigned(c_brushPrism_minSides) << "\n";
 		return;
@@ -149,11 +149,11 @@ void Brush_ConstructPrism(Brush& brush, const AABB& bounds, std::size_t sides, i
 	}
 }
 
-const std::size_t c_brushCone_minSides = 3;
-const std::size_t c_brushCone_maxSides = 32;
-const char* const c_brushCone_name = "brushCone";
+static const std::size_t c_brushCone_minSides = 3;
+static const std::size_t c_brushCone_maxSides = 32;
+static const char* const c_brushCone_name = "brushCone";
 
-void Brush_ConstructCone(Brush& brush, const AABB& bounds, std::size_t sides, const char* shader, const TextureProjection& projection) {
+static void Brush_ConstructCone(Brush& brush, const AABB& bounds, std::size_t sides, const char* shader, const TextureProjection& projection) {
 	if (sides < c_brushCone_minSides) {
 		globalErrorStream() << c_brushCone_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is " << Unsigned(c_brushCone_minSides) << "\n";
 		return;
@@ -205,11 +205,11 @@ void Brush_ConstructCone(Brush& brush, const AABB& bounds, std::size_t sides, co
 	}
 }
 
-const std::size_t c_brushSphere_minSides = 3;
-const std::size_t c_brushSphere_maxSides = 7;
-const char* const c_brushSphere_name = "brushSphere";
+static const std::size_t c_brushSphere_minSides = 3;
+static const std::size_t c_brushSphere_maxSides = 7;
+static const char* const c_brushSphere_name = "brushSphere";
 
-void Brush_ConstructSphere(Brush& brush, const AABB& bounds, std::size_t sides, const char* shader, const TextureProjection& projection) {
+static void Brush_ConstructSphere(Brush& brush, const AABB& bounds, std::size_t sides, const char* shader, const TextureProjection& projection) {
 	if (sides < c_brushSphere_minSides) {
 		globalErrorStream() << c_brushSphere_name << ": sides " << Unsigned(sides) << ": too few sides, minimum is " << Unsigned(c_brushSphere_minSides) << "\n";
 		return;
@@ -255,7 +255,7 @@ void Brush_ConstructSphere(Brush& brush, const AABB& bounds, std::size_t sides, 
 	}
 }
 
-int GetViewAxis() {
+static inline int GetViewAxis() {
 	switch (GlobalXYWnd_getCurrentViewType()) {
 	case XY:
 		return 2;
@@ -267,7 +267,11 @@ int GetViewAxis() {
 	return 2;
 }
 
-void Brush_ConstructPrefab(Brush& brush, EBrushPrefab type, const AABB& bounds, std::size_t sides, const char* shader, const TextureProjection& projection) {
+static void Brush_ConstructPrefab(Brush& brush, EBrushPrefab type, const AABB& bounds, std::size_t sides, const char* shader, const TextureProjection& projection) {
+
+	if (!shader || !*shader)
+		shader = "textures/tex_common/nodraw";
+
 	switch (type) {
 	case eBrushCuboid: {
 		UndoableCommand undo("brushCuboid");
@@ -276,7 +280,7 @@ void Brush_ConstructPrefab(Brush& brush, EBrushPrefab type, const AABB& bounds, 
 	}
 	break;
 	case eBrushPrism: {
-		int axis = GetViewAxis();
+		const int axis = GetViewAxis();
 		StringOutputStream command;
 		command << c_brushPrism_name << " -sides " << Unsigned(sides) << " -axis " << axis;
 		UndoableCommand undo(command.c_str());
@@ -583,7 +587,7 @@ void Scene_BrushResize_Selected(scene::Graph& graph, const AABB& bounds, const c
 	}
 }
 
-bool Brush_hasShader(const Brush& brush, const char* name) {
+static inline bool Brush_hasShader(const Brush& brush, const char* name) {
 	for (Brush::const_iterator i = brush.begin(); i != brush.end(); ++i) {
 		if (shader_equal((*i)->GetShader(), name)) {
 			return true;
@@ -926,9 +930,10 @@ public:
 	typedef MemberCaller<BrushPrefab, &BrushPrefab::set> SetCaller;
 };
 
-BrushPrefab g_brushprism(eBrushPrism);
-BrushPrefab g_brushcone(eBrushCone);
-BrushPrefab g_brushsphere(eBrushSphere);
+static BrushPrefab g_brushcuboid(eBrushCuboid);
+static BrushPrefab g_brushprism(eBrushPrism);
+static BrushPrefab g_brushcone(eBrushCone);
+static BrushPrefab g_brushsphere(eBrushSphere);
 
 
 void FlipClip();
@@ -974,6 +979,7 @@ void Texdef_ToggleMoveLock() {
 void Brush_registerCommands() {
 	GlobalToggles_insert("TogTexLock", FreeCaller<Texdef_ToggleMoveLock>(), ToggleItem::AddCallbackCaller(g_texdef_movelock_item), Accelerator('T', (GdkModifierType)GDK_SHIFT_MASK));
 
+	GlobalCommands_insert("BrushCuboid", BrushPrefab::SetCaller(g_brushcuboid));
 	GlobalCommands_insert("BrushPrism", BrushPrefab::SetCaller(g_brushprism));
 	GlobalCommands_insert("BrushCone", BrushPrefab::SetCaller(g_brushcone));
 	GlobalCommands_insert("BrushSphere", BrushPrefab::SetCaller(g_brushsphere));
@@ -995,14 +1001,15 @@ void Brush_registerCommands() {
 }
 
 void Brush_constructMenu(GtkMenu* menu) {
-	create_menu_item_with_mnemonic(menu, "Prism...", "BrushPrism");
+	create_menu_item_with_mnemonic(menu, "Cuboid...", "BrushCuboid");
 	create_menu_item_with_mnemonic(menu, "Cone...", "BrushCone");
+	create_menu_item_with_mnemonic(menu, "Prism...", "BrushPrism");
 	create_menu_item_with_mnemonic(menu, "Sphere...", "BrushSphere");
-	menu_separator (menu);
+	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic (menu, "CSG");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "CSG");
 		if (g_Layout_enableDetachableMenus.m_value)
-			menu_tearoff (menu_in_menu);
+			menu_tearoff(menu_in_menu);
 		create_menu_item_with_mnemonic(menu_in_menu, "Make _Hollow", "CSGHollow");
 		create_menu_item_with_mnemonic(menu_in_menu, "CSG _Subtract", "CSGSubtract");
 		create_menu_item_with_mnemonic(menu_in_menu, "CSG _Merge", "CSGMerge");

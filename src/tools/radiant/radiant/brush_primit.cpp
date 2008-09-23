@@ -298,6 +298,9 @@ float Texdef_getDefaultTextureScale() {
 void TexDef_Construct_Default(TextureProjection& projection) {
 	projection.m_texdef.scale[0] = Texdef_getDefaultTextureScale();
 	projection.m_texdef.scale[1] = Texdef_getDefaultTextureScale();
+	projection.m_texdef.shift[0] = 0;
+	projection.m_texdef.shift[1] = 0;
+	projection.m_texdef.rotate = 0;
 }
 
 void ShiftScaleRotate_fromFace(texdef_t& shiftScaleRotate, const TextureProjection& projection) {
@@ -310,11 +313,11 @@ void ShiftScaleRotate_toFace(const texdef_t& shiftScaleRotate, TextureProjection
 
 inline Matrix4 matrix4_rotation_for_vector3(const Vector3& x, const Vector3& y, const Vector3& z) {
 	return Matrix4(
-	           x.x(), x.y(), x.z(), 0,
-	           y.x(), y.y(), y.z(), 0,
-	           z.x(), z.y(), z.z(), 0,
-	           0, 0, 0, 1
-	       );
+		x.x(), x.y(), x.z(), 0,
+		y.x(), y.y(), y.z(), 0,
+		z.x(), z.y(), z.z(), 0,
+		0, 0, 0, 1
+	);
 }
 
 inline Matrix4 matrix4_swap_axes(const Vector3& from, const Vector3& to) {
@@ -349,23 +352,23 @@ inline Matrix4 matrix4_swap_axes(const Vector3& from, const Vector3& to) {
 
 inline Matrix4 matrix4_reflection_for_plane(const Plane3& plane) {
 	return Matrix4(
-	           static_cast<float>(1 - (2 * plane.a * plane.a)),
-	           static_cast<float>(-2 * plane.a * plane.b),
-	           static_cast<float>(-2 * plane.a * plane.c),
-	           0,
-	           static_cast<float>(-2 * plane.b * plane.a),
-	           static_cast<float>(1 - (2 * plane.b * plane.b)),
-	           static_cast<float>(-2 * plane.b * plane.c),
-	           0,
-	           static_cast<float>(-2 * plane.c * plane.a),
-	           static_cast<float>(-2 * plane.c * plane.b),
-	           static_cast<float>(1 - (2 * plane.c * plane.c)),
-	           0,
-	           static_cast<float>(-2 * plane.d * plane.a),
-	           static_cast<float>(-2 * plane.d * plane.b),
-	           static_cast<float>(-2 * plane.d * plane.c),
-	           1
-	       );
+		static_cast<float>(1 - (2 * plane.a * plane.a)),
+		static_cast<float>(-2 * plane.a * plane.b),
+		static_cast<float>(-2 * plane.a * plane.c),
+		0,
+		static_cast<float>(-2 * plane.b * plane.a),
+		static_cast<float>(1 - (2 * plane.b * plane.b)),
+		static_cast<float>(-2 * plane.b * plane.c),
+		0,
+		static_cast<float>(-2 * plane.c * plane.a),
+		static_cast<float>(-2 * plane.c * plane.b),
+		static_cast<float>(1 - (2 * plane.c * plane.c)),
+		0,
+		static_cast<float>(-2 * plane.d * plane.a),
+		static_cast<float>(-2 * plane.d * plane.b),
+		static_cast<float>(-2 * plane.d * plane.c),
+		1
+	);
 }
 
 inline Matrix4 matrix4_reflection_for_plane45(const Plane3& plane, const Vector3& from, const Vector3& to) {

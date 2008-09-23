@@ -981,7 +981,7 @@ void XYWnd::NewBrushDrag_End(int x, int y) {
 static inline const char* NewBrushDragGetTexture (void)
 {
 	const char *selectedTexture = TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
-	if (g_brush_always_nodraw || !strcmp(selectedTexture, "textures/"))
+	if (g_brush_always_nodraw)
 		return "textures/tex_common/nodraw";
 	return selectedTexture;
 }
