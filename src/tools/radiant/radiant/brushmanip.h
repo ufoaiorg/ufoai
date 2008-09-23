@@ -27,7 +27,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "generic/callbackfwd.h"
 
 enum EBrushPrefab {
-	eBrushCuboid,
 	eBrushPrism,
 	eBrushCone,
 	eBrushSphere,

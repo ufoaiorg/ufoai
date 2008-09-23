@@ -36,6 +36,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <list>
 
+/**
+ * @brief Creates a cube out of the given mins and maxs of the axis aligned bounding box
+ * @param[out] The brush to creates the planes for
+ * @param[in] bounds The mins and maxs of the cube
+ * @param[in] shader The path of the texture relative to the base dir
+ * @param[in] projection The texture projection that is used (shift, scale and rotate values)
+ */
 static void Brush_ConstructCuboid(Brush& brush, const AABB& bounds, const char* shader, const TextureProjection& projection) {
 	const unsigned char box[3][2] = { { 0, 1 }, { 2, 0 }, { 1, 2 } };
 	Vector3 mins(vector3_subtracted(bounds.origin, bounds.extents));
@@ -273,12 +280,6 @@ static void Brush_ConstructPrefab(Brush& brush, EBrushPrefab type, const AABB& b
 		shader = "textures/tex_common/nodraw";
 
 	switch (type) {
-	case eBrushCuboid: {
-		UndoableCommand undo("brushCuboid");
-
-		Brush_ConstructCuboid(brush, bounds, shader, projection);
-	}
-	break;
 	case eBrushPrism: {
 		const int axis = GetViewAxis();
 		StringOutputStream command;
@@ -930,11 +931,9 @@ public:
 	typedef MemberCaller<BrushPrefab, &BrushPrefab::set> SetCaller;
 };
 
-static BrushPrefab g_brushcuboid(eBrushCuboid);
 static BrushPrefab g_brushprism(eBrushPrism);
 static BrushPrefab g_brushcone(eBrushCone);
 static BrushPrefab g_brushsphere(eBrushSphere);
-
 
 void FlipClip();
 void SplitClip();
@@ -972,14 +971,9 @@ void Texdef_ToggleMoveLock() {
 	g_texture_lock_status_changed();
 }
 
-
-
-
-
 void Brush_registerCommands() {
 	GlobalToggles_insert("TogTexLock", FreeCaller<Texdef_ToggleMoveLock>(), ToggleItem::AddCallbackCaller(g_texdef_movelock_item), Accelerator('T', (GdkModifierType)GDK_SHIFT_MASK));
 
-	GlobalCommands_insert("BrushCuboid", BrushPrefab::SetCaller(g_brushcuboid));
 	GlobalCommands_insert("BrushPrism", BrushPrefab::SetCaller(g_brushprism));
 	GlobalCommands_insert("BrushCone", BrushPrefab::SetCaller(g_brushcone));
 	GlobalCommands_insert("BrushSphere", BrushPrefab::SetCaller(g_brushsphere));
@@ -1001,7 +995,6 @@ void Brush_registerCommands() {
 }
 
 void Brush_constructMenu(GtkMenu* menu) {
-	create_menu_item_with_mnemonic(menu, "Cuboid...", "BrushCuboid");
 	create_menu_item_with_mnemonic(menu, "Cone...", "BrushCone");
 	create_menu_item_with_mnemonic(menu, "Prism...", "BrushPrism");
 	create_menu_item_with_mnemonic(menu, "Sphere...", "BrushSphere");
