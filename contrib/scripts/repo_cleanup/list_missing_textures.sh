@@ -21,4 +21,4 @@ while read MAP; do
 	echo
     }
     unset HASMISSINGTEXTS
-done < <(find "$DIR" -type f ! -wholename '*/.svn*' -name '*.map' ! -name '*.autosave.*')
+done < <(find "$DIR" -type f ! -wholename '*/.svn*' ! -wholename '*/old/*' -name '*.map' ! -name '*.autosave.*')
