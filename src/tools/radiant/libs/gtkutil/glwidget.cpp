@@ -21,8 +21,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // OpenGL widget based on GtkGLExt
 
-#include "glwidget.h"
-
 #include "debugging/debugging.h"
 
 #include "igl.h"
@@ -179,6 +177,12 @@ namespace {
 GtkWidget* g_shared = 0;
 }
 
+gboolean glwidget_make_current (GtkWidget *widget) {
+	GdkGLContext *glcontext = gtk_widget_get_gl_context (widget);
+	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
+	return gdk_gl_drawable_gl_begin (gldrawable, glcontext);
+}
+
 gint glwidget_context_created(GtkWidget* widget, gpointer data) {
 	if (++g_context_count == 1) {
 		g_shared = widget;
@@ -243,10 +247,4 @@ void glwidget_create_context (GtkWidget *widget) {
 void glwidget_swap_buffers (GtkWidget *widget) {
 	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
 	gdk_gl_drawable_swap_buffers (gldrawable);
-}
-
-gboolean glwidget_make_current (GtkWidget *widget) {
-	GdkGLContext *glcontext = gtk_widget_get_gl_context (widget);
-	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
-	return gdk_gl_drawable_gl_begin (gldrawable, glcontext);
 }

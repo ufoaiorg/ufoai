@@ -739,10 +739,7 @@ static gboolean xywnd_size_allocate(GtkWidget* widget, GtkAllocation* allocation
 static gboolean xywnd_expose(GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd) {
 	if (glwidget_make_current(xywnd->GetWidget()) != FALSE) {
 		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
-
 			xywnd->XY_Draw();
-
-
 			xywnd->m_XORRectangle.set(rectangle_t());
 		}
 		glwidget_swap_buffers(xywnd->GetWidget());

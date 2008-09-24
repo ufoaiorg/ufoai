@@ -176,7 +176,7 @@ void environment_init (int argc, char* argv[])
 		if (string_empty(appdata)) {
 			ERROR_MESSAGE("Application Data folder not available.\n"
 					"Please install shfolder redistributable package.\n"
-					"Radiant will use C:\\ for user preferences.\n");
+					"UFORadiant will use C:\\ for user preferences.\n");
 			home << "C:";
 		} else {
 			home << PathCleaned(appdata);

@@ -39,76 +39,61 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 
-/*
-=================
-Error
+/**
+ * @todo the prompt wether to do prefs dialog, may not even be possible
+ * if the crash happens before the game is loaded
+ * @brief For abnormal program terminations
+ */
 
-For abnormal program terminations
-=================
-*/
-
-/*!
-\todo
-FIXME the prompt wether to do prefs dialog, may not even be possible
-if the crash happens before the game is loaded
-*/
-
-void Error (const char *error, ...) {
+void Error (const char *error, ...)
+{
 	va_list argptr;
-	char	text[4096];
+	char text[4096];
 
-	va_start (argptr, error);
-	vsprintf (text, error, argptr);
-	va_end (argptr);
+	va_start(argptr, error);
+	vsprintf(text, error, argptr);
+	va_end(argptr);
 
-	strcat( text, "\n" );
+	strcat(text, "\n");
 
 #ifdef WIN32
 	if (GetLastError() != 0) {
 		LPVOID lpMsgBuf;
-		FormatMessage(
-		    FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		    FORMAT_MESSAGE_FROM_SYSTEM |
-		    FORMAT_MESSAGE_IGNORE_INSERTS,
-		    0,
-		    GetLastError(),
-		    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-		    (LPTSTR) &lpMsgBuf,
-		    0,
-		    0
+		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			0, GetLastError(),
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+			(LPTSTR) &lpMsgBuf, 0, 0
 		);
-		strcat( text, "GetLastError: " );
-		/*
-		Gtk will only crunch 0<=char<=127
-		this is a bit hackish, but I didn't find useful functions in win32 API for this
-		*/
+		strcat(text, "GetLastError: ");
+		/* Gtk will only crunch 0<=char<=127
+		 * this is a bit hackish, but I didn't find useful functions in win32 API for this */
 		TCHAR *scan, *next = (TCHAR*)lpMsgBuf;
 		do {
 			scan = next;
-			text[strlen(text)+1] = '\0';
+			text[strlen(text) + 1] = '\0';
 			if (scan[0] <= 127)
 				text[strlen(text)] = char(scan[0]);
 			else
 				text[strlen(text)] = '?';
 			next = CharNext(scan);
 		} while (next != scan);
-		strcat( text, "\n");
-		LocalFree( lpMsgBuf );
+		strcat(text, "\n");
+		LocalFree(lpMsgBuf);
 	}
 #else
 	if (errno != 0) {
-		strcat( text, "errno: " );
-		strcat( text, strerror (errno));
-		strcat( text, "\n");
+		strcat(text, "errno: ");
+		strcat(text, strerror(errno));
+		strcat(text, "\n");
 	}
 #endif
 
-	strcat (text, "An unrecoverable error has occured.\n");
+	strcat(text, "An unrecoverable error has occured.\n");
 
 	ERROR_MESSAGE(text);
 
 	// force close logging if necessary
 	Sys_LogFile(false);
 
-	_exit (1);
+	_exit(1);
 }
