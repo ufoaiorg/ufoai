@@ -44,17 +44,6 @@ GdkCursor* create_blank_cursor() {
 	return cursor;
 }
 
-void blank_cursor(GtkWidget* widget) {
-	GdkCursor* cursor = create_blank_cursor();
-	gdk_window_set_cursor (widget->window, cursor);
-	gdk_cursor_unref(cursor);
-}
-
-void default_cursor(GtkWidget* widget) {
-	gdk_window_set_cursor(widget->window, 0);
-}
-
-
 #if defined(WIN32)
 
 #include <gdk/gdkwin32.h>

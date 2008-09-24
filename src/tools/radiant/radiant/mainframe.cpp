@@ -612,17 +612,17 @@ void SelectionSystem_DefaultMode (void) {
 
 bool EdgeMode (void) {
 	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-	       && GlobalSelectionSystem().ComponentMode() == SelectionSystem::eEdge;
+		&& GlobalSelectionSystem().ComponentMode() == SelectionSystem::eEdge;
 }
 
 bool VertexMode (void) {
 	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-	       && GlobalSelectionSystem().ComponentMode() == SelectionSystem::eVertex;
+		&& GlobalSelectionSystem().ComponentMode() == SelectionSystem::eVertex;
 }
 
 bool FaceMode (void) {
 	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-	       && GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace;
+		&& GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace;
 }
 
 template < bool (*BoolFunction)() >
@@ -740,8 +740,7 @@ public:
 
 		if (!path.top().get().isRoot()) {
 			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0
-			&& selectable->isSelected()) {
+			if (selectable != 0 && selectable->isSelected()) {
 				return false;
 			}
 		}
@@ -754,8 +753,7 @@ public:
 
 		if (!path.top().get().isRoot()) {
 			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0
-			&& selectable->isSelected()) {
+			if (selectable != 0 && selectable->isSelected()) {
 				NodeSmartReference clone(Node_Clone(path.top()));
 				Map_gatherNamespaced(clone);
 				Node_getTraversable(path.parent().get())->insert(clone);
@@ -922,7 +920,7 @@ void ToolChanged (void) {
 	g_clipper_button.update();
 }
 
-const char* const c_ResizeMode_status = "QE4 Drag Tool";
+static const char* const c_ResizeMode_status = "QE4 Drag Tool";
 
 void DragMode (void) {
 	if (g_currentToolMode == DragMode && g_defaultToolMode != DragMode) {
@@ -1090,8 +1088,7 @@ public:
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		if (path.top().get().visible()) {
 			Snappable* snappable = Node_getSnappable(path.top());
-			if (snappable != 0
-			&& Instance_getSelectable(instance)->isSelected()) {
+			if (snappable != 0 && Instance_getSelectable(instance)->isSelected()) {
 				snappable->snapto(m_snap);
 			}
 		}
@@ -1112,8 +1109,7 @@ public:
 	bool pre(const scene::Path& path, scene::Instance& instance) const {
 		if (path.top().get().visible()) {
 			ComponentSnappable* componentSnappable = Instance_getComponentSnappable(instance);
-			if (componentSnappable != 0
-			&& Instance_getSelectable(instance)->isSelected()) {
+			if (componentSnappable != 0 && Instance_getSelectable(instance)->isSelected()) {
 				componentSnappable->snapComponents(m_snap);
 			}
 		}
@@ -1137,11 +1133,13 @@ void Selection_SnapToGrid (void) {
 	}
 }
 
-
+/**
+ * @brief Timer function that is called every second
+ */
 static gint qe_every_second(gpointer data) {
 	GdkModifierType mask;
 
-	gdk_window_get_pointer (0, 0, 0, &mask);
+	gdk_window_get_pointer(0, 0, 0, &mask);
 
 	if ((mask & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) == 0) {
 		QE_CheckAutoSave();
@@ -1150,7 +1148,7 @@ static gint qe_every_second(gpointer data) {
 	return TRUE;
 }
 
-guint s_qe_every_second_id = 0;
+static guint s_qe_every_second_id = 0;
 
 void EverySecondTimer_enable (void) {
 	if (s_qe_every_second_id == 0) {
@@ -1176,7 +1174,7 @@ public:
 	GtkLabel* m_label;
 };
 
-WaitDialog create_wait_dialog(const char* title, const char* text) {
+static WaitDialog create_wait_dialog(const char* title, const char* text) {
 	WaitDialog dialog;
 
 	dialog.m_window = create_floating_window(title, MainFrame_getWindow());
@@ -1188,10 +1186,10 @@ WaitDialog create_wait_dialog(const char* title, const char* text) {
 
 	{
 		dialog.m_label = GTK_LABEL(gtk_label_new(text));
-		gtk_misc_set_alignment(GTK_MISC(dialog.m_label), 0.0, 0.5);
-		gtk_label_set_justify(dialog.m_label, GTK_JUSTIFY_LEFT);
+		gtk_misc_set_alignment(GTK_MISC(dialog.m_label), 0.5, 0.5);
+		gtk_label_set_justify(dialog.m_label, GTK_JUSTIFY_CENTER);
 		gtk_widget_show(GTK_WIDGET(dialog.m_label));
-		gtk_widget_set_size_request(GTK_WIDGET(dialog.m_label), 200, -1);
+		gtk_widget_set_size_request(GTK_WIDGET(dialog.m_label), 300, 100);
 
 		gtk_container_add(GTK_CONTAINER(dialog.m_window), GTK_WIDGET(dialog.m_label));
 	}
@@ -1213,22 +1211,18 @@ bool redrawRequired (void) {
 }
 
 bool MainFrame_isActiveApp (void) {
-	//globalOutputStream() << "listing\n";
 	GList* list = gtk_window_list_toplevels();
 	for (GList* i = list; i != 0; i = g_list_next(i)) {
-		//globalOutputStream() << "toplevel.. ";
 		if (gtk_window_is_active(GTK_WINDOW(i->data))) {
-			//globalOutputStream() << "is active\n";
 			return true;
 		}
-		//globalOutputStream() << "not active\n";
 	}
 	return false;
 }
 
 typedef std::list<CopiedString> StringStack;
-StringStack g_wait_stack;
-WaitDialog g_wait;
+static StringStack g_wait_stack;
+static WaitDialog g_wait;
 
 bool ScreenUpdates_Enabled (void) {
 	return g_wait_stack.empty();
@@ -1240,14 +1234,13 @@ void ScreenUpdates_process (void) {
 	}
 }
 
-
 void ScreenUpdates_Disable(const char* message, const char* title) {
 	if (g_wait_stack.empty()) {
 		EverySecondTimer_disable();
 
 		process_gui();
 
-		bool isActiveApp = MainFrame_isActiveApp();
+		const bool isActiveApp = MainFrame_isActiveApp();
 
 		g_wait = create_wait_dialog(title, message);
 		gtk_grab_add(GTK_WIDGET(g_wait.m_window));
@@ -1268,20 +1261,14 @@ void ScreenUpdates_Enable (void) {
 	g_wait_stack.pop_back();
 	if (g_wait_stack.empty()) {
 		EverySecondTimer_enable();
-		//gtk_widget_set_sensitive(GTK_WIDGET(MainFrame_getWindow()), TRUE);
-
 		gtk_grab_remove(GTK_WIDGET(g_wait.m_window));
 		destroy_floating_window(g_wait.m_window);
 		g_wait.m_window = 0;
-
-		//gtk_window_present(MainFrame_getWindow());
 	} else if (GTK_WIDGET_VISIBLE(g_wait.m_window)) {
 		gtk_label_set_text(g_wait.m_label, g_wait_stack.back().c_str());
 		ScreenUpdates_process();
 	}
 }
-
-
 
 static void GlobalCamera_UpdateWindow (void) {
 	if (g_pParentWnd != 0) {

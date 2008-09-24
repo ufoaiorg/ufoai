@@ -34,12 +34,8 @@ typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 
 GdkCursor* create_blank_cursor();
-void blank_cursor(GtkWidget* widget);
-void default_cursor(GtkWidget* widget);
 void Sys_GetCursorPos(GtkWindow* window, int *x, int *y);
 void Sys_SetCursorPos(GtkWindow* window, int x, int y);
-
-
 
 class DeferredMotion {
 	guint m_handler;
@@ -82,9 +78,9 @@ class DeferredMotionDelta {
 
 	static gboolean deferred_motion(gpointer data) {
 		reinterpret_cast<DeferredMotionDelta*>(data)->m_function(
-		    reinterpret_cast<DeferredMotionDelta*>(data)->m_delta_x,
-		    reinterpret_cast<DeferredMotionDelta*>(data)->m_delta_y,
-		    reinterpret_cast<DeferredMotionDelta*>(data)->m_data
+			reinterpret_cast<DeferredMotionDelta*>(data)->m_delta_x,
+			reinterpret_cast<DeferredMotionDelta*>(data)->m_delta_y,
+			reinterpret_cast<DeferredMotionDelta*>(data)->m_data
 		);
 		reinterpret_cast<DeferredMotionDelta*>(data)->m_motion_handler = 0;
 		reinterpret_cast<DeferredMotionDelta*>(data)->m_delta_x = 0;
@@ -121,8 +117,8 @@ public:
 	static gboolean motion_delta(GtkWidget *widget, GdkEventMotion *event, FreezePointer* self) {
 		int current_x, current_y;
 		Sys_GetCursorPos(GTK_WINDOW(widget), &current_x, &current_y);
-		int dx = current_x - self->recorded_x;
-		int dy = current_y - self->recorded_y;
+		const int dx = current_x - self->recorded_x;
+		const int dy = current_y - self->recorded_y;
 		if (dx != 0 || dy != 0) {
 			Sys_SetCursorPos(GTK_WINDOW(widget), self->recorded_x, self->recorded_y);
 			self->m_function(dx, dy, event->state, self->m_data);
