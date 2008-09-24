@@ -1,3 +1,10 @@
+/**
+ * @file mainframe.cpp
+ * @brief Main Window for UFORadiant
+ * @note Creates the editing windows and dialogs, creates commands and
+ * registers preferences as well as handling internal paths
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -18,12 +25,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-//
-// Main Window for UFORadiant
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "mainframe.h"
 
@@ -585,7 +586,8 @@ void OpenBugReportURL (void) {
 static GtkWidget* g_page_console;
 
 void Console_ToggleShow (void) {
-	GroupDialog_showPage(g_page_console);
+	if (g_pParentWnd->CurrentStyle() != MainFrame::eSplit)
+		GroupDialog_showPage(g_page_console);
 }
 
 static GtkWidget* g_page_entity;
