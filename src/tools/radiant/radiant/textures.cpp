@@ -248,7 +248,6 @@ void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 			texture.contentFlags = image->getContentFlags();
 			texture.value = image->getValue();
 			globalOutputStream() << "Loaded Texture: \"" << key.second.c_str() << "\"\n";
-			GlobalOpenGL_debugAssertNoErrors();
 		} else {
 			globalErrorStream() << "Texture load failed: \"" << key.second.c_str() << "\"\n";
 		}
@@ -258,7 +257,6 @@ void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 void qtexture_unrealise(qtexture_t& texture) {
 	if (GlobalOpenGL().contextValid && texture.texture_number != 0) {
 		glDeleteTextures(1, &texture.texture_number);
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 }
 

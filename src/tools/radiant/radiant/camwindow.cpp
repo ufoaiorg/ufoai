@@ -1460,13 +1460,9 @@ void CamWnd::Cam_Draw() {
 void CamWnd::draw() {
 	m_drawing = true;
 
-	//globalOutputStream() << "draw...\n";
 	if (glwidget_make_current(m_gl_widget) != FALSE) {
 		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
-			GlobalOpenGL_debugAssertNoErrors();
 			Cam_Draw();
-			GlobalOpenGL_debugAssertNoErrors();
-			//qglFinish();
 
 			m_XORRectangle.set(rectangle_t());
 		}
@@ -1478,7 +1474,7 @@ void CamWnd::draw() {
 }
 
 void CamWnd::BenchMark() {
-	double dStart = Sys_DoubleTime();
+	const double dStart = Sys_DoubleTime();
 	for (int i = 0 ; i < 100 ; i++) {
 		Vector3 angles;
 		angles[CAMERA_ROLL] = 0;
@@ -1486,7 +1482,7 @@ void CamWnd::BenchMark() {
 		angles[CAMERA_YAW] = static_cast<float>(i * (360.0 / 100.0));
 		Camera_setAngles(*this, angles);
 	}
-	double dEnd = Sys_DoubleTime();
+	const double dEnd = Sys_DoubleTime();
 	globalOutputStream() << FloatFormat(dEnd - dStart, 5, 2) << " seconds\n";
 }
 

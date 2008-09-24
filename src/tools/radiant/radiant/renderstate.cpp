@@ -53,37 +53,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "xywindow.h"
 
 
-inline void debug_string(const char* string) {
-#if(DEBUG_RENDER)
-	globalOutputStream() << string << "\n";
-#endif
-}
-
-inline void debug_int(const char* comment, int i) {
-#if(DEBUG_RENDER)
-	globalOutputStream() << comment << " " << i << "\n";
-#endif
-}
-
-inline void debug_colour(const char* comment) {
-#if(DEBUG_RENDER)
-	Vector4 v;
-	glGetFloatv(GL_CURRENT_COLOR, reinterpret_cast<float*>(&v));
-	globalOutputStream() << comment << " colour: "
-	<< v[0] << " "
-	<< v[1] << " "
-	<< v[2] << " "
-	<< v[3];
-	if (glIsEnabled(GL_COLOR_ARRAY)) {
-		globalOutputStream() << " ARRAY";
-	}
-	if (glIsEnabled(GL_COLOR_MATERIAL)) {
-		globalOutputStream() << " MATERIAL";
-	}
-	globalOutputStream() << "\n";
-#endif
-}
-
 #include "timer.h"
 
 StringOutputStream g_renderer_stats;
@@ -114,9 +83,9 @@ void Renderer_ResetStats() {
 const char* Renderer_GetStats() {
 	g_renderer_stats.clear();
 	g_renderer_stats << "prims: " << Unsigned(g_count_prims)
-	<< " | states: " << Unsigned(g_count_states)
-	<< " | transforms: " << Unsigned(g_count_transforms)
-	<< " | msec: " << g_timer.elapsed_msec();
+		<< " | states: " << Unsigned(g_count_states)
+		<< " | transforms: " << Unsigned(g_count_transforms)
+		<< " | msec: " << g_timer.elapsed_msec();
 	return g_renderer_stats.c_str();
 }
 
@@ -142,176 +111,17 @@ void createProgram(const char* filename, GLenum type) {
 	}
 }
 
-class ARBBumpProgram : public GLProgram {
-public:
-	GLuint m_vertex_program;
-	GLuint m_fragment_program;
-
-	void create() {
-		glEnable(GL_VERTEX_PROGRAM_ARB);
-		glEnable(GL_FRAGMENT_PROGRAM_ARB);
-
-		{
-			glGenProgramsARB(1, &m_vertex_program);
-			glBindProgramARB(GL_VERTEX_PROGRAM_ARB, m_vertex_program);
-			StringOutputStream filename(256);
-			filename << GlobalRadiant().getAppPath() << "gl/lighting_DBS_omni_vp.glp";
-			createProgram(filename.c_str(), GL_VERTEX_PROGRAM_ARB);
-
-			glGenProgramsARB(1, &m_fragment_program);
-			glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, m_fragment_program);
-			filename.clear();
-			filename << GlobalRadiant().getAppPath() << "gl/lighting_DBS_omni_fp.glp";
-			createProgram(filename.c_str(), GL_FRAGMENT_PROGRAM_ARB);
-		}
-
-		glDisable(GL_VERTEX_PROGRAM_ARB);
-		glDisable(GL_FRAGMENT_PROGRAM_ARB);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void destroy() {
-		glDeleteProgramsARB(1, &m_vertex_program);
-		glDeleteProgramsARB(1, &m_fragment_program);
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void enable() {
-		glEnable(GL_VERTEX_PROGRAM_ARB);
-		glEnable(GL_FRAGMENT_PROGRAM_ARB);
-		glBindProgramARB(GL_VERTEX_PROGRAM_ARB, m_vertex_program);
-		glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, m_fragment_program);
-
-		glEnableVertexAttribArrayARB(8);
-		glEnableVertexAttribArrayARB(9);
-		glEnableVertexAttribArrayARB(10);
-		glEnableVertexAttribArrayARB(11);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void disable() {
-		glDisable(GL_VERTEX_PROGRAM_ARB);
-		glDisable(GL_FRAGMENT_PROGRAM_ARB);
-
-		glDisableVertexAttribArrayARB(8);
-		glDisableVertexAttribArrayARB(9);
-		glDisableVertexAttribArrayARB(10);
-		glDisableVertexAttribArrayARB(11);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void setParameters(const Vector3& viewer, const Matrix4& localToWorld, const Vector3& origin, const Vector3& colour, const Matrix4& world2light) {
-		Matrix4 world2local(localToWorld);
-		matrix4_affine_invert(world2local);
-
-		Vector3 localLight(origin);
-		matrix4_transform_point(world2local, localLight);
-
-		Vector3 localViewer(viewer);
-		matrix4_transform_point(world2local, localViewer);
-
-		Matrix4 local2light(world2light);
-		matrix4_multiply_by_matrix4(local2light, localToWorld); // local->world->light
-
-		// view origin
-		glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 4, localViewer.x(), localViewer.y(), localViewer.z(), 0);
-
-		// light origin
-		glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 2, localLight.x(), localLight.y(), localLight.z(), 1);
-
-		// light colour
-		glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 3, colour.x(), colour.y(), colour.z(), 0);
-
-		// bump scale
-		glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 1, 1, 0, 0, 0);
-
-		// specular exponent
-		glProgramLocalParameter4fARB(GL_FRAGMENT_PROGRAM_ARB, 5, 32, 0, 0, 0);
-
-
-		glActiveTexture(GL_TEXTURE3);
-		glClientActiveTexture(GL_TEXTURE3);
-
-		glMatrixMode(GL_TEXTURE);
-		glLoadMatrixf(reinterpret_cast<const float*>(&local2light));
-		glMatrixMode(GL_MODELVIEW);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-};
-
-class ARBDepthFillProgram : public GLProgram {
-public:
-	GLuint m_vertex_program;
-	GLuint m_fragment_program;
-
-	void create() {
-		glEnable(GL_VERTEX_PROGRAM_ARB);
-		glEnable(GL_FRAGMENT_PROGRAM_ARB);
-
-		{
-			glGenProgramsARB(1, &m_vertex_program);
-			glBindProgramARB(GL_VERTEX_PROGRAM_ARB, m_vertex_program);
-			StringOutputStream filename(256);
-			filename << GlobalRadiant().getAppPath() << "gl/zfill_vp.glp";
-			createProgram(filename.c_str(), GL_VERTEX_PROGRAM_ARB);
-
-			glGenProgramsARB(1, &m_fragment_program);
-			glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, m_fragment_program);
-			filename.clear();
-			filename << GlobalRadiant().getAppPath() << "gl/zfill_fp.glp";
-			createProgram(filename.c_str(), GL_FRAGMENT_PROGRAM_ARB);
-		}
-
-		glDisable(GL_VERTEX_PROGRAM_ARB);
-		glDisable(GL_FRAGMENT_PROGRAM_ARB);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void destroy() {
-		glDeleteProgramsARB(1, &m_vertex_program);
-		glDeleteProgramsARB(1, &m_fragment_program);
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void enable() {
-		glEnable(GL_VERTEX_PROGRAM_ARB);
-		glEnable(GL_FRAGMENT_PROGRAM_ARB);
-		glBindProgramARB(GL_VERTEX_PROGRAM_ARB, m_vertex_program);
-		glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, m_fragment_program);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void disable() {
-		glDisable(GL_VERTEX_PROGRAM_ARB);
-		glDisable(GL_FRAGMENT_PROGRAM_ARB);
-
-		GlobalOpenGL_debugAssertNoErrors();
-	}
-
-	void setParameters(const Vector3& viewer, const Matrix4& localToWorld, const Vector3& origin, const Vector3& colour, const Matrix4& world2light) {
-	}
-};
-
-ARBBumpProgram g_bumpARB;
-ARBDepthFillProgram g_depthFillARB;
-
-bool g_vertexArray_enabled = false;
-bool g_normalArray_enabled = false;
-bool g_texcoordArray_enabled = false;
-bool g_colorArray_enabled = false;
+static bool g_vertexArray_enabled = false;
+static bool g_normalArray_enabled = false;
+static bool g_texcoordArray_enabled = false;
+static bool g_colorArray_enabled = false;
 
 inline bool OpenGLState_less(const OpenGLState& self, const OpenGLState& other) {
-	//! Sort by sort-order override.
+	// Sort by sort-order override.
 	if (self.m_sort != other.m_sort) {
 		return self.m_sort < other.m_sort;
 	}
-	//! Sort by texture handle.
+	// Sort by texture handle.
 	if (self.m_texture != other.m_texture) {
 		return self.m_texture < other.m_texture;
 	}
@@ -336,11 +146,11 @@ inline bool OpenGLState_less(const OpenGLState& self, const OpenGLState& other) 
 	if (self.m_texture7 != other.m_texture7) {
 		return self.m_texture7 < other.m_texture7;
 	}
-	//! Sort by state bit-vector.
+	// Sort by state bit-vector.
 	if (self.m_state != other.m_state) {
 		return self.m_state < other.m_state;
 	}
-	//! Comparing address makes sure states are never equal.
+	// Comparing address makes sure states are never equal.
 	return &self < &other;
 }
 
@@ -439,21 +249,6 @@ public:
 	}
 	void operator()(const RendererLight& light) {
 		m_bucket.addRenderable(m_renderable, m_modelview, &light);
-	}
-};
-
-class CountLights {
-	std::size_t m_count;
-public:
-	typedef RendererLight& first_argument_type;
-
-	CountLights() : m_count(0) {
-	}
-	void operator()(const RendererLight& light) {
-		++m_count;
-	}
-	std::size_t count() const {
-		return m_count;
 	}
 };
 
@@ -563,8 +358,6 @@ public:
 
 typedef std::set<RendererLight*> RendererLights;
 
-#define DEBUG_LIGHT_SYNC 0
-
 class LinearLightList : public LightList {
 	LightCullable& m_cullable;
 	RendererLights& m_allLights;
@@ -603,7 +396,7 @@ public:
 	}
 };
 
-inline void setFogState(const OpenGLFogState& state) {
+static inline void setFogState(const OpenGLFogState& state) {
 	glFogi(GL_FOG_MODE, state.mode);
 	glFogf(GL_FOG_DENSITY, state.density);
 	glFogf(GL_FOG_START, state.start);
@@ -611,8 +404,6 @@ inline void setFogState(const OpenGLFogState& state) {
 	glFogi(GL_FOG_INDEX, state.index);
 	glFogfv(GL_FOG_COLOR, vector4_to_array(state.colour));
 }
-
-#define DEBUG_SHADERS 0
 
 class OpenGLShaderCache : public ShaderCache, public TexturesCacheObserver, public ModuleObserver {
 	class CreateOpenGLShader {
@@ -658,20 +449,11 @@ public:
 		}
 	}
 	Shader* capture(const char* name) {
-		ASSERT_MESSAGE(name[0] == '$'
-		               || *name == '['
-		               || *name == '<'
-		               || *name == '('
-		               || strchr(name, '\\') == 0, "shader name contains invalid characters: \"" << name << "\"");
-#if DEBUG_SHADERS
-		globalOutputStream() << "shaders capture: " << makeQuoted(name) << '\n';
-#endif
+		ASSERT_MESSAGE(name[0] == '$' || *name == '[' || *name == '<' || *name == '(' || strchr(name, '\\') == 0,
+			"shader name contains invalid characters: \"" << name << "\"");
 		return m_shaders.capture(name).get();
 	}
 	void release(const char *name) {
-#if DEBUG_SHADERS
-		globalOutputStream() << "shaders release: " << makeQuoted(name) << '\n';
-#endif
 		m_shaders.release(name);
 	}
 	void render(RenderStateFlags globalstate, const Matrix4& modelview, const Matrix4& projection, const Vector3& viewer) {
@@ -767,21 +549,12 @@ public:
 		glDisable(GL_FOG);
 		setFogState(OpenGLFogState());
 
-		GlobalOpenGL_debugAssertNoErrors();
-
-		debug_string("begin rendering");
 		for (OpenGLStates::iterator i = g_state_sorted.begin(); i != g_state_sorted.end(); ++i) {
 			(*i).second->render(current, globalstate, viewer);
 		}
-		debug_string("end rendering");
 	}
 	void realise() {
 		if (--m_unrealised == 0) {
-			if (lightingSupported() && lightingEnabled()) {
-				g_bumpARB.create();
-				g_depthFillARB.create();
-			}
-
 			for (Shaders::iterator i = m_shaders.begin(); i != m_shaders.end(); ++i) {
 				if (!(*i).value.empty()) {
 					(*i).value->realise(i->key);
@@ -795,10 +568,6 @@ public:
 				if (!(*i).value.empty()) {
 					(*i).value->unrealise();
 				}
-			}
-			if (GlobalOpenGL().contextValid && lightingSupported() && lightingEnabled()) {
-				g_bumpARB.destroy();
-				g_depthFillARB.destroy();
 			}
 		}
 	}
@@ -830,14 +599,14 @@ public:
 	}
 	void extensionsInitialised() {
 		setLighting(GlobalOpenGL().GL_1_3()
-		            && GlobalOpenGL().ARB_vertex_program()
-		            && GlobalOpenGL().ARB_fragment_program()
-		            && GlobalOpenGL().ARB_shader_objects()
-		            && GlobalOpenGL().ARB_vertex_shader()
-		            && GlobalOpenGL().ARB_fragment_shader()
-		            && GlobalOpenGL().ARB_shading_language_100(),
-		            m_lightingEnabled
-		           );
+			&& GlobalOpenGL().ARB_vertex_program()
+			&& GlobalOpenGL().ARB_fragment_program()
+			&& GlobalOpenGL().ARB_shader_objects()
+			&& GlobalOpenGL().ARB_vertex_shader()
+			&& GlobalOpenGL().ARB_fragment_shader()
+			&& GlobalOpenGL().ARB_shading_language_100(),
+			m_lightingEnabled
+			);
 
 		if (!lightingSupported()) {
 			globalWarningStream() << "Lighting mode requires OpenGL features not supported by your graphics drivers:\n";
@@ -944,9 +713,6 @@ void ShaderCache_setBumpEnabled(bool enabled) {
 	g_ShaderCache->setLightingEnabled(enabled);
 }
 
-
-Vector3 g_DebugShaderColours[256];
-
 void ShaderCache_Construct() {
 	g_ShaderCache = new OpenGLShaderCache;
 	GlobalTexturesCache().attach(*g_ShaderCache);
@@ -968,7 +734,7 @@ inline void setTextureState(GLint& current, const GLint& texture, GLenum texture
 		glActiveTexture(textureUnit);
 		glClientActiveTexture(textureUnit);
 		glBindTexture(GL_TEXTURE_2D, texture);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		current = texture;
 	}
 }
@@ -976,7 +742,6 @@ inline void setTextureState(GLint& current, const GLint& texture, GLenum texture
 inline void setTextureState(GLint& current, const GLint& texture) {
 	if (texture != current) {
 		glBindTexture(GL_TEXTURE_2D, texture);
-		GlobalOpenGL_debugAssertNoErrors();
 		current = texture;
 	}
 }
@@ -984,19 +749,12 @@ inline void setTextureState(GLint& current, const GLint& texture) {
 inline void setState(unsigned int state, unsigned int delta, unsigned int flag, GLenum glflag) {
 	if (delta & state & flag) {
 		glEnable(glflag);
-		GlobalOpenGL_debugAssertNoErrors();
 	} else if (delta & ~state & flag) {
 		glDisable(glflag);
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 }
 
 void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned int globalstate) {
-	debug_int("sort", int(self.m_sort));
-	debug_int("texture", self.m_texture);
-	debug_int("state", self.m_state);
-	debug_int("address", int(std::size_t(&self)));
-
 	count_state();
 
 	if (self.m_state & RENDER_OVERRIDE) {
@@ -1006,15 +764,12 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 	const unsigned int state = self.m_state & globalstate;
 	const unsigned int delta = state ^ current.m_state;
 
-	GlobalOpenGL_debugAssertNoErrors();
-
 	GLProgram* program = (state & RENDER_PROGRAM) != 0 ? self.m_program : 0;
 
 	if (program != current.m_program) {
 		if (current.m_program != 0) {
 			current.m_program->disable();
 			glColor4fv(vector4_to_array(current.m_colour));
-			debug_colour("cleaning program");
 		}
 
 		current.m_program = program;
@@ -1025,13 +780,9 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 	}
 
 	if (delta & state & RENDER_FILL) {
-		//qglPolygonMode (GL_BACK, GL_LINE);
-		//qglPolygonMode (GL_FRONT, GL_FILL);
-		glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-		GlobalOpenGL_debugAssertNoErrors();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	} else if (delta & ~state & RENDER_FILL) {
-		glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
-		GlobalOpenGL_debugAssertNoErrors();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
 	setState(state, delta, RENDER_OFFSETLINE, GL_POLYGON_OFFSET_LINE);
@@ -1039,34 +790,27 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 	if (delta & state & RENDER_LIGHTING) {
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-		//qglEnable(GL_RESCALE_NORMAL);
 		glEnableClientState(GL_NORMAL_ARRAY);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		g_normalArray_enabled = true;
 	} else if (delta & ~state & RENDER_LIGHTING) {
 		glDisable(GL_LIGHTING);
 		glDisable(GL_COLOR_MATERIAL);
-		//qglDisable(GL_RESCALE_NORMAL);
 		glDisableClientState(GL_NORMAL_ARRAY);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		g_normalArray_enabled = false;
 	}
 
 	if (delta & state & RENDER_TEXTURE) {
-		GlobalOpenGL_debugAssertNoErrors();
-
 		if (GlobalOpenGL().GL_1_3()) {
 			glActiveTexture(GL_TEXTURE0);
 			glClientActiveTexture(GL_TEXTURE0);
 		}
 
 		glEnable(GL_TEXTURE_2D);
-
 		glColor4f(1, 1, 1, self.m_colour[3]);
-		debug_colour("setting texture");
-
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		g_texcoordArray_enabled = true;
 	} else if (delta & ~state & RENDER_TEXTURE) {
 		if (GlobalOpenGL().GL_1_3()) {
@@ -1078,7 +822,7 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-		GlobalOpenGL_debugAssertNoErrors();
+
 		g_texcoordArray_enabled = false;
 	}
 
@@ -1094,80 +838,52 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 			glActiveTexture(GL_TEXTURE0);
 		}
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-		GlobalOpenGL_debugAssertNoErrors();
 	} else if (delta & ~state & RENDER_BLEND) {
 		glDisable(GL_BLEND);
 		if (GlobalOpenGL().GL_1_3()) {
 			glActiveTexture(GL_TEXTURE0);
 		}
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 
 	setState(state, delta, RENDER_CULLFACE, GL_CULL_FACE);
 
 	if (delta & state & RENDER_SMOOTH) {
 		glShadeModel(GL_SMOOTH);
-		GlobalOpenGL_debugAssertNoErrors();
 	} else if (delta & ~state & RENDER_SMOOTH) {
 		glShadeModel(GL_FLAT);
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 
 	setState(state, delta, RENDER_SCALED, GL_NORMALIZE); // not GL_RESCALE_NORMAL
-
 	setState(state, delta, RENDER_DEPTHTEST, GL_DEPTH_TEST);
 
 	if (delta & state & RENDER_DEPTHWRITE) {
 		glDepthMask(GL_TRUE);
-
-#if DEBUG_RENDER
-		GLboolean depthEnabled;
-		glGetBooleanv(GL_DEPTH_WRITEMASK, &depthEnabled);
-		ASSERT_MESSAGE(depthEnabled, "failed to set depth buffer mask bit");
-#endif
-		debug_string("enabled depth-buffer writing");
-
-		GlobalOpenGL_debugAssertNoErrors();
 	} else if (delta & ~state & RENDER_DEPTHWRITE) {
 		glDepthMask(GL_FALSE);
-
-#if DEBUG_RENDER
-		GLboolean depthEnabled;
-		glGetBooleanv(GL_DEPTH_WRITEMASK, &depthEnabled);
-		ASSERT_MESSAGE(!depthEnabled, "failed to set depth buffer mask bit");
-#endif
-		debug_string("disabled depth-buffer writing");
-
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 
 	if (delta & state & RENDER_COLOURWRITE) {
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-		GlobalOpenGL_debugAssertNoErrors();
 	} else if (delta & ~state & RENDER_COLOURWRITE) {
 		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 
 	setState(state, delta, RENDER_ALPHATEST, GL_ALPHA_TEST);
 
 	if (delta & state & RENDER_COLOURARRAY) {
 		glEnableClientState(GL_COLOR_ARRAY);
-		GlobalOpenGL_debugAssertNoErrors();
-		debug_colour("enabling color_array");
+
 		g_colorArray_enabled = true;
 	} else if (delta & ~state & RENDER_COLOURARRAY) {
 		glDisableClientState(GL_COLOR_ARRAY);
 		glColor4fv(vector4_to_array(self.m_colour));
-		debug_colour("cleaning color_array");
-		GlobalOpenGL_debugAssertNoErrors();
+
 		g_colorArray_enabled = false;
 	}
 
 	if (delta & ~state & RENDER_COLOURCHANGE) {
 		glColor4fv(vector4_to_array(self.m_colour));
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 
 	setState(state, delta, RENDER_LINESTIPPLE, GL_LINE_STIPPLE);
@@ -1180,31 +896,31 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 
 	if ((state & RENDER_FOG) != 0) {
 		setFogState(self.m_fog);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		current.m_fog = self.m_fog;
 	}
 
 	if (state & RENDER_DEPTHTEST && self.m_depthfunc != current.m_depthfunc) {
 		glDepthFunc(self.m_depthfunc);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		current.m_depthfunc = self.m_depthfunc;
 	}
 
 	if (state & RENDER_LINESTIPPLE
-	        && (self.m_linestipple_factor != current.m_linestipple_factor
-	|| self.m_linestipple_pattern != current.m_linestipple_pattern)) {
+	 && (self.m_linestipple_factor != current.m_linestipple_factor
+	 || self.m_linestipple_pattern != current.m_linestipple_pattern)) {
 		glLineStipple(self.m_linestipple_factor, self.m_linestipple_pattern);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		current.m_linestipple_factor = self.m_linestipple_factor;
 		current.m_linestipple_pattern = self.m_linestipple_pattern;
 	}
 
 
 	if (state & RENDER_ALPHATEST
-	        && ( self.m_alphafunc != current.m_alphafunc
-	|| self.m_alpharef != current.m_alpharef ) ) {
+	 && (self.m_alphafunc != current.m_alphafunc
+	 || self.m_alpharef != current.m_alpharef)) {
 		glAlphaFunc(self.m_alphafunc, self.m_alpharef);
-		GlobalOpenGL_debugAssertNoErrors();
+
 		current.m_alphafunc = self.m_alphafunc;
 		current.m_alpharef = self.m_alpharef;
 	}
@@ -1244,56 +960,41 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 		}
 	}
 
-
 	if (state & RENDER_TEXTURE && self.m_colour[3] != current.m_colour[3]) {
-		debug_colour("setting alpha");
 		glColor4f(1, 1, 1, self.m_colour[3]);
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 
-	if (!(state & RENDER_TEXTURE)
-	        && (self.m_colour[0] != current.m_colour[0]
-	            || self.m_colour[1] != current.m_colour[1]
-	            || self.m_colour[2] != current.m_colour[2]
-	|| self.m_colour[3] != current.m_colour[3])) {
+	if (!(state & RENDER_TEXTURE) && (self.m_colour[0] != current.m_colour[0]
+	 || self.m_colour[1] != current.m_colour[1] || self.m_colour[2] != current.m_colour[2]
+	 || self.m_colour[3] != current.m_colour[3])) {
 		glColor4fv(vector4_to_array(self.m_colour));
-		debug_colour("setting non-texture");
-		GlobalOpenGL_debugAssertNoErrors();
 	}
 	current.m_colour = self.m_colour;
 
 	if (state & RENDER_BLEND
 	&& (self.m_blend_src != current.m_blend_src || self.m_blend_dst != current.m_blend_dst)) {
 		glBlendFunc(self.m_blend_src, self.m_blend_dst);
-		GlobalOpenGL_debugAssertNoErrors();
 		current.m_blend_src = self.m_blend_src;
 		current.m_blend_dst = self.m_blend_dst;
 	}
 
-	if (!(state & RENDER_FILL)
-	&& self.m_linewidth != current.m_linewidth) {
+	if (!(state & RENDER_FILL) && self.m_linewidth != current.m_linewidth) {
 		glLineWidth(self.m_linewidth);
-		GlobalOpenGL_debugAssertNoErrors();
 		current.m_linewidth = self.m_linewidth;
 	}
 
-	if (!(state & RENDER_FILL)
-	&& self.m_pointsize != current.m_pointsize) {
+	if (!(state & RENDER_FILL) && self.m_pointsize != current.m_pointsize) {
 		glPointSize(self.m_pointsize);
-		GlobalOpenGL_debugAssertNoErrors();
 		current.m_pointsize = self.m_pointsize;
 	}
 
 	current.m_state = state;
-
-	GlobalOpenGL_debugAssertNoErrors();
 }
 
 void Renderables_flush(OpenGLStateBucket::Renderables& renderables, OpenGLState& current, unsigned int globalstate, const Vector3& viewer) {
 	const Matrix4* transform = 0;
 	glPushMatrix();
 	for (OpenGLStateBucket::Renderables::const_iterator i = renderables.begin(); i != renderables.end(); ++i) {
-		//qglLoadMatrixf(i->m_transform);
 		if (!transform || (transform != (*i).m_transform && !matrix4_affine_equal(*transform, *(*i).m_transform))) {
 			count_transform();
 			transform = (*i).m_transform;
@@ -1314,7 +1015,6 @@ void Renderables_flush(OpenGLStateBucket::Renderables& renderables, OpenGLState&
 void OpenGLStateBucket::render(OpenGLState& current, unsigned int globalstate, const Vector3& viewer) {
 	if ((globalstate & m_state.m_state & RENDER_SCREEN) != 0) {
 		OpenGLState_apply(m_state, current, globalstate);
-		debug_colour("screen fill");
 
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
@@ -1377,7 +1077,7 @@ public:
 	}
 };
 
-OpenGLStateMap* g_openglStates = 0;
+static OpenGLStateMap* g_openglStates = 0;
 
 inline GLenum convertBlendFactor(BlendFactor factor) {
 	switch (factor) {

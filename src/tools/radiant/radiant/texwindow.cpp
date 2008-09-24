@@ -906,7 +906,6 @@ void Texture_Draw(TextureBrowser& textureBrowser) {
 
 			// Draw the texture
 			glBindTexture (GL_TEXTURE_2D, q->texture_number);
-			GlobalOpenGL_debugAssertNoErrors();
 			glColor3f (1, 1, 1);
 			glBegin (GL_QUADS);
 			glTexCoord2i (0, 0);
@@ -1042,10 +1041,8 @@ static gboolean TextureBrowser_size_allocate (GtkWidget* widget, GtkAllocation* 
 
 static gboolean TextureBrowser_expose (GtkWidget* widget, GdkEventExpose* event, TextureBrowser* textureBrowser) {
 	if (glwidget_make_current(textureBrowser->m_gl_widget) != FALSE) {
-		GlobalOpenGL_debugAssertNoErrors();
 		TextureBrowser_evaluateHeight(*textureBrowser);
 		Texture_Draw(*textureBrowser);
-		GlobalOpenGL_debugAssertNoErrors();
 		glwidget_swap_buffers(textureBrowser->m_gl_widget);
 	}
 	return FALSE;

@@ -2702,14 +2702,4 @@ inline OpenGLBinding& GlobalOpenGL() {
 	return GlobalOpenGLModule::getTable();
 }
 
-#if defined(DEBUG)
-inline void GlobalOpenGL_debugAssertNoErrors() {
-	GlobalOpenGL().assertNoErrors();
-}
-#else
-inline void GlobalOpenGL_debugAssertNoErrors() {
-}
-#endif
-
-
 #endif

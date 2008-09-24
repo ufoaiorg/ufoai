@@ -22,8 +22,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_DEBUGGING_DEBUGGING_H)
 #define INCLUDED_DEBUGGING_DEBUGGING_H
 
-/// \file
-/// \brief Debugging macros for fatal error/assert messages.
+/**
+ * @file debugging.h
+ * @brief Debugging macros for fatal error/assert messages.
+ */
 
 #include "stream/textstream.h"
 #include "generic/static.h"

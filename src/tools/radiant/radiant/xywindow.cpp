@@ -739,9 +739,9 @@ static gboolean xywnd_size_allocate(GtkWidget* widget, GtkAllocation* allocation
 static gboolean xywnd_expose(GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd) {
 	if (glwidget_make_current(xywnd->GetWidget()) != FALSE) {
 		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
-			GlobalOpenGL_debugAssertNoErrors();
+
 			xywnd->XY_Draw();
-			GlobalOpenGL_debugAssertNoErrors();
+
 
 			xywnd->m_XORRectangle.set(rectangle_t());
 		}
@@ -2131,40 +2131,40 @@ void XYWnd::XY_Draw(void) {
 
 		Scene_Render(renderer, m_view);
 
-		GlobalOpenGL_debugAssertNoErrors();
+
 		renderer.render(m_modelview, m_projection);
-		GlobalOpenGL_debugAssertNoErrors();
+
 	}
 
 	glDepthMask(GL_FALSE);
 
-	GlobalOpenGL_debugAssertNoErrors();
+
 
 	glLoadMatrixf(reinterpret_cast<const float*>(&m_modelview));
 
-	GlobalOpenGL_debugAssertNoErrors();
+
 	glDisable(GL_LINE_STIPPLE);
-	GlobalOpenGL_debugAssertNoErrors();
+
 	glLineWidth(1);
-	GlobalOpenGL_debugAssertNoErrors();
+
 	if (GlobalOpenGL().GL_1_3()) {
 		glActiveTexture(GL_TEXTURE0);
 		glClientActiveTexture(GL_TEXTURE0);
 	}
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	GlobalOpenGL_debugAssertNoErrors();
-	glDisableClientState(GL_NORMAL_ARRAY);
-	GlobalOpenGL_debugAssertNoErrors();
-	glDisableClientState(GL_COLOR_ARRAY);
-	GlobalOpenGL_debugAssertNoErrors();
-	glDisable(GL_TEXTURE_2D);
-	GlobalOpenGL_debugAssertNoErrors();
-	glDisable(GL_LIGHTING);
-	GlobalOpenGL_debugAssertNoErrors();
-	glDisable(GL_COLOR_MATERIAL);
-	GlobalOpenGL_debugAssertNoErrors();
 
-	GlobalOpenGL_debugAssertNoErrors();
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glDisableClientState(GL_COLOR_ARRAY);
+
+	glDisable(GL_TEXTURE_2D);
+
+	glDisable(GL_LIGHTING);
+
+	glDisable(GL_COLOR_MATERIAL);
+
+
+
 
 
 	// size info
@@ -2200,7 +2200,7 @@ void XYWnd::XY_Draw(void) {
 		GlobalClipPoints_Draw(m_fScale);
 	}
 
-	GlobalOpenGL_debugAssertNoErrors();
+
 
 	// reset modelview
 	glLoadIdentity();
@@ -2242,8 +2242,6 @@ void XYWnd::XY_Draw(void) {
 			glEnd();
 		}
 	}
-
-	GlobalOpenGL_debugAssertNoErrors();
 
 	glFinish();
 }
