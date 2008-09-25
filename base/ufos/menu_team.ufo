@@ -1723,7 +1723,7 @@ menu equipment
 
 	model body
 	{
-		md2		"*cvar mn_body"
+		md2	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand_menu"
 		origin	"785 173 0"
@@ -1733,9 +1733,9 @@ menu equipment
 
 	model head
 	{
-		md2		"*cvar mn_head"
+		md2	"*cvar mn_head"
 		skin	"*cvar mn_skin"
-		tag		"body tag_head"
+		tag	"body tag_head"
 		scale	"1.0 1.0 1.0"
 	}
 
@@ -1768,7 +1768,7 @@ menu equipment
 	container extension	{ pos "548 104" }
 	container right		{ pos "548 178" }
 	container left		{ pos "872 178" }
-	container armour	{ pos "700 100" invis true }
+	container armour	{ pos "735 100" invis true }
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }

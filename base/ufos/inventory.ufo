@@ -76,7 +76,7 @@ inventory holster
 // Armour (Region=Soldier)
 inventory armour
 {
-	shape	"0 0 6 6"
+	shape	"0 0 5 6"
 	single	true
 	armour	true
 	in		200

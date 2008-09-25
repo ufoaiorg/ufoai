@@ -435,13 +435,15 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 			dragInfo.to = node->container;
 			dragInfo.toX = 0;
 			dragInfo.toY = 0;
-		} else {
-			assert(node->container == dragInfo.to);
 		}
-
-		INV_MoveItem(menuInventory,
-			dragInfo.to, dragInfo.toX, dragInfo.toY,
-			dragInfo.from, fItem);
+		if (node->container == dragInfo.to) {
+			INV_MoveItem(menuInventory,
+				dragInfo.to, dragInfo.toX, dragInfo.toY,
+				dragInfo.from, fItem);
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "MN_Drag: node->container and dragInfo.to mismatch (%s != %s).\n", node->container->name, 
+				(dragInfo.to) ? dragInfo.to->name : "(none)");
+		}
 	}
 
 	/* Update display of scroll buttons. */
