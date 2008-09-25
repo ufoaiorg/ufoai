@@ -24,8 +24,10 @@ ifeq ($(TARGET_OS),mingw32)
 	CFLAGS+=-DWINVER=0x501
 #	GAME_LIBS+=
 #	TOOLS_LIBS=
-else ifneq ($(TARGET_OS),darwin)
-	CLIENT_LIBS+=-lGL
+else
+	ifneq ($(TARGET_OS),darwin)
+		CLIENT_LIBS+=-lGL
+	endif
 endif
 
 # Linux like
