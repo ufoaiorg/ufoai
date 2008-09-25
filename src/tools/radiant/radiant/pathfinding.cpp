@@ -36,6 +36,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /**
  * @brief Parses the ufo2map pathfinding output to be able to display it afterwards
  * @returns 0 on success
+ * @note >>mapname<<.elevation.csv and >>mapname<<.walls.csv are the files we have to parse
  */
 static int ParsePathfindingLogFile (const char *filename)
 {
