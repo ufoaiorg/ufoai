@@ -1001,7 +1001,7 @@ menu team
 	func init
 	{
 		team_clear
-		cmd "team_mark;team_select 0;set mn_show_employe 1;"
+		cmd "team_mark;team_select 0;set mn_show_employee 1;"
 	}
 }
 
