@@ -109,15 +109,14 @@ GAME RELATED TRACING
 */
 
 
-int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int y, const int z);
-int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, const int y, const int z, const int dir);
+int RT_CheckCell(routing_t * map, const int actor_size, const int x, const int y, const int z);
+int RT_UpdateConnection(routing_t * map, const int actor_size, const int x, const int y, const int z, const int dir);
 
 /*
 ==========================================================
-  GRID ORIENTED MOVEMENT AND SCANNING
+GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================
 */
 
-
-void Grid_DumpMap (struct routing_s *map, int size, int lx, int ly, int lz, int hx, int hy, int hz);
-void Grid_DumpWholeMap (routing_t *map);
+void Grid_DumpMap(struct routing_s *map, int size, int lx, int ly, int lz, int hx, int hy, int hz);
+void Grid_DumpWholeMap(routing_t *map);

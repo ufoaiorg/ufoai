@@ -882,20 +882,18 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	curTile = &mapTiles[numTiles - 1];
 
 	/* wpMin and wpMax have the map size data from the initial build.
-	 * Offset this by the given parameters so teh stored values are in real coordinates.
-	 */
-	 curTile->wpMins[0] += sX;
-	 curTile->wpMins[1] += sY;
-	 curTile->wpMins[2] += sZ;
-	 curTile->wpMaxs[0] += sX;
-	 curTile->wpMaxs[1] += sY;
-	 curTile->wpMaxs[2] += sZ;
+	 * Offset this by the given parameters so teh stored values are in real coordinates. */
+	curTile->wpMins[0] += sX;
+	curTile->wpMins[1] += sY;
+	curTile->wpMins[2] += sZ;
+	curTile->wpMaxs[0] += sX;
+	curTile->wpMaxs[1] += sY;
+	curTile->wpMaxs[2] += sZ;
 
 	/* Things that need to be done:
 	 * The floor, ceiling, and route data can be copied over from the map.
-	 * All data must be regenerated for cells with overlapping content or where new model data is adjacent
-	 *   to a cell with existing model data.
-	 */
+	 * All data must be regenerated for cells with overlapping content or where new
+	 * model data is adjacent to a cell with existing model data. */
 
 	/* Copy the routing information into our master table */
 	minX = max(curTile->wpMins[0], 0);
@@ -2034,15 +2032,13 @@ void Grid_PosToVec (struct routing_s *map, const int actor_size, pos3_t pos, vec
  */
 void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 {
-	int x, y, z, actor_size, dir, new_z;
+	int x, y, z, actor_size, dir;
 
 #if 0
 	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
 		(int)min[0], (int)min[1], (int)min[2],
 		(int)max[0], (int)max[1], (int)max[2]);
-#endif
 
-#if 0
 	Com_Printf("Before:\n");
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
 #endif
@@ -2054,7 +2050,7 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 			for (x = max(min[0] - actor_size + 1, 0); x < max[0] - actor_size; x++)
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
-					new_z = RT_CheckCell(map, actor_size, x, y, z);
+					const int new_z = RT_CheckCell(map, actor_size, x, y, z);
 					assert(new_z <= z);
 					z = new_z;
 				}
@@ -2066,15 +2062,14 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 	/* check connections */
 	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
 		/* Offset the initial X and Y to compensate for larger actors when needed.
-		 * Also sweep further out to catch the walls back into our box.
-		 */
+		 * Also sweep further out to catch the walls back into our box. */
 		for (y = max(min[1] - actor_size, 0); y < min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1); y++)
 			for (x = max(min[0] - actor_size, 0); x < min(max[0] - actor_size + 1, PATHFINDING_WIDTH - 1); x++)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
 					/** @note This update MUST go from the bottom (0) to the top (7) of the model.
-					 *  RT_UpdateConnection expects it and breaks otherwise. */
+					 * RT_UpdateConnection expects it and breaks otherwise. */
 					for (z = 0; z < PATHFINDING_HEIGHT; z++) {
-						new_z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
+						const int new_z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
 						assert(new_z >= z);
 						z = new_z;
 					}
