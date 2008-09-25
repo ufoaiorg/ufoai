@@ -458,11 +458,7 @@ static qboolean MakeBrushWindings (mapbrush_t *brush)
  */
 static inline void CheckFlags (side_t *side, const mapbrush_t *b)
 {
-	if ((side->contentFlags & CONTENTS_ACTORCLIP) &&
-		(side->contentFlags & CONTENTS_STEPON))
-		Sys_Error("Brush %i (entity %i) has invalid mix of stepon and actorclip", b->brushnum, b->entitynum);
-	if ((side->contentFlags & CONTENTS_ACTORCLIP) &&
-		(side->contentFlags & CONTENTS_PASSABLE))
+	if ((side->contentFlags & CONTENTS_ACTORCLIP) && (side->contentFlags & CONTENTS_PASSABLE))
 		Sys_Error("Brush %i (entity %i) has invalid mix of passable and actorclip", b->brushnum, b->entitynum);
 }
 

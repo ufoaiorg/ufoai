@@ -167,11 +167,6 @@ static qboolean IsInLevel (int contents, int level)
 			return qtrue;
 		else
 			return qfalse;
-	case LEVEL_STEPON:
-		if (contents & CONTENTS_STEPON)
-			return qtrue;
-		else
-			return qfalse;
 	}
 
 	/* If the brush is any kind of clip, we are not looking for it after here. */

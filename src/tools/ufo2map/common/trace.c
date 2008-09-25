@@ -67,64 +67,6 @@ void MakeTracingNodes (int levels)
 	}
 }
 
-
-/**
- * @brief
- */
-static int TestContents_r (int node, const vec3_t pos)
-{
-	tnode_t	*tnode;
-	float	front;
-	int		r;
-
-	if (node & (1 << 31))
-		return node & ~(1 << 31);	/* leaf node */
-
-	tnode = &curTile->tnodes[node];
-	switch (tnode->type) {
-	case PLANE_X:
-	case PLANE_Y:
-	case PLANE_Z:
-		front = pos[tnode->type] - tnode->dist;
-		break;
-	case PLANE_NONE:
-		r = TestContents_r(tnode->children[0], pos);
-		if (r)
-			return r;
-		return TestContents_r(tnode->children[1], pos);
-		break;
-	default:
-		front = (pos[0] * tnode->normal[0] + pos[1] * tnode->normal[1] + pos[2] * tnode->normal[2]) - tnode->dist;
-		break;
-	}
-
-	if (front >= 0)
-		return TestContents_r(tnode->children[0], pos);
-	else
-		return TestContents_r(tnode->children[1], pos);
-}
-
-
-/**
- * @brief Step height check
- * @sa TestContents_r
- */
-qboolean TestContents (const vec3_t pos)
-{
-	int i;
-
-	/* loop over all theads */
-	for (i = curTile->numtheads - 1; i >= 0; i--) {
-		if (curTile->theadlevel[i] != LEVEL_STEPON) /* only check stepon here */
-			continue;
-
-		if (TestContents_r(curTile->thead[i], pos))
-			return qtrue;
-		break;
-	}
-	return qfalse;
-}
-
 /**
  * @brief
  * @sa MakeTnodes

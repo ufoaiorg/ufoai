@@ -307,7 +307,6 @@ COLLISION DETECTION
 #define	CONTENTS_DEADACTOR		0x04000000
 #define	CONTENTS_DETAIL			0x08000000 /**< brushes to be added after vis leafs also used for debugging local entities */
 #define	CONTENTS_TRANSLUCENT	0x10000000 /**< auto set if any surface has trans */
-#define	CONTENTS_STEPON			0x40000000 /**< marks areas elevated passable areas */
 
 /* {ufo2map}, [renderer] */
 #define	SURF_LIGHT		0x00000001 /**< value will hold the light strength */
@@ -331,10 +330,10 @@ COLLISION DETECTION
 #define	MASK_ALL			(-1)
 #define	MASK_SOLID			(CONTENTS_SOLID | CONTENTS_WINDOW)
 #define	MASK_IMPASSABLE		(MASK_SOLID | CONTENTS_ACTORCLIP)
-#define MASK_PASSABLE		(CONTENTS_PASSABLE | CONTENTS_WATER | CONTENTS_STEPON)
+#define MASK_PASSABLE		(CONTENTS_PASSABLE | CONTENTS_WATER)
 #define	MASK_SHOT			(CONTENTS_SOLID | CONTENTS_ACTOR | CONTENTS_WEAPONCLIP | CONTENTS_WINDOW | CONTENTS_DEADACTOR)
 #define	MASK_VISIBILILITY	(CONTENTS_SOLID | CONTENTS_WATER)
-#define	MASK_CLIP			(CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON)
+#define	MASK_CLIP			(CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP)
 
 /*============================================================== */
 
@@ -383,8 +382,7 @@ COLLISION DETECTION
 #define	LEVEL_LASTVISIBLE		255
 #define	LEVEL_WEAPONCLIP		256
 #define	LEVEL_ACTORCLIP			257
-#define	LEVEL_STEPON			258
-#define	LEVEL_MAX				259
+#define	LEVEL_MAX				258
 /* ufo2map/bsp.c, common/cmodel.c, renderer/r_model_brush.c */
 #define	NUM_REGULAR_MODELS		(LEVEL_ACTORCLIP + 1)
 
@@ -394,7 +392,6 @@ COLLISION DETECTION
 #define	TL_FLAG_NONE		0x00
 #define	TL_FLAG_ACTORCLIP	0x01
 #define	TL_FLAG_WEAPONCLIP	0x02
-#define	TL_FLAG_STEPON		0x04
 #define	TL_FLAG_ALL			0x07
 
 /* ufo2map/common/bspfile.c, renderer/r_lightmap.c, renderer/r_lightmap.h, renderer/R-main.c, renderer/r_model_brush.c,

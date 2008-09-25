@@ -226,7 +226,7 @@ typedef struct {
  *  All static entities in the tile are located in levels 0-255, with the main world located in 0.
  *  Levels 256-258 are reserved, see LEVEL_* constants in src/shared/shared.h.  Non-static entities
  *  (ET_BREAKABLE and ET_ROTATING, ET_DOOR, etc.) are contained in levels 259 and above. These entities'
- *  models are named *##, beginning from 1, and each corresponds to level LEVEL_STEPON + ##.
+ *  models are named *##, beginning from 1, and each corresponds to level LEVEL_MAX - 1 + ##.
  *
  *  The code that handles the pathing has separate checks for the static and non-static levels in a tile.
  *  The static levels have their bounds precalculated by CM_MakeTracingNodes and stored in tile->theads.

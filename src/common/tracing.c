@@ -309,8 +309,6 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 			continue;
 		if (curTile->theadlevel[i] == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
-		if (curTile->theadlevel[i] == LEVEL_STEPON && !(levelmask & TL_FLAG_STEPON))
-			continue;
 		if (TR_TestLine_r(curTile->thead[i], start, stop))
 			return qtrue;
 	}
@@ -323,7 +321,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
- * @note Special levels are LEVEL_ACTORCLIP, LEVEL_WEAPONCLIP, and LEVEL_STEPON.
+ * @note Special levels are LEVEL_ACTORCLIP and LEVEL_WEAPONCLIP.
  * @sa TR_TestLine_r
  * @sa CL_TargetingToHit
  * @return qfalse if not blocked
@@ -447,8 +445,6 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 		if (curTile->theadlevel[i] == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
 		if (curTile->theadlevel[i] == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
-			continue;
-		if (curTile->theadlevel[i] == LEVEL_STEPON && !(levelmask & TL_FLAG_STEPON))
 			continue;
 		if (TR_TestLineDist_r(tile->thead[i], start, stop))
 			if (VectorNearer(tr_end, end, start))
@@ -1172,8 +1168,10 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 			 * @brief This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
 			 * are bitmasks of game levels 1-8.  0 is a special case repeat fo 255.
 			 * However a levelmask including 0x100 is usually included so the CLIP levels are
-			 * examined.  Note that LEVEL_STEPON should not be available at this point, but may be erroneously
+			 * examined.
+			 * @todo @note that LEVEL_STEPON should not be available at this point, but may be erroneously
 			 * included in another level, requiring the addition ot the brushreject parameter.
+			 * @todo Is the above still true?
 			 */
 			if (h->level && levelmask && !(h->level & levelmask))
 				continue;

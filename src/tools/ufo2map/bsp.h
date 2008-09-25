@@ -129,7 +129,6 @@ void FreeTree(tree_t *tree);
 
 void MakeTracingNodes(int levels);
 void CloseTracingNodes(void);
-qboolean TestContents(const vec3_t pos);
 
 /* levels.c */
 

@@ -50,12 +50,6 @@ pathing_t svPathMap, clPathMap; /* This is where the data for TUS used to move a
 /** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;
 
-/** @note The old value for the normal step up (will become obselete) */
-byte sh_low;
-
-/** @note The old value for the STEPON flagged step up (will become obselete) */
-byte sh_big;
-
 /** @note a list with all inline models (like func_breakable) */
 static const char **inlineList;
 

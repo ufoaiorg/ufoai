@@ -221,8 +221,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		if (debugTrace)
 			Com_Printf("[(%i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, start[0], start[1], start[2], end[0], end[1], end[2]);
-		tr = RT_COMPLETEBOXTRACE (start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
-		assert(!(tr.contentFlags & CONTENTS_STEPON));
+		tr = RT_COMPLETEBOXTRACE(start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			if (debugTrace)
@@ -241,9 +240,9 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		bottom = tr.endpos[2];  /* record the floor position. */
 
 		/* Record the debugging data in case it is used. */
-		VectorCopy(tr.endpos, brushesHit.floor);\
+		VectorCopy(tr.endpos, brushesHit.floor);
 
-		assert(initial>bottom);
+		assert(initial > bottom);
 
 		if (debugTrace)
 			Com_Printf("Potential floor found at %f.\n", bottom);
@@ -257,8 +256,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		if (debugTrace)
 			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
-		tr = RT_COMPLETEBOXTRACE (tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
-		assert(!(tr.contentFlags & CONTENTS_STEPON));
+		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction < 1.0) {
 			if (debugTrace)
 				Com_Printf("Cannot use found surface- stepup obstruction found at %f.\n", tr.endpos[2]);
@@ -297,7 +295,6 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
 
 		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
-		assert(!(tr.contentFlags & CONTENTS_STEPON));
 
 		/*
 		 * There is one last possibility:
@@ -374,7 +371,7 @@ static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int ac
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	tr_obstruction = RT_COMPLETEBOXTRACE (start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr_obstruction = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 	return tr_obstruction.fraction < 1.0;
 }
 

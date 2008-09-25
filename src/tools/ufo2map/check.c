@@ -1259,7 +1259,6 @@ void DisplayContentFlags (const int flags)
 	M(DEADACTOR);
 	M(DETAIL);
 	M(TRANSLUCENT);
-	M(STEPON);
 #undef x
 }
 
@@ -1409,19 +1408,16 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 	} else if (!strcmp(texname, "tex_common/slick")) {
 		side->contentFlags |= SURF_SLICK;
 		flagsDescription = "SURF_SLICK";
-	} else if (!strcmp(texname, "tex_common/stepon")) {
-		side->contentFlags |= CONTENTS_STEPON;
-		flagsDescription = "CONTENTS_STEPON";
 	} else if (!strcmp(texname, "tex_common/weaponclip")) {
 		side->contentFlags |= CONTENTS_WEAPONCLIP;
 		flagsDescription = "CONTENTS_WEAPONCLIP";
 	}
 
 	if (strstr(texname, "water")) {
-		#if 0
+#if 0
 		side->surfaceFlags |= SURF_WARP;
 		tex->surfaceFlags |= SURF_WARP;
-		#endif
+#endif
 		side->contentFlags |= CONTENTS_WATER;
 		side->contentFlags |= CONTENTS_PASSABLE;
 		flagsDescription = "CONTENTS_WATER and CONTENTS_PASSABLE";
@@ -1439,13 +1435,13 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 		side->surfaceFlags &= ~SURF_PHONG;
 		tex->surfaceFlags &= ~SURF_PHONG;
 		Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,
-				"SURF_PHONG unset, as it has SURF_NODRAW set\n");
+			"SURF_PHONG unset, as it has SURF_NODRAW set\n");
 	}
 
 	if (side->surfaceFlags & SURF_SKIP) {
 		side->surfaceFlags &= ~SURF_SKIP;
 		Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,
-				"removing legacy flag, SURF_SKIP\n");
+			"removing legacy flag, SURF_SKIP\n");
 	}
 }
 
@@ -1515,16 +1511,6 @@ void CheckTexturesBasedOnFlags (void)
 				Q_strncpyz(tex->name, "tex_common/hint", sizeof(tex->name));
 			}
 
-			if (side->contentFlags & CONTENTS_ACTORCLIP && side->contentFlags & CONTENTS_STEPON) {
-				if (!Q_strcmp(tex->name, "tex_common/actorclip")) {
-					Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_STEPON\n");
-					side->contentFlags &= ~CONTENTS_STEPON;
-				} else {
-					Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "mixed CONTENTS_STEPON and CONTENTS_ACTORCLIP - removed CONTENTS_ACTORCLIP\n");
-					side->contentFlags &= ~CONTENTS_ACTORCLIP;
-				}
-			}
-
 			if (side->contentFlags & CONTENTS_WEAPONCLIP && Q_strcmp(tex->name, "tex_common/weaponclip")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set weaponclip texture for CONTENTS_WEAPONCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/weaponclip", sizeof(tex->name));
@@ -1532,10 +1518,6 @@ void CheckTexturesBasedOnFlags (void)
 			if (side->contentFlags & CONTENTS_ACTORCLIP && Q_strcmp(tex->name, "tex_common/actorclip")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "*set actorclip texture for CONTENTS_ACTORCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
-			}
-			if (side->contentFlags & CONTENTS_STEPON && Q_strcmp(tex->name, "tex_common/stepon")) {
-				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "set stepon texture for CONTENTS_STEPON\n");
-				Q_strncpyz(tex->name, "tex_common/stepon", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ORIGIN && Q_strcmp(tex->name, "tex_common/origin")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "set origin texture for CONTENTS_ORIGIN\n");

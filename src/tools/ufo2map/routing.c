@@ -159,7 +159,7 @@ void DoRouting (void)
 	/* build tracing structure */
 	EmitBrushes();
 	EmitPlanes(); /** This is needed for tracing to work!!! */
-	/** @note LEVEL_TRACING is not an actual level- LEVEL_MAX comes after LEVEL_STEPON */
+	/** @note LEVEL_TRACING is not an actual level */
 	MakeTracingNodes(LEVEL_ACTORCLIP + 1);
 
 	/* Reset the whole block of map data to 0 */
