@@ -4155,6 +4155,11 @@ void CL_CampaignRun (void)
 	const int currentinterval = (int)floor(ccs.date.sec) % detectioninterval;
 	int checks, dt, i;
 
+#ifdef DEBUG
+	/* temporary check to find out bug: [1999099] no pilots available */
+	assert(gd.numEmployees[EMPL_PILOT]);
+#endif
+
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
 	checks = currentinterval + (int)floor(ccs.timer);
