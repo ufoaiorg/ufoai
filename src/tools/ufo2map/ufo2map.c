@@ -89,9 +89,8 @@ static void Usage (void)
 		" -block <xl> <yl>           : \n"
 		" -blocks <xl> <yl> <xh> <yh>: \n"
 		" -chop                      : subdivide brushes for better light effects (but higher poly count)\n"
-		" -direct                    : \n"
-		" -dump                      : \n"
-		" -entity                    : \n"
+		" -direct                    : direct light scaling (float value)\n"
+		" -entity                    : entity light scaling (float value)\n"
 		" -fulldetail                : don't treat details (and trans surfaces) as details\n"
 		" -info                      : print bsp file info\n"
 	); Com_Printf(
