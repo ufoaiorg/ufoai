@@ -26,6 +26,9 @@
 #
 #######################################
 # Changelog
+#	2008-09-26 Hoehrer
+#		Quick fix to make this work with "mdl" and "image" tech settings.
+#		(previously mdl_top and image_top)
 #	2008-04-03 Hoehrer
 #		Added first working parseUfoToken function.
 #		Multi-line support for text inside ""s
@@ -112,8 +115,8 @@ my $technologySkipSettings = [
 my $technologySimpleSettings = [
 	"type",		# weapon
 	"name",		# "_Continuous Wave Laser Operation"
-	"image_top",	# techs/laser
-	"mdl_top",	# weap_machine_pistol
+	"image",	# techs/laser
+	"mdl",	# weap_machine_pistol
 	"up_chapter", 	# equipment
 	"provides", 	# knifemono
 	"time",		# 100
