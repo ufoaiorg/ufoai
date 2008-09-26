@@ -752,7 +752,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
  */
 static void CL_LeftClickUp_f (void)
 {
-	if (mouseSpace == MS_DRAG)
+	if (mouseSpace == MS_DRAGITEM)
 		MN_Click(mousePosX, mousePosY);
 	mouseSpace = MS_NULL;
 }
@@ -1239,7 +1239,7 @@ static void IN_Parse (void)
 		return;
 	}
 
-	case MS_DRAG:
+	case MS_DRAGITEM:
 		/* do nothing */
 		return;
 

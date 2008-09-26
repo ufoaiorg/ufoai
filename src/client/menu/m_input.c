@@ -352,7 +352,7 @@ void MN_Click (int x, int y)
 				continue;
 
 			/* check whether mouse is over this node */
-			if (mouseSpace == MS_DRAG && node->type == MN_CONTAINER && dragInfo.item.t) {
+			if (mouseSpace == MS_DRAGITEM && node->type == MN_CONTAINER && dragInfo.item.t) {
 				int itemX = 0;
 				int itemY = 0;
 

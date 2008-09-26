@@ -315,7 +315,7 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 		if (ic) {
 			if (!rightClick) {
 				/* Found item to drag. Prepare for drag-mode. */
-				mouseSpace = MS_DRAG;
+				mouseSpace = MS_DRAGITEM;
 				dragInfo.item = ic->item;
 				dragInfo.ic = ic;
 				dragInfo.from = node->container;
@@ -441,7 +441,7 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 				dragInfo.to, dragInfo.toX, dragInfo.toY,
 				dragInfo.from, fItem);
 		} else {
-			Com_DPrintf(DEBUG_CLIENT, "MN_Drag: node->container and dragInfo.to mismatch (%s != %s).\n", node->container->name, 
+			Com_DPrintf(DEBUG_CLIENT, "MN_Drag: node->container and dragInfo.to mismatch (%s != %s).\n", node->container->name,
 				(dragInfo.to) ? dragInfo.to->name : "(none)");
 		}
 	}
@@ -643,7 +643,7 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
 
 /**
  * @brief Draws the free and usable inventory positions when dragging an item.
- * @note Only call this function in dragging mode (mouseSpace == MS_DRAG)
+ * @note Only call this function in dragging mode @code (mouseSpace == MS_DRAGITEM) @endcode
  */
 void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
@@ -657,7 +657,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	int checkedTo;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
-	assert(mouseSpace == MS_DRAG);
+	assert(mouseSpace == MS_DRAGITEM);
 	assert(inv);
 
 	/* if single container (hands, extension, headgear) */
@@ -760,7 +760,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	assert(menuInventory);
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (mouseSpace == MS_DRAG && dragInfo.item.t)
+	if (mouseSpace == MS_DRAGITEM && dragInfo.item.t)
 		drawLoadable = qtrue;
 
 	if (node->container->single) {
@@ -983,12 +983,12 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	}
 
 	/* Draw free space if dragging - but not for idEquip */
-	if (mouseSpace == MS_DRAG && node->container->id != csi.idEquip)
+	if (mouseSpace == MS_DRAGITEM && node->container->id != csi.idEquip)
 		MN_InvDrawFree(menuInventory, node);
 
-	/**@todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
+	/** @todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
 	/* Draw tooltip for weapon or ammo */
-	if (mouseSpace != MS_DRAG && node->state && mn_show_tooltips->integer) {
+	if (mouseSpace != MS_DRAGITEM && node->state && mn_show_tooltips->integer) {
 		assert(node->container);
 
 		/** Find out where the mouse is. */
