@@ -258,6 +258,14 @@ language ja {
 	}
 }
 
+language zh_cn {
+	"_Chinese"
+	{
+		zh_CN.UTF-8
+		zh_CN.utf8
+	}
+}
+
 language none {
 	"_No language"
 	{
