@@ -24,6 +24,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "g_local.h"
+#include "../common/filesys.h"
+
+#include "lua/lauxlib.h"
+
+
+#define		POS3_METATABLE		"pos3"
+#define		ACTOR_METATABLE		"actor"
+
+/*
+ * Provides an api like luaL_dostring for buffers.
+ */
+#define luaL_dobuffer(L, b, n, s) \
+   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+#define AIL_invalidparameter(n)	\
+   Com_Printf("AIL: Invalid parameter #%d in '%s'.\n",n,__func__)
+
 
 typedef struct {
 	pos3_t to;			/**< grid pos to walk to */
@@ -35,13 +51,754 @@ typedef struct {
 	int z_align;		/**< the z-align for every shoot */
 } aiAction_t;
 
+
+/*
+ * Wrapper around edict.
+ */
+typedef struct aiActor_s {
+	edict_t *ent;
+} aiActor_t;
+
+
+/*
+ * Stores the current actor running Lua commands.
+ */
+static edict_t *AIL_ent = NULL;
+static player_t *AIL_player = NULL;
+
+
+/*
+ * Actor metatable.
+ */
+/* Internal functions. */
+static int actorL_register(lua_State *L);
+static int lua_isactor(lua_State *L, int index);
+static aiActor_t* lua_toactor(lua_State *L, int index);
+static aiActor_t* lua_pushactor(lua_State *L, aiActor_t *actor);
+/* Metatable functions. */
+static int actorL_tostring(lua_State *L);
+static int actorL_pos(lua_State *L);
+static int actorL_shoot(lua_State *L);
+static int actorL_face(lua_State *L);
+static int actorL_team(lua_State *L);
+static const luaL_reg actorL_methods[] = {
+	{"__tostring", actorL_tostring},
+	{"pos", actorL_pos},
+	{"shoot", actorL_shoot},
+	{"face", actorL_face},
+	{"team", actorL_team},
+	{0, 0}
+};
+
+
+/*
+ * pos3 metatable.
+ */
+/* Internal functions. */
+static int pos3L_register(lua_State *L);
+static int lua_ispos3(lua_State *L, int index);
+static pos3_t* lua_topos3(lua_State *L, int index);
+static pos3_t* lua_pushpos3(lua_State *L, pos3_t *pos);
+/* Metatable functions. */
+static int pos3L_tostring(lua_State *L);
+static int pos3L_goto(lua_State *L);
+static int pos3L_face(lua_State *L);
+static const luaL_reg pos3L_methods[] = {
+	{"__tostring", pos3L_tostring},
+	{"goto", pos3L_goto},
+	{"face", pos3L_face},
+	{0, 0}
+};
+
+
+/*
+ * General AI bindings.
+ */
+static int AIL_print(lua_State *L);
+static int AIL_see(lua_State *L);
+static int AIL_crouch(lua_State *L);
+static int AIL_TU(lua_State *L);
+static int AIL_reactionfire(lua_State *L);
+static int AIL_roundsleft(lua_State *L);
+static int AIL_canreload(lua_State *L);
+static int AIL_reload(lua_State *L);
+static int AIL_positionshoot(lua_State *L);
+static int AIL_positionhide(lua_State *L);
+static const luaL_reg AIL_methods[] = {
+	{"print", AIL_print},
+	{"see", AIL_see},
+	{"crouch", AIL_crouch},
+	{"TU", AIL_TU},
+	{"reactionfire", AIL_reactionfire},
+	{"roundsleft", AIL_roundsleft},
+	{"canreload", AIL_canreload},
+	{"reload", AIL_reload},
+	{"positionshoot", AIL_positionshoot},
+	{"positionhide", AIL_positionhide},
+	{0, 0}
+};
+
+
+/*
+ * Prototypes.
+ */
+static void AI_TurnIntoDirection(edict_t *aiActor, pos3_t pos);
+
+
+/*
+ *    A C T O R L
+ */
+
+/**
+ * @brief Registers the actor metatable in the lua_State.
+ * @param[in] L State to register the metatable in.
+ * @return 0 on success.
+ */
+static int actorL_register (lua_State *L)
+{
+	/* Create the metatable */
+	luaL_newmetatable(L, ACTOR_METATABLE);
+
+	/* Create the access table */
+	lua_pushvalue(L, -1);
+	lua_setfield(L, -2, "__index");
+
+	/* Register the values */
+	luaL_register(L, NULL, actorL_methods);
+
+	return 0; /* No error */
+}
+
+/**
+ * @brief Checks to see if there is a actor metatable at index in the lua_State.
+ * @param[in] L Lua state to check.
+ * @param[in] index Index to check for a actor metatable.
+ * @return 1 if index has a actor metatable otherwise returns 0.
+ */
+static int lua_isactor (lua_State *L, int index)
+{
+	int ret;
+
+	if (lua_getmetatable(L, index) == 0)
+		return 0;
+	lua_getfield(L, LUA_REGISTRYINDEX, ACTOR_METATABLE);
+
+	ret = 0;
+	if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
+		ret = 1;
+
+	lua_pop(L, 2);  /* remove both metatables */
+	return ret;
+}
+
+/**
+ * @brief Returns the actor from the metatable at index.
+ */
+static aiActor_t* lua_toactor (lua_State *L, int index)
+{
+	if (lua_isactor(L,index)) {
+		return (aiActor_t*) lua_touserdata(L, index);
+	}
+	luaL_typerror(L, index, ACTOR_METATABLE);
+	return NULL;
+}
+
+/**
+ * @brief Pushes a actor as a metatable at the top of the stack.
+ */
+static aiActor_t* lua_pushactor (lua_State *L, aiActor_t *actor)
+{
+	aiActor_t *a;
+	a = (aiActor_t*) lua_newuserdata(L, sizeof(*a));
+	memcpy(a, actor, sizeof(*a));
+	luaL_getmetatable(L, ACTOR_METATABLE);
+	lua_setmetatable(L, -2);
+	return a;
+}
+
+/**
+ * @brief Pushes the actor as a string.
+ */
+static int actorL_tostring (lua_State *L)
+{
+	aiActor_t *target;
+	char buf[MAX_VAR];
+
+	assert(lua_isactor(L, 1));
+
+	target = lua_toactor(L, 1);
+	Com_sprintf(buf, sizeof(buf), "Actor( %s )", target->ent->chr.name);
+
+	lua_pushstring(L, buf);
+	return 1;
+}
+
+/*
+ * @brief Gets the actors position.
+ */
+static int actorL_pos (lua_State *L)
+{
+	aiActor_t *target;
+
+	assert(lua_isactor(L, 1));
+
+	target = lua_toactor(L, 1);
+	lua_pushpos3(L, &target->ent->pos);
+	return 1;
+}
+
+/**
+ * @brief Shoots the actor.
+ */
+static int actorL_shoot (lua_State *L)
+{
+	int fm, tu, shots;
+	aiActor_t *target;
+	int weapFdsIdx;
+	const objDef_t *od;     /* Ammo pointer. */
+	const objDef_t *weapon; /* Weapon pointer. */
+	const fireDef_t *fd;    /* Fire-definition pointer. */
+
+	assert(lua_isactor(L, 1));
+
+	/* Target */
+	target = lua_toactor(L, 1);
+
+	/* Figure out weapon to use. */
+	if (IS_SHOT_RIGHT(fm) && RIGHT(AIL_ent)
+			&& RIGHT(AIL_ent)->item.m
+			&& RIGHT(AIL_ent)->item.t->weapon
+			&& (!RIGHT(AIL_ent)->item.t->reload
+				|| RIGHT(AIL_ent)->item.a > 0)) {
+		od = RIGHT(AIL_ent)->item.m;
+		weapon = RIGHT(AIL_ent)->item.t;
+	} else if (IS_SHOT_LEFT(fm) && LEFT(AIL_ent)
+			&& LEFT(AIL_ent)->item.m
+			&& LEFT(AIL_ent)->item.t->weapon
+			&& (!LEFT(AIL_ent)->item.t->reload
+				|| LEFT(AIL_ent)->item.a > 0)) {
+		od = LEFT(AIL_ent)->item.m;
+		weapon = LEFT(AIL_ent)->item.t;
+	} else {
+		/* Failure - no weapon. */
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Number of TU to spend shooting, adjust fire mode to that. */
+	if (lua_gettop(L) > 1) {
+		assert(lua_isnumber(L, 2)); /* Must be a number. */
+
+		tu = (int) lua_tonumber(L, 2);
+		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
+		fd = &od->fd[weapFdsIdx][0];
+		shots = tu / fd->time;
+	}
+
+	while (shots > 0) {
+		shots--;
+		/* @todo actually handle fire modes */
+		G_ClientShoot(AIL_player, AIL_ent->number, target->ent->pos,
+				0, 0, NULL, qtrue, 0);
+	}
+
+	/* Success. */
+	lua_pushboolean(L, 1);
+	return 1;
+}
+
+/**
+ * @brief Makes the actor face the position.
+ */
+static int actorL_face (lua_State *L)
+{
+	aiActor_t *target;
+
+	assert(lua_isactor(L, 1));
+
+	AI_TurnIntoDirection(AIL_ent, target->ent->pos);
+
+	lua_pushboolean(L, 1);
+	return 1;
+}
+
+/**
+ * @brief Gets the actor's team.
+ */
+static int actorL_team (lua_State *L)
+{
+	aiActor_t *target;
+
+	assert(lua_isactor(L, 1));
+
+	target = lua_toactor(L, 1);
+	switch (target->ent->team) {
+		case TEAM_PHALANX:
+			lua_pushstring(L, "phalanx");
+			break;
+		case TEAM_CIVILIAN:
+			lua_pushstring(L, "civilian");
+			break;
+		case TEAM_ALIEN:
+			lua_pushstring(L, "alien");
+			break;
+		default:
+			lua_pushstring(L, "unknown");
+			break;
+	}
+	return 1;
+}
+
+
+/*
+ *   P O S 3 L
+ */
+
+/**
+ * @brief Registers the pos3 metatable in the lua_State.
+ * @param[in] L State to register the metatable in.
+ * @return 0 on success.
+ */
+static int pos3L_register (lua_State *L)
+{
+	/* Create the metatable */
+	luaL_newmetatable(L, POS3_METATABLE);
+
+	/* Create the access table */
+	lua_pushvalue(L, -1);
+	lua_setfield(L, -2, "__index");
+
+	/* Register the values */
+	luaL_register(L, NULL, pos3L_methods);
+
+	return 0; /* No error */
+}
+
+/**
+ * @brief Checks to see if there is a pos3 metatable at index in the lua_State.
+ * @param[in] L Lua state to check.
+ * @param[in] index Index to check for a pos3 metatable.
+ * @return 1 if index has a pos3 metatable otherwise returns 0.
+ */
+static int lua_ispos3 (lua_State *L, int index)
+{
+	int ret;
+
+	if (lua_getmetatable(L, index) == 0)
+		return 0;
+	lua_getfield(L, LUA_REGISTRYINDEX, POS3_METATABLE);
+
+	ret = 0;
+	if (lua_rawequal(L, -1, -2))  /* does it have the correct metatable? */
+		ret = 1;
+
+	lua_pop(L, 2);  /* remove both metatables */
+	return ret;
+}
+
+/**
+ * @brief Returns the pos3 from the metatable at index.
+ */
+static pos3_t* lua_topos3 (lua_State *L, int index)
+{
+	if (lua_ispos3(L, index)) {
+		return (pos3_t*) lua_touserdata(L, index);
+	}
+	luaL_typerror(L, index, POS3_METATABLE);
+	return NULL;
+}
+
+/**
+ * @brief Pushes a pos3 as a metatable at the top of the stack.
+ */
+static pos3_t* lua_pushpos3 (lua_State *L, pos3_t *pos)
+{
+	pos3_t *p;
+	p = (pos3_t*) lua_newuserdata(L, sizeof(*p));
+	memcpy(p, pos, sizeof(*p));
+	luaL_getmetatable(L, POS3_METATABLE);
+	lua_setmetatable(L, -2);
+	return p;
+}
+
+/**
+ * @brief Puts the pos3 information in a string.
+ */
+static int pos3L_tostring (lua_State *L)
+{
+	pos3_t *p;
+	char buf[MAX_VAR];
+
+	assert(lua_ispos3(L, 1));
+
+	p = lua_topos3(L, 1);
+	Com_sprintf(buf, sizeof(buf), "Pos3( x=%d, y=%d, z=%d )", (*p)[0], (*p)[1], (*p)[2]);
+
+	lua_pushstring(L, buf);
+	return 1;
+}
+
+/**
+ * @brief Makes the actor head to the position.
+ */
+static int pos3L_goto (lua_State *L)
+{
+	pos3_t *pos;
+
+	assert(lua_ispos3(L, 1));
+
+	/* Calculate move table. */
+	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize,
+			(AIL_ent->state & STATE_CROUCHED) ? 1 : 0, AIL_ent->TU);
+	gi.MoveStore(gi.pathingMap);
+
+	/* Move. */
+	pos = lua_topos3(L, 1);
+	G_ClientMove(AIL_player, AIL_ent->team, AIL_ent->number, *pos, qfalse, QUIET);
+
+	lua_pushboolean(L, 1);
+	return 1;
+}
+
+/**
+ * @brief Makes the actor face the position.
+ */
+static int pos3L_face (lua_State *L)
+{
+	pos3_t *pos;
+
+	assert(lua_ispos3(L, 1));
+
+	pos = lua_topos3(L, 1);
+	AI_TurnIntoDirection(AIL_ent, *pos);
+
+	lua_pushboolean(L, 1);
+	return 1;
+}
+
+/*
+ *    A I L
+ */
+/**
+ * @brief Works more or less like Lua's builtin print.
+ */
+static int AIL_print (lua_State *L)
+{
+	int i;
+	const char *s;
+	const int n = lua_gettop(L);  /* number of arguments */
+
+	for (i = 1; i <= n; i++) {
+		int meta = 0;
+
+		lua_pushvalue(L, i);   /* value to print */
+		if (luaL_callmeta(L, 1, "__tostring")) {
+			s = lua_tostring(L, -1);
+			meta = 1;
+		} else {
+			switch (lua_type(L, -1)) {
+			case LUA_TNUMBER:
+			case LUA_TSTRING:
+				s = lua_tostring(L, -1);
+				break;
+			case LUA_TBOOLEAN:
+				s = lua_toboolean(L, -1) ? "true" : "false";
+				break;
+			case LUA_TNIL:
+				s = "nil";
+				break;
+
+			default:
+				s = "unknown lua type";
+				break;
+			}
+		}
+		Com_Printf("%s%s", (i > 1) ? "\t" : "", s);
+		lua_pop(L, 1); /* Pop the value */
+		if (meta) /* Meta creates an additional string. */
+			lua_pop(L, 1);
+	}
+
+	Com_Printf("\n");
+	return 0;
+}
+
+/**
+ * @brief Returns what the actor can see.
+ */
+static int AIL_see (lua_State *L)
+{
+	int vision, team;
+	int i, j, k, n, cur;
+	edict_t *check;
+	aiActor_t target;
+	edict_t *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
+	float dist_lookup[MAX_EDICTS];
+	const char *s;
+
+	/* Handle parameters. */
+	if ((lua_gettop(L) > 0)) {
+		/* Get what to "see" with. */
+		vision = 0;
+		if (lua_isstring(L, 1)) {
+			s = lua_tostring(L, 1);
+			/** @todo Properly implement at edict level, get rid of magic numbers.
+			 * These are only "placeholders". */
+			if (Q_strcmp(s, "all") == 0)
+				vision = 0;
+			else if (Q_strcmp(s, "sight") == 0)
+				vision = 1;
+			else if (Q_strcmp(s, "psionic") == 0)
+				vision = 2;
+			else if (Q_strcmp(s, "infrared") == 0)
+				vision = 3;
+			else
+				AIL_invalidparameter(1);
+		} else
+			AIL_invalidparameter(1);
+
+		/* We now check for different teams. */
+		team = TEAM_NONE;
+		if ((lua_gettop(L) > 1)) {
+			if (lua_isstring(L, 2)) {
+				s = lua_tostring(L, 2);
+				if (Q_strcmp(s, "all") == 0)
+					team = TEAM_NONE;
+				else if (Q_strcmp(s, "alien") == 0)
+					team = TEAM_ALIEN;
+				else if (Q_strcmp(s, "civilian") == 0)
+					team = TEAM_CIVILIAN;
+				else if (Q_strcmp(s, "phalanx") == 0)
+					team = TEAM_PHALANX;
+				else
+					AIL_invalidparameter(2);
+			} else
+				AIL_invalidparameter(2);
+		}
+	}
+
+	n = 0;
+	/* Get visible things. */
+	/** @todo check for what they can see instead of seeing all. */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check) &&
+				((vision == 0)) && /* Vision checks. */
+				((team == TEAM_NONE) || /* Check for team match if needed. */
+					(check->team == team))) {
+
+			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
+			unsorted[n++] = check;
+		}
+
+	/* Sort by distance - nearest first. */
+	for (i = 0; i < n; i++) { /* Until we fill sorted */
+		cur = -1;
+		for (j = 0; j < n; j++) { /* Check for closest */
+
+			/* Is shorter then current minimum? */
+			if ((cur < 0) || (dist_lookup[j] < dist_lookup[cur])) {
+
+				/* Check if not already in sorted. */
+				for (k = 0; k < i; k++)
+					if (sorted[k] == unsorted[j])
+						break;
+
+				/* Not already sorted and is new minimum. */
+				if (k == i)
+					cur = j;
+			}
+		}
+
+		sorted[i] = unsorted[cur];
+	}
+
+	/* Now save it in a Lua table. */
+	lua_newtable(L);
+	for (i = 0; i < n; i++) {
+		lua_pushnumber(L, i + 1); /* index, starts with 1 */
+		target.ent = sorted[i];
+		lua_pushactor(L, &target); /* value */
+		lua_rawset(L, -3); /* store the value in the table */
+	}
+	return 1; /* Returns the table of actors. */
+}
+
+/**
+ * @brief Toggles crouch state with true/false and returns current crouch state.
+ */
+static int AIL_crouch (lua_State *L)
+{
+	int state;
+
+	if (lua_gettop(L) > 0) {
+		if (lua_isboolean(L, 1)) {
+			state = lua_toboolean(L, 1);
+			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
+				(state) ? qtrue : qfalse);
+		}
+		else AIL_invalidparameter(1);
+	}
+
+	lua_pushboolean(L, AIL_ent->state & STATE_CROUCHED);
+	return 1;
+}
+
+/**
+ * @brief Gets the number of TU the actor has left.
+ */
+static int AIL_TU (lua_State *L)
+{
+	lua_pushnumber(L,AIL_ent->TU);
+	return 1;
+}
+
+/**
+ * @brief Sets the actor's reaction fire.
+ */
+static int AIL_reactionfire (lua_State *L)
+{
+	return 0;
+}
+
+/**
+ * @brief Checks to see how many rounds the actor has left.
+ */
+static int AIL_roundsleft (lua_State *L)
+{
+	/* Right hand */
+	if (RIGHT(AIL_ent) && RIGHT(AIL_ent)->item.t->reload)
+		lua_pushnumber(L, RIGHT(AIL_ent)->item.a);
+	else lua_pushnil(L);
+	/* Left hand */
+	if (LEFT(AIL_ent) && LEFT(AIL_ent)->item.t->reload)
+		lua_pushnumber(L, LEFT(AIL_ent)->item.a);
+	else lua_pushnil(L);
+	return 2;
+}
+
+/**
+ * @brief Checks to see if the actor can reload.
+ */
+static int AIL_canreload (lua_State *L)
+{
+	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent->number, gi.csi->idRight));
+	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent->number, gi.csi->idLeft));
+	return 2;
+}
+
+/**
+ * @brief Actor reloads his weapons.
+ */
+static int AIL_reload (lua_State *L)
+{
+	shoot_types_t weap;
+
+	if (lua_gettop(L) > 0) {
+		if (lua_isstring(L,1)) {
+			const char *s = lua_tostring(L,1);
+
+			if (Q_strcmp(s,"right")==0)
+				weap = gi.csi->idRight;
+			else if (Q_strcmp(s,"left")==0)
+				weap = gi.csi->idLeft;
+		}
+		else AIL_invalidparameter(1);
+	}
+	else
+		weap = gi.csi->idRight; /* Default to right hand. */
+
+	G_ClientReload(AIL_player, AIL_ent->number, weap, QUIET);
+	return 0;
+}
+
+/**
+ * @brief Moves the actor into a position in which he can shoot his target.
+ */
+static int AIL_positionshoot (lua_State *L)
+{
+	pos3_t to, bestPos;
+	vec3_t check;
+	edict_t *ent;
+	int dist;
+	int xl, yl, xh, yh;
+	int tu, min_tu;
+	aiActor_t *target;
+
+	/* We need a target. */
+	assert(lua_isactor(L, 1));
+	target = lua_toactor(L, 1);
+
+	/* Make things more simple. */
+	ent = AIL_ent;
+	dist = ent->TU;
+
+	/* Calculate move table. */
+	G_MoveCalc(0, ent->pos, ent->fieldSize,
+			(ent->state & STATE_CROUCHED) ? 1 : 0, ent->TU);
+	gi.MoveStore(gi.pathingMap);
+
+	/* set borders */
+	xl = (int) ent->pos[0] - dist;
+	if (xl < 0)
+		xl = 0;
+	yl = (int) ent->pos[1] - dist;
+	if (yl < 0)
+		yl = 0;
+	xh = (int) ent->pos[0] + dist;
+	if (xh > PATHFINDING_WIDTH)
+		xl = PATHFINDING_WIDTH;
+	yh = (int) ent->pos[1] + dist;
+	if (yh > PATHFINDING_WIDTH)
+		yh = PATHFINDING_WIDTH;
+
+	/* evaluate moving to every possible location in the search area,
+	 * including combat considerations */
+	tu = 0;
+	min_tu = INT_MAX;
+	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
+		for (to[1] = yl; to[1] < yh; to[1]++)
+			for (to[0] = xl; to[0] < xh; to[0]++) {
+				/* Can we see the target? */
+				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
+				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
+					tu = gi.MoveLength(gi.pathingMap, to,
+							(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+
+					/* Better spot (easier to get to). */
+					if (tu < min_tu) {
+						VectorCopy(to, bestPos);
+						min_tu = tu;
+					}
+				}
+			}
+
+	/* No position found in range. */
+	if (min_tu > ent->TU) {
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	/* Return the spot. */
+	lua_pushpos3(L, &bestPos);
+	return 1;
+}
+
+/**
+ * @brief Moves the actor into a position in which he can hide.
+ */
+static int AIL_positionhide (lua_State *L)
+{
+	return 0;
+}
+
+
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
  * @param[in] target Shoot to this location
  * @param[in] spread
  */
-static qboolean AI_CheckFF (const edict_t *ent, const vec3_t target, float spread)
+static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -101,8 +858,8 @@ static qboolean AI_CheckFF (const edict_t *ent, const vec3_t target, float sprea
 
 /**
  * @brief Check whether the fighter should perform the shoot
- * @todo Check whether radius and power of fd are to to big for dist
- * @todo Check whether the alien will die when shooting
+ * @todo: Check whether radius and power of fd are to to big for dist
+ * @todo: Check whether the alien will die when shooting
  */
 static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, const fireDef_t* fd, float *dist)
 {
@@ -122,112 +879,6 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 }
 
 /**
- * @brief Checks whether the AI controlled actor wants to use a door
- * @param[in] ent The AI controlled actor
- * @param[in] door The door edict
- * @returns true if the AI wants to use (open/close) that door, false otherwise
- * @note Don't start any new events in here, don't change the actor state
- * @sa Touch_DoorTrigger
- * @todo Finish implementation
- */
-qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
-{
-	/* don't try to use the door in every case */
-	if (frand() < 0.3)
-		return qfalse;
-
-	/* not in the view frustom - don't use the door while not seeing it */
-	if (!G_FrustumVis(door, ent->origin))
-		return qfalse;
-
-	/* if the alien is trying to hide and the door is
-	 * still opened, close it */
-	if (ent->hiding && door->moveinfo.state == STATE_OPENED)
-		return qtrue;
-
-	/* aliens and civilians need different handling */
-	switch (ent->team) {
-	case TEAM_ALIEN: {
-			/* only use the door when there is no civilian or phalanx to kill */
-			int i;
-			const edict_t *check;
-
-			/* see if there are enemies */
-			for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-				if (!check->inuse)
-					continue;
-				/* don't check for aliens */
-				if (check->team == ent->team)
-					continue;
-				/* if it's an actor and he's still living */
-				if (G_IsLivingActor(check)) {
-					/* check whether the origin of the enemy is inside the
-					 * AI actors view frustum */
-					float actorVis;
-					qboolean frustum = G_FrustumVis(check, ent->origin);
-					if (!frustum)
-						continue;
-					/* check whether the enemy is close enough to change the state */
-					if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
-						continue;
-					actorVis = G_ActorVis(check->origin, ent, qtrue);
-					/* there is a visible enemy, don't use that door */
-					if (actorVis > ACTOR_VIS_0)
-						return qfalse;
-				}
-			}
-		}
-		break;
-	case TEAM_CIVILIAN: {
-			/* don't use any door if no alien is inside the viewing angle  - but
-			 * try to hide behind the door when there is an alien */
-		}
-		break;
-	default:
-		Com_Printf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
-			ent->team, ent->type);
-		break;
-	}
-	return qtrue;
-}
-
-/**
- * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
- * @param[in] ent The AI controlled actor to chech the state change for
- * @returns true if the actor should go into STATE_CROUCHED, false otherwise
- */
-static qboolean AI_CheckCrouch (const edict_t *ent)
-{
-	int i;
-	const edict_t *check;
-
-	/* see if we are very well visible by an enemy */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		if (!check->inuse)
-			continue;
-		/* don't check for civilians or aliens */
-		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
-			continue;
-		/* if it's an actor and he's still living */
-		if (G_IsLivingActor(check)) {
-			/* check whether the origin of the enemy is inside the
-			 * AI actors view frustum */
-			float actorVis;
-			qboolean frustum = G_FrustumVis(check, ent->origin);
-			if (!frustum)
-				continue;
-			/* check whether the enemy is close enough to change the state */
-			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
-				continue;
-			actorVis = G_ActorVis(check->origin, ent, qtrue);
-			if (actorVis >= 0.6)
-				return qtrue;
-		}
-	}
-	return qfalse;
-}
-
-/**
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  * @todo fill z_align values
@@ -241,14 +892,14 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	float bestActionPoints, dmg, maxDmg, best_time = -1, vis;
 	const objDef_t *ad;
 	int still_searching = 1;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	int weapFdsIdx; /* Weapon-Firedefs index in fd[x] */
 	int fdIdx;	/* firedef index fd[][x]*/
 
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
-	move = gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue);
+	move = gi.MoveLength(gi.pathingMap, to,
+			(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -256,7 +907,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		return AI_ACTION_NOTHING_FOUND;
 
 	/* see if we are very well visible by a reacting enemy */
-	/** @todo this is worthless now; need to check all squares along our way! */
+	/* @todo: this is worthless now; need to check all squares along our way! */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && G_IsLivingActor(check) && ent != check
 			 && (check->team != ent->team || ent->state & STATE_INSANE)
@@ -287,7 +938,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		const objDef_t *weapon;	/* Weapon pointer. */
 		const fireDef_t *fd;	/* Fire-definition pointer. */
 
-		/* optimization: reaction fire is automatic */
+		/* optimization: reaction fire is automatic */;
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
@@ -308,9 +959,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		} else {
 			weapon = NULL;
 			od = NULL;
-			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo grenade/knife toss from inventory using empty hand\n");
-			/** @todo grenade/knife toss from inventory using empty hand */
-			/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: @todo: grenade/knife toss from inventory using empty hand\n");
+			/* @todo: grenade/knife toss from inventory using empty hand */
+			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
 		if (!od || !weapon)
@@ -321,7 +972,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weapFdsIdx == -1)
 			continue;
-		/** @todo timed firedefs that bounce around should not be thrown/shooten about the whole distance */
+		/* @todo: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
 		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
 			fd = &od->fd[weapFdsIdx][fdIdx];
 
@@ -424,17 +1075,17 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	if (!(ent->state & STATE_RAGE)) {
 		/* hide */
-		/** @todo Only hide if the visible actors have long range weapons in their hands
+		/* @todo: Only hide if the visible actors have long range weapons in their hands
 		 * otherwise make it depended on the mood (or some skill) of the alien whether
 		 * it tries to attack by trying to get as close as possible or to try to hide */
 		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
-		/** @todo What is this 2? */
+		/* @todo: What is this 2? */
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
-			 * @todo do this decently, only penalizing the visible part of walk
+			 * @todo: do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
 			 * now it may remove some tactical options from aliens,
 			 * e.g. they may now choose only the closer doors;
@@ -443,8 +1094,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, to, ent->fieldSize, crouching_state, HIDE_DIST);
-			Com_DPrintf(DEBUG_ENGINE, "AI_FighterCalcBestAction: Called MoveMark.\n");
+			G_MoveCalc(0, to, ent->fieldSize,
+					(ent->state & STATE_CROUCHED) ? 1 : 0, HIDE_DIST);
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
@@ -454,7 +1105,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
-					delta = gi.MoveLength(gi.pathingMap, ent->pos, crouching_state, qfalse);
+					delta = gi.MoveLength(gi.pathingMap, ent->pos,
+							(ent->state & STATE_CROUCHED) ? 1 : 0, qfalse);
 					if (delta > tu)
 						continue;
 
@@ -475,13 +1127,13 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* nothing found */
 			VectorCopy(to, ent->pos);
 			gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
-			/** @todo Try to crouch if no hiding spot was found - randomized */
+			/* @todo: Try to crouch if no hiding spot was found - randomized */
 		} else {
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
 			bestActionPoints += GUETE_HIDE;
 			tu -= delta;
-			/** @todo also add bonus for fleeing from reaction fire
+			/* @todo: also add bonus for fleeing from reaction fire
 			 * and a huge malus if more than 1 move under reaction */
 		}
 	}
@@ -503,15 +1155,12 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia)
+static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
 	int i, move, tu;
-	float minDist, minDistCivilian, minDistFighter;
+	float dist, minDist;
 	float bestActionPoints;
-	float reaction_trap = 0.0;
-	float delta = 0.0;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -521,7 +1170,8 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 	VectorCopy(to, aia->stop);
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
 
-	move = gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue);
+	move = gi.MoveLength(gi.pathingMap, to,
+			(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -534,76 +1184,22 @@ static float AI_CivilianCalcBestAction (edict_t *ent, pos3_t to, aiAction_t *aia
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		Com_Printf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
+		Com_Printf("AI_FighterCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
-	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
-
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		float dist;
-		if (!check->inuse || ent == check)
-			continue;
-		if (!G_IsLivingActor(check))
-			continue;
-		dist = VectorDist(ent->origin, check->origin);
-		assert(dist);
-		switch (check->team) {
-		case TEAM_ALIEN:
+	minDist = RUN_AWAY_DIST;
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+		if (check->inuse && check->team == TEAM_ALIEN && !(check->state & STATE_DEAD)) {
+			dist = VectorDist(ent->origin, check->origin);
 			if (dist < minDist)
 				minDist = dist;
-			break;
-		case TEAM_CIVILIAN:
-			if (dist < minDistCivilian)
-				minDistCivilian = dist;
-			break;
-		case TEAM_PHALANX:
-			if (dist < minDistFighter)
-				minDistFighter = dist;
-			break;
 		}
-	}
-
-	minDist /= UNIT_SIZE;
-	minDistCivilian /= UNIT_SIZE;
-	minDistFighter /= UNIT_SIZE;
-
-	if (minDist < 8.0) {
-		/* very near an alien: run away fast */
-		delta = 4.0 * minDist;
-	} else if (minDist < 16.0) {
-		/* near an alien: run away */
-		delta = 24.0 + minDist;
-	} else if (minDist < 24.0) {
-		/* near an alien: run away slower */
-		delta = 40.0 + (minDist - 16) / 4;
-	} else {
-		delta = 42.0;
-	}
-	/* near a civilian: join him (1/3) */
-	if (minDistCivilian < 10.0)
-		delta += (10.0 - minDistCivilian) / 3.0;
-	/* near a fighter: join him (1/5) */
-	if (minDistFighter < 15.0)
-		delta += (15.0 - minDistFighter) / 5.0;
-	/* don't go close to a fighter to let him move */
-	if (minDistFighter < 2.0)
-		delta /= 10.0;
-
-	/* try to hide */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		if (!check->inuse || ent == check)
-			continue;
-		if (!(check->team == TEAM_ALIEN || ent->state & STATE_INSANE))
-			continue;
-		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
-			reaction_trap += 25.0;
-	}
-	delta -= reaction_trap;
-	bestActionPoints += delta;
+	bestActionPoints += GUETE_RUN_AWAY * minDist / RUN_AWAY_DIST;
 
 	/* add laziness */
 	if (ent->TU)
 		bestActionPoints += GUETE_CIV_LAZINESS * tu / ent->TU;
+
 	/* add random effects */
 	bestActionPoints += GUETE_CIV_RANDOM * frand();
 
@@ -641,7 +1237,6 @@ void G_AddToWayPointList (edict_t *ent)
 static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
@@ -665,7 +1260,8 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 					i++;
 					Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
 					/* test for time and distance */
-					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos, crouching_state, qtrue);
+					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos,
+							(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
 					bestActionPoints = GUETE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
@@ -703,6 +1299,43 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 	return bestActionPoints;
 }
 
+/**
+ * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
+ * @param[in] ent The AI controlled actor to chech the state change for
+ * @returns true if the actor should go into STATE_CROUCHED, false otherwise
+ */
+static qboolean AI_CheckCrouch (const edict_t *ent)
+{
+	int i;
+	const edict_t *check;
+
+	/* see if we are very well visible by an enemy */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		if (!check->inuse)
+			continue;
+		/* don't check for civilians or aliens */
+		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
+			continue;
+		/* if it's an actor and he's still living */
+		if (G_IsLivingActor(check)) {
+			/* check whether the origin of the enemy is inside the
+			 * AI actors view frustum */
+			float actorVis;
+			qboolean frustum = G_FrustumVis(check, ent->origin);
+			if (!frustum)
+				continue;
+			/* check whether the enemy is close enough to change the state */
+			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+				continue;
+			actorVis = G_ActorVis(check->origin, ent, qtrue);
+			if (actorVis >= 0.6)
+				return qtrue;
+		}
+	}
+	return qfalse;
+}
+
+
 #define AI_MAX_DIST	30
 /**
  * @brief Attempts to find the best action for an alien. Moves the alien
@@ -717,11 +1350,10 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	float bestActionPoints, best;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouching_state, MAX_ROUTE);
-	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
+	G_MoveCalc(0, ent->pos, ent->fieldSize,
+			(ent->state & STATE_CROUCHED) ? 1 : 0, MAX_ROUTE);
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
@@ -748,7 +1380,8 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue) <= ent->TU) {
+				if (gi.MoveLength(gi.pathingMap, to,
+						(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue) <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
 					else
@@ -780,7 +1413,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	/** @todo Why 0 - and not ent->team?
+	/* @todo: Why 0 - and not ent->team?
 	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
@@ -799,24 +1432,19 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
  */
 static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 {
-	int dv;
-	const int crouching_state = aiActor->state & STATE_CROUCHED ? 1 : 0;
+	byte dv;
 
-	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouching_state, MAX_ROUTE);
-
-	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouching_state);
-
-	if (dv != ROUTING_UNREACHABLE) {
-		const byte dir = getDVdir(dv);
-		/* Only attempt to turn if the direction is not a vertical only action */
-		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS) {
-			const int status = G_DoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
-			if (status) {
-				/* send the turn */
-				gi.AddEvent(G_VisToPM(aiActor->visflags), EV_ACTOR_TURN);
-				gi.WriteShort(aiActor->number);
-				gi.WriteByte(aiActor->dir);
-			}
+	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize,
+			(aiActor->state & STATE_CROUCHED) ? 1 : 0, MAX_ROUTE);
+	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos,
+			(aiActor->state & STATE_CROUCHED) ? 1 : 0);
+	if (dv < ROUTING_NOT_REACHABLE) {
+		const int status = G_DoTurn(aiActor, dv);
+		if (status) {
+			/* send the turn */
+			gi.AddEvent(G_VisToPM(aiActor->visflags), EV_ACTOR_TURN);
+			gi.WriteShort(aiActor->number);
+			gi.WriteByte(aiActor->dir);
 		}
 	}
 }
@@ -832,6 +1460,28 @@ static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
  */
 void AI_ActorThink (player_t * player, edict_t * ent)
 {
+#if 0
+	lua_State *L;
+
+	/* The Lua State we will work with. */
+	L = ent->chr.AI.L;
+
+	/* Set the global player and edict */
+	AIL_ent = ent;
+	AIL_player = player;
+
+	/* Try to run the function. */
+	lua_getglobal(L, "think");
+	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
+		Com_Printf("Error while running Lua: %s\n",
+			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
+	}
+
+	/* Cleanup */
+	AIL_ent = NULL;
+	AIL_player = NULL;
+#endif
+
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
@@ -927,7 +1577,7 @@ void AI_Run (void)
 				ent = player->pers.last + 1;
 
 			for (j = ent - g_edicts; j < globals.num_edicts; j++, ent++)
-				if (ent->inuse && ent->TU && ent->team == player->pers.team && G_IsLivingActor(ent)) {
+				if (ent->inuse && ent->team == player->pers.team && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->TU) {
 					AI_ActorThink(player, ent);
 					player->pers.last = ent;
 					return;
@@ -940,6 +1590,180 @@ void AI_Run (void)
 			}
 			return;
 		}
+}
+
+/**
+ * @brief Initializes the AI.
+ * @param[in] ent Pointer to actor to initialize AI for.
+ * @param[in] type Type of AI (Lua file name without .lua).
+ * @param[in] subtype Subtype of the AI.
+ * @return 0 on success.
+ */
+static int AI_InitActor (edict_t * ent, char *type, char *subtype)
+{
+	AI_t *AI;
+	int size;
+	char path[MAX_VAR];
+	char *fbuf;
+
+	/* Prepare the AI */
+	AI = &ent->chr.AI;
+	Q_strncpyz(AI->type, type, sizeof(AI->type));
+	Q_strncpyz(AI->subtype, subtype, sizeof(AI->type));
+
+	/* Create the new Lua state */
+	AI->L = luaL_newstate();
+	if (AI->L == NULL) {
+		Com_Printf("Unable to create Lua state.\n");
+		return -1;
+	}
+
+	/* Register metatables. */
+	actorL_register(AI->L);
+	pos3L_register(AI->L);
+
+	/* Register libraries. */
+	luaL_register(AI->L, "ai", AIL_methods);
+
+	/* Load the AI */
+	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
+	size = gi.FS_LoadFile(path, (byte **) &fbuf);
+	if (luaL_dobuffer(AI->L, fbuf, size, path) < 0) {
+		Com_Printf("Unable to load Lua file '%s'.\n", path);
+		return -1;
+	}
+	gi.FS_FreeFile(fbuf);
+
+	return 0;
+}
+
+/**
+ * @brief Cleans up the AI part of the actor.
+ * @param[in] ent Pointer to actor to cleanup AI.
+ */
+static void AI_CleanupActor (edict_t * ent)
+{
+	AI_t *AI;
+	AI = &ent->chr.AI;
+
+	/* Cleanup. */
+	if (AI->L != NULL) {
+		lua_close(AI->L);
+		AI->L = NULL;
+	}
+}
+
+/**
+ * @brief Purges all the AI from the entities.
+ */
+void AI_Cleanup (void)
+{
+	int i;
+	edict_t *ent;
+
+	for (i = 0; i < globals.num_edicts; i++) {
+		ent = g_edicts+i;
+		if (ent->inuse && (ent->type == ET_ACTOR))
+			AI_CleanupActor(ent);
+	}
+}
+
+/**
+ * @brief Initializes the Actor.
+ * @param[in] player Player to which this actor belongs.
+ * @param[in] ent Pointer to edict_t representing actor.
+ */
+static void AI_InitPlayer (player_t * player, edict_t * ent)
+{
+	int team, alienTeam;
+	team = player->pers.team;
+
+	/* Set Actor state */
+	ent->type = ET_ACTOR;
+	ent->pnum = player->num;
+
+	/* Set stats */
+	if (team != TEAM_CIVILIAN) {
+		/** skills; @todo: more power to Ortnoks, more mind to Tamans */
+		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2); /**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
+		/*  aliens get much more mind */
+		ent->chr.score.skills[ABILITY_MIND] += 100;
+		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
+			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
+	}
+	else if (team == TEAM_CIVILIAN) {
+		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
+	}
+
+	/* Set starting health */
+	ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
+	ent->HP = ent->chr.HP;
+	ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+	if (ent->chr.morale >= MAX_SKILL)
+		ent->chr.morale = MAX_SKILL;
+	ent->morale = ent->chr.morale;
+	ent->STUN = 0;
+	/* tweak health */
+	if (team == TEAM_CIVILIAN) {
+		ent->chr.HP /= 2; /* civilians get half health */
+		ent->HP = ent->chr.HP;
+		if (ent->chr.morale > 45) /* they can't get over 45 morale */
+			ent->chr.morale = 45;
+	}
+
+	/* set model */
+	if (team != TEAM_CIVILIAN) {
+		if (gi.csi->numAlienTeams) {
+			alienTeam = rand() % gi.csi->numAlienTeams;
+			assert(gi.csi->alienTeams[alienTeam]);
+			ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
+		} else
+			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_alien"), &ent->chr);
+	}
+	else if (team == TEAM_CIVILIAN) {
+		/* @todo: Maybe we have civilians with armour, too - police and so on */
+		ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
+	}
+	ent->chr.inv = &ent->i;
+	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
+	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+	ent->skin = ent->chr.skin;
+
+	/* pack equipment */
+	if (team != TEAM_CIVILIAN) { /* @todo Give civilians gear. */
+		if (ent->chr.weapons)   /* actor can handle equipment */
+			INVSH_EquipActor(&ent->i, gi.csi->eds[0].num, MAX_OBJDEFS, gi.csi->eds[0].name, &ent->chr);
+		else if (ent->chr.teamDef)
+			/* actor cannot handle equipment */
+			INVSH_EquipActorMelee(&ent->i, &ent->chr);
+		else
+			Com_Printf("G_SpawnAIPlayer: actor with no equipment\n");
+	}
+
+	/* more tweaks */
+	if (team != TEAM_CIVILIAN) {
+		/** Set default reaction mode.
+		 * @sa cl_team:CL_GenerateCharacter This function sets the initial default value for (newly created) non-AI actors.
+		 * @todo Make the AI change the value (and its state) if needed while playing! */
+		ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
+
+		/** Set initial state of reaction fire to previously stored state for this actor.
+		 * @sa g_client.c:G_ClientSpawn */
+		Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
+		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
+		G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
+	}
+
+	/* initialize the AI now */
+	if (team == TEAM_CIVILIAN)
+		AI_InitActor(ent, "civilian", "default");
+	else if (team == TEAM_ALIEN)
+		AI_InitActor(ent, "alien", "default");
+	else
+		Com_Printf("G_SpawnAIPlayer: unknown team AI\n");
+
+	/* link the new actor entity */
+	gi.LinkEdict(ent);
 }
 
 #define MAX_SPAWNPOINTS		64
@@ -962,7 +1786,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 	team = player->pers.team;
 	numPoints = 0;
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTORSPAWN && ent->team == team)
+		if (ent->inuse && (ent->type == ET_ACTORSPAWN) && (ent->team == team))
 			spawnPoints[numPoints++] = i;
 
 	/* check spawn point number */
@@ -991,76 +1815,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		/* spawn */
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
-		if (team != TEAM_CIVILIAN) {
-			if (gi.csi->numAlienTeams) {
-				const int alienTeam = rand() % gi.csi->numAlienTeams;
-				assert(gi.csi->alienTeams[alienTeam]);
-				ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
-			} else
-				ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_alien"), &ent->chr);
-
-			ent->type = ET_ACTOR;
-			ent->pnum = player->num;
-			gi.LinkEdict(ent);
-
-			/** skills; @todo more power to Ortnoks, more mind to Tamans */
-			CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2);	/**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
-			ent->chr.score.skills[ABILITY_MIND] += 100;
-			if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
-				ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
-
-			ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
-			ent->HP = ent->chr.HP;
-			ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-			if (ent->chr.morale >= MAX_SKILL)
-				ent->chr.morale = MAX_SKILL;
-			ent->morale = ent->chr.morale;
-			ent->STUN = 0;
-
-			/* pack equipment */
-			if (ent->chr.weapons)	/* actor can handle equipment */
-				INVSH_EquipActor(&ent->i, ed->num, MAX_OBJDEFS, name, &ent->chr);
-			else if (ent->chr.teamDef)
-				/* actor cannot handle equipment */
-				INVSH_EquipActorMelee(&ent->i, &ent->chr);
-			else
-				Com_Printf("G_SpawnAIPlayer: actor with no equipment\n");
-
-			/* set model */
-			ent->chr.inv = &ent->i;
-			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
-			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
-			ent->skin = ent->chr.skin;
-
-			/** Set default reaction mode.
-			 * @sa cl_team:CL_GenerateCharacter This function sets the initial default value for (newly created) non-AI actors.
-			 * @todo Make the AI change the value (and its state) if needed while playing! */
-			ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
-
-			/** Set initial state of reaction fire to previously stored state for this actor.
-			 * @sa g_client.c:G_ClientSpawn */
-			Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
-			/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
-			G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
-		} else {
-			/* Civilians */
-			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
-			ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]) / 2;
-			ent->HP = ent->chr.HP;
-			ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-			ent->morale = (ent->chr.morale > 45 ? 45 : ent->chr.morale); /* low morale for civilians */
-			ent->STUN = 0;
-
-			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
-			ent->chr.inv = &ent->i;
-			/** @todo Maybe we have civilians with armour, too - police and so on */
-			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
-			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
-			ent->skin = ent->chr.skin;
-			ent->type = ET_ACTOR;
-			ent->pnum = player->num;
-			gi.LinkEdict(ent);
-		}
+		AI_InitPlayer( player, ent ); /* initialize the new actor */
 	}
 	/* show visible actors */
 	G_ClearVisFlags(team);
@@ -1091,7 +1846,7 @@ player_t *AI_CreatePlayer (int team)
 	/* set players to ai players and cycle over all of them */
 	for (i = 0, p = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, p++)
 		if (!p->inuse) {
-			memset(p, 0, sizeof(*p));
+			memset(p, 0, sizeof(player_t));
 			p->inuse = qtrue;
 			p->num = p - game.players;
 			p->pers.team = team;

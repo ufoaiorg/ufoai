@@ -595,6 +595,9 @@ void G_EndGame (int team)
 
 	gi.EndEvents();
 
+	/* now we cleanup the AI */
+	AI_Cleanup();
+
 	if (level.nextmap[0] != '\0') {
 		char command[MAX_VAR];
 		/** @todo We have to make sure, that the teaminfo is not completly resent

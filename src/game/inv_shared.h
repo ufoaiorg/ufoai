@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_INV_SHARED_H
 
 #include "q_shared.h"
+#include "lua/lua.h"
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
@@ -671,7 +672,13 @@ typedef enum {
 	MAX_EMPL		/**< For counting over all available enums. */
 } employeeType_t;
 
-/** @brief Describes a character with all its attributes */
+/** @brief Artificial intelligence of a character */
+typedef struct AI_s {
+	char type[MAX_VAR]; /**< Lua file used by the AI. */
+	char subtype[MAX_VAR]; /**< Subtype to be used by AI. */
+	lua_State* L; /**< The lua state used by the AI. */
+} AI_t;/** @brief Describes a character with all its attributes */
+
 typedef struct character_s {
 	int ucn;
 	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
@@ -705,6 +712,8 @@ typedef struct character_s {
 	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+
+	AI_t AI; /*< The character's artificial intelligence */
 } character_t;
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)

@@ -17,7 +17,39 @@ GAME_SRCS=\
 	game/inv_shared.c \
 	shared/mathlib.c \
 	shared/shared.c \
-	shared/infostring.c
+	shared/infostring.c \
+	game/lua/lapi.c \
+	game/lua/lauxlib.c \
+	game/lua/lbaselib.c \
+	game/lua/lcode.c \
+	game/lua/ldblib.c \
+	game/lua/ldebug.c \
+	game/lua/ldo.c \
+	game/lua/ldump.c \
+	game/lua/lfunc.c \
+	game/lua/lgc.c \
+	game/lua/linit.c \
+	game/lua/liolib.c \
+	game/lua/llex.c \
+	game/lua/lmathlib.c \
+	game/lua/lmem.c \
+	game/lua/loadlib.c \
+	game/lua/lobject.c \
+	game/lua/lopcodes.c \
+	game/lua/loslib.c \
+	game/lua/lparser.c \
+	game/lua/lstate.c \
+	game/lua/lstring.c \
+	game/lua/lstrlib.c \
+	game/lua/ltable.c \
+	game/lua/ltablib.c \
+	game/lua/ltm.c \
+	game/lua/lua.c \
+	game/lua/lundump.c \
+	game/lua/lvm.c \
+	game/lua/lzio.c \
+	game/lua/print.c
+
 
 GAME_OBJS=$(GAME_SRCS:%.c=$(_BUILDDIR)/game/%.o)
 GAME_TARGET=base/game.$(SHARED_EXT)

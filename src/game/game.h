@@ -175,6 +175,8 @@ typedef struct {
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);
+	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
+	void (IMPORT *FS_FreeFile) (void *buffer);
 
 	/* network messaging (writing) */
 	void (IMPORT *WriteChar) (char c);
