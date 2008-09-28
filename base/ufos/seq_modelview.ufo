@@ -42,99 +42,28 @@
 
 sequence view
 {
-	cmd "seq_animspeed 200;"
+	cmd "seq_animspeed 1000;"
 
 	precache models
 	{
-		animals/bird/bird
 	}
 
 	camera cam1
 	{
-		zoom	1.0
-		angles	"20 0 0"
-		omega   "0 0 0"
-		dist	1000
-		origin  "0 0 0"
+		zoom	6.0
+		angles	"15 180 0"
+		dist	100
 	}
-
-	model bird
-	{
-		//model	models/aliens/bloodspider/bloodspider.md2
-		anim	flying
-		model	animals/bird/bird
-		origin	"1000 1000 1000"
-		omega "0 -30 0"
-	}
-
-	click 1
-	rem bird
 
 	model bloodspider
 	{
-		//model	models/aliens/bloodspider/bloodspider.md2
-		//anim	walk0
-		model	models/weapons/bolterrifle/bolterrifle_clip.md2
-		origin	"0 0 0"
+		model	models/aliens/bloodspider/bloodspider.md2
+		anim	walk0
+		origin	"0 -15 0"
 		omega "0 -30 0"
 	}
 
 	click 1
+	wait 100
 	rem bloodspider
-
-//	model cow
-//	{
-//		model	models/animals/cow/cow.md2
-//		anim	walk0
-//		origin	"0 0 0"
-// 		tag	tag_floor
-//	}
-
-// 	model penguin
-// 	{
-// 		model	models/animals/penguin/penguin.md2
-// 		anim	walk0
-// 		origin	"0 -90 0"
-// 		tag	tag_floor
-// 	}
-
- 	model model_body
- 	{
- 		model	models/aliens/tamanmedium/body01.md2
- 		skin	1
- 		anim	walk0
- 		origin	"0 0 0"
-		omega "0 -30 0"
-//		speed "0 10 0"
- 	}
- 	model model_head
- 	{
- 		model	models/aliens/tamanmedium/head01.md2
- 		parent	model_body
- 		tag		tag_head
- 	}
-
- 	model model2_body
- 	{
- 		model	models/aliens/tamanlight/body01.md2
- 		skin	1
- 		anim	walk0
- 		origin	"0 -30 0"
-		omega "0 -30 0"
-//		speed "0 10 0"
- 	}
- 	model model2_head
- 	{
- 		model	models/aliens/tamanlight/head01.md2
- 		parent	model2_body
- 		tag		tag_head
- 	}
-
-	wait 20.0
-
-	rem model_head
-	rem model_body
-
-	rem model2_head
-	rem model2_body
 }
