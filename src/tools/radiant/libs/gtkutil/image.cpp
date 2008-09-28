@@ -21,8 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "image.h"
 
-#include <gtk/gtkimage.h>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 
 #include "string/string.h"
 #include "stream/stringstream.h"
