@@ -77,88 +77,10 @@ const char* g_shadersExtension = "";
 const char* g_shadersDirectory = "";
 const char* g_texturePrefix = "textures/";
 
-void ActiveShaders_IteratorBegin();
-bool ActiveShaders_IteratorAtEnd();
-IShader *ActiveShaders_IteratorCurrent();
-void ActiveShaders_IteratorIncrement();
-Callback g_ActiveShadersChangedNotify;
+static Callback g_ActiveShadersChangedNotify;
 
 void FreeShaders();
-void LoadShaderFile (const char *filename);
-qtexture_t *Texture_ForName (const char *filename);
-
-inline byte* getPixel(byte* pixels, int width, int height, int x, int y) {
-	return pixels + (((((y + height) % height) * width) + ((x + width) % width)) * 4);
-}
-
-class KernelElement {
-public:
-	int x, y;
-	float w;
-};
-
-Image& convertHeightmapToNormalmap(Image& heightmap, float scale) {
-	int w = heightmap.getWidth();
-	int h = heightmap.getHeight();
-
-	Image& normalmap = *(new RGBAImage(heightmap.getWidth(), heightmap.getHeight()));
-
-	byte* in = heightmap.getRGBAPixels();
-	byte* out = normalmap.getRGBAPixels();
-
-	// no filtering
-	const int kernelSize = 2;
-	KernelElement kernel_du[kernelSize] = {
-		{ -1, 0, -0.5f },
-		{ 1, 0, 0.5f }
-	};
-	KernelElement kernel_dv[kernelSize] = {
-		{ 0, 1, 0.5f },
-		{ 0, -1, -0.5f }
-	};
-
-	int x, y = 0;
-	while ( y < h ) {
-		x = 0;
-		while ( x < w ) {
-			float du = 0;
-			for (KernelElement* i = kernel_du; i != kernel_du + kernelSize; ++i) {
-				du += (getPixel(in, w, h, x + (*i).x, y + (*i).y)[0] / 255.0) * (*i).w;
-			}
-			float dv = 0;
-			for (KernelElement* i = kernel_dv; i != kernel_dv + kernelSize; ++i) {
-				dv += (getPixel(in, w, h, x + (*i).x, y + (*i).y)[0] / 255.0) * (*i).w;
-			}
-
-			float nx = -du * scale;
-			float ny = -dv * scale;
-			float nz = 1.0;
-
-			// Normalize
-			float norm = 1.0 / sqrt(nx * nx + ny * ny + nz * nz);
-			out[0] = float_to_integer(((nx * norm) + 1) * 127.5);
-			out[1] = float_to_integer(((ny * norm) + 1) * 127.5);
-			out[2] = float_to_integer(((nz * norm) + 1) * 127.5);
-			out[3] = 255;
-
-			x++;
-			out += 4;
-		}
-
-		y++;
-	}
-
-	return normalmap;
-}
-
-Image* loadHeightmap(void* environment, const char* name) {
-	AutoPtr<Image> heightmap(GlobalTexturesCache().loadImage(name));
-	if (heightmap) {
-		Image& normalmap = convertHeightmapToNormalmap(*heightmap, *reinterpret_cast<float*>(environment));
-		return &normalmap;
-	}
-	return 0;
-}
+void LoadShaderFile(const char *filename);
 
 class ShaderPoolContext {
 };
@@ -593,8 +515,6 @@ public:
 				m_pTexture = GlobalTexturesCache().capture(name.c_str());
 			}
 		}
-
-		realiseLighting();
 	}
 
 	void unrealise() {
@@ -603,58 +523,12 @@ public:
 		if (m_notfound != 0) {
 			GlobalTexturesCache().release(m_notfound);
 		}
-
-		unrealiseLighting();
 	}
 
 	void realiseLighting() {
-		if (m_lightingEnabled) {
-			LoadImageCallback loader = GlobalTexturesCache().defaultLoader();
-			if (!string_empty(m_template.m_heightmapScale.c_str())) {
-				m_heightmapScale = evaluateFloat(m_template.m_heightmapScale, m_template.m_params, m_args);
-				loader = LoadImageCallback(&m_heightmapScale, loadHeightmap);
-			}
-			m_pLightFalloffImage = evaluateTexture(m_template.m_lightFalloffImage, m_template.m_params, m_args);
-
-			for (ShaderTemplate::MapLayers::const_iterator i = m_template.m_layers.begin(); i != m_template.m_layers.end(); ++i) {
-				m_layers.push_back(evaluateLayer(*i, m_template.m_params, m_args));
-			}
-
-			if (m_layers.size() == 1) {
-				const BlendFuncExpression& blendFunc = m_template.m_layers.front().blendFunc();
-				if (!string_empty(blendFunc.second.c_str())) {
-					m_blendFunc = BlendFunc(
-					                  evaluateBlendFactor(blendFunc.first.c_str(), m_template.m_params, m_args),
-					                  evaluateBlendFactor(blendFunc.second.c_str(), m_template.m_params, m_args)
-					              );
-				} else {
-					const char* blend = evaluateShaderValue(blendFunc.first.c_str(), m_template.m_params, m_args);
-
-					if (string_equal_nocase(blend, "add")) {
-						m_blendFunc = BlendFunc(BLEND_ONE, BLEND_ONE);
-					} else if (string_equal_nocase(blend, "filter")) {
-						m_blendFunc = BlendFunc(BLEND_DST_COLOUR, BLEND_ZERO);
-					} else if (string_equal_nocase(blend, "blend")) {
-						m_blendFunc = BlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
-					} else {
-						globalErrorStream() << "parsing blend value failed: " << makeQuoted(blend) << "\n";
-					}
-				}
-			}
-		}
 	}
 
 	void unrealiseLighting() {
-		if (m_lightingEnabled) {
-			GlobalTexturesCache().release(m_pLightFalloffImage);
-
-			for (MapLayers::iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
-				GlobalTexturesCache().release((*i).texture());
-			}
-			m_layers.clear();
-
-			m_blendFunc = BlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
-		}
 	}
 
 	// set shader name
@@ -729,19 +603,19 @@ shaders_t g_ActiveShaders;
 
 static shaders_t::iterator g_ActiveShadersIterator;
 
-void ActiveShaders_IteratorBegin() {
+static void ActiveShaders_IteratorBegin() {
 	g_ActiveShadersIterator = g_ActiveShaders.begin();
 }
 
-bool ActiveShaders_IteratorAtEnd() {
+static bool ActiveShaders_IteratorAtEnd() {
 	return g_ActiveShadersIterator == g_ActiveShaders.end();
 }
 
-IShader *ActiveShaders_IteratorCurrent() {
+static IShader *ActiveShaders_IteratorCurrent() {
 	return static_cast<CShader*>(g_ActiveShadersIterator->second);
 }
 
-void ActiveShaders_IteratorIncrement() {
+static void ActiveShaders_IteratorIncrement() {
 	++g_ActiveShadersIterator;
 }
 
