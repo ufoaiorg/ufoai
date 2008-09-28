@@ -299,12 +299,11 @@ static int checkFuncGroup (entity_t *e, int entnum)
 	if (e->numbrushes == 1) {
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", name);
 		numToMoveToWorldspawn++;
-		/* returning 1 ensures the entity will be skipped on writing back, the
-		 * map writer will check and tack them onto the end of the worldspawn */
+		/* the  map writer will check and tack them onto the end of the worldspawn */
 		return FUNC_GROUP_MOVE_TO_WORLD;
 	}
 	if (checkEntityZeroBrushes(e, entnum))
-		return FUNC_GROUP_EMPTY_DELETE;/* make this 2, then 1 means single brush to be moved to worldspawn */
+		return FUNC_GROUP_EMPTY_DELETE;
 	return FUNC_GROUP_NO_PROBLEM;
 }
 
