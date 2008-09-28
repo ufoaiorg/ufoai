@@ -41,23 +41,6 @@ class UFOModelSkin {
 	typedef std::map<CopiedString, CopiedString> Remaps;
 	Remaps m_remaps;
 public:
-	bool parseTokens(Tokeniser& tokeniser) {
-		RETURN_FALSE_IF_FAIL(Tokeniser_parseToken(tokeniser, "{"));
-		tokeniser.nextLine();
-		for (;;) {
-			const char* token = tokeniser.getToken();
-			if (token == 0) {
-				return false;
-			}
-			if (string_equal(token, "}")) {
-				tokeniser.nextLine();
-				return true;
-			} else if (string_equal(token, "model")) {
-				tokeniser.getToken();
-			}
-			tokeniser.nextLine();
-		}
-	}
 	const char* getRemap(const char* name) const {
 		Remaps::const_iterator i = m_remaps.find(name);
 		if (i != m_remaps.end()) {

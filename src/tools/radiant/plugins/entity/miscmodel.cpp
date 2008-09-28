@@ -1,3 +1,10 @@
+/**
+ * @file miscmodel.cpp
+ * @brief Represents the misc_model entity.
+ * This entity displays the model specified in its "model" key.
+ * The "origin", "angles" and "modelscale_vec" keys directly control the entity's local-to-parent transform.
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -18,12 +25,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-///\file
-///\brief Represents the misc_model entity.
-///
-/// This entity displays the model specified in its "model" key.
-/// The "origin", "angles" and "modelscale_vec" keys directly control the entity's local-to-parent transform.
 
 #include "cullable.h"
 #include "renderable.h"
@@ -47,6 +48,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
+#include "modelskinkey.h"
 
 #include "entity.h"
 
@@ -63,6 +65,7 @@ class MiscModel :
 	/*float m_angle;*/ // see generic.cpp
 	ScaleKey m_scaleKey;
 	Vector3 m_scale;
+	ModelSkinKey m_skin;
 
 	SingletonModel m_model;
 
@@ -79,6 +82,7 @@ class MiscModel :
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 		m_keyObservers.insert("model", SingletonModel::ModelChangedCaller(m_model));
+		m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 		m_keyObservers.insert("angle", AnglesKey::AngleChangedCaller(m_anglesKey));
 		m_keyObservers.insert("angles", AnglesKey::AnglesChangedCaller(m_anglesKey));
@@ -96,16 +100,28 @@ class MiscModel :
 		updateTransform();
 	}
 	typedef MemberCaller<MiscModel, &MiscModel::originChanged> OriginChangedCaller;
+
 	void anglesChanged() {
 		m_angles = m_anglesKey.m_angles;
 		updateTransform();
 	}
 	typedef MemberCaller<MiscModel, &MiscModel::anglesChanged> AnglesChangedCaller;
+
 	void scaleChanged() {
 		m_scale = m_scaleKey.m_scale;
 		updateTransform();
 	}
 	typedef MemberCaller<MiscModel, &MiscModel::scaleChanged> ScaleChangedCaller;
+
+	void skinChanged() {
+		scene::Node* node = m_model.getNode();
+		if (node != 0) {
+			// TODO Fix this
+// 			Node_modelSkinChanged(*node);
+		}
+	}
+	typedef MemberCaller<MiscModel, &MiscModel::skinChanged> SkinChangedCaller;
+
 public:
 
 	MiscModel(EntityClass* eclass, scene::Node& node, const Callback& transformChanged, const Callback& evaluateTransform) :
@@ -116,6 +132,7 @@ public:
 			m_angles(ANGLESKEY_IDENTITY),
 			m_scaleKey(ScaleChangedCaller(*this)),
 			m_scale(SCALEKEY_IDENTITY),
+			m_skin(SkinChangedCaller(*this)),
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),
@@ -132,6 +149,7 @@ public:
 			m_angles(ANGLESKEY_IDENTITY),
 			m_scaleKey(ScaleChangedCaller(*this)),
 			m_scale(SCALEKEY_IDENTITY),
+			m_skin(SkinChangedCaller(*this)),
 			m_filter(m_entity, node),
 			m_named(m_entity),
 			m_nameKeys(m_entity),

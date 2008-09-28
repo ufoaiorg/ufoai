@@ -1,3 +1,10 @@
+/**
+ * @file eclassmodel.cpp
+ * @brief Represents any entity which has a fixed size specified in its entity-definition and displays a model (e.g. ammo_bfg).
+ * This entity displays the model specified in its entity-definition.
+ * The "origin" and "angle" keys directly control the entity's local-to-parent transform.
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -18,12 +25,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-///\file
-///\brief Represents any entity which has a fixed size specified in its entity-definition and displays a model (e.g. ammo_bfg).
-///
-/// This entity displays the model specified in its entity-definition.
-/// The "origin" and "angle" keys directly control the entity's local-to-parent transform.
 
 #include "eclassmodel.h"
 
@@ -77,6 +78,7 @@ class EclassModel :
 	void construct() {
 		m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 		m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
+		m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
 		m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
 		m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 	}
@@ -96,6 +98,7 @@ class EclassModel :
 		updateTransform();
 	}
 	typedef MemberCaller<EclassModel, &EclassModel::originChanged> OriginChangedCaller;
+
 	void angleChanged() {
 		m_angle = m_angleKey.m_angle;
 		updateTransform();
@@ -105,7 +108,8 @@ class EclassModel :
 	void skinChanged() {
 		scene::Node* node = m_model.getNode();
 		if (node != 0) {
-			Node_modelSkinChanged(*node);
+			// TODO Fix this
+// 			Node_modelSkinChanged(*node);
 		}
 	}
 	typedef MemberCaller<EclassModel, &EclassModel::skinChanged> SkinChangedCaller;

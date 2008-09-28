@@ -230,10 +230,10 @@ static EntityClass *Eclass_InitFromText (const char *text) {
 		// any remaining words are parm flags
 		const char* p = parms;
 		for (std::size_t i = 0 ; i < MAX_FLAGS ; i++) {
-			p = COM_Parse (p);
+			p = COM_Parse(p);
 			if (!p)
 				break;
-			strcpy (e->flagnames[i], com_token);
+			strcpy(e->flagnames[i], com_token);
 		}
 	}
 
