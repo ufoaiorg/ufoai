@@ -40,6 +40,5 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 void CheckPropagateParserContentFlags(mapbrush_t *b);
 void Check_ContainedBrushes(void);
 void CheckZFighting(void);
-void CheckFootstepFireaffected(void);
 
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes);
