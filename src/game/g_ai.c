@@ -876,6 +876,75 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 }
 
 /**
+ * @brief Checks whether the AI controlled actor wants to use a door
+ * @param[in] ent The AI controlled actor
+ * @param[in] door The door edict
+ * @returns true if the AI wants to use (open/close) that door, false otherwise
+ * @note Don't start any new events in here, don't change the actor state
+ * @sa Touch_DoorTrigger
+ * @todo Finish implementation
+ */
+qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
+{
+	/* don't try to use the door in every case */
+	if (frand() < 0.3)
+		return qfalse;
+
+	/* not in the view frustom - don't use the door while not seeing it */
+	if (!G_FrustumVis(door, ent->origin))
+		return qfalse;
+
+	/* if the alien is trying to hide and the door is
+	* still opened, close it */
+	if (ent->hiding && door->moveinfo.state == STATE_OPENED)
+		return qtrue;
+
+	/* aliens and civilians need different handling */
+	switch (ent->team) {
+	case TEAM_ALIEN: {
+		/* only use the door when there is no civilian or phalanx to kill */
+		int i;
+		const edict_t *check;
+
+		/* see if there are enemies */
+		for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+			if (!check->inuse)
+				continue;
+			/* don't check for aliens */
+			if (check->team == ent->team)
+				continue;
+			/* if it's an actor and he's still living */
+			if (G_IsLivingActor(check)) {
+				/* check whether the origin of the enemy is inside the
+				* AI actors view frustum */
+				float actorVis;
+				qboolean frustum = G_FrustumVis(check, ent->origin);
+				if (!frustum)
+					continue;
+				/* check whether the enemy is close enough to change the state */
+				if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+					continue;
+				actorVis = G_ActorVis(check->origin, ent, qtrue);
+				/* there is a visible enemy, don't use that door */
+				if (actorVis > ACTOR_VIS_0)
+					return qfalse;
+				}
+			}
+		}
+		break;
+	case TEAM_CIVILIAN:
+		/* don't use any door if no alien is inside the viewing angle  - but
+		 * try to hide behind the door when there is an alien */
+		break;
+	default:
+		Com_Printf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
+			ent->team, ent->type);
+		break;
+	}
+	return qtrue;
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  * @todo fill z_align values
