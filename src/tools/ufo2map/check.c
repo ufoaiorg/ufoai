@@ -912,7 +912,9 @@ static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
 	return qfalse; /* all points are collinear */
 }
 
-/** @todo improve this test, it misses several cases */
+/** @brief check all brushes for overlapping shared faces
+ *  @todo maybe too fussy. perhaps should ignore small overlaps.
+ */
 void CheckZFighting (void)
 {
 	int i, j, is, js;
