@@ -1631,11 +1631,8 @@ void CheckBrushes (void)
 
 		for (j = 0; j < brush->numsides; j++) {
 			side_t *side = &brush->original_sides[j];
-			const ptrdiff_t index = side - brushsides;
-			brush_texture_t *tex = &side_brushtextures[index];
 
 			assert(side);
-			assert(tex);
 
 			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "origin brush inside worldspawn - removed CONTENTS_ORIGIN\n");

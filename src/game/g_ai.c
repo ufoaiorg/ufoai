@@ -264,6 +264,8 @@ static int actorL_shoot (lua_State *L)
 	/* Target */
 	target = lua_toactor(L, 1);
 
+	/** @todo Init var: fm and shots */
+
 	/* Figure out weapon to use. */
 	if (IS_SHOT_RIGHT(fm) && RIGHT(AIL_ent)
 			&& RIGHT(AIL_ent)->item.m
@@ -312,13 +314,17 @@ static int actorL_shoot (lua_State *L)
  */
 static int actorL_face (lua_State *L)
 {
+#if 0
 	aiActor_t *target;
 
 	assert(lua_isactor(L, 1));
 
+	/** @todo Get the target */
+
 	AI_TurnIntoDirection(AIL_ent, target->ent->pos);
 
 	lua_pushboolean(L, 1);
+#endif
 	return 1;
 }
 
@@ -536,10 +542,12 @@ static int AIL_see (lua_State *L)
 	float dist_lookup[MAX_EDICTS];
 	const char *s;
 
+	team = TEAM_NONE;
+	vision = 0;
+
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
-		vision = 0;
 		if (lua_isstring(L, 1)) {
 			s = lua_tostring(L, 1);
 			/** @todo Properly implement at edict level, get rid of magic numbers.
@@ -558,7 +566,6 @@ static int AIL_see (lua_State *L)
 			AIL_invalidparameter(1);
 
 		/* We now check for different teams. */
-		team = TEAM_NONE;
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				s = lua_tostring(L, 2);
@@ -692,15 +699,19 @@ static int AIL_reload (lua_State *L)
 	shoot_types_t weap;
 
 	if (lua_gettop(L) > 0) {
-		if (lua_isstring(L,1)) {
-			const char *s = lua_tostring(L,1);
+		if (lua_isstring(L, 1)) {
+			const char *s = lua_tostring(L, 1);
 
-			if (Q_strcmp(s,"right")==0)
+			if (!Q_strcmp(s, "right"))
 				weap = gi.csi->idRight;
-			else if (Q_strcmp(s,"left")==0)
+			else if (!Q_strcmp(s, "left"))
 				weap = gi.csi->idLeft;
-		} else
+			else
+				return 0;
+		} else {
 			AIL_invalidparameter(1);
+			return 0;
+		}
 	} else
 		weap = gi.csi->idRight; /* Default to right hand. */
 
@@ -720,7 +731,7 @@ static int AIL_positionshoot (lua_State *L)
 	int xl, yl, xh, yh;
 	int tu, min_tu;
 	aiActor_t *target;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
+	const int crouching_state = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* We need a target. */
 	assert(lua_isactor(L, 1));
