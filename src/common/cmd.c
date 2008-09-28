@@ -337,10 +337,10 @@ static void Cmd_Exec_f (void)
 
 	len = FS_LoadFile(Cmd_Argv(1), &f);
 	if (!f) {
-		Com_Printf("couldn't exec %s\n", Cmd_Argv(1));
+		Com_Printf("couldn't execute %s\n", Cmd_Argv(1));
 		return;
 	}
-	Com_Printf("execing %s\n", Cmd_Argv(1));
+	Com_Printf("executing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
 	f2 = Mem_Alloc(len + 2);
@@ -503,7 +503,7 @@ void Cmd_BufClear (void)
 
 /**
  * @brief Parses the given string into command line tokens.
- * @note $Cvars will be expanded unless they are in a quoted token
+ * @note *cvars will be expanded unless they are in a quoted token
  * @sa COM_MacroExpandString
  */
 void Cmd_TokenizeString (const char *text, qboolean macroExpand)
@@ -535,7 +535,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 
 		/* set cmd_args to everything after the first arg */
 		if (cmd_argc == 1) {
-			int l;
+			size_t l;
 
 			/* sku - removed potentional buffer overflow vulnerability */
 			Q_strncpyz(cmd_args, text, sizeof(cmd_args));

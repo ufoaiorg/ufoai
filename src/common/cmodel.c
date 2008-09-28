@@ -841,9 +841,12 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	int minX, minY, minZ;
 	int maxX, maxY, maxZ;
 	unsigned int i;
+	double start, end;
 	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(temp_map);
 
 	inlineList = NULL;
+
+	start = time(NULL);
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: No lump given");
@@ -911,7 +914,7 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 					clMap[size].ceil[z][y][x] = temp_map[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++)
 						clMap[size].route[z][y][x][dir] = temp_map[size].route[z - sZ][y - sY][x - sX][dir];
-					}
+				}
 
 	Com_Printf("Done copying data.\n");
 
@@ -923,8 +926,8 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 			max(max(minY, mapTiles[tile].wpMins[1]), 0),
 			max(max(minZ, mapTiles[tile].wpMins[2]), 0));
 		VectorSet(max, min(min(maxX, mapTiles[tile].wpMaxs[0]), PATHFINDING_WIDTH - 1),
-				min(min(maxY, mapTiles[tile].wpMaxs[1]), PATHFINDING_WIDTH - 1),
-				min(min(maxZ, mapTiles[tile].wpMaxs[2]), PATHFINDING_HEIGHT - 1));
+			min(min(maxY, mapTiles[tile].wpMaxs[1]), PATHFINDING_WIDTH - 1),
+			min(min(maxZ, mapTiles[tile].wpMaxs[2]), PATHFINDING_HEIGHT - 1));
 
 		Com_Printf("Overlap: (%i, %i, %i) to (%i, %i, %i)\n", min[0], min[1], min[2], max[0], max[1], max[2]);
 		/* Call the recalc function */
@@ -934,7 +937,8 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	/* calculate new border after merge */
 	CMod_GetMapSize();
 
-	Com_Printf("Loaded routing for tile %s\n", name);
+	end = time(NULL);
+	Com_Printf("Loaded routing for tile %s in %5.0fs\n", name, end - start);
 }
 
 

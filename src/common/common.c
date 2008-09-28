@@ -899,7 +899,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Key_Init();
 
 	/* we need to add the early commands twice, because
-	 * a basedir needs to be set before execing
+	 * a basedir needs to be set before executing
 	 * config files, but we want other parms to override
 	 * the settings of the config files */
 	Cbuf_AddEarlyCommands(qfalse);

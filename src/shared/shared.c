@@ -159,6 +159,10 @@ skipwhite:
 			if (c == '\\' && data[0] == 'n') {
 				c = '\n';
 				data++;
+			/* nested quotation */
+			} else if (c == '\\' && data[0] == '\"') {
+				c = '\"';
+				data++;
 			} else if (c == '\"' || !c) {
 				com_token[len] = 0;
 				*data_p = data;
