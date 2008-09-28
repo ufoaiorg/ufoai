@@ -116,7 +116,7 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
+static void CMod_LoadSubmodels (lump_t * l, const vec3_t shift)
 {
 	dBspModel_t *in;
 	cBspModel_t *out;
@@ -158,7 +158,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
+static void CMod_LoadSurfaces (lump_t * l, const vec3_t shift)
 {
 	dBspTexinfo_t *in;
 	cBspSurface_t *out;
@@ -195,7 +195,7 @@ static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadNodes (lump_t * l, vec3_t shift)
+static void CMod_LoadNodes (lump_t * l, const vec3_t shift)
 {
 	dBspNode_t *in;
 	int child;
@@ -245,7 +245,7 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
+static void CMod_LoadBrushes (lump_t * l, const vec3_t shift)
 {
 	dBspBrush_t *in;
 	cBspBrush_t *out;
@@ -280,7 +280,7 @@ static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
+static void CMod_LoadLeafs (lump_t * l, const vec3_t shift)
 {
 	int i;
 	cBspLeaf_t *out;
@@ -332,7 +332,7 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
+static void CMod_LoadPlanes (lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
@@ -383,7 +383,7 @@ static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (lump_t * l, vec3_t shift)
+static void CMod_LoadLeafBrushes (lump_t * l, const vec3_t shift)
 {
 	int i;
 	unsigned short *out;
@@ -419,7 +419,7 @@ static void CMod_LoadLeafBrushes (lump_t * l, vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
+static void CMod_LoadBrushSides (lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspBrushSide_t *out;
@@ -555,7 +555,7 @@ static void CM_MakeTracingNodes (void)
 	curTile->numcheads = 0;
 
 	for (i = 0; i < curTile->nummodels; i++) {
-		if (curTile->models[i].headnode == -1 || curTile->models[i].headnode >= curTile->numnodes + 6)
+		if (curTile->models[i].headnode == LEAFNODE || curTile->models[i].headnode >= curTile->numnodes + 6)
 			continue;
 
 		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
@@ -875,8 +875,8 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 
 	curTile = &mapTiles[numTiles - 1];
 
-	/* wpMin and wpMax have the map size data from the initial build.
-	 * Offset this by the given parameters so teh stored values are in real coordinates. */
+	/* wpMins and wpMaxs have the map size data from the initial build.
+	 * Offset this by the given parameters so the stored values are in real coordinates. */
 	curTile->wpMins[0] += sX;
 	curTile->wpMins[1] += sY;
 	curTile->wpMins[2] += sZ;
@@ -919,16 +919,12 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	for (tile = 0; tile < numTiles - 1; tile++) {
 		/* look for adjacent and overlapping data to regenerate */
 		pos3_t min, max;
-		VectorSet(min,
-			max(max(minX, mapTiles[tile].wpMins[0]), 0),
+		VectorSet(min, max(max(minX, mapTiles[tile].wpMins[0]), 0),
 			max(max(minY, mapTiles[tile].wpMins[1]), 0),
-			max(max(minZ, mapTiles[tile].wpMins[2]), 0)
-			);
-		VectorSet(max,
-			min(min(maxX, mapTiles[tile].wpMaxs[0]), PATHFINDING_WIDTH - 1),
+			max(max(minZ, mapTiles[tile].wpMins[2]), 0));
+		VectorSet(max, min(min(maxX, mapTiles[tile].wpMaxs[0]), PATHFINDING_WIDTH - 1),
 				min(min(maxY, mapTiles[tile].wpMaxs[1]), PATHFINDING_WIDTH - 1),
-				min(min(maxZ, mapTiles[tile].wpMaxs[2]), PATHFINDING_HEIGHT - 1)
-			);
+				min(min(maxZ, mapTiles[tile].wpMaxs[2]), PATHFINDING_HEIGHT - 1));
 
 		Com_Printf("Overlap: (%i, %i, %i) to (%i, %i, %i)\n", min[0], min[1], min[2], max[0], max[1], max[2]);
 		/* Call the recalc function */
