@@ -36,9 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Provides an api like luaL_dostring for buffers.
  */
 #define luaL_dobuffer(L, b, n, s) \
-   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 #define AIL_invalidparameter(n)	\
-   Com_Printf("AIL: Invalid parameter #%d in '%s'.\n",n,__func__)
+	Com_Printf("AIL: Invalid parameter #%d in '%s'.\n",n,__func__)
 
 
 typedef struct {
@@ -52,22 +52,22 @@ typedef struct {
 } aiAction_t;
 
 
-/*
- * Wrapper around edict.
+/**
+ * @brief Wrapper around edict.
  */
 typedef struct aiActor_s {
 	edict_t *ent;
 } aiActor_t;
 
 
-/*
- * Stores the current actor running Lua commands.
+/**
+ * @brief Stores the current actor running Lua commands.
  */
 static edict_t *AIL_ent = NULL;
 static player_t *AIL_player = NULL;
 
 
-/*
+/**
  * Actor metatable.
  */
 /* Internal functions. */
@@ -87,11 +87,11 @@ static const luaL_reg actorL_methods[] = {
 	{"shoot", actorL_shoot},
 	{"face", actorL_face},
 	{"team", actorL_team},
-	{0, 0}
+	{NULL, NULL}
 };
 
 
-/*
+/**
  * pos3 metatable.
  */
 /* Internal functions. */
@@ -107,11 +107,11 @@ static const luaL_reg pos3L_methods[] = {
 	{"__tostring", pos3L_tostring},
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
-	{0, 0}
+	{NULL, NULL}
 };
 
 
-/*
+/**
  * General AI bindings.
  */
 static int AIL_print(lua_State *L);
@@ -135,23 +135,23 @@ static const luaL_reg AIL_methods[] = {
 	{"reload", AIL_reload},
 	{"positionshoot", AIL_positionshoot},
 	{"positionhide", AIL_positionhide},
-	{0, 0}
+	{NULL, NULL}
 };
 
 
-/*
+/**
  * Prototypes.
  */
 static void AI_TurnIntoDirection(edict_t *aiActor, pos3_t pos);
 
 
-/*
+/**
  *    A C T O R L
  */
 
 /**
  * @brief Registers the actor metatable in the lua_State.
- * @param[in] L State to register the metatable in.
+ * @param[in,out] L State to register the metatable in.
  * @return 0 on success.
  */
 static int actorL_register (lua_State *L)
@@ -171,7 +171,7 @@ static int actorL_register (lua_State *L)
 
 /**
  * @brief Checks to see if there is a actor metatable at index in the lua_State.
- * @param[in] L Lua state to check.
+ * @param[in,out] L Lua state to check.
  * @param[in] index Index to check for a actor metatable.
  * @return 1 if index has a actor metatable otherwise returns 0.
  */
@@ -233,7 +233,7 @@ static int actorL_tostring (lua_State *L)
 	return 1;
 }
 
-/*
+/**
  * @brief Gets the actors position.
  */
 static int actorL_pos (lua_State *L)
@@ -327,30 +327,30 @@ static int actorL_face (lua_State *L)
  */
 static int actorL_team (lua_State *L)
 {
-	aiActor_t *target;
+	const aiActor_t *target;
 
 	assert(lua_isactor(L, 1));
 
 	target = lua_toactor(L, 1);
 	switch (target->ent->team) {
-		case TEAM_PHALANX:
-			lua_pushstring(L, "phalanx");
-			break;
-		case TEAM_CIVILIAN:
-			lua_pushstring(L, "civilian");
-			break;
-		case TEAM_ALIEN:
-			lua_pushstring(L, "alien");
-			break;
-		default:
-			lua_pushstring(L, "unknown");
-			break;
+	case TEAM_PHALANX:
+		lua_pushstring(L, "phalanx");
+		break;
+	case TEAM_CIVILIAN:
+		lua_pushstring(L, "civilian");
+		break;
+	case TEAM_ALIEN:
+		lua_pushstring(L, "alien");
+		break;
+	default:
+		lua_pushstring(L, "unknown");
+		break;
 	}
 	return 1;
 }
 
 
-/*
+/**
  *   P O S 3 L
  */
 
@@ -476,7 +476,7 @@ static int pos3L_face (lua_State *L)
 	return 1;
 }
 
-/*
+/**
  *    A I L
  */
 /**
@@ -485,16 +485,16 @@ static int pos3L_face (lua_State *L)
 static int AIL_print (lua_State *L)
 {
 	int i;
-	const char *s;
 	const int n = lua_gettop(L);  /* number of arguments */
 
 	for (i = 1; i <= n; i++) {
-		int meta = 0;
+		const char *s;
+		qboolean meta = qfalse;
 
 		lua_pushvalue(L, i);   /* value to print */
 		if (luaL_callmeta(L, 1, "__tostring")) {
 			s = lua_tostring(L, -1);
-			meta = 1;
+			meta = qtrue;
 		} else {
 			switch (lua_type(L, -1)) {
 			case LUA_TNUMBER:
@@ -628,11 +628,9 @@ static int AIL_see (lua_State *L)
  */
 static int AIL_crouch (lua_State *L)
 {
-	int state;
-
 	if (lua_gettop(L) > 0) {
 		if (lua_isboolean(L, 1)) {
-			state = lua_toboolean(L, 1);
+			const int state = lua_toboolean(L, 1);
 			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
 				(state) ? qtrue : qfalse);
 		}
@@ -701,10 +699,9 @@ static int AIL_reload (lua_State *L)
 				weap = gi.csi->idRight;
 			else if (Q_strcmp(s,"left")==0)
 				weap = gi.csi->idLeft;
-		}
-		else AIL_invalidparameter(1);
-	}
-	else
+		} else
+			AIL_invalidparameter(1);
+	} else
 		weap = gi.csi->idRight; /* Default to right hand. */
 
 	G_ClientReload(AIL_player, AIL_ent->number, weap, QUIET);
