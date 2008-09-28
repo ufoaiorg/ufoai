@@ -1637,6 +1637,30 @@ void CheckBrushes (void)
 			assert(side);
 			assert(tex);
 
+			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
+				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "origin brush inside worldspawn - removed CONTENTS_ORIGIN\n");
+				side->contentFlags &= ~CONTENTS_ORIGIN;
+			}
+		}
+	}
+}
+
+
+void CheckFootstepFireaffected (void)
+{
+	int i, j;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *brush = &mapbrushes[i];
+
+		for (j = 0; j < brush->numsides; j++) {
+			side_t *side = &brush->original_sides[j];
+			const ptrdiff_t index = side - brushsides;
+			brush_texture_t *tex = &side_brushtextures[index];
+
+			assert(side);
+			assert(tex);
+
 #if 1
 			/** @todo remove this once every map is run with ./ufo2map -fix brushes <map> */
 			/* the old footstep value */
@@ -1655,10 +1679,6 @@ void CheckBrushes (void)
 			}
 #endif
 
-			if (side->contentFlags & CONTENTS_ORIGIN && brush->entitynum == 0) {
-				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "origin brush inside worldspawn - removed CONTENTS_ORIGIN\n");
-				side->contentFlags &= ~CONTENTS_ORIGIN;
-			}
 		}
 	}
 }

@@ -65,11 +65,13 @@ static void Usage (void)
 #endif
 		" -nofootstep                : don't generate a footstep file\n"
 		" -tracefile                 : generate two csv files describing the floors and walls found by the trace functions\n"
+	); Com_Printf(
 		" -debugfile (TODO)          : generate a trace debug file.  The client can load the file to highlight map obstructions\n"
 		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
 	); Com_Printf(
 		" -v --verbosity <int>       : set verbosity. higher <int> gives more output\n"
 		"                              if it is required, this should be the first option\n"
+	); Com_Printf(
 		"                              0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname\n"
 		"                              2 - (check/fix) mapname if findings, 4 - normal output,"
 		"                              5 extra output (eg from BSPing)"
@@ -127,6 +129,8 @@ static void Usage (void)
 		"    con contained           : checks for brushes contained entirely within other brushes. includes coincident duplicates.\n"
 		"    isc intersection        : report intersection between optimisable brushes from worldspawn and func_group entities\n"
 		"                              this is not included in all or bru as it is not always a bad thing\n"
+	); Com_Printf(
+		"    ffs firefootstep        : check old contentflag values have been changed\n"
 		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
 	); Com_Printf(
 		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
@@ -186,6 +190,9 @@ static void U2M_Parameter (int argc, const char **argv)
 				} else if (!strcmp(argv[i], "contained") || !strcmp(argv[i], "con")) {
 					Verb_Printf(VERB_LESS, "  %s contained brushes\n", config.fixMap ? "fixing" : "checking");
 					config.chkContained = qtrue;
+				} else if (!strcmp(argv[i], "firefootstep") || !strcmp(argv[i], "ffs")) {
+					Verb_Printf(VERB_LESS, "  %s old flag values\n", config.fixMap ? "fixing" : "checking");
+					config.chkFireFootstep = qtrue;
 				} else if (!strcmp(argv[i], "filllevelflags") || !strcmp(argv[i], "flv")) {
 					Verb_Printf(VERB_LESS, "  %s filllevelflags\n", config.fixMap ? "fixing" : "checking");
 					config.chkFillLevelFlags = qtrue;
@@ -606,6 +613,8 @@ int main (int argc, const char **argv)
 			Check_ContainedBrushes();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
+		if (config.chkFireFootstep || config.chkBrushes || config.chkAll)
+			CheckFootstepFireaffected();
 		/** @todo include in chkAll when it works */
 		if (config.chkNodraws /* || config.chkAll */)
 			CheckNodraws();
