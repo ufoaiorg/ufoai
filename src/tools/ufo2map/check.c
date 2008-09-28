@@ -1232,6 +1232,8 @@ void CheckMapMicro (void)
 
 /**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
+ * @todo make this use names like CONTENTS_STEPON, so it is found when the code is searched.
+ * @todo check list of content flags is up to date
  */
 void DisplayContentFlags (const int flags)
 {
