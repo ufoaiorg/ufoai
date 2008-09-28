@@ -1902,7 +1902,7 @@ int Grid_Floor (struct routing_s *map, const int actor_size, const pos3_t pos)
 		Com_Printf("Grid_Floor: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return RT_FLOOR(map, actor_size, pos[0], pos[1], pos[2] & 7) * QUANT;
+	return RT_FLOOR(map, actor_size, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1)) * QUANT;
 }
 
 
@@ -1930,7 +1930,7 @@ pos_t Grid_StepUp (struct routing_s *map, const int actor_size, const pos3_t pos
  */
 int Grid_TUsUsed (int dir)
 {
-	assert(dir >= 0 && dir <PATHFINDING_DIRECTIONS);
+	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 	return TUs_used[dir];
 }
 
@@ -1976,16 +1976,15 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
 	if (flier)
 		return z;
 
-    /*
-     * Easy math- get the floor, integer divide by 16, add to z.
-     * If z < 0, we are going down.
-     * If z >= 16, we are going up.
-     * If 0 <= z <= 16, then z / 16 = 0, no change.
-     */
+	/** @todo Replace magic numbers */
+	/* Easy math- get the floor, integer divide by 16, add to z.
+	 * If z < 0, we are going down.
+	 * If z >= 16, we are going up.
+	 * If 0 <= z <= 16, then z / 16 = 0, no change. */
 	base = RT_FLOOR(map, actor_size, pos[0], pos[1], z);
-    diff = base < 0 ? (base - 15) / 16 : base / 16;
-    z += diff;
-    assert(z >= 0 && z < PATHFINDING_HEIGHT);
+	diff = base < 0 ? (base - 15) / 16 : base / 16;
+	z += diff;
+	assert(z >= 0 && z < PATHFINDING_HEIGHT);
 	return z;
 }
 
