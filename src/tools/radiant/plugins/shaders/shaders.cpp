@@ -395,30 +395,6 @@ typedef std::map<CopiedString, ShaderDefinition> ShaderDefinitionMap;
 
 ShaderDefinitionMap g_shaderDefinitions;
 
-bool parseTemplateInstance(Tokeniser& tokeniser, const char* filename) {
-	CopiedString name;
-	RETURN_FALSE_IF_FAIL(Tokeniser_parseShaderName(tokeniser, name));
-	const char* templateName = tokeniser.getToken();
-	ShaderTemplate* shaderTemplate = findTemplate(templateName);
-	if (shaderTemplate == 0) {
-		globalErrorStream() << "shader instance: " << makeQuoted(name.c_str()) << ": shader template not found: " << makeQuoted(templateName) << "\n";
-	}
-
-	ShaderArguments args;
-	if (!parseShaderParameters(tokeniser, args)) {
-		globalErrorStream() << "shader instance: " << makeQuoted(name.c_str()) << ": argument parse failed\n";
-		return false;
-	}
-
-	if (shaderTemplate != 0) {
-		if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(name, ShaderDefinition(shaderTemplate, args, filename))).second) {
-			globalErrorStream() << "shader instance: " << makeQuoted(name.c_str()) << ": already exists, second definition ignored\n";
-		}
-	}
-	return true;
-}
-
-
 const char* evaluateShaderValue(const char* value, const ShaderParameters& params, const ShaderArguments& args) {
 	ShaderArguments::const_iterator j = args.begin();
 	for (ShaderParameters::const_iterator i = params.begin(); i != params.end(); ++i, ++j) {
@@ -944,95 +920,31 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 			break;
 		}
 
-		if (string_equal(token, "table")) {
-			if (tokeniser.getToken() == 0) {
-				Tokeniser_unexpectedError(tokeniser, 0, "#table-name");
-				return;
-			}
-			if (!Tokeniser_parseToken(tokeniser, "{")) {
-				return;
-			}
-			for (;;) {
-				const char* option = tokeniser.getToken();
-				if (string_equal(option, "{")) {
-					for (;;) {
-						const char* value = tokeniser.getToken();
-						if (string_equal(value, "}")) {
-							break;
-						}
-					}
+		if (!string_equal(token, "material")
+		 && !string_equal(token, "particle")
+		 && !string_equal(token, "skin")) {
+			tokeniser.ungetToken();
+		}
+		// first token should be the path + name.. (from base)
+		CopiedString name;
+		if (!Tokeniser_parseShaderName(tokeniser, name)) {
+		}
+		ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
+		shaderTemplate->setName(name.c_str());
 
-					if (!Tokeniser_parseToken(tokeniser, "}")) {
-						return;
-					}
-					break;
-				}
+		g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
+
+		bool result = shaderTemplate->parseUFO(tokeniser);
+		if (result) {
+			// do we already have this shader?
+			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
+#ifdef DEBUG
+				globalWarningStream() << "Shader " << shaderTemplate->getName() << " is already in memory, definition in " << filename << " ignored.\n";
+#endif
 			}
 		} else {
-			if (string_equal(token, "guide")) {
-				parseTemplateInstance(tokeniser, filename);
-			} else {
-				if (!string_equal(token, "material")
-				        && !string_equal(token, "particle")
-				        && !string_equal(token, "skin")) {
-					tokeniser.ungetToken();
-				}
-				// first token should be the path + name.. (from base)
-				CopiedString name;
-				if (!Tokeniser_parseShaderName(tokeniser, name)) {
-				}
-				ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
-				shaderTemplate->setName(name.c_str());
-
-				g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
-
-				bool result = shaderTemplate->parseUFO(tokeniser);
-				if (result) {
-					// do we already have this shader?
-					if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
-#ifdef DEBUG
-						globalWarningStream() << "Shader " << shaderTemplate->getName() << " is already in memory, definition in " << filename << " ignored.\n";
-#endif
-					}
-				} else {
-					globalErrorStream() << "Error parsing shader " << shaderTemplate->getName() << "\n";
-					return;
-				}
-			}
-		}
-	}
-}
-
-void parseGuideFile(Tokeniser& tokeniser, const char* filename) {
-	tokeniser.nextLine();
-	for (;;) {
-		const char* token = tokeniser.getToken();
-
-		if (token == 0) {
-			break;
-		}
-
-		if (string_equal(token, "guide")) {
-			// first token should be the path + name.. (from base)
-			ShaderTemplatePointer shaderTemplate(new ShaderTemplate);
-			shaderTemplate->parseTemplate(tokeniser);
-			if (!g_shaderTemplates.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate)).second) {
-				globalErrorStream() << "guide " << makeQuoted(shaderTemplate->getName()) << ": already defined, second definition ignored\n";
-			}
-		} else if (string_equal(token, "inlineGuide")) {
-			// skip entire inlineGuide definition
-			std::size_t depth = 0;
-			for (;;) {
-				tokeniser.nextLine();
-				token = tokeniser.getToken();
-				if (string_equal(token, "{")) {
-					++depth;
-				} else if (string_equal(token, "}")) {
-					if (--depth == 0) {
-						break;
-					}
-				}
-			}
+			globalErrorStream() << "Error parsing shader " << shaderTemplate->getName() << "\n";
+			return;
 		}
 	}
 }
@@ -1050,23 +962,6 @@ void LoadShaderFile(const char* filename) {
 }
 
 typedef FreeCaller1<const char*, LoadShaderFile> LoadShaderFileCaller;
-
-
-void loadGuideFile(const char* filename) {
-	StringOutputStream fullname(256);
-	fullname << "guides/" << filename;
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullname.c_str()));
-	if (file) {
-		globalOutputStream() << "Parsing guide file " << fullname.c_str() << "\n";
-
-		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
-		parseGuideFile(*tokeniser, fullname.c_str());
-	} else {
-		globalOutputStream() << "Unable to read guide file " << fullname.c_str() << "\n";
-	}
-}
-
-typedef FreeCaller1<const char*, loadGuideFile> LoadGuideFileCaller;
 
 
 CShader* Try_Shader_ForName(const char* name) {
