@@ -429,9 +429,8 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		return z;
 	}
 
-
 	/* if our destination cell is out of bounds, bail. */
-	if ((ax < 0) || (ax > PATHFINDING_WIDTH - actor_size) || (ay < 0) || (y > PATHFINDING_WIDTH - actor_size)) {
+	if ((ax < 0) || (ax > PATHFINDING_WIDTH - actor_size) || ay < 0 || (y > PATHFINDING_WIDTH - actor_size)) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Zero the debugging data */
@@ -458,10 +457,9 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	 * 3. The floor in the cell above the destination cell is in that cell.
 	 * 4. We are not at the highest z.
 	 */
-	if (z < PATHFINDING_HEIGHT - 1
-		&& h < (z + 1) * (UNIT_HEIGHT / QUANT)
-		&& RT_FLOOR(map, actor_size, ax, ay, z + 1) >= 0
-		&& h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * (UNIT_HEIGHT / QUANT) ) {
+	if (z < PATHFINDING_HEIGHT - 1 && h < (z + 1) * (UNIT_HEIGHT / QUANT)
+	 && RT_FLOOR(map, actor_size, ax, ay, z + 1) >= 0
+	 && h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * (UNIT_HEIGHT / QUANT) ) {
 		dz++;
 		if (debugTrace)
 			Com_Printf("Adjusting dz for stepup. z = %i, dz = %i\n", z, dz);
@@ -487,7 +485,6 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	SizedPosToVec(pos, actor_size, end);
 	end[2] = start[2]; /** end is now at the center of the destination cell and at the same height as the starting point. */
 
-
 	/* Test to see if c <= h or ac <= ah - indicates a filled cell. */
 	if (c <= h || ac <= ah) {
 		/* We can't go this way. */
@@ -500,7 +497,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	}
 
 	/* test if the destination cell is blocked by a loaded model */
-	if (h >= ac || ah >= c) {
+	else if (h >= ac || ah >= c) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Point to where we can't be. */
@@ -512,7 +509,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 
 	/* If the destination floor is more than PATHFINDING_MIN_STEPUP higher than the base of the current cell
 	 * then we can't go there. */
-	if (ah - h > PATHFINDING_MIN_STEPUP) {
+	else if (ah - h > PATHFINDING_MIN_STEPUP) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Point to where we can't be. */
@@ -587,7 +584,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	 * Part B: Look for additional space below PATHFINDING_MIN_STEPUP. Low points at the higher of the two floors;
 	 * high points at the current floor_p, the current lowest valid floor.
 	 */
-	lo = max (0, ah - h); /* Relative to the current floor h */
+	lo = max(0, ah - h); /* Relative to the current floor h */
 	hi = floor_p;
 	worst = lo;
 	/* Move the floor brush to the lowest possible floor. */
@@ -627,7 +624,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	 * valid ceiling; high points at the lower of both ceilings.
 	 */
 	lo = ceil_p;
-	hi = min (c, ac) - h;
+	hi = min(c, ac) - h;
 	worst = hi;
 	/* Move the ceiling brush to the highest possible ceiling. */
 	brushesHit.ceiling[2] += hi * QUANT;
