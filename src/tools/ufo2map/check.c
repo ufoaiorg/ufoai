@@ -661,9 +661,8 @@ static void Check_NearList (void)
 			Sys_Error("Check_Nearlist: out of memory");
 
 		iBrush->numNear = numNear;
-		for (j = 0; j < numNear; j++) {
+		for (j = 0; j < numNear; j++)
 			iBrush->nearBrushes[j] = bbuf[j];
-		}
 	}
 
 	done = qtrue;
