@@ -1,3 +1,12 @@
+/**
+ * @file shaders.cpp
+ * @brief Shaders Manager Plugin
+ * @note there is an important distinction between SHADER_NOT_FOUND and SHADER_NOTEX:
+ * SHADER_NOT_FOUND means we didn't find the raw texture or the shader for this
+ * SHADER_NOTEX means we recognize this as a shader script, but we are missing the texture to represent it
+ * this was in the initial design of the shader code since early GtkRadiant alpha, and got sort of foxed in 1.2 and put back in
+ */
+
 /*
 Copyright (c) 2001, Loki software, inc.
 All rights reserved.
@@ -27,12 +36,6 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
-//
-// Shaders Manager Plugin
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "shaders.h"
 
@@ -72,8 +75,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 const char* g_shadersExtension = "";
 const char* g_shadersDirectory = "";
-bool g_enableDefaultShaders = true;
-bool g_useShaderList = true;
 const char* g_texturePrefix = "textures/";
 
 void ActiveShaders_IteratorBegin();
@@ -85,14 +86,6 @@ Callback g_ActiveShadersChangedNotify;
 void FreeShaders();
 void LoadShaderFile (const char *filename);
 qtexture_t *Texture_ForName (const char *filename);
-
-
-/*!
-NOTE TTimo: there is an important distinction between SHADER_NOT_FOUND and SHADER_NOTEX:
-SHADER_NOT_FOUND means we didn't find the raw texture or the shader for this
-SHADER_NOTEX means we recognize this as a shader script, but we are missing the texture to represent it
-this was in the initial design of the shader code since early GtkRadiant alpha, and got sort of foxed in 1.2 and put back in
-*/
 
 inline byte* getPixel(byte* pixels, int width, int height, int x, int y) {
 	return pixels + (((((y + height) % height) * width) + ((x + width) % width)) * 4);
@@ -281,11 +274,7 @@ public:
 
 
 	void CreateDefault(const char *name) {
-		if (g_enableDefaultShaders) {
-			m_textureName = name;
-		} else {
-			m_textureName = "";
-		}
+		m_textureName = name;
 		setName(name);
 	}
 
@@ -1013,12 +1002,9 @@ GSList* Shaders_getShaderFileList() {
 	return l_shaderfiles;
 }
 
-/*
-==================
-DumpUnreferencedShaders
-usefull function: dumps the list of .shader files that are not referenced to the console
-==================
-*/
+/**
+ * @brief Usefull function: dumps the list of .shader files that are not referenced to the console
+ */
 void IfFound_dumpUnreferencedShader(bool& bFound, const char* filename) {
 	bool listed = false;
 
@@ -1063,12 +1049,9 @@ void ShaderList_addShaderFile(const char* dirstring) {
 typedef FreeCaller1<const char*, ShaderList_addShaderFile> AddShaderFileCaller;
 
 
-/*
-==================
-BuildShaderList
-build a CStringList of shader names
-==================
-*/
+/**
+ * @brief Build a CStringList of shader names
+ */
 void BuildShaderList(TextInputStream& shaderlist) {
 	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(shaderlist));
 	tokeniser->nextLine();
@@ -1118,34 +1101,30 @@ void Shaders_Load() {
 		StringOutputStream path(256);
 		path << DirectoryCleaned(shaderPath);
 
-		if (g_useShaderList) {
-			// preload shader files that have been listed in shaderlist.txt
-			const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-			const char* gamename = GlobalRadiant().getGameName();
-			const char* enginePath = GlobalRadiant().getEnginePath();
+		// preload shader files that have been listed in shaderlist.txt
+		const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+		const char* gamename = GlobalRadiant().getGameName();
+		const char* enginePath = GlobalRadiant().getEnginePath();
 
-			bool isMod = !string_equal(basegame, gamename);
+		bool isMod = !string_equal(basegame, gamename);
 
-			if (!isMod || !shaderlist_findOrInstall(enginePath, path.c_str(), gamename)) {
-				gamename = basegame;
-				shaderlist_findOrInstall(enginePath, path.c_str(), gamename);
+		if (!isMod || !shaderlist_findOrInstall(enginePath, path.c_str(), gamename)) {
+			gamename = basegame;
+			shaderlist_findOrInstall(enginePath, path.c_str(), gamename);
+		}
+
+		StringOutputStream absShaderList(256);
+		absShaderList << enginePath << gamename << '/' << path.c_str() << "shaderlist.txt";
+
+		{
+			globalOutputStream() << "Parsing shader files from " << absShaderList.c_str() << "\n";
+			TextFileInputStream shaderlistFile(absShaderList.c_str());
+			if (shaderlistFile.failed()) {
+				globalErrorStream() << "Couldn't find '" << absShaderList.c_str() << "'\n";
+			} else {
+				BuildShaderList(shaderlistFile);
+				DumpUnreferencedShaders();
 			}
-
-			StringOutputStream absShaderList(256);
-			absShaderList << enginePath << gamename << '/' << path.c_str() << "shaderlist.txt";
-
-			{
-				globalOutputStream() << "Parsing shader files from " << absShaderList.c_str() << "\n";
-				TextFileInputStream shaderlistFile(absShaderList.c_str());
-				if (shaderlistFile.failed()) {
-					globalErrorStream() << "Couldn't find '" << absShaderList.c_str() << "'\n";
-				} else {
-					BuildShaderList(shaderlistFile);
-					DumpUnreferencedShaders();
-				}
-			}
-		} else {
-			GlobalFileSystem().forEachFile(path.c_str(), g_shadersExtension, AddShaderFileCaller(), 0);
 		}
 
 		GSList *lst = l_shaderfiles;
@@ -1157,8 +1136,6 @@ void Shaders_Load() {
 			lst = lst->next;
 		}
 	}
-
-	//StringPool_analyse(ShaderPool::instance());
 }
 
 void Shaders_Free() {
@@ -1167,9 +1144,11 @@ void Shaders_Free() {
 	g_shaderFilenames.clear();
 }
 
-ModuleObservers g_observers;
+static ModuleObservers g_observers;
 
-std::size_t g_shaders_unrealised = 1; // wait until filesystem and is realised before loading anything
+/** @brief wait until filesystem and is realised before loading anything */
+static std::size_t g_shaders_unrealised = 1;
+
 bool Shaders_realised() {
 	return g_shaders_unrealised == 0;
 }

@@ -38,7 +38,5 @@ ShaderSystem& GetShaderSystem();
 
 extern const char* g_shadersExtension;
 extern const char* g_shadersDirectory;
-extern bool g_enableDefaultShaders;
-extern bool g_useShaderList;
 
 #endif

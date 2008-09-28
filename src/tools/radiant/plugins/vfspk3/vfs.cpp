@@ -84,7 +84,7 @@ static char g_strDirs[VFS_MAXDIRS][PATH_MAX + 1];
 static int g_numDirs;
 static bool g_bUsePak = true;
 
-ModuleObservers g_observers;
+static ModuleObservers g_observers;
 
 // =============================================================================
 // Static functions
