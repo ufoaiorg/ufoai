@@ -945,6 +945,42 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 }
 
 /**
+ * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
+ * @param[in] ent The AI controlled actor to chech the state change for
+ * @returns true if the actor should go into STATE_CROUCHED, false otherwise
+ */
+static qboolean AI_CheckCrouch (const edict_t *ent)
+{
+	int i;
+	const edict_t *check;
+
+	/* see if we are very well visible by an enemy */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		if (!check->inuse)
+			continue;
+		/* don't check for civilians or aliens */
+		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
+			continue;
+		/* if it's an actor and he's still living */
+		if (G_IsLivingActor(check)) {
+			/* check whether the origin of the enemy is inside the
+			 * AI actors view frustum */
+			float actorVis;
+			qboolean frustum = G_FrustumVis(check, ent->origin);
+			if (!frustum)
+				continue;
+			/* check whether the enemy is close enough to change the state */
+			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+				continue;
+			actorVis = G_ActorVis(check->origin, ent, qtrue);
+			if (actorVis >= 0.6)
+				return qtrue;
+		}
+	}
+	return qfalse;
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  * @todo fill z_align values
@@ -1280,6 +1316,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 			break;
 		}
 	}
+
 	minDist /= UNIT_SIZE;
 	minDistCivilian /= UNIT_SIZE;
 	minDistFighter /= UNIT_SIZE;
@@ -1420,43 +1457,6 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 	return bestActionPoints;
 }
 
-/**
- * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
- * @param[in] ent The AI controlled actor to chech the state change for
- * @returns true if the actor should go into STATE_CROUCHED, false otherwise
- */
-static qboolean AI_CheckCrouch (const edict_t *ent)
-{
-	int i;
-	const edict_t *check;
-
-	/* see if we are very well visible by an enemy */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		if (!check->inuse)
-			continue;
-		/* don't check for civilians or aliens */
-		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
-			continue;
-		/* if it's an actor and he's still living */
-		if (G_IsLivingActor(check)) {
-			/* check whether the origin of the enemy is inside the
-			 * AI actors view frustum */
-			float actorVis;
-			qboolean frustum = G_FrustumVis(check, ent->origin);
-			if (!frustum)
-				continue;
-			/* check whether the enemy is close enough to change the state */
-			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
-				continue;
-			actorVis = G_ActorVis(check->origin, ent, qtrue);
-			if (actorVis >= 0.6)
-				return qtrue;
-		}
-	}
-	return qfalse;
-}
-
-
 #define AI_MAX_DIST	30
 /**
  * @brief Attempts to find the best action for an alien. Moves the alien
@@ -1553,16 +1553,17 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
  */
 static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 {
-	byte dv;
+	int dv;
 	const int crouching_state = aiActor->state & STATE_CROUCHED ? 1 : 0;
 
 	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouching_state, MAX_ROUTE);
+
 	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouching_state);
-	if (dv < ROUTING_NOT_REACHABLE) {
+	if (dv != ROUTING_NOT_REACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
 		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS) {
-			const int status = G_DoTurn(aiActor, dv);
+			const int status = G_DoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
 			if (status) {
 				/* send the turn */
 				gi.AddEvent(G_VisToPM(aiActor->visflags), EV_ACTOR_TURN);
