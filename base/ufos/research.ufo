@@ -101,13 +101,13 @@
 up_chapters main
 {
 	news		"_Background"
-	crafts	"_Aircraft"
+	crafts		"_Aircraft"
 	buildings	"_Base Facilities"
 	tech		"_Research Reports"
 	equipment	"_Equipment"
 	artifacts	"_Alien Artifacts"
-	aliens	"_Autopsies & Observation"
-	threat	"_The Alien Threat"
+	aliens		"_Autopsies & Observation"
+	threat		"_The Alien Threat"
 }
 
 //============================
@@ -199,9 +199,11 @@ tech rs_item_antimatter
 	{
 		tech rs_antimatter
 	}
-        provides	antimatter
+
+	provides	antimatter
 	time		0
 	producetime	-1
+	image		"techs/antimatter"
 }
 
 tech rs_alien_live
@@ -300,6 +302,7 @@ tech rs_item_brapparatus
 	provides	brapparatus
 	time		0
 	producetime	-1
+	image		"techs/alien_breathing"
 }
 
 
@@ -338,6 +341,7 @@ tech rs_alien_mind
 		alienglobal 3
 	}
 	time	1500
+//	image		"techs/alien_mind"
 }
 
 tech rs_alien_oddbehaviour
@@ -375,6 +379,7 @@ tech rs_alien_oddbehaviour
 		alienglobal 10
 	}
 	time		1500
+//	image		"techs/alien_oddbehaviour"
 }
 
 tech rs_alien_communication
@@ -411,6 +416,7 @@ tech rs_alien_communication
 		tech rs_alien_oddbehaviour
 	}
 	time	1600
+//	image		"techs/alien_communication"
 }
 
 tech rs_universal_serum
@@ -447,6 +453,7 @@ tech rs_universal_serum
 		tech rs_alien_communication
 	}
 	time	1800
+	image		"techs/universal_serum"
 }
 
 tech rs_alien_origins
@@ -479,6 +486,7 @@ tech rs_alien_origins
 	}
 
 	time		2700
+//	image		"techs/alien_origins"
 }
 
 tech rs_alien_ufo_theory
@@ -522,6 +530,7 @@ tech rs_alien_ufo_theory
 	}
 
 	time		3000
+	image		"techs/ufo_theory"
 }
 
 //=================================
@@ -4575,7 +4584,7 @@ tech rs_alien_materials
 	}
 
 	time		6000
-//	image	"techs/alien_materials"
+	image	"techs/alien_materials"
 }
 
 tech rs_item_alienmaterials
