@@ -1884,7 +1884,8 @@ int Grid_Height (struct routing_s *map, const int actor_size, const pos3_t pos)
 		Com_Printf("Grid_Height: Warning: z level is bigger than %i: %i\n",
 			(PATHFINDING_HEIGHT - 1), pos[2]);
 	}
-	return (RT_CEILING(map, actor_size, pos[0], pos[1], pos[2] & 7) - RT_FLOOR(map, actor_size, pos[0], pos[1], pos[2] & 7)) * QUANT;
+	return (RT_CEILING(map, actor_size, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))
+		- RT_FLOOR(map, actor_size, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1))) * QUANT;
 }
 
 
