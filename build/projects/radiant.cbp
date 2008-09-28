@@ -149,6 +149,9 @@
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\glfont.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\glwidget.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tools\radiant\libs\gtkutil\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -234,9 +237,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\dialogs\findtextures.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\radiant\glwidget.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\radiant\radiant\grid.cpp">
