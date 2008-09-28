@@ -2029,28 +2029,35 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 #endif
 
 	/* check unit heights */
-	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
+	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) {
+		const int maxY = max[1] - actor_size;
+		const int maxX = max[0] - actor_size;
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
-		for (y = max(min[1] - actor_size + 1, 0); y < max[1] - actor_size; y++)
-			for (x = max(min[0] - actor_size + 1, 0); x < max[0] - actor_size; x++)
+		for (y = max(min[1] - actor_size + 1, 0); y < maxY; y++) {
+			for (x = max(min[0] - actor_size + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
 					const int new_z = RT_CheckCell(map, actor_size, x, y, z);
 					assert(new_z <= z);
 					z = new_z;
 				}
+			}
+		}
+	}
 
 #if 0
 	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
 #endif
 
 	/* check connections */
-	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++)
+	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) {
+		const int maxY = min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1);
+		const int maxX = min(max[0] - actor_size + 1, PATHFINDING_WIDTH - 1);
 		/* Offset the initial X and Y to compensate for larger actors when needed.
 		 * Also sweep further out to catch the walls back into our box. */
-		for (y = max(min[1] - actor_size, 0); y < min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1); y++)
-			for (x = max(min[0] - actor_size, 0); x < min(max[0] - actor_size + 1, PATHFINDING_WIDTH - 1); x++)
-				for (dir = 0; dir < CORE_DIRECTIONS; dir ++)
+		for (y = max(min[1] - actor_size, 0); y < maxY; y++) {
+			for (x = max(min[0] - actor_size, 0); x < maxX; x++) {
+				for (dir = 0; dir < CORE_DIRECTIONS; dir ++) {
 					/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 					 * RT_UpdateConnection expects it and breaks otherwise. */
 					for (z = 0; z < PATHFINDING_HEIGHT; z++) {
@@ -2058,6 +2065,10 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 						assert(new_z >= z);
 						z = new_z;
 					}
+				}
+			}
+		}
+	}
 
 #if 0
 	Com_Printf("After:\n");
