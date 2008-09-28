@@ -1358,7 +1358,6 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	/* add laziness */
 	if (ent->TU)
 		bestActionPoints += GUETE_CIV_LAZINESS * tu / ent->TU;
-
 	/* add random effects */
 	bestActionPoints += GUETE_CIV_RANDOM * frand();
 
@@ -1559,7 +1558,7 @@ static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouching_state, MAX_ROUTE);
 
 	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouching_state);
-	if (dv != ROUTING_NOT_REACHABLE) {
+	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
 		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS) {
