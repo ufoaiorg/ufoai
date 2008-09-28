@@ -1225,8 +1225,11 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 {
 	edict_t *check;
 	int i, move, tu;
-	float dist, minDist;
+	float minDist, minDistCivilian, minDistFighter;
 	float bestActionPoints;
+	float reaction_trap = 0.0;
+	float delta = 0.0;
+	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -1236,8 +1239,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	VectorCopy(to, aia->stop);
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
 
-	move = gi.MoveLength(gi.pathingMap, to,
-			(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+	move = gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -1250,17 +1252,71 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		Com_Printf("AI_FighterCalcBestAction: Error - civilian team with no teamdef\n");
+		Com_Printf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
-	minDist = RUN_AWAY_DIST;
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->team == TEAM_ALIEN && !(check->state & STATE_DEAD)) {
-			dist = VectorDist(ent->origin, check->origin);
+	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
+
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		float dist;
+		if (!check->inuse || ent == check)
+			continue;
+		if (!G_IsLivingActor(check))
+			continue;
+		dist = VectorDist(ent->origin, check->origin);
+		assert(dist);
+		switch (check->team) {
+		case TEAM_ALIEN:
 			if (dist < minDist)
 				minDist = dist;
+			break;
+		case TEAM_CIVILIAN:
+			if (dist < minDistCivilian)
+				minDistCivilian = dist;
+			break;
+		case TEAM_PHALANX:
+			if (dist < minDistFighter)
+				minDistFighter = dist;
+			break;
 		}
-	bestActionPoints += GUETE_RUN_AWAY * minDist / RUN_AWAY_DIST;
+	}
+	minDist /= UNIT_SIZE;
+	minDistCivilian /= UNIT_SIZE;
+	minDistFighter /= UNIT_SIZE;
+
+	if (minDist < 8.0) {
+		/* very near an alien: run away fast */
+		delta = 4.0 * minDist;
+	} else if (minDist < 16.0) {
+		/* near an alien: run away */
+		delta = 24.0 + minDist;
+	} else if (minDist < 24.0) {
+		/* near an alien: run away slower */
+		delta = 40.0 + (minDist - 16) / 4;
+	} else {
+		delta = 42.0;
+	}
+	/* near a civilian: join him (1/3) */
+	if (minDistCivilian < 10.0)
+		delta += (10.0 - minDistCivilian) / 3.0;
+	/* near a fighter: join him (1/5) */
+	if (minDistFighter < 15.0)
+		delta += (15.0 - minDistFighter) / 5.0;
+	/* don't go close to a fighter to let him move */
+	if (minDistFighter < 2.0)
+		delta /= 10.0;
+
+	/* try to hide */
+	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+		if (!check->inuse || ent == check)
+			continue;
+		if (!(check->team == TEAM_ALIEN || ent->state & STATE_INSANE))
+			continue;
+		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
+			reaction_trap += 25.0;
+	}
+	delta -= reaction_trap;
+	bestActionPoints += delta;
 
 	/* add laziness */
 	if (ent->TU)
@@ -1276,13 +1332,12 @@ edict_t *ai_waypointList;
 
 void G_AddToWayPointList (edict_t *ent)
 {
-	edict_t *e;
 	int i = 1;
 
 	if (!ai_waypointList)
 		ai_waypointList = ent;
 	else {
-		e = ai_waypointList;
+		edict_t *e = ai_waypointList;
 		while (e->groupChain) {
 			e = e->groupChain;
 			i++;
@@ -1753,14 +1808,13 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 
 	/* Set stats */
 	if (team != TEAM_CIVILIAN) {
-		/** skills;@todo more power to Ortnoks, more mind to Tamans */
+		/** skills; @todo more power to Ortnoks, more mind to Tamans */
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2); /**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
 		/*  aliens get much more mind */
 		ent->chr.score.skills[ABILITY_MIND] += 100;
 		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
 			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
-	}
-	else if (team == TEAM_CIVILIAN) {
+	} else if (team == TEAM_CIVILIAN) {
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
 	}
 
@@ -1788,8 +1842,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 			ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
 		} else
 			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_alien"), &ent->chr);
-	}
-	else if (team == TEAM_CIVILIAN) {
+	} else if (team == TEAM_CIVILIAN) {
 		/** @todo Maybe we have civilians with armour, too - police and so on */
 		ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
 	}
@@ -1806,7 +1859,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 			/* actor cannot handle equipment */
 			INVSH_EquipActorMelee(&ent->i, &ent->chr);
 		else
-			Com_Printf("G_SpawnAIPlayer: actor with no equipment\n");
+			Com_Printf("AI_InitPlayer: actor with no equipment\n");
 	}
 
 	/* more tweaks */
@@ -1818,7 +1871,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 
 		/** Set initial state of reaction fire to previously stored state for this actor.
 		 * @sa g_client.c:G_ClientSpawn */
-		Com_DPrintf(DEBUG_GAME, "G_SpawnAIPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
+		Com_DPrintf(DEBUG_GAME, "AI_InitPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
 		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 		G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
 	}
@@ -1829,7 +1882,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 	else if (team == TEAM_ALIEN)
 		AI_InitActor(ent, "alien", "default");
 	else
-		Com_Printf("G_SpawnAIPlayer: unknown team AI\n");
+		Com_Printf("AI_InitPlayer: unknown team AI\n");
 
 	/* link the new actor entity */
 	gi.LinkEdict(ent);
@@ -1884,7 +1937,8 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		/* spawn */
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
-		AI_InitPlayer( player, ent ); /* initialize the new actor */
+		/* initialize the new actor */
+		AI_InitPlayer(player, ent);
 	}
 	/* show visible actors */
 	G_ClearVisFlags(team);
