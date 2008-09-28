@@ -22,9 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_GTKUTIL_NONMODAL_H)
 #define INCLUDED_GTKUTIL_NONMODAL_H
 
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkspinbutton.h>
-#include <gtk/gtkradiobutton.h>
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "generic/callback.h"

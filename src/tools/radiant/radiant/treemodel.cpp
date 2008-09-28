@@ -24,9 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "debugging/debugging.h"
 
 #include <map>
-#include <gtk/gtktreemodel.h>
-#include <gtk/gtktreednd.h>
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 
 #include "iscenegraph.h"
 #include "nameable.h"

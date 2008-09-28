@@ -30,10 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <vector>
 
-#include <gtk/gtknotebook.h>
-#include <gtk/gtktextview.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/widget.h"
 #include "gtkutil/accelerator.h"

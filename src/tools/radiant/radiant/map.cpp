@@ -40,15 +40,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <set>
 
-#include <gtk/gtkmain.h>
-#include <gtk/gtkbox.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtktreemodel.h>
-#include <gtk/gtktreeview.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtk.h>
 
 #include "scenelib.h"
 #include "transformlib.h"

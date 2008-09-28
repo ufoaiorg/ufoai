@@ -34,14 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "iundo.h"
 #include "iselection.h"
 
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkspinbutton.h>
-#include <gdk/gdkkeysyms.h>
+#include <gtk/gtk.h>
 
 #include "signal/isignal.h"
 #include "generic/object.h"

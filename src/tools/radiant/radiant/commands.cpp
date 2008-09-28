@@ -122,11 +122,7 @@ const KeyEvent& GlobalKeyEvents_find (const char* name)
 
 #include <cctype>
 
-#include <gtk/gtkbox.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtktreemodel.h>
-#include <gtk/gtktreeview.h>
-#include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/dialog.h"
 #include "mainframe.h"

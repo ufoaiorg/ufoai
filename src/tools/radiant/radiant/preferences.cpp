@@ -32,20 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "debugging/debugging.h"
 
-#include <gtk/gtkmain.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktogglebutton.h>
-#include <gtk/gtkspinbutton.h>
-#include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtktreemodel.h>
-#include <gtk/gtktreeview.h>
-#include <gtk/gtktreestore.h>
-#include <gtk/gtktreeselection.h>
-#include <gtk/gtkcellrenderertext.h>
-#include <gtk/gtknotebook.h>
+#include <gtk/gtk.h>
 
 #include "generic/callback.h"
 #include "math/vector.h"

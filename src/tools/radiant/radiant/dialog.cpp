@@ -35,18 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <stdlib.h>
 
-#include <gtk/gtkmain.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtktogglebutton.h>
-#include <gtk/gtkspinbutton.h>
-#include <gtk/gtkradiobutton.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkcombobox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkhscale.h>
-#include <gtk/gtkalignment.h>
+#include <gtk/gtk.h>
 
 #include "stream/stringstream.h"
 #include "convert.h"

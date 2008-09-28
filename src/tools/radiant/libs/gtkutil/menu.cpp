@@ -22,11 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "menu.h"
 
 #include <ctype.h>
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkmenubar.h>
-#include <gtk/gtkradiomenuitem.h>
-#include <gtk/gtktearoffmenuitem.h>
-#include <gtk/gtkaccellabel.h>
+#include <gtk/gtk.h>
 
 #include "generic/callback.h"
 

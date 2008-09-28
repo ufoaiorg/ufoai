@@ -21,16 +21,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "messagebox.h"
 
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkalignment.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkimage.h>
-#include <gtk/gtkstock.h>
 
 #include "dialog.h"
 #include "widget.h"

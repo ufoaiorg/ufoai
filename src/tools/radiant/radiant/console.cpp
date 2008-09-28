@@ -22,10 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "console.h"
 
 #include <time.h>
-#include <gtk/gtktextbuffer.h>
-#include <gtk/gtktextview.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtk.h>
 
 #include "gtkutil/accelerator.h"
 #include "gtkutil/messagebox.h"
