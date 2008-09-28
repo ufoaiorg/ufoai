@@ -32,13 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define		POS3_METATABLE		"pos3"
 #define		ACTOR_METATABLE		"actor"
 
-/*
+/**
  * Provides an api like luaL_dostring for buffers.
  */
 #define luaL_dobuffer(L, b, n, s) \
 	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 #define AIL_invalidparameter(n)	\
-	Com_Printf("AIL: Invalid parameter #%d in '%s'.\n",n,__func__)
+	Com_Printf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
 
 
 typedef struct {

@@ -460,14 +460,13 @@ void MN_Click (int x, int y)
  */
 void MN_RightClick (int x, int y)
 {
-	menuNode_t *node;
-	menu_t *menu;
-	int sp, mouseOver;
-
-	sp = mn.menuStackPos;
+	int mouseOver;
+	int sp = mn.menuStackPos;
 
 	while (sp > 0) {
-		menu = mn.menuStack[--sp];
+		menu_t *menu = mn.menuStack[--sp];
+		menuNode_t *node;
+
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no right click for this node defined */
 			if (node->type != MN_CONTAINER && !node->rclick)
