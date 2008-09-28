@@ -712,13 +712,8 @@ static qboolean Check_WindingIntersects (const winding_t *winding, const mapbrus
 			vj = vi + 1;
 			vj = vj == winding->numpoints ? 0 : vj;
 			if (Check_EdgePlaneIntersection(winding->p[vi], winding->p[vj], &mapplanes[brush->original_sides[bi].planenum], intersection))
-				if (Check_IsPointInsideBrush(intersection, brush, PIB_INCL_SURF_EXCL_EDGE)) {
-					#if 0
-					Print3Vector(intersection);
-					#else
+				if (Check_IsPointInsideBrush(intersection, brush, PIB_INCL_SURF_EXCL_EDGE))
 					return qtrue;
-					#endif
-			}
 		}
 	}
 	return qfalse;
