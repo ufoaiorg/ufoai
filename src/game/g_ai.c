@@ -444,12 +444,12 @@ static int pos3L_tostring (lua_State *L)
 static int pos3L_goto (lua_State *L)
 {
 	pos3_t *pos;
+	const int crouching_state = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
 
 	assert(lua_ispos3(L, 1));
 
 	/* Calculate move table. */
-	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize,
-			(AIL_ent->state & STATE_CROUCHED) ? 1 : 0, AIL_ent->TU);
+	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize, crouching_state, AIL_ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* Move. */
@@ -720,6 +720,7 @@ static int AIL_positionshoot (lua_State *L)
 	int xl, yl, xh, yh;
 	int tu, min_tu;
 	aiActor_t *target;
+	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* We need a target. */
 	assert(lua_isactor(L, 1));
@@ -730,8 +731,7 @@ static int AIL_positionshoot (lua_State *L)
 	dist = ent->TU;
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent->pos, ent->fieldSize,
-			(ent->state & STATE_CROUCHED) ? 1 : 0, ent->TU);
+	G_MoveCalc(0, ent->pos, ent->fieldSize, crouching_state, ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
@@ -1187,7 +1187,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
-			 *@todo do this decently, only penalizing the visible part of walk
+			 * @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
 			 * now it may remove some tactical options from aliens,
 			 * e.g. they may now choose only the closer doors;

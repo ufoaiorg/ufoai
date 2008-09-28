@@ -1463,7 +1463,6 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i dir:%i c:%i ol:%i\n", x, y, z, actor_size, dir, crouching_state, ol);
 
-
 	/* We cannot fly and crouch at the same time. This will also cause an actor to stand to fly. */
 	if (crouching_state && dir >= FLYING_DIRECTIONS) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly while crouching.\n");
@@ -1535,16 +1534,15 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	/* Connection checks.  If we cannot move in the desired direction, then bail. */
 	/* Range check of new values (all sizes) */
 	if (nx < 0 || nx > PATHFINDING_WIDTH - actor_size
-		|| ny < 0 || ny > PATHFINDING_WIDTH - actor_size
-		|| nz < 0 || nz > PATHFINDING_HEIGHT) {
+	 || ny < 0 || ny > PATHFINDING_WIDTH - actor_size
+	 || nz < 0 || nz > PATHFINDING_HEIGHT) {
 		return;
-		}
+	}
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i to (%i %i %i)\n", x, y, z, actor_size, nx, ny, nz);
 
 	/* This value is worthless if it is CORE_DIRECTIONS through FLYING_DIRECTIONS:
-	 * these are actions or climbing.
-	 */
+	 * these are actions or climbing. */
 	core_dir = dir % CORE_DIRECTIONS;
 
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
@@ -1581,25 +1579,24 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	}
 	/* else there is no movement that uses passages. */
 
-
 	/** @todo stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
 	stepup_height = PATHFINDING_MIN_STEPUP;
 	/* If we are moving horizontally, get the height difference of the floors. */
 	if (dir < CORE_DIRECTIONS) {
 		/* Here's the catch: if we can possibly move up, then do so. */
 		if (z < PATHFINDING_HEIGHT - 1 /* Not at the top */
-			/* The floor is in the target cell */
-			&& RT_FLOOR(map, actor_size, nx, ny, nz + 1) >= 0
-			/* We can make the step into the cell */
-			&& stepup_height + RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1)) {
-				/* Use the adjusted calculation. */
-				height_change = UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1) - RT_FLOOR(map, actor_size, x, y, z);
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
-			} else {
-				/* Use the default calculation. */
-				height_change = RT_FLOOR(map, actor_size, nx, ny, nz) - RT_FLOOR(map, actor_size, x, y, z);
-				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
-			}
+		 /* The floor is in the target cell */
+		 && RT_FLOOR(map, actor_size, nx, ny, nz + 1) >= 0
+		 /* We can make the step into the cell */
+		 && stepup_height + RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1)) {
+			/* Use the adjusted calculation. */
+			height_change = UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1) - RT_FLOOR(map, actor_size, x, y, z);
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
+		} else {
+			/* Use the default calculation. */
+			height_change = RT_FLOOR(map, actor_size, nx, ny, nz) - RT_FLOOR(map, actor_size, x, y, z);
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
+		}
 	}
 	/* If we are falling, the height difference is the floor value. */
 	if (dir == DIRECTION_FALL)
@@ -1607,8 +1604,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 
 	if (!flier) {
 		/* If the destination cell is higher than this actor can walk, then return.
-		 * Fliers will ignore this rule.  They only need the passage to exist.
-		 */
+		 * Fliers will ignore this rule.  They only need the passage to exist. */
 		if (height_change > stepup_height) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't step up high enough. change:%i stepup:%i\n", height_change, stepup_height);
 			return;
@@ -1619,8 +1615,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		falling_height = PATHFINDING_MAX_FALL;
 		/** @todo has_ladder_support should return true if
 		 *  1) There is a ladder in the new cell in the specified direction or
-		 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself.
-		 */
+		 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
 		has_ladder_support = qfalse;
 		if (height_change < -falling_height && !has_ladder_support) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", height_change, -falling_height);
@@ -1634,8 +1629,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		}
 
 		/** @todo has_ladder_climb should return true if
-		 *  1) There is a ladder in the new cell in the specified direction.
-		 */
+		 *  1) There is a ladder in the new cell in the specified direction. */
 		has_ladder_climb = qfalse;
 		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
 		if (dir == DIRECTION_CLIMB_UP && !has_ladder_climb) {
@@ -1652,8 +1646,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		/* If we are walking normally, we cannot fall a distance further than stepup_height, so we initiate a fall:
 		 * Set height_change to 0.
 		 * The actor enters the cell.
-		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below.
-		 */
+		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
 		if (dir < CORE_DIRECTIONS && height_change < -stepup_height) {
 			/* We cannot fall if there is an entity below the cell we want to move to. */
 			if (Grid_CheckForbidden(map, actor_size, path, nx, ny, nz - 1)) {
@@ -1694,8 +1687,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	 *    falling_height, unless climbing.
 	 *
 	 * If the actor is a flier, as long as there is a passage, it can be moved through.
-	 * There are no floor difference restrictions for fliers, only obstructions.
-	 */
+	 * There are no floor difference restrictions for fliers, only obstructions. */
 
 	/* If we are moving horizontally, the new z coordinate may need to be adjusted from stepup. */
 	if (dir < CORE_DIRECTIONS && abs(height_change) <= stepup_height) {
@@ -1705,7 +1697,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		/* Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Adjusting hight. floor:%i new_floor:%i delta:%i\n", RT_FLOOR(map, actor_size, x, y, z), new_floor, delta); */
 		nz += delta;
 	}
-	/* nz can't move outof bounds */
+	/* nz can't move out of bounds */
 	if (nz < 0)
 		nz = 0;
 	if (nz >= PATHFINDING_HEIGHT)
@@ -1758,7 +1750,6 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 	pos3_t pos;
 
 	/* reset move data */
-	/* ROUTING_NOT_REACHABLE means, not reachable */
 	memset(path->area, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
 	path->fblist = fb_list;
 	path->fblength = fb_length;
