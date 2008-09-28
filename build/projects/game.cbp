@@ -125,6 +125,99 @@
 		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\game\lua\lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\lua\print.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

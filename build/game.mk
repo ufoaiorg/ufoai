@@ -50,7 +50,6 @@ GAME_SRCS=\
 	game/lua/lzio.c \
 	game/lua/print.c
 
-
 GAME_OBJS=$(GAME_SRCS:%.c=$(_BUILDDIR)/game/%.o)
 GAME_TARGET=base/game.$(SHARED_EXT)
 
