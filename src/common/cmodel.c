@@ -53,7 +53,7 @@ static int numInline;
 /** @note a list with all inline models (like func_breakable) */
 static const char **inlineList;
 
-/** @note (???) a pointer to the part of the lump that defines inline model data */
+/** @note a pointer to the bsp file model data */
 static byte *cmod_base;
 
 /** @note this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
