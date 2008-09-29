@@ -380,9 +380,6 @@ LIGHTMAP SAMPLE GENERATION
 =================================================================
 */
 
-
-#define	SINGLEMAP	(512 * 512 * 4)
-
 typedef struct {
 	vec_t	facedist;
 	vec3_t	facenormal;
@@ -492,8 +489,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->texsize[i] = lm_maxs[i] - lm_mins[i];
 	}
 
-	/* div 4 for extrasamples */
-	if (l->texsize[0] * l->texsize[1] > SINGLEMAP / 4)
+	if (l->texsize[0] * l->texsize[1] > MAX_MAP_LIGHTMAP)
 		Sys_Error("Surface too large to light (%dx%d)", l->texsize[0], l->texsize[1]);
 }
 
@@ -503,7 +499,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 static void CalcFaceVectors (lightinfo_t *l)
 {
 	const dBspTexinfo_t *tex;
-	int i, w, h;
+	int i;
 	vec3_t texnormal;
 	vec_t distscale, dist;
 
@@ -560,10 +556,8 @@ static void CalcFaceVectors (lightinfo_t *l)
 	VectorAdd(l->texorg, l->modelorg, l->texorg);
 
 	/* total sample count */
-	h = l->texsize[1] + 1;
-	w = l->texsize[0] + 1;
-	l->numsurfpt = w * h;
-	l->surfpt = malloc(l->numsurfpt * sizeof(*l->surfpt));
+	l->numsurfpt = (l->texsize[0] + 1) * (l->texsize[1] + 1);
+	l->surfpt = malloc(l->numsurfpt * sizeof(vec3_t));
 	if (!l->surfpt)
 		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
 }
@@ -836,67 +830,14 @@ void CreateDirectLights (void)
 	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
-
 /**
- * @param[in] lightscale is the normalizer for multisampling
+ * @brief A follow-up to GatherSampleLight, simply trace along the sun normal, adding sunlight
  */
-static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t center,
-	float *sample, float *direction, float lightscale,
+static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale,
 	const float sun_intensity, const vec3_t sun_color, const vec3_t sun_dir)
 {
-	directlight_t *l;
-	vec3_t dir, delta;
-	float dot, dot2, dist;
-	float light = 0.0f;
-
-	/* move into the level using the normal and surface center */
-	VectorSubtract(pos, center, dir);
-	VectorNormalize(dir);
-
-	VectorMA(pos, 0.5, dir, pos);
-	VectorMA(pos, 0.5, normal, pos);
-
-	for (l = directlights[config.compile_for_day]; l; l = l->next) {
-		VectorSubtract(l->origin, pos, delta);
-		dist = VectorNormalize(delta);
-		dot = DotProduct(delta, normal);
-		if (dot <= 0.001)
-			continue;	/* behind sample surface */
-
-		switch (l->type) {
-		case emit_point:
-			/* linear falloff */
-			light = (l->intensity - dist) * dot;
-			break;
-
-		case emit_surface:
-			dot2 = -DotProduct(delta, l->normal);
-			if (dot2 <= 0.001)
-				continue;	/* behind light surface */
-			light = (l->intensity / (dist * dist)) * dot * dot2;
-			break;
-
-		case emit_spotlight:
-			/* linear falloff */
-			dot2 = -DotProduct(delta, l->normal);
-			if (dot2 <= l->stopdot)
-				continue;	/* outside light cone */
-			light = (l->intensity - dist) * dot;
-			break;
-		default:
-			Sys_Error("Bad l->type");
-		}
-
-		if (light <= 0)
-			continue;
-
-		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
-			continue;	/* occluded */
-
-		/* add some light to it */
-		VectorMA(sample, light * lightscale, l->color, sample);
-		VectorMA(direction, light * lightscale, delta, direction);
-	}
+	vec3_t delta, light;
+	float dot;
 
 	/* add sun light */
 	if (!sun_intensity)
@@ -914,8 +855,109 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, const vec3_t cen
 		return; /* occluded */
 
 	/* add some light to it */
-	VectorMA(sample, sun_intensity * dot * lightscale, sun_color, sample);
-	VectorMA(direction, sun_intensity * dot * lightscale, delta, direction);
+	VectorScale(sun_color, sun_intensity * dot * scale, light);
+	VectorAdd(sample, light, sample);
+
+	/* and accumulate the direction */
+	VectorMA(direction, VectorLength(light) * scale, sun_dir, direction);
+}
+
+
+/**
+ * @param[in] lightscale is the normalizer for multisampling
+ */
+static void GatherSampleLight (vec3_t pos, const vec3_t normal,
+	float *sample, float *direction, float lightscale,
+	const float sun_intensity, const vec3_t sun_color, const vec3_t sun_dir)
+{
+	directlight_t *l;
+	vec3_t delta;
+	float dot, dot2;
+	float dist, halfDist;
+	float light, dir;
+
+	for (l = directlights[config.compile_for_day]; l; l = l->next) {
+		light = dir = 0.0;
+
+		VectorSubtract(l->origin, pos, delta);
+		dist = VectorNormalize(delta);
+		halfDist = dist * 0.5;
+
+		dot = DotProduct(delta, normal);
+		if (dot <= 0.001)
+			continue;	/* behind sample surface */
+
+		switch (l->type) {
+		case emit_point:
+			/* linear falloff */
+			light = (l->intensity - dist) * dot;
+			dir = (l->intensity - halfDist) * dot;
+			break;
+
+		case emit_surface:
+			/* exponential falloff */
+			dot2 = -DotProduct(delta, l->normal);
+			if (dot2 <= 0.001)
+				continue;	/* behind light surface */
+			light = (l->intensity / (dist * dist)) * dot * dot2;
+			dir = (l->intensity / (halfDist * halfDist)) * dot * dot2;
+			break;
+
+		case emit_spotlight:
+			/* linear falloff with cone */
+			dot2 = -DotProduct(delta, l->normal);
+			if (dot2 <= l->stopdot)
+				continue;	/* outside light cone */
+			light = (l->intensity - dist) * dot;
+			dir = (l->intensity - halfDist) * dot;
+			break;
+		default:
+			Sys_Error("Bad l->type");
+		}
+
+		if (light < 0.0)  /* clamp light */
+			light = 0.0;
+
+		if (dir < 0.0)  /* and direction */
+			dir = 0.0;
+
+		if (light == 0.0 && dir == 0.0)
+			continue;
+
+		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
+			continue;	/* occluded */
+
+		light *= lightscale;
+		dir *= lightscale;
+
+		/* add some light to it */
+		VectorMA(sample, light, l->color, sample);
+
+		VectorMA(direction, dir, delta, direction);
+		VectorMA(direction, 1.0 / dir, normal, direction);
+	}
+
+	GatherSampleSunlight(pos, normal, sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
+}
+
+#define SAMPLE_NUDGE 0.25
+
+/**
+ * @brief Move the incoming sample position towards the surface center and along the
+ * surface normal to reduce false-positive traces.
+ */
+static inline void NudgeSamplePosition (const vec3_t in, const vec3_t normal, const vec3_t center, vec3_t out)
+{
+	vec3_t dir;
+
+	VectorCopy(in, out);
+
+	/* move into the level using the normal and surface center */
+	VectorSubtract(out, center, dir);
+	VectorNormalize(dir);
+
+	VectorMA(out, SAMPLE_NUDGE, dir, out);
+	VectorMA(out, SAMPLE_NUDGE, normal, out);
 }
 
 /**
@@ -932,6 +974,9 @@ static inline void AddSampleToPatch (const vec3_t pos, const vec3_t color, const
 	patch_t *patch;
 	vec3_t mins, maxs;
 	int i;
+
+	if (config.numbounce == 0)
+		return;
 
 	if (color[0] + color[1] + color[2] < 3)
 		return;
@@ -1004,6 +1049,8 @@ void BuildVertexNormals (void)
 	BuildFaceExtents();
 
 	for (i = 0; i < curTile->numvertexes; i++) {
+		VectorClear(curTile->normals[i].normal);
+
 		FacesWithVert(i, vert_faces, &num_vert_faces);
 		if (!num_vert_faces)  /* rely on plane normal only */
 			continue;
@@ -1087,11 +1134,11 @@ void BuildFacelights (unsigned int facenum)
 	dBspTexinfo_t *tex;
 	float *center;
 	float *sdir, *tdir;
-	vec3_t normal, binormal, avg_direction;
+	vec3_t normal, binormal;
 	vec4_t tangent;
 	lightinfo_t l[MAX_SAMPLES];
 	float lightscale;
-	int i, j, numsamples, numdirsamples;
+	int i, j, numsamples;
 	patch_t *patch;
 	facelight_t *fl;
 	vec3_t sun_color, sun_dir;
@@ -1133,12 +1180,9 @@ void BuildFacelights (unsigned int facenum)
 	else
 		numsamples = 1;
 
-	VectorClear(avg_direction);
-	numdirsamples = 0;
-
 	memset(l, 0, sizeof(l));
 
-	lightscale = 1.0 / numsamples;
+	lightscale = 1.0 / numsamples; /* each sample contributes this much */
 
 	for (i = 0; i < numsamples; i++) {
 		l[i].surfnum = facenum;
@@ -1147,7 +1191,7 @@ void BuildFacelights (unsigned int facenum)
 		VectorCopy(curTile->planes[f->planenum].normal, l[i].facenormal);
 		l[i].facedist = curTile->planes[f->planenum].dist;
 		if (f->side) {
-			VectorSubtract(vec3_origin, l[i].facenormal, l[i].facenormal);
+			VectorNegate(l[i].facenormal, l[i].facenormal);
 			l[i].facedist = -l[i].facedist;
 		}
 
@@ -1155,7 +1199,6 @@ void BuildFacelights (unsigned int facenum)
 		VectorCopy(face_offset[facenum], l[i].modelorg);
 
 		CalcFaceExtents(&l[i]);
-		/* This function mallocs memory to l[i].surfpt */
 		CalcFaceVectors(&l[i]);
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
@@ -1174,21 +1217,27 @@ void BuildFacelights (unsigned int facenum)
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
 		float *direction = fl->directions + i * 3;		/* accumulate direction here */
-		vec3_t dir;
 
 		for (j = 0; j < numsamples; j++) {
+			vec3_t pos;
+
 			/* calculate interpolated normal for phong shading */
 			if (curTile->texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
 				SampleNormal(&l[0], l[j].surfpt[i], normal);
 			else /* or just use the plane normal */
 				VectorCopy(l[0].facenormal, normal);
 
-			GatherSampleLight(l[j].surfpt[i], normal, center,
-				sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
+			NudgeSamplePosition(l[j].surfpt[i], normal, center, pos);
+
+			GatherSampleLight(pos, normal, sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
 		}
 		if (!VectorCompare(direction, vec3_origin)) {
-			/* finalize the lighting direction for the sample and
-			 * transform it into tangent space */
+			vec3_t dir;
+
+			/* normalize it */
+			VectorNormalize(direction);
+
+			/* finalize the lighting direction for the sample */
 			TangentVectors(normal, sdir, tdir, tangent, binormal);
 
 			dir[0] = DotProduct(direction, tangent);
@@ -1196,35 +1245,16 @@ void BuildFacelights (unsigned int facenum)
 			dir[2] = DotProduct(direction, normal);
 
 			VectorCopy(dir, direction);
-
-			/* normalize it, falling back on the last good direction when underlit */
-			VectorNormalize(direction);
-
-			if (direction[2] < 0.33) {  /* clamp it */
-				direction[2] = 0.33;
-				VectorNormalize(direction);
-			}
-
-			VectorAdd(avg_direction, direction, avg_direction);
-			numdirsamples++;
 		}
 		/* contribute the sample to one or more patches for radiosity */
 /*		if (config.numbounce > 0)*/
 			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
 	}
 
-	/* determine the average light direction for the face */
-	if (!numdirsamples)
-		VectorSet(avg_direction, 0.0, 0.0, 1.0);
-	else
-		VectorScale(avg_direction, 1.0 / numdirsamples, avg_direction);
-
-	VectorNormalize(avg_direction);
-
 	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
 		float *direction = fl->directions + i * 3;
 		if (VectorCompare(direction, vec3_origin))
-			VectorCopy(avg_direction, direction);
+			VectorSet(direction, 0.0, 0.0, 1.0);
 	}
 
 	/* free the sample positions for the face */
@@ -1329,6 +1359,7 @@ void FinalLightFace (unsigned int facenum)
 
 	for (j = 0; j < fl->numsamples; j++) {
 		vec3_t lb;
+		float clamp;
 
 		/* start with raw sample data */
 		VectorCopy((fl->samples + j * 3), lb);
@@ -1352,24 +1383,28 @@ void FinalLightFace (unsigned int facenum)
 		/* apply global scale factor */
 		VectorScale(lb, config.lightscale, lb);
 
-		/* clamp without hue change */
-		for (k = 0; k < 3; k++)
-			if (lb[k] < 1)
-				lb[k] = 1;
-		max = lb[0];
-		if (lb[1] > max)
-			max = lb[1];
-		if (lb[2] > max)
-			max = lb[2];
+		max = -999;
+
+		/* find the brightest component */
+		for (k = 0; k < 3; k++) {
+			/* enforcing some minumum */
+			if (lb[k] < 1.0)
+				lb[k] = 1.0;
+
+			if (lb[k] > max)
+				max = lb[k];
+		}
+
 		newmax = max;
-		if (newmax < 0)
-			newmax = 0;		/* roundoff problems */
+
 		if (newmax > config.maxlight)
 			newmax = config.maxlight;
 
+		clamp = newmax / max;
+
 		/* write the lightmap sample data */
 		for (k = 0; k < 3; k++) {
-			*dest++ = lb[k] * newmax / max;
+			*dest++ = (byte)(lb[k] * clamp);
 		}
 
 		/* also write the directional data */

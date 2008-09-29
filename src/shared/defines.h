@@ -434,6 +434,8 @@ From tools/ufo2map/map.c
 /* ufo2map/bsp.h, ufo2map/textures.c */
 #define	MAX_MAP_TEXTURES	1024
 
+#define MAX_MAP_LIGHTMAP	(512 * 512)
+
 #define MAP_SIZE_OFFSET 100
 
 #endif /* SHARED_DEFINES_H */

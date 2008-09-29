@@ -84,6 +84,7 @@ cvar_t *r_geoscape_overlay;
 cvar_t *r_bumpmap;
 cvar_t *r_specular;
 cvar_t *r_shownormals;
+cvar_t *r_parallax;
 
 /**
  * @brief Prints some OpenGL strings
@@ -424,6 +425,7 @@ static void R_RegisterSystemVars (void)
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE, "Activate bump mapping");
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
+	r_parallax = Cvar_Get("r_parallax", "1.0", CVAR_ARCHIVE, "Controls parallax parameters");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

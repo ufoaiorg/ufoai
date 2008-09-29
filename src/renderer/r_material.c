@@ -657,17 +657,24 @@ void R_LoadMaterials (const char *map)
 		m = &image->material;
 		if (!strcmp(c, "bump")) {
 			m->bump = atof(COM_Parse(&buffer));
-			if (m->bump < 0.5) {
+			if (m->bump < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid bump value for %s\n", image->name);
-				m->bump = 0.5;
+				m->bump = DEFAULT_BUMP;
 			}
 		}
 
 		if (!strcmp(c, "specular")) {
 			m->specular = atof(COM_Parse(&buffer));
-			if (m->specular < 0.5) {
+			if (m->specular < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
-				m->specular = 0.5;
+				m->specular = DEFAULT_SPECULAR;;
+			}
+		}
+		if (!strcmp(c, "parallax")) {
+			m->parallax = atof(COM_Parse(&buffer));
+			if (m->parallax < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid parallax value for %s\n", image->name);
+				m->parallax = DEFAULT_PARALLAX;
 			}
 		}
 

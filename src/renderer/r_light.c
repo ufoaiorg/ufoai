@@ -48,20 +48,6 @@ void R_AddLight (vec3_t origin, float radius, const vec3_t color)
 	VectorCopy(color, r_lightsArray[i].color);
 }
 
-static void R_AddBumpmapLight (void)
-{
-	const vec3_t color = {0.0, 0.0, 0.0};
-	vec3_t org;
-
-	if (!r_bumpmap->value)
-		return;
-
-	VectorCopy(refdef.vieworg, org);
-	org[2] -= 16;
-
-	R_AddLight(org, r_bumpmap->value, color);
-}
-
 void R_EnableLights (void)
 {
 	light_t *l;
@@ -71,8 +57,6 @@ void R_EnableLights (void)
 
 	position[3] = diffuse[3] = 1.0;
 
-	R_AddBumpmapLight();
-
 	for (i = 0, l = r_lightsArray; i < r_numLights; i++, l++) {
 		VectorCopy(l->origin, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
@@ -81,6 +65,6 @@ void R_EnableLights (void)
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->radius * LIGHT_RADIUS_FACTOR);
 	}
 
-	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+	/* disable first light to reset state */
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
 }

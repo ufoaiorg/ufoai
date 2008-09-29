@@ -34,10 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LIGHTMAP_BLOCK_BYTES	4 /* bytes RGBA */
 #define DELUXEMAP_BLOCK_BYTES	4 /* bytes RGBA */
 
-#define LIGHTMAP_WIDTH			512
-#define LIGHTMAP_HEIGHT			512
 #define LIGHTMAP_BYTES			3 /* RGB */
-
 
 void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
@@ -51,7 +48,7 @@ typedef struct lightmap_sample_s {
 
 /* in the bsp, they are just rgb, and we work with floats */
 #define LIGHTMAP_FBUFFER_SIZE \
-	(LIGHTMAP_WIDTH * LIGHTMAP_HEIGHT * LIGHTMAP_BYTES)
+	(MAX_MAP_LIGHTMAP * LIGHTMAP_BYTES)
 
 typedef struct lightmaps_s {
 	GLuint lightmap_texnum;

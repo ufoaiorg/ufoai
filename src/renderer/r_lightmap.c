@@ -127,10 +127,10 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 
 			sout += 4;
 
-			dout[0] = 128;
-			dout[1] = 128;
-			dout[2] = 128;
-			dout[3] = 0;
+			dout[0] = 127;
+			dout[1] = 127;
+			dout[2] = 127;
+			dout[3] = 255;
 
 			dout += 4;
 		}
@@ -172,7 +172,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 		d[0] = surf->samples[j++];
 		d[1] = surf->samples[j++];
 		d[2] = surf->samples[j++];
-		d[3] = 0;
+		d[3] = 255;  /* pad alpha */
 	}
 
 	/* put into texture format */
@@ -231,8 +231,10 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 
 	/* soften it if it's sufficiently large */
 	if (r_soften->integer && size > 128)
-		for (i = 0; i < 4; i++)
+		for (i = 0; i < 4; i++) {
 			R_SoftenTexture(lightmap, smax, tmax, LIGHTMAP_BLOCK_BYTES);
+			R_SoftenTexture(r_lightmaps.direction_buffer, smax, tmax, LIGHTMAP_BLOCK_BYTES);
+		}
 
 	/* the final lightmap is uploaded to the card via the strided lightmap
 	 * block, and also cached on the surface for fast point lighting lookups */

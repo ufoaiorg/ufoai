@@ -62,6 +62,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			vec3 dir = normalize(delta);
 			float d = dot(normal, dir);
 
+			// if the light is not facing us, skip it
 			if(d > 0.0){
 				float atten = gl_LightSource[i].constantAttenuation / dist - 1.0;
 				light += gl_LightSource[i].diffuse.rgb * d * atten * atten;

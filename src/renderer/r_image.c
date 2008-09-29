@@ -60,7 +60,9 @@ void R_ImageClearMaterials (void)
 		}
 
 		memset(m, 0, sizeof(*m));
-		m->bump = m->specular = 1.0;
+		m->bump = DEFAULT_BUMP;
+		m->parallax = DEFAULT_PARALLAX;
+		m->specular = DEFAULT_SPECULAR;
 	}
 }
 
