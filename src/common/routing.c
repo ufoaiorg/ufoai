@@ -167,7 +167,7 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 
 	for (i = 0; i < 3; i++) {
 		/* Lower positive boundary */
-		while (end[i]>start[i]) {
+		while (end[i] > start[i]) {
 			/* Adjust ceiling */
 			VectorCopy(start, test);
 			test[i] = end[i] - 1; /* test is now one floor lower than end */
@@ -185,7 +185,7 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 		}
 
 		/* Raise negative boundary */
-		while (end[i]>start[i]) {
+		while (end[i] > start[i]) {
 			/* Adjust ceiling */
 			VectorCopy(end, test);
 			test[i] = start[i] + 1; /* test is now one floor lower than end */
@@ -501,7 +501,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	}
 
 	/* if our destination cell is out of bounds, bail. */
-	if ((ax < 0) || (ax > PATHFINDING_WIDTH - actor_size) || ay < 0 || (y > PATHFINDING_WIDTH - actor_size)) {
+	if (ax < 0 || ax > PATHFINDING_WIDTH - actor_size || ay < 0 || y > PATHFINDING_WIDTH - actor_size) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Zero the debugging data */
@@ -530,7 +530,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	 */
 	if (z < PATHFINDING_HEIGHT - 1 && h < (z + 1) * CELL_HEIGHT
 	 && RT_FLOOR(map, actor_size, ax, ay, z + 1) >= 0
-	 && h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT ) {
+	 && h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT) {
 		dz++;
 		if (debugTrace)
 			Com_Printf("Adjusting dz for stepup. z = %i, dz = %i\n", z, dz);
