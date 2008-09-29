@@ -754,73 +754,6 @@ GAME RELATED TRACING
 */
 
 
-/**
- * @brief Calculate the map size via model data and store grid size
- * in map_min and map_max. This is done with every new map load
- * @sa map_min
- * @sa map_max
- * @sa CMod_LoadRouting
- */
-static void CMod_GetMapSize (void)
-{
-	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
-	pos3_t start, end, test;
-	vec3_t mins, maxs, normal, origin;
-	int i;
-	trace_t trace;
-
-	/* Initialize start, end, and normal */
-	VectorSet(start, 0, 0, 0);
-	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
-	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-	VectorCopy(vec3_origin, origin);
-
-	for (i = 0; i < 3; i++) {
-		/* Lower positive boundary */
-		while (end[i]>start[i]) {
-			/* Adjust ceiling */
-			VectorCopy(start, test);
-			test[i] = end[i] - 1; /* test is now one floor lower than end */
-			/* Prep boundary box */
-			PosToVec(test, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(end, maxs);
-			VectorAdd(maxs, normal, maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
-			trace = TR_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
-			if (trace.fraction < 1.0)
-				break;
-			/* There is nothing, lower the boundary. */
-			end[i]--;
-		}
-
-		/* Raise negative boundary */
-		while (end[i]>start[i]) {
-			/* Adjust ceiling */
-			VectorCopy(end, test);
-			test[i] = start[i] + 1; /* test is now one floor lower than end */
-			/* Prep boundary box */
-			PosToVec(start, mins);
-			VectorSubtract(mins, normal, mins);
-			PosToVec(test, maxs);
-			VectorAdd(maxs, normal, maxs);
-			/* Test for stuff in a small box, if there is something then exit while */
-			trace = TR_CompleteBoxTrace(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
-			if (trace.fraction < 1.0)
-				break;
-			/* There is nothing, raise the boundary. */
-			start[i]++;
-		}
-	}
-
-	/* convert to vectors */
-	PosToVec(start, map_min);
-	PosToVec(end, map_max);
-
-	/* tiny offset */
-	VectorAdd(map_min, offset, map_min);
-	VectorSubtract(map_max, offset, map_max);
-}
 
 
 /**
@@ -887,6 +820,8 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	curTile->wpMaxs[1] += sY;
 	curTile->wpMaxs[2] += sZ;
 
+	Com_Printf("Shifted wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
+
 	/* Things that need to be done:
 	 * The floor, ceiling, and route data can be copied over from the map.
 	 * All data must be regenerated for cells with overlapping content or where new
@@ -905,6 +840,7 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	assert(minZ <= maxZ);
 
 	Com_Printf("Tile bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX, minY, minZ, maxX, maxY, maxZ);
+	Com_Printf("Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX -sX, minY - sY, minZ - sZ, maxX -sX, maxY -sY, maxZ - sZ);
 
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
 		for (z = minZ; z < maxZ; z++)
@@ -935,7 +871,7 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	}
 
 	/* calculate new border after merge */
-	CMod_GetMapSize();
+	RT_GetMapSize(map_min, map_max);
 
 	end = time(NULL);
 	Com_Printf("Loaded routing for tile %s in %5.0fs\n", name, end - start);
@@ -1588,9 +1524,9 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		 /* The floor is in the target cell */
 		 && RT_FLOOR(map, actor_size, nx, ny, nz + 1) >= 0
 		 /* We can make the step into the cell */
-		 && stepup_height + RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1)) {
+		 && stepup_height + RT_FLOOR(map, actor_size, x, y, z) >= CELL_HEIGHT + RT_FLOOR(map, actor_size, nx, ny, nz + 1)) {
 			/* Use the adjusted calculation. */
-			height_change = UNIT_HEIGHT / QUANT + RT_FLOOR(map, actor_size, nx, ny, nz + 1) - RT_FLOOR(map, actor_size, x, y, z);
+			height_change = CELL_HEIGHT + RT_FLOOR(map, actor_size, nx, ny, nz + 1) - RT_FLOOR(map, actor_size, x, y, z);
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
 		} else {
 			/* Use the default calculation. */
@@ -1693,7 +1629,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	if (dir < CORE_DIRECTIONS && abs(height_change) <= stepup_height) {
 		const int new_floor = RT_FLOOR(map, actor_size, x, y, z) + height_change;
 		/** @note offset by 15 if negative to force nz down */
-		const int delta = new_floor < 0 ? (new_floor - 15) / 16 : new_floor / 16;
+		const int delta = new_floor < 0 ? (new_floor - (CELL_HEIGHT - 1)) / CELL_HEIGHT : new_floor / CELL_HEIGHT;
 		/* Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Adjusting hight. floor:%i new_floor:%i delta:%i\n", RT_FLOOR(map, actor_size, x, y, z), new_floor, delta); */
 		nz += delta;
 	}
@@ -1976,13 +1912,13 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
 	if (flier)
 		return z;
 
-	/** @todo Replace magic numbers */
-	/* Easy math- get the floor, integer divide by 16, add to z.
+	/* Easy math- get the floor, integer divide by CELL_HEIGHT, add to z.
 	 * If z < 0, we are going down.
-	 * If z >= 16, we are going up.
-	 * If 0 <= z <= 16, then z / 16 = 0, no change. */
+	 * If z >= CELL_HEIGHT, we are going up.
+	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
 	base = RT_FLOOR(map, actor_size, pos[0], pos[1], z);
-	diff = base < 0 ? (base - 15) / 16 : base / 16;
+	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
+	diff = base < 0 ? (base - (CELL_HEIGHT -1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
 	assert(z >= 0 && z < PATHFINDING_HEIGHT);
 	return z;
@@ -2036,7 +1972,7 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 		for (y = max(min[1] - actor_size + 1, 0); y < maxY; y++) {
 			for (x = max(min[0] - actor_size + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
-				for (z = PATHFINDING_HEIGHT - 1; z >= 0; z--) {
+				for (z = max[2]; z >= 0; z--) {
 					const int new_z = RT_CheckCell(map, actor_size, x, y, z);
 					assert(new_z <= z);
 					z = new_z;
@@ -2060,7 +1996,7 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir ++) {
 					/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 					 * RT_UpdateConnection expects it and breaks otherwise. */
-					for (z = 0; z < PATHFINDING_HEIGHT; z++) {
+					for (z = 0; z <= max[2]; z++) {
 						const int new_z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
 						assert(new_z >= z);
 						z = new_z;

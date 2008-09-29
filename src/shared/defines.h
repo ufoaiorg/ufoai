@@ -348,8 +348,10 @@ COLLISION DETECTION
 #define GRID_WIDTH (MAX_WORLD_WIDTH / UNIT_SIZE)
 /** @brief absolute max */
 #define PATHFINDING_WIDTH (GRID_WIDTH * 2)
-/** @brief 15 max */
+/** @brief 15 max, adjusting above 8 will require a rewrite to the DV code */
 #define PATHFINDING_HEIGHT 8
+/** @brief A cell's height in QUANT sized units */
+#define CELL_HEIGHT (UNIT_HEIGHT / QUANT)
 
 /* Maximum falling distance in step units (model units / QUANT) */
 /* common/routing.c */

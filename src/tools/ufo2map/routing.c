@@ -148,6 +148,8 @@ void DoRouting (void)
 {
 	int i;
 	byte *data;
+	vec3_t mins, maxs;
+	pos3_t pos;
 
 	/* Turn on trace debugging if requested. */
 	if (config.generateDebugTrace)
@@ -166,26 +168,42 @@ void DoRouting (void)
 	memset(Nmap, 0, sizeof(Nmap));
 
 	/* get world bounds for optimizing */
-	VecToPos(worldMins, wpMins);
-	VectorSubtract(wpMins, v_epsilon, wpMins);
-
-	VecToPos(worldMaxs, wpMaxs);
-	VectorAdd(wpMaxs, v_epsilon, wpMaxs);
-
-	for (i = 0; i < 3; i++) {
-		if (wpMins[i] < 0)
-			wpMins[i] = 0;
-		if (wpMaxs[i] > PATHFINDING_WIDTH)
-			wpMaxs[i] = PATHFINDING_WIDTH;
-	}
-	if (wpMaxs[2] > PATHFINDING_HEIGHT)
-		wpMaxs[2] = PATHFINDING_HEIGHT;
+	RT_GetMapSize(mins, maxs);
+	/* Com_Printf("Vectors: (%f, %f, %f) to (%f, %f, %f)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]); */
+	VecToPos(mins, wpMins);
+	VecToPos(maxs, wpMaxs);
 
 	/* scan area heights */
 	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
 	/* scan connections */
 	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * CORE_DIRECTIONS * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "CONNCHECK");
+
+	/* Try to shrink the world bounds along the x and y coordinates */
+	for (i = 0; i < 2; i++) {
+		/* Increase the mins */
+		while (wpMaxs[i] > wpMins[i]) {
+			VectorSet(pos, wpMins[0], wpMins[1], wpMaxs[2]);
+			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
+				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
+					break;
+			}
+			if (pos[i] <= wpMaxs[i])
+				break;
+			wpMins[i ^ 1]++;
+		}
+		/* Increase the mins */
+		while (wpMaxs[i] > wpMins[i]) {
+			VectorCopy(wpMaxs, pos);
+			for (pos[i] = wpMins[i]; pos[i] <= wpMaxs[i]; pos[i]++) {
+				if (RT_FLOOR(Nmap, 1, pos[0], pos[1], wpMaxs[2]) + wpMaxs[2] * CELL_HEIGHT != -1)
+					break;
+			}
+			if (pos[i] <= wpMaxs[i])
+				break;
+			wpMaxs[i ^ 1]--;
+		}
+	}
 
 	/* Output the floor trace file if set */
 	if (config.generateTraceFile) {
@@ -200,6 +218,7 @@ void DoRouting (void)
 		fprintf(handle, ",");
 		for (x = wpMins[0]; x <= wpMaxs[0]; x++)
 			fprintf(handle, "x:%i,", x);
+		fprintf(handle, "\n");
 		for (z = wpMaxs[2]; z >= wpMins[2]; z--) {
 			for (y = wpMaxs[1]; y >= wpMins[1]; y--) {
 				fprintf(handle, "z:%i  y:%i,", z ,y);

@@ -144,6 +144,77 @@ void Grid_DumpWholeMap (routing_t *map)
 }
 
 
+/**
+ * @brief Calculate the map size via model data and store grid size
+ * in map_min and map_max. This is done with every new map load
+ * @param[out] map_min The lower extents of the current map.
+ * @param[out] map_max The upper extents of the current map.
+ * @sa CMod_LoadRouting
+ * @sa DoRouting
+ */
+void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
+{
+	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
+	pos3_t start, end, test;
+	vec3_t mins, maxs, origin;
+	int i;
+	trace_t trace;
+
+	/* Initialize start, end, and normal */
+	VectorSet(start, 0, 0, 0);
+	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
+	VectorCopy(vec3_origin, origin);
+
+	for (i = 0; i < 3; i++) {
+		/* Lower positive boundary */
+		while (end[i]>start[i]) {
+			/* Adjust ceiling */
+			VectorCopy(start, test);
+			test[i] = end[i] - 1; /* test is now one floor lower than end */
+			/* Prep boundary box */
+			PosToVec(test, mins);
+			VectorSubtract(mins, normal, mins);
+			PosToVec(end, maxs);
+			VectorAdd(maxs, normal, maxs);
+			/* Test for stuff in a small box, if there is something then exit while */
+			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
+			if (trace.fraction < 1.0)
+				break;
+			/* There is nothing, lower the boundary. */
+			end[i]--;
+		}
+
+		/* Raise negative boundary */
+		while (end[i]>start[i]) {
+			/* Adjust ceiling */
+			VectorCopy(end, test);
+			test[i] = start[i] + 1; /* test is now one floor lower than end */
+			/* Prep boundary box */
+			PosToVec(start, mins);
+			VectorSubtract(mins, normal, mins);
+			PosToVec(test, maxs);
+			VectorAdd(maxs, normal, maxs);
+			/* Test for stuff in a small box, if there is something then exit while */
+			trace = RT_COMPLETEBOXTRACE(origin, origin, mins, maxs, 0x1FF, MASK_ALL, 0);
+			if (trace.fraction < 1.0)
+				break;
+			/* There is nothing, raise the boundary. */
+			start[i]++;
+		}
+	}
+
+	/* Com_Printf("Extents: (%i, %i, %i) to (%i, %i, %i)\n", start[0], start[1], start[2], end[0], end[1], end[2]); */
+
+	/* convert to vectors */
+	PosToVec(start, map_min);
+	PosToVec(end, map_max);
+
+	/* Stretch to the exterior edges of our extents */
+	VectorSubtract(map_min, normal, map_min);
+	VectorAdd(map_max, normal, map_max);
+}
+
+
 /*
 ===============================================================================
 NEW MAP TRACING FUNCTIONS
@@ -229,7 +300,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
-				RT_FLOOR(map, actor_size, x, y, i) = 16; /* There is no floor in this cell. */
+				RT_FLOOR(map, actor_size, x, y, i) = -1 - i * CELL_HEIGHT; /* There is no floor in this cell, place it at -1 below the model. */
 				RT_CEILING(map, actor_size, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 			}
 			/* return 0 to indicate we just scanned the model bottom. */
@@ -274,7 +345,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 				/* Mark all cells to the model base as filled. */
 				for (i = z; i >= 0 ; i--) {
 					/* no floor in this cell, it is bottomless! */
-					RT_FLOOR(map, actor_size, x, y, i) = 16; /* There is no floor in this cell. */
+					RT_FLOOR(map, actor_size, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
 					RT_CEILING(map, actor_size, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 				}
 				/* return 0 to indicate we just scanned the model bottom. */
@@ -346,7 +417,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
-		RT_FLOOR(map, actor_size, x, y, i) = 16; /* There is no floor in this cell. */
+		RT_FLOOR(map, actor_size, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
 		RT_CEILING(map, actor_size, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
 	}
 
@@ -367,7 +438,7 @@ static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int ac
 	vec3_t bmin, bmax;
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
-	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT);
+	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT - DIST_EPSILON);
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
 	/* perform the trace, then return true if the trace was obstructed. */
@@ -417,7 +488,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actor_size); */
 
 	/* test if the unit is blocked by a loaded model */
-	if (RT_FLOOR(map, actor_size, x, y, z) >= UNIT_HEIGHT / QUANT || RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING){
+	if (RT_FLOOR(map, actor_size, x, y, z) >= CELL_HEIGHT || RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING){
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Zero the debugging data */
@@ -446,10 +517,10 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	RT_CONN_TEST(map, actor_size, ax, ay, z, dir);
 
 	/* get the originating floor's absolute height */
-	h = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * (UNIT_HEIGHT / QUANT);
+	h = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * CELL_HEIGHT;
 
 	/* get the originating ceiling's absolute height */
-	c = RT_CEILING(map, actor_size, x, y, z) + z * (UNIT_HEIGHT / QUANT);
+	c = RT_CEILING(map, actor_size, x, y, z) + z * CELL_HEIGHT;
 
 	/* Check if we can step up into a higher cell.  Criteria are:
 	 * 1. The floor in the current cell is high enough to stepup into the next cell.
@@ -457,19 +528,19 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	 * 3. The floor in the cell above the destination cell is in that cell.
 	 * 4. We are not at the highest z.
 	 */
-	if (z < PATHFINDING_HEIGHT - 1 && h < (z + 1) * (UNIT_HEIGHT / QUANT)
+	if (z < PATHFINDING_HEIGHT - 1 && h < (z + 1) * CELL_HEIGHT
 	 && RT_FLOOR(map, actor_size, ax, ay, z + 1) >= 0
-	 && h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * (UNIT_HEIGHT / QUANT) ) {
+	 && h + PATHFINDING_MIN_STEPUP >= RT_FLOOR(map, actor_size, ax, ay, z + 1) + (z + 1) * CELL_HEIGHT ) {
 		dz++;
 		if (debugTrace)
 			Com_Printf("Adjusting dz for stepup. z = %i, dz = %i\n", z, dz);
 	}
 
 	/* get the destination floor's absolute height */
-	ah = max(0, RT_FLOOR(map, actor_size, ax, ay, dz)) + dz * (UNIT_HEIGHT / QUANT);
+	ah = max(0, RT_FLOOR(map, actor_size, ax, ay, dz)) + dz * CELL_HEIGHT;
 
 	/* get the destination ceiling's absolute height */
-	ac = RT_CEILING(map, actor_size, ax, ay, dz) + dz * (UNIT_HEIGHT / QUANT);
+	ac = RT_CEILING(map, actor_size, ax, ay, dz) + dz * CELL_HEIGHT;
 
 	/* Set maxh to the larger of h and ah. */
 	maxh = max(h, ah);
@@ -521,7 +592,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		return z;
 	}
 
-	/* Point to where we need be. */
+	/* Point this debugging pointer to where we need be. */
 	VectorCopy(end, brushesHit.floor);
 	VectorCopy(brushesHit.floor, brushesHit.ceiling);
 
@@ -637,7 +708,6 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		if (obstructed) {
 			/* Record the debugging data in case it is used. */
 			VectorCopy(tr_obstruction.endpos, brushesHit.ceiling);
-
 			if (debugTrace)
 				Com_Printf("found obstruction.\n");
 			/* if hi and lo differ by one, then we are done.*/
@@ -675,7 +745,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 
 	/* floor_p and ceil_p are absolute step heights.  Find the actual cell z coordinates for these heights.
 	 * Use h instead of floor_p, stepping into the new cell my move us up one z unit
-	 * Also reduce ceil_p by one because ceilings divisible by 16 are only in the cells below.
+	 * Also reduce ceil_p by one because ceilings divisible by CELL_HEIGHT are only in the cells below.
 	 */
 	fz = h * QUANT / UNIT_HEIGHT;
 	cz = (ceil_p - 1) * QUANT / UNIT_HEIGHT;
@@ -703,7 +773,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	for (i = fz; i <= cz; i++) {
 		/* Offset from the floor or the bottom of the current cell, whichever is higher. */
 		RT_CONN_TEST(map, actor_size, x, y, i, dir);
-		RT_CONN(map, actor_size, x, y, i, dir) = ceil_p - max(floor_p, i * UNIT_HEIGHT / QUANT);
+		RT_CONN(map, actor_size, x, y, i, dir) = ceil_p - max(floor_p, i * CELL_HEIGHT);
 		if (debugTrace)
 			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, actor_size, dir, RT_CONN(map, actor_size, x, y, i, dir));
 	}
