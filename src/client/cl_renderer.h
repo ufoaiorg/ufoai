@@ -66,6 +66,13 @@ typedef struct {
 	float radius;
 } light_t;
 
+/** @brief sustains are light flashes which slowly decay */
+typedef struct sustain_s {
+	light_t light;
+	float time;
+	float sustain;
+} sustain_t;
+
 typedef struct {
 	struct model_s *model;
 	const char *name;				/**< model path */

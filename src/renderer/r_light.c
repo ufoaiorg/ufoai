@@ -30,8 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int r_numLights;
 static light_t r_lightsArray[MAX_GL_LIGHTS];
+static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
-void R_AddLight (vec3_t origin, float radius, const vec3_t color)
+void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
 
@@ -48,12 +49,68 @@ void R_AddLight (vec3_t origin, float radius, const vec3_t color)
 	VectorCopy(color, r_lightsArray[i].color);
 }
 
+/**
+ * @sa R_AddSustainedLights
+ */
+void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, float sustain)
+{
+	sustain_t *s;
+	int i;
+
+	if (!r_lighting->integer)
+		return;
+
+	s = r_sustainArray;
+
+	for (i = 0; i < MAX_GL_LIGHTS; i++, s++)
+		if (!s->sustain)
+			break;
+
+	if (i == MAX_GL_LIGHTS)
+		return;
+
+	VectorCopy(org, s->light.origin);
+	s->light.radius = radius;
+	VectorCopy(color, s->light.color);
+
+	s->time = refdef.time;
+	s->sustain = refdef.time + sustain;
+}
+
+/**
+ * @sa R_EnableLights
+ * @sa R_AddSustainedLight
+ */
+static void R_AddSustainedLights (void)
+{
+	sustain_t *s;
+	int i;
+
+	/* sustains must be recalculated every frame */
+	for (i = 0, s = r_sustainArray; i < MAX_GL_LIGHTS; i++, s++) {
+		float intensity;
+		vec3_t color;
+
+		if (s->sustain <= refdef.time) {  /* clear it */
+			s->sustain = 0;
+			continue;
+		}
+
+		intensity = (s->sustain - refdef.time) / (s->sustain - s->time);
+		VectorScale(s->light.color, intensity, color);
+
+		R_AddLight(s->light.origin, s->light.radius, color);
+	}
+}
+
 void R_EnableLights (void)
 {
 	light_t *l;
 	vec4_t position;
 	vec4_t diffuse;
 	int i;
+
+	R_AddSustainedLights();
 
 	position[3] = diffuse[3] = 1.0;
 
