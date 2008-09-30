@@ -500,8 +500,6 @@ void R_LightPoint (const vec3_t p)
 		}
 	}
 
-
-
 	/* check inline bsp models */
 	for (j = 0; j < r_numEntities; j++) {
 		const entity_t *ent = R_GetEntity(j);

@@ -975,9 +975,6 @@ static inline void AddSampleToPatch (const vec3_t pos, const vec3_t color, const
 	vec3_t mins, maxs;
 	int i;
 
-	if (config.numbounce == 0)
-		return;
-
 	if (color[0] + color[1] + color[2] < 3)
 		return;
 
@@ -1247,7 +1244,7 @@ void BuildFacelights (unsigned int facenum)
 			VectorCopy(dir, direction);
 		}
 		/* contribute the sample to one or more patches for radiosity */
-/*		if (config.numbounce > 0)*/
+		if (config.numbounce > 0)
 			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
 	}
 
