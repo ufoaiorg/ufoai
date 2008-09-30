@@ -1330,6 +1330,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	if (base->idx > 0) {
 		const int j = round ((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
 		for (i = 0; i < j; i++) {
+			/* Note that the rightmost column (containing the entrance) should never contain any blocked tiles, lest the entrance be boxed in. */
 			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
 			/* set this field to invalid if there is no building yet */
 			if (!mapPtr->building)
