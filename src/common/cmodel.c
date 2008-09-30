@@ -1918,7 +1918,7 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
 	 * If 0 <= z <= CELL_HEIGHT, then z / 16 = 0, no change. */
 	base = RT_FLOOR(map, actor_size, pos[0], pos[1], z);
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
-	diff = base < 0 ? (base - (CELL_HEIGHT -1)) / CELL_HEIGHT : base / CELL_HEIGHT;
+	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
 	assert(z >= 0 && z < PATHFINDING_HEIGHT);
 	return z;

@@ -370,7 +370,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
 		Cmd_ExecuteString("multi_select_click");
- 	} else if (multiSelect.nbSelect > 1) {
+	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
 		mn.menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
 		CL_GameTimeStop();
@@ -654,7 +654,7 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	 * v[0] is the vertical axis of the screen
 	 * v[1] is the horizontal axis of the screen
 	 * v[2] is the axis perpendicular to the screen - we get its value knowing that norm of v is egal to radius
-	 * 	(because the point is on the globe) */
+	 *  (because the point is on the globe) */
 	v[0] = - (y - mid[1]);
 	v[1] = - (x - mid[0]);
 	v[2] = - sqrt(radius * radius - (x - mid[0]) * (x - mid[0]) - (y - mid[1]) * (y - mid[1]));
@@ -2555,7 +2555,7 @@ void MAP_SetOverlay (const char *overlayID)
 			r_geoscape_overlay->integer |= OVERLAY_RADAR;
 			RADAR_UpdateWholeRadarOverlay();
 		}
- 	}
+	}
 }
 
 /**
@@ -2601,7 +2601,7 @@ void MAP_DeactivateOverlay (const char *overlayID)
 			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else
 			return;
- 	}
+	}
 }
 
 /**

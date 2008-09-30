@@ -404,7 +404,7 @@ void MN_DrawMenus (void)
 		}	/* for */
 		if (sp == mn.menuStackPos && menu->hoverNode && mn_show_tooltips->integer) {
 			/* We are hovering over an item and also want to display it.
-	 		 * Make sure that we draw this on top of every other node. */
+			 * Make sure that we draw this on top of every other node. */
 
 			if (itemHover) {
 				char tooltiptext[MAX_VAR * 2];

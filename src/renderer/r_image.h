@@ -73,7 +73,7 @@ typedef struct image_s {
 extern int registration_sequence;
 
 #define MAX_GL_TEXTURES		1024
-#define MAX_GL_LIGHTMAPS 	256
+#define MAX_GL_LIGHTMAPS	256
 #define MAX_GL_DELUXEMAPS	256
 
 #define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES

@@ -35,24 +35,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 GLOBAL TYPES
 ==============================================================*/
 #if defined(COMPILE_MAP)
-  #define TR_TILE_TYPE 			dMapTile_t
-  #define TR_PLANE_TYPE 		dBspPlane_t
+  #define TR_TILE_TYPE			dMapTile_t
+  #define TR_PLANE_TYPE			dBspPlane_t
   #define TR_PLANE2_TYPE		plane_t
-  #define TR_NODE_TYPE 			dBspNode_t
-  #define TR_LEAF_TYPE 			dBspLeaf_t
-  #define TR_BRUSH_TYPE 		dBspBrush_t
-  #define TR_BRUSHSIDE_TYPE 	dBspBrushSide_t
+  #define TR_NODE_TYPE			dBspNode_t
+  #define TR_LEAF_TYPE			dBspLeaf_t
+  #define TR_BRUSH_TYPE			dBspBrush_t
+  #define TR_BRUSHSIDE_TYPE		dBspBrushSide_t
 
   #define MAX_MAPTILES	1
 
 #elif defined(COMPILE_UFO)
-  #define TR_TILE_TYPE 			mapTile_t
-  #define TR_PLANE_TYPE 		cBspPlane_t
-  #define TR_PLANE2_TYPE 		cBspPlane_t
-  #define TR_NODE_TYPE 			cBspNode_t
-  #define TR_LEAF_TYPE 			cBspLeaf_t
-  #define TR_BRUSH_TYPE 		cBspBrush_t
-  #define TR_BRUSHSIDE_TYPE 	cBspBrushSide_t
+  #define TR_TILE_TYPE			mapTile_t
+  #define TR_PLANE_TYPE			cBspPlane_t
+  #define TR_PLANE2_TYPE		cBspPlane_t
+  #define TR_NODE_TYPE			cBspNode_t
+  #define TR_LEAF_TYPE			cBspLeaf_t
+  #define TR_BRUSH_TYPE			cBspBrush_t
+  #define TR_BRUSHSIDE_TYPE		cBspBrushSide_t
 
   #define MAX_MAPTILES	256
 

@@ -487,8 +487,8 @@ typedef struct {
 	cBspHead_t cheads[MAX_MAP_NODES];
 
 	/* ---- */
-	int 			entdatasize;
-	char 			entdata[MAX_MAP_ENTSTRING];
+	int				entdatasize;
+	char			entdata[MAX_MAP_ENTSTRING];
 
 	int				routedatasize;
 	byte			routedata[MAX_MAP_ROUTING];
@@ -501,7 +501,7 @@ typedef struct {
 
 	int				numleafs;
 	dBspLeaf_t		leafs[MAX_MAP_LEAFS];
-	int 			emptyleaf;
+	int				emptyleaf;
 
 	int				numplanes;
 	dBspPlane_t		planes[MAX_MAP_PLANES];

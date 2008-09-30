@@ -1537,8 +1537,8 @@ static const char *RS_TechTypeToName (researchType_t type)
 	case RS_LOGIC:
 		return "logic";
 	default:
- 		return "unknown";
- 	}
+		return "unknown";
+	}
 }
 
 static const char *RS_TechReqToName (requirement_t *req)
@@ -1944,7 +1944,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 			|| (!Q_strncmp(token, "pre_description", MAX_VAR))) {
 				/* Parse the available descriptions for this tech */
 
- 				/* Link to correct list. */
+				/* Link to correct list. */
 				if (!Q_strncmp(token, "pre_description", MAX_VAR)) {
 					descTemp = &tech->pre_description;
 				} else {

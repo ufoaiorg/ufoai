@@ -1260,7 +1260,7 @@ static void CL_MarkTeam_f (void)
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
 	CL_GenTeamList(baseCurrent);	/* Populate employeeList */
- 	emplList = employeeList;
+	emplList = employeeList;
 	while (emplList) {
 		const employee_t *employee = (employee_t*)emplList->data;
 		assert(employee->hired);

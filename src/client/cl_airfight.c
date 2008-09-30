@@ -274,7 +274,7 @@ int AIRFIGHT_ChooseWeapon (const aircraftSlot_t const *slot, int maxSlot, const 
 
 		/* set slotIdx to AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if needed */
 		/* this will only happen if weapon_state is AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
- 		 * and no weapon has been found that can shoot. */
+		 * and no weapon has been found that can shoot. */
 		if (weapon_status > slotIdx)
 			slotIdx = AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT;
 

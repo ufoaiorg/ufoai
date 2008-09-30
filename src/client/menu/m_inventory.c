@@ -792,8 +792,8 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			if (menuInventory->c[csi.idRight]) {
 				item = &menuInventory->c[csi.idRight]->item;
 				/* If there is a weapon in the right hand that needs two hands to shoot it
-			 	 * and there is a weapon in the left, then draw a disabled marker for the
-			 	 * fireTwoHanded weapon. */
+				 * and there is a weapon in the left, then draw a disabled marker for the
+				 * fireTwoHanded weapon. */
 				assert(item);
 				assert(item->t);
 				if (node->container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {

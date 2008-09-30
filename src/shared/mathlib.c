@@ -55,7 +55,7 @@ const vec4_t dvecs[PATHFINDING_DIRECTIONS] = {
 	{-1,  1,  0,  0},	/* NW */
 	{ 1, -1,  0,  0},	/* SE */
 	{ 0,  0,  1,  0},	/* CLIMB UP */
-	{ 0,  0, -1,  0}, 	/* CLIMB DOWN */
+	{ 0,  0, -1,  0},	/* CLIMB DOWN */
 	{ 0,  0,  0, -1},	/* STAND UP */
 	{ 0,  0,  0,  1},	/* STAND DOWN */
 	{ 0,  0,  0,  0},	/* UNDEFINED OPPOSITE OF FALL DOWN */
@@ -80,7 +80,7 @@ const vec4_t dvecs[PATHFINDING_DIRECTIONS] = {
 	{ 1, -1, -1,  0},	/* DOWN SE (Fliers only) */
 	};
 
-/*                   		                0:E     1:W      2:N     3:S      4:NE        5:SW          6:NW         7:SE  */
+/*                                           0:E     1:W      2:N     3:S      4:NE        5:SW          6:NW         7:SE  */
 const float dvecsn[CORE_DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
 /** @note if you change dangle[PATHFINDING_DIRECTIONS], you must also change function AngleToDV */
 /*                                     0:E 1: W    2:N    3:S     4:NE   5:SW    6:NW    7:SE  */

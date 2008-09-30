@@ -218,7 +218,7 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
 		R_StageTexCoord(stage, v, st, &texunit_diffuse.texcoord_array[i * 2]);
- 		if (stage->flags & STAGE_TERRAIN)
+		if (stage->flags & STAGE_TERRAIN)
 			R_StageColor(stage, v, &r_state.color_array[i * 4]);
 
 		if (texunit_lightmap.enabled) {

@@ -974,14 +974,14 @@ static void PR_ProductionListClick_f (void)
 				if (INV_ItemMatchesFilter(od, produceCategory)	/* Item is in the current inventory-category */
 				 && RS_IsResearched_ptr(od->tech)		/* Tech is researched */
 				 && od->tech->produceTime >= 0) {		/* Item is producible */
-				 	assert(*od->name);
+					assert(*od->name);
 
 					selectedQueueItem = qfalse;
 					PR_ClearSelected();
 					selectedItem = od;
 					PR_ProductionInfo(base, qfalse);
 					return;
-				 }
+				}
 			} else {	/* Aircraft. */
 				aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
 				if (!aircraftTemplate) {
@@ -1440,7 +1440,7 @@ static void PR_ProductionIncrease_f (void)
 				PR_ClearSelected();
 				selectedProduction = &queue->items[queue->numItems - 1];
 			} else { /* requirements are not met => producibleAmount <= 0 */
- 				/** @todo better messages needed */
+				/** @todo better messages needed */
 				MN_Popup(_("Not enough material!"), _("You don't have enough of the needed material to produce this item."));
 				/** @todo
 				 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
@@ -1557,7 +1557,7 @@ static void PR_ProductionDecrease_f (void)
 			PR_ProductionInfo(base, qtrue);
 			PR_UpdateDisassemblingList_f();
 		}
- 	}
+	}
 }
 
 /**

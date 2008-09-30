@@ -115,7 +115,7 @@ typedef struct ptl_s {
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
 
-	ptlArt_t *pic; 			/**< Picture link. */
+	ptlArt_t *pic;			/**< Picture link. */
 	ptlArt_t *model;		/**< Model link. */
 
 	byte blend;				/**< blend mode */

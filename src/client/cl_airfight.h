@@ -59,7 +59,7 @@ typedef struct aircraftProjectile_s {
 	struct base_s* aimedBase;		/**< aimed base - NULL if the target is an aircraft */
 	struct installation_s* aimedInstallation;	/**< aimed installation - NULL if the target is an aircraft */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/
-							 	 ** used only if the projectile will touch its target (otherwise it's NULL)
+								 ** used only if the projectile will touch its target (otherwise it's NULL)
 									and if aimedBase != NULL */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */

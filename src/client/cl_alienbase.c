@@ -154,7 +154,7 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
  * @param[in] dt Elapsed time since last check.
  * @param[in] base Pointer to the alien base.
  * @note base stealth decreases if it is inside an aircraft radar range, and even more if it's
- * 	inside @c radarratio times radar range.
+ * inside @c radarratio times radar range.
  * @sa UFO_UpdateAlienInterestForOneBase
  */
 static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alienBase_t *base)

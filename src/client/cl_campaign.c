@@ -2768,9 +2768,9 @@ static void CP_SpawnNewMissions_f (void)
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
- 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
+				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
 			if (category == INTERESTCATEGORY_BUILDING)
- 				Com_Printf(" <0:Subverse Government, 1:Build Base>");
+				Com_Printf(" <0:Subverse Government, 1:Build Base>");
 			Com_Printf("\n");
 		}
 		return;
@@ -3344,7 +3344,7 @@ static void CP_EndCampaign (qboolean won)
 static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
- 	/* fraction of nation that can be below min happiness before the game is lost */
+	/* fraction of nation that can be below min happiness before the game is lost */
 	const float nationBelowLimitPercentage = 0.5f;
 
 	assert(curCampaign);
@@ -4106,7 +4106,7 @@ static void CL_CampaignRunMarket (void)
 	assert(curCampaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
- 		technology_t *tech = csi.ods[i].tech;
+		technology_t *tech = csi.ods[i].tech;
 		const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
 		const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
 													 * items added on market */

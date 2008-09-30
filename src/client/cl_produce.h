@@ -64,7 +64,7 @@ typedef struct production_s
  */
 typedef struct production_queue_s
 {
-	int 		numItems;		/**< The number of items in the queue. */
+	int				numItems;		/**< The number of items in the queue. */
 	production_t	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 

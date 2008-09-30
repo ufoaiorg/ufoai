@@ -125,7 +125,7 @@ typedef struct menuNode_s {
 	vec3_t origin, scale, angles, center;
 	vec2_t pos;
 	vec2_t size;
-	vec2_t texh; 				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
+	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
 	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
 	byte state;
@@ -163,7 +163,7 @@ typedef struct menuNode_s {
 	struct menu_s *menu;		/**< backlink */
 	lineStrips_t linestrips;	/**< List of lines to draw. (MN_LINESTRIP) */
 	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
-	int gapWidth; 				/**< MN_TBAR: tens separator width */
+	int gapWidth;				/**< MN_TBAR: tens separator width */
 	const value_t *scriptValues;
 } menuNode_t;
 

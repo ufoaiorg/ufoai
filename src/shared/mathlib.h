@@ -89,7 +89,7 @@ qboolean Q_IsPowerOfTwo(int i);
  * @brief Number of direct connected fields for a position
  * @sa DIRECTIONS.
  */
-#define BASE_DIRECTIONS 		4			/* Only the standard N,S,E,W directions */
+#define BASE_DIRECTIONS			4			/* Only the standard N,S,E,W directions */
 
 /* game/g_ai.c, game/g_spawn.c, common/routing.c, ufo2map/routing.c, client/cl_actor.c, common/cmodel.c, shared/typedefs.h */
 #define PATHFINDING_DIRECTIONS	32			/* total number of directions */

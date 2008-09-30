@@ -867,7 +867,7 @@ static int CL_GetMostExpensiveFiremode (objDef_t *weapon, objDef_t *ammo, int TU
 	if (!ammo || !weapon)
 		return foundFmIdx;
 
- 	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(ammo, weapon);
+	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(ammo, weapon);
 
 	if (weapFdsIdx < 0)
 		return foundFmIdx;
@@ -3538,10 +3538,10 @@ void CL_ActorToggleCrouchReservation_f (void)
 /**
  * @brief Toggles reaction fire between the states off/single/multi.
  * @note RF mode will change as follows (Current mode -> resulting mode after click)
- * 	off	-> single
- * 	single	-> multi
- * 	multi	-> off
- * 	single	-> off (if no TUs for multi available)
+ * off	-> single
+ * single	-> multi
+ * multi	-> off
+ * single	-> off (if no TUs for multi available)
  */
 void CL_ActorToggleReaction_f (void)
 {
@@ -4284,7 +4284,7 @@ void CL_ActorMouseTrace (void)
 		VecToPos(from, testPos);
 		intersectionLevel = Grid_Fall(clMap, fieldSize, testPos);
 
- 		/* if looking up, raise the intersection level */
+		/* if looking up, raise the intersection level */
 		if (cur[1] < 0.0f)
 			intersectionLevel++;
 	} else {

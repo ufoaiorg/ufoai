@@ -670,7 +670,7 @@ static void TR_TransferListClear_f (void)
 			} else
 				B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], trItemsTmp[i], qfalse, qfalse);
 		}
- 	}
+	}
 	for (i = 0; i < gd.numAliensTD; i++) {	/* Return aliens. */
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
@@ -685,7 +685,7 @@ static void TR_TransferListClear_f (void)
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
- 	TR_TransferSelect(baseCurrent, transferBase, currentTransferType);
+	TR_TransferSelect(baseCurrent, transferBase, currentTransferType);
 	TR_ResetScrolling_f();
 }
 
@@ -839,7 +839,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 			transfer = &gd.alltransfers[i];
 			break;
 		}
- 	}
+	}
 
 	if (!transfer)
 		return;
@@ -1006,8 +1006,8 @@ static void TR_TransferStart_f (void)
 
 	if (currentTransferType == TRANS_TYPE_INVALID) {
 		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
- 		return;
- 	}
+		return;
+	}
 
 	if (!transferBase || !baseCurrent) {
 		Com_Printf("TR_TransferStart_f: No base selected!\n");
@@ -1021,7 +1021,7 @@ static void TR_TransferStart_f (void)
 			transfer = &gd.alltransfers[i];
 			break;
 		}
- 	}
+	}
 
 	if (!transfer)
 		return;

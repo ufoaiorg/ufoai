@@ -1292,9 +1292,9 @@ static void CL_PlaceItem (le_t *le)
 static void CL_InvAdd (struct dbuffer *msg)
 {
 	int		number, nr;
-	int 	container, x, y;
+	int		container, x, y;
 	le_t	*le;
-	item_t 	item;
+	item_t	item;
 
 	number = NET_ReadShort(msg);
 
@@ -1348,8 +1348,8 @@ static void CL_InvDel (struct dbuffer *msg)
 {
 	le_t	*le;
 	int		number;
-	int 	container, x, y;
-	invList_t *ic;
+	int		container, x, y;
+	invList_t	*ic;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_DEL],
 		&number, &container, &x, &y);

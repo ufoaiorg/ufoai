@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define STAGE_ANIM			(1 << 13)
 
 /* set on stages with valid render passes */
-#define STAGE_RENDER 		(1 << 31)
+#define STAGE_RENDER		(1 << 31)
 
 /* frame based animation, lerp between consecutive images */
 #define MAX_ANIM_FRAMES 8

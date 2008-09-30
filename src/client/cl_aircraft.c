@@ -924,7 +924,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 			/* Transfer items carried by soldiers from oldBase to base */
 			INV_TransferItemCarriedByChr(employee, oldBase, base);
 		}
- 	}
+	}
 
 	/* Move aircraft to new base */
 	base->aircraft[base->numAircraftInBase] = *aircraft;
@@ -2298,19 +2298,19 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
-			MSG_ReadByte(sb); 			/* visible */
-			MSG_ReadByte(sb); 			/* notOnGeoscape */
-			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
+			MSG_ReadByte(sb);			/* visible */
+			MSG_ReadByte(sb);			/* notOnGeoscape */
+			MSG_ReadPos(sb, tmp_vec3t);	/* pos */
 			MSG_ReadByte(sb);			/* status */
 			MSG_ReadLong(sb);			/* fuel */
 			MSG_ReadLong(sb);			/* damage */
 			MSG_ReadShort(sb);			/* time */
 			MSG_ReadShort(sb);			/* point */
-			tmp_int = MSG_ReadShort(sb);		/* numPoints */
+			tmp_int = MSG_ReadShort(sb);/* numPoints */
 			MSG_ReadFloat(sb);			/* distance */
 			for (j = 0; j < tmp_int; j++)
 				MSG_Read2Pos(sb, tmp_vec2t);	/* route points */
-			MSG_ReadPos(sb, tmp_vec3t);		/* direction */
+			MSG_ReadPos(sb, tmp_vec3t);	/* direction */
 			MSG_ReadString(sb);			/* Mission id */
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				MSG_ReadLong(sb);
