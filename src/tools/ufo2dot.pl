@@ -26,6 +26,8 @@
 #
 #######################################
 # Changelog
+#	2008-09-30 Hoehrer
+#		Added "redirect" entry.
 #	2008-09-26 Hoehrer
 #		Quick fix to make this work with "mdl" and "image" tech settings.
 #		(previously mdl_top and image_top)
@@ -116,14 +118,15 @@ my $technologySimpleSettings = [
 	"type",		# weapon
 	"name",		# "_Continuous Wave Laser Operation"
 	"image",	# techs/laser
-	"mdl",	# weap_machine_pistol
+	"mdl",		# weap_machine_pistol
 	"up_chapter", 	# equipment
 	"provides", 	# knifemono
 	"time",		# 100
 	"producetime",	# 100
 	"delay",
 	"event",
-	"pushnews"
+	"pushnews",
+	"redirect"
 ];
 
 # Settings of requirements that we want to parse

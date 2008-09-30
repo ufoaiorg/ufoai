@@ -21,6 +21,9 @@
 //		Self-explaining I hope :) Only needed when type=tech
 //	up_chapter
 //		Defines in which chapter of the ufopedia this item will show up.
+//	redirect <techid>
+//		Display the given tech instead of the current one when opening up the ufopedia.
+//		No "description", "pre_description", "mail" or "mail_pre" entry will ever be needed for an entry with this option.
 //	description {}
 //		A list of all full descriptions that can be be displayed after research (depending on logic blocks).
 //		The first entry must always exist and it is used as default/fallback text.
@@ -680,7 +683,7 @@ tech rs_weapon_machinegun_ammo
 		default "_machinegun_mag_txt"
 	}
 	// pre_description	"_machinegun_mag_pre_txt"
-
+ 
 	require_AND
 	{
 		tech rs_damage_normal
@@ -772,12 +775,8 @@ tech rs_weapon_xaw95_ammo
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description {
-		default "_xaw95_ammo_txt"
-	}
-	pre_description {
-		default "_xaw95_ammo_pre_txt"
-	}
+
+	redirect	rs_weapon_xaw95
 
 	provides	xaw95_ammo
 	time	0
@@ -847,12 +846,8 @@ tech rs_weapon_chaingun_ammo
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description {
-		default "_chaingun_ammo_txt"
-	}
-	pre_description {
-		default "_chaingun_ammo_pre_txt"
-	}
+
+	redirect	rs_weapon_chaingun
 
 	provides	chaingun_ammo
 	time	0
@@ -885,10 +880,8 @@ tech rs_weapon_shotgun_ammo
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description {
-		default "_shotgun_ammo_txt"
-	}
-	// pre_description	"_shotgun_ammo_pre_txt"
+
+	redirect	rs_weapon_shotgun
 
 	require_AND
 	{
@@ -946,28 +939,7 @@ tech rs_weapon_bolterrifle_ammo
 	type	weapon
 	up_chapter	equipment
 
-	description {
-		default "_bolterrifle_txt"
-	}
-	pre_description {
-		default "_bolterrifle_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
+	redirect	rs_weapon_bolterrifle
 
 	require_AND
 	{
@@ -1534,28 +1506,7 @@ tech rs_weapon_plasatomizer_ammo
 	type	weapon
 	up_chapter	artifacts
 
-	description {
-		default "_plasatomizer_txt"
-	}
-	pre_description {
-		default "_plasatomizer_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
+	redirect	rs_weapon_plasatomizer
 
 	require_AND
 	{
@@ -1614,28 +1565,7 @@ tech rs_weapon_plasblaster_ammo
 	type	weapon
 	up_chapter	artifacts
 
-	description {
-		default "_plasblaster_txt"
-	}
-	pre_description {
-		default "_plasblaster_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
+	redirect	rs_weapon_plasblaster
 
 	require_AND
 	{
@@ -1775,28 +1705,7 @@ tech rs_weapon_plasrifle_ammo
 	type	weapon
 	up_chapter	artifacts
 
-	description {
-		default "_plasrifle_txt"
-	}
-	pre_description {
-		default "_plasrifle_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
+	redirect	rs_weapon_plasrifle
 
 	require_AND
 	{
@@ -1854,28 +1763,7 @@ tech rs_weapon_needlergun_ammo
 	type	weapon
 	up_chapter	equipment
 
-	description {
-		default "_needlergun_txt"
-	}
-	pre_description {
-		default "_needlergun_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
+	redirect	rs_weapon_needlergun
 
 	require_AND
 	{
@@ -1929,28 +1817,8 @@ tech rs_weapon_coilgun_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description {
-		default "_coilgun_txt"
-	}
-	pre_description {
-		default "_coilgun_pre_txt"
-	}
 
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		subject	"_Coilgun Ammo"
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		subject	"_Coilgun Ammo"
-		icon	icons/tech
-	}
+	redirect	rs_weapon_coilgun
 
 	require_AND
 	{
@@ -2318,28 +2186,7 @@ tech rs_weapon_pbeampistol_ammo
 	type		weapon
 	up_chapter	artifacts
 
-	description {
-		default "_pbeamammo_txt"
-	}
-	pre_description {
-		default "_pbeamammo_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
+	redirect	rs_weapon_pbeam_ammo
 
 	require_AND
 	{
@@ -2399,28 +2246,7 @@ tech rs_weapon_pbeamcannon_ammo
 	type		weapon
 	up_chapter	artifacts
 
-	description {
-		default "_pbeamammo_txt"
-	}
-	pre_description {
-		default "_pbeamammo_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
+	redirect	rs_weapon_pbeam_ammo
 
 	require_AND
 	{
@@ -2479,28 +2305,7 @@ tech rs_weapon_pbeamrifle_ammo
 	type		weapon
 	up_chapter	artifacts
 
-	description {
-		default "_pbeamammo_txt"
-	}
-	pre_description {
-		default "_pbeamammo_pre_txt"
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/artifact
-	}
+	redirect	rs_weapon_pbeam_ammo
 
 	require_AND
 	{

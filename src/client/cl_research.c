@@ -566,12 +566,16 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 	}
 }
 
+static linkedList_t *redirectedTechs;
+
 /**
  * @brief Assign Link pointers to all required techs/items/etc...
  * @note This replaces the RS_InitRequirementList function (since the switch to the _OR and _AND list)
  */
 void RS_RequiredLinksAssign (void)
 {
+	linkedList_t* ll = redirectedTechs;	/**< Use this so we do not change the original redirectedTechs pointer. */
+	technology_t *redirectedTech;
 	int i;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -583,6 +587,22 @@ void RS_RequiredLinksAssign (void)
 		if (&tech->require_for_production.numLinks)
 			RS_AssignTechLinks(&tech->require_for_production);
 	}
+
+	/* Link the redirected technologies to their correct "parents" */
+	while (ll) {
+		/* Get the data stored in the linked list. */
+		assert(ll);
+		redirectedTech = (technology_t *) ll->data;
+		ll = ll->next;
+
+		assert(redirectedTech);
+
+		assert(ll);
+		redirectedTech->redirect = RS_GetTechByID((char*)ll->data);
+		ll = ll->next;
+	}
+
+
 }
 
 /**
@@ -1827,6 +1847,9 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	descriptions_t *descTemp;
 	int i;
 
+	/* Clear linked list. */
+	LIST_Delete(&redirectedTechs);
+
 	for (i = 0; i < gd.numTechnologies; i++) {
 		if (!Q_strcmp(gd.technologies[i].id, name)) {
 			Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
@@ -1879,13 +1902,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->type = RS_TECH;
 	tech->statusResearch = RS_NONE;
 	tech->statusResearchable = qfalse;
-	tech->time = 0;
-	tech->overalltime = 0;
-	tech->scientists = 0;
-	tech->upPrev = NULL;
-	tech->upNext = NULL;
-	tech->base = NULL;
-	tech->upChapter = NULL;
 
 	do {
 		/* get the name type */
@@ -1966,7 +1982,12 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					}
 				} while (*text);
 
-			 } else if ((!Q_strncmp(token, "require_AND", MAX_VAR))
+			} else if (!Q_strncmp(token, "redirect", MAX_VAR)) {
+				token = COM_EParse(text, errhead, name);
+				/* Store this tech and the parsed tech-id of the target of the redirection for later linking. */
+				LIST_AddPointer(&redirectedTechs, tech);
+				LIST_AddString(&redirectedTechs, token);
+			} else if ((!Q_strncmp(token, "require_AND", MAX_VAR))
 				|| (!Q_strncmp(token, "require_OR", MAX_VAR))
 				|| (!Q_strncmp(token, "require_for_production", MAX_VAR))) {
 				/* Link to correct list. */

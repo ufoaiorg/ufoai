@@ -171,6 +171,9 @@ typedef struct technology_s {
 	descriptions_t pre_description;	/**< Descriptions of item before it's researched. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
+	struct technology_s *redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
+									 * Mopstly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
+
 	requirements_t require_AND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t require_OR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
 	qboolean statusCollected;	/**< Did we loot any items of this tech?

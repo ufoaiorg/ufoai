@@ -73,7 +73,8 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 	return (RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
 	 || RS_Collected_(tech)	/* ... has collected items OR ... */
 	 || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0)))
-	 && tech->type != RS_LOGIC;	/* Is no logic block. */
+	 && tech->type != RS_LOGIC	/* Is no logic block. */
+	 && !tech->redirect;		/* Another technology will get displayed instead of this one. */
 }
 
 /**
@@ -1120,6 +1121,11 @@ static void UP_FindEntry_f (void)
 
 	tech = RS_GetTechByID(id);
 	if (tech) {
+		if (tech->redirect) {
+			Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: Tech %s redirected to %s\n", tech->id, tech->redirect->id);
+			tech = tech->redirect;
+		}
+
 		upCurrentTech = tech;
 		UP_DrawEntry(upCurrentTech, NULL);
 		return;
