@@ -190,10 +190,6 @@ static byte cmdStack[MAX_STACK_DATA];
 static void *stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
 
-static void CL_ParticleRun2(ptl_t *p);
-
-/* =========================================================== */
-
 
 /**
  * @brief Spawns the map particle
