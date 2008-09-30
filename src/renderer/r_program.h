@@ -51,7 +51,6 @@ typedef struct r_program_s {
 	r_progvar_t vars[MAX_PROGRAM_VARS];
 	void (*init)(void);
 	void (*use)(void);
-	void (*think)(void);
 } r_program_t;
 
 #define MAX_PROGRAMS 8
@@ -62,6 +61,10 @@ void R_EnableAttribute(const char *name);
 void R_DisableAttribute(const char *name);
 void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
+void R_ProgramParameter1f(const char *name, GLfloat value);
+void R_ProgramParameter1i(const char *name, GLint value);
+void R_ProgramParameter3fv(const char *name, GLfloat *value);
+void R_ProgramParameter4fv(const char *name, GLfloat *value);
 
 void R_RestartPrograms_f(void);
 

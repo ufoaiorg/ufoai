@@ -81,7 +81,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	return v;
 }
 
-static void R_ProgramParameter1i (const char *name, GLint value)
+void R_ProgramParameter1i (const char *name, GLint value)
 {
 	r_progvar_t *v;
 
@@ -91,7 +91,7 @@ static void R_ProgramParameter1i (const char *name, GLint value)
 	qglUniform1i(v->location, value);
 }
 
-static void R_ProgramParameter1f (const char *name, GLfloat value)
+void R_ProgramParameter1f (const char *name, GLfloat value)
 {
 	r_progvar_t *v;
 
@@ -101,8 +101,7 @@ static void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
-#if 0
-static void R_ProgramParameter3fv (const char *name, GLfloat *value)
+void R_ProgramParameter3fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -111,9 +110,8 @@ static void R_ProgramParameter3fv (const char *name, GLfloat *value)
 
 	qglUniform3fv(v->location, 1, value);
 }
-#endif
 
-static void R_ProgramParameter4fv (const char *name, GLfloat *value)
+void R_ProgramParameter4fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;
 
@@ -313,7 +311,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	return sh;
 }
 
-static r_program_t *R_LoadProgram (const char *name, void *init, void *use, void *think)
+static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 {
 	r_program_t *prog;
 	char log[MAX_STRING_CHARS];
@@ -366,7 +364,6 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use, void
 	}
 
 	prog->use = use;
-	prog->think = think;
 
 	Com_Printf("R_LoadProgram: '%s' loaded.\n", name);
 
@@ -396,31 +393,6 @@ static void R_UseDefaultProgram (void)
 		R_ProgramParameter1i("LIGHTMAP", 0);
 }
 
-static void R_ThinkDefaultProgram (void)
-{
-	static float last_b = 0.0f, last_s = 0.0f, last_p = 0.0f;
-
-	if (r_state.bumpmap_enabled) {
-		const float b = r_state.active_material->bump * r_bumpmap->value;
-		const float s = r_state.active_material->specular * r_specular->value;
-		const float p = r_state.active_material->parallax * r_parallax->value;
-		R_EnableAttribute("TANGENT");
-		R_ProgramParameter1i("BUMPMAP", 1);
-		if (b != last_b)
-			R_ProgramParameter1f("BUMP", b);
-		if (s != last_s)
-			R_ProgramParameter1f("SPECULAR", s);
-		if (p != last_p)
-			R_ProgramParameter1f("PARALLAX", p);
-		last_b = b;
-		last_s = s;
-		last_p = p;
-	} else {
-		R_DisableAttribute("TANGENT");
-		R_ProgramParameter1i("BUMPMAP", 0);
-	}
-}
-
 static void R_InitWarpProgram (void)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -443,14 +415,10 @@ void R_InitPrograms (void)
 	}
 
 	memset(r_state.shaders, 0, sizeof(r_state.shaders));
-
 	memset(r_state.programs, 0, sizeof(r_state.programs));
 
-	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram,
-		R_UseDefaultProgram, R_ThinkDefaultProgram);
-
-	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram,
-		R_UseWarpProgram, NULL);
+	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram, R_UseDefaultProgram);
+	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 }
 
 /**

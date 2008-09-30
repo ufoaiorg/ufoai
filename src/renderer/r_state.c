@@ -243,6 +243,35 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 	}
 }
 
+static inline void R_UseMaterial (material_t *material)
+{
+	static float last_b, last_p, last_s;
+	float b, p, s;
+
+	if (r_state.active_material == material)
+		return;
+
+	r_state.active_material = material;
+
+	if (!r_state.active_material)
+		return;
+
+	b = r_state.active_material->bump * r_bumpmap->value;
+	if (b != last_b)
+		R_ProgramParameter1f("BUMP", b);
+	last_b = b;
+
+	p = r_state.active_material->parallax * r_parallax->value;
+	if (p != last_p)
+		R_ProgramParameter1f("PARALLAX", p);
+	last_p = p;
+
+	s = r_state.active_material->specular * r_specular->value;
+	if (s != last_s)
+		R_ProgramParameter1f("SPECULAR", s);
+	last_s = s;
+}
+
 void R_EnableBumpmap (qboolean enable, material_t *material)
 {
 	if (!r_state.lighting_enabled)
@@ -251,15 +280,20 @@ void R_EnableBumpmap (qboolean enable, material_t *material)
 	if (!r_bumpmap->value)
 		return;
 
-	/* same state, same material, no change */
-	if (r_state.bumpmap_enabled == enable && r_state.active_material == material)
+	R_UseMaterial(material);
+
+	if (r_state.bumpmap_enabled == enable)
 		return;
 
-	/* toggle state */
 	r_state.bumpmap_enabled = enable;
-	r_state.active_material = material;
 
-	r_state.default_program->think();
+	if (enable) {  /* toggle state */
+		R_EnableAttribute("TANGENT");
+		R_ProgramParameter1i("BUMPMAP", 1);
+	} else {
+		R_DisableAttribute("TANGENT");
+		R_ProgramParameter1i("BUMPMAP", 0);
+	}
 }
 
 void R_EnableWarp (r_program_t *program, qboolean enable)
