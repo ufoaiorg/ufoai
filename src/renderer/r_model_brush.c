@@ -321,6 +321,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 		/* and size, texcoords, etc */
 		R_SetSurfaceExtents(out, r_worldmodel);
 
+		/* lastly lighting info */
 		if (day)
 			i = LittleLong(in->lightofs[LIGHTMAP_DAY]);
 		else
@@ -333,6 +334,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 			out->flags |= MSURF_LIGHTMAP;
 		}
 
+		/* create lightmaps */
 		R_CreateSurfaceLightmap(out);
 
 		out->tile = r_numMapTiles - 1;
@@ -553,6 +555,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 		surf->index = vertind / 3;
 
 		for (j = 0; j < surf->numedges; j++) {
+			const float *normal;
 			const int index = mod->bsp.surfedges[surf->firstedge + j];
 
 			if (vertind >= MAX_GL_ARRAY_LENGTH * 3)
@@ -610,12 +613,14 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			/* normal vectors */
 			if (surf->texinfo->flags & SURF_PHONG &&
 					!VectorCompare(vert->normal, vec3_origin))
-				memcpy(&mod->bsp.normals[vertind], vert->normal, sizeof(vec3_t));
+				normal = vert->normal; /* phong shaded */
 			else
-				memcpy(&mod->bsp.normals[vertind], surf->normal, sizeof(vec3_t));
+				normal = surf->normal; /* per plane */
+
+			memcpy(&mod->bsp.normals[vertind], normal, sizeof(vec3_t));
 
 			/* tangent vector */
-			TangentVectors(vert->normal, sdir, tdir, tangent, binormal);
+			TangentVectors(normal, sdir, tdir, tangent, binormal);
 			memcpy(&mod->bsp.tangents[tangind], tangent, sizeof(vec4_t));
 
 			vertind += 3;

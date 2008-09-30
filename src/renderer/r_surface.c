@@ -102,7 +102,9 @@ static void R_ResetArrayState (void)
 	if (r_state.lighting_enabled) {
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
-		R_BindDefaultArray(GL_TANGENT_ARRAY);
+		/* tangent vectors for bump mapping */
+		if (r_bumpmap->value)
+			R_BindDefaultArray(GL_TANGENT_ARRAY);
 	}
 	bufferMapTile = NULL;
 }
