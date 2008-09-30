@@ -34,9 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
-static int ptl_numWeather;
-static ptl_t *ptl_weather[MAX_PTLS];
-
 #define RADR(x)		((x < 0) ? (byte*)p - x : (byte*)pcmdData + x)
 #define RSTACK		-0xFFF0
 #define F(x)		(1<<x)
@@ -817,10 +814,8 @@ void CL_ParticleCheckRounds (void)
  * other particle values that are needed to display it
  * @sa CL_ParticleRun
  * @param[in,out] p The particle to handle
- * @param[in] doWeather If true, weather particles are handled, otherwise they are stored
- * for a later @c CL_ParticleRun2 run
  */
-static void CL_ParticleRun2 (ptl_t *p, qboolean doWeather)
+static void CL_ParticleRun2 (ptl_t *p)
 {
 	/* advance time */
 	p->dt = cls.frametime;
@@ -838,16 +833,11 @@ static void CL_ParticleRun2 (ptl_t *p, qboolean doWeather)
 	/* don't play the weather particles if a user don't want them
 	 * there can be a lot of weather particles - which might slow the computer
 	 * down - so i made them switchable */
-	} else if (p->weather) {
-		if (!cl_particleweather->integer) {
-			CL_ParticleFree(p);
-			return;
-		/* ensure, that we first render all the other particles, and cache the
-		 * weather stuff */
-		} else if (!doWeather) {
-			ptl_weather[ptl_numWeather++] = p;
-			return;
-		}
+	/** @todo We should ensure, that every other particle is renderer, before you
+	 * add weather particles */
+	} else if (p->weather && !cl_particleweather->integer) {
+		CL_ParticleFree(p);
+		return;
 	}
 
 	/* kinematics */
@@ -950,14 +940,9 @@ void CL_ParticleRun (void)
 	if (cls.state != ca_active)
 		return;
 
-	ptl_numWeather = 0;
-
 	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse)
-			CL_ParticleRun2(p, qfalse);
-
-	for (i = 0, p = ptl_weather[0]; i < ptl_numWeather; i++, p++)
-		CL_ParticleRun2(p, qtrue);
+			CL_ParticleRun2(p);
 }
 
 
