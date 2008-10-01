@@ -147,7 +147,7 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
  * @sa R_LoadJPG
  * @sa R_FindImage
  */
-static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
+static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
 	int rowptr;
 	int samples, color_type, bit_depth;
@@ -165,13 +165,13 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	/* Load the file */
 	FS_LoadFile(name, (byte **)&PngFileBuffer.buffer);
 	if (!PngFileBuffer.buffer)
-		return 0;
+		return;
 
 	/* Parse the PNG file */
 	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
 		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
-		return 0;
+		return;
 	}
 
 	PngFileBuffer.pos = 0;
@@ -180,7 +180,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	if (!png_ptr) {
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
-		return 0;
+		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
@@ -188,7 +188,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
-		return 0;
+		return;
 	}
 
 	end_info = png_create_info_struct(png_ptr);
@@ -196,7 +196,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
-		return 0;
+		return;
 	}
 
 	/* get some usefull information from header */
@@ -259,7 +259,6 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
 
 	FS_FreeFile(PngFileBuffer.buffer);
-	return samples;
 }
 
 /**
@@ -1573,6 +1572,19 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	return image;
 }
 
+typedef struct imageLoader_s {
+	const char *extension;
+	void (*load) (const char *name, byte **pic, int *width, int *height);
+} imageLoader_t;
+
+static const imageLoader_t imageLoader[] = {
+	{".tga", R_LoadTGA},
+	{".jpg", R_LoadJPG},
+	{".png", R_LoadPNG},
+
+	{NULL, NULL}
+};
+
 /**
  * @brief Finds or loads the given image
  * @sa R_RegisterPic
@@ -1593,8 +1605,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	image_t *image;
 	int i;
 	size_t len;
-	byte *pic = NULL;
-	int width, height;
+	const imageLoader_t *loader;
 
 	if (!pname)
 		Sys_Error("R_FindImage: NULL name");
@@ -1616,53 +1627,30 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			return image;
 		}
 
-	/* load the pic from disk */
-	image = NULL;
-	pic = NULL;
-
-	strcpy(ename, ".tga");
-	if (FS_CheckFile(lname) != -1) {
-		R_LoadTGA(lname, &pic, &width, &height);
-		if (pic) {
-			image = R_LoadImageData(lname, pic, width, height, type);
-			goto end;
+	loader = imageLoader;
+	while (loader->load) {
+		strcpy(ename, loader->extension);
+		if (FS_CheckFile(lname) != -1) {
+			byte *pic = NULL;
+			int width, height;
+			loader->load(lname, &pic, &width, &height);
+			if (pic) {
+				image = R_LoadImageData(lname, pic, width, height, type);
+				Mem_Free(pic);
+				if (image->type == it_world) {
+					image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
+					if (image->normalmap == r_noTexture)
+						image->normalmap = NULL;
+				}
+				break;
+			}
 		}
+		loader++;
 	}
 
-	strcpy(ename, ".png");
-	if (FS_CheckFile(lname) != -1) {
-		R_LoadPNG(lname, &pic, &width, &height);
-		if (pic) {
-			image = R_LoadImageData(lname, pic, width, height, type);
-			goto end;
-		}
-	}
-
-	strcpy(ename, ".jpg");
-	if (FS_CheckFile(lname) != -1) {
-		R_LoadJPG(lname, &pic, &width, &height);
-		if (pic) {
-			image = R_LoadImageData(lname, pic, width, height, type);
-			goto end;
-		}
-	}
-
-	/* no fitting texture found */
-	/* add to error list */
-	image = r_noTexture;
-
-#ifdef PARANOID
-	Com_Printf("R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
-#endif
-
-  end:
-	if (pic)
-		Mem_Free(pic);
-
-	if (image->type == it_world) {
-		image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
-		if (image->normalmap == r_noTexture)
-			image->normalmap = NULL;
+	if (!loader->load) {
+		/* no fitting texture found */
+		image = r_noTexture;
 	}
 
 	return image;
