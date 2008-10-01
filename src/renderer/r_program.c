@@ -334,8 +334,8 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 
 	prog->id = qglCreateProgram();
 
-	prog->v = R_LoadShader(GL_VERTEX_SHADER, va("%s.vs", name));
-	prog->f = R_LoadShader(GL_FRAGMENT_SHADER, va("%s.fs", name));
+	prog->v = R_LoadShader(GL_VERTEX_SHADER, va("%s_vs.glsl", name));
+	prog->f = R_LoadShader(GL_FRAGMENT_SHADER, va("%s_fs.glsl", name));
 
 	if (prog->v)
 		qglAttachShader(prog->id, prog->v->id);

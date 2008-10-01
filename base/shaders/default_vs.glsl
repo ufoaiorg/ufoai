@@ -1,7 +1,7 @@
 // default vertex shader
 
-#include "light.vs"
-#include "bump.vs"
+#include "light_vs.glsl"
+#include "bump_vs.glsl"
 
 uniform int LIGHTMAP;
 uniform int BUMPMAP;

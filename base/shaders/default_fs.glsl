@@ -1,7 +1,7 @@
 // default fragment shader
 
-#include "light.fs"
-#include "bump.fs"
+#include "light_fs.glsl"
+#include "bump_fs.glsl"
 
 uniform int LIGHTMAP;
 uniform int BUMPMAP;
