@@ -380,7 +380,6 @@ static void R_InitDefaultProgram (void)
 	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
 
-	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("SPECULAR", 1.0);
 }

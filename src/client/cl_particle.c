@@ -925,10 +925,11 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* add light to the scene */
 	if (VectorNotEmpty(p->lightColor)) {
+		const float intensity = 0.5 + p->lightIntensity;
 		if (p->lightSustain)
-			R_AddSustainedLight(p->s, 1 + p->lightIntensity, p->lightColor, p->lightSustain);
+			R_AddSustainedLight(p->s, intensity, p->lightColor, p->lightSustain);
 		else
-			R_AddLight(p->s, 1 + p->lightIntensity, p->lightColor);
+			R_AddLight(p->s, intensity, p->lightColor);
 	}
 
 	p->invis = qfalse;
