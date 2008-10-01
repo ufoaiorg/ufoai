@@ -1571,6 +1571,10 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 		image->type = it_wrappic;
 
 	image->texnum = TEXNUM_IMAGES + (image - r_images);
+#ifdef DEBUG
+	if (image->texnum >= TEXNUM_IMAGES + MAX_GL_TEXTURES)
+		Sys_Error("Texture number overflow");
+#endif
 	if (pic) {
 		R_BindTexture(image->texnum);
 		R_UploadTexture((unsigned *) pic, width, height, image);

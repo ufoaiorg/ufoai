@@ -27,13 +27,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_HASH_STRING		128
 #define MAX_FONT_CACHE		1024
-#define MAX_FONTS		16
+#define MAX_FONTS			16
 #define	MAX_FONTNAME		32
 
 #define BUF_SIZE 2048
 
 /* starting offset for font texture numbers (used in font-cache) */
-#define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GL_TEXTURES
+#define TEXNUM_FONTS		(TEXNUM_IMAGES + MAX_FONT_CACHE)
 
 typedef struct font_s {
 	const char *name;
