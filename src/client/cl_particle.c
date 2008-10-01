@@ -156,6 +156,7 @@ static const value_t pps[] = {
 	{"weather", V_BOOL, offsetof(ptl_t, weather), MEMBER_SIZEOF(ptl_t, weather)},
 	{"lightcolor", V_VECTOR, offsetof(ptl_t, lightColor), MEMBER_SIZEOF(ptl_t, lightColor)},
 	{"lightintensity", V_FLOAT, offsetof(ptl_t, lightIntensity), MEMBER_SIZEOF(ptl_t, lightIntensity)},
+	{"lightsustain", V_FLOAT, offsetof(ptl_t, lightSustain), MEMBER_SIZEOF(ptl_t, lightSustain)},
 
 	{NULL, 0, 0, 0}
 };
@@ -923,8 +924,12 @@ static void CL_ParticleRun2 (ptl_t *p)
 	}
 
 	/* add light to the scene */
-	if (!p->parent && VectorNotEmpty(p->lightColor))
-		R_AddLight(p->s, 1 + p->lightIntensity, p->lightColor);
+	if (VectorNotEmpty(p->lightColor)) {
+		if (p->lightSustain)
+			R_AddSustainedLight(p->s, 1 + p->lightIntensity, p->lightColor, p->lightSustain);
+		else
+			R_AddLight(p->s, 1 + p->lightIntensity, p->lightColor);
+	}
 
 	p->invis = qfalse;
 }

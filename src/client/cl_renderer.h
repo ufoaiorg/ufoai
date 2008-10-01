@@ -129,6 +129,7 @@ typedef struct ptl_s {
 	vec3_t angles;
 	vec3_t lightColor;
 	float lightIntensity;
+	float lightSustain;
 	int levelFlags;
 	short stipplePattern;	/**< the GL_LINE_STIPPLE pattern */
 

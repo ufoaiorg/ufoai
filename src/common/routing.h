@@ -53,12 +53,12 @@ MACROS
  */
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actor_size is 1 or greater!!! */
-#define RT_CONN(map, actor_size, x, y, z, dir)		map[(actor_size) - 1].route[(z)][(y)][(x)][(dir)]
+#define RT_CONN(map, actor_size, x, y, z, dir)			map[(actor_size) - 1].route[(z)][(y)][(x)][(dir)]
 #define RT_CONN_TEST(map, actor_size, x, y, z, dir)		assert((actor_size) >= 1); assert((actor_size) <= ACTOR_MAX_SIZE); \
-														assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
-														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
-														assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
-														assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
+															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
+															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
+															assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
+															assert((dir) >= 0); assert((dir) < CORE_DIRECTIONS);
 
 #define RT_CONN_PX(map, actor_size, x, y, z)		(RT_CONN(map, actor_size, x, y, z, 0))
 #define RT_CONN_NX(map, actor_size, x, y, z)		(RT_CONN(map, actor_size, x, y, z, 1))
@@ -70,14 +70,14 @@ MACROS
 #define RT_CONN_NX_PY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 6))
 #define RT_CONN_NX_NY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 5))
 
-#define RT_FLOOR(map, actor_size, x, y, z)		    map[(actor_size) - 1].floor[(z)][(y)][(x)]
+#define RT_FLOOR(map, actor_size, x, y, z)			map[(actor_size) - 1].floor[(z)][(y)][(x)]
 #define RT_CEILING(map, actor_size, x, y, z)		map[(actor_size) - 1].ceil[(z)][(y)][(x)]
-#define RT_FILLED(map, actor_size, x, y, z)		    (RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING)
+#define RT_FILLED(map, actor_size, x, y, z)			(RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING)
 
 /* area - Used by Grid_* only */
-#define RT_AREA(path, x, y, z, state)               ((path)->area[(state)][(z)][(y)][(x)])
-#define RT_AREA_FROM(path, x, y, z, state)          ((path)->areaFrom[(state)][(z)][(y)][(x)])
-#define RT_SAREA(path, x, y, z, state)              ((path)->areaStored[(state)][(z)][(y)][(x)])
+#define RT_AREA(path, x, y, z, state)				((path)->area[(state)][(z)][(y)][(x)])
+#define RT_AREA_FROM(path, x, y, z, state)			((path)->areaFrom[(state)][(z)][(y)][(x)])
+#define RT_SAREA(path, x, y, z, state)				((path)->areaStored[(state)][(z)][(y)][(x)])
 #define RT_AREA_TEST(path, x, y, z, state)			assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 														assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
 														assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
@@ -85,7 +85,8 @@ MACROS
 
 
 /**
- * @brief SizedPosToVect locates the center of an actor based on size and position. */
+ * @brief SizedPosToVect locates the center of an actor based on size and position.
+ */
 #define SizedPosToVec(p, actor_size, v) ( \
 	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2, \
 	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2, \

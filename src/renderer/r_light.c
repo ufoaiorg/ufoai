@@ -122,6 +122,6 @@ void R_EnableLights (void)
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->radius * LIGHT_RADIUS_FACTOR);
 	}
 
-	/* disable first light to reset state */
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
+	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
 }
