@@ -125,14 +125,14 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 			sout[2] = 255;
 			sout[3] = 255;
 
-			sout += 4;
+			sout += LIGHTMAP_BLOCK_BYTES;
 
 			dout[0] = 127;
 			dout[1] = 127;
-			dout[2] = 127;
+			dout[2] = 255;
 			dout[3] = 255;
 
-			dout += 4;
+			dout += DELUXEMAP_BLOCK_BYTES;
 		}
 	}
 
@@ -157,13 +157,11 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	if (size * LIGHTMAP_BYTES > sizeof(r_lightmaps.fbuffer))
 		Com_Error(ERR_DROP, "R_BuildLightmap: Surface too large: %d.\n", size);
 
-	lightmap = surf->samples;
-
 	d = r_lightmaps.direction_buffer;
 	fb = r_lightmaps.fbuffer;
 
 	/* convert the raw lightmap samples to floating point and scale them */
-	for (i = j = 0; i < size; i++, fb += 3, d += 4) {
+	for (i = j = 0; i < size; i++, fb += LIGHTMAP_BYTES, d += DELUXEMAP_BLOCK_BYTES) {
 		fb[0] = surf->samples[j++] * r_modulate->value;
 		fb[1] = surf->samples[j++] * r_modulate->value;
 		fb[2] = surf->samples[j++] * r_modulate->value;
@@ -233,7 +231,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	if (r_soften->integer && size > 128)
 		for (i = 0; i < 4; i++) {
 			R_SoftenTexture(lightmap, smax, tmax, LIGHTMAP_BLOCK_BYTES);
-			R_SoftenTexture(r_lightmaps.direction_buffer, smax, tmax, LIGHTMAP_BLOCK_BYTES);
+			R_SoftenTexture(r_lightmaps.direction_buffer, smax, tmax, DELUXEMAP_BLOCK_BYTES);
 		}
 
 	/* the final lightmap is uploaded to the card via the strided lightmap
@@ -459,7 +457,7 @@ void R_LightPoint (const vec3_t p)
 	int j;
 
 	/* fullbright */
-	VectorClear(r_lightmap_sample.point);
+	memset(&r_lightmap_sample, 0, sizeof(r_lightmap_sample));
 	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
 
 	if (!r_mapTiles[0]->bsp.lightdata)
