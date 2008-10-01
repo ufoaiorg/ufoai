@@ -247,6 +247,9 @@ particle explosion_2
 		image +sfx/uexp_
 		blend blend
 		style facing
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.5
+		lightsustain 1.0
 		framefade out
 		size  "170 170"
 		fps   8.0
