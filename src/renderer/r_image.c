@@ -118,7 +118,7 @@ void R_ImageList_f (void)
 			break;
 		}
 
-		Com_Printf(" %3i %3i RGB: %5i idx: %i - %s\n", image->upload_width, image->upload_height, image->texnum, image->index, image->name);
+		Com_Printf(" %3i %3i RGB: %5i idx: %s\n", image->upload_width, image->upload_height, image->texnum, image->name);
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", r_numImages, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
@@ -1552,29 +1552,20 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	}
 	image = &r_images[i];
 	image->has_alpha = qfalse;
-	image->index = i;
 	image->type = type;
+	image->registration_sequence = registration_sequence;
+	image->width = width;
+	image->height = height;
+	image->texnum = i + 1;
 
 	len = strlen(name);
 	if (len >= sizeof(image->name))
 		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
 	Q_strncpyz(image->name, name, MAX_QPATH);
-	image->registration_sequence = registration_sequence;
 	/* drop extension */
-	if (len >= 4 && (*image).name[len - 4] == '.')
-		(*image).name[len - 4] = '\0';
+	if (len >= 4 && image->name[len - 4] == '.')
+		image->name[len - 4] = '\0';
 
-	image->width = width;
-	image->height = height;
-
-	if (image->type == it_pic && strstr(image->name, "_noclamp"))
-		image->type = it_wrappic;
-
-	image->texnum = TEXNUM_IMAGES + (image - r_images);
-#ifdef DEBUG
-	if (image->texnum >= TEXNUM_IMAGES + MAX_GL_TEXTURES)
-		Sys_Error("Texture number overflow");
-#endif
 	if (pic) {
 		R_BindTexture(image->texnum);
 		R_UploadTexture((unsigned *) pic, width, height, image);

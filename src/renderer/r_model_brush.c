@@ -663,14 +663,14 @@ static void R_SortSurfacesArrays_ (mBspSurfaces_t *surfs)
 	int i, j;
 
 	for (i = 0; i < surfs->count; i++) {
-		const int texindex = surfs->surfaces[i]->texinfo->image->index;
-		R_SurfaceToSurfaces(r_sorted_surfaces[texindex], surfs->surfaces[i]);
+		const int texnum = surfs->surfaces[i]->texinfo->image->texnum;
+		R_SurfaceToSurfaces(r_sorted_surfaces[texnum], surfs->surfaces[i]);
 	}
 
 	surfs->count = 0;
 
 	for (i = 0; i < r_numImages; i++) {
-		mBspSurfaces_t *sorted = r_sorted_surfaces[r_images[i].index];
+		mBspSurfaces_t *sorted = r_sorted_surfaces[r_images[i].texnum];
 		if (sorted && sorted->count) {
 			for (j = 0; j < sorted->count; j++)
 				R_SurfaceToSurfaces(surfs, sorted->surfaces[j]);
@@ -702,10 +702,10 @@ static void R_SortSurfacesArrays (const model_t *mod)
 
 	/* allocate the per-texture surfaces arrays and determine counts */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image->index];
+		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image->texnum];
 		if (!surfs) {  /* allocate it */
 			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
-			r_sorted_surfaces[surf->texinfo->image->index] = surfs;
+			r_sorted_surfaces[surf->texinfo->image->texnum] = surfs;
 		}
 
 		surfs->count++;
@@ -713,7 +713,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 
 	/* allocate the surfaces pointers based on counts */
 	for (i = 0; i < r_numImages; i++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].index];
+		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].texnum];
 		if (surfs) {
 			surfs->surfaces = (mBspSurface_t **)Mem_PoolAlloc(sizeof(mBspSurface_t *) * surfs->count, vid_modelPool, 0);
 			surfs->count = 0;
@@ -730,7 +730,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 
 	/* free the per-texture surfaces arrays */
 	for (i = 0; i < r_numImages; i++) {
-		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].index];
+		mBspSurfaces_t *surfs = r_sorted_surfaces[r_images[i].texnum];
 		if (surfs) {
 			if (surfs->surfaces)
 				Mem_Free(surfs->surfaces);

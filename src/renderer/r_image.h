@@ -64,7 +64,6 @@ typedef struct image_s {
 	int registration_sequence;			/**< 0 = free */
 	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
 	GLuint texnum;						/**< gl texture binding */
-	int index;							/**< index in gltexture array */
 	qboolean has_alpha;
 	material_t material;
 	struct image_s *normalmap;			/**< normalmap texture  */
@@ -78,7 +77,6 @@ extern int registration_sequence;
 
 #define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES
 #define TEXNUM_DELUXEMAPS	(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
-#define TEXNUM_IMAGES		(TEXNUM_DELUXEMAPS + MAX_GL_DELUXEMAPS)
 
 extern image_t r_images[MAX_GL_TEXTURES];
 extern int r_numImages;
