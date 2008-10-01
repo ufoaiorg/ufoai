@@ -1593,7 +1593,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	image_t *image;
 	int i;
 	size_t len;
-	byte *pic = NULL, *palette;
+	byte *pic = NULL;
 	int width, height;
 
 	if (!pname)
@@ -1619,7 +1619,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	/* load the pic from disk */
 	image = NULL;
 	pic = NULL;
-	palette = NULL;
 
 	strcpy(ename, ".tga");
 	if (FS_CheckFile(lname) != -1) {
@@ -1659,8 +1658,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
   end:
 	if (pic)
 		Mem_Free(pic);
-	if (palette)
-		Mem_Free(palette);
 
 	if (image->type == it_world) {
 		image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
