@@ -98,6 +98,9 @@ static const int TUs_used[PATHFINDING_DIRECTIONS] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
 	};
 
+/** @brief Used to track where rerouting needs to occur. */
+static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+
 static void CM_MakeTracingNodes(void);
 static void CM_InitBoxHull(void);
 
@@ -770,7 +773,6 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	byte *source;
 	int length;
 	int x, y, z, size, dir;
-	int tile;
 	int minX, minY, minZ;
 	int maxX, maxY, maxZ;
 	unsigned int i;
@@ -843,32 +845,27 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	Com_Printf("Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX -sX, minY - sY, minZ - sZ, maxX -sX, maxY -sY, maxZ - sZ);
 
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
-		for (z = minZ; z < maxZ; z++)
-			for (y = minY; y < maxY; y++)
-				for (x = minX; x < maxX; x++) {
+		/* Adjust starting x and y by size to catch large actor cell overlap. */
+		for (y = minY - size; y < maxY; y++)
+			for (x = minX - size; x < maxX; x++) {
+				/* Just incase x or y start negative. */
+				if (x < 0 || y < 0)
+					continue;
+				for (z = minZ; z < maxZ; z++) {
 					clMap[size].floor[z][y][x] = temp_map[size].floor[z - sZ][y - sY][x - sX];
 					clMap[size].ceil[z][y][x] = temp_map[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++)
 						clMap[size].route[z][y][x][dir] = temp_map[size].route[z - sZ][y - sY][x - sX][dir];
 				}
+				/* Update the reroute table */
+				if (!reroute[size][y][x]) {
+					reroute[size][y][x]=numTiles;
+				} else {
+					reroute[size][y][x]=ROUTING_NOT_REACHABLE;
+				}
+			}
 
 	Com_Printf("Done copying data.\n");
-
-	/* Check each tile to look for overlaps and such */
-	for (tile = 0; tile < numTiles - 1; tile++) {
-		/* look for adjacent and overlapping data to regenerate */
-		pos3_t min, max;
-		VectorSet(min, max(max(minX, mapTiles[tile].wpMins[0]), 0),
-			max(max(minY, mapTiles[tile].wpMins[1]), 0),
-			max(max(minZ, mapTiles[tile].wpMins[2]), 0));
-		VectorSet(max, min(min(maxX, mapTiles[tile].wpMaxs[0]), PATHFINDING_WIDTH - 1),
-			min(min(maxY, mapTiles[tile].wpMaxs[1]), PATHFINDING_WIDTH - 1),
-			min(min(maxZ, mapTiles[tile].wpMaxs[2]), PATHFINDING_HEIGHT - 1));
-
-		Com_Printf("Overlap: (%i, %i, %i) to (%i, %i, %i)\n", min[0], min[1], min[2], max[0], max[1], max[2]);
-		/* Call the recalc function */
-		Grid_RecalcBoxRouting(clMap, min, max);
-	}
 
 	/* calculate new border after merge */
 	RT_GetMapSize(map_min, map_max);
@@ -1040,11 +1037,73 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	numTiles++;
 
 	CMod_LoadRouting(name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
-	memcpy(&svMap, &clMap, sizeof(svMap));
 
 	FS_FreeFile(buf);
 
 	return checksum;
+}
+
+static void CMod_RerouteMap(void)
+{
+	int size, x, y, z, dir;
+	int dx, dy;
+	pos3_t mins, maxs;
+
+	VecToPos(map_min, mins);
+	VecToPos(map_max, maxs);
+
+	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
+		(int)mins[0], (int)mins[1], (int)mins[2],
+		(int)maxs[0], (int)maxs[1], (int)maxs[2]);
+
+	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
+		for (y = mins[1]; y <= maxs[1]; y++) {
+			for (x = mins[0]; x <= maxs[0]; x++) {
+				Com_Printf("%i,", reroute[size][y][x]);
+			}
+			Com_Printf("\n");
+		}
+		Com_Printf("\n");
+	}
+
+	/* Floor pass */
+	for (size = 0; size < ACTOR_MAX_SIZE; size++)
+		for (y = mins[1]; y <= maxs[1]; y++)
+			for (x = mins[0]; x <= maxs[0]; x++)
+				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
+					for (z = maxs[2]; z >= mins[2]; z--) {
+						const int new_z = RT_CheckCell(clMap, size, x, y, z);
+						assert(new_z <= z);
+						z = new_z;
+					}
+				}
+
+	/* Wall pass */
+	for (size = 0; size < ACTOR_MAX_SIZE; size++)
+		for (y = mins[1]; y <= maxs[1]; y++)
+			for (x = mins[0]; x <= maxs[0]; x++)
+				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+					dx = x + dvecs[dir][0];
+					dy = y + dvecs[dir][1];
+					/* Skip if the destination is out of bounds. */
+					if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
+						continue;
+					/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
+					if (!reroute[size][y][x] && !reroute[dy][dx]
+						&& (reroute[size][y][x] == ROUTING_NOT_REACHABLE
+						|| reroute[size][dy][dx] == ROUTING_NOT_REACHABLE
+						|| reroute[size][dy][dx] != reroute[size][y][x])) {
+							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
+							 * RT_UpdateConnection expects it and breaks otherwise. */
+							for (z = 0; z <= maxs[2]; z++) {
+								const int new_z = RT_UpdateConnection(clMap, size, x, y, z, dir);
+								assert(new_z >= z);
+								z = new_z;
+							}
+						}
+				}
+
+	memcpy(&svMap, &clMap, sizeof(svMap));
 }
 
 
@@ -1075,6 +1134,9 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 
 	memset(clMap, 0, sizeof(clMap));
 
+	/* Reset the reroute table */
+	memset(reroute, 0, sizeof(reroute));
+
 	if (pos && *pos)
 		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
 
@@ -1082,8 +1144,10 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	while (tiles) {
 		/* get tile name */
 		token = COM_Parse(&tiles);
-		if (!tiles)
+		if (!tiles) {
+			CMod_RerouteMap();
 			return;
+		}
 
 		/* get base path */
 		if (token[0] == '-') {
@@ -1920,6 +1984,8 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
 	/* Hack to deal with negative numbers- otherwise rounds toward 0 instead of down. */
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
+	/* The tracing code will set locations without a floor to -1.  Compensate for that. */
+	if (z<0) z=0;
 	assert(z >= 0 && z < PATHFINDING_HEIGHT);
 	return z;
 }
@@ -1955,13 +2021,13 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 {
 	int x, y, z, actor_size, dir;
 
-#if 0
+#if 1
 	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
 		(int)min[0], (int)min[1], (int)min[2],
 		(int)max[0], (int)max[1], (int)max[2]);
 
-	Com_Printf("Before:\n");
-	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+	//Com_Printf("Before:\n");
+	//Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
 #endif
 
 	/* check unit heights */
