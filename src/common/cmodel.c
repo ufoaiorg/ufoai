@@ -859,9 +859,9 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 				}
 				/* Update the reroute table */
 				if (!reroute[size][y][x]) {
-					reroute[size][y][x]=numTiles;
+					reroute[size][y][x] = numTiles;
 				} else {
-					reroute[size][y][x]=ROUTING_NOT_REACHABLE;
+					reroute[size][y][x] = ROUTING_NOT_REACHABLE;
 				}
 			}
 
@@ -1985,7 +1985,8 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
 	diff = base < 0 ? (base - (CELL_HEIGHT - 1)) / CELL_HEIGHT : base / CELL_HEIGHT;
 	z += diff;
 	/* The tracing code will set locations without a floor to -1.  Compensate for that. */
-	if (z<0) z=0;
+	if (z < 0)
+		z = 0;
 	assert(z >= 0 && z < PATHFINDING_HEIGHT);
 	return z;
 }
@@ -2026,8 +2027,8 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 		(int)min[0], (int)min[1], (int)min[2],
 		(int)max[0], (int)max[1], (int)max[2]);
 
-	//Com_Printf("Before:\n");
-	//Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
+	/* Com_Printf("Before:\n"); */
+	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
 #endif
 
 	/* check unit heights */
