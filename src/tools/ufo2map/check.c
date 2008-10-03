@@ -460,7 +460,7 @@ static qboolean Check_SidePointsDown(const side_t *s)
 static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t *plane)
 {
 	/* normal should have a magnitude of one */
-	assert(abs(VectorLengthSqr(plane->normal) - 1.0f) < CH_DIST_EPSILON);
+	assert(fabs(VectorLengthSqr(plane->normal) - 1.0f) < CH_DIST_EPSILON);
 
 	return DotProduct(point, plane->normal) - plane->dist;
 }
@@ -493,7 +493,7 @@ static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
 	 * between the planes */
 	distance = Check_PointPlaneDistance(plane1->planeVector[0], plane2);
 
-	return abs(distance) < CH_DIST_EPSILON;
+	return fabs(distance) < CH_DIST_EPSILON;
 }
 
 /**
@@ -514,7 +514,7 @@ static qboolean ParallelAndCoincidentTo (const side_t *side1, const side_t *side
 
 	distance = Check_PointPlaneDistance(plane1->planeVector[0], plane2);
 
-	return abs(distance) < CH_DIST_EPSILON;
+	return fabs(distance) < CH_DIST_EPSILON;
 }
 
 /**
@@ -541,7 +541,7 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 		if (dist > epsilon)
 			return qfalse;
 
-		numPlanes += abs(dist) < CH_DIST_EPSILON ? 1 : 0;
+		numPlanes += fabs(dist) < CH_DIST_EPSILON ? 1 : 0;
 	}
 
 	if (mode == PIB_ON_SURFACE_ONLY && numPlanes == 0)
@@ -687,7 +687,7 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
 	if (length < DIST_EPSILON)
 		return qfalse;
 	sin = DotProduct(direction, plane->normal) / length;
-	if (abs(sin) < SIN_EPSILON)
+	if (fabs(sin) < SIN_EPSILON)
 		return qfalse;
 	VectorSubtract(plane->planeVector[0], vert1, lineToPlane);
 	param = DotProduct(plane->normal, lineToPlane) / DotProduct(plane->normal, direction);
@@ -798,7 +798,7 @@ static qboolean Check_EdgeEdgeIntersection(const vec3_t e1p1, const vec3_t e1p2,
 	VectorScale(dir1, 1.0f / length1, unitDir1);
 	VectorScale(dir2, 1.0f / length2, unitDir2);
 
-	cosAngle = abs(DotProduct(unitDir1, unitDir2));
+	cosAngle = fabs(DotProduct(unitDir1, unitDir2));
 
 	if (cosAngle >= COS_EPSILON)
 		return qfalse; /* parallel lines either do not intersect, or are coincident */
@@ -807,7 +807,7 @@ static qboolean Check_EdgeEdgeIntersection(const vec3_t e1p1, const vec3_t e1p2,
 	VectorNormalize(dirClosestApproach);
 
 	VectorSubtract(e2p1, e1p1, from1To2);
-	dist = abs(DotProduct(dirClosestApproach, from1To2));
+	dist = fabs(DotProduct(dirClosestApproach, from1To2));
 
 	if (dist > CH_DIST_EPSILON)
 		return qfalse; /* closest approach of skew lines is nonzero: no intersection */
@@ -888,7 +888,7 @@ static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
 		do {
 			i++;
 			VectorSubtract(vertbuf[i], vertbuf[i - 1], from0to1);
-		} while (abs(VectorLength(from0to1)) < CH_DIST_EPSILON);
+		} while (fabs(VectorLength(from0to1)) < CH_DIST_EPSILON);
 
 		/*check we have enough points left */
 		if (numVert - 2 < i)
@@ -897,13 +897,24 @@ static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
 		for (i++; i < numVert; i++) {
 			VectorSubtract(vertbuf[0], vertbuf[i], fromito0);
 			CrossProduct(from0to1, fromito0, linearCross);
-			if (abs(VectorLength(linearCross) / VectorLength(from0to1)) > CH_DIST_EPSILON)
+			if ((fabs(VectorLength(linearCross) / VectorLength(from0to1))) > CH_DIST_EPSILON) {
 				return qtrue; /* 3 points not in a line, there is overlap */
+			}
 		}
 	}
 
 	return qfalse; /* all points are collinear */
 }
+
+#if 0
+static void Check_SetError(side_t *s)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *tex = &side_brushtextures[index];
+
+	Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
+}
+#endif
 
 /** @brief check all brushes for overlapping shared faces
  *  @todo maybe too fussy. perhaps should ignore small overlaps.
@@ -950,7 +961,8 @@ void CheckZFighting (void)
 
 					#if 0
 					/** running this chunk on a large map proves that plane indices
-					  * cannot be relied on to test sides are from a common plane */
+					  * cannot be relied on to test sides are from a common plane
+					  * @todo this test needs repeating*/
 					if (ParallelAndCoincidentTo(iSide, jSide))
 						if (jSide->planenum != jSide->planenum)
 							Com_Printf("CheckZFighting: plane indices %i %i \n",
@@ -961,6 +973,7 @@ void CheckZFighting (void)
 						if (Check_SidesOverlap(iSide, jSide)) {
 							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
 								"z-fighting with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
+
 						}
 					}
 				}
