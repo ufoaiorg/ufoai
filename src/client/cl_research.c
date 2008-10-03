@@ -1488,7 +1488,7 @@ void RS_ResearchRun (void)
 					Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
 					/** @todo include employee-skill in calculation. */
 					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-					if (tech->time == 0) {
+					if (tech->time <= 0) {
 						/* Remove all scientists from the technology. */
 						while (tech->scientists > 0)
 							RS_RemoveScientist(tech, NULL);
