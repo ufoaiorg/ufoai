@@ -146,6 +146,8 @@ static void CMod_LoadSubmodels (lump_t * l, const vec3_t shift)
 	for (i = 0; i < count; i++, in++, out++) {
 		out = &curTile->models[i];
 
+		/* Record the shift in case we need to undo it. */
+		VectorCopy(shift, out->shift);
 		/* spread the mins / maxs by a pixel */
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
@@ -846,12 +848,12 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
 		/* Adjust starting x and y by size to catch large actor cell overlap. */
-		for (y = minY - size; y < maxY; y++)
-			for (x = minX - size; x < maxX; x++) {
+		for (y = minY - size; y <= maxY; y++)
+			for (x = minX - size; x <= maxX; x++) {
 				/* Just incase x or y start negative. */
 				if (x < 0 || y < 0)
 					continue;
-				for (z = minZ; z < maxZ; z++) {
+				for (z = minZ; z <= maxZ; z++) {
 					clMap[size].floor[z][y][x] = temp_map[size].floor[z - sZ][y - sY][x - sX];
 					clMap[size].ceil[z][y][x] = temp_map[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++)
@@ -871,7 +873,7 @@ static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int 
 	RT_GetMapSize(map_min, map_max);
 
 	end = time(NULL);
-	Com_Printf("Loaded routing for tile %s in %5.0fs\n", name, end - start);
+	Com_Printf("Loaded routing for tile %s in %5.1fs\n", name, end - start);
 }
 
 
@@ -1056,6 +1058,7 @@ static void CMod_RerouteMap(void)
 		(int)mins[0], (int)mins[1], (int)mins[2],
 		(int)maxs[0], (int)maxs[1], (int)maxs[2]);
 
+	/*
 	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
@@ -1065,14 +1068,16 @@ static void CMod_RerouteMap(void)
 		}
 		Com_Printf("\n");
 	}
+	*/
 
 	/* Floor pass */
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
 		for (y = mins[1]; y <= maxs[1]; y++)
 			for (x = mins[0]; x <= maxs[0]; x++)
 				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
+					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
-						const int new_z = RT_CheckCell(clMap, size, x, y, z);
+						const int new_z = RT_CheckCell(clMap, size + 1, x, y, z);
 						assert(new_z <= z);
 						z = new_z;
 					}
@@ -1089,14 +1094,15 @@ static void CMod_RerouteMap(void)
 					if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 						continue;
 					/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
-					if (!reroute[size][y][x] && !reroute[dy][dx]
+					if (reroute[size][y][x] && reroute[size][dy][dx]
 						&& (reroute[size][y][x] == ROUTING_NOT_REACHABLE
 						|| reroute[size][dy][dx] == ROUTING_NOT_REACHABLE
 						|| reroute[size][dy][dx] != reroute[size][y][x])) {
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
+							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
 							for (z = 0; z <= maxs[2]; z++) {
-								const int new_z = RT_UpdateConnection(clMap, size, x, y, z, dir);
+								const int new_z = RT_UpdateConnection(clMap, size + 1, x, y, z, dir);
 								assert(new_z >= z);
 								z = new_z;
 							}
@@ -2109,26 +2115,38 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
 		return;
 	}
+
+	Com_Printf("Model:%s origin(%f,%f,%f) angles(%f,%f,%f) mins(%f,%f,%f) maxs(%f,%f,%f)\n", name,
+		model->origin[0], model->origin[1], model->origin[2],
+		model->angles[0], model->angles[1], model->angles[2],
+		model->mins[0], model->mins[1], model->mins[2],
+		model->maxs[0], model->maxs[1], model->maxs[2]);
+
 	inlineList = list;
 
 	/* get the target model's dimensions */
 	if (VectorNotEmpty(model->angles)) {
 		vec3_t minVec, maxVec;
-		float maxF, v;
+		vec3_t centerVec, halfVec, worstVec, newCenterVec;
+		vec3_t m[3];
 
-		maxF = 0;
-		for (i = 0; i < 3; i++) {
-			v = fabsf(model->mins[i]);
-			if (v > maxF)
-				maxF = v;
-			v = fabsf(model->maxs[i]);
-			if (v > maxF)
-				maxF = v;
-		}
-		for (i = 0; i < 3; i++) {
-			minVec[i] = -maxF;
-			maxVec[i] = maxF;
-		}
+		/* Find the center of the extents. */
+		VectorCenterFromMinsMaxs (model->mins, model->maxs, centerVec);
+
+		/* Find the half height and half width of the extents. */
+		VectorSubtract(model->maxs, centerVec, halfVec);
+
+		/* Define the rough largest extenst that this box can have when rotated. */
+		worstVec[0] = worstVec[1] = worstVec[2] = halfVec[0] + halfVec[1] + halfVec[2];
+
+		/* Rotate the center about the origin. */
+		AngleVectors(model->angles, m[0], m[1], m[2]);
+		VectorRotate(m, centerVec, newCenterVec);
+
+		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
+		VectorSubtract(newCenterVec, halfVec, minVec);
+		VectorAdd(newCenterVec, halfVec, maxVec);
+
 		/* Now offset by origin then convert to position (Doors do not have 0 origins) */
 		VectorAdd(minVec, model->origin, minVec);
 		VecToPos(minVec, min);

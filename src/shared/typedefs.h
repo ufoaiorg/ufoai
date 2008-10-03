@@ -78,7 +78,7 @@ typedef struct cBspPlane_s {
 
 typedef struct cBspModel_s {
 	vec3_t mins, maxs;
-	vec3_t origin, angles;		/**< used to orient doors and rotating entities */
+	vec3_t origin, angles, shift;		/**< used to orient doors and rotating entities */
 	int headnode;
 	/** @note Not used by ufo2map */
 	int tile;					/**< which tile in assembly */
