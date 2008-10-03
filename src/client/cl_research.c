@@ -107,7 +107,12 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
 
-	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
+	/* Don't do anything for not researchable techs. */
+	if (tech->time == -1)
+		return;
+
+	/* Don't send mail for automatically completed techs. */
+	if (tech->time == 0)
 		tech->mailSent = MAILSENT_FINISHED;
 
 	/** At this point we define what research proposal description is used when displayed. (i.e. "usedDescription" is set here).
@@ -486,7 +491,7 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
-					if (init && tech->time <= 0)
+					if (init && tech->time == 0)
 						tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
 				}
@@ -494,7 +499,7 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 				/* If the tech is a 'free' one (such as ammo for a weapon),
 				 * mark it as researched and loop back to see if it unlocks
 				 * any other techs */
-				if (tech->statusResearchable && tech->time <= 0) {
+				if (tech->statusResearchable && tech->time == 0) {
 					if (init)
 						tech->mailSent = MAILSENT_FINISHED;
 					RS_ResearchFinish(tech);
@@ -734,7 +739,7 @@ void RS_InitTree (qboolean load)
 			/* Fill in subject lines of tech-mails.
 			 * The tech-name is copied if nothing is defined. */
 			for (j = 0; j < TECHMAIL_MAX; j++) {
-				/* Check if no subject was defined (but it is suppsoed to be sent) */
+				/* Check if no subject was defined (but it is supposed to be sent) */
 				if (!tech->mail[j].subject && tech->mail[j].to) {
 					tech->mail[j].subject = tech->name;
 				}
@@ -1483,7 +1488,7 @@ void RS_ResearchRun (void)
 					Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
 					/** @todo include employee-skill in calculation. */
 					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
-					if (tech->time <= 0) {
+					if (tech->time == 0) {
 						/* Remove all scientists from the technology. */
 						while (tech->scientists > 0)
 							RS_RemoveScientist(tech, NULL);
@@ -2295,7 +2300,7 @@ qboolean RS_ItemIsResearched (const char *idProvided)
 {
 	technology_t *tech;
 
-	/* in multiplaer everyting is researched */
+	/* in multiplayer everyting is researched */
 	if (!ccs.singleplayer)
 		return qtrue;
 
