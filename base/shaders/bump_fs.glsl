@@ -1,6 +1,6 @@
 // bumpmap fragment shader
 
-varying vec3 eyedir;
+vec3 eyedir;
 
 uniform float BUMP;
 uniform float PARALLAX;
