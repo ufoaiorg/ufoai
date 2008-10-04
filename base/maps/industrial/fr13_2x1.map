@@ -3,12 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"light" "190"
-"_color" "0.9 0.9 1"
-"angles" "0.032285 225"
-"ambient" "0.45 0.45 0.45"
-"maxteams" "0"
-"spawnflags" "255"
 // brush 0
 {
 ( 256 256 4 ) ( 256 0 4 ) ( 0 256 4 ) tex_buildings/floor015 0 -0 0 0.25 0.25 65280 0 0

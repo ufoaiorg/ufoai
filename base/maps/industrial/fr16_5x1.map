@@ -3,11 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"light" "190"
-"_color" "0.9 0.9 1"
-"angles" "0.032285 225"
-"ambient" "0.45 0.45 0.45"
-"maxteams" "0"
 // brush 0
 {
 ( 1218 160 132 ) ( 1214 160 132 ) ( 1218 160 55 ) tex_material/metall006 0 204 0 -0.25 0.25 65280 0 0
