@@ -191,8 +191,9 @@ static void checkEntityLevelFlags (entity_t *e, const int entnum)
  */
 static int checkEntityNotSet (const entity_t *e, int entnum, const char *var)
 {
-	const char *name = ValueForKey(e, var);
-	if (name) {
+	const char *key = ValueForKey(e, var);
+	if (key) {
+		const char *name = ValueForKey(e, "classname");
 		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "%s has %s set - remove it!\n", name, var);
 		return 1;
 	}
