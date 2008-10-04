@@ -62,7 +62,7 @@ typedef enum {
 #define NUM_SAME -3
 
 
-static void Check_Printf (const verbosityLevel_t msgVerbLevel, qboolean change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
+static void Check_Printf(const verbosityLevel_t msgVerbLevel, qboolean change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
 
 /**
  * @brief decides wether to proceed with output based on verbosity and ufo2map's mode: check/fix/compile
@@ -147,7 +147,6 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 		} else {
 			printf("%s", out_buffer1);
 		}
-
 	}
 
 	/* ensure next call gets brushnum and entnum printed if this is the end of the previous*/
@@ -156,12 +155,13 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 
 /**
  * @param[in] mandatory if this key is missing the entity will be deleted, else just a warning
+ * @sa checkEntityNotSet
  */
 static int checkEntityKey (entity_t *e, const int entnum, const char* key, const qboolean mandatory)
 {
 	const char *val = ValueForKey(e, key);
-	const char *name = ValueForKey(e, "classname");
 	if (!*val) {
+		const char *name = ValueForKey(e, "classname");
 		if (mandatory == MANDATORY_KEY) {
 			Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no %s given - will be deleted\n", name, key);
 			return 1;
@@ -177,8 +177,8 @@ static int checkEntityKey (entity_t *e, const int entnum, const char* key, const
 static void checkEntityLevelFlags (entity_t *e, const int entnum)
 {
 	const char *val = ValueForKey(e, "spawnflags");
-	const char *name = ValueForKey(e, "classname");
 	if (!*val) {
+		const char *name = ValueForKey(e, "classname");
 		char buf[16];
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no levelflags given - setting all\n", name);
 		snprintf(buf, sizeof(buf) - 1, "%i", (CONTENTS_LEVEL_ALL >> 8));
@@ -186,10 +186,23 @@ static void checkEntityLevelFlags (entity_t *e, const int entnum)
 	}
 }
 
-static int checkEntityZeroBrushes (entity_t *e, int entnum)
+/**
+ * @sa checkEntityKey
+ */
+static int checkEntityNotSet (const entity_t *e, int entnum, const char *var)
 {
-	const char *name = ValueForKey(e, "classname");
+	const char *name = ValueForKey(e, var);
+	if (name) {
+		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "%s has %s set - remove it!\n", name, var);
+		return 1;
+	}
+	return 0;
+}
+
+static int checkEntityZeroBrushes (const entity_t *e, int entnum)
+{
 	if (!e->numbrushes) {
+		const char *name = ValueForKey(e, "classname");
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", name);
 		return 1;
 	}
@@ -213,6 +226,7 @@ static int checkLight (entity_t *e, int entnum)
 static int checkFuncRotating (entity_t *e, int entnum)
 {
 	checkEntityLevelFlags(e, entnum);
+	checkEntityNotSet(e, entnum, "angles");
 
 	if (checkEntityZeroBrushes(e, entnum))
 		return 1;
@@ -223,6 +237,7 @@ static int checkFuncRotating (entity_t *e, int entnum)
 static int checkFuncDoor (entity_t *e, int entnum)
 {
 	checkEntityLevelFlags(e, entnum);
+	checkEntityNotSet(e, entnum, "angles");
 
 	if (checkEntityZeroBrushes(e, entnum))
 		return 1;
@@ -233,6 +248,8 @@ static int checkFuncDoor (entity_t *e, int entnum)
 static int checkFuncBreakable (entity_t *e, int entnum)
 {
 	checkEntityLevelFlags(e, entnum);
+	checkEntityNotSet(e, entnum, "angles");
+	checkEntityNotSet(e, entnum, "angle");
 
 	if (checkEntityZeroBrushes(e, entnum)) {
 		return 1;
