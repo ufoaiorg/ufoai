@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
  *  the margin for abutting brushes to be considered not intersecting */
 #define CH_DIST_EPSILON 0.001f
+#define CH_DIST_EPSILON_SQR 0.000001
 
 /** if the cosine of an angle is greater than this, then the angle is negligibly different from zero */
 #define COS_EPSILON 0.9999f
@@ -796,7 +797,7 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
  *  @return qtrue if the lines intersect between the given points
  *  @note http://mathworld.wolfram.com/Line-LineDistance.html
  */
-static qboolean Check_EdgeEdgeIntersection(const vec3_t e1p1, const vec3_t e1p2,
+static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2,
 											const vec3_t e2p1, const vec3_t e2p2, vec3_t intersection)
 {
 	vec3_t dir1, dir2, unitDir1, unitDir2;
@@ -849,6 +850,44 @@ static qboolean Check_EdgeEdgeIntersection(const vec3_t e1p1, const vec3_t e1p2,
 	return qtrue;
 }
 
+/** @brief test if three points are in a straight line in a robust way
+ *  @note if 2 points are very close, then there are essentially only 2 points, which must be in a straight line
+ *  @note this function should return the same result regardless of the order the points are sent
+ *  @note calculates how far off the line one of the points is and uses an epsilon to test.
+ *  @return qtrue if the 3 points are in a line
+ */
+static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const vec3_t c)
+{
+	vec3_t d1, d2, d3, cross;
+	float d1d, d2d, d3d, offLineDist;
+
+	VectorSubtract(a, b, d1);
+	VectorSubtract(a, c, d2);
+	VectorSubtract(a, c, d3);
+
+	d1d = VectorLength(d1);
+	d2d = VectorLength(d2);
+	d3d = VectorLength(d3);
+
+	/* if 2 points are in the same place, we only have 2 points, which must be in a line */
+	if ((d1d < CH_DIST_EPSILON) ||
+		(d2d < CH_DIST_EPSILON) ||
+		(d3d < CH_DIST_EPSILON))
+		return qtrue;
+
+	if (d1d >= d2d && d1d >= d3d) {
+		CrossProduct(d2, d3, cross);
+		offLineDist = VectorLength(cross) / d1d;
+	} else if (d2d >= d1d && d2d >= d3d) {
+		CrossProduct(d1, d3, cross);
+		offLineDist = VectorLength(cross) / d2d;
+	} else { /* d3d must be the largest */
+		CrossProduct(d1, d2, cross);
+		offLineDist = VectorLength(cross) / d3d;
+	}
+
+	return offLineDist < CH_DIST_EPSILON;
+}
 
 #define VERT_BUF_SIZE_DISJOINT_SIDES 21
 
@@ -856,7 +895,7 @@ static qboolean Check_EdgeEdgeIntersection(const vec3_t e1p1, const vec3_t e1p2,
  *  @note the sides must be on a common plane. if they are not, the result is unspecified
  *  @note http://mathworld.wolfram.com/Collinear.html
  */
-static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
+static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 {
 	vec3_t vertbuf[VERT_BUF_SIZE_DISJOINT_SIDES];/* vertices of intersection of sides. arbitrary choice of size: more than 4 is unusual */
 	int numVert = 0, i, j, k, l;
@@ -899,13 +938,14 @@ static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
 		return qfalse; /* must be at least 3 points to be not in a line */
 
 	{
-		vec3_t from0to1, fromito0, linearCross;
+		vec3_t from0to1, one;
 
 		/* skip past elements 0, 1, ... if they are coincident - to avoid division by zero */
 		i = 0;
 		do {
 			i++;
 			VectorSubtract(vertbuf[i], vertbuf[i - 1], from0to1);
+			VectorCopy(vertbuf[i], one);
 		} while (fabs(VectorLength(from0to1)) < CH_DIST_EPSILON);
 
 		/*check we have enough points left */
@@ -913,9 +953,7 @@ static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
 			return qfalse;
 
 		for (i++; i < numVert; i++) {
-			VectorSubtract(vertbuf[0], vertbuf[i], fromito0);
-			CrossProduct(from0to1, fromito0, linearCross);
-			if ((fabs(VectorLength(linearCross) / VectorLength(from0to1))) > CH_DIST_EPSILON) {
+			if (!Check_PointsAreCollinear(vertbuf[0], one, vertbuf[i])) {
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
@@ -925,7 +963,10 @@ static qboolean Check_SidesOverlap(const side_t *s1, const side_t *s2)
 }
 
 #if 0
-static void Check_SetError(side_t *s)
+/** @brief for debugging, use this to see which face is the problem
+  * as there is not non-debugging use (yet) usuallu #ifed out
+  */
+static void Check_SetError (side_t *s)
 {
 	const ptrdiff_t index = s - brushsides;
 	brush_texture_t *tex = &side_brushtextures[index];
@@ -991,7 +1032,10 @@ void CheckZFighting (void)
 						if (Check_SidesOverlap(iSide, jSide)) {
 							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
 								"z-fighting with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
-
+							#if 0
+							Check_SetError(iSide);
+							Check_SetError(jSide);
+							#endif
 						}
 					}
 				}
