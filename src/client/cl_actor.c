@@ -3358,6 +3358,12 @@ void CL_ActorDoMove (struct dbuffer *msg)
 
 	le->pathLength = NET_ReadByte(msg);
 	assert(le->pathLength <= MAX_LE_PATHLENGTH);
+
+	/* Also get the final position */
+	le->newPos[0] = NET_ReadByte(msg);
+	le->newPos[1] = NET_ReadByte(msg);
+	le->newPos[2] = NET_ReadByte(msg);
+
 	for (i = 0; i < le->pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
 		le->pathContents[i] = NET_ReadShort(msg);

@@ -38,7 +38,7 @@ typedef struct le_s {
 	int entnum;				/**< the server side edict num this le belongs to */
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
-	pos3_t pos, oldPos;		/**< position on the grid */
+	pos3_t pos, oldPos, newPos;		/**< position on the grid */
 	int dir;				/**< the current dir the le is facing into */
 
 	int TU, maxTU;				/**< time units */

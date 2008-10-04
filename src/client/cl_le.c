@@ -646,6 +646,16 @@ static void LET_PathMove (le_t * le)
 				}
 			}
 #endif
+			/* Verify the current position */
+			if (!VectorCompare(le->pos, le->newPos)) {
+				/* Output an error message */
+				Com_Printf("The actor's end position is not what the server has. o(%i %i %i) n(%i %i %i)\n"
+					, le->pos[0], le->pos[1], le->pos[2]
+					, le->newPos[0], le->newPos[1], le->newPos[2]);
+				/* Fix the location */
+				VectorCopy(le->newPos, le->pos);
+				Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+			}
 
 			CL_ConditionalMoveCalc(clMap, &clPathMap, le, MAX_ROUTE);
 

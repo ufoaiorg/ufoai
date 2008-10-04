@@ -1598,6 +1598,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 						 * stepAmount pointer would no longer be valid and you would
 						 * modify data in the new event. */
 						stepAmount = gi.WriteDummyByte(0);
+						/* Add four more dummy bytes.  These will be the final actor position. */
+						gi.WriteDummyByte(0); /* x */
+						gi.WriteDummyByte(0); /* y */
+						gi.WriteDummyByte(0); /* z */
 					}
 
 					assert(stepAmount);
@@ -1616,6 +1620,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					steps++;
 					/* store steps in netchannel */
 					*stepAmount = steps;
+					/* store the position too */
+					*(stepAmount + 1) = ent->pos[0];
+					*(stepAmount + 2) = ent->pos[1];
+					*(stepAmount + 3) = ent->pos[2];
 
 					/* write move header and always one step after another - because the next step
 					 * might already be the last one due to some stop event */
