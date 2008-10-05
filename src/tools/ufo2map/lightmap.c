@@ -1242,6 +1242,11 @@ void BuildFacelights (unsigned int facenum)
 			dir[2] = DotProduct(direction, normal);
 
 			VectorCopy(dir, direction);
+
+			if (direction[2] < 0.33) {  /* clamp it */
+				direction[2] = 0.33;
+				VectorNormalize(dir);
+			}
 		}
 		/* contribute the sample to one or more patches for radiosity */
 		if (config.numbounce > 0)
