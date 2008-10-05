@@ -350,6 +350,8 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 			mess->eventMail = mail;
 			mess->date.day = MSG_ReadLong(sb);
 			mess->date.sec = MSG_ReadLong(sb);
+			/* redo timestamp text after setting date */
+			MN_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 		}
 	}
 	return qtrue;
