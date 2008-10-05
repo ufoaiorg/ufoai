@@ -1,13 +1,8 @@
-/snd_*.so
-/ref_*.so
 /ufo
-/qdata
 /ufoded
 /ufo2map
-/ufomaster
 /config.status
 /config.log
 /config.h
 /Makefile
-/BUILD
-/stamps
+/debug-linux-gnu-i386
