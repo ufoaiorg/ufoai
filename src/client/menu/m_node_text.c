@@ -139,6 +139,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
 	int x1, y1; /* variable x and y position */
+	vec2_t nodepos;
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -148,6 +149,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		Sys_Error("MN_DrawTextNode: Called without text or linkedList pointer");
 	cur = textCopy;
 
+	MN_GetNodeAbsPos(node, nodepos);
 	/* Hover darkening effect for normal text lines. */
 	VectorScale(node->color, 0.8, colorHover);
 	colorHover[3] = node->color[3];
@@ -165,8 +167,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 	y1 = y;
 	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
-	if (node)
-		node->textLines = 0; /* these are lines only in one-line texts! */
+	node->textLines = 0; /* these are lines only in one-line texts! */
 	/* but it's easy to fix, just change FontDrawString
 	 * so that it returns a pair, #lines and height
 	 * and add that to variable line; the only other file
@@ -274,18 +275,18 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 	/* draw scrollbars */
 	if (node->scrollbar && node->height && node->textLines > node->height) {
-		const int scrollbarX = node->pos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
+		const int scrollbarX = nodepos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
 		const float scrollbarY = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
 
 		R_DrawFill(scrollbarX,
-			node->pos[1],
+			nodepos[1],
 			MN_SCROLLBAR_WIDTH,
 			node->size[1],
 			ALIGN_UL,
 			scrollbarBackground);
 
 		R_DrawFill(scrollbarX,
-			node->pos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->height),
+			nodepos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->height),
 			MN_SCROLLBAR_WIDTH,
 			scrollbarY,
 			ALIGN_UL,

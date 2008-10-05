@@ -29,6 +29,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern menuNode_t *focusNode;
 
+/**
+ * @brief Returns the absolute position of a menunode
+ * @param[in] menunode
+ * @param[out] pos
+ */
+void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
+{
+	if (!node)
+		Sys_Error("MN_GetNodeAbsPos: No node given");
+	if (!node->menu)
+		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
+
+	switch (node->type) {
+	case MN_NULL:
+	case MN_CONFUNC:
+	case MN_CVARFUNC:
+	case MN_FUNC:
+		break;
+	case MN_MODEL:
+		Vector2Set(pos, node->menu->origin[0] + node->origin[0], node->menu->origin[1] + node->origin[1]);
+		break;
+	default:
+		Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
+		break;
+	}
+}
+
 #if 0
 /** @todo to be integrated into MN_CheckNodeZone */
 /**
@@ -44,10 +71,12 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	int width, height;	/**< Width and height for the pic. */
 	int pic_x, pic_y;	/**< Position inside image */
 	byte *color = NULL;	/**< Pointer to specific pixel in image. */
+	vec2_t nodepos;
 
 	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
 		return qfalse;
 
+	MN_GetNodeAbsPos(node, nodepos);
 	R_LoadImage(va("pics/menu/%s", path), &picture, &width, &height);
 
 	if (!picture || !width || !height) {
@@ -57,8 +86,8 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	}
 
 	/** @todo Get current location _inside_ image from global position. CHECKME */
-	pic_x = x - node->pos[0];
-	pic_y = y - node->pos[1];
+	pic_x = x - nodepos[0];
+	pic_y = y - nodepos[1];
 
 	if (pic_x < 0 || pic_y < 0)
 		return qfalse;
@@ -81,6 +110,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty, i;
+	vec2_t nodepos;
 
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
 	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
@@ -89,6 +119,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (focusNode && mouseSpace != MS_NULL)
 		return qfalse;
 
+	MN_GetNodeAbsPos(node, nodepos);
 	switch (node->type) {
 	case MN_CONTAINER:
 		if (!node->container)
@@ -97,7 +128,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 			return qfalse;
 
 		/* check bounding box */
-		if (x < node->pos[0] || x > node->pos[0] + node->size[0] || y < node->pos[1] || y > node->pos[1] + node->size[1])
+		if (x < nodepos[0] || x > nodepos[0] + node->size[0] || y < nodepos[1] || y > nodepos[1] + node->size[1])
 			return qfalse;
 
 		/* found a container */
@@ -146,7 +177,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 			int hoverOptionID;
 			sy += (node->size[1] * node->height);
 			/* hover a given entry in the list */
-			hoverOptionID = (y - node->pos[1]);
+			hoverOptionID = (y - nodepos[1]);
 
 			if (node->size[1])
 				hoverOptionID = (hoverOptionID - node->size[1]) / node->size[1];
@@ -159,17 +190,17 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		}
 	}
 
-	tx = x - node->pos[0];
-	ty = y - node->pos[1];
+	tx = x - nodepos[0];
+	ty = y - nodepos[1];
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
 		/* center */
 		case 1:
-			tx = x - node->pos[0] + sx / 2;
+			tx = x - nodepos[0] + sx / 2;
 			break;
 		/* right */
 		case 2:
-			tx = x - node->pos[0] + sx;
+			tx = x - nodepos[0] + sx;
 			break;
 		}
 	}
@@ -178,8 +209,8 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qfalse;
 
 	for (i = 0; i < node->excludeNum; i++) {
-		if (x >= node->exclude[i].pos[0] && x <= node->exclude[i].pos[0] + node->exclude[i].size[0]
-		 && y >= node->exclude[i].pos[1] && y <= node->exclude[i].pos[1] + node->exclude[i].size[1])
+		if (x >= node->menu->origin[0] + node->exclude[i].pos[0] && x <= node->menu->origin[0] + node->exclude[i].pos[0] + node->exclude[i].size[0]
+		 && y >= node->menu->origin[1] + node->exclude[i].pos[1] && y <= node->menu->origin[1] + node->exclude[i].pos[1] + node->exclude[i].size[1])
 			return qfalse;
 	}
 

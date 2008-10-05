@@ -327,10 +327,13 @@ static void SCR_DrawCursor (void)
 				dragInfo.item.rotated = qtrue;
 
 			if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
+				vec2_t nodepos;
+
+				MN_GetNodeAbsPos(dragInfo.toNode, nodepos);
 				if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
 					VectorSet(org,
-						dragInfo.toNode->pos[0] + dragInfo.toNode->size[0] / 2.0,
-						dragInfo.toNode->pos[1] + dragInfo.toNode->size[1] / 2.0,
+						nodepos[0] + dragInfo.toNode->size[0] / 2.0,
+						nodepos[1] + dragInfo.toNode->size[1] / 2.0,
 						-40);
 				} else {
 					/* This is a "grid" container - we need to calculate the item-position
@@ -338,13 +341,13 @@ static void SCR_DrawCursor (void)
 					 * calculated rotation info. */
 					if (dragInfo.item.rotated)
 						VectorSet(org,
-							dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT,
-							dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT,
+							nodepos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT,
+							nodepos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT,
 							-40);
 					else
 						VectorSet(org,
-							dragInfo.toNode->pos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT,
-							dragInfo.toNode->pos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT,
+							nodepos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT,
+							nodepos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT,
 							-40);
 				}
 				Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */

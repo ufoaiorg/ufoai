@@ -614,6 +614,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 	int i;
 
 	lastNode = NULL;
+	Vector2Set(menu->origin, 0, 0);
 
 	/* if inheriting another menu, link in the super menu's nodes */
 	for (node = menu->firstNode; node; node = node->next) {
@@ -656,6 +657,13 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						if (!*text)
 							return qfalse;
 						Com_ParseValue(menu->noticePos, token, V_POS, 0, sizeof(vec2_t));
+						found = qtrue;
+					} else if (!Q_strcmp(token, "origin")) {
+						/* get new token */
+						token = COM_EParse(text, errhead, menu->name);
+						if (!*text)
+							return qfalse;
+						Com_ParseValue(menu->origin, token, V_POS, 0, sizeof(vec2_t));
 						found = qtrue;
 					} else
 						Com_Printf("Invalid special menu value '%s'\n", token);

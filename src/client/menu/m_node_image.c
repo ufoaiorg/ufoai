@@ -4,7 +4,9 @@
 void MN_DrawImageNode (menuNode_t *node, const char *imageName, int time)
 {
 	vec2_t size;
+	vec2_t nodepos;
 
+	MN_GetNodeAbsPos(node, nodepos);
 	/* HACK for ekg pics */
 	if (!Q_strncmp(node->name, "ekg_", 4)) {
 		int pt;
@@ -35,6 +37,6 @@ void MN_DrawImageNode (menuNode_t *node, const char *imageName, int time)
 	} else {
 		Vector2Copy(node->size, size);
 	}
-	R_DrawNormPic(node->pos[0], node->pos[1], size[0], size[1],
+	R_DrawNormPic(nodepos[0], nodepos[1], size[0], size[1],
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
 }

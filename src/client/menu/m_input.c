@@ -125,8 +125,10 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int clickedAtOption;
+	vec2_t pos;
 
-	clickedAtOption = (y - node->pos[1]);
+	MN_GetNodeAbsPos(node, pos);
+	clickedAtOption = (y - pos[1]);
 
 	if (node->size[1])
 		clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
@@ -174,15 +176,17 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 static void MN_BarClick (menu_t * menu, menuNode_t * node, int x)
 {
 	char var[MAX_VAR];
+	vec2_t pos;
 
 	if (!node->mousefx)
 		return;
 
+	MN_GetNodeAbsPos(node, pos);
 	Q_strncpyz(var, node->data[2], sizeof(var));
 	/* no cvar? */
 	if (!Q_strncmp(var, "*cvar", 5)) {
 		/* normalize it */
-		const float frac = (float) (x - node->pos[0]) / node->size[0];
+		const float frac = (float) (x - pos[0]) / node->size[0];
 		const float min = MN_GetReferenceFloat(menu, node->data[1]);
 		const float value = min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min);
 		/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
@@ -250,6 +254,8 @@ static void MN_BaseMapClick (const menuNode_t *node, base_t *base, int x, int y)
 	int row, col;
 
 	assert(base);
+	assert(node);
+	assert(node->menu);
 
 	if (gd.baseAction == BA_NEWBUILDING) {
 		assert(base->buildingCurrent);
@@ -302,12 +308,14 @@ static void MN_BaseMapRightClick (const menuNode_t *node, base_t *base, int x, i
 	int row, col;
 
 	assert(base);
+	assert(node);
+	assert(node->menu);
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (base->map[row][col].building && x >= base->map[row][col].posX
-			 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
-			 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+			if (base->map[row][col].building && x >= base->map[row][col].posX + node->menu->origin[0]
+			 && x < base->map[row][col].posX + node->menu->origin[0] + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY + node->menu->origin[1]
+			 && y < base->map[row][col].posY + node->menu->origin[1] + node->size[1] / BASE_SIZE) {
 				building_t *entry = base->map[row][col].building;
 				if (!entry)
 					Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);

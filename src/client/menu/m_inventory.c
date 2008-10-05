@@ -180,7 +180,7 @@ static invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const nod
 					qboolean newRow = qfalse;
 					vec2_t posMin;
 					vec2_t posMax;
-					Vector2Copy(node->pos, posMin);
+					MN_GetNodeAbsPos(node, posMin);
 					posMin[0] += curWidth;
 					posMin[1] += curHeight;
 					Vector2Copy(posMin, posMax);
@@ -198,7 +198,7 @@ static invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const nod
 						curWidth = maxHeight = 0;
 
 						/* Re-calculate the min & max values for this item in the new row. */
-						Vector2Copy(node->pos, posMin);
+						MN_GetNodeAbsPos(node, posMin);
 						posMin[1] += curHeight;
 						Vector2Copy(posMin, posMax);
 						newRow = qtrue;
@@ -297,16 +297,18 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 	if (mouseSpace == MS_MENU) {
 		invList_t *ic;
 		int fromX, fromY;
-
 		assert(node->container);
 		/* Get coordinates inside a scrollable container (if it is one). */
 		if (node->container->scroll) {
 			ic = MN_GetItemFromScrollableContainer(node, mouseX, mouseY, &fromX, &fromY);
 			Com_DPrintf(DEBUG_CLIENT, "MN_Drag: item %i/%i selected from scrollable container.\n", fromX, fromY);
 		} else {
+			vec2_t nodepos;
+
+			MN_GetNodeAbsPos(node, nodepos);
 			/* Normalize screen coordinates to container coordinates. */
-			fromX = (int) (mouseX - node->pos[0]) / C_UNIT;
-			fromY = (int) (mouseY - node->pos[1]) / C_UNIT;
+			fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
+			fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
 
 			ic = Com_SearchInInventory(menuInventory, node->container, fromX, fromY);
 		}
@@ -620,7 +622,10 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 void MN_DrawDisabled (const menuNode_t* node)
 {
 	const vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
-	R_DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
+	vec2_t nodepos;
+	
+	MN_GetNodeAbsPos(node, nodepos);
+	R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], ALIGN_UL, color);
 }
 
 /**
@@ -630,15 +635,18 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = &csi.ids[container];
+	vec2_t nodepos;
 
+	MN_GetNodeAbsPos(node, nodepos);
 	R_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
-	if (showTUs && cls.state == ca_active)
-		R_FontDrawString("f_verysmall", 0, node->pos[0] + 3, node->pos[1] + 3,
-			node->pos[0] + 3, node->pos[1] + 3, node->size[0] - 6, 0, 0,
+	if (showTUs && cls.state == ca_active){
+		R_FontDrawString("f_verysmall", 0, nodepos[0] + 3, nodepos[1] + 3,
+			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse);
+	}
 }
 
 /**
@@ -648,8 +656,8 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
 void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
 	objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
-
 	qboolean showTUs = qtrue;
+	vec2_t nodepos;
 
 	/* The shape of the free positions. */
 	uint32_t free[SHAPE_BIG_MAX_HEIGHT];
@@ -660,11 +668,12 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	assert(mouseSpace == MS_DRAGITEM);
 	assert(inv);
 
+	MN_GetNodeAbsPos(node, nodepos);
 	/* if single container (hands, extension, headgear) */
 	if (node->container->single) {
 		/* if container is free or the dragged-item is in it */
 		if (node->container == dragInfo.from || Com_CheckToInventory(inv, od, node->container, 0, 0, dragInfo.ic))
-			MN_DrawFree(node->container->id, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
+			MN_DrawFree(node->container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		memset(free, 0, sizeof(free));
 		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
@@ -681,7 +690,7 @@ void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 				/* Only draw on existing positions. */
 				if (Com_CheckShape(node->container->shape, x, y)) {
 					if (Com_CheckShape(free, x, y)) {
-						MN_DrawFree(node->container->id, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
+						MN_DrawFree(node->container->id, node, nodepos[0] + x * C_UNIT, nodepos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
 						showTUs = qfalse;
 					}
 				}
@@ -751,6 +760,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	qboolean drawLoadable = qfalse;
+	vec2_t nodepos;
 
 	if (!node->container)
 		MN_FindContainer(node);
@@ -758,6 +768,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		return NULL;
 
 	assert(menuInventory);
+	MN_GetNodeAbsPos(node, nodepos);
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
 	if (mouseSpace == MS_DRAGITEM && dragInfo.item.t)
@@ -766,7 +777,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	if (node->container->single) {
 		/* Single container */
 		vec2_t pos;
-		Vector2Copy(node->pos, pos);
+		Vector2Copy(nodepos, pos);
 		pos[0] += node->size[0] / 2.0;
 		pos[1] += node->size[1] / 2.0;
 
@@ -847,7 +858,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 							item_t tempItem = {1, NULL, NULL, 0, 0};
 							qboolean newRow = qfalse;
 							vec2_t pos;
-							Vector2Copy(node->pos, pos);
+							Vector2Copy(nodepos, pos);
 							pos[0] += curWidth;
 							pos[1] += curHeight;
 
@@ -864,7 +875,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 									curRow++;
 
 									/* Re-calculate the position of this item in the new row. */
-									Vector2Copy(node->pos, pos);
+									Vector2Copy(nodepos, pos);
 									pos[1] += curHeight;
 									newRow = qtrue;
 								}
@@ -927,7 +938,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 											if (icAmmo) {
 												/* Calculate the center of the item model/image. */
 												pos[0] += tempItem.t->sx * C_UNIT / 2;
-												pos[1] = node->pos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
+												pos[1] = nodepos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
 
 												curWidth += tempItem.t->sx * C_UNIT;
 
@@ -975,9 +986,9 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 				assert(ic->item.t);
 				if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
-					MN_DrawItem(node->pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
+					MN_DrawItem(nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 				else
-					MN_DrawItem(node->pos, &ic->item, ic->x, ic->y, scale, color);
+					MN_DrawItem(nodepos, &ic->item, ic->x, ic->y, scale, color);
 			}
 		}
 	}
@@ -997,8 +1008,8 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 		} else {
 			return Com_SearchInInventory(menuInventory,
 				node->container,
-				(mousePosX - node->pos[0]) / C_UNIT,
-				(mousePosY - node->pos[1]) / C_UNIT);
+				(mousePosX - nodepos[0]) / C_UNIT,
+				(mousePosY - nodepos[1]) / C_UNIT);
 		}
 	}
 
@@ -1022,7 +1033,7 @@ void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 
 	/* We position the model of the item ourself (in the middle of the item
 	 * node). See the "-1, -1" parameter of MN_DrawItem. */
-	Vector2Copy(node->pos, pos);
+	MN_GetNodeAbsPos(node, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;
 	MN_DrawItem(pos, &item, -1, -1, node->scale, color);

@@ -43,7 +43,8 @@ static void CL_ShowMessagesOnStack_f (void)
 
 #ifdef DEBUG
 /**
- * @brief Script command to delete all messages */
+ * @brief Script command to delete all messages
+ */
 static void CL_DeleteMessages_f (void)
 {
 	message_t *m = mn.messageStack;

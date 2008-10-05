@@ -36,18 +36,21 @@ cvar_t *mn_show_tooltips;
 
 static void MN_DrawBorder (const menuNode_t *node)
 {
+	vec2_t nodepos;
+	
+	MN_GetNodeAbsPos(node, nodepos);
 	/** @todo use GL_LINE_LOOP + array here */
 	/* left */
-	R_DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
+	R_DrawFill(nodepos[0] - node->padding - node->border, nodepos[1] - node->padding - node->border,
 		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
 	/* right */
-	R_DrawFill(node->pos[0] + node->size[0] + node->padding, node->pos[1] - node->padding - node->border,
+	R_DrawFill(nodepos[0] + node->size[0] + node->padding, nodepos[1] - node->padding - node->border,
 		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
 	/* top */
-	R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding - node->border,
+	R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding - node->border,
 		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
 	/* down */
-	R_DrawFill(node->pos[0] - node->padding, node->pos[1] + node->size[1] + node->padding,
+	R_DrawFill(nodepos[0] - node->padding, nodepos[1] + node->size[1] + node->padding,
 		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
 }
 
@@ -68,6 +71,7 @@ void MN_DrawMenus (void)
 	int i;
 	message_t *message;
 	const invList_t *itemHover = NULL;
+	vec2_t nodepos;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -97,6 +101,7 @@ void MN_DrawMenus (void)
 			}
 		}
 		for (node = menu->firstNode; node; node = node->next) {
+			MN_GetNodeAbsPos(node, nodepos);
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASELAYOUT || node->type == MN_BASEMAP || node->type == MN_MAP)
 					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
@@ -138,13 +143,13 @@ void MN_DrawMenus (void)
 				}
 
 				/* check node size x and y value to check whether they are zero */
-				if (node->bgcolor && node->size[0] && node->size[1] && node->pos) {
+				if (node->bgcolor && node->size[0] && node->size[1] && nodepos[0] && nodepos[1]) {
 					if (node->type != MN_BASELAYOUT)
-						R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding,
+						R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding,
 							node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
 				}
 
-				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
+				if (node->border && node->bordercolor && node->size[0] && node->size[1] && nodepos)
 					MN_DrawBorder(node);
 
 				/* mouse darken effect */
@@ -200,18 +205,18 @@ void MN_DrawMenus (void)
 					ref += node->horizontalScroll;
 					/* blinking */
 					if (!node->mousefx || cl.time % 1000 < 500)
-						R_FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
+						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else
-						R_FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
+						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
 					break;
 
 				case MN_TEXT:
 					if (mn.menuText[node->num]) {
 						font = MN_GetFont(menu, node);
-						MN_DrawTextNode(mn.menuText[node->num], NULL, font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+						MN_DrawTextNode(mn.menuText[node->num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 					} else if (mn.menuTextLinkedList[node->num]) {
 						font = MN_GetFont(menu, node);
-						MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+						MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						linkedList_t *messagelist = NULL;
 						char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
@@ -233,7 +238,7 @@ void MN_DrawMenus (void)
 							message = message->next;
 						}
 						if (messagelist) {
-							MN_DrawTextNode(NULL, messagelist, font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+							MN_DrawTextNode(NULL, messagelist, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 							LIST_Delete(&messagelist);
 						}
 					}
@@ -246,7 +251,7 @@ void MN_DrawMenus (void)
 						/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 						fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
 						bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
-						R_DrawFill(node->pos[0], node->pos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
+						R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
 					}
 					break;
 
@@ -259,7 +264,7 @@ void MN_DrawMenus (void)
 							shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
 						} else
 							shx = node->texh[0];
-						R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+						R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
 							shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 					}
 					break;
@@ -308,8 +313,8 @@ void MN_DrawMenus (void)
 							dragInfo.toNode = node;
 							dragInfo.to = node->container;
 
-							dragInfo.toX = (mousePosX - node->pos[0] - itemX) / C_UNIT;
-							dragInfo.toY = (mousePosY - node->pos[1] - itemY) / C_UNIT;
+							dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
+							dragInfo.toY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
 
 							/** Check if the items already exists in the container. i.e. there is already at least one item.
 							 * @sa Com_AddToInventory */
@@ -384,7 +389,7 @@ void MN_DrawMenus (void)
 							CIN_PlayCinematic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 						if (cls.playingCinematic) {
 							/* only set replay to true if video was found and is running */
-							CIN_SetParameters(node->pos[0], node->pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
+							CIN_SetParameters(nodepos[0], nodepos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
 							CIN_RunCinematic();
 						}
 					}
@@ -396,7 +401,7 @@ void MN_DrawMenus (void)
 					menu->hoverNode = node;
 
 				if (mn_debugmenu->integer)
-					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1], 0);
+					MN_DrawTooltip("f_small", node->name, nodepos[0], nodepos[1], node->size[1], 0);
 
 				R_ColorBlend(NULL);
 			}	/* if */

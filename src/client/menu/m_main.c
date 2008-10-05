@@ -294,6 +294,27 @@ menu_t *MN_GetMenu (const char *name)
 	return NULL;
 }
 
+/**
+ * @brief Sets new x and y coordinates for a given menu
+ */
+void MN_SetNewMenuPos (menu_t* menu, int x, int y)
+{
+	if (menu)
+		Vector2Set(menu->origin, x, y);
+}
+
+/**
+ * @brief Console command for moving a menu
+ */
+void MN_SetNewMenuPos_f (void)
+{
+	menu_t* menu = MN_GetActiveMenu();
+
+	if (Cmd_Argc() < 3)
+		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
+
+	MN_SetNewMenuPos(menu, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
+}
 
 /**
  * @brief This will reinit the current visible menu
@@ -633,6 +654,8 @@ void MN_Init (void)
 	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
 	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
+
+	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
 
 	/* 256kb */
 	/** @todo Get rid of adata, curadata and adataize */

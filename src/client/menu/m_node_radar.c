@@ -250,12 +250,14 @@ static void MN_InitRadar (const menuNode_t *node)
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
 	float distAB, distBC;
 	vec2_t gridSize;		/**< Size of the whole grid (in tiles units) */
+	vec2_t nodepos;
 
 	MN_FreeRadarImages();
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 
-	radar.x = node->pos[0];
-	radar.y = node->pos[1];
+	MN_GetNodeAbsPos(node, nodepos);
+	radar.x = nodepos[0];
+	radar.y = nodepos[1];
 
 	/* only check once per map whether all the needed images exist */
 	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
