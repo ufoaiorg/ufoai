@@ -129,7 +129,6 @@ void R_GetLevelSurfaceLists(void);
 void R_InitMiscTexture(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);
-qboolean R_CullBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawParticles(void);
 void R_SetupFrustum(void);
 

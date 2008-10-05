@@ -35,10 +35,50 @@ BRUSH MODELS
 
 #define BACKFACE_EPSILON 0.01
 
+
+/**
+ * @brief Returns true if the box is completely outside the frustum
+ */
+static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
+{
+	int i;
+
+	if (r_nocull->integer)
+		return qfalse;
+
+	for (i = 0; i < 4; i++)
+		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
+			return qtrue;
+	return qfalse;
+}
+
+qboolean R_CullBspModel (const entity_t *e)
+{
+	vec3_t mins, maxs;
+
+	/* no surfaces */
+	if (!e->model->bsp.nummodelsurfaces)
+		return qtrue;
+
+	if (VectorNotEmpty(e->angles)) {
+		int i;
+		for (i = 0; i < 3; i++) {
+			mins[i] = e->origin[i] - e->model->radius;
+			maxs[i] = e->origin[i] + e->model->radius;
+		}
+	} else {
+		VectorAdd(e->origin, e->model->mins, mins);
+		VectorAdd(e->origin, e->model->maxs, maxs);
+	}
+
+	return R_CullBox(mins, maxs);
+}
+
 /**
  * @brief
+ * @param[in] modelorg relative to viewpoint
  */
-static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
+static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 {
 	int i;
 	float dot;
@@ -69,41 +109,17 @@ static void R_DrawInlineBrushModel (const entity_t *e, const vec3_t modelorg)
 
 	R_DrawOpaqueWarpSurfaces(e->model->bsp.opaque_warp_surfaces);
 
+	R_DrawAlphaTestSurfaces(e->model->bsp.alpha_test_surfaces);
+
 	R_EnableBlend(qtrue);
 
 	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
 
 	R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
 
-	R_DrawAlphaTestSurfaces(e->model->bsp.alpha_test_surfaces);
-
 	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
 
 	R_EnableBlend(qfalse);
-}
-
-qboolean R_CullBspModel (const entity_t *e)
-{
-	vec3_t mins, maxs;
-
-	if (e->model->bsp.nummodelsurfaces == 0)
-		return qfalse;
-
-	if (VectorNotEmpty(e->angles)) {
-		int i;
-		for (i = 0; i < 3; i++) {
-			mins[i] = e->origin[i] - e->model->radius;
-			maxs[i] = e->origin[i] + e->model->radius;
-		}
-	} else {
-		VectorAdd(e->origin, e->model->mins, mins);
-		VectorAdd(e->origin, e->model->maxs, maxs);
-	}
-
-	if (R_CullBox(mins, maxs))
-		return qfalse;
-
-	return qtrue;
 }
 
 /**
@@ -115,23 +131,24 @@ void R_DrawBrushModel (const entity_t * e)
 	/* relative to viewpoint */
 	vec3_t modelorg;
 
-	VectorCopy(refdef.vieworg, modelorg);
+	/* set the relative origin, accounting for rotation if necessary */
+	VectorSubtract(refdef.vieworg, e->origin, modelorg);
 	if (VectorNotEmpty(e->angles)) {
 		vec3_t temp;
 		vec3_t forward, right, up;
 
 		VectorCopy(modelorg, temp);
 		AngleVectors(e->angles, forward, right, up);
+
 		modelorg[0] = DotProduct(temp, forward);
 		modelorg[1] = -DotProduct(temp, right);
 		modelorg[2] = DotProduct(temp, up);
 	}
-	VectorSubtract(modelorg, e->origin, modelorg);
 
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
 
-	R_DrawInlineBrushModel(e, modelorg);
+	R_DrawBspModelSurfaces(e, modelorg);
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
@@ -229,8 +246,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	if (node->contents == CONTENTS_SOLID)
 		return;					/* solid */
 
-	if (!r_nocull->integer && R_CullBox(node->minmaxs, node->minmaxs + 3))
-		return;
+	if (R_CullBox(node->minmaxs, node->minmaxs + 3))
+		return;					/* culled out */
 
 	/* if a leaf node, draw stuff */
 	if (node->contents != LEAFNODE)

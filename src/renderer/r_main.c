@@ -100,19 +100,6 @@ static void R_Strings_f (void)
 }
 
 /**
- * @brief Returns true if the box is completely outside the frustum
- */
-qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
-{
-	int i;
-
-	for (i = 0; i < 4; i++)
-		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
-			return qtrue;
-	return qfalse;
-}
-
-/**
  * @sa R_ModLoadPlanes
  */
 static inline int SignbitsForPlane (const cBspPlane_t * out)
