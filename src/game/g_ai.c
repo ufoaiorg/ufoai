@@ -1808,49 +1808,54 @@ void AI_Cleanup (void)
 	}
 }
 
+
 /**
- * @brief Initializes the Actor.
- * @param[in] player Player to which this actor belongs.
- * @param[in] ent Pointer to edict_t representing actor.
+ * @brief Initializes the Actor's stats.
+ * @param ent Actor to set stats.
+ * @param[in] team Team to which actor belongs.
  */
-static void AI_InitPlayer (player_t * player, edict_t * ent)
+static void AI_SetStats (edict_t * ent, int team)
 {
-	int team, alienTeam;
-	team = player->pers.team;
-
-	/* Set Actor state */
-	ent->type = ET_ACTOR;
-	ent->pnum = player->num;
-
 	/* Set stats */
 	if (team != TEAM_CIVILIAN) {
 		/** skills; @todo more power to Ortnoks, more mind to Tamans */
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2); /**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
-		/*  aliens get much more mind */
+		/* Aliens get much more mind */
 		ent->chr.score.skills[ABILITY_MIND] += 100;
 		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
 			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
 	} else if (team == TEAM_CIVILIAN) {
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
-	}
 
-	/* Set starting health */
-	ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
-	ent->HP = ent->chr.HP;
-	ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-	if (ent->chr.morale >= MAX_SKILL)
-		ent->chr.morale = MAX_SKILL;
-	ent->morale = ent->chr.morale;
-	ent->STUN = 0;
-	/* tweak health */
-	if (team == TEAM_CIVILIAN) {
-		ent->chr.HP /= 2; /* civilians get half health */
+		/* Set starting health */
+		ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
 		ent->HP = ent->chr.HP;
-		if (ent->chr.morale > 45) /* they can't get over 45 morale */
-			ent->chr.morale = 45;
+		ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+		if (ent->chr.morale >= MAX_SKILL)
+			ent->chr.morale = MAX_SKILL;
+		ent->morale = ent->chr.morale;
+		ent->STUN = 0;
+		/* Tweak health */
+		if (team == TEAM_CIVILIAN) {
+			ent->chr.HP /= 2; /* civilians get half health */
+			ent->HP = ent->chr.HP;
+			if (ent->chr.morale > 45) /* they can't get over 45 morale */
+				ent->chr.morale = 45;
+		}
 	}
+}
 
-	/* set model */
+
+/**
+ * @brief Sets an Actor's ingame model.
+ * @param ent Actor to set model of.
+ * @param[in] team Team to which actor belongs.
+ */
+static void AI_SetModel (edict_t * ent, int team)
+{
+	int alienTeam;
+
+	/* Set model. */
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
 			alienTeam = rand() % gi.csi->numAlienTeams;
@@ -1866,19 +1871,55 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 	ent->skin = ent->chr.skin;
+}
 
-	/* pack equipment */
+
+/**
+ * @brief Sets the Actor's equipment.
+ * @param ent Actor to give equipment to.
+ * @param[in] team Team to which the Actor belongs.
+ * @param[in] ed Equipment definition for the new Actor.
+ */
+static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
+{
+	/* Pack equipment. */
 	if (team != TEAM_CIVILIAN) { /** @todo Give civilians gear. */
 		if (ent->chr.weapons)   /* actor can handle equipment */
-			INVSH_EquipActor(&ent->i, gi.csi->eds[0].num, MAX_OBJDEFS, gi.csi->eds[0].name, &ent->chr);
+			INVSH_EquipActor(&ent->i, ed->num, MAX_OBJDEFS, ed->name, &ent->chr);
 		else if (ent->chr.teamDef)
 			/* actor cannot handle equipment */
 			INVSH_EquipActorMelee(&ent->i, &ent->chr);
 		else
 			Com_Printf("AI_InitPlayer: actor with no equipment\n");
 	}
+}
 
-	/* more tweaks */
+
+/**
+ * @brief Initializes the Actor.
+ * @param[in] player Player to which this actor belongs.
+ * @param ent Pointer to edict_t representing actor.
+ * @param[in] ed Equipment definition for the new Actor.
+ */
+static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
+{
+	int team;
+	team = player->pers.team;
+
+	/* Set Actor state. */
+	ent->type = ET_ACTOR;
+	ent->pnum = player->num;
+
+	/* Calculate stats. */
+	AI_SetStats(ent, team);
+
+	/* Set the model. */
+	AI_SetModel(ent, team);
+
+	/* Give equipment. */
+	AI_SetEquipment(ent, team, ed);
+
+	/* More tweaks */
 	if (team != TEAM_CIVILIAN) {
 		/** Set default reaction mode.
 		 * @sa cl_team:CL_GenerateCharacter This function sets the initial default value for (newly created) non-AI actors.
@@ -1906,6 +1947,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent)
 
 #define MAX_SPAWNPOINTS		64
 static int spawnPoints[MAX_SPAWNPOINTS];
+
 
 /**
  * @brief Spawn civilians and aliens
@@ -1954,7 +1996,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
 		/* initialize the new actor */
-		AI_InitPlayer(player, ent);
+		AI_InitPlayer(player, ent, ed);
 	}
 	/* show visible actors */
 	G_ClearVisFlags(team);
