@@ -149,7 +149,7 @@ void MN_DrawMenus (void)
 							node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
 				}
 
-				if (node->border && node->bordercolor && node->size[0] && node->size[1] && nodepos)
+				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
 					MN_DrawBorder(node);
 
 				/* mouse darken effect */
