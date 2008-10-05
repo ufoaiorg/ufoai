@@ -695,11 +695,11 @@ static void Check_NearList (void)
  */
 static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, const plane_t *plane, vec3_t intersection)
 {
-	vec3_t direction; /*< a vector in the direction of the line */
-	vec3_t lineToPlane; /*< a line from vert1 on the line to a point on the plane */
-	float sin; /*< sine of angle to plane, cosine of angle to normal */
-	float param; /*< param in line equation  line = vert1 + param * (vert2 - vert1) */
-	float length; /*< length of the edge */
+	vec3_t direction; /* a vector in the direction of the line */
+	vec3_t lineToPlane; /* a line from vert1 on the line to a point on the plane */
+	float sin; /* sine of angle to plane, cosine of angle to normal */
+	float param; /* param in line equation  line = vert1 + param * (vert2 - vert1) */
+	float length; /* length of the edge */
 
 	VectorSubtract(vert2, vert1, direction);/*< direction points from vert1 to vert2 */
 	length = VectorLength(direction);
@@ -723,11 +723,12 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
 static qboolean Check_WindingIntersects (const winding_t *winding, const mapbrush_t *brush)
 {
 	vec3_t intersection;
-	int vi, vj, bi;
+	int vi, bi;
+
 	for (bi = 0; bi < brush->numsides; bi++) {
 		for (vi = 0; vi < winding->numpoints; vi++) {
-			vj = vi + 1;
-			vj = vj == winding->numpoints ? 0 : vj;
+			const int val = vi + 1;
+			const int vj = (winding->numpoints == val) ? 0 : val;
 			if (Check_EdgePlaneIntersection(winding->p[vi], winding->p[vj], &mapplanes[brush->original_sides[bi].planenum], intersection))
 				if (Check_IsPointInsideBrush(intersection, brush, PIB_INCL_SURF_EXCL_EDGE))
 					return qtrue;
@@ -798,7 +799,7 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
  *  @note http://mathworld.wolfram.com/Line-LineDistance.html
  */
 static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2,
-											const vec3_t e2p1, const vec3_t e2p2, vec3_t intersection)
+					const vec3_t e2p1, const vec3_t e2p2, vec3_t intersection)
 {
 	vec3_t dir1, dir2, unitDir1, unitDir2;
 	vec3_t dirClosestApproach, from1To2, e1p1ToIntersection, e2p1ToIntersection;
@@ -850,11 +851,12 @@ static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2
 	return qtrue;
 }
 
-/** @brief test if three points are in a straight line in a robust way
- *  @note if 2 points are very close, then there are essentially only 2 points, which must be in a straight line
- *  @note this function should return the same result regardless of the order the points are sent
- *  @note calculates how far off the line one of the points is and uses an epsilon to test.
- *  @return qtrue if the 3 points are in a line
+/**
+ * @brief test if three points are in a straight line in a robust way
+ * @note if 2 points are very close, then there are essentially only 2 points, which must be in a straight line
+ * @note this function should return the same result regardless of the order the points are sent
+ * @note calculates how far off the line one of the points is and uses an epsilon to test.
+ * @return qtrue if the 3 points are in a line
  */
 static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const vec3_t c)
 {
@@ -870,9 +872,7 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 	d3d = VectorLength(d3);
 
 	/* if 2 points are in the same place, we only have 2 points, which must be in a line */
-	if ((d1d < CH_DIST_EPSILON) ||
-		(d2d < CH_DIST_EPSILON) ||
-		(d3d < CH_DIST_EPSILON))
+	if (d1d < CH_DIST_EPSILON || d2d < CH_DIST_EPSILON || d3d < CH_DIST_EPSILON)
 		return qtrue;
 
 	if (d1d >= d2d && d1d >= d3d) {
@@ -898,11 +898,13 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 {
 	vec3_t vertbuf[VERT_BUF_SIZE_DISJOINT_SIDES];/* vertices of intersection of sides. arbitrary choice of size: more than 4 is unusual */
-	int numVert = 0, i, j, k, l;
+	int numVert = 0, i, j, k;
 	winding_t *w[2];
 	mapbrush_t *b[2];
+
 	w[0] = s1->winding; w[1] = s2->winding;
 	b[0] = s1->brush; b[1] = s2->brush;
+
 	/* test if points from first winding are in (or on) brush that is parent of second winding
 	 * and vice - versa. i ^ 1 toggles */
 	for (i = 0; i < 2; i++) {
@@ -919,18 +921,17 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 	}
 
 	/* test for intersections between windings*/
-	for (i = 0; i < w[0]->numpoints ; i++) {
-		j = (i + 1) % w[0]->numpoints;
-		for (k = 0; k < w[1]->numpoints ;k++) {
-			l = (k + 1) % w[1]->numpoints;
-			if (Check_EdgeEdgeIntersection(w[0]->p[i], w[0]->p[j], w[1]->p[k], w[1]->p[l], vertbuf[numVert])) {
+	for (i = 0; i < w[0]->numpoints; i++) {
+		const int pointIndex = (i + 1) % w[0]->numpoints;
+		for (k = 0; k < w[1]->numpoints; k++) {
+			const int pointIndex2 = (k + 1) % w[1]->numpoints;
+			if (Check_EdgeEdgeIntersection(w[0]->p[i], w[0]->p[pointIndex], w[1]->p[k], w[1]->p[pointIndex2], vertbuf[numVert])) {
 				numVert++; /* if intersection, keep it */
 				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
 					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
 					return qfalse;
 				}
 			}
-
 		}
 	}
 
@@ -1018,7 +1019,7 @@ void CheckZFighting (void)
 					if (jSide->surfaceFlags & SURF_NODRAW)
 						continue;
 
-					#if 0
+#if 0
 					/** running this chunk on a large map proves that plane indices
 					  * cannot be relied on to test sides are from a common plane
 					  * @todo this test needs repeating*/
@@ -1026,16 +1027,16 @@ void CheckZFighting (void)
 						if (jSide->planenum != jSide->planenum)
 							Com_Printf("CheckZFighting: plane indices %i %i \n",
 								iSide->planenum, jSide->planenum);
-					#endif
+#endif
 
 					if (ParallelAndCoincidentTo(iSide, jSide) ) {
 						if (Check_SidesOverlap(iSide, jSide)) {
 							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
 								"z-fighting with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
-							#if 0
+#if 0
 							Check_SetError(iSide);
 							Check_SetError(jSide);
-							#endif
+#endif
 						}
 					}
 				}
@@ -1075,7 +1076,6 @@ void Check_ContainedBrushes (void)
 			if (numSidesInside == jBrush->numsides) {
 				Check_Printf(VERB_CHECK, qfalse, jBrush->entitynum, jBrush->brushnum, "inside brush %i (entity %i)\n",
 							iBrush->brushnum, iBrush->entitynum);
-
 			}
 		}
 	}
