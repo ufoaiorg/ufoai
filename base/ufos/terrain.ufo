@@ -552,7 +552,7 @@ footstepsound "footsteps/water_in"
 }
 
 terrain tex_nature/snow002 {
-footstepsound "footsteps/water_in"
+footstepsound "footsteps/snow1"
 }
 
 terrain tex_buildings/wall019 {
