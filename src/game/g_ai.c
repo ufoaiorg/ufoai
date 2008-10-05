@@ -264,7 +264,17 @@ static int actorL_shoot (lua_State *L)
 	/* Target */
 	target = lua_toactor(L, 1);
 
-	/** @todo Init var: fm and shots */
+	/* Number of TU to spend shooting, fire mode will adjust to that. */
+	if (lua_gettop(L) > 1) {
+		assert(lua_isnumber(L, 2)); /* Must be a number. */
+
+		tu = (int) lua_tonumber(L, 2);
+	} else {
+		tu = AIL_ent->TU;
+	}
+
+	/** @todo figure out this shot mode stuff out. */
+	fm = 0;
 
 	/* Figure out weapon to use. */
 	if (IS_SHOT_RIGHT(fm) && RIGHT(AIL_ent)
@@ -287,15 +297,10 @@ static int actorL_shoot (lua_State *L)
 		return 1;
 	}
 
-	/* Number of TU to spend shooting, adjust fire mode to that. */
-	if (lua_gettop(L) > 1) {
-		assert(lua_isnumber(L, 2)); /* Must be a number. */
-
-		tu = (int) lua_tonumber(L, 2);
-		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
-		fd = &od->fd[weapFdsIdx][0];
-		shots = tu / fd->time;
-	}
+	/** @todo Choose fire mode based on TU available. */
+	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
+	fd = &od->fd[weapFdsIdx][0];
+	shots = tu / fd->time;
 
 	while (shots > 0) {
 		shots--;
