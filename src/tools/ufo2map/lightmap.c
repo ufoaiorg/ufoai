@@ -1245,7 +1245,7 @@ void BuildFacelights (unsigned int facenum)
 
 			if (direction[2] < 0.33) {  /* clamp it */
 				direction[2] = 0.33;
-				VectorNormalize(dir);
+				VectorNormalize(direction);
 			}
 		}
 		/* contribute the sample to one or more patches for radiosity */

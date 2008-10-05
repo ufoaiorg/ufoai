@@ -2131,7 +2131,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		vec3_t m[3];
 
 		/* Find the center of the extents. */
-		VectorCenterFromMinsMaxs (model->mins, model->maxs, centerVec);
+		VectorCenterFromMinsMaxs(model->mins, model->maxs, centerVec);
 
 		/* Find the half height and half width of the extents. */
 		VectorSubtract(model->maxs, centerVec, halfVec);
