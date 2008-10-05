@@ -627,6 +627,10 @@ static void LET_PathMove (le_t * le)
 				le->endTime += (start[2] - dest[2]);
 			}
 
+			Com_DPrintf(DEBUG_CLIENT, "LET_PathMove: moving from (%i %i %i) to (%i %i %i).\n"
+				, le->oldPos[0], le->oldPos[1], le->oldPos[2]
+				, le->pos[0], le->pos[1], le->pos[2]);
+
 			le->positionContents = le->pathContents[le->pathPos];
 			le->pathPos++;
 		} else {
@@ -649,7 +653,7 @@ static void LET_PathMove (le_t * le)
 			/* Verify the current position */
 			if (!VectorCompare(le->pos, le->newPos)) {
 				/* Output an error message */
-				Com_Printf("The actor's end position is not what the server has. o(%i %i %i) n(%i %i %i)\n"
+				Com_DPrintf(DEBUG_CLIENT, "The actor's end position is not what the server has. o(%i %i %i) n(%i %i %i)\n"
 					, le->pos[0], le->pos[1], le->pos[2]
 					, le->newPos[0], le->newPos[1], le->newPos[2]);
 				/* Fix the location */

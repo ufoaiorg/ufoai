@@ -3363,6 +3363,9 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->newPos[0] = NET_ReadByte(msg);
 	le->newPos[1] = NET_ReadByte(msg);
 	le->newPos[2] = NET_ReadByte(msg);
+	Com_DPrintf(DEBUG_CLIENT, "EV_ACTOR_MOVE: %i steps, s:(%i %i %i) d:(%i %i %i)\n", le->pathLength
+		, le->pos[0], le->pos[1], le->pos[2]
+		, le->newPos[0], le->newPos[1], le->newPos[2]);
 
 	for (i = 0; i < le->pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
