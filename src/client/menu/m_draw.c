@@ -104,9 +104,10 @@ void MN_DrawMenus (void)
 			MN_GetNodeAbsPos(node, nodepos);
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASELAYOUT || node->type == MN_BASEMAP || node->type == MN_MAP)
-					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
+					|| node->type == MN_CHECKBOX || node->type == MN_TAB || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
 					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]) || node->type == MN_RADAR)) {
 				/* if construct */
+				if (!MN_CheckCondition(node))
 				if (!MN_CheckCondition(node))
 					continue;
 
@@ -167,7 +168,7 @@ void MN_DrawMenus (void)
 					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 					if (!ref) {
 						/* these have default values for their image */
-						if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX) {
+						if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
 							/* bad reference */
 							node->invis = qtrue;
 							Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
@@ -193,6 +194,10 @@ void MN_DrawMenus (void)
 				case MN_SELECTBOX:
 					if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
 						MN_DrawSelectBoxNode(node, ref);
+					break;
+
+				case MN_TAB:
+					MN_DrawTabNode(node, ref);
 					break;
 
 				case MN_RADAR:

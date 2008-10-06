@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_inventory.h"
 #include "m_node_text.h"
+#include "m_node_tab.h"
 #include "m_draw.h"
 #include "../cl_global.h"
 
@@ -51,7 +52,7 @@ static void MN_CheckCvar (const cvar_t *cvar)
 /**
  * @param[in] str Might be NULL if you want to set a float value
  */
-static void MN_SetCvar (const char *name, const char *str, float value)
+void MN_SetCvar (const char *name, const char *str, float value)
 {
 	const cvar_t *cvar;
 	cvar = Cvar_FindVar(name);
@@ -356,7 +357,7 @@ void MN_Click (int x, int y)
 		menuNode_t *execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->type != MN_CONTAINER && node->type != MN_CHECKBOX
-			 && node->type != MN_SELECTBOX && !node->click)
+			 && node->type != MN_SELECTBOX && node->type != MN_TAB && !node->click)
 				continue;
 
 			/* check whether mouse is over this node */
@@ -407,6 +408,9 @@ void MN_Click (int x, int y)
 				break;
 			case MN_SELECTBOX:
 				MN_SelectboxClick(menu, node, y);
+				break;
+			case MN_TAB:
+				MN_TabNodeClick(node, x, y);
 				break;
 			case MN_MODEL:
 				MN_ModelClick(node);

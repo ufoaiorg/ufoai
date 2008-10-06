@@ -41,7 +41,7 @@ selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 {
 	selectBoxOptions_t *selectBoxOption;
 
-	assert(node->type == MN_SELECTBOX);
+	assert(node->type == MN_SELECTBOX || node->type == MN_TAB);
 
 	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
 		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");

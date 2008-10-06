@@ -1,5 +1,5 @@
 /**
- * @file m_input.h
+ * @file m_node_tab.h
  */
 
 /*
@@ -22,16 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_INPUT_H
-#define CLIENT_MENU_M_INPUT_H
+#ifndef CLIENT_MENU_M_NODE_TAB_H
+#define CLIENT_MENU_M_NODE_TAB_H
 
-void MN_Click(int x, int y);
-void MN_RightClick(int x, int y);
-void MN_MiddleClick(int x, int y);
-void MN_MouseWheel(qboolean down, int x, int y);
-qboolean MN_CursorOnMenu(int x, int y);
-void MN_TextClick(menuNode_t * node, int mouseOver);
-qboolean MN_CursorOnMenu(int x, int y);
-void MN_SetCvar(const char *name, const char *str, float value);
+#include "m_nodes.h"
+
+selectBoxOptions_t* MN_AddTabOption(menuNode_t *node);
+void MN_NodeTabInit(void);
+void MN_DrawTabNode(const menuNode_t *node, const char *image);
+void MN_TabNodeClick(menuNode_t * node, int x, int y);
 
 #endif

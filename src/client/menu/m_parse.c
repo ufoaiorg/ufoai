@@ -162,7 +162,8 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"linestrip",
 	"cinematic",
 	"textlist",
-	"radar"
+	"radar",
+	"tab"
 };
 
 /** @brief valid node event actions */

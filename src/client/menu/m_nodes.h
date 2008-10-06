@@ -56,6 +56,7 @@ typedef enum mn_s {
 	MN_CINEMATIC, /**< every menu can only have one cinematic */
 	MN_TEXTLIST,
 	MN_RADAR,	/**< tactical mission radar */
+	MN_TAB,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -184,5 +185,6 @@ void MN_InitNodes(void);
 #include "m_node_selectbox.h"
 #include "m_node_checkbox.h"
 #include "m_node_radar.h"
+#include "m_node_tab.h"
 
 #endif

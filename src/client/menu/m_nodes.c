@@ -135,6 +135,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qtrue;
 	/* checkboxes don't need action nodes */
 	case MN_CHECKBOX:
+	case MN_TAB:
 	case MN_SELECTBOX:
 		break;
 	default:

@@ -340,6 +340,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_checkbox.h" />
+		<Unit filename="..\..\src\client\menu\m_node_tab.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_tab.h" />
 		<Unit filename="..\..\src\client\menu\m_node_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
