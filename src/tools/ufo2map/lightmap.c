@@ -934,7 +934,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal,
 		VectorMA(sample, light, l->color, sample);
 
 		VectorMA(direction, dir, delta, direction);
-		VectorMA(direction, 1.0 / dir, normal, direction);
+		VectorMA(direction, lightscale / dir, normal, direction);
 	}
 
 	GatherSampleSunlight(pos, normal, sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
