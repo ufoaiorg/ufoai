@@ -851,7 +851,7 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	 * higher value - because the light angle is not fixed at 90 degree */
 	VectorMA(pos, 8192, sun_dir, delta);
 
-	if (TR_TestLine(pos, delta, TL_FLAG_NONE))
+	if (TR_TestLineSingleTile(pos, delta))
 		return; /* occluded */
 
 	/* add some light to it */
@@ -924,7 +924,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal,
 		if (light == 0.0 && dir == 0.0)
 			continue;
 
-		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
+		if (TR_TestLineSingleTile(pos, l->origin))
 			continue;	/* occluded */
 
 		light *= lightscale;

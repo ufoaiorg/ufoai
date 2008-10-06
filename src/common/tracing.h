@@ -94,6 +94,9 @@ trace_t TR_BoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, con
 trace_t TR_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject, const vec3_t origin, const vec3_t angles);
 trace_t TR_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
 
+#ifdef COMPILE_MAP
+qboolean TR_TestLineSingleTile(const vec3_t start, const vec3_t stop);
+#endif
 qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 
