@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
-static int eTempCredits;		/**< Used to count temporary credits for item selling. */
 
 const int UGV_SIZE = 300;	/**< Size of a UGV in hangar capacity */
 
@@ -201,7 +200,6 @@ void INV_CollectingItems (int won)
 
 	cargo = aircraft->itemcargo;
 	aircraft->itemtypes = 0;
-	eTempCredits = ccs.credits;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		/* Winner collects everything on the floor, and everything carried
@@ -312,17 +310,19 @@ void INV_CollectingItems (int won)
  */
 void INV_SellOrAddItems (aircraft_t *aircraft)
 {
-	int i, j, numitems = 0, gained = 0, sold = 0;
+	int i;
+	int numitems = 0;
+	int gained = 0;
+	int forcedsold = 0;
+	int forcedgained = 0;
 	char str[128];
 	itemsTmp_t *cargo;
 	base_t *base;
-	qboolean notenoughspace = qfalse;
 
 	assert(aircraft);
 	base = aircraft->homebase;
 	assert(base);
 
-	eTempCredits = ccs.credits;
 	cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemtypes; i++) {
@@ -340,18 +340,18 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 			/* If the related technology is researched, check the autosell option. */
 			if (gd.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
 				ccs.eMarket.num[cargo[i].item->idx] += cargo[i].amount;
-				eTempCredits += (cargo[i].item->price * cargo[i].amount);
+				gained += (cargo[i].item->price * cargo[i].amount);
 				numitems += cargo[i].amount;
 			} else {
+				int j;
 				/* Check whether there is enough space for adding this item.
 				 * If yes - add. If not - sell. */
 				for (j = 0; j < cargo[i].amount; j++) {
 					if (!B_UpdateStorageAndCapacity(base, cargo[i].item, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
-						notenoughspace = qtrue;
-						sold++;
 						ccs.eMarket.num[cargo[i].item->idx]++;
-						eTempCredits += cargo[i].item->price;
+						forcedgained += cargo[i].item->price;
+						forcedsold++;
 					}
 				}
 			}
@@ -359,18 +359,17 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 		}
 	}
 
-	gained = eTempCredits - ccs.credits;
-	if (gained > 0) {
+	if (numitems > 0) {
 		Com_sprintf(str, sizeof(str), _("By selling %s you gathered %i credits."),
 			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
-	if (notenoughspace) {
+	if (forcedsold > 0) {
 		Com_sprintf(str, sizeof(str), _("Not enough storage space in base %s. %s"),
-			base->name, va(ngettext("%i item was sold.", "%i items were sold.", sold), sold));
+			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
-	CL_UpdateCredits(ccs.credits + gained);
+	CL_UpdateCredits(ccs.credits + gained + forcedgained);
 
 	/* ship no longer has cargo aboard */
 	aircraft->itemtypes = 0;
