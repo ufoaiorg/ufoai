@@ -1323,6 +1323,10 @@ static void PR_ProductionIncrease_f (void)
 	if (!baseCurrent)
 		return;
 
+	if (!(selectedProduction || selectedAircraft || selectedItem
+			|| selectedDisassembly))
+		return;
+
 	base = baseCurrent;
 
 	if (Cmd_Argc() == 2)
