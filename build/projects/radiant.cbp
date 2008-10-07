@@ -87,11 +87,13 @@
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
 					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
+					<Add option="`xml2-config --cflags`" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add option="`xml2-config --libs`" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
