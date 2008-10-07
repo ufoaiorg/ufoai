@@ -1536,6 +1536,13 @@ menu popup_intercept
 		pos		"116 186"
 	}
 
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"830 212"
+	}
+
 	pic vertical_bar
 	{
 		mousefx	true
@@ -1642,10 +1649,18 @@ menu popup_mission
 	{
 		invis	true
 	}
+
 	pic back
 	{
 		image	menu/popup_big
 		pos		"116 186"
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"830 212"
 	}
 
 	string title
@@ -1866,7 +1881,6 @@ menu popup_multi_selection
 		pos		"378 466"
 		align	cc
 	}
-
 }
 
 
