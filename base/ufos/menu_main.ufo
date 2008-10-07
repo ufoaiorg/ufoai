@@ -399,7 +399,7 @@ menu popup_tipoftheday
 
 	controls drag_button
 	{
-		image	menu/button_alienkill1
+		image	menu/move
 		tooltip	"_Drag to move window"
 		pos		"460 26"
 	}
