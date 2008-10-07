@@ -614,7 +614,14 @@ menu popup_maintain_resolution
 	pic back
 	{
 		image	menu/popup
-		pos		"0 0"
+		pos		"256 256"
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"692 284"
 	}
 
 	string title
