@@ -104,12 +104,14 @@
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
 					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
+					<Add option="`xml2-config --cflags`" />
 					<Add directory="/sw/include" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add option="`xml2-config --libs`" />
 					<Add directory="/sw/lib" />
 				</Linker>
 			</Target>
