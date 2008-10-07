@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_messages.h"
 
-typedef struct {
+typedef struct mouseRepeat_s {
 	menu_t *menu;				/**< where - the menu is it executed in (context) */
 	menuAction_t *action;		/**< what - the action node to be executed (the clicknode e.g.) */
 	unsigned nexttime;			/**< when (milliseconds) - calculated from cls.realtime + delay */
@@ -98,4 +98,6 @@ void MN_SetNewMenuPos_f (void);
 void MN_ScrollContainerUpdate_f(void);
 void MN_ScrollContainerNext_f(void);
 void MN_ScrollContainerPrev_f(void);
+
+void MN_DragMenu(void);
 #endif

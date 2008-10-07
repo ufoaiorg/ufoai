@@ -357,7 +357,8 @@ void MN_Click (int x, int y)
 		menuNode_t *execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->type != MN_CONTAINER && node->type != MN_CHECKBOX
-			 && node->type != MN_SELECTBOX && node->type != MN_TAB && !node->click)
+			 && node->type != MN_SELECTBOX && node->type != MN_TAB
+			 && node->type != MN_CONTROLS && !node->click)
 				continue;
 
 			/* check whether mouse is over this node */
@@ -391,6 +392,9 @@ void MN_Click (int x, int y)
 
 			/* found a node -> do actions */
 			switch (node->type) {
+			case MN_CONTROLS:
+				MN_DragMenu();
+				break;
 			case MN_CONTAINER:
 				MN_Drag(node, baseCurrent, x, y, qfalse);
 				break;
