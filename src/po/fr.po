@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-09-13 19:24+0200\n"
-"PO-Revision-Date: 2008-09-21 17:45+0100\n"
-"Last-Translator: Kracken <kracken.gp@free.fr>\n"
+"PO-Revision-Date: 2008-10-08 18:49+0100\n"
+"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -625,7 +625,8 @@ msgstr "Vaisseau alien repéré"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/events.ufo:61
 #: ../base/ufos/events.ufo:71
@@ -781,8 +782,8 @@ msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
 #: ../base/ufos/research.ufo:4763
 #: ../base/ufos/research.ufo:4770
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
-
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 # l'année doit être en premier pour correspondre aux formats de date des autres emails
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -913,7 +914,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4558
 #: ../base/ufos/research.ufo:4566
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:74
 #: ../base/ufos/events.ufo:84
@@ -971,7 +973,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:212
 #: ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -1069,7 +1072,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:4723
 #: ../base/ufos/research.ufo:4731
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -1101,7 +1105,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4819,7 +4824,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4762
 #: ../base/ufos/research.ufo:4769
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:252
 #: ../base/ufos/research.ufo:292
@@ -6536,7 +6542,6 @@ msgstr "coilgun_txt"
 #: ../base/ufos/research.ufo:1927
 msgid "coilgun_pre_txt"
 msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
-
 # Pour les médailles
 #: ../base/ufos/research.ufo:1897
 #: ../base/ufos/research.ufo:1905
@@ -8264,42 +8269,40 @@ msgstr ""
 #: ../base/ufos/research.ufo:3382
 msgid "inter_dragon_txt"
 msgstr ""
-"Commander, I'm extremely proud to present you with the plans for our new interceptor, the Dragon. As you can see we've taken more than one page out of the aliens' book and the radical styling truly pays off.\n"
+"Commandant, je suis extrêmement fier de me présenter à vous avec les plans de notre nouvel intercepteur, le Dragon. Comme vous pouvez le voir, nous avons pri plus d'une page au livre d'or des aliens, et le style radical en vaut vraiment la peine.\n"
 "\n"
-"Incorporating new technologies from the ground up, the Dragon consists of an inner skeleton of alien materials providing strength for the lighter outer skin of carbon nanotube-reinforced plastics. This allows it to mount two actual alien engines which give speed and power like nothing else in our arsenal. The forward-swept wings are a special touch to allow it more knife-fighting mobility than alien designs.\n"
+"Incorporant les toute dernières technologies, le Dragon se compose d'un squelette interne de matériaux aliens fournissant la force necéssaire pour la légère peau extérieure en plastique de carbone renforcé de nanotubes. Cela lui permet de monter deux moteurs aliens, ce qui donne une vitesse et une puissance inégalée dans notre arsenal. Le design des ailes sont une touche spéciale pour lui permettre une bien meilleure mobilité que les conceptions aliennes.\n"
 "\n"
-"The three-pronged fuselage is also inspired by the enemy, slicing through the air with remarkable grace. The upper two prongs can mount small retractable weapons, the bottom prong contains a medium-sized weapon compartment, and the central structure was designed to accomodate the main hardpoint -- the 'mouth', if you will -- for which the Dragon was named.\n"
+"Le fuselage 'trois branches' est également inspiré de l'ennemi, fendant l'air avec une remarquable grâce. Les deux branches suppérieures peuvent monter de petites armes rétractables, la branche inférieure quant à elle, contient un compartiment d'arme de taille moyenne, et la strucure centrale à été conçue pour accueuillir le hardpoint principal -- la 'bouche' si vous préférez -- laquelle détermina le nom du vaisseau.\n"
 "\n"
-"The main drawback of the Dragon is that, like UFOs, it requires antimatter to get into the air. Nothing else will do considering the weight of the fuselage. Since our supplies of antimatter are so limited it may be that we can't afford to spend it on anything but our airfleet. That's why we should be careful about where we deploy the Dragon, and consider whether or not its deployment is really necessary in any given situation.\n"
+"Le principal inconvénient du Dragon est que, comme les OVNIs, il requiert de l'anti-matière pour aller dans les airs. Rien d'autre ne détermine le poids du fuselage. Tant que nos approvisionnements en anti-matière seront si limités, il se peut que nous ne puissions nous permettre de le dépenser autrement que pour notre flotte. C'est pourquoi le déploiement du dragon ne devra être effectué qu'en cas de réelle necéssité quelque soit la situation.\n"
 "\n"
-"Also, please note that while the Dragon is technically capable of entering orbit on its own steam, it has no space capabilities and should not be pushed above the upper atmosphere under any circumstances. Some things are just too much to ask right now. We're engineers, Commander, not wizards.\n"
+"Notez également que tandis que le Dragon est techniquement capable d'entrer en orbite par ses propre moyens, il ne possède aucune capacités spatiales et ne devrait en aucun cas dépasser la mésosphère. Ce serait trop demander pour le moment. Nous sommes des ingénieurs, pas des magiciens.\n"
 "\n"
-"--Cdr. Navarre\n"
+"--Cdt. Navarre\n"
 "\n"
+"Statistiques estimées du Dragon :\n"
 "\n"
-"Estimated Dragon statistics:\n"
+"Taille: 12m x 22m x 7m\n"
 "\n"
+"Vitesse de croisière: 2,500 km/h\n"
 "\n"
-"Size: 12m x 22m x 7m\n"
+"Vitesse maximum: 4,290km/h\n"
 "\n"
-"Cruising speed: 2,500 km/h\n"
+"Capacité d'équipage: 1 Pilot\n"
 "\n"
-"Top speed: 4,290km/h\n"
-"\n"
-"Crew capacity: 1 Pilot\n"
-"\n"
-"Weapon capacity: 1 Large hardpoint (main fuselage), 1 Medium hardpoint (bottom prong), 2 Small hardpoints (top prongs), 1 Equipment bay, 1 Armour slot"
+"Capacité d'arme: 1 Grand hardpoint (fuselage principal), 1 Moyen hardpoint (branche inférieure), 2 Petits hardpoints (branches suppérieures), 1 Compartiment d'équippement, 1 Emplacement d'armure"
 
 #: ../base/ufos/research.ufo:3385
 msgid "inter_dragon_pre_txt"
 msgstr ""
-"Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
+"Commandant, laissez-moi préfacer ceci en disant qu'il est évident que les aliens nous surpassent sur tous les plans, mais cela n'est nulepart aussi flagrant que dans les airs. Nous étions en mauvaise posture au début de la guerre et malgré nos efforts, il n'y a eu que peu d'améliorations.\n"
 "\n"
-"However, now that we have an understanding of alien materials and how they behave in the air, as well as alien engines and fuelling systems, I think my team and I are ready to tackle the task of creating an entirely new interceptor exclusive to PHALANX. We believe that by combining alien techniques with good old human manufacturing we can design something that will be vastly superior to our current-generation craft while remaining economically feasible to produce and to fly.\n"
+"Qu'importe, maintenant que nous avons une compréhension des matériaux aliens et de leur comportement dans les airs, aussi bien que des moteurs et systèmes d'alimentation aliens, je pense que mon équipe et moi-même sommes prêts à aborder la tâche de création d'un tout nouvel Intercepteur propre à PHALANX. Nous croyons qu'en combinant les techniques aliennes avec la bonne vielle manufacture humaine, nous pourrions concevoir quelque chose de largement supérieur à notre génération actuelle d'engins tout en restant économiquement faisable à produire et à faire voler.\n"
 "\n"
-"The program will incur considerable expenses in lab time, personnel and materials, but as always we stand to gain much more than we could possibly lose. It's a project that could rally a lot of hope for our cause, Commander. Please let me know as soon as possible when you want us to start work.\n"
+"Le programme engagera des dépenses considérables en temps de laboratoire, personnel et matériaux, mais comme toujours nous nous attendons à gagner bien plus que ce que nous pourrions perdre. C'est un projet qui pourrait rallier beaucoup d'espoir à notre cause, Commandant. S'il vous plaît, faites-moi savoir dès que possible votre position et/ou votre accord sur ce projet.\n"
 "\n"
-"--Cdr. Navarre"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3404
 msgid "inter_stingray_txt"
@@ -8307,7 +8310,8 @@ msgstr "inter_stingray_txt"
 
 #: ../base/ufos/research.ufo:3407
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3433
 msgid "ufo_scout_txt"
@@ -8447,11 +8451,47 @@ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:3647
 msgid "ufo_corrupter_txt"
-msgstr "ufo_corrupter_txt"
+msgstr ""
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
+"\n"
+"This UFO, which we've come to call the Corrupter, is a nightmare of alien medical technology. It makes only a few concessions to air combat. Its main purpose, without a shadow of a doubt, is to land on Earth and carry out hideous operations on human victims.\n"
+"\n"
+"Where previous alien equipment seemed to focus mostly on collecting human biomass, the Corrupter's interior -- particularly the massive blood transfusion banks -- are geared towards the capture and alteration of complete, live human beings. The alcoves I mentioned in my proposal are still mysterious, but going by the wear patterns on the floors they seem to be used to store some kind of heavy alien robot or cargo equipped with tank treads. Heavy harnesses drop down from the ceiling to hold these robots in place during flight, and the alcoves seem to have some type of air-drop mechanism as well.\n"
+"\n"
+"It's difficult to speculate exactly what exactly goes on in these UFOs with regards to captured civilians. Clearly it has something to do with the alien harvesting of human biomass, but they already have craft for that which do not appear to be in any way obsolete. Instead we have to suspect that the Corrupter represents a paradigm shift in alien activity on Earth. Something has changed. Until we fully understand what's happening, we need to prepare ourselves for what could be the worst threat to the global population we've ever seen.\n"
+"\n"
+"In the air the Corrupter's performance is relatively poor, being slow and sluggish compared to other UFOs, but from our observations it appears to be heavily escorted and presents a major ground threat due to its large crew complement and on-board heavy weapons. More than any other craft we've encountered, the Corrupter is purpose-built to deliver large alien forces to the surface solely to attack civilians.\n"
+"\n"
+"Commander, it's painfully obvious that we need to shoot these things down whenever and wherever we see them. If we don't, it's going to result in the wholesale slaughter of innocent people and possibly even scenes worse than Mumbai and Bonn.\n"
+"\n"
+"We have to stop that from happening at all costs.\n"
+"\n"
+"--Cdr. Navarre\n"
+"\n"
+"\n"
+"Estimated Corrupter statistics:\n"
+"\n"
+"\n"
+"Size: Medium (12m x 16m x 5m)\n"
+"\n"
+"Cruising speed: +/- 2,000 km/hh\n"
+"\n"
+"Top speed: +/- 4,000km/h\n"
+"\n"
+"Crew capacity: 30 max.\n"
+"\n"
+"Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3650
 msgid "ufo_corrupter_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalising clues about its intended function.\n"
+"\n"
+"A lot of the equipment is stuff we've seen before, containers geared towards storing live and dead biomass, but this UFO also has a lot of other kit that's leaving my team scratching their heads. There are mysterious alcoves with ports and valves leading to tanks full of human blood, with strange controls unlike anything we've seen from the aliens before. There are banks of robotic arms all ending in alien syringes, like some kind of mass inoculation centre -- and there's more that we can't even begin to describe. Just being inside it gives you a sense of something hostile to all human life.\n"
+"\n"
+"I think we need to do some serious investigation on that thing right away, Commander. There's something very very wrong about it, and I'm not going to be able to sleep until I know what it is.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3690
 msgid "ufo_harvester_txt"
@@ -8904,14 +8944,9 @@ msgstr ""
 "--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:4083
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr ""
-"Commandant, nous avons récupéré un canon alien qui tire des rayons de particules de haute énergie. Il est extrèmement léthal et a des effets effrayants sur nos blindages d'après les premiers tests. Nous avons besoin d'effectuer plus de recherches sur ces armes de toute urgence.\n"
-"\n"
-"Merci d'envoyer votre approbation pour ce programme dans les plus brefs délais.\n"
-"\n"
-"--Cdt Navarre"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4137
 msgid "'Raven' ECM Unit"
@@ -9001,16 +9036,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4173
 msgid "craft_shield_plating_pre_txt"
-msgstr ""
-"Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
-"\n"
-"We've had an extremely difficult time shooting down UFOs thanks to the resilient outer skin of alien materials. Unfortunately we can't simply slap this same kind of skin onto our own craft because the alien materials are far too heavy. Our craft would struggle to even get off the ground. That needn't be the end of it, though.\n"
-"\n"
-"Commander, if you let us do some research on it, I believe we can come up with an armouring scheme that -- while it might decrease speed and increase fuel consumption a bit -- should give our aircraft a far better survival chance against the alien weapons during interceptions. According to our calculations, aircraft with this kind of armour could withstand several particle beam hits and still remain combat effective.\n"
-"\n"
-"It's a very promising possibility, Commander, one that definitely deserves investigation.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 
 #: ../base/ufos/research.ufo:4176
 msgid "craft_shield_plating_txt"
@@ -9124,48 +9150,29 @@ msgstr ""
 "--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:4308
-#, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
-"Spécifications techniques : Canon Rotatif SHIVA\n"
+"Proposal\n"
 "\n"
-"NIVEAU DE CONFIDENTIALITE NOIR\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Unité de réaction extraterrestre PHALANX\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Document Technique, Autorisation Sigma -- destiné au Commandant uniquement\n"
+"DATE: %02i %s %i\n"
 "\n"
-"Classé le : 19 Mars 2084\n"
+"SUB: Proposal: Aerial Laser Cannon\n"
 "\n"
-"Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
+"The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.\n"
 "\n"
+"As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.\n"
 "\n"
-"Considérations générales\n"
+"The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.\n"
 "\n"
-"Maintenant que nous disposons d'appareils capables d'intercepter les OVNI attaquants, nous devons les équiper en armements qui puissent les détruire. Nous avons testé toutes les armes disponibles sur Terre, et nous avons sélectionné la meilleure pour la défense de notre planète pour le Programme Excalibur.\n"
+"Please approve lab time and funding for this program when you're ready, Commander.\n"
 "\n"
-"Le SHIVA est un canon rotatif à quatre tubes, utilisant des balles 20mm FML (Fusil Mitrailleur Lourd). Le rechargement de l'arme n'est pas alimenté par son recul, mais par un petit moteur externe. Il s'agit d'un moteur électrique très performant de 20 chevaux de puissance, qui permet au SHIVA de tirer avec précision les balles 20mm FML à une cadence de tir de 6000 balles par minutes.\n"
-"\n"
-"Conçu et fabriqué au Bangladesh, le premier prototype du SHIVA date de 2048. Celui-ci échoua à tous les tests durant sa première année. Le projet fut presque abandonné, jusqu'à ce qu'une enquête des services secrets révèle en 2050 un sabotage par une compagnie d'armement concurrente. Un nouveau prototype fut mis au point qui afficha des résultats prometteurs. Après quelques modifications permettant l'élimination des problèmes majeurs, la puissance de l'arme devint évidente.\n"
-"\n"
-"Le SHIVA est très léger pour une arme d'appareil de cette taille et de cette efficacité. Elle ne pèse que 250 kilo à vide, et 400 kilos chargée. Sa cadence de tir dépasse celle de toute autre arme existante à quatre tubes. Son système de verrouillage sophistiqué lui permet de viser la cible tant qu'un radar, un lidar ou une visée laser est disponible. L'alimentation des balles non reliées est très fiable et aucun enrayement n'a jamais été enregistré depuis la création du SHIVA.\n"
-"\n"
-"Le SHIVA peut tirer deux types de balles FML différentes : les IP (Incendiaires Perforantes) ou les IHE (Incendiaires Hautement Explosives). Les premières pénètrent mieux les protections alors que les secondes font plus de dommages une fois la protection passée. Ces deux types de munitions ont montré leurs capacités à transpercer jusqu'à un certain point les armures des OVNI.\n"
-"\n"
-"L'inconvénient principal du canon SHIVA est les dégâts limités qu'il inflige aux OVNI. Le combat doit donc être relativement long pour abattre un ennemi avec cette arme. Cela lui laisse l'opportunité de s'échapper ou de riposter. Cependant, son nombre de munitions important en font une arme plus endurante que la plupart des autres, ce qui ne doit pas être négligé.\n"
-"\n"
-"\n"
-"Doctrine recommandée\n"
-"\n"
-"Les faibles dégâts qu'il engendre et la longueur nécessaire des combats limitent l'utilité du SHIVA. Dans la plupart des cas, ces inconvénients seront diminués, voire compensés, si plusieurs canons sont installés ou si le canon est utilisé conjointement à un lance-missile. Le tir automatique continu permet par exemple au pilote de se concentrer sur le lancement des missiles. Ou encore, une configuration en canonnière (un ou plusieurs intercepteurs armés exclusivement de ce canon), permet la destruction de l'ennemi par le grand nombre de balles tirées.\n"
-"\n"
-"Nous manquons d'expérience pour recommander une stratégie d'engagement des vaisseaux aliens, avec ou sans cette arme. Jusqu'à ce que nous capturions des armes d'OVNI, le SHIVA reste cependant le meilleur canon que la Terre puisse nous proposer.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"Aucun."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4327
 msgid "SHIVA Rotary Cannon"
@@ -10171,35 +10178,43 @@ msgstr "seq_alienbase_sentence3"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
