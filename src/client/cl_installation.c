@@ -691,6 +691,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
+		gd.numInstallations++;
 		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
 		MSG_ReadPos(sb, inst->pos);
 		inst->installationStatus = MSG_ReadByte(sb);
@@ -717,5 +718,6 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}
+	Cvar_SetValue("mn_installation_count", gd.numInstallations);
 	return qtrue;
 }
