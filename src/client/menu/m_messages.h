@@ -51,7 +51,8 @@ typedef enum {
 
 /** @brief also used for chat message buffer */
 #define MAX_MESSAGE_TEXT 256
-#define TIMESTAMP_TEXT 22
+/* Russian timestamp (with UTF-8) is 23 bytes long */
+#define TIMESTAMP_TEXT 24
 typedef struct message_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
