@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Invalid aircraft index in base-list of aircraft. */
 #define AIRCRAFT_INBASE_INVALID -1
 
-/** factor to speed up refueling */
+/** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
 
 /** @brief A path on the map described by 2D points */
