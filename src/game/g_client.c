@@ -1445,6 +1445,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t *ent;
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
+	byte olddvtab[MAX_DVTAB];
 	int dv, dir;
 	int old_z;
 	byte numdv, length, steps;
@@ -1504,8 +1505,14 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* dv indicates the direction traveled to get to the new cell and the original cell height.
 			 * dv = (dir << 3) | z
 			 */
-			assert(numdv < MAX_DVTAB);
+			if(!(numdv < MAX_DVTAB)) {
+				Com_Printf("ASSERT: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);
+				for (numdv = 0; numdv < MAX_DVTAB; numdv++)
+					Com_Printf(" %i", olddvtab[numdv]);
+				assert(numdv < MAX_DVTAB);
+			}
 			old_z = pos[2];
+			olddvtab[numdv] = dv;
 			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
 			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
 			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i->%i].\n", pos[0], pos[1], pos[2], crouching_state, dv, dvtab[numdv - 1]);
