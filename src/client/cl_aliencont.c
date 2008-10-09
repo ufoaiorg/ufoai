@@ -196,15 +196,15 @@ void AL_AddAliens (aircraft_t *aircraft)
 			assert(cargo[i].teamDef);
 			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
-				/* Add breathing apparatuses as well and update storage capacity. */
-				B_UpdateStorageAndCapacity(tobase, alBrOd, cargo[i].amount_dead, qfalse, qfalse);
+				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
+				INV_CollectItem(aircraft, alBrOd, cargo[i].amount_dead);
 				if (cargo[i].amount_alive <= 0)
 					continue;
 				if (!alienBreathing && !cargo[i].teamDef->robot) {
 					/* We can not store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
-					/* Add breathing apparatuses as well and update storage capacity. */
-					B_UpdateStorageAndCapacity(tobase, alBrOd, cargo[i].amount_alive, qfalse, qfalse);
+					/* Add breathing apparatuses as well */
+					INV_CollectItem(aircraft, alBrOd, cargo[i].amount_alive);
 					/* only once */
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
@@ -225,8 +225,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							}
 							/* Just kill aliens which don't fit the limit. */
 							tobase->alienscont[j].amount_dead++;
-							/* Add breathing apparatus as well and update storage capacity. */
-							B_UpdateStorageAndCapacity(tobase, alBrOd, 1, qfalse, qfalse);
+							INV_CollectItem(aircraft, alBrOd, 1);
 						}
 					}
 					/* only once */
