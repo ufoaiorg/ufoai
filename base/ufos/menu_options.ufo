@@ -606,28 +606,33 @@ menu options_video
 
 menu popup_maintain_resolution
 {
+	{
+		origin	"256 256"
+	}
+
 	zone popup
 	{
 		invis false
 		timeout 4000
 	}
+
 	pic back
 	{
 		image	menu/popup
-		pos		"256 256"
+		pos		"0 0"
 	}
 
 	controls drag_button
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"692 284"
+		pos		"437 29"
 	}
 
 	string title
 	{
 		string	"_Maintain resolution"
-		pos	"34 20"
+		pos	"34 24"
 		font	f_big
 	}
 
