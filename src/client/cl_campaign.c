@@ -6182,7 +6182,7 @@ static const cmdList_t game_commands[] = {
 	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL},
 	{"aircraft_new", AIR_NewAircraft_f, NULL},
 	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
-	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
+	{"aircraft_return", AIR_AircraftReturnToBase_f, "Sends the current aircraft back to homebase"},
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
 	{"aircraft_select", AIR_AircraftSelect_f, NULL},
 	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},

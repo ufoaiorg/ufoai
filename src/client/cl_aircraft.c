@@ -257,9 +257,7 @@ void AIM_AircraftStart_f (void)
 		return;
 
 	if (!baseCurrent->aircraftCurrent) {
-#ifdef DEBUG
-		Com_Printf("Error - there is no current aircraft in this base\n");
-#endif
+		Com_DPrintf(DEBUG_CLIENT, "Error - there is no current aircraft in this base\n");
 		return;
 	}
 
