@@ -196,20 +196,20 @@ void CL_LanguageInit (void)
 
 	if (*s_language->string) {
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
-		Q_strncpyz(deflang, s_language->string, MAX_VAR);
+		Q_strncpyz(deflang, s_language->string, sizeof(deflang));
 	} else {
 #ifdef _WIN32
 		if (getenv("LANGUAGE"))
-			Q_strncpyz(deflang, getenv("LANGUAGE"), MAX_VAR);
+			Q_strncpyz(deflang, getenv("LANGUAGE"), sizeof(deflang));
 		else {
 			/* Setting to en will always work in every windows. */
-			Q_strncpyz(deflang, "en", MAX_VAR);
+			Q_strncpyz(deflang, "en", sizeof(deflang));
 		}
 #else
 		/* Calling with NULL param should return current system settings. */
-		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
+		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), sizeof(deflang));
 		if (deflang[0] == '\0')
-			Q_strncpyz(deflang, "C", MAX_VAR);
+			Q_strncpyz(deflang, "C", sizeof(deflang));
 #endif
 	}
 
