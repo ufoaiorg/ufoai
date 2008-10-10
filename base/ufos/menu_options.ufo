@@ -895,7 +895,7 @@ menu options_pause
 
 	string header_pause
 	{
-		string	"_pause;"
+		string	"_pause"
 		pos		"750 100"
 		font	f_big
 	}
