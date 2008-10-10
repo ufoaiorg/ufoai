@@ -1010,10 +1010,10 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				AII_UpdateAircraftStats(aircraft);
 				/* Only stop time and post a notice, if no new item to install is assigned */
 				if (!slot->item) {
+					CL_GameTimeStop();
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 						_("%s was successfully removed from aircraft %s at base %s."),
 						_(olditem->name), _(aircraft->name), base->name);
-					CL_GameTimeStop();
 				} else {
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 						_ ("%s was successfully removed, starting installation of %s into aircraft %s at base %s"),
