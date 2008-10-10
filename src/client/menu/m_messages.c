@@ -600,7 +600,7 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 qboolean MSO_Load (sizebuf_t* sb, void* data)
 {
 	int count;
-
+#if 0
 	/* reset current message settings */
 	memset(messageSettings, 0, sizeof(messageSettings));
 	/* load all positiv settings */
@@ -629,6 +629,7 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 		}
 		MSO_Set(0, type, pause, qtrue, qfalse);
 	}
+#endif
 	return qtrue;
 }
 
