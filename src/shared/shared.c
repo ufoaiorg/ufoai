@@ -303,19 +303,6 @@ char *Q_strlwr (char *str)
 	return origs;
 }
 
-int Q_putenv (const char *var, const char *value)
-{
-#ifdef __APPLE__
-	return setenv(var, value, 1);
-#else
-	char str[32];
-
-	Com_sprintf(str, sizeof(str), "%s=%s", var, value);
-
-	return putenv((char *) str);
-#endif /* __APPLE__ */
-}
-
 #ifndef HAVE_STRNCASECMP
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
