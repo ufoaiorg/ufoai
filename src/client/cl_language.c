@@ -139,7 +139,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
 
 #ifdef _WIN32
-	if (FS_FileExists(languagePath) && (SDL_putenv("LANGUAGE", localeID) == 0)) {
+	if (FS_FileExists(languagePath) && (SDL_putenv(va("LANGUAGE=%s", localeID)) == 0)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
 		return qtrue;
 	} else {
@@ -297,7 +297,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 		Cvar_Set("s_language", mapping->localeMapping);
 #ifdef _WIN32
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s\n", mapping->localeMapping);
-		SDL_putenv("LANGUAGE", mapping->localeMapping);
+		SDL_putenv(va("LANGUAGE=%s", mapping->localeMapping));
 		Cvar_Set("s_language", language->localeID);
 		s_language->modified = qfalse;
 		return qtrue;

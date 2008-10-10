@@ -2382,16 +2382,16 @@ static qboolean CL_LocaleSet (void)
 	char *locale;
 
 #ifdef _WIN32
-	SDL_putenv("LANG", s_language->string);
-	SDL_putenv("LANGUAGE", s_language->string);
+	SDL_putenv(va("LANG=%s", s_language->string));
+	SDL_putenv(va("LANGUAGE=%s", s_language->string));
 #else /* _WIN32 */
 # ifndef __sun
 	unsetenv("LANGUAGE");
 # endif /* __sun */
 # ifdef __APPLE__
-	if (s_language->string[0] != '\0' && SDL_putenv("LANGUAGE", s_language->string) == -1)
+	if (s_language->string[0] != '\0' && SDL_putenv(va("LANGUAGE=%s", s_language->string)) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (s_language->string[0] != '\0' && SDL_putenv("LC_ALL", s_language->string) == -1)
+	if (s_language->string[0] != '\0' && SDL_putenv(va("LC_ALL=%s", s_language->string)) == -1)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
 # endif /* __APPLE__ */
 #endif /* _WIN32 */
