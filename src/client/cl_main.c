@@ -1463,7 +1463,7 @@ void CL_RequestNextDownload (void)
 
 		/* check download */
 		if (precache_check == CS_MODELS) { /* confirm map */
-			if (*cl.configstrings[CS_TILES] != '+') {
+			if (cl.configstrings[CS_TILES][0] != '+') {
 				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
 					return; /* started a download */
 			}
@@ -1551,15 +1551,12 @@ static void CL_Precache_f (void)
 static void CL_PrecacheModels (void)
 {
 	int i;
-	float loading;
 	float percent = 40.0f;
 
 	if (cl_precache->integer)
 		Com_PrecacheCharacterModels(); /* 55% */
 	else
 		percent = 95.0f;
-
-	loading = cls.loadingPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (csi.ods[i].type[0] == '\0' || !Q_strcmp(csi.ods[i].type, "dummy"))
@@ -1584,7 +1581,6 @@ void CL_InitAfter (void)
 	int i;
 	menu_t* menu;
 	menuNode_t* vidModesOptions;
-	selectBoxOptions_t* selectBoxOption;
 
 	/* start the music track already while precaching data */
 	S_Frame();
@@ -1625,10 +1621,9 @@ void CL_InitAfter (void)
 	if (!vidModesOptions)
 		Sys_Error("Could not find node select_res in menu options_video\n");
 	for (i = 0; i < VID_GetModeNums(); i++) {
-		selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
-		if (!selectBoxOption) {
+		selectBoxOptions_t *selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
+		if (!selectBoxOption)
 			return;
-		}
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", vid_modes[i].mode);
 	}
@@ -1944,7 +1939,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 
 	FS_CloseFile(&f);
 }
-#endif /* DEBUG */
+#endif
 
 /**
  * @brief Autocomplete function for some network functions
@@ -1955,15 +1950,12 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 {
 	int i, matches = 0;
 	const char *localMatch[MAX_COMPLETE];
-	const char *adrStr;
-	size_t len;
-
-	len = strlen(partial);
+	const size_t len = strlen(partial);
 	if (!len) {
 		/* list them all if there was no parameter given */
 		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			adrStr = Cvar_VariableString(va("adr%i", i));
-			if (*adrStr)
+			const char *adrStr = Cvar_VariableString(va("adr%i", i));
+			if (adrStr[0] != '\0')
 				Com_Printf("%s\n", adrStr);
 		}
 		return 0;
@@ -1973,8 +1965,8 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		adrStr = Cvar_VariableString(va("adr%i", i));
-		if (*adrStr && !Q_strncmp(partial, adrStr, len)) {
+		const char *adrStr = Cvar_VariableString(va("adr%i", i));
+		if (adrStr[0] != '\0' && !Q_strncmp(partial, adrStr, len)) {
 			Com_Printf("%s\n", adrStr);
 			localMatch[matches++] = adrStr;
 			if (matches >= MAX_COMPLETE)
@@ -2397,9 +2389,9 @@ static qboolean CL_LocaleSet (void)
 	unsetenv("LANGUAGE");
 # endif /* __sun */
 # ifdef __APPLE__
-	if (*s_language->string && SDL_putenv("LANGUAGE", s_language->string) == -1)
+	if (s_language->string[0] != '\0' && SDL_putenv("LANGUAGE", s_language->string) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (*s_language->string && SDL_putenv("LC_ALL", s_language->string) == -1)
+	if (s_language->string[0] != '\0' && SDL_putenv("LC_ALL", s_language->string) == -1)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
 # endif /* __APPLE__ */
 #endif /* _WIN32 */
@@ -2442,7 +2434,7 @@ void CL_Init (void)
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
 	/* use system locale dir if we can't find in gamedir */
-	if (*fs_i18ndir->string)
+	if (fs_i18ndir->string[0] != '\0')
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());
