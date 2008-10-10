@@ -626,9 +626,8 @@ static void CL_PingServerCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
 	serverList_t *server = NET_StreamGetData(s);
-	int cmd = NET_ReadByte(buf);
-	char *str = NET_ReadStringLine(buf);
-	char string[MAX_INFO_STRING];
+	const int cmd = NET_ReadByte(buf);
+	const char *str = NET_ReadStringLine(buf);
 
 	if (cmd == clc_oob && Q_strncmp(str, "info", 4) == 0) {
 		str = NET_ReadString(buf);
@@ -642,6 +641,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 	if (cl_serverlist->integer == SERVERLIST_SHOWALL
 	|| (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
 	|| (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients)) {
+		char string[MAX_INFO_STRING];
 		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
 			server->sv_hostname,
 			server->mapname,
@@ -835,7 +835,6 @@ static char userInfoText[256];
 static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 {
 	const char *value;
-	const char *users;
 	int team;
 	const char *token;
 	char buf[256];
@@ -846,13 +845,13 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 	/* check for server status response message */
 	value = Info_ValueForKey(s, "sv_dedicated");
 	if (*value) {
-		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
 		/* server info cvars and users are seperated via newline */
-		users = strstr(s, "\n");
+		const char *users = strstr(s, "\n");
 		if (!users) {
 			Com_Printf("%c%s\n", COLORED_GREEN, s);
 			return;
 		}
+		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
 
 		Cvar_Set("mn_mappic", "maps/shots/default.jpg");
 		if (*Info_ValueForKey(s, "sv_needpass") == '1')
@@ -921,8 +920,8 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 		return;
 
 	{
-		int cmd = NET_ReadByte(buf);
-		char *str = NET_ReadStringLine(buf);
+		const int cmd = NET_ReadByte(buf);
+		const char *str = NET_ReadStringLine(buf);
 
 		if (cmd == clc_oob && Q_strncmp(str, "print", 5) == 0) {
 			str = NET_ReadString(buf);
