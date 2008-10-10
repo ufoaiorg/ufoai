@@ -168,7 +168,7 @@ void Cmd_ForwardToServer (void)
  */
 static void CL_Env_f (void)
 {
-	int argc = Cmd_Argc();
+	const int argc = Cmd_Argc();
 
 	if (argc == 3) {
 		char buffer[MAX_VAR];
@@ -213,9 +213,6 @@ static void CL_Quit_f (void)
  */
 void CL_StartSingleplayer (qboolean singleplayer)
 {
-	const char *type, *name, *text;
-	base_t *base;
-
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
 		if (Com_ServerState()) {
@@ -241,6 +238,8 @@ void CL_StartSingleplayer (qboolean singleplayer)
 	} else {
 		const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 		const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+		const char *type, *name, *text;
+		base_t *base;
 
 		/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 		 * cvars if values were previously set */
