@@ -687,6 +687,160 @@ static void Check_NearList (void)
 }
 
 /**
+ * @brief tests the vertices in the winding of side s.
+ * @param[in] mode determines how epsilon is applied
+ * @return qtrue if they are all in or on (within epsilon) brush b
+ * @sa Check_IsPointInsideBrush
+ */
+static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
+{
+	int i;
+	const winding_t *w = side->winding;
+
+	assert(w->numpoints > 0);
+
+	for (i = 0; i < w->numpoints ; i++)
+		if (!Check_IsPointInsideBrush(w->p[i], brush, mode))
+			return qfalse;
+
+	return qtrue;
+}
+
+/** @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
+ *  these sides can cooperate to hide a face, this is used for nodraw setting. composite sides may be
+ *  used for other things in the future.
+ */
+static void Check_FindCompositeSides (void)
+{
+	static qboolean done = qfalse;
+	int i, is, j, k, l, m, numMembers, numDone = 0, numTodo;
+
+	/* store pointers to sides here and then malloc them when we know how many.
+	 * divide by 4 becuase, the minimum number of sides for a brush is 4, so if
+	 * all brushes were lined up, and had one side as a member, that would be their number */
+	side_t *sbuf[MAX_MAP_SIDES / 4];
+
+	mapbrush_t *bDone[MAX_MAP_SIDES]; /*< an array of brushes to check if the composite propagates across */
+	mapbrush_t *bTodo[MAX_MAP_SIDES]; /*< an array of brushes that have been checked, without this it would never stop */
+
+	/* this function may be called more than once, but we only want this done once */
+	if (done)
+		return;
+
+	Check_NearList();
+
+	/* check each brush, iBrush */
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+
+		/* check each side, iSide, of iBrush for being the seed of a composite face */
+		for (is = 0; is < iBrush->numsides; is++) {
+			side_t *iSide = &iBrush->original_sides[is];
+
+			if (iSide->isCompositeMember)
+				continue; /* do not find the same composite again */
+
+			/* start making the list of brushes in the composite,
+			 * we will only keep it if the composite has more than member */
+			sbuf[0] = iSide; /* set iSide->isCompositeMember = true later, if we keep the composite */
+			numMembers = 1;
+
+			/* add neighbouring brushes to the list to check for composite propagation */
+			numTodo = iBrush->numNear;
+			for(j = 0; j < iBrush->numNear; j++)
+				bTodo[j] = iBrush->nearBrushes[j];
+
+			/* this brush's nearlist is listed for checking, so it is done */
+			bDone[numDone++] = iBrush;
+
+			while (numTodo > 0) {
+				mapbrush_t *bChecking = bTodo[--numTodo];
+				bDone[numDone++] = bChecking; /* remember so it is not added to the todo list again */
+
+				for (j = 0; j < bChecking->numsides; j++) {
+					side_t *sChecking = &bChecking->original_sides[j];
+
+					if (ParallelAndCoincidentTo(iSide, sChecking)) {
+						/* test if sChecking intersects or touches any of the brushes that have faces already in the composite*/
+						for (k = 0; k < numMembers; k++) {
+							if (Check_SideIsInBrush(sChecking, sbuf[k]->brush, PIB_INCL_SURF)) {
+								const mapbrush_t *newMembersBrush = sChecking->brush;
+								sbuf[numMembers++] = sChecking; /* add to the array of members */
+								sChecking->isCompositeMember = qtrue;
+
+								/* add this brushes nearList to the todo list, as the compostite may propagate through it */
+								for (l = 0; l < newMembersBrush->numNear;l++) {
+
+									/* only add them to the todo list if they are not on the done list
+									 * as a brush cannot have parallel sides, this also ensures the same side
+									 * is not added to a composite more than once */
+									for (m = 0; m < numDone; m++) {
+										if(newMembersBrush->nearBrushes[l] == bDone[m])
+											goto skip_add_brush_to_todo_list;
+									}
+									bTodo[numTodo++] = newMembersBrush->nearBrushes[l];
+
+									skip_add_brush_to_todo_list:
+									; /* there must be a statement after the label, ";" will do */
+								}
+								goto next_brush_todo; /* need not test any more sides of this brush, if a member is found */
+							}
+						}
+					}
+				}
+				next_brush_todo:
+				;
+			}
+
+			if(numMembers > 1) { /* composite found */
+				side_t **sidesInNewComposite = (side_t **)malloc(numMembers * sizeof(side_t *));
+
+				if (!sidesInNewComposite)
+					Sys_Error("Check_FindCompositeSides: out of memory");
+
+				/* this was not done before for the first side before, as we did not know it would have at least 2 members */
+				iSide->isCompositeMember = qtrue;
+
+				compositeSides[numCompositeSides].numMembers = numMembers;
+				for (j = 0; j < numMembers; j++) {
+					compositeSides[numCompositeSides].memberSides = sidesInNewComposite;
+				}
+				numCompositeSides++;
+			}
+
+
+		}
+	}
+
+	done = qtrue;
+}
+
+/** @brief free the mapbrush_t::nearBrushes and compositeSides */
+void Check_Free()
+{
+	int i;
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+		if (iBrush->numNear) {
+			assert(iBrush->nearBrushes);
+			free(iBrush->nearBrushes);
+			iBrush->numNear = 0;
+			iBrush->nearBrushes = NULL;
+		}
+	}
+
+	for (i = 0; i < numCompositeSides; i++) {
+		compositeSide_t *cs = &compositeSides[i];
+		if (cs->numMembers) {
+			assert(cs->memberSides);
+			free(cs->memberSides);
+			cs->numMembers = 0;
+			cs->memberSides = NULL;
+		}
+	}
+}
+
+/**
  * @brief 	calculate where an edge (defined by the vertices) intersects a plane.
  *			http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
  * @param[out] the position of the intersection, if the edge is not too close to parallel.
@@ -769,26 +923,6 @@ void Check_BrushIntersection (void)
 			}
 		}
 	}
-}
-
-/**
- * @brief tests the vertices in the winding of side s.
- * @param[in] mode determines how epsilon is applied
- * @return qtrue if they are all in or on (within epsilon) brush b
- * @sa Check_IsPointInsideBrush
- */
-static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
-{
-	int i;
-	const winding_t *w = side->winding;
-
-	assert(w->numpoints > 0);
-
-	for (i = 0; i < w->numpoints ; i++)
-		if (!Check_IsPointInsideBrush(w->p[i], brush, mode))
-			return qfalse;
-
-	return qtrue;
 }
 
 /** @brief finds point of intersection of two finite lines, if one exists
@@ -1103,7 +1237,7 @@ static void Check_SetNodraw(side_t *s)
 }
 
 /**
- * @brief Check for SURF_NODRAW which might be exposed, and check for
+ * @brief check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes. Also set faces pointing near straight down nodraw.
  * @todo test for sides hidden by composite faces
@@ -1113,15 +1247,16 @@ static void Check_SetNodraw(side_t *s)
 void CheckNodraws (void)
 {
 	int i, j, is, js;
-	int globalNumSet = 0;
+	int numSetFromSingleSide = 0, numSetPointingDown = 0/*,  numSetFromCompositeSide */;
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
+	Check_FindCompositeSides();
 
 	/* check each brush, i, for downward sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
-		int numSet = 0;
+		int iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
@@ -1137,22 +1272,21 @@ void CheckNodraws (void)
 
 			if (Check_SidePointsDown(iSide)) {
 				Check_SetNodraw(iSide);
-				globalNumSet++;
-				numSet++;
+				numSetPointingDown++;
+				iBrushNumSet++;
 			}
 
 		}
-		if (numSet)
-			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (point down, or are close to pointing down).\n", numSet);
+		if (iBrushNumSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (point down, or are close to pointing down).\n", iBrushNumSet);
 	}
-	if (globalNumSet)
-		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (point down, or are close to pointing down)\n", globalNumSet);
-	globalNumSet = 0;
+	if (numSetPointingDown)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (point down, or are close to pointing down)\n", numSetPointingDown);
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
-		int numSet = 0;
+		int iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
@@ -1196,17 +1330,19 @@ void CheckNodraws (void)
 						FacingAndCoincidentTo(iSide, jSide) &&
 						Check_SideIsInBrush(iSide, jBrush, PIB_INCL_SURF)) {
 						Check_SetNodraw(iSide);
-						numSet++;
-						globalNumSet++;
+						iBrushNumSet++;
+						numSetFromSingleSide++;
 					}
 				}
 			}
 		}
-		if (numSet)
-			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by another brush).\n", numSet);
+		if (iBrushNumSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by another brush).\n", iBrushNumSet);
+
+		/**@todo check each composite side for hiding iSide */
 	}
-	if (globalNumSet)
-		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (covered by another brush).\n", globalNumSet);
+	if (numSetFromSingleSide)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (covered by another brush).\n", numSetFromSingleSide);
 }
 
 /**

@@ -291,9 +291,16 @@ typedef struct side_s {
 	qboolean	visible;		/**< choose visible planes first */
 	qboolean	tested;			/**< this plane already checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
+	qboolean	isCompositeMember; /**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
 
 	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
 } side_t;
+
+/** @sa Check_FindCompositeSides */
+typedef struct compositeSide_s {
+	struct side_s **memberSides;
+	int numMembers;
+} compositeSide_t;
 
 typedef struct mapbrush_s {
 	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
