@@ -1005,7 +1005,6 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
 static void CL_BookmarkAdd_f (void)
 {
 	int i;
-	const char *bookmark;
 	const char *newBookmark;
 
 	if (Cmd_Argc() < 2) {
@@ -1018,8 +1017,8 @@ static void CL_BookmarkAdd_f (void)
 		newBookmark = Cmd_Argv(1);
 
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		bookmark = Cvar_VariableString(va("adr%i", i));
-		if (!*bookmark) {
+		const char *bookmark = Cvar_VariableString(va("adr%i", i));
+		if (bookmark[0] == '\0') {
 			Cvar_Set(va("adr%i", i), newBookmark);
 			return;
 		}
@@ -1191,7 +1190,7 @@ static void CL_PingServers_f (void)
  */
 static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
-	char *s;
+	const char *s;
 	const char *c;
 	int i;
 
@@ -1205,9 +1204,8 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
-		const char *p;
 		for (i = 1; i < Cmd_Argc(); i++) {
-			p = Cmd_Argv(i);
+			const char *p = Cmd_Argv(i);
 			if (!Q_strncmp(p, "dlserver=", 9)) {
 				p += 9;
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
@@ -1282,7 +1280,7 @@ static void CL_ReadPackets (void)
 {
 	struct dbuffer *msg;
 	while ((msg = NET_ReadMsg(cls.netStream))) {
-		int cmd = NET_ReadByte(msg);
+		const int cmd = NET_ReadByte(msg);
 		if (cmd == clc_oob)
 			CL_ConnectionlessPacket(msg);
 		else
@@ -1310,7 +1308,7 @@ static void CL_TeamNum_f (void)
 	int max = 4;
 	int i = cl_teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
-	int maxteamnum = Cvar_VariableInteger("mn_maxteams");
+	const int maxteamnum = Cvar_VariableInteger("mn_maxteams");
 
 	if (maxteamnum > 0)
 		max = maxteamnum;
