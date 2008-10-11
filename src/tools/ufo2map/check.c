@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
  *  the margin for abutting brushes to be considered not intersecting */
 #define CH_DIST_EPSILON 0.001f
+#define CH_DIST_EPSILON_COLLINEAR_POINTS 0.01f
 #define CH_DIST_EPSILON_SQR 0.000001
 
 /** if the cosine of an angle is greater than this, then the angle is negligibly different from zero */
@@ -1023,7 +1024,7 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 		offLineDist = VectorLength(cross) / d3d;
 	}
 
-	return offLineDist < CH_DIST_EPSILON;
+	return offLineDist < CH_DIST_EPSILON_COLLINEAR_POINTS;
 }
 
 #define VERT_BUF_SIZE_DISJOINT_SIDES 21
@@ -1091,6 +1092,12 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 
 		for (i++; i < numVert; i++) {
 			if (!Check_PointsAreCollinear(zero, one, vertbuf[i])) {
+				#if 0
+				Com_Printf("\non-collinear points\n");
+				Print3Vector(zero);
+				Print3Vector(one);
+				Print3Vector(vertbuf[i]);
+				#endif
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
@@ -1101,7 +1108,7 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 
 #if 0
 /** @brief for debugging, use this to see which face is the problem
-  * as there is not non-debugging use (yet) usuallu #ifed out
+  * as there is not non-debugging use (yet) usually #ifed out
   */
 static void Check_SetError (side_t *s)
 {
