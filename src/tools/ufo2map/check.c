@@ -1073,22 +1073,21 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 		return qfalse; /* must be at least 3 points to be not in a line */
 
 	{
-		vec3_t from0to1, one;
+		vec3_t from0to1, one, zero;
 
 		/* skip past elements 0, 1, ... if they are coincident - to avoid division by zero */
 		i = 0;
 		do {
 			i++;
+			if ((i + 1) >= numVert)
+				return qfalse; /* not enough separated points - they must be in a line */
 			VectorSubtract(vertbuf[i], vertbuf[i - 1], from0to1);
+			VectorCopy(vertbuf[i - 1], zero);
 			VectorCopy(vertbuf[i], one);
-		} while (fabs(VectorLength(from0to1)) < CH_DIST_EPSILON);
-
-		/*check we have enough points left */
-		if (numVert - 2 < i)
-			return qfalse;
+		} while (VectorLength(from0to1) < CH_DIST_EPSILON);
 
 		for (i++; i < numVert; i++) {
-			if (!Check_PointsAreCollinear(vertbuf[0], one, vertbuf[i])) {
+			if (!Check_PointsAreCollinear(zero, one, vertbuf[i])) {
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
