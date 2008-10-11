@@ -1387,7 +1387,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 {
 	edict_t *ent;
 	pos3_t pos;
-	int i;
+	int i = 0;
 
 	/* Get target position. */
 	VectorCopy(from, pos);

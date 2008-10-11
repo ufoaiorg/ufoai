@@ -3530,9 +3530,9 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 	d = date->day % DAYS_PER_YEAR;
 
 	/* Subtract days until no full month is left. */
-	for (i = 0; d >= monthLength[i]; i++) {
-		if (i >= MONTHS_PER_YEAR)
-			Sys_Error("CL_DateConvert: More days left in year that it is long!\n");
+	for (i = 0; i < MONTHS_PER_YEAR; i++) {
+		if (d < monthLength[i])
+			break;
 		d -= monthLength[i];
 	}
 

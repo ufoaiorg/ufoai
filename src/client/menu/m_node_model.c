@@ -199,7 +199,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	MN_GetNodeAbsPos(node, nodepos);
 	nodeorigin[0] = nodepos[0];
 	nodeorigin[1] = nodepos[1];
-	nodeorigin[3] = node->origin[2];
+	nodeorigin[2] = node->origin[2];
 
 	menuModel = node->menuModel = MN_GetMenuModel(source);
 
