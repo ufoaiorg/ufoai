@@ -999,7 +999,7 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 
 	VectorSubtract(a, b, d1);
 	VectorSubtract(a, c, d2);
-	VectorSubtract(a, c, d3);
+	VectorSubtract(b, c, d3);
 
 	d1d = VectorLength(d1);
 	d2d = VectorLength(d2);
