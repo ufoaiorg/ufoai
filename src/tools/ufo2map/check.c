@@ -1217,7 +1217,7 @@ void Check_ContainedBrushes (void)
 			int numSidesInside = 0;
 
 			for (js = 0; js < jBrush->numsides; js++) {
-				side_t *jSide = &jBrush->original_sides[js];
+				const side_t *jSide = &jBrush->original_sides[js];
 
 				if (Check_SideIsInBrush(jSide, iBrush, PIB_INCL_SURF))
 					numSidesInside++;
@@ -1240,7 +1240,7 @@ static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
 	return !(CONTENTS_LEVEL_ALL & ~coverer->contentFlags & coveree->contentFlags);
 }
 
-static void Check_SetNodraw(side_t *s)
+static void Check_SetNodraw (side_t *s)
 {
 	const ptrdiff_t index = s - brushsides;
 	brush_texture_t *tex = &side_brushtextures[index];
@@ -1328,19 +1328,19 @@ void CheckNodraws (void)
 				for (js = 0; js < jBrush->numsides; js++) {
 					const side_t *jSide = &jBrush->original_sides[js];
 
-					#if 0
+#if 0
 					/* run on a largish map, this section proves that the plane indices alone cannot
-					   cannot be relied on to test for 2 planes facing each other. */
+					 * cannot be relied on to test for 2 planes facing each other. */
 					if (FacingAndCoincidentTo(iSide, jSide)) {
-						int minIndex = min(iSide->planenum, jSide->planenum);
-						int maxIndex = max(iSide->planenum, jSide->planenum);
-						int diff = maxIndex - minIndex, minOdd = (minIndex & 1);
+						const int minIndex = min(iSide->planenum, jSide->planenum);
+						const int maxIndex = max(iSide->planenum, jSide->planenum);
+						const int diff = maxIndex - minIndex, minOdd = (minIndex & 1);
 						if ((diff != 1) || minOdd) {
 							Com_Printf("CheckNodraws: facing and coincident plane indices %i %i diff:%i minOdd:%i\n",
 								iSide->planenum, jSide->planenum, diff, minOdd);
 						}
 					}
-					#endif
+#endif
 
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
@@ -1355,7 +1355,7 @@ void CheckNodraws (void)
 		if (iBrushNumSet)
 			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by another brush).\n", iBrushNumSet);
 
-		/**@todo check each composite side for hiding iSide */
+		/** @todo check each composite side for hiding iSide */
 	}
 	if (numSetFromSingleSide)
 		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (covered by another brush).\n", numSetFromSingleSide);
