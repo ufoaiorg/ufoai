@@ -672,13 +672,16 @@ static void Check_NearList (void)
 			bbuf[numNear++] = jBrush;
 		}
 
+		iBrush->numNear = numNear;
+		if (!numNear)
+			continue;
+
 		/* now we know how many, we can malloc. then copy the pointers */
 		iBrush->nearBrushes = (mapbrush_t **)malloc(numNear * sizeof(mapbrush_t *));
 
 		if (!iBrush->nearBrushes)
 			Sys_Error("Check_Nearlist: out of memory");
 
-		iBrush->numNear = numNear;
 		for (j = 0; j < numNear; j++)
 			iBrush->nearBrushes[j] = bbuf[j];
 	}
