@@ -462,8 +462,10 @@ static const entityCheck_t checkArray[] = {
  * this is the cosine of the angle of how close it has to be. around 10 degrees */
 #define NEARDOWN_COS 0.985
 
-/** @brief faces that are near pointing down may be set nodraw,
- *  as views are always slightly down */
+/**
+ * @brief faces that are near pointing down may be set nodraw,
+ * as views are always slightly down
+ */
 static qboolean Check_SidePointsDown(const side_t *s)
 {
 	const vec3_t down = {0.0f, 0.0f, -1.0f};
@@ -710,9 +712,10 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 	return qtrue;
 }
 
-/** @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
- *  these sides can cooperate to hide a face, this is used for nodraw setting. composite sides may be
- *  used for other things in the future.
+/**
+ * @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
+ * these sides can cooperate to hide a face, this is used for nodraw setting. composite sides may be
+ * used for other things in the future.
  */
 static void Check_FindCompositeSides (void)
 {
@@ -811,16 +814,16 @@ static void Check_FindCompositeSides (void)
 				}
 				numCompositeSides++;
 			}
-
-
 		}
 	}
 
 	done = qtrue;
 }
 
-/** @brief free the mapbrush_t::nearBrushes and compositeSides */
-void Check_Free()
+/**
+ * @brief free the mapbrush_t::nearBrushes and compositeSides
+ */
+void Check_Free (void)
 {
 	int i;
 	for (i = 0; i < nummapbrushes; i++) {
@@ -929,12 +932,13 @@ void Check_BrushIntersection (void)
 	}
 }
 
-/** @brief finds point of intersection of two finite lines, if one exists
- *  @param[in] e1p1 first point defining line 1
- *  @param[in] e1p2 second point defining line 1
- *  @paran[out] intersection will be set to the point of intersection, if one exists
- *  @return qtrue if the lines intersect between the given points
- *  @note http://mathworld.wolfram.com/Line-LineDistance.html
+/**
+ * @brief finds point of intersection of two finite lines, if one exists
+ * @param[in] e1p1 first point defining line 1
+ * @param[in] e1p2 second point defining line 1
+ * @param[out] intersection will be set to the point of intersection, if one exists
+ * @return qtrue if the lines intersect between the given points
+ * @note http://mathworld.wolfram.com/Line-LineDistance.html
  */
 static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2,
 					const vec3_t e2p1, const vec3_t e2p2, vec3_t intersection)
@@ -1029,9 +1033,10 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 
 #define VERT_BUF_SIZE_DISJOINT_SIDES 21
 
-/** @brief tests if sides overlap, for z-fighting check
- *  @note the sides must be on a common plane. if they are not, the result is unspecified
- *  @note http://mathworld.wolfram.com/Collinear.html
+/**
+ * @brief tests if sides overlap, for z-fighting check
+ * @note the sides must be on a common plane. if they are not, the result is unspecified
+ * @note http://mathworld.wolfram.com/Collinear.html
  */
 static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 {
@@ -1092,12 +1097,12 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 
 		for (i++; i < numVert; i++) {
 			if (!Check_PointsAreCollinear(zero, one, vertbuf[i])) {
-				#if 0
+#if 0
 				Com_Printf("\non-collinear points\n");
 				Print3Vector(zero);
 				Print3Vector(one);
 				Print3Vector(vertbuf[i]);
-				#endif
+#endif
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
@@ -1107,9 +1112,10 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 }
 
 #if 0
-/** @brief for debugging, use this to see which face is the problem
-  * as there is not non-debugging use (yet) usually #ifed out
-  */
+/**
+ * @brief for debugging, use this to see which face is the problem
+ * as there is not non-debugging use (yet) usually #ifed out
+ */
 static void Check_SetError (side_t *s)
 {
 	const ptrdiff_t index = s - brushsides;
@@ -1119,7 +1125,8 @@ static void Check_SetError (side_t *s)
 }
 #endif
 
-/** @brief check all brushes for overlapping shared faces
+/**
+ * @brief check all brushes for overlapping shared faces
  *  @todo maybe too fussy. perhaps should ignore small overlaps.
  */
 void CheckZFighting (void)
