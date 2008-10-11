@@ -731,7 +731,7 @@ void CreateDirectLights (void)
 					VectorNormalize(dl->normal);
 				}
 			} else {	/* point down angle */
-				float angle = FloatForKey(e, "angle");
+				const float angle = FloatForKey(e, "angle");
 				if (angle == ANGLE_UP) {
 					dl->normal[0] = dl->normal[1] = 0;
 					dl->normal[2] = 1;
