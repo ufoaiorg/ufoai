@@ -42,7 +42,7 @@ static char ms_messageSettingsList[1024];/* buffer for message settings text nod
 qboolean messageOptionsInitialized = qfalse; /* flag indicating whether message options menu is initialized @sa MSO_Init_f */
 
 /** @brief how many message settings may be shown at once on option page */
-#define MAX_MESSAGESETTINGS_ENTRIES 23
+#define MAX_MESSAGESETTINGS_ENTRIES 21
 
 /**
  * @brief Script command to show all messages on the stack

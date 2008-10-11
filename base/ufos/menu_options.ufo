@@ -888,22 +888,22 @@ menu options_pause
 
 	string header_messagetype
 	{
-		string	"_Notice type"
-		pos		"500 100"
+		string	"_Notify type"
+		pos		"500 140"
 		font	f_big
 	}
 
 	string header_pause
 	{
 		string	"_pause"
-		pos		"750 100"
+		pos		"750 140"
 		font	f_big
 	}
 
-	string header_notice
+	string header_notify
 	{
-		string	"_notice"
-		pos		"850 100"
+		string	"_notify"
+		pos		"850 140"
 		font	f_big
 	}
 
@@ -911,10 +911,10 @@ menu options_pause
 	{
 		color	"0 .78 0 1"
 		num		TEXT_MESSAGEOPTIONS
-		height	"23"
+		height	"21"
 		format	"25 0"
-		pos		"500 130"
-		size	"265 700"
+		pos		"500 170"
+		size	"265 525"
 		click
 		wheel	{ cmd "msgoptions_scroll;" }
 		mousefx	true
@@ -923,7 +923,7 @@ menu options_pause
 	pic bt_pause0 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 130"
+		pos		"790 170"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 0 pause;" }
 	}
@@ -931,7 +931,7 @@ menu options_pause
 	pic bt_notify0 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 130"
+		pos		"890 170"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 notify;" }
 	}
@@ -939,7 +939,7 @@ menu options_pause
 	pic bt_pause1 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 155"
+		pos		"790 195"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 1 pause;" }
 	}
@@ -947,7 +947,7 @@ menu options_pause
 	pic bt_notify1 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 155"
+		pos		"890 195"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 notify;" }
 	}
@@ -955,7 +955,7 @@ menu options_pause
 	pic bt_pause2 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 180"
+		pos		"790 220"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 2 pause;" }
 	}
@@ -963,7 +963,7 @@ menu options_pause
 	pic bt_notify2 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 180"
+		pos		"890 220"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 notify;" }
 	}
@@ -971,7 +971,7 @@ menu options_pause
 	pic bt_pause3 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 205"
+		pos		"790 245"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 3 pause;" }
 	}
@@ -979,7 +979,7 @@ menu options_pause
 	pic bt_notify3 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 205"
+		pos		"890 245"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 notify;" }
 	}
@@ -987,7 +987,7 @@ menu options_pause
 	pic bt_pause4 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 230"
+		pos		"790 270"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 4 pause;" }
 	}
@@ -995,7 +995,7 @@ menu options_pause
 	pic bt_notify4 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 230"
+		pos		"890 270"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 notify;" }
 	}
@@ -1003,7 +1003,7 @@ menu options_pause
 	pic bt_pause5 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 255"
+		pos		"790 295"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 5 pause;" }
 	}
@@ -1011,7 +1011,7 @@ menu options_pause
 	pic bt_notify5 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 255"
+		pos		"890 295"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 notify;" }
 	}
@@ -1019,7 +1019,7 @@ menu options_pause
 	pic bt_pause6 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 280"
+		pos		"790 320"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 6 pause;" }
 	}
@@ -1027,7 +1027,7 @@ menu options_pause
 	pic bt_notify6 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 280"
+		pos		"890 320"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 notify;" }
 	}
@@ -1035,7 +1035,7 @@ menu options_pause
 	pic bt_pause7 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 305"
+		pos		"790 345"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 7 pause;" }
 	}
@@ -1043,7 +1043,7 @@ menu options_pause
 	pic bt_notify7 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 305"
+		pos		"890 345"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 notify;" }
 	}
@@ -1051,7 +1051,7 @@ menu options_pause
 	pic bt_pause8 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 330"
+		pos		"790 370"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 8 pause;" }
 	}
@@ -1059,7 +1059,7 @@ menu options_pause
 	pic bt_notify8 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 330"
+		pos		"890 370"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 notify;" }
 	}
@@ -1067,7 +1067,7 @@ menu options_pause
 	pic bt_pause9 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 355"
+		pos		"790 395"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 9 pause;" }
 	}
@@ -1075,7 +1075,7 @@ menu options_pause
 	pic bt_notify9 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 355"
+		pos		"890 395"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 notify;" }
 	}
@@ -1083,7 +1083,7 @@ menu options_pause
 	pic bt_pause10 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 380"
+		pos		"790 420"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 10 pause;" }
 	}
@@ -1091,7 +1091,7 @@ menu options_pause
 	pic bt_notify10 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 380"
+		pos		"890 420"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 notify;" }
 	}
@@ -1099,7 +1099,7 @@ menu options_pause
 	pic bt_pause11 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 405"
+		pos		"790 445"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 11 pause;" }
 	}
@@ -1107,7 +1107,7 @@ menu options_pause
 	pic bt_notify11 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 405"
+		pos		"890 445"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 notify;" }
 	}
@@ -1115,7 +1115,7 @@ menu options_pause
 	pic bt_pause12 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 430"
+		pos		"790 470"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 12 pause;" }
 	}
@@ -1123,7 +1123,7 @@ menu options_pause
 	pic bt_notify12 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 430"
+		pos		"890 470"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 notify;" }
 	}
@@ -1131,7 +1131,7 @@ menu options_pause
 	pic bt_pause13 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 455"
+		pos		"790 495"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 13 pause;" }
 	}
@@ -1139,7 +1139,7 @@ menu options_pause
 	pic bt_notify13 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 455"
+		pos		"890 495"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 notify;" }
 	}
@@ -1147,7 +1147,7 @@ menu options_pause
 	pic bt_pause14 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 480"
+		pos		"790 520"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 14 pause;" }
 	}
@@ -1155,7 +1155,7 @@ menu options_pause
 	pic bt_notify14 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 480"
+		pos		"890 520"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 notify;" }
 	}
@@ -1163,7 +1163,7 @@ menu options_pause
 	pic bt_pause15 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 505"
+		pos		"790 545"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 15 pause;" }
 	}
@@ -1171,7 +1171,7 @@ menu options_pause
 	pic bt_notify15 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 505"
+		pos		"890 545"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 notify;" }
 	}
@@ -1179,7 +1179,7 @@ menu options_pause
 	pic bt_pause16 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 530"
+		pos		"790 570"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 16 pause;" }
 	}
@@ -1187,7 +1187,7 @@ menu options_pause
 	pic bt_notify16 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 530"
+		pos		"890 570"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 notify;" }
 	}
@@ -1195,7 +1195,7 @@ menu options_pause
 	pic bt_pause17 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 555"
+		pos		"790 595"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 17 pause;" }
 	}
@@ -1203,7 +1203,7 @@ menu options_pause
 	pic bt_notify17 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 555"
+		pos		"890 595"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 notify;" }
 	}
@@ -1211,7 +1211,7 @@ menu options_pause
 	pic bt_pause18 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 580"
+		pos		"790 620"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 18 pause;" }
 	}
@@ -1219,7 +1219,7 @@ menu options_pause
 	pic bt_notify18 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 580"
+		pos		"890 620"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 notify;" }
 	}
@@ -1227,7 +1227,7 @@ menu options_pause
 	pic bt_pause19 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 605"
+		pos		"790 645"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 19 pause;" }
 	}
@@ -1235,7 +1235,7 @@ menu options_pause
 	pic bt_notify19 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 605"
+		pos		"890 645"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 notify;" }
 	}
@@ -1243,7 +1243,7 @@ menu options_pause
 	pic bt_pause20 {
 		tooltip "_pause disabled"
 		align	ur
-		pos		"790 630"
+		pos		"790 670"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 20 pause;" }
 	}
@@ -1251,41 +1251,9 @@ menu options_pause
 	pic bt_notify20 {
 		tooltip	"_notify disabled"
 		align	ur
-		pos		"890 630"
+		pos		"890 670"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 notify;" }
-	}
-
-	pic bt_pause21 {
-		tooltip "_pause disabled"
-		align	ur
-		pos		"790 655"
-		image	menu/checkbox_unchecked
-		click {	cmd "msgoptions_toggle 21 pause;" }
-	}
-
-	pic bt_notify21 {
-		tooltip	"_notify disabled"
-		align	ur
-		pos		"890 655"
-		image	menu/checkbox_unchecked
-		click { cmd "msgoptions_toggle 21 notify;" }
-	}
-
-	pic bt_pause22 {
-		tooltip "_pause disabled"
-		align	ur
-		pos		"790 680"
-		image	menu/checkbox_unchecked
-		click {	cmd "msgoptions_toggle 22 pause;" }
-	}
-
-	pic bt_notify22 {
-		tooltip	"_notify disabled"
-		align	ur
-		pos		"890 680"
-		image	menu/checkbox_unchecked
-		click { cmd "msgoptions_toggle 22 notify;" }
 	}
 
 	// ===================
@@ -1564,32 +1532,6 @@ menu options_pause
 		*bt_notify20 tooltip "_notification disabled"
 	}
 
-	confunc ms_pausee21 { *bt_pause21 image menu/checkbox_checked
-		*bt_pause21 tooltip "_pause enabled"
-	}
-	confunc ms_paused21 { *bt_pause21 image menu/checkbox_unchecked
-		*bt_pause21 tooltip "_pause disabled"
-	}
-	confunc ms_notifye21 { *bt_notify21 image menu/checkbox_checked
-		*bt_notify21 tooltip "_notification enabled"
-	}
-	confunc ms_notifyd21 { *bt_notify21 image menu/checkbox_unchecked
-		*bt_notify21 tooltip "_notification disabled"
-	}
-
-	confunc ms_pausee22 { *bt_pause22 image menu/checkbox_checked
-		*bt_pause22 tooltip "_pause enabled"
-	}
-	confunc ms_paused22 { *bt_pause22 image menu/checkbox_unchecked
-		*bt_pause22 tooltip "_pause disabled"
-	}
-	confunc ms_notifye22 { *bt_notify22 image menu/checkbox_checked
-		*bt_notify22 tooltip "_notification enabled"
-	}
-	confunc ms_notifyd22 { *bt_notify22 image menu/checkbox_unchecked
-		*bt_notify22 tooltip "_notification disabled"
-	}
-
 	// ===================
 	// confuncs to enable/disable lines
 	// ===================
@@ -1738,20 +1680,6 @@ menu options_pause
 	}
 	confunc ms_disable20 { *bt_pause20 invis true
 		*bt_notify20 invis true
-	}
-
-	confunc ms_enable21 { *bt_pause21 invis false
-		*bt_notify21 invis false
-	}
-	confunc ms_disable21 { *bt_pause21 invis true
-		*bt_notify21 invis true
-	}
-
-	confunc ms_enable22 { *bt_pause22 invis false
-		*bt_notify22 invis false
-	}
-	confunc ms_disable22 { *bt_pause22 invis true
-		*bt_notify22 invis true
 	}
 
 	func init
