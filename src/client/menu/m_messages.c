@@ -604,7 +604,11 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 	memset(messageSettings, 0, sizeof(messageSettings));
 	/* load all positiv settings */
 	count = MSG_ReadLong(sb);
-	for (; count--;) {
+	if (count < 0) {
+		Com_Printf("Can't load negativ number of message settings, probably old savegame.\n");
+		return qfalse;
+	}
+	for (; count > 0; count--) {
 		const char *messagetype = MSG_ReadString(sb);
 		const char pauseOrNotify = MSG_ReadChar(sb);
 		notify_t type;
