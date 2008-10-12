@@ -1045,17 +1045,14 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	else
 		VectorCopy(player_maxs, le->maxs);
 
-	/* hidden actors don't have models assigned, thus we can not change the
-	 * animation for any model */
-	if (le->type != ET_ACTORHIDDEN)
-		le->think = LET_StartIdle;
+	le->think = LET_StartIdle;
 
 	/* count spotted aliens */
 	if (!(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
-	/** @todo Why do we check cls.state here - events are only executed when a mission is active */
-	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
+	assert(cls.state == ca_active);
+	if (!(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
 			VectorCopy(le->origin, cl.cam.origin);
