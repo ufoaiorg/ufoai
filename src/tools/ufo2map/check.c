@@ -1305,7 +1305,7 @@ static void Check_SetNodraw (side_t *s)
 void CheckNodraws (void)
 {
 	int i, j, k, l, is, js;
-	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide, iBrushNumSet ;
+	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide = 0, iBrushNumSet = 0;
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
