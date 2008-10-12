@@ -382,23 +382,15 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 static void MSO_InitTextList (void)
 {
 	char categoryLine[36];
-	const char *category;
 	int idx;
 
 	*ms_messageSettingsList = '\0';
 
-	/** add all available texts, enable as much menu button lines as needed*/
+	/* add all available texts, enable as much menu button lines as needed*/
 	for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx++) {
-		if (idx < MAX_MESSAGESETTINGS_ENTRIES) {
-			MN_ExecuteConfunc(va("ms_enable%i", idx));
-		}
-		category = nt_strings[idx];
+		const char *category = nt_strings[idx];
 		Com_sprintf(categoryLine, sizeof(categoryLine), "%s\n", _(category));
 		Q_strcat(ms_messageSettingsList, categoryLine, sizeof(ms_messageSettingsList));
-	}
-	/** disable menu button lines that are not needed */
-	for (idx = NT_NUM_NOTIFYTYPE; idx < MAX_MESSAGESETTINGS_ENTRIES; idx++) {
-		MN_ExecuteConfunc(va("ms_disable%i", idx));
 	}
 	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
 }
@@ -416,11 +408,11 @@ static void MSO_Init_f (void)
 		for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx++) {
 			if (idx < MAX_MESSAGESETTINGS_ENTRIES) {
 				MN_ExecuteConfunc(va("ms_enable%i", idx));
-				MN_ExecuteConfunc(va("ms_pause%s%i",messageSettings[idx].doPause ? "e" : "d", idx));
-				MN_ExecuteConfunc(va("ms_notify%s%i",messageSettings[idx].doNotify ? "e" : "d", idx));
+				MN_ExecuteConfunc(va("ms_pause%s%i", messageSettings[idx].doPause ? "e" : "d", idx));
+				MN_ExecuteConfunc(va("ms_notify%s%i", messageSettings[idx].doNotify ? "e" : "d", idx));
 			}
 		}
-		/** disable menu button lines that are not needed */
+		/* disable menu button lines that are not needed */
 		for (idx = NT_NUM_NOTIFYTYPE; idx < MAX_MESSAGESETTINGS_ENTRIES; idx++) {
 			MN_ExecuteConfunc(va("ms_disable%i", idx));
 		}
