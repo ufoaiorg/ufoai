@@ -2312,10 +2312,9 @@ void CL_ActorUpdateCVars (void)
 			}
 		} else if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 			const int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
-			/* If the mouse is outside the world, blank move */
-			/* or the movelength is ROUTING_NOT_REACHABLE */
+			/* If the mouse is outside the world, and we haven't placed the cursor in pend
+			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
-				/** @todo CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reserved_tus > 0)
 					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
