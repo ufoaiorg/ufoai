@@ -273,15 +273,14 @@ void R_FontListCache_f (void)
 
 /**
  * @param[in] string String to build the hash value for
- * @param[in] maxlen Max length that should be used to calculate the hash value
  * @return hash value for given string
  */
-static int R_FontHash (const char *string, int maxlen)
+static int R_FontHash (const char *string)
 {
 	register int hashValue, i;
 
 	hashValue = 0;
-	for (i = 0; i < maxlen && string[i] != '\0'; i++)
+	for (i = 0; string[i] != '\0'; i++)
 		hashValue += string[i] * (119 + i);
 
 	hashValue = (hashValue ^ (hashValue >> 10) ^ (hashValue >> 20));
@@ -298,9 +297,12 @@ static fontCache_t *R_FontGetFromCache (const font_t *font, const char *s)
 	fontCache_t *entry;
 	int hashValue;
 
-	hashValue = R_FontHash(s, MAX_HASH_STRING);
+	hashValue = R_FontHash(s);
+	/* String is considered a match if the part that fit in entry->string
+	 * matches. Since the hash value also matches and the hash was taken
+	 * over the whole string, this is good enough. */
 	for (entry = hash[hashValue]; entry; entry = entry->next)
-		if (!Q_strncmp(s, entry->string, MAX_HASH_STRING)
+		if (!Q_strncmp(s, entry->string, sizeof(entry->string)-1)
 		 && entry->font == font)
 			return entry;
 
@@ -337,7 +339,7 @@ static fontCache_t* R_FontAddToCache (const char *s, const font_t *f, SDL_Surfac
 	if (numInCache >= MAX_FONT_CACHE)
 		R_FontCleanCache();
 
-	hashValue = R_FontHash(s, MAX_HASH_STRING);
+	hashValue = R_FontHash(s);
 	if (hash[hashValue]) {
 		fontCache_t *font = hash[hashValue];
 		/* go to end of list */
@@ -348,7 +350,7 @@ static fontCache_t* R_FontAddToCache (const char *s, const font_t *f, SDL_Surfac
 		hash[hashValue] = &fontCache[numInCache];
 
 	if (numInCache < MAX_FONT_CACHE) {
-		Q_strncpyz(fontCache[numInCache].string, s, MAX_HASH_STRING);
+		Q_strncpyz(fontCache[numInCache].string, s, sizeof(fontCache[numInCache].string));
 		fontCache[numInCache].font = f;
 		fontCache[numInCache].size[0] = w;
 		fontCache[numInCache].size[1] = h;
