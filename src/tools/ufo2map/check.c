@@ -1413,7 +1413,8 @@ void CheckNodraws (void)
 				if (!FacingAndCoincidentTo(iSide, composite->memberSides[0]))
 					continue; /* all sides in the composite are parallel, and iSide must face them to be hidden */
 
-				/* skip those that are already nodraw */
+				/* skip those that are already nodraw. note: this includes sides hidden by single sides
+				 * set above - this prevents duplicate nodraw reports */
 				if (iSide->surfaceFlags & SURF_NODRAW)
 					continue;
 
@@ -1440,7 +1441,6 @@ void CheckNodraws (void)
 				}
 
 				/** @todo tests to skip to next_iSide if iWinding crosses out of the composite */
-				/** @todo do we need a test for iSide being covered by only one member, or is that OK, as the one member test is first */
 
 				/* set nodraw for iSide (covered by composite) */
 				Check_SetNodraw(iSide);
