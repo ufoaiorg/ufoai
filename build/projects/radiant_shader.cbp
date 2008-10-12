@@ -45,7 +45,6 @@
 				<Linker>
 					<Add library="libglib-2.0" />
 					<Add option="--export-all-symbols" />
-					<Add library="libglib-2.0" />
 				</Linker>
 			</Target>
 			<Target title="linux">
