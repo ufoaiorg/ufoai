@@ -787,8 +787,8 @@ static void Check_FindCompositeSides (void)
 		for (is = 0; is < iBrush->numsides; is++) {
 			side_t *iSide = &iBrush->original_sides[is];
 
-			if (iSide->isCompositeMember)
-				continue; /* do not find the same composite again */
+			if (iSide->isCompositeMember || (iSide->surfaceFlags & SURF_NODRAW))
+				continue; /* do not find the same composite again, no nodraws */
 
 			/* start making the list of brushes in the composite,
 			 * we will only keep it if the composite has more than member */
@@ -810,6 +810,9 @@ static void Check_FindCompositeSides (void)
 
 				for (j = 0; j < bChecking->numsides; j++) {
 					side_t *sChecking = &bChecking->original_sides[j];
+
+					if (sChecking->surfaceFlags & SURF_NODRAW)
+						continue; /* no nodraws in composites */
 
 					if (ParallelAndCoincidentTo(iSide, sChecking)) {
 
