@@ -211,6 +211,7 @@ CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
  */
 static int CL_MoveMode (int length)
 {
+	assert(selActor);
 	if (selActor->state & STATE_CROUCHED) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
 			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
@@ -2588,7 +2589,6 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 	/* check selection */
 	if (selActor == le) {
-		/** @todo This should probably be a while loop */
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (CL_ActorSelect(cl.teamList[i]))
 				break;
@@ -2603,9 +2603,7 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 /**
  * @brief Selects an actor.
- *
  * @param le Pointer to local entity struct
- *
  * @sa CL_UGVCvars
  * @sa CL_CharacterCvars
  */
@@ -2914,7 +2912,6 @@ static int CL_MoveLength (pos3_t to)
 {
 	const int crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
 	const float length = Grid_MoveLength(&clPathMap, to, crouching_state, qfalse);
-	assert(selActor);
 
 	switch (CL_MoveMode(length)) {
 	case WALKTYPE_AUTOSTAND_BEING_USED:
@@ -3045,6 +3042,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	if (blockEvents)
 		return;
 
+	assert(selActor);
 	length = CL_MoveLength(to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
