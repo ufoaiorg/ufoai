@@ -55,7 +55,7 @@ static qboolean displayRemainingTus[REMAINING_TU_MAX];	/**< 0=reload_r, 1=reload
 
 /**
  * @brief If you want to change the z level of targetting and shooting,
- * use this value. Negative and positiv offsets are possible
+ * use this value. Negative and positive offsets are possible
  * @sa CL_ActorTargetAlign_f
  * @sa G_ClientShoot
  * @sa G_ShootGrenade

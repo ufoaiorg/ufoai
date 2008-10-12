@@ -562,7 +562,7 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 {
 	notify_t type;
 	int count = 0;
-	/* count positiv values */
+	/* count positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		if (messageSettings[type].doNotify)
 			count++;
@@ -570,7 +570,7 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 			count++;
 	}
 	MSG_WriteLong(sb, count);
-	/* save positiv values (negativ won't be saved) */
+	/* save positive values (negative won't be saved) */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		if (messageSettings[type].doNotify)	{
 			MSG_WriteString(sb, nt_strings[type]);
@@ -594,10 +594,10 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 	int count;
 	/* reset current message settings */
 	memset(messageSettings, 0, sizeof(messageSettings));
-	/* load all positiv settings */
+	/* load all positive settings */
 	count = MSG_ReadLong(sb);
 	if (count < 0) {
-		Com_Printf("Can't load negativ number of message settings, probably old savegame.\n");
+		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
 		return qfalse;
 	}
 	for (; count > 0; count--) {
