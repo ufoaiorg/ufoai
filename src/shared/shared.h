@@ -104,6 +104,15 @@ const char *COM_EParse(const char **text, const char *errhead, const char *errin
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
+/** Is this the second or later byte of a multibyte UTF-8 character? */
+/* The definition of UTF-8 guarantees that the second and later
+ * bytes of a multibyte character have high bits 10, and that
+ * singlebyte characters and the start of multibyte characters
+ * never do. */
+#define UTF8_CONTINUATION_BYTE(c) (((c) & 0xc0) == 0x80)
+
+int UTF8_delete_char(char *s, int pos);
+
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 int Q_FloatSort(const void *float1, const void *float2);
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));

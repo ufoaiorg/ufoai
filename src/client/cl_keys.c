@@ -494,8 +494,7 @@ static void Key_Message (int key)
 
 	if (key == K_BACKSPACE) {
 		if (msg_bufferlen) {
-			msg_bufferlen--;
-			msg_buffer[msg_bufferlen] = 0;
+			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
 			if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 				Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
 		}

@@ -438,3 +438,26 @@ const char *Q_stristr (const char *str, const char *substr)
 		str = NULL;
 	return str;
 }
+
+/**
+ * @brief Delete a whole (possibly multibyte) character from a string.
+ * @param[in] s Start of the string
+ * @param[in] pos Offset from the start
+ * @return position where deleted character started
+ */
+int UTF8_delete_char (char *s, int pos)
+{
+	int start = pos;
+	int next = pos;
+
+	while (start > 0 && UTF8_CONTINUATION_BYTE(s[start]))
+		start--;
+	if (s[next] != 0)
+		next++;
+	while (s[next] != 0 && UTF8_CONTINUATION_BYTE(s[next]))
+		next++;
+	/* memmove is the only standard copying function that is guaranteed
+	 * to work if the source and destination overlap. */
+	memmove(&s[start], &s[next], strlen(&s[next]) + 1);
+	return start;
+}
