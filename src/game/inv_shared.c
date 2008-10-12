@@ -1317,7 +1317,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 	item.t = weapon;
 
 	/* Get ammo for item/weapon. */
-	assert(weapon->numAmmos > 0);	/**< There _has_ to be at least one ammo-type. */
+	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */
 	assert(weapon->ammos[0]);
 	item.m = weapon->ammos[0];
 
@@ -1456,8 +1456,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				weapon = NULL;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
-					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload)
-							|| INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
+					 && !obj->reload) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 						if (obj->price > maxPrice && obj->price < prevPrice) {
 							maxPrice = obj->price;
 							weapon = obj;
@@ -1465,9 +1465,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 					}
 				}
 				if (maxPrice) {
-					int num;
-
-					num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
+					int num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
 					while (num--)
 						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				}
@@ -1988,9 +1986,7 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	}
 #endif
 
-	if (od && od->numWeapons == 1
-	 && od->weapons[0]
-	 && od->weapons[0] == od) {
+	if (od && od->numWeapons == 1 && od->weapons[0] && od->weapons[0] == od) {
 		/* The weapon is only linked to itself. */
 		return qfalse;
 	}
@@ -2222,19 +2218,19 @@ uint32_t Com_ShapeRotate (const uint32_t shape)
 void Com_ShapePrint (const uint32_t shape)
 {
 	int h, w;
-	int row;
 
 	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
-		row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)); /* Shift the mask to the right to remove leading rows */
-		row &= 0xFF;		/* Mask out trailing rows */
+		/* Shift the mask to the right to remove leading rows and
+		 * mask out trailing rows */
+		const int row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)) & 0xFF;
 		Com_Printf("<");
-			for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
-				if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
-					Com_Printf("#");
-				} else {
-					Com_Printf(".");
-				}
+		for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
+			if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
+				Com_Printf("#");
+			} else {
+				Com_Printf(".");
 			}
+		}
 		Com_Printf(">\n");
 	}
 }
