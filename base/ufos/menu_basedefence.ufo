@@ -132,7 +132,7 @@ menu basedefence
 		angles	"0 0 120"
 		origin	"886 545 0"
 		pos		"786 500"
-		size	"200 200"
+		size	"200 175"
 		mousefx	true
 		click
 	}
