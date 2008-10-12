@@ -828,7 +828,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 		AIR_ResetAircraftTeam(aircraft);
 
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new (a %s) class craft is ready in in base %s"), _(aircraft->name), base->name);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new (a %s) class craft is ready in base %s"), _(aircraft->name), base->name);
 		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
