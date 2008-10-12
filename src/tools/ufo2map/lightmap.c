@@ -1121,6 +1121,8 @@ static const float sampleofs[MAX_SAMPLES][2] = {
 	{0, 0}, {-0.25, -0.25}, {0.25, -0.25}, {0.25, 0.25}, {-0.25, 0.25}
 };
 
+#define CLAMP_DELUXEMAP_Z 0.5
+
 /**
  * @brief
  * @sa FinalLightFace
@@ -1243,8 +1245,8 @@ void BuildFacelights (unsigned int facenum)
 
 			VectorCopy(dir, direction);
 
-			if (direction[2] < 0.33) {  /* clamp it */
-				direction[2] = 0.33;
+			if (direction[2] < CLAMP_DELUXEMAP_Z) {  /* clamp it */
+				direction[2] = CLAMP_DELUXEMAP_Z;
 				VectorNormalize(direction);
 			}
 		}
