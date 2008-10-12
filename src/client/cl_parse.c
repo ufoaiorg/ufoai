@@ -1045,7 +1045,10 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	else
 		VectorCopy(player_maxs, le->maxs);
 
-	le->think = LET_StartIdle;
+	/* hidden actors don't have models assigned, thus we can not change the
+	 * animation for any model */
+	if (le->type != ET_ACTORHIDDEN)
+		le->think = LET_StartIdle;
 
 	/* count spotted aliens */
 	if (!(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
