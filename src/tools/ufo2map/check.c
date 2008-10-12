@@ -712,6 +712,46 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 	return qtrue;
 }
 
+#if 0
+/**
+ * @brief for debugging, use this to see which face is the problem
+ * as there is not non-debugging use (yet) usually #ifed out
+ */
+static void Check_SetError (side_t *s)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *tex = &side_brushtextures[index];
+
+	Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
+}
+#endif
+
+/**
+ * @brief test if sides abut or intersect
+ * @note return qtrue if they do
+ * @note assumes the sides are parallel and coincident
+ * @note tests for either side having a vertex in the other's brush, this will miss some odd types of intersection
+ * @sa ParallelAndCoincident
+ */
+static qboolean Check_SidesTouch (side_t *a, side_t *b)
+{
+	side_t *s[2];
+	int i, j;
+
+	s[0] = a;
+	s[1] = b;
+
+	for (i = 0; i < 2; i++) {
+		const winding_t *w = s[i]->winding; /* winding from one of the sides */
+		const mapbrush_t *b = s[i ^ 1]->brush; /* the brush that the other side belongs to */
+		for (j = 0; j < w->numpoints ; j++) {
+			if (Check_IsPointInsideBrush(w->p[j], b, PIB_INCL_SURF))
+				return qtrue;
+		}
+	}
+	return qfalse;
+}
+
 /**
  * @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
  * these sides can cooperate to hide a face, this is used for nodraw setting. composite sides may be
@@ -740,6 +780,9 @@ static void Check_FindCompositeSides (void)
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 
+		if (!Check_IsOptimisable(iBrush))
+			continue; /* skip clips etc */
+
 		/* check each side, iSide, of iBrush for being the seed of a composite face */
 		for (is = 0; is < iBrush->numsides; is++) {
 			side_t *iSide = &iBrush->original_sides[is];
@@ -754,8 +797,9 @@ static void Check_FindCompositeSides (void)
 
 			/* add neighbouring brushes to the list to check for composite propagation */
 			numTodo = iBrush->numNear;
-			for(j = 0; j < iBrush->numNear; j++)
-				bTodo[j] = iBrush->nearBrushes[j];
+			for (j = 0; j < iBrush->numNear; j++)
+				if (Check_IsOptimisable(iBrush->nearBrushes[j]))
+					bTodo[j] = iBrush->nearBrushes[j];
 
 			/* this brush's nearlist is listed for checking, so it is done */
 			bDone[numDone++] = iBrush;
@@ -768,24 +812,29 @@ static void Check_FindCompositeSides (void)
 					side_t *sChecking = &bChecking->original_sides[j];
 
 					if (ParallelAndCoincidentTo(iSide, sChecking)) {
-						/* test if sChecking intersects or touches any of the brushes that have faces already in the composite*/
+
+						/* test if sChecking intersects or touches any of sides that are already in the composite*/
 						for (k = 0; k < numMembers; k++) {
-							if (Check_SideIsInBrush(sChecking, sbuf[k]->brush, PIB_INCL_SURF)) {
+							if (Check_SidesTouch(sChecking, sbuf[k])) {
 								const mapbrush_t *newMembersBrush = sChecking->brush;
 								sbuf[numMembers++] = sChecking; /* add to the array of members */
 								sChecking->isCompositeMember = qtrue;
 
-								/* add this brushes nearList to the todo list, as the compostite may propagate through it */
+								/* add this brush's nearList to the todo list, as the compostite may propagate through it */
 								for (l = 0; l < newMembersBrush->numNear;l++) {
+									mapbrush_t *nearListBrush = newMembersBrush->nearBrushes[l];
+
+									if (!Check_IsOptimisable(nearListBrush))
+										continue; /* do not propogate across clips etc */
 
 									/* only add them to the todo list if they are not on the done list
 									 * as a brush cannot have parallel sides, this also ensures the same side
 									 * is not added to a composite more than once */
 									for (m = 0; m < numDone; m++) {
-										if(newMembersBrush->nearBrushes[l] == bDone[m])
+										if (nearListBrush == bDone[m])
 											goto skip_add_brush_to_todo_list;
 									}
-									bTodo[numTodo++] = newMembersBrush->nearBrushes[l];
+									bTodo[numTodo++] = nearListBrush;
 
 									skip_add_brush_to_todo_list:
 									; /* there must be a statement after the label, ";" will do */
@@ -799,7 +848,7 @@ static void Check_FindCompositeSides (void)
 				;
 			}
 
-			if(numMembers > 1) { /* composite found */
+			if (numMembers > 1) { /* composite found */
 				side_t **sidesInNewComposite = (side_t **)malloc(numMembers * sizeof(side_t *));
 
 				if (!sidesInNewComposite)
@@ -1111,20 +1160,6 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 	return qfalse; /* all points are collinear */
 }
 
-#if 0
-/**
- * @brief for debugging, use this to see which face is the problem
- * as there is not non-debugging use (yet) usually #ifed out
- */
-static void Check_SetError (side_t *s)
-{
-	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *tex = &side_brushtextures[index];
-
-	Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
-}
-#endif
-
 /**
  * @brief check all brushes for overlapping shared faces
  *  @todo maybe too fussy. perhaps should ignore small overlaps.
@@ -1359,6 +1394,7 @@ void CheckNodraws (void)
 	}
 	if (numSetFromSingleSide)
 		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (covered by another brush).\n", numSetFromSingleSide);
+
 }
 
 /**
