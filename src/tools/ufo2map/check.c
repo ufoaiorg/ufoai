@@ -788,7 +788,7 @@ static void Check_FindCompositeSides (void)
 			side_t *iSide = &iBrush->original_sides[is];
 
 			if (iSide->isCompositeMember || (iSide->surfaceFlags & SURF_NODRAW))
-				continue; /* do not find the same composite again, no nodraws */
+				continue; /* do not find the same composite again. no nodraws */
 
 			/* start making the list of brushes in the composite,
 			 * we will only keep it if the composite has more than member */
@@ -861,13 +861,17 @@ static void Check_FindCompositeSides (void)
 				iSide->isCompositeMember = qtrue;
 
 				compositeSides[numCompositeSides].numMembers = numMembers;
+				compositeSides[numCompositeSides].memberSides = sidesInNewComposite;
+
 				for (j = 0; j < numMembers; j++) {
-					compositeSides[numCompositeSides].memberSides = sidesInNewComposite;
+					compositeSides[numCompositeSides].memberSides[j] = sbuf[j];
 				}
 				numCompositeSides++;
 			}
 		}
 	}
+
+	Check_Printf(VERB_EXTRA, qfalse, -1, -1, "%i composite sides found", numCompositeSides);
 
 	done = qtrue;
 }
@@ -1300,8 +1304,8 @@ static void Check_SetNodraw (side_t *s)
  */
 void CheckNodraws (void)
 {
-	int i, j, is, js;
-	int numSetFromSingleSide = 0, numSetPointingDown = 0/*,  numSetFromCompositeSide */;
+	int i, j, k, l, is, js;
+	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide, iBrushNumSet ;
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
@@ -1310,7 +1314,7 @@ void CheckNodraws (void)
 	/* check each brush, i, for downward sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
-		int iBrushNumSet = 0;
+		iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
@@ -1333,14 +1337,14 @@ void CheckNodraws (void)
 		}
 		if (iBrushNumSet)
 			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (point down, or are close to pointing down).\n", iBrushNumSet);
-	}
+	} /* next iBrush for downward faces that can be nodraw */
 	if (numSetPointingDown)
 		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (point down, or are close to pointing down)\n", numSetPointingDown);
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
-		int iBrushNumSet = 0;
+		iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
@@ -1389,14 +1393,73 @@ void CheckNodraws (void)
 					}
 				}
 			}
-		}
+		} /* next jBrush */
 		if (iBrushNumSet)
 			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by another brush).\n", iBrushNumSet);
 
-		/** @todo check each composite side for hiding iSide */
-	}
+		iBrushNumSet = 0; /* reset to count composite side coverings */
+
+		/* check each composite side for hiding iSide */
+		for (j = 0; j < numCompositeSides; j++) {
+			const compositeSide_t *composite = &compositeSides[j];
+			assert(composite);
+			assert(composite->memberSides[0]);
+
+			/* check each side for being hidden */
+			for (is = 0; is < iBrush->numsides; is++) {
+				side_t *iSide = &iBrush->original_sides[is];
+				winding_t *iWinding;
+
+				if (!FacingAndCoincidentTo(iSide, composite->memberSides[0]))
+					continue; /* all sides in the composite are parallel, and iSide must face them to be hidden */
+
+				/* skip those that are already nodraw */
+				if (iSide->surfaceFlags & SURF_NODRAW)
+					continue;
+
+				iWinding = iSide->winding;
+
+				/* to be covered each vertex of iSide must be on one of the composite side's members */
+				for (k = 0; k < iWinding->numpoints; k++) {
+					qboolean pointOnComposite = qfalse;
+					for (l = 0; l < composite->numMembers; l++) {
+						if (Check_IsPointInsideBrush(iWinding->p[k], composite->memberSides[l]->brush, PIB_INCL_SURF)) {
+
+							/* levelflags mean this member cannot cover iSide
+							 * might be wrong to assume the composite will not cover iSide (if the members intersect)
+							  * it is _safe_ in that it will not result in an exposed nodraw */
+							if (!Check_LevelForNodraws(composite->memberSides[l], iSide))
+								goto next_iSide;
+
+							pointOnComposite = qtrue;
+							break;
+						}
+					}
+					if (!pointOnComposite)
+						goto next_iSide;
+				}
+
+				/** @todo tests to skip to next_iSide if iWinding crosses out of the composite */
+				/** @todo do we need a test for iSide being covered by only one member, or is that OK, as the one member test is first */
+
+				/* set nodraw for iSide (covered by composite) */
+				Check_SetNodraw(iSide);
+				iBrushNumSet++;
+				numSetFromCompositeSide++;
+
+				next_iSide:
+				;
+			}
+		} /* next composite */
+		if (iBrushNumSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by a composite side).\n", iBrushNumSet);
+	} /* next iBrush */
+
 	if (numSetFromSingleSide)
-		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (covered by another brush).\n", numSetFromSingleSide);
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "%i nodraws set (covered by another brush).\n", numSetFromSingleSide);
+
+	if (numSetFromCompositeSide)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "%i nodraws set (covered by a composite side).\n", numSetFromCompositeSide);
 
 }
 
