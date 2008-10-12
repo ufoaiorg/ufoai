@@ -272,7 +272,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		text = NULL;
 
 		if (!gd.numTechnologies) {
-			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 				if (!Q_strncmp(type, "tech", 4))
 					RS_ParseTechnologies(name, &text);
 
@@ -1811,7 +1811,7 @@ void CL_ReadSinglePlayerData (void)
 	text = NULL;
 
 	CL_ResetSinglePlayerData();
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
@@ -1822,7 +1822,7 @@ void CL_ReadSinglePlayerData (void)
 	text = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptSecond(type, name, &text);
 
 	Com_Printf("Global data loaded - size "UFO_SIZE_T" bytes\n", sizeof(gd));
