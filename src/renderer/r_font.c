@@ -293,15 +293,16 @@ static int R_FontHash (const char *string, int maxlen)
  * @return NULL if not found
  * @sa R_FontHash
  */
-static fontCache_t *R_FontGetFromCache (const char *s)
+static fontCache_t *R_FontGetFromCache (const font_t *font, const char *s)
 {
-	fontCache_t *font;
+	fontCache_t *entry;
 	int hashValue;
 
 	hashValue = R_FontHash(s, MAX_HASH_STRING);
-	for (font = hash[hashValue]; font; font = font->next)
-		if (!Q_strncmp(s, font->string, MAX_HASH_STRING))
-			return font;
+	for (entry = hash[hashValue]; entry; entry = entry->next)
+		if (!Q_strncmp(s, entry->string, MAX_HASH_STRING)
+		 && entry->font == font)
+			return entry;
 
 	return NULL;
 }
@@ -329,7 +330,7 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
  * @sa R_FontHash
  * @sa R_FontCacheGLSurface
  */
-static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, int h)
+static fontCache_t* R_FontAddToCache (const char *s, const font_t *f, SDL_Surface *pixel, int w, int h)
 {
 	int hashValue;
 
@@ -348,6 +349,7 @@ static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, 
 
 	if (numInCache < MAX_FONT_CACHE) {
 		Q_strncpyz(fontCache[numInCache].string, s, MAX_HASH_STRING);
+		fontCache[numInCache].font = f;
 		fontCache[numInCache].size[0] = w;
 		fontCache[numInCache].size[1] = h;
 		fontCache[numInCache].texsize[0] = pixel->w;
@@ -369,7 +371,7 @@ static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, 
  * @sa SDL_LowerBlit
  * @sa SDL_FreeSurface
  */
-static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, const font_t *f, int maxWidth)
+static fontCache_t *R_FontGenerateCache (const char *s, const font_t *f, int maxWidth)
 {
 	int w, h;
 	SDL_Surface *textSurface;
@@ -391,7 +393,7 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
 	if (!textSurface) {
-		Com_Printf("%s (%s)\n", TTF_GetError(), fontString);
+		Com_Printf("%s (%s)\n", TTF_GetError(), s);
 		return NULL;
 	}
 
@@ -417,7 +419,7 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
-	result = R_FontAddToCache(fontString, openGLSurface, w, h);
+	result = R_FontAddToCache(s, f, openGLSurface, w, h);
 	SDL_FreeSurface(openGLSurface);
 	return result;
 }
@@ -547,7 +549,6 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 	const font_t *f;
 	char *buffer = buf;
 	char *pos;
-	static char searchString[MAX_FONTNAME + MAX_HASH_STRING];
 	int max = 0;				/* calculated maxWidth */
 	int line = 0;
 	float texh0, fh, fy; /* Rounding errors break mouse-text correlation. */
@@ -563,37 +564,10 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 	if (!cacheList)
 		Sys_Error("...no pointer to cachelist given!\n");
 
-	if (cacheList->numCaches >= MAX_FONTCACHE_ENTRIES)
-		Sys_Error("...out of space in cachelist!\n");
-
 	/* Init Cachelist */
 	cacheList->numCaches = 0;
 	cacheList->height = 0;
 	cacheList->width = 0;
-
-	cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(c);
-	if (cacheList->cache[cacheList->numCaches]) { /** @todo check that cache.font = fontID and that texh0 was the same */
-		if (cur_line) {
-			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
-			if (increaseLine)
-				(*cur_line)++; /* Increment the number of processed lines (overall). */
-			line = *cur_line;
-
-			if (box_height > 0 && line > box_height + scroll_pos) {
-				/* Due to scrolling this line and the following are not visible */
-				return -1;
-			}
-		}
-		cacheList->height += cacheList->cache[cacheList->numCaches]->size[1];
-		if (cacheList->width < cacheList->cache[cacheList->numCaches]->size[0])
-			cacheList->width = cacheList->cache[cacheList->numCaches]->size[0];
-		cacheList->posX[cacheList->numCaches] = x;
-		cacheList->posY[cacheList->numCaches] = fy;
-		cacheList->numCaches++;
-		/* R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight);*/
-		return lineHeight;
-	}
-
 
 	Q_strncpyz(buffer, c, BUF_SIZE);
 	buffer = strtok(buf, "\n");
@@ -666,21 +640,17 @@ int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int ab
 		}
 
 		if (!skipline && strlen(buffer)) {
-			/* This will cut down the string to 160 chars */
-			/* NOTE: There can be a non critical overflow in Com_sprintf */
-			Com_sprintf(searchString, sizeof(searchString), "%s%s", fontID, buffer);
-
 			if (cacheList->numCaches >= MAX_FONTCACHE_ENTRIES)
 				Sys_Error("...out of space in cachelist!\n");
 
-			cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(searchString);
+			cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(f, buffer);
 			if (!cacheList->cache[cacheList->numCaches])
-				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, searchString, f, maxWidth);
+				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, f, maxWidth);
 
 			if (!cacheList->cache[cacheList->numCaches]) {
 				/* maybe we are running out of mem */
 				R_FontCleanCache();
-				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, searchString, f, maxWidth);
+				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, f, maxWidth);
 			}
 			if (!cacheList->cache[cacheList->numCaches])
 				Sys_Error("...could not generate font surface '%s'\n", buffer);

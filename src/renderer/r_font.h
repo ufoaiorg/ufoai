@@ -49,6 +49,7 @@ typedef struct font_s {
 typedef struct fontCache_s {
 	char string[MAX_HASH_STRING];	/** hash id */
 	struct fontCache_s *next;	/**< next hash entry in case of collision */
+	const font_t *font;			/**< font used for rendering this string */
 	vec2_t size;				/**< real width and height */
 	vec2_t texsize;				/**< texture width and height */
 	GLuint texPos;				/**< the bound texture number/identifier*/
