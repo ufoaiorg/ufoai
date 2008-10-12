@@ -441,7 +441,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				continue;
 			if (PR_ConditionsDisassembly(base, comp)) {
 				LIST_AddPointer(&productionItemList, comp);
-	
+
 				Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
 				Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
@@ -831,7 +831,7 @@ static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
 		production_t *prod = selectedProduction;
-		MN_ExecuteConfunc("prod_priority_on");
+		MN_ExecuteConfunc("prod_all_on");
 		if (prod->aircraft) {
 			PR_AircraftInfo(prod->aircraft);
 		} else if (prod->production) {
@@ -840,7 +840,7 @@ static void PR_ProductionInfo (const base_t *base)
 			PR_DisassemblyInfo(base, prod->item, INV_GetComponentsByItem(prod->item), prod->percentDone);
 		}
 	} else {
-		MN_ExecuteConfunc("prod_priority_off");
+		MN_ExecuteConfunc("prod_priodecr_off");
 		if (selectedAircraft) {
 			PR_AircraftInfo(selectedAircraft);
 		} else if (selectedItem) {
@@ -848,6 +848,7 @@ static void PR_ProductionInfo (const base_t *base)
 		} else if (selectedDisassembly) {
 			PR_DisassemblyInfo(base, selectedDisassembly->asItem, selectedDisassembly, 0.0);
 		} else {
+			MN_ExecuteConfunc("prod_inc_off");
 			if (produceCategory == FILTER_AIRCRAFT)
 				mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
 			else

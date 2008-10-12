@@ -317,14 +317,34 @@ menu production
 	// ==========================================
 	// confunc to enable/disable priority buttons
 	// ==========================================
-	confunc prod_priority_off
+	
+	confunc prod_priodecr_off
 	{
+		//decrease and prio off 
+		*prod_dec	invis true
+		*prod_dec2	invis true
+		*prod_stop	invis true
+		*prod_inc	invis false
+		*prod_inc2	invis false
 		*prod_down	invis true
 		*prod_up	invis true
 	}
-
-	confunc prod_priority_on
+	
+	confunc prod_inc_off
 	{
+		//increase off (used in combination with prod_priodecr_off
+		*prod_inc	invis true
+		*prod_inc2	invis true
+	}
+	
+	confunc prod_all_on
+	{
+		//enable all
+		*prod_dec	invis false
+		*prod_dec2	invis false
+		*prod_stop	invis false
+		*prod_inc	invis false
+		*prod_inc2	invis false
 		*prod_down	invis false
 		*prod_up	invis false
 	}
