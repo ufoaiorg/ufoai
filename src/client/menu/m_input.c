@@ -352,7 +352,7 @@ void MN_Click (int x, int y)
 
 	sp = mn.menuStackPos;
 
-	while (sp > 0) {
+	while (sp > 0 && !clickedInside) {
 		menu_t *menu = mn.menuStack[--sp];
 		menuNode_t *execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
@@ -478,8 +478,9 @@ void MN_RightClick (int x, int y)
 {
 	int mouseOver;
 	int sp = mn.menuStackPos;
+	qboolean clickedInside = qfalse;
 
-	while (sp > 0) {
+	while (sp > 0 && !clickedInside) {
 		menu_t *menu = mn.menuStack[--sp];
 		menuNode_t *node;
 
@@ -492,6 +493,8 @@ void MN_RightClick (int x, int y)
 			mouseOver = MN_CheckNodeZone(node, x, y);
 			if (!mouseOver)
 				continue;
+
+			clickedInside = qtrue;
 
 			/* found a node -> do actions */
 			switch (node->type) {
@@ -535,15 +538,18 @@ void MN_MiddleClick (int x, int y)
 	menuNode_t *node;
 	menu_t *menu;
 	int sp, mouseOver;
+	qboolean clickedInside = qfalse;
 
 	sp = mn.menuStackPos;
 
-	while (sp > 0) {
+	while (sp > 0 && !clickedInside) {
 		menu = mn.menuStack[--sp];
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
 			if (!node->mclick)
 				continue;
+
+			clickedInside = qtrue;
 
 			/* check whether mouse if over this node */
 			mouseOver = MN_CheckNodeZone(node, x, y);
@@ -586,10 +592,11 @@ void MN_MouseWheel (qboolean down, int x, int y)
 	menuNode_t *node;
 	menu_t *menu;
 	int sp, mouseOver;
+	qboolean wheelInside = qfalse;
 
 	sp = mn.menuStackPos;
 
-	while (sp > 0) {
+	while (sp > 0 && !wheelInside) {
 		menu = mn.menuStack[--sp];
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
@@ -601,6 +608,8 @@ void MN_MouseWheel (qboolean down, int x, int y)
 			mouseOver = MN_CheckNodeZone(node, x, y);
 			if (!mouseOver)
 				continue;
+
+			wheelInside = qtrue;
 
 			/* found a node -> do actions */
 			switch (node->type) {
