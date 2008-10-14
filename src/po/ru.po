@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-10-12 23:09+0700\n"
-"PO-Revision-Date: 2008-10-13 00:20+0600\n"
+"POT-Creation-Date: 2008-10-14 22:39+0700\n"
+"PO-Revision-Date: 2008-10-14 23:33+0600\n"
 "Last-Translator: Kildor <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1736,14 +1736,14 @@ msgstr "Выбрать предмет:"
 
 #: ../base/ufos/menu_aircraft.ufo:594
 #: ../base/ufos/menu_buy.ufo:1322
-#: ../base/ufos/menu_production.ufo:362
+#: ../base/ufos/menu_production.ufo:382
 #: ../base/ufos/menu_transfer.ufo:210
 msgid "Previous category"
 msgstr "Предыдущая категория"
 
 #: ../base/ufos/menu_aircraft.ufo:607
 #: ../base/ufos/menu_buy.ufo:1333
-#: ../base/ufos/menu_production.ufo:384
+#: ../base/ufos/menu_production.ufo:404
 #: ../base/ufos/menu_transfer.ufo:223
 msgid "Next category"
 msgstr "Следующая категория"
@@ -1856,7 +1856,7 @@ msgstr "Изготовить самолет"
 #: ../base/ufos/menu_buildings.ufo:80
 #: ../base/ufos/menu_buy.ufo:1344
 #: ../base/ufos/menu_hire.ufo:836
-#: ../base/ufos/menu_production.ufo:405
+#: ../base/ufos/menu_production.ufo:425
 #: ../base/ufos/menu_research.ufo:1191
 #: ../base/ufos/menu_transfer.ufo:280
 msgid "Back to baseview"
@@ -2204,6 +2204,7 @@ msgstr "Постройте хотя бы один ангар (нажмите д�
 #: ../base/ufos/menu_geoscape.ufo:1912
 #: ../base/ufos/research.ufo:108
 #: client/cl_map.c:348
+#: client/cl_market.c:521
 #: client/cl_transfer.c:430
 msgid "Aircraft"
 msgstr "Авиация"
@@ -4076,9 +4077,8 @@ msgstr "пауза активирована"
 #: ../base/ufos/menu_options.ufo:1503
 #: ../base/ufos/menu_options.ufo:1516
 #: ../base/ufos/menu_options.ufo:1529
-#, fuzzy
 msgid "notification enabled"
-msgstr "Скорость поворота:"
+msgstr "Уведомления включены"
 
 #: ../base/ufos/menu_options.ufo:1272
 #: ../base/ufos/menu_options.ufo:1285
@@ -4101,9 +4101,8 @@ msgstr "Скорость поворота:"
 #: ../base/ufos/menu_options.ufo:1506
 #: ../base/ufos/menu_options.ufo:1519
 #: ../base/ufos/menu_options.ufo:1532
-#, fuzzy
 msgid "notification disabled"
-msgstr "Автоматическая продажа отключена."
+msgstr "Уведомления отключены"
 
 #: ../base/ufos/menu_options.ufo:1700
 msgid "Game settings"
@@ -4569,7 +4568,7 @@ msgstr "Переименовать солдата"
 #: ../base/ufos/menu_team.ufo:970
 #: ../base/ufos/menu_team.ufo:981
 msgid "Assign tanks"
-msgstr "Назначить танки"
+msgstr "Назначить бронетехнику"
 
 #: ../base/ufos/menu_team.ufo:975
 msgid "Assign soldiers"
@@ -10864,13 +10863,13 @@ msgstr "Тяжёлый лазер"
 
 #: ../base/ufos/weapons_laser.ufo:73
 msgid "D-F Cartridge"
-msgstr "Фтор-дейтериевый модуль питания"
+msgstr "Фтор-дейтериевый картридж"
 
 #: ../base/ufos/weapons_laser.ufo:89
 #: ../base/ufos/weapons_laser.ufo:132
 #: ../base/ufos/weapons_laser.ufo:175
 msgid "Wave Fire"
-msgstr "непрерывный"
+msgstr "Непрерывный огонь"
 
 #: ../base/ufos/weapons_laser.ufo:108
 #: ../base/ufos/weapons_laser.ufo:151
@@ -11581,8 +11580,8 @@ msgstr "Оборудование:\t%i из %i"
 
 #: client/cl_aircraft.c:831
 #, c-format
-msgid "A new (a %s) class craft is ready in in base %s"
-msgstr "Новый самолёт (класс %s) готов на базе %s"
+msgid "A new (a %s) class craft is ready in base %s"
+msgstr "Новый самолёт класса %s готов на базе %s"
 
 #: client/cl_aircraft.c:870
 msgid "No operational hangars at that base."
@@ -11602,7 +11601,7 @@ msgstr "Недостаточно свободного места на склад
 
 #: client/cl_aircraft.c:884
 msgid "That base is beyond this aircraft's range."
-msgstr ""
+msgstr "Эта база вне радиуса действия этого самолёта."
 
 #: client/cl_aircraft.c:1205
 #, c-format
@@ -11616,7 +11615,7 @@ msgstr "У самолёта %s заканчивается горючее, он �
 
 #: client/cl_aircraft.c:1319
 msgid "Assign one or more soldiers to this aircraft first."
-msgstr ""
+msgstr "В начале припишите хотя бы одного солдата на этот самолёт."
 
 #: client/cl_aircraft.c:1343
 msgid "Insufficient fuel."
@@ -11815,7 +11814,7 @@ msgstr "Отключено"
 
 #: client/cl_basemanagement.c:1502
 msgid "Not enough credits to build this\n"
-msgstr "На строительство этого не хватает наличных средств\n"
+msgstr "На строительство модуля не хватает наличных средств\n"
 
 #: client/cl_basemanagement.c:1596
 #, c-format
@@ -13120,6 +13119,42 @@ msgstr "Вес неизвестен"
 msgid "%i c\n"
 msgstr "%i кр\n"
 
+#: client/cl_market.c:506
+msgid "Primary weapons"
+msgstr "Основное вооружение"
+
+#: client/cl_market.c:509
+msgid "Secondary weapons"
+msgstr "Личное оружие"
+
+#: client/cl_market.c:512
+msgid "Heavy weapons"
+msgstr "Тяжёлое вооружение"
+
+#: client/cl_market.c:515
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: client/cl_market.c:518
+msgid "Personal Armour"
+msgstr "Персональная броня"
+
+#: client/cl_market.c:524
+msgid "Other"
+msgstr "Остальное"
+
+#: client/cl_market.c:527
+msgid "Aircraft equipment"
+msgstr "Авиационное снаряжение"
+
+#: client/cl_market.c:530
+msgid "Tanks"
+msgstr "Бронетехника"
+
+#: client/cl_market.c:533
+msgid "Disassembling"
+msgstr "Демонтаж"
+
 #: client/cl_market.c:649
 #: client/cl_market.c:870
 msgid "Not enough storage space"
@@ -13188,6 +13223,59 @@ msgstr "Установки не имеют смысла!"
 
 #: client/cl_menu.c:282
 msgid "all"
+msgstr ""
+
+#: client/cl_nation.c:110
+msgid "Giving up"
+msgstr "Разорвано"
+
+#: client/cl_nation.c:112
+msgid "Furious"
+msgstr "В ярости"
+
+#: client/cl_nation.c:114
+msgid "Angry"
+msgstr "Разгневано"
+
+#: client/cl_nation.c:116
+msgid "Mad"
+msgstr "В бешенстве"
+
+#: client/cl_nation.c:118
+msgid "Upset"
+msgstr "Огорчено"
+
+#: client/cl_nation.c:120
+msgid "Tolerant"
+msgstr "Терпимое"
+
+#: client/cl_nation.c:122
+msgid "Neutral"
+msgstr "Нейтрально"
+
+#: client/cl_nation.c:124
+msgid "Content"
+msgstr "Удовлетворено"
+
+#: client/cl_nation.c:126
+msgid "Pleased"
+msgstr "Довольно"
+
+#: client/cl_nation.c:128
+msgid "Happy"
+msgstr "Счастливо"
+
+#: client/cl_nation.c:130
+msgid "Exuberant"
+msgstr "В восторге"
+
+#: client/cl_nation.c:153
+#, c-format
+msgid "Nation %s changed happiness from %s to %s"
+msgstr ""
+
+#: client/cl_nation.c:154
+msgid "Nation changed happiness"
 msgstr ""
 
 #: client/cl_parse.c:873
@@ -13274,6 +13362,10 @@ msgid ""
 "\n"
 "Aircraft cannot start.\n"
 msgstr ""
+"На базе приписки этого самолёта \n"
+"отсутствует рабочий Центр Управления\n"
+"\n"
+"Самолёт не может стартовать.\n"
 
 #: client/cl_produce.c:246
 msgid "Not enough workers"
@@ -13285,6 +13377,9 @@ msgid ""
 "\n"
 "Hire workers."
 msgstr ""
+"Вы не можете назначить очередь производства без рабочих, нанятых на этой базе.\n"
+"\n"
+"Наймите рабочих."
 
 #: client/cl_produce.c:253
 msgid "Not enough workshops"
@@ -13314,12 +13409,16 @@ msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
 msgstr ""
+"Вы не можете заказать авиатехнику.\n"
+"На этой базе отсутствует командный центр\n"
 
 #: client/cl_produce.c:274
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
 msgstr ""
+"Вы не можете заказать авиатехнику.\n"
+"На этой базе отсутствует ангар\n"
 
 #: client/cl_produce.c:279
 #: client/cl_produce.c:1264
@@ -13328,6 +13427,8 @@ msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
 msgstr ""
+"Вы не можете заказать авиатехнику.\n"
+"Нет свободного места в ангарах.\n"
 
 #: client/cl_produce.c:513
 #, c-format
@@ -13676,7 +13777,7 @@ msgstr "Игра загружена"
 
 #: client/cl_save.c:620
 msgid "Quicksave campaign was successfully loaded."
-msgstr ""
+msgstr "Быстрое сохранение успешно загружено."
 
 #: client/cl_save.c:676
 msgid "Saves to the quick save slot"
@@ -14811,6 +14912,55 @@ msgstr "До принудительного завершения раунда о
 msgid "Current active team hit the max round time\n"
 msgstr "Текущая команда потратила отведённое на раунд время\n"
 
+#: game/g_combat.c:385
+msgid ""
+"Soldier is dazed!\n"
+"Enemy used flashbang!\n"
+msgstr ""
+"Солдат офигел!\n"
+"Враг использовал светошумовую гранату!\n"
+
+#: game/g_combat.c:607
+msgid "Can't perform action - impossible throw!\n"
+msgstr "Can't perform action - impossible throw!\n"
+
+#: game/g_combat.c:1167
+msgid "Can't perform action - object not activateable!\n"
+msgstr "Невозможно выполнить действие - объект не может быть активирован!\n"
+
+#: game/g_combat.c:1185
+msgid "Can't perform action - weapon cannot be fired one handed!\n"
+msgstr "Невозможно выполнить действие -- из этого оружия нельзя стрелять с одной руки.\n"
+
+#: game/g_combat.c:1192
+msgid "Can't perform action - no ammo!\n"
+msgstr "Невозможно выполнить действие - нет боеприпасов!\n"
+
+#: game/g_combat.c:1200
+msgid "Can't perform action - target out of range!\n"
+msgstr "Невозможно выполнить действие - цель вне зоны поражения!\n"
+
+#: game/g_combat.c:1246
+msgid "Can't perform action - not enough ammo!\n"
+msgstr "Can't perform action - not enough ammo!\n"
+
+#: game/g_spawn.c:672
+msgid "Aliens entered target zone\n"
+msgstr "Пришельцы достигли зоны назначения\n"
+
+#: game/g_spawn.c:699
+msgid "Item was placed\n"
+msgstr "Предмет помещён\n"
+
+#: game/g_spawn.c:705
+msgid "Target zone is occupied\n"
+msgstr "Захвачена зона назначения\n"
+
+#: game/g_spawn.c:837
+#, c-format
+msgid "Mission won for team %i\n"
+msgstr "Команда %i выиграла миссию\n"
+
 #: po/OTHER_STRINGS:2
 msgid "human"
 msgstr "человек"
@@ -14926,24 +15076,8 @@ msgstr "Сделать скриншот"
 #~ msgstr "Защитная система базы была успешно демонтирована."
 #~ msgid "Base defence item was successfully removed."
 #~ msgstr "Защитная система базы была успешно демонтирована."
-#~ msgid "Primary weapons"
-#~ msgstr "Основное вооружение"
-#~ msgid "Secondary weapons"
-#~ msgstr "Личное оружие"
-#~ msgid "Miscellaneous"
-#~ msgstr "Разное"
-#~ msgid "Personal Armours"
-#~ msgstr "Персональная броня"
-#~ msgid "Other"
-#~ msgstr "Остальное"
-#~ msgid "Aircraft equipment"
-#~ msgstr "Авиационное снаряжение"
-#~ msgid "Heavy Weapons"
-#~ msgstr "Тяжёлое вооружение"
 #~ msgid "No particle loaded"
 #~ msgstr "Частицы не загружены"
-#~ msgid "Disassembling"
-#~ msgstr "Демонтаж"
 #~ msgid "Show miscellaneous equipment"
 #~ msgstr "Показать прочее снаряжение"
 #~ msgid "Show other items and materials"
@@ -14984,28 +15118,6 @@ msgstr "Сделать скриншот"
 #~ msgstr "скоростная стрельба"
 #~ msgid "Repeat Fire"
 #~ msgstr "Стрельба очередью"
-#~ msgid "Giving up"
-#~ msgstr "Разорвано"
-#~ msgid "Furious"
-#~ msgstr "В ярости"
-#~ msgid "Angry"
-#~ msgstr "Разгневано"
-#~ msgid "Mad"
-#~ msgstr "Рассержено"
-#~ msgid "Upset"
-#~ msgstr "Огорчено"
-#~ msgid "Tolerant"
-#~ msgstr "Терпимое"
-#~ msgid "Neutral"
-#~ msgstr "Нейтрально"
-#~ msgid "Content"
-#~ msgstr "Удовлетворено"
-#~ msgid "Pleased"
-#~ msgstr "Довольно"
-#~ msgid "Happy"
-#~ msgstr "Счастливо"
-#~ msgid "Exuberant"
-#~ msgstr "В восторге"
 #~ msgid ""
 #~ "\n"
 #~ "\n"
@@ -16800,10 +16912,6 @@ msgstr "Сделать скриншот"
 #~ "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 #~ "\n"
 #~ "--Cdr. Navarre"
-#~ msgid "Can't perform action - impossible throw!\n"
-#~ msgstr "Can't perform action - impossible throw!\n"
-#~ msgid "Can't perform action - not enough ammo!\n"
-#~ msgstr "Can't perform action - not enough ammo!\n"
 #~ msgid "SMG Clip"
 #~ msgstr "SMG Clip"
 #~ msgid "Napalm Tank"

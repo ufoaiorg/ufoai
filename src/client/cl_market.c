@@ -496,34 +496,34 @@ char *BS_BuyTypeName(const int buyCat)
 {
 	switch (buyCat) {
 	case FILTER_S_PRIMARY:
-		return "Primary weapons";
+		return _("Primary weapons");
 		break;
 	case FILTER_S_SECONDARY:
-		return "Secondary weapons";
+		return _("Secondary weapons");
 		break;
 	case FILTER_S_HEAVY:
-		return "Heavy weapons";
+		return _("Heavy weapons");
 		break;
 	case FILTER_S_MISC:
-		return "Miscellaneous";
+		return _("Miscellaneous");
 		break;
 	case FILTER_S_ARMOUR:
-		return "Personal Armour";
+		return _("Personal Armour");
 		break;
 	case FILTER_AIRCRAFT:
-		return "Aircraft";
+		return _("Aircraft");
 		break;
 	case FILTER_DUMMY:
-		return "Other";
+		return _("Other");
 		break;
 	case FILTER_CRAFTITEM:
-		return "Aircraft equipment";
+		return _("Aircraft equipment");
 		break;
 	case FILTER_UGVITEM:
-		return "Tanks";
+		return _("Tanks");
 		break;
 	case FILTER_DISASSEMBLY:
-		return "Disassembling";
+		return _("Disassembling");
 		break;
 	default:
 		return "Unknown";
