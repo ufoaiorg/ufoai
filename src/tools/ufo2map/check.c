@@ -1442,8 +1442,6 @@ void CheckNodraws (void)
 						goto next_iSide;
 				}
 
-				/** @todo tests to skip to next_iSide if iWinding crosses out of the composite */
-
 				for (k = 0; k < iWinding->numpoints; k++) {
 					vec3_t intersection, lastIntersection;
 					int lastIntersectionMembInd = -1;
@@ -1505,8 +1503,6 @@ void CheckNodraws (void)
 							goto next_iSide;
 					}
 
-					/** @todo test for one member face with two non-coincident edge intersections - test levelflags */
-					/** @todo test for intersection not coincident with intersection with edge from other member - means edge is leaving the composite */
 				}
 
 				/* set nodraw for iSide (covered by composite) */
