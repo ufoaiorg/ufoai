@@ -1294,6 +1294,8 @@ static void Check_SetNodraw (side_t *s)
 	tex->surfaceFlags &= ~SURF_PHONG;
 }
 
+#define CH_COMP_NDR_EDGE_INTSCT_BUF 21
+
 /**
  * @brief check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
@@ -1304,7 +1306,7 @@ static void Check_SetNodraw (side_t *s)
  */
 void CheckNodraws (void)
 {
-	int i, j, k, l, is, js;
+	int i, j, k, l, m, n, is, js;
 	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide = 0, iBrushNumSet = 0;
 
 	/* initialise mapbrush_t.nearBrushes */
@@ -1399,7 +1401,7 @@ void CheckNodraws (void)
 
 		iBrushNumSet = 0; /* reset to count composite side coverings */
 
-		/* check each composite side for hiding iSide */
+		/* check each composite side for hiding one of iBrush's sides */
 		for (j = 0; j < numCompositeSides; j++) {
 			const compositeSide_t *composite = &compositeSides[j];
 			assert(composite);
@@ -1441,6 +1443,71 @@ void CheckNodraws (void)
 				}
 
 				/** @todo tests to skip to next_iSide if iWinding crosses out of the composite */
+
+				for (k = 0; k < iWinding->numpoints; k++) {
+					vec3_t intersection, lastIntersection;
+					int lastIntersectionMembInd = -1;
+					vec3_t intersections[CH_COMP_NDR_EDGE_INTSCT_BUF];
+					qboolean paired[CH_COMP_NDR_EDGE_INTSCT_BUF];
+					int numIntsct = 0;
+
+					memset(paired, '\0', CH_COMP_NDR_EDGE_INTSCT_BUF * sizeof(qboolean));
+
+					for (l = 0; l < composite->numMembers; l++) {
+						const winding_t *mWinding = composite->memberSides[l]->winding;
+
+						for (m = 0; m < mWinding->numpoints; m++) {
+							qboolean intersects = Check_EdgeEdgeIntersection(
+								iWinding->p[k], iWinding->p[(k + 1) % iWinding->numpoints],
+								mWinding->p[m], mWinding->p[(m + 1) % mWinding->numpoints],
+								intersection);
+
+							if (intersects) {
+								qboolean coincident = qfalse;
+								/* check for coincident intersections */
+								for (n = 0; n < numIntsct; n++) {
+									float distSq = VectorDistSqr(intersection, intersections[n]);
+									if (CH_DIST_EPSILON_SQR > distSq) {
+										paired[n] = qtrue;
+										coincident = qtrue;
+									}
+								}
+
+								/* if it is not coincident, then add it to the list */
+								if (!coincident) {
+									VectorCopy(intersection, intersections[numIntsct]);
+									numIntsct++;
+									if (numIntsct >= CH_COMP_NDR_EDGE_INTSCT_BUF) {
+										Check_Printf(VERB_LESS, qfalse, -1, -1, "warning: CheckNodraws: buffer too small");
+										return;
+									}
+								}
+
+								/* if edge k of iSide crosses side l of composite then check levelflags */
+								/* note that as each member side is convex any line can intersect its edges a maximum of twice,
+								 * as the member sides of the composite are the inner loop, these two (if they exist) will
+								 * be found consecutively */
+								if ((lastIntersectionMembInd == l)
+								 && (VectorDistSqr(intersection, lastIntersection) > CH_DIST_EPSILON_SQR)
+								 && !Check_LevelForNodraws(composite->memberSides[l], iSide))
+									goto next_iSide;
+
+								lastIntersectionMembInd = l;
+								VectorCopy(intersection, lastIntersection);
+							}
+						}
+					}
+
+					/* make sure all intersections are paired. an unpaired intersection indicates
+					 * that iSide's boundary crosses out of the composite side, so iSide is not hidden */
+					for (l = 0; l < numIntsct; l++) {
+						if (!paired[l])
+							goto next_iSide;
+					}
+
+					/** @todo test for one member face with two non-coincident edge intersections - test levelflags */
+					/** @todo test for intersection not coincident with intersection with edge from other member - means edge is leaving the composite */
+				}
 
 				/* set nodraw for iSide (covered by composite) */
 				Check_SetNodraw(iSide);
