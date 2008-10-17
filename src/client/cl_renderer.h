@@ -212,7 +212,12 @@ void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
 void R_LoadImage(const char *name, byte **pic, int *width, int *height);
 
 void R_FontRegister(const char *name, int size, const char *path, const char *style);
+
+/* for method parameter */
+#define LONG_LINES_TRUNCATE 0
+#define LONG_LINES_WRAP 1
+void R_FontTextSize(const char *fontId, const char *text, int maxWidth, int method, int *width, int *height, int *lines);
+
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
-void R_FontLength(const char *font, char *c, int *width, int *height);
 
 #endif /* CLIENT_REF_H */

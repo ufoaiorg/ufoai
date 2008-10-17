@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
-static fontCacheList_t cacheList;
 
 /**
  * @brief Generic tooltip function
@@ -48,35 +47,30 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 	if (!string || !*string || !font)
 		return 0;
 
-	/* Get height of string. The width will be ignored (except for the check below). */
-	R_FontLength(font, string, &width, &height);
+	R_FontTextSize(font, string, maxWidth, LONG_LINES_WRAP, &width, &height, NULL);
 
 	if (!width)
 		return 0;
 
 	x += 5;
 	y += 5;
-/*	if (x + maxWidth +3 > VID_NORM_WIDTH)
-		x -= (maxWidth + 10);*/
 
-	R_FontGenerateCacheList(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, height, string, lines, 0, NULL, qfalse, &cacheList);
-
-	if (x + cacheList.width + 3 > VID_NORM_WIDTH)
-		dx = -(cacheList.width + 10);
+	if (x + width + 3 > VID_NORM_WIDTH)
+		dx = -(width + 10);
 	else
 		dx = 0;
 
 /** @todo
-	if (y + cacheList.height + 3 > VID_NORM_HEIGHT)
-		dy = -(cacheList.height + 10);
+	if (y + height + 3 > VID_NORM_HEIGHT)
+		dy = -(height + 10);
 */
 
-	R_DrawFill(x - 1 + dx, y - 1, cacheList.width + 4, cacheList.height + 4, 0, tooltipBG);
+	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, tooltipBG);
 	R_ColorBlend(tooltipColor);
-	R_FontRenderCacheList(&cacheList, y + 1, maxWidth, maxHeight, dx, 0);
+	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse);
 
 	R_ColorBlend(NULL);
-	return cacheList.width;
+	return width;
 }
 
 /**
@@ -123,23 +117,20 @@ int MN_DrawNotice (int x, int y)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
-	/* Get height of string. The width will be ignored (except for the check below). */
-	R_FontLength(font, cl.msgText, &width, &height);
+	R_FontTextSize(font, cl.msgText, maxWidth, LONG_LINES_WRAP, &width, &height, NULL);
 
 	if (!width)
 		return 0;
 
-	R_FontGenerateCacheList(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, height, cl.msgText, lines, 0, NULL, qfalse, &cacheList);
-
-	if (x + cacheList.width + 3 > VID_NORM_WIDTH)
-		dx = -(cacheList.width + 10);
+	if (x + width + 3 > VID_NORM_WIDTH)
+		dx = -(width + 10);
 	else
 		dx = 0;
 
-	R_DrawFill(x - 1 + dx, y - 1, cacheList.width + 4, cacheList.height + 4, 0, noticeBG);
+	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, noticeBG);
 	R_ColorBlend(noticeColor);
-	R_FontRenderCacheList(&cacheList, y + 1, maxWidth, maxHeight, dx, 0);
+	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, cl.msgText, lines, 0, NULL, qfalse);
 
 	R_ColorBlend(NULL);
-	return cacheList.width;
+	return width;
 }

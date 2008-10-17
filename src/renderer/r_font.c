@@ -27,17 +27,76 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_font.h"
 #include "r_error.h"
 
-static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */
+#define MAX_CACHE_STRING	128
+#define MAX_CHUNK_CACHE		1024 /* making this bigger uses more GL textures */
+#define MAX_WRAP_CACHE		1024 /* making this bigger uses more memory */
+#define MAX_WRAP_HASH		4096 /* making this bigger reduces collisions */
+#define MAX_FONTS			16
+#define MAX_FONTNAME		32
+
+#define BUF_SIZE 2048
+
+/**
+ * @brief This structure holds one piece of text (usually a whole line)
+ * and the texture on which it is rendered. It also holds positioning
+ * information about the place of this piece in a multiline text.
+ * Further information is held in the wrapCache_t struct that points
+ * to this struct.
+ */
+typedef struct {
+	int pos;		/**< offset of this chunk in source string */
+	int len;		/**< length of this chunk in source string */
+	int linenum;	/**< 0-based line offset from first line of text */
+	int width;		/**< text chunk rendered width in pixels */
+	/* no need for individual line height, just use font->height */
+	qboolean truncated;	/**< needs ellipsis after text */
+	vec2_t texsize;	/**< texture width and height */
+	GLuint texId;	/**< bound texture ID (0 if not textured yet) */
+} chunkCache_t;
+
+/**
+ * @brief This structure caches information about rendering a text
+ * in one font wrapped to a specific width. It points to structures
+ * in the chunkCache that cache detailed information and the textures used.
+ *
+ * @note Caching text-wrapping information is particularly important
+ * for Cyrillic and possibly other non-ascii text, where TTF_SizeUTF8()
+ * is almost as slow as rendering. Intro sequence went from 4 fps to 50
+ * after introducing the wrapCache.
+ */
+typedef struct wrapCache_s {
+	char text[MAX_CACHE_STRING];	/**< hash id */
+	const font_t *font;	/**< font used for wrapping/rendering this text */
+    struct wrapCache_s *next;		/**< next hash entry in case of collision */
+	int maxWidth;		/**< width to which this text was wrapped */
+	int method;			/**< were long lines wrapped or truncated? */
+	int numChunks;		/**< number of (contiguous) chunks in chunkCache used */
+	int numLines;		/**< total line count of wrapped text */
+	int chunkIdx;		/**< first chunk in chunkCache for this text */
+} wrapCache_t;
+
 static int numFonts = 0;
-
-static fontCache_t fontCache[MAX_FONT_CACHE];
-static fontCache_t *hash[MAX_FONT_CACHE];
-
 static font_t fonts[MAX_FONTS];
 
-/* holds the gettext string */
-static char buf[BUF_SIZE];
-static int numInCache = 0;
+static chunkCache_t chunkCache[MAX_CHUNK_CACHE];
+static wrapCache_t wrapCache[MAX_WRAP_CACHE];
+static wrapCache_t *hash[MAX_WRAP_HASH];
+static int numChunks = 0;
+static int numWraps = 0;
+
+/** @todo Internationalize this. European languages can use the nice
+ * Unicode ellipsis symbol which is shorter than three periods, and
+ * Asian language have their own conventions for this.
+ * Unfortunately, the renderer directory has no gettext hookup.
+ */
+const char *ellipsis = "...";
+
+typedef struct {
+	const char *name;
+	int renderStyle;
+} fontRenderStyle_t;
+
+#define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof(fontRenderStyle_t))
 static const fontRenderStyle_t fontStyle[] = {
 	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
 	{"TTF_STYLE_BOLD", TTF_STYLE_BOLD},
@@ -53,22 +112,23 @@ static const fontRenderStyle_t fontStyle[] = {
  */
 static void R_FontCleanCache (void)
 {
-	int i, count = 0;
+	int i;
 
 	R_CheckError();
 
 	/* free the surfaces */
-	for (i = 0; i < numInCache; i++) {
-		if (!fontCache[i].texPos)
+	for (i = 0; i < numChunks; i++) {
+		if (!chunkCache[i].texId)
 			continue;
-		glDeleteTextures(1, &(fontCache[i].texPos));
-		count++;
+		glDeleteTextures(1, &(chunkCache[i].texId));
 		R_CheckError();
 	}
 
-	memset(fontCache, 0, sizeof(fontCache));
+	memset(chunkCache, 0, sizeof(chunkCache));
+	memset(wrapCache, 0, sizeof(wrapCache));
 	memset(hash, 0, sizeof(hash));
-	numInCache = 0;
+	numChunks = 0;
+	numWraps = 0;
 }
 
 /**
@@ -146,101 +206,9 @@ static font_t *R_FontGetFont (const char *name)
 		if (!Q_strncmp(name, fonts[i].name, MAX_FONTNAME))
 			return &fonts[i];
 
-	return NULL;
+	Com_Error(ERR_FATAL, "Could not find font: %s\n", name);
 }
 
-/**
- * @param[in] maxWidth is a pixel value
- * @todo if maxWidth is too small to display even the first word this has bugs
- */
-static char *R_FontGetLineWrap (const font_t * f, char *buffer, int maxWidth, int *width, int *height)
-{
-	char *space;
-	char *newlineTest;
-	int w = 0, oldW = 0;
-	int h = 0;
-
-	/* TTF does not like empty strings... */
-	assert(buffer);
-	assert(strlen(buffer));
-
-	if (!maxWidth)
-		maxWidth = VID_NORM_WIDTH;
-
-	/* no line wrap needed? */
-	TTF_SizeUTF8(f->font, buffer, &w, &h);
-	if (!w)
-		return NULL;
-
-	*width = w;
-	*height = h;
-
-	/* string fits */
-	if (w <= maxWidth)
-		return NULL;
-
-	space = buffer;
-	newlineTest = strstr(space, "\n");
-	/* try to break at a newline */
-	if (newlineTest) {
-		*newlineTest = '\0';
-		TTF_SizeUTF8(f->font, buffer, &w, &h);
-		*width = w;
-		/* Fine, the whole line (up to \n) has a length smaller than maxwidth. */
-		if (w < maxWidth)
-			return newlineTest + 1;
-		/* Ok, doesn't fit - revert the change. */
-		*newlineTest = '\n';
-	}
-
-	/* uh - this line is getting longer than allowed... */
-	space = newlineTest = buffer;
-	while ((space = strstr(space, " ")) != NULL) {
-		*space = '\0';
-		TTF_SizeUTF8(f->font, buffer, &w, &h);
-		*width = w;
-		/* otherwise even the first work would be too long */
-		if (w > maxWidth) {
-			*width = oldW;
-			*space = ' ';
-			*newlineTest = '\0';
-			return newlineTest + 1;
-		} else if (maxWidth == w)
-			return space + 1;
-		newlineTest = space;
-		oldW = w;
-		*space++ = ' ';
-		/* maybe there is space for one more word? */
-	}
-
-	TTF_SizeUTF8(f->font, buffer, &w, &h);
-	if (w > maxWidth) {
-		/* last word - no more spaces but still to long? */
-		*newlineTest = '\0';
-		return newlineTest + 1;
-	}
-	return NULL;
-}
-
-/**
- * @sa R_FontGetFont
- */
-void R_FontLength (const char *font, char *c, int *width, int *height)
-{
-	font_t *f;
-
-	if (width && height)
-		*width = *height = 0;
-
-	if (!c || !*c || !font)
-		return;
-
-	/* get the font */
-	f = R_FontGetFont(font);
-	if (!f)
-		return;
-	R_FontGetLineWrap(f, c, VID_NORM_WIDTH, width, height);
-}
 
 /**
  * @brief Console command binding to show the font cache
@@ -251,21 +219,18 @@ void R_FontListCache_f (void)
 	int collCount = 0, collSum = 0;
 
 	Com_Printf("Font cache info\n========================\n");
-	Com_Printf("...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache);
+	Com_Printf("...wrap cache size: %i - used %i\n", MAX_WRAP_CACHE, numWraps);
+	Com_Printf("...chunk cache size: %i - used %i\n", MAX_CHUNK_CACHE, numChunks);
 
-	for (; i < numInCache; i++) {
-		const fontCache_t *f = &fontCache[i];
-		if (!f) {
-			Com_Printf("...hashtable inconsistency at %i\n", i);
-			continue;
-		}
+	for (; i < numWraps; i++) {
+		const wrapCache_t *wrap = &wrapCache[i];
 		collCount = 0;
-		while (f->next) {
+		while (wrap->next) {
 			collCount++;
-			f = f->next;
+			wrap = wrap->next;
 		}
 		if (collCount)
-			Com_Printf("...%i collisions for %s\n", collCount, f->string);
+			Com_Printf("...%i collisions for %s\n", collCount, wrap->text);
 		collSum += collCount;
 	}
 	Com_Printf("...overall collisions %i\n", collSum);
@@ -284,102 +249,279 @@ static int R_FontHash (const char *string)
 		hashValue += string[i] * (119 + i);
 
 	hashValue = (hashValue ^ (hashValue >> 10) ^ (hashValue >> 20));
-	return hashValue & (MAX_FONT_CACHE - 1);
+	return hashValue & (MAX_WRAP_HASH - 1);
 }
 
 /**
- * @brief Searches the given string in cache
- * @return NULL if not found
- * @sa R_FontHash
+ * @brief Calculate the width in pixels needed to render a piece of text.
+ * Can temporarily modify the caller's string but leaves it unchanged.
  */
-static fontCache_t *R_FontGetFromCache (const font_t *font, const char *s)
-{
-	fontCache_t *entry;
-	int hashValue;
+static int R_FontChunkLength (const font_t *f, char *text, int len) {
+	int width;
+	char old;
 
-	hashValue = R_FontHash(s);
+	if (len == 0)
+		return 0;
+
+	old = text[len];
+	text[len] = '\0';
+	TTF_SizeUTF8(f->font, text, &width, NULL);
+	text[len] = old;
+
+	return width;
+}
+
+/**
+ * @brief Find longest part of text that fits in maxWidth pixels,
+ * with a clean break such as at a word boundary.
+ * Can temporarily modify the caller's string but leaves it unchanged.
+ * Assumes whole string won't fit.
+ * @param[out] widthp Pixel width of part that fits.
+ * @return String length of part that fits.
+ */
+static int R_FontFindFit (const font_t *f, char *text, int maxlen, int maxWidth, int *widthp)
+{
+	int bestbreak = 0;
+	int width;
+	int len;
+
+	*widthp = 0;
+
+	/* Fit whole words */
+	for (len = 1; len < maxlen; len++) {
+		if (text[len] == ' ') {
+			width = R_FontChunkLength(f, text, len);
+			if (width > maxWidth)
+				break;
+			bestbreak = len;
+			*widthp = width;
+		}
+	}
+
+	/* Fit hyphenated word parts */
+	for (len = bestbreak+1; len < maxlen; len++) {
+		if (text[len] == '-') {
+			width = R_FontChunkLength(f, text, len+1);
+			if (width > maxWidth)
+				break;
+			bestbreak = len+1;
+			*widthp = width;
+		}
+	}
+
+	if (bestbreak > 0)
+		return bestbreak;
+
+	/** @todo Smart breaking of Chinese text */
+
+	/* Can't fit even one word. Break first word anywhere. */
+	for (len = 1; len < maxlen; len++) {
+		if (UTF8_CONTINUATION_BYTE(text[len]))
+			continue;
+		width = R_FontChunkLength(f, text, len);
+		if (width > maxWidth)
+			break;
+		bestbreak = len;
+		*widthp = width;
+	}
+
+	if (!bestbreak)
+		Com_Error(ERR_FATAL, "R_FontFindFit: Renderer can't fit even one character in %i pixels.\n", maxWidth);
+
+	return bestbreak;
+}
+
+/**
+ * @brief Find longest part of text that fits in maxWidth pixels,
+ * with an ellipsis at the end to show that part of the text was
+ * truncated.
+ * Assumes whole string won't fit.
+ */
+static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, int maxWidth, int *widthp)
+{
+	char buf[BUF_SIZE];
+	int width;
+	int len;
+
+	*widthp = 0;
+
+	for (len = 1; len < maxlen; len++) {
+		buf[len-1] = text[len-1];
+		Q_strncpyz(&buf[len], ellipsis, sizeof(buf) - len);
+		TTF_SizeUTF8(f->font, buf, &width, NULL);
+		if (width > maxWidth)
+			return len - 1;
+		*widthp = width;
+	}
+
+	return maxlen;
+}
+
+/**
+ * @brief Split text into chunks that fit on one line, and create cache
+ * entries for those chunks.
+ * @return number of chunks allocated in chunkCache.
+ */
+static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, int method, int *lines)
+{
+	int lineno = 0;
+	int pos = 0;
+	int startChunks = numChunks;
+	char buf[BUF_SIZE];
+
+	assert(text);
+
+	Q_strncpyz(buf, text, sizeof(buf));
+
+	do {
+		int width;
+		int len;
+		int skip = 0;
+		qboolean truncated = qfalse;
+
+		/* find mandatory break */
+		len = strcspn(&buf[pos], "\n\\");
+
+		/* delete trailing spaces */
+		while (len > 0 && buf[pos + len - 1] == ' ') {
+			len--;
+			skip++;
+		}
+
+		width = R_FontChunkLength(f, &buf[pos], len);
+		if (width > 0) {
+			if (maxWidth > 0 && width > maxWidth) {
+				if (method == LONG_LINES_WRAP) {
+					/* full chunk didn't fit; try smaller */
+					len = R_FontFindFit(f, &buf[pos], len, maxWidth, &width);
+					/* skip following spaces */
+					skip = 0;
+					while (buf[pos + len + skip] == ' ')
+						skip++;
+				} else {
+					len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, &width);
+					skip = strcspn(&buf[pos + len], "\n\\\\");
+					truncated = qtrue;
+				}
+			}
+			/* add chunk to cache */
+			if (numChunks >= MAX_CHUNK_CACHE) {
+				/* whoops, ran out of cache, wipe cache and start over */
+				R_FontCleanCache();
+				/** @todo check for infinite recursion here */
+				return R_FontMakeChunks(f, text, maxWidth, method, lines);
+			}
+			chunkCache[numChunks].pos = pos;
+			chunkCache[numChunks].len = len;
+			chunkCache[numChunks].linenum = lineno;
+			chunkCache[numChunks].width = width;
+			chunkCache[numChunks].truncated = truncated;
+			numChunks++;
+		}
+		pos += len + skip;
+		if (buf[pos] == '\n' || buf[pos] == '\\') {
+			pos++;
+		}
+		lineno++;
+	} while (buf[pos] != '\0');
+
+	/* If there were empty lines at the end of the text, then lineno might
+	 * be greater than the linenum of the last chunk. Some callers need to
+	 * know this to count lines accurately. */
+	*lines = lineno;
+	return numChunks - startChunks;
+}
+
+/**
+ * @brief Wrap text according to provided parameters.
+ * Pull wrapping from cache if possible.
+ */
+static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWidth, int method)
+{
+	wrapCache_t *wrap;
+	int hashValue = R_FontHash(text);
+	int chunksUsed;
+	int lines;
+
 	/* String is considered a match if the part that fit in entry->string
 	 * matches. Since the hash value also matches and the hash was taken
 	 * over the whole string, this is good enough. */
-	for (entry = hash[hashValue]; entry; entry = entry->next)
-		if (!Q_strncmp(s, entry->string, sizeof(entry->string)-1)
-		 && entry->font == font)
-			return entry;
+	for (wrap = hash[hashValue]; wrap; wrap = wrap->next)
+		if (!Q_strncmp(text, wrap->text, sizeof(wrap->text)-1)
+		 && wrap->font == f && wrap->method == method
+		 && (wrap->maxWidth == maxWidth || (wrap->numChunks == 1 && (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
+		return wrap;
 
-	return NULL;
-}
-
-/**
- * @brief generate a new opengl texture out of the sdl-surface, bind and cache it
- */
-static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
-{
-	/* use a fixed texture number allocation scheme, starting offset at TEXNUM_FONTS */
-	cache->texPos = TEXNUM_FONTS + numInCache;
-	R_BindTexture(cache->texPos);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixel->pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	R_CheckError();
-}
-
-/**
- * @brief We add the font string (e.g. f_small) to the beginning
- * of each string (char *s) because we can have the same strings
- * but other fonts.
- * @sa R_FontGenerateCache
- * @sa R_FontCleanCache
- * @sa R_FontHash
- * @sa R_FontCacheGLSurface
- */
-static fontCache_t* R_FontAddToCache (const char *s, const font_t *f, SDL_Surface *pixel, int w, int h)
-{
-	int hashValue;
-
-	if (numInCache >= MAX_FONT_CACHE)
+	if (numWraps >= MAX_WRAP_CACHE)
 		R_FontCleanCache();
 
-	hashValue = R_FontHash(s);
-	if (hash[hashValue]) {
-		fontCache_t *font = hash[hashValue];
-		/* go to end of list */
-		while (font->next)
-			font = font->next;
-		font->next = &fontCache[numInCache];
-	} else
-		hash[hashValue] = &fontCache[numInCache];
+	/* It is possible that R_FontMakeChunks will wipe the cache,
+	 * so do not rely on numWraps until it completes. */
+	chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines);
 
-	if (numInCache < MAX_FONT_CACHE) {
-		Q_strncpyz(fontCache[numInCache].string, s, sizeof(fontCache[numInCache].string));
-		fontCache[numInCache].font = f;
-		fontCache[numInCache].size[0] = w;
-		fontCache[numInCache].size[1] = h;
-		fontCache[numInCache].texsize[0] = pixel->w;
-		fontCache[numInCache].texsize[1] = pixel->h;
-		R_FontCacheGLSurface(&fontCache[numInCache], pixel);
-	} else
-		Sys_Error("...font cache exceeded with %i\n", hashValue);
+	wrap = &wrapCache[numWraps];
+	Q_strncpyz(wrap->text, text, sizeof(wrap->text));
+	wrap->font = f;
+	wrap->maxWidth = maxWidth;
+	wrap->method = method;
+	wrap->numChunks = chunksUsed;
+	wrap->numLines = lines;
+	wrap->chunkIdx = numChunks - chunksUsed;
 
-	numInCache++;
-	return &fontCache[numInCache - 1];
+	/* insert new text into wrap cache */
+	wrap->next = hash[hashValue];
+	hash[hashValue] = wrap;
+	numWraps++;
+
+	return wrap;
+}
+
+/**
+ * @brief Supply information about the size of the text when it is
+ * linewrapped and rendered, without actually rendering it. Any of the
+ * output parameters may be NULL.
+ * @param[out] width receives width in pixels of the longest line in the text
+ * @param[out] height receives height in pixels when rendered with standard line height
+ * @param[out] lines receives total number of lines in text, including blank ones
+ */
+void R_FontTextSize (const char *fontId, const char *text, int maxWidth, int method, int *width, int *height, int *lines)
+{
+	const font_t *font = R_FontGetFont(fontId);
+	wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
+
+	if (width) {
+		int i;
+		*width = 0;
+		for (i = 0; i < wrap->numChunks; i++) {
+			if (chunkCache[wrap->chunkIdx + i].width > *width)
+				*width = chunkCache[wrap->chunkIdx + i].width;
+		}
+	}
+
+	if (height)
+		*height = (wrap->numLines - 1) * font->lineSkip + font->height;
+
+	if (lines)
+		*lines = wrap->numLines;
 }
 
 /**
  * @brief Renders the text surface and coverts to 32bit SDL_Surface that is stored in font_t structure
  * @todo maybe 32bit is overkill if the game is only using 16bit?
- * @sa R_FontAddToCache
+ * @sa R_FontCacheGLSurface
  * @sa TTF_RenderUTF8_Blended
  * @sa SDL_CreateRGBSurface
  * @sa SDL_LowerBlit
  * @sa SDL_FreeSurface
  */
-static fontCache_t *R_FontGenerateCache (const char *s, const font_t *f, int maxWidth)
+static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCache_t *chunk)
 {
 	int w, h;
 	SDL_Surface *textSurface;
 	SDL_Surface *openGLSurface;
 	SDL_Rect rect = { 0, 0, 0, 0 };
-	fontCache_t *result;
+	char buf[BUF_SIZE];
+	static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4th value is unused */
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;
@@ -393,63 +535,64 @@ static fontCache_t *R_FontGenerateCache (const char *s, const font_t *f, int max
 	Uint32 amask = 0xff000000;
 #endif
 
-	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
+	if (chunk->texId != 0)
+		return;  /* already generated */
+
+	assert(strlen(text) >= chunk->pos + chunk->len);
+	if (chunk->len >= sizeof(buf))
+		return;
+	memcpy(buf, &text[chunk->pos], chunk->len);
+	buf[chunk->len] = 0;
+
+	if (chunk->truncated)
+		Q_strncpyz(buf + chunk->len, ellipsis, sizeof(buf) - chunk->len);
+
+	textSurface = TTF_RenderUTF8_Blended(font->font, buf, color);
 	if (!textSurface) {
-		Com_Printf("%s (%s)\n", TTF_GetError(), s);
-		return NULL;
+		Com_Printf("%s (%s)\n", TTF_GetError(), buf);
+		return;
 	}
 
-	/* convert to power of two */
+	/* copy text to a surface of suitable size for a texture (power of two) */
 	for (w = 2; w < textSurface->w; w <<= 1) {}
 	for (h = 2; h < textSurface->h; h <<= 1) {}
 
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
 	if (!openGLSurface)
-		return NULL;
+		return;
 
 	rect.x = rect.y = 0;
 	rect.w = textSurface->w;
-	if (maxWidth > 0 && textSurface->w > maxWidth)
-		rect.w = maxWidth;
+	if (rect.w > chunk->width)
+		rect.w = chunk->width;
 	rect.h = textSurface->h;
 
 	/* ignore alpha when blitting - just copy it over */
 	SDL_SetAlpha(textSurface, 0, 255);
 
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
-	w = textSurface->w;
-	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
-	result = R_FontAddToCache(s, f, openGLSurface, w, h);
+	/* use a fixed texture number allocation scheme */
+	chunk->texId = TEXNUM_FONTS + (chunk - chunkCache);
+	R_BindTexture(chunk->texId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	chunk->texsize[0] = w;
+	chunk->texsize[1] = h;
+	R_CheckError();
 	SDL_FreeSurface(openGLSurface);
-	return result;
 }
 
-/**
- * @brief draw cached opengl texture
- * @param[in] cache
- * @param[in] x x coordinate on screen to draw the text to
- * @param[in] y y coordinate on screen to draw the text to
- * @param[in] absY This is the absolute y coodinate (e.g. of a node)
- * y coordinates will change for each linebreak - whereas the absY will be fix
- * @param[in] width The max width of the text
- * @param[in] height The max height of the text
- */
-static int R_FontGenerateGLSurface (const fontCache_t *cache, int x, int y, int absY, int width, int height)
+static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 {
 	float nx = x * viddef.rx;
 	float ny = y * viddef.ry;
-	float nw = cache->texsize[0] * viddef.rx;
-	float nh = cache->texsize[1] * viddef.ry;
+	float nw = w * viddef.rx;
+	float nh = h * viddef.ry;
 
-	/* if height is too much we should be able to scroll down */
-	if (height > 0 && y + cache->size[1] > absY + height)
-		return 1;
-
-	R_BindTexture(cache->texPos);
-
-	/* draw it */
+	R_BindTexture(texId);
 	R_EnableBlend(qtrue);
 
 	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
@@ -472,30 +615,8 @@ static int R_FontGenerateGLSurface (const fontCache_t *cache, int x, int y, int 
 	glVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 
 	R_EnableBlend(qfalse);
-
-	return 0;
 }
 
-static void R_FontConvertChars (char *buffer)
-{
-	char *replace;
-
-	/* convert all \\ to \n */
-	replace = strstr(buffer, "\\");
-	while (replace != NULL) {
-		*replace++ = '\n';
-		replace = strstr(replace, "\\");
-	}
-
-	/* convert all tabs to spaces */
-	replace = strstr(buffer, "\t");
-	while (replace != NULL) {
-		*replace++ = ' ';
-		replace = strstr(replace, "\t");
-	}
-}
-
-static fontCacheList_t cacheList;
 /**
  * @param[in] fontID the font id (defined in ufos/fonts.ufo)
  * @param[in] x Current x position (may differ from absX due to tabs e.g.)
@@ -512,206 +633,65 @@ static fontCacheList_t cacheList;
  * @note the x, y, width and height values are all normalized here - don't use the
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT
+ * @todo This could be replaced with a set of much simpler interfaces.
  */
-int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
-	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
+int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+        int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
-	const int returnHeight = R_FontGenerateCacheList(fontID, align, x, y,
-		absX, absY, maxWidth, lineHeight, c, box_height, scroll_pos, cur_line,
-		increaseLine, &cacheList);
-
-	R_FontRenderCacheList(&cacheList, absY, maxWidth, maxHeight, 0, 0);
-
-	return returnHeight;
-}
-
-/**
- * @param[in] fontID the font id (defined in ufos/fonts.ufo)
- * @param[in] x Current x position (may differ from absX due to tabs e.g.)
- * @param[in] y Current y position (may differ from absY due to linebreaks)
- * @param[in] absX Absolute x value for this string
- * @param[in] absY Absolute y value for this string
- * @param[in] maxWidth Max width - relative from absX
- * @param[in] lineHeight The lineheight of that node
- * @param[in] c The string to draw
- * @param[in] scroll_pos Starting line in this node (due to scrolling)
- * @param[in] cur_line Current line (see lineHeight)
- * @param[in] increaseLine If true cur_line is increased with every linebreak
- * @param[out] cacheList A List of fontCache_t pointers will be created that can be drawwn later on.
- * @note the x, y, width and height values are all normalized here - don't use the
- * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
- * and VID_NORM_HEIGHT
- * @todo replace R_FontDrawString with this function.
- */
-int R_FontGenerateCacheList (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth,
-	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, fontCacheList_t *cacheList)
-{
-	int w = 0, h = 0, locX;
-	float returnHeight = 0; /* Rounding errors break mouse-text correlation. */
-	const font_t *f;
-	char *buffer = buf;
-	char *pos;
-	int max = 0;				/* calculated maxWidth */
-	int line = 0;
-	float texh0, fh, fy; /* Rounding errors break mouse-text correlation. */
-
-	fy = y;
-	texh0 = lineHeight;
-
-	/* get the font */
-	f = R_FontGetFont(fontID);
-	if (!f)
-		Sys_Error("...could not find font: %s\n", fontID);
-
-	if (!cacheList)
-		Sys_Error("...no pointer to cachelist given!\n");
-
-	/* Init Cachelist */
-	cacheList->numCaches = 0;
-	cacheList->height = 0;
-	cacheList->width = 0;
-
-	Q_strncpyz(buffer, c, BUF_SIZE);
-	buffer = strtok(buf, "\n");
-
-	R_FontConvertChars(buf);
-	/* for linebreaks */
-	locX = x;
-
-	do {
-		qboolean skipline = qfalse;
-		if (cur_line) {
-			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
-			if (increaseLine)
-				(*cur_line)++; /* Increment the number of processed lines (overall). */
-			line = *cur_line;
-
-			if (box_height > 0 && line > box_height + scroll_pos) {
-				/* due to scrolling this line and the following are not visible, but we need to continue to get a proper line count */
-				skipline = qtrue;
-			}
-			if (line <= scroll_pos) {
-				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
-				skipline = qtrue;
-				/*Com_Printf("skipline line: %i scroll_pos: %i\n", line, scroll_pos);*/
-			}
-		}
-
-		/* TTF does not like empty strings... */
-		if (!buffer || !strlen(buffer))
-			return returnHeight;
-
-		pos = R_FontGetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
-
-		fh = h;
-
-		if (texh0 > 0) {
-			/** @todo something is broken with that warning, please test */
-#if 0
-			if (fh > texh0)
-				Com_DPrintf(DEBUG_RENDERER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
-#endif
-			fh = texh0; /* some extra space below the line */
-		}
-
-		/* check whether this line is bigger than every other */
-		if (w > max)
-			max = w;
-
-		if (align > 0 && align < ALIGN_LAST) {
-			switch (align % 3) {
-			case 1:
-				x -= w / 2;
-				break;
-			case 2:
-				x -= w;
-				break;
-			}
-
-			/* Warning: this works OK only for single-line texts! */
-			switch (align / 3) {
-			case 1:
-				fy -= fh / 2;
-				fh += fh / 2;
-				break;
-			case 2:
-				fy -= fh;
-				fh += fh;
-				break;
-			}
-		}
-
-		if (!skipline && strlen(buffer)) {
-			if (cacheList->numCaches >= MAX_FONTCACHE_ENTRIES)
-				Sys_Error("...out of space in cachelist!\n");
-
-			cacheList->cache[cacheList->numCaches] = R_FontGetFromCache(f, buffer);
-			if (!cacheList->cache[cacheList->numCaches])
-				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, f, maxWidth);
-
-			if (!cacheList->cache[cacheList->numCaches]) {
-				/* maybe we are running out of mem */
-				R_FontCleanCache();
-				cacheList->cache[cacheList->numCaches] = R_FontGenerateCache(buffer, f, maxWidth);
-			}
-			if (!cacheList->cache[cacheList->numCaches])
-				Sys_Error("...could not generate font surface '%s'\n", buffer);
-
-			cacheList->height += cacheList->cache[cacheList->numCaches]->size[1];
-			if (cacheList->width < cacheList->cache[cacheList->numCaches]->size[0])
-				cacheList->width = cacheList->cache[cacheList->numCaches]->size[0];
-			cacheList->posX[cacheList->numCaches] = x;
-			cacheList->posY[cacheList->numCaches] = fy;
-			cacheList->numCaches++;
-			/* R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight); */
-
-			fy += fh;
-			returnHeight += (texh0 > 0) ? texh0 : h;
-		}
-
-		/* skip for next line */
-		if (pos) {
-			/* We have to break this line */
-			buffer = pos;
-		} else {
-			/* Check if this line has any linebreaks and update buffer if that is the case. */
-			buffer = strtok(NULL, "\n");
-		}
-		x = locX;
-	} while (buffer);
-
-	return returnHeight;
-}
-
-/**
- * @brief Render all the entries in a list of caches (e.g. generated in R_FontDrawString)
- * @param[in] cacheList A List of fontCache_t pointers that will be drawn.
- * @param[in] absY Absolute y value for the string(s).
- * @param[in] maxWidth Max width - relative from absX (as used in R_FontGenerateCacheList)
- * @param[in] maxHeight Max height - relative from absY
- * @param[in] dx Modifier to displace strings by a relative x value.
- * @param[in] dy Modifier to displace strings by a relative y value.
- */
-void R_FontRenderCacheList (const fontCacheList_t *cacheList, int absY, int maxWidth, int maxHeight, int dx, int dy)
-{
+	const int horiz_align = align % 3; /* left, center, right */
+	const int vert_align = align / 3;  /* top, center, bottom */
+	const font_t *font = R_FontGetFont(fontId);
+	const wrapCache_t *wrap;
 	int i;
+	int xalign = 0;
+	int yalign = 0;
 
-	if (!cacheList)
-		Sys_Error("...no pointer to cachelist given!\n");
+	if (maxWidth <= 0)
+		maxWidth = VID_NORM_WIDTH;
 
-	for (i = 0; i < cacheList->numCaches; i++) {
-		if (cacheList->cache[i]) {
-			R_FontGenerateGLSurface(cacheList->cache[i],
-				cacheList->posX[i] + dx,
-				cacheList->posY[i] + dy,
-				absY,
-				maxWidth,
-				maxHeight);
-		} else {
-			Sys_Error("...no font-cache pointer found!\n");
-		}
+	if (lineHeight <= 0)
+		lineHeight = font->height;
+
+	wrap = R_FontWrapText(font, c, maxWidth - (x - absX), LONG_LINES_WRAP);
+
+	if (box_height <= 0)
+		box_height = wrap->numLines;
+
+	/* vertical alignment makes only a single-line adjustment in this
+	 * function. That means that ALIGN_Lx values will not show more than
+	 * one line in any case. */
+	if (vert_align == 1)
+		yalign = -(lineHeight / 2);
+	else if (vert_align == 2)
+		yalign = -lineHeight;
+
+	for (i = 0; i < wrap->numChunks; i++) {
+		chunkCache_t *chunk = &chunkCache[wrap->chunkIdx + i];
+		int linenum = chunk->linenum;
+
+		if (cur_line)
+			linenum += *cur_line;
+
+		if (horiz_align == 1)
+			xalign = -(chunk->width / 2);
+		else if (horiz_align == 2)
+			xalign = -chunk->width;
+		else
+			xalign = 0;
+
+		if (linenum < scroll_pos || linenum >= scroll_pos + box_height)
+			continue;
+
+		R_FontGenerateTexture(font, c, chunk);
+		R_FontDrawTexture(chunk->texId, x + xalign, y + (linenum - scroll_pos) * lineHeight + yalign, chunk->texsize[0], chunk->texsize[1]);
 	}
+
+	if (cur_line && increaseLine)
+		*cur_line += wrap->numLines;
+
+	return wrap->numLines * lineHeight;
 }
+
 
 void R_FontInit (void)
 {
@@ -730,9 +710,11 @@ void R_FontInit (void)
 	numFonts = 0;
 	memset(fonts, 0, sizeof(fonts));
 
-	numInCache = 0;
-	memset(fontCache, 0, sizeof(fontCache));
+	memset(chunkCache, 0, sizeof(chunkCache));
+	memset(wrapCache, 0, sizeof(wrapCache));
 	memset(hash, 0, sizeof(hash));
+	numChunks = 0;
+	numWraps = 0;
 
 	/* init the truetype font engine */
 	if (TTF_Init() == -1)

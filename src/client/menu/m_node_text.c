@@ -132,13 +132,12 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
 	const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
 	char textCopy[MAX_MENUTEXTLEN];
-	int lineHeight = 0;
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
-	int x1, y1; /* variable x and y position */
+	int x1; /* variable x position */
 	vec2_t nodepos;
 
 	if (text) {
@@ -165,7 +164,6 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 	}
 
-	y1 = y;
 	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
 	node->textLines = 0; /* these are lines only in one-line texts! */
 	/* but it's easy to fix, just change FontDrawString
@@ -193,8 +191,11 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			}
 		} else if (!Q_strncmp(cur, "img:", 4)) {
 			const char *token;
+			int y1 = y;
 			cur += 4;
 			token = COM_Parse((const char **)&cur);
+			if (node->textLines > node->textScroll)
+				y1 += (node->textLines - node->textScroll) * node->texh[0];
 			/** @todo once font_t from r_font.h is known everywhere we should scale the height here, too
 			 * @todo once image_t is known everywhere we should fix this, too */
 			x1 += R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
@@ -238,11 +239,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			*tab++ = '\0';
 			/* now check whether we should draw this string */
 			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
-			if (node)
-				node->textLines++;
-			R_FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
-			if (node)
-				node->textLines--;
+			R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
 			/* increase the x value as given via menu definition format string */
 			/* or use 1/3 of the node size (width) */
 			if (!node || !node->texh[1])
@@ -255,12 +252,15 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 		/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-		lineHeight = R_FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
-		if (lineHeight > 0)
-			y1 += lineHeight;
+		R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
 
 		if (node && node->mousefx)
 			R_ColorBlend(node->color); /* restore original color */
+
+		/* if textLines has advanced past the visible area, don't bother
+		 * counting the remaining lines unless it is needed for a scrollbar */
+		if (!node->scrollbar && node->textLines >= node->textScroll + node->height)
+			break;
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
