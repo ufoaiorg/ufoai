@@ -172,6 +172,34 @@ typedef struct menuNode_s {
 typedef struct {
 	char* name;							/**< name of the behaviour: string type of a node */
 	void (*draw)(menuNode_t *node);		/**< how to draw a node */
+	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
+	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
+	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */
+	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y); /**< on use mouse wheel into the node */
+	void (*mouseMove)(menuNode_t *node, int x, int y);
+
+	/** Planed */
+	/*
+	mouse move event
+	void (*mouseEnter)(menuNode_t *node);
+	void (*mouseLeave)(menuNode_t *node);
+	void (*mouseMove)(menuNode_t *node, int relativeX, int relativeY);
+	mouse click event
+	void (*middleClickDown)(menuNode_t *node);
+	void (*middleClickUp)(menuNode_t *node);
+	void (*rightClickDown)(menuNode_t *node);
+	void (*rightClickUp)(menuNode_t *node);
+	void (*leftClickDown)(menuNode_t *node);
+	void (*leftClickUp)(menuNode_t *node);
+	void (*mouseWheel)(menuNode_t *node);
+	captured mouse callback
+	void (*capturedMouseMove)(menuNode_t *node, int relativeX, int relativeY);
+	drag and drop callback
+	int  (*dndEnter)(menuNode_t *node);
+	void (*dndLeave)(menuNode_t *node);
+	int  (*dndMove)(menuNode_t *node);
+	int  (*dndEnd)(menuNode_t *node);
+	*/
 } nodeBehaviour_t;
 
 extern nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];

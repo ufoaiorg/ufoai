@@ -139,33 +139,6 @@ static const value_t menuModelValues[] = {
 
 /* =========================================================== */
 
-/** @brief node type strings */
-static const char *nt_strings[MN_NUM_NODETYPE] = {
-	"",
-	"confunc",
-	"cvarfunc",
-	"func",
-	"zone",
-	"pic",
-	"string",
-	"text",
-	"bar",
-	"tbar",
-	"model",
-	"container",
-	"item",
-	"map",
-	"basemap",
-	"baselayout",
-	"checkbox",
-	"selectbox",
-	"linestrip",
-	"cinematic",
-	"textlist",
-	"radar",
-	"tab"
-};
-
 /** @brief valid node event actions */
 static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
@@ -676,8 +649,10 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					return qfalse;
 			}
 			found = qfalse;
-			for (i = 0; i < MN_NUM_NODETYPE; i++)
-				if (!Q_strcmp(token, nt_strings[i])) {
+			for (i = 0; i < MN_NUM_NODETYPE; i++) {
+				if (nodeBehaviourList[i].name == NULL)
+					continue;
+				if (!Q_strcmp(token, nodeBehaviourList[i].name)) {
 					/* found node */
 					/* get name */
 					token = COM_EParse(text, errhead, menu->name);
@@ -720,7 +695,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					node->padding = 3;
 					node->textLineSelected = -1; /**< Invalid/no line selected per default. */
 
-/*					Com_Printf(" %s %s\n", nt_strings[i], *token); */
+/*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
 
 					/* check for special nodes */
 					switch (node->type) {
@@ -794,6 +769,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					found = qtrue;
 					break;
 				}
+			}
 		} while (found);
 
 		/* test for end or unknown token */

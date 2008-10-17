@@ -32,7 +32,4 @@ void MN_SetViewRect(const menu_t* menu);
 
 void MN_InitStartup(void);
 
-void MN_BaseMapDraw(const menuNode_t * node);
-void MN_BaseMapLayout(const menuNode_t * node);
-
 #endif /* CLIENT_CL_MENU_H */

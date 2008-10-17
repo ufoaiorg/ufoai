@@ -361,7 +361,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 
 	if (numitems > 0) {
 		Com_sprintf(str, sizeof(str), _("By selling %s you gathered %i credits."),
-			ngettext("%i collected item", "%i collected items", numitems), gained);
+			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	if (forcedsold > 0) {

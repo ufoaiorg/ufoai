@@ -76,7 +76,17 @@ static void MN_DrawContainerNode2(menuNode_t *node) {
 	}
 }
 
+void MN_ContainerClick (menuNode_t *node, int x, int y) {
+	MN_Drag(node, baseCurrent, x, y, qfalse);
+}
+
+void MN_ContainerRightClick (menuNode_t *node, int x, int y) {
+	MN_Drag(node, baseCurrent, x, y, qtrue);
+}
+
 void MN_RegisterNodeContainer(nodeBehaviour_t* behaviour) {
 	behaviour->name = "container";
 	behaviour->draw = MN_DrawContainerNode2;
+	behaviour->leftClick = MN_ContainerClick;
+	behaviour->rightClick = MN_ContainerRightClick;
 }

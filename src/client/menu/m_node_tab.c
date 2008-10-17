@@ -249,4 +249,5 @@ void MN_DrawTabNode (menuNode_t *node)
 void MN_RegisterNodeTab(nodeBehaviour_t *behaviour) {
 	behaviour->name = "tab";
 	behaviour->draw = MN_DrawTabNode;
+	behaviour->leftClick = MN_TabNodeClick;
 }

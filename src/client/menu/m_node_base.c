@@ -9,6 +9,7 @@
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_node_model.h"
+#include "m_input.h"
 
 /**
  * @brief Draw a small square with the menu layout of the given base
@@ -176,9 +177,98 @@ void MN_BaseMapDraw (menuNode_t * node)
 	}
 }
 
+/**
+ * @brief Left click on the basemap
+ * @sa MN_BaseMapRightClick
+ * @param[in] node The menu node definition for the base map
+ * @param[in,out] base The base we are just viewing (and clicking)
+ * @param[in] x The x screen coordinate
+ * @param[in] y The y screen coordinate
+ */
+static void MN_BaseMapClick (menuNode_t *node, int x, int y)
+{
+	int row, col;
+	base_t *base = baseCurrent;
+
+	assert(base);
+	assert(node);
+	assert(node->menu);
+
+	if (gd.baseAction == BA_NEWBUILDING) {
+		assert(base->buildingCurrent);
+		for (row = 0; row < BASE_SIZE; row++)
+			for (col = 0; col < BASE_SIZE; col++) {
+				if (x >= base->map[row][col].posX
+				 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE
+				 && y >= base->map[row][col].posY
+				 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+					/* we're on the tile the player clicked */
+					if (!base->map[row][col].building && !base->map[row][col].blocked) {
+						if (!base->buildingCurrent->needs
+						 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
+						 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
+						/* Set position for a new building */
+						B_SetBuildingByClick(base, base->buildingCurrent, row, col);
+					}
+					return;
+				}
+			}
+	}
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (base->map[row][col].building && x >= base->map[row][col].posX
+			 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
+			 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
+				const building_t *entry = base->map[row][col].building;
+				if (!entry)
+					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
+
+				assert(!base->map[row][col].blocked);
+
+				B_BuildingOpenAfterClick(base, entry);
+				gd.baseAction = BA_NONE;
+				return;
+			}
+}
+
+/**
+ * @brief Right click on the basemap
+ * @sa MN_BaseMapClick
+ * @param[in] node The menu node definition for the base map
+ * @param[in,out] base The base we are just viewing (and clicking)
+ * @param[in] x The x screen coordinate
+ * @param[in] y The y screen coordinate
+ */
+static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
+{
+	int row, col;
+	base_t *base = baseCurrent;
+
+	assert(base);
+	assert(node);
+	assert(node->menu);
+
+	for (row = 0; row < BASE_SIZE; row++)
+		for (col = 0; col < BASE_SIZE; col++)
+			if (base->map[row][col].building && x >= base->map[row][col].posX + node->menu->origin[0]
+			 && x < base->map[row][col].posX + node->menu->origin[0] + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY + node->menu->origin[1]
+			 && y < base->map[row][col].posY + node->menu->origin[1] + node->size[1] / BASE_SIZE) {
+				building_t *entry = base->map[row][col].building;
+				if (!entry)
+					Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);
+
+				assert(!base->map[row][col].blocked);
+				B_MarkBuildingDestroy(base, entry);
+				return;
+			}
+}
+
 void MN_RegisterNodeBaseMap(nodeBehaviour_t *behaviour) {
 	behaviour->name = "basemap";
 	behaviour->draw = MN_BaseMapDraw;
+	behaviour->leftClick = MN_BaseMapClick;
+	behaviour->rightClick = MN_BaseMapRightClick;
 }
 
 void MN_RegisterNodeBaseLayout(nodeBehaviour_t *behaviour) {

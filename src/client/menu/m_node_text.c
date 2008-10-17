@@ -377,8 +377,59 @@ void MN_NodeTextInit (void)
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
 }
 
+/**
+ * @brief Calls the script command for a text node that is clickable
+ * @note The node must have the click parameter in it's menu definition or there
+ * must be a console command that has the same name as the node has + _click
+ * attached.
+ * @sa MN_TextRightClick
+ * @todo Check for scrollbars and when one would click them scroll according to
+ * mouse movement, maybe implement a new mousespace (MS_* - @sa cl_input.c)
+ */
+void MN_TextClick (menuNode_t * node, int x, int y)
+{
+	int mouseOver = 1;
+	char cmd[MAX_VAR];
+	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
+	if (Cmd_Exists(cmd))
+		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+	else if (node->click && node->click->type == EA_CMD) {
+		assert(node->click->data);
+		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, mouseOver - 1));
+	}
+}
+
+/**
+ * @brief Calls the script command for a text node that is clickable via right mouse button
+ * @note The node must have the rclick parameter
+ * @sa MN_TextClick
+ */
+static void MN_TextRightClick (menuNode_t * node, int x, int y)
+{
+	int mouseOver = 1;
+	char cmd[MAX_VAR];
+	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
+	if (Cmd_Exists(cmd))
+		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+}
+
+static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	menu_t *menu = node->menu;
+	if (node->wheelUp && node->wheelDown) {
+		MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
+	} else {
+		MN_TextScroll(node, (down ? 1 : -1));
+		/* they can also have script commands assigned */
+		MN_ExecuteActions(menu, node->wheel);
+	}
+}
+
 void MN_RegisterNodeText(nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
 	behaviour->draw = MN_DrawTextNode2;
+	behaviour->leftClick = MN_TextClick;
+	behaviour->rightClick = MN_TextRightClick;
+	behaviour->mouseWheel = MN_NodeTextMouseWheel;
 }

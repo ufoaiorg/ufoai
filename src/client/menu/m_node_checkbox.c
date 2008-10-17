@@ -1,6 +1,7 @@
 
 #include "m_nodes.h"
 #include "m_parse.h"
+#include "m_input.h"
 
 void MN_DrawCheckBoxNode (menuNode_t* node)
 {
@@ -35,7 +36,26 @@ void MN_DrawCheckBoxNode (menuNode_t* node)
 	}
 }
 
+/**
+ * @brief Handles checkboxes clicks
+ */
+static void MN_CheckboxClick (menuNode_t * node, int x, int y)
+{
+	int value;
+	const char *cvarName;
+
+	assert(node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	/* no cvar? */
+	if (Q_strncmp(node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+		return;
+
+	cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+	value = Cvar_VariableInteger(cvarName) ^ 1;
+	MN_SetCvar(cvarName, NULL, value);
+}
+
 void MN_RegisterNodeCheckBox(nodeBehaviour_t *behaviour) {
 	behaviour->name = "checkbox";
 	behaviour->draw = MN_DrawCheckBoxNode;
+	behaviour->leftClick = MN_CheckboxClick;
 }

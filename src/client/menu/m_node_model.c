@@ -483,7 +483,20 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	} while (menuModel != NULL);
 }
 
+/**
+ * @brief Activates the model rotation
+ * @note set the mouse space to MS_ROTATE
+ * @sa rotateAngles
+ */
+static void MN_ModelClick (menuNode_t * node, int x, int y)
+{
+	mouseSpace = MS_ROTATE;
+	/* modify node->angles (vec3_t) if you rotate the model */
+	rotateAngles = node->angles;
+}
+
 void MN_RegisterNodeModel(nodeBehaviour_t *behaviour) {
 	behaviour->name = "model";
 	behaviour->draw = MN_DrawModelNode2;
+	behaviour->leftClick = MN_ModelClick;
 }

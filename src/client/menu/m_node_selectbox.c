@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_parse.h"
 #include "m_font.h"
+#include "m_input.h"
 
 const menuNode_t *selectBoxNode;
 
@@ -154,7 +155,60 @@ void MN_DrawSelectBoxNode (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Handles selectboxes clicks
+ * @sa MN_SELECTBOX
+ */
+static void MN_SelectboxClick (menuNode_t * node, int x, int y)
+{
+	selectBoxOptions_t* selectBoxOption;
+	int clickedAtOption;
+	vec2_t pos;
+
+	MN_GetNodeAbsPos(node, pos);
+	clickedAtOption = (y - pos[1]);
+
+	if (node->size[1])
+		clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
+	else
+		clickedAtOption = (clickedAtOption - SELECTBOX_DEFAULT_HEIGHT) / SELECTBOX_DEFAULT_HEIGHT; /* default height - see selectbox.tga */
+
+	if (clickedAtOption < 0 || clickedAtOption >= node->height)
+		return;
+
+	/* the cvar string is stored in data[MN_DATA_MODEL_SKIN_OR_CVAR] */
+	/* no cvar given? */
+	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
+		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
+		return;
+	}
+
+	/* no cvar? */
+	if (Q_strncmp((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+		return;
+
+	/* only execute the click stuff if the selectbox is active */
+	if (node->state) {
+		selectBoxOption = node->options;
+		for (; clickedAtOption > 0 && selectBoxOption; selectBoxOption = selectBoxOption->next) {
+			clickedAtOption--;
+		}
+		if (selectBoxOption) {
+			const char *cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+			MN_SetCvar(cvarName, selectBoxOption->value, 0);
+			if (*selectBoxOption->action) {
+#ifdef DEBUG
+				if (selectBoxOption->action[strlen(selectBoxOption->action) - 1] != ';')
+					Com_Printf("selectbox option with none terminated action command");
+#endif
+				Cbuf_AddText(selectBoxOption->action);
+			}
+		}
+	}
+}
+
 void MN_RegisterNodeSelectBox(nodeBehaviour_t *behaviour) {
 	behaviour->name = "selectbox";
 	behaviour->draw = MN_DrawSelectBoxNode;
+	behaviour->leftClick = MN_SelectboxClick;
 }

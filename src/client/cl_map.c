@@ -239,7 +239,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 /**
  * @brief Click on the map/geoscape
  */
-void MAP_MapClick (const menuNode_t* node, int x, int y)
+void MAP_MapClick (menuNode_t* node, int x, int y)
 {
 	aircraft_t *aircraft;
 	int i;
