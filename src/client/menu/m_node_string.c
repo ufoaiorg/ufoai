@@ -20,3 +20,7 @@ void MN_DrawStringNode(menuNode_t *node) {
 	else
 		R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
 }
+
+void MN_RegisterNodeString(nodeBehaviour_t *behaviour) {
+	behaviour->draw = MN_DrawStringNode;
+}

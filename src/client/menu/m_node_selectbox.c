@@ -153,3 +153,7 @@ void MN_DrawSelectBoxNode (const menuNode_t *node)
 			23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
 	}
 }
+
+void MN_RegisterNodeSelectBox(nodeBehaviour_t *behaviour) {
+	behaviour->draw = MN_DrawSelectBoxNode;
+}

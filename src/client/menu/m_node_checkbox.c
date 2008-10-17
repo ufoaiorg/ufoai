@@ -34,3 +34,7 @@ void MN_DrawCheckBoxNode (const menuNode_t* node)
 		Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed (%s)\n", ref);
 	}
 }
+
+void MN_RegisterNodeCheckBox(nodeBehaviour_t *behaviour) {
+	behaviour->draw = MN_DrawCheckBoxNode;
+}

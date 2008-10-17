@@ -482,3 +482,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	 * ran once */
 	} while (menuModel != NULL);
 }
+
+void MN_RegisterNodeModel(nodeBehaviour_t *behaviour) {
+	behaviour->draw = MN_DrawModelNode2;
+}

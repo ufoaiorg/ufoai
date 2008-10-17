@@ -245,3 +245,7 @@ void MN_DrawTabNode (const menuNode_t *node)
 	if (currentX < node->pos[0] + node->size[0])
 		MN_DrawTabNodePlain(image, currentX, node->pos[1], node->pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
 }
+
+void MN_RegisterNodeTab(nodeBehaviour_t *behaviour) {
+	behaviour->draw = MN_DrawTabNode;
+}

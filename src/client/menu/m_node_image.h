@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_IMAGE_H
 #define CLIENT_MENU_M_NODE_IMAGE_H
 
-void MN_DrawImageNode(menuNode_t *node);
+void MN_RegisterNodeImage(nodeBehaviour_t* behaviour);
 
 #endif

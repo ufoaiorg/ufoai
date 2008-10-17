@@ -22,4 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-void MN_DrawRadar(menuNode_t *node);
+#ifndef CLIENT_MENU_M_NODE_RADAR_H
+#define CLIENT_MENU_M_NODE_RADAR_H
+
+void MN_RegisterNodeRadar(nodeBehaviour_t *behaviour);
+
+#endif

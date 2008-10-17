@@ -1,8 +1,14 @@
-
 #include "../client.h"
+#include "../cl_map.h"
+#include "m_main.h"
+#include "m_draw.h"
+#include "m_parse.h"
+#include "m_font.h"
+#include "m_inventory.h"
+#include "m_tooltip.h"
 #include "m_nodes.h"
 
-void MN_DrawImageNode (menuNode_t *node)
+void MN_DrawImageNode(menuNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -46,4 +52,8 @@ void MN_DrawImageNode (menuNode_t *node)
 	}
 	R_DrawNormPic(nodepos[0], nodepos[1], size[0], size[1],
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
+}
+
+void MN_RegisterNodeImage(nodeBehaviour_t* behaviour) {
+	behaviour->draw = MN_DrawImageNode;
 }

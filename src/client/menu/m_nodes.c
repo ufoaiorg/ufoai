@@ -28,6 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_inventory.h"
 #include "../cl_input.h"
 
+#include "m_node_bar.h"
+#include "m_node_checkbox.h"
+#include "m_node_cinematic.h"
+#include "m_node_container.h"
+#include "m_node_image.h"
+#include "m_node_item.h"
+#include "m_node_linestrip.h"
+#include "m_node_map.h"
+#include "m_node_model.h"
+#include "m_node_radar.h"
+#include "m_node_selectbox.h"
+#include "m_node_string.h"
+#include "m_node_tab.h"
+#include "m_node_tbar.h"
+#include "m_node_text.h"
+
 extern menuNode_t *focusNode;
 
 /**
@@ -61,7 +77,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
  * @brief
  * @todo delete this function when it's possible
  */
-const char *MN_GetNodeReference(menuNode_t *node) {
+const char *MN_GetNodeReference(const menuNode_t *node) {
 	const char *ref = NULL;
 	/* get the reference */
 	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
@@ -72,7 +88,7 @@ const char *MN_GetNodeReference(menuNode_t *node) {
 			/* these have default values for their image */
 			if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
 				/* bad reference */
-				node->invis = qtrue;
+				((menuNode_t *)node)->invis = qtrue; /*< why dont we shut down the appli? */
 				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
 			}
 		}
@@ -335,6 +351,17 @@ static void MN_UnHideNode_f (void)
 		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
 
+/** @brief Init a behaviour to null. A null node dont react
+ */
+inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour) {
+	memset(behaviour, 0, sizeof(nodeBehaviour_t));
+}
+
+/** @brief List of all node behaviours, indexes by nodetype num.
+ */
+nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
+
+
 void MN_InitNodes (void)
 {
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
@@ -343,4 +370,27 @@ void MN_InitNodes (void)
 	MN_NodeTextInit();
 	MN_NodeSelectBoxInit();
 	MN_NodeModelInit();
+
+	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE);
+	MN_RegisterNodeImage(nodeBehaviourList + MN_PIC);
+	MN_RegisterNodeString(nodeBehaviourList + MN_STRING);
+	MN_RegisterNodeBar(nodeBehaviourList + MN_BAR);
+	MN_RegisterNodeTBar(nodeBehaviourList + MN_TBAR);
+	MN_RegisterNodeModel(nodeBehaviourList + MN_MODEL);
+	MN_RegisterNodeContainer(nodeBehaviourList + MN_CONTAINER);
+	MN_RegisterNodeItem(nodeBehaviourList + MN_ITEM);
+	MN_RegisterNodeMap(nodeBehaviourList + MN_MAP);
+	//MN_RegisterNodeBaseMap(nodeBehaviourList + MN_BASEMAP); /* @fixme temporary hide */
+	//MN_RegisterNodeBaseLayout(nodeBehaviourList + MN_BASELAYOUT); /* @fixme temporary hide */
+	MN_RegisterNodeCheckBox(nodeBehaviourList + MN_CHECKBOX);
+	MN_RegisterNodeSelectBox(nodeBehaviourList + MN_SELECTBOX);
+	MN_RegisterNodeLineStrip(nodeBehaviourList + MN_LINESTRIP);
+	MN_RegisterNodeCinematic(nodeBehaviourList + MN_CINEMATIC);
+	//MN_RegisterNodeTextList(nodeBehaviourList + MN_TEXTLIST); /* @fixme temporary hide */
+	MN_RegisterNodeRadar(nodeBehaviourList + MN_RADAR);
+	MN_RegisterNodeTab(nodeBehaviourList + MN_TAB);
 }
