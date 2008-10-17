@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_font.h"
 #include "m_inventory.h"
 #include "m_tooltip.h"
+#include "m_nodes.h"
+#include "m_node_model.h"
 
 static cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;
@@ -68,10 +70,11 @@ static void MN_DrawBorder (const menuNode_t *node)
 /**
  * @todo move it to a m_node_bar.c
  */
-static void MN_DrawBarNode(menuNode_t *node, menu_t *menu, qboolean mouseOver) {
+static void MN_DrawBarNode(menuNode_t *node) {
 	vec4_t color;
 	float fac, bar_width;
 	vec2_t nodepos;
+	menu_t *menu = node->menu;
 	MN_GetNodeAbsPos(node, nodepos);
 	VectorScale(node->color, 0.8, color);
 	color[3] = node->color[3];
@@ -79,16 +82,20 @@ static void MN_DrawBarNode(menuNode_t *node, menu_t *menu, qboolean mouseOver) {
 	/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 	fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
 	bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
-	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
+	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, node->state ? color : node->color);
 }
 
 /**
  * @todo move it to a m_node_tbar.c
  */
-static void MN_DrawTBarNode(menuNode_t *node, menu_t *menu, const char* ref) {
+static void MN_DrawTBarNode(menuNode_t *node) {
 	/* data[0] is the texture name, data[1] is the minimum value, data[2] is the current value */
 	float ps, shx;
 	vec2_t nodepos;
+	menu_t *menu = node->menu;
+	const char* ref = MN_GetNodeReference(node);
+	if (!ref || !*ref)
+		return;
 	MN_GetNodeAbsPos(node, nodepos);
 	if (node->pointWidth) {
 		ps = MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1]);
@@ -102,7 +109,7 @@ static void MN_DrawTBarNode(menuNode_t *node, menu_t *menu, const char* ref) {
 /**
  * @todo move it to a m_node_linestrip.c
  */
-static void MN_DrawLineStripNode(menuNode_t *node, menu_t *menu) {
+static void MN_DrawLineStripNode(menuNode_t *node) {
 	int i;
 	if (node->linestrips.numStrips > 0) {
 		/* Draw all linestrips. */
@@ -121,7 +128,7 @@ static void MN_DrawLineStripNode(menuNode_t *node, menu_t *menu) {
  * @todo need to think about a common mecanism from drag-drop
  * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
  */
-static void MN_DrawContainerNode2(menuNode_t *node, menu_t *menu, const char* ref) {
+static void MN_DrawContainerNode2(menuNode_t *node) {
 	vec2_t nodepos;
 	MN_GetNodeAbsPos(node, nodepos);
 	if (menuInventory) {
@@ -188,19 +195,22 @@ static void MN_DrawContainerNode2(menuNode_t *node, menu_t *menu, const char* re
  * @todo move it to a m_node_item.c
  * @todo need a cleanup/marge/refactoring with MN_DrawItemNode
  */
-static void MN_DrawItemNode2(menuNode_t *node, menu_t *menu, const char* ref) {
-	if (ref && *ref) {
-		const objDef_t *od = INVSH_GetItemByIDSilent(ref);
-		if (od) {
-			MN_DrawItemNode(node, ref);
+static void MN_DrawItemNode2(menuNode_t *node) {
+	menu_t *menu = node->menu;
+	const char* ref = MN_GetNodeReference(node);
+	if (!ref || !*ref)
+		return;
+
+	const objDef_t *od = INVSH_GetItemByIDSilent(ref);
+	if (od) {
+		MN_DrawItemNode(node, ref);
+	} else {
+		const aircraft_t *aircraft = AIR_GetAircraft(ref);
+		if (aircraft) {
+			assert(aircraft->tech);
+			MN_DrawModelNode(menu, node, ref, aircraft->tech->mdl);
 		} else {
-			const aircraft_t *aircraft = AIR_GetAircraft(ref);
-			if (aircraft) {
-				assert(aircraft->tech);
-				MN_DrawModelNode(menu, node, ref, aircraft->tech->mdl);
-			} else {
-				Com_Printf("Unknown item: '%s'\n", ref);
-			}
+			Com_Printf("Unknown item: '%s'\n", ref);
 		}
 	}
 }
@@ -235,34 +245,6 @@ static void MN_DrawMapNode(menuNode_t *node) {
 	}
 }
 
-static void MN_DrawModelNode2(menu_t *menu, menuNode_t *node, const char* ref) {
-	char source[MAX_VAR] = "";
-	if (ref == NULL)
-		*source = '\0';
-	else
-		Q_strncpyz(source, ref, MAX_VAR);
-	MN_DrawModelNode(menu, node, ref, source);
-}
-
-static const char *MN_GetNodeReference(menu_t *menu, menuNode_t *node) {
-	const char *ref = NULL;
-	/* get the reference */
-	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
-		&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP
-		&& node->type != MN_RADAR) {
-		ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
-		if (!ref) {
-			/* these have default values for their image */
-			if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
-				/* bad reference */
-				node->invis = qtrue;
-				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
-			}
-		}
-	}
-	return ref;
-}
-
 /**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
@@ -271,7 +253,6 @@ void MN_DrawMenus (void)
 {
 	menuNode_t *node;
 	menu_t *menu;
-	const char *ref;
 	int sp, pp;
 	int mouseOver = 0;
 	vec2_t nodepos;
@@ -371,28 +352,22 @@ void MN_DrawMenus (void)
 					R_ColorBlend(node->color);
 
 
-				ref = MN_GetNodeReference(menu, node);
-				/** MN_GetNodeReference can force to hide a node */
-				if (node->invis == qtrue)
-					continue;
-
 
 				switch (node->type) {
 				case MN_PIC:
-					MN_DrawImageNode(node, ref);
+					MN_DrawImageNode(node);
 					break;
 
 				case MN_CHECKBOX:
-					assert(node->menu == menu);
-					MN_DrawCheckBoxNode(menu, node, ref);
+					MN_DrawCheckBoxNode(node);
 					break;
 
 				case MN_SELECTBOX:
-					MN_DrawSelectBoxNode(node, ref);
+					MN_DrawSelectBoxNode(node);
 					break;
 
 				case MN_TAB:
-					MN_DrawTabNode(node, ref);
+					MN_DrawTabNode(node);
 					break;
 
 				case MN_RADAR:
@@ -400,42 +375,35 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_STRING:
-					assert(node->menu == menu);
-					MN_DrawStringNode(node, menu, ref);
+					MN_DrawStringNode(node);
 					break;
 
 				case MN_TEXT:
-					MN_DrawTextNode2(node, menu);
+					MN_DrawTextNode2(node);
 					break;
 
 				case MN_BAR:
-					assert(node->menu == menu);
-					MN_DrawBarNode(node, menu, mouseOver);
+					MN_DrawBarNode(node);
 					break;
 
 				case MN_TBAR:
-					assert(node->menu == menu);
-					MN_DrawTBarNode(node, menu, ref);
+					MN_DrawTBarNode(node);
 					break;
 
 				case MN_LINESTRIP:
-					assert(node->menu == menu);
-					MN_DrawLineStripNode(node, menu);
+					MN_DrawLineStripNode(node);
 					break;
 
 				case MN_CONTAINER:
-					assert(node->menu == menu);
-					MN_DrawContainerNode2(node, menu, ref);
+					MN_DrawContainerNode2(node);
 					break;
 
 				case MN_ITEM:
-					assert(node->menu == menu);
-					MN_DrawItemNode2(node, menu, ref);
+					MN_DrawItemNode2(node);
 					break;
 
 				case MN_MODEL:
-					assert(node->menu == menu);
-					MN_DrawModelNode2(menu, node, ref);
+					MN_DrawModelNode2(node);
 					break;
 
 				case MN_MAP:

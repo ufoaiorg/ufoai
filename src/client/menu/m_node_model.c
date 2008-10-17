@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "m_node_model.h"
+#include "m_nodes.h"
 #include "m_parse.h"
 
 /**
@@ -177,6 +178,17 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+}
+
+void MN_DrawModelNode2(menuNode_t *node) {
+	menu_t *menu = node->menu;
+	const char* ref = MN_GetNodeReference(node);
+	char source[MAX_VAR] = "";
+	if (ref == NULL)
+		*source = '\0';
+	else
+		Q_strncpyz(source, ref, MAX_VAR);
+	MN_DrawModelNode(menu, node, ref, source);
 }
 
 /**

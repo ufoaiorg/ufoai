@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_main.h"
 #include "m_nodes.h"
+#include "m_parse.h"
 #include "m_inventory.h"
 #include "../cl_input.h"
 
@@ -54,6 +55,29 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 		Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
 		break;
 	}
+}
+
+/**
+ * @brief
+ * @todo delete this function when it's possible
+ */
+const char *MN_GetNodeReference(menuNode_t *node) {
+	const char *ref = NULL;
+	/* get the reference */
+	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
+		&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP
+		&& node->type != MN_RADAR) {
+		ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+		if (!ref) {
+			/* these have default values for their image */
+			if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
+				/* bad reference */
+				node->invis = qtrue;
+				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
+			}
+		}
+	}
+	return ref;
 }
 
 #if 0

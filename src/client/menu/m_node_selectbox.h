@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
 void MN_NodeSelectBoxInit(void);
-void MN_DrawSelectBoxNode(const menuNode_t *node, const char *image);
+void MN_DrawSelectBoxNode(const menuNode_t *node);
 
 extern const menuNode_t *selectBoxNode;
 

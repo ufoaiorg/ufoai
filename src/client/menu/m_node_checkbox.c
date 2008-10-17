@@ -2,11 +2,13 @@
 #include "m_nodes.h"
 #include "m_parse.h"
 
-void MN_DrawCheckBoxNode (const menu_t* menu, const menuNode_t* node, const char *checkBoxImage)
+void MN_DrawCheckBoxNode (const menuNode_t* node)
 {
 	const char *image;
 	const char *ref;
 	vec2_t nodepos;
+	const menu_t* menu = node->menu;
+	const char *checkBoxImage = MN_GetNodeReference(node);
 
 	MN_GetNodeAbsPos(node, nodepos);
 	/* image set? */

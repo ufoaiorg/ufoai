@@ -67,7 +67,7 @@ void MN_NodeSelectBoxInit (void)
 	selectBoxNode = NULL;
 }
 
-void MN_DrawSelectBoxNode (const menuNode_t *node, const char *image)
+void MN_DrawSelectBoxNode (const menuNode_t *node)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int selBoxX, selBoxY;
@@ -79,6 +79,7 @@ void MN_DrawSelectBoxNode (const menuNode_t *node, const char *image)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
+	const char* image = MN_GetNodeReference(node);
 	if (!image)
 		image = "menu/selectbox";
 

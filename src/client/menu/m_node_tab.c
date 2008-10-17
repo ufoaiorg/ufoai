@@ -191,7 +191,7 @@ static inline void MN_DrawTabNodeJunction (const char *image, int x, int y, mn_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, qtrue, image);
 }
 
-void MN_DrawTabNode (const menuNode_t *node, const char *image)
+void MN_DrawTabNode (const menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
 	selectBoxOptions_t* tabOption;
@@ -200,13 +200,16 @@ void MN_DrawTabNode (const menuNode_t *node, const char *image)
 	const char *font;
 	int currentX;
 
+	const char* image = MN_GetNodeReference(node);
 	if (!image)
 		image = "menu/tab";
 
 	ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 	font = MN_GetFont(node->menu, node);
 
-	overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
+	if (node->state) {
+		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
+	}
 	currentX = node->pos[0];
 	tabOption = node->options;
 
