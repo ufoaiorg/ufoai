@@ -127,7 +127,8 @@ static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t i
 			return qtrue;
 
 		/* Check y maximum. */
-		if (y + i >= SHAPE_BIG_MAX_HEIGHT && itemRow)
+		if (y + i >= SHAPE_BIG_MAX_HEIGHT
+		 && itemRow)
 			/* This row (row "i" in itemShape) is outside of the max. bound and has bits in it. */
 			return qtrue;
 
@@ -511,7 +512,8 @@ invList_t *INV_SearchInScrollableContainer (const inventory_t* const i, const in
 				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
 				if (item == ic->item.t)
 					return ic;
-			} else if (curItem >= i->scrollCur && curDispItem < i->scrollNum) {
+			} else if (curItem >= i->scrollCur
+			&& curDispItem < i->scrollNum) {
 				/* We search only in actually visible items. */
 				if (ic->x == x && ic->y == y)
 					return ic;
@@ -855,9 +857,8 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		cacheItem = cacheItem2;
 	} else if (!checkedTo) {
-		/* Get the target-invlist (e.g. a weapon). We don't need to check for
-		 * scroll because checkedTo is always true here. */
-		ic = Com_SearchInInventory(i, to, tx, ty);
+		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon)
+													 * We don't need to check for scroll because checkedTo is always true here. */
 
 		if (ic && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t) && to->id != CSI->idEquip) {
 			/* A target-item was found and the dragged item (implicitly ammo)
@@ -865,11 +866,11 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 			/** @todo (or do this in two places in cl_menu.c):
 			if (!RS_IsResearched_ptr(ic->item.t->tech)
-			 || !RS_IsResearched_ptr(cacheItem.t->tech)) {
+				 || !RS_IsResearched_ptr(cacheItem.t->tech)) {
 				return IA_NORELOAD;
 			} */
 			if (ic->item.a >= ic->item.t->ammo
-			 && ic->item.m == fItem->item.t) {
+				&& ic->item.m == fItem->item.t) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
@@ -1048,6 +1049,7 @@ void INVSH_DestroyInventory (inventory_t* const i)
 void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t * container, int* const px, int* const py, const invList_t *ignoredItem)
 {
 	int x, y;
+	int checkedTo = 0;
 
 	assert(inv);
 	assert(container);
@@ -1061,7 +1063,7 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = Com_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
+			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
 			if (checkedTo) {
 				cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
@@ -1118,11 +1120,12 @@ qboolean Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDe
 void INVSH_PrintContainerToConsole (inventory_t* const i)
 {
 	int container;
+	invList_t *ic;
 
 	assert(i);
 
 	for (container = 0; container < CSI->numIDs; container++) {
-		const invList_t *ic = i->c[container];
+		ic = i->c[container];
 		Com_Printf("Container: %i\n", container);
 		while (ic) {
 			Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n", (ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE), ic->item.a, ic->x, ic->y);
@@ -1317,7 +1320,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 	item.t = weapon;
 
 	/* Get ammo for item/weapon. */
-	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */
+	assert(weapon->numAmmos > 0);	/**< There _has_ to be at least one ammo-type. */
 	assert(weapon->ammos[0]);
 	item.m = weapon->ammos[0];
 
@@ -1456,8 +1459,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				weapon = NULL;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
-					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
-					 && !obj->reload) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload)
+							|| INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 						if (obj->price > maxPrice && obj->price < prevPrice) {
 							maxPrice = obj->price;
 							weapon = obj;
@@ -1465,7 +1468,9 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 					}
 				}
 				if (maxPrice) {
-					int num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
+					int num;
+
+					num = equip[weapon->idx] / 40 + (equip[weapon->idx] % 40 >= 40 * frand());
 					while (num--)
 						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				}
@@ -1986,7 +1991,9 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 	}
 #endif
 
-	if (od && od->numWeapons == 1 && od->weapons[0] && od->weapons[0] == od) {
+	if (od && od->numWeapons == 1
+	 && od->weapons[0]
+	 && od->weapons[0] == od) {
 		/* The weapon is only linked to itself. */
 		return qfalse;
 	}
@@ -2218,19 +2225,19 @@ uint32_t Com_ShapeRotate (const uint32_t shape)
 void Com_ShapePrint (const uint32_t shape)
 {
 	int h, w;
+	int row;
 
 	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
-		/* Shift the mask to the right to remove leading rows and
-		 * mask out trailing rows */
-		const int row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)) & 0xFF;
+		row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)); /* Shift the mask to the right to remove leading rows */
+		row &= 0xFF;		/* Mask out trailing rows */
 		Com_Printf("<");
-		for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
-			if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
-				Com_Printf("#");
-			} else {
-				Com_Printf(".");
+			for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
+				if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
+					Com_Printf("#");
+				} else {
+					Com_Printf(".");
+				}
 			}
-		}
 		Com_Printf(">\n");
 	}
 }

@@ -535,6 +535,8 @@ menu map_combatzoom
 		}
 	}
 
+
+
 	text messagesystem
 	{
 		pos		"0 0"
@@ -644,6 +646,8 @@ menu map_combatzoom
 		color	"0 .78 0 1"
 	}
 
+
+
 	func init
 	{
 		cmd		"music_change aircombat;"
@@ -655,11 +659,8 @@ menu map_combatzoom
 		cmd		"music_change geoscape;"
 		cmd		"combatzoom_exit;"
 	}
-}
 
-// ========================================================================
-// POPUPS (GEOSCAPE)
-// ========================================================================
+}
 
 
 // ==================
@@ -679,13 +680,6 @@ menu popup_list
 	{
 		image	menu/popup
 		pos		"256 256"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
 	}
 
 	pic bt_close
@@ -734,7 +728,7 @@ menu popup_list
 		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
 		in		{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
-
+		
 	}
 	string string_ok
 	{
@@ -761,13 +755,6 @@ menu popup_button
 	{
 		image	menu/popup
 		pos		"256 256"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
 	}
 
 	pic bt_close
@@ -892,13 +879,6 @@ menu popup_intercept_ready
 		pos		"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_Ready"
@@ -997,13 +977,6 @@ menu popup_base_attack
 		pos		"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_Base is under attack"
@@ -1078,19 +1051,13 @@ menu popup_transferbaselist
 		pos		"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_Select base to transfer to"
 		pos		"290 280"
 		font	f_big
 	}
+
 
 	string info
 	{
@@ -1108,7 +1075,7 @@ menu popup_transferbaselist
 		height	9
 		wheel
 		click
-		rclick	{ cmd "mn_pop; aircraft_return;" }
+		rclick	{ cmd "mn_pop; aircraft_return" }
 		mousefx	true
 	}
 
@@ -1146,13 +1113,6 @@ menu popup_newbase
 	{
 		image	menu/popup
 		pos		"256 256"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
 	}
 
 	string title
@@ -1296,13 +1256,6 @@ menu popup_newinstallation_type
 		pos	"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_New installation"
@@ -1410,13 +1363,6 @@ menu popup_newinstallation
 	{
 		image	menu/popup
 		pos	"256 256"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
 	}
 
 	string title_radar
@@ -1536,13 +1482,6 @@ menu popup_intercept
 		pos		"116 186"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"830 212"
-	}
-
 	pic vertical_bar
 	{
 		mousefx	true
@@ -1649,18 +1588,10 @@ menu popup_mission
 	{
 		invis	true
 	}
-
 	pic back
 	{
 		image	menu/popup_big
 		pos		"116 186"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"830 212"
 	}
 
 	string title
@@ -1746,13 +1677,6 @@ menu popup_baseattack
 		pos		"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_Base attack"
@@ -1824,13 +1748,6 @@ menu popup_multi_selection
 		pos		"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_Select item"
@@ -1881,6 +1798,7 @@ menu popup_multi_selection
 		pos		"378 466"
 		align	cc
 	}
+
 }
 
 
@@ -1898,13 +1816,6 @@ menu popup_aircraft
 	{
 		image	menu/popup
 		pos		"256 256"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
 	}
 
 	string title
@@ -1970,13 +1881,6 @@ menu popup
 	{
 		image	menu/popup
 		pos		"256 256"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
 	}
 
 	pic bt_close

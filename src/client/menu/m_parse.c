@@ -163,8 +163,7 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"cinematic",
 	"textlist",
 	"radar",
-	"tab",
-	"controls"
+	"tab"
 };
 
 /** @brief valid node event actions */

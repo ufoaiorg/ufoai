@@ -29,9 +29,9 @@ tile +drop_firebird
 {
 5 4
 
-0      abfg    abfg    abfg	  0
-acdg     +a     +a     +a	  acef
-acdg     +a     +a     +a	  acef
+0       abf     abf     abf	  0
+acd     +a     +a     +a	  acef
+acd     +a     +a     +a	  acef
 0      abde    abde    abde	  0
 }
 
@@ -39,10 +39,10 @@ tile +craft_crash_scout
 {
 4 5
 
-0      abfg    abfg	  0
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
+0       abf     abf	  0
+acd     +a     +a	  acef
+acd     +a     +a	  acef
+acd     +a     +a	  acef
 0      abde    abde	  0
 }
 
@@ -50,10 +50,10 @@ tile +craft_ufo_scout
 {
 4 5
 
-0      abfg    abfg	  0
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
-acdg     +a     +a	  acef
+0      abf      abf 	  0
+acd     +a     +a	  acef
+acd     +a     +a	  acef
+acd     +a     +a	  acef
 0      abde    abde	  0
 }
 
@@ -63,8 +63,8 @@ tile +f1
 {
 3 3
 
-0      abfg         0
-acdg     +a        acef
+0       abf         0
+acd     +a        acef
 0      abde         0
 }
 
@@ -72,8 +72,8 @@ tile +f2
 {
 3 3
 
-0      abfg         0
-acdg     +a        acef
+0       abf         0
+acd     +a        acef
 0      abde         0
 }
 
@@ -81,9 +81,9 @@ tile +f3
 {
 3 4
 
-0      abfg         0
-acdg     +a        acef
-acdg     +a        acef
+0       abf         0
+acd     +a        acef
+acd     +a        acef
 0      abde         0
 }
 
@@ -91,9 +91,9 @@ tile +f4
 {
 4 4
 
-0      abfg     abfg         0
-acdg     +a      +a        acef
-acdg     +a      +a        acef
+0       abf      abf         0
+acd     +a      +a        acef
+acd     +a      +a        acef
 0      abde     abde         0
 }
 
@@ -102,9 +102,9 @@ tile +f5
 
 4 4
 
-0      abfg     abfg         0
-acdg     +a      +a        acef
-acdg     +a      +a        acef
+0       abf      abf         0
+acd     +a      +a        acef
+acd     +a      +a        acef
 0      abde     abde         0
 }
 
@@ -113,9 +113,9 @@ tile +f6
 
 3 4
 
-0      abfg       0
-acdg     +a       acef
-acdg     +a       acef
+0      abf        0
+acd     +a       acef
+acd     +a       acef
 0      abde       0
 }
 
@@ -124,8 +124,8 @@ tile +f7
 
 3 3
 
-0      abfg       0
-acdg     +a       acef
+0      abf        0
+acd     +a       acef
 0      abde       0
 }
 
@@ -134,8 +134,8 @@ tile +f8
 
 3 3
 
-0      abfg      0
-acdg    +a       acef
+0      abf       0
+acd    +a       acef
 0      abde      0
 }
 
@@ -144,9 +144,9 @@ tile +f9
 
 4 4
 
-0      abfg     gabf         0
-acdg     +a      +a        acef
-acdg     +a      +a        acef
+0       abf      abf         0
+acd     +a      +a        acef
+acd     +a      +a        acef
 0      abde     abde         0
 }
 
@@ -154,8 +154,8 @@ tile +f10
 {
 4 3
 
-0      abfg     abfg         0
-acdg     +a      +a        acef
+0       abf      abf         0
+acd     +a      +a        acef
 0      abde     abde         0
 }
 
@@ -167,8 +167,8 @@ tile +a1
 
 3 3
 
-0      abfg      0
-acdg    +a       acef
+0      abf       0
+acd    +a       acef
 0      abde      0
 }
 
@@ -176,9 +176,9 @@ tile +a2
 {
 4 4
 
-0      abfg      abfg      0
-acdg      a      +a     acef
-acdg      +a     +a     acef
+0      abcdef      abf      0
+abcdef      a      +a     acef
+acef      +a     +a     acef
 0      abde      abde      0
 }
 
@@ -190,15 +190,15 @@ tile +h1
 
 4 5
 
-0      abfg      abfg     0
-acdg    +a       +a     acef
-acdg    +a       +a     acef
-acdg    +a       +a     acef
+0      abf      abf     0
+acd    +a       +a     acef
+acd    +a       +a     acef
+acd    +a       +a     acef
 0      abde      abde    0
 }
 
 //** Water tiles
-                   
+
 //  .   .
 //  ==,
 //  . I .
@@ -281,8 +281,8 @@ tile +w6
 3 4
 
 0       a       0
-bf     +d       a
-a      +f       bdg
+b      +d       a
+a      +f       b
 0       a       0
 }
 

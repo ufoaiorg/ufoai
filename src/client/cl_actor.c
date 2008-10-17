@@ -55,7 +55,7 @@ static qboolean displayRemainingTus[REMAINING_TU_MAX];	/**< 0=reload_r, 1=reload
 
 /**
  * @brief If you want to change the z level of targetting and shooting,
- * use this value. Negative and positive offsets are possible
+ * use this value. Negative and positiv offsets are possible
  * @sa CL_ActorTargetAlign_f
  * @sa G_ClientShoot
  * @sa G_ShootGrenade
@@ -211,7 +211,6 @@ CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
  */
 static int CL_MoveMode (int length)
 {
-	assert(selActor);
 	if (selActor->state & STATE_CROUCHED) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
 			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
@@ -2313,9 +2312,10 @@ void CL_ActorUpdateCVars (void)
 			}
 		} else if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 			const int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
-			/* If the mouse is outside the world, and we haven't placed the cursor in pend
-			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
+			/* If the mouse is outside the world, blank move */
+			/* or the movelength is ROUTING_NOT_REACHABLE */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
+				/** @todo CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reserved_tus > 0)
 					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
@@ -2589,6 +2589,7 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 	/* check selection */
 	if (selActor == le) {
+		/** @todo This should probably be a while loop */
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (CL_ActorSelect(cl.teamList[i]))
 				break;
@@ -2603,7 +2604,9 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 /**
  * @brief Selects an actor.
+ *
  * @param le Pointer to local entity struct
+ *
  * @sa CL_UGVCvars
  * @sa CL_CharacterCvars
  */
@@ -2912,6 +2915,7 @@ static int CL_MoveLength (pos3_t to)
 {
 	const int crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
 	const float length = Grid_MoveLength(&clPathMap, to, crouching_state, qfalse);
+	assert(selActor);
 
 	switch (CL_MoveMode(length)) {
 	case WALKTYPE_AUTOSTAND_BEING_USED:
@@ -3042,7 +3046,6 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	if (blockEvents)
 		return;
 
-	assert(selActor);
 	length = CL_MoveLength(to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {

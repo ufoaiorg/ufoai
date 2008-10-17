@@ -114,6 +114,9 @@ Alex Parker
   aliendeath1.wav, aliendeath2.wav, aliendeath3.wav, aliendeath4.wav, aliendeath5.wav,
   aliendeath6.wav
 
+David Reeves
+* music tracks: David01.ogg
+
 David "Psawhn" Townsend
 * aircraft models + textures: stingray
 
@@ -123,8 +126,7 @@ Michal "Blywulf" Bilinski
 Raynorpat
 * sfx/smoke1-4.png
 
-David Reeves (Destructavator)
-* music tracks: David01-4.ogg
+David Reeves
 * data_source/sounds/samples
 ** footsteps_carpet_over_concrete1.ogg
 ** footsteps_linoleum1.ogg
@@ -132,7 +134,7 @@ David Reeves (Destructavator)
 ** misc_clothing_sounds1.ogg
 ** misc_footswitch_sound1.ogg
 ** misc_mechanical_sound1.ogg
-** misc_rubbing_sound1.ogg
+**misc_rubbing_sound1.ogg
 Samples are released under Creative Commons Sampling Plus 1.0
 
 J. W. Bjerk "eleazar"  www.jwbjerk.com

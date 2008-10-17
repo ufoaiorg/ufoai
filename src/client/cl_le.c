@@ -443,19 +443,15 @@ void LET_PlayAmbientSound (le_t * le)
  */
 void LET_StartIdle (le_t * le)
 {
-	/* hidden actors don't have models assigned, thus we can not change the
-	 * animation for any model */
-	if (le->type != ET_ACTORHIDDEN) {
-		if (le->state & STATE_DEAD)
-			R_AnimChange(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
-		else if (le->state & STATE_PANIC)
-			R_AnimChange(&le->as, le->model1, "panic0");
-		else
-			R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-		if (!le->as.change)
-			Com_Printf("LET_StartIdle: Could not change anim of le: %i, team: %i, pnum: %i\n",
-				le->entnum, le->team, le->pnum);
-	}
+	if (le->state & STATE_DEAD)
+		R_AnimChange(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
+	else if (le->state & STATE_PANIC)
+		R_AnimChange(&le->as, le->model1, "panic0");
+	else
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+	if (!le->as.change)
+		Com_Printf("LET_StartIdle: Could not change anim of le: %i, team: %i, pnum: %i\n",
+			le->entnum, le->team, le->pnum);
 
 #ifdef DEBUG
 	/* idle actors don't move */
@@ -627,7 +623,7 @@ static void LET_PathMove (le_t * le)
 				/* This needs to account for the distance of the fall. */
 				Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
 				Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
-				/* 1/1000th of a second per model unit in height change */
+				/** 1/1000th of a second per model unit in height change */
 				le->endTime += (start[2] - dest[2]);
 			}
 

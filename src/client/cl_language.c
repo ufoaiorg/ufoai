@@ -139,7 +139,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
 
 #ifdef _WIN32
-	if (FS_FileExists(languagePath) && (SDL_putenv(va("LANGUAGE=%s", localeID)) == 0)) {
+	if (FS_FileExists(languagePath) && (Q_putenv("LANGUAGE", localeID) == 0)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
 		return qtrue;
 	} else {
@@ -196,20 +196,20 @@ void CL_LanguageInit (void)
 
 	if (*s_language->string) {
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
-		Q_strncpyz(deflang, s_language->string, sizeof(deflang));
+		Q_strncpyz(deflang, s_language->string, MAX_VAR);
 	} else {
 #ifdef _WIN32
 		if (getenv("LANGUAGE"))
-			Q_strncpyz(deflang, getenv("LANGUAGE"), sizeof(deflang));
+			Q_strncpyz(deflang, getenv("LANGUAGE"), MAX_VAR);
 		else {
 			/* Setting to en will always work in every windows. */
-			Q_strncpyz(deflang, "en", sizeof(deflang));
+			Q_strncpyz(deflang, "en", MAX_VAR);
 		}
 #else
 		/* Calling with NULL param should return current system settings. */
-		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), sizeof(deflang));
+		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
 		if (deflang[0] == '\0')
-			Q_strncpyz(deflang, "C", sizeof(deflang));
+			Q_strncpyz(deflang, "C", MAX_VAR);
 #endif
 	}
 
@@ -297,7 +297,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 		Cvar_Set("s_language", mapping->localeMapping);
 #ifdef _WIN32
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s\n", mapping->localeMapping);
-		SDL_putenv(va("LANGUAGE=%s", mapping->localeMapping));
+		Q_putenv("LANGUAGE", mapping->localeMapping);
 		Cvar_Set("s_language", language->localeID);
 		s_language->modified = qfalse;
 		return qtrue;

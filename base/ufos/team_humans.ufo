@@ -527,12 +527,12 @@ team human
 
 	actorsounds {
 		female {
-			hurtsound	soldiers/female_hurt
-			deathsound	soldiers/female_death
+			hurtsound	misc/newmission
+			deathsound	misc/newmission
 		}
 		male {
-			hurtsound 	soldiers/male_hurt
-			deathsound	soldiers/male_death
+			hurtsound 	misc/newmission
+			deathsound	misc/newmission
 		}
 	}
 }
@@ -871,17 +871,6 @@ team human_scientist
 			civilians/male scientist01 sci_head02b 0
 			civilians/male scientist01 sci_head03a 0
 			civilians/male scientist01 sci_head03b 0
-		}
-	}
-
-	actorsounds {
-		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
-		}
-		male {
-			hurtsound 	civilians/male_hurt
-			deathsound	civilians/male_death
 		}
 	}
 }
@@ -1223,17 +1212,6 @@ team human_pilot
 			soldiers/male body head03b 0
 		}
 	}
-
-	actorsounds {
-		female {
-			hurtsound	soldiers/female_hurt
-			deathsound	soldiers/female_death
-		}
-		male {
-			hurtsound 	soldiers/male_hurt
-			deathsound	soldiers/male_death
-		}
-	}
 }
 
 // ======================
@@ -1567,17 +1545,6 @@ team human_worker
 		male {
 			civilians/male worker01 worker01_head 0
 			civilians/male worker01 worker01_head 1
-		}
-	}
-
-	actorsounds {
-		female {
-			hurtsound	civilians/female_hurt
-			deathsound	civilians/female_death
-		}
-		male {
-			hurtsound 	civilians/male_hurt
-			deathsound	civilians/male_death
 		}
 	}
 }

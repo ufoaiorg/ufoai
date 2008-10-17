@@ -51,8 +51,7 @@ typedef enum {
 
 /** @brief also used for chat message buffer */
 #define MAX_MESSAGE_TEXT 256
-/* Russian timestamp (with UTF-8) is 23 bytes long */
-#define TIMESTAMP_TEXT 24
+#define TIMESTAMP_TEXT 22
 typedef struct message_s {
 	char title[MAX_VAR];
 	char timestamp[TIMESTAMP_TEXT];
@@ -70,33 +69,10 @@ typedef struct chatMessage_s {
 	struct chatMessage_s *next;
 } chatMessage_t;
 
-/** @brief Notify types */
-typedef enum nt_s {
-	NT_INSTALLATION_INSTALLED,
-	NT_INSTALLATION_REMOVED,
-	NT_INSTALLATION_REPLACE,
-
-	NT_NUM_NOTIFYTYPE
-} notify_t;
-
-/**
- * @brief structure holding pause and notify settings for a notify type.
- *
- */
-typedef struct messageSettings_s {
-	qboolean	doPause; /** flag whether game should pause */
-	qboolean	doNotify; /** flag whether game should notify */
-} messageSettings_t;
-
-extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
-
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 message_t *MN_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
 void MN_RemoveMessage(const char *title);
 void MN_AddChatMessage(const char *text);
 void MN_MessageInit(void);
-void MSO_CheckTimestop(const notify_t messagecategory);
-qboolean MSO_ShouldNotify(const notify_t messagecategory);
-void MSO_ParseSettings(const char *name, const char **text);
 
 #endif

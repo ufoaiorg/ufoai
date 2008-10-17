@@ -137,7 +137,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	case MN_CHECKBOX:
 	case MN_TAB:
 	case MN_SELECTBOX:
-	case MN_CONTROLS:
 		break;
 	default:
 		/* check for click action */
@@ -154,7 +153,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 			} else {
 				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]));
 			}
-		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+		} else if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];

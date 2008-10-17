@@ -86,7 +86,7 @@ const char *menutextid_names[] = {
 	"TEXT_CARGO_LIST", "TEXT_UFOPEDIA_MAILHEADER", "TEXT_UFOPEDIA_MAIL", "TEXT_MARKET_NAMES",
 	"TEXT_MARKET_STORAGE", "TEXT_MARKET_MARKET", "TEXT_MARKET_PRICES", "TEXT_CHAT_WINDOW",
 	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_AIREQUIP_3", "TEXT_BASEDEFENCE_LIST", "TEXT_TIPOFTHEDAY",
-	"TEXT_GENERIC", "TEXT_XVI", "TEXT_MOUSECURSOR_TOP", "TEXT_MOUSECURSOR_BOTTOM", "TEXT_MOUSECURSOR_LEFT", "TEXT_MESSAGEOPTIONS"
+	"TEXT_GENERIC", "TEXT_XVI", "TEXT_MOUSECURSOR_TOP", "TEXT_MOUSECURSOR_BOTTOM", "TEXT_MOUSECURSOR_LEFT"
 };
 CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 
@@ -2384,7 +2384,7 @@ void Com_ParseScripts (void)
 	FS_BuildFileList("ufos/*.ufo");
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 		if (!Q_strncmp(type, "damagetypes", 11))
 			Com_ParseDamageTypes(name, &text);
 		else if (!Q_strncmp(type, "gametype", 8))
@@ -2394,7 +2394,7 @@ void Com_ParseScripts (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0) {
 		/* server/client scripts */
 		if (!Q_strncmp(type, "item", 4))
 			Com_ParseItem(name, &text, qfalse);
@@ -2414,7 +2414,7 @@ void Com_ParseScripts (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0) {
 		/* server/client scripts */
 		if (!Q_strncmp(type, "equipment", 9))
 			Com_ParseEquipment(name, &text);

@@ -315,47 +315,6 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 	return qfalse;
 }
 
-#ifdef COMPILE_MAP
-/**
- * @brief Checks traces against a single-tile map, optimized for ufo2map
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @sa TR_TestLine
- * @sa GatherSampleLight
- * @return qfalse if not blocked
- */
-qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
-{
-	int i;
-	static int lastthead = 0;
-
-	assert(numTiles == 1);
-	curTile = &mapTiles[0];
-
-	/* ufo2map does many traces to the same endpoint.
-	 * Often an occluding node will be found in the same thead
-	 * as the last trace, so test that one first. */
-	if (curTile->theadlevel[lastthead] != LEVEL_ACTORCLIP
-	    && curTile->theadlevel[lastthead] != LEVEL_WEAPONCLIP
-	    && TR_TestLine_r(curTile->thead[lastthead], start, stop))
-		return qtrue;
-
-	for (i = 0; i < curTile->numtheads; i++) {
-		if (i == lastthead)
-			continue;
-		if (curTile->theadlevel[i] == LEVEL_ACTORCLIP)
-			continue;
-		if (curTile->theadlevel[i] == LEVEL_WEAPONCLIP)
-			continue;
-		if (TR_TestLine_r(curTile->thead[i], start, stop)) {
-			lastthead = i;
-			return qtrue;
-		}
-	}
-	return qfalse;
-}
-#endif
-
 
 /**
  * @brief Checks traces against the world

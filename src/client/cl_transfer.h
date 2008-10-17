@@ -76,7 +76,7 @@ typedef struct transfer_s {
 
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {
-	int type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
+	int type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - alive aliens). */
 	int itemidx;			/**< Index of item in cargo. */
 } transferCargo_t;
 

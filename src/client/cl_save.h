@@ -147,9 +147,6 @@ qboolean XVI_Save(sizebuf_t* sb, void* data);
 qboolean XVI_Load(sizebuf_t* sb, void* data);
 qboolean INS_Save(sizebuf_t* sb, void* data);
 qboolean INS_Load(sizebuf_t* sb, void* data);
-qboolean MSO_Save(sizebuf_t* sb, void* data);
-qboolean MSO_Load(sizebuf_t* sb, void* data);
-
 void RS_PostLoadInit(void);
 void B_PostLoadInit(void);
 #endif /* CLIENT_CL_SAVE_H */

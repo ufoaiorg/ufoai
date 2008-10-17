@@ -580,6 +580,7 @@ int main (int argc, const char **argv)
 
 		WriteBSPFile(bspFilename);
 	} else if (config.performMapCheck || config.fixMap) {
+		int i;
 		Verb_Printf(VERB_NORMAL, "Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
 		/* level flags must be fixed before mixed face contents, or they swamp the
@@ -622,7 +623,19 @@ int main (int argc, const char **argv)
 			UnparseEntities();
 			WriteMapFile(GetScriptFile());
 		}
-		Check_Free();
+
+		/* several of the check functions use nearBrushes list for speedup
+		 * it can only be freed when the checks have finished */
+		for (i = 0; i < nummapbrushes; i++) {
+			mapbrush_t *iBrush = &mapbrushes[i];
+
+			if (iBrush->numNear) {
+				assert(iBrush->nearBrushes);
+				free(iBrush->nearBrushes);
+				iBrush->numNear = 0;
+				iBrush->nearBrushes = NULL;
+			}
+		}
 		return 0;
 	} else {
 		/* start from scratch */
@@ -667,6 +680,6 @@ int main (int argc, const char **argv)
 		end = time(NULL);
 	}
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
-	Check_Free();
+
 	return 0;
 }

@@ -731,7 +731,7 @@ void CreateDirectLights (void)
 					VectorNormalize(dl->normal);
 				}
 			} else {	/* point down angle */
-				const float angle = FloatForKey(e, "angle");
+				float angle = FloatForKey(e, "angle");
 				if (angle == ANGLE_UP) {
 					dl->normal[0] = dl->normal[1] = 0;
 					dl->normal[2] = 1;
@@ -851,7 +851,7 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	 * higher value - because the light angle is not fixed at 90 degree */
 	VectorMA(pos, 8192, sun_dir, delta);
 
-	if (TR_TestLineSingleTile(pos, delta))
+	if (TR_TestLine(pos, delta, TL_FLAG_NONE))
 		return; /* occluded */
 
 	/* add some light to it */
@@ -924,7 +924,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal,
 		if (light == 0.0 && dir == 0.0)
 			continue;
 
-		if (TR_TestLineSingleTile(pos, l->origin))
+		if (TR_TestLine(pos, l->origin, TL_FLAG_NONE))
 			continue;	/* occluded */
 
 		light *= lightscale;
@@ -1121,8 +1121,6 @@ static const float sampleofs[MAX_SAMPLES][2] = {
 	{0, 0}, {-0.25, -0.25}, {0.25, -0.25}, {0.25, 0.25}, {-0.25, 0.25}
 };
 
-#define CLAMP_DELUXEMAP_Z 0.5
-
 /**
  * @brief
  * @sa FinalLightFace
@@ -1245,8 +1243,8 @@ void BuildFacelights (unsigned int facenum)
 
 			VectorCopy(dir, direction);
 
-			if (direction[2] < CLAMP_DELUXEMAP_Z) {  /* clamp it */
-				direction[2] = CLAMP_DELUXEMAP_Z;
+			if (direction[2] < 0.33) {  /* clamp it */
+				direction[2] = 0.33;
 				VectorNormalize(direction);
 			}
 		}

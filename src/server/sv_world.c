@@ -175,30 +175,22 @@ void SV_LinkEdict (edict_t * ent)
 
 	/* expand for rotation */
 	if (ent->solid == SOLID_BSP && VectorNotEmpty(ent->angles)) {
-		vec3_t minVec, maxVec;
-		vec3_t centerVec, halfVec, worstVec, newCenterVec;
-		vec3_t m[3];
+		float max, v;
+		int i;
 
-		/* Find the center of the extents. */
-		VectorCenterFromMinsMaxs(ent->mins, ent->maxs, centerVec);
-
-		/* Find the half height and half width of the extents. */
-		VectorSubtract(ent->maxs, centerVec, halfVec);
-
-		/* Define the rough largest extenst that this box can have when rotated. */
-		worstVec[0] = worstVec[1] = worstVec[2] = halfVec[0] + halfVec[1] + halfVec[2];
-
-		/* Rotate the center about the origin. */
-		AngleVectors(ent->angles, m[0], m[1], m[2]);
-		VectorRotate(m, centerVec, newCenterVec);
-
-		/* Set minVec and maxVec to bound around newCenterVec at halfVec size. */
-		VectorSubtract(newCenterVec, halfVec, minVec);
-		VectorAdd(newCenterVec, halfVec, maxVec);
-
-		/* Adjust the absolute mins/maxs */
-		VectorAdd(ent->origin, minVec, ent->absmin);
-		VectorAdd(ent->origin, maxVec, ent->absmax);
+		max = 0;
+		for (i = 0; i < 3; i++) {
+			v = fabsf(ent->mins[i]);
+			if (v > max)
+				max = v;
+			v = fabsf(ent->maxs[i]);
+			if (v > max)
+				max = v;
+		}
+		for (i = 0; i < 3; i++) {
+			ent->absmin[i] = ent->origin[i] - max;
+			ent->absmax[i] = ent->origin[i] + max;
+		}
 	} else {  /* normal */
 		VectorAdd(ent->origin, ent->mins, ent->absmin);
 		VectorAdd(ent->origin, ent->maxs, ent->absmax);

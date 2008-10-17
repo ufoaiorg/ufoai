@@ -1243,10 +1243,6 @@ static void IN_Parse (void)
 		/* do nothing */
 		return;
 
-	case MS_DRAGMENU:
-		/* do nothing */
-		return;
-
 	/* repeat the mouse button */
 	case MS_LHOLD:
 		if (cls.realtime >= mn.mouseRepeat.nexttime) {

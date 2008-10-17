@@ -182,10 +182,6 @@ void MN_DrawMenus (void)
 				}
 
 				switch (node->type) {
-				case MN_CONTROLS:
-					if (mouseSpace == MS_DRAGMENU){
-						MN_SetNewMenuPos(node->menu, mousePosX - node->pos[0], mousePosY - node->pos[1]);
-					}
 				case MN_PIC:
 					if (ref && *ref)
 						MN_DrawImageNode(node, ref, cl.time);

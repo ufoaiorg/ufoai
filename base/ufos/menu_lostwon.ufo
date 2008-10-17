@@ -362,13 +362,6 @@ menu popup_recoverybaselist
 		pos		"256 256"
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
 	string title
 	{
 		string	"_Select base for UFO recovery"
@@ -458,13 +451,6 @@ menu popup_recoverynationlist
 	{
 		image	menu/popup_big
 		pos		"116 186"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"830 212"
 	}
 
 	string title

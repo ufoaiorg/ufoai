@@ -645,7 +645,6 @@ void SAV_Init (void)
 	static saveSubsystems_t ab_subsystem = {"alien base", AB_Save, AB_Load, 0xD};
 	static saveSubsystems_t xvi_subsystem = {"xvirate", XVI_Save, XVI_Load, 0xE};
 	static saveSubsystems_t ins_subsystem = {"installation", INS_Save, INS_Load, 0x0};
-	static saveSubsystems_t mso_subsystem = {"messageoptions", MSO_Save, MSO_Load, 0x1};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -670,7 +669,6 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&ab_subsystem);
 	SAV_AddSubsystem(&xvi_subsystem);
 	SAV_AddSubsystem(&ins_subsystem);
-	SAV_AddSubsystem(&mso_subsystem);
 
 	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
 	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, _("Saves to the quick save slot"));

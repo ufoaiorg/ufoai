@@ -1033,15 +1033,13 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 			/* first brightness */
 			float f = p[j] / 255.0;  /* as float */
 
-			if (type == it_lightmap)  /* scale */
-				f *= r_modulate->value;
-			else
+			if (type != it_lightmap)  /* scale */
 				f *= r_brightness->value;
 
 			if (f > 1.0)  /* clamp */
 				f = 1.0;
-			else if (f < 0.0)
-				f = 0.0;
+			else if (f < 0)
+				f = 0;
 
 			/* then contrast */
 			f -= 0.5;  /* normalize to -0.5 through 0.5 */

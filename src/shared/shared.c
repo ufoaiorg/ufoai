@@ -303,6 +303,19 @@ char *Q_strlwr (char *str)
 	return origs;
 }
 
+int Q_putenv (const char *var, const char *value)
+{
+#ifdef __APPLE__
+	return setenv(var, value, 1);
+#else
+	char str[32];
+
+	Com_sprintf(str, sizeof(str), "%s=%s", var, value);
+
+	return putenv((char *) str);
+#endif /* __APPLE__ */
+}
+
 #ifndef HAVE_STRNCASECMP
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
@@ -437,27 +450,4 @@ const char *Q_stristr (const char *str, const char *substr)
 	if (!(*str))
 		str = NULL;
 	return str;
-}
-
-/**
- * @brief Delete a whole (possibly multibyte) character from a string.
- * @param[in] s Start of the string
- * @param[in] pos Offset from the start
- * @return position where deleted character started
- */
-int UTF8_delete_char (char *s, int pos)
-{
-	int start = pos;
-	int next = pos;
-
-	while (start > 0 && UTF8_CONTINUATION_BYTE(s[start]))
-		start--;
-	if (s[next] != 0)
-		next++;
-	while (s[next] != 0 && UTF8_CONTINUATION_BYTE(s[next]))
-		next++;
-	/* memmove is the only standard copying function that is guaranteed
-	 * to work if the source and destination overlap. */
-	memmove(&s[start], &s[next], strlen(&s[next]) + 1);
-	return start;
 }

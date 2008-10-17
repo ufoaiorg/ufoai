@@ -119,7 +119,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 					if (cargo[j].teamDef == le->teamDef) {
 						/* Search stunned first. */
 						if ((le->state & STATE_STUN) & ~STATE_DEAD) {
-							/* live alien */
+							/* alive alien */
 							cargo[j].amount_alive++;
 							Com_DPrintf(DEBUG_CLIENT, "Counting: alive %s count: %i\n", le->teamDef->name, cargo[j].amount_alive);
 						} else {
@@ -135,7 +135,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 					cargo[j].teamDef = le->teamDef;
 					/* Search stunned first. */
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
-						/* live alien */
+						/* alive alien */
 						cargo[j].amount_alive++;
 						Com_DPrintf(DEBUG_CLIENT, "Adding: alive %s count: %i\n", le->teamDef->name, cargo[j].amount_alive);
 					} else {
@@ -154,7 +154,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 		if (cargo[i].amount_dead > 0)
 			Com_DPrintf(DEBUG_CLIENT, "Collecting alien bodies... type: %s amount: %i\n", cargo[i].teamDef->name, cargo[i].amount_dead);
 		if (cargo[i].amount_alive > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Aliens captured alive... type: %s amount: %i\n", cargo[i].teamDef->name, cargo[i].amount_alive);
+			Com_DPrintf(DEBUG_CLIENT, "Alive aliens captured... type: %s amount: %i\n", cargo[i].teamDef->name, cargo[i].amount_alive);
 	}
 }
 
@@ -196,18 +196,18 @@ void AL_AddAliens (aircraft_t *aircraft)
 			assert(cargo[i].teamDef);
 			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
-				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
-				INV_CollectItem(aircraft, alBrOd, cargo[i].amount_dead);
+				/* Add breathing apparatuses as well and update storage capacity. */
+				B_UpdateStorageAndCapacity(tobase, alBrOd, cargo[i].amount_dead, qfalse, qfalse);
 				if (cargo[i].amount_alive <= 0)
 					continue;
 				if (!alienBreathing && !cargo[i].teamDef->robot) {
-					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
+					/* We can not store alive (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
-					/* Add breathing apparatuses as well */
-					INV_CollectItem(aircraft, alBrOd, cargo[i].amount_alive);
+					/* Add breathing apparatuses as well and update storage capacity. */
+					B_UpdateStorageAndCapacity(tobase, alBrOd, cargo[i].amount_alive, qfalse, qfalse);
 					/* only once */
 					if (!messageAlreadySet) {
-						MN_AddNewMessage(_("Notice"), _("You cannot hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
+						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
 						messageAlreadySet = qtrue;
 					}
 				} else {
@@ -225,7 +225,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 							}
 							/* Just kill aliens which don't fit the limit. */
 							tobase->alienscont[j].amount_dead++;
-							INV_CollectItem(aircraft, alBrOd, 1);
+							/* Add breathing apparatus as well and update storage capacity. */
+							B_UpdateStorageAndCapacity(tobase, alBrOd, 1, qfalse, qfalse);
 						}
 					}
 					/* only once */
@@ -275,7 +276,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, const alienCalcType_t action)
 {
 	int j, toremove;
-	int maxamount = 0; /* amount (of alien type), which is max in Containment) */
+	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
 	int maxidx = 0;
 	aliensCont_t *containment;
 
@@ -447,9 +448,9 @@ int AL_GetAlienAmount (const teamDef_t *alienType, requirementType_t reqtype, co
 }
 
 /**
- * @brief Counts live aliens in base.
+ * @brief Counts alive aliens in base.
  * @param[in] base Pointer to the base
- * @return amount of all live aliens stored in containment
+ * @return amount of all alive aliens stored in containment
  * @note must not return 0 if hasBuilding[B_ALIEN_CONTAINMENT] is qfalse: used to update capacity
  * @sa AL_ChangeAliveAlienNumber
  * @sa B_ResetAllStatusAndCapacities_f
@@ -470,7 +471,7 @@ int AL_CountInBase (const base_t *base)
 }
 
 /**
- * @brief Add / Remove live aliens to Alien Containment.
+ * @brief Add / Remove alive aliens to Alien Containment.
  * @param[in] base Pointer to the base where Alien Cont. should be checked.
  * @param[in] containment Pointer to the containment
  * @param[in] num Number of alien to be added/removed
@@ -483,7 +484,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 
 	/* Just a check -- should never be reached */
 	if (!AL_CheckAliveFreeSpace(base, containment, num)) {
-		Com_Printf("AL_ChangeAliveAlienNumber: Can't add/remove %i live aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
+		Com_Printf("AL_ChangeAliveAlienNumber: Can't add/remove %i alive aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
 			num, base->capacities[CAP_ALIENS].cur, base->capacities[CAP_ALIENS].max,
 			B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT));
 		return;
@@ -500,7 +501,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 }
 
 /**
- * @brief Check if live aliens can be added/removed to Alien Containment.
+ * @brief Check if alive aliens can be added/removed to Alien Containment.
  * @param[in] base Pointer to the base where Alien Cont. should be checked.
  * @param[in] containment Pointer to the containment (may be @c NULL when adding
  * aliens or if you don't care about alien type of alien you're removing)
@@ -532,10 +533,10 @@ qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *contain
  */
 
 /**
- * @brief Counts live aliens in all bases.
+ * @brief Counts alive aliens in all bases.
  * @note This should be called whenever you add or remove
  * @note aliens from alien containment.
- * @return amount of all live aliens stored in containments
+ * @return amount of all alive aliens stored in containments
  * @sa CL_AircraftReturnedToHomeBase
  * @sa AC_Init_f
  */
@@ -976,7 +977,7 @@ static void AC_UpdateMenu (const base_t *base)
 						Cvar_Set(va("mn_ac_name%i", j), _(containment[i].teamDef->name));
 						/* Display amount of dead aliens in the correct list-entry. */
 						Cvar_SetValue(va("mn_ac_dead%i", j), containment[i].amount_dead);
-						/* Display number of live aliens in the correct list-entry. */
+						/* Display amount of alive aliens in the correct list-entry. */
 						Cvar_SetValue(va("mn_ac_alive%i", j), containment[i].amount_alive);
 						j++;
 					}

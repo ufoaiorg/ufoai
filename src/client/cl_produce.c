@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type.
 												 * @sa itemFilterTypes_t */
 
+static qboolean productionDisassembling;	/**< Are we in disassembling state? */
+static qboolean selectedQueueItem = qfalse;	/**< Did we select something in the queue. */
 static production_t *selectedProduction = NULL;	/**< Holds the current active selected queue entry. */
 
 /** A list if all producable items. */
@@ -101,8 +103,7 @@ static qboolean PR_ConditionsDisassembly (const base_t *base, const components_t
  * @param[in] comp Pointer to components definition.
  * @param[in] disassembly True if calculations for disassembling, false otherwise.
  * @sa PR_ProductionRun
- * @sa PR_ItemProductionInfo
- * @sa PR_DisassemblyInfo
+ * @sa PR_ProductionInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
 static float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp, qboolean disassembly)
@@ -398,6 +399,8 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	assert(base);
 
+	productionDisassembling = qfalse;
+
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[base->idx];
 
@@ -433,21 +436,23 @@ static void PR_UpdateProductionList (const base_t* base)
 	LIST_Delete(&productionItemList);
 
 	/* Then go through all object definitions ... */
-	if (produceCategory == FILTER_DISASSEMBLY) {
-		for (i = 0; i < gd.numComponents; i++) {
-			const objDef_t *asOd = gd.components[i].asItem;
-			components_t *comp = &gd.components[i];
-			if (!asOd)
-				continue;
-			if (PR_ConditionsDisassembly(base, comp)) {
-				LIST_AddPointer(&productionItemList, comp);
+	if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
+		objDef_t *od;
+		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			assert(od->tech);
+			/* We will not show items with producetime = -1 - these are not producible.
+			 * We can produce what was researched before. */
+			if (INV_ItemMatchesFilter(od, produceCategory)
+			 && RS_IsResearched_ptr(od->tech) && od->name[0] != '\0'
+			 && od->tech->produceTime > 0) {
+				LIST_AddPointer(&productionItemList, od);
 
-				Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
-				Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
+				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 			}
 		}
-	} else if (produceCategory == FILTER_AIRCRAFT) {
+	} else {
 		for (i = 0; i < numAircraftTemplates; i++) {
 			aircraft_t *aircraftTemplate = &aircraftTemplates[i];
 			/* don't allow producing ufos */
@@ -473,24 +478,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 			}
 		}
-	} else {
-		objDef_t *od;
-		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			assert(od->tech);
-			/* We will not show items with producetime = -1 - these are not producible.
-			 * We can produce what was researched before. */
-			if (INV_ItemMatchesFilter(od, produceCategory)
-			 && RS_IsResearched_ptr(od->tech) && od->name[0] != '\0'
-			 && od->tech->produceTime > 0) {
-				LIST_AddPointer(&productionItemList, od);
-
-				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
-				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
-			}
-		}
 	}
-
 	/* bind the menu text to our static char array */
 	mn.menuText[TEXT_PRODUCTION_LIST] = productionList;
 	/* bind the amount of available items */
@@ -509,6 +497,7 @@ static void PR_QueueNext (base_t *base)
 
 	PR_QueueDelete(base, queue, 0);
 	if (queue->numItems == 0) {
+		selectedQueueItem = qfalse;
 		PR_ClearSelected();
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production queue for base %s is empty"), base->name);
 		MN_AddNewMessage(_("Production queue empty"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
@@ -540,6 +529,7 @@ static void PR_EmptyQueue (base_t *base)
 
 	while (queue->numItems)
 		PR_QueueDelete(base, queue, 0);
+	selectedQueueItem = qfalse;
 	PR_ClearSelected();
 }
 
@@ -733,71 +723,101 @@ void PR_ProductionRun (void)
 /**
  * @brief Prints information about the selected item (no aircraft) in production.
  * @param[in] base Pointer to the base where informations should be printed.
- * @sa PR_ProductionInfo
+ * @param[in] disassembly True, if we are trying to display disassembly info.
+ * @sa PR_AircraftInfo
  */
-static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float percentDone)
+static void PR_ProductionInfo (const base_t *base, qboolean disassembly)
 {
 	static char productionInfo[512];
-	int time;
-	float prodPerHour;
-
-	assert(base);
-	assert(od);
-	assert(od->tech);
-
-	/* Don't try to display an item which is not producible. */
-	if (od->tech->produceTime < 0) {
-		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
-		Cvar_Set("mn_item", "");
-	} else {
-		prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
-		/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-		assert(prodPerHour > 0);
-		time = ceil((1.0f - percentDone) / prodPerHour);
-
-		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
-		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
-			sizeof(productionInfo));
-		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
-		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
-		Cvar_Set("mn_item", od->id);
-	}
-	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
-}
-
-/**
- * @brief Prints information about the selected disassembly task
- * @param[in] base Pointer to the base where informations should be printed.
- * @sa PR_ProductionInfo
- */
-static void PR_DisassemblyInfo (const base_t *base, const objDef_t *od, const components_t *comp, float percentDone)
-{
-	static char productionInfo[512];
+	const objDef_t *od;
 	int time, i;
 	float prodPerHour;
 
 	assert(base);
-	assert(od);
-	assert(comp);
-	assert(od->tech);
 
-	prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
-	/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-	assert(prodPerHour > 0);
-	time = ceil((1.0f - percentDone) / prodPerHour);
+	if (!disassembly) {
+		if (selectedQueueItem) {
+			assert(selectedProduction);
+			od = selectedProduction->item;
+			MN_ExecuteConfunc("prod_priority_on");
+		} else if (selectedItem) {
+			od = selectedItem;
+			MN_ExecuteConfunc("prod_priority_off");
+		} else {
+			od = NULL;
+			MN_ExecuteConfunc("prod_priority_off");
+		}
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
-	Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
-	/* Print components. */
-	for (i = 0; i < comp->numItemtypes; i++) {
-		const objDef_t *compOd = comp->items[i];
-		assert(compOd);
-		Q_strcat(productionInfo, va(_("%s (%i) "), compOd->name, comp->item_amount[i]),
-			sizeof(productionInfo));
+		if (od) {
+			assert(od->tech);
+			/* Don't try to display the item which is not producible. */
+			if (od->tech->produceTime < 0) {
+				Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
+				Cvar_Set("mn_item", "");
+			} else {
+				/* If item is first in queue, take percentDone into account. */
+				prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
+				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
+				assert(prodPerHour > 0);
+				if (od == gd.productions[base->idx].items[0].item)
+					time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
+				else
+					time = ceil(1.0f / prodPerHour);
+				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
+				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
+					sizeof(productionInfo));
+				Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
+				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
+				Cvar_Set("mn_item", od->id);
+			}
+		} else {
+			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
+			Cvar_Set("mn_item", "");
+		}
+	} else {	/* Disassembling. */
+		const components_t *comp;
+
+		if (selectedQueueItem) {
+			assert(selectedProduction);
+			od = selectedProduction->item;
+			assert(od);
+			comp = INV_GetComponentsByItem(od);
+			assert(comp);
+		} else if (selectedDisassembly) {
+			comp = selectedDisassembly;
+			od = comp->asItem;
+			assert(comp->asItem);
+		} else {
+			od = NULL;
+		}
+
+		if (od) {
+			assert(od->tech);
+
+			/* If item is first in queue, take percentDone into account. */
+			prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
+			/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
+			assert(prodPerHour > 0);
+			if (od == gd.productions[base->idx].items[0].item)
+				time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
+			else
+				time = ceil(1.0f / prodPerHour);
+			Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
+			Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
+			/* Print components. */
+			for (i = 0; i < comp->numItemtypes; i++) {
+				const objDef_t *compOd = comp->items[i];
+				assert(compOd);
+				Q_strcat(productionInfo, va(_("%s (%i) "), compOd->name, comp->item_amount[i]),
+					sizeof(productionInfo));
+			}
+			Q_strcat(productionInfo, "\n", sizeof(productionInfo));
+			Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
+				sizeof(productionInfo));
+			Cvar_Set("mn_item", od->id);
+		} else
+			Cvar_Set("mn_item", "");
 	}
-	Q_strcat(productionInfo, "\n", sizeof(productionInfo));
-	Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time), sizeof(productionInfo));
-	Cvar_Set("mn_item", od->id);
 	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
 
@@ -806,55 +826,25 @@ static void PR_DisassemblyInfo (const base_t *base, const objDef_t *od, const co
  * @param[in] aircraftTemplate The aircraft to print the information for
  * @sa PR_ProductionInfo
  */
-static void PR_AircraftInfo (const aircraft_t *aircraftTemplate)
+static void PR_AircraftInfo (const aircraft_t * aircraftTemplate)
 {
-	static char productionInfo[512];
-	assert(aircraftTemplate);
+	if (selectedQueueItem)
+		MN_ExecuteConfunc("prod_priority_on");
+	else
+		MN_ExecuteConfunc("prod_priority_off");
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
-	Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftTemplate->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
-		sizeof(productionInfo));
-	assert(aircraftTemplate->tech);
-	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftTemplate->tech->produceTime), sizeof(productionInfo));
-	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
-	Cvar_Set("mn_item", aircraftTemplate->id);
-}
-
-/**
- * @brief Prints information about the selected item in production.
- * @param[in] base Pointer to the base where informations should be printed.
- * @sa PR_AircraftInfo
- * @sa PR_ItemProductionInfo
- * @sa PR_DisassemblyInfo
- */
-static void PR_ProductionInfo (const base_t *base)
-{
-	if (selectedProduction) {
-		production_t *prod = selectedProduction;
-		MN_ExecuteConfunc("prod_all_on");
-		if (prod->aircraft) {
-			PR_AircraftInfo(prod->aircraft);
-		} else if (prod->production) {
-			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
-		} else {
-			PR_DisassemblyInfo(base, prod->item, INV_GetComponentsByItem(prod->item), prod->percentDone);
-		}
+	if (aircraftTemplate) {
+		static char productionInfo[512];
+		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
+		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftTemplate->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
+			sizeof(productionInfo));
+		assert(aircraftTemplate->tech);
+		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftTemplate->tech->produceTime), sizeof(productionInfo));
+		mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+		Cvar_Set("mn_item", aircraftTemplate->id);
 	} else {
-		MN_ExecuteConfunc("prod_priodecr_off");
-		if (selectedAircraft) {
-			PR_AircraftInfo(selectedAircraft);
-		} else if (selectedItem) {
-			PR_ItemProductionInfo(base, selectedItem, 0.0);
-		} else if (selectedDisassembly) {
-			PR_DisassemblyInfo(base, selectedDisassembly->asItem, selectedDisassembly, 0.0);
-		} else {
-			MN_ExecuteConfunc("prod_inc_off");
-			if (produceCategory == FILTER_AIRCRAFT)
-				mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
-			else
-				mn.menuText[TEXT_PRODUCTION_INFO] = _("No item selected");
-			Cvar_Set("mn_item", "");
-		}
+		mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
+		Cvar_Set("mn_item", "");
 	}
 }
 
@@ -883,32 +873,16 @@ static void PR_ProductionListRightClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
+		const objDef_t *od = queue->items[num].item;
+		assert(od->tech);
+		selectedQueueItem = qtrue;
 		selectedProduction = &queue->items[num];
-		if (selectedProduction->aircraft) {
-			assert(selectedProduction->aircraft->tech);
-			UP_OpenWith(selectedProduction->aircraft->tech->id);
-		} else {
-			const objDef_t *od = selectedProduction->item;
-			assert(od->tech);
-			UP_OpenWith(od->tech->id);
-		}
+		UP_OpenWith(od->tech->id);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
-		if (produceCategory == FILTER_AIRCRAFT) {
-			const aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
-			/* ufo research definition must not have a tech assigned
-			 * only RS_CRAFT types have
-			 * @sa RS_InitTree */
-			if (aircraftTemplate->tech)
-				UP_OpenWith(aircraftTemplate->tech->id);
-		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
-			if (comp && comp->asItem && comp->asItem->tech) {
-				UP_OpenWith(comp->asItem->tech->id);
-			}
-		} else {
+		if (produceCategory != FILTER_AIRCRAFT) {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
 #ifdef DEBUG
 			if (!od) {
@@ -922,11 +896,19 @@ static void PR_ProductionListRightClick_f (void)
 
 			/* Open up UFOpaedia for this entry. */
 			if (INV_ItemMatchesFilter(od, produceCategory) && RS_IsResearched_ptr(od->tech)) {
+				selectedQueueItem = qfalse;
 				PR_ClearSelected();
 				selectedItem = od;
 				UP_OpenWith(od->tech->id);
 				return;
 			}
+		} else {
+			const aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
+			/* ufo research definition must not have a tech assigned
+			 * only RS_CRAFT types have
+			 * @sa RS_InitTree */
+			if (aircraftTemplate->tech)
+				UP_OpenWith(aircraftTemplate->tech->id);
 		}
 	}
 #ifdef DEBUG
@@ -963,61 +945,143 @@ static void PR_ProductionListClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
-		selectedProduction = &queue->items[num];
-		PR_ProductionInfo(base);
+		production_t *prod = &queue->items[num];
+		selectedQueueItem = qtrue;
+		selectedProduction = prod;
+		if (prod->production) {
+			if (prod->aircraft)
+				PR_AircraftInfo(selectedAircraft);
+			else
+				PR_ProductionInfo(base, qfalse);
+		} else
+			PR_ProductionInfo(base, qtrue);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
-		if (produceCategory == FILTER_DISASSEMBLY) {
+		if (!productionDisassembling) {
+			if (produceCategory != FILTER_AIRCRAFT) {	/* Everything except aircraft. */
+				objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
+
+				if (!od) {
+					Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
+					return;
+				}
+
+				if (!od->tech)
+					Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
+				/* We can only produce items that fulfill the following conditions... */
+				if (INV_ItemMatchesFilter(od, produceCategory)	/* Item is in the current inventory-category */
+				 && RS_IsResearched_ptr(od->tech)		/* Tech is researched */
+				 && od->tech->produceTime >= 0) {		/* Item is producible */
+					assert(*od->name);
+
+					selectedQueueItem = qfalse;
+					PR_ClearSelected();
+					selectedItem = od;
+					PR_ProductionInfo(base, qfalse);
+					return;
+				}
+			} else {	/* Aircraft. */
+				aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
+				if (!aircraftTemplate) {
+					Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
+					return;
+				}
+				/* ufo research definition must not have a tech assigned
+				 * only RS_CRAFT types have
+				 * @sa RS_InitTree */
+				if (aircraftTemplate->tech
+				 && aircraftTemplate->tech->produceTime >= 0
+				 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
+					selectedQueueItem = qfalse;
+
+					PR_ClearSelected();
+					selectedAircraft = aircraftTemplate;
+
+					PR_AircraftInfo(selectedAircraft);
+					return;
+				}
+			}
+		} else {	/* Disassembling. */
 			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
 
+			selectedQueueItem = qfalse;
 			PR_ClearSelected();
 			selectedDisassembly = comp;
 
-			PR_ProductionInfo(base);
-		} else if (produceCategory == FILTER_AIRCRAFT) {
-			aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
-			if (!aircraftTemplate) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
-				return;
-			}
-			/* ufo research definition must not have a tech assigned
-			 * only RS_CRAFT types have
-			 * @sa RS_InitTree */
-			if (aircraftTemplate->tech
-			 && aircraftTemplate->tech->produceTime >= 0
-			 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
-				PR_ClearSelected();
-				selectedAircraft = aircraftTemplate;
-				PR_ProductionInfo(base);
-			}
-		} else {
-			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
-
-			if (!od) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
-				return;
-			}
-
-			if (!od->tech)
-				Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
-			/* We can only produce items that fulfill the following conditions... */
-			if (INV_ItemMatchesFilter(od, produceCategory)	/* Item is in the current inventory-category */
-			 && RS_IsResearched_ptr(od->tech)		/* Tech is researched */
-			 && od->tech->produceTime >= 0) {		/* Item is producible */
-				assert(*od->name);
-
-				PR_ClearSelected();
-				selectedItem = od;
-				PR_ProductionInfo(base);
-			}
+			PR_ProductionInfo(base, qtrue);
+			return;
 		}
 	}
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: Click on spacer %i\n", num);
 #endif
+}
+
+/**
+ * @brief update the list of items ready for disassembling
+ */
+static void PR_UpdateDisassemblingList_f (void)
+{
+	int i;
+	static char productionList[1024];
+	static char productionQueued[256];
+	static char productionAmount[256];
+	const production_queue_t *queue;
+	const base_t* base;
+
+	if (!baseCurrent)
+		return;
+
+	base = baseCurrent;
+	productionDisassembling = qtrue;
+
+	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
+	queue = &gd.productions[base->idx];
+
+	/* first add all the queue items */
+	for (i = 0; i < queue->numItems; i++) {
+		const production_t *prod = &queue->items[i];
+		const objDef_t *od = prod->item;
+
+		Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+		Q_strcat(productionAmount, va("%i\n", base->storage.num[od->idx]), sizeof(productionAmount));
+		Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
+	}
+
+	/* then spacers */
+	for (i = 0; i < QUEUE_SPACERS; i++) {
+		Q_strcat(productionList, "\n", sizeof(productionList));
+		Q_strcat(productionAmount, "\n", sizeof(productionAmount));
+		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+	}
+
+	LIST_Delete(&productionItemList);
+
+	for (i = 0; i < gd.numComponents; i++) {
+		const objDef_t *asOd = gd.components[i].asItem;
+		components_t *comp = &gd.components[i];
+		if (!asOd)
+			continue;
+		if (PR_ConditionsDisassembly(base, comp)) {
+			LIST_AddPointer(&productionItemList, comp);
+
+			Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
+			Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
+			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+		}
+	}
+
+	/* Enable disassembly cvar. */
+	productionDisassembling = qtrue;
+	/* bind the menu text to our static char array */
+	mn.menuText[TEXT_PRODUCTION_LIST] = productionList;
+	/* bind the amount of available items */
+	mn.menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
+	/* bind the amount of queued items */
+	mn.menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
 }
 
 /**
@@ -1043,33 +1107,43 @@ static void PR_ProductionSelect_f (void)
 		produceCategory = cat;
 		Cvar_Set("mn_itemtype", va("%d", produceCategory));
 		Cvar_Set("mn_itemtypename", _(BS_BuyTypeName(produceCategory)));
+		if (produceCategory == FILTER_DISASSEMBLY) {
+			PR_ProductionInfo(baseCurrent, qtrue);
+			PR_UpdateDisassemblingList_f();
+			return;
+		}
 	} else {
 		return;
 	}
 
+	/** Enable disassembly cvar. @todo Better docu please? enable = qfalse? */
+	productionDisassembling = qfalse;
+
 	/* Reset scroll values of the list. */
 	node1->textScroll = node2->textScroll = prodlist->textScroll = 0;
 
-	/* Update list of entries for current production tab. */
+	/* Disable selection of queue entries. */
+	selectedQueueItem = qfalse;
+
+	/* Update list if entries for current production tab. */
 	PR_UpdateProductionList(baseCurrent);
 
-	/* Reset selected entry, if it was not from the queue */
-	selectedItem = NULL;
-	selectedDisassembly = NULL;
-	selectedAircraft = NULL;
+	/* Reset selected entries. */
+	PR_ClearSelected();
 
 	/* Select first entry in the list (if any). */
 	if (LIST_Count(productionItemList) > 0) {
-		if (produceCategory == FILTER_AIRCRAFT)
-			selectedAircraft = (aircraft_t*)LIST_GetByIdx(productionItemList, 0);
-		else if (produceCategory == FILTER_DISASSEMBLY)
-			selectedDisassembly = (components_t*)LIST_GetByIdx(productionItemList, 0);
-		else
+		if (produceCategory != FILTER_AIRCRAFT)
 			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
+		else
+			selectedAircraft = (aircraft_t*)LIST_GetByIdx(productionItemList, 0);
 	}
 
 	/* Update displayed info about selected entry (if any). */
-	PR_ProductionInfo(baseCurrent);
+	if (produceCategory != FILTER_AIRCRAFT)
+		PR_ProductionInfo(baseCurrent, qfalse);
+	else
+		PR_AircraftInfo(selectedAircraft);
 }
 
 /**
@@ -1109,7 +1183,6 @@ static void PR_ProductionList_f (void)
 	Cvar_Set("mn_production_storage", tmpbuf);
 
 	produceCategory = atoi(Cmd_Argv(1));
-	PR_ClearSelected();
 	Cmd_ExecuteString(va("prod_select %i", produceCategory));
 }
 
@@ -1130,6 +1203,9 @@ static void BS_Prev_ProduceType_f (void)
 		produceCategory = FILTER_S_PRIMARY;	/* First entry of itemFilterTypes_t */
 	}
 
+	selectedItem = NULL;
+	selectedDisassembly = NULL;
+	selectedAircraft = NULL;
 	Cbuf_AddText(va("prod_select %i\n", produceCategory));
 }
 
@@ -1150,6 +1226,9 @@ static void BS_Next_ProduceType_f (void)
 		produceCategory = FILTER_S_PRIMARY;	/* First entry of itemFilterTypes_t */
 	}
 
+	selectedItem = NULL;
+	selectedDisassembly = NULL;
+	selectedAircraft = NULL;
 	Cbuf_AddText(va("prod_select %i\n", produceCategory));
 }
 
@@ -1244,10 +1323,6 @@ static void PR_ProductionIncrease_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!(selectedProduction || selectedAircraft || selectedItem
-			|| selectedDisassembly))
-		return;
-
 	base = baseCurrent;
 
 	if (Cmd_Argc() == 2)
@@ -1255,7 +1330,8 @@ static void PR_ProductionIncrease_f (void)
 
 	queue = &gd.productions[base->idx];
 
-	if (selectedProduction) {
+	if (selectedQueueItem) {
+		assert(selectedProduction);
 		prod = selectedProduction;
 		if (prod->production) {		/* Production. */
 			if (prod->aircraft) {
@@ -1300,14 +1376,14 @@ static void PR_ProductionIncrease_f (void)
 			prod->amount += amountTemp;
 		}
 	} else {
-		if (!selectedDisassembly) {
+		if (!productionDisassembling) {
 			if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
 				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 				return;
 			}
 			prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, amount, qfalse);	/* Production. (only of of the "selected" pointer can be nonNULL) */
 		} else {
-			/* We can disassemble only as many items as we have in base storage. */
+			/* We can disassembly only as many items as we have in base storage. */
 			assert(selectedDisassembly && selectedDisassembly->asItem);
 
 			if (base->storage.num[selectedDisassembly->asItem->idx] > amount)
@@ -1351,7 +1427,7 @@ static void PR_ProductionIncrease_f (void)
 					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount));
 				}
 
-				if (!selectedDisassembly) {
+				if (!productionDisassembling) {
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), od->name);
 					MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				} else {
@@ -1360,6 +1436,7 @@ static void PR_ProductionIncrease_f (void)
 				}
 
 				/* Now we select the item we just created. */
+				selectedQueueItem = qtrue;
 				PR_ClearSelected();
 				selectedProduction = &queue->items[queue->numItems - 1];
 			} else { /* requirements are not met => producibleAmount <= 0 */
@@ -1379,13 +1456,22 @@ static void PR_ProductionIncrease_f (void)
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(aircraftTemplate->name));
 			MN_AddNewMessage(_("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */
+			selectedQueueItem = qtrue;
 			PR_ClearSelected();
 			selectedProduction = &queue->items[queue->numItems - 1];
 		}
 	}
 
-	PR_ProductionInfo(base);
-	PR_UpdateProductionList(base);
+	if (!productionDisassembling) {	/* Production. */
+		if (produceCategory != FILTER_AIRCRAFT)
+			PR_ProductionInfo(base, qfalse);
+		else
+			PR_AircraftInfo(selectedAircraft);
+		PR_UpdateProductionList(base);
+	} else {							/* Disassembling. */
+		PR_ProductionInfo(base, qtrue);
+		PR_UpdateDisassemblingList_f();
+	}
 }
 
 /**
@@ -1394,25 +1480,40 @@ static void PR_ProductionIncrease_f (void)
 static void PR_ProductionStop_f (void)
 {
 	production_queue_t *queue;
+	qboolean disassembling = qfalse;
 	base_t* base;
 
-	if (!baseCurrent || !selectedProduction)
+	if (!baseCurrent || !selectedQueueItem)
 		return;
 
 	base = baseCurrent;
 
 	queue = &gd.productions[base->idx];
+	if (!selectedProduction->production)
+		disassembling = qtrue;
 
 	PR_QueueDelete(base, queue, selectedProduction->idx);
 
 	if (queue->numItems == 0) {
+		selectedQueueItem = qfalse;
 		selectedProduction = NULL;
+		/* empty selected item description */
+		PR_ProductionInfo(base, qfalse);
 	} else if (selectedProduction->idx >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
+		if (!selectedProduction->production)
+			PR_ProductionInfo(base, qtrue);
+		else
+			PR_ProductionInfo(base, qfalse);
 	}
 
-	PR_ProductionInfo(base);
-	PR_UpdateProductionList(base);
+	if (productionDisassembling) {
+		PR_ProductionInfo(base, qtrue);
+		PR_UpdateDisassemblingList_f();
+	} else {
+		PR_ProductionInfo(base, qfalse);
+		PR_UpdateProductionList(base);
+	}
 }
 
 /**
@@ -1428,12 +1529,13 @@ static void PR_ProductionDecrease_f (void)
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
 
-	if (!baseCurrent || !selectedProduction)
+	if (!baseCurrent || !selectedQueueItem)
 		return;
 
 	base = baseCurrent;
 
 	queue = &gd.productions[base->idx];
+	assert(selectedProduction);
 	prod = selectedProduction;
 	if (prod->amount >= amount)
 		amountTemp = amount;
@@ -1448,8 +1550,13 @@ static void PR_ProductionDecrease_f (void)
 	if (prod->amount <= 0) {
 		PR_ProductionStop_f();
 	} else {
-		PR_ProductionInfo(base);
-		PR_UpdateProductionList(base);
+		if (prod->production) {
+			PR_ProductionInfo(base, qfalse);
+			PR_UpdateProductionList(base);
+		} else {
+			PR_ProductionInfo(base, qtrue);
+			PR_UpdateDisassemblingList_f();
+		}
 	}
 }
 
@@ -1460,7 +1567,7 @@ static void PR_ProductionUp_f (void)
 {
 	production_queue_t *queue;
 
-	if (!baseCurrent || !selectedProduction)
+	if (!baseCurrent || !selectedQueueItem)
 		return;
 
 	/* first position already */
@@ -1481,7 +1588,7 @@ static void PR_ProductionDown_f (void)
 {
 	production_queue_t *queue;
 
-	if (!baseCurrent || !selectedProduction)
+	if (!baseCurrent || !selectedQueueItem)
 		return;
 
 	queue = &gd.productions[baseCurrent->idx];
@@ -1506,6 +1613,7 @@ void PR_InitStartup (void)
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
 	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
 	Cmd_AddCommand("prod_select", PR_ProductionSelect_f, NULL);
+	Cmd_AddCommand("prod_disassemble", PR_UpdateDisassemblingList_f, "List of items ready for disassembling");
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");

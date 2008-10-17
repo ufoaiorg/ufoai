@@ -52,7 +52,6 @@ void INV_ParseComponents(const char *name, const char **text);
 void INV_TransferItemCarriedByChr(employee_t *employee, base_t *sourceBase, base_t* destBase);
 int INV_GetStorageRoom(const aircraft_t *aircraft);
 
-void INV_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void INV_CollectingItems(int won);
 void INV_SellOrAddItems(aircraft_t *aircraft);
 void INV_EnableAutosell(const technology_t *tech);

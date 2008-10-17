@@ -169,7 +169,7 @@ clean_html()
 	END=`wc -l downloaded_page_${language0}.tmp | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
 	$sed_soft $BEGIN','$END'd' downloaded_page_${language0}.tmp |
 	$sed_soft 's/(Extra:.*researched)[ \t]*//g;s/[ \t]*(End Extra)//g' |
-	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g;s/<\/span>//g' > downloaded_page_${language0}
+	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page_${language0}
 	rm -f downloaded_page_${language0}.tmp
 
 }
@@ -353,8 +353,6 @@ update_txt()
 			}
 		$0 ~ /<h3>/ {h3++;
 			match($0,"<h3>");
-			$0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
-			match($0,"\">");
 			$0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
 			if (h3 == 1 && already_written_test) {$0="\\n\n"$0}
 			gsub (/[ \t]*$/,"")

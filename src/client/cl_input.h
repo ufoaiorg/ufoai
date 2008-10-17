@@ -38,8 +38,7 @@ typedef enum {
 	MS_SHIFTMAP,	/**< we move the geoscape map */
 	MS_ZOOMMAP,		/**< we zoom the geoscape map (also possible via mousewheels)*/
 	MS_SHIFT3DMAP,	/**< we rotate the 3d globe */
-	MS_WORLD,		/**< we are in tactical mode */
-	MS_DRAGMENU
+	MS_WORLD		/**< we are in tactical mode */
 } mouseSpace_t;
 
 #define FOV				75.0
