@@ -67,27 +67,6 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
-/**
- * @brief possible values for the data array of a menu node
- * @note the positions 0, 1 and 2 are also used for MN_BAR values
- * like min, max and current
- */
-typedef enum {
-	MN_DATA_STRING_OR_IMAGE_OR_MODEL,	/**< First entry in data array can
-						* be an image, an model or an string, this depends
-						* on the node type
-						*/
-	MN_DATA_ANIM_OR_FONT,	/** This is the font string or the anim string
-						* from the *.anm files for the model */
-	MN_DATA_MODEL_TAG,	/**< the tag to place the model onto */
-	MN_DATA_MODEL_SKIN_OR_CVAR,	/**< the skin of the model */
-	MN_DATA_MODEL_ANIMATION_STATE,	/**< holds then anim state for the current model
-						* model - also see MN_DATA_ANIM_OR_FONT */
-	MN_DATA_NODE_TOOLTIP,	/**< holds the tooltip for the menu */
-
-	MN_DATA_MAX
-} menuDataValues_t;
-
 /* all available select box options - for all menunodes */
 #define MAX_SELECT_BOX_OPTIONS 128
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
@@ -116,9 +95,24 @@ typedef struct lineStrips_s {
 	int numStrips;			/**< Number of point-lists. */
 } lineStrips_t;
 
-/** @brief menu node */
+/** @brief menu node
+ * @todo delete data when it's possible
+ */
 typedef struct menuNode_s {
-	void *data[6];				/**< needs to be first */
+	//void *data[6];				/**< needs to be first */
+
+	void* dataStringOrImageOrModel;	/**< First entry in data array can
+						* be an image, an model or an string, this depends
+						* on the node type
+						*/
+	void* dataAnimOrFont;	/** This is the font string or the anim string
+						* from the *.anm files for the model */
+	void* dataModelTag;	/**< the tag to place the model onto */
+	void* dataModelSkinOrCVar; /**< the skin of the model */
+	void* dataModelAnimationState;	/**< holds then anim state for the current model
+						* model - also see MN_DATA_ANIM_OR_FONT */
+	void* dataNodeTooltip; /**< holds the tooltip for the menu */
+
 	char name[MAX_VAR];
 	char key[MAX_VAR];
 	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */

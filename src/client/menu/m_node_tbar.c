@@ -4,7 +4,7 @@
 /**
  */
 void MN_DrawTBarNode(menuNode_t *node) {
-	/* data[0] is the texture name, data[1] is the minimum value, data[2] is the current value */
+	/* dataStringOrImageOrModel is the texture name, dataAnimOrFont is the minimum value, dataModelTag is the current value */
 	float ps, shx;
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
@@ -13,7 +13,7 @@ void MN_DrawTBarNode(menuNode_t *node) {
 		return;
 	MN_GetNodeAbsPos(node, nodepos);
 	if (node->pointWidth) {
-		ps = MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1]);
+		ps = MN_GetReferenceFloat(menu, node->dataModelTag) - MN_GetReferenceFloat(menu, node->dataAnimOrFont);
 		shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
 	} else
 		shx = node->texh[0];

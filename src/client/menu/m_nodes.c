@@ -84,13 +84,13 @@ const char *MN_GetNodeReference(const menuNode_t *node) {
 	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
 		&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP
 		&& node->type != MN_RADAR) {
-		ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+		ref = MN_GetReferenceString(node->menu, node->dataStringOrImageOrModel);
 		if (!ref) {
 			/* these have default values for their image */
 			if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
 				/* bad reference */
 				((menuNode_t *)node)->invis = qtrue; /*< why dont we shut down the appli? */
-				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
+				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->dataStringOrImageOrModel, node->menu->name);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	byte *color = NULL;	/**< Pointer to specific pixel in image. */
 	vec2_t nodepos;
 
-	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
+	if (!node || node->type != MN_PIC || !node->dataStringOrImageOrModel)
 		return qfalse;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -189,17 +189,17 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_CHECKBOX) {
 			/* the checked and unchecked should always have the same dimensions */
-			if (!node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+			if (!node->dataStringOrImageOrModel) {
 				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
 			} else {
-				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]));
+				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataStringOrImageOrModel));
 			}
-		} else if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+		} else if (node->type == MN_PIC && node->dataStringOrImageOrModel) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];
 			} else
-				R_DrawGetPicSize(&sx, &sy, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+				R_DrawGetPicSize(&sx, &sy, node->dataStringOrImageOrModel);
 		} else
 			return qfalse;
 #if 0

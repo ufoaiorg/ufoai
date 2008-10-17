@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "m_parse.h"
 #include "m_font.h"
+#include "m_input.h"
 #include "m_inventory.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
@@ -66,6 +67,17 @@ static void MN_DrawBorder (const menuNode_t *node)
 		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
 }
 
+/** @frief hack to catch a mouse move event when we redraw the GUI
+ */
+static void MN_CheckMouseMove() {
+	static int oldX = 0, oldY = 0;
+	if (mousePosX != oldX || mousePosY != oldY) {
+		oldX = mousePosX;
+		oldY = mousePosY;
+		MN_MouseMove(mousePosX, mousePosY);
+	}
+}
+
 /**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
@@ -77,6 +89,8 @@ void MN_DrawMenus (void)
 	int sp, pp;
 	int mouseOver = 0;
 	vec2_t nodepos;
+
+	MN_CheckMouseMove();
 
 	MN_SetItemHover(NULL);
 
@@ -109,84 +123,90 @@ void MN_DrawMenus (void)
 		}
 		for (node = menu->firstNode; node; node = node->next) {
 			MN_GetNodeAbsPos(node, nodepos);
-			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
+			if (node->invis || !nodeBehaviourList[node->type].draw)
+				continue;
+
+#if 0 /**< overcomplex condition, if a drawable check is realy need, add a isDrawable() function into the node behaviour */
+			if (!(node->invis && ((node->dataStringOrImageOrModel /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASELAYOUT || node->type == MN_BASEMAP || node->type == MN_MAP)
 					|| node->type == MN_CHECKBOX || node->type == MN_TAB || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
-					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]) || node->type == MN_RADAR)) {
-				/* if construct */
-				if (!MN_CheckCondition(node)) /** @fixeme double same if!?! if its ok, a comment to explain why */
-				if (!MN_CheckCondition(node))
+					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]) || node->type == MN_RADAR)))
+				continue;
+#endif
+
+			/* if construct */
+			if (!MN_CheckCondition(node)) /** @fixeme double same if!?! if its ok, a comment to explain why */
+			if (!MN_CheckCondition(node))
+				continue;
+
+			/* timeout? */
+			if (node->timePushed) {
+				if (node->timePushed + node->timeOut < cls.realtime) {
+					node->timePushed = 0;
+					node->invis = qtrue;
+					/* only timeout this once, otherwise there is a new timeout after every new stack push */
+					if (node->timeOutOnce)
+						node->timeOut = 0;
+					Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
 					continue;
-
-				/* timeout? */
-				if (node->timePushed) {
-					if (node->timePushed + node->timeOut < cls.realtime) {
-						node->timePushed = 0;
-						node->invis = qtrue;
-						/* only timeout this once, otherwise there is a new timeout after every new stack push */
-						if (node->timeOutOnce)
-							node->timeOut = 0;
-						Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
-						continue;
-					}
 				}
+			}
 
-				/* mouse effects */
-				/* don't allow to open more than one selectbox */
-				if (selectBoxNode && selectBoxNode != node)
-					node->state = qfalse;
-				else if (sp > pp) {
-					/* in and out events */
-					mouseOver = MN_CheckNodeZone(node, mousePosX, mousePosY);
-					if (mouseOver != node->state) {
-						/* maybe we are leaving to another menu */
-						menu->hoverNode = NULL;
-						if (mouseOver)
-							MN_ExecuteActions(menu, node->mouseIn);
-						else
-							MN_ExecuteActions(menu, node->mouseOut);
-						node->state = mouseOver;
-						selectBoxNode = NULL;
-					}
+			/* mouse effects */
+			/* don't allow to open more than one selectbox */
+			if (selectBoxNode && selectBoxNode != node)
+				node->state = qfalse;
+			else if (sp > pp) {
+				/* in and out events */
+				mouseOver = MN_CheckNodeZone(node, mousePosX, mousePosY);
+				if (mouseOver != node->state) {
+					/* maybe we are leaving to another menu */
+					menu->hoverNode = NULL;
+					if (mouseOver)
+						MN_ExecuteActions(menu, node->mouseIn);
+					else
+						MN_ExecuteActions(menu, node->mouseOut);
+					node->state = mouseOver;
+					selectBoxNode = NULL;
 				}
+			}
 
-				/* check node size x and y value to check whether they are zero */
-				if (node->size[0] && node->size[1]) {
-					if (node->bgcolor) {
-						R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding,
-							node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
-					}
-					if (node->border && node->bordercolor)
-						MN_DrawBorder(node);
+			/* check node size x and y value to check whether they are zero */
+			if (node->size[0] && node->size[1]) {
+				if (node->bgcolor) {
+					R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding,
+						node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
 				}
-
-				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
+				if (node->border && node->bordercolor)
 					MN_DrawBorder(node);
+			}
 
-				/* mouse darken effect */
-				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp) {
-					vec4_t color;
-					VectorScale(node->color, 0.8, color);
-					color[3] = node->color[3];
-					R_ColorBlend(color);
-				} else if (node->type != MN_SELECTBOX)
-					R_ColorBlend(node->color);
+			if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
+				MN_DrawBorder(node);
+
+			/* mouse darken effect */
+			if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp) {
+				vec4_t color;
+				VectorScale(node->color, 0.8, color);
+				color[3] = node->color[3];
+				R_ColorBlend(color);
+			} else if (node->type != MN_SELECTBOX)
+				R_ColorBlend(node->color);
 
 
-				/* draw the node */
-				if (nodeBehaviourList[node->type].draw) {
-					nodeBehaviourList[node->type].draw(node);
-				}
+			/* draw the node */
+			if (nodeBehaviourList[node->type].draw) {
+				nodeBehaviourList[node->type].draw(node);
+			}
 
-				/* mouseover? */
-				if (node->state == qtrue)
-					menu->hoverNode = node;
+			/* mouseover? */
+			if (node->state == qtrue)
+				menu->hoverNode = node;
 
-				if (mn_debugmenu->integer)
-					MN_DrawTooltip("f_small", node->name, nodepos[0], nodepos[1], node->size[1], 0);
+			if (mn_debugmenu->integer)
+				MN_DrawTooltip("f_small", node->name, nodepos[0], nodepos[1], node->size[1], 0);
 
-				R_ColorBlend(NULL);
-			}	/* if */
+			R_ColorBlend(NULL);
 
 		}	/* for */
 		if (sp == mn.menuStackPos && menu->hoverNode && mn_show_tooltips->integer) {

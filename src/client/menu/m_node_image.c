@@ -15,7 +15,7 @@ void MN_DrawImageNode(menuNode_t *node)
 
 	int time = cl.time;
 
-	const char* imageName = MN_GetNodeReference(node);
+	const char* imageName = node->dataStringOrImageOrModel;
 	if (!imageName || !*imageName)
 		return;
 

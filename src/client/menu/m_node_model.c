@@ -318,8 +318,8 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				VectorCopy(node->center, mi.center);
 
 				/* get the animation given by menu node properties */
-				if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-					ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
+				if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
+					ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
 				/* otherwise use the standard animation from modelmenu defintion */
 				} else
 					ref = menuModel->anim;
@@ -386,30 +386,30 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 			menuModel = menuModel->next;
 		} else {
 			/* get skin */
-			if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR] && *(char *) node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
-				mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]));
+			if (node->dataModelSkinOrCVar && *(char *) node->dataModelSkinOrCVar)
+				mi.skin = atoi(MN_GetReferenceString(menu, node->dataModelSkinOrCVar));
 			else
 				mi.skin = 0;
 
 			/* do animations */
-			if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-				ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
+			if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
+				ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
 				if (updateModel) {
 					/* model has changed but mem is already reserved in pool */
-					if (node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
-						Mem_Free(node->data[MN_DATA_MODEL_ANIMATION_STATE]);
-						node->data[MN_DATA_MODEL_ANIMATION_STATE] = NULL;
+					if (node->dataModelAnimationState) {
+						Mem_Free(node->dataModelAnimationState);
+						node->dataModelAnimationState = NULL;
 					}
 				}
-				if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
+				if (!node->dataModelAnimationState) {
 					as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					R_AnimChange(as, mi.model, ref);
-					node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
+					node->dataModelAnimationState = as;
 				} else {
 					/* change anim if needed */
-					as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
+					as = node->dataModelAnimationState;
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					anim = R_AnimGetName(as, mi.model);
@@ -424,12 +424,12 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 			}
 
 			/* place on tag */
-			if (node->data[MN_DATA_MODEL_TAG]) {
+			if (node->dataModelTag) {
 				menuNode_t *search;
 				char parent[MAX_VAR];
 				char *tag;
 
-				Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_TAG]), MAX_VAR);
+				Q_strncpyz(parent, MN_GetReferenceString(menu, node->dataModelTag), MAX_VAR);
 				tag = parent;
 				/* tag "menuNodeName modelTag" */
 				while (*tag && *tag != ' ')
@@ -440,7 +440,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				for (search = menu->firstNode; search != node && search; search = search->next)
 					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
 						char modelName[MAX_VAR];
-						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), sizeof(modelName));
+						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataStringOrImageOrModel), sizeof(modelName));
 
 						pmi.model = R_RegisterModelShort(modelName);
 						if (!pmi.model)
@@ -465,9 +465,9 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 							mi.center = node->size;
 						}
 
-						as = search->data[MN_DATA_MODEL_ANIMATION_STATE];
+						as = search->dataModelAnimationState;
 						if (!as)
-							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->data[MN_DATA_ANIM_OR_FONT]);
+							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->dataAnimOrFont);
 						pmi.frame = as->frame;
 						pmi.oldframe = as->oldframe;
 						pmi.backlerp = as->backlerp;

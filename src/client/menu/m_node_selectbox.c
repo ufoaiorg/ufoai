@@ -76,7 +76,7 @@ void MN_DrawSelectBoxNode (menuNode_t *node)
 	const char *font;
 	vec2_t nodepos;
 
-	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
+	if (!node->dataModelSkinOrCVar)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -84,7 +84,7 @@ void MN_DrawSelectBoxNode (menuNode_t *node)
 	if (!image)
 		image = "menu/selectbox";
 
-	ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
 
 	font = MN_GetFont(node->menu, node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
@@ -176,15 +176,15 @@ static void MN_SelectboxClick (menuNode_t * node, int x, int y)
 	if (clickedAtOption < 0 || clickedAtOption >= node->height)
 		return;
 
-	/* the cvar string is stored in data[MN_DATA_MODEL_SKIN_OR_CVAR] */
+	/* the cvar string is stored in dataModelSkinOrCVar */
 	/* no cvar given? */
-	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
+	if (!node->dataModelSkinOrCVar || !*(char*)node->dataModelSkinOrCVar) {
 		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
 		return;
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
 		return;
 
 	/* only execute the click stuff if the selectbox is active */
@@ -194,7 +194,7 @@ static void MN_SelectboxClick (menuNode_t * node, int x, int y)
 			clickedAtOption--;
 		}
 		if (selectBoxOption) {
-			const char *cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+			const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
 			MN_SetCvar(cvarName, selectBoxOption->value, 0);
 			if (*selectBoxOption->action) {
 #ifdef DEBUG

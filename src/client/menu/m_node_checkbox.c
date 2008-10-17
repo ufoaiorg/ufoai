@@ -18,7 +18,7 @@ void MN_DrawCheckBoxNode (menuNode_t* node)
 	else
 		image = "menu/checkbox";
 
-	ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	ref = MN_GetReferenceString(menu, node->dataModelSkinOrCVar);
 	if (!ref)
 		return;
 
@@ -44,12 +44,12 @@ static void MN_CheckboxClick (menuNode_t * node, int x, int y)
 	int value;
 	const char *cvarName;
 
-	assert(node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	assert(node->dataModelSkinOrCVar);
 	/* no cvar? */
-	if (Q_strncmp(node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+	if (Q_strncmp(node->dataModelSkinOrCVar, "*cvar", 5))
 		return;
 
-	cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+	cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
 	value = Cvar_VariableInteger(cvarName) ^ 1;
 	MN_SetCvar(cvarName, NULL, value);
 }

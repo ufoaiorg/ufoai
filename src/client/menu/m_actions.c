@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_input.h"
 #include "m_main.h"
+#include "m_parse.h"
 
 menuNode_t *focusNode;
 
@@ -83,11 +84,10 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 					break;
 				}
 
-				/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-				if (action->scriptValues->ofs > 0 && (action->scriptValues->ofs < (size_t)-5))
+				if (!(action->scriptValues->type & V_MENU_COPY))
 					Com_SetValue(node, (char *) data, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
 				else
-					node->data[-((int)action->scriptValues->ofs)] = data;
+					*(byte **) ((byte *) node + action->scriptValues->ofs) = data;
 			}
 			break;
 		default:

@@ -80,22 +80,22 @@ static const value_t nps[] = {
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key), 0},
-	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-	{"tooltip", V_LONGSTRING, -5, 0},	/* translated in MN_Tooltip */
-	{"image", V_STRING, 0, 0},
-	{"roq", V_STRING, 0, 0},
-	{"md2", V_STRING, 0, 0},	/** @todo Rename into model */
-	{"anim", V_STRING, -1, 0},
-	{"tag", V_STRING, -2, 0},
-	{"cvar", V_STRING, -3, 0},	/* for selectbox */
-	{"skin", V_STRING, -3, 0},
-	/* -4 is animation state */
-	{"string", V_LONGSTRING, 0, 0},	/* no gettext here - this can be a cvar, too */
-	{"font", V_STRING, -1, 0},
-	{"max", V_FLOAT, 0, 0},
-	{"min", V_FLOAT, -1, 0},
-	{"current", V_FLOAT, -2, 0},
-	{"weapon", V_STRING, 0, 0},
+
+	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataNodeTooltip), 0},	/* translated in MN_Tooltip */
+	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
+	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
+	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/** @todo Rename into model */
+	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
+	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelTag), 0},
+	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
+	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
+	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/* no gettext here - this can be a cvar, too */
+	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
+	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
+	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
+	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, dataModelTag), 0},
+	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
+
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
@@ -265,7 +265,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 /*				Com_Printf(" %s\n", *token); */
 
-				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type, 0, val->size);
+				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 
 				/* get next token */
 				*token = COM_EParse(text, errhead, NULL);
@@ -393,14 +393,15 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 /*						Com_Printf(" %s", *token); */
 
 						/* get the value */
-						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-						if ((val->ofs > 0) && (val->ofs < (size_t)-5)) {
+						if (!(val->type & V_MENU_COPY)) {
 							if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
 								Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
 						} else {
 							/* a reference to data is handled like this */
 /* 							Com_Printf("%i %s\n", val->ofs, *token); */
-							node->data[-((int)val->ofs)] = mn.curadata;
+							*(byte **) ((byte *) node + val->ofs) = mn.curadata;
+							/* we read it, we no more need extra flag */
+							//*((int*)&val->type) = val->type & V_BASETYPEMASK;
 							/* references are parsed as string */
 							if (**token == '*') {
 								/* sanity check */
@@ -411,7 +412,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 								/* sanity check */
 								if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
 									Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
-								mn.curadata += Com_ParseValue(mn.curadata, *token, val->type, 0, val->size);
+								mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 							}
 						}
 					}
@@ -1051,11 +1052,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 				return NULL;
 
 			/* get the string */
-			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
-				return Com_ValueToStr(refNode, val->type, val->ofs);
-			else
-				return Com_ValueToStr(refNode->data[-((int)val->ofs)], val->type, 0);
+			return Com_ValueToStr(refNode, val->type & V_BASETYPEMASK, val->ofs);
 		}
 	} else if (*ref == '_') {
 		ref++;
@@ -1105,11 +1102,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 				return 0.0;
 
 			/* get the string */
-			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
-				return *(float *) ((byte *) refNode + val->ofs);
-			else
-				return *(float *) refNode->data[-((int)val->ofs)];
+			return *(float *) ((byte *) refNode + val->ofs);
 		}
 	} else {
 		/* just get the data */

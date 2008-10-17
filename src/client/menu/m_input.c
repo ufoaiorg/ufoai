@@ -102,6 +102,13 @@ qboolean MN_CursorOnMenu (int x, int y)
 }
 
 /**
+ * @brief Is called everytime the mouse position change
+ */
+void MN_MouseMove(int x, int y) {
+
+}
+
+/**
  * @brief Is called everytime one clickes on a menu/screen. Then checks if anything needs to be executed in the earea of the click (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
  * @sa MN_ModelClick
  * @sa MN_TextRightClick
