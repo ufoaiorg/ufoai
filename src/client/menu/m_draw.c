@@ -34,10 +34,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;
 
+static const invList_t *itemHover;
+
+/**
+ * @brief assign an hover item for the draw pipeline
+ * @todo think better about this mecanism
+ * @sa itemHover
+ */
+void MN_SetItemHover(const invList_t *item) {
+	itemHover = item;
+}
+
 static void MN_DrawBorder (const menuNode_t *node)
 {
 	vec2_t nodepos;
-	
+
 	MN_GetNodeAbsPos(node, nodepos);
 	/** @todo use GL_LINE_LOOP + array here */
 	/* left */
@@ -55,6 +66,204 @@ static void MN_DrawBorder (const menuNode_t *node)
 }
 
 /**
+ * @todo move it to a m_node_bar.c
+ */
+static void MN_DrawBarNode(menuNode_t *node, menu_t *menu, qboolean mouseOver) {
+	vec4_t color;
+	float fac, bar_width;
+	vec2_t nodepos;
+	MN_GetNodeAbsPos(node, nodepos);
+	VectorScale(node->color, 0.8, color);
+	color[3] = node->color[3];
+
+	/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
+	fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
+	bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
+	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
+}
+
+/**
+ * @todo move it to a m_node_tbar.c
+ */
+static void MN_DrawTBarNode(menuNode_t *node, menu_t *menu, const char* ref) {
+	/* data[0] is the texture name, data[1] is the minimum value, data[2] is the current value */
+	float ps, shx;
+	vec2_t nodepos;
+	MN_GetNodeAbsPos(node, nodepos);
+	if (node->pointWidth) {
+		ps = MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1]);
+		shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
+	} else
+		shx = node->texh[0];
+	R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
+		shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+}
+
+/**
+ * @todo move it to a m_node_linestrip.c
+ */
+static void MN_DrawLineStripNode(menuNode_t *node, menu_t *menu) {
+	int i;
+	if (node->linestrips.numStrips > 0) {
+		/* Draw all linestrips. */
+		for (i = 0; i < node->linestrips.numStrips; i++) {
+			/* Draw this line if it's valid. */
+			if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
+				R_ColorBlend(node->linestrips.color[i]);
+				R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+			}
+		}
+	}
+}
+
+/**
+ * @todo move it to a m_node_container.c
+ * @todo need to think about a common mecanism from drag-drop
+ * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
+ */
+static void MN_DrawContainerNode2(menuNode_t *node, menu_t *menu, const char* ref) {
+	vec2_t nodepos;
+	MN_GetNodeAbsPos(node, nodepos);
+	if (menuInventory) {
+		const invList_t *itemHover_temp = MN_DrawContainerNode(node);
+		qboolean exists;
+		int itemX = 0;
+		int itemY = 0;
+
+		if (itemHover_temp)
+			MN_SetItemHover(itemHover_temp);
+
+
+		/** We calculate the position of the top-left corner of the dragged
+		 * item in oder to compensate for the centered-drawn cursor-item.
+		 * Or to be more exact, we calculate the relative offset from the cursor
+		 * location to the middle of the top-left square of the item.
+		 * @sa m_input.c:MN_Click */
+		if (dragInfo.item.t) {
+			itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
+			itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+
+			/* Place relative center in the middle of the square. */
+			itemX -= C_UNIT / 2;
+			itemY -= C_UNIT / 2;
+		}
+
+		/* Store information for preview drawing of dragged items. */
+		if (MN_CheckNodeZone(node, mousePosX, mousePosY)
+		 ||	MN_CheckNodeZone(node, mousePosX - itemX, mousePosY - itemY)) {
+			dragInfo.toNode = node;
+			dragInfo.to = node->container;
+
+			dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
+			dragInfo.toY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
+
+			/** Check if the items already exists in the container. i.e. there is already at least one item.
+			 * @sa Com_AddToInventory */
+			exists = qfalse;
+			if (dragInfo.to && dragInfo.toNode
+			 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
+			 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
+			 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
+					exists = qtrue;
+			 }
+
+			/** Search for a suitable position to render the item at if
+			 * the container is "single", the cursor is out of bound of the container.
+			 */
+			 if (!exists && dragInfo.item.t && (dragInfo.to->single
+			  || dragInfo.toX  < 0 || dragInfo.toY < 0
+			  || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+	#if 0
+	/* ... or there is something in the way. */
+	/* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
+			  || (Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY) == INV_DOES_NOT_FIT)) {
+	#endif
+				Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
+			}
+		}
+	}
+}
+
+/**
+ * @todo move it to a m_node_item.c
+ * @todo need a cleanup/marge/refactoring with MN_DrawItemNode
+ */
+static void MN_DrawItemNode2(menuNode_t *node, menu_t *menu, const char* ref) {
+	if (ref && *ref) {
+		const objDef_t *od = INVSH_GetItemByIDSilent(ref);
+		if (od) {
+			MN_DrawItemNode(node, ref);
+		} else {
+			const aircraft_t *aircraft = AIR_GetAircraft(ref);
+			if (aircraft) {
+				assert(aircraft->tech);
+				MN_DrawModelNode(menu, node, ref, aircraft->tech->mdl);
+			} else {
+				Com_Printf("Unknown item: '%s'\n", ref);
+			}
+		}
+	}
+}
+
+/**
+ * @todo move it to a m_node_cinematic.c
+ */
+static void MN_DrawCinematicNode(menuNode_t *node) {
+	vec2_t nodepos;
+	MN_GetNodeAbsPos(node, nodepos);
+	if (node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
+		if (cls.playingCinematic == CIN_STATUS_NONE)
+			CIN_PlayCinematic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+		if (cls.playingCinematic) {
+			/* only set replay to true if video was found and is running */
+			CIN_SetParameters(nodepos[0], nodepos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
+			CIN_RunCinematic();
+		}
+	}
+}
+
+/**
+ * @todo move it to a m_node_map.c
+ */
+static void MN_DrawMapNode(menuNode_t *node) {
+	if (curCampaign) {
+		/* don't run the campaign in console mode */
+		if (cls.key_dest != key_console)
+			CL_CampaignRun();	/* advance time */
+		MAP_DrawMap(node); /* Draw geoscape */
+	}
+}
+
+static void MN_DrawModelNode2(menu_t *menu, menuNode_t *node, const char* ref) {
+	char source[MAX_VAR] = "";
+	if (ref == NULL)
+		*source = '\0';
+	else
+		Q_strncpyz(source, ref, MAX_VAR);
+	MN_DrawModelNode(menu, node, ref, source);
+}
+
+static const char *MN_GetNodeReference(menu_t *menu, menuNode_t *node) {
+	const char *ref = NULL;
+	/* get the reference */
+	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
+		&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP
+		&& node->type != MN_RADAR) {
+		ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+		if (!ref) {
+			/* these have default values for their image */
+			if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
+				/* bad reference */
+				node->invis = qtrue;
+				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
+			}
+		}
+	}
+	return ref;
+}
+
+/**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
@@ -63,15 +272,11 @@ void MN_DrawMenus (void)
 	menuNode_t *node;
 	menu_t *menu;
 	const char *ref;
-	const char *font;
-	char source[MAX_VAR] = "";
 	int sp, pp;
-	vec4_t color;
 	int mouseOver = 0;
-	int i;
-	message_t *message;
-	const invList_t *itemHover = NULL;
 	vec2_t nodepos;
+
+	MN_SetItemHover(NULL);
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -107,7 +312,7 @@ void MN_DrawMenus (void)
 					|| node->type == MN_CHECKBOX || node->type == MN_TAB || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
 					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]) || node->type == MN_RADAR)) {
 				/* if construct */
-				if (!MN_CheckCondition(node))
+				if (!MN_CheckCondition(node)) /** @fixeme double same if!?! if its ok, a comment to explain why */
 				if (!MN_CheckCondition(node))
 					continue;
 
@@ -144,56 +349,46 @@ void MN_DrawMenus (void)
 				}
 
 				/* check node size x and y value to check whether they are zero */
-				if (node->bgcolor && node->size[0] && node->size[1] && nodepos[0] && nodepos[1]) {
-					if (node->type != MN_BASELAYOUT)
+				if (node->size[0] && node->size[1]) {
+					if (node->bgcolor) {
 						R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding,
 							node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
+					}
+					if (node->border && node->bordercolor)
+						MN_DrawBorder(node);
 				}
 
 				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
 					MN_DrawBorder(node);
 
 				/* mouse darken effect */
-				VectorScale(node->color, 0.8, color);
-				color[3] = node->color[3];
-				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp)
+				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp) {
+					vec4_t color;
+					VectorScale(node->color, 0.8, color);
+					color[3] = node->color[3];
 					R_ColorBlend(color);
-				else if (node->type != MN_SELECTBOX)
+				} else if (node->type != MN_SELECTBOX)
 					R_ColorBlend(node->color);
 
-				/* get the reference */
-				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
-					&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP
-					&& node->type != MN_RADAR) {
-					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
-					if (!ref) {
-						/* these have default values for their image */
-						if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
-							/* bad reference */
-							node->invis = qtrue;
-							Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
-							continue;
-						}
-					} else
-						Q_strncpyz(source, ref, MAX_VAR);
-				} else {
-					ref = NULL;
-					*source = '\0';
-				}
+
+				ref = MN_GetNodeReference(menu, node);
+				/** MN_GetNodeReference can force to hide a node */
+				if (node->invis == qtrue)
+					continue;
+
 
 				switch (node->type) {
 				case MN_PIC:
-					if (ref && *ref)
-						MN_DrawImageNode(node, ref, cl.time);
+					MN_DrawImageNode(node, ref);
 					break;
 
 				case MN_CHECKBOX:
+					assert(node->menu == menu);
 					MN_DrawCheckBoxNode(menu, node, ref);
 					break;
 
 				case MN_SELECTBOX:
-					if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
-						MN_DrawSelectBoxNode(node, ref);
+					MN_DrawSelectBoxNode(node, ref);
 					break;
 
 				case MN_TAB:
@@ -201,182 +396,50 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_RADAR:
-					if (cls.state == ca_active && !cl.skipRadarNodes)
-						MN_DrawRadar(node);
+					MN_DrawRadar(node);
 					break;
 
 				case MN_STRING:
-					font = MN_GetFont(menu, node);
-					ref += node->horizontalScroll;
-					/* blinking */
-					if (!node->mousefx || cl.time % 1000 < 500)
-						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
-					else
-						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
+					assert(node->menu == menu);
+					MN_DrawStringNode(node, menu, ref);
 					break;
 
 				case MN_TEXT:
-					if (mn.menuText[node->num]) {
-						font = MN_GetFont(menu, node);
-						MN_DrawTextNode(mn.menuText[node->num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-					} else if (mn.menuTextLinkedList[node->num]) {
-						font = MN_GetFont(menu, node);
-						MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-					} else if (node->num == TEXT_MESSAGESYSTEM) {
-						linkedList_t *messagelist = NULL;
-						char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
-						font = MN_GetFont(menu, node);
-
-						message = mn.messageStack;
-						while (message) {
-							/* get formatted date text */
-							/** @todo this is not utf-8 safe - but the messages are already translated */
-							Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-							for (i = 0; i < (sizeof(text) - 1); i++) {
-								if (text[i] == '\n') {
-									text[i] = '\0';
-									break;
-								}
-							}
-							/* Make a list */
-							LIST_Add(&messagelist, (byte*) text, sizeof(text));
-							message = message->next;
-						}
-						if (messagelist) {
-							MN_DrawTextNode(NULL, messagelist, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-							LIST_Delete(&messagelist);
-						}
-					}
+					MN_DrawTextNode2(node, menu);
 					break;
 
 				case MN_BAR:
-					{
-						float fac, bar_width;
-
-						/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
-						fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
-						bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
-						R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
-					}
+					assert(node->menu == menu);
+					MN_DrawBarNode(node, menu, mouseOver);
 					break;
 
 				case MN_TBAR:
-					{
-						/* data[0] is the texture name, data[1] is the minimum value, data[2] is the current value */
-						float ps, shx;
-						if (node->pointWidth) {
-							ps = MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1]);
-							shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
-						} else
-							shx = node->texh[0];
-						R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
-							shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
-					}
+					assert(node->menu == menu);
+					MN_DrawTBarNode(node, menu, ref);
 					break;
 
 				case MN_LINESTRIP:
-					if (node->linestrips.numStrips > 0) {
-						/* Draw all linestrips. */
-						for (i = 0; i < node->linestrips.numStrips; i++) {
-							/* Draw this line if it's valid. */
-							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-								R_ColorBlend(node->linestrips.color[i]);
-								R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
-							}
-						}
-					}
+					assert(node->menu == menu);
+					MN_DrawLineStripNode(node, menu);
 					break;
 
 				case MN_CONTAINER:
-					if (menuInventory) {
-						const invList_t *itemHover_temp = MN_DrawContainerNode(node);
-						qboolean exists;
-						int itemX = 0;
-						int itemY = 0;
-
-						if (itemHover_temp)
-							itemHover = itemHover_temp;
-
-
-						/** We calculate the position of the top-left corner of the dragged
-						 * item in oder to compensate for the centered-drawn cursor-item.
-						 * Or to be more exact, we calculate the relative offset from the cursor
-						 * location to the middle of the top-left square of the item.
-						 * @sa m_input.c:MN_Click */
-						if (dragInfo.item.t) {
-							itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
-							itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
-
-							/* Place relative center in the middle of the square. */
-							itemX -= C_UNIT / 2;
-							itemY -= C_UNIT / 2;
-						}
-
-						/* Store information for preview drawing of dragged items. */
-						if (MN_CheckNodeZone(node, mousePosX, mousePosY)
-						 ||	MN_CheckNodeZone(node, mousePosX - itemX, mousePosY - itemY)) {
-							dragInfo.toNode = node;
-							dragInfo.to = node->container;
-
-							dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
-							dragInfo.toY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
-
-							/** Check if the items already exists in the container. i.e. there is already at least one item.
-							 * @sa Com_AddToInventory */
-							exists = qfalse;
-							if (dragInfo.to && dragInfo.toNode
-							 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
-							 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
-							 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
-									exists = qtrue;
-							 }
-
-							/** Search for a suitable position to render the item at if
-							 * the container is "single", the cursor is out of bound of the container.
-							 */
-							 if (!exists && dragInfo.item.t && (dragInfo.to->single
-							  || dragInfo.toX  < 0 || dragInfo.toY < 0
-							  || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
-#if 0
-/* ... or there is something in the way. */
-/* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-							  || (Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY) == INV_DOES_NOT_FIT)) {
-#endif
-								Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
-							}
-						}
-					}
+					assert(node->menu == menu);
+					MN_DrawContainerNode2(node, menu, ref);
 					break;
 
 				case MN_ITEM:
-					if (ref && *ref) {
-						const objDef_t *od = INVSH_GetItemByIDSilent(ref);
-						if (od) {
-							MN_DrawItemNode(node, ref);
-						} else {
-							const aircraft_t *aircraft = AIR_GetAircraft(ref);
-							if (aircraft) {
-								assert(aircraft->tech);
-								MN_DrawModelNode(menu, node, ref, aircraft->tech->mdl);
-							} else {
-								Com_Printf("Unknown item: '%s'\n", ref);
-							}
-						}
-					}
+					assert(node->menu == menu);
+					MN_DrawItemNode2(node, menu, ref);
 					break;
 
 				case MN_MODEL:
-					if (*source)
-						MN_DrawModelNode(menu, node, ref, source);
+					assert(node->menu == menu);
+					MN_DrawModelNode2(menu, node, ref);
 					break;
 
 				case MN_MAP:
-					if (curCampaign) {
-						/* don't run the campaign in console mode */
-						if (cls.key_dest != key_console)
-							CL_CampaignRun();	/* advance time */
-						MAP_DrawMap(node); /* Draw geoscape */
-					}
+					MN_DrawMapNode(node);
 					break;
 
 				case MN_BASELAYOUT:
@@ -388,16 +451,7 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_CINEMATIC:
-					if (node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
-						assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
-						if (cls.playingCinematic == CIN_STATUS_NONE)
-							CIN_PlayCinematic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
-						if (cls.playingCinematic) {
-							/* only set replay to true if video was found and is running */
-							CIN_SetParameters(nodepos[0], nodepos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
-							CIN_RunCinematic();
-						}
-					}
+					MN_DrawCinematicNode(node);
 					break;
 				}	/* switch */
 

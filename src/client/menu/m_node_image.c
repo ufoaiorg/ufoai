@@ -1,10 +1,13 @@
 
+#include "../client.h"
 #include "m_nodes.h"
 
-void MN_DrawImageNode (menuNode_t *node, const char *imageName, int time)
+void MN_DrawImageNode (menuNode_t *node, const char *imageName)
 {
 	vec2_t size;
 	vec2_t nodepos;
+
+	int time = cl.time;
 
 	MN_GetNodeAbsPos(node, nodepos);
 	/* HACK for ekg pics */

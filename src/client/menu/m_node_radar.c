@@ -427,6 +427,9 @@ void MN_DrawRadar (menuNode_t *node)
 	int i;
 	vec3_t pos;
 
+	if (!(cls.state == ca_active && !cl.skipRadarNodes))
+		return;
+
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited)
 		MN_InitRadar(node);

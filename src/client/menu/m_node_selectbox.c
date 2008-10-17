@@ -75,6 +75,9 @@ void MN_DrawSelectBoxNode (const menuNode_t *node, const char *image)
 	const char *font;
 	vec2_t nodepos;
 
+	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
+		return;
+
 	MN_GetNodeAbsPos(node, nodepos);
 	if (!image)
 		image = "menu/selectbox";

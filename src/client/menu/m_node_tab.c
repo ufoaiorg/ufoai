@@ -82,7 +82,7 @@ void MN_NodeTabInit (void)
 }
 
 /**
- * Return a tab located at a screen position
+ * @brief Return a tab located at a screen position
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
@@ -218,7 +218,6 @@ void MN_DrawTabNode (const menuNode_t *node, const char *image)
 			status = MN_TAB_SELECTED;
 		} else if (tabOption == overMouseOption) {
 			status = MN_TAB_HILIGHTED;
-			Com_Printf("MN_DrawTabNode\n");
 		}
 
 		/* Display */
