@@ -79,6 +79,13 @@ typedef enum nt_s {
 	NT_NUM_NOTIFYTYPE
 } notify_t;
 
+/** @brief notification types */
+typedef enum mso_s {
+	MSO_PAUSE, /** pause game */
+	MSO_NOTIFY, /** add notification message */
+	MSO_SOUND /** play notification sound */
+} mso_t;
+
 /**
  * @brief structure holding pause and notify settings for a notify type.
  *
@@ -86,6 +93,7 @@ typedef enum nt_s {
 typedef struct messageSettings_s {
 	qboolean	doPause; /** flag whether game should pause */
 	qboolean	doNotify; /** flag whether game should notify */
+	qboolean	doSound; /** flag whether game should play sound notification */
 } messageSettings_t;
 
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];

@@ -8,6 +8,8 @@ msgoptions default
 {
 	installation_installed pause
 	installation_installed notify
+	installation_installed sound
 	installation_removed pause
 	installation_removed notify
+	installation_removed sound
 }

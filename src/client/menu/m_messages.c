@@ -410,6 +410,7 @@ static void MSO_Init_f (void)
 				MN_ExecuteConfunc(va("ms_enable%i", idx));
 				MN_ExecuteConfunc(va("ms_pause%s%i", messageSettings[idx].doPause ? "e" : "d", idx));
 				MN_ExecuteConfunc(va("ms_notify%s%i", messageSettings[idx].doNotify ? "e" : "d", idx));
+				MN_ExecuteConfunc(va("ms_sound%s%i", messageSettings[idx].doSound? "e" : "d", idx));
 			}
 		}
 		/* disable menu button lines that are not needed */
@@ -424,21 +425,29 @@ static void MSO_Init_f (void)
  * @brief Function updates pause or notification settings.
  * @param listIndex listIndex in menu to update via confunc
  * @param type notification type to update
- * @param pause flag indicating whether to update pause (qtrue) or notify (qfalse) setting
+ * @param optionType option type that should be updated
  * @param activate flag indicating whether setting should be activated (qtrue) or deactivated
  * @param sendCommands flag indicating whether confunc command to update menu button should be sent
  * @sa MSO_Toggle_f
  * @sa MSO_Set_f
  * @note if sendCommands is qfalse, initialization of buttons is reactivated for next menu displaying
  */
-static void MSO_Set (const int listIndex, const notify_t type, const qboolean pause, const qboolean activate, const qboolean sendCommands)
+static void MSO_Set (const int listIndex, const notify_t type, const mso_t optionType, const qboolean activate, const qboolean sendCommands)
 {
-	if (pause)
+	const char* option;
+
+	if (optionType == MSO_PAUSE) {
 		messageSettings[type].doPause = activate;
-	else
+		option = "pause";
+	} else if (optionType == MSO_NOTIFY) {
 		messageSettings[type].doNotify = activate;
+		option = "notify";
+	} else {
+		messageSettings[type].doSound = activate;
+		option = "sound";
+	}
 	if (sendCommands)
-		MN_ExecuteConfunc(va("ms_%s%s%i", pause ? "pause" : "notify", activate ? "e" : "d", listIndex));
+		MN_ExecuteConfunc(va("ms_%s%s%i", option, activate ? "e" : "d", listIndex));
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
 		messageOptionsInitialized = qfalse;
@@ -455,17 +464,20 @@ static void MSO_Toggle_f (void)
 	else {
 		const int listIndex = atoi(Cmd_Argv(1));
 		const notify_t type = listIndex + messageList_scroll;
-		qboolean pause;
+		mso_t optionType;
 		qboolean activate;
 
 		if (!Q_strcmp(Cmd_Argv(2), "pause")) {
-			pause = qtrue;
+			optionType = MSO_PAUSE;
 			activate = !messageSettings[type].doPause;
-		} else {
-			pause = qfalse;
+		} else if (!Q_strcmp(Cmd_Argv(2), "notify")) {
+			optionType = MSO_NOTIFY;
 			activate = !messageSettings[type].doNotify;
+		} else {
+			optionType = MSO_SOUND;
+			activate = !messageSettings[type].doSound;
 		}
-		MSO_Set(listIndex, type, pause, activate, qtrue);
+		MSO_Set(listIndex, type, optionType, activate, qtrue);
 	}
 }
 
@@ -476,10 +488,10 @@ static void MSO_Toggle_f (void)
 static void MSO_Set_f (void)
 {
 	if (Cmd_Argc() != 4)
-		Com_Printf("Usage: %s <messagetypename> <pause|notify> <0|1>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
 	else {
 		notify_t type;
-		qboolean pause = qfalse;
+		mso_t optionsType;
 		const char *messagetype = Cmd_Argv(1);
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -492,8 +504,16 @@ static void MSO_Set_f (void)
 		}
 
 		if (!Q_strcmp(Cmd_Argv(2), "pause"))
-			pause = qtrue;
-		MSO_Set(0, type, pause, atoi(Cmd_Argv(3)), qfalse);
+			optionsType = MSO_PAUSE;
+		else if (!Q_strcmp(Cmd_Argv(2), "notify"))
+			optionsType = MSO_NOTIFY;
+		else if (!Q_strcmp(Cmd_Argv(2), "sound"))
+			optionsType = MSO_SOUND;
+		else {
+			Sys_ConsoleOutput(va("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2)));
+			return;
+		}
+		MSO_Set(0, type, optionsType, atoi(Cmd_Argv(3)), qfalse);
 	}
 }
 
@@ -528,6 +548,7 @@ static void MSO_Scroll_f (void)
 		if (type < NT_NUM_NOTIFYTYPE) {
 			MN_ExecuteConfunc(va("ms_pause%s%i", messageSettings[type].doPause ? "e" : "d", i));
 			MN_ExecuteConfunc(va("ms_notify%s%i", messageSettings[type].doNotify ? "e" : "d", i));
+			MN_ExecuteConfunc(va("ms_sound%s%i", messageSettings[type].doSound ? "e" : "d", i));
 		}
 	}
 }
@@ -568,6 +589,8 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 			count++;
 		if (messageSettings[type].doPause)
 			count++;
+		if (messageSettings[type].doSound)
+			count++;
 	}
 	MSG_WriteLong(sb, count);
 	/* save positive values (negative won't be saved) */
@@ -579,6 +602,10 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 		if (messageSettings[type].doPause) {
 			MSG_WriteString(sb, nt_strings[type]);
 			MSG_WriteChar(sb, 'p');
+		}
+		if (messageSettings[type].doSound) {
+			MSG_WriteString(sb, nt_strings[type]);
+			MSG_WriteChar(sb, 's');
 		}
 	}
 	messageOptionsInitialized = qfalse;
@@ -604,7 +631,7 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 		const char *messagetype = MSG_ReadString(sb);
 		const char pauseOrNotify = MSG_ReadChar(sb);
 		notify_t type;
-		qboolean pause;
+		mso_t pause;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 			if (Q_strcmp(nt_strings[type], messagetype) == 0)
@@ -616,9 +643,11 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 			continue;
 		}
 		if (pauseOrNotify == 'p') {
-			pause = qtrue;
+			pause = MSO_PAUSE;
 		} else if (pauseOrNotify == 'n') {
-			pause = qfalse;
+			pause = MSO_NOTIFY;
+		} else if (pauseOrNotify == 's') {
+			pause = MSO_SOUND;
 		} else {
 			return 0;
 		}
@@ -656,7 +685,7 @@ void MSO_ParseSettings(const char *name, const char **text)
 			break;
 		/* temporarly store type */
 		tmpCommand = va("%s",msgtype);
-		/* build command from msgtype, settingstype (pause|notice) */
+		/* build command from msgtype, settingstype (pause|notify|sound) */
 		token = va("msgoptions_set %s %s 1",tmpCommand,COM_EParse(text, errhead, name));
 		Cmd_ExecuteString(token);
 	} while (*text);
@@ -666,7 +695,11 @@ void MN_MessageInit (void)
 {
 	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
-	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause or notification setting for a message category");
+	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
+#if 0
+	/* @todo implement setall for given optionstype */
+	Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
+#endif
 	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause or notification setting for a message category");
 	Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
 	Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
