@@ -701,6 +701,20 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 }
 
 /**
+ * @brief Initialise all values of installation slot defence.
+ * @param[in] Pointer to the installation which needs initalisation of its slots.
+ */
+void BDEF_InitialiseInstallationSlots (installation_t *installation)
+{
+	int i;
+
+	for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
+		AII_InitialiseSlot(&installation->batteries[i].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
+		installation->batteries[i].target = NULL;
+	}
+}
+
+/**
  * @brief Script command to init the base defence menu.
  * @note this function is only called when the menu launches
  * @sa BDEF_BaseDefenseMenuUpdate_f
@@ -1907,8 +1921,10 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 
-	if (!baseCurrent)
+	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent)) {
+		Com_Printf("Exiting early base and install both true or both false\n");
 		return;
+	}
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1926,7 +1942,11 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		aircraft = baseCurrent->aircraftCurrent;
 		slot = AII_SelectAircraftSlot(aircraft);
 	} else {
-		slot = BDEF_SelectBaseSlot(baseCurrent);
+		if (baseCurrent) {
+			slot = BDEF_SelectBaseSlot(baseCurrent);
+		} else {
+			slot = BDEF_SelectInstallationSlot(installationCurrent);
+		}
 		aircraft = NULL;
 	}
 
@@ -1943,7 +1963,6 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		return;
 	}
 
-
 	/* no item in slot: nothing to remove */
 	if (!slot->item)
 		return;
@@ -1956,9 +1975,16 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < slot->item->craftitem.installationTime) {
 			slot->installationTime = -slot->item->craftitem.installationTime;
-			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
+			if (baseCurrent)
+				AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
+			else
+				AII_RemoveItemFromSlot(NULL, slot, qtrue); /* we remove only ammo, not item */
 		} else {
-			AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
+			if (baseCurrent) {
+				AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
+			} else {
+				AII_RemoveItemFromSlot(NULL, slot, qfalse);
+			}
 		}
 		/* aircraft stats are updated below */
 		break;
@@ -1969,8 +1995,13 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
-		if (airequipID >= AC_ITEM_AMMO)
-			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
+		if (airequipID >= AC_ITEM_AMMO) {
+			if (baseCurrent) {
+				AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
+			} else {
+				AII_RemoveItemFromSlot(NULL, slot, qtrue);
+			}
+		}
 		break;
 	default:
 		/* Zone higher than ZONE_AMMO shouldn't exist */
@@ -2002,8 +2033,6 @@ void AIM_ResetEquipAircraftMenu (void)
 
 	mn.menuText[TEXT_STANDARD] = "";
 }
-
-
 
 /**
  * @brief Set airequipSelectedTechnology to the technology of current selected aircraft item.
