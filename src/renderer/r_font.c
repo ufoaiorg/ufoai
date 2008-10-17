@@ -325,9 +325,6 @@ static int R_FontFindFit (const font_t *f, char *text, int maxlen, int maxWidth,
 		*widthp = width;
 	}
 
-	if (!bestbreak)
-		Com_Error(ERR_FATAL, "R_FontFindFit: Renderer can't fit even one character in %i pixels.\n", maxWidth);
-
 	return bestbreak;
 }
 
@@ -389,21 +386,23 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, in
 		}
 
 		width = R_FontChunkLength(f, &buf[pos], len);
-		if (width > 0) {
-			if (maxWidth > 0 && width > maxWidth) {
-				if (method == LONG_LINES_WRAP) {
-					/* full chunk didn't fit; try smaller */
-					len = R_FontFindFit(f, &buf[pos], len, maxWidth, &width);
-					/* skip following spaces */
-					skip = 0;
-					while (buf[pos + len + skip] == ' ')
-						skip++;
-				} else {
-					len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, &width);
-					skip = strcspn(&buf[pos + len], "\n\\\\");
-					truncated = qtrue;
-				}
+		if (maxWidth > 0 && width > maxWidth) {
+			if (method == LONG_LINES_WRAP) {
+				/* full chunk didn't fit; try smaller */
+				len = R_FontFindFit(f, &buf[pos], len, maxWidth, &width);
+				/* skip following spaces */
+				skip = 0;
+				while (buf[pos + len + skip] == ' ')
+					skip++;
+				if (len + skip == 0)
+					break; /* could not fit even one character */
+			} else {
+				len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, &width);
+				skip = strcspn(&buf[pos + len], "\n\\\\");
+				truncated = qtrue;
 			}
+		}
+		if (width > 0) {
 			/* add chunk to cache */
 			if (numChunks >= MAX_CHUNK_CACHE) {
 				/* whoops, ran out of cache, wipe cache and start over */
