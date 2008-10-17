@@ -91,10 +91,11 @@ static const value_t nps[] = {
 	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
 	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/* no gettext here - this can be a cvar, too */
 	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
-	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
-	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
-	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, dataModelTag), 0},
 	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
+
+	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.max), 0},
+	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.min), 0},
+	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.value), 0},
 
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},

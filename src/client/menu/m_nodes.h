@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODES_H
 
 #include "m_menu.h"
+#include "m_node_abstractvalue.h"
 #include "../cl_renderer.h"
 #include "../../common/common.h"
 #include "../../renderer/r_mesh.h"
@@ -99,20 +100,6 @@ typedef struct lineStrips_s {
  * @todo delete data when it's possible
  */
 typedef struct menuNode_s {
-	//void *data[6];				/**< needs to be first */
-
-	void* dataStringOrImageOrModel;	/**< First entry in data array can
-						* be an image, an model or an string, this depends
-						* on the node type
-						*/
-	void* dataAnimOrFont;	/** This is the font string or the anim string
-						* from the *.anm files for the model */
-	void* dataModelTag;	/**< the tag to place the model onto */
-	void* dataModelSkinOrCVar; /**< the skin of the model */
-	void* dataModelAnimationState;	/**< holds then anim state for the current model
-						* model - also see MN_DATA_ANIM_OR_FONT */
-	void* dataNodeTooltip; /**< holds the tooltip for the menu */
-
 	char name[MAX_VAR];
 	char key[MAX_VAR];
 	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
@@ -160,6 +147,24 @@ typedef struct menuNode_s {
 	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 	const value_t *scriptValues;
+	void* dataStringOrImageOrModel;	/**< First entry in data array can
+						* be an image, an model or an string, this depends
+						* on the node type
+						*/
+	void* dataAnimOrFont;	/** This is the font string or the anim string
+						* from the *.anm files for the model */
+	void* dataModelTag;	/**< the tag to place the model onto */
+	void* dataModelSkinOrCVar; /**< the skin of the model */
+	void* dataModelAnimationState;	/**< holds then anim state for the current model
+						* model - also see MN_DATA_ANIM_OR_FONT */
+	void* dataNodeTooltip; /**< holds the tooltip for the menu */
+
+	/** union will contain all extradata for a node */
+	union {
+		abstractvalue_data_node_t abstractvalue;
+
+	};
+
 } menuNode_t;
 
 /** @brief node behaviour, how a node work */

@@ -9,9 +9,9 @@ void MN_DrawBarNode(menuNode_t *node) {
 	float fac, bar_width;
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
-	float min = MN_GetReferenceFloat(menu, node->dataAnimOrFont);
-	float max = MN_GetReferenceFloat(menu, node->dataStringOrImageOrModel);
-	float value = MN_GetReferenceFloat(menu, node->dataModelTag);
+	float min = MN_GetReferenceFloat(menu, node->abstractvalue.min);
+	float max = MN_GetReferenceFloat(menu, node->abstractvalue.max);
+	float value = MN_GetReferenceFloat(menu, node->abstractvalue.value);
 	MN_GetNodeAbsPos(node, nodepos);
 	VectorScale(node->color, 0.8, color);
 	color[3] = node->color[3];
@@ -36,13 +36,13 @@ static void MN_BarClick (menuNode_t * node, int x, int y)
 		return;
 
 	MN_GetNodeAbsPos(node, pos);
-	Q_strncpyz(var, node->dataModelTag, sizeof(var));
+	Q_strncpyz(var, node->abstractvalue.value, sizeof(var));
 	/* no cvar? */
 	if (!Q_strncmp(var, "*cvar", 5)) {
 		/* normalize it */
 		const float frac = (float) (x - pos[0]) / node->size[0];
-		const float min = MN_GetReferenceFloat(menu, node->dataAnimOrFont);
-		const float value = min + frac * (MN_GetReferenceFloat(menu, node->dataStringOrImageOrModel) - min);
+		const float min = MN_GetReferenceFloat(menu, node->abstractvalue.min);
+		const float value = min + frac * (MN_GetReferenceFloat(menu, node->abstractvalue.max) - min);
 		/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 		MN_SetCvar(&var[6], NULL, value);
 	}
