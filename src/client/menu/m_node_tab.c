@@ -191,7 +191,7 @@ static inline void MN_DrawTabNodeJunction (const char *image, int x, int y, mn_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, qtrue, image);
 }
 
-void MN_DrawTabNode (const menuNode_t *node)
+void MN_DrawTabNode (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
 	selectBoxOptions_t* tabOption;
@@ -247,5 +247,6 @@ void MN_DrawTabNode (const menuNode_t *node)
 }
 
 void MN_RegisterNodeTab(nodeBehaviour_t *behaviour) {
+	behaviour->name = "tab";
 	behaviour->draw = MN_DrawTabNode;
 }

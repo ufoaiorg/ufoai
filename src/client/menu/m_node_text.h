@@ -48,4 +48,6 @@ void MN_MenuTextReset(int menuTextID);
 
 void MN_NodeTextInit(void);
 
+void MN_RegisterNodeText(nodeBehaviour_t *behaviour);
+
 #endif

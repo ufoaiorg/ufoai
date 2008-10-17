@@ -55,5 +55,6 @@ void MN_DrawImageNode(menuNode_t *node)
 }
 
 void MN_RegisterNodeImage(nodeBehaviour_t* behaviour) {
+	behaviour->name = "pic";
 	behaviour->draw = MN_DrawImageNode;
 }

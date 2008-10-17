@@ -170,7 +170,8 @@ typedef struct menuNode_s {
 
 /** @brief node behaviour, how a node work */
 typedef struct {
-	void (*draw)(menuNode_t *node);	/**< how to draw a node */
+	char* name;							/**< name of the behaviour: string type of a node */
+	void (*draw)(menuNode_t *node);		/**< how to draw a node */
 } nodeBehaviour_t;
 
 extern nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];

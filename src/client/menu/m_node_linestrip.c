@@ -19,5 +19,6 @@ void MN_DrawLineStripNode(menuNode_t *node) {
 }
 
 void MN_RegisterNodeLineStrip(nodeBehaviour_t *behaviour) {
+	behaviour->name = "linestrip";
 	behaviour->draw = MN_DrawLineStripNode;
 }

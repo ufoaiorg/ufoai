@@ -484,5 +484,6 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 }
 
 void MN_RegisterNodeModel(nodeBehaviour_t *behaviour) {
+	behaviour->name = "model";
 	behaviour->draw = MN_DrawModelNode2;
 }

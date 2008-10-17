@@ -22,5 +22,6 @@ void MN_DrawStringNode(menuNode_t *node) {
 }
 
 void MN_RegisterNodeString(nodeBehaviour_t *behaviour) {
+	behaviour->name = "string";
 	behaviour->draw = MN_DrawStringNode;
 }

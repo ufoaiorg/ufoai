@@ -77,5 +77,6 @@ static void MN_DrawContainerNode2(menuNode_t *node) {
 }
 
 void MN_RegisterNodeContainer(nodeBehaviour_t* behaviour) {
+	behaviour->name = "container";
 	behaviour->draw = MN_DrawContainerNode2;
 }

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_input.h"
 
 #include "m_node_bar.h"
+#include "m_node_base.h"
 #include "m_node_checkbox.h"
 #include "m_node_cinematic.h"
 #include "m_node_container.h"
@@ -353,8 +354,9 @@ static void MN_UnHideNode_f (void)
 
 /** @brief Init a behaviour to null. A null node dont react
  */
-inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour) {
+inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour, char* name) {
 	memset(behaviour, 0, sizeof(nodeBehaviour_t));
+	behaviour->name = name;
 }
 
 /** @brief List of all node behaviours, indexes by nodetype num.
@@ -371,21 +373,22 @@ void MN_InitNodes (void)
 	MN_NodeSelectBoxInit();
 	MN_NodeModelInit();
 
-	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone");
 	MN_RegisterNodeImage(nodeBehaviourList + MN_PIC);
 	MN_RegisterNodeString(nodeBehaviourList + MN_STRING);
+	MN_RegisterNodeText(nodeBehaviourList + MN_TEXT);
 	MN_RegisterNodeBar(nodeBehaviourList + MN_BAR);
 	MN_RegisterNodeTBar(nodeBehaviourList + MN_TBAR);
 	MN_RegisterNodeModel(nodeBehaviourList + MN_MODEL);
 	MN_RegisterNodeContainer(nodeBehaviourList + MN_CONTAINER);
 	MN_RegisterNodeItem(nodeBehaviourList + MN_ITEM);
 	MN_RegisterNodeMap(nodeBehaviourList + MN_MAP);
-	//MN_RegisterNodeBaseMap(nodeBehaviourList + MN_BASEMAP); /* @fixme temporary hide */
-	//MN_RegisterNodeBaseLayout(nodeBehaviourList + MN_BASELAYOUT); /* @fixme temporary hide */
+	MN_RegisterNodeBaseMap(nodeBehaviourList + MN_BASEMAP);
+	MN_RegisterNodeBaseLayout(nodeBehaviourList + MN_BASELAYOUT);
 	MN_RegisterNodeCheckBox(nodeBehaviourList + MN_CHECKBOX);
 	MN_RegisterNodeSelectBox(nodeBehaviourList + MN_SELECTBOX);
 	MN_RegisterNodeLineStrip(nodeBehaviourList + MN_LINESTRIP);

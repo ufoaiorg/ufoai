@@ -27,5 +27,6 @@ void MN_DrawCinematicNode(menuNode_t *node) {
 }
 
 void MN_RegisterNodeCinematic(nodeBehaviour_t* behaviour) {
+	behaviour->name = "cinematic";
 	behaviour->draw = MN_DrawCinematicNode;
 }

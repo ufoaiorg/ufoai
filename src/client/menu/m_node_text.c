@@ -376,3 +376,9 @@ void MN_NodeTextInit (void)
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
 }
+
+void MN_RegisterNodeText(nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "text";
+	behaviour->draw = MN_DrawTextNode2;
+}

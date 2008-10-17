@@ -67,7 +67,7 @@ void MN_NodeSelectBoxInit (void)
 	selectBoxNode = NULL;
 }
 
-void MN_DrawSelectBoxNode (const menuNode_t *node)
+void MN_DrawSelectBoxNode (menuNode_t *node)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int selBoxX, selBoxY;
@@ -155,5 +155,6 @@ void MN_DrawSelectBoxNode (const menuNode_t *node)
 }
 
 void MN_RegisterNodeSelectBox(nodeBehaviour_t *behaviour) {
+	behaviour->name = "selectbox";
 	behaviour->draw = MN_DrawSelectBoxNode;
 }

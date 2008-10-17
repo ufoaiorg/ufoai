@@ -21,5 +21,6 @@ void MN_DrawMapNode(menuNode_t *node) {
 }
 
 void MN_RegisterNodeMap(nodeBehaviour_t *behaviour) {
+	behaviour->name = "map";
 	behaviour->draw = MN_DrawMapNode;
 }

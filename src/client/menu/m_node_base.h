@@ -1,5 +1,5 @@
 /**
- * @file m_draw.h
+ * @file m_node_container.h
  */
 
 /*
@@ -22,15 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_DRAW_H
-#define CLIENT_MENU_M_DRAW_H
+#ifndef CLIENT_MENU_M_NODE_BASE_H
+#define CLIENT_MENU_M_NODE_BASE_H
 
-extern cvar_t *mn_show_tooltips;
+#include "m_nodes.h"
 
-void MN_DrawMenus(void);
-void MN_DrawMenusInit(void);
-void MN_DisplayNotice(const char *text, int time);
-
-void MN_SetItemHover(const invList_t *item);
+void MN_RegisterNodeBaseMap(nodeBehaviour_t *behaviour);
+void MN_RegisterNodeBaseLayout(nodeBehaviour_t *behaviour);
 
 #endif
+
+
+

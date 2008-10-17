@@ -34,5 +34,6 @@ void MN_DrawItemNode2(menuNode_t *node) {
 }
 
 void MN_RegisterNodeItem(nodeBehaviour_t *behaviour) {
+	behaviour->name = "item";
 	behaviour->draw = MN_DrawItemNode2;
 }

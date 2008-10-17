@@ -19,5 +19,6 @@ void MN_DrawBarNode(menuNode_t *node) {
 }
 
 void MN_RegisterNodeBar(nodeBehaviour_t *behaviour) {
+	behaviour->name = "bar";
 	behaviour->draw = MN_DrawBarNode;
 }

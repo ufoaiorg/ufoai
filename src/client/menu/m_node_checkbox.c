@@ -2,7 +2,7 @@
 #include "m_nodes.h"
 #include "m_parse.h"
 
-void MN_DrawCheckBoxNode (const menuNode_t* node)
+void MN_DrawCheckBoxNode (menuNode_t* node)
 {
 	const char *image;
 	const char *ref;
@@ -36,5 +36,6 @@ void MN_DrawCheckBoxNode (const menuNode_t* node)
 }
 
 void MN_RegisterNodeCheckBox(nodeBehaviour_t *behaviour) {
+	behaviour->name = "checkbox";
 	behaviour->draw = MN_DrawCheckBoxNode;
 }
