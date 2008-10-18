@@ -172,7 +172,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 			} else {
 				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataStringOrImageOrModel));
 			}
-		} else if (node->type == MN_PIC && node->dataStringOrImageOrModel) {
+		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->dataStringOrImageOrModel) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];

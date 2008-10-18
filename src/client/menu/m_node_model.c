@@ -213,8 +213,8 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	nodeorigin[0] = nodepos[0];
-	nodeorigin[1] = nodepos[1];
+	nodeorigin[0] = node->model.origin[0] - node->pos[0] + nodepos[0];
+	nodeorigin[1] = node->model.origin[1] - node->pos[1] + nodepos[1];
 	nodeorigin[3] = node->model.origin[2];
 
 	menuModel = node->model.menuModel = MN_GetMenuModel(source);
