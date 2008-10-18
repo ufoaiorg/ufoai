@@ -80,7 +80,7 @@ void MN_DrawSelectBoxNode (menuNode_t *node)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	const char* image = MN_GetNodeReference(node);
+	const char* image = MN_GetReferenceString(node->menu, node->dataStringOrImageOrModel);
 	if (!image)
 		image = "menu/selectbox";
 

@@ -10,8 +10,8 @@ void MN_DrawStringNode (menuNode_t *node)
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
 	const char *font = MN_GetFont(menu, node);
-	const char* ref = MN_GetNodeReference(node);
-	if (!ref || !*ref)
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	if (!ref)
 		return;
 	MN_GetNodeAbsPos(node, nodepos);
 	ref += node->horizontalScroll;

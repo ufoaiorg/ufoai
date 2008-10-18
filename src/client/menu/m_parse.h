@@ -31,6 +31,8 @@ void MN_ParseMenu(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const menu_t* const menu, void *ref);
 const char *MN_GetReferenceString(const menu_t* const menu, char *ref);
+const char *MN_GetSaifeReferenceString (const menu_t* const menu, char *ref);
+
 qboolean MN_ScriptSanityCheck(void);
 
 #define V_MENU_COPY 0x100 /**< flag to request a string copy into the menu structure */

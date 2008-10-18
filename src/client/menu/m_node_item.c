@@ -16,9 +16,10 @@
 void MN_DrawItemNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetNodeReference(node);
-	if (!ref || !*ref)
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	if (!ref) {
 		return;
+	}
 
 	const objDef_t *od = INVSH_GetItemByIDSilent(ref);
 	if (od) {

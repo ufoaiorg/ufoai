@@ -1006,6 +1006,23 @@ void MN_ParseMenu (const char *name, const char **text)
 }
 
 /**
+ * @brief Return a string
+ * @return A string, or NULL if the ref is NULL or empty
+ * @sa MN_GetReferenceString
+ */
+const char *MN_GetSaifeReferenceString (const menu_t* const menu, char *ref)
+{
+	const char* string = MN_GetReferenceString(menu, ref);
+	if (!string || !*string) {
+#ifdef DEBUG
+		Com_Printf("MN_GetSaifeReferenceString: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->dataStringOrImageOrModel, node->menu->name);
+#endif
+		return NULL;
+	}
+	return string;
+}
+
+/**
  * @sa COM_MacroExpandString
  */
 const char *MN_GetReferenceString (const menu_t* const menu, char *ref)

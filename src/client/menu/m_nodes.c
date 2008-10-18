@@ -75,30 +75,6 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	}
 }
 
-/**
- * @brief
- * @todo delete this function when it's possible
- */
-const char *MN_GetNodeReference (const menuNode_t *node)
-{
-	const char *ref = NULL;
-	/* get the reference */
-	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT
-		&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP
-		&& node->type != MN_RADAR) {
-		ref = MN_GetReferenceString(node->menu, node->dataStringOrImageOrModel);
-		if (!ref) {
-			/* these have default values for their image */
-			if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX && node->type != MN_TAB) {
-				/* bad reference */
-				((menuNode_t *)node)->invis = qtrue; /*< why dont we shut down the appli? */
-				Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->dataStringOrImageOrModel, node->menu->name);
-			}
-		}
-	}
-	return ref;
-}
-
 #if 0
 /** @todo to be integrated into MN_CheckNodeZone */
 /**

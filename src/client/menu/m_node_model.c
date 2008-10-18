@@ -183,7 +183,7 @@ void MN_NodeModelInit (void)
 void MN_DrawModelNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetNodeReference(node);
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
 	char source[MAX_VAR] = "";
 	if (ref == NULL)
 		*source = '\0';

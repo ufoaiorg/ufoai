@@ -15,8 +15,8 @@ void MN_DrawImageNode(menuNode_t *node)
 
 	int time = cl.time;
 
-	const char* imageName = node->dataStringOrImageOrModel;
-	if (!imageName || !*imageName)
+	const char* imageName = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	if (!imageName)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);

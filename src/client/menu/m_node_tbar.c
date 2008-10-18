@@ -9,9 +9,10 @@ void MN_DrawTBarNode (menuNode_t *node)
 	float ps, shx;
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetNodeReference(node);
-	if (!ref || !*ref)
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	if (!ref) {
 		return;
+	}
 	MN_GetNodeAbsPos(node, nodepos);
 
 	if (node->pointWidth) {

@@ -9,7 +9,7 @@ void MN_DrawCheckBoxNode (menuNode_t* node)
 	const char *ref;
 	vec2_t nodepos;
 	const menu_t* menu = node->menu;
-	const char *checkBoxImage = MN_GetNodeReference(node);
+	const char *checkBoxImage = MN_GetReferenceString(node->menu, node->dataStringOrImageOrModel);
 
 	MN_GetNodeAbsPos(node, nodepos);
 	/* image set? */
