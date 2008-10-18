@@ -1199,7 +1199,7 @@ void CL_CampaignRunAircraft (int dt)
 						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 						aircraft->status = AIR_HOME;
 						assert(aircraft->homebase);
-						MN_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), aircraft->name, aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+						MN_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 					}
 				}
 
@@ -1207,7 +1207,7 @@ void CL_CampaignRunAircraft (int dt)
 				if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
 					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 					/** @todo check if aircraft can go to a closer base with free space */
-					MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name), qfalse, MSG_STANDARD, NULL);
+					MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
 
