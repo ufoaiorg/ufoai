@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_WRAP_HASH		4096 /* making this bigger reduces collisions */
 #define MAX_FONTS			16
 #define MAX_FONTNAME		32
+#define MAX_TRUNCMARKER		16   /* enough for 3 chinese chars */
 
 #define BUF_SIZE 2048
 
@@ -84,12 +85,12 @@ static wrapCache_t *hash[MAX_WRAP_HASH];
 static int numChunks = 0;
 static int numWraps = 0;
 
-/** @todo Internationalize this. European languages can use the nice
- * Unicode ellipsis symbol which is shorter than three periods, and
- * Asian language have their own conventions for this.
- * Unfortunately, the renderer directory has no gettext hookup.
+/**
+ * @brief This string is added at the end of truncated strings.
+ * By default it is an ellipsis, but the caller can change that.
+ * @sa R_FontSetTruncationMarker
  */
-static const char *ellipsis = "...";
+static char truncmarker[MAX_TRUNCMARKER] =  "...";
 
 typedef struct {
 	const char *name;
@@ -105,6 +106,11 @@ static const fontRenderStyle_t fontStyle[] = {
 };
 
 /*============================================================== */
+
+void R_FontSetTruncationMarker (const char *marker)
+{
+	Q_strncpyz(truncmarker, marker, sizeof(truncmarker));
+}
 
 
 /**
@@ -331,7 +337,7 @@ static int R_FontFindFit (const font_t *f, char *text, int maxlen, int maxWidth,
 
 /**
  * @brief Find longest part of text that fits in maxWidth pixels,
- * with an ellipsis at the end to show that part of the text was
+ * with a marker (ellipsis) at the end to show that part of the text was
  * truncated.
  * Assumes whole string won't fit.
  */
@@ -347,7 +353,7 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
 		buf[len - 1] = text[len - 1];
 		if (UTF8_CONTINUATION_BYTE(text[len]))
 			continue;
-		Q_strncpyz(&buf[len], ellipsis, sizeof(buf) - len);
+		Q_strncpyz(&buf[len], truncmarker, sizeof(buf) - len);
 		TTF_SizeUTF8(f->font, buf, &width, NULL);
 		if (width > maxWidth)
 			return len - 1;
@@ -559,7 +565,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	buf[chunk->len] = 0;
 
 	if (chunk->truncated)
-		Q_strncpyz(buf + chunk->len, ellipsis, sizeof(buf) - chunk->len);
+		Q_strncpyz(buf + chunk->len, truncmarker, sizeof(buf) - chunk->len);
 
 	textSurface = TTF_RenderUTF8_Blended(font->font, buf, color);
 	if (!textSurface) {

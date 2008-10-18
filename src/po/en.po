@@ -14694,3 +14694,6 @@ msgstr "Take a screenshot"
 
 #~ msgid "Crashed Alien Ship. Secure the area."
 #~ msgstr "Crashed Alien Ship. Secure the area."
+
+msgid "..."
+msgstr "…"

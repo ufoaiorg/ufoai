@@ -211,7 +211,10 @@ void R_SwitchModelMemPoolTag(void);
 void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
 void R_LoadImage(const char *name, byte **pic, int *width, int *height);
 
+void R_FontShutdown(void);
+void R_FontInit(void);
 void R_FontRegister(const char *name, int size, const char *path, const char *style);
+void R_FontSetTruncationMarker(const char *marker);
 
 /* for method parameter */
 #define LONG_LINES_TRUNCATE 0

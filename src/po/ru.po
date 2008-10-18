@@ -16691,3 +16691,6 @@ msgstr "Сделать скриншот"
 
 #~ msgid "Heavy Nano Armor"
 #~ msgstr "Heavy Nano Armor"
+
+msgid "..."
+msgstr "…"

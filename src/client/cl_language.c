@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_language.h"
 
+#include "menu/m_font.h"
+
 /**
  * @brief List of all mappings for a locale
  */
@@ -263,6 +265,17 @@ void CL_LanguageInit (void)
 }
 
 /**
+ * @brief Adjust game for new language: reregister fonts, etc.
+ */
+static void CL_NewLanguage (void)
+{
+	R_FontShutdown();
+	R_FontInit();
+	MN_InitFonts();
+	R_FontSetTruncationMarker(_("..."));
+}
+
+/**
  * @brief Cycle through all parsed locale mappings and try to set one after another
  * @param[in] localeID the locale id parsed from scriptfiles
  * @sa CL_LocaleSet
@@ -300,11 +313,13 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 		SDL_putenv(va("LANGUAGE=%s", mapping->localeMapping));
 		Cvar_Set("s_language", language->localeID);
 		s_language->modified = qfalse;
+		CL_NewLanguage();
 		return qtrue;
 #else
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
 			Cvar_Set("s_language", language->localeID);
 			s_language->modified = qfalse;
+			CL_NewLanguage();
 			return qtrue;
 		}
 #endif
@@ -313,6 +328,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 #ifndef _WIN32
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: Finally try: '%s'\n", localeID);
 	setlocale(LC_MESSAGES, localeID);
+	CL_NewLanguage();
 #endif
 	return qfalse;
 }
