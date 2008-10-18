@@ -857,7 +857,7 @@ static void Check_FindCompositeSides (void)
 				if (!sidesInNewComposite)
 					Sys_Error("Check_FindCompositeSides: out of memory");
 
-				/* this was not done before for the first side before, as we did not know it would have at least 2 members */
+				/* this was not done before for the first side, as we did not know it would have at least 2 members */
 				iSide->isCompositeMember = qtrue;
 
 				compositeSides[numCompositeSides].numMembers = numMembers;
@@ -1411,6 +1411,9 @@ void CheckNodraws (void)
 			for (is = 0; is < iBrush->numsides; is++) {
 				side_t *iSide = &iBrush->original_sides[is];
 				winding_t *iWinding;
+				vec3_t lastIntersection; /* used in innner loop, here to avoid repeated memset calls */
+
+				memset(lastIntersection, '\0', sizeof(vec3_t));
 
 				if (!FacingAndCoincidentTo(iSide, composite->memberSides[0]))
 					continue; /* all sides in the composite are parallel, and iSide must face them to be hidden */
@@ -1443,7 +1446,7 @@ void CheckNodraws (void)
 				}
 
 				for (k = 0; k < iWinding->numpoints; k++) {
-					vec3_t intersection, lastIntersection;
+					vec3_t intersection;
 					int lastIntersectionMembInd = -1;
 					vec3_t intersections[CH_COMP_NDR_EDGE_INTSCT_BUF];
 					qboolean paired[CH_COMP_NDR_EDGE_INTSCT_BUF];
