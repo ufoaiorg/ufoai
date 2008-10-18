@@ -1669,12 +1669,6 @@ void IN_Frame (void)
 				break;
 			}
 
-			/* usually tilde is for toggling the console */
-			if (unicode == '^' || unicode == '`' || unicode == '~') {
-				Con_ToggleConsole_f();
-				return;
-			}
-
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
 			EVENT_ENQUEUE(key, unicode, qtrue)
 			break;
