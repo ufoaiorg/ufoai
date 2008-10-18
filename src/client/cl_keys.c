@@ -421,6 +421,8 @@ static void Key_Console (int key)
  */
 static void Key_Message (int key)
 {
+	int utf8len;
+
 	if (key == K_ENTER || key == K_KP_ENTER) {
 		qboolean send = qtrue;
 
@@ -488,10 +490,6 @@ static void Key_Message (int key)
 		return;
 	}
 
-	/** @todo use isprint here? */
-	if (key < 32 || key > 127)
-		return;					/* non printable */
-
 	if (key == K_BACKSPACE) {
 		if (msg_bufferlen) {
 			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
@@ -501,17 +499,23 @@ static void Key_Message (int key)
 		return;
 	}
 
-	if (msg_bufferlen == sizeof(msg_buffer) - 1)
+	utf8len = UTF8_encoded_len(key);
+
+	/** @todo figure out which unicode codes to accept */
+	if (utf8len == 0 || key < 32 || (key >= 127 && key < 192))
+		return;					/* non printable */
+
+
+	if (msg_bufferlen + utf8len >= sizeof(msg_buffer))
 		return;					/* all full */
 
 	/* limit the length for cvar inline editing */
-	if ((msg_mode == MSG_MENU || msg_mode == MSG_IRC) && msg_bufferlen >= mn_inputlength->integer) {
+	if ((msg_mode == MSG_MENU || msg_mode == MSG_IRC) && msg_bufferlen + utf8len > mn_inputlength->integer) {
 		Com_Printf("Input buffer length exceeded\n");
 		return;
 	}
 
-	msg_buffer[msg_bufferlen++] = key;
-	msg_buffer[msg_bufferlen] = 0;
+	msg_bufferlen += UTF8_insert_char(msg_buffer, sizeof(msg_buffer),  msg_bufferlen, key);
 
 	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
@@ -594,7 +598,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 		return "";
 	}
 
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keySpace[i] && *keySpace[i] && !Q_strncmp(keySpace[i], binding, strlen(binding))) {
 			return Key_KeynumToString(i);
 		}
@@ -678,7 +682,7 @@ static void Key_Unbindall_f (void)
 {
 	int i;
 
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i]) {
 			if (!Q_strncmp(Cmd_Argv(0), "unbindallmenu", MAX_VAR))
 				Key_SetBinding(i, "", KEYSPACE_MENU);
@@ -754,11 +758,11 @@ void Key_WriteBindings (const char* filename)
 	fprintf(f.f, "// If you want to know the keyname of a specific key - set in_debug cvar to 1 and press the key\n");
 	fprintf(f.f, "unbindallmenu\n");
 	fprintf(f.f, "unbindall\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			if (fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
 				delete = qtrue;
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			if (fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
 				delete = qtrue;
@@ -796,11 +800,11 @@ static void Key_Bindlist_f (void)
 	int i;
 
 	Com_Printf("key space: game\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
 	Com_Printf("key space: menu\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
 }
@@ -873,7 +877,7 @@ void Key_SetDest (int key_dest)
  * @note Should NOT be called during an interrupt!
  * @sa Key_Message
  */
-void Key_Event (int key, qboolean down, unsigned time)
+void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigned time)
 {
 	const char *kb = NULL;
 	char cmd[MAX_STRING_CHARS];
@@ -914,7 +918,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 		switch (cls.key_dest) {
 		case key_input:
 		case key_message:
-			Key_Message(key);
+			Key_Message(unicode);
 			break;
 		case key_game:
 			Cbuf_AddText("mn_pop esc;");
@@ -984,7 +988,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	switch (cls.key_dest) {
 	case key_input:
 	case key_message:
-		Key_Message(key);
+		Key_Message(unicode);
 		break;
 	case key_game:
 	case key_console:

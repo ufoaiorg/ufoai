@@ -463,6 +463,47 @@ int UTF8_delete_char (char *s, int pos)
 }
 
 /**
+ * @brief Insert a (possibly multibyte) UTF-8 character into a string.
+ * @param[in] s Start of the string
+ * @param[in] n Buffer size of the string
+ * @param[in] pos Offset from the start
+ * @param[in] c Unicode code as 32-bit integer
+ * @return Number of bytes added
+ */
+int UTF8_insert_char (char *s, int n, int pos, int c)
+{
+	const int utf8len = UTF8_encoded_len(c);
+	const int tail = strlen(&s[pos]) + 1;
+
+	if (utf8len == 0)
+		return 0;
+
+	if (pos + tail + utf8len >= n)
+		return 0;
+
+	/* Insertion: move up rest of string. Also moves string terminator. */
+	memmove(&s[pos + utf8len], &s[pos], tail);
+
+	if (c <= 0x7f) {
+		s[pos] = c;
+	} else if (c <= 0x7ff) { 				/* c has 11 bits */
+		s[pos] = 0xc0 | (c >> 6);	  			/* high 5 bits */
+		s[pos + 1] = 0x80 | (c & 0x3f); 		/* low 6 bits */
+	} else if (c <= 0xffff) { 				/* c has 16 bits */
+		s[pos] = 0xe0 | (c >> 12);				/* high 4 bits */
+		s[pos + 1] = 0x80 | ((c >> 6) & 0x3f);	/* mid 6 bits */
+		s[pos + 2] = 0x80 | (c & 0x3f);			/* low 6 bits */
+	} else if (c <= 0x10ffff) {				/* c has 21 bits */
+		s[pos] = 0xf0 | (c >> 18);				/* high 3 bits */
+		s[pos + 1] = 0x80 | ((c >> 12) & 0x3f);	/* mid 6 bits */
+		s[pos + 2] = 0x80 | ((c >> 6) & 0x3f);	/* mid 6 bits */
+		s[pos + 3] = 0x80 | (c & 0x3f);			/* low 6 bits */
+	}
+
+	return utf8len;
+}
+
+/**
  * @brief length of UTF-8 character starting here.
  * @return length of character encoding, or 0 if not start of a UTF-8 sequence
  * @todo Using this does not solve the truncation problem in case of
@@ -487,5 +528,22 @@ int UTF8_char_len (const char *s)
 		return 4;
 	/* UTF-8 used to define 5 and 6 byte sequences, but they are
 	 * no longer valid. */
+	return 0;
+}
+
+/**
+ * Calculate how long a Unicode code point (such as returned by
+ * SDL key events in unicode mode) would be in UTF-8 encoding.
+ */
+int UTF8_encoded_len(int c)
+{
+	if (c <= 0x7F)
+		return 1;
+	if (c <= 0x07FF)
+		return 2;
+	if (c <= 0xFFFF)
+		return 3;
+	if (c <= 0x10FFFF)  /* highest defined Unicode code */
+		return 4;
 	return 0;
 }

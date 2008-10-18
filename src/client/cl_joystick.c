@@ -112,7 +112,7 @@ void IN_JoystickMove (void)
 		for (i = 0; i < total; i++) {
 			qboolean pressed = (SDL_JoystickGetButton(stick, i) != 0);
 			if (pressed != stick_state.buttons[i]) {
-				IN_EventEnqueue(K_JOY1 + i, pressed);
+				IN_EventEnqueue(K_JOY1 + i, 0, pressed);
 				stick_state.buttons[i] = pressed;
 			}
 		}
@@ -134,32 +134,32 @@ void IN_JoystickMove (void)
 				/* release event */
 				switch (((Uint8 *)&stick_state.oldhats)[i]) {
 				case SDL_HAT_UP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qfalse);
 					break;
 				case SDL_HAT_RIGHT:
-					IN_EventEnqueue(hat_keys[4 * i + 1], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qfalse);
 					break;
 				case SDL_HAT_DOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qfalse);
 					break;
 				case SDL_HAT_LEFT:
-					IN_EventEnqueue(hat_keys[4 * i + 3], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qfalse);
 					break;
 				case SDL_HAT_RIGHTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 1], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qfalse);
 					break;
 				case SDL_HAT_RIGHTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 1], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qfalse);
 					break;
 				case SDL_HAT_LEFTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 3], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qfalse);
 					break;
 				case SDL_HAT_LEFTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], qfalse);
-					IN_EventEnqueue(hat_keys[4 * i + 3], qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qfalse);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qfalse);
 					break;
 				default:
 					break;
@@ -167,32 +167,32 @@ void IN_JoystickMove (void)
 				/* press event */
 				switch (((Uint8 *)&hats)[i]) {
 				case SDL_HAT_UP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qtrue);
 					break;
 				case SDL_HAT_RIGHT:
-					IN_EventEnqueue(hat_keys[4 * i + 1], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qtrue);
 					break;
 				case SDL_HAT_DOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qtrue);
 					break;
 				case SDL_HAT_LEFT:
-					IN_EventEnqueue(hat_keys[4 * i + 3], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qtrue);
 					break;
 				case SDL_HAT_RIGHTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 1], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qtrue);
 					break;
 				case SDL_HAT_RIGHTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 1], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 1], 0, qtrue);
 					break;
 				case SDL_HAT_LEFTUP:
-					IN_EventEnqueue(hat_keys[4 * i + 0], qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 3], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 0], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qtrue);
 					break;
 				case SDL_HAT_LEFTDOWN:
-					IN_EventEnqueue(hat_keys[4 * i + 2], qtrue);
-					IN_EventEnqueue(hat_keys[4 * i + 3], qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 2], 0, qtrue);
+					IN_EventEnqueue(hat_keys[4 * i + 3], 0, qtrue);
 					break;
 				default:
 					break;
@@ -251,10 +251,10 @@ void IN_JoystickMove (void)
 	if (axes != stick_state.oldaxes) {
 		for (i = 2; i < 16; i++) {
 			if ((axes & (1 << i)) && !(stick_state.oldaxes & (1 << i)))
-				IN_EventEnqueue(joy_keys[i], qtrue);
+				IN_EventEnqueue(joy_keys[i], 0, qtrue);
 
 			if (!(axes & (1 << i)) && (stick_state.oldaxes & (1 << i)))
-				IN_EventEnqueue(joy_keys[i], qfalse);
+				IN_EventEnqueue(joy_keys[i], 0, qfalse);
 		}
 	}
 
