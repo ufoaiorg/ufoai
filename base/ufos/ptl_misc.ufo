@@ -226,6 +226,8 @@ particle explosion_1
 		blend blend
 		style facing
 		framefade in
+		lightcolor "1 0.4 0.4"
+		lightintensity -0.5
 		size  "170 170"
 		fps   8.0
 		tps   0.8
@@ -251,6 +253,8 @@ particle explosion_2
 		lightintensity 0.5
 		lightsustain 1.0
 		framefade out
+		lightcolor "1 0.4 0.4"
+		lightintensity -0.5
 		size  "170 170"
 		fps   8.0
 		tps   0.8
