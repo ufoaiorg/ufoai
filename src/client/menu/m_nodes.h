@@ -58,6 +58,7 @@ typedef enum mn_s {
 	MN_TEXTLIST,
 	MN_RADAR,	/**< tactical mission radar */
 	MN_TAB,
+	MN_CONTROLS,
 
 	MN_NUM_NODETYPE
 } mn_t;
