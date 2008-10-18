@@ -276,9 +276,6 @@ void AIM_AircraftStart_f (void)
 	}
 
 	if (AIR_IsAircraftInBase(aircraft)) {
-		/* little offset to be able to select the aircraft without a multi-popup */
-		aircraft->pos[0] = baseCurrent->pos[0] + 2;
-		aircraft->pos[1] = baseCurrent->pos[1] + 2;
 		/* reload its ammunition */
 		AII_ReloadWeapon(aircraft);
 	}
