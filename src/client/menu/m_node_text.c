@@ -116,6 +116,34 @@ void MN_TextScrollBottom (const char* nodeName)
 	}
 }
 
+/**
+ * @brief Draw a scrollbar, if necessary
+ * @note Needs node->textLines to be accurate
+ */
+static void MN_DrawScrollBar (const menuNode_t *node)
+{
+	static const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
+	static const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
+
+	if (node->scrollbar && node->height && node->textLines > node->height) {
+		vec2_t nodepos;
+		int scrollbarX;
+		float scrollbarY;
+
+		MN_GetNodeAbsPos(node, nodepos);
+		scrollbarX = nodepos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
+		scrollbarY = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
+
+		R_DrawFill(scrollbarX, nodepos[1],
+			MN_SCROLLBAR_WIDTH, node->size[1],
+			ALIGN_UL, scrollbarBackground);
+
+		R_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->height),
+			MN_SCROLLBAR_WIDTH, scrollbarY,
+			ALIGN_UL, scrollbarColor);
+	}
+}
+
 
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
@@ -125,12 +153,9 @@ void MN_TextScrollBottom (const char* nodeName)
  * @param[in] node The current menu node
  * @param[in] x The fixed x position every new line starts
  * @param[in] y The fixed y position the text node starts
- * @todo The node pointer can be NULL
  */
 void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* font, menuNode_t* node, int x, int y, int width, int height)
 {
-	const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
-	const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
 	char textCopy[MAX_MENUTEXTLEN];
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
@@ -138,7 +163,6 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
 	int x1; /* variable x position */
-	vec2_t nodepos;
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -148,7 +172,6 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		Sys_Error("MN_DrawTextNode: Called without text or linkedList pointer");
 	cur = textCopy;
 
-	MN_GetNodeAbsPos(node, nodepos);
 	/* Hover darkening effect for normal text lines. */
 	VectorScale(node->color, 0.8, colorHover);
 	colorHover[3] = node->color[3];
@@ -165,12 +188,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 	}
 
 	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
-	node->textLines = 0; /* these are lines only in one-line texts! */
-	/* but it's easy to fix, just change FontDrawString
-	 * so that it returns a pair, #lines and height
-	 * and add that to variable line; the only other file
-	 * using FontDrawString result is client/cl_sequence.c
-	 * and there just ignore #lines */
+	node->textLines = 0;
 	do {
 		/* new line starts from node x position */
 		x1 = x;
@@ -209,24 +227,21 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			*end++ = '\0';
 
 		/* highlighting */
-		if (node) {
-			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
-				/* Draw current line in "selected" color (if the linenumber is stored). */
-				R_Color(node->selectedColor);
-			}
-
-			if (node->mousefx && node->textLines + 1 == node->state) {
-				/* Hightlight line if mousefx is true. */
-				/* node->state is the line number to highlight */
-				/** @todo what about multiline text that should be highlighted completely? */
-				if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
-					R_ColorBlend(colorSelectedHover);
-				} else {
-					R_ColorBlend(colorHover);
-				}
-			}
+		if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
+			/* Draw current line in "selected" color (if the linenumber is stored). */
+			R_Color(node->selectedColor);
 		}
 
+		if (node->mousefx && node->textLines + 1 == node->state) {
+			/* Hightlight line if mousefx is true. */
+			/* node->state is the line number to highlight */
+			/** @todo what about multiline text that should be highlighted completely? */
+			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
+				R_ColorBlend(colorSelectedHover);
+			} else {
+				R_ColorBlend(colorHover);
+			}
+		}
 
 		/* tabulation, we assume all the tabs fit on a single line */
 		do {
@@ -242,7 +257,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
 			/* increase the x value as given via menu definition format string */
 			/* or use 1/3 of the node size (width) */
-			if (!node || !node->texh[1])
+			if (!node->texh[1])
 				x1 += (width / 3);
 			else
 				x1 += node->texh[1];
@@ -254,7 +269,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
 		R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
 
-		if (node && node->mousefx)
+		if (node->mousefx)
 			R_ColorBlend(node->color); /* restore original color */
 
 		/* if textLines has advanced past the visible area, don't bother
@@ -273,24 +288,60 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		}
 	} while (cur);
 
-	/* draw scrollbars */
-	if (node->scrollbar && node->height && node->textLines > node->height) {
-		const int scrollbarX = nodepos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
-		const float scrollbarY = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
+	MN_DrawScrollBar(node);
+}
 
-		R_DrawFill(scrollbarX,
-			nodepos[1],
-			MN_SCROLLBAR_WIDTH,
-			node->size[1],
-			ALIGN_UL,
-			scrollbarBackground);
+/**
+ * @brief Draws the TEXT_MESSAGESYSTEM node
+ * @sa MN_DrawMenus
+ * @param[in] font Font string to use
+ * @param[in] node The current menu node
+ * @param[in] x The fixed x position every new line starts
+ * @param[in] y The fixed y position the text node starts
+ * @note For efficiency, scrolling is based on the count of messages
+ * rather than a count of linewrapped lines. The result is that
+ * scrolling of the message window scrolls message by message,
+ * which looks better anyway.
+ */
+void MN_DrawMessageList (const message_t *messageStack, const char *font, menuNode_t *node, int x, int y, int width, int height)
+{
+	char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
+	const message_t *message;
+	int skip_messages;
+	int screenLines;
 
-		R_DrawFill(scrollbarX,
-			nodepos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->height),
-			MN_SCROLLBAR_WIDTH,
-			scrollbarY,
-			ALIGN_UL,
-			scrollbarColor);
+	/* scrollbar space */
+	if (node->scrollbar) {
+		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
+		if (node->scrollbarLeft)
+			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
+	}
+
+	skip_messages = node->textScroll;
+	screenLines = 0;
+	for (message = messageStack; message; message = message->next) {
+		if (skip_messages) {
+			skip_messages--;
+			continue;
+		}
+		
+		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
+		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, node->height, 0, &screenLines, qtrue);
+		if (screenLines > node->height)
+			break;
+	}
+
+	if (node->scrollbar && node->height) {
+		node->textLines = 0;
+		for (message = messageStack; message; message = message->next)
+			node->textLines++;
+		/** @todo This is a hack to allow scrolling all the way
+		 * to the last message, if the last page has multiline
+		 * messages. Getting an accurate count of the last page
+		 * would be nice, if it can be done efficiently enough. */
+		if (node->textLines > node->height)
+			node->textLines += node->height / 2;
+		MN_DrawScrollBar(node);
 	}
 }
 
