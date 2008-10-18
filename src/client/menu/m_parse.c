@@ -67,10 +67,7 @@ static const value_t nps[] = {
 	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
 	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
 	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, origin), MEMBER_SIZEOF(menuNode_t, origin)},
-	{"center", V_VECTOR, offsetof(menuNode_t, center), MEMBER_SIZEOF(menuNode_t, center)},
 	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
-	{"angles", V_VECTOR, offsetof(menuNode_t, angles), MEMBER_SIZEOF(menuNode_t, angles)},
 	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 	{"baseid", V_BASEID, offsetof(menuNode_t, baseid), MEMBER_SIZEOF(menuNode_t, baseid)},
 	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
@@ -86,13 +83,23 @@ static const value_t nps[] = {
 	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
 	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/** @todo Rename into model */
 	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
-	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelTag), 0},
 	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
 	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
 	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/* no gettext here - this can be a cvar, too */
 	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
 	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
 
+	/* specific for model
+	 * @todo move it into the node behaviour
+	 */
+	{"angles", V_VECTOR, offsetof(menuNode_t, model.angles), MEMBER_SIZEOF(menuNode_t, model.angles)},
+	{"center", V_VECTOR, offsetof(menuNode_t, model.center), MEMBER_SIZEOF(menuNode_t, model.center)},
+	{"origin", V_VECTOR, offsetof(menuNode_t, model.origin), MEMBER_SIZEOF(menuNode_t, model.origin)},
+	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, model.tag), 0},
+
+	/* specific for abstractvalue
+	 * @todo move it into the node behaviour
+	 */
 	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.max), 0},
 	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.min), 0},
 	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.value), 0},

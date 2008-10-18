@@ -162,9 +162,9 @@ static void MN_SetModelTransform_f (void)
 		if (!Q_strcmp(command, "debug_mnscale")) {
 			VectorCopy(value, node->scale);
 		} else if (!Q_strcmp(command, "debug_mnangles")) {
-			VectorCopy(value, node->angles);
+			VectorCopy(value, node->model.angles);
 		} else if (!Q_strcmp(command, "debug_mnorigin")) {
-			VectorCopy(value, node->origin);
+			VectorCopy(value, node->model.origin);
 		}
 	}
 }
@@ -214,9 +214,9 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	MN_GetNodeAbsPos(node, nodepos);
 	nodeorigin[0] = nodepos[0];
 	nodeorigin[1] = nodepos[1];
-	nodeorigin[3] = node->origin[2];
+	nodeorigin[3] = node->model.origin[2];
 
-	menuModel = node->menuModel = MN_GetMenuModel(source);
+	menuModel = node->model.menuModel = MN_GetMenuModel(source);
 
 	/* direct model name - no menumodel definition */
 	if (!menuModel) {
@@ -231,15 +231,15 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	}
 
 	/* check whether the cvar value changed */
-	if (Q_strncmp(node->oldRefValue, source, sizeof(node->oldRefValue))) {
-		Q_strncpyz(node->oldRefValue, source, sizeof(node->oldRefValue));
+	if (Q_strncmp(node->model.oldRefValue, source, sizeof(node->model.oldRefValue))) {
+		Q_strncpyz(node->model.oldRefValue, source, sizeof(node->model.oldRefValue));
 		updateModel = qtrue;
 	}
 
 	mi.origin = nodeorigin;
-	mi.angles = node->angles;
+	mi.angles = node->model.angles;
 	mi.scale = node->scale;
-	mi.center = node->center;
+	mi.center = node->model.center;
 	mi.color = node->color;
 	mi.mesh = 0;
 
@@ -291,7 +291,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 							if (menuModel->menuTransform[i].useAngles) {
 								VectorCopy(menuModel->menuTransform[i].angles, mi.angles);
 							} else {
-								VectorCopy(node->angles, mi.angles);
+								VectorCopy(node->model.angles, mi.angles);
 							}
 
 							/* Use menu origin if defined. */
@@ -306,16 +306,16 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 					/* not for this menu */
 					if (i == menuModel->menuTransformCnt) {
 						VectorCopy(node->scale, mi.scale);
-						VectorCopy(node->angles, mi.angles);
+						VectorCopy(node->model.angles, mi.angles);
 						VectorCopy(nodeorigin, mi.origin);
 					}
 				} else {
 					VectorCopy(node->scale, mi.scale);
-					VectorCopy(node->angles, mi.angles);
+					VectorCopy(node->model.angles, mi.angles);
 					VectorCopy(nodeorigin, mi.origin);
 				}
 				Vector4Copy(node->color, mi.color);
-				VectorCopy(node->center, mi.center);
+				VectorCopy(node->model.center, mi.center);
 
 				/* get the animation given by menu node properties */
 				if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
@@ -396,20 +396,25 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
 				if (updateModel) {
 					/* model has changed but mem is already reserved in pool */
-					if (node->dataModelAnimationState) {
-						Mem_Free(node->dataModelAnimationState);
-						node->dataModelAnimationState = NULL;
+					if (node->model.animationState) {
+
+						Mem_Free(node->model.animationState);
+						node->model.animationState = NULL;
+
 					}
 				}
-				if (!node->dataModelAnimationState) {
+				if (!node->model.animationState) {
+
 					as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					R_AnimChange(as, mi.model, ref);
-					node->dataModelAnimationState = as;
+					node->model.animationState = as;
+
 				} else {
 					/* change anim if needed */
-					as = node->dataModelAnimationState;
+					as = node->model.animationState;
+
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					anim = R_AnimGetName(as, mi.model);
@@ -424,12 +429,12 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 			}
 
 			/* place on tag */
-			if (node->dataModelTag) {
+			if (node->model.tag) {
 				menuNode_t *search;
 				char parent[MAX_VAR];
 				char *tag;
 
-				Q_strncpyz(parent, MN_GetReferenceString(menu, node->dataModelTag), MAX_VAR);
+				Q_strncpyz(parent, MN_GetReferenceString(menu, node->model.tag), MAX_VAR);
 				tag = parent;
 				/* tag "menuNodeName modelTag" */
 				while (*tag && *tag != ' ')
@@ -447,16 +452,16 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 							break;
 
 						pmi.name = modelName;
-						VectorCopy(search->origin, pmiorigin);
+						VectorCopy(search->model.origin, pmiorigin);
 						pmi.origin = pmiorigin;
 						pmi.origin[0] += mi.origin[0];
 						pmi.origin[1] += mi.origin[1];
 						/* don't count menuoffset twice for tagged models */
 						mi.origin[0] -= node->menu->origin[0];
 						mi.origin[1] -= node->menu->origin[1];
-						pmi.angles = search->angles;
+						pmi.angles = search->model.angles;
 						pmi.scale = search->scale;
-						pmi.center = search->center;
+						pmi.center = search->model.center;
 						pmi.color = search->color;
 
 						/* autoscale? */
@@ -465,7 +470,8 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 							mi.center = node->size;
 						}
 
-						as = search->dataModelAnimationState;
+						as = search->model.animationState;
+
 						if (!as)
 							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->dataAnimOrFont);
 						pmi.frame = as->frame;
@@ -491,8 +497,8 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 static void MN_ModelClick (menuNode_t * node, int x, int y)
 {
 	mouseSpace = MS_ROTATE;
-	/* modify node->angles (vec3_t) if you rotate the model */
-	rotateAngles = node->angles;
+	/* modify node->model.angles (vec3_t) if you rotate the model */
+	rotateAngles = node->model.angles;
 }
 
 void MN_RegisterNodeModel(nodeBehaviour_t *behaviour) {

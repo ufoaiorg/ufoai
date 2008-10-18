@@ -67,7 +67,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	case MN_FUNC:
 		break;
 	case MN_MODEL:
-		Vector2Set(pos, node->menu->origin[0] + node->origin[0], node->menu->origin[1] + node->origin[1]);
+		Vector2Set(pos, node->menu->origin[0] + node->model.origin[0], node->menu->origin[1] + node->model.origin[1]);
 		break;
 	default:
 		Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
@@ -79,7 +79,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
  * @brief
  * @todo delete this function when it's possible
  */
-const char *MN_GetNodeReference(const menuNode_t *node) {
+const char *MN_GetNodeReference (const menuNode_t *node) {
 	const char *ref = NULL;
 	/* get the reference */
 	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT

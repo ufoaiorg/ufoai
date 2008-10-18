@@ -97,20 +97,32 @@ typedef struct lineStrips_s {
 	int numStrips;			/**< Number of point-lists. */
 } lineStrips_t;
 
+/** @brief extradata node for the model node
+ * @todo move it on m_node_model.h
+ */
+typedef struct {
+	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
+	vec3_t angles;
+	vec3_t origin;
+	vec3_t center;
+	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
+	void* tag;	/**< the tag to place the model onto */
+	void* animationState;	/**< holds then anim state for the current model */
+} model_data_node_t;
+
 /** @brief menu node
- * @todo delete data when it's possible
+ * @todo delete data* when it's possible
  */
 typedef struct menuNode_s {
 	char name[MAX_VAR];
 	char key[MAX_VAR];
-	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
 	int type;
-	vec3_t origin, scale, angles, center;
+	vec3_t scale;
+
 	vec2_t pos;
 	vec2_t size;
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
-	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
 	byte state;
 	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
@@ -152,18 +164,14 @@ typedef struct menuNode_s {
 						* be an image, an model or an string, this depends
 						* on the node type
 						*/
-	void* dataAnimOrFont;	/** This is the font string or the anim string
-						* from the *.anm files for the model */
-	void* dataModelTag;	/**< the tag to place the model onto */
 	void* dataModelSkinOrCVar; /**< the skin of the model */
-	void* dataModelAnimationState;	/**< holds then anim state for the current model
-						* model - also see MN_DATA_ANIM_OR_FONT */
 	void* dataNodeTooltip; /**< holds the tooltip for the menu */
+	void* dataAnimOrFont;	/** Anim string from the *.anm files for the model; or font */
 
 	/** union will contain all extradata for a node */
 	union {
 		abstractvalue_data_node_t abstractvalue;
-
+		model_data_node_t model;
 	};
 
 } menuNode_t;
