@@ -388,7 +388,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 						/* Stop Time */
 						CL_GameTimeStop();
 						/* Send a message to player to warn him */
-						MN_AddNewMessage(_("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse, MSG_STANDARD, NULL);
+						MN_AddNewMessage(_("Notice"), va(_("A UFO is flying toward %s"), _(phalanxAircraft->name)), qfalse, MSG_STANDARD, NULL);
 						/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 					}
 				}

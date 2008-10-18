@@ -1871,7 +1871,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		case AIR_UFO:
 			assert(selectedAircraft->aircraftTarget);
 			distance = MAP_GetDistance(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
-			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
+			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), _(selectedAircraft->name), selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
@@ -1881,7 +1881,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			mn.menuText[TEXT_STANDARD] = text_standard;
 			break;
 		default:
-			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
+			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), _(selectedAircraft->name), selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
