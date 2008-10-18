@@ -562,24 +562,16 @@ static void MSO_Scroll_f (void)
  * @param[in] popup Show this as a popup, too?
  * @param[in] type The message type
  * @param[in] pedia Pointer to technology (only if needed)
- * @return message_t pointer
+ * @return message_t pointer if message was added
  * @sa MN_AddNewMessageSound
  */
 message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia) {
+	message_t *result = NULL;
 	if (messageSettings[messagecategory].doNotify)
-		MN_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
+		result = MN_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
 	if (messageSettings[messagecategory].doPause)
 		CL_GameTimeStop();
-}
-
-/**
- * @brief Returns the actual setting whether to produce a notify message for given messagecategory.
- * @param[in] messagecategory notify type of messagecategory
- * @return qtrue if message should be generated
- */
-qboolean MSO_ShouldNotify (const notify_t messagecategory)
-{
-	return messageSettings[messagecategory].doNotify;
+	return result;
 }
 
 /**
