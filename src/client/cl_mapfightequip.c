@@ -997,27 +997,18 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			/* Update stats values */
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
-				if (MSO_ShouldNotify(NT_INSTALLATION_INSTALLED)) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
-							_("%s was successfully installed into aircraft %s at base %s."),
-							_(slot->item->name), _(aircraft->name), aircraft->homebase->name);
-					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-				}
-				MSO_CheckTimestop(NT_INSTALLATION_INSTALLED);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+						_("%s was successfully installed into aircraft %s at base %s."),
+						_(slot->item->name), _(aircraft->name), aircraft->homebase->name);
+				MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED,_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			} else if (installation) {
-				if (MSO_ShouldNotify(NT_INSTALLATION_INSTALLED)) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully installed at installation %s."),
-							_(slot->item->name), installation->name);
-					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-				}
-				MSO_CheckTimestop(NT_INSTALLATION_INSTALLED);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully installed at installation %s."),
+						_(slot->item->name), installation->name);
+				MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED,_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			} else {
-				if (MSO_ShouldNotify(NT_INSTALLATION_INSTALLED)) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully installed at base %s."),
-							_(slot->item->name), base->name);
-					MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-				}
-				MSO_CheckTimestop(NT_INSTALLATION_INSTALLED);
+				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully installed at base %s."),
+						_(slot->item->name), base->name);
+				MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED,_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			}
 		}
 	} else if (slot->installationTime < 0) {
@@ -1036,42 +1027,31 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				AII_UpdateAircraftStats(aircraft);
 				/* Only stop time and post a notice, if no new item to install is assigned */
 				if (!slot->item) {
-					if (MSO_ShouldNotify(NT_INSTALLATION_REMOVED)) {
-						Com_sprintf(mn.messageBuffer,sizeof(mn.messageBuffer),
-								_("%s was successfully removed from aircraft %s at base %s."),
-								_(olditem->name), _(aircraft->name), base->name);
-
-						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse,
-								MSG_STANDARD, NULL);
-					}
-					MSO_CheckTimestop(NT_INSTALLATION_REMOVED);
+					Com_sprintf(mn.messageBuffer,sizeof(mn.messageBuffer),
+							_("%s was successfully removed from aircraft %s at base %s."),
+							_(olditem->name), _(aircraft->name), base->name);
+					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED,_("Notice"), mn.messageBuffer, qfalse,
+							MSG_STANDARD, NULL);
 				} else {
-					if (MSO_ShouldNotify(NT_INSTALLATION_REPLACE))  {
-						Com_sprintf(mn.messageBuffer,sizeof(mn.messageBuffer),
-								_ ("%s was successfully removed, starting installation of %s into aircraft %s at base %s"),
-								_(olditem->name), _(slot->item->name), _(aircraft->name), base->name);
-						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse,
-								MSG_STANDARD, NULL);
-					}
-					MSO_CheckTimestop(NT_INSTALLATION_REPLACE);
+					Com_sprintf(mn.messageBuffer,sizeof(mn.messageBuffer),
+							_ ("%s was successfully removed, starting installation of %s into aircraft %s at base %s"),
+							_(olditem->name), _(slot->item->name), _(aircraft->name), base->name);
+					MSO_CheckAddNewMessage(NT_INSTALLATION_REPLACE,_("Notice"), mn.messageBuffer, qfalse,
+							MSG_STANDARD, NULL);
 				}
 			} else if (!slot->item) {
-				if (MSO_ShouldNotify(NT_INSTALLATION_REMOVED)) {
-					if (installation) {
-						Com_sprintf(mn.messageBuffer,sizeof(mn.messageBuffer),
-								_("%s was successfully removed from installation %s."),
-								_(olditem->name), installation->name);
-						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD,
-								NULL);
-					} else {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully removed from base %s."),
-								_(olditem->name), base->name);
-
-						MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD,
-								NULL);
-					}
+				if (installation) {
+					Com_sprintf(mn.messageBuffer,sizeof(mn.messageBuffer),
+							_("%s was successfully removed from installation %s."),
+							_(olditem->name), installation->name);
+					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED,_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD,
+							NULL);
+				} else {
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s was successfully removed from base %s."),
+							_(olditem->name), base->name);
+					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED,_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD,
+							NULL);
 				}
-				MSO_CheckTimestop(NT_INSTALLATION_REMOVED);
 			}
 		}
 	}

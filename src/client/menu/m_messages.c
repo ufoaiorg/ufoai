@@ -332,7 +332,7 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 
 /**
  * @sa MS_Save
- * @sa MN_AddNewMessage
+ * @sa MN_AddNewMessageSound
  */
 qboolean MS_Load (sizebuf_t* sb, void* data)
 {
@@ -554,13 +554,20 @@ static void MSO_Scroll_f (void)
 }
 
 /**
- * @brief Checks whether to stop game for given messagecategory
- * @param[in] messagecategory notify type of messagecategory
- * @sa CL_GameTimeStop
- * @note if game should stop, CL_GameTimeStop is invoked
+ * @brief Adds a new message to message stack. It uses message settings to
+ * verify whether sound should be played and whether game should stop.
+ * @param messagecategory category for notification
+ * @param[in] title Already translated message/mail title
+ * @param[in] text Already translated message/mail body
+ * @param[in] popup Show this as a popup, too?
+ * @param[in] type The message type
+ * @param[in] pedia Pointer to technology (only if needed)
+ * @return message_t pointer
+ * @sa MN_AddNewMessageSound
  */
-void MSO_CheckTimestop (const notify_t messagecategory)
-{
+message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia) {
+	if (messageSettings[messagecategory].doNotify)
+		MN_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
 	if (messageSettings[messagecategory].doPause)
 		CL_GameTimeStop();
 }

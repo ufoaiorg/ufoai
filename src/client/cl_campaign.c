@@ -3773,7 +3773,8 @@ void CL_GameTimeStop (void)
 		return;
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strncmp(menu->name, "map", 3)) {
+	/* @todo check whether we really need to identify menu with CL_OnBattlescape - was checking menu name before */
+	if (menu && !CL_OnBattlescape()) {
 		gameLapse = 0;
 	}
 

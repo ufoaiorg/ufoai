@@ -103,8 +103,7 @@ message_t *MN_AddNewMessageSound(const char *title, const char *text, qboolean p
 void MN_RemoveMessage(const char *title);
 void MN_AddChatMessage(const char *text);
 void MN_MessageInit(void);
-void MSO_CheckTimestop(const notify_t messagecategory);
-qboolean MSO_ShouldNotify(const notify_t messagecategory);
+message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 void MSO_ParseSettings(const char *name, const char **text);
 
 #endif
