@@ -246,25 +246,28 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		/* tabulation, we assume all the tabs fit on a single line */
 		do {
 			int tabwidth;
+			int numtabs;
 
 			tab = strchr(cur, '\t');
-			/* if this string does not contain any tabstops break this do while ... */
 			if (!tab)
 				break;
-			/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
-			/* after the tab (needed for the next loop in this (the inner) do while) */
-			*tab++ = '\0';
+
 			/* use tab stop as given via menu definition format string
 			 * or use 1/3 of the node size (width) */
 			if (!node->texh[1])
 				tabwidth = width / 3;
 			else
 				tabwidth = node->texh[1];
-			/* now check whether we should draw this string */
+
+			numtabs = strspn(tab, "\t");
+			tabwidth *= numtabs;
+			while (*tab == '\t')
+				*tab++ = '\0';
+
 			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
 			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
-			/* now set cur to the first char after the \t */
+			/* now skip to the first char after the \t */
 			cur = tab;
 		} while (1);
 
