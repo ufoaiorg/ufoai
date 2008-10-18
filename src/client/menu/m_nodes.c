@@ -60,19 +60,11 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	if (!node->menu)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
 
-	switch (node->type) {
-	case MN_NULL:
-	case MN_CONFUNC:
-	case MN_CVARFUNC:
-	case MN_FUNC:
-		break;
-	case MN_MODEL:
-		Vector2Set(pos, node->menu->origin[0] + node->model.origin[0], node->menu->origin[1] + node->model.origin[1]);
-		break;
-	default:
-		Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
-		break;
-	}
+	/** if we request the position of an undrawable node, there are a problem */
+	if (!nodeBehaviourList[node->type].draw)
+		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
+
+	Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
 }
 
 #if 0
