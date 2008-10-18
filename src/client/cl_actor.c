@@ -4078,7 +4078,7 @@ static void CL_ActorMoveMouse (void)
 
 			cl.cmode = M_PEND_MOVE;
 		} else {
-			/* Just move theR_ */
+			/* Just move there */
 			CL_ActorStartMove(selActor, mousePos);
 		}
 	}
@@ -4087,6 +4087,7 @@ static void CL_ActorMoveMouse (void)
 /**
  * @brief Selects an actor using the mouse.
  * @todo Comment on the cl.cmode stuff.
+ * @sa CL_ActorStartMove
  */
 void CL_ActorSelectMouse (void)
 {

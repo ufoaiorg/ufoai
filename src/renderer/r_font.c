@@ -67,7 +67,7 @@ typedef struct {
 typedef struct wrapCache_s {
 	char text[MAX_CACHE_STRING];	/**< hash id */
 	const font_t *font;	/**< font used for wrapping/rendering this text */
-    struct wrapCache_s *next;		/**< next hash entry in case of collision */
+	struct wrapCache_s *next;		/**< next hash entry in case of collision */
 	int maxWidth;		/**< width to which this text was wrapped */
 	int method;			/**< were long lines wrapped or truncated? */
 	int numChunks;		/**< number of (contiguous) chunks in chunkCache used */
@@ -89,7 +89,7 @@ static int numWraps = 0;
  * Asian language have their own conventions for this.
  * Unfortunately, the renderer directory has no gettext hookup.
  */
-const char *ellipsis = "...";
+static const char *ellipsis = "...";
 
 typedef struct {
 	const char *name;
@@ -256,7 +256,8 @@ static int R_FontHash (const char *string)
  * @brief Calculate the width in pixels needed to render a piece of text.
  * Can temporarily modify the caller's string but leaves it unchanged.
  */
-static int R_FontChunkLength (const font_t *f, char *text, int len) {
+static int R_FontChunkLength (const font_t *f, char *text, int len)
+{
 	int width;
 	char old;
 
@@ -299,12 +300,12 @@ static int R_FontFindFit (const font_t *f, char *text, int maxlen, int maxWidth,
 	}
 
 	/* Fit hyphenated word parts */
-	for (len = bestbreak+1; len < maxlen; len++) {
+	for (len = bestbreak + 1; len < maxlen; len++) {
 		if (text[len] == '-') {
-			width = R_FontChunkLength(f, text, len+1);
+			width = R_FontChunkLength(f, text, len + 1);
 			if (width > maxWidth)
 				break;
-			bestbreak = len+1;
+			bestbreak = len + 1;
 			*widthp = width;
 		}
 	}
@@ -343,7 +344,7 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
 	*widthp = 0;
 
 	for (len = 1; len < maxlen; len++) {
-		buf[len-1] = text[len-1];
+		buf[len - 1] = text[len - 1];
 		Q_strncpyz(&buf[len], ellipsis, sizeof(buf) - len);
 		TTF_SizeUTF8(f->font, buf, &width, NULL);
 		if (width > maxWidth)
@@ -446,7 +447,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	 * matches. Since the hash value also matches and the hash was taken
 	 * over the whole string, this is good enough. */
 	for (wrap = hash[hashValue]; wrap; wrap = wrap->next)
-		if (!Q_strncmp(text, wrap->text, sizeof(wrap->text)-1)
+		if (!Q_strncmp(text, wrap->text, sizeof(wrap->text) - 1)
 		 && wrap->font == f && wrap->method == method
 		 && (wrap->maxWidth == maxWidth || (wrap->numChunks == 1 && (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
 		return wrap;
@@ -518,9 +519,9 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	int w, h;
 	SDL_Surface *textSurface;
 	SDL_Surface *openGLSurface;
-	SDL_Rect rect = { 0, 0, 0, 0 };
+	SDL_Rect rect = {0, 0, 0, 0};
 	char buf[BUF_SIZE];
-	static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4th value is unused */
+	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;

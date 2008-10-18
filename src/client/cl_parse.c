@@ -905,7 +905,6 @@ static void CL_ActorDoStartMove (struct dbuffer *msg)
 	int entnum, speed;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_MOVE], &entnum, &speed);
-
 	CL_SetLastMoving(LE_Get(entnum));
 	assert(lastMoving);
 	lastMoving->speed = speed;
