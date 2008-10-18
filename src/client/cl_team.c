@@ -1278,7 +1278,7 @@ static void CL_MarkTeam_f (void)
 		}
 
 		/* Set name of the employee. */
-		Cvar_ForceSet(va("mn_name%i", k), employee->chr.name);
+		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
 		/* Change the buttons */
 		Cbuf_AddText(va("listdel%i\n", k));
 		if (!alreadyInOtherShip && CL_SoldierInAircraft(employee, aircraft))
