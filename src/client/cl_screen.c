@@ -71,7 +71,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 			string++;
 		}
 	} else
-		R_FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse);
+		R_FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -103,7 +103,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 		R_FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			30,
-			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse);
+			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 	R_EndFrame();
@@ -161,7 +161,7 @@ static void SCR_DrawDownloading (void)
 		(int)(VID_NORM_HEIGHT / 2 - 60),
 		(int)(VID_NORM_WIDTH / 2),
 		(int)(VID_NORM_HEIGHT / 2 - 60),
-		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, dlmsg, 1, 0, NULL, qfalse);
+		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, dlmsg, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.downloadPercent);
 }
@@ -200,7 +200,7 @@ static void SCR_DrawLoading (void)
 			(int)(VID_NORM_HEIGHT / 2 - 60),
 			(int)(VID_NORM_WIDTH / 2),
 			(int)(VID_NORM_HEIGHT / 2 - 60),
-			VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 1, 0, NULL, qfalse);
+			VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 1, 0, NULL, qfalse, 0);
 	}
 
 	R_FontDrawString("f_menu", ALIGN_UC,
@@ -208,7 +208,7 @@ static void SCR_DrawLoading (void)
 		(int)(VID_NORM_HEIGHT / 2),
 		(int)(VID_NORM_WIDTH / 2),
 		(int)(VID_NORM_HEIGHT / 2),
-		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 1, 0, NULL, qfalse);
+		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 }

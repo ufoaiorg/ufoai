@@ -211,11 +211,12 @@ void MN_DrawMenus (void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					ref += node->horizontalScroll;
+					/** @todo should this wrap or chop long lines? */
 					/* blinking */
 					if (!node->mousefx || cl.time % 1000 < 500)
-						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
+						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse, 0);
 					else
-						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
+						R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse, 0);
 					break;
 
 				case MN_TEXT:

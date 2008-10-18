@@ -70,7 +70,7 @@ typedef struct wrapCache_s {
 	const font_t *font;	/**< font used for wrapping/rendering this text */
 	struct wrapCache_s *next;		/**< next hash entry in case of collision */
 	int maxWidth;		/**< width to which this text was wrapped */
-	int method;			/**< were long lines wrapped or truncated? */
+	longlines_t method;		/**< were long lines wrapped or truncated? */
 	int numChunks;		/**< number of (contiguous) chunks in chunkCache used */
 	int numLines;		/**< total line count of wrapped text */
 	int chunkIdx;		/**< first chunk in chunkCache for this text */
@@ -341,22 +341,28 @@ static int R_FontFindFit (const font_t *f, char *text, int maxlen, int maxWidth,
  * truncated.
  * Assumes whole string won't fit.
  */
-static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, int maxWidth, int *widthp)
+static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, int maxWidth, qboolean mark, int *widthp)
 {
 	char buf[BUF_SIZE];
 	int width;
 	int len;
+	int breaklen;
 
+	breaklen = 0;
 	*widthp = 0;
 
 	for (len = 1; len < maxlen; len++) {
 		buf[len - 1] = text[len - 1];
 		if (UTF8_CONTINUATION_BYTE(text[len]))
 			continue;
-		Q_strncpyz(&buf[len], truncmarker, sizeof(buf) - len);
+		if (mark)
+			Q_strncpyz(&buf[len], truncmarker, sizeof(buf) - len);
+		else
+			buf[len] = '\0';
 		TTF_SizeUTF8(f->font, buf, &width, NULL);
 		if (width > maxWidth)
-			return len - 1;
+			return breaklen;
+		breaklen = len;
 		*widthp = width;
 	}
 
@@ -368,7 +374,7 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
  * entries for those chunks.
  * @return number of chunks allocated in chunkCache.
  */
-static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, int method, int *lines)
+static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, longlines_t method, int *lines)
 {
 	int lineno = 0;
 	int pos = 0;
@@ -408,7 +414,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, in
 
 		width = R_FontChunkLength(f, &buf[pos], len);
 		if (maxWidth > 0 && width > maxWidth) {
-			if (method == LONG_LINES_WRAP) {
+			if (method == LONGLINES_WRAP) {
 				/* full chunk didn't fit; try smaller */
 				len = R_FontFindFit(f, &buf[pos], len, maxWidth, &width);
 				/* skip following spaces */
@@ -418,9 +424,9 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, in
 				if (len + skip == 0)
 					break; /* could not fit even one character */
 			} else {
-				len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, &width);
+				truncated = (method == LONGLINES_PRETTYCHOP);
+				len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, truncated, &width);
 				skip = strcspn(&buf[pos + len], "\n\\\\");
-				truncated = qtrue;
 			}
 		}
 		if (width > 0) {
@@ -456,7 +462,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, in
  * @brief Wrap text according to provided parameters.
  * Pull wrapping from cache if possible.
  */
-static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWidth, int method)
+static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWidth, longlines_t method)
 {
 	wrapCache_t *wrap;
 	int hashValue = R_FontHash(text);
@@ -504,7 +510,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
  * @param[out] height receives height in pixels when rendered with standard line height
  * @param[out] lines receives total number of lines in text, including blank ones
  */
-void R_FontTextSize (const char *fontId, const char *text, int maxWidth, int method, int *width, int *height, int *lines)
+void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines)
 {
 	const font_t *font = R_FontGetFont(fontId);
 	wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
@@ -656,7 +662,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
  * @todo This could be replaced with a set of much simpler interfaces.
  */
 int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
-        int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
+        int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method)
 {
 	const int horiz_align = align % 3; /* left, center, right */
 	const int vert_align = align / 3;  /* top, center, bottom */
@@ -672,7 +678,7 @@ int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int
 	if (lineHeight <= 0)
 		lineHeight = font->height;
 
-	wrap = R_FontWrapText(font, c, maxWidth - (x - absX), LONG_LINES_WRAP);
+	wrap = R_FontWrapText(font, c, maxWidth - (x - absX), method);
 
 	if (box_height <= 0)
 		box_height = wrap->numLines;

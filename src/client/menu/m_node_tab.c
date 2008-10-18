@@ -110,8 +110,8 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 		if (x < TILE_WIDTH)
 			return NULL;
 
-		/* @todo use LONG_LINES_TRUNCATE once rendering is done that way */
-		R_FontTextSize(font, _(tabOption->label), 0, LONG_LINES_WRAP, &fontWidth, NULL, NULL);
+		/* @todo use LONGLINES_CHOP once rendering is done that way */
+		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &fontWidth, NULL, NULL);
 		if (x < TILE_WIDTH + fontWidth)
 			return tabOption;
 
@@ -226,11 +226,11 @@ void MN_DrawTabNode (const menuNode_t *node, const char *image)
 		MN_DrawTabNodeJunction(image, currentX, node->pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(tabOption->label), 0, LONG_LINES_WRAP, &fontWidth, &fontHeight, NULL);
+		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &fontWidth, &fontHeight, NULL);
 		MN_DrawTabNodePlain(image, currentX, node->pos[1], fontWidth, status);
 		R_FontDrawString(font, 0, currentX, node->pos[1] + ((node->size[1] - fontHeight) / 2),
 			currentX, node->pos[1], fontWidth, TILE_HEIGHT,
-			0, _(tabOption->label), 0, 0, NULL, qfalse);
+			0, _(tabOption->label), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 		currentX += fontWidth;
 
 		/* Next */

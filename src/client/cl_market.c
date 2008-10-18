@@ -262,20 +262,20 @@ static char bsMarketPrices[256];
  */
 static void BS_AddToList (const char *name, int storage, int market, int price)
 {
+	char shortString[36];
+
 	/* MAX_MARKET_MENU_ENTRIES items in the list (of length 1024) */
-	char shortName[36];
+	Q_strcat(bsMarketNames, _(name), sizeof(bsMarketNames));
+	Q_strcat(bsMarketNames, "\n", sizeof(bsMarketNames));
 
-	Com_sprintf(shortName, sizeof(shortName), "%s\n", _(name));
-	Q_strcat(bsMarketNames, shortName, sizeof(bsMarketNames));
+	Com_sprintf(shortString, sizeof(shortString), "%i\n", storage);
+	Q_strcat(bsMarketStorage, shortString, sizeof(bsMarketStorage));
 
-	Com_sprintf(shortName, sizeof(shortName), "%i\n", storage);
-	Q_strcat(bsMarketStorage, shortName, sizeof(bsMarketStorage));
+	Com_sprintf(shortString, sizeof(shortString), "%i\n", market);
+	Q_strcat(bsMarketMarket, shortString, sizeof(bsMarketMarket));
 
-	Com_sprintf(shortName, sizeof(shortName), "%i\n", market);
-	Q_strcat(bsMarketMarket, shortName, sizeof(bsMarketMarket));
-
-	Com_sprintf(shortName, sizeof(shortName), _("%i c\n"), price);
-	Q_strcat(bsMarketPrices, shortName, sizeof(bsMarketPrices));
+	Com_sprintf(shortString, sizeof(shortString), _("%i c\n"), price);
+	Q_strcat(bsMarketPrices, shortString, sizeof(bsMarketPrices));
 }
 
 /**

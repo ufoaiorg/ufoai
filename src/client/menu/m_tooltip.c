@@ -47,7 +47,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 	if (!string || !*string || !font)
 		return 0;
 
-	R_FontTextSize(font, string, maxWidth, LONG_LINES_WRAP, &width, &height, NULL);
+	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL);
 
 	if (!width)
 		return 0;
@@ -67,7 +67,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 
 	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, tooltipBG);
 	R_ColorBlend(tooltipColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse);
+	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	R_ColorBlend(NULL);
 	return width;
@@ -117,7 +117,7 @@ int MN_DrawNotice (int x, int y)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
-	R_FontTextSize(font, cl.msgText, maxWidth, LONG_LINES_WRAP, &width, &height, NULL);
+	R_FontTextSize(font, cl.msgText, maxWidth, LONGLINES_WRAP, &width, &height, NULL);
 
 	if (!width)
 		return 0;
@@ -129,7 +129,7 @@ int MN_DrawNotice (int x, int y)
 
 	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, noticeBG);
 	R_ColorBlend(noticeColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, cl.msgText, lines, 0, NULL, qfalse);
+	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, cl.msgText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	R_ColorBlend(NULL);
 	return width;

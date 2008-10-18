@@ -2378,7 +2378,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - (ccs.date.day - building->timeStart);
-					R_FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse);
+					R_FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
 				default:
 					break;
@@ -2388,7 +2388,7 @@ void MN_BaseMapDraw (const menuNode_t * node)
 	}
 	if (hoverBuilding) {
 		R_Color(color);
-		R_FontDrawString("f_small", 0, mousePosX + 3, mousePosY, mousePosX + 3, mousePosY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
+		R_FontDrawString("f_small", 0, mousePosX + 3, mousePosY, mousePosX + 3, mousePosY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse, 0);
 		R_Color(NULL);
 	}
 	if (xHover != -1) {

@@ -99,7 +99,7 @@ void MN_DrawSelectBoxNode (const menuNode_t *node, const char *image)
 		if (!Q_strcmp(selectBoxOption->value, ref)) {
 			R_FontDrawString(font, node->align, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
-				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
+				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		}
 	}
 
@@ -129,7 +129,7 @@ void MN_DrawSelectBoxNode (const menuNode_t *node, const char *image)
 			/* print the option label */
 			R_FontDrawString(font, node->align, selBoxX, selBoxY,
 				selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
-				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
+				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			/* next entries' position */
 			selBoxY += node->size[1];
 			/* reset the hovering - will be recalculated next frame */

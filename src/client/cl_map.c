@@ -1465,7 +1465,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			} else
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/mission");
 
-			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse);
+			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
 		}
 	}
 
@@ -1517,7 +1517,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		/* Draw base names */
 		if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse);
+			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse, 0);
 	}
 
 	closestInterceptorDistance = -1.0f;
@@ -1561,7 +1561,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		/* Draw base names */
 		if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
+			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse, 0);
 
 		/* draw all aircraft of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
@@ -1788,7 +1788,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < gd.numNations; i++) {
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
-			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
+			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse, 0);
 		if (showXVI) {
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(gd.nations[i].name), gd.nations[i].stats[0].xviInfection), sizeof(buffer));
 		}

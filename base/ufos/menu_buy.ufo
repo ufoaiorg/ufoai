@@ -56,6 +56,7 @@ menu buy
 		click
 		wheel	{ cmd "market_scroll;" }
 		mousefx	true
+		longlines prettychop
 	}
 
 	text market_storage

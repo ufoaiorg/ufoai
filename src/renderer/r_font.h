@@ -43,12 +43,8 @@ void R_FontShutdown(void);
 void R_FontInit(void);
 void R_FontListCache_f(void);
 
-/* for method parameter */
-#define LONG_LINES_TRUNCATE 0
-#define LONG_LINES_WRAP 1
-
 void R_FontSetTruncationMarker(const char *marker);
-void R_FontTextSize(const char *fontId, const char *text, int maxWidth, int method, int *width, int *height, int *lines);
-int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
+void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines);
+int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);
 
 #endif

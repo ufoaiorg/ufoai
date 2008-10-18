@@ -245,6 +245,8 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 		/* tabulation, we assume all the tabs fit on a single line */
 		do {
+			int tabwidth;
+
 			tab = strchr(cur, '\t');
 			/* if this string does not contain any tabstops break this do while ... */
 			if (!tab)
@@ -252,22 +254,23 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
 			/* after the tab (needed for the next loop in this (the inner) do while) */
 			*tab++ = '\0';
+			/* use tab stop as given via menu definition format string
+			 * or use 1/3 of the node size (width) */
+			if (!node->texh[1])
+				tabwidth = width / 3;
+			else
+				tabwidth = node->texh[1];
 			/* now check whether we should draw this string */
 			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
-			R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
-			/* increase the x value as given via menu definition format string */
-			/* or use 1/3 of the node size (width) */
-			if (!node->texh[1])
-				x1 += (width / 3);
-			else
-				x1 += node->texh[1];
+			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse, LONGLINES_PRETTYCHOP);
+			x1 += tabwidth;
 			/* now set cur to the first char after the \t */
 			cur = tab;
 		} while (1);
 
 		/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-		R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
+		R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue, node->longlines);
 
 		if (node->mousefx)
 			R_ColorBlend(node->color); /* restore original color */
@@ -326,7 +329,7 @@ void MN_DrawMessageList (const message_t *messageStack, const char *font, menuNo
 		}
 		
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, node->height, 0, &screenLines, qtrue);
+		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, node->height, 0, &screenLines, qtrue, node->longlines);
 		if (screenLines > node->height)
 			break;
 	}

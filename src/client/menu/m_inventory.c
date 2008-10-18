@@ -645,7 +645,7 @@ void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int
 	if (showTUs && cls.state == ca_active){
 		R_FontDrawString("f_verysmall", 0, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
-			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse);
+			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);
 	}
 }
 
@@ -915,7 +915,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 										posName[0], posName[1],
 										0,	/* maxWidth */
 										0,	/* maxHeight */
-										0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse);
+										0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, 0);
 								} /* scrollVertical */
 
 								if (newRow)
@@ -948,7 +948,7 @@ const invList_t* MN_DrawContainerNode (menuNode_t *node)
 													pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
 													C_UNIT,	/* maxWidth */
 													0,	/* maxHeight */
-													0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse);
+													0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
 
 												/* Add width of text and the rest of the item. */
 												curWidth += C_UNIT / 2.0;
