@@ -30,9 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief valid notification types that may cause pause / notice */
 static const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
-	"installation_installed",
-	"installation_removed",
-	"installation_replaced",
+	N_("installation_installed"),
+	N_("installation_removed"),
+	N_("installation_replaced"),
 };
 CASSERT(lengthof(nt_strings) == NT_NUM_NOTIFYTYPE);
 
