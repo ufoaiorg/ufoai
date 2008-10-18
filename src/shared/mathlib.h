@@ -69,7 +69,7 @@ qboolean Q_IsPowerOfTwo(int i);
 #define ROLL   2   /* fall over */
 
 /* earth map data */
-/* values of sinus and cosinus of earth inclinaison (23,5 degrees) for faster day and night calculations */
+/* values of sinus and cosinus of earth inclination (23,5 degrees) for faster day and night calculations */
 #define SIN_ALPHA   0.39875
 #define COS_ALPHA   0.91706
 #define HIGH_LAT    +1.0
