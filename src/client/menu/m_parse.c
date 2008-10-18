@@ -1015,7 +1015,7 @@ const char *MN_GetSaifeReferenceString (const menu_t* const menu, char *ref)
 	const char* string = MN_GetReferenceString(menu, ref);
 	if (!string || !*string) {
 #ifdef DEBUG
-		Com_Printf("MN_GetSaifeReferenceString: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->dataStringOrImageOrModel, node->menu->name);
+		Com_Printf("MN_GetSaifeReferenceString: Reference null or empty");
 #endif
 		return NULL;
 	}

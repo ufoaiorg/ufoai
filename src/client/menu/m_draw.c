@@ -122,9 +122,9 @@ void MN_DrawMenus (void)
 			}
 		}
 		for (node = menu->firstNode; node; node = node->next) {
-			MN_GetNodeAbsPos(node, nodepos);
 			if (node->invis || !nodeBehaviourList[node->type].draw)
 				continue;
+			MN_GetNodeAbsPos(node, nodepos);
 
 #if 0 /**< overcomplex condition, if a drawable check is realy need, add a isDrawable() function into the node behaviour */
 			if (!(node->invis && ((node->dataStringOrImageOrModel /* 0 are images, models and strings e.g. */
