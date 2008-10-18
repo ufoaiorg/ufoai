@@ -425,7 +425,7 @@ static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y
 	}
 }
 
-void MN_RegisterNodeText(nodeBehaviour_t *behaviour)
+void MN_RegisterNodeText (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
 	behaviour->draw = MN_DrawTextNode2;

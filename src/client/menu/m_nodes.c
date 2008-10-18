@@ -79,7 +79,8 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
  * @brief
  * @todo delete this function when it's possible
  */
-const char *MN_GetNodeReference (const menuNode_t *node) {
+const char *MN_GetNodeReference (const menuNode_t *node)
+{
 	const char *ref = NULL;
 	/* get the reference */
 	if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_BASELAYOUT

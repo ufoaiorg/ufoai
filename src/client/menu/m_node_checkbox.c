@@ -54,7 +54,8 @@ static void MN_CheckboxClick (menuNode_t * node, int x, int y)
 	MN_SetCvar(cvarName, NULL, value);
 }
 
-void MN_RegisterNodeCheckBox(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeCheckBox (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "checkbox";
 	behaviour->draw = MN_DrawCheckBoxNode;
 	behaviour->leftClick = MN_CheckboxClick;

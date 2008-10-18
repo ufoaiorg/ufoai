@@ -476,7 +476,8 @@ void MN_DrawRadar (menuNode_t *node)
 	}
 }
 
-void MN_RegisterNodeRadar(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeRadar (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "radar";
 	behaviour->draw = MN_DrawRadar;
 }

@@ -180,7 +180,8 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }
 
-void MN_DrawModelNode2(menuNode_t *node) {
+void MN_DrawModelNode2 (menuNode_t *node)
+{
 	menu_t *menu = node->menu;
 	const char* ref = MN_GetNodeReference(node);
 	char source[MAX_VAR] = "";
@@ -501,7 +502,8 @@ static void MN_ModelClick (menuNode_t * node, int x, int y)
 	rotateAngles = node->model.angles;
 }
 
-void MN_RegisterNodeModel(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeModel (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "model";
 	behaviour->draw = MN_DrawModelNode2;
 	behaviour->leftClick = MN_ModelClick;

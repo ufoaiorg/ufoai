@@ -12,7 +12,8 @@
 
 /**
  */
-void MN_DrawMapNode(menuNode_t *node) {
+void MN_DrawMapNode (menuNode_t *node)
+{
 	if (curCampaign) {
 		/* don't run the campaign in console mode */
 		if (cls.key_dest != key_console)
@@ -64,7 +65,8 @@ void MN_NodeMapMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 	MAP_StopSmoothMovement();
 }
 
-void MN_RegisterNodeMap(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeMap (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "map";
 	behaviour->draw = MN_DrawMapNode;
 	behaviour->leftClick = MAP_MapClick;

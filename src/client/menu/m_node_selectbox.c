@@ -207,7 +207,8 @@ static void MN_SelectboxClick (menuNode_t * node, int x, int y)
 	}
 }
 
-void MN_RegisterNodeSelectBox(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeSelectBox (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "selectbox";
 	behaviour->draw = MN_DrawSelectBoxNode;
 	behaviour->leftClick = MN_SelectboxClick;

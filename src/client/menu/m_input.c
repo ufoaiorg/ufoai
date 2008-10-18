@@ -104,7 +104,8 @@ qboolean MN_CursorOnMenu (int x, int y)
 /**
  * @brief Is called everytime the mouse position change
  */
-void MN_MouseMove(int x, int y) {
+void MN_MouseMove (int x, int y)
+{
 
 }
 

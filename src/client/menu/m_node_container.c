@@ -13,7 +13,8 @@
  * @todo need to think about a common mecanism from drag-drop
  * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
  */
-static void MN_DrawContainerNode2(menuNode_t *node) {
+static void MN_DrawContainerNode2 (menuNode_t *node)
+{
 	vec2_t nodepos;
 	MN_GetNodeAbsPos(node, nodepos);
 	if (menuInventory) {
@@ -76,15 +77,18 @@ static void MN_DrawContainerNode2(menuNode_t *node) {
 	}
 }
 
-void MN_ContainerClick (menuNode_t *node, int x, int y) {
+void MN_ContainerClick (menuNode_t *node, int x, int y)
+{
 	MN_Drag(node, baseCurrent, x, y, qfalse);
 }
 
-void MN_ContainerRightClick (menuNode_t *node, int x, int y) {
+void MN_ContainerRightClick (menuNode_t *node, int x, int y)
+{
 	MN_Drag(node, baseCurrent, x, y, qtrue);
 }
 
-void MN_RegisterNodeContainer(nodeBehaviour_t* behaviour) {
+void MN_RegisterNodeContainer (nodeBehaviour_t* behaviour)
+{
 	behaviour->name = "container";
 	behaviour->draw = MN_DrawContainerNode2;
 	behaviour->leftClick = MN_ContainerClick;

@@ -5,7 +5,8 @@
 
 /**
  */
-void MN_DrawStringNode(menuNode_t *node) {
+void MN_DrawStringNode (menuNode_t *node)
+{
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
 	const char *font = MN_GetFont(menu, node);
@@ -21,7 +22,8 @@ void MN_DrawStringNode(menuNode_t *node) {
 		R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
 }
 
-void MN_RegisterNodeString(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeString (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "string";
 	behaviour->draw = MN_DrawStringNode;
 }

@@ -108,7 +108,7 @@ typedef struct {
 	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
 	void* tag;	/**< the tag to place the model onto */
 	void* animationState;	/**< holds then anim state for the current model */
-} model_data_node_t;
+} modelDataNode_t;
 
 /** @brief menu node
  * @todo delete data* when it's possible
@@ -170,8 +170,8 @@ typedef struct menuNode_s {
 
 	/** union will contain all extradata for a node */
 	union {
-		abstractvalue_data_node_t abstractvalue;
-		model_data_node_t model;
+		abstractValueDataNode_t abstractvalue;
+		modelDataNode_t model;
 	};
 
 } menuNode_t;

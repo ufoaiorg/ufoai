@@ -11,7 +11,8 @@
 
 /**
  */
-void MN_DrawCinematicNode(menuNode_t *node) {
+void MN_DrawCinematicNode (menuNode_t *node)
+{
 	vec2_t nodepos;
 	MN_GetNodeAbsPos(node, nodepos);
 	if (node->dataStringOrImageOrModel) {
@@ -26,7 +27,8 @@ void MN_DrawCinematicNode(menuNode_t *node) {
 	}
 }
 
-void MN_RegisterNodeCinematic(nodeBehaviour_t* behaviour) {
+void MN_RegisterNodeCinematic (nodeBehaviour_t* behaviour)
+{
 	behaviour->name = "cinematic";
 	behaviour->draw = MN_DrawCinematicNode;
 }

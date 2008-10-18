@@ -4,7 +4,8 @@
 /**
  * @todo move it to a m_node_linestrip.c
  */
-void MN_DrawLineStripNode(menuNode_t *node) {
+void MN_DrawLineStripNode (menuNode_t *node)
+{
 	int i;
 	if (node->linestrips.numStrips > 0) {
 		/* Draw all linestrips. */
@@ -18,7 +19,8 @@ void MN_DrawLineStripNode(menuNode_t *node) {
 	}
 }
 
-void MN_RegisterNodeLineStrip(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeLineStrip (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "linestrip";
 	behaviour->draw = MN_DrawLineStripNode;
 }

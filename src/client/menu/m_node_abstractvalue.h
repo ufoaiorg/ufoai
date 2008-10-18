@@ -38,6 +38,6 @@ typedef struct {
 	void* max;	/**< Max value can take the value field */
 	void* value;	/**< Current value */
 	void* delta;	/**< Quantity the control add or remove in one step */
-} abstractvalue_data_node_t;
+} abstractValueDataNode_t;
 
 #endif

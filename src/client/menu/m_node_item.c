@@ -13,7 +13,8 @@
  * @todo move it to a m_node_item.c
  * @todo need a cleanup/marge/refactoring with MN_DrawItemNode
  */
-void MN_DrawItemNode2(menuNode_t *node) {
+void MN_DrawItemNode2 (menuNode_t *node)
+{
 	menu_t *menu = node->menu;
 	const char* ref = MN_GetNodeReference(node);
 	if (!ref || !*ref)
@@ -33,7 +34,8 @@ void MN_DrawItemNode2(menuNode_t *node) {
 	}
 }
 
-void MN_RegisterNodeItem(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeItem (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "item";
 	behaviour->draw = MN_DrawItemNode2;
 }

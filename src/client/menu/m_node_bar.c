@@ -4,7 +4,8 @@
 
 /**
  */
-void MN_DrawBarNode(menuNode_t *node) {
+void MN_DrawBarNode (menuNode_t *node)
+{
 	vec4_t color;
 	float fac, bar_width;
 	vec2_t nodepos;
@@ -48,7 +49,8 @@ static void MN_BarClick (menuNode_t * node, int x, int y)
 	}
 }
 
-void MN_RegisterNodeBar(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeBar (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "bar";
 	behaviour->draw = MN_DrawBarNode;
 	behaviour->leftClick = MN_BarClick;

@@ -54,7 +54,8 @@ void MN_DrawImageNode(menuNode_t *node)
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
 }
 
-void MN_RegisterNodeImage(nodeBehaviour_t* behaviour) {
+void MN_RegisterNodeImage (nodeBehaviour_t* behaviour)
+{
 	behaviour->name = "pic";
 	behaviour->draw = MN_DrawImageNode;
 }

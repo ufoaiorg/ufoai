@@ -3,7 +3,8 @@
 
 /**
  */
-void MN_DrawTBarNode(menuNode_t *node) {
+void MN_DrawTBarNode (menuNode_t *node)
+{
 	/* dataStringOrImageOrModel is the texture name */
 	float ps, shx;
 	vec2_t nodepos;
@@ -22,7 +23,8 @@ void MN_DrawTBarNode(menuNode_t *node) {
 		shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 }
 
-void MN_RegisterNodeTBar(nodeBehaviour_t *behaviour) {
+void MN_RegisterNodeTBar (nodeBehaviour_t *behaviour)
+{
 	behaviour->name = "tbar";
 	behaviour->draw = MN_DrawTBarNode;
 }
