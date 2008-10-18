@@ -461,3 +461,31 @@ int UTF8_delete_char (char *s, int pos)
 	memmove(&s[start], &s[next], strlen(&s[next]) + 1);
 	return start;
 }
+
+/**
+ * @brief length of UTF-8 character starting here.
+ * @return length of character encoding, or 0 if not start of a UTF-8 sequence
+ * @todo Using this does not solve the truncation problem in case of
+ * decomposed characters. For example a code for "a" followed by a
+ * code for "put dots above previous character: the "a" will be reported
+ * as a character of length 1 by this function, even though the code
+ * that follows is part of its visual appearance and should not be
+ * cut off separately. Fortunately decomposed characters are rarely used.
+ */
+int UTF8_char_len (const char *s)
+{
+	unsigned char c = *s;
+	if (c < 0x80)
+		return 1;
+	if (c < 0xc0)
+		return 0;
+	if (c < 0xe0)
+		return 2;
+	if (c < 0xf0)
+		return 3;
+	if (c < 0xf8)
+		return 4;
+	/* UTF-8 used to define 5 and 6 byte sequences, but they are
+	 * no longer valid. */
+	return 0;
+}

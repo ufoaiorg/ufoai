@@ -345,6 +345,8 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
 
 	for (len = 1; len < maxlen; len++) {
 		buf[len - 1] = text[len - 1];
+		if (UTF8_CONTINUATION_BYTE(text[len]))
+			continue;
 		Q_strncpyz(&buf[len], ellipsis, sizeof(buf) - len);
 		TTF_SizeUTF8(f->font, buf, &width, NULL);
 		if (width > maxWidth)
@@ -374,11 +376,23 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, in
 	do {
 		int width;
 		int len;
+		int utf8len;
 		int skip = 0;
 		qboolean truncated = qfalse;
 
 		/* find mandatory break */
 		len = strcspn(&buf[pos], "\n\\");
+
+		/* tidy up broken UTF-8 at end of line which may have been
+		 * truncated by caller by use of functions like Q_strncpyz */
+		utf8len = 1;
+		while (len > utf8len
+			   && UTF8_CONTINUATION_BYTE(buf[pos + len - utf8len]))
+			utf8len++;
+		if (utf8len != UTF8_char_len(&buf[pos + len - utf8len])) {
+			len -= utf8len;
+			skip += utf8len;
+		}
 
 		/* delete trailing spaces */
 		while (len > 0 && buf[pos + len - 1] == ' ') {
