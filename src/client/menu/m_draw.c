@@ -189,6 +189,16 @@ void MN_DrawMenus (void)
 			if (nodeBehaviourList[node->type].draw) {
 				nodeBehaviourList[node->type].draw(node);
 			}
+
+			/* mouseover? */
+			if (node->state == qtrue)
+				menu->hoverNode = node;
+
+			if (mn_debugmenu->integer)
+				MN_DrawTooltip("f_small", node->name, nodepos[0], nodepos[1], node->size[1], 0);
+
+			R_ColorBlend(NULL);
+
 		}	/* for */
 		if (sp == mn.menuStackPos && menu->hoverNode && mn_show_tooltips->integer) {
 			/* We are hovering over an item and also want to display it.

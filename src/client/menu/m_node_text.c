@@ -187,6 +187,7 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 	}
 }
 
+
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
  * @sa MN_DrawMenus
@@ -405,6 +406,7 @@ void MN_MenuTextReset (int menuTextID)
 	LIST_Delete(&mn.menuTextLinkedList[menuTextID]);
 }
 
+
 /**
  * @brief Resets the mn.menuText pointers from a func node
  * @note You can give this function a parameter to only delete a specific list
@@ -443,7 +445,7 @@ void MN_NodeTextInit (void)
  */
 void MN_TextClick (menuNode_t * node, int x, int y)
 {
-	int mouseOver = 1;
+	int mouseOver = MN_CheckNodeZone(node, x, y);
 	char cmd[MAX_VAR];
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
 	if (Cmd_Exists(cmd))
@@ -461,7 +463,7 @@ void MN_TextClick (menuNode_t * node, int x, int y)
  */
 static void MN_TextRightClick (menuNode_t * node, int x, int y)
 {
-	int mouseOver = 1;
+	int mouseOver = MN_CheckNodeZone(node, x, y);
 	char cmd[MAX_VAR];
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
 	if (Cmd_Exists(cmd))
