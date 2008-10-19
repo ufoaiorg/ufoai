@@ -104,6 +104,20 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
 }
 
 /**
+ * @brief Checks whether a given item is a basedefence item
+ * @note This is done by checking whether it's a craftitem and whether it's
+ * marked as a dummy item - the combination of both means, that it's a
+ * basedefence item.
+ * @param[in] item The item to check whether it's a basedefence item
+ * @return true if the given item is a basedefence item
+ */
+static inline qboolean INS_IsBaseDefenceItem (const objDef_t *item)
+{
+	return item->craftitem.type != MAX_ACITEMS
+		&& (item->isDummy || !Q_strncmp(item->type, "dummy", MAX_VAR));
+}
+
+/**
  * @brief Setup new installation
  * @sa CL_NewInstallation
  */
@@ -141,10 +155,9 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	/* Add defenceweapons to storage */
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *item = &csi.ods[i];
+		const objDef_t *item = &csi.ods[i];
 		/* this is a craftitem but also dummy */
-		if ((item->craftitem.type != MAX_ACITEMS)
-		 && (item->isDummy || !Q_strncmp(item->type, "dummy", MAX_VAR))) {
+		if (INS_IsBaseDefenceItem(item)) {
 			installation->storage.num[item->idx] = installation->installationTemplate->maxBatteries;
 		}
 	}
