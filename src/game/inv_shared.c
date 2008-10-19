@@ -461,8 +461,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		break;
 
 	case FILTER_S_HEAVY:
-		if (obj->isHeavy)
-			return qtrue;
+		return obj->isHeavy;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numAmmos; i++) {
@@ -472,41 +471,31 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		break;
 
 	case FILTER_S_ARMOUR:
-		if (!Q_strncmp(obj->type, "armour", MAX_VAR))
-			return qtrue;
-		break;
+		return !Q_strncmp(obj->type, "armour", MAX_VAR);
 
 	case FILTER_S_MISC:
-		if (obj->isMisc)
-			return qtrue;
-		break;
+		return obj->isMisc;
 
 	case FILTER_CRAFTITEM:
 		/** @todo Should we handle FILTER_AIRCRAFT here as well? */
-		if (INV_IsCraftItem(obj))
-			return qtrue;
-		break;
+		return INV_IsCraftItem(obj);
 
 	case FILTER_UGVITEM:
-		if (obj->isUGVitem)
-			return qtrue;
-		break;
+		return obj->isUGVitem;
 
 	case FILTER_DUMMY:
-		if (obj->isDummy)
-			return qtrue;
-		break;
+		return obj->isDummy;
 
 	case FILTER_AIRCRAFT:
-		if (!Q_strncmp(obj->type, "aircraft", MAX_VAR))
-			return qtrue;
-		break;
+		return !Q_strncmp(obj->type, "aircraft", MAX_VAR);
 
 	case FILTER_DISASSEMBLY:
 		/** @todo I guess we should search for components matching this item here. */
 		break;
 
-	default:
+	case MAX_SOLDIER_FILTERTYPES:
+	case MAX_FILTERTYPES:
+	case FILTER_ENSURE_32BIT:
 		Com_Printf("INV_ItemMatchesFilter: Unknown filter type for items: %i\n", filterType);
 		break;
 	}
