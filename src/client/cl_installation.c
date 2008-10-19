@@ -113,8 +113,7 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
  */
 static inline qboolean INS_IsBaseDefenceItem (const objDef_t *item)
 {
-	return item->craftitem.type != MAX_ACITEMS
-		&& (item->isDummy || !Q_strncmp(item->type, "dummy", MAX_VAR));
+	return item->craftitem.type != MAX_ACITEMS && item->isDummy;
 }
 
 /**

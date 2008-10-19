@@ -399,8 +399,8 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 
 /**
  * @brief Checks if the given object/item matched the giben filter type.
- * @param[in] obj	A pointer to an objDef_t item.
- * @param[in] filterType	Filter type to check against.
+ * @param[in] obj A pointer to an objDef_t item.
+ * @param[in] filterType Filter type to check against.
  * @return qtrue if obj is in filterType
  */
 inline qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
@@ -466,7 +466,7 @@ inline qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterType
 		break;
 
 	case FILTER_DUMMY:
-		if (obj->isDummy || !Q_strncmp(obj->type, "dummy", MAX_VAR))
+		if (obj->isDummy)
 			return qtrue;
 		break;
 

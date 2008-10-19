@@ -1559,7 +1559,7 @@ static void CL_PrecacheModels (void)
 		percent = 95.0f;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].type[0] == '\0' || !Q_strcmp(csi.ods[i].type, "dummy"))
+		if (csi.ods[i].type[0] == '\0' || csi.ods[i].isDummy)
 			continue;
 
 		if (csi.ods[i].model[0] != '\0') {
