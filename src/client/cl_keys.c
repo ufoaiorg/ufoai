@@ -42,6 +42,20 @@ int msg_mode;
 char msg_buffer[MAXCMDLINE];
 size_t msg_bufferlen = 0;
 
+/** @todo To support international keyboards nicely, we will need full
+ * support for binding to either
+ * - a unicode value, however achieved
+ * - a key
+ * - modifier + key
+ * with a priority system to decide which to try first.
+ * This will mean that cleverly-hidden punctuation keys will still have
+ * their expected effect, even if they have to be pressed as Shift-AltGr-7
+ * or something. At the same time, it allows key combinations to be bound
+ * regardless of what their translated meaning is, so that for example
+ * Shift-4 can do something with the 4th agent regardless of which
+ * punctuation symbol is above the 4.
+ */
+
 char *keybindings[K_KEY_SIZE];
 char *menukeybindings[K_KEY_SIZE];
 static qboolean keydown[K_KEY_SIZE];
@@ -964,8 +978,15 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	/* if not a consolekey, send to the interpreter no matter what mode is */
 	if (cls.key_dest == key_game ||
 		(cls.key_dest == key_input && key >= K_MOUSE1 && key <= K_MWHEELUP)) {
-		if (mouseSpace == MS_MENU)
+		/* Some keyboards need modifiers to access key values that are
+		 * present as bare keys on other keyboards. Smooth over the difference
+		 * here by using the translated value if there is a binding for it. */
+		if (mouseSpace == MS_MENU && unicode >= 32 && unicode < 127)
+			kb = menukeybindings[unicode];
+		if (!kb && mouseSpace == MS_MENU)
 			kb = menukeybindings[key];
+		if (!kb && unicode >= 32 && unicode < 127)
+			kb = keybindings[unicode];
 		if (!kb)
 			kb = keybindings[key];
 		if (kb) {
