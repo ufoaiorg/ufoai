@@ -199,11 +199,11 @@ static void MN_InitKeyList_f (void)
 
 	*keylist = '\0';
 
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
 
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(menukeybindings[i])), sizeof(keylist));
 

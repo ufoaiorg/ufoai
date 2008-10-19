@@ -36,6 +36,29 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 const int UGV_SIZE = 300;	/**< Size of a UGV in hangar capacity */
 
 /**
+ * @brief Add an item to aircraft inventory.
+ * @sa AL_AddAliens
+ * @sa INV_CollectingItems
+ */
+void INV_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
+{
+	int i;
+	itemsTmp_t *cargo = aircraft->itemcargo;
+
+	for (i = 0; i < aircraft->itemtypes; i++) {
+		if (cargo[i].item == item) {
+			Com_DPrintf(DEBUG_CLIENT, "INV_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
+			cargo[i].amount += amount;
+			return;
+		}
+	}
+	Com_DPrintf(DEBUG_CLIENT, "INV_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
+	cargo[i].item = item;
+	cargo[i].amount = amount;
+	aircraft->itemtypes++;
+}
+
+/**
  * @brief Count and collect ammo from gun magazine.
  * @param[in] magazine Pointer to invList_t being magazine.
  * @param[in] aircraft Pointer to aircraft used in this mission.
@@ -43,29 +66,12 @@ const int UGV_SIZE = 300;	/**< Size of a UGV in hangar capacity */
  */
 static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
 {
-	int i;
-	itemsTmp_t *cargo;
-
-	cargo = aircraft->itemcargo;
-
 	/* Let's add remaining ammo to market. */
 	eTempEq.numLoose[magazine->item.m->idx] += magazine->item.a;
 	if (eTempEq.numLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
 		eTempEq.numLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
-		for (i = 0; i < aircraft->itemtypes; i++) {
-			if (cargo[i].item == magazine->item.m) {
-				cargo[i].amount++;
-				Com_DPrintf(DEBUG_CLIENT, "Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].item->idx, magazine->item.m->name, cargo[i].amount);
-				break;
-			}
-		}
-		if (i == aircraft->itemtypes) {
-			cargo[i].item = magazine->item.m;
-			cargo[i].amount++;
-			Com_DPrintf(DEBUG_CLIENT, "Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].item->idx, magazine->item.m->name);
-			aircraft->itemtypes++;
-		}
+		INV_CollectItem(aircraft, magazine->item.m, 1);
 	}
 }
 
@@ -211,29 +217,9 @@ void INV_CollectingItems (int won)
 		case ET_ITEM:
 			if (won) {
 				for (item = FLOOR(le); item; item = item->next) {
-					for (j = 0; j < aircraft->itemtypes; j++) {
-						if (cargo[j].item == item->item.t) {
-							cargo[j].amount++;
-							Com_DPrintf(DEBUG_CLIENT, "Collecting item: %i name: %s amount: %i\n", cargo[j].item->idx, item->item.t->name, cargo[j].amount);
-							/* If this is not reloadable item, or no ammo left, break... */
-							if (!item->item.t->reload || item->item.a == 0)
-								break;
-							/* ...otherwise collect ammo as well. */
-							INV_CollectingAmmo(item, aircraft);
-							break;
-						}
-					}
-					if (j == aircraft->itemtypes) {
-						cargo[j].item = item->item.t;
-						cargo[j].amount++;
-						Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].item->idx, item->item.t->name);
-						aircraft->itemtypes++;
-						/* If this is not reloadable item, or no ammo left, break... */
-						if (!item->item.t->reload || item->item.a == 0)
-							continue;
-						/* ...otherwise collect ammo as well. */
+					INV_CollectItem(aircraft, item->item.t, 1);
+					if (item->item.t->reload && item->item.a > 0)
 						INV_CollectingAmmo(item, aircraft);
-					}
 				}
 			}
 			break;
@@ -245,19 +231,7 @@ void INV_CollectingItems (int won)
 				if (le->state & STATE_DEAD) {
 					if (le->i.c[csi.idArmour]) {
 						item = le->i.c[csi.idArmour];
-						for (j = 0; j < aircraft->itemtypes; j++) {
-							if (cargo[j].item == item->item.t) {
-								cargo[j].amount++;
-								Com_DPrintf(DEBUG_CLIENT, "Collecting armour: %i name: %s amount: %i\n", cargo[j].item->idx, cargo[j].item->name, cargo[j].amount);
-								break;
-							}
-						}
-						if (j == aircraft->itemtypes) {
-							cargo[j].item = item->item.t;
-							cargo[j].amount++;
-							Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].item->idx, cargo[j].item->id);
-							aircraft->itemtypes++;
-						}
+						INV_CollectItem(aircraft, item->item.t, 1);
 					}
 					break;
 				}

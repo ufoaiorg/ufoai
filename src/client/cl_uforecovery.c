@@ -143,7 +143,7 @@ static void CP_UFORecovered_f (void)
 	}
 
 	/* At the beginning we enable all UFO recovery options. (confunc) */
-	Cmd_ExecuteString("menuwon_update_buttons");
+	MN_ExecuteConfunc("menuwon_update_buttons");
 
 	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
@@ -187,7 +187,7 @@ static void CP_UFORecovered_f (void)
 	/** @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. (confunc) */
-		Cmd_ExecuteString("disufostore");
+		MN_ExecuteConfunc("disufostore");
 	}
 }
 

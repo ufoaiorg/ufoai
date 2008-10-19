@@ -29,6 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 menuGlobal_t mn;
 static cvar_t *mn_escpop;
 
+void MN_DragMenu (void)
+{
+	if (mouseSpace == MS_MENU) {
+		mouseSpace = MS_DRAGMENU;
+	}
+}
+
 /**
  * @brief Returns the number of currently renderer menus on the menustack
  * @note Checks for a render node - if invis is true there, it's the last
@@ -94,7 +101,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 				MN_ExecuteActions(&mn.menus[i], mn.menus[i].initNode->click);
 
 			if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-				Key_Event(K_ENTER, qtrue, cls.realtime);
+				Key_Event(K_ENTER, 0, qtrue, cls.realtime);
 			Key_SetDest(key_game);
 
 			for (node = mn.menus[i].firstNode; node; node = node->next) {
@@ -204,7 +211,7 @@ void MN_PopMenu (qboolean all)
 {
 	/* make sure that we end all input buffers */
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-		Key_Event(K_ENTER, qtrue, cls.realtime);
+		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
 
 	MN_FocusRemove();
 

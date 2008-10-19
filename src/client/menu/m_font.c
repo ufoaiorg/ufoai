@@ -42,6 +42,19 @@ static const value_t fontValues[] = {
 	{NULL, V_NULL, 0},
 };
 
+static void MN_RegisterFont (const font_t *font)
+{
+	const char *path = _(font->path);
+
+	if (!path)
+		Sys_Error("...font without path (font %s)\n", font->name);
+
+	if (FS_CheckFile(path) == -1)
+		Sys_Error("...font file %s does not exist (font %s)\n", path, font->name);
+
+	R_FontRegister(font->name, font->size, path, font->style);
+}
+
 /**
  * @sa CL_ParseClientData
  */
@@ -120,13 +133,7 @@ void MN_ParseFont (const char *name, const char **text)
 			Com_Printf("MN_ParseFont: unknown token \"%s\" ignored (font %s)\n", token, name);
 	} while (*text);
 
-	if (!font->path)
-		Sys_Error("...font without path (font %s)\n", font->name);
-
-	if (FS_CheckFile(font->path) == -1)
-		Sys_Error("...font file %s does not exist (font %s)\n", font->path, font->name);
-
-	R_FontRegister(font->name, font->size, _(font->path), font->style);
+	MN_RegisterFont(font);
 }
 
 /**
@@ -155,5 +162,5 @@ void MN_InitFonts (void)
 
 	Com_Printf("...registering %i fonts\n", numFonts);
 	for (i = 0; i < numFonts; i++)
-		R_FontRegister(fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style);
+		MN_RegisterFont(&fonts[i]);
 }

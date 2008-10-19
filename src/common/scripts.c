@@ -60,7 +60,8 @@ const char *vt_names[] = {
 	"client_hunk", /* 25 */
 	"client_hunk_string",
 	"num",
-	"baseid"
+	"baseid",
+	"longlines"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -99,6 +100,11 @@ const char *fade_names[] = {
 	"none", "in", "out", "sin", "saw", "blend"
 };
 CASSERT(lengthof(fade_names) == FADE_LAST);
+
+const char *longlines_names[] = {
+	"wrap", "chop", "prettychop"
+};
+CASSERT(lengthof(longlines_names) == LONGLINES_LAST);
 
 #ifndef DEDICATED_ONLY
 static const char *if_strings[] = {
@@ -164,7 +170,8 @@ static const size_t vt_sizes[] = {
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
 	sizeof(int),	/* V_MENUTEXTID */
-	sizeof(int)		/* V_BASEID */
+	sizeof(int),	/* V_BASEID */
+	sizeof(byte) 	/* V_LONGLINES */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -426,6 +433,16 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(float *) b = atof(token);
 		}
 		return ALIGN(sizeof(float));
+
+	case V_LONGLINES:
+		for (num = 0; num < LONGLINES_LAST; num++)
+			if (!Q_strcmp(token, longlines_names[num]))
+				break;
+		if (num == LONGLINES_LAST)
+			*b = 0;
+		else
+			*b = num;
+		return ALIGN(1);
 
 	default:
 		Sys_Error("Com_ParseValue: unknown value type '%s'\n", token);
@@ -2384,7 +2401,7 @@ void Com_ParseScripts (void)
 	FS_BuildFileList("ufos/*.ufo");
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		if (!Q_strncmp(type, "damagetypes", 11))
 			Com_ParseDamageTypes(name, &text);
 		else if (!Q_strncmp(type, "gametype", 8))
@@ -2394,7 +2411,7 @@ void Com_ParseScripts (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0) {
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
 		if (!Q_strncmp(type, "item", 4))
 			Com_ParseItem(name, &text, qfalse);
@@ -2414,7 +2431,7 @@ void Com_ParseScripts (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0) {
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
 		if (!Q_strncmp(type, "equipment", 9))
 			Com_ParseEquipment(name, &text);

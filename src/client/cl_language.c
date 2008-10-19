@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_language.h"
 
+#include "menu/m_font.h"
+
 /**
  * @brief List of all mappings for a locale
  */
@@ -139,7 +141,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
 
 #ifdef _WIN32
-	if (FS_FileExists(languagePath) && (Q_putenv("LANGUAGE", localeID) == 0)) {
+	if (FS_FileExists(languagePath) && (SDL_putenv(va("LANGUAGE=%s", localeID)) == 0)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
 		return qtrue;
 	} else {
@@ -196,20 +198,20 @@ void CL_LanguageInit (void)
 
 	if (*s_language->string) {
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
-		Q_strncpyz(deflang, s_language->string, MAX_VAR);
+		Q_strncpyz(deflang, s_language->string, sizeof(deflang));
 	} else {
 #ifdef _WIN32
 		if (getenv("LANGUAGE"))
-			Q_strncpyz(deflang, getenv("LANGUAGE"), MAX_VAR);
+			Q_strncpyz(deflang, getenv("LANGUAGE"), sizeof(deflang));
 		else {
 			/* Setting to en will always work in every windows. */
-			Q_strncpyz(deflang, "en", MAX_VAR);
+			Q_strncpyz(deflang, "en", sizeof(deflang));
 		}
 #else
 		/* Calling with NULL param should return current system settings. */
-		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
+		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), sizeof(deflang));
 		if (deflang[0] == '\0')
-			Q_strncpyz(deflang, "C", MAX_VAR);
+			Q_strncpyz(deflang, "C", sizeof(deflang));
 #endif
 	}
 
@@ -263,6 +265,17 @@ void CL_LanguageInit (void)
 }
 
 /**
+ * @brief Adjust game for new language: reregister fonts, etc.
+ */
+static void CL_NewLanguage (void)
+{
+	R_FontShutdown();
+	R_FontInit();
+	MN_InitFonts();
+	R_FontSetTruncationMarker(_("..."));
+}
+
+/**
  * @brief Cycle through all parsed locale mappings and try to set one after another
  * @param[in] localeID the locale id parsed from scriptfiles
  * @sa CL_LocaleSet
@@ -297,14 +310,16 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 		Cvar_Set("s_language", mapping->localeMapping);
 #ifdef _WIN32
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s\n", mapping->localeMapping);
-		Q_putenv("LANGUAGE", mapping->localeMapping);
+		SDL_putenv(va("LANGUAGE=%s", mapping->localeMapping));
 		Cvar_Set("s_language", language->localeID);
 		s_language->modified = qfalse;
+		CL_NewLanguage();
 		return qtrue;
 #else
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
 			Cvar_Set("s_language", language->localeID);
 			s_language->modified = qfalse;
+			CL_NewLanguage();
 			return qtrue;
 		}
 #endif
@@ -313,6 +328,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 #ifndef _WIN32
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: Finally try: '%s'\n", localeID);
 	setlocale(LC_MESSAGES, localeID);
+	CL_NewLanguage();
 #endif
 	return qfalse;
 }

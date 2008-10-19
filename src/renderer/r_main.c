@@ -47,6 +47,7 @@ cvar_t *r_brightness;
 cvar_t *r_contrast;
 cvar_t *r_invert;
 cvar_t *r_monochrome;
+cvar_t *r_saturation;
 cvar_t *r_drawentities;
 cvar_t *r_drawworld;
 cvar_t *r_drawspecialbrushes;
@@ -426,6 +427,7 @@ static void R_RegisterImageVars (void)
 {
 	r_brightness = Cvar_Get("r_brightness", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Brightness for images");
 	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_IMAGES, "Contrast for images");
+	r_saturation = Cvar_Get("r_saturation", "1.0", CVAR_ARCHIVE | CVAR_IMAGES, "Saturation for images");
 	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Monochrome world - Bitmask - 1, 2");
 	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Invert images - Bitmask - 1, 2");
 	if (r_config.hardwareType == GLHW_NVIDIA)

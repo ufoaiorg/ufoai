@@ -106,6 +106,7 @@ typedef enum {
 	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
 	V_MENUTEXTID,
 	V_BASEID,
+	V_LONGLINES,
 
 	V_NUM_TYPES
 } valueTypes_t;
@@ -229,10 +230,19 @@ typedef enum {
 	FADE_LAST
 } fade_t;
 
+typedef enum {
+	LONGLINES_WRAP,
+	LONGLINES_CHOP,
+	LONGLINES_PRETTYCHOP,
+
+	LONGLINES_LAST
+} longlines_t;
+
 extern const char *align_names[];
 extern const char *blend_names[];
 extern const char *style_names[];
 extern const char *fade_names[];
+extern const char *longlines_names[];
 extern const char *air_slot_type_strings[];
 
 /** used e.g. in our parsers */

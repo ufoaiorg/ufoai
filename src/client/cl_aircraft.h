@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Invalid aircraft index in base-list of aircraft. */
 #define AIRCRAFT_INBASE_INVALID -1
 
-/** factor to speed up refueling */
+/** factor to speed up refuelling */
 #define AIRCRAFT_REFUEL_FACTOR 16
 
 /** @brief A path on the map described by 2D points */
@@ -128,7 +128,7 @@ typedef struct aircraftSlot_s {
 /** @brief A cargo of items collected after mission. */
 typedef struct itemsTmp_s {
 	const objDef_t *item;		/**< Collected item. */
-	int amount;			/**< Amount of collected items. */
+	int amount;					/**< Amount of collected items. */
 } itemsTmp_t;
 
 /**
@@ -150,17 +150,17 @@ typedef enum {
 
 /** possible aircraft states */
 typedef enum aircraftStatus_s {
-	AIR_NONE = 0,
+	AIR_NONE,
 	AIR_REFUEL,			/**< refill fuel */
 	AIR_HOME,			/**< in homebase */
 	AIR_IDLE,			/**< just sit there on geoscape */
-	AIR_TRANSIT,			/**< moving */
-	AIR_MISSION,			/**< moving to a mission */
+	AIR_TRANSIT,		/**< moving */
+	AIR_MISSION,		/**< moving to a mission */
 	AIR_UFO,			/**< pursuing a UFO - also used for ufos that are pursuing an aircraft */
 	AIR_DROP,			/**< ready to drop down */
-	AIR_INTERCEPT,			/**< ready to intercept */
-	AIR_TRANSFER,			/**< being transfered */
-	AIR_RETURNING			/**< returning to homebase */
+	AIR_INTERCEPT,		/**< ready to intercept */
+	AIR_TRANSFER,		/**< being transfered */
+	AIR_RETURNING		/**< returning to homebase */
 } aircraftStatus_t;
 
 /** @brief An aircraft with all it's data */

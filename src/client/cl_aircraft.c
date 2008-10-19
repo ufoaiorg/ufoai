@@ -257,15 +257,13 @@ void AIM_AircraftStart_f (void)
 		return;
 
 	if (!baseCurrent->aircraftCurrent) {
-#ifdef DEBUG
-		Com_Printf("Error - there is no current aircraft in this base\n");
-#endif
+		Com_DPrintf(DEBUG_CLIENT, "Error - there is no current aircraft in this base\n");
 		return;
 	}
 
 	/* Aircraft cannot start without Command Centre operational. */
 	if (!B_GetBuildingStatus(baseCurrent, B_COMMAND)) {
-		MN_Popup(_("Notice"), _("No Command Centre operational in this base.\n\nAircraft can not start.\n"));
+		MN_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -278,9 +276,6 @@ void AIM_AircraftStart_f (void)
 	}
 
 	if (AIR_IsAircraftInBase(aircraft)) {
-		/* little offset to be able to select the aircraft without a multi-popup */
-		aircraft->pos[0] = baseCurrent->pos[0] + 2;
-		aircraft->pos[1] = baseCurrent->pos[1] + 2;
 		/* reload its ammunition */
 		AII_ReloadWeapon(aircraft);
 	}
@@ -314,25 +309,25 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 	case AIR_NONE:
 		return _("Nothing - should not be displayed");
 	case AIR_HOME:
-		return _("At homebase");
+		return _("at home base");
 	case AIR_REFUEL:
-		return _("Refuel");
+		return _("refuelling");
 	case AIR_IDLE:
-		return _("Idle");
+		return _("idle");
 	case AIR_TRANSIT:
-		return _("On transit");
+		return _("in transit");
 	case AIR_MISSION:
-		return _("Moving to mission");
+		return _("enroute to mission");
 	case AIR_UFO:
-		return _("Pursuing a UFO");
+		return _("pursuing a UFO");
 	case AIR_DROP:
-		return _("Ready for drop down");
+		return _("ready to drop soldiers");
 	case AIR_INTERCEPT:
-		return _("On interception");
+		return _("intercepting a UFO");
 	case AIR_TRANSFER:
-		return _("Being transfered");
+		return _("enroute to new home base");
 	case AIR_RETURNING:
-		return _("Back to base");
+		return _("returning to base");
 	default:
 		Com_Printf("Error: Unknown aircraft status for %s\n", aircraft->name);
 	}
@@ -747,7 +742,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Operational range:\t%i km\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE] *
 		aircraft->stats[AIR_STATS_SPEED], AIR_STATS_OP_RANGE)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AII_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Armours:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
 	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
@@ -830,7 +825,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 		AIR_ResetAircraftTeam(aircraft);
 
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("You've got a new aircraft (a %s) in base %s"), _(aircraft->name), base->name);
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new (a %s) class craft is ready in base %s"), _(aircraft->name), base->name);
 		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
@@ -869,21 +864,21 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
 {
 	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
-		return _("not a working hangar");
+		return _("No operational hangars at that base.");
 
 	/* not enough capacity */
 	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
-		return _("no more available hangar");
+		return _("No free hangars at that base.");
 
 	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
-		return _("no more quarter for employees aboard");
+		return _("Insufficient free crew quarter space at that base.");
 
 	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
-		return _("no more room in storage");
+		return _("Insufficient storage space at that base.");
 
 	/* check aircraft fuel, because the aircraft has to travel to the new base */
 	if (!AIR_AircraftHasEnoughFuelOneWay(aircraft, base->pos))
-		return _("base is too far");
+		return _("That base is beyond this aircraft's range.");
 
 	return NULL;
 }
@@ -1198,13 +1193,13 @@ void CL_CampaignRunAircraft (int dt)
 					/* radar overlay should be updated */
 					radarOverlayReset = qtrue;
 				} else if (aircraft->status == AIR_REFUEL) {
-					/* Aircraft is refueling at base */
+					/* Aircraft is refuelling at base */
 					aircraft->fuel += dt * AIRCRAFT_REFUEL_FACTOR;
 					if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
 						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 						aircraft->status = AIR_HOME;
 						assert(aircraft->homebase);
-						MN_AddNewMessage(_("Notice"), va(_("Your %s is refueled at base %s."), aircraft->name, aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+						MN_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 					}
 				}
 
@@ -1212,7 +1207,7 @@ void CL_CampaignRunAircraft (int dt)
 				if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
 					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 					/** @todo check if aircraft can go to a closer base with free space */
-					MN_AddNewMessage(_("Notice"), va(_("Your %s is low on fuel and returns to base"), aircraft->name), qfalse, MSG_STANDARD, NULL);
+					MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
 
@@ -1318,7 +1313,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		return qfalse;
 
 	if (!aircraft->teamSize) {
-		MN_Popup(_("Notice"), _("Assign a team to aircraft"));
+		MN_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
 		return qfalse;
 	}
 
@@ -1342,7 +1337,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->pos)) {
-		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base."), qfalse, MSG_STANDARD, NULL);
+		MN_AddNewMessage(_("Notice"), _("Insufficient fuel."), qfalse, MSG_STANDARD, NULL);
 		return qfalse;
 	}
 

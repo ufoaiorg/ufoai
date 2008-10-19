@@ -62,6 +62,7 @@ extern cvar_t *r_brightness;
 extern cvar_t *r_contrast;
 extern cvar_t *r_invert;
 extern cvar_t *r_monochrome;
+extern cvar_t *r_saturation;
 
 extern cvar_t *r_drawworld;
 extern cvar_t *r_drawspecialbrushes;

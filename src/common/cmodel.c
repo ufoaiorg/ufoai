@@ -1031,8 +1031,8 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	/* Lets test if curTile is changed */
 	assert(curTile == &mapTiles[numTiles]);
 
-	/* CMod_LoadRouting plays with curTile and numTiles, so lets set */
-	/* these to the right values now */
+	/* CMod_LoadRouting plays with curTile and numTiles, so let set
+	 * these to the right values now */
 	numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
 	/* now increase the amount of loaded tiles */
@@ -1048,11 +1048,18 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 static void CMod_RerouteMap(void)
 {
 	int size, x, y, z, dir;
-	int dx, dy;
+	int dx, dy, i;
 	pos3_t mins, maxs;
 
 	VecToPos(map_min, mins);
 	VecToPos(map_max, maxs);
+
+	/* fit min/max into the world size */
+	maxs[0] = min(maxs[0], PATHFINDING_WIDTH - 1);
+	maxs[1] = min(maxs[1], PATHFINDING_WIDTH - 1);
+	maxs[2] = min(maxs[2], PATHFINDING_HEIGHT - 1);
+	for (i = 0; i < 3; i++)
+		mins[i] = max(mins[i], 0);
 
 	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
 		(int)mins[0], (int)mins[1], (int)mins[2],

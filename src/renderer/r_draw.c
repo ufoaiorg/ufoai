@@ -798,7 +798,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
 	if (starfield != r_noTexture  && !disableSolarRender) {
-		/* TODO: this should be a box that is rotated, too */
+		/** @todo this should be a box that is rotated, too */
 		R_DrawTexture(starfield->texnum, nx, ny, nw, nh);
 	}
 

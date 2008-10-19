@@ -164,17 +164,18 @@ void Cmd_ForwardToServer (void)
 
 /**
  * @brief Set or print some environment variables via console command
- * @sa Q_putenv
+ * @sa SDL_putenv
  */
 static void CL_Env_f (void)
 {
-	int argc = Cmd_Argc();
+	const int argc = Cmd_Argc();
 
 	if (argc == 3) {
-		Q_putenv(Cmd_Argv(1), Cmd_Argv(2));
+		char buffer[MAX_VAR];
+		Com_sprintf(buffer, sizeof(buffer), "%s=%s", Cmd_Argv(1), Cmd_Argv(2));
+		SDL_putenv(buffer);
 	} else if (argc == 2) {
-		char *env = getenv(Cmd_Argv(1));
-
+		const char *env = SDL_getenv(Cmd_Argv(1));
 		if (env)
 			Com_Printf("%s=%s\n", Cmd_Argv(1), env);
 		else
@@ -212,9 +213,6 @@ static void CL_Quit_f (void)
  */
 void CL_StartSingleplayer (qboolean singleplayer)
 {
-	const char *type, *name, *text;
-	base_t *base;
-
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
 		if (Com_ServerState()) {
@@ -240,6 +238,8 @@ void CL_StartSingleplayer (qboolean singleplayer)
 	} else {
 		const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 		const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+		const char *type, *name, *text;
+		base_t *base;
 
 		/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 		 * cvars if values were previously set */
@@ -272,7 +272,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		text = NULL;
 
 		if (!gd.numTechnologies) {
-			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 				if (!Q_strncmp(type, "tech", 4))
 					RS_ParseTechnologies(name, &text);
 
@@ -626,9 +626,8 @@ static void CL_PingServerCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
 	serverList_t *server = NET_StreamGetData(s);
-	int cmd = NET_ReadByte(buf);
-	char *str = NET_ReadStringLine(buf);
-	char string[MAX_INFO_STRING];
+	const int cmd = NET_ReadByte(buf);
+	const char *str = NET_ReadStringLine(buf);
 
 	if (cmd == clc_oob && Q_strncmp(str, "info", 4) == 0) {
 		str = NET_ReadString(buf);
@@ -642,6 +641,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 	if (cl_serverlist->integer == SERVERLIST_SHOWALL
 	|| (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
 	|| (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients)) {
+		char string[MAX_INFO_STRING];
 		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
 			server->sv_hostname,
 			server->mapname,
@@ -835,7 +835,6 @@ static char userInfoText[256];
 static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 {
 	const char *value;
-	const char *users;
 	int team;
 	const char *token;
 	char buf[256];
@@ -846,13 +845,13 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 	/* check for server status response message */
 	value = Info_ValueForKey(s, "sv_dedicated");
 	if (*value) {
-		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
 		/* server info cvars and users are seperated via newline */
-		users = strstr(s, "\n");
+		const char *users = strstr(s, "\n");
 		if (!users) {
 			Com_Printf("%c%s\n", COLORED_GREEN, s);
 			return;
 		}
+		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
 
 		Cvar_Set("mn_mappic", "maps/shots/default.jpg");
 		if (*Info_ValueForKey(s, "sv_needpass") == '1')
@@ -921,8 +920,8 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 		return;
 
 	{
-		int cmd = NET_ReadByte(buf);
-		char *str = NET_ReadStringLine(buf);
+		const int cmd = NET_ReadByte(buf);
+		const char *str = NET_ReadStringLine(buf);
 
 		if (cmd == clc_oob && Q_strncmp(str, "print", 5) == 0) {
 			str = NET_ReadString(buf);
@@ -1006,7 +1005,6 @@ static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const cha
 static void CL_BookmarkAdd_f (void)
 {
 	int i;
-	const char *bookmark;
 	const char *newBookmark;
 
 	if (Cmd_Argc() < 2) {
@@ -1019,8 +1017,8 @@ static void CL_BookmarkAdd_f (void)
 		newBookmark = Cmd_Argv(1);
 
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		bookmark = Cvar_VariableString(va("adr%i", i));
-		if (!*bookmark) {
+		const char *bookmark = Cvar_VariableString(va("adr%i", i));
+		if (bookmark[0] == '\0') {
 			Cvar_Set(va("adr%i", i), newBookmark);
 			return;
 		}
@@ -1192,7 +1190,7 @@ static void CL_PingServers_f (void)
  */
 static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
-	char *s;
+	const char *s;
 	const char *c;
 	int i;
 
@@ -1206,9 +1204,8 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
-		const char *p;
 		for (i = 1; i < Cmd_Argc(); i++) {
-			p = Cmd_Argv(i);
+			const char *p = Cmd_Argv(i);
 			if (!Q_strncmp(p, "dlserver=", 9)) {
 				p += 9;
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
@@ -1283,7 +1280,7 @@ static void CL_ReadPackets (void)
 {
 	struct dbuffer *msg;
 	while ((msg = NET_ReadMsg(cls.netStream))) {
-		int cmd = NET_ReadByte(msg);
+		const int cmd = NET_ReadByte(msg);
 		if (cmd == clc_oob)
 			CL_ConnectionlessPacket(msg);
 		else
@@ -1311,7 +1308,7 @@ static void CL_TeamNum_f (void)
 	int max = 4;
 	int i = cl_teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
-	int maxteamnum = Cvar_VariableInteger("mn_maxteams");
+	const int maxteamnum = Cvar_VariableInteger("mn_maxteams");
 
 	if (maxteamnum > 0)
 		max = maxteamnum;
@@ -1466,7 +1463,7 @@ void CL_RequestNextDownload (void)
 
 		/* check download */
 		if (precache_check == CS_MODELS) { /* confirm map */
-			if (*cl.configstrings[CS_TILES] != '+') {
+			if (cl.configstrings[CS_TILES][0] != '+') {
 				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
 					return; /* started a download */
 			}
@@ -1554,7 +1551,6 @@ static void CL_Precache_f (void)
 static void CL_PrecacheModels (void)
 {
 	int i;
-	float loading;
 	float percent = 40.0f;
 
 	if (cl_precache->integer)
@@ -1562,10 +1558,8 @@ static void CL_PrecacheModels (void)
 	else
 		percent = 95.0f;
 
-	loading = cls.loadingPercent;
-
 	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].type[0] == '\0' || !Q_strcmp(csi.ods[i].type, "dummy"))
+		if (csi.ods[i].type[0] == '\0' || csi.ods[i].isDummy)
 			continue;
 
 		if (csi.ods[i].model[0] != '\0') {
@@ -1587,7 +1581,6 @@ void CL_InitAfter (void)
 	int i;
 	menu_t* menu;
 	menuNode_t* vidModesOptions;
-	selectBoxOptions_t* selectBoxOption;
 
 	/* start the music track already while precaching data */
 	S_Frame();
@@ -1628,10 +1621,9 @@ void CL_InitAfter (void)
 	if (!vidModesOptions)
 		Sys_Error("Could not find node select_res in menu options_video\n");
 	for (i = 0; i < VID_GetModeNums(); i++) {
-		selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
-		if (!selectBoxOption) {
+		selectBoxOptions_t *selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
+		if (!selectBoxOption)
 			return;
-		}
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", vid_modes[i].mode);
 	}
@@ -1734,6 +1726,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		INV_ParseComponents(name, text);
 	else if (!Q_strncmp(type, "alienteam", 9))
 		CL_ParseAlienTeam(name, text);
+	else if (!Q_strncmp(type, "msgoptions", 10))
+		MSO_ParseSettings(name, text);
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
 		Com_ParseMedalsAndRanks(name, &text, qfalse);
@@ -1817,7 +1811,7 @@ void CL_ReadSinglePlayerData (void)
 	text = NULL;
 
 	CL_ResetSinglePlayerData();
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
@@ -1828,7 +1822,7 @@ void CL_ReadSinglePlayerData (void)
 	text = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
-	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptSecond(type, name, &text);
 
 	Com_Printf("Global data loaded - size "UFO_SIZE_T" bytes\n", sizeof(gd));
@@ -1947,7 +1941,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 
 	FS_CloseFile(&f);
 }
-#endif /* DEBUG */
+#endif
 
 /**
  * @brief Autocomplete function for some network functions
@@ -1958,15 +1952,12 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 {
 	int i, matches = 0;
 	const char *localMatch[MAX_COMPLETE];
-	const char *adrStr;
-	size_t len;
-
-	len = strlen(partial);
+	const size_t len = strlen(partial);
 	if (!len) {
 		/* list them all if there was no parameter given */
 		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			adrStr = Cvar_VariableString(va("adr%i", i));
-			if (*adrStr)
+			const char *adrStr = Cvar_VariableString(va("adr%i", i));
+			if (adrStr[0] != '\0')
 				Com_Printf("%s\n", adrStr);
 		}
 		return 0;
@@ -1976,8 +1967,8 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		adrStr = Cvar_VariableString(va("adr%i", i));
-		if (*adrStr && !Q_strncmp(partial, adrStr, len)) {
+		const char *adrStr = Cvar_VariableString(va("adr%i", i));
+		if (adrStr[0] != '\0' && !Q_strncmp(partial, adrStr, len)) {
 			Com_Printf("%s\n", adrStr);
 			localMatch[matches++] = adrStr;
 			if (matches >= MAX_COMPLETE)
@@ -2393,16 +2384,16 @@ static qboolean CL_LocaleSet (void)
 	char *locale;
 
 #ifdef _WIN32
-	Q_putenv("LANG", s_language->string);
-	Q_putenv("LANGUAGE", s_language->string);
+	SDL_putenv(va("LANG=%s", s_language->string));
+	SDL_putenv(va("LANGUAGE=%s", s_language->string));
 #else /* _WIN32 */
 # ifndef __sun
 	unsetenv("LANGUAGE");
 # endif /* __sun */
 # ifdef __APPLE__
-	if (*s_language->string && Q_putenv("LANGUAGE", s_language->string) == -1)
+	if (s_language->string[0] != '\0' && SDL_putenv(va("LANGUAGE=%s", s_language->string)) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (*s_language->string && Q_putenv("LC_ALL", s_language->string) == -1)
+	if (s_language->string[0] != '\0' && SDL_putenv(va("LC_ALL=%s", s_language->string)) == -1)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
 # endif /* __APPLE__ */
 #endif /* _WIN32 */
@@ -2445,7 +2436,7 @@ void CL_Init (void)
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
 	/* use system locale dir if we can't find in gamedir */
-	if (*fs_i18ndir->string)
+	if (fs_i18ndir->string[0] != '\0')
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());

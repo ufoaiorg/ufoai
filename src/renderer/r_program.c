@@ -314,7 +314,6 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 {
 	r_program_t *prog;
-	char log[MAX_STRING_CHARS];
 	unsigned e;
 	int i;
 
@@ -346,6 +345,7 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 
 	qglGetProgramiv(prog->id, GL_LINK_STATUS, &e);
 	if (!e) {
+		char log[MAX_STRING_CHARS];
 		qglGetProgramInfoLog(prog->id, sizeof(log) - 1, NULL, log);
 		Com_Printf("R_LoadProgram: %s: %s\n", prog->name, log);
 

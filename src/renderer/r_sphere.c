@@ -65,18 +65,18 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 6), vid_modelPool, 0);
 
 	for (i = 0; i < tris; i++) {
-		float rho = (float) i * drho;
-		float srho = (float) (sin(rho));
-		float crho = (float) (cos(rho));
-		float srhodrho = (float) (sin(rho + drho));
-		float crhodrho = (float) (cos(rho + drho));
+		const float rho = (float) i * drho;
+		const float srho = (float) (sin(rho));
+		const float crho = (float) (cos(rho));
+		const float srhodrho = (float) (sin(rho + drho));
+		const float crhodrho = (float) (cos(rho + drho));
 
 		s = 0.0f;
 
 		for (j = 0; j <= tris; j++) {
-			float theta = (j == tris) ? 0.0f : j * dtheta;
-			float stheta = (float) (-sin(theta));
-			float ctheta = (float) (cos(theta));
+			const float theta = (j == tris) ? 0.0f : j * dtheta;
+			const float stheta = (float) (-sin(theta));
+			const float ctheta = (float) (cos(theta));
 
 			Vector2Set((&sphere->texes[texespos]), s, (t - dt));
 			texespos += 2;

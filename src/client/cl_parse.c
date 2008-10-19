@@ -905,7 +905,6 @@ static void CL_ActorDoStartMove (struct dbuffer *msg)
 	int entnum, speed;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_MOVE], &entnum, &speed);
-
 	CL_SetLastMoving(LE_Get(entnum));
 	assert(lastMoving);
 	lastMoving->speed = speed;
@@ -1051,8 +1050,8 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	if (!(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
-	/** @todo Why do we check cls.state here - events are only executed when a mission is active */
-	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
+	assert(cls.state == ca_active);
+	if (!(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
 			VectorCopy(le->origin, cl.cam.origin);

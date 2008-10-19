@@ -42,6 +42,20 @@ int msg_mode;
 char msg_buffer[MAXCMDLINE];
 size_t msg_bufferlen = 0;
 
+/** @todo To support international keyboards nicely, we will need full
+ * support for binding to either
+ * - a unicode value, however achieved
+ * - a key
+ * - modifier + key
+ * with a priority system to decide which to try first.
+ * This will mean that cleverly-hidden punctuation keys will still have
+ * their expected effect, even if they have to be pressed as Shift-AltGr-7
+ * or something. At the same time, it allows key combinations to be bound
+ * regardless of what their translated meaning is, so that for example
+ * Shift-4 can do something with the 4th agent regardless of which
+ * punctuation symbol is above the 4.
+ */
+
 char *keybindings[K_KEY_SIZE];
 char *menukeybindings[K_KEY_SIZE];
 static qboolean keydown[K_KEY_SIZE];
@@ -191,9 +205,10 @@ LINE TYPING INTO THE CONSOLE
 
 /**
  * @brief Interactive line editing and console scrollback
- * @param[in] key
+ * @param[in] key key code, either K_ value or lowercase ascii
+ * @param[in] unicode translated meaning of keypress in unicode
  */
-static void Key_Console (int key)
+static void Key_Console (int key, int unicode)
 {
 	int i;
 
@@ -388,6 +403,7 @@ static void Key_Console (int key)
 		key = '.';
 		break;
 	default:
+		key = unicode;
 		break;
 	}
 
@@ -421,6 +437,8 @@ static void Key_Console (int key)
  */
 static void Key_Message (int key)
 {
+	int utf8len;
+
 	if (key == K_ENTER || key == K_KP_ENTER) {
 		qboolean send = qtrue;
 
@@ -488,31 +506,32 @@ static void Key_Message (int key)
 		return;
 	}
 
-	/** @todo use isprint here? */
-	if (key < 32 || key > 127)
-		return;					/* non printable */
-
 	if (key == K_BACKSPACE) {
 		if (msg_bufferlen) {
-			msg_bufferlen--;
-			msg_buffer[msg_bufferlen] = 0;
+			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
 			if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 				Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
 		}
 		return;
 	}
 
-	if (msg_bufferlen == sizeof(msg_buffer) - 1)
+	utf8len = UTF8_encoded_len(key);
+
+	/** @todo figure out which unicode codes to accept */
+	if (utf8len == 0 || key < 32 || (key >= 127 && key < 192))
+		return;					/* non printable */
+
+
+	if (msg_bufferlen + utf8len >= sizeof(msg_buffer))
 		return;					/* all full */
 
 	/* limit the length for cvar inline editing */
-	if ((msg_mode == MSG_MENU || msg_mode == MSG_IRC) && msg_bufferlen >= mn_inputlength->integer) {
+	if ((msg_mode == MSG_MENU || msg_mode == MSG_IRC) && msg_bufferlen + utf8len > mn_inputlength->integer) {
 		Com_Printf("Input buffer length exceeded\n");
 		return;
 	}
 
-	msg_buffer[msg_bufferlen++] = key;
-	msg_buffer[msg_bufferlen] = 0;
+	msg_bufferlen += UTF8_insert_char(msg_buffer, sizeof(msg_buffer),  msg_bufferlen, key);
 
 	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
@@ -595,7 +614,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 		return "";
 	}
 
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keySpace[i] && *keySpace[i] && !Q_strncmp(keySpace[i], binding, strlen(binding))) {
 			return Key_KeynumToString(i);
 		}
@@ -679,7 +698,7 @@ static void Key_Unbindall_f (void)
 {
 	int i;
 
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i]) {
 			if (!Q_strncmp(Cmd_Argv(0), "unbindallmenu", MAX_VAR))
 				Key_SetBinding(i, "", KEYSPACE_MENU);
@@ -755,11 +774,11 @@ void Key_WriteBindings (const char* filename)
 	fprintf(f.f, "// If you want to know the keyname of a specific key - set in_debug cvar to 1 and press the key\n");
 	fprintf(f.f, "unbindallmenu\n");
 	fprintf(f.f, "unbindall\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			if (fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
 				delete = qtrue;
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			if (fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
 				delete = qtrue;
@@ -797,11 +816,11 @@ static void Key_Bindlist_f (void)
 	int i;
 
 	Com_Printf("key space: game\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i] && keybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]);
 	Com_Printf("key space: menu\n");
-	for (i = 0; i < K_LAST_KEY; i++)
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
 }
@@ -874,7 +893,7 @@ void Key_SetDest (int key_dest)
  * @note Should NOT be called during an interrupt!
  * @sa Key_Message
  */
-void Key_Event (int key, qboolean down, unsigned time)
+void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigned time)
 {
 	const char *kb = NULL;
 	char cmd[MAX_STRING_CHARS];
@@ -915,7 +934,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 		switch (cls.key_dest) {
 		case key_input:
 		case key_message:
-			Key_Message(key);
+			Key_Message(unicode);
 			break;
 		case key_game:
 			Cbuf_AddText("mn_pop esc;");
@@ -959,8 +978,15 @@ void Key_Event (int key, qboolean down, unsigned time)
 	/* if not a consolekey, send to the interpreter no matter what mode is */
 	if (cls.key_dest == key_game ||
 		(cls.key_dest == key_input && key >= K_MOUSE1 && key <= K_MWHEELUP)) {
-		if (mouseSpace == MS_MENU)
+		/* Some keyboards need modifiers to access key values that are
+		 * present as bare keys on other keyboards. Smooth over the difference
+		 * here by using the translated value if there is a binding for it. */
+		if (mouseSpace == MS_MENU && unicode >= 32 && unicode < 127)
+			kb = menukeybindings[unicode];
+		if (!kb && mouseSpace == MS_MENU)
 			kb = menukeybindings[key];
+		if (!kb && unicode >= 32 && unicode < 127)
+			kb = keybindings[unicode];
 		if (!kb)
 			kb = keybindings[key];
 		if (kb) {
@@ -985,11 +1011,11 @@ void Key_Event (int key, qboolean down, unsigned time)
 	switch (cls.key_dest) {
 	case key_input:
 	case key_message:
-		Key_Message(key);
+		Key_Message(unicode);
 		break;
 	case key_game:
 	case key_console:
-		Key_Console(key);
+		Key_Console(key, unicode);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Bad cls.key_dest");

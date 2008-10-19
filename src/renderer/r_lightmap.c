@@ -136,7 +136,7 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 		}
 	}
 
-	Vector4Set(surf->color, 1, 1, 1, 1);
+	Vector4Set(surf->color, 1.0, 1.0, 1.0, 1.0);
 }
 
 /**
@@ -148,90 +148,41 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 {
 	int smax, tmax;
 	unsigned int i, j, size;
-	byte *lightmap, *lm, *l, *d;
-	float *fb;
+	byte *lightmap, *lm, *l, *deluxemap, *dm;
 
 	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
 	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
 	size = smax * tmax;
-	if (size * LIGHTMAP_BYTES > sizeof(r_lightmaps.fbuffer))
-		Com_Error(ERR_DROP, "R_BuildLightmap: Surface too large: %d.\n", size);
+	stride -= (smax * LIGHTMAP_BLOCK_BYTES);
 
-	d = r_lightmaps.direction_buffer;
-	fb = r_lightmaps.fbuffer;
-
-	/* convert the raw lightmap samples to floating point and scale them */
-	for (i = j = 0; i < size; i++, fb += LIGHTMAP_BYTES, d += DELUXEMAP_BLOCK_BYTES) {
-		fb[0] = surf->samples[j++] * r_modulate->value;
-		fb[1] = surf->samples[j++] * r_modulate->value;
-		fb[2] = surf->samples[j++] * r_modulate->value;
-
-		/* read in directional samples for deluxe mapping as well */
-		d[0] = surf->samples[j++];
-		d[1] = surf->samples[j++];
-		d[2] = surf->samples[j++];
-		d[3] = 255;  /* pad alpha */
-	}
-
-	/* put into texture format */
-	stride -= (smax * 4);
-	fb = r_lightmaps.fbuffer;
-
-	/* first into an RGBA linear block for softening */
 	lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);
 	lm = lightmap;
 
-	for (i = 0; i < tmax; i++) {
-		for (j = 0; j < smax; j++) {
-			int r = Q_ftol(fb[0]);
-			int g = Q_ftol(fb[1]);
-			int b = Q_ftol(fb[2]);
-			int max;
+	deluxemap = (byte *)Mem_PoolAlloc(size * DELUXEMAP_BLOCK_BYTES, vid_lightPool, 0);
+	dm = deluxemap;
 
-			/* catch negative lights */
-			if (r < 0)
-				r = 0;
-			if (g < 0)
-				g = 0;
-			if (b < 0)
-				b = 0;
+	/* convert the raw lightmap samples to floating point and scale them */
+	for (i = j = 0; i < size; i++, lm += LIGHTMAP_BLOCK_BYTES, dm += DELUXEMAP_BLOCK_BYTES) {
+		lm[0] = surf->samples[j++];
+		lm[1] = surf->samples[j++];
+		lm[2] = surf->samples[j++];
+		lm[3] = 255;  /* pad alpha */
 
-			/* determine the brightest of the three color components */
-			if (r > g)
-				max = r;
-			else
-				max = g;
-			if (b > max)
-				max = b;
-
-			/* rescale all the color components if the intensity of the greatest
-			 * channel exceeds 255 */
-			if (max > 255) {
-				float t = 255.0F / max;
-
-				r *= t;
-				g *= t;
-				b *= t;
-			}
-
-			lm[0] = r;
-			lm[1] = g;
-			lm[2] = b;
-			lm[3] = 255; /* pad alpha */
-
-			fb += LIGHTMAP_BYTES;
-			lm += LIGHTMAP_BLOCK_BYTES;
-		}
+		/* read in directional samples for deluxe mapping as well */
+		dm[0] = surf->samples[j++];
+		dm[1] = surf->samples[j++];
+		dm[2] = surf->samples[j++];
+		dm[3] = 255;  /* pad alpha */
 	}
 
-	/* apply contrast, resolve average surface color, etc.. */
+	/* apply modulate, contrast, resolve average surface color, etc.. */
 	R_FilterTexture((unsigned *)lightmap, smax, tmax, it_lightmap);
 
 	/* soften it if it's sufficiently large */
 	if (r_soften->integer && size > 128)
 		for (i = 0; i < 4; i++) {
 			R_SoftenTexture(lightmap, smax, tmax, LIGHTMAP_BLOCK_BYTES);
-			R_SoftenTexture(r_lightmaps.direction_buffer, smax, tmax, DELUXEMAP_BLOCK_BYTES);
+			R_SoftenTexture(deluxemap, smax, tmax, DELUXEMAP_BLOCK_BYTES);
 		}
 
 	/* the final lightmap is uploaded to the card via the strided lightmap
@@ -240,7 +191,7 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	surf->lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BYTES, vid_lightPool, 0);
 	l = surf->lightmap;
 	lm = lightmap;
-	d = r_lightmaps.direction_buffer;
+	dm = deluxemap;
 
 	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
 		for (j = 0; j < smax; j++) {
@@ -260,17 +211,18 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 			lm += LIGHTMAP_BLOCK_BYTES;
 
 			/* lastly copy the deluxemap to the strided block */
-			dout[0] = d[0];
-			dout[1] = d[1];
-			dout[2] = d[2];
-			dout[3] = d[3];
+			dout[0] = dm[0];
+			dout[1] = dm[1];
+			dout[2] = dm[2];
+			dout[3] = dm[3];
 			dout += DELUXEMAP_BLOCK_BYTES;
 
-			d += DELUXEMAP_BLOCK_BYTES;
+			dm += DELUXEMAP_BLOCK_BYTES;
 		}
 	}
 
 	Mem_Free(lightmap);
+	Mem_Free(deluxemap);
 }
 
 /**
@@ -291,7 +243,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		/* upload the last block */
 		R_UploadLightmapBlock();
 		if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			Com_Error(ERR_DROP, "Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lightmap_scale: %i)\n", smax, tmax, surf->lightmap_scale);
+			Com_Error(ERR_DROP, "R_CreateSurfaceLightmap: Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lightmap_scale: %i)\n", smax, tmax, surf->lightmap_scale);
 	}
 
 	surf->lightmap_texnum = r_lightmaps.lightmap_texnum;

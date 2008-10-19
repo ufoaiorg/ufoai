@@ -335,6 +335,14 @@ vec_t VectorLength (const vec3_t v)
 	return sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 
+void VectorMix (const vec3_t v1, const vec3_t v2, float mix, vec3_t out)
+{
+	int i;
+
+	for (i = 0; i < 3; i++)
+		out[i] = v1[i] * (1.0 - mix) + v2[i] * mix;
+}
+
 void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];

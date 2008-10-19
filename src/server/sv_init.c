@@ -212,10 +212,8 @@ static uLong tileMask (const char chr)
 		return 1UL << (chr - 'a' + 6);
 	else if (chr >= 'A' && chr <= 'Z')
 		return 1UL << (chr - 'A' + 6);
-	else
-		Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
-	/* never reached */
-	return 0UL;
+
+	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
 /**
@@ -467,7 +465,8 @@ static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRat
  */
 static void SV_ClearMap (void)
 {
-	uLong *mp, *me;
+	uLong *mp;
+	const uLong *me;
 
 	memset(curMap, 0, sizeof(curMap));
 	memset(curRating, 0, sizeof(curRating));
@@ -493,11 +492,10 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	int tx, ty;
 	const uLong *spec = NULL;
 	const uLong *m = NULL;
-	uLong combined;
 
 	/* check vor valid grid positions */
-	assert(x%mAsm->dx == 0);
-	assert(y%mAsm->dy == 0);
+	assert(x % mAsm->dx == 0);
+	assert(y % mAsm->dy == 0);
 	assert(tile);
 
 	if (x < 0 || y < 0)
@@ -512,7 +510,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	m = &curMap[y][x];
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
-			combined = (*m) & (*spec);
+			const uLong combined = (*m) & (*spec);
 
 			/* quit if both are solid or no equal connection is found*/
 			if (IS_SOLID(combined) || !combined)
@@ -566,14 +564,14 @@ static void SV_DumpRating (void)
  */
 static void SV_DumpPlaced (mPlaced_t * placed)
 {
-	int x, y, dx, dy;
+	int x, y;
 
 	Com_Printf("Placed tile %s at %d %d\n", placed->tile->id, placed->x, placed->y);
 
 	for (y = mapH; y >= 1; y--) {
 		for (x = 1; x < mapW + 1; x++) {
-			dx = x - placed->x;
-			dy = y - placed->y;
+			const int dx = x - placed->x;
+			const int dy = y - placed->y;
 
 			if ((dx >= 0) && (dx < placed->tile->w) &&
 					(dy >= 0) && (dy < placed->tile->h) &&
@@ -783,7 +781,7 @@ static qboolean SV_AddMissingTiles (void)
 			if (SV_TestFilled())
 				return qtrue;
 
-			rating[i] =  SV_CalcRating();
+			rating[i] = SV_CalcRating();
 
 			if (rating[i] > max_rating)
 				max_rating = rating[i];
@@ -1061,7 +1059,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	const char *map, *pos, *buf;
 
 	assert(server);
-	assert(*server);
+	assert(server[0] != '\0');
 
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
@@ -1210,7 +1208,7 @@ static void SV_InitGame (void)
  */
 void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 {
-	assert(*levelstring);
+	assert(levelstring[0] != '\0');
 
 	/* the game is just starting */
 	if (Com_ServerState() == ss_dead)

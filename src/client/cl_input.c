@@ -10,7 +10,7 @@
  * its key number as a parameter to the command so it can be matched up with
  * the release.
  *
- * Key_Event (int key, qboolean down, unsigned time);
+ * Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
  *
  *  +mlook src time
  */
@@ -57,7 +57,8 @@ extern pos3_t mousePendPos;
 #define MAX_KEYQ 64
 
 static struct {
-	unsigned char key;
+	unsigned int key;
+	unsigned short unicode;
 	int down;
 } keyq[MAX_KEYQ];
 
@@ -1324,245 +1325,238 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
 /**
  * @brief Translate the keys to ufo keys
  */
-static int IN_TranslateKey (SDL_keysym *keysym, int *key)
+static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
 {
-	int buf = 0;
-	*key = 0;
-
 	if (cls.deactivateKeyBindings)
-		return 0;
+		return;
 
 	switch (keysym->sym) {
 	case SDLK_KP9:
-		*key = K_KP_PGUP;
+		*ascii = K_KP_PGUP;
 		break;
 	case SDLK_PAGEUP:
-		*key = K_PGUP;
+		*ascii = K_PGUP;
 		break;
 	case SDLK_KP3:
-		*key = K_KP_PGDN;
+		*ascii = K_KP_PGDN;
 		break;
 	case SDLK_PAGEDOWN:
-		*key = K_PGDN;
+		*ascii = K_PGDN;
 		break;
 	case SDLK_KP7:
-		*key = K_KP_HOME;
+		*ascii = K_KP_HOME;
 		break;
 	case SDLK_HOME:
-		*key = K_HOME;
+		*ascii = K_HOME;
 		break;
 	case SDLK_KP1:
-		*key = K_KP_END;
+		*ascii = K_KP_END;
 		break;
 	case SDLK_END:
-		*key = K_END;
+		*ascii = K_END;
 		break;
 	case SDLK_KP4:
-		*key = K_KP_LEFTARROW;
+		*ascii = K_KP_LEFTARROW;
 		break;
 	case SDLK_LEFT:
-		*key = K_LEFTARROW;
+		*ascii = K_LEFTARROW;
 		break;
 	case SDLK_KP6:
-		*key = K_KP_RIGHTARROW;
+		*ascii = K_KP_RIGHTARROW;
 		break;
 	case SDLK_RIGHT:
-		*key = K_RIGHTARROW;
+		*ascii = K_RIGHTARROW;
 		break;
 	case SDLK_KP2:
-		*key = K_KP_DOWNARROW;
+		*ascii = K_KP_DOWNARROW;
 		break;
 	case SDLK_DOWN:
-		*key = K_DOWNARROW;
+		*ascii = K_DOWNARROW;
 		break;
 	case SDLK_KP8:
-		*key = K_KP_UPARROW;
+		*ascii = K_KP_UPARROW;
 		break;
 	case SDLK_UP:
-		*key = K_UPARROW;
+		*ascii = K_UPARROW;
 		break;
 	case SDLK_ESCAPE:
-		*key = K_ESCAPE;
+		*ascii = K_ESCAPE;
 		break;
 	case SDLK_KP_ENTER:
-		*key = K_KP_ENTER;
+		*ascii = K_KP_ENTER;
 		break;
 	case SDLK_RETURN:
-		*key = K_ENTER;
+		*ascii = K_ENTER;
 		break;
 	case SDLK_TAB:
-		*key = K_TAB;
+		*ascii = K_TAB;
 		break;
 	case SDLK_F1:
-		*key = K_F1;
+		*ascii = K_F1;
 		break;
 	case SDLK_F2:
-		*key = K_F2;
+		*ascii = K_F2;
 		break;
 	case SDLK_F3:
-		*key = K_F3;
+		*ascii = K_F3;
 		break;
 	case SDLK_F4:
-		*key = K_F4;
+		*ascii = K_F4;
 		break;
 	case SDLK_F5:
-		*key = K_F5;
+		*ascii = K_F5;
 		break;
 	case SDLK_F6:
-		*key = K_F6;
+		*ascii = K_F6;
 		break;
 	case SDLK_F7:
-		*key = K_F7;
+		*ascii = K_F7;
 		break;
 	case SDLK_F8:
-		*key = K_F8;
+		*ascii = K_F8;
 		break;
 	case SDLK_F9:
-		*key = K_F9;
+		*ascii = K_F9;
 		break;
 	case SDLK_F10:
-		*key = K_F10;
+		*ascii = K_F10;
 		break;
 	case SDLK_F11:
-		*key = K_F11;
+		*ascii = K_F11;
 		break;
 	case SDLK_F12:
-		*key = K_F12;
+		*ascii = K_F12;
 		break;
 	case SDLK_F13:
-		*key = K_F13;
+		*ascii = K_F13;
 		break;
 	case SDLK_F14:
-		*key = K_F14;
+		*ascii = K_F14;
 		break;
 	case SDLK_F15:
-		*key = K_F15;
+		*ascii = K_F15;
 		break;
 	case SDLK_BACKSPACE:
-		*key = K_BACKSPACE;
+		*ascii = K_BACKSPACE;
 		break;
 	case SDLK_KP_PERIOD:
-		*key = K_KP_DEL;
+		*ascii = K_KP_DEL;
 		break;
 	case SDLK_DELETE:
-		*key = K_DEL;
+		*ascii = K_DEL;
 		break;
 	case SDLK_PAUSE:
-		*key = K_PAUSE;
+		*ascii = K_PAUSE;
 		break;
 	case SDLK_LSHIFT:
 	case SDLK_RSHIFT:
-		*key = K_SHIFT;
+		*ascii = K_SHIFT;
 		break;
 	case SDLK_LCTRL:
 	case SDLK_RCTRL:
-		*key = K_CTRL;
+		*ascii = K_CTRL;
 		break;
 	case SDLK_LMETA:
 	case SDLK_RMETA:
 	case SDLK_LALT:
 	case SDLK_RALT:
-		*key = K_ALT;
+		*ascii = K_ALT;
 		break;
 	case SDLK_LSUPER:
 	case SDLK_RSUPER:
-		*key = K_SUPER;
+		*ascii = K_SUPER;
 		break;
 	case SDLK_KP5:
-		*key = K_KP_5;
+		*ascii = K_KP_5;
 		break;
 	case SDLK_INSERT:
-		*key = K_INS;
+		*ascii = K_INS;
 		break;
 	case SDLK_KP0:
-		*key = K_KP_INS;
+		*ascii = K_KP_INS;
 		break;
 	case SDLK_KP_MULTIPLY:
-		*key = '*';
+		*ascii = '*';
 		break;
 	case SDLK_KP_PLUS:
-		*key = K_KP_PLUS;
+		*ascii = K_KP_PLUS;
 		break;
 	case SDLK_KP_MINUS:
-		*key = K_KP_MINUS;
+		*ascii = K_KP_MINUS;
 		break;
 	case SDLK_KP_DIVIDE:
-		*key = K_KP_SLASH;
+		*ascii = K_KP_SLASH;
 		break;
 	/* suggestions on how to handle this better would be appreciated */
 	case SDLK_WORLD_7:
-		*key = '`';
+		*ascii = '`';
 		break;
 	case SDLK_MODE:
-		*key = K_MODE;
+		*ascii = K_MODE;
 		break;
 	case SDLK_COMPOSE:
-		*key = K_COMPOSE;
+		*ascii = K_COMPOSE;
 		break;
 	case SDLK_HELP:
-		*key = K_HELP;
+		*ascii = K_HELP;
 		break;
 	case SDLK_PRINT:
-		*key = K_PRINT;
+		*ascii = K_PRINT;
 		break;
 	case SDLK_SYSREQ:
-		*key = K_SYSREQ;
+		*ascii = K_SYSREQ;
 		break;
 	case SDLK_BREAK:
-		*key = K_BREAK;
+		*ascii = K_BREAK;
 		break;
 	case SDLK_MENU:
-		*key = K_MENU;
+		*ascii = K_MENU;
 		break;
 	case SDLK_POWER:
-		*key = K_POWER;
+		*ascii = K_POWER;
 		break;
 	case SDLK_EURO:
-		*key = K_EURO;
+		*ascii = K_EURO;
 		break;
 	case SDLK_UNDO:
-		*key = K_UNDO;
+		*ascii = K_UNDO;
 		break;
 	case SDLK_SCROLLOCK:
-		*key = K_SCROLLOCK;
+		*ascii = K_SCROLLOCK;
 		break;
 	case SDLK_NUMLOCK:
-		*key = K_KP_NUMLOCK;
+		*ascii = K_KP_NUMLOCK;
 		break;
 	case SDLK_CAPSLOCK:
-		*key = K_CAPSLOCK;
+		*ascii = K_CAPSLOCK;
 		break;
 	case SDLK_SPACE:
-		*key = K_SPACE;
+		*ascii = K_SPACE;
 		break;
 	default:
-		if (!keysym->unicode && (keysym->sym >= ' ') && (keysym->sym <= '~'))
-			*key = (int) keysym->sym;
+		*ascii = keysym->sym;
 		break;
 	}
 
-	/* maps to ASCII? */
-	if ((keysym->unicode & 0xFF80) == 0)
-		buf = (int) keysym->unicode & 0x7F;
+	*unicode = keysym->unicode;
 
 	if (in_debug->integer)
-		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
-
-	return buf;
+		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *ascii, *ascii);
 }
 
-#define EVENT_ENQUEUE(keyNum, keyDown) \
+#define EVENT_ENQUEUE(keyNum, keyUnicode, keyDown) \
 	if (keyNum > 0) { \
 		if (in_debug->integer) \
 			Com_Printf("Enqueue: %s (%i) (down: %i)\n", Key_KeynumToString(keyNum), keyNum, keyDown); \
 		keyq[keyq_head].down = (keyDown); \
+		keyq[keyq_head].unicode = (keyUnicode); \
 		keyq[keyq_head].key = (keyNum); \
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \
 	}
 
-void IN_EventEnqueue (int key, qboolean down)
+void IN_EventEnqueue (unsigned int key, unsigned short unicode, qboolean down)
 {
-	EVENT_ENQUEUE(key, down)
+	EVENT_ENQUEUE(key, unicode, down)
 }
 
 /**
@@ -1574,7 +1568,9 @@ void IN_EventEnqueue (int key, qboolean down)
  */
 void IN_Frame (void)
 {
-	int key = -1, mouse_buttonstate, p;
+	int mouse_buttonstate;
+	unsigned short unicode;
+	unsigned int key;
 	SDL_Event event;
 
 	IN_Parse();
@@ -1635,7 +1631,7 @@ void IN_Frame (void)
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
 			}
-			EVENT_ENQUEUE(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN))
+			EVENT_ENQUEUE(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN))
 			break;
 
 		case SDL_MOUSEMOTION:
@@ -1674,10 +1670,8 @@ void IN_Frame (void)
 				break;
 			}
 
-			p = IN_TranslateKey(&event.key.keysym, &key);
-			if (!key && p)
-				key = p;
-			EVENT_ENQUEUE(key, qtrue)
+			IN_TranslateKey(&event.key.keysym, &key, &unicode);
+			EVENT_ENQUEUE(key, unicode, qtrue)
 			break;
 
 		case SDL_VIDEOEXPOSE:
@@ -1685,10 +1679,8 @@ void IN_Frame (void)
 
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
-			p = IN_TranslateKey(&event.key.keysym, &key);
-			if (!key && p)
-				key = p;
-			EVENT_ENQUEUE(key, qfalse)
+			IN_TranslateKey(&event.key.keysym, &key, &unicode);
+			EVENT_ENQUEUE(key, unicode, qfalse)
 			break;
 
 		case SDL_QUIT:
@@ -1815,7 +1807,7 @@ void IN_Init (void)
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {
-		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, cls.realtime);
+		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].unicode, keyq[keyq_tail].down, cls.realtime);
 		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 	}
 }

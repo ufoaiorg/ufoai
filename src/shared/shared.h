@@ -104,6 +104,18 @@ const char *COM_EParse(const char **text, const char *errhead, const char *errin
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
+/** Is this the second or later byte of a multibyte UTF-8 character? */
+/* The definition of UTF-8 guarantees that the second and later
+ * bytes of a multibyte character have high bits 10, and that
+ * singlebyte characters and the start of multibyte characters
+ * never do. */
+#define UTF8_CONTINUATION_BYTE(c) (((c) & 0xc0) == 0x80)
+
+int UTF8_delete_char(char *s, int pos);
+int UTF8_insert_char(char *s, int n, int pos, int codepoint);
+int UTF8_char_len(const char *s);
+int UTF8_encoded_len(int codepoint);
+
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 int Q_FloatSort(const void *float1, const void *float2);
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
@@ -135,6 +147,5 @@ void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, const char *f
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));
-int Q_putenv(const char *var, const char *value);
 
 #endif

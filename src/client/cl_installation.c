@@ -103,7 +103,6 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
 	return NULL;
 }
 
-
 /**
  * @brief Setup new installation
  * @sa CL_NewInstallation
@@ -111,8 +110,7 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
 void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate)
 {
 	const int newInstallationAlienInterest = 1.0f;
-	int idxBattery;
-	const objDef_t *od;
+	int i;
 
 	assert(installation);
 
@@ -138,15 +136,18 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* intialise hit points */
 	installation->installationDamage = installation->installationTemplate->maxDamage;
 
-	/** @todo Put this into the scripts */
-	od = INVSH_GetItemByID("base_AA51_launcher");
-	if (!od)
-		Sys_Error("Could not find base_AA51_launcher item definition");
+	/* initialise Batteries */
+	installation->numBatteries = installation->installationTemplate->maxBatteries;
 
-	/* this is a craftitem */
-	assert(od->craftitem.type != MAX_ACITEMS);
-
-	installation->storage.num[od->idx] = 3;
+	/* Add defenceweapons to storage */
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *item = &csi.ods[i];
+		/* this is a craftitem but also dummy */
+		if (INV_IsBaseDefenceItem(item)) {
+			installation->storage.num[item->idx] = installation->installationTemplate->maxBatteries;
+		}
+	}
+	BDEF_InitialiseInstallationSlots(installation);
 
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %f, batteries = %i, ufos = %i\n",
 		installation->installationTemplate->id, installation->installationTemplate->radarRange,
@@ -155,11 +156,6 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
 	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
-
-	for (idxBattery = 0; idxBattery < installation->installationTemplate->maxBatteries; idxBattery++) {
-		AII_InitialiseSlot(&installation->batteries[idxBattery].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
-		installation->batteries[idxBattery].target = NULL;
-	}
 }
 
 /**
@@ -235,12 +231,11 @@ void INS_SelectInstallation (installation_t *installation)
 		installationCurrent = installation;
 		baseCurrent = NULL;
 		gd.mapAction = MA_NONE;
-		if (installation->installationTemplate->maxBatteries > 0)
+		if (installation->numBatteries > 0)
 			MN_PushMenu("basedefence");
 		else if (installation->numAircraftInInstallation > 0)
 			MN_PushMenu("ufoyard");
 	}
-
 }
 
 /**
@@ -443,7 +438,7 @@ void INS_InitStartup (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "Reset installation\n");
 
-	Cvar_SetValue("mn_installation_max", 10);
+	Cvar_SetValue("mn_installation_max", MAX_INSTALLATIONS);
 
 	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
 		gd.installationTemplates[idx].id = NULL;
@@ -604,10 +599,17 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 			installation->name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 		} else if (!Q_strncmp(token, "cost", MAX_VAR)) {
+			char cvarname[MAX_VAR] = "mn_installation_";
+
+			Q_strcat(cvarname, installation->id, MAX_VAR);
+			Q_strcat(cvarname, "_cost", MAX_VAR);
+
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			installation->cost = atoi(token);
+
+			Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
 		} else if (!Q_strncmp(token, "radar_range", MAX_VAR)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
@@ -661,8 +663,8 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 
 		/* store equipments */
 		for (j = 0; j < presaveArray[PRE_NUMODS]; j++) {
-			MSG_WriteString(sb, csi.ods[i].id);
-			MSG_WriteLong(sb, inst->storage.num[i]);
+			MSG_WriteString(sb, csi.ods[j].id);
+			MSG_WriteLong(sb, inst->storage.num[j]);
 		}
 
 		/** @todo aircraft (don't save capacities, they should
@@ -691,6 +693,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
+		gd.numInstallations++;
 		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
 		MSG_ReadPos(sb, inst->pos);
 		inst->installationStatus = MSG_ReadByte(sb);
@@ -699,6 +702,8 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 1.0f, qtrue);
 
 		/* read battery slots */
+		BDEF_InitialiseInstallationSlots(inst);
+
 		inst->numBatteries = MSG_ReadByte(sb);
 		B_LoadBaseSlots(inst->batteries, inst->numBatteries, sb);
 
@@ -717,5 +722,6 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}
+	Cvar_SetValue("mn_installation_count", gd.numInstallations);
 	return qtrue;
 }

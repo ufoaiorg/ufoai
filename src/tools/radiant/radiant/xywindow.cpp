@@ -1380,6 +1380,7 @@ void XYWnd::XY_LoadBackgroundImage(const char *name)
 	int m_ix, m_iy;
 	switch(g_pParentWnd->ActiveXY()->m_viewType)
 	{
+		default:
 		case XY:
 			m_ix = 0;
 			m_iy = 1;

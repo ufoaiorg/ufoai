@@ -292,7 +292,7 @@ static void UP_DisplayTechTree (const technology_t* t)
  * @sa MN_Drag
  * Not only called from UFOpaedia but also from other places to display
  * weapon and ammo stats
- * @todo Do we need to add checks for (od->type == "dummy") here somewhere?
+ * @todo Do we need to add checks for @c od->isDummy here somewhere?
  */
 void UP_ItemDescription (const objDef_t *od)
 {

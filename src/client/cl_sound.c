@@ -734,6 +734,32 @@ static int S_CompleteSounds (const char *partial, const char **match)
 }
 
 /**
+ * @brief
+ * @return true if the value needed adjustment and was changed
+ */
+static qboolean CL_CvarCheckSoundRate (cvar_t *cvar)
+{
+	const int sndRates[] = {48000, 44100, 22050, 11025};
+	const int n = lengthof(sndRates);
+	int i;
+
+	for (i = 0; i < n; i++)
+		if (cvar->integer == sndRates[i])
+			break;
+	if (i == n) {
+		Com_Printf("Invalid value for snd_rate, valid values are: ");
+		for (i = 0; i < n; i++)
+			Com_Printf(" %i", sndRates[i]);
+		Com_Printf("\n");
+		Cvar_Set(cvar->name, "44100");
+		cvar->modified = qfalse;
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
  * @sa S_Shutdown
  * @sa S_Restart_f
  */
@@ -753,6 +779,7 @@ void S_Init (void)
 	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
 	snd_volume = Cvar_Get("snd_volume", "128", CVAR_ARCHIVE, "Sound volume - default is 128");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
+	Cvar_SetCheckFunction("snd_rate", CL_CvarCheckSoundRate);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
 	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_play\" if you experience crackling when background music loops");

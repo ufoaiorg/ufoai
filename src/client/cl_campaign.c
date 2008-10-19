@@ -3530,16 +3530,16 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 	d = date->day % DAYS_PER_YEAR;
 
 	/* Subtract days until no full month is left. */
-	for (i = 0; d >= monthLength[i]; i++) {
-		if (i >= MONTHS_PER_YEAR)
-			Sys_Error("CL_DateConvert: More days left in year that it is long!\n");
+	for (i = 0; i < MONTHS_PER_YEAR; i++) {
+		if (d < monthLength[i])
+			break;
 		d -= monthLength[i];
 	}
 
 	/* Prepare return values. */
 	*day = d + 1;
 	*month = i + 1;	/**< Return month in range [1-12] */
-	assert(*month >= 1 && *month <= 12);
+	assert(*month >= 1 && *month <= MONTHS_PER_YEAR);
 	assert(*day >= 1 && *day <= monthLength[i]);
 }
 
@@ -3773,7 +3773,8 @@ void CL_GameTimeStop (void)
 		return;
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strncmp(menu->name, "map", 3)) {
+	/* @todo check whether we really need to identify menu with CL_OnBattlescape - was checking menu name before */
+	if (menu && !CL_OnBattlescape()) {
 		gameLapse = 0;
 	}
 
@@ -6182,7 +6183,7 @@ static const cmdList_t game_commands[] = {
 	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL},
 	{"aircraft_new", AIR_NewAircraft_f, NULL},
 	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
-	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
+	{"aircraft_return", AIR_AircraftReturnToBase_f, "Sends the current aircraft back to homebase"},
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
 	{"aircraft_select", AIR_AircraftSelect_f, NULL},
 	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},

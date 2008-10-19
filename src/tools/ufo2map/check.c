@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
  *  the margin for abutting brushes to be considered not intersecting */
 #define CH_DIST_EPSILON 0.001f
+#define CH_DIST_EPSILON_COLLINEAR_POINTS 0.01f
 #define CH_DIST_EPSILON_SQR 0.000001
 
 /** if the cosine of an angle is greater than this, then the angle is negligibly different from zero */
@@ -193,9 +194,9 @@ static void checkEntityLevelFlags (entity_t *e, const int entnum)
 static int checkEntityNotSet (const entity_t *e, int entnum, const char *var)
 {
 	const char *key = ValueForKey(e, var);
-	if (key) {
+	if (key[0] != '\0') {
 		const char *name = ValueForKey(e, "classname");
-		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "%s has %s set - remove it!\n", name, var);
+		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "%s has %s set (%s) - remove it!\n", name, var, key);
 		return 1;
 	}
 	return 0;
@@ -461,8 +462,10 @@ static const entityCheck_t checkArray[] = {
  * this is the cosine of the angle of how close it has to be. around 10 degrees */
 #define NEARDOWN_COS 0.985
 
-/** @brief faces that are near pointing down may be set nodraw,
- *  as views are always slightly down */
+/**
+ * @brief faces that are near pointing down may be set nodraw,
+ * as views are always slightly down
+ */
 static qboolean Check_SidePointsDown(const side_t *s)
 {
 	const vec3_t down = {0.0f, 0.0f, -1.0f};
@@ -672,18 +675,232 @@ static void Check_NearList (void)
 			bbuf[numNear++] = jBrush;
 		}
 
+		iBrush->numNear = numNear;
+		if (!numNear)
+			continue;
+
 		/* now we know how many, we can malloc. then copy the pointers */
 		iBrush->nearBrushes = (mapbrush_t **)malloc(numNear * sizeof(mapbrush_t *));
 
 		if (!iBrush->nearBrushes)
 			Sys_Error("Check_Nearlist: out of memory");
 
-		iBrush->numNear = numNear;
 		for (j = 0; j < numNear; j++)
 			iBrush->nearBrushes[j] = bbuf[j];
 	}
 
 	done = qtrue;
+}
+
+/**
+ * @brief tests the vertices in the winding of side s.
+ * @param[in] mode determines how epsilon is applied
+ * @return qtrue if they are all in or on (within epsilon) brush b
+ * @sa Check_IsPointInsideBrush
+ */
+static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
+{
+	int i;
+	const winding_t *w = side->winding;
+
+	assert(w->numpoints > 0);
+
+	for (i = 0; i < w->numpoints ; i++)
+		if (!Check_IsPointInsideBrush(w->p[i], brush, mode))
+			return qfalse;
+
+	return qtrue;
+}
+
+#if 0
+/**
+ * @brief for debugging, use this to see which face is the problem
+ * as there is not non-debugging use (yet) usually #ifed out
+ */
+static void Check_SetError (side_t *s)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *tex = &side_brushtextures[index];
+
+	Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
+}
+#endif
+
+/**
+ * @brief test if sides abut or intersect
+ * @note return qtrue if they do
+ * @note assumes the sides are parallel and coincident
+ * @note tests for either side having a vertex in the other's brush, this will miss some odd types of intersection
+ * @sa ParallelAndCoincident
+ */
+static qboolean Check_SidesTouch (side_t *a, side_t *b)
+{
+	side_t *s[2];
+	int i, j;
+
+	s[0] = a;
+	s[1] = b;
+
+	for (i = 0; i < 2; i++) {
+		const winding_t *w = s[i]->winding; /* winding from one of the sides */
+		const mapbrush_t *b = s[i ^ 1]->brush; /* the brush that the other side belongs to */
+		for (j = 0; j < w->numpoints ; j++) {
+			if (Check_IsPointInsideBrush(w->p[j], b, PIB_INCL_SURF))
+				return qtrue;
+		}
+	}
+	return qfalse;
+}
+
+/**
+ * @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
+ * these sides can cooperate to hide a face, this is used for nodraw setting. composite sides may be
+ * used for other things in the future.
+ */
+static void Check_FindCompositeSides (void)
+{
+	static qboolean done = qfalse;
+	int i, is, j, k, l, m, numMembers, numDone = 0, numTodo;
+
+	/* store pointers to sides here and then malloc them when we know how many.
+	 * divide by 4 becuase, the minimum number of sides for a brush is 4, so if
+	 * all brushes were lined up, and had one side as a member, that would be their number */
+	side_t *sbuf[MAX_MAP_SIDES / 4];
+
+	mapbrush_t *bDone[MAX_MAP_SIDES]; /*< an array of brushes to check if the composite propagates across */
+	mapbrush_t *bTodo[MAX_MAP_SIDES]; /*< an array of brushes that have been checked, without this it would never stop */
+
+	/* this function may be called more than once, but we only want this done once */
+	if (done)
+		return;
+
+	Check_NearList();
+
+	/* check each brush, iBrush */
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+
+		if (!Check_IsOptimisable(iBrush))
+			continue; /* skip clips etc */
+
+		/* check each side, iSide, of iBrush for being the seed of a composite face */
+		for (is = 0; is < iBrush->numsides; is++) {
+			side_t *iSide = &iBrush->original_sides[is];
+
+			if (iSide->isCompositeMember || (iSide->surfaceFlags & SURF_NODRAW))
+				continue; /* do not find the same composite again. no nodraws */
+
+			/* start making the list of brushes in the composite,
+			 * we will only keep it if the composite has more than member */
+			sbuf[0] = iSide; /* set iSide->isCompositeMember = true later, if we keep the composite */
+			numMembers = 1;
+
+			/* add neighbouring brushes to the list to check for composite propagation */
+			numTodo = iBrush->numNear;
+			for (j = 0; j < iBrush->numNear; j++)
+				if (Check_IsOptimisable(iBrush->nearBrushes[j]))
+					bTodo[j] = iBrush->nearBrushes[j];
+
+			/* this brush's nearlist is listed for checking, so it is done */
+			bDone[numDone++] = iBrush;
+
+			while (numTodo > 0) {
+				mapbrush_t *bChecking = bTodo[--numTodo];
+				bDone[numDone++] = bChecking; /* remember so it is not added to the todo list again */
+
+				for (j = 0; j < bChecking->numsides; j++) {
+					side_t *sChecking = &bChecking->original_sides[j];
+
+					if (sChecking->surfaceFlags & SURF_NODRAW)
+						continue; /* no nodraws in composites */
+
+					if (ParallelAndCoincidentTo(iSide, sChecking)) {
+
+						/* test if sChecking intersects or touches any of sides that are already in the composite*/
+						for (k = 0; k < numMembers; k++) {
+							if (Check_SidesTouch(sChecking, sbuf[k])) {
+								const mapbrush_t *newMembersBrush = sChecking->brush;
+								sbuf[numMembers++] = sChecking; /* add to the array of members */
+								sChecking->isCompositeMember = qtrue;
+
+								/* add this brush's nearList to the todo list, as the compostite may propagate through it */
+								for (l = 0; l < newMembersBrush->numNear;l++) {
+									mapbrush_t *nearListBrush = newMembersBrush->nearBrushes[l];
+
+									if (!Check_IsOptimisable(nearListBrush))
+										continue; /* do not propogate across clips etc */
+
+									/* only add them to the todo list if they are not on the done list
+									 * as a brush cannot have parallel sides, this also ensures the same side
+									 * is not added to a composite more than once */
+									for (m = 0; m < numDone; m++) {
+										if (nearListBrush == bDone[m])
+											goto skip_add_brush_to_todo_list;
+									}
+									bTodo[numTodo++] = nearListBrush;
+
+									skip_add_brush_to_todo_list:
+									; /* there must be a statement after the label, ";" will do */
+								}
+								goto next_brush_todo; /* need not test any more sides of this brush, if a member is found */
+							}
+						}
+					}
+				}
+				next_brush_todo:
+				;
+			}
+
+			if (numMembers > 1) { /* composite found */
+				side_t **sidesInNewComposite = (side_t **)malloc(numMembers * sizeof(side_t *));
+
+				if (!sidesInNewComposite)
+					Sys_Error("Check_FindCompositeSides: out of memory");
+
+				/* this was not done before for the first side, as we did not know it would have at least 2 members */
+				iSide->isCompositeMember = qtrue;
+
+				compositeSides[numCompositeSides].numMembers = numMembers;
+				compositeSides[numCompositeSides].memberSides = sidesInNewComposite;
+
+				for (j = 0; j < numMembers; j++) {
+					compositeSides[numCompositeSides].memberSides[j] = sbuf[j];
+				}
+				numCompositeSides++;
+			}
+		}
+	}
+
+	Check_Printf(VERB_EXTRA, qfalse, -1, -1, "%i composite sides found", numCompositeSides);
+
+	done = qtrue;
+}
+
+/**
+ * @brief free the mapbrush_t::nearBrushes and compositeSides
+ */
+void Check_Free (void)
+{
+	int i;
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+		if (iBrush->numNear) {
+			assert(iBrush->nearBrushes);
+			free(iBrush->nearBrushes);
+			iBrush->numNear = 0;
+			iBrush->nearBrushes = NULL;
+		}
+	}
+
+	for (i = 0; i < numCompositeSides; i++) {
+		compositeSide_t *cs = &compositeSides[i];
+		if (cs->numMembers) {
+			assert(cs->memberSides);
+			free(cs->memberSides);
+			cs->numMembers = 0;
+			cs->memberSides = NULL;
+		}
+	}
 }
 
 /**
@@ -772,31 +989,12 @@ void Check_BrushIntersection (void)
 }
 
 /**
- * @brief tests the vertices in the winding of side s.
- * @param[in] mode determines how epsilon is applied
- * @return qtrue if they are all in or on (within epsilon) brush b
- * @sa Check_IsPointInsideBrush
- */
-static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush, pointInBrush_t mode)
-{
-	int i;
-	const winding_t *w = side->winding;
-
-	assert(w->numpoints > 0);
-
-	for (i = 0; i < w->numpoints ; i++)
-		if (!Check_IsPointInsideBrush(w->p[i], brush, mode))
-			return qfalse;
-
-	return qtrue;
-}
-
-/** @brief finds point of intersection of two finite lines, if one exists
- *  @param[in] e1p1 first point defining line 1
- *  @param[in] e1p2 second point defining line 1
- *  @paran[out] intersection will be set to the point of intersection, if one exists
- *  @return qtrue if the lines intersect between the given points
- *  @note http://mathworld.wolfram.com/Line-LineDistance.html
+ * @brief finds point of intersection of two finite lines, if one exists
+ * @param[in] e1p1 first point defining line 1
+ * @param[in] e1p2 second point defining line 1
+ * @param[out] intersection will be set to the point of intersection, if one exists
+ * @return qtrue if the lines intersect between the given points
+ * @note http://mathworld.wolfram.com/Line-LineDistance.html
  */
 static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2,
 					const vec3_t e2p1, const vec3_t e2p2, vec3_t intersection)
@@ -865,7 +1063,7 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 
 	VectorSubtract(a, b, d1);
 	VectorSubtract(a, c, d2);
-	VectorSubtract(a, c, d3);
+	VectorSubtract(b, c, d3);
 
 	d1d = VectorLength(d1);
 	d2d = VectorLength(d2);
@@ -886,14 +1084,15 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 		offLineDist = VectorLength(cross) / d3d;
 	}
 
-	return offLineDist < CH_DIST_EPSILON;
+	return offLineDist < CH_DIST_EPSILON_COLLINEAR_POINTS;
 }
 
 #define VERT_BUF_SIZE_DISJOINT_SIDES 21
 
-/** @brief tests if sides overlap, for z-fighting check
- *  @note the sides must be on a common plane. if they are not, the result is unspecified
- *  @note http://mathworld.wolfram.com/Collinear.html
+/**
+ * @brief tests if sides overlap, for z-fighting check
+ * @note the sides must be on a common plane. if they are not, the result is unspecified
+ * @note http://mathworld.wolfram.com/Collinear.html
  */
 static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 {
@@ -939,22 +1138,27 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 		return qfalse; /* must be at least 3 points to be not in a line */
 
 	{
-		vec3_t from0to1, one;
+		vec3_t from0to1, one, zero;
 
 		/* skip past elements 0, 1, ... if they are coincident - to avoid division by zero */
 		i = 0;
 		do {
 			i++;
+			if ((i + 1) >= numVert)
+				return qfalse; /* not enough separated points - they must be in a line */
 			VectorSubtract(vertbuf[i], vertbuf[i - 1], from0to1);
+			VectorCopy(vertbuf[i - 1], zero);
 			VectorCopy(vertbuf[i], one);
-		} while (fabs(VectorLength(from0to1)) < CH_DIST_EPSILON);
-
-		/*check we have enough points left */
-		if (numVert - 2 < i)
-			return qfalse;
+		} while (VectorLength(from0to1) < CH_DIST_EPSILON);
 
 		for (i++; i < numVert; i++) {
-			if (!Check_PointsAreCollinear(vertbuf[0], one, vertbuf[i])) {
+			if (!Check_PointsAreCollinear(zero, one, vertbuf[i])) {
+#if 0
+				Com_Printf("\non-collinear points\n");
+				Print3Vector(zero);
+				Print3Vector(one);
+				Print3Vector(vertbuf[i]);
+#endif
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
@@ -963,20 +1167,8 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 	return qfalse; /* all points are collinear */
 }
 
-#if 0
-/** @brief for debugging, use this to see which face is the problem
-  * as there is not non-debugging use (yet) usuallu #ifed out
-  */
-static void Check_SetError (side_t *s)
-{
-	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *tex = &side_brushtextures[index];
-
-	Q_strncpyz(tex->name, "tex_common/error", sizeof(tex->name));
-}
-#endif
-
-/** @brief check all brushes for overlapping shared faces
+/**
+ * @brief check all brushes for overlapping shared faces
  *  @todo maybe too fussy. perhaps should ignore small overlaps.
  */
 void CheckZFighting (void)
@@ -1067,7 +1259,7 @@ void Check_ContainedBrushes (void)
 			int numSidesInside = 0;
 
 			for (js = 0; js < jBrush->numsides; js++) {
-				side_t *jSide = &jBrush->original_sides[js];
+				const side_t *jSide = &jBrush->original_sides[js];
 
 				if (Check_SideIsInBrush(jSide, iBrush, PIB_INCL_SURF))
 					numSidesInside++;
@@ -1090,7 +1282,7 @@ static int Check_LevelForNodraws (const side_t *coverer, const side_t *coveree)
 	return !(CONTENTS_LEVEL_ALL & ~coverer->contentFlags & coveree->contentFlags);
 }
 
-static void Check_SetNodraw(side_t *s)
+static void Check_SetNodraw (side_t *s)
 {
 	const ptrdiff_t index = s - brushsides;
 	brush_texture_t *tex = &side_brushtextures[index];
@@ -1102,8 +1294,10 @@ static void Check_SetNodraw(side_t *s)
 	tex->surfaceFlags &= ~SURF_PHONG;
 }
 
+#define CH_COMP_NDR_EDGE_INTSCT_BUF 21
+
 /**
- * @brief Check for SURF_NODRAW which might be exposed, and check for
+ * @brief check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes. Also set faces pointing near straight down nodraw.
  * @todo test for sides hidden by composite faces
@@ -1112,16 +1306,17 @@ static void Check_SetNodraw(side_t *s)
  */
 void CheckNodraws (void)
 {
-	int i, j, is, js;
-	int globalNumSet = 0;
+	int i, j, k, l, m, n, is, js;
+	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide = 0, iBrushNumSet = 0;
 
 	/* initialise mapbrush_t.nearBrushes */
 	Check_NearList();
+	Check_FindCompositeSides();
 
 	/* check each brush, i, for downward sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
-		int numSet = 0;
+		iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
@@ -1137,22 +1332,21 @@ void CheckNodraws (void)
 
 			if (Check_SidePointsDown(iSide)) {
 				Check_SetNodraw(iSide);
-				globalNumSet++;
-				numSet++;
+				numSetPointingDown++;
+				iBrushNumSet++;
 			}
 
 		}
-		if (numSet)
-			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (point down, or are close to pointing down).\n", numSet);
-	}
-	if (globalNumSet)
-		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (point down, or are close to pointing down)\n", globalNumSet);
-	globalNumSet = 0;
+		if (iBrushNumSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (point down, or are close to pointing down).\n", iBrushNumSet);
+	} /* next iBrush for downward faces that can be nodraw */
+	if (numSetPointingDown)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (point down, or are close to pointing down)\n", numSetPointingDown);
 
 	/* check each brush, i, for hidden sides */
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
-		int numSet = 0;
+		iBrushNumSet = 0;
 
 		/* skip moving brushes, clips etc */
 		if (!Check_IsOptimisable(iBrush))
@@ -1178,35 +1372,159 @@ void CheckNodraws (void)
 				for (js = 0; js < jBrush->numsides; js++) {
 					const side_t *jSide = &jBrush->original_sides[js];
 
-					#if 0
+#if 0
 					/* run on a largish map, this section proves that the plane indices alone cannot
-					   cannot be relied on to test for 2 planes facing each other. */
+					 * cannot be relied on to test for 2 planes facing each other. */
 					if (FacingAndCoincidentTo(iSide, jSide)) {
-						int minIndex = min(iSide->planenum, jSide->planenum);
-						int maxIndex = max(iSide->planenum, jSide->planenum);
-						int diff = maxIndex - minIndex, minOdd = (minIndex & 1);
+						const int minIndex = min(iSide->planenum, jSide->planenum);
+						const int maxIndex = max(iSide->planenum, jSide->planenum);
+						const int diff = maxIndex - minIndex, minOdd = (minIndex & 1);
 						if ((diff != 1) || minOdd) {
 							Com_Printf("CheckNodraws: facing and coincident plane indices %i %i diff:%i minOdd:%i\n",
 								iSide->planenum, jSide->planenum, diff, minOdd);
 						}
 					}
-					#endif
+#endif
 
 					if (Check_LevelForNodraws(jSide, iSide) &&
 						FacingAndCoincidentTo(iSide, jSide) &&
 						Check_SideIsInBrush(iSide, jBrush, PIB_INCL_SURF)) {
 						Check_SetNodraw(iSide);
-						numSet++;
-						globalNumSet++;
+						iBrushNumSet++;
+						numSetFromSingleSide++;
 					}
 				}
 			}
-		}
-		if (numSet)
-			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by another brush).\n", numSet);
-	}
-	if (globalNumSet)
-		Check_Printf(VERB_CHECK, qtrue, -1, -1, "total of %i nodraws set (covered by another brush).\n", globalNumSet);
+		} /* next jBrush */
+		if (iBrushNumSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by another brush).\n", iBrushNumSet);
+
+		iBrushNumSet = 0; /* reset to count composite side coverings */
+
+		/* check each composite side for hiding one of iBrush's sides */
+		for (j = 0; j < numCompositeSides; j++) {
+			const compositeSide_t *composite = &compositeSides[j];
+			assert(composite);
+			assert(composite->memberSides[0]);
+
+			/* check each side for being hidden */
+			for (is = 0; is < iBrush->numsides; is++) {
+				side_t *iSide = &iBrush->original_sides[is];
+				winding_t *iWinding;
+				vec3_t lastIntersection = {NAN, NAN, NAN}; /* used in innner loop, here to avoid repeated memset calls */
+
+				if (!FacingAndCoincidentTo(iSide, composite->memberSides[0]))
+					continue; /* all sides in the composite are parallel, and iSide must face them to be hidden */
+
+				/* skip those that are already nodraw. note: this includes sides hidden by single sides
+				 * set above - this prevents duplicate nodraw reports */
+				if (iSide->surfaceFlags & SURF_NODRAW)
+					continue;
+
+				iWinding = iSide->winding;
+
+				/* to be covered each vertex of iSide must be on one of the composite side's members */
+				for (k = 0; k < iWinding->numpoints; k++) {
+					qboolean pointOnComposite = qfalse;
+					for (l = 0; l < composite->numMembers; l++) {
+						if (Check_IsPointInsideBrush(iWinding->p[k], composite->memberSides[l]->brush, PIB_INCL_SURF)) {
+
+							/* levelflags mean this member cannot cover iSide
+							 * might be wrong to assume the composite will not cover iSide (if the members intersect)
+							  * it is _safe_ in that it will not result in an exposed nodraw */
+							if (!Check_LevelForNodraws(composite->memberSides[l], iSide))
+								goto next_iSide;
+
+							pointOnComposite = qtrue;
+							break;
+						}
+					}
+					if (!pointOnComposite)
+						goto next_iSide;
+				}
+
+				for (k = 0; k < iWinding->numpoints; k++) {
+					vec3_t intersection;
+					int lastIntersectionMembInd = -1;
+					vec3_t intersections[CH_COMP_NDR_EDGE_INTSCT_BUF];
+					qboolean paired[CH_COMP_NDR_EDGE_INTSCT_BUF];
+					int numIntsct = 0;
+
+					memset(paired, '\0', CH_COMP_NDR_EDGE_INTSCT_BUF * sizeof(qboolean));
+
+					for (l = 0; l < composite->numMembers; l++) {
+						const winding_t *mWinding = composite->memberSides[l]->winding;
+
+						for (m = 0; m < mWinding->numpoints; m++) {
+							qboolean intersects = Check_EdgeEdgeIntersection(
+								iWinding->p[k], iWinding->p[(k + 1) % iWinding->numpoints],
+								mWinding->p[m], mWinding->p[(m + 1) % mWinding->numpoints],
+								intersection);
+
+							if (intersects) {
+								qboolean coincident = qfalse;
+								/* check for coincident intersections */
+								for (n = 0; n < numIntsct; n++) {
+									float distSq = VectorDistSqr(intersection, intersections[n]);
+									if (CH_DIST_EPSILON_SQR > distSq) {
+										paired[n] = qtrue;
+										coincident = qtrue;
+									}
+								}
+
+								/* if it is not coincident, then add it to the list */
+								if (!coincident) {
+									VectorCopy(intersection, intersections[numIntsct]);
+									numIntsct++;
+									if (numIntsct >= CH_COMP_NDR_EDGE_INTSCT_BUF) {
+										Check_Printf(VERB_LESS, qfalse, -1, -1, "warning: CheckNodraws: buffer too small");
+										return;
+									}
+								}
+
+								/* if edge k of iSide crosses side l of composite then check levelflags */
+								/* note that as each member side is convex any line can intersect its edges a maximum of twice,
+								 * as the member sides of the composite are the inner loop, these two (if they exist) will
+								 * be found consecutively */
+								if ((lastIntersectionMembInd == l)
+								 && (VectorDistSqr(intersection, lastIntersection) > CH_DIST_EPSILON_SQR)
+								 && !Check_LevelForNodraws(composite->memberSides[l], iSide))
+									goto next_iSide;
+
+								lastIntersectionMembInd = l;
+								VectorCopy(intersection, lastIntersection);
+							}
+						}
+					}
+
+					/* make sure all intersections are paired. an unpaired intersection indicates
+					 * that iSide's boundary crosses out of the composite side, so iSide is not hidden */
+					for (l = 0; l < numIntsct; l++) {
+						if (!paired[l])
+							goto next_iSide;
+					}
+
+				}
+
+				/* set nodraw for iSide (covered by composite) */
+				Check_SetNodraw(iSide);
+				iBrushNumSet++;
+				numSetFromCompositeSide++;
+
+				next_iSide:
+				;
+			}
+		} /* next composite */
+		if (iBrushNumSet)
+			Check_Printf(VERB_EXTRA, qtrue, iBrush->entitynum, iBrush->brushnum, "set nodraw on %i sides (covered by a composite side).\n", iBrushNumSet);
+	} /* next iBrush */
+
+	if (numSetFromSingleSide)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "%i nodraws set (covered by another brush).\n", numSetFromSingleSide);
+
+	if (numSetFromCompositeSide)
+		Check_Printf(VERB_CHECK, qtrue, -1, -1, "%i nodraws set (covered by a composite side).\n", numSetFromCompositeSide);
+
 }
 
 /**

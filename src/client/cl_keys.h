@@ -34,78 +34,69 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* normal keys should be passed as lowercased ascii */
 
 typedef enum {
+	K_FIRST_KEY,
+
+	K_BACKSPACE = 8,
 	K_TAB = 9,
 	K_ENTER = 13,
+	K_PAUSE = 19,
 	K_ESCAPE = 27,
 	K_SPACE = 32,
+	K_DEL = 127,
 
-	K_BACKSPACE = 127,
+	K_MOUSE1 = 200,
+	K_MOUSE2 = 201,
+	K_MOUSE3 = 202,
+	K_MWHEELDOWN = 239,
+	K_MWHEELUP = 240,
+	K_MOUSE4 = 241,
+	K_MOUSE5 = 242,
 
-	K_COMMAND = 128,
-	K_CAPSLOCK,
-	K_POWER,
-	K_PAUSE,
+	K_KP_INS = 256,
+	K_KP_END = 257,
+	K_KP_DOWNARROW = 258,
+	K_KP_PGDN = 259,
+	K_KP_LEFTARROW = 260,
+	K_KP_5 = 261,
+	K_KP_RIGHTARROW = 262,
+	K_KP_HOME = 263,
+	K_KP_UPARROW = 264,
+	K_KP_PGUP = 265,
+	K_KP_DEL = 266,
+	K_KP_SLASH = 267,
+	K_KP_MINUS = 269,
+	K_KP_PLUS = 270,
+	K_KP_ENTER = 271,
+	K_KP_NUMLOCK = 272,
 
-	K_UPARROW,
-	K_DOWNARROW,
-	K_LEFTARROW,
-	K_RIGHTARROW,
+	K_UPARROW = 273,
+	K_DOWNARROW = 274,
+	K_RIGHTARROW = 275,
+	K_LEFTARROW = 276,
 
-	K_ALT,
-	K_CTRL,
-	K_SHIFT,
-	K_INS,
-	K_DEL,
-	K_PGDN,
-	K_PGUP,
-	K_HOME,
-	K_END,
-
-	K_F1,
-	K_F2,
-	K_F3,
-	K_F4,
-	K_F5,
-	K_F6,
-	K_F7,
-	K_F8,
-	K_F9,
-	K_F10,
-	K_F11,
-	K_F12,
-	K_F13,
-	K_F14,
-	K_F15,
-
-	K_APPS,
-
-	K_KP_HOME,
-	K_KP_UPARROW,
-	K_KP_PGUP,
-	K_KP_LEFTARROW,
-	K_KP_5,
-	K_KP_RIGHTARROW,
-	K_KP_END,
-	K_KP_DOWNARROW,
-	K_KP_PGDN,
-	K_KP_ENTER,
-	K_KP_INS,
-	K_KP_DEL,
-	K_KP_SLASH,
-	K_KP_MINUS,
-	K_KP_PLUS,
-	K_KP_NUMLOCK,
-	K_KP_STAR,
-	K_KP_EQUALS,
-
-	K_MOUSE1,
-	K_MOUSE2,
-	K_MOUSE3,
-	K_MOUSE4,
-	K_MOUSE5,
-
-	K_MWHEELDOWN,
-	K_MWHEELUP,
+	K_HOME = 278,
+	K_END = 279,
+	K_PGUP = 280,
+	K_PGDN = 281,
+	K_F1 = 282,
+	K_F2 = 283,
+	K_F3 = 284,
+	K_F4 = 285,
+	K_F5 = 286,
+	K_F6 = 287,
+	K_F7 = 288,
+	K_F8 = 289,
+	K_F9 = 290,
+	K_F10 = 291,
+	K_F11 = 292,
+	K_F12 = 293,
+	K_F13 = 294,
+	K_F14 = 295,
+	K_F15 = 296,
+	K_INS = 277,
+	K_SHIFT = 304,
+	K_CTRL = 306,
+	K_ALT = 308,
 
 	K_JOY1,
 	K_JOY2,
@@ -170,8 +161,13 @@ typedef enum {
 	K_EURO,
 	K_UNDO,
 
-	K_LAST_KEY,
-	K_KEY_SIZE = 256
+	K_COMMAND,
+	K_CAPSLOCK,
+	K_POWER,
+	K_APPS,
+
+	K_LAST_KEY = 511,	/* to support as many chars as posible */
+	K_KEY_SIZE = 512
 } keyNum_t;
 
 typedef enum {
@@ -199,7 +195,7 @@ extern char *keybindings[K_KEY_SIZE];
 extern char *menukeybindings[K_KEY_SIZE];
 
 void Key_SetDest(int key_dest);
-void Key_Event(int key, qboolean down, unsigned time);
+void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
 void Key_Init(void);
 void Key_WriteBindings(const char* filename);
 const char* Key_GetBinding(const char *binding, keyBindSpace_t space);

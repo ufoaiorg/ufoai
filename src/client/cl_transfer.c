@@ -203,7 +203,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 }
 
 /**
- * @brief Checks condition for alive alien transfer.
+ * @brief Checks condition for live alien transfer.
  * @param[in] alienidx Index of an alien type.
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
@@ -214,7 +214,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
 
 	assert(destbase);
 
-	/* Count amount of alive aliens already on the transfer list. */
+	/* Count amount of live aliens already on the transfer list. */
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 			intransfer += trAliensTmp[i][TRANS_ALIEN_ALIVE];
@@ -964,7 +964,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 
 		num = (base->capacities[CAP_ALIENS].max - base->capacities[CAP_ALIENS].cur);
 		Q_strcat(transferBaseSelectPopup, va("  %s ", base->name), sizeof(transferBaseSelectPopup));
-		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i alive alien)\n", "(can host %i alive aliens)\n", num), num), sizeof(transferBaseSelectPopup));
+		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i live alien)\n", "(can host %i live aliens)\n", num), num), sizeof(transferBaseSelectPopup));
 	}
 	mn.menuText[TEXT_LIST] = transferBaseSelectPopup;
 	MN_PushMenu("popup_transferbaselist");
