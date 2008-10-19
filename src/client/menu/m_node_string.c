@@ -1,6 +1,7 @@
 
 #include "m_nodes.h"
 #include "m_font.h"
+#include "m_parse.h"
 #include "../client.h"
 
 /**
@@ -10,7 +11,7 @@ void MN_DrawStringNode (menuNode_t *node)
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
 	const char *font = MN_GetFont(menu, node);
-	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->text);
 	if (!ref)
 		return;
 	MN_GetNodeAbsPos(node, nodepos);

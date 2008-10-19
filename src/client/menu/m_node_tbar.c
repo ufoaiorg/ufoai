@@ -5,11 +5,11 @@
  */
 void MN_DrawTBarNode (menuNode_t *node)
 {
-	/* dataStringOrImageOrModel is the texture name */
+	/* dataImageOrModel is the texture name */
 	float ps, shx;
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
 	if (!ref) {
 		return;
 	}

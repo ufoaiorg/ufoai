@@ -15,10 +15,10 @@ void MN_DrawCinematicNode (menuNode_t *node)
 {
 	vec2_t nodepos;
 	MN_GetNodeAbsPos(node, nodepos);
-	if (node->dataStringOrImageOrModel) {
+	if (node->dataImageOrModel) {
 		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
 		if (cls.playingCinematic == CIN_STATUS_NONE)
-			CIN_PlayCinematic(node->dataStringOrImageOrModel);
+			CIN_PlayCinematic(node->dataImageOrModel);
 		if (cls.playingCinematic) {
 			/* only set replay to true if video was found and is running */
 			CIN_SetParameters(nodepos[0], nodepos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);

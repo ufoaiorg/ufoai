@@ -183,7 +183,7 @@ void MN_NodeModelInit (void)
 void MN_DrawModelNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
 	char source[MAX_VAR] = "";
 	if (ref == NULL)
 		*source = '\0';
@@ -446,7 +446,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				for (search = menu->firstNode; search != node && search; search = search->next)
 					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
 						char modelName[MAX_VAR];
-						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataStringOrImageOrModel), sizeof(modelName));
+						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
 
 						pmi.model = R_RegisterModelShort(modelName);
 						if (!pmi.model)

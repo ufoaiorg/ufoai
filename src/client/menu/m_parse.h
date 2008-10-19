@@ -35,6 +35,6 @@ const char *MN_GetSaifeReferenceString(const menu_t* const menu, char *ref);
 
 qboolean MN_ScriptSanityCheck(void);
 
-#define V_MENU_COPY 0x100 /**< flag to request a string copy into the menu structure */
+#define V_MENU_COPY 0x100 /**< flag to request a memory copy into the menu structure */
 
 #endif

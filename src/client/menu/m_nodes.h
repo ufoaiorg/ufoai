@@ -160,8 +160,9 @@ typedef struct menuNode_s {
 	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 	const value_t *scriptValues;
-	void* dataStringOrImageOrModel;	/**< First entry in data array can
-						* be an image, an model or an string, this depends
+	char* text;
+	void* dataImageOrModel;	/**< First entry in data array can
+						* be an image, or a model, this depends
 						* on the node type
 						*/
 	void* dataModelSkinOrCVar; /**< the skin of the model */

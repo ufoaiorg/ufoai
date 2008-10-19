@@ -16,7 +16,7 @@
 void MN_DrawItemNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
 	if (!ref) {
 		return;
 	}

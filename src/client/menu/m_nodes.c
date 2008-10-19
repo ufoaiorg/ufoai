@@ -84,7 +84,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	byte *color = NULL;	/**< Pointer to specific pixel in image. */
 	vec2_t nodepos;
 
-	if (!node || node->type != MN_PIC || !node->dataStringOrImageOrModel)
+	if (!node || node->type != MN_PIC || !node->dataImageOrModel)
 		return qfalse;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -163,17 +163,17 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_CHECKBOX) {
 			/* the checked and unchecked should always have the same dimensions */
-			if (!node->dataStringOrImageOrModel) {
+			if (!node->dataImageOrModel) {
 				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
 			} else {
-				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataStringOrImageOrModel));
+				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataImageOrModel));
 			}
-		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->dataStringOrImageOrModel) {
+		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->dataImageOrModel) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];
 			} else
-				R_DrawGetPicSize(&sx, &sy, node->dataStringOrImageOrModel);
+				R_DrawGetPicSize(&sx, &sy, node->dataImageOrModel);
 		} else
 			return qfalse;
 #if 0

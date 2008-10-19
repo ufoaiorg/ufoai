@@ -437,9 +437,9 @@ void MN_DrawRadar (menuNode_t *node)
 	if (!cl.radarInited)
 		return;
 
-	if (node->dataStringOrImageOrModel)
+	if (node->dataImageOrModel)
 		R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0,
-			ALIGN_UL, node->blend, node->dataStringOrImageOrModel);
+			ALIGN_UL, node->blend, node->dataImageOrModel);
 
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);

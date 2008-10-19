@@ -15,7 +15,7 @@ void MN_DrawImageNode(menuNode_t *node)
 
 	int time = cl.time;
 
-	const char* imageName = MN_GetSaifeReferenceString(node->menu, node->dataStringOrImageOrModel);
+	const char* imageName = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
 	if (!imageName)
 		return;
 

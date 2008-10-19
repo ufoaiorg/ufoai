@@ -200,7 +200,7 @@ void MN_DrawTabNode (menuNode_t *node)
 	const char *font;
 	int currentX;
 
-	const char* image = MN_GetReferenceString(node->menu, node->dataStringOrImageOrModel);
+	const char* image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (!image)
 		image = "menu/tab";
 

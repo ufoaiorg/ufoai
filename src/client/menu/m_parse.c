@@ -79,15 +79,17 @@ static const value_t nps[] = {
 	{"key", V_STRING, offsetof(menuNode_t, key), 0},
 
 	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataNodeTooltip), 0},	/* translated in MN_Tooltip */
-	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
-	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
-	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/** @todo Rename into model */
+	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
 	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
 	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
 	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
-	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},	/* no gettext here - this can be a cvar, too */
+	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
-	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataStringOrImageOrModel), 0},
+#if 0 /* never use */
+	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+#endif
 
 	/* specific for model
 	 * @todo move it into the node behaviour
