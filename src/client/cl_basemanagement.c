@@ -3464,9 +3464,7 @@ int B_GetFoundedBaseCount (void)
  */
 void B_UpdateBaseData (void)
 {
-	building_t *b;
 	int baseIdx, j;
-	int new;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -3474,11 +3472,10 @@ void B_UpdateBaseData (void)
 			continue;
 
 		for (j = 0; j < gd.numBuildings[baseIdx]; j++) {
-			b = &gd.buildings[baseIdx][j];
+			building_t *b = &gd.buildings[baseIdx][j];
 			if (!b)
 				continue;
-			new = B_CheckBuildingConstruction(b, base);
-			if (new) {
+			if (B_CheckBuildingConstruction(b, base)) {
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
 				MN_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
