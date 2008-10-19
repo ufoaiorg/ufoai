@@ -191,9 +191,10 @@ LINE TYPING INTO THE CONSOLE
 
 /**
  * @brief Interactive line editing and console scrollback
- * @param[in] key
+ * @param[in] key key code, either K_ value or lowercase ascii
+ * @param[in] unicode translated meaning of keypress in unicode
  */
-static void Key_Console (int key)
+static void Key_Console (int key, int unicode)
 {
 	int i;
 
@@ -388,6 +389,7 @@ static void Key_Console (int key)
 		key = '.';
 		break;
 	default:
+		key = unicode;
 		break;
 	}
 
@@ -992,7 +994,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		break;
 	case key_game:
 	case key_console:
-		Key_Console(key);
+		Key_Console(key, unicode);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Bad cls.key_dest");
