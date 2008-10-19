@@ -1431,10 +1431,10 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(orthographic_menu);
 		if (style == MainFrame::eRegular) {
-			create_menu_item_with_mnemonic(orthographic_menu, "_Next (XY, YZ, XY)", "NextView");
+			create_menu_item_with_mnemonic(orthographic_menu, "_Next (XY, YZ, YZ)", "NextView");
 			create_menu_item_with_mnemonic(orthographic_menu, "XY (Top)", "ViewTop");
-			create_menu_item_with_mnemonic(orthographic_menu, "YZ", "ViewSide");
-			create_menu_item_with_mnemonic(orthographic_menu, "XZ", "ViewFront");
+			create_menu_item_with_mnemonic(orthographic_menu, "XZ (Side)", "ViewSide");
+			create_menu_item_with_mnemonic(orthographic_menu, "YZ (Front)", "ViewFront");
 			menu_separator(orthographic_menu);
 		}
 
@@ -1788,7 +1788,7 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 	ComponentModes_constructToolbar(toolbar);
 
 	if (style == MainFrame::eRegular) {
-		gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+		gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 		XYWnd_constructToolbar(toolbar);
 	}
@@ -2141,7 +2141,7 @@ void MainFrame::Create (void) {
 			gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
 		}
 
-		// set height of the upper split view (seperates the 4 views and the console)
+		// set height of the upper split view (seperates the 4 views and the console
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
 
 		break;

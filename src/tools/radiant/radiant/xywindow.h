@@ -252,7 +252,7 @@ struct xywindow_globals_t {
 	Vector3 AxisColorY;
 	Vector3 AxisColorZ;
 
-	bool m_bRightClick;
+	bool m_bRightClick; //! activates the context menu
 	bool m_bNoStipple;
 
 	xywindow_globals_t() :
