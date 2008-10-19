@@ -124,20 +124,12 @@ void MN_DrawMenus (void)
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->invis || !nodeBehaviourList[node->type].draw)
 				continue;
-			MN_GetNodeAbsPos(node, nodepos);
-
-#if 0 /**< overcomplex condition, if a drawable check is realy need, add a isDrawable() function into the node behaviour */
-			if (!(node->invis && ((node->dataStringOrImageOrModel /* 0 are images, models and strings e.g. */
-					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASELAYOUT || node->type == MN_BASEMAP || node->type == MN_MAP)
-					|| node->type == MN_CHECKBOX || node->type == MN_TAB || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
-					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]) || node->type == MN_RADAR)))
-				continue;
-#endif
 
 			/* if construct */
-			if (!MN_CheckCondition(node)) /** @fixeme double same if!?! if its ok, a comment to explain why */
 			if (!MN_CheckCondition(node))
 				continue;
+
+			MN_GetNodeAbsPos(node, nodepos);
 
 			/* timeout? */
 			if (node->timePushed) {
