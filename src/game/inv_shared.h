@@ -757,6 +757,7 @@ void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* w
 void INVSH_EquipActor(inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
 qboolean INV_IsCraftItem(const objDef_t *obj);
+qboolean INV_IsBaseDefenceItem(const objDef_t *item);
 
 void INVSH_PrintItemDescription(const objDef_t *od);
 objDef_t *INVSH_GetItemByID(const char *id);

@@ -402,6 +402,21 @@ qboolean INV_IsCraftItem (const objDef_t *obj)
 	return obj->craftitem.type != MAX_ACITEMS;
 }
 
+
+/**
+ * @brief Checks whether a given item is a basedefence item
+ * @note This is done by checking whether it's a craftitem and whether it's
+ * marked as a dummy item - the combination of both means, that it's a
+ * basedefence item.
+ * @param[in] item The item to check whether it's a basedefence item
+ * @return true if the given item is a basedefence item
+ */
+qboolean INV_IsBaseDefenceItem (const objDef_t *item)
+{
+	return INV_IsCraftItem(item) && item->isDummy;
+}
+
+
 /**
  * @brief Checks if the given object/item matched the giben filter type.
  * @param[in] obj A pointer to an objDef_t item.
