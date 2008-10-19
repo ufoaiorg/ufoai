@@ -166,6 +166,7 @@ int AngleToDir(int angle);
 
 void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
 void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
+void VectorMix(const vec3_t v1, const vec3_t v2, const float mix, vec3_t out);
 
 void MatrixMultiply(const vec3_t a[3], const vec3_t b[3], vec3_t c[3]);
 void GLMatrixMultiply(const float a[16], const float b[16], float c[16]);

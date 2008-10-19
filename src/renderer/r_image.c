@@ -1009,54 +1009,72 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
  */
 void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 {
-	int i, j, mask;
+	vec3_t intensity, luminosity, temp;
+	int i, j, c, mask;
 	byte *p;
-	const int c = width * height;
+	float max, d;
+	const float scale = 1.0 / 255.0;
 
-	switch (type) {
-	case it_effect:
-	case it_world:
-	case it_material:
-	case it_skin:
+	p = (byte *)in;
+	c = width * height;
+
+	if (type == it_world || type == it_effect || type == it_material)
 		mask = 1;
-		break;
-	case it_lightmap:
+	else if (type == it_lightmap)
 		mask = 2;
-		break;
-	default:
+	else
 		mask = 0;  /* monochrome/invert */
-		break;
-	}
 
-	for (i = 0, p = (byte *)in; i < c; i++, p += 4) {
+	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
+
+	for (i = 0; i < c; i++, p+= 4) {
+		VectorCopy(p, temp);
+		VectorScale(temp, scale, temp);  /* convert to float */
+
+		if (type == it_lightmap)  /* apply brightness */
+			VectorScale(temp, r_modulate->value, temp);
+		else
+			VectorScale(temp, r_brightness->value, temp);
+
+		max = 0.0;  /* determine brightest component */
+
 		for (j = 0; j < 3; j++) {
-			/* first brightness */
-			float f = p[j] / 255.0;  /* as float */
+			if (temp[j] > max)
+				max = temp[j];
 
-			if (type == it_lightmap)  /* scale */
-				f *= r_modulate->value;
-			else
-				f *= r_brightness->value;
+			if (temp[j] < 0.0)  /* enforcing positive values */
+				temp[j] = 0.0;
+		}
 
-			if (f > 1.0)  /* clamp */
-				f = 1.0;
-			else if (f < 0.0)
-				f = 0.0;
+		if (max > 1.0)  /* clamp without changing hue */
+			VectorScale(temp, 1.0 / max, temp);
 
-			/* then contrast */
-			f -= 0.5;  /* normalize to -0.5 through 0.5 */
+		for (j = 0; j < 3; j++) {  /* apply contrast */
+			temp[j] -= 0.5;  /* normalize to -0.5 through 0.5 */
+			temp[j] *= r_contrast->value;  /* scale */
+			temp[j] += 0.5;
 
-			f *= r_contrast->value;  /* scale */
+			if (temp[j] > 1.0)  /* clamp */
+				temp[j] = 1.0;
+			else if (temp[j] < 0)
+				temp[j] = 0;
+		}
 
-			f += 0.5;
-			f *= 255;  /* back to byte */
+		/* finally saturation, which requires rgb */
+		d = DotProduct(temp, luminosity);
 
-			if (f > 255)  /* clamp */
-				f = 255;
-			else if (f < 0)
-				f = 0;
+		VectorSet(intensity, d, d, d);
+		VectorMix(intensity, temp, r_saturation->value, temp);
 
-			p[j] = (byte)f;
+		for (j = 0; j < 3; j++) {
+			temp[j] *= 255;  /* back to byte */
+
+			if (temp[j] > 255)  /* clamp */
+				temp[j] = 255;
+			else if (temp[j] < 0)
+				temp[j] = 0;
+
+			p[j] = (byte)temp[j];
 		}
 
 		if (r_monochrome->integer & mask)  /* monochrome */

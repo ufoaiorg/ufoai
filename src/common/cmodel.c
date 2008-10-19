@@ -1031,8 +1031,8 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	/* Lets test if curTile is changed */
 	assert(curTile == &mapTiles[numTiles]);
 
-	/* CMod_LoadRouting plays with curTile and numTiles, so lets set */
-	/* these to the right values now */
+	/* CMod_LoadRouting plays with curTile and numTiles, so let set
+	 * these to the right values now */
 	numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
 	/* now increase the amount of loaded tiles */
