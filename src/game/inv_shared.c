@@ -463,7 +463,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		break;
 
 	case FILTER_S_HEAVY:
-		return obj->isHeavy;
+		if (obj->isHeavy)
+			return qtrue;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numAmmos; i++) {
