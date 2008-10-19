@@ -756,6 +756,7 @@ void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
 void INVSH_EquipActor(inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
+qboolean INV_IsCraftItem(const objDef_t *obj);
 
 void INVSH_PrintItemDescription(const objDef_t *od);
 objDef_t *INVSH_GetItemByID(const char *id);

@@ -397,13 +397,18 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 	return MAX_FILTERTYPES;
 }
 
+qboolean INV_IsCraftItem (const objDef_t *obj)
+{
+	return obj->craftitem.type != MAX_ACITEMS;
+}
+
 /**
  * @brief Checks if the given object/item matched the giben filter type.
  * @param[in] obj A pointer to an objDef_t item.
  * @param[in] filterType Filter type to check against.
  * @return qtrue if obj is in filterType
  */
-inline qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
+qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
 {
 	int i;
 
@@ -456,7 +461,7 @@ inline qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterType
 
 	case FILTER_CRAFTITEM:
 		/** @todo Should we handle FILTER_AIRCRAFT here as well? */
-		if (obj->craftitem.type != MAX_ACITEMS)
+		if (INV_IsCraftItem(obj))
 			return qtrue;
 		break;
 
