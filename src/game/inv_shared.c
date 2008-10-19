@@ -399,11 +399,12 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 
 /**
  * @brief Checks whether a given item is an aircraftitem item
- * @note This is done by checking whether it's a craftitem and not 
+ * @note This is done by checking whether it's a craftitem and not
  * marked as a dummy item - the combination of both means, that it's a
  * basedefence item.
  * @param[in] item The item to check whether it's an aircraftiem item
  * @return true if the given item is an aircraftitem item
+ * @sa INV_IsBaseDefenceItem
  */
 qboolean INV_IsCraftItem (const objDef_t *obj)
 {
@@ -417,6 +418,7 @@ qboolean INV_IsCraftItem (const objDef_t *obj)
  * basedefence item.
  * @param[in] item The item to check whether it's a basedefence item
  * @return true if the given item is a basedefence item
+ * @sa INV_IsCraftItem
  */
 qboolean INV_IsBaseDefenceItem (const objDef_t *obj)
 {
