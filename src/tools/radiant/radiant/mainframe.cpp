@@ -1425,6 +1425,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(camera_menu, "Look Through Selected", "LookThroughSelected");
 		create_menu_item_with_mnemonic(camera_menu, "Look Through Camera", "LookThroughCamera");
 	}
+
 	menu_separator(menu);
 	{
 		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, "Orthographic");
@@ -1444,7 +1445,6 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 	}
 
 	menu_separator(menu);
-
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Show");
 		if (g_Layout_enableDetachableMenus.m_value)
@@ -1467,6 +1467,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu_in_menu, "Hide Selected", "HideSelected");
 		create_menu_item_with_mnemonic(menu_in_menu, "Show Hidden", "ShowHidden");
 	}
+
 	menu_separator(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Region");
@@ -1478,11 +1479,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu_in_menu, "Set Se_lected Brushes", "RegionSetSelection");
 	}
 
-	if (style == MainFrame::eSplit) {
-		command_connect_accelerator("CenterXYViews");
-	} else {
-		command_connect_accelerator("CenterXYView");
-	}
+	command_connect_accelerator("CenterXYViews");
 
 	return view_menu_item;
 }
@@ -1505,7 +1502,6 @@ static GtkMenuItem* create_selection_menu (void)
 	}
 
 	menu_separator(menu);
-
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Nudge");
 		if (g_Layout_enableDetachableMenus.m_value)
@@ -1531,6 +1527,7 @@ static GtkMenuItem* create_selection_menu (void)
 		create_menu_item_with_mnemonic(menu_in_menu, "Flip _Y", "MirrorSelectionY");
 		create_menu_item_with_mnemonic(menu_in_menu, "Flip _Z", "MirrorSelectionZ");
 	}
+
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, "Arbitrary rotation...", "ArbitraryRotation");
 	create_menu_item_with_mnemonic(menu, "Arbitrary scale...", "ArbitraryScale");

@@ -2280,22 +2280,19 @@ void XYWnd_Focus(XYWnd* xywnd) {
 }
 
 /**
- * @brief Center positions in eSplit mode for all three views
- */
-void XY_Split_Focus(void) {
-	Vector3 position;
-	GetFocusPosition(position);
-	g_pParentWnd->GetXYWnd()->PositionView(position);
-	g_pParentWnd->GetXZWnd()->PositionView(position);
-	g_pParentWnd->GetYZWnd()->PositionView(position);
-}
-
-/**
  * @brief Center position for eRegular mode for currently active view
  */
-void XY_Focus(void) {
-	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	XYWnd_Focus(xywnd);
+void XY_CenterViews(void) {
+	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
+		Vector3 position;
+		GetFocusPosition(position);
+		g_pParentWnd->GetXYWnd()->PositionView(position);
+		g_pParentWnd->GetXZWnd()->PositionView(position);
+		g_pParentWnd->GetYZWnd()->PositionView(position);
+	} else {
+		XYWnd* xywnd = g_pParentWnd->GetXYWnd();
+		XYWnd_Focus(xywnd);
+	}
 }
 
 /**
@@ -2320,8 +2317,9 @@ void XY_Side(void) {
  * @brief Front view for eRegular mode
  */
 void XY_Front(void) {
-	g_pParentWnd->GetXYWnd()->SetViewType(YZ);
-	XYWnd_Focus(g_pParentWnd->GetXYWnd());
+	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
+	xywnd->SetViewType(YZ);
+	XYWnd_Focus(xywnd);
 }
 
 /**
@@ -2561,10 +2559,6 @@ void XYWindow_Construct(void) {
 	GlobalCommands_insert("ViewTop", FreeCaller<XY_Top>());
 	GlobalCommands_insert("ViewSide", FreeCaller<XY_Side>());
 	GlobalCommands_insert("ViewFront", FreeCaller<XY_Front>());
-	GlobalCommands_insert("CenterXYView", FreeCaller<XY_Focus>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-
-	// eSplit
-	GlobalCommands_insert("CenterXYViews", FreeCaller<XY_Split_Focus>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	// general commands
 	GlobalCommands_insert("ToggleCrosshairs", FreeCaller<ToggleShowCrosshair>(), Accelerator('X', (GdkModifierType)GDK_SHIFT_MASK));
@@ -2574,6 +2568,7 @@ void XYWindow_Construct(void) {
 	GlobalCommands_insert("ZoomIn", FreeCaller<XY_ZoomIn>(), Accelerator(GDK_Delete));
 	GlobalCommands_insert("ZoomOut", FreeCaller<XY_ZoomOut>(), Accelerator(GDK_Insert));
 	GlobalCommands_insert("Zoom100", FreeCaller<XY_Zoom100>());
+	GlobalCommands_insert("CenterXYViews", FreeCaller<XY_CenterViews>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	// register preference settings
 	GlobalPreferenceSystem().registerPreference("ClipNoDraw", BoolImportStringCaller(g_clip_useNodraw), BoolExportStringCaller(g_clip_useNodraw));
