@@ -1328,6 +1328,14 @@ menu popup_newinstallation_type
 		align	ul
 	}
 
+	pic radar_icon
+	{
+		image	"geoscape/radar"
+		pos	"310 340"
+		in	{ *bt_highlight invis false *bt_highlight pos "290 338" }
+		out	{ *bt_highlight invis true }
+		click	{ cmd "set mn_newinstallation_type radartower; mn_pop; mn_select_installation -1;" }
+	}
 	string radar_type
 	{
 		string	"_Radar tower"
@@ -1345,6 +1353,14 @@ menu popup_newinstallation_type
 		font	f_small
 	}
 
+	pic sam_icon
+	{
+		image	"geoscape/defence"
+		pos	"310 360"
+		in	{ *bt_highlight invis false *bt_highlight pos "290 358" }
+		out	{ *bt_highlight invis true }
+		click	{ cmd "set mn_newinstallation_type samsite; mn_pop; mn_select_installation -1;" }
+	}
 	string sam_type
 	{
 		string	"_SAM Site"
@@ -1362,6 +1378,14 @@ menu popup_newinstallation_type
 		font	f_small
 	}
 
+	pic ufoyard_icon
+	{
+		image	"geoscape/ufoyard"
+		pos	"310 380"
+		in	{ *bt_highlight invis false *bt_highlight pos "290 378" }
+		out	{ *bt_highlight invis true }
+		click	{ cmd "set mn_newinstallation_type ufoyard; mn_pop; mn_select_installation -1;" }
+	}
 	string ufoyard_type
 	{
 		string	"_UFO Yard"
