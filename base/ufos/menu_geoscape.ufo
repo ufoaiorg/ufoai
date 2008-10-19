@@ -1340,7 +1340,7 @@ menu popup_newinstallation_type
 	}
 	string radar_cost
 	{
-		string	"*cvar mn_installation_newcost"
+		string	"*cvar mn_installation_radartower_cost"
 		pos	"650 340"
 		font	f_small
 	}
@@ -1357,7 +1357,7 @@ menu popup_newinstallation_type
 	}
 	string sam_cost
 	{
-		string	"*cvar mn_installation_newcost"
+		string	"*cvar mn_installation_samsite_cost"
 		pos	"650 360"
 		font	f_small
 	}
@@ -1374,7 +1374,7 @@ menu popup_newinstallation_type
 	}
 	string ufoyard_cost
 	{
-		string	"*cvar mn_installation_newcost"
+		string	"*cvar mn_installation_ufoyard_cost"
 		pos	"650 380"
 		font	f_small
 	}
@@ -1473,9 +1473,25 @@ menu popup_newinstallation
 		string	"_Cost:"
 		pos	"290 380"
 	}
-	string cost
+
+	string cost_radartower
 	{
-		string	"*cvar mn_installation_newcost"
+		if "mn_newinstallation_type eq radartower"
+		string	"*cvar mn_installation_radartower_cost"
+		pos	"290 395"
+		font	f_big
+	}
+	string cost_samsite
+	{
+		if "mn_newinstallation_type eq samsite"
+		string	"*cvar mn_installation_samsite_cost"
+		pos	"290 395"
+		font	f_big
+	}
+	string cost_ufoyard
+	{
+		if "mn_newinstallation_type eq ufoyard"
+		string	"*cvar mn_installation_ufoyard_cost"
 		pos	"290 395"
 		font	f_big
 	}

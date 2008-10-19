@@ -439,7 +439,7 @@ void INS_InitStartup (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "Reset installation\n");
 
-	Cvar_SetValue("mn_installation_max", 10);
+	Cvar_SetValue("mn_installation_max", MAX_INSTALLATIONS);
 
 	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
 		gd.installationTemplates[idx].id = NULL;
@@ -600,10 +600,17 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 			installation->name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 		} else if (!Q_strncmp(token, "cost", MAX_VAR)) {
+			char cvarname[MAX_VAR] = "mn_installation_";
+
+			Q_strcat(cvarname, installation->id, MAX_VAR);
+			Q_strcat(cvarname, "_cost", MAX_VAR);
+
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			installation->cost = atoi(token);
+
+			Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
 		} else if (!Q_strncmp(token, "radar_range", MAX_VAR)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
