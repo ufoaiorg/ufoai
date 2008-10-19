@@ -152,6 +152,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	case MN_CHECKBOX:
 	case MN_TAB:
 	case MN_SELECTBOX:
+	case MN_CONTROLS:
 		break;
 	default:
 		/* check for click action */
