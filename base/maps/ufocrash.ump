@@ -1,0 +1,333 @@
+// *********************************
+// UFO Crash THEME
+// *********************************
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: any
+// b: street horizontal
+// c: street vertical
+// d: destroyed tile (put it 'behind' the crashed ufo)
+// h: destroyed tile for harvester (put it 'behind' the crashed harvester)
+// u: crashed ufo
+
+base ufocrash/uc_
+
+// *********************************
+// Tiles
+// *********************************
+
+// ---------------------------------
+// Dropship
+// ---------------------------------
+tile +drop_firebird
+{
+5 4
+0      audbh     audbh      audbh      0
+audc      +a        +a         +a   audc
+audc      +a        +a         +a   audc
+0      audbh     audbh      audbh      0
+}
+
+// ---------------------------------
+// Stiletto
+// ---------------------------------
+tile +inter_stiletto
+{
+5 4
+0      audbh     audbh      audbh      0
+audc      +a        +a         +a   audc
+audc      +a        +a         +a   audc
+0      audbh     audbh      audbh      0
+}
+
+// ---------------------------------
+// Stiletto
+// ---------------------------------
+tile +inter_saracen
+{
+5 4
+0      audbh     audbh      audbh      0
+audc      +a        +a         +a   audc
+audc      +a        +a         +a   audc
+0      audbh     audbh      audbh      0
+}
+
+// ---------------------------------
+// Stingray
+// ---------------------------------
+tile +inter_stingray
+{
+5 4
+0      audbh     audbh      audbh      0
+audc      +a        +a         +a   audc
+audc      +a        +a         +a   audc
+0      audbh     audbh      audbh      0
+}
+
+// ---------------------------------
+// destroyed houses #1
+// ---------------------------------
+tile +d01
+{
+4 4
+
+0      audbh     audbh      0
+audc      +d        +d   audc
+audc      +d        +d   audc
+0      audbh     audbh      0
+}
+
+// ---------------------------------
+// destroyed house #2
+// ---------------------------------
+tile +d03
+{
+4 4
+
+0      audbh     audbh      0
+audc      +d        +d   audc
+audc      +d        +d   audc
+0      audbh     audbh      0
+}
+
+// ---------------------------------
+// harvester destroyed tile
+// ---------------------------------
+tile +d02_harvester
+{
+3 6
+
+0      adb          0
+u       +h        adc
+u       +h        adc
+u       +h        adc
+u       +h        adc
+0      adb          0
+}
+
+// ---------------------------------
+// house #1
+// ---------------------------------
+tile +h01
+{
+4 3
+
+0      audbh     audbh      0
+audc      +a        +a   audc
+0      audbh     audbh      0
+}
+
+
+// ---------------------------------
+// house #2 (same as house #1 but smaller ground tile)
+// ---------------------------------
+tile +h02
+{
+3 3
+
+0      audbh      0
+audc      +a   audc
+0      audbh      0
+}
+
+// ---------------------------------
+// house #3 (shop)
+// ---------------------------------
+tile +h03
+{
+4 4
+
+0      audbh     audbh      0
+audc      +a        +a   audc
+audc      +a        +a   audc
+0      audbh     audbh      0
+}
+
+// ---------------------------------
+// house #4 (farm)
+// ---------------------------------
+tile +h04
+{
+5 5
+
+0      audbh     audbh     audbh      0
+audc      +a        +a        +a   audc
+audc      +a        +a        +a   audc
+audc      +a        au     audbh      0
+0      audbh         0         0      0
+}
+
+// ---------------------------------
+// house #5 (farm 2)
+// ---------------------------------
+tile +h05
+{
+3 4
+
+0      audbh      0
+audc      +a   audc
+audc      +a   audc
+0      audbh      0
+}
+
+// ---------------------------------
+// house #6 (farm 3)
+// ---------------------------------
+tile +h06
+{
+4 4
+
+0      audbh     audbh      0
+audc      +a        +a   audc
+audc      +a        +a   audc
+0      audbh     audbh      0
+}
+
+// --------------------------------------------
+// house #7 (house, village, 2 floors, balcony)
+// --------------------------------------------
+tile +h07
+{
+5 4
+
+0      audbh     audbh      audbh      0
+audc      +a        +a         +a   audc
+audc      +a        +a         +a   audc
+0      audbh     audbh      audbh      0
+}
+
+// *********************************
+// UFO Tiles
+// *********************************
+
+// ---------------------------------
+// bomber
+// ---------------------------------
+tile +craft_crash_bomber
+{
+7 5
+
+0      0      0     ab    ab    ab    0
+0      ab     a     +u    +u    +u    adc
+ac     +u     +u    +u    +u    +u    adc
+ac     +u     +u    +u    ad    adb   0
+0      ab     ab    ab    0     0     0
+}
+
+// ---------------------------------
+// carrier
+// ---------------------------------
+tile +craft_crash_carrier
+{
+7 5
+
+0      0      0     ab    ab    ab    0
+0      ab     a     +u    +u    +u    adc
+ac     +u     +u    +u    +u    +u    adc
+ac     +u     +u    +u    ad    adb   0
+0      ab     ab    ab    0     0     0
+}
+
+// ---------------------------------
+// corrupter
+// ---------------------------------
+tile +craft_crash_corrupter
+{
+10 8
+
+0      0      0     0     ab    ab    ab    ab    ab    0
+0      0      0     ac    +u    +u    +u    +u    +u    adc
+0      ab     ab    a     +u    +u    +u    +u    +u    adc
+ac     +u     +u    +u    +u    +u    +u    +u    ad    adc
+ac     +u     +u    +u    +u    +u    +u    +u    ad    adc
+0      ab     ab    a     +u    +u    +u    +u    +u    adc
+0      0      0     ac    +u    +u    +u    +u    +u    adc
+0      0      0     0     ab    ab    ab    ab    ab    0
+}
+
+// ---------------------------------
+// fighter
+// ---------------------------------
+tile +craft_crash_fighter
+{
+7 5
+
+0      0      0     ab    ab    ab    0
+0      ab     a     +u    +u    +u    adc
+ac     +u     +u    +u    +u    +u    adc
+ac     +u     +u    +u    ad    adb   0
+0      ab     ab    ab    0     0     0
+}
+
+// ---------------------------------
+// harvester
+// ---------------------------------
+tile +craft_crash_harvester
+{
+8 6
+
+0      0      ab     ab     ab     ab     ab     0
+0      a      +u     +u     +u     +u     +u     h
+ac     +u     +u     +u     +u     +u     +u     h
+0      ab     ab     a      +u     +u     +u     h
+0      0      0      ac     +u     +u     +u     h
+0      0      0      0      ab     ab     ab     0
+}
+
+// ---------------------------------
+// scout
+// ---------------------------------
+tile +craft_crash_scout
+{
+4 5
+
+0      ab     ab     0
+ac     +u     +u     adc
+ac     +u     +u     adc
+ac     +u     +u     adc
+0      ab     ab     0
+}
+
+// ---------------------------------
+// supply
+// ---------------------------------
+tile +craft_crash_supply
+{
+6 7
+
+0      ab     ab     0      0     0
+ac     +u     +u     ad     0     0
+ac     +u     +u     +u     adc   0
+ac     +u     +u     +u     ad    0
+ac     +u     +u     +u     +u    adc
+ac     +u     +u     +u     ad    0
+0      ab     ab     ab     0     0
+}
+
+
+// *********************************
+// Assemblies
+// *********************************
+
+// *********************************
+// crashed UFOs
+// *********************************
+
+assembly craft_crash_normal
+{
+title "_Crashed UFO"
+size "7 5"
++h01 "0 10"
++h02 "0 10"
++h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
++h07 "0 2"
++d01 "0 2"
++d03 "0 2"
+*rm_ufo +craft_crash_scout "1 1"
+*rm_drop +drop_firebird "1 1"
+}

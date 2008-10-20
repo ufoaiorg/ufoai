@@ -1,0 +1,231 @@
+// ==================
+// SKIRMISH MENU
+// ==================
+
+menu skirmish
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis	true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/skirmish_ul
+		pos	"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/skirmish_ur
+		pos	"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/skirmish_ll
+		pos	"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/skirmish_lr
+		pos	"512 512"
+	}
+
+	pic button_back
+	{
+		pos "90 200"
+		click	{ cmd "mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
+		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
+	}
+	string string_back
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"218 232"
+		align	cc
+	}
+
+	// ====================
+	// start game button
+	// ====================
+	pic button_start
+	{
+		pos	"90 80"
+		click	{ cmd "game_skirmish;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_start color "0 0.5 0 1" *button_start texl "0 0"  *button_start texh "256 64" }
+		in	{ *string_start color "1 1 1 1" *button_start texl "0 64" *button_start texh "256 128" }
+	}
+	string string_start
+	{
+		pos	"218 112"
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Start game"
+		align	cc
+	}
+
+	string settings
+	{
+		string	"_Skirmish game settings"
+		pos	"500 100"
+		font	f_big
+	}
+
+	// ===================
+	// DAY + NIGHT
+	// ===================
+	string daynight_str
+	{
+		string	"_Day version:"
+		pos	"500 260"
+	}
+	checkbox daynight_value
+	{
+		cvar	"*cvar mn_serverday"
+		pos	"840 260"
+		align	ur
+	}
+
+	// ===================
+	// AI_NUMACTORS
+	// ===================
+	string ai_numactors_str
+	{
+		string	"_Max. AI actors:"
+		pos	"500 280"
+		tooltip	"_Max AI actors for this game"
+	}
+	string ai_numactors_value
+	{
+		string	"*cvar ai_numactors"
+		pos	"840 280"
+		align	ur
+	}
+	pic ai_numactors_dec
+	{
+		image	menu/buttons_small
+		pos	"868 282"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_modify ai_numactors -1 0 8;" }
+	}
+	pic ai_numactors_inc
+	{
+		image	menu/buttons_small
+		pos	"884 282"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_modify ai_numactors +1 0 8;" }
+	}
+
+	// ===================
+	// MAP
+	// ===================
+	string current_map
+	{
+		string	"_Map"
+		pos	"500 510"
+	}
+	pic slot_map
+	{
+		image	menu/save_slot
+		pos	"500 530"
+		mousefx	true
+	}
+	string txt_mapname
+	{
+		string	"*cvar mn_svmapname"
+		pos	"510 535"
+		color	"0 .78 0 1"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		size "256 32"
+	}
+
+	pic prev_map
+	{
+		image	menu/buttons_small
+		pos	"478 538"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		click	{ cmd "mn_prevmap;" }
+	}
+	pic next_map
+	{
+		image	menu/buttons_small
+		pos	"760 538"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		click	{ cmd "mn_nextmap;" }
+	}
+	pic mappic
+	{
+		image	"*cvar mn_mappic"
+		pos	"500 330"
+		texl	"0 0"
+		texh	"128 96"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		click	{ cmd "mn_nextmap;" }
+		rclick	{ cmd "mn_prevmap;" }
+	}
+	pic mappic2
+	{
+		image	"*cvar mn_mappic2"
+		pos	"650 330"
+		texl	"0 0"
+		texh	"128 96"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		click	{ cmd "mn_nextmap;" }
+		rclick	{ cmd "mn_prevmap;" }
+	}
+	pic mappic3
+	{
+		image	"*cvar mn_mappic3"
+		pos	"800 330"
+		texl	"0 0"
+		texh	"128 96"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		click	{ cmd "mn_nextmap;" }
+		rclick	{ cmd "mn_prevmap;" }
+	}
+
+	// ===================
+	// INIT
+	// ===================
+	func init
+	{
+		cmd	"set sv_maxclients 1;set ai_numactors 8;"
+		cmd "set mn_serverday 1;mn_getmaps;"
+	}
+}

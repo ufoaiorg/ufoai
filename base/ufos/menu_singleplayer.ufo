@@ -1,0 +1,1088 @@
+// ==================
+// SINGLE PLAYER MENU
+// ==================
+
+menu singleplayer
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/main_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/main_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/main_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/main_lr
+		pos		"512 512"
+	}
+
+	string version
+	{
+		string	"*cvar version"
+		pos		"10 744"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_new
+	{
+		pos	"640 170"
+		click	{ cmd "game_exit; mn_push campaigns;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_new color "0 0.5 0 1" *button_new texl "0 0"  *button_new texh "256 64" }
+		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "256 128" }
+	}
+	string string_new
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_New game"
+		pos	"768 202"
+		align	cc
+	}
+
+	pic button_load
+	{
+		click	{ cmd "mn_push load" }
+		pos	"640 240"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_load color "0 0.5 0 1" *button_load texl "0 0"  *button_load texh "256 64" }
+		in	{ *string_load color "1 1 1 1" *button_load texl "0 64" *button_load texh "256 128" }
+	}
+	string string_load
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Load"
+		pos	"768 272"
+		align	cc
+	}
+
+	pic button_save_na
+	{
+		// only if we have no game started yet
+		if "mn_main ne singleplayerInGame"
+		tooltip	"_No game to save"
+		pos	"640 310"
+		image	menu/button_big
+		texl	"0 128"
+		texh	"256 192"
+		mousefx	true
+	}
+	string string_save_na
+	{
+		// only if we have no game started yet
+		if "mn_main ne singleplayerInGame"
+		font	f_menubig
+		color	"0.5 0.5 0.5 1"
+		string	"_Save"
+		pos	"768 342"
+		align	cc
+	}
+
+	pic button_save
+	{
+		// only if we already have a game started
+		if "mn_main eq singleplayerInGame"
+		pos	"640 310"
+		click	{ cmd "mn_push save;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_save color "0 0.5 0 1" *button_save texl "0 0"  *button_save texh "256 64" }
+		in	{ *string_save color "1 1 1 1" *button_save texl "0 64" *button_save texh "256 128" }
+	}
+	string string_save
+	{
+		// only if we already have a game started
+		if "mn_main eq singleplayerInGame"
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Save"
+		pos	"768 342"
+		align	cc
+	}
+
+	pic button_continue
+	{
+		if "mn_lastsave"
+		click	{ cmd "game_continue;" }
+		pos	"640 380"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		tooltip	"_Load last saved game or continue playing"
+		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
+		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
+	}
+	string string_continue
+	{
+		if "mn_lastsave"
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 412"
+		align	cc
+	}
+
+	pic button_back
+	{
+		pos	"640 520"
+		click	{ cmd "game_exit;mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
+		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
+	}
+	string string_back
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"768 552"
+		align	cc
+	}
+	func init
+	{
+		// sv_ai might be deactivated because we were in the multiplayer menu before
+		cmd "set sv_ai 1;"
+	}
+}
+
+menu singleplayerInGame extends singleplayer
+{
+	// over-ride button_new with a continue button
+	pic button_new
+	{
+		click	{ cmd "game_continue;" }
+		pos	"640 170"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_new color "0 0.5 0 1" *button_new texl "0 0"  *button_new texh "256 64" }
+		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "256 128" }
+	}
+	string string_new
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 202"
+		align	cc
+	}
+
+	// over-ride button_continue with a continue button
+	pic button_continue
+	{
+		pos	"640 170"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		invis	true
+	}
+	string string_continue
+	{
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 202"
+		align	cc
+		invis	true
+	}
+
+	pic button_options
+	{
+		pos	"640 380"
+		click	{ cmd "mn_push options;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
+		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
+	}
+	string string_options
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Options"
+		pos	"768 412"
+		align	cc
+	}
+
+	string string_back
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 552"
+		align	cc
+	}
+}
+
+// ==================
+// SINGLE PLAYER MISSION MENU
+// ==================
+
+menu singleplayermission
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/main_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/main_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/main_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/main_lr
+		pos		"512 512"
+	}
+
+	string version
+	{
+		string	"*cvar version"
+		pos		"10 744"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_continue
+	{
+		click	{ cmd "game_continue;" }
+		pos	"640 170"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
+		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
+	}
+	string string_continue
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 202"
+		align	cc
+	}
+
+	pic button_abort
+	{
+		click	{ cmd "game_abort;" }
+		pos	"640 240"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_abort color "0 0.5 0 1" *button_abort texl "0 0"  *button_abort texh "256 64" }
+		in	{ *string_abort color "1 1 1 1" *button_abort texl "0 64" *button_abort texh "256 128" }
+	}
+	string string_abort
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Abort"
+		pos	"768 272"
+		align	cc
+	}
+
+	pic button_retry
+	{
+		pos	"640 310"
+		click	{ cmd "game_go;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_retry color "0 0.5 0 1" *button_retry texl "0 0"  *button_retry texh "256 64" }
+		in	{ *string_retry color "1 1 1 1" *button_retry texl "0 64" *button_retry texh "256 128" }
+	}
+	string string_retry
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Retry"
+		pos	"768 342"
+		align	cc
+	}
+
+	pic button_options
+	{
+		pos	"640 380"
+		click	{ cmd "mn_push options;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
+		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
+	}
+	string string_options
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Options"
+		pos	"768 412"
+		align	cc
+	}
+
+	pic button_exit
+	{
+		pos	"640 520"
+		click	{ cmd "game_exit;mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
+		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
+	}
+	string string_exit
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Exit"
+		pos	"768 552"
+		align	cc
+	}
+}
+
+// ==================
+// QUICK LOAD MENU
+// ==================
+
+menu quickload
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos		"256 256"
+	}
+
+	string title
+	{
+		string	"_Reload campaign"
+		pos	"290 280"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_Are you sure that you really want to reload the last automatically saved campaign state?"
+		pos		"290 320"
+		size	"440 64"
+		format	"16 0"
+		height	4
+	}
+
+	pic bt_cancel
+	{
+		tooltip	"_Close this dialogue"
+		image	menu/multi_buttons3
+		texh	"180 64"
+		texl	"0 32"
+		pos	"310 450"
+		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
+		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;" }
+	}
+	string string_cancel
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Cancel"
+		pos	"398 466"
+		align	cc
+	}
+
+	pic bt_go
+	{
+		tooltip	"_Reload the last automatically saved campaign state"
+		image	menu/multi_buttons3
+		pos	"530 450"
+		texh	"180 64"
+		texl	"0 32"
+		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
+		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
+		click	{ cmd "game_quickload;" }
+	}
+	string string_go
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Reload"
+		pos	"618 466"
+		align	cc
+	}
+	func init
+	{
+		cmd "game_quickloadinit;"
+	}
+}
+
+// ==================
+// LOAD MENU
+// ==================
+
+menu load
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/main_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/main_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/main_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/main_lr
+		pos		"512 512"
+	}
+
+	string version
+	{
+		string	"*cvar version"
+		pos		"10 744"
+	}
+
+	string headline
+	{
+		string  "_Load"
+		pos             "758 170"
+		align	uc
+		font f_big
+	}
+
+	// ==================
+	// slots
+	// ==================
+
+	pic slot0
+	{
+		image	menu/save_slot
+		pos		"640 200"
+		out		{ *slot0 image menu/save_slot }
+		in		{ *slot0 image menu/save_slota }
+		click	{ cmd "game_load slot0; game_timestop;" }
+	}
+	pic slot1
+	{
+		image	menu/save_slot
+		pos		"640 235"
+		out		{ *slot1 image menu/save_slot }
+		in		{ *slot1 image menu/save_slota }
+		click	{ cmd "game_load slot1; game_timestop;" }
+	}
+	pic slot2
+	{
+		image	menu/save_slot
+		pos		"640 270"
+		out		{ *slot2 image menu/save_slot }
+		in		{ *slot2 image menu/save_slota }
+		click	{ cmd "game_load slot2; game_timestop;" }
+	}
+	pic slot3
+	{
+		image	menu/save_slot
+		pos		"640 305"
+		out		{ *slot3 image menu/save_slot }
+		in		{ *slot3 image menu/save_slota }
+		click	{ cmd "game_load slot3; game_timestop;" }
+	}
+	pic slot4
+	{
+		image	menu/save_slot
+		pos		"640 340"
+		out		{ *slot4 image menu/save_slot }
+		in		{ *slot4 image menu/save_slota }
+		click	{ cmd "game_load slot4; game_timestop;" }
+	}
+	pic slot5
+	{
+		image	menu/save_slot
+		pos		"640 375"
+		out		{ *slot5 image menu/save_slot }
+		in		{ *slot5 image menu/save_slota }
+		click	{ cmd "game_load slot5; game_timestop;" }
+	}
+	pic slot6
+	{
+		image	menu/save_slot
+		pos		"640 410"
+		out		{ *slot6 image menu/save_slot }
+		in		{ *slot6 image menu/save_slota }
+		click	{ cmd "game_load slot6; game_timestop;" }
+	}
+	pic slot7
+	{
+		image	menu/save_slot
+		pos		"640 445"
+		out		{ *slot7 image menu/save_slot }
+		in		{ *slot7 image menu/save_slota }
+		click	{ cmd "game_load slot7; game_timestop;" }
+	}
+
+	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "648 210" size "240 11" color "0 .78 0 1" }
+	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "648 245" size "240 11" color "0 .78 0 1" }
+	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "648 280" size "240 11" color "0 .78 0 1" }
+	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "648 315" size "240 11" color "0 .78 0 1" }
+	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "648 350" size "240 11" color "0 .78 0 1" }
+	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "648 385" size "240 11" color "0 .78 0 1" }
+	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "648 420" size "240 11" color "0 .78 0 1" }
+	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "648 455" size "240 11" color "0 .78 0 1" }
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_back
+	{
+		pos	"640 520"
+		click	{ cmd "mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
+		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
+	}
+	string string_back
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"768 552"
+		align	cc
+	}
+
+	func init
+	{
+		cmd "game_comments;"
+	}
+}
+
+
+// ==================
+// SAVE MENU
+// ==================
+
+menu save
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/main_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/main_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/main_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/main_lr
+		pos		"512 512"
+	}
+
+	string version
+	{
+		string	"*cvar version"
+		pos		"10 744"
+	}
+
+	string headline
+	{
+		string  "_Save"
+		pos             "758 170"
+		align	uc
+		font f_big
+	}
+
+	// ==================
+	// slots
+	// ==================
+
+	pic slot0
+	{
+		image	menu/save_slot
+		pos		"640 200"
+		size	"256 32"
+		out		{ *slot0 image menu/save_slot }
+		in		{ *slot0 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 0;msgmenu ?mn_slot0" *txt_slot0 color "1 1 1 1" *txt_slot0 mousefx true
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot1
+	{
+		image	menu/save_slot
+		pos		"640 235"
+		size	"256 32"
+		out		{ *slot1 image menu/save_slot }
+		in		{ *slot1 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 1;msgmenu ?mn_slot1" *txt_slot1 color "1 1 1 1" *txt_slot1 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot2
+	{
+		image	menu/save_slot
+		pos		"640 270"
+		size	"256 32"
+		out		{ *slot2 image menu/save_slot }
+		in		{ *slot2 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 2;msgmenu ?mn_slot2" *txt_slot2 color "1 1 1 1" *txt_slot2 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot3
+	{
+		image	menu/save_slot
+		pos		"640 305"
+		size	"256 32"
+		out		{ *slot3 image menu/save_slot }
+		in		{ *slot3 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 3;msgmenu ?mn_slot3" *txt_slot3 color "1 1 1 1" *txt_slot3 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot4
+	{
+		image	menu/save_slot
+		pos		"640 340"
+		size	"256 32"
+		out		{ *slot4 image menu/save_slot }
+		in		{ *slot4 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 4;msgmenu ?mn_slot4" *txt_slot4 color "1 1 1 1" *txt_slot4 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot5
+	{
+		image	menu/save_slot
+		pos		"640 375"
+		size	"256 32"
+		out		{ *slot5 image menu/save_slot }
+		in		{ *slot5 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 5;msgmenu ?mn_slot5" *txt_slot5 color "1 1 1 1" *txt_slot5 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot6
+	{
+		image	menu/save_slot
+		pos		"640 410"
+		size	"256 32"
+		out		{ *slot6 image menu/save_slot }
+		in		{ *slot6 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 6;msgmenu ?mn_slot6" *txt_slot6 color "1 1 1 1" *txt_slot6 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false }
+	}
+	pic slot7
+	{
+		image	menu/save_slot
+		pos		"640 445"
+		size	"256 32"
+		out		{ *slot7 image menu/save_slot }
+		in		{ *slot7 image menu/save_slota }
+		click	{ cmd "game_comments;game_savenamecleanup 7;msgmenu ?mn_slot7" *txt_slot7 color "1 1 1 1" *txt_slot7 mousefx true
+					*txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false
+					*txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false
+					*txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false
+					*txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false
+					*txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false
+					*txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false
+					*txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false }
+	}
+
+	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "650 210" color "0 .78 0 1" }
+	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "650 245" color "0 .78 0 1" }
+	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "650 280" color "0 .78 0 1" }
+	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "650 315" color "0 .78 0 1" }
+	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "650 350" color "0 .78 0 1" }
+	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "650 385" color "0 .78 0 1" }
+	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "650 420" color "0 .78 0 1" }
+	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "650 455" color "0 .78 0 1" }
+
+	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0; game_comments;" }
+	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1; game_comments;" }
+	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2; game_comments;" }
+	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3; game_comments;" }
+	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4; game_comments;" }
+	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5; game_comments;" }
+	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6; game_comments;" }
+	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7; game_comments;" }
+
+	confunc mn_slot0_aborted { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_comments;" }
+	confunc mn_slot1_aborted { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_comments;" }
+	confunc mn_slot2_aborted { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_comments;" }
+	confunc mn_slot3_aborted { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_comments;" }
+	confunc mn_slot4_aborted { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_comments;" }
+	confunc mn_slot5_aborted { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_comments;" }
+	confunc mn_slot6_aborted { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_comments;" }
+	confunc mn_slot7_aborted { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_comments;" }
+
+	// ==================
+	// buttons
+	// ==================
+
+	pic button_back
+	{
+		pos	"640 520"
+		click	{ cmd "msgmenu !;mn_pop;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
+		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
+	}
+	string string_back
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"768 552"
+		align	cc
+	}
+
+	func init
+	{
+		cmd "game_comments;"
+	}
+}
+
+// ==================
+// LOST GAME MENU
+// ==================
+
+menu lostgame
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	pic back_ul
+	{
+		image	menu/endgame_ul
+		pos		"0 0"
+	}
+	pic back_ur
+	{
+		image	menu/endgame_ur
+		pos		"512 0"
+	}
+	pic back_ll
+	{
+		image	menu/endgame_ll
+		pos		"0 512"
+	}
+	pic back_lr
+	{
+		image	menu/endgame_lr
+		pos		"512 512"
+	}
+
+	string lostgame
+	{
+		pos	"512 20"
+		string	"_You've lost the game"
+		font "f_menubig"
+		align	uc
+		color	"0 0.8 0 1"
+	}
+
+	// reason why you've lost
+	text reason {
+		color	"0 0.8 0 0.9"
+		align	uc
+		pos		"512 640"
+		size	"900 100"
+		format	"20 0"
+		height	"5"
+		wheel
+		font	"f_normal"
+		scrollbar true
+	}
+
+	string lostgame_click
+	{
+		pos	"1014 750"
+		string	"_Click to continue"
+		font "f_verysmall"
+		align	ur
+		color	"0 0.8 0 0.9"
+	}
+
+	// ==================
+	// leave
+	// ==================
+
+	zone leave
+	{
+		size	"1024 768"
+		click	{ cmd "mn_pop;" }
+	}
+}
+
+// ==================
+// END GAME MENU
+// ==================
+
+menu endgame
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/endgame_ul
+		pos		"0 0"
+	}
+	pic back_ur
+	{
+		image	menu/endgame_ur
+		pos		"512 0"
+	}
+	pic back_ll
+	{
+		image	menu/endgame_ll
+		pos		"0 512"
+	}
+	pic back_lr
+	{
+		image	menu/endgame_lr
+		pos		"512 512"
+	}
+
+	string endgame
+	{
+		pos	"512 20"
+		string	"_Thank you for playing UFO:Alien Invasion"
+		font "f_menubig"
+		align	uc
+		color	"0 0.8 0 1"
+	}
+
+	string endgame_multiplayer
+	{
+		pos	"512 640"
+		string	"_Now after you have finished the single-player campaigns"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+	string endgame_multiplayer_2
+	{
+		pos	"512 660"
+		string	"_you should try the multiplayer features"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+
+	string endgame_note
+	{
+		pos	"512 700"
+		string	"_Visit http://ufoai.sf.net"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+
+	string endgame_note_irc
+	{
+		pos	"512 720"
+		string	"_and join irc.freenode.org #ufo:ai"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+
+	string endgame_click
+	{
+		pos	"1014 750"
+		string	"_Click to continue"
+		font "f_verysmall"
+		align	ur
+		color	"0 0.8 0 0.9"
+	}
+
+	func init {
+		cmd "cinematic end;"
+	}
+
+	// ==================
+	// leave
+	// ==================
+
+	zone leave
+	{
+		size	"1024 768"
+		click	{ cmd "mn_pop;mn_push main;seq_start credits;" }
+	}
+}

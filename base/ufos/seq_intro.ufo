@@ -1,0 +1,91 @@
+sequence intro
+{
+//	cmd "snd_music PsymongN3;"
+	cmd "seq_animspeed 100;"
+
+	2dobj i_sentence1
+	{
+		text	"_intro_sentence1"
+		pos		"512 485"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence2
+	{
+		text	"_intro_sentence2"
+		pos		"512 510"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence3
+	{
+		text	"_intro_sentence3"
+		pos		"512 535"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence4
+	{
+		text	"_intro_sentence4"
+		pos		"512 560"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence5
+	{
+		text	"_intro_sentence5"
+		pos		"512 585"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence6
+	{
+		text	"_intro_sentence6"
+		pos		"512 610"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence7
+	{
+		text	"_intro_sentence7"
+		pos		"512 635"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+	2dobj i_sentence8
+	{
+		text	"_intro_sentence8"
+		pos		"512 660"		align	uc
+		color	"0 1 0 1"
+		speed	"0 -9"
+		relative	true
+	}
+
+	2dobj i_continue_txt
+	{
+		text	"_Click to continue"
+		pos	"1020 750"
+		align	ur
+		color	"0 0.6 0 1"
+		font	f_small
+	}
+
+	wait 165.0
+
+	rem i_sentence1
+	rem i_sentence2
+	rem i_sentence3
+	rem i_sentence4
+	rem i_sentence5
+	rem i_sentence6
+	rem i_sentence7
+	rem i_sentence8
+	rem i_continue_txt
+}

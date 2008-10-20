@@ -1,0 +1,7 @@
+{
+	material tex_pics/tonight_honuda
+	{
+		texture tex_pics/tonight_honuda
+		scroll.s 0.25
+	}
+}

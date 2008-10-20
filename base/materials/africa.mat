@@ -1,0 +1,7 @@
+{
+	// glass of the ufo window
+	material tex_material/c_gray050
+	{
+		envmap 1
+	}
+}

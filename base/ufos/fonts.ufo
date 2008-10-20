@@ -1,0 +1,76 @@
+// font definitions for SDL_ttf font engine
+// Wanna use them? Compile UFO:AI with -DUSE_SDL_TTF
+// and link against SDL and SDL_ttf
+//
+// valid flags
+// =======================
+// style:	(string)	TTF_STYLE_NORMAL, TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_UNDERLINE
+// size:	(int)		pixel size for font
+// font		(string)	path to truetype font file
+
+// The fonts are marked as translatble to let the translators decide which font they want to use
+
+font f_verysmall_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	11
+	style	TTF_STYLE_BOLD
+}
+
+font f_verysmall
+{
+	font	"_media/DejaVuSans.ttf"
+	size	11
+}
+
+font f_small_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	14
+	style	TTF_STYLE_BOLD
+}
+
+font f_small
+{
+	font	"_media/DejaVuSans.ttf"
+	size	14
+}
+
+font f_normal_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+	style	TTF_STYLE_BOLD
+}
+
+font f_normal
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+}
+
+font f_big
+{
+	font	"_media/DejaVuSans.ttf"
+	size	20
+}
+
+font f_menu
+{
+	font	"_media/FreeSans.ttf"
+	size	22
+}
+
+font f_menubig
+{
+	font	"_media/FreeSans.ttf"
+	size	28
+	style	TTF_STYLE_BOLD
+}
+
+font f_menusmall
+{
+	font	"_media/FreeSans.ttf"
+	size	20
+	style	TTF_STYLE_BOLD
+}

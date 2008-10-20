@@ -1,0 +1,61 @@
+// *********************************
+// Military convoy
+// *********************************
+
+base military_convoy/mc_
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: main
+// b: dropship
+
+tile +main
+{
+14 11
+
+0      0      0      0      0      0      0      0      0      0      0      0      0      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      0      0      0      0      0      0      0      0      0      0      0      0      0
+}
+
+tile +drop_firebird
+{
+4 5
+
+a      a      a      0
+a      +b     +b     0 
+a      +b     +b     0 
+a      +b     +b     0 
+a      a      a      0
+}
+
+//tile +drop_herakles
+//{
+//4 5
+//
+//a      a      a      0
+//a      +b     +b     0 
+//a      +b     +b     0 
+//a      +b     +b     0 
+//a      a      a      0
+//}
+
+// ########################################
+// ########### Maps for the game ###########
+
+assembly default
+{
+size "12 9"
+title "_Military convoy"
++main "1 1"
+*rm_drop +drop_firebird "1 1"
+}

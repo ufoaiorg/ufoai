@@ -1,0 +1,492 @@
+//========================================================================
+// CIVILIANS - List of NAMES, MODELS and SOUNDS
+//========================================================================
+// Description:
+//	Please see team_humans.ufo
+//========================================================================
+// The civilian teams must match the nation ids
+//========================================================================
+
+team latin
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team states
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body01 head01a 0
+			civilians/female body01 head01a 1
+			civilians/female body01 head01a 2
+			civilians/female body02 head01a 0
+			civilians/female body02 head01a 1
+			civilians/female body01 head01b 0
+			civilians/female body01 head01b 1
+			civilians/female body01 head01b 2
+			civilians/female body02 head01b 0
+			civilians/female body02 head01b 1
+			civilians/female body01 head02a 0
+			civilians/female body01 head02a 1
+			civilians/female body01 head02a 2
+			civilians/female body02 head02a 0
+			civilians/female body02 head02a 1
+			civilians/female body01 head02b 0
+			civilians/female body01 head02b 1
+			civilians/female body01 head02b 2
+			civilians/female body02 head02b 0
+			civilians/female body02 head02b 1
+			civilians/female body05 head05a 1
+		}
+
+		male {
+			civilians/male body01 head01 0
+			civilians/male body01 head01 1
+			civilians/male body01 head01 2
+			civilians/male body01 head03 2
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team europe
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body01 head01a 0
+			civilians/female body01 head01a 1
+			civilians/female body01 head01a 2
+			civilians/female body02 head01a 0
+			civilians/female body02 head01a 1
+			civilians/female body01 head01b 0
+			civilians/female body01 head01b 1
+			civilians/female body01 head01b 2
+			civilians/female body02 head01b 0
+			civilians/female body02 head01b 1
+			civilians/female body01 head02a 0
+			civilians/female body01 head02a 1
+			civilians/female body01 head02a 2
+			civilians/female body02 head02a 0
+			civilians/female body02 head02a 1
+			civilians/female body01 head02b 0
+			civilians/female body01 head02b 1
+			civilians/female body01 head02b 2
+			civilians/female body02 head02b 0
+			civilians/female body02 head02b 1
+			civilians/female body05 head05a 1
+		}
+		male {
+			civilians/male body01 head01 0
+			civilians/male body01 head01 1
+			civilians/male body01 head01 2
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team asia
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team middle
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			// sheik
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team africa
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team russia
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team oceania
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+//========================================================================
+// OTHER NONE-NATION CIVILIANS
+//========================================================================
+
+team armysoldier
+{
+	size	1
+	hit_particle	blood
+	weapons true
+	armour false
+	civilian true
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male soldier01 soldier01_head 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team scientist
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team worker
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male worker01 worker01_head 0
+			civilians/male worker01 worker01_head 1
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}
+
+team miner
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armour false
+	civilian true
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male worker01 worker02_head 1
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_hurt
+			deathsound	civilians/female_death
+		}
+		male {
+			hurtsound 	civilians/male_hurt
+			deathsound	civilians/male_death
+		}
+	}
+}

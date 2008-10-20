@@ -1,0 +1,1777 @@
+// ==================
+// ALTERNATIVE HUD MAIN
+// ==================
+
+menu althud
+{
+	// ==================
+	// render rectangle
+	// ==================
+	zone render
+	{
+		pos		"0 0"
+		size	"1024 768"
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic bar_top
+	{
+		image	althud/bar_top
+		pos		"768 0"
+	}
+	zone zone_top
+	{
+		pos		"832 0"
+		size	"192 56"
+		click { }
+	}
+
+	pic bar_right
+	{
+		image	althud/bar_right
+		pos		"768 64"
+	}
+	zone zone_right
+	{
+		pos		"864 64"
+		size	"160 512"
+		click { }
+	}
+	zone zone_clickright
+	{
+		tooltip	"_Inventory and physical stats"
+		pos		"878 84"
+		size	"130 265"
+		click	{ cmd "mn_push ahudinv;" }
+		rclick	{ cmd "mn_push ahudphysdat;" }
+	}
+
+	// ==================
+	// CHAT BUTTONS
+	// ==================
+	pic bar_chat
+	{
+		if	"sv_maxclients >= 2"
+		image	hud/bar_chat
+		pos		"1024 580"
+		align	"ur"
+		out	{
+				*bar_chat image hud/bar_chat
+				*bar_chat size "64 64"
+				cmd "mn_showchatbuttons 0;"
+			}
+		in	{
+				*bar_chat image hud/bar_chat_choice
+				*bar_chat size "256 64"
+				cmd "mn_showchatbuttons 1;"
+			}
+	}
+	pic bar_chat_all
+	{
+		if	"mn_showchatbuttons == 1"
+		key "*binding messagesay"
+		tooltip	"_Chat"
+		image	hud/button_chat
+		pos		"976 592"
+		align	"ur"
+		texl	"0 0"
+		texh	"32 32"
+		click {
+				cmd	"messagesay;"
+			}
+	}
+	pic bar_chat_team
+	{
+		if	"mn_showchatbuttons == 1"
+		key "*binding messagesayteam"
+		tooltip	"_Teamchat"
+		image	hud/button_chat
+		pos		"938 592"
+		align	"ur"
+		texl	"32 0"
+		texh	"64 32"
+		click {
+				cmd	"messagesayteam;"
+			}
+	}
+	pic bar_chat_show
+	{
+		if	"mn_showchatbuttons == 1"
+		key "*binding showchat"
+		tooltip	"_Show chat history"
+		image	hud/button_chat
+		pos		"900 592"
+		align	"ur"
+		texl	"64 0"
+		texh	"96 32"
+		mousefx false
+		out	{
+				*chatscreen size "690 48"
+				*chatscreen height "3"
+				*event timeout 10000
+			}
+		in	{
+				*chatscreen size "690 400"
+				*chatscreen height "25"
+				*event timeout 0
+				cmd "mn_unhidenode chatscreen;"
+			}
+	}
+
+	pic button_chat
+	{
+		if	"sv_maxclients >= 2"
+		tooltip	"_Chat messages"
+		image	hud/event_log
+		texl	"0 0"
+		texh	"32 36"
+		pos	"985 590"
+		mousefx false
+		in
+	}
+
+	// the name must be the same in all huds
+	text chatscreen
+	{
+		pos		"130 2"
+		size	"690 48"
+		font	"f_verysmall"
+		wheel
+		num		TEXT_CHAT_WINDOW
+		height	"3"
+		format	"16 0"
+		padding	5
+		bordercolor	"0.5 0.5 0.5 1"
+		border	2
+		bgcolor	"0 0.1 0 0.8"
+		in	{
+			cmd "unhide_chatscreen;"
+		}
+	}
+
+	func event
+	{
+		timeout	10000
+		cmd "hide_chatscreen;"
+	}
+
+	pic bar_floor
+	{
+		image	althud/bar_floor
+		pos		"960 630"
+		click { }
+	}
+
+	pic bar_teamright
+	{
+		image	althud/bar_teamright
+		pos		"920 640"
+		click { }
+	}
+
+	pic bar_teambox0
+	{
+		key "*binding soldier_select 0"
+		image	althud/bar_teambox
+		pos		"856 640"
+		click	{ cmd "soldier_select 0;" }
+	}
+
+	pic bar_teamsep1
+	{
+		image	althud/bar_teamsep
+		pos		"840 640"
+		click { }
+	}
+	pic bar_teambox1
+	{
+		key "*binding soldier_select 1"
+		image	althud/bar_teambox
+		pos		"776 640"
+		click	{ cmd "soldier_select 1;" }
+	}
+
+	pic bar_teamsep2
+	{
+		image	althud/bar_teamsep
+		pos		"760 640"
+		click { }
+	}
+	pic bar_teambox2
+	{
+		key "*binding soldier_select 2"
+		image	althud/bar_teambox
+		pos		"696 640"
+		click	{ cmd "soldier_select 2;" }
+	}
+
+	pic bar_teamsep3
+	{
+		image	althud/bar_teamsep
+		pos		"680 640"
+		click { }
+	}
+	pic bar_teambox3
+	{
+		key "*binding soldier_select 3"
+		image	althud/bar_teambox
+		pos		"616 640"
+		click	{ cmd "soldier_select 3;" }
+	}
+
+	pic bar_teamsep4
+	{
+		image	althud/bar_teamsep
+		pos		"600 640"
+		click { }
+	}
+	pic bar_teambox4
+	{
+		key "*binding soldier_select 4"
+		image	althud/bar_teambox
+		pos		"536 640"
+		click	{ cmd "soldier_select 4;" }
+	}
+
+	pic bar_teamsep5
+	{
+		image	althud/bar_teamsep
+		pos		"520 640"
+		click { }
+	}
+	pic bar_teambox5
+	{
+		key "*binding soldier_select 5"
+		image	althud/bar_teambox
+		pos		"456 640"
+		click	{ cmd "soldier_select 5;" }
+	}
+
+	pic bar_teamsep6
+	{
+		image	althud/bar_teamsep
+		pos		"440 640"
+		click { }
+	}
+	pic bar_teambox6
+	{
+		key "*binding soldier_select 6"
+		image	althud/bar_teambox
+		pos		"376 640"
+		click	{ cmd "soldier_select 6;" }
+	}
+
+	pic bar_teamsep7
+	{
+		image	althud/bar_teamsep
+		pos		"360 640"
+		click { }
+	}
+	pic bar_teambox7
+	{
+		key "*binding soldier_select 7"
+		image	althud/bar_teambox
+		pos		"296 640"
+		click	{ cmd "soldier_select 7;" }
+	}
+
+	pic bar_teamleft
+	{
+		image	althud/bar_teamleft
+		pos		"264 640"
+		click { }
+	}
+
+	confunc numonteam1
+	{
+		*bar_teambox1 invis true  *bar_teamsep1 invis true  *head1 invis true
+		*bar_teambox2 invis true  *bar_teamsep2 invis true  *head2 invis true
+		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "824 640"
+	}
+	confunc numonteam2
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis true  *bar_teamsep2 invis true  *head2 invis true
+		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "744 640"
+	}
+	confunc numonteam3
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
+		*bar_teambox3 invis true  *bar_teamsep3 invis true  *head3 invis true
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "664 640"
+	}
+	confunc numonteam4
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
+		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
+		*bar_teambox4 invis true  *bar_teamsep4 invis true  *head4 invis true
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "584 640"
+	}
+	confunc numonteam5
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
+		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
+		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
+		*bar_teambox5 invis true  *bar_teamsep5 invis true  *head5 invis true
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "504 640"
+	}
+	confunc numonteam6
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
+		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
+		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
+		*bar_teambox5 invis false *bar_teamsep5 invis false *head5 invis false
+		*bar_teambox6 invis true  *bar_teamsep6 invis true  *head6 invis true
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "424 640"
+	}
+	confunc numonteam7
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
+		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
+		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
+		*bar_teambox5 invis false *bar_teamsep5 invis false *head5 invis false
+		*bar_teambox6 invis false *bar_teamsep6 invis false *head6 invis false
+		*bar_teambox7 invis true  *bar_teamsep7 invis true  *head7 invis true
+		*bar_teamleft pos "344 640"
+	}
+	confunc numonteam8
+	{
+		*bar_teambox1 invis false *bar_teamsep1 invis false *head1 invis false
+		*bar_teambox2 invis false *bar_teamsep2 invis false *head2 invis false
+		*bar_teambox3 invis false *bar_teamsep3 invis false *head3 invis false
+		*bar_teambox4 invis false *bar_teamsep4 invis false *head4 invis false
+		*bar_teambox5 invis false *bar_teamsep5 invis false *head5 invis false
+		*bar_teambox6 invis false *bar_teamsep6 invis false *head6 invis false
+		*bar_teambox7 invis false *bar_teamsep7 invis false *head7 invis false
+		*bar_teamleft pos "264 640"
+	}
+
+	pic bar_selbox
+	{
+		image	althud/bar_selbox
+		pos		"849 628"
+	}
+
+	confunc hudselecta0 { *bar_selbox pos "849 628" }
+	confunc hudselecta1 { *bar_selbox pos "769 628" }
+	confunc hudselecta2 { *bar_selbox pos "689 628" }
+	confunc hudselecta3 { *bar_selbox pos "609 628" }
+	confunc hudselecta4 { *bar_selbox pos "529 628" }
+	confunc hudselecta5 { *bar_selbox pos "449 628" }
+	confunc hudselecta6 { *bar_selbox pos "369 628" }
+	confunc hudselecta7 { *bar_selbox pos "289 628" }
+
+
+	// ==================
+	// models
+	// ==================
+
+	model right_actor
+	{
+		md2		"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"*cvar mn_anim"
+		origin	"948 180 0"
+		angles	"0 80 90"
+		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
+//		pos		"884 80"
+//		size	"120 260"
+//		bgcolor	"1 1 1 0.5"
+		scale	"4 4 4"
+	}
+
+	model right_head
+	{
+		md2		"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"right_actor tag_head"
+		scale	"1.0 1.0 1.0"
+	}
+
+	model right_rweapon
+	{
+		md2		"*cvar mn_rweapon"
+		tag		"right_actor tag_rweapon"
+		scale	"1.0 1.0 1.0"
+	}
+
+	model right_lweapon
+	{
+		md2		"*cvar mn_lweapon"
+		tag		"right_actor tag_lweapon"
+		scale	"1.0 1.0 1.0"
+	}
+
+	model head0
+	{
+		md2		"*cvar mn_head0"
+		origin	"880 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"854 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head1
+	{
+		md2		"*cvar mn_head1"
+		origin	"800 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"774 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head2
+	{
+		md2		"*cvar mn_head2"
+		origin	"720 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"694 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head3
+	{
+		md2		"*cvar mn_head3"
+		origin	"640 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"614 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head4
+	{
+		md2		"*cvar mn_head4"
+		origin	"560 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"534 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head5
+	{
+		md2		"*cvar mn_head5"
+		origin	"480 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"454 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head6
+	{
+		md2		"*cvar mn_head6"
+		origin	"400 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"374 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+	model head7
+	{
+		md2		"*cvar mn_head7"
+		origin	"320 710 0"
+		angles	"15 60 100"
+//		scale	"7 7 7"
+		pos		"294 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	zone spotted
+	{
+		key "*binding nextalien"
+		tooltip	"_Enemy spotted"
+		pos		"841 12"
+		size	"48 34"
+		click	{ cmd "nextalien;" }
+	}
+	string numspotted
+	{
+		key "*binding nextalien"
+		tooltip "_Click to cycle through spotted enemies"
+		string	"*cvar mn_numaliensspotted"
+		pos		"865 30"
+		size    "48 34"
+		align	cc
+		in
+	}
+	pic nextround
+	{
+		key "*binding nextround"
+		tooltip	"_Finish round"
+		image	althud/buttons_althud1g
+		pos		"888 11"
+		texl	"0 0"
+		texh	"40 34"
+		mousefx	true
+		click	{ cmd "nextround;" }
+	}
+	pic messagelog
+	{
+		image	althud/buttons_althud1g
+		pos		"932 11"
+		texl	"43 0"
+		texh	"83 34"
+		mousefx	true
+		click	{  }
+	}
+	pic menu
+	{
+		image	althud/buttons_althud1
+		pos		"976 11"
+		texl	"86 0"
+		texh	"126 34"
+		mousefx	true
+		click	{ cmd "mn_pop;" }
+	}
+
+	confunc selpla { *bt_primaryleft    image althud/buttons_althud1a }
+	confunc selpra { *bt_primaryright   image althud/buttons_althud1a }
+
+	confunc deselpla { *bt_primaryleft     image althud/buttons_althud1 }
+	confunc deselpra { *bt_primaryright    image althud/buttons_althud1 }
+	confunc deselrla { *bt_reloadleft      image althud/buttons_althud1 }
+	confunc deselrra { *bt_reloadright     image althud/buttons_althud1 }
+
+	confunc displa { *bt_primaryleft     image althud/buttons_althud1g }
+	confunc dispra { *bt_primaryright    image althud/buttons_althud1g }
+	confunc disrla { *bt_reloadleft      image althud/buttons_althud1g }
+	confunc disrra { *bt_reloadright     image althud/buttons_althud1g }
+
+	// ==================
+	// round events
+	// ==================
+
+	confunc startrounda
+	{
+		*nextround image althud/buttons_althud1
+	}
+	confunc endrounda
+	{
+		*nextround image althud/buttons_althud1g
+	}
+
+	confunc startreactionmanya
+	{
+		*bt_reaction_a image althud/buttons_althud1b
+		*bt_reaction_a tooltip "_Multiple-shot reaction fire"
+	}
+	confunc startreactionmanya_impos
+	{
+		*bt_reaction_a image althud/buttons_althud1br
+		*bt_reaction_a tooltip "_Multiple-shot reaction fire (not possible)"
+	}
+	confunc startreactiononcea
+	{
+		*bt_reaction_a image althud/buttons_althud1a
+		*bt_reaction_a tooltip "_One-shot reaction fire"
+	}
+	confunc startreactiononcea_impos
+	{
+		*bt_reaction_a image althud/buttons_althud1ar
+		*bt_reaction_a tooltip "_One-shot reaction fire (not possible)"
+	}
+
+	confunc deselreactiona
+	{
+		*bt_reaction_a image althud/buttons_althud1
+		*bt_reaction_a tooltip "_No reaction fire"
+	}
+	confunc disreactiona {
+		*bt_reaction_a image althud/buttons_althud1g
+	}
+
+	pic bt_reaction_a
+	{
+		key "*binding togglereaction"
+		image	althud/buttons_althud1
+		mousefx true
+		pos		"900 497"
+		texl	"81 37"
+		texh	"106 70"
+		click	{ cmd "togglereaction;" }
+	}
+
+	confunc althud_deselheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
+	confunc althud_disheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
+
+	pic althud_bt_use_headgear
+	{
+		tooltip	"_Use headgear"
+		image	althud/buttons_althud1
+		mousefx true
+		pos		"930 497"
+		texl	"108 37"
+		texh	"134 70"
+		click	{ cmd "useheadgear;" }
+	}
+
+	pic bt_reloadright
+	{
+		tooltip	"*cvar mn_reloadright_tt"
+		image	althud/buttons_althud1
+		pos		"991 497"
+		texl	"0 37"
+		texh	"25 70"
+		mousefx	true
+		click	{ cmd "reloadright;" }
+		in	{ cmd "remaining_tus reload_r 1;" }
+		out	{ cmd "remaining_tus reload_r 0;" }
+	}
+
+	pic bt_reloadleft
+	{
+		tooltip	"*cvar mn_reloadleft_tt"
+		image	althud/buttons_althud1
+		pos		"991 497"
+		texl	"0 37"
+		texh	"25 70"
+		mousefx	true
+		click	{ cmd "reloadleft;" }
+		in	{ cmd "remaining_tus reload_l 1;" }
+		out	{ cmd "remaining_tus reload_l 0;" }
+	}
+
+	// CROUCH/STAND UP BUTTON
+	confunc deselstanda  { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1 }
+	confunc deselcroucha { *bt_duck texl "54 37" *bt_duck texh "79 70" *bt_duck image althud/buttons_althud1 }
+	confunc disstanda    { *bt_duck texl "27 37" *bt_duck texh "52 70" *bt_duck image althud/buttons_althud1g }
+	confunc discroucha   { *bt_duck texl "54 37" *bt_duck texh "79 70" *bt_duck image althud/buttons_althud1g }
+
+	pic bt_duck
+	{
+		key "*binding standcrouch"
+		tooltip	"*cvar mn_crouchstand_tt"
+		image	althud/buttons_althud1
+		mousefx true
+		pos		"991 536"
+		texl	"27 37"
+		texh	"52 70"
+		click	{ cmd "standcrouch;" }
+		in	{ cmd "remaining_tus crouch 1;" }
+		out	{ cmd "remaining_tus crouch 0;" }
+	}
+
+	confunc crouch_checkbox_disable_a { *bt_crouch_reservation image menu/checkbox_disabled }
+	confunc crouch_checkbox_clear_a	{ *bt_crouch_reservation image menu/checkbox_unchecked }
+	confunc crouch_checkbox_check_a	{ *bt_crouch_reservation image menu/checkbox_checked }
+
+	pic bt_crouch_reservation
+	{
+		tooltip	"*cvar mn_crouch_reservation_tt"
+		pos	"969 536"
+		texl	"0 0"
+		texh	"17 16"
+		mousefx true
+		click { cmd "togglecrouchreserve" }
+//		out	{ *bt_crouch_reservation texl "0 0" *bt_crouch_reservation texh "17 16" }	// activate this if we ever get a "hover" version
+//		in	{ *bt_crouch_reservation texl "0 17" *bt_crouch_reservation texh "17 33" }
+	}
+
+	// "RESERVATION FOR SHOT" BUTTON
+	confunc reserve_shot_clear_a
+	{
+		*bt_shot_reservation texl	"0 0"
+		*bt_shot_reservation texh	"51 32"
+	}
+	confunc reserve_shot_check_a
+	{
+		*bt_shot_reservation texl	"0 32"
+		*bt_shot_reservation texh	"51 64"
+	}
+	confunc reserve_shot_disable_a
+	{
+		*bt_shot_reservation texl	"64 32"
+		*bt_shot_reservation texh	"127 64"
+	}
+	pic bt_shot_reservation
+	{
+		tooltip	"*cvar mn_shot_reservation_tt"
+		// key "*binding sel_shotreservation"
+		image hud/button_reserve_shot	// fixme
+		pos	"965 497"
+		texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
+		texh	"127 64"
+		mousefx true
+		click	{ cmd "sel_shotreservation;" }
+		rclick	{ cmd "sel_shotreservation 0;" }
+	}
+
+	pic bt_floorup
+	{
+		key "*binding levelup"
+		tooltip	"_Level up"
+		image	althud/buttons_althud1
+		mousefx true
+		pos		"991 648"
+		texl	"54 74"
+		texh	"79 107"
+		click	{ cmd "mn_modify cl_worldlevel +1 0 7;" }
+	}
+	pic bt_floordown
+	{
+		key "*binding leveldown"
+		tooltip	"_Level down"
+		image	althud/buttons_althud1
+		mousefx true
+		pos		"991 723"
+		texl	"81 74"
+		texh	"106 107"
+		click	{ cmd "mn_modify cl_worldlevel -1 0 7;" }
+	}
+
+	container right
+	{
+		pos "882 404"
+	}
+	container left
+	{
+		pos "882 404"
+	}
+	string ammoright
+	{
+		string	"*cvar mn_ammoright"
+		pos		"885 470"
+	}
+	string ammoleft
+	{
+		string	"*cvar mn_ammoleft"
+		pos		"885 470"
+	}
+
+	func show_rightweapon
+	{
+		*right invis false *ammoright invis false
+		*left  invis true  *ammoleft  invis true
+		*bt_primaryright invis false
+		*bt_primaryleft  invis true
+		*bt_reloadright invis false
+		*bt_reloadleft  invis true
+	}
+	func show_leftweapon
+	{
+		*right invis true  *ammoright invis true
+		*left  invis false *ammoleft  invis false
+		*bt_primaryright invis true
+		*bt_primaryleft  invis false
+		*bt_reloadright invis true
+		*bt_reloadleft  invis false
+	}
+
+	pic switch_to_right_hand
+	{
+		tooltip	"_Switch to right hand weapon"
+		image	menu/buttons_small
+		pos		"964 464"
+		texl	"0 0"		texh	"16 16"
+		mousefx	true
+		whup	{ show_rightweapon cmd "switch_firemode_list r;" }
+		whdown	{ show_leftweapon cmd "switch_firemode_list l;" }
+		click	{ show_rightweapon cmd "switch_firemode_list r;" }
+	}
+	pic switch_to_left_hand
+	{
+		tooltip	"_Switch to left hand weapon"
+		image	menu/buttons_small
+		pos		"980 464"
+		texl	"16 0"		texh	"32 16"
+		mousefx	true
+		whup	{ show_rightweapon cmd "switch_firemode_list r;" }
+		whdown	{ show_leftweapon cmd "switch_firemode_list l;" }
+		click	{ show_leftweapon cmd "switch_firemode_list l;" }
+	}
+
+	// ==================
+	// strings
+	// ==================
+
+	string str_name
+	{
+		string	"*cvar mn_name"
+		pos		"883 84"
+	}
+
+	string str_hp
+	{
+		string	"*cvar mn_hp"
+		pos		"901 369"
+		align	uc
+	}
+	string str_tu
+	{
+		string	"*cvar mn_tu"
+		pos		"929 369"
+		align	uc
+	}
+	string str_crg
+	{
+		string	"*cvar mn_morale"
+		pos		"958 369"
+		align	uc
+	}
+
+	string str_floor
+	{
+		string	"*cvar cl_worldlevel"
+		pos		"1005 700"
+		align	cc
+	}
+
+	// ==================
+	// status bars
+	// ==================
+
+	bar health
+	{
+		pos		"886 324"
+		size	"120 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp"
+		max		"*cvar mn_hpmax"
+		align	uc
+	}
+
+	//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_hud.
+	string tu_tooltips
+	{
+		string " "
+		tooltip	"*cvar mn_tu_tooltips"
+		pos		"886 332"
+		size	"120 4"
+		in
+	}
+
+	bar timeall
+	{
+		pos		"886 332"
+		size	"120 4"
+		color	".1 .1 .5 1"
+		current	"*cvar mn_tu"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
+	bar timeremain
+	{
+		pos		"886 332"
+		size	"120 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_turemain"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
+
+	bar timereserved
+	{
+		pos		"886 332"
+		size	"120 2"
+		color	"0 .5 0 1"
+		current	"*cvar mn_tureserved"
+		max		"*cvar mn_tumax"
+		align	uc
+	}
+
+	bar morale
+	{
+		pos		"886 340"
+		size	"120 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale"
+		max		"*cvar mn_moralemax"
+		align	uc
+	}
+
+	bar morale0
+	{
+		pos		"907 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale0"
+		max		"*cvar mn_moralemax0"
+		align	cc
+	}
+	bar health0
+	{
+		pos		"913 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp0"
+		max		"*cvar mn_hpmax0"
+		align	cc
+	}
+	bar time0
+	{
+		pos		"919 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu0"
+		max		"*cvar mn_tumax0"
+		align	cc
+	}
+	bar morale1
+	{
+		pos		"827 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale1"
+		max		"*cvar mn_moralemax1"
+		align	cc
+	}
+	bar health1
+	{
+		pos		"833 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp1"
+		max		"*cvar mn_hpmax1"
+		align	cc
+	}
+	bar time1
+	{
+		pos		"839 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu1"
+		max		"*cvar mn_tumax1"
+		align	cc
+	}
+	bar morale2
+	{
+		pos		"747 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale2"
+		max		"*cvar mn_moralemax2"
+		align	cc
+	}
+	bar health2
+	{
+		pos		"753 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp2"
+		max		"*cvar mn_hpmax2"
+		align	cc
+	}
+	bar time2
+	{
+		pos		"759 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu2"
+		max		"*cvar mn_tumax2"
+		align	cc
+	}
+	bar morale3
+	{
+		pos		"667 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale3"
+		max		"*cvar mn_moralemax3"
+		align	cc
+	}
+	bar health3
+	{
+		pos		"673 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp3"
+		max		"*cvar mn_hpmax3"
+		align	cc
+	}
+	bar time3
+	{
+		pos		"679 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu3"
+		max		"*cvar mn_tumax3"
+		align	cc
+	}
+	bar morale4
+	{
+		pos		"587 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale4"
+		max		"*cvar mn_moralemax4"
+		align	cc
+	}
+	bar health4
+	{
+		pos		"593 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp4"
+		max		"*cvar mn_hpmax4"
+		align	cc
+	}
+	bar time4
+	{
+		pos		"599 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu4"
+		max		"*cvar mn_tumax4"
+		align	cc
+	}
+	bar morale5
+	{
+		pos		"507 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale5"
+		max		"*cvar mn_moralemax5"
+		align	cc
+	}
+	bar health5
+	{
+		pos		"513 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp5"
+		max		"*cvar mn_hpmax5"
+		align	cc
+	}
+	bar time5
+	{
+		pos		"519 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu5"
+		max		"*cvar mn_tumax5"
+		align	cc
+	}
+	bar morale6
+	{
+		pos		"427 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale6"
+		max		"*cvar mn_moralemax6"
+		align	cc
+	}
+	bar health6
+	{
+		pos		"433 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp6"
+		max		"*cvar mn_hpmax6"
+		align	cc
+	}
+	bar time6
+	{
+		pos		"439 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu6"
+		max		"*cvar mn_tumax6"
+		align	cc
+	}
+	bar morale7
+	{
+		pos		"347 753"
+		size	"78 4"
+		color	".7 .7 0 1"
+		current	"*cvar mn_morale7"
+		max		"*cvar mn_moralemax7"
+		align	cc
+	}
+	bar health7
+	{
+		pos		"353 753"
+		size	"78 4"
+		color	".7 0 0 1"
+		current	"*cvar mn_hp7"
+		max		"*cvar mn_hpmax7"
+		align	cc
+	}
+	bar time7
+	{
+		pos		"359 753"
+		size	"78 4"
+		color	".2 .2 1 1"
+		current	"*cvar mn_tu7"
+		max		"*cvar mn_tumax7"
+		align	cc
+	}
+
+	text infoscreen
+	{
+		pos		"5 722"
+		size	"275 50"
+		format	"20 100"
+		color	"0 1 0 1"
+		height	"2"
+	}
+
+	// ==================
+	// init function
+	// ==================
+
+	func init
+	{
+		cmd "music_change battlescape;"
+		cmd "set hud_refresh 1;"
+		show_rightweapon
+		cmd "set mn_showchatbuttons 0;"
+	}
+
+	// ==================
+	//  FIREMODES (seperate lists for each weaponhand)
+	// ==================
+	/*
+		fm	... firemode
+		left/right/l/r  ... The hand/side of the firemode list
+		name ... The name of the firemode.
+		tu ... timeunits
+		shots ... The number of shots one firemode will use.
+		tt ... tooltip
+		cb ... checkboxes
+		a ... active
+		ina ... inactive
+		vis ... visible
+		inv ... invisible
+	*/
+	// ==================
+
+	/* Firemode console functions ===================================*/
+	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
+	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
+	confunc set_left_ina2 { *bt_left_fm2	texl "0 64"	*bt_left_fm2 texh "255 128" }
+	confunc set_left_ina3 { *bt_left_fm3	texl "0 64"	*bt_left_fm3 texh "255 128" }
+	confunc set_left_ina4 { *bt_left_fm4	texl "0 64"	*bt_left_fm4 texh "255 128" }
+	confunc set_left_ina5 { *bt_left_fm5	texl "0 64"	*bt_left_fm5 texh "255 128" }
+	confunc set_left_ina6 { *bt_left_fm6	texl "0 64"	*bt_left_fm6 texh "255 128" }
+	confunc set_left_ina7 { *bt_left_fm7	texl "0 64"	*bt_left_fm7 texh "255 128" }
+	confunc set_right_ina0 { *bt_right_fm0	texl "0 64"	*bt_right_fm0 texh "255 128" }
+	confunc set_right_ina1 { *bt_right_fm1	texl "0 64"	*bt_right_fm1 texh "255 128" }
+	confunc set_right_ina2 { *bt_right_fm2	texl "0 64"	*bt_right_fm2 texh "255 128" }
+	confunc set_right_ina3 { *bt_right_fm3	texl "0 64"	*bt_right_fm3 texh "255 128" }
+	confunc set_right_ina4 { *bt_right_fm4	texl "0 64"	*bt_right_fm4 texh "255 128" }
+	confunc set_right_ina5 { *bt_right_fm5	texl "0 64"	*bt_right_fm5 texh "255 128" }
+	confunc set_right_ina6 { *bt_right_fm6	texl "0 64"	*bt_right_fm6 texh "255 128" }
+	confunc set_right_ina7 { *bt_right_fm7	texl "0 64"	*bt_right_fm7 texh "255 128" }
+
+	confunc set_left_a0 { *bt_left_fm0	texl "0 0"	*bt_left_fm0 texh "255 63" }
+	confunc set_left_a1 { *bt_left_fm1	texl "0 0"	*bt_left_fm1 texh "255 63" }
+	confunc set_left_a2 { *bt_left_fm2	texl "0 0"	*bt_left_fm2 texh "255 63" }
+	confunc set_left_a3 { *bt_left_fm3	texl "0 0"	*bt_left_fm3 texh "255 63" }
+	confunc set_left_a4 { *bt_left_fm4	texl "0 0"	*bt_left_fm4 texh "255 63" }
+	confunc set_left_a5 { *bt_left_fm5	texl "0 0"	*bt_left_fm5 texh "255 63" }
+	confunc set_left_a6 { *bt_left_fm6	texl "0 0"	*bt_left_fm6 texh "255 63" }
+	confunc set_left_a7 { *bt_left_fm7	texl "0 0"	*bt_left_fm7 texh "255 63" }
+	confunc set_right_a0 { *bt_right_fm0	texl "0 0"	*bt_right_fm0 texh "255 63" }
+	confunc set_right_a1 { *bt_right_fm1	texl "0 0"	*bt_right_fm1 texh "255 63" }
+	confunc set_right_a2 { *bt_right_fm2	texl "0 0"	*bt_right_fm2 texh "255 63" }
+	confunc set_right_a3 { *bt_right_fm3	texl "0 0"	*bt_right_fm3 texh "255 63" }
+	confunc set_right_a4 { *bt_right_fm4	texl "0 0"	*bt_right_fm4 texh "255 63" }
+	confunc set_right_a5 { *bt_right_fm5	texl "0 0"	*bt_right_fm5 texh "255 63" }
+	confunc set_right_a6 { *bt_right_fm6	texl "0 0"	*bt_right_fm6 texh "255 63" }
+	confunc set_right_a7 { *bt_right_fm7	texl "0 0"	*bt_right_fm7 texh "255 63" }
+
+	confunc set_left_inv0 { *bt_left_fm0 invis true	*left_fm_name0 invis true	*left_fm_tu0 invis true	*left_fm_shot0 invis true	*bt_left_cb0 invis true }
+	confunc set_left_inv1 { *bt_left_fm1 invis true	*left_fm_name1 invis true	*left_fm_tu1 invis true	*left_fm_shot1 invis true	*bt_left_cb1 invis true }
+	confunc set_left_inv2 { *bt_left_fm2 invis true	*left_fm_name2 invis true	*left_fm_tu2 invis true	*left_fm_shot2 invis true	*bt_left_cb2 invis true }
+	confunc set_left_inv3 { *bt_left_fm3 invis true	*left_fm_name3 invis true	*left_fm_tu3 invis true	*left_fm_shot3 invis true	*bt_left_cb3 invis true }
+	confunc set_left_inv4 { *bt_left_fm4 invis true	*left_fm_name4 invis true	*left_fm_tu4 invis true	*left_fm_shot4 invis true	*bt_left_cb4 invis true }
+	confunc set_left_inv5 { *bt_left_fm5 invis true	*left_fm_name5 invis true	*left_fm_tu5 invis true	*left_fm_shot5 invis true	*bt_left_cb5 invis true }
+	confunc set_left_inv6 { *bt_left_fm6 invis true	*left_fm_name6 invis true	*left_fm_tu6 invis true	*left_fm_shot6 invis true	*bt_left_cb6 invis true }
+	confunc set_left_inv7 { *bt_left_fm7 invis true	*left_fm_name7 invis true	*left_fm_tu7 invis true	*left_fm_shot7 invis true	*bt_left_cb7 invis true }
+	confunc set_right_inv0 { *bt_right_fm0 invis true	*right_fm_name0 invis true	*right_fm_tu0 invis true	*right_fm_shot0 invis true	*bt_right_cb0 invis true }
+	confunc set_right_inv1 { *bt_right_fm1 invis true	*right_fm_name1 invis true	*right_fm_tu1 invis true	*right_fm_shot1 invis true	*bt_right_cb1 invis true }
+	confunc set_right_inv2 { *bt_right_fm2 invis true	*right_fm_name2 invis true	*right_fm_tu2 invis true	*right_fm_shot2 invis true	*bt_right_cb2 invis true }
+	confunc set_right_inv3 { *bt_right_fm3 invis true	*right_fm_name3 invis true	*right_fm_tu3 invis true	*right_fm_shot3 invis true	*bt_right_cb3 invis true }
+	confunc set_right_inv4 { *bt_right_fm4 invis true	*right_fm_name4 invis true	*right_fm_tu4 invis true	*right_fm_shot4 invis true	*bt_right_cb4 invis true }
+	confunc set_right_inv5 { *bt_right_fm5 invis true	*right_fm_name5 invis true	*right_fm_tu5 invis true	*right_fm_shot5 invis true	*bt_right_cb5 invis true }
+	confunc set_right_inv6 { *bt_right_fm6 invis true	*right_fm_name6 invis true	*right_fm_tu6 invis true	*right_fm_shot6 invis true	*bt_right_cb6 invis true }
+	confunc set_right_inv7 { *bt_right_fm7 invis true	*right_fm_name7 invis true	*right_fm_tu7 invis true	*right_fm_shot7 invis true	*bt_right_cb7 invis true }
+
+	confunc set_left_vis0 { *bt_left_fm0 invis false	*left_fm_name0 invis false	*left_fm_tu0 invis false 	*left_fm_shot0 invis false }
+	confunc set_left_vis1 { *bt_left_fm1 invis false	*left_fm_name1 invis false	*left_fm_tu1 invis false 	*left_fm_shot1 invis false }
+	confunc set_left_vis2 { *bt_left_fm2 invis false	*left_fm_name2 invis false	*left_fm_tu2 invis false 	*left_fm_shot2 invis false }
+	confunc set_left_vis3 { *bt_left_fm3 invis false	*left_fm_name3 invis false	*left_fm_tu3 invis false 	*left_fm_shot3 invis false }
+	confunc set_left_vis4 { *bt_left_fm4 invis false	*left_fm_name4 invis false	*left_fm_tu4 invis false 	*left_fm_shot4 invis false }
+	confunc set_left_vis5 { *bt_left_fm5 invis false	*left_fm_name5 invis false	*left_fm_tu5 invis false 	*left_fm_shot5 invis false }
+	confunc set_left_vis6 { *bt_left_fm6 invis false	*left_fm_name6 invis false	*left_fm_tu6 invis false 	*left_fm_shot6 invis false }
+	confunc set_left_vis7 { *bt_left_fm7 invis false	*left_fm_name7 invis false	*left_fm_tu7 invis false 	*left_fm_shot7 invis false }
+	confunc set_right_vis0 { *bt_right_fm0 invis false	*right_fm_name0 invis false *right_fm_tu0 invis false	*right_fm_shot0 invis false }
+	confunc set_right_vis1 { *bt_right_fm1 invis false	*right_fm_name1 invis false *right_fm_tu1 invis false	*right_fm_shot1 invis false }
+	confunc set_right_vis2 { *bt_right_fm2 invis false	*right_fm_name2 invis false *right_fm_tu2 invis false	*right_fm_shot2 invis false }
+	confunc set_right_vis3 { *bt_right_fm3 invis false	*right_fm_name3 invis false *right_fm_tu3 invis false	*right_fm_shot3 invis false }
+	confunc set_right_vis4 { *bt_right_fm4 invis false	*right_fm_name4 invis false *right_fm_tu4 invis false	*right_fm_shot4 invis false }
+	confunc set_right_vis5 { *bt_right_fm5 invis false	*right_fm_name5 invis false *right_fm_tu5 invis false	*right_fm_shot5 invis false }
+	confunc set_right_vis6 { *bt_right_fm6 invis false	*right_fm_name6 invis false *right_fm_tu6 invis false	*right_fm_shot6 invis false }
+	confunc set_right_vis7 { *bt_right_fm7 invis false	*right_fm_name7 invis false *right_fm_tu7 invis false	*right_fm_shot7 invis false }
+
+	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
+	confunc set_left_cb_ina0 { *bt_left_cb0 texl "0 0"	*bt_left_cb0 texh "31 31"	*bt_left_cb0 invis false }
+	confunc set_left_cb_ina1 { *bt_left_cb1 texl "0 0"	*bt_left_cb1 texh "31 31"	*bt_left_cb1 invis false }
+	confunc set_left_cb_ina2 { *bt_left_cb2 texl "0 0"	*bt_left_cb2 texh "31 31"	*bt_left_cb2 invis false }
+	confunc set_left_cb_ina3 { *bt_left_cb3 texl "0 0"	*bt_left_cb3 texh "31 31"	*bt_left_cb3 invis false }
+	confunc set_left_cb_ina4 { *bt_left_cb4 texl "0 0"	*bt_left_cb4 texh "31 31"	*bt_left_cb4 invis false }
+	confunc set_left_cb_ina5 { *bt_left_cb5 texl "0 0"	*bt_left_cb5 texh "31 31"	*bt_left_cb5 invis false }
+	confunc set_left_cb_ina6 { *bt_left_cb6 texl "0 0"	*bt_left_cb6 texh "31 31"	*bt_left_cb6 invis false }
+	confunc set_left_cb_ina7 { *bt_left_cb7 texl "0 0"	*bt_left_cb7 texh "31 31"	*bt_left_cb7 invis false }
+	confunc set_right_cb_ina0 { *bt_right_cb0 texl "0 0"	*bt_right_cb0 texh "31 31"	*bt_right_cb0 invis false }
+	confunc set_right_cb_ina1 { *bt_right_cb1 texl "0 0"	*bt_right_cb1 texh "31 31"	*bt_right_cb1 invis false }
+	confunc set_right_cb_ina2 { *bt_right_cb2 texl "0 0"	*bt_right_cb2 texh "31 31"	*bt_right_cb2 invis false }
+	confunc set_right_cb_ina3 { *bt_right_cb3 texl "0 0"	*bt_right_cb3 texh "31 31"	*bt_right_cb3 invis false }
+	confunc set_right_cb_ina4 { *bt_right_cb4 texl "0 0"	*bt_right_cb4 texh "31 31"	*bt_right_cb4 invis false }
+	confunc set_right_cb_ina5 { *bt_right_cb5 texl "0 0"	*bt_right_cb5 texh "31 31"	*bt_right_cb5 invis false }
+	confunc set_right_cb_ina6 { *bt_right_cb6 texl "0 0"	*bt_right_cb6 texh "31 31"	*bt_right_cb6 invis false }
+	confunc set_right_cb_ina7 { *bt_right_cb7 texl "0 0"	*bt_right_cb7 texh "31 31"	*bt_right_cb7 invis false }
+
+	confunc set_left_cb_a0 { *bt_left_cb0 texl "0 32"	*bt_left_cb0 texh "31 63"	*bt_left_cb0 invis false }
+	confunc set_left_cb_a1 { *bt_left_cb1 texl "0 32"	*bt_left_cb1 texh "31 63"	*bt_left_cb1 invis false }
+	confunc set_left_cb_a2 { *bt_left_cb2 texl "0 32"	*bt_left_cb2 texh "31 63"	*bt_left_cb2 invis false }
+	confunc set_left_cb_a3 { *bt_left_cb3 texl "0 32"	*bt_left_cb3 texh "31 63"	*bt_left_cb3 invis false }
+	confunc set_left_cb_a4 { *bt_left_cb4 texl "0 32"	*bt_left_cb4 texh "31 63"	*bt_left_cb4 invis false }
+	confunc set_left_cb_a5 { *bt_left_cb5 texl "0 32"	*bt_left_cb5 texh "31 63"	*bt_left_cb5 invis false }
+	confunc set_left_cb_a6 { *bt_left_cb6 texl "0 32"	*bt_left_cb6 texh "31 63"	*bt_left_cb6 invis false }
+	confunc set_left_cb_a7 { *bt_left_cb7 texl "0 32"	*bt_left_cb7 texh "31 63"	*bt_left_cb7 invis false }
+	confunc set_right_cb_a0 { *bt_right_cb0	texl "0 32"	*bt_right_cb0 texh "31 63"	*bt_right_cb0 invis false }
+	confunc set_right_cb_a1 { *bt_right_cb1	texl "0 32"	*bt_right_cb1 texh "31 63"	*bt_right_cb1 invis false }
+	confunc set_right_cb_a2 { *bt_right_cb2	texl "0 32"	*bt_right_cb2 texh "31 63"	*bt_right_cb2 invis false }
+	confunc set_right_cb_a3 { *bt_right_cb3	texl "0 32"	*bt_right_cb3 texh "31 63"	*bt_right_cb3 invis false }
+	confunc set_right_cb_a4 { *bt_right_cb4	texl "0 32"	*bt_right_cb4 texh "31 63"	*bt_right_cb4 invis false }
+	confunc set_right_cb_a5 { *bt_right_cb5	texl "0 32"	*bt_right_cb5 texh "31 63"	*bt_right_cb5 invis false }
+	confunc set_right_cb_a6 { *bt_right_cb6	texl "0 32"	*bt_right_cb6 texh "31 63"	*bt_right_cb6 invis false }
+	confunc set_right_cb_a7 { *bt_right_cb7	texl "0 32"	*bt_right_cb7 texh "31 63"	*bt_right_cb7 invis false }
+
+	/* Firemode images ===================================*/
+	/*
+		Some helpful info:
+		hud/firemode (active)	->	texl "0 0"	texh "255 63"
+		hud/firemode (inactive)	->	texl "0 64"	texh "255 128"
+	*/
+	pic bt_left_fm0
+	{
+		image	hud/firemode
+		pos		"647 500"
+		texl	"0 0"
+		texh	"255  63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 0;" }
+		blend 1
+	}
+
+	pic bt_left_fm1
+	{
+		image	hud/firemode
+		pos		"647 436"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 1;" }
+		blend 1
+	}
+
+	pic bt_left_fm2
+	{
+		image	hud/firemode
+		pos		"647 372"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 2;" }
+		blend 1
+	}
+
+	pic bt_left_fm3
+	{
+		image	hud/firemode
+		pos		"647 308"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 3;" }
+		blend 1
+	}
+
+	pic bt_left_fm4
+	{
+		image	hud/firemode
+		pos		"647 244"
+		texl	"0 0"
+		texh	"255  63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 4;" }
+		blend 1
+	}
+
+	pic bt_left_fm5
+	{
+		image	hud/firemode
+		pos		"647 180"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 5;" }
+		blend 1
+	}
+
+	pic bt_left_fm6
+	{
+		image	hud/firemode
+		pos		"647 116"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 6;" }
+		blend 1
+	}
+
+	pic bt_left_fm7
+	{
+		image	hud/firemode
+		pos		"647 52"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap l 7;" }
+		blend 1
+	}
+
+	pic bt_right_fm0
+	{
+		image	hud/firemode
+		pos		"647 500"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 0;" }
+		blend 1
+	}
+
+	pic bt_right_fm1
+	{
+		image	hud/firemode
+		pos		"647 436"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 1;" }
+		blend 1
+	}
+
+	pic bt_right_fm2
+	{
+		image	hud/firemode
+		pos		"647 372"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 2;" }
+		blend 1
+	}
+
+	pic bt_right_fm3
+	{
+		image	hud/firemode
+		pos		"647 308"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 3;" }
+		blend 1
+	}
+
+	pic bt_right_fm4
+	{
+		image	hud/firemode
+		pos		"647 244"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 4;" }
+		blend 1
+	}
+
+	pic bt_right_fm5
+	{
+		image	hud/firemode
+		pos		"647 180"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 5;" }
+		blend 1
+	}
+
+	pic bt_right_fm6
+	{
+		image	hud/firemode
+		pos		"647 116"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 6;" }
+		blend 1
+	}
+
+	pic bt_right_fm7
+	{
+		image	hud/firemode
+		pos		"647 52"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "fireweap r 7;" }
+		blend 1
+	}
+
+	/* Firemode checkbox images ===================================*/
+	/*
+		Some helpful info:
+		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31"
+		hud/checkbox (active)	->	texl "0 32"	texh "31 63"
+	*/
+
+	pic bt_left_cb0
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 532"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 0;" }
+		blend 1
+	}
+
+	pic bt_left_cb1
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 468"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 1;" }
+		blend 1
+	}
+
+	pic bt_left_cb2
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 404"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 2;" }
+		blend 1
+	}
+
+	pic bt_left_cb3
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 340"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 3;" }
+		blend 1
+	}
+
+	pic bt_left_cb4
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 276"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 4;" }
+		blend 1
+	}
+
+	pic bt_left_cb5
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 212"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 5;" }
+		blend 1
+	}
+
+	pic bt_left_cb6
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 148"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 6;" }
+		blend 1
+	}
+
+	pic bt_left_cb7
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 84"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 7;" }
+		blend 1
+	}
+
+	pic bt_right_cb0
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 532"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 0;" }
+		blend 1
+	}
+
+	pic bt_right_cb1
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 468"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 1;" }
+		blend 1
+	}
+
+	pic bt_right_cb2
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 404"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 2;" }
+		blend 1
+	}
+
+	pic bt_right_cb3
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 340"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 3;" }
+		blend 1
+	}
+
+	pic bt_right_cb4
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 276"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 4;" }
+		blend 1
+	}
+
+	pic bt_right_cb5
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 212"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 5;" }
+		blend 1
+	}
+
+	pic bt_right_cb6
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 148"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 6;" }
+		blend 1
+	}
+
+	pic bt_right_cb7
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"647 84"
+		texl	"0 0"
+		texh	"31 31"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 7;" }
+		blend 1
+	}
+
+	/* Firemode text ===================================*/
+	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "679 506"	invis true }
+	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "679 442"	invis true }
+	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "679 378"	invis true }
+	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "679 314"	invis true }
+	string left_fm_name4 { string "*cvar mn_l_fm_name4"	pos "679 250"	invis true }
+	string left_fm_name5 { string "*cvar mn_l_fm_name5"	pos "679 186"	invis true }
+	string left_fm_name6 { string "*cvar mn_l_fm_name6"	pos "679 122"	invis true }
+	string left_fm_name7 { string "*cvar mn_l_fm_name7"	pos "679 58"	invis true }
+	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "679 506"	invis true }
+	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "679 442"	invis true }
+	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "679 378"	invis true }
+	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "679 315"	invis true }
+	string right_fm_name4 { string "*cvar mn_r_fm_name4"	pos "679 250"	invis true }
+	string right_fm_name5 { string "*cvar mn_r_fm_name5"	pos "679 186"	invis true }
+	string right_fm_name6 { string "*cvar mn_r_fm_name6"	pos "679 122"	invis true }
+	string right_fm_name7 { string "*cvar mn_r_fm_name7"	pos "679 58"	invis true }
+
+	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "679 538"	invis true	tooltip "*cvar mn_l_fm_tt_tu0" size "50 16" click }
+	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "679 474"	invis true	tooltip "*cvar mn_l_fm_tt_tu1" size "50 16" click }
+	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "679 410"	invis true	tooltip "*cvar mn_l_fm_tt_tu2" size "50 16" click }
+	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "679 346"	invis true	tooltip "*cvar mn_l_fm_tt_tu3" size "50 16" click }
+	string left_fm_tu4 { string "*cvar mn_l_fm_tu4"	pos "679 282"	invis true	tooltip "*cvar mn_l_fm_tt_tu4" size "50 16" click }
+	string left_fm_tu5 { string "*cvar mn_l_fm_tu5"	pos "679 218"	invis true	tooltip "*cvar mn_l_fm_tt_tu5" size "50 16" click }
+	string left_fm_tu6 { string "*cvar mn_l_fm_tu6"	pos "679 154"	invis true	tooltip "*cvar mn_l_fm_tt_tu6" size "50 16" click }
+	string left_fm_tu7 { string "*cvar mn_l_fm_tu7"	pos "679 90"	invis true	tooltip "*cvar mn_l_fm_tt_tu7" size "50 16" click }
+	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "679 538"	invis true	tooltip "*cvar mn_r_fm_tt_tu0" size "50 16" click }
+	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "679 474"	invis true	tooltip "*cvar mn_r_fm_tt_tu1" size "50 16" click }
+	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "679 410"	invis true	tooltip "*cvar mn_r_fm_tt_tu2" size "50 16" click }
+	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "679 346"	invis true	tooltip "*cvar mn_r_fm_tt_tu3" size "50 16" click }
+	string right_fm_tu4 { string "*cvar mn_r_fm_tu4"	pos "679 282"	invis true	tooltip "*cvar mn_r_fm_tt_tu4" size "50 16" click }
+	string right_fm_tu5 { string "*cvar mn_r_fm_tu5"	pos "679 218"	invis true	tooltip "*cvar mn_r_fm_tt_tu5" size "50 16" click }
+	string right_fm_tu6 { string "*cvar mn_r_fm_tu6"	pos "679 154"	invis true	tooltip "*cvar mn_r_fm_tt_tu6" size "50 16" click }
+	string right_fm_tu7 { string "*cvar mn_r_fm_tu7"	pos "679 90"	invis true	tooltip "*cvar mn_r_fm_tt_tu7" size "50 16" click }
+
+	string left_fm_shot0 { string "*cvar mn_l_fm_shot0"	pos "753 538"	invis true }
+	string left_fm_shot1 { string "*cvar mn_l_fm_shot1"	pos "753 474"	invis true }
+	string left_fm_shot2 { string "*cvar mn_l_fm_shot2"	pos "753 410"	invis true }
+	string left_fm_shot3 { string "*cvar mn_l_fm_shot3"	pos "753 346"	invis true }
+	string left_fm_shot4 { string "*cvar mn_l_fm_shot4"	pos "753 282"	invis true }
+	string left_fm_shot5 { string "*cvar mn_l_fm_shot5"	pos "753 218"	invis true }
+	string left_fm_shot6 { string "*cvar mn_l_fm_shot6"	pos "753 154"	invis true }
+	string left_fm_shot7 { string "*cvar mn_l_fm_shot7"	pos "753 90"	invis true }
+	string right_fm_shot0 { string "*cvar mn_r_fm_shot0"	pos "753 538"	invis true }
+	string right_fm_shot1 { string "*cvar mn_r_fm_shot1"	pos "753 474"	invis true }
+	string right_fm_shot2 { string "*cvar mn_r_fm_shot2"	pos "753 410"	invis true }
+	string right_fm_shot3 { string "*cvar mn_r_fm_shot3"	pos "753 346"	invis true }
+	string right_fm_shot4 { string "*cvar mn_r_fm_shot4"	pos "753 282"	invis true }
+	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "753 218"	invis true }
+	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "753 154"	invis true }
+	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "753 90"	invis true }
+
+	/* These two need to be _after_ the firemode-nodes so they can be toggled correctly. (z-depth/orer of menu node)
+	 * The alpha value (i.e. image overlaps but is not visible) in the firemode-images would prevent clicking them in some cases. */
+	pic bt_primaryright
+	{
+		tooltip	"_Use Item"
+		image	althud/buttons_althud1
+		pos		"870 497"
+		texl	"0 74"
+		texh	"25 107"
+		mousefx	true
+		click { cmd "list_firemodes r;" }
+	}
+	pic bt_primaryleft
+	{
+		tooltip	"_Use Item"
+		image	althud/buttons_althud1
+		pos		"870 497"
+		texl	"0 74"
+		texh	"25 107"
+		mousefx	true
+		click { cmd "list_firemodes l;" }
+	}
+
+	radar hudradar
+	{
+		pos	"512 384"
+		bgcolor	"0.3 0.3 0.3 0.8"
+		blend	yes
+		invis	true
+		align	cc
+	}
+}
