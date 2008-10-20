@@ -663,6 +663,13 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 
+		if (!strcmp(c, "hardness")) {
+			m->hardness = atof(COM_Parse(&buffer));
+			if (m->hardness < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid hardness value for %s\n", image->name);
+				m->hardness = DEFAULT_HARDNESS;
+			}
+		}
 		if (!strcmp(c, "specular")) {
 			m->specular = atof(COM_Parse(&buffer));
 			if (m->specular < 0.0) {

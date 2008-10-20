@@ -245,8 +245,8 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 
 static inline void R_UseMaterial (material_t *material)
 {
-	static float last_b, last_p, last_s;
-	float b, p, s;
+	static float last_b, last_p, last_s, last_h;
+	float b, p, s, h;
 
 	if (r_state.active_material == material)
 		return;
@@ -265,6 +265,11 @@ static inline void R_UseMaterial (material_t *material)
 	if (p != last_p)
 		R_ProgramParameter1f("PARALLAX", p);
 	last_p = p;
+
+	h = r_state.active_material->hardness * r_hardness->value;
+	if (h != last_h)
+		R_ProgramParameter1f("HARDNESS", h);
+	last_h = h;
 
 	s = r_state.active_material->specular * r_specular->value;
 	if (s != last_s)
