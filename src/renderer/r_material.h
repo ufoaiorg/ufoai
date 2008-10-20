@@ -111,12 +111,14 @@ typedef struct materialStage_s {
 #define DEFAULT_BUMP 1.0
 #define DEFAULT_PARALLAX 1.0
 #define DEFAULT_SPECULAR 1.0
+#define DEFAULT_HARDNESS 1.0
 
 typedef struct material_s {
 	unsigned flags;
 	float time;
 	float bump;
 	float parallax;
+	float hardness;
 	float specular;
 	materialStage_t *stages;
 	int num_stages;

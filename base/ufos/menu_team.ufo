@@ -668,133 +668,133 @@ menu team
 	}
 	string txt_actor0
 	{
-		string	"*cvar mn_name0"
+		string	"*cvar mn_ename0"
 		pos		"60 32"
 		size	"290 16"
 		click { cmd "team_select 0;" }
 	}
 	string txt_actor1
 	{
-		string	"*cvar mn_name1"
+		string	"*cvar mn_ename1"
 		pos		"60 70"
 		size	"290 16"
 		click { cmd "team_select 1;" }
 	}
 	string txt_actor2
 	{
-		string	"*cvar mn_name2"
+		string	"*cvar mn_ename2"
 		pos		"60 108"
 		size	"290 16"
 		click { cmd "team_select 2;" }
 	}
 	string txt_actor3
 	{
-		string	"*cvar mn_name3"
+		string	"*cvar mn_ename3"
 		pos		"60 146"
 		size	"290 16"
 		click { cmd "team_select 3;" }
 	}
 	string txt_actor4
 	{
-		string	"*cvar mn_name4"
+		string	"*cvar mn_ename4"
 		pos		"60 184"
 		size	"290 16"
 		click { cmd "team_select 4;" }
 	}
 	string txt_actor5
 	{
-		string	"*cvar mn_name5"
+		string	"*cvar mn_ename5"
 		pos		"60 222"
 		size	"290 16"
 		click { cmd "team_select 5;" }
 	}
 	string txt_actor6
 	{
-		string	"*cvar mn_name6"
+		string	"*cvar mn_ename6"
 		pos		"60 260"
 		size	"290 16"
 		click { cmd "team_select 6;" }
 	}
 	string txt_actor7
 	{
-		string	"*cvar mn_name7"
+		string	"*cvar mn_ename7"
 		pos		"60 298"
 		size	"290 16"
 		click { cmd "team_select 7;" }
 	}
 	string txt_actor8
 	{
-		string	"*cvar mn_name8"
+		string	"*cvar mn_ename8"
 		pos		"60 336"
 		size	"290 16"
 		click { cmd "team_select 8;" }
 	}
 	string txt_actor9
 	{
-		string	"*cvar mn_name9"
+		string	"*cvar mn_ename9"
 		pos		"60 374"
 		size	"290 16"
 		click { cmd "team_select 9;" }
 	}
 	string txt_actor10
 	{
-		string	"*cvar mn_name10"
+		string	"*cvar mn_ename10"
 		pos		"60 412"
 		size	"290 16"
 		click { cmd "team_select 10;" }
 	}
 	string txt_actor11
 	{
-		string	"*cvar mn_name11"
+		string	"*cvar mn_ename11"
 		pos		"60 450"
 		size	"290 16"
 		click { cmd "team_select 11;" }
 	}
 	string txt_actor12
 	{
-		string	"*cvar mn_name12"
+		string	"*cvar mn_ename12"
 		pos		"60 488"
 		size	"290 16"
 		click { cmd "team_select 12;" }
 	}
 	string txt_actor13
 	{
-		string	"*cvar mn_name13"
+		string	"*cvar mn_ename13"
 		pos		"60 526"
 		size	"290 16"
 		click { cmd "team_select 13;" }
 	}
 	string txt_actor14
 	{
-		string	"*cvar mn_name14"
+		string	"*cvar mn_ename14"
 		pos		"60 564"
 		size	"290 16"
 		click { cmd "team_select 14;" }
 	}
 	string txt_actor15
 	{
-		string	"*cvar mn_name15"
+		string	"*cvar mn_ename15"
 		pos		"60 602"
 		size	"290 16"
 		click { cmd "team_select 15;" }
 	}
 	string txt_actor16
 	{
-		string	"*cvar mn_name16"
+		string	"*cvar mn_ename16"
 		pos		"60 640"
 		size	"290 16"
 		click { cmd "team_select 16;" }
 	}
 	string txt_actor17
 	{
-		string	"*cvar mn_name17"
+		string	"*cvar mn_ename17"
 		pos		"60 678"
 		size	"290 16"
 		click { cmd "team_select 17;" }
 	}
 	string txt_actor18
 	{
-		string	"*cvar mn_name18"
+		string	"*cvar mn_ename18"
 		pos		"60 716"
 		size	"290 16"
 		click { cmd "team_select 18;" }

@@ -82,9 +82,10 @@ cvar_t *r_lighting;
 cvar_t *r_programs;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
+cvar_t *r_shownormals;
 cvar_t *r_bumpmap;
 cvar_t *r_specular;
-cvar_t *r_shownormals;
+cvar_t *r_hardness;
 cvar_t *r_parallax;
 
 /**
@@ -413,6 +414,7 @@ static void R_RegisterSystemVars (void)
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE, "Activate bump mapping");
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
+	r_hardness = Cvar_Get("r_hardness", "1.0", CVAR_ARCHIVE, "Hardness controll for GLSL shaders (specular, bump, ...)");
 	r_parallax = Cvar_Get("r_parallax", "1.0", CVAR_ARCHIVE, "Controls parallax parameters");
 
 	for (commands = r_commands; commands->name; commands++)

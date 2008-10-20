@@ -1104,6 +1104,9 @@ public:
 	}
 };
 
+/**
+ * @brief Context menu for the right click in the views
+ */
 void XYWnd::OnContextMenu(void) {
 	if (g_xywindow_globals.m_bRightClick == false)
 		return;
@@ -2276,36 +2279,52 @@ void XYWnd_Focus(XYWnd* xywnd) {
 	xywnd->PositionView(position);
 }
 
-void XY_Split_Focus(void) {
-	Vector3 position;
-	GetFocusPosition(position);
-	g_pParentWnd->GetXYWnd()->PositionView(position);
-	g_pParentWnd->GetXZWnd()->PositionView(position);
-	g_pParentWnd->GetYZWnd()->PositionView(position);
+/**
+ * @brief Center position for eRegular mode for currently active view
+ */
+void XY_CenterViews(void) {
+	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
+		Vector3 position;
+		GetFocusPosition(position);
+		g_pParentWnd->GetXYWnd()->PositionView(position);
+		g_pParentWnd->GetXZWnd()->PositionView(position);
+		g_pParentWnd->GetYZWnd()->PositionView(position);
+	} else {
+		XYWnd* xywnd = g_pParentWnd->GetXYWnd();
+		XYWnd_Focus(xywnd);
+	}
 }
 
-void XY_Focus(void) {
-	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	XYWnd_Focus(xywnd);
-}
-
+/**
+ * @brief Top view for eRegular mode
+ */
 void XY_Top(void) {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	xywnd->SetViewType(XY);
 	XYWnd_Focus(xywnd);
 }
 
+/**
+ * @brief Side view for eRegular mode
+ */
 void XY_Side(void) {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	xywnd->SetViewType(XZ);
 	XYWnd_Focus(xywnd);
 }
 
+/**
+ * @brief Front view for eRegular mode
+ */
 void XY_Front(void) {
-	g_pParentWnd->GetXYWnd()->SetViewType(YZ);
-	XYWnd_Focus(g_pParentWnd->GetXYWnd());
+	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
+	xywnd->SetViewType(YZ);
+	XYWnd_Focus(xywnd);
 }
 
+/**
+ * @brief Next view for eRegular mode
+ */
 void XY_Next(void) {
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	if (xywnd->GetViewType() == XY)
@@ -2317,6 +2336,9 @@ void XY_Next(void) {
 	XYWnd_Focus(xywnd);
 }
 
+/**
+ * @brief Zooms all active views to 100%
+ */
 void XY_Zoom100(void) {
 	if (g_pParentWnd->GetXYWnd())
 		g_pParentWnd->GetXYWnd()->SetScale(1);
@@ -2326,11 +2348,15 @@ void XY_Zoom100(void) {
 		g_pParentWnd->GetYZWnd()->SetScale(1);
 }
 
+/**
+ * @brief Zooms the current active view in
+ */
 void XY_ZoomIn(void) {
 	XYWnd_ZoomIn(g_pParentWnd->ActiveXY());
 }
 
 /**
+ * @brief Zooms the current active view out
  * @note the zoom out factor is 4/5, we could think about customizing it
  * we don't go below a zoom factor corresponding to 10% of the max world size
  * (this has to be computed against the window size)
@@ -2353,25 +2379,6 @@ void ToggleShowGrid(void) {
 	g_xywindow_globals_private.d_showgrid = !g_xywindow_globals_private.d_showgrid;
 	XY_UpdateAllWindows();
 }
-
-static ToggleShown g_xy_top_shown(true);
-
-void XY_Top_Shown_Construct(GtkWindow* parent) {
-	g_xy_top_shown.connect(GTK_WIDGET(parent));
-}
-
-static ToggleShown g_yz_side_shown(false);
-
-void YZ_Side_Shown_Construct(GtkWindow* parent) {
-	g_yz_side_shown.connect(GTK_WIDGET(parent));
-}
-
-static ToggleShown g_xz_front_shown(false);
-
-void XZ_Front_Shown_Construct(GtkWindow* parent) {
-	g_xz_front_shown.connect(GTK_WIDGET(parent));
-}
-
 
 class EntityClassMenu : public ModuleObserver {
 	std::size_t m_unrealised;
@@ -2547,34 +2554,34 @@ typedef ConstReferenceCaller1<ToggleShown, const BoolImportCallback&, ToggleShow
 
 
 void XYWindow_Construct(void) {
+	// eRegular
+	GlobalCommands_insert("NextView", FreeCaller<XY_Next>(), Accelerator(GDK_Tab, (GdkModifierType)GDK_CONTROL_MASK));
+	GlobalCommands_insert("ViewTop", FreeCaller<XY_Top>());
+	GlobalCommands_insert("ViewSide", FreeCaller<XY_Side>());
+	GlobalCommands_insert("ViewFront", FreeCaller<XY_Front>());
+
+	// general commands
 	GlobalCommands_insert("ToggleCrosshairs", FreeCaller<ToggleShowCrosshair>(), Accelerator('X', (GdkModifierType)GDK_SHIFT_MASK));
 	GlobalCommands_insert("ToggleSizePaint", FreeCaller<ToggleShowSizeInfo>(), Accelerator('J'));
 	GlobalCommands_insert("ToggleGrid", FreeCaller<ToggleShowGrid>(), Accelerator('0'));
 
-	GlobalToggles_insert("ToggleView", ToggleShown::ToggleCaller(g_xy_top_shown), ToggleItem::AddCallbackCaller(g_xy_top_shown.m_item), Accelerator('V', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	GlobalToggles_insert("ToggleSideView", ToggleShown::ToggleCaller(g_yz_side_shown), ToggleItem::AddCallbackCaller(g_yz_side_shown.m_item));
-	GlobalToggles_insert("ToggleFrontView", ToggleShown::ToggleCaller(g_xz_front_shown), ToggleItem::AddCallbackCaller(g_xz_front_shown.m_item));
-	GlobalCommands_insert("NextView", FreeCaller<XY_Next>(), Accelerator(GDK_Tab, (GdkModifierType)GDK_CONTROL_MASK));
 	GlobalCommands_insert("ZoomIn", FreeCaller<XY_ZoomIn>(), Accelerator(GDK_Delete));
 	GlobalCommands_insert("ZoomOut", FreeCaller<XY_ZoomOut>(), Accelerator(GDK_Insert));
-	GlobalCommands_insert("ViewTop", FreeCaller<XY_Top>());
-	GlobalCommands_insert("ViewSide", FreeCaller<XY_Side>());
-	GlobalCommands_insert("ViewFront", FreeCaller<XY_Front>());
 	GlobalCommands_insert("Zoom100", FreeCaller<XY_Zoom100>());
-	GlobalCommands_insert("CenterXYViews", FreeCaller<XY_Split_Focus>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	GlobalCommands_insert("CenterXYView", FreeCaller<XY_Focus>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	GlobalCommands_insert("CenterXYViews", FreeCaller<XY_CenterViews>(), Accelerator(GDK_Tab, (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
+	// register preference settings
 	GlobalPreferenceSystem().registerPreference("ClipNoDraw", BoolImportStringCaller(g_clip_useNodraw), BoolExportStringCaller(g_clip_useNodraw));
-
 	GlobalPreferenceSystem().registerPreference("NewRightClick", BoolImportStringCaller(g_xywindow_globals.m_bRightClick), BoolExportStringCaller(g_xywindow_globals.m_bRightClick));
 	GlobalPreferenceSystem().registerPreference("ChaseMouse", BoolImportStringCaller(g_xywindow_globals_private.m_bChaseMouse), BoolExportStringCaller(g_xywindow_globals_private.m_bChaseMouse));
 	GlobalPreferenceSystem().registerPreference("SizePainting", BoolImportStringCaller(g_xywindow_globals_private.m_bSizePaint), BoolExportStringCaller(g_xywindow_globals_private.m_bSizePaint));
 	GlobalPreferenceSystem().registerPreference("NoStipple", BoolImportStringCaller(g_xywindow_globals.m_bNoStipple), BoolExportStringCaller(g_xywindow_globals.m_bNoStipple));
+	GlobalPreferenceSystem().registerPreference("CamXYUpdate", BoolImportStringCaller(g_xywindow_globals_private.m_bCamXYUpdate), BoolExportStringCaller(g_xywindow_globals_private.m_bCamXYUpdate));
+	GlobalPreferenceSystem().registerPreference("ShowWorkzone", BoolImportStringCaller(g_xywindow_globals_private.d_show_work), BoolExportStringCaller(g_xywindow_globals_private.d_show_work));
+
 	GlobalPreferenceSystem().registerPreference("SI_ShowCoords", BoolImportStringCaller(g_xywindow_globals_private.show_coordinates), BoolExportStringCaller(g_xywindow_globals_private.show_coordinates));
 	GlobalPreferenceSystem().registerPreference("SI_ShowOutlines", BoolImportStringCaller(g_xywindow_globals_private.show_outline), BoolExportStringCaller(g_xywindow_globals_private.show_outline));
 	GlobalPreferenceSystem().registerPreference("SI_ShowAxis", BoolImportStringCaller(g_xywindow_globals_private.show_axis), BoolExportStringCaller(g_xywindow_globals_private.show_axis));
-	GlobalPreferenceSystem().registerPreference("CamXYUpdate", BoolImportStringCaller(g_xywindow_globals_private.m_bCamXYUpdate), BoolExportStringCaller(g_xywindow_globals_private.m_bCamXYUpdate));
-	GlobalPreferenceSystem().registerPreference("ShowWorkzone", BoolImportStringCaller(g_xywindow_globals_private.d_show_work), BoolExportStringCaller(g_xywindow_globals_private.d_show_work));
 
 	GlobalPreferenceSystem().registerPreference("SI_AxisColors0", Vector3ImportStringCaller(g_xywindow_globals.AxisColorX), Vector3ExportStringCaller(g_xywindow_globals.AxisColorX));
 	GlobalPreferenceSystem().registerPreference("SI_AxisColors1", Vector3ImportStringCaller(g_xywindow_globals.AxisColorY), Vector3ExportStringCaller(g_xywindow_globals.AxisColorY));
@@ -2590,10 +2597,6 @@ void XYWindow_Construct(void) {
 	GlobalPreferenceSystem().registerPreference("SI_Colors11", Vector3ImportStringCaller(g_xywindow_globals.color_viewname), Vector3ExportStringCaller(g_xywindow_globals.color_viewname));
 	GlobalPreferenceSystem().registerPreference("SI_Colors13", Vector3ImportStringCaller(g_xywindow_globals.color_gridminor_alt), Vector3ExportStringCaller(g_xywindow_globals.color_gridminor_alt));
 	GlobalPreferenceSystem().registerPreference("SI_Colors14", Vector3ImportStringCaller(g_xywindow_globals.color_gridmajor_alt), Vector3ExportStringCaller(g_xywindow_globals.color_gridmajor_alt));
-
-
-	GlobalPreferenceSystem().registerPreference("XZVIS", makeBoolStringImportCallback(ToggleShownImportBoolCaller(g_xz_front_shown)), makeBoolStringExportCallback(ToggleShownExportBoolCaller(g_xz_front_shown)));
-	GlobalPreferenceSystem().registerPreference("YZVIS", makeBoolStringImportCallback(ToggleShownImportBoolCaller(g_yz_side_shown)), makeBoolStringExportCallback(ToggleShownExportBoolCaller(g_yz_side_shown)));
 
 	Orthographic_registerPreferencesPage();
 	Clipper_registerPreferencesPage();

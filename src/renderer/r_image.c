@@ -63,6 +63,7 @@ void R_ImageClearMaterials (void)
 		m->bump = DEFAULT_BUMP;
 		m->parallax = DEFAULT_PARALLAX;
 		m->specular = DEFAULT_SPECULAR;
+		m->hardness = DEFAULT_HARDNESS;
 	}
 }
 

@@ -196,7 +196,7 @@ void MN_DrawTabNode (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
 	selectBoxOptions_t* tabOption;
-	selectBoxOptions_t* overMouseOption;
+	selectBoxOptions_t* overMouseOption = NULL;
 	const char *ref;
 	const char *font;
 	int currentX;

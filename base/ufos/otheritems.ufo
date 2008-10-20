@@ -1,13 +1,10 @@
 // ===========
 // Dummy items
-// We use "type dummy" if we do not want their models to be pre-cached.
-// TODO: Are there other checks for type==dummy in the code?
 // ===========
 item antimatter
 {
 	// Note that antimatter does not have size on purpose.
 	name		"_Antimatter"
-	type		dummy
 	is_dummy	true
 	weapon		false
 	notonmarket	true
@@ -16,7 +13,6 @@ item antimatter
 item brapparatus
 {
 	name		"_Alien Breathing Apparatus"
-	type		dummy
 	is_dummy	true
 	price		300
 	size		4
@@ -26,7 +22,6 @@ item brapparatus
 item alienmaterials
 {
 	name		"_Alien Materials"
-	type		dummy
 	is_dummy	true
 	price		3
 	size		1
@@ -40,7 +35,6 @@ item alienmaterials
 item craft_ufo_scout
 {
 	name	"_UFO - Scout"
-	type	dummy
 	is_dummy	true
 	weapon	false
 	model	objects/alien/disassembled/ufo_scout
@@ -50,7 +44,6 @@ item craft_ufo_scout
 item craft_ufo_fighter
 {
 	name	"_UFO - Fighter"
-	type	dummy
 	is_dummy	true
 	weapon	false
 	model	objects/alien/disassembled/ufo_fighter
@@ -60,7 +53,6 @@ item craft_ufo_fighter
 item craft_ufo_harvester
 {
 	name	"_UFO - Harvester"
-	type	dummy
 	is_dummy	true
 	weapon	false
 	model	objects/alien/disassembled/ufo_harvester
@@ -70,7 +62,6 @@ item craft_ufo_harvester
 item craft_ufo_bomber
 {
 	name	"_UFO - Bomber"
-	type	dummy
 	is_dummy	true
 	weapon false
 	notonmarket	true
@@ -79,7 +70,6 @@ item craft_ufo_bomber
 item craft_ufo_corrupter
 {
 	name	"_UFO - Corrupter"
-	type	dummy
 	is_dummy	true
 	weapon false
 	notonmarket	true
@@ -88,7 +78,6 @@ item craft_ufo_corrupter
 item craft_ufo_carrier
 {
 	name	"_UFO - Carrier"
-	type	dummy
 	is_dummy	true
 	weapon false
 	notonmarket	true
@@ -97,7 +86,6 @@ item craft_ufo_carrier
 item craft_ufo_supply
 {
 	name	"_UFO - Supply Ship"
-	type	dummy
 	is_dummy	true
 	weapon false
 	notonmarket	true

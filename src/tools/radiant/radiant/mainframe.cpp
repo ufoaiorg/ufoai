@@ -117,7 +117,7 @@ struct layout_globals_t {
 	layout_globals_t() :
 			m_position(-1, -1, 640, 480),
 
-			nXYHeight(300),
+			nXYHeight(650),
 			nXYWidth(300),
 			nCamWidth(200),
 			nCamHeight(200),
@@ -1425,16 +1425,17 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(camera_menu, "Look Through Selected", "LookThroughSelected");
 		create_menu_item_with_mnemonic(camera_menu, "Look Through Camera", "LookThroughCamera");
 	}
+
 	menu_separator(menu);
 	{
 		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, "Orthographic");
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(orthographic_menu);
 		if (style == MainFrame::eRegular) {
-			create_menu_item_with_mnemonic(orthographic_menu, "_Next (XY, YZ, XY)", "NextView");
+			create_menu_item_with_mnemonic(orthographic_menu, "_Next (XY, YZ, YZ)", "NextView");
 			create_menu_item_with_mnemonic(orthographic_menu, "XY (Top)", "ViewTop");
-			create_menu_item_with_mnemonic(orthographic_menu, "YZ", "ViewSide");
-			create_menu_item_with_mnemonic(orthographic_menu, "XZ", "ViewFront");
+			create_menu_item_with_mnemonic(orthographic_menu, "XZ (Side)", "ViewSide");
+			create_menu_item_with_mnemonic(orthographic_menu, "YZ (Front)", "ViewFront");
 			menu_separator(orthographic_menu);
 		}
 
@@ -1444,7 +1445,6 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 	}
 
 	menu_separator(menu);
-
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Show");
 		if (g_Layout_enableDetachableMenus.m_value)
@@ -1467,6 +1467,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu_in_menu, "Hide Selected", "HideSelected");
 		create_menu_item_with_mnemonic(menu_in_menu, "Show Hidden", "ShowHidden");
 	}
+
 	menu_separator(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Region");
@@ -1478,11 +1479,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu_in_menu, "Set Se_lected Brushes", "RegionSetSelection");
 	}
 
-	if (style == MainFrame::eSplit) {
-		command_connect_accelerator("CenterXYViews");
-	} else {
-		command_connect_accelerator("CenterXYView");
-	}
+	command_connect_accelerator("CenterXYViews");
 
 	return view_menu_item;
 }
@@ -1505,7 +1502,6 @@ static GtkMenuItem* create_selection_menu (void)
 	}
 
 	menu_separator(menu);
-
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Nudge");
 		if (g_Layout_enableDetachableMenus.m_value)
@@ -1531,6 +1527,7 @@ static GtkMenuItem* create_selection_menu (void)
 		create_menu_item_with_mnemonic(menu_in_menu, "Flip _Y", "MirrorSelectionY");
 		create_menu_item_with_mnemonic(menu_in_menu, "Flip _Z", "MirrorSelectionZ");
 	}
+
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, "Arbitrary rotation...", "ArbitraryRotation");
 	create_menu_item_with_mnemonic(menu, "Arbitrary scale...", "ArbitraryScale");
@@ -1788,7 +1785,7 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 	ComponentModes_constructToolbar(toolbar);
 
 	if (style == MainFrame::eRegular) {
-		gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
+		gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 		XYWnd_constructToolbar(toolbar);
 	}
@@ -2082,12 +2079,10 @@ void MainFrame::Create (void) {
 					GlobalCamera_setCamWnd(*m_pCamWnd);
 					CamWnd_setParent(*m_pCamWnd, window);
 					GtkFrame* camera_window = create_framed_widget(CamWnd_getWidget(*m_pCamWnd));
-
 					gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
 
 					// textures
 					GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructWindow(window));
-
 					gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
 				}
 			}
@@ -2106,40 +2101,44 @@ void MainFrame::Create (void) {
 			gtk_widget_show(vsplit);
 		}
 
+		// camera
 		m_pCamWnd = NewCamWnd();
 		GlobalCamera_setCamWnd(*m_pCamWnd);
 		CamWnd_setParent(*m_pCamWnd, window);
-
 		GtkWidget* camera = CamWnd_getWidget(*m_pCamWnd);
 
+		// yz window
 		m_pYZWnd = new XYWnd();
 		m_pYZWnd->SetViewType(YZ);
-
 		GtkWidget* yz = m_pYZWnd->GetWidget();
 
+		// xy window
 		m_pXYWnd = new XYWnd();
 		m_pXYWnd->SetViewType(XY);
-
 		GtkWidget* xy = m_pXYWnd->GetWidget();
 
+		// xz window
 		m_pXZWnd = new XYWnd();
 		m_pXZWnd->SetViewType(XZ);
-
 		GtkWidget* xz = m_pXZWnd->GetWidget();
 
+		// split view (4 views)
 		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
 		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
 
 		{
+			// textures
 			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
 			g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
 		}
 
 		{
+			// console
 			GtkWidget* console_window = Console_constructWindow(window);
 			gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
 		}
 
+		// set height of the upper split view (seperates the 4 views and the console
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
 
 		break;
@@ -2275,7 +2274,7 @@ void GlobalGL_sharedContextDestroyed (void) {
 
 void Layout_constructPreferences(PreferencesPage& page) {
 	{
-		const char* layouts[] = {"window_regular.bmp", "window_split.bmp",};
+		const char* layouts[] = {"window_regular.bmp", "window_split.bmp"};
 		page.appendRadioIcons(
 			"Window Layout",
 			STRING_ARRAY_RANGE(layouts),

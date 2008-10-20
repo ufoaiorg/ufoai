@@ -54,8 +54,9 @@ menu buy
 		pos		"55 40"
 		size	"265 700"
 		click
-		wheel	{ cmd "market_scroll" }
+		wheel	{ cmd "market_scroll;" }
 		mousefx	true
+		longlines prettychop
 	}
 
 	text market_storage
@@ -89,7 +90,7 @@ menu buy
 		size	"80 700"
 		format	"25 0"
 		pos		"542 40"
-		wheel	{ cmd "market_scroll" }
+		wheel	{ cmd "market_scroll;" }
 	}
 
 	// =========================

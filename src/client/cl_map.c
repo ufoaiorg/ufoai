@@ -970,14 +970,15 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
  */
 static void MAP_GetGeoscapeAngle (float *vector)
 {
-	int i, baseIdx;
+	int i;
+	int baseIdx;
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
 	aircraft_t *aircraft;
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
-	maxEventIdx = numMissions + gd.numBases - 1;
+	maxEventIdx = numMissions + gd.numBases + gd.numInstallations - 1;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
@@ -1048,6 +1049,26 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		}
 	}
 	counter += gd.numBases;
+
+	/* Cycle through installations */
+	if (centerOnEventIdx < gd.numInstallations + counter) {
+		int instIdx;
+		for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
+			const installation_t *inst = INS_GetFoundedInstallationByIDX(instIdx);
+			if (!inst)
+				continue;
+
+			if (counter == centerOnEventIdx) {
+				if (cl_3dmap->integer)
+					VectorSet(vector, gd.installations[instIdx].pos[0], -gd.installations[instIdx].pos[1], 0);
+				else
+					Vector2Set(vector, gd.installations[instIdx].pos[0], gd.installations[instIdx].pos[1]);
+				return;
+			}
+			counter++;
+		}
+	}
+	counter += gd.numInstallations;
 
 	/* Cycle through aircraft (only those present on geoscape) */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {

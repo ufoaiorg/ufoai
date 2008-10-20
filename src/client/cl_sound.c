@@ -747,7 +747,7 @@ static qboolean CL_CvarCheckSoundRate (cvar_t *cvar)
 		if (cvar->integer == sndRates[i])
 			break;
 	if (i == n) {
-		Com_Printf("Invalid value for snd_rate, valid values are: ");
+		Com_Printf("Invalid value for %s, valid values are: ", cvar->name);
 		for (i = 0; i < n; i++)
 			Com_Printf(" %i", sndRates[i]);
 		Com_Printf("\n");
