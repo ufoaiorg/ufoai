@@ -1,0 +1,680 @@
+// =======================
+// MEDIKIT
+// =======================
+item medikit
+{
+	name		"_Medikit"
+	model		weapons/medikit/medikit
+	weapon		false
+	type		melee
+	animationindex	2
+	shape		"0 0 2 2"
+	center		"1 0 2"
+	scale		1.1
+	price		80
+	size		15
+	is_misc	true
+	thrown		true
+	dmgtype 	normal
+
+	weapon_mod medikit
+	{
+		firedef
+		{
+			name	"_Heal"
+			projtl	null
+			impact	null
+			hitbody null
+			firesnd	weapons/medikit
+			speed	0
+			range	1.5
+			shots	1
+			time	20
+			damage	"-40 20"
+			reaction	false
+		}
+		firedef
+		{
+			name	"_Throw"
+			skill	close
+			projtl	medikit
+			impsnd	misc/klonk03
+			bodysnd misc/klonk01
+			gravity	true
+			speed	220
+			range	8
+			spread	"4 7"
+			shots	1
+			ammo	1
+			time	10
+			damage	"1 1"
+			dmgweight normal_medium
+			reaction	false
+		}
+	}
+}
+
+
+// =======================
+// IR-GOGGLES
+// =======================
+item irgoggles
+{
+	name		"_IR Goggles"
+	model		weapons/irgoggles/irgoggles
+	weapon		false
+	type		melee
+	animationindex	2
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.5
+	price		100
+	size		15
+	is_misc	true
+	thrown		true
+	headgear		true
+	dmgtype normal
+
+	weapon_mod irgoggles
+	{
+		firedef
+		{
+			name	"_Scan"
+			firesnd	weapons/irgoggles
+			splrad	10
+			range	9.5
+			time	12
+			shots	1
+			irgoggles	true
+		}
+		firedef
+		{
+			name	"_Throw"
+			skill	close
+			projtl	irgoggles
+			impsnd	misc/klonk03
+			bodysnd misc/klonk01
+			gravity	true
+			speed	220
+			range	10
+			spread	"4 7"
+			shots	1
+			ammo	1
+			time	10
+			damage	"1 2"
+			dmgweight normal_medium
+		}
+	}
+}
+
+
+// =======================
+// FRAGMENTATION GRENADE
+// =======================
+item fraggrenade
+{
+	name		"_Frag Grenade"
+	model		weapons/fraggren/fraggren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.3
+	price		35
+	size		5
+	is_misc	true
+	thrown		true
+	dmgtype blast
+
+	weapon_mod fraggrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	fraggren
+			impact	frag_explosion
+			hitbody frag_explosion
+			impsnd	weapons/grenade
+			bodysnd	weapons/grenade
+			bncsnd	misc/klonk03
+			impactvolume 1.0
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"110 30"
+			splrad	4
+			dmgweight blast
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	fraggren
+			impact	frag_explosion
+			hitbody frag_explosion
+			impsnd	weapons/grenade
+			bodysnd	weapons/grenade
+			bncsnd	misc/klonk03
+			impactvolume 1.0
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	14
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"110 30"
+			splrad	4
+			dmgweight blast
+		}
+	}
+}
+
+// =======================
+// FLASHBANG GRENADE
+// TODO: fix spldmg value
+// =======================
+item flashbang
+{
+	name		"_Flashbang"
+	model		weapons/flashbang/flashbang
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 1.5 1.5"
+	scale		2.4
+	price		70
+	size		4
+	is_misc	true
+	thrown		true
+	dmgtype shock
+
+	weapon_mod flashbang
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	flashgren
+			impact	flash_explosion
+			hitbody flash_explosion
+			impsnd	weapons/flashbang
+			bodysnd	weapons/flashbang
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"7 7"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	12
+			spldmg	"999 0"	// TODO: needed at all?
+			splrad	4
+			dmgweight shock
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	flashgren
+			impact	flash_explosion
+			hitbody flash_explosion
+			impsnd	weapons/flashbang
+			bodysnd	weapons/flashbang
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"7 7"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	12
+			spldmg	"999 0"	// TODO: needed at all?
+			splrad	4
+			dmgweight shock
+		}
+	}
+}
+
+// =======================
+// SMOKE GRENADE
+// =======================
+item smokegrenade
+{
+	name		"_Smoke Grenade"
+	model		weapons/smokegren/smokegren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.25"
+	scale		1.5
+	price		25
+	size		5
+	is_misc	true
+	thrown		true
+	dmgtype normal
+
+	weapon_mod smokegrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	smokegren
+			impact	smoke_explosion
+			hitbody smoke_explosion
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"5 5"
+			splrad	6
+			dmgweight normal_light
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	smokegren
+			impact	smoke_explosion
+			hitbody smoke_explosion
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"5 5"
+			splrad	6
+			dmgweight normal_light
+		}
+	}
+}
+
+// =======================
+// STUNGAS GRENADE
+// =======================
+item stungrenade
+{
+	name		"_Gas Grenade"
+	model		weapons/stungren/stungren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.4
+	price		190
+	size		7
+	is_misc	true
+	thrown		true
+	dmgtype stun_gas
+
+	weapon_mod stungrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	stungren
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgweight stun_gas
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	stungren
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgweight stun_gas
+		}
+	}
+}
+
+// =======================
+// STUNGAS ALIEN GRENADE
+// TODO fix the various values
+// =======================
+item stungrenade_alien
+{
+	name		"_Alien Gas Grenade"
+	model		weapons/stungren_alien/stungren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 0"
+	scale		1.4
+	price		190
+	size		7
+	is_misc	true
+	thrown		true
+	dmgtype stun_gas
+
+	weapon_mod stungrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	stungren_alien
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgweight stun_gas
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	stungren_alien
+			impact	coronaImpact
+			hitbody	coronaImpact
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 60"
+			splrad	6
+			dmgweight stun_gas
+		}
+	}
+}
+
+// ====================
+// INCENDIARY GRENADE
+// TODO fix the various values
+// ====================
+item incgrenade
+{
+	name		"_Incendiary grenade"
+	model		weapons/incgren/incgren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.3"
+	scale		1.4
+	price		150
+	size		5
+	is_misc	true
+	thrown		true
+	dmgtype fire
+
+	weapon_mod incgrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	incgren
+			impact	fire_explosion
+			hitbody fire_explosion
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"80 30"
+			splrad	3
+			dmgweight fire_medium
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	incgren
+			impact	fire_explosion
+			hitbody fire_explosion
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
+			impactvolume 0.7
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"80 30"
+			splrad	3
+			dmgweight fire_medium
+		}
+	}
+}
+
+// ================
+// PLASMA GRENADE
+// ================
+item plasmagrenade
+{
+	name		"_Plasma Grenade"
+	model		weapons/plasmagren/plasmagren
+	weapon		true
+	type		grenade
+	animationindex	0
+	shape		"0 0 1 1"
+	center		"0 0 -0.25"
+	scale		1.5
+	price		950
+	size		10
+	is_misc	true
+	thrown		true
+	dmgtype blast
+
+	weapon_mod plasmagrenade
+	{
+		firedef
+		{
+			name	"_Lob"
+			skill	explosive
+			projtl	plasmagren
+			impact	plasmaBigExplosion
+			hitbody	plasmaBigExplosion
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
+			impactvolume 1.0
+			gravity	true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 30"
+			splrad	6
+			dmgweight blast
+		}
+		firedef
+		{
+			name	"_Roll"
+			skill	explosive
+			projtl	plasmagren
+			impact	plasmaBigExplosion
+			hitbody	plasmaBigExplosion
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
+			impactvolume 1.0
+			gravity	true
+			rolled true
+			delay	1
+			bounce	10
+			bncfac	0.5
+			spread	"2 6"
+			range	12
+			shots	1
+			ammo	1
+			delaybetweenshots		1
+			time	8
+			spldmg	"150 30"
+			splrad	6
+			dmgweight blast
+		}
+	}
+}
+
+
+// =================================
+// BOMB KIT - only for trigger usage
+// only for in-mission spawning, not produceable or buyable
+// =================================
+item bomb1
+{
+	name		"_Bomb"
+	model		weapons/bombs/bomb1
+	weapon		false
+	type		melee
+	animationindex	2
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.5
+	size		15
+	notonmarket	true
+	thrown		true
+	is_misc	true
+}
+
+/*
+// =================================
+// BOMB KIT - only for trigger usage
+// only for in-mission spawning, not produceable or buyable
+// =================================
+item bomb2
+{
+	name		"_Bomb"
+	model		weapons/bombs/bomb2
+	weapon		false
+	type		melee
+	animationindex	2
+	shape		"0 0 2 1"
+	center		"0 0 0"
+	scale		1.5
+	notonmarket	true
+	size		15
+	thrown		true
+	is_misc	true
+}
+*/

@@ -1,0 +1,218 @@
+// *****************************
+// Cemetery
+// *****************************
+
+base cemetery/cem_
+
+// ########################
+// ##### Dropship #####
+
+// Firebird on grass with 3 trees
+tile +drop_firebird
+{
+5 4
+
+0     ab    ab    ab      0
+ac    +a    +a    +a     ac
+ac    +a    +a    +a     ac
+0     ab    ab    ab      0
+}
+
+// ########################
+// ##### Path tiles #####
+
+// Horizontal path
+tile +p01
+{
+3 3
+
+0  a  0
+b +b  b
+0  a  0
+}
+
+// Vertical path
+tile +p02
+{
+3 3
+
+0  c 0
+a +c a
+0  c 0
+}
+
+// Path crossroads
+tile +p03
+{
+3 3
+
+0   c   0
+b +bc   b
+0   c   0
+}
+
+// T-crossing W
+tile +p04
+{
+3 3
+
+0   c   0
+b +bc   a
+0   c   0
+}
+
+// T-crossing N
+tile +p05
+{
+3 3
+
+0   c   0
+b +bc   b
+0   a   0
+}
+
+// T-crossing E
+tile +p06
+{
+3 3
+
+0   c   0
+a +bc   b
+0   c   0
+}
+
+// T-crossing S
+tile +p07
+{
+3 3
+
+0   a   0
+b +bc   b
+0   c   0
+}
+
+// Curve S-W
+tile +p08
+{
+3 3
+
+0   a   0
+b +bc   a
+0   c   0
+}
+
+// Curve N-W
+tile +p09
+{
+3 3
+
+0   c   0
+b +bc   a
+0   a   0
+}
+
+// Curve N-E
+tile +p10
+{
+3 3
+
+0   c   0
+a +bc   b
+0   a   0
+}
+
+// Curve S-E
+tile +p11
+{
+3 3
+
+0   a   0
+a +bc   b
+0   c   0
+}
+
+// Horizontal path with hole in the hedge
+tile +p12
+{
+3 3
+
+0  a  0
+b +b  b
+0  a  0
+}
+
+// Vertical path with hole in the hedge
+tile +p13
+{
+3 3
+
+0  c 0
+a +c a
+0  c 0
+}
+
+// ########################################
+// ########## Dummy+Filler tiles ##########
+
+// Empty grassland
+tile +d01
+{
+3 3
+
+0  ab  0
+ac +a  ac
+0  ab  0
+}
+
+// ########################################
+// ########## Graves, buildings and stuff ##########
+
+// Horizontal path, graves and one open grave
+tile +g01
+{
+3 4
+
+0   a  0
+ab +b  ab
+ac +a  ac
+0  ab  0
+}
+
+// Horizontal path and graves
+tile +g02
+{
+3 4
+
+0   a  0
+ab +b  ab
+ac +a  ac
+0  ab  0
+}
+
+
+// ########################################
+// *** Maps for playing the game ***
+
+assembly test
+{
+size "5 5"
+title "_Small cemetery"
+
++p01 "0 8"
++p02 "0 8"
++p03 "0 2"
++p04 "0 1"
++p05 "0 1"
++p06 "0 1"
++p07 "0 1"
++p08 "0 1"
++p09 "0 1"
++p10 "0 1"
++p11 "0 1"
++d01 "0 5"
++p12 "0 3"
++p13 "0 3"
++g01 "1 3"
++g02 "1 3"
+*rm_drop +drop_firebird "1 1"
+}

@@ -1,0 +1,134 @@
+// ===========
+// Dummy items
+// ===========
+item antimatter
+{
+	// Note that antimatter does not have size on purpose.
+	name		"_Antimatter"
+	is_dummy	true
+	weapon		false
+	notonmarket	true
+}
+
+item brapparatus
+{
+	name		"_Alien Breathing Apparatus"
+	is_dummy	true
+	price		300
+	size		4
+	weapon		false
+}
+
+item alienmaterials
+{
+	name		"_Alien Materials"
+	is_dummy	true
+	price		3
+	size		1
+	weapon		false
+}
+
+// ==========
+// UFO Crafts
+// ==========
+
+item craft_ufo_scout
+{
+	name	"_UFO - Scout"
+	is_dummy	true
+	weapon	false
+	model	objects/alien/disassembled/ufo_scout
+	notonmarket	true
+}
+
+item craft_ufo_fighter
+{
+	name	"_UFO - Fighter"
+	is_dummy	true
+	weapon	false
+	model	objects/alien/disassembled/ufo_fighter
+	notonmarket	true
+}
+
+item craft_ufo_harvester
+{
+	name	"_UFO - Harvester"
+	is_dummy	true
+	weapon	false
+	model	objects/alien/disassembled/ufo_harvester
+	notonmarket	true
+}
+
+item craft_ufo_bomber
+{
+	name	"_UFO - Bomber"
+	is_dummy	true
+	weapon false
+	notonmarket	true
+}
+
+item craft_ufo_corrupter
+{
+	name	"_UFO - Corrupter"
+	is_dummy	true
+	weapon false
+	notonmarket	true
+}
+
+item craft_ufo_carrier
+{
+	name	"_UFO - Carrier"
+	is_dummy	true
+	weapon false
+	notonmarket	true
+}
+
+item craft_ufo_supply
+{
+	name	"_UFO - Supply Ship"
+	is_dummy	true
+	weapon false
+	notonmarket	true
+}
+
+// ========================
+// weapons for melee actors
+// ========================
+
+item bloodspider_weapon
+{
+	name	"Bloodspider weapon"	// TODO Will this ever be displayed? If se we would need gettext support.
+	model	weapons/knife/knife	//FIXME
+	weapon	true
+	type	melee
+	animationindex	2			//FIXME
+	scale	1.0
+	size	6
+	is_dummy	true
+	notonmarket	true
+	firetwohanded   true
+	dmgtype		normal
+
+	weapon_mod bloodspider_weapon
+	{
+		firedef
+		{
+			name		"_Stab"
+			skill		close
+			projtl		null
+			impact		null
+			hitbody		blood
+			firesnd		weapons/bloodspider
+			speed		0
+			range		2
+			shots		1			//FIXME
+			time		12			//FIXME
+			damage		"40 20"			//FIXME
+			reaction	true
+			dmgweight   normal_monomolecularblade
+		}
+	}
+}
+
+
+

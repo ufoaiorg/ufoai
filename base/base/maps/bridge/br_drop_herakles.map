@@ -1,0 +1,241 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "5"
+// brush 0
+{
+( -512 -1960 -64 ) ( -330 -1960 -64 ) ( -512 -1192 -64 ) tex_nature/dirt_se01 96 128 0 1 1 0 0 0
+( 0 -992 92 ) ( 0 -1116 92 ) ( 0 -1116 -4 ) tex_common/nodraw 0 0 0 1 1 0 0 0
+( 768 3204 92 ) ( 768 3328 92 ) ( 768 3328 -4 ) tex_common/nodraw 0 0 0 1 1 0 0 0
+( 0 0 64 ) ( 768 0 -64 ) ( 0 0 -64 ) tex_common/nodraw 0 0 0 1 1 0 0 0
+( -330 -1192 2 ) ( -330 -1960 2 ) ( -512 -1192 2 ) tex_nature/dirt_se01 96 128 0 1 1 65280 0 0
+( 512 512 -64 ) ( 4096 512 -64 ) ( 512 512 64 ) tex_common/nodraw 0 0 0 1 1 0 0 0
+}
+// brush 1
+{
+( 36 544 0 ) ( 0 544 0 ) ( 0 420 0 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 0 420 316 ) ( 0 544 316 ) ( 36 544 316 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 1300 480 92 ) ( 1336 480 92 ) ( 1336 480 -4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 768 3204 92 ) ( 768 3328 92 ) ( 768 3328 -4 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 0 -992 92 ) ( 0 -1116 92 ) ( 0 -1116 -4 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 512 512 -64 ) ( 4096 512 -64 ) ( 512 512 64 ) tex_common/actorclip 0 0 0 1 1 0 0 0
+}
+}
+// entity 1
+{
+"classname" "info_player_start"
+"origin" "80 112 28"
+"team" "1"
+}
+// entity 2
+{
+"classname" "info_player_start"
+"origin" "720 176 28"
+"team" "1"
+}
+// entity 3
+{
+"classname" "info_player_start"
+"origin" "208 112 28"
+"team" "1"
+}
+// entity 4
+{
+"classname" "info_player_start"
+"origin" "112 16 28"
+"team" "1"
+}
+// entity 5
+{
+"classname" "info_player_start"
+"origin" "176 16 28"
+"team" "1"
+}
+// entity 6
+{
+"classname" "info_player_start"
+"origin" "656 176 28"
+"team" "1"
+}
+// entity 7
+{
+"classname" "info_player_start"
+"origin" "208 432 28"
+"team" "1"
+}
+// entity 8
+{
+"classname" "info_player_start"
+"origin" "176 80 28"
+"team" "1"
+}
+// entity 9
+{
+"classname" "info_player_start"
+"origin" "112 80 28"
+"team" "1"
+}
+// entity 10
+{
+"classname" "info_player_start"
+"origin" "48 16 28"
+"team" "1"
+}
+// entity 11
+{
+"classname" "info_player_start"
+"origin" "16 112 28"
+"team" "1"
+}
+// entity 12
+{
+"classname" "info_player_start"
+"origin" "496 80 28"
+"team" "1"
+}
+// entity 13
+{
+"classname" "info_player_start"
+"origin" "560 48 28"
+"team" "1"
+}
+// entity 14
+{
+"classname" "info_player_start"
+"origin" "304 432 28"
+"team" "1"
+}
+// entity 15
+{
+"classname" "info_player_start"
+"origin" "16 80 28"
+"team" "1"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"origin" "752 16 28"
+"team" "1"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "400 16 32"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "656 48 32"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "304 48 32"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "720 272 32"
+}
+// entity 21
+{
+"classname" "info_human_start"
+"origin" "528 368 32"
+}
+// entity 22
+{
+"classname" "info_human_start"
+"origin" "688 400 32"
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "720 80 32"
+}
+// entity 24
+{
+"classname" "info_human_start"
+"origin" "144 432 32"
+}
+// entity 25
+{
+"classname" "info_human_start"
+"origin" "624 272 32"
+}
+// entity 26
+{
+"classname" "info_human_start"
+"origin" "240 16 32"
+}
+// entity 27
+{
+"classname" "misc_model"
+"origin" "404 254 36"
+"model" "models/aircraft/drop_herakles/herakles_pod.md2"
+"spawnflags" "255"
+"angle" "-180"
+}
+// entity 28
+{
+"classname" "func_group"
+// brush 0
+{
+( 64 160 120 ) ( 64 384 120 ) ( 576 160 120 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 64 144 64 ) ( 576 144 64 ) ( 64 144 32 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+( 576 368 32 ) ( 576 368 64 ) ( 64 368 32 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+( 576 384 32 ) ( 576 160 32 ) ( 576 384 64 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 80 144 -64 ) ( 48 256 -64 ) ( 80 144 64 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 48 256 -64 ) ( 80 368 -64 ) ( 48 256 64 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 80 704 120 ) ( 48 704 64 ) ( 80 832 120 ) tex_common/weaponclip 0 2 0 -1 1 33554432 0 0
+( 48 704 62 ) ( 92 704 0 ) ( 48 832 62 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 562 704 0 ) ( 578 704 34 ) ( 562 832 0 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 928 144 16 ) ( 928 368 16 ) ( 800 144 16 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 928 368 64 ) ( 928 344 104 ) ( 800 368 64 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+( 928 344 104 ) ( 928 256 120 ) ( 800 344 104 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 928 252 120 ) ( 928 160 104 ) ( 800 252 120 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 928 160 104 ) ( 928 144 64 ) ( 800 160 104 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+}
+}
+// entity 29
+{
+"classname" "func_group"
+// brush 0
+{
+( 64 160 120 ) ( 64 384 120 ) ( 576 160 120 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 64 144 64 ) ( 576 144 64 ) ( 64 144 32 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+( 576 368 32 ) ( 576 368 64 ) ( 64 368 32 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+( 576 384 32 ) ( 576 160 32 ) ( 576 384 64 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 80 144 -64 ) ( 48 256 -64 ) ( 80 144 64 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 48 256 -64 ) ( 80 368 -64 ) ( 48 256 64 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 80 704 120 ) ( 48 704 64 ) ( 80 832 120 ) tex_common/nodraw 0 2 0 -1 1 0 128 0
+( 48 704 62 ) ( 92 704 0 ) ( 48 832 62 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 562 704 0 ) ( 578 704 34 ) ( 562 832 0 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 928 144 16 ) ( 928 368 16 ) ( 800 144 16 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 928 368 64 ) ( 928 344 104 ) ( 800 368 64 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+( 928 344 104 ) ( 928 256 120 ) ( 800 344 104 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 928 252 120 ) ( 928 160 104 ) ( 800 252 120 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 928 160 104 ) ( 928 144 64 ) ( 800 160 104 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+}
+}
+// entity 30
+{
+"classname" "func_group"
+// brush 0
+{
+( 64 160 120 ) ( 64 384 120 ) ( 576 160 120 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 64 144 64 ) ( 576 144 64 ) ( 64 144 32 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 576 368 32 ) ( 576 368 64 ) ( 64 368 32 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 576 384 32 ) ( 576 160 32 ) ( 576 384 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 80 144 -64 ) ( 48 256 -64 ) ( 80 144 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 48 256 -64 ) ( 80 368 -64 ) ( 48 256 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 80 704 120 ) ( 48 704 64 ) ( 80 832 120 ) tex_common/actorclip 0 2 0 -1 1 65536 0 0
+( 48 704 62 ) ( 92 704 0 ) ( 48 832 62 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 562 704 0 ) ( 578 704 34 ) ( 562 832 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 928 144 16 ) ( 928 368 16 ) ( 800 144 16 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 928 368 64 ) ( 928 344 104 ) ( 800 368 64 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 928 344 104 ) ( 928 256 120 ) ( 800 344 104 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 928 252 120 ) ( 928 160 104 ) ( 800 252 120 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 928 160 104 ) ( 928 144 64 ) ( 800 160 104 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+}
+}

@@ -1,0 +1,2381 @@
+// MAP DESCRIPTIONS
+//
+// valid terrain values:
+// * desert, arctic, cold, water, mountain, tropical, grass
+// valid culture values:
+// * eastern, western, oriental, african
+// valid population values:
+// * urban, suburban, village, rural, nopopulation
+// See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
+//
+// valid UFO values:
+// * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
+
+////////////////////////
+// INDUSTRIAL RANDOM MAPS
+////////////////////////
+
+mapdef oilpipes_small
+{
+	map				"+industrial"
+	param			small
+	description		"_Industrial theme."
+	size			"small"
+	teams			4
+	multiplayer		false
+	maxaliens		6
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+
+///////////////////////
+// ORIENTAL RANDOM MAPS
+///////////////////////
+
+mapdef or_small
+{
+	map				"+oriental"
+	param			small
+	multiplayer		false
+	description		"_A suburban district of an oriental area."
+	size			"small"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef or_medium
+{
+	map				"+oriental"
+	param			medium
+	multiplayer		false
+	description		"_A suburban district of an oriental area."
+	size			"small"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef or_large
+{
+	map				"+oriental"
+	param			large
+	multiplayer		false
+	description		"_A suburban district of an oriental area."
+	size			"small"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+///////////////////
+// FARM RANDOM MAPS
+///////////////////
+
+mapdef farm_small
+{
+	map				"+farm"
+	param			small
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	size			"small"
+	teams			4
+	multiplayer		false
+	maxaliens		6
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef farm_medium
+{
+	map				"+farm"
+	param			medium
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	size			"medium"
+	teams			4
+	multiplayer		false
+	maxaliens		11
+
+	ufos
+	{
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef farm_large
+{
+	map				"+farm"
+	param			large
+	description		"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
+	size			"large"
+	teams			4
+	multiplayer		false
+	maxaliens		16
+
+	ufos
+	{
+		craft_ufo_bomber
+	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+
+
+/////////////////////
+// FROZEN RANDOM MAPS
+/////////////////////
+
+mapdef frozen_alienlandingindustrial
+{
+	map				"+frozen"
+	param			alienlandingindustrial
+	multiplayer		false
+	description		"_An industrial area in a cold region."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		arctic
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+
+mapdef frozen_small
+{
+	map				"+frozen"
+	param			small
+	multiplayer		false
+	description		"_An underpopulated area in a cold region."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		arctic
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef frozen_alienlandingnature
+{
+	map				"+frozen"
+	param			alienlandingnature
+	multiplayer		false
+	description		"_An industrial area in a cold region."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		arctic
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef frozen_industrial
+{
+	map				"+frozen"
+	param			industrial
+	multiplayer		false
+	description		"_An industrial area in a cold region."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		arctic
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+//Mapdef to replace industrial.map
+mapdef alienlandingindustrial_fix
+{
+	map				"+frozen"
+	param			industrial_static
+	description		"_An industrial compound."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		20
+
+	ufos
+	{
+		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		arctic
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nonpopulation
+		rural
+		village
+		suburban
+	}
+}
+
+/////////////////////
+// TROPIC RANDOM MAPS
+/////////////////////
+mapdef tropic_river
+{
+	map				"+tropic"
+	description		"_A river runs through this piece of jungle."
+	param			river
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef tropic_drug
+{
+	map				"+tropic"
+	description		"_A cleared stretch of land in the middle of the jungle."
+	param			drug
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+//////////////////////
+// VILLAGE RANDOM MAPS
+//////////////////////
+mapdef vil_lille
+{
+	map				"+village"
+	param			recreational
+	multiplayer		false
+	description		"_A peaceful neighborhood on the outskirts of a centre of population."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef vil_residential
+{
+	map				"+village"
+	param			residential
+	multiplayer		false
+	description		"_A peaceful neighborhood on the outskirts of a centre of population."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef vil_commercial
+{
+	map				"+village"
+	param			commercial
+	multiplayer		false
+	description		"_A peaceful neighborhood on the outskirts of a centre of population."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef vil_big
+{
+	map				"+village"
+	param			big
+	multiplayer		false
+	description		"_A peaceful neighborhood on the outskirts of a centre of population."
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+/////////////
+// FIXED MAPS
+/////////////
+mapdef excavation
+{
+	map				excavation
+	description		"_An excavation site that has fallen under alien attack."
+	multiplayer		true
+	teams			2
+	maxaliens		5
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+
+	maxaliens		17
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		african
+		oriental
+	}
+
+	populations
+	{
+		village
+		rural
+		nonpopulation
+	}
+}
+
+mapdef estate
+{
+	map				estate
+	description		"_An estate owned by rich and influential people."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+
+	maxaliens		12
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		//any
+	}
+}
+
+mapdef italy
+{
+	map				+italy
+	description		"_A small office in a mountainous region."
+	teams			2
+	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+
+	maxaliens		22
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		rural
+		nonpopulation
+	}
+}
+
+mapdef mart
+{
+	map			+mart
+	description		"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+
+	maxaliens		16
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		mountain
+		cold
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		urban
+		village
+		suburban
+	}
+}
+
+mapdef mine
+{
+	map				mine
+	description		"_An old mine."
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		15
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		rural
+		nonpopulation
+	}
+
+}
+
+mapdef transport
+{
+	map				+transport
+	description		"_An industial area, used for loading and unloading goods."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		19
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef bunker
+{
+	map				bunker
+	description		"_A bunker used in a previous conflict."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+		mountain
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		rural
+		nonpopulation
+	}
+}
+
+mapdef dam
+{
+	map				dam
+	description		"_A hydroelectricity dam that is threatened by the alien invaders."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		10
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		//any
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		rural
+		nonpopulation
+	}
+}
+
+mapdef japan
+{
+	map				+japan
+	description		"_A classic eastern suburban area."
+	teams			2
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		16
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		eastern
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef spedition
+{
+	map				+spedition
+	description		"_A small industrial area."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		7
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef stadium
+{
+	map				+stadium
+	description		"_A stadium used for various recreational events."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+
+	maxaliens		5
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		grass
+	}
+
+	cultures
+	{
+		eastern
+		western
+	}
+
+	populations
+	{
+		urban
+		village
+		suburban
+	}
+}
+
+mapdef druglord
+{
+	map				"+druglord"
+	description		"_A tropical area where several suspected criminals have made their homes."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		11
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		rural
+	}
+}
+
+mapdef eaglenest
+{
+	map				+eaglenest
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		9
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+		cold
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+		village
+		suburban
+		rural
+	}
+}
+
+mapdef scout_crash
+{
+	map				scout_crash
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		4
+
+	ufos
+	{
+		crash_scout
+	}
+
+	terrains
+	{
+		cold
+		arctic
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		//any
+	}
+}
+
+mapdef farm
+{
+	map				farm
+	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+	size			"medium"
+	teams			2
+	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		12
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		village
+		suburban
+	}
+}
+
+
+
+mapdef rivertown
+{
+	map				rivertown
+	description		"_A rather old-fashioned suburban district."
+	multiplayer		true
+	teams			4
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		16
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef city_disco
+{
+	map				"+city_disco"
+	description		"_A small neighbourhood in a warm urban region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		6
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
+mapdef city_train
+{
+	map				"city_train"
+	description		"_A small neighbourhood in a warm urban region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		6
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
+mapdef gasstation
+{
+	map				"+gasstation"
+	description		"_A place where citizens come to replenish their vehicles' fuel supply."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		4
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef oriental
+{
+	map				oriental
+	description		"_An urban district in an oriental region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		16
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef oriental_mosque
+{
+	map				oriental_mosque
+	description		"_An urban district in an oriental region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		16
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef subway
+{
+	map				subway
+	description		"_A subway station in a suburban part of town."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		desert
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
+mapdef tower
+{
+	map				tower
+	description		"_An office complex in the center of town."
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		desert
+		grass
+		cold
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
+mapdef village
+{
+	map				village
+	description		"_A suburban district."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		11
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef military_convoy
+{
+	map				"+military_convoy"
+	description		"_A military convoy has caught the eye of the aliens."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		11
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		mountain
+		grass
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nonpopulation
+		rural
+		village
+	}
+}
+
+mapdef fighter_crash
+{
+	map				fighter_crash
+	description		"_A small UFO has crashed in this mining region."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		19
+
+	ufos
+	{
+		craft_crash_fighter
+	}
+
+	terrains
+	{
+		desert
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nonpopulation
+		rural
+	}
+}
+
+mapdef bridge
+{
+	map				"+bridge"
+	description		"_A small UFO has crashed in this mining region."
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		19
+
+	ufos
+	{
+		craft_crash_fighter
+	}
+
+	terrains
+	{
+		desert
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nonpopulation
+		rural
+	}
+}
+
+mapdef construction
+{
+	map				"+construction"
+	description		"_An office complex under constuction."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef harbor
+{
+	map				harbor
+	description		"_A local harbor."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef office
+{
+	map				office
+	description		"_An office complex on the outskirts of town."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		18
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef resort
+{
+	map				resort
+	description		"_A luxurious vacation resort."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef africa
+{
+	map				"+africa"
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	description		"_An african suburb that has received a visit from a Harvester."
+	maxaliens		24
+
+	ufos
+	{
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		african
+	}
+
+	populations
+	{
+		village
+		suburban
+		urban
+	}
+}
+
+mapdef harvester_crash
+{
+	map				harvester_crash
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	description		"_An alien Harvester has crashed in the wastelands."
+	maxaliens		24
+
+	ufos
+	{
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nonpopulation
+	}
+}
+
+mapdef lake_ice
+{
+	map				lake_ice
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	description		"_A small settlement in winter."
+	maxaliens		16
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		arctic
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		//any
+	}
+}
+
+mapdef lake_ice_big
+{
+	map				lake_ice_big
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
+}
+
+mapdef shelter
+{
+	map				"+shelter"
+	description		"_A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+	size			"medium"
+	teams			4
+	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		21
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		mountain
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+		//any
+	}
+}
+
+mapdef bomber_city
+{
+	map				"+bomber_city"
+	description		"_A Bomber has landed in the middle of a city."
+	multiplayer		true
+	teams			4
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		16
+
+	ufos
+	{
+		craft_ufo_bomber
+	}
+
+	terrains
+	{
+		cold
+		grass
+		desert
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		suburban
+		urban
+	}
+}
+
+mapdef community_centre
+{
+	map				"+community_centre"
+	description		"_A place where people come to relax and mingle."
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef laboratory
+{
+	map				+laboratory
+	description		"_A laboratory where they examined found UFO wreck tiles."
+	multiplayer		true
+	teams			3
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+		grass
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef fueldump
+{
+	map				fueldump
+	description		"_A fuel depot the aliens try to destroy."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		cold
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+	}
+}
+
+mapdef wilderness
+{
+	map				wilderness
+	description		"_Wilderness terror mission."
+	multiplayer		true
+	teams			2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+	}
+	maxaliens		8
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+	}
+}
+
+mapdef forest_small
+{
+	map				"+forest"
+	param			small
+	multiplayer		false
+	description		"_Aliens are up to no good in this sparsely populated forest region."
+	size			"small"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
+
+mapdef forest_large
+{
+	map				"+forest"
+	param			large
+	multiplayer		false
+	description		"_Aliens are up to no good in this sparsely populated forest region."
+	size			"large"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
+
+///////////////////////
+// UFOCRASH RANDOM MAPS
+///////////////////////
+
+mapdef ufocrash
+{
+	map				"+ufocrash"
+	multiplayer		false
+	description		"_UFO Crashsite."
+	storyrelated	true
+	maxaliens		8
+	ufos
+	{
+		craft_crash_scout
+		craft_crash_fighter
+		craft_crash_corrupter
+		craft_crash_harvester
+		craft_crash_supply
+	}
+}
+
+///////////////////////
+// ALIEN BASE
+///////////////////////
+
+mapdef alienbase
+{
+	map				"+alienbase"
+	multiplayer		false
+	description		"_An alien base."
+	storyrelated	true
+	maxaliens		8
+}
+
+///////////////////////
+// BASE ATTACK
+///////////////////////
+
+mapdef baseattack
+{
+	map				".baseattack"
+	multiplayer		false
+	description		"_Base is under attack."
+	maxaliens		9
+}

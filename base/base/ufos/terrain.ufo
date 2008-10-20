@@ -1,0 +1,586 @@
+// Put footsteps and particles for different terrain into this file
+
+// ==========================
+//  G R A S S
+// ==========================
+
+// normal grass
+terrain tex_nature/grass001 {
+// tex_nature/grass001 estate
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// normal grass
+terrain tex_nature/grass {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.5
+}
+
+// lush grass
+terrain tex_nature/grass_lush {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_dry_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_dry_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_dry_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_green_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_green_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// mowed grass
+terrain tex_nature/grass_mowed_green_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// tall grass
+terrain tex_nature/grass_tall_dry_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_dry_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_dry_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_green_a {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_green_b {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// tall grass
+terrain tex_nature/grass_tall_green_c {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.3
+}
+
+// normal grass
+terrain tex_nature/grass003 {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_d2r {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_hor {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_l2d {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_l2u {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_start_h {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_start_v {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_t_fork {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_x_fork {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_u2r {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// beaten path in grass
+terrain tex_nature/grass003_way_vert {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.4
+}
+
+// normal grass
+terrain tex_nature/grass004 {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.5
+}
+
+// high grass
+terrain tex_nature/jungle002 {
+// tex_nature/jungle002 estate
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.2
+}
+
+// ==========================
+//  NATURE
+// ==========================
+
+// bed of potatoes
+terrain tex_nature/potatoes {
+	footstepsound "footsteps/flesh3"
+	bouncefraction 0.3
+}
+
+// flowers
+terrain tex_nature/flower {
+	footstepsound "footsteps/grass2"
+	bouncefraction 0.8
+}
+
+// straw
+terrain tex_misc/straw {
+	bouncefraction 0.3
+}
+
+// ==========================
+//  D O O R S
+// ==========================
+
+// metal doors
+terrain tex_doors/door001 {
+	footstepsound "footsteps/mech4"
+}
+
+// metal doors
+terrain tex_doors/door007 {
+	footstepsound "footsteps/mech4"
+}
+
+// ==========================
+//  R O A D S
+// ==========================
+
+// asphalt road
+terrain tex_streets/street001 {
+// tex_streets/street001 dam it_main
+}
+
+// gravel street
+terrain tex_streets/street006 {
+}
+
+// gravel road
+terrain tex_nature/railway {
+}
+
+// ==========================
+//  W O O D E N  F L O O R S
+// ==========================
+
+// wooden floor
+terrain tex_material/wood001 {
+// tex_material/wood001 dam
+}
+
+// wooden floor (big wood squares)
+terrain tex_buildings/floor001 {
+// tex_buildings/floor001 estate
+}
+
+// parquet floor
+terrain tex_buildings/floor002 {
+// tex_buildings/floor002 estate
+}
+
+// ==========================
+//  S T O N E
+// ==========================
+
+// floor in barracks
+terrain tex_buildings/concrete001 {
+}
+
+// concrete walkway
+terrain tex_buildings/concrete005 {
+// tex_buildings/concrete005 dam
+}
+
+// concrete ground and stairs
+terrain tex_buildings/concrete007 {
+}
+
+// stone ruins
+terrain tex_buildings/floor_se01 {
+// tex_buildings/floor_se01 estate
+	footstepsound "footsteps/stone2"
+}
+
+//concrete floor
+terrain tex_buildings/wall001 {
+	footstepsound "footsteps/stone1"
+}
+
+// concrete floor
+terrain tex_buildings/wall003 {
+// tex_buildings/wall003 estate
+	footstepsound "footsteps/stone1"
+}
+
+// concrete floor
+terrain tex_buildings/floor003 {
+	footstepsound "footsteps/stone1"
+}
+
+// ==========================
+//  P O T T E R Y
+// ==========================
+
+// terracotta floor
+terrain tex_buildings/floor_se02 {
+}
+
+//terracotta floor
+terrain tex_buildings/floor013 {
+}
+
+// terracotta floor
+terrain tex_buildings/floor021 {
+// tex_buildings/floor021 it_main
+}
+
+// tile floor (pottery one)
+terrain tex_buildings/floor006 {
+}
+
+// tile floor (pottery one)
+terrain tex_buildings/floor008 {
+// tex_buildings/floor008 estate
+}
+
+// ==========================
+//  R O O F S
+// ==========================
+
+// roof with tile
+terrain tex_buildings/roof003 {
+}
+
+// roof with gravel
+terrain tex_buildings/floor005 {
+}
+
+// ==========================
+//  D I R T  A N D  S A N D
+// ==========================
+
+// sand
+terrain tex_nature/desert004 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 0.1
+}
+
+// sand
+terrain tex_nature/desert006 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 0.1
+}
+
+// sand
+terrain tex_nature/desert007 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 1
+}
+
+// sand
+terrain tex_nature/desert008 {
+	footstepsound "footsteps/sand2"
+	bouncefraction 0.1
+}
+
+// dirt ground
+terrain tex_nature/dirt_se01 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se02 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se03 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se05 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se06 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se08 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se09 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se10 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se11 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt_se12 {
+	footstepsound "footsteps/softrug1"
+	bouncefraction 0.8
+}
+
+// dirt ground
+terrain tex_nature/dirt001 {
+	footstepsound "footsteps/softrug2"
+	bouncefraction 0.3
+}
+
+// dirt ground
+terrain tex_nature/dirt002 {
+	footstepsound "footsteps/softrug2"
+	bouncefraction 0.3
+}
+
+// ==========================
+//  R O C K
+// ==========================
+
+// rock with some moss
+terrain tex_nature/rock002 {
+}
+
+// rock ground
+terrain tex_nature/rock005 {
+}
+
+// rock ground
+terrain tex_nature/rock006 {
+// tex_nature/rock006 it_main
+}
+
+// rock ground
+terrain tex_nature/rock007 {
+}
+
+// ==========================
+//  S T A I R S
+// ==========================
+
+// stone stairs
+terrain tex_buildings/wall_sel2 {
+}
+
+// wooden stairs
+terrain tex_material/wood002 {
+// tex_material/wood002 dam
+	footstepsound "footsteps/squeak_2"
+}
+
+// ==========================
+//  C A R P E T S
+// ==========================
+
+// smooth ones
+terrain tex_buildings/carpet001 {
+// tex_buildings/carpet001 estate
+}
+terrain tex_buildings/carpet002 {
+// tex_buildings/carpet002 estate
+}
+terrain tex_buildings/carpet005 {
+// tex_buildings/carpet005 estate
+}
+terrain tex_furniture/jap_carpet001 {
+}
+terrain tex_carpets/carpet140 {
+}
+
+// covering
+terrain tex_furniture/textil001 {
+}
+
+// ==========================
+//  O T H E R  F L O O R S
+// ==========================
+
+// linoleum floor
+terrain tex_buildings/floor015 {
+// tex_buildings/floor015 estate it_main
+	footstepsound "footsteps/linoleum"
+}
+
+// linoleum floor
+terrain tex_buildings/floor019 {
+	footstepsound "footsteps/linoleum"
+}
+
+// PCV-type floor
+terrain tex_buildings/floor016 {
+	footstepsound "footsteps/step_3"
+}
+
+//PCV-type floor
+terrain tex_base/lab_floor001 {
+// tex_base/lab_floor001 dam
+	footstepsound "footsteps/step_3"
+}
+
+// PCV-type floor
+terrain tex_buildings/floor017 {
+	footstepsound "footsteps/step_3"
+}
+
+// ==========================
+//  H E L I P A D
+// ==========================
+terrain tex_base/helipad1 {
+// tex_base/helipad1 dam
+}
+
+terrain tex_base/helipad2 {
+// tex_base/helipad2 dam
+}
+
+terrain tex_base/helipad3 {
+// tex_base/helipad3 dam
+}
+
+terrain tex_base/helipad4 {
+// tex_base/helipad4 dam
+}
+
+terrain tex_nature/snow002 {
+// tex_nature/snow002 industrial
+	footstepsound "footsteps/snow1"
+}
+
+###
+# Not sorted, added by footstepper.sh
+###
+
+terrain tex_buildings/concrete004 {
+// tex_buildings/concrete004 estate industrial
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_buildings/roof006 {
+// tex_buildings/roof006 industrial
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_buildings_snow/concrete001 {
+// tex_buildings_snow/concrete001 uc_d03 uc_d01 industrial
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_material/metall009 {
+// tex_material/metall009 st_i01 industrial
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_buildings/wall019 {
+// tex_buildings/wall019 it_main
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_buildings/wall_se12 {
+// tex_buildings/wall_se12 it_main
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_furniture/jap_carpet002 {
+// tex_furniture/jap_carpet002 estate
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_base/wall001 {
+// tex_base/wall001 dam
+footstepsound "footsteps/water_in"
+}
+
+terrain tex_misc/wood_palet {
+// tex_misc/wood_palet dam
+footstepsound "footsteps/water_in"
+}
+

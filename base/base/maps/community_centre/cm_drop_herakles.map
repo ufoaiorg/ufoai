@@ -1,0 +1,207 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"maxlevel" "3"
+"maxteams" "2"
+// brush 0
+{
+( 404 32 2 ) ( 404 -32 2 ) ( 400 32 2 ) tex_streets/street001 64 224 0 1 1 65280 0 0
+( 436 512 4 ) ( 432 512 4 ) ( 436 512 0 ) tex_common/nodraw 32 0 0 1 1 65280 128 0
+( 768 0 4 ) ( 768 0 0 ) ( 768 -64 4 ) tex_common/nodraw 0 0 0 1 1 65280 0 0
+( 400 -32 0 ) ( 404 -32 0 ) ( 400 32 0 ) tex_common/nodraw 0 32 0 1 1 65280 0 0
+( 400 0 0 ) ( 400 0 4 ) ( 404 0 0 ) tex_common/nodraw 0 0 0 1 1 65280 0 0
+( 0 1536 64 ) ( 0 0 -64 ) ( 0 1536 -64 ) tex_common/nodraw 0 0 0 1 1 65280 0 0
+}
+}
+// entity 1
+{
+"classname" "info_human_start"
+"origin" "304 48 28"
+}
+// entity 2
+{
+"classname" "info_human_start"
+"origin" "464 48 28"
+}
+// entity 3
+{
+"classname" "info_human_start"
+"origin" "560 48 28"
+}
+// entity 4
+{
+"classname" "info_human_start"
+"origin" "176 464 28"
+}
+// entity 5
+{
+"classname" "info_human_start"
+"origin" "80 432 28"
+}
+// entity 6
+{
+"classname" "info_human_start"
+"origin" "208 80 28"
+}
+// entity 7
+{
+"classname" "info_human_start"
+"origin" "304 432 28"
+}
+// entity 8
+{
+"classname" "info_human_start"
+"origin" "496 432 28"
+}
+// entity 9
+{
+"classname" "info_human_start"
+"origin" "624 464 28"
+}
+// entity 10
+{
+"classname" "info_human_start"
+"origin" "720 368 28"
+}
+// entity 11
+{
+"classname" "info_player_start"
+"origin" "80 16 32"
+"team" "1"
+"angle" "90"
+}
+// entity 12
+{
+"classname" "info_player_start"
+"origin" "144 80 32"
+"team" "1"
+"angle" "90"
+}
+// entity 13
+{
+"classname" "info_player_start"
+"origin" "240 48 32"
+"team" "1"
+"angle" "90"
+}
+// entity 14
+{
+"classname" "info_player_start"
+"origin" "432 48 32"
+"team" "1"
+"angle" "90"
+}
+// entity 15
+{
+"classname" "info_player_start"
+"origin" "592 464 32"
+"team" "1"
+"angle" "90"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"origin" "464 464 32"
+"team" "1"
+"angle" "90"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"origin" "240 432 32"
+"team" "1"
+"angle" "90"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"origin" "144 464 32"
+"team" "1"
+"angle" "90"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"origin" "112 48 32"
+"team" "1"
+"angle" "90"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"origin" "240 496 32"
+"team" "1"
+"angle" "90"
+}
+// entity 21
+{
+"classname" "misc_model"
+"origin" "404 254 36"
+"model" "models/aircraft/drop_herakles/herakles_pod.md2"
+"spawnflags" "255"
+"angle" "-180"
+}
+// entity 22
+{
+"classname" "func_group"
+// brush 0
+{
+( 64 160 120 ) ( 64 384 120 ) ( 576 160 120 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 64 144 64 ) ( 576 144 64 ) ( 64 144 32 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+( 576 368 32 ) ( 576 368 64 ) ( 64 368 32 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+( 576 384 32 ) ( 576 160 32 ) ( 576 384 64 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 80 144 -64 ) ( 48 256 -64 ) ( 80 144 64 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 48 256 -64 ) ( 80 368 -64 ) ( 48 256 64 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 80 704 120 ) ( 48 704 64 ) ( 80 832 120 ) tex_common/weaponclip 0 2 0 -1 1 33554432 0 0
+( 48 704 62 ) ( 92 704 0 ) ( 48 832 62 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 562 704 0 ) ( 578 704 34 ) ( 562 832 0 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
+( 928 144 16 ) ( 928 368 16 ) ( 800 144 16 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 928 368 64 ) ( 928 344 104 ) ( 800 368 64 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+( 928 344 104 ) ( 928 256 120 ) ( 800 344 104 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 928 252 120 ) ( 928 160 104 ) ( 800 252 120 ) tex_common/weaponclip 32 0 180 1 1 33554432 0 0
+( 928 160 104 ) ( 928 144 64 ) ( 800 160 104 ) tex_common/weaponclip 32 0 0 -1 1 33554432 0 0
+}
+}
+// entity 23
+{
+"classname" "func_group"
+// brush 0
+{
+( 64 160 120 ) ( 64 384 120 ) ( 576 160 120 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 64 144 64 ) ( 576 144 64 ) ( 64 144 32 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+( 576 368 32 ) ( 576 368 64 ) ( 64 368 32 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+( 576 384 32 ) ( 576 160 32 ) ( 576 384 64 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 80 144 -64 ) ( 48 256 -64 ) ( 80 144 64 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 48 256 -64 ) ( 80 368 -64 ) ( 48 256 64 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 80 704 120 ) ( 48 704 64 ) ( 80 832 120 ) tex_common/nodraw 0 2 0 -1 1 0 128 0
+( 48 704 62 ) ( 92 704 0 ) ( 48 832 62 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 562 704 0 ) ( 578 704 34 ) ( 562 832 0 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
+( 928 144 16 ) ( 928 368 16 ) ( 800 144 16 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 928 368 64 ) ( 928 344 104 ) ( 800 368 64 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+( 928 344 104 ) ( 928 256 120 ) ( 800 344 104 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 928 252 120 ) ( 928 160 104 ) ( 800 252 120 ) tex_common/nodraw 32 0 180 1 1 0 128 0
+( 928 160 104 ) ( 928 144 64 ) ( 800 160 104 ) tex_common/nodraw 32 0 0 -1 1 0 128 0
+}
+}
+// entity 24
+{
+"classname" "func_group"
+// brush 0
+{
+( 64 160 120 ) ( 64 384 120 ) ( 576 160 120 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 64 144 64 ) ( 576 144 64 ) ( 64 144 32 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 576 368 32 ) ( 576 368 64 ) ( 64 368 32 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 576 384 32 ) ( 576 160 32 ) ( 576 384 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 80 144 -64 ) ( 48 256 -64 ) ( 80 144 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 48 256 -64 ) ( 80 368 -64 ) ( 48 256 64 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 80 704 120 ) ( 48 704 64 ) ( 80 832 120 ) tex_common/actorclip 0 2 0 -1 1 65536 0 0
+( 48 704 62 ) ( 92 704 0 ) ( 48 832 62 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 562 704 0 ) ( 578 704 34 ) ( 562 832 0 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
+( 928 144 16 ) ( 928 368 16 ) ( 800 144 16 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 928 368 64 ) ( 928 344 104 ) ( 800 368 64 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+( 928 344 104 ) ( 928 256 120 ) ( 800 344 104 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 928 252 120 ) ( 928 160 104 ) ( 800 252 120 ) tex_common/actorclip 32 0 180 1 1 65536 0 0
+( 928 160 104 ) ( 928 144 64 ) ( 800 160 104 ) tex_common/actorclip 32 0 0 -1 1 65536 0 0
+}
+}

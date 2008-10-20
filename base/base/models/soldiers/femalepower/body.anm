@@ -1,0 +1,85 @@
+// character animations
+// name				start	end		fps
+
+// Showcase: All animations - mostly for checking.
+showcase			0		452		22
+
+// The death animations that are choosen randomly
+death1				0		27		18
+death2				28		46		18
+death3				47		59		18
+dead1				27		27		1
+dead2				46		46		1
+dead3				59		59		1
+
+// Standing "animations" (0=nothing/grenades, 1=rifles, 2=pistol, 3=rpg)
+stand0				60		60		1
+stand1				62		62		1
+stand2				64		64		1
+stand3				66		66		1
+
+// Crouched-standing "animations" (0=nothing/grenades, 1=rifles, 2=pistol, 3=rpg)
+cstand0				68		68		1
+cstand1				70		70		1
+cstand2				72		72		1
+cstand3				74		74		1
+
+// Walking animations (0=nothing/grenades, 1=rifles, 2=pistol, 3=rpg)
+walk0				76		94		22
+walk1				95		113		22
+walk2				114		132		22
+walk3				133		151		22
+
+// Crouched-walking animations (0=nothing/grenades, 1=rifles, 2=pistol, 3=rpg)
+cwalk0				152		169		15
+cwalk1_Rifle				170		187		15
+cwalk2_Pistol				188		206		15
+cwalk3_RPG				207		224		15
+
+// Panic animation
+panic0				225		227		3
+
+// "animation" used for menu-display (currently a copy of stand0)
+stand_menu				60		60		1
+
+// "animation" used for ???? (currently a copy of stand0)
+stand_still				225		225		1
+
+shoot_rifle				243		257		22
+shoot_biggun				258		272		22	// currently a frame-by-frame copy of rifle
+shoot_melee				273		282		22
+shoot_pistol				283		297		22
+shoot_pistol_d				298		312		22
+shoot_grenade				313		322		22
+//shoot_item				323		332		22	// no animation yet
+shoot_rpg				333		347		22
+cshoot_rifle				348		362		22
+cshoot_biggun				363		377		22	// currently a frame-by-frame copy of rifle
+//cshoot_melee				378		387		22	// no animation yet
+cshoot_pistol				388		402		22
+cshoot_pistol_d				403		417		22
+cshoot_grenade				418		427		22
+//cshoot_item				428		437		22	// no animation yet
+cshoot_rpg				438		452		22
+
+// IDLE animations (right now these are reused "stand" animations)
+move_rifle				62		62		1	//stand1
+move_biggun				62		62		1	//stand1
+move_melee				60		60		1	//stand0
+move_pistol				64		64		1	//stand2
+move_pistol_d				64		64		1	//stand2
+move_grenade				60		60		1	//stand0
+move_item				60		60		1	//stand0
+move_rpg				66		66		1	//stand3
+
+// IDLE crouched animations (right now these are reused "cstand" animations)
+cmove_rifle				70		70		1	//cstand1
+cmove_biggun				70		70		1	//cstand1
+cmove_melee				68		68		1	//cstand0
+cmove_pistol				72		72		1	//cstand2
+cmove_pistol_d				72		72		1	//cstand2
+cmove_grenade				68		68		1	//cstand0
+cmove_item				68		68		1	//cstand0
+cmove_rpg				74		74		1	//cstand3
+
+// End of file

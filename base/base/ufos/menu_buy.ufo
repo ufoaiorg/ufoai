@@ -1,0 +1,1552 @@
+// ==================
+// BUY/SELL MENU
+// ==================
+
+menu buy
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/buy_ul
+		pos	"0 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/buy_ll
+		pos	"0 512"
+	}
+
+	pic back_ur
+	{
+		image	menu/buy_ur
+		pos	"512 0"
+	}
+
+	pic back_lr
+	{
+		image	menu/buy_lr
+		pos	"512 512"
+	}
+
+	// ==================
+	// lists
+	// ==================
+
+	text market
+	{
+		color	"0 .78 0 1"
+		num		TEXT_MARKET_NAMES
+		height	"28"
+		format	"25 0"
+		pos		"55 40"
+		size	"265 700"
+		click
+		wheel	{ cmd "market_scroll;" }
+		mousefx	true
+		longlines prettychop
+	}
+
+	text market_storage
+	{
+		color	"0 .78 0 1"
+		align	ur
+		num		TEXT_MARKET_STORAGE
+		height	"28"
+		size	"40 700"
+		format	"25 0"
+		pos	"370 40"
+	}
+
+	text market_market
+	{
+		color	"0 .78 0 1"
+		align	ur
+		num		TEXT_MARKET_MARKET
+		height	"28"
+		size	"40 700"
+		format	"25 0"
+		pos		"446 40"
+	}
+
+	text market_prices
+	{
+		color	"0 .78 0 1"
+		align	ur
+		num		TEXT_MARKET_PRICES
+		height	"28"
+		size	"80 700"
+		format	"25 0"
+		pos		"542 40"
+		wheel	{ cmd "market_scroll;" }
+	}
+
+	// =========================
+	// buy/sell/autosell buttons
+	// =========================
+	confunc buy_autoselle0 { *bt_autosell0 image menu/button_autosell1
+		*bt_autosell0 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld0 { *bt_autosell0 image menu/button_autosell2
+		*bt_autosell0 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle1 { *bt_autosell1 image menu/button_autosell1
+		*bt_autosell1 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld1 { *bt_autosell1 image menu/button_autosell2
+		*bt_autosell1 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle2 { *bt_autosell2 image menu/button_autosell1
+		*bt_autosell2 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld2 { *bt_autosell2 image menu/button_autosell2
+		*bt_autosell2 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle3 { *bt_autosell3 image menu/button_autosell1
+		*bt_autosell3 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld3 { *bt_autosell3 image menu/button_autosell2
+		*bt_autosell3 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle4 { *bt_autosell4 image menu/button_autosell1
+		*bt_autosell4 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld4 { *bt_autosell4 image menu/button_autosell2
+		*bt_autosell4 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle5 { *bt_autosell5 image menu/button_autosell1
+		*bt_autosell5 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld5 { *bt_autosell5 image menu/button_autosell2
+		*bt_autosell5 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle6 { *bt_autosell6 image menu/button_autosell1
+		*bt_autosell6 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld6 { *bt_autosell6 image menu/button_autosell2
+		*bt_autosell6 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle7 { *bt_autosell7 image menu/button_autosell1
+		*bt_autosell7 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld7 { *bt_autosell7 image menu/button_autosell2
+		*bt_autosell7 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle8 { *bt_autosell8 image menu/button_autosell1
+		*bt_autosell8 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld8 { *bt_autosell8 image menu/button_autosell2
+		*bt_autosell8 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle9 { *bt_autosell9 image menu/button_autosell1
+		*bt_autosell9 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld9 { *bt_autosell9 image menu/button_autosell2
+		*bt_autosell9 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle10 { *bt_autosell10 image menu/button_autosell1
+		*bt_autosell10 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld10 { *bt_autosell10 image menu/button_autosell2
+		*bt_autosell10 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle11 { *bt_autosell11 image menu/button_autosell1
+		*bt_autosell11 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld11 { *bt_autosell11 image menu/button_autosell2
+		*bt_autosell11 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle12 { *bt_autosell12 image menu/button_autosell1
+		*bt_autosell12 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld12 { *bt_autosell12 image menu/button_autosell2
+		*bt_autosell12 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle13 { *bt_autosell13 image menu/button_autosell1
+		*bt_autosell13 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld13 { *bt_autosell13 image menu/button_autosell2
+		*bt_autosell13 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle14 { *bt_autosell14 image menu/button_autosell1
+		*bt_autosell14 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld14 { *bt_autosell14 image menu/button_autosell2
+		*bt_autosell14 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle15 { *bt_autosell15 image menu/button_autosell1
+		*bt_autosell15 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld15 { *bt_autosell15 image menu/button_autosell2
+		*bt_autosell15 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle16 { *bt_autosell16 image menu/button_autosell1
+		*bt_autosell16 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld16 { *bt_autosell16 image menu/button_autosell2
+		*bt_autosell16 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle17 { *bt_autosell17 image menu/button_autosell1
+		*bt_autosell17 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld17 { *bt_autosell17 image menu/button_autosell2
+		*bt_autosell17 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle18 { *bt_autosell18 image menu/button_autosell1
+		*bt_autosell18 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld18 { *bt_autosell18 image menu/button_autosell2
+		*bt_autosell18 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle19 { *bt_autosell19 image menu/button_autosell1
+		*bt_autosell19 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld19 { *bt_autosell19 image menu/button_autosell2
+		*bt_autosell19 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle20 { *bt_autosell20 image menu/button_autosell1
+		*bt_autosell20 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld20 { *bt_autosell20 image menu/button_autosell2
+		*bt_autosell20 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle21 { *bt_autosell21 image menu/button_autosell1
+		*bt_autosell21 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld21 { *bt_autosell21 image menu/button_autosell2
+		*bt_autosell21 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle22 { *bt_autosell22 image menu/button_autosell1
+		*bt_autosell22 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld22 { *bt_autosell22 image menu/button_autosell2
+		*bt_autosell22 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle23 { *bt_autosell23 image menu/button_autosell1
+		*bt_autosell23 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld23 { *bt_autosell23 image menu/button_autosell2
+		*bt_autosell23 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle24 { *bt_autosell24 image menu/button_autosell1
+		*bt_autosell24 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld24 { *bt_autosell24 image menu/button_autosell2
+		*bt_autosell24 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle25 { *bt_autosell25 image menu/button_autosell1
+		*bt_autosell25 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld25 { *bt_autosell25 image menu/button_autosell2
+		*bt_autosell25 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle26 { *bt_autosell26 image menu/button_autosell1
+		*bt_autosell26 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld26 { *bt_autosell26 image menu/button_autosell2
+		*bt_autosell26 tooltip "_Item autosell disabled"
+	}
+	confunc buy_autoselle27 { *bt_autosell27 image menu/button_autosell1
+		*bt_autosell27 tooltip "_Item autosell enabled"
+	}
+	confunc buy_autoselld27 { *bt_autosell27 image menu/button_autosell2
+		*bt_autosell27 tooltip "_Item autosell disabled"
+	}
+
+	// =========================
+	// hide/show functions for the buy/sell entries in the list
+	// =========================
+
+	confunc buy_hide0 { *bt_autosell0 invis true	*bt_buy0 invis true	*bt_sell0 invis true  }
+	confunc buy_hide1 { *bt_autosell1 invis true	*bt_buy1 invis true	*bt_sell1 invis true  }
+	confunc buy_hide2 { *bt_autosell2 invis true	*bt_buy2 invis true	*bt_sell2 invis true  }
+	confunc buy_hide3 { *bt_autosell3 invis true	*bt_buy3 invis true	*bt_sell3 invis true  }
+	confunc buy_hide4 { *bt_autosell4 invis true	*bt_buy4 invis true	*bt_sell4 invis true  }
+	confunc buy_hide5 { *bt_autosell5 invis true	*bt_buy5 invis true	*bt_sell5 invis true  }
+	confunc buy_hide6 { *bt_autosell6 invis true	*bt_buy6 invis true	*bt_sell6 invis true  }
+	confunc buy_hide7 { *bt_autosell7 invis true	*bt_buy7 invis true	*bt_sell7 invis true  }
+	confunc buy_hide8 { *bt_autosell8 invis true	*bt_buy8 invis true	*bt_sell8 invis true  }
+	confunc buy_hide9 { *bt_autosell9 invis true	*bt_buy9 invis true	*bt_sell9 invis true  }
+	confunc buy_hide10 { *bt_autosell10 invis true	*bt_buy10 invis true	*bt_sell10 invis true  }
+	confunc buy_hide11 { *bt_autosell11 invis true	*bt_buy11 invis true	*bt_sell11 invis true  }
+	confunc buy_hide12 { *bt_autosell12 invis true	*bt_buy12 invis true	*bt_sell12 invis true  }
+	confunc buy_hide13 { *bt_autosell13 invis true	*bt_buy13 invis true	*bt_sell13 invis true  }
+	confunc buy_hide14 { *bt_autosell14 invis true	*bt_buy14 invis true	*bt_sell14 invis true  }
+	confunc buy_hide15 { *bt_autosell15 invis true	*bt_buy15 invis true	*bt_sell15 invis true  }
+	confunc buy_hide16 { *bt_autosell16 invis true	*bt_buy16 invis true	*bt_sell16 invis true  }
+	confunc buy_hide17 { *bt_autosell17 invis true	*bt_buy17 invis true	*bt_sell17 invis true  }
+	confunc buy_hide18 { *bt_autosell18 invis true	*bt_buy18 invis true	*bt_sell18 invis true  }
+	confunc buy_hide19 { *bt_autosell19 invis true	*bt_buy19 invis true	*bt_sell19 invis true  }
+	confunc buy_hide20 { *bt_autosell20 invis true	*bt_buy20 invis true	*bt_sell20 invis true  }
+	confunc buy_hide21 { *bt_autosell21 invis true	*bt_buy21 invis true	*bt_sell21 invis true  }
+	confunc buy_hide22 { *bt_autosell22 invis true	*bt_buy22 invis true	*bt_sell22 invis true  }
+	confunc buy_hide23 { *bt_autosell23 invis true	*bt_buy23 invis true	*bt_sell23 invis true  }
+	confunc buy_hide24 { *bt_autosell24 invis true	*bt_buy24 invis true	*bt_sell24 invis true  }
+	confunc buy_hide25 { *bt_autosell25 invis true	*bt_buy25 invis true	*bt_sell25 invis true  }
+	confunc buy_hide26 { *bt_autosell26 invis true	*bt_buy26 invis true	*bt_sell26 invis true  }
+	confunc buy_hide27 { *bt_autosell27 invis true	*bt_buy27 invis true	*bt_sell27 invis true  }
+
+	confunc buy_show0 { *bt_autosell0 invis false	*bt_buy0 invis false	*bt_sell0 invis false  }
+	confunc buy_show1 { *bt_autosell1 invis false	*bt_buy1 invis false	*bt_sell1 invis false  }
+	confunc buy_show2 { *bt_autosell2 invis false	*bt_buy2 invis false	*bt_sell2 invis false  }
+	confunc buy_show3 { *bt_autosell3 invis false	*bt_buy3 invis false	*bt_sell3 invis false  }
+	confunc buy_show4 { *bt_autosell4 invis false	*bt_buy4 invis false	*bt_sell4 invis false  }
+	confunc buy_show5 { *bt_autosell5 invis false	*bt_buy5 invis false	*bt_sell5 invis false  }
+	confunc buy_show6 { *bt_autosell6 invis false	*bt_buy6 invis false	*bt_sell6 invis false  }
+	confunc buy_show7 { *bt_autosell7 invis false	*bt_buy7 invis false	*bt_sell7 invis false  }
+	confunc buy_show8 { *bt_autosell8 invis false	*bt_buy8 invis false	*bt_sell8 invis false  }
+	confunc buy_show9 { *bt_autosell9 invis false	*bt_buy9 invis false	*bt_sell9 invis false  }
+	confunc buy_show10 { *bt_autosell10 invis false	*bt_buy10 invis false	*bt_sell10 invis false  }
+	confunc buy_show11 { *bt_autosell11 invis false	*bt_buy11 invis false	*bt_sell11 invis false  }
+	confunc buy_show12 { *bt_autosell12 invis false	*bt_buy12 invis false	*bt_sell12 invis false  }
+	confunc buy_show13 { *bt_autosell13 invis false	*bt_buy13 invis false	*bt_sell13 invis false  }
+	confunc buy_show14 { *bt_autosell14 invis false	*bt_buy14 invis false	*bt_sell14 invis false  }
+	confunc buy_show15 { *bt_autosell15 invis false	*bt_buy15 invis false	*bt_sell15 invis false  }
+	confunc buy_show16 { *bt_autosell16 invis false	*bt_buy16 invis false	*bt_sell16 invis false  }
+	confunc buy_show17 { *bt_autosell17 invis false	*bt_buy17 invis false	*bt_sell17 invis false  }
+	confunc buy_show18 { *bt_autosell18 invis false	*bt_buy18 invis false	*bt_sell18 invis false  }
+	confunc buy_show19 { *bt_autosell19 invis false	*bt_buy19 invis false	*bt_sell19 invis false  }
+	confunc buy_show20 { *bt_autosell20 invis false	*bt_buy20 invis false	*bt_sell20 invis false  }
+	confunc buy_show21 { *bt_autosell21 invis false	*bt_buy21 invis false	*bt_sell21 invis false  }
+	confunc buy_show22 { *bt_autosell22 invis false	*bt_buy22 invis false	*bt_sell22 invis false  }
+	confunc buy_show23 { *bt_autosell23 invis false	*bt_buy23 invis false	*bt_sell23 invis false  }
+	confunc buy_show24 { *bt_autosell24 invis false	*bt_buy24 invis false	*bt_sell24 invis false  }
+	confunc buy_show25 { *bt_autosell25 invis false	*bt_buy25 invis false	*bt_sell25 invis false  }
+	confunc buy_show26 { *bt_autosell26 invis false	*bt_buy26 invis false	*bt_sell26 invis false  }
+	confunc buy_show27 { *bt_autosell27 invis false	*bt_buy27 invis false	*bt_sell27 invis false  }
+
+
+	zone wz_buysell0
+	{
+		pos	"332 40"
+		size	"120 24"
+		whup	{ cmd "mn_buy 0;" }
+		whdown	{ cmd "mn_sell 0;" }
+	}
+	pic bt_buy0
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 40"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 0;" }
+		repeat	true
+	}
+	pic bt_sell0
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 40"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 0;" }
+		repeat	true
+	}
+	pic bt_autosell0
+	{
+		pos	"30 40"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "buy_autosell 0;" }
+	}
+	zone wz_buysell1
+	{
+		pos	"332 65"
+		size	"120 24"
+		whup	{ cmd "mn_buy 1;" }
+		whdown	{ cmd "mn_sell 1;" }
+	}
+	pic bt_buy1
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 65"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 1;" }
+		repeat	true
+	}
+	pic bt_sell1
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 65"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 1;" }
+		repeat	true
+	}
+	pic bt_autosell1
+	{
+		pos		"30 65"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 1;" }
+	}
+	zone wz_buysell2
+	{
+		pos	"332 90"
+		size	"120 24"
+		whup	{ cmd "mn_buy 2;" }
+		whdown	{ cmd "mn_sell 2;" }
+	}
+	pic bt_buy2
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 90"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 2;" }
+		repeat	true
+	}
+	pic bt_sell2
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 90"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 2;" }
+		repeat	true
+	}
+	pic bt_autosell2
+	{
+		pos		"30 90"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 2;" }
+	}
+	zone wz_buysell3
+	{
+		pos	"332 115"
+		size	"120 24"
+		whup	{ cmd "mn_buy 3;" }
+		whdown	{ cmd "mn_sell 3;" }
+	}
+	pic bt_buy3
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 115"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 3;" }
+		repeat	true
+	}
+	pic bt_sell3
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 115"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 3;" }
+		repeat	true
+	}
+	pic bt_autosell3
+	{
+		pos		"30 115"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 3;" }
+	}
+	zone wz_buysell4
+	{
+		pos	"332 140"
+		size	"120 24"
+		whup	{ cmd "mn_buy 4;" }
+		whdown	{ cmd "mn_sell 4;" }
+	}
+	pic bt_buy4
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 140"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 4;" }
+		repeat	true
+	}
+	pic bt_sell4
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 140"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 4;" }
+		repeat	true
+	}
+	pic bt_autosell4
+	{
+		pos		"30 140"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 4;" }
+	}
+	zone wz_buysell5
+	{
+		pos	"332 165"
+		size	"120 24"
+		whup	{ cmd "mn_buy 5;" }
+		whdown	{ cmd "mn_sell 5;" }
+	}
+	pic bt_buy5
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 165"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 5;" }
+		repeat	true
+	}
+	pic bt_sell5
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 165"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 5;" }
+		repeat	true
+	}
+	pic bt_autosell5
+	{
+		pos		"30 165"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 5;" }
+	}
+	zone wz_buysell6
+	{
+		pos	"332 190"
+		size	"120 24"
+		whup	{ cmd "mn_buy 6;" }
+		whdown	{ cmd "mn_sell 6;" }
+	}
+	pic bt_buy6
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 190"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 6;" }
+		repeat	true
+	}
+	pic bt_sell6
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 190"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 6;" }
+		repeat	true
+	}
+	pic bt_autosell6
+	{
+		pos		"30 190"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 6;" }
+	}
+	zone wz_buysell7
+	{
+		pos	"332 215"
+		size	"120 24"
+		whup	{ cmd "mn_buy 7;" }
+		whdown	{ cmd "mn_sell 7;" }
+	}
+	pic bt_buy7
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 215"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 7;" }
+		repeat	true
+	}
+	pic bt_sell7
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 215"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 7;" }
+		repeat	true
+	}
+	pic bt_autosell7
+	{
+		pos		"30 215"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 7;" }
+	}
+	zone wz_buysell8
+	{
+		pos	"332 240"
+		size	"120 24"
+		whup	{ cmd "mn_buy 8;" }
+		whdown	{ cmd "mn_sell 8;" }
+	}
+	pic bt_buy8
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 240"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 8;" }
+		repeat	true
+	}
+	pic bt_sell8
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 240"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 8;" }
+		repeat	true
+	}
+	pic bt_autosell8
+	{
+		pos		"30 240"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 8;" }
+	}
+	zone wz_buysell9
+	{
+		pos	"332 265"
+		size	"120 24"
+		whup	{ cmd "mn_buy 9;" }
+		whdown	{ cmd "mn_sell 9;" }
+	}
+	pic bt_buy9
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 9;" }
+		repeat	true
+	}
+	pic bt_sell9
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 9;" }
+		repeat	true
+	}
+	pic bt_autosell9
+	{
+		pos		"30 265"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 9;" }
+	}
+	zone wz_buysell10
+	{
+		pos	"332 290"
+		size	"120 24"
+		whup	{ cmd "mn_buy 10;" }
+		whdown	{ cmd "mn_sell 10;" }
+	}
+	pic bt_buy10
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 290"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 10;" }
+		repeat	true
+	}
+	pic bt_sell10
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 290"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 10;" }
+		repeat	true
+	}
+	pic bt_autosell10
+	{
+		pos		"30 290"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 10;" }
+	}
+	zone wz_buysell11
+	{
+		pos	"332 315"
+		size	"120 24"
+		whup	{ cmd "mn_buy 11;" }
+		whdown	{ cmd "mn_sell 11;" }
+	}
+	pic bt_buy11
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 315"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 11;" }
+		repeat	true
+	}
+	pic bt_sell11
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 315"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 11;" }
+		repeat	true
+	}
+	pic bt_autosell11
+	{
+		pos		"30 315"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 11;" }
+	}
+	zone wz_buysell12
+	{
+		pos	"332 340"
+		size	"120 24"
+		whup	{ cmd "mn_buy 12;" }
+		whdown	{ cmd "mn_sell 12;" }
+	}
+	pic bt_buy12
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 340"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 12;" }
+		repeat	true
+	}
+	pic bt_sell12
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 340"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 12;" }
+		repeat	true
+	}
+	pic bt_autosell12
+	{
+		pos		"30 340"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 12;" }
+	}
+	zone wz_buysell13
+	{
+		pos	"332 365"
+		size	"120 24"
+		whup	{ cmd "mn_buy 13;" }
+		whdown	{ cmd "mn_sell 13;" }
+	}
+	pic bt_buy13
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 365"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 13;" }
+		repeat	true
+	}
+	pic bt_sell13
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 365"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 13;" }
+		repeat	true
+	}
+	pic bt_autosell13
+	{
+		pos		"30 365"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 13;" }
+	}
+	zone wz_buysell14
+	{
+		pos	"332 390"
+		size	"120 24"
+		whup	{ cmd "mn_buy 14;" }
+		whdown	{ cmd "mn_sell 14;" }
+	}
+	pic bt_buy14
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 390"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 14;" }
+		repeat	true
+	}
+	pic bt_sell14
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 390"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 14;" }
+		repeat	true
+	}
+	pic bt_autosell14
+	{
+		pos		"30 390"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 14;" }
+	}
+	zone wz_buysell15
+	{
+		pos	"332 415"
+		size	"120 24"
+		whup	{ cmd "mn_buy 15;" }
+		whdown	{ cmd "mn_sell 15;" }
+	}
+	pic bt_buy15
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 415"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 15;" }
+		repeat	true
+	}
+	pic bt_sell15
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 415"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 15;" }
+		repeat	true
+	}
+	pic bt_autosell15
+	{
+		pos		"30 415"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 15;" }
+	}
+	zone wz_buysell16
+	{
+		pos	"332 440"
+		size	"120 24"
+		whup	{ cmd "mn_buy 16;" }
+		whdown	{ cmd "mn_sell 16;" }
+	}
+	pic bt_buy16
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 440"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 16;" }
+		repeat	true
+	}
+	pic bt_sell16
+	{
+		tooltip "_Sell item"
+		image	menu/buttons_small
+		pos		"392 440"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 16;" }
+		repeat	true
+	}
+	pic bt_autosell16
+	{
+		pos		"30 440"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 16;" }
+	}
+	zone wz_buysell17
+	{
+		pos	"332 465"
+		size	"120 24"
+		whup	{ cmd "mn_buy 17;" }
+		whdown	{ cmd "mn_sell 17;" }
+	}
+	pic bt_buy17
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 465"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 17;" }
+		repeat	true
+	}
+	pic bt_sell17
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 465"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 17;" }
+		repeat	true
+	}
+	pic bt_autosell17
+	{
+		pos		"30 465"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 17;" }
+	}
+	zone wz_buysell18
+	{
+		pos	"332 490"
+		size	"120 24"
+		whup	{ cmd "mn_buy 18;" }
+		whdown	{ cmd "mn_sell 18;" }
+	}
+	pic bt_buy18
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 490"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 18;" }
+		repeat	true
+	}
+	pic bt_sell18
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 490"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 18;" }
+		repeat	true
+	}
+	pic bt_autosell18
+	{
+		pos		"30 490"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 18;" }
+	}
+	zone wz_buysell19
+	{
+		pos	"332 515"
+		size	"120 24"
+		whup	{ cmd "mn_buy 19;" }
+		whdown	{ cmd "mn_sell 19;" }
+	}
+	pic bt_buy19
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 515"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 19;" }
+		repeat	true
+	}
+	pic bt_sell19
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 515"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 19;" }
+		repeat	true
+	}
+	pic bt_autosell19
+	{
+		pos		"30 515"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 19;" }
+	}
+	zone wz_buysell20
+	{
+		pos	"332 540"
+		size	"120 24"
+		whup	{ cmd "mn_buy 20;" }
+		whdown	{ cmd "mn_sell 20;" }
+	}
+	pic bt_buy20
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 540"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 20;" }
+		repeat	true
+	}
+	pic bt_sell20
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 540"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 20;" }
+		repeat	true
+	}
+	pic bt_autosell20
+	{
+		pos		"30 540"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 20;" }
+	}
+	zone wz_buysell21
+	{
+		pos	"332 565"
+		size	"120 24"
+		whup	{ cmd "mn_buy 21;" }
+		whdown	{ cmd "mn_sell 21;" }
+	}
+	pic bt_buy21
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 565"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 21;" }
+		repeat	true
+	}
+	pic bt_sell21
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 565"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 21;" }
+		repeat	true
+	}
+	pic bt_autosell21
+	{
+		pos		"30 565"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 21;" }
+	}
+	zone wz_buysell22
+	{
+		pos	"332 590"
+		size	"120 24"
+		whup	{ cmd "mn_buy 22;" }
+		whdown	{ cmd "mn_sell 22;" }
+	}
+	pic bt_buy22
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 590"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 22;" }
+		repeat	true
+	}
+	pic bt_sell22
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 590"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 22;" }
+		repeat	true
+	}
+	pic bt_autosell22
+	{
+		pos		"30 590"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 22;" }
+	}
+	zone wz_buysell23
+	{
+		pos	"332 615"
+		size	"120 24"
+		whup	{ cmd "mn_buy 23;" }
+		whdown	{ cmd "mn_sell 23;" }
+	}
+	pic bt_buy23
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 615"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 23;" }
+		repeat	true
+	}
+	pic bt_sell23
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 615"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 23;" }
+		repeat	true
+	}
+	pic bt_autosell23
+	{
+		pos		"30 615"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 23;" }
+	}
+	zone wz_buysell24
+	{
+		pos	"332 640"
+		size	"120 24"
+		whup	{ cmd "mn_buy 24;" }
+		whdown	{ cmd "mn_sell 24;" }
+	}
+	pic bt_buy24
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 640"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 24;" }
+		repeat	true
+	}
+	pic bt_sell24
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 640"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 24;" }
+		repeat	true
+	}
+	pic bt_autosell24
+	{
+		pos		"30 640"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 24;" }
+	}
+	zone wz_buysell25
+	{
+		pos	"332 665"
+		size	"120 24"
+		whup	{ cmd "mn_buy 25;" }
+		whdown	{ cmd "mn_sell 25;" }
+	}
+	pic bt_buy25
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 665"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 25;" }
+		repeat	true
+	}
+	pic bt_sell25
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 665"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 25;" }
+		repeat	true
+	}
+	pic bt_autosell25
+	{
+		pos		"30 665"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 25;" }
+	}
+	zone wz_buysell26
+	{
+		pos	"332 690"
+		size	"120 24"
+		whup	{ cmd "mn_buy 26;" }
+		whdown	{ cmd "mn_sell 26;" }
+	}
+	pic bt_buy26
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 690"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 26;" }
+		repeat	true
+	}
+	pic bt_sell26
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 690"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 26;" }
+		repeat	true
+	}
+	pic bt_autosell26
+	{
+		pos		"30 690"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 26;" }
+	}
+	zone wz_buysell27
+	{
+		pos	"332 715"
+		size	"120 24"
+		whup	{ cmd "mn_buy 27;" }
+		whdown	{ cmd "mn_sell 27;" }
+	}
+	pic bt_buy27
+	{
+		tooltip	"_Buy item"
+		image	menu/buttons_small
+		pos		"376 715"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy 27;" }
+		repeat	true
+	}
+	pic bt_sell27
+	{
+		tooltip	"_Sell item"
+		image	menu/buttons_small
+		pos		"392 715"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell 27;" }
+		repeat	true
+	}
+	pic bt_autosell27
+	{
+		pos		"30 715"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "buy_autosell 27;" }
+	}
+
+	// ==================
+	// credits
+	// ==================
+
+	string txt_credits_caption
+	{
+		string	"_CREDIT"
+		pos	"650 50"
+		font	f_big
+		align	ul
+	}
+
+	string txt_credits
+	{
+		font	"f_big"
+		string	"*cvar mn_credits"
+		pos		"940 50"
+		align	ur
+	}
+
+	// ==================
+	// storage capacity
+	// ==================
+
+	string txt_storage_caption
+	{
+		if "mn_itemtype != 8"	// for everything except aircraft
+		string 		"_Storage (used/all):"
+		pos		"650 80"
+		font		f_small
+		align		ul
+	}
+
+	string txt_storage_value
+	{
+		if "mn_itemtype != 8"	// for everything except aircraft
+		string 		"*cvar mn_bs_storage"
+		pos		"855 80"
+		font		f_small
+		align		ul
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	zone zone_category {
+		pos	"650 627"
+		size	"270 59"
+		whup	{
+			cmd "prev_buy_type;"
+		}
+		whdown	{
+			cmd "next_buy_type;"
+		}
+	}
+
+	string txt_category
+	{
+		font	"f_small"
+		string	"*cvar mn_itemtypename"
+		pos	"785 647"
+		align	uc
+	}
+
+	pic bt_previtemtype
+	{
+		tooltip	"_Previous category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"650 623"
+		texl	"0 0"
+		texh	"32 64"
+		click	{ cmd "prev_buy_type;" }
+	}
+
+	pic bt_nextitemtype
+	{
+		tooltip	"_Next category"
+		mousefx	true
+		image	menu/button_aliencont1
+		pos	"882 623"
+		texl	"32 0"
+		texh	"64 64"
+		click	{ cmd "next_buy_type;" }
+	}
+
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos	"920 715"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+
+	// ==================
+	// item description
+	// ==================
+
+	string itemname
+	{
+		if "mn_itemtype != 8"	// for everything except aircraft
+		string	"*cvar mn_itemname"
+		pos	"793 155"
+		align	uc
+	}
+
+	string aircraftname
+	{
+		if "mn_itemtype == 8"	// Only for aircraft.
+		string  "*cvar mn_aircraftname"
+		pos	"793 155"
+		align   uc
+	}
+
+	item itemmodel
+	{
+		string	"*cvar mn_item"
+		pos	"793 250"
+		scale	"7 7 7"
+		origin	"793 250"
+	}
+
+	text description
+	{
+		pos		"620 377"
+		size	"336 150"
+		height	"10"
+		format	"15 168"
+		font	"f_verysmall"
+	}
+
+	zone weapon_wz
+	{
+		pos	"745 498"
+		size	"226 16"
+		whup	{ cmd "mn_increaseweapon;" }
+		whdown	{ cmd "mn_decreaseweapon;" }
+	}
+
+
+	pic weapon_dec
+	{
+		if "mn_changeweapon == 1"
+		tooltip "_Previous weapon chambered for this ammunition"
+		image	menu/buttons_small
+		pos	"745 498"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_decreaseweapon;"
+		}
+	}
+
+	pic ammo_dec
+	{
+		if "mn_changeweapon == 2"
+		tooltip "_Previous ammunition compatible with this weapon"
+		image	menu/buttons_small
+		pos	"745 498"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_decreaseweapon;"
+		}
+	}
+
+
+	pic weapon_inc
+	{
+		if "mn_changeweapon == 1"
+		tooltip "_Next weapon chambered for this ammunition"
+		image	menu/buttons_small
+		pos	"955 498"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increaseweapon
+		}
+	}
+
+	pic ammo_inc
+	{
+		if "mn_changeweapon == 2"
+		tooltip "_Next ammunition compatible with this weapon"
+		image	menu/buttons_small
+		pos	"955 498"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increaseweapon
+		}
+	}
+
+	string header_weapon
+	{
+		if "mn_displayweapon == 1"
+		string	"_With weapon:"
+		pos	"620 506"
+		align	cl
+		font	f_verysmall
+	}
+
+	string header_ammo
+	{
+		if "mn_displayweapon == 2"
+		string	"_With ammo:"
+		pos	"620 506"
+		align	cl
+		font	f_verysmall
+	}
+
+	string weapon_name
+	{
+		string	"*cvar mn_researchedlinkname"
+		pos	"855 506"
+		align	cc
+		font	f_verysmall
+	}
+
+	zone firemode_wz
+	{
+		pos	"745 516"
+		size	"226 16"
+		whup	{ cmd mn_increasefiremode }
+		whdown	{ cmd mn_decreasefiremode }
+	}
+
+	pic firemode_dec
+	{
+		if "mn_changefiremode == 1"
+		tooltip "_Previous firemode"
+		image	menu/buttons_small
+		pos	"745 516"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreasefiremode
+		}
+	}
+
+	pic firemode_inc
+	{
+		if "mn_changefiremode == 1"
+		tooltip "_Next firemode"
+		image	menu/buttons_small
+		pos	"955 516"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increasefiremode
+		}
+	}
+
+	string header_firemode
+	{
+		if "mn_displayfiremode == 1"
+		string	"_Firemode:"
+		pos	"620 524"
+		align	cl
+		font	f_verysmall
+	}
+
+	string firemode_name
+	{
+		if "mn_displayfiremode == 1"
+		string	"*cvar mn_firemodename"
+		pos	"855 524"
+		align	cc
+		font	f_verysmall
+	}
+
+
+	// ==================
+	// init
+	// ==================
+
+	func init
+	{
+		cmd "buy_type *mn_itemtype;"
+	}
+}
