@@ -134,28 +134,8 @@ void MN_DrawTextNode2(menuNode_t *node) {
 		font = MN_GetFont(menu, node);
 		MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 	} else if (node->num == TEXT_MESSAGESYSTEM) {
-		linkedList_t *messagelist = NULL;
-		char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
 		font = MN_GetFont(menu, node);
-		message = mn.messageStack;
-		while (message) {
-			/* get formatted date text */
-			/** @todo this is not utf-8 safe - but the messages are already translated */
-			Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-			for (i = 0; i < (sizeof(text) - 1); i++) {
-				if (text[i] == '\n') {
-					text[i] = '\0';
-					break;
-				}
-			}
-			/* Make a list */
-			LIST_Add(&messagelist, (byte*) text, sizeof(text));
-			message = message->next;
-		}
-		if (messagelist) {
-			MN_DrawTextNode(NULL, messagelist, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-			LIST_Delete(&messagelist);
-		}
+		MN_DrawMessageList(mn.messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 	}
 }
 
