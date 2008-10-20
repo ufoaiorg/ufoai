@@ -1,8 +1,0 @@
-{
-	material tex_nature/rock005
-	{
-		texture tex_nature/rock006
-		terrain 120 192
-		lightmap
-	}
-}
