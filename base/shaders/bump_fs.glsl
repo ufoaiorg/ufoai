@@ -4,6 +4,7 @@ varying vec3 eyedir;
 
 uniform float BUMP;
 uniform float PARALLAX;
+uniform float HARDNESS;
 uniform float SPECULAR;
 
 vec3 eye;
@@ -28,7 +29,7 @@ void BumpFragment(in vec3 deluxemap, in vec3 normalmap){
 	float diffuse = dot(deluxemap,
 			vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z));
 
-	float specular = pow(max(-dot(eye,
+	float specular = HARDNESS * pow(max(-dot(eye,
 			reflect(deluxemap, normalmap)), 0.0), 8.0 * SPECULAR);
 
 	gl_FragColor.rgb *= vec3(diffuse + specular);
