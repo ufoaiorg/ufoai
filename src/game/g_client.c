@@ -1506,6 +1506,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			 * dv = (dir << 3) | z
 			 */
 			if (!(numdv < MAX_DVTAB)) {
+				gi.GridDumpDVTable(gi.pathingMap);
 				for (numdv = 0; numdv < MAX_DVTAB; numdv++)
 					Com_Printf(" %i", olddvtab[numdv]);
 				Sys_Error("G_ClientMove: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);

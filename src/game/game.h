@@ -172,6 +172,7 @@ typedef struct {
 	pos_t (IMPORT *GridFall) (struct routing_s * map, int actor_size, pos3_t pos);
 	void (IMPORT *GridPosToVec) (struct routing_s * map, int actor_size, pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
+	void (IMPORT *GridDumpDVTable) (struct pathing_s * path);
 
 	/* filesystem functions */
 	const char *(IMPORT *FS_Gamedir) (void);

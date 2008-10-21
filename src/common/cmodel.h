@@ -67,6 +67,7 @@ void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);
 void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max);
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
+void Grid_DumpDVTable(struct pathing_s *path);
 void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue);
 void Grid_MoveCalc(struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t from, int crouching_state, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct pathing_s *path);

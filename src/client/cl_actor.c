@@ -2968,7 +2968,10 @@ static qboolean CL_TraceMove (pos3_t to)
 
 	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
-		assert(++counter < 100);
+		if (++counter < 100) {
+			Grid_DumpDVTable(&clPathMap);
+			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
+		}
 #endif
 		length = CL_MoveLength(pos);
 		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */

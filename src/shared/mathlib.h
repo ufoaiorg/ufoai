@@ -155,12 +155,14 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define DV_Z_BIT_SHIFT	3	/**< This is the bit shift needed to store the z component of a DV value */
 #define DV_Z_BIT_MASK	((1 << DV_Z_BIT_SHIFT) - 1)  /**< This is the mask to retreive the z component of a  DV value */
 
+#define makeDV(dir, z)				((dir << DV_Z_BIT_SHIFT) | (z & DV_Z_BIT_MASK))
+#define NewDVZ(dv, z)				((dv & (~DV_Z_BIT_MASK)) | (z & DV_Z_BIT_MASK))
 #define getDVdir(dv)				(dv >> DV_Z_BIT_SHIFT)
 #define getDVz(dv)					(dv & DV_Z_BIT_MASK)
 
 #define PosAddDV(p, crouch, dv)     (p[0]+=dvecs[getDVdir(dv)][0], p[1]+=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch+=dvecs[getDVdir(dv)][3])
 #define PosSubDV(p, crouch, dv)     (p[0]-=dvecs[getDVdir(dv)][0], p[1]-=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch-=dvecs[getDVdir(dv)][3])
-#define NewDVZ(dv, z)				((dv & (~DV_Z_BIT_MASK)) | (z & DV_Z_BIT_MASK))
+
 int AngleToDir(int angle);
 #define AngleToDV(x)	(AngleToDir(x) << DV_Z_BIT_SHIFT)
 

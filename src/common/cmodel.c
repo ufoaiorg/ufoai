@@ -1437,6 +1437,54 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
 	return qfalse;
 }
 
+void Grid_DumpDVTable(struct pathing_s *path)
+{
+	int px, py, pz, cr;
+	pos3_t mins, maxs;
+
+	VecToPos(map_min, mins);
+	VecToPos(map_max, maxs);
+
+	Com_Printf("Bounds: (%i %i %i) to (%i %i %i)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]);
+	for (cr = 0; cr < ACTOR_MAX_STATES; cr++) {
+		for (pz = mins[2]; pz <= maxs[2]; pz++) {
+			Com_Printf("\ncr:%i z:%i\n", cr, pz);
+			for (py = mins[1]; py < maxs[1]; py++) {
+				for(px = mins[0]; px< maxs[0]; px++) {
+					Com_Printf("%3i_%3i,", RT_AREA(path, px, py, pz, cr), RT_AREA_FROM(path, px, py, pz, cr));
+				}
+				Com_Printf("\n");
+			}
+		}
+	}
+}
+
+static void Grid_SetMoveData(struct pathing_s *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
+{
+	pos4_t dummy;
+
+	RT_AREA_TEST(path, x, y, z, c);
+	RT_AREA(path, x, y, z, c) = length;	/**< Store TUs for this square. */
+	RT_AREA_FROM(path, x, y, z, c) = makeDV(dir, oz); /**< Store origination information for this square. */
+	{
+		pos3_t pos, test;
+		int crouch = c;
+		VectorSet(pos, ox, oy, oz);
+		VectorSet(test, x, y, z);
+		PosSubDV(test, crouch, RT_AREA_FROM(path, x, y, z, c));
+		if (!VectorCompare(test, pos) || crouch != oc) {
+			Com_Printf("Grid_MoveMark: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
+				ox, oy, oz, oc, dir, x, y, z, c, test[0], test[1], test[2], crouch);
+
+			Grid_DumpDVTable(path);
+			Com_Error(ERR_DROP, "Grid_MoveMark: Created faulty DV table.");
+		}
+	}
+	Vector4Set(dummy, x, y, z, c);
+	/** @todo add heuristic for A* algorithm */
+	PQueuePush(pqueue, dummy, length);
+}
+
 /**
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -1450,11 +1498,9 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
 void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_s *path, pos3_t pos, int crouching_state, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
-	byte ol;
 	int nx, ny, nz;
 	int dx, dy, dz;
-	pos4_t dummy;
-	byte l;
+	byte l, ol;
 	qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
 	qboolean has_ladder_support = qfalse; /**< Indicates if there is a ladder present providing support. */
 	qboolean has_ladder_climb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
@@ -1537,10 +1583,9 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		}
 
 		/* Store move. */
-		RT_AREA(path, x, y, z, crouching_state) = l;	/**< Store TUs for this square. */
-		RT_AREA_FROM(path, x, y, z, crouching_state) = z | (dir << 3); /**< Store origination information for this square. */
-		Vector4Set(dummy, x, y, z, crouching_state);
-		PQueuePush(pqueue, dummy, l); /** @todo add heuristic for A* algorithm */
+		if (pqueue) {
+			Grid_SetMoveData(path, x, y, z, crouching_state, l, dir, x, y, z, crouching_state ^ 1, pqueue);
+		}
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i.\n", x, y, z, crouching_state, l);
 		/* We are done, exit now. */
 		return;
@@ -1740,11 +1785,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 
 	/* Store move. */
 	if (pqueue) {
-		RT_AREA(path, nx, ny, nz, crouching_state) = l;	/**< Store TUs for this square. */
-		RT_AREA_FROM(path, nx, ny, nz, crouching_state) = z | (dir << 3); /**< Store origination information for this square. */
-		Vector4Set(dummy, nx, ny, nz, crouching_state);
-		/** @todo add heuristic for A* algorithm */
-		PQueuePush(pqueue, dummy, l);
+		Grid_SetMoveData(path, nx, ny, nz, crouching_state, l, dir, x, y, z, crouching_state, pqueue);
 	}
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i change:%i\n", nx, ny, nz, crouching_state, l, RT_FLOOR(map, actor_size, x, y, z), height_change);
 }
@@ -1774,6 +1815,7 @@ void Grid_MoveCalc (struct routing_s *map, const int actor_size, struct pathing_
 
 	/* reset move data */
 	memset(path->area, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
+	memset(path->areaFrom, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
 	path->fblist = fb_list;
 	path->fblength = fb_length;
 

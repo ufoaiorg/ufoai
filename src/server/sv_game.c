@@ -404,6 +404,7 @@ void SV_InitGameProgs (void)
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = Grid_RecalcRouting;
+	import.GridDumpDVTable = Grid_DumpDVTable;
 
 	import.ModelIndex = SV_ModelIndex;
 
