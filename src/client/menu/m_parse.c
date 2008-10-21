@@ -95,17 +95,17 @@ static const value_t nps[] = {
 	/* specific for model
 	 * @todo move it into the node behaviour
 	 */
-	{"angles", V_VECTOR, offsetof(menuNode_t, model.angles), MEMBER_SIZEOF(menuNode_t, model.angles)},
-	{"center", V_VECTOR, offsetof(menuNode_t, model.center), MEMBER_SIZEOF(menuNode_t, model.center)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, model.origin), MEMBER_SIZEOF(menuNode_t, model.origin)},
-	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, model.tag), 0},
+	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
+	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
+	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
+	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.tag), 0},
 
 	/* specific for abstractvalue
 	 * @todo move it into the node behaviour
 	 */
-	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.max), 0},
-	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.min), 0},
-	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.value), 0},
+	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.max), 0},
+	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.min), 0},
+	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.value), 0},
 
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
@@ -412,7 +412,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 /* 							Com_Printf("%i %s\n", val->ofs, *token); */
 							*(byte **) ((byte *) node + val->ofs) = mn.curadata;
 							/* we read it, we no more need extra flag */
-							//*((int*)&val->type) = val->type & V_BASETYPEMASK;
+							/* *((int*)&val->type) = val->type & V_BASETYPEMASK; */
 							/* references are parsed as string */
 							if (**token == '*') {
 								/* sanity check */

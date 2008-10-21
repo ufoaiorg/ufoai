@@ -174,7 +174,7 @@ typedef struct menuNode_s {
 	union {
 		abstractValueDataNode_t abstractvalue;
 		modelDataNode_t model;
-	};
+	} u;
 
 } menuNode_t;
 
