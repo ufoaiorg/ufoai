@@ -75,17 +75,17 @@ static void MN_DrawSelectBoxNode (menuNode_t *node)
 	const char *ref;
 	const char *font;
 	vec2_t nodepos;
+	const char* image;
 
 	if (!node->dataModelSkinOrCVar)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	const char* image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (!image)
 		image = "menu/selectbox";
 
 	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
-
 	font = MN_GetFont(node->menu, node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;

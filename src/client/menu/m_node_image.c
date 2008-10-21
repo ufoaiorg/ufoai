@@ -36,10 +36,9 @@ void MN_DrawImageNode(menuNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
+	const int time = cl.time;
 
-	int time = cl.time;
-
-	const char* imageName = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
+	const char* imageName = MN_GetSafeReferenceString(node->menu, node->dataImageOrModel);
 	if (!imageName)
 		return;
 

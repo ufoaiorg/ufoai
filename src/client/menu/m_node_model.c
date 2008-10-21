@@ -183,12 +183,12 @@ void MN_NodeModelInit (void)
 static void MN_DrawModelNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
-	char source[MAX_VAR] = "";
+	const char* ref = MN_GetSafeReferenceString(node->menu, node->dataImageOrModel);
+	char source[MAX_VAR];
 	if (ref == NULL)
-		*source = '\0';
+		source[0] = '\0';
 	else
-		Q_strncpyz(source, ref, MAX_VAR);
+		Q_strncpyz(source, ref, sizeof(source));
 	MN_DrawModelNode(menu, node, ref, source);
 }
 
