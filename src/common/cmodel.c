@@ -889,6 +889,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 	char keyname[256];
 	vec3_t v;
 	int num;
+	cBspModel_t *model = NULL;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
@@ -937,9 +938,17 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				sscanf(com_token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
 				Q_strcat(map_entitystring, va("%s \"%i %i %i\" ", keyname, (int) v[0], (int) v[1], (int) v[2]), MAX_MAP_ENTSTRING);
+				/* If we have a model, then unadjust it's mins and maxs. */
+				if (model) {
+					VectorSubtract(model->mins, shift, model->mins);
+					VectorSubtract(model->maxs, shift, model->maxs);
+				}
 			} else if (!Q_strncmp(keyname, "model", sizeof(keyname)) && com_token[0] == '*') {
 				/* adapt inline model number */
 				num = atoi(com_token + 1);
+				/* Get the model */
+				model = &curTile->models[NUM_REGULAR_MODELS + num];
+				/* Now update the model number to reflect prior tiles loaded. */
 				num += numInline;
 				Q_strcat(map_entitystring, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
 			} else {
@@ -1739,6 +1748,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	}
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i change:%i\n", nx, ny, nz, crouching_state, l, RT_FLOOR(map, actor_size, x, y, z), height_change);
 }
+
 
 /**
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
