@@ -1018,7 +1018,7 @@ const char *MN_GetSaifeReferenceString (const menu_t* const menu, char *ref)
 	const char* string = MN_GetReferenceString(menu, ref);
 	if (!string || !*string) {
 #ifdef DEBUG
-		Com_Printf("MN_GetSaifeReferenceString: Reference null or empty");
+		Com_Printf("MN_GetSaifeReferenceString: Reference null or empty\n");
 #endif
 		return NULL;
 	}
