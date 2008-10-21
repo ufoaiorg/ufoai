@@ -1562,12 +1562,12 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	/* If this is a crouching or crouching move, then process that motion. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
 		/* Can't stand up if standing. */
-		if (dvecs[dir][3] > 0 && crouching_state == 0) {
+		if (dvecs[dir][3] < 0 && crouching_state == 0) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't stand while standing.\n");
 			return;
 		}
 		/* Can't get down if crouching. */
-		if (dvecs[dir][3] < 0 && crouching_state == 1) {
+		if (dvecs[dir][3] > 0 && crouching_state == 1) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't crouch while crouching.\n");
 			return;
 		}
