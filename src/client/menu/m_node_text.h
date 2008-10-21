@@ -43,10 +43,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void MN_DrawTextNode(const char *text, const linkedList_t *list, const char *font, menuNode_t *node, int x, int y, int width, int height);
 void MN_DrawMessageList(const message_t *messageStack, const char *font, menuNode_t *node, int x, int y, int width, int height);
+void MN_DrawTextNode2(menuNode_t *node);
 void MN_TextScrollBottom(const char* nodeName);
 qboolean MN_TextScroll(menuNode_t *node, int offset);
 void MN_MenuTextReset(int menuTextID);
 
 void MN_NodeTextInit(void);
+
+void MN_RegisterNodeText(nodeBehaviour_t *behaviour);
 
 #endif

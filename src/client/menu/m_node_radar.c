@@ -427,6 +427,9 @@ void MN_DrawRadar (menuNode_t *node)
 	int i;
 	vec3_t pos;
 
+	if (!(cls.state == ca_active && !cl.skipRadarNodes))
+		return;
+
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited)
 		MN_InitRadar(node);
@@ -434,9 +437,9 @@ void MN_DrawRadar (menuNode_t *node)
 	if (!cl.radarInited)
 		return;
 
-	if (node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
+	if (node->dataImageOrModel)
 		R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0,
-			ALIGN_UL, node->blend, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+			ALIGN_UL, node->blend, node->dataImageOrModel);
 
 	if (VectorNotEmpty(node->bgcolor))
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
@@ -471,4 +474,10 @@ void MN_DrawRadar (menuNode_t *node)
 			break;
 		}
 	}
+}
+
+void MN_RegisterNodeRadar (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "radar";
+	behaviour->draw = MN_DrawRadar;
 }

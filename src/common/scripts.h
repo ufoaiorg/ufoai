@@ -65,6 +65,13 @@ typedef struct menuDepends_s {
 #define MEMBER_SIZEOF(TYPE, MEMBER) sizeof(((TYPE *)0)->MEMBER)
 
 /**
+ * @brief Allow to add extra bit into the type
+ * @note If valueTypes_t is bigger than 63 the mast must be change
+ * @sa valueTypes_t
+ */
+#define V_BASETYPEMASK 0x3F
+
+/**
  * @brief possible values for parsing functions
  * @sa vt_names
  * @sa vt_sizes

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "m_node_model.h"
+#include "m_nodes.h"
 #include "m_parse.h"
 
 /**
@@ -161,9 +162,9 @@ static void MN_SetModelTransform_f (void)
 		if (!Q_strcmp(command, "debug_mnscale")) {
 			VectorCopy(value, node->scale);
 		} else if (!Q_strcmp(command, "debug_mnangles")) {
-			VectorCopy(value, node->angles);
+			VectorCopy(value, node->model.angles);
 		} else if (!Q_strcmp(command, "debug_mnorigin")) {
-			VectorCopy(value, node->origin);
+			VectorCopy(value, node->model.origin);
 		}
 	}
 }
@@ -177,6 +178,18 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+}
+
+void MN_DrawModelNode2 (menuNode_t *node)
+{
+	menu_t *menu = node->menu;
+	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);
+	char source[MAX_VAR] = "";
+	if (ref == NULL)
+		*source = '\0';
+	else
+		Q_strncpyz(source, ref, MAX_VAR);
+	MN_DrawModelNode(menu, node, ref, source);
 }
 
 /**
@@ -196,12 +209,15 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	static vec3_t nodeorigin;
 	static vec3_t pmiorigin;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	nodeorigin[0] = nodepos[0];
-	nodeorigin[1] = nodepos[1];
-	nodeorigin[2] = node->origin[2];
+	if (!*source)
+		return;
 
-	menuModel = node->menuModel = MN_GetMenuModel(source);
+	MN_GetNodeAbsPos(node, nodepos);
+	nodeorigin[0] = node->model.origin[0] - node->pos[0] + nodepos[0];
+	nodeorigin[1] = node->model.origin[1] - node->pos[1] + nodepos[1];
+	nodeorigin[3] = node->model.origin[2];
+
+	menuModel = node->model.menuModel = MN_GetMenuModel(source);
 
 	/* direct model name - no menumodel definition */
 	if (!menuModel) {
@@ -216,15 +232,15 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	}
 
 	/* check whether the cvar value changed */
-	if (Q_strncmp(node->oldRefValue, source, sizeof(node->oldRefValue))) {
-		Q_strncpyz(node->oldRefValue, source, sizeof(node->oldRefValue));
+	if (Q_strncmp(node->model.oldRefValue, source, sizeof(node->model.oldRefValue))) {
+		Q_strncpyz(node->model.oldRefValue, source, sizeof(node->model.oldRefValue));
 		updateModel = qtrue;
 	}
 
 	mi.origin = nodeorigin;
-	mi.angles = node->angles;
+	mi.angles = node->model.angles;
 	mi.scale = node->scale;
-	mi.center = node->center;
+	mi.center = node->model.center;
 	mi.color = node->color;
 	mi.mesh = 0;
 
@@ -276,7 +292,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 							if (menuModel->menuTransform[i].useAngles) {
 								VectorCopy(menuModel->menuTransform[i].angles, mi.angles);
 							} else {
-								VectorCopy(node->angles, mi.angles);
+								VectorCopy(node->model.angles, mi.angles);
 							}
 
 							/* Use menu origin if defined. */
@@ -291,20 +307,20 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 					/* not for this menu */
 					if (i == menuModel->menuTransformCnt) {
 						VectorCopy(node->scale, mi.scale);
-						VectorCopy(node->angles, mi.angles);
+						VectorCopy(node->model.angles, mi.angles);
 						VectorCopy(nodeorigin, mi.origin);
 					}
 				} else {
 					VectorCopy(node->scale, mi.scale);
-					VectorCopy(node->angles, mi.angles);
+					VectorCopy(node->model.angles, mi.angles);
 					VectorCopy(nodeorigin, mi.origin);
 				}
 				Vector4Copy(node->color, mi.color);
-				VectorCopy(node->center, mi.center);
+				VectorCopy(node->model.center, mi.center);
 
 				/* get the animation given by menu node properties */
-				if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-					ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
+				if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
+					ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
 				/* otherwise use the standard animation from modelmenu defintion */
 				} else
 					ref = menuModel->anim;
@@ -371,30 +387,35 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 			menuModel = menuModel->next;
 		} else {
 			/* get skin */
-			if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR] && *(char *) node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
-				mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]));
+			if (node->dataModelSkinOrCVar && *(char *) node->dataModelSkinOrCVar)
+				mi.skin = atoi(MN_GetReferenceString(menu, node->dataModelSkinOrCVar));
 			else
 				mi.skin = 0;
 
 			/* do animations */
-			if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
-				ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
+			if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
+				ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
 				if (updateModel) {
 					/* model has changed but mem is already reserved in pool */
-					if (node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
-						Mem_Free(node->data[MN_DATA_MODEL_ANIMATION_STATE]);
-						node->data[MN_DATA_MODEL_ANIMATION_STATE] = NULL;
+					if (node->model.animationState) {
+
+						Mem_Free(node->model.animationState);
+						node->model.animationState = NULL;
+
 					}
 				}
-				if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
+				if (!node->model.animationState) {
+
 					as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					R_AnimChange(as, mi.model, ref);
-					node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
+					node->model.animationState = as;
+
 				} else {
 					/* change anim if needed */
-					as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
+					as = node->model.animationState;
+
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					anim = R_AnimGetName(as, mi.model);
@@ -409,12 +430,12 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 			}
 
 			/* place on tag */
-			if (node->data[MN_DATA_MODEL_TAG]) {
+			if (node->model.tag) {
 				menuNode_t *search;
 				char parent[MAX_VAR];
 				char *tag;
 
-				Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_TAG]), MAX_VAR);
+				Q_strncpyz(parent, MN_GetReferenceString(menu, node->model.tag), MAX_VAR);
 				tag = parent;
 				/* tag "menuNodeName modelTag" */
 				while (*tag && *tag != ' ')
@@ -425,23 +446,23 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				for (search = menu->firstNode; search != node && search; search = search->next)
 					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
 						char modelName[MAX_VAR];
-						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), sizeof(modelName));
+						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
 
 						pmi.model = R_RegisterModelShort(modelName);
 						if (!pmi.model)
 							break;
 
 						pmi.name = modelName;
-						VectorCopy(search->origin, pmiorigin);
+						VectorCopy(search->model.origin, pmiorigin);
 						pmi.origin = pmiorigin;
 						pmi.origin[0] += mi.origin[0];
 						pmi.origin[1] += mi.origin[1];
 						/* don't count menuoffset twice for tagged models */
 						mi.origin[0] -= node->menu->origin[0];
 						mi.origin[1] -= node->menu->origin[1];
-						pmi.angles = search->angles;
+						pmi.angles = search->model.angles;
 						pmi.scale = search->scale;
-						pmi.center = search->center;
+						pmi.center = search->model.center;
 						pmi.color = search->color;
 
 						/* autoscale? */
@@ -450,9 +471,10 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 							mi.center = node->size;
 						}
 
-						as = search->data[MN_DATA_MODEL_ANIMATION_STATE];
+						as = search->model.animationState;
+
 						if (!as)
-							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->data[MN_DATA_ANIM_OR_FONT]);
+							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->dataAnimOrFont);
 						pmi.frame = as->frame;
 						pmi.oldframe = as->oldframe;
 						pmi.backlerp = as->backlerp;
@@ -466,4 +488,23 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	 * menuModel pointer is null - the do-while loop is only
 	 * ran once */
 	} while (menuModel != NULL);
+}
+
+/**
+ * @brief Activates the model rotation
+ * @note set the mouse space to MS_ROTATE
+ * @sa rotateAngles
+ */
+static void MN_ModelClick (menuNode_t * node, int x, int y)
+{
+	mouseSpace = MS_ROTATE;
+	/* modify node->model.angles (vec3_t) if you rotate the model */
+	rotateAngles = node->model.angles;
+}
+
+void MN_RegisterNodeModel (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "model";
+	behaviour->draw = MN_DrawModelNode2;
+	behaviour->leftClick = MN_ModelClick;
 }

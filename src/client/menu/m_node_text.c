@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "m_main.h"
+#include "m_font.h"
 
 /**
  * @brief Scrolls the text in a textbox up/down.
@@ -113,6 +114,28 @@ void MN_TextScrollBottom (const char* nodeName)
 	if (node->textLines > node->height) {
 		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", node->textLines - node->height + 1);
 		node->textScroll = node->textLines - node->height + 1;
+	}
+}
+
+/**
+ * @note need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
+ */
+void MN_DrawTextNode2(menuNode_t *node) {
+	message_t *message;
+	int i;
+	menu_t *menu = node->menu;
+	const char *font;
+	vec2_t nodepos;
+	MN_GetNodeAbsPos(node, nodepos);
+	if (mn.menuText[node->num]) {
+		font = MN_GetFont(menu, node);
+		MN_DrawTextNode(mn.menuText[node->num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+	} else if (mn.menuTextLinkedList[node->num]) {
+		font = MN_GetFont(menu, node);
+		MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+	} else if (node->num == TEXT_MESSAGESYSTEM) {
+		font = MN_GetFont(menu, node);
+		MN_DrawMessageList(mn.messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 	}
 }
 
@@ -330,7 +353,7 @@ void MN_DrawMessageList (const message_t *messageStack, const char *font, menuNo
 			skip_messages--;
 			continue;
 		}
-		
+
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
 		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, node->height, 0, &screenLines, qtrue, node->longlines);
 		if (screenLines > node->height)
@@ -389,4 +412,61 @@ void MN_NodeTextInit (void)
 	/* textbox */
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
+}
+
+/**
+ * @brief Calls the script command for a text node that is clickable
+ * @note The node must have the click parameter in it's menu definition or there
+ * must be a console command that has the same name as the node has + _click
+ * attached.
+ * @sa MN_TextRightClick
+ * @todo Check for scrollbars and when one would click them scroll according to
+ * mouse movement, maybe implement a new mousespace (MS_* - @sa cl_input.c)
+ */
+void MN_TextClick (menuNode_t * node, int x, int y)
+{
+	int mouseOver = MN_CheckNodeZone(node, x, y);
+	char cmd[MAX_VAR];
+	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
+	if (Cmd_Exists(cmd))
+		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+	else if (node->click && node->click->type == EA_CMD) {
+		assert(node->click->data);
+		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, mouseOver - 1));
+	}
+}
+
+/**
+ * @brief Calls the script command for a text node that is clickable via right mouse button
+ * @note The node must have the rclick parameter
+ * @sa MN_TextClick
+ */
+static void MN_TextRightClick (menuNode_t * node, int x, int y)
+{
+	int mouseOver = MN_CheckNodeZone(node, x, y);
+	char cmd[MAX_VAR];
+	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
+	if (Cmd_Exists(cmd))
+		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+}
+
+static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	menu_t *menu = node->menu;
+	if (node->wheelUp && node->wheelDown) {
+		MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
+	} else {
+		MN_TextScroll(node, (down ? 1 : -1));
+		/* they can also have script commands assigned */
+		MN_ExecuteActions(menu, node->wheel);
+	}
+}
+
+void MN_RegisterNodeText (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "text";
+	behaviour->draw = MN_DrawTextNode2;
+	behaviour->leftClick = MN_TextClick;
+	behaviour->rightClick = MN_TextRightClick;
+	behaviour->mouseWheel = MN_NodeTextMouseWheel;
 }

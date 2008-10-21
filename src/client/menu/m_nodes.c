@@ -24,8 +24,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_main.h"
 #include "m_nodes.h"
+#include "m_parse.h"
 #include "m_inventory.h"
 #include "../cl_input.h"
+
+#include "m_node_bar.h"
+#include "m_node_base.h"
+#include "m_node_checkbox.h"
+#include "m_node_controls.h"
+#include "m_node_cinematic.h"
+#include "m_node_container.h"
+#include "m_node_image.h"
+#include "m_node_item.h"
+#include "m_node_linestrip.h"
+#include "m_node_map.h"
+#include "m_node_model.h"
+#include "m_node_radar.h"
+#include "m_node_selectbox.h"
+#include "m_node_string.h"
+#include "m_node_tab.h"
+#include "m_node_tbar.h"
+#include "m_node_text.h"
 
 extern menuNode_t *focusNode;
 
@@ -41,19 +60,11 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	if (!node->menu)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
 
-	switch (node->type) {
-	case MN_NULL:
-	case MN_CONFUNC:
-	case MN_CVARFUNC:
-	case MN_FUNC:
-		break;
-	case MN_MODEL:
-		Vector2Set(pos, node->menu->origin[0] + node->origin[0], node->menu->origin[1] + node->origin[1]);
-		break;
-	default:
-		Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
-		break;
-	}
+	/** if we request the position of an undrawable node, there are a problem */
+	if (!nodeBehaviourList[node->type].draw)
+		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
+
+	Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
 }
 
 #if 0
@@ -73,7 +84,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	byte *color = NULL;	/**< Pointer to specific pixel in image. */
 	vec2_t nodepos;
 
-	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
+	if (!node || node->type != MN_PIC || !node->dataImageOrModel)
 		return qfalse;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -112,6 +123,10 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	int sx, sy, tx, ty, i;
 	vec2_t nodepos;
 
+	/* skip all unactive nodes */
+	if (!nodeBehaviourList[node->type].draw)
+		return qfalse;
+
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
 	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
 		return qfalse;
@@ -149,17 +164,17 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_CHECKBOX) {
 			/* the checked and unchecked should always have the same dimensions */
-			if (!node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+			if (!node->dataImageOrModel) {
 				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
 			} else {
-				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]));
+				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataImageOrModel));
 			}
-		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->dataImageOrModel) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];
 			} else
-				R_DrawGetPicSize(&sx, &sy, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+				R_DrawGetPicSize(&sx, &sy, node->dataImageOrModel);
 		} else
 			return qfalse;
 #if 0
@@ -312,6 +327,18 @@ static void MN_UnHideNode_f (void)
 		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
 
+/** @brief Init a behaviour to null. A null node dont react
+ */
+inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour, char* name) {
+	memset(behaviour, 0, sizeof(nodeBehaviour_t));
+	behaviour->name = name;
+}
+
+/** @brief List of all node behaviours, indexes by nodetype num.
+ */
+nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
+
+
 void MN_InitNodes (void)
 {
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
@@ -320,4 +347,29 @@ void MN_InitNodes (void)
 	MN_NodeTextInit();
 	MN_NodeSelectBoxInit();
 	MN_NodeModelInit();
+
+	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone");
+	MN_RegisterNodeImage(nodeBehaviourList + MN_PIC);
+	MN_RegisterNodeString(nodeBehaviourList + MN_STRING);
+	MN_RegisterNodeText(nodeBehaviourList + MN_TEXT);
+	MN_RegisterNodeBar(nodeBehaviourList + MN_BAR);
+	MN_RegisterNodeTBar(nodeBehaviourList + MN_TBAR);
+	MN_RegisterNodeModel(nodeBehaviourList + MN_MODEL);
+	MN_RegisterNodeContainer(nodeBehaviourList + MN_CONTAINER);
+	MN_RegisterNodeItem(nodeBehaviourList + MN_ITEM);
+	MN_RegisterNodeMap(nodeBehaviourList + MN_MAP);
+	MN_RegisterNodeBaseMap(nodeBehaviourList + MN_BASEMAP);
+	MN_RegisterNodeBaseLayout(nodeBehaviourList + MN_BASELAYOUT);
+	MN_RegisterNodeCheckBox(nodeBehaviourList + MN_CHECKBOX);
+	MN_RegisterNodeSelectBox(nodeBehaviourList + MN_SELECTBOX);
+	MN_RegisterNodeLineStrip(nodeBehaviourList + MN_LINESTRIP);
+	MN_RegisterNodeCinematic(nodeBehaviourList + MN_CINEMATIC);
+	//MN_RegisterNodeTextList(nodeBehaviourList + MN_TEXTLIST); /* @fixme temporary hide */
+	MN_RegisterNodeRadar(nodeBehaviourList + MN_RADAR);
+	MN_RegisterNodeTab(nodeBehaviourList + MN_TAB);
+	MN_RegisterNodeControls(nodeBehaviourList + MN_CONTROLS);
 }

@@ -1,5 +1,5 @@
 /**
- * @file m_node_checkbox.h
+ * @file m_node_container.h
  */
 
 /*
@@ -22,9 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_CHECKBOX_H
-#define CLIENT_MENU_M_NODE_CHECKBOX_H
+#ifndef CLIENT_MENU_M_NODE_BASE_H
+#define CLIENT_MENU_M_NODE_BASE_H
 
-void MN_RegisterNodeCheckBox(nodeBehaviour_t *behaviour);
+#include "m_nodes.h"
+
+void MN_RegisterNodeBaseMap(nodeBehaviour_t *behaviour);
+void MN_RegisterNodeBaseLayout(nodeBehaviour_t *behaviour);
 
 #endif
+
+
+

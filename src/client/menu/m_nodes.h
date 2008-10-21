@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODES_H
 
 #include "m_menu.h"
+#include "m_node_abstractvalue.h"
 #include "../cl_renderer.h"
 #include "../../common/common.h"
 #include "../../renderer/r_mesh.h"
@@ -68,27 +69,6 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
-/**
- * @brief possible values for the data array of a menu node
- * @note the positions 0, 1 and 2 are also used for MN_BAR values
- * like min, max and current
- */
-typedef enum {
-	MN_DATA_STRING_OR_IMAGE_OR_MODEL,	/**< First entry in data array can
-						* be an image, an model or an string, this depends
-						* on the node type
-						*/
-	MN_DATA_ANIM_OR_FONT,	/** This is the font string or the anim string
-						* from the *.anm files for the model */
-	MN_DATA_MODEL_TAG,	/**< the tag to place the model onto */
-	MN_DATA_MODEL_SKIN_OR_CVAR,	/**< the skin of the model */
-	MN_DATA_MODEL_ANIMATION_STATE,	/**< holds then anim state for the current model
-						* model - also see MN_DATA_ANIM_OR_FONT */
-	MN_DATA_NODE_TOOLTIP,	/**< holds the tooltip for the menu */
-
-	MN_DATA_MAX
-} menuDataValues_t;
-
 /* all available select box options - for all menunodes */
 #define MAX_SELECT_BOX_OPTIONS 128
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
@@ -117,19 +97,32 @@ typedef struct lineStrips_s {
 	int numStrips;			/**< Number of point-lists. */
 } lineStrips_t;
 
-/** @brief menu node */
+/** @brief extradata node for the model node
+ * @todo move it on m_node_model.h
+ */
+typedef struct {
+	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
+	vec3_t angles;
+	vec3_t origin;
+	vec3_t center;
+	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
+	void* tag;	/**< the tag to place the model onto */
+	void* animationState;	/**< holds then anim state for the current model */
+} modelDataNode_t;
+
+/** @brief menu node
+ * @todo delete data* when it's possible
+ */
 typedef struct menuNode_s {
-	void *data[6];				/**< needs to be first */
 	char name[MAX_VAR];
 	char key[MAX_VAR];
-	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
 	int type;
-	vec3_t origin, scale, angles, center;
+	vec3_t scale;
+
 	vec2_t pos;
 	vec2_t size;
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
-	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
 	byte state;
 	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
@@ -168,7 +161,58 @@ typedef struct menuNode_s {
 	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 	const value_t *scriptValues;
+	char* text;
+	void* dataImageOrModel;	/**< First entry in data array can
+						* be an image, or a model, this depends
+						* on the node type
+						*/
+	void* dataModelSkinOrCVar; /**< the skin of the model */
+	void* dataNodeTooltip; /**< holds the tooltip for the menu */
+	void* dataAnimOrFont;	/** Anim string from the *.anm files for the model; or font */
+
+	/** union will contain all extradata for a node */
+	union {
+		abstractValueDataNode_t abstractvalue;
+		modelDataNode_t model;
+	};
+
 } menuNode_t;
+
+/** @brief node behaviour, how a node work */
+typedef struct {
+	char* name;							/**< name of the behaviour: string type of a node */
+	void (*draw)(menuNode_t *node);		/**< how to draw a node */
+	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
+	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
+	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */
+	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y); /**< on use mouse wheel into the node */
+	void (*mouseMove)(menuNode_t *node, int x, int y);
+
+	/** Planed */
+	/*
+	mouse move event
+	void (*mouseEnter)(menuNode_t *node);
+	void (*mouseLeave)(menuNode_t *node);
+	void (*mouseMove)(menuNode_t *node, int relativeX, int relativeY);
+	mouse click event
+	void (*middleClickDown)(menuNode_t *node);
+	void (*middleClickUp)(menuNode_t *node);
+	void (*rightClickDown)(menuNode_t *node);
+	void (*rightClickUp)(menuNode_t *node);
+	void (*leftClickDown)(menuNode_t *node);
+	void (*leftClickUp)(menuNode_t *node);
+	void (*mouseWheel)(menuNode_t *node);
+	captured mouse callback
+	void (*capturedMouseMove)(menuNode_t *node, int relativeX, int relativeY);
+	drag and drop callback
+	int  (*dndEnter)(menuNode_t *node);
+	void (*dndLeave)(menuNode_t *node);
+	int  (*dndMove)(menuNode_t *node);
+	int  (*dndEnd)(menuNode_t *node);
+	*/
+} nodeBehaviour_t;
+
+extern nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
 
 qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
 void MN_UnHideNode(menuNode_t* node);

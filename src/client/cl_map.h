@@ -52,7 +52,7 @@ void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float 
 void MAP_ToggleCombatZoomLevel_f(void);
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
-void MAP_MapClick(const menuNode_t * node, int x, int y);
+void MAP_MapClick(menuNode_t * node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectMission(mission_t* mission);

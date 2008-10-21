@@ -82,7 +82,7 @@ void MN_NodeTabInit (void)
 }
 
 /**
- * Return a tab located at a screen position
+ * @brief Return a tab located at a screen position
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
@@ -133,25 +133,25 @@ void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	if (newOption == NULL)
 		return;
 
-	ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
 	/* Is we click on the already active tab? */
 	if (!Q_strcmp(newOption->value, ref))
 		return;
 
-	/* the cvar string is stored in data[MN_DATA_MODEL_SKIN_OR_CVAR]
+	/* the cvar string is stored in dataModelSkinOrCVar
 	 * no cvar given? */
-	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
+	if (!node->dataModelSkinOrCVar || !*(char*)node->dataModelSkinOrCVar) {
 		Com_Printf("MN_TabNodeClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
 		return;
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
 		return;
 
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state) {
-		const char *cvarName = &((const char *)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6];
+		const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
 		MN_SetCvar(cvarName, newOption->value, 0);
 		if (newOption->action[0] != '\0') {
 #ifdef DEBUG
@@ -192,22 +192,25 @@ static inline void MN_DrawTabNodeJunction (const char *image, int x, int y, mn_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, qtrue, image);
 }
 
-void MN_DrawTabNode (const menuNode_t *node, const char *image)
+void MN_DrawTabNode (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
 	selectBoxOptions_t* tabOption;
-	selectBoxOptions_t* overMouseOption;
+	selectBoxOptions_t* overMouseOption = NULL;
 	const char *ref;
 	const char *font;
 	int currentX;
 
+	const char* image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (!image)
 		image = "menu/tab";
 
-	ref = MN_GetReferenceString(node->menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
 	font = MN_GetFont(node->menu, node);
 
-	overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
+	if (node->state) {
+		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
+	}
 	currentX = node->pos[0];
 	tabOption = node->options;
 
@@ -219,7 +222,6 @@ void MN_DrawTabNode (const menuNode_t *node, const char *image)
 			status = MN_TAB_SELECTED;
 		} else if (tabOption == overMouseOption) {
 			status = MN_TAB_HILIGHTED;
-			Com_Printf("MN_DrawTabNode\n");
 		}
 
 		/* Display */
@@ -243,4 +245,11 @@ void MN_DrawTabNode (const menuNode_t *node, const char *image)
 	currentX += TILE_WIDTH;
 	if (currentX < node->pos[0] + node->size[0])
 		MN_DrawTabNodePlain(image, currentX, node->pos[1], node->pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
+}
+
+void MN_RegisterNodeTab (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "tab";
+	behaviour->draw = MN_DrawTabNode;
+	behaviour->leftClick = MN_TabNodeClick;
 }

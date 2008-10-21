@@ -67,10 +67,7 @@ static const value_t nps[] = {
 	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
 	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
 	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, origin), MEMBER_SIZEOF(menuNode_t, origin)},
-	{"center", V_VECTOR, offsetof(menuNode_t, center), MEMBER_SIZEOF(menuNode_t, center)},
 	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
-	{"angles", V_VECTOR, offsetof(menuNode_t, angles), MEMBER_SIZEOF(menuNode_t, angles)},
 	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 	{"baseid", V_BASEID, offsetof(menuNode_t, baseid), MEMBER_SIZEOF(menuNode_t, baseid)},
 	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
@@ -81,22 +78,35 @@ static const value_t nps[] = {
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key), 0},
-	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-	{"tooltip", V_LONGSTRING, -5, 0},	/* translated in MN_Tooltip */
-	{"image", V_STRING, 0, 0},
-	{"roq", V_STRING, 0, 0},
-	{"md2", V_STRING, 0, 0},	/** @todo Rename into model */
-	{"anim", V_STRING, -1, 0},
-	{"tag", V_STRING, -2, 0},
-	{"cvar", V_STRING, -3, 0},	/* for selectbox */
-	{"skin", V_STRING, -3, 0},
-	/* -4 is animation state */
-	{"string", V_LONGSTRING, 0, 0},	/* no gettext here - this can be a cvar, too */
-	{"font", V_STRING, -1, 0},
-	{"max", V_FLOAT, 0, 0},
-	{"min", V_FLOAT, -1, 0},
-	{"current", V_FLOAT, -2, 0},
-	{"weapon", V_STRING, 0, 0},
+
+	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataNodeTooltip), 0},	/* translated in MN_Tooltip */
+	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
+	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
+	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
+	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
+	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
+	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
+#if 0 /* never use */
+	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+#endif
+
+	/* specific for model
+	 * @todo move it into the node behaviour
+	 */
+	{"angles", V_VECTOR, offsetof(menuNode_t, model.angles), MEMBER_SIZEOF(menuNode_t, model.angles)},
+	{"center", V_VECTOR, offsetof(menuNode_t, model.center), MEMBER_SIZEOF(menuNode_t, model.center)},
+	{"origin", V_VECTOR, offsetof(menuNode_t, model.origin), MEMBER_SIZEOF(menuNode_t, model.origin)},
+	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, model.tag), 0},
+
+	/* specific for abstractvalue
+	 * @todo move it into the node behaviour
+	 */
+	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.max), 0},
+	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.min), 0},
+	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, abstractvalue.value), 0},
+
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
@@ -139,34 +149,6 @@ static const value_t menuModelValues[] = {
 };
 
 /* =========================================================== */
-
-/** @brief node type strings */
-static const char *nt_strings[MN_NUM_NODETYPE] = {
-	"",
-	"confunc",
-	"cvarfunc",
-	"func",
-	"zone",
-	"pic",
-	"string",
-	"text",
-	"bar",
-	"tbar",
-	"model",
-	"container",
-	"item",
-	"map",
-	"basemap",
-	"baselayout",
-	"checkbox",
-	"selectbox",
-	"linestrip",
-	"cinematic",
-	"textlist",
-	"radar",
-	"tab",
-	"controls"
-};
 
 /** @brief valid node event actions */
 static const char *ea_strings[EA_NUM_EVENTACTION] = {
@@ -294,7 +276,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 /*				Com_Printf(" %s\n", *token); */
 
-				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type, 0, val->size);
+				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 
 				/* get next token */
 				*token = COM_EParse(text, errhead, NULL);
@@ -422,14 +404,15 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 /*						Com_Printf(" %s", *token); */
 
 						/* get the value */
-						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-						if ((val->ofs > 0) && (val->ofs < (size_t)-5)) {
+						if (!(val->type & V_MENU_COPY)) {
 							if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
 								Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
 						} else {
 							/* a reference to data is handled like this */
 /* 							Com_Printf("%i %s\n", val->ofs, *token); */
-							node->data[-((int)val->ofs)] = mn.curadata;
+							*(byte **) ((byte *) node + val->ofs) = mn.curadata;
+							/* we read it, we no more need extra flag */
+							//*((int*)&val->type) = val->type & V_BASETYPEMASK;
 							/* references are parsed as string */
 							if (**token == '*') {
 								/* sanity check */
@@ -440,7 +423,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 								/* sanity check */
 								if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
 									Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
-								mn.curadata += Com_ParseValue(mn.curadata, *token, val->type, 0, val->size);
+								mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 							}
 						}
 					}
@@ -678,8 +661,10 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					return qfalse;
 			}
 			found = qfalse;
-			for (i = 0; i < MN_NUM_NODETYPE; i++)
-				if (!Q_strcmp(token, nt_strings[i])) {
+			for (i = 0; i < MN_NUM_NODETYPE; i++) {
+				if (nodeBehaviourList[i].name == NULL)
+					continue;
+				if (!Q_strcmp(token, nodeBehaviourList[i].name)) {
 					/* found node */
 					/* get name */
 					token = COM_EParse(text, errhead, menu->name);
@@ -722,7 +707,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					node->padding = 3;
 					node->textLineSelected = -1; /**< Invalid/no line selected per default. */
 
-/*					Com_Printf(" %s %s\n", nt_strings[i], *token); */
+/*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
 
 					/* check for special nodes */
 					switch (node->type) {
@@ -796,6 +781,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					found = qtrue;
 					break;
 				}
+			}
 		} while (found);
 
 		/* test for end or unknown token */
@@ -1023,6 +1009,23 @@ void MN_ParseMenu (const char *name, const char **text)
 }
 
 /**
+ * @brief Return a string
+ * @return A string, or NULL if the ref is NULL or empty
+ * @sa MN_GetReferenceString
+ */
+const char *MN_GetSaifeReferenceString (const menu_t* const menu, char *ref)
+{
+	const char* string = MN_GetReferenceString(menu, ref);
+	if (!string || !*string) {
+#ifdef DEBUG
+		Com_Printf("MN_GetSaifeReferenceString: Reference null or empty");
+#endif
+		return NULL;
+	}
+	return string;
+}
+
+/**
  * @sa COM_MacroExpandString
  */
 const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
@@ -1077,11 +1080,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 				return NULL;
 
 			/* get the string */
-			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
-				return Com_ValueToStr(refNode, val->type, val->ofs);
-			else
-				return Com_ValueToStr(refNode->data[-((int)val->ofs)], val->type, 0);
+			return Com_ValueToStr(refNode, val->type & V_BASETYPEMASK, val->ofs);
 		}
 	} else if (*ref == '_') {
 		ref++;
@@ -1131,11 +1130,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 				return 0.0;
 
 			/* get the string */
-			/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
-				return *(float *) ((byte *) refNode + val->ofs);
-			else
-				return *(float *) refNode->data[-((int)val->ofs)];
+			return *(float *) ((byte *) refNode + val->ofs);
 		}
 	} else {
 		/* just get the data */

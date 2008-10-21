@@ -29,9 +29,10 @@ void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
 void MN_MouseWheel(qboolean down, int x, int y);
+void MN_MouseMove(int x, int y);
+
 qboolean MN_CursorOnMenu(int x, int y);
-void MN_TextClick(menuNode_t * node, int mouseOver);
-qboolean MN_CursorOnMenu(int x, int y);
+void MN_TextClick(menuNode_t * node, int x, int y);
 void MN_SetCvar(const char *name, const char *str, float value);
 
 #endif
