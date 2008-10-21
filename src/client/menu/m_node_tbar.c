@@ -38,7 +38,7 @@ void MN_DrawTBarNode (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 
 	if (node->pointWidth) {
-		ps = MN_GetReferenceFloat(menu, node->abstractvalue.value) - MN_GetReferenceFloat(menu, node->abstractvalue.min);
+		ps = MN_GetReferenceFloat(menu, node->u.abstractvalue.value) - MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
 		shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
 	} else
 		shx = node->texh[0];
