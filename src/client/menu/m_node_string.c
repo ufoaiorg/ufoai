@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "../client.h"
 
-void MN_DrawStringNode (menuNode_t *node)
+static void MN_DrawStringNode (menuNode_t *node)
 {
 	vec2_t nodepos;
 	menu_t *menu = node->menu;

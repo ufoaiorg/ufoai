@@ -421,7 +421,7 @@ static void MN_DrawItem (const le_t *le, const vec3_t pos)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node The radar menu node (located in the hud menu definitions)
  */
-void MN_DrawRadar (menuNode_t *node)
+static void MN_DrawRadar (menuNode_t *node)
 {
 	const le_t *le;
 	int i;

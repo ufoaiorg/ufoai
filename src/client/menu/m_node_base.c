@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Draw a small square with the menu layout of the given base
  */
-void MN_BaseMapLayout (menuNode_t * node)
+static void MN_BaseMapLayout (menuNode_t * node)
 {
 	base_t *base;
 	int height, width, x, y;
@@ -81,7 +81,7 @@ void MN_BaseMapLayout (menuNode_t * node)
  * @brief Draws a base.
  * @sa MN_DrawMenus
  */
-void MN_BaseMapDraw (menuNode_t * node)
+static void MN_BaseMapDraw (menuNode_t * node)
 {
 	int xHover = -1, yHover = -1, widthHover = 1;
 	int width, height, row, col, time, colSecond;

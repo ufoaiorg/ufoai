@@ -77,10 +77,6 @@ selectBoxOptions_t* MN_AddTabOption (menuNode_t *node)
 	return tabOption;
 }
 
-void MN_NodeTabInit (void)
-{
-}
-
 /**
  * @brief Return a tab located at a screen position
  * @param[in] node A tab node
@@ -124,7 +120,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
  * @brief Handles selectboxes clicks
  * @sa MN_SELECTBOX
  */
-void MN_TabNodeClick (menuNode_t * node, int x, int y)
+static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 {
 	selectBoxOptions_t* newOption;
 	const char *ref;
@@ -192,7 +188,7 @@ static inline void MN_DrawTabNodeJunction (const char *image, int x, int y, mn_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, qtrue, image);
 }
 
-void MN_DrawTabNode (menuNode_t *node)
+static void MN_DrawTabNode (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
 	selectBoxOptions_t* tabOption;

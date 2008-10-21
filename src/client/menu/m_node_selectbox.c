@@ -68,7 +68,7 @@ void MN_NodeSelectBoxInit (void)
 	selectBoxNode = NULL;
 }
 
-void MN_DrawSelectBoxNode (menuNode_t *node)
+static void MN_DrawSelectBoxNode (menuNode_t *node)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int selBoxX, selBoxY;

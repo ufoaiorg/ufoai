@@ -329,7 +329,7 @@ static void MN_UnHideNode_f (void)
 
 /** @brief Init a behaviour to null. A null node dont react
  */
-inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour, char* name) {
+static inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour, char* name) {
 	memset(behaviour, 0, sizeof(nodeBehaviour_t));
 	behaviour->name = name;
 }

@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @todo need a cleanup/marge/refactoring with MN_DrawItemNode
  */
-void MN_DrawItemNode2 (menuNode_t *node)
+static void MN_DrawItemNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
 	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);

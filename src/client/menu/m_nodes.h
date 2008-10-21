@@ -224,13 +224,22 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos);
 
 void MN_InitNodes(void);
 
-#include "m_node_image.h"
-#include "m_node_model.h"
-#include "m_node_string.h"
-#include "m_node_text.h"
-#include "m_node_selectbox.h"
+#include "m_node_bar.h"
+#include "m_node_base.h"
 #include "m_node_checkbox.h"
+#include "m_node_cinematic.h"
+#include "m_node_container.h"
+#include "m_node_controls.h"
+#include "m_node_image.h"
+#include "m_node_item.h"
+#include "m_node_linestrip.h"
+#include "m_node_map.h"
+#include "m_node_model.h"
 #include "m_node_radar.h"
+#include "m_node_selectbox.h"
+#include "m_node_string.h"
 #include "m_node_tab.h"
+#include "m_node_tbar.h"
+#include "m_node_text.h"
 
 #endif

@@ -121,8 +121,6 @@ void MN_TextScrollBottom (const char* nodeName)
  * @note need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
  */
 void MN_DrawTextNode2(menuNode_t *node) {
-	message_t *message;
-	int i;
 	menu_t *menu = node->menu;
 	const char *font;
 	vec2_t nodepos;

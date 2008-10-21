@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_node_model.h"
 
-void MN_DrawCinematicNode (menuNode_t *node)
+static void MN_DrawCinematicNode (menuNode_t *node)
 {
 	vec2_t nodepos;
 	MN_GetNodeAbsPos(node, nodepos);

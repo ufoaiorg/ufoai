@@ -180,7 +180,7 @@ void MN_NodeModelInit (void)
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }
 
-void MN_DrawModelNode2 (menuNode_t *node)
+static void MN_DrawModelNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
 	const char* ref = MN_GetSaifeReferenceString(node->menu, node->dataImageOrModel);

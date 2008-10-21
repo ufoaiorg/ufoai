@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 
-void MN_DrawTBarNode (menuNode_t *node)
+static void MN_DrawTBarNode (menuNode_t *node)
 {
 	/* dataImageOrModel is the texture name */
 	float ps, shx;
