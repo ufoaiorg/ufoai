@@ -67,7 +67,7 @@ static void MN_DrawBorder (const menuNode_t *node)
 		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
 }
 
-/** @frief hack to catch a mouse move event when we redraw the GUI
+/** @brief hack to catch a mouse move event when we redraw the GUI
  */
 static void MN_CheckMouseMove() {
 	static int oldX = 0, oldY = 0;

@@ -1,5 +1,5 @@
 /**
- * @file m_node_container.h
+ * @file m_node_base.h
  */
 
 /*

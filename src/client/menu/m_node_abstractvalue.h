@@ -1,7 +1,6 @@
-
 /**
  * @file m_node_abstractvalue.h
- * @brief Define commun thing for GUI controls which allow to
+ * @brief Define common thing for GUI controls which allow to
  * edit a value (scroolbar, spinner, and more)
  */
 

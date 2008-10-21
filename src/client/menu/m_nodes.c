@@ -368,7 +368,9 @@ void MN_InitNodes (void)
 	MN_RegisterNodeSelectBox(nodeBehaviourList + MN_SELECTBOX);
 	MN_RegisterNodeLineStrip(nodeBehaviourList + MN_LINESTRIP);
 	MN_RegisterNodeCinematic(nodeBehaviourList + MN_CINEMATIC);
-	//MN_RegisterNodeTextList(nodeBehaviourList + MN_TEXTLIST); /* @fixme temporary hide */
+#if 0
+	MN_RegisterNodeTextList(nodeBehaviourList + MN_TEXTLIST); /* @todo fixme: temporary hide */
+#endif
 	MN_RegisterNodeRadar(nodeBehaviourList + MN_RADAR);
 	MN_RegisterNodeTab(nodeBehaviourList + MN_TAB);
 	MN_RegisterNodeControls(nodeBehaviourList + MN_CONTROLS);
