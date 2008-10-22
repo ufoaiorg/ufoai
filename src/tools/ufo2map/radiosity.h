@@ -71,7 +71,6 @@ typedef struct patch_s {
 } patch_t;
 
 extern patch_t *face_patches[MAX_MAP_FACES];
-extern entity_t *face_entity[MAX_MAP_FACES];
 extern patch_t patches[MAX_PATCHES];
 extern unsigned num_patches;
 

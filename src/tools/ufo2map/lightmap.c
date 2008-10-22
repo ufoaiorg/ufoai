@@ -394,7 +394,6 @@ typedef struct {
 	vec3_t	textoworld[2];	/* world = texorg + s * textoworld[0] */
 
 	int		texmins[2], texsize[2];
-	int		surfnum;
 	dBspFace_t	*face;
 } lightinfo_t;
 
@@ -523,16 +522,16 @@ static void CalcFaceVectors (lightinfo_t *l)
 	distscale = DotProduct(texnormal, l->facenormal);
 	if (!distscale) {
 		Verb_Printf(VERB_EXTRA, "WARNING: Texture axis perpendicular to face\n");
-		distscale = 1;
+		distscale = 1.0;
 	}
-	if (distscale < 0) {
+	if (distscale < 0.0) {
 		distscale = -distscale;
 		VectorSubtract(vec3_origin, texnormal, texnormal);
 	}
 
 	/* distscale is the ratio of the distance along the texture normal to
 	 * the distance along the plane normal */
-	distscale = 1 / distscale;
+	distscale = 1.0 / distscale;
 
 	for (i = 0; i < 2; i++) {
 		const vec_t len = VectorLength(l->worldtotex[i]);
@@ -1080,10 +1079,11 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
 	vec3_t temp;
 	float dist[MAX_VERT_FACES];
-	float total;
-	int i, v;
+	float near;
+	int i, v, nearv;
 
-	total = 0.0;
+	near = 9999.0;
+	nearv = 0;
 
 	/* calculate the distance to each vertex */
 	for (i = 0; i < l->face->numedges; i++) {  /* find nearest and farthest verts */
@@ -1095,30 +1095,18 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 		VectorSubtract(pos, curTile->vertexes[v].point, temp);
 		dist[i] = VectorLength(temp);
-
-		total += dist[i];
+		if (dist[i] < near) {
+			near = dist[i];
+			nearv = v;
+		}
 	}
-
-	VectorClear(normal);
-
-	/* interpolate between them */
-	for (i = 0; i < l->face->numedges; i++) {
-		const int e = curTile->surfedges[l->face->firstedge + i];
-		if (e >= 0)
-			v = curTile->edges[e].v[0];
-		else
-			v = curTile->edges[-e].v[1];
-
-		VectorMA(normal, (total - dist[i]) / total, curTile->normals[v].normal, normal);
-	}
-
-	VectorNormalize(normal);
+	VectorCopy(curTile->normals[nearv].normal, normal);
 }
 
 
 #define MAX_SAMPLES 5
 static const float sampleofs[MAX_SAMPLES][2] = {
-	{0, 0}, {-0.25, -0.25}, {0.25, -0.25}, {0.25, 0.25}, {-0.25, 0.25}
+	{0, 0}, {-0.5, -0.5}, {0.5, -0.5}, {0.5, 0.5}, {-0.5, 0.5}
 };
 
 #define CLAMP_DELUXEMAP_Z 0.5
@@ -1129,7 +1117,8 @@ static const float sampleofs[MAX_SAMPLES][2] = {
  */
 void BuildFacelights (unsigned int facenum)
 {
-	dBspFace_t *f;
+	dBspFace_t *face;
+	dBspPlane_t *plane;
 	dBspTexinfo_t *tex;
 	float *center;
 	float *sdir, *tdir;
@@ -1148,16 +1137,15 @@ void BuildFacelights (unsigned int facenum)
 		return;
 	}
 
-	f = &curTile->faces[facenum];
-	tex = &curTile->texinfo[f->texinfo];
-
-	sdir = tex->vecs[0];
-	tdir = tex->vecs[1];
-
-	center = face_extents[facenum].center;
+	face = &curTile->faces[facenum];
+	plane = &curTile->planes[face->planenum];
+	tex = &curTile->texinfo[face->texinfo];
 
 	if (tex->surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
+
+	sdir = tex->vecs[0];
+	tdir = tex->vecs[1];
 
 	/* sun light options */
 	if (config.compile_for_day) {
@@ -1174,6 +1162,7 @@ void BuildFacelights (unsigned int facenum)
 		VectorCopy(config.night_sun_color, sun_color);
 	}
 
+	/* rad -extra antialiasing */
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
 	else
@@ -1184,12 +1173,11 @@ void BuildFacelights (unsigned int facenum)
 	lightscale = 1.0 / numsamples; /* each sample contributes this much */
 
 	for (i = 0; i < numsamples; i++) {
-		l[i].surfnum = facenum;
-		l[i].face = f;
-		/* rotate plane */
-		VectorCopy(curTile->planes[f->planenum].normal, l[i].facenormal);
-		l[i].facedist = curTile->planes[f->planenum].dist;
-		if (f->side) {
+		l[i].face = face;
+		l[i].facedist = plane->dist;
+		VectorCopy(plane->normal, l[i].facenormal);
+		/* negate the normal and dist */
+		if (face->side) {
 			VectorNegate(l[i].facenormal, l[i].facenormal);
 			l[i].facedist = -l[i].facedist;
 		}
@@ -1197,8 +1185,13 @@ void BuildFacelights (unsigned int facenum)
 		/* get the origin offset for rotating bmodels */
 		VectorCopy(face_offset[facenum], l[i].modelorg);
 
+		/* calculate lightmap texture mins and maxs */
 		CalcFaceExtents(&l[i]);
+
+		/* and the lightmap texture vectors */
 		CalcFaceVectors(&l[i]);
+
+		/* now generate all of the sample points */
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
 	}
 
@@ -1212,18 +1205,21 @@ void BuildFacelights (unsigned int facenum)
 	fl->directions = malloc(fl->numsamples * sizeof(vec3_t));
 	memset(fl->directions, 0, fl->numsamples * sizeof(vec3_t));
 
+	center = face_extents[facenum].center;  /* center of the face */
+
 	/* get the light samples */
 	for (i = 0; i < l[0].numsurfpt; i++) {
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
 		float *direction = fl->directions + i * 3;		/* accumulate direction here */
 
-		for (j = 0; j < numsamples; j++) {
+		for (j = 0; j < numsamples; j++) {  /* with antialiasing */
 			vec3_t pos;
 
-			/* calculate interpolated normal for phong shading */
-			if (curTile->texinfo[l[0].face->texinfo].surfaceFlags & SURF_PHONG)
+			if (tex->surfaceFlags & SURF_PHONG)
+				/* interpolated normal */
 				SampleNormal(&l[0], l[j].surfpt[i], normal);
-			else /* or just use the plane normal */
+			else
+				/* or just plane normal */
 				VectorCopy(l[0].facenormal, normal);
 
 			NudgeSamplePosition(l[j].surfpt[i], normal, center, pos);
@@ -1270,7 +1266,7 @@ void BuildFacelights (unsigned int facenum)
 		if (patch->samples)
 			VectorScale(patch->samplelight, 1.0 / patch->samples, patch->samplelight);
 		else
-			Verb_Printf(VERB_EXTRA, "patch with no samples\n");
+			Verb_Printf(VERB_EXTRA, "Patch with no samples\n");
 
 	assert(face_patches[facenum]);
 	/* the light from DIRECT_LIGHTS is sent out, but the

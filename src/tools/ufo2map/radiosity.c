@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/tracing.h"
 
 patch_t *face_patches[MAX_MAP_FACES];
-entity_t *face_entity[MAX_MAP_FACES];
 patch_t patches[MAX_PATCHES];
 unsigned num_patches;
 
