@@ -328,14 +328,17 @@ static void MN_UnHideNode_f (void)
 		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
 
-/** @brief Init a behaviour to null. A null node dont react
+/**
+ * @brief Init a behaviour to null. A null node dont react
  */
-static inline void MN_RegisterNodeNull(nodeBehaviour_t* behaviour, char* name) {
-	memset(behaviour, 0, sizeof(nodeBehaviour_t));
+static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name)
+{
+	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
 }
 
-/** @brief List of all node behaviours, indexes by nodetype num.
+/**
+ * @brief List of all node behaviours, indexes by nodetype num.
  */
 nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
 

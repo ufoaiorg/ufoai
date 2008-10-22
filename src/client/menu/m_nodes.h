@@ -98,7 +98,8 @@ typedef struct lineStrips_s {
 	int numStrips;			/**< Number of point-lists. */
 } lineStrips_t;
 
-/** @brief extradata node for the model node
+/**
+ * @brief extradata node for the model node
  * @todo move it on m_node_model.h
  */
 typedef struct {
@@ -111,7 +112,8 @@ typedef struct {
 	void* animationState;	/**< holds then anim state for the current model */
 } modelDataNode_t;
 
-/** @brief menu node
+/**
+ * @brief menu node
  * @todo delete data* when it's possible
  */
 typedef struct menuNode_s {
@@ -181,7 +183,7 @@ typedef struct menuNode_s {
 
 /** @brief node behaviour, how a node work */
 typedef struct {
-	char* name;							/**< name of the behaviour: string type of a node */
+	const char* name;					/**< name of the behaviour: string type of a node */
 	void (*draw)(menuNode_t *node);		/**< how to draw a node */
 	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
 	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
