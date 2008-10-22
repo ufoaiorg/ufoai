@@ -173,7 +173,7 @@ void VectorMix(const vec3_t v1, const vec3_t v2, const float mix, vec3_t out);
 void MatrixMultiply(const vec3_t a[3], const vec3_t b[3], vec3_t c[3]);
 void GLMatrixMultiply(const float a[16], const float b[16], float c[16]);
 void GLVectorTransform(const float m[16], const vec4_t in, vec4_t out);
-void VectorRotate(const vec3_t m[3], const vec3_t va, vec3_t vb);
+void VectorRotate(vec3_t m[3], const vec3_t va, vec3_t vb);
 
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);

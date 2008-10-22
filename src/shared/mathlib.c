@@ -295,7 +295,7 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
  * @param[in] m
  * @param[in] va
  */
-void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
+void VectorRotate (vec3_t m[3], const vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
 	vb[1] = m[0][1] * va[0] + m[1][1] * va[1] + m[2][1] * va[2];
