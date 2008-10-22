@@ -31,9 +31,6 @@ patch_t *face_patches[MAX_MAP_FACES];
 patch_t patches[MAX_PATCHES];
 unsigned num_patches;
 
-static vec3_t radiosity[MAX_PATCHES];		/**< light leaving a patch */
-static vec3_t illumination[MAX_PATCHES];	/**< light arriving at a patch */
-
 dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 /*
@@ -62,7 +59,7 @@ TRANSFER SCALES
 ===================================================================
 */
 
-static inline int PointInLeafnum (const vec3_t point)
+static inline int Rad_PointInLeafnum (const vec3_t point)
 {
 	int nodenum;
 
@@ -83,208 +80,10 @@ static inline int PointInLeafnum (const vec3_t point)
 
 dBspLeaf_t *Rad_PointInLeaf (const vec3_t point)
 {
-	const int num = PointInLeafnum(point);
+	const int num = Rad_PointInLeafnum(point);
 	assert(num >= 0);
 	assert(num < MAX_MAP_LEAFS);
 	return &curTile->leafs[num];
-}
-
-
-static int total_transfer;
-static void MakeTransfers (unsigned int i)
-{
-	unsigned int			j;
-	vec3_t		delta;
-	vec_t		dist, scale;
-	float		trans;
-	int			itrans;
-	patch_t		*patch, *patch2;
-	float		total;
-	dBspPlane_t	plane;
-	vec3_t		origin;
-	float		transfers[MAX_PATCHES], *all_transfers;
-	int			s;
-	int			itotal;
-
-	patch = patches + i;
-	total = 0;
-
-	VectorCopy(patch->origin, origin);
-	plane = *patch->plane;
-
-	/* find out which patches will collect light from patch */
-
-	all_transfers = transfers;
-	patch->numtransfers = 0;
-	for (j = 0, patch2 = patches; j < num_patches; j++, patch2++) {
-		transfers[j] = 0;
-
-		if (j == i)
-			continue;
-
-		/* calculate vector */
-		VectorSubtract(patch2->origin, origin, delta);
-		dist = VectorNormalize(delta);
-		if (!dist)
-			continue;	/* should never happen */
-
-		/* reletive angles */
-		scale = DotProduct(delta, plane.normal);
-		scale *= -DotProduct(delta, patch2->plane->normal);
-		if (scale <= 0)
-			continue;
-
-		trans = scale * patch2->area / (dist * dist);
-
-		if (trans < 0.1)
-			continue;
-
-		/* check exact transfer */
-		if (TR_TestLine(patch->origin, patch2->origin, TL_FLAG_NONE))
-			continue;
-
-#if 0
-		if (trans < 0)
-			trans = 0;		/* rounding errors... */
-#endif
-
-		transfers[j] = trans;
-		if (trans > 0) {
-			total += trans;
-			patch->numtransfers++;
-		}
-	}
-
-	/* copy the transfers out and normalize
-	 * total should be somewhere near PI if everything went right
-	 * because partial occlusion isn't accounted for, and nearby
-	 * patches have underestimated form factors, it will usually
-	 * be higher than PI */
-	if (patch->numtransfers) {
-		transfer_t *t;
-
-		if (patch->numtransfers < 0 || patch->numtransfers > MAX_PATCHES)
-			Sys_Error("Weird numtransfers");
-		s = patch->numtransfers * sizeof(transfer_t);
-		patch->transfers = malloc(s);
-		if (!patch->transfers)
-			Sys_Error("Memory allocation failure");
-
-		/* normalize all transfers so all of the light */
-		/* is transfered to the surroundings */
-		t = patch->transfers;
-		itotal = 0;
-		for (j = 0; j < num_patches; j++) {
-			if (transfers[j] <= 0)
-				continue;
-			itrans = transfers[j] * 0x10000 / total;
-			itotal += itrans;
-			t->transfer = itrans;
-			t->patch = j;
-			t++;
-		}
-	}
-
-	/* don't bother locking around this.  not that important. */
-	total_transfer += patch->numtransfers;
-}
-
-
-static void FreeTransfers (void)
-{
-	unsigned int i;
-
-	for (i = 0; i < num_patches; i++) {
-		if (patches[i].transfers)
-			free(patches[i].transfers);
-		patches[i].transfers = NULL;
-	}
-}
-
-static float CollectLight (void)
-{
-	unsigned int i, j;
-	patch_t	*patch;
-	vec_t	total;
-
-	total = 0;
-
-	for (i = 0, patch = patches; i < num_patches; i++, patch++) {
-		for (j = 0; j < 3; j++) {
-			patch->totallight[j] += illumination[i][j] / patch->area;
-			radiosity[i][j] = illumination[i][j] * patch->reflectivity[j];
-		}
-
-		total += radiosity[i][0] + radiosity[i][1] + radiosity[i][2];
-		VectorClear(illumination[i]);
-	}
-
-	return total;
-}
-
-
-/**
- * @brief Send light out to other patches
- */
-static void ShootLight (unsigned int patchnum)
-{
-	int k, l, num;
-	const transfer_t *trans;
-	const patch_t *patch;
-	vec3_t send;
-
-	/* this is the amount of light we are distributing
-	 * prescale it so that multiplying by the 16 bit
-	 * transfer values gives a proper output value */
-	for (k = 0; k < 3; k++)
-		send[k] = radiosity[patchnum][k] / 0x10000;
-	patch = &patches[patchnum];
-
-	trans = patch->transfers;
-	num = patch->numtransfers;
-
-	for (k = 0; k < num; k++, trans++) {
-		for (l = 0; l < 3; l++)
-			illumination[trans->patch][l] += send[l] * trans->transfer;
-	}
-}
-
-static void BounceLight (void)
-{
-	unsigned int i, j;
-
-	for (i = 0; i < num_patches; i++) {
-		const patch_t *p = &patches[i];
-		for (j = 0; j < 3; j++) {
-			radiosity[i][j] = p->samplelight[j] * p->reflectivity[j] * p->area;
-		}
-	}
-
-	for (i = 0; i < config.numbounce; i++) {
-		float added;
-		char buf[12];
-
-		snprintf(buf, sizeof(buf), "%i LGHTBNCE", i);
-		RunThreadsOn(ShootLight, num_patches, config.verbosity >= VERB_NORMAL, buf);
-		added = CollectLight();
-
-		Verb_Printf(VERB_EXTRA, "bounce:%i added:%f\n", i, added);
-	}
-}
-
-
-
-/*============================================================== */
-
-static void CheckPatches (void)
-{
-	unsigned int i;
-
-	for (i = 0; i < num_patches; i++) {
-		const patch_t *patch = &patches[i];
-		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
-			Sys_Error("negative patch totallight\n");
-	}
 }
 
 void RadWorld (void)
@@ -315,23 +114,7 @@ void RadWorld (void)
 	/* build initial facelights */
 	RunThreadsOn(BuildFacelights, curTile->numfaces, config.verbosity >= VERB_NORMAL, "FACELIGHTS");
 
-	if (config.numbounce > 0) {
-		/* build transfer lists */
-		RunThreadsOn(MakeTransfers, num_patches, config.verbosity >= VERB_NORMAL, "TRANSFERS");
-		Verb_Printf(VERB_EXTRA, "transfer lists: %5.1f megs\n",
-			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
-
-		/* spread light around */
-		BounceLight();
-
-		FreeTransfers();
-
-		CheckPatches();
-	}
-
-	/* blend bounced light into direct light and save */
-	LinkPlaneFaces();
-
+	/* finalize it and write it out */
 	RunThreadsOn(FinalLightFace, curTile->numfaces, config.verbosity >= VERB_NORMAL, "FINALLIGHT");
 	CloseTracingNodes();
 }

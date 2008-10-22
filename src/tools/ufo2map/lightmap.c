@@ -26,360 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "radiosity.h"
 #include "../../common/tracing.h"
 
-static int facelinks[MAX_MAP_FACES];
-static int planelinks[2][MAX_MAP_PLANES];
-
 vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
 
-/**
- * @sa RadWorld
- */
-void LinkPlaneFaces (void)
-{
-	int i;
-	const dBspFace_t *f;
-
-	f = curTile->faces;
-	for (i = 0; i < curTile->numfaces; i++, f++) {
-		facelinks[i] = planelinks[f->side][f->planenum];
-		planelinks[f->side][f->planenum] = i;
-	}
-}
-
-/*
-=================================================================
-POINT TRIANGULATION
-=================================================================
-*/
-
-typedef struct triedge_s {
-	int			p0, p1;
-	vec3_t		normal;
-	vec_t		dist;
-	struct triangle_s	*tri;
-} triedge_t;
-
-typedef struct triangle_s {
-	triedge_t	*edges[3];
-} triangle_t;
-
-#define	MAX_TRI_POINTS		1024
-#define	MAX_TRI_EDGES		(MAX_TRI_POINTS*6)
-#define	MAX_TRI_TRIS		(MAX_TRI_POINTS*2)
-
-typedef struct {
-	int			numpoints;
-	int			numedges;
-	int			numtris;
-	dBspPlane_t	*plane;
-	triedge_t	*edgematrix[MAX_TRI_POINTS][MAX_TRI_POINTS];
-	patch_t		*points[MAX_TRI_POINTS];
-	triedge_t	edges[MAX_TRI_EDGES];
-	triangle_t	tris[MAX_TRI_TRIS];
-} triangulation_t;
-
-/**
- * @sa FreeTriangulation
- */
-static triangulation_t *AllocTriangulation (dBspPlane_t *plane)
-{
-	triangulation_t *tr;
-
-	tr = malloc(sizeof(*tr));
-	memset(tr, 0, sizeof(*tr));
-	tr->plane = plane;
-
-	return tr;
-}
-
-/**
- * @sa AllocTriangulation
- */
-static void FreeTriangulation (triangulation_t *tr)
-{
-	free(tr);
-}
-
-/**
- * @sa TriangulatePoints
- */
-static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
-{
-	triedge_t *e, *be;
-	vec3_t v1, normal;
-	vec_t dist;
-
-	if (trian->edgematrix[p0][p1])
-		return trian->edgematrix[p0][p1];
-
-	if (trian->numedges > MAX_TRI_EDGES - 2)
-		Sys_Error("trian->numedges > MAX_TRI_EDGES-2");
-
-	VectorSubtract(trian->points[p1]->origin, trian->points[p0]->origin, v1);
-	VectorNormalize(v1);
-	CrossProduct(v1, trian->plane->normal, normal);
-	dist = DotProduct(trian->points[p0]->origin, normal);
-
-	e = &trian->edges[trian->numedges];
-	e->p0 = p0;
-	e->p1 = p1;
-	e->tri = NULL;
-	VectorCopy(normal, e->normal);
-	e->dist = dist;
-	trian->numedges++;
-	trian->edgematrix[p0][p1] = e;
-
-	be = &trian->edges[trian->numedges];
-	be->p0 = p1;
-	be->p1 = p0;
-	be->tri = NULL;
-	VectorNegate(normal, be->normal);
-	be->dist = -dist;
-	trian->numedges++;
-	trian->edgematrix[p1][p0] = be;
-
-	return e;
-}
-
-static inline triangle_t *AllocTriangle (triangulation_t *trian)
-{
-	triangle_t *t;
-
-	if (trian->numtris >= MAX_TRI_TRIS)
-		Sys_Error("trian->numtris >= MAX_TRI_TRIS");
-
-	t = &trian->tris[trian->numtris];
-	trian->numtris++;
-
-	return t;
-}
-
-static void TriEdge_r (triangulation_t *trian, triedge_t *e)
-{
-	int i, bestp;
-	vec3_t v1, v2;
-	vec_t *p0, *p1;
-	vec_t best, ang;
-	triangle_t *nt;
-
-	if (e->tri)
-		return;		/* already connected by someone */
-
-	/* find the point with the best angle */
-	p0 = trian->points[e->p0]->origin;
-	p1 = trian->points[e->p1]->origin;
-	best = 1.1;
-	bestp = 0;
-	for (i = 0; i < trian->numpoints; i++) {
-		const vec_t *p = trian->points[i]->origin;
-
-		/* a 0 dist will form a degenerate triangle */
-		if (DotProduct(p, e->normal) - e->dist <= 0)
-			continue;	/* behind edge */
-
-		VectorSubtract(p0, p, v1);
-		VectorSubtract(p1, p, v2);
-
-		if (!VectorNormalize(v1))
-			continue;
-
-		if (!VectorNormalize(v2))
-			continue;
-
-		ang = DotProduct(v1, v2);
-
-		if (ang < best) {
-			best = ang;
-			bestp = i;
-		}
-	}
-	if (best >= 1)
-		return;		/* edge doesn't match anything */
-
-	/* make a new triangle */
-	nt = AllocTriangle(trian);
-	nt->edges[0] = e;
-	nt->edges[1] = FindEdge(trian, e->p1, bestp);
-	nt->edges[2] = FindEdge(trian, bestp, e->p0);
-	for (i = 0; i < 3; i++)
-		nt->edges[i]->tri = nt;
-	TriEdge_r(trian, FindEdge(trian, bestp, e->p1));
-	TriEdge_r(trian, FindEdge(trian, e->p0, bestp));
-}
-
-/**
- * @sa FindEdge
- */
-static void TriangulatePoints (triangulation_t *trian)
-{
-	vec_t d, bestd;
-	vec3_t v1;
-	int bp1, bp2, i, j;
-	vec_t *p1, *p2;
-	triedge_t *e, *e2;
-
-	if (trian->numpoints < 2)
-		return;
-
-	/* find the two closest points */
-	bestd = 9999;
-	bp1 = bp2 = 0;
-	for (i = 0; i < trian->numpoints; i++) {
-		p1 = trian->points[i]->origin;
-		for (j = i + 1; j < trian->numpoints; j++) {
-			p2 = trian->points[j]->origin;
-			VectorSubtract(p2, p1, v1);
-			d = VectorLength(v1);
-			if (d < bestd) {
-				bestd = d;
-				bp1 = i;
-				bp2 = j;
-			}
-		}
-	}
-
-	e = FindEdge(trian, bp1, bp2);
-	e2 = FindEdge(trian, bp2, bp1);
-	TriEdge_r(trian, e);
-	TriEdge_r(trian, e2);
-}
-
-static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
-{
-	if (trian->numpoints == MAX_TRI_POINTS)
-		Sys_Error("trian->numpoints == MAX_TRI_POINTS (%i)", trian->numpoints);
-	trian->points[trian->numpoints++] = patch;
-}
-
-/**
- * @param[in] trian
- * @param[in] t
- * @param[in] point
- * @param[out] color
- */
-static void LerpTriangle (const triangulation_t *trian, const triangle_t *t, const vec3_t point, vec3_t color)
-{
-	const patch_t *p1, *p2, *p3;
-	vec3_t base, d1, d2;
-	float x, y, x1, y1, x2, y2;
-
-	p1 = trian->points[t->edges[0]->p0];
-	p2 = trian->points[t->edges[1]->p0];
-	p3 = trian->points[t->edges[2]->p0];
-
-	VectorCopy(p1->totallight, base);
-	VectorSubtract(p2->totallight, base, d1);
-	VectorSubtract(p3->totallight, base, d2);
-
-	x = DotProduct(point, t->edges[0]->normal) - t->edges[0]->dist;
-	y = DotProduct(point, t->edges[2]->normal) - t->edges[2]->dist;
-
-	x1 = 0;
-	y1 = DotProduct(p2->origin, t->edges[2]->normal) - t->edges[2]->dist;
-
-	x2 = DotProduct(p3->origin, t->edges[0]->normal) - t->edges[0]->dist;
-	y2 = 0;
-
-	if (fabs(y1) < ON_EPSILON || fabs(x2) < ON_EPSILON) {
-		VectorCopy(base, color);
-		return;
-	}
-
-	VectorMA(base, x / x2, d2, color);
-	VectorMA(color, y / y1, d1, color);
-}
-
-static qboolean PointInTriangle (const vec3_t point, const triangle_t *t)
-{
-	int i;
-
-	for (i = 0; i < 3; i++) {
-		const triedge_t *e = t->edges[i];
-		const vec_t d = DotProduct(e->normal, point) - e->dist;
-		if (d < 0)
-			return qfalse;	/* not inside */
-	}
-
-	return qtrue;
-}
-
-static void SampleTriangulation (const vec3_t point, const triangulation_t *trian, vec3_t color)
-{
-	const triangle_t *t;
-	const triedge_t *e;
-	vec_t d, best;
-	const patch_t *p0, *p1;
-	vec3_t v1, v2;
-	int i, j;
-
-	if (trian->numpoints == 0) {
-		VectorClear(color);
-		return;
-	}
-	if (trian->numpoints == 1) {
-		VectorCopy(trian->points[0]->totallight, color);
-		return;
-	}
-	/* search for triangles */
-	for (t = trian->tris, j = 0; j < trian->numtris; t++, j++) {
-		if (!PointInTriangle(point, t))
-			continue;
-
-		/* this is it */
-		LerpTriangle(trian, t, point, color);
-		return;
-	}
-
-	/* search for exterior edge */
-	for (e = trian->edges, j = 0; j < trian->numedges; e++, j++) {
-		if (e->tri)
-			continue;		/* not an exterior edge */
-
-		d = DotProduct(point, e->normal) - e->dist;
-		if (d < 0)
-			continue;	/* not in front of edge */
-
-		p0 = trian->points[e->p0];
-		p1 = trian->points[e->p1];
-
-		VectorSubtract(p1->origin, p0->origin, v1);
-		VectorNormalize(v1);
-		VectorSubtract(point, p0->origin, v2);
-		d = DotProduct(v2, v1);
-		if (d < 0)
-			continue;
-		if (d > 1)
-			continue;
-		for (i = 0; i < 3; i++)
-			color[i] = p0->totallight[i] + d * (p1->totallight[i] - p0->totallight[i]);
-		return;
-	}
-
-	/* search for nearest point */
-	best = 99999;
-	p1 = NULL;
-	for (j = 0; j < trian->numpoints; j++) {
-		p0 = trian->points[j];
-		VectorSubtract(point, p0->origin, v1);
-		d = VectorLength(v1);
-		if (d < best) {
-			best = d;
-			p1 = p0;
-		}
-	}
-
-	if (!p1)
-		Sys_Error("SampleTriangulation: no points");
-
-	VectorCopy(p1->totallight, color);
-}
-
-/*
-=================================================================
-LIGHTMAP SAMPLE GENERATION
-=================================================================
-*/
-
+/** @brief lightinfo is a temporary bucket for lighting calculations */
 typedef struct {
 	vec_t	facedist;
 	vec3_t	facenormal;
@@ -387,16 +36,17 @@ typedef struct {
 	int		numsurfpt;
 	vec3_t	*surfpt;
 
-	vec3_t	modelorg;		/* for origined bmodels */
+	vec3_t	modelorg;		/**< for origined bmodels */
 
 	vec3_t	texorg;
-	vec3_t	worldtotex[2];	/* s = (world - texorg) . worldtotex[0] */
-	vec3_t	textoworld[2];	/* world = texorg + s * textoworld[0] */
+	vec3_t	worldtotex[2];	/**< s = (world - texorg) . worldtotex[0] */
+	vec3_t	textoworld[2];	/**< world = texorg + s * textoworld[0] */
 
 	int		texmins[2], texsize[2];
 	dBspFace_t	*face;
 } lightinfo_t;
 
+/** @brief face extents */
 typedef struct extents_s {
 	vec3_t mins, maxs;
 	vec3_t center;
@@ -407,6 +57,8 @@ static extents_t face_extents[MAX_MAP_FACES];
 
 /**
  * @brief Populates face_extents for all dBspSurface_t, prior to light creation.
+ * This is done so that sample positions may be nudged outward along
+ * the face normal and towards the face center to help with traces.
  */
 static void BuildFaceExtents (void)
 {
@@ -959,41 +611,6 @@ static inline void NudgeSamplePosition (const vec3_t in, const vec3_t normal, co
 	VectorMA(out, SAMPLE_NUDGE, normal, out);
 }
 
-/**
- * @brief Take the sample's collected light and
- * add it back into the apropriate patch
- * for the radiosity pass.
- *
- * The sample is added to all patches that might include
- * any part of it. They are counted and averaged, so it
- * doesn't generate extra light.
- */
-static inline void AddSampleToPatch (const vec3_t pos, const vec3_t color, const int facenum)
-{
-	patch_t *patch;
-	vec3_t mins, maxs;
-	int i;
-
-	if (color[0] + color[1] + color[2] < 3)
-		return;
-
-	for (patch = face_patches[facenum]; patch; patch = patch->next) {
-		/* see if the point is in this patch (roughly) */
-		WindingBounds(patch->winding, mins, maxs);
-		for (i = 0; i < 3; i++) {
-			if (mins[i] > pos[i] + ((1 << config.lightquant) / 2.0))
-				goto nextpatch;
-			if (maxs[i] < pos[i] - ((1 << config.lightquant) / 2.0))
-				goto nextpatch;
-		}
-
-		/* add the sample to the patch */
-		patch->samples++;
-		VectorAdd(patch->samplelight, color, patch->samplelight);
-nextpatch:;
-	}
-}
-
 #define MAX_VERT_FACES 256
 
 /**
@@ -1079,10 +696,10 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 {
 	vec3_t temp;
 	float dist[MAX_VERT_FACES];
-	float near;
+	float nearest;
 	int i, v, nearv;
 
-	near = 9999.0;
+	nearest = 9999.0;
 	nearv = 0;
 
 	/* calculate the distance to each vertex */
@@ -1095,8 +712,8 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 		VectorSubtract(pos, curTile->vertexes[v].point, temp);
 		dist[i] = VectorLength(temp);
-		if (dist[i] < near) {
-			near = dist[i];
+		if (dist[i] < nearest) {
+			nearest = dist[i];
 			nearv = v;
 		}
 	}
@@ -1106,7 +723,7 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 #define MAX_SAMPLES 5
 static const float sampleofs[MAX_SAMPLES][2] = {
-	{0, 0}, {-0.5, -0.5}, {0.5, -0.5}, {0.5, 0.5}, {-0.5, 0.5}
+	{0.0, 0.0}, {-0.25, -0.25}, {0.25, -0.25}, {0.25, 0.25}, {-0.25, 0.25}
 };
 
 #define CLAMP_DELUXEMAP_Z 0.5
@@ -1127,7 +744,6 @@ void BuildFacelights (unsigned int facenum)
 	lightinfo_t l[MAX_SAMPLES];
 	float lightscale;
 	int i, j, numsamples;
-	patch_t *patch;
 	facelight_t *fl;
 	vec3_t sun_color, sun_dir;
 	float sun_intensity;
@@ -1246,9 +862,6 @@ void BuildFacelights (unsigned int facenum)
 				VectorNormalize(direction);
 			}
 		}
-		/* contribute the sample to one or more patches for radiosity */
-		if (config.numbounce > 0)
-			AddSampleToPatch(l[0].surfpt[i], sample, facenum);
 	}
 
 	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
@@ -1260,13 +873,6 @@ void BuildFacelights (unsigned int facenum)
 	/* free the sample positions for the face */
 	for (i = 0; i < numsamples; i++)
 		free(l[i].surfpt);
-
-	/* average up the direct light on each patch for radiosity */
-	for (patch = face_patches[facenum]; patch; patch = patch->next)
-		if (patch->samples)
-			VectorScale(patch->samplelight, 1.0 / patch->samples, patch->samplelight);
-		else
-			Verb_Printf(VERB_EXTRA, "Patch with no samples\n");
 
 	assert(face_patches[facenum]);
 	/* the light from DIRECT_LIGHTS is sent out, but the
@@ -1289,14 +895,11 @@ void BuildFacelights (unsigned int facenum)
 void FinalLightFace (unsigned int facenum)
 {
 	dBspFace_t *f;
-	int i, j, k, pfacenum;
+	int j, k;
 	vec3_t dir;
-	patch_t *patch;
-	triangulation_t *trian = NULL;
 	facelight_t	*fl;
 	float max, newmax;
 	byte *dest;
-	vec3_t facemins, facemaxs;
 
 	f = &curTile->faces[facenum];
 	fl = &facelight[config.compile_for_day][facenum];
@@ -1319,42 +922,7 @@ void FinalLightFace (unsigned int facenum)
 
 	ThreadUnlock();
 
-	/* set up the triangulation */
-	if (config.numbounce > 0) {
-		ClearBounds(facemins, facemaxs);
-		for (i = 0; i < f->numedges; i++) {
-			const int ednum = curTile->surfedges[f->firstedge + i];
-			if (ednum >= 0)
-				AddPointToBounds(curTile->vertexes[curTile->edges[ednum].v[0]].point, facemins, facemaxs);
-			else
-				AddPointToBounds(curTile->vertexes[curTile->edges[-ednum].v[1]].point, facemins, facemaxs);
-		}
-
-		trian = AllocTriangulation(&curTile->planes[f->planenum]);
-
-		/* for all faces on the plane, add the nearby patches
-		 * to the triangulation */
-		for (pfacenum = planelinks[f->side][f->planenum]; pfacenum; pfacenum = facelinks[pfacenum]) {
-			for (patch = face_patches[pfacenum]; patch; patch = patch->next) {
-				for (i = 0; i < 3; i++) {
-					if (facemins[i] - patch->origin[i] > config.subdiv * 2)
-						break;
-					if (patch->origin[i] - facemaxs[i] > config.subdiv * 2)
-						break;
-				}
-				if (i != 3)
-					continue;	/* not needed for this face */
-				AddPointToTriangulation(patch, trian);
-			}
-		}
-		for (i = 0; i < trian->numpoints; i++)
-			memset(trian->edgematrix[i], 0,
-				trian->numpoints * sizeof(trian->edgematrix[0][0]));
-		TriangulatePoints(trian);
-	}
-
-	/* sample the triangulation */
-
+	/* write it out */
 	dest = &curTile->lightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
 
 	for (j = 0; j < fl->numsamples; j++) {
@@ -1363,12 +931,7 @@ void FinalLightFace (unsigned int facenum)
 
 		/* start with raw sample data */
 		VectorCopy((fl->samples + j * 3), lb);
-		if (config.numbounce > 0) {
-			vec3_t add;
-			/* add radiosity bounces */
-			SampleTriangulation(fl->origins + j * 3, trian, add);
-			VectorAdd(lb, add, lb);
-		}
+
 		/* add an ambient term if desired */
 		if (config.compile_for_day) {
 			lb[0] += config.day_ambient_red;
@@ -1412,7 +975,4 @@ void FinalLightFace (unsigned int facenum)
 		for (k = 0; k < 3; k++)
 			*dest++ = (byte)((dir[k] +1.0f) * 127.0f);
 	}
-
-	if (config.numbounce > 0)
-		FreeTriangulation(trian);
 }

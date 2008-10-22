@@ -75,7 +75,6 @@ static void Usage (void)
 		"                              5 extra output (eg from BSPing)"
 	); Com_Printf(
 		"\nRadiosity options:\n"
-		" -bounce <num>              : light bounces\n"
 		" -extra                     : extra light samples\n"
 		" -maxlight                  : \n"
 		" -noradiosity TYPE          : don't perform the radiosity calculations, where TYPE is one of day, night, all\n"
@@ -336,10 +335,6 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			Verb_Printf(VERB_LESS, "nobackclip = true\n");
 			config.nobackclip = qtrue;
-		} else if (!strcmp(argv[i],"-bounce")) {
-			config.numbounce = atoi(argv[i + 1]);
-			Verb_Printf(VERB_LESS, "light bounces = %i\n", config.numbounce);
-			i++;
 		} else if (!strcmp(argv[i],"-extra")) {
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
@@ -366,7 +361,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			Verb_Printf(VERB_LESS, "entity light scaling at %f\n", config.entity_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-maxlight")) {
-			config.maxlight = atof(argv[i + 1]) * 128;
+			config.maxlight = atof(argv[i + 1]) * 196.0;
 			i++;
 		} else if (!strcmp(argv[i], "-noradiosity")) {
 			if (argc > i + 1) {

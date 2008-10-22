@@ -85,7 +85,6 @@ typedef struct mapConfig_s {
 	int noradiosity;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume; /**< -micro test after CSG */
-	unsigned int numbounce;
 	qboolean extrasamples;
 	float subdiv;
 	qboolean info;
