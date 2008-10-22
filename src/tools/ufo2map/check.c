@@ -36,8 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
  *  the margin for abutting brushes to be considered not intersecting */
 #define CH_DIST_EPSILON 0.001f
-#define CH_DIST_EPSILON_COLLINEAR_POINTS 0.01f
 #define CH_DIST_EPSILON_SQR 0.000001
+
+#define CH_DIST_EPSILON_COLLINEAR_POINTS 0.02f /**< this epsilon does need to be this big for the odd difficult case */
 
 /** if the cosine of an angle is greater than this, then the angle is negligibly different from zero */
 #define COS_EPSILON 0.9999f
