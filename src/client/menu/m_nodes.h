@@ -59,6 +59,7 @@ typedef enum mn_s {
 	MN_RADAR,	/**< tactical mission radar */
 	MN_TAB,
 	MN_CONTROLS,	/**< menu controls */
+	MN_CUSTOMBUTTON,
 
 	MN_NUM_NODETYPE
 } mn_t;

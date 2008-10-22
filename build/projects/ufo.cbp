@@ -361,6 +361,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_controls.h" />
+		<Unit filename="..\..\src\client\menu\m_node_custombutton.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_custombutton.h" />
 		<Unit filename="..\..\src\client\menu\m_node_image.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_controls.h"
 #include "m_node_cinematic.h"
 #include "m_node_container.h"
+#include "m_node_custombutton.h"
 #include "m_node_image.h"
 #include "m_node_item.h"
 #include "m_node_linestrip.h"
@@ -374,4 +375,5 @@ void MN_InitNodes (void)
 	MN_RegisterNodeRadar(nodeBehaviourList + MN_RADAR);
 	MN_RegisterNodeTab(nodeBehaviourList + MN_TAB);
 	MN_RegisterNodeControls(nodeBehaviourList + MN_CONTROLS);
+	MN_RegisterNodeCustomButton(nodeBehaviourList + MN_CUSTOMBUTTON);
 }
