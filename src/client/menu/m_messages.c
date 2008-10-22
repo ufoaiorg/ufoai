@@ -460,7 +460,7 @@ static void MSO_Set (const int listIndex, const notify_t type, const mso_t optio
 static void MSO_Toggle_f (void)
 {
 	if (Cmd_Argc() != 3)
-		Com_Printf("Usage: %s <listId> <pause|notice>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", Cmd_Argv(0));
 	else {
 		const int listIndex = atoi(Cmd_Argv(1));
 		const notify_t type = listIndex + messageList_scroll;
@@ -514,6 +514,38 @@ static void MSO_Set_f (void)
 			return;
 		}
 		MSO_Set(0, type, optionsType, atoi(Cmd_Argv(3)), qfalse);
+	}
+}
+
+/**
+ * @brief Function callback that sets all message options settings for one mso_t to given value.
+ * @sa MSO_Set
+ * @sa MSO_Init_f
+ */
+static void MSO_SetAll_f(void)
+{
+	if (Cmd_Argc() != 3)
+		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
+	else {
+		mso_t optionsType;
+		notify_t type;
+		qboolean activate = atoi(Cmd_Argv(2));
+		if (!Q_strcmp(Cmd_Argv(1), "pause"))
+			optionsType = MSO_PAUSE;
+		else if (!Q_strcmp(Cmd_Argv(1), "notify"))
+			optionsType = MSO_NOTIFY;
+		else if (!Q_strcmp(Cmd_Argv(1), "sound"))
+			optionsType = MSO_SOUND;
+		else {
+			Sys_ConsoleOutput(va("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2)));
+			return;
+		}
+		/* update settings for chosen type */
+		for (type = 0; type < NT_NUM_NOTIFYTYPE; type ++) {
+			MSO_Set(0, type, optionsType, activate, qfalse);
+		}
+		/* reinit menu */
+		MSO_Init_f();
 	}
 }
 
@@ -695,11 +727,8 @@ void MN_MessageInit (void)
 	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
-#if 0
-	/* @todo implement setall for given optionstype */
 	Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
-#endif
-	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause or notification setting for a message category");
+	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notificatio or sound setting for a message category");
 	Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
 	Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
 #ifdef DEBUG
