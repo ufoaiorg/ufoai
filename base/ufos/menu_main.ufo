@@ -51,125 +51,76 @@ menu main
 	// buttons
 	// ==================
 
-	// SINGLEPLAYER
-	pic button_singleplayer
+	custombutton button_singleplayer
 	{
-		click	{ cmd "mn_push singleplayer" }
 		pos	"640 170"
+		size "256 64"
+		click	{ cmd "mn_push singleplayer" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_singleplayer color "0 0.5 0 1" *button_singleplayer texl "0 0"  *button_singleplayer texh "256 64" }
-		in	{ *string_singleplayer color "1 1 1 1" *button_singleplayer texl "0 64" *button_singleplayer texh "256 128" }
-	}
-	string string_singleplayer
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Single-player"
-		pos	"768 202"
-		align	cc
 	}
 
-	pic button_multiplayer
+	custombutton button_multiplayer
 	{
-		click	{ cmd "mn_push multiplayer;" }
 		pos	"640 240"
+		size "256 64"
+		click	{ cmd "mn_push multiplayer;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_multiplayer color "0 0.5 0 1" *button_multiplayer texl "0 0"  *button_multiplayer texh "256 64" }
-		in	{ *string_multiplayer color "1 1 1 1" *button_multiplayer texl "0 64" *button_multiplayer texh "256 128" }
-	}
-	string string_multiplayer
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Multiplayer"
-		pos	"768 272"
-		align	cc
 	}
 
-	pic button_options
+	custombutton button_options
 	{
 		pos	"640 310"
+		size "256 64"
 		click	{ cmd "mn_push options;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
-		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
-	}
-	string string_options
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Options"
-		pos	"768 342"
-		align	cc
 	}
 
-	pic button_tut
+	custombutton button_tut
 	{
 		pos	"640 380"
+		size "256 64"
 		click	{ cmd "mn_push tutorials;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_tut color "0 0.5 0 1" *button_tut texl "0 0"  *button_tut texh "256 64" }
-		in	{ *string_tut color "1 1 1 1" *button_tut texl "0 64" *button_tut texh "256 128" }
-	}
-	string string_tut
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Tutorials"
-		pos	"768 412"
-		align	cc
 	}
 
-	pic button_credits
+	custombutton button_credits
 	{
 		pos	"640 450"
+		size "256 64"
 		click	{ cmd "seq_start credits;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_credits color "0 0.5 0 1" *button_credits texl "0 0"  *button_credits texh "256 64" }
-		in	{ *string_credits color "1 1 1 1" *button_credits texl "0 64" *button_credits texh "256 128" }
-	}
-	string string_credits
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Credits"
-		pos	"768 482"
-		align	cc
 	}
 
-	pic button_exit
+	custombutton button_exit
 	{
 		pos	"640 520"
+		size "256 64"
 		click	{ cmd quit }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
-		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
-	}
-	string string_exit
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Exit"
-		pos	"768 552"
-		align	cc
 	}
 
 	func init
@@ -393,7 +344,7 @@ menu popup_tipoftheday
 	pic back
 	{
 		image	menu/popup_alpha
-		pos		"0 0"
+		pos	"0 0"
 		blend	true
 	}
 
@@ -401,13 +352,13 @@ menu popup_tipoftheday
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"460 26"
+		pos	"460 26"
 	}
 
 	string title
 	{
 		string	"_Tip of the day"
-		pos		"256 24"
+		pos	"256 24"
 		font	f_big
 		align uc
 	}
@@ -415,23 +366,23 @@ menu popup_tipoftheday
 	checkbox activate
 	{
 		cvar	"*cvar cl_showTipOfTheDay"
-		pos		"44 200"
+		pos	"44 200"
 		align	ul
 	}
 	string activate_string
 	{
 		string	"_Show tip of the day"
-		pos		"66 200"
+		pos	"66 200"
 		font	f_small
-		align	ul
+		align ul
 	}
 
 	text popup_tipoftheday_text
 	{
-		pos		"34 64"
+		pos	"34 64"
 		size	"444 120"
 		format	"20 150"
-		num		TEXT_TIPOFTHEDAY
+		num	TEXT_TIPOFTHEDAY
 		click	{ }
 		wheel
 		height	6
@@ -443,9 +394,9 @@ menu popup_tipoftheday
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 32"
-		pos		"274 194"
-		out		{ *string_next color "0 0.5 0 1" *bt_next image menu/multi_buttons3 }
-		in		{ *string_next color "1 1 1 1" *bt_next image menu/multi_buttons3a }
+		pos	"274 194"
+		out	{ *string_next color "0 0.5 0 1" *bt_next image menu/multi_buttons3 }
+		in	{ *string_next color "1 1 1 1" *bt_next image menu/multi_buttons3a }
 		click	{ cmd "tipoftheday;" }
 	}
 	string string_next
@@ -453,7 +404,7 @@ menu popup_tipoftheday
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Next"
-		pos		"360 210"
+		pos	"360 210"
 		align	cc
 	}
 

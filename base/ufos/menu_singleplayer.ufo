@@ -51,134 +51,84 @@ menu singleplayer
 	// buttons
 	// ==================
 
-	pic button_new
+	custombutton button_new
 	{
 		pos	"640 170"
+		size "256 64"
 		click	{ cmd "game_exit; mn_push campaigns;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_new color "0 0.5 0 1" *button_new texl "0 0"  *button_new texh "256 64" }
-		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "256 128" }
-	}
-	string string_new
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_New game"
-		pos	"768 202"
-		align	cc
 	}
 
-	pic button_load
+	custombutton button_load
 	{
-		click	{ cmd "mn_push load" }
 		pos	"640 240"
+		size "256 64"
+		click	{ cmd "mn_push load" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_load color "0 0.5 0 1" *button_load texl "0 0"  *button_load texh "256 64" }
-		in	{ *string_load color "1 1 1 1" *button_load texl "0 64" *button_load texh "256 128" }
-	}
-	string string_load
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Load"
-		pos	"768 272"
-		align	cc
 	}
 
-	pic button_save_na
+	custombutton button_save_na
 	{
 		// only if we have no game started yet
 		if "mn_main ne singleplayerInGame"
 		tooltip	"_No game to save"
 		pos	"640 310"
+		size "256 64"
 		image	menu/button_big
-		texl	"0 128"
-		texh	"256 192"
-		mousefx	true
-	}
-	string string_save_na
-	{
-		// only if we have no game started yet
-		if "mn_main ne singleplayerInGame"
 		font	f_menubig
-		color	"0.5 0.5 0.5 1"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Save"
-		pos	"768 342"
-		align	cc
 	}
 
-	pic button_save
+	custombutton button_save
 	{
 		// only if we already have a game started
 		if "mn_main eq singleplayerInGame"
 		pos	"640 310"
+		size "256 64"
 		click	{ cmd "mn_push save;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_save color "0 0.5 0 1" *button_save texl "0 0"  *button_save texh "256 64" }
-		in	{ *string_save color "1 1 1 1" *button_save texl "0 64" *button_save texh "256 128" }
-	}
-	string string_save
-	{
-		// only if we already have a game started
-		if "mn_main eq singleplayerInGame"
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Save"
-		pos	"768 342"
-		align	cc
 	}
 
-	pic button_continue
+	custombutton button_continue
 	{
 		if "mn_lastsave"
-		click	{ cmd "game_continue;" }
-		pos	"640 380"
-		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
 		tooltip	"_Load last saved game or continue playing"
-		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
-		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
-	}
-	string string_continue
-	{
-		if "mn_lastsave"
+		pos	"640 380"
+		size "256 64"
+		click	{ cmd "game_continue;" }
+		image	menu/button_big
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Continue"
-		pos	"768 412"
-		align	cc
 	}
 
-	pic button_back
+	custombutton button_back
 	{
 		pos	"640 520"
+		size "256 64"
 		click	{ cmd "game_exit;mn_pop;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
-		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
-	}
-	string string_back
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Back"
-		pos	"768 552"
-		align	cc
 	}
+
 	func init
 	{
 		// sv_ai might be deactivated because we were in the multiplayer menu before
@@ -189,62 +139,41 @@ menu singleplayer
 menu singleplayerInGame extends singleplayer
 {
 	// over-ride button_new with a continue button
-	pic button_new
+	custombutton button_new
 	{
-		click	{ cmd "game_continue;" }
 		pos	"640 170"
+		size "256 64"
+		click	{ cmd "game_continue;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_new color "0 0.5 0 1" *button_new texl "0 0"  *button_new texh "256 64" }
-		in	{ *string_new color "1 1 1 1" *button_new texl "0 64" *button_new texh "256 128" }
-	}
-	string string_new
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Continue"
-		pos	"768 202"
-		align	cc
 	}
 
 	// over-ride button_continue with a continue button
-	pic button_continue
+	custombutton button_continue
 	{
 		pos	"640 170"
+		size "256 64"
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
+		font	f_menubig
 		invis	true
-	}
-	string string_continue
-	{
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Continue"
-		pos	"768 202"
-		align	cc
-		invis	true
 	}
 
-	pic button_options
+	custombutton button_options
 	{
 		pos	"640 380"
+		size "256 64"
 		click	{ cmd "mn_push options;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
-		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
-	}
-	string string_options
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Options"
-		pos	"768 412"
-		align	cc
 	}
 
 	string string_back
@@ -310,104 +239,64 @@ menu singleplayermission
 	// buttons
 	// ==================
 
-	pic button_continue
+	custombutton button_continue
 	{
-		click	{ cmd "game_continue;" }
 		pos	"640 170"
+		size "256 64"
+		click	{ cmd "game_continue;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
-		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
-	}
-	string string_continue
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Continue"
-		pos	"768 202"
-		align	cc
 	}
 
-	pic button_abort
+	custombutton button_abort
 	{
-		click	{ cmd "game_abort;" }
 		pos	"640 240"
+		size "256 64"
+		click	{ cmd "game_abort;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_abort color "0 0.5 0 1" *button_abort texl "0 0"  *button_abort texh "256 64" }
-		in	{ *string_abort color "1 1 1 1" *button_abort texl "0 64" *button_abort texh "256 128" }
-	}
-	string string_abort
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Abort"
-		pos	"768 272"
-		align	cc
 	}
 
-	pic button_retry
+	custombutton button_retry
 	{
 		pos	"640 310"
+		size "256 64"
 		click	{ cmd "game_go;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_retry color "0 0.5 0 1" *button_retry texl "0 0"  *button_retry texh "256 64" }
-		in	{ *string_retry color "1 1 1 1" *button_retry texl "0 64" *button_retry texh "256 128" }
-	}
-	string string_retry
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Retry"
-		pos	"768 342"
-		align	cc
 	}
 
-	pic button_options
+	custombutton button_options
 	{
 		pos	"640 380"
+		size "256 64"
 		click	{ cmd "mn_push options;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_options color "0 0.5 0 1" *button_options texl "0 0"  *button_options texh "256 64" }
-		in	{ *string_options color "1 1 1 1" *button_options texl "0 64" *button_options texh "256 128" }
-	}
-	string string_options
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Options"
-		pos	"768 412"
-		align	cc
 	}
 
-	pic button_exit
+	custombutton button_exit
 	{
 		pos	"640 520"
+		size "256 64"
 		click	{ cmd "game_exit;mn_pop;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_exit color "0 0.5 0 1" *button_exit texl "0 0"  *button_exit texh "256 64" }
-		in	{ *string_exit color "1 1 1 1" *button_exit texl "0 64" *button_exit texh "256 128" }
-	}
-	string string_exit
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Exit"
-		pos	"768 552"
-		align	cc
 	}
 }
 
@@ -627,24 +516,16 @@ menu load
 	// buttons
 	// ==================
 
-	pic button_back
+	custombutton button_back
 	{
 		pos	"640 520"
+		size "256 64"
 		click	{ cmd "mn_pop;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
-		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
-	}
-	string string_back
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Back"
-		pos	"768 552"
-		align	cc
 	}
 
 	func init
@@ -875,24 +756,16 @@ menu save
 	// buttons
 	// ==================
 
-	pic button_back
+	custombutton button_back
 	{
 		pos	"640 520"
+		size "256 64"
 		click	{ cmd "msgmenu !;mn_pop;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
-		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
-	}
-	string string_back
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Back"
-		pos	"768 552"
-		align	cc
 	}
 
 	func init

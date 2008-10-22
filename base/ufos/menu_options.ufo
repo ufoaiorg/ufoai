@@ -45,126 +45,78 @@ menu options
 	// buttons
 	// ==================
 
-	pic button_input
+	custombutton button_input
 	{
 		pos	"80 170"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_input;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_input color "0 0.5 0 1" *button_input texl "0 0"  *button_input texh "256 64" }
-		in	{ *string_input color "1 1 1 1" *button_input texl "0 64" *button_input texh "256 128" }
-	}
-	string string_input
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Input"
-		pos	"208 202"
-		align	cc
 	}
 
-	pic button_video
+	custombutton button_video
 	{
 		pos	"80 240"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_video;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_video color "0 0.5 0 1" *button_video texl "0 0"  *button_video texh "256 64" }
-		in	{ *string_video color "1 1 1 1" *button_video texl "0 64" *button_video texh "256 128" }
-	}
-	string string_video
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Video"
-		pos	"208 272"
-		align	cc
 	}
 
-	pic button_sound
+	custombutton button_sound
 	{
 		if "snd_init == 1"
 		pos	"80 310"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_sound;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_sound color "0 0.5 0 1" *button_sound texl "0 0"  *button_sound texh "256 64" }
-		in	{ *string_sound color "1 1 1 1" *button_sound texl "0 64" *button_sound texh "256 128" }
-	}
-	string string_sound
-	{
-		if "snd_init == 1"
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Sound"
-		pos	"208 342"
-		align	cc
 	}
 
-	pic button_sound_na
+	custombutton button_sound_na
 	{
 		if "snd_init == 0"
 		tooltip	"_Sound is not activated"
 		pos	"80 310"
+		size "256 64"
 		image	menu/button_big
-		texl	"0 128"
-		texh	"256 192"
-		in
-	}
-	string string_sound_na
-	{
-		if "snd_init == 0"
 		font	f_menubig
-		color	"0.5 0.5 0.5 1"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Sound"
-		pos	"208 342"
-		align	cc
 	}
 
-	pic button_game
+	custombutton button_game
 	{
 		pos	"80 380"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_game;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_game color "0 0.5 0 1" *button_game texl "0 0"  *button_game texh "256 64" }
-		in	{ *string_game color "1 1 1 1" *button_game texl "0 64" *button_game texh "256 128" }
-	}
-	string string_game
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Game"
-		pos	"208 412"
-		align	cc
 	}
 
-	pic button_back
+	custombutton button_back
 	{
 		pos	"80 470"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_pop" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
-		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
-	}
-	string string_back
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Back"
-		pos	"208 502"
-		align	cc
 	}
 
 	func init
@@ -1952,24 +1904,16 @@ menu options_game
 	// ===================
 	// PAUSE/MESSAGE SETTINGS
 	// ===================
-	pic button_pause
+	custombutton button_pause
 	{
 		pos	"500 620"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_pause;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_pause color "0 0.5 0 1" *button_pause texl "0 0"  *button_pause texh "256 64" }
-		in	{ *string_pause color "1 1 1 1" *button_pause texl "0 64" *button_pause texh "256 128" }
-	}
-	string string_pause
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Pause/Messages"
-		pos	"628 652"
-		align	cc
 	}
 
 	// ===================
@@ -2181,24 +2125,16 @@ menu options_input
 	// ===================
 	// KEY BINDINGS
 	// ===================
-	pic button_keys
+	custombutton button_keys
 	{
 		pos	"500 620"
+		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_keys;" }
 		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_keys color "0 0.5 0 1" *button_keys texl "0 0"  *button_keys texh "256 64" }
-		in	{ *string_keys color "1 1 1 1" *button_keys texl "0 64" *button_keys texh "256 128" }
-	}
-	string string_keys
-	{
 		font	f_menubig
 		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
 		string	"_Keys"
-		pos	"628 652"
-		align	cc
 	}
 
 	// selectboxes must be the last clickable nodes
