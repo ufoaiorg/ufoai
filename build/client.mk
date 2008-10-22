@@ -63,6 +63,7 @@ CLIENT_SRCS = \
 	client/menu/m_node_cinematic.c \
 	client/menu/m_node_container.c \
 	client/menu/m_node_controls.c \
+	client/menu/m_node_custombutton.c \
 	client/menu/m_node_image.c \
 	client/menu/m_node_item.c \
 	client/menu/m_node_linestrip.c \

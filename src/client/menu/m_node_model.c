@@ -209,13 +209,13 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	static vec3_t nodeorigin;
 	static vec3_t pmiorigin;
 
-	if (!*source)
+	if (source[0] == '\0')
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
 	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodepos[0];
 	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodepos[1];
-	nodeorigin[3] = node->u.model.origin[2];
+	nodeorigin[2] = node->u.model.origin[2];
 
 	menuModel = node->u.model.menuModel = MN_GetMenuModel(source);
 
@@ -398,24 +398,19 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				if (updateModel) {
 					/* model has changed but mem is already reserved in pool */
 					if (node->u.model.animationState) {
-
 						Mem_Free(node->u.model.animationState);
 						node->u.model.animationState = NULL;
-
 					}
 				}
 				if (!node->u.model.animationState) {
-
 					as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					R_AnimChange(as, mi.model, ref);
 					node->u.model.animationState = as;
-
 				} else {
 					/* change anim if needed */
 					as = node->u.model.animationState;
-
 					if (!as)
 						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 					anim = R_AnimGetName(as, mi.model);
@@ -444,7 +439,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				*tag++ = 0;
 
 				for (search = menu->firstNode; search != node && search; search = search->next)
-					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
+					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, sizeof(search->name))) {
 						char modelName[MAX_VAR];
 						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
 
@@ -472,7 +467,6 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 						}
 
 						as = search->u.model.animationState;
-
 						if (!as)
 							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->dataAnimOrFont);
 						pmi.frame = as->frame;
