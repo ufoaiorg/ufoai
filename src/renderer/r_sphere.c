@@ -46,8 +46,8 @@ sphere_t r_globeMoon;
  */
 void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 {
-	const float drho = M_PI / tris;
-	const float dtheta = M_PI / (tris / 2);
+	const float drho = M_PI / tris; /**< angle from the pole (z-axis) */
+	const float dtheta = M_PI / (tris / 2); /**< angle around the equator, from y-axis */
 
 	const float ds = 1.0f / (tris * 2);
 	const float dt = 1.0f / tris;
