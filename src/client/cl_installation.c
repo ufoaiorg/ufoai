@@ -790,10 +790,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->installationDamage = MSG_ReadShort(sb);
 		inst->alienInterest = MSG_ReadFloat(sb);
 		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 1.0f, qtrue);
-#if 0
-		/** breaking save-game compatibility: */
 		inst->buildStart = MSG_ReadLong(sb);
-#endif
 
 		/* read battery slots */
 		BDEF_InitialiseInstallationSlots(inst);
