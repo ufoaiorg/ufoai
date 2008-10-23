@@ -414,7 +414,7 @@ static void CP_UFORecoveredSell_f (void)
 {
 	int i, nations = 0;
 	aircraft_t *ufocraft;
-	static char recoveryNationSelectPopup[512];
+	static char recoveryNationSelectPopup[MAX_SMALLMENUTEXTLEN];
 
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
