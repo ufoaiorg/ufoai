@@ -22,9 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "radiosity.h"
 #include "../../common/tracing.h"
+
+#define	sun_pitch			config.sun_pitch[config.compile_for_day]
+#define	sun_yaw				config.sun_yaw[config.compile_for_day]
+#define	sun_dir				config.sun_dir[config.compile_for_day]
+#define	sun_color			config.sun_color[config.compile_for_day]
+#define	sun_intensity		config.sun_intensity[config.compile_for_day]
+#define	sun_ambient_color	config.sun_ambient_color[config.compile_for_day]
 
 vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
 
@@ -401,91 +407,52 @@ void CreateDirectLights (void)
 	/* handle worldspawn light settings */
 	{
 		const entity_t *e = &entities[0];
+		const char *ambient, *light, *angles, *color;
+
 		if (config.compile_for_day) {
-			const char *ambient = ValueForKey(e, "ambient_day");
-			const char *light = ValueForKey(e, "light_day");
-			const char *angles = ValueForKey(e, "angles_day");
-			const char *color = ValueForKey(e, "color_day");
-			vec3_t vector;
-
-			if (light[0] != '\0')
-				config.day_sun_intensity = atoi(light);
-
-			if (angles[0] != '\0') {
-				GetVectorForKey(e, "angles_day", vector);
-				config.day_sun_pitch = vector[PITCH] * torad;
-				config.day_sun_yaw = vector[YAW] * torad;
-				VectorSet(config.day_sun_dir,
-					cos(config.day_sun_yaw) * sin(config.day_sun_pitch),
-					sin(config.day_sun_yaw) * sin(config.day_sun_pitch),
-					cos(config.day_sun_pitch));
-			}
-
-			if (color[0] != '\0') {
-				GetVectorForKey(e, "color_day", vector);
-				VectorCopy(vector, config.day_sun_color);
-			}
-
-			if (ambient[0] != '\0') {
-				GetVectorForKey(e, "ambient_day", vector);
-				config.day_ambient_red = vector[0];
-				config.day_ambient_green = vector[1];
-				config.day_ambient_blue = vector[2];
-			}
+			ambient = ValueForKey(e, "ambient_day");
+			light = ValueForKey(e, "light_day");
+			angles = ValueForKey(e, "angles_day");
+			color = ValueForKey(e, "color_day");
 		} else {
-			const char *ambient = ValueForKey(e, "ambient_night");
-			const char *light = ValueForKey(e, "light_night");
-			const char *angles = ValueForKey(e, "angles_night");
-			const char *color = ValueForKey(e, "color_night");
+			ambient = ValueForKey(e, "ambient_night");
+			light = ValueForKey(e, "light_night");
+			angles = ValueForKey(e, "angles_night");
+			color = ValueForKey(e, "color_night");
+		}
+
+		if (light[0] != '\0')
+			sun_intensity = atoi(light);
+
+		if (angles[0] != '\0') {
 			vec3_t vector;
+			GetVectorFromString(angles, vector);
+			sun_pitch = vector[PITCH] * torad;
+			sun_yaw = vector[YAW] * torad;
+			VectorSet(sun_dir, cos(sun_yaw) * sin(sun_pitch),
+				sin(sun_yaw) * sin(sun_pitch), cos(sun_pitch));
+		}
 
-			if (light[0] != '\0')
-				config.night_sun_intensity = atoi(light);
+		if (color[0] != '\0') {
+			GetVectorFromString(color, sun_color);
+			ColorNormalize(sun_color, sun_color);
+		}
 
-			if (angles[0] != '\0') {
-				GetVectorForKey(e, "angles_night", vector);
-				config.night_sun_pitch = vector[PITCH] * torad;
-				config.night_sun_yaw = vector[YAW] * torad;
-				VectorSet(config.night_sun_dir,
-					cos(config.night_sun_yaw) * sin(config.night_sun_pitch),
-					sin(config.night_sun_yaw) * sin(config.night_sun_pitch),
-					cos(config.night_sun_pitch));
-			}
-
-			if (color[0] != '\0') {
-				GetVectorForKey(e, "color_night", vector);
-				VectorCopy(vector, config.night_sun_color);
-			}
-
-			if (ambient[0] != '\0') {
-				GetVectorForKey(e, "ambient_night", vector);
-				config.night_ambient_red = vector[0];
-				config.night_ambient_green = vector[1];
-				config.night_ambient_blue = vector[2];
-			}
+		if (ambient[0] != '\0') {
+			GetVectorFromString(ambient, sun_ambient_color);
+			VectorScale(sun_ambient_color, 128.0f, sun_ambient_color);
 		}
 	}
 
-	ColorNormalize(config.day_sun_color, config.day_sun_color);
-	ColorNormalize(config.night_sun_color, config.night_sun_color);
-	if (config.compile_for_day) {
-		config.day_ambient_red *= 128;
-		config.day_ambient_green *= 128;
-		config.day_ambient_blue *= 128;
-	} else {
-		config.night_ambient_red *= 128;
-		config.night_ambient_green *= 128;
-		config.night_ambient_blue *= 128;
-	}
-
+	Verb_Printf(VERB_EXTRA, "light settings:\n * intensity: %i\n * sun_angles: pitch %f yaw %f\n * sun_color: %f:%f:%f\n * sun_ambient_color: %f:%f:%f\n",
+		sun_intensity, sun_pitch, sun_yaw, sun_color[0], sun_color[1], sun_color[2], sun_ambient_color[0], sun_ambient_color[1], sun_ambient_color[2]);
 	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
 /**
  * @brief A follow-up to GatherSampleLight, simply trace along the sun normal, adding sunlight
  */
-static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale,
-	const float sun_intensity, const vec3_t sun_color, const vec3_t sun_dir)
+static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale)
 {
 	vec3_t delta, light;
 	float dot;
@@ -515,11 +482,9 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 
 
 /**
- * @param[in] lightscale is the normalizer for multisampling
+ * @param[in] scale is the normalizer for multisampling
  */
-static void GatherSampleLight (vec3_t pos, const vec3_t normal,
-	float *sample, float *direction, float lightscale,
-	const float sun_intensity, const vec3_t sun_color, const vec3_t sun_dir)
+static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale)
 {
 	directlight_t *l;
 	vec3_t delta;
@@ -578,17 +543,17 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal,
 		if (TR_TestLineSingleTile(pos, l->origin))
 			continue;	/* occluded */
 
-		light *= lightscale;
-		dir *= lightscale;
+		light *= scale;
+		dir *= scale;
 
 		/* add some light to it */
 		VectorMA(sample, light, l->color, sample);
 
 		VectorMA(direction, dir, delta, direction);
-		VectorMA(direction, lightscale / dir, normal, direction);
+		VectorMA(direction, scale / dir, normal, direction);
 	}
 
-	GatherSampleSunlight(pos, normal, sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
+	GatherSampleSunlight(pos, normal, sample, direction, scale);
 }
 
 #define SAMPLE_NUDGE 0.25
@@ -742,11 +707,9 @@ void BuildFacelights (unsigned int facenum)
 	vec3_t normal, binormal;
 	vec4_t tangent;
 	lightinfo_t l[MAX_SAMPLES];
-	float lightscale;
+	float scale;
 	int i, j, numsamples;
 	facelight_t *fl;
-	vec3_t sun_color, sun_dir;
-	float sun_intensity;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -763,21 +726,6 @@ void BuildFacelights (unsigned int facenum)
 	sdir = tex->vecs[0];
 	tdir = tex->vecs[1];
 
-	/* sun light options */
-	if (config.compile_for_day) {
-		if (!config.day_sun_intensity)
-			return;
-		sun_intensity = config.day_sun_intensity;
-		VectorCopy(config.day_sun_dir, sun_dir);
-		VectorCopy(config.day_sun_color, sun_color);
-	} else {
-		if (!config.night_sun_intensity)
-			return;
-		sun_intensity = config.night_sun_intensity;
-		VectorCopy(config.night_sun_dir, sun_dir);
-		VectorCopy(config.night_sun_color, sun_color);
-	}
-
 	/* rad -extra antialiasing */
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
@@ -786,7 +734,7 @@ void BuildFacelights (unsigned int facenum)
 
 	memset(l, 0, sizeof(l));
 
-	lightscale = 1.0 / numsamples; /* each sample contributes this much */
+	scale = 1.0 / numsamples; /* each sample contributes this much */
 
 	for (i = 0; i < numsamples; i++) {
 		l[i].face = face;
@@ -840,7 +788,7 @@ void BuildFacelights (unsigned int facenum)
 
 			NudgeSamplePosition(l[j].surfpt[i], normal, center, pos);
 
-			GatherSampleLight(pos, normal, sample, direction, lightscale, sun_intensity, sun_color, sun_dir);
+			GatherSampleLight(pos, normal, sample, direction, scale);
 		}
 		if (!VectorCompare(direction, vec3_origin)) {
 			vec3_t dir;
@@ -933,15 +881,7 @@ void FinalLightFace (unsigned int facenum)
 		VectorCopy((fl->samples + j * 3), lb);
 
 		/* add an ambient term if desired */
-		if (config.compile_for_day) {
-			lb[0] += config.day_ambient_red;
-			lb[1] += config.day_ambient_green;
-			lb[2] += config.day_ambient_blue;
-		} else {
-			lb[0] += config.night_ambient_red;
-			lb[1] += config.night_ambient_green;
-			lb[2] += config.night_ambient_blue;
-		}
+		VectorAdd(lb, sun_ambient_color, lb);
 
 		/* apply global scale factor */
 		VectorScale(lb, config.lightscale, lb);
@@ -973,6 +913,6 @@ void FinalLightFace (unsigned int facenum)
 		/* also write the directional data */
 		VectorCopy((fl->directions + j * 3), dir);
 		for (k = 0; k < 3; k++)
-			*dest++ = (byte)((dir[k] +1.0f) * 127.0f);
+			*dest++ = (byte)((dir[k] + 1.0f) * 127.0f);
 	}
 }

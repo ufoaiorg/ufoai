@@ -413,31 +413,33 @@ static void U2M_SetDefaultConfigValues (void)
 	config.subdiv = 2048.0f; /* rad chop/subdiv */
 	config.mapMicrovol = 1.0f;/* this value is up for debate blondandy */
 
-	config.night_ambient_red = 0.0;
-	config.night_ambient_green = 0.0;
-	config.night_ambient_blue = 0.0;
-	config.night_sun_intensity = 35;
-	config.night_sun_pitch = 15 * torad;
-	config.night_sun_yaw = 60 * torad;
-	VectorSet(config.night_sun_color, 0.8, 0.8, 1);
+	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.0, 0.0, 0.0);
+	VectorScale(config.sun_ambient_color[LIGHTMAP_NIGHT], 128.0f, config.sun_ambient_color[LIGHTMAP_NIGHT]);
 
-	config.day_ambient_red = 0.4;
-	config.day_ambient_green = 0.4;
-	config.day_ambient_blue = 0.4;
-	config.day_sun_intensity = 120;
-	config.day_sun_pitch = 30 * torad;
-	config.day_sun_yaw = 210 * torad;
-	VectorSet(config.day_sun_color, 1, 0.8, 0.8);
+	config.sun_intensity[LIGHTMAP_NIGHT] = 35;
+	config.sun_pitch[LIGHTMAP_NIGHT] = 15.0 * torad;
+	config.sun_yaw[LIGHTMAP_NIGHT] = 60.0 * torad;
+	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.8, 0.8, 1.0);
+	ColorNormalize(config.sun_color[LIGHTMAP_NIGHT], config.sun_color[LIGHTMAP_NIGHT]);
 
-	VectorSet(config.night_sun_dir,
-		cos(config.night_sun_yaw) * sin(config.night_sun_pitch),
-		sin(config.night_sun_yaw) * sin(config.night_sun_pitch),
-		cos(config.night_sun_pitch));
+	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.4, 0.4, 0.4);
+	VectorScale(config.sun_ambient_color[LIGHTMAP_DAY], 128.0f, config.sun_ambient_color[LIGHTMAP_DAY]);
 
-	VectorSet(config.day_sun_dir,
-		cos(config.day_sun_yaw) * sin(config.day_sun_pitch),
-		sin(config.day_sun_yaw) * sin(config.day_sun_pitch),
-		cos(config.day_sun_pitch));
+	config.sun_intensity[LIGHTMAP_DAY] = 120;
+	config.sun_pitch[LIGHTMAP_DAY] = 30.0 * torad;
+	config.sun_yaw[LIGHTMAP_DAY] = 210.0 * torad;
+	VectorSet(config.sun_color[LIGHTMAP_DAY], 1.0, 0.8, 0.8);
+	ColorNormalize(config.sun_color[LIGHTMAP_DAY], config.sun_color[LIGHTMAP_DAY]);
+
+	VectorSet(config.sun_dir[LIGHTMAP_NIGHT],
+		cos(config.sun_yaw[LIGHTMAP_NIGHT]) * sin(config.sun_pitch[LIGHTMAP_NIGHT]),
+		sin(config.sun_yaw[LIGHTMAP_NIGHT]) * sin(config.sun_pitch[LIGHTMAP_NIGHT]),
+		cos(config.sun_pitch[LIGHTMAP_NIGHT]));
+
+	VectorSet(config.sun_dir[LIGHTMAP_DAY],
+		cos(config.sun_yaw[LIGHTMAP_DAY]) * sin(config.sun_pitch[LIGHTMAP_DAY]),
+		sin(config.sun_yaw[LIGHTMAP_DAY]) * sin(config.sun_pitch[LIGHTMAP_DAY]),
+		cos(config.sun_pitch[LIGHTMAP_DAY]));
 
 	config.maxlight = 196;
 	config.lightscale = 1.0;

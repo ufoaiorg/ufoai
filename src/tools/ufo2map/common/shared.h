@@ -109,23 +109,12 @@ typedef struct mapConfig_s {
 	qboolean generateTraceFile;
 	qboolean generateDebugTrace;
 
-	float day_ambient_red;
-	float day_ambient_green;
-	float day_ambient_blue;
-	float day_sun_intensity;
-	float day_sun_pitch;
-	float day_sun_yaw;
-	vec3_t day_sun_color;
-	vec3_t day_sun_dir;
-
-	float night_ambient_red;
-	float night_ambient_green;
-	float night_ambient_blue;
-	float night_sun_intensity;
-	float night_sun_pitch;
-	float night_sun_yaw;
-	vec3_t night_sun_color;
-	vec3_t night_sun_dir;
+	int sun_intensity[LIGHTMAP_MAX];
+	vec3_t sun_ambient_color[LIGHTMAP_MAX];
+	vec3_t sun_color[LIGHTMAP_MAX];
+	float sun_yaw[LIGHTMAP_MAX];
+	float sun_pitch[LIGHTMAP_MAX];
+	vec3_t sun_dir[LIGHTMAP_MAX];
 
 	float maxlight;
 	float lightscale;
