@@ -398,8 +398,8 @@ menu map
 		texh	"32 32"
 		mousefx	false
 		click	{ cmd "map_overlay radar;" }
-		out		{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
-		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
+		out		{ *bt_show_radar texl "0 0" *bt_show_radar texh "32 32" }
+		in		{ *bt_show_radar texl "32 0" *bt_show_radar texh "64 32" }
 	}
 
 	pic bt_show_xvi
@@ -412,8 +412,8 @@ menu map
 		texh	"32 32"
 		mousefx	false
 		click	{ cmd "map_overlay xvi;" }
-		out		{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
-		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
+		out		{ *bt_show_xvi texl "0 0" *bt_show_xvi texh "32 32" }
+		in		{ *bt_show_xvi texl "32 0" *bt_show_xvi texh "64 32" }
 	}
 
 	pic bt_messagesystem
