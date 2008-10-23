@@ -539,7 +539,7 @@ menu mp_serverbrowser
 	pic button_serverbrowser
 	{
 		image	menu/multi_buttons3a
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"500 70"
 	}
@@ -563,7 +563,7 @@ menu mp_serverbrowser
 			cmd "mn_push mp_bookmarks;"
 			cmd "mn_escpop 3;"
 		}
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"726 70"
 		out	{ *string_bookmarks color "0 0.5 0 1" *button_bookmarks image menu/multi_buttons3 }
@@ -741,7 +741,7 @@ menu mp_bookmarks
 	pic button_serverbrowser
 	{
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"500 70"
 		out	{ *string_serverbrowser color "0 0.5 0 1" *button_serverbrowser image menu/multi_buttons3 }
@@ -751,7 +751,7 @@ menu mp_bookmarks
 	pic button_bookmarks
 	{
 		image	menu/multi_buttons3a
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"726 70"
 	}
@@ -1559,7 +1559,7 @@ menu multiplayer_wait
 		if "mp_wait_init_show_force == 1"
 		tooltip	"_Start the game even if not all teams have joined"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"560 454"
 		out	{ *string_force color "0 0.5 0 1" *bt_force image menu/multi_buttons3 }
@@ -1641,7 +1641,7 @@ menu serverpassword
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"560 454"
 		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
@@ -1706,7 +1706,7 @@ menu chat_popup
 	{
 		tooltip	"_Go into the lobby"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"544 448"
 		out	{ *string_lobby color "0 0.5 0 1" *bt_lobby image menu/multi_buttons3 }

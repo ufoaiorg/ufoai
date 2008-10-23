@@ -172,7 +172,7 @@ menu checkcvars
 	{
 		tooltip	"_Save settings"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"690 530"
 		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
@@ -392,7 +392,7 @@ menu popup_tipoftheday
 	{
 		tooltip	"_Next"
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"274 194"
 		out	{ *string_next color "0 0.5 0 1" *bt_next image menu/multi_buttons3 }

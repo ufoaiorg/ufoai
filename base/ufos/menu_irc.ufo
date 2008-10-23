@@ -256,7 +256,7 @@ menu irc_popup
 	{
 		tooltip	"_Connect to the lobby"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"560 454"
 		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
@@ -276,7 +276,7 @@ menu irc_popup
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"300 454"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }

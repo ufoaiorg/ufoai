@@ -728,7 +728,7 @@ menu popup_list
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"560 454"
 		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
@@ -805,7 +805,7 @@ menu popup_button
 		invis	true
 		tooltip	"*cvar mn_popup_button_tooltip1"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"290 454"
 		out		{ *popup_button_string_1 color "0 0.5 0 1" *popup_button_1 image menu/multi_buttons3 }
@@ -827,7 +827,7 @@ menu popup_button
 		invis	true
 		tooltip	"*cvar mn_popup_button_tooltip2"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"560 454"
 		out		{ *popup_button_string_2 color "0 0.5 0 1" *popup_button_2 image menu/multi_buttons3 }
@@ -849,7 +849,7 @@ menu popup_button
 		invis	true
 		tooltip	"*cvar mn_popup_button_tooltip3"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"560 418"
 		out		{ *popup_button_string_3 color "0 0.5 0 1" *popup_button_3 image menu/multi_buttons3 }
@@ -916,7 +916,7 @@ menu popup_intercept_ready
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"310 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -937,7 +937,7 @@ menu popup_intercept_ready
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos		"530 450"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
@@ -958,7 +958,7 @@ menu popup_intercept_ready
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos		"530 410"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
 		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
@@ -1022,7 +1022,7 @@ menu popup_base_attack
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos		"530 450"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
@@ -1042,7 +1042,7 @@ menu popup_base_attack
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos		"530 410"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
 		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
@@ -1116,7 +1116,7 @@ menu popup_transferbaselist
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"530 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -1239,7 +1239,7 @@ menu popup_newbase
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"290 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -1253,7 +1253,7 @@ menu popup_newbase
 	{
 		tooltip	"_Build the base"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"560 450"
 		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
@@ -1439,7 +1439,7 @@ menu popup_newinstallation_type
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		pos	"440 450"
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -1555,7 +1555,7 @@ menu popup_newinstallation
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"290 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -1566,7 +1566,7 @@ menu popup_newinstallation
 	{
 		tooltip	"_Build the radar tower"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"560 450"
 		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
@@ -1642,7 +1642,7 @@ menu radartower
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		pos	"304 194"
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *string_back color "0 0.5 0 1" *bt_back image menu/multi_buttons3 }
 		in	{ *string_back color "1 1 1 1" *bt_back image menu/multi_buttons3a }
@@ -1734,7 +1734,7 @@ menu popup_installationstatus
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		pos	"34 194"
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *string_back color "0 0.5 0 1" *bt_back image menu/multi_buttons3 }
 		in	{ *string_back color "1 1 1 1" *bt_back image menu/multi_buttons3a }
@@ -1747,7 +1747,7 @@ menu popup_installationstatus
 		tooltip	"_Manange installation"
 		image	menu/multi_buttons3
 		pos	"304 194"
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *string_enter color "0 0.5 0 1" *bt_enter image menu/multi_buttons3 }
 		in	{ *string_enter color "1 1 1 1" *bt_enter image menu/multi_buttons3a }
@@ -1758,7 +1758,7 @@ menu popup_installationstatus
 		tooltip	"_Destroy installation"
 		image	menu/multi_buttons3
 		pos	"304 155"
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *string_destroy color "0 0.5 0 1" *bt_destroy image menu/multi_buttons3 }
 		in	{ *string_destroy color "1 1 1 1" *bt_destroy image menu/multi_buttons3a }
@@ -1898,7 +1898,7 @@ menu popup_intercept
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"690 530"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -1989,7 +1989,7 @@ menu popup_mission
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"690 530"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -2046,7 +2046,7 @@ menu popup_baseattack
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"310 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -2067,7 +2067,7 @@ menu popup_baseattack
 		tooltip	"_Enter the battlefield"
 		image	menu/multi_buttons3
 		pos		"530 450"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
@@ -2142,7 +2142,7 @@ menu popup_multi_selection
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"290 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -2218,7 +2218,7 @@ menu popup_aircraft
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"290 450"
 		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -2286,7 +2286,7 @@ menu popup
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos		"560 454"
 		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }

@@ -1018,7 +1018,7 @@ menu aircraft_action
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"310 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -1048,7 +1048,7 @@ menu aircraft_action
 		tooltip	"_Buy aircraft"
 		image	menu/multi_buttons3
 		pos	"530 450"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_buy image menu/multi_buttons3 *string_buy color "0 0.5 0 1" }
 		in	{ *bt_buy image menu/multi_buttons3a *string_buy color "1 1 1 1" }
@@ -1069,7 +1069,7 @@ menu aircraft_action
 		tooltip	"_Produce aircraft"
 		image	menu/multi_buttons3
 		pos	"530 410"
-		texh	"180 64"
+		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_prod image menu/multi_buttons3 *string_prod color "0 0.5 0 1" }
 		in	{ *bt_prod image menu/multi_buttons3a *string_prod color "1 1 1 1" }

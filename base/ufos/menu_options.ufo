@@ -598,7 +598,7 @@ menu popup_maintain_resolution
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"34 194"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
@@ -609,7 +609,7 @@ menu popup_maintain_resolution
 	{
 		tooltip	"_Change the resolution"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"304 194"
 		out	{ *string_accept color "0 0.5 0 1" *bt_change image menu/multi_buttons3 }
@@ -1782,7 +1782,7 @@ menu popup_setall_pause
 	{
 		tooltip	"_Enable all pause settings"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"34 194"
 		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
@@ -1801,7 +1801,7 @@ menu popup_setall_pause
 	{
 		tooltip	"_Disable all pause settings"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"304 194"
 		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
@@ -1867,7 +1867,7 @@ menu popup_setall_notify
 	{
 		tooltip	"_Enable all notification messages"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"34 194"
 		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
@@ -1886,7 +1886,7 @@ menu popup_setall_notify
 	{
 		tooltip	"_Disable all notification messages"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"304 194"
 		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
@@ -1952,7 +1952,7 @@ menu popup_setall_sound
 	{
 		tooltip	"_Enable all sound notifications"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"34 194"
 		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
@@ -1971,7 +1971,7 @@ menu popup_setall_sound
 	{
 		tooltip	"_Disable all sound notifications"
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"176 64"
 		texl	"0 32"
 		pos	"304 194"
 		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
