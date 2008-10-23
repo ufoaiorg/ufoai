@@ -69,7 +69,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	/* Add installation coverage */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (installation && installation->founded && (installation->installationStatus == INSTALLATION_WORKING)) {
+		if (installation && installation->founded && installation->installationStatus == INSTALLATION_WORKING) {
 			const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * installation->radar.range;
 			R_AddRadarCoverage(installation->pos, installation->radar.range, rangeTracking, qtrue);
 		}
@@ -280,6 +280,7 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	int baseIdx;
+	int installationIdx;
 	aircraft_t *aircraft;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -293,7 +294,12 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 			RADAR_NotifyUFORemovedFromOneRadar(&aircraft->radar, ufo, destroyed);
 	}
 
-	/** @todo remove from installation_t radars */
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (installation && installation->founded && installation->installationStatus == INSTALLATION_WORKING) {
+			RADAR_NotifyUFORemovedFromOneRadar(&installation->radar, ufo, destroyed);
+		}
+	}
 }
 
 /**
