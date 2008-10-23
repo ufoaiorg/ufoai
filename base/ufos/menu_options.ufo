@@ -849,30 +849,27 @@ menu options_pause
 	pic header_pause
 	{
 		tooltip	"_enable or disable pause for all notification types\nPause can't be enabled without notification"
-		pos		"830 140"
+		pos		"834 140"
 		align	ur
-		//todo replace with appropriate icon
-		image	menu/button_alienkill1
+		image	menu/notify_pause
 		click {	cmd "mn_push popup_setall_pause;" }
 	}
 
 	pic header_notify
 	{
 		tooltip	"_enable or disable messages being displayed for all notification types"
-		pos		"860 140"
+		pos		"864 140"
 		align	ur
-		//todo replace with appropriate icon
-		image	menu/button_autosell1
+		image	menu/notify_notice
 		click { cmd "mn_push popup_setall_notify;" }
 	}
 	
 	pic header_sound
 	{
 		tooltip	"_enable or disable sounds being played for all notification types"
-		pos		"890 140"
+		pos		"894 140"
 		align	ur
-		//todo replace with appropriate icon
-		image	menu/checkbox_disabled
+		image	menu/sound
 		click { cmd "mn_push popup_setall_sound;" }
 	}
 
