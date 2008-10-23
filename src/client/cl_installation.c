@@ -452,7 +452,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	installationCurrent = NULL;
 	installation->founded = qfalse;
 
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Installation %s was destroyed."), _(installation->name), installation->name);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Installation %s was destroyed."), _(installation->name));
     	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 }
 
@@ -554,7 +554,7 @@ void INS_UpdateInstallationData (void)
 			installation->installationStatus = INSTALLATION_WORKING;
 			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
 
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of installation %s finished."), _(installation->name), gd.installations[instIdx].name);
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of installation %s finished."), _(installation->name));
 		    	MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 		}
 	}
@@ -746,10 +746,7 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, inst->installationDamage);
 		MSG_WriteFloat(sb, inst->alienInterest);
 		MSG_WriteShort(sb, inst->radar.range);
-#if 0
-		/** breaking save-game compatibility: */
 		MSG_WriteLong(sb, inst->buildStart);
-#endif
 
 		MSG_WriteByte(sb, inst->numBatteries);
 		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);

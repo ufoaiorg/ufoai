@@ -1777,7 +1777,7 @@ menu popup_installationstatus
 		if "mn_installation_timetobuild eq -"
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Enter"
+		string	"_Manage"
 		pos	"392 210"
 		align	cc
 	}
