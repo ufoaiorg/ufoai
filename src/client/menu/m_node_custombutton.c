@@ -64,10 +64,11 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	const float *textColor;
 	const char *image;
 	vec2_t nodepos;
+	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
 	if (!node->click) {
 		/** @todo need custom color when button is disabled */
-		textColor = node->color;
+		textColor = disabledColor;
 		baseY = MN_CUSTOMBUTTON_TEX_HEIGHT * 2;
 	} else if (node->state) {
 		textColor = node->selectedColor;
