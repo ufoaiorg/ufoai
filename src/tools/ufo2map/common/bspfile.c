@@ -549,20 +549,28 @@ vec_t FloatForKey (const entity_t *ent, const char *key)
 }
 
 /**
- * @brief
+ * @brief Converts a string into a @c vec3_t
  */
-void GetVectorForKey (const entity_t *ent, const char *key, vec3_t vec)
+void GetVectorFromString (const char *value, vec3_t vec)
 {
-	const char *k = ValueForKey(ent, key);
-	if (k[0] != '\0') {
+	if (value[0] != '\0') {
 		double v1, v2, v3;
 
 		/* scanf into doubles, then assign, so it is vec_t size independent */
 		v1 = v2 = v3 = 0;
-		sscanf(k, "%lf %lf %lf", &v1, &v2, &v3);
+		sscanf(value, "%lf %lf %lf", &v1, &v2, &v3);
 		vec[0] = v1;
 		vec[1] = v2;
 		vec[2] = v3;
 	} else
 		VectorClear(vec);
+}
+
+/**
+ * @brief Converts the value of a entity parameter into a @c vec3_t
+ */
+void GetVectorForKey (const entity_t *ent, const char *key, vec3_t vec)
+{
+	const char *k = ValueForKey(ent, key);
+	GetVectorFromString(k, vec);
 }
