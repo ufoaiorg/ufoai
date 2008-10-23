@@ -869,7 +869,7 @@ menu options_pause
 		tooltip	"_enable or disable sounds being played for all notification types"
 		pos		"894 140"
 		align	ur
-		image	menu/sound
+		image	menu/notify_sound
 		click { cmd "mn_push popup_setall_sound;" }
 	}
 
