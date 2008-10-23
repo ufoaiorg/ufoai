@@ -99,7 +99,42 @@ mapdef or_medium
 
 //	ufos
 //	{
+//		craft_ufo_scout
 //	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef or_ufo
+{
+	map				"+oriental"
+	param			ufo
+	multiplayer		false
+	description		"_A suburban district of an oriental area."
+	size			"small"
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_crash_fighter
+	}
 
 	terrains
 	{
@@ -2280,9 +2315,11 @@ mapdef forest_small
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_crash_scout
+		craft_ufo_scout
+	}
 
 	terrains
 	{
@@ -2312,9 +2349,11 @@ mapdef forest_large
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_crash_scout
+		craft_ufo_scout
+	}
 
 	terrains
 	{
