@@ -40,9 +40,9 @@ static void MN_DrawItemNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
 	const objDef_t *od;
-	const char* ref = MN_GetSafeReferenceString(node->menu, node->dataImageOrModel);
+	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 
-	if (!ref)
+	if (!ref || ref[0] == '\0')
 		return;
 
 	od = INVSH_GetItemByIDSilent(ref);
