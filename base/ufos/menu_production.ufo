@@ -414,7 +414,7 @@ menu production
 	item itemmodel
 	{
 		if "mn_itemtype != 5"
-		string	"*cvar mn_item"
+		md2	"*cvar mn_item"
 		pos	"793 288"
 		scale	"7 7 7"
 		origin	"793 288"

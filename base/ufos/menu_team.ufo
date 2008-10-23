@@ -1423,7 +1423,7 @@ menu equipment
 
 	item itemmodel
 	{
-		string	"*cvar mn_item"
+		md2	"*cvar mn_item"
 		pos		"203 472"
 		scale	"7 7 7"
 	}
