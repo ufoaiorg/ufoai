@@ -116,8 +116,9 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	installation->idx = gd.numInstallations - 1;
 	installation->founded = qtrue;
-	installation->installationStatus = INSTALLATION_WORKING;
+	installation->installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
 	installation->installationTemplate = installationTemplate;
+	installation->buildStart = ccs.date.day;
 
 	/* Reset current capacities. */
 	installation->aircraftCapacitiy.cur = 0;
@@ -227,14 +228,21 @@ void INS_SelectInstallation (installation_t *installation)
 			gd.mapAction = MA_NONE;
 		}
 	} else {
+		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
+
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installation->idx);
 		installationCurrent = installation;
 		baseCurrent = NULL;
 		gd.mapAction = MA_NONE;
-		if (installation->numBatteries > 0)
-			MN_PushMenu("basedefence");
-		else if (installation->numAircraftInInstallation > 0)
-			MN_PushMenu("ufoyard");
+		Cvar_SetValue("mn_installation_id", installation->idx);
+		Cvar_Set("mn_installation_title", installation->name);
+		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
+		if (installation->installationStatus == INSTALLATION_WORKING) {
+			Cvar_Set("mn_installation_timetobuild", "-");
+		} else {
+			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
+		}
+		MN_PushMenu("popup_installationstatus");
 	}
 }
 
@@ -315,7 +323,7 @@ static void INS_BuildInstallation_f (void)
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new installation has been built: %s (nation: %s)"), mn_installation_title->string, _(nation->name));
 			else
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new installation has been built: %s"), mn_installation_title->string);
-			MN_AddNewMessage(_("Installation built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 			Cbuf_AddText(va("mn_select_installation %i;", installationCurrent->idx));
 			return;
@@ -428,6 +436,54 @@ static void INS_CheckMaxInstallations_f (void)
 	}
 }
 
+/*
+ * @brief Destroys an installation
+ * @param[in] pointer to the installation to be destroyed
+ */
+void INS_DestroyInstallation (installation_t *installation)
+{
+	if (!installation)
+		return;
+	if (!installation->founded)
+		return;
+
+	RADAR_UpdateInstallationRadarCoverage(installation, 0);
+	gd.numInstallations--;
+	installationCurrent = NULL;
+	installation->founded = qfalse;
+
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Installation %s was destroyed."), _(installation->name), installation->name);
+    	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+}
+
+/*
+ * @brief console function for destroying an installation
+ * @sa INS_DestroyInstallation
+ */
+static void INS_DestroyInstallation_f (void)
+{
+	installation_t *installation;
+
+	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
+		installation = installationCurrent;
+	} else {
+		installation = INS_GetFoundedInstallationByIDX(atoi(Cmd_Argv(1)));
+		Cvar_SetValue("mn_installation_id", installation->idx);
+	}
+	/** Ask 'Are you sure?' by default */
+	if (Cmd_Argc() < 3) {
+		char command[MAX_VAR];
+
+		Com_sprintf(command, MAX_VAR, "mn_destroyinstallation %d 1; mn_pop;", installation->idx);
+		MN_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
+		    command, _("Destroy"), _("Destroy installation"),
+		    "mn_pop;", _("Cancel"), _("Forget it"),
+		    NULL, NULL, NULL);
+		return;
+	}
+	INS_DestroyInstallation(installation);
+}
+
 /**
  * @brief Resets console commands.
  * @sa MN_ResetMenus
@@ -457,6 +513,7 @@ void INS_InitStartup (void)
 	Cmd_AddCommand("mn_check_max_installations", INS_CheckMaxInstallations_f, NULL);
 	Cmd_AddCommand("mn_rename_installation", INS_RenameInstallation_f, "Rename the current installation");
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
+	Cmd_AddCommand("mn_destroyinstallation", INS_DestroyInstallation_f, "Destroys an installation");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
 #endif
@@ -480,6 +537,27 @@ int INS_GetFoundedInstallationCount (void)
 	}
 
 	return cnt;
+}
+
+void INS_UpdateInstallationData (void)
+{
+	int instIdx;
+
+	for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
+                installation_t *installation = INS_GetFoundedInstallationByIDX(instIdx);
+                if (!installation)
+                        continue;
+
+		if ((installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION)
+		 && installation->buildStart 
+		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
+			installation->installationStatus = INSTALLATION_WORKING;
+			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
+
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of installation %s finished."), _(installation->name), gd.installations[instIdx].name);
+		    	MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+		}
+	}
 }
 
 /**
@@ -630,8 +708,19 @@ void INS_ParseInstallations (const char *name, const char **text)
 			if (!*text)
 				return;
 			installation->maxDamage = atoi(token);
-		}
+		} else if (!Q_strncmp(token, "buildtime", MAX_VAR)) {
+			char cvarname[MAX_VAR] = "mn_installation_";
 
+			Q_strcat(cvarname, installation->id, MAX_VAR);
+			Q_strcat(cvarname, "_buildtime", MAX_VAR);
+
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->buildTime = atoi(token);
+
+			Cvar_Set(cvarname, va(ngettext("%d day\n", "%d days\n", atoi(token)), atoi(token)));
+		}
 	} while (*text);
 }
 
@@ -657,6 +746,10 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, inst->installationDamage);
 		MSG_WriteFloat(sb, inst->alienInterest);
 		MSG_WriteShort(sb, inst->radar.range);
+#if 0
+		/** breaking save-game compatibility: */
+		MSG_WriteLong(sb, inst->buildStart);
+#endif
 
 		MSG_WriteByte(sb, inst->numBatteries);
 		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);
@@ -700,11 +793,19 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->installationDamage = MSG_ReadShort(sb);
 		inst->alienInterest = MSG_ReadFloat(sb);
 		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 1.0f, qtrue);
+#if 0
+		/** breaking save-game compatibility: */
+		inst->buildStart = MSG_ReadLong(sb);
+#endif
 
 		/* read battery slots */
 		BDEF_InitialiseInstallationSlots(inst);
 
 		inst->numBatteries = MSG_ReadByte(sb);
+		if (inst->numBatteries > inst->installationTemplate->maxBatteries){
+			Com_Printf("Installation has more batteries than possible\n");
+			return qfalse;
+		}
 		B_LoadBaseSlots(inst->batteries, inst->numBatteries, sb);
 
 		/* load equipments */

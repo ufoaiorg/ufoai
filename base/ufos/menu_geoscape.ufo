@@ -1315,10 +1315,17 @@ menu popup_newinstallation_type
 		string	"_Type"
 		pos	"350 320"
 	}
+	string buildtime_label
+	{
+		string	"_Build Time"
+		pos	"590 320"
+		align	uc
+	}
 	string cost_label
 	{
 		string	"_Cost"
-		pos	"650 320"
+		pos	"685 320"
+		align	uc
 	}
 
 	pic bt_highlight
@@ -1334,7 +1341,7 @@ menu popup_newinstallation_type
 		pos	"310 340"
 		in	{ *bt_highlight invis false *bt_highlight pos "290 338" }
 		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_newinstallation_type radartower; mn_pop; mn_select_installation -1;" }
+		click	{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
 	}
 	string radar_type
 	{
@@ -1344,12 +1351,20 @@ menu popup_newinstallation_type
 		font	f_small
 		in	{ *bt_highlight invis false *bt_highlight pos "290 338" }
 		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_newinstallation_type radartower; mn_pop; mn_select_installation -1;" }
+		click	{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
+	}
+	string radar_buildtime
+	{
+		string	"*cvar mn_installation_radartower_buildtime"
+		pos	"615 340"
+		align	ur
+		font	f_small
 	}
 	string radar_cost
 	{
 		string	"*cvar mn_installation_radartower_cost"
-		pos	"650 340"
+		pos	"715 340"
+		align	ur
 		font	f_small
 	}
 
@@ -1359,7 +1374,7 @@ menu popup_newinstallation_type
 		pos	"310 360"
 		in	{ *bt_highlight invis false *bt_highlight pos "290 358" }
 		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_newinstallation_type samsite; mn_pop; mn_select_installation -1;" }
+		click	{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
 	}
 	string sam_type
 	{
@@ -1369,12 +1384,20 @@ menu popup_newinstallation_type
 		font	f_small
 		in	{ *bt_highlight invis false *bt_highlight pos "290 358" }
 		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_newinstallation_type samsite; mn_pop; mn_select_installation -1;" }
+		click	{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
+	}
+	string sam_buildtime
+	{
+		string	"*cvar mn_installation_samsite_buildtime"
+		pos	"615 360"
+		align	ur
+		font	f_small
 	}
 	string sam_cost
 	{
 		string	"*cvar mn_installation_samsite_cost"
-		pos	"650 360"
+		pos	"715 360"
+		align	ur
 		font	f_small
 	}
 
@@ -1384,7 +1407,7 @@ menu popup_newinstallation_type
 		pos	"310 380"
 		in	{ *bt_highlight invis false *bt_highlight pos "290 378" }
 		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_newinstallation_type ufoyard; mn_pop; mn_select_installation -1;" }
+		click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
 	string ufoyard_type
 	{
@@ -1394,12 +1417,20 @@ menu popup_newinstallation_type
 		font	f_small
 		in	{ *bt_highlight invis false *bt_highlight pos "290 378" }
 		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_newinstallation_type ufoyard; mn_pop; mn_select_installation -1;" }
+		click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
+	}
+	string ufoyard_buildtime
+	{
+		string	"*cvar mn_installation_ufoyard_buildtime"
+		pos	"615 380"
+		align	ur
+		font	f_small
 	}
 	string ufoyard_cost
 	{
 		string	"*cvar mn_installation_ufoyard_cost"
-		pos	"650 380"
+		pos	"715 380"
+		align	ur
 		font	f_small
 	}
 
@@ -1445,21 +1476,21 @@ menu popup_newinstallation
 
 	string title_radar
 	{
-		if "mn_newinstallation_type eq radartower"
+		if "mn_installation_type eq radartower"
 		string	"_New radar tower"
 		pos	"290 280"
 		font	f_big
 	}
 	string title_samsite
 	{
-		if "mn_newinstallation_type eq samsite"
+		if "mn_installation_type eq samsite"
 		string	"_New SAM site"
 		pos	"290 280"
 		font	f_big
 	}
 	string title_ufoyard
 	{
-		if "mn_newinstallation_type eq ufoyard"
+		if "mn_installation_type eq ufoyard"
 		string	"_New UFO yard"
 		pos	"290 280"
 		font	f_big
@@ -1500,21 +1531,21 @@ menu popup_newinstallation
 
 	string cost_radartower
 	{
-		if "mn_newinstallation_type eq radartower"
+		if "mn_installation_type eq radartower"
 		string	"*cvar mn_installation_radartower_cost"
 		pos	"290 395"
 		font	f_big
 	}
 	string cost_samsite
 	{
-		if "mn_newinstallation_type eq samsite"
+		if "mn_installation_type eq samsite"
 		string	"*cvar mn_installation_samsite_cost"
 		pos	"290 395"
 		font	f_big
 	}
 	string cost_ufoyard
 	{
-		if "mn_newinstallation_type eq ufoyard"
+		if "mn_installation_type eq ufoyard"
 		string	"*cvar mn_installation_ufoyard_cost"
 		pos	"290 395"
 		font	f_big
@@ -1540,7 +1571,7 @@ menu popup_newinstallation
 		pos	"560 450"
 		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
 		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_build_installation *mn_newinstallation_type;" }
+		click	{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
 	}
 	string string_cancel
 	{
@@ -1557,6 +1588,211 @@ menu popup_newinstallation
 		string	"_Build"
 		pos	"648 466"
 		align	cc
+	}
+}
+
+//menu samsite extends basedefence
+menu samsite
+{
+	func init
+	{
+		cmd "mn_pop; mn_push basedefence;"
+	}
+}
+
+menu radartower
+{
+	{
+		origin "276 276"
+	}
+
+	zone popup
+	{
+		invis	true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos	"0 0"
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"436 28"
+	}
+
+	string title
+	{
+		string	"*cvar mn_installation_title"
+		pos	"34 24"
+		size	"440 32"
+		font	f_big
+	}
+
+	string info
+	{
+		string	"_No manangeable options for a radartower"
+		pos	"34 124"
+	}
+
+	pic bt_back
+	{
+		tooltip	"_Close this dialogue"
+		image	menu/multi_buttons3
+		pos	"304 194"
+		texh	"256 64"
+		texl	"0 32"
+		out	{ *string_back color "0 0.5 0 1" *bt_back image menu/multi_buttons3 }
+		in	{ *string_back color "1 1 1 1" *bt_back image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+	string string_back
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"392 210"
+		align	cc
+	}
+}
+
+menu popup_installationstatus
+{
+	{
+		origin "256 256"
+	}
+
+	zone popup
+	{
+		invis	true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos	"0 0"
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"436 28"
+	}
+
+	string title
+	{
+		string	"_Installation Status"
+		pos	"34 24"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_Name:"
+		pos		"34 64"
+	}
+	string name
+	{
+		string	"*cvar mn_installation_title"
+		pos	"54 79"
+		size	"440 32"
+		font	f_big
+	}
+
+	pic bt_nameedit
+	{
+		tooltip "_Rename installation"
+		image   menu/buttons_small
+		pos     "34 84"
+		texl    "0 48"
+		texh    "16 64"
+		mousefx false
+		click {
+			*name mousefx true
+			cmd "msgmenu ?mn_installation_title"
+		}
+	}
+
+	string buildtime_label
+	{
+		if "mn_installation_timetobuild ne -"
+		string	"_Time to build:"
+		pos	"34 124"
+	}
+
+	string buildtime
+	{
+		if "mn_installation_timetobuild ne -"
+		string	"*cvar mn_installation_timetobuild"
+		pos	"134 124"
+	}
+
+	pic bt_back
+	{
+		tooltip	"_Close this dialogue"
+		image	menu/multi_buttons3
+		pos	"34 194"
+		texh	"256 64"
+		texl	"0 32"
+		out	{ *string_back color "0 0.5 0 1" *bt_back image menu/multi_buttons3 }
+		in	{ *string_back color "1 1 1 1" *bt_back image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+	pic bt_enter
+	{
+//		if "mn_installation_type eq samsite"
+		if "mn_installation_timetobuild eq -"
+		tooltip	"_Manange installation"
+		image	menu/multi_buttons3
+		pos	"304 194"
+		texh	"256 64"
+		texl	"0 32"
+		out	{ *string_enter color "0 0.5 0 1" *bt_enter image menu/multi_buttons3 }
+		in	{ *string_enter color "1 1 1 1" *bt_enter image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_push *mn_installation_type;" }
+	}
+	pic bt_destroy
+	{
+		tooltip	"_Destroy installation"
+		image	menu/multi_buttons3
+		pos	"304 155"
+		texh	"256 64"
+		texl	"0 32"
+		out	{ *string_destroy color "0 0.5 0 1" *bt_destroy image menu/multi_buttons3 }
+		in	{ *string_destroy color "1 1 1 1" *bt_destroy image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;mn_destroyinstallation;" }
+	}
+	string string_back
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Back"
+		pos	"122 210"
+		align	cc
+	}
+	string string_enter
+	{
+		if "mn_installation_timetobuild eq -"
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enter"
+		pos	"392 210"
+		align	cc
+	}
+	string string_destroy
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Destroy"
+		pos	"392 170"
+		align	cc
+	}
+
+	func init
+	{
+		cmd "game_timestop;"
 	}
 }
 

@@ -12,4 +12,11 @@ msgoptions default
 	installation_removed pause
 	installation_removed notify
 	installation_removed sound
+	installation_replaced notify
+	installation_replaced sound
+	installation_build_started notify
+	installation_build_started sound
+	installation_build_finished notify
+	installation_build_finished sound
+	installation_build_finished pause
 }

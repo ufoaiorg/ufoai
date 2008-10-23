@@ -780,7 +780,10 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			return;
 		}
 	} else if (installationCurrent) {
-		if (installationCurrent->installationTemplate->maxBatteries < 1) {
+		if (installationCurrent->installationStatus != INSTALLATION_WORKING) {
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
+			return;
+		} else if (installationCurrent->installationTemplate->maxBatteries < 1) {
 			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
 			return;
 		}
@@ -2425,8 +2428,9 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 {
 	assert(installation);
 
-	if (installation->installationTemplate->maxBatteries > 0) {
-		/* installation has battery */
+	if (installation->founded && installation->installationStatus == INSTALLATION_WORKING
+	 && installation->installationTemplate->maxBatteries > 0) {
+		/* installation is working and has battery */
 		return AII_WeaponsCanShoot(installation->batteries, &installation->installationTemplate->maxBatteries);
 	}
 

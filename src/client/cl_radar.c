@@ -69,7 +69,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	/* Add installation coverage */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (installation) {
+		if (installation && installation->founded && (installation->installationStatus == INSTALLATION_WORKING)) {
 			const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * installation->radar.range;
 			R_AddRadarCoverage(installation->pos, installation->radar.range, rangeTracking, qtrue);
 		}
@@ -359,8 +359,10 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
  */
 void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange)
 {
-	RADAR_Initialise(&installation->radar, radarRange, RADAR_INSTALLATIONLEVEL, qtrue);
-	CP_UpdateMissionVisibleOnGeoscape();
+	if (installation && installation->founded && (installation->installationStatus == INSTALLATION_WORKING)) {
+		RADAR_Initialise(&installation->radar, radarRange, RADAR_INSTALLATIONLEVEL, qtrue);
+		CP_UpdateMissionVisibleOnGeoscape();
+	}
 }
 
 /**

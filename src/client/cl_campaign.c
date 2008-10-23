@@ -4209,6 +4209,7 @@ void CL_CampaignRun (void)
 			ccs.date.day++;
 			/* every day */
 			B_UpdateBaseData();
+			INS_UpdateInstallationData();
 			HOS_HospitalRun();
 			BDEF_ReloadBattery();
 			CP_SpawnNewMissions();

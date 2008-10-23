@@ -10,6 +10,7 @@ installation radartower
 	max_batteries	0
 	max_ufo_stored	0
 	max_damage		1
+	buildtime	7
 }
 
 installation ufoyard
@@ -20,6 +21,7 @@ installation ufoyard
 	max_batteries	0
 	max_ufo_stored	10
 	max_damage		100
+	buildtime	11
 }
 
 installation samsite
@@ -30,6 +32,7 @@ installation samsite
 	max_batteries	2
 	max_ufo_stored	0
 	max_damage		1
+	buildtime	1
 }
 
 

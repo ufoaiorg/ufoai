@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef enum {
 	INSTALLATION_NOT_USED,
+	INSTALLATION_UNDER_CONSTRUCTION,
 	INSTALLATION_WORKING		/**< nothing special */
 } installationStatus_t;
 
@@ -53,6 +54,7 @@ typedef struct installationTemplate_s {
 	int maxBatteries; /* The maximum number of battery slots that can be used in an installation. */
 	int maxUfoStored; /* The maximum number of ufos that can be stored in an installation. */
 	int maxDamage; /* The maximum amount of damage an installation can sustain before it is destroyed. */
+	int buildTime;
 } installationTemplate_t;
 
 typedef struct installationWeapon_s {
@@ -97,7 +99,7 @@ typedef struct installation_s {
 	capacities_t aircraftCapacitiy;		/**< Capacity of UFO Yard. */
 
 	int installationDamage;			/**< Hit points of installation */
-
+	int buildStart;
 } installation_t;
 
 /** Currently displayed/accessed base. */
@@ -120,11 +122,12 @@ void INS_SelectInstallation(installation_t *installation);
 
 aircraft_t *INS_GetAircraftFromInstallationByIndex(installation_t* installation, int index);
 
-void CL_InstallationDestroy(installation_t *installation);
+void INS_DestroyInstallation(installation_t *installation);
 
 void INS_InitStartup(void);
 void INS_ParseInstallationNames(const char *name, const char **text);
 void INS_ParseInstallations(const char *name, const char **text);
+void INS_UpdateInstallationData(void);
 
 qboolean INS_Load(sizebuf_t* sb, void* data);
 qboolean INS_Save(sizebuf_t* sb, void* data);
