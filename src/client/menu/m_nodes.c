@@ -329,12 +329,23 @@ static void MN_UnHideNode_f (void)
 }
 
 /**
+ * @brief only to have a "if (!xxxx[type]->draw)" == true for all "graphic" nodes (a node with a position and a size)
+ * @todo remove this, and add a boolean isGraphicNode into the behaviour, and check all "if (!xxxx[type]->draw)"
+ */
+static MN_HolderNodeDraw (menuNode_t *node)
+{
+}
+
+/**
  * @brief Init a behaviour to null. A null node dont react
  */
-static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name)
+static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name, qboolean isGraphicNode)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
+	if (isGraphicNode) {
+		behaviour->draw = MN_HolderNodeDraw;
+	}
 }
 
 /**
@@ -352,11 +363,11 @@ void MN_InitNodes (void)
 	MN_NodeSelectBoxInit();
 	MN_NodeModelInit();
 
-	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "");
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc");
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc");
-	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func");
-	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone");
+	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qfalse);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc", qfalse);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qfalse);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func", qfalse);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone", qtrue);
 	MN_RegisterNodeImage(nodeBehaviourList + MN_PIC);
 	MN_RegisterNodeString(nodeBehaviourList + MN_STRING);
 	MN_RegisterNodeText(nodeBehaviourList + MN_TEXT);
