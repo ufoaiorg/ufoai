@@ -190,6 +190,7 @@ typedef struct {
 	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */
 	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y); /**< on use mouse wheel into the node */
 	void (*mouseMove)(menuNode_t *node, int x, int y);
+	void (*init)(menuNode_t *node); /**< call one time, when node initialization is finished */
 
 	/** Planed */
 	/*

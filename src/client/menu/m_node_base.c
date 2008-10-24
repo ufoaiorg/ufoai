@@ -36,41 +36,53 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 
 /**
+ * @brief Handled alfer the end and the initialization of the node (all data and/or child are set)
+ */
+static void MN_BaseLayoutNodeInit (menuNode_t * node)
+{
+	/* if it exists a better size that the size requested on the .ufo
+	 * (for example: rounding error) we can force a better size here
+	 */
+}
+
+/**
  * @brief Draw a small square with the menu layout of the given base
  */
-static void MN_BaseMapLayout (menuNode_t * node)
+static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 {
 	base_t *base;
 	int height, width, x, y;
 	int row, col;
 	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
 	vec2_t size;
+	vec2_t nodepos;
+	int totalMarge;
 
 	if (node->baseid >= MAX_BASES || node->baseid < 0)
 		return;
 
-	height = node->size[1] / BASE_SIZE;
-	width = node->size[0] / BASE_SIZE;
+	totalMarge = node->padding * (BASE_SIZE + 1);
+	width = (node->size[0] - totalMarge) / BASE_SIZE;
+	height = (node->size[1] - totalMarge) / BASE_SIZE;
 
-	Vector2Copy(node->size, size);
-	size[0] += (BASE_SIZE + 1) * node->padding;
-	size[1] += (BASE_SIZE + 1) * node->padding;
-	R_DrawFill(node->pos[0], node->pos[1], size[0], size[1], node->align, node->bgcolor);
+	MN_GetNodeAbsPos(node, nodepos);
 
 	base = B_GetBaseByIDX(node->baseid);
 
+	y = nodepos[1] + node->padding;
 	for (row = 0; row < BASE_SIZE; row++) {
+		x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
-			x = node->pos[0] + (width * col + node->padding * (col + 1));
-			y = node->pos[1] + (height * row + node->padding * (row + 1));
 			if (base->map[row][col].blocked) {
 				R_DrawFill(x, y, width, height, node->align, c_gray);
 			} else if (base->map[row][col].building) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
-					R_DrawFill(x, y, width, height, node->align, node->color);
+					R_DrawFill(x, y, width, height, ALIGN_UL, node->color);
 			}
+			x += width + node->padding;
 		}
+		y += height + node->padding;
 	}
 }
 
@@ -299,5 +311,6 @@ void MN_RegisterNodeBaseMap (nodeBehaviour_t *behaviour)
 void MN_RegisterNodeBaseLayout (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
-	behaviour->draw = MN_BaseMapLayout;
+	behaviour->draw = MN_BaseLayoutNodeDraw;
+	behaviour->init = MN_BaseLayoutNodeInit;
 }

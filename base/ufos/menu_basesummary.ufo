@@ -140,7 +140,7 @@ menu basesummary
 	// ==================
 	baselayout base0
 	{
-		size		"55 60"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"654 62"
@@ -154,7 +154,7 @@ menu basesummary
 
 	baselayout base1
 	{
-		size		"55 60"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"724 62"
@@ -168,7 +168,7 @@ menu basesummary
 
 	baselayout base2
 	{
-		size		"55 60"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"794 62"
@@ -182,7 +182,7 @@ menu basesummary
 
 	baselayout base3
 	{
-		size		"55 60"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"864 62"
@@ -196,7 +196,7 @@ menu basesummary
 
 	baselayout base4
 	{
-		size		"55 61"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"654 137"
@@ -210,7 +210,7 @@ menu basesummary
 
 	baselayout base5
 	{
-		size		"55 61"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"724 137"
@@ -224,7 +224,7 @@ menu basesummary
 
 	baselayout base6
 	{
-		size		"55 61"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"794 137"
@@ -238,7 +238,7 @@ menu basesummary
 
 	baselayout base7
 	{
-		size		"55 61"
+		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
 		pos			"864 137"

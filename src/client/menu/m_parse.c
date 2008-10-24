@@ -774,9 +774,16 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 							return qfalse;
 					}
 
-					/* set standard color */
+					/** set standard color
+					 * @todo move it on init behaviour only where it need
+					 */
 					if (!node->color[3])
 						Vector4Set(node->color, 1, 1, 1, 1);
+
+					/* init the node according to his behaviour */
+					if (nodeBehaviourList[node->type].init) {
+						nodeBehaviourList[node->type].init(node);
+					}
 
 					found = qtrue;
 					break;

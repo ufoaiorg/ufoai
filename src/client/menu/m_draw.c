@@ -168,8 +168,7 @@ void MN_DrawMenus (void)
 			/* check node size x and y value to check whether they are zero */
 			if (node->size[0] && node->size[1]) {
 				if (node->bgcolor) {
-					R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding,
-						node->size[0] + (node->padding * 2), node->size[1] + (node->padding * 2), 0, node->bgcolor);
+					R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], 0, node->bgcolor);
 				}
 				if (node->border && node->bordercolor)
 					MN_DrawBorder(node);
