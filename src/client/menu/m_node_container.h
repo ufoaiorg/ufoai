@@ -26,7 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODE_CONTAINER_H
 
 #include "m_nodes.h"
+#include "m_dragndrop.h"
 
 void MN_RegisterNodeContainer(nodeBehaviour_t *behaviour);
+void MN_FindContainer(menuNode_t* const node);
+invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY);
+void MN_Drag(const menuNode_t* const node, struct base_s *base, int x, int y, qboolean rightClick);
+void MN_DrawItem(const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color);
+void MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
 
 #endif

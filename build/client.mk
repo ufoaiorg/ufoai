@@ -53,7 +53,6 @@ CLIENT_SRCS = \
 	client/menu/m_draw.c \
 	client/menu/m_font.c \
 	client/menu/m_input.c \
-	client/menu/m_inventory.c \
 	client/menu/m_main.c \
 	client/menu/m_messages.c \
 	client/menu/m_nodes.c \

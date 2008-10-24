@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_main.h"
 #include "m_actions.h"
-#include "m_inventory.h"
+#include "m_dragndrop.h"
 
 /** @brief valid node event ids */
 static const char *ne_strings[NE_NUM_NODEEVENT] = {

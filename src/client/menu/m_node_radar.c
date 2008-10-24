@@ -406,7 +406,7 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 	R_DrawCircle2D(x, y, radar.gridWidth / 2, qfalse, color, 2);
 }
 
-static void MN_DrawItem (const le_t *le, const vec3_t pos)
+static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 {
 	const vec4_t color = {0, 1, 0, 1};
 	/* relative to screen */
@@ -470,7 +470,7 @@ static void MN_DrawRadar (menuNode_t *node)
 			MN_DrawActor(le, pos);
 			break;
 		case ET_ITEM:
-			MN_DrawItem(le, pos);
+			MN_RadarNodeDrawItem(le, pos);
 			break;
 		}
 	}

@@ -28,10 +28,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "m_parse.h"
 #include "m_font.h"
-#include "m_inventory.h"
+#include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_node_model.h"
+
+void MN_DrawItemNode (menuNode_t *node, const char *itemName)
+{
+	int i;
+	item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
+	const vec4_t color = {1, 1, 1, 1};
+	vec2_t pos;
+
+	for (i = 0; i < csi.numODs; i++)
+		if (!Q_strncmp(itemName, csi.ods[i].id, MAX_VAR))
+			break;
+	if (i == csi.numODs)
+		return;
+
+	item.t = &csi.ods[i];
+
+	/* We position the model of the item ourself (in the middle of the item
+	 * node). See the "-1, -1" parameter of MN_DrawItem. */
+	MN_GetNodeAbsPos(node, pos);
+	pos[0] += node->size[0] / 2.0;
+	pos[1] += node->size[1] / 2.0;
+	MN_DrawItem(pos, &item, -1, -1, node->scale, color);
+}
 
 /**
  * @todo need a cleanup/marge/refactoring with MN_DrawItemNode

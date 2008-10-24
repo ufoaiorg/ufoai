@@ -311,6 +311,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_actions.h" />
+		<Unit filename="..\..\src\client\menu\m_dragndrop.h" />
 		<Unit filename="..\..\src\client\menu\m_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -323,10 +324,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_input.h" />
-		<Unit filename="..\..\src\client\menu\m_inventory.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\m_inventory.h" />
 		<Unit filename="..\..\src\client\menu\m_main.c">
 			<Option compilerVar="CC" />
 		</Unit>

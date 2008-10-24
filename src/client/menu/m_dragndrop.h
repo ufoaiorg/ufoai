@@ -1,5 +1,6 @@
 /**
- * @file m_inventory.h
+ * @file m_dragndrop.h
+ * @todo create generic function usable by every nodes
  */
 
 /*
@@ -22,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_INVENTORY_H
-#define CLIENT_MENU_M_INVENTORY_H
+#ifndef CLIENT_MENU_M_DRAGNDROP_H
+#define CLIENT_MENU_M_DRAGNDROP_H
 
 #include "../../game/inv_shared.h"
 
@@ -55,15 +56,5 @@ typedef struct dragInfo_s {
 
 extern dragInfo_t dragInfo;
 
-void MN_FindContainer(menuNode_t* const node);
-void MN_Drag(const menuNode_t* const node, struct base_s *base, int x, int y, qboolean rightClick);
-void MN_DrawItem(const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color);
-const invList_t* MN_DrawContainerNode(menuNode_t *node);
-void MN_DrawItemNode(menuNode_t *node, const char *itemName);
-
-void MN_DrawDisabled(const menuNode_t* node);
-void MN_DrawFree(int container, const menuNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs);
-void MN_InvDrawFree(inventory_t *inv, const menuNode_t *node);
-void MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
 
 #endif

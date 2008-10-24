@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "../renderer/r_main.h"
 #include "../renderer/r_draw.h"
-#include "menu/m_inventory.h"
+#include "menu/m_dragndrop.h"
 #include "menu/m_draw.h"
 
 static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
