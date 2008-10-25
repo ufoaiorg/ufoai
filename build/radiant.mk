@@ -63,9 +63,10 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/windowobservers.cpp \
 	$(RADIANT_BASE)/radiant/xywindow.cpp \
 	\
+	$(RADIANT_BASE)/radiant/sidebar/entitylist.cpp \
+	\
 	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
-	$(RADIANT_BASE)/radiant/dialogs/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findbrush.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/prism.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/light.cpp \

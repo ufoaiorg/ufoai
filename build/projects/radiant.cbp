@@ -213,10 +213,10 @@
 		<Unit filename="../../src/tools/radiant/radiant/dialog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/about.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/sidebar/entitylist.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/dialogs/entitylist.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/dialogs/about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/findbrush.cpp">
