@@ -2317,8 +2317,15 @@ void XY_Side(void) {
  * @brief Front view for eRegular mode
  */
 void XY_Front(void) {
+	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
+		// cannot do this in a split window
+		// do something else that the user may want here
+		XY_CenterViews();
+		return;
+	}
+
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	xywnd->SetViewType(YZ);
+	xywnd->SetViewType(XY);
 	XYWnd_Focus(xywnd);
 }
 
@@ -2326,6 +2333,13 @@ void XY_Front(void) {
  * @brief Next view for eRegular mode
  */
 void XY_Next(void) {
+	if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
+		// cannot do this in a split window
+		// do something else that the user may want here
+		XY_CenterViews();
+		return;
+	}
+
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	if (xywnd->GetViewType() == XY)
 		xywnd->SetViewType(XZ);

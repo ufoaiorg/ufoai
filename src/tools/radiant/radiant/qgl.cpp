@@ -1532,6 +1532,7 @@ void QGL_sharedContextCreated(OpenGLBinding& table) {
 		globalOutputStream() << "Anisotropic filtering possible (max " << g_maxTextureAnisotropy << "x)\n";
 	} else {
 		globalOutputStream() << "No Anisotropic filtering available\n";
+		g_maxTextureAnisotropy = 0;
 	}
 }
 
