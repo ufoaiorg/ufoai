@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_font.h"
 #include "m_input.h"
+#include "m_node_windowpanel.h"
 
 /* constants defining all tile of the texture */
 
@@ -99,8 +100,6 @@ static void MN_WindowPanelNodeDraw (menuNode_t *node)
 		MID_POSX, BOTTOM_POSY, ALIGN_UL, node->blend, image);
 	R_DrawNormPic(pos[0] + node->size[0] - RIGHT_WIDTH, y, RIGHT_WIDTH, BOTTOM_HEIGHT, RIGHT_POSX+RIGHT_WIDTH, BOTTOM_POSY+BOTTOM_HEIGHT,
 		RIGHT_POSX, BOTTOM_POSY, ALIGN_UL, node->blend, image);
-
-
 }
 
 void MN_RegisterNodeWindowPanel (nodeBehaviour_t *behaviour)
