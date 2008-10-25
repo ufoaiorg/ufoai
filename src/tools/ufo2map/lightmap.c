@@ -269,7 +269,7 @@ typedef struct {
 	float *directions;
 } facelight_t;
 
-static facelight_t facelight[2][MAX_MAP_FACES];
+static facelight_t facelight[LIGHTMAP_MAX][MAX_MAP_FACES];
 
 typedef enum {
 	emit_surface,
