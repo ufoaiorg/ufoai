@@ -845,7 +845,6 @@ menu options_pause
 		font	f_big
 	}
 
-//todo add popup "really change all settings" [enable all] [disable all] [abort]
 	pic header_pause
 	{
 		tooltip	"_enable or disable pause for all notification types\nPause can't be enabled without notification"

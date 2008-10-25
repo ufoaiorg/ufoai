@@ -1313,19 +1313,22 @@ menu popup_newinstallation_type
 	string type_label
 	{
 		string	"_Type"
-		pos	"350 320"
+		pos	"350 310"
+		font	f_normal
 	}
 	string buildtime_label
 	{
 		string	"_Build Time"
-		pos	"590 320"
+		pos	"590 310"
 		align	uc
+		font	f_normal
 	}
 	string cost_label
 	{
 		string	"_Cost"
-		pos	"685 320"
+		pos	"685 310"
 		align	uc
+		font	f_normal
 	}
 
 	pic bt_highlight
@@ -2117,13 +2120,15 @@ menu popup_multi_selection
 	string type_label
 	{
 		string	"_Type:"
-		pos		"290 320"
+		pos		"290 310"
+		font	f_normal
 	}
 
 	string name_label
 	{
 		string	"_Name:"
-		pos		"440 320"
+		pos		"440 310"
+		font	f_normal
 	}
 
 	text multi_select
@@ -2193,13 +2198,15 @@ menu popup_aircraft
 	string action_label
 	{
 		string	"_Action:"
-		pos		"290 320"
+		pos		"290 310"
+		font	f_normal
 	}
 
 	string description_label
 	{
 		string	"_Description:"
-		pos		"440 320"
+		pos		"440 310"
+		font	f_normal
 	}
 
 	text popup_aircraft_action
