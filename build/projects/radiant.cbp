@@ -219,6 +219,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/sidebar/entitylist.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/sidebar/entityinspector.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -250,9 +253,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/entity.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/entityinspector/entityinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/environment.cpp">
