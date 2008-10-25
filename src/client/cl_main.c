@@ -146,7 +146,7 @@ void Cmd_ForwardToServer (void)
 	const char *cmd = Cmd_Argv(0);
 	struct dbuffer *msg;
 
-	if (cls.state <= ca_connected || *cmd == '-' || *cmd == '+') {
+	if (cls.state <= ca_connected || cmd[0] == '-' || cmd[0] == '+') {
 		Com_Printf("Unknown command \"%s\"\n", cmd);
 		return;
 	}

@@ -43,8 +43,7 @@ static void MN_UpdateGametype_f (void)
 static void MN_ChangeGametype_f (void)
 {
 	int i, newType;
-	gametype_t* gt;
-	mapDef_t *md;
+	const mapDef_t *md;
 	const char *newGameTypeID = NULL;
 	qboolean next = qtrue;
 
@@ -93,7 +92,7 @@ static void MN_ChangeGametype_f (void)
 			newGameTypeID = (const char *)md->gameTypes->data;
 	} else {
 		for (i = 0; i < numGTs; i++) {
-			gt = &gts[i];
+			const gametype_t *gt = &gts[i];
 			if (!Q_strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
 				if (next) {
 					newType = (i + 1);
