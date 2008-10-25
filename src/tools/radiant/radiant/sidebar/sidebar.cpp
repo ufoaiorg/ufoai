@@ -19,7 +19,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 void Sidebar_constructEntities (GtkWidget *notebook)
 {
 	GtkWidget *label = gtk_label_new("Entities");
+	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	// scrollable window settings
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	// entity list
 	GtkWidget *pageEntityList = EntityList_constructNotebookTab();
@@ -29,6 +33,8 @@ void Sidebar_constructEntities (GtkWidget *notebook)
 	GtkWidget *pageEntityInspector = EntityInspector_constructNotebookTab();
 	gtk_container_add(GTK_CONTAINER(vbox), pageEntityInspector);
 
-	gtk_widget_show_all(vbox);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+	gtk_container_add(GTK_CONTAINER(swin), vbox);
+
+	gtk_widget_show_all(swin);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
