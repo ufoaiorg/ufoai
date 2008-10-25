@@ -68,8 +68,7 @@ public:
 	}
 	void post(const scene::Path& path, scene::Instance& instance) const {
 		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0
-		        && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
+		if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
 			entity->setKeyValue(m_key, m_value);
 		}
 	}
@@ -86,8 +85,7 @@ public:
 	}
 	void post(const scene::Path& path, scene::Instance& instance) const {
 		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0
-		        && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
+		if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
 			NodeSmartReference node(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(m_classname, node_is_group(path.top()))));
 
 			EntityCopyingVisitor visitor(*Node_getEntity(node));
@@ -97,9 +95,7 @@ public:
 			NodeSmartReference child(path.top().get());
 			NodeSmartReference parent(path.parent().get());
 			Node_getTraversable(parent)->erase(child);
-			if (Node_getTraversable(child) != 0
-			        && Node_getTraversable(node) != 0
-			        && node_is_group(node)) {
+			if (Node_getTraversable(child) != 0 && Node_getTraversable(node) != 0 && node_is_group(node)) {
 				parentBrushes(child, node);
 			}
 			Node_getTraversable(parent)->insert(node);
@@ -115,7 +111,6 @@ void Scene_EntitySetClassname_Selected(const char* classname) {
 	GlobalSceneGraph().traverse(EntitySetClassnameSelected(classname));
 }
 
-
 void Entity_ungroupSelected() {
 	if (GlobalSelectionSystem().countSelected() < 1) return;
 
@@ -127,10 +122,10 @@ void Entity_ungroupSelected() {
 	scene::Instance &instance = GlobalSelectionSystem().ultimateSelected();
 	scene::Path path = instance.path();
 
-	if (!Node_isEntity(path.top())) path.pop();
+	if (!Node_isEntity(path.top()))
+		path.pop();
 
-	if (Node_getEntity(path.top()) != 0
-	        && node_is_group(path.top())) {
+	if (Node_getEntity(path.top()) != 0 && node_is_group(path.top())) {
 		if (world_path.top().get_pointer() != path.top().get_pointer()) {
 			parentBrushes(path.top(), world_path.top());
 			Path_deleteTop(path);
@@ -138,13 +133,11 @@ void Entity_ungroupSelected() {
 	}
 }
 
-
-
 void Entity_connectSelected() {
 	if (GlobalSelectionSystem().countSelected() == 2) {
 		GlobalEntityCreator().connectEntities(
-		    GlobalSelectionSystem().penultimateSelected().path(),
-		    GlobalSelectionSystem().ultimateSelected().path()
+			GlobalSelectionSystem().penultimateSelected().path(),
+			GlobalSelectionSystem().ultimateSelected().path()
 		);
 	} else {
 		globalErrorStream() << "entityConnectSelected: exactly two instances must be selected\n";
@@ -168,7 +161,6 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	}
 
 	AABB workzone(aabb_for_minmax(Select_getWorkZone().d_work_min, Select_getWorkZone().d_work_max));
-
 
 	NodeSmartReference node(GlobalEntityCreator().createEntity(entityClass));
 

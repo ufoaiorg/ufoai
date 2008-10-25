@@ -61,7 +61,7 @@ struct WindowPosition {
 	}
 };
 
-const WindowPosition c_default_window_pos(50, 25, 400, 300);
+static const WindowPosition c_default_window_pos(50, 25, 800, 600);
 
 inline void window_get_position(GtkWindow* window, WindowPosition& position) {
 	ASSERT_MESSAGE(window != 0, "error saving window position");
@@ -74,10 +74,8 @@ inline void window_set_position(GtkWindow* window, const WindowPosition& positio
 	gtk_window_set_gravity(window, GDK_GRAVITY_STATIC);
 
 	GdkScreen* screen = gdk_screen_get_default();
-	if (position.x < 0
-	        || position.y < 0
-	        || position.x > gdk_screen_get_width(screen)
-	        || position.y > gdk_screen_get_height(screen)) {
+	if (position.x < 0 || position.y < 0 || position.x > gdk_screen_get_width(screen)
+	 || position.y > gdk_screen_get_height(screen)) {
 		gtk_window_set_position(window, GTK_WIN_POS_CENTER_ON_PARENT);
 	} else {
 		gtk_window_move(window, position.x, position.y);

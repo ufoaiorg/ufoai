@@ -22,12 +22,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_ENTITYLIST_H)
 #define INCLUDED_ENTITYLIST_H
 
+#include <gtk/gtk.h>
+
 void EntityList_Construct();
 void EntityList_Destroy();
 
-typedef struct _GtkWindow GtkWindow;
-void EntityList_constructWindow(GtkWindow* main_window);
-void EntityList_destroyWindow();
-void EntityList_toggleShown();
+void AttachEntityTreeModel();
+void EntityList_constructNotebookTab(GtkWidget *notebook);
 
 #endif

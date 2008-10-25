@@ -28,8 +28,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "iselection.h"
 
-#include <gtk/gtk.h>
-
 #include "string/string.h"
 #include "scenelib.h"
 #include "nameable.h"
@@ -62,7 +60,6 @@ public:
 	IdleDraw m_idleDraw;
 	WindowPositionTracker m_positionTracker;
 
-	GtkWindow* m_window;
 	GtkTreeView* m_tree_view;
 	GraphTreeModel* m_tree_model;
 	bool m_selection_disabled;
@@ -70,12 +67,7 @@ public:
 	EntityList() :
 			m_dirty(EntityList::eDefault),
 			m_idleDraw(RedrawEntityListCaller()),
-			m_window(0),
 			m_selection_disabled(false) {
-	}
-
-	bool visible() const {
-		return GTK_WIDGET_VISIBLE(GTK_WIDGET(m_window));
 	}
 };
 
@@ -107,7 +99,7 @@ inline void gtk_tree_model_get_pointer(GtkTreeModel* model, GtkTreeIter* iter, g
 
 
 
-void entitylist_treeviewcolumn_celldatafunc(GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter, gpointer data) {
+static void entitylist_treeviewcolumn_celldatafunc(GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter, gpointer data) {
 	scene::Node* node;
 	gtk_tree_model_get_pointer(model, iter, 0, &node);
 	scene::Instance* instance;
@@ -171,7 +163,7 @@ void EntityList_DisconnectSignals(GtkTreeView* view) {
 
 
 
-gboolean treemodel_update_selection(GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, gpointer data) {
+static gboolean treemodel_update_selection(GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, gpointer data) {
 	GtkTreeView* view = reinterpret_cast<GtkTreeView*>(data);
 
 	scene::Instance* instance;
@@ -232,15 +224,6 @@ void entitylist_treeview_row_expanded(GtkTreeView* view, GtkTreeIter* iter, GtkT
 	EntityList_SelectionUpdate();
 }
 
-
-void EntityList_SetShown(bool shown) {
-	widget_set_visible(GTK_WIDGET(getEntityList().m_window), shown);
-}
-
-void EntityList_toggleShown (void) {
-	EntityList_SetShown(!getEntityList().visible());
-}
-
 gint graph_tree_model_compare_name(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data) {
 	scene::Node* first;
 	gtk_tree_model_get(model, a, 0, (gpointer*)&first, -1);
@@ -269,22 +252,22 @@ void DetachEntityTreeModel (void) {
 	gtk_tree_view_set_model(getEntityList().m_tree_view, 0);
 }
 
-/**
- * @sa EntityList_destroyWindow
- */
-void EntityList_constructWindow(GtkWindow* main_window) {
-	ASSERT_MESSAGE(getEntityList().m_window == 0, "error");
+void EntityList_constructNotebookTab(GtkWidget *notebook) {
+	GtkWidget* label = gtk_label_new("Entity List");
+	gtk_widget_show(label);
 
-	GtkWindow* window = create_persistent_floating_window("Entity List", main_window);
+	GtkWidget* pageframe = gtk_frame_new("Entity List");
+	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 4);
+	gtk_widget_show(pageframe);
 
-	gtk_window_add_accel_group(window, global_accel);
-
-	getEntityList().m_positionTracker.connect(window);
-	getEntityList().m_window = window;
+	GtkWidget* vbox = gtk_vbox_new(FALSE, 4);
+	gtk_widget_show(vbox);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), 4);
+	gtk_container_add(GTK_CONTAINER(pageframe), vbox);
 
 	{
 		GtkScrolledWindow* scr = create_scrolled_window(GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(scr));
+		gtk_container_add(GTK_CONTAINER(pageframe), GTK_WIDGET(scr));
 
 		{
 			GtkWidget* view = gtk_tree_view_new();
@@ -301,25 +284,19 @@ void EntityList_constructWindow(GtkWindow* main_window) {
 			g_signal_connect(G_OBJECT(view), "row_expanded", G_CALLBACK(entitylist_treeview_row_expanded), 0);
 			g_signal_connect(G_OBJECT(view), "row_collapsed", G_CALLBACK(entitylist_treeview_rowcollapsed), 0);
 
-			gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
+			gtk_tree_view_append_column(GTK_TREE_VIEW (view), column);
 
 			gtk_widget_show(view);
-			gtk_container_add (GTK_CONTAINER(scr), view);
+			gtk_container_add(GTK_CONTAINER(scr), view);
 			getEntityList().m_tree_view = GTK_TREE_VIEW(view);
 		}
 	}
 
 	EntityList_ConnectSignals(getEntityList().m_tree_view);
 	AttachEntityTreeModel();
-}
 
-/**
- * @sa EntityList_constructWindow
- */
-void EntityList_destroyWindow (void) {
-	DetachEntityTreeModel();
-	EntityList_DisconnectSignals(getEntityList().m_tree_view);
-	destroy_floating_window(getEntityList().m_window);
+	// Add the page to the notebook
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), pageframe, label);
 }
 
 #include "preferencesystem.h"

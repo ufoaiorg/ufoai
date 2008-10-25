@@ -1408,7 +1408,6 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu, "Entity Inspector", "ViewEntityInfo");
 	}
 	create_menu_item_with_mnemonic(menu, "_Surface Inspector", "SurfaceInspector");
-	create_menu_item_with_mnemonic(menu, "Entity List", "EntityList");
 
 	menu_separator(menu);
 	{
@@ -2025,11 +2024,7 @@ void MainFrame::Create (void) {
 		window_set_position(window, g_layout_globals.m_position);
 	} else
 #endif
-	if (g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED) {
-		gtk_window_maximize(window);
-		WindowPosition default_position(-1, -1, 640, 480);
-		window_set_position(window, default_position);
-	} else {
+	if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
 		window_set_position(window, g_layout_globals.m_position);
 	}
 
@@ -2037,13 +2032,30 @@ void MainFrame::Create (void) {
 
 	gtk_widget_show(GTK_WIDGET(window));
 
+	GtkWidget* mainHsplit = gtk_hpaned_new();
+	gtk_box_pack_start(GTK_BOX(hbox), mainHsplit, TRUE, TRUE, 0);
+	gtk_widget_show(mainHsplit);
+
+	GtkWidget *notebook = gtk_notebook_new();
+	gtk_widget_show(GTK_WIDGET(notebook));
+	gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
+
+	EntityList_constructNotebookTab(notebook);
+	PreferencesDialog_constructWindow(window);
+	FindTextureDialog_constructWindow(window);
+	SurfaceInspector_constructWindow(window);
+
+	int w, h;
+	gtk_window_get_size(window, &w, &h);
+	gtk_paned_set_position(GTK_PANED(mainHsplit), w);
+
 	// create edit windows according to user setable style
 	switch (CurrentStyle()) {
 	case eRegular:
 		{
 			GtkWidget* vsplit = gtk_vpaned_new();
 			m_vSplit = vsplit;
-			gtk_box_pack_start(GTK_BOX(hbox), vsplit, TRUE, TRUE, 0);
+			gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
 			gtk_widget_show(vsplit);
 
 			// console
@@ -2097,7 +2109,7 @@ void MainFrame::Create (void) {
 		{
 			GtkWidget* vsplit = gtk_vpaned_new();
 			m_vSplit = vsplit;
-			gtk_box_pack_start(GTK_BOX(hbox), vsplit, TRUE, TRUE, 0);
+			gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
 			gtk_widget_show(vsplit);
 		}
 
@@ -2138,16 +2150,10 @@ void MainFrame::Create (void) {
 			gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
 		}
 
-		// set height of the upper split view (seperates the 4 views and the console
+		// set height of the upper split view (seperates the 4 views and the console)
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
-
 		break;
 	}
-
-	EntityList_constructWindow(window);
-	PreferencesDialog_constructWindow(window);
-	FindTextureDialog_constructWindow(window);
-	SurfaceInspector_constructWindow(window);
 
 	SetActiveXY(m_pXYWnd);
 
@@ -2177,8 +2183,6 @@ void MainFrame::SaveWindowInfo (void) {
 
 void MainFrame::Shutdown (void) {
 	EverySecondTimer_disable();
-
-	EntityList_destroyWindow();
 
 	delete m_pXYWnd;
 	m_pXYWnd = 0;
@@ -2337,7 +2341,6 @@ void MainFrame_Construct (void) {
 
 	GlobalCommands_insert("ToggleConsole", FreeCaller<Console_ToggleShow>(), Accelerator('O'));
 	GlobalCommands_insert("ToggleEntityInspector", FreeCaller<EntityInspector_ToggleShow>(), Accelerator('N'));
-	GlobalCommands_insert("EntityList", FreeCaller<EntityList_toggleShown>(), Accelerator('L'));
 
 	GlobalCommands_insert("ShowHidden", FreeCaller<Select_ShowAllHidden>(), Accelerator('H', (GdkModifierType)GDK_SHIFT_MASK));
 	GlobalCommands_insert("HideSelected", FreeCaller<HideSelected>(), Accelerator('H'));
