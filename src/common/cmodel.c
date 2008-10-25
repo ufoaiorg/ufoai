@@ -1437,7 +1437,7 @@ static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size
 	return qfalse;
 }
 
-void Grid_DumpDVTable(struct pathing_s *path)
+void Grid_DumpDVTable (struct pathing_s *path)
 {
 	int px, py, pz, cr;
 	pos3_t mins, maxs;
@@ -1451,9 +1451,9 @@ void Grid_DumpDVTable(struct pathing_s *path)
 			Com_Printf("\ncr:%i z:%i\n", cr, pz);
 			for (py = maxs[1]; py >= mins[1]; py--) {
 				for (px = mins[0]; px <= maxs[0]; px++) {
-					const dv = RT_AREA_FROM(path, px, py, pz, cr);
-					const oz = getDVz(dv);
-					const dir = getDVdir(dv);
+					const int dv = RT_AREA_FROM(path, px, py, pz, cr);
+					const int oz = getDVz(dv);
+					const int dir = getDVdir(dv);
 					Com_Printf("%3i %2i %1i,", RT_AREA(path, px, py, pz, cr), dir, oz);
 				}
 				Com_Printf("\n");
@@ -1462,7 +1462,7 @@ void Grid_DumpDVTable(struct pathing_s *path)
 	}
 }
 
-static void Grid_SetMoveData(struct pathing_s *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
+static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
 {
 	pos4_t dummy;
 
