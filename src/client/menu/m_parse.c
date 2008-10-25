@@ -608,6 +608,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 			Sys_Error("MAX_MENUNODES exceeded\n");
 		iNode = &mn.menuNodes[mn.numNodes++];
 		*iNode = *node;
+		iNode->menu = menu;
 		/* link it in */
 		if (lastNode)
 			lastNode->next = iNode;
