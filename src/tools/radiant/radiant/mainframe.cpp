@@ -74,7 +74,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "console.h"
 #include "entity.h"
 #include "entityinspector/entityinspector.h"
-#include "dialogs/entitylist.h"
+#include "sidebar/entitylist.h"
 #include "filters.h"
 #include "dialogs/findtextures.h"
 #include "grid.h"
