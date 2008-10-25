@@ -74,7 +74,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "console.h"
 #include "entity.h"
 #include "entityinspector/entityinspector.h"
-#include "sidebar/entitylist.h"
+#include "sidebar/sidebar.h"
 #include "filters.h"
 #include "dialogs/findtextures.h"
 #include "grid.h"
@@ -2037,10 +2037,11 @@ void MainFrame::Create (void) {
 	gtk_widget_show(mainHsplit);
 
 	GtkWidget *notebook = gtk_notebook_new();
-	gtk_widget_show(GTK_WIDGET(notebook));
 	gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
 
-	EntityList_constructNotebookTab(notebook);
+	Sidebar_constructEntities(notebook);
+	gtk_widget_show_all(notebook);
+
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
 	SurfaceInspector_constructWindow(window);

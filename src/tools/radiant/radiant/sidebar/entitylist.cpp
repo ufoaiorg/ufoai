@@ -246,9 +246,8 @@ static void AttachEntityTreeModel (void) {
 	gtk_tree_view_set_model(getEntityList().m_tree_view, GTK_TREE_MODEL(getEntityList().m_tree_model));
 }
 
-void EntityList_constructNotebookTab(GtkWidget *notebook)
+GtkWidget *EntityList_constructNotebookTab(void)
 {
-	GtkWidget* label = gtk_label_new("Entities");
 	GtkWidget* pageframe = gtk_frame_new("Entity List");
 
 	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);
@@ -266,13 +265,13 @@ void EntityList_constructNotebookTab(GtkWidget *notebook)
 			gtk_tree_view_column_pack_start(column, renderer, TRUE);
 			gtk_tree_view_column_set_cell_data_func(column, renderer, entitylist_treeviewcolumn_celldatafunc, 0, 0);
 
-			GtkTreeSelection* select = gtk_tree_view_get_selection (GTK_TREE_VIEW(view));
+			GtkTreeSelection* select = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
 			gtk_tree_selection_set_mode(select, GTK_SELECTION_MULTIPLE);
 
 			g_signal_connect(G_OBJECT(view), "row_expanded", G_CALLBACK(entitylist_treeview_row_expanded), 0);
 			g_signal_connect(G_OBJECT(view), "row_collapsed", G_CALLBACK(entitylist_treeview_rowcollapsed), 0);
 
-			gtk_tree_view_append_column(GTK_TREE_VIEW (view), column);
+			gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 
 			gtk_widget_show(view);
 			gtk_container_add(GTK_CONTAINER(scr), view);
@@ -283,9 +282,7 @@ void EntityList_constructNotebookTab(GtkWidget *notebook)
 	EntityList_ConnectSignals(getEntityList().m_tree_view);
 	AttachEntityTreeModel();
 
-	// Add the page to the notebook
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), pageframe, label);
-	gtk_widget_show_all(pageframe);
+	return pageframe;
 }
 
 #include "preferencesystem.h"
