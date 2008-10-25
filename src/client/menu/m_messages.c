@@ -644,8 +644,8 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 qboolean MSO_Load (sizebuf_t* sb, void* data)
 {
 	int count;
-	/* reset current message settings */
-	memset(messageSettings, 0, sizeof(messageSettings));
+	/* reset current message settings (default to set for undefined settings)*/
+	memset(messageSettings, 1, sizeof(messageSettings));
 	/* load all positive settings */
 	count = MSG_ReadLong(sb);
 	if (count < 0) {
@@ -654,14 +654,8 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 	}
 	for (; count > 0; count--) {
 		const char *messagetype = MSG_ReadString(sb);
-		/* savegame breaking */
-#if 1
-		const char pauseOrNotify = MSG_ReadChar(sb);
-#else
 		const byte pauseOrNotify = MSG_ReadByte(sb);
-#endif
 		notify_t type;
-		mso_t pause;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 			if (Q_strcmp(nt_strings[type], messagetype) == 0)
@@ -672,24 +666,9 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 			Com_Printf("Unrecognized messagetype during load '%s' ignored\n", messagetype);
 			continue;
 		}
-		/* savegame breaking */
-#if 1
-		if (pauseOrNotify == 'p') {
-			pause = MSO_PAUSE;
-		} else if (pauseOrNotify == 'n') {
-			pause = MSO_NOTIFY;
-		} else if (pauseOrNotify == 's') {
-			pause = MSO_SOUND;
-		} else {
-			return 0;
-		}
-		MSO_Set(0, type, pause, qtrue, qfalse);
-#else
 		MSO_Set(0, type, MSO_NOTIFY, ((pauseOrNotify & NTMASK_NOTIFY) == NTMASK_NOTIFY), qfalse);
 		MSO_Set(0, type, MSO_PAUSE, ((pauseOrNotify & NTMASK_PAUSE) == NTMASK_PAUSE), qfalse);
 		MSO_Set(0, type, MSO_SOUND, ((pauseOrNotify & NTMASK_SOUND) == NTMASK_SOUND), qfalse);
-#endif
-
 
 	}
 	messageOptionsInitialized = qfalse;
