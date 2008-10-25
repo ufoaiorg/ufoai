@@ -1449,9 +1449,12 @@ void Grid_DumpDVTable(struct pathing_s *path)
 	for (cr = 0; cr < ACTOR_MAX_STATES; cr++) {
 		for (pz = mins[2]; pz <= maxs[2]; pz++) {
 			Com_Printf("\ncr:%i z:%i\n", cr, pz);
-			for (py = mins[1]; py < maxs[1]; py++) {
-				for(px = mins[0]; px< maxs[0]; px++) {
-					Com_Printf("%3i_%3i,", RT_AREA(path, px, py, pz, cr), RT_AREA_FROM(path, px, py, pz, cr));
+			for (py = maxs[1]; py >= mins[1]; py--) {
+				for(px = mins[0]; px <= maxs[0]; px++) {
+					const dv = RT_AREA_FROM(path, px, py, pz, cr);
+					const oz = getDVz(dv);
+					const dir = getDVdir(dv);
+					Com_Printf("%3i %2i %1i,", RT_AREA(path, px, py, pz, cr), dir, oz);
 				}
 				Com_Printf("\n");
 			}

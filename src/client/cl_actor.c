@@ -2968,7 +2968,9 @@ static qboolean CL_TraceMove (pos3_t to)
 
 	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
-		if (++counter < 100) {
+		if (++counter > 100) {
+			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], selActor->state & STATE_CROUCHED ? 1 : 0);
+			Com_Printf("Last pos: (%i, %i, %i, %i).\n", pos[0], pos[1], pos[2], crouching_state);
 			Grid_DumpDVTable(&clPathMap);
 			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
 		}
@@ -2979,7 +2981,7 @@ static qboolean CL_TraceMove (pos3_t to)
 		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
 		if (length > CL_UsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
-		else if (selActor->state & STATE_CROUCHED)
+		else if (crouching_state)
 			CL_ParticleSpawn("crawlTracer", 0, vec, oldVec, NULL);
 		else
 			CL_ParticleSpawn("moveTracer", 0, vec, oldVec, NULL);
