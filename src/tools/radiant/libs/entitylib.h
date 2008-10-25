@@ -1,3 +1,7 @@
+/**
+ * @file entitylib.h
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -554,15 +558,25 @@ public:
 			visitor.visit((*i).first.c_str(), (*i).second->c_str());
 		}
 	}
+
+	/**
+	 * @brief Sets or deletes properties for the entity
+	 * @param[in] key The property key
+	 * @param[in] value If empty, the property will be removed
+	 */
 	void setKeyValue(const char* key, const char* value) {
-		if (value[0] == '\0'
-		        /*|| string_equal(EntityClass_valueForKey(*m_eclass, key), value)*/) { // don't delete values equal to default
+		if (value[0] == '\0') {
 			erase(key);
 		} else {
 			insert(key, value);
 		}
 		m_entityKeyValueChanged();
 	}
+	/**
+	 * @brief Searches the value for a given property key
+	 * @param[in] key The property key to get the value for
+	 * @return The value for the given property key or the default value
+	 */
 	const char* getKeyValue(const char* key) const {
 		KeyValues::const_iterator i = m_keyValues.find(key);
 		if (i != m_keyValues.end()) {
