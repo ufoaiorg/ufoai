@@ -6,7 +6,7 @@ UFO2MAP_CFLAGS+=-DCOMPILE_MAP -ffloat-store
 
 UFO2MAP_SRCS = \
 	tools/ufo2map/ufo2map.c \
-	tools/ufo2map/radiosity.c \
+	tools/ufo2map/lighting.c \
 	tools/ufo2map/bsp.c \
 	tools/ufo2map/brushbsp.c \
 	tools/ufo2map/check.c \

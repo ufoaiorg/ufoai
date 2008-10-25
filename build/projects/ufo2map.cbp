@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+	<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
@@ -167,10 +167,10 @@
 		<Unit filename="..\..\src\tools\ufo2map\portals.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\radiosity.c">
+		<Unit filename="..\..\src\tools\ufo2map\lighting.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\radiosity.h" />
+		<Unit filename="..\..\src\tools\ufo2map\lighting.h" />
 		<Unit filename="..\..\src\tools\ufo2map\routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
