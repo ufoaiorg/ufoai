@@ -1,5 +1,5 @@
 /**
- * @file radiosity.h
+ * @file lighting.h
  */
 
 /*
@@ -55,12 +55,12 @@ typedef struct patch_s {
 	vec3_t		origin;
 	dBspPlane_t	*plane;
 
-	vec3_t		totallight;			/**< accumulated by radiosity
+	vec3_t		totallight;			/**< accumulated by lighting stage
 									 * does NOT include light
 									 * accounted for by direct lighting */
 	float		area;
 
-	/** illuminance * reflectivity = radiosity */
+	/** illuminance * reflectivity = lighting */
 	vec3_t		reflectivity;
 	vec3_t		baselight;			/**< emissivity only */
 
@@ -81,12 +81,12 @@ void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
 void CreateDirectLights(void);
 
-dBspLeaf_t *Rad_PointInLeaf(const vec3_t point);
+dBspLeaf_t *Light_PointInLeaf(const vec3_t point);
 
 extern dBspPlane_t backplanes[MAX_MAP_PLANES];
 
 void MakePatches(void);
 void SubdividePatches(const int num);
 void CalcTextureReflectivity(void);
-void RadWorld(void);
+void LightWorld(void);
 void BuildVertexNormals(void);

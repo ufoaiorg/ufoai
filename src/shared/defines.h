@@ -49,12 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* common/files.c, common/filesys.h (extern fs_maps) */
 #define	MAX_MAPS 400
 
-/* valid -noradiosity parameters */
-/* ufo2map/ufo2map.c */
-#define	RADIOSITY_NONE			1
-#define	RADIOSITY_DAY_ONLY		2
-#define	RADIOSITY_NIGHT_ONLY	3
-
 /* client/cl_campaign.c, client/cl_mapfightequip.c, client/cl_ufopedia.c */
 #define	UFO_EPSILON 0.00001f
 

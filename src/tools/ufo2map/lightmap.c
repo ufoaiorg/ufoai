@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "radiosity.h"
+#include "lighting.h"
 #include "../../common/tracing.h"
 
 #define	sun_pitch			config.sun_pitch[config.compile_for_day]
@@ -255,7 +255,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 						l->textoworld[1][j] * ut;
 
 			VectorMA(surf, 2, l->facenormal, pos);
-			leaf = Rad_PointInLeaf(pos);
+			leaf = Light_PointInLeaf(pos);
 			if (leaf->contentFlags == CONTENTS_SOLID)
 				continue;
 		}
@@ -295,7 +295,7 @@ static int numdlights[2];
 
 /**
  * @brief Create directlights out of patches and lights
- * @sa RadWorld
+ * @sa LightWorld
  */
 void CreateDirectLights (void)
 {
@@ -318,7 +318,7 @@ void CreateDirectLights (void)
 
 		VectorCopy(p->origin, dl->origin);
 
-		leaf = Rad_PointInLeaf(dl->origin);
+		leaf = Light_PointInLeaf(dl->origin);
 		dl->next = directlights[config.compile_for_day];
 		directlights[config.compile_for_day] = dl;
 

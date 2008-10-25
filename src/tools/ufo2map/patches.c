@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "radiosity.h"
+#include "lighting.h"
 #include "../../common/tracing.h"
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
@@ -211,7 +211,7 @@ static void MakePatchForFace (int facenum, winding_t *w)
 
 	WindingCenter(w, patch->origin);
 	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
-	leaf = Rad_PointInLeaf(patch->origin);
+	leaf = Light_PointInLeaf(patch->origin);
 
 	patch->area = area;
 	if (patch->area <= 1)
@@ -310,11 +310,11 @@ static void FinishSplit (patch_t *patch, patch_t *newp)
 
 	WindingCenter(patch->winding, patch->origin);
 	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
-	Rad_PointInLeaf(patch->origin);
+	Light_PointInLeaf(patch->origin);
 
 	WindingCenter(newp->winding, newp->origin);
 	VectorAdd(newp->origin, newp->plane->normal, newp->origin);
-	Rad_PointInLeaf(newp->origin);
+	Light_PointInLeaf(newp->origin);
 }
 
 /**
@@ -370,7 +370,7 @@ void SubdividePatches (const int num)
 {
 	int i;
 
-	/* don't subdivide for radiosity? */
+	/* don't subdivide for lighting? */
 	if (config.subdiv < 1)
 		return;
 

@@ -25,7 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define VERSION "1.2.3"
 
-#include "radiosity.h"
+/* valid -noradiosity parameters */
+#define	LIGHTING_NONE			1
+#define	LIGHTING_DAY_ONLY		2
+#define	LIGHTING_NIGHT_ONLY	3
+
+#include "lighting.h"
 #include "bsp.h"
 #include "check.h"
 #include "../../shared/shared.h"
@@ -74,10 +79,10 @@ static void Usage (void)
 		"                              2 - (check/fix) mapname if findings, 4 - normal output,"
 		"                              5 extra output (eg from BSPing)"
 	); Com_Printf(
-		"\nRadiosity options:\n"
+		"\nLighting options:\n"
 		" -extra                     : extra light samples\n"
 		" -maxlight                  : \n"
-		" -noradiosity TYPE          : don't perform the radiosity calculations, where TYPE is one of day, night, all\n"
+		" -nolighting TYPE           : don't perform the lighting calculations, where TYPE is one of day, night, all\n"
 		"                            : default is all\n"
 		" -quant                     : lightquant\n"
 		" -radchop                   : subdivide for better looking lightmap\n"
@@ -143,7 +148,7 @@ static void Usage (void)
 }
 
 /**
- * @brief Check for bsping, radiosity and checking/fixing command line parameters
+ * @brief Check for bsping, lighting and checking/fixing command line parameters
  */
 static void U2M_Parameter (int argc, const char **argv)
 {
@@ -339,7 +344,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
 		} else if (!strcmp(argv[i],"-radchop")) {
-			Verb_Printf(VERB_LESS, "radiosity subdivide size = %s\n", argv[i + 1]);
+			Verb_Printf(VERB_LESS, "lighting subdivide size = %s\n", argv[i + 1]);
 			config.subdiv = atoi(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
@@ -363,19 +368,19 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-maxlight")) {
 			config.maxlight = atof(argv[i + 1]) * 196.0;
 			i++;
-		} else if (!strcmp(argv[i], "-noradiosity")) {
+		} else if (!strcmp(argv[i], "-nolighting")) {
 			if (argc > i + 1) {
 				if (!strcmp(argv[i + 1], "day")) {
-					Verb_Printf(VERB_LESS, "noradiosity = day\n");
-					config.noradiosity = RADIOSITY_NIGHT_ONLY;
+					Verb_Printf(VERB_LESS, "nolighting = day\n");
+					config.nolighting = LIGHTING_NIGHT_ONLY;
 					i++;
 				} else if (!strcmp(argv[i + 1], "night")) {
-					Verb_Printf(VERB_LESS, "noradiosity = night\n");
-					config.noradiosity = RADIOSITY_DAY_ONLY;
+					Verb_Printf(VERB_LESS, "nolighting = night\n");
+					config.nolighting = LIGHTING_DAY_ONLY;
 					i++;
 				} else {
-					Verb_Printf(VERB_LESS, "noradiosity = none\n");
-					config.noradiosity = RADIOSITY_NONE;
+					Verb_Printf(VERB_LESS, "nolighting = none\n");
+					config.nolighting = LIGHTING_NONE;
 				}
 			} else {
 				Sys_Error("invalid parameter count\n");
@@ -633,24 +638,24 @@ int main (int argc, const char **argv)
 	Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 	begin = start;
 
-	if (!config.onlyents && config.noradiosity != RADIOSITY_NONE) {
-		Verb_Printf(VERB_LESS, "----- Radiosity ----\n");
+	if (!config.onlyents && config.nolighting != LIGHTING_NONE) {
+		Verb_Printf(VERB_LESS, "----- Lighting ----\n");
 
 		CalcTextureReflectivity();
 
-		if (config.noradiosity != RADIOSITY_DAY_ONLY) {
+		if (config.nolighting != LIGHTING_DAY_ONLY) {
 			/* compile night version */
 			start = time(NULL);
-			RadWorld();
+			LightWorld();
 			end = time(NULL);
 			Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 		}
 
-		if (config.noradiosity != RADIOSITY_NIGHT_ONLY) {
+		if (config.nolighting != LIGHTING_NIGHT_ONLY) {
 			/* compile day version */
 			config.compile_for_day = 1;
 			start = time(NULL);
-			RadWorld();
+			LightWorld();
 			end = time(NULL);
 			Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 		}

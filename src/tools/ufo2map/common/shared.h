@@ -82,7 +82,7 @@ typedef struct mapConfig_s {
 	qboolean notjunc;
 	qboolean verboseentities;
 	qboolean nobackclip;
-	int noradiosity;
+	int nolighting;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume; /**< -micro test after CSG */
 	qboolean extrasamples;

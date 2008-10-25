@@ -1,5 +1,5 @@
 /**
- * @file radiosity.c
+ * @file lighting.c
  * @note every surface must be divided into at least two patches each axis
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "radiosity.h"
+#include "lighting.h"
 #include "bsp.h"
 #include "../../common/tracing.h"
 
@@ -59,7 +59,7 @@ TRANSFER SCALES
 ===================================================================
 */
 
-static inline int Rad_PointInLeafnum (const vec3_t point)
+static inline int Light_PointInLeafnum (const vec3_t point)
 {
 	int nodenum;
 
@@ -78,15 +78,15 @@ static inline int Rad_PointInLeafnum (const vec3_t point)
 }
 
 
-dBspLeaf_t *Rad_PointInLeaf (const vec3_t point)
+dBspLeaf_t *Light_PointInLeaf (const vec3_t point)
 {
-	const int num = Rad_PointInLeafnum(point);
+	const int num = Light_PointInLeafnum(point);
 	assert(num >= 0);
 	assert(num < MAX_MAP_LEAFS);
 	return &curTile->leafs[num];
 }
 
-void RadWorld (void)
+void LightWorld (void)
 {
 	if (curTile->numnodes == 0 || curTile->numfaces == 0)
 		Sys_Error("Empty map");
