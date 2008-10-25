@@ -325,7 +325,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; /* tend is now STEPUP above tstart */
 
 		if (debugTrace)
-			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
+			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
 				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction < 1.0) {
@@ -364,6 +364,10 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 
 		tstart[2] = tend[2]; /* The box trace for height starts at stepup height. */
 		tend[2] = PATHFINDING_HEIGHT * UNIT_HEIGHT; /* tend now reaches the model ceiling. */
+
+		if (debugTrace)
+			Com_Printf("    Casting ceiling (%f, %f, %f) to (%f, %f, %f)\n",
+				tstart[0], tstart[1], tstart[2], tend[0], tend[1], tend[2]);
 
 		tr = RT_COMPLETEBOXTRACE(tstart, tend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 
