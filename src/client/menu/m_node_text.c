@@ -301,8 +301,11 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 
 		/* if textLines has advanced past the visible area, don't bother
 		 * counting the remaining lines unless it is needed for a scrollbar */
-		if (!node->scrollbar && node->textLines >= node->textScroll + node->height)
+		if (!node->scrollbar && node->textLines >= node->textScroll + node->height) {
+			if (end || (list && list->next))
+				node->textLines++;
 			break;
+		}
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
