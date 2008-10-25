@@ -726,7 +726,7 @@ void BuildFacelights (unsigned int facenum)
 	sdir = tex->vecs[0];
 	tdir = tex->vecs[1];
 
-	/* rad -extra antialiasing */
+	/* lighting -extra antialiasing */
 	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
 	else

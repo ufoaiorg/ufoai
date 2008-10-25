@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define VERSION "1.2.3"
 
-/* valid -noradiosity parameters */
+/* valid -nolighting parameters */
 #define	LIGHTING_NONE			1
 #define	LIGHTING_DAY_ONLY		2
 #define	LIGHTING_NIGHT_ONLY	3
@@ -85,7 +85,7 @@ static void Usage (void)
 		" -nolighting TYPE           : don't perform the lighting calculations, where TYPE is one of day, night, all\n"
 		"                            : default is all\n"
 		" -quant                     : lightquant\n"
-		" -radchop                   : subdivide for better looking lightmap\n"
+		" -lightingchop              : subdivide for better looking lightmap\n"
 		" -scale                     : lightscale\n"
 		" -t --threads               : thread amount\n"
 	); Com_Printf(
@@ -343,7 +343,7 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-extra")) {
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
-		} else if (!strcmp(argv[i],"-radchop")) {
+		} else if (!strcmp(argv[i],"-lightingchop")) {
 			Verb_Printf(VERB_LESS, "lighting subdivide size = %s\n", argv[i + 1]);
 			config.subdiv = atoi(argv[i + 1]);
 			i++;
@@ -415,7 +415,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.block_yl = -8;
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
-	config.subdiv = 2048.0f; /* rad chop/subdiv */
+	config.subdiv = 2048.0f; /* lighting chop/subdiv */
 	config.mapMicrovol = 1.0f;/* this value is up for debate blondandy */
 
 	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.0, 0.0, 0.0);
