@@ -668,9 +668,6 @@ GtkTextView* g_entityClassComment;
 
 GtkCheckButton* g_entitySpawnflagsCheck[MAX_FLAGS];
 
-GtkEntry* g_entityKeyEntry;
-GtkEntry* g_entityValueEntry;
-
 GtkListStore* g_entlist_store;
 GtkListStore* g_entprops_store;
 const EntityClass* g_current_flags = 0;
@@ -938,29 +935,6 @@ void EntityInspector_updateSpawnflags(void) {
 	}
 }
 
-void EntityInspector_applySpawnflags(void) {
-	int f, i, v;
-	char sz[32];
-
-	f = 0;
-	for (i = 0; i < g_spawnflag_count; ++i) {
-		v = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (g_entitySpawnflagsCheck[i]));
-		f |= v << spawn_table[i];
-	}
-
-	sprintf (sz, "%i", f);
-	const char* value = (f == 0) ? "" : sz;
-
-	{
-		StringOutputStream command;
-		command << "entitySetFlags -flags " << f;
-		UndoableCommand undo("entitySetSpawnflags");
-
-		Scene_EntitySetKeyValue_Selected("spawnflags", value);
-	}
-}
-
-
 void EntityInspector_updateKeyValues(void) {
 	g_selectedKeyValues.clear();
 	g_selectedDefaultKeyValues.clear();
@@ -971,11 +945,6 @@ void EntityInspector_updateKeyValues(void) {
 	EntityInspector_updateSpawnflags();
 
 	GtkListStore* store = g_entprops_store;
-
-	// save current key/val pair around filling epair box
-	// row_select wipes it and sets to first in list
-	CopiedString strKey(gtk_entry_get_text(g_entityKeyEntry));
-	CopiedString strVal(gtk_entry_get_text(g_entityValueEntry));
 
 	gtk_list_store_clear(store);
 	// Walk through list and add pairs
@@ -988,9 +957,6 @@ void EntityInspector_updateKeyValues(void) {
 		value << ConvertLocaleToUTF8((*i).second.c_str());
 		gtk_list_store_set(store, &iter, 0, key.c_str(), 1, value.c_str(), -1);
 	}
-
-	gtk_entry_set_text(g_entityKeyEntry, strKey.c_str());
-	gtk_entry_set_text(g_entityValueEntry, strVal.c_str());
 
 	for (EntityAttributes::const_iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
 		(*i)->update();
@@ -1019,7 +985,7 @@ void EntityInspector_selectionChanged(const Selectable&) {
 
 // Creates a new entity based on the currently selected brush and entity type.
 //
-void EntityClassList_createEntity(void) {
+static void EntityClassList_createEntity(void) {
 	GtkTreeView* view = g_entityClassList;
 
 	// find out what type of entity we are trying to create
@@ -1044,58 +1010,44 @@ void EntityClassList_createEntity(void) {
 	g_free(text);
 }
 
-void EntityInspector_applyKeyValue(void) {
-	// Get current selection text
-	StringOutputStream key(64);
-	key << ConvertUTF8ToLocale(gtk_entry_get_text(g_entityKeyEntry));
-	StringOutputStream value(64);
-	value << ConvertUTF8ToLocale(gtk_entry_get_text(g_entityValueEntry));
+void EntityInspector_addKeyValue(GtkButton *button, gpointer user_data) {
+	GtkTreeIter iter;
+	GtkTreeView *view = GTK_TREE_VIEW(user_data);
+	GtkTreeModel* model = gtk_tree_view_get_model(view);
+	GtkListStore *store = GTK_LIST_STORE(model);
 
+	gtk_list_store_append(store, &iter);
+	// TODO add a parameter name already - new parameters should be added via entify comment click
+	gtk_list_store_set(store, &iter, 0, "", 1, "", -1);
 
-	// TTimo: if you change the classname to worldspawn you won't merge back in the structural brushes but create a parasite entity
-	if (!strcmp(key.c_str(), "classname") && !strcmp(value.c_str(), "worldspawn")) {
-		gtk_MessageBox(gtk_widget_get_toplevel(GTK_WIDGET(g_entityKeyEntry)),  "Cannot change \"classname\" key back to worldspawn.", 0, eMB_OK );
+	GtkTreeViewColumn* viewColumn = gtk_tree_view_get_column(view, 0);
+	GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
+	gtk_tree_view_set_cursor(view, path, viewColumn, TRUE);
+	gtk_tree_path_free(path);
+}
+
+void EntityInspector_clearKeyValue(GtkButton * button, gpointer user_data) {
+	GtkTreeModel* model;
+	GtkTreeView *view = GTK_TREE_VIEW(user_data);
+	GtkTreeIter iter;
+	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
+	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
 		return;
 	}
 
+	char* value, *key;
+	gtk_tree_model_get(model, &iter, 0, &key, -1);
+	gtk_tree_model_get(model, &iter, 1, &value, -1);
 
-	// RR2DO2: we don't want spaces in entity keys
-	if (strstr( key.c_str(), " " )) {
-		gtk_MessageBox(gtk_widget_get_toplevel(GTK_WIDGET(g_entityKeyEntry)), "No spaces are allowed in entity keys.", 0, eMB_OK );
-		return;
-	}
-
-	if (strcmp(key.c_str(), "classname") == 0) {
-		StringOutputStream command;
-		command << "entitySetClass -class " << value.c_str();
-		UndoableCommand undo(command.c_str());
-		Scene_EntitySetClassname_Selected(value.c_str());
-	} else {
-		Scene_EntitySetKeyValue_Selected_Undoable(key.c_str(), value.c_str());
-	}
-}
-
-void EntityInspector_clearKeyValue(void) {
 	// Get current selection text
-	StringOutputStream key(64);
-	key << ConvertUTF8ToLocale(gtk_entry_get_text(g_entityKeyEntry));
+	StringOutputStream keyConverted(64);
+	keyConverted << ConvertUTF8ToLocale(key);
 
-	if (strcmp(key.c_str(), "classname") != 0) {
+	if (strcmp(keyConverted.c_str(), "classname") != 0) {
 		StringOutputStream command;
-		command << "entityDeleteKey -key " << key.c_str();
+		command << "entityDeleteKey -key " << keyConverted.c_str();
 		UndoableCommand undo(command.c_str());
-		Scene_EntitySetKeyValue_Selected(key.c_str(), "");
-	}
-}
-
-void EntityInspector_clearAllKeyValues(void) {
-	UndoableCommand undo("entityClear");
-
-	// remove all keys except classname
-	for (KeyValues::iterator i = g_selectedKeyValues.begin(); i != g_selectedKeyValues.end(); ++i) {
-		if (strcmp((*i).first.c_str(), "classname") != 0) {
-			Scene_EntitySetKeyValue_Selected((*i).first.c_str(), "");
-		}
+		Scene_EntitySetKeyValue_Selected(keyConverted.c_str(), "");
 	}
 }
 
@@ -1165,45 +1117,92 @@ static gint EntityClassList_keypress(GtkWidget* widget, GdkEventKey* event, gpoi
 	return FALSE;
 }
 
-static void EntityProperties_selection_changed(GtkTreeSelection* selection, gpointer data) {
-	// find out what type of entity we are trying to create
+static void SpawnflagCheck_toggled(GtkWidget *widget, gpointer data)
+{
+	int f, i;
+	char sz[32];
+
+	f = 0;
+	for (i = 0; i < g_spawnflag_count; ++i) {
+		const int v = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (g_entitySpawnflagsCheck[i]));
+		f |= v << spawn_table[i];
+	}
+
+	sprintf(sz, "%i", f);
+	const char* value = (f == 0) ? "" : sz;
+
+	{
+		StringOutputStream command;
+		command << "entitySetFlags -flags " << f;
+		UndoableCommand undo("entitySetSpawnflags");
+
+		Scene_EntitySetKeyValue_Selected("spawnflags", value);
+	}
+}
+
+static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
+{
+	char *key, *value;
 	GtkTreeModel* model;
 	GtkTreeIter iter;
+	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
+
 	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
+		globalWarningStream() << "No entity parameter selected to change the value for\n";
 		return;
 	}
 
-	char* key;
-	char* val;
-	gtk_tree_model_get(model, &iter, 0, &key, 1, &val, -1);
-
-	gtk_entry_set_text(g_entityKeyEntry, key);
-	gtk_entry_set_text(g_entityValueEntry, val);
-
-	g_free(key);
-	g_free(val);
-}
-
-static void SpawnflagCheck_toggled(GtkWidget *widget, gpointer data) {
-	EntityInspector_applySpawnflags();
-}
-
-static gint EntityEntry_keypress(GtkEntry* widget, GdkEventKey* event, gpointer data) {
-	if (event->keyval == GDK_Return) {
-		if (widget == g_entityKeyEntry) {
-			gtk_entry_set_text(g_entityValueEntry, "");
-			gtk_window_set_focus(GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(widget))), GTK_WIDGET(g_entityValueEntry));
-		} else {
-			EntityInspector_applyKeyValue();
-		}
-		return TRUE;
-	}
-	if (event->keyval == GDK_Escape) {
-		gtk_window_set_focus(GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(widget))), NULL);
-		return TRUE;
+	if (columnIndex == 1) {
+		gtk_tree_model_get(model, &iter, 0, &key, -1);
+		value = newValue;
+	} else {
+		gtk_tree_model_get(model, &iter, 1, &value, -1);
+		key = newValue;
 	}
 
-	return FALSE;
+	// Get current selection text
+	StringOutputStream keyConverted(64);
+	keyConverted << ConvertUTF8ToLocale(key);
+	StringOutputStream valueConverted(64);
+	valueConverted << ConvertUTF8ToLocale(value);
+
+	// if you change the classname to worldspawn you won't merge back in the structural
+	// brushes but create a parasite entity
+	if (!strcmp(keyConverted.c_str(), "classname") && !strcmp(valueConverted.c_str(), "worldspawn")) {
+		gtk_MessageBox(0, "Cannot change \"classname\" key back to worldspawn.", 0, eMB_OK);
+		return;
+	}
+
+	// we don't want spaces in entity keys
+	if (strstr(keyConverted.c_str(), " " )) {
+		gtk_MessageBox(0, "No spaces are allowed in entity keys.", 0, eMB_OK);
+		return;
+	}
+
+	// TODO: Add a sane default value
+	if (columnIndex == 0 && !keyConverted.empty() && valueConverted.empty())
+		valueConverted << "value";
+
+	globalOutputStream() << "change value for " << keyConverted.c_str() << " to " << valueConverted.c_str() << "\n";
+	if (!strcmp(keyConverted.c_str(), "classname")) {
+		StringOutputStream command;
+		command << "entitySetClass -class " << valueConverted.c_str();
+		UndoableCommand undo(command.c_str());
+		Scene_EntitySetClassname_Selected(valueConverted.c_str());
+	} else {
+		Scene_EntitySetKeyValue_Selected_Undoable(keyConverted.c_str(), valueConverted.c_str());
+	}
+	gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+}
+
+static void entityValueEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
+{
+	entityKeyValueEdited(view, 1, new_text);
+}
+
+static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* new_text, GtkTreeView *view)
+{
+	entityKeyValueEdited(view, 0, new_text);
 }
 
 GtkWidget* EntityInspector_constructNotebookTab(void)
@@ -1227,7 +1226,7 @@ GtkWidget* EntityInspector_constructNotebookTab(void)
 			g_entity_split2 = split2;
 
 			{
-				// class list
+				// entity class list
 				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 				gtk_paned_add1(GTK_PANED(split2), scr);
 				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
@@ -1262,6 +1261,7 @@ GtkWidget* EntityInspector_constructNotebookTab(void)
 			}
 
 			{
+				// entity class comments
 				GtkWidget* scr = gtk_scrolled_window_new (0, 0);
 				gtk_paned_add2(GTK_PANED(split2), scr);
 				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
@@ -1302,100 +1302,51 @@ GtkWidget* EntityInspector_constructNotebookTab(void)
 				}
 
 				{
-					// key/value list
-					GtkWidget* scr = gtk_scrolled_window_new (0, 0);
+					// entity key/value list
+					GtkWidget* scr = gtk_scrolled_window_new(0, 0);
 					gtk_box_pack_start(GTK_BOX (vbox2), scr, TRUE, TRUE, 0);
 					gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 					gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
-					{
-						GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+					GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
 
-						GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
-						gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
-						gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(view), FALSE);
-
-						{
-							GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("", renderer, "text", 0, (char const*)0);
-							gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
-						}
-
-						{
-							GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-							GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("", renderer, "text", 1, (char const*)0);
-							gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
-						}
-
-						{
-							GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-							g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityProperties_selection_changed), 0);
-						}
-
-						gtk_container_add(GTK_CONTAINER (scr), view);
-
-						g_object_unref(G_OBJECT(store));
-
-						g_entprops_store = store;
-					}
-				}
-
-				{
-					// key/value entry
-					GtkTable* table = GTK_TABLE(gtk_table_new(2, 2, FALSE));
-					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
-					gtk_table_set_row_spacings(table, 3);
-					gtk_table_set_col_spacings(table, 5);
+					GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+					gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
 
 					{
-						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-						gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-										(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-										(GtkAttachOptions)(0), 0, 0);
-						gtk_widget_set_events(GTK_WIDGET(entry), GDK_KEY_PRESS_MASK);
-						g_signal_connect(G_OBJECT(entry), "key_press_event", G_CALLBACK(EntityEntry_keypress), 0);
-						g_entityKeyEntry = entry;
+						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 0, (char const*)0);
+						gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
+						g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*)0);
+						g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer)view);
 					}
 
 					{
-						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-						gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-										(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-										(GtkAttachOptions)(0), 0, 0);
-						gtk_widget_set_events(GTK_WIDGET(entry), GDK_KEY_PRESS_MASK);
-						g_signal_connect(G_OBJECT(entry), "key_press_event", G_CALLBACK(EntityEntry_keypress), 0);
-						g_entityValueEntry = entry;
+						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Value	", renderer, "text", 1, (char const*)0);
+						gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
+						g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*)0);
+						g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer)view);
 					}
 
-					{
-						GtkLabel* label = GTK_LABEL(gtk_label_new("Value"));
-						gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
-										(GtkAttachOptions)(GTK_FILL),
-										(GtkAttachOptions)(0), 0, 0);
-						gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-					}
+					gtk_container_add(GTK_CONTAINER(scr), view);
 
-					{
-						GtkLabel* label = GTK_LABEL(gtk_label_new("Key"));
-						gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
-										(GtkAttachOptions)(GTK_FILL),
-										(GtkAttachOptions)(0), 0, 0);
-						gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-					}
-				}
+					g_object_unref(G_OBJECT(store));
 
-				{
+					g_entprops_store = store;
+
+					// entity parameter action buttons
 					GtkBox* hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
 					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(hbox), FALSE, TRUE, 0);
 
 					{
-						GtkButton* button = GTK_BUTTON(gtk_button_new_with_label("Clear All"));
-						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearAllKeyValues), 0);
+						GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_REMOVE));
+						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue), gpointer(view));
 						gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
 					}
 					{
-						GtkButton* button = GTK_BUTTON(gtk_button_new_with_label("Delete Key"));
-						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue), 0);
+						GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_NEW));
+						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue), gpointer(view));
 						gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
 					}
 				}
