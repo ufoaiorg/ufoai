@@ -67,7 +67,7 @@ menu singleplayer
 	{
 		pos	"640 240"
 		size "256 64"
-		click	{ cmd "mn_push load" }
+		click	{ cmd "mn_push load;" }
 		image	menu/button_big
 		font	f_menubig
 		color	"0 0.5 0 1"
