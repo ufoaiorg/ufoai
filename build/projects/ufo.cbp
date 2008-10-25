@@ -406,6 +406,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_text.h" />
+		<Unit filename="..\..\src\client\menu\m_node_windowpanel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_windowpanel.h" />
 		<Unit filename="..\..\src\client\menu\m_nodes.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -341,10 +341,11 @@ menu popup_tipoftheday
 		origin "30 450"
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup_alpha
-		pos	"0 0"
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
 		blend	true
 	}
 
