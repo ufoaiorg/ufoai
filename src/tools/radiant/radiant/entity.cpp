@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "os/file.h"
 #include "stream/stringstream.h"
 #include "stringio.h"
+#include "sidebar/entitylist.h"
 
 #include "gtkutil/filechooser.h"
 #include "gtkmisc.h"

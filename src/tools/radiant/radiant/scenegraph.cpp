@@ -84,11 +84,11 @@ public:
 	void addSceneChangedCallback(const SignalHandler& handler) {
 		m_sceneChangedCallbacks.connectLast(handler);
 	}
-	void sceneChanged() {
+	void sceneChanged(void) {
 		m_sceneChangedCallbacks();
 	}
 
-	scene::Node& root() {
+	scene::Node& root(void) {
 		ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
 		return m_rootpath.top();
 	}
@@ -103,7 +103,7 @@ public:
 
 		m_rootpath.push(makeReference(root));
 	}
-	void erase_root() {
+	void erase_root(void) {
 		//globalOutputStream() << "erase_root\n";
 
 		ASSERT_MESSAGE(!m_rootpath.empty(), "scenegraph root does not exist");
@@ -116,7 +116,7 @@ public:
 
 		root.DecRef();
 	}
-	void boundsChanged() {
+	void boundsChanged(void) {
 		m_boundsChanged();
 	}
 
@@ -204,7 +204,7 @@ CompiledGraph* g_sceneGraph;
 GraphTreeModel* g_tree_model;
 }
 
-GraphTreeModel* scene_graph_get_tree_model() {
+GraphTreeModel* scene_graph_get_tree_model(void) {
 	return g_tree_model;
 }
 
@@ -223,13 +223,13 @@ public:
 
 SceneGraphObserver g_SceneGraphObserver;
 
-void SceneGraph_Construct() {
+void SceneGraph_Construct(void) {
 	g_tree_model = graph_tree_model_new();
 
 	g_sceneGraph = new CompiledGraph(&g_SceneGraphObserver);
 }
 
-void SceneGraph_Destroy() {
+void SceneGraph_Destroy(void) {
 	delete g_sceneGraph;
 
 	graph_tree_model_delete(g_tree_model);
@@ -245,15 +245,15 @@ public:
 	typedef scene::Graph Type;
 	STRING_CONSTANT(Name, "*");
 
-	SceneGraphAPI() {
+	SceneGraphAPI(void) {
 		SceneGraph_Construct();
 
 		m_scenegraph = g_sceneGraph;
 	}
-	~SceneGraphAPI() {
+	~SceneGraphAPI(void) {
 		SceneGraph_Destroy();
 	}
-	scene::Graph* getTable() {
+	scene::Graph* getTable(void) {
 		return m_scenegraph;
 	}
 };

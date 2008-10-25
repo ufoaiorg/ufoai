@@ -240,30 +240,18 @@ gint graph_tree_model_compare_name(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 }
 
 extern GraphTreeModel* scene_graph_get_tree_model();
-void AttachEntityTreeModel (void) {
+static void AttachEntityTreeModel (void) {
 	getEntityList().m_tree_model = scene_graph_get_tree_model();
 
 	gtk_tree_view_set_model(getEntityList().m_tree_view, GTK_TREE_MODEL(getEntityList().m_tree_model));
 }
 
-void DetachEntityTreeModel (void) {
-	getEntityList().m_tree_model = 0;
-
-	gtk_tree_view_set_model(getEntityList().m_tree_view, 0);
-}
-
-void EntityList_constructNotebookTab(GtkWidget *notebook) {
-	GtkWidget* label = gtk_label_new("Entity List");
-	gtk_widget_show(label);
-
+void EntityList_constructNotebookTab(GtkWidget *notebook)
+{
+	GtkWidget* label = gtk_label_new("Entities");
 	GtkWidget* pageframe = gtk_frame_new("Entity List");
-	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 4);
-	gtk_widget_show(pageframe);
 
-	GtkWidget* vbox = gtk_vbox_new(FALSE, 4);
-	gtk_widget_show(vbox);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox), 4);
-	gtk_container_add(GTK_CONTAINER(pageframe), vbox);
+	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);
 
 	{
 		GtkScrolledWindow* scr = create_scrolled_window(GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -297,6 +285,7 @@ void EntityList_constructNotebookTab(GtkWidget *notebook) {
 
 	// Add the page to the notebook
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), pageframe, label);
+	gtk_widget_show_all(pageframe);
 }
 
 #include "preferencesystem.h"
