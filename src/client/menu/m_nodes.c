@@ -332,12 +332,12 @@ static void MN_UnHideNode_f (void)
  * @brief only to have a "if (!xxxx[type]->draw)" == true for all "graphic" nodes (a node with a position and a size)
  * @todo remove this, and add a boolean isGraphicNode into the behaviour, and check all "if (!xxxx[type]->draw)"
  */
-static MN_HolderNodeDraw (menuNode_t *node)
+static void MN_HolderNodeDraw (menuNode_t *node)
 {
 }
 
 /**
- * @brief Init a behaviour to null. A null node dont react
+ * @brief Init a behaviour to null. A null node doesn't react
  */
 static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name, qboolean isGraphicNode)
 {

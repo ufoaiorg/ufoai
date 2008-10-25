@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_node_model.h"
 
-void MN_DrawItemNode (menuNode_t *node, const char *itemName)
+static void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 {
 	int i;
 	item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */

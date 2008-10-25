@@ -54,7 +54,6 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 	int height, width, x, y;
 	int row, col;
 	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
-	vec2_t size;
 	vec2_t nodepos;
 	int totalMarge;
 
