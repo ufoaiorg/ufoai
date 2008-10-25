@@ -616,33 +616,24 @@ message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *ti
 qboolean MSO_Save (sizebuf_t* sb, void* data)
 {
 	notify_t type;
-	int count = 0;
-	/* count positive values */
-	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-		if (messageSettings[type].doNotify)
-			count++;
-		if (messageSettings[type].doPause)
-			count++;
-		if (messageSettings[type].doSound)
-			count++;
-	}
+	int count = NT_NUM_NOTIFYTYPE;
+	/* save amount of available entries (forward compatible for additional types) */
 	MSG_WriteLong(sb, count);
-	/* save positive values (negative won't be saved) */
+	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-		if (messageSettings[type].doNotify)	{
-			MSG_WriteString(sb, nt_strings[type]);
-			MSG_WriteChar(sb, 'n');
+		byte bitmask = 0;
+		if (messageSettings[type].doNotify) {
+			bitmask |= NTMASK_NOTIFY;
 		}
 		if (messageSettings[type].doPause) {
-			MSG_WriteString(sb, nt_strings[type]);
-			MSG_WriteChar(sb, 'p');
+			bitmask |= NTMASK_PAUSE;
 		}
 		if (messageSettings[type].doSound) {
-			MSG_WriteString(sb, nt_strings[type]);
-			MSG_WriteChar(sb, 's');
+			bitmask |= NTMASK_SOUND;
 		}
+		MSG_WriteString(sb, nt_strings[type]);
+		MSG_WriteByte(sb, bitmask);
 	}
-	messageOptionsInitialized = qfalse;
 	return qtrue;
 }
 
@@ -663,7 +654,12 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 	}
 	for (; count > 0; count--) {
 		const char *messagetype = MSG_ReadString(sb);
+		/* savegame breaking */
+#if 1
 		const char pauseOrNotify = MSG_ReadChar(sb);
+#else
+		const byte pauseOrNotify = MSG_ReadByte(sb);
+#endif
 		notify_t type;
 		mso_t pause;
 
@@ -676,6 +672,8 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 			Com_Printf("Unrecognized messagetype during load '%s' ignored\n", messagetype);
 			continue;
 		}
+		/* savegame breaking */
+#if 1
 		if (pauseOrNotify == 'p') {
 			pause = MSO_PAUSE;
 		} else if (pauseOrNotify == 'n') {
@@ -686,7 +684,15 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 			return 0;
 		}
 		MSO_Set(0, type, pause, qtrue, qfalse);
+#else
+		MSO_Set(0, type, MSO_NOTIFY, ((pauseOrNotify & NTMASK_NOTIFY) == NTMASK_NOTIFY), qfalse);
+		MSO_Set(0, type, MSO_PAUSE, ((pauseOrNotify & NTMASK_PAUSE) == NTMASK_PAUSE), qfalse);
+		MSO_Set(0, type, MSO_SOUND, ((pauseOrNotify & NTMASK_SOUND) == NTMASK_SOUND), qfalse);
+#endif
+
+
 	}
+	messageOptionsInitialized = qfalse;
 	return qtrue;
 }
 

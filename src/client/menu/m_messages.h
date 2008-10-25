@@ -82,6 +82,13 @@ typedef enum nt_s {
 	NT_NUM_NOTIFYTYPE
 } notify_t;
 
+/** @brief bitmask values for storing msgoptions */
+typedef enum ntmask_s {
+	NTMASK_NOTIFY = 1,
+	NTMASK_PAUSE = 1<<1,
+	NTMASK_SOUND = 1<<2
+} notifymask_t;
+
 /** @brief notification types */
 typedef enum mso_s {
 	MSO_PAUSE, /** pause game */
