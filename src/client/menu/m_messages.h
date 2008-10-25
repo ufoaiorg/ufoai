@@ -91,9 +91,9 @@ typedef enum ntmask_s {
 
 /** @brief notification types */
 typedef enum mso_s {
-	MSO_PAUSE, /** pause game */
-	MSO_NOTIFY, /** add notification message */
-	MSO_SOUND /** play notification sound */
+	MSO_PAUSE,	/**< pause game */
+	MSO_NOTIFY,	/**< add notification message */
+	MSO_SOUND	/**< play notification sound */
 } mso_t;
 
 /**
@@ -101,9 +101,9 @@ typedef enum mso_s {
  *
  */
 typedef struct messageSettings_s {
-	qboolean	doPause; /** flag whether game should pause */
-	qboolean	doNotify; /** flag whether game should notify */
-	qboolean	doSound; /** flag whether game should play sound notification */
+	qboolean doPause;	/**< flag whether game should pause */
+	qboolean doNotify;	/**< flag whether game should notify */
+	qboolean doSound;	/**< flag whether game should play sound notification */
 } messageSettings_t;
 
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
