@@ -59,7 +59,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../mainframe.h"
 #include "../textureentry.h"
 
-GtkEntry* numeric_entry_new() {
+GtkEntry* numeric_entry_new(void) {
 	GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 	gtk_widget_show(GTK_WIDGET(entry));
 	gtk_widget_set_size_request(GTK_WIDGET(entry), 64, -1);
@@ -97,7 +97,7 @@ void Scene_EntitySetKeyValue_Selected_Undoable(const char* key, const char* valu
 
 class EntityAttribute {
 public:
-	virtual ~EntityAttribute() {}
+	virtual ~EntityAttribute(void) {}
 	virtual GtkWidget* getWidget() const = 0;
 	virtual void update() = 0;
 };
@@ -128,12 +128,12 @@ public:
 		return GTK_WIDGET(m_check);
 	}
 
-	void apply() {
+	void apply(void) {
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(m_check)) ? "1" : "0");
 	}
 	typedef MemberCaller<BooleanAttribute, &BooleanAttribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		const char* value = SelectedEntity_getValueForKey(m_key.c_str());
 		if (!string_empty(value)) {
 			toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(m_check), atoi(value) != 0);
@@ -168,14 +168,14 @@ public:
 		return m_entry;
 	}
 
-	void apply() {
+	void apply(void) {
 		StringOutputStream value(64);
 		value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
 	}
 	typedef MemberCaller<StringAttribute, &StringAttribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		StringOutputStream value(64);
 		value << ConvertLocaleToUTF8(SelectedEntity_getValueForKey(m_key.c_str()));
 		gtk_entry_set_text(m_entry, value.c_str());
@@ -206,13 +206,13 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream value(64);
 		value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
 	}
 	typedef MemberCaller<ModelAttribute, &ModelAttribute::apply> ApplyCaller;
-	void update() {
+	void update(void) {
 		StringOutputStream value(64);
 		value << ConvertLocaleToUTF8(SelectedEntity_getValueForKey(m_key.c_str()));
 		gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
@@ -245,13 +245,13 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream value(64);
 		value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
 	}
 	typedef MemberCaller<SoundAttribute, &SoundAttribute::apply> ApplyCaller;
-	void update() {
+	void update(void) {
 		StringOutputStream value(64);
 		value << ConvertLocaleToUTF8(SelectedEntity_getValueForKey(m_key.c_str()));
 		gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
@@ -284,13 +284,13 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry.m_entry.m_frame);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream value(64);
 		value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), value.c_str());
 	}
 	typedef MemberCaller<ParticleAttribute, &ParticleAttribute::apply> ApplyCaller;
-	void update() {
+	void update(void) {
 		StringOutputStream value(64);
 		value << ConvertLocaleToUTF8(SelectedEntity_getValueForKey(m_key.c_str()));
 		gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
@@ -328,14 +328,14 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_entry);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream angle(32);
 		angle << angle_normalised(entry_get_float(m_entry));
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), angle.c_str());
 	}
 	typedef MemberCaller<AngleAttribute, &AngleAttribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		const char* value = SelectedEntity_getValueForKey(m_key.c_str());
 		if (!string_empty(value)) {
 			StringOutputStream angle(32);
@@ -383,14 +383,14 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream angle(32);
 		angle << angle_normalised(entry_get_float(m_entry));
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), angle.c_str());
 	}
 	typedef MemberCaller<DirectionAttribute, &DirectionAttribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		const char* value = SelectedEntity_getValueForKey(m_key.c_str());
 		if (!string_empty(value)) {
 			float f = float(atof(value));
@@ -415,7 +415,7 @@ public:
 	}
 	typedef MemberCaller<DirectionAttribute, &DirectionAttribute::update> UpdateCaller;
 
-	void applyRadio() {
+	void applyRadio(void) {
 		int index = radio_button_get_active(m_radio.m_radio);
 		if (index == 0) {
 			Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), "-1");
@@ -474,7 +474,7 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream angles(64);
 		angles << angle_normalised(entry_get_float(m_angles.m_pitch))
 		<< " " << angle_normalised(entry_get_float(m_angles.m_yaw))
@@ -483,7 +483,7 @@ public:
 	}
 	typedef MemberCaller<AnglesAttribute, &AnglesAttribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		StringOutputStream angle(32);
 		const char* value = SelectedEntity_getValueForKey(m_key.c_str());
 		if (!string_empty(value)) {
@@ -555,7 +555,7 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_hbox);
 	}
-	void apply() {
+	void apply(void) {
 		StringOutputStream vector3(64);
 		vector3 << entry_get_float(m_vector3.m_x)
 		<< " " << entry_get_float(m_vector3.m_y)
@@ -564,7 +564,7 @@ public:
 	}
 	typedef MemberCaller<Vector3Attribute, &Vector3Attribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		StringOutputStream buffer(32);
 		const char* value = SelectedEntity_getValueForKey(m_key.c_str());
 		if (!string_empty(value)) {
@@ -641,12 +641,12 @@ public:
 	GtkWidget* getWidget() const {
 		return GTK_WIDGET(m_combo);
 	}
-	void apply() {
+	void apply(void) {
 		Scene_EntitySetKeyValue_Selected_Undoable(m_key.c_str(), m_type[gtk_combo_box_get_active(m_combo)].second.c_str());
 	}
 	typedef MemberCaller<ListAttribute, &ListAttribute::apply> ApplyCaller;
 
-	void update() {
+	void update(void) {
 		const char* value = SelectedEntity_getValueForKey(m_key.c_str());
 		ListAttributeType::const_iterator i = m_type.findValue(value);
 		if (i != m_type.end()) {
@@ -660,12 +660,8 @@ public:
 
 
 namespace {
-GtkWidget* g_entity_split1 = 0;
-GtkWidget* g_entity_split2 = 0;
 int g_entitysplit1_position;
 int g_entitysplit2_position;
-
-bool g_entityInspector_windowConstructed = false;
 
 GtkTreeView* g_entityClassList;
 GtkTextView* g_entityClassComment;
@@ -694,7 +690,7 @@ typedef std::vector<EntityAttribute*> EntityAttributes;
 EntityAttributes g_entityAttributes;
 }
 
-void GlobalEntityAttributes_clear() {
+void GlobalEntityAttributes_clear(void) {
 	for (EntityAttributes::iterator i = g_entityAttributes.begin(); i != g_entityAttributes.end(); ++i) {
 		delete *i;
 	}
@@ -767,12 +763,12 @@ public:
 	}
 };
 
-void EntityClassList_fill() {
+void EntityClassList_fill(void) {
 	EntityClassListStoreAppend append(g_entlist_store);
 	GlobalEntityClassManager().forEach(append);
 }
 
-void EntityClassList_clear() {
+void EntityClassList_clear(void) {
 	gtk_list_store_clear(g_entlist_store);
 }
 
@@ -875,7 +871,7 @@ class EntityAttributeFactory {
 	typedef std::map<const char*, CreateFunc, RawStringLess> Creators;
 	Creators m_creators;
 public:
-	EntityAttributeFactory() {
+	EntityAttributeFactory(void) {
 		m_creators.insert(Creators::value_type("string", &StatelessAttributeCreator<StringAttribute>::create));
 		m_creators.insert(Creators::value_type("color", &StatelessAttributeCreator<StringAttribute>::create));
 		m_creators.insert(Creators::value_type("integer", &StatelessAttributeCreator<StringAttribute>::create));
@@ -925,7 +921,7 @@ void EntityInspector_setEntityClass(EntityClass *eclass) {
 	}
 }
 
-void EntityInspector_updateSpawnflags() {
+void EntityInspector_updateSpawnflags(void) {
 	{
 		int f = atoi(SelectedEntity_getValueForKey("spawnflags"));
 		for (int i = 0; i < g_spawnflag_count; ++i) {
@@ -942,7 +938,7 @@ void EntityInspector_updateSpawnflags() {
 	}
 }
 
-void EntityInspector_applySpawnflags() {
+void EntityInspector_applySpawnflags(void) {
 	int f, i, v;
 	char sz[32];
 
@@ -965,7 +961,7 @@ void EntityInspector_applySpawnflags() {
 }
 
 
-void EntityInspector_updateKeyValues() {
+void EntityInspector_updateKeyValues(void) {
 	g_selectedKeyValues.clear();
 	g_selectedDefaultKeyValues.clear();
 	Entity_GetKeyValues_Selected(g_selectedKeyValues, g_selectedDefaultKeyValues);
@@ -1006,7 +1002,7 @@ class EntityInspectorDraw {
 public:
 	EntityInspectorDraw() : m_idleDraw(FreeCaller<EntityInspector_updateKeyValues>()) {
 	}
-	void queueDraw() {
+	void queueDraw(void) {
 		m_idleDraw.queueDraw();
 	}
 };
@@ -1014,7 +1010,7 @@ public:
 EntityInspectorDraw g_EntityInspectorDraw;
 
 
-void EntityInspector_keyValueChanged() {
+void EntityInspector_keyValueChanged(void) {
 	g_EntityInspectorDraw.queueDraw();
 }
 void EntityInspector_selectionChanged(const Selectable&) {
@@ -1023,7 +1019,7 @@ void EntityInspector_selectionChanged(const Selectable&) {
 
 // Creates a new entity based on the currently selected brush and entity type.
 //
-void EntityClassList_createEntity() {
+void EntityClassList_createEntity(void) {
 	GtkTreeView* view = g_entityClassList;
 
 	// find out what type of entity we are trying to create
@@ -1048,7 +1044,7 @@ void EntityClassList_createEntity() {
 	g_free(text);
 }
 
-void EntityInspector_applyKeyValue() {
+void EntityInspector_applyKeyValue(void) {
 	// Get current selection text
 	StringOutputStream key(64);
 	key << ConvertUTF8ToLocale(gtk_entry_get_text(g_entityKeyEntry));
@@ -1079,7 +1075,7 @@ void EntityInspector_applyKeyValue() {
 	}
 }
 
-void EntityInspector_clearKeyValue() {
+void EntityInspector_clearKeyValue(void) {
 	// Get current selection text
 	StringOutputStream key(64);
 	key << ConvertUTF8ToLocale(gtk_entry_get_text(g_entityKeyEntry));
@@ -1092,7 +1088,7 @@ void EntityInspector_clearKeyValue() {
 	}
 }
 
-void EntityInspector_clearAllKeyValues() {
+void EntityInspector_clearAllKeyValues(void) {
 	UndoableCommand undo("entityClear");
 
 	// remove all keys except classname
@@ -1210,39 +1206,29 @@ static gint EntityEntry_keypress(GtkEntry* widget, GdkEventKey* event, gpointer 
 	return FALSE;
 }
 
-void EntityInspector_destroyWindow(GtkWidget* widget, gpointer data) {
-	g_entitysplit1_position = gtk_paned_get_position(GTK_PANED(g_entity_split1));
-	g_entitysplit2_position = gtk_paned_get_position(GTK_PANED(g_entity_split2));
+GtkWidget* EntityInspector_constructNotebookTab(void)
+{
+	GtkWidget* pageframe = gtk_frame_new("Entity Inspector");
+	GtkWidget* g_entity_split1 = 0;
+	GtkWidget* g_entity_split2 = 0;
 
-	g_entityInspector_windowConstructed = false;
-	GlobalEntityAttributes_clear();
-}
-
-GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
-	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
-	gtk_widget_show (vbox);
-	gtk_container_set_border_width(GTK_CONTAINER (vbox), 2);
-
-	g_signal_connect(G_OBJECT(vbox), "destroy", G_CALLBACK(EntityInspector_destroyWindow), 0);
+	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);
 
 	{
 		GtkWidget* split1 = gtk_vpaned_new();
-		gtk_box_pack_start(GTK_BOX(vbox), split1, TRUE, TRUE, 0);
-		gtk_widget_show(split1);
+		gtk_container_add(GTK_CONTAINER(pageframe), split1);
 
 		g_entity_split1 = split1;
 
 		{
 			GtkWidget* split2 = gtk_vpaned_new();
-			gtk_paned_add1(GTK_PANED (split1), split2);
-			gtk_widget_show(split2);
+			gtk_paned_add1(GTK_PANED(split1), split2);
 
 			g_entity_split2 = split2;
 
 			{
 				// class list
 				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-				gtk_widget_show(scr);
 				gtk_paned_add1(GTK_PANED(split2), scr);
 				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
@@ -1267,8 +1253,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 						g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed), 0);
 					}
 
-					gtk_widget_show(GTK_WIDGET(view));
-
 					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
 
 					g_object_unref(G_OBJECT(store));
@@ -1279,7 +1263,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 			{
 				GtkWidget* scr = gtk_scrolled_window_new (0, 0);
-				gtk_widget_show(scr);
 				gtk_paned_add2(GTK_PANED(split2), scr);
 				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
@@ -1289,7 +1272,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 					gtk_widget_set_size_request(GTK_WIDGET(text), 0, -1); // allow shrinking
 					gtk_text_view_set_wrap_mode(text, GTK_WRAP_WORD);
 					gtk_text_view_set_editable(text, FALSE);
-					gtk_widget_show(GTK_WIDGET(text));
 					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(text));
 					g_entityClassComment = text;
 				}
@@ -1299,18 +1281,15 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 		{
 			GtkWidget* split2 = gtk_vpaned_new();
 			gtk_paned_add2(GTK_PANED(split1), split2);
-			gtk_widget_show(split2);
 
 			{
 				GtkWidget* vbox2 = gtk_vbox_new(FALSE, 2);
-				gtk_widget_show(vbox2);
 				gtk_paned_pack1(GTK_PANED(split2), vbox2, FALSE, FALSE);
 
 				{
 					// Spawnflags (4 colums wide max, or window gets too wide.)
 					GtkTable* table = GTK_TABLE(gtk_table_new(4, 4, FALSE));
 					gtk_box_pack_start(GTK_BOX (vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
-					gtk_widget_show(GTK_WIDGET(table));
 
 					g_spawnflagsTable = table;
 
@@ -1325,7 +1304,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 				{
 					// key/value list
 					GtkWidget* scr = gtk_scrolled_window_new (0, 0);
-					gtk_widget_show(scr);
 					gtk_box_pack_start(GTK_BOX (vbox2), scr, TRUE, TRUE, 0);
 					gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 					gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
@@ -1354,8 +1332,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 							g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityProperties_selection_changed), 0);
 						}
 
-						gtk_widget_show(view);
-
 						gtk_container_add(GTK_CONTAINER (scr), view);
 
 						g_object_unref(G_OBJECT(store));
@@ -1367,14 +1343,12 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 				{
 					// key/value entry
 					GtkTable* table = GTK_TABLE(gtk_table_new(2, 2, FALSE));
-					gtk_widget_show(GTK_WIDGET(table));
 					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
 					gtk_table_set_row_spacings(table, 3);
 					gtk_table_set_col_spacings(table, 5);
 
 					{
 						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-						gtk_widget_show(GTK_WIDGET(entry));
 						gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
 										(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
 										(GtkAttachOptions)(0), 0, 0);
@@ -1385,7 +1359,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 					{
 						GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-						gtk_widget_show(GTK_WIDGET(entry));
 						gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
 										(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
 										(GtkAttachOptions)(0), 0, 0);
@@ -1396,7 +1369,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 					{
 						GtkLabel* label = GTK_LABEL(gtk_label_new("Value"));
-						gtk_widget_show(GTK_WIDGET(label));
 						gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
 										(GtkAttachOptions)(GTK_FILL),
 										(GtkAttachOptions)(0), 0, 0);
@@ -1405,7 +1377,6 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 					{
 						GtkLabel* label = GTK_LABEL(gtk_label_new("Key"));
-						gtk_widget_show(GTK_WIDGET(label));
 						gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
 										(GtkAttachOptions)(GTK_FILL),
 										(GtkAttachOptions)(0), 0, 0);
@@ -1415,18 +1386,15 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 				{
 					GtkBox* hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
-					gtk_widget_show(GTK_WIDGET(hbox));
 					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(hbox), FALSE, TRUE, 0);
 
 					{
 						GtkButton* button = GTK_BUTTON(gtk_button_new_with_label("Clear All"));
-						gtk_widget_show(GTK_WIDGET(button));
 						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearAllKeyValues), 0);
 						gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
 					}
 					{
 						GtkButton* button = GTK_BUTTON(gtk_button_new_with_label("Delete Key"));
-						gtk_widget_show(GTK_WIDGET(button));
 						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue), 0);
 						gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
 					}
@@ -1435,15 +1403,12 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 
 			{
 				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-				gtk_widget_show(scr);
 				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 				GtkWidget* viewport = gtk_viewport_new(0, 0);
-				gtk_widget_show(viewport);
 				gtk_viewport_set_shadow_type(GTK_VIEWPORT(viewport), GTK_SHADOW_NONE);
 
 				g_attributeBox = GTK_VBOX(gtk_vbox_new(FALSE, 2));
-				gtk_widget_show(GTK_WIDGET(g_attributeBox));
 
 				gtk_container_add(GTK_CONTAINER(viewport), GTK_WIDGET(g_attributeBox));
 				gtk_container_add(GTK_CONTAINER(scr), viewport);
@@ -1452,52 +1417,40 @@ GtkWidget* EntityInspector_constructWindow(GtkWindow* toplevel) {
 		}
 	}
 
+	// show the sliders in any case
+	if (g_entitysplit2_position < 22)
+		g_entitysplit2_position = 22;
+	gtk_paned_set_position(GTK_PANED(g_entity_split2), g_entitysplit2_position);
 
-	{
-		// show the sliders in any case
-		if (g_entitysplit2_position < 22)
-			g_entitysplit2_position = 22;
-		gtk_paned_set_position(GTK_PANED(g_entity_split2), g_entitysplit2_position);
-
-		if ((g_entitysplit1_position - g_entitysplit2_position) > 27) {
-			gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit1_position);
-		} else {
-			gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit2_position + 27);
-		}
+	if ((g_entitysplit1_position - g_entitysplit2_position) > 27) {
+		gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit1_position);
+	} else {
+		gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit2_position + 27);
 	}
 
-	g_entityInspector_windowConstructed = true;
 	EntityClassList_fill();
 
 	typedef FreeCaller1<const Selectable&, EntityInspector_selectionChanged> EntityInspectorSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityInspectorSelectionChangedCaller());
 	GlobalEntityCreator().setKeyValueChangedFunc(EntityInspector_keyValueChanged);
 
-	// hack
-	gtk_container_set_focus_chain(GTK_CONTAINER(vbox), NULL);
-
-	return vbox;
+	return pageframe;
 }
 
+// todo remove me?
 class EntityInspector : public ModuleObserver {
 	std::size_t m_unrealised;
 public:
 	EntityInspector() : m_unrealised(1) {
 	}
-	void realise() {
+	void realise(void) {
 		if (--m_unrealised == 0) {
-			if (g_entityInspector_windowConstructed) {
-				//globalOutputStream() << "Entity Inspector: realise\n";
-				EntityClassList_fill();
-			}
+			EntityClassList_fill();
 		}
 	}
-	void unrealise() {
+	void unrealise(void) {
 		if (++m_unrealised == 1) {
-			if (g_entityInspector_windowConstructed) {
-				//globalOutputStream() << "Entity Inspector: unrealise\n";
-				EntityClassList_clear();
-			}
+			EntityClassList_clear();
 		}
 	}
 };
@@ -1507,7 +1460,7 @@ EntityInspector g_EntityInspector;
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void EntityInspector_construct() {
+void EntityInspector_construct(void) {
 	GlobalEntityClassManager().attach(g_EntityInspector);
 
 	GlobalPreferenceSystem().registerPreference("EntitySplit1", IntImportStringCaller(g_entitysplit1_position), IntExportStringCaller(g_entitysplit1_position));
@@ -1515,6 +1468,6 @@ void EntityInspector_construct() {
 
 }
 
-void EntityInspector_destroy() {
+void EntityInspector_destroy(void) {
 	GlobalEntityClassManager().detach(g_EntityInspector);
 }

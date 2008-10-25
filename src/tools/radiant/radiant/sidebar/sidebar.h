@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_SIDEBAR_H
 
 #include "entitylist.h"
+#include "entityinspector.h"
 #include <gtk/gtk.h>
 
 void Sidebar_constructEntities(GtkWidget *notebook);

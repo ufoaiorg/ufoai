@@ -73,7 +73,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "commands.h"
 #include "console.h"
 #include "entity.h"
-#include "entityinspector/entityinspector.h"
 #include "sidebar/sidebar.h"
 #include "filters.h"
 #include "dialogs/findtextures.h"
@@ -570,19 +569,6 @@ void OpenHelpURL (void) {
 
 void OpenBugReportURL (void) {
 	OpenURL("http://sourceforge.net/tracker/?func=add&group_id=157793&atid=805242");
-}
-
-static GtkWidget* g_page_console;
-
-void Console_ToggleShow (void) {
-	if (g_pParentWnd->CurrentStyle() != MainFrame::eSplit)
-		GroupDialog_showPage(g_page_console);
-}
-
-static GtkWidget* g_page_entity;
-
-void EntityInspector_ToggleShow (void) {
-	GroupDialog_showPage(g_page_entity);
 }
 
 static void ModeChangeNotify();
@@ -1401,11 +1387,7 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 		menu_tearoff(menu);
 
 	if (style == MainFrame::eSplit) {
-		create_menu_item_with_mnemonic(menu, "Console View", "ToggleConsole");
 		create_menu_item_with_mnemonic(menu, "Texture Browser", "ToggleTextures");
-		create_menu_item_with_mnemonic(menu, "Entity Inspector", "ToggleEntityInspector");
-	} else {
-		create_menu_item_with_mnemonic(menu, "Entity Inspector", "ViewEntityInfo");
 	}
 	create_menu_item_with_mnemonic(menu, "_Surface Inspector", "SurfaceInspector");
 
@@ -1827,7 +1809,6 @@ static GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style) {
 	if (style != MainFrame::eRegular) {
 		toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
 	}
-	toolbar_append_button(toolbar, "Entities (N)", "entities.bmp", "ToggleEntityInspector");
 	toolbar_append_button(toolbar, "Surface Inspector (S)", "si.bmp", "SurfaceInspector");
 
 	return toolbar;
@@ -2016,7 +1997,6 @@ void MainFrame::Create (void) {
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 
 	GroupDialog_constructWindow(window);
-	g_page_entity = GroupDialog_addPage("Entities", EntityInspector_constructWindow(GroupDialog_getWindow()), RawStringExportCaller("Entities"));
 
 #ifdef WIN32
 	if (g_multimon_globals.m_bStartOnPrimMon) {
@@ -2339,9 +2319,6 @@ void MainFrame_Construct (void) {
 	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching>());
 	GlobalCommands_insert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities>(), Accelerator('E', (GdkModifierType)(GDK_MOD1_MASK | GDK_CONTROL_MASK)));
 	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog>(), Accelerator('P'));
-
-	GlobalCommands_insert("ToggleConsole", FreeCaller<Console_ToggleShow>(), Accelerator('O'));
-	GlobalCommands_insert("ToggleEntityInspector", FreeCaller<EntityInspector_ToggleShow>(), Accelerator('N'));
 
 	GlobalCommands_insert("ShowHidden", FreeCaller<Select_ShowAllHidden>(), Accelerator('H', (GdkModifierType)GDK_SHIFT_MASK));
 	GlobalCommands_insert("HideSelected", FreeCaller<HideSelected>(), Accelerator('H'));

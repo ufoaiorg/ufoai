@@ -22,10 +22,12 @@ void Sidebar_constructEntities (GtkWidget *notebook)
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
 	// entity list
-	GtkWidget *page = EntityList_constructNotebookTab();
-	gtk_container_add(GTK_CONTAINER(vbox), page);
+	GtkWidget *pageEntityList = EntityList_constructNotebookTab();
+	gtk_container_add(GTK_CONTAINER(vbox), pageEntityList);
 
 	// entity inspector
+	GtkWidget *pageEntityInspector = EntityInspector_constructNotebookTab();
+	gtk_container_add(GTK_CONTAINER(vbox), pageEntityInspector);
 
 	gtk_widget_show_all(vbox);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);

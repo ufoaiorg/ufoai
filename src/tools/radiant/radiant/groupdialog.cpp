@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "gtkutil/widget.h"
 #include "gtkutil/accelerator.h"
-#include "entityinspector/entityinspector.h"
+#include "sidebar/entityinspector.h"
 #include "gtkmisc.h"
 #include "multimon.h"
 #include "console.h"
@@ -191,8 +191,6 @@ void GroupDialog_updatePageTitle(GtkWidget* page) {
 
 void GroupDialog_Construct() {
 	GlobalPreferenceSystem().registerPreference("EntityWnd", WindowPositionTrackerImportStringCaller(g_GroupDlg.m_position_tracker), WindowPositionTrackerExportStringCaller(g_GroupDlg.m_position_tracker));
-
-	GlobalCommands_insert("ViewEntityInfo", FreeCaller<GroupDialog_ToggleShow>(), Accelerator('N'));
 }
 void GroupDialog_Destroy() {
 }
