@@ -235,42 +235,28 @@ menu transfer
 	// buttons
 	// ==================
 
-	pic bt_emptycraftstorage
+	button bt_emptycraftstorage
 	{
 		tooltip	"_Empty the aircraft storage"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos	"605 678"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ cmd "trans_emptyairstorage;" }
-	}
-
-	string s_emptycraftstorage
-	{
-		pos	"670 705"
-		align	cc
 		color "1 1 1 0.6"
+		selectcolor "1 1 1 1"
 		font	"f_normal"
 		string	"_Unload"
 	}
 
-	pic bt_starttrans
+	button bt_starttrans
 	{
 		tooltip	"_Start the transfer"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos	"750 678"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ cmd "trans_start;" }
-	}
-
-	string s_starttrans
-	{
-		pos	"815 705"
-		align	cc
 		color	"1 1 1 0.6"
+		selectcolor	"1 1 1 0.6"
 		font	"f_normal"
 		string	"_Transfer"
 	}

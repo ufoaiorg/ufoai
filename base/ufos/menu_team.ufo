@@ -1298,114 +1298,79 @@ menu equipment
 
 	confunc equip_reset
 	{
-		*s_primary	color "1 1 1 0.6"
-		*s_secondary	color "1 1 1 0.6"
-		*s_heavy	color "1 1 1 0.6"
-		*s_misc		color "1 1 1 0.6"
-		*s_armour	color "1 1 1 0.6"
+		*bt_primary	color "1 1 1 0.8"
+		*bt_secondary	color "1 1 1 0.8"
+		*bt_heavy	color "1 1 1 0.8"
+		*bt_misc		color "1 1 1 0.8"
+		*bt_armour	color "1 1 1 0.8"
 	}
-	confunc equip_primary	{ cmd "equip_type primary;"	equip_reset *s_primary	color "1 1 1 1" }
-	confunc equip_secondary	{ cmd "equip_type secondary;"	equip_reset *s_secondary	color "1 1 1 1" }
-	confunc equip_heavy	{ cmd "equip_type heavy;"	equip_reset *s_heavy	color "1 1 1 1" }
-	confunc equip_misc	{ cmd "equip_type misc;"	equip_reset *s_misc	color "1 1 1 1" }
-	confunc equip_armour	{ cmd "equip_type armour;"	equip_reset *s_armour	color "1 1 1 1" }
+	confunc equip_primary	{ cmd "equip_type primary;"	equip_reset *bt_primary	color "1 1 1 1" }
+	confunc equip_secondary	{ cmd "equip_type secondary;"	equip_reset *bt_secondary	color "1 1 1 1" }
+	confunc equip_heavy	{ cmd "equip_type heavy;"	equip_reset *bt_heavy	color "1 1 1 1" }
+	confunc equip_misc	{ cmd "equip_type misc;"	equip_reset *bt_misc	color "1 1 1 1" }
+	confunc equip_armour	{ cmd "equip_type armour;"	equip_reset *bt_armour	color "1 1 1 1" }
 
-	pic bt_primary
+	button bt_primary
 	{
 		tooltip	"_Show available primary weapons"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos		"374 70"	//125
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ equip_primary }
-	}
-
-	string s_primary
-	{
-		pos	"438 96"	//151
-		align	cc
 		color "1 1 1 0.6"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Primary"
 	}
 
-	pic bt_secondary
+	button bt_secondary
 	{
 		tooltip	"_Show available secondary weapons"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos		"374 125"	//180
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ equip_secondary }
-	}
-
-	string s_secondary
-	{
-		pos	"438 151"	//206
-		align	cc
 		color "1 1 1 0.6"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Secondary"
 	}
 
-	pic bt_heavy
+	button bt_heavy
 	{
 		tooltip	"_Show available heavy weapons"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos		"374 180"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ equip_heavy }
-	}
-
-	string s_heavy
-	{
-		pos	"438 206"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Heavy"
 	}
 
-	pic bt_misc
+	button bt_misc
 	{
 		tooltip	"_Show available miscellaneous equipment and weapons"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos		"374 235"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ equip_misc }
-	}
-
-	string s_misc
-	{
-		pos	"438 261"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Misc"
 	}
 
-	pic bt_armour
+	button bt_armour
 	{
 		tooltip	"_Show available armour"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
 		pos		"374 290"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ equip_armour }
-	}
-
-	string s_armour
-	{
-		pos	"438 316"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Armour"
 	}

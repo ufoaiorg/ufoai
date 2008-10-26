@@ -152,43 +152,30 @@ menu basedefence
 		align	uc
 	}
 
-	pic basedef_button_missile
+	button basedef_button_missile
 	{
 		tooltip	"_Choose missile battery"
 		invis	true
-		mousefx	true
 		pos		"50 710"
-		image	menu/button_blue
-		texl	"0 0"
-		texh	"128 52"
+		image	menu/button_blue3
+		size	"128 52"
 		click	{ basedef_missile }
-	}
-	string basedef_button_missile_str
-	{
 		string "_Missile"
-		invis	true
-		pos		"114 736"
-		align	cc
+		color "1 1 1 1"
+		selectcolor "1 1 1 1"
 	}
 
-	pic basedef_button_laser
+	button basedef_button_laser
 	{
 		tooltip	"_Choose laser battery"
 		invis	true
-		mousefx	true
 		pos		"288 710"
-		image	menu/button_blue
-		texl	"0 0"
-		texh	"128 52"
+		image	menu/button_blue3
+		size	"128 52"
 		click	{ basedef_laser }
-	}
-
-	string basedef_button_laser_str
-	{
 		string "_Laser"
-		invis	true
-		pos		"352 736"
-		align	cc
+		color "1 1 1 1"
+		selectcolor "1 1 1 1"
 	}
 
 	text basedef_list
