@@ -133,6 +133,7 @@ typedef struct menuNode_s {
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	qboolean invis, blend;
+	qboolean disabled;			/**< true, the node is unactive */
 	int mousefx;
 	invDef_t *container;		/** The container linked to this node. */
 	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */

@@ -63,10 +63,12 @@ static void MN_ButtonNodeInit (menuNode_t *node) {
 /**
  * @brief Handles Button clicks
  * @sa MN_BUTTON
+ * @todo node->disabled is not need, a disabled node must not receive
+ * any input event; but it dont work like that for the moment
  */
 static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
 {
-	if (node->click) {
+	if (node->click && !node->disabled) {
 		MN_ExecuteActions(node->menu, node->click);
 	}
 }
@@ -86,7 +88,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	int y, h;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
-	if (!node->click) {
+	if (!node->click || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
 		texX = TILE_SIZE;
