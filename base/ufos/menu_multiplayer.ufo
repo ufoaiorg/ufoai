@@ -203,6 +203,7 @@ menu mp_team
 	{
 		pos	"780 130"
 		size "128 64"
+		tooltip "_Load team from current selected slot"
 		click	{ cmd "loadteamslot;" }
 		image	menu/multi_buttons2
 		font	f_menusmall
