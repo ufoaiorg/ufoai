@@ -189,10 +189,10 @@ class Lock {
 public:
 	Lock() : m_locked(false) {
 	}
-	void lock() {
+	void lock(void) {
 		m_locked = true;
 	}
-	void unlock() {
+	void unlock(void) {
 		m_locked = false;
 	}
 	bool locked() const {
@@ -206,7 +206,7 @@ public:
 	ScopedLock(Lock& lock) : m_lock(lock) {
 		m_lock.lock();
 	}
-	~ScopedLock() {
+	~ScopedLock(void) {
 		m_lock.unlock();
 	}
 };
@@ -243,13 +243,13 @@ class PopupDebugMessageHandler : public DebugMessageHandler {
 	StringOutputStream m_buffer;
 	Lock m_lock;
 public:
-	TextOutputStream& getOutputStream() {
+	TextOutputStream& getOutputStream(void) {
 		if (!m_lock.locked()) {
 			return m_buffer;
 		}
 		return globalErrorStream();
 	}
-	bool handleMessage() {
+	bool handleMessage(void) {
 		getOutputStream() << "----------------\n";
 		LineLimitedTextOutputStream outputStream(getOutputStream(), 24);
 		write_stack_trace(outputStream);
@@ -274,13 +274,13 @@ public:
 
 typedef Static<PopupDebugMessageHandler> GlobalPopupDebugMessageHandler;
 
-void streams_init() {
+static void streams_init(void) {
 	GlobalErrorStream::instance().setOutputStream(getSysPrintErrorStream());
 	GlobalOutputStream::instance().setOutputStream(getSysPrintOutputStream());
 	GlobalWarningStream::instance().setOutputStream(getSysPrintWarningStream());
 }
 
-void paths_init() {
+static void paths_init(void) {
 	const char* home = environment_get_home_path();
 	Q_mkdir(home);
 
@@ -301,7 +301,7 @@ void paths_init() {
 	}
 }
 
-void create_global_pid() {
+static void create_global_pid(void) {
 	/*!
 	the global prefs loading / game selection dialog might fail for any reason we don't know about
 	we need to catch when it happens, to cleanup the stateful prefs which might be killing it
@@ -352,42 +352,42 @@ void create_global_pid() {
 		fclose(pid);
 }
 
-void remove_global_pid() {
+static void remove_global_pid(void) {
 	StringOutputStream g_pidFile(256);
 	g_pidFile << SettingsPath_get() << "radiant.pid";
 
 	// close the primary
-	if (remove (g_pidFile.c_str()) == -1) {
+	if (remove(g_pidFile.c_str()) == -1) {
 		StringOutputStream msg(256);
 		msg << "WARNING: Could not delete " << g_pidFile.c_str();
-		gtk_MessageBox (0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR );
+		gtk_MessageBox(0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR);
 	}
 }
 
-/*!
-now the secondary game dependant .pid file
-*/
-void create_local_pid() {
+/**
+ * @brief now the secondary game dependant .pid file
+ */
+static void create_local_pid(void) {
 	StringOutputStream g_pidGameFile(256); ///< the game-specific .pid file
 	g_pidGameFile << SettingsPath_get() << "/radiant-game.pid";
 
-	FILE *pid = fopen (g_pidGameFile.c_str(), "r");
+	FILE *pid = fopen(g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
-		fclose (pid);
-		if (remove (g_pidGameFile.c_str()) == -1) {
+		fclose(pid);
+		if (remove(g_pidGameFile.c_str()) == -1) {
 			StringOutputStream msg;
 			msg << "WARNING: Could not delete " << g_pidGameFile.c_str();
-			gtk_MessageBox (0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR );
+			gtk_MessageBox(0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR);
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
 		StringOutputStream msg;
 		msg << "Radiant failed to start properly the last time it was run.\n"
-		"The failure may be caused by current preferences.\n"
-		"Do you want to reset all preferences to defaults?";
+			"The failure may be caused by current preferences.\n"
+			"Do you want to reset all preferences to defaults?";
 
-		if (gtk_MessageBox (0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
+		if (gtk_MessageBox(0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			Preferences_Reset();
 		}
 
@@ -402,23 +402,23 @@ void create_local_pid() {
 		Sys_LogFile(true);
 	} else {
 		// create one, will remove right after entering message loop
-		pid = fopen (g_pidGameFile.c_str(), "w");
+		pid = fopen(g_pidGameFile.c_str(), "w");
 		if (pid)
-			fclose (pid);
+			fclose(pid);
 	}
 }
 
 
-/*!
-now the secondary game dependant .pid file
-*/
-void remove_local_pid() {
+/**
+ * @brief now the secondary game dependant .pid file
+ */
+static void remove_local_pid(void) {
 	StringOutputStream g_pidGameFile(256);
 	g_pidGameFile << SettingsPath_get() << "/radiant-game.pid";
 	remove(g_pidGameFile.c_str());
 }
 
-static void user_shortcuts_init() {
+static void user_shortcuts_init(void) {
 	LoadCommandMap(SettingsPath_get());
 	SaveCommandMap(SettingsPath_get());
 }
@@ -431,15 +431,15 @@ int main (int argc, char* argv[]) {
 	gtk_init(&argc, &argv);
 
 	// redirect Gtk warnings to the console
-	g_log_set_handler ("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
+	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
 				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), error_redirect, 0);
-	g_log_set_handler ("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
+	g_log_set_handler("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
 				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), error_redirect, 0);
-	g_log_set_handler ("GtkGLExt", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
+	g_log_set_handler("GtkGLExt", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
 				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), error_redirect, 0);
-	g_log_set_handler ("GLib", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
+	g_log_set_handler("GLib", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
 				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), error_redirect, 0);
-	g_log_set_handler (0, (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
+	g_log_set_handler(0, (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
 				G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION), error_redirect, 0);
 
 	GlobalDebugMessageHandler::instance().setHandler(GlobalPopupDebugMessageHandler::instance());

@@ -800,14 +800,14 @@ static void SurfaceFlags_setEntityClass(EntityClass* eclass) {
 	{
 		for (int i = 0; i < g_spawnflag_count; ++i) {
 			GtkWidget* widget = GTK_WIDGET(g_entitySpawnflagsCheck[i]);
-			gtk_widget_show (widget);
+			gtk_widget_show(widget);
 
 			StringOutputStream str(16);
 			str << LowerCase(eclass->flagnames[spawn_table[i]]);
 
 			gtk_table_attach(g_spawnflagsTable, widget, i % 4, i % 4 + 1, i / 4, i / 4 + 1,
-			                 (GtkAttachOptions)(GTK_FILL),
-			                 (GtkAttachOptions)(GTK_FILL), 0, 0);
+				(GtkAttachOptions)(GTK_FILL),
+				(GtkAttachOptions)(GTK_FILL), 0, 0);
 			gtk_widget_unref(widget);
 
 			gtk_label_set_text(GTK_LABEL(GTK_BIN(widget)->child), str.c_str());
@@ -821,7 +821,7 @@ static void EntityClassList_selectEntityClass(EntityClass* eclass) {
 	for (gboolean good = gtk_tree_model_get_iter_first(model, &iter); good != FALSE; good = gtk_tree_model_iter_next(model, &iter)) {
 		char* text;
 		gtk_tree_model_get(model, &iter, 0, &text, -1);
-		if (strcmp (text, eclass->name()) == 0) {
+		if (!strcmp(text, eclass->name())) {
 			GtkTreeView* view = g_entityClassList;
 			GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
 			gtk_tree_selection_select_path(gtk_tree_view_get_selection(view), path);
@@ -1108,7 +1108,7 @@ static void SpawnflagCheck_toggled(GtkWidget *widget, gpointer data)
 
 	f = 0;
 	for (i = 0; i < g_spawnflag_count; ++i) {
-		const int v = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (g_entitySpawnflagsCheck[i]));
+		const int v = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(g_entitySpawnflagsCheck[i]));
 		f |= v << spawn_table[i];
 	}
 
@@ -1273,7 +1273,7 @@ GtkWidget* EntityInspector_constructNotebookTab(void)
 				{
 					// Spawnflags (4 colums wide max, or window gets too wide.)
 					GtkTable* table = GTK_TABLE(gtk_table_new(4, 4, FALSE));
-					gtk_box_pack_start(GTK_BOX (vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
+					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
 
 					g_spawnflagsTable = table;
 
