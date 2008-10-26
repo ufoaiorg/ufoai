@@ -191,10 +191,10 @@ void Com_Printf (const char* const fmt, ...)
  */
 void Com_DPrintf (int level, const char *fmt, ...)
 {
+	level |= DEBUG_ALL;
+
 	/* don't confuse non-developers with techie stuff... */
-	if (!developer || developer->integer == 0)
-		return;
-	else if (developer->integer != DEBUG_ALL && developer->integer & ~level)
+	if (!developer || !(developer->integer & level))
 		return;
 	else {
 		va_list ap;

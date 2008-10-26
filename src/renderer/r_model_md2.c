@@ -157,7 +157,8 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
 	outMesh->num_verts = LittleLong(md2->num_verts);
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
-		Com_Error(ERR_DROP, "model %s has too many (or no) vertices", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) vertices (%i/%i)",
+			mod->name, outMesh->num_verts, MD2_MAX_VERTS);
 	outMesh->num_tris = LittleLong(md2->num_tris);
 	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
 		Com_Error(ERR_DROP, "model %s has too many (or no) triangles", mod->name);

@@ -849,9 +849,7 @@ void Cmd_ExecuteString (const char *text)
 	const char *str;
 	unsigned int hash;
 
-#ifdef DEBUG
 	Com_DPrintf(DEBUG_COMMANDS, "ExecuteString: '%s'\n", text);
-#endif
 
 	Cmd_TokenizeString(text, qtrue);
 
