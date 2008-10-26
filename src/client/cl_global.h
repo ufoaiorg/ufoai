@@ -32,11 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief This struct/variable holds the global data for a game.
- * @note This struct will be saved directly to the savegame-file.
- * Everything that should be saved needs to be in here.
- * No pointers are allowed inside this struct. Use an index of an array instead.
- * @note If you need pointers you have to change CL_UpdatePointersInGlobalData, too
- * @sa CL_UpdatePointersInGlobalData
  * @sa CL_ReadSinglePlayerData
  */
 typedef struct globalData_s

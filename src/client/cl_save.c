@@ -124,7 +124,6 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
  * @sa SAV_GameSave
  * @sa CL_GameInit
  * @sa CL_ReadSinglePlayerData
- * @sa CL_UpdatePointersInGlobalData
  */
 static qboolean SAV_GameLoad (const char *file, char **error)
 {
