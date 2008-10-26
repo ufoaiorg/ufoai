@@ -344,7 +344,7 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 static inline void R_ModSetParent (mBspNode_t *node, mBspNode_t *parent)
 {
 	node->parent = parent;
-	if (node->contents != NODE_NO_LEAF)
+	if (node->contents != CONTENTS_NO_LEAF)
 		return;
 	R_ModSetParent(node->children[0], node);
 	R_ModSetParent(node->children[1], node);
@@ -387,7 +387,7 @@ static void R_ModLoadNodes (const lump_t *l)
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
 		/* differentiate from leafs */
-		out->contents = NODE_NO_LEAF;
+		out->contents = CONTENTS_NO_LEAF;
 
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);

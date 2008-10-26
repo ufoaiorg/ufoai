@@ -114,7 +114,7 @@ typedef struct msurfaces_s {
 #define R_SurfaceToSurfaces(surfs, surf)\
 	(surfs)->surfaces[(surfs)->count++] = surf
 
-#define NODE_NO_LEAF -1
+#define CONTENTS_NO_LEAF -1
 
 typedef struct mBspNode_s {
 	/* common with leaf */

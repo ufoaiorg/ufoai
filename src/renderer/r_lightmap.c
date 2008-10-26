@@ -318,7 +318,7 @@ begin:
 	if (!node->plane)
 		return qfalse;
 
-	if (node->contents != NODE_NO_LEAF) /* didn't hit anything */
+	if (node->contents != CONTENTS_NO_LEAF) /* didn't hit anything */
 		return qfalse;
 
 	VectorCopy(end, mid);
