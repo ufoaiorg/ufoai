@@ -80,24 +80,12 @@ inline EntityList& getEntityList (void) {
 }
 }
 
-
-inline Nameable* Node_getNameable(scene::Node& node) {
-	return NodeTypeCast<Nameable>::cast(node);
-}
-
-const char* node_get_name(scene::Node& node) {
-	Nameable* nameable = Node_getNameable(node);
-	return (nameable != 0) ? nameable->name() : "node";
-}
-
 template<typename value_type>
 inline void gtk_tree_model_get_pointer(GtkTreeModel* model, GtkTreeIter* iter, gint column, value_type** pointer) {
 	GValue value = GValue_default();
 	gtk_tree_model_get_value(model, iter, column, &value);
 	*pointer = (value_type*)g_value_get_pointer(&value);
 }
-
-
 
 static void entitylist_treeviewcolumn_celldatafunc(GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter, gpointer data) {
 	scene::Node* node;

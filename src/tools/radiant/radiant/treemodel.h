@@ -22,10 +22,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_TREEMODEL_H)
 #define INCLUDED_TREEMODEL_H
 
+#include "iscenegraph.h"
+#include "nameable.h"
+
 struct GraphTreeModel;
 
 GraphTreeModel* graph_tree_model_new();
 void graph_tree_model_delete(GraphTreeModel* model);
+inline Nameable* Node_getNameable(scene::Node& node);
+const char* node_get_name(scene::Node& node);
 
 namespace scene {
 class Instance;
