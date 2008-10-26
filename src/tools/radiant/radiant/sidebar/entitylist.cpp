@@ -277,45 +277,10 @@ GtkWidget *EntityList_constructNotebookTab(void)
 
 #include "iselection.h"
 
-namespace {
-scene::Node* nullNode = 0;
-}
-
-class NullSelectedInstance : public scene::Instance, public Selectable {
-	class TypeCasts {
-		InstanceTypeCastTable m_casts;
-	public:
-		TypeCasts (void) {
-			InstanceStaticCast<NullSelectedInstance, Selectable>::install(m_casts);
-		}
-		InstanceTypeCastTable& get (void) {
-			return m_casts;
-		}
-	};
-
-public:
-	typedef LazyStatic<TypeCasts> StaticTypeCasts;
-
-	NullSelectedInstance() : Instance(scene::Path(makeReference(*nullNode)), 0, this, StaticTypeCasts::instance().get()) {
-	}
-
-	void setSelected(bool select) {
-		ERROR_MESSAGE("error");
-	}
-	bool isSelected() const {
-		return true;
-	}
-};
-
-typedef LazyStatic<NullSelectedInstance> StaticNullSelectedInstance;
-
-
 /**
  * @sa EntityList_Destroy
  */
 void EntityList_Construct (void) {
-	graph_tree_model_insert(scene_graph_get_tree_model(), StaticNullSelectedInstance::instance());
-
 	g_EntityList = new EntityList;
 
 	getEntityList().m_positionTracker.setPosition(c_default_window_pos);
@@ -331,6 +296,4 @@ void EntityList_Construct (void) {
  */
 void EntityList_Destroy (void) {
 	delete g_EntityList;
-
-	graph_tree_model_erase(scene_graph_get_tree_model(), StaticNullSelectedInstance::instance());
 }

@@ -1,3 +1,7 @@
+/**
+ * @file treemodel.h
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
