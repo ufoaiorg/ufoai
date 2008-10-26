@@ -111,9 +111,6 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 	/* Update visible status of UFO and detected UFO on radar */
 	UFO_CampaignCheckEvents(qfalse);
 
-	/* Open up popups for baseattacks */
-	CP_CheckBaseAttacks();
-
 	return qtrue;
 }
 
@@ -619,6 +616,7 @@ static void SAV_GameQuickLoad_f (void)
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 		MN_Popup(_("Error"), popupText);
 	} else {
+		CP_CheckBaseAttacks();
 		MN_Popup(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."));
 	}
 }

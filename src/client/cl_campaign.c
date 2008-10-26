@@ -1467,11 +1467,11 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	} else {
 		Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"), base->name);
 	}
-	mn.menuText[TEXT_POPUP_INFO] = popupText;
+	mn.menuText[TEXT_POPUP] = popupText;
 
 	CL_GameTimeStop();
 	B_SelectBase(base);
-	Cbuf_AddText("mn_push popup_baseattack;");
+	MN_PushMenu("popup_baseattack");
 }
 
 /**

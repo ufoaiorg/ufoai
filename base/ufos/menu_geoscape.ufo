@@ -1021,7 +1021,7 @@ menu popup_baseattack
 	text description
 	{
 		pos	"290 320"
-		num	TEXT_POPUP_INFO
+		num	TEXT_POPUP
 		size	"450 144"
 	}
 
