@@ -64,7 +64,7 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 4), vid_modelPool, 0);
 	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 6), vid_modelPool, 0);
 
-	for (i = 0; i < tris; i++) {
+	for (i = 0; i < tris; i++) { /* loop through rho, from pole to pole */
 		const float rho = (float) i * drho;
 		const float srho = (float) (sin(rho));
 		const float crho = (float) (cos(rho));
@@ -73,8 +73,8 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 		s = 0.0f;
 
-		for (j = 0; j <= tris; j++) {
-			const float theta = (j == tris) ? 0.0f : j * dtheta;
+		for (j = 0; j <= tris; j++) { /* loop through theta, around equator */
+			const float theta = (j == tris) ? 0.0f : j * dtheta; /* boundary conditions, go back to zero */
 			const float stheta = (float) (-sin(theta));
 			const float ctheta = (float) (cos(theta));
 
@@ -116,8 +116,9 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 	glEnable(GL_NORMALIZE);
 
+	glBegin(GL_TRIANGLE_STRIP);
+
 	for (i = 0; i < tris; i++) {
-		glBegin(GL_TRIANGLE_STRIP);
 
 		for (j = 0; j <= tris; j++) {
 			glNormal3fv(&sphere->normals[vertspos]);
@@ -135,9 +136,10 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 			vertspos += 3;
 		}
 
-		glEnd();
-		R_CheckError();
 	}
+
+	glEnd();
+	R_CheckError();
 
 	glDisable(GL_NORMALIZE);
 
