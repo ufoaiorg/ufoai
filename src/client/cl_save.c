@@ -111,6 +111,9 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 	/* Update visible status of UFO and detected UFO on radar */
 	UFO_CampaignCheckEvents(qfalse);
 
+	/* Open up popups for baseattacks */
+	CP_CheckBaseAttacks();
+
 	return qtrue;
 }
 

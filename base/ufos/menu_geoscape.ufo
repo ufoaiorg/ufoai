@@ -988,10 +988,9 @@ menu popup_intercept_ready
 
 // ==================
 // POPUP BASE ATTACK
-// TODO: Allow to edit team from here
 // ==================
 
-menu popup_base_attack
+menu popup_baseattack
 {
 	zone popup
 	{
@@ -1019,10 +1018,11 @@ menu popup_base_attack
 		font	f_big
 	}
 
-	string name_label
+	text description
 	{
-		string	"_Base is under attack - what to do?"
-		pos		"290 320"
+		pos	"290 320"
+		num	TEXT_POPUP_INFO
+		size	"450 144"
 	}
 
 	pic bt_go
@@ -1062,6 +1062,26 @@ menu popup_base_attack
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
 		pos		"618 426"
+		align	cc
+	}
+
+	pic bt_enter_base
+	{
+		tooltip	"_Enter base before the battle"
+		image	menu/multi_buttons3
+		pos		"300 450"
+		texh	"176 64"
+		texl	"0 32"
+		out		{ *bt_enter_base image menu/multi_buttons3 *string_enter_base color "0 0.5 0 1" }
+		in		{ *bt_enter_base image menu/multi_buttons3a *string_enter_base color "1 1 1 1" }
+		click	{ cmd "mn_push bases;" }
+	}
+	string string_enter_base
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enter base"
+		pos		"388 466"
 		align	cc
 	}
 
@@ -2032,86 +2052,6 @@ menu popup_mission
 		align	cc
 	}
 }
-
-// ==================
-// POPUP BASEATTACK
-// ==================
-
-menu popup_baseattack
-{
-	zone popup
-	{
-		invis	true
-	}
-	windowpanel back
-	{
-		image	menu/popup_alpha_tile
-		pos	"264 262"
-		size	"496 247"
-		blend	true
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"692 284"
-	}
-
-	string title
-	{
-		string	"_Base attack"
-		pos		"290 276"
-		font	f_big
-	}
-
-	string name_label
-	{
-		string	"_What to do?"
-		pos		"290 320"
-	}
-
-	pic bt_cancel
-	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"310 450"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"398 466"
-		align	cc
-	}
-
-	pic bt_go
-	{
-		tooltip	"_Enter the battlefield"
-		image	menu/multi_buttons3
-		pos		"530 450"
-		texh	"176 64"
-		texl	"0 32"
-		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
-		click	{ cmd "game_go;" }
-	}
-	string string_go
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Enter"
-		pos		"618 466"
-		align	cc
-	}
-}
-
 
 // =====================
 // POPUP MULTI SELECTION

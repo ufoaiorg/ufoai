@@ -1462,24 +1462,36 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	cls.missionaircraft = &baseAttackFakeAircraft;
 	gd.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 
-	popupText[0] = '\0';
 	if (base->capacities[CAP_ALIENS].cur) {
-		Q_strcat(popupText,
-			va(_("Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"), base->name),
-			sizeof(popupText));
+		Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"), base->name);
 	} else {
-		Q_strcat(popupText,
-			va(_("Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"), base->name),
-			sizeof(popupText));
+		Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"), base->name);
+	}
+	mn.menuText[TEXT_POPUP_INFO] = popupText;
+
+	CL_GameTimeStop();
+	B_SelectBase(base);
+	Cbuf_AddText("mn_push popup_baseattack;");
+}
+
+/**
+ * @brief Check and start baseattack missions
+ * @sa SAV_GameActionsAfterLoad
+ * @sa CP_BaseAttackStartMission
+ */
+void CP_CheckBaseAttacks (void)
+{
+	linkedList_t *missionlist = ccs.missions;
+
+	while (missionlist) {
+		mission_t *mission = (mission_t*) missionlist->data;
+
+		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
+			CP_BaseAttackStartMission(mission);
+		missionlist = missionlist->next;
 	}
 
-	popupAction1[0] = '\0';
-	Q_strcat(popupAction1, va("mn_select_base %i;mn_push bases", base->idx), sizeof(popupAction1));
-
-	MN_PopupButton(_("Base is under attack"), popupText,
-		popupAction1, _("Enter base"), _("Enter base before the battle"),
-		"mn_pop;game_go;", _("Enter"), _("Start base defence"),
-		"game_auto_go;", _("Auto mission"), _("Automatically resolve mission"));
+	return;
 }
 
 /**
