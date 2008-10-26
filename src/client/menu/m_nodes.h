@@ -61,6 +61,7 @@ typedef enum mn_s {
 	MN_CONTROLS,	/**< menu controls */
 	MN_CUSTOMBUTTON,
 	MN_WINDOWPANEL,
+	MN_BUTTON,
 
 	MN_NUM_NODETYPE
 } mn_t;

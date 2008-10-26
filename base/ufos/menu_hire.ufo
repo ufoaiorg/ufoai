@@ -721,112 +721,88 @@ menu employees
 
 	func empl_reset
 	{
-		*s_scientists	color "1 1 1 0.6"
-		*s_soldiers		color "1 1 1 0.6"
-		*s_workers		color "1 1 1 0.6"
-		*s_pilots		color "1 1 1 0.6"
+		*bt_scientists	color "1 1 1 0.8"
+		*bt_soldier		color "1 1 1 0.8"
+		*bt_workers		color "1 1 1 0.8"
+		*bt_pilots		color "1 1 1 0.8"
 	}
 	func empl_soldiers
 	{
 		cmd "employee_init 0;"
 		empl_reset
-		*s_soldiers		color "1 1 1 1"
+		*bt_soldier		color "1 1 1 1"
 	}
 	func empl_scientists
 	{
 		cmd "employee_init 1;"
 		empl_reset
-		*s_scientists	color "1 1 1 1"
+		*bt_scientists	color "1 1 1 1"
 	}
 	func empl_workers
 	{
 		cmd "employee_init 2;"
 		empl_reset
-		*s_workers		color "1 1 1 1"
+		*bt_workers		color "1 1 1 1"
 	}
 	func empl_pilots
 	{
 		cmd "employee_init 3;"
 		empl_reset
-		*s_pilots		color "1 1 1 1"
+		*bt_pilots		color "1 1 1 1"
 	}
 
-	pic bt_soldier
+	button bt_soldier
 	{
 		tooltip	"_Hire soldiers"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
+		blend	true
 		pos		"615 585"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ empl_soldiers }
-	}
-
-	string s_soldiers
-	{
-		pos	"679 611"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Soldiers"
 	}
 
-	pic bt_scientists
+	button bt_scientists
 	{
 		tooltip	"_Hire scientists"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
+		blend	true
 		pos		"615 655"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ empl_scientists }
-	}
-
-	string s_scientists
-	{
-		pos	"679 681"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Scientists"
 	}
 
-	pic bt_workers
+	button bt_workers
 	{
 		tooltip	"_Hire workers"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
+		blend	true
 		pos		"765 585"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ empl_workers }
-	}
-
-	string s_workers
-	{
-		pos	"829 611"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Workers"
 	}
 
-	pic bt_pilots
+	button bt_pilots
 	{
 		tooltip	"_Hire pilots"
-		image	menu/button_blue
-		mousefx	true
+		image	menu/button_blue3
+		blend	true
 		pos		"765 655"
-		texl	"0 0"
-		texh	"128 52"
+		size	"128 52"
 		click	{ empl_pilots }
-	}
-
-	string s_pilots
-	{
-		pos	"829 681"
-		align	cc
-		color "1 1 1 0.6"
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
 		font	"f_big"
 		string	"_Pilots"
 	}

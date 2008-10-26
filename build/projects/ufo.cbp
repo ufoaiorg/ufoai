@@ -342,6 +342,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_base.h" />
+		<Unit filename="..\..\src\client\menu\m_node_button.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_button.h" />
 		<Unit filename="..\..\src\client\menu\m_node_checkbox.c">
 			<Option compilerVar="CC" />
 		</Unit>

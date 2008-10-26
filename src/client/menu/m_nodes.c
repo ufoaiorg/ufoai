@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_node_bar.h"
 #include "m_node_base.h"
+#include "m_node_button.h"
 #include "m_node_checkbox.h"
 #include "m_node_controls.h"
 #include "m_node_cinematic.h"
@@ -392,4 +393,5 @@ void MN_InitNodes (void)
 	MN_RegisterNodeControls(nodeBehaviourList + MN_CONTROLS);
 	MN_RegisterNodeCustomButton(nodeBehaviourList + MN_CUSTOMBUTTON);
 	MN_RegisterNodeWindowPanel(nodeBehaviourList + MN_WINDOWPANEL);
+	MN_RegisterNodeButton(nodeBehaviourList + MN_BUTTON);
 }
