@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "debugging/debugging.h"
 #include "version.h"
+#include "error.h"
 
 #include "ifilesystem.h"
 #include "iundo.h"
@@ -2092,48 +2093,46 @@ void MainFrame::Create (void) {
 			m_vSplit = vsplit;
 			gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
 			gtk_widget_show(vsplit);
-		}
 
-		// camera
-		m_pCamWnd = NewCamWnd();
-		GlobalCamera_setCamWnd(*m_pCamWnd);
-		CamWnd_setParent(*m_pCamWnd, window);
-		GtkWidget* camera = CamWnd_getWidget(*m_pCamWnd);
+			// camera
+			m_pCamWnd = NewCamWnd();
+			GlobalCamera_setCamWnd(*m_pCamWnd);
+			CamWnd_setParent(*m_pCamWnd, window);
+			GtkWidget* camera = CamWnd_getWidget(*m_pCamWnd);
 
-		// yz window
-		m_pYZWnd = new XYWnd();
-		m_pYZWnd->SetViewType(YZ);
-		GtkWidget* yz = m_pYZWnd->GetWidget();
+			// yz window
+			m_pYZWnd = new XYWnd();
+			m_pYZWnd->SetViewType(YZ);
+			GtkWidget* yz = m_pYZWnd->GetWidget();
 
-		// xy window
-		m_pXYWnd = new XYWnd();
-		m_pXYWnd->SetViewType(XY);
-		GtkWidget* xy = m_pXYWnd->GetWidget();
+			// xy window
+			m_pXYWnd = new XYWnd();
+			m_pXYWnd->SetViewType(XY);
+			GtkWidget* xy = m_pXYWnd->GetWidget();
 
-		// xz window
-		m_pXZWnd = new XYWnd();
-		m_pXZWnd->SetViewType(XZ);
-		GtkWidget* xz = m_pXZWnd->GetWidget();
+			// xz window
+			m_pXZWnd = new XYWnd();
+			m_pXZWnd->SetViewType(XZ);
+			GtkWidget* xz = m_pXZWnd->GetWidget();
 
-		// split view (4 views)
-		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
-		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
+			// split view (4 views)
+			GtkHPaned* split = create_split_views(camera, yz, xy, xz);
+			gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
 
-		{
 			// textures
 			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
 			g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
-		}
 
-		{
 			// console
 			GtkWidget* console_window = Console_constructWindow(window);
 			gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
-		}
 
-		// set height of the upper split view (seperates the 4 views and the console)
-		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
+			// set height of the upper split view (seperates the 4 views and the console)
+			gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
+		}
 		break;
+	default:
+		Error("Invalid layout type set - remove your radiant config files and retry");
 	}
 
 	SetActiveXY(m_pXYWnd);
