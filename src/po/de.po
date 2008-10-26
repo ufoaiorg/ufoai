@@ -603,7 +603,8 @@ msgstr "UFO gesichtet"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -674,7 +675,8 @@ msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 #: ../base/ufos/research.ufo:4547 ../base/ufos/research.ufo:4578
 #: ../base/ufos/research.ufo:4585
 msgid "mail_to_base_commander"
-msgstr "Basiskommandeur, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Basiskommandeur, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -744,7 +746,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4298 ../base/ufos/research.ufo:4373
 #: ../base/ufos/research.ufo:4381
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 msgid "Recovery Report -- %s"
@@ -805,7 +808,8 @@ msgstr "Produktion abgeschlossen"
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -941,7 +945,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4538
 #: ../base/ufos/research.ufo:4546
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -976,7 +981,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4420,7 +4426,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4508 ../base/ufos/research.ufo:4577
 #: ../base/ufos/research.ufo:4584
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:258 ../base/ufos/research.ufo:298
 msgid "alien_breathing_txt"
@@ -6204,42 +6211,30 @@ msgid "Needler Gun"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1728
-#, fuzzy
 msgid "needlergun_txt"
 msgstr ""
-"Technische Spezifikationen: Scharfschützengewehrmunition\n"
+"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
 "\n"
-"KLASSIFIZIERUNGSSTUFE GELB\n"
+"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
 "\n"
-"Technisches Dokument, Freigabe Delta\n"
+"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
 "\n"
-"Gespeichert: 20. März 2084\n"
+"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
 "\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Division, PHALANX, Atlantisches Operationskommando\n"
+"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
 "\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Dieses Magazin enthält 5 Schuss 20x140mm SMG (schweres Maschinengewehr) Munition. Es hat ein einspaltiges Box Design und kann durch die schweren Kugeln sehr schwer werden. Ein Magazin kann, in Abhängigkeit vom Kugeltyp, bis zu einem Kilo wiegen. Die Kugeln für dieses Scharfschützengewehr sind zwar teurer als die normalen SMG Kugeln, dafür sorgen sie für eine höhere Genauigkeit.\n"
-"\n"
-"Dieses Magazin kann in ein S-1 Scharfschützengewehr geladen werden.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Alle Soldaten, die mit einem Scharfschützengewehr ausgerüstet sind, sollten mindestens ein extra Magazin mit sich führen. Es ist nicht anzuraten, unsere Truppen ohne Ersatzmagazine ins Feld zu schicken.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1731
 msgid "needlergun_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"\n"
+"Please authorise this program at your convenience, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1785
 #, fuzzy
@@ -8205,7 +8200,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3222
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3248
 msgid "ufo_scout_txt"
@@ -8398,40 +8394,48 @@ msgid "ufo_bomber_pre_txt"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:3462
-#, fuzzy
 msgid "ufo_corrupter_txt"
 msgstr ""
-"Herr Kommandant, mein Team und ich haben eben einen weiteren UFO Bericht für sie angefertigt. Hier ist eine Zusammenfassung.\n"
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
-"Dieses Luftfahrzeug -- wir haben es 'Ernter' genannt -- scheint speziell zum Landen auf planetaren Oberflächen und für den Einsatz für Erntetrupps designed worden zu sein. Es ist mit großen, kräftigen Landestützen und speziellen Antriebsdüsen im Bauch des UFOs, womit es VTOL (Vertical Take-Off and Landing) Fähigkeiten bekommt. Sobald die Sammlerbesatzung genug Gefangene, Leichen und andere Biomasse gesammelt hat, kehren sie zum UFO und dann in den Orbit zurück, um schnell dahin zu verschwinden, wo sie herkamen.\n"
+"This UFO, which we've come to call the Corrupter, is a nightmare of alien medical technology. It makes only a few concessions to air combat. Its main purpose, without a shadow of a doubt, is to land on Earth and carry out hideous operations on human victims.\n"
 "\n"
-"Der Sammler scheint unsere Theorie zu bekräftigen, dass die Treibstoffkapazität der Hauptbegrenzungsfaktor für die Geschwindigkeit des UFOs ist, da es sowohl größer, als auch schneller als jedes andere UFO, das wir bisher gesehen haben, ist. Es ist in der Lage, mehr Antimaterietreibstoff mitzuführen und kann ihn auch effektiver durch eine stärkere Hülle, dickere Panzerung um den Tank und effektivere Notfall-Ablasssysteme schützen. Sogar bei einer Explosion wird der größte Teil der Energie durch die extrem starke Konstruktion des UFOs aufgehalten. Wenn der Tank voll ist, hat der Tank eine potentielle Sprengkraft von ungefähr 18 Kilotonnen.\n"
+"Where previous alien equipment seemed to focus mostly on collecting human biomass, the Corrupter's interior -- particularly the massive blood transfusion banks -- are geared towards the capture and alteration of complete, live human beings. The alcoves I mentioned in my proposal are still mysterious, but going by the wear patterns on the floors they seem to be used to store some kind of heavy alien robot or cargo equipped with tank treads. Heavy harnesses drop down from the ceiling to hold these robots in place during flight, and the alcoves seem to have some type of air-drop mechanism as well.\n"
 "\n"
-"Es gibt drei nach vorne gerichtete Waffenschächte, angeordnet in einem Dreieck umdas Cockpit herum. Zwei davon sind mit dieser Partikelstrahlwaffe ausgerüstet, die wir auf anderen UFOs gesehen haben, aber der dritte Schacht hat einen interessanten Raketenwerfer. Diese Raketen haben ein hochmodernes Zielsystem und werden mit den gleichen Materie-Antimaterie Triebwerken wie bei den UFOs angetrieben. Sie sind unglaublich schnell, so schnell, dass sie nicht mal einen Sprengkopf brauchen, um ihre Beute zu zerstören. Sie verlassen sich ausschließlich auf ihre kinetische Energie und den restlichen Antimaterietreibstoff. Mehr Forschung für diese Waffe sollte eine hohe Priorität sein.\n"
+"It's difficult to speculate exactly what exactly goes on in these UFOs with regards to captured civilians. Clearly it has something to do with the alien harvesting of human biomass, but they already have craft for that which do not appear to be in any way obsolete. Instead we have to suspect that the Corrupter represents a paradigm shift in alien activity on Earth. Something has changed. Until we fully understand what's happening, we need to prepare ourselves for what could be the worst threat to the global population we've ever seen.\n"
 "\n"
-"Unsere Analyse der verbesserten Fähigkeiten des Sammlers steigert die beängstigende Möglichkeit, dass die UFOs immer schneller wachsen, wenn sie größer und stärker werden. Es besteht kein Zweifel, dass sie, wenn sie diese Sammler bauen können, auch größere und schlimmere UFOs bauen können. Wir sollten versuchen, die Antimaterietechnologie der Aliens so bald wie möglich für unsere Abfangjäger anzupassen, um besser mit der Alieninvasion fertig zu werden, die derzeit stattfindet.\n"
+"In the air the Corrupter's performance is relatively poor, being slow and sluggish compared to other UFOs, but from our observations it appears to be heavily escorted and presents a major ground threat due to its large crew complement and on-board heavy weapons. More than any other craft we've encountered, the Corrupter is purpose-built to deliver large alien forces to the surface solely to attack civilians.\n"
 "\n"
-"In der Luft ist der Sammler extrem gefährlich und sollten als wichtigstes Ziel gesehen werden. Mit den Zwillingspartikelwaffen und dem Raketenwerfer ist seine Feuerkraft allem, was wir haben, mehr als ebenbürtig. Sein größter Fehler ist der bedeutende Verlust der Manövrierfähigkeit im Vergleich mit den Scouts oder Jägern. Das ist einer der wenigen Vorteile, den wir gegen die Sammler haben; unsere Abfangjäger sind weit agiler und wir haben mehr Kampferfahrung in der Erdatmosphäre als die Aliens.\n"
+"Commander, it's painfully obvious that we need to shoot these things down whenever and wherever we see them. If we don't, it's going to result in the wholesale slaughter of innocent people and possibly even scenes worse than Mumbai and Bonn.\n"
 "\n"
-"Wenn ein Sammler dabei ist, sollten sich unsere besten Piloten auf ihn konzentrieren und ihn so schnell wie möglich ausschalten.\n"
+"We have to stop that from happening at all costs.\n"
 "\n"
 "--Cdr. Navarre\n"
 "\n"
-"Geschätzte Sammler Statistiken:\n"
 "\n"
-"Größe: Small (12m x 18m x 6m)\n"
+"Estimated Corrupter statistics:\n"
 "\n"
-"Reisegeschwindigkeit: +/- 2,200 km/h\n"
 "\n"
-"Höchstgeschwindigkeit: +/- 4,100km/h\n"
+"Size: Medium (12m x 16m x 5m)\n"
 "\n"
-"Besatzung: max. 12\n"
+"Cruising speed: +/- 2,000 km/hh\n"
 "\n"
-"Waffenkapazität: 2 Partikelstrahlen Waffenschächte, 1 Alien Raketenwerfer"
+"Top speed: +/- 4,000km/h\n"
+"\n"
+"Crew capacity: 30 max.\n"
+"\n"
+"Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3465
 msgid "ufo_corrupter_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalising clues about its intended function.\n"
+"\n"
+"A lot of the equipment is stuff we've seen before, containers geared towards storing live and dead biomass, but this UFO also has a lot of other kit that's leaving my team scratching their heads. There are mysterious alcoves with ports and valves leading to tanks full of human blood, with strange controls unlike anything we've seen from the aliens before. There are banks of robotic arms all ending in alien syringes, like some kind of mass inoculation centre -- and there's more that we can't even begin to describe. Just being inside it gives you a sense of something hostile to all human life.\n"
+"\n"
+"I think we need to do some serious investigation on that thing right away, Commander. There's something very very wrong about it, and I'm not going to be able to sleep until I know what it is.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3505
 msgid "ufo_harvester_txt"
@@ -8885,14 +8889,9 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3898
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr ""
-"Herr Kommandant, wir haben eine große Kanone geborgen, die einen hochenergetischen Partikelstrahl abfeuert. Sie ist ungemein tödlich und hat beängstigende Effekte auf unsere Rüstungen. Wir müssen diese Waffen sofort erforschen.\n"
-"\n"
-"Bitte autorisieren sie dieses Programm sobald wie möglich.\n"
-"\n"
-"--Cdr. Navarre"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3952
 msgid "'Raven' ECM Unit"
@@ -9109,48 +9108,29 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4123
-#, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
-"Technische Spezifikationen: SHIVA Drehkanone\n"
+"Proposal\n"
 "\n"
-"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"PHALANX außerirdische Reaktionseinheit\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Technisches Dokument, Freigabe Sigma -- Nur für den Kommandanten\n"
+"DATE: %02i %s %i\n"
 "\n"
-"Gespeichert: 19. März 2084\n"
+"SUB: Proposal: Aerial Laser Cannon\n"
 "\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
+"The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.\n"
 "\n"
+"As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.\n"
 "\n"
-"Überblick\n"
+"The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.\n"
 "\n"
-"Nun, da wir Flugzeuge haben, die die angreifenden UFOs abfangen können, müssen wir sie mit Waffen ausrüsten, die die außerirdischen Vehikel auch abschießen können. Wir haben jede verfügbare Waffe der Erde als Teil des Excalibur-Programms getestet und wir haben die Besten davon für die Verteidigung unseres Planeten ausgewählt.\n"
+"Please approve lab time and funding for this program when you're ready, Commander.\n"
 "\n"
-"Die SHIVA ist eine vierläufige rotierende Kanone, die 20mm SMG (Schweres Maschinengewehr) Patronen verschießt. Sie ist eine extern-versorgte Kanone -- anstatt sich auf Rückstoß zu verlassen, um das System anzutreiben, nutzt es einen externen Motor, um Strom zu produzieren. Der Elektromotor der SHIVA ist ein hocheffizientes 20 PS Kraftpaket, was eine Feuerrate von 6.000 Schuss pro Minute erlaubt.\n"
-"\n"
-"Entwickelt und gebaut in Bangladesch wurde die SHIVA im Jahre 2048 und versagte in jedem Test. Das Projekt wurde beinahe aufgegeben, bis eine Geheimuntersuchung im Juli 2050 ergab, dass ein rivalisierender Waffenproduzent eine lange laufende Verschwörung zur Sabotage unterhielt. Es wurde ein neuer Prototyp konstruiert, welcher genug versprach, um eine weitere Entwicklung zu erlauben. Nach und nach wurden alle schweren Fehler ausgemerzt und an diesem Punkt wurde die Kraft dieser Waffe offenbar.\n"
-"\n"
-"Die SHIVA ist sehr leicht für eine Flugzeugwaffe ihrer Größe und Effektivität und hat ein Leergewicht von gerade mal 250 Kilogramm (beladen 400 Kg). Die Feuerrate übertrifft alle anderen existierenden, vierläufigen Waffen. Ihr fortschrittliches Zielsystem kann den Gegner erfasst halten, solange dieser in Radarreichweite, Lidarreichweite oder Sichtweite ist. Die ungebundenen Munitionsgurte sind sehr verlässlich und es wurde noch nie von einer Ladehemmung berichtet, seit die Waffe in Benutzung ist.\n"
-"\n"
-"Die SHIVA kann eine gute Auswahl an SMG Patronen verschießen; PB (Panzerbrechend) oder HE (Hochexplosiv). Die erste ist besser beim Durchschlagen, während die zweite mehr Schaden anrichtet, wenn sie durch die Panzerung kommt. Beide Arten haben bewiesen, dass sie UFO-Panzerung durchschlagen können.\n"
-"\n"
-"Das größte Problem der SHIVA ist der begrenzte Schaden, den sie an UFOs anrichtet, was einen langen Luftkampf und viele Treffer benötigt, um das UFO runter zu holen. Das gibt dem Gegner viele Möglichkeiten, zu entkommen oder unser Flugzeug zu beschießen. Andererseits bietet das große Magazin mehr Durchhaltevermögen als andere Waffen und sie sollte nicht unterschätzt werden.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Geringer Schaden und lange Kampfzeiten begrenzen den Nutzen der SHIVA. Jedoch können diese Nachteile dadurch ausgeglichen werden, indem viele SHIVAs genutzt werden, oder sie mit Raketenwaffen gemischt wird. Sie bietet dauerndes Autofeuer, während sich der Pilot darauf konzentriert, seine Raketen ins Ziel zu bringen. Oder es kann Teil einer Kanonenbootkonfiguration sein -- einer oder mehrere Abfangjäger mit so vielen Kanonen wie möglich, um den Gegner durch das schiere Gewicht der Munition runter zu holen.\n"
-"\n"
-"Wir haben derzeit zu wenig Erfahrung, um den besten Weg des Angriffes auf ein UFO mit oder ohne diese Waffe zu ermitteln. Aber solange wir keine Alienwaffen bergen, ist die SHIVA die beste Wahl in einem Luftkampf, die die Erde zu bieten hat.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4142
 msgid "SHIVA Rotary Cannon"
@@ -10161,35 +10141,43 @@ msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
+msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr ""
+"Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
+msgstr ""
+"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
+msgstr ""
+"Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr ""
+"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
