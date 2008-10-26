@@ -50,22 +50,15 @@ menu irc
 		font	f_big
 	}
 
-	pic button_disconnect
+	button button_disconnect
 	{
 		tooltip	"_Close menu and disconnect"
-		image	menu/button_blue2
-		mousefx true
+		image	menu/button_blue3
 		pos		"780 720"
-		texl	"0 0"
-		texh	"160 37"
+		size	"160 37"
 		click	{ cmd "irc_disconnect; mn_pop;" }
-	}
-
-	string string_disconnect
-	{
 		string	"_Disconnect"
-		pos		"860 726"
-		align	uc
+		selectcolor "1 1 1 1"
 		font	f_normal
 	}
 
