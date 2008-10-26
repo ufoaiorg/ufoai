@@ -1017,23 +1017,6 @@ void MN_ParseMenu (const char *name, const char **text)
 }
 
 /**
- * @brief Return a string
- * @return A string, or NULL if the ref is NULL or empty
- * @sa MN_GetReferenceString
- */
-const char *MN_GetSafeReferenceString (const menu_t* const menu, char *ref)
-{
-	const char* string = MN_GetReferenceString(menu, ref);
-	if (!string || string[0] == '\0') {
-#ifdef DEBUG
-		Com_Printf("MN_GetSafeReferenceString: Reference null or empty\n");
-#endif
-		return NULL;
-	}
-	return string;
-}
-
-/**
  * @sa COM_MacroExpandString
  */
 const char *MN_GetReferenceString (const menu_t* const menu, char *ref)

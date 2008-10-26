@@ -31,8 +31,8 @@ static void MN_DrawTBarNode (menuNode_t *node)
 	float shx;
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetSafeReferenceString(node->menu, node->dataImageOrModel);
-	if (!ref)
+	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	if (!ref || ref[0] == '\0')
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);

@@ -38,8 +38,8 @@ void MN_DrawImageNode(menuNode_t *node)
 	vec2_t nodepos;
 	const int time = cl.time;
 
-	const char* imageName = MN_GetSafeReferenceString(node->menu, node->dataImageOrModel);
-	if (!imageName)
+	const char* imageName = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	if (!imageName || imageName[0] == '\0')
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
