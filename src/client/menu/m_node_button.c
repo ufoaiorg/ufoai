@@ -2,7 +2,6 @@
  * @file m_node_button.c
  * @todo add an icon if possible.
  * @todo implement clicked button when its possible.
- * @todo allow to disable the node (also when it own a click action) (generic for every nodes)
  * @todo allow autosize (use the size need looking string, problem when we change langage)
  */
 
