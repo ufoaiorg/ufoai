@@ -769,7 +769,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
 	vec4_t lightPos;
-	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
+	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 2.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a, sqrta, p, q;
 	/* earth radius is about 3000.0f * zoom, so 300 with the base zoom of 0.1
