@@ -45,7 +45,7 @@ static void R_UpdateMaterial (material_t *m)
 
 		if (s->flags & STAGE_STRETCH) {
 			s->stretch.dhz = (sin(refdef.time * s->stretch.hz * 6.28) + 1.0) / 2.0;
-			s->stretch.damp = -2.0 - s->stretch.dhz * s->stretch.amp;
+			s->stretch.damp = s->stretch.dhz * s->stretch.amp;
 		}
 
 		if (s->flags & STAGE_ROTATE) {
