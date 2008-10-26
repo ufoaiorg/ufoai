@@ -2,7 +2,6 @@
  * @file m_node_custombutton.c
  * @todo add an icon if possible.
  * @todo implement click button when its possible.
- * @todo allow to disable the node when it own a click action (generic for every nodes)
  */
 
 /*
@@ -38,14 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void MN_CustomButtonNodeClick (menuNode_t * node, int x, int y)
 {
-	int mouseOver = 1;
-	char cmd[MAX_VAR];
-	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
-	if (Cmd_Exists(cmd))
-		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
-	else if (node->click && node->click->type == EA_CMD) {
-		assert(node->click->data);
-		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, mouseOver - 1));
+	if (node->click && !node->disabled) {
+		MN_ExecuteActions(node->menu, node->click);
 	}
 }
 
@@ -66,7 +59,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	vec2_t nodepos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
-	if (!node->click) {
+	if (!node->click || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
 		baseY = MN_CUSTOMBUTTON_TEX_HEIGHT * 2;
