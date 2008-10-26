@@ -356,10 +356,12 @@ menu popup_recoverybaselist
 	{
 		invis true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -454,10 +456,13 @@ menu popup_recoverynationlist
 	{
 		invis true
 	}
-	pic back
+	
+	windowpanel back
 	{
-		image	menu/popup_big
-		pos		"116 186"
+		image	menu/popup_alpha_tile
+		pos		"124 192"
+		size	"777 402"
+		blend	true
 	}
 
 	controls drag_button

@@ -568,10 +568,12 @@ menu popup_maintain_resolution
 		timeout 4000
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"0 0"
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1751,10 +1753,12 @@ menu popup_setall_pause
 		invis false
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"0 0"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"8 6"
+		blend	true
 	}
 
 	controls drag_button
@@ -1836,10 +1840,12 @@ menu popup_setall_notify
 		invis false
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"0 0"
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1921,10 +1927,12 @@ menu popup_setall_sound
 		invis false
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"0 0"
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button

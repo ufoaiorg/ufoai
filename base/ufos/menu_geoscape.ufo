@@ -675,10 +675,12 @@ menu popup_list
 //	{
 //		invis true
 //	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -757,10 +759,12 @@ menu popup_button
 		invis true
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -886,10 +890,12 @@ menu popup_intercept_ready
 	{
 		invis true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -991,10 +997,12 @@ menu popup_base_attack
 	{
 		invis true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1072,10 +1080,12 @@ menu popup_transferbaselist
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1142,10 +1152,12 @@ menu popup_newbase
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1290,10 +1302,12 @@ menu popup_newinstallation_type
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos	"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1464,10 +1478,12 @@ menu popup_newinstallation
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos	"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1613,10 +1629,12 @@ menu radartower
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos	"0 0"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1671,10 +1689,12 @@ menu popup_installationstatus
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos	"0 0"
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -1809,10 +1829,12 @@ menu popup_intercept
 	{
 		invis	true
 	}
-	pic back_no_base
+	windowpanel back
 	{
-		image	menu/popup_big
-		pos		"116 186"
+		image	menu/popup_alpha_tile
+		pos		"124 192"
+		size	"777 402"
+		blend	true
 	}
 
 	controls drag_button
@@ -1929,10 +1951,12 @@ menu popup_mission
 		invis	true
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup_big
-		pos		"116 186"
+		image	menu/popup_alpha_tile
+		pos		"124 192"
+		size	"777 402"
+		blend	true
 	}
 
 	controls drag_button
@@ -2019,10 +2043,12 @@ menu popup_baseattack
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -2097,10 +2123,12 @@ menu popup_multi_selection
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -2175,10 +2203,12 @@ menu popup_aircraft
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button
@@ -2249,10 +2279,12 @@ menu popup
 	{
 		invis	true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	controls drag_button

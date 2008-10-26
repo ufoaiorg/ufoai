@@ -1530,10 +1530,12 @@ menu multiplayer_wait
 		pos	"512 72"
 		align	uc
 	}
-	pic back
+	windowpanel back
 	{
-		image   menu/popup
-		pos "256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 	string title
 	{
@@ -1592,10 +1594,12 @@ menu serverpassword
 	{
 		invis true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos	"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	pic bt_close
@@ -1670,10 +1674,12 @@ menu chat_popup
 		invis true
 	}
 
-	pic back
+	windowpanel back
 	{
-		image	menu/popup
-		pos	"256 256"
+		image	menu/popup_alpha_tile
+		pos	"264 262"
+		size	"496 247"
+		blend	true
 	}
 
 	pic bt_close

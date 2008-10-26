@@ -140,10 +140,12 @@ menu checkcvars
 	{
 		invis true
 	}
-	pic back
+	windowpanel back
 	{
-		image	menu/popup_big
-		pos		"116 186"
+		image	menu/popup_alpha_tile
+		pos		"124 192"
+		size	"777 402"
+		blend	true
 	}
 
 	string title
