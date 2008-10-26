@@ -654,7 +654,8 @@ msgstr "Aeronave"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "Gen.Seg. Mahouf Serra, Naciones Unidas, Ciudad de New York"
+msgstr ""
+"Gen.Seg. Mahouf Serra, Naciones Unidas, Ciudad de New York"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -725,7 +726,8 @@ msgstr "Gen.Seg. Mahouf Serra, Naciones Unidas, Ciudad de New York"
 #: ../base/ufos/research.ufo:4547 ../base/ufos/research.ufo:4578
 #: ../base/ufos/research.ufo:4585
 msgid "mail_to_base_commander"
-msgstr "Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -796,7 +798,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4298 ../base/ufos/research.ufo:4373
 #: ../base/ufos/research.ufo:4381
 msgid "mail_from_paul_navarre"
-msgstr "Cmd. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmd. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 #, fuzzy
@@ -855,7 +858,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -968,7 +972,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:205
 msgid "mail_alien_base_discovered"
-msgstr "Señor, nuestros agentes han descubierto la ubicación de una gran instalación alienígena en la Tierra en el territorio que pertenece a %s. Esta instalación representa una grave amenaza para PHALANX y de la humanidad en general, tenemos que atacarla de inmediato."
+msgstr ""
+"Señor, nuestros agentes han descubierto la ubicación de una gran instalación alienígena en la Tierra en el territorio que pertenece a %s. Esta instalación representa una grave amenaza para PHALANX y de la humanidad en general, tenemos que atacarla de inmediato."
 
 #: ../base/ufos/events.ufo:214
 msgid "Lost Radar Tracking -- %s"
@@ -991,7 +996,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4538
 #: ../base/ufos/research.ufo:4546
 msgid "mail_from_col_falkland"
-msgstr "Cnl. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cnl. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -1029,7 +1035,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Cmd. (Aire) Subakh al-Kuhar, Fuerza Aerea, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmd. (Aire) Subakh al-Kuhar, Fuerza Aerea, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4660,18 +4667,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:223
 msgid "alien_live_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We have captured a live alien in the field! The creature has been recovered from our last tactical mission and is being held in our new Containment unit, which I'm pleased to report seems to be working up to spec.\n"
-"\n"
-"I don't need to explain why we should start research on this specimen right away. The information that could be gleaned from it supercedes all other considerations. Up until now we've had no chance to study the alien mind, their thoughts and motivations, except through their continued attacks upon our world. This is our first chance to discover the aliens' purpose for humanity, perhaps even an explanation. Who are they? Why are they here? What can we do against them? We can know nothing without interrogating this specimen.\n"
-"\n"
-"Please send your approval for this program at your earliest convenience.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:228 ../base/ufos/research.ufo:236
 #: ../base/ufos/research.ufo:266 ../base/ufos/research.ufo:274
@@ -4687,7 +4683,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4508 ../base/ufos/research.ufo:4577
 #: ../base/ufos/research.ufo:4584
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/research.ufo:258 ../base/ufos/research.ufo:298
 msgid "alien_breathing_txt"
@@ -4753,18 +4750,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:323
 msgid "alien_mind_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"Though we've achieved limited results so far, research must continue on our alien captives. There's a number of experiments we'd like to run that require your authorisation for lab time and funding. I assure you this is not blue-sky research; with enough tests and behavioural data, we may be able to figure out a way to communicate with these aliens, perhaps even reawaken their intelligence somehow. We don't know what the results of the program will be -- we simply know too little about these aliens, our body of data is far too small to make any predictions at this point. What we do know is that every tidbit we learn about alien psychology is a valuable piece of the puzzle.\n"
-"\n"
-"On a personal note, I'm convinced they must know something, Commander. The trick is in getting it out of them, and we're by God going to do it.\n"
-"\n"
-"My team and I are all eagerly awaiting your approval for the program.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:353
 msgid "Odd Behaviour"
@@ -5634,18 +5620,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:984
 msgid "monoknife_pre_txt"
-msgstr ""
-"Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
-"\n"
-"Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.\n"
-"\n"
-"Obviously it would be of great interest to us if we could create our own knives made from these materials, with edges tapering to the width of a single molecule. My team and I believe it may now be possible.\n"
-"\n"
-"If you give us the funding and lab time we need, we can design and create a new monomolecular combat knife that will even the playing field for our soldiers when forced into hand-to-hand combat. This knife will be far more compact than the Kerrblade and much easier for humans to wield, and it'll be small enough to be used one-handed.\n"
-"\n"
-"Equipping our troops with such weapons could give them a major advantage, as they'll be able to properly defend themselves in melee for the first time whilst using other weapons or equipment -- such as pistols, grenades, medikits, or other useful items of tactical or life-saving importance.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1020
 msgid "flamer_txt"
@@ -5711,7 +5686,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "This is a 200mm canister of high-pressure flammable gas, locked and secured via three different systems to prevent accidents. Compound 90 is a new flamethrower fuel that, when injected into the air, creates a slow thermobaric reaction -- a fuel-air ignition rather than a fuel-air explosion -- that can roast living tissue in seconds. Its range is limited, as the C90 must be quickly ignited before it disperses, but it inflicts horrific damage on organic targets that few weapons can hope to match. The heat generated by C90 exceeds 1700 degrees celsius, enough to melt titanium, but due to its gaseous nature it leaves no burning residue (like napalm) and disperses heat much more quickly. This makes it significantly safer for urban use than napalm-derivative substances.\n"
 "\n"
@@ -5752,7 +5727,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
 "\n"
@@ -5807,7 +5782,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
 "\n"
@@ -5856,7 +5831,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
 "\n"
@@ -5907,7 +5882,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
 "\n"
@@ -5970,7 +5945,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "This is a box of 9 25mm HIT (High Impulse Thermobaric) grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are 'fuel-air munitions' that use atmospheric oxygen to generate an explosion instead of carrying along an oxidising agent. Thermobaric weapons produce a far more powerful explosive force than would be possible with conventional explosives of the same size.\n"
 "\n"
@@ -6011,7 +5986,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "This is a box of 9 25mm flechette grenades. They are fired electronically by a spark igniter inside the launcher's barrel. While still classified as grenades due to their calibre and delivery system, they have more in common with shotgun shells. Each grenade contains 24 solid steel needles packed into a sabot shell that breaks away immediately after leaving the muzzle. This creates a buckshot-like effect that can shred unarmoured or lightly-armoured enemies, but their lower muzzle velocity compared to shotgun shells makes them significantly less effective against heavy armour.\n"
 "\n"
@@ -6052,7 +6027,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "This is a box of 9 25mm incendiary grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. And thanks to modern miniaturisation technology, it will all fit into a handy, lightweight 25mm shell.\n"
 "\n"
@@ -6097,7 +6072,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1195
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
 "\n"
@@ -6114,7 +6089,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1234
 msgid "laser_ammo_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.\n"
 "\n"
@@ -6124,14 +6099,14 @@ msgstr ""
 "\n"
 "Any materials remaining in a used cartridge will be pumped back into base storage upon the dropship's return. However, once they've been used, these cartridges have to be disposed of by a chemohazard team, and we'll have to manufacture replacements. They cannot be reused due to deuterium contamination.\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "--Cte. Navarre"
 
 #: ../base/ufos/research.ufo:1237
 msgid "laser_ammo_pre_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
@@ -6141,7 +6116,7 @@ msgstr ""
 "\n"
 "Please approve this program as soon as you can, Commander.\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "--Cte. Navarre"
 
@@ -6171,7 +6146,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1277
 msgid "heavylaser_pre_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
@@ -6204,7 +6179,7 @@ msgstr ""
 "\n"
 "Descripción\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
 "\n"
@@ -6271,7 +6246,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1337
 msgid "kerrblade_pre_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
 "\n"
@@ -6286,7 +6261,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1373
 msgid "laserpistol_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
 "\n"
@@ -6309,7 +6284,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1376
 msgid "laserpistol_pre_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
@@ -6321,7 +6296,7 @@ msgstr ""
 "\n"
 "As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
 "\n"
-">\n"
+"&gt;\n"
 "\n"
 "--Cte. Navarre"
 
@@ -6349,7 +6324,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1414
 msgid "laserrifle_pre_txt"
 msgstr ""
-">\n"
+"&gt;\n"
 "\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
@@ -6434,14 +6409,7 @@ msgstr ""
 # longer bursts recoil
 #: ../base/ufos/research.ufo:1472
 msgid "plasatomizer_pre_txt"
-msgstr ""
-"Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
-"\n"
-"The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!\n"
-"\n"
-"Of course, this program will need your approval for lab time and funding.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1524 ../base/ufos/research.ufo:1565
 #, fuzzy
@@ -6465,12 +6433,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1532
 msgid "plasblaster_pre_txt"
-msgstr ""
-"Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
-"\n"
-"Please authorise this research program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1583
 #, fuzzy
@@ -6498,12 +6461,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1591
 msgid "plasblade_pre_txt"
-msgstr ""
-"Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
-"\n"
-"More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1623
 #, fuzzy
@@ -6527,14 +6485,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1631
 msgid "plasmagren_pre_txt"
-msgstr ""
-"Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
-"\n"
-"We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
-"\n"
-"The project is ready for research, just waiting on your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1663 ../base/ufos/research.ufo:1705
 #, fuzzy
@@ -6560,10 +6511,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1671
 msgid "plasrifle_pre_txt"
-msgstr ""
-"Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:1723 ../base/ufos/research.ufo:1763
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -6571,42 +6519,30 @@ msgid "Needler Gun"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1728
-#, fuzzy
 msgid "needlergun_txt"
 msgstr ""
-"Technical Specifications: Sniper Rifle Magazine\n"
+"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
 "\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 5 rounds of 20x140mm HMG (Heavy Machine Gun) ammunition. It is a conventional single-column box design, and can be extremely heavy due to the weight of the rounds inside. One magazine can weigh up to 1 kilogramme depending on the type of ammo used. The rounds in this magazine are high-quality match grade ammunition meant for heavy sniper rifles; they are more accurate and expensive than ordinary HMG rounds.\n"
-"\n"
-"The magazine is meant to be loaded into an S-1 Sniper Rifle.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with sniper rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1731
 msgid "needlergun_pre_txt"
-msgstr "No existe información disponible previa a la investigación."
+msgstr ""
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"\n"
+"Please authorise this program at your convenience, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1785
 #, fuzzy
@@ -7012,20 +6948,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2023
 msgid "stungren_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.\n"
-"\n"
-"Our study of the various live and dead alien specimens we've recovered has been enlightening. Thanks to the discoveries we've made over the past few months, my team and I have come to believe that we're ready to start a bio/chemical warfare program against the alien threat. We have tissue samples, autopsy data, live specimens for testing; all the raw materials we require to investigate methods of properly incapacitating battlefield specimens without being forced to send PHALANX troops into melee combat.\n"
-"\n"
-"This will be a challenge given the constant protection and filtration offered by the alien breathing apparatus, which prevents any harmful materials entering the lungs, but if you authorise sufficient lab time and funding we can almost certainly develop an aerosol compound that will disable exposed aliens by chemical or biological means.\n"
-"\n"
-"This will be a project of greatest importance and priority, Commander. The sooner you lend it your authorisation, the better.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:2061
 #, fuzzy
@@ -7079,22 +7002,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2113
 msgid "stunrod_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"I hope I'm not overstepping my bounds, but I have an important technical research proposal to make, a proposal to create a new piece of PHALANX equipment for use by our field agents. I realise this falls outside the responsibilities of my division. However, I've already discussed things with Cdr. Navarre, and he doesn't quite see eye-to-eye with me on the necessity of the item in question. I had no choice but to go to straight to you with the proposal.\n"
-"\n"
-"As you know, we've yet to capture an alien alive during our tactical engagements in all the weeks we've been waging this war. Now that we know how to keep them alive in containment, our lack of specimens is becoming a serious impediment to our biological and chemical research. We need living tissue to study, performing its natural functions inside a living body, and we don't have the ability to simply clone up some aliens to research. We need prisoners. The sooner the better.\n"
-"\n"
-"That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a two-handed man-portable unit with a large battery and several charge settings, the highest of which should be sufficient even to disable alien robots such as the Bloodspider. We in DivBio believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners.\n"
-"\n"
-"Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, my division's needs will be far, far higher than that for proper research and interrogation.\n"
-"\n"
-"I hope you understand. Please authorise lab time and funding for this project as soon as you can, and I'll get some people from DivEngine together to develop this project properly. I would of course be delighted if you could explain things to Cdr. Navarre. I'm sure he'll be happy to receive a message from you.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:2146 ../base/ufos/research.ufo:2186
 #, fuzzy
@@ -7122,12 +7030,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2154
 msgid "pbeampistol_pre_txt"
-msgstr ""
-"Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:2205 ../base/ufos/research.ufo:2246
 #, fuzzy
@@ -7155,12 +7058,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2213
 msgid "pbeamcannon_pre_txt"
-msgstr ""
-"Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:2265 ../base/ufos/research.ufo:2305
 #, fuzzy
@@ -7190,12 +7088,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2273
 msgid "pbeamrifle_pre_txt"
-msgstr ""
-"Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:2325
 #, fuzzy
@@ -7223,16 +7116,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2333
 msgid "pbeamammo_pre_txt"
-msgstr ""
-"Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
-"\n"
-"I want to use our lab's radiation chamber to bombard one of the magazines with electromagnetic pulses, destroying most of the internal electronics, and hopefully causing it to shut down. Once it's safely deactivated, we can use brute force to open it up.\n"
-"\n"
-"Destroying a magazine to find out how it works may seem crude and backwards, but we have no other choice at the moment. Even blasted to hell by EMP, it should help us answer a lot of questions about the aliens' particle beam technology. It may also give us clues as to how we can get inside an undamaged magazine.\n"
-"\n"
-"Once we know how the magazine works, we can reassess the weapons and we'll hopefully be able to tell you how it all fits together, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:2372
 msgid "combat_armour_txt"
@@ -8420,14 +8304,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3579
 msgid "bloodspider_autopsy_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3628
 msgid "Alien Autopsy - Ortnok"
@@ -8507,25 +8384,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3637
 msgid "ortnok_autopsy_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3638
 msgid "ortnok_autopsy_extra_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3672
 msgid "Alien Autopsy - Taman"
@@ -8609,25 +8472,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3681
 msgid "taman_autopsy_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3682
 msgid "taman_autopsy_extra_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3716
 msgid "Alien Autopsy - Shevaar"
@@ -8707,25 +8556,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3725
 msgid "shevaar_autopsy_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3726
 msgid "shevaar_autopsy_extra_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3817
 #, fuzzy
@@ -8794,14 +8629,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3898
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:3952
 msgid "'Raven' ECM Unit"
@@ -9115,26 +8944,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4496
 msgid "enemy_on_earth_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
-"\n"
-"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
-"\n"
-"Do the aliens have active sympathisers on Earth? Yes.\n"
-"\n"
-"Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.\n"
-"\n"
-"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
-"\n"
-"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
-"\n"
-"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "No existe información disponible previa a la investigación."
 
 #: ../base/ufos/research.ufo:4525
 msgid "XVI Census"
