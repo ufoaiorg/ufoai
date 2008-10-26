@@ -5285,7 +5285,6 @@ msgid "ugv_weapon_autocannon_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:3898
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "<TODO>"
 

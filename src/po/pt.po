@@ -8424,7 +8424,6 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:3726
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:3817
 msgid "Phoenix UGV"
@@ -8489,7 +8488,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3898
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "<TODO>"
 
