@@ -689,7 +689,8 @@ msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atla
 #: ../base/ufos/research.ufo:4547 ../base/ufos/research.ufo:4578
 #: ../base/ufos/research.ufo:4585
 msgid "mail_to_base_commander"
-msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -749,7 +750,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4298 ../base/ufos/research.ufo:4373
 #: ../base/ufos/research.ufo:4381
 msgid "mail_from_paul_navarre"
-msgstr "mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 #, fuzzy
@@ -800,7 +802,8 @@ msgstr "Produkcja ukończona"
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -938,7 +941,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4538
 #: ../base/ufos/research.ufo:4546
 msgid "mail_from_col_falkland"
-msgstr "płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -970,7 +974,8 @@ msgstr "Raport o aktywności Obcych: '%s'"
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4499,7 +4504,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4508 ../base/ufos/research.ufo:4577
 #: ../base/ufos/research.ufo:4584
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:258 ../base/ufos/research.ufo:298
 msgid "alien_breathing_txt"
@@ -4628,22 +4634,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:399
 msgid "alien_communication_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:\n"
-"\n"
-"(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"\n"
-"\n"
-"\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"\n"
-"\n"
-"Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.\n"
-"\n"
-"Thank you for your time, Commander. Please approve this program as soon as feasible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:428
 msgid "The Universal Serum"
@@ -4670,16 +4661,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:436
 msgid "universal_serum_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
-"\n"
-"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
-"\n"
-"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
-"\n"
-"Sincerely,Dr. Connor"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:465
 msgid "Alien Origins"
@@ -6191,56 +6173,30 @@ msgid "Needler Gun"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1728
-#, fuzzy
 msgid "needlergun_txt"
 msgstr ""
-"Specyfikacja techniczna: Karabin maszynowy MG12\n"
+"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
 "\n"
-"POZIOM DOSTĘPU: ŻÓŁTY\n"
+"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
 "\n"
-"Jednostka interwencyjna PHALANX\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
 "\n"
-"Dokument techniczny, Kategoria Delta\n"
+"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
 "\n"
-"Sporządzony: 20 Marca 2084\n"
+"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
 "\n"
-"Przez: mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
 "\n"
-"\n"
-"\n"
-"Przegląd\n"
-"\n"
-"Atak Obcych przeprowadzony na Bombaj jasno dowiódł niewątpliwej przewagi technologicznej wroga. Niezdolność wojsk Sprzymierzonych do uzyskania wymiernych efektów bojowych podczas próby kontrofensywy ujawniła poważne słabości dotychczas stosowanych środków uzbrojenia i treningu taktycznego. Kompletne wykrwawienie trzech doborowych batalionów pozwoliło jedynie powstrzymać niewielkie siły obcych, praktycznie nie zadając przeciwnikowi poważniejszych strat. Zadaniem nowotworzonych sił PHALANX będzie zmiana tych statystyk na naszą korzyść; do tego potrzebne będzie wszystko, co dzisiejsza ziemska technologia ma do zaoferowania.\n"
-"\n"
-"Powołanie do życia programu \"Excalibur\" miało na celu wyselekcjonowanie najlepszych na Ziemi broni oraz innych środków nowoczesnego pola walki. Podstawowym kryterium wyboru było założenie najwyższej efektywności bojowej podczas starcia z Obcymi.\n"
-"\n"
-"Brytyjski uniwersalny karabin maszynowy SA-3000, powszechnie znany jako \"karabin wielko-brytyjski\" (Great British Gun), jest niezwykle poręcznym RKM-em z magazynkiem bębnowym, szeroko wykorzystywanym na całym świecie przez 16 lat swojego istnienia. Skonstruowany w roku 2068, szybko znalazł swoje miejsce jako podstawowa broń piechoty oraz helikopterów wsparcia naziemnego, pozwalając równie łatwo na oddawanie strzałów z biodra, z dwójnogu czy wieżyczki.\n"
-"\n"
-"Wersja karabinu przeznaczona dla użytku piechoty jest bardzo wygodna i niezawodna w użyciu. W przeciwieństwie do większości RKMów, ten ładowany jest magazynkiem bębnowym zamiast popularnej taśmy, co przyczynia się do ograniczenia szybkostrzelności oraz wytrzymałości magazynka; jest jednak głównym powodem niezwykłej jego poręczności. Proces przeładowania jest niemal tak samo szybki jak karabinu szturmowego, a jeden magazynek bębnowy zawiera 100 pocisków, co pozwala wykorzystywać tą broń niemal jak ciężki karabin szturmowy. Bębnowe magazynki są trochę nieporęczne w użyciu, ale wciąż wystarczająco lekkie i małe, aby przeciętny żołnierz piechoty mógł posiadać kilka sztuk przy sobie w czasie bitwy.\n"
-"\n"
-"Karabin ten zawiera zadziwiająco małą ilość elementów elektronicznych, a mianowicie silny stabilizator i system absorbujący siłę odrzutu. Obecność tych elementów pomaga polepszyć celność znacznie bardziej niż w przypadku starszych moedli karabinów maszynowych, jednak nie należy zapominać, że nie jest to broń snajperska. Jednolita i prosta budowa tworzą z SA-3000 broń, na której można polegać. Swój sprawdzian przeszła w Bombaju, spisując się wyśmienicie w zapewnianiu efektownego i mobilnego ognia zaporowego, odpierając całe oddziały Obcych w kombinacji z odpowiednim ukształtowaniem terenu.\n"
-"\n"
-"SA-3000 ładowany jest popularną amunicją bezłuskową 4,7mm, która używana jest również w karabinie szturmowym AR-80. Niestety, odmienna konstrukcja mechanizmu ładującego uniemożliwia wymianę magazynków między tymi karabinami.\n"
-"\n"
-"W naszej opinii, SA-3000 jest najlepszym możliwym wyborem w kategorii ręcznych karabinów maszynowych. Karabin ten dostarczy naszym żołnierzom niezbędnej siły ognia tam, gdzie będą jej najbardziej potrzebowali.\n"
-"\n"
-"Na potrzeby PHALANX, opisywany karabin posiada oznaczenie MG12.\n"
-"\n"
-"\n"
-"Sugerowana Doktryna Postępowania\n"
-"\n"
-"MG12 jest niezwykle cennym narzędziem, pozwalającym naszym żołnierzom kontrolować pole bitwy. Pozwala tworzyć ruchome umocnienia oraz przeprowadzać z nich ataki na pozycje wroga, może dostarczyć efektywnego ognia zaporowego lub dywersyjnego z dowolnej odległości lub po prostu służyć jako potężny karabin szturmowy średniego zasięgu.\n"
-"\n"
-"MG12 powinien stanowić podstawową opcję dla każdego żołnierza posługującego się bronią ciężką.\n"
-"\n"
-"\n"
-"Dodatki\n"
-"\n"
-"Brak."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1731
 msgid "needlergun_pre_txt"
-msgstr "Brak informacji przed wynalezieniem."
+msgstr ""
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"\n"
+"Please authorise this program at your convenience, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1785
 #, fuzzy
@@ -8077,7 +8033,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3222
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3248
 msgid "ufo_scout_txt"
@@ -8116,10 +8073,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3251
 msgid "ufo_scout_pre_txt"
-msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:3290
 msgid "ufo_fighter_txt"
@@ -8193,12 +8147,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3336
 msgid "ufo_supply_pre_txt"
-msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
-"\n"
-"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:3376
 msgid "ufo_carrier_txt"
@@ -8247,44 +8196,48 @@ msgid "ufo_bomber_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:3462
-#, fuzzy
 msgid "ufo_corrupter_txt"
 msgstr ""
-"This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
-"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It makes sense. Every modern military force needs intelligence more than anything.\n"
+"This UFO, which we've come to call the Corrupter, is a nightmare of alien medical technology. It makes only a few concessions to air combat. Its main purpose, without a shadow of a doubt, is to land on Earth and carry out hideous operations on human victims.\n"
 "\n"
-"Here are the major technical details:\n"
+"Where previous alien equipment seemed to focus mostly on collecting human biomass, the Corrupter's interior -- particularly the massive blood transfusion banks -- are geared towards the capture and alteration of complete, live human beings. The alcoves I mentioned in my proposal are still mysterious, but going by the wear patterns on the floors they seem to be used to store some kind of heavy alien robot or cargo equipped with tank treads. Heavy harnesses drop down from the ceiling to hold these robots in place during flight, and the alcoves seem to have some type of air-drop mechanism as well.\n"
 "\n"
-"-- The craft has only a small fuel tank and few provisions for a crew. It seems designed for little more than coming down from orbit, flying around a bit, and then returning.\n"
+"It's difficult to speculate exactly what exactly goes on in these UFOs with regards to captured civilians. Clearly it has something to do with the alien harvesting of human biomass, but they already have craft for that which do not appear to be in any way obsolete. Instead we have to suspect that the Corrupter represents a paradigm shift in alien activity on Earth. Something has changed. Until we fully understand what's happening, we need to prepare ourselves for what could be the worst threat to the global population we've ever seen.\n"
 "\n"
-"-- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down and won't come back up.\n"
+"In the air the Corrupter's performance is relatively poor, being slow and sluggish compared to other UFOs, but from our observations it appears to be heavily escorted and presents a major ground threat due to its large crew complement and on-board heavy weapons. More than any other craft we've encountered, the Corrupter is purpose-built to deliver large alien forces to the surface solely to attack civilians.\n"
 "\n"
-"-- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment that we can identify, which would defeat the purpose of a scout. Your guess is as good as ours, sir.\n"
+"Commander, it's painfully obvious that we need to shoot these things down whenever and wherever we see them. If we don't, it's going to result in the wholesale slaughter of innocent people and possibly even scenes worse than Mumbai and Bonn.\n"
 "\n"
-"Beyond that the craft has no particular distinguishing characteristics.\n"
-"\n"
-"As I said, this UFO type is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these things down whenever we're not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
+"We have to stop that from happening at all costs.\n"
 "\n"
 "--Cdr. Navarre\n"
 "\n"
 "\n"
-"Estimated Scout statistics:\n"
+"Estimated Corrupter statistics:\n"
 "\n"
 "\n"
-"Size: Small (6m x 14m x 3m)\n"
+"Size: Medium (12m x 16m x 5m)\n"
 "\n"
-"Cruising speed: +/- 1,600 km/h\n"
+"Cruising speed: +/- 2,000 km/hh\n"
 "\n"
-"Top speed: +/- 3,000km/h\n"
+"Top speed: +/- 4,000km/h\n"
 "\n"
-"Crew capacity: 3 max.\n"
+"Crew capacity: 30 max.\n"
 "\n"
 "Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3465
 msgid "ufo_corrupter_pre_txt"
-msgstr "Brak informacji przed wynalezieniem."
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalising clues about its intended function.\n"
+"\n"
+"A lot of the equipment is stuff we've seen before, containers geared towards storing live and dead biomass, but this UFO also has a lot of other kit that's leaving my team scratching their heads. There are mysterious alcoves with ports and valves leading to tanks full of human blood, with strange controls unlike anything we've seen from the aliens before. There are banks of robotic arms all ending in alien syringes, like some kind of mass inoculation centre -- and there's more that we can't even begin to describe. Just being inside it gives you a sense of something hostile to all human life.\n"
+"\n"
+"I think we need to do some serious investigation on that thing right away, Commander. There's something very very wrong about it, and I'm not going to be able to sleep until I know what it is.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3505
 msgid "ufo_harvester_txt"
@@ -8325,12 +8278,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3508
 msgid "ufo_harvester_pre_txt"
-msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.\n"
-"\n"
-"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:3550
 msgid "Live Specimen - Bloodspider"
@@ -8706,14 +8654,9 @@ msgstr ""
 "--mjr Navarre"
 
 #: ../base/ufos/research.ufo:3898
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr ""
-"Dowódco, podczas jednej z ostatnich potyczek z Obcymi nasi żołnierze zdobyli na wrogu nowy typ broni, najprawdopodobniej przenośne działo cząsteczkowe. Raporty naszych ludzi, podobnie jak nasze wstępne testy, wskazują na to, że jest to niezwykle potężna broń. Powinniśmy zająć się nią jak najszybciej.\n"
-"\n"
-"Prace ruszą, jak tylko otrzymamy Pańską autoryzację.\n"
-"\n"
-"--mjr Navarre"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3952
 msgid "'Raven' ECM Unit"
@@ -8831,12 +8774,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4011
 msgid "craft_alien_astrogation_pre_txt"
-msgstr ""
-"Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
-"\n"
-"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:4014
 msgid "craft_alien_astrogation_txt"
@@ -8859,12 +8797,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4049
 msgid "craft_alien_propulsion_pre_txt"
-msgstr ""
-"Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
-"\n"
-"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:4052
 msgid "craft_alien_propulsion_txt"
@@ -8891,14 +8824,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4086
 msgid "craft_alien_detection_pre_txt"
-msgstr ""
-"Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
-"\n"
-"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
-"\n"
-"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:4089
 msgid "craft_alien_detection_txt"
@@ -8924,48 +8850,29 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4123
-#, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
-"Specyfikacja techniczna: Działo SHIVA systemu Gatling\n"
+"Proposal\n"
 "\n"
-"POZIOM DOSTĘPU: CZARNY\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Jednostka interwencyjna PHALANX\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Dokument techniczny, Kategoria Sigma – tylko do wglądu dowódcy\n"
+"DATE: %02i %s %i\n"
 "\n"
-"Sporządzony: 19 Marca 2084\n"
+"SUB: Proposal: Aerial Laser Cannon\n"
 "\n"
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
+"The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.\n"
 "\n"
+"As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.\n"
 "\n"
-"Przegląd\n"
+"The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.\n"
 "\n"
-"Teraz, gdy posiadamy już pojazdy powietrzne zdolne do przechwytywania UFO, musimy zapewnić im odpowiednie wyposażenie: broń i elektronikę. W ramach programu \"Excalibur\" rozpatrzyliśmy każdą nowoczesną broń dostępną na Ziemi, i wybraliśmy to, co najlepiej posłuży obronie naszej planety.\n"
+"Please approve lab time and funding for this program when you're ready, Commander.\n"
 "\n"
-"SHIVA jest czterolufowym działem w systemie Gatlinga, czyli z obrotowymi lufami. Działo to strzela seriami pocisków kalibru 20 mm, podobnych do tych używanych w ciężkich karabinach maszynowych. Jest niezależne od systemów zasilania pojazdu – działo posiada własny silnik zapewniający moc niezbędną do działania. Jest to wysokowydajny silnik elektryczny o mocy 20 koni mechanicznych, który jest w stanie zapewnić szybkostrzelność na poziomie 6 tysięcy pocisków na minutę.\n"
-"\n"
-"Projekt działa oraz pierwszy prototyp powstały w 2048 roku w Bangladeszu. Początkowo nie uzyskano zamierzonych efektów podczas testów. Kiedy wszystko zmierzało do podjęcia decyzji o przerwaniu projektu, w lipcu 2050 śledztwo wykazało, że przyczyną niepowodzeń podczas testów był długofalowy sabotaż jednej z firm konkurujących o przydział dostaw broni dla armii. Wobec tego wkrótce potem stworzono nowy prototyp, którego testy przedstawiły rzeczywistą wartość i zalety działa na tyle, że zdecydowano się przeznaczyć dalsze fundusze na kontynuację projektu. Ostatecznie wszystkie istotne błędy w projekcie wyeliminowano i działo SHIVA mogło zaprezentować swoje zalety w całej okazałości.\n"
-"\n"
-"W kategorii broni przeznaczonych dla pojazdów powietrznych SHIVA jest działem lekkim, biorąc pod uwagę zarówno rozmiar, jak i skuteczność oraz wagę (250 kg, 400 kg z kompletem amunicji). Szybkostrzelność SHIVY przekracza szybkostrzelność dowolnego innego znanego nam działa czterolufowego. Zaawansowane systemy namierzania są w stanie utrzymywać cel na muszce przez stosunkowo długi czas, a to wszystko dzięki wbudowanemu radarowi, lidarowi oraz dodatkowym rozwiązaniom optycznym. Nietypowy podajnik amunicji jest praktycznie niezawodny, nie zanotowano zacięcia przez cały okres użytkowania broni (włącznie z prototypami).\n"
-"\n"
-"Działo SHIVA używa dwóch rodzajów amunicji: penetrującej, której przeznaczeniem jest osłabianie pancerza wrogich pojazdów, oraz wybuchowej, która – poprzez eksplozje – może wyrządzić więcej szkód przy założeniu, że systemy ochronne pojazdów będących celem są w znacznym stopniu zneutralizowane. Oba rodzaje amunicji dowiodły swojej skuteczności - w ograniczonym zakresie - przeciwko pojazdom UFO.\n"
-"\n"
-"Użycie dział SHIVA przeciwko UFO wymaga stosunkowo długiego prowadzenia ognia do celu ze względu na niewielką siłę rażenia. Niestety dzięki temu wróg zyskuje kilka możliwości uniknięcia ataku – czy to poprzez ucieczkę, czy też utrzymywanie się poza zasięgiem skutecznego ognia. Z drugiej strony, duży magazynek zapewnia stabilną siłę ognia, lepszą, niż może zapewnić większość innych broni. A to jest coś, czego nie należy nie doceniać.\n"
-"\n"
-"\n"
-"Sugerowana Doktryna Postępowania\n"
-"\n"
-"Użyteczność SHIVY jest limitowana niewielką siłą rażenia oraz koniecznością długiego prowadzenia ognia, jednak ograniczenia te przestają mieć znaczenie w sytuacji, gdy pojazd powietrzny używa więcej niż jednego działa lub nawet w sytuacji połączonej siły ognia SHIVY oraz pocisków rakietowych. Takie rozwiązania zapewniają koncentrację ognia w celu, dzięki czemu pilot może skoncentrować się na kontrolowaniu rakiet. Inną ideą jest użycie co najmniej jednego samolotu przechwytującego wyposażonego w tak dużo dział jak to tylko możliwe – przeważająca siła ognia powinna wystarczyć do strącenia większości UFO.\n"
-"\n"
-"W obecnej chwili nie mamy na tyle doświadczenia, by rekomendować najbardziej efektywne sposoby walki z pojazdami UFO. Najprawdopodobniej jednak, przynajmniej do czasu zdobycia i przebadania egzemplarzy statków Obcych, to właśnie SHIVA pozostanie najlepszym ziemskim działem dla naszych pojazdów powietrznych.\n"
-"\n"
-"\n"
-"Dodatki\n"
-"\n"
-"Brak."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4142
 msgid "SHIVA Rotary Cannon"
@@ -9502,26 +9409,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4496
 msgid "enemy_on_earth_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"My team and I are deeply troubled by the recent reports of human hostility against PHALANX personnel, as I'm sure you are. We've all seen the battlefield footage. There's no doubt that the attackers were humans like you and me, but it's also clear they were using alien weaponry and equipment -- some of which even PHALANX has never seen before.\n"
-"\n"
-"The worrying questions seem to mount up. First, however, we need to review the facts we have.\n"
-"\n"
-"Do the aliens have active sympathisers on Earth? Yes.\n"
-"\n"
-"Are the aliens supplying these human servants? Most likely, it's the only reasonable explanation for their advanced alien equipment.\n"
-"\n"
-"Do the servants present a threat? Absolutely. Perhaps a greater one than the alien menace itself.\n"
-"\n"
-"We need to delve deeper into what makes these people tick. If we can find out the most common causes for alien infiltration, our Information Division should be able to devise a far more successful propaganda strategy, which could increase our number of volunteers as well as decrease the alien infiltration rate across the globe. DivBio also has a stake; we'd like to examine at least one live human prisoner in our Containment unit so we can run a full physical examination. If the aliens have bodily altered these people in addition to training and supplying them, we'd like to find out about it.\n"
-"\n"
-"Director Wong (DivInfo) also asked me to mention that, if we hold off on implementing a new info strategy for too long, we could soon face recruitment shortfalls and increased human resistance as the sympathisers begin getting their word out. I tend to agree. We need to keep this planet together if we are to have any chance against the alien threat.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "Brak informacji przed wynalezieniem."
 
 #: ../base/ufos/research.ufo:4525
 msgid "XVI Census"
