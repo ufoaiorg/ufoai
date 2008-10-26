@@ -593,7 +593,8 @@ msgstr "Idegen Repülőt találtunk"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "Mahouf Serra Főtitk., Egyesült Nemzetek, New York Város"
+msgstr ""
+"Mahouf Serra főtitk., Egyesült Nemzetek, New York"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -664,7 +665,8 @@ msgstr "Mahouf Serra Főtitk., Egyesült Nemzetek, New York Város"
 #: ../base/ufos/research.ufo:4547 ../base/ufos/research.ufo:4578
 #: ../base/ufos/research.ufo:4585
 msgid "mail_to_base_commander"
-msgstr "Bázis parancsnok, PHALANX, Atlanti Műveleti Parancsnokság"
+msgstr ""
+"Bázisparancsnok, PHALANX, Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -723,7 +725,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4298 ../base/ufos/research.ufo:4373
 #: ../base/ufos/research.ufo:4381
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre Alezr., K&F: Mérnöki részleg, PHALANX, Atlanti Műveleti Parancsnokság"
+msgstr ""
+"Paul Navarre alezr., K&F mérnöki részleg, PHALANX, Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 msgid "Recovery Report -- %s"
@@ -767,7 +770,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "Abel S. Howard Par.Hely., Parancsnokság, PHALANX, Atlanti Műveleti Parancsnokság"
+msgstr ""
+"Abel S. Howard par. hely., Parancsnokság, PHALANX, Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -862,7 +866,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4538
 #: ../base/ufos/research.ufo:4546
 msgid "mail_from_col_falkland"
-msgstr "Ingrid Falkland Ezr., Felderítési részleg, PHALANX, Atlanti Műveleti Parancsnokság"
+msgstr ""
+"Ingrid Falkland ezr., Felderítési részleg, PHALANX, Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -892,7 +897,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Subakh al-Kuhar Rep. Ezr., Légierő, PHALANX, Atlanti Műveleti Parancsnokság"
+msgstr ""
+"Subakh al-Kuhar rep. ezr., Légierő, PHALANX, Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4324,7 +4330,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4508 ../base/ufos/research.ufo:4577
 #: ../base/ufos/research.ufo:4584
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, K&F: Bio & Karantén részleg, PHALANX, Atlanti Műveleti Parancsnokság"
+msgstr ""
+"Dr. Connor, K&F: Bio&Karantén részleg, PHALANX, Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/research.ufo:258 ../base/ufos/research.ufo:298
 msgid "alien_breathing_txt"
@@ -5991,10 +5998,28 @@ msgstr ""
 #: ../base/ufos/research.ufo:1728
 msgid "needlergun_txt"
 msgstr ""
+"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
+"\n"
+"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
+"\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
+"\n"
+"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
+"\n"
+"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
+"\n"
+"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1731
 msgid "needlergun_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"\n"
+"Please authorise this program at your convenience, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1785
 msgid "coilgun_txt"
@@ -6601,43 +6626,41 @@ msgstr ""
 #: ../base/ufos/research.ufo:2372
 msgid "combat_armour_txt"
 msgstr ""
-"Technikai Specifikáció: Gyalogsági Páncél\n"
+"Technikai specifikáció: Gyalogsági páncél\n"
 "\n"
 "SÁRGA BIZTONSÁGI MINŐSÍTÉS\n"
 "\n"
-"PHALANX Földönkívüli Gyorsreagálású Egység\n"
+"PHALANX Földönkívüli-ellenes Gyorsreagálású Egység\n"
 "\n"
-"Technikai Dokumentum, Delta Engedély\n"
+"Technikai dokumentum, Delta engedély\n"
 "\n"
-"Készült: 2084 Március 20\n"
-"\n"
-"By: Paul Navarre Alezr., K&F: Mérnöki Részleg, PHALANX, Atlanti Műveleti Parancsnokásg\n"
+"Készült: 2084. március 20., Paul Navarre alezr., K&F mérnöki részleg, PHALANX, Atlanti Műveleti Parancsnokság\n"
 "\n"
 "\n"
 "\n"
-"Overview\n"
+"Áttekintés\n"
 "\n"
-"Az idegenek mumbai akciója fájdalmasan tiszta helyzetet teremtett. Technológiájuk sokkal fejlettebb a miénknél.A nemzetközösségi csapatok tehetetlensége, hogy megakasszák a mumbai offenzívát súlyos hiányosságokat fedett fel a jelenleg katonai kiképzésben és felszerelésben. Három zászlóaljat vesztettek csak hogy feltartsák az idegeneket, miközben azok sérüléseket is alig szereztek. A PHALANX-nak fel kell számolnia ezeket a különbségeket és ehhez az elérhető legjobb földi technológiákra van szüksége.\n"
+"Az idegenek bombayi akciója fájdalmasan tiszta helyzetet teremtett. Technológiájuk sokkal fejlettebb a miénknél. Az, hogy a nemzetközösségi csapatok szinte képtelenek voltak megakasztani a bombayi offenzívát, súlyos hiányosságokra világít rá a jelenlegi katonai kiképzésben és felszerelésben. Három zászlóaljat vesztettek csak azért, hogy feltartsák az idegeneket, miközben azok sérüléseket is alig szereztek. A PHALANX-nak fel kell számolnia ezeket a különbségeket, és ehhez az elérhető legjobb földi technológiákra van szüksége.\n"
 "\n"
-"Az Excalibur Program nem csak a megfelelő fegyvereket keresi az idegenek ellen, de célja azon páncélok és egyéb eszközök megtalálása is, amelyek hozzásegíthetik katonáinkat küldetésük sikeres végrehajtásához és a túléléshez. Ezek az eszközök növelik egy katona harci hatékonyságát vagy általános túlélőképességét.\n"
+"Az Excalibur program nemcsak a megfelelő fegyvereket keresi az idegenek ellen, de célja azon páncélok és egyéb eszközök megtalálása is, amelyek hozzásegíthetik katonáinkat küldetésük sikeres végrehajtásához és a túléléshez. Ezek az eszközök növelik egy katona harci hatékonyságát vagy általános túlélőképességét.\n"
 "\n"
-"A páncélok használata harctereken sosem merült teljesen feledésbe bár a XVIII. század elejétől a XX.század végéig hatékonyság csökkentő tényezőnek számított. Az Első Világháború idején kezdett újra megjelenni acél sisakok formájában. Ez a gyakorlat folyatódott a Második Világháborúban is és végül a kevlár feltalálásával fejeződött be. Manapság a kevlár is túlhaladott, csak civilek és pénzügyi gondokkal küzdő rendőri erők használják. Mág a fejlettebb XX.századi test páncélok is hasznavehetetlennek minősültek az modern fegyverek ellen. Új anyagokat kellett találni, amelyek a páncélt erősebbé viselőjét ellenállóbbá tették.\n"
+"A páncélok használata a harctereken sosem szűnt meg teljesen, bár a páncél a 18. század elejétől a 20. század végéig a hatékonyságot csökkentő tényezőnek számított. Az első világháború idején kezdett újra megjelenni acélsisakok formájában. Ez a gyakorlat folyatódott a második világháborúban is, és végül a kevlár feltalálásával fejlődött tovább. Manapság a kevlár is túlhaladott, csak civilek és pénzügyi gondokkal küzdő rendőri erők használják. Még a fejlettebb 20. századi testpáncélok is hasznavehetetlennek minősültek a modern fegyverek ellen. Új anyagokat kellett találni, amelyek a páncélt erősebbé, viselőjét ellenállóbbá tették.\n"
 "\n"
-"Érdekes módon több általunk felfedezett régi dokumentum megerősíti, hogy a PHALANX nagyban hozzájárult néhány nagyobb technikai áttöréshez a múltban, olyan technológiákhoz amelyek később világszinten elterjedtek. Minden a pókselyem mesterséges előállítására tett kísérlet csődöt mondott mígnem a PHALANX Földközi Műveleti Parancsnokság bázisának végül sikerült 2017-ben. MA is ezt a technikát használjuk, amelynek középpontjában egy \"szerves szövőszék\" elnevezésű eszköz áll: egy nagy etető armatúra\n"
+"Érdekes módon több általunk felfedezett régi dokumentum megerősíti, hogy a PHALANX nagyban hozzájárult néhány nagyobb technikai áttöréshez a múltban, olyan technológiákhoz, amelyek később világszinten elterjedtek. Minden, a pókselyem mesterséges előállítására tett kísérlet csődöt mondott, mígnem a PHALANX Földközi Műveleti Parancsnokságának kutatói 2017-ben végül sikerrel jártak. A technika, amelyet feltaláltak, ma is használatban van. A középpontjában egy \"szerves szövőszék\" elnevezésű eszköz áll: egy nagy etető armatúra, selyemmirigyek és fonószemölcsök százaival, melyet egyedül a pókselyem tömeggyártására terveztek.\n"
 "\n"
-"The first widespread use of military combat armour made from spider silk came as a joint effort by NATO in 2023, after ballistic tests proved that Chinese rounds tore right through their aging standard-issue kevlar vests. The armour itself is a layercake of spider silk and treated ultra high molecular weight polyethylene, giving it astonishing strength and flexibility. The resulting fabric is about 18 times stronger than steel and provides a performance increase over kevlar that is estimated between 300 and 400%. Suits made primarily from polyethylene became obsolete after artificial spider silk was released into the wider market, and the new composite armour soon replaced it in military use throughout the world. The armour has been upgraded to move with the times, being so effective that it is still in common use today. It features pockets on the front and back that can take ceramic or metal inserts to further protect vital areas.\n"
+"A pókselyemből készült katonai páncélzat széleskörű elterjesztése 2023-ban kezdődött a NATO-tagországok közös erőfeszítésével, miután ballisztikai teszteken a kínai lövedékek könnyűszerrel áttörték az ódivatú standard kevlármellényeket. A páncél maga pókselyem-rétegekből áll, extramagas molekulasúlyú polietilénnel kezelve, mely meglepően erőssé és rugalmassá teszi a konstrukciót. Az így kapott anyag 18-szor erősebb, mint az acél, és a kevlarhoz képest is 3-400%-kal jobb teljesítményt mutat. A tisztán polietilénből készült öltözékek a mesterséges pókselyem piacra való bevezetésével elavulttá váltak, és a katonai használatban hamarosan ezt is felváltotta az új kompozit vértezet. A páncél olyan hatékonynak bizonyult, hogy azóta is fejlesztik és széles körben használják. A ma használt modelleken zsebek vannak hátul és elöl, amelyekbe kerámia- vagy fémbetétek helyezhetők a létfontosságú szervek további védelmére.\n"
 "\n"
-"The Combat Armour's only disadvantage is its relatively high weight compared to older suits, but this is mainly due to the number of layers required to properly protect against modern weapons. The weight is evenly distributed, making it quite comfortable to wear and much less bulky than experimental nanocomposite armours. This armour will save lives while preserving the soldier's all-important mobility.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"Where possible, PHALANX troops should always wear armour whenever they are sent into a combat situation. The Combat Armour should be considered the basic protection no soldier can afford to go without. For some soldiers, the Combat Armour will remain a viable choice compared to heavier, more advanced armours due to the freedom of movement it provides. Snipers and anyone else not expected to be at the front line will be able to make good use of the extra mobility.\n"
+"A gyalogsági páncél egyetlen hátránya a régebbi öltözékekhez viszonyított relatíve nagy súlya. Ez nagyrészt azért van, mert sok réteg szükséges ahhoz, hogy a páncél megbízható védelmet nyújtson a modern fegyverek ellen. A súly egyenlően van elosztva, ezért elég kényelmes, és sokkal kevésbé terjedelmes, mint a kísérleti nanokompozit páncélok. Ez az öltözék életeket menthet, miközben meghagyja a katonák számára oly fontos mozgékonyságot.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Alkalmazási javaslat\n"
 "\n"
-"None."
+"Ahol csak lehetséges, a PHALANX-katonák viseljenek páncélt a harci szituációkban. A gyalogsági páncél azt az alapvető védelmet nyújtja, amely nélkül egy katonának sem szabad a terepre indulnia. Egyes katonák számára ez lesz a megfelelő választás a nehezebb, fejlettebb páncélokkal szemben, mert ez szabad mozgást biztosít. A mesterlövészek és mindenki más, aki nem az első sorban teljesít szolgálatot, jó hasznát veheti ennek az előnynek.\n"
+"\n"
+"\n"
+"Megjegyzés\n"
+"\n"
+"Nincs."
 
 #: ../base/ufos/research.ufo:2387
 msgid "advanced_combat_armour_txt"
@@ -6646,9 +6669,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:2403
 msgid "nano_armour_txt"
 msgstr ""
-"Commander, I would like to report the success of our nanocomposite production research!\n"
+"Parancsnok, örömmel jelentem, hogy a nanokompozit-gyártással kapcsolatos kutatásunk sikerrel járt!\n"
 "\n"
-"I won't bore you with the intricacies of CNT production; suffice it to say that, by close study of the telltale traces left by alien production lines, we've been able to identify some of their processes. Apparently they use some kind of plasma furnace in order to spin, shape and press the nanotubes into a latticework pattern. We've been able to create a prototype furnace of our own, and have made various modifications to our nanotube production methods based on the alien examples. The result is a significant increase in power efficiency and production volume.\n"
+"Nem untatnám a karbon nanocsövek előállításának apró részleteivel; elegendő annyi, hogy az idegen gyártási metódus által hagyott árulkodó nyomokat közelebbről szemügyre véve sikerült azonosítanunk néhányat a folyamat elemei közül. Kétségkívül valamilyen plazmakemencét használnak arra, hogy a nanocsöveket megtekerjék, formázzák és egy rácsszerű mintázatba préseljék. Képesek voltunk előállítani egy hasonló kemence prototípusát, és változtattunk a nanocső-gyártási módszereinken is az idegen példák alapján. Ez a teljesítményhatékonyság és a termelési kapacitás jelentős növekedését eredményezte.\n"
 "\n"
 "From here on I'll restrict my summary to the capabilities and tactical applications of the new armour, which I trust you will find both fascinating and encouraging.\n"
 "\n"
@@ -6665,15 +6688,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:2406
 msgid "nano_armour_pre_txt"
 msgstr ""
-"Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.\n"
+"Az idegen testpáncéllal kapcsolatos kutatásaink több érdekes felismeréshez hozzásegítettek bennünket. A kulcs a még hatékonyabb gyalogsági páncélok készítéséhez nyilvánvalóan a nanokompozitok irányában keresendő.\n"
 "\n"
-"In the past, carbon nanotubes have been difficult and expensive to produce, and trying to work them into a proper shape was even worse. Because of this nanocomposite armour has never been used except in high-cost vehicles such as aircraft and tanks, and then only in plating that requires minimal shaping or other work. The alien armour, however, uses carbon nanotube composites in abundance. It's our manufacturing processes that are holding us back.\n"
+"A nanokompozit-gyártáshoz azonban nagy mennyiségű karbon nanocsőre lenne szükségünk, ezek előállítása viszont nehézkes és drága, és használható alakba rendezni őket még ennél is bonyolultabb. Emiatt a nanokompozit konstrukciókat sosem használták másra, mint drága járművek, például repülők vagy tankok védelmére, és ott is csak burkolólapokként, mert ennek előállítása csak minimális formázást és megmunkálást igényel. Az idegen páncélban ugyanakkor bőséggel használnak nanocső-kompozitokat. Lehet, hogy a gyártási metódusunk az, ami visszafog bennünket.\n"
 "\n"
-"With the alien armour in hand and enough resources at our disposal, I believe that we can devise new production methods and shaping processes that will allow us to mass-produce shaped nanocomposite plates, finally bringing this technology into our reach.\n"
+"Azt hiszem, az idegen testpáncél felhasználásával ki tudnánk kísérletezni új gyártási módokat és formázási metódusokat, amelyekkel végre lehetségessé válna az alakformált nanokompozit lemezek tömeggyártása. A kutatáshoz jelentős anyagi támogatásra és laboridőre van szükségünk. Azonnal elkezdjük a munkát, mihelyt megkapjuk az engedélyét, parancsnok.\n"
 "\n"
-"This project will require a fair amount of lab time and funding. We'll start work as soon as we receive your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+"--Navarre alezr."
 
 #: ../base/ufos/research.ufo:2481
 msgid "alien_body_armour_txt"
@@ -6694,12 +6715,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2484
 msgid "alien_body_armour_pre_txt"
-msgstr ""
-"Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.\n"
-"\n"
-"This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2518
 msgid "alien_medium_armour_txt"
@@ -6720,12 +6736,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2521
 msgid "alien_medium_armour_pre_txt"
-msgstr ""
-"Commander, we've salvaged a new suit of alien armour from the field. It's much heavier than the alien armour we've encountered previously, and it seems to stop ordinary firearms without taking so much as a scratch. Its trauma plates are made of the densest CNT (Carbon Nanotube) weave I've ever seen. We need to research this armour right away to determine which weapons will remain effective against aliens wearing it, and to try and find a method to replicate it for our own troops. As long as we can't match this technology, we are at a severe disadvantage.\n"
-"\n"
-"This project will require a significant amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2556
 msgid "Blast Damage Type"
@@ -7768,7 +7779,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3222
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3248
 msgid "ufo_scout_txt"
@@ -7883,7 +7895,7 @@ msgstr ""
 "\n"
 "Top speed: +/- 3,000km/h\n"
 "\n"
-"Crew capacity: 30 max.\n"
+"Crew capacity: 12 max.\n"
 "\n"
 "Weapon capacity: None"
 
@@ -7915,10 +7927,46 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:3462
 msgid "ufo_corrupter_txt"
 msgstr ""
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
+"\n"
+"This UFO, which we've come to call the Corrupter, is a nightmare of alien medical technology. It makes only a few concessions to air combat. Its main purpose, without a shadow of a doubt, is to land on Earth and carry out hideous operations on human victims.\n"
+"\n"
+"Where previous alien equipment seemed to focus mostly on collecting human biomass, the Corrupter's interior -- particularly the massive blood transfusion banks -- are geared towards the capture and alteration of complete, live human beings. The alcoves I mentioned in my proposal are still mysterious, but going by the wear patterns on the floors they seem to be used to store some kind of heavy alien robot or cargo equipped with tank treads. Heavy harnesses drop down from the ceiling to hold these robots in place during flight, and the alcoves seem to have some type of air-drop mechanism as well.\n"
+"\n"
+"It's difficult to speculate exactly what exactly goes on in these UFOs with regards to captured civilians. Clearly it has something to do with the alien harvesting of human biomass, but they already have craft for that which do not appear to be in any way obsolete. Instead we have to suspect that the Corrupter represents a paradigm shift in alien activity on Earth. Something has changed. Until we fully understand what's happening, we need to prepare ourselves for what could be the worst threat to the global population we've ever seen.\n"
+"\n"
+"In the air the Corrupter's performance is relatively poor, being slow and sluggish compared to other UFOs, but from our observations it appears to be heavily escorted and presents a major ground threat due to its large crew complement and on-board heavy weapons. More than any other craft we've encountered, the Corrupter is purpose-built to deliver large alien forces to the surface solely to attack civilians.\n"
+"\n"
+"Commander, it's painfully obvious that we need to shoot these things down whenever and wherever we see them. If we don't, it's going to result in the wholesale slaughter of innocent people and possibly even scenes worse than Mumbai and Bonn.\n"
+"\n"
+"We have to stop that from happening at all costs.\n"
+"\n"
+"--Cdr. Navarre\n"
+"\n"
+"\n"
+"Estimated Corrupter statistics:\n"
+"\n"
+"\n"
+"Size: Medium (12m x 16m x 5m)\n"
+"\n"
+"Cruising speed: +/- 2,000 km/hh\n"
+"\n"
+"Top speed: +/- 4,000km/h\n"
+"\n"
+"Crew capacity: 30 max.\n"
+"\n"
+"Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3465
 msgid "ufo_corrupter_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalising clues about its intended function.\n"
+"\n"
+"A lot of the equipment is stuff we've seen before, containers geared towards storing live and dead biomass, but this UFO also has a lot of other kit that's leaving my team scratching their heads. There are mysterious alcoves with ports and valves leading to tanks full of human blood, with strange controls unlike anything we've seen from the aliens before. There are banks of robotic arms all ending in alien syringes, like some kind of mass inoculation centre -- and there's more that we can't even begin to describe. Just being inside it gives you a sense of something hostile to all human life.\n"
+"\n"
+"I think we need to do some serious investigation on that thing right away, Commander. There's something very very wrong about it, and I'm not going to be able to sleep until I know what it is.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3505
 msgid "ufo_harvester_txt"
@@ -8361,6 +8409,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3898
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3952
 msgid "'Raven' ECM Unit"
@@ -8575,6 +8624,27 @@ msgstr ""
 #: ../base/ufos/research.ufo:4123
 msgid "craft_weapon_alc_txt"
 msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Aerial Laser Cannon\n"
+"\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"The Aerial Laser Cannon is the largest and most powerful iteration of our new laser designs. Like our infantry weapons it'll be powered by deuterium-fluoride reaction, but on a much larger scale and amplified by the aircraft's on-board electrical systems. Several exciting ideas are being considered.\n"
+"\n"
+"As well as being the biggest, this may well be our most challenging laser to create. Any aircraft cannon will have to reach across several kilometres of atmosphere -- and therefore loads of atmospheric blooming -- with enough punch at the endpoint to cut into a UFO's fuselage. Those sorts of power levels have been achieved before with massive arrays mounted on jumbo jets, but never in a package small enough to make a jet fighter cannon.\n"
+"\n"
+"The finished product should be able to engage UFOs with bullseye accuracy at ranges well beyond that of the SHIVA cannon, and although damage may be low, we expect that the ability to keep continuous fire and pressure on enemy craft will be valuable in the days to come.\n"
+"\n"
+"Please approve lab time and funding for this program when you're ready, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4142
 msgid "SHIVA Rotary Cannon"
@@ -9154,33 +9224,29 @@ msgstr ""
 #: ../base/ufos/research.ufo:4446
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
-"A PHALANX projekt ötlete 1955-ben született meg az Egyesült Államok Védelmi Minisztériumában, válaszul az UFO-észlelések világszerte növekvő számára. Egy idegen invázió lehetősége bogarat ültetett azoknak a politikusoknak a fülébe, akiknek Szovjetunió nukleáris ereje miatt már nem kellett aggódniuk. Az ellenséges idegen értelem létezése az univerzumban nagyon távoli lehetőségnek tűnt, és még inkább az, hogy azok rátalálnának a Földre az űr végtelen ürességében - de vajon felvállalhatta-e az USA ezt a kockázatot?\n"
+"A PHALANX projekt ötlete 1955-ben született meg az Egyesült Államok Védelmi Minisztériumában, válaszul az UFO-észlelések világszerte növekvő számára. Az idegen invázió lehetősége bogarat ültetett a politikusok fülébe, akiknek Szovjetunió nukleáris ereje miatt már nem kellett aggódniuk. Az ellenséges idegen értelem létezése az univerzumban nagyon távoli lehetőségnek tűnt, és még inkább az, hogy az idegenek rátalálnának a Földre az űr végtelen ürességében - de vajon felvállalhatta-e az USA ezt a kockázatot?\n"
 "\n"
-"A PHALANX-projekt indítványozói két évet töltöttek azzal, hogy támogató réteget építettek ki a hatalom legfelsőbb szintjein. 1957-ben kapott a projekt először állami támogatást. Az év \"fekete költségvetésének\" egy jelentős darabja ment el egy modern földalatti komplexum építésére a Nevada sivatagban, valahol a Nellis Légibázis területén. A komplexum a PHALANX Csendes-óceáni Parancsnoksága volt. A bázist a létező legkorszerűbb felszereléssel látták el, és összegyűjtötték benne a világ legjobb koponyáit, hogy kitalálják, hogy küzdhetnének meg a legeredményesebben egy az Egyesült Államok ellen irányuló idegen támadással.\n"
+"A PHALANX-projekt indítványozói két évet töltöttek azzal, hogy támogató réteget építsenek ki a hatalom legfelsőbb szintjein. A program először 1957-ben kapott állami támogatást. Az év \"fekete költségvetésének\" egy jelentős darabját költötték el egy modern földalatti komplexum építésére a Nevada sivatagban, valahol a Nellis Légibázis területén. Ez a komplexum a PHALANX Csendes-óceáni Parancsnoksága volt. A bázist a létező legkorszerűbb felszereléssel látták el, és összegyűjtötték benne a világ legjobb koponyáit, hogy kitalálják, hogy küzdhetnének meg a legeredményesebben egy az USA ellen irányuló idegen támadással.\n"
 "\n"
-"A projekt az első években sikert sikerre halmozott, kiemelkedő technológiákat és korábban nem látott dolgok működő prototípusait fejleszve, és mindezt a civil szerződéses partnerek által kínált ár töredékéért. A projekt természetéből adódóan a PHALANX minden évben kemény költségvetési viták tárgya volt, de kutatás-fejlesztési eredmények még a legkeményfejűbb praktikusok szemében is okot szolgáltattak a támogatására.\n"
+"A projekt az első években sikert sikerre halmozott, kiemelkedő technológiákat és korábban nem látott dolgok működő prototípusait fejleszve, és mindezt a civil szerződéses partnerek által kínált ár töredékéért. A program természetéből adódóan a PHALANX minden évben kemény költségvetési viták tárgya volt, de kutatás-fejlesztési eredmények még a legkeményfejűbb praktikusok szemében is okot szolgáltattak a támogatására.\n"
 "\n"
 "De az élet ment tovább, miközben a PHALANX egy olyan dologra készülődött, amely sohasem történt meg. A vietnami háború a katonai kiadások hatalmas mértékű növekedését hozta, amelyből nem jutott a PHALANX-nak és hasonló projekteknek. A több pénzt könyörgő ismételt kérelmeket a vezérkar elutasította, az 1950-es években indult \"hóbortos, nevetséges\" programot még tovább futni is csak a kutatással kapcsolatos erőfeszítéseik miatt engedték. A kapott pénz csak arra volt elég - ha egyáltalán -, hogy a régi felszerelést karbantartsák és a laborokat működtessék belőle.\n"
 "\n"
 "A PHALANX sohasem heverte ki a háborút. Sohasem kaptak annyi támogatást többé, mint az '50-es években: a dicsőséges időszak véget ért. Néhány új technológiát szállítottak még a gulf háborúban, és történt egy kis felemelkedés a 21. század elején a szárnyaló amerikai katonai költségvetésnek köszönhetően, de a kreativitás e rövid fellángolásai után a projekt újra jelentéktelenségbe süllyedt.\n"
 "\n"
-"A Második Hidegháború az utolsó életet is kiszívta a projektből. A parancsnokok küszködtek, hogy életben tartsák annak ellenére, hogy annyi pénzt sem kaptak, amiből a gépeiket a levegőben tarthatták volna, de még a mesterséges pókselyem felfedezése sem menthette ki őket az USA összeomló gazdaságának romjai alól. Az ország csődje minden nem nélkülözhetetlen katonai programot elfojtott az országban, egyiket a másik után - a PHALANX végül 2027-ben került ki a költségvetési tételek közül, öt hónappal a hetvenedik évfordulója után. A legénységet elbocsátották, a bázist lebontották, az egyedülálló felszerelést raktárakba hordták. A PHALANX projekt gyorsan a feledés homályába veszett.\n"
+"A Második Hidegháború az utolsó életet is kiszívta belőle. A parancsnokok küszködtek, hogy életben tartsák annak ellenére, hogy annyi pénzt sem kaptak, amiből a gépeiket a levegőben tarthatták volna, de még a mesterséges pókselyem felfedezése sem menthette ki őket az USA összeomló gazdaságának romjai alól. Az ország csődje minden nem nélkülözhetetlen katonai programot elfojtott az országban, egyiket a másik után - a PHALANX végül 2027-ben került ki a költségvetési tételek közül, öt hónappal a hetvenedik születésnapja után. A legénységet elbocsátották, a bázist lebontották, az egyedülálló felszerelést raktárakba hordták. A projekt gyorsan a feledés homályába veszett.\n"
 "\n"
-"Until it was rediscovered on 9 March 2084 by an old man who remembered reading about it in a dusty file in his long-demolished office.\n"
+"2084. március 9-én egy idős embernek jutott újra eszébe, aki emlékezett arra, hogy valaha olvasott róla egy poros aktában.\n"
 "\n"
-"The horror and enormity of the events in Mumbai shocked the world. The existence of intelligent alien life in the universe was no longer a matter of faith. Not only did it exist, it had made contact in the worst way. The massacres were too large and visible for Earth's governments to keep them secret. Video evidence of the smoking, blood-stained streets aired on television sets around the world. The aliens had left no other evidence of their visit; they diligently recovered their dead and collected every scrap of dropped technology before pulling out.\n"
+"A bombayi események borzalma és iszonyata megrázta a világot. Az, hogy létezik-e intelligens idegen élet az univerzumban, többé nem hit kérdése volt: nemhogy létezett, de a legrosszabb módon vette fel a kapcsolatot az emberiséggel. A bombayi mészárlás nagyobb és feltűnőbb volt annál, hogy a Föld kormányai titokban tarthatták volna. A füstölgő, véres utcákat mutató felvételek bejárták a világ televíziókészülékeit. Az idegenek nem hagytak más bizonyítékot maguk után a létezésükről: szorgalmasan összeszedték a halottaikat, és a technológiájuk minden elejtett töredékét összegyűjtötték, mielőtt távoztak.A pánik bozóttűzként terjedt a közvetítések nyomában, és a helyzet csak rosszabb lett, amikor a bonni, johannesburgi és bangkoki mészárlás is nyilvánosságra került. A világ, amely tudta, hogy meglátogatták, csak most kezdte realizálni, hogy háborúban áll.\n"
 "\n"
-"Panic spread like wildfire in the wake of the Mumbai broadcasts, and things got worse as word reached the general public about the slaughter in Bonn, Johannesburg and Bangkok. The world knew it had been visited, and now it began to realise it was under attack.\n"
+"A világ vezetői őrült sebességgel keresték a megoldást. Az ENSZ több mint egy hétig folyamatosan ülésezett. Villámgyorsan készítették és vetették el az újabb és újabb terveket. A Föld teljességgel védtelen volt az idegen támadás ellen, katonailag és pszichológiai értelemben egyaránt. Senki sem készült fel egy ilyen esetre, hiszen az erről szóló ítéletnapi forgatókönyv egy volt azok közül, amelyek mellőzve, olvasatlanul porladtak valahol egy stratégiai tervezőiroda faliszekrényében. A világ válaszokat követelt, amiket senki sem tudott megadni.Az ENSZ csak néhány jelképes gesztust tudott tenni: a Biztonsági Tanács parancsára a NASA evakuálta mind a két nemzetközi űrállomást, valamint a holdi állandó kolóniát, és az összes tervezett marsi missziót törölték a naptárból. Ám mindenben, ami valójában számított, az ENSZ döntésképtelen volt. Egyes országok hatalmas orbitális védelmi rendszereket akartak építeni, mások amellett kardoskodtak, hogy az ENSZ engedélyezze a nukleáris rakéták alkalmazását az UFO-elfogáshoz. Megint másoknak még értelmetlenebb terveik voltak. A helyzet a napok múlásával egyre rosszabb lett - míg végül egy idős diplomatának eszébe jutott a PHALANX projekt.\n"
 "\n"
-"The quest for solutions was frantic. The United Nations remained in session continuously for over a week. Plans were drawn up and burnt down with lightning speed. The world was completely defenceless against an alien invasion, both militarily and psychologically. No one had prepared for this. It was one of the forgotten doomsday scenarios that sat crumbling to dust in the back closet of some strategic planning office, unread and unheeded. Now, however, the public demanded answers that no one knew, action that no one could provide.\n"
+"Az ENSZ teljes hozzáférést kapott a projekt régi aktáihoz, és megdöbbenéssel nyálazták végig a régi haditerveket, tervrajzokat, felszerelést és képzési útmutatókat: a részletes forgatókönyvet egy idegen invázió esetére. Azonnal eldöntötték, hogy újraélesztik, felszerelik és bevetik a PHALANX-ot a Föld védelmében. Ehhez, mivel mindenki, aki valaha része volt a PHALANX-nak, már halott vagy harcra alkalmatlan volt, új legénységet toboroztak.\n"
 "\n"
-"The UN could agree only on a few token gestures; at the order of the Security Council, NASA evacuated International Space Stations 1 and 2, as well as the permanent colony on the moon. The entire range of planned missions to Mars was stricken from the calendar. On all the matters that counted, the UN was deadlocked. Some nations wanted to build massive orbital defences while others insisted they should be permitted to use nuclear missiles for UFO interception. Still others had even more outlandish projects to push. The situation grew worse as the days wore on, until one aging diplomat remembered the PHALANX project.\n"
+"Egyhangú szavazással eldöntötték, hogy a programot titokban tartják, amennyire csak lehetséges, és csak a legmagasabb rangú politikusokat és katonai parancsnokokat avatták be. Az embereket ködösítéssel és édes hazugságokkal nyugtatták meg, míg a gondosan kiválogatott team a PHALANX feltámasztásán és harcképes állapotba hozásán fáradozott. A régi felszerelések helyét lenyomozták, és elővették őket az omladozó raktárakból; töredező papírú kézikönyveket poroltak le, fegyverkészleteket készítettek újra elő a használatra. A nyolc politikai erő titkos támogatásával a projektnek már megvolt a kellő anyagi ereje, fegyverzete és legénysége a háborúzáshoz.\n"
 "\n"
-"With full access to the old US files, the UN was shocked to find plans, designs, equipment and training manuals; a fully-detailed response to an invasion scenario. They immediately decided to revive PHALANX and equip it to defend Earth from the alien threat. However, everyone who was once a part of PHALANX was either dead or dying. They were going to need a new staff.\n"
-"\n"
-"By unanimous vote, it was decided to keep the project as secret as possible, known only to the highest-ranking politicians and military commanders in the world. The public was comforted with smokescreens and sweet lies while a hand-picked team of operatives from all over the world struggled to resurrect PHALANX and whip it back into fighting trim. Old equipment was tracked down and recovered from gutted warehouses, crumbling manuals were dusted off, and stockpiles of weapons were reassembled for use. With the secret backing of all eight great powers, the project had funding, support and the men it needed to go to war.\n"
-"\n"
-"All it lacked was a leader."
+"Egyvalami hiányzott csak: egy vezető."
 
 #: ../base/ufos/research.ufo:4456
 msgid "A New Twist"
@@ -9509,35 +9575,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "2084. A Földre, amely sosem volt egy nyugodt hely, a viszonylagos béke ideje köszöntött. A 21. század véres kezdete messze volt már; távoli, bár még élő emlék volt a Föld népének nagy része számára. A Második Hidegháború is csak egy sötét árnyék volt a múltból, mint a késő huszadik század gyermekei szemében a két világháború."
+msgstr ""
+"2084. A Földre, amely sosem volt egy nyugodt hely, a viszonylagos béke ideje köszöntött. A 21. század véres kezdete messze volt már; távoli, bár még élő emlék volt a Föld népének nagy része számára. A Második Hidegháború is csak egy sötét árnyék volt a múltból, mint a késő huszadik század gyermekei szemében a két világháború."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "A század vége felé a konfliktusok egyre ritkábbak lettek, ahogy az új technológia és az egészségügy modern megoldásai a harmadik világban is elérhetőkké váltak. A terrorizmus lángjai is ellobbantak a Második Hidegháború tüzében. A hidegháború borzalma és embertelensége még friss volt az emberek emlékezetében, a régi Egyesült Államoktól a tönkretett Indiáig. Az osztályharcok a politikai küzdőtérre szorultak vissza, ahogy minden ország képviselethez jutott az ENSZ-ben, és a globális életszínvonal lassan növekedett a Föld legelmaradottabb részein is. A világ országai stabilizálódtak az újjászervezett ENSZ segítségével, amely sikeresen tartotta fenn a rendet a világban. Kisebb nemzetek szétszóródott csoportjai, megriadva a Kína és az Európai Unió körül megszilárduló hatalmi tömböktől, erős politikai szövetségekbe szerveződtek - és olyan szomszédok között találták magukat, amelyek egyikével szemben sem kockáztathattak meg egy kétes kimenetelű háborút. Az emberiség történelmében először béke és rend uralta a Föld több mint háromnegyedét."
+msgstr ""
+"A konfliktusok egyre ritkábbak lettek, ahogy az új technológia és az egészségügy modern megoldásai a harmadik világban is elérhetőkké váltak. A terrorizmus lángjai is ellobbantak a Második Hidegháború tüzében. A hidegháború borzalma és embertelensége még friss volt az emberek emlékezetében, a régi Egyesült Államoktól a tönkretett Indiáig. Az osztályharcok a politikai küzdőtérre szorultak vissza, ahogy minden ország képviselethez jutott az ENSZ-ben, és a globális életszínvonal lassan növekedett a Föld legelmaradottabb részein is. A világ országai stabilizálódtak az újjászervezett ENSZ segítségével, amely sikeresen tartotta fenn a rendet a világban. Kisebb nemzetek szétszóródott csoportjai, megriadva a Kína és az Európai Unió körül megszilárduló hatalmi tömböktől, erős politikai szövetségekbe szerveződtek - és olyan szomszédok között találták magukat, amelyek egyikével szemben sem kockáztathattak meg egy kétes kimenetelű háborút. Az emberiség történelmében először béke és rend uralta a Föld több mint háromnegyedét."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "A legtöbb ember számára úgy tűnt, a dolgok a lehető legnagyobb rendben mennek."
+msgstr ""
+"A legtöbb ember számára úgy tűnt, a dolgok a lehető legnagyobb rendben mennek."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Az első támadás Bombayt érte, 2084. március 3-án. Hat kis UFO tűnt fel az égen a semmiből, a Bombayt védelmező radarrendszerek számára észrevétlenül, és leszálltak a Föld legnépesebb városában. Az idegenek nem figyelmeztettek, nem magyarázkodtak. Húszezer ártatlan civilt és három elit zászlóaljat mészároltak le húsz rettenetes óra alatt, mielőtt a Nemzetközösség katonáinak sikerült megállítaniuk az előrenyomulást; aztán amilyen hirtelen érkeztek, eltűntek a hajóikban és távoztak, csak Bombay porig rombolt utcáit hagyva maguk után bizonyítékul."
+msgstr ""
+"Az első támadás Bombayt érte, 2084. március 3-án. Hat kis UFO tűnt fel az égen a semmiből, a Bombayt védelmező radarrendszerek számára észrevétlenül, és leszálltak a Föld legnépesebb városában. Az idegenek nem figyelmeztettek, nem magyarázkodtak. Húszezer ártatlan civilt és három elit zászlóaljat mészároltak le húsz rettenetes óra alatt, mielőtt a Nemzetközösség katonáinak sikerült megállítaniuk az előrenyomulást; aztán amilyen hirtelen érkeztek, eltűntek a hajóikban és távoztak, csak Bombay porig rombolt utcáit hagyva maguk után bizonyítékul."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Az ENSZ vésztanácsa képtelen volt megoldást találni a helyzetre. A következő betörés Bonnt, Johannesburgot és Bangkokot érte, még gyorsabban, még pusztítóbban, még kegyetlenebbül. Néhány állam megpróbálkozott a diplomáciával, ezer különböző nyelven küldve üzenetet a földet dúló idegeneknek. Válasz nem érkezett. Órákon belül mindhárom városból eltűnt az emberi élet. A támadásnak már vége volt, mire a hadseregek megkapták az engedélyt a visszavágásra. Az idegenek semmit sem hagytak maguk után, csak betont és vért. Az UFO-k nyom nélkül eltűntek - és senkiben sem maradt kétség afelől, hogy vissza fognak-e térni."
+msgstr ""
+"Az ENSZ vésztanácsa képtelen volt megoldást találni a helyzetre. A következő betörés Bonnt, Johannesburgot és Bangkokot érte, még gyorsabban, még pusztítóbban, még kegyetlenebbül. Néhány állam megpróbálkozott a diplomáciával, ezer különböző nyelven küldve üzenetet a földet dúló idegeneknek. Válasz nem érkezett. Órákon belül mindhárom városból eltűnt az emberi élet. A támadásnak már vége volt, mire a hadseregek megkapták az engedélyt a visszavágásra. Az idegenek semmit sem hagytak maguk után, csak betont és vért. Az UFO-k nyom nélkül eltűntek - és senkiben sem maradt kétség afelől, hogy vissza fognak-e térni."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Nyolcvanhét órával a Bombayt érő támadás után a Föld deklarálta a háborút. A földi országok haderői két hétig minden erejüket latba vetve próbálták megállítani az idegen támadókat, viszonylag kevés - ám annál értékesebb - sikerrel."
+msgstr ""
+"Nyolcvanhét órával a Bombayt érő támadás után a Föld deklarálta a háborút. A földi országok haderői két hétig minden erejüket latba vetve próbálták megállítani az idegen támadókat, viszonylag kevés - ám annál értékesebb - sikerrel."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Az ENSZ számára egyetlen lehetőség maradt hátra. A régi - több mint százéves - felszerelést leporolva újjászervezték az USA régen megszüntetett földönkívüli-ellenes ügynökségét, a PHALANX-ot, ezúttal ENSZ-zászló alatt. Feladatául az idegen fenyegetés elhárítását, az emberi faj túlélésének bármi áron való biztosítását tűzték ki."
+msgstr ""
+"Az ENSZ számára egyetlen lehetőség maradt hátra. A régi - több mint százéves - felszerelést leporolva újjászervezték az USA régen megszüntetett földönkívüli-ellenes ügynökségét, a PHALANX-ot, ezúttal ENSZ-zászló alatt. Feladatául az idegen fenyegetés elhárítását, az emberi faj túlélésének bármi áron való biztosítását tűzték ki."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "A PHALANX-ot a Föld nyolc politikai ereje támogatja, katonáikat azok elitcsapataiból válogatják. A legjobbak legjobbjait. A PHALANX a bolygó első és egyetlen védvonala - nem veszíthet, mert az emberiségnek nincsen több esélye."
+msgstr ""
+"A PHALANX-ot a Föld nyolc politikai ereje támogatja, katonáikat azok elitcsapataiból válogatják. A legjobbak legjobbjait. A PHALANX a bolygó első és egyetlen védvonala - nem veszíthet, mert az emberiségnek nincsen több esélye."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

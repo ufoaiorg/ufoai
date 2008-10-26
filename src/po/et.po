@@ -4528,21 +4528,11 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:165
 msgid "antimatter_pre_txt"
-msgstr ""
-"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
-"\n"
-"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:166
 msgid "antimatter_extra_pre_txt"
-msgstr ""
-"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
-"\n"
-"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:215
 #, fuzzy
@@ -4601,18 +4591,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:261
 msgid "alien_breathing_pre_txt"
-msgstr ""
-"Commander,\n"
-"\n"
-"During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
-"\n"
-"I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.\n"
-"\n"
-"Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:315
 #, fuzzy
@@ -4756,20 +4735,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:473
 msgid "alien_origins_pre_txt"
-msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
-"\n"
-"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
-"\n"
-"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
-"\n"
-"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:498
 #, fuzzy
@@ -4801,12 +4767,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:506
 msgid "alien_theory_pre_txt"
-msgstr ""
-"Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
-"\n"
-"We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:549
 msgid "pistol_txt"
@@ -6274,42 +6235,30 @@ msgid "Needler Gun"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1728
-#, fuzzy
 msgid "needlergun_txt"
 msgstr ""
-"Technical Specifications: Sniper Rifle Magazine\n"
+"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
 "\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 5 rounds of 20x140mm HMG (Heavy Machine Gun) ammunition. It is a conventional single-column box design, and can be extremely heavy due to the weight of the rounds inside. One magazine can weigh up to 1 kilogramme depending on the type of ammo used. The rounds in this magazine are high-quality match grade ammunition meant for heavy sniper rifles; they are more accurate and expensive than ordinary HMG rounds.\n"
-"\n"
-"The magazine is meant to be loaded into an S-1 Sniper Rifle.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with sniper rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1731
 msgid "needlergun_pre_txt"
-msgstr "Eelnev informatsioon uuringu kohta puudub."
+msgstr ""
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"\n"
+"Please authorise this program at your convenience, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1785
 #, fuzzy
@@ -7561,14 +7510,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3898
-#, fuzzy
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
-"\n"
-"Please authorise this program at your earliest convenience.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:3952
 msgid "'Raven' ECM Unit"
@@ -7777,12 +7720,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4368
 msgid "alien_materials_pre_txt"
-msgstr ""
-"Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
-"\n"
-"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:4420
 #, fuzzy
@@ -7870,20 +7808,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4533
 msgid "xvi_census_pre_txt"
-msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
-"\n"
-"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
-"\n"
-"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
-"\n"
-"All we need is your signature on the dotted line, Sir.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:4564
 msgid "The Enemy On Earth - Revisited"
