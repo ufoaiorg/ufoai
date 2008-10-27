@@ -223,4 +223,5 @@ void R_SphereShutdown (void)
 		glDeleteLists(r_globeEarth.list, 1);
 		glDeleteLists(r_globeMoon.list, 1);
 	}
+	sphereInit = qfalse;
 }
