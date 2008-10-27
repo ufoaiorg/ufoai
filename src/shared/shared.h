@@ -113,7 +113,7 @@ const char *COM_EParse(const char **text, const char *errhead, const char *errin
 
 int UTF8_delete_char(char *s, int pos);
 int UTF8_insert_char(char *s, int n, int pos, int codepoint);
-int UTF8_char_len(const char *s);
+int UTF8_char_len(unsigned char c);
 int UTF8_encoded_len(int codepoint);
 
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));

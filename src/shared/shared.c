@@ -504,7 +504,7 @@ int UTF8_insert_char (char *s, int n, int pos, int c)
 }
 
 /**
- * @brief length of UTF-8 character starting here.
+ * @brief length of UTF-8 character starting with this byte.
  * @return length of character encoding, or 0 if not start of a UTF-8 sequence
  * @todo Using this does not solve the truncation problem in case of
  * decomposed characters. For example a code for "a" followed by a
@@ -513,9 +513,8 @@ int UTF8_insert_char (char *s, int n, int pos, int c)
  * that follows is part of its visual appearance and should not be
  * cut off separately. Fortunately decomposed characters are rarely used.
  */
-int UTF8_char_len (const char *s)
+int UTF8_char_len (unsigned char c)
 {
-	unsigned char c = *s;
 	if (c < 0x80)
 		return 1;
 	if (c < 0xc0)

@@ -401,7 +401,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 		while (len > utf8len
 			   && UTF8_CONTINUATION_BYTE(buf[pos + len - utf8len]))
 			utf8len++;
-		if (utf8len != UTF8_char_len(&buf[pos + len - utf8len])) {
+		if (len > 0 && utf8len != UTF8_char_len(buf[pos + len - utf8len])) {
 			len -= utf8len;
 			skip += utf8len;
 		}
