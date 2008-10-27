@@ -1,5 +1,6 @@
 /**
  * @file m_node_model.c
+ * @todo use MN_GetNodeAbsPos instead of menu->pos
  */
 
 /*
