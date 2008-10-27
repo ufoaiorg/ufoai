@@ -157,7 +157,7 @@ menu basedefence
 		tooltip	"_Choose missile battery"
 		invis	true
 		pos		"50 710"
-		image	menu/button_blue3
+		image	menu/button_blue
 		size	"128 52"
 		click	{ basedef_missile }
 		string "_Missile"
@@ -170,7 +170,7 @@ menu basedefence
 		tooltip	"_Choose laser battery"
 		invis	true
 		pos		"288 710"
-		image	menu/button_blue3
+		image	menu/button_blue
 		size	"128 52"
 		click	{ basedef_laser }
 		string "_Laser"

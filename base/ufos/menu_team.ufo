@@ -1313,7 +1313,7 @@ menu equipment
 	button bt_primary
 	{
 		tooltip	"_Show available primary weapons"
-		image	menu/button_blue3
+		image	menu/button_blue
 		pos		"374 70"	//125
 		size	"128 52"
 		click	{ equip_primary }
@@ -1326,7 +1326,7 @@ menu equipment
 	button bt_secondary
 	{
 		tooltip	"_Show available secondary weapons"
-		image	menu/button_blue3
+		image	menu/button_blue
 		pos		"374 125"	//180
 		size	"128 52"
 		click	{ equip_secondary }
@@ -1339,7 +1339,7 @@ menu equipment
 	button bt_heavy
 	{
 		tooltip	"_Show available heavy weapons"
-		image	menu/button_blue3
+		image	menu/button_blue
 		pos		"374 180"
 		size	"128 52"
 		click	{ equip_heavy }
@@ -1352,7 +1352,7 @@ menu equipment
 	button bt_misc
 	{
 		tooltip	"_Show available miscellaneous equipment and weapons"
-		image	menu/button_blue3
+		image	menu/button_blue
 		pos		"374 235"
 		size	"128 52"
 		click	{ equip_misc }
@@ -1365,7 +1365,7 @@ menu equipment
 	button bt_armour
 	{
 		tooltip	"_Show available armour"
-		image	menu/button_blue3
+		image	menu/button_blue
 		pos		"374 290"
 		size	"128 52"
 		click	{ equip_armour }

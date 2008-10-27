@@ -78,7 +78,7 @@ menu won
 	{
 		if "mission_uforecovered == 1"
 		tooltip	"_Store the UFO in base"
-		image		"menu/button_blue3"
+		image		"menu/button_blue"
 		pos		"480 630"
 		size		"128 53"
 		click	{ cmd "cp_uforecoverystore;" }
@@ -92,7 +92,7 @@ menu won
 	{
 		if "mission_uforecovered == 1"
 		tooltip	"_Sell the UFO to desired nation"
-		image		"menu/button_blue3"
+		image		"menu/button_blue"
 		pos		"670 630"
 		size		"128 53"
 		click	{ cmd "cp_uforecoverysell;" }
@@ -106,7 +106,7 @@ menu won
 	{
 		if "mission_uforecovered == 1"
 		tooltip	"_Destroy recovered UFO"
-		image		"menu/button_blue3"
+		image		"menu/button_blue"
 		pos		"865 630"
 		size		"128 53"
 		click	{ cmd "cp_uforecoverydestroy;" }
@@ -125,7 +125,7 @@ menu won
 	button bt_tryagain
 	{
 		tooltip	"_Retry this mission"
-		image	"menu/button_blue3"
+		image	"menu/button_blue"
 		pos		"480 700"
 		size	"128 53"
 		click	{ cmd "cp_tryagain;" }
@@ -138,7 +138,7 @@ menu won
 //	button bt_replay
 //	{
 //		tooltip	"_Replay your tactical mission as demo"
-//		image	"menu/button_blue3"
+//		image	"menu/button_blue"
 //		pos		"480 700"
 //		texl	"0 0"
 //		texh	"128 57"
@@ -152,7 +152,7 @@ menu won
 	button bt_continue
 	{
 		tooltip	"_Continue"
-		image	"menu/button_blue3"
+		image	"menu/button_blue"
 		pos		"865 700"
 		size	"128 53"
 		click	{ cmd "set game_tryagain 0;mn_pop;" }
@@ -235,7 +235,7 @@ menu lost
 	button bt_tryagain
 	{
 		tooltip	"_Retry this mission"
-		image	"menu/button_blue3"
+		image	"menu/button_blue"
 		pos		"480 700"
 		size	"128 53"
 		click	{ cmd "set game_tryagain 1;mn_pop;" }
@@ -248,7 +248,7 @@ menu lost
 //	pic bt_replay
 //	{
 //		tooltip	"_Replay your tactical mission as demo"
-//		image	"menu/button_blue3"
+//		image	"menu/button_blue"
 //		pos		"480 700"
 //		size	"128 57"
 //		click	{ }
@@ -261,7 +261,7 @@ menu lost
 	button bt_continue
 	{
 		tooltip	"_Continue"
-		image	"menu/button_blue3"
+		image	"menu/button_blue"
 		pos		"865 700"
 		texl	"0 0"
 		texh	"128 53"

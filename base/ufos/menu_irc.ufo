@@ -53,7 +53,7 @@ menu irc
 	button button_disconnect
 	{
 		tooltip	"_Close menu and disconnect"
-		image	menu/button_blue3
+		image	menu/button_blue
 		pos		"780 720"
 		size	"160 37"
 		click	{ cmd "irc_disconnect; mn_pop;" }

@@ -754,7 +754,7 @@ menu employees
 	button bt_soldier
 	{
 		tooltip	"_Hire soldiers"
-		image	menu/button_blue3
+		image	menu/button_blue
 		blend	true
 		pos		"615 585"
 		size	"128 52"
@@ -768,7 +768,7 @@ menu employees
 	button bt_scientists
 	{
 		tooltip	"_Hire scientists"
-		image	menu/button_blue3
+		image	menu/button_blue
 		blend	true
 		pos		"615 655"
 		size	"128 52"
@@ -782,7 +782,7 @@ menu employees
 	button bt_workers
 	{
 		tooltip	"_Hire workers"
-		image	menu/button_blue3
+		image	menu/button_blue
 		blend	true
 		pos		"765 585"
 		size	"128 52"
@@ -796,7 +796,7 @@ menu employees
 	button bt_pilots
 	{
 		tooltip	"_Hire pilots"
-		image	menu/button_blue3
+		image	menu/button_blue
 		blend	true
 		pos		"765 655"
 		size	"128 52"
