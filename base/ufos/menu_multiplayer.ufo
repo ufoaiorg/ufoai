@@ -459,23 +459,16 @@ menu serverinfo
 		}
 	}
 
-	pic button_favorite
+	button button_favorite
 	{
 		pos	"200 720"
 		click	{ cmd "bookmark_add;" }
-		image	menu/button_long
-		texl	"0 0"
-		texh	"128 35"
-		size	"140 35"
-		mousefx	true
-	}
-	string string_favorite
-	{
+		image	menu/button_blue
+		size	"128 35"
 		font	f_menu
-		color	"1 1 1 1"
+		color	"1 1 1 0.8"
+		selectcolor	"1 1 1 1"
 		string	"_Bookmark"
-		pos	"268 736"
-		align	cc
 	}
 
 	func init
