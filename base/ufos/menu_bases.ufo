@@ -66,401 +66,361 @@ menu bases
 	// buttons
 	// ===============
 
-	pic buildings
+	button buildings
 	{
 		// only if base is not under attack
 		if "mn_base_status_id != 1"
 		tooltip	"_Build base facilities"
-		image	menu/button
+		image	menu/button_green_small
+		blend true
 		pos	"755 128"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
-		click
-		{
+		size	"230 56"
+		click	{
 			cmd "mn_push buildings"
 		}
-		out		{ *txt_building color "0 0.8 0 1" *buildings texl "0 8" *buildings texh "230 56" }
-		in		{ *txt_building color "1 1 1 1" *buildings texl "230 8" *buildings texh "460 56" }
+		color "0 0.8 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Buildings"
+		font	f_menu
 	}
-	pic buildings_na
+	
+	// @todo need to merge it with the last one
+	button buildings_na
 	{
 		// only if base is under attack
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 128"
-		texl	"0 72"
-		texh	"230 120"
-		in
-	}
-	string txt_building
-	{
+		size	"230 56"
+		disabled	true
 		string	"_Buildings"
 		color	"0 0.8 0 1"
-		pos	"874 153"
 		font	f_menu
-		align	cc
 	}
 
-	pic aircraft
+	button aircraft
 	{
 		// only if base has at least one aircraft
 		if "mn_base_num_aircraft >= 1"
 		tooltip	"_Manage your aircraft"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 188"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push aircraft;"
 		}
-		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 8" *aircraft texh "230 56" }
-		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 8" *aircraft texh "460 56" }
+		string	"_Aircraft"
+		font	f_menu
+		color "0 0.8 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic aircraft_action
+	button aircraft_action
 	{
 		// only if base has no aircraft but can handle them
 		if "mn_base_num_aircraft == 0"
 		tooltip	"_Buy or produce a new aircraft"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 188"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push aircraft_action;"
 		}
-		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_action texl "0 8" *aircraft_action texh "230 56" }
-		in		{ *txt_aircraft color "1 1 1 1" *aircraft_action texl "230 8" *aircraft_action texh "460 56" }
+		string	"_Aircraft"
+		font	f_menu
+		color "0 0.8 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic aircraft_na
+	button aircraft_na
 	{
 		// only if base can't handle aircraft
 		if "mn_base_num_aircraft == -1"
 		tooltip	"_Build at least one functional Hangar (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 188"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_hangar;"
 		}
-		in
-	}
-	string txt_aircraft
-	{
 		string	"_Aircraft"
-		color	"0 0.8 0 1"
-		pos	"874 213"
 		font	f_menu
-		align	cc
+		color "0 0.8 0 1"
+		selectcolor "1 1 1 1"
 	}
 
-	pic buysell
+	button buysell
 	{
 		// only if base is not under attack and has a storage
 		if "mn_base_buysell_allowed == 1"
 		tooltip	"_Buy/Sell equipment"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 248"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push buy"
 		}
-		out		{ *txt_buysell color "0 0.8 0 1" *buysell texl "0 8" *buysell texh "230 56" }
-		in		{ *txt_buysell color "1 1 1 1" *buysell texl "230 8" *buysell texh "460 56" }
+		string	"_Buy/Sell Equipment"
+		selectcolor	"1 1 1 1"
+		color	"0 0.8 0 1"
+		font	f_menu
 	}
-	pic buysell_na
+	button buysell_na
 	{
 		// only if base is under attack don't have a storage
 		if "mn_base_buysell_allowed != 1"
 		tooltip	"_Build at least one functional Storage (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 248"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_storage;"
 		}
-		in
-	}
-	string txt_buysell
-	{
 		string	"_Buy/Sell Equipment"
+		selectcolor	"1 1 1 1"
 		color	"0 0.8 0 1"
-		pos	"874 273"
 		font	f_menu
-		align	cc
 	}
 
-	pic transfer
+	button transfer
 	{
 		if "mn_base_transfer_allowed == 1"
 		tooltip	"_Transfer equipment or personnel"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 308"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push transfer"
 		}
-		out		{ *txt_transfer color "0 0.8 0 1" *transfer texl "0 8" *transfer texh "230 56" }
-		in		{ *txt_transfer color "1 1 1 1" *transfer texl "230 8" *transfer texh "460 56" }
+		string	"_Transfer"
+		color	"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		font	f_menu
 	}
-	pic transfer_na
+	// @todo merge it with the last one
+	button transfer_na
 	{
 		if "mn_base_transfer_allowed != 1"
 		tooltip	"_Can't transfer (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 308"
-		texl	"0 72"
-		texh	"230 120"
-		in
-	}
-	string txt_transfer
-	{
+		size	"230 56"
+		disabled	true
 		string	"_Transfer"
 		color	"0 0.8 0 1"
-		pos	"874 333"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
-	pic research
+	button research
 	{
 		// only if base is not under attack
 		if "mn_base_research_allowed == 1"
 		tooltip	"_Research new technology"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 368"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push research"
 		}
-		out		{ *txt_research color "0 0.8 0 1" *research texl "0 8" *research texh "230 56" }
-		in		{ *txt_research color "1 1 1 1" *research texl "230 8" *research texh "460 56" }
+		string	"_Research"
+		color	"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		font	f_menu
 	}
-	pic research_na
+	button research_na
 	{
 		// only if base is not under attack
 		if "mn_base_research_allowed != 1"
 		tooltip	"_Build at least one functional Laboratory (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 368"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_lab;"
 		}
-		in
-	}
-	string txt_research
-	{
 		string	"_Research"
 		color	"0 0.8 0 1"
-		pos	"874 393"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
-	pic production
+	button production
 	{
 		// only if base is able to produce items
 		if "mn_base_prod_allowed == 1"
 		tooltip	"_Produce new equipment"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 428"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push production"
 		}
-		out		{ *txt_production color "0 0.8 0 1" *production texl "0 8" *production texh "230 56" }
-		in		{ *txt_production color "1 1 1 1" *production texl "230 8" *production texh "460 56" }
+		string	"_Production"
+		color	"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		font	f_menu
 	}
-	pic production_na
+	button production_na
 	{
 		// only if base is unable to produce items
 		if "mn_base_prod_allowed == 0"
 		tooltip	"_Build at least one functional Workshop (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 428"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_workshop;"
 		}
-		in
-	}
-	string txt_production
-	{
 		string	"_Production"
 		color	"0 0.8 0 1"
-		pos	"874 453"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
-	pic hire
+	button hire
 	{
 		// only if base is not under attack
 		if "mn_base_hire_allowed == 1"
 		tooltip	"_Hire employees"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 488"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push employees"
 		}
-		out		{ *txt_hire color "0 0.8 0 1" *hire texl "0 8" *hire texh "230 56" }
-		in		{ *txt_hire color "1 1 1 1" *hire texl "230 8" *hire texh "460 56" }
+		string	"_Hire employees"
+		color	"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		font	f_menu
 	}
-	pic hire_na
+	button hire_na
 	{
 		// only if base is not under attack
 		if "mn_base_hire_allowed != 1"
 		tooltip	"_Build at least one functional Living Quarter (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 488"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_quarters;"
 		}
-		in
-	}
-	string txt_hire
-	{
 		string	"_Hire employees"
 		color	"0 0.8 0 1"
-		pos	"874 513"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
-	pic containment
+	button containment
 	{
 		if "mn_base_containment_allowed == 1"
 		tooltip	"_Deal with Aliens in Alien Containment"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 548"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push aliencont"
 		}
-		out		{ *txt_containment color "0 0.8 0 1" *containment texl "0 8" *containment texh "230 56" }
-		in		{ *txt_containment color "1 1 1 1" *containment texl "230 8" *containment texh "460 56" }
+		string	"_Containment"
+		color	"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		font	f_menu
 	}
-	pic containment_na
+	button containment_na
 	{
 		if "mn_base_containment_allowed != 1"
 		tooltip	"_Build at least one functional Alien Containment (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 548"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_aliencontainment;"
 		}
-		in
-	}
-	string txt_containment
-	{
 		string	"_Containment"
 		color	"0 0.8 0 1"
-		pos	"874 573"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
-	pic hospital
+	button hospital
 	{
 		if "mn_base_hospital_allowed == 1"
 		tooltip	"_Medical and Surgery operations"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 608"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push hospital"
 		}
-		out		{ *txt_hospital color "0 0.8 0 1" *hospital texl "0 8" *hospital texh "230 56" }
-		in		{ *txt_hospital color "1 1 1 1" *hospital texl "230 8" *hospital texh "460 56" }
+		string	"_Hospital"
+		color	"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		font	f_menu
 	}
-	pic hospital_na
+	button hospital_na
 	{
 		if "mn_base_hospital_allowed != 1"
 		tooltip	"_Build at least one functional Hospital (click for more info)"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 608"
-		texl	"0 72"
-		texh	"230 120"
+		size	"230 56"
 		click
 		{
 			cmd "check_building_status building_hospital;"
 		}
-		in
-	}
-	string txt_hospital
-	{
 		string	"_Hospital"
 		color	"0 0.8 0 1"
-		pos	"874 633"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
-	pic summary
+	button summary
 	{
 		tooltip	"_Base Information"
-		image	menu/button
+		image	menu/button_green_small
+		blend	true
 		pos	"755 668"
-		texl	"0 8"
-		texh	"230 56"
-		mousefx true
+		size	"230 56"
 		click
 		{
 			cmd "mn_push basesummary;"
 		}
-		out		{ *txt_summary color "0 0.8 0 1" *summary texl "0 8" *summary texh "230 56" }
-		in		{ *txt_summary color "1 1 1 1" *summary texl "230 8" *summary texh "460 56" }
-	}
-
-	string txt_summary
-	{
 		string	"_Base Summary"
 		color	"0 0.8 0 1"
-		pos	"874 693"
+		selectcolor	"1 1 1 1"
 		font	f_menu
-		align	cc
 	}
 
 	// ==================
