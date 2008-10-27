@@ -307,7 +307,7 @@ menu_t *MN_GetMenu (const char *name)
 void MN_SetNewMenuPos (menu_t* menu, int x, int y)
 {
 	if (menu)
-		Vector2Set(menu->origin, x, y);
+		Vector2Set(menu->pos, x, y);
 }
 
 /**

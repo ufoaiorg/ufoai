@@ -362,8 +362,8 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 				pmi.origin[1] = menuModelParent->origin[1] + mi.origin[1];
 				pmi.origin[2] = menuModelParent->origin[2];
 				/* don't count menuoffset twice for tagged models */
-				mi.origin[0] -= node->menu->origin[0];
-				mi.origin[1] -= node->menu->origin[1];
+				mi.origin[0] -= node->menu->pos[0];
+				mi.origin[1] -= node->menu->pos[1];
 				pmi.angles = menuModelParent->angles;
 				pmi.scale = menuModelParent->scale;
 				pmi.center = menuModelParent->center;
@@ -453,8 +453,8 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 						pmi.origin[0] += mi.origin[0];
 						pmi.origin[1] += mi.origin[1];
 						/* don't count menuoffset twice for tagged models */
-						mi.origin[0] -= node->menu->origin[0];
-						mi.origin[1] -= node->menu->origin[1];
+						mi.origin[0] -= node->menu->pos[0];
+						mi.origin[1] -= node->menu->pos[1];
 						pmi.angles = search->u.model.angles;
 						pmi.scale = search->scale;
 						pmi.center = search->u.model.center;

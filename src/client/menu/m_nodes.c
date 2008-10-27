@@ -67,7 +67,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	if (!nodeBehaviourList[node->type].draw)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
 
-	Vector2Set(pos, node->menu->origin[0] + node->pos[0], node->menu->origin[1] + node->pos[1]);
+	Vector2Set(pos, node->menu->pos[0] + node->pos[0], node->menu->pos[1] + node->pos[1]);
 }
 
 #if 0
@@ -229,8 +229,8 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qfalse;
 
 	for (i = 0; i < node->excludeNum; i++) {
-		if (x >= node->menu->origin[0] + node->exclude[i].pos[0] && x <= node->menu->origin[0] + node->exclude[i].pos[0] + node->exclude[i].size[0]
-		 && y >= node->menu->origin[1] + node->exclude[i].pos[1] && y <= node->menu->origin[1] + node->exclude[i].pos[1] + node->exclude[i].size[1])
+		if (x >= node->menu->pos[0] + node->exclude[i].pos[0] && x <= node->menu->pos[0] + node->exclude[i].pos[0] + node->exclude[i].size[0]
+		 && y >= node->menu->pos[1] + node->exclude[i].pos[1] && y <= node->menu->pos[1] + node->exclude[i].pos[1] + node->exclude[i].size[1])
 			return qfalse;
 	}
 

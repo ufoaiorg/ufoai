@@ -286,9 +286,9 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (base->map[row][col].building && x >= base->map[row][col].posX + node->menu->origin[0]
-			 && x < base->map[row][col].posX + node->menu->origin[0] + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY + node->menu->origin[1]
-			 && y < base->map[row][col].posY + node->menu->origin[1] + node->size[1] / BASE_SIZE) {
+			if (base->map[row][col].building && x >= base->map[row][col].posX + node->menu->pos[0]
+			 && x < base->map[row][col].posX + node->menu->pos[0] + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY + node->menu->pos[1]
+			 && y < base->map[row][col].posY + node->menu->pos[1] + node->size[1] / BASE_SIZE) {
 				building_t *entry = base->map[row][col].building;
 				if (!entry)
 					Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);

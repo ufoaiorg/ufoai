@@ -31,7 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct menu_s {
 	char name[MAX_VAR];
 	int eventTime;
-	vec2_t origin;	/**< the position of the menu */
+	vec2_t pos;	/**< the position of the menu */
+	vec2_t size;	/**< the size of the menu */
 	vec2_t noticePos; /**< the position where the cl.msgText messages are rendered */
 	struct menuNode_s *firstNode, *initNode, *closeNode, *renderNode;
 	struct menuNode_s *popupNode, *hoverNode, *eventNode, *leaveNode;
