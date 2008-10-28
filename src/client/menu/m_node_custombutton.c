@@ -75,7 +75,6 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (image) {
-		R_ColorBlend(NULL);
 		R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
 			node->size[0], baseY + node->size[1], 0, baseY, ALIGN_UL, node->blend, image);
 	}
@@ -88,6 +87,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 		R_FontDrawString(font, ALIGN_CC, nodepos[0] + (node->size[0] / 2), nodepos[1] + (node->size[1] / 2),
 			nodepos[0], nodepos[1], node->size[0] * 1.5, node->size[1],
 			0, _(text), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		R_ColorBlend(NULL);
 	}
 }
 
