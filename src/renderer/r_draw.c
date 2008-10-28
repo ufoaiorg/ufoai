@@ -239,6 +239,9 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
 	glEnd();
 }
 
+static float image_texcoords[4 * 2];
+static short image_verts[4 * 2];
+
 /**
  * @brief Draws an image or parts of it
  * @param[in] x X position to draw the image to
@@ -261,6 +264,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 	image_t *gl;
+	int image_index;
 
 	gl = R_RegisterPic(name);
 	if (!gl) {
@@ -342,23 +346,40 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 		x2 += nh;
 	}
 
+	image_texcoords[0] = sl;
+	image_texcoords[1] = tl;
+	image_texcoords[2] = sh;
+	image_texcoords[3] = tl;
+	image_texcoords[4] = sh;
+	image_texcoords[5] = th;
+	image_texcoords[6] = sl;
+	image_texcoords[7] = th;
+	image_verts[0] = x1;
+	image_verts[1] = y1;
+	image_verts[2] = x2;
+	image_verts[3] = y2;
+	image_verts[4] = x3;
+	image_verts[5] = y3;
+	image_verts[6] = x4;
+	image_verts[7] = y4;
+
+	/* alter the array pointers */
+	glVertexPointer(2, GL_SHORT, 0, image_verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, image_texcoords);
+
 	if (blend)
 		R_EnableBlend(qtrue);
 
 	R_BindTexture(gl->texnum);
-	glBegin(GL_QUADS);
-	glTexCoord2f(sl, tl);
-	glVertex2f(x1, y1);
-	glTexCoord2f(sh, tl);
-	glVertex2f(x2, y2);
-	glTexCoord2f(sh, th);
-	glVertex2f(x3, y3);
-	glTexCoord2f(sl, th);
-	glVertex2f(x4, y4);
-	glEnd();
+
+	glDrawArrays(GL_QUADS, 0, 4);
 
 	if (blend)
 		R_EnableBlend(qfalse);
+
+	/* and restore them */
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	return nw;
 }

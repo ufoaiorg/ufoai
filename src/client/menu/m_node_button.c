@@ -106,7 +106,6 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (image) {
-		R_ColorBlend(NULL);
 
 		/* draw top (from left to right) */
 		R_DrawNormPic(pos[0], pos[1], CORNER_WIDTH, CORNER_HEIGHT, texX+LEFT_POSX+CORNER_WIDTH, texY+TOP_POSY+CORNER_HEIGHT,
@@ -144,6 +143,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 		R_FontDrawString(font, ALIGN_CC, pos[0] + (node->size[0] / 2), pos[1] + (node->size[1] / 2),
 			pos[0], pos[1], node->size[0] * 1.5, node->size[1],
 			0, _(text), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		R_ColorBlend(NULL);
 	}
 }
 
