@@ -885,6 +885,7 @@ menu options_pause
 		click
 		wheel	{ cmd "msgoptions_scroll;" }
 		mousefx	true
+		longlines prettychop
 	}
 
 	pic bt_pause0 {
