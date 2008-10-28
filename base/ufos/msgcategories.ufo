@@ -1,3 +1,9 @@
+//========================================
+// Settings for message categories
+//========================================
+// Description:
+// definitions of categories to group notification types
+// the order of categories in this file defines the order in settings menu 
 msgcategory "_install_equipment" {
 	installation_installed
 	installation_removed

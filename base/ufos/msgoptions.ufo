@@ -3,7 +3,7 @@
 //========================================
 // Description:
 // a list of enabled message options settings
-// each line contains one nt_type and pause|notify
+// each line contains one nt_type and pause|notify|sound
 msgoptions default
 {
 	installation_installed pause
