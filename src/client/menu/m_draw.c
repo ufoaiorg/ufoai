@@ -222,8 +222,11 @@ void MN_DrawMenus (void)
 				VectorScale(node->color, 0.8, color);
 				color[3] = node->color[3];
 				R_ColorBlend(color);
-			} else if (node->type != MN_SELECTBOX)
+			}
+#if 0 /* if it need move this function into some nodes */
+			else if (node->type != MN_SELECTBOX)
 				R_ColorBlend(node->color);
+#endif
 
 			/* draw the node */
 			if (nodeBehaviourList[node->type].draw) {
