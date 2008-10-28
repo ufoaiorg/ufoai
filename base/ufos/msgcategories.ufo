@@ -1,0 +1,11 @@
+msgcategory "_install_equipment" {
+	installation_installed
+	installation_removed
+	installation_replaced
+}
+
+msgcategory "_installation_construction" {
+	installation_build_started
+	installation_build_finished
+	installation_destroyed
+}

@@ -96,6 +96,23 @@ typedef enum mso_s {
 	MSO_SOUND	/**< play notification sound */
 } mso_t;
 
+#define MAX_MESSAGECATEGORIES 16
+typedef struct msgcatEntry_s {
+	struct msgcategory_s *category; /**< associated category */
+	const char *notifyType;			/**< notification type or category name */
+	struct msgcatEntry_s *next;		/**< pointer to next in category */
+	struct msgcatEntry_s *previous;	/**< pointer to previous in category */
+	struct messageSettings_s *settings;	/**< associated settings */
+	qboolean isCategory;			/**< flag indicating that this is a category and no notification type */
+} msgcatEntry_t;
+
+typedef struct msgcategory_s {
+	int idx;				/**< self-link */
+	char	*id;			/**< script file id / translateable category name */
+	struct msgcatEntry_s *first;
+	struct msgcatEntry_s *last;
+} msgcategory_t;
+
 /**
  * @brief structure holding pause and notify settings for a notify type.
  *
@@ -115,5 +132,6 @@ void MN_AddChatMessage(const char *text);
 void MN_MessageInit(void);
 message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 void MSO_ParseSettings(const char *name, const char **text);
+void MSO_ParseCategories(const char *name, const char **text);
 
 #endif

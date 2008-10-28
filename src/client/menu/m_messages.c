@@ -43,6 +43,7 @@ messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];/* array holding message se
 int messageList_scroll; /* actual messageSettings list begin index due to scrolling */
 static char ms_messageSettingsList[1024];/* buffer for message settings text node */
 qboolean messageOptionsInitialized = qfalse; /* flag indicating whether message options menu is initialized @sa MSO_Init_f */
+qboolean messageOptionsPrepared = qfalse; /* flag indicating whether parsed category data is prepared @sa MSO_ParseCategories */
 
 /** @brief how many message settings may be shown at once on option page */
 #define MAX_MESSAGESETTINGS_ENTRIES 21
@@ -380,46 +381,63 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 
 /**
  * @brief Initializes menu texts for scrollable area
- * @note Calls confuncs to enable enough button lines in menu
+ * @sa MSO_Init_f
  */
 static void MSO_InitTextList (void)
 {
-	char categoryLine[36];
+	char categoryLine[64];
 	int idx;
 
 	*ms_messageSettingsList = '\0';
 
-	/* add all available texts, enable as much menu button lines as needed*/
-	for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx++) {
-		const char *category = nt_strings[idx];
-		Com_sprintf(categoryLine, sizeof(categoryLine), "%s\n", _(category));
+	for (idx = 0; idx < gd.numMsgCatEntries; idx ++) {
+		Com_sprintf(categoryLine, sizeof(categoryLine), "%s%s\n", gd.msgcategoryEntries[idx].isCategory ? "" : "-", _(gd.msgcategoryEntries[idx].notifyType));
 		Q_strcat(ms_messageSettingsList, categoryLine, sizeof(ms_messageSettingsList));
 	}
 	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
+	messageList_scroll = 0;
+}
+
+static void MSO_UpdateVisibleButtons (void)
+{
+	int i;
+
+	/** update visible button lines based on current displayed values */
+	for (i = 0; (i < MAX_MESSAGESETTINGS_ENTRIES && i < gd.numMsgCatEntries); i++) {
+		const int idx = i + messageList_scroll;
+		if (idx < NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES) {
+			if (gd.msgcategoryEntries[idx].isCategory) {
+				MN_ExecuteConfunc(va("ms_disable%i",i));
+			} else {
+				MN_ExecuteConfunc(va("ms_enable%i",i));
+				MN_ExecuteConfunc(va("ms_pause%s%i", gd.msgcategoryEntries[idx].settings->doPause ? "e" : "d", i));
+				MN_ExecuteConfunc(va("ms_notify%s%i", gd.msgcategoryEntries[idx].settings->doNotify ? "e" : "d", i));
+				MN_ExecuteConfunc(va("ms_sound%s%i", gd.msgcategoryEntries[idx].settings->doSound ? "e" : "d", i));
+			}
+		}
+	}
+
+	for (; i < NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES; i++) {
+		MN_ExecuteConfunc(va("ms_disable%i", i));
+	}
 }
 
 /**
  * @brief initializes message options menu by showing as much button lines as needed.
- * @note this must only be done once as long as settings are changed in menu, so
+ * @note This must only be done once as long as settings are changed in menu, so
  * messageOptionsInitialized is checked whether this is done yet. This function will be
- * reenabled if settings are changed via MSO_Set_f
+ * reenabled if settings are changed via MSO_Set_f. If text list is not initialized
+ * after parsing, MSO_InitTextList will be called first.
  */
 static void MSO_Init_f (void)
 {
+	if (!messageOptionsPrepared) {
+		MSO_InitTextList();
+		messageOptionsPrepared = qtrue;
+	}
+
 	if (!messageOptionsInitialized) {
-		int idx;
-		for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx++) {
-			if (idx < MAX_MESSAGESETTINGS_ENTRIES) {
-				MN_ExecuteConfunc(va("ms_enable%i", idx));
-				MN_ExecuteConfunc(va("ms_pause%s%i", messageSettings[idx].doPause ? "e" : "d", idx));
-				MN_ExecuteConfunc(va("ms_notify%s%i", messageSettings[idx].doNotify ? "e" : "d", idx));
-				MN_ExecuteConfunc(va("ms_sound%s%i", messageSettings[idx].doSound? "e" : "d", idx));
-			}
-		}
-		/* disable menu button lines that are not needed */
-		for (idx = NT_NUM_NOTIFYTYPE; idx < MAX_MESSAGESETTINGS_ENTRIES; idx++) {
-			MN_ExecuteConfunc(va("ms_disable%i", idx));
-		}
+		MSO_UpdateVisibleButtons();
 		messageOptionsInitialized = qtrue;
 	}
 }
@@ -466,19 +484,33 @@ static void MSO_Toggle_f (void)
 		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", Cmd_Argv(0));
 	else {
 		const int listIndex = atoi(Cmd_Argv(1));
-		const notify_t type = listIndex + messageList_scroll;
+		const msgcatEntry_t selectedEntry = gd.msgcategoryEntries[listIndex + messageList_scroll];
 		mso_t optionType;
 		qboolean activate;
+		notify_t type;
+
+		if (selectedEntry.isCategory) {
+			Sys_ConsoleOutput("Toggle command with selected category entry ignored.\n");
+			return;
+		}
+		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
+			if (!Q_strcmp(nt_strings[type], selectedEntry.notifyType))
+				break;
+		}
+		if (type == NT_NUM_NOTIFYTYPE) {
+			Sys_ConsoleOutput(va("Unrecognized messagetype during toggle '%s' ignored\n", selectedEntry.notifyType));
+			return;
+		}
 
 		if (!Q_strcmp(Cmd_Argv(2), "pause")) {
 			optionType = MSO_PAUSE;
-			activate = !messageSettings[type].doPause;
+			activate = !selectedEntry.settings->doPause;
 		} else if (!Q_strcmp(Cmd_Argv(2), "notify")) {
 			optionType = MSO_NOTIFY;
-			activate = !messageSettings[type].doNotify;
+			activate = !selectedEntry.settings->doNotify;
 		} else {
 			optionType = MSO_SOUND;
-			activate = !messageSettings[type].doSound;
+			activate = !selectedEntry.settings->doSound;
 		}
 		MSO_Set(listIndex, type, optionType, activate, qtrue);
 	}
@@ -559,7 +591,6 @@ static void MSO_SetAll_f(void)
 static void MSO_Scroll_f (void)
 {
 	menuNode_t *textNode;
-	int i;
 
 	/* no scrolling available if displaying less notify types that max on page */
 	if (NT_NUM_NOTIFYTYPE < MAX_MESSAGESETTINGS_ENTRIES)
@@ -577,16 +608,9 @@ static void MSO_Scroll_f (void)
 		textNode->textScroll = messageList_scroll;
 	}
 
-	/** update visible button lines based on current displayed values */
-	for (i = 0; i < MAX_MESSAGESETTINGS_ENTRIES; i++) {
-		const notify_t type = i + messageList_scroll;
-		if (type < NT_NUM_NOTIFYTYPE) {
-			MN_ExecuteConfunc(va("ms_pause%s%i", messageSettings[type].doPause ? "e" : "d", i));
-			MN_ExecuteConfunc(va("ms_notify%s%i", messageSettings[type].doNotify ? "e" : "d", i));
-			MN_ExecuteConfunc(va("ms_sound%s%i", messageSettings[type].doSound ? "e" : "d", i));
-		}
-	}
+	MSO_UpdateVisibleButtons();
 }
+
 
 /**
  * @brief Adds a new message to message stack. It uses message settings to
@@ -710,6 +734,84 @@ void MSO_ParseSettings(const char *name, const char **text)
 	} while (*text);
 }
 
+/**
+ * @brief Parses a messagecategory script section. These categories are used to group notification types.
+ * @param name
+ * @param text
+ * @sa MSO_InitTextList
+ */
+void MSO_ParseCategories(const char *name, const char **text)
+{
+	const char *errhead = "MSO_ParseCategories: unexpected end of file (names ";
+	const char *token;
+	int idx;
+
+	name++;
+
+	/* get name list body body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("MSO_ParseCategories: category \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	/* add category */
+	if (gd.numMsgCategories >= MAX_MESSAGECATEGORIES) {
+		Com_Printf("MSO_ParseCategories: too many messagecategory defs\n");
+		return;
+	}
+	memset(&gd.messagecategories[gd.numMsgCategories], 0, sizeof(gd.messagecategories[gd.numMsgCategories]));
+	gd.messagecategories[gd.numMsgCategories].id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+	gd.messagecategories[gd.numMsgCategories].idx = gd.numMsgCategories;	/* set self-link */
+
+	/* first entry is category */
+	memset(&gd.msgcategoryEntries[gd.numMsgCatEntries],0,sizeof(gd.msgcategoryEntries[gd.numMsgCatEntries]));
+	gd.msgcategoryEntries[gd.numMsgCatEntries].category = &gd.messagecategories[gd.numMsgCategories];
+	gd.messagecategories[gd.numMsgCategories].first = &gd.msgcategoryEntries[gd.numMsgCatEntries];
+	gd.messagecategories[gd.numMsgCategories].last = &gd.msgcategoryEntries[gd.numMsgCatEntries];
+	gd.msgcategoryEntries[gd.numMsgCatEntries].previous = NULL;
+	gd.msgcategoryEntries[gd.numMsgCatEntries].next = NULL;
+	gd.msgcategoryEntries[gd.numMsgCatEntries].isCategory = qtrue;
+	gd.msgcategoryEntries[gd.numMsgCatEntries].notifyType = gd.messagecategories[gd.numMsgCategories].id;
+
+	gd.numMsgCatEntries++;
+
+	do {
+		/* get entries and add them to category */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		if (*token) {
+			for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
+				if (!Q_strncmp(token, nt_strings[idx],MAX_VAR)) {
+					/* prepare a new msgcategory entry */
+					msgcatEntry_t *old = gd.messagecategories[gd.numMsgCategories].last;
+
+					memset(&gd.msgcategoryEntries[gd.numMsgCatEntries],0,sizeof(gd.msgcategoryEntries[gd.numMsgCatEntries]));
+					gd.msgcategoryEntries[gd.numMsgCatEntries].category = &gd.messagecategories[gd.numMsgCategories];
+
+					gd.messagecategories[gd.numMsgCategories].last = &gd.msgcategoryEntries[gd.numMsgCatEntries];
+					old->next = &gd.msgcategoryEntries[gd.numMsgCatEntries];
+					gd.msgcategoryEntries[gd.numMsgCatEntries].previous = old;
+					gd.msgcategoryEntries[gd.numMsgCatEntries].next = NULL;
+					gd.msgcategoryEntries[gd.numMsgCatEntries].notifyType = nt_strings[idx];
+					gd.msgcategoryEntries[gd.numMsgCatEntries].settings = &messageSettings[idx];
+					gd.numMsgCatEntries++;
+					break;
+				}
+			}
+		}
+
+
+	} while (*text);
+	gd.numMsgCategories++;
+	messageOptionsPrepared = qfalse;
+}
+
 void MN_MessageInit (void)
 {
 	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
@@ -723,6 +825,4 @@ void MN_MessageInit (void)
 	Cmd_AddCommand("debug_clear_messagelist", CL_DeleteMessages_f, "Clears messagelist");
 #endif
 
-	messageList_scroll = 0;
-	MSO_InitTextList();
 }

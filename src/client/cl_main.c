@@ -1728,6 +1728,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		CL_ParseAlienTeam(name, text);
 	else if (!Q_strncmp(type, "msgoptions", 10))
 		MSO_ParseSettings(name, text);
+	else if (!Q_strncmp(type, "msgcategory", 11))
+		MSO_ParseCategories(name, text);
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
 		Com_ParseMedalsAndRanks(name, &text, qfalse);

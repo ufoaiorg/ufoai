@@ -159,6 +159,14 @@ typedef struct globalData_s
 	teamDef_t *alienTeams[ALIENTEAM_MAX][MAX_ALIEN_TEAM_LEVEL][MAX_TEAMS_PER_MISSION];	/**< different alien team available
 																	 * that will be used in mission */
 	int numAlienTeams[ALIENTEAM_MAX];		/** number of alienTeams defined */
+
+	/* message categories */
+	msgcategory_t messagecategories[MAX_MESSAGECATEGORIES];
+	int numMsgCategories;
+
+	/* entries for message categories */
+	msgcatEntry_t msgcategoryEntries[NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES];
+	int numMsgCatEntries;
 } globalData_t;
 
 
