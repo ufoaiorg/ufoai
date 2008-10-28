@@ -340,13 +340,14 @@ menu sequence
 menu popup_tipoftheday
 {
 	{
-		origin "30 450"
+		pos "38 456"
+		size "496 247"
 	}
 
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"8 6"
+		pos	"0 0"
 		size	"496 247"
 		blend	true
 	}
@@ -355,13 +356,13 @@ menu popup_tipoftheday
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos	"460 26"
+		pos	"452 20"
 	}
 
 	string title
 	{
 		string	"_Tip of the day"
-		pos	"256 24"
+		pos	"248 18"
 		font	f_big
 		align uc
 	}
@@ -369,20 +370,20 @@ menu popup_tipoftheday
 	checkbox activate
 	{
 		cvar	"*cvar cl_showTipOfTheDay"
-		pos	"44 200"
+		pos	"36 194"
 		align	ul
 	}
 	string activate_string
 	{
 		string	"_Show tip of the day"
-		pos	"66 200"
+		pos	"58 194"
 		font	f_small
 		align ul
 	}
 
 	text popup_tipoftheday_text
 	{
-		pos	"34 64"
+		pos	"26 58"
 		size	"444 120"
 		format	"20 150"
 		num	TEXT_TIPOFTHEDAY
@@ -397,7 +398,7 @@ menu popup_tipoftheday
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"274 194"
+		pos	"266 188"
 		out	{ *string_next color "0 0.5 0 1" *bt_next image menu/multi_buttons3 }
 		in	{ *string_next color "1 1 1 1" *bt_next image menu/multi_buttons3a }
 		click	{ cmd "tipoftheday;" }
@@ -407,7 +408,7 @@ menu popup_tipoftheday
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Next"
-		pos	"360 210"
+		pos	"352 204"
 		align	cc
 	}
 

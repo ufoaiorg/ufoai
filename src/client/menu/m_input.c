@@ -101,12 +101,45 @@ qboolean MN_CursorOnMenu (int x, int y)
 	return qfalse;
 }
 
+menuNode_t *mouseOverTest;
+
 /**
  * @brief Is called everytime the mouse position change
  */
 void MN_MouseMove (int x, int y)
 {
+	menu_t *menu;
+	int sp;
+	menuNode_t *node;
 
+	mouseOverTest = NULL;
+
+	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
+		menu = mn.menuStack[sp];
+
+		/* check mouse vs menu boundedbox */
+		if (menu->size[0] != 0 && menu->size[1] != 0) {
+			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
+				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+				continue;
+		}
+
+		/* local position */
+		x -= menu->pos[0];
+		y -= menu->pos[1];
+
+
+		/* check mouse vs node boundedbox */
+		for (node = menu->firstNode; node; node = node->next) {
+			if (node->invis || node->disabled)
+				continue;
+			if (x >= node->pos[0] && x <= node->pos[0] + node->size[0]
+				&& y >= node->pos[1] && y <= node->pos[1] + node->size[1])
+				mouseOverTest = node;
+		}
+
+		break;
+	}
 }
 
 /**

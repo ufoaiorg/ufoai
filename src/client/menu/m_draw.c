@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 
 static cvar_t *mn_debugmenu;
+static cvar_t *mn_debugmenu2;
 cvar_t *mn_show_tooltips;
 
 static const invList_t *itemHover;
@@ -78,6 +79,44 @@ static void MN_CheckMouseMove (void)
 		oldY = mousePosY;
 		MN_MouseMove(mousePosX, mousePosY);
 	}
+}
+
+void MN_DrawDebugMenu2 (void)
+{
+	static vec4_t red = {1, 0.0, 0.0, 1.0};
+	static vec4_t white = {1, 1.0, 1.0, 1.0};
+	menuNode_t *node = mouseOverTest;
+	vec2_t pos;
+	int padding = 10;
+	int sp;
+	menu_t *menu;
+	int posy = 0;
+
+	MN_GetNodeAbsPos(node, pos);
+
+	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
+		menu = mn.menuStack[sp];
+		if (node->menu == menu)
+			R_ColorBlend(red);
+		else
+			R_ColorBlend(white);
+		R_FontDrawString("f_small_bold", ALIGN_UL, 0, posy, 0, posy, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+		posy += 15;
+	}
+	R_ColorBlend(red);
+	R_FontDrawString("f_small_bold", ALIGN_LR, pos[0], pos[1], pos[0], pos[1], 200, 200, 0, node->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_ColorBlend(NULL);
+
+	#if 0
+	R_DrawFill(pos[0] - padding/2, pos[1] - padding/2,
+		padding, padding, ALIGN_UL, red);
+	#endif
+	R_DrawFill(pos[0] + node->size[0]-padding/2, pos[1] + node->size[1]-padding/2,
+		padding, padding, ALIGN_UL, red);
+	R_DrawFill(pos[0] - padding/2, pos[1] + node->size[1],
+		padding, padding, ALIGN_UL, red);
+	R_DrawFill(pos[0]+node->size[0], pos[1] -padding/2,
+		padding, padding, ALIGN_UL, red);
 }
 
 /**
@@ -232,12 +271,18 @@ void MN_DrawMenus (void)
 			MN_DrawNotice(500, 110);
 	}
 
+	/* debug help for comming architecture */
+	if (mouseOverTest && mn_debugmenu2->integer) {
+		MN_DrawDebugMenu2();
+	}
+
 	R_ColorBlend(NULL);
 }
 
 void MN_DrawMenusInit (void)
 {
 	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
+	mn_debugmenu2 = Cvar_Get("mn_debugmenu2", "0", 0, "Prints active node names for debugging the coming architecture");
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 }
 
