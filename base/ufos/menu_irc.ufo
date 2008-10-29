@@ -211,6 +211,11 @@ menu irc
 // don't change this name or change it in the code, too
 menu irc_popup
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis true

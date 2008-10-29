@@ -560,6 +560,7 @@ menu popup_maintain_resolution
 {
 	{
 		pos	"256 256"
+		size	"496 247"
 	}
 
 	zone popup
@@ -1745,6 +1746,7 @@ menu popup_setall_pause
 {
 	{
 		pos	"256 256"
+		size	"496 247"
 	}
 
 	zone popup
@@ -1755,8 +1757,8 @@ menu popup_setall_pause
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"264 262"
-		size	"8 6"
+		size	"264 262"
+		pos	"8 6"
 		blend	true
 	}
 
@@ -1832,6 +1834,7 @@ menu popup_setall_notify
 {
 	{
 		pos	"256 256"
+		size	"496 247"
 	}
 
 	zone popup
@@ -1919,6 +1922,7 @@ menu popup_setall_sound
 {
 	{
 		pos	"256 256"
+		size	"496 247"
 	}
 
 	zone popup

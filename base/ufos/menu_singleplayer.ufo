@@ -309,6 +309,11 @@ menu singleplayermission
 
 menu quickload
 {
+	{
+		pos	"0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis true

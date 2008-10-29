@@ -997,6 +997,11 @@ menu aircraft_equip
 //
 menu aircraft_action
 {
+	{
+		pos	"0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis true

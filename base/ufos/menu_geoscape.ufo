@@ -668,6 +668,11 @@ menu map_combatzoom
 
 menu popup_list
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	// NOTE: This is only used in battlefield on top of the hud right now
 	// If we will ever use this in other places (on geoscape e.g.) we maybe
 	// have to readd the popup zone node
@@ -754,6 +759,11 @@ menu popup_list
 
 menu popup_button
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis true
@@ -886,6 +896,11 @@ menu popup_button
 
 menu popup_intercept_ready
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis true
@@ -992,6 +1007,11 @@ menu popup_intercept_ready
 
 menu popup_baseattack
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis true
@@ -1096,6 +1116,11 @@ menu popup_baseattack
 // ===============================
 menu popup_transferbaselist
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -1168,6 +1193,11 @@ menu popup_transferbaselist
 // ==================
 menu popup_newbase
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -1318,6 +1348,11 @@ menu popup_newbase
 // ==================
 menu popup_newinstallation_type
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -1494,6 +1529,11 @@ menu popup_newinstallation_type
 
 menu popup_newinstallation
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -1643,6 +1683,7 @@ menu radartower
 {
 	{
 		pos "276 276"
+		size	"496 247"
 	}
 
 	zone popup
@@ -1703,6 +1744,7 @@ menu popup_installationstatus
 {
 	{
 		pos "256 256"
+		size	"496 247"
 	}
 
 	zone popup
@@ -1845,6 +1887,12 @@ menu popup_installationstatus
 
 menu popup_intercept
 {
+
+	{
+		pos "0 0"
+		size	"777 402"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -1966,6 +2014,12 @@ menu popup_intercept
 
 menu popup_mission
 {
+
+	{
+		pos	"0 0"
+		size	"777 402"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -2059,6 +2113,11 @@ menu popup_mission
 
 menu popup_multi_selection
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -2139,6 +2198,11 @@ menu popup_multi_selection
 
 menu popup_aircraft
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
 	zone popup
 	{
 		invis	true
@@ -2215,6 +2279,12 @@ menu popup_aircraft
 
 menu popup
 {
+	{
+		pos "0 0"
+		size	"496 247"
+	}
+
+
 	zone popup
 	{
 		invis	true

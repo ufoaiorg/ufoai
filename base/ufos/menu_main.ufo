@@ -136,6 +136,11 @@ menu main
 
 menu checkcvars
 {
+	{
+		pos "0 0"
+		size	"777 402"
+	}
+
 	zone popup
 	{
 		invis true
