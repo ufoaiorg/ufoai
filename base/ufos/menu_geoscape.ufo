@@ -1642,7 +1642,7 @@ menu samsite
 menu radartower
 {
 	{
-		origin "276 276"
+		pos "276 276"
 	}
 
 	zone popup
@@ -1702,7 +1702,7 @@ menu radartower
 menu popup_installationstatus
 {
 	{
-		origin "256 256"
+		pos "256 256"
 	}
 
 	zone popup
