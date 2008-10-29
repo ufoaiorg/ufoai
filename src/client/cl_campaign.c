@@ -1471,23 +1471,31 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 
 	CL_GameTimeStop();
 	B_SelectBase(base);
+	MN_PopMenu(qfalse);
 	MN_PushMenu("popup_baseattack");
 }
 
 /**
  * @brief Check and start baseattack missions
- * @sa SAV_GameActionsAfterLoad
  * @sa CP_BaseAttackStartMission
  */
-void CP_CheckBaseAttacks (void)
+static void CP_CheckBaseAttacks_f (void)
 {
 	linkedList_t *missionlist = ccs.missions;
+	base_t *base = NULL;
+
+	if (Cmd_Argc() == 2) {
+		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(1)));
+	}
 
 	while (missionlist) {
 		mission_t *mission = (mission_t*) missionlist->data;
 
-		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
+		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK) {
+			if (base && ((base_t*) mission->data != base))
+				continue;
 			CP_BaseAttackStartMission(mission);
+		}
 		missionlist = missionlist->next;
 	}
 
@@ -4239,6 +4247,8 @@ void CL_CampaignRun (void)
 		CP_CheckEvents();
 		CP_CheckLostCondition(qtrue, NULL, 0);
 		AIRFIGHT_CampaignRunProjectiles(dt);
+		/* Check if there is a base attack mission */
+		CP_CheckBaseAttacks_f();
 
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
@@ -6858,4 +6868,5 @@ void CP_InitStartup (void)
 	Cmd_AddCommand("debug_addmission", CP_SpawnNewMissions_f, "Add a new mission");
 	Cmd_AddCommand("debug_delmissions", CP_DeleteMissions_f, "Remove all missions from global array");
 #endif
+	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
 }

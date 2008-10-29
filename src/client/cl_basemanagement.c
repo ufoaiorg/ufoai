@@ -2249,10 +2249,6 @@ static void B_NextBase_f (void)
 	if (!base)
 		return;
 
-	/* you can't change base if base is under attack */
-	if (base->baseStatus == BASE_UNDER_ATTACK)
-		return;
-
 	baseID = (base->idx + 1) % gd.numBases;
 	base = B_GetFoundedBaseByIDX(baseID);
 	if (base)
@@ -2270,10 +2266,6 @@ static void B_PrevBase_f (void)
 	base_t *base = baseCurrent;
 
 	if (!base)
-		return;
-
-	/* you can't change base if base is under attack */
-	if (base->baseStatus == BASE_UNDER_ATTACK)
 		return;
 
 	baseID = base->idx;

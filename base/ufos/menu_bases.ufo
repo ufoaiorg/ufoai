@@ -51,7 +51,7 @@ menu bases
 		texl	"0 64"
 		texh	"64 128"
 		mousefx false
-		click	{ cmd mn_pop; }
+		click	{ cmd "mn_pop;check_baseattacks;" }
 		out	{
 				*back_geo texl "0 64"
 				*back_geo texh "64 128"
