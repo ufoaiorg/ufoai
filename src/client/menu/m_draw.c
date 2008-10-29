@@ -81,7 +81,7 @@ static void MN_CheckMouseMove (void)
 	}
 }
 
-void MN_DrawDebugMenu2 (void)
+static void MN_DrawDebugMenu2 (void)
 {
 	static vec4_t red = {1, 0.0, 0.0, 1.0};
 	static vec4_t white = {1, 1.0, 1.0, 1.0};
