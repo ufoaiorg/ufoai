@@ -290,7 +290,7 @@ menu lost
 menu popup_recoverybaselist
 {
 	{
-		pos	"0 0"
+		pos	"264 262"
 		size	"496 247"
 	}
 
@@ -301,7 +301,7 @@ menu popup_recoverybaselist
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"264 262"
+		pos	"0 0"
 		size	"496 247"
 		blend	true
 	}
@@ -310,20 +310,20 @@ menu popup_recoverybaselist
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"692 284"
+		pos		"428 22"
 	}
 
 	string title
 	{
 		string	"_Select base for UFO recovery"
-		pos	"290 280"
+		pos	"26 18"
 		font	f_big
 	}
 
 	text cp_uforecovery_baselist
 	{
 		num TEXT_LIST
-		pos	"290 320"
+		pos	"26 58"
 		size "440 96"
 //		bgcolor "1 1 1 0.5"
 		color	"0.60 0.60 0.60 1"
@@ -339,12 +339,12 @@ menu popup_recoverybaselist
 	string selected_base_str
 	{
 		string	"Selected base:"
-		pos		"290 420"
+		pos		"26 158"
 	}
 	string selected_base_val
 	{
 		string	"*cvar mission_recoverybase"
-		pos		"390 420"
+		pos		"126 158"
 	}
 
 	pic bt_cancel
@@ -353,7 +353,7 @@ menu popup_recoverybaselist
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"310 450"
+		pos	"46 188"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
@@ -363,7 +363,7 @@ menu popup_recoverybaselist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"398 466"
+		pos	"134 204"
 		align	cc
 	}
 
@@ -371,7 +371,7 @@ menu popup_recoverybaselist
 	{
 		tooltip	"_Begin UFO recovery process"
 		image	menu/multi_buttons3
-		pos	"530 450"
+		pos	"266 188"
 		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
@@ -383,7 +383,7 @@ menu popup_recoverybaselist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Recover"
-		pos	"618 466"
+		pos	"354 204"
 		align	cc
 	}
 }
@@ -395,7 +395,7 @@ menu popup_recoverybaselist
 menu popup_recoverynationlist
 {
 	{
-		pos		"0 0"
+		pos		"124 192"
 		size	"777 402"
 	}
 
@@ -407,7 +407,7 @@ menu popup_recoverynationlist
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos		"124 192"
+		pos		"0 0"
 		size	"777 402"
 		blend	true
 	}
@@ -416,13 +416,13 @@ menu popup_recoverynationlist
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"830 212"
+		pos		"706 20"
 	}
 
 	string title
 	{
 		string	"_Select nation for UFO recovery"
-		pos	"512 210"
+		pos	"388 18"
 		font	f_big
 		align	uc
 	}
@@ -430,25 +430,25 @@ menu popup_recoverynationlist
 	string name_label
 	{
 		string	"_Nation:"
-		pos	"150 240"
+		pos	"26 48"
 	}
 
 	string price_label
 	{
 		string	"_Price:"
-		pos	"450 240"
+		pos	"326 48"
 	}
 
 	string relation_label
 	{
 		string	"_Relations:"
-		pos	"650 240"
+		pos	"526 48"
 	}
 
 	text cp_uforecovery_nationlist
 	{
 		num	TEXT_LIST
-		pos		"150 266"
+		pos		"26 74"
 		size	"726 134"
 		format	"16 100"
 //		bgcolor	"1 1 1 0.6"
@@ -464,12 +464,12 @@ menu popup_recoverynationlist
 	string selected_nation_str
 	{
 		string	"Selected nation:"
-		pos		"150 400"
+		pos		"26 208"
 	}
 	string selected_nation_val
 	{
 		string	"*cvar mission_recoverynation"
-		pos		"450 400"
+		pos		"326 208"
 	}
 
 	pic bt_cancel
@@ -478,7 +478,7 @@ menu popup_recoverynationlist
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"160 530"
+		pos	"36 338"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
@@ -488,7 +488,7 @@ menu popup_recoverynationlist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"248 546"
+		pos	"124 354"
 		align	cc
 	}
 
@@ -496,7 +496,7 @@ menu popup_recoverynationlist
 	{
 		tooltip	"_Begin UFO sell process"
 		image	menu/multi_buttons3
-		pos	"690 530"
+		pos	"566 338"
 		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
@@ -508,7 +508,7 @@ menu popup_recoverynationlist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Sell"
-		pos	"778 546"
+		pos	"654 354"
 		align	cc
 	}
 }

@@ -559,7 +559,7 @@ menu options_video
 menu popup_maintain_resolution
 {
 	{
-		pos	"256 256"
+		pos	"264 262"
 		size	"496 247"
 	}
 
@@ -572,7 +572,7 @@ menu popup_maintain_resolution
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"8 6"
+		pos	"0 0"
 		size	"496 247"
 		blend	true
 	}
@@ -581,20 +581,20 @@ menu popup_maintain_resolution
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"437 29"
+		pos		"429 23"
 	}
 
 	string title
 	{
 		string	"_Maintain resolution"
-		pos	"34 24"
+		pos	"26 18"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Want To Maintain resolution"
-		pos	"34 64"
+		pos	"26 58"
 	}
 
 	pic bt_cancel
@@ -603,7 +603,7 @@ menu popup_maintain_resolution
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"34 194"
+		pos	"26 188"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
@@ -614,7 +614,7 @@ menu popup_maintain_resolution
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"304 194"
+		pos	"296 188"
 		out	{ *string_accept color "0 0.5 0 1" *bt_change image menu/multi_buttons3 }
 		in	{ *string_accept color "1 1 1 1" *bt_change image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
@@ -624,7 +624,7 @@ menu popup_maintain_resolution
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"122 210"
+		pos	"114 204"
 		align	cc
 	}
 	string string_accept
@@ -632,7 +632,7 @@ menu popup_maintain_resolution
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Accept"
-		pos	"392 210"
+		pos	"384 204"
 		align	cc
 	}
 
@@ -1745,7 +1745,7 @@ menu options_pause
 menu popup_setall_pause
 {
 	{
-		pos	"256 256"
+		pos	"264 262"
 		size	"496 247"
 	}
 
@@ -1758,7 +1758,7 @@ menu popup_setall_pause
 	{
 		image	menu/popup_alpha_tile
 		size	"264 262"
-		pos	"8 6"
+		pos	"0 0"
 		blend	true
 	}
 
@@ -1766,20 +1766,20 @@ menu popup_setall_pause
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"437 29"
+		pos		"429 23"
 	}
 
 	string title
 	{
 		string	"_Change all pause settings"
-		pos	"34 24"
+		pos	"26 18"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Do you really want to change all pause settings?\nThis change can't be undone."
-		pos	"34 64"
+		pos	"26 58"
 	}
 
 	pic bt_setall
@@ -1788,7 +1788,7 @@ menu popup_setall_pause
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"34 194"
+		pos	"26 188"
 		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
 		in	{ *string_setall color "1 1 1 1" *bt_setall image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; msgoptions_setall pause 1;" }
@@ -1798,7 +1798,7 @@ menu popup_setall_pause
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enable all"
-		pos	"122 210"
+		pos	"114 204"
 		align	cc
 	}
 	pic bt_unsetall
@@ -1807,7 +1807,7 @@ menu popup_setall_pause
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"304 194"
+		pos	"296 188"
 		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
 		in	{ *string_unsetall color "1 1 1 1" *bt_unsetall image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; msgoptions_setall pause 0;" }
@@ -1817,7 +1817,7 @@ menu popup_setall_pause
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Disable all"
-		pos	"392 210"
+		pos	"384 204"
 		align	cc
 	}
 	
@@ -1825,7 +1825,7 @@ menu popup_setall_pause
 	{
 		tooltip "_Close this dialogue"
 		image	hud/close
-		pos		"467 29"
+		pos		"459 23"
 		click	{ cmd "mn_pop;" }
 	}
 }
@@ -1833,7 +1833,7 @@ menu popup_setall_pause
 menu popup_setall_notify
 {
 	{
-		pos	"256 256"
+		pos	"264 262"
 		size	"496 247"
 	}
 
@@ -1845,7 +1845,7 @@ menu popup_setall_notify
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"8 6"
+		pos	"0 0"
 		size	"496 247"
 		blend	true
 	}
@@ -1854,20 +1854,20 @@ menu popup_setall_notify
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"437 29"
+		pos		"429 23"
 	}
 
 	string title
 	{
 		string	"_Change all notification settings"
-		pos	"34 24"
+		pos	"26 18"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Do you really want to change all notification messages?\nThis change can't be undone."
-		pos	"34 64"
+		pos	"26 58"
 	}
 
 	pic bt_setall
@@ -1876,7 +1876,7 @@ menu popup_setall_notify
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"34 194"
+		pos	"26 188"
 		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
 		in	{ *string_setall color "1 1 1 1" *bt_setall image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; msgoptions_setall notify 1;" }
@@ -1886,7 +1886,7 @@ menu popup_setall_notify
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enable all"
-		pos	"122 210"
+		pos	"114 204"
 		align	cc
 	}
 	pic bt_unsetall
@@ -1895,7 +1895,7 @@ menu popup_setall_notify
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"304 194"
+		pos	"296 188"
 		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
 		in	{ *string_unsetall color "1 1 1 1" *bt_unsetall image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; msgoptions_setall notify 0;" }
@@ -1905,7 +1905,7 @@ menu popup_setall_notify
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Disable all"
-		pos	"392 210"
+		pos	"384 204"
 		align	cc
 	}
 	
@@ -1913,7 +1913,7 @@ menu popup_setall_notify
 	{
 		tooltip "_Close this dialogue"
 		image	hud/close
-		pos		"467 29"
+		pos		"459 23"
 		click	{ cmd "mn_pop;" }
 	}
 }
@@ -1921,7 +1921,7 @@ menu popup_setall_notify
 menu popup_setall_sound
 {
 	{
-		pos	"256 256"
+		pos	"264 262"
 		size	"496 247"
 	}
 
@@ -1933,7 +1933,7 @@ menu popup_setall_sound
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"8 6"
+		pos	"0 0"
 		size	"496 247"
 		blend	true
 	}
@@ -1942,20 +1942,20 @@ menu popup_setall_sound
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"437 29"
+		pos		"429 23"
 	}
 
 	string title
 	{
 		string	"_Change all sound settings"
-		pos	"34 24"
+		pos	"26 18"
 		font	f_big
 	}
 
 	string name_label
 	{
 		string	"_Do you really want to change all sound notifications?\nThis change can't be undone."
-		pos	"34 64"
+		pos	"26 58"
 	}
 
 	pic bt_setall
@@ -1964,7 +1964,7 @@ menu popup_setall_sound
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"34 194"
+		pos	"26 188"
 		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
 		in	{ *string_setall color "1 1 1 1" *bt_setall image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; msgoptions_setall sound 1;" }
@@ -1974,7 +1974,7 @@ menu popup_setall_sound
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enable all"
-		pos	"122 210"
+		pos	"114 204"
 		align	cc
 	}
 	pic bt_unsetall
@@ -1983,7 +1983,7 @@ menu popup_setall_sound
 		image	menu/multi_buttons3
 		texh	"176 64"
 		texl	"0 32"
-		pos	"304 194"
+		pos	"296 188"
 		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
 		in	{ *string_unsetall color "1 1 1 1" *bt_unsetall image menu/multi_buttons3a }
 		click	{ cmd "mn_pop; msgoptions_setall sound 0;" }
@@ -1993,7 +1993,7 @@ menu popup_setall_sound
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Disable all"
-		pos	"392 210"
+		pos	"384 204"
 		align	cc
 	}
 	
@@ -2001,7 +2001,7 @@ menu popup_setall_sound
 	{
 		tooltip "_Close this dialogue"
 		image	hud/close
-		pos		"467 29"
+		pos		"459 23"
 		click	{ cmd "mn_pop;" }
 	}
 }
