@@ -216,7 +216,6 @@ menu options_video
 	{
 		cvar	"*cvar vid_fullscreen"
 		pos		"840 240"
-		align	ur
 	}
 
 	string compression_str
@@ -228,7 +227,6 @@ menu options_video
 	{
 		cvar	"*cvar r_ext_texture_compression"
 		pos		"840 265"
-		align	ur
 	}
 
 	string fps_str
@@ -240,7 +238,6 @@ menu options_video
 	{
 		cvar	"*cvar cl_fps"
 		pos		"840 290"
-		align	ur
 	}
 
 	string lod_str
@@ -252,7 +249,6 @@ menu options_video
 	{
 		cvar	"*cvar r_texture_lod"
 		pos		"840 315"
-		align	ur
 	}
 
 	string isomode_str
@@ -264,7 +260,6 @@ menu options_video
 	{
 		cvar	"*cvar r_isometric"
 		pos		"840 340"
-		align	ur
 	}
 
 	string glsl_str
@@ -276,7 +271,6 @@ menu options_video
 	{
 		cvar	"*cvar r_programs"
 		pos		"840 365"
-		align	ur
 	}
 
 	string light_str
@@ -288,7 +282,6 @@ menu options_video
 	{
 		cvar	"*cvar r_lighting"
 		pos		"840 390"
-		align	ur
 	}
 
 	string ptlweather_str
@@ -300,7 +293,6 @@ menu options_video
 	{
 		cvar	"*cvar cl_particleweather"
 		pos		"840 415"
-		align	ur
 	}
 
 	string vbo_str
@@ -312,7 +304,6 @@ menu options_video
 	{
 		cvar	"*cvar r_vertexbuffers"
 		pos		"840 440"
-		align	ur
 	}
 
 	string samplebuf_str
@@ -2032,7 +2023,6 @@ menu options_game
 	{
 		cvar	"*cvar mn_show_tooltips"
 		pos		"840 280"
-		align	ur
 		tooltip	"_Activates tooltips"
 	}
 
@@ -2048,7 +2038,6 @@ menu options_game
 	{
 		cvar	"*cvar cl_centerview"
 		pos		"840 305"
-		align	ur
 		tooltip	"_Centring at soldier selecting, shooting and appearing"
 	}
 
@@ -2064,7 +2053,6 @@ menu options_game
 	{
 		cvar	"*cvar cl_show_cursor_tooltips"
 		pos		"840 330"
-		align	ur
 		tooltip	"_Activates cursor tooltips"
 	}
 
@@ -2080,7 +2068,6 @@ menu options_game
 	{
 		cvar	"*cvar cl_3dmap"
 		pos		"840 355"
-		align	ur
 		tooltip	"_Use 3D geoscape"
 	}
 
@@ -2098,7 +2085,6 @@ menu options_game
 	{
 		cvar	"*cvar cl_showTipOfTheDay"
 		pos	"840 380"
-		align	ur
 	}
 
 	// ===================
@@ -2113,7 +2099,6 @@ menu options_game
 	{
 		cvar	"*cvar cl_precache"
 		pos	"840 405"
-		align	ur
 		tooltip	"_Precache models (faster menus)"
 	}
 
