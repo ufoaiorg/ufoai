@@ -264,7 +264,6 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 	image_t *gl;
-	int image_index;
 
 	gl = R_RegisterPic(name);
 	if (!gl) {

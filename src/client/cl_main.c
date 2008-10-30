@@ -2222,7 +2222,7 @@ static void CL_CvarCheck (void)
 			Cvar_SetValue("cl_worldlevel", 0);
 		for (i = 0; i < cl.map_maxlevel; i++)
 			Cbuf_AddText(va("deselfloor%i\n", i));
-		for (; i < 8; i++)
+		for (; i < PATHFINDING_HEIGHT; i++)
 			Cbuf_AddText(va("disfloor%i\n", i));
 		Cbuf_AddText(va("selfloor%i\n", cl_worldlevel->integer));
 		cl_worldlevel->modified = qfalse;
