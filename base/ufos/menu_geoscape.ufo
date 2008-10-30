@@ -1043,6 +1043,7 @@ menu popup_baseattack
 		pos	"26 58"
 		num	TEXT_POPUP
 		size	"450 144"
+		height	5
 	}
 
 	pic bt_go
@@ -1411,7 +1412,7 @@ menu popup_newinstallation_type
 	{
 		image	"geoscape/radar"
 		pos	"46 78"
-		in	{ *bt_highlight invis false *bt_highlight pos "290 338" }
+		in	{ *bt_highlight invis false *bt_highlight pos "26 76" }
 		out	{ *bt_highlight invis true }
 		click	{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
 	}
@@ -1421,7 +1422,7 @@ menu popup_newinstallation_type
 		pos	"86 78"
 		size	"389 18"
 		font	f_small
-		in	{ *bt_highlight invis false *bt_highlight pos "290 338" }
+		in	{ *bt_highlight invis false *bt_highlight pos "26 76" }
 		out	{ *bt_highlight invis true }
 		click	{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
 	}
@@ -1444,7 +1445,7 @@ menu popup_newinstallation_type
 	{
 		image	"geoscape/defence"
 		pos	"46 98"
-		in	{ *bt_highlight invis false *bt_highlight pos "290 358" }
+		in	{ *bt_highlight invis false *bt_highlight pos "26 96" }
 		out	{ *bt_highlight invis true }
 		click	{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
 	}
@@ -1454,7 +1455,7 @@ menu popup_newinstallation_type
 		pos	"86 98"
 		size	"389 18"
 		font	f_small
-		in	{ *bt_highlight invis false *bt_highlight pos "290 358" }
+		in	{ *bt_highlight invis false *bt_highlight pos "26 96" }
 		out	{ *bt_highlight invis true }
 		click	{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
 	}
@@ -1477,7 +1478,7 @@ menu popup_newinstallation_type
 	{
 		image	"geoscape/ufoyard"
 		pos	"46 118"
-		in	{ *bt_highlight invis false *bt_highlight pos "290 378" }
+		in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
 		out	{ *bt_highlight invis true }
 		click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
@@ -1487,7 +1488,7 @@ menu popup_newinstallation_type
 		pos	"86 118"
 		size	"389 18"
 		font	f_small
-		in	{ *bt_highlight invis false *bt_highlight pos "290 378" }
+		in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
 		out	{ *bt_highlight invis true }
 		click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
@@ -1588,6 +1589,10 @@ menu popup_newinstallation
 		font	f_big
 	}
 
+	confunc mn_installation_title_changed
+	{
+		*name mousefx false
+	}
 	pic bt_nameedit
 	{
 		tooltip "_Rename installation"
@@ -1786,6 +1791,12 @@ menu popup_installationstatus
 		font	f_big
 	}
 
+	confunc mn_installation_title_changed
+	{
+		*name mousefx false
+		cmd "mn_installation_changename;"
+	}
+
 	pic bt_nameedit
 	{
 		tooltip "_Rename installation"
@@ -1796,7 +1807,8 @@ menu popup_installationstatus
 		mousefx false
 		click {
 			*name mousefx true
-			cmd "msgmenu ?mn_installation_title"
+			cmd "msgmenu ?mn_installation_title;"
+			// mn_rename_installation"
 		}
 	}
 
