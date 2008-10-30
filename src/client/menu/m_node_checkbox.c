@@ -26,6 +26,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_input.h"
 
+/**
+ * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
+ */
+static void MN_CheckBoxNodeLoaded (menuNode_t *node) {
+	/* update the size when its possible */
+	if (node->size[0] == 0 && node->size[1] == 0) {
+		if (node->texl[0] != 0 || node->texh[0] != 0) {
+			node->size[0] = node->texh[0] - node->texl[0];
+			node->size[1] = node->texh[1] - node->texl[1];
+		} else {
+			node->size[0] = 18;
+			node->size[1] = 17;
+		}
+	}
+}
+
 static void MN_DrawCheckBoxNode (menuNode_t* node)
 {
 	const char *image;
@@ -82,4 +98,5 @@ void MN_RegisterNodeCheckBox (nodeBehaviour_t *behaviour)
 	behaviour->name = "checkbox";
 	behaviour->draw = MN_DrawCheckBoxNode;
 	behaviour->leftClick = MN_CheckboxClick;
+	behaviour->loaded = MN_CheckBoxNodeLoaded;
 }

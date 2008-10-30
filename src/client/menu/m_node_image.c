@@ -32,6 +32,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 
+/**
+ * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
+ */
+static void MN_ImageNodeLoaded (menuNode_t *node) {
+	/* update the size when its possible */
+	if (node->size[0] == 0 && node->size[1] == 0) {
+		if (node->texl[0] != 0 || node->texh[0]) {
+			node->size[0] = node->texh[0] - node->texl[0];
+			node->size[1] = node->texh[1] - node->texl[1];
+		}
+	}
+#ifdef DEBUG
+	if (node->size[0] == 0 && node->size[1] == 0) {
+		if (node->click || node->rclick || node->mouseIn || node->mouseOut || node->wheelUp || node->wheelDown || node->wheel || node->mclick) {
+			Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' is an active image without size\n", node->menu->name, node->name);
+		}
+	}
+#endif
+}
+
+
 void MN_DrawImageNode(menuNode_t *node)
 {
 	vec2_t size;
@@ -81,4 +102,5 @@ void MN_RegisterNodeImage (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "pic";
 	behaviour->draw = MN_DrawImageNode;
+	behaviour->loaded = MN_ImageNodeLoaded;
 }
