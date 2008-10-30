@@ -50,9 +50,9 @@ static const int TOP_POSY = 0;
 #define BOTTOM_POSY MID_POSY+MID_HEIGHT+MARGE
 
 /**
- * @brief Handled alfer the end and the initialization of the node (all data and/or child are set)
+ * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
  */
-static void MN_ButtonNodeInit (menuNode_t *node) {
+static void MN_ButtonNodeLoaded (menuNode_t *node) {
 #ifdef DEBUG
 	if (node->size[0] < CORNER_WIDTH+MID_WIDTH+CORNER_WIDTH || node->size[1] < CORNER_HEIGHT+MID_HEIGHT+CORNER_HEIGHT)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical bugs\n", node->name);
@@ -151,6 +151,6 @@ void MN_RegisterNodeButton (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
 	behaviour->draw = MN_ButtonNodeDraw;
-	behaviour->init = MN_ButtonNodeInit;
+	behaviour->loaded = MN_ButtonNodeLoaded;
 	behaviour->leftClick = MN_ButtonNodeClick;
 }

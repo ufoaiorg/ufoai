@@ -37,9 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 
 /**
- * @brief Handled alfer the end and the initialization of the node (all data and/or child are set)
+ * @brief Handled alfer the end and the load of the node from script (all data and/or child are set)
  */
-static void MN_BaseLayoutNodeInit (menuNode_t * node)
+static void MN_BaseLayoutNodeLoaded (menuNode_t * node)
 {
 	/* if it exists a better size that the size requested on the .ufo
 	 * (for example: rounding error) we can force a better size here
@@ -312,5 +312,5 @@ void MN_RegisterNodeBaseLayout (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->draw = MN_BaseLayoutNodeDraw;
-	behaviour->init = MN_BaseLayoutNodeInit;
+	behaviour->loaded = MN_BaseLayoutNodeLoaded;
 }

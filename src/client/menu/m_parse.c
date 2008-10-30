@@ -790,8 +790,8 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						Vector4Set(node->color, 1, 1, 1, 1);
 
 					/* init the node according to his behaviour */
-					if (nodeBehaviourList[node->type].init) {
-						nodeBehaviourList[node->type].init(node);
+					if (nodeBehaviourList[node->type].loaded) {
+						nodeBehaviourList[node->type].loaded(node);
 					}
 
 					found = qtrue;

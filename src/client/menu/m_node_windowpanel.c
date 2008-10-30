@@ -53,9 +53,9 @@ static const int TOP_POSY = 0;
 #define BOTTOM_POSY MID_POSY + MID_HEIGHT + MARGE /**< @node compilator dont when to take static const */
 
 /**
- * @brief Handled alfer the end and the initialization of the node (all data and/or child are set)
+ * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
  */
-static void MN_WindowPanelNodeInit (menuNode_t *node) {
+static void MN_WindowPanelNodeLoaded (menuNode_t *node) {
 #ifdef DEBUG
 	if (node->size[0] < LEFT_WIDTH+MID_WIDTH+RIGHT_WIDTH || node->size[1] < TOP_HEIGHT+MID_HEIGHT+BOTTOM_HEIGHT)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical bugs\n", node->name);
@@ -106,5 +106,5 @@ void MN_RegisterNodeWindowPanel (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "windowpanel";
 	behaviour->draw = MN_WindowPanelNodeDraw;
-	behaviour->init = MN_WindowPanelNodeInit;
+	behaviour->loaded = MN_WindowPanelNodeLoaded;
 }
