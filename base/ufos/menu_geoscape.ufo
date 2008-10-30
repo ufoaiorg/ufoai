@@ -250,125 +250,124 @@ menu map
 	// buttons
 	// ==================
 
-	pic bt_highlight
-	{
-		image	"menu/geo_button_hl"
-		invis	true
-		align	ul
-	}
-
-	string bt_mailclient
+	button bt_mailclient
 	{
 		if "mn_upunreadmail != 0"
 		color	"0 0.5 0 1"
-		align	"uc"
 		font 	f_small
 		tooltip	"_INBOX (with unread mails)"
 		string	"_Mailclient"
-		pos		"896 536"
-		size	"220 20"
+		pos		"809 536"
+		size	"175 34"
 		click	{ cmd "mn_push ufopedia_mail;" }
-		out		{ *bt_mailclient color "0 0.5 0 1" *bt_highlight invis true }
-		in		{ *bt_mailclient color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 530" }
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
 	}
 
-	string bt_mailclient_nomail
+	button bt_mailclient_nomail
 	{
 		if "mn_upunreadmail == 0"
 		color	"0 0.5 0 1"
-		align	"uc"
 		font 	f_small
 		tooltip	"_INBOX"
 		string	"_Mailclient"
-		pos		"896 536"
-		size	"220 20"
+		pos		"809 536"
+		size	"175 34"
 		click	{ cmd "mn_push ufopedia_mail;" }
-		out		{ *bt_mailclient_nomail color "0 0.5 0 1" *bt_highlight invis true  }
-		in		{ *bt_mailclient_nomail color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 530" }
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
 	}
 
-	string bt_stats
+	button bt_stats
 	{
 		tooltip	"_Organisation statistics"
-		pos		"896 577"
-		align	"uc"
+		pos		"809 577"
 		color	"0 0.5 0 1"
-		size	"220 20"
+		size	"175 34"
 		font 	f_small
 		string	"_Statistics"
 		click	{ cmd "mn_push stats;" }
-		out		{ *bt_stats color "0 0.5 0 1" *bt_highlight invis true  }
-		in		{ *bt_stats color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 571" }
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
 	}
 
-	string bt_ufopedia
+	button bt_ufopedia
 	{
 		tooltip	"_Open UFOpaedia"
-		pos		"896 618"
+		pos		"809 618"
 		color	"0 0.5 0 1"
-		align	"uc"
-		size	"220 20"
+		size	"175 34"
 		font 	f_small
 		string	"_UFOpaedia"
 		click	{ cmd "mn_push ufopedia;" }
-		out		{ *bt_ufopedia color "0 0.5 0 1" *bt_highlight invis true  }
-		in		{ *bt_ufopedia color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 611" }
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
 	}
 
-	string bt_base
+	button bt_base
 	{
 		if "mn_base_count < 8"
 		tooltip	"_Create base"
-		align	"uc"
 		color	"0 0.5 0 1"
-		size	"220 20"
+		size	"175 34"
 		font 	f_small
 		string	"_Create base"
-		pos		"896 659"
+		pos		"809 659"
 		click	{ cmd "mn_select_base -1;" }
-		out		{ *bt_base color "0 0.5 0 1" *bt_highlight invis true  }
-		in		{ *bt_base color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 651" }
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
 	}
 
-	string bt_base_nomore
+	button bt_base_nomore
 	{
 		if "mn_base_count >= 8"
 		tooltip	"_Max. bases reached"
-		align	"uc"
 		string	"_Create base"
 		font 	f_small
-		size	"220 20"
-		pos		"896 659"
+		size	"175 34"
+		pos		"809 659"
 		color	"0.5 0.5 0.5 1"
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
+		disabled	true
 	}
 
-	string bt_installation
+	button bt_installation
 	{
 		// if "mn_installation_count < mn_installation_max"
 		if "mn_installation_count < 10"
 		tooltip	"_Create installation"
-		align	"uc"
 		color	"0 0.5 0 1"
-		size	"220 20"
+		size	"175 34"
 		font 	f_small
 		string	"_Create installation"
-		pos		"896 700"
+		pos		"809 700"
 		click	{ cmd "mn_push popup_newinstallation_type;" }
-		out		{ *bt_installation color "0 0.5 0 1" *bt_highlight invis true  }
-		in		{ *bt_installation color "1 1 1 1" *bt_highlight invis false *bt_highlight pos "809 692" }
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
 	}
 
-	string bt_installation_nomore
+	button bt_installation_nomore
 	{
 		// if "mn_installation_count >= mn_installation_max"
 		if "mn_installation_count >= 10"
 		tooltip	"_Max. installations reached"
-		align	"uc"
 		string	"_Create installation"
 		font 	f_small
-		size	"220 20"
-		pos		"896 700"
+		size	"175 34"
+		pos		"809 700"
 		color	"0.5 0.5 0.5 1"
+		selectcolor	"1 1 1 1"
+		image	menu/button_geoscape
+		blend	true
+		disabled	true
 	}
 
 

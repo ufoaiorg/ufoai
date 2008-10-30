@@ -448,79 +448,102 @@ menu load
 	// slots
 	// ==================
 
-	pic slot0
+	button slot0
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 200"
-		out		{ *slot0 image menu/save_slot }
-		in		{ *slot0 image menu/save_slota }
 		click	{ cmd "game_load slot0; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot0"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot1
+	button slot1
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 235"
-		out		{ *slot1 image menu/save_slot }
-		in		{ *slot1 image menu/save_slota }
 		click	{ cmd "game_load slot1; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot1"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot2
+	button slot2
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 270"
-		out		{ *slot2 image menu/save_slot }
-		in		{ *slot2 image menu/save_slota }
 		click	{ cmd "game_load slot2; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot2"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot3
+	button slot3
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 305"
-		out		{ *slot3 image menu/save_slot }
-		in		{ *slot3 image menu/save_slota }
 		click	{ cmd "game_load slot3; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot3"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot4
+	button slot4
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 340"
-		out		{ *slot4 image menu/save_slot }
-		in		{ *slot4 image menu/save_slota }
 		click	{ cmd "game_load slot4; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot4"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot5
+	button slot5
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 375"
-		out		{ *slot5 image menu/save_slot }
-		in		{ *slot5 image menu/save_slota }
 		click	{ cmd "game_load slot5; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot5"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot6
+	button slot6
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 410"
-		out		{ *slot6 image menu/save_slot }
-		in		{ *slot6 image menu/save_slota }
 		click	{ cmd "game_load slot6; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot6"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-	pic slot7
+	button slot7
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
 		pos		"640 445"
-		out		{ *slot7 image menu/save_slot }
-		in		{ *slot7 image menu/save_slota }
 		click	{ cmd "game_load slot7; game_timestop;" }
+		size	"256 34"
+		blend	true
+		font "f_verysmall"
+		string "*cvar mn_slot7"
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
 	}
-
-	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "648 210" size "240 11" color "0 .78 0 1" }
-	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "648 245" size "240 11" color "0 .78 0 1" }
-	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "648 280" size "240 11" color "0 .78 0 1" }
-	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "648 315" size "240 11" color "0 .78 0 1" }
-	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "648 350" size "240 11" color "0 .78 0 1" }
-	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "648 385" size "240 11" color "0 .78 0 1" }
-	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "648 420" size "240 11" color "0 .78 0 1" }
-	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "648 455" size "240 11" color "0 .78 0 1" }
 
 	// ==================
 	// buttons
