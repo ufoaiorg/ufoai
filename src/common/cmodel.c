@@ -1125,7 +1125,6 @@ static void CMod_RerouteMap(void)
 						}
 				}
 
-	memcpy(&svMap, &clMap, sizeof(svMap));
 }
 
 
@@ -1168,6 +1167,8 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 		token = COM_Parse(&tiles);
 		if (!tiles) {
 			CMod_RerouteMap();
+			/* Copy the server map from the client */
+			memcpy(&svMap, &clMap, sizeof(svMap));
 			return;
 		}
 
@@ -1202,6 +1203,8 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 		} else {
 			/* load only a single tile, if no positions are specified */
 			*mapchecksum = CM_AddMapTile(name, 0, 0, 0);
+			/* Copy the server map from the client */
+			memcpy(&svMap, &clMap, sizeof(svMap));
 			return;
 		}
 	}
