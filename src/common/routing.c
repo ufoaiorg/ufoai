@@ -322,7 +322,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		VectorCopy(start, tstart);
 		tstart[2] = bottom;
 		VectorCopy(tstart, tend);
-		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; /* tend is now STEPUP above tstart */
+		tend[2] += PATHFINDING_MIN_STEPUP * QUANT; /* tend is now MIN_STEPUP above tstart */
 
 		if (debugTrace)
 			Com_Printf("    Casting leg room (%f, %f, %f) to (%f, %f, %f)\n",
@@ -487,7 +487,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	RT_CONN_TEST(map, actor_size, x, y, z, dir);
 
 	if (debugTrace)
-		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i)\n", x, y, z, ax, ay, z);
+		Com_Printf("\n(%i, %i, %i) to (%i, %i, %i) as:%i\n", x, y, z, ax, ay, z, actor_size);
 
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actor_size); */
 
@@ -592,7 +592,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		VectorCopy(brushesHit.floor, brushesHit.ceiling);
 		brushesHit.obstructed = qtrue;
 		if (debugTrace)
-			Com_Printf("Destination cell too high up. cf:%i df:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_FLOOR(map, actor_size, ax, ay, z));
+			Com_Printf("Destination cell too high up. h:%i ah:%i\n", h, ah);
 		return z;
 	}
 
@@ -607,7 +607,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		/* Point to where we can't be. */
 		brushesHit.obstructed = qtrue;
 		if (debugTrace)
-			Com_Printf("Destination cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, ax, ay, z), RT_CEILING(map, actor_size, ax, ay, z));
+			Com_Printf("Destination cell filled. h:%i ac:%i\n", h, ac);
 		return z;
 	}
 
