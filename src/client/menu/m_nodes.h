@@ -74,11 +74,8 @@ typedef struct excludeRect_s {
 
 /* all available select box options - for all menunodes */
 #define MAX_SELECT_BOX_OPTIONS 128
-#define SELECTBOX_DEFAULT_HEIGHT 20.0f
-#define SELECTBOX_SIDE_WIDTH 7.0f
-#define SELECTBOX_BOTTOM_HEIGHT 4.0f
-#define SELECTBOX_SPACER 2.0f
 #define SELECTBOX_MAX_VALUE_LENGTH 32
+#define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
 /** @brief MN_SELECTBOX definition */
 typedef struct selectBoxOptions_s {

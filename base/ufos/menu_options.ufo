@@ -459,7 +459,7 @@ menu options_video
 	{
 		image	"menu/selectbox_green"
 		pos	"774 192"
-		size	"100 20"
+		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar r_maxlightmap"
 		option low_value {
@@ -488,7 +488,7 @@ menu options_video
 	{
 		image	"menu/selectbox_green"
 		pos	"774 167"
-		size	"100 20"
+		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar r_maxtexres"
 		option low_value {
@@ -528,7 +528,7 @@ menu options_video
 		pos		"774 142"
 		cvar	"*cvar mn_vidmode"
 		image	"menu/selectbox_green"
-		size	"100 20"
+		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		// will be filled in CL_InitAfter
 	}
@@ -727,7 +727,7 @@ menu options_sound
 	{
 		image	"menu/selectbox_green"
 		pos	"774 245"
-		size	"100 20"
+		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar snd_rate"
 		option low_value {
@@ -2139,6 +2139,7 @@ menu options_game
 	{
 		image   menu/save_slot
 		pos     "500 160"
+		size	"256 32"
 		mousefx true
 		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
 	}
@@ -2179,7 +2180,7 @@ menu options_game
 		pos		"758 255"
 		cvar	"*cvar s_language"
 		image	"menu/selectbox_green"
-		size	"130 20"
+		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		// will be filled in CL_LanguageInit
 	}
@@ -2196,7 +2197,7 @@ menu options_game
 	{
 		image	"menu/selectbox_green"
 		pos		"758 230"
-		size	"130 20"
+		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar mn_hud"
 		option hud_value {
@@ -2400,7 +2401,7 @@ menu options_input
 	{
 		image	"menu/selectbox_green"
 		pos		"758 310"
-		size	"130 20"
+		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar cl_autostand"
 		option confirm_value {
@@ -2427,7 +2428,7 @@ menu options_input
 	{
 		image	"menu/selectbox_green"
 		pos		"758 285"
-		size	"130 20"
+		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar confirm_actions"
 		option confirm_value {
@@ -2459,7 +2460,7 @@ menu options_input
 	{
 		image	"menu/selectbox_green"
 		pos		"658 530"
-		size	"230 20"
+		size	"256 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar in_joystickNo"
 	}

@@ -28,6 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_font.h"
 #include "m_input.h"
 
+#define SELECTBOX_SIDE_WIDTH 7.0f
+#define SELECTBOX_RIGHT_WIDTH 20.0f
+
+#define SELECTBOX_SPACER 2.0f
+#define SELECTBOX_BOTTOM_HEIGHT 4.0f
+
 const menuNode_t *selectBoxNode;
 
 /**
@@ -92,17 +98,17 @@ static void MN_DrawSelectBoxNode (menuNode_t *node)
 
 	/* left border */
 	R_DrawNormPic(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
-		SELECTBOX_SIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, image);
+		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* stretched middle bar */
-	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0], node->size[1],
-		12.0f, 20.0f, 7.0f, 0.0f, node->align, node->blend, image);
+	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
+		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* right border (arrow) */
-	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
-		32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, image);
+	R_DrawNormPic(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
+		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* draw the label for the current selected option */
 	for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 		if (!Q_strcmp(selectBoxOption->value, ref)) {
-			R_FontDrawString(font, node->align, selBoxX, selBoxY,
+			R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
 				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		}
@@ -116,21 +122,21 @@ static void MN_DrawSelectBoxNode (menuNode_t *node)
 		/* drop down menu */
 		/* left side */
 		R_DrawNormPic(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
-			7.0f, 28.0f, 0.0f, 21.0f, node->align, node->blend, image);
+			7.0f, 28.0f, 0.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 		/* stretched middle bar */
-		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0], node->size[1] * node->height,
-			16.0f, 28.0f, 7.0f, 21.0f, node->align, node->blend, image);
+		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->height,
+			16.0f, 28.0f, 7.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 		/* right side */
-		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
-			23.0f, 28.0f, 16.0f, 21.0f, node->align, node->blend, image);
+		R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+			23.0f, 28.0f, 16.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 		/* now draw all available options for this selectbox */
 		for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 			/* draw the hover effect */
 			if (selectBoxOption->hovered)
-				R_DrawFill(selBoxX, selBoxY, node->size[0], SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
+				R_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
 			/* print the option label */
 			R_FontDrawString(font, node->align, selBoxX, selBoxY,
 				selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
@@ -145,11 +151,11 @@ static void MN_DrawSelectBoxNode (menuNode_t *node)
 			7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
 
 		/* stretched middle bar */
-		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0], SELECTBOX_BOTTOM_HEIGHT,
+		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 			16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
 
 		/* right bottom side */
-		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], selBoxY - SELECTBOX_SPACER,
+		R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 			SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 			23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
 	}
