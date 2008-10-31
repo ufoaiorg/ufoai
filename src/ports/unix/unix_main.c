@@ -103,6 +103,11 @@ void Sys_Sleep (int milliseconds)
 	usleep(milliseconds * 1000);
 }
 
+int Sys_Setenv (const char *name, const char *value)
+{
+	return setenv(name, value, 1);
+}
+
 /**
  * @brief Returns the home environment variable
  * (which hold the path of the user's homedir)

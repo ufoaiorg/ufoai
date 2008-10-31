@@ -164,16 +164,14 @@ void Cmd_ForwardToServer (void)
 
 /**
  * @brief Set or print some environment variables via console command
- * @sa SDL_putenv
+ * @sa Sys_Setenv
  */
 static void CL_Env_f (void)
 {
 	const int argc = Cmd_Argc();
 
 	if (argc == 3) {
-		char buffer[MAX_VAR];
-		Com_sprintf(buffer, sizeof(buffer), "%s=%s", Cmd_Argv(1), Cmd_Argv(2));
-		SDL_putenv(buffer);
+		Sys_Setenv(Cmd_Argv(1), Cmd_Argv(2));
 	} else if (argc == 2) {
 		const char *env = SDL_getenv(Cmd_Argv(1));
 		if (env)
@@ -2386,16 +2384,16 @@ static qboolean CL_LocaleSet (void)
 	char *locale;
 
 #ifdef _WIN32
-	SDL_putenv(va("LANG=%s", s_language->string));
-	SDL_putenv(va("LANGUAGE=%s", s_language->string));
+	Sys_Setenv("LANG", s_language->string);
+	Sys_Setenv("LANGUAGE", s_language->string);
 #else /* _WIN32 */
 # ifndef __sun
 	unsetenv("LANGUAGE");
 # endif /* __sun */
 # ifdef __APPLE__
-	if (s_language->string[0] != '\0' && SDL_putenv(va("LANGUAGE=%s", s_language->string)) == -1)
+	if (s_language->string[0] != '\0' && Sys_Setenv("LANGUAGE", s_language->string) != 0)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (s_language->string[0] != '\0' && SDL_putenv(va("LC_ALL=%s", s_language->string)) == -1)
+	if (s_language->string[0] != '\0' && Sys_Setenv("LC_ALL", s_language->string) != 0)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
 # endif /* __APPLE__ */
 #endif /* _WIN32 */

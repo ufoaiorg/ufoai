@@ -335,6 +335,7 @@ void Sys_Init(void);
 void Sys_NormPath(char *path);
 void Sys_Sleep(int milliseconds);
 const char *Sys_GetCurrentUser(void);
+int Sys_Setenv(const char *name, const char *value);
 
 void Sys_UnloadGame(void);
 /** loads the game dll and calls the api init function */

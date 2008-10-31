@@ -420,6 +420,15 @@ void Sys_Sleep (int milliseconds)
 	Sleep(milliseconds);
 }
 
+int Sys_Setenv (const char *name, const char *value)
+{
+	/* Windows does not have setenv, but its putenv is safe to use.
+	 * It does not keep a pointer to the string. */
+	char str[256];
+	Com_sprintf(str, sizeof(str), "%s=%s", name, value);
+	return putenv(str);
+}
+
 /**
  * @sa Sys_FreeLibrary
  * @sa Sys_GetProcAddress
