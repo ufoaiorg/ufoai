@@ -263,6 +263,7 @@ menu lost
 		tooltip	"_Continue"
 		image	"menu/button_blue"
 		pos		"865 700"
+		size	"128 53"
 		texl	"0 0"
 		texh	"128 53"
 		mousefx	true
