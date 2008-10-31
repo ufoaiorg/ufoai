@@ -84,39 +84,41 @@ static void MN_CheckMouseMove (void)
 static void MN_DrawDebugMenu2 (void)
 {
 	static vec4_t red = {1, 0.0, 0.0, 1.0};
+	/*static vec4_t redalpha = {1, 0.0, 0.0, 0.2};*/
 	static vec4_t white = {1, 1.0, 1.0, 1.0};
 	menuNode_t *node = mouseOverTest;
 	vec2_t pos;
-	int padding = 10;
+	int size = 20;
+	int weigth = 5;
 	int sp;
 	menu_t *menu;
 	int posy = 0;
 
-	MN_GetNodeAbsPos(node, pos);
-
-	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
+	for (sp = 0; sp < mn.menuStackPos; sp++) {
 		menu = mn.menuStack[sp];
-		if (node->menu == menu)
+		if (node && node->menu == menu)
 			R_ColorBlend(red);
 		else
 			R_ColorBlend(white);
 		R_FontDrawString("f_small_bold", ALIGN_UL, 0, posy, 0, posy, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 		posy += 15;
 	}
+	R_ColorBlend(NULL);
+
+	if (node == NULL)
+		return;
+
+	MN_GetNodeAbsPos(node, pos);
+
 	R_ColorBlend(red);
 	R_FontDrawString("f_small_bold", ALIGN_LR, pos[0], pos[1], pos[0], pos[1], 200, 200, 0, node->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_ColorBlend(NULL);
 
-	#if 0
-	R_DrawFill(pos[0] - padding/2, pos[1] - padding/2,
-		padding, padding, ALIGN_UL, red);
-	#endif
-	R_DrawFill(pos[0] + node->size[0]-padding/2, pos[1] + node->size[1]-padding/2,
-		padding, padding, ALIGN_UL, red);
-	R_DrawFill(pos[0] - padding/2, pos[1] + node->size[1],
-		padding, padding, ALIGN_UL, red);
-	R_DrawFill(pos[0]+node->size[0], pos[1] -padding/2,
-		padding, padding, ALIGN_UL, red);
+	/*R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, redalpha);*/
+	R_DrawFill(pos[0], pos[1], size, weigth, ALIGN_UL, red);
+	R_DrawFill(pos[0], pos[1], weigth, size, ALIGN_UL, red);
+	R_DrawFill(pos[0]+node->size[0]-size, pos[1]+node->size[1]-weigth, size, weigth, ALIGN_UL, red);
+	R_DrawFill(pos[0]+node->size[0]-weigth, pos[1]+node->size[1]-size, weigth, size, ALIGN_UL, red);
 }
 
 /**
@@ -275,7 +277,7 @@ void MN_DrawMenus (void)
 	}
 
 	/* debug help for comming architecture */
-	if (mouseOverTest && mn_debugmenu2->integer) {
+	if (mn_debugmenu2->integer) {
 		MN_DrawDebugMenu2();
 	}
 
