@@ -66,7 +66,7 @@ typedef struct menuDepends_s {
 
 /**
  * @brief Allow to add extra bit into the type
- * @note If valueTypes_t is bigger than 63 the mast must be change
+ * @note If valueTypes_t is bigger than 63 the mask must be changed
  * @sa valueTypes_t
  */
 #define V_BASETYPEMASK 0x3F
