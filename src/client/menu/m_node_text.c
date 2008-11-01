@@ -208,6 +208,8 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 	}
 
+	R_ColorBlend(node->color);
+
 	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
 	node->textLines = 0;
 	do {
