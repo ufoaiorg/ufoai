@@ -357,20 +357,13 @@ static void CL_ActorGlobalCVars (void)
 			char str[MAX_VAR];
 			/* the model name is the first entry in model_t */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
-			Com_sprintf(str, sizeof(str), "%i", le->HP);
-			Cvar_Set(va("mn_hp%i", i), str);
-			Com_sprintf(str, sizeof(str), "%i", le->maxHP);
-			Cvar_Set(va("mn_hpmax%i", i), str);
-			Com_sprintf(str, sizeof(str), "%i", le->TU);
-			Cvar_Set(va("mn_tu%i", i), str);
-			Com_sprintf(str, sizeof(str), "%i", le->maxTU);
-			Cvar_Set(va("mn_tumax%i", i), str);
-			Com_sprintf(str, sizeof(str), "%i", le->morale);
-			Cvar_Set(va("mn_morale%i",i), str);
-			Com_sprintf(str, sizeof(str), "%i", le->maxMorale);
-			Cvar_Set(va("mn_moralemax%i",i), str);
-			Com_sprintf(str, sizeof(str), "%i", le->STUN);
-			Cvar_Set(va("mn_stun%i", i), str);
+			Cvar_SetValue(va("mn_hp%i", i), le->HP);
+			Cvar_SetValue(va("mn_hpmax%i", i), le->maxHP);
+			Cvar_SetValue(va("mn_tu%i", i), le->TU);
+			Cvar_SetValue(va("mn_tumax%i", i), le->maxTU);
+			Cvar_SetValue(va("mn_morale%i",i), le->morale);
+			Cvar_SetValue(va("mn_moralemax%i",i), le->maxMorale);
+			Cvar_SetValue(va("mn_stun%i", i), le->STUN);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
 			Cvar_Set(va("mn_hp%i", i), "0");
