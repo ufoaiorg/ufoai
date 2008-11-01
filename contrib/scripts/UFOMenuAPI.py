@@ -274,7 +274,7 @@ def fixeWindowpanelUnderWindow():
 
 	root.save()
 
-def replaceOptionContent():
+def moveOptionMenuContent():
 	root = Root()
 	root.loadFile('base/ufos/menu_options.ufo')
 
@@ -295,4 +295,4 @@ def replaceOptionContent():
 
 	root.save()
 
-replaceOptionContent()
+#moveOptionMenuContent()
