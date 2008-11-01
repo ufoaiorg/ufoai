@@ -36,8 +36,15 @@ static void MN_CheckBoxNodeLoaded (menuNode_t *node) {
 			node->size[0] = node->texh[0] - node->texl[0];
 			node->size[1] = node->texh[1] - node->texl[1];
 		} else {
-			node->size[0] = 18;
-			node->size[1] = 17;
+			/* the checked and unchecked should always have the same dimensions */
+			int sx, sy;
+			if (!node->dataImageOrModel) {
+				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
+			} else {
+				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataImageOrModel));
+			}
+			node->size[0] = sx;
+			node->size[1] = sy;
 		}
 	}
 }

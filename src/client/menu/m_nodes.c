@@ -184,33 +184,14 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 			return qfalse;
 	}
 
-	if (!node->size[0] || !node->size[1]) {
-		if (node->type == MN_CHECKBOX) {
-			/* the checked and unchecked should always have the same dimensions */
-			if (!node->dataImageOrModel) {
-				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
-			} else {
-				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataImageOrModel));
-			}
-		} else if ((node->type == MN_PIC || node->type == MN_CONTROLS) && node->dataImageOrModel) {
-			if (node->texh[0] && node->texh[1]) {
-				sx = node->texh[0] - node->texl[0];
-				sy = node->texh[1] - node->texl[1];
-			} else
-				R_DrawGetPicSize(&sx, &sy, node->dataImageOrModel);
-		} else
-			return qfalse;
-#if 0
-		/** @todo Check this */
-		Vector2Set(node->size, sx, sy); /* speed up further calls */
-#endif
-	} else {
-		sx = node->size[0];
-		sy = node->size[1];
-	}
+	if (node->size[0] == 0 || node->size[1] == 0)
+		return qfalse;
 
+	sx = node->size[0];
+	sy = node->size[1];
 	tx = x - nodepos[0];
 	ty = y - nodepos[1];
+
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch (node->align % 3) {
 		/* center */

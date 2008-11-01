@@ -38,9 +38,11 @@ static void MN_ControlsNodeLoaded (menuNode_t *node) {
 		if (node->texl[0] != 0 || node->texh[0] != 0) {
 			node->size[0] = node->texh[0] - node->texl[0];
 			node->size[1] = node->texh[1] - node->texl[1];
-		} else {
-			node->size[0] = 18;
-			node->size[1] = 17;
+		} else if (node->dataImageOrModel) {
+			int sx, sy;
+			R_DrawGetPicSize(&sx, &sy, node->dataImageOrModel);
+			node->size[0] = sx;
+			node->size[1] = sy;
 		}
 	}
 }
