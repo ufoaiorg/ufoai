@@ -137,7 +137,7 @@ char *Curses_Input (void)
 			if (*input[(historyline + CURSES_HISTORYSIZE - 1) % CURSES_HISTORYSIZE]) {
 				historyline = (historyline + CURSES_HISTORYSIZE - 1) % CURSES_HISTORYSIZE;
 				inputpos = 0;
-				Com_sprintf(input[inputline], sizeof(input[inputline]), input[historyline]);
+				Com_sprintf(input[inputline], sizeof(input[inputline]), "%s", input[historyline]);
 				while (input[inputline][inputpos])
 					inputpos++;
 				curses_redraw |= 1;
@@ -148,7 +148,7 @@ char *Curses_Input (void)
 			if (historyline != inputline) {
 				historyline = (historyline + 1) % CURSES_HISTORYSIZE;
 				inputpos = 0;
-				Com_sprintf(input[inputline], sizeof(input[inputline]), input[historyline]);
+				Com_sprintf(input[inputline], sizeof(input[inputline]), "%s", input[historyline]);
 				while (input[inputline][inputpos])
 					inputpos++;
 				curses_redraw |= 1;

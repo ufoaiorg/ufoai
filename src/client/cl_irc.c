@@ -970,7 +970,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			Irc_Client_CmdQuit(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "NOTICE", 6)) {
 			if (irc_logConsole->integer)
-				Com_Printf(va("%s\n", msg->trailing));
+				Com_Printf("%s\n", msg->trailing);
 		} else if (!Q_strncmp(cmd.id.string, "PRIVMSG", 7))
 			Irc_Client_CmdPrivmsg(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "MODE", 4))

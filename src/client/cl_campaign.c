@@ -1023,9 +1023,9 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
 	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
@@ -1257,9 +1257,9 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
 	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
 	if (mission->ufo) {
@@ -1569,7 +1569,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 
 	Vector2Copy(base->pos, mission->pos);
 
-	Com_sprintf(mission->location, sizeof(mission->location), base->name);
+	Com_sprintf(mission->location, sizeof(mission->location), "%s", base->name);
 
 	if (mission->ufo) {
 		CP_MissionDisableTimeLimit(mission);
@@ -2982,9 +2982,9 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), _(nation->name));
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
 	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), _("No nation"));
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
 	CP_MissionDisableTimeLimit(mission);

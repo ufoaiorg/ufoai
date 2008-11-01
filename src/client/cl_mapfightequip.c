@@ -897,7 +897,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
 	if (!slot->item) {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No defence system assigned.\n"));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s", _("No defence system assigned.\n"));
 		/* Weight are not used for base defence atm
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
 	} else {
@@ -914,7 +914,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* Second slot: next item to install when the first one will be removed */
 	if (slot->item && slot->installationTime < 0) {
 		if (!slot->nextItem)
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defence system assigned."));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No defence system assigned."));
 		else {
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("%s\nThis defence system will be operational in %i hours.\n"),
 				_(slot->nextItem->tech->name), slot->nextItem->craftitem.installationTime - slot->installationTime);
@@ -1322,7 +1322,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	} else {
 		/* First slot: item currently assigned */
 		if (!slot->item) {
-			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s", _("No item assigned.\n"));
 			Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."),
 				AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 		} else {
@@ -1342,9 +1342,9 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		/* Second slot: next item to install when the first one will be removed */
 		if (slot->item && slot->installationTime < 0) {
 			if (!slot->nextItem)
-				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned."));
+				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No item assigned."));
 			else {
-				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(slot->nextItem->tech->name));
+				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _(slot->nextItem->tech->name));
 				Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
 				Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
 			}
@@ -1356,7 +1356,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
 			if (!slot->ammo) {
 				AIM_EmphazeAmmoSlotText();
-				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
+				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), "%s", _("No ammo assigned to this weapon."));
 			} else {
 				AIM_NoEmphazeAmmoSlotText();
 				assert(slot->ammo->tech);

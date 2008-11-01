@@ -436,7 +436,7 @@ static void CL_Rcon_f (void)
 	Com_sprintf(message, sizeof(message), "rcon %s %s",
 		rcon_client_password->string, Cmd_Args());
 
-	NET_OOB_Printf(cls.netStream, message);
+	NET_OOB_Printf(cls.netStream, "%s", message);
 }
 
 /**
