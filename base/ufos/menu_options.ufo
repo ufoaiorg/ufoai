@@ -136,7 +136,7 @@ menu options_video
 	{
 		pos	"415 0"
 		size	"608 768"
-		noticepos	"75 110"
+		noticepos	"85 110"
 	}
 
 	string videosettings
