@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_map.h"
+#include "m_input.h"
 #include "m_main.h"
 #include "m_parse.h"
 #include "m_input.h"
@@ -103,9 +104,9 @@ qboolean MN_CursorOnMenu (int x, int y)
 
 /**
  * @brief save the captured node
- * @sa MN_SetMouseCapture()
- * @sa MN_GetMouseCapture()
- * @sa MN_MouseRelese()
+ * @sa MN_SetMouseCapture
+ * @sa MN_GetMouseCapture
+ * @sa MN_MouseRelease
  */
 static menuNode_t* capturedNode;
 
@@ -113,14 +114,16 @@ static menuNode_t* capturedNode;
  * @brief Return the captured node
  * @return Return a node, else NULL
  */
-menuNode_t* MN_GetMouseCapture (void) {
+menuNode_t* MN_GetMouseCapture (void)
+{
 	return capturedNode;
 }
 
 /**
  * @brief Captured the mouse into a node
  */
-void MN_SetMouseCapture (menuNode_t* node) {
+void MN_SetMouseCapture (menuNode_t* node)
+{
 	assert(capturedNode == NULL);
 	assert(node != NULL);
 	capturedNode = node;
@@ -130,7 +133,8 @@ void MN_SetMouseCapture (menuNode_t* node) {
  * @brief Release the captured node
  * @todo update mouse events (in, out)
  */
-void MN_MouseRelese () {
+void MN_MouseRelease (void)
+{
 	capturedNode = NULL;
 }
 

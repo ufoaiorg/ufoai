@@ -611,7 +611,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 									pos[0] += ic->item.t->sx * C_UNIT / 2.0;
 
 									/* Loop through all ammo-types for this item. */
-									for (ammoIdx = 0; ammoIdx <ic->item.t->numAmmos; ammoIdx++) {
+									for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
 										tempItem.t = ic->item.t->ammos[ammoIdx];
 										if (tempItem.t->tech && RS_IsResearched_ptr(tempItem.t->tech)) {
 											icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, tempItem.t, baseCurrent->equipType);

@@ -31,9 +31,9 @@ void MN_MiddleClick(int x, int y);
 void MN_MouseWheel(qboolean down, int x, int y);
 void MN_MouseMove(int x, int y);
 
-menuNode_t* MN_GetMouseCapture (void);
-void MN_SetMouseCapture (menuNode_t* node);
-void MN_MouseRelese ();
+menuNode_t* MN_GetMouseCapture(void);
+void MN_SetMouseCapture(menuNode_t* node);
+void MN_MouseRelease(void);
 
 qboolean MN_CursorOnMenu(int x, int y);
 void MN_SetCvar(const char *name, const char *str, float value);

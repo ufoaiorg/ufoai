@@ -91,11 +91,10 @@ static void MN_DrawDebugMenu2 (void)
 	int size = 20;
 	int weigth = 5;
 	int sp;
-	menu_t *menu;
 	int posy = 0;
 
 	for (sp = 0; sp < mn.menuStackPos; sp++) {
-		menu = mn.menuStack[sp];
+		menu_t *menu = mn.menuStack[sp];
 		if (node && node->menu == menu)
 			R_ColorBlend(red);
 		else
@@ -117,8 +116,8 @@ static void MN_DrawDebugMenu2 (void)
 	/*R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, redalpha);*/
 	R_DrawFill(pos[0], pos[1], size, weigth, ALIGN_UL, red);
 	R_DrawFill(pos[0], pos[1], weigth, size, ALIGN_UL, red);
-	R_DrawFill(pos[0]+node->size[0]-size, pos[1]+node->size[1]-weigth, size, weigth, ALIGN_UL, red);
-	R_DrawFill(pos[0]+node->size[0]-weigth, pos[1]+node->size[1]-size, weigth, size, ALIGN_UL, red);
+	R_DrawFill(pos[0] + node->size[0] - size, pos[1]+node->size[1] - weigth, size, weigth, ALIGN_UL, red);
+	R_DrawFill(pos[0] + node->size[0] - weigth, pos[1]+node->size[1] - size, weigth, size, ALIGN_UL, red);
 }
 
 /**

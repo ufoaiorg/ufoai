@@ -72,7 +72,8 @@ selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 /**
  * @brief call when the mouse move over the node
  */
-static void MN_SelectBoxNodeMouseMove (menuNode_t *node, int x, int y) {
+static void MN_SelectBoxNodeMouseMove (menuNode_t *node, int x, int y)
+{
 	MN_SetMouseCapture(node);
 }
 
@@ -80,15 +81,16 @@ static void MN_SelectBoxNodeMouseMove (menuNode_t *node, int x, int y) {
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
-static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y) {
+static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+{
 	selectBoxOptions_t* selectBoxOption;
 	int posy;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* test bounded box */
-	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->height+1)) {
-		MN_MouseRelese();
+	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->height + 1)) {
+		MN_MouseRelease();
 		return;
 	}
 

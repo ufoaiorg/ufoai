@@ -42,19 +42,19 @@ static const int MID_HEIGHT = 1;
 static const int MARGE = 3;
 
 static const int LEFT_POSX = 0;
-#define MID_POSX LEFT_POSX+CORNER_WIDTH+MARGE
-#define RIGHT_POSX MID_POSX+MID_WIDTH+MARGE
+#define MID_POSX (LEFT_POSX + CORNER_WIDTH + MARGE)
+#define RIGHT_POSX (MID_POSX + MID_WIDTH + MARGE)
 
 static const int TOP_POSY = 0;
-#define MID_POSY TOP_POSY+CORNER_HEIGHT+MARGE
-#define BOTTOM_POSY MID_POSY+MID_HEIGHT+MARGE
+#define MID_POSY (TOP_POSY + CORNER_HEIGHT + MARGE)
+#define BOTTOM_POSY (MID_POSY + MID_HEIGHT + MARGE)
 
 /**
  * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
  */
 static void MN_ButtonNodeLoaded (menuNode_t *node) {
 #ifdef DEBUG
-	if (node->size[0] < CORNER_WIDTH+MID_WIDTH+CORNER_WIDTH || node->size[1] < CORNER_HEIGHT+MID_HEIGHT+CORNER_HEIGHT)
+	if (node->size[0] < CORNER_WIDTH + MID_WIDTH + CORNER_WIDTH || node->size[1] < CORNER_HEIGHT + MID_HEIGHT + CORNER_HEIGHT)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical bugs\n", node->name);
 #endif
 }
@@ -108,31 +108,31 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	if (image) {
 
 		/* draw top (from left to right) */
-		R_DrawNormPic(pos[0], pos[1], CORNER_WIDTH, CORNER_HEIGHT, texX+LEFT_POSX+CORNER_WIDTH, texY+TOP_POSY+CORNER_HEIGHT,
-			texX+LEFT_POSX, texY+TOP_POSY, ALIGN_UL, node->blend, image);
-		R_DrawNormPic(pos[0] + CORNER_WIDTH, pos[1], node->size[0] - CORNER_WIDTH - CORNER_WIDTH, CORNER_HEIGHT, texX+MID_POSX+MID_WIDTH, texY+TOP_POSY+CORNER_HEIGHT,
-			texX+MID_POSX, texY+TOP_POSY, ALIGN_UL, node->blend, image);
-		R_DrawNormPic(pos[0] + node->size[0] - CORNER_WIDTH, pos[1], CORNER_WIDTH, CORNER_HEIGHT, texX+RIGHT_POSX+CORNER_WIDTH, texY+TOP_POSY+CORNER_HEIGHT,
-			texX+RIGHT_POSX, texY+TOP_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0], pos[1], CORNER_WIDTH, CORNER_HEIGHT, texX + LEFT_POSX + CORNER_WIDTH, texY + TOP_POSY + CORNER_HEIGHT,
+			texX + LEFT_POSX, texY + TOP_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0] + CORNER_WIDTH, pos[1], node->size[0] - CORNER_WIDTH - CORNER_WIDTH, CORNER_HEIGHT, texX + MID_POSX + MID_WIDTH, texY + TOP_POSY + CORNER_HEIGHT,
+			texX + MID_POSX, texY + TOP_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0] + node->size[0] - CORNER_WIDTH, pos[1], CORNER_WIDTH, CORNER_HEIGHT, texX + RIGHT_POSX + CORNER_WIDTH, texY + TOP_POSY + CORNER_HEIGHT,
+			texX + RIGHT_POSX, texY + TOP_POSY, ALIGN_UL, node->blend, image);
 
 		/* draw middle (from left to right) */
 		y = pos[1] + CORNER_HEIGHT;
 		h = node->size[1] - CORNER_HEIGHT - CORNER_HEIGHT; /*< height of middle */
-		R_DrawNormPic(pos[0], y, CORNER_WIDTH, h, texX+LEFT_POSX+CORNER_WIDTH, texY+MID_POSY+MID_HEIGHT,
-			texX+LEFT_POSX, texY+MID_POSY, ALIGN_UL, node->blend, image);
-		R_DrawNormPic(pos[0] + CORNER_WIDTH, y, node->size[0] - CORNER_WIDTH - CORNER_WIDTH, h, texX+MID_POSX+MID_WIDTH, texY+MID_POSY+MID_HEIGHT,
-			texX+MID_POSX, texY+MID_POSY, ALIGN_UL, node->blend, image);
-		R_DrawNormPic(pos[0] + node->size[0] - CORNER_WIDTH, y, CORNER_WIDTH, h, texX+RIGHT_POSX+CORNER_WIDTH, texY+MID_POSY+MID_HEIGHT,
-			texX+RIGHT_POSX, texY+MID_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0], y, CORNER_WIDTH, h, texX + LEFT_POSX + CORNER_WIDTH, texY + MID_POSY + MID_HEIGHT,
+			texX + LEFT_POSX, texY + MID_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0] + CORNER_WIDTH, y, node->size[0] - CORNER_WIDTH - CORNER_WIDTH, h, texX + MID_POSX + MID_WIDTH, texY + MID_POSY + MID_HEIGHT,
+			texX + MID_POSX, texY + MID_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0] + node->size[0] - CORNER_WIDTH, y, CORNER_WIDTH, h, texX + RIGHT_POSX + CORNER_WIDTH, texY + MID_POSY + MID_HEIGHT,
+			texX + RIGHT_POSX, texY + MID_POSY, ALIGN_UL, node->blend, image);
 
 		/* draw bottom (from left to right) */
 		y = pos[1] + node->size[1] - CORNER_HEIGHT;
-		R_DrawNormPic(pos[0], y, CORNER_WIDTH, CORNER_HEIGHT, texX+LEFT_POSX+CORNER_WIDTH, texY+BOTTOM_POSY+CORNER_HEIGHT,
-			texX+LEFT_POSX, texY+BOTTOM_POSY, ALIGN_UL, node->blend, image);
-		R_DrawNormPic(pos[0] + CORNER_WIDTH, y, node->size[0] - CORNER_WIDTH - CORNER_WIDTH, CORNER_HEIGHT, texX+MID_POSX+MID_WIDTH, texY+BOTTOM_POSY+CORNER_HEIGHT,
-			texX+MID_POSX, texY+BOTTOM_POSY, ALIGN_UL, node->blend, image);
-		R_DrawNormPic(pos[0] + node->size[0] - CORNER_WIDTH, y, CORNER_WIDTH, CORNER_HEIGHT, texX+RIGHT_POSX+CORNER_WIDTH, texY+BOTTOM_POSY+CORNER_HEIGHT,
-			texX+RIGHT_POSX, texY+BOTTOM_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0], y, CORNER_WIDTH, CORNER_HEIGHT, texX + LEFT_POSX + CORNER_WIDTH, texY + BOTTOM_POSY + CORNER_HEIGHT,
+			texX + LEFT_POSX, texY + BOTTOM_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0] + CORNER_WIDTH, y, node->size[0] - CORNER_WIDTH - CORNER_WIDTH, CORNER_HEIGHT, texX + MID_POSX + MID_WIDTH, texY + BOTTOM_POSY + CORNER_HEIGHT,
+			texX + MID_POSX, texY + BOTTOM_POSY, ALIGN_UL, node->blend, image);
+		R_DrawNormPic(pos[0] + node->size[0] - CORNER_WIDTH, y, CORNER_WIDTH, CORNER_HEIGHT, texX + RIGHT_POSX + CORNER_WIDTH, texY + BOTTOM_POSY + CORNER_HEIGHT,
+			texX + RIGHT_POSX, texY + BOTTOM_POSY, ALIGN_UL, node->blend, image);
 	}
 
 	text = MN_GetReferenceString(node->menu, node->text);
