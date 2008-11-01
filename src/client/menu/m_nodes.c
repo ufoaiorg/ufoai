@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_nodes.h"
 #include "m_parse.h"
+#include "m_input.h"
 #include "m_dragndrop.h"
 #include "../cl_input.h"
 
@@ -155,6 +156,9 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qfalse;
 
 	if (focusNode && mouseSpace != MS_NULL)
+		return qfalse;
+
+	if (MN_GetMouseCapture())
 		return qfalse;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -342,7 +346,6 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 
 	MN_NodeTextInit();
-	MN_NodeSelectBoxInit();
 	MN_NodeModelInit();
 
 	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qfalse);

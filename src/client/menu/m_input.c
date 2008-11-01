@@ -108,7 +108,7 @@ qboolean MN_CursorOnMenu (int x, int y)
  * @sa MN_GetMouseCapture
  * @sa MN_MouseRelease
  */
-static menuNode_t* capturedNode;
+static menuNode_t* capturedNode = NULL;
 
 /**
  * @brief Return the captured node
@@ -136,6 +136,7 @@ void MN_SetMouseCapture (menuNode_t* node)
 void MN_MouseRelease (void)
 {
 	capturedNode = NULL;
+	MN_FocusRemove();
 }
 
 /**
@@ -158,6 +159,8 @@ void MN_MouseMove (int x, int y)
 			nodeBehaviourList[capturedNode->type].capturedMouseMove(capturedNode, x, y);
 		return;
 	}
+
+	MN_FocusRemove();
 
 	/* compute the node under the mouse */
 	mouseOverTest = NULL;

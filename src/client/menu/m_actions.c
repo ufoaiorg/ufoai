@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_input.h"
 #include "m_main.h"
 #include "m_parse.h"
+#include "m_input.h"
 
 menuNode_t *focusNode;
 
@@ -154,6 +155,9 @@ void MN_FocusRemove (void)
 	if (mouseSpace != MS_MENU)
 		return;
 
+	if (MN_GetMouseCapture())
+		return;
+
 	if (focusNode)
 		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
 	focusNode = NULL;
@@ -168,6 +172,9 @@ void MN_FocusRemove (void)
 qboolean MN_FocusExecuteActionNode (void)
 {
 	if (mouseSpace != MS_MENU)
+		return qfalse;
+
+	if (MN_GetMouseCapture())
 		return qfalse;
 
 	if (focusNode) {
@@ -192,6 +199,9 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
 		return qfalse;
 	}
 
+	if (MN_GetMouseCapture())
+		return qfalse;
+
 	/* reset already focused node */
 	MN_FocusRemove();
 
@@ -213,6 +223,9 @@ qboolean MN_FocusNextActionNode (void)
 	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
 
 	if (mouseSpace != MS_MENU)
+		return qfalse;
+
+	if (MN_GetMouseCapture())
 		return qfalse;
 
 	if (i >= mn.menuStackPos)

@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_SPACER 2.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 
-const menuNode_t *selectBoxNode;
-
 /**
  * @brief Adds a new selectbox option to a selectbox node
  * @sa MN_SELECTBOX
@@ -101,14 +99,6 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	}
 }
 
-/**
- * @todo check if this function is need
- */
-void MN_NodeSelectBoxInit (void)
-{
-	selectBoxNode = NULL;
-}
-
 static void MN_SelectBoxNodeDraw (menuNode_t *node)
 {
 	selectBoxOptions_t* selectBoxOption;
@@ -154,7 +144,6 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		return;
 
 	selBoxY += node->size[1];
-	selectBoxNode = node;
 
 	/* drop down menu */
 	/* left side */

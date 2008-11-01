@@ -188,9 +188,7 @@ void MN_DrawMenus (void)
 
 			/* mouse effects */
 			/* don't allow to open more than one selectbox */
-			if (selectBoxNode && selectBoxNode != node)
-				node->state = qfalse;
-			else if (sp > pp) {
+			if (sp > pp) {
 				/* in and out events */
 				mouseOver = MN_CheckNodeZone(node, mousePosX, mousePosY);
 				if (mouseOver != node->state) {
@@ -201,7 +199,6 @@ void MN_DrawMenus (void)
 					else
 						MN_ExecuteActions(menu, node->mouseOut);
 					node->state = mouseOver;
-					selectBoxNode = NULL;
 				}
 			}
 

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_main.h"
 #include "m_draw.h"
+#include "m_input.h"
 #include "../client.h"
 
 menuGlobal_t mn;
@@ -83,6 +84,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 	int i;
 	menuNode_t *node;
 
+	MN_MouseRelease();
 	MN_FocusRemove();
 
 	for (i = 0; i < mn.numMenus; i++)
@@ -213,6 +215,7 @@ void MN_PopMenu (qboolean all)
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
 
+	MN_MouseRelease();
 	MN_FocusRemove();
 
 	if (all)
