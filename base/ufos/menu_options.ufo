@@ -778,6 +778,7 @@ menu options_keys
 		pos	"480 110"
 		height	"28"
 		num	TEXT_LIST
+		wheel
 		format	"20 0"
 		scrollbar	true
 //		bgcolor	"1 1 1 0.4"
@@ -873,6 +874,7 @@ menu options_pause
 		format	"25 0"
 		pos		"500 170"
 		size	"265 525"
+		click
 		wheel	{ cmd "msgoptions_scroll;" }
 		mousefx	true
 		longlines prettychop
