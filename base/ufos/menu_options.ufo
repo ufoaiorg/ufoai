@@ -134,13 +134,15 @@ menu options
 menu options_video
 {
 	{
-		noticepos	"500 110"
+		pos	"415 0"
+		size	"608 768"
+		noticepos	"75 110"
 	}
 
 	string videosettings
 	{
 		string	"_Video settings"
-		pos		"840 60"
+		pos		"425 60"
 		align	ur
 		font	"f_menubig"
 	}
@@ -148,13 +150,13 @@ menu options_video
 	string res_str
 	{
 		string	"_Resolution:"
-		pos		"500 140"
+		pos		"85 140"
 	}
 
 	pic res_test_pic
 	{
 		image	menu/buttons_small
-		pos	"750 140"
+		pos	"335 140"
 		texl	"32 0"
 		texh	"47 16"
 		mousefx	true
@@ -167,31 +169,31 @@ menu options_video
 	string texres_str
 	{
 		string	"_Texture resolution cap:"
-		pos		"500 165"
+		pos		"85 165"
 	}
 	// select box is defined at the bottom - due to shine through on hovering
 
 	string lightmapres_str
 	{
 		string	"_Lightmap block size:"
-		pos		"500 190"
+		pos		"85 190"
 	}
 
 	string aniso_str
 	{
 		string	"_Texture anisotropy level:"
-		pos		"500 215"
+		pos		"85 215"
 	}
 	string aniso_value
 	{
 		string	"*cvar r_anisotropic"
-		pos		"840 215"
+		pos		"425 215"
 		align	ur
 	}
 	pic aniso_dec
 	{
 		image	menu/buttons_small
-		pos		"868 219"
+		pos		"453 219"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -200,7 +202,7 @@ menu options_video
 	pic aniso_inc
 	{
 		image	menu/buttons_small
-		pos		"884 219"
+		pos		"469 219"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -210,117 +212,117 @@ menu options_video
 	string fullscreen_str
 	{
 		string	"_Fullscreen:"
-		pos		"500 240"
+		pos		"85 240"
 	}
 	checkbox fullscreen
 	{
 		cvar	"*cvar vid_fullscreen"
-		pos		"840 240"
+		pos		"425 240"
 	}
 
 	string compression_str
 	{
 		string	"_Texture compression:"
-		pos		"500 265"
+		pos		"85 265"
 	}
 	checkbox compression
 	{
 		cvar	"*cvar r_ext_texture_compression"
-		pos		"840 265"
+		pos		"425 265"
 	}
 
 	string fps_str
 	{
 		string	"_Show FPS:"
-		pos		"500 290"
+		pos		"85 290"
 	}
 	checkbox fps
 	{
 		cvar	"*cvar cl_fps"
-		pos		"840 290"
+		pos		"425 290"
 	}
 
 	string lod_str
 	{
 		string	"_Texture Lod:"
-		pos		"500 315"
+		pos		"85 315"
 	}
 	checkbox lod
 	{
 		cvar	"*cvar r_texture_lod"
-		pos		"840 315"
+		pos		"425 315"
 	}
 
 	string isomode_str
 	{
 		string	"_Isometric Mode:"
-		pos		"500 340"
+		pos		"85 340"
 	}
 	checkbox isomode
 	{
 		cvar	"*cvar r_isometric"
-		pos		"840 340"
+		pos		"425 340"
 	}
 
 	string glsl_str
 	{
 		string	"_GLSL shaders:"
-		pos		"500 365"
+		pos		"85 365"
 	}
 	checkbox glsl
 	{
 		cvar	"*cvar r_programs"
-		pos		"840 365"
+		pos		"425 365"
 	}
 
 	string light_str
 	{
 		string	"_Realtime lighting:"
-		pos		"500 390"
+		pos		"85 390"
 	}
 	checkbox light
 	{
 		cvar	"*cvar r_lighting"
-		pos		"840 390"
+		pos		"425 390"
 	}
 
 	string ptlweather_str
 	{
 		string	"_Weather effects:"
-		pos		"500 415"
+		pos		"85 415"
 	}
 	checkbox ptlweather
 	{
 		cvar	"*cvar cl_particleweather"
-		pos		"840 415"
+		pos		"425 415"
 	}
 
 	string vbo_str
 	{
 		string	"_Vertex buffers:"
-		pos		"500 440"
+		pos		"85 440"
 	}
 	checkbox vbo
 	{
 		cvar	"*cvar r_vertexbuffers"
-		pos		"840 440"
+		pos		"425 440"
 	}
 
 	string samplebuf_str
 	{
 		string	"_Multisample buffers:"
-		pos		"500 465"
+		pos		"85 465"
 	}
 	string samplebuf_value
 	{
 		string	"*cvar r_multisample"
-		pos		"840 465"
+		pos		"425 465"
 		align	ur
 	}
 	pic samplebuf_dec
 	{
 		image	menu/buttons_small
-		pos		"868 469"
+		pos		"453 469"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -329,7 +331,7 @@ menu options_video
 	pic samplebuf_inc
 	{
 		image	menu/buttons_small
-		pos		"884 469"
+		pos		"469 469"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -339,18 +341,18 @@ menu options_video
 	string swapcontrol_str
 	{
 		string	"_Swap interval:"
-		pos		"500 485"
+		pos		"85 485"
 	}
 	string swapcontrol_value
 	{
 		string	"*cvar r_multisample"
-		pos		"840 485"
+		pos		"425 485"
 		align	ur
 	}
 	pic swapinterval_dec
 	{
 		image	menu/buttons_small
-		pos		"868 489"
+		pos		"453 489"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -359,7 +361,7 @@ menu options_video
 	pic swapinterval_inc
 	{
 		image	menu/buttons_small
-		pos		"884 489"
+		pos		"469 489"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -369,16 +371,16 @@ menu options_video
 	string gamma_str
 	{
 		string	"_Gamma:"
-		pos		"500 515"
+		pos		"85 515"
 	}
 	pic gamma_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 520"
+		pos		"244 520"
 	}
 	bar gamma_bar
 	{
-		pos		"668 525"
+		pos		"253 525"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"
@@ -391,16 +393,16 @@ menu options_video
 	string contrast_str
 	{
 		string	"_Contrast:"
-		pos		"500 540"
+		pos		"85 540"
 	}
 	pic contrast_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 545"
+		pos		"244 545"
 	}
 	bar contrast_bar
 	{
-		pos		"668 550"
+		pos		"253 550"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar r_contrast"
@@ -413,16 +415,16 @@ menu options_video
 	string brightness_str
 	{
 		string	"_Brightness:"
-		pos		"500 565"
+		pos		"85 565"
 	}
 	pic brightness_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 570"
+		pos		"244 570"
 	}
 	bar brightness_bar
 	{
-		pos		"668 575"
+		pos		"253 575"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar r_brightness"
@@ -435,16 +437,16 @@ menu options_video
 	string lightmap_str
 	{
 		string	"_Lightmap scale:"
-		pos		"500 590"
+		pos		"85 590"
 	}
 	pic lightmap_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 595"
+		pos		"244 595"
 	}
 	bar lightmap_bar
 	{
-		pos		"668 600"
+		pos		"253 600"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar r_modulate"
@@ -458,7 +460,7 @@ menu options_video
 	selectbox lightmapres_box
 	{
 		image	"menu/selectbox_green"
-		pos	"774 192"
+		pos	"359 192"
 		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar r_maxlightmap"
@@ -487,7 +489,7 @@ menu options_video
 	selectbox texres_box
 	{
 		image	"menu/selectbox_green"
-		pos	"774 167"
+		pos	"359 167"
 		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar r_maxtexres"
@@ -525,7 +527,7 @@ menu options_video
 
 	selectbox select_res
 	{
-		pos		"774 142"
+		pos		"359 142"
 		cvar	"*cvar mn_vidmode"
 		image	"menu/selectbox_green"
 		size	"125 20"
@@ -647,10 +649,15 @@ menu popup_maintain_resolution
 
 menu options_sound
 {
+	{
+		pos	"415 0"
+		size	"608 768"
+	}
+
 	string soundsettings
 	{
 		string	"_Sound settings"
-		pos		"840 60"
+		pos		"425 60"
 		align	ur
 		font	"f_menubig"
 	}
@@ -658,21 +665,21 @@ menu options_sound
 	string volume_str
 	{
 		string	"_Volume Control"
-		pos		"500 140"
+		pos		"85 140"
 	}
 	string effects_str
 	{
 		string	"_Effects:"
-		pos		"520 170"
+		pos		"105 170"
 	}
 	pic effects_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 175"
+		pos		"230 175"
 	}
 	bar effects_bar
 	{
-		pos		"654 180"
+		pos		"239 180"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar snd_volume"
@@ -685,16 +692,16 @@ menu options_sound
 	string music_str
 	{
 		string	"_Music:"
-		pos		"520 195"
+		pos		"105 195"
 	}
 	pic music_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 200"
+		pos		"230 200"
 	}
 	bar music_bar
 	{
-		pos		"654 205"
+		pos		"239 205"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar snd_music_volume"
@@ -707,13 +714,13 @@ menu options_sound
 	string rate_str
 	{
 		string	"_Sound rate:"
-		pos		"500	 245"
+		pos		"85 245"
 	}
 	pic rate_test_pic
 	{
 		tooltip	"_Restart sound to change the settings"
 		image	menu/buttons_small
-		pos	"750 245"
+		pos	"335 245"
 		texl	"32 0"
 		texh	"47 16"
 		mousefx	true
@@ -726,7 +733,7 @@ menu options_sound
 	selectbox rate_box
 	{
 		image	"menu/selectbox_green"
-		pos	"774 245"
+		pos	"359 245"
 		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar snd_rate"
@@ -763,10 +770,15 @@ menu options_sound
 
 menu options_keys
 {
+	{
+		pos	"415 0"
+		size	"608 768"
+	}
+
 	string showkeys
 	{
 		string	"_Show key bindings"
-		pos		"840 60"
+		pos		"425 60"
 		align	ur
 		font	"f_menubig"
 	}
@@ -775,7 +787,7 @@ menu options_keys
 	text keylist
 	{
 		size	"460 560"
-		pos	"480 110"
+		pos	"65 110"
 		height	"28"
 		num	TEXT_LIST
 		wheel
@@ -788,7 +800,7 @@ menu options_keys
 	{
 		tooltip "_Scroll up"
 		image menu/buttons_small
-		pos		"926 90"
+		pos		"511 90"
 		texl	"32 32"
 		texh	"48 48"
 		mousefx	true
@@ -802,7 +814,7 @@ menu options_keys
 	{
 		tooltip "_Scroll down"
 		image menu/buttons_small
-		pos		"926 680"
+		pos		"511 680"
 		texl	"32 48"
 		texh	"48 64"
 		mousefx	true
@@ -824,10 +836,15 @@ menu options_keys
 
 menu options_pause
 {
+	{
+		pos	"415 0"
+		size	"608 768"
+	}
+
 	string pause_settings
 	{
 		string	"_Pause/message settings"
-		pos		"840 60"
+		pos		"425 60"
 		align	ur
 		font	"f_menubig"
 	}
@@ -835,14 +852,14 @@ menu options_pause
 	string header_messagetype
 	{
 		string	"_Notify type"
-		pos		"500 140"
+		pos		"85 140"
 		font	f_big
 	}
 
 	pic header_pause
 	{
 		tooltip	"_enable or disable pause for all notification types\nPause can't be enabled without notification"
-		pos		"834 140"
+		pos		"419 140"
 		align	ur
 		image	menu/notify_pause
 		click {	cmd "mn_push popup_setall_pause;" }
@@ -851,7 +868,7 @@ menu options_pause
 	pic header_notify
 	{
 		tooltip	"_enable or disable messages being displayed for all notification types"
-		pos		"864 140"
+		pos		"449 140"
 		align	ur
 		image	menu/notify_notice
 		click { cmd "mn_push popup_setall_notify;" }
@@ -860,7 +877,7 @@ menu options_pause
 	pic header_sound
 	{
 		tooltip	"_enable or disable sounds being played for all notification types"
-		pos		"894 140"
+		pos		"479 140"
 		align	ur
 		image	menu/notify_sound
 		click { cmd "mn_push popup_setall_sound;" }
@@ -872,7 +889,7 @@ menu options_pause
 		num		TEXT_MESSAGEOPTIONS
 		height	"21"
 		format	"25 0"
-		pos		"500 170"
+		pos		"85 170"
 		size	"265 525"
 		click
 		wheel	{ cmd "msgoptions_scroll;" }
@@ -883,7 +900,7 @@ menu options_pause
 	pic bt_pause0 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 170"
+		pos		"415 170"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 0 pause;" }
 	}
@@ -891,7 +908,7 @@ menu options_pause
 	pic bt_notify0 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 170"
+		pos		"445 170"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 notify;" }
 	}
@@ -899,7 +916,7 @@ menu options_pause
 	pic bt_sound0 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 170"
+		pos		"475 170"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 sound;" }
 	}
@@ -907,7 +924,7 @@ menu options_pause
 	pic bt_pause1 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 195"
+		pos		"415 195"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 1 pause;" }
 	}
@@ -915,7 +932,7 @@ menu options_pause
 	pic bt_notify1 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 195"
+		pos		"445 195"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 notify;" }
 	}
@@ -923,7 +940,7 @@ menu options_pause
 	pic bt_sound1 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 195"
+		pos		"475 195"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 sound;" }
 	}
@@ -931,7 +948,7 @@ menu options_pause
 	pic bt_pause2 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 220"
+		pos		"415 220"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 2 pause;" }
 	}
@@ -939,7 +956,7 @@ menu options_pause
 	pic bt_notify2 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 220"
+		pos		"445 220"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 notify;" }
 	}
@@ -947,7 +964,7 @@ menu options_pause
 	pic bt_sound2 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 220"
+		pos		"475 220"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 sound;" }
 	}
@@ -955,7 +972,7 @@ menu options_pause
 	pic bt_pause3 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 245"
+		pos		"415 245"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 3 pause;" }
 	}
@@ -963,7 +980,7 @@ menu options_pause
 	pic bt_notify3 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 245"
+		pos		"445 245"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 notify;" }
 	}
@@ -971,7 +988,7 @@ menu options_pause
 	pic bt_sound3 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 245"
+		pos		"475 245"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 sound;" }
 	}
@@ -979,7 +996,7 @@ menu options_pause
 	pic bt_pause4 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 270"
+		pos		"415 270"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 4 pause;" }
 	}
@@ -987,7 +1004,7 @@ menu options_pause
 	pic bt_notify4 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 270"
+		pos		"445 270"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 notify;" }
 	}
@@ -995,7 +1012,7 @@ menu options_pause
 	pic bt_sound4 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 270"
+		pos		"475 270"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 sound;" }
 	}
@@ -1003,7 +1020,7 @@ menu options_pause
 	pic bt_pause5 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 295"
+		pos		"415 295"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 5 pause;" }
 	}
@@ -1011,7 +1028,7 @@ menu options_pause
 	pic bt_notify5 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 295"
+		pos		"445 295"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 notify;" }
 	}
@@ -1019,7 +1036,7 @@ menu options_pause
 	pic bt_sound5 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 295"
+		pos		"475 295"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 sound;" }
 	}
@@ -1027,7 +1044,7 @@ menu options_pause
 	pic bt_pause6 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 320"
+		pos		"415 320"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 6 pause;" }
 	}
@@ -1035,7 +1052,7 @@ menu options_pause
 	pic bt_notify6 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 320"
+		pos		"445 320"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 notify;" }
 	}
@@ -1043,7 +1060,7 @@ menu options_pause
 	pic bt_sound6 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 320"
+		pos		"475 320"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 sound;" }
 	}
@@ -1051,7 +1068,7 @@ menu options_pause
 	pic bt_pause7 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 345"
+		pos		"415 345"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 7 pause;" }
 	}
@@ -1059,7 +1076,7 @@ menu options_pause
 	pic bt_notify7 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 345"
+		pos		"445 345"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 notify;" }
 	}
@@ -1067,7 +1084,7 @@ menu options_pause
 	pic bt_sound7 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 345"
+		pos		"475 345"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 sound;" }
 	}
@@ -1075,7 +1092,7 @@ menu options_pause
 	pic bt_pause8 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 370"
+		pos		"415 370"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 8 pause;" }
 	}
@@ -1083,7 +1100,7 @@ menu options_pause
 	pic bt_notify8 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 370"
+		pos		"445 370"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 notify;" }
 	}
@@ -1091,7 +1108,7 @@ menu options_pause
 	pic bt_sound8 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 370"
+		pos		"475 370"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 sound;" }
 	}
@@ -1099,7 +1116,7 @@ menu options_pause
 	pic bt_pause9 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 395"
+		pos		"415 395"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 9 pause;" }
 	}
@@ -1107,7 +1124,7 @@ menu options_pause
 	pic bt_notify9 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 395"
+		pos		"445 395"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 notify;" }
 	}
@@ -1115,7 +1132,7 @@ menu options_pause
 	pic bt_sound9 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 395"
+		pos		"475 395"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 sound;" }
 	}
@@ -1123,7 +1140,7 @@ menu options_pause
 	pic bt_pause10 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 420"
+		pos		"415 420"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 10 pause;" }
 	}
@@ -1131,7 +1148,7 @@ menu options_pause
 	pic bt_notify10 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 420"
+		pos		"445 420"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 notify;" }
 	}
@@ -1139,7 +1156,7 @@ menu options_pause
 	pic bt_sound10 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 420"
+		pos		"475 420"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 sound;" }
 	}
@@ -1147,7 +1164,7 @@ menu options_pause
 	pic bt_pause11 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 445"
+		pos		"415 445"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 11 pause;" }
 	}
@@ -1155,7 +1172,7 @@ menu options_pause
 	pic bt_notify11 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 445"
+		pos		"445 445"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 notify;" }
 	}
@@ -1163,7 +1180,7 @@ menu options_pause
 	pic bt_sound11 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 445"
+		pos		"475 445"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 sound;" }
 	}
@@ -1171,7 +1188,7 @@ menu options_pause
 	pic bt_pause12 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 470"
+		pos		"415 470"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 12 pause;" }
 	}
@@ -1179,7 +1196,7 @@ menu options_pause
 	pic bt_notify12 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 470"
+		pos		"445 470"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 notify;" }
 	}
@@ -1187,7 +1204,7 @@ menu options_pause
 	pic bt_sound12 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 470"
+		pos		"475 470"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 sound;" }
 	}
@@ -1195,7 +1212,7 @@ menu options_pause
 	pic bt_pause13 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 495"
+		pos		"415 495"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 13 pause;" }
 	}
@@ -1203,7 +1220,7 @@ menu options_pause
 	pic bt_notify13 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 495"
+		pos		"445 495"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 notify;" }
 	}
@@ -1211,7 +1228,7 @@ menu options_pause
 	pic bt_sound13 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 495"
+		pos		"475 495"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 sound;" }
 	}
@@ -1219,7 +1236,7 @@ menu options_pause
 	pic bt_pause14 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 520"
+		pos		"415 520"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 14 pause;" }
 	}
@@ -1227,7 +1244,7 @@ menu options_pause
 	pic bt_notify14 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 520"
+		pos		"445 520"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 notify;" }
 	}
@@ -1235,7 +1252,7 @@ menu options_pause
 	pic bt_sound14 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 520"
+		pos		"475 520"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 sound;" }
 	}
@@ -1243,7 +1260,7 @@ menu options_pause
 	pic bt_pause15 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 545"
+		pos		"415 545"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 15 pause;" }
 	}
@@ -1251,7 +1268,7 @@ menu options_pause
 	pic bt_notify15 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 545"
+		pos		"445 545"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 notify;" }
 	}
@@ -1259,7 +1276,7 @@ menu options_pause
 	pic bt_sound15 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 545"
+		pos		"475 545"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 sound;" }
 	}
@@ -1267,7 +1284,7 @@ menu options_pause
 	pic bt_pause16 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 570"
+		pos		"415 570"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 16 pause;" }
 	}
@@ -1275,7 +1292,7 @@ menu options_pause
 	pic bt_notify16 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 570"
+		pos		"445 570"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 notify;" }
 	}
@@ -1283,7 +1300,7 @@ menu options_pause
 	pic bt_sound16 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 570"
+		pos		"475 570"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 sound;" }
 	}
@@ -1291,7 +1308,7 @@ menu options_pause
 	pic bt_pause17 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 595"
+		pos		"415 595"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 17 pause;" }
 	}
@@ -1299,7 +1316,7 @@ menu options_pause
 	pic bt_notify17 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 595"
+		pos		"445 595"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 notify;" }
 	}
@@ -1307,7 +1324,7 @@ menu options_pause
 	pic bt_sound17 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 595"
+		pos		"475 595"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 sound;" }
 	}
@@ -1315,7 +1332,7 @@ menu options_pause
 	pic bt_pause18 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 620"
+		pos		"415 620"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 18 pause;" }
 	}
@@ -1323,7 +1340,7 @@ menu options_pause
 	pic bt_notify18 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 620"
+		pos		"445 620"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 notify;" }
 	}
@@ -1331,7 +1348,7 @@ menu options_pause
 	pic bt_sound18 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 620"
+		pos		"475 620"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 sound;" }
 	}
@@ -1339,7 +1356,7 @@ menu options_pause
 	pic bt_pause19 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 645"
+		pos		"415 645"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 19 pause;" }
 	}
@@ -1347,7 +1364,7 @@ menu options_pause
 	pic bt_notify19 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 645"
+		pos		"445 645"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 notify;" }
 	}
@@ -1355,7 +1372,7 @@ menu options_pause
 	pic bt_sound19 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 645"
+		pos		"475 645"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 sound;" }
 	}
@@ -1363,7 +1380,7 @@ menu options_pause
 	pic bt_pause20 {
 		tooltip "_enable or disable game stopping"
 		align	ur
-		pos		"830 670"
+		pos		"415 670"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 20 pause;" }
 	}
@@ -1371,7 +1388,7 @@ menu options_pause
 	pic bt_notify20 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 670"
+		pos		"445 670"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 notify;" }
 	}
@@ -1379,7 +1396,7 @@ menu options_pause
 	pic bt_sound20 {
 		tooltip "_enable or disable playing sound"
 		align	ur
-		pos		"890 670"
+		pos		"475 670"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 sound;" }
 	}
@@ -2005,10 +2022,15 @@ menu popup_setall_sound
 
 menu options_game
 {
+	{
+		pos	"415 0"
+		size	"608 768"
+	}
+
 	string gamesettings
 	{
 		string	"_Game settings"
-		pos		"840 60"
+		pos		"425 60"
 		align	ur
 		font	"f_menubig"
 	}
@@ -2019,12 +2041,12 @@ menu options_game
 	string tooltip_str
 	{
 		string	"_Tooltips:"
-		pos		"500 280"
+		pos		"85 280"
 	}
 	checkbox tooltip
 	{
 		cvar	"*cvar mn_show_tooltips"
-		pos		"840 280"
+		pos		"425 280"
 		tooltip	"_Activates tooltips"
 	}
 
@@ -2034,12 +2056,12 @@ menu options_game
 	string centerview_str
 	{
 		string	"_Centre view:"
-		pos		"500 305"
+		pos		"85 305"
 	}
 	checkbox centerview_value
 	{
 		cvar	"*cvar cl_centerview"
-		pos		"840 305"
+		pos		"425 305"
 		tooltip	"_Centring at soldier selecting, shooting and appearing"
 	}
 
@@ -2049,12 +2071,12 @@ menu options_game
 	string c_tooltip_str
 	{
 		string	"_Cursor tooltips:"
-		pos		"500 330"
+		pos		"85 330"
 	}
 	checkbox c_tooltip
 	{
 		cvar	"*cvar cl_show_cursor_tooltips"
-		pos		"840 330"
+		pos		"425 330"
 		tooltip	"_Activates cursor tooltips"
 	}
 
@@ -2064,12 +2086,12 @@ menu options_game
 	string 3dmap_str
 	{
 		string	"_3D Geoscape:"
-		pos		"500 355"
+		pos		"85 355"
 	}
 	checkbox 3dmap
 	{
 		cvar	"*cvar cl_3dmap"
-		pos		"840 355"
+		pos		"425 355"
 		tooltip	"_Use 3D geoscape"
 	}
 
@@ -2079,14 +2101,14 @@ menu options_game
 	string tipoftheday_string
 	{
 		string	"_Show tip of the day"
-		pos		"500 380"
+		pos		"85 380"
 		font	f_small
 		align ul
 	}
 	checkbox tipoftheday
 	{
 		cvar	"*cvar cl_showTipOfTheDay"
-		pos	"840 380"
+		pos	"425 380"
 	}
 
 	// ===================
@@ -2095,12 +2117,12 @@ menu options_game
 	string precache_str
 	{
 		string	"_Precache models:"
-		pos	"500 405"
+		pos	"85 405"
 	}
 	checkbox precache
 	{
 		cvar	"*cvar cl_precache"
-		pos	"840 405"
+		pos	"425 405"
 		tooltip	"_Precache models (faster menus)"
 	}
 
@@ -2110,16 +2132,16 @@ menu options_game
 	string actorsspeed_str
 	{
 		string	"_Actors speed:"
-		pos		"500 430"
+		pos		"85 430"
 	}
 	pic actorsspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"645 435"
+		pos		"230 435"
 	}
 	bar actorsspeed_bar
 	{
-		pos		"654 440"
+		pos		"239 440"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar g_actorspeed"
@@ -2135,12 +2157,12 @@ menu options_game
 	string current_name
 	{
 		string  "_Name:"
-		pos     "500 140"
+		pos     "85 140"
 	}
 	pic slot_name
 	{
 		image   menu/save_slot
-		pos     "500 160"
+		pos     "85 160"
 		size	"256 32"
 		mousefx true
 		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
@@ -2148,7 +2170,7 @@ menu options_game
 	string txt_name
 	{
 		string "*cvar cl_name"
-		pos "510 165"
+		pos "95 165"
 		color "0 .78 0 1"
 	}
 	confunc cl_name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
@@ -2158,7 +2180,7 @@ menu options_game
 	// ===================
 	custombutton button_pause
 	{
-		pos	"500 620"
+		pos	"85 620"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_pause;" }
 		image	menu/button_big
@@ -2175,11 +2197,11 @@ menu options_game
 	string language_str
 	{
 		string "_Language"
-		pos     "500 255"
+		pos     "85 255"
 	}
 	selectbox select_language
 	{
-		pos		"758 255"
+		pos		"343 255"
 		cvar	"*cvar s_language"
 		image	"menu/selectbox_green"
 		size	"155 20"
@@ -2193,12 +2215,12 @@ menu options_game
 	string hud_str
 	{
 		string	"_HUD Design:"
-		pos		"500 230"
+		pos		"85 230"
 	}
 	selectbox select_hud
 	{
 		image	"menu/selectbox_green"
-		pos		"758 230"
+		pos		"343 230"
 		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar mn_hud"
@@ -2222,10 +2244,15 @@ menu options_game
 
 menu options_input
 {
+	{
+		pos	"415 0"
+		size	"608 768"
+	}
+
 	string gamesettings
 	{
 		string	"_Input settings"
-		pos		"840 60"
+		pos		"425 60"
 		align	ur
 		font	"f_menubig"
 	}
@@ -2236,21 +2263,21 @@ menu options_input
 	string camera_str
 	{
 		string	"_Camera"
-		pos		"500 140"
+		pos		"85 140"
 	}
 	string camspeed_str
 	{
 		string	"_Scroll Speed:"
-		pos		"520 170"
+		pos		"105 170"
 	}
 	pic camspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 175"
+		pos		"244 175"
 	}
 	bar camspeed_bar
 	{
-		pos		"668 180"
+		pos		"253 180"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammovespeed"
@@ -2267,16 +2294,16 @@ menu options_input
 	string camrot_str
 	{
 		string	"_Rotation Speed:"
-		pos		"520 195"
+		pos		"105 195"
 	}
 	pic camrot_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 200"
+		pos		"244 200"
 	}
 	bar camrot_bar
 	{
-		pos		"668 205"
+		pos		"253 205"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_camrotspeed"
@@ -2293,16 +2320,16 @@ menu options_input
 	string cammoveaccel_str
 	{
 		string	"_Move Acceleration:"
-		pos		"520 245"
+		pos		"105 245"
 	}
 	pic cammoveaccel_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 250"
+		pos		"244 250"
 	}
 	bar cammoveaccel_bar
 	{
-		pos		"668 255"
+		pos		"253 255"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammoveaccel"
@@ -2319,7 +2346,7 @@ menu options_input
 	string joystick_settings_str
 	{
 		string	"_Joystick settings:"
-		pos		"500 505"
+		pos		"85 505"
 	}
 
 	// ===================
@@ -2328,16 +2355,16 @@ menu options_input
 	string joystick_threshold_str
 	{
 		string	"_Threshold:"
-		pos		"520 555"
+		pos		"105 555"
 	}
 	pic joystick_threshold_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 560"
+		pos		"244 560"
 	}
 	bar joystick_threshold_bar
 	{
-		pos		"668 565"
+		pos		"253 565"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar in_joystickThreshold"
@@ -2354,16 +2381,16 @@ menu options_input
 	string joystick_speed_str
 	{
 		string	"_Speed:"
-		pos		"520 580"
+		pos		"105 580"
 	}
 	pic joystick_speed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 585"
+		pos		"244 585"
 	}
 	bar joystick_speed_bar
 	{
-		pos		"668 590"
+		pos		"253 590"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar in_joystickSpeed"
@@ -2379,7 +2406,7 @@ menu options_input
 	// ===================
 	custombutton button_keys
 	{
-		pos	"500 620"
+		pos	"85 620"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_keys;" }
 		image	menu/button_big
@@ -2397,12 +2424,12 @@ menu options_input
 	string autostand_str
 	{
 		string	"_Autostand"
-		pos		"500 310"
+		pos		"85 310"
 	}
 	selectbox select_autostand
 	{
 		image	"menu/selectbox_green"
-		pos		"758 310"
+		pos		"343 310"
 		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar cl_autostand"
@@ -2424,12 +2451,12 @@ menu options_input
 	string confirm_str
 	{
 		string	"_Confirm Actions:"
-		pos		"500 285"
+		pos		"85 285"
 	}
 	selectbox select_confirmactions
 	{
 		image	"menu/selectbox_green"
-		pos		"758 285"
+		pos		"343 285"
 		size	"155 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar confirm_actions"
@@ -2456,12 +2483,12 @@ menu options_input
 	string joystick_str
 	{
 		string	"_Joystick:"
-		pos		"500 530"
+		pos		"85 530"
 	}
 	selectbox select_joystick
 	{
 		image	"menu/selectbox_green"
-		pos		"658 530"
+		pos		"243 530"
 		size	"256 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar in_joystickNo"
