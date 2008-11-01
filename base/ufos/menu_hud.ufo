@@ -483,12 +483,12 @@ menu hud
 	// info bar
 	// ==================
 
-	zone bar_info_zone
-	{
-		pos	"176 640"
-		size	"672 128"
-		click
-	}
+//	zone bar_info_zone
+//	{
+//		pos	"176 640"
+//		size	"672 128"
+//		click
+//	}
 
 	pic bar_info
 	{
