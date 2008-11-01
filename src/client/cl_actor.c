@@ -122,8 +122,10 @@ static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
 static void CL_RefreshWeaponButtons(int time);
 /**
  * @brief Writes player action with its data
+ * @param[in] player_action
+ * @param[in] entnum The server side edict number of the actor
  */
-void MSG_Write_PA (player_action_t player_action, int num, ...)
+void MSG_Write_PA (player_action_t player_action, int entnum, ...)
 {
 	va_list ap;
 	struct dbuffer *msg = new_dbuffer();
@@ -132,8 +134,8 @@ void MSG_Write_PA (player_action_t player_action, int num, ...)
 		Com_Printf("still some pending events but starting %i (%s)\n",
 			player_action, pa_format[player_action]);
 
-	va_start(ap, num);
-	NET_WriteFormat(msg, "bbs", clc_action, player_action, num);
+	va_start(ap, entnum);
+	NET_WriteFormat(msg, "bbs", clc_action, player_action, entnum);
 	NET_vWriteFormat(msg, pa_format[player_action], ap);
 	va_end(ap);
 	NET_WriteMsg(cls.netStream, msg);
