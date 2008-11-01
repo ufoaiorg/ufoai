@@ -354,7 +354,6 @@ static void CL_ActorGlobalCVars (void)
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		const le_t *le = cl.teamList[i];
 		if (le && !(le->state & STATE_DEAD)) {
-			char str[MAX_VAR];
 			/* the model name is the first entry in model_t */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
 			Cvar_SetValue(va("mn_hp%i", i), le->HP);
@@ -462,7 +461,7 @@ static void HighlightWeaponButton (int button)
 	/* only one button can be highlighted at once, so reset other buttons */
 	ClearHighlights();
 
-	Com_sprintf(cbufText, sizeof(cbufText), "sel%s", shoot_type_strings[button]);
+	Com_sprintf(cbufText, lengthof(cbufText), "sel%s", shoot_type_strings[button]);
 	Cbuf_AddText(cbufText);
 	weaponButtonState[button] = BT_STATE_HIGHLIGHT;
 }
@@ -478,9 +477,9 @@ void CL_ResetWeaponButtons (void)
  */
 static void SetWeaponButton (int button, weaponButtonState_t state)
 {
-	weaponButtonState_t currentState = weaponButtonState[button];
-	char                cbufText[MAX_VAR];
-	char const*         prefix;
+	const weaponButtonState_t currentState = weaponButtonState[button];
+	char cbufText[MAX_VAR];
+	char const* prefix;
 
 	assert(button < BT_NUM_TYPES);
 
@@ -1122,7 +1121,7 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 			for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
 				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT)) >= ammo->fd[weapFdsIdx][i].time) {
 					/** Get weapon name, firemode name and TUs. */
-					Com_sprintf(text, sizeof(text),
+					Com_sprintf(text, lengthof(text),
 						_("[%i TU] %s - %s"),
 						ammo->fd[weapFdsIdx][i].time,
 						weapon->name,
@@ -2195,7 +2194,7 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
 		Cvar_Set("mn_tureserved", va("%i", CL_ReservedTUs(selActor, RES_ALL_ACTIVE)));
 
-		Com_sprintf(tuTooltipText, sizeof(tuTooltipText),
+		Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
 			_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
 			selActor->TU, selActor->maxTU,
 			CL_ReservedTUs(selActor, RES_ALL_ACTIVE),
@@ -2313,9 +2312,9 @@ void CL_ActorUpdateCVars (void)
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reserved_tus > 0)
-					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
 				else
-					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i"), selActor->morale);
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
@@ -2323,17 +2322,17 @@ void CL_ActorUpdateCVars (void)
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 					if (reserved_tus > 0)
-						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
+						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
 							selActor->morale, reserved_tus, moveModeDescriptions[CL_MoveMode(actorMoveLength)], actorMoveLength,
 							selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
 					else
-						Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
+						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
 							moveModeDescriptions[CL_MoveMode(actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
 
 					if (actorMoveLength <= CL_UsableTUs(selActor))
-						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
+						Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
 					else
-						Com_sprintf(mouseText, sizeof(mouseText), "- (-)\n");
+						Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
 				} else {
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 				}
@@ -2351,9 +2350,9 @@ void CL_ActorUpdateCVars (void)
 				SCR_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
-				Com_sprintf(infoText, sizeof(infoText),
+				Com_sprintf(infoText, lengthof(infoText),
 							"%s\n%s (%i) [%i%%] %i\n", selWeapon->item.t->name, selFD->name, selFD->ammo, selToHit, selFD->time);
-				Com_sprintf(mouseText, sizeof(mouseText),
+				Com_sprintf(mouseText, lengthof(mouseText),
 							"%s: %s (%i) [%i%%] %i\n", selWeapon->item.t->name, selFD->name, selFD->ammo, selToHit, selFD->time);
 
 				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
@@ -2365,7 +2364,7 @@ void CL_ActorUpdateCVars (void)
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}
 			} else if (selWeapon) {
-				Com_sprintf(infoText, sizeof(infoText), _("%s\n(empty)\n"), selWeapon->item.t->name);
+				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), selWeapon->item.t->name);
 			} else {
 				cl.cmode = M_MOVE;
 				CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
@@ -2374,7 +2373,7 @@ void CL_ActorUpdateCVars (void)
 
 		/* handle actor in a panic */
 		if (selActor->state & STATE_PANIC) {
-			Com_sprintf(infoText, sizeof(infoText), _("Currently panics!\n"));
+			Com_sprintf(infoText, lengthof(infoText), _("Currently panics!\n"));
 			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 		}
 
@@ -2383,18 +2382,18 @@ void CL_ActorUpdateCVars (void)
 		pos[2] = cl_worldlevel->integer;
 
 		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(topText, sizeof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
+		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
 		/* Save the text for later display next to the cursor. */
 		mn.menuText[TEXT_MOUSECURSOR_TOP] = topText;
 
 		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(bottomText, sizeof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
+		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
 		/* Save the text for later display next to the cursor. */
 		mn.menuText[TEXT_MOUSECURSOR_BOTTOM] = bottomText;
 
 		/* Display the floor and ceiling values for the current cell. */
 		dv = Grid_MoveNext(clMap, fieldSize, &clPathMap, mousePos, 0);
-		Com_sprintf(leftText, sizeof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
+		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
 		/* Save the text for later display next to the cursor. */
 		mn.menuText[TEXT_MOUSECURSOR_LEFT] = leftText;
 
@@ -2879,7 +2878,7 @@ static int CL_CheckAction (void)
 
 	if (!selActor) {
 		Com_Printf("Nobody selected.\n");
-		Com_sprintf(infoText, sizeof(infoText), _("Nobody selected\n"));
+		Com_sprintf(infoText, lengthof(infoText), _("Nobody selected\n"));
 		return qfalse;
 	}
 
@@ -3987,11 +3986,11 @@ void CL_ActorDie (struct dbuffer *msg)
 	if (le->team == cls.team) {
 		character_t *chr = CL_GetActorChr(le);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
-			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was stunned\n"),
+			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was stunned\n"),
 			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
 		} else if (chr) {
-			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was killed\n"),
+			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was killed\n"),
 			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
 		}
@@ -4007,10 +4006,10 @@ void CL_ActorDie (struct dbuffer *msg)
 			if (le->teamDef) {
 				if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
-						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
+						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
 						SCR_DisplayHudMessage(tmpbuf, 2000);
 					} else {
-						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was killed: %s\n"), _(le->teamDef->name));
+						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was killed: %s\n"), _(le->teamDef->name));
 						SCR_DisplayHudMessage(tmpbuf, 2000);
 					}
 				} else {

@@ -1412,7 +1412,7 @@ void CheckNodraws (void)
 			for (is = 0; is < iBrush->numsides; is++) {
 				side_t *iSide = &iBrush->original_sides[is];
 				winding_t *iWinding;
-				vec3_t lastIntersection = {NAN, NAN, NAN}; /* used in innner loop, here to avoid repeated memset calls */
+				vec3_t lastIntersection = {0, 0, 0}; /* used in innner loop, here to avoid repeated memset calls */
 
 				if (!FacingAndCoincidentTo(iSide, composite->memberSides[0]))
 					continue; /* all sides in the composite are parallel, and iSide must face them to be hidden */

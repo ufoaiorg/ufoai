@@ -2077,7 +2077,7 @@ int FIRESH_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
 {
 	int fdIdx;
 	if (weaponFdsIdx >= MAX_WEAPONS_PER_OBJDEF) {
-		Com_Printf("FIRESH_GetDefaultReactionFire: bad weaponFdsIdx (%i) Maximum is %i.\n", weaponFdsIdx, MAX_WEAPONS_PER_OBJDEF-1);
+		Com_Printf("FIRESH_GetDefaultReactionFire: bad weaponFdsIdx (%i) Maximum is %i.\n", weaponFdsIdx, MAX_WEAPONS_PER_OBJDEF - 1);
 		return -1;
 	}
 	if (weaponFdsIdx < 0) {
