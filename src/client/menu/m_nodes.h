@@ -190,6 +190,7 @@ typedef struct {
 	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */
 	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y); /**< on use mouse wheel into the node */
 	void (*mouseMove)(menuNode_t *node, int x, int y);
+	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
 	void (*loaded)(menuNode_t *node); /**< call one time, when node load from script is finished */
 
 	/** Planed */
@@ -207,7 +208,6 @@ typedef struct {
 	void (*leftClickUp)(menuNode_t *node);
 	void (*mouseWheel)(menuNode_t *node);
 	captured mouse callback
-	void (*capturedMouseMove)(menuNode_t *node, int relativeX, int relativeY);
 	drag and drop callback
 	int  (*dndEnter)(menuNode_t *node);
 	void (*dndLeave)(menuNode_t *node);
@@ -225,6 +225,7 @@ menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
 void MN_SetNewNodePos(menuNode_t* node, int x, int y);
 menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos);
+void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y);
 
 void MN_InitNodes(void);
 

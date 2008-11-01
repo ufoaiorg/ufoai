@@ -101,6 +101,42 @@ qboolean MN_CursorOnMenu (int x, int y)
 	return qfalse;
 }
 
+/**
+ * @brief save the captured node
+ * @sa MN_SetMouseCapture()
+ * @sa MN_GetMouseCapture()
+ * @sa MN_MouseRelese()
+ */
+static menuNode_t* capturedNode;
+
+/**
+ * @brief Return the captured node
+ * @return Return a node, else NULL
+ */
+menuNode_t* MN_GetMouseCapture (void) {
+	return capturedNode;
+}
+
+/**
+ * @brief Captured the mouse into a node
+ */
+void MN_SetMouseCapture (menuNode_t* node) {
+	assert(capturedNode == NULL);
+	assert(node != NULL);
+	capturedNode = node;
+}
+
+/**
+ * @brief Release the captured node
+ * @todo update mouse events (in, out)
+ */
+void MN_MouseRelese () {
+	capturedNode = NULL;
+}
+
+/**
+ * @brief save the node over the mouse
+ */
 menuNode_t *mouseOverTest;
 
 /**
@@ -112,6 +148,14 @@ void MN_MouseMove (int x, int y)
 	int sp;
 	menuNode_t *node;
 
+	/* send the captured move mouse event */
+	if (capturedNode) {
+		if (nodeBehaviourList[capturedNode->type].capturedMouseMove)
+			nodeBehaviourList[capturedNode->type].capturedMouseMove(capturedNode, x, y);
+		return;
+	}
+
+	/* compute the node under the mouse */
 	mouseOverTest = NULL;
 
 	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
@@ -131,7 +175,7 @@ void MN_MouseMove (int x, int y)
 
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstNode; node; node = node->next) {
-			if (node->invis || node->disabled || !MN_CheckCondition(node))
+			if (node->invis || !MN_CheckCondition(node))
 				continue;
 			if (x >= node->pos[0] && x <= node->pos[0] + node->size[0]
 				&& y >= node->pos[1] && y <= node->pos[1] + node->size[1])
@@ -139,6 +183,14 @@ void MN_MouseMove (int x, int y)
 		}
 
 		break;
+	}
+
+	/* compute here the function to send 'in' and 'out' event */
+	/* ... */
+
+	/* send the move event */
+	if (mouseOverTest && nodeBehaviourList[mouseOverTest->type].mouseMove) {
+		nodeBehaviourList[mouseOverTest->type].mouseMove(mouseOverTest, x, y);
 	}
 }
 
@@ -164,6 +216,13 @@ void MN_Click (int x, int y)
 	menuNode_t *node;
 	int sp, mouseOver;
 	qboolean clickedInside = qfalse;
+
+	/* send it to the captured mouse node */
+	if (capturedNode) {
+		if (nodeBehaviourList[capturedNode->type].leftClick)
+			nodeBehaviourList[capturedNode->type].leftClick(capturedNode, x, y);
+		return;
+	}
 
 	sp = mn.menuStackPos;
 
@@ -265,6 +324,13 @@ void MN_RightClick (int x, int y)
 	int sp = mn.menuStackPos;
 	qboolean clickedInside = qfalse;
 
+	/* send it to the captured mouse node */
+	if (capturedNode) {
+		if (nodeBehaviourList[capturedNode->type].rightClick)
+			nodeBehaviourList[capturedNode->type].rightClick(capturedNode, x, y);
+		return;
+	}
+
 	while (sp > 0 && !clickedInside) {
 		menu_t *menu = mn.menuStack[--sp];
 		menuNode_t *node;
@@ -307,6 +373,13 @@ void MN_MiddleClick (int x, int y)
 	menu_t *menu;
 	int sp, mouseOver;
 	qboolean clickedInside = qfalse;
+
+	/* send it to the captured mouse node */
+	if (capturedNode) {
+		if (nodeBehaviourList[capturedNode->type].middleClick)
+			nodeBehaviourList[capturedNode->type].middleClick(capturedNode, x, y);
+		return;
+	}
 
 	sp = mn.menuStackPos;
 
@@ -358,6 +431,13 @@ void MN_MouseWheel (qboolean down, int x, int y)
 	menu_t *menu;
 	int sp, mouseOver;
 	qboolean wheelInside = qfalse;
+
+	/* send it to the captured mouse node */
+	if (capturedNode) {
+		if (nodeBehaviourList[capturedNode->type].mouseWheel)
+			nodeBehaviourList[capturedNode->type].mouseWheel(capturedNode, down, x, y);
+		return;
+	}
 
 	sp = mn.menuStackPos;
 

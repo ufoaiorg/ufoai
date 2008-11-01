@@ -69,12 +69,45 @@ selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 	return selectBoxOption;
 }
 
+/**
+ * @brief call when the mouse move over the node
+ */
+static void MN_SelectBoxNodeMouseMove (menuNode_t *node, int x, int y) {
+	MN_SetMouseCapture(node);
+}
+
+/**
+ * @brief call when the mouse move is the node is captured
+ * @todo we can remove the loop if we save the current element in the node
+ */
+static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y) {
+	selectBoxOptions_t* selectBoxOption;
+	int posy;
+
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+
+	/* test bounded box */
+	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->height+1)) {
+		MN_MouseRelese();
+		return;
+	}
+
+	posy = node->size[1];
+	for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+		selectBoxOption->hovered = (posy <= y && y < posy + node->size[1]) ? qtrue : qfalse;
+		posy += node->size[1];
+	}
+}
+
+/**
+ * @todo check if this function is need
+ */
 void MN_NodeSelectBoxInit (void)
 {
 	selectBoxNode = NULL;
 }
 
-static void MN_DrawSelectBoxNode (menuNode_t *node)
+static void MN_SelectBoxNodeDraw (menuNode_t *node)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int selBoxX, selBoxY;
@@ -114,62 +147,65 @@ static void MN_DrawSelectBoxNode (menuNode_t *node)
 		}
 	}
 
-	/* active? */
-	if (node->state) {
+	/* must we draw the drop-down list */
+	if (node != MN_GetMouseCapture())
+		return;
+
+	selBoxY += node->size[1];
+	selectBoxNode = node;
+
+	/* drop down menu */
+	/* left side */
+	R_DrawNormPic(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+		7.0f, 28.0f, 0.0f, 21.0f, ALIGN_UL, node->blend, image);
+
+	/* stretched middle bar */
+	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->height,
+		16.0f, 28.0f, 7.0f, 21.0f, ALIGN_UL, node->blend, image);
+
+	/* right side */
+	R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+		23.0f, 28.0f, 16.0f, 21.0f, ALIGN_UL, node->blend, image);
+
+	/* now draw all available options for this selectbox */
+	for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+		/* draw the hover effect */
+		if (selectBoxOption->hovered)
+			R_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
+		/* print the option label */
+		R_FontDrawString(font, node->align, selBoxX, selBoxY,
+			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
+			node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		/* next entries' position */
 		selBoxY += node->size[1];
-		selectBoxNode = node;
-
-		/* drop down menu */
-		/* left side */
-		R_DrawNormPic(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
-			7.0f, 28.0f, 0.0f, 21.0f, ALIGN_UL, node->blend, image);
-
-		/* stretched middle bar */
-		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->height,
-			16.0f, 28.0f, 7.0f, 21.0f, ALIGN_UL, node->blend, image);
-
-		/* right side */
-		R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
-			23.0f, 28.0f, 16.0f, 21.0f, ALIGN_UL, node->blend, image);
-
-		/* now draw all available options for this selectbox */
-		for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
-			/* draw the hover effect */
-			if (selectBoxOption->hovered)
-				R_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
-			/* print the option label */
-			R_FontDrawString(font, node->align, selBoxX, selBoxY,
-				selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
-				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-			/* next entries' position */
-			selBoxY += node->size[1];
-			/* reset the hovering - will be recalculated next frame */
-			selectBoxOption->hovered = qfalse;
-		}
-		/* left side */
-		R_DrawNormPic(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-			7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
-
-		/* stretched middle bar */
-		R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-			16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
-
-		/* right bottom side */
-		R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
-			SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-			23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
 	}
+	/* left side */
+	R_DrawNormPic(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+		7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
+
+	/* stretched middle bar */
+	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+		16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
+
+	/* right bottom side */
+	R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
+		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+		23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
 }
 
 /**
  * @brief Handles selectboxes clicks
  * @sa MN_SELECTBOX
  */
-static void MN_SelectboxClick (menuNode_t * node, int x, int y)
+static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int clickedAtOption;
 	vec2_t pos;
+
+	/* only execute the click stuff if the selectbox is active */
+	if (MN_GetMouseCapture() != node)
+		return;
 
 	MN_GetNodeAbsPos(node, pos);
 	clickedAtOption = (y - pos[1]);
@@ -193,22 +229,19 @@ static void MN_SelectboxClick (menuNode_t * node, int x, int y)
 	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
 		return;
 
-	/* only execute the click stuff if the selectbox is active */
-	if (node->state) {
-		selectBoxOption = node->options;
-		for (; clickedAtOption > 0 && selectBoxOption; selectBoxOption = selectBoxOption->next) {
-			clickedAtOption--;
-		}
-		if (selectBoxOption) {
-			const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
-			MN_SetCvar(cvarName, selectBoxOption->value, 0);
-			if (*selectBoxOption->action) {
+	selectBoxOption = node->options;
+	for (; clickedAtOption > 0 && selectBoxOption; selectBoxOption = selectBoxOption->next) {
+		clickedAtOption--;
+	}
+	if (selectBoxOption) {
+		const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
+		MN_SetCvar(cvarName, selectBoxOption->value, 0);
+		if (*selectBoxOption->action) {
 #ifdef DEBUG
-				if (selectBoxOption->action[strlen(selectBoxOption->action) - 1] != ';')
-					Com_Printf("selectbox option with none terminated action command\n");
+			if (selectBoxOption->action[strlen(selectBoxOption->action) - 1] != ';')
+				Com_Printf("selectbox option with none terminated action command\n");
 #endif
-				Cbuf_AddText(selectBoxOption->action);
-			}
+			Cbuf_AddText(selectBoxOption->action);
 		}
 	}
 }
@@ -216,6 +249,8 @@ static void MN_SelectboxClick (menuNode_t * node, int x, int y)
 void MN_RegisterNodeSelectBox (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
-	behaviour->draw = MN_DrawSelectBoxNode;
-	behaviour->leftClick = MN_SelectboxClick;
+	behaviour->draw = MN_SelectBoxNodeDraw;
+	behaviour->leftClick = MN_SelectBoxNodeClick;
+	behaviour->mouseMove = MN_SelectBoxNodeMouseMove;
+	behaviour->capturedMouseMove = MN_SelectBoxNodeCapturedMouseMove;
 }

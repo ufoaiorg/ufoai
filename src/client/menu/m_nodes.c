@@ -70,6 +70,26 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	Vector2Set(pos, node->menu->pos[0] + node->pos[0], node->menu->pos[1] + node->pos[1]);
 }
 
+/**
+ * @brief Update an absolute position to a relative one
+ * @param[in] menunode
+ * @param[inout] x an absolute x position
+ * @param[inout] y an absolute y position
+ */
+void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
+{
+	assert(node != NULL);
+	assert(x != NULL);
+	assert(y != NULL);
+
+	/** if we request the position of an undrawable node, there are a problem */
+	if (!nodeBehaviourList[node->type].draw)
+		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
+
+	*x -= node->menu->pos[0] + node->pos[0];
+	*y -= node->menu->pos[1] + node->pos[1];
+}
+
 #if 0
 /** @todo to be integrated into MN_CheckNodeZone */
 /**
@@ -187,27 +207,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	} else {
 		sx = node->size[0];
 		sy = node->size[1];
-	}
-
-	/* hardcoded value for select box from selectbox.tga image */
-	if (node->type == MN_SELECTBOX) {
-		sx += 20;
-		/* state is set when the selectbox is hovered */
-		if (node->state) {
-			int hoverOptionID;
-			sy += (node->size[1] * node->height);
-			/* hover a given entry in the list */
-			hoverOptionID = (y - nodepos[1]);
-
-			if (node->size[1])
-				hoverOptionID = (hoverOptionID - node->size[1]) / node->size[1];
-			else
-				hoverOptionID = (hoverOptionID - SELECTBOX_DEFAULT_HEIGHT) / SELECTBOX_DEFAULT_HEIGHT;
-
-			if (hoverOptionID >= 0 && hoverOptionID < node->height) {
-				node->options[hoverOptionID].hovered = qtrue;
-			}
-		}
 	}
 
 	tx = x - nodepos[0];
