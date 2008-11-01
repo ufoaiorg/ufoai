@@ -131,7 +131,7 @@ void MN_MouseMove (int x, int y)
 
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstNode; node; node = node->next) {
-			if (node->invis || node->disabled)
+			if (node->invis || node->disabled || !MN_CheckCondition(node))
 				continue;
 			if (x >= node->pos[0] && x <= node->pos[0] + node->size[0]
 				&& y >= node->pos[1] && y <= node->pos[1] + node->size[1])
