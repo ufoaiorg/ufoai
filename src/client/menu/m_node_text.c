@@ -155,7 +155,11 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 {
 	assert(node->type == MN_TEXT);
-	assert(node->texh[0]);
+
+	/* if no texh, its not a text list, result is not important */
+	if (!node->texh[0])
+		return 0;
+
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 	if (node->textScroll)
 		return (int) (y / node->texh[0]) + node->textScroll;
