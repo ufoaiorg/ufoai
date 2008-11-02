@@ -64,7 +64,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	if (!node->menu)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
 
-	/** if we request the position of an undrawable node, there are a problem */
+	/* if we request the position of an undrawable node, there is a problem */
 	if (!nodeBehaviourList[node->type].draw)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
 
@@ -83,9 +83,9 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 	assert(x != NULL);
 	assert(y != NULL);
 
-	/** if we request the position of an undrawable node, there are a problem */
+	/* if we request the position of an undrawable node, there is a problem */
 	if (!nodeBehaviourList[node->type].draw)
-		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
+		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
 
 	*x -= node->menu->pos[0] + node->pos[0];
 	*y -= node->menu->pos[1] + node->pos[1];
