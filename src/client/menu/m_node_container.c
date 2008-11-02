@@ -453,7 +453,9 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
 
+#if 0
 	MN_FindContainer(node);
+#endif
 	if (!node->container)
 		return NULL;
 
@@ -1114,4 +1116,5 @@ void MN_RegisterNodeContainer (nodeBehaviour_t* behaviour)
 	behaviour->draw = MN_DrawContainerNode2;
 	behaviour->leftClick = MN_ContainerClick;
 	behaviour->rightClick = MN_ContainerRightClick;
+	behaviour->loaded = MN_FindContainer;
 }

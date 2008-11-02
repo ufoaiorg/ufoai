@@ -164,6 +164,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	MN_GetNodeAbsPos(node, nodepos);
 	switch (node->type) {
 	case MN_CONTAINER:
+#if 0
 		MN_FindContainer(node);
 		if (!node->container)
 			return qfalse;
@@ -175,6 +176,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		/* found a container */
 		return qtrue;
 	/* checkboxes don't need action nodes */
+#endif
 	case MN_CHECKBOX:
 	case MN_TAB:
 	case MN_SELECTBOX:
