@@ -307,18 +307,18 @@ menu popup_recoverybaselist
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Select base for UFO recovery"
 		pos	"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	text cp_uforecovery_baselist
@@ -413,19 +413,19 @@ menu popup_recoverynationlist
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"706 20"
-	}
-
 	string title
 	{
 		string	"_Select nation for UFO recovery"
 		pos	"388 18"
 		font	f_big
 		align	uc
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"706 20"
 	}
 
 	string name_label

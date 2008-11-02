@@ -357,13 +357,6 @@ menu popup_tipoftheday
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos	"452 20"
-	}
-
 	string title
 	{
 		string	"_Tip of the day"

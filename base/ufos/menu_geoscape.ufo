@@ -698,6 +698,15 @@ menu popup_list
 		blend	true
 	}
 
+	text title
+	{
+		pos		"176 18"
+		align	uc
+		size	"446 20"
+		height	"1"
+		num		TEXT_POPUP
+	}
+
 	controls drag_button
 	{
 		image	menu/move
@@ -710,15 +719,6 @@ menu popup_list
 		image	hud/close
 		pos		"458 22"
 		click	{ cmd "mn_pop;" }
-	}
-
-	text title
-	{
-		pos		"176 18"
-		align	uc
-		size	"446 20"
-		height	"1"
-		num		TEXT_POPUP
 	}
 
 	text popup_text
@@ -787,6 +787,16 @@ menu popup_button
 		blend	true
 	}
 
+	text title
+	{
+		pos		"248 30"
+		align	uc
+		size	"446 20"
+		height	"1"
+		num		TEXT_POPUP
+		align cc
+	}
+
 	controls drag_button
 	{
 		image	menu/move
@@ -800,16 +810,6 @@ menu popup_button
 		image	hud/close
 		pos		"458 22"
 		click	{ cmd "mn_pop;" }
-	}
-
-	text title
-	{
-		pos		"248 30"
-		align	uc
-		size	"446 20"
-		height	"1"
-		num		TEXT_POPUP
-		align cc
 	}
 
 	text popup_text
@@ -923,18 +923,18 @@ menu popup_intercept_ready
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Ready"
 		pos		"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string name_label
@@ -1034,18 +1034,18 @@ menu popup_baseattack
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Base is under attack"
 		pos		"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	text description
@@ -1144,18 +1144,18 @@ menu popup_transferbaselist
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Select base to transfer to"
 		pos		"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string info
@@ -1221,18 +1221,18 @@ menu popup_newbase
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_New base"
 		pos		"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string name_label
@@ -1376,18 +1376,18 @@ menu popup_newinstallation_type
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_New installation"
 		pos	"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string type_label
@@ -1557,13 +1557,6 @@ menu popup_newinstallation
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title_radar
 	{
 		if "mn_installation_type eq radartower"
@@ -1584,6 +1577,13 @@ menu popup_newinstallation
 		string	"_New UFO yard"
 		pos	"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string name_label
@@ -1713,19 +1713,19 @@ menu radartower
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"*cvar mn_installation_title"
 		pos	"26 18"
 		size	"440 32"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string info
@@ -1774,18 +1774,18 @@ menu popup_installationstatus
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Installation Status"
 		pos	"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string name_label
@@ -1927,13 +1927,6 @@ menu popup_intercept
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"706 20"
-	}
-
 	pic vertical_bar
 	{
 		mousefx	true
@@ -1957,6 +1950,13 @@ menu popup_intercept
 		pos		"626 18"
 		font	f_big
 		align	uc
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"706 20"
 	}
 
 	string name_label
@@ -2055,19 +2055,19 @@ menu popup_mission
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"706 20"
-	}
-
 	string title
 	{
 		string	"_Select aircraft"
 		pos		"246 18"
 		font	f_big
 		align	uc
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"706 20"
 	}
 
 	string name_label
@@ -2152,18 +2152,18 @@ menu popup_multi_selection
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Select item"
 		pos		"26 14"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string type_label
@@ -2237,18 +2237,18 @@ menu popup_aircraft
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
 	string title
 	{
 		string	"_Aircraft"
 		pos		"26 14"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"428 22"
 	}
 
 	string action_label
@@ -2319,6 +2319,15 @@ menu popup
 		blend	true
 	}
 
+	text title
+	{
+		pos		"176 18"
+		align	uc
+		size	"446 20"
+		height	"1"
+		num		TEXT_POPUP
+	}
+
 	controls drag_button
 	{
 		image	menu/move
@@ -2331,15 +2340,6 @@ menu popup
 		image	hud/close
 		pos		"458 22"
 		click	{ cmd "mn_pop;" }
-	}
-
-	text title
-	{
-		pos		"176 18"
-		align	uc
-		size	"446 20"
-		height	"1"
-		num		TEXT_POPUP
 	}
 
 	text popup_text
@@ -3362,18 +3362,18 @@ menu popup_setall_pause
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"437 29"
-	}
-
 	string title
 	{
 		string	"_Change all pause settings"
 		pos	"34 24"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"437 29"
 	}
 
 	string name_label
@@ -3450,18 +3450,18 @@ menu popup_setall_notify
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"437 29"
-	}
-
 	string title
 	{
 		string	"_Change all notification settings"
 		pos	"34 24"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"437 29"
 	}
 
 	string name_label
@@ -3539,18 +3539,18 @@ menu popup_setall_sound
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"437 29"
-	}
-
 	string title
 	{
 		string	"_Change all sound settings"
 		pos	"34 24"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"437 29"
 	}
 
 	string name_label

@@ -570,18 +570,18 @@ menu popup_maintain_resolution
 		blend	true
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"429 23"
-	}
-
 	string title
 	{
 		string	"_Maintain resolution"
 		pos	"26 18"
 		font	f_big
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"429 23"
 	}
 
 	string name_label
