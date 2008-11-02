@@ -241,7 +241,7 @@ void MN_DrawMenus (void)
 			if (node->state)
 				menu->hoverNode = node;
 
-			if (mn_debugmenu->integer)
+			if (mn_debugmenu->integer == 1)
 				MN_DrawTooltip("f_small", node->name, nodepos[0], nodepos[1], node->size[1], 0);
 
 			R_ColorBlend(NULL);
@@ -288,7 +288,7 @@ void MN_DrawMenus (void)
 
 void MN_DrawMenusInit (void)
 {
-	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
+	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 }
 
