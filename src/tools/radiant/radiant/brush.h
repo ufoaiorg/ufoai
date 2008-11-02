@@ -1032,7 +1032,6 @@ public:
 		Texdef_EmitTextureCoordinates(m_texdefTransformed, m_shader.width(), m_shader.height(), m_winding, plane3().normal(), g_matrix4_identity);
 	}
 
-
 	const Vector3& centroid() const {
 		return m_centroid;
 	}

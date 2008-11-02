@@ -111,11 +111,6 @@ void createProgram(const char* filename, GLenum type) {
 	}
 }
 
-static bool g_vertexArray_enabled = false;
-static bool g_normalArray_enabled = false;
-static bool g_texcoordArray_enabled = false;
-static bool g_colorArray_enabled = false;
-
 inline bool OpenGLState_less(const OpenGLState& self, const OpenGLState& other) {
 	// Sort by sort-order override.
 	if (self.m_sort != other.m_sort) {
@@ -484,7 +479,6 @@ public:
 			glPolygonStipple(pattern);
 		}
 		glEnableClientState(GL_VERTEX_ARRAY);
-		g_vertexArray_enabled = true;
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
 		if (GlobalOpenGL().GL_1_3()) {
@@ -514,11 +508,8 @@ public:
 		glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		g_texcoordArray_enabled = false;
 		glDisableClientState(GL_COLOR_ARRAY);
-		g_colorArray_enabled = false;
 		glDisableClientState(GL_NORMAL_ARRAY);
-		g_normalArray_enabled = false;
 		glDisable(GL_BLEND);
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -542,6 +533,7 @@ public:
 		glDisable(GL_FOG);
 		setFogState(OpenGLFogState());
 
+		// render brushes and entities
 		for (OpenGLStates::iterator i = g_state_sorted.begin(); i != g_state_sorted.end(); ++i) {
 			(*i).second->render(current, globalstate, viewer);
 		}
@@ -769,14 +761,10 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 		glEnableClientState(GL_NORMAL_ARRAY);
-
-		g_normalArray_enabled = true;
 	} else if (delta & ~state & RENDER_LIGHTING) {
 		glDisable(GL_LIGHTING);
 		glDisable(GL_COLOR_MATERIAL);
 		glDisableClientState(GL_NORMAL_ARRAY);
-
-		g_normalArray_enabled = false;
 	}
 
 	if (delta & state & RENDER_TEXTURE) {
@@ -788,8 +776,6 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 		glEnable(GL_TEXTURE_2D);
 		glColor4f(1, 1, 1, self.m_colour[3]);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		g_texcoordArray_enabled = true;
 	} else if (delta & ~state & RENDER_TEXTURE) {
 		if (GlobalOpenGL().GL_1_3()) {
 			glActiveTexture(GL_TEXTURE0);
@@ -799,9 +785,6 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 		glDisable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-
-		g_texcoordArray_enabled = false;
 	}
 
 	if (delta & state & RENDER_BLEND) {
@@ -851,13 +834,9 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 
 	if (delta & state & RENDER_COLOURARRAY) {
 		glEnableClientState(GL_COLOR_ARRAY);
-
-		g_colorArray_enabled = true;
 	} else if (delta & ~state & RENDER_COLOURARRAY) {
 		glDisableClientState(GL_COLOR_ARRAY);
 		glColor4fv(vector4_to_array(self.m_colour));
-
-		g_colorArray_enabled = false;
 	}
 
 	if (delta & ~state & RENDER_COLOURCHANGE) {
