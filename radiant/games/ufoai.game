@@ -12,7 +12,6 @@
   archivetypes="pk3"
   texturetypes="tga jpg"
   modeltypes="md2 md3 ase"
-  shaderpath="scripts"
   mapcompiler_param_compile="-extra"
   mapcompiler_param_fix="-v 1 -fix"
   mapcompiler_param_check="-v 1 -check"
