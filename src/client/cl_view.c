@@ -149,7 +149,7 @@ static void CL_ParseEntitystring (const char *es)
 			cl.map_maxlevel = maxlevel;
 
 			if (!ccs.singleplayer && (cl_teamnum->integer > maxmultiplayerteams
-									|| cl_teamnum->integer <= TEAM_CIVILIAN)) {
+			 || cl_teamnum->integer <= TEAM_CIVILIAN)) {
 				Com_Printf("The selected team is not useable. "
 					"The map doesn't support %i teams but only %i teams\n",
 					cl_teamnum->integer, maxmultiplayerteams);

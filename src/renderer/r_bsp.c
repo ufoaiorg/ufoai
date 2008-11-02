@@ -146,7 +146,7 @@ void R_DrawBrushModel (const entity_t * e)
 	}
 
 	glPushMatrix();
-	glMultMatrixf(e->transform.matrix);
+	R_TransformForEntity(e);
 
 	R_DrawBspModelSurfaces(e, modelorg);
 
@@ -313,11 +313,12 @@ void R_GetLevelSurfaceLists (void)
 {
 	int i, tile, mask;
 
+	r_locals.frame++;
+
 	if (!r_drawworld->integer)
 		return;
 
 	mask = 1 << refdef.worldlevel;
-	r_locals.frame++;
 
 	for (tile = 0; tile < r_numMapTiles; tile++) {
 		/* don't draw weaponclip, actorclip and stepon */

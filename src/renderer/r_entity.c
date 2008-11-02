@@ -81,6 +81,15 @@ void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bb
 	}
 }
 
+void R_TransformForEntity (const entity_t *e)
+{
+	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
+
+	glRotatef(e->angles[YAW], 0, 0, 1);
+	glRotatef(e->angles[PITCH], 0, 1, 0);
+	glRotatef(e->angles[ROLL], 1, 0, 0);
+}
+
 /**
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
