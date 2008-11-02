@@ -106,7 +106,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-ansi" />
 			<Add option="-Winline" />
 			<Add option="-Wcast-qual" />
 			<Add option="-Wcast-align" />

@@ -55,7 +55,6 @@ typedef enum mn_s {
 	MN_SELECTBOX,
 	MN_LINESTRIP,
 	MN_CINEMATIC, /**< every menu can only have one cinematic */
-	MN_TEXTLIST,
 	MN_RADAR,	/**< tactical mission radar */
 	MN_TAB,
 	MN_CONTROLS,	/**< menu controls */
