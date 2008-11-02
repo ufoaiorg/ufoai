@@ -4163,7 +4163,7 @@ static void CL_CampaignRunMarket (void)
 /**
  * @brief This will hide or show the geoscape button for handling the xvi overlay map
  */
-static void CP_UpdateXVIMapButton (void)
+static inline void CP_UpdateXVIMapButton (void)
 {
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 }

@@ -807,6 +807,8 @@ static void Check_FindCompositeSides (void)
 
 			while (numTodo > 0) {
 				mapbrush_t *bChecking = bTodo[--numTodo];
+				if (bChecking == NULL)
+					continue;
 				bDone[numDone++] = bChecking; /* remember so it is not added to the todo list again */
 
 				for (j = 0; j < bChecking->numsides; j++) {
