@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 
 static cvar_t *mn_debugmenu;
-static cvar_t *mn_debugmenu2;
 cvar_t *mn_show_tooltips;
 
 static const invList_t *itemHover;
@@ -81,7 +80,10 @@ static void MN_CheckMouseMove (void)
 	}
 }
 
-static void MN_DrawDebugMenu2 (void)
+/**
+ * @brief Prints active node names for debugging
+ */
+static void MN_DrawDebugMenuNodeNames (void)
 {
 	static vec4_t red = {1, 0.0, 0.0, 1.0};
 	/*static vec4_t redalpha = {1, 0.0, 0.0, 0.2};*/
@@ -277,8 +279,8 @@ void MN_DrawMenus (void)
 	}
 
 	/* debug help for comming architecture */
-	if (mn_debugmenu2->integer) {
-		MN_DrawDebugMenu2();
+	if (mn_debugmenu->integer == 2) {
+		MN_DrawDebugMenuNodeNames();
 	}
 
 	R_ColorBlend(NULL);
@@ -287,7 +289,6 @@ void MN_DrawMenus (void)
 void MN_DrawMenusInit (void)
 {
 	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
-	mn_debugmenu2 = Cvar_Get("mn_debugmenu2", "0", 0, "Prints active node names for debugging the coming architecture");
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 }
 
