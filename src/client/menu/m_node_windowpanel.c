@@ -45,12 +45,12 @@ static const int BOTTOM_HEIGHT = 19;
 static const int MARGE = 3;
 
 static const int LEFT_POSX = 0;
-#define MID_POSX LEFT_POSX + LEFT_WIDTH + MARGE /**< @node compilator dont when to take static const */
-#define RIGHT_POSX MID_POSX + MID_WIDTH + MARGE /**< @node compilator dont when to take static const */
+#define MID_POSX (LEFT_POSX + LEFT_WIDTH + MARGE)
+#define RIGHT_POSX (MID_POSX + MID_WIDTH + MARGE)
 
 static const int TOP_POSY = 0;
-#define MID_POSY TOP_POSY + TOP_HEIGHT + MARGE /**< @node compilator dont when to take static const */
-#define BOTTOM_POSY MID_POSY + MID_HEIGHT + MARGE /**< @node compilator dont when to take static const */
+#define MID_POSY (TOP_POSY + TOP_HEIGHT + MARGE)
+#define BOTTOM_POSY (MID_POSY + MID_HEIGHT + MARGE)
 
 /**
  * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
