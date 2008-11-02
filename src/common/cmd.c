@@ -503,8 +503,11 @@ void Cmd_BufClear (void)
 
 /**
  * @brief Parses the given string into command line tokens.
+ * @note @c cmd_argv and @c cmd_argv are filled and set here
  * @note *cvars will be expanded unless they are in a quoted token
  * @sa COM_MacroExpandString
+ * @param[in] text The text to parse and tokenize
+ * @param[in] macroExpand expand cvar string with their values
  */
 void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 {
@@ -520,7 +523,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 	}
 
 	while (1) {
-		/* skip whitespace up to a /n */
+		/* skip whitespace up to a newline */
 		while (*text && *text <= ' ' && *text != '\n') {
 			text++;
 		}
@@ -537,7 +540,6 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 		if (cmd_argc == 1) {
 			size_t l;
 
-			/* sku - removed potentional buffer overflow vulnerability */
 			Q_strncpyz(cmd_args, text, sizeof(cmd_args));
 
 			/* strip off any trailing whitespace */
@@ -555,7 +557,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 
 		if (cmd_argc < MAX_STRING_TOKENS) {
 			/* check first char of string if it is a variable */
-			if (*com_token == '*') {
+			if (com_token[0] == '*') {
 				com_token++;
 				com_token = Cvar_VariableString(com_token);
 			}
@@ -564,7 +566,6 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 			cmd_argc++;
 		}
 	}
-
 }
 
 /**
