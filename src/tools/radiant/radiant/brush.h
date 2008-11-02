@@ -92,6 +92,14 @@ inline void Winding_DrawWireframe(const Winding& winding) {
  */
 inline void Winding_Draw(const Winding& winding, const Vector3& normal, RenderStateFlags state) {
 	glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->vertex);
+	if (state & RENDER_LIGHTING) {
+		Vector3 normals[c_brush_maxFaces];
+		typedef Vector3* Vector3Iter;
+		for (Vector3Iter i = normals, last = normals + winding.numpoints; i != last; ++i) {
+			*i = normal;
+		}
+		glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
+	}
 	if (state & RENDER_TEXTURE) {
 		glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
 	}
