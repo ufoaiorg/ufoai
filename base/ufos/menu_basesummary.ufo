@@ -60,20 +60,6 @@ menu basesummary
 	}
 
 	// ==================
-	// buttons
-	// ==================
-	pic bt_continue
-	{
-		tooltip	"_Back to baseview"
-		image	hud/buttons2
-		mousefx	true
-		pos	"920 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;" }
-	}
-
-	// ==================
 	// main window
 	// ==================
 
@@ -258,4 +244,19 @@ menu basesummary
 		resetbaselayout
 		cmd "basesummary_init;"
 	}
+	
+	// ==================
+	// buttons
+	// ==================
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos	"920 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop;" }
+	}
+
 }
