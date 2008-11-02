@@ -24,28 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "igl.h"
 #include "generic/vector.h"
-class AABB;
-class Matrix4;
-
-
-class GLProgram {
-public:
-	virtual void enable() = 0;
-	virtual void disable() = 0;
-	virtual void setParameters(const Vector3& viewer, const Matrix4& localToWorld, const Vector3& origin, const Vector3& colour, const Matrix4& world2light) = 0;
-};
-
-class OpenGLFogState {
-public:
-	OpenGLFogState() : mode(GL_EXP), density(0), start(0), end(0), index(0), colour(1, 1, 1, 1) {
-	}
-	GLenum mode;
-	GLfloat density;
-	GLfloat start;
-	GLfloat end;
-	GLint index;
-	Vector4 colour;
-};
 
 //! A collection of opengl state information.
 class OpenGLState {
@@ -87,10 +65,8 @@ public:
 	GLfloat m_pointsize;
 	GLint m_linestipple_factor;
 	GLushort m_linestipple_pattern;
-	OpenGLFogState m_fog;
-	GLProgram* m_program;
 
-	OpenGLState() : m_program(0) {
+	OpenGLState() {
 	}
 };
 

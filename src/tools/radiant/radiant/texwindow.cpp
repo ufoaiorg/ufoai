@@ -109,7 +109,6 @@ void TextureGroups_addDirectory(TextureGroups& groups, const char* directory) {
 typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addDirectory> TextureGroupsAddDirectoryCaller;
 
 namespace {
-bool g_TextureBrowser_shaderlistOnly = false;
 bool g_TextureBrowser_fixedSize = false;
 }
 
@@ -169,9 +168,6 @@ typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport> 
 void TextureBrowser_showShadersExport(const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport> TextureBrowserShowShadersExport;
 
-void TextureBrowser_showShaderlistOnly(const BoolImportCallback& importer);
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShaderlistOnly> TextureBrowserShowShaderlistOnlyExport;
-
 void TextureBrowser_fixedSize(const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_fixedSize> TextureBrowserFixedSizeExport;
 
@@ -204,7 +200,6 @@ public:
 
 	ToggleItem m_hideunused_item;
 	ToggleItem m_showshaders_item;
-	ToggleItem m_showshaderlistonly_item;
 	ToggleItem m_fixedsize_item;
 
 	guint m_sizeHandler;
@@ -266,7 +261,6 @@ public:
 			m_texture_scroll(0),
 			m_hideunused_item(TextureBrowserHideUnusedExport()),
 			m_showshaders_item(TextureBrowserShowShadersExport()),
-			m_showshaderlistonly_item(TextureBrowserShowShaderlistOnlyExport()),
 			m_fixedsize_item(TextureBrowserFixedSizeExport()),
 			m_heightChanged(true),
 			m_originInvalid(true),
@@ -635,11 +629,6 @@ void TextureBrowser_showShadersExport(const BoolImportCallback& importer) {
 	importer(GlobalTextureBrowser().m_showShaders);
 }
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport> TextureBrowserShowShadersExport;
-
-void TextureBrowser_showShaderlistOnly(const BoolImportCallback& importer) {
-	importer(g_TextureBrowser_shaderlistOnly);
-}
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShaderlistOnly> TextureBrowserShowShaderlistOnlyExport;
 
 void TextureBrowser_fixedSize(const BoolImportCallback& importer) {
 	importer(g_TextureBrowser_fixedSize);
@@ -1096,10 +1085,7 @@ static void TextureGroups_constructTreeModel (TextureGroups groups, GtkTreeStore
 static TextureGroups TextureGroups_constructTreeView (void) {
 	TextureGroups groups;
 
-	// scan texture dirs and pak files only if not restricting to shaderlist
-	if (!g_TextureBrowser_shaderlistOnly) {
-		GlobalFileSystem().forEachDirectory ("textures/", TextureGroupsAddDirectoryCaller(groups));
-	}
+	GlobalFileSystem().forEachDirectory("textures/", TextureGroupsAddDirectoryCaller(groups));
 	GlobalShaderSystem().foreachShaderName(TextureGroupsAddShaderCaller(groups));
 
 	return groups;
@@ -1285,13 +1271,6 @@ void TextureBrowser_ToggleShowShaders(void) {
 	TextureBrowser_queueDraw(g_TextureBrowser);
 }
 
-void TextureBrowser_ToggleShowShaderListOnly(void) {
-	g_TextureBrowser_shaderlistOnly ^= 1;
-	g_TextureBrowser.m_showshaderlistonly_item.update();
-
-	TextureBrowser_constructTreeStore();
-}
-
 void TextureBrowser_showAll(void) {
 	g_TextureBrowser_currentDirectory = "";
 	TextureBrowser_heightChanged(g_TextureBrowser);
@@ -1405,7 +1384,6 @@ void TextureBrowser_Construct (void)
 	GlobalCommands_insert("ToggleTextures", FreeCaller<TextureBrowser_toggleShow>(), Accelerator('T'));
 	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect>());
 	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaders_item));
-	GlobalToggles_insert("ToggleShowShaderlistOnly", FreeCaller<TextureBrowser_ToggleShowShaderListOnly>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaderlistonly_item));
 	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_fixedsize_item));
 
 	GlobalPreferenceSystem().registerPreference("TextureScale",
@@ -1415,7 +1393,6 @@ void TextureBrowser_Construct (void)
 		makeBoolStringImportCallback(TextureBrowserImportShowScrollbarCaller(g_TextureBrowser)),
 		BoolExportStringCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(GlobalTextureBrowser().m_showShaders));
-	GlobalPreferenceSystem().registerPreference("ShowShaderlistOnly", BoolImportStringCaller(g_TextureBrowser_shaderlistOnly), BoolExportStringCaller(g_TextureBrowser_shaderlistOnly));
 	GlobalPreferenceSystem().registerPreference("FixedSize", BoolImportStringCaller(g_TextureBrowser_fixedSize), BoolExportStringCaller(g_TextureBrowser_fixedSize));
 	GlobalPreferenceSystem().registerPreference("LoadShaders", IntImportStringCaller(reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders)), IntExportStringCaller(reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders)));
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement));

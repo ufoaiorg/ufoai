@@ -63,6 +63,13 @@ public:
 		if (!file->failed()) {
 			return file.release();
 		}
+
+		UnixPath abspath("");
+		abspath.push_filename(name);
+		AutoPtr<DirectoryArchiveTextFile> absfile(new DirectoryArchiveTextFile(name, abspath.c_str()));
+		if (!absfile->failed()) {
+			return absfile.release();
+		}
 		return 0;
 	}
 	virtual bool containsFile(const char* name) {

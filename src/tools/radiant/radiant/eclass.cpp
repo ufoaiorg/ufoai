@@ -146,34 +146,25 @@ void EntityClassUFO_constructDirectory(const char* directory, const char* extens
 
 
 void EntityClassUFO_Construct() {
-	StringOutputStream baseDirectory(256);
-	StringOutputStream gameDirectory(256);
-	const char* basegame = basegame_get();
-	const char* gamename = gamename_get();
-	baseDirectory << GlobalRadiant().getEnginePath() << basegame << '/';
-	gameDirectory << GlobalRadiant().getEnginePath() << gamename << '/';
+	StringOutputStream appDirectory(256);
+	appDirectory << GlobalRadiant().getAppPath() << "games/";
 
 	class LoadEntityDefinitionsVisitor : public EClassModules::Visitor {
-		const char* baseDirectory;
-		const char* gameDirectory;
+		const char* appDirectory;
 	public:
-		LoadEntityDefinitionsVisitor(const char* baseDirectory, const char* gameDirectory)
-				: baseDirectory(baseDirectory), gameDirectory(gameDirectory) {
+		LoadEntityDefinitionsVisitor(const char* appDirectory)
+				: appDirectory(appDirectory) {
 		}
 		void visit(const char* name, const EntityClassScanner& table) const {
 			Paths paths;
-			EntityClassUFO_constructDirectory(baseDirectory, table.getExtension(), paths);
-			if (!string_equal(baseDirectory, gameDirectory)) {
-				EntityClassUFO_constructDirectory(gameDirectory, table.getExtension(), paths);
-			}
-
+			EntityClassUFO_constructDirectory(appDirectory, table.getExtension(), paths);
 			for (Paths::iterator i = paths.begin(); i != paths.end(); ++i) {
 				EntityClassesLoadFile(table, (*i).second)((*i).first.c_str());
 			}
 		}
 	};
 
-	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor(baseDirectory.c_str(), gameDirectory.c_str()));
+	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor(appDirectory.c_str()));
 }
 
 EntityClass *Eclass_ForName(const char *name, bool has_brushes) {

@@ -46,8 +46,6 @@ public:
 	STRING_CONSTANT(Name, "ufo");
 
 	ShadersAPI(ShadersDependencies& dependencies) {
-		g_shadersExtension = "shader";
-		g_shadersDirectory = "scripts/";
 		Shaders_Construct();
 		m_shaders = &GetShaderSystem();
 	}

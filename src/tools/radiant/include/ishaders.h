@@ -27,17 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 enum {
 	QER_TRANS = 1 << 0,
-	QER_NOCARVE = 1 << 1,
-	QER_NODRAW = 1 << 2,
-	QER_NONSOLID = 1 << 3,
-	QER_WATER = 1 << 4,
-	QER_LAVA = 1 << 5,
-	QER_FOG = 1 << 6,
-	QER_ALPHATEST = 1 << 7,
-	QER_CULL = 1 << 8,
-	QER_AREAPORTAL = 1 << 9,
-	QER_CLIP = 1 << 10,
-	QER_BOTCLIP = 1 << 11,
+	QER_ALPHATEST = 1 << 1,
+	QER_CLIP = 1 << 2,
 };
 
 struct qtexture_t;
@@ -102,7 +93,7 @@ public:
 	virtual const char* getName() const = 0;
 	virtual bool IsInUse() const = 0;
 	virtual void SetInUse(bool bInUse) = 0;
-	// get the editor flags (QER_NOCARVE QER_TRANS)
+	// get the editor flags (QER_TRANS)
 	virtual int getFlags() const = 0;
 	// get the transparency value
 	virtual float getTrans() const = 0;

@@ -179,8 +179,6 @@ void OpenGLState_constructDefault(OpenGLState& state) {
 
 	state.m_linestipple_factor = 1;
 	state.m_linestipple_pattern = 0xaaaa;
-
-	state.m_fog = OpenGLFogState();
 }
 
 
@@ -384,14 +382,6 @@ public:
 	}
 };
 
-static inline void setFogState(const OpenGLFogState& state) {
-	glFogi(GL_FOG_MODE, state.mode);
-	glFogf(GL_FOG_DENSITY, state.density);
-	glFogf(GL_FOG_START, state.start);
-	glFogf(GL_FOG_END, state.end);
-	glFogi(GL_FOG_INDEX, state.index);
-	glFogfv(GL_FOG_COLOR, vector4_to_array(state.colour));
-}
 
 class OpenGLShaderCache : public ShaderCache, public TexturesCacheObserver, public ModuleObserver {
 	class CreateOpenGLShader {
@@ -528,10 +518,6 @@ public:
 		glAlphaFunc(GL_ALWAYS, 0);
 		glLineWidth(1);
 		glPointSize(1);
-
-		glHint(GL_FOG_HINT, GL_NICEST);
-		glDisable(GL_FOG);
-		setFogState(OpenGLFogState());
 
 		// render brushes and entities
 		for (OpenGLStates::iterator i = g_state_sorted.begin(); i != g_state_sorted.end(); ++i) {
@@ -755,8 +741,6 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
-	setState(state, delta, RENDER_OFFSETLINE, GL_POLYGON_OFFSET_LINE);
-
 	if (delta & state & RENDER_LIGHTING) {
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
@@ -844,18 +828,6 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 	}
 
 	setState(state, delta, RENDER_LINESTIPPLE, GL_LINE_STIPPLE);
-	setState(state, delta, RENDER_LINESMOOTH, GL_LINE_SMOOTH);
-
-	setState(state, delta, RENDER_POLYGONSTIPPLE, GL_POLYGON_STIPPLE);
-	setState(state, delta, RENDER_POLYGONSMOOTH, GL_POLYGON_SMOOTH);
-
-	setState(state, delta, RENDER_FOG, GL_FOG);
-
-	if ((state & RENDER_FOG) != 0) {
-		setFogState(self.m_fog);
-
-		current.m_fog = self.m_fog;
-	}
 
 	if (state & RENDER_DEPTHTEST && self.m_depthfunc != current.m_depthfunc) {
 		glDepthFunc(self.m_depthfunc);
@@ -1137,7 +1109,7 @@ void OpenGLShader::construct(const char* name) {
 		state.m_sort = OpenGLState::eSortHighlight;
 		state.m_depthfunc = GL_LEQUAL;
 	} else if (string_equal(name + 1, "CAM_OVERLAY")) {
-		state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_OFFSETLINE;
+		state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 		state.m_sort = OpenGLState::eSortOverlayFirst + 1;
 		state.m_depthfunc = GL_LEQUAL;
 
@@ -1146,7 +1118,7 @@ void OpenGLShader::construct(const char* name) {
 		hiddenLine.m_colour[1] = 0.75;
 		hiddenLine.m_colour[2] = 0.75;
 		hiddenLine.m_colour[3] = 1;
-		hiddenLine.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_OFFSETLINE | RENDER_LINESTIPPLE;
+		hiddenLine.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_LINESTIPPLE;
 		hiddenLine.m_sort = OpenGLState::eSortOverlayFirst;
 		hiddenLine.m_depthfunc = GL_GREATER;
 		hiddenLine.m_linestipple_factor = 2;
@@ -1203,7 +1175,7 @@ void OpenGLShader::construct(const char* name) {
 		state.m_depthfunc = GL_LEQUAL;
 
 		OpenGLState& hiddenLine = appendDefaultPass();
-		hiddenLine.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH | RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE | RENDER_POLYGONSTIPPLE;
+		hiddenLine.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH | RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
 		hiddenLine.m_sort = OpenGLState::eSortGUI0;
 		hiddenLine.m_depthfunc = GL_GREATER;
 	} else if (string_equal(name + 1, "CLIPPER_OVERLAY")) {
@@ -1211,7 +1183,7 @@ void OpenGLShader::construct(const char* name) {
 		state.m_colour[1] = g_xywindow_globals.color_clipper[1];
 		state.m_colour[2] = g_xywindow_globals.color_clipper[2];
 		state.m_colour[3] = 1;
-		state.m_state = RENDER_CULLFACE | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_FILL | RENDER_POLYGONSTIPPLE;
+		state.m_state = RENDER_CULLFACE | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_FILL;
 		state.m_sort = OpenGLState::eSortOverlayFirst;
 	} else if (string_equal(name + 1, "OVERBRIGHT")) {
 		const float lightScale = 2;
@@ -1241,13 +1213,7 @@ void OpenGLShader::construct(const char* name) {
 		state.m_texture = m_shader->getTexture()->texture_number;
 
 		state.m_state = RENDER_FILL | RENDER_TEXTURE | RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_LIGHTING | RENDER_SMOOTH;
-		if ((m_shader->getFlags() & QER_CULL) != 0) {
-			if (m_shader->getCull() == IShader::eCullBack) {
-				state.m_state |= RENDER_CULLFACE;
-			}
-		} else {
-			state.m_state |= RENDER_CULLFACE;
-		}
+		state.m_state |= RENDER_CULLFACE;
 		if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
 			state.m_state |= RENDER_ALPHATEST;
 			IShader::EAlphaFunc alphafunc;

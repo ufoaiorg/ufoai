@@ -36,7 +36,4 @@ void Shaders_Destroy();
 class ShaderSystem;
 ShaderSystem& GetShaderSystem();
 
-extern const char* g_shadersExtension;
-extern const char* g_shadersDirectory;
-
 #endif

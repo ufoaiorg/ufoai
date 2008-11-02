@@ -73,14 +73,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "archivelib.h"
 #include "imagelib.h"
 
-const char* g_shadersExtension = "";
-const char* g_shadersDirectory = "";
 const char* g_texturePrefix = "textures/";
 
 static Callback g_ActiveShadersChangedNotify;
-
-void FreeShaders();
-void LoadShaderFile(const char *filename);
 
 class ShaderPoolContext {
 };
@@ -625,21 +620,8 @@ void debug_check_shaders(shaders_t& shaders) {
 	}
 }
 
-// will free all GL binded qtextures and shaders
-// NOTE: doesn't make much sense out of Radiant exit or called during a reload
-void FreeShaders() {
-	// reload shaders
-	// empty the actives shaders list
-	debug_check_shaders(g_ActiveShaders);
-	g_ActiveShaders.clear();
-	g_shaders.clear();
-	g_shaderTemplates.clear();
-	g_shaderDefinitions.clear();
-	g_ActiveShadersChangedNotify();
-}
-
 bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
-	// name of the qtexture_t we'll use to represent this shader (this one has the "textures\" before)
+	// name of the qtexture_t we'll use to represent this shader (this one has the "textures/" before)
 	m_textureName = m_Name.c_str();
 
 	tokeniser.nextLine();
@@ -669,14 +651,10 @@ bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
 		}
 
 		if (depth == 1) {
-			if (string_equal_nocase(token, "qer_nocarve")) {
-				m_nFlags |= QER_NOCARVE;
-			} else if (string_equal_nocase(token, "qer_trans")) {
+			if (string_equal_nocase(token, "trans")) {
 				RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, m_fTrans));
 				m_nFlags |= QER_TRANS;
-			} else if (string_equal_nocase(token, "qer_editorimage")) {
-				RETURN_FALSE_IF_FAIL(Tokeniser_parseTextureName(tokeniser, m_textureName));
-			} else if (string_equal_nocase(token, "qer_alphafunc")) {
+			} else if (string_equal_nocase(token, "alphafunc")) {
 				const char* alphafunc = tokeniser.getToken();
 
 				if (alphafunc == 0) {
@@ -701,54 +679,16 @@ bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
 				m_nFlags |= QER_ALPHATEST;
 
 				RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, m_AlphaRef));
-			} else if (string_equal_nocase(token, "cull")) {
-				const char* cull = tokeniser.getToken();
-
-				if (cull == 0) {
-					Tokeniser_unexpectedError(tokeniser, cull, "#cull");
-					return false;
-				}
-
-				if (string_equal_nocase(cull, "none")
-				        || string_equal_nocase(cull, "twosided")
-				        || string_equal_nocase(cull, "disable")) {
-					m_Cull = IShader::eCullNone;
-				} else if (string_equal_nocase(cull, "back")
-				           || string_equal_nocase(cull, "backside")
-				           || string_equal_nocase(cull, "backsided")) {
-					m_Cull = IShader::eCullBack;
-				} else {
-					m_Cull = IShader::eCullBack;
-				}
-
-				m_nFlags |= QER_CULL;
-			} else if (string_equal_nocase(token, "surfaceparm")) {
+			} else if (string_equal_nocase(token, "param")) {
 				const char* surfaceparm = tokeniser.getToken();
 
 				if (surfaceparm == 0) {
-					Tokeniser_unexpectedError(tokeniser, surfaceparm, "#surfaceparm");
+					Tokeniser_unexpectedError(tokeniser, surfaceparm, "param");
 					return false;
 				}
 
-				if (string_equal_nocase(surfaceparm, "fog")) {
-					m_nFlags |= QER_FOG;
-					if (m_fTrans == 1.0f) { // has not been explicitly set by qer_trans
-						m_fTrans = 0.35f;
-					}
-				} else if (string_equal_nocase(surfaceparm, "nodraw")) {
-					m_nFlags |= QER_NODRAW;
-				} else if (string_equal_nocase(surfaceparm, "nonsolid")) {
-					m_nFlags |= QER_NONSOLID;
-				} else if (string_equal_nocase(surfaceparm, "water")) {
-					m_nFlags |= QER_WATER;
-				} else if (string_equal_nocase(surfaceparm, "lava")) {
-					m_nFlags |= QER_LAVA;
-				} else if (string_equal_nocase(surfaceparm, "areaportal")) {
-					m_nFlags |= QER_AREAPORTAL;
-				} else if (string_equal_nocase(surfaceparm, "playerclip")) {
+				if (string_equal_nocase(surfaceparm, "clip")) {
 					m_nFlags |= QER_CLIP;
-				} else if (string_equal_nocase(surfaceparm, "botclip")) {
-					m_nFlags |= QER_BOTCLIP;
 				}
 			}
 		}
@@ -770,11 +710,8 @@ public:
 	}
 };
 
-std::list<CopiedString> g_shaderFilenames;
-
 void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
-	g_shaderFilenames.push_back(filename);
-	filename = g_shaderFilenames.back().c_str();
+
 	tokeniser.nextLine();
 	for (;;) {
 		const char* token = tokeniser.getToken();
@@ -812,19 +749,21 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 	}
 }
 
-void LoadShaderFile(const char* filename) {
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
+static void LoadShaderFile(const char* filename) {
+	const char* appPath = GlobalRadiant().getAppPath();
+	StringOutputStream shadername(256);
+	shadername << appPath << filename;
+
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername.c_str()));
 	if (file) {
-		globalOutputStream() << "Parsing shaderfile " << filename << "\n";
+		globalOutputStream() << "Parsing shaderfile " << shadername.c_str() << "\n";
 
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
-		ParseShaderFile(*tokeniser, filename);
+		ParseShaderFile(*tokeniser, shadername.c_str());
 	} else {
-		globalOutputStream() << "Unable to read shaderfile " << filename << "\n";
+		globalErrorStream() << "Unable to read shaderfile " << shadername.c_str() << "\n";
 	}
 }
-
-typedef FreeCaller1<const char*, LoadShaderFile> LoadShaderFileCaller;
 
 
 CShader* Try_Shader_ForName(const char* name) {
@@ -865,157 +804,24 @@ IShader *Shader_ForName(const char *name) {
 	return pShader;
 }
 
-
-
-
-// the list of scripts/*.shader files we need to work with
-// those are listed in shaderlist file
-GSList *l_shaderfiles = 0;
-
-GSList* Shaders_getShaderFileList() {
-	return l_shaderfiles;
-}
-
-/**
- * @brief Usefull function: dumps the list of .shader files that are not referenced to the console
- */
-void IfFound_dumpUnreferencedShader(bool& bFound, const char* filename) {
-	bool listed = false;
-
-	for (GSList* sh = l_shaderfiles; sh != 0; sh = g_slist_next(sh)) {
-		if (!strcmp((char*)sh->data, filename)) {
-			listed = true;
-			break;
-		}
-	}
-
-	if (!listed) {
-		if (!bFound) {
-			bFound = true;
-			globalOutputStream() << "Following shader files are not referenced in shaderlist.txt:\n";
-		}
-		globalOutputStream() << filename << "\n";
-	}
-}
-typedef ReferenceCaller1<bool, const char*, IfFound_dumpUnreferencedShader> IfFoundDumpUnreferencedShaderCaller;
-
-void DumpUnreferencedShaders() {
-	bool bFound = false;
-	GlobalFileSystem().forEachFile(g_shadersDirectory, g_shadersExtension, IfFoundDumpUnreferencedShaderCaller(bFound));
-}
-
-void ShaderList_addShaderFile(const char* dirstring) {
-	bool found = false;
-
-	for (GSList* tmp = l_shaderfiles; tmp != 0; tmp = tmp->next) {
-		if (string_equal_nocase(dirstring, (char*)tmp->data)) {
-			found = true;
-			globalOutputStream() << "duplicate entry \"" << (char*)tmp->data << "\" in shaderlist.txt\n";
-			break;
-		}
-	}
-
-	if (!found) {
-		l_shaderfiles = g_slist_append(l_shaderfiles, strdup(dirstring));
-	}
-}
-
-typedef FreeCaller1<const char*, ShaderList_addShaderFile> AddShaderFileCaller;
-
-
-/**
- * @brief Build a CStringList of shader names
- */
-void BuildShaderList(TextInputStream& shaderlist) {
-	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(shaderlist));
-	tokeniser->nextLine();
-	const char* token = tokeniser->getToken();
-	StringOutputStream shaderFile(64);
-	while (token != 0) {
-		// each token should be a shader filename
-		shaderFile << token << "." << g_shadersExtension;
-
-		ShaderList_addShaderFile(shaderFile.c_str());
-
-		tokeniser->nextLine();
-		token = tokeniser->getToken();
-
-		shaderFile.clear();
-	}
-}
-
-void FreeShaderList() {
-	while (l_shaderfiles != 0) {
-		free(l_shaderfiles->data);
-		l_shaderfiles = g_slist_remove(l_shaderfiles, l_shaderfiles->data);
-	}
-}
-
 #include "stream/filestream.h"
 
-bool shaderlist_findOrInstall(const char* enginePath, const char* shaderPath, const char* gamename) {
-	StringOutputStream absShaderList(256);
-	absShaderList << enginePath << gamename << '/' << shaderPath << "shaderlist.txt";
-	if (file_exists(absShaderList.c_str())) {
-		return true;
-	}
-	{
-		StringOutputStream directory(256);
-		directory << enginePath << gamename << '/' << shaderPath;
-		if (!file_exists(directory.c_str()) && !Q_mkdir(directory.c_str())) {
-			return false;
-		}
-	}
-	return false;
-}
-
 void Shaders_Load() {
-	const char* shaderPath = GlobalRadiant().getGameDescriptionKeyValue("shaderpath");
-	if (!string_empty(shaderPath)) {
-		StringOutputStream path(256);
-		path << DirectoryCleaned(shaderPath);
-
-		// preload shader files that have been listed in shaderlist.txt
-		const char* basegame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-		const char* gamename = GlobalRadiant().getGameName();
-		const char* enginePath = GlobalRadiant().getEnginePath();
-
-		bool isMod = !string_equal(basegame, gamename);
-
-		if (!isMod || !shaderlist_findOrInstall(enginePath, path.c_str(), gamename)) {
-			gamename = basegame;
-			shaderlist_findOrInstall(enginePath, path.c_str(), gamename);
-		}
-
-		StringOutputStream absShaderList(256);
-		absShaderList << enginePath << gamename << '/' << path.c_str() << "shaderlist.txt";
-
-		{
-			globalOutputStream() << "Parsing shader files from " << absShaderList.c_str() << "\n";
-			TextFileInputStream shaderlistFile(absShaderList.c_str());
-			if (shaderlistFile.failed()) {
-				globalErrorStream() << "Couldn't find '" << absShaderList.c_str() << "'\n";
-			} else {
-				BuildShaderList(shaderlistFile);
-				DumpUnreferencedShaders();
-			}
-		}
-
-		GSList *lst = l_shaderfiles;
-		StringOutputStream shadername(256);
-		while (lst) {
-			shadername << path.c_str() << reinterpret_cast<const char*>(lst->data);
-			LoadShaderFile(shadername.c_str());
-			shadername.clear();
-			lst = lst->next;
-		}
-	}
+	LoadShaderFile("shaders/common.shader");
+	LoadShaderFile("shaders/textures.shader");
 }
 
+// will free all GL binded qtextures and shaders
+// NOTE: doesn't make much sense out of Radiant exit or called during a reload
 void Shaders_Free() {
-	FreeShaders();
-	FreeShaderList();
-	g_shaderFilenames.clear();
+	// reload shaders
+	// empty the actives shaders list
+	debug_check_shaders(g_ActiveShaders);
+	g_ActiveShaders.clear();
+	g_shaders.clear();
+	g_shaderTemplates.clear();
+	g_shaderDefinitions.clear();
+	g_ActiveShadersChangedNotify();
 }
 
 static ModuleObservers g_observers;

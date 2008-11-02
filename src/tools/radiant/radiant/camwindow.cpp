@@ -1371,30 +1371,18 @@ void CamWnd::Cam_Draw() {
 	}
 
 
-	unsigned int globalstate = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_ALPHATEST | RENDER_BLEND | RENDER_CULLFACE | RENDER_COLOURARRAY | RENDER_OFFSETLINE | RENDER_POLYGONSMOOTH | RENDER_LINESMOOTH | RENDER_FOG | RENDER_COLOURCHANGE;
+	unsigned int globalstate = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_ALPHATEST | RENDER_BLEND | RENDER_CULLFACE | RENDER_COLOURARRAY | RENDER_COLOURCHANGE;
 	switch (m_Camera.draw_mode) {
 	case cd_wire:
 		break;
 	case cd_solid:
-		globalstate |= RENDER_FILL
-		               | RENDER_LIGHTING
-		               | RENDER_SMOOTH
-		               | RENDER_SCALED;
+		globalstate |= (RENDER_FILL | RENDER_LIGHTING | RENDER_SMOOTH | RENDER_SCALED);
 		break;
 	case cd_texture:
-		globalstate |= RENDER_FILL
-					| RENDER_LIGHTING
-					| RENDER_TEXTURE
-					| RENDER_SMOOTH
-					| RENDER_SCALED;
+		globalstate |= (RENDER_FILL | RENDER_LIGHTING | RENDER_TEXTURE | RENDER_SMOOTH | RENDER_SCALED);
 		break;
 	case cd_lighting:
-		globalstate |= RENDER_FILL
-					| RENDER_LIGHTING
-					| RENDER_TEXTURE
-					| RENDER_SMOOTH
-					| RENDER_SCALED
-					| RENDER_SCREEN;
+		globalstate |= (RENDER_FILL | RENDER_LIGHTING | RENDER_TEXTURE | RENDER_SMOOTH | RENDER_SCALED | RENDER_SCREEN);
 		break;
 	default:
 		globalstate = 0;
@@ -1402,7 +1390,7 @@ void CamWnd::Cam_Draw() {
 	}
 
 	if (!g_xywindow_globals.m_bNoStipple) {
-		globalstate |= (RENDER_LINESTIPPLE | RENDER_POLYGONSTIPPLE);
+		globalstate |= RENDER_LINESTIPPLE;
 	}
 
 	{

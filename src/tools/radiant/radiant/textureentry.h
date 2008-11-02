@@ -96,18 +96,4 @@ public:
 
 typedef Static< EntryCompletion<TextureNameList> > GlobalTextureEntryCompletion;
 
-
-class ShaderList {
-public:
-	void forEach(const ShaderNameCallback& callback) const {
-		GlobalShaderSystem().foreachShaderName(callback);
-	}
-	void connect(const SignalHandler& update) const {
-		TextureBrowser_addShadersRealiseCallback(update);
-	}
-};
-
-typedef Static< EntryCompletion<ShaderList> > GlobalShaderEntryCompletion;
-
-
 #endif
