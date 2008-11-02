@@ -120,11 +120,14 @@ void MN_TextScrollBottom (const char* nodeName)
 /**
  * @note need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
  */
-void MN_DrawTextNode2(menuNode_t *node) {
-	menu_t *menu = node->menu;
+void MN_DrawTextNode2 (menuNode_t *node)
+{
+	const menu_t *menu = node->menu;
 	const char *font;
 	vec2_t nodepos;
+
 	MN_GetNodeAbsPos(node, nodepos);
+
 	if (mn.menuText[node->num]) {
 		font = MN_GetFont(menu, node);
 		MN_DrawTextNode(mn.menuText[node->num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
@@ -233,6 +236,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 		} else if (!Q_strncmp(cur, "img:", 4)) {
 			const char *token;
 			int y1 = y;
+			/* cut the image tag 'img:' */
 			cur += 4;
 			token = COM_Parse((const char **)&cur);
 			if (node->textLines > node->textScroll)
@@ -422,6 +426,7 @@ void MN_TextClick (menuNode_t * node, int x, int y)
 {
 	int mouseOver = MN_CheckNodeZone(node, x, y);
 	char cmd[MAX_VAR];
+
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
@@ -440,6 +445,7 @@ static void MN_TextRightClick (menuNode_t * node, int x, int y)
 {
 	int mouseOver = MN_CheckNodeZone(node, x, y);
 	char cmd[MAX_VAR];
+
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
@@ -447,7 +453,8 @@ static void MN_TextRightClick (menuNode_t * node, int x, int y)
 
 static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	menu_t *menu = node->menu;
+	const menu_t *menu = node->menu;
+
 	if (node->wheelUp && node->wheelDown) {
 		MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
 	} else {

@@ -34,7 +34,7 @@ typedef enum ea_s {
 
 	EA_CALL,
 	EA_NODE,
-	EA_VAR,	/**< @todo finishe menu var implementation - to reduce the cvar use */
+	EA_VAR,	/**< @todo finish menu var implementation - to reduce the cvar use */
 
 	EA_NUM_EVENTACTION
 } ea_t;
