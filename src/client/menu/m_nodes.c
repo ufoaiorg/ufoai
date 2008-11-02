@@ -164,8 +164,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	MN_GetNodeAbsPos(node, nodepos);
 	switch (node->type) {
 	case MN_CONTAINER:
-		if (!node->container)
-			MN_FindContainer(node);
+		MN_FindContainer(node);
 		if (!node->container)
 			return qfalse;
 

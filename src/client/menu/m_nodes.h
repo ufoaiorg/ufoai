@@ -224,8 +224,8 @@ void MN_HideNode(menuNode_t* node);
 menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
 void MN_SetNewNodePos(menuNode_t* node, int x, int y);
 menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
-void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos);
-void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y);
+void MN_GetNodeAbsPos(const menuNode_t* node, vec2_t pos);
+void MN_NodeAbsoluteToRelativePos(const menuNode_t* node, int *x, int *y);
 
 void MN_InitNodes(void);
 

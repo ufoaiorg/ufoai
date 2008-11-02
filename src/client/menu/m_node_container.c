@@ -392,10 +392,19 @@ static void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Calculates the size of a container node and links the container
+ * into the node (uses the @c invDef_t shape bitmask to determine the size)
+ * @param[in,out] node The node to get the size for
+ */
 void MN_FindContainer (menuNode_t* const node)
 {
 	invDef_t *id;
 	int i, j;
+
+	/* already a container assigned - no need to recalculate the size */
+	if (node->container)
+		return;
 
 	for (i = 0, id = csi.ids; i < csi.numIDs; id++, i++)
 		if (!Q_strncmp(node->name, id->name, sizeof(node->name)))
@@ -444,8 +453,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
 
-	if (!node->container)
-		MN_FindContainer(node);
+	MN_FindContainer(node);
 	if (!node->container)
 		return NULL;
 
