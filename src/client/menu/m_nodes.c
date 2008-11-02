@@ -268,7 +268,7 @@ void MN_HideNode (menuNode_t* node)
 {
 	if (node)
 		node->invis = qtrue;
-	if (!node)
+	else
 		Com_Printf("MN_HideNode: No node given\n");
 }
 
@@ -291,7 +291,7 @@ void MN_UnHideNode (menuNode_t* node)
 {
 	if (node)
 		node->invis = qfalse;
-	if (!node)
+	else
 		Com_Printf("MN_UnHideNode: No node given\n");
 }
 
