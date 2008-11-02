@@ -81,7 +81,7 @@ components craft_ufo_supply {
 //	time	3200
 //	item	alienmaterials		500	300
 //	item	antimatter		600	0
-	//item	craft_alien_propulsion	2	1
+//	item	craft_alien_propulsion	2	1
 //}
 
 // UFO -- Carrier

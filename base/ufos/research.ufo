@@ -684,7 +684,7 @@ tech rs_weapon_machinegun_ammo
 		default "_machinegun_mag_txt"
 	}
 	// pre_description	"_machinegun_mag_pre_txt"
- 
+
 	require_AND
 	{
 		tech rs_damage_normal
@@ -2054,6 +2054,7 @@ tech rs_weapon_stungren
 	provides	stungrenade
 	time		2100
 	producetime	24
+//	image	techs/anti_alien_gas
 }
 
 tech rs_weapon_stungren_alien
