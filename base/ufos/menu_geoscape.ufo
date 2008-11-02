@@ -391,7 +391,7 @@ menu map
 	pic bt_show_radar
 	{
 		tooltip	"_Show radar range"
-		image	menu/geo_nations_highlight
+		image	menu/geo_radar
 		pos		"808 350"
 		texl	"0 0"
 		texh	"32 32"
@@ -472,12 +472,14 @@ menu map
 	pic bt_messagesettings
 	{
 		tooltip	"_Change message and pause settings"
-		image	menu/geo_eventlog
+		image	menu/geo_eventoptions
 		pos		"850 350"
 		texl	"32 0"
 		texh	"64 32"
 		mousefx	false
 		click	{ cmd "mn_push messageoptions;" }
+		out		{ *bt_messagesettings texl "0 0" *bt_messagesettings texh "32 32" }
+		in		{ *bt_messagesettings texl "32 0" *bt_messagesettings texh "64 32" }
 	}
 
 	pic bt_mapcenter
