@@ -49,7 +49,7 @@ static void MN_CheckBoxNodeLoaded (menuNode_t *node) {
 	}
 }
 
-static void MN_DrawCheckBoxNode (menuNode_t* node)
+static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
 	const char *image;
 	const char *ref;
@@ -85,7 +85,7 @@ static void MN_DrawCheckBoxNode (menuNode_t* node)
 /**
  * @brief Handles checkboxes clicks
  */
-static void MN_CheckboxClick (menuNode_t * node, int x, int y)
+static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 {
 	int value;
 	const char *cvarName;
@@ -103,7 +103,7 @@ static void MN_CheckboxClick (menuNode_t * node, int x, int y)
 void MN_RegisterNodeCheckBox (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
-	behaviour->draw = MN_DrawCheckBoxNode;
-	behaviour->leftClick = MN_CheckboxClick;
+	behaviour->draw = MN_CheckBoxNodeDraw;
+	behaviour->leftClick = MN_CheckBoxNodeClick;
 	behaviour->loaded = MN_CheckBoxNodeLoaded;
 }

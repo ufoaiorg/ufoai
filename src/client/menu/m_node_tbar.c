@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 
-static void MN_DrawTBarNode (menuNode_t *node)
+static void MN_TBarNodeDraw (menuNode_t *node)
 {
 	/* dataImageOrModel is the texture name */
 	float shx;
@@ -50,5 +50,5 @@ static void MN_DrawTBarNode (menuNode_t *node)
 void MN_RegisterNodeTBar (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
-	behaviour->draw = MN_DrawTBarNode;
+	behaviour->draw = MN_TBarNodeDraw;
 }

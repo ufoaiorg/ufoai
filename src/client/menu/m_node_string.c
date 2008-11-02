@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "../client.h"
 
-static void MN_DrawStringNode (menuNode_t *node)
+static void MN_StringNodeDraw (menuNode_t *node)
 {
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
@@ -50,5 +50,5 @@ static void MN_DrawStringNode (menuNode_t *node)
 void MN_RegisterNodeString (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
-	behaviour->draw = MN_DrawStringNode;
+	behaviour->draw = MN_StringNodeDraw;
 }

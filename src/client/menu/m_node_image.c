@@ -58,7 +58,7 @@ static void MN_ImageNodeLoaded (menuNode_t *node) {
 }
 
 
-void MN_DrawImageNode(menuNode_t *node)
+void MN_ImageNodeDraw(menuNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -106,6 +106,6 @@ void MN_DrawImageNode(menuNode_t *node)
 void MN_RegisterNodeImage (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "pic";
-	behaviour->draw = MN_DrawImageNode;
+	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
 }

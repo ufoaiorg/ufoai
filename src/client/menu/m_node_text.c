@@ -118,29 +118,6 @@ void MN_TextScrollBottom (const char* nodeName)
 }
 
 /**
- * @note need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
- */
-void MN_DrawTextNode2 (menuNode_t *node)
-{
-	const menu_t *menu = node->menu;
-	const char *font;
-	vec2_t nodepos;
-
-	MN_GetNodeAbsPos(node, nodepos);
-
-	if (mn.menuText[node->num]) {
-		font = MN_GetFont(menu, node);
-		MN_DrawTextNode(mn.menuText[node->num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-	} else if (mn.menuTextLinkedList[node->num]) {
-		font = MN_GetFont(menu, node);
-		MN_DrawTextNode(NULL, mn.menuTextLinkedList[node->num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-	} else if (node->num == TEXT_MESSAGESYSTEM) {
-		font = MN_GetFont(menu, node);
-		MN_DrawMessageList(mn.messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-	}
-}
-
-/**
  * @brief Draw a scrollbar, if necessary
  * @note Needs node->textLines to be accurate
  */
@@ -199,7 +176,7 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
  * @param[in] x The fixed x position every new line starts
  * @param[in] y The fixed y position the text node starts
  */
-void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* font, menuNode_t* node, int x, int y, int width, int height)
+static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, const char* font, menuNode_t* node, int x, int y, int width, int height)
 {
 	char textCopy[MAX_MENUTEXTLEN];
 	char newFont[MAX_VAR];
@@ -351,7 +328,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
  * scrolling of the message window scrolls message by message,
  * which looks better anyway.
  */
-void MN_DrawMessageList (const message_t *messageStack, const char *font, menuNode_t *node, int x, int y, int width, int height)
+static void MN_TextNodeDrawMessageList (const message_t *messageStack, const char *font, menuNode_t *node, int x, int y, int width, int height)
 {
 	char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
 	const message_t *message;
@@ -390,6 +367,29 @@ void MN_DrawMessageList (const message_t *messageStack, const char *font, menuNo
 		if (node->textLines > node->height)
 			node->textLines += node->height / 2;
 		MN_DrawScrollBar(node);
+	}
+}
+
+/**
+ * @note need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
+ */
+static void MN_TextNodeDraw (menuNode_t *node)
+{
+	const menu_t *menu = node->menu;
+	const char *font;
+	vec2_t nodepos;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	if (mn.menuText[node->num]) {
+		font = MN_GetFont(menu, node);
+		MN_TextNodeDrawText(mn.menuText[node->num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+	} else if (mn.menuTextLinkedList[node->num]) {
+		font = MN_GetFont(menu, node);
+		MN_TextNodeDrawText(NULL, mn.menuTextLinkedList[node->num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+	} else if (node->num == TEXT_MESSAGESYSTEM) {
+		font = MN_GetFont(menu, node);
+		MN_TextNodeDrawMessageList(mn.messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 	}
 }
 
@@ -442,7 +442,7 @@ void MN_NodeTextInit (void)
  * @todo Check for scrollbars and when one would click them scroll according to
  * mouse movement, maybe implement a new mousespace (MS_* - @sa cl_input.c)
  */
-void MN_TextClick (menuNode_t * node, int x, int y)
+static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
@@ -463,7 +463,7 @@ void MN_TextClick (menuNode_t * node, int x, int y)
  * @note The node must have the rclick parameter
  * @sa MN_TextClick
  */
-static void MN_TextRightClick (menuNode_t * node, int x, int y)
+static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
@@ -473,7 +473,7 @@ static void MN_TextRightClick (menuNode_t * node, int x, int y)
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 }
 
-static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	const menu_t *menu = node->menu;
 
@@ -489,9 +489,9 @@ static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y
 void MN_RegisterNodeText (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
-	behaviour->draw = MN_DrawTextNode2;
-	behaviour->leftClick = MN_TextClick;
-	behaviour->rightClick = MN_TextRightClick;
-	behaviour->mouseWheel = MN_NodeTextMouseWheel;
+	behaviour->draw = MN_TextNodeDraw;
+	behaviour->leftClick = MN_TextNodeClick;
+	behaviour->rightClick = MN_TextNodeRightClick;
+	behaviour->mouseWheel = MN_TextNodeMouseWheel;
 	behaviour->mouseMove = MN_TextNodeMouseMove;
 }

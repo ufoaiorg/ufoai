@@ -41,12 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* space between text and scrollbar */
 #define MN_SCROLLBAR_PADDING 10
 
-void MN_DrawTextNode(const char *text, const linkedList_t *list, const char *font, menuNode_t *node, int x, int y, int width, int height);
-void MN_DrawMessageList(const message_t *messageStack, const char *font, menuNode_t *node, int x, int y, int width, int height);
-void MN_DrawTextNode2(menuNode_t *node);
 void MN_TextScrollBottom(const char* nodeName);
 qboolean MN_TextScroll(menuNode_t *node, int offset);
-void MN_TextClick(menuNode_t *node, int x, int y);
 void MN_MenuTextReset(int menuTextID);
 int MN_TextNodeGetLine (const menuNode_t *node, int x, int y);
 

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_model.h"
 #include "../cl_global.h"
 
-static void MN_DrawMapNode (menuNode_t *node)
+static void MN_MapNodeDraw (menuNode_t *node)
 {
 	if (curCampaign) {
 		/* don't run the campaign in console mode */
@@ -44,7 +44,7 @@ static void MN_DrawMapNode (menuNode_t *node)
 	}
 }
 
-static void MN_NodeMapRightClick (menuNode_t *node, int x, int y)
+static void MN_MapNodeRightClick (menuNode_t *node, int x, int y)
 {
 	if (!gd.combatZoomOn || !gd.combatZoomedUfo) {
 		if (!cl_3dmap->integer)
@@ -55,12 +55,12 @@ static void MN_NodeMapRightClick (menuNode_t *node, int x, int y)
 	}
 }
 
-static void MN_NodeMapMiddleClick (menuNode_t *node, int x, int y)
+static void MN_MapNodeMiddleClick (menuNode_t *node, int x, int y)
 {
 	mouseSpace = MS_ZOOMMAP;
 }
 
-static void MN_NodeMapMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	if (gd.combatZoomOn  && gd.combatZoomedUfo && !down) {
 		return;
@@ -90,9 +90,9 @@ static void MN_NodeMapMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 void MN_RegisterNodeMap (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
-	behaviour->draw = MN_DrawMapNode;
+	behaviour->draw = MN_MapNodeDraw;
 	behaviour->leftClick = MAP_MapClick;
-	behaviour->rightClick = MN_NodeMapRightClick;
-	behaviour->middleClick = MN_NodeMapMiddleClick;
-	behaviour->mouseWheel = MN_NodeMapMouseWheel;
+	behaviour->rightClick = MN_MapNodeRightClick;
+	behaviour->middleClick = MN_MapNodeMiddleClick;
+	behaviour->mouseWheel = MN_MapNodeMouseWheel;
 }

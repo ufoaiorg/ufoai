@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 
-static void MN_DrawLineStripNode (menuNode_t *node)
+static void MN_LineStripNodeDraw (menuNode_t *node)
 {
 	int i;
 	if (node->linestrips.numStrips > 0) {
@@ -43,5 +43,5 @@ static void MN_DrawLineStripNode (menuNode_t *node)
 void MN_RegisterNodeLineStrip (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "linestrip";
-	behaviour->draw = MN_DrawLineStripNode;
+	behaviour->draw = MN_LineStripNodeDraw;
 }

@@ -1269,9 +1269,12 @@ static void IN_Parse (void)
 				if (mn.mouseRepeat.node->type != MN_TEXT) {
 					/* we didn't click on a text node (button,...) */
 					MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
-				} else
-					if (mn.mouseRepeat.textLine)
-						MN_TextClick(mn.mouseRepeat.node, mousePosX, mousePosY);
+				} else {
+					if (mn.mouseRepeat.textLine) {
+						menuNode_t *node = mn.mouseRepeat.node;
+						nodeBehaviourList[node->type].leftClick(node, mousePosX, mousePosY);
+					}
+				}
 			}
 
 			/* next "event" after clickdelay msec - low values (>= 100) would result in executing

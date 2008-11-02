@@ -59,7 +59,7 @@ static void MN_ControlsNodeDraw(menuNode_t *node)
 	if (mouseSpace == MS_DRAGMENU){
 		MN_SetNewMenuPos(node->menu, mousePosX - node->pos[0], mousePosY - node->pos[1]);
 	}
-	MN_DrawImageNode(node);
+	MN_ImageNodeDraw(node);
 }
 
 void MN_RegisterNodeControls (nodeBehaviour_t *behaviour)

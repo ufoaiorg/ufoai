@@ -168,7 +168,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
  * @param[in] width The width size of the screen to use (strech)
  * @param[in] type The status of the tab we display
  */
-static inline void MN_DrawTabNodePlain (const char *image, int x, int y, int width, mn_tab_type_t type)
+static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int width, mn_tab_type_t type)
 {
 	R_DrawNormPic(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
 		0 + TILE_SIZE * 0, 0 + TILE_SIZE * type, ALIGN_UL, qtrue, image);
@@ -182,13 +182,13 @@ static inline void MN_DrawTabNodePlain (const char *image, int x, int y, int wid
  * @param[in] leftType The status of the left tab of the junction we display
  * @param[in] rightType The status of the right tab of the junction we display
  */
-static inline void MN_DrawTabNodeJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
+static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
 {
 	R_DrawNormPic(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, ALIGN_UL, qtrue, image);
 }
 
-static void MN_DrawTabNode (menuNode_t *node)
+static void MN_TabNodeDraw (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
 	selectBoxOptions_t* tabOption;
@@ -221,11 +221,11 @@ static void MN_DrawTabNode (menuNode_t *node)
 		}
 
 		/* Display */
-		MN_DrawTabNodeJunction(image, currentX, node->pos[1], lastStatus, status);
+		MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
 		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &fontWidth, &fontHeight, NULL);
-		MN_DrawTabNodePlain(image, currentX, node->pos[1], fontWidth, status);
+		MN_TabNodeDrawPlain(image, currentX, node->pos[1], fontWidth, status);
 		R_FontDrawString(font, 0, currentX, node->pos[1] + ((node->size[1] - fontHeight) / 2),
 			currentX, node->pos[1], fontWidth, TILE_HEIGHT,
 			0, _(tabOption->label), 0, 0, NULL, qfalse, LONGLINES_WRAP);
@@ -237,15 +237,15 @@ static void MN_DrawTabNode (menuNode_t *node)
 	}
 
 	/* Display last junction and end of header */
-	MN_DrawTabNodeJunction(image, currentX, node->pos[1], lastStatus, MN_TAB_NOTHING);
+	MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, MN_TAB_NOTHING);
 	currentX += TILE_WIDTH;
 	if (currentX < node->pos[0] + node->size[0])
-		MN_DrawTabNodePlain(image, currentX, node->pos[1], node->pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
+		MN_TabNodeDrawPlain(image, currentX, node->pos[1], node->pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
 }
 
 void MN_RegisterNodeTab (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
-	behaviour->draw = MN_DrawTabNode;
+	behaviour->draw = MN_TabNodeDraw;
 	behaviour->leftClick = MN_TabNodeClick;
 }
