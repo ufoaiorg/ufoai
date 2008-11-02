@@ -437,7 +437,6 @@ void MN_MiddleClick (int x, int y)
 void MN_MouseWheel (qboolean down, int x, int y)
 {
 	menuNode_t *node;
-	menu_t *menu;
 	int sp;
 	qboolean mouseOver;
 	qboolean wheelInside = qfalse;
@@ -452,7 +451,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 	sp = mn.menuStackPos;
 
 	while (sp > 0 && !wheelInside) {
-		menu = mn.menuStack[--sp];
+		menu_t *menu = mn.menuStack[--sp];
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
 			/* both wheelUp & wheelDown required */
