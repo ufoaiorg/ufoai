@@ -468,6 +468,17 @@ menu map
 				cmd "set mn_messagesystem 0;"
 		}
 	}
+	
+	pic bt_messagesettings
+	{
+		tooltip	"_Change message and pause settings"
+		image	menu/geo_eventlog
+		pos		"850 350"
+		texl	"32 0"
+		texh	"64 32"
+		mousefx	false
+		click	{ cmd "mn_push messageoptions;" }
+	}
 
 	pic bt_mapcenter
 	{
@@ -2364,5 +2375,1234 @@ menu popup
 	func leave
 	{
 		cmd		"mn_pop;"
+	}
+}
+
+// ==================
+// MENU FOR PAUSE/MESSAGES
+// ==================
+
+menu messageoptions
+{
+	zone render 
+	{
+		invis	true
+	}
+	
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/mail_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/mail_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/mail_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/mail_lr
+		pos		"512 512"
+	}
+	
+	pic button_exit
+	{
+		tooltip "_Done"
+		image	hud/buttons2
+		mousefx true
+		pos		"920 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{
+			cmd "mn_pop;"
+		}
+	}
+
+	string pause_settings
+	{
+		string	"_Pause/message settings"
+		pos	"500 30"
+		align	uc
+		color	"0 .78 0 1"
+		font	f_big
+	}
+
+	string header_messagetype
+	{
+		string	"_Notify type"
+		pos		"500 140"
+		font	f_big
+	}
+
+	pic header_pause
+	{
+		tooltip	"_enable or disable pause for all notification types\nPause can't be enabled without notification"
+		pos		"834 140"
+		align	ur
+		image	menu/notify_pause
+		click {	cmd "mn_push popup_setall_pause;" }
+	}
+
+	pic header_notify
+	{
+		tooltip	"_enable or disable messages being displayed for all notification types"
+		pos		"864 140"
+		align	ur
+		image	menu/notify_notice
+		click { cmd "mn_push popup_setall_notify;" }
+	}
+	
+	pic header_sound
+	{
+		tooltip	"_enable or disable sounds being played for all notification types"
+		pos		"894 140"
+		align	ur
+		image	menu/notify_sound
+		click { cmd "mn_push popup_setall_sound;" }
+	}
+
+	text messagetypes
+	{
+		color	"0 .78 0 1"
+		num		TEXT_MESSAGEOPTIONS
+		height	"21"
+		format	"25 0"
+		pos		"500 170"
+		size	"265 525"
+		wheel	{ cmd "msgoptions_scroll;" }
+		mousefx	true
+		longlines prettychop
+	}
+
+	pic bt_pause0 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 170"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 0 pause;" }
+	}
+
+	pic bt_notify0 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 170"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 0 notify;" }
+	}
+
+	pic bt_sound0 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 170"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 0 sound;" }
+	}
+
+	pic bt_pause1 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 195"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 1 pause;" }
+	}
+
+	pic bt_notify1 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 195"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 1 notify;" }
+	}
+
+	pic bt_sound1 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 195"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 1 sound;" }
+	}
+
+	pic bt_pause2 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 220"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 2 pause;" }
+	}
+
+	pic bt_notify2 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 220"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 2 notify;" }
+	}
+
+	pic bt_sound2 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 220"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 2 sound;" }
+	}
+
+	pic bt_pause3 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 245"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 3 pause;" }
+	}
+
+	pic bt_notify3 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 245"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 3 notify;" }
+	}
+
+	pic bt_sound3 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 245"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 3 sound;" }
+	}
+
+	pic bt_pause4 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 270"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 4 pause;" }
+	}
+
+	pic bt_notify4 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 270"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 4 notify;" }
+	}
+
+	pic bt_sound4 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 270"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 4 sound;" }
+	}
+
+	pic bt_pause5 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 295"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 5 pause;" }
+	}
+
+	pic bt_notify5 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 295"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 5 notify;" }
+	}
+
+	pic bt_sound5 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 295"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 5 sound;" }
+	}
+
+	pic bt_pause6 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 320"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 6 pause;" }
+	}
+
+	pic bt_notify6 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 320"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 6 notify;" }
+	}
+
+	pic bt_sound6 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 320"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 6 sound;" }
+	}
+
+	pic bt_pause7 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 345"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 7 pause;" }
+	}
+
+	pic bt_notify7 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 345"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 7 notify;" }
+	}
+
+	pic bt_sound7 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 345"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 7 sound;" }
+	}
+
+	pic bt_pause8 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 370"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 8 pause;" }
+	}
+
+	pic bt_notify8 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 370"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 8 notify;" }
+	}
+
+	pic bt_sound8 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 370"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 8 sound;" }
+	}
+
+	pic bt_pause9 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 395"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 9 pause;" }
+	}
+
+	pic bt_notify9 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 395"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 9 notify;" }
+	}
+
+	pic bt_sound9 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 395"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 9 sound;" }
+	}
+
+	pic bt_pause10 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 420"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 10 pause;" }
+	}
+
+	pic bt_notify10 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 420"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 10 notify;" }
+	}
+
+	pic bt_sound10 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 420"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 10 sound;" }
+	}
+
+	pic bt_pause11 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 445"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 11 pause;" }
+	}
+
+	pic bt_notify11 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 445"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 11 notify;" }
+	}
+
+	pic bt_sound11 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 445"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 11 sound;" }
+	}
+
+	pic bt_pause12 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 470"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 12 pause;" }
+	}
+
+	pic bt_notify12 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 470"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 12 notify;" }
+	}
+
+	pic bt_sound12 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 470"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 12 sound;" }
+	}
+
+	pic bt_pause13 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 495"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 13 pause;" }
+	}
+
+	pic bt_notify13 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 495"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 13 notify;" }
+	}
+
+	pic bt_sound13 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 495"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 13 sound;" }
+	}
+
+	pic bt_pause14 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 520"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 14 pause;" }
+	}
+
+	pic bt_notify14 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 520"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 14 notify;" }
+	}
+
+	pic bt_sound14 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 520"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 14 sound;" }
+	}
+
+	pic bt_pause15 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 545"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 15 pause;" }
+	}
+
+	pic bt_notify15 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 545"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 15 notify;" }
+	}
+
+	pic bt_sound15 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 545"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 15 sound;" }
+	}
+
+	pic bt_pause16 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 570"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 16 pause;" }
+	}
+
+	pic bt_notify16 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 570"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 16 notify;" }
+	}
+
+	pic bt_sound16 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 570"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 16 sound;" }
+	}
+
+	pic bt_pause17 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 595"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 17 pause;" }
+	}
+
+	pic bt_notify17 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 595"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 17 notify;" }
+	}
+
+	pic bt_sound17 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 595"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 17 sound;" }
+	}
+
+	pic bt_pause18 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 620"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 18 pause;" }
+	}
+
+	pic bt_notify18 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 620"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 18 notify;" }
+	}
+
+	pic bt_sound18 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 620"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 18 sound;" }
+	}
+
+	pic bt_pause19 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 645"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 19 pause;" }
+	}
+
+	pic bt_notify19 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 645"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 19 notify;" }
+	}
+
+	pic bt_sound19 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 645"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 19 sound;" }
+	}
+
+	pic bt_pause20 {
+		tooltip "_enable or disable game stopping"
+		align	ur
+		pos		"830 670"
+		image	menu/checkbox_unchecked
+		click {	cmd "msgoptions_toggle 20 pause;" }
+	}
+
+	pic bt_notify20 {
+		tooltip	"_enable or disable displaying a notification message"
+		align	ur
+		pos		"860 670"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 20 notify;" }
+	}
+
+	pic bt_sound20 {
+		tooltip "_enable or disable playing sound"
+		align	ur
+		pos		"890 670"
+		image	menu/checkbox_unchecked
+		click { cmd "msgoptions_toggle 20 sound;" }
+	}
+
+	// ===================
+	// confuncs to change button pictures
+	// ===================
+	confunc ms_pausee0 { *bt_pause0 image menu/checkbox_checked }
+	confunc ms_paused0 { *bt_pause0 image menu/checkbox_unchecked }
+	confunc ms_notifye0 { *bt_notify0 image menu/checkbox_checked }
+	confunc ms_notifyd0 { *bt_notify0 image menu/checkbox_unchecked }
+	confunc ms_sounde0 { *bt_sound0 image menu/checkbox_checked }
+	confunc ms_soundd0 { *bt_sound0 image menu/checkbox_unchecked }
+
+	confunc ms_pausee1 { *bt_pause1 image menu/checkbox_checked }
+	confunc ms_paused1 { *bt_pause1 image menu/checkbox_unchecked }
+	confunc ms_notifye1 { *bt_notify1 image menu/checkbox_checked }
+	confunc ms_notifyd1 { *bt_notify1 image menu/checkbox_unchecked }
+	confunc ms_sounde1 { *bt_sound1 image menu/checkbox_checked }
+	confunc ms_soundd1 { *bt_sound1 image menu/checkbox_unchecked }
+
+	confunc ms_pausee2 { *bt_pause2 image menu/checkbox_checked }
+	confunc ms_paused2 { *bt_pause2 image menu/checkbox_unchecked }
+	confunc ms_notifye2 { *bt_notify2 image menu/checkbox_checked }
+	confunc ms_notifyd2 { *bt_notify2 image menu/checkbox_unchecked }
+	confunc ms_sounde2 { *bt_sound2 image menu/checkbox_checked }
+	confunc ms_soundd2 { *bt_sound2 image menu/checkbox_unchecked }
+
+	confunc ms_pausee3 { *bt_pause3 image menu/checkbox_checked }
+	confunc ms_paused3 { *bt_pause3 image menu/checkbox_unchecked }
+	confunc ms_notifye3 { *bt_notify3 image menu/checkbox_checked }
+	confunc ms_notifyd3 { *bt_notify3 image menu/checkbox_unchecked }
+	confunc ms_sounde3 { *bt_sound3 image menu/checkbox_checked }
+	confunc ms_soundd3 { *bt_sound3 image menu/checkbox_unchecked }
+
+	confunc ms_pausee4 { *bt_pause4 image menu/checkbox_checked }
+	confunc ms_paused4 { *bt_pause4 image menu/checkbox_unchecked }
+	confunc ms_notifye4 { *bt_notify4 image menu/checkbox_checked }
+	confunc ms_notifyd4 { *bt_notify4 image menu/checkbox_unchecked }
+	confunc ms_sounde4 { *bt_sound4 image menu/checkbox_checked }
+	confunc ms_soundd4 { *bt_sound4 image menu/checkbox_unchecked }
+
+	confunc ms_pausee5 { *bt_pause5 image menu/checkbox_checked }
+	confunc ms_paused5 { *bt_pause5 image menu/checkbox_unchecked }
+	confunc ms_notifye5 { *bt_notify5 image menu/checkbox_checked }
+	confunc ms_notifyd5 { *bt_notify5 image menu/checkbox_unchecked }
+	confunc ms_sounde5 { *bt_sound5 image menu/checkbox_checked }
+	confunc ms_soundd5 { *bt_sound5 image menu/checkbox_unchecked }
+
+	confunc ms_pausee6 { *bt_pause6 image menu/checkbox_checked }
+	confunc ms_paused6 { *bt_pause6 image menu/checkbox_unchecked }
+	confunc ms_notifye6 { *bt_notify6 image menu/checkbox_checked }
+	confunc ms_notifyd6 { *bt_notify6 image menu/checkbox_unchecked }
+	confunc ms_sounde6 { *bt_sound6 image menu/checkbox_checked }
+	confunc ms_soundd6 { *bt_sound6 image menu/checkbox_unchecked }
+
+	confunc ms_pausee7 { *bt_pause7 image menu/checkbox_checked }
+	confunc ms_paused7 { *bt_pause7 image menu/checkbox_unchecked }
+	confunc ms_notifye7 { *bt_notify7 image menu/checkbox_checked }
+	confunc ms_notifyd7 { *bt_notify7 image menu/checkbox_unchecked }
+	confunc ms_sounde7 { *bt_sound7 image menu/checkbox_checked }
+	confunc ms_soundd7 { *bt_sound7 image menu/checkbox_unchecked }
+
+	confunc ms_pausee8 { *bt_pause8 image menu/checkbox_checked }
+	confunc ms_paused8 { *bt_pause8 image menu/checkbox_unchecked }
+	confunc ms_notifye8 { *bt_notify8 image menu/checkbox_checked }
+	confunc ms_notifyd8 { *bt_notify8 image menu/checkbox_unchecked }
+	confunc ms_sounde8 { *bt_sound8 image menu/checkbox_checked }
+	confunc ms_soundd8 { *bt_sound8 image menu/checkbox_unchecked }
+
+	confunc ms_pausee9 { *bt_pause9 image menu/checkbox_checked }
+	confunc ms_paused9 { *bt_pause9 image menu/checkbox_unchecked }
+	confunc ms_notifye9 { *bt_notify9 image menu/checkbox_checked }
+	confunc ms_notifyd9 { *bt_notify9 image menu/checkbox_unchecked }
+	confunc ms_sounde9 { *bt_sound9 image menu/checkbox_checked }
+	confunc ms_soundd9 { *bt_sound9 image menu/checkbox_unchecked }
+
+	confunc ms_pausee10 { *bt_pause10 image menu/checkbox_checked }
+	confunc ms_paused10 { *bt_pause10 image menu/checkbox_unchecked }
+	confunc ms_notifye10 { *bt_notify10 image menu/checkbox_checked }
+	confunc ms_notifyd10 { *bt_notify10 image menu/checkbox_unchecked }
+	confunc ms_sounde10 { *bt_sound10 image menu/checkbox_checked }
+	confunc ms_soundd10 { *bt_sound10 image menu/checkbox_unchecked }
+
+	confunc ms_pausee11 { *bt_pause11 image menu/checkbox_checked }
+	confunc ms_paused11 { *bt_pause11 image menu/checkbox_unchecked }
+	confunc ms_notifye11 { *bt_notify11 image menu/checkbox_checked }
+	confunc ms_notifyd11 { *bt_notify11 image menu/checkbox_unchecked }
+	confunc ms_sounde11 { *bt_sound11 image menu/checkbox_checked }
+	confunc ms_soundd11 { *bt_sound11 image menu/checkbox_unchecked }
+
+	confunc ms_pausee12 { *bt_pause12 image menu/checkbox_checked }
+	confunc ms_paused12 { *bt_pause12 image menu/checkbox_unchecked }
+	confunc ms_notifye12 { *bt_notify12 image menu/checkbox_checked }
+	confunc ms_notifyd12 { *bt_notify12 image menu/checkbox_unchecked }
+	confunc ms_sounde12 { *bt_sound12 image menu/checkbox_checked }
+	confunc ms_soundd12 { *bt_sound12 image menu/checkbox_unchecked }
+
+	confunc ms_pausee13 { *bt_pause13 image menu/checkbox_checked }
+	confunc ms_paused13 { *bt_pause13 image menu/checkbox_unchecked }
+	confunc ms_notifye13 { *bt_notify13 image menu/checkbox_checked }
+	confunc ms_notifyd13 { *bt_notify13 image menu/checkbox_unchecked }
+	confunc ms_sounde13 { *bt_sound13 image menu/checkbox_checked }
+	confunc ms_soundd13 { *bt_sound13 image menu/checkbox_unchecked }
+
+	confunc ms_pausee14 { *bt_pause14 image menu/checkbox_checked }
+	confunc ms_paused14 { *bt_pause14 image menu/checkbox_unchecked }
+	confunc ms_notifye14 { *bt_notify14 image menu/checkbox_checked }
+	confunc ms_notifyd14 { *bt_notify14 image menu/checkbox_unchecked }
+	confunc ms_sounde14 { *bt_sound14 image menu/checkbox_checked }
+	confunc ms_soundd14 { *bt_sound14 image menu/checkbox_unchecked }
+
+	confunc ms_pausee15 { *bt_pause15 image menu/checkbox_checked }
+	confunc ms_paused15 { *bt_pause15 image menu/checkbox_unchecked }
+	confunc ms_notifye15 { *bt_notify15 image menu/checkbox_checked }
+	confunc ms_notifyd15 { *bt_notify15 image menu/checkbox_unchecked }
+	confunc ms_sounde15 { *bt_sound15 image menu/checkbox_checked }
+	confunc ms_soundd15 { *bt_sound15 image menu/checkbox_unchecked }
+
+	confunc ms_pausee16 { *bt_pause16 image menu/checkbox_checked }
+	confunc ms_paused16 { *bt_pause16 image menu/checkbox_unchecked }
+	confunc ms_notifye16 { *bt_notify16 image menu/checkbox_checked }
+	confunc ms_notifyd16 { *bt_notify16 image menu/checkbox_unchecked }
+	confunc ms_sounde16 { *bt_sound16 image menu/checkbox_checked }
+	confunc ms_soundd16 { *bt_sound16 image menu/checkbox_unchecked }
+
+	confunc ms_pausee17 { *bt_pause17 image menu/checkbox_checked }
+	confunc ms_paused17 { *bt_pause17 image menu/checkbox_unchecked }
+	confunc ms_notifye17 { *bt_notify17 image menu/checkbox_checked }
+	confunc ms_notifyd17 { *bt_notify17 image menu/checkbox_unchecked }
+	confunc ms_sounde17 { *bt_sound17 image menu/checkbox_checked }
+	confunc ms_soundd17 { *bt_sound17 image menu/checkbox_unchecked }
+
+	confunc ms_pausee18 { *bt_pause18 image menu/checkbox_checked }
+	confunc ms_paused18 { *bt_pause18 image menu/checkbox_unchecked }
+	confunc ms_notifye18 { *bt_notify18 image menu/checkbox_checked }
+	confunc ms_notifyd18 { *bt_notify18 image menu/checkbox_unchecked }
+	confunc ms_sounde18 { *bt_sound18 image menu/checkbox_checked }
+	confunc ms_soundd18 { *bt_sound18 image menu/checkbox_unchecked }
+
+	confunc ms_pausee19 { *bt_pause19 image menu/checkbox_checked }
+	confunc ms_paused19 { *bt_pause19 image menu/checkbox_unchecked }
+	confunc ms_notifye19 { *bt_notify19 image menu/checkbox_checked }
+	confunc ms_notifyd19 { *bt_notify19 image menu/checkbox_unchecked }
+	confunc ms_sounde19 { *bt_sound19 image menu/checkbox_checked }
+	confunc ms_soundd19 { *bt_sound19 image menu/checkbox_unchecked }
+
+	confunc ms_pausee20 { *bt_pause20 image menu/checkbox_checked }
+	confunc ms_paused20 { *bt_pause20 image menu/checkbox_unchecked }
+	confunc ms_notifye20 { *bt_notify20 image menu/checkbox_checked }
+	confunc ms_notifyd20 { *bt_notify20 image menu/checkbox_unchecked }
+	confunc ms_sounde20 { *bt_sound20 image menu/checkbox_checked }
+	confunc ms_soundd20 { *bt_sound20 image menu/checkbox_unchecked }
+
+	// ===================
+	// confuncs to enable/disable lines
+	// ===================
+	confunc ms_enable0 { *bt_pause0 invis false
+		*bt_notify0 invis false
+		*bt_sound0 invis false
+	}
+	confunc ms_disable0 { *bt_pause0 invis true
+		*bt_notify0 invis true
+		*bt_sound0 invis true
+	}
+
+	confunc ms_enable1 { *bt_pause1 invis false
+		*bt_notify1 invis false
+		*bt_sound1 invis false
+	}
+	confunc ms_disable1 { *bt_pause1 invis true
+		*bt_notify1 invis true
+		*bt_sound1 invis true
+	}
+
+	confunc ms_enable2 { *bt_pause2 invis false
+		*bt_notify2 invis false
+		*bt_sound2 invis false
+	}
+	confunc ms_disable2 { *bt_pause2 invis true
+		*bt_notify2 invis true
+		*bt_sound2 invis true
+	}
+
+	confunc ms_enable3 { *bt_pause3 invis false
+		*bt_notify3 invis false
+		*bt_sound3 invis false
+	}
+	confunc ms_disable3 { *bt_pause3 invis true
+		*bt_notify3 invis true
+		*bt_sound3 invis true
+	}
+
+	confunc ms_enable4 { *bt_pause4 invis false
+		*bt_notify4 invis false
+		*bt_sound4 invis false
+	}
+	confunc ms_disable4 { *bt_pause4 invis true
+		*bt_notify4 invis true
+		*bt_sound4 invis true
+	}
+
+	confunc ms_enable5 { *bt_pause5 invis false
+		*bt_notify5 invis false
+		*bt_sound5 invis false
+	}
+	confunc ms_disable5 { *bt_pause5 invis true
+		*bt_notify5 invis true
+		*bt_sound5 invis true
+	}
+
+	confunc ms_enable6 { *bt_pause6 invis false
+		*bt_notify6 invis false
+		*bt_sound6 invis false
+	}
+	confunc ms_disable6 { *bt_pause6 invis true
+		*bt_notify6 invis true
+		*bt_sound6 invis true
+	}
+
+	confunc ms_enable7 { *bt_pause7 invis false
+		*bt_notify7 invis false
+		*bt_sound7 invis false
+	}
+	confunc ms_disable7 { *bt_pause7 invis true
+		*bt_notify7 invis true
+		*bt_sound7 invis true
+	}
+
+	confunc ms_enable8 { *bt_pause8 invis false
+		*bt_notify8 invis false
+		*bt_sound8 invis false
+	}
+	confunc ms_disable8 { *bt_pause8 invis true
+		*bt_notify8 invis true
+		*bt_sound8 invis true
+	}
+
+	confunc ms_enable9 { *bt_pause9 invis false
+		*bt_notify9 invis false
+		*bt_sound9 invis false
+	}
+	confunc ms_disable9 { *bt_pause9 invis true
+		*bt_notify9 invis true
+		*bt_sound9 invis true
+	}
+
+	confunc ms_enable10 { *bt_pause10 invis false
+		*bt_notify10 invis false
+		*bt_sound10 invis false
+	}
+	confunc ms_disable10 { *bt_pause10 invis true
+		*bt_notify10 invis true
+		*bt_sound10 invis true
+	}
+
+	confunc ms_enable11 { *bt_pause11 invis false
+		*bt_notify11 invis false
+		*bt_sound11 invis false
+	}
+	confunc ms_disable11 { *bt_pause11 invis true
+		*bt_notify11 invis true
+		*bt_sound11 invis true
+	}
+
+	confunc ms_enable12 { *bt_pause12 invis false
+		*bt_notify12 invis false
+		*bt_sound12 invis false
+	}
+	confunc ms_disable12 { *bt_pause12 invis true
+		*bt_notify12 invis true
+		*bt_sound12 invis true
+	}
+
+	confunc ms_enable13 { *bt_pause13 invis false
+		*bt_notify13 invis false
+		*bt_sound13 invis false
+	}
+	confunc ms_disable13 { *bt_pause13 invis true
+		*bt_notify13 invis true
+		*bt_sound13 invis true
+	}
+
+	confunc ms_enable14 { *bt_pause14 invis false
+		*bt_notify14 invis false
+		*bt_sound14 invis false
+	}
+	confunc ms_disable14 { *bt_pause14 invis true
+		*bt_notify14 invis true
+		*bt_sound14 invis true
+	}
+
+	confunc ms_enable15 { *bt_pause15 invis false
+		*bt_notify15 invis false
+		*bt_sound15 invis false
+	}
+	confunc ms_disable15 { *bt_pause15 invis true
+		*bt_notify15 invis true
+		*bt_sound15 invis true
+	}
+
+	confunc ms_enable16 { *bt_pause16 invis false
+		*bt_notify16 invis false
+		*bt_sound16 invis false
+	}
+	confunc ms_disable16 { *bt_pause16 invis true
+		*bt_notify16 invis true
+		*bt_sound16 invis true
+	}
+
+	confunc ms_enable17 { *bt_pause17 invis false
+		*bt_notify17 invis false
+		*bt_sound17 invis false
+	}
+	confunc ms_disable17 { *bt_pause17 invis true
+		*bt_notify17 invis true
+		*bt_sound17 invis true
+	}
+
+	confunc ms_enable18 { *bt_pause18 invis false
+		*bt_notify18 invis false
+		*bt_sound18 invis false
+	}
+	confunc ms_disable18 { *bt_pause18 invis true
+		*bt_notify18 invis true
+		*bt_sound18 invis true
+	}
+
+	confunc ms_enable19 { *bt_pause19 invis false
+		*bt_notify19 invis false
+		*bt_sound19 invis false
+	}
+	confunc ms_disable19 { *bt_pause19 invis true
+		*bt_notify19 invis true
+		*bt_sound19 invis true
+	}
+
+	confunc ms_enable20 { *bt_pause20 invis false
+		*bt_notify20 invis false
+		*bt_sound20 invis false
+	}
+	confunc ms_disable20 { *bt_pause20 invis true
+		*bt_notify20 invis true
+		*bt_sound20 invis true
+	}
+	
+	func init
+	{
+		cmd "msgoptions_init;"
+	}
+
+}
+
+// ==================
+// Popups for setall msgoptions
+// ==================
+menu popup_setall_pause
+{
+	{
+		pos	"256 256"
+		size	"496 247"
+	}
+
+	zone popup
+	{
+		invis false
+	}
+
+	windowpanel back
+	{
+		image	menu/popup_alpha_tile
+		size	"496 247"
+		pos	"8 6"
+		blend	true
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"437 29"
+	}
+
+	string title
+	{
+		string	"_Change all pause settings"
+		pos	"34 24"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_Do you really want to change all pause settings?\nThis change can't be undone."
+		pos	"34 64"
+	}
+
+	pic bt_setall
+	{
+		tooltip	"_Enable all pause settings"
+		image	menu/multi_buttons3
+		texh	"176 64"
+		texl	"0 32"
+		pos	"34 194"
+		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
+		in	{ *string_setall color "1 1 1 1" *bt_setall image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; msgoptions_setall pause 1;" }
+	}
+	string string_setall
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enable all"
+		pos	"122 210"
+		align	cc
+	}
+	pic bt_unsetall
+	{
+		tooltip	"_Disable all pause settings"
+		image	menu/multi_buttons3
+		texh	"176 64"
+		texl	"0 32"
+		pos	"304 194"
+		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
+		in	{ *string_unsetall color "1 1 1 1" *bt_unsetall image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; msgoptions_setall pause 0;" }
+	}
+	string string_unsetall
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Disable all"
+		pos	"392 210"
+		align	cc
+	}
+	
+	pic bt_close
+	{
+		tooltip "_Close this dialogue"
+		image	hud/close
+		pos		"467 29"
+		click	{ cmd "mn_pop;" }
+	}
+}
+
+menu popup_setall_notify
+{
+	{
+		pos	"256 256"
+		size	"496 247"
+	}
+
+	zone popup
+	{
+		invis false
+	}
+
+	windowpanel back
+	{
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
+		blend	true
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"437 29"
+	}
+
+	string title
+	{
+		string	"_Change all notification settings"
+		pos	"34 24"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_Do you really want to change all notification messages?\nThis change can't be undone."
+		pos	"34 64"
+	}
+
+	pic bt_setall
+	{
+		tooltip	"_Enable all notification messages"
+		image	menu/multi_buttons3
+		texh	"176 64"
+		texl	"0 32"
+		pos	"34 194"
+		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
+		in	{ *string_setall color "1 1 1 1" *bt_setall image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; msgoptions_setall notify 1;" }
+	}
+	string string_setall
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enable all"
+		pos	"122 210"
+		align	cc
+	}
+	pic bt_unsetall
+	{
+		tooltip	"_Disable all notification messages"
+		image	menu/multi_buttons3
+		texh	"176 64"
+		texl	"0 32"
+		pos	"304 194"
+		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
+		in	{ *string_unsetall color "1 1 1 1" *bt_unsetall image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; msgoptions_setall notify 0;" }
+	}
+	string string_unsetall
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Disable all"
+		pos	"392 210"
+		align	cc
+	}
+	
+	pic bt_close
+	{
+		tooltip "_Close this dialogue"
+		image	hud/close
+		pos		"467 29"
+		click	{ cmd "mn_pop;" }
+	}
+}
+
+
+menu popup_setall_sound
+{
+	{
+		pos	"256 256"
+		size	"496 247"
+	}
+
+	zone popup
+	{
+		invis false
+	}
+
+	windowpanel back
+	{
+		image	menu/popup_alpha_tile
+		pos	"8 6"
+		size	"496 247"
+		blend	true
+	}
+
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"437 29"
+	}
+
+	string title
+	{
+		string	"_Change all sound settings"
+		pos	"34 24"
+		font	f_big
+	}
+
+	string name_label
+	{
+		string	"_Do you really want to change all sound notifications?\nThis change can't be undone."
+		pos	"34 64"
+	}
+
+	pic bt_setall
+	{
+		tooltip	"_Enable all sound notifications"
+		image	menu/multi_buttons3
+		texh	"176 64"
+		texl	"0 32"
+		pos	"34 194"
+		out	{ *string_setall color "0 0.5 0 1" *bt_setall image menu/multi_buttons3 }
+		in	{ *string_setall color "1 1 1 1" *bt_setall image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; msgoptions_setall sound 1;" }
+	}
+	string string_setall
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Enable all"
+		pos	"122 210"
+		align	cc
+	}
+	pic bt_unsetall
+	{
+		tooltip	"_Disable all sound notifications"
+		image	menu/multi_buttons3
+		texh	"176 64"
+		texl	"0 32"
+		pos	"304 194"
+		out	{ *string_unsetall color "0 0.5 0 1" *bt_unsetall image menu/multi_buttons3 }
+		in	{ *string_unsetall color "1 1 1 1" *bt_unsetall image menu/multi_buttons3a }
+		click	{ cmd "mn_pop; msgoptions_setall sound 0;" }
+	}
+	string string_unsetall
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Disable all"
+		pos	"392 210"
+		align	cc
+	}
+	
+	pic bt_close
+	{
+		tooltip "_Close this dialogue"
+		image	hud/close
+		pos		"467 29"
+		click	{ cmd "mn_pop;" }
 	}
 }
