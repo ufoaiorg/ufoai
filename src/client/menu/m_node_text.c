@@ -426,13 +426,6 @@ static void MN_MenuTextReset_f (void)
 	}
 }
 
-void MN_NodeTextInit (void)
-{
-	/* textbox */
-	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
-	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
-}
-
 /**
  * @brief Calls the script command for a text node that is clickable
  * @note The node must have the click parameter in it's menu definition or there
@@ -494,4 +487,7 @@ void MN_RegisterNodeText (nodeBehaviour_t *behaviour)
 	behaviour->rightClick = MN_TextNodeRightClick;
 	behaviour->mouseWheel = MN_TextNodeMouseWheel;
 	behaviour->mouseMove = MN_TextNodeMouseMove;
+
+	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
+	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
 }

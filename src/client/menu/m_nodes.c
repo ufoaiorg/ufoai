@@ -338,9 +338,6 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 
-	MN_NodeTextInit();
-	MN_NodeModelInit();
-
 	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qfalse);
 	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc", qfalse);
 	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qfalse);

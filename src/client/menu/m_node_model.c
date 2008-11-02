@@ -171,16 +171,6 @@ static void MN_SetModelTransform_f (void)
 }
 #endif
 
-void MN_NodeModelInit (void)
-{
-#ifdef DEBUG
-	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
-#endif
-	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
-}
-
 static void MN_DrawModelNode2 (menuNode_t *node)
 {
 	menu_t *menu = node->menu;
@@ -502,4 +492,11 @@ void MN_RegisterNodeModel (nodeBehaviour_t *behaviour)
 	behaviour->name = "model";
 	behaviour->draw = MN_DrawModelNode2;
 	behaviour->leftClick = MN_ModelClick;
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
+	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
+	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
+#endif
+	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }
