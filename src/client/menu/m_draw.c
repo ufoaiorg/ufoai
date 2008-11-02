@@ -189,12 +189,9 @@ void MN_DrawMenus (void)
 			}
 
 			/* mouse effects */
-			/* don't allow to open more than one selectbox */
 			if (sp > pp) {
 				/* in and out events */
 				mouseOver = MN_CheckNodeZone(node, mousePosX, mousePosY);
-				/** @todo This won't work anymore - as the return value was an int before and
-				 * was the line you clicked in the textnode */
 				if (mouseOver != node->state) {
 					/* maybe we are leaving to another menu */
 					menu->hoverNode = NULL;
@@ -202,8 +199,6 @@ void MN_DrawMenus (void)
 						MN_ExecuteActions(menu, node->mouseIn);
 					else
 						MN_ExecuteActions(menu, node->mouseOut);
-					/** @todo This won't work anymore - as the return value was an int before and
-					 * was the line you clicked in the textnode */
 					node->state = mouseOver;
 				}
 			}

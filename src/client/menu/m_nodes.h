@@ -165,6 +165,7 @@ typedef struct menuNode_s {
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 	const value_t *scriptValues;
 	char* text;
+	int lineUnderMouse;	/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	void* dataImageOrModel;	/**< First entry in data array can
 						* be an image, or a model, this depends
 						* on the node type

@@ -168,6 +168,27 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Get the line number under an absolute position
+ * @param[in] node a text node
+ * @param[in] x position x on the screen
+ * @param[in] y position x on the screen
+ * @return The line number under the position (0 = first line)
+ */
+int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
+{
+	assert(node->type == MN_TEXT);
+	assert(node->texh[0]);
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	if (node->textScroll)
+		return (int) (y / node->texh[0]) + node->textScroll;
+	else
+		return (int) (y / node->texh[0]);
+}
+
+void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
+	node->lineUnderMouse = MN_TextNodeGetLine(node, x, y);
+}
 
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
@@ -259,9 +280,7 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			R_Color(node->selectedColor);
 		}
 
-		/** @todo This won't work anymore - as the return value was an int before and
-		 * was the line you clicked in the textnode */
-		if (node->mousefx && node->textLines + 1 == node->state) {
+		if (node->state && node->mousefx && node->textLines == node->lineUnderMouse) {
 			/* Hightlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
@@ -425,17 +444,17 @@ void MN_NodeTextInit (void)
  */
 void MN_TextClick (menuNode_t * node, int x, int y)
 {
-	/** @todo This won't work anymore - as the return value was an int before and
-	 * was the line you clicked in the textnode */
-	qboolean mouseOver = MN_CheckNodeZone(node, x, y);
+	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
+
+	node->textLineSelected = line;
 
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
 	if (Cmd_Exists(cmd))
-		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+		Cbuf_AddText(va("%s %i\n", cmd, line));
 	else if (node->click && node->click->type == EA_CMD) {
 		assert(node->click->data);
-		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, mouseOver - 1));
+		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, line));
 	}
 }
 
@@ -446,14 +465,12 @@ void MN_TextClick (menuNode_t * node, int x, int y)
  */
 static void MN_TextRightClick (menuNode_t * node, int x, int y)
 {
-	/** @todo This won't work anymore - as the return value was an int before and
-	 * was the line you clicked in the textnode */
-	qboolean mouseOver = MN_CheckNodeZone(node, x, y);
+	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
 
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
 	if (Cmd_Exists(cmd))
-		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
+		Cbuf_AddText(va("%s %i\n", cmd, line));
 }
 
 static void MN_NodeTextMouseWheel (menuNode_t *node, qboolean down, int x, int y)
@@ -476,4 +493,5 @@ void MN_RegisterNodeText (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_TextClick;
 	behaviour->rightClick = MN_TextRightClick;
 	behaviour->mouseWheel = MN_NodeTextMouseWheel;
+	behaviour->mouseMove = MN_TextNodeMouseMove;
 }

@@ -280,9 +280,7 @@ void MN_Click (int x, int y)
 			}
 			if (node->type == MN_TEXT) {
 				execute_node = node;
-				/** @todo mouseOver was an int before - which pointed to the line you clicked - now it's a boolean
-				 * so this won't work anymore */
-				mn.mouseRepeat.textLine = mouseOver;
+				mn.mouseRepeat.textLine = MN_TextNodeGetLine(node, x, y);
 			}
 		}
 

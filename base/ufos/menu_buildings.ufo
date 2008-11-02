@@ -135,6 +135,8 @@ menu buildings
 		pos		"770 120"
 		size	"210 600"
 		format	"30 700"
+		color	"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		mousefx	true
 		num		TEXT_BUILDINGS
 		height	"20"

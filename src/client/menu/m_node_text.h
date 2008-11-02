@@ -48,6 +48,7 @@ void MN_TextScrollBottom(const char* nodeName);
 qboolean MN_TextScroll(menuNode_t *node, int offset);
 void MN_TextClick(menuNode_t *node, int x, int y);
 void MN_MenuTextReset(int menuTextID);
+int MN_TextNodeGetLine (const menuNode_t *node, int x, int y);
 
 void MN_NodeTextInit(void);
 
