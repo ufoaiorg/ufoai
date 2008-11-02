@@ -406,7 +406,7 @@ void MN_FindContainer (menuNode_t* const node)
 	else
 		node->container = &csi.ids[i];
 
-	if (node->container->scroll) {
+	if (node->container && node->container->scroll) {
 		/* No need to calculate the size - we directly define it in
 		 * the "inventory" entry in the .ufo file anyway. */
 		node->size[0] = node->container->scroll;
