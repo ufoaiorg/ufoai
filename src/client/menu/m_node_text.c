@@ -440,13 +440,14 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
 
-	node->textLineSelected = line;
-
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
-	if (Cmd_Exists(cmd))
+	if (Cmd_Exists(cmd)) {
+		node->textLineSelected = line;
 		Cbuf_AddText(va("%s %i\n", cmd, line));
+	}
 	else if (node->click && node->click->type == EA_CMD) {
 		assert(node->click->data);
+		node->textLineSelected = line;
 		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, line));
 	}
 }
