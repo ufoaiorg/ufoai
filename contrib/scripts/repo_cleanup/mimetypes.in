@@ -1,6 +1,7 @@
 # modify this file
 bmp image/bmp
 jpg image/jpeg
+jpeg image/jpeg
 ogg application/ogg
 blend application/x-blender
 exe application/x-executable
