@@ -250,7 +250,7 @@ void MN_Click (int x, int y)
 				 * item in oder to compensate for the centered-drawn cursor-item.
 				 * Or to be more exact, we calculate the relative offset from the cursor
 				 * location to the middle of the top-left square of the item.
-				 * @sa m_draw.c:MN_DrawMenus:MN_CONTAINER */
+				 * @sa MN_DrawMenus:MN_CONTAINER */
 				if (dragInfo.item.t) {
 					itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
 					itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
@@ -280,7 +280,7 @@ void MN_Click (int x, int y)
 			}
 			if (node->type == MN_TEXT) {
 				execute_node = node;
-				/** @todo mouseOver was an int before - which pointed to the line you clicked - not it's a boolean
+				/** @todo mouseOver was an int before - which pointed to the line you clicked - now it's a boolean
 				 * so this won't work anymore */
 				mn.mouseRepeat.textLine = mouseOver;
 			}
@@ -288,8 +288,7 @@ void MN_Click (int x, int y)
 
 		/* Only execute the last-found (i.e. from the top-most displayed node) action found.
 		 * Especially needed for button-nodes that are (partially) overlayed and all have actions defined.
-		 * e.g. the firemode checkboxes.
-		 */
+		 * e.g. the firemode checkboxes. */
 		if (execute_node) {
 			mn.mouseRepeat.node = execute_node;
 			mn.mouseRepeat.lastclicked = cls.realtime;
@@ -301,7 +300,7 @@ void MN_Click (int x, int y)
 					mn.mouseRepeat.clickDelay = execute_node->clickDelay;
 				else
 					mn.mouseRepeat.clickDelay = 300;
-				/** Delay between the 2 first actions is longer than the delay between other actions (see IN_Parse()) */
+				/* Delay between the 2 first actions is longer than the delay between other actions (see IN_Parse()) */
 				mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
@@ -358,7 +357,6 @@ void MN_RightClick (int x, int y)
 			clickedInside = qtrue;
 
 			/* found a node -> do actions */
-
 			if (nodeBehaviourList[node->type].rightClick) {
 				nodeBehaviourList[node->type].rightClick(node, x, y);
 			} else {
