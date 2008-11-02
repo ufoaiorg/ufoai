@@ -186,7 +186,7 @@ int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 		return (int) (y / node->texh[0]);
 }
 
-void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
+static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
 	node->lineUnderMouse = MN_TextNodeGetLine(node, x, y);
 }
 
