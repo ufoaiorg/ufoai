@@ -221,7 +221,8 @@ void MN_MouseMove (int x, int y)
 void MN_Click (int x, int y)
 {
 	menuNode_t *node;
-	int sp, mouseOver;
+	int sp;
+	qboolean mouseOver;
 	qboolean clickedInside = qfalse;
 
 	/* send it to the captured mouse node */
@@ -279,6 +280,8 @@ void MN_Click (int x, int y)
 			}
 			if (node->type == MN_TEXT) {
 				execute_node = node;
+				/** @todo mouseOver was an int before - which pointed to the line you clicked - not it's a boolean
+				 * so this won't work anymore */
 				mn.mouseRepeat.textLine = mouseOver;
 			}
 		}
@@ -327,7 +330,7 @@ void MN_Click (int x, int y)
  */
 void MN_RightClick (int x, int y)
 {
-	int mouseOver;
+	qboolean mouseOver;
 	int sp = mn.menuStackPos;
 	qboolean clickedInside = qfalse;
 
@@ -378,7 +381,8 @@ void MN_MiddleClick (int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
-	int sp, mouseOver;
+	int sp;
+	qboolean mouseOver;
 	qboolean clickedInside = qfalse;
 
 	/* send it to the captured mouse node */
@@ -436,7 +440,8 @@ void MN_MouseWheel (qboolean down, int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
-	int sp, mouseOver;
+	int sp;
+	qboolean mouseOver;
 	qboolean wheelInside = qfalse;
 
 	/* send it to the captured mouse node */

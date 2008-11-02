@@ -129,7 +129,7 @@ void MN_DrawMenus (void)
 	menuNode_t *node;
 	menu_t *menu;
 	int sp, pp;
-	int mouseOver = 0;
+	qboolean mouseOver = qfalse;
 	vec2_t nodepos;
 
 	MN_CheckMouseMove();
@@ -191,6 +191,8 @@ void MN_DrawMenus (void)
 			if (sp > pp) {
 				/* in and out events */
 				mouseOver = MN_CheckNodeZone(node, mousePosX, mousePosY);
+				/** @todo This won't work anymore - as the return value was an int before and
+				 * was the line you clicked in the textnode */
 				if (mouseOver != node->state) {
 					/* maybe we are leaving to another menu */
 					menu->hoverNode = NULL;
@@ -198,6 +200,8 @@ void MN_DrawMenus (void)
 						MN_ExecuteActions(menu, node->mouseIn);
 					else
 						MN_ExecuteActions(menu, node->mouseOut);
+					/** @todo This won't work anymore - as the return value was an int before and
+					 * was the line you clicked in the textnode */
 					node->state = mouseOver;
 				}
 			}
@@ -232,7 +236,7 @@ void MN_DrawMenus (void)
 			}
 
 			/* mouseover? */
-			if (node->state == qtrue)
+			if (node->state)
 				menu->hoverNode = node;
 
 			if (mn_debugmenu->integer)

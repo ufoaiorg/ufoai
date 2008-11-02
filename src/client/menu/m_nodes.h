@@ -125,7 +125,7 @@ typedef struct menuNode_s {
 	vec2_t size;
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
-	byte state;
+	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
 	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */

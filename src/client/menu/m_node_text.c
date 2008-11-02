@@ -259,9 +259,10 @@ void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* fo
 			R_Color(node->selectedColor);
 		}
 
+		/** @todo This won't work anymore - as the return value was an int before and
+		 * was the line you clicked in the textnode */
 		if (node->mousefx && node->textLines + 1 == node->state) {
 			/* Hightlight line if mousefx is true. */
-			/* node->state is the line number to highlight */
 			/** @todo what about multiline text that should be highlighted completely? */
 			if (node->textLines == node->textLineSelected && node->textLineSelected >= 0) {
 				R_ColorBlend(colorSelectedHover);
@@ -424,7 +425,9 @@ void MN_NodeTextInit (void)
  */
 void MN_TextClick (menuNode_t * node, int x, int y)
 {
-	int mouseOver = MN_CheckNodeZone(node, x, y);
+	/** @todo This won't work anymore - as the return value was an int before and
+	 * was the line you clicked in the textnode */
+	qboolean mouseOver = MN_CheckNodeZone(node, x, y);
 	char cmd[MAX_VAR];
 
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
@@ -443,7 +446,9 @@ void MN_TextClick (menuNode_t * node, int x, int y)
  */
 static void MN_TextRightClick (menuNode_t * node, int x, int y)
 {
-	int mouseOver = MN_CheckNodeZone(node, x, y);
+	/** @todo This won't work anymore - as the return value was an int before and
+	 * was the line you clicked in the textnode */
+	qboolean mouseOver = MN_CheckNodeZone(node, x, y);
 	char cmd[MAX_VAR];
 
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
