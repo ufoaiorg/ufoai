@@ -33,7 +33,7 @@ void Sidebar_constructEntities (GtkWidget *notebook)
 	GtkWidget *pageEntityInspector = EntityInspector_constructNotebookTab();
 	gtk_container_add(GTK_CONTAINER(vbox), pageEntityInspector);
 
-	gtk_container_add(GTK_CONTAINER(swin), vbox);
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);

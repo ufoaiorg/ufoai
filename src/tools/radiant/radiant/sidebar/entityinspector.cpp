@@ -747,12 +747,16 @@ public:
 };
 
 static void EntityClassList_fill(void) {
-	EntityClassListStoreAppend append(g_entlist_store);
-	GlobalEntityClassManager().forEach(append);
+	if (g_entlist_store) {
+		EntityClassListStoreAppend append(g_entlist_store);
+		GlobalEntityClassManager().forEach(append);
+	}
 }
 
 static void EntityClassList_clear(void) {
-	gtk_list_store_clear(g_entlist_store);
+	if (g_entlist_store) {
+		gtk_list_store_clear(g_entlist_store);
+	}
 }
 
 static void SetComment(EntityClass* eclass) {
