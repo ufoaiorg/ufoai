@@ -3,23 +3,6 @@
 // ==============
 menu bases
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis false
-	}
-
-	basemap thebasemap
-	{
-		pos	"0 96"
-		size	"725 672"
-		click
-		rclick
-		mclick
-	}
 
 	// ==================
 	// background
@@ -60,6 +43,24 @@ menu bases
 				*back_geo texl "64 64"
 				*back_geo texh "128 128"
 			}
+	}
+
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	basemap thebasemap
+	{
+		pos	"0 96"
+		size	"725 672"
+		click
+		rclick
+		mclick
 	}
 
 	// ===============
