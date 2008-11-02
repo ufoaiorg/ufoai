@@ -4161,6 +4161,14 @@ static void CL_CampaignRunMarket (void)
 }
 
 /**
+ * @brief This will hide or show the geoscape button for handling the xvi overlay map
+ */
+static void CP_UpdateXVIMapButton (void)
+{
+	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+}
+
+/**
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types MN_MAP and MN_3DMAP
  * @sa MN_DrawMenus
@@ -4260,7 +4268,7 @@ void CL_CampaignRun (void)
 		} else if (date.day > 1)
 			gd.fund = qtrue;
 
-		Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+		CP_UpdateXVIMapButton();
 		UP_GetUnreadMails();
 		CL_UpdateTime();
 	}
@@ -4495,6 +4503,8 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
 	ccs.XVIShowMap = MSG_ReadByte(sb);
 	ccs.humansAttackActivated = MSG_ReadByte(sb);
+
+	CP_UpdateXVIMapButton();
 
 	/* read missions */
 	num = MSG_ReadShort(sb);
