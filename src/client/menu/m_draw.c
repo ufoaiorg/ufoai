@@ -166,7 +166,8 @@ void MN_DrawMenus (void)
 			}
 		}
 		for (node = menu->firstNode; node; node = node->next) {
-			if (node->invis || !nodeBehaviourList[node->type].draw)
+			/* skip invisible, virtual, and undrawable nodes */
+			if (node->invis || nodeBehaviourList[node->type].isVirtual || !nodeBehaviourList[node->type].draw)
 				continue;
 
 			/* if construct */

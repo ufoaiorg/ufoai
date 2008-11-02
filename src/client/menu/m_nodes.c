@@ -65,7 +65,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
 
 	/* if we request the position of an undrawable node, there is a problem */
-	if (!nodeBehaviourList[node->type].draw)
+	if (nodeBehaviourList[node->type].isVirtual)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
 
 	Vector2Set(pos, node->menu->pos[0] + node->pos[0], node->menu->pos[1] + node->pos[1]);
@@ -84,7 +84,7 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 	assert(y != NULL);
 
 	/* if we request the position of an undrawable node, there is a problem */
-	if (!nodeBehaviourList[node->type].draw)
+	if (nodeBehaviourList[node->type].isVirtual)
 		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
 
 	*x -= node->menu->pos[0] + node->pos[0];
@@ -148,7 +148,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	vec2_t nodepos;
 
 	/* skip all unactive nodes */
-	if (!nodeBehaviourList[node->type].draw)
+	if (nodeBehaviourList[node->type].isVirtual)
 		return qfalse;
 
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
@@ -308,23 +308,13 @@ static void MN_UnHideNode_f (void)
 }
 
 /**
- * @brief only to have a "if (!xxxx[type]->draw)" == true for all "graphic" nodes (a node with a position and a size)
- * @todo remove this, and add a boolean isGraphicNode into the behaviour, and check all "if (!xxxx[type]->draw)"
- */
-static void MN_HolderNodeDraw (menuNode_t *node)
-{
-}
-
-/**
  * @brief Init a behaviour to null. A null node doesn't react
  */
-static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name, qboolean isGraphicNode)
+static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
-	if (isGraphicNode) {
-		behaviour->draw = MN_HolderNodeDraw;
-	}
+	behaviour->isVirtual = isVirtual;
 }
 
 /**
@@ -338,11 +328,11 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 
-	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qfalse);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc", qfalse);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qfalse);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func", qfalse);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone", qtrue);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qtrue);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func", qtrue);
+	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone", qfalse);
 	MN_RegisterNodeImage(nodeBehaviourList + MN_PIC);
 	MN_RegisterNodeString(nodeBehaviourList + MN_STRING);
 	MN_RegisterNodeText(nodeBehaviourList + MN_TEXT);

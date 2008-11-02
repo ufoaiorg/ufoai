@@ -193,7 +193,7 @@ typedef struct {
 	void (*mouseMove)(menuNode_t *node, int x, int y);
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
 	void (*loaded)(menuNode_t *node); /**< call one time, when node load from script is finished */
-
+	qboolean isVirtual; /**< if true, the node dont have any position on the screen */
 	/** Planed */
 	/*
 	mouse move event
