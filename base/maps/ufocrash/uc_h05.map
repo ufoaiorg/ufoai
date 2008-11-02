@@ -1318,3 +1318,31 @@
 ( 214 384 44 ) ( 214 382 44 ) ( 214 382 6 ) tex_material/wood002 92 0 0 0.35 0.35 65280 0 0
 }
 }
+// entity 8
+{
+"classname" "light"
+"origin" "144 408 72"
+"light" "100"
+"spawnflags" "1"
+}
+// entity 9
+{
+"classname" "light"
+"origin" "144 104 72"
+"light" "100"
+"spawnflags" "1"
+}
+// entity 10
+{
+"classname" "light"
+"origin" "144 208 72"
+"light" "100"
+"spawnflags" "1"
+}
+// entity 11
+{
+"classname" "light"
+"origin" "144 296 72"
+"light" "100"
+"spawnflags" "1"
+}

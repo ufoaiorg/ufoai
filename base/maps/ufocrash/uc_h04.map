@@ -2268,24 +2268,84 @@
 // entity 13
 {
 "classname" "light"
-"origin" "104 288 64"
+"origin" "184 120 64"
 "light" "120"
+"spawnflags" "1"
 }
 // entity 14
 {
 "classname" "light"
-"origin" "184 288 64"
+"origin" "104 120 64"
 "light" "120"
+"spawnflags" "1"
 }
 // entity 15
 {
 "classname" "light"
-"origin" "184 480 64"
+"origin" "104 288 64"
 "light" "120"
+"spawnflags" "1"
 }
 // entity 16
 {
 "classname" "light"
+"origin" "184 288 64"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 17
+{
+"classname" "light"
+"origin" "568 504 56"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 18
+{
+"classname" "light"
+"origin" "568 584 56"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 19
+{
+"classname" "light"
+"origin" "184 480 64"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 20
+{
+"classname" "light"
 "origin" "104 480 64"
 "light" "120"
+"spawnflags" "1"
+}
+// entity 21
+{
+"classname" "light"
+"origin" "392 544 136"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 22
+{
+"classname" "light"
+"origin" "560 544 136"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 23
+{
+"classname" "light"
+"origin" "392 504 56"
+"light" "120"
+"spawnflags" "1"
+}
+// entity 24
+{
+"classname" "light"
+"origin" "392 584 56"
+"light" "120"
+"spawnflags" "1"
 }
