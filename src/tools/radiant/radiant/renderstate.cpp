@@ -277,14 +277,7 @@ public:
 	}
 	void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview, const LightList* lights) {
 		for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
-			if (((*i)->state().m_state & RENDER_BUMP) != 0) {
-				if (lights != 0) {
-					OpenGLStateBucketAdd add(*(*i), renderable, modelview);
-					lights->forEachLight(makeCallback1(add));
-				}
-			} else {
-				(*i)->addRenderable(renderable, modelview);
-			}
+			(*i)->addRenderable(renderable, modelview);
 		}
 	}
 	void incrementUsed() {
@@ -763,21 +756,6 @@ void OpenGLState_apply(const OpenGLState& self, OpenGLState& current, unsigned i
 
 	const unsigned int state = self.m_state & globalstate;
 	const unsigned int delta = state ^ current.m_state;
-
-	GLProgram* program = (state & RENDER_PROGRAM) != 0 ? self.m_program : 0;
-
-	if (program != current.m_program) {
-		if (current.m_program != 0) {
-			current.m_program->disable();
-			glColor4fv(vector4_to_array(current.m_colour));
-		}
-
-		current.m_program = program;
-
-		if (current.m_program != 0) {
-			current.m_program->enable();
-		}
-	}
 
 	if (delta & state & RENDER_FILL) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

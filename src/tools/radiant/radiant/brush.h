@@ -72,14 +72,14 @@ const unsigned int BRUSH_WATER_MASK = 0x0020; // CONTENTS_WATER
 template<typename TextOuputStreamType>
 inline TextOuputStreamType& ostream_write(TextOuputStreamType& ostream, const Matrix4& m) {
 	return ostream << "(" << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << ", "
-	       << m[4] << " " << m[5] << " " << m[6] << " " << m[7] << ", "
-	       << m[8] << " " << m[9] << " " << m[10] << " " << m[11] << ", "
-	       << m[12] << " " << m[13] << " " << m[14] << " " << m[15] << ")";
+		<< m[4] << " " << m[5] << " " << m[6] << " " << m[7] << ", "
+		<< m[8] << " " << m[9] << " " << m[10] << " " << m[11] << ", "
+		<< m[12] << " " << m[13] << " " << m[14] << " " << m[15] << ")";
 }
 
 inline bool texdef_sane(const texdef_t& texdef) {
 	return fabs(texdef.shift[0]) < (1 << 16)
-	       && fabs(texdef.shift[1]) < (1 << 16);
+		&& fabs(texdef.shift[1]) < (1 << 16);
 }
 
 inline void Winding_DrawWireframe(const Winding& winding) {
@@ -87,34 +87,14 @@ inline void Winding_DrawWireframe(const Winding& winding) {
 	glDrawArrays(GL_LINE_LOOP, 0, GLsizei(winding.numpoints));
 }
 
+/**
+ * @brief Brush rendering
+ */
 inline void Winding_Draw(const Winding& winding, const Vector3& normal, RenderStateFlags state) {
 	glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->vertex);
-
-	if ((state & RENDER_BUMP) != 0) {
-		Vector3 normals[c_brush_maxFaces];
-		typedef Vector3* Vector3Iter;
-		for (Vector3Iter i = normals, end = normals + winding.numpoints; i != end; ++i) {
-			*i = normal;
-		}
-		glVertexAttribPointerARB(11, 3, GL_FLOAT, 0, sizeof(Vector3), normals);
-		glVertexAttribPointerARB(8, 2, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->texcoord);
-		glVertexAttribPointerARB(9, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->tangent);
-		glVertexAttribPointerARB(10, 3, GL_FLOAT, 0, sizeof(WindingVertex), &winding.points.data()->bitangent);
-	} else {
-		if (state & RENDER_LIGHTING) {
-			Vector3 normals[c_brush_maxFaces];
-			typedef Vector3* Vector3Iter;
-			for (Vector3Iter i = normals, last = normals + winding.numpoints; i != last; ++i) {
-				*i = normal;
-			}
-			glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
-		}
-
-		if (state & RENDER_TEXTURE) {
-			glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
-		}
+	if (state & RENDER_TEXTURE) {
+		glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
 	}
-
 	glDrawArrays(GL_POLYGON, 0, GLsizei(winding.numpoints));
 }
 
@@ -191,13 +171,13 @@ inline void planepts_snap(PlanePoints planepts, double snap) {
 
 inline PointVertex pointvertex_for_planept(const DoubleVector3& point, const Colour4b& colour) {
 	return PointVertex(
-	           Vertex3f(
-	               static_cast<float>(point.x()),
-	               static_cast<float>(point.y()),
-	               static_cast<float>(point.z())
-	           ),
-	           colour
-	       );
+		Vertex3f(
+			static_cast<float>(point.x()),
+			static_cast<float>(point.y()),
+			static_cast<float>(point.z())
+		),
+		colour
+	);
 }
 
 inline PointVertex pointvertex_for_windingpoint(const Vector3& point, const Colour4b& colour) {
@@ -450,9 +430,9 @@ public:
 	bool m_scaleApplied;
 
 	FaceTexdef(
-	    FaceShader& shader,
-	    const TextureProjection& projection,
-	    bool projectionInitialised = true
+		FaceShader& shader,
+		const TextureProjection& projection,
+		bool projectionInitialised = true
 	) :
 			m_shader(shader),
 			m_projection(projection),
@@ -540,8 +520,8 @@ public:
 
 inline void planepts_print(const PlanePoints& planePoints, TextOutputStream& ostream) {
 	ostream << "( " << planePoints[0][0] << " " << planePoints[0][1] << " " << planePoints[0][2] << " ) "
-	<< "( " << planePoints[1][0] << " " << planePoints[1][1] << " " << planePoints[1][2] << " ) "
-	<< "( " << planePoints[2][0] << " " << planePoints[2][1] << " " << planePoints[2][2] << " )";
+		<< "( " << planePoints[1][0] << " " << planePoints[1][1] << " " << planePoints[1][2] << " ) "
+		<< "( " << planePoints[2][0] << " " << planePoints[2][1] << " " << planePoints[2][2] << " )";
 }
 
 
@@ -757,12 +737,12 @@ public:
 		planeChanged();
 	}
 	Face(
-	    const Vector3& p0,
-	    const Vector3& p1,
-	    const Vector3& p2,
-	    const char* shader,
-	    const TextureProjection& projection,
-	    FaceObserver* observer
+		const Vector3& p0,
+		const Vector3& p1,
+		const Vector3& p2,
+		const char* shader,
+		const TextureProjection& projection,
+		FaceObserver* observer
 	) :
 			m_refcount(0),
 			m_shader(shader),

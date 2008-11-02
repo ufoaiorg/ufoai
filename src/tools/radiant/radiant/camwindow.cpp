@@ -1383,20 +1383,18 @@ void CamWnd::Cam_Draw() {
 		break;
 	case cd_texture:
 		globalstate |= RENDER_FILL
-		               | RENDER_LIGHTING
-		               | RENDER_TEXTURE
-		               | RENDER_SMOOTH
-		               | RENDER_SCALED;
+					| RENDER_LIGHTING
+					| RENDER_TEXTURE
+					| RENDER_SMOOTH
+					| RENDER_SCALED;
 		break;
 	case cd_lighting:
 		globalstate |= RENDER_FILL
-		               | RENDER_LIGHTING
-		               | RENDER_TEXTURE
-		               | RENDER_SMOOTH
-		               | RENDER_SCALED
-		               | RENDER_BUMP
-		               | RENDER_PROGRAM
-		               | RENDER_SCREEN;
+					| RENDER_LIGHTING
+					| RENDER_TEXTURE
+					| RENDER_SMOOTH
+					| RENDER_SCALED
+					| RENDER_SCREEN;
 		break;
 	default:
 		globalstate = 0;
@@ -1404,7 +1402,7 @@ void CamWnd::Cam_Draw() {
 	}
 
 	if (!g_xywindow_globals.m_bNoStipple) {
-		globalstate |= RENDER_LINESTIPPLE | RENDER_POLYGONSTIPPLE;
+		globalstate |= (RENDER_LINESTIPPLE | RENDER_POLYGONSTIPPLE);
 	}
 
 	{
@@ -1439,20 +1437,20 @@ void CamWnd::Cam_Draw() {
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_DEPTH_TEST);
-	glColor3f( 1.f, 1.f, 1.f );
+	glColor3f(1.f, 1.f, 1.f);
 	glLineWidth(1);
 
 	// draw the crosshair
 	if (m_bFreeMove) {
 		glBegin( GL_LINES );
-		glVertex2f( (float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f + 6 );
-		glVertex2f( (float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f + 2 );
-		glVertex2f( (float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f - 6 );
-		glVertex2f( (float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f - 2 );
-		glVertex2f( (float)m_Camera.width / 2.f + 6, (float)m_Camera.height / 2.f );
-		glVertex2f( (float)m_Camera.width / 2.f + 2, (float)m_Camera.height / 2.f );
-		glVertex2f( (float)m_Camera.width / 2.f - 6, (float)m_Camera.height / 2.f );
-		glVertex2f( (float)m_Camera.width / 2.f - 2, (float)m_Camera.height / 2.f );
+		glVertex2f((float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f + 6 );
+		glVertex2f((float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f + 2 );
+		glVertex2f((float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f - 6 );
+		glVertex2f((float)m_Camera.width / 2.f, (float)m_Camera.height / 2.f - 2 );
+		glVertex2f((float)m_Camera.width / 2.f + 6, (float)m_Camera.height / 2.f );
+		glVertex2f((float)m_Camera.width / 2.f + 2, (float)m_Camera.height / 2.f );
+		glVertex2f((float)m_Camera.width / 2.f - 6, (float)m_Camera.height / 2.f );
+		glVertex2f((float)m_Camera.width / 2.f - 2, (float)m_Camera.height / 2.f );
 		glEnd();
 	}
 
@@ -1468,7 +1466,7 @@ void CamWnd::Cam_Draw() {
 
 	// bind back to the default texture so that we don't have problems
 	// elsewhere using/modifying texture maps between contexts
-	glBindTexture( GL_TEXTURE_2D, 0 );
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void CamWnd::draw() {
