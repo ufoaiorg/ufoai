@@ -46,7 +46,7 @@ qboolean messageOptionsInitialized = qfalse; /* flag indicating whether message 
 qboolean messageOptionsPrepared = qfalse; /* flag indicating whether parsed category data is prepared @sa MSO_ParseCategories */
 
 /** @brief how many message settings may be shown at once on option page */
-#define MAX_MESSAGESETTINGS_ENTRIES 21
+#define MAX_MESSAGESETTINGS_ENTRIES 12
 
 /**
  * @brief Script command to show all messages on the stack
