@@ -90,7 +90,7 @@ void CL_DisplayBlockedPaths_f(void);
 void LE_List_f(void);
 void LM_List_f(void);
 #endif
-void CL_ConditionalMoveCalc(routing_t *map, pathing_t *path, le_t *le, int distance);
+void CL_ConditionalMoveCalcForCurrentSelectedActor(void);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);

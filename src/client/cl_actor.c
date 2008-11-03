@@ -2583,6 +2583,8 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 	/* check selection */
 	if (selActor == le) {
+		CL_ConditionalMoveCalcForCurrentSelectedActor();
+
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (CL_ActorSelect(cl.teamList[i]))
 				break;
@@ -2657,7 +2659,7 @@ qboolean CL_ActorSelect (le_t * le)
 	Cvar_SetValue("hud_refresh", 1);
 	CL_ActorUpdateCVars();
 
-	CL_ConditionalMoveCalc(clMap, &clPathMap, le, MAX_ROUTE);
+	CL_ConditionalMoveCalcForCurrentSelectedActor();
 
 	/* move first person camera to new actor */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -2672,7 +2674,6 @@ qboolean CL_ActorSelect (le_t * le)
 
 	return qtrue;
 }
-
 
 /**
  * @brief Selects an actor from a list.
@@ -2854,17 +2855,14 @@ void CL_DisplayBlockedPaths_f (void)
 
 /**
  * @brief Recalculate forbidden list, available moves and actor's move length
- * if given le is the selected Actor.
- * @param[in] map Routing data
- * @param[in] le Calculate the move for this actor (if he's the selected actor)
- * @param[in] distance
+ * for the current selected actor.
  */
-void CL_ConditionalMoveCalc (routing_t *map, pathing_t *path, le_t * le, int distance)
+void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
 {
-	const int crouching_state = selActor && (le->state & STATE_CROUCHED) ? 1 : 0;
-	if (selActor && selActor == le) {
+	if (selActor) {
+		const int crouching_state = (selActor->state & STATE_CROUCHED) ? 1 : 0;
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(map, le->fieldSize, path, le->pos, crouching_state, distance, fb_list, fb_length);
+		Grid_MoveCalc(clMap, selActor->fieldSize, &clPathMap, selActor->pos, crouching_state, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength();
 	}
 }
@@ -4044,8 +4042,6 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
-
-	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 }
 
 
@@ -4223,7 +4219,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		MN_ExecuteConfunc("startround");
 		SCR_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart");
-		CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
+		CL_ConditionalMoveCalcForCurrentSelectedActor();
 
 		for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 			if (cl.teamList[actorIdx]) {
@@ -5448,6 +5444,6 @@ void CL_DumpMoveMark_f (void)
 
 	developer->integer ^= DEBUG_PATHING;
 
-	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
+	CL_ConditionalMoveCalcForCurrentSelectedActor();
 	developer->integer = temp;
 }

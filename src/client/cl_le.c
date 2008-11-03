@@ -87,6 +87,8 @@ void CL_RecalcRouting (const le_t* le)
 	 */
 	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(clMap, le->inlineModelName, leInlineModelList);
+
+	CL_ConditionalMoveCalcForCurrentSelectedActor();
 }
 
 /**
@@ -182,8 +184,6 @@ static inline void LE_DoorAction (struct dbuffer *msg, qboolean openDoor)
 
 	CM_SetInlineModelOrientation(le->inlineModelName, le->origin, le->angles);
 	CL_RecalcRouting(le);
-
-	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 }
 
 /**
@@ -219,7 +219,6 @@ void LE_Explode (struct dbuffer *msg)
 
 	/* Recalc the client routing table because this le (and the inline model) is now gone */
 	CL_RecalcRouting(le);
-	CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 }
 
 /**
@@ -665,7 +664,8 @@ static void LET_PathMove (le_t * le)
 				Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 			}
 
-			CL_ConditionalMoveCalc(clMap, &clPathMap, le, MAX_ROUTE);
+			if (le == selActor)
+				CL_ConditionalMoveCalcForCurrentSelectedActor();
 
 			/* link any floor container into the actor temp floor container */
 			floor = LE_Find(ET_ITEM, le->pos);

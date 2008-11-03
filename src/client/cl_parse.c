@@ -1082,7 +1082,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 			/* update pathing as new actor could block path */
 			if (newActor)
-				CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
+				CL_ConditionalMoveCalcForCurrentSelectedActor();
 		}
 	}
 
@@ -1189,7 +1189,6 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 		le->think = NULL;
 		VectorCopy(player_dead_maxs, le->maxs);
 		CL_RemoveActorFromTeamList(le);
-		CL_ConditionalMoveCalc(clMap, &clPathMap, selActor, MAX_ROUTE);
 		return;
 	} else {
 		le->state = state;
