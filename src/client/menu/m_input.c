@@ -237,6 +237,14 @@ void MN_Click (int x, int y)
 	while (sp > 0 && !clickedInside) {
 		menu_t *menu = mn.menuStack[--sp];
 		menuNode_t *execute_node = NULL;
+
+		/* check mouse vs menu boundedbox */
+		if (menu->size[0] != 0 && menu->size[1] != 0) {
+			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
+				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+				continue;
+		}
+
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!nodeBehaviourList[node->type].leftClick && !node->click)
 				continue;
@@ -314,6 +322,8 @@ void MN_Click (int x, int y)
 		/* don't care about non-rendered windows */
 		if (menu->renderNode || menu->popupNode)
 			return;
+
+		break;
 	}
 }
 
@@ -342,6 +352,13 @@ void MN_RightClick (int x, int y)
 		menu_t *menu = mn.menuStack[--sp];
 		menuNode_t *node;
 
+		/* check mouse vs menu boundedbox */
+		if (menu->size[0] != 0 && menu->size[1] != 0) {
+			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
+				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+				continue;
+		}
+
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no right click for this node defined */
 			if (!nodeBehaviourList[node->type].rightClick && !node->rclick)
@@ -365,6 +382,8 @@ void MN_RightClick (int x, int y)
 		if (menu->renderNode || menu->popupNode)
 			/* don't care about non-rendered windows */
 			return;
+
+		break;
 	}
 }
 
@@ -392,6 +411,14 @@ void MN_MiddleClick (int x, int y)
 
 	while (sp > 0 && !clickedInside) {
 		menu = mn.menuStack[--sp];
+
+		/* check mouse vs menu boundedbox */
+		if (menu->size[0] != 0 && menu->size[1] != 0) {
+			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
+				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+				continue;
+		}
+
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
 			if (!nodeBehaviourList[node->type].middleClick && !node->mclick)
@@ -415,6 +442,8 @@ void MN_MiddleClick (int x, int y)
 		if (menu->renderNode || menu->popupNode)
 			/* don't care about non-rendered windows */
 			return;
+
+		break;
 	}
 }
 
@@ -450,6 +479,14 @@ void MN_MouseWheel (qboolean down, int x, int y)
 
 	while (sp > 0 && !wheelInside) {
 		menu_t *menu = mn.menuStack[--sp];
+
+		/* check mouse vs menu boundedbox */
+		if (menu->size[0] != 0 && menu->size[1] != 0) {
+			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
+				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+				continue;
+		}
+
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
 			/* both wheelUp & wheelDown required */
@@ -477,5 +514,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		if (menu->renderNode || menu->popupNode)
 			/* don't care about non-rendered windows */
 			return;
+
+		break;
 	}
 }
