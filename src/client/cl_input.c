@@ -588,9 +588,8 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace != MS_MENU)
-		return;
-	MN_RightClick(mousePosX, mousePosY);
+	if (mouseSpace == MS_MENU)
+		MN_RightClick(mousePosX, mousePosY);
 }
 
 /**
@@ -623,19 +622,14 @@ static void CL_MiddleClickUp_f (void)
  */
 static void CL_LeftClickDown_f (void)
 {
-	switch (mouseSpace) {
-	case MS_MENU:
+	if (mouseSpace == MS_MENU)
 		MN_LeftClick(mousePosX, mousePosY);
-		break;
-	default:
+	else if (cls.state == ca_active) {
 		/* we clicked outside the world but not onto a menu */
-		if (cls.state == ca_active) {
-			/* get the current menu */
-			const menu_t *menu = MN_GetActiveMenu();
-			if (menu && menu->leaveNode)
-				MN_ExecuteActions(menu, menu->leaveNode->click);
-		}
-		break;
+		/* get the current menu */
+		const menu_t *menu = MN_GetActiveMenu();
+		if (menu && menu->leaveNode)
+			MN_ExecuteActions(menu, menu->leaveNode->click);
 	}
 }
 
