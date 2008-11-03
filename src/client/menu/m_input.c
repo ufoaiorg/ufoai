@@ -241,7 +241,7 @@ void MN_Click (int x, int y)
 		/* check mouse vs menu boundedbox */
 		if (menu->size[0] != 0 && menu->size[1] != 0) {
 			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
 				continue;
 		}
 
@@ -319,10 +319,6 @@ void MN_Click (int x, int y)
 		if (!clickedInside && menu->leaveNode)
 			MN_ExecuteActions(menu, menu->leaveNode->click);
 
-		/* don't care about non-rendered windows */
-		if (menu->renderNode || menu->popupNode)
-			return;
-
 		break;
 	}
 }
@@ -355,7 +351,7 @@ void MN_RightClick (int x, int y)
 		/* check mouse vs menu boundedbox */
 		if (menu->size[0] != 0 && menu->size[1] != 0) {
 			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
 				continue;
 		}
 
@@ -378,10 +374,6 @@ void MN_RightClick (int x, int y)
 				MN_ExecuteActions(menu, node->rclick);
 			}
 		}
-
-		if (menu->renderNode || menu->popupNode)
-			/* don't care about non-rendered windows */
-			return;
 
 		break;
 	}
@@ -415,7 +407,7 @@ void MN_MiddleClick (int x, int y)
 		/* check mouse vs menu boundedbox */
 		if (menu->size[0] != 0 && menu->size[1] != 0) {
 			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
 				continue;
 		}
 
@@ -438,10 +430,6 @@ void MN_MiddleClick (int x, int y)
 				MN_ExecuteActions(menu, node->mclick);
 			}
 		}
-
-		if (menu->renderNode || menu->popupNode)
-			/* don't care about non-rendered windows */
-			return;
 
 		break;
 	}
@@ -483,7 +471,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		/* check mouse vs menu boundedbox */
 		if (menu->size[0] != 0 && menu->size[1] != 0) {
 			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
+			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
 				continue;
 		}
 
@@ -510,10 +498,6 @@ void MN_MouseWheel (qboolean down, int x, int y)
 					MN_ExecuteActions(menu, node->wheel);
 			}
 		}
-
-		if (menu->renderNode || menu->popupNode)
-			/* don't care about non-rendered windows */
-			return;
 
 		break;
 	}
