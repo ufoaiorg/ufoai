@@ -2411,26 +2411,28 @@ menu messageoptions
 		pos		"437 24"
 	}
 
-	custombutton button_apply
+	button button_apply
 	{
-		pos	"20 400"
-		size "232 64"
+		pos	"30 400"
+		size "208 48"
 		click	{ cmd "mn_pop;" }
-		image	menu/button
-		font	f_menubig
+		image	menu/button_green_small
+		blend	true
+		font	f_menu
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Apply"
 		tooltip "_Apply changes"
 	}
 
-	custombutton button_revert
+	button button_revert
 	{
 		pos	"256 400"
-		size "232 64"
+		size "208 48"
 		click	{ cmd "mn_pop;" }
-		image	menu/button
-		font	f_menubig
+		image	menu/button_green_small
+		blend	true
+		font	f_menu
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Revert"
