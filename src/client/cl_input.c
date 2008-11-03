@@ -625,7 +625,7 @@ static void CL_LeftClickDown_f (void)
 {
 	switch (mouseSpace) {
 	case MS_MENU:
-		MN_Click(mousePosX, mousePosY);
+		MN_LeftClick(mousePosX, mousePosY);
 		break;
 	default:
 		/* we clicked outside the world but not onto a menu */
@@ -637,6 +637,16 @@ static void CL_LeftClickDown_f (void)
 		}
 		break;
 	}
+}
+
+/**
+ * @brief Left mouse button is freed in menu
+ */
+static void CL_LeftClickUp_f (void)
+{
+	if (mouseSpace == MS_DRAGITEM)
+		MN_LeftClick(mousePosX, mousePosY);
+	mouseSpace = MS_NULL;
 }
 
 /**
@@ -746,16 +756,6 @@ static void CL_NextAlienVisibleFromActor_f (void)
 			return;
 		}
 	} while (i != lastAlien);
-}
-
-/**
- * @brief Left mouse button is freed in menu
- */
-static void CL_LeftClickUp_f (void)
-{
-	if (mouseSpace == MS_DRAGITEM)
-		MN_Click(mousePosX, mousePosY);
-	mouseSpace = MS_NULL;
 }
 
 /**

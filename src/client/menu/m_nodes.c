@@ -140,7 +140,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 #endif
 
 /**
- * @sa MN_Click
+ * @sa MN_LeftClick
  */
 qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {

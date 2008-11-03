@@ -218,7 +218,7 @@ void MN_MouseMove (int x, int y)
  * @sa CL_MessageMenu_f
  * @note inline editing of cvars (e.g. save dialog) is done in Key_Message
  */
-void MN_Click (int x, int y)
+void MN_LeftClick (int x, int y)
 {
 	menuNode_t *node;
 	int sp;
@@ -327,7 +327,7 @@ void MN_Click (int x, int y)
  * @sa MAP_ResetAction
  * @sa MN_TextRightClick
  * @sa MN_ExecuteActions
- * @sa MN_Click
+ * @sa MN_LeftClick
  * @sa MN_MiddleClick
  * @sa MN_MouseWheel
  */
@@ -382,7 +382,7 @@ void MN_RightClick (int x, int y)
 }
 
 /**
- * @sa MN_Click
+ * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MouseWheel
  */
@@ -439,12 +439,12 @@ void MN_MiddleClick (int x, int y)
 /**
  * @brief Called when we are in menu mode and scroll via mousewheel
  * @note The geoscape zooming code is here, too (also in CL_ParseInput)
- * @sa MN_Click
+ * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MiddleClick
  * @sa CL_ZoomInQuant
  * @sa CL_ZoomOutQuant
- * @sa MN_Click
+ * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MiddleClick
  * @sa CL_ZoomInQuant

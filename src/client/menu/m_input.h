@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_INPUT_H
 #define CLIENT_MENU_M_INPUT_H
 
-void MN_Click(int x, int y);
+void MN_LeftClick(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
 void MN_MouseWheel(qboolean down, int x, int y);

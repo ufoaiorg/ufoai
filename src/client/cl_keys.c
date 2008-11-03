@@ -432,7 +432,7 @@ static void Key_Console (int key, int unicode)
  * @brief Handles input when cls.key_dest == key_message
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
- * @sa MN_Click
+ * @sa MN_LeftClick
  * @sa CL_MessageMenu_f
  */
 static void Key_Message (int key)
