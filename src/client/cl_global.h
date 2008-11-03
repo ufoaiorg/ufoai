@@ -161,12 +161,12 @@ typedef struct globalData_s
 	int numAlienTeams[ALIENTEAM_MAX];		/** number of alienTeams defined */
 
 	/* message categories */
-	msgcategory_t messagecategories[MAX_MESSAGECATEGORIES];
+	msgCategory_t messageCategories[MAX_MESSAGECATEGORIES];
 	int numMsgCategories;
 
 	/* entries for message categories */
-	msgcatEntry_t msgcategoryEntries[NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES];
-	int numMsgCatEntries;
+	msgCategoryEntry_t msgCategoryEntries[NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES];
+	int numMsgCategoryEntries;
 } globalData_t;
 
 

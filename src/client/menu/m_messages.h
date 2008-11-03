@@ -96,32 +96,31 @@ typedef enum mso_s {
 	MSO_SOUND	/**< play notification sound */
 } mso_t;
 
-#define MAX_MESSAGECATEGORIES 16
-typedef struct msgcatEntry_s {
-	struct msgcategory_s *category; /**< associated category */
-	const char *notifyType;			/**< notification type or category name */
-	struct msgcatEntry_s *next;		/**< pointer to next in category */
-	struct msgcatEntry_s *previous;	/**< pointer to previous in category */
-	struct messageSettings_s *settings;	/**< associated settings */
-	qboolean isCategory;			/**< flag indicating that this is a category and no notification type */
-} msgcatEntry_t;
-
-typedef struct msgcategory_s {
-	int idx;				/**< self-link */
-	char	*id;			/**< script file id / translateable category name */
-	struct msgcatEntry_s *first;
-	struct msgcatEntry_s *last;
-} msgcategory_t;
-
 /**
  * @brief structure holding pause and notify settings for a notify type.
- *
  */
 typedef struct messageSettings_s {
 	qboolean doPause;	/**< flag whether game should pause */
 	qboolean doNotify;	/**< flag whether game should notify */
 	qboolean doSound;	/**< flag whether game should play sound notification */
 } messageSettings_t;
+
+#define MAX_MESSAGECATEGORIES 16
+typedef struct msgCategoryEntry_s {
+	const char *notifyType;					/**< notification type or category name */
+	struct msgCategory_s *category; 		/**< associated category */
+	struct msgCategoryEntry_s *next;		/**< pointer to next in category */
+	struct msgCategoryEntry_s *previous;	/**< pointer to previous in category */
+	messageSettings_t *settings;			/**< associated settings */
+	qboolean isCategory;					/**< flag indicating that this is a category and no notification type */
+} msgCategoryEntry_t;
+
+typedef struct msgCategory_s {
+	int idx;				/**< self-link */
+	const char *id;			/**< script file id / translateable category name */
+	msgCategoryEntry_t *first;
+	msgCategoryEntry_t *last;
+} msgCategory_t;
 
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 
