@@ -140,9 +140,16 @@ void MN_MouseRelease (void)
 }
 
 /**
- * @brief save the node over the mouse
+ * @brief save the node under the mouse
  */
 menuNode_t *mouseOverTest;
+
+/**
+ * @brief save the previous node under the mouse
+ */
+static menuNode_t *oldMouseOverTest;
+
+extern cvar_t *mn_debugmenu; /**< removed soon */
 
 /**
  * @brief Is called everytime the mouse position change
@@ -162,23 +169,30 @@ void MN_MouseMove (int x, int y)
 
 	MN_FocusRemove();
 
-	/* compute the node under the mouse */
-	mouseOverTest = NULL;
 
+	/* find the first menu under the mouse */
+	menu = NULL;
 	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
-		menu = mn.menuStack[sp];
-
-		/* check mouse vs menu boundedbox */
-		if (menu->size[0] != 0 && menu->size[1] != 0) {
-			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-				|| y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
-				continue;
+		menu_t *m = mn.menuStack[sp];
+		/* full screen menu */
+		if (m->size[0] == 0 && m->size[1] == 0) {
+			menu = m;
+			break;
 		}
+		/* check mouse vs menu boundedbox */
+		if (x >= m->pos[0] && x <= m->pos[0] + m->size[0]
+			&& y >= m->pos[1] && y <= m->pos[1] + m->size[1]) {
+			menu = m;
+			break;
+		}
+	}
 
-		/* local position */
+	/* find the first node under the mouse (last of the node list) */
+	mouseOverTest = NULL;
+	if (menu) {
+		/* relative position */
 		x -= menu->pos[0];
 		y -= menu->pos[1];
-
 
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstNode; node; node = node->next) {
@@ -188,12 +202,22 @@ void MN_MouseMove (int x, int y)
 				&& y >= node->pos[1] && y <= node->pos[1] + node->size[1])
 				mouseOverTest = node;
 		}
-
-		break;
 	}
 
-	/* compute here the function to send 'in' and 'out' event */
-	/* ... */
+	/* update function to send 'in' and 'out' event */
+	if (mn_debugmenu->integer == 2 && oldMouseOverTest != mouseOverTest) {
+		if (oldMouseOverTest) {
+			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->mouseOut);
+			oldMouseOverTest->menu->hoverNode = NULL;
+			oldMouseOverTest->state = qfalse;
+		}
+		if (mouseOverTest) {
+			mouseOverTest->state = qtrue;
+			mouseOverTest->menu->hoverNode = mouseOverTest;
+			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->mouseIn);
+		}
+	}
+	oldMouseOverTest = mouseOverTest;
 
 	/* send the move event */
 	if (mouseOverTest && nodeBehaviourList[mouseOverTest->type].mouseMove) {
@@ -229,6 +253,36 @@ void MN_LeftClick (int x, int y)
 	if (capturedNode) {
 		if (nodeBehaviourList[capturedNode->type].leftClick)
 			nodeBehaviourList[capturedNode->type].leftClick(capturedNode, x, y);
+		return;
+	}
+
+	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+		node = mouseOverTest;
+		if (mouseSpace == MS_DRAGITEM && node->type == MN_CONTAINER && dragInfo.item.t) {
+			int itemX = 0;
+			int itemY = 0;
+
+			/** We calculate the position of the top-left corner of the dragged
+			 * item in oder to compensate for the centered-drawn cursor-item.
+			 * Or to be more exact, we calculate the relative offset from the cursor
+			 * location to the middle of the top-left square of the item.
+			 * @sa MN_DrawMenus:MN_CONTAINER */
+			if (dragInfo.item.t) {
+				itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
+				itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+
+				/* Place relative center in the middle of the square. */
+				itemX -= C_UNIT / 2;
+				itemY -= C_UNIT / 2;
+			}
+			mouseOver = MN_CheckNodeZone(node, x, y) || MN_CheckNodeZone(node, x - itemX, y - itemY);
+		}
+
+		if (nodeBehaviourList[node->type].leftClick) {
+			nodeBehaviourList[node->type].leftClick(node, x, y);
+		} else {
+			MN_ExecuteActions(node->menu, node->click);
+		}
 		return;
 	}
 
@@ -344,6 +398,15 @@ void MN_RightClick (int x, int y)
 		return;
 	}
 
+	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+		if (nodeBehaviourList[mouseOverTest->type].rightClick) {
+			nodeBehaviourList[mouseOverTest->type].rightClick(mouseOverTest, x, y);
+		} else {
+			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->rclick);
+		}
+		return;
+	}
+
 	sp = mn.menuStackPos;
 
 	while (sp > 0 && !insideNode) {
@@ -397,6 +460,15 @@ void MN_MiddleClick (int x, int y)
 	if (capturedNode) {
 		if (nodeBehaviourList[capturedNode->type].middleClick)
 			nodeBehaviourList[capturedNode->type].middleClick(capturedNode, x, y);
+		return;
+	}
+
+	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+		if (nodeBehaviourList[mouseOverTest->type].middleClick) {
+			nodeBehaviourList[mouseOverTest->type].middleClick(mouseOverTest, x, y);
+		} else {
+			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->mclick);
+		}
 		return;
 	}
 
@@ -461,6 +533,18 @@ void MN_MouseWheel (qboolean down, int x, int y)
 	if (capturedNode) {
 		if (nodeBehaviourList[capturedNode->type].mouseWheel)
 			nodeBehaviourList[capturedNode->type].mouseWheel(capturedNode, down, x, y);
+		return;
+	}
+
+	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+		if (nodeBehaviourList[mouseOverTest->type].mouseWheel) {
+			nodeBehaviourList[mouseOverTest->type].mouseWheel(mouseOverTest, down, x, y);
+		} else {
+			if (mouseOverTest->wheelUp && mouseOverTest->wheelDown)
+				MN_ExecuteActions(mouseOverTest->menu, (down ? mouseOverTest->wheelDown : mouseOverTest->wheelUp));
+			else
+				MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->wheel);
+		}
 		return;
 	}
 

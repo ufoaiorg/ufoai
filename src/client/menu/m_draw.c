@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 
-static cvar_t *mn_debugmenu;
+cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;
 
 static const invList_t *itemHover;
@@ -126,6 +126,142 @@ static void MN_DrawDebugMenuNodeNames (void)
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
+static void MN_DrawMenusTest (void)
+{
+	menuNode_t *node;
+	menu_t *menu;
+	int sp, pp;
+	qboolean mouseOver = qfalse;
+	vec2_t nodepos;
+
+	MN_CheckMouseMove();
+
+	MN_SetItemHover(NULL);
+
+	/* render every menu on top of a menu with a render node */
+	pp = 0;
+	sp = mn.menuStackPos;
+	while (sp > 0) {
+		if (mn.menuStack[--sp]->renderNode)
+			break;
+		if (mn.menuStack[sp]->popupNode)
+			pp = sp;
+	}
+	if (pp < sp)
+		pp = sp;
+
+	/* Reset info for preview rendering of dragged items. */
+	dragInfo.toNode = NULL;
+
+	while (sp < mn.menuStackPos) {
+		menu = mn.menuStack[sp++];
+		/* event node */
+		if (menu->eventNode) {
+			if (menu->eventNode->timeOut > 0 && (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)))) {
+				menu->eventTime = cls.realtime;
+				MN_ExecuteActions(menu, menu->eventNode->click);
+#ifdef DEBUG
+				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
+#endif
+			}
+		}
+		for (node = menu->firstNode; node; node = node->next) {
+			/* skip invisible, virtual, and undrawable nodes */
+			if (node->invis || nodeBehaviourList[node->type].isVirtual || !nodeBehaviourList[node->type].draw)
+				continue;
+
+			/* if construct */
+			if (!MN_CheckCondition(node))
+				continue;
+
+			/** @todo remove it when its possible */
+			MN_GetNodeAbsPos(node, nodepos);
+
+			/* check node size x and y value to check whether they are zero */
+			if (node->size[0] && node->size[1]) {
+				if (node->bgcolor) {
+					/** @todo remove it when its possible */
+					R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], 0, node->bgcolor);
+				}
+				if (node->border && node->bordercolor)
+					/** @todo remove it when its possible */
+					MN_DrawBorder(node);
+			}
+
+			/** @todo remove it when its possible */
+			if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
+				MN_DrawBorder(node);
+
+			/** @todo remove it when its possible */
+			/* mouse darken effect */
+			if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp) {
+				vec4_t color;
+				VectorScale(node->color, 0.8, color);
+				color[3] = node->color[3];
+				R_ColorBlend(color);
+			}
+
+			/* draw the node */
+			if (nodeBehaviourList[node->type].draw) {
+				nodeBehaviourList[node->type].draw(node);
+			}
+
+			/** @todo remove it when its possible */
+			R_ColorBlend(NULL);
+
+		}	/* for */
+	}
+
+	/* draw tooltip */
+	if (menu->hoverNode && mn_show_tooltips->integer) {
+		if (itemHover) {
+			char tooltiptext[MAX_VAR * 2];
+			const int itemToolTipWidth = 250;
+
+			/* Get name and info about item */
+			MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+#ifdef DEBUG
+			/* Display stored container-coordinates of the item. */
+			Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
+#endif
+			MN_DrawTooltip("f_small", tooltiptext, mousePosX, mousePosY, itemToolTipWidth, 0);
+		} else {
+			MN_Tooltip(menu, menu->hoverNode, mousePosX, mousePosY);
+		}
+	}
+
+	/* timeout? */
+	if (mouseOverTest && mouseOverTest->timePushed) {
+		node = mouseOverTest;
+		if (node->timePushed + node->timeOut < cls.realtime) {
+			node->timePushed = 0;
+			node->invis = qtrue;
+			/* only timeout this once, otherwise there is a new timeout after every new stack push */
+			if (node->timeOutOnce)
+				node->timeOut = 0;
+			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
+		}
+	}
+
+	/* draw a special notice */
+	if (cl.time < cl.msgTime) {
+		menu = MN_GetActiveMenu();
+		if (menu->noticePos[0] || menu->noticePos[1])
+			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
+		else
+			MN_DrawNotice(500, 110);
+	}
+
+	/* debug help for comming architecture */
+	MN_DrawDebugMenuNodeNames();
+
+	R_ColorBlend(NULL);
+}
+
+/**
+ * @brief Draws the menu stack
+ * @sa SCR_UpdateScreen
+ */
 void MN_DrawMenus (void)
 {
 	menuNode_t *node;
@@ -133,6 +269,12 @@ void MN_DrawMenus (void)
 	int sp, pp;
 	qboolean mouseOver = qfalse;
 	vec2_t nodepos;
+
+	/* draw function of the comming architecture */
+	if (mn_debugmenu->integer == 2) {
+		MN_DrawMenusTest();
+		return;
+	}
 
 	MN_CheckMouseMove();
 
@@ -272,11 +414,6 @@ void MN_DrawMenus (void)
 			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
 		else
 			MN_DrawNotice(500, 110);
-	}
-
-	/* debug help for comming architecture */
-	if (mn_debugmenu->integer == 2) {
-		MN_DrawDebugMenuNodeNames();
 	}
 
 	R_ColorBlend(NULL);
