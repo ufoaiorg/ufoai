@@ -335,7 +335,8 @@ static void MN_ReinitCurrentMenu_f (void)
 	menu_t* menu = MN_GetActiveMenu();
 	/* initialize it */
 	if (menu) {
-		MN_ExecuteActions(menu, menu->initNode->click);
+		if (menu->initNode)
+			MN_ExecuteActions(menu, menu->initNode->click);
 		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
 	}
 }
