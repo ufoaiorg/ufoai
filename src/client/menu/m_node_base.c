@@ -147,7 +147,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
 				R_DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* check for hovering building name or outline border */
-			if (mousePosX > x && mousePosX < x + width && mousePosY > y && mousePosY < y + height - 20) {
+			if (node->state && mousePosX > x && mousePosX < x + width && mousePosY > y && mousePosY < y + height - 20) {
 				if (!baseCurrent->map[row][col].building
 				 && !baseCurrent->map[row][col].blocked) {
 					if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
@@ -197,7 +197,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
 			}
 		}
 	}
-	if (hoverBuilding) {
+	if (node->state && hoverBuilding) {
 		R_Color(color);
 		R_FontDrawString("f_small", 0, mousePosX + 3, mousePosY, mousePosX + 3, mousePosY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse, 0);
 		R_Color(NULL);
