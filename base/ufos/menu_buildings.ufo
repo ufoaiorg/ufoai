@@ -179,7 +179,7 @@ menu popup_buildingpreview
 	{
 		image	menu/move
 		tooltip	"_Drag to move window"
-		pos		"437 29"
+		pos		"487 22"
 	}
 
 	// ==================
