@@ -656,6 +656,19 @@
 ( 344 544 8 ) ( 272 452 12 ) ( 248 484 0 ) tex_nature/dirt002 0 0 0 1 1 65280 0 0
 ( 272 520 0 ) ( 308 512 20 ) ( 280 408 20 ) tex_nature/dirt002 0 0 0 1 1 65280 0 0
 }
+// brush 70
+{
+( 236 688 64 ) ( 492 688 -64 ) ( 236 688 -64 ) tex_nature/dirt002 0 0 0 0.2 0.2 65280 0 0
+( 404 768 2 ) ( 244 768 2 ) ( 404 672 2 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 426 758 2 ) ( 266 758 194 ) ( 266 758 2 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 246 758 194 ) ( 246 662 2 ) ( 246 758 2 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 382 716 66 ) ( 382 796 -62 ) ( 382 716 -62 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 212 800 10 ) ( 272 776 6 ) ( 232 736 34 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 258 738 30 ) ( 246 738 18 ) ( 278 786 18 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 274 758 22 ) ( 290 738 34 ) ( 262 742 26 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 196 740 26 ) ( 352 788 54 ) ( 312 648 14 ) tex_nature/grass_mowed_dry_c 0 0 0 0.2 0.2 65280 0 0
+( 260 688 16 ) ( 311 714 44 ) ( 310 681 -2 ) tex_nature/dirt002 0 0 0 0.2 0.2 65280 0 0
+}
 }
 // entity 1
 {
@@ -778,4 +791,11 @@
 "model" "models/objects/vegi/chestnut/chestnut_stamm1.md2"
 "spawnflags" "1"
 "origin" "396 492 66"
+}
+// entity 19
+{
+"classname" "misc_particle"
+"origin" "96 176 40"
+"particle" "crashsite_fire"
+"spawnflags" "255"
 }

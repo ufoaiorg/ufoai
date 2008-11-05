@@ -2353,6 +2353,7 @@ mapdef forest_large
 	{
 		craft_crash_scout
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains

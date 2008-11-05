@@ -57,6 +57,17 @@ acdg     +a     +a	  acef
 0      abde    abde	  0
 }
 
+tile +craft_ufo_fighter
+{
+5 5
+
+0      abfg    abfg    abfg	  0
+acdg     +a     +a     +a	  acef
+acdg     +a     +a     +a	  acef
+acdg     +a     +a     +a	  acef
+0      abde    abde    abde	  0
+}
+
 //** forest tiles
 
 tile +f1
@@ -371,7 +382,7 @@ size "8 8"
 +h1 "1 2"
 +a1 "2 3"
 +a2 "1 2"
-*rm_ufo +craft_crash_scout "1 1"
+*rm_ufo +craft_ufo_fighter "1 1"
 *rm_drop +drop_firebird "1 1"
 }
 
