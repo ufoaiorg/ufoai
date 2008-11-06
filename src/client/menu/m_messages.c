@@ -39,7 +39,8 @@ static const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
 };
 CASSERT(lengthof(nt_strings) == NT_NUM_NOTIFYTYPE);
 
-messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];/* array holding message settings for every notify type */
+messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /* array holding actual message settings for every notify type */
+messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /* array holding backup message settings (used for restore function in options popup) */
 int messageList_scroll; /* actual messageSettings list begin index due to scrolling */
 static char ms_messageSettingsList[1024];/* buffer for message settings text node */
 qboolean messageOptionsInitialized = qfalse; /* flag indicating whether message options menu is initialized @sa MSO_Init_f */
@@ -419,7 +420,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; i < lengthof(gd.msgCategoryEntries); i++) {
+	for (; i < MAX_MESSAGESETTINGS_ENTRIES && i < lengthof(gd.msgCategoryEntries); i++) {
 		MN_ExecuteConfunc(va("ms_disable%i", i));
 	}
 }
@@ -611,6 +612,25 @@ static void MSO_Scroll_f (void)
 	}
 
 	MSO_UpdateVisibleButtons();
+}
+
+/**
+ * @brief Saves actual settings into backup settings variable.
+ */
+static void MSO_BackupSettings_f(void)
+{
+	memcpy(backupMessageSettings,messageSettings,sizeof(backupMessageSettings));
+}
+
+/**
+ * @brief Restores actual settings from backup settings variable.
+ * @note message options are caused to be re-initialized (for menu display)
+ * @sa MSO_Init_f
+ */
+static void MSO_RestoreSettings_f(void)
+{
+	memcpy(messageSettings,backupMessageSettings,sizeof(messageSettings));
+	messageOptionsInitialized = qfalse;
 }
 
 
@@ -828,8 +848,10 @@ void MN_MessageInit (void)
 	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notificatio or sound setting for a message category");
 	Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
 	Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");
+	Cmd_AddCommand("msgoptions_backup", MSO_BackupSettings_f, "Backup message settings");
+	Cmd_AddCommand("msgoptions_restore",MSO_RestoreSettings_f, "Restore message settings from backup");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_clear_messagelist", CL_DeleteMessages_f, "Clears messagelist");
 #endif
-
+	memset(backupMessageSettings,1,sizeof(backupMessageSettings));
 }

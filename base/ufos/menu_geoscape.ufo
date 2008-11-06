@@ -2401,6 +2401,16 @@ menu messageoptions
 		blend	true
 	}
 
+	func init
+	{
+		cmd "msgoptions_init;msgoptions_backup;"
+	}
+
+	func close
+	{
+		cmd "msgoptions_restore;"
+	}
+
 	controls drag_button
 	{
 		image	menu/move
@@ -2412,7 +2422,7 @@ menu messageoptions
 	{
 		pos	"30 400"
 		size "208 48"
-		click	{ cmd "mn_pop;" }
+		click	{ cmd "mn_pop;msgoptions_backup;" }
 		image	menu/button_green_small
 		blend	true
 		font	f_menu
@@ -2496,6 +2506,7 @@ menu messageoptions
 		pos		"360 90"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 0 pause;" }
+		invis true
 	}
 
 	pic bt_notify0 {
@@ -2504,6 +2515,7 @@ menu messageoptions
 		pos		"390 90"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 notify;" }
+		invis true
 	}
 
 	pic bt_sound0 {
@@ -2512,6 +2524,7 @@ menu messageoptions
 		pos		"420 90"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 sound;" }
+		invis true
 	}
 
 	pic bt_pause1 {
@@ -2520,6 +2533,7 @@ menu messageoptions
 		pos		"360 115"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 1 pause;" }
+		invis true
 	}
 
 	pic bt_notify1 {
@@ -2528,6 +2542,7 @@ menu messageoptions
 		pos		"390 115"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 notify;" }
+		invis true
 	}
 
 	pic bt_sound1 {
@@ -2536,6 +2551,7 @@ menu messageoptions
 		pos		"420 115"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 sound;" }
+		invis true
 	}
 
 	pic bt_pause2 {
@@ -2544,6 +2560,7 @@ menu messageoptions
 		pos		"360 140"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 2 pause;" }
+		invis true
 	}
 
 	pic bt_notify2 {
@@ -2552,6 +2569,7 @@ menu messageoptions
 		pos		"390 140"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 notify;" }
+		invis true
 	}
 
 	pic bt_sound2 {
@@ -2560,6 +2578,7 @@ menu messageoptions
 		pos		"420 140"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 sound;" }
+		invis true
 	}
 
 	pic bt_pause3 {
@@ -2568,6 +2587,7 @@ menu messageoptions
 		pos		"360 165"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 3 pause;" }
+		invis true
 	}
 
 	pic bt_notify3 {
@@ -2576,6 +2596,7 @@ menu messageoptions
 		pos		"390 165"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 notify;" }
+		invis true
 	}
 
 	pic bt_sound3 {
@@ -2584,6 +2605,7 @@ menu messageoptions
 		pos		"420 165"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 sound;" }
+		invis true
 	}
 
 	pic bt_pause4 {
@@ -2592,6 +2614,7 @@ menu messageoptions
 		pos		"360 190"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 4 pause;" }
+		invis true
 	}
 
 	pic bt_notify4 {
@@ -2600,6 +2623,7 @@ menu messageoptions
 		pos		"390 190"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 notify;" }
+		invis true
 	}
 
 	pic bt_sound4 {
@@ -2608,6 +2632,7 @@ menu messageoptions
 		pos		"420 190"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 sound;" }
+		invis true
 	}
 
 	pic bt_pause5 {
@@ -2616,6 +2641,7 @@ menu messageoptions
 		pos		"360 215"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 5 pause;" }
+		invis true
 	}
 
 	pic bt_notify5 {
@@ -2624,6 +2650,7 @@ menu messageoptions
 		pos		"390 215"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 notify;" }
+		invis true
 	}
 
 	pic bt_sound5 {
@@ -2632,6 +2659,7 @@ menu messageoptions
 		pos		"420 215"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 sound;" }
+		invis true
 	}
 
 	pic bt_pause6 {
@@ -2640,6 +2668,7 @@ menu messageoptions
 		pos		"360 240"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 6 pause;" }
+		invis true
 	}
 
 	pic bt_notify6 {
@@ -2648,6 +2677,7 @@ menu messageoptions
 		pos		"390 240"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 notify;" }
+		invis true
 	}
 
 	pic bt_sound6 {
@@ -2656,6 +2686,7 @@ menu messageoptions
 		pos		"420 240"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 sound;" }
+		invis true
 	}
 
 	pic bt_pause7 {
@@ -2664,6 +2695,7 @@ menu messageoptions
 		pos		"360 265"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 7 pause;" }
+		invis true
 	}
 
 	pic bt_notify7 {
@@ -2672,6 +2704,7 @@ menu messageoptions
 		pos		"390 265"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 notify;" }
+		invis true
 	}
 
 	pic bt_sound7 {
@@ -2680,6 +2713,7 @@ menu messageoptions
 		pos		"420 265"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 sound;" }
+		invis true
 	}
 
 	pic bt_pause8 {
@@ -2688,6 +2722,7 @@ menu messageoptions
 		pos		"360 290"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 8 pause;" }
+		invis true
 	}
 
 	pic bt_notify8 {
@@ -2696,6 +2731,7 @@ menu messageoptions
 		pos		"390 290"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 notify;" }
+		invis true
 	}
 
 	pic bt_sound8 {
@@ -2704,6 +2740,7 @@ menu messageoptions
 		pos		"420 290"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 sound;" }
+		invis true
 	}
 
 	pic bt_pause9 {
@@ -2712,6 +2749,7 @@ menu messageoptions
 		pos		"360 315"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 9 pause;" }
+		invis true
 	}
 
 	pic bt_notify9 {
@@ -2720,6 +2758,7 @@ menu messageoptions
 		pos		"390 315"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 notify;" }
+		invis true
 	}
 
 	pic bt_sound9 {
@@ -2728,6 +2767,7 @@ menu messageoptions
 		pos		"420 315"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 sound;" }
+		invis true
 	}
 
 	pic bt_pause10 {
@@ -2736,6 +2776,7 @@ menu messageoptions
 		pos		"360 340"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 10 pause;" }
+		invis true
 	}
 
 	pic bt_notify10 {
@@ -2744,6 +2785,7 @@ menu messageoptions
 		pos		"390 340"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 notify;" }
+		invis true
 	}
 
 	pic bt_sound10 {
@@ -2752,6 +2794,7 @@ menu messageoptions
 		pos		"420 340"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 sound;" }
+		invis true
 	}
 
 	pic bt_pause11 {
@@ -2760,6 +2803,7 @@ menu messageoptions
 		pos		"360 365"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 11 pause;" }
+		invis true
 	}
 
 	pic bt_notify11 {
@@ -2768,6 +2812,7 @@ menu messageoptions
 		pos		"390 365"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 notify;" }
+		invis true
 	}
 
 	pic bt_sound11 {
@@ -2776,6 +2821,7 @@ menu messageoptions
 		pos		"420 365"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 sound;" }
+		invis true
 	}
 
 	pic bt_pause12 {
@@ -2784,6 +2830,7 @@ menu messageoptions
 		pos		"360 390"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 12 pause;" }
+		invis true
 	}
 
 	pic bt_notify12 {
@@ -2792,6 +2839,7 @@ menu messageoptions
 		pos		"390 390"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 notify;" }
+		invis true
 	}
 
 	pic bt_sound12 {
@@ -2800,6 +2848,7 @@ menu messageoptions
 		pos		"420 390"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 sound;" }
+		invis true
 	}
 
 	pic bt_pause13 {
@@ -2808,6 +2857,7 @@ menu messageoptions
 		pos		"360 415"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 13 pause;" }
+		invis true
 	}
 
 	pic bt_notify13 {
@@ -2816,6 +2866,7 @@ menu messageoptions
 		pos		"390 415"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 notify;" }
+		invis true
 	}
 
 	pic bt_sound13 {
@@ -2824,6 +2875,7 @@ menu messageoptions
 		pos		"420 415"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 sound;" }
+		invis true
 	}
 
 	pic bt_pause14 {
@@ -2832,6 +2884,7 @@ menu messageoptions
 		pos		"360 440"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 14 pause;" }
+		invis true
 	}
 
 	pic bt_notify14 {
@@ -2840,6 +2893,7 @@ menu messageoptions
 		pos		"390 440"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 notify;" }
+		invis true
 	}
 
 	pic bt_sound14 {
@@ -2848,6 +2902,7 @@ menu messageoptions
 		pos		"420 440"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 sound;" }
+		invis true
 	}
 
 	pic bt_pause15 {
@@ -2856,6 +2911,7 @@ menu messageoptions
 		pos		"360 465"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 15 pause;" }
+		invis true
 	}
 
 	pic bt_notify15 {
@@ -2864,6 +2920,7 @@ menu messageoptions
 		pos		"390 465"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 notify;" }
+		invis true
 	}
 
 	pic bt_sound15 {
@@ -2872,6 +2929,7 @@ menu messageoptions
 		pos		"420 465"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 sound;" }
+		invis true
 	}
 
 	pic bt_pause16 {
@@ -2880,6 +2938,7 @@ menu messageoptions
 		pos		"360 490"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 16 pause;" }
+		invis true
 	}
 
 	pic bt_notify16 {
@@ -2888,6 +2947,7 @@ menu messageoptions
 		pos		"390 490"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 notify;" }
+		invis true
 	}
 
 	pic bt_sound16 {
@@ -2896,6 +2956,7 @@ menu messageoptions
 		pos		"420 490"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 sound;" }
+		invis true
 	}
 
 	pic bt_pause17 {
@@ -2904,6 +2965,7 @@ menu messageoptions
 		pos		"360 515"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 17 pause;" }
+		invis true
 	}
 
 	pic bt_notify17 {
@@ -2912,6 +2974,7 @@ menu messageoptions
 		pos		"390 515"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 notify;" }
+		invis true
 	}
 
 	pic bt_sound17 {
@@ -2920,6 +2983,7 @@ menu messageoptions
 		pos		"420 515"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 sound;" }
+		invis true
 	}
 
 	pic bt_pause18 {
@@ -2928,6 +2992,7 @@ menu messageoptions
 		pos		"360 540"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 18 pause;" }
+		invis true
 	}
 
 	pic bt_notify18 {
@@ -2936,6 +3001,7 @@ menu messageoptions
 		pos		"390 540"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 notify;" }
+		invis true
 	}
 
 	pic bt_sound18 {
@@ -2944,6 +3010,7 @@ menu messageoptions
 		pos		"420 540"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 sound;" }
+		invis true
 	}
 
 	pic bt_pause19 {
@@ -2952,6 +3019,7 @@ menu messageoptions
 		pos		"360 565"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 19 pause;" }
+		invis true
 	}
 
 	pic bt_notify19 {
@@ -2960,6 +3028,7 @@ menu messageoptions
 		pos		"390 565"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 notify;" }
+		invis true
 	}
 
 	pic bt_sound19 {
@@ -2968,6 +3037,7 @@ menu messageoptions
 		pos		"420 565"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 sound;" }
+		invis true
 	}
 
 	pic bt_pause20 {
@@ -2976,14 +3046,16 @@ menu messageoptions
 		pos		"360 590"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 20 pause;" }
+		invis true
 	}
 
 	pic bt_notify20 {
 		tooltip	"_enable or disable displaying a notification message"
 		align	ur
-		pos		"860 590"
+		pos		"390 590"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 notify;" }
+		invis true
 	}
 
 	pic bt_sound20 {
@@ -2992,6 +3064,7 @@ menu messageoptions
 		pos		"420 590"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 sound;" }
+		invis true
 	}
 
 	// ===================
@@ -3334,11 +3407,6 @@ menu messageoptions
 	confunc ms_disable20 { *bt_pause20 invis true
 		*bt_notify20 invis true
 		*bt_sound20 invis true
-	}
-	
-	func init
-	{
-		cmd "msgoptions_init;"
 	}
 
 }
