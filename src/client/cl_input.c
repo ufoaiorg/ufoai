@@ -588,8 +588,10 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_MENU) {
+		MN_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 		MN_RightClick(mousePosX, mousePosY);
+	}
 }
 
 /**
@@ -597,6 +599,9 @@ static void CL_RightClickDown_f (void)
  */
 static void CL_RightClickUp_f (void)
 {
+	if (mouseSpace == MS_MENU) {
+		MN_MouseUp(mousePosX, mousePosY, K_MOUSE2);
+	}
 	mouseSpace = MS_NULL;
 }
 
@@ -605,8 +610,10 @@ static void CL_RightClickUp_f (void)
  */
 static void CL_MiddleClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_MENU) {
+		MN_MouseDown(mousePosX, mousePosY, K_MOUSE3);
 		MN_MiddleClick(mousePosX, mousePosY);
+	}
 }
 
 /**
@@ -614,6 +621,9 @@ static void CL_MiddleClickDown_f (void)
  */
 static void CL_MiddleClickUp_f (void)
 {
+	if (mouseSpace == MS_MENU) {
+		MN_MouseUp(mousePosX, mousePosY, K_MOUSE3);
+	}
 	mouseSpace = MS_NULL;
 }
 
@@ -622,9 +632,10 @@ static void CL_MiddleClickUp_f (void)
  */
 static void CL_LeftClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_MENU) {
+		MN_MouseDown(mousePosX, mousePosY, K_MOUSE1);
 		MN_LeftClick(mousePosX, mousePosY);
-	else if (cls.state == ca_active) {
+	} else if (cls.state == ca_active) {
 		/* we clicked outside the world but not onto a menu */
 		/* get the current menu */
 		const menu_t *menu = MN_GetActiveMenu();
@@ -638,8 +649,12 @@ static void CL_LeftClickDown_f (void)
  */
 static void CL_LeftClickUp_f (void)
 {
-	if (mouseSpace == MS_DRAGITEM)
+	if (mouseSpace == MS_DRAGITEM) {
 		MN_LeftClick(mousePosX, mousePosY);
+	}
+	if (mouseSpace == MS_MENU) {
+		MN_MouseUp(mousePosX, mousePosY, K_MOUSE1);
+	}
 	mouseSpace = MS_NULL;
 }
 
@@ -1235,10 +1250,6 @@ static void IN_Parse (void)
 	}
 
 	case MS_DRAGITEM:
-		/* do nothing */
-		return;
-
-	case MS_DRAGMENU:
 		/* do nothing */
 		return;
 

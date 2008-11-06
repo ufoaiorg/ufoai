@@ -30,13 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 menuGlobal_t mn;
 static cvar_t *mn_escpop;
 
-void MN_DragMenu (void)
-{
-	if (mouseSpace == MS_MENU) {
-		mouseSpace = MS_DRAGMENU;
-	}
-}
-
 /**
  * @brief Returns the number of currently renderer menus on the menustack
  * @note Checks for a render node - if invis is true there, it's the last

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_node_image.h"
 #include "../cl_input.h"
+#include "../cl_keys.h"
 
 /**
  * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
@@ -47,25 +48,64 @@ static void MN_ControlsNodeLoaded (menuNode_t *node) {
 	}
 }
 
-static void MN_ControlsNodeClick (menuNode_t *node, int x, int y)
+static int deltaMouseX;
+static int deltaMouseY;
+
+static void MN_ControlsNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
-	if (mouseSpace == MS_MENU) {
-		mouseSpace = MS_DRAGMENU;
+	if (button == K_MOUSE1) {
+		MN_SetMouseCapture(node);
+
+		/* save position between mouse and menu pos */
+		MN_NodeAbsoluteToRelativePos(node, &x, &y);
+		deltaMouseX = x + node->pos[0];
+		deltaMouseY = y + node->pos[1];
 	}
 }
 
+static void MN_ControlsNodeMouseUp (menuNode_t *node, int x, int y, int button)
+{
+	if (button == K_MOUSE1)
+		MN_MouseRelease();
+}
+
+/**
+ * @brief Called when the node is captured by the mouse
+ */
+static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+{
+	/* compute new x position of the menu */
+	x -= deltaMouseX;
+	if (x < 0)
+		x = 0;
+	if (x + node->menu->size[0] > 1024)
+		x = 1024 - node->menu->size[0];
+
+	/* compute new y position of the menu */
+	y -= deltaMouseY;
+	if (y < 0)
+		y = 0;
+	if (y + node->menu->size[1] > 768)
+		y = 768 - node->menu->size[1];
+
+	MN_SetNewMenuPos(node->menu, x, y);
+}
+
+/**
+ * @todo remove MN_ImageNodeDraw for a real draw code (copy-paste), image node may change
+ */
 static void MN_ControlsNodeDraw(menuNode_t *node)
 {
-	if (mouseSpace == MS_DRAGMENU){
-		MN_SetNewMenuPos(node->menu, mousePosX - node->pos[0], mousePosY - node->pos[1]);
-	}
+	/* as is the node is an image */
 	MN_ImageNodeDraw(node);
 }
 
 void MN_RegisterNodeControls (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
-	behaviour->leftClick = MN_ControlsNodeClick;
 	behaviour->draw = MN_ControlsNodeDraw;
 	behaviour->loaded = MN_ControlsNodeLoaded;
+	behaviour->mouseDown = MN_ControlsNodeMouseDown;
+	behaviour->mouseUp = MN_ControlsNodeMouseUp;
+	behaviour->capturedMouseMove = MN_ControlsNodeCapturedMouseMove;
 }

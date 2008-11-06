@@ -30,6 +30,8 @@ void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
 void MN_MouseWheel(qboolean down, int x, int y);
 void MN_MouseMove(int x, int y);
+void MN_MouseDown(int x, int y, int button);
+void MN_MouseUp(int x, int y, int button);
 
 menuNode_t* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(menuNode_t* node);

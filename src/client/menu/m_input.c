@@ -107,6 +107,8 @@ qboolean MN_CursorOnMenu (int x, int y)
  * @sa MN_SetMouseCapture
  * @sa MN_GetMouseCapture
  * @sa MN_MouseRelease
+ * @todo think about replacing it by a boolean. When capturedNode != NULL => mouseOverTest == capturedNode
+ * it create unneed case
  */
 static menuNode_t* capturedNode = NULL;
 
@@ -141,6 +143,7 @@ void MN_MouseRelease (void)
 
 /**
  * @brief save the node under the mouse
+ * @todo rename it into hoveredNode when the code is stable
  */
 menuNode_t *mouseOverTest;
 
@@ -585,4 +588,58 @@ void MN_MouseWheel (qboolean down, int x, int y)
 
 		break;
 	}
+}
+
+/**
+ * @brief Called when we are in menu mode and down a mouse button
+ * @sa MN_LeftClick
+ * @sa MN_RightClick
+ * @sa MN_MiddleClick
+ * @sa CL_ZoomInQuant
+ * @sa CL_ZoomOutQuant
+ * @sa MN_LeftClick
+ * @sa MN_RightClick
+ * @sa MN_MiddleClick
+ * @sa CL_ZoomInQuant
+ * @sa CL_ZoomOutQuant
+ */
+void MN_MouseDown (int x, int y, int button)
+{
+	menuNode_t *node;
+
+	/* captured or hover node */
+	node = capturedNode ? capturedNode : mouseOverTest;
+
+	if (node == NULL)
+		return;
+
+	if (nodeBehaviourList[node->type].mouseDown)
+		nodeBehaviourList[node->type].mouseDown(node, x, y, button);
+}
+
+/**
+ * @brief Called when we are in menu mode and up a mouse button
+ * @sa MN_LeftClick
+ * @sa MN_RightClick
+ * @sa MN_MiddleClick
+ * @sa CL_ZoomInQuant
+ * @sa CL_ZoomOutQuant
+ * @sa MN_LeftClick
+ * @sa MN_RightClick
+ * @sa MN_MiddleClick
+ * @sa CL_ZoomInQuant
+ * @sa CL_ZoomOutQuant
+ */
+void MN_MouseUp (int x, int y, int button)
+{
+	menuNode_t *node;
+
+	/* captured or hover node */
+	node = capturedNode ? capturedNode : mouseOverTest;
+
+	if (node == NULL)
+		return;
+
+	if (nodeBehaviourList[node->type].mouseUp)
+		nodeBehaviourList[node->type].mouseUp(node, x, y, button);
 }
