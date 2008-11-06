@@ -365,6 +365,13 @@ menu popup_tipoftheday
 		align uc
 	}
 
+	controls drag_button
+	{
+		image	menu/move
+		tooltip	"_Drag to move window"
+		pos		"458 22"
+	}
+
 	checkbox activate
 	{
 		cvar	"*cvar cl_showTipOfTheDay"
