@@ -1281,15 +1281,13 @@ menu popup_newbase
 	{
 		if		"mn_base_count <= 0"
 		string	"_Start with employees:"
-		pos		"451 98"
-		align	ur
+		pos		"436 98"
 	}
 	checkbox start_employees
 	{
 		if		"mn_base_count <= 0"
 		cvar	"*cvar cl_start_employees"
-		pos		"471 98"
-		align	ur
+		pos		"456 98"
 		tooltip	"_Employees already hired at campaign start"
 	}
 
@@ -1305,8 +1303,7 @@ menu popup_newbase
 	{
 		if		"mn_base_count <= 0"
 		cvar	"*cvar cl_start_buildings"
-		pos		"471 123"
-		align	ur
+		pos		"456 123"
 		tooltip	"_Buildings already built in the initial base"
 	}
 

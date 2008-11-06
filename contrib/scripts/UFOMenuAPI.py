@@ -295,4 +295,25 @@ def moveOptionMenuContent():
 
 	root.save()
 
-#moveOptionMenuContent()
+def findNonULCheckBox():
+	root = Root()
+	root.loadAll()
+
+	print '-----'
+	
+	for menu in root.nodes.child:
+		print 'menu ' + menu.name + " " + menu.filename
+
+		for node in menu.child:
+			if node.behaviour != "checkbox":
+				continue
+			if not node.existsParam("align"):
+				continue
+			align = node.param["align"]
+			## @todo the API must remove quotes 
+			if align == "ul" or align == "\"ul\"":
+				continue
+		
+			print node.name + " align=" + align
+	
+#findNonULCheckBox()

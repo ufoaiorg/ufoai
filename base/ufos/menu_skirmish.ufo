@@ -86,8 +86,7 @@ menu skirmish
 	checkbox daynight_value
 	{
 		cvar	"*cvar mn_serverday"
-		pos	"840 260"
-		align	ur
+		pos	"825 260"
 	}
 
 	// ===================

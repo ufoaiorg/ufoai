@@ -847,8 +847,7 @@ menu mp_create_server
 	checkbox daynight_value
 	{
 		cvar	"*cvar mn_serverday"
-		pos	"840 100"
-		align	ur
+		pos	"825 100"
 	}
 
 	string firewall_str
@@ -872,8 +871,7 @@ menu mp_create_server
 	{
 		image	"menu/checkbox"
 		cvar	"*cvar sv_public"
-		pos	"840 120"
-		align	ur
+		pos	"825 120"
 	}
 
 	// ===================
@@ -887,8 +885,7 @@ menu mp_create_server
 	checkbox morale_value
 	{
 		cvar	"*cvar sv_enablemorale"
-		pos	"840 140"
-		align	ur
+		pos	"825 140"
 	}
 
 	// ===================
@@ -941,8 +938,7 @@ menu mp_create_server
 	checkbox server_teamplay_value
 	{
 		cvar	"*cvar sv_teamplay"
-		pos	"840 180"
-		align	ur
+		pos	"825 180"
 	}
 
 	// ===================
@@ -1127,8 +1123,7 @@ menu mp_create_server
 	checkbox ai_autojoin_value
 	{
 		cvar	"*cvar ai_autojoin"
-		pos	"840 300"
-		align	ur
+		pos	"825 300"
 	}
 
 	// ===================
