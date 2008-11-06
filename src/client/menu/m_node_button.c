@@ -64,8 +64,7 @@ static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
 }
 
 /**
- * @brief Handles CustomButton draw
- * @sa MN_CUSTOMBUTTON
+ * @brief Handles Button draw
  */
 static void MN_ButtonNodeDraw (menuNode_t *node)
 {
@@ -111,10 +110,21 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Handles Button before loading. Used to init node attributes
+ * @todo remove the align comment when we update the event handler (problem with the current one)
+ */
+static void MN_ButtonNodeLoading (menuNode_t *node)
+{
+	/* default text align */
+	/* node->align = ALIGN_CC; */
+}
+
 void MN_RegisterNodeButton (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
 	behaviour->draw = MN_ButtonNodeDraw;
 	behaviour->loaded = MN_ButtonNodeLoaded;
 	behaviour->leftClick = MN_ButtonNodeClick;
+	behaviour->loading = MN_ButtonNodeLoading;
 }

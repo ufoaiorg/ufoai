@@ -27,20 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "m_node_custombutton.h"
 #include "m_main.h"
+#include "m_node_button.h"
 #include "m_parse.h"
 #include "m_font.h"
 #include "m_input.h"
-
-/**
- * @brief Handles CustomButton clicks
- * @sa MN_CUSTOMBUTTON
- */
-static void MN_CustomButtonNodeClick (menuNode_t * node, int x, int y)
-{
-	if (node->click && !node->disabled) {
-		MN_ExecuteActions(node->menu, node->click);
-	}
-}
 
 #define MN_CUSTOMBUTTON_TEX_HEIGHT 64
 #define MN_CUSTOMBUTTON_TEX_WIDTH 256
@@ -93,7 +83,9 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 void MN_RegisterNodeCustomButton (nodeBehaviour_t *behaviour)
 {
+	/* inheritance */
+	MN_RegisterNodeButton(behaviour);
+	/* overwrite */
 	behaviour->name = "custombutton";
 	behaviour->draw = MN_CustomButtonNodeDraw;
-	behaviour->leftClick = MN_CustomButtonNodeClick;
 }

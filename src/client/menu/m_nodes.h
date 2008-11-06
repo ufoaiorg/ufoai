@@ -190,7 +190,10 @@ typedef struct {
 	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */
 	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y); /**< on use mouse wheel into the node */
 	void (*mouseMove)(menuNode_t *node, int x, int y);
+	void (*mouseDown)(menuNode_t *node, int x, int y, int button);	/**< on a mouse button down into the node */
+	void (*mouseUp)(menuNode_t *node, int x, int y, int button);	/**< on a mouse button up into the node */
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
+	void (*loading)(menuNode_t *node);		/**< call before script initialisation to init default value */
 	void (*loaded)(menuNode_t *node); /**< call one time, when node load from script is finished */
 	qboolean isVirtual; /**< if true, the node dont have any position on the screen */
 	/** Planed */
@@ -198,16 +201,6 @@ typedef struct {
 	mouse move event
 	void (*mouseEnter)(menuNode_t *node);
 	void (*mouseLeave)(menuNode_t *node);
-	void (*mouseMove)(menuNode_t *node, int relativeX, int relativeY);
-	mouse click event
-	void (*middleClickDown)(menuNode_t *node);
-	void (*middleClickUp)(menuNode_t *node);
-	void (*rightClickDown)(menuNode_t *node);
-	void (*rightClickUp)(menuNode_t *node);
-	void (*leftClickDown)(menuNode_t *node);
-	void (*leftClickUp)(menuNode_t *node);
-	void (*mouseWheel)(menuNode_t *node);
-	captured mouse callback
 	drag and drop callback
 	int  (*dndEnter)(menuNode_t *node);
 	void (*dndLeave)(menuNode_t *node);
