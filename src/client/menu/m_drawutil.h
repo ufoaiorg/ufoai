@@ -43,8 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static inline void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, int corner, int middle, int marge)
 {
 	const int firstPos = 0;
-	int secondPos = firstPos + corner + marge;
-	int thirdPos = secondPos + middle + marge;
+	const int secondPos = firstPos + corner + marge;
+	const int thirdPos = secondPos + middle + marge;
 	int y, h;
 
 	/* draw top (from left to right) */
