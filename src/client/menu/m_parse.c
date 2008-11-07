@@ -55,6 +55,16 @@ static size_t const ne_values[NE_NUM_NODEEVENT] = {
 
 /* =========================================================== */
 
+/** @brief valid properties for a window node (called yet 'menu') */
+static const value_t windowNodeProperties[] = {
+	{"noticepos", V_POS, offsetof(menu_t, noticePos), MEMBER_SIZEOF(menu_t, noticePos)},
+	{"pos", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
+	{"origin", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
+	{"size", V_POS, offsetof(menu_t, size), MEMBER_SIZEOF(menu_t, size)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 /** @brief valid properties for a menu node */
 static const value_t nps[] = {
 	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
@@ -160,6 +170,22 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"*",
 	"&"
 };
+
+/**
+ * @brief Find a value_t by name into a array of value_t
+ * @param[in] propertyList Array of value_t, with null termination
+ * @param[in] name Property name we search
+ * @return A value_t with the requested name, else NULL
+ */
+static const value_t* findPropertyByName(const value_t* propertyList, const char* name) {
+	const value_t* current = propertyList;
+	while (current->string != NULL) {
+		if (!Q_strcasecmp(name, current->string))
+			return current;
+		current++;
+	}
+	return NULL;
+}
 
 /**
  * @brief
@@ -631,6 +657,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 			/* parse special menu values */
 			if (token[0] == '{') {
 				do {
+					const value_t* property;
 					found = qfalse;
 					/* get new token */
 					token = COM_EParse(text, errhead, menu->name);
@@ -639,29 +666,17 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					if (token[0] == '}')
 						break;
 
-					if (!Q_strcmp(token, "noticepos")) {
+					property = findPropertyByName(windowNodeProperties, token);
+					if (property) {
 						/* get new token */
 						token = COM_EParse(text, errhead, menu->name);
 						if (!*text)
 							return qfalse;
-						Com_ParseValue(menu->noticePos, token, V_POS, 0, sizeof(vec2_t));
+						Com_ParseValue(menu, token, property->type, property->ofs, property->size);
 						found = qtrue;
-					} else if (!Q_strcmp(token, "origin") || !Q_strcmp(token, "pos")) {
-						/* get new token */
-						token = COM_EParse(text, errhead, menu->name);
-						if (!*text)
-							return qfalse;
-						Com_ParseValue(menu->pos, token, V_POS, 0, sizeof(vec2_t));
-						found = qtrue;
-					} else if (!Q_strcmp(token, "size")) {
-						/* get new token */
-						token = COM_EParse(text, errhead, menu->name);
-						if (!*text)
-							return qfalse;
-						Com_ParseValue(menu->size, token, V_POS, 0, sizeof(vec2_t));
-						found = qtrue;
-					} else
+					} else {
 						Com_Printf("Invalid special menu value '%s'\n", token);
+					}
 				} while (found);
 
 				/* get new token */
