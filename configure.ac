@@ -261,7 +261,7 @@ then
 	AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
 	if test "$HAVE_WINDRES" != "yes"
 	then
-		WINDRES="$target_cpu-$target_os-windres"
+		WINDRES="$target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
 		AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
 		if test "$HAVE_WINDRES" != "yes"
 		then
