@@ -28,14 +28,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../game/inv_shared.h"
 
-struct base_s;
-
-/* One unit in the containers is 25x25. */
+/** @brief One unit in the containers is 25x25. */
 #define C_UNIT				25
-#define	C_ROW_OFFSET		15	/**< Offset between two rows (and the top of the container to
-								 * the first row) of items in a scrollable container.
-								 * Right now only used for vertical containers.
-								 */
+
+/**
+ * @brief Offset between two rows (and the top of the container to
+ * the first row) of items in a scrollable container.
+ * Right now only used for vertical containers.
+ */
+#define	C_ROW_OFFSET		15
 
 extern inventory_t *menuInventory;
 
@@ -49,7 +50,7 @@ typedef struct dragInfo_s {
 
 	/* The "to" variables are only used in cl_screen.c to draw the preview. */
 	const menuNode_t *toNode;
-	const invDef_t * to;
+	const invDef_t *to;
 	int toX;
 	int toY;
 } dragInfo_t;
