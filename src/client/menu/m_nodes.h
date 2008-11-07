@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODES_H
 #define CLIENT_MENU_M_NODES_H
 
-#include "m_menu.h"
 #include "m_node_abstractvalue.h"
 #include "../cl_renderer.h"
 #include "../../common/common.h"
@@ -182,8 +181,14 @@ typedef struct menuNode_s {
 } menuNode_t;
 
 /** @brief node behaviour, how a node work */
-typedef struct {
-	const char* name;					/**< name of the behaviour: string type of a node */
+typedef struct nodeBehaviour_s {
+	/* attributes */
+	const char* name;	/**< name of the behaviour: string type of a node */
+	qboolean isVirtual; /**< if true, the node dont have any position on the screen */
+	const value_t* properties; /**< list of properties of the node */
+	int propertyCount;	/**< number of the properties into the propertiesList. Cache value to speedup search */
+
+	/* function */
 	void (*draw)(menuNode_t *node);		/**< how to draw a node */
 	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
 	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
@@ -195,7 +200,7 @@ typedef struct {
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
 	void (*loading)(menuNode_t *node);		/**< call before script initialisation to init default value */
 	void (*loaded)(menuNode_t *node); /**< call one time, when node load from script is finished */
-	qboolean isVirtual; /**< if true, the node dont have any position on the screen */
+
 	/** Planed */
 	/*
 	mouse move event
@@ -210,18 +215,21 @@ typedef struct {
 } nodeBehaviour_t;
 
 extern nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
+extern nodeBehaviour_t menuBehaviour;
 
 qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
 void MN_UnHideNode(menuNode_t* node);
 void MN_HideNode(menuNode_t* node);
 menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
 void MN_SetNewNodePos(menuNode_t* node, int x, int y);
-menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 void MN_GetNodeAbsPos(const menuNode_t* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const menuNode_t* node, int *x, int *y);
+menuNode_t* MN_AllocNode(int type);
+nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 
 void MN_InitNodes(void);
 
+#include "m_node_window.h"
 #include "m_node_bar.h"
 #include "m_node_base.h"
 #include "m_node_checkbox.h"

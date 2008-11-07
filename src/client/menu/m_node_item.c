@@ -61,7 +61,6 @@ static void MN_DrawItemNode (menuNode_t *node, const char *itemName)
  */
 static void MN_DrawItemNode2 (menuNode_t *node)
 {
-	menu_t *menu = node->menu;
 	const objDef_t *od;
 	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 
@@ -75,7 +74,7 @@ static void MN_DrawItemNode2 (menuNode_t *node)
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {
 			assert(aircraft->tech);
-			MN_DrawModelNode(menu, node, ref, aircraft->tech->mdl);
+			MN_DrawModelNode(node, ref, aircraft->tech->mdl);
 		} else {
 			Com_Printf("Unknown item: '%s'\n", ref);
 		}

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_dragndrop.h"
 #include "../cl_input.h"
+#include "../../game/q_shared.h"
 
 #include "m_node_bar.h"
 #include "m_node_base.h"
@@ -222,25 +223,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	return qtrue;
 }
 
-
-/**
- * @brief Searches all nodes in the given menu for a given nodename
- * @sa MN_GetNodeFromCurrentMenu
- */
-menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
-{
-	menuNode_t *node = NULL;
-
-	if (!menu)
-		return NULL;
-
-	for (node = menu->firstNode; node; node = node->next)
-		if (!Q_strncmp(name, node->name, sizeof(node->name)))
-			break;
-
-	return node;
-}
-
 /**
  * @brief Searches a given node in the current menu
  * @sa MN_GetNode
@@ -285,6 +267,31 @@ static void MN_HideNode_f (void)
 }
 
 /**
+ * @todo Update int type by a char* behaviourName
+ */
+menuNode_t* MN_AllocNode (int type)
+{
+	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
+	node->type = type;
+	return node;
+}
+
+/**
+ * @brief Return a node behaviour by name
+ * @todo when its possible use a dicotomic search
+ */
+nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
+{
+	int i;
+	for (i = 0; i < MN_NUM_NODETYPE; i++) {
+		if (!Q_strcmp(name, nodeBehaviourList[i].name)) {
+			return &nodeBehaviourList[i];
+		}
+	}
+	Sys_Error("Node behaviour '%s' dont exists\n", name);
+}
+
+/**
  * @brief Unhides a given menu node
  * @note Sanity check whether node is null included
  */
@@ -322,12 +329,20 @@ static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* 
  */
 nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
 
+/**
+ * @brief menu behaviour, not realy a node for the moment
+ */
+nodeBehaviour_t menuBehaviour;
 
 void MN_InitNodes (void)
 {
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 
+	/* menu node */
+	MN_RegisterNodeWindow(&menuBehaviour);
+
+	/* all nodes */
 	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qtrue);
 	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue);
 	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue);

@@ -1,5 +1,5 @@
 /**
- * @file m_menu.h
+ * @file m_node_window.h
  */
 
 /*
@@ -22,10 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_MENU_H
-#define CLIENT_MENU_M_MENU_H
+#ifndef CLIENT_MENU_M_NODE_WINDOW_H
+#define CLIENT_MENU_M_NODE_WINDOW_H
 
 #include "../../game/q_shared.h"
+#include "m_nodes.h"
 
 /** @brief menu with all it's nodes linked in */
 typedef struct menu_s {
@@ -34,16 +35,27 @@ typedef struct menu_s {
 	vec2_t pos;	/**< the position of the menu */
 	vec2_t size;	/**< the size of the menu */
 	vec2_t noticePos; /**< the position where the cl.msgText messages are rendered */
-	struct menuNode_s *firstNode, *initNode, *closeNode, *renderNode;
-	struct menuNode_s *popupNode, *hoverNode, *eventNode, *leaveNode;
+	qboolean dragButton;
+	qboolean closeButton;
+
+	menuNode_t *firstNode;	/**< first element of linked list of child */
+
+	menuNode_t *initNode;	/**< node to execute on init */
+	menuNode_t *closeNode;	/**< node to execute on close */
+	menuNode_t *hoverNode;	/**< current hovered node */
+	menuNode_t *renderNode;
+	menuNode_t *popupNode;
+	menuNode_t *eventNode;
+	menuNode_t *leaveNode;
 } menu_t;
 
-menu_t* MN_PushMenu(const char *name);
-void MN_PopMenu(qboolean all);
-menu_t* MN_GetActiveMenu(void);
-menu_t *MN_GetMenu(const char *name);
+void MN_RegisterNodeWindow(nodeBehaviour_t *behaviour);
 
-int MN_CompletePushMenu(const char *partial, const char **match);
+menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
+menuNode_t *MN_GetLastNode(const menu_t* const menu);
+void MN_InsertNode(menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode);
 
+void MN_WindowNodeLoading(menu_t *menu);
+void MN_WindowNodeLoaded(menu_t *menu);
 
 #endif

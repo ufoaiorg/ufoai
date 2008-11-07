@@ -347,6 +347,7 @@ menu popup_tipoftheday
 	{
 		pos "38 456"
 		size "496 247"
+		dragbutton true
 	}
 
 	windowpanel back
@@ -363,13 +364,6 @@ menu popup_tipoftheday
 		pos	"248 18"
 		font	f_big
 		align uc
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"458 22"
 	}
 
 	checkbox activate

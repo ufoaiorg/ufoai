@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_actions.h"
 #include "m_dragndrop.h"
+#include "m_node_window.h"
 
 /** @brief valid node event ids */
 static const char *ne_strings[NE_NUM_NODEEVENT] = {
@@ -54,16 +55,6 @@ static size_t const ne_values[NE_NUM_NODEEVENT] = {
 };
 
 /* =========================================================== */
-
-/** @brief valid properties for a window node (called yet 'menu') */
-static const value_t windowNodeProperties[] = {
-	{"noticepos", V_POS, offsetof(menu_t, noticePos), MEMBER_SIZEOF(menu_t, noticePos)},
-	{"pos", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
-	{"origin", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
-	{"size", V_POS, offsetof(menu_t, size), MEMBER_SIZEOF(menu_t, size)},
-
-	{NULL, V_NULL, 0, 0}
-};
 
 /** @brief valid properties for a menu node */
 static const value_t nps[] = {
@@ -633,7 +624,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 	for (node = menu->firstNode; node; node = node->next) {
 		if (mn.numNodes >= MAX_MENUNODES)
 			Sys_Error("MAX_MENUNODES exceeded\n");
-		iNode = &mn.menuNodes[mn.numNodes++];
+		iNode = MN_AllocNode(node->type);
 		*iNode = *node;
 		iNode->menu = menu;
 		/* link it in */
@@ -666,7 +657,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					if (token[0] == '}')
 						break;
 
-					property = findPropertyByName(windowNodeProperties, token);
+					property = findPropertyByName(menuBehaviour.properties, token);
 					if (property) {
 						/* get new token */
 						token = COM_EParse(text, errhead, menu->name);
@@ -712,7 +703,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					if (!node) {
 						if (mn.numNodes >= MAX_MENUNODES)
 							Sys_Error("MAX_MENUNODES exceeded\n");
-						node = &mn.menuNodes[mn.numNodes++];
+						node = MN_AllocNode(i);
 						memset(node, 0, sizeof(*node));
 						node->menu = menu;
 						Q_strncpyz(node->name, token, sizeof(node->name));
@@ -1009,6 +1000,8 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
 
+	MN_WindowNodeLoading(menu);
+
 	/* get it's body */
 	token = COM_Parse(text);
 
@@ -1037,6 +1030,8 @@ void MN_ParseMenu (const char *name, const char **text)
 		mn.numMenus--;
 		return;
 	}
+
+	MN_WindowNodeLoaded(menu);
 
 	for (node = menu->firstNode; node; node = node->next)
 		if (node->num >= MAX_MENUTEXTS)

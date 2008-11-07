@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_ACTIONS_H
 
 #include "../../common/common.h"
-#include "m_menu.h"
 
 typedef enum ea_s {
 	EA_NULL,

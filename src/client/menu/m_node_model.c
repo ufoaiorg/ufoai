@@ -173,20 +173,19 @@ static void MN_SetModelTransform_f (void)
 
 static void MN_DrawModelNode2 (menuNode_t *node)
 {
-	menu_t *menu = node->menu;
 	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	char source[MAX_VAR];
 	if (ref == NULL || ref[0] == '\0')
 		source[0] = '\0';
 	else
 		Q_strncpyz(source, ref, sizeof(source));
-	MN_DrawModelNode(menu, node, ref, source);
+	MN_DrawModelNode(node, ref, source);
 }
 
 /**
  * @todo Menu models should inherit the node values from their parent
  */
-void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, const char *source)
+void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 {
 	int i;
 	modelInfo_t mi;
@@ -199,6 +198,7 @@ void MN_DrawModelNode (const menu_t* menu, menuNode_t *node, const char *ref, co
 	vec2_t nodepos;
 	static vec3_t nodeorigin;
 	static vec3_t pmiorigin;
+	const menu_t* menu = node->menu;
 
 	if (source[0] == '\0')
 		return;

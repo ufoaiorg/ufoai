@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MENUSTACK		32
 #define MAX_MENUACTIONS		8192
 
-#include "m_menu.h"
+#include "m_node_window.h"
 #include "m_actions.h"
 #include "m_messages.h"
 #include "m_nodes.h"
@@ -100,4 +100,12 @@ void MN_ScrollContainerNext_f(void);
 void MN_ScrollContainerPrev_f(void);
 
 void MN_DragMenu(void);
+
+menu_t* MN_PushMenu(const char *name);
+void MN_PopMenu(qboolean all);
+menu_t* MN_GetActiveMenu(void);
+menu_t *MN_GetMenu(const char *name);
+
+int MN_CompletePushMenu(const char *partial, const char **match);
+
 #endif

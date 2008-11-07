@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_PARSE_H
 #define CLIENT_MENU_M_PARSE_H
 
-#include "m_menu.h"
+#include "m_node_window.h"
 
 void MN_ParseMenu(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
