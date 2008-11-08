@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_node_tbar.h"
+#include "m_node_abstractvalue.h"
 
 static void MN_TBarNodeDraw (menuNode_t *node)
 {
@@ -50,6 +51,9 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
+	/* inherite */
+	MN_RegisterAbstractValueNode(behaviour);
+	/* overwrite */
 	behaviour->name = "tbar";
 	behaviour->draw = MN_TBarNodeDraw;
 }

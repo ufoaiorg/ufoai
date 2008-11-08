@@ -27,16 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_ABSTRACTVALUE_H
 #define CLIENT_MENU_M_NODE_ABSTRACTVALUE_H
 
-/**
- * @brief Commun structure for all GUI controls which allow to
- * edit a value (scroolbar, spinner, and more)
- * All fields are ref into a float or a cvar
- */
-typedef struct {
-	void* min;	/**< Min value can take the value field */
-	void* max;	/**< Max value can take the value field */
-	void* value;	/**< Current value */
-	void* delta;	/**< Quantity the control add or remove in one step */
-} abstractValueDataNode_t;
+#include "m_nodes.h"
+
+void MN_RegisterAbstractValueNode(nodeBehaviour_t *behavior);
 
 #endif

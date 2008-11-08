@@ -96,13 +96,6 @@ static const value_t nps[] = {
 	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
 	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.tag), 0},
 
-	/* specific for abstractvalue
-	 * @todo move it into the node behaviour
-	 */
-	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.max), 0},
-	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.min), 0},
-	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.value), 0},
-
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},

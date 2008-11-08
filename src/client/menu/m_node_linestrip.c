@@ -29,13 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_LineStripNodeDraw (menuNode_t *node)
 {
 	int i;
-	if (node->linestrips.numStrips > 0) {
+	if (node->u.linestrip.numStrips > 0) {
 		/* Draw all linestrips. */
-		for (i = 0; i < node->linestrips.numStrips; i++) {
+		for (i = 0; i < node->u.linestrip.numStrips; i++) {
 			/* Draw this line if it's valid. */
-			if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-				R_ColorBlend(node->linestrips.color[i]);
-				R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+			if (node->u.linestrip.pointList[i] && (node->u.linestrip.numPoints[i] > 0)) {
+				R_ColorBlend(node->u.linestrip.color[i]);
+				R_DrawLineStrip(node->u.linestrip.numPoints[i], node->u.linestrip.pointList[i]);
 			}
 		}
 	}

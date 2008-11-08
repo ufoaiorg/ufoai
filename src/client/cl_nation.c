@@ -409,19 +409,19 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int ma
 	}
 
 	/* Break if we reached the max strip number. */
-	if (node->linestrips.numStrips >= MAX_LINESTRIPS - 1)
+	if (node->u.linestrip.numStrips >= MAX_LINESTRIPS - 1)
 		return;
 
 	/* Link graph to node */
-	node->linestrips.pointList[node->linestrips.numStrips] = (int*)fundingPts[usedFundPtslist];
-	node->linestrips.numPoints[node->linestrips.numStrips] = ptsNumber;
+	node->u.linestrip.pointList[node->u.linestrip.numStrips] = (int*)fundingPts[usedFundPtslist];
+	node->u.linestrip.numPoints[node->u.linestrip.numStrips] = ptsNumber;
 	if (color < 0) {
 		Cvar_Set("mn_nat_symbol", va("nations/%s", gd.nations[selectedNation].id));
-		Vector4Copy(graphColorSelected, node->linestrips.color[node->linestrips.numStrips]);
+		Vector4Copy(graphColorSelected, node->u.linestrip.color[node->u.linestrip.numStrips]);
 	} else {
-		Vector4Copy(graphColors[color], node->linestrips.color[node->linestrips.numStrips]);
+		Vector4Copy(graphColors[color], node->u.linestrip.color[node->u.linestrip.numStrips]);
 	}
-	node->linestrips.numStrips++;
+	node->u.linestrip.numStrips++;
 
 	usedFundPtslist++;
 }
@@ -444,7 +444,7 @@ static void CL_NationStatsUpdate_f (void)
 	colorNode = MN_GetNodeFromCurrentMenu("nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->size[1] / MAX_NATIONS);
-		colorNode->linestrips.numStrips = 0;
+		colorNode->u.linestrip.numStrips = 0;
 	}
 
 	for (i = 0; i < gd.numNations; i++) {
@@ -464,17 +464,17 @@ static void CL_NationStatsUpdate_f (void)
 			colorLinePts[usedColPtslists][1].x = colorNode->pos[0] + (int)colorNode->size[0];
 			colorLinePts[usedColPtslists][1].y = colorLinePts[usedColPtslists][0].y;
 
-			colorNode->linestrips.pointList[colorNode->linestrips.numStrips] = (int*)colorLinePts[usedColPtslists];
-			colorNode->linestrips.numPoints[colorNode->linestrips.numStrips] = 2;
+			colorNode->u.linestrip.pointList[colorNode->u.linestrip.numStrips] = (int*)colorLinePts[usedColPtslists];
+			colorNode->u.linestrip.numPoints[colorNode->u.linestrip.numStrips] = 2;
 
 			if (i == selectedNation) {
-				Vector4Copy(graphColorSelected, colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+				Vector4Copy(graphColorSelected, colorNode->u.linestrip.color[colorNode->u.linestrip.numStrips]);
 			} else {
-				Vector4Copy(graphColors[i], colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+				Vector4Copy(graphColors[i], colorNode->u.linestrip.color[colorNode->u.linestrip.numStrips]);
 			}
 
 			usedColPtslists++;
-			colorNode->linestrips.numStrips++;
+			colorNode->u.linestrip.numStrips++;
 		}
 	}
 
@@ -489,7 +489,7 @@ static void CL_NationStatsUpdate_f (void)
 	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
 	if (graphNode) {
 		usedFundPtslist = 0;
-		graphNode->linestrips.numStrips = 0;
+		graphNode->u.linestrip.numStrips = 0;
 
 		/* Generate axes & link to node. */
 		/** @todo Maybe create a margin toward the axes? */
@@ -499,10 +499,10 @@ static void CL_NationStatsUpdate_f (void)
 		coordAxesPts[1].y = graphNode->pos[1];	/* y */
 		coordAxesPts[2].x = graphNode->pos[0] + (int)graphNode->size[0];	/* x + width */
 		coordAxesPts[2].y = graphNode->pos[1];	/* y */
-		graphNode->linestrips.pointList[graphNode->linestrips.numStrips] = (int*)coordAxesPts;
-		graphNode->linestrips.numPoints[graphNode->linestrips.numStrips] = 3;
-		Vector4Copy(colorAxes, graphNode->linestrips.color[graphNode->linestrips.numStrips]);
-		graphNode->linestrips.numStrips++;
+		graphNode->u.linestrip.pointList[graphNode->u.linestrip.numStrips] = (int*)coordAxesPts;
+		graphNode->u.linestrip.numPoints[graphNode->u.linestrip.numStrips] = 3;
+		Vector4Copy(colorAxes, graphNode->u.linestrip.color[graphNode->u.linestrip.numStrips]);
+		graphNode->u.linestrip.numStrips++;
 
 		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < gd.numNations; i++) {

@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODES_H
 #define CLIENT_MENU_M_NODES_H
 
-#include "m_node_abstractvalue.h"
 #include "../cl_renderer.h"
 #include "../../common/common.h"
 #include "../../renderer/r_mesh.h"
@@ -88,18 +87,34 @@ typedef struct selectBoxOptions_s {
 
 #define MAX_LINESTRIPS 16
 
-typedef struct lineStrips_s {
+/**
+ * @brief extradata for common GUI widget which allow to
+ * edit a value (scroolbar, spinner, and more)
+ * @todo move it on m_node_abstractvalue.h when its possible
+ */
+typedef struct abstractValueExtraData_s {
+	void* min;	/**< Min value can take the value field */
+	void* max;	/**< Max value can take the value field */
+	void* value;	/**< Current value */
+	void* delta;	/**< Quantity the control add or remove in one step */
+} abstractValueExtraData_t;
+
+/**
+ * @brief extradata for the linestrip node
+ * @todo move it on m_node_linestrip.h when its possible
+ */
+typedef struct lineStripExtraData_s {
 	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes MN_LINESTRIP. */
 	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
 	vec4_t color[MAX_LINESTRIPS];	/**< Color of the point-list. */
 	int numStrips;			/**< Number of point-lists. */
-} lineStrips_t;
+} lineStripExtraData_t;
 
 /**
- * @brief extradata node for the model node
- * @todo move it on m_node_model.h
+ * @brief extradata for the model node
+ * @todo move it on m_node_model.h when its possible
  */
-typedef struct {
+typedef struct modelExtraData_s {
 	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
 	vec3_t angles;
 	vec3_t origin;
@@ -108,7 +123,7 @@ typedef struct {
 	void* tag;	/**< the tag to place the model onto */
 	void* animationState;	/**< holds then anim state for the current model */
 	void* animation;	/**< Anim string from the *.anm files */
-} modelDataNode_t;
+} modelExtraData_t;
 
 /**
  * @brief menu node
@@ -179,7 +194,6 @@ typedef struct menuNode_s {
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
-	lineStrips_t linestrips;	/**< List of lines to draw. (MN_LINESTRIP) */
 	const value_t *scriptValues;
 
 	/* MN_IMAGE, and more */
@@ -204,8 +218,9 @@ typedef struct menuNode_s {
 
 	/** union will contain all extradata for a node */
 	union {
-		abstractValueDataNode_t abstractvalue;
-		modelDataNode_t model;
+		abstractValueExtraData_t abstractvalue;
+		modelExtraData_t model;
+		lineStripExtraData_t linestrip;	/**< List of lines to draw. (MN_LINESTRIP) */
 	} u;
 
 } menuNode_t;
@@ -260,5 +275,6 @@ nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 void MN_InitNodes(void);
 
 #include "m_node_window.h"	/* define struct menu_s */
+#include "m_node_abstractvalue.h"	/* define struct menu_s */
 
 #endif
