@@ -75,7 +75,7 @@ static const value_t nps[] = {
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key), 0},
 
-	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, dataNodeTooltip), 0},	/* translated in MN_Tooltip */
+	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
 	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */

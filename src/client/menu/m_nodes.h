@@ -139,12 +139,12 @@ typedef struct menuNode_s {
 	int mousefx;
 	char* text;
 	void* font;	/**< Font to drw text */
+	void* tooltip; /**< holds the tooltip */
 
 	/** @todo need a cleanup
 	 */
 	void* dataImageOrModel;	/**< an image, or a model, this depends on the node type */
 	void* dataModelSkinOrCVar; /**< a skin or a cvar, this depends on the node type */
-	void* dataNodeTooltip; /**< holds the tooltip for the menu */
 
 	/* common color */
 	vec4_t color;				/**< rgba */

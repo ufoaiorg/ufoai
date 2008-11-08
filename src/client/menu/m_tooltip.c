@@ -82,13 +82,13 @@ void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 	int width = 0;
 
 	/* tooltips
-	 * dataNodeTooltip is a char pointer to the tooltip text
+	 * node->tooltip is a char pointer to the tooltip text
 	 * see value_t nps for more info */
 
 	/* maybe not tooltip but a key entity? */
-	if (node->dataNodeTooltip) {
+	if (node->tooltip) {
 		char buf[256]; /** @todo @sa MN_DrawTooltip */
-		tooltip = MN_GetReferenceString(menu, node->dataNodeTooltip);
+		tooltip = MN_GetReferenceString(menu, node->tooltip);
 		Q_strncpyz(buf, tooltip, sizeof(buf));
 		width = MN_DrawTooltip("f_small", buf, x, y, width, 0);
 		y += 20;
