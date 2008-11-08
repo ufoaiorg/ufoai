@@ -87,43 +87,10 @@ typedef struct selectBoxOptions_s {
 
 #define MAX_LINESTRIPS 16
 
-/**
- * @brief extradata for common GUI widget which allow to
- * edit a value (scroolbar, spinner, and more)
- * @todo move it on m_node_abstractvalue.h when its possible
- */
-typedef struct abstractValueExtraData_s {
-	void* min;	/**< Min value can take the value field */
-	void* max;	/**< Max value can take the value field */
-	void* value;	/**< Current value */
-	void* delta;	/**< Quantity the control add or remove in one step */
-} abstractValueExtraData_t;
-
-/**
- * @brief extradata for the linestrip node
- * @todo move it on m_node_linestrip.h when its possible
- */
-typedef struct lineStripExtraData_s {
-	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes MN_LINESTRIP. */
-	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
-	vec4_t color[MAX_LINESTRIPS];	/**< Color of the point-list. */
-	int numStrips;			/**< Number of point-lists. */
-} lineStripExtraData_t;
-
-/**
- * @brief extradata for the model node
- * @todo move it on m_node_model.h when its possible
- */
-typedef struct modelExtraData_s {
-	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
-	vec3_t angles;
-	vec3_t origin;
-	vec3_t center;
-	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
-	void* tag;	/**< the tag to place the model onto */
-	void* animationState;	/**< holds then anim state for the current model */
-	void* animation;	/**< Anim string from the *.anm files */
-} modelExtraData_t;
+/* extradata struct */
+#include "m_node_abstractvalue.h"
+#include "m_node_linestrip.h"
+#include "m_node_model.h"
 
 /**
  * @brief menu node
@@ -273,8 +240,5 @@ menuNode_t* MN_AllocNode(int type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 
 void MN_InitNodes(void);
-
-#include "m_node_window.h"	/* define struct menu_s */
-#include "m_node_abstractvalue.h"	/* define struct menu_s */
 
 #endif

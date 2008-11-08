@@ -25,8 +25,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_LINESTRIP_H
 #define CLIENT_MENU_M_NODE_LINESTRIP_H
 
-#include "m_nodes.h"
+/**
+ * @brief extradata for the linestrip node
+ */
+typedef struct lineStripExtraData_s {
+	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes MN_LINESTRIP. */
+	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
+	vec4_t color[MAX_LINESTRIPS];	/**< Color of the point-list. */
+	int numStrips;			/**< Number of point-lists. */
+} lineStripExtraData_t;
 
-void MN_RegisterLineStripNode(nodeBehaviour_t *behaviour);
+struct nodeBehaviour_s; /* prototype */
+void MN_RegisterLineStripNode(struct nodeBehaviour_s *behaviour);
 
 #endif

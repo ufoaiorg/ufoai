@@ -59,14 +59,28 @@ typedef struct menuModel_s {
 	struct menuModel_s *next;
 } menuModel_t;
 
+/**
+ * @brief extradata for the model node
+ */
+typedef struct modelExtraData_s {
+	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
+	vec3_t angles;
+	vec3_t origin;
+	vec3_t center;
+	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
+	void* tag;	/**< the tag to place the model onto */
+	void* animationState;	/**< holds then anim state for the current model */
+	void* animation;	/**< Anim string from the *.anm files */
+} modelExtraData_t;
+
 void MN_LinkMenuModels(void);
 menuModel_t *MN_GetMenuModel(const char *menuModel);
 void MN_ListMenuModels_f(void);
 
-void MN_DrawModelNode(menuNode_t *node, const char *ref, const char *source);
+struct menuNode_s; /* prototype */
+void MN_DrawModelNode(struct menuNode_s *node, const char *ref, const char *source);
 
-void MN_RegisterModelNode(nodeBehaviour_t *behaviour);
-
-
+struct nodeBehaviour_s; /* prototype */
+void MN_RegisterModelNode(struct nodeBehaviour_s *behaviour);
 
 #endif

@@ -27,8 +27,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_ABSTRACTVALUE_H
 #define CLIENT_MENU_M_NODE_ABSTRACTVALUE_H
 
-#include "m_nodes.h"
+/**
+ * @brief extradata for common GUI widget which allow to
+ * edit a value (scroolbar, spinner, and more)
+ */
+typedef struct abstractValueExtraData_s {
+	void* min;	/**< Min value can take the value field */
+	void* max;	/**< Max value can take the value field */
+	void* value;	/**< Current value */
+	void* delta;	/**< Quantity the control add or remove in one step */
+} abstractValueExtraData_t;
 
-void MN_RegisterAbstractValueNode(nodeBehaviour_t *behavior);
+struct nodeBehaviour_s; /* prototype */
+void MN_RegisterAbstractValueNode(struct nodeBehaviour_s *behavior);
 
 #endif
