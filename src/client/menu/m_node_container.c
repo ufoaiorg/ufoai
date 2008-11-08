@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_node_model.h"
+#include "m_node_container.h"
 
 inventory_t *menuInventory = NULL;
 
@@ -1110,7 +1111,7 @@ static void MN_ContainerRightClick (menuNode_t *node, int x, int y)
 	MN_Drag(node, baseCurrent, x, y, qtrue);
 }
 
-void MN_RegisterNodeContainer (nodeBehaviour_t* behaviour)
+void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
 	behaviour->draw = MN_DrawContainerNode2;

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_input.h"
+#include "m_node_checkbox.h"
 
 /**
  * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
@@ -100,7 +101,7 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 	MN_SetCvar(cvarName, NULL, value);
 }
 
-void MN_RegisterNodeCheckBox (nodeBehaviour_t *behaviour)
+void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->draw = MN_CheckBoxNodeDraw;

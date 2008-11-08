@@ -120,7 +120,7 @@ static void MN_ButtonNodeLoading (menuNode_t *node)
 	/* node->align = ALIGN_CC; */
 }
 
-void MN_RegisterNodeButton (nodeBehaviour_t *behaviour)
+void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
 	behaviour->draw = MN_ButtonNodeDraw;

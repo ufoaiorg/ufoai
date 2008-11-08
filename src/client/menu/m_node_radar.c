@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_actor.h"
 #include "m_main.h"
 #include "m_font.h"
+#include "m_node_radar.h"
 
 /** @brief Each maptile must have an entry in the images array */
 typedef struct hudRadarImage_s {
@@ -476,7 +477,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	}
 }
 
-void MN_RegisterNodeRadar (nodeBehaviour_t *behaviour)
+void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;

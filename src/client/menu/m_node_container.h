@@ -30,7 +30,7 @@ struct base_s;
 #include "m_nodes.h"
 #include "m_dragndrop.h"
 
-void MN_RegisterNodeContainer(nodeBehaviour_t *behaviour);
+void MN_RegisterContainerNode(nodeBehaviour_t *behaviour);
 void MN_FindContainer(menuNode_t* const node);
 invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY);
 void MN_Drag(const menuNode_t* const node, struct base_s *base, int x, int y, qboolean rightClick);

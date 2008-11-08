@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "m_node_text.h"
+
 #ifndef CLIENT_MENU_M_POPUP_H
 #define CLIENT_MENU_M_POPUP_H
 

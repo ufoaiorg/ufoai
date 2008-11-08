@@ -120,7 +120,7 @@ static const value_t windowNodeProperties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterNodeWindow (nodeBehaviour_t *behaviour)
+void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "menu";
 	/* behaviour->loading = MN_WindowNodeLoading; */

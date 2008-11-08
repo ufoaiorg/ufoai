@@ -114,22 +114,54 @@ typedef struct {
  * @todo delete data* when it's possible
  */
 typedef struct menuNode_s {
+	/* common identification */
 	char name[MAX_VAR];
-	char key[MAX_VAR];
 	int type;
-	vec3_t scale;
 
+	/* common navigation */
+	struct menuNode_s *next;
+	struct menu_s *menu;		/**< backlink */
+
+	/* common pos */
 	vec2_t pos;
 	vec2_t size;
-	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
-	vec2_t texl;				/**< upper left texture coordinates */
+
+	/* common attributes */
+	char key[MAX_VAR];
 	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
 	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
-	qboolean invis, blend;
+	qboolean invis;
+	qboolean blend;
 	qboolean disabled;			/**< true, the node is unactive */
 	int mousefx;
+	char* text;
+
+	/** @todo need a cleanup
+	 */
+	void* dataImageOrModel;	/**< an image, or a model, this depends on the node type */
+	void* dataModelSkinOrCVar; /**< a skin or a cvar, this depends on the node type */
+	void* dataNodeTooltip; /**< holds the tooltip for the menu */
+	void* dataAnimOrFont;	/** Anim string from the *.anm files for the model; or font */
+
+	/* common color */
+	vec4_t color;				/**< rgba */
+	vec4_t bgcolor;				/**< rgba */
+	vec4_t bordercolor;			/**< rgba - see border and padding */
+	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
+
+	/* common events */
+	struct menuAction_s *click;
+	struct menuAction_s *rclick;
+	struct menuAction_s *mclick;
+	struct menuAction_s *wheel;
+	struct menuAction_s *mouseIn;
+	struct menuAction_s *mouseOut;
+	struct menuAction_s *wheelUp;
+	struct menuAction_s *wheelDown;
+
+	vec3_t scale;
 	invDef_t *container;		/** The container linked to this node. */
 	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
 	int textScroll;				/**< textfields - current scroll position */
@@ -139,16 +171,6 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
-	int height;					/**< textfields: max. rows to show
-								 * select box: options count */
-	int baseid;					/**< the baseid - e.g. for baselayout nodes */
-	struct selectBoxOptions_s *options;	/**< pointer to select box options when type is MN_SELECTBOX */
-	vec4_t color;				/**< rgba */
-	vec4_t bgcolor;				/**< rgba */
-	vec4_t bordercolor;			/**< rgba - see border and padding */
-	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
-	struct menuAction_s *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut, *wheelUp, *wheelDown;
 	qboolean repeat;			/**< repeat action when "click" is holded */
 	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
@@ -156,21 +178,28 @@ typedef struct menuNode_s {
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
-	struct menuNode_s *next;
-	struct menu_s *menu;		/**< backlink */
 	lineStrips_t linestrips;	/**< List of lines to draw. (MN_LINESTRIP) */
+	const value_t *scriptValues;
+
+	/* MN_IMAGE, and more */
+	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
+	vec2_t texl;				/**< upper left texture coordinates */
+
+	/* MN_TBAR */
 	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
 	int gapWidth;				/**< MN_TBAR: tens separator width */
-	const value_t *scriptValues;
-	char* text;
+
+	/* MN_TEXT */
 	int lineUnderMouse;	/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
-	void* dataImageOrModel;	/**< First entry in data array can
-						* be an image, or a model, this depends
-						* on the node type
-						*/
-	void* dataModelSkinOrCVar; /**< the skin of the model */
-	void* dataNodeTooltip; /**< holds the tooltip for the menu */
-	void* dataAnimOrFont;	/** Anim string from the *.anm files for the model; or font */
+	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
+	int height;					/**< textfields: max. rows to show
+								 * select box: options count */
+
+	/* BaseLayout */
+	int baseid;					/**< the baseid - e.g. for baselayout nodes */
+
+	/* MN_SELECTBOX, and more */
+	struct selectBoxOptions_s *options;	/**< pointer to select box options when type is MN_SELECTBOX */
 
 	/** union will contain all extradata for a node */
 	union {
@@ -229,23 +258,6 @@ nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 
 void MN_InitNodes(void);
 
-#include "m_node_window.h"
-#include "m_node_bar.h"
-#include "m_node_base.h"
-#include "m_node_checkbox.h"
-#include "m_node_cinematic.h"
-#include "m_node_container.h"
-#include "m_node_controls.h"
-#include "m_node_image.h"
-#include "m_node_item.h"
-#include "m_node_linestrip.h"
-#include "m_node_map.h"
-#include "m_node_model.h"
-#include "m_node_radar.h"
-#include "m_node_selectbox.h"
-#include "m_node_string.h"
-#include "m_node_tab.h"
-#include "m_node_tbar.h"
-#include "m_node_text.h"
+#include "m_node_window.h"	/* define struct menu_s */
 
 #endif

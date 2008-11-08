@@ -27,6 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_nodes.h"
 
-void MN_RegisterNodeMap(nodeBehaviour_t*);
+void MN_RegisterMapNode(nodeBehaviour_t*);
 
 #endif

@@ -65,7 +65,7 @@ void MN_ListMenuModels_f(void);
 
 void MN_DrawModelNode(menuNode_t *node, const char *ref, const char *source);
 
-void MN_RegisterNodeModel(nodeBehaviour_t *behaviour);
+void MN_RegisterModelNode(nodeBehaviour_t *behaviour);
 
 
 

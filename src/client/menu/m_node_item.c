@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_node_model.h"
+#include "m_node_item.h"
+#include "m_node_container.h"
 
 static void MN_DrawItemNode (menuNode_t *node, const char *itemName)
 {
@@ -81,7 +83,7 @@ static void MN_DrawItemNode2 (menuNode_t *node)
 	}
 }
 
-void MN_RegisterNodeItem (nodeBehaviour_t *behaviour)
+void MN_RegisterItemNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
 	behaviour->draw = MN_DrawItemNode2;

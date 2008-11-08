@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_input.h"
+#include "m_node_bar.h"
 
 static void MN_DrawBarNode (menuNode_t *node)
 {
@@ -71,7 +72,7 @@ static void MN_BarClick (menuNode_t * node, int x, int y)
 	}
 }
 
-void MN_RegisterNodeBar (nodeBehaviour_t *behaviour)
+void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->draw = MN_DrawBarNode;

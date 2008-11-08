@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
+#include "m_node_image.h"
 
 /**
  * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
@@ -103,7 +104,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
 }
 
-void MN_RegisterNodeImage (nodeBehaviour_t* behaviour)
+void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "pic";
 	behaviour->draw = MN_ImageNodeDraw;

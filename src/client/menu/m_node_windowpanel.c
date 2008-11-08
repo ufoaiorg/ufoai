@@ -103,7 +103,7 @@ static void MN_WindowPanelNodeDraw (menuNode_t *node)
 		RIGHT_POSX, BOTTOM_POSY, ALIGN_UL, node->blend, image);
 }
 
-void MN_RegisterNodeWindowPanel (nodeBehaviour_t *behaviour)
+void MN_RegisterWindowPanelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "windowpanel";
 	behaviour->draw = MN_WindowPanelNodeDraw;

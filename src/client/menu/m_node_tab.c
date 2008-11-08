@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_font.h"
 #include "m_input.h"
+#include "m_node_tab.h"
 
 typedef enum {
 	MN_TAB_NOTHING = 0,
@@ -243,7 +244,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawPlain(image, currentX, node->pos[1], node->pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
 }
 
-void MN_RegisterNodeTab (nodeBehaviour_t *behaviour)
+void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->draw = MN_TabNodeDraw;

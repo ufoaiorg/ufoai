@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_main.h"
 #include "m_node_image.h"
+#include "m_node_controls.h"
 #include "../cl_input.h"
 #include "../cl_keys.h"
 
@@ -100,7 +101,7 @@ static void MN_ControlsNodeDraw(menuNode_t *node)
 	MN_ImageNodeDraw(node);
 }
 
-void MN_RegisterNodeControls (nodeBehaviour_t *behaviour)
+void MN_RegisterControlsNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
 	behaviour->draw = MN_ControlsNodeDraw;

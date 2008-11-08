@@ -317,7 +317,7 @@ static void MN_UnHideNode_f (void)
 /**
  * @brief Init a behaviour to null. A null node doesn't react
  */
-static inline void MN_RegisterNodeNull (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual)
+static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
@@ -340,33 +340,33 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 
 	/* menu node */
-	MN_RegisterNodeWindow(&menuBehaviour);
+	MN_RegisterWindowNode(&menuBehaviour);
 
 	/* all nodes */
-	MN_RegisterNodeNull(nodeBehaviourList + MN_NULL, "", qtrue);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_FUNC, "func", qtrue);
-	MN_RegisterNodeNull(nodeBehaviourList + MN_ZONE, "zone", qfalse);
-	MN_RegisterNodeImage(nodeBehaviourList + MN_PIC);
-	MN_RegisterNodeString(nodeBehaviourList + MN_STRING);
-	MN_RegisterNodeText(nodeBehaviourList + MN_TEXT);
-	MN_RegisterNodeBar(nodeBehaviourList + MN_BAR);
-	MN_RegisterNodeTBar(nodeBehaviourList + MN_TBAR);
-	MN_RegisterNodeModel(nodeBehaviourList + MN_MODEL);
-	MN_RegisterNodeContainer(nodeBehaviourList + MN_CONTAINER);
-	MN_RegisterNodeItem(nodeBehaviourList + MN_ITEM);
-	MN_RegisterNodeMap(nodeBehaviourList + MN_MAP);
-	MN_RegisterNodeBaseMap(nodeBehaviourList + MN_BASEMAP);
-	MN_RegisterNodeBaseLayout(nodeBehaviourList + MN_BASELAYOUT);
-	MN_RegisterNodeCheckBox(nodeBehaviourList + MN_CHECKBOX);
-	MN_RegisterNodeSelectBox(nodeBehaviourList + MN_SELECTBOX);
-	MN_RegisterNodeLineStrip(nodeBehaviourList + MN_LINESTRIP);
-	MN_RegisterNodeCinematic(nodeBehaviourList + MN_CINEMATIC);
-	MN_RegisterNodeRadar(nodeBehaviourList + MN_RADAR);
-	MN_RegisterNodeTab(nodeBehaviourList + MN_TAB);
-	MN_RegisterNodeControls(nodeBehaviourList + MN_CONTROLS);
-	MN_RegisterNodeCustomButton(nodeBehaviourList + MN_CUSTOMBUTTON);
-	MN_RegisterNodeWindowPanel(nodeBehaviourList + MN_WINDOWPANEL);
-	MN_RegisterNodeButton(nodeBehaviourList + MN_BUTTON);
+	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue);
+	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue);
+	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue);
+	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue);
+	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse);
+	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
+	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
+	MN_RegisterTextNode(nodeBehaviourList + MN_TEXT);
+	MN_RegisterBarNode(nodeBehaviourList + MN_BAR);
+	MN_RegisterTBarNode(nodeBehaviourList + MN_TBAR);
+	MN_RegisterModelNode(nodeBehaviourList + MN_MODEL);
+	MN_RegisterContainerNode(nodeBehaviourList + MN_CONTAINER);
+	MN_RegisterItemNode(nodeBehaviourList + MN_ITEM);
+	MN_RegisterMapNode(nodeBehaviourList + MN_MAP);
+	MN_RegisterBaseMapNode(nodeBehaviourList + MN_BASEMAP);
+	MN_RegisterBaseLayoutNode(nodeBehaviourList + MN_BASELAYOUT);
+	MN_RegisterCheckBoxNode(nodeBehaviourList + MN_CHECKBOX);
+	MN_RegisterSelectBoxNode(nodeBehaviourList + MN_SELECTBOX);
+	MN_RegisterLineStripNode(nodeBehaviourList + MN_LINESTRIP);
+	MN_RegisterCinematicNode(nodeBehaviourList + MN_CINEMATIC);
+	MN_RegisterRadarNode(nodeBehaviourList + MN_RADAR);
+	MN_RegisterTabNode(nodeBehaviourList + MN_TAB);
+	MN_RegisterControlsNode(nodeBehaviourList + MN_CONTROLS);
+	MN_RegisterCustomButtonNode(nodeBehaviourList + MN_CUSTOMBUTTON);
+	MN_RegisterWindowPanelNode(nodeBehaviourList + MN_WINDOWPANEL);
+	MN_RegisterButtonNode(nodeBehaviourList + MN_BUTTON);
 }

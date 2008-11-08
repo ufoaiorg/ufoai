@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_font.h"
 #include "m_input.h"
+#include "m_node_selectbox.h"
 
 #define SELECTBOX_SIDE_WIDTH 7.0f
 #define SELECTBOX_RIGHT_WIDTH 20.0f
@@ -237,7 +238,7 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	}
 }
 
-void MN_RegisterNodeSelectBox (nodeBehaviour_t *behaviour)
+void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->draw = MN_SelectBoxNodeDraw;

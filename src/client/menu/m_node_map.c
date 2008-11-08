@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_node_model.h"
+#include "m_node_map.h"
 #include "../cl_global.h"
 
 static void MN_MapNodeDraw (menuNode_t *node)
@@ -87,7 +88,7 @@ static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 	MAP_StopSmoothMovement();
 }
 
-void MN_RegisterNodeMap (nodeBehaviour_t *behaviour)
+void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
 	behaviour->draw = MN_MapNodeDraw;

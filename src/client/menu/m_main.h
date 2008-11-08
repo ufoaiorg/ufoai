@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_actions.h"
 #include "m_messages.h"
 #include "m_nodes.h"
+#include "m_node_model.h"
 
 typedef struct mouseRepeat_s {
 	menu_t *menu;				/**< where - the menu is it executed in (context) */

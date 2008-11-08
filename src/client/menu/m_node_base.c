@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_node_model.h"
+#include "m_node_base.h"
 #include "m_input.h"
 
 /**
@@ -300,7 +301,7 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
 			}
 }
 
-void MN_RegisterNodeBaseMap (nodeBehaviour_t *behaviour)
+void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->draw = MN_BaseMapDraw;
@@ -308,7 +309,7 @@ void MN_RegisterNodeBaseMap (nodeBehaviour_t *behaviour)
 	behaviour->rightClick = MN_BaseMapRightClick;
 }
 
-void MN_RegisterNodeBaseLayout (nodeBehaviour_t *behaviour)
+void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->draw = MN_BaseLayoutNodeDraw;

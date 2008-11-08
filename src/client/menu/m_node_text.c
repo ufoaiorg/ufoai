@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_main.h"
 #include "m_font.h"
+#include "m_node_text.h"
 
 /**
  * @brief Scrolls the text in a textbox up/down.
@@ -484,7 +485,7 @@ static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y
 	}
 }
 
-void MN_RegisterNodeText (nodeBehaviour_t *behaviour)
+void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
 	behaviour->draw = MN_TextNodeDraw;

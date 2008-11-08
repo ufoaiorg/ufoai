@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_nodes.h"
 #include "m_parse.h"
+#include "m_node_tbar.h"
 
 static void MN_TBarNodeDraw (menuNode_t *node)
 {
@@ -47,7 +48,7 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 		shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 }
 
-void MN_RegisterNodeTBar (nodeBehaviour_t *behaviour)
+void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->draw = MN_TBarNodeDraw;

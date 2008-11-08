@@ -487,7 +487,7 @@ static void MN_ModelClick (menuNode_t * node, int x, int y)
 	rotateAngles = node->u.model.angles;
 }
 
-void MN_RegisterNodeModel (nodeBehaviour_t *behaviour)
+void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
 	behaviour->draw = MN_DrawModelNode2;

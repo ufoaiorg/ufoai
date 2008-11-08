@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_font.h"
 #include "m_parse.h"
 #include "../client.h"
+#include "m_node_string.h"
 
 static void MN_StringNodeDraw (menuNode_t *node)
 {
@@ -47,7 +48,7 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	R_ColorBlend(NULL);
 }
 
-void MN_RegisterNodeString (nodeBehaviour_t *behaviour)
+void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->draw = MN_StringNodeDraw;

@@ -49,7 +49,7 @@ typedef struct menu_s {
 	menuNode_t *leaveNode;
 } menu_t;
 
-void MN_RegisterNodeWindow(nodeBehaviour_t *behaviour);
+void MN_RegisterWindowNode(nodeBehaviour_t *behaviour);
 
 menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 menuNode_t *MN_GetLastNode(const menu_t* const menu);
