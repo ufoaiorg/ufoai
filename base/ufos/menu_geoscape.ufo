@@ -2462,7 +2462,7 @@ menu messageoptions
 
 	pic header_pause
 	{
-		tooltip	"_enable or disable pause for all notification types\nPause can't be enabled without notification"
+		tooltip	"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
 		pos		"364 60"
 		align	ur
 		image	menu/notify_pause
@@ -2471,7 +2471,7 @@ menu messageoptions
 
 	pic header_notify
 	{
-		tooltip	"_enable or disable messages being displayed for all notification types"
+		tooltip	"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
 		pos		"394 60"
 		align	ur
 		image	menu/notify_notice
@@ -2480,7 +2480,7 @@ menu messageoptions
 	
 	pic header_sound
 	{
-		tooltip	"_enable or disable sounds being played for all notification types"
+		tooltip	"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
 		pos		"424 60"
 		align	ur
 		image	menu/notify_sound
@@ -2498,6 +2498,7 @@ menu messageoptions
 		wheel	{ cmd "msgoptions_scroll;" }
 		mousefx	true
 		longlines prettychop
+		click
 	}
 
 	pic bt_pause0 {
