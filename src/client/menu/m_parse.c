@@ -110,7 +110,7 @@ static const value_t nps[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
-/** @brief valid properties for a select box */
+/** @brief valid properties for options of the selectbox and tab */
 static const value_t selectBoxValues[] = {
 	{"label", V_TRANSLATION_MANUAL_STRING, offsetof(selectBoxOptions_t, label), sizeof(char) * SELECTBOX_MAX_VALUE_LENGTH},
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},

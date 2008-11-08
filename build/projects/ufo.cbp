@@ -338,6 +338,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_messages.h" />
+		<Unit filename="..\..\src\client\menu\m_node_abstractvalue.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_abstractvalue.h" />
 		<Unit filename="..\..\src\client\menu\m_node_bar.c">
 			<Option compilerVar="CC" />
