@@ -30,26 +30,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_window.h"
 #include "m_node_selectbox.h"
 
-typedef struct {
-	const char *name;
-	const size_t ofs;
-} eventProperty_t;
+#define	V_ACTION	0xF000 /**< Identify an action type into the value_t structure */
 
 /**
  * @brief valid node event ids
  * @todo merge it with the properties
  */
-static const eventProperty_t eventProperties[NE_NUM_NODEEVENT] = {
-	{"", 0},
-	{"click", offsetof(menuNode_t, click)},
-	{"rclick", offsetof(menuNode_t, rclick)},
-	{"mclick", offsetof(menuNode_t, mclick)},
-	{"wheel", offsetof(menuNode_t, wheel)},
-	{"in", offsetof(menuNode_t, mouseIn)},
-	{"out", offsetof(menuNode_t, mouseOut)},
-	{"whup", offsetof(menuNode_t, wheelUp)},
-	{"whdown", offsetof(menuNode_t, wheelDown)},
-	/* {NULL, 0} */
+static const value_t eventProperties[] = {
+	{"click", V_ACTION, offsetof(menuNode_t, click), MEMBER_SIZEOF(menuNode_t, click)},
+	{"rclick", V_ACTION, offsetof(menuNode_t, rclick), MEMBER_SIZEOF(menuNode_t, rclick)},
+	{"mclick", V_ACTION, offsetof(menuNode_t, mclick), MEMBER_SIZEOF(menuNode_t, mclick)},
+	{"wheel", V_ACTION, offsetof(menuNode_t, wheel), MEMBER_SIZEOF(menuNode_t, wheel)},
+	{"in", V_ACTION, offsetof(menuNode_t, mouseIn), MEMBER_SIZEOF(menuNode_t, mouseIn)},
+	{"out", V_ACTION, offsetof(menuNode_t, mouseOut), MEMBER_SIZEOF(menuNode_t, mouseOut)},
+	{"whup", V_ACTION, offsetof(menuNode_t, wheelUp), MEMBER_SIZEOF(menuNode_t, wheelUp)},
+	{"whdown", V_ACTION, offsetof(menuNode_t, wheelDown), MEMBER_SIZEOF(menuNode_t, wheelDown)},
+	{NULL, V_NULL, 0, 0}
 };
 
 /* =========================================================== */
@@ -175,22 +171,6 @@ static const value_t* findPropertyByName (const value_t* propertyList, const cha
 		current++;
 	}
 	return NULL;
-}
-
-/**
- * @brief Find an event id by his name
- * @param[in] name Name of the property
- * @return the event id, if not find -1
- */
-static int findEventPropertyByName (const char *name)
-{
-	int i;
-	for (i = 0; i < NE_NUM_NODEEVENT; i++) {
-		if (!Q_strcmp(name, eventProperties[i].name)) {
-			return i;
-		}
-	}
-	return -1;
 }
 
 /**
@@ -532,14 +512,14 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 }
 
 
-static qboolean MN_ParseEventProperty (menuNode_t * node, int eventId, const char **text, const char **token, const char *errhead)
+static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, const char **text, const char **token, const char *errhead)
 {
 	menuAction_t **action;
 
 	/* Com_Printf("  %s\n", *token); */
 
 	/* add new actions to end of list */
-	action = (menuAction_t **) ((byte *) node + eventProperties[eventId].ofs);
+	action = (menuAction_t **) ((byte *) node + event->ofs);
 	for (; *action; action = &(*action)->next) {}
 
 	if (mn.numActions >= MAX_MENUACTIONS)
@@ -597,7 +577,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 	do {
 		const value_t *val;
-		int eventId;
+		const value_t *event;
 		qboolean result;
 
 		/* get new token */
@@ -619,7 +599,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (!val && nodeBehaviourList[node->type].properties)
 			val = findPropertyByName(nodeBehaviourList[node->type].properties, *token);
 		if (!val)
-			eventId = findEventPropertyByName(*token);
+			event = findPropertyByName(eventProperties, *token);
 
 		/* is it a property */
 		if (val) {
@@ -628,8 +608,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 				return qfalse;
 
 		/* is it an event property */
-		} else if (eventId != -1) {
-			result = MN_ParseEventProperty(node, eventId, text, token, errhead);
+		} else if (event) {
+			result = MN_ParseEventProperty(node, event, text, token, errhead);
 			if (!result)
 				return qfalse;
 			nextTokenAlreadyRead = qtrue;

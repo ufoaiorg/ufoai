@@ -54,20 +54,6 @@ typedef struct menuAction_s {
 	const value_t *scriptValues;
 } menuAction_t;
 
-typedef enum ne_s {
-	NE_NULL,
-	NE_CLICK,
-	NE_RCLICK,
-	NE_MCLICK,
-	NE_WHEEL,
-	NE_MOUSEIN,
-	NE_MOUSEOUT,
-	NE_WHEELUP,
-	NE_WHEELDOWN,
-
-	NE_NUM_NODEEVENT
-} ne_t;
-
 void MN_ExecuteConfunc(const char *confunc);
 
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
