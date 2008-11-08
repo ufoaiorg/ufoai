@@ -79,11 +79,10 @@ static const value_t nps[] = {
 	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
-	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
 	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
 	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
 	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
-	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataAnimOrFont), 0},
+	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, font), 0},
 #if 0 /* never use */
 	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
 #endif
@@ -91,6 +90,7 @@ static const value_t nps[] = {
 	/* specific for model
 	 * @todo move it into the node behaviour
 	 */
+	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.animation), MEMBER_SIZEOF(menuNode_t, u.model.animation)},
 	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
 	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
 	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},

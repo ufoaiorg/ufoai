@@ -144,11 +144,11 @@ void MN_ParseFont (const char *name, const char **text)
  */
 const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 {
-	if (!n || n->dataAnimOrFont) {
+	if (!n || n->font) {
 		if (!m)
 			m = MN_GetActiveMenu();
 
-		return MN_GetReferenceString(m, n->dataAnimOrFont);
+		return MN_GetReferenceString(m, n->font);
 	}
 	return "f_small";
 }

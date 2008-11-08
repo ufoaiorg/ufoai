@@ -107,6 +107,7 @@ typedef struct {
 	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
 	void* tag;	/**< the tag to place the model onto */
 	void* animationState;	/**< holds then anim state for the current model */
+	void* animation;	/**< Anim string from the *.anm files */
 } modelDataNode_t;
 
 /**
@@ -137,13 +138,13 @@ typedef struct menuNode_s {
 	qboolean disabled;			/**< true, the node is unactive */
 	int mousefx;
 	char* text;
+	void* font;	/**< Font to drw text */
 
 	/** @todo need a cleanup
 	 */
 	void* dataImageOrModel;	/**< an image, or a model, this depends on the node type */
 	void* dataModelSkinOrCVar; /**< a skin or a cvar, this depends on the node type */
 	void* dataNodeTooltip; /**< holds the tooltip for the menu */
-	void* dataAnimOrFont;	/** Anim string from the *.anm files for the model; or font */
 
 	/* common color */
 	vec4_t color;				/**< rgba */

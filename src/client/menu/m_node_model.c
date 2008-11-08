@@ -310,8 +310,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				VectorCopy(node->u.model.center, mi.center);
 
 				/* get the animation given by menu node properties */
-				if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
-					ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
+				if (node->u.model.animation && *(char *) node->u.model.animation) {
+					ref = MN_GetReferenceString(menu, node->u.model.animation);
 				/* otherwise use the standard animation from modelmenu defintion */
 				} else
 					ref = menuModel->anim;
@@ -384,8 +384,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				mi.skin = 0;
 
 			/* do animations */
-			if (node->dataAnimOrFont && *(char *) node->dataAnimOrFont) {
-				ref = MN_GetReferenceString(menu, node->dataAnimOrFont);
+			if (node->u.model.animation && *(char *) node->u.model.animation) {
+				ref = MN_GetReferenceString(menu, node->u.model.animation);
 				if (updateModel) {
 					/* model has changed but mem is already reserved in pool */
 					if (node->u.model.animationState) {
@@ -459,7 +459,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 
 						as = search->u.model.animationState;
 						if (!as)
-							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->dataAnimOrFont);
+							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->u.model.animation);
 						pmi.frame = as->frame;
 						pmi.oldframe = as->oldframe;
 						pmi.backlerp = as->backlerp;
