@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_node_bar.h"
 #include "m_node_abstractvalue.h"
+#include "../cl_keys.h"
 
 static void MN_DrawBarNode (menuNode_t *node)
 {
@@ -48,29 +49,49 @@ static void MN_DrawBarNode (menuNode_t *node)
 }
 
 /**
- * @brief Handles the bar cvar values
- * @sa Key_Message
+ * @brief Called when the node is captured by the mouse
  */
-static void MN_BarClick (menuNode_t * node, int x, int y)
+static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
 	char var[MAX_VAR];
 	vec2_t pos;
 	menu_t * menu = node->menu;
 
-	if (!node->mousefx)
-		return;
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+
+	if (x < 0)
+		x = 0;
+	else if (x > node->size[0])
+		x = node->size[0];
 
 	MN_GetNodeAbsPos(node, pos);
 	Q_strncpyz(var, node->u.abstractvalue.value, sizeof(var));
 	/* no cvar? */
 	if (!Q_strncmp(var, "*cvar", 5)) {
 		/* normalize it */
-		const float frac = (float) (x - pos[0]) / node->size[0];
+		const float frac = (float) x / node->size[0];
 		const float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
 		const float value = min + frac * (MN_GetReferenceFloat(menu, node->u.abstractvalue.max) - min);
 		/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 		MN_SetCvar(&var[6], NULL, value);
 	}
+}
+
+static void MN_BarNodeMouseDown (menuNode_t *node, int x, int y, int button)
+{
+	if (!node->mousefx || node->disabled)
+		return;
+
+	if (button == K_MOUSE1) {
+		MN_SetMouseCapture(node);
+		MN_BarNodeCapturedMouseMove(node, x, y);
+	}
+}
+
+static void MN_BarNodeMouseUp (menuNode_t *node, int x, int y, int button)
+{
+	if (button == K_MOUSE1)
+		MN_MouseRelease();
 }
 
 void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
@@ -80,6 +101,8 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	/* overwrite */
 	behaviour->name = "bar";
 	behaviour->draw = MN_DrawBarNode;
-	behaviour->leftClick = MN_BarClick;
+	behaviour->mouseDown = MN_BarNodeMouseDown;
+	behaviour->mouseUp = MN_BarNodeMouseUp;
+	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
 }
 
