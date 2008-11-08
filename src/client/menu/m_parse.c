@@ -30,29 +30,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_window.h"
 #include "m_node_selectbox.h"
 
-/** @brief valid node event ids */
-static const char *ne_strings[NE_NUM_NODEEVENT] = {
-	"",
-	"click",
-	"rclick",
-	"mclick",
-	"wheel",
-	"in",
-	"out",
-	"whup",
-	"whdown"
-};
+typedef struct {
+	const char *name;
+	const size_t ofs;
+} eventProperty_t;
 
-static size_t const ne_values[NE_NUM_NODEEVENT] = {
-	0,
-	offsetof(menuNode_t, click),
-	offsetof(menuNode_t, rclick),
-	offsetof(menuNode_t, mclick),
-	offsetof(menuNode_t, wheel),
-	offsetof(menuNode_t, mouseIn),
-	offsetof(menuNode_t, mouseOut),
-	offsetof(menuNode_t, wheelUp),
-	offsetof(menuNode_t, wheelDown)
+/**
+ * @brief valid node event ids
+ * @todo merge it with the properties
+ */
+static const eventProperty_t eventProperties[NE_NUM_NODEEVENT] = {
+	{"", 0},
+	{"click", offsetof(menuNode_t, click)},
+	{"rclick", offsetof(menuNode_t, rclick)},
+	{"mclick", offsetof(menuNode_t, mclick)},
+	{"wheel", offsetof(menuNode_t, wheel)},
+	{"in", offsetof(menuNode_t, mouseIn)},
+	{"out", offsetof(menuNode_t, mouseOut)},
+	{"whup", offsetof(menuNode_t, wheelUp)},
+	{"whdown", offsetof(menuNode_t, wheelDown)},
+	/* {NULL, 0} */
 };
 
 /* =========================================================== */
@@ -169,7 +166,8 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
  */
-static const value_t* findPropertyByName(const value_t* propertyList, const char* name) {
+static const value_t* findPropertyByName (const value_t* propertyList, const char* name)
+{
 	const value_t* current = propertyList;
 	while (current->string != NULL) {
 		if (!Q_strcasecmp(name, current->string))
@@ -177,6 +175,22 @@ static const value_t* findPropertyByName(const value_t* propertyList, const char
 		current++;
 	}
 	return NULL;
+}
+
+/**
+ * @brief Find an event id by his name
+ * @param[in] name Name of the property
+ * @return the event id, if not find -1
+ */
+static int findEventPropertyByName (const char *name)
+{
+	int i;
+	for (i = 0; i < NE_NUM_NODEEVENT; i++) {
+		if (!Q_strcmp(name, eventProperties[i].name)) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 /**
@@ -364,6 +378,191 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 	return qfalse;
 }
 
+static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char **token, const char *errhead)
+{
+	const value_t *val;
+
+	/* get parameters */
+	*token = COM_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+	/** @todo mem corruption in case of too many select box options */
+	Q_strncpyz(mn.menuSelectBoxes[mn.numSelectBoxes].id, *token, sizeof(mn.menuSelectBoxes[mn.numSelectBoxes].id));
+	Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
+
+	*token = COM_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+	if (**token != '{') {
+		Com_Printf("MN_ParseNodeBody: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+		return qtrue;
+	}
+
+	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
+		FS_SkipBlock(text);
+		Com_Printf("MN_ParseNodeBody: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
+		return qfalse;
+	}
+
+	/**
+	 * the options data can be defined like this
+	 * @code
+	 * option string {
+	 *  value "value"
+	 *  action "command string"
+	 * }
+	 * @endcode
+	 * The strings will appear in the drop down list of the select box
+	 * if you select the 'string', the 'cvarname' will be set to 'value'
+	 * and if action is defined (which is a console/script command string)
+	 * this one is executed on each selection
+	 */
+
+	do {
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+		if (**token == '}')
+			break;
+
+		val = findPropertyByName(selectBoxValues, *token);
+		if (val) {
+			/* get parameter values */
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			switch (val->type) {
+			case V_TRANSLATION_MANUAL_STRING:
+				if (val->size) {
+					/* selectbox values are static arrays */
+					char *target = ((char*)&mn.menuSelectBoxes[mn.numSelectBoxes] + val->ofs);
+					const char *translateableToken = *token;
+					if (*translateableToken == '_')
+						translateableToken++;
+					Q_strncpyz(target, translateableToken, val->size);
+					break;
+				}
+				/* otherwise fall through */
+			default:
+				Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
+				break;
+			}
+		}
+		if (!val || !val->string)
+			Com_Printf("MN_ParseNodeBody: unknown options value: '%s' - ignore it\n", *token);
+	} while (**token != '}');
+	MN_AddSelectboxOption(node);
+	return qtrue;
+}
+
+static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const char **token, const char *errhead)
+{
+	/* get parameters */
+	*token = COM_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+	if (**token != '{') {
+		Com_Printf("MN_ParseNodeBody: node with bad excluderect ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+		return qtrue;
+	}
+
+	do {
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+		if (!Q_strcmp(*token, "pos")) {
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
+		} else if (!Q_strcmp(*token, "size")) {
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
+		}
+	} while (**token != '}');
+	if (node->excludeNum < MAX_EXLUDERECTS - 1)
+		node->excludeNum++;
+	else
+		Com_Printf("MN_ParseNodeBody: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
+	return qtrue;
+}
+
+static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const char **text, const char **token, const char *errhead)
+{
+	node->scriptValues = val;
+
+	/* Com_Printf("  %s", *token); */
+
+	if (val->type != V_NULL) {
+		/* get parameter values */
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+
+		/* Com_Printf(" %s", *token); */
+
+		/* get the value */
+		if (!(val->type & V_MENU_COPY)) {
+			if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
+				Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
+		} else {
+			/* a reference to data is handled like this */
+			/* Com_Printf("%i %s\n", val->ofs, *token); */
+			*(byte **) ((byte *) node + val->ofs) = mn.curadata;
+			/* we read it, we no more need extra flag */
+			/* *((int*)&val->type) = val->type & V_BASETYPEMASK; */
+			/* references are parsed as string */
+			if (**token == '*') {
+				/* sanity check */
+				if (strlen(*token) > MAX_VAR - 1)
+					Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
+				mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
+			} else {
+				/* sanity check */
+				if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
+					Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
+				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+			}
+		}
+	}
+	/* Com_Printf("\n"); */
+	return qtrue;
+}
+
+
+static qboolean MN_ParseEventProperty (menuNode_t * node, int eventId, const char **text, const char **token, const char *errhead)
+{
+	menuAction_t **action;
+
+	/* Com_Printf("  %s\n", *token); */
+
+	/* add new actions to end of list */
+	action = (menuAction_t **) ((byte *) node + eventProperties[eventId].ofs);
+	for (; *action; action = &(*action)->next) {}
+
+	if (mn.numActions >= MAX_MENUACTIONS)
+		Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+	*action = &mn.menuActions[mn.numActions++];
+	memset(*action, 0, sizeof(**action));
+
+	/* get the action body */
+	*token = COM_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+
+	if (**token == '{') {
+		MN_ParseAction(node, *action, text, token);
+
+		/* get next token */
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+	}
+	return qtrue;
+}
+
 /**
  * @sa MN_ParseMenuBody
  */
@@ -371,6 +570,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 {
 	const char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean found;
+	qboolean result;
 	const value_t *val;
 	int i;
 
@@ -408,88 +608,27 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		do {
 			found = qfalse;
 
-			for (val = nps; val->type; val++)
-				if (!Q_strcmp(*token, val->string)) {
-					node->scriptValues = val;
+			val = findPropertyByName(nps, *token);
+			if (val) {
+				result = MN_ParseProperty(node, val, text, token, errhead);
+				if (!result)
+					return qfalse;
 
-/*					Com_Printf("  %s", *token); */
+				/* get next token */
+				*token = COM_EParse(text, errhead, node->name);
+				if (!*text)
+					return qfalse;
 
-					if (val->type != V_NULL) {
-						/* get parameter values */
-						*token = COM_EParse(text, errhead, node->name);
-						if (!*text)
-							return qfalse;
+				found = qtrue;
+			}
 
-/*						Com_Printf(" %s", *token); */
-
-						/* get the value */
-						if (!(val->type & V_MENU_COPY)) {
-							if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
-								Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
-						} else {
-							/* a reference to data is handled like this */
-/* 							Com_Printf("%i %s\n", val->ofs, *token); */
-							*(byte **) ((byte *) node + val->ofs) = mn.curadata;
-							/* we read it, we no more need extra flag */
-							/* *((int*)&val->type) = val->type & V_BASETYPEMASK; */
-							/* references are parsed as string */
-							if (**token == '*') {
-								/* sanity check */
-								if (strlen(*token) > MAX_VAR - 1)
-									Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
-								mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
-							} else {
-								/* sanity check */
-								if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
-									Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
-								mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
-							}
-						}
-					}
-
-/*					Com_Printf("\n"); */
-
-					/* get next token */
-					*token = COM_EParse(text, errhead, node->name);
-					if (!*text)
-						return qfalse;
-
-					found = qtrue;
-					break;
-				}
-
-			for (i = 0; i < NE_NUM_NODEEVENT; i++)
-				if (!Q_strcmp(*token, ne_strings[i])) {
-					menuAction_t **action;
-
-/*					Com_Printf("  %s\n", *token); */
-
-					/* add new actions to end of list */
-					action = (menuAction_t **) ((byte *) node + ne_values[i]);
-					for (; *action; action = &(*action)->next) {}
-
-					if (mn.numActions >= MAX_MENUACTIONS)
-						Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-					*action = &mn.menuActions[mn.numActions++];
-					memset(*action, 0, sizeof(**action));
-
-					/* get the action body */
-					*token = COM_EParse(text, errhead, node->name);
-					if (!*text)
-						return qfalse;
-
-					if (**token == '{') {
-						MN_ParseAction(node, *action, text, token);
-
-						/* get next token */
-						*token = COM_EParse(text, errhead, node->name);
-						if (!*text)
-							return qfalse;
-					}
-
-					found = qtrue;
-					break;
-				}
+			i = findEventPropertyByName(*token);
+			if (i != -1) {
+				result = MN_ParseEventProperty(node, i, text, token, errhead);
+				if (!result)
+					return qfalse;
+				found = qtrue;
+			}
 		} while (found);
 
 		/* test for end or unknown token */
@@ -497,107 +636,14 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			/* finished */
 			return qtrue;
 		} else if (!Q_strncmp(*token, "excluderect", 12)) {
-			/* get parameters */
-			*token = COM_EParse(text, errhead, node->name);
-			if (!*text)
+			result = MN_ParseExcludeRect(node, text, token, errhead);
+			if (!result)
 				return qfalse;
-			if (**token != '{') {
-				Com_Printf("MN_ParseNodeBody: node with bad excluderect ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
-				continue;
-			}
-
-			do {
-				*token = COM_EParse(text, errhead, node->name);
-				if (!*text)
-					return qfalse;
-				if (!Q_strcmp(*token, "pos")) {
-					*token = COM_EParse(text, errhead, node->name);
-					if (!*text)
-						return qfalse;
-					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
-				} else if (!Q_strcmp(*token, "size")) {
-					*token = COM_EParse(text, errhead, node->name);
-					if (!*text)
-						return qfalse;
-					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
-				}
-			} while (**token != '}');
-			if (node->excludeNum < MAX_EXLUDERECTS - 1)
-				node->excludeNum++;
-			else
-				Com_Printf("MN_ParseNodeBody: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 		/* for MN_SELECTBOX */
 		} else if (!Q_strncmp(*token, "option", 7)) {
-			/* get parameters */
-			*token = COM_EParse(text, errhead, node->name);
-			if (!*text)
+			result = MN_ParseOption(node, text, token, errhead);
+			if (!result)
 				return qfalse;
-			/** @todo mem corruption in case of too many select box options */
-			Q_strncpyz(mn.menuSelectBoxes[mn.numSelectBoxes].id, *token, sizeof(mn.menuSelectBoxes[mn.numSelectBoxes].id));
-			Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
-
-			*token = COM_EParse(text, errhead, node->name);
-			if (!*text)
-				return qfalse;
-			if (**token != '{') {
-				Com_Printf("MN_ParseNodeBody: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
-				continue;
-			}
-
-			if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
-				FS_SkipBlock(text);
-				Com_Printf("MN_ParseNodeBody: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
-				return qfalse;
-			}
-
-			/**
-			 * the options data can be defined like this
-			 * @code
-			 * option string {
-			 *  value "value"
-			 *  action "command string"
-			 * }
-			 * @endcode
-			 * The strings will appear in the drop down list of the select box
-			 * if you select the 'string', the 'cvarname' will be set to 'value'
-			 * and if action is defined (which is a console/script command string)
-			 * this one is executed on each selection
-			 */
-
-			do {
-				*token = COM_EParse(text, errhead, node->name);
-				if (!*text)
-					return qfalse;
-				if (**token == '}')
-					break;
-				for (val = selectBoxValues; val->string; val++)
-					if (!Q_strncmp(*token, val->string, sizeof(val->string))) {
-						/* get parameter values */
-						*token = COM_EParse(text, errhead, node->name);
-						if (!*text)
-							return qfalse;
-						switch (val->type) {
-						case V_TRANSLATION_MANUAL_STRING:
-							if (val->size) {
-								/* selectbox values are static arrays */
-								char *target = ((char*)&mn.menuSelectBoxes[mn.numSelectBoxes] + val->ofs);
-								const char *translateableToken = *token;
-								if (*translateableToken == '_')
-									translateableToken++;
-								Q_strncpyz(target, translateableToken, val->size);
-								break;
-							}
-							/* otherwise fall through */
-						default:
-							Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
-							break;
-						}
-						break;
-					}
-				if (!val->string)
-					Com_Printf("MN_ParseNodeBody: unknown options value: '%s' - ignore it\n", *token);
-			} while (**token != '}');
-			MN_AddSelectboxOption(node);
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
