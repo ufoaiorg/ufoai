@@ -569,10 +569,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, int eventId, const cha
 static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const char **token)
 {
 	const char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
-	qboolean found;
-	qboolean result;
-	const value_t *val;
-	int i;
+	qboolean nextTokenAlreadyRead = qfalse;
 
 	/* functions are a special case */
 	if (node->type == MN_CONFUNC || node->type == MN_FUNC || node->type == MN_CVARFUNC) {
@@ -599,51 +596,55 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	}
 
 	do {
+		const value_t *val;
+		int eventId;
+		qboolean result;
+
 		/* get new token */
-		*token = COM_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
+		if (!nextTokenAlreadyRead) {
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+		} else {
+			nextTokenAlreadyRead = qfalse;
+		}
 
-		/* get properties, events and actions */
-		do {
-			found = qfalse;
-
-			val = findPropertyByName(nps, *token);
-			if (val) {
-				result = MN_ParseProperty(node, val, text, token, errhead);
-				if (!result)
-					return qfalse;
-
-				/* get next token */
-				*token = COM_EParse(text, errhead, node->name);
-				if (!*text)
-					return qfalse;
-
-				found = qtrue;
-			}
-
-			i = findEventPropertyByName(*token);
-			if (i != -1) {
-				result = MN_ParseEventProperty(node, i, text, token, errhead);
-				if (!result)
-					return qfalse;
-				found = qtrue;
-			}
-		} while (found);
-
-		/* test for end or unknown token */
+		/* is finished */
 		if (**token == '}') {
-			/* finished */
 			return qtrue;
+		}
+
+		/* test token vs know properties */
+		val = findPropertyByName(nps, *token);
+		if (!val && nodeBehaviourList[node->type].properties)
+			val = findPropertyByName(nodeBehaviourList[node->type].properties, *token);
+		if (!val)
+			eventId = findEventPropertyByName(*token);
+
+		/* is it a property */
+		if (val) {
+			result = MN_ParseProperty(node, val, text, token, errhead);
+			if (!result)
+				return qfalse;
+
+		/* is it an event property */
+		} else if (eventId != -1) {
+			result = MN_ParseEventProperty(node, eventId, text, token, errhead);
+			if (!result)
+				return qfalse;
+			nextTokenAlreadyRead = qtrue;
+
 		} else if (!Q_strncmp(*token, "excluderect", 12)) {
 			result = MN_ParseExcludeRect(node, text, token, errhead);
 			if (!result)
 				return qfalse;
+
 		/* for MN_SELECTBOX */
 		} else if (!Q_strncmp(*token, "option", 7)) {
 			result = MN_ParseOption(node, text, token, errhead);
 			if (!result)
 				return qfalse;
+
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
