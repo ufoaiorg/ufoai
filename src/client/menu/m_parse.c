@@ -753,7 +753,6 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					 * @todo move it into the respective "loading" function (where its need)
 					 */
 					node->padding = 3;
-					node->textLineSelected = -1; /**< Invalid/no line selected per default. */
 
 /*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
 

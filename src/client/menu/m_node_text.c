@@ -485,6 +485,12 @@ static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y
 	}
 }
 
+static void MN_TextNodeLoading (menuNode_t *node)
+{
+	node->textLineSelected = -1; /**< Invalid/no line selected per default. */
+	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
+}
+
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
@@ -493,6 +499,7 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->rightClick = MN_TextNodeRightClick;
 	behaviour->mouseWheel = MN_TextNodeMouseWheel;
 	behaviour->mouseMove = MN_TextNodeMouseMove;
+	behaviour->loading = MN_TextNodeLoading;
 
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
