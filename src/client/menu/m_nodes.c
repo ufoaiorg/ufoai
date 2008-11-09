@@ -267,7 +267,7 @@ static void MN_HideNode_f (void)
 }
 
 /**
- * @todo Update int type by a char* behaviourName
+ * @todo Change the @c type to @c char* (behaviourName)
  */
 menuNode_t* MN_AllocNode (int type)
 {
