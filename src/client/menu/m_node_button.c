@@ -113,7 +113,6 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 
 /**
  * @brief Handles Button before loading. Used to init node attributes
- * @todo remove the align comment when we update the event handler (problem with the current one)
  */
 static void MN_ButtonNodeLoading (menuNode_t *node)
 {
