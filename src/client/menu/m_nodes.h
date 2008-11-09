@@ -112,7 +112,7 @@ typedef struct menuNode_s {
 	/* common attributes */
 	char key[MAX_VAR];
 	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
-	byte align;
+	byte textalign;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	qboolean invis;
@@ -122,6 +122,8 @@ typedef struct menuNode_s {
 	char* text;
 	void* font;	/**< Font to draw text */
 	void* tooltip; /**< holds the tooltip */
+
+	byte align;					/** @todo delete it when its possible */
 
 	/** @todo need a cleanup
 	 */

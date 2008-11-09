@@ -46,7 +46,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	int baseY;
 	const float *textColor;
 	const char *image;
-	vec2_t nodepos;
+	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
 	if (!node->click || node->disabled) {
@@ -61,11 +61,11 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 		baseY = 0;
 	}
 
-	MN_GetNodeAbsPos(node, nodepos);
+	MN_GetNodeAbsPos(node, pos);
 
 	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (image) {
-		R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
+		R_DrawNormPic(pos[0], pos[1], node->size[0], node->size[1],
 			node->size[0], baseY + node->size[1], 0, baseY, ALIGN_UL, node->blend, image);
 	}
 
@@ -73,10 +73,10 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	if (text != NULL && *text != '\0') {
 		font = MN_GetFont(node->menu, node);
 		R_ColorBlend(textColor);
-		/** @todo remove the *1.5, only here because R_FontDrawString ius buggy */
-		R_FontDrawString(font, ALIGN_CC, nodepos[0] + (node->size[0] / 2), nodepos[1] + (node->size[1] / 2),
-			nodepos[0], nodepos[1], node->size[0] * 1.5, node->size[1],
-			0, _(text), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		R_FontDrawStringInBox(font, node->textalign,
+			pos[0] + node->padding, pos[1] + node->padding,
+			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
+			text, LONGLINES_PRETTYCHOP);
 		R_ColorBlend(NULL);
 	}
 }

@@ -93,7 +93,7 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 }
 
 #if 0
-/** @todo to be integrated into MN_CheckNodeZone */
+/** @todo (menu) to be integrated into MN_CheckNodeZone */
 /**
  * @brief Check if the node is an image and if it is transparent on the given (global) position.
  * @param[in] node A menunode pointer to be checked.
@@ -121,7 +121,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 		return qtrue;
 	}
 
-	/** @todo Get current location _inside_ image from global position. CHECKME */
+	/** @todo (menu) Get current location _inside_ image from global position. CHECKME */
 	pic_x = x - nodepos[0];
 	pic_y = y - nodepos[1];
 

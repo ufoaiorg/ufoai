@@ -459,6 +459,8 @@ menu load
 		string "*cvar mn_slot0"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot1
 	{
@@ -471,6 +473,8 @@ menu load
 		string "*cvar mn_slot1"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot2
 	{
@@ -483,6 +487,8 @@ menu load
 		string "*cvar mn_slot2"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot3
 	{
@@ -495,6 +501,8 @@ menu load
 		string "*cvar mn_slot3"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot4
 	{
@@ -507,6 +515,8 @@ menu load
 		string "*cvar mn_slot4"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot5
 	{
@@ -519,6 +529,8 @@ menu load
 		string "*cvar mn_slot5"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot6
 	{
@@ -531,6 +543,8 @@ menu load
 		string "*cvar mn_slot6"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 	button slot7
 	{
@@ -543,6 +557,8 @@ menu load
 		string "*cvar mn_slot7"
 		color "0 .78 0 1"
 		selectcolor "1 1 1 1"
+		textalign	cl
+		padding 8
 	}
 
 	// ==================

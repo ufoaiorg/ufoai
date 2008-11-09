@@ -102,10 +102,11 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	if (text != NULL && *text != '\0') {
 		font = MN_GetFont(node->menu, node);
 		R_ColorBlend(textColor);
-		/** @todo remove the *1.5, only here because R_FontDrawString ius buggy */
-		R_FontDrawString(font, ALIGN_CC, pos[0] + (node->size[0] / 2), pos[1] + (node->size[1] / 2),
-			pos[0], pos[1], node->size[0] * 1.5, node->size[1],
-			0, _(text), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		text = _(text);
+		R_FontDrawStringInBox(font, node->textalign,
+			pos[0] + node->padding, pos[1] + node->padding,
+			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
+			text, LONGLINES_PRETTYCHOP);
 		R_ColorBlend(NULL);
 	}
 }
@@ -116,8 +117,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
  */
 static void MN_ButtonNodeLoading (menuNode_t *node)
 {
-	/* default text align */
-	/* node->align = ALIGN_CC; */
+	node->textalign = ALIGN_CC;
 }
 
 void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)

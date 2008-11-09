@@ -57,7 +57,7 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
 
 	for (i = 0; i < mn.menuStackPos; i++)
 		if (mn.menuStack[i] == menu) {
-			/** @todo don't leave the loop even if we found it - there still
+			/** @todo (menu) don't leave the loop even if we found it - there still
 			 * may be other copies around in the stack of the same menu
 			 * @sa MN_PushCopyMenu_f */
 			for (mn.menuStackPos--; i < mn.menuStackPos; i++)
@@ -662,7 +662,7 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
 
 	/* 256kb */
-	/** @todo Get rid of adata, curadata and adataize */
+	/** @todo (menu) Get rid of adata, curadata and adataize */
 	mn.adataize = MENU_HUNK_SIZE;
 	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, CL_TAG_MENU);
 	mn.curadata = mn.adata;

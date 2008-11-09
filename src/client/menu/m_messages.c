@@ -143,7 +143,7 @@ message_t *MN_AddNewMessageSound (const char *title, const char *text, qboolean 
 
 	mess->date = ccs.date;
 
-	/** @todo Handle translated text - don't use single byte string copy here */
+	/** @todo (menu) Handle translated text - don't use single byte string copy here */
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
 	mess->text = Mem_PoolStrDup(text, cl_localPool, CL_TAG_NONE);
 
@@ -773,7 +773,7 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 			if (Q_strcmp(nt_strings[type], messagetype) == 0)
 				break;
 		}
-		/** @todo check why this message is not shown anywhere in logs*/
+		/** @todo (menu) check why this message is not shown anywhere in logs*/
 		if (type == NT_NUM_NOTIFYTYPE) {
 			Com_Printf("Unrecognized messagetype during load '%s' ignored\n", messagetype);
 			continue;

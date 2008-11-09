@@ -244,8 +244,8 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			token = COM_Parse((const char **)&cur);
 			if (node->textLines > node->textScroll)
 				y1 += (node->textLines - node->textScroll) * node->texh[0];
-			/** @todo once font_t from r_font.h is known everywhere we should scale the height here, too
-			 * @todo once image_t is known everywhere we should fix this, too */
+			/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too
+			 * @todo (menu) once image_t is known everywhere we should fix this, too */
 			x1 += R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
 		}
 
