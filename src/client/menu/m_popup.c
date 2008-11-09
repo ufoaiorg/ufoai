@@ -89,7 +89,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 
 	if (clickAction) {
 		listNode->mousefx = qtrue;
-		listNode->click = MN_SetMenuAction(&listNode->click, EA_CMD, clickAction);
+		MN_SetMenuAction(&listNode->click, EA_CMD, clickAction);
 	} else {
 		listNode->mousefx = qfalse;
 		listNode->click = NULL;
@@ -129,7 +129,7 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 
 	if (clickAction) {
 		buttonNode->mousefx = qtrue;
-		buttonNode->click = MN_SetMenuAction(&buttonNode->click, EA_CMD, clickAction);
+		MN_SetMenuAction(&buttonNode->click, EA_CMD, clickAction);
 		buttonNode->invis = qfalse;
 		buttonTextNode->invis = qfalse;
 	} else {

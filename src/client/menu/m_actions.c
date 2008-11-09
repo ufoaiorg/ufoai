@@ -261,19 +261,17 @@ qboolean MN_FocusNextActionNode (void)
  */
 menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *data)
 {
-	menuAction_t *newAction;
-
 	if (*action)
 		Sys_Error("There is already an action assigned\n");
-	newAction = (menuAction_t *)Mem_PoolAlloc(sizeof(*newAction), cl_menuSysPool, CL_TAG_MENU);
-	newAction->type = type;
+	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), cl_menuSysPool, CL_TAG_MENU);
+	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
-		newAction->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, CL_TAG_MENU);
+		(*action)->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, CL_TAG_MENU);
 		break;
 	default:
 		Sys_Error("Action type %i is not yet implemented", type);
 	}
 
-	return newAction;
+	return *action;
 }
