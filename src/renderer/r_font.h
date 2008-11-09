@@ -47,6 +47,5 @@ void R_FontSetTruncationMarker(const char *marker);
 void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines);
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);
 int R_FontDrawStringInBox(const char *fontID, int align, int x, int y, int width, int height, const char *text, longlines_t method);
-int R_FontGetHeight(const char *fontID);
 
 #endif
