@@ -323,7 +323,7 @@ def moveMultiplayerMenuContent():
 	print '-----'
 	
 	for menu in root.nodes.child:
-		if menu.name not in ["options_video", "options_sound", "options_keys", "options_pause", "options_game", "options_input"]:
+		if menu.name not in ["mp_serverbrowser", "mp_create_server", "mp_team"]:
 			continue
 		print 'menu ' + menu.name
 		
@@ -335,8 +335,8 @@ def moveMultiplayerMenuContent():
 			x, y = node.pos[0] - dx, node.pos[1] - dy
 			node.updateParam("pos", '"' + str(x) + " " + str(y) + '"')
 
-	#root.save()
+	root.save()
 
 			
-moveMultiplayerMenuContent()
+#moveMultiplayerMenuContent()
 
