@@ -90,7 +90,7 @@ static const value_t nps[] = {
 	/* specific for model
 	 * @todo move it into the node behaviour
 	 */
-	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.animation), MEMBER_SIZEOF(menuNode_t, u.model.animation)},
+	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.animation), 0},
 	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
 	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
 	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
