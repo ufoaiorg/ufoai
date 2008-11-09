@@ -27,10 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_sphere.h"
 #include "r_error.h"
 
-/** @brief This var is needed - because a Sys_Error may call R_SphereShutdown
- * before the precompiled lists are even generated */
-static qboolean sphereInit = qfalse;
-
 static cvar_t *r_sphereDetails;
 
 sphere_t r_globeEarth;
@@ -52,7 +48,6 @@ static inline float rhoSpiral (const int index, const float deltaRho,const float
  */
 void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 {
-
 	const float drho = M_PI / tris; /**< angle from the pole (z-axis) */
 	/* must multiply pi by 2, rather than do integer division of tris by two,
 	 * otherwise it goes wrong when tris is an odd number */
@@ -69,7 +64,6 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 	/* must be i <= tris, as one loop is wasted, because of the spiral */
 	for (i = 0; i <= tris; i++) { /* loop through rho, from pole to pole */
-
 		/* must be j <= tris, so it meets up again */
 		for (j = 0; j <= tris ; j++) { /* loop through theta, around equator */
 			const float theta = j * dtheta;
@@ -108,55 +102,9 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 				crho * radius);
 			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
 			vertspos += 3;
-#if 0
-			Com_Printf("%1.4f,%1.4f\n", 	theta, rho);
-#endif
 		}
-
 	}
-
-	vertspos = 0;
-	texespos = 0;
-
-	/* build the sphere display list */
-	sphere->list = glGenLists(1);
-	R_CheckError();
-
-	glNewList(sphere->list, GL_COMPILE);
-	R_CheckError();
-
-	glEnable(GL_NORMALIZE);
-
-	glBegin(GL_TRIANGLE_STRIP);
-
-	for (i = 0; i < tris; i++) {
-
-		for (j = 0; j <= (tris + 1); j++) {
-			glNormal3fv(&sphere->normals[vertspos]);
-			glTexCoord2fv(&sphere->texes[texespos]);
-			glVertex3fv(&sphere->verts[vertspos]);
-
-			texespos += 2;
-			vertspos += 3;
-
-			glNormal3fv(&sphere->normals[vertspos]);
-			glTexCoord2fv(&sphere->texes[texespos]);
-			glVertex3fv(&sphere->verts[vertspos]);
-
-			texespos += 2;
-			vertspos += 3;
-		}
-
-	}
-
-	glEnd();
-	R_CheckError();
-
-	glDisable(GL_NORMALIZE);
-
-	sphere->num_tris = tris * (tris + 1);
-
-	glEndList();
+	sphere->num_tris = (tris + 1) * (tris + 2) * 2;
 }
 
 /**
@@ -194,8 +142,18 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	else
 		R_BindTexture(sphere->texture->texnum);
 
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
+
 	glEnable(GL_CULL_FACE);
-	glCallList(sphere->list);
+	glEnable(GL_NORMALIZE);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
+
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisable(GL_NORMALIZE);
 	glDisable(GL_CULL_FACE);
 
 	R_CheckError();
@@ -203,7 +161,11 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	/* restore the previous matrix */
 	glPopMatrix();
 
-	refdef.alias_count += sphere->num_tris;
+	refdef.alias_count += sphere->num_tris * sphere->num_tris;
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	R_BindDefaultArray(GL_NORMAL_ARRAY);
 }
 
 /**
@@ -220,19 +182,4 @@ void R_SphereInit (void)
 	R_SphereGenerate(&r_globeEarth, 60 * r_sphereDetails->value, EARTH_RADIUS);
 	/* the earth has more details than the moon */
 	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
-
-	sphereInit = qtrue;
-}
-
-/**
- * @brief Frees the precompiled display lists
- * @sa R_Shutdown
- */
-void R_SphereShutdown (void)
-{
-	if (sphereInit) {
-		glDeleteLists(r_globeEarth.list, 1);
-		glDeleteLists(r_globeMoon.list, 1);
-	}
-	sphereInit = qfalse;
 }

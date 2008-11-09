@@ -39,4 +39,3 @@ extern sphere_t r_globeMoon;
 void R_SphereGenerate(sphere_t *sphere, const int tris, const float radius);
 void R_SphereRender(const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos);
 void R_SphereInit(void);
-void R_SphereShutdown(void);

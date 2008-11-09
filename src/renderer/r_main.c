@@ -769,7 +769,6 @@ void R_Shutdown (void)
 	R_ShutdownImages();
 
 	R_ShutdownPrograms();
-	R_SphereShutdown();
 	R_FontShutdown();
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
