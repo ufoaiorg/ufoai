@@ -315,5 +315,28 @@ def findNonULCheckBox():
 				continue
 		
 			print node.name + " align=" + align
+
+def moveMultiplayerMenuContent():
+	root = Root()
+	root.loadFile('base/ufos/menu_multiplayer.ufo')
+
+	print '-----'
 	
-#findNonULCheckBox()
+	for menu in root.nodes.child:
+		if menu.name not in ["options_video", "options_sound", "options_keys", "options_pause", "options_game", "options_input"]:
+			continue
+		print 'menu ' + menu.name
+		
+		dx, dy = 415, 0
+		for node in menu.child:
+			if not node.existsParam("pos"):
+				continue
+				
+			x, y = node.pos[0] - dx, node.pos[1] - dy
+			node.updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+
+	#root.save()
+
+			
+moveMultiplayerMenuContent()
+
