@@ -4433,6 +4433,23 @@ ACTOR GRAPHICS
 */
 
 /**
+ * @brief Checks whether a weapon should be added to the entity's hand
+ * @param[in] objID The item id that the actor is holding in his hand (@c le->left or @c le->right)
+ * @return true if the weapon is a valid item and false if it's a dummy item or the actor has nothing
+ * in the given hand
+ */
+static inline qboolean CL_AddActorWeapon (int objID)
+{
+	if (objID != NONE) {
+		const objDef_t *od = &csi.ods[objID];
+		if (od->isDummy)
+			return qfalse;
+		return qtrue;
+	}
+	return qfalse;
+}
+
+/**
  * @brief Adds an actor.
  * @param[in] le The local entity to get the values from
  * @param[in] ent The body entity used in the renderer
@@ -4447,22 +4464,24 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	/* add the weapons to the actor's hands */
 	if (!(le->state & STATE_DEAD)) {
+		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
+		const qboolean addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
-		if (le->left != NONE) {
+		if (addLeftHandWeapon) {
 			memset(&add, 0, sizeof(add));
 
 			add.model = cls.model_weapons[le->left];
 			assert(add.model);
 
 			/* point to the body ent which will be added last */
-			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
+			add.tagent = R_GetFreeEntity() + 2 + addRightHandWeapon;
 			add.tagname = "tag_lweapon";
 
 			R_AddEntity(&add);
 		}
 
 		/* add right hand weapon */
-		if (le->right != NONE) {
+		if (addRightHandWeapon) {
 			memset(&add, 0, sizeof(add));
 
 			add.alpha = le->alpha;
