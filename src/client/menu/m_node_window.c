@@ -115,7 +115,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 
 	/* if the menu should have a close button, add it here */
 	if (menu->closeButton) {
-		menuNode_t *button = MN_AllocNode(MN_BUTTON);
+		menuNode_t *button = MN_AllocNode(MN_IMAGE);
 		menuNode_t *prev = MN_GetLastNode(menu);
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
