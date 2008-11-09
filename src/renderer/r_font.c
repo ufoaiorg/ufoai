@@ -794,6 +794,7 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
 
 /**
  * @return -1 if font wasn't found, font height otherwise
+ * @todo No longer needed once font_t is known in the client
  */
 int R_FontGetHeight (const char *fontID)
 {
