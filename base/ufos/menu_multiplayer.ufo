@@ -1686,6 +1686,8 @@ menu chat_popup
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton	true
+		closeButton	true
 	}
 
 	zone popup
@@ -1699,13 +1701,6 @@ menu chat_popup
 		pos	"0 0"
 		size	"496 247"
 		blend	true
-	}
-
-	pic bt_close
-	{
-		image	hud/close
-		pos	"458 22"
-		click	{ cmd "mn_pop;" }
 	}
 
 	string title
@@ -1727,23 +1722,17 @@ menu chat_popup
 		height	6
 	}
 
-	pic bt_lobby
+	button enter_lobby
 	{
 		tooltip	"_Go into the lobby"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"280 186"
-		out	{ *string_lobby color "0 0.5 0 1" *bt_lobby image menu/multi_buttons3 }
-		in	{ *string_lobby color "1 1 1 1" *bt_lobby image menu/multi_buttons3a }
+		image	menu/button_green_small
+		pos		"260 160"
+		size	"190 56"
+		blend	true
 		click	{ cmd "mn_pop;mn_push irc;" }
-	}
-	string string_lobby
-	{
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Lobby"
-		pos	"368 202"
-		align	cc
+		selectcolor	"1 1 1 1"
 	}
 }
