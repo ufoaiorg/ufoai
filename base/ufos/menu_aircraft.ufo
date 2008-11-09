@@ -223,49 +223,21 @@ menu aircraft
 	// ===============
 	// produce
 	// ===============
-	pic button_produce
+	button button_produce
 	{
-		if "mn_base_prod_allowed == 1"
-		tooltip	"_Produce aircraft or aircraft components"
-		image	menu/button
-		pos	"45 450"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
+		tooltip		"_Produce aircraft or aircraft components"
+		image		menu/button_green_small
+		pos			"45 450"
+		size		"230 56"
+		mousefx		true
 		click
 		{
-			cmd "set mn_itemtype 8; mn_push production;"
+			cmd		"set mn_itemtype 8; mn_push production;"
 		}
-		out		{ *txt_produce color "0 0.8 0 1" *button_produce texl "0 0" *button_produce texh "230 64" }
-		in		{ *txt_produce color "1 1 1 1" *button_produce texl "230 0" *button_produce texh "460 64" }
-	}
-	pic button_produce_na
-	{
-		if "mn_base_prod_allowed == 0"
-		tooltip	"_Build at least one workshop"
-		image	menu/button
-		pos	"45 450"
-		texl	"0 64"
-		texh	"230 128"
-		in
-	}
-	string txt_produce
-	{
-		if "mn_base_prod_allowed == 1"
-		string	"_Produce"
-		color	"0 0.8 0 1"
-		pos	"164 483"
-		font	f_menu
-		align	cc
-	}
-	string txt_produce_na
-	{
-		if "mn_base_prod_allowed == 0"
-		string	"_Produce"
-		color	"0.5 0.5 0.5 1"
-		pos	"164 483"
-		font	f_menu
-		align	cc
+		string		"_Produce"
+		font		f_menu
+		color		"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
 	// ==================
@@ -961,15 +933,14 @@ menu aircraft_equip
 		angles	"0 0 180"
 	}
 
-	pic airequip_button_leave
+	button airequip_button_leave
 	{
 		tooltip	"_Done"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop"  }
+		size	"64 32"
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -995,11 +966,13 @@ menu aircraft_equip
 //
 // This menu is only called when there is already a hangar
 //
-menu aircraft_action
+menu popup_aircraft_action
 {
 	{
-		pos	"264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		closebutton	true
 	}
 
 	zone popup
@@ -1009,7 +982,7 @@ menu aircraft_action
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"0 0"
+		pos		"0 0"
 		size	"496 247"
 		blend	true
 	}
@@ -1021,26 +994,6 @@ menu aircraft_action
 		font	f_big
 	}
 
-	pic bt_cancel
-	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"46 188"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos	"134 204"
-		align	cc
-	}
-
 	string string_info
 	{
 		font	f_small
@@ -1050,47 +1003,49 @@ menu aircraft_action
 		size "440 80"
 	}
 
-	pic bt_buy
+	button aircraft_buy
 	{
-		tooltip	"_Buy aircraft"
-		image	menu/multi_buttons3
-		pos	"266 188"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *bt_buy image menu/multi_buttons3 *string_buy color "0 0.5 0 1" }
-		in	{ *bt_buy image menu/multi_buttons3a *string_buy color "1 1 1 1" }
-		click	{ cmd "mn_pop; set mn_itemtype 8; mn_push buy;" }
-	}
-	string string_buy
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Buy"
-		pos	"354 204"
-		align	cc
+		tooltip		"_Buy aircraft"
+		image		menu/button_green_small
+		pos			"30 148"
+		size		"200 56"
+		blend		true
+		click
+		{
+			cmd		"mn_pop; set mn_itemtype 8; mn_push buy;"
+		}
+		string		"_Buy"
+		font		f_menu
+		color		"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
-	pic bt_prod
+	button aircraft_prod
 	{
-		if "mn_base_prod_allowed == 1"
-		tooltip	"_Produce aircraft"
-		image	menu/multi_buttons3
-		pos	"266 148"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *bt_prod image menu/multi_buttons3 *string_prod color "0 0.5 0 1" }
-		in	{ *bt_prod image menu/multi_buttons3a *string_prod color "1 1 1 1" }
-		click	{ cmd "mn_pop; set mn_itemtype 8; mn_push production;" }
+		tooltip		"_Produce aircraft"
+		image		menu/button_green_small
+		pos			"260 148"
+		size		"200 56"
+		blend		true
+		click
+		{
+			cmd 	"mn_pop; set mn_itemtype 8; mn_push production;"
+		}
+		string		"_Produce"
+		font		f_menu
+		color		"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
 	}
-	string string_prod
+
+	confunc set_aircraftprod_disabled
 	{
-		if "mn_base_prod_allowed == 1"
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Produce"
-		pos	"354 164"
-		align	cc
+		*aircraft_prod disabled true
 	}
+	confunc set_aircraftprod_enabled
+	{
+		*production disabled false
+	}
+
 	func leave
 	{
 		cmd "mn_pop;"

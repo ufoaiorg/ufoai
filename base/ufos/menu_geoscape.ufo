@@ -468,7 +468,7 @@ menu map
 				cmd "set mn_messagesystem 0;"
 		}
 	}
-	
+
 	pic bt_messagesettings
 	{
 		tooltip	"_Change message and pause settings"
@@ -2387,6 +2387,7 @@ menu messageoptions
 		pos	"256 256"
 		size	"496 496"
 		dragbutton	true
+		closebutton	true
 	}
 
 	zone popup
@@ -2410,14 +2411,6 @@ menu messageoptions
 	func close
 	{
 		cmd "msgoptions_restore;"
-	}
-
-	pic bt_close
-	{
-		tooltip "_Close this dialogue"
-		image	hud/close
-		pos		"457 24"
-		click	{ cmd "mn_pop;" }
 	}
 
 	button button_apply

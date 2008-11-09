@@ -177,8 +177,8 @@ menu ahudphysdat extends physdata
 		tooltip "_Inventory and physical stats"
 		pos     "878 84"
 		size    "130 265"
-		click   { cmd "mn_pop" }
-		rclick  { cmd "mn_pop" }
+		click   { cmd "mn_pop;" }
+		rclick  { cmd "mn_pop;" }
 	}
 	func leave
 	{

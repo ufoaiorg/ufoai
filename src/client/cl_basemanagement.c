@@ -338,10 +338,13 @@ static void B_BaseMenuInit (const base_t *base)
 	else
 		MN_ExecuteConfunc("set_research_disabled");
 
-	if (PR_ProductionAllowed(base))
+	if (PR_ProductionAllowed(base)) {
 		MN_ExecuteConfunc("set_prod_enabled");
-	else
+		MN_ExecuteConfunc("set_aircraftprod_enabled");
+	} else {
 		MN_ExecuteConfunc("set_prod_disabled");
+		MN_ExecuteConfunc("set_aircraftprod_disabled");
+	}
 
 	if (E_HireAllowed(base))
 		MN_ExecuteConfunc("set_hire_enabled");

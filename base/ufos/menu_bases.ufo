@@ -112,7 +112,7 @@ menu bases
 		size	"230 56"
 		click
 		{
-			cmd "mn_push aircraft_action;"
+			cmd "mn_push popup_aircraft_action;"
 		}
 		string	"_Aircraft"
 		font	f_menu
