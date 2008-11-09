@@ -214,6 +214,8 @@ menu irc_popup
 	{
 		pos "264 262"
 		size	"496 247"
+		dragbutton	true
+		closebutton	true
 	}
 
 	zone popup
@@ -226,13 +228,6 @@ menu irc_popup
 		pos	"0 0"
 		size	"496 247"
 		blend	true
-	}
-
-	pic bt_close
-	{
-		image	hud/close
-		pos	"458 22"
-		click	{ cmd "mn_pop;" }
 	}
 
 	text title
@@ -252,6 +247,7 @@ menu irc_popup
 		string "_You are not connected to the lobby. Do you want to connect?"
 	}
 
+	// @todo: convert to button node
 	pic bt_ok
 	{
 		tooltip	"_Connect to the lobby"

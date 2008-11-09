@@ -1602,8 +1602,8 @@ menu serverpassword
 	{
 		pos			"264 262"
 		size		"496 247"
-		dragButton	true
-		closeButton	true
+		dragbutton	true
+		closebutton	true
 	}
 
 	zone popup
@@ -1678,8 +1678,8 @@ menu chat_popup
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton	true
-		closeButton	true
+		dragbutton	true
+		closebutton	true
 	}
 
 	zone popup

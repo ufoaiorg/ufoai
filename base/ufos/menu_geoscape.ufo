@@ -683,6 +683,8 @@ menu popup_list
 	{
 		pos "264 262"
 		size	"496 247"
+		dragbutton	true
+		closebutton	true
 	}
 
 	// NOTE: This is only used in battlefield on top of the hud right now
@@ -707,20 +709,6 @@ menu popup_list
 		size	"446 20"
 		height	"1"
 		num		TEXT_POPUP
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
-	pic bt_close
-	{
-		image	hud/close
-		pos		"458 22"
-		click	{ cmd "mn_pop;" }
 	}
 
 	text popup_text
@@ -774,6 +762,8 @@ menu popup_button
 	{
 		pos "264 262"
 		size	"496 247"
+		dragbutton	true
+		closebutton	true
 	}
 
 	zone popup
@@ -797,21 +787,6 @@ menu popup_button
 		height	"1"
 		num		TEXT_POPUP
 		align cc
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
-	pic bt_close
-	{
-		tooltip	"_Close this dialogue"
-		image	hud/close
-		pos		"458 22"
-		click	{ cmd "mn_pop;" }
 	}
 
 	text popup_text
@@ -2303,8 +2278,9 @@ menu popup
 	{
 		pos "264 262"
 		size	"496 247"
+		dragbutton	true
+		closebutton	true
 	}
-
 
 	zone popup
 	{
@@ -2327,20 +2303,6 @@ menu popup
 		num		TEXT_POPUP
 	}
 
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
-	}
-
-	pic bt_close
-	{
-		image	hud/close
-		pos		"458 22"
-		click	{ cmd "mn_pop;" }
-	}
-
 	text popup_text
 	{
 		pos		"26 58"
@@ -2352,25 +2314,18 @@ menu popup
 		scrollbar	true
 		wheel
 	}
-	pic bt_ok
+	button button_ok
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"296 192"
-		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
-		in		{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
+		pos		"260 170"
+		size	"200 48"
 		click	{ cmd "mn_pop;" }
-	}
-	string string_ok
-	{
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_OK"
-		pos		"384 208"
-		align	cc
 	}
+
 	func leave
 	{
 		cmd		"mn_pop;"
