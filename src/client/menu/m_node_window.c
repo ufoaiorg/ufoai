@@ -127,7 +127,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		button->pos[0] = menu->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
-		button->click = NULL; /** @todo */
+		MN_SetMenuAction(&button->click, EA_CMD, "mn_pop;");
 		MN_InsertNode(menu, prev, button);
 	}
 }
