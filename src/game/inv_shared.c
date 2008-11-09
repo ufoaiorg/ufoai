@@ -792,8 +792,13 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		return IA_NONE;
 
 	time = from->out + to->in;
-	if (from == to)
-		time /= 2;
+	if (from == to) {
+		if (from->id == CSI->idFloor)
+			time = 0;
+		else
+			time /= 2;
+	}
+	
 	if (TU && *TU < time)
 		return IA_NOTIME;
 
