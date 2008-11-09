@@ -36,49 +36,60 @@ static cvar_t *r_sphereDetails;
 sphere_t r_globeEarth;
 sphere_t r_globeMoon;
 
+static inline float rhoSpiral (const int index, const float deltaRho,const float thetaAngle)
+{
+	const float rhoAngle = (index == 0) ? 0.0f : (float) ((index - 1) * deltaRho + thetaAngle * deltaRho / (2.0f * M_PI));
+	return rhoAngle > M_PI ? M_PI : rhoAngle;
+}
+
 /**
  * @brief Initialize the globe chain arrays
  * @param[out] sphere The sphere you want to create
  * @param[in] tris The amount of tris the globe should have - the higher the number
- * the higher the details
+ * the higher the details. tris*tris triangles are obtained.
  * @param[in] radius The radius of the sphere
  * @sa R_Draw3DGlobe
  */
 void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 {
+
 	const float drho = M_PI / tris; /**< angle from the pole (z-axis) */
-	const float dtheta = M_PI / (tris / 2); /**< angle around the equator, from y-axis */
-
-	const float ds = 1.0f / (tris * 2);
-	const float dt = 1.0f / tris;
-
-	float t = 1.0f;
-	float s = 0.0f;
+	/* must multiply pi by 2, rather than do integer division of tris by two,
+	 * otherwise it goes wrong when tris is an odd number */
+	const float dtheta = 2.0f * M_PI / tris; /**< angle around the equator, from y-axis */
 
 	int i, j;
 
 	int vertspos = 0;
 	int texespos = 0;
 
-	sphere->verts = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 6), vid_modelPool, 0);
-	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 4), vid_modelPool, 0);
-	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 1) * 6), vid_modelPool, 0);
+	sphere->verts = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_modelPool, 0);
+	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 4), vid_modelPool, 0);
+	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_modelPool, 0);
 
-	for (i = 0; i < tris; i++) { /* loop through rho, from pole to pole */
-		const float rho = (float) i * drho;
-		const float srho = (float) (sin(rho));
-		const float crho = (float) (cos(rho));
-		const float srhodrho = (float) (sin(rho + drho));
-		const float crhodrho = (float) (cos(rho + drho));
+	/* must be i <= tris, as one loop is wasted, because of the spiral */
+	for (i = 0; i <= tris; i++) { /* loop through rho, from pole to pole */
 
-		s = 0.0f;
-
-		for (j = 0; j <= tris; j++) { /* loop through theta, around equator */
-			const float theta = (j == tris) ? 0.0f : j * dtheta; /* boundary conditions, go back to zero */
+		/* must be j <= tris, so it meets up again */
+		for (j = 0; j <= tris ; j++) { /* loop through theta, around equator */
+			const float theta = j * dtheta;
 			const float stheta = (float) (-sin(theta));
 			const float ctheta = (float) (cos(theta));
 
-			Vector2Set((&sphere->texes[texespos]), s, (t - dt));
+			/* second term in rho adds a spiral */
+			const float rho = rhoSpiral(i, drho, theta);
+			const float rhodrho = rhoSpiral(i + 1, drho, theta); /* rho plus drho, minding boundary conditions */
+			const float srho = (float) (sin(rho));
+			const float crho = (float) (cos(rho));
+			const float srhodrho = (float) (sin(rhodrho));
+			const float crhodrho = (float) (cos(rhodrho));
+
+			const float st = (M_PI - rho) / M_PI;
+			const float stdt = (M_PI - rhodrho) / M_PI;
+
+			const float s = theta / (4.0f * M_PI);
+
+			Vector2Set((&sphere->texes[texespos]), s, stdt);
 			texespos += 2;
 
 			VectorSet((&sphere->verts[vertspos]),
@@ -88,7 +99,7 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
 			vertspos += 3;
 
-			Vector2Set((&sphere->texes[texespos]), s, t);
+			Vector2Set((&sphere->texes[texespos]), s, st);
 			texespos += 2;
 
 			VectorSet((&sphere->verts[vertspos]),
@@ -97,11 +108,11 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 				crho * radius);
 			VectorNormalize2((&sphere->verts[vertspos]), (&sphere->normals[vertspos]));
 			vertspos += 3;
-
-			s += ds;
+#if 0
+			Com_Printf("%1.4f,%1.4f\n", 	theta, rho);
+#endif
 		}
 
-		t -= dt;
 	}
 
 	vertspos = 0;
@@ -120,7 +131,7 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 	for (i = 0; i < tris; i++) {
 
-		for (j = 0; j <= tris; j++) {
+		for (j = 0; j <= (tris + 1); j++) {
 			glNormal3fv(&sphere->normals[vertspos]);
 			glTexCoord2fv(&sphere->texes[texespos]);
 			glVertex3fv(&sphere->verts[vertspos]);
@@ -143,7 +154,7 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 	glDisable(GL_NORMALIZE);
 
-	sphere->num_tris = tris * tris;
+	sphere->num_tris = tris * (tris + 1);
 
 	glEndList();
 }
