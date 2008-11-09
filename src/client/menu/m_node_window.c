@@ -115,7 +115,20 @@ void MN_WindowNodeLoaded (menu_t *menu)
 
 	/* if the menu should have a close button, add it here */
 	if (menu->closeButton) {
-		/** @todo Implement this */
+		menuNode_t *button = MN_AllocNode(MN_BUTTON);
+		menuNode_t *prev = MN_GetLastNode(menu);
+		const int positionFromRight = CONTROLS_PADDING;
+		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
+		button->menu = menu;
+		button->dataImageOrModel = "menu/close";
+		 /** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
+		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
+		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;
+		button->pos[0] = menu->size[0] - positionFromRight - button->size[0];
+		button->pos[1] = CONTROLS_PADDING;
+		button->tooltip = _("Close the window");
+		button->click = NULL; /** @todo */
+		MN_InsertNode(menu, prev, button);
 	}
 }
 

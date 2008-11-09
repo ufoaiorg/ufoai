@@ -272,6 +272,8 @@ static void MN_HideNode_f (void)
 menuNode_t* MN_AllocNode (int type)
 {
 	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
+	if (mn.numNodes >= MAX_MENUNODES)
+		Sys_Error("MAX_MENUNODES hit");
 	node->type = type;
 	return node;
 }
