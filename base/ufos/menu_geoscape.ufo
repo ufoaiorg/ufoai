@@ -1184,6 +1184,7 @@ menu popup_newbase
 	{
 		pos "264 262"
 		size	"496 247"
+		dragbutton	true
 	}
 
 	zone popup
@@ -1203,13 +1204,6 @@ menu popup_newbase
 		string	"_New base"
 		pos		"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string name_label
@@ -1256,7 +1250,8 @@ menu popup_newbase
 	{
 		if		"mn_base_count <= 0"
 		string	"_Start with employees:"
-		pos		"436 98"
+		pos		"451 98"
+		align	ur
 	}
 	checkbox start_employees
 	{
