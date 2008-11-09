@@ -1811,12 +1811,15 @@ void AI_Cleanup (void)
 
 /**
  * @brief Initializes the Actor's stats.
+ * First we get the templates, then we set the stats, then we tweak stats.
  * @param ent Actor to set stats.
  * @param[in] team Team to which actor belongs.
  */
 static void AI_SetStats (edict_t * ent, int team)
 {
-	/* Set stats */
+	/* 
+	 * Set base stats.
+	 */
 	if (team != TEAM_CIVILIAN) {
 		/** skills; @todo more power to Ortnoks, more mind to Tamans */
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2); /**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
@@ -1827,21 +1830,29 @@ static void AI_SetStats (edict_t * ent, int team)
 	} else if (team == TEAM_CIVILIAN) {
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
 
-		/* Set starting health */
-		ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
+	}
+
+
+	/*
+	 * Set health, morale and stun.
+	 */
+	ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
+	ent->HP = ent->chr.HP;
+	ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+	if (ent->chr.morale >= MAX_SKILL)
+		ent->chr.morale = MAX_SKILL;
+	ent->morale = ent->chr.morale;
+	ent->STUN = 0;
+
+
+	/*
+	 * Stat post tweaks.
+	 */
+	if (team == TEAM_CIVILIAN) {
+		ent->chr.HP /= 2; /* civilians get half health */
 		ent->HP = ent->chr.HP;
-		ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-		if (ent->chr.morale >= MAX_SKILL)
-			ent->chr.morale = MAX_SKILL;
-		ent->morale = ent->chr.morale;
-		ent->STUN = 0;
-		/* Tweak health */
-		if (team == TEAM_CIVILIAN) {
-			ent->chr.HP /= 2; /* civilians get half health */
-			ent->HP = ent->chr.HP;
-			if (ent->chr.morale > 45) /* they can't get over 45 morale */
-				ent->chr.morale = 45;
-		}
+		if (ent->chr.morale > 45) /* they can't get over 45 morale */
+			ent->chr.morale = 45;
 	}
 }
 
