@@ -89,11 +89,10 @@ void MN_WindowNodeLoading (menu_t *menu)
  */
 void MN_WindowNodeLoaded (menu_t *menu)
 {
-	menuNode_t *prev;
-
 	/* if it need, construct the drag button */
 	if (menu->dragButton) {
 		menuNode_t *control = MN_AllocNode(MN_CONTROLS);
+		menuNode_t *prev = MN_GetLastNode(menu);
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
 		control->dataImageOrModel = "menu/move";
@@ -101,8 +100,12 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		control->size[1] = 17;
 		control->pos[0] = menu->size[0] - 22 - control->size[0];
 		control->pos[1] = 22;
-		prev = MN_GetLastNode(menu);
 		MN_InsertNode(menu, prev, control);
+	}
+
+	/* if the menu should have a close button, add it here */
+	if (menu->closeButton) {
+		/** @todo Implement this */
 	}
 }
 

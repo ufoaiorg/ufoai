@@ -1063,7 +1063,7 @@ void MN_ParseMenu (const char *name, const char **text)
 /**
  * @sa COM_MacroExpandString
  */
-const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
+const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 {
 	if (!ref)
 		return NULL;

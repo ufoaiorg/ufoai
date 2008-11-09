@@ -513,7 +513,7 @@ void MN_MiddleClick (int x, int y)
 
 /**
  * @brief Called when we are in menu mode and scroll via mousewheel
- * @note The geoscape zooming code is here, too (also in CL_ParseInput)
+ * @note The geoscape zooming code is here, too (also in @see CL_ParseInput)
  * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MiddleClick

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void MN_ParseMenu(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const menu_t* const menu, void *ref);
-const char *MN_GetReferenceString(const menu_t* const menu, char *ref);
+const char *MN_GetReferenceString(const menu_t* const menu, const char *ref);
 
 qboolean MN_ScriptSanityCheck(void);
 

@@ -120,8 +120,8 @@ typedef struct menuNode_s {
 	qboolean disabled;			/**< true, the node is unactive */
 	int mousefx;
 	char* text;
-	void* font;	/**< Font to draw text */
-	void* tooltip; /**< holds the tooltip */
+	const char* font;	/**< Font to draw text */
+	const char* tooltip; /**< holds the tooltip */
 
 	byte align;					/** @todo delete it when its possible */
 
