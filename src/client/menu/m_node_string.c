@@ -40,16 +40,43 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	ref += node->horizontalScroll;
 	/* blinking */
 	R_ColorBlend(node->color);
-	/** @todo (menu) should this wrap or chop long lines? */
-	if (!node->mousefx || cl.time % 1000 < 500)
-		R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse, 0);
-	else
-		R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse, 0);
+	if (node->size[0] == 0) {
+		/** @todo (menu) should this wrap or chop long lines? */
+		if (!node->mousefx || cl.time % 1000 < 500)
+			R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse, 0);
+		else
+			R_FontDrawString(font, node->align, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse, 0);
+	}
+	else {
+		if (!node->mousefx || cl.time % 1000 < 500)
+			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], ref, LONGLINES_PRETTYCHOP);
+		else
+			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], va("%s*\n", ref), LONGLINES_PRETTYCHOP);
+	}
+
 	R_ColorBlend(NULL);
+}
+
+static void MN_StringNodeLoaded (menuNode_t *node)
+{
+	/* normalize node position */
+	if (node->align != ALIGN_UL) {
+		const int horiz_align = node->align % 3; /* left, center, right */
+		const int vert_align = node->align / 3;  /* top, center, bottom */
+
+		node->textalign = node->align;
+
+		node->pos[0] -= ((node->size[0] * horiz_align) / 2);
+		node->pos[1] -= ((node->size[1] * vert_align) / 2);
+
+		node->align = ALIGN_UL;
+		/** @todo in few time, we can add a warning to request an update of the node */
+	}
 }
 
 void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->draw = MN_StringNodeDraw;
+	behaviour->loaded = MN_StringNodeLoaded;
 }
