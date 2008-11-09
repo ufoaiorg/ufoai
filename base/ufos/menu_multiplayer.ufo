@@ -1602,6 +1602,8 @@ menu serverpassword
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton	true
+		closeButton	true
 	}
 
 	zone popup
@@ -1614,15 +1616,6 @@ menu serverpassword
 		pos	"0 0"
 		size	"496 247"
 		blend	true
-	}
-
-	pic bt_close
-	{
-		image	hud/close
-		pos	"458 22"
-		click	{
-			cmd "password_changed;mn_pop;"
-		}
 	}
 
 	string title
@@ -1655,26 +1648,25 @@ menu serverpassword
 	}
 	confunc password_changed { *txt_password color "0 .78 0 1" *txt_password mousefx false }
 
-	pic bt_ok
+	button set_password
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"296 192"
-		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
-		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
+		tooltip	"_Connect"
+		image	menu/button_green_small
+		pos		"260 170"
+		size	"200 48"
+		blend	true
 		click	{
 			cmd "password_changed;mn_server_need_password 0;mn_pop;connect;"
 		}
-	}
-	string string_ok
-	{
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_OK"
-		pos	"384 208"
-		align	cc
+		selectcolor	"1 1 1 1"
+	}
+
+	func close
+	{
+		password_changed
 	}
 }
 
@@ -1726,8 +1718,8 @@ menu chat_popup
 	{
 		tooltip	"_Go into the lobby"
 		image	menu/button_green_small
-		pos		"260 160"
-		size	"190 56"
+		pos		"260 170"
+		size	"200 48"
 		blend	true
 		click	{ cmd "mn_pop;mn_push irc;" }
 		font	f_menu
