@@ -102,7 +102,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 }
 
 /**
- * @brief Handles Button before loading. Used to set delault attribute values
+ * @brief Handles Button before loading. Used to set default attribute values
  */
 static void MN_ButtonNodeLoading (menuNode_t *node)
 {
@@ -114,16 +114,16 @@ static void MN_ButtonNodeLoading (menuNode_t *node)
 /**
  * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
  */
-static void MN_ButtonNodeLoaded (menuNode_t *node) {
-	/* auto fixe a size if none */
+static void MN_ButtonNodeLoaded (menuNode_t *node)
+{
+	/* auto calc the size if none was given via script files */
 	if (node->size[1] == 0) {
-		const char *font;
-		font = MN_GetFont(node->menu, node);
+		const char *font = MN_GetFont(node->menu, node);
 		node->size[1] = (R_FontGetHeight(font) / 2) + (node->padding * 2);
 	}
 #ifdef DEBUG
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' too small. It can create graphical bugs\n", node->menu->name, node->name);
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' too small. It can create graphical glitches\n", node->menu->name, node->name);
 #endif
 }
 
