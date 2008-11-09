@@ -81,11 +81,20 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Handles Custombutton before loading. Used to init node attributes
+ */
+static void MN_CustomButtonNodeLoading (menuNode_t *node)
+{
+	Vector4Set(node->selectedColor, 1, 1, 1, 1);
+}
+
 void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
 {
 	/* inheritance */
 	MN_RegisterButtonNode(behaviour);
 	/* overwrite */
+	behaviour->loading = MN_CustomButtonNodeLoading;
 	behaviour->name = "custombutton";
 	behaviour->draw = MN_CustomButtonNodeDraw;
 }
