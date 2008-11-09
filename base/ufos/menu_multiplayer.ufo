@@ -1600,27 +1600,27 @@ menu multiplayer_wait
 menu serverpassword
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
 		dragButton	true
 		closeButton	true
 	}
 
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"0 0"
+		pos		"0 0"
 		size	"496 247"
 		blend	true
 	}
 
 	string title
 	{
-		pos	"248 20"
+		pos		"248 20"
 		align	uc
 		string	"_Enter server password"
 	}
@@ -1642,9 +1642,9 @@ menu serverpassword
 	}
 	string txt_password
 	{
-		string "*cvar password"
-		pos "71 83"
-		color "0 .78 0 1"
+		string	"*cvar password"
+		pos		"71 83"
+		color	"0 .78 0 1"
 	}
 	confunc password_changed { *txt_password color "0 .78 0 1" *txt_password mousefx false }
 
@@ -1656,7 +1656,7 @@ menu serverpassword
 		size	"200 48"
 		blend	true
 		click	{
-			cmd "password_changed;mn_server_need_password 0;mn_pop;connect;"
+			cmd "mn_server_need_password 0;mn_pop;connect;"
 		}
 		font	f_menu
 		color	"0 0.5 0 1"
