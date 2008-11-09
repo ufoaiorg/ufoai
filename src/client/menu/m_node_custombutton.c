@@ -83,9 +83,11 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 /**
  * @brief Handles Custombutton before loading. Used to init node attributes
+ * @todo remove the align comment when we update the event handler (problem with the current one)
  */
 static void MN_CustomButtonNodeLoading (menuNode_t *node)
 {
+	node->textalign = ALIGN_CC;
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
