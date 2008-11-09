@@ -41,16 +41,6 @@ static const int MID_SIZE = 1;
 static const int MARGE = 3;
 
 /**
- * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
- */
-static void MN_ButtonNodeLoaded (menuNode_t *node) {
-#ifdef DEBUG
-	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' too small. It can create graphical bugs\n", node->menu->name, node->name);
-#endif
-}
-
-/**
  * @brief Handles Button clicks
  * @sa MN_BUTTON
  * @todo node->disabled is not need, a disabled node must not receive
@@ -112,12 +102,29 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 }
 
 /**
- * @brief Handles Button before loading. Used to init node attributes
+ * @brief Handles Button before loading. Used to set delault attribute values
  */
 static void MN_ButtonNodeLoading (menuNode_t *node)
 {
+	node->padding = 8;
 	node->textalign = ALIGN_CC;
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
+}
+
+/**
+ * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
+ */
+static void MN_ButtonNodeLoaded (menuNode_t *node) {
+	/* auto fixe a size if none */
+	if (node->size[1] == 0) {
+		const char *font;
+		font = MN_GetFont(node->menu, node);
+		node->size[1] = (R_FontGetHeight(font) / 2) + (node->padding * 2);
+	}
+#ifdef DEBUG
+	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' too small. It can create graphical bugs\n", node->menu->name, node->name);
+#endif
 }
 
 void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)

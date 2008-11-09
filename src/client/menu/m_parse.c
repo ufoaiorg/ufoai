@@ -62,6 +62,8 @@ static const value_t nps[] = {
 	{"padding", V_INT, offsetof(menuNode_t, padding), MEMBER_SIZEOF(menuNode_t, padding)},
 	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
 	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
+	{"width", V_FLOAT, offsetof(menuNode_t, size[0]), MEMBER_SIZEOF(menuNode_t, size[0])},
+	{"height", V_FLOAT, offsetof(menuNode_t, size[1]), MEMBER_SIZEOF(menuNode_t, size[1])},
 	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
 	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
 	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
@@ -739,14 +741,14 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						lastNode = node;
 					}
 
-					node->type = i;
-					if (nodeBehaviourList[node->type].loading)
-						nodeBehaviourList[node->type].loading(node);
-
 					/** node default values
 					 * @todo move it into the respective "loading" function (where its need)
 					 */
 					node->padding = 3;
+
+					node->type = i;
+					if (nodeBehaviourList[node->type].loading)
+						nodeBehaviourList[node->type].loading(node);
 
 /*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
 

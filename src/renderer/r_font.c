@@ -791,3 +791,7 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
 
 	R_FontAnalyze(name, path, renderstyle, size);
 }
+
+int R_FontGetHeight(const char *fontID) {
+	return R_FontGetFont(fontID)->height;
+}
