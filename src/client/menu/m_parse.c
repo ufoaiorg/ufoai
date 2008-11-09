@@ -158,7 +158,7 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
  */
-static const value_t* findPropertyByName (const value_t* propertyList, const char* name)
+static const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* name)
 {
 	const value_t* current = propertyList;
 	while (current->string != NULL) {
@@ -401,7 +401,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		if (**token == '}')
 			break;
 
-		val = findPropertyByName(selectBoxValues, *token);
+		val = MN_FindPropertyByName(selectBoxValues, *token);
 		if (val) {
 			/* get parameter values */
 			*token = COM_EParse(text, errhead, node->name);
@@ -591,11 +591,11 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		}
 
 		/* test token vs know properties */
-		val = findPropertyByName(nps, *token);
+		val = MN_FindPropertyByName(nps, *token);
 		if (!val && nodeBehaviourList[node->type].properties)
-			val = findPropertyByName(nodeBehaviourList[node->type].properties, *token);
+			val = MN_FindPropertyByName(nodeBehaviourList[node->type].properties, *token);
 		if (!val)
-			event = findPropertyByName(eventProperties, *token);
+			event = MN_FindPropertyByName(eventProperties, *token);
 
 		/* is it a property */
 		if (val) {
@@ -681,7 +681,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 					if (token[0] == '}')
 						break;
 
-					property = findPropertyByName(menuBehaviour.properties, token);
+					property = MN_FindPropertyByName(menuBehaviour.properties, token);
 					if (property) {
 						/* get new token */
 						token = COM_EParse(text, errhead, menu->name);
@@ -741,9 +741,8 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						lastNode = node;
 					}
 
-					/** node default values
-					 * @todo move it into the respective "loading" function (where its need)
-					 */
+					/* node default values */
+					/** @todo move it into the respective "loading" function (for those nodes, that need it) */
 					node->padding = 3;
 
 					node->type = i;
@@ -817,9 +816,8 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 							return qfalse;
 					}
 
-					/** set standard color
-					 * @todo move it on init behaviour only where it need
-					 */
+					/* set standard color */
+					/** @todo move it on init behaviour only where it need */
 					if (!node->color[3])
 						Vector4Set(node->color, 1, 1, 1, 1);
 
