@@ -69,8 +69,6 @@ menu bases
 
 	button buildings
 	{
-		// only if base is not under attack
-		if "mn_base_status_id != 1"
 		tooltip	"_Build base facilities"
 		image	menu/button_green_small
 		blend true
@@ -84,27 +82,11 @@ menu bases
 		string	"_Buildings"
 		font	f_menu
 	}
-	
-	// @todo need to merge it with the last one
-	button buildings_na
-	{
-		// only if base is under attack
-		if "mn_base_status_id == 1"
-		tooltip	"_Build base facilities"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 128"
-		size	"230 56"
-		disabled	true
-		string	"_Buildings"
-		color	"0 0.8 0 1"
-		font	f_menu
-	}
 
 	button aircraft
 	{
 		// only if base has at least one aircraft
-		if "mn_base_num_aircraft >= 1"
+		if "mn_base_num_aircraft != 0"
 		tooltip	"_Manage your aircraft"
 		image	menu/button_green_small
 		blend	true
@@ -137,29 +119,9 @@ menu bases
 		color "0 0.8 0 1"
 		selectcolor "1 1 1 1"
 	}
-	button aircraft_na
-	{
-		// only if base can't handle aircraft
-		if "mn_base_num_aircraft == -1"
-		tooltip	"_Build at least one functional Hangar (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 188"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_hangar;"
-		}
-		string	"_Aircraft"
-		font	f_menu
-		color "0 0.8 0 1"
-		selectcolor "1 1 1 1"
-	}
 
 	button buysell
 	{
-		// only if base is not under attack and has a storage
-		if "mn_base_buysell_allowed == 1"
 		tooltip	"_Buy/Sell equipment"
 		image	menu/button_green_small
 		blend	true
@@ -174,28 +136,9 @@ menu bases
 		color	"0 0.8 0 1"
 		font	f_menu
 	}
-	button buysell_na
-	{
-		// only if base is under attack don't have a storage
-		if "mn_base_buysell_allowed != 1"
-		tooltip	"_Build at least one functional Storage (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 248"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_storage;"
-		}
-		string	"_Buy/Sell Equipment"
-		selectcolor	"1 1 1 1"
-		color	"0 0.8 0 1"
-		font	f_menu
-	}
 
 	button transfer
 	{
-		if "mn_base_transfer_allowed == 1"
 		tooltip	"_Transfer equipment or personnel"
 		image	menu/button_green_small
 		blend	true
@@ -210,26 +153,9 @@ menu bases
 		selectcolor	"1 1 1 1"
 		font	f_menu
 	}
-	// @todo merge it with the last one
-	button transfer_na
-	{
-		if "mn_base_transfer_allowed != 1"
-		tooltip	"_Can't transfer (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 308"
-		size	"230 56"
-		disabled	true
-		string	"_Transfer"
-		color	"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		font	f_menu
-	}
 
 	button research
 	{
-		// only if base is not under attack
-		if "mn_base_research_allowed == 1"
 		tooltip	"_Research new technology"
 		image	menu/button_green_small
 		blend	true
@@ -244,29 +170,9 @@ menu bases
 		selectcolor	"1 1 1 1"
 		font	f_menu
 	}
-	button research_na
-	{
-		// only if base is not under attack
-		if "mn_base_research_allowed != 1"
-		tooltip	"_Build at least one functional Laboratory (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 368"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_lab;"
-		}
-		string	"_Research"
-		color	"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		font	f_menu
-	}
 
 	button production
 	{
-		// only if base is able to produce items
-		if "mn_base_prod_allowed == 1"
 		tooltip	"_Produce new equipment"
 		image	menu/button_green_small
 		blend	true
@@ -281,29 +187,9 @@ menu bases
 		selectcolor	"1 1 1 1"
 		font	f_menu
 	}
-	button production_na
-	{
-		// only if base is unable to produce items
-		if "mn_base_prod_allowed == 0"
-		tooltip	"_Build at least one functional Workshop (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 428"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_workshop;"
-		}
-		string	"_Production"
-		color	"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		font	f_menu
-	}
 
 	button hire
 	{
-		// only if base is not under attack
-		if "mn_base_hire_allowed == 1"
 		tooltip	"_Hire employees"
 		image	menu/button_green_small
 		blend	true
@@ -318,28 +204,9 @@ menu bases
 		selectcolor	"1 1 1 1"
 		font	f_menu
 	}
-	button hire_na
-	{
-		// only if base is not under attack
-		if "mn_base_hire_allowed != 1"
-		tooltip	"_Build at least one functional Living Quarter (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 488"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_quarters;"
-		}
-		string	"_Hire employees"
-		color	"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		font	f_menu
-	}
 
 	button containment
 	{
-		if "mn_base_containment_allowed == 1"
 		tooltip	"_Deal with Aliens in Alien Containment"
 		image	menu/button_green_small
 		blend	true
@@ -354,27 +221,9 @@ menu bases
 		selectcolor	"1 1 1 1"
 		font	f_menu
 	}
-	button containment_na
-	{
-		if "mn_base_containment_allowed != 1"
-		tooltip	"_Build at least one functional Alien Containment (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 548"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_aliencontainment;"
-		}
-		string	"_Containment"
-		color	"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		font	f_menu
-	}
 
 	button hospital
 	{
-		if "mn_base_hospital_allowed == 1"
 		tooltip	"_Medical and Surgery operations"
 		image	menu/button_green_small
 		blend	true
@@ -383,23 +232,6 @@ menu bases
 		click
 		{
 			cmd "mn_push hospital"
-		}
-		string	"_Hospital"
-		color	"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		font	f_menu
-	}
-	button hospital_na
-	{
-		if "mn_base_hospital_allowed != 1"
-		tooltip	"_Build at least one functional Hospital (click for more info)"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 608"
-		size	"230 56"
-		click
-		{
-			cmd "check_building_status building_hospital;"
 		}
 		string	"_Hospital"
 		color	"0 0.8 0 1"
@@ -517,102 +349,95 @@ menu bases
 	confunc set_base_under_attack
 	{
 		*base_status color "1 0 0 1"
-		*txt_building color "0.5 0.5 0.5 1"
-		*txt_aircraft color "0.5 0.5 0.5 1"
-		*txt_buysell color "0.5 0.5 0.5 1"
-		*txt_transfer color "0.5 0.5 0.5 1"
-		*txt_research color "0.5 0.5 0.5 1"
-		*txt_production color "0.5 0.5 0.5 1"
-		*txt_hire color "0.5 0.5 0.5 1"
-		*txt_hospital color "0.5 0.5 0.5 1"
+		*buildings disabled true
+		*buysell disabled true
+		*transfer disabled true
+		*research disabled true
+		*production disabled true
+		*hire disabled true
+		*hospital disabled true
 	}
 	confunc set_base_to_normal
 	{
 		*base_status color "1 1 1 1"
-		*txt_building color "0 0.8 0 1"
-		*txt_aircraft color "0 0.8 0 1"
-		*txt_buysell color "0 0.8 0 1"
-		*txt_transfer color "0 0.8 0 1"
-		*txt_research color "0 0.8 0 1"
-		*txt_production color "0 0.8 0 1"
-		*txt_hire color "0 0.8 0 1"
-		*txt_hospital color "0 0.8 0 1"
+		*buildings disabled false
+		cmd "base_init;"
 	}
 
 	confunc set_aircraft_disabled
 	{
-		*txt_aircraft color "0.5 0.5 0.5 1"
+		*aircraft disabled true
 	}
 	confunc set_aircraft_enabled
 	{
-		*txt_aircraft color "0 0.8 0 1"
+		*aircraft disabled false
 	}
 
 	confunc set_buysell_disabled
 	{
-		*txt_buysell color "0.5 0.5 0.5 1"
+		*buysell disabled true
 	}
 	confunc set_buysell_enabled
 	{
-		*txt_buysell color "0 0.8 0 1"
+		*buysell disabled false
 	}
 
 	confunc set_transfer_disabled
 	{
-		*txt_transfer color "0.5 0.5 0.5 1"
+		*transfer disabled true
 	}
 	confunc set_transfer_enabled
 	{
-		*txt_transfer color "0 0.8 0 1"
+		*transfer disabled false
 	}
 
 	confunc set_research_disabled
 	{
-		*txt_research color "0.5 0.5 0.5 1"
+		*research disabled true
 		cmd "set mn_base_research_allowed 0;"
 	}
 	confunc set_research_enabled
 	{
-		*txt_research color "0 0.8 0 1"
+		*research disabled false
 		cmd "set mn_base_research_allowed 1;"
 	}
 
 	confunc set_prod_disabled
 	{
-		*txt_production color "0.5 0.5 0.5 1"
+		*production disabled true
 		cmd "set mn_base_prod_allowed 0;"
 	}
 	confunc set_prod_enabled
 	{
-		*txt_production color "0 0.8 0 1"
+		*production disabled false
 		cmd "set mn_base_prod_allowed 1;"
 	}
 
 	confunc set_hire_disabled
 	{
-		*txt_hire color "0.5 0.5 0.5 1"
+		*hire disabled true
 	}
 	confunc set_hire_enabled
 	{
-		*txt_hire color "0 0.8 0 1"
+		*hire disabled false
 	}
 
 	confunc set_containment_disabled
 	{
-		*txt_containment color "0.5 0.5 0.5 1"
+		*containment disabled true
 	}
 	confunc set_containment_enabled
 	{
-		*txt_containment color "0 0.8 0 1"
+		*containment disabled false
 	}
 
 	confunc set_hospital_disabled
 	{
-		*txt_hospital color "0.5 0.5 0.5 1"
+		*hospital disabled true
 	}
 	confunc set_hospital_enabled
 	{
-		*txt_hospital color "0 0.8 0 1"
+		*hospital disabled false
 	}
 
 	func init
