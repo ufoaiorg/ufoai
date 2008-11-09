@@ -431,13 +431,13 @@ menu map
 				*bt_messagesystem texh "32 32"
 				*messagesystem size "768 22"
 				*messagesystem height "1"
-			}
+		}
 		in	{
 				*bt_messagesystem texl "32 0"
 				*bt_messagesystem texh "64 32"
 				*messagesystem size "768 400"
 				*messagesystem height "20"
-			}
+		}
 		click	{
 				*messagesystem size "768 400"
 				*messagesystem scrollbar "true"

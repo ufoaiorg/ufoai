@@ -192,7 +192,7 @@ menu production
 	{
 		pos		"40 70"
 		size	"376 670"
-//		bgcolor "1 1 1 0.5"
+		color	"0 .78 0 1"
 		format	"22 0"
 		num		TEXT_PRODUCTION_LIST
 		click
@@ -206,7 +206,7 @@ menu production
 	{
 		pos		"505 70"
 		size	"30 670"
-//		bgcolor "1 1 1 0.5"
+		color	"0 .78 0 1"
 		format	"22 0"
 		num		TEXT_PRODUCTION_AMOUNT
 		height "30"
@@ -217,7 +217,7 @@ menu production
 	{
 		pos		"465 70"
 		size	"30 670"
-//		bgcolor "1 1 1 0.5"
+		color	"0 .78 0 1"
 		format	"22 0"
 		num		TEXT_PRODUCTION_QUEUED
 		height	"30"
@@ -356,7 +356,6 @@ menu production
 	text description
 	{
 		pos		"610 428"
-//		bgcolor "1 1 1 0.5"
 		size	"366 100"
 		format	"20 260"
 		num		TEXT_PRODUCTION_INFO
