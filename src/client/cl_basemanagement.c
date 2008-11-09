@@ -315,63 +315,48 @@ static void B_BaseMenuInit (const base_t *base)
 	/* make sure the credits cvar is up-to-date */
 	CL_UpdateCredits(ccs.credits);
 
+	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
+
 	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(base)) {
-		Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
+	if (AIR_AircraftAllowed(base))
 		MN_ExecuteConfunc("set_aircraft_enabled");
-	} else {
-		Cvar_SetValue("mn_base_num_aircraft", -1);
+	else
 		MN_ExecuteConfunc("set_aircraft_disabled");
-	}
-	if (BS_BuySellAllowed(base)) {
-		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
+
+	if (BS_BuySellAllowed(base))
 		MN_ExecuteConfunc("set_buysell_enabled");
-	} else {
-		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_buysell_disabled");
-	}
-	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK) {
-		Cvar_SetValue("mn_base_transfer_allowed", qtrue);
+
+	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK)
 		MN_ExecuteConfunc("set_transfer_enabled");
-	} else {
-		Cvar_SetValue("mn_base_transfer_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_transfer_disabled");
-	}
-	if (RS_ResearchAllowed(base)) {
-		Cvar_SetValue("mn_base_research_allowed", qtrue);
+
+	if (RS_ResearchAllowed(base))
 		MN_ExecuteConfunc("set_research_enabled");
-	} else {
-		Cvar_SetValue("mn_base_research_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_research_disabled");
-	}
-	if (PR_ProductionAllowed(base)) {
-		Cvar_SetValue("mn_base_prod_allowed", qtrue);
+
+	if (PR_ProductionAllowed(base))
 		MN_ExecuteConfunc("set_prod_enabled");
-	} else {
-		Cvar_SetValue("mn_base_prod_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_prod_disabled");
-	}
-	if (E_HireAllowed(base)) {
-		Cvar_SetValue("mn_base_hire_allowed", qtrue);
+
+	if (E_HireAllowed(base))
 		MN_ExecuteConfunc("set_hire_enabled");
-	} else {
-		Cvar_SetValue("mn_base_hire_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_hire_disabled");
-	}
-	if (AC_ContainmentAllowed(base)) {
-		Cvar_SetValue("mn_base_containment_allowed", qtrue);
+
+	if (AC_ContainmentAllowed(base))
 		MN_ExecuteConfunc("set_containment_enabled");
-	} else {
-		Cvar_SetValue("mn_base_containment_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_containment_disabled");
-	}
-	if (HOS_HospitalAllowed(base)) {
-		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
+
+	if (HOS_HospitalAllowed(base))
 		MN_ExecuteConfunc("set_hospital_enabled");
-	} else {
-		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
+	else
 		MN_ExecuteConfunc("set_hospital_disabled");
-	}
 }
 
 /**

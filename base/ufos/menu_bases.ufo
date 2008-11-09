@@ -86,7 +86,7 @@ menu bases
 	button aircraft
 	{
 		// only if base has at least one aircraft
-		if "mn_base_num_aircraft != 0"
+		if "mn_base_num_aircraft > 0"
 		tooltip	"_Manage your aircraft"
 		image	menu/button_green_small
 		blend	true
@@ -367,10 +367,12 @@ menu bases
 	confunc set_aircraft_disabled
 	{
 		*aircraft disabled true
+		*aircraft_action disabled true
 	}
 	confunc set_aircraft_enabled
 	{
 		*aircraft disabled false
+		*aircraft_action disabled false
 	}
 
 	confunc set_buysell_disabled
@@ -394,23 +396,19 @@ menu bases
 	confunc set_research_disabled
 	{
 		*research disabled true
-		cmd "set mn_base_research_allowed 0;"
 	}
 	confunc set_research_enabled
 	{
 		*research disabled false
-		cmd "set mn_base_research_allowed 1;"
 	}
 
 	confunc set_prod_disabled
 	{
 		*production disabled true
-		cmd "set mn_base_prod_allowed 0;"
 	}
 	confunc set_prod_enabled
 	{
 		*production disabled false
-		cmd "set mn_base_prod_allowed 1;"
 	}
 
 	confunc set_hire_disabled
