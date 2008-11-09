@@ -113,28 +113,20 @@ menu aircraft
 	// ===============
 	// buy/sell aircraft
 	// ===============
-	pic button_buysell
+	button button_buysell
 	{
 		tooltip	"_Buy or sell aircraft"
-		image	menu/button
+		image	menu/button_green_small
 		pos	"45 170"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
+		size "230 64"
+		blend	true
 		click
 		{
 			cmd "set mn_itemtype 8; mn_push buy;"
 		}
-		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
-		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
-	}
-	string txt_buysell
-	{
 		string	"_Buy/Sell Aircraft"
 		color	"0 0.8 0 1"
-		pos	"164 203"
 		font	f_menu
-		align	cc
 	}
 
 	// ===============
@@ -229,7 +221,7 @@ menu aircraft
 		image		menu/button_green_small
 		pos			"45 450"
 		size		"230 56"
-		mousefx		true
+		blend	true
 		click
 		{
 			cmd		"set mn_itemtype 8; mn_push production;"
