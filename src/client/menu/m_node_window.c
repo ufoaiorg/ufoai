@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "m_node_window.h"
 
 /**
@@ -100,6 +101,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		control->size[1] = 17;
 		control->pos[0] = menu->size[0] - 22 - control->size[0];
 		control->pos[1] = 22;
+		control->tooltip = _("Drag to move window");
 		MN_InsertNode(menu, prev, control);
 	}
 
