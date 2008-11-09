@@ -118,6 +118,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 static void MN_ButtonNodeLoading (menuNode_t *node)
 {
 	node->textalign = ALIGN_CC;
+	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
 void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
