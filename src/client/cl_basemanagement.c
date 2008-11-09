@@ -796,8 +796,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
 	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
-		assert(0);
-		return qfalse;
+		Sys_Error("B_BuildingDestroy: building mismatch at base %i pos %i,%i.\n", base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
 
 	/* Remove the building from the base map */
