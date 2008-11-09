@@ -2386,6 +2386,7 @@ menu messageoptions
 	{
 		pos	"256 256"
 		size	"496 496"
+		dragbutton	true
 	}
 
 	zone popup
@@ -2409,13 +2410,6 @@ menu messageoptions
 	func close
 	{
 		cmd "msgoptions_restore;"
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"437 24"
 	}
 
 	pic bt_close
@@ -2471,8 +2465,7 @@ menu messageoptions
 	pic header_pause
 	{
 		tooltip	"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
-		pos		"364 60"
-		align	ur
+		pos		"356 60"
 		image	menu/notify_pause
 		click { cmd "msgoptions_setall pause 1;" }
 		rclick { cmd "msgoptions_setall pause 0;" }
@@ -2481,8 +2474,7 @@ menu messageoptions
 	pic header_notify
 	{
 		tooltip	"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
-		pos		"394 60"
-		align	ur
+		pos		"386 60"
 		image	menu/notify_notice
 		click { cmd "msgoptions_setall notify 1;" }
 		rclick { cmd "msgoptions_setall notify 0;" }
@@ -2491,8 +2483,7 @@ menu messageoptions
 	pic header_sound
 	{
 		tooltip	"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
-		pos		"424 60"
-		align	ur
+		pos		"416 60"
 		image	menu/notify_sound
 		click { cmd "msgoptions_setall sound 1;" }
 		rclick { cmd "msgoptions_setall sound 0;" }
@@ -2514,7 +2505,6 @@ menu messageoptions
 
 	pic bt_pause0 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 90"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 0 pause;" }
@@ -2523,7 +2513,6 @@ menu messageoptions
 
 	pic bt_notify0 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 90"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 notify;" }
@@ -2532,7 +2521,6 @@ menu messageoptions
 
 	pic bt_sound0 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 90"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 0 sound;" }
@@ -2541,7 +2529,6 @@ menu messageoptions
 
 	pic bt_pause1 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 115"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 1 pause;" }
@@ -2550,7 +2537,6 @@ menu messageoptions
 
 	pic bt_notify1 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 115"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 notify;" }
@@ -2559,7 +2545,6 @@ menu messageoptions
 
 	pic bt_sound1 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 115"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 1 sound;" }
@@ -2568,7 +2553,6 @@ menu messageoptions
 
 	pic bt_pause2 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 140"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 2 pause;" }
@@ -2577,7 +2561,6 @@ menu messageoptions
 
 	pic bt_notify2 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 140"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 notify;" }
@@ -2586,7 +2569,6 @@ menu messageoptions
 
 	pic bt_sound2 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 140"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 2 sound;" }
@@ -2595,7 +2577,6 @@ menu messageoptions
 
 	pic bt_pause3 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 165"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 3 pause;" }
@@ -2604,7 +2585,6 @@ menu messageoptions
 
 	pic bt_notify3 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 165"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 notify;" }
@@ -2613,7 +2593,6 @@ menu messageoptions
 
 	pic bt_sound3 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 165"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 3 sound;" }
@@ -2622,7 +2601,6 @@ menu messageoptions
 
 	pic bt_pause4 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 190"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 4 pause;" }
@@ -2631,7 +2609,6 @@ menu messageoptions
 
 	pic bt_notify4 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 190"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 notify;" }
@@ -2640,7 +2617,6 @@ menu messageoptions
 
 	pic bt_sound4 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 190"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 4 sound;" }
@@ -2649,7 +2625,6 @@ menu messageoptions
 
 	pic bt_pause5 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 215"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 5 pause;" }
@@ -2658,7 +2633,6 @@ menu messageoptions
 
 	pic bt_notify5 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 215"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 notify;" }
@@ -2667,7 +2641,6 @@ menu messageoptions
 
 	pic bt_sound5 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 215"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 5 sound;" }
@@ -2676,7 +2649,6 @@ menu messageoptions
 
 	pic bt_pause6 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 240"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 6 pause;" }
@@ -2685,7 +2657,6 @@ menu messageoptions
 
 	pic bt_notify6 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 240"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 notify;" }
@@ -2694,7 +2665,6 @@ menu messageoptions
 
 	pic bt_sound6 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 240"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 6 sound;" }
@@ -2703,7 +2673,6 @@ menu messageoptions
 
 	pic bt_pause7 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 265"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 7 pause;" }
@@ -2712,7 +2681,6 @@ menu messageoptions
 
 	pic bt_notify7 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 265"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 notify;" }
@@ -2721,7 +2689,6 @@ menu messageoptions
 
 	pic bt_sound7 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 265"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 7 sound;" }
@@ -2730,7 +2697,6 @@ menu messageoptions
 
 	pic bt_pause8 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 290"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 8 pause;" }
@@ -2739,7 +2705,6 @@ menu messageoptions
 
 	pic bt_notify8 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 290"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 notify;" }
@@ -2748,7 +2713,6 @@ menu messageoptions
 
 	pic bt_sound8 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 290"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 8 sound;" }
@@ -2757,7 +2721,6 @@ menu messageoptions
 
 	pic bt_pause9 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 315"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 9 pause;" }
@@ -2766,7 +2729,6 @@ menu messageoptions
 
 	pic bt_notify9 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 315"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 notify;" }
@@ -2775,7 +2737,6 @@ menu messageoptions
 
 	pic bt_sound9 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 315"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 9 sound;" }
@@ -2784,7 +2745,6 @@ menu messageoptions
 
 	pic bt_pause10 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 340"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 10 pause;" }
@@ -2793,7 +2753,6 @@ menu messageoptions
 
 	pic bt_notify10 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 340"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 notify;" }
@@ -2802,7 +2761,6 @@ menu messageoptions
 
 	pic bt_sound10 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 340"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 10 sound;" }
@@ -2811,7 +2769,6 @@ menu messageoptions
 
 	pic bt_pause11 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 365"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 11 pause;" }
@@ -2820,7 +2777,6 @@ menu messageoptions
 
 	pic bt_notify11 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 365"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 notify;" }
@@ -2829,7 +2785,6 @@ menu messageoptions
 
 	pic bt_sound11 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 365"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 11 sound;" }
@@ -2838,7 +2793,6 @@ menu messageoptions
 
 	pic bt_pause12 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 390"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 12 pause;" }
@@ -2847,7 +2801,6 @@ menu messageoptions
 
 	pic bt_notify12 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 390"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 notify;" }
@@ -2856,7 +2809,6 @@ menu messageoptions
 
 	pic bt_sound12 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 390"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 12 sound;" }
@@ -2865,7 +2817,6 @@ menu messageoptions
 
 	pic bt_pause13 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 415"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 13 pause;" }
@@ -2874,7 +2825,6 @@ menu messageoptions
 
 	pic bt_notify13 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 415"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 notify;" }
@@ -2883,7 +2833,6 @@ menu messageoptions
 
 	pic bt_sound13 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 415"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 13 sound;" }
@@ -2892,7 +2841,6 @@ menu messageoptions
 
 	pic bt_pause14 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 440"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 14 pause;" }
@@ -2901,7 +2849,6 @@ menu messageoptions
 
 	pic bt_notify14 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 440"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 notify;" }
@@ -2910,7 +2857,6 @@ menu messageoptions
 
 	pic bt_sound14 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 440"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 14 sound;" }
@@ -2919,7 +2865,6 @@ menu messageoptions
 
 	pic bt_pause15 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 465"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 15 pause;" }
@@ -2928,7 +2873,6 @@ menu messageoptions
 
 	pic bt_notify15 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 465"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 notify;" }
@@ -2937,7 +2881,6 @@ menu messageoptions
 
 	pic bt_sound15 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 465"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 15 sound;" }
@@ -2946,7 +2889,6 @@ menu messageoptions
 
 	pic bt_pause16 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 490"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 16 pause;" }
@@ -2955,7 +2897,6 @@ menu messageoptions
 
 	pic bt_notify16 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 490"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 notify;" }
@@ -2964,7 +2905,6 @@ menu messageoptions
 
 	pic bt_sound16 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 490"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 16 sound;" }
@@ -2973,7 +2913,6 @@ menu messageoptions
 
 	pic bt_pause17 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 515"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 17 pause;" }
@@ -2982,7 +2921,6 @@ menu messageoptions
 
 	pic bt_notify17 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 515"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 notify;" }
@@ -2991,7 +2929,6 @@ menu messageoptions
 
 	pic bt_sound17 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 515"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 17 sound;" }
@@ -3000,7 +2937,6 @@ menu messageoptions
 
 	pic bt_pause18 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 540"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 18 pause;" }
@@ -3009,7 +2945,6 @@ menu messageoptions
 
 	pic bt_notify18 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 540"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 notify;" }
@@ -3018,7 +2953,6 @@ menu messageoptions
 
 	pic bt_sound18 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 540"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 18 sound;" }
@@ -3027,7 +2961,6 @@ menu messageoptions
 
 	pic bt_pause19 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 565"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 19 pause;" }
@@ -3036,7 +2969,6 @@ menu messageoptions
 
 	pic bt_notify19 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 565"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 notify;" }
@@ -3045,7 +2977,6 @@ menu messageoptions
 
 	pic bt_sound19 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 565"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 19 sound;" }
@@ -3054,7 +2985,6 @@ menu messageoptions
 
 	pic bt_pause20 {
 		tooltip "_enable or disable game stopping"
-		align	ur
 		pos		"360 590"
 		image	menu/checkbox_unchecked
 		click {	cmd "msgoptions_toggle 20 pause;" }
@@ -3063,7 +2993,6 @@ menu messageoptions
 
 	pic bt_notify20 {
 		tooltip	"_enable or disable displaying a notification message"
-		align	ur
 		pos		"390 590"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 notify;" }
@@ -3072,7 +3001,6 @@ menu messageoptions
 
 	pic bt_sound20 {
 		tooltip "_enable or disable playing sound"
-		align	ur
 		pos		"420 590"
 		image	menu/checkbox_unchecked
 		click { cmd "msgoptions_toggle 20 sound;" }

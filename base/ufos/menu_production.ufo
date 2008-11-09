@@ -377,17 +377,6 @@ menu production
 		align   uc
 	}
 
-	pic bt_previtemtype
-	{
-		tooltip "_Previous category"
-		mousefx true
-		image   menu/button_aliencont1
-		pos     "650 623"
-		texl    "0 0"
-		texh    "32 64"
-		click   { cmd "prev_prod_type;" }
-	}
-
 	zone zone_category {
 		pos     "650 627"
 		size    "270 59"
@@ -397,6 +386,17 @@ menu production
 		whdown  {
 			cmd "next_prod_type;"
 		}
+	}
+
+	pic bt_previtemtype
+	{
+		tooltip "_Previous category"
+		mousefx true
+		image   menu/button_aliencont1
+		pos     "650 623"
+		texl    "0 0"
+		texh    "32 64"
+		click   { cmd "prev_prod_type;" }
 	}
 
 	pic bt_nextitemtype
