@@ -85,6 +85,10 @@ void MN_WindowNodeLoading (menu_t *menu)
 {
 }
 
+static const int CONTROLS_IMAGE_DIMENSIONS = 17;
+static const int CONTROLS_PADDING = 22;
+static const int CONTROLS_SPACING = 5;
+
 /**
  * @brief Called at the end of the load from script
  */
@@ -94,13 +98,17 @@ void MN_WindowNodeLoaded (menu_t *menu)
 	if (menu->dragButton) {
 		menuNode_t *control = MN_AllocNode(MN_CONTROLS);
 		menuNode_t *prev = MN_GetLastNode(menu);
+		int positionFromRight = CONTROLS_PADDING;
+		if (menu->closeButton)
+			positionFromRight += CONTROLS_IMAGE_DIMENSIONS + CONTROLS_SPACING;
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
 		control->dataImageOrModel = "menu/move";
-		control->size[0] = 17;
-		control->size[1] = 17;
-		control->pos[0] = menu->size[0] - 22 - control->size[0];
-		control->pos[1] = 22;
+		 /** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
+		control->size[0] = CONTROLS_IMAGE_DIMENSIONS;
+		control->size[1] = CONTROLS_IMAGE_DIMENSIONS;
+		control->pos[0] = menu->size[0] - positionFromRight - control->size[0];
+		control->pos[1] = CONTROLS_PADDING;
 		control->tooltip = _("Drag to move window");
 		MN_InsertNode(menu, prev, control);
 	}
