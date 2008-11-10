@@ -16,28 +16,9 @@ menu aircraft
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/air_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/air_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/air_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/air_lr
-		pos		"512 512"
+		image	menu/aircraft_bg
 	}
 
 	// ===============
