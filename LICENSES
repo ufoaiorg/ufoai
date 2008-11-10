@@ -2008,10 +2008,7 @@ base/pics/menu/geo_radar.tga | GNU General Public License 2.0 or later | Kostia 
 base/pics/menu/hosp_button_blue.tga | GNU General Public License 2.0
 base/pics/menu/hosp_button_green.tga | GNU General Public License 2.0
 base/pics/menu/hosp_button_light.tga | GNU General Public License 2.0
-base/pics/menu/hosp_empl_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/hosp_empl_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/hosp_empl_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/hosp_empl_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/hosp_empl_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/hosp_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/hosp_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/hosp_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta

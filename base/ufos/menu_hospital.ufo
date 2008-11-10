@@ -473,28 +473,9 @@ menu hospital_employee
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/hosp_empl_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/hosp_empl_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/hosp_empl_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/hosp_empl_lr
-		pos		"512 512"
+		image	menu/hosp_empl_bg
 	}
 
 	// ==================
