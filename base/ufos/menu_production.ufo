@@ -16,28 +16,9 @@ menu production
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/prod_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/prod_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/prod_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/prod_lr
-		pos		"512 512"
+		image	menu/production_bg
 	}
 
 	// ==================
@@ -317,10 +298,10 @@ menu production
 	// ==========================================
 	// confunc to enable/disable priority buttons
 	// ==========================================
-	
+
 	confunc prod_priodecr_off
 	{
-		//decrease and prio off 
+		//decrease and prio off
 		*prod_dec	invis true
 		*prod_dec2	invis true
 		*prod_stop	invis true
@@ -329,14 +310,14 @@ menu production
 		*prod_down	invis true
 		*prod_up	invis true
 	}
-	
+
 	confunc prod_inc_off
 	{
 		//increase off (used in combination with prod_priodecr_off
 		*prod_inc	invis true
 		*prod_inc2	invis true
 	}
-	
+
 	confunc prod_all_on
 	{
 		//enable all
