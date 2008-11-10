@@ -838,25 +838,9 @@ menu lostgame
 		invis true
 	}
 
-	pic back_ul
+	pic background
 	{
-		image	menu/endgame_ul
-		pos		"0 0"
-	}
-	pic back_ur
-	{
-		image	menu/endgame_ur
-		pos		"512 0"
-	}
-	pic back_ll
-	{
-		image	menu/endgame_ll
-		pos		"0 512"
-	}
-	pic back_lr
-	{
-		image	menu/endgame_lr
-		pos		"512 512"
+		image	menu/endgame_bg
 	}
 
 	string lostgame
@@ -920,25 +904,9 @@ menu endgame
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/endgame_ul
-		pos		"0 0"
-	}
-	pic back_ur
-	{
-		image	menu/endgame_ur
-		pos		"512 0"
-	}
-	pic back_ll
-	{
-		image	menu/endgame_ll
-		pos		"0 512"
-	}
-	pic back_lr
-	{
-		image	menu/endgame_lr
-		pos		"512 512"
+		image	menu/endgame_bg
 	}
 
 	string endgame
