@@ -674,18 +674,19 @@ typedef enum {
 
 /** @brief Artificial intelligence of a character */
 typedef struct AI_s {
-	char type[MAX_VAR]; /**< Lua file used by the AI. */
-	char subtype[MAX_VAR]; /**< Subtype to be used by AI. */
-	lua_State* L; /**< The lua state used by the AI. */
-} AI_t;/** @brief Describes a character with all its attributes */
+	char type[MAX_QPATH];	/**< Lua file used by the AI. */
+	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
+	lua_State* L;			/**< The lua state used by the AI. */
+} AI_t;
 
+/** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;
 	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
 	char path[MAX_VAR];
 	char body[MAX_VAR];
 	char head[MAX_VAR];
-	int skin;				/**< Index of skin. */
+	int skin;					/**< Index of skin. */
 
 	int HP;						/**< Health points (current ones). */
 	int minHP;					/**< Minimum hp during combat */

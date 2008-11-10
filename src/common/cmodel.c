@@ -1404,7 +1404,8 @@ void Grid_DumpWholeServerMap_f (void)
  * @sa Grid_MoveMark
  * @sa G_BuildForbiddenList
  * @sa CL_BuildForbiddenList
- * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
+ * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
+ * the forbidden list) otherwise false.
  */
 static qboolean Grid_CheckForbidden (struct routing_s *map, const int actor_size, struct pathing_s *path, int x, int y, int z)
 {
@@ -2093,14 +2094,12 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 {
 	int x, y, z, actor_size, dir;
 
-#if 1
-	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
+	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
 		(int)min[0], (int)min[1], (int)min[2],
 		(int)max[0], (int)max[1], (int)max[2]);
 
 	/* Com_Printf("Before:\n"); */
 	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
-#endif
 
 	/* check unit heights */
 	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) {
@@ -2181,7 +2180,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		return;
 	}
 
-	Com_Printf("Model:%s origin(%f,%f,%f) angles(%f,%f,%f) mins(%f,%f,%f) maxs(%f,%f,%f)\n", name,
+	Com_DPrintf(DEBUG_PATHING, "Model:%s origin(%f,%f,%f) angles(%f,%f,%f) mins(%f,%f,%f) maxs(%f,%f,%f)\n", name,
 		model->origin[0], model->origin[1], model->origin[2],
 		model->angles[0], model->angles[1], model->angles[2],
 		model->mins[0], model->mins[1], model->mins[2],
