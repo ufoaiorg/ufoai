@@ -2387,8 +2387,8 @@ menu messageoptions
 		font	f_menu
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		string	"_Revert"
-		tooltip "_Revert setting changes"
+		string	"_Cancel"
+		tooltip "_Revert changes"
 	}
 
 	string title
