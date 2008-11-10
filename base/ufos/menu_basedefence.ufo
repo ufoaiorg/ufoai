@@ -16,28 +16,9 @@ menu basedefence
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/basedefence_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/basedefence_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/basedefence_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/basedefence_lr
-		pos		"512 512"
+		image	menu/basedefence_bg
 	}
 
 	// ==================
