@@ -30,28 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_window.h"
 #include "m_node_selectbox.h"
 
-#define	V_ACTION	0xF000 /**< Identify an action type into the value_t structure */
+#define	V_SPECIAL_ACTION		0x8000	/**< Identify an action type into the value_t structure */
+#define V_SPECIAL_EXCLUDERECT	0x8001	/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_OPTIONNODE	0x8002	/**< Identify a special attribute, use special parse function */
 
-/**
- * @brief valid node event ids
- * @todo merge it with the properties
- */
-static const value_t eventProperties[] = {
-	{"click", V_ACTION, offsetof(menuNode_t, click), MEMBER_SIZEOF(menuNode_t, click)},
-	{"rclick", V_ACTION, offsetof(menuNode_t, rclick), MEMBER_SIZEOF(menuNode_t, rclick)},
-	{"mclick", V_ACTION, offsetof(menuNode_t, mclick), MEMBER_SIZEOF(menuNode_t, mclick)},
-	{"wheel", V_ACTION, offsetof(menuNode_t, wheel), MEMBER_SIZEOF(menuNode_t, wheel)},
-	{"in", V_ACTION, offsetof(menuNode_t, mouseIn), MEMBER_SIZEOF(menuNode_t, mouseIn)},
-	{"out", V_ACTION, offsetof(menuNode_t, mouseOut), MEMBER_SIZEOF(menuNode_t, mouseOut)},
-	{"whup", V_ACTION, offsetof(menuNode_t, wheelUp), MEMBER_SIZEOF(menuNode_t, wheelUp)},
-	{"whdown", V_ACTION, offsetof(menuNode_t, wheelDown), MEMBER_SIZEOF(menuNode_t, wheelDown)},
-	{NULL, V_NULL, 0, 0}
-};
-
-/* =========================================================== */
-
-/** @brief valid properties for a menu node */
-static const value_t nps[] = {
+/** @brief valid properties for a node */
+static const value_t nodeProperties[] = {
 	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
 	{"blend", V_BOOL, offsetof(menuNode_t, blend), MEMBER_SIZEOF(menuNode_t, blend)},
@@ -112,6 +96,20 @@ static const value_t nps[] = {
 	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
 	{"point_width", V_FLOAT, offsetof(menuNode_t, pointWidth), MEMBER_SIZEOF(menuNode_t, pointWidth)},
 	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
+
+	/* action event */
+	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, click), MEMBER_SIZEOF(menuNode_t, click)},
+	{"rclick", V_SPECIAL_ACTION, offsetof(menuNode_t, rclick), MEMBER_SIZEOF(menuNode_t, rclick)},
+	{"mclick", V_SPECIAL_ACTION, offsetof(menuNode_t, mclick), MEMBER_SIZEOF(menuNode_t, mclick)},
+	{"wheel", V_SPECIAL_ACTION, offsetof(menuNode_t, wheel), MEMBER_SIZEOF(menuNode_t, wheel)},
+	{"in", V_SPECIAL_ACTION, offsetof(menuNode_t, mouseIn), MEMBER_SIZEOF(menuNode_t, mouseIn)},
+	{"out", V_SPECIAL_ACTION, offsetof(menuNode_t, mouseOut), MEMBER_SIZEOF(menuNode_t, mouseOut)},
+	{"whup", V_SPECIAL_ACTION, offsetof(menuNode_t, wheelUp), MEMBER_SIZEOF(menuNode_t, wheelUp)},
+	{"whdown", V_SPECIAL_ACTION, offsetof(menuNode_t, wheelDown), MEMBER_SIZEOF(menuNode_t, wheelDown)},
+
+	/* very special attribute */
+	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
+	{"option", V_SPECIAL_OPTIONNODE, 0, 0},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -265,13 +263,11 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 /*				Com_Printf(" %s", *token); */
 
-				for (val = nps, i = 0; val->type; val++, i++)
-					if (!Q_strcasecmp(*token, val->string))
-						break;
+				val = MN_FindPropertyByName(nodeProperties, *token);
 
 				action->scriptValues = val;
 
-				if (!val->type) {
+				if (!val || !val->type) {
 					Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
 					mn.curadata = action->data;
 					if (lastAction) {
@@ -576,7 +572,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 	do {
 		const value_t *val;
-		const value_t *event;
 		qboolean result;
 
 		/* get new token */
@@ -593,37 +588,41 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			return qtrue;
 		}
 
-		/* test token vs know properties */
-		val = MN_FindPropertyByName(nps, *token);
+		/* find the property */
+		val = MN_FindPropertyByName(nodeProperties, *token);
 		if (!val && nodeBehaviourList[node->type].properties)
 			val = MN_FindPropertyByName(nodeBehaviourList[node->type].properties, *token);
-		if (!val)
-			event = MN_FindPropertyByName(eventProperties, *token);
 
 		/* is it a property */
 		if (val) {
-			result = MN_ParseProperty(node, val, text, token, errhead);
-			if (!result)
-				return qfalse;
+			/* for classic properties */
+			if ((val->type | V_BASETYPEMASK|V_MENU_COPY) == (V_BASETYPEMASK|V_MENU_COPY)) {
+				result = MN_ParseProperty(node, val, text, token, errhead);
+				if (!result)
+					return qfalse;
 
-		/* is it an event property */
-		} else if (event) {
-			result = MN_ParseEventProperty(node, event, text, token, errhead);
-			if (!result)
-				return qfalse;
-			nextTokenAlreadyRead = qtrue;
+			/* is it an event property */
+			} else if (val->type == V_SPECIAL_ACTION) {
+				result = MN_ParseEventProperty(node, val, text, token, errhead);
+				if (!result)
+					return qfalse;
+				nextTokenAlreadyRead = qtrue;
 
-		} else if (!Q_strncmp(*token, "excluderect", 12)) {
-			result = MN_ParseExcludeRect(node, text, token, errhead);
-			if (!result)
-				return qfalse;
+			} else if (val->type == V_SPECIAL_EXCLUDERECT) {
+				result = MN_ParseExcludeRect(node, text, token, errhead);
+				if (!result)
+					return qfalse;
 
-		/* for MN_SELECTBOX */
-		} else if (!Q_strncmp(*token, "option", 7)) {
-			result = MN_ParseOption(node, text, token, errhead);
-			if (!result)
-				return qfalse;
+			/* for MN_SELECTBOX */
+			} else if (val->type == V_SPECIAL_OPTIONNODE) {
+				result = MN_ParseOption(node, text, token, errhead);
+				if (!result)
+					return qfalse;
 
+			} else {
+				/* unknown val->type !!!!! */
+				Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" ignored (node \"%s\", menu %s)\n", val->type, node->name, node->menu->name);
+			}
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
@@ -753,50 +752,6 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						nodeBehaviourList[node->type].loading(node);
 
 /*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
-
-					/* check for special nodes */
-					switch (node->type) {
-					case MN_FUNC:
-						if (!Q_strncmp(node->name, "init", 4)) {
-							if (!menu->initNode)
-								menu->initNode = node;
-							else
-								Com_Printf("MN_ParseMenuBody: second init function ignored (menu \"%s\")\n", menu->name);
-						} else if (!Q_strncmp(node->name, "close", 5)) {
-							if (!menu->closeNode)
-								menu->closeNode = node;
-							else
-								Com_Printf("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name);
-						} else if (!Q_strncmp(node->name, "event", 5)) {
-							if (!menu->eventNode) {
-								menu->eventNode = node;
-								menu->eventNode->timeOut = 2000; /* default value */
-							} else
-								Com_Printf("MN_ParseMenuBody: second event function ignored (menu \"%s\")\n", menu->name);
-						} else if (!Q_strncmp(node->name, "leave", 5)) {
-							if (!menu->leaveNode) {
-								menu->leaveNode = node;
-							} else
-								Com_Printf("MN_ParseMenuBody: second leave function ignored (menu \"%s\")\n", menu->name);
-						}
-						break;
-					case MN_ZONE:
-						if (!Q_strncmp(node->name, "render", 6)) {
-							if (!menu->renderNode)
-								menu->renderNode = node;
-							else
-								Com_Printf("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name);
-						} else if (!Q_strncmp(node->name, "popup", 5)) {
-							if (!menu->popupNode)
-								menu->popupNode = node;
-							else
-								Com_Printf("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n", menu->name);
-						}
-						break;
-					case MN_CONTAINER:
-						node->container = NULL;
-						break;
-					}
 
 					/* set standard texture coordinates */
 /*					node->texl[0] = 0; node->texl[1] = 0; */
@@ -1110,11 +1065,9 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 				return NULL;
 
 			/* get the property */
-			for (val = nps; val->type; val++)
-				if (!Q_strcasecmp(token, val->string))
-					break;
+			val = MN_FindPropertyByName(nodeProperties, token);
 
-			if (!val->type)
+			if (!val || !val->type)
 				return NULL;
 
 			/* get the string */
@@ -1160,11 +1113,9 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 				return 0.0;
 
 			/* get the property */
-			for (val = nps; val->type; val++)
-				if (!Q_strcasecmp(token, val->string))
-					break;
+			val = MN_FindPropertyByName(nodeProperties, token);
 
-			if (val->type != V_FLOAT)
+			if (!val || val->type != V_FLOAT)
 				return 0.0;
 
 			/* get the string */

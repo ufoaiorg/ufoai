@@ -1111,11 +1111,17 @@ static void MN_ContainerRightClick (menuNode_t *node, int x, int y)
 	MN_Drag(node, baseCurrent, x, y, qtrue);
 }
 
+static void MN_ContainerLoading (menuNode_t *node)
+{
+	node->container = NULL;
+}
+
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
 	behaviour->draw = MN_DrawContainerNode2;
 	behaviour->leftClick = MN_ContainerClick;
 	behaviour->rightClick = MN_ContainerRightClick;
+	behaviour->loading = MN_ContainerLoading;
 	behaviour->loaded = MN_FindContainer;
 }

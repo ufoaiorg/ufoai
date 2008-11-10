@@ -319,11 +319,62 @@ static void MN_UnHideNode_f (void)
 /**
  * @brief Init a behaviour to null. A null node doesn't react
  */
-static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual)
+static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual, void(*loading)(menuNode_t*))
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
 	behaviour->isVirtual = isVirtual;
+	behaviour->loading = loading;
+}
+
+/**
+ * @todo create a m_node_zone.c
+ */
+static void MN_ZoneNodeLoading (menuNode_t *node)
+{
+	menu_t * menu = node->menu;
+	if (!Q_strncmp(node->name, "render", 6)) {
+		if (!menu->renderNode)
+			menu->renderNode = node;
+		else
+			Com_Printf("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name);
+	} else if (!Q_strncmp(node->name, "popup", 5)) {
+		if (!menu->popupNode)
+			menu->popupNode = node;
+		else
+			Com_Printf("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n", menu->name);
+	}
+}
+
+/**
+ * @todo create a m_node_func.c
+ */
+static void MN_FuncNodeLoading (menuNode_t *node)
+{
+	menu_t * menu = node->menu;
+	if (!Q_strncmp(node->name, "init", 4)) {
+		if (!menu->initNode)
+			menu->initNode = node;
+		else
+			Com_Printf("MN_ParseMenuBody: second init function ignored (menu \"%s\")\n", menu->name);
+	} else if (!Q_strncmp(node->name, "close", 5)) {
+		if (!menu->closeNode)
+			menu->closeNode = node;
+		else
+			Com_Printf("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name);
+	} else if (!Q_strncmp(node->name, "event", 5)) {
+		if (!menu->eventNode) {
+			menu->eventNode = node;
+			menu->eventNode->timeOut = 2000; /* default value */
+		} else
+			Com_Printf("MN_ParseMenuBody: second event function ignored (menu \"%s\")\n", menu->name);
+	} else if (!Q_strncmp(node->name, "leave", 5)) {
+		if (!menu->leaveNode) {
+			menu->leaveNode = node;
+		} else
+			Com_Printf("MN_ParseMenuBody: second leave function ignored (menu \"%s\")\n", menu->name);
+	}
+
 }
 
 /**
@@ -345,11 +396,11 @@ void MN_InitNodes (void)
 	MN_RegisterWindowNode(&menuBehaviour);
 
 	/* all nodes */
-	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue);
-	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue);
-	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue);
-	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue);
-	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse);
+	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue, NULL);
+	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue, NULL);
+	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue, NULL);
+	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue, MN_FuncNodeLoading);
+	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoading);
 	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
 	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
 	MN_RegisterTextNode(nodeBehaviourList + MN_TEXT);
