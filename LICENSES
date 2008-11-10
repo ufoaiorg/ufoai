@@ -1997,10 +1997,7 @@ base/pics/menu/container_scrollv_ina.png | GNU General Public License 2.0 | Wern
 base/pics/menu/del.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/employee_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/endgame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/equipment_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/equipment_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/equipment_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/equipment_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/equipment_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/geo_eventlog.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
 base/pics/menu/geo_eventoptions.tga | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/menu/geo_mapcenter.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta

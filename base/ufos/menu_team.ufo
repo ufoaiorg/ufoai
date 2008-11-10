@@ -1024,16 +1024,9 @@ menu equipment
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/equipment_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/equipment_ur
-		pos		"512 0"
+		image	menu/equipment_bg
 	}
 
 	string s_backpack
@@ -1097,18 +1090,6 @@ menu equipment
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
-	}
-
-	pic back_ll
-	{
-		image	menu/equipment_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/equipment_lr
-		pos		"512 512"
 	}
 
 	// ==================
@@ -1742,13 +1723,13 @@ menu equipment
 
 	confunc cont_scroll_prev_ina { *container_scroll_prev image menu/container_scrollv_ina }
 	confunc cont_scroll_next_ina { *container_scroll_next image menu/container_scrollv_ina }
-	
+
 	confunc cont_scroll_prev_act { *container_scroll_prev image menu/container_scrollv }
 	confunc cont_scroll_next_act { *container_scroll_next image menu/container_scrollv }
-	
+
 	confunc cont_scroll_prev_high { *container_scroll_prev image menu/container_scrollv_high }
 	confunc cont_scroll_next_high { *container_scroll_next image menu/container_scrollv_high }
-	
+
 	pic container_scroll_prev
 	{
 		tooltip	"_Scroll backward"
