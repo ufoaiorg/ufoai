@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+/* uncomment this to try the new lua driven ai */
+/*#define LUA_AI*/
+
 #include "g_local.h"
 #include "../common/filesys.h"
 
@@ -593,10 +596,9 @@ static int AIL_see (lua_State *L)
 	/* Get visible things. */
 	/** @todo check for what they can see instead of seeing all. */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && G_IsLivingActor(check) && (AIL_ent != check) &&
-				((vision == 0)) && /* Vision checks. */
-				((team == TEAM_NONE) || /* Check for team match if needed. */
-					(check->team == team))) {
+		if (check->inuse && G_IsLivingActor(check) && AIL_ent != check
+		 && vision == 0 /* Vision checks. */
+		 && (team == TEAM_NONE || check->team == team)) {/* Check for team match if needed. */
 
 			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
@@ -658,7 +660,7 @@ static int AIL_crouch (lua_State *L)
  */
 static int AIL_TU (lua_State *L)
 {
-	lua_pushnumber(L,AIL_ent->TU);
+	lua_pushnumber(L, AIL_ent->TU);
 	return 1;
 }
 
@@ -678,11 +680,14 @@ static int AIL_roundsleft (lua_State *L)
 	/* Right hand */
 	if (RIGHT(AIL_ent) && RIGHT(AIL_ent)->item.t->reload)
 		lua_pushnumber(L, RIGHT(AIL_ent)->item.a);
-	else lua_pushnil(L);
+	else
+		lua_pushnil(L);
+
 	/* Left hand */
 	if (LEFT(AIL_ent) && LEFT(AIL_ent)->item.t->reload)
 		lua_pushnumber(L, LEFT(AIL_ent)->item.a);
-	else lua_pushnil(L);
+	else
+		lua_pushnil(L);
 	return 2;
 }
 
@@ -804,7 +809,31 @@ static int AIL_positionhide (lua_State *L)
 	return 0;
 }
 
+#define GUETE_HIDE			60
+#define GUETE_CLOSE_IN		20
+#define GUETE_KILL			30
+#define GUETE_RANDOM		10
+#define GUETE_REACTION_ERADICATION 30
+#define GUETE_REACTION_FEAR_FACTOR 20
+#define GUETE_CIV_FACTOR	0.25
 
+#define GUETE_CIV_RANDOM	10
+#define GUETE_RUN_AWAY		50
+#define GUETE_CIV_LAZINESS	5
+#define RUN_AWAY_DIST		160
+#define WAYPOINT_CIV_DIST	768
+
+#define GUETE_MISSION_OPPONENT_TARGET	50
+#define GUETE_MISSION_TARGET	60
+
+#define AI_ACTION_NOTHING_FOUND -10000.0
+
+#define CLOSE_IN_DIST		1200.0
+#define SPREAD_FACTOR		8.0
+#define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
+#define HIDE_DIST			7
+
+#ifndef LUA_AI
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
  * @param[in] ent AI that is trying to shoot
@@ -844,35 +873,10 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	return qfalse;
 }
 
-
-#define GUETE_HIDE			60
-#define GUETE_CLOSE_IN		20
-#define GUETE_KILL			30
-#define GUETE_RANDOM		10
-#define GUETE_REACTION_ERADICATION 30
-#define GUETE_REACTION_FEAR_FACTOR 20
-#define GUETE_CIV_FACTOR	0.25
-
-#define GUETE_CIV_RANDOM	10
-#define GUETE_RUN_AWAY		50
-#define GUETE_CIV_LAZINESS	5
-#define RUN_AWAY_DIST		160
-#define WAYPOINT_CIV_DIST	768
-
-#define GUETE_MISSION_OPPONENT_TARGET	50
-#define GUETE_MISSION_TARGET	60
-
-#define AI_ACTION_NOTHING_FOUND -10000.0
-
-#define CLOSE_IN_DIST		1200.0
-#define SPREAD_FACTOR		8.0
-#define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
-#define HIDE_DIST			7
-
 /**
  * @brief Check whether the fighter should perform the shoot
- *@todo Check whether radius and power of fd are to to big for dist
- *@todo Check whether the alien will die when shooting
+ * @todo Check whether radius and power of fd are to to big for dist
+ * @todo Check whether the alien will die when shooting
  */
 static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, const fireDef_t* fd, float *dist)
 {
@@ -890,6 +894,7 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 
 	return qtrue;
 }
+#endif
 
 /**
  * @brief Checks whether the AI controlled actor wants to use a door
@@ -960,6 +965,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 	return qtrue;
 }
 
+#ifndef LUA_AI
 /**
  * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
  * @param[in] ent The AI controlled actor to chech the state change for
@@ -1006,7 +1012,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	edict_t *check;
 	int move, delta = 0, tu;
 	int i, fm, shots, reaction_trap = 0;
-	float dist, minDist, nspread;
+	float dist, minDist;
 	float bestActionPoints, dmg, maxDmg, best_time = -1, vis;
 	const objDef_t *ad;
 	int still_searching = 1;
@@ -1054,7 +1060,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
 		const objDef_t *od;		/* Ammo pointer. */
 		const objDef_t *weapon;	/* Weapon pointer. */
-		const fireDef_t *fd;	/* Fire-definition pointer. */
 
 		/* optimization: reaction fire is automatic */
 		if (IS_SHOT_REACTION(fm))
@@ -1092,9 +1097,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			continue;
 		/** @todo timed firedefs that bounce around should not be thrown/shooten about the hole distance */
 		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
-			fd = &od->fd[weapFdsIdx][fdIdx];
+			const fireDef_t *fd = &od->fd[weapFdsIdx][fdIdx];
 
-			nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
+			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
 			/* how many shoots can this actor do */
 			shots = tu / fd->time;
@@ -1379,6 +1384,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	return bestActionPoints;
 }
+#endif
 
 edict_t *ai_waypointList;
 
@@ -1401,6 +1407,7 @@ void G_AddToWayPointList (edict_t *ent)
 	Com_DPrintf(DEBUG_GAME, "%i waypoints in this map\n", i);
 }
 
+#ifndef LUA_AI
 /**
  * @brief Searches the map for mission edicts and try to get there
  * @sa AI_PrepBestAction
@@ -1560,6 +1567,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	return bestAia;
 }
+#endif
 
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk
@@ -1600,7 +1608,7 @@ static void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
  */
 void AI_ActorThink (player_t * player, edict_t * ent)
 {
-#if 0
+#ifdef LUA_AI
 	lua_State *L;
 
 	/* The Lua State we will work with. */
@@ -1620,7 +1628,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* Cleanup */
 	AIL_ent = NULL;
 	AIL_player = NULL;
-#endif
+
+#else
 
 	aiAction_t bestAia;
 
@@ -1690,6 +1699,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		ent->hiding = qfalse;
 	}
+#endif
 }
 
 
@@ -1803,7 +1813,7 @@ void AI_Cleanup (void)
 
 	for (i = 0; i < globals.num_edicts; i++) {
 		ent = g_edicts+i;
-		if (ent->inuse && (ent->type == ET_ACTOR))
+		if (ent->inuse && ent->type == ET_ACTOR)
 			AI_CleanupActor(ent);
 	}
 }
@@ -1817,12 +1827,13 @@ void AI_Cleanup (void)
  */
 static void AI_SetStats (edict_t * ent, int team)
 {
-	/* 
+	/*
 	 * Set base stats.
 	 */
 	if (team != TEAM_CIVILIAN) {
-		/** skills; @todo more power to Ortnoks, more mind to Tamans */
-		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2); /**< For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
+		/** skills; @todo more power to Ortnoks, more mind to Tamans
+		 * For aliens we give "MAX_EMPL" as a type, since the emplyoee-type is not used at all for them. */
+		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2);
 		/* Aliens get much more mind */
 		ent->chr.score.skills[ABILITY_MIND] += 100;
 		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
