@@ -358,28 +358,9 @@ menu aircraft_equip
 	// background
 	// ==================
 
-	pic equipback_ul
+	pic background
 	{
-		image	menu/airequip_ul
-		pos		"0 0"
-	}
-
-	pic equipback_ur
-	{
-		image	menu/airequip_ur
-		pos		"512 0"
-	}
-
-	pic equipback_ll
-	{
-		image	menu/airequip_ll
-		pos		"0 512"
-	}
-
-	pic equipback_lr
-	{
-		image	menu/airequip_lr
-		pos		"512 512"
+		image	menu/airequip_bg
 	}
 
 	pic aircraftequipblackbox
