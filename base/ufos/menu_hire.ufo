@@ -16,28 +16,9 @@ menu employees
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/empl_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/empl_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/empl_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/empl_lr
-		pos		"512 512"
+		image	menu/employee_bg
 	}
 
 	// ==================

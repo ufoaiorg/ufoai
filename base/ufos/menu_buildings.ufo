@@ -35,24 +35,6 @@ menu buildings
 		pos		"512 256"
 	}
 
-//	pic back_ul
-//	{
-//		image	menu/base_ul
-//		pos		"0 0"
-//	}
-
-//	pic back_ur
-//	{
-//		image	menu/buildings_ur
-//		pos		"512 0"
-//	}
-
-//	pic back_ll
-//	{
-//		image	menu/buildings_ll
-//		pos		"0 512"
-//	}
-
 	basemap thebasemap
 	{
 		pos	"0 96"
@@ -67,12 +49,6 @@ menu buildings
 			size	"526 60"
 		}
 	}
-
-//	pic back_lr
-//	{
-//		image	menu/buildings_lr
-//		pos		"512 256"
-//	}
 
 	string name
 	{
@@ -174,7 +150,7 @@ menu popup_buildingpreview
 		font	f_big
 		align uc
 	}
-	
+
 	controls drag_button
 	{
 		image	menu/move
@@ -230,7 +206,7 @@ menu popup_buildingpreview
 			cmd "buildinginfo_click;"
 		}
 	}
-	
+
 	func close {
 		// when we close the floating window, we close the parent
 		cmd "mn_pop;"

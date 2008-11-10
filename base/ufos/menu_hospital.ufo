@@ -630,7 +630,7 @@ menu hospital_employee
 
 	func init
 	{
-		cmd hosp_empl_init
+		cmd "hosp_empl_init;"
 	}
 }
 

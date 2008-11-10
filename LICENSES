@@ -1957,9 +1957,6 @@ base/pics/menu/base_ul.tga | GNU General Public License 2.0 |  | Based on origin
 base/pics/menu/base_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/basedefence_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/basesummary_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buildings_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buildings_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/buildings_ur.tga | GNU General Public License 2.0 or later | Martin Gerhardy | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_aircraft_menu.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_aliencont1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
@@ -1998,10 +1995,7 @@ base/pics/menu/container_scrollv.png | GNU General Public License 2.0 | Werner H
 base/pics/menu/container_scrollv_high.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/pics/menu/container_scrollv_ina.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/pics/menu/del.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/empl_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/empl_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/empl_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/empl_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/employee_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/endgame_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/endgame_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/endgame_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
