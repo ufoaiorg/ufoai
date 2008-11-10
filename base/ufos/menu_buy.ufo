@@ -17,28 +17,9 @@ menu buy
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/buy_ul
-		pos	"0 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/buy_ll
-		pos	"0 512"
-	}
-
-	pic back_ur
-	{
-		image	menu/buy_ur
-		pos	"512 0"
-	}
-
-	pic back_lr
-	{
-		image	menu/buy_lr
-		pos	"512 512"
+		image	menu/market_bg
 	}
 
 	// ==================
