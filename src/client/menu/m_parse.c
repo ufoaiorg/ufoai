@@ -596,8 +596,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		/* is it a property */
 		if (val) {
 			const int mask = V_BASETYPEMASK | V_MENU_COPY;
-			/* for classic properties */
-			if ((val->type & mask) == mask) {
+			/* for classic properties (only bits on the mask) */
+			if ((val->type | mask) == mask) {
 				result = MN_ParseProperty(node, val, text, token, errhead);
 				if (!result)
 					return qfalse;
