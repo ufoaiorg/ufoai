@@ -17,28 +17,9 @@ menu options
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/options_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/options_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/options_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/options_lr
-		pos		"512 512"
+		image	menu/options_bg
 	}
 
 	// ==================
