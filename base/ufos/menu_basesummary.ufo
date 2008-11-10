@@ -16,28 +16,9 @@ menu basesummary
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/basesummary_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/basesummary_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/basesummary_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/basesummary_lr
-		pos		"512 512"
+		image	menu/basesummary_bg
 	}
 
 	// ==================
@@ -244,7 +225,7 @@ menu basesummary
 		resetbaselayout
 		cmd "basesummary_init;"
 	}
-	
+
 	// ==================
 	// buttons
 	// ==================
