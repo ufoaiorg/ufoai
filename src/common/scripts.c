@@ -247,9 +247,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(sizeof(int));
 
 	case V_INT2:
-		if (strstr(token, " ") == NULL)
+		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2)
 			Sys_Error("Com_ParseValue: Illegal int2 statement '%s'\n", token);
-		sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]);
+
 		return ALIGN(2 * sizeof(int));
 
 	case V_FLOAT:
@@ -257,34 +257,30 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(sizeof(float));
 
 	case V_POS:
-		if (strstr(token, " ") == NULL)
+		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2)
 			Sys_Error("Com_ParseValue: Illegal pos statement '%s'\n", token);
-		sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]);
+
 		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
-		if (strstr(token, " ") == NULL || strstr(strstr(token, " "), " ") == NULL)
+		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3)
 			Sys_Error("Com_ParseValue: Illegal vector statement '%s'\n", token);
-		sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]);
+
 		return ALIGN(3 * sizeof(float));
 
 	case V_COLOR:
 		{
 			float* f = (float *) b;
-			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
+			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4)
 				Sys_Error("Com_ParseValue: Illegal color statement '%s'\n", token);
-				return -1;
-			}
 			return ALIGN(4 * sizeof(float));
 		}
 
 	case V_RGBA:
 		{
 			int* i = (int *) b;
-			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
+			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4)
 				Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
-				return -1;
-			}
 			return ALIGN(4 * sizeof(int));
 		}
 
@@ -357,9 +353,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
-		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
+		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4)
 			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
-		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
+
 		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y >= SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT)
 			Sys_Error("Com_ParseValue: illegal shape small statement - max h value is %i (y: %i, h: %i)\n", SHAPE_SMALL_MAX_HEIGHT, y, h);
 		if (x + w > SHAPE_SMALL_MAX_WIDTH || x >= SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH)
@@ -369,9 +365,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_SHAPE_BIG:
-		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
+		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4)
 			Sys_Error("Com_ParseValue: Illegal shape big statement '%s'\n", token);
-		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
+
 		if (y + h > SHAPE_BIG_MAX_HEIGHT || y >= SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT)
 			Sys_Error("Com_ParseValue: Illegal shape big statement, max height is %i\n", SHAPE_BIG_MAX_HEIGHT);
 		if (x + w > SHAPE_BIG_MAX_WIDTH || x >= SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH)
@@ -393,9 +389,9 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(1);
 
 	case V_DATE:
-		if (strstr(strstr(token, " "), " ") == NULL)
+		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3)
 			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
-		sscanf(token, "%i %i %i", &x, &y, &w);
+
 		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
 		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
 		return ALIGN(sizeof(date_t));
