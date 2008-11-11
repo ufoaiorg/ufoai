@@ -197,20 +197,14 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	if (size) {
 #ifdef DEBUG
-		if (size > vt_sizes[type]) {
+		if (size > vt_sizes[type])
 			Com_Printf("Warning: Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-		}
-		if (size < vt_sizes[type]) {
-			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+
+		if (size < vt_sizes[type])
 			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-			return -1;	/* don't delete this please */
-		}
 #else
-		if (size < vt_sizes[type]) {
-			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+		if (size < vt_sizes[type])
 			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
-			return -1;	/* don't delete this please */
-		}
 #endif
 	}
 
@@ -480,20 +474,14 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 
 	if (size) {
 #ifdef DEBUG
-		if (size > vt_sizes[type]) {
+		if (size > vt_sizes[type])
 			Com_Printf("Warning: Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-		}
-		if (size < vt_sizes[type]) {
-			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+
+		if (size < vt_sizes[type])
 			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-			return -1;	/* don't delete this please */
-		}
 #else
-		if (size < vt_sizes[type]) {
-			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+		if (size < vt_sizes[type])
 			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
-			return -1;	/* don't delete this please */
-		}
 #endif
 	}
 
