@@ -515,28 +515,9 @@ menu ufopedia_mail
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/mail_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/mail_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/mail_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/mail_lr
-		pos		"512 512"
+		image	menu/mail_bg
 	}
 
 	// ==================
