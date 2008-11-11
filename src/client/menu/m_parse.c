@@ -470,38 +470,38 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 
 	/* Com_Printf("  %s", *token); */
 
-	if (val->type != V_NULL) {
-		/* get parameter values */
-		*token = COM_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
+	if (val->type == V_NULL) {
+		return qtrue;
+	}
 
-		/* Com_Printf(" %s", *token); */
+	/* get parameter values */
+	*token = COM_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
 
-		/* get the value */
-		if (!(val->type & V_MENU_COPY)) {
-			if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
-				Com_Printf("MN_ParseProperty: Wrong size for value %s\n", val->string);
+	/* Com_Printf(" %s", *token); */
+
+	/* get the value */
+	if (!(val->type & V_MENU_COPY)) {
+		if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
+			Com_Printf("MN_ParseProperty: Wrong size for value %s (node %s.%s)\n", val->string, node->menu->name, node->name);
+	} else {
+		/* a reference to data is handled like this */
+		*(byte **) ((byte *) node + val->ofs) = mn.curadata;
+		/* references are parsed as string */
+		if (**token == '*') {
+			/* sanity check */
+			if (strlen(*token) > MAX_VAR - 1)
+				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
+			mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
 		} else {
-			/* a reference to data is handled like this */
-			/* Com_Printf("%i %s\n", val->ofs, *token); */
-			*(byte **) ((byte *) node + val->ofs) = mn.curadata;
-			/* we read it, we no more need extra flag */
-			/* *((int*)&val->type) = val->type & V_BASETYPEMASK; */
-			/* references are parsed as string */
-			if (**token == '*') {
-				/* sanity check */
-				if (strlen(*token) > MAX_VAR - 1)
-					Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-				mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
-			} else {
-				/* sanity check */
-				if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
-					Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
-			}
+			/* sanity check */
+			if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
+				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
+			mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 		}
 	}
+
 	/* Com_Printf("\n"); */
 	return qtrue;
 }

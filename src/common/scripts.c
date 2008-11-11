@@ -275,16 +275,24 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(3 * sizeof(float));
 
 	case V_COLOR:
-		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal color statement '%s'\n", token);
-		sscanf(token, "%f %f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2], &((float *) b)[3]);
-		return ALIGN(4 * sizeof(float));
+		{
+			float* f = (float *) b;
+			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
+				Sys_Error("Com_ParseValue: Illegal color statement '%s'\n", token);
+				return -1;
+			}
+			return ALIGN(4 * sizeof(float));
+		}
 
 	case V_RGBA:
-		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
-		sscanf(token, "%i %i %i %i", &((int *) b)[0], &((int *) b)[1], &((int *) b)[2], &((int *) b)[3]);
-		return ALIGN(4 * sizeof(int));
+		{
+			float* i = (int *) b;
+			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
+				Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
+				return -1;
+			}
+			return ALIGN(4 * sizeof(int));
+		}
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
