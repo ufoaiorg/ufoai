@@ -429,7 +429,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				/* split node name and tag */
 				*tag++ = 0;
 
-				for (search = menu->firstNode; search != node && search; search = search->next)
+				for (search = menu->firstChild; search != node && search; search = search->next)
 					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, sizeof(search->name))) {
 						char modelName[MAX_VAR];
 						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));

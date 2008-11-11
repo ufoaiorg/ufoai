@@ -300,7 +300,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 			}
 
 			/* function calls */
-			for (node = mn.menus[mn.numMenus - 1].firstNode; node; node = node->next)
+			for (node = mn.menus[mn.numMenus - 1].firstChild; node; node = node->next)
 				if ((node->type == MN_FUNC || node->type == MN_CONFUNC || node->type == MN_CVARFUNC)
 					&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
 /*					Com_Printf("   %s\n", node->name); */
@@ -682,28 +682,16 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	const char *token;
 	qboolean result;
-	menuNode_t *node, *lastNode, *iNode;
+	menuNode_t *node, *lastNode;
 	nodeBehaviour_t* behaviour;
 
 	lastNode = NULL;
 	Vector2Set(menu->pos, 0, 0);
 
-	/* if inheriting another menu, link in the super menu's nodes */
-	for (node = menu->firstNode; node; node = node->next) {
-		if (mn.numNodes >= MAX_MENUNODES)
-			Sys_Error("MAX_MENUNODES exceeded\n");
-		iNode = MN_AllocNode(node->type);
-		*iNode = *node;
-		iNode->menu = menu;
-		/* link it in */
-		if (lastNode)
-			lastNode->next = iNode;
-		else
-			menu->firstNode = iNode;
-		lastNode = iNode;
+	/* find the last node */
+	for (node = menu->firstChild; node; node = node->next) {
+		lastNode = node;
 	}
-
-	lastNode = NULL;
 
 	/* get new token */
 	token = COM_EParse(text, errhead, menu->name);
@@ -725,7 +713,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 			return qfalse;
 
 		/* test if node already exists */
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			if (!Q_strncmp(token, node->name, sizeof(node->name))) {
 				if (node->type != behaviour->id)
 					Com_Printf("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name);
@@ -734,7 +722,6 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 				node->click = NULL;
 				break;
 			}
-			lastNode = node;
 		}
 
 		/* initialize node */
@@ -747,11 +734,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 			Q_strncpyz(node->name, token, sizeof(node->name));
 
 			/* link it in */
-			if (lastNode)
-				lastNode->next = node;
-			else
-				menu->firstNode = node;
-
+			MN_InsertNode(menu, lastNode, node);
 			lastNode = node;
 		}
 
@@ -984,6 +967,9 @@ void MN_ParseMenu (const char *name, const char **text)
 	/* does this menu inherit data from another menu? */
 	if (!Q_strncmp(token, "extends", 7)) {
 		menu_t *superMenu;
+		menuNode_t *lastNode = NULL;
+		menuNode_t *newNode;
+
 		token = COM_Parse(text);
 		Com_DPrintf(DEBUG_CLIENT, "MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", name, token);
 		superMenu = MN_GetMenu(token);
@@ -991,6 +977,37 @@ void MN_ParseMenu (const char *name, const char **text)
 			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
 		memcpy(menu, superMenu, sizeof(*menu));
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
+
+		/* we dont need to update everything (some must only be NULL at the run time) */
+		assert(!superMenu->hoverNode);
+
+		/* start a new list */
+		menu->firstChild = NULL;
+
+		/* clone all super menu's nodes */
+		for (node = superMenu->firstChild; node; node = node->next) {
+			if (mn.numNodes >= MAX_MENUNODES)
+				Sys_Error("MAX_MENUNODES exceeded\n");
+
+			newNode = MN_CloneNode(node, menu, qtrue);
+			MN_InsertNode(menu, lastNode, newNode);
+			lastNode = newNode;
+
+			/* update special links */
+			if (superMenu->initNode == node)
+				menu->initNode = newNode;
+			else if (superMenu->closeNode == node)
+				menu->closeNode = newNode;
+			else if (superMenu->renderNode == node)
+				menu->renderNode = newNode;
+			else if (superMenu->popupNode == node)
+				menu->popupNode = newNode;
+			else if (superMenu->eventNode == node)
+				menu->eventNode = newNode;
+			else if (superMenu->leaveNode == node)
+				menu->leaveNode = newNode;
+		}
+
 		token = COM_Parse(text);
 	}
 
@@ -1009,7 +1026,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	MN_WindowNodeLoaded(menu);
 
-	for (node = menu->firstNode; node; node = node->next)
+	for (node = menu->firstChild; node; node = node->next)
 		if (node->num >= MAX_MENUTEXTS)
 			Sys_Error("Error in menu %s - max menu num exeeded (num: %i, max: %i) in node '%s'", menu->name, node->num, MAX_MENUTEXTS, node->name);
 

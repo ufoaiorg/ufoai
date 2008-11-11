@@ -107,7 +107,7 @@ void MN_Command_f (void)
 
 	/* first search all menus on the stack */
 	for (i = 0; i < mn.menuStackPos; i++)
-		for (node = mn.menuStack[i]->firstNode; node; node = node->next)
+		for (node = mn.menuStack[i]->firstChild; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
 				MN_ExecuteActions(mn.menuStack[i], node->click);
@@ -116,7 +116,7 @@ void MN_Command_f (void)
 
 	/* not found - now query all in the menu definitions */
 	for (i = 0; i < mn.numMenus; i++)
-		for (node = mn.menus[i].firstNode; node; node = node->next)
+		for (node = mn.menus[i].firstChild; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
 				MN_ExecuteActions(&mn.menus[i], node->click);
@@ -241,7 +241,7 @@ qboolean MN_FocusNextActionNode (void)
 
 	while (i < mn.menuStackPos) {
 		menu = mn.menuStack[i++];
-		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstNode)))
+		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstChild)))
 			return qtrue;
 	}
 	i = MN_GetVisibleMenuCount();

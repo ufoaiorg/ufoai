@@ -99,7 +99,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 				Key_Event(K_ENTER, 0, qtrue, cls.realtime);
 			Key_SetDest(key_game);
 
-			for (node = mn.menus[i].firstNode; node; node = node->next) {
+			for (node = mn.menus[i].firstChild; node; node = node->next) {
 				/* if there is a timeout value set, init the menu with current
 				 * client time */
 				if (node->timeOut)

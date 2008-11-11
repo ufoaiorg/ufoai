@@ -83,7 +83,7 @@ qboolean MN_CursorOnMenu (int x, int y)
 
 	while (sp > 0) {
 		menu = mn.menuStack[--sp];
-		for (node = menu->firstNode; node; node = node->next)
+		for (node = menu->firstChild; node; node = node->next)
 			if (MN_CheckNodeZone(node, x, y)) {
 				/* found an element */
 				/*MN_FocusSetNode(node);*/
@@ -198,7 +198,7 @@ void MN_MouseMove (int x, int y)
 		y -= menu->pos[1];
 
 		/* check mouse vs node boundedbox */
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			if (node->invis || !MN_CheckCondition(node))
 				continue;
 			if (x >= node->pos[0] && x <= node->pos[0] + node->size[0]
@@ -302,7 +302,7 @@ void MN_LeftClick (int x, int y)
 				continue;
 		}
 
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			if (!nodeBehaviourList[node->type].leftClick && !node->click)
 				continue;
 
@@ -423,7 +423,7 @@ void MN_RightClick (int x, int y)
 				continue;
 		}
 
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			/* no right click for this node defined */
 			if (!nodeBehaviourList[node->type].rightClick && !node->rclick)
 				continue;
@@ -487,7 +487,7 @@ void MN_MiddleClick (int x, int y)
 				continue;
 		}
 
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			/* no middle click for this node defined */
 			if (!nodeBehaviourList[node->type].middleClick && !node->mclick)
 				continue;
@@ -563,7 +563,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 				continue;
 		}
 
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			/* both wheelUp & wheelDown required */
 			if (!nodeBehaviourList[node->type].mouseWheel && !node->wheel && !(node->wheelUp && node->wheelDown))
 				continue;

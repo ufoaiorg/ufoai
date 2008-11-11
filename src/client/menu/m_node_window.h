@@ -38,7 +38,7 @@ typedef struct menu_s {
 	qboolean dragButton;
 	qboolean closeButton;
 
-	menuNode_t *firstNode;	/**< first element of linked list of child */
+	menuNode_t *firstChild;	/**< first element of linked list of child */
 
 	menuNode_t *initNode;	/**< node to execute on init */
 	menuNode_t *closeNode;	/**< node to execute on close */
@@ -54,6 +54,7 @@ void MN_RegisterWindowNode(nodeBehaviour_t *behaviour);
 menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 menuNode_t *MN_GetLastNode(const menu_t* const menu);
 void MN_InsertNode(menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode);
+menuNode_t* MN_CloneNode(const menuNode_t* node, struct menu_s *newMenu, qboolean recursive);
 
 void MN_WindowNodeLoading(menu_t *menu);
 void MN_WindowNodeLoaded(menu_t *menu);

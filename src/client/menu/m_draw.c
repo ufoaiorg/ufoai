@@ -166,7 +166,7 @@ static void MN_DrawMenusTest (void)
 #endif
 			}
 		}
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			/* skip invisible, virtual, and undrawable nodes */
 			if (node->invis || nodeBehaviourList[node->type].isVirtual || !nodeBehaviourList[node->type].draw)
 				continue;
@@ -308,7 +308,7 @@ void MN_DrawMenus (void)
 #endif
 			}
 		}
-		for (node = menu->firstNode; node; node = node->next) {
+		for (node = menu->firstChild; node; node = node->next) {
 			/* skip invisible, virtual, and undrawable nodes */
 			if (node->invis || nodeBehaviourList[node->type].isVirtual || !nodeBehaviourList[node->type].draw)
 				continue;

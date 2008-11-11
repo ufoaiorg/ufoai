@@ -40,7 +40,7 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
 	if (!menu)
 		return NULL;
 
-	for (node = menu->firstNode; node; node = node->next)
+	for (node = menu->firstChild; node; node = node->next)
 		if (!Q_strncmp(name, node->name, sizeof(node->name)))
 			break;
 
@@ -55,10 +55,10 @@ menuNode_t *MN_GetLastNode (const menu_t* const menu)
 {
 	menuNode_t *prev;
 
-	if (!menu->firstNode)
+	if (!menu->firstChild)
 		return NULL;
 
-	prev = menu->firstNode;
+	prev = menu->firstChild;
 	while (prev->next) {
 		prev = prev->next;
 	}
@@ -67,15 +67,39 @@ menuNode_t *MN_GetLastNode (const menu_t* const menu)
 
 /**
  * @brief Insert a node next another one into a menu. If prevNode is NULL add the node on the heap of the menu
+ * @param[in] menu Menu where inserting a node
+ * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the menu
+ * @param[in] newNode node we insert
  */
 void MN_InsertNode (menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode)
 {
+	assert(menu);
+	assert(newNode);
+	assert(!newNode->next);	/*< insert only a single element */
+	assert(!prevNode || (prevNode->menu == menu && newNode->menu == menu));	/*< everything come from the same menu (force the dev to update himself this links) */
 	if (prevNode == NULL) {
-		menu->firstNode = newNode;
+		newNode->next = menu->firstChild;
+		menu->firstChild = newNode;
 		return;
 	}
 	newNode->next = prevNode->next;
 	prevNode->next = newNode;
+}
+
+/**
+ * @brief Clone a node
+ * @param[in] node to clone
+ * @param[in] recursive True if we also must clone subnodeas
+ * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
+ * @todo remember to update this function when we allow a tree of nodes
+ */
+menuNode_t* MN_CloneNode (const menuNode_t* node, menu_t *newMenu, qboolean recursive)
+{
+	menuNode_t* newNode = MN_AllocNode(node->type);
+	*newNode = *node;
+	newNode->menu = newMenu;
+	newNode->next = NULL;
+	return newNode;
 }
 
 /**
