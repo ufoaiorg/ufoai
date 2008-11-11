@@ -286,7 +286,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_RGBA:
 		{
-			float* i = (int *) b;
+			int* i = (int *) b;
 			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
 				Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
 				return -1;
