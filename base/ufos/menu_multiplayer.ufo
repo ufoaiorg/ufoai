@@ -331,29 +331,11 @@ menu serverinfo
 	{
 		invis	true
 	}
-	pic back_ul
+	pic background
 	{
-		image	menu/multiplayer_ul
-		pos	"0 0"
+		image	menu/multiplayer_bg
 	}
 
-	pic back_ur
-	{
-		image	menu/multiplayer_ur
-		pos	"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/multiplayer_ll
-		pos	"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/multiplayer_lr
-		pos	"512 512"
-	}
 	text server_info
 	{
 		pos		"500 200"
