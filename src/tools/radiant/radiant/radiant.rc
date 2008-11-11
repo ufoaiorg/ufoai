@@ -23,11 +23,11 @@ BEGIN
 		BEGIN
 			VALUE "Comments", "http://ufoai.sf.net"
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
-			VALUE "FileDescription", "UFO:Alien Invasion"
-			VALUE "InternalName", "ufoai"
+			VALUE "FileDescription", "UFORadiant"
+			VALUE "InternalName", "uforadiant"
 			VALUE "LegalCopyright", "Copyright (C) 2002-2007"
-			VALUE "OriginalFilename", "ufo.exe"
-			VALUE "ProductName", "UFO:AI"
+			VALUE "OriginalFilename", "radiant.exe"
+			VALUE "ProductName", "UFORadiant"
 			VALUE "ProductVersion", "Release"
 		END
 	END
