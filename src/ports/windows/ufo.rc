@@ -1,73 +1,12 @@
-//Microsoft Developer Studio generated resource script.
-//
-#include "resource.h"
-
-#define APSTUDIO_READONLY_SYMBOLS
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE 2 resource.
-//
 #include <winresrc.h>
-//#include "winres.h"
 
-/////////////////////////////////////////////////////////////////////////////
-#undef APSTUDIO_READONLY_SYMBOLS
-
-/////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-#endif //_WIN32
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE DISCARDABLE
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE DISCARDABLE
-BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE DISCARDABLE
-BEGIN
-    "\r\n"
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
-
-#endif    // AFX_RESOURCE_DLL || AFX_TARG_ENU
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
 #ifndef CROSSBUILD
-IDI_ICON1               ICON    DISCARDABLE     "ufo.ico"
-IDI_ICON2               ICON    DISCARDABLE     "ufo_ded.ico"
+101 ICON DISCARDABLE "ufo.ico"
+112 ICON DISCARDABLE "ufo_ded.ico"
 #else
-IDI_ICON1               ICON    DISCARDABLE     "build/projects/ufo.ico"
-IDI_ICON2               ICON    DISCARDABLE     "build/projects/ufo_ded.ico"
-#endif    // CROSSBUILD
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
+101 ICON DISCARDABLE "build/projects/ufo.ico"
+112 ICON DISCARDABLE "build/projects/ufo_ded.ico"
+#endif
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
