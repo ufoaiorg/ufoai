@@ -18,28 +18,9 @@ menu irc
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/irc_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/irc_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/irc_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/irc_lr
-		pos		"512 512"
+		image	menu/irc_bg
 	}
 
 	string title

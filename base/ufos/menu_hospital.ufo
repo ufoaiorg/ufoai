@@ -16,28 +16,9 @@ menu hospital
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/hosp_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/hosp_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/hosp_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/hosp_lr
-		pos		"512 512"
+		image	menu/hospital_bg
 	}
 
 	// ==================

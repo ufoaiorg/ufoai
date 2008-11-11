@@ -192,28 +192,9 @@ menu lost
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/lost_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/lost_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/lost_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/lost_lr
-		pos		"512 512"
+		image	menu/lost_bg
 	}
 
 	// ==================
@@ -404,7 +385,7 @@ menu popup_recoverynationlist
 	{
 		invis true
 	}
-	
+
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
