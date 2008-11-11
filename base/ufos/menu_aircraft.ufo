@@ -344,12 +344,6 @@ menu aircraft_equip
 		image	menu/airequip_bg
 	}
 
-	pic aircraftequipblackbox
-	{
-		pos		"76 665"
-		image	menu/airequip_typebox
-	}
-
 	// ==================
 	// aircraft model
 	// ==================
