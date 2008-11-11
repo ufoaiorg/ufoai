@@ -17,28 +17,9 @@ menu singleplayer
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/main_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/main_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/main_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/main_lr
-		pos		"512 512"
+		image	menu/main_bg
 	}
 
 	string version
@@ -208,28 +189,9 @@ menu singleplayermission
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/main_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/main_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/main_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/main_lr
-		pos		"512 512"
+		image	menu/main_bg
 	}
 
 	string version
@@ -406,28 +368,9 @@ menu load
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/main_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/main_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/main_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/main_lr
-		pos		"512 512"
+		image	menu/main_bg
 	}
 
 	string version
@@ -603,28 +546,9 @@ menu save
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/main_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/main_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/main_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/main_lr
-		pos		"512 512"
+		image	menu/main_bg
 	}
 
 	string version
