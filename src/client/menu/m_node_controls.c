@@ -105,6 +105,7 @@ static void MN_ControlsNodeDraw(menuNode_t *node)
 void MN_RegisterControlsNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
+	behaviour->id = MN_CONTROLS;
 	behaviour->draw = MN_ControlsNodeDraw;
 	behaviour->loaded = MN_ControlsNodeLoaded;
 	behaviour->mouseDown = MN_ControlsNodeMouseDown;

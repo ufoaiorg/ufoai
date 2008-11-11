@@ -1119,6 +1119,7 @@ static void MN_ContainerLoading (menuNode_t *node)
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
+	behaviour->id = MN_CONTAINER;
 	behaviour->draw = MN_DrawContainerNode2;
 	behaviour->leftClick = MN_ContainerClick;
 	behaviour->rightClick = MN_ContainerRightClick;

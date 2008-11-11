@@ -77,6 +77,7 @@ static void MN_StringNodeLoaded (menuNode_t *node)
 void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
+	behaviour->id = MN_STRING;
 	behaviour->draw = MN_StringNodeDraw;
 	behaviour->loaded = MN_StringNodeLoaded;
 }

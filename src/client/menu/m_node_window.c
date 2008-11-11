@@ -149,6 +149,7 @@ static const value_t windowNodeProperties[] = {
 void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "menu";
+	behaviour->id = MN_WINDOW;
 	/* behaviour->loading = MN_WindowNodeLoading; */
 	/* behaviour->loaded = MN_WindowNodeLoaded; */
 	behaviour->properties = windowNodeProperties;

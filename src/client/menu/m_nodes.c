@@ -291,6 +291,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 		}
 	}
 	Sys_Error("Node behaviour '%s' dont exists\n", name);
+	return NULL;
 }
 
 /**
@@ -319,10 +320,11 @@ static void MN_UnHideNode_f (void)
 /**
  * @brief Init a behaviour to null. A null node doesn't react
  */
-static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual, void(*loading)(menuNode_t*))
+static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual, void(*loading)(menuNode_t*), int id)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
+	behaviour->id = id;
 	behaviour->isVirtual = isVirtual;
 	behaviour->loading = loading;
 }
@@ -396,11 +398,11 @@ void MN_InitNodes (void)
 	MN_RegisterWindowNode(&menuBehaviour);
 
 	/* all nodes */
-	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue, NULL);
-	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue, NULL);
-	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue, NULL);
-	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue, MN_FuncNodeLoading);
-	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoading);
+	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue, NULL, MN_NULL);
+	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue, NULL, MN_CONFUNC);
+	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue, NULL, MN_CVARFUNC);
+	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue, MN_FuncNodeLoading, MN_FUNC);
+	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoading, MN_ZONE);
 	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
 	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
 	MN_RegisterTextNode(nodeBehaviourList + MN_TEXT);
@@ -422,4 +424,5 @@ void MN_InitNodes (void)
 	MN_RegisterCustomButtonNode(nodeBehaviourList + MN_CUSTOMBUTTON);
 	MN_RegisterWindowPanelNode(nodeBehaviourList + MN_WINDOWPANEL);
 	MN_RegisterButtonNode(nodeBehaviourList + MN_BUTTON);
+	MN_RegisterWindowNode(nodeBehaviourList + MN_WINDOW);	/**< for conveniance, must not be used */
 }

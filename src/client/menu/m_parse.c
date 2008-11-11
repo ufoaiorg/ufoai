@@ -369,13 +369,13 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 	if (!*text)
 		return qfalse;
 	if (**token != '{') {
-		Com_Printf("MN_ParseNodeBody: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
-		return qtrue;
+		Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+		return qfalse;
 	}
 
 	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
 		FS_SkipBlock(text);
-		Com_Printf("MN_ParseNodeBody: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
+		Com_Printf("MN_ParseOption: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
 		return qfalse;
 	}
 
@@ -424,7 +424,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 			}
 		}
 		if (!val || !val->string)
-			Com_Printf("MN_ParseNodeBody: unknown options value: '%s' - ignore it\n", *token);
+			Com_Printf("MN_ParseOption: unknown options value: '%s' - ignore it\n", *token);
 	} while (**token != '}');
 	MN_AddSelectboxOption(node);
 	return qtrue;
@@ -437,7 +437,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	if (!*text)
 		return qfalse;
 	if (**token != '{') {
-		Com_Printf("MN_ParseNodeBody: node with bad excluderect ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
 		return qtrue;
 	}
 
@@ -460,7 +460,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	if (node->excludeNum < MAX_EXLUDERECTS - 1)
 		node->excludeNum++;
 	else
-		Com_Printf("MN_ParseNodeBody: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
+		Com_Printf("MN_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 	return qtrue;
 }
 
@@ -481,7 +481,7 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 		/* get the value */
 		if (!(val->type & V_MENU_COPY)) {
 			if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
-				Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
+				Com_Printf("MN_ParseProperty: Wrong size for value %s\n", val->string);
 		} else {
 			/* a reference to data is handled like this */
 			/* Com_Printf("%i %s\n", val->ofs, *token); */
@@ -492,12 +492,12 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 			if (**token == '*') {
 				/* sanity check */
 				if (strlen(*token) > MAX_VAR - 1)
-					Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
+					Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
 				mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
 			} else {
 				/* sanity check */
 				if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
-					Com_Printf("MN_ParseNodeBody: Value '%s' is too long (key %s)\n", *token, val->string);
+					Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
 				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 			}
 		}
@@ -518,7 +518,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 	for (; *action; action = &(*action)->next) {}
 
 	if (mn.numActions >= MAX_MENUACTIONS)
-		Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+		Sys_Error("MN_ParseEventProperty: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 	*action = &mn.menuActions[mn.numActions++];
 	memset(*action, 0, sizeof(**action));
 
@@ -627,10 +627,51 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
+			return qfalse;
 		}
 	} while (*text);
 
 	return qfalse;
+}
+
+static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const char **token, const char *errhead)
+{
+	qboolean found;
+
+	if (*token[0] != '{') {
+		return qtrue;
+	}
+
+	do {
+		const value_t* property;
+		found = qfalse;
+		/* get new token */
+		*token = COM_EParse(text, errhead, menu->name);
+		if (!*text)
+			return qfalse;
+
+		if (*token[0] == '}')
+			break;
+
+		property = MN_FindPropertyByName(menuBehaviour.properties, *token);
+		if (property) {
+			/* get new token */
+			*token = COM_EParse(text, errhead, menu->name);
+			if (!*text)
+				return qfalse;
+			Com_ParseValue(menu, *token, property->type, property->ofs, property->size);
+			found = qtrue;
+		} else {
+			Com_Printf("Invalid special menu value '%s'\n", *token);
+		}
+	} while (found);
+
+	/* get new token */
+	*token = COM_EParse(text, errhead, menu->name);
+	if (!*text)
+		return qfalse;
+
+	return qtrue;
 }
 
 /**
@@ -640,9 +681,9 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 {
 	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	const char *token;
-	qboolean found;
+	qboolean result;
 	menuNode_t *node, *lastNode, *iNode;
-	int i;
+	nodeBehaviour_t* behaviour;
 
 	lastNode = NULL;
 	Vector2Set(menu->pos, 0, 0);
@@ -664,145 +705,100 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 
 	lastNode = NULL;
 
-	do {
-		/* get new token */
+	/* get new token */
+	token = COM_EParse(text, errhead, menu->name);
+	if (!*text)
+		return qfalse;
+
+	/* parse special menu values */
+	result = MN_ParseMenuProperties(menu, text, &token, errhead);
+	if (!result)
+		return qfalse;
+
+	/* for each nodes */
+	while (token[0] != '}') {
+
+		behaviour = MN_GetNodeBehaviour(token);
+
 		token = COM_EParse(text, errhead, menu->name);
 		if (!*text)
 			return qfalse;
 
-		/* get node type */
-		do {
-			/* parse special menu values */
-			if (token[0] == '{') {
-				do {
-					const value_t* property;
-					found = qfalse;
-					/* get new token */
-					token = COM_EParse(text, errhead, menu->name);
-					if (!*text)
-						return qfalse;
-					if (token[0] == '}')
-						break;
-
-					property = MN_FindPropertyByName(menuBehaviour.properties, token);
-					if (property) {
-						/* get new token */
-						token = COM_EParse(text, errhead, menu->name);
-						if (!*text)
-							return qfalse;
-						Com_ParseValue(menu, token, property->type, property->ofs, property->size);
-						found = qtrue;
-					} else {
-						Com_Printf("Invalid special menu value '%s'\n", token);
-					}
-				} while (found);
-
-				/* get new token */
-				token = COM_EParse(text, errhead, menu->name);
-				if (!*text)
-					return qfalse;
+		/* test if node already exists */
+		for (node = menu->firstNode; node; node = node->next) {
+			if (!Q_strncmp(token, node->name, sizeof(node->name))) {
+				if (node->type != behaviour->id)
+					Com_Printf("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name);
+				Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s in menu %s\n", node->name, menu->name);
+				/* reset action list of node */
+				node->click = NULL;
+				break;
 			}
-			found = qfalse;
-			for (i = 0; i < MN_NUM_NODETYPE; i++) {
-				if (nodeBehaviourList[i].name == NULL)
-					continue;
-				if (!Q_strcmp(token, nodeBehaviourList[i].name)) {
-					/* found node */
-					/* get name */
-					token = COM_EParse(text, errhead, menu->name);
-					if (!*text)
-						return qfalse;
+			lastNode = node;
+		}
 
-					/* test if node already exists */
-					for (node = menu->firstNode; node; node = node->next) {
-						if (!Q_strncmp(token, node->name, sizeof(node->name))) {
-							if (node->type != i)
-								Com_Printf("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name);
-							Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s in menu %s\n", node->name, menu->name);
-							/* reset action list of node */
-							node->click = NULL;
-							break;
-						}
-						lastNode = node;
-					}
+		/* initialize node */
+		if (!node) {
+			if (mn.numNodes >= MAX_MENUNODES)
+				Sys_Error("MAX_MENUNODES exceeded\n");
+			node = MN_AllocNode(behaviour->id);
+			memset(node, 0, sizeof(*node));
+			node->menu = menu;
+			Q_strncpyz(node->name, token, sizeof(node->name));
 
-					/* initialize node */
-					if (!node) {
-						if (mn.numNodes >= MAX_MENUNODES)
-							Sys_Error("MAX_MENUNODES exceeded\n");
-						node = MN_AllocNode(i);
-						memset(node, 0, sizeof(*node));
-						node->menu = menu;
-						Q_strncpyz(node->name, token, sizeof(node->name));
+			/* link it in */
+			if (lastNode)
+				lastNode->next = node;
+			else
+				menu->firstNode = node;
 
-						/* link it in */
-						if (lastNode)
-							lastNode->next = node;
-						else
-							menu->firstNode = node;
+			lastNode = node;
+		}
 
-						lastNode = node;
-					}
+		/* node default values */
+		/** @todo move it into the respective "loading" function (for those nodes, that need it) */
+		node->padding = 3;
 
-					/* node default values */
-					/** @todo move it into the respective "loading" function (for those nodes, that need it) */
-					node->padding = 3;
-
-					node->type = i;
-					if (nodeBehaviourList[node->type].loading)
-						nodeBehaviourList[node->type].loading(node);
+		node->type = behaviour->id;
+		if (nodeBehaviourList[node->type].loading)
+			nodeBehaviourList[node->type].loading(node);
 
 /*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
 
-					/* set standard texture coordinates */
+		/* set standard texture coordinates */
 /*					node->texl[0] = 0; node->texl[1] = 0; */
 /*					node->texh[0] = 1; node->texh[1] = 1; */
 
-					/* get parameters */
-					token = COM_EParse(text, errhead, menu->name);
-					if (!*text)
-						return qfalse;
+		/* get parameters */
+		token = COM_EParse(text, errhead, menu->name);
+		if (!*text)
+			return qfalse;
 
-					if (*token == '{') {
-						if (!MN_ParseNodeBody(node, text, &token)) {
-							Com_Printf("MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n", menu->name);
-							mn.numNodes--;
-							continue;
-						}
-
-						token = COM_EParse(text, errhead, menu->name);
-						if (!*text)
-							return qfalse;
-					}
-
-					/* set standard color */
-					/** @todo move it on init behaviour only where it need */
-					if (!node->color[3])
-						Vector4Set(node->color, 1, 1, 1, 1);
-
-					/* init the node according to his behaviour */
-					if (nodeBehaviourList[node->type].loaded) {
-						nodeBehaviourList[node->type].loaded(node);
-					}
-
-					found = qtrue;
-					break;
-				}
+		if (token[0] == '{') {
+			result = MN_ParseNodeBody(node, text, &token);
+			if (!result) {
+				Com_Printf("MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n", menu->name);
+				mn.numNodes--;
+				return qfalse;
 			}
-		} while (found);
 
-		/* test for end or unknown token */
-		if (*token == '}') {
-			/* finished */
-			return qtrue;
-		} else {
-			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseMenuBody: unknown token \"%s\" ignored (menu \"%s\")\n", token, menu->name);
+			token = COM_EParse(text, errhead, menu->name);
+			if (!*text)
+				return qfalse;
 		}
 
-	} while (*text);
+		/* set standard color */
+		/** @todo move it on init behaviour only where it need */
+		if (!node->color[3])
+			Vector4Set(node->color, 1, 1, 1, 1);
 
-	return qfalse;
+		/* init the node according to his behaviour */
+		if (nodeBehaviourList[node->type].loaded) {
+			nodeBehaviourList[node->type].loaded(node);
+		}
+	}
+
+	return qtrue;
 }
 
 /**

@@ -494,6 +494,7 @@ static void MN_TextNodeLoading (menuNode_t *node)
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
+	behaviour->id = MN_TEXT;
 	behaviour->draw = MN_TextNodeDraw;
 	behaviour->leftClick = MN_TextNodeClick;
 	behaviour->rightClick = MN_TextNodeRightClick;

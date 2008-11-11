@@ -44,5 +44,6 @@ static void MN_LineStripNodeDraw (menuNode_t *node)
 void MN_RegisterLineStripNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "linestrip";
+	behaviour->id = MN_LINESTRIP;
 	behaviour->draw = MN_LineStripNodeDraw;
 }

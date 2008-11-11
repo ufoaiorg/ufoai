@@ -490,6 +490,7 @@ static void MN_ModelClick (menuNode_t * node, int x, int y)
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
+	behaviour->id = MN_MODEL;
 	behaviour->draw = MN_DrawModelNode2;
 	behaviour->leftClick = MN_ModelClick;
 

@@ -304,6 +304,7 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
 void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
+	behaviour->id = MN_BASEMAP;
 	behaviour->draw = MN_BaseMapDraw;
 	behaviour->leftClick = MN_BaseMapClick;
 	behaviour->rightClick = MN_BaseMapRightClick;
@@ -312,6 +313,7 @@ void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
+	behaviour->id = MN_BASELAYOUT;
 	behaviour->draw = MN_BaseLayoutNodeDraw;
 	behaviour->loaded = MN_BaseLayoutNodeLoaded;
 }

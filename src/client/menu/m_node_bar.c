@@ -100,6 +100,7 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	MN_RegisterAbstractValueNode(behaviour);
 	/* overwrite */
 	behaviour->name = "bar";
+	behaviour->id = MN_BAR;
 	behaviour->draw = MN_DrawBarNode;
 	behaviour->mouseDown = MN_BarNodeMouseDown;
 	behaviour->mouseUp = MN_BarNodeMouseUp;

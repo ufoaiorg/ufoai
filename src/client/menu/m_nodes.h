@@ -59,6 +59,7 @@ typedef enum mn_s {
 	MN_CUSTOMBUTTON,
 	MN_WINDOWPANEL,
 	MN_BUTTON,
+	MN_WINDOW,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -198,6 +199,7 @@ typedef struct menuNode_s {
 typedef struct nodeBehaviour_s {
 	/* attributes */
 	const char* name;	/**< name of the behaviour: string type of a node */
+	int id;				/**< id of the behaviour: will be removed soon */
 	qboolean isVirtual; /**< if true, the node dont have any position on the screen */
 	const value_t* properties; /**< list of properties of the node */
 	int propertyCount;	/**< number of the properties into the propertiesList. Cache value to speedup search */

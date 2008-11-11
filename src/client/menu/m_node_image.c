@@ -107,6 +107,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "pic";
+	behaviour->id = MN_PIC;
 	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
 }
