@@ -53,16 +53,16 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
  */
 menuNode_t *MN_GetLastNode (const menu_t* const menu)
 {
-	menuNode_t *prev;
+	menuNode_t *last;
 
 	if (!menu->firstChild)
 		return NULL;
 
-	prev = menu->firstChild;
-	while (prev->next) {
-		prev = prev->next;
+	last = menu->firstChild;
+	while (last->next) {
+		last = last->next;
 	}
-	return prev;
+	return last;
 }
 
 /**
@@ -84,6 +84,19 @@ void MN_InsertNode (menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNod
 	}
 	newNode->next = prevNode->next;
 	prevNode->next = newNode;
+}
+
+/**
+ * @brief add a node at the end of the menu child
+ * @todo after an update of the linked list of nodes (next, +prev, firstChild, +lastChild), we can improve this function O(1)
+ */
+void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
+{
+	menuNode_t *last;
+	assert(menu);
+	assert(newNode);
+	last = MN_GetLastNode(menu);
+	MN_InsertNode(menu, last, newNode);
 }
 
 /**

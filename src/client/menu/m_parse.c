@@ -634,6 +634,101 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	return qfalse;
 }
 
+/**
+ * @brief parse a node and complet the menu with it
+ * @sa MN_ParseMenuBody
+ * @sa MN_ParseNodeBody
+ * @todo we can think about merging MN_ParseNodeBody here
+ * @node first token already read
+ * @node dont read more than the need token (last right token is '}' of end of node)
+ */
+static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **token, const char *errhead)
+{
+	menuNode_t *node;
+	nodeBehaviour_t *behaviour;
+	qboolean result;
+
+	/* allow to begin with the identifier "node" before the behaviour name */
+	if (!Q_strcasecmp(*token, "node")) {
+		*token = COM_EParse(text, errhead, menu->name);
+		if (!*text)
+			return qfalse;
+	}
+
+	/* get the behaviour */
+	behaviour = MN_GetNodeBehaviour(*token);
+	if (behaviour == NULL) {
+		Com_Printf("MN_ParseNode: node behaviour '%s' dont exists (menu \"%s\")\n", *token, menu->name);
+		return qfalse;
+	}
+
+	/* get the name */
+	*token = COM_EParse(text, errhead, menu->name);
+	if (!*text)
+		return qfalse;
+
+	/* test if node already exists */
+	node = MN_GetNode(menu, *token);
+	if (node) {
+		if (node->type != behaviour->id) {
+			Com_Printf("MN_ParseNode: we can't change node type (node \"%s.%s\")\n", menu->name, node->name);
+			return qfalse;
+		}
+		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s.%s\n", menu->name, node->name);
+		/* reset action list of node */
+		node->click = NULL;	/**< @todo understand why this strange hack (there is a lot of over actions) */
+
+	/* else initialize node */
+	} else {
+		node = MN_AllocNode(behaviour->id);
+		node->menu = menu;
+		Q_strncpyz(node->name, *token, sizeof(node->name));
+		MN_AppendNode(menu, node);
+	}
+
+	/* node default values */
+	/** @todo move it into the respective "loading" function (for those nodes, that need it) */
+	node->padding = 3;
+
+	/* throw the node we begin to read attributes */
+	node->type = behaviour->id;
+	if (nodeBehaviourList[node->type].loading)
+		nodeBehaviourList[node->type].loading(node);
+
+	/* get body */
+	*token = COM_EParse(text, errhead, menu->name);
+	if (!*text)
+		return qfalse;
+
+	/* node without body is out of spec */
+	if (*token[0] != '{') {
+		Com_Printf("MN_ParseNode: node dont have body, token '%s' read (node \"%s.%s\")\n", *token, menu->name, node->name);
+		mn.numNodes--;
+		return qfalse;
+	}
+
+	result = MN_ParseNodeBody(node, text, token);
+	if (!result) {
+		Com_Printf("MN_ParseNode: node with bad body ignored (node \"%s.%s\")\n", menu->name, node->name);
+		mn.numNodes--;
+		return qfalse;
+	}
+
+	/* already check on MN_ParseNodeBody */
+	assert(*token[0] == '}');
+
+	/* set standard color */
+	/** @todo move it on init behaviour only where it need */
+	if (!node->color[3])
+		Vector4Set(node->color, 1, 1, 1, 1);
+
+	/* init the node according to his behaviour */
+	if (nodeBehaviourList[node->type].loaded) {
+		nodeBehaviourList[node->type].loaded(node);
+	}
+	return qtrue;
+}
+
 static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const char **token, const char *errhead)
 {
 	qboolean found;
@@ -676,22 +771,15 @@ static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const 
 
 /**
  * @sa MN_ParseNodeBody
+ * @todo merge it with MN_ParseMenu
  */
 static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 {
 	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	const char *token;
 	qboolean result;
-	menuNode_t *node, *lastNode;
-	nodeBehaviour_t* behaviour;
 
-	lastNode = NULL;
 	Vector2Set(menu->pos, 0, 0);
-
-	/* find the last node */
-	for (node = menu->firstChild; node; node = node->next) {
-		lastNode = node;
-	}
 
 	/* get new token */
 	token = COM_EParse(text, errhead, menu->name);
@@ -705,80 +793,13 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 
 	/* for each nodes */
 	while (token[0] != '}') {
-
-		behaviour = MN_GetNodeBehaviour(token);
+		result = MN_ParseNode(menu, text, &token, errhead);
+		if (!result)
+			return qfalse;
 
 		token = COM_EParse(text, errhead, menu->name);
 		if (!*text)
 			return qfalse;
-
-		/* test if node already exists */
-		for (node = menu->firstChild; node; node = node->next) {
-			if (!Q_strncmp(token, node->name, sizeof(node->name))) {
-				if (node->type != behaviour->id)
-					Com_Printf("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name);
-				Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s in menu %s\n", node->name, menu->name);
-				/* reset action list of node */
-				node->click = NULL;
-				break;
-			}
-		}
-
-		/* initialize node */
-		if (!node) {
-			if (mn.numNodes >= MAX_MENUNODES)
-				Sys_Error("MAX_MENUNODES exceeded\n");
-			node = MN_AllocNode(behaviour->id);
-			memset(node, 0, sizeof(*node));
-			node->menu = menu;
-			Q_strncpyz(node->name, token, sizeof(node->name));
-
-			/* link it in */
-			MN_InsertNode(menu, lastNode, node);
-			lastNode = node;
-		}
-
-		/* node default values */
-		/** @todo move it into the respective "loading" function (for those nodes, that need it) */
-		node->padding = 3;
-
-		node->type = behaviour->id;
-		if (nodeBehaviourList[node->type].loading)
-			nodeBehaviourList[node->type].loading(node);
-
-/*					Com_Printf(" %s %s\n", nodeBehaviourList[i].name, *token); */
-
-		/* set standard texture coordinates */
-/*					node->texl[0] = 0; node->texl[1] = 0; */
-/*					node->texh[0] = 1; node->texh[1] = 1; */
-
-		/* get parameters */
-		token = COM_EParse(text, errhead, menu->name);
-		if (!*text)
-			return qfalse;
-
-		if (token[0] == '{') {
-			result = MN_ParseNodeBody(node, text, &token);
-			if (!result) {
-				Com_Printf("MN_ParseMenuBody: node with bad body ignored (menu \"%s\")\n", menu->name);
-				mn.numNodes--;
-				return qfalse;
-			}
-
-			token = COM_EParse(text, errhead, menu->name);
-			if (!*text)
-				return qfalse;
-		}
-
-		/* set standard color */
-		/** @todo move it on init behaviour only where it need */
-		if (!node->color[3])
-			Vector4Set(node->color, 1, 1, 1, 1);
-
-		/* init the node according to his behaviour */
-		if (nodeBehaviourList[node->type].loaded) {
-			nodeBehaviourList[node->type].loaded(node);
-		}
 	}
 
 	return qtrue;
