@@ -395,7 +395,7 @@ void Sys_ConsoleInit (void)
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = global_hInstance;
-	wc.hIcon = LoadIcon(global_hInstance, MAKEINTRESOURCE(IDI_ICON1));
+	wc.hIcon = LoadIcon(global_hInstance, MAKEINTRESOURCE(101));
 	wc.hIconSm = 0;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
