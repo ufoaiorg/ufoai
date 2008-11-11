@@ -443,7 +443,7 @@ void Sys_ConsoleInit (void)
 	sys_console.defInputProc = (WNDPROC)SetWindowLong(sys_console.hWndInput, GWL_WNDPROC, (LONG)Sys_ConsoleEditProc);
 
 	/* Set text limit for input edit box */
-	SendMessage(sys_console.hWndInput, EM_SETLIMITTEXT, (WPARAM)(MAXCMDLINE-1), 0);
+	SendMessage(sys_console.hWndInput, EM_SETLIMITTEXT, (WPARAM)(MAXCMDLINE - 1), 0);
 
 	/* Make visible */
 	Sys_ShowConsole(qtrue);

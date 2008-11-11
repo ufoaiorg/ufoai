@@ -546,10 +546,10 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return ALIGN(4 * sizeof(float));
 
 	case V_RGBA:
-		((byte *) b)[0] = ((const byte *) set)[0];
-		((byte *) b)[1] = ((const byte *) set)[1];
-		((byte *) b)[2] = ((const byte *) set)[2];
-		((byte *) b)[3] = ((const byte *) set)[3];
+		((int *) b)[0] = ((const int *) set)[0];
+		((int *) b)[1] = ((const int *) set)[1];
+		((int *) b)[2] = ((const int *) set)[2];
+		((int *) b)[3] = ((const int *) set)[3];
 		return ALIGN(4 * sizeof(int));
 
 	case V_STRING:
@@ -660,7 +660,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return valuestr;
 
 	case V_RGBA:
-		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((int *) b)[0], ((int *) b)[1], ((int *) b)[2], ((int *) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
