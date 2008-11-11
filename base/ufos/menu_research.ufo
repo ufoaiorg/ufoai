@@ -17,28 +17,9 @@ menu research
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/research_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/research_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/research_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/research_lr
-		pos		"512 512"
+		image	menu/research_bg
 	}
 
 	// ==================
