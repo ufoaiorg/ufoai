@@ -30,9 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_window.h"
 #include "m_node_selectbox.h"
 
-#define	V_SPECIAL_ACTION		0x8000	/**< Identify an action type into the value_t structure */
-#define V_SPECIAL_EXCLUDERECT	0x8001	/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_OPTIONNODE	0x8002	/**< Identify a special attribute, use special parse function */
+#define	V_SPECIAL				0x8000
+#define	V_SPECIAL_ACTION		(V_SPECIAL + 0)	/**< Identify an action type into the value_t structure */
+#define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)	/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) /**< Identify a special attribute, use special parse function */
 
 /** @brief valid properties for a node */
 static const value_t nodeProperties[] = {
@@ -595,9 +596,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		/* is it a property */
 		if (val) {
-			const int mask = V_BASETYPEMASK | V_MENU_COPY;
-			/* for classic properties (only bits on the mask) */
-			if ((val->type | mask) == mask) {
+			/* if its not a special case */
+			if (!(val->type & V_SPECIAL)) {
 				result = MN_ParseProperty(node, val, text, token, errhead);
 				if (!result)
 					return qfalse;
