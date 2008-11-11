@@ -17,29 +17,11 @@ menu stats
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/stats_ul
-		pos	"0 0"
+		image	menu/stats_bg
 	}
 
-	pic back_ur
-	{
-		image	menu/stats_ur
-		pos	"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/stats_ll
-		pos	"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/stats_lr
-		pos	"512 512"
-	}
 	pic button_exit
 	{
 		image	hud/buttons2
@@ -205,29 +187,11 @@ menu nations
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/stats_ul
-		pos	"0 0"
+		image	menu/stats_bg
 	}
 
-	pic back_ur
-	{
-		image	menu/stats_ur
-		pos	"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/stats_ll
-		pos	"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/stats_lr
-		pos	"512 512"
-	}
 	pic button_exit
 	{
 		image	hud/buttons2

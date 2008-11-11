@@ -16,28 +16,9 @@ menu transfer
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/trans_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/trans_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/trans_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/trans_lr
-		pos		"512 512"
+		image	menu/transfer_bg
 	}
 
 	pic transtypebox

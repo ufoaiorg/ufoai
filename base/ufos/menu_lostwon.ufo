@@ -17,28 +17,9 @@ menu won
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/won_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/won_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/won_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/won_lr
-		pos		"512 512"
+		image	menu/won_bg
 	}
 
 	// ==================

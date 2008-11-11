@@ -17,30 +17,10 @@ menu team
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/team_ul
-		pos		"0 0"
+		image	menu/team_bg
 	}
-
-	pic back_ur
-	{
-		image	menu/team_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/team_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/team_lr
-		pos		"512 512"
-	}
-
 
 	// ==================
 	// names list

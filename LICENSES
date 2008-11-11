@@ -2035,43 +2035,25 @@ base/pics/menu/save_slota.tga | GNU General Public License 2.0 |  | Based on ori
 base/pics/menu/scroll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/selectbox.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/selectbox_green.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/skirmish_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/skirmish_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/skirmish_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/skirmish_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/stats_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/stats_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/stats_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/stats_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/team_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/team_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/team_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/team_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/trans_ll.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/trans_lr.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/trans_ul.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/trans_ur.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/skirmish_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/stats_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/team_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/transfer_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufoai.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_artifacts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/menu/ufopedia_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufopedia_buildings.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_buttons1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufopedia_buttons1a.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufopedia_buttons2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufopedia_crafts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_equipment.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/ufopedia_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/ufopedia_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/vertical_bar.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/won_ll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/won_lr.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/won_ul.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/won_ur.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/won_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/nations/africa.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/asia.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/europe.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)

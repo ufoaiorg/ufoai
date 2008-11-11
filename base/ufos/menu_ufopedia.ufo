@@ -17,28 +17,9 @@ menu ufopedia
 	// background
 	// ==================
 
-	pic back_ul
+	pic background
 	{
-		image	menu/ufopedia_ul
-		pos		"0 0"
-	}
-
-	pic back_ur
-	{
-		image	menu/ufopedia_ur
-		pos		"512 0"
-	}
-
-	pic back_ll
-	{
-		image	menu/ufopedia_ll
-		pos		"0 512"
-	}
-
-	pic back_lr
-	{
-		image	menu/ufopedia_lr
-		pos		"512 512"
+		image	menu/ufopedia_bg
 	}
 
 	// ==================
