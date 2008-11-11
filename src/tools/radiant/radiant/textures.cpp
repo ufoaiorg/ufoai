@@ -86,9 +86,9 @@ struct texture_globals_t {
 static texture_globals_t g_texture_globals(GL_RGBA);
 
 static void SetTexParameters(ETexturesMode mode) {
-	const float maxAniso = QGL_maxTextureAnisotropy();
+	const int maxAniso = QGL_maxTextureAnisotropy();
 	if (maxAniso > 1)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
 	else if (mode == eTextures_MAX_ANISOTROPY)
 		mode = eTextures_LINEAR_MIPMAP_LINEAR;
 
