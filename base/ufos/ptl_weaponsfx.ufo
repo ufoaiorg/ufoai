@@ -175,9 +175,9 @@ particle fireBall
 	run
 	{
 		// this lets the size gets bigger the longer the particle is active
-		push   vector "80 80"		// push the given vector onto the stack
+		push   vector "80 80 0"		// push the given vector onto the stack
 		mul    *t					// multiple with current stack vector with the values from particle structure t (time)
-		add    vector "10 10"		// add the vector to the current stack values (ensure at least a minimum value of the given vector)
+		add    vector "10 10 0"		// add the vector to the current stack values (ensure at least a minimum value of the given vector)
 		pop    *size				// write the value into the size particle structure
 	}
 	// no kill needed - this is a shooting particle and is automatically freed in the local entity code
@@ -436,7 +436,7 @@ particle plasmaMiniPulse
 		blend  add
 		style  axis
 		child  plasmaMiniPulseBall
-		offset "0 -16"
+		offset "0 -16 0"
 	}
 	run
 	{
@@ -458,7 +458,7 @@ particle plasmaPulse
 		blend  add
 		style  axis
 		child  plasmaPulseBall
-		offset "0 -26"
+		offset "0 -26 0"
 	}
 	run
 	{
@@ -479,7 +479,7 @@ particle plasmaMiniPulseBall
 		image  sfx/plasmaball
 		blend  add
 		style  facing
-		offset "0 9"
+		offset "0 9 0"
 		color  "1 1 1 0.5"
  		size   "6 6"
 		lightcolor "0.3 1.0 3.0"
@@ -494,7 +494,7 @@ particle plasmaPulseBall
 		image  sfx/plasmaball
 		blend  add
 		style  facing
-		offset "0 23"
+		offset "0 23 0"
 		color  "1 1 1 0.5"
 		size   "12 12"
 		lightcolor "0.3 1.0 3.0"
