@@ -406,12 +406,11 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 		break;
 	}
 
-	/* do something apropriate */
+	/* do something appropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (refdef.ready) {
 			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
-			/* inline models are marked with * as first char followed by the
-			 * number */
+			/* inline models are marked with * as first char followed by the number */
 			if (cl.configstrings[i][0] == '*')
 				cl.model_clip[i - CS_MODELS] = CM_InlineModel(cl.configstrings[i]);
 			else

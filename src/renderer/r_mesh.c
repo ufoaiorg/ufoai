@@ -300,6 +300,7 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 
 	vertind = coordind = 0;
 
+	/** @todo damn slow - optimize this */
 	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
 		memcpy(&texunit_diffuse.texcoord_array[coordind + 0], &mesh->stcoords[mesh->indexes[3 * i + 0]][0], sizeof(vec2_t));
 		memcpy(&r_state.vertex_array_3d[vertind + 0], &r_mesh_verts[mesh->indexes[3 * i + 0]], sizeof(vec3_t));
