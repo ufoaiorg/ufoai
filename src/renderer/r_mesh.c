@@ -265,13 +265,14 @@ qboolean R_CullMeshModel (entity_t *e)
 
 void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
 {
-	int i, vertind, coordind;
+	int i, j;
 	const mAliasFrame_t *frame, *oldframe;
 	const mAliasVertex_t *v, *ov;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
 	vec3_t r_mesh_verts[MD3_MAX_VERTS];
 	vec3_t r_mesh_norms[MD3_MAX_VERTS];
+	float *texcoord_array, *vertex_array_3d, *normal_array;
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
@@ -298,27 +299,25 @@ void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, f
 		}
 	}
 
-	vertind = coordind = 0;
+	texcoord_array = texunit_diffuse.texcoord_array;
+	vertex_array_3d = r_state.vertex_array_3d;
+	normal_array = r_state.normal_array;
 
 	/** @todo damn slow - optimize this */
 	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
-		memcpy(&texunit_diffuse.texcoord_array[coordind + 0], &mesh->stcoords[mesh->indexes[3 * i + 0]][0], sizeof(vec2_t));
-		memcpy(&r_state.vertex_array_3d[vertind + 0], &r_mesh_verts[mesh->indexes[3 * i + 0]], sizeof(vec3_t));
+		for (j = 0; j < 3; j++) {
+			const int arrayIndex = 3 * i + j;
+			Vector2Copy(mesh->stcoords[mesh->indexes[arrayIndex]], texcoord_array);
+			VectorCopy(r_mesh_verts[mesh->indexes[arrayIndex]], vertex_array_3d);
 
-		memcpy(&texunit_diffuse.texcoord_array[coordind + 2], &mesh->stcoords[mesh->indexes[3 * i + 1]][0], sizeof(vec2_t));
-		memcpy(&r_state.vertex_array_3d[vertind + 3], &r_mesh_verts[mesh->indexes[3 * i + 1]], sizeof(vec3_t));
+			/* normal vectors for lighting */
+			if (r_state.lighting_enabled)
+				VectorCopy(r_mesh_norms[mesh->indexes[arrayIndex]], normal_array);
 
-		memcpy(&texunit_diffuse.texcoord_array[coordind + 4], &mesh->stcoords[mesh->indexes[3 * i + 2]][0], sizeof(vec2_t));
-		memcpy(&r_state.vertex_array_3d[vertind + 6], &r_mesh_verts[mesh->indexes[3 * i + 2]], sizeof(vec3_t));
-
-		if (r_state.lighting_enabled) {  /* normal vectors for lighting */
-			memcpy(&r_state.normal_array[vertind + 0], &r_mesh_norms[mesh->indexes[3 * i + 0]], sizeof(vec3_t));
-			memcpy(&r_state.normal_array[vertind + 3], &r_mesh_norms[mesh->indexes[3 * i + 1]], sizeof(vec3_t));
-			memcpy(&r_state.normal_array[vertind + 6], &r_mesh_norms[mesh->indexes[3 * i + 2]], sizeof(vec3_t));
+			texcoord_array += 2;
+			vertex_array_3d += 3;
+			normal_array += 3;
 		}
-
-		coordind += 6;
-		vertind += 9;
 	}
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
