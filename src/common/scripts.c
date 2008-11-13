@@ -175,128 +175,160 @@ static const size_t vt_sizes[] = {
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
+#define COM_ERRORMESSAGE_SIZE 256
+static char errorMessage[COM_ERRORMESSAGE_SIZE];
+
+typedef enum {
+	RESULT_ERROR = -1,
+	RESULT_WARNING = -2,
+	RESULT_OK = 0
+} resultStatus_t;
+
 /**
- * @note translateable string are marked with _ at the beginning
- * @code menu exampleName
- * {
- *   string "_this is translatable"
- * }
- * @endcode
+ * Parse a value
+ * @param[out] writedByte
+ * @return A resultStatus_t value
+ * @note instead of , this function separate error message and write byte result
+ * @todo better doxygen documentation
+ * @todo update sprintf for somthing checking COM_ERRORMESSAGE_SIZE
  */
-#ifdef DEBUG
-int Com_EParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
-#else
-int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
-#endif
+int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
 {
 	byte *b;
 	int x, y, w, h;
 	byte num;
-
+	resultStatus_t status = RESULT_OK;
 	b = (byte *) base + ofs;
+	*writedByte = 0;
 
 	if (size) {
 #ifdef DEBUG
-		if (size > vt_sizes[type])
-			Com_Printf("Warning: Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-
-		if (size < vt_sizes[type])
-			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-#else
-		if (size < vt_sizes[type])
-			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
+		if (size > vt_sizes[type]) {
+			sprintf(errorMessage, "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T" (type: %i). ", size, vt_sizes[type], type);
+			status = RESULT_WARNING;
+		}
 #endif
+		if (size < vt_sizes[type]) {
+			sprintf(errorMessage, "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)", size, vt_sizes[type], type);
+			return RESULT_ERROR;
+		}
 	}
 
 	switch (type) {
 	case V_CLIENT_HUNK_STRING:
 	case V_CLIENT_HUNK:
-		Sys_Error("Com_EParseValue: V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here\n");
+		sprintf(errorMessage, "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
+		return RESULT_ERROR;
 
 	case V_NULL:
-		return ALIGN(0);
+		*writedByte = ALIGN(0);
+		break;
 
 	case V_BOOL:
 		if (!Q_strncmp(token, "true", 4) || *token == '1')
 			*b = qtrue;
 		else
 			*b = qfalse;
-		return ALIGN(sizeof(qboolean));
+		*writedByte = ALIGN(sizeof(qboolean));
+		break;
 
 	case V_CHAR:
 		*(char *) b = *token;
-		return ALIGN(sizeof(char));
+		*writedByte = ALIGN(sizeof(char));
+		break;
 
 	case V_MENUTEXTID:
 		for (num = 0; num < MAX_MENUTEXTS; num++)
 			if (!Q_strcmp(token, menutextid_names[num]))
 				break;
-		if (num == MAX_MENUTEXTS)
-			Sys_Error("Could not find menutext id '%s'", token);
+		if (num == MAX_MENUTEXTS) {
+			sprintf(errorMessage, "Could not find menutext id '%s'", token);
+			return RESULT_ERROR;
+		}
 		*(int *) b = num;
-		return ALIGN(sizeof(int));
+		*writedByte = ALIGN(sizeof(int));
+		break;
 
 	case V_BASEID:
 		*(int *) b = atoi(token);
-		if (*(int *) b < 0 || *(int *) b >= MAX_BASES)
-			Sys_Error("Invalid baseid given %i", *(int *) b);
-		return ALIGN(sizeof(int));
+		if (*(int *) b < 0 || *(int *) b >= MAX_BASES) {
+			sprintf(errorMessage, "Invalid baseid given %i", *(int *) b);
+			return RESULT_ERROR;
+		}
+		*writedByte = ALIGN(sizeof(int));
+		break;
 
 	case V_INT:
 		*(int *) b = atoi(token);
-		return ALIGN(sizeof(int));
+		*writedByte = ALIGN(sizeof(int));
+		break;
 
 	case V_INT2:
-		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2)
-			Sys_Error("Com_EParseValue: Illegal int2 statement '%s'\n", token);
-
-		return ALIGN(2 * sizeof(int));
+		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2) {
+			sprintf(errorMessage, "Illegal int2 statement '%s'", token);
+			return RESULT_ERROR;
+		}
+		*writedByte = ALIGN(2 * sizeof(int));
+		break;
 
 	case V_FLOAT:
 		*(float *) b = atof(token);
-		return ALIGN(sizeof(float));
+		*writedByte = ALIGN(sizeof(float));
+		break;
 
 	case V_POS:
-		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2)
-			Sys_Error("Com_EParseValue: Illegal pos statement '%s'\n", token);
-
-		return ALIGN(2 * sizeof(float));
+		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2) {
+			sprintf(errorMessage, "Illegal pos statement '%s'", token);
+			return RESULT_ERROR;
+		}
+		*writedByte = ALIGN(2 * sizeof(float));
+		break;
 
 	case V_VECTOR:
-		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3)
-			Sys_Error("Com_EParseValue: Illegal vector statement '%s'\n", token);
-
-		return ALIGN(3 * sizeof(float));
+		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3) {
+			sprintf(errorMessage, "Illegal vector statement '%s'", token);
+			return RESULT_ERROR;
+		}
+		*writedByte = ALIGN(3 * sizeof(float));
+		break;
 
 	case V_COLOR:
 		{
 			float* f = (float *) b;
-			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4)
-				Sys_Error("Com_EParseValue: Illegal color statement '%s'\n", token);
-			return ALIGN(4 * sizeof(float));
+			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
+				sprintf(errorMessage, "Illegal color statement '%s'", token);
+				return RESULT_ERROR;
+			}
+			*writedByte = ALIGN(4 * sizeof(float));
 		}
+		break;
 
 	case V_RGBA:
 		{
 			int* i = (int *) b;
-			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4)
-				Sys_Error("Com_EParseValue: Illegal rgba statement '%s'\n", token);
-			return ALIGN(4 * sizeof(int));
+			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
+				sprintf(errorMessage, "Illegal rgba statement '%s'", token);
+				return RESULT_ERROR;
+			}
+			*writedByte = ALIGN(4 * sizeof(int));
 		}
+		break;
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen(token) + 1;
 		if (w > MAX_VAR)
 			w = MAX_VAR;
-		return ALIGN(w);
+		*writedByte = ALIGN(w);
+		break;
 
 	case V_TRANSLATION_STRING:
 		if (*token == '_')
 			token++;
 
 		Q_strncpyz((char *) b, _(token), MAX_VAR);
-		return ALIGN((int)strlen((char *) b) + 1);
+		*writedByte = ALIGN((int)strlen((char *) b) + 1);
+		break;
 
 	/* just remove the _ but don't translate */
 	case V_TRANSLATION_MANUAL_STRING:
@@ -305,12 +337,14 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen((char *) b) + 1;
-		return ALIGN(w);
+		*writedByte = ALIGN(w);
+		break;
 
 	case V_LONGSTRING:
 		strcpy((char *) b, token);
 		w = (int)strlen(token) + 1;
-		return ALIGN(w);
+		*writedByte = ALIGN(w);
+		break;
 
 	case V_ALIGN:
 		for (num = 0; num < ALIGN_LAST; num++)
@@ -320,7 +354,8 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			*b = 0;
 		else
 			*b = num;
-		return ALIGN(1);
+		*writedByte = ALIGN(1);
+		break;
 
 	case V_BLEND:
 		for (num = 0; num < BLEND_LAST; num++)
@@ -330,7 +365,8 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			*b = 0;
 		else
 			*b = num;
-		return ALIGN(1);
+		*writedByte = ALIGN(1);
+		break;
 
 	case V_STYLE:
 		for (num = 0; num < STYLE_LAST; num++)
@@ -340,7 +376,8 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			*b = 0;
 		else
 			*b = num;
-		return ALIGN(1);
+		*writedByte = ALIGN(1);
+		break;
 
 	case V_FADE:
 		for (num = 0; num < FADE_LAST; num++)
@@ -350,32 +387,46 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			*b = 0;
 		else
 			*b = num;
-		return ALIGN(1);
+		*writedByte = ALIGN(1);
+		break;
 
 	case V_SHAPE_SMALL:
-		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4)
-			Sys_Error("Com_EParseValue: Illegal shape small statement '%s'\n", token);
+		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4) {
+			sprintf(errorMessage, "Illegal shape small statement '%s'", token);
+			return RESULT_ERROR;
+		}
 
-		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y >= SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT)
-			Sys_Error("Com_EParseValue: illegal shape small statement - max h value is %i (y: %i, h: %i)\n", SHAPE_SMALL_MAX_HEIGHT, y, h);
-		if (x + w > SHAPE_SMALL_MAX_WIDTH || x >= SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH)
-			Sys_Error("Com_EParseValue: illegal shape small statement - max x and w values are %i\n", SHAPE_SMALL_MAX_WIDTH);
+		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y >= SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT) {
+			sprintf(errorMessage, "illegal shape small statement - max h value is %i (y: %i, h: %i)", SHAPE_SMALL_MAX_HEIGHT, y, h);
+			return RESULT_ERROR;
+		}
+		if (x + w > SHAPE_SMALL_MAX_WIDTH || x >= SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH) {
+			sprintf(errorMessage, "illegal shape small statement - max x and w values are %i", SHAPE_SMALL_MAX_WIDTH);
+			return RESULT_ERROR;
+		}
 		for (h += y; y < h; y++)
 			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
-		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
+		*writedByte = ALIGN(SHAPE_SMALL_MAX_HEIGHT);
+		break;
 
 	case V_SHAPE_BIG:
-		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4)
-			Sys_Error("Com_EParseValue: Illegal shape big statement '%s'\n", token);
-
-		if (y + h > SHAPE_BIG_MAX_HEIGHT || y >= SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT)
-			Sys_Error("Com_EParseValue: Illegal shape big statement, max height is %i\n", SHAPE_BIG_MAX_HEIGHT);
-		if (x + w > SHAPE_BIG_MAX_WIDTH || x >= SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH)
-			Sys_Error("Com_EParseValue: illegal shape big statement - max x and w values are %i ('%s')\n", SHAPE_BIG_MAX_WIDTH, token);
+		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4) {
+			sprintf(errorMessage, "Illegal shape big statement '%s'", token);
+			return RESULT_ERROR;
+		}
+		if (y + h > SHAPE_BIG_MAX_HEIGHT || y >= SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT) {
+			sprintf(errorMessage, "Illegal shape big statement, max height is %i", SHAPE_BIG_MAX_HEIGHT);
+			return RESULT_ERROR;
+		}
+		if (x + w > SHAPE_BIG_MAX_WIDTH || x >= SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH) {
+			sprintf(errorMessage, "illegal shape big statement - max x and w values are %i ('%s')", SHAPE_BIG_MAX_WIDTH, token);
+			return RESULT_ERROR;
+		}
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((uint32_t *) b)[y] |= w;
-		return ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
+		*writedByte = ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
+		break;
 
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
@@ -386,15 +437,19 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			*b = 0;
 		else
 			*b = num;
-		return ALIGN(1);
+		*writedByte = ALIGN(1);
+		break;
 
 	case V_DATE:
-		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3)
-			Sys_Error("Com_EParseValue: Illegal if statement '%s'\n", token);
+		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3) {
+			sprintf(errorMessage, "Illegal if statement '%s'", token);
+			return RESULT_ERROR;
+		}
 
 		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
 		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
-		return ALIGN(sizeof(date_t));
+		*writedByte = ALIGN(sizeof(date_t));
+		break;
 
 	case V_IF:
 #ifndef DEDICATED_ONLY
@@ -411,26 +466,34 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			Mem_PoolStrDupTo(string, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
 			Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
 			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
-		} else
-			Sys_Error("Com_EParseValue: Illegal if statement '%s'\n", token);
+		} else {
+			sprintf(errorMessage, "Illegal if statement '%s'", token);
+			return RESULT_ERROR;
+		}
 #endif
 
-		return ALIGN(sizeof(menuDepends_t));
+		*writedByte = ALIGN(sizeof(menuDepends_t));
+		break;
 
 	case V_RELABS:
 		if (token[0] == '-' || token[0] == '+') {
-			if (fabs(atof(token + 1)) <= 2.0f)
-				Com_Printf("Com_EParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
+			if (fabs(atof(token + 1)) <= 2.0f) {
+				sprintf(errorMessage, "a V_RELABS (absolute) value should always be bigger than +/-2.0");
+				status = RESULT_WARNING;
+			}
 			if (token[0] == '-')
 				*(float *) b = atof(token + 1) * (-1);
 			else
 				*(float *) b = atof(token + 1);
 		} else {
-			if (fabs(atof(token)) > 2.0f)
-				Com_Printf("Com_EParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
+			if (fabs(atof(token)) > 2.0f) {
+				sprintf(errorMessage, "a V_RELABS (relative) value should only be between 0.00..1 and 2.0");
+				status = RESULT_WARNING;
+			}
 			*(float *) b = atof(token);
 		}
-		return ALIGN(sizeof(float));
+		*writedByte = ALIGN(sizeof(float));
+		break;
 
 	case V_LONGLINES:
 		for (num = 0; num < LONGLINES_LAST; num++)
@@ -440,14 +503,53 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 			*b = 0;
 		else
 			*b = num;
-		return ALIGN(1);
+		*writedByte = ALIGN(1);
+		break;
 
 	default:
-		Sys_Error("Com_EParseValue: unknown value type '%s'\n", token);
-		return -1;
+		sprintf(errorMessage, "unknown value type '%s'", token);
+		return RESULT_ERROR;
 	}
+	return status;
 }
 
+/**
+ * @note translateable string are marked with _ at the beginning
+ * @code menu exampleName
+ * {
+ *   string "_this is translatable"
+ * }
+ * @endcode
+ */
+#ifdef DEBUG
+int Com_EParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+#else
+int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
+#endif
+{
+	size_t writedByte;
+	resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writedByte);
+	switch (result) {
+		case RESULT_ERROR:
+#ifdef DEBUG
+			Sys_Error("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
+#else
+			Sys_Error("Com_EParseValue: %s\n", errorMessage);
+#endif
+			break;
+		case RESULT_WARNING:
+#ifdef DEBUG
+			Com_Printf("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
+#else
+			Com_Printf("Com_EParseValue: %s\n", errorMessage);
+#endif
+			break;
+		case RESULT_OK:
+			break;
+	}
+	return writedByte;
+
+}
 
 /**
  * @param[in] base The start pointer to a given data type (typedef, struct)
@@ -705,7 +807,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return valuestr;
 
 	default:
-		Sys_Error("Com_EParseValue: unknown value type %i\n", type);
+		Sys_Error("Com_ValueToStr: unknown value type %i\n", type);
 		return NULL;
 	}
 }
