@@ -267,7 +267,7 @@
 "origin" "160 128 0"
 "model" "models/objects/construct/crane/crane_a.md2"
 "spawnflags" "255"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 }
 // entity 2
 {

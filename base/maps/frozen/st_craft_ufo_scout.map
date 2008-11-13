@@ -5,7 +5,7 @@
 "maxlevel" "5"
 "light" "190"
 "_color" "0.9 0.9 1"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 "ambient" "0.45 0.45 0.45"
 "maxteams" "0"
 "spawnflags" "255"

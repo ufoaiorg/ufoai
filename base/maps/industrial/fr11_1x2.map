@@ -1026,7 +1026,7 @@
 "origin" "162 83 8.00004"
 "model" "models/objects/construct/mixer/mixer.md2"
 "spawnflags" "255"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 }
 // entity 2
 {

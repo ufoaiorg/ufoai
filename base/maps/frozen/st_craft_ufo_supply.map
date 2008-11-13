@@ -6,7 +6,7 @@
 "maxteams" "0"
 "light" "160"
 "_color" "1 0.8 0.8"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 "ambient" "0.4 0.4 0.4"
 // brush 0
 {

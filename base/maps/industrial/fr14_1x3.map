@@ -1227,7 +1227,6 @@
 // entity 1
 {
 "classname" "func_group"
-"angles" "0.032285 225"
 // brush 0
 {
 ( 94 120 8 ) ( 96 120 8 ) ( 96 120 28 ) tex_material/c_gray255 8 11 0 0.5 0.5 134283008 0 0
@@ -1367,7 +1366,6 @@
 // entity 2
 {
 "classname" "func_group"
-"angles" "0.032285 225"
 // brush 0
 {
 ( 30 454 58 ) ( 32 454 56 ) ( 32 458 56 ) tex_material/metall002 60 16 -90 0.5 0.5 134283008 0 0

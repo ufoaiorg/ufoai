@@ -85,7 +85,7 @@
 "origin" "128 128 8"
 "model" "models/objects/vegi/tree04/bark.md2"
 "spawnflags" "255"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 }
 // entity 2
 {
@@ -93,7 +93,7 @@
 "origin" "128 128 8"
 "model" "models/objects/vegi/tree04/leafs.md2"
 "spawnflags" "254"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 }
 // entity 3
 {
@@ -101,5 +101,5 @@
 "origin" "148 111 8"
 "model" "models/objects/city/waste/bag.md2"
 "spawnflags" "255"
-"angles" "0.032285 225"
+"angles" "0.032285 225 0"
 }
