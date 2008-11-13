@@ -184,9 +184,9 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
  * @endcode
  */
 #ifdef DEBUG
-int Com_ParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+int Com_EParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
 #else
-int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
+int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
 #endif
 {
 	byte *b;
@@ -211,7 +211,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	switch (type) {
 	case V_CLIENT_HUNK_STRING:
 	case V_CLIENT_HUNK:
-		Sys_Error("Com_ParseValue: V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here\n");
+		Sys_Error("Com_EParseValue: V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here\n");
 
 	case V_NULL:
 		return ALIGN(0);
@@ -248,7 +248,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_INT2:
 		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2)
-			Sys_Error("Com_ParseValue: Illegal int2 statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal int2 statement '%s'\n", token);
 
 		return ALIGN(2 * sizeof(int));
 
@@ -258,13 +258,13 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_POS:
 		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2)
-			Sys_Error("Com_ParseValue: Illegal pos statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal pos statement '%s'\n", token);
 
 		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
 		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3)
-			Sys_Error("Com_ParseValue: Illegal vector statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal vector statement '%s'\n", token);
 
 		return ALIGN(3 * sizeof(float));
 
@@ -272,7 +272,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			float* f = (float *) b;
 			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4)
-				Sys_Error("Com_ParseValue: Illegal color statement '%s'\n", token);
+				Sys_Error("Com_EParseValue: Illegal color statement '%s'\n", token);
 			return ALIGN(4 * sizeof(float));
 		}
 
@@ -280,7 +280,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			int* i = (int *) b;
 			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4)
-				Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
+				Sys_Error("Com_EParseValue: Illegal rgba statement '%s'\n", token);
 			return ALIGN(4 * sizeof(int));
 		}
 
@@ -354,24 +354,24 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_SHAPE_SMALL:
 		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4)
-			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal shape small statement '%s'\n", token);
 
 		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y >= SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT)
-			Sys_Error("Com_ParseValue: illegal shape small statement - max h value is %i (y: %i, h: %i)\n", SHAPE_SMALL_MAX_HEIGHT, y, h);
+			Sys_Error("Com_EParseValue: illegal shape small statement - max h value is %i (y: %i, h: %i)\n", SHAPE_SMALL_MAX_HEIGHT, y, h);
 		if (x + w > SHAPE_SMALL_MAX_WIDTH || x >= SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH)
-			Sys_Error("Com_ParseValue: illegal shape small statement - max x and w values are %i\n", SHAPE_SMALL_MAX_WIDTH);
+			Sys_Error("Com_EParseValue: illegal shape small statement - max x and w values are %i\n", SHAPE_SMALL_MAX_WIDTH);
 		for (h += y; y < h; y++)
 			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
 		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_SHAPE_BIG:
 		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4)
-			Sys_Error("Com_ParseValue: Illegal shape big statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal shape big statement '%s'\n", token);
 
 		if (y + h > SHAPE_BIG_MAX_HEIGHT || y >= SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT)
-			Sys_Error("Com_ParseValue: Illegal shape big statement, max height is %i\n", SHAPE_BIG_MAX_HEIGHT);
+			Sys_Error("Com_EParseValue: Illegal shape big statement, max height is %i\n", SHAPE_BIG_MAX_HEIGHT);
 		if (x + w > SHAPE_BIG_MAX_WIDTH || x >= SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH)
-			Sys_Error("Com_ParseValue: illegal shape big statement - max x and w values are %i ('%s')\n", SHAPE_BIG_MAX_WIDTH, token);
+			Sys_Error("Com_EParseValue: illegal shape big statement - max x and w values are %i ('%s')\n", SHAPE_BIG_MAX_WIDTH, token);
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((uint32_t *) b)[y] |= w;
@@ -390,7 +390,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_DATE:
 		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3)
-			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal if statement '%s'\n", token);
 
 		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
 		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
@@ -412,7 +412,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
 			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
 		} else
-			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
+			Sys_Error("Com_EParseValue: Illegal if statement '%s'\n", token);
 #endif
 
 		return ALIGN(sizeof(menuDepends_t));
@@ -420,14 +420,14 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_RELABS:
 		if (token[0] == '-' || token[0] == '+') {
 			if (fabs(atof(token + 1)) <= 2.0f)
-				Com_Printf("Com_ParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
+				Com_Printf("Com_EParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
 			if (token[0] == '-')
 				*(float *) b = atof(token + 1) * (-1);
 			else
 				*(float *) b = atof(token + 1);
 		} else {
 			if (fabs(atof(token)) > 2.0f)
-				Com_Printf("Com_ParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
+				Com_Printf("Com_EParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
 			*(float *) b = atof(token);
 		}
 		return ALIGN(sizeof(float));
@@ -443,7 +443,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(1);
 
 	default:
-		Sys_Error("Com_ParseValue: unknown value type '%s'\n", token);
+		Sys_Error("Com_EParseValue: unknown value type '%s'\n", token);
 		return -1;
 	}
 }
@@ -705,7 +705,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return valuestr;
 
 	default:
-		Sys_Error("Com_ParseValue: unknown value type %i\n", type);
+		Sys_Error("Com_EParseValue: unknown value type %i\n", type);
 		return NULL;
 	}
 }
@@ -857,7 +857,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 				if (!*text)
 					return;
 
-				Com_ParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
+				Com_EParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
 				break;
 			}
 
@@ -1026,7 +1026,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 					if (!*text)
 						break;
 
-					if (Com_ParseValue(od, token, val->type, val->ofs, val->size) == -1)
+					if (Com_EParseValue(od, token, val->type, val->ofs, val->size) == -1)
 						Com_Printf("Com_ParseItem: Wrong size for value %s\n", val->string);
 				} else {
 					/* parse fire definitions */
@@ -1255,7 +1255,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(id, token, idp->type, idp->ofs, idp->size);
+				Com_EParseValue(id, token, idp->type, idp->ofs, idp->size);
 				break;
 			}
 
@@ -1876,7 +1876,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(td, token, v->type, v->ofs, v->size);
+				Com_EParseValue(td, token, v->type, v->ofs, v->size);
 				break;
 			}
 
@@ -1995,7 +1995,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), com_genericPool, 0);
 					break;
 				default:
-					Com_ParseValue(t, token, v->type, v->ofs, v->size);
+					Com_EParseValue(t, token, v->type, v->ofs, v->size);
 					break;
 				}
 				break;
@@ -2064,7 +2064,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(gt, token, v->type, v->ofs, v->size);
+					Com_EParseValue(gt, token, v->type, v->ofs, v->size);
 					break;
 				}
 
@@ -2323,7 +2323,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 
 				switch (vp->type) {
 				default:
-					Com_ParseValue(md, token, vp->type, vp->ofs, vp->size);
+					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
 					break;
 				case V_TRANSLATION_MANUAL_STRING:
 					if (*token == '_')

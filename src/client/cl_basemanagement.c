@@ -1941,7 +1941,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 								break;
 							default:
-								Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
+								Com_EParseValue(building, token, vp->type, vp->ofs, vp->size);
 								break;
 							}
 							break;
@@ -2209,7 +2209,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 			break;
 		Com_DPrintf(DEBUG_CLIENT, "on position %s\n", token);
 
-		Com_ParseValue(pos, token, V_POS, 0, sizeof(vec2_t));
+		Com_EParseValue(pos, token, V_POS, 0, sizeof(vec2_t));
 		tile->posX = pos[0];
 		tile->posY = pos[1];
 

@@ -2455,7 +2455,7 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 						Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						break;
 					default:
-						Com_ParseValue(rank, token, v->type, v->ofs, v->size);
+						Com_EParseValue(rank, token, v->type, v->ofs, v->size);
 						break;
 					}
 					break;
@@ -2536,7 +2536,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_ParseValue(ugv, token, v->type, v->ofs, v->size);
+				Com_EParseValue(ugv, token, v->type, v->ofs, v->size);
 				break;
 			}
 			if (!v->string)

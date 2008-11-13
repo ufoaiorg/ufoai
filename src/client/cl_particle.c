@@ -1003,7 +1003,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 				}
 
 				/* found a normal particle value */
-				Com_ParseValue(ptl, token, pp->type, pp->ofs, pp->size);
+				Com_EParseValue(ptl, token, pp->type, pp->ofs, pp->size);
 				break;
 			}
 	} while (token);
@@ -1190,7 +1190,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				/* set the values */
 				pc->type = j;
 				pc->ref = pcmdPos;
-				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
+				pcmdPos += Com_EParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
 
 /*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref); */
 				break;
@@ -1213,7 +1213,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
 				pc->ref = pcmdPos;
-				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
+				pcmdPos += Com_EParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
 
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_POP;

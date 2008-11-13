@@ -140,7 +140,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
 					break;
 				default:
-					Com_ParseValue(t, token, v->type, v->ofs, v->size);
+					Com_EParseValue(t, token, v->type, v->ofs, v->size);
 				}
 				break;
 			}

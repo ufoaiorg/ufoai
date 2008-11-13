@@ -123,7 +123,7 @@ void MN_ParseFont (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
 					break;
 				default:
-					Com_ParseValue(font, token, v->type, v->ofs, v->size);
+					Com_EParseValue(font, token, v->type, v->ofs, v->size);
 					break;
 				}
 				break;

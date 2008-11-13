@@ -1640,7 +1640,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
 						break;
 					default:
-						Com_ParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
+						Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
 					}
 
 					break;
@@ -1696,7 +1696,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
 								break;
 							default:
-								Com_ParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
+								Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
 							}
 							break;
 						}

@@ -123,16 +123,16 @@ static void CL_ParseEntitystring (const char *es)
 			else if (!Q_strcmp(keyname, "volume"))
 				volume = atof(entity_token);
 			else if (!Q_strcmp(keyname, "modelscale_vec"))
-				Com_ParseValue(scale, entity_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_EParseValue(scale, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "origin"))
-				Com_ParseValue(origin, entity_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_EParseValue(origin, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "angles") && !angles[YAW])
 				/* pitch, yaw, roll */
-				Com_ParseValue(angles, entity_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_EParseValue(angles, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "angle") && !angles[YAW])
 				angles[YAW] = atof(entity_token);
 			else if (!Q_strcmp(keyname, "wait"))
-				Com_ParseValue(wait, entity_token, V_POS, 0, sizeof(vec2_t));
+				Com_EParseValue(wait, entity_token, V_POS, 0, sizeof(vec2_t));
 			else if (!Q_strcmp(keyname, "spawnflags"))
 				spawnflags = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "maxlevel"))

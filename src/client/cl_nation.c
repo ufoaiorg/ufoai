@@ -269,7 +269,7 @@ void CL_ParseNations (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					break;
 				default:
-					if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
+					if (Com_EParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
 						Com_Printf("CL_ParseNations: Wrong size for value %s\n", vp->string);
 					break;
 				}

@@ -102,7 +102,7 @@ typedef enum {
 	V_DATE,
 	V_IF,
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
-	V_CLIENT_HUNK = 25,			/**< only for client side data - not handled in Com_ParseValue */
+	V_CLIENT_HUNK = 25,			/**< only for client side data - not handled in Com_EParseValue */
 	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
 	V_MENUTEXTID,
 	V_BASEID,
@@ -254,10 +254,10 @@ typedef struct value_s {
 } value_t;
 
 #ifdef DEBUG
-int Com_ParseValueDebug(void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+int Com_EParseValueDebug(void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 #else
-int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
+int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
 const char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);

@@ -6031,7 +6031,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 				if (!*text)
 					return;
 
-				Com_ParseValue(s, token, vp->type, vp->ofs, vp->size);
+				Com_EParseValue(s, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string) {
@@ -6154,7 +6154,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(cp, token, vp->type, vp->ofs, vp->size);
+				Com_EParseValue(cp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!Q_strncmp(token, "salary", MAX_VAR)) {

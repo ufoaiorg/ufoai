@@ -197,7 +197,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)eventMail + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					break;
 				default:
-					Com_ParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
+					Com_EParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
 					break;
 				}
 				break;

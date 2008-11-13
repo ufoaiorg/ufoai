@@ -543,7 +543,7 @@ int SEQ_Camera (const char *name, char *data)
 		for (vp = seqCamera_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
-				Com_ParseValue(&seqCamera, data, vp->type, vp->ofs, vp->size);
+				Com_EParseValue(&seqCamera, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string)
@@ -589,7 +589,7 @@ int SEQ_Model (const char *name, char *data)
 		for (vp = seqEnt_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
-				Com_ParseValue(se, data, vp->type, vp->ofs, vp->size);
+				Com_EParseValue(se, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string) {
@@ -656,7 +656,7 @@ int SEQ_2Dobj (const char *name, char *data)
 					break;
 
 				default:
-					Com_ParseValue(s2d, data, vp->type, vp->ofs, vp->size);
+					Com_EParseValue(s2d, data, vp->type, vp->ofs, vp->size);
 					break;
 				}
 				break;

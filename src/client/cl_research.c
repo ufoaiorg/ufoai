@@ -2192,7 +2192,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
 								break;
 							default:
-								Com_ParseValue(mail, token, vp->type, vp->ofs, vp->size);
+								Com_EParseValue(mail, token, vp->type, vp->ofs, vp->size);
 							}
 							break;
 						}
@@ -2221,7 +2221,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
 							break;
 						default:
-							Com_ParseValue(tech, token, vp->type, vp->ofs, vp->size);
+							Com_EParseValue(tech, token, vp->type, vp->ofs, vp->size);
 						}
 						break;
 					}

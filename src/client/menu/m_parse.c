@@ -221,7 +221,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 						/* get the value */
 						action->data = mn.curadata;
-						mn.curadata += Com_ParseValue(mn.curadata, *token, ea_values[i], 0, 0);
+						mn.curadata += Com_EParseValue(mn.curadata, *token, ea_values[i], 0, 0);
 					}
 
 /*					Com_Printf("\n"); */
@@ -285,7 +285,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 /*				Com_Printf(" %s\n", *token); */
 
-				mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+				mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 
 				/* get next token */
 				*token = COM_EParse(text, errhead, NULL);
@@ -420,7 +420,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 				}
 				/* otherwise fall through */
 			default:
-				Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
+				Com_EParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
 				break;
 			}
 		}
@@ -450,12 +450,12 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
-			Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
+			Com_EParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
 		} else if (!Q_strcmp(*token, "size")) {
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
-			Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
+			Com_EParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 		}
 	} while (**token != '}');
 	if (node->excludeNum < MAX_EXLUDERECTS - 1)
@@ -484,7 +484,7 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 
 	/* get the value */
 	if (!(val->type & V_MENU_COPY)) {
-		if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
+		if (Com_EParseValue(node, *token, val->type, val->ofs, val->size) == -1)
 			Com_Printf("MN_ParseProperty: Wrong size for value %s (node %s.%s)\n", val->string, node->menu->name, node->name);
 	} else {
 		/* a reference to data is handled like this */
@@ -494,12 +494,12 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1)
 				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-			mn.curadata += Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0);
+			mn.curadata += Com_EParseValue(mn.curadata, *token, V_STRING, 0, 0);
 		} else {
 			/* sanity check */
 			if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
 				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-			mn.curadata += Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 		}
 	}
 
@@ -754,7 +754,7 @@ static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const 
 			*token = COM_EParse(text, errhead, menu->name);
 			if (!*text)
 				return qfalse;
-			Com_ParseValue(menu, *token, property->type, property->ofs, property->size);
+			Com_EParseValue(menu, *token, property->type, property->ofs, property->size);
 			found = qtrue;
 		} else {
 			Com_Printf("Invalid special menu value '%s'\n", *token);
@@ -893,7 +893,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 						if (*token == '#') {
 							menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qfalse;
 						} else {
-							Com_ParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].scale, token, V_VECTOR, 0, sizeof(vec3_t));
+							Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].scale, token, V_VECTOR, 0, sizeof(vec3_t));
 							menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qtrue;
 						}
 
@@ -907,7 +907,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 						if (*token == '#') {
 							menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qfalse;
 						} else {
-							Com_ParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].angles, token, V_VECTOR, 0, sizeof(vec3_t));
+							Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].angles, token, V_VECTOR, 0, sizeof(vec3_t));
 							menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qtrue;
 						}
 
@@ -921,7 +921,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 						if (*token == '#') {
 							menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qfalse;
 						} else {
-							Com_ParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].origin, token, V_VECTOR, 0, sizeof(vec3_t));
+							Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].origin, token, V_VECTOR, 0, sizeof(vec3_t));
 							menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qtrue;
 						}
 
@@ -937,7 +937,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 						Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
 						break;
 					default:
-						Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
+						Com_EParseValue(menuModel, token, v->type, v->ofs, v->size);
 					}
 				}
 				break;
