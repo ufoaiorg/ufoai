@@ -356,8 +356,6 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char **token, const char *errhead)
 {
-	const value_t *val;
-
 	/* get parameters */
 	*token = COM_EParse(text, errhead, node->name);
 	if (!*text)
@@ -369,7 +367,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 	*token = COM_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
-	if (**token != '{') {
+	if (*token[0] != '{') {
 		Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
 		return qfalse;
 	}
@@ -395,37 +393,44 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 	 */
 
 	do {
+		const value_t *property;
+
 		*token = COM_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
-		if (**token == '}')
+		if (*token[0] == '}')
 			break;
 
-		val = MN_FindPropertyByName(selectBoxValues, *token);
-		if (val) {
-			/* get parameter values */
-			*token = COM_EParse(text, errhead, node->name);
-			if (!*text)
+		property = MN_FindPropertyByName(selectBoxValues, *token);
+		if (!property) {
+			Com_Printf("MN_ParseOption: unknown options property: '%s' - ignore it\n", *token);
+			return qfalse;
+		}
+
+		/* get parameter values */
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+
+		if (property->type == V_TRANSLATION_MANUAL_STRING) {
+			if (property->size) {
+				/* selectbox values are static arrays */
+				char *target = ((char*)&mn.menuSelectBoxes[mn.numSelectBoxes] + property->ofs);
+				const char *translateableToken = *token;
+				if (translateableToken[0] == '_')
+					translateableToken++;
+				Q_strncpyz(target, translateableToken, property->size);
+			}
+			/* otherwise fall through */
+		} else {
+			int result;
+			size_t bytes;
+			result = Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, property->type, property->ofs, property->size, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("MN_ParseOption: Invalid value for property '%s': %s\n", property->string, Com_GetError());
 				return qfalse;
-			switch (val->type) {
-			case V_TRANSLATION_MANUAL_STRING:
-				if (val->size) {
-					/* selectbox values are static arrays */
-					char *target = ((char*)&mn.menuSelectBoxes[mn.numSelectBoxes] + val->ofs);
-					const char *translateableToken = *token;
-					if (*translateableToken == '_')
-						translateableToken++;
-					Q_strncpyz(target, translateableToken, val->size);
-					break;
-				}
-				/* otherwise fall through */
-			default:
-				Com_EParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, val->type, val->ofs, val->size);
-				break;
 			}
 		}
-		if (!val || !val->string)
-			Com_Printf("MN_ParseOption: unknown options value: '%s' - ignore it\n", *token);
 	} while (**token != '}');
 	MN_AddSelectboxOption(node);
 	return qtrue;
@@ -467,6 +472,8 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 
 static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const char **text, const char **token, const char *errhead)
 {
+	size_t bytes;
+	int result;
 	node->scriptValues = val;
 
 	/* Com_Printf("  %s", *token); */
@@ -484,22 +491,41 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 
 	/* get the value */
 	if (!(val->type & V_MENU_COPY)) {
-		if (Com_EParseValue(node, *token, val->type, val->ofs, val->size) == -1)
-			Com_Printf("MN_ParseProperty: Wrong size for value %s (node %s.%s)\n", val->string, node->menu->name, node->name);
+		result = Com_ParseValue(node, *token, val->type, val->ofs, val->size, &bytes);
+		if (result != RESULT_OK) {
+			Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
+			return qfalse;
+		}
 	} else {
 		/* a reference to data is handled like this */
 		*(byte **) ((byte *) node + val->ofs) = mn.curadata;
 		/* references are parsed as string */
 		if (**token == '*') {
 			/* sanity check */
-			if (strlen(*token) > MAX_VAR - 1)
+			if (strlen(*token) > MAX_VAR - 1) {
 				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-			mn.curadata += Com_EParseValue(mn.curadata, *token, V_STRING, 0, 0);
+				return qfalse;
+			}
+
+			result = Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
+				return qfalse;
+			}
+			mn.curadata += bytes;
 		} else {
 			/* sanity check */
-			if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1)
+			if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1) {
 				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+				return qfalse;
+			}
+
+			result = Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
+				return qfalse;
+			}
+			mn.curadata += bytes;
 		}
 	}
 
@@ -594,39 +620,40 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (!val && nodeBehaviourList[node->type].properties)
 			val = MN_FindPropertyByName(nodeBehaviourList[node->type].properties, *token);
 
-		/* is it a property */
-		if (val) {
-			/* if its not a special case */
-			if (!(val->type & V_SPECIAL)) {
-				result = MN_ParseProperty(node, val, text, token, errhead);
-				if (!result)
-					return qfalse;
-
-			/* is it an event property */
-			} else if (val->type == V_SPECIAL_ACTION) {
-				result = MN_ParseEventProperty(node, val, text, token, errhead);
-				if (!result)
-					return qfalse;
-				nextTokenAlreadyRead = qtrue;
-
-			} else if (val->type == V_SPECIAL_EXCLUDERECT) {
-				result = MN_ParseExcludeRect(node, text, token, errhead);
-				if (!result)
-					return qfalse;
-
-			/* for MN_SELECTBOX */
-			} else if (val->type == V_SPECIAL_OPTIONNODE) {
-				result = MN_ParseOption(node, text, token, errhead);
-				if (!result)
-					return qfalse;
-
-			} else {
-				/* unknown val->type !!!!! */
-				Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" ignored (node \"%s\", menu %s)\n", val->type, node->name, node->menu->name);
-			}
-		} else {
+		if (!val) {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
+			Com_Printf("MN_ParseNodeBody: unknown property \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
+			return qfalse;
+		}
+
+
+		/* if its not a special case */
+		if (!(val->type & V_SPECIAL)) {
+			result = MN_ParseProperty(node, val, text, token, errhead);
+			if (!result)
+				return qfalse;
+
+		/* is it an event property */
+		} else if (val->type == V_SPECIAL_ACTION) {
+			result = MN_ParseEventProperty(node, val, text, token, errhead);
+			if (!result)
+				return qfalse;
+			nextTokenAlreadyRead = qtrue;
+
+		} else if (val->type == V_SPECIAL_EXCLUDERECT) {
+			result = MN_ParseExcludeRect(node, text, token, errhead);
+			if (!result)
+				return qfalse;
+
+		/* for MN_SELECTBOX */
+		} else if (val->type == V_SPECIAL_OPTIONNODE) {
+			result = MN_ParseOption(node, text, token, errhead);
+			if (!result)
+				return qfalse;
+
+		} else {
+			/* unknown val->type !!!!! */
+			Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" ignored (node \"%s\", menu %s)\n", val->type, node->name, node->menu->name);
 			return qfalse;
 		}
 	} while (*text);
@@ -1109,7 +1136,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 			/* get the property */
 			val = MN_FindPropertyByName(nodeProperties, token);
 
-			if (!val || !val->type)
+			if (!val)
 				return NULL;
 
 			/* get the string */
