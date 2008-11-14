@@ -42,6 +42,7 @@ typedef enum mn_s {
 	MN_STRING,
 	MN_SPINNER,
 	MN_TEXT,
+	MN_TEXTENTRY,
 	MN_BAR,
 	MN_TBAR,
 	MN_MODEL,

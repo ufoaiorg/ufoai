@@ -134,8 +134,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define CPUSTRING	"NON-WIN32"
 #endif
 
-#include "common.h"
-
 #define MASTER_SERVER "http://ufoai.ninex.info/" /* sponsored by NineX */
 
 

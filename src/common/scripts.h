@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef SCRIPTS_H
+#define SCRIPTS_H
+
 /**
  * @brief conditions for V_IF
  */
@@ -258,7 +261,6 @@ int Com_EParseValueDebug(void *base, const char *token, valueTypes_t type, int o
 int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 #else
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
-int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
 const char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);
@@ -266,9 +268,6 @@ const char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);
 /*==============================================================
 SCRIPT PARSING
 ==============================================================*/
-
-#ifndef SCRIPTS_H
-#define SCRIPTS_H
 
 extern const char *name_strings[NAME_NUM_TYPES];
 

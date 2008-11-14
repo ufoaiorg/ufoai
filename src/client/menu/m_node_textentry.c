@@ -1,5 +1,5 @@
 /**
- * @file m_node_spinner.c
+ * @file m_node_textentry.c
  */
 
 /*
@@ -23,25 +23,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "m_nodes.h"
-#include "m_node_spinner.h"
+#include "m_node_textentry.h"
 
-static void MN_SpinnerClick (menuNode_t *node, int x, int y)
+static void MN_TextEntryClick (menuNode_t *node, int x, int y)
 {
 }
 
-static void MN_SpinnerNodeDraw (menuNode_t *node)
+static void MN_TextEntryNodeDraw (menuNode_t *node)
 {
 }
 
-static void MN_SpinnerNodeLoaded (menuNode_t *node)
+static void MN_TextEntryNodeLoaded (menuNode_t *node)
 {
 }
 
-void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
+void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 {
-	behaviour->name = "spinner";
-	behaviour->id = MN_SPINNER;
-	behaviour->leftClick = MN_SpinnerClick;
-	behaviour->draw = MN_SpinnerNodeDraw;
-	behaviour->loaded = MN_SpinnerNodeLoaded;
+	behaviour->name = "textentry";
+	behaviour->id = MN_TEXTENTRY;
+	behaviour->leftClick = MN_TextEntryClick;
+	behaviour->draw = MN_TextEntryNodeDraw;
+	behaviour->loaded = MN_TextEntryNodeLoaded;
 }

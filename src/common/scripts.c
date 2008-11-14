@@ -22,6 +22,7 @@
 
 
 #include "common.h"
+#include "scripts.h"
 #include "../game/inv_shared.h"
 #ifndef DEDICATED_ONLY
 #include "../client/client.h"
@@ -192,7 +193,7 @@ typedef enum {
  * @todo better doxygen documentation
  * @todo update sprintf for somthing checking COM_ERRORMESSAGE_SIZE
  */
-int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
+static int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
 {
 	byte *b;
 	int x, y, w, h;
@@ -528,27 +529,26 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 #endif
 {
 	size_t writedByte;
-	resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writedByte);
+	const resultStatus_t result = Com_ParseValue(base, token, type, ofs, size, &writedByte);
 	switch (result) {
-		case RESULT_ERROR:
+	case RESULT_ERROR:
 #ifdef DEBUG
-			Sys_Error("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
+		Sys_Error("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
 #else
-			Sys_Error("Com_EParseValue: %s\n", errorMessage);
+		Sys_Error("Com_EParseValue: %s\n", errorMessage);
 #endif
-			break;
-		case RESULT_WARNING:
+		break;
+	case RESULT_WARNING:
 #ifdef DEBUG
-			Com_Printf("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
+		Com_Printf("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
 #else
-			Com_Printf("Com_EParseValue: %s\n", errorMessage);
+		Com_Printf("Com_EParseValue: %s\n", errorMessage);
 #endif
-			break;
-		case RESULT_OK:
-			break;
+		break;
+	case RESULT_OK:
+		break;
 	}
 	return writedByte;
-
 }
 
 /**

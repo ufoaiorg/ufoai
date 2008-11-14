@@ -50,6 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_tab.h"
 #include "m_node_tbar.h"
 #include "m_node_text.h"
+#include "m_node_textentry.h"
 #include "m_node_windowpanel.h"
 
 extern menuNode_t *focusNode;
@@ -409,6 +410,7 @@ void MN_InitNodes (void)
 	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
 	MN_RegisterSpinnerNode(nodeBehaviourList + MN_SPINNER);
 	MN_RegisterTextNode(nodeBehaviourList + MN_TEXT);
+	MN_RegisterTextEntryNode(nodeBehaviourList + MN_TEXTENTRY);
 	MN_RegisterBarNode(nodeBehaviourList + MN_BAR);
 	MN_RegisterTBarNode(nodeBehaviourList + MN_TBAR);
 	MN_RegisterModelNode(nodeBehaviourList + MN_MODEL);
