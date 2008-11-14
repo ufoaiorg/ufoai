@@ -25,22 +25,22 @@ LIBTOOL_CC=$(LIBTOOL) --silent --mode=compile $(CC) -prefer-pic $(CFLAGS)
 # Target options
 
 ifeq ($(BUILD_DEBUG),1)
-    BUILDDIR=debug-$(TARGET_OS)-$(TARGET_CPU)
-    CFLAGS+=-ggdb -O0 -DDEBUG -fno-inline
+	BUILDDIR=debug-$(TARGET_OS)-$(TARGET_CPU)
+	CFLAGS+=-ggdb -O0 -DDEBUG -fno-inline
 	CPPFLAGS+=-ggdb -O0 -DDEBUG -fno-inline
 # -fvar-tracking
 else
-    BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
-    CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS) -O2
-    CPPFLAGS+=-DNDEBUG -O2
+	BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
+	CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS) -O2
+	CPPFLAGS+=-DNDEBUG -O2
 endif
 
 ifeq ($(PROFILING),1)
-    CFLAGS+=-pg
-    LNKFLAGS+=-pg
+	CFLAGS+=-pg
+	LNKFLAGS+=-pg
 endif
 
 ifeq ($(PARANOID),1)
-    CFLAGS+=-DPARANOID
+	CFLAGS+=-DPARANOID
 	CPPFLAGS+=-DPARANOID
 endif

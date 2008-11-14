@@ -40,6 +40,7 @@ typedef enum mn_s {
 	MN_ZONE,
 	MN_PIC,
 	MN_STRING,
+	MN_SPINNER,
 	MN_TEXT,
 	MN_BAR,
 	MN_TBAR,

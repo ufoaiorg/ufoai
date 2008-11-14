@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_radar.h"
 #include "m_node_selectbox.h"
 #include "m_node_string.h"
+#include "m_node_spinner.h"
 #include "m_node_tab.h"
 #include "m_node_tbar.h"
 #include "m_node_text.h"
@@ -406,6 +407,7 @@ void MN_InitNodes (void)
 	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoading, MN_ZONE);
 	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
 	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
+	MN_RegisterSpinnerNode(nodeBehaviourList + MN_SPINNER);
 	MN_RegisterTextNode(nodeBehaviourList + MN_TEXT);
 	MN_RegisterBarNode(nodeBehaviourList + MN_BAR);
 	MN_RegisterTBarNode(nodeBehaviourList + MN_TBAR);

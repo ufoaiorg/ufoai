@@ -342,6 +342,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_abstractvalue.h" />
+		<Unit filename="..\..\src\client\menu\m_node_spinner.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_spinner.h" />
 		<Unit filename="..\..\src\client\menu\m_node_bar.c">
 			<Option compilerVar="CC" />
 		</Unit>
