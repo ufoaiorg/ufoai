@@ -731,35 +731,44 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 
 static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const char **token, const char *errhead)
 {
-	qboolean found;
-
+	/* there are no menu properties */
 	if (*token[0] != '{') {
 		return qtrue;
 	}
 
-	do {
+	/* get new token */
+	*token = COM_EParse(text, errhead, menu->name);
+	if (!*text)
+		return qfalse;
+
+	while (*token[0] != '}') {
 		const value_t* property;
-		found = qfalse;
+		int result;
+		size_t bytes;
+
+		property = MN_FindPropertyByName(menuBehaviour.properties, *token);
+		if (!property) {
+			Com_Printf("Unknown menu property '%s' find\n", *token);
+			return qfalse;
+		}
+
 		/* get new token */
 		*token = COM_EParse(text, errhead, menu->name);
 		if (!*text)
 			return qfalse;
 
-		if (*token[0] == '}')
-			break;
-
-		property = MN_FindPropertyByName(menuBehaviour.properties, *token);
-		if (property) {
-			/* get new token */
-			*token = COM_EParse(text, errhead, menu->name);
-			if (!*text)
-				return qfalse;
-			Com_EParseValue(menu, *token, property->type, property->ofs, property->size);
-			found = qtrue;
-		} else {
-			Com_Printf("Invalid special menu value '%s'\n", *token);
+		/* check value */
+		result = Com_ParseValue(menu, *token, property->type, property->ofs, property->size, &bytes);
+		if (result != RESULT_OK) {
+			Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+			return qfalse;
 		}
-	} while (found);
+
+		/* get new token */
+		*token = COM_EParse(text, errhead, menu->name);
+		if (!*text)
+			return qfalse;
+	}
 
 	/* get new token */
 	*token = COM_EParse(text, errhead, menu->name);
@@ -966,7 +975,6 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	if (i < mn.numMenus) {
 		Com_Printf("MN_ParseMenus: menu \"%s\" with same name found, second ignored\n", name);
-		return;
 	}
 
 	if (mn.numMenus >= MAX_MENUS) {
@@ -1033,16 +1041,15 @@ void MN_ParseMenu (const char *name, const char **text)
 	}
 
 	if (!*text || *token != '{') {
-		Com_Printf("MN_ParseMenus: menu \"%s\" without body ignored\n", menu->name);
+		Com_Printf("MN_ParseMenu: menu \"%s\" without body ignored\n", menu->name);
 		mn.numMenus--;
 		return;
 	}
 
 	/* parse it's body */
 	if (!MN_ParseMenuBody(menu, text)) {
-		Com_Printf("MN_ParseMenus: menu \"%s\" with bad body ignored\n", menu->name);
-		mn.numMenus--;
-		return;
+		Sys_Error("MN_ParseMenu: menu \"%s\" have a bad body\n", menu->name);
+		return;	/* never reached */
 	}
 
 	MN_WindowNodeLoaded(menu);
