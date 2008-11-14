@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-10-26 09:08+0100\n"
-"PO-Revision-Date: 2008-10-26 19:39+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2008-11-14 15:38+0100\n"
+"Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,7 +63,7 @@ msgstr "Kleiner Wald"
 #: ../base/maps/forest.ump:350
 #, fuzzy
 msgid "Little bungalo in forest"
-msgstr "Sitters"
+msgstr "Kleines Bungalo im Wald"
 
 #: ../base/maps/forest.ump:380
 #, fuzzy
@@ -1350,7 +1350,7 @@ msgstr "Japanisch"
 
 #: ../base/ufos/language.ufo:262
 msgid "Chinese"
-msgstr ""
+msgstr "Chinesisch"
 
 #: ../base/ufos/language.ufo:270
 msgid "No language"
@@ -2857,7 +2857,7 @@ msgstr "Art:"
 #: ../base/ufos/menu_geoscape.ufo:1321
 #, fuzzy
 msgid "Build Time"
-msgstr "Bauen"
+msgstr "Bauzeit"
 
 #: ../base/ufos/menu_geoscape.ufo:1328
 msgid "Cost"
@@ -2919,7 +2919,7 @@ msgstr "Tankstelle"
 #: ../base/ufos/menu_geoscape.ufo:1783
 #, fuzzy
 msgid "Manage"
-msgstr "Reichweite"
+msgstr "Manage"
 
 #: ../base/ufos/menu_geoscape.ufo:1791
 #: client/cl_basemanagement.c:973
@@ -9170,9 +9170,24 @@ msgid "Live Specimen - Bloodspider"
 msgstr "Lebendes Exemplar - Blutspinne"
 
 #: ../base/ufos/research.ufo:3552
-#, fuzzy
 msgid "bloodspider_notes_txt"
-msgstr "TEXT"
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Antrag: Autopsiebericht -- Blutspinne\n"
+"\n"
+"\n"
+"Herr Kommandant,\n"
+"\n"
+"wir haben eine neue Art Spezies vom Schlachtfeld geborgen. Wir sollten sobald wie möglich Sezierung und Beurteilung beginnen.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor "
 
 #: ../base/ufos/research.ufo:3555
 msgid "bloodspider_notes_pre_txt"
@@ -12704,7 +12719,7 @@ msgstr "Basis %s wird angegriffen - Sie können die Basis betreten um die Ausrü
 #: client/cl_campaign.c:1472
 #, fuzzy, c-format
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"
-msgstr "Basis wird angegriffen - Sie können dieses Gebäude nicht betreten!"
+msgstr "Basis '%s' wird angegriffen - Sie können dieses Gebäude nicht betreten!"
 
 #: client/cl_campaign.c:1480
 msgid "Enter base"
@@ -13322,12 +13337,12 @@ msgstr "Gesichertes UFO vom Typ %s wurde zerstört."
 #: client/cl_installation.c:456
 #, fuzzy
 msgid "Installation destroyed"
-msgstr "Tankstelle"
+msgstr "Gebäude wurde zerstört"
 
 #: client/cl_installation.c:478
 #, fuzzy
 msgid "Destroy Installation"
-msgstr "Tankstelle"
+msgstr "Gebäude zerströren"
 
 #: client/cl_installation.c:478
 #, fuzzy
@@ -13577,7 +13592,7 @@ msgstr "Basis"
 #: client/cl_map.c:357
 #, fuzzy
 msgid "Installation"
-msgstr "Tankstelle"
+msgstr "Gebäude"
 
 #: client/cl_map.c:1472
 msgid "Day"
@@ -13755,9 +13770,8 @@ msgid "Items"
 msgstr "Gegenstände"
 
 #: client/cl_mapfightequip.c:1214
-#, fuzzy
 msgid "Ammo"
-msgstr "Rüstung"
+msgstr "Munition"
 
 #: client/cl_mapfightequip.c:1218
 msgid "Unknown"
@@ -13857,7 +13871,7 @@ msgstr "Verfügbare Ausrüstung"
 #: client/cl_market.c:523
 #, fuzzy
 msgid "Tanks"
-msgstr "Transfer"
+msgstr "Panzer"
 
 #: client/cl_market.c:526
 msgid "Disassembling"
@@ -13969,7 +13983,7 @@ msgstr "Zufrieden"
 
 #: client/cl_nation.c:126
 msgid "Pleased"
-msgstr "Befriedigt"
+msgstr "Erfreut"
 
 #: client/cl_nation.c:128
 msgid "Happy"
