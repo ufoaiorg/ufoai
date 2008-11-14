@@ -256,6 +256,12 @@ typedef struct value_s {
 	const size_t size;
 } value_t;
 
+typedef enum {
+	RESULT_ERROR = -1,
+	RESULT_WARNING = -2,
+	RESULT_OK = 0
+} resultStatus_t;
+
 #ifdef DEBUG
 int Com_EParseValueDebug(void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
@@ -264,6 +270,8 @@ int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, s
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
 const char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);
+const char *Com_GetError(void);
+int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte);
 
 /*==============================================================
 SCRIPT PARSING

@@ -179,11 +179,14 @@ CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 #define COM_ERRORMESSAGE_SIZE 256
 static char errorMessage[COM_ERRORMESSAGE_SIZE];
 
-typedef enum {
-	RESULT_ERROR = -1,
-	RESULT_WARNING = -2,
-	RESULT_OK = 0
-} resultStatus_t;
+/**
+ * Return the last error message
+ * @return adresse containe the last message
+ */
+const char* Com_GetError ()
+{
+	return errorMessage;
+}
 
 /**
  * Parse a value
@@ -192,8 +195,9 @@ typedef enum {
  * @note instead of , this function separate error message and write byte result
  * @todo better doxygen documentation
  * @todo update sprintf for somthing checking COM_ERRORMESSAGE_SIZE
+ * @todo improve check (remove atoi and atof, check 'true' value, but 'false' too)
  */
-static int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
+int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
 {
 	byte *b;
 	int x, y, w, h;
