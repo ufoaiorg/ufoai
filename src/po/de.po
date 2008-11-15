@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-10-26 09:08+0100\n"
-"PO-Revision-Date: 2008-11-14 15:38+0100\n"
+"PO-Revision-Date: 2008-11-15 12:56+0100\n"
 "Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1365,8 +1365,9 @@ msgstr "Industrie"
 #: ../base/ufos/maps.ufo:95
 #: ../base/ufos/maps.ufo:128
 #: ../base/ufos/maps.ufo:162
+#, fuzzy
 msgid "A suburban district of an oriental area."
-msgstr ""
+msgstr "Ein Vorstadts Bezirk eines oriantalischen Gebiets"
 
 #: ../base/ufos/maps.ufo:197
 #: ../base/ufos/maps.ufo:232
@@ -1378,7 +1379,7 @@ msgstr ""
 #: ../base/ufos/maps.ufo:374
 #: ../base/ufos/maps.ufo:408
 msgid "An industrial area in a cold region."
-msgstr ""
+msgstr "Ein Industrie-Areal in einer kalten Region"
 
 #: ../base/ufos/maps.ufo:342
 msgid "An underpopulated area in a cold region."
@@ -1404,16 +1405,18 @@ msgid "A peaceful neighborhood on the outskirts of a centre of population."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:677
+#, fuzzy
 msgid "An excavation site that has fallen under alien attack."
-msgstr ""
+msgstr "Eine Ausgrabungsstätte die unter Alienangriff steht."
 
 #: ../base/ufos/maps.ufo:719
+#, fuzzy
 msgid "An estate owned by rich and influential people."
-msgstr ""
+msgstr "Ein Anwesen von Reichen und Einflusshabenden Leuten"
 
 #: ../base/ufos/maps.ufo:758
 msgid "A small office in a mountainous region."
-msgstr ""
+msgstr "Ein kleines Büro in einer Bergreichen Gegend"
 
 #: ../base/ufos/maps.ufo:799
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
@@ -1437,7 +1440,7 @@ msgstr "Ein hydroelektrischer Damm, der durch außerirdische Eindringlinge bedro
 
 #: ../base/ufos/maps.ufo:1005
 msgid "A classic eastern suburban area."
-msgstr ""
+msgstr "Eine klassiche Vorortliche Gegend"
 
 #: ../base/ufos/maps.ufo:1044
 msgid "A small industrial area."
@@ -1471,7 +1474,7 @@ msgstr ""
 #: ../base/ufos/maps.ufo:1451
 #: ../base/ufos/maps.ufo:1490
 msgid "An urban district in an oriental region."
-msgstr ""
+msgstr "Ein Stadtbezirk einer orientalischen Region"
 
 #: ../base/ufos/maps.ufo:1529
 msgid "A subway station in a suburban part of town."
@@ -1500,7 +1503,7 @@ msgstr "Ein sich im Bau befindlicher Bürokomplex."
 
 #: ../base/ufos/maps.ufo:1815
 msgid "A local harbor."
-msgstr ""
+msgstr "Ein lokaler Hafen."
 
 #: ../base/ufos/maps.ufo:1855
 msgid "An office complex on the outskirts of town."
@@ -1536,7 +1539,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:2200
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
+msgstr "Ein Labor in dem Ufowrackteile untersucht werden."
 
 #: ../base/ufos/maps.ufo:2241
 msgid "A fuel depot the aliens try to destroy."
@@ -2725,8 +2728,9 @@ msgid "Exit combat zoom mode"
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:630
+#, fuzzy
 msgid "Toggle between full zoom and half zoom"
-msgstr ""
+msgstr "Umschalten zwischen Total- und Halbzoom"
 
 #: ../base/ufos/menu_geoscape.ufo:687
 #: ../base/ufos/menu_geoscape.ufo:769
@@ -10583,7 +10587,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4525
 msgid "XVI Census"
-msgstr ""
+msgstr "XVI Census"
 
 #: ../base/ufos/research.ufo:4530
 msgid "xvi_census_txt"
@@ -11584,7 +11588,7 @@ msgstr "Doppelschuss"
 #: ../base/ufos/weapons_melee.ufo:181
 #, fuzzy
 msgid "Bludgeon"
-msgstr "Klinge"
+msgstr "Schlagstock"
 
 #: ../base/ufos/weapons_melee.ufo:204
 msgid "Kerrblade"
@@ -12302,8 +12306,9 @@ msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
 #: client/cl_aircraft.c:1340
+#, fuzzy
 msgid "Insufficient fuel."
-msgstr ""
+msgstr "Ungenügend Benzin."
 
 #: client/cl_airfight.c:387
 msgid "Our aircraft has no more ammo left - returning to home base now."
@@ -13332,7 +13337,7 @@ msgstr "Max. Anzahl Basen erreicht."
 #: client/cl_installation.c:455
 #, fuzzy, c-format
 msgid "Installation %s was destroyed."
-msgstr "Gesichertes UFO vom Typ %s wurde zerstört."
+msgstr "Gebäude %s wurde zerstört."
 
 #: client/cl_installation.c:456
 #, fuzzy
@@ -15704,9 +15709,9 @@ msgid "Target zone is occupied\n"
 msgstr ""
 
 #: game/g_spawn.c:837
-#, c-format
+#, fuzzy, c-format
 msgid "Mission won for team %i\n"
-msgstr ""
+msgstr "Missionssieg für Team %i/n"
 
 #: po/OTHER_STRINGS:2
 msgid "human"
