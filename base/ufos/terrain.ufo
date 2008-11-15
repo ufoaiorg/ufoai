@@ -245,6 +245,10 @@ terrain tex_buildings/floor002 {
 // tex_buildings/floor002 estate
 }
 
+terrain tex_misc/wood_palet {
+// tex_misc/wood_palet dam
+}
+
 // ==========================
 //  S T O N E
 // ==========================
@@ -284,6 +288,31 @@ terrain tex_buildings/floor003 {
 	footstepsound "footsteps/stone1"
 }
 
+terrain tex_buildings/concrete004 {
+// tex_buildings/concrete004 estate industrial
+	footstepsound "footsteps/stone1"
+}
+
+terrain tex_buildings/wall019 {
+// tex_buildings/wall019 it_main
+	footstepsound "footsteps/stone1"
+}
+
+terrain tex_buildings/wall_se12 {
+// tex_buildings/wall_se12 it_main
+	footstepsound "footsteps/stone1"
+}
+
+terrain tex_base/wall001 {
+// tex_base/wall001 dam
+	footstepsound "footsteps/stone1"
+}
+
+terrain tex_buildings_snow/concrete001 {
+// tex_buildings_snow/concrete001 uc_d03 uc_d01 industrial
+	footstepsound "footsteps/stone1"
+}
+
 // ==========================
 //  P O T T E R Y
 // ==========================
@@ -320,6 +349,10 @@ terrain tex_buildings/roof003 {
 
 // roof with gravel
 terrain tex_buildings/floor005 {
+}
+
+terrain tex_buildings/roof006 {
+// tex_buildings/roof006 industrial
 }
 
 // ==========================
@@ -473,6 +506,9 @@ terrain tex_buildings/carpet005 {
 }
 terrain tex_furniture/jap_carpet001 {
 }
+terrain tex_furniture/jap_carpet002 {
+// tex_furniture/jap_carpet002 estate
+}
 terrain tex_carpets/carpet140 {
 }
 
@@ -511,6 +547,10 @@ terrain tex_buildings/floor017 {
 	footstepsound "footsteps/step_3"
 }
 
+terrain tex_material/metall009 {
+// tex_material/metall009 st_i01 industrial
+}
+
 // ==========================
 //  H E L I P A D
 // ==========================
@@ -538,49 +578,4 @@ terrain tex_nature/snow002 {
 ###
 # Not sorted, added by footstepper.sh
 ###
-
-terrain tex_buildings/concrete004 {
-// tex_buildings/concrete004 estate industrial
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_buildings/roof006 {
-// tex_buildings/roof006 industrial
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_buildings_snow/concrete001 {
-// tex_buildings_snow/concrete001 uc_d03 uc_d01 industrial
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_material/metall009 {
-// tex_material/metall009 st_i01 industrial
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_buildings/wall019 {
-// tex_buildings/wall019 it_main
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_buildings/wall_se12 {
-// tex_buildings/wall_se12 it_main
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_furniture/jap_carpet002 {
-// tex_furniture/jap_carpet002 estate
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_base/wall001 {
-// tex_base/wall001 dam
-footstepsound "footsteps/water_in"
-}
-
-terrain tex_misc/wood_palet {
-// tex_misc/wood_palet dam
-footstepsound "footsteps/water_in"
-}
 
