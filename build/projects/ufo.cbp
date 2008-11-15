@@ -78,6 +78,9 @@
 					<Add option="`curl-config --libs`" />
 					<Add library="GL" />
 				</Linker>
+				<ExtraCommands>
+					<Add after="cd ../..; make lang" />
+				</ExtraCommands>
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
@@ -123,6 +126,19 @@
 			<Add library="png" />
 			<Add library="curl" />
 		</Linker>
+		<Unit filename="../../Makefile.in" />
+		<Unit filename="../../base/autoexec.cfg" />
+		<Unit filename="../../base/dedicated.cfg" />
+		<Unit filename="../../base/default.cfg" />
+		<Unit filename="../../base/entities.def" />
+		<Unit filename="../../base/shaders/bump_fs.glsl" />
+		<Unit filename="../../base/shaders/bump_vs.glsl" />
+		<Unit filename="../../base/shaders/default_fs.glsl" />
+		<Unit filename="../../base/shaders/default_vs.glsl" />
+		<Unit filename="../../base/shaders/light_fs.glsl" />
+		<Unit filename="../../base/shaders/light_vs.glsl" />
+		<Unit filename="../../base/shaders/warp_fs.glsl" />
+		<Unit filename="../../base/shaders/warp_vs.glsl" />
 		<Unit filename="../../base/ufos/aircraftmanagement.ufo" />
 		<Unit filename="../../base/ufos/alientype_missions.ufo" />
 		<Unit filename="../../base/ufos/armour.ufo" />
@@ -202,6 +218,20 @@
 		<Unit filename="../../base/ufos/weapons_particle.ufo" />
 		<Unit filename="../../base/ufos/weapons_plasma.ufo" />
 		<Unit filename="../../base/ufos/weapons_ugv.ufo" />
+		<Unit filename="../client.mk" />
+		<Unit filename="../data.mk" />
+		<Unit filename="../defs.mk" />
+		<Unit filename="../game.mk" />
+		<Unit filename="../install.mk" />
+		<Unit filename="../lang.mk" />
+		<Unit filename="../maps.mk" />
+		<Unit filename="../pk3_def.mk" />
+		<Unit filename="../platform_specific.mk" />
+		<Unit filename="../radiant.mk" />
+		<Unit filename="../server.mk" />
+		<Unit filename="../tools.mk" />
+		<Unit filename="../various.mk" />
+		<Unit filename="../../configure.ac" />
 		<Unit filename="../../src/client/cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
