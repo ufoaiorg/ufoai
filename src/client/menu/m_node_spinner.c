@@ -36,18 +36,18 @@ static const int SPINNER_HEIGHT = 19;
 static const int BUTTON_TOP_SIZE = 9;
 static const int BUTTON_BOTTOM_SIZE = 10;
 
-static void MN_SpinnerNodeClick (menuNode_t *node, int x, int y)
+/**
+ * @brief change the value of the spinner of one step
+ * @param[in] node Spinner to change
+ * @param[in] down Direction of the step (if down is true, decrease the value)
+ */
+static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 {
 	float value = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
 	const float last = value;
 	const float delta = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.delta);
 
-	if (node->disabled)
-		return;
-
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
-
-	if (y < BUTTON_TOP_SIZE) {
+	if (!down) {
 		const float max = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.max);
 		if (value + delta <= max) {
 			value += delta;
@@ -73,6 +73,23 @@ static void MN_SpinnerNodeClick (menuNode_t *node, int x, int y)
 	} else {
 		*(float*) node->u.abstractvalue.value = value;
 	}
+}
+
+static void MN_SpinnerNodeClick (menuNode_t *node, int x, int y)
+{
+	/** @todo remove that when the input handler is updated */
+	if (node->disabled)
+		return;
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	MN_SpinnerNodeStep(node, y >= BUTTON_TOP_SIZE);
+}
+
+static void MN_SpinnerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	/** @todo remove that when the input handler is updated */
+	if (node->disabled)
+		return;
+	MN_SpinnerNodeStep(node, down);
 }
 
 static void MN_SpinnerNodeDraw (menuNode_t *node)
@@ -144,8 +161,8 @@ void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 	/* overwrite */
 	behaviour->name = "spinner";
 	behaviour->id = MN_SPINNER;
-	/** @todo Implement wheel support */
 	behaviour->leftClick = MN_SpinnerNodeClick;
+	behaviour->mouseWheel = MN_SpinnerNodeWheel;
 	behaviour->draw = MN_SpinnerNodeDraw;
 	behaviour->loaded = MN_SpinnerNodeLoaded;
 }
