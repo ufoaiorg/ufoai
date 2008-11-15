@@ -89,7 +89,7 @@ void RS_ResearchFinish (technology_t* tech)
 	/* send a new message and add it to the mailclient */
 	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->type != RS_LOGIC)) {
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Research finished"), mn.messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
+		MSO_CheckAddNewMessage( NT_RESEARCH_COMPLETED, _("Research finished"), mn.messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
 	}
 }
@@ -124,7 +124,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Unknown Technology researchable"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED, _("Unknown Technology researchable"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
@@ -442,7 +442,7 @@ void RS_MarkCollected (technology_t* tech)
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		if (tech->statusResearch < RS_FINISH) {
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-			MN_AddNewMessage(_("Unknown Technology found"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+			MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED,_("Unknown Technology found"), mn.messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
@@ -1513,8 +1513,9 @@ void RS_ResearchRun (void)
 			RS_UpdateData(checkBases[i], qfalse);
 	}
 
-	if (newResearch)
+/*	if (newResearch)
 		CL_GameTimeStop();
+		*/
 }
 
 #ifdef DEBUG

@@ -15,3 +15,15 @@ msgcategory "_installation_construction" {
 	installation_build_finished
 	installation_destroyed
 }
+
+msgcategory "_research" {
+	research_new_proposed
+	research_completed
+	}
+
+msgcategory "_production" {
+	production_started
+	production_finished
+	production_failed
+	production_queue_empty
+	}

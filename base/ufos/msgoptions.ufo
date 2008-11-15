@@ -19,4 +19,18 @@ msgoptions default
 	installation_build_finished notify
 	installation_build_finished sound
 	installation_build_finished pause
+	research_new_proposed notify
+	research_new_proposed pause
+	research_new_proposed sound
+	research_completed notify
+	research_completed pause
+	research_completed sound
+	production_started notify
+	production_finished notify
+	production_finished pause
+	production_finished sound
+	production_failed notify
+	production_queue_empty notify
+	production_queue_empty sound
+	production_queue_empty pause
 }
