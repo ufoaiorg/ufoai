@@ -891,17 +891,17 @@ menu team
 	}
 
 	pic hp_bdr    { pos "704 374" image menu/bar_border align ul_rsl }
-	bar hp_bar
+	tbar hp_bar
 	{
 		if "mn_show_employee == 1"
 		current	"*cvar mn_vhp"
 		max	"*cvar mn_vhpmax"
-		size "242 5"
-		pos "718 380"
+		pos "707 374"
 		align ul_rsl
-		color   "1 0 0 1"
-		// texl "3 0"
-		// image menu/bar_health
+		point_width 2.2
+		gap_width 3
+		texl "3 0"
+		image menu/bar_health
 	}
 
 	string	missions_lbl { pos "700 394" string "_Missions Performed:" }

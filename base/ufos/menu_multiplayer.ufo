@@ -833,6 +833,7 @@ menu mp_create_server
 		string	"_Make sure that you've opened the TCP port 27910 in your firewall settings"
 		pos		"-207 150"
 		size	"256 40"
+		longlines	wrap
 		align	uc
 		font	"f_small"
 	}

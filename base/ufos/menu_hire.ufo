@@ -657,7 +657,7 @@ menu employees
 	tbar hp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "707 374"  align ul_rsl texl "3 0" image menu/bar_health
+		pos "707 374" current	"*cvar mn_vhp" max "*cvar mn_vhpmax" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health
 	}
 
 	string	missions_lbl
