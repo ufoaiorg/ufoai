@@ -173,7 +173,6 @@ void MN_WindowNodeLoaded (menu_t *menu)
 static const value_t windowNodeProperties[] = {
 	{"noticepos", V_POS, offsetof(menu_t, noticePos), MEMBER_SIZEOF(menu_t, noticePos)},
 	{"pos", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
-	{"origin", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
 	{"size", V_POS, offsetof(menu_t, size), MEMBER_SIZEOF(menu_t, size)},
 	{"dragbutton", V_BOOL, offsetof(menu_t, dragButton), MEMBER_SIZEOF(menu_t, dragButton)},
 	{"closebutton", V_BOOL, offsetof(menu_t, closeButton), MEMBER_SIZEOF(menu_t, closeButton)},
