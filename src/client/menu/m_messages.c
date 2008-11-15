@@ -653,8 +653,8 @@ static void MSO_Scroll_f (void)
 
 	messageList_scroll = textNode->textScroll;
 
-	if (messageList_scroll >= NT_NUM_NOTIFYTYPE - MAX_MESSAGESETTINGS_ENTRIES) {
-		messageList_scroll = NT_NUM_NOTIFYTYPE - MAX_MESSAGESETTINGS_ENTRIES;
+	if (messageList_scroll >= NT_NUM_NOTIFYTYPE - MAX_MESSAGESETTINGS_ENTRIES + gd.numMsgCategories) {
+		messageList_scroll = NT_NUM_NOTIFYTYPE - MAX_MESSAGESETTINGS_ENTRIES + gd.numMsgCategories;
 		textNode->textScroll = messageList_scroll;
 	}
 
