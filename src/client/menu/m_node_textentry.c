@@ -35,6 +35,9 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 
 static void MN_TextEntryNodeLoaded (menuNode_t *node)
 {
+	node->padding = 8;
+	node->textalign = ALIGN_LC;
+	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
 void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)

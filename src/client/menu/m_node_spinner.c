@@ -75,7 +75,7 @@ static void MN_SpinnerNodeClick (menuNode_t *node, int x, int y)
 		if (v == last)
 			return; /* bullshit */
 	} else {
-		/* @todo check it, i am not sure, is it *float or float? */
+		/** @todo check it, i am not sure, is it *float or float? */
 		*(float*) node->u.abstractvalue.value = value;
 	}
 }
