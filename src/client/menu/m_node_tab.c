@@ -55,7 +55,7 @@ selectBoxOptions_t* MN_AddTabOption (menuNode_t *node)
 {
 	selectBoxOptions_t *tabOption;
 
-	assert(node->type == MN_TAB);
+	assert(node->behaviour->id == MN_TAB);
 
 	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
 		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");

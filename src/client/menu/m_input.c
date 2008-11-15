@@ -165,8 +165,8 @@ void MN_MouseMove (int x, int y)
 
 	/* send the captured move mouse event */
 	if (capturedNode) {
-		if (nodeBehaviourList[capturedNode->type].capturedMouseMove)
-			nodeBehaviourList[capturedNode->type].capturedMouseMove(capturedNode, x, y);
+		if (capturedNode->behaviour->capturedMouseMove)
+			capturedNode->behaviour->capturedMouseMove(capturedNode, x, y);
 		return;
 	}
 
@@ -223,8 +223,8 @@ void MN_MouseMove (int x, int y)
 	oldMouseOverTest = mouseOverTest;
 
 	/* send the move event */
-	if (mouseOverTest && nodeBehaviourList[mouseOverTest->type].mouseMove) {
-		nodeBehaviourList[mouseOverTest->type].mouseMove(mouseOverTest, x, y);
+	if (mouseOverTest && mouseOverTest->behaviour->mouseMove) {
+		mouseOverTest->behaviour->mouseMove(mouseOverTest, x, y);
 	}
 }
 
@@ -254,14 +254,14 @@ void MN_LeftClick (int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (nodeBehaviourList[capturedNode->type].leftClick)
-			nodeBehaviourList[capturedNode->type].leftClick(capturedNode, x, y);
+		if (capturedNode->behaviour->leftClick)
+			capturedNode->behaviour->leftClick(capturedNode, x, y);
 		return;
 	}
 
 	if (mn_debugmenu->integer == 2 && mouseOverTest) {
 		node = mouseOverTest;
-		if (mouseSpace == MS_DRAGITEM && node->type == MN_CONTAINER && dragInfo.item.t) {
+		if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
 			int itemX = 0;
 			int itemY = 0;
 
@@ -281,8 +281,8 @@ void MN_LeftClick (int x, int y)
 			mouseOver = MN_CheckNodeZone(node, x, y) || MN_CheckNodeZone(node, x - itemX, y - itemY);
 		}
 
-		if (nodeBehaviourList[node->type].leftClick) {
-			nodeBehaviourList[node->type].leftClick(node, x, y);
+		if (node->behaviour->leftClick) {
+			node->behaviour->leftClick(node, x, y);
 		} else {
 			MN_ExecuteActions(node->menu, node->click);
 		}
@@ -303,11 +303,11 @@ void MN_LeftClick (int x, int y)
 		}
 
 		for (node = menu->firstChild; node; node = node->next) {
-			if (!nodeBehaviourList[node->type].leftClick && !node->click)
+			if (!node->behaviour->leftClick && !node->click)
 				continue;
 
 			/* check whether mouse is over this node */
-			if (mouseSpace == MS_DRAGITEM && node->type == MN_CONTAINER && dragInfo.item.t) {
+			if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
 				int itemX = 0;
 				int itemY = 0;
 
@@ -336,14 +336,14 @@ void MN_LeftClick (int x, int y)
 			insideNode = qtrue;
 
 			/* found a node -> do actions */
-			if (nodeBehaviourList[node->type].leftClick) {
-				nodeBehaviourList[node->type].leftClick(node, x, y);
+			if (node->behaviour->leftClick) {
+				node->behaviour->leftClick(node, x, y);
 			} else {
 				/* Save the action for later execution. */
 				if (node->click && (node->click->type != EA_NULL))
 					execute_node = node;
 			}
-			if (node->type == MN_TEXT) {
+			if (node->behaviour->id == MN_TEXT) {
 				execute_node = node;
 				mn.mouseRepeat.textLine = MN_TextNodeGetLine(node, x, y);
 			}
@@ -368,7 +368,7 @@ void MN_LeftClick (int x, int y)
 				mn.mouseRepeat.menu = menu;
 				mn.mouseRepeat.action = execute_node->click;
 			}
-			if (execute_node->type != MN_TEXT)
+			if (execute_node->behaviour->id != MN_TEXT)
 				MN_ExecuteActions(menu, execute_node->click);
 		}
 
@@ -396,14 +396,14 @@ void MN_RightClick (int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (nodeBehaviourList[capturedNode->type].rightClick)
-			nodeBehaviourList[capturedNode->type].rightClick(capturedNode, x, y);
+		if (capturedNode->behaviour->rightClick)
+			capturedNode->behaviour->rightClick(capturedNode, x, y);
 		return;
 	}
 
 	if (mn_debugmenu->integer == 2 && mouseOverTest) {
-		if (nodeBehaviourList[mouseOverTest->type].rightClick) {
-			nodeBehaviourList[mouseOverTest->type].rightClick(mouseOverTest, x, y);
+		if (mouseOverTest->behaviour->rightClick) {
+			mouseOverTest->behaviour->rightClick(mouseOverTest, x, y);
 		} else {
 			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->rclick);
 		}
@@ -425,7 +425,7 @@ void MN_RightClick (int x, int y)
 
 		for (node = menu->firstChild; node; node = node->next) {
 			/* no right click for this node defined */
-			if (!nodeBehaviourList[node->type].rightClick && !node->rclick)
+			if (!node->behaviour->rightClick && !node->rclick)
 				continue;
 
 			/* check whether mouse if over this node */
@@ -436,8 +436,8 @@ void MN_RightClick (int x, int y)
 			insideNode = qtrue;
 
 			/* found a node -> do actions */
-			if (nodeBehaviourList[node->type].rightClick) {
-				nodeBehaviourList[node->type].rightClick(node, x, y);
+			if (node->behaviour->rightClick) {
+				node->behaviour->rightClick(node, x, y);
 			} else {
 				MN_ExecuteActions(menu, node->rclick);
 			}
@@ -461,14 +461,14 @@ void MN_MiddleClick (int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (nodeBehaviourList[capturedNode->type].middleClick)
-			nodeBehaviourList[capturedNode->type].middleClick(capturedNode, x, y);
+		if (capturedNode->behaviour->middleClick)
+			capturedNode->behaviour->middleClick(capturedNode, x, y);
 		return;
 	}
 
 	if (mn_debugmenu->integer == 2 && mouseOverTest) {
-		if (nodeBehaviourList[mouseOverTest->type].middleClick) {
-			nodeBehaviourList[mouseOverTest->type].middleClick(mouseOverTest, x, y);
+		if (mouseOverTest->behaviour->middleClick) {
+			mouseOverTest->behaviour->middleClick(mouseOverTest, x, y);
 		} else {
 			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->mclick);
 		}
@@ -489,7 +489,7 @@ void MN_MiddleClick (int x, int y)
 
 		for (node = menu->firstChild; node; node = node->next) {
 			/* no middle click for this node defined */
-			if (!nodeBehaviourList[node->type].middleClick && !node->mclick)
+			if (!node->behaviour->middleClick && !node->mclick)
 				continue;
 
 			insideNode = qtrue;
@@ -500,8 +500,8 @@ void MN_MiddleClick (int x, int y)
 				continue;
 
 			/* found a node -> do actions */
-			if (nodeBehaviourList[node->type].middleClick) {
-				nodeBehaviourList[node->type].middleClick(node, x, y);
+			if (node->behaviour->middleClick) {
+				node->behaviour->middleClick(node, x, y);
 			} else {
 				MN_ExecuteActions(menu, node->mclick);
 			}
@@ -534,14 +534,14 @@ void MN_MouseWheel (qboolean down, int x, int y)
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
-		if (nodeBehaviourList[capturedNode->type].mouseWheel)
-			nodeBehaviourList[capturedNode->type].mouseWheel(capturedNode, down, x, y);
+		if (capturedNode->behaviour->mouseWheel)
+			capturedNode->behaviour->mouseWheel(capturedNode, down, x, y);
 		return;
 	}
 
 	if (mn_debugmenu->integer == 2 && mouseOverTest) {
-		if (nodeBehaviourList[mouseOverTest->type].mouseWheel) {
-			nodeBehaviourList[mouseOverTest->type].mouseWheel(mouseOverTest, down, x, y);
+		if (mouseOverTest->behaviour->mouseWheel) {
+			mouseOverTest->behaviour->mouseWheel(mouseOverTest, down, x, y);
 		} else {
 			if (mouseOverTest->wheelUp && mouseOverTest->wheelDown)
 				MN_ExecuteActions(mouseOverTest->menu, (down ? mouseOverTest->wheelDown : mouseOverTest->wheelUp));
@@ -565,7 +565,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 
 		for (node = menu->firstChild; node; node = node->next) {
 			/* both wheelUp & wheelDown required */
-			if (!nodeBehaviourList[node->type].mouseWheel && !node->wheel && !(node->wheelUp && node->wheelDown))
+			if (!node->behaviour->mouseWheel && !node->wheel && !(node->wheelUp && node->wheelDown))
 				continue;
 
 			/* check whether mouse if over this node */
@@ -576,8 +576,8 @@ void MN_MouseWheel (qboolean down, int x, int y)
 			insideNode = qtrue;
 
 			/* found a node -> do actions */
-			if (nodeBehaviourList[node->type].mouseWheel) {
-				nodeBehaviourList[node->type].mouseWheel(node, down, x, y);
+			if (node->behaviour->mouseWheel) {
+				node->behaviour->mouseWheel(node, down, x, y);
 			} else {
 				if (node->wheelUp && node->wheelDown)
 					MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
@@ -613,8 +613,8 @@ void MN_MouseDown (int x, int y, int button)
 	if (node == NULL)
 		return;
 
-	if (nodeBehaviourList[node->type].mouseDown)
-		nodeBehaviourList[node->type].mouseDown(node, x, y, button);
+	if (node->behaviour->mouseDown)
+		node->behaviour->mouseDown(node, x, y, button);
 }
 
 /**
@@ -640,6 +640,6 @@ void MN_MouseUp (int x, int y, int button)
 	if (node == NULL)
 		return;
 
-	if (nodeBehaviourList[node->type].mouseUp)
-		nodeBehaviourList[node->type].mouseUp(node, x, y, button);
+	if (node->behaviour->mouseUp)
+		node->behaviour->mouseUp(node, x, y, button);
 }

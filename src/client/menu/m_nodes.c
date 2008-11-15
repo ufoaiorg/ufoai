@@ -68,7 +68,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
 
 	/* if we request the position of an undrawable node, there is a problem */
-	if (nodeBehaviourList[node->type].isVirtual)
+	if (node->behaviour->isVirtual)
 		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
 
 	Vector2Set(pos, node->menu->pos[0] + node->pos[0], node->menu->pos[1] + node->pos[1]);
@@ -87,7 +87,7 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 	assert(y != NULL);
 
 	/* if we request the position of an undrawable node, there is a problem */
-	if (nodeBehaviourList[node->type].isVirtual)
+	if (node->behaviour->isVirtual)
 		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
 
 	*x -= node->menu->pos[0] + node->pos[0];
@@ -151,7 +151,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	vec2_t nodepos;
 
 	/* skip all unactive nodes */
-	if (nodeBehaviourList[node->type].isVirtual)
+	if (node->behaviour->isVirtual)
 		return qfalse;
 
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
@@ -165,7 +165,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qfalse;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	switch (node->type) {
+	switch (node->behaviour->id) {
 	case MN_CONTAINER:
 #if 0
 		MN_FindContainer(node);
@@ -277,7 +277,7 @@ menuNode_t* MN_AllocNode (int type)
 	if (mn.numNodes >= MAX_MENUNODES)
 		Sys_Error("MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
-	node->type = type;
+	node->behaviour = &nodeBehaviourList[type];
 	return node;
 }
 

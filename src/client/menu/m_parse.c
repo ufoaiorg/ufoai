@@ -302,7 +302,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 			/* function calls */
 			for (node = mn.menus[mn.numMenus - 1].firstChild; node; node = node->next)
-				if ((node->type == MN_FUNC || node->type == MN_CONFUNC || node->type == MN_CVARFUNC)
+				if ((node->behaviour->id == MN_FUNC || node->behaviour->id == MN_CONFUNC || node->behaviour->id == MN_CVARFUNC)
 					&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
 /*					Com_Printf("   %s\n", node->name); */
 
@@ -574,7 +574,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	qboolean nextTokenAlreadyRead = qfalse;
 
 	/* functions are a special case */
-	if (node->type == MN_CONFUNC || node->type == MN_FUNC || node->type == MN_CVARFUNC) {
+	if (node->behaviour->id == MN_CONFUNC || node->behaviour->id == MN_FUNC || node->behaviour->id == MN_CVARFUNC) {
 		menuAction_t **action;
 
 		/* add new actions to end of list */
@@ -586,7 +586,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		*action = &mn.menuActions[mn.numActions++];
 		memset(*action, 0, sizeof(**action));
 
-		if (node->type == MN_CONFUNC) {
+		if (node->behaviour->id == MN_CONFUNC) {
 			/* don't add a callback twice */
 			if (!Cmd_Exists(node->name))
 				Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
@@ -617,8 +617,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		/* find the property */
 		val = MN_FindPropertyByName(nodeProperties, *token);
-		if (!val && nodeBehaviourList[node->type].properties)
-			val = MN_FindPropertyByName(nodeBehaviourList[node->type].properties, *token);
+		if (!val && node->behaviour->properties)
+			val = MN_FindPropertyByName(node->behaviour->properties, *token);
 
 		if (!val) {
 			/* unknown token, print message and continue */
@@ -697,7 +697,7 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	/* test if node already exists */
 	node = MN_GetNode(menu, *token);
 	if (node) {
-		if (node->type != behaviour->id) {
+		if (node->behaviour->id != behaviour->id) {
 			Com_Printf("MN_ParseNode: we can't change node type (node \"%s.%s\")\n", menu->name, node->name);
 			return qfalse;
 		}
@@ -717,10 +717,9 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	/** @todo move it into the respective "loading" function (for those nodes, that need it) */
 	node->padding = 3;
 
-	/* throw the node we begin to read attributes */
-	node->type = behaviour->id;
-	if (nodeBehaviourList[node->type].loading)
-		nodeBehaviourList[node->type].loading(node);
+	/* throw to the node, we begin to read attributes */
+	if (node->behaviour->loading)
+		node->behaviour->loading(node);
 
 	/* get body */
 	*token = COM_EParse(text, errhead, menu->name);
@@ -750,8 +749,8 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 		Vector4Set(node->color, 1, 1, 1, 1);
 
 	/* init the node according to his behaviour */
-	if (nodeBehaviourList[node->type].loaded) {
-		nodeBehaviourList[node->type].loaded(node);
+	if (node->behaviour->loaded) {
+		node->behaviour->loaded(node);
 	}
 	return qtrue;
 }
@@ -1206,7 +1205,7 @@ qboolean MN_ScriptSanityCheck (void)
 	menuNode_t* node;
 
 	for (i = 0, node = mn.menuNodes; i < mn.numNodes; i++, node++) {
-		switch (node->type) {
+		switch (node->behaviour->id) {
 		case MN_TEXT:
 			if (!node->height) {
 				Com_Printf("MN_ParseNodeBody: node '%s' (menu: %s) has no height value but is a text node\n", node->name, node->menu->name);

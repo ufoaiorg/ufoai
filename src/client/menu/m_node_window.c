@@ -108,7 +108,7 @@ void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menu_t *newMenu, qboolean recursive)
 {
-	menuNode_t* newNode = MN_AllocNode(node->type);
+	menuNode_t* newNode = MN_AllocNode(node->behaviour->id);
 	*newNode = *node;
 	newNode->menu = newMenu;
 	newNode->next = NULL;
@@ -134,7 +134,6 @@ void MN_WindowNodeLoaded (menu_t *menu)
 	/* if it need, construct the drag button */
 	if (menu->dragButton) {
 		menuNode_t *control = MN_AllocNode(MN_CONTROLS);
-		menuNode_t *prev = MN_GetLastNode(menu);
 		int positionFromRight = CONTROLS_PADDING;
 		if (menu->closeButton)
 			positionFromRight += CONTROLS_IMAGE_DIMENSIONS + CONTROLS_SPACING;
@@ -147,13 +146,12 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		control->pos[0] = menu->size[0] - positionFromRight - control->size[0];
 		control->pos[1] = CONTROLS_PADDING;
 		control->tooltip = _("Drag to move window");
-		MN_InsertNode(menu, prev, control);
+		MN_AppendNode(menu, control);
 	}
 
 	/* if the menu should have a close button, add it here */
 	if (menu->closeButton) {
 		menuNode_t *button = MN_AllocNode(MN_PIC);
-		menuNode_t *prev = MN_GetLastNode(menu);
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = menu;
@@ -165,7 +163,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
 		MN_SetMenuAction(&button->click, EA_CMD, "mn_pop;");
-		MN_InsertNode(menu, prev, button);
+		MN_AppendNode(menu, button);
 	}
 }
 

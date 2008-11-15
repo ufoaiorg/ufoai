@@ -168,7 +168,7 @@ static void MN_DrawMenusTest (void)
 		}
 		for (node = menu->firstChild; node; node = node->next) {
 			/* skip invisible, virtual, and undrawable nodes */
-			if (node->invis || nodeBehaviourList[node->type].isVirtual || !nodeBehaviourList[node->type].draw)
+			if (node->invis || node->behaviour->isVirtual || !node->behaviour->draw)
 				continue;
 
 			/* if construct */
@@ -195,7 +195,7 @@ static void MN_DrawMenusTest (void)
 
 			/** @todo remove it when its possible */
 			/* mouse darken effect */
-			if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp) {
+			if (node->mousefx && node->behaviour->id == MN_PIC && mouseOver && sp > pp) {
 				vec4_t color;
 				VectorScale(node->color, 0.8, color);
 				color[3] = node->color[3];
@@ -203,8 +203,8 @@ static void MN_DrawMenusTest (void)
 			}
 
 			/* draw the node */
-			if (nodeBehaviourList[node->type].draw) {
-				nodeBehaviourList[node->type].draw(node);
+			if (node->behaviour->draw) {
+				node->behaviour->draw(node);
 			}
 
 			/** @todo remove it when its possible */
@@ -310,7 +310,7 @@ void MN_DrawMenus (void)
 		}
 		for (node = menu->firstChild; node; node = node->next) {
 			/* skip invisible, virtual, and undrawable nodes */
-			if (node->invis || nodeBehaviourList[node->type].isVirtual || !nodeBehaviourList[node->type].draw)
+			if (node->invis || node->behaviour->isVirtual || !node->behaviour->draw)
 				continue;
 
 			/* if construct */
@@ -360,7 +360,7 @@ void MN_DrawMenus (void)
 				MN_DrawBorder(node);
 
 			/* mouse darken effect */
-			if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp) {
+			if (node->mousefx && node->behaviour->id == MN_PIC && mouseOver && sp > pp) {
 				vec4_t color;
 				VectorScale(node->color, 0.8, color);
 				color[3] = node->color[3];
@@ -372,8 +372,8 @@ void MN_DrawMenus (void)
 #endif
 
 			/* draw the node */
-			if (nodeBehaviourList[node->type].draw) {
-				nodeBehaviourList[node->type].draw(node);
+			if (node->behaviour->draw) {
+				node->behaviour->draw(node);
 			}
 
 			/* mouseover? */

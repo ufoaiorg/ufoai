@@ -1271,13 +1271,13 @@ static void IN_Parse (void)
 
 			for (i = 0; i < numClickSinceLastCall; i++) {
 				mn.mouseRepeat.numClick++;
-				if (mn.mouseRepeat.node->type != MN_TEXT) {
+				if (mn.mouseRepeat.node->behaviour->id != MN_TEXT) {
 					/* we didn't click on a text node (button,...) */
 					MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
 				} else {
 					if (mn.mouseRepeat.textLine) {
 						menuNode_t *node = mn.mouseRepeat.node;
-						nodeBehaviourList[node->type].leftClick(node, mousePosX, mousePosY);
+						node->behaviour->leftClick(node, mousePosX, mousePosY);
 					}
 				}
 			}

@@ -102,7 +102,7 @@ typedef struct selectBoxOptions_s {
 typedef struct menuNode_s {
 	/* common identification */
 	char name[MAX_VAR];
-	int type;
+	struct nodeBehaviour_s *behaviour;
 
 	/* common navigation */
 	struct menuNode_s *next;

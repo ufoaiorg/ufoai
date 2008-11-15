@@ -155,7 +155,7 @@ static void MN_SetModelTransform_f (void)
 			/* didn't find node -> "kill" action and print error */
 			Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeOrMenuID);
 			return;
-		} else if (node->type != MN_MODEL) {
+		} else if (node->behaviour->id != MN_MODEL) {
 			Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeOrMenuID);
 			return;
 		}
@@ -430,7 +430,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				*tag++ = 0;
 
 				for (search = menu->firstChild; search != node && search; search = search->next)
-					if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, sizeof(search->name))) {
+					if (search->behaviour->id == MN_MODEL && !Q_strncmp(search->name, parent, sizeof(search->name))) {
 						char modelName[MAX_VAR];
 						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
 
