@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "../cl_global.h"
 
-cvar_t *mn_inputlength;
-
 /**
  * @sa MN_DisplayNotice
  */

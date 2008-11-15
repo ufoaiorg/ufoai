@@ -74,7 +74,8 @@ cvar_t *mn_active;
 cvar_t *mn_afterdrop;
 cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
-cvar_t* mn_serverday;
+cvar_t *mn_serverday;
+cvar_t *mn_inputlength;
 
 cvar_t *cl_lastsave;
 cvar_t *difficulty;
