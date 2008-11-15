@@ -69,13 +69,8 @@ static void MN_SpinnerNodeClick (menuNode_t *node, int x, int y)
 
 	/* save result */
 	if (!Q_strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
-		float v;
 		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
-		v = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
-		if (v == last)
-			return; /* bullshit */
 	} else {
-		/** @todo check it, i am not sure, is it *float or float? */
 		*(float*) node->u.abstractvalue.value = value;
 	}
 }
