@@ -925,32 +925,25 @@ menu mp_create_server
 	string maxclients_str
 	{
 		string	"_Max. clients:"
-		pos	"85 200"
+		pos		"85 200"
 		tooltip	"_Sets the max allowed clients to connect"
 	}
 	string maxclients_value
 	{
 		string	"*cvar sv_maxclients"
-		pos	"425 200"
+		pos		"425 200"
 		align	ur
 	}
-	pic maxclients_dec
+	spinner maxclients_change
 	{
-		image	menu/buttons_small
-		pos	"453 202"
-		texl	"0 0"
-		texh	"16 16"
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 199"
 		mousefx	true
-		click	{ cmd "mn_modify sv_maxclients -1 2 16;" }
-	}
-	pic maxclients_inc
-	{
-		image	menu/buttons_small
-		pos	"469 202"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify sv_maxclients +1 2 16;" }
+		min		2
+		max		16
+		delta	1
+		current	"*cvar sv_maxclients"
 	}
 
 	// ===================
@@ -959,7 +952,7 @@ menu mp_create_server
 	string maxperplayer_str
 	{
 		string	"_Max. soldiers per team:"
-		pos	"85 220"
+		pos		"85 220"
 		tooltip	"_Sets the max allowed soldiers per team"
 	}
 	string maxperplayer_value
@@ -968,23 +961,16 @@ menu mp_create_server
 		pos	"425 220"
 		align	ur
 	}
-	pic maxperplayer_dec
+	spinner maxperplayer_change
 	{
-		image	menu/buttons_small
-		pos	"453 222"
-		texl	"0 0"
-		texh	"16 16"
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 219"
 		mousefx	true
-		click	{ cmd "mn_modify sv_maxsoldiersperteam -1 1 8;" }
-	}
-	pic maxperplayer_inc
-	{
-		image	menu/buttons_small
-		pos	"469 222"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify sv_maxsoldiersperteam +1 1 8;" }
+		min		1
+		max		8
+		delta	1
+		current	"*cvar sv_maxsoldiersperteam"
 	}
 
 	// =====================
@@ -1002,23 +988,16 @@ menu mp_create_server
 		pos	"425 240"
 		align	ur
 	}
-	pic maxsoldierperplayer_dec
+	spinner maxsoldierperplayer_change
 	{
-		image	menu/buttons_small
-		pos	"453 242"
-		texl	"0 0"
-		texh	"16 16"
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 239"
 		mousefx	true
-		click	{ cmd "mn_modify sv_maxsoldiersperplayer -1 1 8;" }
-	}
-	pic maxsoldierperplayer_inc
-	{
-		image	menu/buttons_small
-		pos	"469 242"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify sv_maxsoldiersperplayer +1 1 8;" }
+		min		1
+		max		8
+		delta	1
+		current	"*cvar sv_maxsoldiersperplayer"
 	}
 
 	// ===================
@@ -1036,23 +1015,16 @@ menu mp_create_server
 		pos	"425 260"
 		align	ur
 	}
-	pic server_maxplayerperteam_dec
+	spinner maxplayersperteam_change
 	{
-		image	menu/buttons_small
-		pos	"453 262"
-		texl	"0 0"
-		texh	"16 16"
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 259"
 		mousefx	true
-		click	{ cmd "mn_modify sv_maxplayersperteam -1 1 8;" }
-	}
-	pic server_maxplayerperteam_inc
-	{
-		image	menu/buttons_small
-		pos	"469 262"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify sv_maxplayersperteam +1 1 8;" }
+		min		1
+		max		8
+		delta	1
+		current	"*cvar sv_maxplayersperteam"
 	}
 
 	// ===================
@@ -1070,23 +1042,16 @@ menu mp_create_server
 		pos	"425 280"
 		align	ur
 	}
-	pic ai_numactors_dec
+	spinner ai_numactors_change
 	{
-		image	menu/buttons_small
-		pos	"453 282"
-		texl	"0 0"
-		texh	"16 16"
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 279"
 		mousefx	true
-		click	{ cmd "mn_modify ai_numactors -1 0 8;" }
-	}
-	pic ai_numactors_inc
-	{
-		image	menu/buttons_small
-		pos	"469 282"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify ai_numactors +1 0 8;" }
+		min		0
+		max		8
+		delta	1
+		current	"*cvar ai_numactors"
 	}
 
 	// ===================

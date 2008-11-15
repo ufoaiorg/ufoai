@@ -85,23 +85,16 @@ menu skirmish
 		pos	"840 280"
 		align	ur
 	}
-	pic ai_numactors_dec
+	spinner ai_numactors_change
 	{
-		image	menu/buttons_small
-		pos	"868 282"
-		texl	"0 0"
-		texh	"16 16"
+		image	menu/spinner_blue
+		blend	true
+		pos		"868 279"
 		mousefx	true
-		click	{ cmd "mn_modify ai_numactors -1 0 8;" }
-	}
-	pic ai_numactors_inc
-	{
-		image	menu/buttons_small
-		pos	"884 282"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify ai_numactors +1 0 8;" }
+		min		0
+		max		8
+		delta	1
+		current	"*cvar ai_numactors"
 	}
 
 	// ===================
