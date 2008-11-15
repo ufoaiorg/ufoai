@@ -144,6 +144,7 @@ void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 	/* overwrite */
 	behaviour->name = "spinner";
 	behaviour->id = MN_SPINNER;
+	/** @todo Implement wheel support */
 	behaviour->leftClick = MN_SpinnerNodeClick;
 	behaviour->draw = MN_SpinnerNodeDraw;
 	behaviour->loaded = MN_SpinnerNodeLoaded;
