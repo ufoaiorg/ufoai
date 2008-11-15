@@ -56,6 +56,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern menuNode_t *focusNode;
 
 /**
+ * @brief List of all node behaviours, indexes by nodetype num.
+ */
+static nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
+
+/**
+ * @brief menu behaviour, not realy a node for the moment
+ */
+nodeBehaviour_t menuBehaviour;
+
+/**
  * @brief Returns the absolute position of a menunode
  * @param[in] menunode
  * @param[out] pos
@@ -381,16 +391,6 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 	}
 
 }
-
-/**
- * @brief List of all node behaviours, indexes by nodetype num.
- */
-nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
-
-/**
- * @brief menu behaviour, not realy a node for the moment
- */
-nodeBehaviour_t menuBehaviour;
 
 void MN_InitNodes (void)
 {

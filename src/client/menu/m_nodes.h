@@ -232,7 +232,6 @@ typedef struct nodeBehaviour_s {
 	*/
 } nodeBehaviour_t;
 
-extern nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
 extern nodeBehaviour_t menuBehaviour;
 
 qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
