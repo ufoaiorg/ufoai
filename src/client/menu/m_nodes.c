@@ -192,6 +192,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	/* the following nodes don't need action nodes */
 	case MN_CHECKBOX:
 	case MN_TAB:
+	case MN_SPINNER:
 	case MN_SELECTBOX:
 	case MN_CONTROLS:
 		break;

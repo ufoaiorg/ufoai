@@ -171,23 +171,17 @@ menu options_video
 		pos		"425 215"
 		align	ur
 	}
-	pic aniso_dec
+	
+	/* @todo update max with GL max anisotropic */
+	spinner aniso_change
 	{
-		image	menu/buttons_small
-		pos		"453 219"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify r_anisotropic -1 0 16;" }
-	}
-	pic aniso_inc
-	{
-		image	menu/buttons_small
-		pos		"469 219"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify r_anisotropic +1 0 16;" }
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 214"
+		current	"*cvar r_anisotropic"
+		min	0
+		max	16
+		delta 1
 	}
 
 	string fullscreen_str
@@ -300,23 +294,15 @@ menu options_video
 		pos		"425 465"
 		align	ur
 	}
-	pic samplebuf_dec
+	spinner samplebuf_change
 	{
-		image	menu/buttons_small
-		pos		"453 469"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify r_multisample -1 0 4;" }
-	}
-	pic samplebuf_inc
-	{
-		image	menu/buttons_small
-		pos		"469 469"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify r_multisample +1 0 4;" }
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 464"
+		current	"*cvar r_multisample"
+		min	0
+		max	4
+		delta 1
 	}
 
 	string swapcontrol_str
@@ -326,27 +312,20 @@ menu options_video
 	}
 	string swapcontrol_value
 	{
-		string	"*cvar r_multisample"
+		string	"*cvar r_swapinterval"
 		pos		"425 485"
 		align	ur
 	}
-	pic swapinterval_dec
+
+	spinner swapinterval_change
 	{
-		image	menu/buttons_small
-		pos		"453 489"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modify r_swapinterval -1 0 2;" }
-	}
-	pic swapinterval_inc
-	{
-		image	menu/buttons_small
-		pos		"469 489"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modify r_swapinterval +1 0 2;" }
+		image	menu/spinner_blue
+		blend	true
+		pos		"453 484"
+		current	"*cvar r_swapinterval"
+		min	0
+		max	2
+		delta 1
 	}
 
 	string gamma_str
