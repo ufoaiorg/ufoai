@@ -133,6 +133,7 @@ menu popup_buildingpreview
 	{
 		pos "38 456"
 		size "526 237"
+		dragButton true
 	}
 
 	windowpanel back
@@ -149,13 +150,6 @@ menu popup_buildingpreview
 		pos	"248 18"
 		font	f_big
 		align uc
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"487 22"
 	}
 
 	// ==================

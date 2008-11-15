@@ -255,6 +255,7 @@ menu popup_recoverybaselist
 	{
 		pos	"264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -274,13 +275,6 @@ menu popup_recoverybaselist
 		string	"_Select base for UFO recovery"
 		pos	"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	text cp_uforecovery_baselist
@@ -360,6 +354,7 @@ menu popup_recoverynationlist
 	{
 		pos		"124 192"
 		size	"777 402"
+		dragButton true
 	}
 
 	zone popup
@@ -381,13 +376,6 @@ menu popup_recoverynationlist
 		pos	"388 18"
 		font	f_big
 		align	uc
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"706 20"
 	}
 
 	string name_label

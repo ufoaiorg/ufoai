@@ -514,6 +514,7 @@ menu popup_maintain_resolution
 	{
 		pos	"264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -535,13 +536,6 @@ menu popup_maintain_resolution
 		string	"_Maintain resolution"
 		pos	"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"429 23"
 	}
 
 	string name_label

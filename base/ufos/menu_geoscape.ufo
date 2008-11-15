@@ -886,6 +886,7 @@ menu popup_intercept_ready
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -905,13 +906,6 @@ menu popup_intercept_ready
 		string	"_Ready"
 		pos		"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string name_label
@@ -997,6 +991,7 @@ menu popup_baseattack
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -1016,13 +1011,6 @@ menu popup_baseattack
 		string	"_Base is under attack"
 		pos		"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	text description
@@ -1107,6 +1095,7 @@ menu popup_transferbaselist
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -1126,13 +1115,6 @@ menu popup_transferbaselist
 		string	"_Select base to transfer to"
 		pos		"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string info
@@ -1331,6 +1313,7 @@ menu popup_newinstallation_type
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -1350,13 +1333,6 @@ menu popup_newinstallation_type
 		string	"_New installation"
 		pos	"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string type_label
@@ -1512,6 +1488,7 @@ menu popup_newinstallation
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -1546,13 +1523,6 @@ menu popup_newinstallation
 		string	"_New UFO yard"
 		pos	"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string name_label
@@ -1668,6 +1638,7 @@ menu radartower
 	{
 		pos "284 282"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -1688,13 +1659,6 @@ menu radartower
 		pos	"26 18"
 		size	"440 32"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string info
@@ -1729,6 +1693,7 @@ menu popup_installationstatus
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -1748,13 +1713,6 @@ menu popup_installationstatus
 		string	"_Installation Status"
 		pos	"26 18"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string name_label
@@ -1882,6 +1840,7 @@ menu popup_intercept
 	{
 		pos "124 192"
 		size	"777 402"
+		dragButton true
 	}
 
 	zone popup
@@ -1919,13 +1878,6 @@ menu popup_intercept
 		pos		"626 18"
 		font	f_big
 		align	uc
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"706 20"
 	}
 
 	string name_label
@@ -2009,6 +1961,7 @@ menu popup_mission
 	{
 		pos	"124 192"
 		size	"777 402"
+		dragButton true
 	}
 
 	zone popup
@@ -2030,13 +1983,6 @@ menu popup_mission
 		pos		"246 18"
 		font	f_big
 		align	uc
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"706 20"
 	}
 
 	string name_label
@@ -2107,6 +2053,7 @@ menu popup_multi_selection
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -2126,13 +2073,6 @@ menu popup_multi_selection
 		string	"_Select item"
 		pos		"26 14"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string type_label
@@ -2192,6 +2132,7 @@ menu popup_aircraft
 	{
 		pos "264 262"
 		size	"496 247"
+		dragButton true
 	}
 
 	zone popup
@@ -2211,13 +2152,6 @@ menu popup_aircraft
 		string	"_Aircraft"
 		pos		"26 14"
 		font	f_big
-	}
-
-	controls drag_button
-	{
-		image	menu/move
-		tooltip	"_Drag to move window"
-		pos		"428 22"
 	}
 
 	string action_label
