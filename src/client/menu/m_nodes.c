@@ -174,10 +174,13 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (MN_GetMouseCapture())
 		return qfalse;
 
+	if (node->invis || !MN_CheckCondition(node))
+		return qfalse;
+
 	MN_GetNodeAbsPos(node, nodepos);
-	switch (node->behaviour->id) {
-	case MN_CONTAINER:
+
 #if 0
+	if (node->behaviour->id == MN_CONTAINER) {
 		MN_FindContainer(node);
 		if (!node->container)
 			return qfalse;
@@ -188,20 +191,12 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 
 		/* found a container */
 		return qtrue;
-#endif
-	/* the following nodes don't need action nodes */
-	case MN_CHECKBOX:
-	case MN_TAB:
-	case MN_SPINNER:
-	case MN_SELECTBOX:
-	case MN_CONTROLS:
-		break;
-	default:
-		/* check for click action */
-		if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown)
-		 || !MN_CheckCondition(node))
-			return qfalse;
 	}
+#endif
+
+	/* check for click action */
+	if (!node->behaviour->leftClick && !node->behaviour->rightClick && !node->behaviour->middleClick && !node->behaviour->mouseWheel && !node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown)
+		return qfalse;
 
 	if (node->size[0] == 0 || node->size[1] == 0)
 		return qfalse;
