@@ -232,15 +232,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 }
 
 /**
- * @brief Searches a given node in the current menu
- * @sa MN_GetNode
- */
-menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
-{
-	return MN_GetNode(MN_GetActiveMenu(), name);
-}
-
-/**
  * @brief Sets new x and y coordinates for a given node
  */
 void MN_SetNewNodePos (menuNode_t* node, int x, int y)

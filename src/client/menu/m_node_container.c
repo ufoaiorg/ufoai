@@ -57,7 +57,7 @@ dragInfo_t dragInfo = {
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
  * set by the "in" and "out" functions of the scroll buttons.
  */
-void MN_ScrollContainerUpdate_f (void)
+static void MN_ScrollContainerUpdate_f (void)
 {
 	/* "Previous"/"Backward" button. Are there items before the first displayed one? */
 	if (menuInventory->scrollCur > 0) {
@@ -89,7 +89,7 @@ void MN_ScrollContainerUpdate_f (void)
  * @sa Console command "scrollcont_next"
  * @todo Add check so we do only increase if there are still hidden items after the last displayed one.
  */
-void MN_ScrollContainerNext_f (void)
+static void MN_ScrollContainerNext_f (void)
 {
 	const menuNode_t* const node = MN_GetNodeFromCurrentMenu("equip");
 
@@ -123,7 +123,7 @@ void MN_ScrollContainerNext_f (void)
  * @brief Scrolls one item backwards in a scrollable container.
  * @sa Console command "scrollcont_prev"
  */
-void MN_ScrollContainerPrev_f (void)
+static void MN_ScrollContainerPrev_f (void)
 {
 	const menuNode_t* const node = MN_GetNodeFromCurrentMenu("equip");
 
@@ -1125,4 +1125,8 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->rightClick = MN_ContainerRightClick;
 	behaviour->loading = MN_ContainerLoading;
 	behaviour->loaded = MN_FindContainer;
+
+	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
+	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
+	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
 }

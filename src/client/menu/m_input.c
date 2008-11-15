@@ -71,38 +71,6 @@ void MN_SetCvar (const char *name, const char *str, float value)
 }
 
 /**
- * @sa IN_Parse
- */
-qboolean MN_CursorOnMenu (int x, int y)
-{
-	menuNode_t *node;
-	menu_t *menu;
-	int sp;
-
-	sp = mn.menuStackPos;
-
-	while (sp > 0) {
-		menu = mn.menuStack[--sp];
-		for (node = menu->firstChild; node; node = node->next)
-			if (MN_CheckNodeZone(node, x, y)) {
-				/* found an element */
-				/*MN_FocusSetNode(node);*/
-				return qtrue;
-			}
-
-		if (menu->renderNode) {
-			/* don't care about non-rendered windows */
-			if (menu->renderNode->invis)
-				return qtrue;
-			else
-				return qfalse;
-		}
-	}
-
-	return qfalse;
-}
-
-/**
  * @brief save the captured node
  * @sa MN_SetMouseCapture
  * @sa MN_GetMouseCapture

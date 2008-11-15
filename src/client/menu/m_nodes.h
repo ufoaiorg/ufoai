@@ -237,7 +237,6 @@ extern nodeBehaviour_t menuBehaviour;
 qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
 void MN_UnHideNode(menuNode_t* node);
 void MN_HideNode(menuNode_t* node);
-menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
 void MN_SetNewNodePos(menuNode_t* node, int x, int y);
 void MN_GetNodeAbsPos(const menuNode_t* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const menuNode_t* node, int *x, int *y);

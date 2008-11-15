@@ -96,15 +96,14 @@ int MN_GetVisibleMenuCount(void);
 void MN_SetNewMenuPos(menu_t* menu, int x, int y);
 
 void MN_SetNewMenuPos_f (void);
-void MN_ScrollContainerUpdate_f(void);
-void MN_ScrollContainerNext_f(void);
-void MN_ScrollContainerPrev_f(void);
 
 void MN_DragMenu(void);
 
 menu_t* MN_PushMenu(const char *name);
 void MN_PopMenu(qboolean all);
 menu_t* MN_GetActiveMenu(void);
+menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
+qboolean MN_CursorOnMenu(int x, int y);
 menu_t *MN_GetMenu(const char *name);
 
 int MN_CompletePushMenu(const char *partial, const char **match);

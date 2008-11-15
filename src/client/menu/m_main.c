@@ -276,6 +276,47 @@ menu_t* MN_GetActiveMenu (void)
 }
 
 /**
+ * @brief Searches a given node in the current menu
+ * @sa MN_GetNode
+ */
+menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
+{
+	return MN_GetNode(MN_GetActiveMenu(), name);
+}
+
+/**
+ * @sa IN_Parse
+ */
+qboolean MN_CursorOnMenu (int x, int y)
+{
+	menuNode_t *node;
+	menu_t *menu;
+	int sp;
+
+	sp = mn.menuStackPos;
+
+	while (sp > 0) {
+		menu = mn.menuStack[--sp];
+		for (node = menu->firstChild; node; node = node->next)
+			if (MN_CheckNodeZone(node, x, y)) {
+				/* found an element */
+				/*MN_FocusSetNode(node);*/
+				return qtrue;
+			}
+
+		if (menu->renderNode) {
+			/* don't care about non-rendered windows */
+			if (menu->renderNode->invis)
+				return qtrue;
+			else
+				return qfalse;
+		}
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Searches all menus for the specified one
  * @param[in] name If name is NULL this function will return the current menu
  * on the stack - otherwise it will search the hole stack for a menu with the
@@ -654,10 +695,6 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
-
-	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
-	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
-	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
 
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
 
