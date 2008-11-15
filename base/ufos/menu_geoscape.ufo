@@ -886,7 +886,7 @@ menu popup_intercept_ready
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -991,7 +991,7 @@ menu popup_baseattack
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1095,7 +1095,7 @@ menu popup_transferbaselist
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1313,7 +1313,7 @@ menu popup_newinstallation_type
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1488,7 +1488,7 @@ menu popup_newinstallation
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1638,7 +1638,7 @@ menu radartower
 	{
 		pos "284 282"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1693,7 +1693,7 @@ menu popup_installationstatus
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1840,7 +1840,7 @@ menu popup_intercept
 	{
 		pos "124 192"
 		size	"777 402"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -1961,7 +1961,7 @@ menu popup_mission
 	{
 		pos	"124 192"
 		size	"777 402"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -2053,7 +2053,7 @@ menu popup_multi_selection
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -2132,7 +2132,7 @@ menu popup_aircraft
 	{
 		pos "264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup

@@ -514,7 +514,7 @@ menu popup_maintain_resolution
 	{
 		pos	"264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup

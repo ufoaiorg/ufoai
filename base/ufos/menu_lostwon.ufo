@@ -255,7 +255,7 @@ menu popup_recoverybaselist
 	{
 		pos	"264 262"
 		size	"496 247"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
@@ -354,7 +354,7 @@ menu popup_recoverynationlist
 	{
 		pos		"124 192"
 		size	"777 402"
-		dragButton true
+		dragbutton true
 	}
 
 	zone popup
