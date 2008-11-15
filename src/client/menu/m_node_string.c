@@ -49,9 +49,9 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	}
 	else {
 		if (!node->mousefx || cl.time % 1000 < 500)
-			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], ref, LONGLINES_PRETTYCHOP);
+			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], ref, node->longlines);
 		else
-			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], va("%s*\n", ref), LONGLINES_PRETTYCHOP);
+			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], va("%s*\n", ref), node->longlines);
 	}
 
 	R_ColorBlend(NULL);
