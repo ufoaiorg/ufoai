@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SKILL_BALANCE 1.0f
 #define INJURY_BALANCE 0.2f
 #define INJURY_THRESHOLD 0.5f /* HP / maxHP > INJURY_THRESHOLD no penalty is incurred */
+#define MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE		4
 
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
