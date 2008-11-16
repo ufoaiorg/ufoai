@@ -59,6 +59,7 @@
 ./client/menu/m_messages.c
 ./client/menu/m_node_bar.c
 ./client/menu/m_node_base.c
+./client/menu/m_node_button.c
 ./client/menu/m_node_checkbox.c
 ./client/menu/m_node_cinematic.c
 ./client/menu/m_node_container.c
@@ -72,9 +73,11 @@
 ./client/menu/m_node_radar.c
 ./client/menu/m_node_selectbox.c
 ./client/menu/m_node_string.c
+./client/menu/m_node_spinner.c
 ./client/menu/m_node_tab.c
 ./client/menu/m_node_tbar.c
 ./client/menu/m_node_text.c
+./client/menu/m_node_textentry.c
 ./client/menu/m_node_window.c
 ./client/menu/m_nodes.c
 ./client/menu/m_parse.c
