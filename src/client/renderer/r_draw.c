@@ -176,7 +176,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
  * @return NULL on error or image_t pointer on success
  * @sa R_FindImage
  */
-image_t *R_RegisterPic (const char *name)
+const image_t *R_RegisterPic (const char *name)
 {
 	image_t *gl;
 	char fullname[MAX_QPATH];
@@ -205,9 +205,7 @@ image_t *R_RegisterPic (const char *name)
  */
 void R_DrawGetPicSize (int *w, int *h, const char *pic)
 {
-	image_t *gl;
-
-	gl = R_RegisterPic(pic);
+	const image_t *gl = R_RegisterPic(pic);
 	if (!gl) {
 		*w = *h = -1;
 		return;
@@ -258,17 +256,16 @@ static short image_verts[4 * 2];
  * @sa R_RegisterPic
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
- * @todo Return the image_t pointer (gl) once image_t is known everywhere
  */
-int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
+const image_t *R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
-	image_t *gl;
+	const image_t *image;
 
-	gl = R_RegisterPic(name);
-	if (!gl) {
+	image = R_RegisterPic(name);
+	if (!image) {
 		Com_Printf("Can't find pic: %s\n", name);
-		return 0;
+		return NULL;
 	}
 
 	/* normalize to the screen resolution */
@@ -290,25 +287,25 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	if (sh) {
 		if (!w)
 			nw = (sh - sl) * viddef.rx;
-		sh /= gl->width;
+		sh /= image->width;
 	} else {
 		if (!w)
-			nw = ((float)gl->width - sl) * viddef.rx;
+			nw = ((float)image->width - sl) * viddef.rx;
 		sh = 1.0f;
 	}
-	sl /= gl->width;
+	sl /= image->width;
 
 	/* vertical texture mapping */
 	if (th) {
 		if (!h)
 			nh = (th - tl) * viddef.ry;
-		th /= gl->height;
+		th /= image->height;
 	} else {
 		if (!h)
-			nh = ((float)gl->height - tl) * viddef.ry;
+			nh = ((float)image->height - tl) * viddef.ry;
 		th = 1.0f;
 	}
-	tl /= gl->height;
+	tl /= image->height;
 
 	/* alignment */
 	if (align > 0 && align < ALIGN_LAST) {
@@ -369,7 +366,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	if (blend)
 		R_EnableBlend(qtrue);
 
-	R_BindTexture(gl->texnum);
+	R_BindTexture(image->texnum);
 
 	glDrawArrays(GL_QUADS, 0, 4);
 
@@ -380,7 +377,7 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	return nw;
+	return image;
 }
 
 /**

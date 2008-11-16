@@ -1169,6 +1169,7 @@ static void UP_Content_f (void)
 		if (researched_entries) {
 			assert(numChapters_displaylist<MAX_PEDIACHAPTERS);
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
+			/** @todo integrate images into text better */
 			Q_strcat(upText, va("img:menu/ufopedia_%s %s\n", gd.upChapters[i].id, _(gd.upChapters[i].name)), sizeof(upText));
 		}
 	}

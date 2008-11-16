@@ -63,7 +63,7 @@ typedef struct image_s {
 	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
 	int registration_sequence;			/**< 0 = free */
 	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
-	GLuint texnum;						/**< gl texture binding */
+	unsigned int texnum;				/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
 	struct image_s *normalmap;			/**< normalmap texture  */

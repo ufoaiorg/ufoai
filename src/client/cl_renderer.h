@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_REF_H
 
 #include "../common/common.h"
+#include "renderer/r_material.h"
+#include "renderer/r_image.h"
 
 #include <SDL.h>
 
@@ -74,7 +76,7 @@ typedef struct sustain_s {
 } sustain_t;
 
 typedef struct {
-	struct model_s *model;
+	struct model_s *model;	/**< @todo Fix this once model_t is known everywhere */
 	const char *name;				/**< model path */
 
 	float *origin;			/**< pointer to node/menumodel origin */
@@ -86,7 +88,7 @@ typedef struct {
 	float backlerp;			/**< linear interpolation from previous frame */
 
 	int skin;				/**< skin number */
-	int mesh;				/**< which mesh? md2 models only have one mesh */
+	int mesh;				/**< which mesh? @note md2 models only have one mesh */
 	float *color;
 } modelInfo_t;
 
@@ -107,7 +109,10 @@ typedef struct ptlArt_s {
 	byte frame;
 	char name[MAX_VAR];
 	int skin;
-	char *art;
+	union {
+		const image_t *image;
+		char *model;
+	} art;
 } ptlArt_t;
 
 typedef struct ptl_s {
@@ -199,7 +204,7 @@ typedef struct renderer_threadstate_s {
 extern renderer_threadstate_t r_threadstate;
 
 struct model_s *R_RegisterModelShort(const char *name);
-struct image_s *R_RegisterPic(const char *name);
+const image_t *R_RegisterPic(const char *name);
 
 void R_Color(const float *rgba);
 void R_ColorBlend(const float *rgba);

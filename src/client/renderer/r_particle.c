@@ -87,7 +87,7 @@ static void R_DrawSprite (const ptl_t * p)
 
 	/* load texture set up coordinates */
 	assert(p->pic);
-	R_BindTexture(((image_t *) (p->pic->art))->texnum);
+	R_BindTexture(p->pic->art.image->texnum);
 
 	/* calculate main position and normalised up and right vectors */
 	q = p->parent ? p->parent : p;
@@ -153,7 +153,7 @@ static void R_DrawPtlModel (ptl_t * p)
 	mi.origin = p->s;
 	mi.angles = p->angles;
 	assert(p->model);
-	mi.model = (model_t *) p->model->art;
+	mi.model = (model_t *) p->model->art.model; /**< @todo Fix this once model_t is known everywhere */
 	mi.skin = p->skin;
 
 	/* draw it */

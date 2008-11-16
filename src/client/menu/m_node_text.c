@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_font.h"
 #include "m_node_text.h"
+#include "../cl_video.h" /**< @todo Clean this up and remove this include */
 
 /**
  * @brief Scrolls the text in a textbox up/down.
@@ -238,15 +239,16 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			}
 		} else if (!Q_strncmp(cur, "img:", 4)) {
 			const char *token;
+			const image_t *image;
 			int y1 = y;
 			/* cut the image tag 'img:' */
 			cur += 4;
 			token = COM_Parse((const char **)&cur);
 			if (node->textLines > node->textScroll)
 				y1 += (node->textLines - node->textScroll) * node->texh[0];
-			/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too
-			 * @todo (menu) once image_t is known everywhere we should fix this, too */
-			x1 += R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
+			/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
+			image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
+			x1 += image->height;
 		}
 
 		/* get the position of the next newline - otherwise end will be null */

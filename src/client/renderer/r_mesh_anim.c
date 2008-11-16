@@ -161,10 +161,8 @@ void R_AnimChange (animState_t * as, model_t * mod, const char *name)
  * @sa R_AnimChange
  * @sa R_AnimGetName
  */
-void R_AnimRun (animState_t * as, model_t * mod, int msec)
+void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 {
-	mAliasAnim_t *anim;
-
 	assert(as->lcur < MAX_ANIMLIST);
 
 	if (!mod || mod->type != mod_alias_md2)
@@ -176,8 +174,8 @@ void R_AnimRun (animState_t * as, model_t * mod, int msec)
 	as->dt += msec;
 
 	while (as->dt > as->time) {
+		const mAliasAnim_t *anim = mod->alias.animdata + as->list[as->lcur];
 		as->dt -= as->time;
-		anim = mod->alias.animdata + as->list[as->lcur];
 
 		if (as->change || as->frame >= anim->to) {
 			/* go to next animation if it isn't the last one */
@@ -210,9 +208,9 @@ void R_AnimRun (animState_t * as, model_t * mod, int msec)
  * @sa R_AnimRun
  * @sa R_AnimChange
  */
-const char *R_AnimGetName (animState_t * as, model_t * mod)
+const char *R_AnimGetName (animState_t * as, const model_t * mod)
 {
-	mAliasAnim_t *anim;
+	const mAliasAnim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
 

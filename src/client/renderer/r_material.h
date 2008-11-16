@@ -59,7 +59,7 @@ typedef struct rotate_s {
 } rotate_t;
 
 typedef struct blendmode_s {
-	GLenum src, dest;
+	unsigned int src, dest;	/**< GL_ONE, GL_ZERO, ... */
 } blendmode_t;
 
 typedef struct pulse_s {

@@ -162,10 +162,10 @@ static const value_t pps[] = {
 };
 
 /** @brief particle art type */
-typedef enum art_s {
+typedef enum artType_s {
 	ART_PIC,
 	ART_MODEL
-} art_t;
+} artType_t;
 
 
 /* =========================================================== */
@@ -224,31 +224,45 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 }
 
 /**
- * @note We have to use the char* cast here because the image_t and model_t
- * have their names at the beginning of their structs
+ * @brief Loads the image or model for a given particle art
+ */
+static inline void CL_ParticleLoadArt (ptlArt_t *a, byte type)
+{
+	/* register the art */
+	switch (a->type) {
+	case ART_PIC:
+		{
+			const char *imageName;
+			/* only one image */
+			if (a->name[0] != '+')
+				imageName = a->name;
+			else /* load several frames */
+				imageName = va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0');
+			a->art.image = R_RegisterPic(imageName);
+			if (!a->art.image)
+				Com_Printf("CL_ParticleLoadArt: Could not load image: '%s' for particle: '%s'\n", imageName, a->name);
+		}
+		break;
+	case ART_MODEL:
+		a->art.model = (char *) R_RegisterModelShort(a->name);
+		break;
+	default:
+		Sys_Error("CL_ParticleLoadArt: Unknown art type\n");
+	}
+}
+
+/**
+ * @note We can use the @c char* cast here because @c model_t
+ * has its name at the beginning of the struct
+ * @todo Fix this once model_t is known everywhere
  */
 void CL_ParticleRegisterArt (void)
 {
 	ptlArt_t *a;
 	int i;
 
-	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++) {
-		/* register the art */
-		switch (a->type) {
-		case ART_PIC:
-			/* only one image */
-			if (*a->name != '+')
-				a->art = (char *) R_RegisterPic(a->name);
-			else /* load several frames */
-				a->art = (char *) R_RegisterPic(va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0'));
-			break;
-		case ART_MODEL:
-			a->art = (char *) R_RegisterModelShort(a->name);
-			break;
-		default:
-			Sys_Error("CL_ParticleRegisterArt: Unknown art type\n");
-		}
-	}
+	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
+		CL_ParticleLoadArt(a, a->type);
 }
 
 /**
@@ -258,7 +272,7 @@ void CL_ParticleRegisterArt (void)
  * @note We have to use the char* cast here because the image_t and model_t
  * have their names at the beginning of their structs
  */
-static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, char type)
+static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 {
 	ptlArt_t *a;
 	int i;
@@ -274,30 +288,17 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, char type)
 	if (i >= MAX_PTL_ART)
 		Sys_Error("CL_ParticleGetArt: MAX_PTL_ART overflow\n");
 
-	/* register new art */
-	switch (type) {
-	case ART_PIC:
-		/* only one image */
-		if (*name != '+')
-			a->art = (char *) R_RegisterPic(name);
-		else /* load several frames */
-			a->art = (char *) R_RegisterPic(va("%s%c%c", name + 1, frame / 10 + '0', frame % 10 + '0'));
-		break;
-	case ART_MODEL:
-		a->art = (char *) R_RegisterModelShort(name);
-		break;
-	default:
-		Sys_Error("CL_ParticleGetArt: Unknown art type\n");
-	}
-
-	/* check for an error */
-	if (!a->art)
-		return NULL;
-
 	a->skin = 0;
 	a->type = type;
 	a->frame = (type == ART_PIC) ? frame : 0;
 	Q_strncpyz(a->name, name, sizeof(a->name));
+
+	CL_ParticleLoadArt(a, type);
+
+	/* check for an error */
+	if (!a->art.image)
+		return NULL;
+
 	r_numParticlesArt++;
 
 	return a;
