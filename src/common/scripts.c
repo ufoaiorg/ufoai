@@ -176,8 +176,7 @@ static const size_t vt_sizes[] = {
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
-#define COM_ERRORMESSAGE_SIZE 256
-static char errorMessage[COM_ERRORMESSAGE_SIZE];
+static char errorMessage[256];
 
 /**
  * Return the last error message
@@ -194,7 +193,6 @@ const char* Com_GetError ()
  * @return A resultStatus_t value
  * @note instead of , this function separate error message and write byte result
  * @todo better doxygen documentation
- * @todo update sprintf for somthing checking COM_ERRORMESSAGE_SIZE
  * @todo improve check (remove atoi and atof, check 'true' value, but 'false' too)
  */
 int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
@@ -209,12 +207,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type]) {
-			sprintf(errorMessage, "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T" (type: %i). ", size, vt_sizes[type], type);
+			snprintf(errorMessage, sizeof(errorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T" (type: %i). ", size, vt_sizes[type], type);
 			status = RESULT_WARNING;
 		}
 #endif
 		if (size < vt_sizes[type]) {
-			sprintf(errorMessage, "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)", size, vt_sizes[type], type);
+			snprintf(errorMessage, sizeof(errorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)", size, vt_sizes[type], type);
 			return RESULT_ERROR;
 		}
 	}
@@ -222,7 +220,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	switch (type) {
 	case V_CLIENT_HUNK_STRING:
 	case V_CLIENT_HUNK:
-		sprintf(errorMessage, "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
+		snprintf(errorMessage, sizeof(errorMessage), "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
 		return RESULT_ERROR;
 
 	case V_NULL:
@@ -247,7 +245,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!Q_strcmp(token, menutextid_names[num]))
 				break;
 		if (num == MAX_MENUTEXTS) {
-			sprintf(errorMessage, "Could not find menutext id '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Could not find menutext id '%s'", token);
 			return RESULT_ERROR;
 		}
 		*(int *) b = num;
@@ -257,7 +255,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_BASEID:
 		*(int *) b = atoi(token);
 		if (*(int *) b < 0 || *(int *) b >= MAX_BASES) {
-			sprintf(errorMessage, "Invalid baseid given %i", *(int *) b);
+			snprintf(errorMessage, sizeof(errorMessage), "Invalid baseid given %i", *(int *) b);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN(sizeof(int));
@@ -270,7 +268,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_INT2:
 		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2) {
-			sprintf(errorMessage, "Illegal int2 statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal int2 statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN(2 * sizeof(int));
@@ -283,7 +281,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_POS:
 		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2) {
-			sprintf(errorMessage, "Illegal pos statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal pos statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN(2 * sizeof(float));
@@ -291,7 +289,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_VECTOR:
 		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3) {
-			sprintf(errorMessage, "Illegal vector statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal vector statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN(3 * sizeof(float));
@@ -301,7 +299,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			float* f = (float *) b;
 			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
-				sprintf(errorMessage, "Illegal color statement '%s'", token);
+				snprintf(errorMessage, sizeof(errorMessage), "Illegal color statement '%s'", token);
 				return RESULT_ERROR;
 			}
 			*writedByte = ALIGN(4 * sizeof(float));
@@ -312,7 +310,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			int* i = (int *) b;
 			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
-				sprintf(errorMessage, "Illegal rgba statement '%s'", token);
+				snprintf(errorMessage, sizeof(errorMessage), "Illegal rgba statement '%s'", token);
 				return RESULT_ERROR;
 			}
 			*writedByte = ALIGN(4 * sizeof(int));
@@ -397,16 +395,16 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_SHAPE_SMALL:
 		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4) {
-			sprintf(errorMessage, "Illegal shape small statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal shape small statement '%s'", token);
 			return RESULT_ERROR;
 		}
 
 		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y >= SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT) {
-			sprintf(errorMessage, "illegal shape small statement - max h value is %i (y: %i, h: %i)", SHAPE_SMALL_MAX_HEIGHT, y, h);
+			snprintf(errorMessage, sizeof(errorMessage), "illegal shape small statement - max h value is %i (y: %i, h: %i)", SHAPE_SMALL_MAX_HEIGHT, y, h);
 			return RESULT_ERROR;
 		}
 		if (x + w > SHAPE_SMALL_MAX_WIDTH || x >= SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH) {
-			sprintf(errorMessage, "illegal shape small statement - max x and w values are %i", SHAPE_SMALL_MAX_WIDTH);
+			snprintf(errorMessage, sizeof(errorMessage), "illegal shape small statement - max x and w values are %i", SHAPE_SMALL_MAX_WIDTH);
 			return RESULT_ERROR;
 		}
 		for (h += y; y < h; y++)
@@ -416,15 +414,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_SHAPE_BIG:
 		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4) {
-			sprintf(errorMessage, "Illegal shape big statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal shape big statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		if (y + h > SHAPE_BIG_MAX_HEIGHT || y >= SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT) {
-			sprintf(errorMessage, "Illegal shape big statement, max height is %i", SHAPE_BIG_MAX_HEIGHT);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal shape big statement, max height is %i", SHAPE_BIG_MAX_HEIGHT);
 			return RESULT_ERROR;
 		}
 		if (x + w > SHAPE_BIG_MAX_WIDTH || x >= SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH) {
-			sprintf(errorMessage, "illegal shape big statement - max x and w values are %i ('%s')", SHAPE_BIG_MAX_WIDTH, token);
+			snprintf(errorMessage, sizeof(errorMessage), "illegal shape big statement - max x and w values are %i ('%s')", SHAPE_BIG_MAX_WIDTH, token);
 			return RESULT_ERROR;
 		}
 		w = ((1 << w) - 1) << x;
@@ -447,7 +445,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_DATE:
 		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3) {
-			sprintf(errorMessage, "Illegal if statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal if statement '%s'", token);
 			return RESULT_ERROR;
 		}
 
@@ -472,7 +470,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
 			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
 		} else {
-			sprintf(errorMessage, "Illegal if statement '%s'", token);
+			snprintf(errorMessage, sizeof(errorMessage), "Illegal if statement '%s'", token);
 			return RESULT_ERROR;
 		}
 #endif
@@ -483,7 +481,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_RELABS:
 		if (token[0] == '-' || token[0] == '+') {
 			if (fabs(atof(token + 1)) <= 2.0f) {
-				sprintf(errorMessage, "a V_RELABS (absolute) value should always be bigger than +/-2.0");
+				snprintf(errorMessage, sizeof(errorMessage), "a V_RELABS (absolute) value should always be bigger than +/-2.0");
 				status = RESULT_WARNING;
 			}
 			if (token[0] == '-')
@@ -492,7 +490,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 				*(float *) b = atof(token + 1);
 		} else {
 			if (fabs(atof(token)) > 2.0f) {
-				sprintf(errorMessage, "a V_RELABS (relative) value should only be between 0.00..1 and 2.0");
+				snprintf(errorMessage, sizeof(errorMessage), "a V_RELABS (relative) value should only be between 0.00..1 and 2.0");
 				status = RESULT_WARNING;
 			}
 			*(float *) b = atof(token);
@@ -512,7 +510,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	default:
-		sprintf(errorMessage, "unknown value type '%s'", token);
+		snprintf(errorMessage, sizeof(errorMessage), "unknown value type '%s'", token);
 		return RESULT_ERROR;
 	}
 	return status;
