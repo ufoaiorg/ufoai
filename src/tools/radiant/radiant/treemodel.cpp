@@ -83,7 +83,7 @@ public:
 
 	iterator insert(const value_type& value) {
 		iterator i = m_childnodes.insert(value).first;
-		(*i).second->m_parent = this;
+		i->second->m_parent = this;
 		return i;
 	}
 	void erase(iterator i) {
@@ -185,7 +185,7 @@ static GtkTreePath* graph_tree_model_get_path(GtkTreeModel* tree_model, GtkTreeI
 	for (GraphTreeNode* node = (*graph_iterator_read_tree_iter(iter)).second; node != graph; node = node->m_parent) {
 		std::size_t index = 0;
 		for (GraphTreeNode::iterator i = node->m_parent->begin(); i != node->m_parent->end(); ++i, ++index) {
-			if ((*i).second == node) {
+			if (i->second == node) {
 				gtk_tree_path_prepend_index(path, gint(index));
 				break;
 			}
@@ -206,16 +206,16 @@ static void graph_tree_model_get_value (GtkTreeModel *tree_model, GtkTreeIter  *
 	g_value_init(value, G_TYPE_POINTER);
 
 	if (column == 0) {
-		g_value_set_pointer(value, reinterpret_cast<gpointer>((*i).first.second));
+		g_value_set_pointer(value, reinterpret_cast<gpointer>(i->first.second));
 	} else {
-		g_value_set_pointer(value, reinterpret_cast<gpointer>(&(*i).second->m_instance.get()));
+		g_value_set_pointer(value, reinterpret_cast<gpointer>(&i->second->m_instance.get()));
 	}
 }
 
 static gboolean graph_tree_model_iter_next (GtkTreeModel  *tree_model, GtkTreeIter   *iter) {
 	ASSERT_MESSAGE(tree_model != 0, "RUNTIME ERROR");
 	GraphTreeNode::iterator i = graph_iterator_read_tree_iter(iter);
-	GraphTreeNode& parent = *(*i).second->m_parent;
+	GraphTreeNode& parent = *i->second->m_parent;
 
 	ASSERT_MESSAGE(i != parent.end(), "RUNTIME ERROR");
 
@@ -270,7 +270,7 @@ static gboolean graph_tree_model_iter_parent(GtkTreeModel *tree_model, GtkTreeIt
 	if (node.m_parent != GRAPH_TREE_MODEL(tree_model)->m_graph) {
 		GraphTreeNode& parentParent = *node.m_parent->m_parent;
 		for (GraphTreeNode::iterator i = parentParent.begin(); i != parentParent.end(); ++i) {
-			if ((*i).second == node.m_parent) {
+			if (i->second == node.m_parent) {
 				graph_iterator_write_tree_iter(i, iter);
 				return TRUE;
 			}
@@ -419,7 +419,7 @@ void graph_tree_model_row_deleted(GraphTreeModel& model, GraphTreeNode::iterator
 GraphTreeNode* graph_tree_model_find_parent(GraphTreeModel* model, const scene::Path& path) {
 	GraphTreeNode* parent = model->m_graph;
 	for (scene::Path::const_iterator i = path.begin(); i != path.end() - 1; ++i) {
-		GraphTreeNode::iterator child = parent->find(GraphTreeNode::key_type(node_get_name((*i).get()), (*i).get_pointer()));
+		GraphTreeNode::iterator child = parent->find(GraphTreeNode::key_type(node_get_name(i->get()), i->get_pointer()));
 		ASSERT_MESSAGE(child != parent->end(), "ERROR");
 		parent = (*child).second;
 	}
@@ -496,7 +496,7 @@ void graph_tree_model_erase(GraphTreeModel* model, const scene::Instance& instan
 
 	graph_tree_model_row_deleted(model, i);
 
-	GraphTreeNode* node((*i).second);
+	GraphTreeNode* node(i->second);
 	parent->erase(i);
 	delete node;
 }
