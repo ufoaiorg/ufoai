@@ -63,7 +63,7 @@ EMessageBoxReturn DoParticleDlg (char **particle)
 				treeViewWidget = gtk_tree_view_new();
 
 				renderer = gtk_cell_renderer_text_new();
-				column = gtk_tree_view_column_new_with_attributes("Particle", renderer, "text", 0, NULL);
+				column = gtk_tree_view_column_new_with_attributes("Particle", renderer, "text", 0, (const char*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(treeViewWidget));

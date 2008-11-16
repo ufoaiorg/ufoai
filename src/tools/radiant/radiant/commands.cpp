@@ -228,7 +228,7 @@ void DoCommandListDlg (void)
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 1, (char const*)0);
-				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, NULL);
+				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*)0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(keyShortcutEdited), (gpointer)view);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 			}
