@@ -69,12 +69,8 @@ void MN_SetCvar (const char *name, const char *str, float value)
 }
 
 /**
- * @brief save the captured node
- * @sa MN_SetMouseCapture
- * @sa MN_GetMouseCapture
- * @sa MN_MouseRelease
- * @todo think about replacing it by a boolean. When capturedNode != NULL => mouseOverTest == capturedNode
- * it create unneed case
+ * @brief Timer slot. Only one.
+ * @todo Add more slots if it need
  */
 static menuTimer_t mn_timers;
 
