@@ -278,6 +278,7 @@ void MN_DrawMenus (void)
 	}
 
 	MN_CheckMouseMove();
+	MN_HandleTimers();
 
 	MN_SetItemHover(NULL);
 

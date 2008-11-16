@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_INPUT_H
 #define CLIENT_MENU_M_INPUT_H
 
+/* mouse input */
 void MN_LeftClick(int x, int y);
 void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
@@ -33,12 +34,36 @@ void MN_MouseMove(int x, int y);
 void MN_MouseDown(int x, int y, int button);
 void MN_MouseUp(int x, int y, int button);
 
+/* mouse capture */
 menuNode_t* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(menuNode_t* node);
 void MN_MouseRelease(void);
 
+/* timer input */
+struct menuNode_s;
+struct menuTimer_s;
+typedef void (*timerCallback_t)(struct menuNode_s *node, struct menuTimer_s *timer);
+typedef struct menuTimer_s {
+	struct menuNode_s *node;
+	timerCallback_t callback;
+	int calledTime;
+	int nextTime;
+	int delay;
+	qboolean isRunning;
+	void *userData;
+} menuTimer_t;
+menuTimer_t* MN_AllocTimer(struct menuNode_s *node, int firstDelay, timerCallback_t callback);
+void MN_TimerStart(menuTimer_t *timer);
+void MN_TimerStop(menuTimer_t *timer);
+void MN_TimerRelease(menuTimer_t *timer);
+void MN_HandleTimers(void);
+
+
+/** @todo move it somewhere */
 void MN_SetCvar(const char *name, const char *str, float value);
 
 extern menuNode_t *mouseOverTest; /**< mouse over active node, for preview */
+
+/**/
 
 #endif
