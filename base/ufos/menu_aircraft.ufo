@@ -98,8 +98,8 @@ menu aircraft
 	{
 		tooltip	"_Buy or sell aircraft"
 		image	menu/button_green_small
-		pos	"45 170"
-		size "230 64"
+		pos	"60 185"
+		size		"207 48"
 		blend	true
 		click
 		{
@@ -200,8 +200,8 @@ menu aircraft
 	{
 		tooltip		"_Produce aircraft or aircraft components"
 		image		menu/button_green_small
-		pos			"45 450"
-		size		"230 56"
+		pos			"60 465"
+		size		"207 48"
 		blend	true
 		click
 		{
