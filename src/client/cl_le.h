@@ -147,6 +147,7 @@ le_t *LE_GetClosestActor(const vec3_t origin);
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define LE_IsDead(le)		(((le)->state & STATE_DEAD))
 
+/** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)
 
 void LE_Think(void);
