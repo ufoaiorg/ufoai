@@ -444,10 +444,9 @@ void LET_StartIdle (le_t * le)
 	/* hidden actors don't have models assigned, thus we can not change the
 	 * animation for any model */
 	if (le->type != ET_ACTORHIDDEN) {
-		if (LE_IsDead(le)) {
-			const int animationIndex = le->state % MAX_DEATH;
-			R_AnimChange(&le->as, le->model1, va("dead%i", animationIndex));
-		} else if (le->state & STATE_PANIC)
+		if (LE_IsDead(le))
+			R_AnimChange(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
+		else if (le->state & STATE_PANIC)
 			R_AnimChange(&le->as, le->model1, "panic0");
 		else
 			R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));

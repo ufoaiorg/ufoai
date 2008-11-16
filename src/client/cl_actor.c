@@ -3965,11 +3965,8 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* play animation */
 	le->think = NULL;
-	{
-		const int animationIndex = le->state % MAX_DEATH;
-		R_AnimChange(&le->as, le->model1, va("death%i", animationIndex));
-		R_AnimAppend(&le->as, le->model1, va("dead%i", animationIndex));
-	}
+	R_AnimChange(&le->as, le->model1, va("death%i", LE_GetAnimationIndexForDeath(le)));
+	R_AnimAppend(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
