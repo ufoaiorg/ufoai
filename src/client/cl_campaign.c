@@ -1772,7 +1772,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	/** @todo when the mission is created, we should select a position where nation exists,
 	 * otherwise suverting a government is meaningless */
 	if (nation)
-		NAT_SetHappiness(nation, nation->stats[0].happiness * 0.8);
+		NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_SUBVERSION_LOSS);
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
@@ -3428,6 +3428,11 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
+ * @todo This function needs to be updated/simplified once mission scoring is implemented.
+ * The mission score will directly affect the nation happiness as per
+ * happiness += missionScore * missionWeight
+ * where missionScore is the relative score for the mission (a value between -1 and 1) and
+ * missionWeight is the absolute effect this mission has (a function of the maximum absolute score possible for the mission)
  */
 static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
 {
@@ -3446,30 +3451,34 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
-		const float alienHostile = 1.0f - nation->stats[0].alienFriendly;
+		const float difficultyModifier = (float)curCampaign->difficulty * 0.01f;
 		float delta_happiness = 0.0f;
 
 		if (lost) {
 			if (nation == ccs.battleParameters.nation) {
-				/* Strong negative reaction (happiness_factor must be < 1) */
-				delta_happiness = - (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
+				/* Strong negative reaction (happiness_factor must be < 0) */
+				delta_happiness = - 0.3f * (1.0f - performance);
 				is_on_Earth++;
 			} else {
-				/* Minor negative reaction (10 times lower than if the failed mission were in the nation) */
-				delta_happiness = - 0.1f * (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
+				/* Minor negative reaction (5 times lower than if the failed mission were in the nation) */
+				delta_happiness = - 0.06f * (1.0f - performance);
 			}
 		} else {
 			if (nation == ccs.battleParameters.nation) {
-				/* Strong positive reaction (happiness_factor must be > 1) */
-				delta_happiness = performance * alienHostile * (1.0f - nation->stats[0].happiness);
+				/* Strong positive reaction (happiness_factor must be > 0) */
+				delta_happiness = 0.3f * performance;
 				is_on_Earth++;
 			} else {
-				/* Minor positive reaction (10 times lower than if the mission were in the nation) */
-				delta_happiness = 0.1f * performance * alienHostile * (1.0f - nation->stats[0].happiness);
+				/* Minor positive reaction (5 times lower than if the mission were in the nation) */
+				delta_happiness = 0.06f * performance;
 			}
-			/* the happiness you can gain depends on the difficulty of the campaign */
-			delta_happiness *= (0.2f + pow(4.0f - difficulty->integer, 2) / 32.0f);
 		}
+		/* One mission can only change nation happiness so much in either direction */
+		/* the happiness you can gain depends on the difficulty of the campaign */
+		if (delta_happiness < - HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier)
+			delta_happiness = - HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier;
+		else if (delta_happiness > HAPPINESS_MAX_MISSION_IMPACT + difficultyModifier)
+			delta_happiness = HAPPINESS_MAX_MISSION_IMPACT + difficultyModifier;
 
 		/* update happiness */
 		NAT_SetHappiness(nation, nation->stats[0].happiness + delta_happiness);
@@ -5072,19 +5081,19 @@ static void CP_AddItemAsCollected_f (void)
 }
 
 /**
- * @brief Changes nation happiness by given multiplier.
+ * @brief Changes nation happiness by given value.
  * @note There must be argument passed to this function being converted to float.
  */
 static void CP_ChangeNationHappiness_f (void)
 {
-	float multiplier;
+	float change;
 	nation_t *nation;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <multiplier>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));
 		return;
 	}
-	multiplier = atof(Cmd_Argv(1));
+	change = atof(Cmd_Argv(1));
 
 	if (!selectedMission) {
 		Com_Printf("No mission selected - could not determine nation to use\n");
@@ -5097,7 +5106,7 @@ static void CP_ChangeNationHappiness_f (void)
 	nation = MAP_GetNation(selectedMission->pos);
 	assert(nation);
 
-	NAT_SetHappiness(nation, nation->stats[0].happiness * multiplier);
+	NAT_SetHappiness(nation, nation->stats[0].happiness + change);
 }
 
 /** @brief mission trigger functions */

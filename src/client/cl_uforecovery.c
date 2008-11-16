@@ -397,10 +397,10 @@ static void CP_UFOSellStart_f (void)
 	for (i = 0; i < gd.numNations; i++) {
 		if (gd.nations + i == nation)
 			/* nation is happy because it got the UFO */
-			NAT_SetHappiness(nation, nation->stats[0].happiness + 0.3f * (1.0f - nation->stats[0].happiness));
+			NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_UFO_SALE_GAIN);
 		else
 			/* nation is unhappy because it wanted the UFO */
-			NAT_SetHappiness(&gd.nations[i], gd.nations[i].stats[0].happiness * .95f);
+			NAT_SetHappiness(&gd.nations[i], gd.nations[i].stats[0].happiness + HAPPINESS_UFO_SALE_LOSS);
 	}
 
 	/* UFO recovery process is done, disable buttons. */

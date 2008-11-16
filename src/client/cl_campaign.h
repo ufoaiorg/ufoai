@@ -60,6 +60,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * the higher the value the better the performance, but the smaller the coverage */
 #define RASTER 2
 
+/* nation happiness constants */
+#define HAPPINESS_SUBVERSION_LOSS			-0.15
+#define HAPPINESS_ALIEN_MISSION_LOSS		-0.01
+#define HAPPINESS_UFO_SALE_GAIN				0.07
+#define HAPPINESS_UFO_SALE_LOSS				0.01
+#define HAPPINESS_MAX_MISSION_IMPACT		0.15
+
 /** possible map types */
 typedef enum mapType_s {
 	MAPTYPE_TERRAIN,

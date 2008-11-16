@@ -62,25 +62,26 @@ void NAT_UpdateHappinessForAllNations (void)
 	for (;list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		nation_t *nation = MAP_GetNation(mission->pos);
+		/* Difficulty modifier range is [0, 0.02f] */
+		const float difficultyModifier = (4.0f + (float)curCampaign->difficulty) / 400;
+
 		/* Some non-water location have no nation */
 		if (nation) {
 			float happinessFactor;
 			switch (mission->stage) {
 			case STAGE_TERROR_MISSION:
 			case STAGE_SUBVERT_GOV:
-				happinessFactor = (4.0f - difficulty->integer) / 40.0f;
-				break;
 			case STAGE_RECON_GROUND:
 			case STAGE_SPREAD_XVI:
 			case STAGE_HARVEST:
-				happinessFactor = (4.0f - difficulty->integer) / 80.0f;
+				happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS - difficultyModifier;
 				break;
 			default:
 				/* mission is not active on earth, skip this mission */
 				continue;
 			}
 
-			NAT_SetHappiness(nation, nation->stats[0].happiness - happinessFactor);
+			NAT_SetHappiness(nation, nation->stats[0].happiness + happinessFactor);
 			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, nation->stats[0].happiness);
 		}
 	}
