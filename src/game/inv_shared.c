@@ -798,7 +798,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		else
 			time /= 2;
 	}
-	
+
 	if (TU && *TU < time)
 		return IA_NOTIME;
 

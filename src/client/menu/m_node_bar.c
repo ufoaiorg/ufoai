@@ -106,4 +106,3 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseUp = MN_BarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
 }
-

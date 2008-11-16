@@ -516,7 +516,7 @@ qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
 		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	assert(employee->hired);
-	
+
 	if (employee->transfer)
 		return qfalse;
 	else {

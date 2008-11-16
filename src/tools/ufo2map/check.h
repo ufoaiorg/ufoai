@@ -44,4 +44,3 @@ void CheckZFighting(void);
 void Check_Free(void);
 
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes);
-

@@ -549,7 +549,7 @@ void INS_UpdateInstallationData (void)
                         continue;
 
 		if ((installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION)
-		 && installation->buildStart 
+		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
 			installation->installationStatus = INSTALLATION_WORKING;
 			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);

@@ -92,4 +92,3 @@ void MultiMon_Construct() {
 	PreferencesDialog_addInterfacePreferences(FreeCaller1<PreferencesPage&, MultiMonitor_constructPreferences>());
 #endif
 }
-

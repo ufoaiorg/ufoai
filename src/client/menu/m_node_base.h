@@ -31,6 +31,3 @@ void MN_RegisterBaseMapNode(nodeBehaviour_t *behaviour);
 void MN_RegisterBaseLayoutNode(nodeBehaviour_t *behaviour);
 
 #endif
-
-
-
