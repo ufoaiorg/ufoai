@@ -1,6 +1,5 @@
 /**
  * @file m_node_spinner.c
- * @todo manage autorepeate somewhere here
  */
 
 /*
@@ -29,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_input.h"
 #include "../cl_input.h"
+#include "../cl_keys.h"
 
 static const int TILE_SIZE = 32;
 static const int SPINNER_WIDTH = 15;
@@ -75,13 +75,44 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 	}
 }
 
-static void MN_SpinnerNodeClick (menuNode_t *node, int x, int y)
+static qboolean capturedDownButton;
+static menuTimer_t *capturedTimer = NULL;
+
+static void MN_SpinnerNodeRepeat (menuNode_t *node, menuTimer_t *timer)
+{
+	MN_SpinnerNodeStep(node, capturedDownButton);
+	if (timer->calledTime == 1) {
+		timer->delay = 500;
+	}
+}
+
+static void MN_SpinnerNodeDown (menuNode_t *node, int x, int y, int button)
 {
 	/** @todo remove that when the input handler is updated */
 	if (node->disabled)
 		return;
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
-	MN_SpinnerNodeStep(node, y >= BUTTON_TOP_SIZE);
+	if (button == K_MOUSE1) {
+		MN_SetMouseCapture(node);
+		MN_NodeAbsoluteToRelativePos(node, &x, &y);
+		capturedDownButton = y >= BUTTON_TOP_SIZE;
+		MN_SpinnerNodeStep(node, capturedDownButton);
+		capturedTimer = MN_AllocTimer(node, 1000, MN_SpinnerNodeRepeat);
+		MN_TimerStart (capturedTimer);
+	}
+}
+
+static void MN_SpinnerNodeUp (menuNode_t *node, int x, int y, int button)
+{
+	/** @todo remove that when the input handler is updated */
+	if (node->disabled)
+		return;
+	if (button == K_MOUSE1) {
+		if (capturedTimer) {
+			MN_TimerRelease(capturedTimer);
+			capturedTimer = NULL;
+		}
+		MN_MouseRelease();
+	}
 }
 
 static void MN_SpinnerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
@@ -161,8 +192,9 @@ void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 	/* overwrite */
 	behaviour->name = "spinner";
 	behaviour->id = MN_SPINNER;
-	behaviour->leftClick = MN_SpinnerNodeClick;
 	behaviour->mouseWheel = MN_SpinnerNodeWheel;
+	behaviour->mouseDown = MN_SpinnerNodeDown;
+	behaviour->mouseUp = MN_SpinnerNodeUp;
 	behaviour->draw = MN_SpinnerNodeDraw;
 	behaviour->loaded = MN_SpinnerNodeLoaded;
 }
