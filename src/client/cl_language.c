@@ -232,7 +232,7 @@ void CL_LanguageInit (void)
 #endif
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
-			selectBoxOption = MN_AddSelectboxOption(languageOptions);
+			selectBoxOption = MN_NodeAddOption(languageOptions);
 			if (!selectBoxOption)
 				break;
 			Q_strncpyz(selectBoxOption->label, language->localeString, sizeof(selectBoxOption->label));
@@ -254,7 +254,7 @@ void CL_LanguageInit (void)
 #endif
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
-			selectBoxOption = MN_AddSelectboxOption(languageOptions);
+			selectBoxOption = MN_NodeAddOption(languageOptions);
 			if (!selectBoxOption)
 				break;
 			Q_strncpyz(selectBoxOption->label, language->localeString, sizeof(selectBoxOption->label));

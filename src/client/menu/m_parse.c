@@ -30,11 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_window.h"
 #include "m_node_selectbox.h"
 
-#define	V_SPECIAL				0x8000
-#define	V_SPECIAL_ACTION		(V_SPECIAL + 0)	/**< Identify an action type into the value_t structure */
-#define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)	/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) /**< Identify a special attribute, use special parse function */
-
 /** @brief valid properties for a node */
 static const value_t nodeProperties[] = {
 	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
@@ -110,7 +105,6 @@ static const value_t nodeProperties[] = {
 
 	/* very special attribute */
 	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
-	{"option", V_SPECIAL_OPTIONNODE, 0, 0},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -432,7 +426,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 			}
 		}
 	} while (**token != '}');
-	MN_AddSelectboxOption(node);
+	MN_NodeAddOption(node);
 	return qtrue;
 }
 

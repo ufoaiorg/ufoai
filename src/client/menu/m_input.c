@@ -245,7 +245,7 @@ void MN_MouseMove (int x, int y)
 		}
 	}
 
-	/* update function to send 'in' and 'out' event */
+	/* update nodes: send 'in' and 'out' event */
 	if (mn_debugmenu->integer == 2 && oldMouseOverTest != mouseOverTest) {
 		if (oldMouseOverTest) {
 			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->mouseOut);

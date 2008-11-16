@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * the option
  * @note You have to add the values manually to the option pointer
  */
-selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
+selectBoxOptions_t* MN_NodeAddOption (menuNode_t *node)
 {
 	selectBoxOptions_t *selectBoxOption;
 
@@ -54,16 +54,16 @@ selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 		return NULL;
 	}
 	/* initial options entry */
-	if (!node->options)
-		node->options = &mn.menuSelectBoxes[mn.numSelectBoxes];
+	if (!node->u.option.first)
+		node->u.option.first = &mn.menuSelectBoxes[mn.numSelectBoxes];
 	else {
 		/* link it in */
-		for (selectBoxOption = node->options; selectBoxOption->next; selectBoxOption = selectBoxOption->next) {}
+		for (selectBoxOption = node->u.option.first; selectBoxOption->next; selectBoxOption = selectBoxOption->next) {}
 		selectBoxOption->next = &mn.menuSelectBoxes[mn.numSelectBoxes];
 		selectBoxOption->next->next = NULL;
 	}
 	selectBoxOption = &mn.menuSelectBoxes[mn.numSelectBoxes];
-	node->height++;
+	node->u.option.count++;
 	mn.numSelectBoxes++;
 	return selectBoxOption;
 }
@@ -88,13 +88,13 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* test bounded box */
-	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->height + 1)) {
+	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->u.option.count + 1)) {
 		MN_MouseRelease();
 		return;
 	}
 
 	posy = node->size[1];
-	for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+	for (selectBoxOption = node->u.option.first; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 		selectBoxOption->hovered = (posy <= y && y < posy + node->size[1]) ? qtrue : qfalse;
 		posy += node->size[1];
 	}
@@ -132,7 +132,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	R_DrawNormPic(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* draw the label for the current selected option */
-	for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+	for (selectBoxOption = node->u.option.first; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 		if (!Q_strcmp(selectBoxOption->value, ref)) {
 			R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
@@ -148,19 +148,19 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 	/* drop down menu */
 	/* left side */
-	R_DrawNormPic(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+	R_DrawNormPic(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
 		7.0f, 28.0f, 0.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 	/* stretched middle bar */
-	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->height,
+	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * node->u.option.count,
 		16.0f, 28.0f, 7.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 	/* right side */
-	R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+	R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->u.option.count,
 		23.0f, 28.0f, 16.0f, 21.0f, ALIGN_UL, node->blend, image);
 
 	/* now draw all available options for this selectbox */
-	for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+	for (selectBoxOption = node->u.option.first; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 		/* draw the hover effect */
 		if (selectBoxOption->hovered)
 			R_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
@@ -207,7 +207,7 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	else
 		clickedAtOption = (clickedAtOption - SELECTBOX_DEFAULT_HEIGHT) / SELECTBOX_DEFAULT_HEIGHT; /* default height - see selectbox.tga */
 
-	if (clickedAtOption < 0 || clickedAtOption >= node->height)
+	if (clickedAtOption < 0 || clickedAtOption >= node->u.option.count)
 		return;
 
 	/* the cvar string is stored in dataModelSkinOrCVar */
@@ -221,7 +221,7 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
 		return;
 
-	selectBoxOption = node->options;
+	selectBoxOption = node->u.option.first;
 	for (; clickedAtOption > 0 && selectBoxOption; selectBoxOption = selectBoxOption->next) {
 		clickedAtOption--;
 	}
@@ -238,8 +238,24 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	}
 }
 
+static const value_t properties[] = {
+	/* very special attribute */
+	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
+	{NULL, V_NULL, 0, 0}
+};
+
+void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "abstractoption";
+	behaviour->id = MN_NULL;
+	behaviour->properties = properties;
+}
+
 void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 {
+	/* inherite */
+	MN_RegisterAbstractOptionNode(behaviour);
+	/* overwrite */
 	behaviour->name = "selectbox";
 	behaviour->id = MN_SELECTBOX;
 	behaviour->draw = MN_SelectBoxNodeDraw;

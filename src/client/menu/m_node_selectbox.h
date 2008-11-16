@@ -25,9 +25,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_SELECTBOX_H
 #define CLIENT_MENU_M_NODE_SELECTBOX_H
 
-#include "m_nodes.h"
+#define MAX_SELECT_BOX_OPTIONS 128
+#define SELECTBOX_MAX_VALUE_LENGTH 32
+#define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
-selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
-void MN_RegisterSelectBoxNode(nodeBehaviour_t *behaviour);
+/** @brief MN_SELECTBOX definition */
+typedef struct selectBoxOptions_s {
+	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
+	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
+	char action[MAX_VAR];	/**< execute this when the value is selected */
+	char value[MAX_VAR];	/**< the value the cvar should get */
+	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node
+							 * NULL terminated for each node */
+	qboolean hovered;		/**< current selected option entry selected? */
+} selectBoxOptions_t;
 
+typedef struct {
+	selectBoxOptions_t *first;	/**< pointer to select box options when type is MN_SELECTBOX */
+	int count;
+} optionExtraData_t;
+
+struct menuNode_s;
+struct nodeBehaviour_s;
+
+selectBoxOptions_t* MN_NodeAddOption(struct menuNode_s *node);
+void MN_RegisterSelectBoxNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
 #endif

@@ -44,41 +44,6 @@ static const int TILE_HEIGHT = 36;
 static const int TILE_SIZE = 40;
 
 /**
- * @brief Adds a new tab option to a tab node
- * @sa MN_TAB
- * @return @c NULL if menuTabs is 'full' - otherwise pointer to the selectBoxOption
- * @param[in] node The node (must be of type MN_TAB) where you want to append
- * the option
- * @note You have to add the values manually to the option pointer
- */
-selectBoxOptions_t* MN_AddTabOption (menuNode_t *node)
-{
-	selectBoxOptions_t *tabOption;
-
-	assert(node->behaviour->id == MN_TAB);
-
-	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
-		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");
-		return NULL;
-	}
-
-	/* initial options entry */
-	if (!node->options)
-		node->options = &mn.menuSelectBoxes[mn.numSelectBoxes];
-	else {
-		/* link it in */
-		for (tabOption = node->options; tabOption->next; tabOption = tabOption->next) {}
-		tabOption->next = &mn.menuSelectBoxes[mn.numSelectBoxes];
-		tabOption->next->next = NULL;
-	}
-
-	tabOption = &mn.menuSelectBoxes[mn.numSelectBoxes++];
-	node->height++;
-
-	return tabOption;
-}
-
-/**
  * @brief Return a tab located at a screen position
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
@@ -101,7 +66,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 	font = MN_GetFont(node->menu, node);
 
 	/* Text box test */
-	for (tabOption = node->options; tabOption; tabOption = tabOption->next) {
+	for (tabOption = node->u.option.first; tabOption; tabOption = tabOption->next) {
 		int fontWidth;
 
 		if (x < TILE_WIDTH)
@@ -209,7 +174,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
 	}
 	currentX = node->pos[0];
-	tabOption = node->options;
+	tabOption = node->u.option.first;
 
 	while (tabOption) {
 		int fontHeight, fontWidth;
@@ -246,6 +211,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 {
+	/* inherite */
+	MN_RegisterAbstractOptionNode(behaviour);
+	/* overwrite */
 	behaviour->name = "tab";
 	behaviour->id = MN_TAB;
 	behaviour->draw = MN_TabNodeDraw;

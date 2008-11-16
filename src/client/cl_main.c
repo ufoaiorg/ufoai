@@ -1621,7 +1621,7 @@ void CL_InitAfter (void)
 	if (!vidModesOptions)
 		Sys_Error("Could not find node select_res in menu options_video\n");
 	for (i = 0; i < VID_GetModeNums(); i++) {
-		selectBoxOptions_t *selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
+		selectBoxOptions_t *selectBoxOption = MN_NodeAddOption(vidModesOptions);
 		if (!selectBoxOption)
 			return;
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);

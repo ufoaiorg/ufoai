@@ -72,28 +72,11 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
-/* all available select box options - for all menunodes */
-#define MAX_SELECT_BOX_OPTIONS 128
-#define SELECTBOX_MAX_VALUE_LENGTH 32
-#define SELECTBOX_DEFAULT_HEIGHT 20.0f
-
-/** @brief MN_SELECTBOX definition */
-typedef struct selectBoxOptions_s {
-	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
-	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
-	char action[MAX_VAR];	/**< execute this when the value is selected */
-	char value[MAX_VAR];	/**< the value the cvar should get */
-	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node
-							 * NULL terminated for each node */
-	qboolean hovered;		/**< current selected option entry selected? */
-} selectBoxOptions_t;
-
-#define MAX_LINESTRIPS 16
-
 /* extradata struct */
 #include "m_node_abstractvalue.h"
 #include "m_node_linestrip.h"
 #include "m_node_model.h"
+#include "m_node_selectbox.h"
 
 /**
  * @brief menu node
@@ -185,14 +168,12 @@ typedef struct menuNode_s {
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */
 
-	/* MN_SELECTBOX, and more */
-	struct selectBoxOptions_s *options;	/**< pointer to select box options when type is MN_SELECTBOX */
-
 	/** union will contain all extradata for a node */
 	union {
 		abstractValueExtraData_t abstractvalue;
-		modelExtraData_t model;
 		lineStripExtraData_t linestrip;	/**< List of lines to draw. (MN_LINESTRIP) */
+		modelExtraData_t model;
+		optionExtraData_t option;
 	} u;
 
 } menuNode_t;
