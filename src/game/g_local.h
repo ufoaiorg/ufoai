@@ -290,6 +290,10 @@ edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish);
 edict_t *G_GetFloorItems(edict_t *ent);
 
+#define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
+/** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
+#define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
+
 qboolean G_IsLivingActor(const edict_t *ent);
 void G_ForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);

@@ -323,7 +323,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	}
 
 	/* check the target is still alive */
-	if (ent->reactionTarget->state & STATE_DEAD) {
+	if (G_IsDead(ent->reactionTarget)) {
 		ent->reactionTarget = NULL;
 #ifdef DEBUG_REACTION
 		if (!mock)

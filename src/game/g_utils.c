@@ -334,7 +334,7 @@ int G_TouchTriggers (edict_t *ent)
 	int i, num, usedNum = 0;
 	edict_t *touch[MAX_EDICTS];
 
-	if (ent->type != ET_ACTOR || (ent->state & STATE_DEAD))
+	if (ent->type != ET_ACTOR || G_IsDead(ent))
 		return 0;
 
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);

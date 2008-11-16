@@ -46,8 +46,7 @@ static int scoreMissionNum = 0;
 qboolean G_IsLivingActor (const edict_t *ent)
 {
 	assert(ent);
-	return ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-		&& !(ent->state & STATE_DEAD));
+	return ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !G_IsDead(ent));
 }
 
 /**
@@ -388,7 +387,7 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 
 	/* start on eye height */
 	VectorCopy(check->origin, test);
-	if (check->state & STATE_DEAD) {
+	if (G_IsDead(check)) {
 		test[2] += PLAYER_DEAD;
 		delta = 0;
 	} else if (check->state & (STATE_CROUCHED | STATE_PANIC)) {
@@ -455,11 +454,11 @@ static float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 		return ACTOR_VIS_0;
 
 	/* only actors and 2x2 units can see anything */
-	if ((from->type != ET_ACTOR && from->type != ET_ACTOR2x2) || (from->state & STATE_DEAD))
+	if (!G_IsLivingActor(from))
 		return ACTOR_VIS_0;
 
 	/* living team members are always visible */
-	if (team >= 0 && check->team == team && !(check->state & STATE_DEAD))
+	if (team >= 0 && check->team == team && !G_IsDead(check))
 		return ACTOR_VIS_100;
 
 	/* standard team rules */
@@ -605,8 +604,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-					&& !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN)
+					if (G_IsLivingActor(ent) && ent->team != TEAM_CIVILIAN)
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;
@@ -824,12 +822,12 @@ qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 		return qfalse;
 	}
 
-	if (ent->state & STATE_STUN) {
+	if (G_IsStunned(ent)) {
 		gi.cprintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
 		return qfalse;
 	}
 
-	if (ent->state & STATE_DEAD) {
+	if (G_IsDead(ent)) {
 		gi.cprintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
 		return qfalse;
 	}
@@ -1345,7 +1343,7 @@ static void G_BuildForbiddenList (int team)
 		 * @todo Just a note for the future.
 		 * If we get any that does not block the map when dead this is the place to look.
 		 */
-		if (((ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
+		if (((ent->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
 			fb_list[fb_length++] = ent->pos;
 			fb_list[fb_length++] = (byte*)&ent->fieldSize;
 		}
@@ -1973,7 +1971,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
-		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !G_IsDead(ent)) {
 			/* civilians have a 1:1 chance to randomly run away in multiplayer */
 			if (sv_maxclients->integer >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
 				G_MoralePanic(ent, qfalse, quiet);

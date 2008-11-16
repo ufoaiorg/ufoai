@@ -711,9 +711,8 @@ static void CL_EntPerish (struct dbuffer *msg)
 
 		/* search owners (there can be many, some of them dead) */
 		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
-			if (actor->inuse
-				 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-				 && VectorCompare(actor->pos, le->pos)) {
+			if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+			 && VectorCompare(actor->pos, le->pos)) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: le of type ET_ITEM hidden\n");
 				FLOOR(actor) = NULL;
 			}
@@ -734,7 +733,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 		break;
 	}
 
-	if (!(le->team && le->state && le->team == cls.team && !(le->state & STATE_DEAD)))
+	if (!(le->team && le->state && le->team == cls.team && !LE_IsDead(le)))
 		le->inuse = qfalse;
 }
 
@@ -1038,7 +1037,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 	le->contents = CONTENTS_ACTOR;
 	VectorCopy(player_mins, le->mins);
-	if (le->state & STATE_DEAD)
+	if (LE_IsDead(le))
 		VectorCopy(player_dead_maxs, le->maxs);
 	else
 		VectorCopy(player_maxs, le->maxs);
@@ -1046,11 +1045,11 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	le->think = LET_StartIdle;
 
 	/* count spotted aliens */
-	if (!(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if (!LE_IsDead(le) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
 	assert(cls.state == ca_active);
-	if (!(le->state & STATE_DEAD)) {
+	if (!LE_IsDead(le)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
 			VectorCopy(le->origin, cl.cam.origin);
@@ -1182,7 +1181,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	}
 
 	/* killed by the server: no animation is played, etc. */
-	if (state & STATE_DEAD && !(le->state & STATE_DEAD)) {
+	if (state & STATE_DEAD && !LE_IsDead(le)) {
 		le->state = state;
 		FLOOR(le) = NULL;
 		le->think = NULL;

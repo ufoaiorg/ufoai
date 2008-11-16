@@ -153,8 +153,7 @@ static inline localModel_t *LM_Find (int entnum)
 qboolean LE_IsLivingActor (const le_t *le)
 {
 	assert(le);
-	return ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
-		&& !(le->state & STATE_DEAD));
+	return ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !LE_IsDead(le));
 }
 
 /**
@@ -445,9 +444,10 @@ void LET_StartIdle (le_t * le)
 	/* hidden actors don't have models assigned, thus we can not change the
 	 * animation for any model */
 	if (le->type != ET_ACTORHIDDEN) {
-		if (le->state & STATE_DEAD)
-			R_AnimChange(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
-		else if (le->state & STATE_PANIC)
+		if (LE_IsDead(le)) {
+			const int animationIndex = le->state % MAX_DEATH;
+			R_AnimChange(&le->as, le->model1, va("dead%i", animationIndex));
+		} else if (le->state & STATE_PANIC)
 			R_AnimChange(&le->as, le->model1, "panic0");
 		else
 			R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));

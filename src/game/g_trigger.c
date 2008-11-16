@@ -68,8 +68,8 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
-	assert(!(activator->state & STATE_DEAD));
-	assert(!(activator->state & STATE_STUN));
+	assert(!G_IsDead(activator));
+	assert(!G_IsStunned(activator));
 
 	if (self->spawnflags & 2) {
 		activator->STUN += self->dmg;
@@ -116,8 +116,8 @@ void SP_trigger_hurt (edict_t *ent)
 static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 {
 	/* these actors should really not be able to trigger this - they don't move anymore */
-	assert(!(activator->state & STATE_DEAD));
-	assert(!(activator->state & STATE_STUN));
+	assert(!G_IsDead(activator));
+	assert(!G_IsDead(activator));
 
 	self->owner = G_FindTargetEntity(self->target);
 	if (!self->owner) {

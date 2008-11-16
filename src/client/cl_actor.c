@@ -353,7 +353,7 @@ static void CL_ActorGlobalCVars (void)
 	Cvar_SetValue("mn_numaliensspotted", cl.numAliensSpotted);
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		const le_t *le = cl.teamList[i];
-		if (le && !(le->state & STATE_DEAD)) {
+		if (le && !LE_IsDead(le)) {
 			/* the model name is the first entry in model_t */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
 			Cvar_SetValue(va("mn_hp%i", i), le->HP);
@@ -2504,7 +2504,7 @@ void CL_ActorUpdateCVars (void)
 		int i;
 
 		for (i = 0; i < MAX_TEAMLIST; i++) {
-			if (!cl.teamList[i] || cl.teamList[i]->state & STATE_DEAD) {
+			if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
 				Cbuf_AddText(va("huddisable%i\n", i));
 			} else if (i == cl_selected->integer) {
 				/* stored in menu_nohud.ufo - confunc that calls all the different
@@ -2535,7 +2535,7 @@ void CL_AddActorToTeamList (le_t * le)
 	int i;
 
 	/* test team */
-	if (!le || le->team != cls.team || le->pnum != cl.pnum || (le->state & STATE_DEAD))
+	if (!le || le->team != cls.team || le->pnum != cl.pnum || LE_IsDead(le))
 		return;
 
 	/* check list length */
@@ -2609,8 +2609,7 @@ qboolean CL_ActorSelect (le_t * le)
 	qboolean sameActor = qfalse;
 
 	/* test team */
-	if (!le || le->team != cls.team ||
-		(le->state & STATE_DEAD) || !le->inuse)
+	if (!le || le->team != cls.team || LE_IsDead(le) || !le->inuse)
 		return qfalse;
 
 	if (blockEvents)
@@ -2720,7 +2719,7 @@ qboolean CL_ActorSelectNext (void)
 	/* find index of currently selected actor */
 	for (i = 0; i < num; i++) {
 		const le_t *le = cl.teamList[i];
-		if (le && le->selected && le->inuse && !(le->state & STATE_DEAD)) {
+		if (le && le->selected && le->inuse && !LE_IsDead(le)) {
 			selIndex = i;
 			break;
 		}
@@ -2779,11 +2778,7 @@ static void CL_BuildForbiddenList (void)
 		if (!le->inuse || le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
-		/**
-		 * @note Just a note for the future
-		 * If we get any ugv that does not block the map when dead this is the place to look.
-		 */
-		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_ACTOR2x2) {
+		if (LE_IsLivingActor(le) || le->type == ET_ACTOR2x2) {
 			fb_list[fb_length++] = le->pos;
 			fb_list[fb_length++] = (byte*)&le->fieldSize;
 		}
@@ -2818,7 +2813,7 @@ void CL_DisplayBlockedPaths_f (void)
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
 			/* draw blocking cursor at le->pos */
-			if (!(le->state & STATE_DEAD))
+			if (!LE_IsDead(le))
 				Grid_PosToVec(clMap, le->fieldSize, le->pos, s);
 			break;
 		case ET_DOOR:
@@ -3336,7 +3331,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
-	if (le->state & STATE_DEAD) {
+	if (LE_IsDead(le)) {
 		Com_Printf("Can't move, actor dead\n");
 		return;
 	}
@@ -3445,7 +3440,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 		return;
 	}
 
-	if (le->state & STATE_DEAD) {
+	if (LE_IsDead(le)) {
 		Com_Printf("Can't turn, actor dead\n");
 		return;
 	}
@@ -3659,12 +3654,6 @@ static void CL_ActorHit (const le_t * le, vec3_t impact, int normal)
 		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor (type: %i)\n", le->type);
 		return;
 	}
-#if 0
-	else if (le->state & STATE_DEAD) {
-		Com_Printf("CL_ActorHit: Can't spawn particles, actor already dead\n");
-		return;
-	}
-#endif
 
 	if (le->teamDef) {
 		/* Spawn "hit_particle" if defined in teamDef. */
@@ -3743,7 +3732,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		CL_ActorHit(le, impact, normal);
 	}
 
-	if (le->state & STATE_DEAD) {
+	if (LE_IsDead(le)) {
 		Com_Printf("Can't shoot, actor dead or stunned.\n");
 		return;
 	}
@@ -3887,7 +3876,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		return;
 	}
 
-	if (le->state & STATE_DEAD) {
+	if (LE_IsDead(le)) {
 		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead or stunned.\n", number);
 		return;
 	}
@@ -3953,17 +3942,16 @@ void CL_ActorDie (struct dbuffer *msg)
 		return;
 	}
 
-	if (le->state & STATE_DEAD) {
+	if (LE_IsDead(le)) {
 		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
 		return;
+	} else if (!le->inuse) {
+		/* LE not in use condition normally arises when CL_EntPerish has been
+		 * called on the le to hide it from the client's sight.
+		 * Probably can return without killing unused LEs, but testing reveals
+		 * killing an unused LE here doesn't cause any problems and there is
+		 * an outside chance it fixes some subtle bugs. */
 	}
-	/* else if (!le->inuse) {
-		* LE not in use condition normally arises when CL_EntPerish has been
-		* called on the le to hide it from the client's sight.
-		* Probably can return without killing unused LEs, but testing reveals
-		* killing an unused LE here doesn't cause any problems and there is
-		* an outside chance it fixes some subtle bugs.
-	}*/
 
 	/* count spotted aliens */
 	if (le->team != cls.team && le->team != TEAM_CIVILIAN && le->inuse)
@@ -3977,13 +3965,16 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* play animation */
 	le->think = NULL;
-	R_AnimChange(&le->as, le->model1, va("death%i", le->state & STATE_DEAD));
-	R_AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
+	{
+		const int animationIndex = le->state % MAX_DEATH;
+		R_AnimChange(&le->as, le->model1, va("death%i", animationIndex));
+		R_AnimAppend(&le->as, le->model1, va("dead%i", animationIndex));
+	}
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
 		character_t *chr = CL_GetActorChr(le);
-		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
+		if (chr && LE_IsStunned(le)) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was stunned\n"),
 			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
@@ -3995,7 +3986,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
-			if ((le->state & STATE_STUN) & ~STATE_DEAD)
+			if (LE_IsStunned(le))
 				SCR_DisplayHudMessage(_("A civilian was stunned.\n"), 2000);
 			else
 				SCR_DisplayHudMessage(_("A civilian was killed.\n"), 2000);
@@ -4003,7 +3994,7 @@ void CL_ActorDie (struct dbuffer *msg)
 		case (TEAM_ALIEN):
 			if (le->teamDef) {
 				if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
-					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
+					if (LE_IsStunned(le)) {
 						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
 						SCR_DisplayHudMessage(tmpbuf, 2000);
 					} else {
@@ -4011,26 +4002,26 @@ void CL_ActorDie (struct dbuffer *msg)
 						SCR_DisplayHudMessage(tmpbuf, 2000);
 					}
 				} else {
-					if ((le->state & STATE_STUN) & ~STATE_DEAD)
+					if (LE_IsStunned(le))
 						SCR_DisplayHudMessage(_("An alien was stunned.\n"), 2000);
 					else
 						SCR_DisplayHudMessage(_("An alien was killed.\n"), 2000);
 				}
 			} else {
-				if ((le->state & STATE_STUN) & ~STATE_DEAD)
+				if (LE_IsStunned(le))
 					SCR_DisplayHudMessage(_("An alien was stunned.\n"), 2000);
 				else
 					SCR_DisplayHudMessage(_("An alien was killed.\n"), 2000);
 			}
 			break;
 		case (TEAM_PHALANX):
-			if ((le->state & STATE_STUN) & ~STATE_DEAD)
+			if (LE_IsStunned(le))
 				SCR_DisplayHudMessage(_("A soldier was stunned.\n"), 2000);
 			else
 				SCR_DisplayHudMessage(_("A soldier was killed.\n"), 2000);
 			break;
 		default:
-			if ((le->state & STATE_STUN) & ~STATE_DEAD)
+			if (LE_IsStunned(le))
 				SCR_DisplayHudMessage(va(_("A member of team %i was stunned.\n"), le->team), 2000);
 			else
 				SCR_DisplayHudMessage(va(_("A member of team %i was killed.\n"), le->team), 2000);
@@ -4463,7 +4454,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	entity_t add;
 
 	/* add the weapons to the actor's hands */
-	if (!(le->state & STATE_DEAD)) {
+	if (!LE_IsDead(le)) {
 		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
 		const qboolean addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
@@ -4520,21 +4511,18 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	R_AddEntity(&add);
 
 	/** Add actor special effects.
-	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs.
-	 * @todo Better value for this?	*/
-	if ((le->state & STATE_DEAD)
-	 && !(le->state & STATE_STUN))
+	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs. */
+	/** @todo Better value for this?	*/
+	if (LE_IsStunned(le) && le->HP <= (le->maxHP / 2))
 		ent->flags |= RF_BLOOD;
-	else if ((le->state & STATE_DEAD)
-	 && (le->state & STATE_STUN)
-	 && le->HP <= (le->maxHP / 2))
+	else if (LE_IsDead(le))
 		ent->flags |= RF_BLOOD;
 	else
 		ent->flags |= RF_SHADOW;
 
 	ent->flags |= RF_ACTOR;
 
-	if (!(le->state & STATE_DEAD)) {
+	if (!LE_IsDead(le) && !LE_IsStunned(le)) {
 		if (le->selected)
 			ent->flags |= RF_SELECTED;
 		if (le->team == cls.team) {
@@ -4558,7 +4546,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 {
 	entity_t add;
 
-	if (!(le->state & STATE_DEAD)) {
+	if (!LE_IsDead(le)) {
 		/* add weapon */
 		if (le->left != NONE) {
 			memset(&add, 0, sizeof(add));
@@ -4602,7 +4590,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	ent->flags |= RF_SHADOW;
 	ent->flags |= RF_ACTOR;
 
-	if (!(le->state & STATE_DEAD)) {
+	if (!LE_IsDead(le)) {
 		if (le->selected)
 			ent->flags |= RF_SELECTED;
 		if (le->team == cls.team) {

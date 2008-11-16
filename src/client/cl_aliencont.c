@@ -110,16 +110,15 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 				continue;
 			}
 
-			/* (le->state & STATE_DEAD) includes STATE_STUN */
-			if (le->state & STATE_DEAD) {
+			if (LE_IsDead(le) || LE_IsStunned(le)) {
 				for (j = 0; j < aircraft->alientypes; j++) {
 					/* Search alien type and increase amount */
 					assert(cargo[j].teamDef);
 					assert(le->teamDef);
 					if (cargo[j].teamDef == le->teamDef) {
 						/* Search stunned first. */
-						if ((le->state & STATE_STUN) & ~STATE_DEAD) {
-							/* live alien */
+						if (LE_IsStunned(le)) {
+							/* alive alien */
 							cargo[j].amount_alive++;
 							Com_DPrintf(DEBUG_CLIENT, "Counting: alive %s count: %i\n", le->teamDef->name, cargo[j].amount_alive);
 						} else {
@@ -134,7 +133,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 					/* otherwise add new alien type */
 					cargo[j].teamDef = le->teamDef;
 					/* Search stunned first. */
-					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
+					if (LE_IsStunned(le)) {
 						/* live alien */
 						cargo[j].amount_alive++;
 						Com_DPrintf(DEBUG_CLIENT, "Adding: alive %s count: %i\n", le->teamDef->name, cargo[j].amount_alive);

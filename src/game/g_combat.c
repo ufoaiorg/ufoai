@@ -78,7 +78,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
-		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN) {
+		if (ent->inuse && ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
 			switch (type) {
 			case ML_WOUND:
 			case ML_DEATH:
@@ -144,7 +144,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 	assert(struck->number != shooter->number || mock->allow_self);
 
 	if (damage > 0) {
-		if (!struck || !struck->inuse || struck->state & STATE_DEAD)
+		if (!struck || !struck->inuse || G_IsDead(struck))
 			return;
 		else if (!(struck->visflags & (1 << shooter->team)))
 			return;
@@ -329,7 +329,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	}
 
 	/* Actors don't die again. */
-	if (target->state & STATE_DEAD)
+	if (G_IsDead(target))
 		return;
 
 	/* only actors after this point - and they must have a teamdef */
@@ -586,7 +586,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 	byte flags;
 
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
-	if (ent->state & STATE_DEAD) {
+	if (G_IsDead(ent)) {
 		Com_DPrintf(DEBUG_GAME, "G_ShootGrenade: Shooter is dead, shot not possible.\n");
 		return;
 	}
@@ -826,7 +826,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	int clientType;	/* shoot type for ai controlled actors */
 
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
-	if (ent->state & STATE_DEAD) {
+	if (G_IsDead(ent)) {
 		Com_DPrintf(DEBUG_GAME, "G_ShootSingle: Shooter is dead, shot not possible.\n");
 		return;
 	}
@@ -1281,7 +1281,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
 			G_ReactToPreFire(ent);
-			if (ent->state & STATE_DEAD)
+			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return qfalse;
 		}
@@ -1363,7 +1363,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 
 	if (!mock) {
 		/* send TUs if ent still alive */
-		if (ent->inuse && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && !G_IsDead(ent)) {
 			ent->TU = max(ent->TU - fd->time, 0);
 			G_SendStats(ent);
 		}

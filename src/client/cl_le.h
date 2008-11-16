@@ -143,6 +143,10 @@ void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const ve
 void LE_AddAmbientSound(const char *sound, const vec3_t origin, float volume, int levelflags);
 le_t *LE_GetClosestActor(const vec3_t origin);
 
+#define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)
+/** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
+#define LE_IsDead(le)		(((le)->state & STATE_DEAD))
+
 void LE_Think(void);
 /* think functions */
 void LET_StartIdle(le_t *le);

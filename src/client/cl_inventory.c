@@ -227,8 +227,7 @@ void INV_CollectingItems (int won)
 		case ET_ACTOR2x2:
 			/* First of all collect armour of dead or stunned actors (if won). */
 			if (won) {
-				/* (le->state & STATE_DEAD) includes STATE_STUN */
-				if (le->state & STATE_DEAD) {
+				if (LE_IsDead(le) || LE_IsStunned(le)) {
 					if (le->i.c[csi.idArmour]) {
 						item = le->i.c[csi.idArmour];
 						INV_CollectItem(aircraft, item->item.t, 1);
@@ -237,7 +236,7 @@ void INV_CollectingItems (int won)
 				}
 			}
 			/* Now, if this is dead or stunned actor, additional check. */
-			if (le->state & STATE_DEAD || le->team != cls.team) {
+			if (le->team != cls.team || LE_IsDead(le) || LE_IsStunned(le)) {
 				/* The items are already dropped to floor and are available
 				 * as ET_ITEM; or the actor is not ours. */
 				break;

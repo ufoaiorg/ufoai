@@ -374,7 +374,7 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 	}
 
 	/* show dead actors in full black */
-	if (le->state & STATE_DEAD) {
+	if (LE_IsDead(le)) {
 		/* low alpha because we want to see items on the floor, too */
 		Vector4Set(color, 0, 0, 0, 0.3);
 	} else {

@@ -1668,10 +1668,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 			G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
 			bestAia.shots--;
 			/* dies by our own shot? */
-			if (ent->state & STATE_DEAD)
+			if (G_IsDead(ent))
 				return;
 			/* check for target's death */
-			if (bestAia.target->state & STATE_DEAD) {
+			if (G_IsDead(bestAia.target)) {
 				/* search another target now */
 				bestAia = AI_PrepBestAction(player, ent);
 				/* no other target found - so no need to hide */

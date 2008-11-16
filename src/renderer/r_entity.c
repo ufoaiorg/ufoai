@@ -314,7 +314,7 @@ static void R_DrawEntityEffects (void)
 			if (e->flags & RF_SHADOW)
 				R_BindTexture(shadow->texnum);
 			else
-				R_BindTexture(blood[e->state % STATE_DEAD]->texnum);
+				R_BindTexture(blood[e->state % MAX_DEATH]->texnum);
 
 			glBegin(GL_QUADS);
 			glTexCoord2f(0.0, 1.0);
