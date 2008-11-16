@@ -62,7 +62,6 @@ void R_ModelLoadDPMVertsForFrame (model_t *mod, int frame)
 				 + boneVertex->origin[2] * boneMatrix->matrix[2][2]
 				 + boneVertex->influence * boneMatrix->matrix[2][3];
 		}
-		R_ModLoadArrayDataForStaticModel(&mod->alias, mesh);
 	}
 }
 
@@ -217,4 +216,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 
 	for (i = 0; i < mod->alias.num_frames; i++)
 		R_ModelLoadDPMVertsForFrame(mod, i);
+
+	for (i = 0; i < mod->alias.num_meshes; i++)
+		R_ModLoadArrayDataForStaticModel(&mod->alias, &mod->alias.meshes[i]);
 }
