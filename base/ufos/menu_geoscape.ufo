@@ -2246,9 +2246,10 @@ menu popup
 	button button_ok
 	{
 		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		pos		"260 170"
-		size	"200 48"
+		image	menu/button_green_small
+		blend	true
+		pos		"260 180"
+		width	"200 48"
 		click	{ cmd "mn_pop;" }
 		font	f_menu
 		color	"0 0.5 0 1"
