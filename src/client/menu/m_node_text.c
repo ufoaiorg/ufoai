@@ -237,12 +237,12 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 				cur += 2; /* don't print the format string */
 				break;
 			}
-		} else if (!Q_strncmp(cur, "img:", 4)) {
+		} else if (!Q_strncmp(cur, TEXT_IMAGETAG, strlen(TEXT_IMAGETAG))) {
 			const char *token;
 			const image_t *image;
 			int y1 = y;
-			/* cut the image tag 'img:' */
-			cur += 4;
+			/* cut the image tag */
+			cur += strlen(TEXT_IMAGETAG);
 			token = COM_Parse((const char **)&cur);
 			if (node->textLines > node->textScroll)
 				y1 += (node->textLines - node->textScroll) * node->texh[0];
