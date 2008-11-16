@@ -7455,7 +7455,7 @@ msgstr ""
 "\n"
 "PHALANX计划\n"
 "\n"
-"指挥手册\n"
+"技术文档\n"
 "\n"
 "时间: 20 三月 2084\n"
 "\n"
@@ -8738,7 +8738,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3222
 msgid "inter_stingray_pre_txt"
-msgstr "没有可用的资料。"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3248
 msgid "ufo_scout_txt"
