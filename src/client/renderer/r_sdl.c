@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _WIN32
 static void R_SetSDLIcon (void)
 {
-#include "../ports/linux/ufoicon.xbm"
+#include "../../ports/linux/ufoicon.xbm"
 	SDL_Surface *icon;
 	SDL_Color color;
 	Uint8 *ptr;

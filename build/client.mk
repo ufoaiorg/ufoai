@@ -115,31 +115,31 @@ CLIENT_SRCS = \
 	game/q_shared.c \
 	game/inv_shared.c \
 	\
-	renderer/r_bsp.c \
-	renderer/r_draw.c \
-	renderer/r_entity.c \
-	renderer/r_font.c \
-	renderer/r_image.c \
-	renderer/r_light.c \
-	renderer/r_lightmap.c \
-	renderer/r_main.c \
-	renderer/r_material.c \
-	renderer/r_misc.c \
-	renderer/r_mesh.c \
-	renderer/r_mesh_anim.c \
-	renderer/r_model.c \
-	renderer/r_model_alias.c \
-	renderer/r_model_brush.c \
-	renderer/r_model_dpm.c \
-	renderer/r_model_md2.c \
-	renderer/r_model_md3.c \
-	renderer/r_particle.c \
-	renderer/r_program.c \
-	renderer/r_sdl.c \
-	renderer/r_surface.c \
-	renderer/r_state.c \
-	renderer/r_sphere.c \
-	renderer/r_thread.c \
+	client/renderer/r_bsp.c \
+	client/renderer/r_draw.c \
+	client/renderer/r_entity.c \
+	client/renderer/r_font.c \
+	client/renderer/r_image.c \
+	client/renderer/r_light.c \
+	client/renderer/r_lightmap.c \
+	client/renderer/r_main.c \
+	client/renderer/r_material.c \
+	client/renderer/r_misc.c \
+	client/renderer/r_mesh.c \
+	client/renderer/r_mesh_anim.c \
+	client/renderer/r_model.c \
+	client/renderer/r_model_alias.c \
+	client/renderer/r_model_brush.c \
+	client/renderer/r_model_dpm.c \
+	client/renderer/r_model_md2.c \
+	client/renderer/r_model_md3.c \
+	client/renderer/r_particle.c \
+	client/renderer/r_program.c \
+	client/renderer/r_sdl.c \
+	client/renderer/r_surface.c \
+	client/renderer/r_state.c \
+	client/renderer/r_sphere.c \
+	client/renderer/r_thread.c \
 	\
 	shared/byte.c \
 	shared/mathlib.c \

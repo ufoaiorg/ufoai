@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "menu/m_input.h"
 
-#include "../renderer/r_sdl.h"
+#include "renderer/r_sdl.h"
 #include "../common/tracing.h"
 
 /** @brief Grid position on the map for pending events */

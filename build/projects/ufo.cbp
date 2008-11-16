@@ -690,107 +690,107 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/renderer/anormtab.h" />
-		<Unit filename="../../src/renderer/r_bsp.c">
+		<Unit filename="../../src/client/renderer/anormtab.h" />
+		<Unit filename="../../src/client/renderer/r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_draw.c">
+		<Unit filename="../../src/client/renderer/r_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_draw.h" />
-		<Unit filename="../../src/renderer/r_entity.c">
+		<Unit filename="../../src/client/renderer/r_draw.h" />
+		<Unit filename="../../src/client/renderer/r_entity.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_entity.h" />
-		<Unit filename="../../src/renderer/r_error.h" />
-		<Unit filename="../../src/renderer/r_font.c">
+		<Unit filename="../../src/client/renderer/r_entity.h" />
+		<Unit filename="../../src/client/renderer/r_error.h" />
+		<Unit filename="../../src/client/renderer/r_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_font.h" />
-		<Unit filename="../../src/renderer/r_gl.h" />
-		<Unit filename="../../src/renderer/r_image.c">
+		<Unit filename="../../src/client/renderer/r_font.h" />
+		<Unit filename="../../src/client/renderer/r_gl.h" />
+		<Unit filename="../../src/client/renderer/r_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_image.h" />
-		<Unit filename="../../src/renderer/r_light.c">
+		<Unit filename="../../src/client/renderer/r_image.h" />
+		<Unit filename="../../src/client/renderer/r_light.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_light.h" />
-		<Unit filename="../../src/renderer/r_lightmap.c">
+		<Unit filename="../../src/client/renderer/r_light.h" />
+		<Unit filename="../../src/client/renderer/r_lightmap.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_lightmap.h" />
-		<Unit filename="../../src/renderer/r_local.h" />
-		<Unit filename="../../src/renderer/r_main.c">
+		<Unit filename="../../src/client/renderer/r_lightmap.h" />
+		<Unit filename="../../src/client/renderer/r_local.h" />
+		<Unit filename="../../src/client/renderer/r_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_main.h" />
-		<Unit filename="../../src/renderer/r_material.c">
+		<Unit filename="../../src/client/renderer/r_main.h" />
+		<Unit filename="../../src/client/renderer/r_material.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_material.h" />
-		<Unit filename="../../src/renderer/r_mesh.c">
+		<Unit filename="../../src/client/renderer/r_material.h" />
+		<Unit filename="../../src/client/renderer/r_mesh.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_mesh.h" />
-		<Unit filename="../../src/renderer/r_mesh_anim.c">
+		<Unit filename="../../src/client/renderer/r_mesh.h" />
+		<Unit filename="../../src/client/renderer/r_mesh_anim.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_mesh_anim.h" />
-		<Unit filename="../../src/renderer/r_misc.c">
+		<Unit filename="../../src/client/renderer/r_mesh_anim.h" />
+		<Unit filename="../../src/client/renderer/r_misc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model.c">
+		<Unit filename="../../src/client/renderer/r_model.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model.h" />
-		<Unit filename="../../src/renderer/r_model_alias.c">
+		<Unit filename="../../src/client/renderer/r_model.h" />
+		<Unit filename="../../src/client/renderer/r_model_alias.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model_alias.h" />
-		<Unit filename="../../src/renderer/r_model_brush.c">
+		<Unit filename="../../src/client/renderer/r_model_alias.h" />
+		<Unit filename="../../src/client/renderer/r_model_brush.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model_brush.h" />
-		<Unit filename="../../src/renderer/r_model_dpm.c">
+		<Unit filename="../../src/client/renderer/r_model_brush.h" />
+		<Unit filename="../../src/client/renderer/r_model_dpm.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model_dpm.h" />
-		<Unit filename="../../src/renderer/r_model_md2.c">
+		<Unit filename="../../src/client/renderer/r_model_dpm.h" />
+		<Unit filename="../../src/client/renderer/r_model_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model_md2.h" />
-		<Unit filename="../../src/renderer/r_model_md3.c">
+		<Unit filename="../../src/client/renderer/r_model_md2.h" />
+		<Unit filename="../../src/client/renderer/r_model_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_model_md3.h" />
-		<Unit filename="../../src/renderer/r_particle.c">
+		<Unit filename="../../src/client/renderer/r_model_md3.h" />
+		<Unit filename="../../src/client/renderer/r_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_particle.h" />
-		<Unit filename="../../src/renderer/r_program.c">
+		<Unit filename="../../src/client/renderer/r_particle.h" />
+		<Unit filename="../../src/client/renderer/r_program.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_sdl.c">
+		<Unit filename="../../src/client/renderer/r_sdl.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_sdl.h" />
-		<Unit filename="../../src/renderer/r_sphere.c">
+		<Unit filename="../../src/client/renderer/r_sdl.h" />
+		<Unit filename="../../src/client/renderer/r_sphere.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_sphere.h" />
-		<Unit filename="../../src/renderer/r_state.c">
+		<Unit filename="../../src/client/renderer/r_sphere.h" />
+		<Unit filename="../../src/client/renderer/r_state.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_state.h" />
-		<Unit filename="../../src/renderer/r_surface.c">
+		<Unit filename="../../src/client/renderer/r_state.h" />
+		<Unit filename="../../src/client/renderer/r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_thread.c">
+		<Unit filename="../../src/client/renderer/r_thread.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/renderer/r_thread.h" />
-		<Unit filename="../../src/renderer/r_warpsin.h" />
+		<Unit filename="../../src/client/renderer/r_thread.h" />
+		<Unit filename="../../src/client/renderer/r_warpsin.h" />
 		<Unit filename="../../src/server/server.h" />
 		<Unit filename="../../src/server/sv_ccmds.c">
 			<Option compilerVar="CC" />

@@ -42,7 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_CustomButtonNodeDraw (menuNode_t *node)
 {
 	const char *text;
-	const char *font;
 	int baseY;
 	const float *textColor;
 	const char *image;
@@ -71,7 +70,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 	text = MN_GetReferenceString(node->menu, node->text);
 	if (text != NULL && *text != '\0') {
-		font = MN_GetFont(node->menu, node);
+		const char *font = MN_GetFont(node->menu, node);
 		R_ColorBlend(textColor);
 		R_FontDrawStringInBox(font, node->textalign,
 			pos[0] + node->padding, pos[1] + node->padding,

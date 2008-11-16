@@ -26,14 +26,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_map.h"
-#include "../renderer/r_draw.h"
+#include "renderer/r_draw.h"
 
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
 void R_InitializeRadarOverlay(qboolean source);
 void R_UploadRadarCoverage(qboolean smooth);
 
-qboolean radarOverlayWasSet;	/**< used to store the previous configuration of overlay before radar
-								 * is automatically turned on (e.g when creating base or when UFO appears) */
+/**
+ * used to store the previous configuration of overlay before radar
+ * is automatically turned on (e.g when creating base or when UFO appears)
+ */
+qboolean radarOverlayWasSet;
 
 /* Define radar range */
 const float RADAR_BASERANGE = 24.0f;

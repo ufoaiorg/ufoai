@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "../renderer/r_main.h"
+#include "renderer/r_main.h"
 #include "menu/m_font.h"
 
 viddef_t viddef;	/* global video state; used by other modules */

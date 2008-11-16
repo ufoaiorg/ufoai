@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
-#include "../renderer/r_mesh_anim.h"
+#include "r_mesh_anim.h"
 
 #define LNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
 

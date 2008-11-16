@@ -27,15 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_parse.h"
-#include "../../renderer/r_local.h"
-#include "../../renderer/r_font.h"
+#include "../renderer/r_local.h"
+#include "../renderer/r_font.h"
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
 /**
  * @brief Generic tooltip function
- * @todo R_FontLength can change the string - which very very very bad for reference values and item names.
+ * @todo R_FontLength can change the string - which is very very bad for reference values and item names.
  * @todo Check for max height as well? (multi-line tooltips)
  */
 int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, int maxHeight)
@@ -44,7 +44,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
-	if (!string || !*string || !font)
+	if (!string || string[0] == '\0' || !font)
 		return 0;
 
 	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL);
@@ -81,19 +81,14 @@ void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 	const char *tooltip;
 	int width = 0;
 
-	/* tooltips
-	 * node->tooltip is a char pointer to the tooltip text
-	 * see value_t nps for more info */
-
-	/* maybe not tooltip but a key entity? */
+	/* maybe no tooltip but a key entity? */
 	if (node->tooltip) {
 		char buf[256]; /** @todo @sa MN_DrawTooltip */
 		tooltip = MN_GetReferenceString(menu, node->tooltip);
 		Q_strncpyz(buf, tooltip, sizeof(buf));
 		width = MN_DrawTooltip("f_small", buf, x, y, width, 0);
 		y += 20;
-	}
-	if (node->key[0]) {
+	} else if (node->key[0]) {
 		if (node->key[0] == '*') {
 			tooltip = MN_GetReferenceString(menu, node->key);
 			if (tooltip)
