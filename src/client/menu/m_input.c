@@ -232,15 +232,15 @@ void MN_MouseMove (int x, int y)
 	mouseOverTest = NULL;
 	if (menu) {
 		/* relative position */
-		x -= menu->pos[0];
-		y -= menu->pos[1];
+		const int xx = x - menu->pos[0];
+		const int yy = y - menu->pos[1];
 
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstChild; node; node = node->next) {
 			if (node->invis || !MN_CheckCondition(node))
 				continue;
-			if (x >= node->pos[0] && x <= node->pos[0] + node->size[0]
-				&& y >= node->pos[1] && y <= node->pos[1] + node->size[1])
+			if (xx >= node->pos[0] && xx <= node->pos[0] + node->size[0]
+				&& yy >= node->pos[1] && yy <= node->pos[1] + node->size[1])
 				mouseOverTest = node;
 		}
 	}

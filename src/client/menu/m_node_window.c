@@ -140,7 +140,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
 		control->dataImageOrModel = "menu/move";
-		 /** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
+		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		control->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		control->size[1] = CONTROLS_IMAGE_DIMENSIONS;
 		control->pos[0] = menu->size[0] - positionFromRight - control->size[0];
@@ -156,7 +156,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = menu;
 		button->dataImageOrModel = "menu/close";
-		 /** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
+		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;
 		button->pos[0] = menu->size[0] - positionFromRight - button->size[0];

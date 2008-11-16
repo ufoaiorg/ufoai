@@ -151,7 +151,7 @@ static void MN_DrawScrollBar (const menuNode_t *node)
  * @brief Get the line number under an absolute position
  * @param[in] node a text node
  * @param[in] x position x on the screen
- * @param[in] y position x on the screen
+ * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
 int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
