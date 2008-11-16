@@ -213,7 +213,7 @@ download_description()
 				match($0,"<a href=")
 				if (RLENGTH>0) {
 					$0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
-					match($0,";action=edit\" class=\"new\"")
+					match($0,"&amp;action=edit&amp;redlink=1\"")
 					if (RLENGTH<0) {printf "%s\n",$2}
 				}
 				exit;
