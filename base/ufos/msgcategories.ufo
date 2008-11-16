@@ -31,3 +31,9 @@ msgcategory "_production"
 	production_failed
 	production_queue_empty
 }
+msgcategory "_nations_happiness"
+{
+	nation_happiness_changed
+	nation_unhappy
+	nation_pleased
+}

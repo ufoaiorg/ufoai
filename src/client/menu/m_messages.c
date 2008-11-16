@@ -42,6 +42,9 @@ static const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
 	N_("production_finished"),
 	N_("production_failed"),
 	N_("production_queue_empty"),
+	N_("nation_happiness_changed"),
+	N_("nation_unhappy"),
+	N_("nation_pleased")
 };
 CASSERT(lengthof(nt_strings) == NT_NUM_NOTIFYTYPE);
 

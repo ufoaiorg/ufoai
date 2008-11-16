@@ -33,4 +33,9 @@ msgoptions default
 	production_queue_empty notify
 	production_queue_empty sound
 	production_queue_empty pause
+	nation_happiness_changed notify
+	nation_unhappy notify
+	nation_unhappy pause
+	nation_unhappy sound
+	nation_pleased notify
 }

@@ -140,20 +140,35 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 {
 	const char *oldString = NAT_GetHappinessString(nation);
 	const char *newString;
+	const float oldHappiness = nation->stats[0].happiness;
+	const float middleHappiness = (curCampaign->minhappiness + 1.0) / 2;
+	notify_t notifyType = NT_NUM_NOTIFYTYPE;
 
 	nation->stats[0].happiness = happiness;
-
 	if (nation->stats[0].happiness < 0.0f)
 		nation->stats[0].happiness = 0.0f;
 	else if (nation->stats[0].happiness > 1.0f)
 		nation->stats[0].happiness = 1.0f;
 
 	newString = NAT_GetHappinessString(nation);
+
 	if (oldString != newString) {
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 			_("Nation %s changed happiness from %s to %s"), _(nation->name), oldString, newString);
-		MN_AddNewMessage(_("Nation changed happiness"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+		notifyType = NT_HAPPINESS_CHANGED;
+	} else if (oldHappiness > middleHappiness && happiness < middleHappiness) {
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+			_("Nation %s changed happiness to %s"), _(nation->name), newString);
+		notifyType = NT_HAPPINESS_PLEASED;
+	} else if (happiness < curCampaign->minhappiness && oldHappiness > curCampaign->minhappiness) {
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), /** @todo need to more specific message */
+			_("Happiness of nation %s is %s and less than minimal happiness allowed to the campaign."), _(nation->name), newString);
+		notifyType = NT_HAPPINESS_MIN;
+	} else {
+		return;
 	}
+
+	MSO_CheckAddNewMessage(notifyType, _("Nation changed happiness"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 }
 
 /**
