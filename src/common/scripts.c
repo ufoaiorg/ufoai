@@ -32,7 +32,7 @@
  * @brief possible values for parsing functions
  * @sa valueTypes_t
  */
-const char *vt_names[] = {
+const char *const vt_names[] = {
 	"",
 	"bool",
 	"char",
@@ -66,17 +66,17 @@ const char *vt_names[] = {
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
-const char *align_names[] = {
+const char *const align_names[] = {
 	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr", "ul_rsl", "uc_rsl", "ur_rsl", "cl_rsl", "cc_rsl", "cr_rsl", "ll_rsl", "lc_rsl", "lr_rsl"
 };
 CASSERT(lengthof(align_names) == ALIGN_LAST);
 
-const char *blend_names[] = {
+const char *const blend_names[] = {
 	"replace", "blend", "add", "filter", "invfilter"
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
 
-const char *menutextid_names[] = {
+static const char *const menutextid_names[] = {
 	"TEXT_STANDARD", "TEXT_LIST", "TEXT_UFOPEDIA", "TEXT_BUILDINGS", "TEXT_BUILDING_INFO",
 	"TEXT_RESEARCH", "TEXT_POPUP", "TEXT_POPUP_INFO", "TEXT_AIRCRAFT_LIST",
 	"TEXT_AIRCRAFT_INFO", "TEXT_MESSAGESYSTEM", "TEXT_CAMPAIGN_LIST",
@@ -92,23 +92,23 @@ const char *menutextid_names[] = {
 };
 CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 
-const char *style_names[] = {
+const char *const style_names[] = {
 	"facing", "rotated", "beam", "line", "axis", "circle"
 };
 CASSERT(lengthof(style_names) == STYLE_LAST);
 
-const char *fade_names[] = {
+const char *const fade_names[] = {
 	"none", "in", "out", "sin", "saw", "blend"
 };
 CASSERT(lengthof(fade_names) == FADE_LAST);
 
-const char *longlines_names[] = {
+const char *const longlines_names[] = {
 	"wrap", "chop", "prettychop"
 };
 CASSERT(lengthof(longlines_names) == LONGLINES_LAST);
 
 #ifndef DEDICATED_ONLY
-static const char *if_strings[] = {
+static const char *const if_strings[] = {
 	"==",
 	"<=",
 	">=",
@@ -821,7 +821,7 @@ OBJECT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-static const char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
+static const char *const skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"close",
 	"heavy",
 	"assault",
@@ -1047,7 +1047,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
  * @brief List of valid strings for slot types
  * @note slot names are the same as the item types (and must be in the same order)
  */
-const char *air_slot_type_strings[] = {
+const char *const air_slot_type_strings[] = {
 	"base_missile",
 	"base_laser",
 	"weapon",
@@ -1385,7 +1385,7 @@ typedef enum model_script_s {
 	MODEL_NUM_TYPES
 } model_script_t;
 
-const char *name_strings[NAME_NUM_TYPES] = {
+const char *const name_strings[NAME_NUM_TYPES] = {
 	"neutral",
 	"female",
 	"male",
@@ -1817,7 +1817,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 						else
 							LIST_AddString(&td->models[i], token);
 					}
-					/* first token was } */
+					/* first token was '}' */
 					if (j == 0)
 						break;
 
@@ -1847,7 +1847,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
  */
 static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t* td)
 {
-	const char *errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
+	const char *const errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
 	const char *token;
 	int i;
 

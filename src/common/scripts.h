@@ -114,7 +114,7 @@ typedef enum {
 	V_NUM_TYPES
 } valueTypes_t;
 
-extern const char *vt_names[];
+extern const char *const vt_names[];
 
 /** @brief We need this here for checking the boundaries from script values */
 #define MAX_BASES 8
@@ -241,12 +241,12 @@ typedef enum {
 	LONGLINES_LAST
 } longlines_t;
 
-extern const char *align_names[];
-extern const char *blend_names[];
-extern const char *style_names[];
-extern const char *fade_names[];
-extern const char *longlines_names[];
-extern const char *air_slot_type_strings[];
+extern const char *const align_names[];
+extern const char *const blend_names[];
+extern const char *const style_names[];
+extern const char *const fade_names[];
+extern const char *const longlines_names[];
+extern const char *const air_slot_type_strings[];
 
 /** used e.g. in our parsers */
 typedef struct value_s {
@@ -277,7 +277,7 @@ int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, si
 SCRIPT PARSING
 ==============================================================*/
 
-extern const char *name_strings[NAME_NUM_TYPES];
+extern const char *const name_strings[];
 
 /** @brief Different terrain definitions for footsteps and particles */
 typedef struct terrainType_s {
