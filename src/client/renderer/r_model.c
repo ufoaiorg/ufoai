@@ -84,7 +84,6 @@ void R_ModModellist_f (void)
 	Com_Printf(" - %4i inline models\n", r_numModelsInline);
 }
 
-
 /**
  * @brief Loads in a model for the given name
  * @sa R_RegisterModel

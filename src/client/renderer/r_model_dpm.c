@@ -62,6 +62,7 @@ void R_ModelLoadDPMVertsForFrame (model_t *mod, int frame)
 				 + boneVertex->origin[2] * boneMatrix->matrix[2][2]
 				 + boneVertex->influence * boneMatrix->matrix[2][3];
 		}
+		R_ModLoadArrayDataForStaticModel(&mod->alias, mesh);
 	}
 }
 

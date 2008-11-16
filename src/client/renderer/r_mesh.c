@@ -68,6 +68,120 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 	}
 }
 
+static inline void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
+{
+	int i, j;
+	const mAliasFrame_t *frame, *oldframe;
+	const mAliasVertex_t *v, *ov;
+	vec3_t move;
+	const float frontlerp = 1.0 - backlerp;
+	vec3_t r_mesh_verts[MD3_MAX_VERTS];
+	vec3_t r_mesh_norms[MD3_MAX_VERTS];
+	float *texcoord_array, *vertex_array_3d, *normal_array;
+
+	frame = mod->frames + framenum;
+	oldframe = mod->frames + oldframenum;
+
+	for (i = 0; i < 3; i++)
+		move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
+
+	v = &mesh->vertexes[framenum * mesh->num_verts];
+	ov = &mesh->vertexes[oldframenum * mesh->num_verts];
+
+	assert(mesh->num_verts < MD3_MAX_VERTS);
+
+	for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
+		VectorSet(r_mesh_verts[i],
+				move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
+				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
+				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
+
+		if (r_state.lighting_enabled) {  /* and the norms */
+			VectorSet(r_mesh_norms[i],
+					v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
+					v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
+					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
+		}
+	}
+
+	texcoord_array = texunit_diffuse.texcoord_array;
+	vertex_array_3d = r_state.vertex_array_3d;
+	normal_array = r_state.normal_array;
+
+	/** @todo damn slow - optimize this */
+	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
+		for (j = 0; j < 3; j++) {
+			const int arrayIndex = 3 * i + j;
+			Vector2Copy(mesh->stcoords[mesh->indexes[arrayIndex]], texcoord_array);
+			VectorCopy(r_mesh_verts[mesh->indexes[arrayIndex]], vertex_array_3d);
+
+			/* normal vectors for lighting */
+			if (r_state.lighting_enabled)
+				VectorCopy(r_mesh_norms[mesh->indexes[arrayIndex]], normal_array);
+
+			texcoord_array += 2;
+			vertex_array_3d += 3;
+			normal_array += 3;
+		}
+	}
+}
+
+/**
+ * @brief Loads array data for models with only one frame. Only called once at loading time.
+ */
+void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *mesh)
+{
+	const int v = mesh->num_tris * 3 * 3;
+	const int st = mesh->num_tris * 3 * 2;
+
+	if (mod->num_frames != 1)
+		return;
+
+	assert(mesh->verts == NULL);
+	assert(mesh->texcoords == NULL);
+	assert(mesh->normals == NULL);
+
+	R_FillArrayData(mod, mesh, 0.0, 0, 0);
+
+	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
+
+	memcpy(mesh->verts, r_state.vertex_array_3d, sizeof(float) * v);
+	memcpy(mesh->normals, r_state.normal_array, sizeof(float) * v);
+	memcpy(mesh->texcoords, texunit_diffuse.texcoord_array, sizeof(float) * st);
+}
+
+/**
+ * @brief Animated model render function
+ * @see R_DrawAliasStatic
+ */
+static inline void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
+{
+	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum);
+
+	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	R_CheckError();
+}
+
+/**
+ * @brief Static model render function
+ * @sa R_DrawAliasFrameLerp
+ */
+static inline void R_DrawAliasStatic (const mAliasMesh_t *mesh)
+{
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
+	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
+
+	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_NORMAL_ARRAY);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+}
+
 /**
  * @sa R_DrawAliasModel
  */
@@ -149,7 +263,10 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
 		refdef.alias_count += mesh->num_tris;
-		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
+		if (mesh->verts != NULL)
+			R_DrawAliasStatic(mesh);
+		else
+			R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 	}
 
 	if ((mi->color && mi->color[3] < 1.0f) || skin->has_alpha)
@@ -197,7 +314,10 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	for (i = 0; i < mi->model->alias.num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
 		refdef.alias_count += mesh->num_tris;
-		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
+		if (mesh->verts != NULL)
+			R_DrawAliasStatic(mesh);
+		else
+			R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 	}
 
 	glPopMatrix();
@@ -263,68 +383,6 @@ qboolean R_CullMeshModel (entity_t *e)
 	return qfalse;
 }
 
-void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
-{
-	int i, j;
-	const mAliasFrame_t *frame, *oldframe;
-	const mAliasVertex_t *v, *ov;
-	vec3_t move;
-	const float frontlerp = 1.0 - backlerp;
-	vec3_t r_mesh_verts[MD3_MAX_VERTS];
-	vec3_t r_mesh_norms[MD3_MAX_VERTS];
-	float *texcoord_array, *vertex_array_3d, *normal_array;
-
-	frame = mod->frames + framenum;
-	oldframe = mod->frames + oldframenum;
-
-	for (i = 0; i < 3; i++)
-		move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
-
-	v = &mesh->vertexes[framenum * mesh->num_verts];
-	ov = &mesh->vertexes[oldframenum * mesh->num_verts];
-
-	assert(mesh->num_verts < MD3_MAX_VERTS);
-
-	for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
-		VectorSet(r_mesh_verts[i],
-				move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
-				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
-				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
-
-		if (r_state.lighting_enabled) {  /* and the norms */
-			VectorSet(r_mesh_norms[i],
-					v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
-					v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
-					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
-		}
-	}
-
-	texcoord_array = texunit_diffuse.texcoord_array;
-	vertex_array_3d = r_state.vertex_array_3d;
-	normal_array = r_state.normal_array;
-
-	/** @todo damn slow - optimize this */
-	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
-		for (j = 0; j < 3; j++) {
-			const int arrayIndex = 3 * i + j;
-			Vector2Copy(mesh->stcoords[mesh->indexes[arrayIndex]], texcoord_array);
-			VectorCopy(r_mesh_verts[mesh->indexes[arrayIndex]], vertex_array_3d);
-
-			/* normal vectors for lighting */
-			if (r_state.lighting_enabled)
-				VectorCopy(r_mesh_norms[mesh->indexes[arrayIndex]], normal_array);
-
-			texcoord_array += 2;
-			vertex_array_3d += 3;
-			normal_array += 3;
-		}
-	}
-
-	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
-
-	R_CheckError();
-}
-
 /**
  * @brief Draw the models in the entity list
  * @note this is only called in ca_active or ca_sequence mode
@@ -378,9 +436,12 @@ void R_DrawAliasModel (const entity_t *e)
 	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
 
 	for (i = 0; i < mod->num_meshes; i++) {
-		/* locate the proper data */
-		refdef.alias_count += mod->meshes[i].num_tris;
-		R_DrawAliasFrameLerp(mod, &mod->meshes[i], e->as.backlerp, e->as.frame, e->as.oldframe);
+		const mAliasMesh_t *mesh = &mod->meshes[i];
+		refdef.alias_count += mesh->num_tris;
+		if (mesh->verts != NULL)
+			R_DrawAliasStatic(mesh);
+		else
+			R_DrawAliasFrameLerp(mod, &mod->meshes[i], e->as.backlerp, e->as.frame, e->as.oldframe);
 	}
 
 	/* show model bounding box */

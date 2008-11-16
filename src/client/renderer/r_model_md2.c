@@ -297,4 +297,6 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 		R_ModLoadAnims(&mod->alias, animbuf);
 		FS_FreeFile(animbuf);
 	}
+
+	R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes);
 }

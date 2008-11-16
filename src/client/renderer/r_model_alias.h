@@ -73,6 +73,11 @@ typedef	struct mAliasMesh_s {
 	mAliasVertex_t	*vertexes;
 	mAliasCoord_t	*stcoords;
 
+	/* static meshes have vertex arrays */
+	float *verts;
+	float *texcoords;
+	float *normals;
+
 	int	num_tris;
 	int32_t	*indexes;
 
@@ -123,4 +128,5 @@ typedef	struct	mAliasModel_s {
 	void *tagdata;
 } mAliasModel_t;
 
-void R_ModLoadAnims(mAliasModel_t * mod, void *buffer);
+void R_ModLoadAnims(mAliasModel_t *mod, void *buffer);
+void R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh);
