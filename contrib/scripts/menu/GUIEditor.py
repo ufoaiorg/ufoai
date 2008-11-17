@@ -3,10 +3,14 @@
 #
 # @brief GUI to check UFOAI GUI. Only a viewer for the moment
 # @license Public domaine
+# @note tested with Python 2.4.1
 #
 
+import sys
 from Tkinter import *
 from UFOMenuAPI import Root
+
+#print "Python version", sys.version_info 
 
 # @brief Window to view an UFOAI window
 class View(Toplevel):
@@ -115,3 +119,4 @@ class Application(Tk):
 if __name__ == "__main__":
 	application = Application(None)
 	application.mainloop()
+

@@ -3,13 +3,14 @@
 #
 # @brief functions to check and update menu_*.ufo files
 # @license Public domaine
+# @note tested with Python 2.4.1
 #
 
-import os
-import re
+import os, sys, re
+import os.path 
 
-ufobase = 'base/ufos'
-
+# path where exists ufo binary
+UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
 
 removeComment = re.compile('//.*\\n')
 removeEvents = re.compile('(\s)(click|rclick|mclick|wheel|in|out|whup|whdown)\s*\{.*?\}', re.DOTALL)
@@ -82,7 +83,7 @@ class Root:
 
 	def loadFile(self, filename):
 		print 'load ' + filename
-		file = open(filename, "rt")
+		file = open(UFOAI_ROOT + '/' + filename, "rt")
 		data = file.read()
 		file.close()
 		
@@ -93,10 +94,10 @@ class Root:
 	
 	
 	def loadAll(self):
-		for f in os.listdir(ufobase):
+		for f in os.listdir(UFOAI_ROOT + '/base/ufos'):
 			if "menu_" not in f:
 				continue
-			self.loadFile(ufobase + '/' + f)
+			self.loadFile('/base/ufos/' + f)
 
 	def save(self):
 		for f, data in self.files.iteritems():
@@ -104,7 +105,7 @@ class Root:
 				continue
 
 			print 'save ' + f
-			file = open(f, "wt")
+			file = open(UFOAI_ROOT + '/' + f, "wt")
 			file.write(data)
 			file.close()
 
@@ -337,6 +338,8 @@ def moveMultiplayerMenuContent():
 
 	root.save()
 
-			
-#moveMultiplayerMenuContent()
+if __name__ == "__main__":
+	#moveMultiplayerMenuContent()
+	root = Root()
+	root.loadFile('base/ufos/menu_multiplayer.ufo')
 

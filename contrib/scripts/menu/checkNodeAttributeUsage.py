@@ -7,9 +7,10 @@
 # @todo reading "attributes" from the nodes.h file
 #
 
-import os
+import os, os.path, sys
 
-dir = 'src/client/menu'
+# path where exists ufo binary
+UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
 
 attributes = [
 	"name",
@@ -75,6 +76,7 @@ attributes = [
 ]
 
 files = []
+dir = UFOAI_ROOT + '/src/client/menu'
 
 for f in os.listdir(dir):
 	if ".c" not in f:
