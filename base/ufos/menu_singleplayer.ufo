@@ -311,6 +311,7 @@ menu quickload
 		texh	"176 64"
 		texl	"0 32"
 		pos	"46 188"
+		size	"176 32"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
@@ -329,6 +330,7 @@ menu quickload
 		tooltip	"_Reload the last automatically saved campaign state"
 		image	menu/multi_buttons3
 		pos	"266 188"
+		size	"176 32"
 		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }

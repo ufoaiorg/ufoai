@@ -311,6 +311,7 @@ menu popup_recoverybaselist
 		texh	"176 64"
 		texl	"0 32"
 		pos	"46 188"
+		size	"176 32"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
@@ -329,6 +330,7 @@ menu popup_recoverybaselist
 		tooltip	"_Begin UFO recovery process"
 		image	menu/multi_buttons3
 		pos	"266 188"
+		size	"176 32"
 		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
@@ -430,6 +432,7 @@ menu popup_recoverynationlist
 		texh	"176 64"
 		texl	"0 32"
 		pos	"36 338"
+		size	"176 32"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
@@ -448,6 +451,7 @@ menu popup_recoverynationlist
 		tooltip	"_Begin UFO sell process"
 		image	menu/multi_buttons3
 		pos	"566 338"
+		size	"176 32"
 		texh	"176 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
