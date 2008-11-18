@@ -424,13 +424,14 @@ static void MSO_UpdateVisibleButtons (void)
 	/* update visible button lines based on current displayed values */
 	for (i = 0; visible < MAX_MESSAGESETTINGS_ENTRIES && i < gd.numMsgCategoryEntries; i++) {
 		const int idx = i + messageList_scroll;
-		if (idx < lengthof(gd.msgCategoryEntries)) {
+		if (idx < gd.numMsgCategoryEntries) {
 			const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[idx];
 			if (entry->isCategory) {
 				/* category is visible anyway*/
 				MN_ExecuteConfunc(va("ms_disable%i",visible));
 				visible++;
 			} else {
+				assert(entry->category);
 				if (!entry->category->isFolded) {
 					MN_ExecuteConfunc(va("ms_enable%i", visible));
 					MN_ExecuteConfunc(va("ms_pause%s%i", entry->settings->doPause ? "e" : "d", visible));
@@ -801,7 +802,7 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
  * @param name
  * @param text
  */
-void MSO_ParseSettings(const char *name, const char **text)
+void MSO_ParseSettings (const char *name, const char **text)
 {
 	const char *errhead = "MSO_ParseSettings: unexpected end of file (names ";
 	const char *token, *tmpCommand, *msgtype;
@@ -819,9 +820,9 @@ void MSO_ParseSettings(const char *name, const char **text)
 	do {
 		/* get the msg type*/
 		msgtype = COM_EParse(text, errhead, name);
-		if (!*text)
+		if (text[0] == '\0')
 			break;
-		if (*msgtype == '}')
+		if (msgtype[0] == '}')
 			break;
 		/* temporarly store type */
 		tmpCommand = va("%s",msgtype);
@@ -883,12 +884,12 @@ void MSO_ParseCategories (const char *name, const char **text)
 	do {
 		/* get entries and add them to category */
 		token = COM_EParse(text, errhead, name);
-		if (!*text)
+		if (text[0] == '\0')
 			break;
-		if (*token == '}')
+		if (token[0] == '}')
 			break;
 
-		if (*token) {
+		if (token[0] != '\0') {
 			for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
 				if (!Q_strncmp(token, nt_strings[idx],MAX_VAR)) {
 					/* prepare a new msgcategory entry */
