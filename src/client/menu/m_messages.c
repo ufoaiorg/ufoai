@@ -513,7 +513,7 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex(const int select
 {
 	int entriesToCheck = selection + messageList_scroll;
 	int realIndex = 0;
-	for(; entriesToCheck > 0; entriesToCheck--) {
+	for (; entriesToCheck > 0; entriesToCheck--) {
 		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[realIndex];
 		realIndex++;
 		if (entry->isCategory && entry->category->isFolded) {
@@ -722,8 +722,10 @@ static void MSO_RestoreSettings_f(void)
  * @return message_t pointer if message was added
  * @sa MN_AddNewMessageSound
  */
-message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia) {
+message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia)
+{
 	message_t *result = NULL;
+
 	if (messageSettings[messagecategory].doNotify)
 		result = MN_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
 	if (messageSettings[messagecategory].doPause)
@@ -738,9 +740,11 @@ message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *ti
 qboolean MSO_Save (sizebuf_t* sb, void* data)
 {
 	notify_t type;
-	int count = NT_NUM_NOTIFYTYPE;
+	const int count = NT_NUM_NOTIFYTYPE;
+
 	/* save amount of available entries (forward compatible for additional types) */
 	MSG_WriteLong(sb, count);
+
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		byte bitmask = 0;
@@ -766,14 +770,17 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 qboolean MSO_Load (sizebuf_t* sb, void* data)
 {
 	int count;
+
 	/* reset current message settings (default to set for undefined settings)*/
 	memset(messageSettings, 1, sizeof(messageSettings));
+
 	/* load all positive settings */
 	count = MSG_ReadLong(sb);
 	if (count < 0) {
 		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
 		return qfalse;
 	}
+
 	for (; count > 0; count--) {
 		const char *messagetype = MSG_ReadString(sb);
 		const byte pauseOrNotify = MSG_ReadByte(sb);
