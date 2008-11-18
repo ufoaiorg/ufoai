@@ -123,7 +123,7 @@ static void BuildFaceExtents (void)
 /**
  * @sa BuildFaceExtents
  */
-static void CalcFaceExtents (lightinfo_t *l)
+static void CalcLightinfoExtents (lightinfo_t *l)
 {
 	const dBspFace_t *s;
 	float *mins, *maxs;
@@ -262,7 +262,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	}
 }
 
-typedef struct {
+/** @brief buckets for sample accumulation */
+typedef struct facelight_s {
 	int numsamples;
 	float *origins;
 	float *samples;
@@ -277,8 +278,9 @@ typedef enum {
 	emit_spotlight
 } emittype_t;
 
-typedef struct directlight_s {
-	struct directlight_s *next;
+/** @brief a light source */
+typedef struct light_s {
+	struct light_s *next;
 	emittype_t	type;
 
 	float		intensity;
@@ -286,21 +288,21 @@ typedef struct directlight_s {
 	vec3_t		color;
 	vec3_t		normal;		/**< for surfaces and spotlights */
 	float		stopdot;	/**< for spotlights */
-} directlight_t;
+} light_t;
 
-static directlight_t *directlights[2];
-static int numdlights[2];
+static light_t *lights[2];
+static int numlights[2];
 
 #define	DIRECT_LIGHT	3
 
 /**
- * @brief Create directlights out of patches and lights
+ * @brief Create lights out of patches and lights
  * @sa LightWorld
  */
-void CreateDirectLights (void)
+void BuildLights (void)
 {
 	int i;
-	directlight_t *dl;
+	light_t *dl;
 	const dBspLeaf_t *leaf;
 
 	/* surfaces */
@@ -312,15 +314,15 @@ void CreateDirectLights (void)
 				p->totallight[2] < DIRECT_LIGHT)
 			continue;
 
-		numdlights[config.compile_for_day]++;
+		numlights[config.compile_for_day]++;
 		dl = malloc(sizeof(*dl));
 		memset(dl, 0, sizeof(*dl));
 
 		VectorCopy(p->origin, dl->origin);
 
 		leaf = Light_PointInLeaf(dl->origin);
-		dl->next = directlights[config.compile_for_day];
-		directlights[config.compile_for_day] = dl;
+		dl->next = lights[config.compile_for_day];
+		lights[config.compile_for_day] = dl;
 
 		dl->type = emit_surface;
 		VectorCopy(p->plane->normal, dl->normal);
@@ -347,15 +349,15 @@ void CreateDirectLights (void)
 				continue;
 		}
 
-		numdlights[config.compile_for_day]++;
+		numlights[config.compile_for_day]++;
 		dl = malloc(sizeof(*dl));
 		memset(dl, 0, sizeof(*dl));
 
 		GetVectorForKey(e, "origin", dl->origin);
 
 		/* link in */
-		dl->next = directlights[config.compile_for_day];
-		directlights[config.compile_for_day] = dl;
+		dl->next = lights[config.compile_for_day];
+		lights[config.compile_for_day] = dl;
 
 		intensity = FloatForKey(e, "light");
 		if (!intensity)
@@ -446,7 +448,7 @@ void CreateDirectLights (void)
 
 	Verb_Printf(VERB_EXTRA, "light settings:\n * intensity: %i\n * sun_angles: pitch %f yaw %f\n * sun_color: %f:%f:%f\n * sun_ambient_color: %f:%f:%f\n",
 		sun_intensity, sun_pitch, sun_yaw, sun_color[0], sun_color[1], sun_color[2], sun_ambient_color[0], sun_ambient_color[1], sun_ambient_color[2]);
-	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numdlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
+	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
 /**
@@ -486,13 +488,13 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale)
 {
-	directlight_t *l;
+	light_t *l;
 	vec3_t delta;
 	float dot, dot2;
 	float dist, halfDist;
 	float light, dir;
 
-	for (l = directlights[config.compile_for_day]; l; l = l->next) {
+	for (l = lights[config.compile_for_day]; l; l = l->next) {
 		light = dir = 0.0;
 
 		VectorSubtract(l->origin, pos, delta);
@@ -750,7 +752,7 @@ void BuildFacelights (unsigned int facenum)
 		VectorCopy(face_offset[facenum], l[i].modelorg);
 
 		/* calculate lightmap texture mins and maxs */
-		CalcFaceExtents(&l[i]);
+		CalcLightinfoExtents(&l[i]);
 
 		/* and the lightmap texture vectors */
 		CalcFaceVectors(&l[i]);

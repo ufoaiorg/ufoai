@@ -79,7 +79,7 @@ extern unsigned num_patches;
 void LinkPlaneFaces(void);
 void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
-void CreateDirectLights(void);
+void BuildLights(void);
 
 dBspLeaf_t *Light_PointInLeaf(const vec3_t point);
 

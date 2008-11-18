@@ -106,7 +106,7 @@ void LightWorld (void)
 	SubdividePatches(num_patches);
 
 	/* create directlights out of patches and lights */
-	CreateDirectLights();
+	BuildLights();
 
 	/* build per-vertex normals for phong shading */
 	BuildVertexNormals();
