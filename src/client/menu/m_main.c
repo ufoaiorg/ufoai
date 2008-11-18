@@ -677,9 +677,9 @@ void MN_Shutdown (void)
 
 void MN_Init (void)
 {
-	#ifdef DEBUG
-	void MN_UnittestTimer();
-	#endif
+#ifdef DEBUG
+	MN_UnittestTimer();
+#endif
 
 	/* reset menu structures */
 	memset(&mn, 0, sizeof(mn));
