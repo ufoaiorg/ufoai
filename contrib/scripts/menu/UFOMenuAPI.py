@@ -12,14 +12,15 @@ import os.path
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
 
-removeComment = re.compile('//.*\\n')
+removeComment = re.compile('(?:\s|^)(//.*$)', re.MULTILINE)
 removeEvents = re.compile('(\s)(click|rclick|mclick|wheel|in|out|whup|whdown)\s*\{.*?\}', re.DOTALL)
-removeFunctions = re.compile('(\s)(confunc)(\s*)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
+removeFunctions = re.compile('(\s)(confunc|func)(\s+)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
+removeOptions = re.compile('(\s)(option)(\s+)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
 
 mouseevent = ["click", "rclick", "mclick", "wheel", "in", "out", "whup", "whdown"]
 
 parseNodes = re.compile('\s*([a-zA-Z0-9_-]+)\s+([a-zA-Z0-9_-]+)\s*\{(.*?)\}', re.DOTALL)
-matchParam = re.compile("([^\"\s]\S*|\".*?\")")
+matchParam = re.compile("(\".*?\"|(?!\")\S+)\s+", re.DOTALL)
 
 renameMenuParam = '(\smenu\s+%s\s*\{\s*\{.*?\s)(%s)(\s)'
 updateMenuParam = '(\smenu\s+%s\s*\{\s*\{.*?\s%s\s*)([^\"\s]\S*|\".*?\")(\s)'
@@ -34,18 +35,29 @@ class Root:
 		self.fileBases = {}
 
 	def parseUFOParam(self, object, data):
-		data = "           " + data.strip()
-		result = matchParam.findall(data)
-		while len(result) >= 2:
-			name, value = result.pop(0), result.pop(0)
+		result = matchParam.findall(data.strip() + " ")
+		while len(result) != 0:
+			name = result.pop(0)
+			value = None
+			if name in mouseevent:
+				if len(result) > 0:
+					value = result.pop(0)
+					# is event alone
+					if value != '...':
+						result.insert(0, value)
+					
+			else:
+				if len(result) > 0:
+					value = result.pop(0)
+				else:
+					print 'no value for the param \"' + name + '\" (' + object.name + ')'
 			object.addParam(name, value)
-		if len(result) > 0:
-			print 'unused value (' + object.name + '):' + result[0]
 
 	def parseUFOMenu(self, data, filename):
-		data = removeComment.sub('\n', data)
+		data = removeComment.sub('', data)
 		data = removeEvents.sub('\\1\\2 ...', data)
 		data = removeFunctions.sub('\\1\\2\\3\\4\\5{}', data)
+		data = removeOptions.sub('\\1\\2\\3\\4\\5', data)
 		data = '\n\n' + data
 	
 		menus = data.split('\nmenu')
@@ -341,5 +353,6 @@ def moveMultiplayerMenuContent():
 if __name__ == "__main__":
 	#moveMultiplayerMenuContent()
 	root = Root()
-	root.loadFile('base/ufos/menu_multiplayer.ufo')
+	root.loadAll()
+	#root.loadFile('base/ufos/menu_team.ufo')
 
