@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_parse.h"
 #include "m_input.h"
+#include "m_timer.h"
 #include "../cl_input.h"
 #include "../cl_keys.h"
 

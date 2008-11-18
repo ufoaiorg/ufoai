@@ -429,6 +429,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_draw.h" />
+		<Unit filename="..\..\src\client\menu\m_drawutil.h" />
 		<Unit filename="..\..\src\client\menu\m_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -553,6 +554,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_popup.h" />
+		<Unit filename="..\..\src\client\menu\m_timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_timer.h" />
 		<Unit filename="..\..\src\client\menu\m_tooltip.c">
 			<Option compilerVar="CC" />
 		</Unit>

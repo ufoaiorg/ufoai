@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_draw.h"
 #include "m_input.h"
+#include "m_timer.h"
 #include "../client.h"
 
 menuGlobal_t mn;
@@ -676,6 +677,10 @@ void MN_Shutdown (void)
 
 void MN_Init (void)
 {
+	#ifdef DEBUG
+	void MN_UnittestTimer();
+	#endif
+
 	/* reset menu structures */
 	memset(&mn, 0, sizeof(mn));
 

@@ -39,26 +39,6 @@ menuNode_t* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(menuNode_t* node);
 void MN_MouseRelease(void);
 
-/* timer input */
-struct menuNode_s;
-struct menuTimer_s;
-typedef void (*timerCallback_t)(struct menuNode_s *node, struct menuTimer_s *timer);
-typedef struct menuTimer_s {
-	struct menuNode_s *node;
-	timerCallback_t callback;
-	int calledTime;
-	int nextTime;
-	int delay;
-	qboolean isRunning;
-	void *userData;
-} menuTimer_t;
-menuTimer_t* MN_AllocTimer(struct menuNode_s *node, int firstDelay, timerCallback_t callback);
-void MN_TimerStart(menuTimer_t *timer);
-void MN_TimerStop(menuTimer_t *timer);
-void MN_TimerRelease(menuTimer_t *timer);
-void MN_HandleTimers(void);
-
-
 /** @todo move it somewhere */
 void MN_SetCvar(const char *name, const char *str, float value);
 

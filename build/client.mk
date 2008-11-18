@@ -82,6 +82,7 @@ CLIENT_SRCS = \
 	client/menu/m_node_windowpanel.c \
 	client/menu/m_parse.c \
 	client/menu/m_popup.c \
+	client/menu/m_timer.c \
 	client/menu/m_tooltip.c \
 	\
 	common/cmd.c \

@@ -1,0 +1,222 @@
+/**
+ * @file m_timer.c
+ */
+
+/*
+Copyright (C) 1997-2008 UFO:AI Team
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#include "../client.h"
+#include "m_nodes.h"
+#include "m_timer.h"
+
+/**
+ * @brief Number max of timer slot.
+ */
+#define MN_TIMER_SLOT_NUMBER 10
+
+/**
+ * @brief Timer slot. Only one.
+ */
+static menuTimer_t mn_timerSlots[MN_TIMER_SLOT_NUMBER];
+
+/**
+ * @brief First timer from the timer list.
+ * This list is sorded from smaller to bigger nextTime value
+ */
+static menuTimer_t *mn_firstTimer;
+
+/**
+ * @brief remove a timer from the active linked list
+ * @note the function dont set to null next and prev attributes of the timer
+ */
+static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
+{
+	if (timer->prev) {
+		timer->prev->next = timer->next;
+	} else {
+		mn_firstTimer = timer->next;
+	}
+	if (timer->next) {
+		timer->next->prev = timer->prev;
+	}
+}
+
+/**
+ * @brief Insert a timer in a sorted linked list of timers.
+ * List are sorded from smaller to bigger nextTime value
+ */
+static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTimer)
+{
+	/* find insert position */
+	menuTimer_t* prev = NULL;
+	while (first) {
+		if (newTimer->nextTime < first->nextTime)
+			break;
+		prev = first;
+		first = first->next;
+	}
+
+	/* insert between prev and first */
+	newTimer->prev = prev;
+	newTimer->next = first;
+	if (first != NULL) {
+		first->prev = newTimer;
+	}
+	if (prev == NULL) {
+		mn_firstTimer = newTimer;
+	} else {
+		prev->next = newTimer;
+	}
+}
+
+/**
+ * @brief Internal function to handle timers
+ */
+void MN_HandleTimers (void)
+{
+	/* is first element is out of date? */
+	while (mn_firstTimer && mn_firstTimer->nextTime <= cls.realtime) {
+		menuTimer_t *timer = mn_firstTimer;
+
+		/* throw event */
+		timer->calledTime++;
+		timer->callback(timer->node, timer);
+
+		/* update the sorted list */
+		MN_RemoveTimerFromActiveList(timer);
+		timer->nextTime += timer->delay;
+		MN_InsertTimerInActiveList(timer->next, timer);
+	}
+}
+
+/**
+ * @brief Alloc a new time for a node
+ * @param[in] node node parent of the timer
+ * @param[in] firstDelay millisecond delay to wait the callback
+ * @param[in] callback callback function to call every delay
+ */
+menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t callback)
+{
+	menuTimer_t *timer = NULL;
+	int i;
+
+	/* search empty slot */
+	for (i = 0; i < MN_TIMER_SLOT_NUMBER; i++) {
+		if (mn_timerSlots[i].node != NULL && mn_timerSlots[i].callback != NULL)
+			continue;
+		timer = mn_timerSlots + i;
+		break;
+	}
+	if (timer == NULL) {
+		Sys_Error("MN_AllocTimer: No more timer slot\n");
+		return NULL;
+	}
+
+	timer->node = node;
+	timer->delay = firstDelay;
+	timer->callback = callback;
+	timer->calledTime = 0;
+	return timer;
+}
+
+/**
+ * @brief Restart a timer
+ */
+void MN_TimerStart (menuTimer_t *timer)
+{
+	timer->nextTime = cls.realtime + timer->delay;
+	MN_InsertTimerInActiveList(mn_firstTimer, timer);
+}
+
+/**
+ * @brief Stop a timer
+ */
+void MN_TimerStop (menuTimer_t *timer)
+{
+	MN_RemoveTimerFromActiveList(timer);
+	timer->prev = NULL;
+	timer->next = NULL;
+}
+
+/**
+ * @brief Release the timer. It no more exists
+ */
+void MN_TimerRelease (menuTimer_t *timer)
+{
+	MN_RemoveTimerFromActiveList(timer);
+	timer->prev = NULL;
+	timer->next = NULL;
+	timer->node = NULL;
+	timer->callback = NULL;
+}
+
+#ifdef DEBUG
+
+static menuNode_t *dummyNode = (menuNode_t *) 0x1;
+
+static timerCallback_t dummyCallback = (timerCallback_t) 0x1;
+
+/**
+ * @brief unittest to trust a little the linked list
+ */
+void MN_UnittestTimer (void)
+{
+	menuTimer_t *a, *b, *c;
+	a = MN_AllocTimer(dummyNode, 10, dummyCallback);
+	b = MN_AllocTimer(dummyNode, 20, dummyCallback);
+	c = MN_AllocTimer(dummyNode, 30, dummyCallback);
+	assert(mn_firstTimer == NULL);
+
+	MN_TimerStart(b);
+	assert(mn_firstTimer == b);
+
+	MN_TimerStart(a);
+	assert(mn_firstTimer == a);
+
+	MN_TimerStart(c);
+	assert(mn_firstTimer->next->next == c);
+
+	MN_TimerStop(a);
+	MN_TimerStop(b);
+	assert(a->node != NULL);
+	assert(mn_firstTimer == c);
+	assert(mn_firstTimer->next == NULL);
+
+	MN_TimerStart(a);
+	assert(mn_firstTimer == a);
+	assert(mn_firstTimer->next == c);
+
+	MN_TimerStart(b);
+	assert(mn_firstTimer == a);
+	assert(mn_firstTimer->next == b);
+
+	MN_TimerRelease(b);
+	assert(mn_firstTimer == a);
+	assert(mn_firstTimer->next == c);
+
+	MN_TimerRelease(a);
+	assert(mn_firstTimer == c);
+
+	MN_TimerRelease(c);
+	assert(mn_firstTimer == NULL);
+	assert(c->node == NULL);
+}
+
+#endif
