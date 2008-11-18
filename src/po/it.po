@@ -4751,7 +4751,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:436
 msgid "universal_serum_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander,\n"
+"\n"
+"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
+"\n"
+"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
+"\n"
+"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
+"\n"
+"Sincerely,Dr. Connor"
 
 #: ../base/ufos/research.ufo:465
 msgid "Alien Origins"
@@ -4822,7 +4831,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:506
 msgid "alien_theory_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
+"\n"
+"We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:549
 msgid "pistol_txt"
@@ -5473,7 +5487,18 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:984
 msgid "monoknife_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
+"\n"
+"Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.\n"
+"\n"
+"Obviously it would be of great interest to us if we could create our own knives made from these materials, with edges tapering to the width of a single molecule. My team and I believe it may now be possible.\n"
+"\n"
+"If you give us the funding and lab time we need, we can design and create a new monomolecular combat knife that will even the playing field for our soldiers when forced into hand-to-hand combat. This knife will be far more compact than the Kerrblade and much easier for humans to wield, and it'll be small enough to be used one-handed.\n"
+"\n"
+"Equipping our troops with such weapons could give them a major advantage, as they'll be able to properly defend themselves in melee for the first time whilst using other weapons or equipment -- such as pistols, grenades, medikits, or other useful items of tactical or life-saving importance.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1020
 msgid "flamer_txt"
@@ -5851,7 +5876,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1195
 msgid "grenl_plasma_ammo_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
+"\n"
+"Now that we're able to reproduce these alien plasma grenades, we've been looking into the possibility of adapting the technology to be fired from a grenade launcher. This would be a challenge, as the plasma hand grenades are significantly larger than 25mm, but we may be able to produce a scaled-back version that -- while not as powerful -- will have all the advantages of being fired from our standard HPGL Grenade Launcher.\n"
+"\n"
+"If we can manage to design and produce magazines of this type, they'd lend the HPGL increased firepower and even more tactical applications, well worth the monetary cost.\n"
+"\n"
+"The project is waiting for your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1234
 msgid "laser_ammo_txt"
@@ -5868,7 +5902,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1237
 msgid "laser_ammo_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"In order to power our deuterium-fluoride laser weaponry, we need to design a magazine that can safely store a lot of different hazardous materials. Ethylene, nitrogen trifluoride, helium and deuterium -- three of which are toxic compounds -- have to be kept in separate pressurised compartments, under complete control at all times. If these materials were allowed to mix, it would be what we engineers call a 'Bad Thing'.\n"
+"\n"
+"We already have a basic design that should overcome these problems, but we need lab facilities and funding in order to test it, prototype it and build it to UN safety spec. It's drudge work, but it has to be done in order to make our lasers safe to use on the battlefield. I'm not prepared to risk poisoning our own troops with deuterium gas by cutting corners. We need proper magazines if we're going to use our new laser weapons.\n"
+"\n"
+"Please approve this program as soon as you can, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1274
 msgid "heavylaser_txt"
@@ -5891,7 +5934,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1277
 msgid "heavylaser_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"Thanks to the experience we've gained from our Continuous Wave Laser research, my team and I have figured out one or two possible ways to further amplify the damage output of our infantry lasers. However, this will require significant research and refining of our prototype, as well as enlarging several of the components. The result will be a strictly heavy-infantry weapon of about the same size and weight as our HPML Rocket Launcher.\n"
+"\n"
+"We estimate that this weapon could be invaluable in a fire support role or as a direct-fire blockade breaker, capable of dissolving enemy strongpoints with powerful, pinpoint accurate fire. It would have attributes and capabilities which may be lacking in our current heavy weapons arsenal. Accuracy at range is generally abysmal in Earth-built heavy weapons, and they can be difficult to employ in situations where we need to avoid collateral damage. The heavy laser would avoid these issues altogether.\n"
+"\n"
+"It's certainly worth looking into, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1314
 msgid "irgoggles_txt"
@@ -5965,7 +6017,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1337
 msgid "kerrblade_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
+"\n"
+"We should examine the blade to determine its function and see how it was made. There may be a way to duplicate this technology in a form that's compatible for human use, which would make melee engagements with alien combatants far more survivable than going at them with a combat knife.\n"
+"\n"
+"Of course, this program will need your approval for lab time and funding.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1373
 msgid "laserpistol_txt"
@@ -5988,7 +6047,18 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1376
 msgid "laserpistol_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
+"\n"
+"The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:\n"
+"\n"
+"1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.\n"
+"\n"
+"As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1411
 msgid "laserrifle_txt"
@@ -6009,7 +6079,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1414
 msgid "laserrifle_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.\n"
+"\n"
+"The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.\n"
+"\n"
+"As always, Commander, we'll begin work as soon as you give us your authorisation.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1449
 msgid "medikit_txt"
@@ -6079,7 +6158,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1472
 msgid "plasatomizer_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
+"\n"
+"The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!\n"
+"\n"
+"Of course, this program will need your approval for lab time and funding.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1524 ../base/ufos/research.ufo:1565
 msgid "Alien Artifact - Plasma Blaster"
@@ -6102,7 +6188,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1532
 msgid "plasblaster_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
+"\n"
+"Please authorise this research program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1583
 msgid "Alien Artifact - Plasma Blade"
@@ -6129,7 +6220,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1591
 msgid "plasblade_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
+"\n"
+"More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1623
 msgid "Alien Artifact - Plasma Grenade"
@@ -6152,7 +6248,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1631
 msgid "plasmagren_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
+"\n"
+"We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
+"\n"
+"The project is ready for research, just waiting on your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1663 ../base/ufos/research.ufo:1705
 msgid "Alien Artifact - Plasma Rifle"
@@ -6177,7 +6280,10 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1671
 msgid "plasrifle_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1723 ../base/ufos/research.ufo:1763
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -6605,7 +6711,20 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2023
 msgid "stungren_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander,\n"
+"\n"
+"Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.\n"
+"\n"
+"Our study of the various live and dead alien specimens we've recovered has been enlightening. Thanks to the discoveries we've made over the past few months, my team and I have come to believe that we're ready to start a bio/chemical warfare program against the alien threat. We have tissue samples, autopsy data, live specimens for testing; all the raw materials we require to investigate methods of properly incapacitating battlefield specimens without being forced to send PHALANX troops into melee combat.\n"
+"\n"
+"This will be a challenge given the constant protection and filtration offered by the alien breathing apparatus, which prevents any harmful materials entering the lungs, but if you authorise sufficient lab time and funding we can almost certainly develop an aerosol compound that will disable exposed aliens by chemical or biological means.\n"
+"\n"
+"This will be a project of greatest importance and priority, Commander. The sooner you lend it your authorisation, the better.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2061
 #, fuzzy
@@ -6659,7 +6778,22 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2113
 msgid "stunrod_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander,\n"
+"\n"
+"I hope I'm not overstepping my bounds, but I have an important technical research proposal to make, a proposal to create a new piece of PHALANX equipment for use by our field agents. I realise this falls outside the responsibilities of my division. However, I've already discussed things with Cdr. Navarre, and he doesn't quite see eye-to-eye with me on the necessity of the item in question. I had no choice but to go to straight to you with the proposal.\n"
+"\n"
+"As you know, we've yet to capture an alien alive during our tactical engagements in all the weeks we've been waging this war. Now that we know how to keep them alive in containment, our lack of specimens is becoming a serious impediment to our biological and chemical research. We need living tissue to study, performing its natural functions inside a living body, and we don't have the ability to simply clone up some aliens to research. We need prisoners. The sooner the better.\n"
+"\n"
+"That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a two-handed man-portable unit with a large battery and several charge settings, the highest of which should be sufficient even to disable alien robots such as the Bloodspider. We in DivBio believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners.\n"
+"\n"
+"Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, my division's needs will be far, far higher than that for proper research and interrogation.\n"
+"\n"
+"I hope you understand. Please authorise lab time and funding for this project as soon as you can, and I'll get some people from DivEngine together to develop this project properly. I would of course be delighted if you could explain things to Cdr. Navarre. I'm sure he'll be happy to receive a message from you.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2146 ../base/ufos/research.ufo:2186
 msgid "Alien Artifact - Particle Beam Pistol"
@@ -6686,7 +6820,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2154
 msgid "pbeampistol_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
+"\n"
+"Please authorise this program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2205 ../base/ufos/research.ufo:2246
 msgid "Alien Artifact - Particle Beam Cannon"
@@ -6713,7 +6852,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2213
 msgid "pbeamcannon_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
+"\n"
+"Please authorise this program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2265 ../base/ufos/research.ufo:2305
 msgid "Alien Artifact - Particle Beam Rifle"
@@ -6742,7 +6886,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2273
 msgid "pbeamrifle_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
+"\n"
+"Please authorise this program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2325
 msgid "Man-Portable Particle Beams"
@@ -6769,7 +6918,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2333
 msgid "pbeamammo_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
+"\n"
+"I want to use our lab's radiation chamber to bombard one of the magazines with electromagnetic pulses, destroying most of the internal electronics, and hopefully causing it to shut down. Once it's safely deactivated, we can use brute force to open it up.\n"
+"\n"
+"Destroying a magazine to find out how it works may seem crude and backwards, but we have no other choice at the moment. Even blasted to hell by EMP, it should help us answer a lot of questions about the aliens' particle beam technology. It may also give us clues as to how we can get inside an undamaged magazine.\n"
+"\n"
+"Once we know how the magazine works, we can reassess the weapons and we'll hopefully be able to tell you how it all fits together, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2372
 msgid "combat_armour_txt"
@@ -8056,7 +8214,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3200
 msgid "inter_dragon_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
+"\n"
+"However, now that we have an understanding of alien materials and how they behave in the air, as well as alien engines and fuelling systems, I think my team and I are ready to tackle the task of creating an entirely new interceptor exclusive to PHALANX. We believe that by combining alien techniques with good old human manufacturing we can design something that will be vastly superior to our current-generation craft while remaining economically feasible to produce and to fly.\n"
+"\n"
+"The program will incur considerable expenses in lab time, personnel and materials, but as always we stand to gain much more than we could possibly lose. It's a project that could rally a lot of hope for our cause, Commander. Please let me know as soon as possible when you want us to start work.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3219
 #, fuzzy
@@ -8128,7 +8293,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3222
 msgid "inter_stingray_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3248
 msgid "ufo_scout_txt"
@@ -8167,7 +8333,10 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3251
 msgid "ufo_scout_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3290
 msgid "ufo_fighter_txt"
@@ -8204,7 +8373,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3293
 msgid "ufo_fighter_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3333
 msgid "ufo_supply_txt"
@@ -8235,13 +8409,18 @@ msgstr ""
 "\n"
 "Top speed: +/- 3,000km/h\n"
 "\n"
-"Crew capacity: 30 max.\n"
+"Crew capacity: 12 max.\n"
 "\n"
 "Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3336
 msgid "ufo_supply_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3376
 #, fuzzy
@@ -8404,7 +8583,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3508
 msgid "ufo_harvester_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3550
 msgid "Live Specimen - Bloodspider"
@@ -8425,34 +8609,34 @@ msgstr "Autopsia Aliena - Bloodspider"
 #: ../base/ufos/research.ufo:3576
 msgid "bloodspider_autopsy_txt"
 msgstr ""
-"Commander,\n"
+"Comandante,\n"
 "\n"
-"My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.\n"
+"Il mio team ha analizzato i resti della macchina aracnide recuperata dalla nostra squadra operativa. Abbiamo preparato un rapporto per la sua analisi.\n"
 "\n"
-"Autopsy reveals that the creature is a complex robot without any organic components. Its body is reminiscent of the terrestrial spider; a central body housing the artificial brain and power cells, and eight legs driven by powerful servomotors that allow it to move across the battlefield at frightening speeds. It is equipped with razor-sharp mandibles which can dissect human victims on the spot and store tissue or whole organs in a large cavity located in front of the power cells. These machines have been recorded cutting apart live humans during a terror mission and storing their biomass for retrieval. The process is gruesome and very, very short.\n"
+"L’autopsia mostra che la creatura è un robot complesso e privo di qualsiasi componente organica. La forma ricorda quella di un ragno terrestre; il corpo centrale della macchina ospita il cervello artificiale e le celle di energia, oltre ad otto zampe, azionate da servomotori, che le permettono di muoversi sul campo di battaglia ad una velocità spaventosa. La creatura è dotata di mandibole affilate come rasoi che sono in grado di dissezionare un essere umano in un colpo solo ed immaganizarne i tessuti e gli organi nella cavità anteriore alle celle di energia. Ci sono riprese video che mostrano queste macchine, impegnate in missioni di terrore, smembrare esseri umani ancora vivi ed immagazinarne la biomassa per campionamento. L’intero processo è raccapricciante e molto rapido.\n"
 "\n"
-"Our soldiers have dubbed the creature 'Bloodspider', and the name has stuck.\n"
+"I nostri soldati hanno soprannominato queste creature ‘Bloodspider’ e tale nome è rimasto.\n"
 "\n"
-"Ballistics testing on samples of the Bloodspider's armour plating reveal that it is very tough and has excellent insulating properties, making it effective against a wide variety of weapons.\n"
+"Test balistici su campioni di armatura di Bloodspider rivelano una grande resistenza ed eccellenti proprietà isolanti che la rendono molto efficace contro una grande varietà di armi.\n"
 "\n"
-"-- The armour is highly resistant to lasers, electricity and incendiary ammunition, but it can be penetrated by high-velocity armour-piercing rounds.\n"
+"-- L’armatura è altamente resistente ai laser, all’elettricità e alle munizioni incendiarie, ma può essere penetrata da proiettili ad alta penetrazione e ad alta velocità\n"
 "\n"
-"-- High explosives also achieve good results, as they tend to damage the vulnerable leg joints. This may be the most effective way to take these creatures out.\n"
+"-- Si possono ottenere buoni risultati anche con gli esplosivi ad alto potenziale dato che tendono a danneggiare le giunture delle zampe. Questo potrebbe essere il modo più efficace per togliere di mezzo queste creature.\n"
 "\n"
-"The existence of this creature raises some frightening questions. It suggests that the aliens are taking a very personal interest in us, and they're not asking questions. Commander, these machines pose a dire threat to any human that comes close. If encountered, they should be destroyed immediately and at all costs.\n"
+"Il fatto che queste creature siano in servizio fa sorgere delle domande inquietanti. Ciò suggerisce infatti che gli alieni abbiano un interesse particolare e personale per gli esseri umani, ma senza la necessita di fare domande. Comandante, queste macchine rappresentano una terribile minaccia per ogni essere umano che ne venga in contatto. Ogni qualvolta vengano interecettate devono essere distrutte immediatamente e ad ogni costo.\n"
 "\n"
-"Sincerely,\n"
+"Cordialmente,\n"
 "\n"
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:3579
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
-"Commander,\n"
+"Comandante,\n"
 "\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
+"abbiamo recuperato un nuovo cadavere alieno dal campo di battaglia. Dovremmo iniziare la dissezione e l'analisi il più presto possibile.\n"
 "\n"
-"Sincerely,\n"
+"Cordialmente,\n"
 "\n"
 "Dr. Connor"
 
@@ -8706,35 +8890,35 @@ msgstr ""
 #: ../base/ufos/research.ufo:3722
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
-"Commander,\n"
+"Comandante,\n"
 "\n"
-"Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans and Ortnoks, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.\n"
+"L’autopsia eseguita su questo nuovo alieno, lo Shevaar, ha prodotto risultati molto interessanti. C’è una sostanziale differenza rispetto alle specie umanoidi dei Taman e Ortnoks soprattutto per il fatto di possedere zampe digitigrade e piccole code che paiono essere le vestigia di una costante evoluzione. La creatura sembra essere completamente cieca; è sprovvista di occhi o di qualsiasi altro organo che potrebbe essere impiegato in un processo visivo. Tuttavia l’esemplare sembra avere altri interessanti organi per sopperire a questa deficienza.\n"
 "\n"
-"First off, the Shevaar looks like the unholy merger of a man and a lizard. Unlike most Earth lizards, however, the alien is warm-blooded and its brain is similar in size to our own -- probably slightly larger. Its massive feet are surprisingly springy, and it can cover large amounts of ground in a long, leaping gait. The large hands seem to have no problem wielding the many varieties of alien weaponry.\n"
+"A prima vista lo Shevaar assomiglia ad un incrocio tra un uomo ed una lucertola. A differenza di quasi tutte le lucertole terrestri tuttavia, l’alieno ha il sangue caldo e il suo cervello è molto simile come dimensioni al nostro – probabilmente è leggermente più grande. I suoi enormi piedi sono eccezionalmente agili e gli permettono di coprire grandi distanze grazie ad una lunga e poderosa falcata. Le grandi mani sembrano non avere problemi ad afferrare un’ampia varietà di armamento alieno.\n"
 "\n"
-"The results of the autopsy are no less interesting. Upon cutting upon the chest, we find that the rib cage is a solid shield of bone down the front, reinforced with stiff cartilege. The makeup of the bones is different from ours as well, made up mostly of carbon rather than calcium, with traces of metal that make them extremely hard and tough. Knives and bullets will have a great deal of trouble penetrating it, and it will be even harder to find vital organs to damage. Any body mass that isn't shielded by bone seems to be made up only of lean, wiry muscle.\n"
+"I risultati dell’autopsia non sono meno interessanti. Dopo aver eseguito un taglio lungo il torace, abbiamo scoperto che la cassa toracica della creatura costituisce un solido scudo osseo rinforzato da dura cartilagine. La composizione delle ossa è molto diversa rispetto alla nostra, ed è composta principalmente da carbonio invece che da calcio, con tracce di metalli che rendono l’ossatura estremamente dura e resistente. I coltelli ed i proiettili faranno molta fatica a penetrare questo scudo, ed avranno una difficoltà ancor maggiore ad impattare e danneggiare gli organi vitali. Tutta la massa corporea non protetta dalle ossa pare essere composta solo da una muscolatura fragile e fibrosa.\n"
 "\n"
-"The brain is particularly heavily-defended. Several layers of horn wrap around it like an impenetrable suit of armour. From the marks of wear and tear around this area, we surmise that these aliens regularly engage in vigorous head-butting, probably as part of their mating rituals. A small, omnivorous mouth protrudes from the mass of bone and leads down to a simple but functional digestive tract.\n"
+"Il cervello è particolarmente difeso. Diversi strati di materiale corneo lo proteggono al pari di un’impenetrabile armatura. Osservando i segni di usura e le lacerazioni intorno a quest’area, abbiamo dedotto che questi alieni combattano spesso fra loro a suon di testate, probabilmente come parte di un rituale di accoppiamento. Una piccola bocca onnivora fuoriesce dalla massa ossea per collegarsi ad un semplice ma funzionale tratto digestivo.\n"
 "\n"
-"There are more organs in the head than just the brain and the mouth, however. Behind the curls of bone there is a set of three organs that seem to detect infrared radiation. This is apparently what the Shevaar uses in lieu of eyes. We conclude that the sensitivity of these organs is roughly comparable to that of a human wearing PHALANX-standard IR Goggles.\n"
+"In ogni caso, la testa ospita molti più organi rispetto al solo cervello e alla bocca. Dietro la cortina ossea si trova una serie di tre organi che paiono avere la funzione di rilevazione dell’infrarosso. Questo è ciò che apparentemente gli Shevaar hanno al posto degli occhi. Possiamo concludere che la sensibilità di questi organi è comparabile con quella di un umano che indossa un paio di occhiali IR parte della dotazione standard PHALANX\n"
 "\n"
-"From the autopsy and our analysis of battlefield footage, we can conclude the following:\n"
+"A seguito dell'autopsia e dell'analisi delle riprese video dal campo di battaglia, possiamo concludere quanto segue:\n"
 "\n"
-"- The Shevaar see in infrared. This will make it difficult to hide from them or approach them undetected.\n"
+"-- Gli Shevaar vedono l’infrarosso. Questo rende difficile l’occultamento e abbassa le probabilità di un approccio stealth\n"
 "\n"
-"- They carry mostly light equipment to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.\n"
+"-- Essi prediligono un equipaggiamento leggero al fine di preservare la loro naturale mobilità. Ciò permette loro di sfruttare tattiche note come colpisci e fuggi.\n"
 "\n"
-"- Shevaar bodies are highly resistant to impact and cutting damage, and their compact internals are not easily damaged by concussion or explosives. However, their scaly hides provide little protection from fire, lasers or electricity.\n"
+"-- I corpi degli Shevaar sono molto resistenti ai danni da impatto e taglio. I loro compatti organi interni non sono facilmente danneggiabili da armi a concussione o esplosive. Tuttavia, la loro pelle squamosa fornisce poca protezione dal fuoco, laser o elettricità\n"
 "\n"
-"Shevaar are most often used as fast, armoured scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. The Shevaar seem to be located between Tamans and Ortnoks in the nebulous alien hierarchy, in that they sometimes fill specialist or command roles, unlike Ortnoks, but these tasks are still usually taken by Tamans whenever the two races are deployed together.\n"
+"Gli Shevaar vengono spesso impiegati come unità scout, veloci e pesantemente difese. Sono infatti estremamente efficaci in questo ruolo dato che combinano un’elevata mobilità ad un’estesa capacità visiva. Pare inoltre che gli alieni abbondino di queste creature. All’interno della nebulosa gerarchia aliena, sembra che gli Shevaar si collochino tra i Taman e gli Ortnoks dato che, a differenza degli Ortnoks, essi svolgono a volte ruoli di comando anche se questi vengono sempre occupati dai Taman nel caso in cui le due razze si trovino contemporaneamente sul campo.\n"
 "\n"
-"When not engaged in combat, Shevaar spend most of their time as scouts or skirmishers, or as herders for captured humans.\n"
+"Quando non sono impegnati in combattimento gli Shevaar si occupano di eseguire attività di scout, di schermaglia, oppure di scorta degli eventuali prigionieri umani.\n"
 "\n"
-"We should be careful whenever we encounter these aliens in the field. They are fast and dangerous skirmishers who prefer to fight from cover, and should be pursued and kept under fire at all times when discovered, as long as this does not overextend our position. Exposing our team's flanks or rear to a squad of Shevaar could have disastrous results. Although grenades are unlikely to kill any Shevaar outright, they will be very useful for flushing them out into our troops' sights.\n"
+"Dovremmo usare molta cautela ogni qualvolta incontriamo questi alieni sul campo. Essi sono combattenti veloci e pericolosi che preferiscono attaccare da una copertura. Dovrebbero essere tenuti sotto fuoco ogni qualvolta vengano scoperti, almeno fintanto che la nostra posizione non sia compromessa. Esporre il fianco o le spalle di una nostra squadra agli Shevaar può avere conseguenze disastrose. Benché difficilmente le granate saranno in grado di uccidere uno Shevaar al primo colpo, esse possono essere piuttosto utili per spingere queste creature a portata di tiro delle nostre truppe.\n"
 "\n"
-"Also, although blind, Shevaar possess balance organs that are affected by the sound of our flashbang. It will achieve similar results on them as it does on humans.\n"
+"Inoltre, benché siano ciechi, gli Sheevar possiedono altri organi che possono essere danneggiati da forti suoni o lampi di luce. Questi stratagemmi avranno su di loro lo stesso effetto che hanno sugli umani.\n"
 "\n"
-"Sincerely,\n"
+"Cordialmente,\n"
 "\n"
 "Dr. Connor"
 
@@ -8752,11 +8936,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:3726
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
-"Commander,\n"
+"Comandante,\n"
 "\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
+"abbiamo recuperato un nuovo cadavere alieno dal campo di battaglia. Dovremmo iniziare la dissezione e l'analisi il più presto possibile.\n"
 "\n"
-"Sincerely,\n"
+"Cordialmente,\n"
 "\n"
 "Dr. Connor"
 
@@ -8969,7 +9153,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4049
 msgid "craft_alien_propulsion_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
+"\n"
+"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4052
 msgid "craft_alien_propulsion_txt"
@@ -8996,7 +9185,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4086
 msgid "craft_alien_detection_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
+"\n"
+"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
+"\n"
+"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4089
 msgid "craft_alien_detection_txt"
@@ -9822,7 +10018,20 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4533
 msgid "xvi_census_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
+"\n"
+"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
+"\n"
+"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
+"\n"
+"All we need is your signature on the dotted line, Sir.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:4564
 msgid "The Enemy On Earth - Revisited"
