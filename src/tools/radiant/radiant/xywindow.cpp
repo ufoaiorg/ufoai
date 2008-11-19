@@ -1381,21 +1381,20 @@ void XYWnd::XY_LoadBackgroundImage(const char *name)
 	g_pParentWnd->ActiveXY()->m_backgroundActivated = true;
 
 	int m_ix, m_iy;
-	switch(g_pParentWnd->ActiveXY()->m_viewType)
-	{
-		default:
-		case XY:
-			m_ix = 0;
-			m_iy = 1;
-			break;
-		case XZ:
-			m_ix = 0;
-			m_iy = 2;
-			break;
-		case YZ:
-			m_ix = 1;
-			m_iy = 2;
-			break;
+	switch (g_pParentWnd->ActiveXY()->m_viewType) {
+	default:
+	case XY:
+		m_ix = 0;
+		m_iy = 1;
+		break;
+	case XZ:
+		m_ix = 0;
+		m_iy = 2;
+		break;
+	case YZ:
+		m_ix = 1;
+		m_iy = 2;
+		break;
 	}
 
 	Vector3 min, max;
@@ -1540,7 +1539,6 @@ void XYWnd::XY_DrawGrid(void) {
 		stepx *= 2;
 	while ((stepy * m_fScale) <= 32.0f) // text step y must be at least 32
 		stepy *= 2;
-
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_1D);
@@ -1753,11 +1751,11 @@ void XYWnd::XY_DrawBlockGrid(void) {
 }
 
 void XYWnd::DrawCameraIcon(const Vector3& origin, const Vector3& angles) {
-	float x, y, fov, box;
+	float x, y;
 	double a;
 
-	fov = 48 / m_fScale;
-	box = 16 / m_fScale;
+	const float fov = 48.0f / m_fScale;
+	const float box = 16.0f / m_fScale;
 
 	if (m_viewType == XY) {
 		x = origin[0];
@@ -1788,7 +1786,6 @@ void XYWnd::DrawCameraIcon(const Vector3& origin, const Vector3& angles) {
 	glVertex3f(x, y, 0);
 	glVertex3f(x + static_cast<float>(fov * cos(a - c_pi / 4)), y + static_cast<float>(fov * sin(a - c_pi / 4)), 0);
 	glEnd();
-
 }
 
 
@@ -2129,20 +2126,13 @@ void XYWnd::XY_Draw(void) {
 
 	{
 		XYRenderer renderer(globalstate, m_state_selected);
-
 		Scene_Render(renderer, m_view);
-
-
 		renderer.render(m_modelview, m_projection);
-
 	}
 
 	glDepthMask(GL_FALSE);
 
-
-
 	glLoadMatrixf(reinterpret_cast<const float*>(&m_modelview));
-
 
 	glDisable(GL_LINE_STIPPLE);
 
@@ -2152,21 +2142,13 @@ void XYWnd::XY_Draw(void) {
 		glActiveTexture(GL_TEXTURE0);
 		glClientActiveTexture(GL_TEXTURE0);
 	}
+
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
 	glDisableClientState(GL_NORMAL_ARRAY);
-
 	glDisableClientState(GL_COLOR_ARRAY);
-
 	glDisable(GL_TEXTURE_2D);
-
 	glDisable(GL_LIGHTING);
-
 	glDisable(GL_COLOR_MATERIAL);
-
-
-
-
 
 	// size info
 	if (g_xywindow_globals_private.m_bSizePaint && GlobalSelectionSystem().countSelected() != 0) {
@@ -2200,8 +2182,6 @@ void XYWnd::XY_Draw(void) {
 	if (ClipMode()) {
 		GlobalClipPoints_Draw(m_fScale);
 	}
-
-
 
 	// reset modelview
 	glLoadIdentity();
