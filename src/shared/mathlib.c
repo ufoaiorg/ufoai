@@ -98,12 +98,13 @@ const byte dvleft[CORE_DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
  */
 int AngleToDir (int angle)
 {
-	static int anglesToDV[8] = {0, 4, 2, 6, 1, 5, 3, 7};
+	static const int anglesToDV[8] = {0, 4, 2, 6, 1, 5, 3, 7};
+
 	angle += 22;
 	/* set angle between 0 <= angle < 360 */
 	angle %= 360;
 	/* next step is because the result of angle %= 360 when angle is negative depends of the compiler
-	*  (it can be between -360 < angle <= 0 or 0 <= angle < 360) */
+	 * (it can be between -360 < angle <= 0 or 0 <= angle < 360) */
 	if (angle < 0)
 		angle += 360;
 
