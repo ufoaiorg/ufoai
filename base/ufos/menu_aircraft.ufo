@@ -248,39 +248,6 @@ menu aircraft
 	// additional stuff
 	// ==================
 
-	pic button_leave
-	{
-		tooltip	"_Done"
-		image	hud/buttons2
-		mousefx	true
-		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;"  }
-	}
-
-	pic prev_aircraft
-	{
-		tooltip	"_Switch to the previous aircraft"
-		image	menu/buttons_small
-		pos	"500 410"
-		mousefx true
-		texl	"0 0"
-		texh	"16 16"
-		click	{ cmd "mn_prev_aircraft;" }
-	}
-
-	pic next_aircraft
-	{
-		tooltip	"_Switch to the next aircraft"
-		image	menu/buttons_small
-		pos	"970 410"
-		mousefx	true
-		texl	"16 0"
-		texh	"32 16"
-		click	{ cmd "mn_next_aircraft;" }
-	}
-
 	pic aircraft_return
 	{
 		tooltip	"_Call back"
@@ -313,6 +280,40 @@ menu aircraft
 		format	"20 220"
 		num		TEXT_AIRCRAFT_INFO
 		height	"10"
+	}
+
+	pic prev_aircraft
+	{
+		tooltip	"_Switch to the previous aircraft"
+		image	menu/buttons_small
+		pos	"500 410"
+		mousefx true
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "mn_prev_aircraft;" }
+	}
+
+	pic next_aircraft
+	{
+		tooltip	"_Switch to the next aircraft"
+		image	menu/buttons_small
+		pos	"970 410"
+		mousefx	true
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "mn_next_aircraft;" }
+	}
+
+	pic button_leave
+	{
+		tooltip	"_Done"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 720"
+		size	"64 37"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop;"  }
 	}
 
 	func init
@@ -721,6 +722,15 @@ menu aircraft_equip
 		align	cl
 	}
 
+	model airequip_model_slot0
+	{
+		md2		"*cvar mn_aircraft_item_model_slot0"
+		pos		"38 38"
+		size	"60 60"
+		origin	"68 68 0"
+		angles	"0 0 180"
+	}
+
 	pic airequip_slot0
 	{
 		tooltip	"_Select this slot"
@@ -732,12 +742,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 0;" }
 	}
 
-	model airequip_model_slot0
+	model airequip_model_slot1
 	{
-		md2		"*cvar mn_aircraft_item_model_slot0"
-		pos		"38 38"
+		md2		"*cvar mn_aircraft_item_model_slot1"
+		pos		"196 38"
 		size	"60 60"
-		origin	"68 68 0"
+		origin	"226 68 0"
 		angles	"0 0 180"
 	}
 
@@ -752,12 +762,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 1;" }
 	}
 
-	model airequip_model_slot1
+	model airequip_model_slot2
 	{
-		md2		"*cvar mn_aircraft_item_model_slot1"
-		pos		"196 38"
+		md2	"*cvar mn_aircraft_item_model_slot2"
+		pos		"353 38"
 		size	"60 60"
-		origin	"226 68 0"
+		origin	"383 68 0"
 		angles	"0 0 180"
 	}
 
@@ -772,12 +782,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 2;" }
 	}
 
-	model airequip_model_slot2
+	model airequip_model_slot3
 	{
-		md2	"*cvar mn_aircraft_item_model_slot2"
-		pos		"353 38"
+		md2		"*cvar mn_aircraft_item_model_slot3"
+		pos		"38 301"
 		size	"60 60"
-		origin	"383 68 0"
+		origin	"68 331 0"
 		angles	"0 0 180"
 	}
 
@@ -792,12 +802,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 3;" }
 	}
 
-	model airequip_model_slot3
+	model airequip_model_slot4
 	{
-		md2		"*cvar mn_aircraft_item_model_slot3"
-		pos		"38 301"
+		md2		"*cvar mn_aircraft_item_model_slot4"
+		pos		"353 301"
 		size	"60 60"
-		origin	"68 331 0"
+		origin	"383 331 0"
 		angles	"0 0 180"
 	}
 
@@ -812,12 +822,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 4;" }
 	}
 
-	model airequip_model_slot4
+	model airequip_model_slot5
 	{
-		md2		"*cvar mn_aircraft_item_model_slot4"
-		pos		"353 301"
+		md2		"*cvar mn_aircraft_item_model_slot5"
+		pos		"38 564"
 		size	"60 60"
-		origin	"383 331 0"
+		origin	"68 594 0"
 		angles	"0 0 180"
 	}
 
@@ -832,12 +842,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 5;" }
 	}
 
-	model airequip_model_slot5
+	model airequip_model_slot6
 	{
-		md2		"*cvar mn_aircraft_item_model_slot5"
-		pos		"38 564"
+		md2		"*cvar mn_aircraft_item_model_slot6"
+		pos		"196 564"
 		size	"60 60"
-		origin	"68 594 0"
+		origin	"226 594 0"
 		angles	"0 0 180"
 	}
 
@@ -852,12 +862,12 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 6;" }
 	}
 
-	model airequip_model_slot6
+	model airequip_model_slot7
 	{
-		md2		"*cvar mn_aircraft_item_model_slot6"
-		pos		"196 564"
+		md2		"*cvar mn_aircraft_item_model_slot7"
+		pos		"353 564"
 		size	"60 60"
-		origin	"226 594 0"
+		origin	"383 594 0"
 		angles	"0 0 180"
 	}
 
@@ -872,22 +882,15 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 7;" }
 	}
 
-	model airequip_model_slot7
-	{
-		md2		"*cvar mn_aircraft_item_model_slot7"
-		pos		"353 564"
-		size	"60 60"
-		origin	"383 594 0"
-		angles	"0 0 180"
-	}
-
-	button airequip_button_leave
+	pic airequip_button_leave
 	{
 		tooltip	"_Done"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 720"
-		size	"64 32"
+		size	"64 37"
+		texl	"0 0"
+		texh	"64 37"
 		click	{ cmd "mn_pop;" }
 	}
 
@@ -991,7 +994,7 @@ menu popup_aircraft_action
 	}
 	confunc set_aircraftprod_enabled
 	{
-		*production disabled false
+		*aircraft_prod disabled false
 	}
 
 	func leave
