@@ -589,13 +589,13 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 
 void Com_SetGameType (void)
 {
-	int i, j;
-	gametype_t* gt;
-	cvarlist_t* list;
+	int i;
 
 	for (i = 0; i < numGTs; i++) {
-		gt = &gts[i];
+		const gametype_t *gt = &gts[i];
 		if (!Q_strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
+			int j;
+			const cvarlist_t *list;
 			if (sv_dedicated->integer)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
@@ -614,14 +614,16 @@ void Com_SetGameType (void)
 
 static void Com_GameTypeList_f (void)
 {
-	int i, j;
-	gametype_t* gt;
-	cvarlist_t* list;
+	int i;
 
 	Com_Printf("Available gametypes:\n");
 	for (i = 0; i < numGTs; i++) {
-		gt = &gts[i];
+		int j;
+		const gametype_t *gt = &gts[i];
+		const cvarlist_t *list;
+
 		Com_Printf("%s\n", gt->id);
+
 		for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++)
 			Com_Printf("  %s = %s\n", list->name, list->value);
 	}

@@ -236,9 +236,6 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
-	vec3_t mid;
-	float frac;
-	int side;
 	int r;
 
 	/* leaf node */
@@ -260,29 +257,29 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 			return r;
 		return TR_TestLine_r(tnode->children[1], start, stop);
 	default:
-		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
-		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
+		front = DotProduct(start, tnode->normal) - tnode->dist;
+		back = DotProduct(stop, tnode->normal) - tnode->dist;
 		break;
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
 		return TR_TestLine_r(tnode->children[0], start, stop);
-
-	if (front < ON_EPSILON && back < ON_EPSILON)
+	else if (front < ON_EPSILON && back < ON_EPSILON)
 		return TR_TestLine_r(tnode->children[1], start, stop);
+	else {
+		const int side = front < 0;
+		const float frac = front / (front - back);
+		vec3_t mid;
 
-	side = front < 0;
+		mid[0] = start[0] + (stop[0] - start[0]) * frac;
+		mid[1] = start[1] + (stop[1] - start[1]) * frac;
+		mid[2] = start[2] + (stop[2] - start[2]) * frac;
 
-	frac = front / (front - back);
-
-	mid[0] = start[0] + (stop[0] - start[0]) * frac;
-	mid[1] = start[1] + (stop[1] - start[1]) * frac;
-	mid[2] = start[2] + (stop[2] - start[2]) * frac;
-
-	r = TR_TestLine_r(tnode->children[side], start, mid);
-	if (r)
-		return r;
-	return TR_TestLine_r(tnode->children[!side], mid, stop);
+		r = TR_TestLine_r(tnode->children[side], start, mid);
+		if (r)
+			return r;
+		return TR_TestLine_r(tnode->children[!side], mid, stop);
+	}
 }
 
 
