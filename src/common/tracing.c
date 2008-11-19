@@ -975,8 +975,7 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	if (t1 >= offset && t2 >= offset) {
 		TR_RecursiveHullCheck(node->children[0], p1f, p2f, p1, p2);
 		return;
-	}
-	if (t1 < -offset && t2 < -offset) {
+	} else if (t1 < -offset && t2 < -offset) {
 		TR_RecursiveHullCheck(node->children[1], p1f, p2f, p1, p2);
 		return;
 	}
@@ -1013,12 +1012,12 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	/* go past the node */
 	if (frac2 < 0)
 		frac2 = 0;
-	if (frac2 > 1)
+	else if (frac2 > 1)
 		frac2 = 1;
 
 	midf = p1f + (p2f - p1f) * frac2;
 	for (i = 0; i < 3; i++)
-		mid[i] = p1[i] + frac2 * (p2[i] - p1[i]);
+		mid[i] = p1[i] + (p2[i] - p1[i]) * frac2;
 
 	TR_RecursiveHullCheck(node->children[side ^ 1], midf, p2f, mid, p2);
 }

@@ -208,10 +208,7 @@ void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t v
 
 void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 {
-	float test, newScale;
 	int i;
-
-	newScale = scale;
 
 	/* clamp veca to bounds */
 	for (i = 0; i < 3; i++)
@@ -222,21 +219,20 @@ void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 
 	/* rescale to fit */
 	for (i = 0; i < 3; i++) {
-		test = veca[i] + scale * vecb[i];
+		const float test = veca[i] + scale * vecb[i];
 		if (test < -4095.0f) {
-			newScale = (-4094.0 - veca[i]) / vecb[i];
+			const float newScale = (-4094.0 - veca[i]) / vecb[i];
 			if (fabs(newScale) < fabs(scale))
 				scale = newScale;
 		} else if (test > 4095.0f) {
-			newScale = (4094.0 - veca[i]) / vecb[i];
+			const float newScale = (4094.0 - veca[i]) / vecb[i];
 			if (fabs(newScale) < fabs(scale))
 				scale = newScale;
 		}
 	}
 
 	/* use rescaled scale */
-	for (i = 0; i < 3; i++)
-		vecc[i] = veca[i] + scale * vecb[i];
+	VectorMA(veca, scale, vecb, vecc);
 }
 
 /**
