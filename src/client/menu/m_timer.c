@@ -66,6 +66,9 @@ static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTime
 {
 	/* find insert position */
 	menuTimer_t* prev = NULL;
+	if (first != NULL) {
+		prev = first->prev;
+	}
 	while (first) {
 		if (newTimer->nextTime < first->nextTime)
 			break;
@@ -203,9 +206,10 @@ void MN_UnittestTimer (void)
 	assert(mn_firstTimer == a);
 	assert(mn_firstTimer->next == c);
 
-	MN_TimerStart(b);
+	MN_InsertTimerInActiveList(a->next, b);
 	assert(mn_firstTimer == a);
 	assert(mn_firstTimer->next == b);
+	assert(mn_firstTimer->next->next == c);
 
 	MN_TimerRelease(b);
 	assert(mn_firstTimer == a);
