@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_font.h"
 #include "m_input.h"
+#include "m_timer.h" /* define MN_HandleTimers */
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
@@ -253,8 +254,11 @@ static void MN_DrawMenusTest (void)
 			MN_DrawNotice(500, 110);
 	}
 
-	/* debug help for comming architecture */
-	MN_DrawDebugMenuNodeNames();
+	/* debug information */
+	if (mn_debugmenu->integer == 2) {
+        MN_DrawDebugMenuNodeNames();
+    }
+
 
 	R_ColorBlend(NULL);
 }
@@ -272,7 +276,7 @@ void MN_DrawMenus (void)
 	vec2_t nodepos;
 
 	/* draw function of the comming architecture */
-	if (mn_debugmenu->integer == 2) {
+	if (mn_newHandler) {
 		MN_DrawMenusTest();
 		return;
 	}

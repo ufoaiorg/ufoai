@@ -35,6 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "../cl_global.h"
 
+const qboolean mn_newHandler = qtrue;
+
+
 /**
  * @sa MN_DisplayNotice
  */
@@ -118,8 +121,6 @@ menuNode_t *mouseOverTest;
  */
 static menuNode_t *oldMouseOverTest;
 
-extern cvar_t *mn_debugmenu; /**< removed soon */
-
 /**
  * @brief Is called everytime the mouse position change
  */
@@ -174,7 +175,7 @@ void MN_MouseMove (int x, int y)
 	}
 
 	/* update nodes: send 'in' and 'out' event */
-	if (mn_debugmenu->integer == 2 && oldMouseOverTest != mouseOverTest) {
+	if (mn_newHandler && oldMouseOverTest != mouseOverTest) {
 		if (oldMouseOverTest) {
 			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->mouseOut);
 			oldMouseOverTest->menu->hoverNode = NULL;
@@ -225,7 +226,7 @@ void MN_LeftClick (int x, int y)
 		return;
 	}
 
-	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+	if (mn_newHandler && mouseOverTest) {
 		node = mouseOverTest;
 		if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
 			int itemX = 0;
@@ -367,7 +368,7 @@ void MN_RightClick (int x, int y)
 		return;
 	}
 
-	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+	if (mn_newHandler && mouseOverTest) {
 		if (mouseOverTest->behaviour->rightClick) {
 			mouseOverTest->behaviour->rightClick(mouseOverTest, x, y);
 		} else {
@@ -432,7 +433,7 @@ void MN_MiddleClick (int x, int y)
 		return;
 	}
 
-	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+	if (mn_newHandler && mouseOverTest) {
 		if (mouseOverTest->behaviour->middleClick) {
 			mouseOverTest->behaviour->middleClick(mouseOverTest, x, y);
 		} else {
@@ -505,7 +506,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		return;
 	}
 
-	if (mn_debugmenu->integer == 2 && mouseOverTest) {
+	if (mn_newHandler && mouseOverTest) {
 		if (mouseOverTest->behaviour->mouseWheel) {
 			mouseOverTest->behaviour->mouseWheel(mouseOverTest, down, x, y);
 		} else {
