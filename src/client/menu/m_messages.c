@@ -56,7 +56,8 @@ static char ms_messageSettingsList[1024];/* buffer for message settings text nod
 qboolean messageOptionsInitialized = qfalse; /* flag indicating whether message options menu is initialized @sa MSO_Init_f */
 qboolean messageOptionsPrepared = qfalse; /* flag indicating whether parsed category data is prepared @sa MSO_ParseCategories */
 
-/** @brief how many message settings may be shown at once on option page */
+/** @brief how many message settings may be shown at once on option page
+ * @todo This value should come from the script file (something like node->lines - see textnode scrolling) */
 #define MAX_MESSAGESETTINGS_ENTRIES 12
 
 /**
@@ -650,9 +651,6 @@ static void MSO_Scroll_f (void)
 	menuNode_t *textNode;
 	const int oldScrollIdx = messageList_scroll;
 
-	/* no scrolling available if displaying less notify types that max on page */
-	if (NT_NUM_NOTIFYTYPE < MAX_MESSAGESETTINGS_ENTRIES)
-		return;
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
 	if (visibleMSOEntries < MAX_MESSAGESETTINGS_ENTRIES)
 		return;
