@@ -399,6 +399,7 @@ static void MSO_InitTextList (void)
 {
 	char categoryLine[64];
 	int idx;
+	const int oldVisibleEntries = visibleMSOEntries;
 
 	ms_messageSettingsList[0] = '\0';
 	visibleMSOEntries = 0;
@@ -413,6 +414,13 @@ static void MSO_InitTextList (void)
 	}
 	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
 	messageOptionsInitialized = qfalse;
+	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - MAX_MESSAGESETTINGS_ENTRIES) {
+		menuNode_t *textNode = MN_GetNodeFromCurrentMenu("messagetypes");
+		messageList_scroll = visibleMSOEntries - MAX_MESSAGESETTINGS_ENTRIES;
+		if (messageList_scroll < 0)
+			messageList_scroll = 0;
+		textNode->textScroll = messageList_scroll;
+	}
 }
 
 /**
