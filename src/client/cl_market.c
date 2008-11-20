@@ -796,11 +796,7 @@ static void BS_SellAircraft_f (void)
 			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
 			/* reinit the menu */
 			BS_BuyType(base);
-			/* reinit aircraft menu */
-			AIR_AircraftSelect_f();
-			return;
-		}
-		if (!found) {
+		} else {
 			if (teamNote)
 				MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
 			else if (aircraftOutNote)
