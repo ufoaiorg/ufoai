@@ -48,17 +48,14 @@ static const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
 };
 CASSERT(lengthof(nt_strings) == NT_NUM_NOTIFYTYPE);
 
-messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /* array holding actual message settings for every notify type */
-messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /* array holding backup message settings (used for restore function in options popup) */
-int messageList_scroll = 0; /* actual messageSettings list begin index due to scrolling */
-int visibleMSOEntries = 0; /* actual visible entry count */
-static char ms_messageSettingsList[1024];/* buffer for message settings text node */
-qboolean messageOptionsInitialized = qfalse; /* flag indicating whether message options menu is initialized @sa MSO_Init_f */
-qboolean messageOptionsPrepared = qfalse; /* flag indicating whether parsed category data is prepared @sa MSO_ParseCategories */
-
-/** @brief how many message settings may be shown at once on option page
- * @todo This value should come from the script file (something like node->lines - see textnode scrolling) */
-#define MAX_MESSAGESETTINGS_ENTRIES 12
+messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding actual message settings for every notify type */
+messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding backup message settings (used for restore function in options popup) */
+int messageList_scroll = 0; /**< actual messageSettings list begin index due to scrolling */
+int visibleMSOEntries = 0; /**< actual visible entry count */
+static char ms_messageSettingsList[1024];/**< buffer for message settings text node */
+qboolean messageOptionsInitialized = qfalse; /**< flag indicating whether message options menu is initialized @sa MSO_Init_f */
+qboolean messageOptionsPrepared = qfalse; /**< flag indicating whether parsed category data is prepared @sa MSO_ParseCategories */
+static menuNode_t *msoTextNode; /**< reference to text node for easier references */
 
 /**
  * @brief Script command to show all messages on the stack
@@ -414,12 +411,11 @@ static void MSO_InitTextList (void)
 	}
 	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
 	messageOptionsInitialized = qfalse;
-	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - MAX_MESSAGESETTINGS_ENTRIES) {
-		menuNode_t *textNode = MN_GetNodeFromCurrentMenu("messagetypes");
-		messageList_scroll = visibleMSOEntries - MAX_MESSAGESETTINGS_ENTRIES;
+	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->height) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->height;
 		if (messageList_scroll < 0)
 			messageList_scroll = 0;
-		textNode->textScroll = messageList_scroll;
+		msoTextNode->textScroll = messageList_scroll;
 	}
 }
 
@@ -433,7 +429,7 @@ static void MSO_UpdateVisibleButtons (void)
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (i = 0; visible < MAX_MESSAGESETTINGS_ENTRIES && i < gd.numMsgCategoryEntries; i++) {
+	for (i = 0; visible < msoTextNode->height && i < gd.numMsgCategoryEntries; i++) {
 		const int idx = i + messageList_scroll;
 		if (idx < gd.numMsgCategoryEntries) {
 			const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[idx];
@@ -454,7 +450,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; visible < MAX_MESSAGESETTINGS_ENTRIES && i < lengthof(gd.msgCategoryEntries); i++) {
+	for (; visible < msoTextNode->height && i < lengthof(gd.msgCategoryEntries); i++) {
 		MN_ExecuteConfunc(va("ms_disable%i", visible));
 		visible++;
 	}
@@ -469,6 +465,8 @@ static void MSO_UpdateVisibleButtons (void)
  */
 static void MSO_Init_f (void)
 {
+	if (!msoTextNode)
+		msoTextNode = MN_GetNodeFromCurrentMenu("messagetypes");
 	if (!messageOptionsPrepared) {
 		MSO_InitTextList();
 		messageOptionsPrepared = qtrue;
@@ -656,23 +654,20 @@ static void MSO_SetAll_f(void)
  */
 static void MSO_Scroll_f (void)
 {
-	menuNode_t *textNode;
 	const int oldScrollIdx = messageList_scroll;
 
+	if (!msoTextNode)
+		return;
+
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
-	if (visibleMSOEntries < MAX_MESSAGESETTINGS_ENTRIES)
+	if (visibleMSOEntries < msoTextNode->height)
 		return;
 
-	textNode = MN_GetNodeFromCurrentMenu("messagetypes");
+	messageList_scroll = msoTextNode->textScroll;
 
-	if (!textNode)
-		return;
-
-	messageList_scroll = textNode->textScroll;
-
-	if (messageList_scroll >= visibleMSOEntries - MAX_MESSAGESETTINGS_ENTRIES ) {
-		messageList_scroll = visibleMSOEntries - MAX_MESSAGESETTINGS_ENTRIES;
-		textNode->textScroll = messageList_scroll;
+	if (messageList_scroll >= visibleMSOEntries - msoTextNode->height ) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->height;
+		msoTextNode->textScroll = messageList_scroll;
 	}
 
 	if (messageList_scroll != oldScrollIdx)
