@@ -39,7 +39,6 @@ menu basedefence
 	{
 		cmd "basedef_updatemenu 0;"
 		basedef_reset
-		*basedef_button_missile_str color "1 1 1 1"
 		*basedef_header3 invis false
 	}
 
@@ -47,7 +46,6 @@ menu basedefence
 	{
 		cmd "basedef_updatemenu 1;"
 		basedef_reset
-		*basedef_button_laser_str color "1 1 1 1"
 	}
 
 	func basedef_zone1
