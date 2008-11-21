@@ -27,15 +27,11 @@ menu basedefence
 
 	func basedef_reset
 	{
-		*basedef_button_missile_str		color "1 1 1 0.6"
-		*basedef_button_laser_str		color "1 1 1 0.6"
 		*basedef_header3				invis true
 	}
 
 	func basedef_initnodevalues
 	{
-		*basedef_button_missile_str		color "1 1 1 1"
-		*basedef_button_laser_str		color "1 1 1 0.6"
 		*basedef_header3				invis false
 	}
 

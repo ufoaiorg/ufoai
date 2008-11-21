@@ -824,11 +824,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	if (baseCurrent && baseCurrent->numBatteries > 0 && baseCurrent->numLasers > 0) {
 		node = MN_GetNodeFromCurrentMenu("basedef_button_missile");
 		MN_UnHideNode(node);
-		node = MN_GetNodeFromCurrentMenu("basedef_button_missile_str");
-		MN_UnHideNode(node);
 		node = MN_GetNodeFromCurrentMenu("basedef_button_laser");
-		MN_UnHideNode(node);
-		node = MN_GetNodeFromCurrentMenu("basedef_button_laser_str");
 		MN_UnHideNode(node);
 	}
 
