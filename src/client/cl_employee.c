@@ -461,7 +461,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
  */
 employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 {
-	linkedList_t *hiredEmployees;
+	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
 	employee_t *employee;
 
@@ -484,7 +484,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 	LIST_Delete(&hiredEmployees);
 
 	if (!employee)
-		Com_Printf("Could not get unhired ugv/robot.\n");
+		Com_DPrintf(DEBUG_CLIENT, "Could not get unhired ugv/robot.\n");
 
 	return employee;
 }
@@ -701,7 +701,7 @@ qboolean E_UnhireEmployee (employee_t* employee)
 
 		return qtrue;
 	} else
-		Com_Printf("Could not fire employee\n");
+		Com_DPrintf(DEBUG_CLIENT, "Could not fire employee\n");
 	return qfalse;
 }
 
