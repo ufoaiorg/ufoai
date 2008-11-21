@@ -521,6 +521,12 @@ menu aircraft_equip
 		click	{
 			cmd "mn_prev_equiptype;"
 		}
+		whup	{
+			cmd "mn_next_equiptype;"
+		}
+		whdown	{
+			cmd "mn_prev_equiptype;"
+		}
 	}
 
 	pic bt_next_craftitemtype
@@ -533,6 +539,12 @@ menu aircraft_equip
 		mousefx	true
 		click	{
 			cmd "mn_next_equiptype;"
+		}
+		whup	{
+			cmd "mn_next_equiptype;"
+		}
+		whdown	{
+			cmd "mn_prev_equiptype;"
 		}
 	}
 
