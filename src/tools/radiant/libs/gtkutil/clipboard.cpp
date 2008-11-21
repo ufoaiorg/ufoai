@@ -34,7 +34,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define RADIANT_CLIPPINGS 23
 
-static const GtkTargetEntry clipboard_targets = {"RADIANT_CLIPPINGS", 0, RADIANT_CLIPPINGS};
+static       gchar          clipboard_target[]  = "RADIANT_CLIPPINGS";
+static const GtkTargetEntry clipboard_targets = { clipboard_target, 0, RADIANT_CLIPPINGS };
 /**
  * @sa Map_ExportSelected
  * @sa Map_ImportSelected
