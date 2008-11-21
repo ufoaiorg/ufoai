@@ -137,6 +137,7 @@ static void MN_DrawMenusTest (void)
 	vec2_t nodepos;
 
 	MN_CheckMouseMove();
+	MN_HandleTimers();
 
 	MN_SetItemHover(NULL);
 
