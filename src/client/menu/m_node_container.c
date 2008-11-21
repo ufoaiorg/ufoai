@@ -716,7 +716,14 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 static void MN_DrawContainerNode2 (menuNode_t *node)
 {
 	vec2_t nodepos;
+
+	/** @todo replace this at least by == 0 => must remove the color set used by m_parser.c */
+	if (node->color[3] < 0.01) {
+		return;
+	}
+
 	MN_GetNodeAbsPos(node, nodepos);
+
 	if (menuInventory) {
 		const invList_t *itemHover_temp = MN_DrawContainerNode(node);
 		qboolean exists;
