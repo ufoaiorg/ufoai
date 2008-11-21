@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_input.h"
 #include "m_timer.h"
+#include "m_actions.h"
 #include "../cl_input.h"
 #include "../cl_keys.h"
 
@@ -69,10 +70,16 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 		return;
 
 	/* save result */
+	node->u.abstractvalue.lastdiff = value - last;
 	if (!Q_strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
 		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
 	} else {
 		*(float*) node->u.abstractvalue.value = value;
+	}
+
+	/* fire change event */
+	if (node->change) {
+		MN_ExecuteEventActions(node, node->change);
 	}
 }
 

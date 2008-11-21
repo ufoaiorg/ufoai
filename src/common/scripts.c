@@ -689,12 +689,12 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
  * @sa Com_SetValue
  * @return char pointer with translated data type value
  */
-const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
+const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int ofs)
 {
 	static char valuestr[MAX_VAR];
-	byte *b;
+	const byte *b;
 
-	b = (byte *) base + ofs;
+	b = (const byte *) base + ofs;
 
 	switch (type) {
 	case V_NULL:
@@ -705,7 +705,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		if (b == NULL)
 			return "(null)";
 		else
-			return (char*)b;
+			return (const char*)b;
 
 	case V_BOOL:
 		if (*b)
@@ -714,41 +714,41 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 			return "false";
 
 	case V_CHAR:
-		return (char *) b;
+		return (const char *) b;
 		break;
 
 	case V_MENUTEXTID:
-		assert(*(int *)b < MAX_MENUTEXTS);
-		Q_strncpyz(valuestr, menutextid_names[*(int *)b], sizeof(valuestr));
+		assert(*(const int *)b < MAX_MENUTEXTS);
+		Q_strncpyz(valuestr, menutextid_names[*(const int *)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_BASEID:
 	case V_INT:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(int *) b);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(const int *) b);
 		return valuestr;
 
 	case V_INT2:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i %i", ((int *) b)[0], ((int *) b)[1]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i", ((const int *) b)[0], ((const int *) b)[1]);
 		return valuestr;
 
 	case V_FLOAT:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(float *) b);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(const float *) b);
 		return valuestr;
 
 	case V_POS:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f", ((float *) b)[0], ((float *) b)[1]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f", ((const float *) b)[0], ((const float *) b)[1]);
 		return valuestr;
 
 	case V_VECTOR:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f", ((const float *) b)[0], ((const float *) b)[1], ((const float *) b)[2]);
 		return valuestr;
 
 	case V_COLOR:
-		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2], ((float *) b)[3]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((const float *) b)[0], ((const float *) b)[1], ((const float *) b)[2], ((const float *) b)[3]);
 		return valuestr;
 
 	case V_RGBA:
-		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((int *) b)[0], ((int *) b)[1], ((int *) b)[2], ((int *) b)[3]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((const int *) b)[0], ((const int *) b)[1], ((const int *) b)[2], ((const int *) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
@@ -758,26 +758,26 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		if (b == NULL)
 			return "(null)";
 		else
-			return (char *) b;
+			return (const char *) b;
 
 	case V_ALIGN:
-		assert(*(int *)b < ALIGN_LAST);
-		Q_strncpyz(valuestr, align_names[*(align_t *)b], sizeof(valuestr));
+		assert(*(const int *)b < ALIGN_LAST);
+		Q_strncpyz(valuestr, align_names[*(const align_t *)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_BLEND:
-		assert(*(blend_t *)b < BLEND_LAST);
-		Q_strncpyz(valuestr, blend_names[*(blend_t *)b], sizeof(valuestr));
+		assert(*(const blend_t *)b < BLEND_LAST);
+		Q_strncpyz(valuestr, blend_names[*(const blend_t *)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_STYLE:
-		assert(*(style_t *)b < STYLE_LAST);
-		Q_strncpyz(valuestr, style_names[*(style_t *)b], sizeof(valuestr));
+		assert(*(const style_t *)b < STYLE_LAST);
+		Q_strncpyz(valuestr, style_names[*(const style_t *)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_FADE:
-		assert(*(fade_t *)b < FADE_LAST);
-		Q_strncpyz(valuestr, fade_names[*(fade_t *)b], sizeof(valuestr));
+		assert(*(const fade_t *)b < FADE_LAST);
+		Q_strncpyz(valuestr, fade_names[*(const fade_t *)b], sizeof(valuestr));
 		return valuestr;
 
 	case V_SHAPE_SMALL:
@@ -786,11 +786,11 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
-		assert(*(int *)b < MAX_DAMAGETYPES);
-		return csi.dts[*(int *)b].id;
+		assert(*(const int *)b < MAX_DAMAGETYPES);
+		return csi.dts[*(const int *)b].id;
 
 	case V_DATE:
-		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((date_t *) b)->day / DAYS_PER_YEAR, ((date_t *) b)->day % DAYS_PER_YEAR, ((date_t *) b)->sec);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t *) b)->day / DAYS_PER_YEAR, ((const date_t *) b)->day % DAYS_PER_YEAR, ((const date_t *) b)->sec);
 		return valuestr;
 
 	case V_IF:
@@ -798,14 +798,14 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 
 	case V_RELABS:
 		/* absolute value */
-		if (*(float *) b > 2.0)
-			Com_sprintf(valuestr, sizeof(valuestr), "+%.2f", *(float *) b);
+		if (*(const float *) b > 2.0)
+			Com_sprintf(valuestr, sizeof(valuestr), "+%.2f", *(const float *) b);
 		/* absolute value */
-		else if (*(float *) b < 2.0)
-			Com_sprintf(valuestr, sizeof(valuestr), "-%.2f", *(float *) b);
+		else if (*(const float *) b < 2.0)
+			Com_sprintf(valuestr, sizeof(valuestr), "-%.2f", *(const float *) b);
 		/* relative value */
 		else
-			Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(float *) b);
+			Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(const float *) b);
 		return valuestr;
 
 	default:

@@ -31,6 +31,7 @@ static const value_t properties[] = {
 	{"delta", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.delta), 0},
 	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.max), 0},
 	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.min), 0},
+	{"lastdiff", V_FLOAT, offsetof(menuNode_t, u.abstractvalue.lastdiff), MEMBER_SIZEOF(menuNode_t, u.abstractvalue.lastdiff)},
 	{NULL, V_NULL, 0, 0}
 };
 

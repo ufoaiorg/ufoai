@@ -41,60 +41,137 @@ void MN_ExecuteConfunc (const char *confunc)
 	Cmd_ExecuteString(confunc);
 }
 
+static inline void MN_ExecuteAction (const menu_t* const menu, menuAction_t* const action)
+{
+	byte *data;
+	switch (action->type) {
+	case EA_NULL:
+		/* do nothing */
+		break;
+	case EA_CMD:
+		/* execute a command */
+		if (action->data) {
+			const char *cmd = (const char *)action->data;
+			Cbuf_AddText(va("%s\n", cmd));
+		}
+		break;
+	case EA_CALL:
+		/* call another function */
+		MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
+		break;
+	case EA_VAR:
+		break;
+	case EA_NODE:
+		/* set a property */
+		if (action->data) {
+			menuNode_t *node;
+
+			data = action->data;
+			data += ALIGN(strlen(action->data) + 1);
+
+			/* search the node */
+			node = MN_GetNode(menu, (char *) action->data);
+
+			if (!node) {
+				/* didn't find node -> "kill" action and print error */
+				action->type = EA_NULL;
+				Com_Printf("MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *) action->data);
+				break;
+			}
+
+			if (!(action->scriptValues->type & V_MENU_COPY))
+				Com_SetValue(node, (char *) data, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
+			else
+				*(byte **) ((byte *) node + action->scriptValues->ofs) = data;
+		}
+		break;
+	default:
+		Sys_Error("unknown action type\n");
+		break;
+	}
+
+}
+
 /**
  * @sa MN_ParseAction
  */
 void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
-	byte *data;
+	for (action = first; action; action = action->next) {
+		MN_ExecuteAction(menu, action);
+	}
+}
 
-	for (action = first; action; action = action->next)
-		switch (action->type) {
-		case EA_NULL:
-			/* do nothing */
-			break;
-		case EA_CMD:
-			/* execute a command */
-			if (action->data) {
-				const char *cmd = (const char *)action->data;
-				Cbuf_AddText(va("%s\n", cmd));
-			}
-			break;
-		case EA_CALL:
-			/* call another function */
-			MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
-			break;
-		case EA_VAR:
-			break;
-		case EA_NODE:
-			/* set a property */
-			if (action->data) {
-				menuNode_t *node;
+/**
+ * @brief read a property name from an input buffer to an output
+ * @return last position into the input buffer if we find property, else NULL
+ */
+inline static const char* MN_GenCommandReadProperty (const char* input, char* output, int outputSize)
+{
+	assert(*input == '<');
+	outputSize--;
+	input++;
 
-				data = action->data;
-				data += ALIGN(strlen(action->data) + 1);
+	while (outputSize && *input != '\0' && *input != ' ' && *input != '>') {
+		*output++ = *input++;
+	}
+	if (*input != '>') {
+		return NULL;
+	}
+	*output = '\0';
+	return ++input;
+}
 
-				/* search the node */
-				node = MN_GetNode(menu, (char *) action->data);
-
-				if (!node) {
-					/* didn't find node -> "kill" action and print error */
-					action->type = EA_NULL;
-					Com_Printf("MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *) action->data);
-					break;
+/**
+ * @brief gen a string replacing every <eventParam> by a value
+ * @todo fix all buffer overflow, and special case problem
+ */
+const char* MN_GenCommand (const menuNode_t* source, const char* input)
+{
+	static char cmd[256];
+	static char propertyName[16];
+	const char *cin = input;
+	char *cout = cmd;
+	while (*cin != '\0') {
+		if (*cin == '<') {
+			/* read propertyName between '<' and '>' */
+			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
+			if (next) {
+				/* find peroperty definition */
+				const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
+				if (property) {
+					const char* value;
+					if ((property->type & (V_SPECIAL|V_MENU_COPY)) != 0) {
+						Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s.%s'", property->string, source->menu->name, source->name);
+					}
+					/* inject the property value */
+					value = Com_ValueToStr((const void*)source, property->type, property->ofs);
+					cout += sprintf(cout, "%s", value);
+					cin = next;
+					continue;
 				}
-
-				if (!(action->scriptValues->type & V_MENU_COPY))
-					Com_SetValue(node, (char *) data, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-				else
-					*(byte **) ((byte *) node + action->scriptValues->ofs) = data;
 			}
-			break;
-		default:
-			Sys_Error("unknown action type\n");
-			break;
 		}
+		*cout++ = *cin++;
+	}
+	*cout++ = '\n';
+	*cout++ = '\0';
+	return cmd;
+}
+
+void MN_ExecuteEventActions (const menuNode_t* source, menuAction_t* const firstAction)
+{
+	menuAction_t *action;
+	for (action = firstAction; action; action = action->next) {
+		if (action->type == EA_CMD) {
+		/* execute a command */
+			if (action->data)
+				Cbuf_AddText(MN_GenCommand(source, action->data));
+		} else {
+			MN_ExecuteAction(source->menu, action);
+		}
+	}
 }
 
 void MN_Command_f (void)

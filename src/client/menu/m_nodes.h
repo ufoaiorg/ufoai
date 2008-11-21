@@ -131,6 +131,7 @@ typedef struct menuNode_s {
 	struct menuAction_s *mouseOut;
 	struct menuAction_s *wheelUp;
 	struct menuAction_s *wheelDown;
+	struct menuAction_s *change;	/**< called when the widget change from an user action */
 
 	vec3_t scale;
 	invDef_t *container;		/** The container linked to this node. */
@@ -223,6 +224,8 @@ void MN_GetNodeAbsPos(const menuNode_t* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const menuNode_t* node, int *x, int *y);
 menuNode_t* MN_AllocNode(int type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
+struct value_s;
+const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);
 
 void MN_InitNodes(void);
 

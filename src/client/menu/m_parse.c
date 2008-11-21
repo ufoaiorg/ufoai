@@ -102,6 +102,7 @@ static const value_t nodeProperties[] = {
 	{"out", V_SPECIAL_ACTION, offsetof(menuNode_t, mouseOut), MEMBER_SIZEOF(menuNode_t, mouseOut)},
 	{"whup", V_SPECIAL_ACTION, offsetof(menuNode_t, wheelUp), MEMBER_SIZEOF(menuNode_t, wheelUp)},
 	{"whdown", V_SPECIAL_ACTION, offsetof(menuNode_t, wheelDown), MEMBER_SIZEOF(menuNode_t, wheelDown)},
+	{"change", V_SPECIAL_ACTION, offsetof(menuNode_t, change), MEMBER_SIZEOF(menuNode_t, change)},
 
 	/* very special attribute */
 	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
@@ -163,6 +164,22 @@ static const value_t* MN_FindPropertyByName (const value_t* propertyList, const 
 		current++;
 	}
 	return NULL;
+}
+
+/**
+ * @brief Get a property definition from a node
+ * @param[in] node Requested node
+ * @param[in] name Property name we search
+ * @return A value_t with the requested name, else NULL
+ * @todo it will be better to have it on m_nodes.c
+ */
+const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char* name)
+{
+	const value_t *result;
+	result = MN_FindPropertyByName(nodeProperties, name);
+	if (!result && node->behaviour->properties)
+		result = MN_FindPropertyByName(node->behaviour->properties, name);
+	return result;
 }
 
 /**
@@ -610,9 +627,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		}
 
 		/* find the property */
-		val = MN_FindPropertyByName(nodeProperties, *token);
-		if (!val && node->behaviour->properties)
-			val = MN_FindPropertyByName(node->behaviour->properties, *token);
+
+		val = MN_NodeGetPropertyDefinition(node, *token);
 
 		if (!val) {
 			/* unknown token, print message and continue */

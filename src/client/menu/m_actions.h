@@ -58,6 +58,7 @@ void MN_ExecuteConfunc(const char *confunc);
 
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 void MN_Command_f(void);
+void MN_ExecuteEventActions (const menuNode_t* source, menuAction_t* const firstAction);
 
 qboolean MN_FocusNextActionNode(void);
 qboolean MN_FocusExecuteActionNode(void);
