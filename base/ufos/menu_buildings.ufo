@@ -197,7 +197,7 @@ menu popup_buildingpreview
 		texh		"47 16"
 		click
 		{
-			cmd "buildinginfo_click;"
+			cmd "building_ufopedia;"
 		}
 	}
 

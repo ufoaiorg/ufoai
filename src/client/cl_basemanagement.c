@@ -3233,7 +3233,7 @@ void B_InitStartup (void)
 	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
-	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
+	Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
