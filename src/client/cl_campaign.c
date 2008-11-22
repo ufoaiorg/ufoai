@@ -3148,27 +3148,21 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 {
-	int stage = 1 + mission->initialOverallInterest * (MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE - 1) / (FINAL_OVERALL_INTEREST);
-	int i, randomNum, availableStage = 0;
+	int i, randomNum, availableEquipDef = 0;
 
-	if (stage > MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE)
-		stage = MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE;
-	if (stage < 1)
-		stage = 1;
-
-	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "stage%i_", stage);
+	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "alien_");
 
 	switch (mission->category) {
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Sys_Error("CP_GetAlienByInterest: Try to set alien team for invalid mission category '%i'\n", mission->category);
-	case INTERESTCATEGORY_HARVEST:
 	case INTERESTCATEGORY_XVI:
 	case INTERESTCATEGORY_TERROR_ATTACK:
 	case INTERESTCATEGORY_BASE_ATTACK:
 	case INTERESTCATEGORY_INTERCEPT:
 		Q_strcat(ccs.battleParameters.alienEquipment, "soldiers", sizeof(ccs.battleParameters.alienEquipment));
 		break;
+	case INTERESTCATEGORY_HARVEST:
 	case INTERESTCATEGORY_RECON:
 	case INTERESTCATEGORY_BUILDING:
 	case INTERESTCATEGORY_SUPPLY:
@@ -3178,22 +3172,26 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 
 	/* look for all available alien equipement definitions */
 	for (i = 0; i < csi.numEDs; i++) {
-		if (!Q_strncmp(csi.eds[i].name, ccs.battleParameters.alienEquipment, 14)) {
-			availableStage++;
+		if (mission->initialOverallInterest <= csi.eds[i].maxInterest &&
+			mission->initialOverallInterest >= csi.eds[i].minInterest &&
+			!Q_strncmp(csi.eds[i].name, ccs.battleParameters.alienEquipment, 13)) {
+			availableEquipDef++;
 		}
 	}
 
 	/* Choose an alien equipment definition -- between 0 and availableStage - 1 */
-	randomNum = rand() % availableStage;
+	randomNum = rand() % availableEquipDef;
 
-	availableStage = 0;
+	availableEquipDef = 0;
 	for (i = 0; i < csi.numEDs; i++) {
-		if (!Q_strncmp(csi.eds[i].name, ccs.battleParameters.alienEquipment, 14)) {
-			if (availableStage == randomNum) {
+		if (mission->initialOverallInterest <= csi.eds[i].maxInterest &&
+			mission->initialOverallInterest >= csi.eds[i].minInterest &&
+			!Q_strncmp(csi.eds[i].name, ccs.battleParameters.alienEquipment, 13)) {
+			if (availableEquipDef == randomNum) {
 				Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "%s", csi.eds[i].name);
 				break;
 			} else
-				availableStage++;
+				availableEquipDef++;
 		}
 	}
 }

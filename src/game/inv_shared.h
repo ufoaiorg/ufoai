@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SKILL_BALANCE 1.0f
 #define INJURY_BALANCE 0.2f
 #define INJURY_THRESHOLD 0.5f /* HP / maxHP > INJURY_THRESHOLD no penalty is incurred */
-#define MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE		4
 
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
@@ -378,9 +377,11 @@ typedef struct inventory_s {
 #define MAX_EQUIPDEFS   64
 
 typedef struct equipDef_s {
-	char name[MAX_VAR];
-	int num[MAX_OBJDEFS];
+	char name[MAX_VAR];		/**< Name of the equipment definition */
+	int num[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numLoose[MAX_OBJDEFS];
+	int minInterest;		/**< Minimum overall interest to use this equipment definition (only for alien) */
+	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
 } equipDef_t;
 
 #define MAX_TEAMS_PER_MISSION 4

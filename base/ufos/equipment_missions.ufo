@@ -104,16 +104,18 @@
 // while 40 plaspistol and 40 pbeampistol gives only 1 sidearm
 // (so 20 plaspistol and 20 pbeampistol is a better idea in practice).
 
-// all alien equipment must be defined as :
-// stageN_workersS	or stageN_soldiersS
-// where N is a number between 1 and MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE.
-//    This number represent the advance in game (1 is the start of the game,
-//    MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE is the end of the game.
+// there are 2 types of alien equipment :
+// alien_workersS	or alien_soldiersS
 //    S is any string (used to specify the equipment definition)
 //    For a given stage, all equipment definition can be chosen with the same proability.
+//    For each alien equipment, you must specifiy mininterest and maxinterest : the lower
+//    and upper value of overall alieninterest that can use this equipment definition.
+//    Equipment used will be picked randomly between all definition fitting overallinterest.
 
-equipment stage1_workers
+equipment alien_workers
 {
+	mininterest			0
+	maxinterest			250
 	plaspistol			20
 	plaspistol_ammo		29
 	plasrifle			1
@@ -122,8 +124,10 @@ equipment stage1_workers
 	light_alien         1
 }
 
-equipment stage1_workers_explosive
+equipment alien_workers_explosive
 {
+	mininterest			0
+	maxinterest			250
 	plaspistol			12
 	plaspistol_ammo			16
 	plasblaster			14
@@ -134,8 +138,10 @@ equipment stage1_workers_explosive
 	medium_alien        1
 }
 
-equipment stage1_soldiers
+equipment alien_soldiers
 {
+	mininterest			0
+	maxinterest			250
 	plaspistol			15
 	plaspistol_ammo		55
 	plasrifle			20
@@ -147,8 +153,10 @@ equipment stage1_soldiers
 	light_alien         13
 }
 
-equipment stage2_workers
+equipment alien_workers
 {
+	mininterest			250
+	maxinterest			500
 	plaspistol			30
 	plaspistol_ammo		35
 	plasrifle			2
@@ -159,8 +167,10 @@ equipment stage2_workers
 	medium_alien        7
 }
 
-equipment stage2_soldiers_melee
+equipment alien_soldiers_melee
 {
+	mininterest			250
+	maxinterest			500
 	plaspistol			1
 	plaspistol_ammo		1
 	plasrifle			1
@@ -177,8 +187,10 @@ equipment stage2_soldiers_melee
 //  heavy_alien         1
 }
 
-equipment stage2_soldiers
+equipment alien_soldiers
 {
+	mininterest			250
+	maxinterest			500
 	plaspistol			35
 	plaspistol_ammo		75
 	plasrifle			30
@@ -194,8 +206,10 @@ equipment stage2_soldiers
 	medium_alien        3
 }
 
-equipment stage3_workers
+equipment alien_workers
 {
+	mininterest			500
+	maxinterest			750
 	plaspistol			2
 	plaspistol_ammo		3
 	plasrifle			2
@@ -210,8 +224,10 @@ equipment stage3_workers
 //  heavy_alien         1
 }
 
-equipment stage3_workers_explosive
+equipment alien_workers_explosive
 {
+	mininterest			500
+	maxinterest			750
 	plaspistol			1
 	plaspistol_ammo		1
 	plasblaster			3
@@ -227,8 +243,10 @@ equipment stage3_workers_explosive
 //  heavy_alien         1
 }
 
-equipment stage3_soldiers
+equipment alien_soldiers
 {
+	mininterest			500
+	maxinterest			750
 	plaspistol			15
 	plaspistol_ammo		25
 	plasrifle			15
@@ -247,8 +265,10 @@ equipment stage3_soldiers
 //	heavy_alien         2
 }
 
-equipment stage4_workers
+equipment alien_workers
 {
+	mininterest			750
+	maxinterest			10000
 	plaspistol			10
 	plaspistol_ammo		15
 	plasrifle			1
@@ -267,8 +287,10 @@ equipment stage4_workers
 //	heavy_alien         15
 }
 
-equipment stage4_soldiers_plasma
+equipment alien_soldiers_plasma
 {
+	mininterest			750
+	maxinterest			10000
 	plaspistol			35
 	plaspistol_ammo		100
 	plasrifle			10
@@ -283,8 +305,10 @@ equipment stage4_soldiers_plasma
 //	heavy_alien         34
 }
 
-equipment stage4_soldiers
+equipment alien_soldiers
 {
+	mininterest			750
+	maxinterest			10000
 	plaspistol			15
 	plaspistol_ammo		40
 	plasrifle			1

@@ -1394,11 +1394,20 @@ const char *const name_strings[NAME_NUM_TYPES] = {
 	"male_lastname"
 };
 
+/** @brief Valid equipement definition values from script files. */
+static const value_t equipment_definition_vals[] = {
+	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), 0},
+	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), 0},
+
+	{NULL, 0, 0, 0}
+};
+
 static void Com_ParseEquipment (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
 	const char *token;
+	const value_t *vp;
 	int i, n;
 
 	/* search for equipments with same name */
@@ -1433,6 +1442,15 @@ static void Com_ParseEquipment (const char *name, const char **text)
 		token = COM_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
+
+		for (vp = equipment_definition_vals; vp->string; vp++)
+			if (!Q_strcmp(token, vp->string)) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
+			}
 
 		for (i = 0; i < csi.numODs; i++)
 			if (!Q_strncmp(token, csi.ods[i].id, MAX_VAR)) {
