@@ -114,7 +114,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
  * @param[out] max
  * @param[out] value
  */
-static inline void BS_GetMinMaxValueByItemId (const base_t *base, int itemNum, int *min, int *max, int *value)
+static inline void BS_GetMinMaxValueByItemID (const base_t *base, int itemNum, int *min, int *max, int *value)
 {
 	assert(base);
 
@@ -128,10 +128,14 @@ static inline void BS_GetMinMaxValueByItemId (const base_t *base, int itemNum, i
 		*max = 20000;
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
-		assert(item);
+		if (item) {
+			*value = base->storage.num[item->idx];
+			*max = base->storage.num[item->idx] + ccs.eMarket.num[item->idx];
+		} else {
+			*value = 0;
+			*max = 0;
+		}
 		*min = 0;
-		*value = base->storage.num[item->idx];
-		*max = base->storage.num[item->idx] + ccs.eMarket.num[item->idx];
 	}
 }
 
@@ -142,7 +146,7 @@ static void BS_UpdateItem (const base_t *base, int itemNum)
 {
 	int min, max, value;
 
-	BS_GetMinMaxValueByItemId(base, itemNum, &min, &max, &value);
+	BS_GetMinMaxValueByItemID(base, itemNum, &min, &max, &value);
 	MN_ExecuteConfunc(va("buy_updateitem %d %d %d %d\n", itemNum, value, min, max));
 }
 
