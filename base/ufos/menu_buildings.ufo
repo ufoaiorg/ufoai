@@ -114,12 +114,12 @@ menu buildings
 		num		TEXT_BUILDINGS
 		height	"20"
 		click
-		lineselected 0
 	}
 
 	func init
 	{
 		cmd "building_init;mn_push popup_buildingpreview;buildings_click 0;"
+		*buildings lineselected 0
 	}
 
 	func close
