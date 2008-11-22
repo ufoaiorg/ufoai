@@ -34,15 +34,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
 
-aircraft_t *aircraft[MAX_AIRCRAFT];
-aircraft_t *ufos[MAX_AIRCRAFT];
-int numAircraft, numUfos;
+aircraft_t *aircraftList[MAX_AIRCRAFT];
+aircraft_t *ufoList[MAX_AIRCRAFT];
+int numAircraftList, numUFOList;
 vec2_t airFightMapCenter;
 vec2_t smoothFinalAirFightCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
 float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 qboolean airFightSmoothMovement = qfalse;
 
-static void AFM_GetAircraftInCombatRange(aircraft_t* aircraftList, int numAircraft)
+/**
+ * @brief
+ * @param[out] aircraftList
+ * @param[in] numAircraft
+ * @param[in] distance
+ */
+static void AFM_GetAircraftInCombatRange (float distance)
 {
 	aircraft_t *aircraft;
 	int baseIdx;
@@ -51,30 +57,37 @@ static void AFM_GetAircraftInCombatRange(aircraft_t* aircraftList, int numAircra
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
+
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
-				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
-
+				/* const float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);*/
 				if (aircraft->aircraftTarget == gd.combatZoomedUfo || aircraft == gd.combatZoomedUfo->aircraftTarget) {
-					float distance = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
-					if (distance < 2.0f) {
-						aircraftList = aircraft;
-						numAircraft++;
+					const float distanceToTarget = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
+					if (distanceToTarget < distance) {
+						assert(numAircraftList < MAX_AIRCRAFT);
+						aircraftList[numAircraftList++] = aircraft;
 					}
 				}
 			}
 		}
 	}
+}
 
+static void AFM_GetUFOsInCombatRange (float distance)
+{
+	aircraft_t *ufo;
+
+	for (ufo = &gd.ufos[gd.numUFOs - 1]; ufo >= gd.ufos; ufo--) {
+		const float distance = MAP_GetDistance(ufo->pos, gd.combatZoomedUfo->pos);
+		if (distance < distance || gd.combatZoomedUfo == ufo) {
+			assert(numUFOList < MAX_AIRCRAFT);
+			ufoList[numUFOList++] = ufo;
+		}
+	}
 }
 
 void AFM_Init_f (void)
 {
-	int idx;
-	aircraft_t *thisAircraft;
-	int baseIdx;
-
-
 	Vector2Copy(gd.combatZoomedUfo->pos, airFightMapCenter);
 
 	ccs.zoom = 1.2f;
@@ -84,46 +97,13 @@ void AFM_Init_f (void)
 	smoothFinalZoom = 8.0f;
 	airFightSmoothMovement = qtrue;
 
+	memset(aircraftList, 0, sizeof(aircraftList));
+	memset(ufoList, 0, sizeof(ufoList));
+	numAircraftList = 0;
+	numUFOList = 0;
 
-	for (idx = 0; idx < MAX_AIRCRAFT; idx++) {
-		aircraft[idx] = NULL;
-		ufos[idx] = NULL;
-	}
-
-	numAircraft = 0;
-	numUfos = 0;
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-		for (thisAircraft = base->aircraft + base->numAircraftInBase - 1; thisAircraft >= base->aircraft; thisAircraft--) {
-			if (AIR_IsAircraftOnGeoscape(thisAircraft)) {
-				float maxRange = AIR_GetMaxAircraftWeaponRange(thisAircraft->weapons, thisAircraft->maxWeapons);
-
-				if (thisAircraft->aircraftTarget == gd.combatZoomedUfo || thisAircraft == gd.combatZoomedUfo->aircraftTarget) {
-					float distance = MAP_GetDistance(thisAircraft->pos, gd.combatZoomedUfo->pos);
-					if (distance < 4.0f) {
-						aircraft[numAircraft] = thisAircraft;
-						numAircraft++;
-					}
-				}
-			}
-		}
-	}
-
-	/* draws ufos */
-	for (thisAircraft = gd.ufos + gd.numUFOs - 1; thisAircraft >= gd.ufos; thisAircraft--) {
-		float distance = MAP_GetDistance(thisAircraft->pos, gd.combatZoomedUfo->pos);
-		if (distance < 4.0f || gd.combatZoomedUfo == thisAircraft) {
-			ufos[numUfos] = thisAircraft;
-			numUfos++;
-		}
-	}
-
-		/*	AFM_GetAircraftInCombatRange(aircraft, numAircraft); */
-/*	AFM_GetUfosInCombatRange(ufos); */
-
+	AFM_GetAircraftInCombatRange(4.0f);
+	AFM_GetUFOsInCombatRange(4.0f);
 }
 
 void AFM_Exit_f (void)
@@ -132,7 +112,6 @@ void AFM_Exit_f (void)
 		gd.combatZoomOn = qfalse;
 		gd.combatZoomedUfo = NULL;
 		CL_EnsureValidGameLapseForGeoscape();
-
 	}
 }
 
@@ -254,21 +233,17 @@ qboolean AFM_MapToScreen (const menuNode_t* node, const vec2_t pos,
  */
 qboolean AFM_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
-	int x, y, z;
-	vec3_t screenPos, angles, v;
-	float zoom;
-	qboolean test;
+	int x, y;
+	const qboolean test = AFM_MapToScreen(node, pos, &x, &y);
 
-/*	test = MAP_AllMapToScreen(node, pos, &x, &y, &z); */
-	test = AFM_MapToScreen(node, pos, &x, &y);
-	z = -10;
 	if (test) {
+		vec3_t screenPos, angles;
+		const int z = -10;
+		const float zoom = ccs.zoom / 37.0f;
+
 		/* Set position of the model on the screen */
 		VectorSet(screenPos, x, y, z);
 		VectorSet(angles, theta, 180, 0);
-
-		zoom = ccs.zoom/37;
-/*		zoom = 0.4f; */
 
 		/* Draw */
 		R_Draw3DMapMarkers(angles, zoom, screenPos, model, skin);
@@ -277,13 +252,25 @@ qboolean AFM_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 	return qfalse;
 }
 
-static void AFM_CenterMapPosition(vec3_t pos)
+/**
+ * @brief
+ * @param[in] pos
+ */
+static void AFM_CenterMapPosition (const vec3_t pos)
 {
-	Vector2Set(ccs.center, 0.5f - ((pos[0] - airFightMapCenter[0]) / 360)*12, 0.5f - ((pos[1] - airFightMapCenter[1]) / 180)*12);
+	Vector2Set(ccs.center, 0.5f - ((pos[0] - airFightMapCenter[0]) / 360) * 12, 0.5f - ((pos[1] - airFightMapCenter[1]) / 180) * 12);
 }
 
-
-static void GetNextProjectedStepPosition(const int maxInterpolationPoints, const vec3_t pos, const vec3_t projectedPos, vec3_t drawPos, int numInterpolationPoints)
+#if 0
+/**
+ * @brief
+ * @param[in] maxInterpolationPoints
+ * @param[in] pos
+ * @param[in] projectedPos
+ * @param[in] drawPos
+ * @param[in] numInterpolationPoints
+ */
+static void GetNextProjectedStepPosition (const int maxInterpolationPoints, const vec3_t pos, const vec3_t projectedPos, vec3_t drawPos, int numInterpolationPoints)
 {
 	if (maxInterpolationPoints > 2 && numInterpolationPoints < maxInterpolationPoints) {
 		/* If a new point hasn't been given and there is at least 3 points need to be filled in then
@@ -298,6 +285,7 @@ static void GetNextProjectedStepPosition(const int maxInterpolationPoints, const
 		VectorCopy(pos, drawPos);
 	}
 }
+#endif
 
 /**
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
@@ -306,7 +294,6 @@ static void GetNextProjectedStepPosition(const int maxInterpolationPoints, const
  */
 static void AFM_DrawMapMarkers (const menuNode_t* node)
 {
-	aircraft_t *thisAircraft;
 	aircraftProjectile_t *projectile;
 	int idx;
 	int maxInterpolationPoints;
@@ -317,14 +304,14 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 	vec3_t combatZoomAircraftInCombatPos[MAX_AIRCRAFT];
 	int combatZoomNumCombatAircraft = 0;
 
-
-	for (idx = 0; idx < numAircraft; idx++) {
-		thisAircraft = aircraft[idx];
-		VectorCopy(thisAircraft->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
+	for (idx = 0; idx < numAircraftList; idx++) {
+		const aircraft_t *aircraft = aircraftList[idx];
+		VectorCopy(aircraft->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
 		combatZoomNumCombatAircraft++;
 	}
-	for (idx = 0; idx < numUfos; idx++) {
-		VectorCopy(ufos[idx]->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
+	for (idx = 0; idx < numUFOList; idx++) {
+		const aircraft_t *aircraft = ufoList[idx];
+		VectorCopy(aircraft->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
 		combatZoomNumCombatAircraft++;
 	}
 
@@ -346,26 +333,26 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		maxInterpolationPoints = 0;
 
 	/* draw all aircraft in combat range */
-	for (idx = 0; idx < numAircraft; idx++) {
+	for (idx = 0; idx < numAircraftList; idx++) {
 		vec3_t drawPos = {0, 0, 0};
-		thisAircraft = aircraft[idx];
+		aircraft_t *aircraft = aircraftList[idx];
 		float weaponRanges[MAX_AIRCRAFTSLOT];
 		float angle;
-		int numWeaponRanges = AIR_GetAircraftWeaponRanges(thisAircraft->weapons, thisAircraft->maxWeapons, weaponRanges);
+		const int numWeaponRanges = AIR_GetAircraftWeaponRanges(aircraft->weapons, aircraft->maxWeapons, weaponRanges);
 #if 0
-		Com_Printf("pos=%f,%f projPos=%f,%f \n",thisAircraft->pos[0],thisAircraft->pos[1],thisAircraft->projectedPos[0], thisAircraft->projectedPos[1]);
+		Com_Printf("pos=%f,%f projPos=%f,%f \n",aircraft->pos[0],thisAircraft->pos[1], aircraft->projectedPos[0], aircraft->projectedPos[1]);
 #endif
-		if (maxInterpolationPoints > 2 && thisAircraft->numInterpolationPoints < maxInterpolationPoints && 1 == 2) {
+		if (maxInterpolationPoints > 2 && aircraft->numInterpolationPoints < maxInterpolationPoints && 1 == 2) {
 			/* If a new point hasn't been given and there is at least 3 points need to be filled in then
 			 * use linear interpolation to draw the points until a new projectile point is provided.
 			 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
 			 * gaps in points so dont add the overhead of interpolation. */
-			const float xInterpolStep = (thisAircraft->projectedPos[0] - thisAircraft->pos[0]) / (float)maxInterpolationPoints;
-			thisAircraft->numInterpolationPoints += 1;
-			drawPos[0] = thisAircraft->pos[0] + (xInterpolStep * thisAircraft->numInterpolationPoints);
-			LinearInterpolation(thisAircraft->pos, thisAircraft->projectedPos, drawPos[0], drawPos[1]);
+			const float xInterpolStep = (aircraft->projectedPos[0] - aircraft->pos[0]) / (float)maxInterpolationPoints;
+			aircraft->numInterpolationPoints += 1;
+			drawPos[0] = aircraft->pos[0] + (xInterpolStep * aircraft->numInterpolationPoints);
+			LinearInterpolation(aircraft->pos, aircraft->projectedPos, drawPos[0], drawPos[1]);
 		} else {
-			VectorCopy(thisAircraft->pos, drawPos);
+			VectorCopy(aircraft->pos, drawPos);
 		}
 
 		/* Draw all weapon ranges for this aircraft if at least one UFO is visible */
@@ -376,34 +363,34 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			}
 		}
 
-		if (thisAircraft->status >= AIR_TRANSIT) {
-			angle = MAP_AngleOfPath(thisAircraft->pos, thisAircraft->route.point[thisAircraft->route.numPoints - 1], thisAircraft->direction, NULL);
+		if (aircraft->status >= AIR_TRANSIT) {
+			angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 		} else {
-			angle = MAP_AngleOfPath(thisAircraft->pos, northPole, thisAircraft->direction, NULL);
+			angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL);
 		}
 
-		AFM_Draw3DMarkerIfVisible(node, drawPos, angle, thisAircraft->model, 0);
+		AFM_Draw3DMarkerIfVisible(node, drawPos, angle, aircraft->model, 0);
 	}
 
 	/* draw all ufos in combat range */
-	for (idx = 0; idx < numUfos; idx++) {
+	for (idx = 0; idx < numUFOList; idx++) {
 		vec3_t drawPos = {0, 0, 0};
-		thisAircraft = ufos[idx];
+		aircraft_t *ufo = ufoList[idx];
 		float weaponRanges[MAX_AIRCRAFTSLOT];
 		float angle;
-		int numWeaponRanges = AIR_GetAircraftWeaponRanges(thisAircraft->weapons, thisAircraft->maxWeapons, weaponRanges);
+		int numWeaponRanges = AIR_GetAircraftWeaponRanges(ufo->weapons, ufo->maxWeapons, weaponRanges);
 
-		if (maxInterpolationPoints > 2 && thisAircraft->numInterpolationPoints < maxInterpolationPoints) {
+		if (maxInterpolationPoints > 2 && ufo->numInterpolationPoints < maxInterpolationPoints) {
 			/* If a new point hasn't been given and there is at least 3 points need to be filled in then
 			 * use linear interpolation to draw the points until a new projectile point is provided.
 			 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
 			 * gaps in points so dont add the overhead of interpolation. */
-			const float xInterpolStep = (thisAircraft->projectedPos[0] - thisAircraft->pos[0]) / (float)maxInterpolationPoints;
-			thisAircraft->numInterpolationPoints += 1;
-			drawPos[0] = thisAircraft->pos[0] + (xInterpolStep * thisAircraft->numInterpolationPoints);
-			LinearInterpolation(thisAircraft->pos, thisAircraft->projectedPos, drawPos[0], drawPos[1]);
+			const float xInterpolStep = (ufo->projectedPos[0] - ufo->pos[0]) / (float)maxInterpolationPoints;
+			ufo->numInterpolationPoints += 1;
+			drawPos[0] = ufo->pos[0] + (xInterpolStep * ufo->numInterpolationPoints);
+			LinearInterpolation(ufo->pos, ufo->projectedPos, drawPos[0], drawPos[1]);
 		} else {
-			VectorCopy(thisAircraft->pos, drawPos);
+			VectorCopy(ufo->pos, drawPos);
 		}
 
 		/* Draw all weapon ranges for this aircraft if at least one UFO is visible */
@@ -414,13 +401,13 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			}
 		}
 
-		if (thisAircraft->status >= AIR_TRANSIT) {
-			angle = MAP_AngleOfPath(thisAircraft->pos, thisAircraft->route.point[thisAircraft->route.numPoints - 1], thisAircraft->direction, NULL);
+		if (ufo->status >= AIR_TRANSIT) {
+			angle = MAP_AngleOfPath(ufo->pos, ufo->route.point[ufo->route.numPoints - 1], ufo->direction, NULL);
 		} else {
-			angle = MAP_AngleOfPath(thisAircraft->pos, northPole, thisAircraft->direction, NULL);
+			angle = MAP_AngleOfPath(ufo->pos, northPole, ufo->direction, NULL);
 		}
 
-		AFM_Draw3DMarkerIfVisible(node, drawPos, angle, thisAircraft->model, 0);
+		AFM_Draw3DMarkerIfVisible(node, drawPos, angle, ufo->model, 0);
 	}
 
 
@@ -471,25 +458,31 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
-void AFM_SmoothTranslate (void)
+static void AFM_SmoothTranslate (void)
 {
+#if 0
 	const float dist1 = smoothFinalAirFightCenter[0] - ccs.center[0];
 	const float dist2 = smoothFinalAirFightCenter[1] - ccs.center[1];
 	const float length = sqrt(dist1 * dist1 + dist2 * dist2);
+#endif
 	const float diff_zoom = smoothFinalZoom - ccs.zoom;
 	const float speed = 1.0f;
 
 	if (/*length < AF_SMOOTHING_STEP_2D  && */ fabs(diff_zoom) < AF_SMOOTHING_STEP_2D) {
-/*		ccs.center[0] = smoothFinalAirFightCenter[0];
-		ccs.center[1] = smoothFinalAirFightCenter[1]; */
+#if 0
+		ccs.center[0] = smoothFinalAirFightCenter[0];
+		ccs.center[1] = smoothFinalAirFightCenter[1];
+#endif
 		ccs.zoom = smoothFinalZoom;
 		airFightSmoothMovement = qfalse;
 	} else {
-/*		if (length > 0)
+#if 0
+		if (length > 0)
 			ccs.center[0] = ccs.center[0] + AF_SMOOTHING_STEP_2D * (dist1) / length;
 			ccs.center[1] = ccs.center[1] + AF_SMOOTHING_STEP_2D * (dist2) / length;
 			ccs.zoom = ccs.zoom + AF_SMOOTHING_STEP_2D * (diff_zoom * speed) / length;
-		else */
+		else
+#endif
 			ccs.zoom = ccs.zoom + AF_SMOOTHING_STEP_2D * (diff_zoom * speed);
 	}
 }
@@ -506,8 +499,6 @@ void AFM_StopSmoothMovement (void)
  */
 void AFM_DrawMap (const menuNode_t* node)
 {
-	float q = 0.0f;
-
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	Vector2Copy(node->pos, ccs.mapPos);
 	Vector2Copy(node->size, ccs.mapSize);

@@ -423,6 +423,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
 /** @brief radius of the globe in screen coordinates */
 #define GLOBE_RADIUS EARTH_RADIUS * (ccs.zoom / STANDARD_3D_ZOOM)
 
+#if 0
 /**
  * @brief Return needed zoom to show a given distance on screen, for 3D geoscape.
  * @param[in] node Pointer to the node where 3D geoscape is displayed.
@@ -432,8 +433,9 @@ const float STANDARD_3D_ZOOM = 40.0f;
 static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 {
 	float zoom;
-	const float MAX_AUTO_ZOOM = 40.0f;			/**< maximum zoom reachable with automatic zoom
-												 * we can zoom closer than manually, so don't use cl_mapzoomax */
+	/* maximum zoom reachable with automatic zoom
+	 * we can zoom closer than manually, so don't use cl_mapzoomax */
+	const float MAX_AUTO_ZOOM = 40.0f;
 
 	if (distance >= 90.0f) {
 		/* We want to see the whole world */
@@ -452,6 +454,7 @@ static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 
 	return zoom;
 }
+#endif
 
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
@@ -1168,7 +1171,7 @@ void MAP_CenterOnPoint_f (void)
  * @param[in] zoom  The level at which to zoom.
  * @param[in] acceleration  How fast the smooth movement should go.
  */
-void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
+static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
 {
 	const menu_t *activeMenu;
 
@@ -1238,7 +1241,7 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 	gd.combatZoomedUfo = combatZoomedUfo;
 	gd.combatZoomLevel = COMBAT_ZOOM_FULL;
 	CL_EnsureValidGameLapseForCombatZoom();
-	MAP_SmoothlyMoveToGeoscapePoint(combatZoomedUfo, 40.0f, 0.06f);
+	MAP_SmoothlyMoveToGeoscapePoint(combatZoomedUfo->pos, 40.0f, 0.06f);
 }
 
 /**

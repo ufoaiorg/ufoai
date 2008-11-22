@@ -56,8 +56,8 @@ static void MN_AirfightmapNodeRightClick (menuNode_t *node, int x, int y)
 static void MN_AirfightmapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	AFM_StopSmoothMovement();
-	ccs.zoom *= pow(0.995, (down ? 10: -10));
-	Com_Printf("zoom level %f \n", ccs.zoom);
+	ccs.zoom *= pow(0.995, (down ? 10 : -10));
+	Com_DPrintf(DEBUG_CLIENT, "zoom level %f \n", ccs.zoom);
 
 	if (ccs.zoom < MIN_AIRFIGHT_ZOOM)
 		ccs.zoom = MIN_AIRFIGHT_ZOOM;
@@ -71,7 +71,7 @@ static void MN_AirfightmapNodeMouseWheel (menuNode_t *node, qboolean down, int x
 		ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
 }
 
-void MN_RegisterAirfightmapNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAirfightMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "airfightmap";
 	behaviour->id = MN_AIRFIGHTMAP;

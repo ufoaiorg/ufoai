@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_item.h"
 #include "m_node_linestrip.h"
 #include "m_node_map.h"
+#include "m_node_airfightmap.h"
 #include "m_node_model.h"
 #include "m_node_radar.h"
 #include "m_node_selectbox.h"
@@ -404,7 +405,7 @@ void MN_InitNodes (void)
 	MN_RegisterContainerNode(nodeBehaviourList + MN_CONTAINER);
 	MN_RegisterItemNode(nodeBehaviourList + MN_ITEM);
 	MN_RegisterMapNode(nodeBehaviourList + MN_MAP);
-	MN_RegisterAirfightmapNode(nodeBehaviourList + MN_AIRFIGHTMAP);
+	MN_RegisterAirfightMapNode(nodeBehaviourList + MN_AIRFIGHTMAP);
 	MN_RegisterBaseMapNode(nodeBehaviourList + MN_BASEMAP);
 	MN_RegisterBaseLayoutNode(nodeBehaviourList + MN_BASELAYOUT);
 	MN_RegisterCheckBoxNode(nodeBehaviourList + MN_CHECKBOX);

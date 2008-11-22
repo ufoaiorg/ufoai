@@ -50,7 +50,6 @@ void MAP_SetCombatZoomedUfo(aircraft_t *combatZoomedUfo);
 void MAP_CombatZoomExit_f(void);
 void MAP_StopSmoothMovement(void);
 void MAP_SetSmoothZoom(float finalZoomLevel, qboolean useSafeAcceleration);
-void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration);
 
 void MAP_ToggleCombatZoomLevel_f(void);
 void MAP_Scroll_f(void);

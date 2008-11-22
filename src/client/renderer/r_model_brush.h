@@ -129,6 +129,8 @@ typedef struct mBspNode_s {
 
 	unsigned short firstsurface;
 	unsigned short numsurfaces;
+
+	struct model_s *model;
 } mBspNode_t;
 
 typedef struct mBspLeaf_s {
@@ -138,6 +140,8 @@ typedef struct mBspLeaf_s {
 	float minmaxs[6];			/**< for bounding box culling */
 
 	struct mnode_s *parent;
+
+	struct model_s *model;
 } mBspLeaf_t;
 
 /** @brief brush model */

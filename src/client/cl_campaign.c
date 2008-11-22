@@ -151,7 +151,6 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 
 	/* build base */
 	Vector2Copy(pos, base->pos);
-	Print2Vector(pos);
 
 	gd.numBases++;
 

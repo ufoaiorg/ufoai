@@ -127,7 +127,7 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
  * @brief gen a string replacing every <eventParam> by a value
  * @todo fix all buffer overflow, and special case problem
  */
-const char* MN_GenCommand (const menuNode_t* source, const char* input)
+static const char* MN_GenCommand (const menuNode_t* source, const char* input)
 {
 	static char cmd[256];
 	static char propertyName[16];

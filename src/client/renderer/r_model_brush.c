@@ -823,6 +823,48 @@ static void R_LoadSurfacesArrays (model_t *mod)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
 
+static void R_SetModel (mBspNode_t *node, model_t *mod)
+{
+	node->model = mod;
+
+	if (node->contents != CONTENTS_NO_LEAF)
+		return;
+
+	R_SetModel(node->children[0], mod);
+	R_SetModel(node->children[1], mod);
+}
+
+static void R_SetupSubmodels (void)
+{
+	int i;
+
+	/* set up the submodels, the first 255 submodels are the models of the
+	 * different levels, don't care about them */
+	for (i = NUM_REGULAR_MODELS; i < r_worldmodel->bsp.numsubmodels; i++) {
+		const mBspHeader_t *bm = &r_worldmodel->bsp.submodels[i];
+		model_t *mod = &r_modelsInline[r_numModelsInline];
+
+		*mod = *r_worldmodel;
+		mod->bsp.firstmodelsurface = bm->firstface;
+		mod->bsp.nummodelsurfaces = bm->numfaces;
+		mod->bsp.firstnode = bm->headnode;
+		mod->bsp.nodes = &r_worldmodel->bsp.nodes[mod->bsp.firstnode];
+		mod->bsp.maptile = r_numMapTiles - 1;
+		if (mod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
+			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
+
+		R_SetModel(mod->bsp.nodes, mod);
+
+		VectorCopy(bm->maxs, mod->maxs);
+		VectorCopy(bm->mins, mod->mins);
+		mod->radius = bm->radius;
+		mod->type = mod_bsp_submodel;
+
+		mod->bsp.numleafs = bm->visleafs;
+		r_numModelsInline++;
+	}
+}
+
 /**
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
@@ -891,28 +933,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
 
-	/* set up the submodels, the first 255 submodels are the models of the
-	 * different levels, don't care about them */
-	for (i = NUM_REGULAR_MODELS; i < r_worldmodel->bsp.numsubmodels; i++) {
-		const mBspHeader_t *bm = &r_worldmodel->bsp.submodels[i];
-		model_t *starmod = &r_modelsInline[r_numModelsInline];
-
-		*starmod = *r_worldmodel;
-		starmod->bsp.firstmodelsurface = bm->firstface;
-		starmod->bsp.nummodelsurfaces = bm->numfaces;
-		starmod->bsp.firstnode = bm->headnode;
-		starmod->bsp.maptile = r_numMapTiles - 1;
-		if (starmod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
-			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
-
-		VectorCopy(bm->maxs, starmod->maxs);
-		VectorCopy(bm->mins, starmod->mins);
-		starmod->radius = bm->radius;
-		starmod->type = mod_bsp_submodel;
-
-		starmod->bsp.numleafs = bm->visleafs;
-		r_numModelsInline++;
-	}
+	R_SetupSubmodels();
 
 	R_LoadBspVertexArrays(r_worldmodel);
 
