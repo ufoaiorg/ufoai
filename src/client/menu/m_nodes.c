@@ -394,7 +394,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		*(float*) b = atof(value);
 	} else if (property->type == (V_FLOAT|V_MENU_COPY)) {
 		b = (byte*) (*(void**)b);
-		if (!Q_strncmp(b, "*cvar", 5)) {
+		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
 			MN_SetCvar(&((char*)b)[6], NULL, atof(value));
 		} else {
 			*(float*) b = atof(value);

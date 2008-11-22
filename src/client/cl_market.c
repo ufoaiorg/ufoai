@@ -106,14 +106,22 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
-static void BS_GetMinMaxValueByItemId (int itemNum, int *min, int *max, int *value)
+/**
+ * @brief
+ * @param[in] base
+ * @param[in] itemNum
+ * @param[out] min
+ * @param[out] max
+ * @param[out] value
+ */
+static inline void BS_GetMinMaxValueByItemId (const base_t *base, int itemNum, int *min, int *max, int *value)
 {
-	assert(baseCurrent);
+	assert(base);
 
-	if (itemNum < 0 || itemNum >= buyList.length)
+	if (itemNum < 0 || itemNum + buyList.scroll >= buyList.length)
 		return;
 
-	if ((buyCat == FILTER_UGVITEM) && (buyList.l[itemNum + buyList.scroll].ugv)) {
+	if (buyCat == FILTER_UGVITEM && buyList.l[itemNum + buyList.scroll].ugv) {
 		/** @todo compute something better */
 		*min = 0;
 		*value = 10000;
@@ -122,18 +130,19 @@ static void BS_GetMinMaxValueByItemId (int itemNum, int *min, int *max, int *val
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
 		assert(item);
 		*min = 0;
-		*value = baseCurrent->storage.num[item->idx];
-		*max = baseCurrent->storage.num[item->idx] + ccs.eMarket.num[item->idx];
+		*value = base->storage.num[item->idx];
+		*max = base->storage.num[item->idx] + ccs.eMarket.num[item->idx];
 	}
 }
 
 /**
  * @brief Update the GUI by calling a console function
  */
-static void BS_UpdateItem (int itemNum)
+static void BS_UpdateItem (const base_t *base, int itemNum)
 {
 	int min, max, value;
-	BS_GetMinMaxValueByItemId(itemNum, &min, &max, &value);
+
+	BS_GetMinMaxValueByItemId(base, itemNum, &min, &max, &value);
 	Cbuf_AddText(va("buy_updateitem %d %d %d %d\n", itemNum, value, min, max));
 }
 
@@ -188,7 +197,7 @@ static void BS_MarketScroll_f (void)
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od && INV_ItemMatchesFilter(od, buyCat) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
 				Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
-				BS_UpdateItem(i - buyList.scroll);
+				BS_UpdateItem(baseCurrent, i - buyList.scroll);
 				if (gd.autosell[od->idx])
 					Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
 			}
@@ -348,13 +357,14 @@ static void BS_BuyType (const base_t *base)
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyList.scroll));
 				}
-				BS_AddToList(air_samp->name, AIR_GetStorageSupply(base, air_samp->id, qtrue), AIR_GetStorageSupply(base, air_samp->id, qfalse), air_samp->price);
+				BS_AddToList(air_samp->name, AIR_GetStorageSupply(base, air_samp->id, qtrue),
+						AIR_GetStorageSupply(base, air_samp->id, qfalse), air_samp->price);
 				if (j >= MAX_BUYLIST)
 					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = air_samp;
-				BS_UpdateItem(j);
+				BS_UpdateItem(base, j);
 				j++;
 			}
 		}
@@ -379,7 +389,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
-				BS_UpdateItem(j);
+				BS_UpdateItem(base, j);
 				j++;
 			}
 		}
@@ -408,7 +418,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = &gd.ugvs[i];
 				buyList.l[j].aircraft = NULL;
-				BS_UpdateItem(j);
+				BS_UpdateItem(base, j);
 				j++;
 			}
 		}
@@ -434,7 +444,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
-				BS_UpdateItem(j);
+				BS_UpdateItem(base, j);
 				j++;
 			}
 		}
@@ -943,7 +953,7 @@ static void BS_BuyItem_f (void)
 		UP_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
 		BS_CheckAndDoBuyItem(baseCurrent, item, BS_GetBuySellFactor());
-		BS_UpdateItem(num);
+		BS_UpdateItem(baseCurrent, num);
 	}
 }
 
@@ -1019,7 +1029,7 @@ static void BS_SellItem_f (void)
 
 			BS_BuyType(baseCurrent);
 			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx] * numItems);
-			BS_UpdateItem(num);
+			BS_UpdateItem(baseCurrent, num);
 		}
 	}
 }

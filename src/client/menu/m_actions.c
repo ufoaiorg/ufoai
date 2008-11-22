@@ -41,7 +41,7 @@ void MN_ExecuteConfunc (const char *confunc)
 	Cmd_ExecuteString(confunc);
 }
 
-static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_t* action)
+static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_t* const action)
 {
 	byte *data;
 	switch (action->type) {
@@ -74,7 +74,6 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 
 			if (!node) {
 				/* didn't find node -> "kill" action and print error */
-				((menuAction_t*)action)->type = EA_NULL;
 				Com_Printf("MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *) action->data);
 				break;
 			}
