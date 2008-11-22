@@ -34,19 +34,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
 
-aircraft_t *aircraftList[MAX_AIRCRAFT];
-aircraft_t *ufoList[MAX_AIRCRAFT];
-int numAircraftList, numUFOList;
-vec2_t airFightMapCenter;
-vec2_t smoothFinalAirFightCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
-float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
-qboolean airFightSmoothMovement = qfalse;
+static aircraft_t *aircraftList[MAX_AIRCRAFT];
+static aircraft_t *ufoList[MAX_AIRCRAFT];
+static int numAircraftList, numUFOList;
+static vec2_t airFightMapCenter;
+static vec2_t smoothFinalAirFightCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
+static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
+static qboolean airFightSmoothMovement = qfalse;
+
+static const int BULLET_SIZE = 1;					/**< the pixel size of a bullet */
+static const float AF_SMOOTHING_STEP_2D = 0.02f;	/**< @todo */
 
 /**
- * @brief
- * @param[out] aircraftList
- * @param[in] numAircraft
+ * @brief Fills the @c aircraftList array with aircraft that are in the given combat range
  * @param[in] distance
+ * @see AFM_GetUFOsInCombatRange
  */
 static void AFM_GetAircraftInCombatRange (float distance)
 {
@@ -73,6 +75,11 @@ static void AFM_GetAircraftInCombatRange (float distance)
 	}
 }
 
+/**
+ * @brief
+ * @param[in] distance
+ * @see AFM_GetAircraftInCombatRange
+ */
 static void AFM_GetUFOsInCombatRange (float distance)
 {
 	aircraft_t *ufo;
@@ -86,6 +93,9 @@ static void AFM_GetUFOsInCombatRange (float distance)
 	}
 }
 
+/**
+ * @brief Inits the aircraft combat menu and some structs
+ */
 void AFM_Init_f (void)
 {
 	Vector2Copy(gd.combatZoomedUfo->pos, airFightMapCenter);
@@ -106,6 +116,9 @@ void AFM_Init_f (void)
 	AFM_GetUFOsInCombatRange(4.0f);
 }
 
+/**
+ * @brief Exits the aircraft combat menu
+ */
 void AFM_Exit_f (void)
 {
 	if (gd.combatZoomedUfo) {
@@ -148,9 +161,8 @@ static void AFM_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t c
 		qboolean draw = qfalse;
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
 		VecToPolar(currentPoint, posCircle);
-		if (AFM_MapToScreen(node, posCircle, &xCircle, &yCircle)) {
+		if (AFM_MapToScreen(node, posCircle, &xCircle, &yCircle))
 			draw = qtrue;
-		}
 
 		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
 		 * (to avoid unwanted lines) */
@@ -158,12 +170,14 @@ static void AFM_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t c
 			R_DrawLineStrip(numPoints, (int*)(&pts));
 			numPoints = 0;
 		}
+
 		/* if the current point is to be drawn, add it to the path */
 		if (draw) {
 			pts[numPoints].x = xCircle;
 			pts[numPoints].y = yCircle;
 			numPoints++;
 		}
+
 		/* update value of oldDraw */
 		oldDraw = draw;
 	}
@@ -173,7 +187,6 @@ static void AFM_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t c
 	R_ColorBlend(NULL);
 }
 
-#define BULLET_SIZE	1
 /**
  * @brief Draws on bunch of bullets on the geoscape map
  * @param[in] node Pointer to the node in which you want to draw the bullets.
@@ -199,8 +212,7 @@ static void AFM_DrawBullets (const menuNode_t* node, const vec3_t pos)
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-qboolean AFM_MapToScreen (const menuNode_t* node, const vec2_t pos,
-		int *x, int *y)
+qboolean AFM_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -208,17 +220,18 @@ qboolean AFM_MapToScreen (const menuNode_t* node, const vec2_t pos,
 	sx = ((pos[0] - airFightMapCenter[0]) / 360) * 12 + ccs.center[0] - 0.5;
 
 	/* shift it on screen */
+	/** @todo: shouldn't this be a while loop? just in case? */
 	if (sx < -0.5)
 		sx += 1.0;
-	else if (sx > +0.5)
+	else if (sx > 0.5)
 		sx -= 1.0;
 
 	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom; /* (ccs.zoom * 0.0379); */
 	*y = node->pos[1] + 0.5 * node->size[1] -
 		(((pos[1] - airFightMapCenter[1]) / 180) * 12 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom; /* (ccs.zoom * 0.0379); */
 
-	if (*x < node->pos[0] && *y < node->pos[1] &&
-		*x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+	if (*x < node->pos[0] && *y < node->pos[1]
+	 && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
 		return qfalse;
 	return qtrue;
 }
@@ -332,6 +345,9 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 	else
 		maxInterpolationPoints = 0;
 
+	/** @todo the next two for loops are doing the same for aircraft and ufo - refactor this to some function
+	 * that can be used for those aircraft and ufos */
+
 	/* draw all aircraft in combat range */
 	for (idx = 0; idx < numAircraftList; idx++) {
 		vec3_t drawPos = {0, 0, 0};
@@ -441,16 +457,17 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 
 		if (projectile->bullets)
 			AFM_DrawBullets(node, drawPos);
-/*		else if (projectile->laser)
-			** @todo Implement rendering of laser shot
-			 MAP_DrawLaser(node, vec3_origin, vec3_origin); */
+#if 0
+		else if (projectile->laser)
+			/** @todo Implement rendering of laser shot */
+			 MAP_DrawLaser(node, vec3_origin, vec3_origin);
+#endif
 		else
 			AFM_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
 	}
 
 }
 
-#define AF_SMOOTHING_STEP_2D	0.02f
 /**
  * @brief smooth translation of the 2D geoscape
  * @note updates slowly values of ccs.center so that its value goes to smoothFinal2DGeoscapeCenter
