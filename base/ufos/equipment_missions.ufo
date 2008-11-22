@@ -111,8 +111,9 @@
 //    For each alien equipment, you must specifiy mininterest and maxinterest : the lower
 //    and upper value of overall alieninterest that can use this equipment definition.
 //    Equipment used will be picked randomly between all definition fitting overallinterest.
+//    Note that all equipment definition must have different names.
 
-equipment alien_workers
+equipment alien_workers1
 {
 	mininterest			0
 	maxinterest			250
@@ -124,7 +125,7 @@ equipment alien_workers
 	light_alien         1
 }
 
-equipment alien_workers_explosive
+equipment alien_workers1_explosive
 {
 	mininterest			0
 	maxinterest			250
@@ -138,7 +139,7 @@ equipment alien_workers_explosive
 	medium_alien        1
 }
 
-equipment alien_soldiers
+equipment alien_soldiers1
 {
 	mininterest			0
 	maxinterest			250
@@ -153,7 +154,7 @@ equipment alien_soldiers
 	light_alien         13
 }
 
-equipment alien_workers
+equipment alien_workers2
 {
 	mininterest			250
 	maxinterest			500
@@ -167,7 +168,7 @@ equipment alien_workers
 	medium_alien        7
 }
 
-equipment alien_soldiers_melee
+equipment alien_soldiers_melee2
 {
 	mininterest			250
 	maxinterest			500
@@ -187,7 +188,7 @@ equipment alien_soldiers_melee
 //  heavy_alien         1
 }
 
-equipment alien_soldiers
+equipment alien_soldiers2
 {
 	mininterest			250
 	maxinterest			500
@@ -206,7 +207,7 @@ equipment alien_soldiers
 	medium_alien        3
 }
 
-equipment alien_workers
+equipment alien_workers3
 {
 	mininterest			500
 	maxinterest			750
@@ -224,7 +225,7 @@ equipment alien_workers
 //  heavy_alien         1
 }
 
-equipment alien_workers_explosive
+equipment alien_workers_explosive3
 {
 	mininterest			500
 	maxinterest			750
@@ -243,7 +244,7 @@ equipment alien_workers_explosive
 //  heavy_alien         1
 }
 
-equipment alien_soldiers
+equipment alien_soldiers3
 {
 	mininterest			500
 	maxinterest			750
@@ -265,7 +266,7 @@ equipment alien_soldiers
 //	heavy_alien         2
 }
 
-equipment alien_workers
+equipment alien_workers4
 {
 	mininterest			750
 	maxinterest			10000
@@ -287,7 +288,7 @@ equipment alien_workers
 //	heavy_alien         15
 }
 
-equipment alien_soldiers_plasma
+equipment alien_soldiers_plasma4
 {
 	mininterest			750
 	maxinterest			10000
@@ -305,7 +306,7 @@ equipment alien_soldiers_plasma
 //	heavy_alien         34
 }
 
-equipment alien_soldiers
+equipment alien_soldiers4
 {
 	mininterest			750
 	maxinterest			10000

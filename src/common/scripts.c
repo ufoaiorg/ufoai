@@ -1439,6 +1439,8 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	}
 
 	do {
+		qboolean foundDefinition = qfalse;
+
 		token = COM_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
@@ -1450,24 +1452,27 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (!*text)
 					return;
 				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-			}
-
-		for (i = 0; i < csi.numODs; i++)
-			if (!Q_strncmp(token, csi.ods[i].id, MAX_VAR)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text || *token == '}') {
-					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
-					return;
-				}
-				n = atoi(token);
-				if (n)
-					ed->num[i] = n;
+				foundDefinition = qtrue;
 				break;
 			}
 
-		if (i == csi.numODs)
-			Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+		if (!foundDefinition) {
+			for (i = 0; i < csi.numODs; i++)
+				if (!Q_strncmp(token, csi.ods[i].id, MAX_VAR)) {
+					token = COM_EParse(text, errhead, name);
+					if (!*text || *token == '}') {
+						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
+						return;
+					}
+					n = atoi(token);
+					if (n)
+						ed->num[i] = n;
+					break;
+				}
 
+			if (i == csi.numODs)
+				Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+		}
 	} while (*text);
 }
 
