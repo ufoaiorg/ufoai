@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_input.h"
 #include "m_main.h"
 #include "m_parse.h"
-#include "m_input.h"
 
 menuNode_t *focusNode;
 
@@ -124,15 +123,16 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
 
 /**
  * @brief gen a string replacing every <eventParam> by a value
- * @todo fix all buffer overflow, and special case problem
  */
 static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean useCmdParam, const char* input)
 {
 	static char cmd[256];
+	int length = sizeof(cmd) - 2;
 	static char propertyName[16];
 	const char *cin = input;
 	char *cout = cmd;
-	while (*cin != '\0') {
+
+	while (length && *cin != '\0') {
 		if (*cin == '<') {
 			/* read propertyName between '<' and '>' */
 			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
@@ -142,19 +142,24 @@ static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean use
 					const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
 					if (property) {
 						const char* value;
+						int l;
 						if ((property->type & (V_SPECIAL|V_MENU_COPY)) != 0) {
 							Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s.%s'", property->string, source->menu->name, source->name);
 						}
 						/* inject the property value */
 						value = Com_ValueToStr((const void*)source, property->type, property->ofs);
-						cout += sprintf(cout, "%s", value);
+						l = snprintf(cout, length, "%s", value);
+						cout += l;
 						cin = next;
+						length -= l;
 						continue;
 					} else if (useCmdParam) {
 						const int arg = atoi(propertyName);
 						if (Cmd_Argc() >= arg) {
-							cout += sprintf(cout, "%s", Cmd_Argv(arg));
+							const int l = snprintf(cout, length, "%s", Cmd_Argv(arg));
+							cout += l;
 							cin = next;
+							length -= l;
 							continue;
 						}
 					}
@@ -162,7 +167,12 @@ static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean use
 			}
 		}
 		*cout++ = *cin++;
+		length--;
 	}
+
+	/* is buffer too small? */
+	assert(*cin == '\0');
+
 	*cout++ = '\n';
 	*cout++ = '\0';
 	return cmd;
