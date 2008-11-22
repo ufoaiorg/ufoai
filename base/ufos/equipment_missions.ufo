@@ -21,42 +21,71 @@
 // you get only n/40 of each item number, rounded down
 // (the rounding down is the auto-mission penalty).
 //
-// Alien weapon assignment procedure, more or less (see q_shared.c):
+// Note that we describe the selection of weapon for aliens, but the same
+// procedure is used for initial equipment of phalanx soldiers.
+//
+// Alien weapon assignment procedure, more or less (see inv_shared.c):
 // For each alien, pick the following:
-// 1. the most expensive primary weapon W with probability #W/40
-//    where #W is the number of W weapons listed in equipment
-// 1a. if still no primary weapon,
-//     the second most expensive primary weapon X with probability #X/40
-// etc. for all primary weapons (the order is essential);
-// keep the total <= 40 or the theoretical loot will
-// be much higher than the actual loot
-// 2. similary, sidearms (secondary weapons with reload) based on price,
-//    so in case of current weapons this is:
-//    pbeampistol with probability #pbeampistol/40
-// 2a. if still no sidearm,
-//     plaspistol with probability #plaspistol/40;
-//     add some bonus to probability for those aliens
-//     that don't have primary weapons, yet,
-//     and some malus to those that already have,
-//     with decent probability of akimbo, too;
-//     moreover alien with particle beam primary weapon
-//     will start picking sidarm with plaspistol, not pbeampistol;
-//     keep the total <= 40, likewise
-// 3. get the following number of ammo for each weapon separately:
+// 1. Get a primary weapon:
+// 1a. Select a primary weapon:
+//    There is 15% chance to select any primary weapon W in the equipment definition.
+//    If no primary weapon is selected, the default selected weapon is the most expensive.
+// 1b. See if this weapon is taken:
+//    The selected weapon has a probability #W/40 to be taken
+//    where #W is the number of W weapons listed in equipment.
+// 1c. If W is not taken, then we go back to 1.a: another weapon X is selected,
+//    but the default X weapon is the weapon which cost is just below W cost.
+//    If there is no weapon cheaper than W, alien has no primary weapon.
+// 1d. get the following number of ammo for each weapon separately:
 //      (#ammo/#weapon) slightly randomly increased
 //    with probability depending on the fractional part,
 //    where #ammo and #weapon are the numbers of that particular
 //    ammo and weapon in the equipment definition;
 //    #ammo/#weapon should be greater than 1
-// 4. for each misc item (plasmagrenade)
-//    and secondary weapon without reload (kerrblade or plasblade) get
-//      (#item/40) slightly randomly increased
-//    with probability depending on the fractional part
-//    for each alien (as long as it fits in the backpack);
-//    the order is from the most expensive to the least expensive;
-//    add some bonus to probability for those aliens
-//    that don't have primary weapons nor sidearms, yet,
-//    and some malus to those that already have
+//
+// 2. Get a secondary weapon with reload (sidearms):
+// 2a. Select a secondary weapon:
+//    If primary weapon is a particle or normal damage weapon, 
+/     selected secondary weapon is the cheapest weapon.
+//    Otherwise, it's the most expensive.
+// 2b. See if this weapon is taken:
+//    The selected weapon has a probability #S/40 to be taken
+//    where #S is the number of S secondary weapons listed in equipment.
+// 2c. If S is not taken, then we go back to 2.a: another weapon T is selected,
+//    but the default T weapon is the weapon which cost is just below S cost
+//    (or above if W primary weapon is a particle or normal damage weapon).
+//    If there is no weapon fitting W, alien has no secondary weapon.
+// 2d. If alien has a one-handed secondary weapon without primary weapon,
+//    the is 30% chance that he get onather identical secondary weapon in
+//    the other hand.
+// 2e. get the following number of ammo for each weapon separately: see primary weapon
+//
+// 3. If alien has no weapon at this stage, there is 30% chance that we go back to 2.a
+//    to increase the probability to get a secondary weapon.
+//
+// 4. Get misc items and secondary weapons without reload: (that includes kerrblades or plasblade)
+// 4a. Select a misc items:
+//    Select the most expensive item in list.
+// 4b. See if the item is taken:
+//    the selected item has a probability #I/40 to be taken (as long as it fits
+//    in their hand / belt / holster).
+//    if #I is greater than 40, then it automatically gets this item.
+// 4c. If no item has been selected, then we try again with the item which cost
+//    is just below I cost.
+//
+// 5. If alien has no primary nor secondary weapon at this stage, there is 30% chance
+//    that we go back to 4.a to increase number of misc items.
+//
+// 6. Get an armour:
+// 6a. Select an armour:
+//    Select the most expensive armour in the equipment definition.
+// 6b. See if this armour is taken:
+//    The selected armour has a probability #A/40 to be taken
+// 6c. If A is not taken, then we go back to 2.a: another weapon B is selected,
+//    but the default B weapon is the weapon which cost is just below A cost
+//    If there is no armour left, alien has no armour.
+// 6d. There is a probability to retry to get an armour (go back to 6a), depending
+//    on the result of step 1.b
 
 // There is no problem if the number of assigned things
 // is bigger than the total in equipment --- on average it is OK.
@@ -73,9 +102,18 @@
 // while 40 plaspistol and 40 pbeampistol gives only 1 sidearm
 // (so 20 plaspistol and 20 pbeampistol is a better idea in practice).
 
+// all alien equipment must be defined as :
+// stageN_workersS	or stageN_soldiersS
+// where N is a number between 1 and MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE.
+//    This number represent the advance in game (1 is the start of the game,
+//    MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE is the end of the game (this equipment
+//    will be used only for the difficult campaign).
+//    S is any string (used to specify the equipment definition)
+//    For a given stage, all equipment definition can be chosen with the same proability.
+
 equipment stage1_workers
 {
-	plaspistol			25
+	plaspistol			20
 	plaspistol_ammo		29
 	plasrifle			1
 	plasrifle_ammo		1
@@ -97,9 +135,9 @@ equipment stage1_workers_explosive
 
 equipment stage1_soldiers
 {
-	plaspistol			25
+	plaspistol			15
 	plaspistol_ammo		55
-	plasrifle			30
+	plasrifle			20
 	plasrifle_ammo		45
 	plasblaster			7
 	plasblaster_ammo	7

@@ -1159,8 +1159,7 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
 	}
 }
 
-#define AKIMBO_CHANCE		0.3
-#define WEAPONLESS_BONUS	0.4
+#define WEAPONLESS_BONUS	0.4		/* if you got neither primary nor secondary weapon, this is the chance to retry to get one (before trying to get grenades or blades) */
 #define PROB_COMPENSATION   3.0
 
 /**
@@ -1368,6 +1367,11 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
 	objDef_t *obj;
 	objDef_t *weapon;
+	const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
+											 this is the chance to get another one (between 0 and 1) */
+	const float GET_ANY_PRIMARY_CHANCE = 0.15;	/**< this is the chance to select any primary weapon
+													(even if it's not the more expensive). Then, the chance to get this
+													weapon depends on the numbers defined in equipment_missions.ufo */
 
 	if (chr->weapons) {
 		/* Primary weapons */
@@ -1381,7 +1385,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			for (i = lastPos; i >= 0; i--) {
 				obj = &CSI->ods[i];
 				if (equip[i] && obj->weapon && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)) && obj->fireTwoHanded) {
-					if (frand() < 0.15) { /* Small chance to pick any weapon. */
+					if (frand() < GET_ANY_PRIMARY_CHANCE) { /* Small chance to pick any weapon. */
 						weapon = obj;
 						maxPrice = obj->price;
 						lastPos = i - 1;
@@ -1396,7 +1400,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			/* See if there is any. */
 			if (maxPrice) {
 				/* See if the actor picks it. */
-				if (equip[weapon->idx] >= (28 - PROB_COMPENSATION) * frand()) {
+				if (equip[weapon->idx] >= 40 * frand()) {
 					/* Not decrementing equip[weapon]
 					* so that we get more possible squads. */
 					hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
@@ -1413,7 +1417,6 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 								!(CSI->ods[ammo].dmgtype == CSI->damParticle)
 								/* To avoid SMG + Assault Rifle */
 								&& !(CSI->ods[ammo].dmgtype == CSI->damNormal);
-								/* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
 						}
 						maxPrice = 0; /* One primary weapon is enough. */
 						missedPrimary = 0;
@@ -1453,7 +1456,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 					if (equip[weapon->idx] >= 40 * frand()) {
 						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, name);
 						if (hasWeapon) {
-							/* Try to get the second akimbo pistol. */
+							/* Try to get the second akimbo pistol if no primary weapon. */
 							if (primary == 2
 								&& !weapon->fireTwoHanded
 								&& frand() < AKIMBO_CHANCE) {
