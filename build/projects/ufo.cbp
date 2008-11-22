@@ -326,6 +326,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_map.h" />
+		<Unit filename="..\..\src\client\cl_airfightmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_airfightmap.h" />
 		<Unit filename="..\..\src\client\cl_mapfightequip.c">
 			<Option compilerVar="CC" />
 		</Unit>
