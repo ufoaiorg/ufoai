@@ -1,10 +1,10 @@
 /**
- * @file cl_map.c
- * @brief Geoscape/Map management
+ * @file cl_airfightmap.c
+ * @brief Handles airfights between aircraft / UFOs
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2008 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
