@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_input.h"
 #include "m_main.h"
 #include "m_parse.h"
+#include "m_input.h"
 
 menuNode_t *focusNode;
 
@@ -122,7 +123,10 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
 }
 
 /**
- * @brief gen a string replacing every <eventParam> by a value
+ * @brief Replace injection identifiers (e.g. <eventParam>) by a value
+ * @note The injection identifier can be every node value - e.g. <image> or <width>.
+ * It's also possible to do something like
+ * @code cmd "set someCvar <min>/<max>"
  */
 static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean useCmdParam, const char* input)
 {
@@ -132,8 +136,8 @@ static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean use
 	const char *cin = input;
 	char *cout = cmd;
 
-	while (length && *cin != '\0') {
-		if (*cin == '<') {
+	while (length && cin[0] != '\0') {
+		if (cin[0] == '<') {
 			/* read propertyName between '<' and '>' */
 			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
@@ -171,7 +175,7 @@ static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean use
 	}
 
 	/* is buffer too small? */
-	assert(*cin == '\0');
+	assert(cin[0] == '\0');
 
 	*cout++ = '\n';
 	*cout++ = '\0';
