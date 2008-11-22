@@ -40,6 +40,8 @@ typedef struct abstractValueExtraData_s {
 } abstractValueExtraData_t;
 
 struct nodeBehaviour_s; /* prototype */
+struct menuNode_s;
+
 void MN_RegisterAbstractValueNode(struct nodeBehaviour_s *behavior);
 
 #endif

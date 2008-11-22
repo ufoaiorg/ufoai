@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_node_abstractvalue.h"
+#include "m_input.h"
 
 static const value_t properties[] = {
 	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.value), 0},

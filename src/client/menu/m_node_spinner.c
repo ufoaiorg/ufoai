@@ -102,7 +102,7 @@ static void MN_SpinnerNodeDown (menuNode_t *node, int x, int y, int button)
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
 		MN_NodeAbsoluteToRelativePos(node, &x, &y);
-		capturedDownButton = y >= BUTTON_TOP_SIZE;
+		capturedDownButton = y > BUTTON_TOP_SIZE;
 		MN_SpinnerNodeStep(node, capturedDownButton);
 		capturedTimer = MN_AllocTimer(node, 1000, MN_SpinnerNodeRepeat);
 		MN_TimerStart (capturedTimer);
@@ -169,7 +169,7 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 		if (value <= min) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = TILE_SIZE;
-		} else if (node->state && mousePosY >= pos[1] + BUTTON_TOP_SIZE) {
+		} else if (node->state && mousePosY > pos[1] + BUTTON_TOP_SIZE) {
 			bottomTexX = TILE_SIZE;
 			bottomTexY = 0;
 		} else {

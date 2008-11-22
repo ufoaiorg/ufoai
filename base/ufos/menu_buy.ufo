@@ -77,172 +77,228 @@ menu buy
 	// =========================
 	// buy/sell/autosell buttons
 	// =========================
-	confunc buy_autoselle0 { *bt_autosell0 image menu/button_autosell1
+	confunc buy_autoselle0 {
+		*bt_autosell0 image menu/button_autosell1
 		*bt_autosell0 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld0 { *bt_autosell0 image menu/button_autosell2
+	confunc buy_autoselld0 {
+		*bt_autosell0 image menu/button_autosell2
 		*bt_autosell0 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle1 { *bt_autosell1 image menu/button_autosell1
+	confunc buy_autoselle1 {
+		*bt_autosell1 image menu/button_autosell1
 		*bt_autosell1 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld1 { *bt_autosell1 image menu/button_autosell2
+	confunc buy_autoselld1 {
+		*bt_autosell1 image menu/button_autosell2
 		*bt_autosell1 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle2 { *bt_autosell2 image menu/button_autosell1
+	confunc buy_autoselle2 {
+		*bt_autosell2 image menu/button_autosell1
 		*bt_autosell2 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld2 { *bt_autosell2 image menu/button_autosell2
+	confunc buy_autoselld2 {
+		*bt_autosell2 image menu/button_autosell2
 		*bt_autosell2 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle3 { *bt_autosell3 image menu/button_autosell1
+	confunc buy_autoselle3 {
+		*bt_autosell3 image menu/button_autosell1
 		*bt_autosell3 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld3 { *bt_autosell3 image menu/button_autosell2
+	confunc buy_autoselld3 {
+		*bt_autosell3 image menu/button_autosell2
 		*bt_autosell3 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle4 { *bt_autosell4 image menu/button_autosell1
+	confunc buy_autoselle4 {
+		*bt_autosell4 image menu/button_autosell1
 		*bt_autosell4 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld4 { *bt_autosell4 image menu/button_autosell2
+	confunc buy_autoselld4 {
+		*bt_autosell4 image menu/button_autosell2
 		*bt_autosell4 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle5 { *bt_autosell5 image menu/button_autosell1
+	confunc buy_autoselle5 {
+		*bt_autosell5 image menu/button_autosell1
 		*bt_autosell5 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld5 { *bt_autosell5 image menu/button_autosell2
+	confunc buy_autoselld5 {
+		*bt_autosell5 image menu/button_autosell2
 		*bt_autosell5 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle6 { *bt_autosell6 image menu/button_autosell1
+	confunc buy_autoselle6 {
+		*bt_autosell6 image menu/button_autosell1
 		*bt_autosell6 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld6 { *bt_autosell6 image menu/button_autosell2
+	confunc buy_autoselld6 {
+		*bt_autosell6 image menu/button_autosell2
 		*bt_autosell6 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle7 { *bt_autosell7 image menu/button_autosell1
+	confunc buy_autoselle7 {
+		*bt_autosell7 image menu/button_autosell1
 		*bt_autosell7 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld7 { *bt_autosell7 image menu/button_autosell2
+	confunc buy_autoselld7 {
+		*bt_autosell7 image menu/button_autosell2
 		*bt_autosell7 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle8 { *bt_autosell8 image menu/button_autosell1
+	confunc buy_autoselle8 {
+		*bt_autosell8 image menu/button_autosell1
 		*bt_autosell8 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld8 { *bt_autosell8 image menu/button_autosell2
+	confunc buy_autoselld8 {
+		*bt_autosell8 image menu/button_autosell2
 		*bt_autosell8 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle9 { *bt_autosell9 image menu/button_autosell1
+	confunc buy_autoselle9 {
+		*bt_autosell9 image menu/button_autosell1
 		*bt_autosell9 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld9 { *bt_autosell9 image menu/button_autosell2
+	confunc buy_autoselld9 {
+		*bt_autosell9 image menu/button_autosell2
 		*bt_autosell9 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle10 { *bt_autosell10 image menu/button_autosell1
+	confunc buy_autoselle10 {
+		*bt_autosell10 image menu/button_autosell1
 		*bt_autosell10 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld10 { *bt_autosell10 image menu/button_autosell2
+	confunc buy_autoselld10 {
+		*bt_autosell10 image menu/button_autosell2
 		*bt_autosell10 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle11 { *bt_autosell11 image menu/button_autosell1
+	confunc buy_autoselle11 {
+		*bt_autosell11 image menu/button_autosell1
 		*bt_autosell11 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld11 { *bt_autosell11 image menu/button_autosell2
+	confunc buy_autoselld11 {
+		*bt_autosell11 image menu/button_autosell2
 		*bt_autosell11 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle12 { *bt_autosell12 image menu/button_autosell1
+	confunc buy_autoselle12 {
+		*bt_autosell12 image menu/button_autosell1
 		*bt_autosell12 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld12 { *bt_autosell12 image menu/button_autosell2
+	confunc buy_autoselld12 {
+		*bt_autosell12 image menu/button_autosell2
 		*bt_autosell12 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle13 { *bt_autosell13 image menu/button_autosell1
+	confunc buy_autoselle13 {
+		*bt_autosell13 image menu/button_autosell1
 		*bt_autosell13 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld13 { *bt_autosell13 image menu/button_autosell2
+	confunc buy_autoselld13 {
+		*bt_autosell13 image menu/button_autosell2
 		*bt_autosell13 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle14 { *bt_autosell14 image menu/button_autosell1
+	confunc buy_autoselle14 {
+		*bt_autosell14 image menu/button_autosell1
 		*bt_autosell14 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld14 { *bt_autosell14 image menu/button_autosell2
+	confunc buy_autoselld14 {
+		*bt_autosell14 image menu/button_autosell2
 		*bt_autosell14 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle15 { *bt_autosell15 image menu/button_autosell1
+	confunc buy_autoselle15 {
+		*bt_autosell15 image menu/button_autosell1
 		*bt_autosell15 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld15 { *bt_autosell15 image menu/button_autosell2
+	confunc buy_autoselld15 {
+		*bt_autosell15 image menu/button_autosell2
 		*bt_autosell15 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle16 { *bt_autosell16 image menu/button_autosell1
+	confunc buy_autoselle16 {
+		*bt_autosell16 image menu/button_autosell1
 		*bt_autosell16 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld16 { *bt_autosell16 image menu/button_autosell2
+	confunc buy_autoselld16 {
+		*bt_autosell16 image menu/button_autosell2
 		*bt_autosell16 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle17 { *bt_autosell17 image menu/button_autosell1
+	confunc buy_autoselle17 {
+		*bt_autosell17 image menu/button_autosell1
 		*bt_autosell17 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld17 { *bt_autosell17 image menu/button_autosell2
+	confunc buy_autoselld17 {
+		*bt_autosell17 image menu/button_autosell2
 		*bt_autosell17 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle18 { *bt_autosell18 image menu/button_autosell1
+	confunc buy_autoselle18 {
+		*bt_autosell18 image menu/button_autosell1
 		*bt_autosell18 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld18 { *bt_autosell18 image menu/button_autosell2
+	confunc buy_autoselld18 {
+		*bt_autosell18 image menu/button_autosell2
 		*bt_autosell18 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle19 { *bt_autosell19 image menu/button_autosell1
+	confunc buy_autoselle19 {
+		*bt_autosell19 image menu/button_autosell1
 		*bt_autosell19 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld19 { *bt_autosell19 image menu/button_autosell2
+	confunc buy_autoselld19 {
+		*bt_autosell19 image menu/button_autosell2
 		*bt_autosell19 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle20 { *bt_autosell20 image menu/button_autosell1
+	confunc buy_autoselle20 {
+		*bt_autosell20 image menu/button_autosell1
 		*bt_autosell20 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld20 { *bt_autosell20 image menu/button_autosell2
+	confunc buy_autoselld20 {
+		*bt_autosell20 image menu/button_autosell2
 		*bt_autosell20 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle21 { *bt_autosell21 image menu/button_autosell1
+	confunc buy_autoselle21 {
+		*bt_autosell21 image menu/button_autosell1
 		*bt_autosell21 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld21 { *bt_autosell21 image menu/button_autosell2
+	confunc buy_autoselld21 {
+		*bt_autosell21 image menu/button_autosell2
 		*bt_autosell21 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle22 { *bt_autosell22 image menu/button_autosell1
+	confunc buy_autoselle22 {
+		*bt_autosell22 image menu/button_autosell1
 		*bt_autosell22 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld22 { *bt_autosell22 image menu/button_autosell2
+	confunc buy_autoselld22 {
+		*bt_autosell22 image menu/button_autosell2
 		*bt_autosell22 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle23 { *bt_autosell23 image menu/button_autosell1
+	confunc buy_autoselle23 {
+		*bt_autosell23 image menu/button_autosell1
 		*bt_autosell23 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld23 { *bt_autosell23 image menu/button_autosell2
+	confunc buy_autoselld23 {
+		*bt_autosell23 image menu/button_autosell2
 		*bt_autosell23 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle24 { *bt_autosell24 image menu/button_autosell1
+	confunc buy_autoselle24 {
+		*bt_autosell24 image menu/button_autosell1
 		*bt_autosell24 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld24 { *bt_autosell24 image menu/button_autosell2
+	confunc buy_autoselld24 {
+		*bt_autosell24 image menu/button_autosell2
 		*bt_autosell24 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle25 { *bt_autosell25 image menu/button_autosell1
+	confunc buy_autoselle25 {
+		*bt_autosell25 image menu/button_autosell1
 		*bt_autosell25 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld25 { *bt_autosell25 image menu/button_autosell2
+	confunc buy_autoselld25 {
+		*bt_autosell25 image menu/button_autosell2
 		*bt_autosell25 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle26 { *bt_autosell26 image menu/button_autosell1
+	confunc buy_autoselle26 {
+		*bt_autosell26 image menu/button_autosell1
 		*bt_autosell26 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld26 { *bt_autosell26 image menu/button_autosell2
+	confunc buy_autoselld26 {
+		*bt_autosell26 image menu/button_autosell2
 		*bt_autosell26 tooltip "_Item autosell disabled"
 	}
-	confunc buy_autoselle27 { *bt_autosell27 image menu/button_autosell1
+	confunc buy_autoselle27 {
+		*bt_autosell27 image menu/button_autosell1
 		*bt_autosell27 tooltip "_Item autosell enabled"
 	}
-	confunc buy_autoselld27 { *bt_autosell27 image menu/button_autosell2
+	confunc buy_autoselld27 {
+		*bt_autosell27 image menu/button_autosell2
 		*bt_autosell27 tooltip "_Item autosell disabled"
 	}
 
@@ -250,63 +306,75 @@ menu buy
 	// hide/show functions for the buy/sell entries in the list
 	// =========================
 
-	confunc buy_hide0 { *bt_autosell0 invis true	*bt_buy0 invis true	*bt_sell0 invis true  }
-	confunc buy_hide1 { *bt_autosell1 invis true	*bt_buy1 invis true	*bt_sell1 invis true  }
-	confunc buy_hide2 { *bt_autosell2 invis true	*bt_buy2 invis true	*bt_sell2 invis true  }
-	confunc buy_hide3 { *bt_autosell3 invis true	*bt_buy3 invis true	*bt_sell3 invis true  }
-	confunc buy_hide4 { *bt_autosell4 invis true	*bt_buy4 invis true	*bt_sell4 invis true  }
-	confunc buy_hide5 { *bt_autosell5 invis true	*bt_buy5 invis true	*bt_sell5 invis true  }
-	confunc buy_hide6 { *bt_autosell6 invis true	*bt_buy6 invis true	*bt_sell6 invis true  }
-	confunc buy_hide7 { *bt_autosell7 invis true	*bt_buy7 invis true	*bt_sell7 invis true  }
-	confunc buy_hide8 { *bt_autosell8 invis true	*bt_buy8 invis true	*bt_sell8 invis true  }
-	confunc buy_hide9 { *bt_autosell9 invis true	*bt_buy9 invis true	*bt_sell9 invis true  }
-	confunc buy_hide10 { *bt_autosell10 invis true	*bt_buy10 invis true	*bt_sell10 invis true  }
-	confunc buy_hide11 { *bt_autosell11 invis true	*bt_buy11 invis true	*bt_sell11 invis true  }
-	confunc buy_hide12 { *bt_autosell12 invis true	*bt_buy12 invis true	*bt_sell12 invis true  }
-	confunc buy_hide13 { *bt_autosell13 invis true	*bt_buy13 invis true	*bt_sell13 invis true  }
-	confunc buy_hide14 { *bt_autosell14 invis true	*bt_buy14 invis true	*bt_sell14 invis true  }
-	confunc buy_hide15 { *bt_autosell15 invis true	*bt_buy15 invis true	*bt_sell15 invis true  }
-	confunc buy_hide16 { *bt_autosell16 invis true	*bt_buy16 invis true	*bt_sell16 invis true  }
-	confunc buy_hide17 { *bt_autosell17 invis true	*bt_buy17 invis true	*bt_sell17 invis true  }
-	confunc buy_hide18 { *bt_autosell18 invis true	*bt_buy18 invis true	*bt_sell18 invis true  }
-	confunc buy_hide19 { *bt_autosell19 invis true	*bt_buy19 invis true	*bt_sell19 invis true  }
-	confunc buy_hide20 { *bt_autosell20 invis true	*bt_buy20 invis true	*bt_sell20 invis true  }
-	confunc buy_hide21 { *bt_autosell21 invis true	*bt_buy21 invis true	*bt_sell21 invis true  }
-	confunc buy_hide22 { *bt_autosell22 invis true	*bt_buy22 invis true	*bt_sell22 invis true  }
-	confunc buy_hide23 { *bt_autosell23 invis true	*bt_buy23 invis true	*bt_sell23 invis true  }
-	confunc buy_hide24 { *bt_autosell24 invis true	*bt_buy24 invis true	*bt_sell24 invis true  }
-	confunc buy_hide25 { *bt_autosell25 invis true	*bt_buy25 invis true	*bt_sell25 invis true  }
-	confunc buy_hide26 { *bt_autosell26 invis true	*bt_buy26 invis true	*bt_sell26 invis true  }
-	confunc buy_hide27 { *bt_autosell27 invis true	*bt_buy27 invis true	*bt_sell27 invis true  }
+	/**
+	 * @param[in] <1> id of the item
+	 * @param[in] <2> quantity of the item in the base
+	 * @param[in] <3> min value allowed
+	 * @param[in] <4> max value allowed
+	 */
+	confunc buy_updateitem {
+		cmd "mn_setnodeproperty bt_buysell<1> current <2>"
+		cmd "mn_setnodeproperty bt_buysell<1> min <3>"
+		cmd "mn_setnodeproperty bt_buysell<1> max <4>"
+	}
 
-	confunc buy_show0 { *bt_autosell0 invis false	*bt_buy0 invis false	*bt_sell0 invis false  }
-	confunc buy_show1 { *bt_autosell1 invis false	*bt_buy1 invis false	*bt_sell1 invis false  }
-	confunc buy_show2 { *bt_autosell2 invis false	*bt_buy2 invis false	*bt_sell2 invis false  }
-	confunc buy_show3 { *bt_autosell3 invis false	*bt_buy3 invis false	*bt_sell3 invis false  }
-	confunc buy_show4 { *bt_autosell4 invis false	*bt_buy4 invis false	*bt_sell4 invis false  }
-	confunc buy_show5 { *bt_autosell5 invis false	*bt_buy5 invis false	*bt_sell5 invis false  }
-	confunc buy_show6 { *bt_autosell6 invis false	*bt_buy6 invis false	*bt_sell6 invis false  }
-	confunc buy_show7 { *bt_autosell7 invis false	*bt_buy7 invis false	*bt_sell7 invis false  }
-	confunc buy_show8 { *bt_autosell8 invis false	*bt_buy8 invis false	*bt_sell8 invis false  }
-	confunc buy_show9 { *bt_autosell9 invis false	*bt_buy9 invis false	*bt_sell9 invis false  }
-	confunc buy_show10 { *bt_autosell10 invis false	*bt_buy10 invis false	*bt_sell10 invis false  }
-	confunc buy_show11 { *bt_autosell11 invis false	*bt_buy11 invis false	*bt_sell11 invis false  }
-	confunc buy_show12 { *bt_autosell12 invis false	*bt_buy12 invis false	*bt_sell12 invis false  }
-	confunc buy_show13 { *bt_autosell13 invis false	*bt_buy13 invis false	*bt_sell13 invis false  }
-	confunc buy_show14 { *bt_autosell14 invis false	*bt_buy14 invis false	*bt_sell14 invis false  }
-	confunc buy_show15 { *bt_autosell15 invis false	*bt_buy15 invis false	*bt_sell15 invis false  }
-	confunc buy_show16 { *bt_autosell16 invis false	*bt_buy16 invis false	*bt_sell16 invis false  }
-	confunc buy_show17 { *bt_autosell17 invis false	*bt_buy17 invis false	*bt_sell17 invis false  }
-	confunc buy_show18 { *bt_autosell18 invis false	*bt_buy18 invis false	*bt_sell18 invis false  }
-	confunc buy_show19 { *bt_autosell19 invis false	*bt_buy19 invis false	*bt_sell19 invis false  }
-	confunc buy_show20 { *bt_autosell20 invis false	*bt_buy20 invis false	*bt_sell20 invis false  }
-	confunc buy_show21 { *bt_autosell21 invis false	*bt_buy21 invis false	*bt_sell21 invis false  }
-	confunc buy_show22 { *bt_autosell22 invis false	*bt_buy22 invis false	*bt_sell22 invis false  }
-	confunc buy_show23 { *bt_autosell23 invis false	*bt_buy23 invis false	*bt_sell23 invis false  }
-	confunc buy_show24 { *bt_autosell24 invis false	*bt_buy24 invis false	*bt_sell24 invis false  }
-	confunc buy_show25 { *bt_autosell25 invis false	*bt_buy25 invis false	*bt_sell25 invis false  }
-	confunc buy_show26 { *bt_autosell26 invis false	*bt_buy26 invis false	*bt_sell26 invis false  }
-	confunc buy_show27 { *bt_autosell27 invis false	*bt_buy27 invis false	*bt_sell27 invis false  }
+	confunc buy_hide0 { *bt_autosell0 invis true	*bt_buysell0 invis true }
+	confunc buy_hide1 { *bt_autosell1 invis true	*bt_buysell1 invis true }
+	confunc buy_hide2 { *bt_autosell2 invis true	*bt_buysell2 invis true }
+	confunc buy_hide3 { *bt_autosell3 invis true	*bt_buysell3 invis true }
+	confunc buy_hide4 { *bt_autosell4 invis true	*bt_buysell4 invis true }
+	confunc buy_hide5 { *bt_autosell5 invis true	*bt_buysell5 invis true }
+	confunc buy_hide6 { *bt_autosell6 invis true	*bt_buysell6 invis true }
+	confunc buy_hide7 { *bt_autosell7 invis true	*bt_buysell7 invis true }
+	confunc buy_hide8 { *bt_autosell8 invis true	*bt_buysell8 invis true }
+	confunc buy_hide9 { *bt_autosell9 invis true	*bt_buysell9 invis true }
+	confunc buy_hide10 { *bt_autosell10 invis true	*bt_buysell10 invis true }
+	confunc buy_hide11 { *bt_autosell11 invis true	*bt_buysell11 invis true }
+	confunc buy_hide12 { *bt_autosell12 invis true	*bt_buysell12 invis true }
+	confunc buy_hide13 { *bt_autosell13 invis true	*bt_buysell13 invis true }
+	confunc buy_hide14 { *bt_autosell14 invis true	*bt_buysell14 invis true }
+	confunc buy_hide15 { *bt_autosell15 invis true	*bt_buysell15 invis true }
+	confunc buy_hide16 { *bt_autosell16 invis true	*bt_buysell16 invis true }
+	confunc buy_hide17 { *bt_autosell17 invis true	*bt_buysell17 invis true }
+	confunc buy_hide18 { *bt_autosell18 invis true	*bt_buysell18 invis true }
+	confunc buy_hide19 { *bt_autosell19 invis true	*bt_buysell19 invis true }
+	confunc buy_hide20 { *bt_autosell20 invis true	*bt_buysell20 invis true }
+	confunc buy_hide21 { *bt_autosell21 invis true	*bt_buysell21 invis true }
+	confunc buy_hide22 { *bt_autosell22 invis true	*bt_buysell22 invis true }
+	confunc buy_hide23 { *bt_autosell23 invis true	*bt_buysell23 invis true }
+	confunc buy_hide24 { *bt_autosell24 invis true	*bt_buysell24 invis true }
+	confunc buy_hide25 { *bt_autosell25 invis true	*bt_buysell25 invis true }
+	confunc buy_hide26 { *bt_autosell26 invis true	*bt_buysell26 invis true }
+	confunc buy_hide27 { *bt_autosell27 invis true	*bt_buysell27 invis true }
+
+	confunc buy_show0 { *bt_autosell0 invis false	*bt_buysell0 invis false }
+	confunc buy_show1 { *bt_autosell1 invis false	*bt_buysell1 invis false }
+	confunc buy_show2 { *bt_autosell2 invis false	*bt_buysell2 invis false }
+	confunc buy_show3 { *bt_autosell3 invis false	*bt_buysell3 invis false }
+	confunc buy_show4 { *bt_autosell4 invis false	*bt_buysell4 invis false }
+	confunc buy_show5 { *bt_autosell5 invis false	*bt_buysell5 invis false }
+	confunc buy_show6 { *bt_autosell6 invis false	*bt_buysell6 invis false }
+	confunc buy_show7 { *bt_autosell7 invis false	*bt_buysell7 invis false }
+	confunc buy_show8 { *bt_autosell8 invis false	*bt_buysell8 invis false }
+	confunc buy_show9 { *bt_autosell9 invis false	*bt_buysell9 invis false }
+	confunc buy_show10 { *bt_autosell10 invis false	*bt_buysell10 invis false }
+	confunc buy_show11 { *bt_autosell11 invis false	*bt_buysell11 invis false }
+	confunc buy_show12 { *bt_autosell12 invis false	*bt_buysell12 invis false }
+	confunc buy_show13 { *bt_autosell13 invis false	*bt_buysell13 invis false }
+	confunc buy_show14 { *bt_autosell14 invis false	*bt_buysell14 invis false }
+	confunc buy_show15 { *bt_autosell15 invis false	*bt_buysell15 invis false }
+	confunc buy_show16 { *bt_autosell16 invis false	*bt_buysell16 invis false }
+	confunc buy_show17 { *bt_autosell17 invis false	*bt_buysell17 invis false }
+	confunc buy_show18 { *bt_autosell18 invis false	*bt_buysell18 invis false }
+	confunc buy_show19 { *bt_autosell19 invis false	*bt_buysell19 invis false }
+	confunc buy_show20 { *bt_autosell20 invis false	*bt_buysell20 invis false }
+	confunc buy_show21 { *bt_autosell21 invis false	*bt_buysell21 invis false }
+	confunc buy_show22 { *bt_autosell22 invis false	*bt_buysell22 invis false }
+	confunc buy_show23 { *bt_autosell23 invis false	*bt_buysell23 invis false }
+	confunc buy_show24 { *bt_autosell24 invis false	*bt_buysell24 invis false }
+	confunc buy_show25 { *bt_autosell25 invis false	*bt_buysell25 invis false }
+	confunc buy_show26 { *bt_autosell26 invis false	*bt_buysell26 invis false }
+	confunc buy_show27 { *bt_autosell27 invis false	*bt_buysell27 invis false }
 
 
 	zone wz_buysell0
@@ -316,23 +384,17 @@ menu buy
 		whup	{ cmd "mn_buy 0;" }
 		whdown	{ cmd "mn_sell 0;" }
 	}
-	pic bt_buy0
+	spinner bt_buysell0
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 40"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 0;" }
-		repeat	true
-	}
-	pic bt_sell0
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 40"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 0;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 40"
+		change	{ cmd "mn_buysell 0 <lastdiff>;" }
 	}
 	pic bt_autosell0
 	{
@@ -349,23 +411,17 @@ menu buy
 		whup	{ cmd "mn_buy 1;" }
 		whdown	{ cmd "mn_sell 1;" }
 	}
-	pic bt_buy1
+	spinner bt_buysell1
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 65"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 1;" }
-		repeat	true
-	}
-	pic bt_sell1
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 65"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 1;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 65"
+		change	{ cmd "mn_buysell 1 <lastdiff>;" }
 	}
 	pic bt_autosell1
 	{
@@ -382,23 +438,17 @@ menu buy
 		whup	{ cmd "mn_buy 2;" }
 		whdown	{ cmd "mn_sell 2;" }
 	}
-	pic bt_buy2
+	spinner bt_buysell2
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 90"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 2;" }
-		repeat	true
-	}
-	pic bt_sell2
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 90"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 2;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 90"
+		change	{ cmd "mn_buysell 2 <lastdiff>;" }
 	}
 	pic bt_autosell2
 	{
@@ -415,23 +465,17 @@ menu buy
 		whup	{ cmd "mn_buy 3;" }
 		whdown	{ cmd "mn_sell 3;" }
 	}
-	pic bt_buy3
+	spinner bt_buysell3
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 115"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 3;" }
-		repeat	true
-	}
-	pic bt_sell3
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 115"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 3;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 115"
+		change	{ cmd "mn_buysell 3 <lastdiff>;" }
 	}
 	pic bt_autosell3
 	{
@@ -448,23 +492,17 @@ menu buy
 		whup	{ cmd "mn_buy 4;" }
 		whdown	{ cmd "mn_sell 4;" }
 	}
-	pic bt_buy4
+	spinner bt_buysell4
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 140"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 4;" }
-		repeat	true
-	}
-	pic bt_sell4
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 140"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 4;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 140"
+		change	{ cmd "mn_buysell 4 <lastdiff>;" }
 	}
 	pic bt_autosell4
 	{
@@ -481,23 +519,17 @@ menu buy
 		whup	{ cmd "mn_buy 5;" }
 		whdown	{ cmd "mn_sell 5;" }
 	}
-	pic bt_buy5
+	spinner bt_buysell5
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 165"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 5;" }
-		repeat	true
-	}
-	pic bt_sell5
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 165"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 5;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 165"
+		change	{ cmd "mn_buysell 5 <lastdiff>;" }
 	}
 	pic bt_autosell5
 	{
@@ -514,23 +546,17 @@ menu buy
 		whup	{ cmd "mn_buy 6;" }
 		whdown	{ cmd "mn_sell 6;" }
 	}
-	pic bt_buy6
+	spinner bt_buysell6
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 190"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 6;" }
-		repeat	true
-	}
-	pic bt_sell6
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 190"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 6;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 190"
+		change	{ cmd "mn_buysell 6 <lastdiff>;" }
 	}
 	pic bt_autosell6
 	{
@@ -547,23 +573,17 @@ menu buy
 		whup	{ cmd "mn_buy 7;" }
 		whdown	{ cmd "mn_sell 7;" }
 	}
-	pic bt_buy7
+	spinner bt_buysell7
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 215"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 7;" }
-		repeat	true
-	}
-	pic bt_sell7
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 215"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 7;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 215"
+		change	{ cmd "mn_buysell 7 <lastdiff>;" }
 	}
 	pic bt_autosell7
 	{
@@ -580,23 +600,17 @@ menu buy
 		whup	{ cmd "mn_buy 8;" }
 		whdown	{ cmd "mn_sell 8;" }
 	}
-	pic bt_buy8
+	spinner bt_buysell8
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 240"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 8;" }
-		repeat	true
-	}
-	pic bt_sell8
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 240"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 8;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 240"
+		change	{ cmd "mn_buysell 8 <lastdiff>;" }
 	}
 	pic bt_autosell8
 	{
@@ -613,23 +627,17 @@ menu buy
 		whup	{ cmd "mn_buy 9;" }
 		whdown	{ cmd "mn_sell 9;" }
 	}
-	pic bt_buy9
+	spinner bt_buysell9
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 265"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 9;" }
-		repeat	true
-	}
-	pic bt_sell9
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 9;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 265"
+		change	{ cmd "mn_buysell 9 <lastdiff>;" }
 	}
 	pic bt_autosell9
 	{
@@ -646,23 +654,17 @@ menu buy
 		whup	{ cmd "mn_buy 10;" }
 		whdown	{ cmd "mn_sell 10;" }
 	}
-	pic bt_buy10
+	spinner bt_buysell10
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 290"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 10;" }
-		repeat	true
-	}
-	pic bt_sell10
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 290"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 10;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 290"
+		change	{ cmd "mn_buysell 10 <lastdiff>;" }
 	}
 	pic bt_autosell10
 	{
@@ -679,23 +681,17 @@ menu buy
 		whup	{ cmd "mn_buy 11;" }
 		whdown	{ cmd "mn_sell 11;" }
 	}
-	pic bt_buy11
+	spinner bt_buysell11
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 315"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 11;" }
-		repeat	true
-	}
-	pic bt_sell11
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 315"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 11;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 315"
+		change	{ cmd "mn_buysell 11 <lastdiff>;" }
 	}
 	pic bt_autosell11
 	{
@@ -712,23 +708,17 @@ menu buy
 		whup	{ cmd "mn_buy 12;" }
 		whdown	{ cmd "mn_sell 12;" }
 	}
-	pic bt_buy12
+	spinner bt_buysell12
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 340"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 12;" }
-		repeat	true
-	}
-	pic bt_sell12
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 340"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 12;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 340"
+		change	{ cmd "mn_buysell 12 <lastdiff>;" }
 	}
 	pic bt_autosell12
 	{
@@ -745,23 +735,17 @@ menu buy
 		whup	{ cmd "mn_buy 13;" }
 		whdown	{ cmd "mn_sell 13;" }
 	}
-	pic bt_buy13
+	spinner bt_buysell13
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 365"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 13;" }
-		repeat	true
-	}
-	pic bt_sell13
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 365"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 13;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 365"
+		change	{ cmd "mn_buysell 13 <lastdiff>;" }
 	}
 	pic bt_autosell13
 	{
@@ -778,23 +762,17 @@ menu buy
 		whup	{ cmd "mn_buy 14;" }
 		whdown	{ cmd "mn_sell 14;" }
 	}
-	pic bt_buy14
+	spinner bt_buysell14
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 390"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 14;" }
-		repeat	true
-	}
-	pic bt_sell14
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 390"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 14;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 390"
+		change	{ cmd "mn_buysell 14 <lastdiff>;" }
 	}
 	pic bt_autosell14
 	{
@@ -811,23 +789,17 @@ menu buy
 		whup	{ cmd "mn_buy 15;" }
 		whdown	{ cmd "mn_sell 15;" }
 	}
-	pic bt_buy15
+	spinner bt_buysell15
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 415"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 15;" }
-		repeat	true
-	}
-	pic bt_sell15
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 415"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 15;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 415"
+		change	{ cmd "mn_buysell 15 <lastdiff>;" }
 	}
 	pic bt_autosell15
 	{
@@ -844,23 +816,17 @@ menu buy
 		whup	{ cmd "mn_buy 16;" }
 		whdown	{ cmd "mn_sell 16;" }
 	}
-	pic bt_buy16
+	spinner bt_buysell16
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 440"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 16;" }
-		repeat	true
-	}
-	pic bt_sell16
-	{
-		tooltip "_Sell item"
-		image	menu/buttons_small
-		pos		"392 440"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 16;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 440"
+		change	{ cmd "mn_buysell 16 <lastdiff>;" }
 	}
 	pic bt_autosell16
 	{
@@ -877,23 +843,17 @@ menu buy
 		whup	{ cmd "mn_buy 17;" }
 		whdown	{ cmd "mn_sell 17;" }
 	}
-	pic bt_buy17
+	spinner bt_buysell17
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 465"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 17;" }
-		repeat	true
-	}
-	pic bt_sell17
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 465"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 17;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 465"
+		change	{ cmd "mn_buysell 17 <lastdiff>;" }
 	}
 	pic bt_autosell17
 	{
@@ -910,23 +870,17 @@ menu buy
 		whup	{ cmd "mn_buy 18;" }
 		whdown	{ cmd "mn_sell 18;" }
 	}
-	pic bt_buy18
+	spinner bt_buysell18
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 490"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 18;" }
-		repeat	true
-	}
-	pic bt_sell18
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 490"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 18;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 490"
+		change	{ cmd "mn_buysell 18 <lastdiff>;" }
 	}
 	pic bt_autosell18
 	{
@@ -943,23 +897,17 @@ menu buy
 		whup	{ cmd "mn_buy 19;" }
 		whdown	{ cmd "mn_sell 19;" }
 	}
-	pic bt_buy19
+	spinner bt_buysell19
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 515"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 19;" }
-		repeat	true
-	}
-	pic bt_sell19
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 515"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 19;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 515"
+		change	{ cmd "mn_buysell 19 <lastdiff>;" }
 	}
 	pic bt_autosell19
 	{
@@ -976,23 +924,17 @@ menu buy
 		whup	{ cmd "mn_buy 20;" }
 		whdown	{ cmd "mn_sell 20;" }
 	}
-	pic bt_buy20
+	spinner bt_buysell20
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 540"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 20;" }
-		repeat	true
-	}
-	pic bt_sell20
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 540"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 20;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 540"
+		change	{ cmd "mn_buysell 20 <lastdiff>;" }
 	}
 	pic bt_autosell20
 	{
@@ -1009,23 +951,17 @@ menu buy
 		whup	{ cmd "mn_buy 21;" }
 		whdown	{ cmd "mn_sell 21;" }
 	}
-	pic bt_buy21
+	spinner bt_buysell21
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 565"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 21;" }
-		repeat	true
-	}
-	pic bt_sell21
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 565"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 21;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 565"
+		change	{ cmd "mn_buysell 21 <lastdiff>;" }
 	}
 	pic bt_autosell21
 	{
@@ -1042,23 +978,17 @@ menu buy
 		whup	{ cmd "mn_buy 22;" }
 		whdown	{ cmd "mn_sell 22;" }
 	}
-	pic bt_buy22
+	spinner bt_buysell22
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 590"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 22;" }
-		repeat	true
-	}
-	pic bt_sell22
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 590"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 22;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 590"
+		change	{ cmd "mn_buysell 22 <lastdiff>;" }
 	}
 	pic bt_autosell22
 	{
@@ -1075,23 +1005,17 @@ menu buy
 		whup	{ cmd "mn_buy 23;" }
 		whdown	{ cmd "mn_sell 23;" }
 	}
-	pic bt_buy23
+	spinner bt_buysell23
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 615"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 23;" }
-		repeat	true
-	}
-	pic bt_sell23
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 615"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 23;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 615"
+		change	{ cmd "mn_buysell 23 <lastdiff>;" }
 	}
 	pic bt_autosell23
 	{
@@ -1108,23 +1032,17 @@ menu buy
 		whup	{ cmd "mn_buy 24;" }
 		whdown	{ cmd "mn_sell 24;" }
 	}
-	pic bt_buy24
+	spinner bt_buysell24
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 640"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 24;" }
-		repeat	true
-	}
-	pic bt_sell24
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 640"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 24;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 640"
+		change	{ cmd "mn_buysell 24 <lastdiff>;" }
 	}
 	pic bt_autosell24
 	{
@@ -1141,23 +1059,17 @@ menu buy
 		whup	{ cmd "mn_buy 25;" }
 		whdown	{ cmd "mn_sell 25;" }
 	}
-	pic bt_buy25
+	spinner bt_buysell25
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 665"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 25;" }
-		repeat	true
-	}
-	pic bt_sell25
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 665"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 25;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 665"
+		change	{ cmd "mn_buysell 25 <lastdiff>;" }
 	}
 	pic bt_autosell25
 	{
@@ -1174,23 +1086,17 @@ menu buy
 		whup	{ cmd "mn_buy 26;" }
 		whdown	{ cmd "mn_sell 26;" }
 	}
-	pic bt_buy26
+	spinner bt_buysell26
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 690"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 26;" }
-		repeat	true
-	}
-	pic bt_sell26
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 690"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 26;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 690"
+		change	{ cmd "mn_buysell 26 <lastdiff>;" }
 	}
 	pic bt_autosell26
 	{
@@ -1207,23 +1113,17 @@ menu buy
 		whup	{ cmd "mn_buy 27;" }
 		whdown	{ cmd "mn_sell 27;" }
 	}
-	pic bt_buy27
+	spinner bt_buysell27
 	{
-		tooltip	"_Buy item"
-		image	menu/buttons_small
-		pos		"376 715"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "mn_buy 27;" }
-		repeat	true
-	}
-	pic bt_sell27
-	{
-		tooltip	"_Sell item"
-		image	menu/buttons_small
-		pos		"392 715"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "mn_sell 27;" }
-		repeat	true
+		tooltip	"_Buy and sell item"
+		image	menu/spinner_blue
+		blend	true
+		min 0
+		current 10000
+		max 20000
+		delta 1
+		pos		"376 715"
+		change	{ cmd "mn_buysell 27 <lastdiff>;" }
 	}
 	pic bt_autosell27
 	{
@@ -1526,10 +1426,6 @@ menu buy
 	// init
 	// ==================
 
-	func close
-	{
-		cmd "aircraft_select;"
-	}
 	func init
 	{
 		cmd "buy_type *mn_itemtype;"

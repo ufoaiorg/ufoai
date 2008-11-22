@@ -106,6 +106,37 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
+static void BS_GetMinMaxValueByItemId (int itemNum, int *min, int *max, int *value)
+{
+	assert(baseCurrent);
+
+	if (itemNum < 0 || itemNum >= buyList.length)
+		return;
+
+	if ((buyCat == FILTER_UGVITEM) && (buyList.l[itemNum + buyList.scroll].ugv)) {
+		/** @todo compute something better */
+		*min = 0;
+		*value = 10000;
+		*max = 20000;
+	} else {
+		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
+		assert(item);
+		*min = 0;
+		*value = baseCurrent->storage.num[item->idx];
+		*max = baseCurrent->storage.num[item->idx] + ccs.eMarket.num[item->idx];
+	}
+}
+
+/**
+ * @brief Update the GUI by calling a console function
+ */
+static void BS_UpdateItem (int itemNum)
+{
+	int min, max, value;
+	BS_GetMinMaxValueByItemId(itemNum, &min, &max, &value);
+	Cbuf_AddText(va("buy_updateitem %d %d %d %d\n", itemNum, value, min, max));
+}
+
 /**
  * @brief
  * @sa BS_MarketClick_f
@@ -142,8 +173,9 @@ static void BS_MarketScroll_f (void)
 	node->textScroll = buyList.scroll;
 
 	/* now update the menu pics */
-	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++)
+	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
 		Cbuf_AddText(va("buy_autoselld%i\n", i));
+	}
 
 	assert(buyList.scroll >= 0);
 
@@ -156,6 +188,7 @@ static void BS_MarketScroll_f (void)
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od && INV_ItemMatchesFilter(od, buyCat) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
 				Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
+				BS_UpdateItem(i - buyList.scroll);
 				if (gd.autosell[od->idx])
 					Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
 			}
@@ -321,6 +354,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = air_samp;
+				BS_UpdateItem(j);
 				j++;
 			}
 		}
@@ -345,6 +379,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
+				BS_UpdateItem(j);
 				j++;
 			}
 		}
@@ -373,6 +408,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = &gd.ugvs[i];
 				buyList.l[j].aircraft = NULL;
+				BS_UpdateItem(j);
 				j++;
 			}
 		}
@@ -398,6 +434,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
+				BS_UpdateItem(j);
 				j++;
 			}
 		}
@@ -609,6 +646,7 @@ static void BS_Next_BuyType_f (void)
 	currentSelectedMenuEntry = NULL;
 	Cbuf_AddText(va("buy_type %i\n", buyCat));
 }
+
 /**
  * @brief Buy items.
  * @param[in] base Pointer to the base where items are bought.
@@ -807,6 +845,31 @@ static void BS_SellAircraft_f (void)
 	}
 }
 
+static void BS_BuySellItem_f (void)
+{
+	int num;
+	float value;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+	value = atof(Cmd_Argv(2));
+	if (value == 0)
+		return;
+
+	if (value > 0) {
+		Cbuf_AddText(va("mn_buy %d\n", num));
+	} else {
+		Cbuf_AddText(va("mn_sell %d\n", num));
+	}
+}
+
 /**
  * @brief Buy one item of a given type.
  * @sa BS_SellItem_f
@@ -880,6 +943,7 @@ static void BS_BuyItem_f (void)
 		UP_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
 		BS_CheckAndDoBuyItem(baseCurrent, item, BS_GetBuySellFactor());
+		BS_UpdateItem(num);
 	}
 }
 
@@ -955,6 +1019,7 @@ static void BS_SellItem_f (void)
 
 			BS_BuyType(baseCurrent);
 			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx] * numItems);
+			BS_UpdateItem(num);
 		}
 	}
 }
@@ -1009,6 +1074,7 @@ void BS_InitStartup (void)
 	Cmd_AddCommand("next_buy_type", BS_Next_BuyType_f, NULL);
 	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");
 	Cmd_AddCommand("market_scroll", BS_MarketScroll_f, "Scroll function for buy menu");
+	Cmd_AddCommand("mn_buysell", BS_BuySellItem_f, NULL);
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
