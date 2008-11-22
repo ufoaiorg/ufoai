@@ -92,6 +92,7 @@ static const value_t nodeProperties[] = {
 	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
 	{"point_width", V_FLOAT, offsetof(menuNode_t, pointWidth), MEMBER_SIZEOF(menuNode_t, pointWidth)},
 	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
+	{"lineselected", V_INT, offsetof(menuNode_t, textLineSelected), MEMBER_SIZEOF(menuNode_t, textLineSelected)},
 
 	/* action event */
 	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, click), MEMBER_SIZEOF(menuNode_t, click)},

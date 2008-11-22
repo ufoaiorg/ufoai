@@ -114,6 +114,7 @@ menu buildings
 		num		TEXT_BUILDINGS
 		height	"20"
 		click
+		lineselected 0
 	}
 
 	func init
@@ -166,9 +167,9 @@ menu popup_buildingpreview
 
 	string title_building
 	{
-		string	"*cvar mn_building_title"
-		pos	"50 50"
-		font	f_big
+		string	"*cvar mn_building_name"
+		pos	"30 58"
+		font	f_normal
 	}
 
 	string status_building
@@ -180,7 +181,7 @@ menu popup_buildingpreview
 
 	text buildinginfo
 	{
-		pos		"30 60"
+		pos		"30 100"
 		size	"300 150"
 		mousefx false
 		format	"20 140"
