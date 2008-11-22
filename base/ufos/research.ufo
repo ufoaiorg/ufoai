@@ -1775,6 +1775,46 @@ tech rs_weapon_needlergun
 	producetime	120
 }
 
+tech rs_weapon_needlerheavy
+{
+	name	"_Heavy Needler Gun"
+	type	weapon
+	up_chapter	equipment
+
+	description {
+		default "_needlerheavy_txt"
+	}
+	pre_description {
+		default "_needlerheavy_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	require_AND
+	{
+		tech rs_skill_sniper
+		tech rs_skill_assault
+		item needlerheavy 1
+	}
+	provides	needlerheavy
+	time	600
+	producetime	150
+}
+
 tech rs_weapon_needlergun_ammo
 {
 	name	"_Needler Gun"
