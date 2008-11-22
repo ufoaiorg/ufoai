@@ -290,8 +290,7 @@ static void CL_ChangeIndividualInterest (float percentage, interestCategory_t ca
  */
 static void CP_IncreaseAlienInterest (void)
 {
-	const int delayBetweenIncrease = 28;	/**< Number of hours between 2 overall interest increase
-											 * @todo This should depend on difficulty */
+	const int delayBetweenIncrease = 28 - curCampaign->difficulty;	/**< Number of hours between 2 overall interest increase */
 
 	ccs.lastInterestIncreaseDelay++;
 
