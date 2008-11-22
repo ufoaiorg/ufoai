@@ -143,7 +143,7 @@ static void BS_UpdateItem (const base_t *base, int itemNum)
 	int min, max, value;
 
 	BS_GetMinMaxValueByItemId(base, itemNum, &min, &max, &value);
-	Cbuf_AddText(va("buy_updateitem %d %d %d %d\n", itemNum, value, min, max));
+	MN_ExecuteConfunc(va("buy_updateitem %d %d %d %d\n", itemNum, value, min, max));
 }
 
 /**
@@ -183,7 +183,7 @@ static void BS_MarketScroll_f (void)
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
-		Cbuf_AddText(va("buy_autoselld%i\n", i));
+		MN_ExecuteConfunc(va("buy_autoselld%i\n", i));
 	}
 
 	assert(buyList.scroll >= 0);
@@ -196,10 +196,10 @@ static void BS_MarketScroll_f (void)
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od && INV_ItemMatchesFilter(od, buyCat) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
-				Cbuf_AddText(va("buy_show%i\n", i - buyList.scroll));
+				MN_ExecuteConfunc(va("buy_show%i\n", i - buyList.scroll));
 				BS_UpdateItem(baseCurrent, i - buyList.scroll);
 				if (gd.autosell[od->idx])
-					Cbuf_AddText(va("buy_autoselle%i\n", i - buyList.scroll));
+					MN_ExecuteConfunc(va("buy_autoselle%i\n", i - buyList.scroll));
 			}
 		}
 	}
