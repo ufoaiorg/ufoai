@@ -1520,7 +1520,7 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 			distance = MAP_GetDistance(pos, currentPos);
 			if (distance <= outerRadius) {
 				byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
-				if (distance > innerRadius)
+				if (distance > innerRadius && dest[3] != innerAlpha)
 					dest[3] = outerAlpha;
 				else
 					dest[3] = innerAlpha;
