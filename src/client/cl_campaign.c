@@ -3148,7 +3148,7 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 {
-	int stage = 1 + mission->initialOverallInterest * (MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE - 1) / (FINAL_OVERALL_INTEREST - difficulty->integer * 60);
+	int stage = 1 + mission->initialOverallInterest * (MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE - 1) / (FINAL_OVERALL_INTEREST);
 	int i, randomNum, availableStage = 0;
 
 	if (stage > MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE)

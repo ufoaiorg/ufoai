@@ -108,8 +108,7 @@
 // stageN_workersS	or stageN_soldiersS
 // where N is a number between 1 and MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE.
 //    This number represent the advance in game (1 is the start of the game,
-//    MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE is the end of the game (this equipment
-//    will be used only for the difficult campaign).
+//    MAX_ALIEN_EQUIPMENT_DEFINITION_STAGE is the end of the game.
 //    S is any string (used to specify the equipment definition)
 //    For a given stage, all equipment definition can be chosen with the same proability.
 
