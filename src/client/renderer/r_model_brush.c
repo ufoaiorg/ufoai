@@ -834,6 +834,9 @@ static void R_SetModel (mBspNode_t *node, model_t *mod)
 	R_SetModel(node->children[1], mod);
 }
 
+/**
+ * @brief Sets up bmodels (brush models) like doors and breakable objects
+ */
 static void R_SetupSubmodels (void)
 {
 	int i;
@@ -851,7 +854,7 @@ static void R_SetupSubmodels (void)
 		mod->bsp.nodes = &r_worldmodel->bsp.nodes[mod->bsp.firstnode];
 		mod->bsp.maptile = r_numMapTiles - 1;
 		if (mod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
-			Com_Error(ERR_DROP, "R_ModAddMapTile: Inline model %i has bad firstnode", i);
+			Com_Error(ERR_DROP, "R_SetupSubmodels: Inline model %i has bad firstnode", i);
 
 		R_SetModel(mod->bsp.nodes, mod);
 
