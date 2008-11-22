@@ -194,6 +194,7 @@ equipment multiplayer_alien
 {
 	assault				2
 	assault_ammo		6
+	vhs					2
 	machinegun			2
 	machinegun_ammo		2
 	sniper				2
@@ -215,6 +216,7 @@ equipment multiplayer_alien
 	coilgun				2
 	coilgun_ammo		5
 	needlergun			2
+	needlerheavy		2
 	needlergun_ammo		5
 	flamer				2
 	flamer_ammo			3
@@ -300,6 +302,7 @@ equipment multiplayer
 	coilgun				2
 	coilgun_ammo		5
 	needlergun			2
+	needlerheavy		2
 	needlergun_ammo		5
 	bolterrifle			2
 	bolterrifle_ammo	3
