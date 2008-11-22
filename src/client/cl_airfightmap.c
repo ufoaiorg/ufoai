@@ -188,12 +188,12 @@ static void AFM_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t c
 }
 
 /**
- * @brief Draws on bunch of bullets on the geoscape map
+ * @brief Draw a bullet onto the geoscape map
  * @param[in] node Pointer to the node in which you want to draw the bullets.
- * @param[in] pos
+ * @param[in] pos The position on screen (x and y coordinates) to draw the bullet at
  * @sa MAP_DrawMap
  */
-static void AFM_DrawBullets (const menuNode_t* node, const vec3_t pos)
+static void AFM_DrawBullet (const menuNode_t* node, const vec3_t pos)
 {
 	int x, y;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
@@ -283,7 +283,7 @@ static void AFM_CenterMapPosition (const vec3_t pos)
  * @param[in] drawPos
  * @param[in] numInterpolationPoints
  */
-static void GetNextProjectedStepPosition (const int maxInterpolationPoints, const vec3_t pos, const vec3_t projectedPos, vec3_t drawPos, int numInterpolationPoints)
+static inline void AFM_GetNextProjectedStepPosition (const int maxInterpolationPoints, const vec3_t pos, const vec3_t projectedPos, vec3_t drawPos, int numInterpolationPoints)
 {
 	if (maxInterpolationPoints > 2 && numInterpolationPoints < maxInterpolationPoints) {
 		/* If a new point hasn't been given and there is at least 3 points need to be filled in then
@@ -356,7 +356,8 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		float angle;
 		const int numWeaponRanges = AIR_GetAircraftWeaponRanges(aircraft->weapons, aircraft->maxWeapons, weaponRanges);
 #if 0
-		Com_Printf("pos=%f,%f projPos=%f,%f \n",aircraft->pos[0],thisAircraft->pos[1], aircraft->projectedPos[0], aircraft->projectedPos[1]);
+		Com_DPrintf(DEBUG_CLIENT, "pos=%f,%f projPos=%f,%f \n", aircraft->pos[0], aircraft->pos[1], aircraft->projectedPos[0],
+			aircraft->projectedPos[1]);
 #endif
 		if (maxInterpolationPoints > 2 && aircraft->numInterpolationPoints < maxInterpolationPoints && 1 == 2) {
 			/* If a new point hasn't been given and there is at least 3 points need to be filled in then
@@ -439,7 +440,8 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			VectorCopy(projectile->pos[0], drawPos);
 		} else {
 #if 0
-			GetNextProjectedStepPosition(projectile->numInterpolationPoints, maxInterpolationPoints, projectile->pos[0], projectile->projectedPos[0], drawPos);
+			AFM_GetNextProjectedStepPosition(projectile->numInterpolationPoints, maxInterpolationPoints, projectile->pos[0],
+				projectile->projectedPos[0], drawPos);
 #endif
 			if (maxInterpolationPoints > 2 && projectile->numInterpolationPoints < maxInterpolationPoints) {
 				/* If a new point hasn't been given and there is at least 3 points need to be filled in then
@@ -456,7 +458,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		}
 
 		if (projectile->bullets)
-			AFM_DrawBullets(node, drawPos);
+			AFM_DrawBullet(node, drawPos);
 #if 0
 		else if (projectile->laser)
 			/** @todo Implement rendering of laser shot */
