@@ -1722,7 +1722,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							return;
 						Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
 						if (aircraftTemplate->stats[AIR_STATS_SPEED] == 0)
-							Sys_Error("AIR_ParseAircraft: speed value must be entered before range value\n");
+							Sys_Error("AIR_ParseAircraft: speed value must be entered before range value");
 						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
 							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
 					} else {
