@@ -21,7 +21,7 @@ item needlergun
 	is_primary	true
 }
 
-item needlergun_heavy
+item needlerheavy
 {
 	name            "_Heavy Needler Gun"
 	model           weapons/needlerheavy/needlerheavy

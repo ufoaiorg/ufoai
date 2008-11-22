@@ -47,8 +47,8 @@
 //
 // 2. Get a secondary weapon with reload (sidearms):
 // 2a. Select a secondary weapon:
-//    If primary weapon is a particle or normal damage weapon, 
-/     selected secondary weapon is the cheapest weapon.
+//    If primary weapon is a particle or normal damage weapon,
+//    selected secondary weapon is the cheapest weapon.
 //    Otherwise, it's the most expensive.
 // 2b. See if this weapon is taken:
 //    The selected weapon has a probability #S/40 to be taken
