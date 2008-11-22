@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_team.h"
 #include "cl_mapfightequip.h"
+#include "cl_airfightmap.h"
 #include "cl_hospital.h"
 #include "cl_actor.h"
 #include "cl_popup.h"
@@ -150,6 +151,7 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 
 	/* build base */
 	Vector2Copy(pos, base->pos);
+	Print2Vector(pos);
 
 	gd.numBases++;
 
@@ -6284,6 +6286,8 @@ static const cmdList_t game_commands[] = {
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
 	{"combatzoom_exit", MAP_CombatZoomExit_f, "Exit combat zoom mode."},
+	{"airfightmap_init", AFM_Init_f, "Exit air fight map mode."},
+	{"airfightmap_exit", AFM_Exit_f, "Exit air fight map mode."},
 	{"game_go", CL_GameGo, NULL},
 	{"game_auto_check", CL_GameAutoCheck_f, "Checks whether this mission can be done automatically"},
 	{"game_auto_go", CL_GameAutoGo_f, "Let the current selection mission be done automatically"},

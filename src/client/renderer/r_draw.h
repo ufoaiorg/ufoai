@@ -35,6 +35,7 @@ int R_DrawImagePixelData(const char *name, byte *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);
 void R_DrawGetPicSize(int *w, int *h, const char *name);
 void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
+void R_DrawAirFightBackground(int x, int y, int w, int h, float cx, float cy, float iz);
 void R_DrawLineStrip(int points, int *verts);
 void R_DrawLineLoop(int points, int *verts);
 void R_DrawLine(int *verts, float thickness);

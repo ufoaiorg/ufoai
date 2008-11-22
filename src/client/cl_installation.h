@@ -57,6 +57,11 @@ typedef struct installationTemplate_s {
 	int buildTime;
 } installationTemplate_t;
 
+typedef struct installationUfos_s {
+	aircraft_t *aircraftTemplate;
+	int amount;
+} installationUfos_t;
+
 typedef struct installationWeapon_s {
 	/* int idx; */
 	aircraftSlot_t slot;	/**< Weapon. */
@@ -93,8 +98,8 @@ typedef struct installation_s {
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
 	/** All ufo aircraft in this installation. This is used for UFO Yards. **/
-	aircraft_t aircraft[MAX_AIRCRAFT];
-	int numAircraftInInstallation;	/**< How many aircraft are in this installation. */
+	installationUfos_t installationUfos[MAX_AIRCRAFT];
+	int numUfosInInstallation;	/**< How many ufos are in this installation. */
 
 	capacities_t aircraftCapacitiy;		/**< Capacity of UFO Yard. */
 

@@ -1,5 +1,5 @@
 #all: update_installer_data build_dmg
-all: create-dmg
+all: bundle
 
 EXT=pk3
 ROOTDIR=../../../..

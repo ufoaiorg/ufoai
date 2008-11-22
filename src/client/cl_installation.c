@@ -129,7 +129,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* this cvar is needed by INS_SetBuildingByClick below*/
 	Cvar_SetValue("mn_installation_id", installation->idx);
 
-	installation->numAircraftInInstallation = 0;
+	installation->numUfosInInstallation = 0;
 
 	/* a new installation is not discovered (yet) */
 	installation->alienInterest = newInstallationAlienInterest;
@@ -370,7 +370,7 @@ void INS_NewInstallations (void)
  */
 static void INS_InstallationList_f (void)
 {
-	int i, j;
+	int i;
 	installation_t *installation;
 
 	for (i = 0, installation = gd.installations; i < MAX_INSTALLATIONS; i++, installation++) {
@@ -382,14 +382,11 @@ static void INS_InstallationList_f (void)
 		Com_Printf("Installation idx %i\n", installation->idx);
 		Com_Printf("Installation name %s\n", installation->name);
 		Com_Printf("Installation founded %i\n", installation->founded);
-		Com_Printf("Installation numAircraftInInstallation %i\n", installation->numAircraftInInstallation);
+		Com_Printf("Installation numUfosInInstallation %i\n", installation->numUfosInInstallation);
 		Com_Printf("Installation sensorWidth %i\n", installation->radar.range);
 		Com_Printf("Installation numSensoredAircraft %i\n", installation->radar.numUFOs);
 		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
-		Com_Printf("\nInstallation aircraft %i\n", installation->numAircraftInInstallation);
-		for (j = 0; j < installation->numAircraftInInstallation; j++) {
-			Com_Printf("Installation aircraft-team %i\n", installation->aircraft[j].teamSize);
-		}
+		Com_Printf("\nInstallation aircraft %i\n", installation->numUfosInInstallation);
 		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
 		Com_Printf("\n\n");
 	}

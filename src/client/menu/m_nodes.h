@@ -49,6 +49,7 @@ typedef enum mn_s {
 	MN_CONTAINER,
 	MN_ITEM,	/**< used to display the model of an item or aircraft */
 	MN_MAP,
+	MN_AIRFIGHTMAP,
 	MN_BASEMAP,
 	MN_BASELAYOUT,
 	MN_CHECKBOX,

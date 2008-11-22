@@ -18,6 +18,7 @@ CLIENT_SRCS = \
 	client/cl_inventory.c \
 	client/cl_input.c \
 	client/cl_installation.c \
+	client/cl_airfightmap.c \
 	client/cl_irc.c \
 	client/cl_joystick.c \
 	client/cl_keys.c \
@@ -69,6 +70,7 @@ CLIENT_SRCS = \
 	client/menu/m_node_item.c \
 	client/menu/m_node_linestrip.c \
 	client/menu/m_node_map.c \
+	client/menu/m_node_airfightmap.c \
 	client/menu/m_node_model.c \
 	client/menu/m_node_radar.c \
 	client/menu/m_node_selectbox.c \

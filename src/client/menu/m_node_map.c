@@ -63,12 +63,10 @@ static void MN_MapNodeMiddleClick (menuNode_t *node, int x, int y)
 
 static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	if (gd.combatZoomOn  && gd.combatZoomedUfo && !down) {
-		return;
-	} else if (gd.combatZoomOn && gd.combatZoomedUfo && down) {
-		MAP_TurnCombatZoomOff();
+	if (gd.combatZoomOn  && gd.combatZoomedUfo) {
 		return;
 	}
+
 	ccs.zoom *= pow(0.995, (down ? 10: -10));
 	if (ccs.zoom < cl_mapzoommin->value)
 		ccs.zoom = cl_mapzoommin->value;

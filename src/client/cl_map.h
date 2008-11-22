@@ -35,11 +35,14 @@ extern aircraft_t *selectedUFO;
 
 nation_t* MAP_GetNation(const vec2_t pos);
 qboolean MAP_AllMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
+qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 qboolean MAP_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float angle, const char *model, int skin);
 void MAP_MapDrawEquidistantPoints(const menuNode_t* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 void MAP_DrawMap(const menuNode_t* node);
+void MAP_SmoothTranslate(void);
+qboolean checkSmoothRotation(void);
 void MAP_CenterOnPoint_f(void);
 void MAP_TurnCombatZoomOn(void);
 void MAP_TurnCombatZoomOff(void);
@@ -71,5 +74,6 @@ void MAP_Init(void);
 qboolean MAP_PositionFitsTCPNTypes(vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);
+void MAP_DrawMapMarkers (const menuNode_t* node);
 
 #endif /* CLIENT_CL_MAP_H */

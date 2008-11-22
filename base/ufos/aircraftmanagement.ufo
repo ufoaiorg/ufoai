@@ -150,8 +150,8 @@ aircraft craft_drop_herakles
 aircraft craft_inter_stiletto
 {
 	param {
-		speed		13
-		maxspeed	20
+		speed		7
+		maxspeed	10
 		shield		0
 		ecm		100
 		damage		30
@@ -322,8 +322,8 @@ aircraft craft_inter_stingray
 aircraft craft_ufo_harvester
 {
 	param {
-		speed		20
-		maxspeed	37
+		speed		10
+		maxspeed	18
 		shield		3
 		ecm		100
 		damage		40
@@ -365,8 +365,8 @@ aircraft craft_ufo_harvester
 aircraft craft_ufo_carrier
 {
 	param {
-		speed		25
-		maxspeed	40
+		speed		13
+		maxspeed	20
 		shield		0
 		ecm		100
 		damage		60
@@ -439,8 +439,8 @@ aircraft craft_ufo_bomber
 aircraft craft_ufo_corrupter
 {
 	param {
-		speed		25
-		maxspeed	35
+		speed		13
+		maxspeed	17
 		shield		0
 		ecm			100
 		damage		40
@@ -467,8 +467,8 @@ aircraft craft_ufo_corrupter
 aircraft craft_ufo_scout
 {
 	param {
-		speed		15
-		maxspeed	27
+		speed		7
+		maxspeed	13
 		shield		0
 		ecm		100
 		damage		30
@@ -488,8 +488,8 @@ aircraft craft_ufo_scout
 aircraft craft_ufo_fighter
 {
 	param {
-		speed		17
-		maxspeed	32
+		speed		8
+		maxspeed	16
 		shield		0
 		ecm		100
 		damage		80
@@ -547,9 +547,9 @@ craftitem craft_ammo_shiva_API
 	ammo		20
 	wdamage		10
 	accuracy	0.3
-	wrange		1.07
-	wspeed		250
-	delay		3
+	wrange		0.28
+	wspeed		62
+	delay		1
 	size	10	// light
 }
 
@@ -563,9 +563,9 @@ craftitem craft_ammo_shiva_HEI
 	ammo		20
 	wdamage		14
 	accuracy	0.2
-	wrange		1.07
-	wspeed		250
-	delay		3
+	wrange		0.28
+	wspeed		62
+	delay		1
 	size	10	// light
 }
 
@@ -601,9 +601,9 @@ craftitem craft_ammo_sparrowhawk
 	ammo		7
 	wdamage		20
 	accuracy	0.4
-	wrange		2.5
-	wspeed		100
-	delay		60
+	wrange		0.62
+	wspeed		25
+	delay		15
 }
 
 craftitem craft_weapon_tr20
@@ -632,9 +632,9 @@ craftitem craft_ammo_tr20
 	ammo		12
 	wdamage		18
 	accuracy	0.4
-	wrange		1.07
-	wspeed		75
-	delay		12
+	wrange		0.28
+	wspeed		19
+	delay		3
 }
 
 craftitem craft_weapon_particle_beam
@@ -648,7 +648,7 @@ craftitem craft_weapon_particle_beam
 	wdamage		25
 	speed		0.8
 	maxspeed	0.8
-	wrange		1.79
+	wrange		0.45
 }
 
 craftitem craft_el_targeting

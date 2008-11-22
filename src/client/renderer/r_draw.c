@@ -555,6 +555,70 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 }
 
+
+/**
+ * @brief Draw the day and night images of a flat geoscape
+ * multitexture feature is used to blend the images
+ * @sa R_Draw3DGlobe
+ * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
+ * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
+ * @param[in] cx The x texture coordinate (see MS_SHIFTMAP)
+ * @param[in] cy The y texture coordinate (see MS_SHIFTMAP)
+ * @param[in] p
+ * @param[in] q
+ * @param[in] x The x position of the geoscape node
+ * @param[in] y The y position of the geoscape node
+ * @param[in] w The width of the geoscape node
+ * @param[in] h The height of the geoscape node
+ */
+void R_DrawAirFightBackground (int x, int y, int w, int h, float cx, float cy, float iz)
+{
+	image_t *gl;
+	float geoscape_texcoords[4 * 2];
+	short geoscape_verts[4 * 2];
+
+	/* normalize */
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
+
+	/* load day image */
+	gl = R_FindImage("pics/airfight/hobet2", it_wrappic);
+
+	if (gl == r_noTexture)
+		Sys_Error("Could not load geoscape day image");
+
+	/* alter the array pointers */
+	glVertexPointer(2, GL_SHORT, 0, geoscape_verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, geoscape_texcoords);
+
+	geoscape_texcoords[0] = cx - iz;
+	geoscape_texcoords[1] = cy - iz;
+	geoscape_texcoords[2] = cx + iz;
+	geoscape_texcoords[3] = cy - iz;
+	geoscape_texcoords[4] = cx + iz;
+	geoscape_texcoords[5] = cy + iz;
+	geoscape_texcoords[6] = cx - iz;
+	geoscape_texcoords[7] = cy + iz;
+
+	geoscape_verts[0] = nx;
+	geoscape_verts[1] = ny;
+	geoscape_verts[2] = nx + nw;
+	geoscape_verts[3] = ny;
+	geoscape_verts[4] = nx + nw;
+	geoscape_verts[5] = ny + nh;
+	geoscape_verts[6] = nx;
+	geoscape_verts[7] = ny + nh;
+
+	/* draw day image */
+	R_BindTexture(gl->texnum);
+	glDrawArrays(GL_QUADS, 0, 4);
+
+
+
+}
+
 /**
  * @brief Draws a circle out of lines
  * @param[in] mid Center of the circle

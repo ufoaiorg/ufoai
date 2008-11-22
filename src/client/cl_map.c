@@ -513,7 +513,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-static qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
+qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
 		int *x, int *y)
 {
 	float sx;
@@ -605,6 +605,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 	}
 	return qfalse;
 }
+
 
 /**
  * @brief Return longitude and latitude of a point of the screen for 2D geoscape
@@ -1237,7 +1238,7 @@ void MAP_SetCombatZoomedUfo (aircraft_t *combatZoomedUfo)
 	gd.combatZoomedUfo = combatZoomedUfo;
 	gd.combatZoomLevel = COMBAT_ZOOM_FULL;
 	CL_EnsureValidGameLapseForCombatZoom();
-	MN_PushMenu("map_combatzoom");
+	MAP_SmoothlyMoveToGeoscapePoint(combatZoomedUfo, 40.0f, 0.06f);
 }
 
 /**
@@ -1365,7 +1366,7 @@ void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
-static void MAP_SmoothTranslate (void)
+void MAP_SmoothTranslate (void)
 {
 	const float dist1 = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
 	const float dist2 = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
@@ -1380,8 +1381,16 @@ static void MAP_SmoothTranslate (void)
 		const float diff_zoom = smoothFinalZoom - ccs.zoom;
 		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * dist1 / length;
 		ccs.center[1] = ccs.center[1] + SMOOTHING_STEP_2D * dist2 / length;
-		ccs.zoom = ccs.zoom + SMOOTHING_STEP_2D * diff_zoom / length;
+		ccs.zoom = ccs.zoom + SMOOTHING_STEP_2D * diff_zoom;
 	}
+}
+
+qboolean checkSmoothRotation(void)
+{
+	if (smoothRotation)
+		return qtrue;
+	else
+		return qfalse;
 }
 
 #define BULLET_SIZE	1
@@ -1418,7 +1427,7 @@ static void MAP_DrawLaser (const menuNode_t* node, const vec3_t start, const vec
  * @param[in] node The menu node which will be used for drawing markers.
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers (const menuNode_t* node)
+void MAP_DrawMapMarkers (const menuNode_t* node)
 {
 	aircraft_t *aircraft;
 	const linkedList_t *list = ccs.missions;
@@ -1447,6 +1456,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	int combatZoomNumCombatAircraft = 0;
 
 	assert(node);
+
+	if (ccs.zoom < 35.0f  && gd.combatZoomedUfo)
+		MN_PushMenu("airfight");
+
 
 	/* font color on geoscape */
 	R_Color(node->color);
@@ -1544,7 +1557,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	closestInterceptorDistance = -1.0f;
 
 	/* draw bases */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+ 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
@@ -1715,7 +1728,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					} else {
 						aircraftInWeaponsRange = qfalse;
 					}
-
+#if 0
 					if (aircraftInWeaponsRange && gd.combatZoomLevel == COMBAT_ZOOM_FULL) {
 						vec3_t centroid = {0,0,0};
 						int combatAirIdx;
@@ -1744,6 +1757,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 							MAP_SmoothlyMoveToGeoscapePoint(gd.combatZoomedUfo->pos, cl_mapzoommax->value + 1, 0.15);
 						}
 					}
+#endif
 				}
 			}
 
@@ -1836,7 +1850,7 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
-		if (gd.combatZoomOn)
+		if (ccs.zoom > cl_mapzoommax->value)
 			disableSolarRender = qtrue;
 		if (smoothRotation)
 			MAP3D_SmoothRotate();

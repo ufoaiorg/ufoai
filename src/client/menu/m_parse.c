@@ -695,7 +695,7 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	/* get the behaviour */
 	behaviour = MN_GetNodeBehaviour(*token);
 	if (behaviour == NULL) {
-		Com_Printf("MN_ParseNode: node behaviour '%s' dont exists (menu \"%s\")\n", *token, menu->name);
+		Com_Printf("MN_ParseNode: node behaviour '%s' doesn't exist (menu \"%s\")\n", *token, menu->name);
 		return qfalse;
 	}
 
