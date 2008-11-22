@@ -70,14 +70,14 @@ static void Usage (void)
 #endif
 		" -nofootstep                : don't generate a footstep file\n"
 		" -tracefile                 : generate two csv files describing the floors and walls found by the trace functions\n"
-		" -debugfile (TODO)          : generate a trace debug file.  The client can load the file to highlight map obstructions\n"
+		" -debugfile (TODO)          : generate a trace debug file. The client can load the file to highlight map obstructions\n"
 		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
 	); Com_Printf(
 		" -v --verbosity <int>       : set verbosity. higher <int> gives more output\n"
 		"                              if it is required, this should be the first option\n"
 		"                              0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname\n"
-		"                              2 - (check/fix) mapname if findings, 4 - normal output,"
-		"                              5 extra output (eg from BSPing)"
+		"                              2 - (check/fix) mapname if findings, 4 - normal output,\n"
+		"                              5 - extra output (eg from BSPing)\n"
 	); Com_Printf(
 		"\nLighting options:\n"
 		" -extra                     : extra light samples\n"
