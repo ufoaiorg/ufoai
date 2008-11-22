@@ -23,22 +23,22 @@ item needlergun
 
 item needlerheavy
 {
-	name            "_Heavy Needler Gun"
-	model           weapons/needlerheavy/needlerheavy
-	weapon          true
-	type            biggun
-	animationindex        1
+	name			"_Heavy Needler Gun"
+	model			weapons/needlerheavy/needlerheavy
+	weapon			true
+	type			biggun
+	animationindex	1
 	holdtwohanded   false
 	firetwohanded	true
-	shape           "1 0 4 1"
-	shape           "0 1 4 1"
-	center          "4 -0.5 0.2"
-	scale           1.2
-	ammo            16
-	reload          19
-	price           18240
-	size		45
-	is_primary	true
+	shape			"1 0 4 1"
+	shape			"0 1 4 1"
+	center			"10 -0.5 0.2"
+	scale			0.8
+	ammo			16
+	reload			19
+	price			18240
+	size			45
+	is_primary		true
 }
 
 item needlergun_ammo

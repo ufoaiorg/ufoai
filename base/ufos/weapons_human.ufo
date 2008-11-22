@@ -21,29 +21,6 @@ item assault
 	is_primary	true
 }
 
-// =======================
-// VHS ASSAULT RIFLE
-// =======================
-item vhs
-{
-	name		"_VHS Assault Rifle"
-	model		weapons/vhs/vhs
-	weapon		true
-	type		rifle
-	animationindex	1
-	holdtwohanded	false
-	firetwohanded	true
-	shape		"1 0 4 1"
-	shape		"0 1 5 1"
-	center		"-3 -3 1"
-	scale		1.2
-	ammo		30
-	reload	10
-	price		3000
-	size		20
-	is_primary	true
-}
-
 item assault_ammo
 {
 	name		"_Assault Rifle Magazine"
@@ -339,8 +316,8 @@ item sniper
 	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
-        shape           "2 0 3 1"
-	shape           "0 1 5 1"
+	shape		"2 0 3 1"
+	shape		"0 1 5 1"
 	center		"9 0 3"
 	scale		1.05
 	ammo		5

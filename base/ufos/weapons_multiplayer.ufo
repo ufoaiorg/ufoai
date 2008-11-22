@@ -1,9 +1,9 @@
+// Weapons that are only used for multiplayer - make sure that the tech entries that provides these
+// items have a producetime and time of -1.
+
 // =======================
 // MINIGUN
-// (should be multiplayer only)
-//
 // TODO: If the name sticks we need to rename all "chaingun" stuff to "minigun" for consistency (files, techs, etc...).
-//
 // =======================
 item chaingun
 {
@@ -191,10 +191,30 @@ item shotgun_ammo
 	}
 }
 
+// =======================
+// VHS ASSAULT RIFLE
+// =======================
+item vhs
+{
+	name		"_VHS Assault Rifle"
+	model		weapons/vhs/vhs
+	weapon		true
+	type		rifle
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape		"1 0 4 1"
+	shape		"0 1 5 1"
+	center		"-3 -3 1"
+	scale		1.2
+	ammo		30
+	reload		10
+	notonmarket	true
+	is_primary	true
+}
 
 // =======================
 // XAW95 VINDICATOR
-// (should be multiplayer only)
 // =======================
 item xaw95
 {
@@ -296,5 +316,3 @@ item xaw95_ammo
 		}
 	}
 }
-
-
