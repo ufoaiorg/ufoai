@@ -498,6 +498,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_map.h" />
+		<Unit filename="..\..\src\client\menu\m_node_airfightmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_airfightmap.h" />
 		<Unit filename="..\..\src\client\menu\m_node_model.c">
 			<Option compilerVar="CC" />
 		</Unit>
