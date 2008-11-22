@@ -565,7 +565,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 		return value / 1000;
 	case AIR_STATS_OP_RANGE:
 		/* the 2.0f factor is for going to destination and then come back */
-		return 100 * (int) (111.2 * value / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
+		return 100 * (int) (KILOMETER_PER_DEGREE * value / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
 	default:
 		return value;
 	}
@@ -1422,7 +1422,6 @@ static const value_t aircraft_param_vals[] = {
 	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
-	{"fuelsize", V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"wrange", V_INT, offsetof(aircraft_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
 	{NULL, 0, 0, 0}
@@ -1716,23 +1715,35 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					if (*token == '}')
 						break;
 
-					for (vp = aircraft_param_vals; vp->string; vp++)
-						if (!Q_strcmp(token, vp->string)) {
-							/* found a definition */
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							switch (vp->type) {
-							case V_TRANSLATION_MANUAL_STRING:
-								token++;
-							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
+					if (!Q_strncmp(token, "range", 5)) {
+						/* this is the range of aircraft, must be translated into fuel */
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						Com_EParseValue(aircraftTemplate, token, V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0]));
+						if (aircraftTemplate->stats[AIR_STATS_SPEED] == 0)
+							Com_Printf("AIR_ParseAircraft: speed value must be entered before range value\n");
+						aircraftTemplate->stats[AIR_STATS_FUELSIZE] = (int) (2.0f * (float)SECONDS_PER_HOUR * aircraftTemplate->stats[AIR_STATS_FUELSIZE]) /
+							((float) aircraftTemplate->stats[AIR_STATS_SPEED]);
+					} else {
+						for (vp = aircraft_param_vals; vp->string; vp++)
+							if (!Q_strcmp(token, vp->string)) {
+								/* found a definition */
+								token = COM_EParse(text, errhead, name);
+								if (!*text)
+									return;
+								switch (vp->type) {
+								case V_TRANSLATION_MANUAL_STRING:
+									token++;
+								case V_CLIENT_HUNK_STRING:
+									Mem_PoolStrDupTo(token, (char**) ((char*)aircraftTemplate + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
+									break;
+								default:
+									Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
+								}
 								break;
-							default:
-								Com_EParseValue(aircraftTemplate, token, vp->type, vp->ofs, vp->size);
 							}
-							break;
-						}
+					}
 					if (!vp->string)
 						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 				} while (*text); /* dummy condition */

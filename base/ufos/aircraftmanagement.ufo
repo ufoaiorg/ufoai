@@ -20,7 +20,8 @@
 //	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
 //	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
 //	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent).
-//	fuelsize - Maximum capacity of fuel tank.
+//	range - operationnal range of the aircraft (in degree). 180 degrees is the range between one point and the opposite
+//			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
 //	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //	---------------------------------------------------------------------
 //
@@ -80,7 +81,7 @@ aircraft craft_drop_firebird
 		ecm			100
 		damage		50
 		accuracy	70
-		fuelsize	250000
+		range		243
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
@@ -117,7 +118,7 @@ aircraft craft_drop_herakles
 		ecm			100
 		damage		50
 		accuracy	70
-		fuelsize	250000
+		range		243
 	}
 	name		"_Herakles-class Heavy Lifter"
 	shortname	"_Herakles D"
@@ -156,7 +157,7 @@ aircraft craft_inter_stiletto
 		ecm		100
 		damage		30
 		accuracy	100
-		fuelsize	10000
+		range		18
 	}
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
@@ -201,7 +202,7 @@ aircraft craft_inter_saracen
 		ecm		100
 		damage		40
 		accuracy	70
-		fuelsize	17500
+		range		90
 	}
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
@@ -241,7 +242,7 @@ aircraft craft_inter_dragon
 		ecm		100
 		damage		40
 		accuracy	80
-		fuelsize	35000
+		range		146
 	}
 	name		"_Dragon Interceptor"
 	shortname	"_Dragon"
@@ -281,7 +282,7 @@ aircraft craft_inter_stingray
 		ecm		100
 		damage		70
 		accuracy	100
-		fuelsize	25000
+		range		156
 	}
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
@@ -328,7 +329,7 @@ aircraft craft_ufo_harvester
 		ecm		100
 		damage		40
 		accuracy	100
-		fuelsize	100000
+		range		278
 	}
 	name		"_UFO - Harvester"
 	shortname	"_Harvester U"
@@ -371,7 +372,7 @@ aircraft craft_ufo_carrier
 		ecm		100
 		damage		60
 		accuracy	50
-		fuelsize	100000
+		range		347
 	}
 	name		"_UFO - Carrier"
 	shortname	"_Carrier U"
@@ -394,7 +395,7 @@ aircraft craft_ufo_supply
 		ecm		100
 		damage		50
 		accuracy	50
-		fuelsize	100000
+		range		208
 	}
 	name		"_UFO - Supply Ship"
 	shortname	"_Supply U"
@@ -416,7 +417,7 @@ aircraft craft_ufo_bomber
 		ecm			100
 		damage		40
 		accuracy	80
-		fuelsize	100000
+		range		347
 	}
 	name		"_UFO - Bomber"
 	shortname	"_Bomber U"
@@ -445,7 +446,7 @@ aircraft craft_ufo_corrupter
 		ecm			100
 		damage		40
 		accuracy	80
-		fuelsize	100000
+		range		347
 	}
 	name		"_UFO - Corrupter"
 	shortname	"_Corrupter U"
@@ -473,7 +474,7 @@ aircraft craft_ufo_scout
 		ecm		100
 		damage		30
 		accuracy	50
-		fuelsize	100000
+		range		208
 	}
 	name		"_UFO - Scout"
 	shortname	"_Scout U"
@@ -494,7 +495,7 @@ aircraft craft_ufo_fighter
 		ecm		100
 		damage		80
 		accuracy	80
-		fuelsize	1000000
+		range		236
 	}
 	name		"_UFO - Fighter"
 	shortname	"_Fighter U"
