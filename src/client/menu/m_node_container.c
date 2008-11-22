@@ -717,8 +717,8 @@ static void MN_DrawContainerNode2 (menuNode_t *node)
 {
 	vec2_t nodepos;
 
-	/** @todo replace this at least by == 0 => must remove the color set used by m_parser.c */
-	if (node->color[3] < 0.01) {
+	/* node transparent but active */
+	if (node->color[3] < 0.001) {
 		return;
 	}
 
@@ -1121,6 +1121,7 @@ static void MN_ContainerRightClick (menuNode_t *node, int x, int y)
 static void MN_ContainerLoading (menuNode_t *node)
 {
 	node->container = NULL;
+	node->color[3] = 1.0;
 }
 
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)

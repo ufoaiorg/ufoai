@@ -94,6 +94,14 @@ static void MN_BarNodeMouseUp (menuNode_t *node, int x, int y, int button)
 		MN_MouseRelease();
 }
 
+/**
+ * @brief Called before loading. Used to set default attribute values
+ */
+static void MN_DrawBarLoading (menuNode_t *node)
+{
+	Vector4Set(node->color, 1, 1, 1, 1);
+}
+
 void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 {
 	/* inherite */
@@ -102,6 +110,7 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "bar";
 	behaviour->id = MN_BAR;
 	behaviour->draw = MN_DrawBarNode;
+	behaviour->loading = MN_DrawBarLoading;
 	behaviour->mouseDown = MN_BarNodeMouseDown;
 	behaviour->mouseUp = MN_BarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;

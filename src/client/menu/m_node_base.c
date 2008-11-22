@@ -301,6 +301,14 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
 			}
 }
 
+/**
+ * @brief Called before loading. Used to set default attribute values
+ */
+static void MN_BaseLayoutNodeLoading (menuNode_t *node)
+{
+	Vector4Set(node->color, 1, 1, 1, 1);
+}
+
 void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
@@ -316,4 +324,5 @@ void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 	behaviour->id = MN_BASELAYOUT;
 	behaviour->draw = MN_BaseLayoutNodeDraw;
 	behaviour->loaded = MN_BaseLayoutNodeLoaded;
+	behaviour->loading = MN_BaseLayoutNodeLoading;
 }

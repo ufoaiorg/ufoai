@@ -480,11 +480,19 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
  * @note set the mouse space to MS_ROTATE
  * @sa rotateAngles
  */
-static void MN_ModelClick (menuNode_t * node, int x, int y)
+static void MN_ModelNodeClick (menuNode_t * node, int x, int y)
 {
 	mouseSpace = MS_ROTATE;
 	/* modify node->model.angles (vec3_t) if you rotate the model */
 	rotateAngles = node->u.model.angles;
+}
+
+/**
+ * @brief Called before loading. Used to set default attribute values
+ */
+static void MN_ModelNodeLoading (menuNode_t *node)
+{
+	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
@@ -492,7 +500,8 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "model";
 	behaviour->id = MN_MODEL;
 	behaviour->draw = MN_DrawModelNode2;
-	behaviour->leftClick = MN_ModelClick;
+	behaviour->leftClick = MN_ModelNodeClick;
+	behaviour->loading = MN_ModelNodeLoading;
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");

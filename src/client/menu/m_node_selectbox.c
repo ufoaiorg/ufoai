@@ -238,6 +238,14 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	}
 }
 
+/**
+ * @brief Called before loading. Used to set default attribute values
+ */
+static void MN_SelectBoxNodeLoading (menuNode_t *node)
+{
+	Vector4Set(node->color, 1, 1, 1, 1);
+}
+
 static const value_t properties[] = {
 	/* very special attribute */
 	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
@@ -261,5 +269,6 @@ void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_SelectBoxNodeDraw;
 	behaviour->leftClick = MN_SelectBoxNodeClick;
 	behaviour->mouseMove = MN_SelectBoxNodeMouseMove;
+	behaviour->loading = MN_SelectBoxNodeLoading;
 	behaviour->capturedMouseMove = MN_SelectBoxNodeCapturedMouseMove;
 }

@@ -74,10 +74,16 @@ static void MN_StringNodeLoaded (menuNode_t *node)
 	}
 }
 
+static void MN_StringNodeLoading (menuNode_t *node)
+{
+	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
+}
+
 void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->id = MN_STRING;
 	behaviour->draw = MN_StringNodeDraw;
+	behaviour->loading = MN_StringNodeLoading;
 	behaviour->loaded = MN_StringNodeLoaded;
 }

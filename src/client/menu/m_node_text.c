@@ -491,6 +491,7 @@ static void MN_TextNodeLoading (menuNode_t *node)
 {
 	node->textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
+	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)

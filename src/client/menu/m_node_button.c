@@ -109,6 +109,7 @@ static void MN_ButtonNodeLoading (menuNode_t *node)
 	node->padding = 8;
 	node->textalign = ALIGN_CC;
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
+	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
 /**

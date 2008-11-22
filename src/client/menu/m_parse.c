@@ -753,11 +753,6 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	/* already check on MN_ParseNodeBody */
 	assert(*token[0] == '}');
 
-	/* set standard color */
-	/** @todo move it on init behaviour only where it need */
-	if (!node->color[3])
-		Vector4Set(node->color, 1, 1, 1, 1);
-
 	/* init the node according to his behaviour */
 	if (node->behaviour->loaded) {
 		node->behaviour->loaded(node);
