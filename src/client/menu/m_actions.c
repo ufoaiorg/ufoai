@@ -152,7 +152,7 @@ static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean use
 						cin = next;
 						continue;
 					} else if (useCmdParam) {
-						int arg = atoi(propertyName);
+						const int arg = atoi(propertyName);
 						if (Cmd_Argc() >= arg) {
 							cout += sprintf(cout, "%s", Cmd_Argv(arg));
 							cin = next;
@@ -191,11 +191,6 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
  */
 static void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction_t* firstAction)
 {
-	int i = 0;
-	if (!Q_strcmp(source->name, "buy_updateitem")) {
-		i++;
-	}
-
 	MN_ExecuteInjectedActions(source, qtrue, firstAction);
 }
 
