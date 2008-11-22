@@ -21,6 +21,29 @@ item assault
 	is_primary	true
 }
 
+// =======================
+// VHS ASSAULT RIFLE
+// =======================
+item vhs
+{
+	name		"_VHS Assault Rifle"
+	model		weapons/vhs/vhs
+	weapon		true
+	type		rifle
+	animationindex	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape		"1 0 4 1"
+	shape		"0 1 5 1"
+	center		"-3 -3 1"
+	scale		1.2
+	ammo		30
+	reload	10
+	price		3000
+	size		20
+	is_primary	true
+}
+
 item assault_ammo
 {
 	name		"_Assault Rifle Magazine"
@@ -112,6 +135,88 @@ item assault_ammo
 			ammo	1
 			time	14
 			damage	"42 5"
+			dmgweight normal_medium
+			reaction	true
+		}
+	}
+
+	weapon_mod vhs
+	{
+		firedef
+		{
+			name	"_Snap Shot"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/assaultrifle
+			speed	0
+			spread	"1.0 1.0"
+			crouch	0.7
+			range	250
+			shots	1
+			ammo	1
+			time	8
+			damage	"40 5"
+			dmgweight normal_medium
+			reaction	true
+		}
+		firedef
+		{
+			name	"_3-Round Burst"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/assaultrifle
+			speed	0
+			spread	"1.2 1.2"
+			crouch	0.7
+			range	70
+			shots	3
+			ammo	3
+			delaybetweenshots		5
+			time	10
+			damage	"40 5"
+			dmgweight normal_medium
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Full-Auto"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/assaultrifle
+			speed	0
+			spread	"1.8 1.8"
+			crouch	0.6
+			range	70
+			shots	6
+			ammo	8
+			delaybetweenshots		10
+			time	16
+			damage	"40 5"
+			dmgweight normal_medium
+			reaction 	true
+		}
+		firedef
+		{
+			name	"_Aimed shot"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody null
+			firesnd	weapons/assaultrifle
+			speed	0
+			spread	"0.75 0.75"
+			crouch	0.6
+			range	70
+			shots	1
+			ammo	1
+			time	12
+			damage	"40 5"
 			dmgweight normal_medium
 			reaction	true
 		}

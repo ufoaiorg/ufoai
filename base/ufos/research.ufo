@@ -621,6 +621,23 @@ tech rs_weapon_pistol2_ammo
 	producetime	12
 }
 
+tech rs_weapon_vhs
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_vhs_assault_txt"
+	}
+
+	require_AND
+	{
+		tech rs_skill_assault
+	}
+	provides	vhs
+	time	-1
+	producetime	-1
+}
+
 tech rs_weapon_assault
 {
 	type	weapon
