@@ -41,7 +41,7 @@ void MN_ExecuteConfunc (const char *confunc)
 	Cmd_ExecuteString(confunc);
 }
 
-static inline void MN_ExecuteAction (const menu_t* const menu, menuAction_t* const action)
+static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_t* action)
 {
 	byte *data;
 	switch (action->type) {
@@ -74,7 +74,7 @@ static inline void MN_ExecuteAction (const menu_t* const menu, menuAction_t* con
 
 			if (!node) {
 				/* didn't find node -> "kill" action and print error */
-				action->type = EA_NULL;
+				((menuAction_t*)action)->type = EA_NULL;
 				Com_Printf("MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *) action->data);
 				break;
 			}
@@ -127,7 +127,7 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
  * @brief gen a string replacing every <eventParam> by a value
  * @todo fix all buffer overflow, and special case problem
  */
-static const char* MN_GenCommand (const menuNode_t* source, const char* input)
+static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean useCmdParam, const char* input)
 {
 	static char cmd[256];
 	static char propertyName[16];
@@ -138,18 +138,27 @@ static const char* MN_GenCommand (const menuNode_t* source, const char* input)
 			/* read propertyName between '<' and '>' */
 			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
-				/* find peroperty definition */
-				const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
-				if (property) {
-					const char* value;
-					if ((property->type & (V_SPECIAL|V_MENU_COPY)) != 0) {
-						Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s.%s'", property->string, source->menu->name, source->name);
+				if (source) {
+					/* find peroperty definition */
+					const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
+					if (property) {
+						const char* value;
+						if ((property->type & (V_SPECIAL|V_MENU_COPY)) != 0) {
+							Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s.%s'", property->string, source->menu->name, source->name);
+						}
+						/* inject the property value */
+						value = Com_ValueToStr((const void*)source, property->type, property->ofs);
+						cout += sprintf(cout, "%s", value);
+						cin = next;
+						continue;
+					} else if (useCmdParam) {
+						int arg = atoi(propertyName);
+						if (Cmd_Argc() >= arg) {
+							cout += sprintf(cout, "%s", Cmd_Argv(arg));
+							cin = next;
+							continue;
+						}
 					}
-					/* inject the property value */
-					value = Com_ValueToStr((const void*)source, property->type, property->ofs);
-					cout += sprintf(cout, "%s", value);
-					cin = next;
-					continue;
 				}
 			}
 		}
@@ -160,18 +169,39 @@ static const char* MN_GenCommand (const menuNode_t* source, const char* input)
 	return cmd;
 }
 
-void MN_ExecuteEventActions (const menuNode_t* source, menuAction_t* const firstAction)
+static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
 {
-	menuAction_t *action;
+	const menuAction_t *action;
 	for (action = firstAction; action; action = action->next) {
-		if (action->type == EA_CMD) {
+		switch (action->type) {
 		/* execute a command */
+		case EA_CMD:
 			if (action->data)
-				Cbuf_AddText(MN_GenCommand(source, action->data));
-		} else {
+				Cbuf_AddText(MN_GenInjectedCommand(source, useCmdParam, action->data));
+			break;
+
+		default:
 			MN_ExecuteAction(source->menu, action);
 		}
 	}
+}
+
+/**
+ * @brief allow to inject command param into cmd of confunc command
+ */
+static void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction_t* firstAction)
+{
+	int i = 0;
+	if (!Q_strcmp(source->name, "buy_updateitem")) {
+		i++;
+	}
+
+	MN_ExecuteInjectedActions(source, qtrue, firstAction);
+}
+
+void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* firstAction)
+{
+	MN_ExecuteInjectedActions(source, qfalse, firstAction);
 }
 
 void MN_Command_f (void)
@@ -187,7 +217,7 @@ void MN_Command_f (void)
 		for (node = mn.menuStack[i]->firstChild; node; node = node->next)
 			if (node->behaviour->id == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				MN_ExecuteActions(mn.menuStack[i], node->click);
+				MN_ExecuteConFuncActions(node, node->click);
 				return;
 			}
 
@@ -196,7 +226,7 @@ void MN_Command_f (void)
 		for (node = mn.menus[i].firstChild; node; node = node->next)
 			if (node->behaviour->id == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				MN_ExecuteActions(&mn.menus[i], node->click);
+				MN_ExecuteConFuncActions(node, node->click);
 				return;
 			}
 

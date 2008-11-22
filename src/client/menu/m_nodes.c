@@ -380,10 +380,66 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 
 }
 
+/**
+ * @brief Set node property
+ * @note More hard to set string like that at the run time
+ * @todo remove atof
+ * @todo add support of more fixed size value (everything else string)
+ */
+qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const char* value)
+{
+	byte* b = (byte*)node + property->ofs;
+
+	if (property->type == V_FLOAT) {
+		*(float*) b = atof(value);
+	} else if (property->type == (V_FLOAT|V_MENU_COPY)) {
+		b = (byte*) (*(void**)b);
+		if (!Q_strncmp(b, "*cvar", 5)) {
+			MN_SetCvar(&((char*)b)[6], NULL, atof(value));
+		} else {
+			*(float*) b = atof(value);
+		}
+	} else {
+		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s.%s@%s'\n", node->menu->name, node->name, property->string);
+		return qfalse;
+	}
+
+	return qtrue;
+}
+
+/**
+ * @brief set a node property from the command line
+ */
+static void MN_NodeSetProperty_f (void)
+{
+	menuNode_t *node;
+	const value_t *property;
+
+	if (Cmd_Argc() != 4) {
+		Com_Printf("Usage: %s <node> <prop> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
+	if (!node) {
+		Com_Printf("Node '%s' not find\n", Cmd_Argv(1));
+		return;
+	}
+
+	property = MN_NodeGetPropertyDefinition(node, Cmd_Argv(2));
+	if (!property) {
+		Com_Printf("Property '%s.%s@%s' dont exists\n", node->menu->name, node->name, Cmd_Argv(2));
+		return;
+	}
+
+	MN_NodeSetProperty(node, property, Cmd_Argv(3));
+}
+
 void MN_InitNodes (void)
 {
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
+	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
 
 	/* menu node */
 	MN_RegisterWindowNode(&menuBehaviour);

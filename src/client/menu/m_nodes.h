@@ -227,6 +227,7 @@ menuNode_t* MN_AllocNode(int type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 struct value_s;
 const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);
+qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
 
 void MN_InitNodes(void);
 
