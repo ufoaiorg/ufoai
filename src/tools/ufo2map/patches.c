@@ -313,6 +313,7 @@ static void SubdividePatch(patch_t *patch)
 
 	/* create a new patch */
 	newp = (patch_t *)malloc(sizeof(patch_t));
+	memset(newp, 0, sizeof(*newp));
 
 	newp->next = patch->next;
 	patch->next = newp;
