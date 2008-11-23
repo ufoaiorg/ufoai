@@ -86,6 +86,14 @@ static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 	MAP_StopSmoothMovement();
 }
 
+/**
+ * @brief Called before loading. Used to set default attribute values
+ */
+static void MN_MapNodeLoading (menuNode_t *node)
+{
+	Vector4Set(node->color, 1, 1, 1, 1);
+}
+
 void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
@@ -95,4 +103,5 @@ void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 	behaviour->rightClick = MN_MapNodeRightClick;
 	behaviour->middleClick = MN_MapNodeMiddleClick;
 	behaviour->mouseWheel = MN_MapNodeMouseWheel;
+	behaviour->loading = MN_MapNodeLoading;
 }
