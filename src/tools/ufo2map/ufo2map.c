@@ -83,7 +83,7 @@ static void Usage (void)
 		" -extra                     : extra light samples\n"
 		" -maxlight                  : \n"
 		" -nolighting TYPE           : don't perform the lighting calculations, where TYPE is one of day, night, all\n"
-		"                            : default is all\n"
+		"                              default is all\n"
 		" -quant                     : lightquant\n"
 		" -lightingchop              : subdivide for better looking lightmap\n"
 		" -scale                     : lightscale\n"
@@ -100,7 +100,7 @@ static void Usage (void)
 	); Com_Printf(
 		" -material                  : generate a material file\n"
 		" -micro <float>             : warn if a brush has a volume lower than the specified float.\n"
-		"                            : brushes are tested after CSG.\n"
+		"                              brushes are tested after CSG.\n"
 		" -nobackclip                : draw downward pointing faces. (so actors cannot see up through floors\n"
 		"                              in first person view). default is to set SURF_NODRAW to downard faces.\n"
 		" -nocsg                     : \n"
