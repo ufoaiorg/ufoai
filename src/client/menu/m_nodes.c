@@ -65,7 +65,7 @@ static nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
 /**
  * @brief menu behaviour, not realy a node for the moment
  */
-nodeBehaviour_t menuBehaviour;
+nodeBehaviour_t *menuBehaviour;
 
 /**
  * @brief Returns the absolute position of a menunode
@@ -360,23 +360,23 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 		if (!menu->initNode)
 			menu->initNode = node;
 		else
-			Com_Printf("MN_ParseMenuBody: second init function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoading: second init function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "close", 5)) {
 		if (!menu->closeNode)
 			menu->closeNode = node;
 		else
-			Com_Printf("MN_ParseMenuBody: second close function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoading: second close function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "event", 5)) {
 		if (!menu->eventNode) {
 			menu->eventNode = node;
 			menu->eventNode->timeOut = 2000; /* default value */
 		} else
-			Com_Printf("MN_ParseMenuBody: second event function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoading: second event function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "leave", 5)) {
 		if (!menu->leaveNode) {
 			menu->leaveNode = node;
 		} else
-			Com_Printf("MN_ParseMenuBody: second leave function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoading: second leave function ignored (menu \"%s\")\n", menu->name);
 	}
 
 }
@@ -442,9 +442,6 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
 
-	/* menu node */
-	MN_RegisterWindowNode(&menuBehaviour);
-
 	/* all nodes */
 	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue, NULL, MN_NULL);
 	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue, NULL, MN_CONFUNC);
@@ -477,4 +474,8 @@ void MN_InitNodes (void)
 	MN_RegisterButtonNode(nodeBehaviourList + MN_BUTTON);
 	MN_RegisterWindowNode(nodeBehaviourList + MN_WINDOW);	/**< for conveniance, must not be used */
 	MN_RegisterVScrollbarNode(nodeBehaviourList + MN_VSCROLLBAR);
+
+	/* direct access to menu node */
+	menuBehaviour = nodeBehaviourList + MN_WINDOW;
+
 }

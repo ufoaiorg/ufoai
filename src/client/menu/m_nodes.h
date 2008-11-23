@@ -218,7 +218,7 @@ typedef struct nodeBehaviour_s {
 	*/
 } nodeBehaviour_t;
 
-extern nodeBehaviour_t menuBehaviour;
+extern nodeBehaviour_t* menuBehaviour;
 
 qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
 void MN_UnHideNode(menuNode_t* node);

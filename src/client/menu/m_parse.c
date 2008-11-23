@@ -778,7 +778,7 @@ static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const 
 		int result;
 		size_t bytes;
 
-		property = MN_FindPropertyByName(menuBehaviour.properties, *token);
+		property = MN_FindPropertyByName(menuBehaviour->properties, *token);
 		if (!property) {
 			Com_Printf("Unknown menu property '%s' find\n", *token);
 			return qfalse;
@@ -1020,6 +1020,8 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
 
+	/** @todo waithing for the merge of menu and node */
+	/* menuBehaviour->loading(menu); */
 	MN_WindowNodeLoading(menu);
 
 	/* get it's body */
@@ -1084,6 +1086,8 @@ void MN_ParseMenu (const char *name, const char **text)
 		return;	/* never reached */
 	}
 
+	/** @todo waithing for the merge of menu and node */
+	/* menuBehaviour->loaded(menu); */
 	MN_WindowNodeLoaded(menu);
 
 	for (node = menu->firstChild; node; node = node->next)

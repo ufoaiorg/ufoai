@@ -40,13 +40,17 @@ typedef struct menu_s {
 
 	menuNode_t *firstChild;	/**< first element of linked list of child */
 
-	menuNode_t *initNode;	/**< node to execute on init */
-	menuNode_t *closeNode;	/**< node to execute on close */
+	/** @todo remove it after the cleanup of the input handler */
 	menuNode_t *hoverNode;	/**< current hovered node */
-	menuNode_t *renderNode;
+
 	menuNode_t *popupNode;
-	menuNode_t *eventNode;
-	menuNode_t *leaveNode;
+	menuNode_t *renderNode;
+
+	/** @todo think about converting it to action instead of node */
+	menuNode_t *initNode;	/**< node to execute on init. Single 'func' node, or NULL */
+	menuNode_t *closeNode;	/**< node to execute on close. Single 'func' node, or NULL */
+	menuNode_t *eventNode;	/**< single 'func' node, or NULL */
+	menuNode_t *leaveNode;	/**< single 'func' node, or NULL */
 } menu_t;
 
 void MN_RegisterWindowNode(nodeBehaviour_t *behaviour);
