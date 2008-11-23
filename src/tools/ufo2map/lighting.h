@@ -52,8 +52,6 @@ void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
 void BuildLights(void);
 
-dBspLeaf_t *Light_PointInLeaf(const vec3_t point);
-
 void BuildPatches(void);
 void SubdividePatches(const int num);
 void CalcTextureReflectivity(void);

@@ -229,8 +229,6 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	int w, h, step;
 	vec_t starts, startt;
 	vec_t *surf;
-	vec3_t pos;
-	const dBspLeaf_t *leaf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
@@ -253,11 +251,6 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 			for (j = 0; j < 3; j++)
 				surf[j] = l->texorg[j] + l->textoworld[0][j] * us +
 						l->textoworld[1][j] * ut;
-
-			VectorMA(surf, 2, l->facenormal, pos);
-			leaf = Light_PointInLeaf(pos);
-			if (leaf->contentFlags == CONTENTS_SOLID)
-				continue;
 		}
 	}
 }

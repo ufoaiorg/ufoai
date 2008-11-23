@@ -31,39 +31,6 @@ patch_t *face_patches[MAX_MAP_FACES];
 patch_t patches[MAX_PATCHES];
 unsigned num_patches;
 
-/*
-===================================================================
-TRANSFER SCALES
-===================================================================
-*/
-
-static inline int Light_PointInLeafnum (const vec3_t point)
-{
-	int nodenum;
-
-	nodenum = 0;
-	while (nodenum >= 0) {
-		const dBspNode_t *node = &curTile->nodes[nodenum];
-		const dBspPlane_t *plane = &curTile->planes[node->planenum];
-		const vec_t dist = DotProduct(point, plane->normal) - plane->dist;
-		if (dist > 0)
-			nodenum = node->children[0];
-		else
-			nodenum = node->children[1];
-	}
-
-	return -nodenum - 1;
-}
-
-
-dBspLeaf_t *Light_PointInLeaf (const vec3_t point)
-{
-	const int num = Light_PointInLeafnum(point);
-	assert(num >= 0);
-	assert(num < MAX_MAP_LEAFS);
-	return &curTile->leafs[num];
-}
-
 void LightWorld (void)
 {
 	if (curTile->numnodes == 0 || curTile->numfaces == 0)
