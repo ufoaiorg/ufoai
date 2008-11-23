@@ -1680,7 +1680,7 @@ void Irc_Init (void)
 
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
-	irc_channel = Cvar_Get("irc_channel", "#ufo:ai-gamer", CVAR_ARCHIVE, "IRC channel to join into");
+	irc_channel = Cvar_Get("irc_channel", "#ufoai-gamer", CVAR_ARCHIVE, "IRC channel to join into");
 	irc_channel->modified = qfalse;
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
 	irc_user = Cvar_Get("irc_user", "UFOAIPlayer", CVAR_ARCHIVE, NULL);
