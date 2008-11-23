@@ -128,10 +128,10 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
  * It's also possible to do something like
  * @code cmd "set someCvar <min>/<max>"
  */
-static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean useCmdParam, const char* input)
+static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
 {
 	static char cmd[256];
-	int length = sizeof(cmd) - 2;
+	int length = sizeof(cmd) - ((addNewLine)?2:1);
 	static char propertyName[16];
 	const char *cin = input;
 	char *cout = cmd;
@@ -177,7 +177,9 @@ static const char* MN_GenInjectedCommand (const menuNode_t* source, qboolean use
 	/* is buffer too small? */
 	assert(cin[0] == '\0');
 
-	*cout++ = '\n';
+	if (addNewLine) {
+		*cout++ = '\n';
+	}
 	*cout++ = '\0';
 	return cmd;
 }
@@ -190,7 +192,33 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 		/* execute a command */
 		case EA_CMD:
 			if (action->data)
-				Cbuf_AddText(MN_GenInjectedCommand(source, useCmdParam, action->data));
+				Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->data, qtrue));
+			break;
+
+		case EA_NODE:
+			/* set a property */
+			if (action->data) {
+				const char* nodeName = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
+				byte *value;
+				menuNode_t *node;
+
+				value = action->data;
+				value += ALIGN(strlen(action->data) + 1);
+
+				/* search the node */
+				node = MN_GetNode(source->menu, nodeName);
+
+				if (!node) {
+					/* didn't find node -> "kill" action and print error */
+					Com_Printf("MN_ExecuteInjectedActions: node \"%s.%s\" doesn't exist\n", source->menu->name, nodeName);
+					break;
+				}
+
+				if (!(action->scriptValues->type & V_MENU_COPY))
+					Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
+				else
+					*(byte **) ((byte *) node + action->scriptValues->ofs) = value;
+			}
 			break;
 
 		default:
