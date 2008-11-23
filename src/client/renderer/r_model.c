@@ -176,9 +176,6 @@ static model_t *R_ModForName (const char *name, qboolean crash)
  */
 static model_t *R_RegisterModel (const char *name)
 {
-	model_t *mod;
-	int i;
-
 	return R_ModForName(name, qfalse);
 }
 

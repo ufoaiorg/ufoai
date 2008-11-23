@@ -300,7 +300,7 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
  * @param[in] x The x location in the container.
  * @param[in] y The y location in the container.
  */
-static qboolean Com_ShapeCheckPosition(const invList_t *ic, const int x, const int y)
+static qboolean Com_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
 {
 	assert(ic);
 
