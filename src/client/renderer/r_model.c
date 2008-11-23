@@ -93,7 +93,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	byte *buf;
 	int i;
 
-	if (!name[0])
+	if (name[0] == '\0')
 		Sys_Error("R_ModForName: NULL name");
 
 	/* inline models are grabbed only from worldmodel */
@@ -105,12 +105,9 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	}
 
 	/* search the currently loaded models */
-	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
-		if (mod->name[0] == '\0')
-			continue;
+	for (i = 0, mod = r_models; i < r_numModels; i++, mod++)
 		if (!Q_strcmp(mod->name, name))
 			return mod;
-	}
 
 	/* find a free model slot spot */
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
