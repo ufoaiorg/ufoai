@@ -32,10 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern qboolean radarOverlayWasSet;
 
 extern const float RADAR_BASERANGE;
+extern const float RADAR_BASERTRACKINGANGE;
 extern const float RADAR_AIRCRAFTRANGE;
+extern const float RADAR_AIRCRAFTTRACKINGRANGE;
 
 typedef struct radar_s {
 	int range;						/**< Range of radar */
+	int trackingRange;				/**< Tracking range of radar */
 	int ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar (gd.ufos[id]) */
 	int numUFOs;					/**< Num UFOs sensored by radar */
 } radar_t;
@@ -45,9 +48,9 @@ void RADAR_UpdateWholeRadarOverlay(void);
 void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, const vec2_t pos);
 void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, qboolean destroyed);
-void RADAR_Initialise(radar_t* radar, float range, float level, qboolean updateSourceRadarMap);
+void RADAR_Initialise(radar_t* radar, float range, float trackingRange, float level, qboolean updateSourceRadarMap);
 void RADAR_UpdateBaseRadarCoverage_f(void);
-void RADAR_UpdateInstallationRadarCoverage(struct installation_s *installation, const float radarRange);
+void RADAR_UpdateInstallationRadarCoverage(struct installation_s *installation, const float radarRange, const float trackingRadarRange);
 qboolean RADAR_CheckRadarSensored(const vec2_t pos);
 qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar,
 	const struct aircraft_s* ufo, qboolean wasUFOSensored);

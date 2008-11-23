@@ -38,13 +38,12 @@ void R_UploadRadarCoverage(qboolean smooth);
  */
 qboolean radarOverlayWasSet;
 
-/* Define radar range */
+/* Define base radar range (can be modified by level of the radar) */
 const float RADAR_BASERANGE = 24.0f;
+const float RADAR_BASETRACKINGRANGE = 34.0f;
 const float RADAR_AIRCRAFTRANGE = 10.0f;
-const float RADAR_INSTALLATIONRANGE = 12.0f;
+const float RADAR_AIRCRAFTTRACKINGRANGE = 14.0f;
 const float RADAR_INSTALLATIONLEVEL = 1.0f;
-/** @brief outer circle radar is bigger than inner circle radar by 100 * RADAR_OUTER_CIRCLE_RATIO percent */
-static const float RADAR_OUTER_CIRCLE_RATIO = 0.41f;
 /** @brief this is the multiplier applied to the radar range when the radar levels up */
 static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
 
@@ -64,8 +63,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (base) {
-			const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * base->radar.range;
-			R_AddRadarCoverage(base->pos, base->radar.range, rangeTracking, qtrue);
+			R_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, qtrue);
 		}
 	}
 
@@ -73,8 +71,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (installation && installation->founded && installation->installationStatus == INSTALLATION_WORKING) {
-			const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * installation->radar.range;
-			R_AddRadarCoverage(installation->pos, installation->radar.range, rangeTracking, qtrue);
+			R_AddRadarCoverage(installation->pos, installation->radar.range, installation->radar.trackingRange, qtrue);
 		}
 	}
 
@@ -90,9 +87,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
  */
 static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 {
-	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
-
-	R_AddRadarCoverage(pos, radar->range, rangeTracking, qfalse);
+	R_AddRadarCoverage(pos, radar->range, radar->trackingRange, qfalse);
 }
 
 /**
@@ -136,13 +131,12 @@ void RADAR_UpdateWholeRadarOverlay (void)
 static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, const vec2_t pos)
 {
 	const vec4_t color = {1., 1., 1., .4};
-	const float rangeTracking = (1.0f + RADAR_OUTER_CIRCLE_RATIO) * radar->range;
 
 	/* Set color */
 	R_Color(color);
 
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
-	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color);
+	MAP_MapDrawEquidistantPoints(node, pos, radar->trackingRange, color);
 
 	R_Color(NULL);
 }
@@ -312,14 +306,17 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  * @param[in] level The tech level of the radar
  * @param[in] updateSourceRadarMap
  */
-void RADAR_Initialise (radar_t* radar, float range, float level, qboolean updateSourceRadarMap)
+void RADAR_Initialise (radar_t* radar, float range, float trackingRange, float level, qboolean updateSourceRadarMap)
 {
 	const int oldrange = radar->range;
 
-	if (!level)
+	if (!level) {
 		radar->range = 0.0f;
-	else
+		radar->trackingRange = 0.0f;
+	} else {
 		radar->range = range * (1 + (level - 1) * RADAR_UPGRADE_MULTIPLIER);
+		radar->trackingRange = trackingRange * (1 + (level - 1) * RADAR_UPGRADE_MULTIPLIER);
+	}
 
 	assert(radar->numUFOs >= 0);
 
@@ -359,17 +356,17 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 		return;
 
 	level = B_GetMaxBuildingLevel(base, B_RADAR);
-	RADAR_Initialise(&base->radar, RADAR_BASERANGE, level, qtrue);
+	RADAR_Initialise(&base->radar, RADAR_BASERANGE, RADAR_BASETRACKINGRANGE, level, qtrue);
 	CP_UpdateMissionVisibleOnGeoscape();
 }
 
 /**
  * @brief Update radar coverage when building/destroying new radar
  */
-void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange)
+void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const float radarRange, const float trackingRadarRange)
 {
 	if (installation && installation->founded && (installation->installationStatus == INSTALLATION_WORKING)) {
-		RADAR_Initialise(&installation->radar, radarRange, RADAR_INSTALLATIONLEVEL, qtrue);
+		RADAR_Initialise(&installation->radar, radarRange, trackingRadarRange, RADAR_INSTALLATIONLEVEL, qtrue);
 		CP_UpdateMissionVisibleOnGeoscape();
 	}
 }
@@ -413,7 +410,7 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (!ufo->notOnGeoscape && (radar->range + (wasUFOSensored ? radar->range * RADAR_OUTER_CIRCLE_RATIO : 0) > dist)) {
+	if (!ufo->notOnGeoscape && (wasUFOSensored ? radar->range : radar->trackingRange > dist)) {
 		/* UFO is inside the radar range */
 		/** @todo There is a hardcoded detection probability here - this should be scripted. Probability should be a function of UFO type and maybe radar type too. */
 		if (frand() <= 0.40 || wasUFOSensored) {

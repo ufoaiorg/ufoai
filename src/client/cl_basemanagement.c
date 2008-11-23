@@ -1343,7 +1343,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	BDEF_InitialiseBaseSlots(base);
 
 	/* Reset Radar range */
-	RADAR_Initialise(&(base->radar), 0.0f, 1.0f, qtrue);
+	RADAR_Initialise(&(base->radar), 0.0f, 0.0f, 1.0f, qtrue);
 }
 
 /**
@@ -2929,7 +2929,8 @@ static void B_BaseList_f (void)
 		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
 		Com_Printf("Base numMissileBattery %i\n", base->numBatteries);
 		Com_Printf("Base numLaserBattery %i\n", base->numLasers);
-		Com_Printf("Base sensorWidth %i\n", base->radar.range);
+		Com_Printf("Base radarRange %i\n", base->radar.range);
+		Com_Printf("Base trackingRange %i\n", base->radar.trackingRange);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUFOs);
 		Com_Printf("Base Alien interest %f\n", base->alienInterest);
 		Com_Printf("Base hasBuilding[]:\n");
@@ -3640,6 +3641,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
+			MSG_WriteShort(sb, aircraft->radar.trackingRange);
 			MSG_WriteShort(sb, aircraft->route.numPoints);
 			MSG_WriteFloat(sb, aircraft->route.distance);
 			for (l = 0; l < aircraft->route.numPoints; l++)
@@ -3682,6 +3684,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		}
 
 		MSG_WriteShort(sb, b->radar.range);
+		MSG_WriteShort(sb, b->radar.trackingRange);
 
 		/* Alien Containment. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
@@ -3939,6 +3942,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
+#if 0
+			aircraft->radar.trackingRange = MSG_ReadShort(sb);
+#endif
+#if 1
+			aircraft->radar.trackingRange = RADAR_AIRCRAFTTRACKINGRANGE;
+#endif
 			aircraft->route.numPoints = MSG_ReadShort(sb);
 			aircraft->route.distance = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.numPoints; l++)
@@ -3988,8 +3997,15 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		}
 
-		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
-
+#if 0
+		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
+#endif
+#if 1
+		{
+			int temp = MSG_ReadShort(sb);
+			RADAR_Initialise(&b->radar, temp, temp * 1.4, B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
+		}
+#endif
 		/* Alien Containment. */
 
 		/* Fill Alien Containment with default values like the tech pointer. */

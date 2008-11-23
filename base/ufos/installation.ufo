@@ -6,7 +6,8 @@ installation radartower
 {
 	name		"_Radar Tower"
 	cost		10000
-	radar_range	12.0
+	radar_range	8.0
+	radar_tracking_range	16.0
 	max_batteries	0
 	max_ufo_stored	0
 	max_damage		1

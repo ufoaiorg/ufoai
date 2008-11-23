@@ -155,8 +155,8 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
 
 	/* Reset Radar range */
-	RADAR_Initialise(&(installation->radar), 0.0f, 1.0f, qtrue);
-	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
+	RADAR_Initialise(&(installation->radar), 0.0f, 0.0f, 1.0f, qtrue);
+	RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
 }
 
 /**
@@ -445,7 +445,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	if (!installation->founded)
 		return;
 
-	RADAR_UpdateInstallationRadarCoverage(installation, 0);
+	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
 	gd.numInstallations--;
 	installationCurrent = NULL;
 	installation->founded = qfalse;
@@ -499,6 +499,7 @@ void INS_InitStartup (void)
 		gd.installationTemplates[idx].name = NULL;
 		gd.installationTemplates[idx].cost = 0;
 		gd.installationTemplates[idx].radarRange = 0.0f;
+		gd.installationTemplates[idx].trackingRange = 0.0f;
 		gd.installationTemplates[idx].maxUfoStored = 0;
 		gd.installationTemplates[idx].maxBatteries = 0;
 	}
@@ -553,7 +554,7 @@ void INS_UpdateInstallationData (void)
 		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
 			installation->installationStatus = INSTALLATION_WORKING;
-			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
+			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
 
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of installation %s finished."), _(installation->name));
 				MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
@@ -694,6 +695,11 @@ void INS_ParseInstallations (const char *name, const char **text)
 			if (!*text)
 				return;
 			installation->radarRange = atof(token);
+		} else if (!Q_strncmp(token, "radar_tracking_range", MAX_VAR)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			installation->trackingRange = atof(token);
 		} else if (!Q_strncmp(token, "max_batteries", MAX_VAR)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
@@ -747,6 +753,7 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, inst->installationDamage);
 		MSG_WriteFloat(sb, inst->alienInterest);
 		MSG_WriteShort(sb, inst->radar.range);
+		MSG_WriteShort(sb, inst->radar.trackingRange);
 		MSG_WriteLong(sb, inst->buildStart);
 
 		MSG_WriteByte(sb, inst->numBatteries);
@@ -790,7 +797,12 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->installationStatus = MSG_ReadByte(sb);
 		inst->installationDamage = MSG_ReadShort(sb);
 		inst->alienInterest = MSG_ReadFloat(sb);
-		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 1.0f, qtrue);
+#if 0
+		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), MSG_ReadShort(sb), 1.0f, qtrue);
+#endif
+#if 1
+		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 14.0, 1.0f, qtrue);
+#endif
 		inst->buildStart = MSG_ReadLong(sb);
 
 		/* read battery slots */

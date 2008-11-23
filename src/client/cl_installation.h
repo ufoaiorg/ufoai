@@ -40,21 +40,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note: Don't change the order or you have to change the installationmenu scriptfiles, too
  */
 typedef enum {
-	INSTALLATION_NOT_USED,
-	INSTALLATION_UNDER_CONSTRUCTION,
-	INSTALLATION_WORKING		/**< nothing special */
+	INSTALLATION_NOT_USED,				/**< installation is not set yet */
+	INSTALLATION_UNDER_CONSTRUCTION,	/**< installation is under construction */
+	INSTALLATION_WORKING				/**< nothing special */
 } installationStatus_t;
 
 typedef struct installationTemplate_s {
-	char *id;
-	char *name;
+	char *id;		/**< id of the installation. */
+	char *name;		/**< Name of the installation (as you see it ingame). */
 
-	int cost;
-	float radarRange; /* The range of the installation's radar.  Units is the angle of the two points from center of earth. */
-	int maxBatteries; /* The maximum number of battery slots that can be used in an installation. */
-	int maxUfoStored; /* The maximum number of ufos that can be stored in an installation. */
-	int maxDamage; /* The maximum amount of damage an installation can sustain before it is destroyed. */
-	int buildTime;
+	int cost;				/**< Price of the installation. */
+	float radarRange;		/**< The range of the installation's radar.  Units is the angle of the two points from center of earth. */
+	float trackingRange;	/**< The tracking range of the installation's radar. Units are degrees. */
+	int maxBatteries;		/**< The maximum number of battery slots that can be used in an installation. */
+	int maxUfoStored;		/**< The maximum number of ufos that can be stored in an installation. */
+	int maxDamage;			/**< The maximum amount of damage an installation can sustain before it is destroyed. */
+	int buildTime;			/**< Time to build the installation, in days. */
 } installationTemplate_t;
 
 typedef struct installationUfos_s {
@@ -90,7 +91,7 @@ typedef struct installation_s {
 
 	float alienInterest;	/**< How much aliens know this installation (and may attack it) */
 
-	radar_t	radar;
+	radar_t	radar;			/**< Radar of the installation (for radar towers) */
 
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation. For Sam Sites only. */
 	int numBatteries;		/**< how many batteries are installed? */
@@ -104,7 +105,7 @@ typedef struct installation_s {
 	capacities_t aircraftCapacity;		/**< Capacity of UFO Yard. */
 
 	int installationDamage;			/**< Hit points of installation */
-	int buildStart;
+	int buildStart;					/**< Date when the installation building started */
 } installation_t;
 
 /** Currently displayed/accessed base. */
