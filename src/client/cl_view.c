@@ -274,9 +274,6 @@ void CL_LoadMedia (void)
 	cls.loadingPercent = 100.0f;
 	SCR_UpdateScreen();
 
-	/* the renderer can now free unneeded stuff */
-	R_ModEndLoading();
-
 	/* waiting for EV_START */
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();

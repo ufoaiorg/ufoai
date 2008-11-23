@@ -201,7 +201,7 @@ model_t *R_RegisterModelShort (const char *name)
 
 		while (mod_extensions[i]) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
-				mod = R_ModForName(name, qfalse);
+			mod = R_ModForName(name, qfalse);
 			if (mod)
 				return mod;
 			i++;
@@ -210,13 +210,6 @@ model_t *R_RegisterModelShort (const char *name)
 		return NULL;
 	} else
 		return R_ModForName(name, qfalse);
-}
-
-/**
- * @sa R_ModBeginLoading
- */
-void R_ModEndLoading (void)
-{
 }
 
 #define MEM_TAG_STATIC_MODELS 1

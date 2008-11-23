@@ -960,7 +960,6 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
  * and every of the three components must exists for every tile.
  * @param[in] mapName The mapname that the get from the server (used to identify
  * the correct name for the materials in case of a random assembly).
- * @sa R_ModEndLoading
  * @sa R_ModAddMapTile
  * @sa CM_LoadMap
  * @note This function is called for listen servers, too. This loads the bsp
