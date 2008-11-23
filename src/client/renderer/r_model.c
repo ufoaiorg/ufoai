@@ -86,7 +86,6 @@ void R_ModModellist_f (void)
 
 /**
  * @brief Loads in a model for the given name
- * @sa R_RegisterModel
  */
 static model_t *R_ModForName (const char *name, qboolean crash)
 {
@@ -170,16 +169,6 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 }
 
 /**
- * @brief Register model and skins
- * @sa R_RegisterModelShort
- * @sa R_ModForName
- */
-static model_t *R_RegisterModel (const char *name)
-{
-	return R_ModForName(name, qfalse);
-}
-
-/**
  * @brief all supported model formats
  * @sa modtype_t
  */
@@ -198,7 +187,6 @@ static const char *mod_extensions[] = {
  * @note if there is not extension in the given filename the function will
  * try to load one of the supported model formats
  * @return NULL if no model could be found with the given name, model_t otherwise
- * @sa R_RegisterModel
  */
 model_t *R_RegisterModelShort (const char *name)
 {
@@ -213,7 +201,7 @@ model_t *R_RegisterModelShort (const char *name)
 
 		while (mod_extensions[i]) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
-				mod = R_RegisterModel(filename);
+				mod = R_ModForName(name, qfalse);
 			if (mod)
 				return mod;
 			i++;
@@ -221,7 +209,7 @@ model_t *R_RegisterModelShort (const char *name)
 		Com_Printf("R_RegisterModelShort: Could not find: '%s'\n", name);
 		return NULL;
 	} else
-		return R_RegisterModel(name);
+		return R_ModForName(name, qfalse);
 }
 
 /**
