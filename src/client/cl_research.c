@@ -942,6 +942,41 @@ void RS_AssignScientist (technology_t* tech, base_t *base)
 }
 
 /**
+ * @brief Script function to add and remove a scientist to  the technology entry in the research-list.
+ * @sa RS_AssignScientist_f
+ * @sa RS_RemoveScientist_f
+ * @todo use the diff as a value, not only as a +1 or -1
+ */
+static void RS_ChangeScientist_f ()
+{
+	int num;
+	float diff;
+
+	if (!baseCurrent)
+		return;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <num_in_list> <diff>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= researchListLength)
+		return;
+
+	diff = atof(Cmd_Argv(2));
+	if (diff == 0)
+		return;
+
+	Com_DPrintf(DEBUG_CLIENT, "RS_ChangeScientist_f: num %i, diff %i\n", num, (int) diff);
+	if (diff > 0) {
+		RS_AssignScientist(researchList[num], baseCurrent);
+	} else {
+		RS_RemoveScientist(researchList[num], NULL);
+	}
+}
+
+/**
  * @brief Script function to add a scientist to  the technology entry in the research-list.
  * @sa RS_AssignScientist
  * @sa RS_RemoveScientist_f
@@ -1269,6 +1304,16 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 
 			/* Make icons visible for this entry */
 			MN_ExecuteConfunc(va("research_show%i", j));
+		}
+
+		/* update the GUI for all research of the current base */
+		if (baseCurrent == base) {
+			if (tech->statusResearchable && tech->statusResearch != RS_FINISH && (tech->base == NULL || base->idx == tech->base->idx)) {
+				const int min = 0;
+				const int value = tech->scientists;
+				const int max = available[base->idx] + tech->scientists;
+				MN_ExecuteConfunc(va("research_updateitem %i %i %i %i", j, value, min, max));
+			}
 		}
 
 		if (tech->statusCollected && !tech->statusResearchable && tech->statusResearch != RS_FINISH) {
@@ -1782,6 +1827,7 @@ void RS_InitStartup (void)
 	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
+	Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");
 	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
 	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
@@ -1793,7 +1839,7 @@ void RS_InitStartup (void)
 }
 
 /**
- * @brief This i called everytime RS_ParseTechnologies i called - to prevent cyclic hash tables
+ * @brief This i called everytime RS_ParseTechnologies is called - to prevent cyclic hash tables
  */
 void RS_ResetHash (void)
 {

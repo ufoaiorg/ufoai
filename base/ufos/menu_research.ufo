@@ -33,6 +33,18 @@ menu research
 	// unresearchable: 	texl	"48 16"	texh	"64 32"
 	// ==================
 
+	/**
+	 * @param[in] <1> id of the research
+	 * @param[in] <2> quantity of the item in the base
+	 * @param[in] <3> min value allowed
+	 * @param[in] <4> max value allowed
+	 */
+	confunc research_updateitem {
+		cmd "mn_setnodeproperty bt_rs_change<1> current <2>"
+		cmd "mn_setnodeproperty bt_rs_change<1> min <3>"
+		cmd "mn_setnodeproperty bt_rs_change<1> max <4>"
+	}
+
 	confunc research_clear
 	{
 		*txt_item0 color "0 .78 0 1" *img_status0 texl	"32 16"	*img_status0 texh	"48 32"
@@ -66,64 +78,64 @@ menu research
 	}
 
 	// Functions to hide a single entry in the list (icons only right now)
-	confunc research_hide0 { *img_status0 invis true	*bt_rs_add0 invis true	*bt_rs_remove0 invis true }
-	confunc research_hide1 { *img_status1 invis true	*bt_rs_add1 invis true	*bt_rs_remove1 invis true }
-	confunc research_hide2 { *img_status2 invis true	*bt_rs_add2 invis true	*bt_rs_remove2 invis true }
-	confunc research_hide3 { *img_status3 invis true	*bt_rs_add3 invis true	*bt_rs_remove3 invis true }
-	confunc research_hide4 { *img_status4 invis true	*bt_rs_add4 invis true	*bt_rs_remove4 invis true }
-	confunc research_hide5 { *img_status5 invis true	*bt_rs_add5 invis true	*bt_rs_remove5 invis true }
-	confunc research_hide6 { *img_status6 invis true	*bt_rs_add6 invis true	*bt_rs_remove6 invis true }
-	confunc research_hide7 { *img_status7 invis true	*bt_rs_add7 invis true	*bt_rs_remove7 invis true }
-	confunc research_hide8 { *img_status8 invis true	*bt_rs_add8 invis true	*bt_rs_remove8 invis true }
-	confunc research_hide9 { *img_status9 invis true	*bt_rs_add9 invis true	*bt_rs_remove9 invis true }
-	confunc research_hide10 { *img_status10 invis true	*bt_rs_add10 invis true	*bt_rs_remove10 invis true }
-	confunc research_hide11 { *img_status11 invis true	*bt_rs_add11 invis true	*bt_rs_remove11 invis true }
-	confunc research_hide12 { *img_status12 invis true	*bt_rs_add12 invis true	*bt_rs_remove12 invis true }
-	confunc research_hide13 { *img_status13 invis true	*bt_rs_add13 invis true	*bt_rs_remove13 invis true }
-	confunc research_hide14 { *img_status14 invis true	*bt_rs_add14 invis true	*bt_rs_remove14 invis true }
-	confunc research_hide15 { *img_status15 invis true	*bt_rs_add15 invis true	*bt_rs_remove15 invis true }
-	confunc research_hide16 { *img_status16 invis true	*bt_rs_add16 invis true	*bt_rs_remove16 invis true }
-	confunc research_hide17 { *img_status17 invis true	*bt_rs_add17 invis true	*bt_rs_remove17 invis true }
-	confunc research_hide18 { *img_status18 invis true	*bt_rs_add18 invis true	*bt_rs_remove18 invis true }
-	confunc research_hide19 { *img_status19 invis true	*bt_rs_add19 invis true	*bt_rs_remove19 invis true }
-	confunc research_hide20 { *img_status20 invis true	*bt_rs_add20 invis true	*bt_rs_remove20 invis true }
-	confunc research_hide21 { *img_status21 invis true	*bt_rs_add21 invis true	*bt_rs_remove21 invis true }
-	confunc research_hide22 { *img_status22 invis true	*bt_rs_add22 invis true	*bt_rs_remove22 invis true }
-	confunc research_hide23 { *img_status23 invis true	*bt_rs_add23 invis true	*bt_rs_remove23 invis true }
-	confunc research_hide24 { *img_status24 invis true	*bt_rs_add24 invis true	*bt_rs_remove24 invis true }
-	confunc research_hide25 { *img_status25 invis true	*bt_rs_add25 invis true	*bt_rs_remove25 invis true }
-	confunc research_hide26 { *img_status26 invis true	*bt_rs_add26 invis true	*bt_rs_remove26 invis true }
-	confunc research_hide27 { *img_status27 invis true	*bt_rs_add27 invis true	*bt_rs_remove27 invis true }
+	confunc research_hide0 { *img_status0 invis true	*bt_rs_change0 invis true	}
+	confunc research_hide1 { *img_status1 invis true	*bt_rs_change1 invis true	}
+	confunc research_hide2 { *img_status2 invis true	*bt_rs_change2 invis true	}
+	confunc research_hide3 { *img_status3 invis true	*bt_rs_change3 invis true	}
+	confunc research_hide4 { *img_status4 invis true	*bt_rs_change4 invis true	}
+	confunc research_hide5 { *img_status5 invis true	*bt_rs_change5 invis true	}
+	confunc research_hide6 { *img_status6 invis true	*bt_rs_change6 invis true	}
+	confunc research_hide7 { *img_status7 invis true	*bt_rs_change7 invis true	}
+	confunc research_hide8 { *img_status8 invis true	*bt_rs_change8 invis true	}
+	confunc research_hide9 { *img_status9 invis true	*bt_rs_change9 invis true	}
+	confunc research_hide10 { *img_status10 invis true	*bt_rs_change10 invis true	}
+	confunc research_hide11 { *img_status11 invis true	*bt_rs_change11 invis true	}
+	confunc research_hide12 { *img_status12 invis true	*bt_rs_change12 invis true	}
+	confunc research_hide13 { *img_status13 invis true	*bt_rs_change13 invis true	}
+	confunc research_hide14 { *img_status14 invis true	*bt_rs_change14 invis true	}
+	confunc research_hide15 { *img_status15 invis true	*bt_rs_change15 invis true	}
+	confunc research_hide16 { *img_status16 invis true	*bt_rs_change16 invis true	}
+	confunc research_hide17 { *img_status17 invis true	*bt_rs_change17 invis true	}
+	confunc research_hide18 { *img_status18 invis true	*bt_rs_change18 invis true	}
+	confunc research_hide19 { *img_status19 invis true	*bt_rs_change19 invis true	}
+	confunc research_hide20 { *img_status20 invis true	*bt_rs_change20 invis true	}
+	confunc research_hide21 { *img_status21 invis true	*bt_rs_change21 invis true	}
+	confunc research_hide22 { *img_status22 invis true	*bt_rs_change22 invis true	}
+	confunc research_hide23 { *img_status23 invis true	*bt_rs_change23 invis true	}
+	confunc research_hide24 { *img_status24 invis true	*bt_rs_change24 invis true	}
+	confunc research_hide25 { *img_status25 invis true	*bt_rs_change25 invis true	}
+	confunc research_hide26 { *img_status26 invis true	*bt_rs_change26 invis true	}
+	confunc research_hide27 { *img_status27 invis true	*bt_rs_change27 invis true	}
 
 	// Functions to make a single entry visible again in the list (icons only right now)
-	confunc research_show0 { *img_status0 invis false	*bt_rs_add0 invis false	*bt_rs_remove0 invis false }
-	confunc research_show1 { *img_status1 invis false	*bt_rs_add1 invis false	*bt_rs_remove1 invis false }
-	confunc research_show2 { *img_status2 invis false	*bt_rs_add2 invis false	*bt_rs_remove2 invis false }
-	confunc research_show3 { *img_status3 invis false	*bt_rs_add3 invis false	*bt_rs_remove3 invis false }
-	confunc research_show4 { *img_status4 invis false	*bt_rs_add4 invis false	*bt_rs_remove4 invis false }
-	confunc research_show5 { *img_status5 invis false	*bt_rs_add5 invis false	*bt_rs_remove5 invis false }
-	confunc research_show6 { *img_status6 invis false	*bt_rs_add6 invis false	*bt_rs_remove6 invis false }
-	confunc research_show7 { *img_status7 invis false	*bt_rs_add7 invis false	*bt_rs_remove7 invis false }
-	confunc research_show8 { *img_status8 invis false	*bt_rs_add8 invis false	*bt_rs_remove8 invis false }
-	confunc research_show9 { *img_status9 invis false	*bt_rs_add9 invis false	*bt_rs_remove9 invis false }
-	confunc research_show10 { *img_status10 invis false	*bt_rs_add10 invis false	*bt_rs_remove10 invis false }
-	confunc research_show11 { *img_status11 invis false	*bt_rs_add11 invis false	*bt_rs_remove11 invis false }
-	confunc research_show12 { *img_status12 invis false	*bt_rs_add12 invis false	*bt_rs_remove12 invis false }
-	confunc research_show13 { *img_status13 invis false	*bt_rs_add13 invis false	*bt_rs_remove13 invis false }
-	confunc research_show14 { *img_status14 invis false	*bt_rs_add14 invis false	*bt_rs_remove14 invis false }
-	confunc research_show15 { *img_status15 invis false	*bt_rs_add15 invis false	*bt_rs_remove15 invis false }
-	confunc research_show16 { *img_status16 invis false	*bt_rs_add16 invis false	*bt_rs_remove16 invis false }
-	confunc research_show17 { *img_status17 invis false	*bt_rs_add17 invis false	*bt_rs_remove17 invis false }
-	confunc research_show18 { *img_status18 invis false	*bt_rs_add18 invis false	*bt_rs_remove18 invis false }
-	confunc research_show19 { *img_status19 invis false	*bt_rs_add19 invis false	*bt_rs_remove19 invis false }
-	confunc research_show20 { *img_status20 invis false	*bt_rs_add20 invis false	*bt_rs_remove20 invis false }
-	confunc research_show21 { *img_status21 invis false	*bt_rs_add21 invis false	*bt_rs_remove21 invis false }
-	confunc research_show22 { *img_status22 invis false	*bt_rs_add22 invis false	*bt_rs_remove22 invis false }
-	confunc research_show23 { *img_status23 invis false	*bt_rs_add23 invis false	*bt_rs_remove23 invis false }
-	confunc research_show24 { *img_status24 invis false	*bt_rs_add24 invis false	*bt_rs_remove24 invis false }
-	confunc research_show25 { *img_status25 invis false	*bt_rs_add25 invis false	*bt_rs_remove25 invis false }
-	confunc research_show26 { *img_status26 invis false	*bt_rs_add26 invis false	*bt_rs_remove26 invis false }
-	confunc research_show27 { *img_status27 invis false	*bt_rs_add27 invis false	*bt_rs_remove27 invis false }
+	confunc research_show0 { *img_status0 invis false	*bt_rs_change0 invis false	}
+	confunc research_show1 { *img_status1 invis false	*bt_rs_change1 invis false	}
+	confunc research_show2 { *img_status2 invis false	*bt_rs_change2 invis false	}
+	confunc research_show3 { *img_status3 invis false	*bt_rs_change3 invis false	}
+	confunc research_show4 { *img_status4 invis false	*bt_rs_change4 invis false	}
+	confunc research_show5 { *img_status5 invis false	*bt_rs_change5 invis false	}
+	confunc research_show6 { *img_status6 invis false	*bt_rs_change6 invis false	}
+	confunc research_show7 { *img_status7 invis false	*bt_rs_change7 invis false	}
+	confunc research_show8 { *img_status8 invis false	*bt_rs_change8 invis false	}
+	confunc research_show9 { *img_status9 invis false	*bt_rs_change9 invis false	}
+	confunc research_show10 { *img_status10 invis false	*bt_rs_change10 invis false	}
+	confunc research_show11 { *img_status11 invis false	*bt_rs_change11 invis false	}
+	confunc research_show12 { *img_status12 invis false	*bt_rs_change12 invis false	}
+	confunc research_show13 { *img_status13 invis false	*bt_rs_change13 invis false	}
+	confunc research_show14 { *img_status14 invis false	*bt_rs_change14 invis false	}
+	confunc research_show15 { *img_status15 invis false	*bt_rs_change15 invis false	}
+	confunc research_show16 { *img_status16 invis false	*bt_rs_change16 invis false	}
+	confunc research_show17 { *img_status17 invis false	*bt_rs_change17 invis false	}
+	confunc research_show18 { *img_status18 invis false	*bt_rs_change18 invis false	}
+	confunc research_show19 { *img_status19 invis false	*bt_rs_change19 invis false	}
+	confunc research_show20 { *img_status20 invis false	*bt_rs_change20 invis false	}
+	confunc research_show21 { *img_status21 invis false	*bt_rs_change21 invis false	}
+	confunc research_show22 { *img_status22 invis false	*bt_rs_change22 invis false	}
+	confunc research_show23 { *img_status23 invis false	*bt_rs_change23 invis false	}
+	confunc research_show24 { *img_status24 invis false	*bt_rs_change24 invis false	}
+	confunc research_show25 { *img_status25 invis false	*bt_rs_change25 invis false	}
+	confunc research_show26 { *img_status26 invis false	*bt_rs_change26 invis false	}
+	confunc research_show27 { *img_status27 invis false	*bt_rs_change27 invis false	}
 
 	confunc researchselect0  { *txt_item0  color "1 1 1 1" }
 	confunc researchselect1  { *txt_item1  color "1 1 1 1" }
@@ -409,621 +421,312 @@ menu research
 	string txt_available27	{ string "*cvar mn_researchavailable27"	pos "440 715"	color "0 .78 0 1"	align ur }
 	string txt_max27	{ string "*cvar mn_researchmax27"		pos "540 715"	color "0 .78 0 1"	align ur }
 
-	pic bt_rs_add0
+	spinner bt_rs_change0
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 40"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 0; mn_rs_add 0;" }
-		repeat	true
-		whup	{ cmd "research_select 0; mn_rs_add 0;" }
-		whdown	{ cmd "research_select 0; mn_rs_remove 0;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 40"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 0; mn_rs_change 0 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove0
+
+	spinner bt_rs_change1
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 40"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 0; mn_rs_remove 0;" }
-		repeat	true
-		whup	{ cmd "research_select 0; mn_rs_add 0;" }
-		whdown	{ cmd "research_select 0; mn_rs_remove 0;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 65"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 1; mn_rs_change 1 <lastdiff>"
+		}
 	}
-	pic bt_rs_add1
+
+	spinner bt_rs_change2
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 65"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 1; mn_rs_add 1;" }
-		repeat	true
-		whup	{ cmd "research_select 1; mn_rs_add 1;" }
-		whdown	{ cmd "research_select 1; mn_rs_remove 1;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 90"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 2; mn_rs_change 2 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove1
+
+	spinner bt_rs_change3
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 65"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 1; mn_rs_remove 1;" }
-		repeat	true
-		whup	{ cmd "research_select 1; mn_rs_add 1;" }
-		whdown	{ cmd "research_select 1; mn_rs_remove 1;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 115"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 3; mn_rs_change 3 <lastdiff>"
+		}
 	}
-	pic bt_rs_add2
+
+	spinner bt_rs_change4
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 90"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 2; mn_rs_add 2;" }
-		repeat	true
-		whup	{ cmd "research_select 2; mn_rs_add 2;" }
-		whdown	{ cmd "research_select 2; mn_rs_remove 2;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 140"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 4; mn_rs_change 4 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove2
+
+	spinner bt_rs_change5
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 90"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 2; mn_rs_remove 2;" }
-		repeat	true
-		whup	{ cmd "research_select 2; mn_rs_add 2;" }
-		whdown	{ cmd "research_select 2; mn_rs_remove 2;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 165"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 5; mn_rs_change 5 <lastdiff>"
+		}
 	}
-	pic bt_rs_add3
+
+	spinner bt_rs_change6
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 115"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 3; mn_rs_add 3;" }
-		repeat	true
-		whup	{ cmd "research_select 3; mn_rs_add 3;" }
-		whdown	{ cmd "research_select 3; mn_rs_remove 3;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 190"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 6; mn_rs_change 6 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove3
+
+	spinner bt_rs_change7
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 115"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 3; mn_rs_remove 3;" }
-		repeat	true
-		whup	{ cmd "research_select 3; mn_rs_add 3;" }
-		whdown	{ cmd "research_select 3; mn_rs_remove 3;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 215"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 7; mn_rs_change 7 <lastdiff>"
+		}
 	}
-	pic bt_rs_add4
+
+	spinner bt_rs_change8
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 140"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 4; mn_rs_add 4;" }
-		repeat	true
-		whup	{ cmd "research_select 4; mn_rs_add 4;" }
-		whdown	{ cmd "research_select 4; mn_rs_remove 4;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 240"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 8; mn_rs_change 8 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove4
+
+	spinner bt_rs_change9
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 140"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 4; mn_rs_remove 4;" }
-		repeat	true
-		whup	{ cmd "research_select 4; mn_rs_add 4;" }
-		whdown	{ cmd "research_select 4; mn_rs_remove 4;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 265"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 9; mn_rs_change 9 <lastdiff>"
+		}
 	}
-	pic bt_rs_add5
+
+	spinner bt_rs_change10
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 165"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 5; mn_rs_add 5;" }
-		repeat	true
-		whup	{ cmd "research_select 5; mn_rs_add 5;" }
-		whdown	{ cmd "research_select 5; mn_rs_remove 5;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 290"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 10; mn_rs_change 10 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove5
+
+	spinner bt_rs_change11
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 165"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 5; mn_rs_remove 5;" }
-		repeat	true
-		whup	{ cmd "research_select 5; mn_rs_add 5;" }
-		whdown	{ cmd "research_select 5; mn_rs_remove 5;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 315"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 11; mn_rs_change 11 <lastdiff>"
+		}
 	}
-	pic bt_rs_add6
+
+	spinner bt_rs_change12
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 190"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 6; mn_rs_add 6;" }
-		repeat	true
-		whup	{ cmd "research_select 6; mn_rs_add 6;" }
-		whdown	{ cmd "research_select 6; mn_rs_remove 6;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 340"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 12; mn_rs_change 12 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove6
+
+	spinner bt_rs_change13
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 190"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 6; mn_rs_remove 6;" }
-		repeat	true
-		whup	{ cmd "research_select 6; mn_rs_add 6;" }
-		whdown	{ cmd "research_select 6; mn_rs_remove 6;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 365"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 13; mn_rs_change 13 <lastdiff>"
+		}
 	}
-	pic bt_rs_add7
+
+	spinner bt_rs_change14
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 215"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 7; mn_rs_add 7;" }
-		repeat	true
-		whup	{ cmd "research_select 7; mn_rs_add 7;" }
-		whdown	{ cmd "research_select 7; mn_rs_remove 7;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 390"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 14; mn_rs_change 14 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove7
+
+	spinner bt_rs_change15
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 215"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 7; mn_rs_remove 7;" }
-		repeat	true
-		whup	{ cmd "research_select 7; mn_rs_add 7;" }
-		whdown	{ cmd "research_select 7; mn_rs_remove 7;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 415"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 15; mn_rs_change 15 <lastdiff>"
+		}
 	}
-	pic bt_rs_add8
+
+	spinner bt_rs_change16
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 240"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 8; mn_rs_add 8;" }
-		repeat	true
-		whup	{ cmd "research_select 8; mn_rs_add 8;" }
-		whdown	{ cmd "research_select 8; mn_rs_remove 8;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 440"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 16; mn_rs_change 16 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove8
+
+	spinner bt_rs_change17
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 240"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 8; mn_rs_remove 8;" }
-		repeat	true
-		whup	{ cmd "research_select 8; mn_rs_add 8;" }
-		whdown	{ cmd "research_select 8; mn_rs_remove 8;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 465"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 17; mn_rs_change 17 <lastdiff>"
+		}
 	}
-	pic bt_rs_add9
+
+	spinner bt_rs_change18
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 265"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 9; mn_rs_add 9;" }
-		repeat	true
-		whup	{ cmd "research_select 9; mn_rs_add 9;" }
-		whdown	{ cmd "research_select 9; mn_rs_remove 9;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 490"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 18; mn_rs_change 18 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove9
+
+	spinner bt_rs_change19
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 9; mn_rs_remove 9;" }
-		repeat	true
-		whup	{ cmd "research_select 9; mn_rs_add 9;" }
-		whdown	{ cmd "research_select 9; mn_rs_remove 9;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 515"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 19; mn_rs_change 19 <lastdiff>"
+		}
 	}
-	pic bt_rs_add10
+
+	spinner bt_rs_change20
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 290"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 10; mn_rs_add 10;" }
-		repeat	true
-		whup	{ cmd "research_select 10; mn_rs_add 10;" }
-		whdown	{ cmd "research_select 10; mn_rs_remove 10;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 540"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 20; mn_rs_change 20 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove10
+
+	spinner bt_rs_change21
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 290"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 10; mn_rs_remove 10;" }
-		repeat	true
-		whup	{ cmd "research_select 10; mn_rs_add 10;" }
-		whdown	{ cmd "research_select 10; mn_rs_remove 10;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 565"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 21; mn_rs_change 21 <lastdiff>"
+		}
 	}
-	pic bt_rs_add11
+
+	spinner bt_rs_change22
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 315"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 11; mn_rs_add 11;" }
-		repeat	true
-		whup	{ cmd "research_select 11; mn_rs_add 11;" }
-		whdown	{ cmd "research_select 11; mn_rs_remove 11;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 590"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 22; mn_rs_change 22 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove11
+
+	spinner bt_rs_change23
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 315"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 11; mn_rs_remove 11;" }
-		repeat	true
-		whup	{ cmd "research_select 11; mn_rs_add 11;" }
-		whdown	{ cmd "research_select 11; mn_rs_remove 11;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 615"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 23; mn_rs_change 23 <lastdiff>"
+		}
 	}
-	pic bt_rs_add12
+
+	spinner bt_rs_change24
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 340"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 12; mn_rs_add 12;" }
-		repeat	true
-		whup	{ cmd "research_select 12; mn_rs_add 12;" }
-		whdown	{ cmd "research_select 12; mn_rs_remove 12;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 640"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 24; mn_rs_change 24 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove12
+
+	spinner bt_rs_change25
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 340"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 12; mn_rs_remove 12;" }
-		repeat	true
-		whup	{ cmd "research_select 12; mn_rs_add 12;" }
-		whdown	{ cmd "research_select 12; mn_rs_remove 12;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 665"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 25; mn_rs_change 25 <lastdiff>"
+		}
 	}
-	pic bt_rs_add13
+
+	spinner bt_rs_change26
 	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 365"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 13; mn_rs_add 13;" }
-		repeat	true
-		whup	{ cmd "research_select 13; mn_rs_add 13;" }
-		whdown	{ cmd "research_select 13; mn_rs_remove 13;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 690"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 26; mn_rs_change 26 <lastdiff>"
+		}
 	}
-	pic bt_rs_remove13
+
+	spinner bt_rs_change27
 	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 365"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 13; mn_rs_remove 13;" }
-		repeat	true
-		whup	{ cmd "research_select 13; mn_rs_add 13;" }
-		whdown	{ cmd "research_select 13; mn_rs_remove 13;" }
-	}
-	pic bt_rs_add14
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 390"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 14; mn_rs_add 14;" }
-		repeat	true
-		whup	{ cmd "research_select 14; mn_rs_add 14;" }
-		whdown	{ cmd "research_select 14; mn_rs_remove 14;" }
-	}
-	pic bt_rs_remove14
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 390"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 14; mn_rs_remove 14;" }
-		repeat	true
-		whup	{ cmd "research_select 14; mn_rs_add 14;" }
-		whdown	{ cmd "research_select 14; mn_rs_remove 14;" }
-	}
-	pic bt_rs_add15
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 415"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 15; mn_rs_add 15;" }
-		repeat	true
-		whup	{ cmd "research_select 15; mn_rs_add 15;" }
-		whdown	{ cmd "research_select 15; mn_rs_remove 15;" }
-	}
-	pic bt_rs_remove15
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 415"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 15; mn_rs_remove 15;" }
-		repeat	true
-		whup	{ cmd "research_select 15; mn_rs_add 15;" }
-		whdown	{ cmd "research_select 15; mn_rs_remove 15;" }
-	}
-	pic bt_rs_add16
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 440"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 16; mn_rs_add 16;" }
-		repeat	true
-		whup	{ cmd "research_select 16; mn_rs_add 16;" }
-		whdown	{ cmd "research_select 16; mn_rs_remove 16;" }
-	}
-	pic bt_rs_remove16
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 440"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 16; mn_rs_remove 16;" }
-		repeat	true
-		whup	{ cmd "research_select 16; mn_rs_add 16;" }
-		whdown	{ cmd "research_select 16; mn_rs_remove 16;" }
-	}
-	pic bt_rs_add17
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 465"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 17; mn_rs_add 17;" }
-		repeat	true
-		whup	{ cmd "research_select 17; mn_rs_add 17;" }
-		whdown	{ cmd "research_select 17; mn_rs_remove 17;" }
-	}
-	pic bt_rs_remove17
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 465"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 17; mn_rs_remove 17;" }
-		repeat	true
-		whup	{ cmd "research_select 17; mn_rs_add 17;" }
-		whdown	{ cmd "research_select 17; mn_rs_remove 17;" }
-	}
-	pic bt_rs_add18
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 490"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 18; mn_rs_add 18;" }
-		repeat	true
-		whup	{ cmd "research_select 18; mn_rs_add 18;" }
-		whdown	{ cmd "research_select 18; mn_rs_remove 18;" }
-	}
-	pic bt_rs_remove18
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 490"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 18; mn_rs_remove 18;" }
-		repeat	true
-		whup	{ cmd "research_select 18; mn_rs_add 18;" }
-		whdown	{ cmd "research_select 18; mn_rs_remove 18;" }
-	}
-	pic bt_rs_add19
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 515"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 19; mn_rs_add 19;" }
-		repeat	true
-		whup	{ cmd "research_select 19; mn_rs_add 19;" }
-		whdown	{ cmd "research_select 19; mn_rs_remove 19;" }
-	}
-	pic bt_rs_remove19
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 515"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 19; mn_rs_remove 19;" }
-		repeat	true
-		whup	{ cmd "research_select 19; mn_rs_add 19;" }
-		whdown	{ cmd "research_select 19; mn_rs_remove 19;" }
-	}
-	pic bt_rs_add20
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 540"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 20; mn_rs_add 20;" }
-		repeat	true
-		whup	{ cmd "research_select 20; mn_rs_add 20;" }
-		whdown	{ cmd "research_select 20; mn_rs_remove 20;" }
-	}
-	pic bt_rs_remove20
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 540"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 20; mn_rs_remove 20;" }
-		repeat	true
-		whup	{ cmd "research_select 20; mn_rs_add 20;" }
-		whdown	{ cmd "research_select 20; mn_rs_remove 20;" }
-	}
-	pic bt_rs_add21
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 565"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 21; mn_rs_add 21;" }
-		repeat	true
-		whup	{ cmd "research_select 21; mn_rs_add 21;" }
-		whdown	{ cmd "research_select 21; mn_rs_remove 21;" }
-	}
-	pic bt_rs_remove21
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 565"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 21; mn_rs_remove 21;" }
-		repeat	true
-		whup	{ cmd "research_select 21; mn_rs_add 21;" }
-		whdown	{ cmd "research_select 21; mn_rs_remove 21;" }
-	}
-	pic bt_rs_add22
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 590"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 22; mn_rs_add 22;" }
-		repeat	true
-		whup	{ cmd "research_select 22; mn_rs_add 22;" }
-		whdown	{ cmd "research_select 22; mn_rs_remove 22;" }
-	}
-	pic bt_rs_remove22
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 590"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 22; mn_rs_remove 22;" }
-		repeat	true
-		whup	{ cmd "research_select 22; mn_rs_add 22;" }
-		whdown	{ cmd "research_select 22; mn_rs_remove 22;" }
-	}
-	pic bt_rs_add23
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 615"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 23; mn_rs_add 23;" }
-		repeat	true
-		whup	{ cmd "research_select 23; mn_rs_add 23;" }
-		whdown	{ cmd "research_select 23; mn_rs_remove 23;" }
-	}
-	pic bt_rs_remove23
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 615"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 23; mn_rs_remove 23;" }
-		repeat	true
-		whup	{ cmd "research_select 23; mn_rs_add 23;" }
-		whdown	{ cmd "research_select 23; mn_rs_remove 23;" }
-	}
-	pic bt_rs_add24
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 640"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 24; mn_rs_add 24;" }
-		repeat	true
-		whup	{ cmd "research_select 24; mn_rs_add 24;" }
-		whdown	{ cmd "research_select 24; mn_rs_remove 24;" }
-	}
-	pic bt_rs_remove24
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 640"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 24; mn_rs_remove 24;" }
-		repeat	true
-		whup	{ cmd "research_select 24; mn_rs_add 24;" }
-		whdown	{ cmd "research_select 24; mn_rs_remove 24;" }
-	}
-	pic bt_rs_add25
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 665"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 25; mn_rs_add 25;" }
-		repeat	true
-		whup	{ cmd "research_select 25; mn_rs_add 25;" }
-		whdown	{ cmd "research_select 25; mn_rs_remove 25;" }
-	}
-	pic bt_rs_remove25
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 665"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 25; mn_rs_remove 25;" }
-		repeat	true
-		whup	{ cmd "research_select 25; mn_rs_add 25;" }
-		whdown	{ cmd "research_select 25; mn_rs_remove 25;" }
-	}
-	pic bt_rs_add26
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 690"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 26; mn_rs_add 26;" }
-		repeat	true
-		whup	{ cmd "research_select 26; mn_rs_add 26;" }
-		whdown	{ cmd "research_select 26; mn_rs_remove 26;" }
-	}
-	pic bt_rs_remove26
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 690"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 26; mn_rs_remove 26" }
-		repeat	true
-		whup	{ cmd "research_select 26; mn_rs_add 26;" }
-		whdown	{ cmd "research_select 26; mn_rs_remove 26;" }
-	}
-	pic bt_rs_add27
-	{
-		tooltip	"_Add scientist"
-		image	menu/buttons_small
-		pos		"376 715"	mousefx true
-		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 27; mn_rs_add 27;" }
-		repeat	true
-		whup	{ cmd "research_select 27; mn_rs_add 27;" }
-		whdown	{ cmd "research_select 27; mn_rs_remove 27;" }
-	}
-	pic bt_rs_remove27
-	{
-		tooltip	"_Remove scientist"
-		image	menu/buttons_small
-		pos		"392 715"	mousefx	true
-		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 27; mn_rs_remove 27;" }
-		repeat	true
-		whup	{ cmd "research_select 27; mn_rs_add 27;" }
-		whdown	{ cmd "research_select 27; mn_rs_remove 27;" }
+		tooltip	"_Add and remove scientist"
+		image	menu/spinner_blue blend true
+		pos		"356 715"
+		min 0 current 10000 max 20000 delta 1
+		change {
+			cmd "research_select 27; mn_rs_change 27 <lastdiff>"
+		}
 	}
 
 	// ==================
