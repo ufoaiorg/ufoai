@@ -4730,8 +4730,9 @@
 // entity 140
 {
 "classname" "misc_item"
-"origin" "232 624 16"
+"origin" "240 624 16"
 "item" "bomb1"
+"spawnflags" "255"
 }
 // entity 141
 {
