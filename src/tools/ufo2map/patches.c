@@ -163,6 +163,7 @@ static void BuildPatch (int fn, winding_t *w)
 	dBspPlane_t *plane;
 
 	patch = (patch_t *)malloc(sizeof(*patch));
+	memset(patch, 0, sizeof(*patch));
 
 	face_patches[fn] = patch;
 
@@ -216,6 +217,8 @@ void BuildPatches (void)
 	int i, j, k;
 	winding_t *w;
 	vec3_t origin;
+
+	memset(face_patches, 0, sizeof(face_patches));
 
 	for (i = 0; i < curTile->nummodels; i++) {
 		const dBspModel_t *mod = &curTile->models[i];
