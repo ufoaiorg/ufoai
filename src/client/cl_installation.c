@@ -86,9 +86,9 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
 }
 
 /**
- * @brief Returns the installation radar range (if set) for a given installation type.
- * @param[in] installationType The type of the installation to find the radar range of.
- * @return The radar range of the installation if the installation is found and has had the range set.  Otherwise it will return -1.
+ * @brief Returns the installation Template for a given installation ID.
+ * @param[in] id ID of the installation template to find.
+ * @return corresponding installation Template, @c NULL if not found.
  */
 static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (const char *id)
 {
@@ -121,7 +121,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->buildStart = ccs.date.day;
 
 	/* Reset current capacities. */
-	installation->aircraftCapacitiy.cur = 0;
+	installation->aircraftCapacity.cur = 0;
 
 	/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 	Cvar_Set("mn_installation_count", va("%i", gd.numInstallations));
@@ -190,6 +190,7 @@ static int INS_GetFirstUnfoundedInstallation (void)
 	return MAX_INSTALLATIONS;
 }
 /**
+ * @brief Select an installation when clicking on it on geoscape, or build a new installation.
  * @param[in] installation If this is @c NULL we want to installation a new base
  * @note This is (and should be) the only place where installationCurrent is set
  * to a value that is not @c NULL
@@ -433,7 +434,7 @@ static void INS_CheckMaxInstallations_f (void)
 	}
 }
 
-/*
+/**
  * @brief Destroys an installation
  * @param[in] pointer to the installation to be destroyed
  */
@@ -450,10 +451,10 @@ void INS_DestroyInstallation (installation_t *installation)
 	installation->founded = qfalse;
 
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Installation %s was destroyed."), _(installation->name));
-    	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 }
 
-/*
+/**
  * @brief console function for destroying an installation
  * @sa INS_DestroyInstallation
  */
@@ -502,7 +503,6 @@ void INS_InitStartup (void)
 		gd.installationTemplates[idx].maxBatteries = 0;
 	}
 
-
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, NULL);
 	Cmd_AddCommand("mn_build_installation", INS_BuildInstallation_f, NULL);
@@ -536,14 +536,18 @@ int INS_GetFoundedInstallationCount (void)
 	return cnt;
 }
 
+/**
+ * @brief Check if some installation are build.
+ * @note Daily called.
+ */
 void INS_UpdateInstallationData (void)
 {
 	int instIdx;
 
 	for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
-                installation_t *installation = INS_GetFoundedInstallationByIDX(instIdx);
-                if (!installation)
-                        continue;
+		installation_t *installation = INS_GetFoundedInstallationByIDX(instIdx);
+		if (!installation)
+			continue;
 
 		if ((installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION)
 		 && installation->buildStart
@@ -552,7 +556,7 @@ void INS_UpdateInstallationData (void)
 			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange);
 
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of installation %s finished."), _(installation->name));
-		    	MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 		}
 	}
 }

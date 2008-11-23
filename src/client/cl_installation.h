@@ -101,7 +101,7 @@ typedef struct installation_s {
 	installationUfos_t installationUfos[MAX_AIRCRAFT];
 	int numUfosInInstallation;	/**< How many ufos are in this installation. */
 
-	capacities_t aircraftCapacitiy;		/**< Capacity of UFO Yard. */
+	capacities_t aircraftCapacity;		/**< Capacity of UFO Yard. */
 
 	int installationDamage;			/**< Hit points of installation */
 	int buildStart;
