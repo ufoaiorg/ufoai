@@ -1304,7 +1304,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 			/** @todo add check for collected items */
 
 			/* Make icons visible for this entry */
-			MN_ExecuteConfunc(va("research_show%i", j));
+			MN_ExecuteConfunc(va("research_show %i", j));
 		}
 
 		/* update the GUI for all research of the current base */
@@ -1322,7 +1322,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 
 			if (updateMenu) {
 				/* Color the item 'unresearchable' */
-				MN_ExecuteConfunc(va("researchunresearchable%i", j));
+				MN_ExecuteConfunc(va("researchunresearchable %i", j));
 				/* Display the concated text in the correct list-entry. */
 				Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
 
@@ -1355,11 +1355,11 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 				switch (tech->statusResearch) {
 				case RS_RUNNING:
 					/* Color the item with 'research running'-color. */
-					MN_ExecuteConfunc(va("researchrunning%i", j));
+					MN_ExecuteConfunc(va("researchrunning %i", j));
 					break;
 				case RS_PAUSED:
 					/* Color the item with 'research paused'-color. */
-					MN_ExecuteConfunc(va("researchpaused%i", j));
+					MN_ExecuteConfunc(va("researchpaused %i", j));
 					break;
 				case RS_NONE:
 					/* The color is defined in menu research.ufo by  "confunc research_clear". See also above. */
@@ -1403,16 +1403,16 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 		Cvar_Set(va("mn_researchmax%i", j), "");
 
 		/* Hide the icons for this entry */
-		MN_ExecuteConfunc(va("research_hide%i", j));
+		MN_ExecuteConfunc(va("research_hide %i", j));
 	}
 
 	/* Select last selected item if possible or the very first one if not. */
 	if (researchListLength) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
 		if ((researchListPos < researchListLength) && (researchListLength < MAX_RESEARCHDISPLAY)) {
-			MN_ExecuteConfunc(va("researchselect%i", researchListPos));
+			MN_ExecuteConfunc(va("researchselect %i", researchListPos));
 		} else {
-			MN_ExecuteConfunc("researchselect0");
+			MN_ExecuteConfunc("researchselect 0");
 		}
 	} else {
 		/* No display list available (zero items) - > Reset description. */

@@ -77,181 +77,57 @@ menu research
 		*txt_item27 color "0 .78 0 1" *img_status27 texl	"32 16"	*img_status27 texh	"48 32"
 	}
 
-	// Functions to hide a single entry in the list (icons only right now)
-	confunc research_hide0 { *img_status0 invis true	*bt_rs_change0 invis true	}
-	confunc research_hide1 { *img_status1 invis true	*bt_rs_change1 invis true	}
-	confunc research_hide2 { *img_status2 invis true	*bt_rs_change2 invis true	}
-	confunc research_hide3 { *img_status3 invis true	*bt_rs_change3 invis true	}
-	confunc research_hide4 { *img_status4 invis true	*bt_rs_change4 invis true	}
-	confunc research_hide5 { *img_status5 invis true	*bt_rs_change5 invis true	}
-	confunc research_hide6 { *img_status6 invis true	*bt_rs_change6 invis true	}
-	confunc research_hide7 { *img_status7 invis true	*bt_rs_change7 invis true	}
-	confunc research_hide8 { *img_status8 invis true	*bt_rs_change8 invis true	}
-	confunc research_hide9 { *img_status9 invis true	*bt_rs_change9 invis true	}
-	confunc research_hide10 { *img_status10 invis true	*bt_rs_change10 invis true	}
-	confunc research_hide11 { *img_status11 invis true	*bt_rs_change11 invis true	}
-	confunc research_hide12 { *img_status12 invis true	*bt_rs_change12 invis true	}
-	confunc research_hide13 { *img_status13 invis true	*bt_rs_change13 invis true	}
-	confunc research_hide14 { *img_status14 invis true	*bt_rs_change14 invis true	}
-	confunc research_hide15 { *img_status15 invis true	*bt_rs_change15 invis true	}
-	confunc research_hide16 { *img_status16 invis true	*bt_rs_change16 invis true	}
-	confunc research_hide17 { *img_status17 invis true	*bt_rs_change17 invis true	}
-	confunc research_hide18 { *img_status18 invis true	*bt_rs_change18 invis true	}
-	confunc research_hide19 { *img_status19 invis true	*bt_rs_change19 invis true	}
-	confunc research_hide20 { *img_status20 invis true	*bt_rs_change20 invis true	}
-	confunc research_hide21 { *img_status21 invis true	*bt_rs_change21 invis true	}
-	confunc research_hide22 { *img_status22 invis true	*bt_rs_change22 invis true	}
-	confunc research_hide23 { *img_status23 invis true	*bt_rs_change23 invis true	}
-	confunc research_hide24 { *img_status24 invis true	*bt_rs_change24 invis true	}
-	confunc research_hide25 { *img_status25 invis true	*bt_rs_change25 invis true	}
-	confunc research_hide26 { *img_status26 invis true	*bt_rs_change26 invis true	}
-	confunc research_hide27 { *img_status27 invis true	*bt_rs_change27 invis true	}
+	/**
+	 * @brief Functions to hide a single entry in the list (icons only right now)
+	 * @param[in] <1> Item row
+	 */
+	confunc research_hide {
+		*img_status<1> invis true
+		*bt_rs_change<1> invis true
+	}
 
-	// Functions to make a single entry visible again in the list (icons only right now)
-	confunc research_show0 { *img_status0 invis false	*bt_rs_change0 invis false	}
-	confunc research_show1 { *img_status1 invis false	*bt_rs_change1 invis false	}
-	confunc research_show2 { *img_status2 invis false	*bt_rs_change2 invis false	}
-	confunc research_show3 { *img_status3 invis false	*bt_rs_change3 invis false	}
-	confunc research_show4 { *img_status4 invis false	*bt_rs_change4 invis false	}
-	confunc research_show5 { *img_status5 invis false	*bt_rs_change5 invis false	}
-	confunc research_show6 { *img_status6 invis false	*bt_rs_change6 invis false	}
-	confunc research_show7 { *img_status7 invis false	*bt_rs_change7 invis false	}
-	confunc research_show8 { *img_status8 invis false	*bt_rs_change8 invis false	}
-	confunc research_show9 { *img_status9 invis false	*bt_rs_change9 invis false	}
-	confunc research_show10 { *img_status10 invis false	*bt_rs_change10 invis false	}
-	confunc research_show11 { *img_status11 invis false	*bt_rs_change11 invis false	}
-	confunc research_show12 { *img_status12 invis false	*bt_rs_change12 invis false	}
-	confunc research_show13 { *img_status13 invis false	*bt_rs_change13 invis false	}
-	confunc research_show14 { *img_status14 invis false	*bt_rs_change14 invis false	}
-	confunc research_show15 { *img_status15 invis false	*bt_rs_change15 invis false	}
-	confunc research_show16 { *img_status16 invis false	*bt_rs_change16 invis false	}
-	confunc research_show17 { *img_status17 invis false	*bt_rs_change17 invis false	}
-	confunc research_show18 { *img_status18 invis false	*bt_rs_change18 invis false	}
-	confunc research_show19 { *img_status19 invis false	*bt_rs_change19 invis false	}
-	confunc research_show20 { *img_status20 invis false	*bt_rs_change20 invis false	}
-	confunc research_show21 { *img_status21 invis false	*bt_rs_change21 invis false	}
-	confunc research_show22 { *img_status22 invis false	*bt_rs_change22 invis false	}
-	confunc research_show23 { *img_status23 invis false	*bt_rs_change23 invis false	}
-	confunc research_show24 { *img_status24 invis false	*bt_rs_change24 invis false	}
-	confunc research_show25 { *img_status25 invis false	*bt_rs_change25 invis false	}
-	confunc research_show26 { *img_status26 invis false	*bt_rs_change26 invis false	}
-	confunc research_show27 { *img_status27 invis false	*bt_rs_change27 invis false	}
+	/**
+	 * @brief Functions to make a single entry visible again in the list (icons only right now)
+	 * @param[in] <1> Item row
+	 */
+	confunc research_show {
+		*img_status<1> invis false
+		*bt_rs_change<1> invis false
+	}
 
-	confunc researchselect0  { *txt_item0  color "1 1 1 1" }
-	confunc researchselect1  { *txt_item1  color "1 1 1 1" }
-	confunc researchselect2  { *txt_item2  color "1 1 1 1" }
-	confunc researchselect3  { *txt_item3  color "1 1 1 1" }
-	confunc researchselect4  { *txt_item4  color "1 1 1 1" }
-	confunc researchselect5  { *txt_item5  color "1 1 1 1" }
-	confunc researchselect6  { *txt_item6  color "1 1 1 1" }
-	confunc researchselect7  { *txt_item7  color "1 1 1 1" }
-	confunc researchselect8  { *txt_item8  color "1 1 1 1" }
-	confunc researchselect9  { *txt_item9  color "1 1 1 1" }
-	confunc researchselect10 { *txt_item10 color "1 1 1 1" }
-	confunc researchselect11 { *txt_item11 color "1 1 1 1" }
-	confunc researchselect12 { *txt_item12 color "1 1 1 1" }
-	confunc researchselect13 { *txt_item13 color "1 1 1 1" }
-	confunc researchselect14 { *txt_item14 color "1 1 1 1" }
-	confunc researchselect15 { *txt_item15 color "1 1 1 1" }
-	confunc researchselect16 { *txt_item16 color "1 1 1 1" }
-	confunc researchselect17 { *txt_item17 color "1 1 1 1" }
-	confunc researchselect18 { *txt_item18 color "1 1 1 1" }
-	confunc researchselect19 { *txt_item19 color "1 1 1 1" }
-	confunc researchselect20 { *txt_item20 color "1 1 1 1" }
-	confunc researchselect21 { *txt_item21 color "1 1 1 1" }
-	confunc researchselect22 { *txt_item22 color "1 1 1 1" }
-	confunc researchselect23 { *txt_item23 color "1 1 1 1" }
-	confunc researchselect24 { *txt_item24 color "1 1 1 1" }
-	confunc researchselect25 { *txt_item25 color "1 1 1 1" }
-	confunc researchselect26 { *txt_item26 color "1 1 1 1" }
-	confunc researchselect27 { *txt_item27 color "1 1 1 1" }
+	/**
+	 * @param[in] <1> Item row
+	 */
+	confunc researchselect {
+		*txt_item<1>  color "1 1 1 1"
+	}
 
-	confunc researchrunning0  { *txt_item0  color "0 1 0 1" *img_status0 texl	"32 0"	*img_status0 texh	"48 16" }
-	confunc researchrunning1  { *txt_item1  color "0 1 0 1" *img_status1 texl	"32 0"	*img_status1 texh	"48 16" }
-	confunc researchrunning2  { *txt_item2  color "0 1 0 1" *img_status2 texl	"32 0"	*img_status2 texh	"48 16" }
-	confunc researchrunning3  { *txt_item3  color "0 1 0 1" *img_status3 texl	"32 0"	*img_status3 texh	"48 16" }
-	confunc researchrunning4  { *txt_item4  color "0 1 0 1" *img_status4 texl	"32 0"	*img_status4 texh	"48 16" }
-	confunc researchrunning5  { *txt_item5  color "0 1 0 1" *img_status5 texl	"32 0"	*img_status5 texh	"48 16" }
-	confunc researchrunning6  { *txt_item6  color "0 1 0 1" *img_status6 texl	"32 0"	*img_status6 texh	"48 16" }
-	confunc researchrunning7  { *txt_item7  color "0 1 0 1" *img_status7 texl	"32 0"	*img_status7 texh	"48 16" }
-	confunc researchrunning8  { *txt_item8  color "0 1 0 1" *img_status8 texl	"32 0"	*img_status8 texh	"48 16" }
-	confunc researchrunning9  { *txt_item9  color "0 1 0 1" *img_status9 texl	"32 0"	*img_status9 texh	"48 16" }
-	confunc researchrunning10 { *txt_item10 color "0 1 0 1" *img_status10 texl	"32 0"	*img_status10 texh	"48 16" }
-	confunc researchrunning11 { *txt_item11 color "0 1 0 1" *img_status11 texl	"32 0"	*img_status11 texh	"48 16" }
-	confunc researchrunning12 { *txt_item12 color "0 1 0 1" *img_status12 texl	"32 0"	*img_status12 texh	"48 16" }
-	confunc researchrunning13 { *txt_item13 color "0 1 0 1" *img_status13 texl	"32 0"	*img_status13 texh	"48 16" }
-	confunc researchrunning14 { *txt_item14 color "0 1 0 1" *img_status14 texl	"32 0"	*img_status14 texh	"48 16" }
-	confunc researchrunning15 { *txt_item15 color "0 1 0 1" *img_status15 texl	"32 0"	*img_status15 texh	"48 16" }
-	confunc researchrunning16 { *txt_item16 color "0 1 0 1" *img_status16 texl	"32 0"	*img_status16 texh	"48 16" }
-	confunc researchrunning17 { *txt_item17 color "0 1 0 1" *img_status17 texl	"32 0"	*img_status17 texh	"48 16" }
-	confunc researchrunning18 { *txt_item18 color "0 1 0 1" *img_status18 texl	"32 0"	*img_status18 texh	"48 16" }
-	confunc researchrunning19 { *txt_item19 color "0 1 0 1" *img_status19 texl	"32 0"	*img_status19 texh	"48 16" }
-	confunc researchrunning20 { *txt_item20 color "0 1 0 1" *img_status20 texl	"32 0"	*img_status20 texh	"48 16" }
-	confunc researchrunning21 { *txt_item21 color "0 1 0 1" *img_status21 texl	"32 0"	*img_status21 texh	"48 16" }
-	confunc researchrunning22 { *txt_item22 color "0 1 0 1" *img_status22 texl	"32 0"	*img_status22 texh	"48 16" }
-	confunc researchrunning23 { *txt_item23 color "0 1 0 1" *img_status23 texl	"32 0"	*img_status23 texh	"48 16" }
-	confunc researchrunning24 { *txt_item24 color "0 1 0 1" *img_status24 texl	"32 0"	*img_status24 texh	"48 16" }
-	confunc researchrunning25 { *txt_item25 color "0 1 0 1" *img_status25 texl	"32 0"	*img_status25 texh	"48 16" }
-	confunc researchrunning26 { *txt_item26 color "0 1 0 1" *img_status26 texl	"32 0"	*img_status26 texh	"48 16" }
-	confunc researchrunning27 { *txt_item27 color "0 1 0 1" *img_status27 texl	"32 0"	*img_status27 texh	"48 16" }
+	/**
+	 * @param[in] <1> Item row
+	 */
+	confunc researchrunning {
+		*txt_item<1>  color "0 1 0 1"
+		*img_status<1> texl	"32 0"
+		*img_status<1> texh	"48 16"
+	}
 
-	confunc researchpaused0  { *txt_item0  color ".78 .78 0 1" *img_status0 texl	"48 0"	*img_status0 texh	"64 16" }
-	confunc researchpaused1  { *txt_item1  color ".78 .78 0 1" *img_status1 texl	"48 0"	*img_status1 texh	"64 16" }
-	confunc researchpaused2  { *txt_item2  color ".78 .78 0 1" *img_status2 texl	"48 0"	*img_status2 texh	"64 16" }
-	confunc researchpaused3  { *txt_item3  color ".78 .78 0 1" *img_status3 texl	"48 0"	*img_status3 texh	"64 16" }
-	confunc researchpaused4  { *txt_item4  color ".78 .78 0 1" *img_status4 texl	"48 0"	*img_status4 texh	"64 16" }
-	confunc researchpaused5  { *txt_item5  color ".78 .78 0 1" *img_status5 texl	"48 0"	*img_status5 texh	"64 16" }
-	confunc researchpaused6  { *txt_item6  color ".78 .78 0 1" *img_status6 texl	"48 0"	*img_status6 texh	"64 16" }
-	confunc researchpaused7  { *txt_item7  color ".78 .78 0 1" *img_status7 texl	"48 0"	*img_status7 texh	"64 16" }
-	confunc researchpaused8  { *txt_item8  color ".78 .78 0 1" *img_status8 texl	"48 0"	*img_status8 texh	"64 16" }
-	confunc researchpaused9  { *txt_item9  color ".78 .78 0 1" *img_status9 texl	"48 0"	*img_status9 texh	"64 16" }
-	confunc researchpaused10 { *txt_item10 color ".78 .78 0 1" *img_status10 texl	"48 0"	*img_status10 texh	"64 16" }
-	confunc researchpaused11 { *txt_item11 color ".78 .78 0 1" *img_status11 texl	"48 0"	*img_status11 texh	"64 16" }
-	confunc researchpaused12 { *txt_item12 color ".78 .78 0 1" *img_status12 texl	"48 0"	*img_status12 texh	"64 16" }
-	confunc researchpaused13 { *txt_item13 color ".78 .78 0 1" *img_status13 texl	"48 0"	*img_status13 texh	"64 16" }
-	confunc researchpaused14 { *txt_item14 color ".78 .78 0 1" *img_status14 texl	"48 0"	*img_status14 texh	"64 16" }
-	confunc researchpaused15 { *txt_item15 color ".78 .78 0 1" *img_status15 texl	"48 0"	*img_status15 texh	"64 16" }
-	confunc researchpaused16 { *txt_item16 color ".78 .78 0 1" *img_status16 texl	"48 0"	*img_status16 texh	"64 16" }
-	confunc researchpaused17 { *txt_item17 color ".78 .78 0 1" *img_status17 texl	"48 0"	*img_status17 texh	"64 16" }
-	confunc researchpaused18 { *txt_item18 color ".78 .78 0 1" *img_status18 texl	"48 0"	*img_status18 texh	"64 16" }
-	confunc researchpaused19 { *txt_item19 color ".78 .78 0 1" *img_status19 texl	"48 0"	*img_status19 texh	"64 16" }
-	confunc researchpaused20 { *txt_item20 color ".78 .78 0 1" *img_status20 texl	"48 0"	*img_status20 texh	"64 16" }
-	confunc researchpaused21 { *txt_item21 color ".78 .78 0 1" *img_status21 texl	"48 0"	*img_status21 texh	"64 16" }
-	confunc researchpaused22 { *txt_item22 color ".78 .78 0 1" *img_status22 texl	"48 0"	*img_status22 texh	"64 16" }
-	confunc researchpaused23 { *txt_item23 color ".78 .78 0 1" *img_status23 texl	"48 0"	*img_status23 texh	"64 16" }
-	confunc researchpaused24 { *txt_item24 color ".78 .78 0 1" *img_status24 texl	"48 0"	*img_status24 texh	"64 16" }
-	confunc researchpaused25 { *txt_item25 color ".78 .78 0 1" *img_status25 texl	"48 0"	*img_status25 texh	"64 16" }
-	confunc researchpaused26 { *txt_item26 color ".78 .78 0 1" *img_status26 texl	"48 0"	*img_status26 texh	"64 16" }
-	confunc researchpaused27 { *txt_item27 color ".78 .78 0 1" *img_status27 texl	"48 0"	*img_status27 texh	"64 16" }
+	/**
+	 * @param[in] <1> Item row
+	 */
+	confunc researchpaused {
+		*txt_item<1>  color ".78 .78 0 1"
+		*img_status<1> texl	"48 0"
+		*img_status<1> texh	"64 16"
+	}
 
-	confunc researchunresearchable0  { *txt_item0  color ".27 .27 .27 1" *img_status0 texl	"48 16"	*img_status0 texh	"64 32" }
-	confunc researchunresearchable1  { *txt_item1  color ".27 .27 .27 1" *img_status1 texl	"48 16"	*img_status1 texh	"64 32" }
-	confunc researchunresearchable2  { *txt_item2  color ".27 .27 .27 1" *img_status2 texl	"48 16"	*img_status2 texh	"64 32" }
-	confunc researchunresearchable3  { *txt_item3  color ".27 .27 .27 1" *img_status3 texl	"48 16"	*img_status3 texh	"64 32" }
-	confunc researchunresearchable4  { *txt_item4  color ".27 .27 .27 1" *img_status4 texl	"48 16"	*img_status4 texh	"64 32" }
-	confunc researchunresearchable5  { *txt_item5  color ".27 .27 .27 1" *img_status5 texl	"48 16"	*img_status5 texh	"64 32" }
-	confunc researchunresearchable6  { *txt_item6  color ".27 .27 .27 1" *img_status6 texl	"48 16"	*img_status6 texh	"64 32" }
-	confunc researchunresearchable7  { *txt_item7  color ".27 .27 .27 1" *img_status7 texl	"48 16"	*img_status7 texh	"64 32" }
-	confunc researchunresearchable8  { *txt_item8  color ".27 .27 .27 1" *img_status8 texl	"48 16"	*img_status8 texh	"64 32" }
-	confunc researchunresearchable9  { *txt_item9  color ".27 .27 .27 1" *img_status9 texl	"48 16"	*img_status9 texh	"64 32" }
-	confunc researchunresearchable10 { *txt_item10 color ".27 .27 .27 1" *img_status10 texl	"48 16"	*img_status10 texh	"64 32" }
-	confunc researchunresearchable11 { *txt_item11 color ".27 .27 .27 1" *img_status11 texl	"48 16"	*img_status11 texh	"64 32" }
-	confunc researchunresearchable12 { *txt_item12 color ".27 .27 .27 1" *img_status12 texl	"48 16"	*img_status12 texh	"64 32" }
-	confunc researchunresearchable13 { *txt_item13 color ".27 .27 .27 1" *img_status13 texl	"48 16"	*img_status13 texh	"64 32" }
-	confunc researchunresearchable14 { *txt_item14 color ".27 .27 .27 1" *img_status14 texl	"48 16"	*img_status14 texh	"64 32" }
-	confunc researchunresearchable15 { *txt_item15 color ".27 .27 .27 1" *img_status15 texl	"48 16"	*img_status15 texh	"64 32" }
-	confunc researchunresearchable16 { *txt_item16 color ".27 .27 .27 1" *img_status16 texl	"48 16"	*img_status16 texh	"64 32" }
-	confunc researchunresearchable17 { *txt_item17 color ".27 .27 .27 1" *img_status17 texl	"48 16"	*img_status17 texh	"64 32" }
-	confunc researchunresearchable18 { *txt_item18 color ".27 .27 .27 1" *img_status18 texl	"48 16"	*img_status18 texh	"64 32" }
-	confunc researchunresearchable19 { *txt_item19 color ".27 .27 .27 1" *img_status19 texl	"48 16"	*img_status19 texh	"64 32" }
-	confunc researchunresearchable20 { *txt_item20 color ".27 .27 .27 1" *img_status20 texl	"48 16"	*img_status20 texh	"64 32" }
-	confunc researchunresearchable21 { *txt_item21 color ".27 .27 .27 1" *img_status21 texl	"48 16"	*img_status21 texh	"64 32" }
-	confunc researchunresearchable22 { *txt_item22 color ".27 .27 .27 1" *img_status22 texl	"48 16"	*img_status22 texh	"64 32" }
-	confunc researchunresearchable23 { *txt_item23 color ".27 .27 .27 1" *img_status23 texl	"48 16"	*img_status23 texh	"64 32" }
-	confunc researchunresearchable24 { *txt_item24 color ".27 .27 .27 1" *img_status24 texl	"48 16"	*img_status24 texh	"64 32" }
-	confunc researchunresearchable25 { *txt_item25 color ".27 .27 .27 1" *img_status25 texl	"48 16"	*img_status25 texh	"64 32" }
-	confunc researchunresearchable26 { *txt_item26 color ".27 .27 .27 1" *img_status26 texl	"48 16"	*img_status26 texh	"64 32" }
-	confunc researchunresearchable27 { *txt_item27 color ".27 .27 .27 1" *img_status27 texl	"48 16"	*img_status27 texh	"64 32" }
+	/**
+	 * @param[in] <1> Item row
+	 */
+	confunc researchunresearchable {
+		*txt_item<1>  color ".27 .27 .27 1"
+		*img_status<1> texl	"48 16"
+		*img_status<1> texh	"64 32"
+	}
 
 	pic img_status0	{ tooltip "*cvar mn_researchstatus0"	pos	"30 40"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
 	string txt_item0	{ string "*cvar mn_researchitem0"		pos "50 40"		color "0 .78 0 1"	size "275 16"	click { cmd "research_select 0;" } }
