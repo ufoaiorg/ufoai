@@ -702,9 +702,9 @@ static void MSO_OptionsClick_f(void)
 /**
  * @brief Saves actual settings into backup settings variable.
  */
-static void MSO_BackupSettings_f(void)
+static void MSO_BackupSettings_f (void)
 {
-	memcpy(backupMessageSettings,messageSettings,sizeof(backupMessageSettings));
+	memcpy(backupMessageSettings, messageSettings, sizeof(backupMessageSettings));
 }
 
 /**
@@ -712,9 +712,9 @@ static void MSO_BackupSettings_f(void)
  * @note message options are caused to be re-initialized (for menu display)
  * @sa MSO_Init_f
  */
-static void MSO_RestoreSettings_f(void)
+static void MSO_RestoreSettings_f (void)
 {
-	memcpy(messageSettings,backupMessageSettings,sizeof(messageSettings));
+	memcpy(messageSettings, backupMessageSettings, sizeof(messageSettings));
 	messageOptionsInitialized = qfalse;
 }
 
@@ -948,5 +948,5 @@ void MN_MessageInit (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_clear_messagelist", CL_DeleteMessages_f, "Clears messagelist");
 #endif
-	memset(backupMessageSettings,1,sizeof(backupMessageSettings));
+	memset(backupMessageSettings, 1, sizeof(backupMessageSettings));
 }

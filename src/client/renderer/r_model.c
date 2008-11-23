@@ -106,7 +106,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 
 	/* search the currently loaded models */
 	for (i = 0, mod = r_models; i < r_numModels; i++, mod++) {
-		if (!mod->name[0])
+		if (mod->name[0] == '\0')
 			continue;
 		if (!Q_strcmp(mod->name, name))
 			return mod;
@@ -126,7 +126,6 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 
 	memset(mod, 0, sizeof(*mod));
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
-/*	Com_DPrintf(DEBUG_RENDERER, "name: %s\n", name); */
 
 	/* load the file */
 	modfilelen = FS_LoadFile(mod->name, &buf);
@@ -201,7 +200,7 @@ model_t *R_RegisterModelShort (const char *name)
 
 		while (mod_extensions[i]) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
-			mod = R_ModForName(name, qfalse);
+			mod = R_ModForName(filename, qfalse);
 			if (mod)
 				return mod;
 			i++;
