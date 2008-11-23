@@ -648,7 +648,7 @@ item bomb1
 	weapon		false
 	type		melee
 	animationindex	2
-	shape		"0 0 2 1"
+	shape		"0 0 2 2"
 	center		"0 0 0"
 	scale		1.5
 	size		15
@@ -669,7 +669,7 @@ item bomb2
 	weapon		false
 	type		melee
 	animationindex	2
-	shape		"0 0 2 1"
+	shape		"0 0 2 2"
 	center		"0 0 0"
 	scale		1.5
 	notonmarket	true
