@@ -3942,12 +3942,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
-#if 0
 			aircraft->radar.trackingRange = MSG_ReadShort(sb);
-#endif
-#if 1
-			aircraft->radar.trackingRange = RADAR_AIRCRAFTTRACKINGRANGE;
-#endif
 			aircraft->route.numPoints = MSG_ReadShort(sb);
 			aircraft->route.distance = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.numPoints; l++)
@@ -3997,15 +3992,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		}
 
-#if 0
 		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
-#endif
-#if 1
-		{
-			int temp = MSG_ReadShort(sb);
-			RADAR_Initialise(&b->radar, temp, temp * 1.4, B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
-		}
-#endif
+
 		/* Alien Containment. */
 
 		/* Fill Alien Containment with default values like the tech pointer. */

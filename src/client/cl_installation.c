@@ -797,12 +797,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->installationStatus = MSG_ReadByte(sb);
 		inst->installationDamage = MSG_ReadShort(sb);
 		inst->alienInterest = MSG_ReadFloat(sb);
-#if 0
 		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), MSG_ReadShort(sb), 1.0f, qtrue);
-#endif
-#if 1
-		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), 14.0, 1.0f, qtrue);
-#endif
 		inst->buildStart = MSG_ReadLong(sb);
 
 		/* read battery slots */
