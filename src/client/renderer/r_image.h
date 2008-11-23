@@ -61,15 +61,12 @@ typedef struct image_s {
 	imagetype_t type;
 	int width, height;					/**< source image dimensions */
 	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
-	int registration_sequence;			/**< 0 = free */
 	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
 	unsigned int texnum;				/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
 	struct image_s *normalmap;			/**< normalmap texture  */
 } image_t;
-
-extern int registration_sequence;
 
 #define MAX_GL_TEXTURES		1024
 #define MAX_GL_LIGHTMAPS	256
@@ -91,7 +88,7 @@ void R_SoftenTexture(byte *in, int width, int height, int bpp);
 void R_ImageList_f(void);
 void R_InitImages(void);
 void R_ShutdownImages(void);
-void R_FreeUnusedImages(void);
+void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
 void R_CalcAndUploadDayAndNightTexture(float q);
 void R_FilterTexture(unsigned *in, int width, int height, imagetype_t type);

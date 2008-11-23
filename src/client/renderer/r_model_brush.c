@@ -978,8 +978,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	assert(mapName);
 
-	/* next registration sequence */
-	registration_sequence++;
+	R_FreeWorldImages();
 
 	if (*mapName == '+')
 		R_LoadMaterials(mapName + 1);

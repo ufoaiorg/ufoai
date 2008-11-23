@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 image_t r_images[MAX_GL_TEXTURES];
 int r_numImages;
-int registration_sequence;
 
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
@@ -1573,7 +1572,6 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image = &r_images[i];
 	image->has_alpha = qfalse;
 	image->type = type;
-	image->registration_sequence = registration_sequence;
 	image->width = width;
 	image->height = height;
 	image->texnum = i + 1;
@@ -1643,10 +1641,8 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 	/* look for it */
 	for (i = 0, image = r_images; i < r_numImages; i++, image++)
-		if (!Q_strncmp(lname, image->name, MAX_QPATH)) {
-			image->registration_sequence = registration_sequence;
+		if (!Q_strncmp(lname, image->name, MAX_QPATH))
 			return image;
-		}
 
 	loader = imageLoader;
 	while (loader->load) {
@@ -1681,7 +1677,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
  * @brief Any image that was not touched on this registration sequence will be freed
  * @sa R_ShutdownImages
  */
-void R_FreeUnusedImages (void)
+void R_FreeWorldImages (void)
 {
 	int i;
 	image_t *image;
@@ -1691,9 +1687,7 @@ void R_FreeUnusedImages (void)
 		if (!image->texnum)
 			continue;			/* free image slot */
 		if (image->type < it_world)
-			continue;			/* fix this! don't free pics */
-		if (image->registration_sequence == registration_sequence)
-			continue;			/* used this sequence */
+			continue;			/* keep them */
 
 		/* free it */
 		glDeleteTextures(1, (GLuint *) &image->texnum);
@@ -1706,7 +1700,6 @@ void R_InitImages (void)
 {
 	int i;
 
-	registration_sequence = 1;
 	r_numImages = 0;
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 	if (!r_dayandnightTexture)
@@ -1722,7 +1715,7 @@ void R_InitImages (void)
 }
 
 /**
- * @sa R_FreeUnusedImages
+ * @sa R_FreeWorldImages
  */
 void R_ShutdownImages (void)
 {

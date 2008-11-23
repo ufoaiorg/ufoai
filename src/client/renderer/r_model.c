@@ -179,23 +179,7 @@ static model_t *R_RegisterModel (const char *name)
 	model_t *mod;
 	int i;
 
-	mod = R_ModForName(name, qfalse);
-	if (mod) {
-		/* register any images used by the models */
-		switch (mod->type) {
-		case mod_alias_dpm:
-		case mod_alias_md2:
-		case mod_alias_md3:
-			break;
-		case mod_bsp:
-			for (i = 0; i < mod->bsp.numtexinfo; i++)
-				mod->bsp.texinfo[i].image->registration_sequence = registration_sequence;
-			break;
-		default:
-			break;
-		}
-	}
-	return mod;
+	return R_ModForName(name, qfalse);
 }
 
 /**
@@ -248,7 +232,6 @@ model_t *R_RegisterModelShort (const char *name)
  */
 void R_ModEndLoading (void)
 {
-	R_FreeUnusedImages();
 }
 
 #define MEM_TAG_STATIC_MODELS 1
@@ -256,7 +239,7 @@ void R_ModEndLoading (void)
  * @brief After all static models are loaded, switch the pool tag for these models
  * to not free them everytime R_ShutdownModels is called
  * @sa CL_InitAfter
- * @sa R_FreeUnusedImages
+ * @sa R_FreeWorldImages
  */
 void R_SwitchModelMemPoolTag (void)
 {
@@ -266,7 +249,7 @@ void R_SwitchModelMemPoolTag (void)
 	r_numModelsStatic = r_numModels;
 	Mem_ChangeTag(vid_modelPool, 0, MEM_TAG_STATIC_MODELS);
 
-	/* mark the static model textures as it_statis, thus R_FreeUnusedImages
+	/* mark the static model textures as it_static, thus R_FreeWorldImages
 	 * won't free them */
 	for (i = 0, mod = r_models; i < r_numModelsStatic; i++, mod++) {
 		for (j = 0; j < mod->alias.num_meshes; j++) {
