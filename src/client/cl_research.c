@@ -1272,6 +1272,7 @@ static void RS_ShowPedia_f (void)
  * @param[in] updateMenu True if menu should be update, false if only research status of base is needed.
  * @note See menu_research.ufo for the layout/called functions.
  * @todo Display free space in all labs in the current base for each item.
+ * @todo split update of the GUI and update of the internal data (RS_PostLoadInit must not update GUI)
  */
 void RS_UpdateData (base_t* base, qboolean updateMenu)
 {
