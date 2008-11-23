@@ -863,3 +863,40 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 		return qfalse;
 	}
 }
+
+#ifdef DEBUG
+qboolean INV_ItemsSanityCheck (void)
+{
+	int i;
+	qboolean result = qtrue;
+
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *item = &csi.ods[i];
+
+		/* Warn if item has no size set. */
+		if (item->size <= 0 && !(INV_ItemMatchesFilter(item, FILTER_DUMMY) && item->notOnMarket)) {
+			result = qfalse;
+			Com_Printf("INV_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
+		}
+
+		/* Warn if no price is set. */
+		if (item->price <= 0 && !item->notOnMarket) {
+			result = qfalse;
+			Com_Printf("INV_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
+		}
+
+		if (item->price > 0 && item->notOnMarket && !PR_ItemIsProduceable(item)) {
+			result = qfalse;
+			Com_Printf("INV_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
+		}
+
+		/* extension and headgear are mutual exclusive */
+		if (item->extension && item->headgear) {
+			result = qfalse;
+			Com_Printf("INV_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
+		}
+	}
+
+	return result;
+}
+#endif

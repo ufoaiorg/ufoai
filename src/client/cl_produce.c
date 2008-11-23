@@ -1495,6 +1495,17 @@ static void PR_ProductionDown_f (void)
 }
 
 /**
+ * @brief check if an item is producable.
+ * @param[in] item Pointer to the item that should be checked.
+ */
+qboolean PR_ItemIsProduceable (const objDef_t const *item)
+{
+	assert(item);
+
+	return !(item->tech && item->tech->produceTime == -1);
+}
+
+/**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_InitStartup resp. CL_InitLocal

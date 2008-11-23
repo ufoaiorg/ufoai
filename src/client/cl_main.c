@@ -1773,7 +1773,7 @@ static const sanity_functions_t sanity_functions[] = {
 	{AIR_ScriptSanityCheck, "aircraft"},
 	{MN_ScriptSanityCheck, "menu"},
 #ifdef DEBUG
-	{Com_ItemsSanityCheck, "items"},
+	{INV_ItemsSanityCheck, "items"},
 #endif
 
 	{NULL, NULL}

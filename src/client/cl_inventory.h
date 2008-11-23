@@ -69,6 +69,7 @@ void INV_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildin
 
 #ifdef DEBUG
 void INV_InventoryList_f(void);
+qboolean INV_ItemsSanityCheck(void);
 #endif
 
 #endif /* CLIENT_CL_INVENTORY_H */

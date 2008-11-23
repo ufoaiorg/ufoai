@@ -3994,7 +3994,7 @@ tech rs_base_ammo_AA51
 
 	provides	base_ammo_AA51
 	time		0
-	producetime	12
+	producetime	-1
 
 	image	"techs/base_ammo_AA51"
 }

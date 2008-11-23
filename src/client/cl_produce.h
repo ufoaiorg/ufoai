@@ -73,5 +73,6 @@ void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 void PR_Init(void);
 void PR_UpdateProductionCap(struct base_s *base);
+qboolean PR_ItemIsProduceable(const objDef_t const *item);
 
 #endif /* CLIENT_CL_PROOUCE */

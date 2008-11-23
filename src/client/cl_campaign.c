@@ -3168,7 +3168,9 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 		break;
 	}
 
-	/* look for all available alien equipement definitions */
+	/* look for all available alien equipement definitions
+	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
+	 * when you encounter it */
 	for (i = 0; i < csi.numEDs; i++) {
 		if (mission->initialOverallInterest <= csi.eds[i].maxInterest &&
 			mission->initialOverallInterest >= csi.eds[i].minInterest &&

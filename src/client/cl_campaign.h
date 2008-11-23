@@ -77,7 +77,7 @@ typedef enum mapType_s {
 	MAPTYPE_MAX
 } mapType_t;
 
-/** possible alien teams type */
+/** @brief possible alien teams type */
 typedef enum alienTeamType_s {
 	ALIENTEAM_DEFAULT,
 	ALIENTEAM_XVI,

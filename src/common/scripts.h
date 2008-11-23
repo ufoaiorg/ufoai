@@ -300,6 +300,5 @@ mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);
 void Com_PrecacheCharacterModels(void);
-qboolean Com_ItemsSanityCheck(void);
 
 #endif /* SCRIPTS_H */
