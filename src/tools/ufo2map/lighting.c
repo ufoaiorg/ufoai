@@ -27,10 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "bsp.h"
 #include "../../common/tracing.h"
 
-patch_t *face_patches[MAX_MAP_FACES];
-patch_t patches[MAX_PATCHES];
-unsigned num_patches;
-
 void LightWorld (void)
 {
 	if (curTile->numnodes == 0 || curTile->numfaces == 0)
@@ -46,9 +42,9 @@ void LightWorld (void)
 	BuildPatches();
 
 	/* subdivide patches to a maximum dimension */
-	SubdividePatches(num_patches);
+	SubdividePatches();
 
-	/* create directlights out of patches and lights */
+	/* create lights out of patches and lights */
 	BuildLights();
 
 	/* patches are no longer needed */

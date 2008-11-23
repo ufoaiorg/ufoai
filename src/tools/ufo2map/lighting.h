@@ -47,13 +47,12 @@ extern patch_t *face_patches[MAX_MAP_FACES];
 /** for rotating bmodels */
 extern vec3_t face_offset[MAX_MAP_FACES];
 
-void LinkPlaneFaces(void);
 void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
 void BuildLights(void);
 
 void BuildPatches(void);
-void SubdividePatches(const int num);
+void SubdividePatches(void);
 void CalcTextureReflectivity(void);
 void LightWorld(void);
 void BuildVertexNormals(void);

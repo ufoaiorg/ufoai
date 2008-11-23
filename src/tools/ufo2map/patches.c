@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/tracing.h"
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
+patch_t *face_patches[MAX_MAP_FACES];
 
 /*
 ===================================================================
@@ -326,7 +327,7 @@ static void SubdividePatch(patch_t *patch)
  * @brief Iterate all of the head face patches, subdividing them as necessary.
  * @param[in] num The number of patches - the list will grow in @c DicePatch
  */
-void SubdividePatches (const int num)
+void SubdividePatches (void)
 {
 	int i;
 
