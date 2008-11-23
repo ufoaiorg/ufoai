@@ -63,6 +63,7 @@ typedef enum mn_s {
 	MN_WINDOWPANEL,
 	MN_BUTTON,
 	MN_WINDOW,
+	MN_VSCROLLBAR,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -75,6 +76,7 @@ typedef struct excludeRect_s {
 
 /* extradata struct */
 #include "m_node_abstractvalue.h"
+#include "m_node_abstractscrollbar.h"
 #include "m_node_linestrip.h"
 #include "m_node_model.h"
 #include "m_node_selectbox.h"
@@ -173,6 +175,7 @@ typedef struct menuNode_s {
 	/** union will contain all extradata for a node */
 	union {
 		abstractValueExtraData_t abstractvalue;
+		abstractScrollbarExtraData_t abstractscrollbar;
 		lineStripExtraData_t linestrip;	/**< List of lines to draw. (MN_LINESTRIP) */
 		modelExtraData_t model;
 		optionExtraData_t option;

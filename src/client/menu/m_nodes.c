@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_tbar.h"
 #include "m_node_text.h"
 #include "m_node_textentry.h"
+#include "m_node_vscrollbar.h"
 #include "m_node_windowpanel.h"
 
 extern menuNode_t *focusNode;
@@ -475,4 +476,5 @@ void MN_InitNodes (void)
 	MN_RegisterWindowPanelNode(nodeBehaviourList + MN_WINDOWPANEL);
 	MN_RegisterButtonNode(nodeBehaviourList + MN_BUTTON);
 	MN_RegisterWindowNode(nodeBehaviourList + MN_WINDOW);	/**< for conveniance, must not be used */
+	MN_RegisterVScrollbarNode(nodeBehaviourList + MN_VSCROLLBAR);
 }

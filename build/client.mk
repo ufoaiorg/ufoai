@@ -58,6 +58,7 @@ CLIENT_SRCS = \
 	client/menu/m_messages.c \
 	client/menu/m_nodes.c \
 	client/menu/m_node_abstractvalue.c \
+	client/menu/m_node_abstractscrollbar.c \
 	client/menu/m_node_bar.c \
 	client/menu/m_node_base.c \
 	client/menu/m_node_button.c \
@@ -80,6 +81,7 @@ CLIENT_SRCS = \
 	client/menu/m_node_tbar.c \
 	client/menu/m_node_text.c \
 	client/menu/m_node_textentry.c \
+	client/menu/m_node_vscrollbar.c \
 	client/menu/m_node_window.c \
 	client/menu/m_node_windowpanel.c \
 	client/menu/m_parse.c \

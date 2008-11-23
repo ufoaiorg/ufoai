@@ -242,6 +242,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_airfight.h" />
+		<Unit filename="..\..\src\client\cl_airfightmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_airfightmap.h" />
 		<Unit filename="..\..\src\client\cl_alienbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -326,10 +330,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_map.h" />
-		<Unit filename="..\..\src\client\cl_airfightmap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_airfightmap.h" />
 		<Unit filename="..\..\src\client\cl_mapfightequip.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -450,10 +450,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_messages.h" />
+		<Unit filename="..\..\src\client\menu\m_node_abstractscrollbar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_abstractscrollbar.h" />
 		<Unit filename="..\..\src\client\menu\m_node_abstractvalue.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_abstractvalue.h" />
+		<Unit filename="..\..\src\client\menu\m_node_airfightmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_airfightmap.h" />
 		<Unit filename="..\..\src\client\menu\m_node_bar.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -502,10 +510,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_map.h" />
-		<Unit filename="..\..\src\client\menu\m_node_airfightmap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\m_node_airfightmap.h" />
 		<Unit filename="..\..\src\client\menu\m_node_model.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -542,6 +546,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_textentry.h" />
+		<Unit filename="..\..\src\client\menu\m_node_vscrollbar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_vscrollbar.h" />
 		<Unit filename="..\..\src\client\menu\m_node_window.c">
 			<Option compilerVar="CC" />
 		</Unit>
