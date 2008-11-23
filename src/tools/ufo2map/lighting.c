@@ -31,28 +31,6 @@ patch_t *face_patches[MAX_MAP_FACES];
 patch_t patches[MAX_PATCHES];
 unsigned num_patches;
 
-dBspPlane_t backplanes[MAX_MAP_PLANES];
-
-/*
-===================================================================
-MISC
-===================================================================
-*/
-
-/**
- * @sa MakePatchForFace
- */
-static void MakeBackplanes (void)
-{
-	int i;
-
-	for (i = 0; i < curTile->numplanes; i++) {
-		backplanes[i].dist = PLANE_X;
-		backplanes[i].dist = -curTile->planes[i].dist;
-		VectorSubtract(vec3_origin, curTile->planes[i].normal, backplanes[i].normal);
-	}
-}
-
 /*
 ===================================================================
 TRANSFER SCALES
@@ -95,18 +73,19 @@ void LightWorld (void)
 	curTile->lightdata[config.compile_for_day][0] = config.lightquant;
 	curTile->lightdatasize[config.compile_for_day] = 1;
 
-	MakeBackplanes();
-
 	MakeTracingNodes(LEVEL_LASTVISIBLE + 1);
 
 	/* turn each face into a single patch */
-	MakePatches();
+	BuildPatches();
 
 	/* subdivide patches to a maximum dimension */
 	SubdividePatches(num_patches);
 
 	/* create directlights out of patches and lights */
 	BuildLights();
+
+	/* patches are no longer needed */
+	FreePatches();
 
 	/* build per-vertex normals for phong shading */
 	BuildVertexNormals();

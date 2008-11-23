@@ -153,7 +153,7 @@ static void CalcLightinfoExtents (lightinfo_t *l)
 /**
  * @brief Fills in texorg, worldtotex. and textoworld
  */
-static void CalcFaceVectors (lightinfo_t *l)
+static void CalcLightinfoVectors (lightinfo_t *l)
 {
 	const dBspTexinfo_t *tex;
 	int i;
@@ -283,17 +283,15 @@ typedef struct light_s {
 	struct light_s *next;
 	emittype_t	type;
 
-	float		intensity;
+	float		intensity;	/**< brightness */
 	vec3_t		origin;
 	vec3_t		color;
-	vec3_t		normal;		/**< for surfaces and spotlights */
-	float		stopdot;	/**< for spotlights */
+	vec3_t		normal;		/**< spotlight direction */
+	float		stopdot;	/**< spotlights cone */
 } light_t;
 
 static light_t *lights[2];
 static int numlights[2];
-
-#define	DIRECT_LIGHT	3
 
 /**
  * @brief Create lights out of patches and lights
@@ -302,34 +300,31 @@ static int numlights[2];
 void BuildLights (void)
 {
 	int i;
-	light_t *dl;
-	const dBspLeaf_t *leaf;
+	light_t *l;
 
 	/* surfaces */
-	for (i = 0; i < num_patches; i++) {
-		patch_t *p = &patches[i];
+	for(i = 0; i < MAX_MAP_FACES; i++){
+		patch_t *p = face_patches[i];
+		while (p) {  /* iterate subdivided patches */
+			if (VectorCompare(p->light, vec3_origin))
+				continue;
 
-		if (p->totallight[0] < DIRECT_LIGHT &&
-				p->totallight[1] < DIRECT_LIGHT &&
-				p->totallight[2] < DIRECT_LIGHT)
-			continue;
+			numlights[config.compile_for_day]++;
+			l = malloc(sizeof(*l));
+			memset(l, 0, sizeof(*l));
 
-		numlights[config.compile_for_day]++;
-		dl = malloc(sizeof(*dl));
-		memset(dl, 0, sizeof(*dl));
+			VectorCopy(p->origin, l->origin);
 
-		VectorCopy(p->origin, dl->origin);
+			l->next = lights[config.compile_for_day];
+			lights[config.compile_for_day] = l;
 
-		leaf = Light_PointInLeaf(dl->origin);
-		dl->next = lights[config.compile_for_day];
-		lights[config.compile_for_day] = dl;
+			l->type = emit_surface;
 
-		dl->type = emit_surface;
-		VectorCopy(p->plane->normal, dl->normal);
+			l->intensity = ColorNormalize(p->light, l->color);
+			l->intensity *= p->area * config.direct_scale;
 
-		dl->intensity = ColorNormalize(p->totallight, dl->color);
-		dl->intensity *= p->area * config.direct_scale;
-		VectorClear(p->totallight);	/* all sent now */
+			p = p->next;
+		}
 	}
 
 	/* entities (skip the world) */
@@ -350,57 +345,57 @@ void BuildLights (void)
 		}
 
 		numlights[config.compile_for_day]++;
-		dl = malloc(sizeof(*dl));
-		memset(dl, 0, sizeof(*dl));
+		l = malloc(sizeof(*l));
+		memset(l, 0, sizeof(*l));
 
-		GetVectorForKey(e, "origin", dl->origin);
+		GetVectorForKey(e, "origin", l->origin);
 
 		/* link in */
-		dl->next = lights[config.compile_for_day];
-		lights[config.compile_for_day] = dl;
+		l->next = lights[config.compile_for_day];
+		lights[config.compile_for_day] = l;
 
 		intensity = FloatForKey(e, "light");
 		if (!intensity)
 			intensity = 300;
 		color = ValueForKey(e, "_color");
 		if (color && color[0]){
-			sscanf(color, "%f %f %f", &dl->color[0], &dl->color[1], &dl->color[2]);
-			ColorNormalize(dl->color, dl->color);
+			sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]);
+			ColorNormalize(l->color, l->color);
 		} else
-			dl->color[0] = dl->color[1] = dl->color[2] = 1.0;
-		dl->intensity = intensity * config.entity_scale;
-		dl->type = emit_point;
+			l->color[0] = l->color[1] = l->color[2] = 1.0;
+		l->intensity = intensity * config.entity_scale;
+		l->type = emit_point;
 
 		target = ValueForKey(e, "target");
 		if (!strcmp(name, "light_spot") || target[0]) {
-			dl->type = emit_spotlight;
-			dl->stopdot = FloatForKey(e, "_cone");
-			if (!dl->stopdot)
-				dl->stopdot = 10;
-			dl->stopdot = cos(dl->stopdot / 180.0f * M_PI);
+			l->type = emit_spotlight;
+			l->stopdot = FloatForKey(e, "_cone");
+			if (!l->stopdot)
+				l->stopdot = 10;
+			l->stopdot = cos(l->stopdot / 180.0f * M_PI);
 			if (target[0]) {	/* point towards target */
 				entity_t *e2 = FindTargetEntity(target);
 				if (!e2)
 					Com_Printf("WARNING: light at (%i %i %i) has missing target '%s' - e.g. create an info_null that has a 'targetname' set to '%s'\n",
-						(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2], target, target);
+						(int)l->origin[0], (int)l->origin[1], (int)l->origin[2], target, target);
 				else {
 					vec3_t dest;
 					GetVectorForKey(e2, "origin", dest);
-					VectorSubtract(dest, dl->origin, dl->normal);
-					VectorNormalize(dl->normal);
+					VectorSubtract(dest, l->origin, l->normal);
+					VectorNormalize(l->normal);
 				}
 			} else {	/* point down angle */
 				const float angle = FloatForKey(e, "angle");
 				if (angle == ANGLE_UP) {
-					dl->normal[0] = dl->normal[1] = 0;
-					dl->normal[2] = 1;
+					l->normal[0] = l->normal[1] = 0;
+					l->normal[2] = 1;
 				} else if (angle == ANGLE_DOWN) {
-					dl->normal[0] = dl->normal[1] = 0;
-					dl->normal[2] = -1;
+					l->normal[0] = l->normal[1] = 0;
+					l->normal[2] = -1;
 				} else {
-					dl->normal[2] = 0;
-					dl->normal[0] = cos(angle / 180.0f * M_PI);
-					dl->normal[1] = sin(angle / 180.0f * M_PI);
+					l->normal[2] = 0;
+					l->normal[0] = cos(angle / 180.0f * M_PI);
+					l->normal[1] = sin(angle / 180.0f * M_PI);
 				}
 			}
 		}
@@ -456,8 +451,8 @@ void BuildLights (void)
  */
 static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale)
 {
-	vec3_t delta, light;
-	float dot;
+	vec3_t delta;
+	float dot, light;
 
 	/* add sun light */
 	if (!sun_intensity)
@@ -474,12 +469,14 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	if (TR_TestLineSingleTile(pos, delta))
 		return; /* occluded */
 
+	light = sun_intensity * dot * scale;
+
 	/* add some light to it */
-	VectorScale(sun_color, sun_intensity * dot * scale, light);
-	VectorAdd(sample, light, sample);
+	VectorMA(sample, light, sun_color, sample);
 
 	/* and accumulate the direction */
-	VectorMA(direction, VectorLength(light) * scale, sun_dir, direction);
+	VectorMix(normal, sun_dir, light / sun_intensity, delta);
+	VectorMA(direction, light * scale, sun_dir, direction);
 }
 
 
@@ -491,15 +488,13 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 	light_t *l;
 	vec3_t delta;
 	float dot, dot2;
-	float dist, halfDist;
-	float light, dir;
+	float dist;
 
 	for (l = lights[config.compile_for_day]; l; l = l->next) {
-		light = dir = 0.0;
+		float light = 0.0;
 
 		VectorSubtract(l->origin, pos, delta);
 		dist = VectorNormalize(delta);
-		halfDist = dist * 0.5;
 
 		dot = DotProduct(delta, normal);
 		if (dot <= 0.001)
@@ -509,50 +504,40 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 		case emit_point:
 			/* linear falloff */
 			light = (l->intensity - dist) * dot;
-			dir = (l->intensity - halfDist) * dot;
 			break;
 
 		case emit_surface:
 			/* exponential falloff */
-			dot2 = -DotProduct(delta, l->normal);
-			if (dot2 <= 0.001)
-				continue;	/* behind light surface */
-			light = (l->intensity / (dist * dist)) * dot * dot2;
-			dir = (l->intensity / (halfDist * halfDist)) * dot * dot2;
+			light = (l->intensity / (dist * dist)) * dot;
 			break;
 
 		case emit_spotlight:
 			/* linear falloff with cone */
 			dot2 = -DotProduct(delta, l->normal);
-			if (dot2 <= l->stopdot)
-				continue;	/* outside light cone */
-			light = (l->intensity - dist) * dot;
-			dir = (l->intensity - halfDist) * dot;
+			if (dot2 > l->stopdot) {
+				/* inside light cone */
+				light = (l->intensity - dist) * dot;
+			} else {
+				/* outside light cone */
+				light = (l->intensity - dist) * dot;
+			}
 			break;
 		default:
 			Sys_Error("Bad l->type");
 		}
 
-		if (light < 0.0)  /* clamp light */
-			light = 0.0;
-
-		if (dir < 0.0)  /* and direction */
-			dir = 0.0;
-
-		if (light == 0.0 && dir == 0.0)
+		if (light <= 0.0)  /* no light */
 			continue;
 
 		if (TR_TestLineSingleTile(pos, l->origin))
 			continue;	/* occluded */
 
-		light *= scale;
-		dir *= scale;
-
 		/* add some light to it */
-		VectorMA(sample, light, l->color, sample);
+		VectorMA(sample, light * scale, l->color, sample);
 
-		VectorMA(direction, dir, delta, direction);
-		VectorMA(direction, scale / dir, normal, direction);
+		/* and add some direction */
+		VectorMix(normal, delta, 2.0 * light / l->intensity, delta);
+		VectorMA(direction, light * scale, delta, direction);
 	}
 
 	GatherSampleSunlight(pos, normal, sample, direction, scale);
@@ -615,8 +600,8 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 
 /**
  * @brief Calculate per-vertex (instead of per-plane) normal vectors. This is done by
- * finding all of the faces which use a given vertex, and calculating an average
- * of their normal vectors.
+ * finding all of the faces which share a given vertex, and calculating a weighted
+ * average of their normals.
  */
 void BuildVertexNormals (void)
 {
@@ -690,7 +675,7 @@ static void SampleNormal (const lightinfo_t *l, const vec3_t pos, vec3_t normal)
 
 #define MAX_SAMPLES 5
 static const float sampleofs[MAX_SAMPLES][2] = {
-	{0.0, 0.0}, {-0.25, -0.25}, {0.25, -0.25}, {0.25, 0.25}, {-0.25, 0.25}
+	{0.0, 0.0}, {-0.125, -0.125}, {0.125, -0.125}, {0.125, 0.125}, {-0.125, 0.125}
 };
 
 #define CLAMP_DELUXEMAP_Z 0.5
@@ -755,7 +740,7 @@ void BuildFacelights (unsigned int facenum)
 		CalcLightinfoExtents(&l[i]);
 
 		/* and the lightmap texture vectors */
-		CalcFaceVectors(&l[i]);
+		CalcLightinfoVectors(&l[i]);
 
 		/* now generate all of the sample points */
 		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
@@ -806,11 +791,6 @@ void BuildFacelights (unsigned int facenum)
 			dir[2] = DotProduct(direction, normal);
 
 			VectorCopy(dir, direction);
-
-			if (direction[2] < CLAMP_DELUXEMAP_Z) {  /* clamp it */
-				direction[2] = CLAMP_DELUXEMAP_Z;
-				VectorNormalize(direction);
-			}
 		}
 	}
 
@@ -823,17 +803,6 @@ void BuildFacelights (unsigned int facenum)
 	/* free the sample positions for the face */
 	for (i = 0; i < numsamples; i++)
 		free(l[i].surfpt);
-
-	assert(face_patches[facenum]);
-	/* the light from DIRECT_LIGHTS is sent out, but the
-	 * texture itself should still be full bright */
-	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
-		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
-		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT) {
-		float *sample = fl->samples;
-		for (i = 0; i < l[0].numsurfpt; i++, sample += 3)
-			VectorAdd(sample, face_patches[facenum]->baselight, sample);
-	}
 }
 
 

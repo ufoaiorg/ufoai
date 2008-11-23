@@ -27,13 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
 
-/* created planes for origin offset */
-static int fakeplanes;
-
-static float totalarea;
-
-extern vec3_t face_offset[MAX_MAP_FACES];		/**< for rotating bmodels */
-
 /*
 ===================================================================
 TEXTURE LIGHT VALUES
@@ -45,16 +38,12 @@ void CalcTextureReflectivity (void)
 	int i, j, texels = 0;
 	char path[1024];
 	int color[3];
-	byte *pos;
-	float r;
 	miptex_t *mt;
 	qboolean loaded = qfalse;
 	const char *gamedir = FS_GameDir();
 
 	/* always set index 0 even if no textures */
-	texture_reflectivity[0][0] = 0.5;
-	texture_reflectivity[0][1] = 0.5;
-	texture_reflectivity[0][2] = 0.5;
+	VectorSet(texture_reflectivity[0], 0.5, 0.5, 0.5);
 
 	for (i = 0; i < curTile->numtexinfo; i++) {
 		/* see if an earlier texinfo already got the value */
@@ -64,7 +53,7 @@ void CalcTextureReflectivity (void)
 				break;
 			}
 		}
-		if (j != i)
+		if (j != i) /* earlier texinfo found, continue */
 			continue;
 
 		/* load the tga file */
@@ -75,7 +64,7 @@ void CalcTextureReflectivity (void)
 			color[0] = color[1] = color[2] = 0;
 
 			for (j = 0; j < texels; j++) {
-				pos = ((byte *)mt + mt->offsets[0]) + j * 4;
+				const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
 				color[0] += *pos++; /* r */
 				color[1] += *pos++; /* g */
 				color[2] += *pos++; /* b */
@@ -94,7 +83,7 @@ void CalcTextureReflectivity (void)
 				color[0] = color[1] = color[2] = 0;
 
 				for (j = 0; j < texels; j++) {
-					pos = ((byte *)mt + mt->offsets[0]) + j * 4;
+					const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
 					color[0] += *pos++; /* r */
 					color[1] += *pos++; /* g */
 					color[2] += *pos++; /* b */
@@ -111,20 +100,15 @@ void CalcTextureReflectivity (void)
 			texture_reflectivity[i][2] = 0.5;
 		} else {
 			for (j = 0; j < 3; j++) {
-				r = color[j] / texels / 255.0;
+				const float r = color[j] / texels / 255.0;
 				texture_reflectivity[i][j] = r;
 			}
 		}
 	}
 }
 
-/*
-=======================================================================
-MAKE FACES
-=======================================================================
-*/
 
-static winding_t *WindingFromFace (dBspFace_t *f)
+static winding_t *WindingFromFace (const dBspFace_t *f)
 {
 	int i, v;
 	dBspVertex_t *dv;
@@ -149,91 +133,60 @@ static winding_t *WindingFromFace (dBspFace_t *f)
 	return w;
 }
 
+static inline qboolean HasLight (const dBspFace_t *f)
+{
+	const dBspTexinfo_t *tex;
+
+	tex = &curTile->texinfo[f->texinfo];
+	return (tex->surfaceFlags & SURF_LIGHT) && tex->value;
+}
+
 /**
  * @brief Check for light emited by texture
  * @note Surface lights
  * @sa TexinfoForBrushTexture
  */
-static void BaseLightForFace (dBspFace_t *f, vec3_t color)
+static inline void EmissiveLight (patch_t *patch)
 {
-	const dBspTexinfo_t *tx;
+	if (HasLight(patch->face)) {
+		const dBspTexinfo_t *tex = &curTile->texinfo[patch->face->texinfo];
+		const vec_t *ref = texture_reflectivity[patch->face->texinfo];
 
-	/* check for light emited by texture */
-	tx = &curTile->texinfo[f->texinfo];
-	if (!(tx->surfaceFlags & SURF_LIGHT) || tx->value == 0) {
-		if (tx->surfaceFlags & SURF_LIGHT)
-			Com_Printf("Surface light has 0 intensity (%s).\n", tx->texture);
-		VectorClear(color);
-		return;
+		VectorScale(ref, tex->value, patch->light);
 	}
-
-	VectorScale(texture_reflectivity[f->texinfo], tx->value, color);
 }
 
-static void MakePatchForFace (int facenum, winding_t *w)
+static void BuildPatch (int fn, winding_t *w)
 {
-	dBspFace_t *f;
-	float area;
 	patch_t *patch;
-	dBspPlane_t *pl;
-	int i;
-	vec3_t color;
-	dBspLeaf_t *leaf;
+	dBspPlane_t *plane;
 
-	f = &curTile->faces[facenum];
+	patch = (patch_t *)malloc(sizeof(*patch));
 
-	area = WindingArea(w);
-	totalarea += area;
+	face_patches[fn] = patch;
 
-	patch = &patches[num_patches];
-	if (num_patches == MAX_PATCHES)
-		Sys_Error("num_patches == MAX_PATCHES");
-	patch->next = face_patches[facenum];
-	face_patches[facenum] = patch;
-
+	patch->face = &curTile->faces[fn];
 	patch->winding = w;
 
-	if (f->side)
-		patch->plane = &backplanes[f->planenum];
-	else
-		patch->plane = &curTile->planes[f->planenum];
+	/* resolve the normal */
+	plane = &curTile->planes[patch->face->planenum];
 
-	/* origin offset faces must create new planes (moving bmodels - e.g. func_door) */
-	if (VectorNotEmpty(face_offset[facenum])) {
-		if (curTile->numplanes + fakeplanes >= MAX_MAP_PLANES)
-			Sys_Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
-		pl = &curTile->planes[curTile->numplanes + fakeplanes];
-		fakeplanes++;
-		*pl = *(patch->plane);
-		pl->dist += DotProduct(face_offset[facenum], pl->normal);
-		patch->plane = pl;
-	}
+	if (patch->face->side)
+		VectorNegate(plane->normal, patch->normal);
+	else
+		VectorCopy(plane->normal, patch->normal);
 
 	WindingCenter(w, patch->origin);
-	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
-	leaf = Light_PointInLeaf(patch->origin);
 
-	patch->area = area;
-	if (patch->area <= 1)
-		patch->area = 1;
+	/* nudge the origin out along the normal */
+	VectorMA(patch->origin, 2.0, patch->normal, patch->origin);
 
-	VectorCopy(texture_reflectivity[f->texinfo], patch->reflectivity);
+	patch->area = WindingArea(w);
 
-	VectorClear(patch->baselight);
-	VectorClear(patch->totallight);
+	if (patch->area < 1.0)  /* clamp area */
+		patch->area = 1.0;
 
-	/* non-bmodel patches can emit light */
-	if (facenum < curTile->models[0].numfaces || (curTile->texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
-		BaseLightForFace(f, patch->baselight);
-
-		ColorNormalize(patch->reflectivity, color);
-
-		for (i = 0; i < 3; i++)
-			patch->baselight[i] *= color[i];
-
-		VectorCopy(patch->baselight, patch->totallight);
-	}
-	num_patches++;
+	EmissiveLight(patch);  /* surface light */
 }
 
 static entity_t *EntityForModel (int modnum)
@@ -254,37 +207,40 @@ static entity_t *EntityForModel (int modnum)
 }
 
 /**
- * @brief turn each face into a single patch
+ * @brief Create surface fragments for light-emitting surfaces so that light sources
+ * may be computed along them. This function is responsible for one
  */
-void MakePatches (void)
+void BuildPatches (void)
 {
 	int i, j, k;
+	winding_t *w;
 	vec3_t origin;
-
-	Verb_Printf(VERB_EXTRA, "%i faces\n", curTile->numfaces);
 
 	for (i = 0; i < curTile->nummodels; i++) {
 		const dBspModel_t *mod = &curTile->models[i];
 		const entity_t *ent = EntityForModel(i);
-		/* bmodels with origin brushes need to be offset into their
+		/* bmodels with origin brushes (like func_door) need to be offset into their
 		 * in-use position */
 		GetVectorForKey(ent, "origin", origin);
 
 		for (j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
 			dBspFace_t *f = &curTile->faces[facenum];
-			winding_t *w = WindingFromFace(f);
 
 			/* store the origin in case of moving bmodels (e.g. func_door) */
 			VectorCopy(origin, face_offset[facenum]);
 
+			if(!HasLight(f))  /* no light */
+				continue;
+
+			w = WindingFromFace(f);
+
 			for (k = 0; k < w->numpoints; k++)
 				VectorAdd(w->p[k], origin, w->p[k]);
-			MakePatchForFace(facenum, w);
+
+			BuildPatch(facenum, w);
 		}
 	}
-
-	Verb_Printf(VERB_EXTRA, "%i square feet\n", (int)(totalarea / 64));
 }
 
 /*
@@ -293,34 +249,37 @@ SUBDIVIDE
 =======================================================================
 */
 
-static void FinishSplit (patch_t *patch, patch_t *newp)
+#define PATCH_SUBDIVIDE 64
+
+static void FinishSubdividePatch (patch_t *patch, patch_t *newp)
 {
-	VectorCopy(patch->baselight, newp->baselight);
-	VectorCopy(patch->totallight, newp->totallight);
-	VectorCopy(patch->reflectivity, newp->reflectivity);
-	newp->plane = patch->plane;
+	VectorCopy(patch->normal, newp->normal);
+
+	VectorCopy(patch->light, newp->light);
 
 	patch->area = WindingArea(patch->winding);
+
+	if (patch->area < 1.0)
+		patch->area = 1.0;
+
 	newp->area = WindingArea(newp->winding);
 
-	if (patch->area <= 1)
-		patch->area = 1;
-	if (newp->area <= 1)
-		newp->area = 1;
+	if (newp->area < 1.0)
+		newp->area = 1.0;
 
 	WindingCenter(patch->winding, patch->origin);
-	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
-	Light_PointInLeaf(patch->origin);
+	/* nudge the patch origin out along the normal */
+	VectorMA(patch->origin, 2.0, patch->normal, patch->origin);
 
 	WindingCenter(newp->winding, newp->origin);
-	VectorAdd(newp->origin, newp->plane->normal, newp->origin);
-	Light_PointInLeaf(newp->origin);
+	/* nudge the patch origin out along the normal */
+	VectorMA(newp->origin, 2.0, newp->normal, newp->origin);
 }
 
 /**
  *	@brief Chops the patch by a global grid
  */
-static void DicePatch (patch_t *patch)
+static void SubdividePatch(patch_t *patch)
 {
 	winding_t *w, *o1, *o2;
 	vec3_t mins, maxs;
@@ -331,24 +290,25 @@ static void DicePatch (patch_t *patch)
 
 	w = patch->winding;
 	WindingBounds(w, mins, maxs);
-	for (i = 0; i < 3; i++)
-		if (floor((mins[i] + 1) / config.subdiv) < floor((maxs[i] - 1) / config.subdiv))
+
+	VectorClear(split);
+
+	for (i = 0; i < 3; i++) {
+		if (floor((mins[i] + 1) / PATCH_SUBDIVIDE) < floor((maxs[i] - 1) / PATCH_SUBDIVIDE)) {
+			split[i] = 1.0;
 			break;
+		}
+	}
 	/* no splitting needed */
 	if (i == 3)
 		return;
 
 	/* split the winding */
-	VectorCopy(vec3_origin, split);
-	split[i] = 1;
-	dist = config.subdiv * (1 + floor((mins[i] + 1) / config.subdiv));
+	dist = PATCH_SUBDIVIDE * (1 + floor((mins[i] + 1) / PATCH_SUBDIVIDE));
 	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
-	if (num_patches == MAX_PATCHES)
-		Sys_Error("MAX_PATCHES (%i)", num_patches);
-	newp = &patches[num_patches];
-	num_patches++;
+	newp = (patch_t *)malloc(sizeof(patch_t));
 
 	newp->next = patch->next;
 	patch->next = newp;
@@ -356,25 +316,41 @@ static void DicePatch (patch_t *patch)
 	patch->winding = o1;
 	newp->winding = o2;
 
-	FinishSplit(patch, newp);
+	FinishSubdividePatch(patch, newp);
 
-	DicePatch(patch);
-	DicePatch(newp);
+	SubdividePatch(patch);
+	SubdividePatch(newp);
 }
 
 /**
- * @brief subdivide patches to a maximum dimension
+ * @brief Iterate all of the head face patches, subdividing them as necessary.
  * @param[in] num The number of patches - the list will grow in @c DicePatch
  */
 void SubdividePatches (const int num)
 {
 	int i;
 
-	/* don't subdivide for lighting? */
-	if (config.subdiv < 1)
-		return;
+	for (i = 0; i < MAX_MAP_FACES; i++) {
+		patch_t *p = face_patches[i];
 
-	for (i = 0; i < num; i++)
-		DicePatch(&patches[i]);
-	Verb_Printf(VERB_EXTRA, "%i patches after subdivision\n", num_patches);
+		if (p)  /* break it up */
+			SubdividePatch(p);
+	}
+}
+
+/**
+ * @brief After light sources have been created, patches may be freed.
+ */
+void FreePatches (void)
+{
+	int i;
+
+	for (i = 0; i < MAX_MAP_FACES; i++) {
+		patch_t *p = face_patches[i];
+		while (p) {
+			patch_t *pnext = p->next;
+			free(p);
+			p = pnext;
+		}
+	}
 }

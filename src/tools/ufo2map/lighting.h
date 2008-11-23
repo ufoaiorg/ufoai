@@ -22,59 +22,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "common/shared.h"
 #include "common/cmdlib.h"
 #include "common/bspfile.h"
 #include "common/polylib.h"
 #include "common/imagelib.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
-/**
- * @note the sum of all tranfer->transfer values for a given patch
- * should equal exactly 0x10000, showing that all radiance
- * reaches other patches
- */
-typedef struct {
-	unsigned short	patch;
-	unsigned short	transfer;
-} transfer_t;
-
-
 #define	MAX_PATCHES	65000			/* larger will cause 32 bit overflows */
 
 typedef struct patch_s {
-	winding_t	*winding;
-	struct patch_s		*next;		/**< next in face */
-	int			numtransfers;
-	transfer_t	*transfers;
+	dBspFace_t 		*face;
+	winding_t		*winding;
 
-	vec3_t		origin;
-	dBspPlane_t	*plane;
+	vec3_t			origin;
+	vec3_t			normal;
 
-	vec3_t		totallight;			/**< accumulated by lighting stage
-									 * does NOT include light
-									 * accounted for by direct lighting */
-	float		area;
+	float			area;
+	vec3_t			light;		/**< emissive surface light */
 
-	/** illuminance * reflectivity = lighting */
-	vec3_t		reflectivity;
-	vec3_t		baselight;			/**< emissivity only */
-
-	/** each lightmap sample in the patch will be
-	 * added up to get the average illuminance of the entire patch */
-	vec3_t		samplelight;
-	int			samples;		/**< for averaging direct light */
+	struct patch_s	*next;		/**< next in face */
 } patch_t;
 
 extern patch_t *face_patches[MAX_MAP_FACES];
-extern patch_t patches[MAX_PATCHES];
-extern unsigned num_patches;
-
-/*============================================== */
+/** for rotating bmodels */
+extern vec3_t face_offset[MAX_MAP_FACES];
 
 void LinkPlaneFaces(void);
 void BuildFacelights(unsigned int facenum);
@@ -83,10 +54,9 @@ void BuildLights(void);
 
 dBspLeaf_t *Light_PointInLeaf(const vec3_t point);
 
-extern dBspPlane_t backplanes[MAX_MAP_PLANES];
-
-void MakePatches(void);
+void BuildPatches(void);
 void SubdividePatches(const int num);
 void CalcTextureReflectivity(void);
 void LightWorld(void);
 void BuildVertexNormals(void);
+void FreePatches(void);
