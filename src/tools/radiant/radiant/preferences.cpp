@@ -251,7 +251,6 @@ void notebook_set_page(GtkWidget* notebook, GtkWidget* page) {
 
 void PrefsDlg::showPrefPage(GtkWidget* prefpage) {
 	notebook_set_page(m_notebook, prefpage);
-	return;
 }
 
 static void treeSelection(GtkTreeSelection* selection, gpointer data) {

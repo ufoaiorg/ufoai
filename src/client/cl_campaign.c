@@ -1498,8 +1498,6 @@ static void CP_CheckBaseAttacks_f (void)
 		}
 		missionlist = missionlist->next;
 	}
-
-	return;
 }
 
 /**

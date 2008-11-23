@@ -61,7 +61,6 @@ int PicoInit(void) {
  */
 void PicoShutdown (void)
 {
-	return;
 }
 
 /**
