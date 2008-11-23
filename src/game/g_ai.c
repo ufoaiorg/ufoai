@@ -213,7 +213,7 @@ static aiActor_t* lua_pushactor (lua_State *L, aiActor_t *actor)
 {
 	aiActor_t *a;
 	a = (aiActor_t*) lua_newuserdata(L, sizeof(*a));
-	memcpy(a, actor, sizeof(*a));
+	*a = *actor;
 	luaL_getmetatable(L, ACTOR_METATABLE);
 	lua_setmetatable(L, -2);
 	return a;

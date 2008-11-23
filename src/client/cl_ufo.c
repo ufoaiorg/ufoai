@@ -619,8 +619,8 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	}
 
 	/* Create ufo */
-	ufo = gd.ufos + gd.numUFOs;
-	memcpy(ufo, aircraftTemplates + newUFONum, sizeof(aircraft_t));
+	ufo = &gd.ufos[gd.numUFOs];
+	*ufo = aircraftTemplates[newUFONum];
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUFONum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
 	gd.numUFOs++;
 

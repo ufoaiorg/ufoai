@@ -2377,7 +2377,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 			}
 		} else {
-			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
+			gd.ufos[i] = *ufo;
 			ufo = &gd.ufos[i];
 			ufo->visible = MSG_ReadByte(sb);
 			ufo->notOnGeoscape = MSG_ReadByte(sb);

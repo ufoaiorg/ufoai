@@ -1036,7 +1036,7 @@ void MN_ParseMenu (const char *name, const char **text)
 		superMenu = MN_GetMenu(token);
 		if (!superMenu)
 			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
-		memcpy(menu, superMenu, sizeof(*menu));
+		*menu = *superMenu;
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 
 		/* we dont need to update everything (some must only be NULL at the run time) */

@@ -3376,7 +3376,7 @@ static void CL_BackupMonthlyData (void)
 		nation_t *nation = &gd.nations[nat];
 
 		for (i = MONTHS_PER_YEAR-1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
-			memcpy(&nation->stats[i], &nation->stats[i-1], sizeof(nationInfo_t));
+			nation->stats[i] = nation->stats[i - 1];
 		}
 	}
 }
@@ -5392,7 +5392,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 		/* check whether there are already dead aliens on board */
 		if (aircraft->alientypes) {
-			memcpy(aliencargoTemp, aircraft->aliencargo, sizeof(aircraft->aliencargo));
+			*aliencargoTemp = *aircraft->aliencargo;
 			aliencargoTypes = aircraft->alientypes;
 		}
 
