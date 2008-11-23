@@ -599,7 +599,6 @@ static int AIL_see (lua_State *L)
 		if (check->inuse && G_IsLivingActor(check) && AIL_ent != check
 		 && vision == 0 /* Vision checks. */
 		 && (team == TEAM_NONE || check->team == team)) {/* Check for team match if needed. */
-
 			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}
@@ -608,10 +607,8 @@ static int AIL_see (lua_State *L)
 	for (i = 0; i < n; i++) { /* Until we fill sorted */
 		cur = -1;
 		for (j = 0; j < n; j++) { /* Check for closest */
-
 			/* Is shorter then current minimum? */
 			if ((cur < 0) || (dist_lookup[j] < dist_lookup[cur])) {
-
 				/* Check if not already in sorted. */
 				for (k = 0; k < i; k++)
 					if (sorted[k] == unsorted[j])
@@ -647,8 +644,8 @@ static int AIL_crouch (lua_State *L)
 			const int state = lua_toboolean(L, 1);
 			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
 				(state) ? qtrue : qfalse);
-		}
-		else AIL_invalidparameter(1);
+		} else
+			AIL_invalidparameter(1);
 	}
 
 	lua_pushboolean(L, AIL_ent->state & STATE_CROUCHED);
@@ -739,7 +736,7 @@ static int AIL_positionshoot (lua_State *L)
 	edict_t *ent;
 	int dist;
 	int xl, yl, xh, yh;
-	int tu, min_tu;
+	int min_tu;
 	aiActor_t *target;
 	const int crouching_state = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
 
@@ -771,7 +768,6 @@ static int AIL_positionshoot (lua_State *L)
 
 	/* evaluate moving to every possible location in the search area,
 	 * including combat considerations */
-	tu = 0;
 	min_tu = INT_MAX;
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
@@ -779,7 +775,7 @@ static int AIL_positionshoot (lua_State *L)
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
 				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
-					tu = gi.MoveLength(gi.pathingMap, to,
+					const int tu = gi.MoveLength(gi.pathingMap, to,
 							(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
 
 					/* Better spot (easier to get to). */
