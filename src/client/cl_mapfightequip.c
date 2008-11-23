@@ -927,9 +927,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			_(slot->ammo->tech->name) :
 			_("No ammo assigned to this defence system.");
 		Q_strncpyz(smallbuffer3, ammo, sizeof(smallbuffer3));
-		/* show remaining missile in battery for missiles */
+		/* inform player that base missile are unlimited */
 		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
-			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));
+			Q_strcat(smallbuffer3, _(" (unlimited missiles)"), sizeof(smallbuffer3));
 	} else {
 		*smallbuffer3 = '\0';
 	}
@@ -1588,12 +1588,9 @@ static void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraf
 			ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableAircraftItem(base, installation, aircraft, ammo_tech)) {
 				AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
-				/* base missile are free, you have 20 when you build a new base defence */
-				if (item->craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
-					/* we use < 0 here, and not <= 0, because we give missiles only on first build
-					 * (not when player removes base defence and re-add it)
-					 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
-					slot->ammoLeft = 20;
+				/* base missile are free and unlimited */
+				if (item->craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft == AMMO_STATUS_NOT_SET)) {
+					slot->ammoLeft = AMMO_STATUS_UNLIMITED;
 				} else if (aircraft)
 					AII_ReloadWeapon(aircraft);
 				break;
@@ -2183,7 +2180,7 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraftTemplate, bas
 	slot->size = ITEM_HEAVY;
 	slot->nextItem = NULL;
 	slot->type = type;
-	slot->ammoLeft = -1; /** sa BDEF_AddBattery: it needs to be -1 and not 0 @sa B_SaveItemSlots */
+	slot->ammoLeft = AMMO_STATUS_NOT_SET; /** sa BDEF_AddBattery: it needs to be AMMO_STATUS_NOT_SET and not 0 @sa B_SaveBaseSlots */
 	slot->installationTime = 0;
 }
 
@@ -2360,7 +2357,7 @@ int AII_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
 /**
  * @brief Check if the aircraft has weapon and ammo
  * @param[in] aircraft The aircraft to count the items for (may not be NULL)
- * @return qtrue if the aircraft can fight, qflase else
+ * @return qtrue if the aircraft can fight, qfalse else
  * @sa AII_BaseCanShoot
  */
 int AII_AircraftCanShoot (const aircraft_t *aircraft)
@@ -2377,6 +2374,14 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
 	return qfalse;
 }
 
+/**
+ * @brief Check if base or installation weapon can shoot
+ * @param[in] weapons Pointer to the weapon array of the base.
+ * @param[in] numWeapons Pointer to the number of weapon in this base.
+ * @return qtrue if the base can fight, qfalse else
+ * @sa AII_BaseCanShoot
+ * @note No need to check for ammos: base and installations have unlimited ammos.
+ */
 static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *numWeapons)
 {
 	int i;
@@ -2384,7 +2389,6 @@ static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *num
 	for (i = 0; i < *numWeapons; i++) {
 		const baseWeapon_t *weapon = weapons + i;
 		if (weapon->slot.item
-		 && weapon->slot.ammo && weapon->slot.ammoLeft > 0
 		 && weapon->slot.installationTime == 0)
 			return qtrue;
 	}

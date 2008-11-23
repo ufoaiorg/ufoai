@@ -43,6 +43,17 @@ typedef enum {
 } zoneaircraftParams_t;
 
 /**
+ * @brief Different status for numAmmo.
+ */
+typedef enum {
+	AMMO_STATUS_UNLIMITED = -2,			/**< The weapon doesn't need ammo. */
+	AMMO_STATUS_NOT_SET = -1,			/**< This weapon can't shoot yet. */
+
+	AMMO_STATUS_NO_MORE_AMMO = 0		/**< This weapon has no ammo. */
+	/* positive values are used for number of ammo left in the weapon */
+} ammoStatus_t;
+
+/**
  * @brief The different possible types of base defence systems.
  * @sa BDEF_RemoveBattery_f: BASEDEF_LASER must be just after BASEDEF_MISSILE
  */

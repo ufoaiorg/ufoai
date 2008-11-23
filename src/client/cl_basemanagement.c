@@ -3484,7 +3484,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 
 /**
  * @brief Saves an item slot
- * @sa B_LoadItemSlots
+ * @sa B_LoadAircraftSlots
  * @sa B_Save
  * @sa AII_InitialiseSlot
  */
@@ -3503,7 +3503,7 @@ static void B_SaveAircraftSlots (const aircraftSlot_t* slot, const int num, size
 			MSG_WriteString(sb, ammo ? ammo->id : "");
 		} else {
 			MSG_WriteString(sb, "");
-			MSG_WriteShort(sb, -1);	/* must be the same value as in AII_InitialiseSlot */
+			MSG_WriteShort(sb, AMMO_STATUS_NOT_SET);
 			MSG_WriteShort(sb, 0);
 			MSG_WriteShort(sb, 0);
 			/* if there is no ammo MSG_WriteString will write an empty string */
@@ -3530,7 +3530,7 @@ void B_SaveBaseSlots (const baseWeapon_t *weapons, const int numWeapons, sizebuf
 			MSG_WriteString(sb, ammo ? ammo->id : "");
 		} else {
 			MSG_WriteString(sb, "");
-			MSG_WriteShort(sb, -1);	/* must be the same value as in AII_InitialiseSlot */
+			MSG_WriteShort(sb, AMMO_STATUS_NOT_SET);
 			MSG_WriteShort(sb, 0);
 			MSG_WriteShort(sb, 0);
 			/* if there is no ammo MSG_WriteString will write an empty string */
@@ -3700,7 +3700,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 /**
  * @brief Loads the weapon slots of an aircraft.
  * @sa B_Load
- * @sa B_SaveItemSlots
+ * @sa B_SaveAircraftSlots
  */
 static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, sizebuf_t* sb)
 {
@@ -3730,7 +3730,7 @@ static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, si
 /**
  * @brief Loads the missile and laser slots of a base.
  * @sa B_Load
- * @sa B_SaveItemSlots
+ * @sa B_SaveBaseSlots
  */
 void B_LoadBaseSlots (baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
 {

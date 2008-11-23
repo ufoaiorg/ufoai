@@ -137,7 +137,8 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	else
 		projectile->laser = qfalse;
 
-	weaponSlot->ammoLeft -= 1;
+	if (weaponSlot->ammoLeft != AMMO_STATUS_UNLIMITED)
+		weaponSlot->ammoLeft--;
 
 	gd.numProjectiles++;
 
@@ -235,7 +236,7 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 		/* check if there is still ammo in this weapon */
-	if (!slot->ammo || slot->ammoLeft <= 0)
+	if (!slot->ammo || (slot->ammoLeft <= 0  && slot->ammoLeft != AMMO_STATUS_UNLIMITED))
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 	/* check if the target is within range of this weapon */
