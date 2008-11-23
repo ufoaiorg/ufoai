@@ -666,7 +666,17 @@ static int AIL_TU (lua_State *L)
  */
 static int AIL_reactionfire (lua_State *L)
 {
-	return 0;
+	if (lua_gettop(L) > 0) {
+		if (lua_isboolean(L, 1)) {
+			const int state = lua_toboolean(L, 1);
+			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_REACTION_ONCE,
+				(state) ? qtrue : qfalse);
+		} else
+			AIL_invalidparameter(1);
+	}
+
+	lua_pushboolean(L, AIL_ent->state & STATE_REACTION_ONCE);
+	return 1;
 }
 
 /**
