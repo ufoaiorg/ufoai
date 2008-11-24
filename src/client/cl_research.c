@@ -880,7 +880,7 @@ static void CL_ResearchSelect_f (void)
 
 	/* call researchselect function from menu_research.ufo */
 	researchListPos = num;
-	Cbuf_AddText(va("researchselect%i\n", researchListPos));
+	MN_ExecuteConfunc(va("researchselect %i\n", researchListPos));
 
 	/* need to set previous selected tech to proper color */
 	RS_UpdateData(baseCurrent, qtrue);
@@ -1012,26 +1012,31 @@ static void RS_AssignScientist_f (void)
  */
 void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 {
+	base_t *base;
 	assert(tech);
 
-	if (tech->scientists > 0) {
-		assert(tech->base);
-		if (!employee)
-			employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
-		if (employee) {
-			/* Remove the sci from the tech. */
-			tech->scientists--;
-			/* Update capacity. */
-			tech->base->capacities[CAP_LABSPACE].cur--;
-			/* Remove the scientist from the lab and set number of used lab-space. */
-			employee->building = NULL; /* See also E_RemoveEmployeeFromBuildingOrAircraft */
-		} else {
-			/* No assigned scientists found - serious inconsistency. */
-			/** @todo add proper handling of this case. */
-		}
+	/* no need to remove anything, but we can do some check */
+	if (tech->scientists == 0) {
+		assert(tech->base == NULL);
+		assert(tech->statusResearch == RS_PAUSED);
+		return;
+	}
+
+	assert(tech->base);
+	base = tech->base;
+
+	if (!employee)
+		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
+	if (employee) {
+		/* Remove the sci from the tech. */
+		tech->scientists--;
+		/* Update capacity. */
+		tech->base->capacities[CAP_LABSPACE].cur--;
+		/* Remove the scientist from the lab and set number of used lab-space. */
+		employee->building = NULL; /* See also E_RemoveEmployeeFromBuildingOrAircraft */
 	} else {
-		/* No scientists to remove. */
-		employee = NULL;
+		/* No assigned scientists found - serious inconsistency. */
+		/** @todo add proper handling of this case. */
 	}
 
 	assert(tech->scientists >= 0);
@@ -1042,11 +1047,8 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		tech->statusResearch = RS_PAUSED;
 	}
 
-	/* We only need an update if the employee pointer is set and the tech still is still assigned to a base. */
-	if (employee && tech->base) {
-		/* Update display-list and display-info. */
-		RS_UpdateData(tech->base, qtrue);
-	}
+	/* Update display-list and display-info. */
+	RS_UpdateData(base, qtrue);
 }
 
 
@@ -1293,6 +1295,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 	assert(base);
 	RS_MarkResearchable(qfalse, base);
 
+	/* update tech list */
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 
@@ -1300,45 +1303,50 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 		if (tech->time == 0)
 			continue;
 
-		if (updateMenu) {
-			/** @todo add check for collected items */
+		/* hide finished research */
+		if (tech->statusResearch == RS_FINISH)
+			continue;
 
-			/* Make icons visible for this entry */
-			MN_ExecuteConfunc(va("research_show %i", j));
-		}
+		/* hide tech without little thing to search */
+		if (!tech->statusResearchable && !tech->statusCollected)
+			continue;
+
+		/* Assign the current tech in the global list to the correct entry in the displayed list. */
+		researchList[j] = tech;
+		/* counting the numbers of display-list entries. */
+		j++;
+	}
+	researchList[j] = NULL;
+	researchListLength = j;
+
+	/* update GUI */
+	for (j = 0; j < MAX_RESEARCHDISPLAY && j < researchListLength; j++) {
+		technology_t *tech = researchList[j];
 
 		/* update the GUI for all research of the current base */
 		if (baseCurrent == base) {
-			if (tech->statusResearchable && tech->statusResearch != RS_FINISH && (tech->base == NULL || base->idx == tech->base->idx)) {
+			/* update data for assigned or free resource */
+			if (tech->base == NULL || base == tech->base) {
 				const int min = 0;
 				const int value = tech->scientists;
 				const int max = available[base->idx] + tech->scientists;
 				MN_ExecuteConfunc(va("research_updateitem %i %i %i %i", j, value, min, max));
+			} else {
+				MN_ExecuteConfunc(va("research_updateitem %i 0 0 0", j));
 			}
 		}
 
-		if (tech->statusCollected && !tech->statusResearchable && tech->statusResearch != RS_FINISH) {
-			/* Item is collected but not yet researchable. */
+		if (updateMenu) {
+			/* Make icons visible for this entry */
+			MN_ExecuteConfunc(va("research_show %i", j));
 
-			if (updateMenu) {
-				/* Color the item 'unresearchable' */
-				MN_ExecuteConfunc(va("researchunresearchable %i", j));
-				/* Display the concated text in the correct list-entry. */
-				Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
-
-				Cvar_Set(va("mn_researchassigned%i", j), "--");
-				Cvar_Set(va("mn_researchavailable%i", j), "--");
-				Cvar_Set(va("mn_researchmax%i", j), "--");
-			}
-
-			/* Assign the current tech in the global list to the correct entry in the displayed list. */
-			researchList[j] = tech;
-			/* counting the numbers of display-list entries. */
-			j++;
-		} else if (tech->statusResearch != RS_FINISH && tech->statusResearchable) {
 			/* An item that can be researched. */
+			if (tech->statusResearchable) {
+				/* research out of this base */
+				if (tech->base != NULL && tech->base != base) {
+					MN_ExecuteConfunc(va("researchoutofbase %i", j));
+				}
 
-			if (updateMenu) {
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 				if (tech->base == base || !tech->base) {
@@ -1377,16 +1385,26 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 					Cvar_Set(va("mn_researchitem%i", j), name);
 				} else
 					Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
+				continue;
 			}
 
-			/* Assign the current tech in the global list to the correct entry in the displayed list. */
-			researchList[j] = tech;
-			/* counting the numbers of display-list entries. */
-			j++;
+			/* Item is collected but not yet researchable. */
+			if (tech->statusCollected) {
+				/* Color the item 'unresearchable' */
+				MN_ExecuteConfunc(va("researchunresearchable %i", j));
+				MN_ExecuteConfunc(va("research_hide %i", j));
+
+				/* Display the concated text in the correct list-entry. */
+				Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
+
+				Cvar_Set(va("mn_researchassigned%i", j), "--");
+				Cvar_Set(va("mn_researchavailable%i", j), "--");
+				Cvar_Set(va("mn_researchmax%i", j), "--");
+				continue;
+			}
+
 		}
 	}
-
-	researchListLength = j;
 
 	if (!updateMenu)
 		return;
