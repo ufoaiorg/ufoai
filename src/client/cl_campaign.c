@@ -4230,6 +4230,7 @@ void CL_CampaignRun (void)
 	const int detectioninterval = (SECONDS_PER_HOUR / 2);
 	const int currentinterval = (int)floor(ccs.date.sec) % detectioninterval;
 	int checks, dt, i;
+	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detectioninterval */
 
 #ifdef DEBUG
 	/* temporary check to find out bug: [1999099] no pilots available */
@@ -4247,6 +4248,7 @@ void CL_CampaignRun (void)
 		qboolean detection;
 		UFO_CampaignRunUFOs(dt);
 		CL_CampaignRunAircraft(dt);
+		timeAlreadyFlied += dt;
 		detection = UFO_CampaignCheckEvents(qtrue);
 		if (detection) {
 			ccs.timer = (i + 1) * detectioninterval - currentinterval;
@@ -4295,8 +4297,12 @@ void CL_CampaignRun (void)
 		}
 
 		/* check for campaign events */
-		CL_CampaignRunAircraft(dt);
-		UFO_CampaignRunUFOs(dt);
+		if (dt > timeAlreadyFlied) {
+			/** aircraft and UFO already moved during radar detection (see above),
+			 *  just make them move the missing part -- if any */
+			CL_CampaignRunAircraft(dt - timeAlreadyFlied);
+			UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
+		}
 		UFO_CampaignCheckEvents(qfalse);
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();
