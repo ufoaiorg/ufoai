@@ -413,13 +413,13 @@ int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 	str[size - 1] = '\0';
 #ifdef DEBUG
 	if (len == -1)
-		Com_Printf("Q_vsnprintf: string (%s) was truncated (%i) - target buffer too small ("UFO_SIZE_T")\n", str, len, size);
+		Com_Printf("Q_vsnprintf: string (%.32s...) was truncated (%i) - target buffer too small ("UFO_SIZE_T")\n", str, len, size);
 #endif
 #else
 	len = vsnprintf(str, size, format, ap);
 #ifdef DEBUG
 	if ((size_t)len >= size)
-		Com_Printf("Q_vsnprintf: string (%s) was truncated (%i) - target buffer too small ("UFO_SIZE_T")\n", str, len, size);
+		Com_Printf("Q_vsnprintf: string (%.32s...) was truncated (%i) - target buffer too small ("UFO_SIZE_T")\n", str, len, size);
 #endif
 #endif
 
