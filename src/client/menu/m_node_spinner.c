@@ -86,11 +86,20 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 static qboolean capturedDownButton;
 static menuTimer_t *capturedTimer = NULL;
 
+/** @todo increase the delta instead of decrase the delay */
 static void MN_SpinnerNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 {
 	MN_SpinnerNodeStep(node, capturedDownButton);
-	if (timer->calledTime == 1) {
-		timer->delay = 500;
+	switch (timer->calledTime) {
+	case 1:
+		timer->delay = 300;
+		break;
+	case 5:
+		timer->delay = 100;
+		break;
+	case 20:
+		timer->delay = 50;
+		break;
 	}
 }
 
