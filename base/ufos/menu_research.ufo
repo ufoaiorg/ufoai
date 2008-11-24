@@ -301,7 +301,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 40"
+		pos		"376 40"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 0; mn_rs_change 0 <lastdiff>"
@@ -312,7 +312,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 65"
+		pos		"376 65"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 1; mn_rs_change 1 <lastdiff>"
@@ -323,7 +323,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 90"
+		pos		"376 90"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 2; mn_rs_change 2 <lastdiff>"
@@ -334,7 +334,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 115"
+		pos		"376 115"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 3; mn_rs_change 3 <lastdiff>"
@@ -345,7 +345,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 140"
+		pos		"376 140"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 4; mn_rs_change 4 <lastdiff>"
@@ -356,7 +356,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 165"
+		pos		"376 165"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 5; mn_rs_change 5 <lastdiff>"
@@ -367,7 +367,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 190"
+		pos		"376 190"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 6; mn_rs_change 6 <lastdiff>"
@@ -378,7 +378,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 215"
+		pos		"376 215"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 7; mn_rs_change 7 <lastdiff>"
@@ -389,7 +389,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 240"
+		pos		"376 240"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 8; mn_rs_change 8 <lastdiff>"
@@ -400,7 +400,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 265"
+		pos		"376 265"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 9; mn_rs_change 9 <lastdiff>"
@@ -411,7 +411,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 290"
+		pos		"376 290"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 10; mn_rs_change 10 <lastdiff>"
@@ -422,7 +422,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 315"
+		pos		"376 315"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 11; mn_rs_change 11 <lastdiff>"
@@ -433,7 +433,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 340"
+		pos		"376 340"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 12; mn_rs_change 12 <lastdiff>"
@@ -444,7 +444,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 365"
+		pos		"376 365"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 13; mn_rs_change 13 <lastdiff>"
@@ -455,7 +455,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 390"
+		pos		"376 390"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 14; mn_rs_change 14 <lastdiff>"
@@ -466,7 +466,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 415"
+		pos		"376 415"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 15; mn_rs_change 15 <lastdiff>"
@@ -477,7 +477,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 440"
+		pos		"376 440"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 16; mn_rs_change 16 <lastdiff>"
@@ -488,7 +488,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 465"
+		pos		"376 465"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 17; mn_rs_change 17 <lastdiff>"
@@ -499,7 +499,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 490"
+		pos		"376 490"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 18; mn_rs_change 18 <lastdiff>"
@@ -510,7 +510,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 515"
+		pos		"376 515"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 19; mn_rs_change 19 <lastdiff>"
@@ -521,7 +521,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 540"
+		pos		"376 540"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 20; mn_rs_change 20 <lastdiff>"
@@ -532,7 +532,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 565"
+		pos		"376 565"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 21; mn_rs_change 21 <lastdiff>"
@@ -543,7 +543,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 590"
+		pos		"376 590"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 22; mn_rs_change 22 <lastdiff>"
@@ -554,7 +554,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 615"
+		pos		"376 615"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 23; mn_rs_change 23 <lastdiff>"
@@ -565,7 +565,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 640"
+		pos		"376 640"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 24; mn_rs_change 24 <lastdiff>"
@@ -576,7 +576,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 665"
+		pos		"376 665"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 25; mn_rs_change 25 <lastdiff>"
@@ -587,7 +587,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 690"
+		pos		"376 690"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 26; mn_rs_change 26 <lastdiff>"
@@ -598,7 +598,7 @@ menu research
 	{
 		tooltip	"_Add and remove scientist"
 		image	menu/spinner_blue blend true
-		pos		"356 715"
+		pos		"376 715"
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 27; mn_rs_change 27 <lastdiff>"

@@ -4574,6 +4574,7 @@ tech rs_enemy_on_earth
 	}
 
 	time		600
+	image		"techs/enemy_on_earth"
 }
 
 // http://ufoai.ninex.info/wiki/index.php/Research/XVI_Census
@@ -4613,6 +4614,7 @@ tech rs_xvi_census
 	}
 
 	time		600				// Fixme
+	image		"techs/xvi"
 }
 
 /*
