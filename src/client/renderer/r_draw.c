@@ -579,7 +579,7 @@ void R_DrawAirFightBackground (int x, int y, int w, int h, float cx, float cy, f
 	const float nh = h * viddef.ry;
 
 	/* load day image */
-	gl = R_FindImage("pics/airfight/hobet2", it_wrappic);
+	gl = R_FindImage("pics/airfight/forest1", it_wrappic);
 
 	if (gl == r_noTexture)
 		Sys_Error("Could not load geoscape day image");
