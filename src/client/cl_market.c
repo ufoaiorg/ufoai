@@ -608,8 +608,12 @@ static void BS_BuyType_f (void)
 		Cvar_Set("mn_itemtype", va("%d", buyCat));	/**< @todo use a better identifier (i.e. filterTypeNames[]) for mn_itemtype @sa menu_buy.ufo */
 		Cvar_Set("mn_itemtypename", _(BS_BuyTypeName(buyCat)));
 		buyList.scroll = 0;
-		if (node)
+		if (node) {
 			node->textScroll = 0;
+			/* reset selection */
+			node->textLineSelected = 0;
+		}
+		currentSelectedMenuEntry = NULL;
 		BS_MarketScroll_f();
 	}
 
