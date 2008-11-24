@@ -92,12 +92,16 @@ void Cmd_Init(void);
  * if function is NULL, the command will be forwarded to the server
  * as a clc_stringcmd instead of executed locally
  */
-void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char* desc);
+void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char *desc);
 
 void Cmd_RemoveCommand(const char *cmd_name);
 
 #define MAX_COMPLETE 128
 extern void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
+
+void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
+
+void Cmd_AddUserdata(const char *cmd_name, void* userdata);
 
 int Cmd_GenericCompleteFunction(size_t len, const char **match, int matches, const char **list);
 
@@ -121,6 +125,7 @@ int Cmd_CompleteCommand(const char *partial, const char **match);
 int Cmd_Argc(void);
 const char *Cmd_Argv(int arg);
 const char *Cmd_Args(void);
+void *Cmd_Userdata(void);
 
 /**
  * @brief Takes a null terminated string.  Does not need to be /n terminated.

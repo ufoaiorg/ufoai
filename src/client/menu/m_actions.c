@@ -240,35 +240,13 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
 	MN_ExecuteInjectedActions(source, qfalse, firstAction);
 }
 
-void MN_Command_f (void)
+void MN_ConfuncCommand_f (void)
 {
-	menuNode_t *node;
-	const char *name;
-	int i;
-
-	name = Cmd_Argv(0);
-
-	/* first search all menus on the stack */
-	for (i = 0; i < mn.menuStackPos; i++)
-		for (node = mn.menuStack[i]->firstChild; node; node = node->next)
-			if (node->behaviour->id == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
-				/* found the node */
-				MN_ExecuteConFuncActions(node, node->click);
-				return;
-			}
-
-	/* not found - now query all in the menu definitions */
-	for (i = 0; i < mn.numMenus; i++)
-		for (node = mn.menus[i].firstChild; node; node = node->next)
-			if (node->behaviour->id == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
-				/* found the node */
-				MN_ExecuteConFuncActions(node, node->click);
-				return;
-			}
-
-	Com_Printf("MN_Command_f: confunc '%s' was not found in any menu\n", name);
+	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
+	assert(node);
+	assert(node->behaviour->id == MN_CONFUNC);
+	MN_ExecuteConFuncActions(node, node->click);
 }
-
 
 /**
  * @sa MN_FocusExecuteActionNode

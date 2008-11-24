@@ -444,11 +444,13 @@ typedef struct cmd_function_s {
 	const char *description;
 	xcommand_t function;
 	int (*completeParam) (const char *partial, const char **match);
+	void* userdata;
 } cmd_function_t;
 
 static int cmd_argc;
 static char *cmd_argv[MAX_STRING_TOKENS];
 static char cmd_args[MAX_STRING_CHARS];
+static void *cmd_userdata;
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
 static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
@@ -484,6 +486,14 @@ const char *Cmd_Args (void)
 }
 
 /**
+ * @brief Return the userdata of the called command
+ */
+void *Cmd_Userdata(void)
+{
+	return cmd_userdata;
+}
+
+/**
  * @brief Clears the argv vector and set argc to zero
  * @sa Cmd_TokenizeString
  */
@@ -499,6 +509,7 @@ void Cmd_BufClear (void)
 
 	cmd_argc = 0;
 	cmd_args[0] = 0;
+	cmd_userdata = NULL;
 }
 
 /**
@@ -664,6 +675,29 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(cmd_name, cmd->name)) {
 			cmd->completeParam = function;
+			return;
+		}
+	}
+}
+
+/**
+ * @param[in] cmd_name The name the command we want to add edit
+ * @param[in] userdata for this function
+ * @sa Cmd_AddCommand
+ * @sa Cmd_CompleteCommandParameters
+ */
+void Cmd_AddUserdata (const char *cmd_name, void* userdata)
+{
+	cmd_function_t *cmd;
+	unsigned int hash;
+
+	if (!cmd_name || !cmd_name[0])
+		return;
+
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+		if (!Q_strcmp(cmd_name, cmd->name)) {
+			cmd->userdata = userdata;
 			return;
 		}
 	}
@@ -868,6 +902,7 @@ void Cmd_ExecuteString (const char *text)
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString(va("cmd %s", text));
 			} else
+				cmd_userdata = cmd->userdata;
 				cmd->function();
 			return;
 		}

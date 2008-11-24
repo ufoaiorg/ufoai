@@ -57,7 +57,7 @@ typedef struct menuAction_s {
 void MN_ExecuteConfunc(const char *confunc);
 
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
-void MN_Command_f(void);
+void MN_ConfuncCommand_f(void);
 void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* firstAction);
 
 qboolean MN_FocusNextActionNode(void);

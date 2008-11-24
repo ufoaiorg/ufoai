@@ -600,10 +600,12 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		if (node->behaviour->id == MN_CONFUNC) {
 			/* don't add a callback twice */
-			if (!Cmd_Exists(node->name))
-				Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
-			else
+			if (!Cmd_Exists(node->name)) {
+				Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Confunc callback");
+				Cmd_AddUserdata(node->name, node);
+			} else {
 				Com_DPrintf(DEBUG_CLIENT, "MN_ParseNodeBody: skip confunc '%s' - already added (menu %s)\n", node->name, node->menu->name);
+			}
 		}
 
 		return MN_ParseAction(node, *action, text, token);
