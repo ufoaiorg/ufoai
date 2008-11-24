@@ -3719,7 +3719,7 @@ typedef struct gameLapse_s {
 #define LAPSETYPE_ALL         3       /**< The gameLapse_t type flag for both geoscape and combat zoom */
 
 
-#define NUM_TIMELAPSE 10
+#define NUM_TIMELAPSE 11
 
 /** @brief The possible geoscape time intervalls */
 static const gameLapse_t lapse[NUM_TIMELAPSE] = {
@@ -3729,6 +3729,7 @@ static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{N_("1 min"), 60, LAPSETYPE_COMBATZOOM},
 	{N_("5 mins"), 5 * 60, LAPSETYPE_ALL},
 	{N_("10 mins"), 10 * 60, LAPSETYPE_COMBATZOOM},
+	{N_("20 mins"), SECONDS_PER_HOUR / 3, LAPSETYPE_GEOSCAPE},
 	{N_("1 hour"), SECONDS_PER_HOUR, LAPSETYPE_GEOSCAPE},
 	{N_("12 hours"), 12 * SECONDS_PER_HOUR, LAPSETYPE_GEOSCAPE},
 	{N_("1 day"), 24 * SECONDS_PER_HOUR, LAPSETYPE_GEOSCAPE},
