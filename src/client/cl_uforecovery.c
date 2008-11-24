@@ -357,7 +357,6 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 
 	nation = &gd.nations[num];
 	ufoRecovery.nation = nation;
-	assert(nation);
 
 	/* Pop the menu and launch it again - now with updated value of selected nation. */
 	MN_PopMenu(qfalse);
