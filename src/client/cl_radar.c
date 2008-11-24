@@ -410,7 +410,7 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (!ufo->notOnGeoscape && ((wasUFOSensored ? radar->trackingRange : radar->range ) > dist)) {
+	if (!ufo->notOnGeoscape && ((wasUFOSensored ? radar->trackingRange : radar->range) > dist)) {
 		/* UFO is inside the radar range */
 		/** @todo There is a hardcoded detection probability here - this should be scripted. Probability should be a function of UFO type and maybe radar type too. */
 		if (frand() <= 0.40 || wasUFOSensored) {
