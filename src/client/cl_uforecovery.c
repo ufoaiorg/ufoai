@@ -340,7 +340,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
  */
 static void CP_UFORecoveryNationSelectPopup_f (void)
 {
-	int i, j = -1, num;
+	int num;
 	nation_t *nation;
 	menuNode_t *nationList;
 
@@ -351,13 +351,12 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 
 	num = atoi(Cmd_Argv(1));
 
-	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
-		j++;
-		if (j == num) {
-			ufoRecovery.nation = nation;
-			break;
-		}
-	}
+	/* don't do anything if index is higher than visible nations */
+	if (0 > num || num >= gd.numNations)
+		return;
+
+	nation = &gd.nations[num];
+	ufoRecovery.nation = nation;
 	assert(nation);
 
 	/* Pop the menu and launch it again - now with updated value of selected nation. */
@@ -440,7 +439,6 @@ static void CP_UFORecoveredSell_f (void)
 
 	for (i = 0; i < gd.numNations; i++) {
 		const nation_t *nation = &gd.nations[i];
-		/** @todo only nations with proper alien infiltration values */
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
 		if (!ufoRecovery.nation) {
