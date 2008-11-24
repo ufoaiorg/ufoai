@@ -186,7 +186,12 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 
 static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
 {
+	static int callnumber = 0;
 	const menuAction_t *action;
+	if (callnumber++ > 10) {
+		Com_Printf("MN_ExecuteInjectedActions: Possible recursion\n");
+		return;
+	}
 	for (action = firstAction; action; action = action->next) {
 		switch (action->type) {
 		/* execute a command */
@@ -225,6 +230,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 			MN_ExecuteAction(source->menu, action);
 		}
 	}
+	callnumber--;
 }
 
 /**
