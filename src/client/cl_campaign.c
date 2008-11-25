@@ -2356,7 +2356,6 @@ static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int
  */
 static void CP_InterceptNextStage (mission_t *mission)
 {
-	Com_DPrintf(DEBUG_CLIENT, "New interception stage: %i\n", mission->stage);
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Intercept mission */
