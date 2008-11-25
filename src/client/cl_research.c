@@ -878,9 +878,18 @@ static void CL_ResearchSelect_f (void)
 		return;
 	}
 
-	/* call researchselect function from menu_research.ufo */
+	/* update the selected row */
 	researchListPos = num;
 	MN_ExecuteConfunc(va("researchselect %i\n", researchListPos));
+
+	/* switch to another team */
+	if (baseCurrent != NULL) {
+		technology_t *tech = researchList[num];
+		if (tech->base != NULL && tech->base != baseCurrent) {
+			MN_ExecuteConfunc(va("research_changebase %i %i\n", tech->base->idx, researchListPos));
+			return;
+		}
+	}
 
 	/* need to set previous selected tech to proper color */
 	RS_UpdateData(baseCurrent, qtrue);
@@ -1383,6 +1392,7 @@ void RS_UpdateData (base_t* base, qboolean updateMenu)
 					char name[MAX_VAR];
 					Com_sprintf(name, sizeof(name), "(%s)", _(tech->name));
 					Cvar_Set(va("mn_researchitem%i", j), name);
+					MN_ExecuteConfunc(va("researchchangebasetooltype %i", j));
 				} else
 					Cvar_Set(va("mn_researchitem%i", j), _(tech->name));
 				continue;

@@ -98,8 +98,22 @@ menu research
 	/**
 	 * @param[in] <1> Item row
 	 */
+	confunc research_unselect {
+		*txt_item<1> color "0 .78 0 1"
+	}
+
+	/**
+	 * @param[in] <1> Item row
+	 */
 	confunc researchselect {
 		*txt_item<1>  color "1 1 1 1"
+	}
+
+	/**
+	 * @param[in] <1> Item row
+	 */
+	confunc researchchangebasetooltype {
+		*txt_item<1>  tooltip "_Switch to another base"
 	}
 
 	/**
@@ -135,6 +149,24 @@ menu research
 	 */
 	confunc researchoutofbase {
 		*bt_rs_change<1> invis true
+	}
+
+	/**
+	 * @brief Switch to another reserch base
+	 * @param[in] <1> New base id
+	 * @param[in] <2> Selected item row
+	 */
+	confunc research_changebase {
+		cmd "mn_pop;mn_pop;mn_select_base <1>;mn_push research;"
+		cmd "research_select <2>"
+	}
+
+	string name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"30 00"
+		font	f_big
 	}
 
 	pic img_status0	{ tooltip "*cvar mn_researchstatus0"	pos	"30 40"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
