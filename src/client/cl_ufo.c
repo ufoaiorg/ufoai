@@ -749,9 +749,12 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 				if (!base)
 					continue;
-				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
+				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
+					if (!AIR_IsAircraftOnGeoscape(aircraft))
+						continue;
 					/* maybe the ufo is already visible, don't reset it */
 					visible |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, ufo->visible);
+				}
 			}
 
 		/* Check if ufo appears or disappears on radar */

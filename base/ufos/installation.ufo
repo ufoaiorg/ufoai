@@ -6,8 +6,8 @@ installation radartower
 {
 	name		"_Radar Tower"
 	cost		10000
-	radar_range	8.0
-	radar_tracking_range	19.0
+	radar_range	8
+	radar_tracking_range	19
 	max_batteries	0
 	max_ufo_stored	0
 	max_damage		1
@@ -18,7 +18,7 @@ installation ufoyard
 {
 	name		"_UFO Yard"
 	cost		30000
-	radar_range	0.0
+	radar_range	0
 	max_batteries	0
 	max_ufo_stored	10
 	max_damage		100
@@ -29,7 +29,7 @@ installation samsite
 {
 	name		"_SAM Site"
 	cost		20000
-	radar_range	0.0
+	radar_range	0
 	max_batteries	2
 	max_ufo_stored	0
 	max_damage		1

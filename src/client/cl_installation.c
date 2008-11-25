@@ -150,7 +150,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	}
 	BDEF_InitialiseInstallationSlots(installation);
 
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %f, batteries = %i, ufos = %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %i, batteries = %i, ufos = %i\n",
 		installation->installationTemplate->id, installation->installationTemplate->radarRange,
 		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
 
@@ -752,8 +752,6 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, inst->installationStatus);
 		MSG_WriteShort(sb, inst->installationDamage);
 		MSG_WriteFloat(sb, inst->alienInterest);
-		MSG_WriteShort(sb, inst->radar.range);
-		MSG_WriteShort(sb, inst->radar.trackingRange);
 		MSG_WriteLong(sb, inst->buildStart);
 
 		MSG_WriteByte(sb, inst->numBatteries);
@@ -797,7 +795,12 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->installationStatus = MSG_ReadByte(sb);
 		inst->installationDamage = MSG_ReadShort(sb);
 		inst->alienInterest = MSG_ReadFloat(sb);
-		RADAR_Initialise(&inst->radar, MSG_ReadShort(sb), MSG_ReadShort(sb), 1.0f, qtrue);
+# if 1
+MSG_ReadShort(sb);
+MSG_ReadShort(sb);
+#endif
+		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
+		RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
 		inst->buildStart = MSG_ReadLong(sb);
 
 		/* read battery slots */
