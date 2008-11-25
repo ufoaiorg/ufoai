@@ -158,6 +158,27 @@ void UFO_SetRandomDest (aircraft_t* ufocraft)
 }
 
 /**
+ * @brief Give a random destination to the given UFO close to a position, and make him to move there.
+ * @param[in] ufocraft Pointer to the UFO which destination will be changed.
+ * @param[in] pos The position the UFO should around.
+ * @sa UFO_SetRandomPos
+ */
+void UFO_SetRandomDestAround (aircraft_t* ufocraft, vec2_t pos)
+{
+	vec2_t dest;
+	const float spread = 5.0f;
+	float rand1, rand2;
+
+	gaussrand(&rand1, &rand2);
+	rand1 *= spread;
+	rand2 *= spread;
+
+	Vector2Set(dest, pos[0] + rand1, pos[1] + rand2);
+
+	UFO_SendToDestination(ufocraft, dest);
+}
+
+/**
  * @brief Give a random position to the given UFO
  * @param[in] ufocraft Pointer to the UFO which position will be changed.
  * @sa UFO_SetRandomDest
@@ -494,7 +515,11 @@ void UFO_CampaignRunUFOs (int dt)
 			end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
 			MAP_CheckPositionBoundaries(ufo->pos);
-			UFO_SetRandomDest(ufo);
+			if (ufo->mission->stage == STAGE_INTERCEPT && ufo->mission->data) {
+				/* Attacking an installation: fly over this installation */
+				UFO_SetRandomDestAround(ufo, ufo->mission->pos);
+			} else
+				UFO_SetRandomDest(ufo);
 			CP_CheckNextStageDestination(ufo);
 		}
 

@@ -1696,7 +1696,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 #endif
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
 			continue;
-		else {
+
+		{
 			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 
 			if (gd.combatZoomOn && !gd.combatZoomedUfo) {

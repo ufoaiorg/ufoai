@@ -864,7 +864,7 @@ static qboolean CP_MissionCreate (mission_t *mission)
 	ufoType = CP_MissionChooseUFO(mission);
 	if (ufoType == UFO_MAX) {
 		mission->ufo = NULL;
-		/* Go to next stage on next frame */
+		/* Mission starts from ground: no UFO. Go to next stage on next frame (skip UFO arrives on earth) */
 		mission->finalDate = ccs.date;
 	} else {
 		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
@@ -2188,13 +2188,21 @@ static void CP_InterceptMissionIsFailure (mission_t *mission)
 
 /**
  * @brief Intercept mission ends: UFO leave earth.
- * @note Intercept mission -- Stage 2
+ * @note Intercept mission -- Stage 3
  */
 static void CP_InterceptMissionLeave (mission_t *mission)
 {
+	installation_t *installation;
+
 	assert(mission->ufo);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
+
+	/* if the mission was an attack of an installation, destroy it */
+	installation = mission->data;
+	if (installation && installation->founded && VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
+		INS_DestroyInstallation(installation);
+	}
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
@@ -2204,16 +2212,125 @@ static void CP_InterceptMissionLeave (mission_t *mission)
 }
 
 /**
- * @brief Set Intercept mission: UFO looks for new target.
+ * @brief UFO starts to attack the installation.
+ * @note Intercept mission -- Stage 2
+ */
+static void CP_InterceptAttackInstallation (mission_t *mission)
+{
+	const date_t minAttackDelay = {1, 0};
+	const date_t attackDelay = {2, 0};		/* How long the UFO should stay on earth */
+	installation_t *installation;
+
+	mission->stage = STAGE_INTERCEPT;
+
+	/* Check that installation is not already destroyed */
+	installation = (installation_t *)mission->data;
+	if (!installation->founded) {
+		mission->finalDate = ccs.date;
+		return;
+	}
+
+	/* Maybe installation has been destroyed, but rebuild somewhere else? */
+	if (!VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
+		mission->finalDate = ccs.date;
+		return;
+	}
+
+	/* Make round around the position of the mission */
+	UFO_SetRandomDestAround(mission->ufo, mission->pos);
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minAttackDelay, attackDelay));
+}
+
+/**
+ * @brief Set Intercept mission: UFO looks for new aircraft target.
  * @note Intercept mission -- Stage 1
  */
-static void CP_InterceptMissionSet (mission_t *mission)
+static void CP_InterceptAircraftMissionSet (mission_t *mission)
 {
 	const date_t minReconDelay = {3, 0};
 	const date_t reconDelay = {6, 0};		/* How long the UFO should stay on earth */
 
 	mission->stage = STAGE_INTERCEPT;
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
+}
+
+/**
+ * @brief Choose Base that will be attacked, and add it to mission description.
+ * @note Base attack mission -- Stage 1
+ * @return Pointer to the base, NULL if no base set
+ */
+static installation_t* CP_InterceptChooseInstallation (const mission_t *mission)
+{
+	float randomNumber, sum = 0.0f;
+	int installationIdx;
+	installation_t *installation = NULL;
+
+	assert(mission);
+
+	/* Choose randomly a base depending on alienInterest values for those bases */
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (!installation)
+			continue;
+		sum += installation->alienInterest;
+	}
+	randomNumber = frand() * sum;
+	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+		installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		if (!installation)
+			continue;
+		randomNumber -= installation->alienInterest;
+		if (randomNumber < 0)
+			break;
+	}
+
+	/* Make sure we have a base */
+	assert(installation && (randomNumber < 0));
+
+	return installation;
+}
+
+/**
+ * @brief Set Intercept mission: UFO chooses an installation an flies to it.
+ * @note Intercept mission -- Stage 1
+ */
+static void CP_InterceptGoToInstallation (mission_t *mission)
+{
+	installation_t *installation;
+	assert(mission->ufo);
+
+	mission->stage = STAGE_MISSION_GOTO;
+
+	installation = CP_InterceptChooseInstallation(mission);
+	if (!installation) {
+		Com_Printf("CP_InterceptGoToInstallation: no installation found\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+	mission->data = (void *)installation;
+
+	Vector2Copy(installation->pos, mission->pos);
+
+	Com_sprintf(mission->location, sizeof(mission->location), "%s", installation->name);
+
+	CP_MissionDisableTimeLimit(mission);
+	UFO_SendToDestination(mission->ufo, mission->pos);
+}
+
+/**
+ * @brief Set Intercept mission: choose between attacking aircraft or installations.
+ * @note Intercept mission -- Stage 1
+ */
+static void CP_InterceptMissionSet (mission_t *mission)
+{
+	assert(mission->ufo);
+
+	/* Only harvesters can attack installations -- if there are installations to attack */
+	if (mission->ufo->ufotype == UFO_HARVESTER && gd.numInstallations) {
+		CP_InterceptGoToInstallation(mission);
+	}
+
+	CP_InterceptAircraftMissionSet(mission);
 }
 
 /**
@@ -2228,6 +2345,7 @@ static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int
 	int num = 0;
 
 	ufoTypes[num++] = UFO_FIGHTER;
+	ufoTypes[num++] = UFO_HARVESTER;
 
 	return num;
 }
@@ -2238,6 +2356,7 @@ static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int
  */
 static void CP_InterceptNextStage (mission_t *mission)
 {
+Com_Printf("New interception stage: %i\n", mission->stage);
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Intercept mission */
@@ -2247,12 +2366,15 @@ static void CP_InterceptNextStage (mission_t *mission)
 		/* UFO start looking for target */
 		CP_InterceptMissionSet(mission);
 		break;
+	case STAGE_MISSION_GOTO:
+		CP_InterceptAttackInstallation(mission);
+		break;
 	case STAGE_INTERCEPT:
 		assert(mission->ufo);
 		/* Leave earth */
 		if (AIRFIGHT_ChooseWeapon(mission->ufo->weapons, mission->ufo->maxWeapons, mission->ufo->pos, mission->ufo->pos) !=
-			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO) {
-			/* UFO is fighting and has still ammo, wait a little bit before leaving */
+			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO && !mission->data) {
+			/* UFO is fighting and has still ammo, wait a little bit before leaving (UFO is not attacking an installation) */
 			const date_t AdditionalDelay = {1, 0};	/* 1 day */
 			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);
 		} else
@@ -2528,7 +2650,10 @@ static inline void CP_MissionIsOver (mission_t *mission)
 			CP_XVIMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
-		CP_InterceptMissionIsFailure(mission);
+		if (mission->stage <= STAGE_INTERCEPT)
+			CP_InterceptMissionIsFailure(mission);
+		else
+			CP_InterceptMissionIsSuccess(mission);
 		break;
 	case INTERESTCATEGORY_HARVEST:
 		CP_HarvestMissionIsFailure(mission);
@@ -2716,7 +2841,7 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 		return "XVI propagation";
 		break;
 	case INTERESTCATEGORY_INTERCEPT:
-		return "Aircraft interception";
+		return "Interception";
 		break;
 	case INTERESTCATEGORY_HARVEST:
 		return "Harvest";
@@ -2759,7 +2884,7 @@ static const char* CP_MissionStageToName (const missionStage_t stage)
 	case STAGE_SPREAD_XVI:
 		return "Spreading XVI";
 	case STAGE_INTERCEPT:
-		return "Intercepting aircraft";
+		return "Intercepting or attacking installation";
 	case STAGE_RETURN_TO_ORBIT:
 		return "Leaving earth";
 	case STAGE_BASE_DISCOVERED:
@@ -2789,6 +2914,8 @@ static void CP_SpawnNewMissions_f (void)
 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
 			if (category == INTERESTCATEGORY_BUILDING)
 				Com_Printf(" <0:Subverse Government, 1:Build Base>");
+			if (category == INTERESTCATEGORY_INTERCEPT)
+				Com_Printf(" <0:Intercept aircraft, 1:Attack installation>");
 			Com_Printf("\n");
 		}
 		return;
@@ -2812,7 +2939,7 @@ static void CP_SpawnNewMissions_f (void)
 		}
 		switch (category) {
 		case INTERESTCATEGORY_RECON:
-			/* Start ground mission */
+			/* Start mission */
 			if (!CP_MissionCreate(mission))
 				return;
 			if (type == 1)
@@ -2825,6 +2952,17 @@ static void CP_SpawnNewMissions_f (void)
 		case INTERESTCATEGORY_BUILDING:
 			if (type == 1)
 				mission->initialOverallInterest = STARTING_BASEBUILD_INTEREST + 1;
+			break;
+		case INTERESTCATEGORY_INTERCEPT:
+			/* Start mission */
+			if (!CP_MissionCreate(mission))
+				return;
+			if (type == 1) {
+				mission->ufo->ufotype = UFO_HARVESTER;
+				CP_InterceptGoToInstallation(mission);
+			} else {
+				CP_InterceptAircraftMissionSet(mission);
+			}
 			break;
 		default:
 			Com_Printf("Type is not implemented for this category.\n");
@@ -2932,7 +3070,7 @@ void CP_UFOProceedMission (aircraft_t *ufocraft)
 	/* Every UFO on geoscape should have a mission assigned */
 	assert(ufocraft->mission);
 
-	if (ufocraft->mission->category == INTERESTCATEGORY_INTERCEPT) {
+	if (ufocraft->mission->category == INTERESTCATEGORY_INTERCEPT && !ufocraft->mission->data) {
 		/* Interception mission is over */
 		ufocraft->status = AIR_TRANSIT;			/* continue stage */
 		CP_MissionStageEnd(ufocraft->mission);

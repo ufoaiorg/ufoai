@@ -115,7 +115,7 @@ typedef enum missionStage_s {
 	STAGE_SUBVERT_GOV,				/**< Subvert government */
 	STAGE_SUPPLY,					/**< Supply already existing base */
 	STAGE_SPREAD_XVI,				/**< Spreading XVI Virus */
-	STAGE_INTERCEPT,				/**< UFO attacks any encountered PHALANX aircraft */
+	STAGE_INTERCEPT,				/**< UFO attacks any encountered PHALANX aircraft or attack an installation */
 	STAGE_BASE_DISCOVERED,			/**< PHALANX discovered the base */
 	STAGE_HARVEST,					/**< Harvesting */
 

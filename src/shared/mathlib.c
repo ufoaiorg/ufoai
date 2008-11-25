@@ -305,6 +305,10 @@ void VectorRotate (vec3_t m[3], const vec3_t va, vec3_t vb)
  * @param[in] v1 vector to compare with v2
  * @param[in] v2 vector to compare with v1
  * @param[in] epsilon The epsilon the vectors may differ to still be the same
+ * @return 1 if the 2 vectors are the same (less than epsilon difference).
+ * @note This is not an exact calculation (should use a sqrt). Use this function
+ * only if you want to know if both vectors are the same with a precison that is
+ * roughly epsilon (the difference should be lower than sqrt(3) * epsilon).
  */
 int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
 {
