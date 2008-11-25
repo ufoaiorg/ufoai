@@ -2356,7 +2356,7 @@ static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int
  */
 static void CP_InterceptNextStage (mission_t *mission)
 {
-Com_Printf("New interception stage: %i\n", mission->stage);
+	Com_DPrintf(DEBUG_CLIENT, "New interception stage: %i\n", mission->stage);
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Intercept mission */
@@ -2912,9 +2912,9 @@ static void CP_SpawnNewMissions_f (void)
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
 				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
-			if (category == INTERESTCATEGORY_BUILDING)
+			else if (category == INTERESTCATEGORY_BUILDING)
 				Com_Printf(" <0:Subverse Government, 1:Build Base>");
-			if (category == INTERESTCATEGORY_INTERCEPT)
+			else if (category == INTERESTCATEGORY_INTERCEPT)
 				Com_Printf(" <0:Intercept aircraft, 1:Attack installation>");
 			Com_Printf("\n");
 		}
