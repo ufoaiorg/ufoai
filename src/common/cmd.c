@@ -488,7 +488,7 @@ const char *Cmd_Args (void)
 /**
  * @brief Return the userdata of the called command
  */
-void *Cmd_Userdata(void)
+void *Cmd_Userdata (void)
 {
 	return cmd_userdata;
 }
@@ -901,9 +901,10 @@ void Cmd_ExecuteString (const char *text)
 		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
 				Cmd_ExecuteString(va("cmd %s", text));
-			} else
+			} else {
 				cmd_userdata = cmd->userdata;
 				cmd->function();
+			}
 			return;
 		}
 	}
