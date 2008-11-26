@@ -394,14 +394,14 @@ void LET_PlayAmbientSound (le_t * le)
 	assert(le->sfx);
 
 	if (!((1 << cl_worldlevel->integer) & le->levelflags)) {
-		Mix_HaltChannel(le->sfx->channel);
+		S_StopSound(le->sfx);
 		le->sfx->channel = -1;
 		return;
 	}
 
 	if (le->sfx->channel == -1) {
 		S_SetVolume(le->sfx, le->sfx->volume);
-		le->sfx->channel = Mix_PlayChannel(le->sfx->channel, le->sfx->data, le->sfx->loops);
+		S_StartSound(NULL, le->sfx, -1.0f);
 	}
 
 	/* could not start the sound */
@@ -411,7 +411,7 @@ void LET_PlayAmbientSound (le_t * le)
 	}
 
 	/* find the total contribution of all sounds of this type */
-	if (Mix_Playing(le->sfx->channel)) {
+	if (S_Playing(le->sfx)) {
 		float dist = VectorDist(cl.cam.camorg, le->origin);
 		float volume = le->volume;
 		if (dist >= SOUND_FULLVOLUME) {

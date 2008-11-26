@@ -821,8 +821,6 @@ static int CIN_CompleteCommand (const char *partial, const char **match)
 
 void CIN_Init (void)
 {
-	float f;
-	short s;
 	int i;
 
 	memset(&cin, 0, sizeof(cin));
@@ -834,7 +832,7 @@ void CIN_Init (void)
 
 	/* Build YUV table */
 	for (i = 0; i < 256; i++) {
-		f = (float)(i - 128);
+		const float f = (float)(i - 128);
 		cin_yuvTable.vr[i] = Q_ftol(f * 1.40200f);
 		cin_yuvTable.ug[i] = Q_ftol(f * 0.34414f);
 		cin_yuvTable.vg[i] = Q_ftol(f * 0.71414f);
@@ -843,7 +841,7 @@ void CIN_Init (void)
 
 	/* Build square table */
 	for (i = 0; i < 128; i++) {
-		s = (short)(i * i);
+		const short s = (short)(i * i);
 		cin_sqrTable[i] = s;
 		cin_sqrTable[i + 128] = -s;
 	}

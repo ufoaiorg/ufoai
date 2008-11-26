@@ -313,6 +313,7 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 	sample.allocated = 0;
 	sample.abuf = wavecvt.buf;
 	sample.alen = wavecvt.len_cvt;
+	/** @todo make use of snd_volume->value */
 	sample.volume = MIX_MAX_VOLUME;
 
 	/** @todo Free the channel data after the channel ended - memleak */
@@ -355,6 +356,10 @@ sfx_t *S_RegisterSound (const char *name)
 
 /**
  * @brief Set volume for mixer chunk relative to snd_volume
+ * @param[in,out] sfx The @c sfx_t to set the sound volume for
+ * @param[in] volume The channel volume (0-MIX_MAX_VOLUME)
+ * a negative value would not update the volume (e.g. if already set)
+ * @sa S_StartSound
  */
 void S_SetVolume (sfx_t *sfx, int volume)
 {
@@ -377,15 +382,36 @@ void S_SetVolume (sfx_t *sfx, int volume)
 }
 
 /**
+ * @return true if the sfx is still playing
+ * @sa S_StopSound
+ * @sa S_StartSound
+ */
+qboolean S_Playing (const sfx_t* sfx)
+{
+	return Mix_Playing(sfx->channel);
+}
+
+/**
+ * @sa S_StartSound
+ * @sa S_Playing
+ */
+void S_StopSound (const sfx_t* sfx)
+{
+	if (S_Playing(sfx))
+		Mix_HaltChannel(sfx->channel);
+}
+
+/**
  * @brief Validates the parms and ques the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
  * @param[in] sfx The soundfile to play
- * @param[in] relVolume - 0 - 1
+ * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
  * @sa S_StartLocalSound
+ * @sa S_SetVolume
  */
 void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 {
-	int volume = MIX_MAX_VOLUME * relVolume;
+	int volume = min(MIX_MAX_VOLUME, MIX_MAX_VOLUME * relVolume);
 
 	if (!sound_started) {
 		Com_DPrintf(DEBUG_SOUND, "S_StartSound: no sound started\n");
@@ -395,13 +421,6 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 	/* maybe the sound file couldn't be loaded */
 	if (!sfx)
 		return;
-
-#ifdef DEBUG
-	if (volume > MIX_MAX_VOLUME) {
-		Com_DPrintf(DEBUG_SOUND, "S_StartSound: Mixer volume is too high: %i - max value is %i\n", MIX_MAX_VOLUME, volume);
-		volume = MIX_MAX_VOLUME;
-	}
-#endif
 
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
