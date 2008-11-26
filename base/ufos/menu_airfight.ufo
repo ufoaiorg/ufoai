@@ -78,8 +78,8 @@ menu airfight
 		pos		"840 100"
 		texl	"41 0"
 		texh	"61 20"
-		out		{ *bt_exitzoom texl "41 0" *bt_exitzoom texh "61 20" }
-		in		{ *bt_exitzoom texl "61 0" *bt_exitzoom texh "81 20" }
+		out		{ *bt_exit texl "41 0" *bt_exit texh "61 20" }
+		in		{ *bt_exit texl "61 0" *bt_exit texh "81 20" }
 		click	{ cmd mn_pop; }
 	}
 
@@ -89,7 +89,7 @@ menu airfight
 		image	menu/buttons_time
 		pos		"871 100"
 		texl	"42 0"
-		texh	"52 20"
+		texh	"52 20"	
 		out		{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
 		in		{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
 		click	{ cmd "game_timeslow;" }
@@ -109,18 +109,6 @@ menu airfight
 		click	{ cmd "game_timefast;" }
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
-	}
-
-	pic bt_zoomlevel
-	{
-		tooltip	"_Toggle between full zoom and half zoom"
-		image	menu/buttons_combatzoom
-		pos		"911 100"
-		texl	"0 0"
-		texh	"20 20"
-		out		{ *bt_zoomlevel texl "0 0" *bt_zoomlevel texh "20 20" }
-		in		{ *bt_zoomlevel texl "21 0" *bt_zoomlevel texh "41 20" }
-		click	{ cmd "togglecombatzoomlevel;" }
 	}
 
 	string timelapse
