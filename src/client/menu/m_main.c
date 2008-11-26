@@ -105,6 +105,12 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 				 * client time */
 				if (node->timeOut)
 					node->timePushed = cl.time;
+
+				/* override confunc definition */
+				if (node->behaviour->id == MN_CONFUNC) {
+					assert(Cmd_Exists(node->name));
+					Cmd_AddUserdata(node->name, node);
+				}
 			}
 
 			return mn.menus + i;
