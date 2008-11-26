@@ -151,8 +151,8 @@ aircraft craft_drop_herakles
 aircraft craft_inter_stiletto
 {
 	param {
-		speed		7
-		maxspeed	10
+		speed		9
+		maxspeed	14
 		shield		0
 		ecm		100
 		damage		30
@@ -196,8 +196,8 @@ aircraft craft_inter_stiletto
 aircraft craft_inter_saracen
 {
 	param {
-		speed		37
-		maxspeed	41
+		speed		12
+		maxspeed	18
 		shield		0
 		ecm		100
 		damage		40
@@ -236,8 +236,8 @@ aircraft craft_inter_saracen
 aircraft craft_inter_dragon
 {
 	param {
-		speed		30
-		maxspeed	37
+		speed		17
+		maxspeed	23
 		shield		0
 		ecm		100
 		damage		40
@@ -276,8 +276,8 @@ aircraft craft_inter_dragon
 aircraft craft_inter_stingray
 {
 	param {
-		speed		45
-		maxspeed	55
+		speed		20
+		maxspeed	30
 		shield		3
 		ecm		100
 		damage		70
@@ -389,8 +389,8 @@ aircraft craft_ufo_carrier
 aircraft craft_ufo_supply
 {
 	param {
-		speed		15
-		maxspeed	27
+		speed		8
+		maxspeed	16
 		shield		5
 		ecm		100
 		damage		50
@@ -411,8 +411,8 @@ aircraft craft_ufo_supply
 aircraft craft_ufo_bomber
 {
 	param {
-		speed		25
-		maxspeed	30
+		speed		18
+		maxspeed	27
 		shield		0
 		ecm			100
 		damage		40
@@ -490,7 +490,7 @@ aircraft craft_ufo_fighter
 {
 	param {
 		speed		8
-		maxspeed	16
+		maxspeed	14
 		shield		0
 		ecm		100
 		damage		80
