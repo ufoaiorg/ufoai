@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-11-18 19:11+0100\n"
-"PO-Revision-Date: 2008-11-22 22:02+0100\n"
+"PO-Revision-Date: 2008-11-26 19:05+0100\n"
 "Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,12 +63,12 @@ msgstr "Kleiner Wald"
 #: ../base/maps/forest.ump:361
 #, fuzzy
 msgid "Little bungalo in forest"
-msgstr "Kleines Bungalo im Wald"
+msgstr "Ein kleines Bungalo im Wald"
 
 #: ../base/maps/forest.ump:391
 #, fuzzy
 msgid "Crashed UFO - Scout"
-msgstr "UFO - Kundschafter"
+msgstr "Abgestürtzes  UFO - Kundschafter"
 
 #: ../base/maps/forest.ump:419
 #: ../base/ufos/aircraftmanagement.ufo:478
@@ -108,7 +108,7 @@ msgstr "Tankstelle"
 #: ../base/maps/industrial.ump:235
 #, fuzzy
 msgid "UFO Landed"
-msgstr "UFO - Transporter"
+msgstr "Gelandetes UFO"
 
 #: ../base/maps/italy.ump:42
 msgid "Italy"
@@ -427,7 +427,6 @@ msgid "stun_electro"
 msgstr ""
 
 #: ../base/ufos/armour.ufo:58
-#, fuzzy
 msgid "stun_gas"
 msgstr "Betäubungsgas"
 
@@ -1359,7 +1358,7 @@ msgstr "Keine Sprache"
 #: ../base/ufos/maps.ufo:22
 #, fuzzy
 msgid "Industrial theme."
-msgstr "Industrie"
+msgstr "Industrie Theme."
 
 #: ../base/ufos/maps.ufo:63
 #: ../base/ufos/maps.ufo:95
@@ -1391,8 +1390,9 @@ msgid "An industrial compound."
 msgstr "Ein Industriekomplex."
 
 #: ../base/ufos/maps.ufo:485
+#, fuzzy
 msgid "A river runs through this piece of jungle."
-msgstr ""
+msgstr "Ein Fluss der durch diesen Teil des Jungles fliesst."
 
 #: ../base/ufos/maps.ufo:516
 msgid "A cleared stretch of land in the middle of the jungle."
@@ -1428,8 +1428,9 @@ msgid "An old mine."
 msgstr "Eine alte Mine."
 
 #: ../base/ufos/maps.ufo:886
+#, fuzzy
 msgid "An industial area, used for loading and unloading goods."
-msgstr ""
+msgstr "Ein industrieeller Güterent- und Belade Bereich."
 
 #: ../base/ufos/maps.ufo:925
 #, fuzzy
@@ -1449,8 +1450,9 @@ msgid "A small industrial area."
 msgstr "Ein kleines Industriegebiet."
 
 #: ../base/ufos/maps.ufo:1083
+#, fuzzy
 msgid "A stadium used for various recreational events."
-msgstr ""
+msgstr "Ein Stadium welches für verschiedene Veranstaltungsmöglichkeiten verwendet wird."
 
 #: ../base/ufos/maps.ufo:1125
 msgid "A tropical area where several suspected criminals have made their homes."
@@ -1461,8 +1463,9 @@ msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of th
 msgstr "Ein von Äckern und Scheunen umgebenes Bauernhaus. Ein UFO ist auf einem der Felder gelandet. "
 
 #: ../base/ufos/maps.ufo:1285
+#, fuzzy
 msgid "A rather old-fashioned suburban district."
-msgstr ""
+msgstr "Einw eher altmodischer Vorortsbezirk."
 
 #: ../base/ufos/maps.ufo:1329
 #: ../base/ufos/maps.ufo:1369
@@ -1470,8 +1473,9 @@ msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1409
+#, fuzzy
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr ""
+msgstr "Tankstelle"
 
 #: ../base/ufos/maps.ufo:1451
 #: ../base/ufos/maps.ufo:1490
@@ -1537,8 +1541,9 @@ msgid "A Bomber has landed in the middle of a city."
 msgstr "Ein Bomber ist mitten in einer Stadt gelandet."
 
 #: ../base/ufos/maps.ufo:2159
+#, fuzzy
 msgid "A place where people come to relax and mingle."
-msgstr ""
+msgstr "Ein Ort and den sich Leute treffen und entspannen."
 
 #: ../base/ufos/maps.ufo:2200
 msgid "A laboratory where they examined found UFO wreck tiles."
@@ -1554,8 +1559,9 @@ msgstr "Terrormission in der Wildniss."
 
 #: ../base/ufos/maps.ufo:2313
 #: ../base/ufos/maps.ufo:2347
+#, fuzzy
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Gegend vor."
 
 #: ../base/ufos/maps.ufo:2385
 msgid "UFO Crashsite."
@@ -2337,7 +2343,7 @@ msgstr "Name:"
 #: ../base/ufos/menu_buildings.ufo:149
 #, fuzzy
 msgid "Building preview"
-msgstr "Konstruktion abgeschlossen"
+msgstr "Gebäude Vorschau"
 
 #: ../base/ufos/menu_buildings.ufo:194
 #: ../base/ufos/menu_geoscape.ufo:304
@@ -4580,7 +4586,7 @@ msgstr "Soldat umbenennen"
 #: ../base/ufos/menu_team.ufo:961
 #, fuzzy
 msgid "Assign tanks"
-msgstr "Panzer zuteilen"
+msgstr "Panzerfahrzeug zuteilen"
 
 #: ../base/ufos/menu_team.ufo:955
 msgid "Assign soldiers"
@@ -12185,8 +12191,9 @@ msgid "Insufficient storage space at that base."
 msgstr "Nicht genügend Lagerplatz vorhanden in dieser Basis."
 
 #: client/cl_aircraft.c:881
+#, fuzzy
 msgid "That base is beyond this aircraft's range."
-msgstr ""
+msgstr "Die Basis ist ausserhalb Flugreichweite des Flugzeugs."
 
 #: client/cl_aircraft.c:1202
 #, c-format
@@ -15649,8 +15656,9 @@ msgid "Item was placed\n"
 msgstr "Gegenstand wurde platziert\n"
 
 #: game/g_spawn.c:705
+#, fuzzy
 msgid "Target zone is occupied\n"
-msgstr ""
+msgstr "Zielzone ist besetzt\n"
 
 #: game/g_spawn.c:837
 #, c-format
