@@ -400,7 +400,9 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		} else {
 			*(float*) b = atof(value);
 		}
-	} else {
+	} else if (property->type == V_INT) {
+		*(int*) b = atoi(value);
+    } else {
 		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s.%s@%s'\n", node->menu->name, node->name, property->string);
 		return qfalse;
 	}

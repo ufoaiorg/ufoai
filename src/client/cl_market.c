@@ -253,6 +253,9 @@ static void BS_MarketClick_f (void)
 		currentSelectedMenuEntry = buyList.l[num].item;
 		break;
 	}
+
+    /* update selected element */
+	MN_ExecuteConfunc(va("buy_selectitem %i", num));
 }
 
 /**

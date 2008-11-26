@@ -307,7 +307,14 @@ menu buy
 	// =========================
 
 	/**
-	 * @param[in] <1> id of the item
+	 * @param[in] <1> row of the item
+     */
+	confunc buy_selectitem {
+		cmd "mn_setnodeproperty market lineselected <1>"
+	}
+
+	/**
+	 * @param[in] <1> row of the item
 	 * @param[in] <2> quantity of the item in the base
 	 * @param[in] <3> min value allowed
 	 * @param[in] <4> max value allowed
@@ -394,7 +401,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 40"
-		change	{ cmd "mn_buysell 0 <lastdiff>;" }
+		change	{ cmd "mn_buysell 0 <lastdiff>; market_click 0" }
 	}
 	pic bt_autosell0
 	{
@@ -421,7 +428,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 65"
-		change	{ cmd "mn_buysell 1 <lastdiff>;" }
+		change	{ cmd "mn_buysell 1 <lastdiff>; market_click 1" }
 	}
 	pic bt_autosell1
 	{
@@ -448,7 +455,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 90"
-		change	{ cmd "mn_buysell 2 <lastdiff>;" }
+		change	{ cmd "mn_buysell 2 <lastdiff>; market_click 2" }
 	}
 	pic bt_autosell2
 	{
@@ -475,7 +482,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 115"
-		change	{ cmd "mn_buysell 3 <lastdiff>;" }
+		change	{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
 	}
 	pic bt_autosell3
 	{
@@ -502,7 +509,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 140"
-		change	{ cmd "mn_buysell 4 <lastdiff>;" }
+		change	{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
 	}
 	pic bt_autosell4
 	{
@@ -529,7 +536,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 165"
-		change	{ cmd "mn_buysell 5 <lastdiff>;" }
+		change	{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
 	}
 	pic bt_autosell5
 	{
@@ -556,7 +563,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 190"
-		change	{ cmd "mn_buysell 6 <lastdiff>;" }
+		change	{ cmd "mn_buysell 6 <lastdiff>; market_click 6" }
 	}
 	pic bt_autosell6
 	{
@@ -583,7 +590,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 215"
-		change	{ cmd "mn_buysell 7 <lastdiff>;" }
+		change	{ cmd "mn_buysell 7 <lastdiff>; market_click 7" }
 	}
 	pic bt_autosell7
 	{
@@ -610,7 +617,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 240"
-		change	{ cmd "mn_buysell 8 <lastdiff>;" }
+		change	{ cmd "mn_buysell 8 <lastdiff>; market_click 8" }
 	}
 	pic bt_autosell8
 	{
@@ -637,7 +644,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 265"
-		change	{ cmd "mn_buysell 9 <lastdiff>;" }
+		change	{ cmd "mn_buysell 9 <lastdiff>; market_click 9" }
 	}
 	pic bt_autosell9
 	{
@@ -664,7 +671,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 290"
-		change	{ cmd "mn_buysell 10 <lastdiff>;" }
+		change	{ cmd "mn_buysell 10 <lastdiff>; market_click 10" }
 	}
 	pic bt_autosell10
 	{
@@ -691,7 +698,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 315"
-		change	{ cmd "mn_buysell 11 <lastdiff>;" }
+		change	{ cmd "mn_buysell 11 <lastdiff>; market_click 11" }
 	}
 	pic bt_autosell11
 	{
@@ -718,7 +725,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 340"
-		change	{ cmd "mn_buysell 12 <lastdiff>;" }
+		change	{ cmd "mn_buysell 12 <lastdiff>; market_click 12" }
 	}
 	pic bt_autosell12
 	{
@@ -745,7 +752,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 365"
-		change	{ cmd "mn_buysell 13 <lastdiff>;" }
+		change	{ cmd "mn_buysell 13 <lastdiff>; market_click 13" }
 	}
 	pic bt_autosell13
 	{
@@ -772,7 +779,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 390"
-		change	{ cmd "mn_buysell 14 <lastdiff>;" }
+		change	{ cmd "mn_buysell 14 <lastdiff>; market_click 14" }
 	}
 	pic bt_autosell14
 	{
@@ -799,7 +806,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 415"
-		change	{ cmd "mn_buysell 15 <lastdiff>;" }
+		change	{ cmd "mn_buysell 15 <lastdiff>; market_click 15" }
 	}
 	pic bt_autosell15
 	{
@@ -826,7 +833,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 440"
-		change	{ cmd "mn_buysell 16 <lastdiff>;" }
+		change	{ cmd "mn_buysell 16 <lastdiff>; market_click 16" }
 	}
 	pic bt_autosell16
 	{
@@ -853,7 +860,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 465"
-		change	{ cmd "mn_buysell 17 <lastdiff>;" }
+		change	{ cmd "mn_buysell 17 <lastdiff>; market_click 17" }
 	}
 	pic bt_autosell17
 	{
@@ -880,7 +887,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 490"
-		change	{ cmd "mn_buysell 18 <lastdiff>;" }
+		change	{ cmd "mn_buysell 18 <lastdiff>; market_click 18" }
 	}
 	pic bt_autosell18
 	{
@@ -907,7 +914,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 515"
-		change	{ cmd "mn_buysell 19 <lastdiff>;" }
+		change	{ cmd "mn_buysell 19 <lastdiff>; market_click 19" }
 	}
 	pic bt_autosell19
 	{
@@ -934,7 +941,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 540"
-		change	{ cmd "mn_buysell 20 <lastdiff>;" }
+		change	{ cmd "mn_buysell 20 <lastdiff>; market_click 20" }
 	}
 	pic bt_autosell20
 	{
@@ -961,7 +968,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 565"
-		change	{ cmd "mn_buysell 21 <lastdiff>;" }
+		change	{ cmd "mn_buysell 21 <lastdiff>; market_click 21" }
 	}
 	pic bt_autosell21
 	{
@@ -988,7 +995,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 590"
-		change	{ cmd "mn_buysell 22 <lastdiff>;" }
+		change	{ cmd "mn_buysell 22 <lastdiff>; market_click 22" }
 	}
 	pic bt_autosell22
 	{
@@ -1015,7 +1022,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 615"
-		change	{ cmd "mn_buysell 23 <lastdiff>;" }
+		change	{ cmd "mn_buysell 23 <lastdiff>; market_click 23" }
 	}
 	pic bt_autosell23
 	{
@@ -1042,7 +1049,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 640"
-		change	{ cmd "mn_buysell 24 <lastdiff>;" }
+		change	{ cmd "mn_buysell 24 <lastdiff>; market_click 24" }
 	}
 	pic bt_autosell24
 	{
@@ -1069,7 +1076,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 665"
-		change	{ cmd "mn_buysell 25 <lastdiff>;" }
+		change	{ cmd "mn_buysell 25 <lastdiff>; market_click 25" }
 	}
 	pic bt_autosell25
 	{
@@ -1096,7 +1103,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 690"
-		change	{ cmd "mn_buysell 26 <lastdiff>;" }
+		change	{ cmd "mn_buysell 26 <lastdiff>; market_click 26" }
 	}
 	pic bt_autosell26
 	{
@@ -1123,7 +1130,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 715"
-		change	{ cmd "mn_buysell 27 <lastdiff>;" }
+		change	{ cmd "mn_buysell 27 <lastdiff>; market_click 27" }
 	}
 	pic bt_autosell27
 	{
