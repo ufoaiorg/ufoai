@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-11-18 19:11+0100\n"
-"PO-Revision-Date: 2008-11-26 19:05+0100\n"
+"PO-Revision-Date: 2008-11-26 20:38+0100\n"
 "Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,12 +61,10 @@ msgid "Little forest"
 msgstr "Kleiner Wald"
 
 #: ../base/maps/forest.ump:361
-#, fuzzy
 msgid "Little bungalo in forest"
 msgstr "Ein kleines Bungalo im Wald"
 
 #: ../base/maps/forest.ump:391
-#, fuzzy
 msgid "Crashed UFO - Scout"
 msgstr "Abgestürtzes  UFO - Kundschafter"
 
@@ -106,7 +104,6 @@ msgid "Gasstation"
 msgstr "Tankstelle"
 
 #: ../base/maps/industrial.ump:235
-#, fuzzy
 msgid "UFO Landed"
 msgstr "Gelandetes UFO"
 
@@ -1356,7 +1353,6 @@ msgid "No language"
 msgstr "Keine Sprache"
 
 #: ../base/ufos/maps.ufo:22
-#, fuzzy
 msgid "Industrial theme."
 msgstr "Industrie Theme."
 
@@ -1364,7 +1360,6 @@ msgstr "Industrie Theme."
 #: ../base/ufos/maps.ufo:95
 #: ../base/ufos/maps.ufo:128
 #: ../base/ufos/maps.ufo:162
-#, fuzzy
 msgid "A suburban district of an oriental area."
 msgstr "Ein Vorstadts Bezirk eines oriantalischen Gebiets"
 
@@ -1381,7 +1376,6 @@ msgid "An industrial area in a cold region."
 msgstr "Ein Industrie-Areal in einer kalten Region"
 
 #: ../base/ufos/maps.ufo:342
-#, fuzzy
 msgid "An underpopulated area in a cold region."
 msgstr "Unbewohntes Areal in einer kalten Region."
 
@@ -1390,7 +1384,6 @@ msgid "An industrial compound."
 msgstr "Ein Industriekomplex."
 
 #: ../base/ufos/maps.ufo:485
-#, fuzzy
 msgid "A river runs through this piece of jungle."
 msgstr "Ein Fluss der durch diesen Teil des Jungles fliesst."
 
@@ -1406,12 +1399,10 @@ msgid "A peaceful neighborhood on the outskirts of a centre of population."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:677
-#, fuzzy
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Eine Ausgrabungsstätte die unter Alienangriff steht."
 
 #: ../base/ufos/maps.ufo:719
-#, fuzzy
 msgid "An estate owned by rich and influential people."
 msgstr "Ein Anwesen von Reichen und Einflusshabenden Leuten"
 
@@ -1428,12 +1419,10 @@ msgid "An old mine."
 msgstr "Eine alte Mine."
 
 #: ../base/ufos/maps.ufo:886
-#, fuzzy
 msgid "An industial area, used for loading and unloading goods."
 msgstr "Ein industrieeller Güterent- und Belade Bereich."
 
 #: ../base/ufos/maps.ufo:925
-#, fuzzy
 msgid "A bunker used in a previous conflict."
 msgstr "Bunker aus einem voerherigen Konflikt."
 
@@ -1450,7 +1439,6 @@ msgid "A small industrial area."
 msgstr "Ein kleines Industriegebiet."
 
 #: ../base/ufos/maps.ufo:1083
-#, fuzzy
 msgid "A stadium used for various recreational events."
 msgstr "Ein Stadium welches für verschiedene Veranstaltungsmöglichkeiten verwendet wird."
 
@@ -1463,7 +1451,6 @@ msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of th
 msgstr "Ein von Äckern und Scheunen umgebenes Bauernhaus. Ein UFO ist auf einem der Felder gelandet. "
 
 #: ../base/ufos/maps.ufo:1285
-#, fuzzy
 msgid "A rather old-fashioned suburban district."
 msgstr "Einw eher altmodischer Vorortsbezirk."
 
@@ -1473,7 +1460,6 @@ msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:1409
-#, fuzzy
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Tankstelle"
 
@@ -1512,7 +1498,6 @@ msgid "A local harbor."
 msgstr "Ein lokaler Hafen."
 
 #: ../base/ufos/maps.ufo:1855
-#, fuzzy
 msgid "An office complex on the outskirts of town."
 msgstr "Ein Bürogebäude am Rand der Stadt."
 
@@ -1541,7 +1526,6 @@ msgid "A Bomber has landed in the middle of a city."
 msgstr "Ein Bomber ist mitten in einer Stadt gelandet."
 
 #: ../base/ufos/maps.ufo:2159
-#, fuzzy
 msgid "A place where people come to relax and mingle."
 msgstr "Ein Ort and den sich Leute treffen und entspannen."
 
@@ -1559,7 +1543,6 @@ msgstr "Terrormission in der Wildniss."
 
 #: ../base/ufos/maps.ufo:2313
 #: ../base/ufos/maps.ufo:2347
-#, fuzzy
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Gegend vor."
 
@@ -2341,7 +2324,6 @@ msgid "Name:"
 msgstr "Name:"
 
 #: ../base/ufos/menu_buildings.ufo:149
-#, fuzzy
 msgid "Building preview"
 msgstr "Gebäude Vorschau"
 
@@ -2658,9 +2640,8 @@ msgid "Go to Options"
 msgstr "Optionen"
 
 #: ../base/ufos/menu_geoscape.ufo:602
-#, fuzzy
 msgid "Exit combat zoom mode"
-msgstr "Kampf Zoom Modus beenden"
+msgstr "Zoom im Kampfmodus beenden"
 
 #: ../base/ufos/menu_geoscape.ufo:642
 #, fuzzy
@@ -4584,7 +4565,6 @@ msgstr "Soldat umbenennen"
 
 #: ../base/ufos/menu_team.ufo:950
 #: ../base/ufos/menu_team.ufo:961
-#, fuzzy
 msgid "Assign tanks"
 msgstr "Panzerfahrzeug zuteilen"
 
@@ -13625,7 +13605,7 @@ msgstr[1] " (%i Raketen übrig)"
 #: client/cl_mapfightequip.c:1005
 #, c-format
 msgid "%s was successfully installed into aircraft %s at base %s."
-msgstr ""
+msgstr "%s wurde erfolggreich in Flugzeug %s der Basis %s installiert"
 
 #: client/cl_mapfightequip.c:1009
 #, fuzzy, c-format
@@ -13891,12 +13871,12 @@ msgstr "Überschäumend"
 #: client/cl_nation.c:157
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
-msgstr ""
+msgstr "Nation %s hat seine Zufriedenheit con %s nach %s geändert"
 
 #: client/cl_nation.c:161
 #, c-format
 msgid "Nation %s changed happiness to %s"
-msgstr ""
+msgstr "Nation %s hat ihre Zufriedenheit nach %s geändert"
 
 #: client/cl_nation.c:165
 #, c-format
@@ -13904,9 +13884,8 @@ msgid "Happiness of nation %s is %s and less than minimal happiness allowed to t
 msgstr ""
 
 #: client/cl_nation.c:171
-#, fuzzy
 msgid "Nation changed happiness"
-msgstr "Nationale Zufriedenheit hat sich geändert"
+msgstr "Zufriedenheit der Nation hat sich geändert"
 
 #: client/cl_parse.c:871
 msgid "You've ended your round\n"
@@ -14077,17 +14056,17 @@ msgid "Not enough credits to finish production in base %s.\n"
 msgstr "Nicht genug Kapital um die Produktion in Basis %s abzuschließen.\n"
 
 #: client/cl_produce.c:617
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Production postponed.\n"
 msgstr "Nicht genug Lagerkapazität in der Basis %s. Produktion unterbrochen.\n"
 
 #: client/cl_produce.c:638
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in base %s. Production postponed.\n"
 msgstr "Nicht genug Hangarkapazität in der Basis %s. Produktion unterbrochen.\n"
 
 #: client/cl_produce.c:649
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
 msgstr "Nicht genug Lagerkapazität in der Basis %s. Demontage unterbrochen.\n"
 
@@ -15439,38 +15418,32 @@ msgid "research_completed"
 msgstr "Forschung abgeschlossen"
 
 #: client/menu/m_messages.c:41
-#, fuzzy
 msgid "production_started"
 msgstr "Produktion gestartet"
 
 #: client/menu/m_messages.c:42
-#, fuzzy
 msgid "production_finished"
 msgstr "Produktion abgeschlossen"
 
 #: client/menu/m_messages.c:43
-#, fuzzy
 msgid "production_failed"
-msgstr "Produktion abgeschlossen"
+msgstr "Produktion fehlgeschlagen"
 
 #: client/menu/m_messages.c:44
-#, fuzzy
 msgid "production_queue_empty"
 msgstr "Produktionswarteschlange ist leer"
 
 #: client/menu/m_messages.c:45
 msgid "nation_happiness_changed"
-msgstr ""
+msgstr "Zufriedenheit der Nation hat sich geändert"
 
 #: client/menu/m_messages.c:46
-#, fuzzy
 msgid "nation_unhappy"
 msgstr "Nation is unglücklich"
 
 #: client/menu/m_messages.c:47
-#, fuzzy
 msgid "nation_pleased"
-msgstr "Nationale zufriedenheit"
+msgstr "Zufriedenheit der Nation"
 
 #: client/menu/m_messages.c:101
 #, c-format
@@ -15656,7 +15629,6 @@ msgid "Item was placed\n"
 msgstr "Gegenstand wurde platziert\n"
 
 #: game/g_spawn.c:705
-#, fuzzy
 msgid "Target zone is occupied\n"
 msgstr "Zielzone ist besetzt\n"
 
