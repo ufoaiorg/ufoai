@@ -4010,7 +4010,7 @@ void CL_GameTimeSlow (void)
 	assert(gameLapse >= minGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strncmp(menu->name, "map", 3)) {
+	if (menu && (!Q_strncmp(menu->name, "map", 3) || !Q_strncmp(menu->name, "airfight", 8))) {
 		gameLapse--;
 		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse <= minGameLapse) {
@@ -4048,7 +4048,7 @@ void CL_GameTimeFast (void)
 	assert(gameLapse <= maxGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && !Q_strncmp(menu->name, "map", 3)) {
+	if (menu && (!Q_strncmp(menu->name, "map", 3) || !Q_strncmp(menu->name, "airfight", 8))) {
 		gameLapse++;
 		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse >= maxGameLapse) {
