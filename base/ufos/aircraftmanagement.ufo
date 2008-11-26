@@ -157,7 +157,7 @@ aircraft craft_inter_stiletto
 		ecm		100
 		damage		30
 		accuracy	100
-		range		18
+		range		80
 	}
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
@@ -202,7 +202,7 @@ aircraft craft_inter_saracen
 		ecm		100
 		damage		40
 		accuracy	70
-		range		90
+		range		100
 	}
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
