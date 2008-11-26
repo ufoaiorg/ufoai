@@ -604,7 +604,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 				Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Confunc callback");
 				Cmd_AddUserdata(node->name, node);
 			} else {
-				Com_Printf("MN_ParseNodeBody: Command name for confunc '%s.%s' already registred\n", node->menu->name, node->name);
+				Com_Printf("MN_ParseNodeBody: Command name for confunc '%s.%s' already registered\n", node->menu->name, node->name);
 			}
 		}
 
