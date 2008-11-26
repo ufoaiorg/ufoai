@@ -1,0 +1,26 @@
+// ==================
+// HUD INTERFACE
+// ==================
+
+/**
+ * @brief Define interface shared by all huds.
+ * @note called "ahud" to be load before another huds
+ */
+menu ahud {
+
+	/* Firemode console functions */
+	confunc set_left_ina { }
+	confunc set_right_ina { }
+	confunc set_left_a { }
+	confunc set_right_a { }
+	confunc set_left_inv { }
+	confunc set_right_inv { }
+	confunc set_left_vis { }
+	confunc set_right_vis { }
+
+	/* Firemode checkbox console functions */
+	confunc set_left_cb_ina { }
+	confunc set_right_cb_ina { }
+	confunc set_left_cb_a { }
+	confunc set_right_cb_a { }
+}
