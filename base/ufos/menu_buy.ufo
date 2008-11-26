@@ -310,7 +310,7 @@ menu buy
 	 * @param[in] <1> row of the item
      */
 	confunc buy_selectitem {
-		cmd "mn_setnodeproperty market lineselected <1>"
+		cmd "mn_setnodeproperty market lineselected <1>;"
 	}
 
 	/**
@@ -401,7 +401,7 @@ menu buy
 		max 20000
 		delta 1
 		pos		"376 40"
-		change	{ cmd "mn_buysell 0 <lastdiff>; market_click 0" }
+		change	{ cmd "mn_buysell 0 <lastdiff>; market_click 0;" }
 	}
 	pic bt_autosell0
 	{
