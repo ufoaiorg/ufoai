@@ -571,8 +571,8 @@ static void HideFiremodes (void)
 	visible_firemode_list_left = qfalse;
 	visible_firemode_list_right = qfalse;
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		Cbuf_AddText(va("set_left_inv%i\n", i));
-		Cbuf_AddText(va("set_right_inv%i\n", i));
+		Cbuf_AddText(va("set_left_inv %i\n", i));
+		Cbuf_AddText(va("set_right_inv %i\n", i));
 	}
 
 }
@@ -970,12 +970,12 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
 	if (hand == 'r') {
-		Cbuf_AddText(va("set_right_vis%i\n", fd->fdIdx)); /* Make this entry visible (in case it wasn't). */
+		Cbuf_AddText(va("set_right_vis %i\n", fd->fdIdx)); /* Make this entry visible (in case it wasn't). */
 
 		if (status) {
-			Cbuf_AddText(va("set_right_a%i\n", fd->fdIdx));
+			Cbuf_AddText(va("set_right_a %i\n", fd->fdIdx));
 		} else {
-			Cbuf_AddText(va("set_right_ina%i\n", fd->fdIdx));
+			Cbuf_AddText(va("set_right_ina %i\n", fd->fdIdx));
 		}
 
 		if (usableTusForRF > fd->time)
@@ -988,12 +988,12 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 		Cvar_Set(va("mn_r_fm_shot%i", fd->fdIdx), va(_("Shots:%i"), fd->ammo));
 
 	} else if (hand == 'l') {
-		Cbuf_AddText(va("set_left_vis%i\n", fd->fdIdx)); /* Make this entry visible (in case it wasn't). */
+		Cbuf_AddText(va("set_left_vis %i\n", fd->fdIdx)); /* Make this entry visible (in case it wasn't). */
 
 		if (status) {
-			Cbuf_AddText(va("set_left_a%i\n", fd->fdIdx));
+			Cbuf_AddText(va("set_left_a %i\n", fd->fdIdx));
 		} else {
-			Cbuf_AddText(va("set_left_ina%i\n", fd->fdIdx));
+			Cbuf_AddText(va("set_left_ina %i\n", fd->fdIdx));
 		}
 
 		if (usableTusForRF > fd->time)
@@ -1630,27 +1630,27 @@ void CL_DisplayFiremodes_f (void)
 				if (hand[0] == 'r') {
 					if (THIS_FIREMODE(&selChr->RFmode, 0, i)) {
 						/* Set this checkbox visible+active. */
-						Cbuf_AddText(va("set_right_cb_a%i\n", i));
+						Cbuf_AddText(va("set_right_cb_a %i\n", i));
 					} else {
 						/* Set this checkbox visible+inactive. */
-						Cbuf_AddText(va("set_right_cb_ina%i\n", i));
+						Cbuf_AddText(va("set_right_cb_ina %i\n", i));
 					}
 				} else { /* hand[0] == 'l' */
 					if (THIS_FIREMODE(&selChr->RFmode, 1, i)) {
 						/* Set this checkbox visible+active. */
-						Cbuf_AddText(va("set_left_cb_a%i\n", i));
+						Cbuf_AddText(va("set_left_cb_a %i\n", i));
 					} else {
 						/* Set this checkbox visible+active. */
-						Cbuf_AddText(va("set_left_cb_ina%i\n", i));
+						Cbuf_AddText(va("set_left_cb_ina %i\n", i));
 					}
 				}
 			}
 
 		} else { /* No more fd left in the list or weapon not researched. */
 			if (hand[0] == 'r')
-				Cbuf_AddText(va("set_right_inv%i\n", i)); /* Hide this entry */
+				Cbuf_AddText(va("set_right_inv %i\n", i)); /* Hide this entry */
 			else
-				Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
+				Cbuf_AddText(va("set_left_inv %i\n", i)); /* Hide this entry */
 		}
 	}
 }
