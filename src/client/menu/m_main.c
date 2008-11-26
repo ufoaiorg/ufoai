@@ -352,7 +352,6 @@ menu_t *MN_GetMenu (const char *name)
 		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR))
 			return &mn.menus[i];
 
-	Sys_Error("Could not find menu '%s'\n", name);
 	return NULL;
 }
 
