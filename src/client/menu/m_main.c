@@ -404,8 +404,10 @@ static void MN_ModifyWrap_f (void)
 {
 	float value;
 
-	if (Cmd_Argc() < 5)
+	if (Cmd_Argc() < 5) {
 		Com_Printf("Usage: %s <name> <amount> <min> <max>\n", Cmd_Argv(0));
+		return;
+	}
 
 	value = Cvar_VariableValue(Cmd_Argv(1));
 	value += atof(Cmd_Argv(2));
