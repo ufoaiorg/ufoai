@@ -1090,7 +1090,6 @@ menu hud
 		texh	"255 63"
 		mousefx	false
 		invis true
-		invis true
 		click	{ cmd "fireweap l 5;" }
 		blend 1
 	}
