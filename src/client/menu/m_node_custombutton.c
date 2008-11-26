@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_CustomButtonNodeDraw (menuNode_t *node)
 {
 	const char *text;
-	int baseY;
+	int texY;
 	const float *textColor;
 	const char *image;
 	vec2_t pos;
@@ -51,21 +51,23 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	if (!node->click || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
-		baseY = MN_CUSTOMBUTTON_TEX_HEIGHT * 2;
+		texY = MN_CUSTOMBUTTON_TEX_HEIGHT * 2;
 	} else if (node->state) {
 		textColor = node->selectedColor;
-		baseY = MN_CUSTOMBUTTON_TEX_HEIGHT;
+		texY = MN_CUSTOMBUTTON_TEX_HEIGHT;
 	} else {
 		textColor = node->color;
-		baseY = 0;
+		texY = 0;
 	}
 
 	MN_GetNodeAbsPos(node, pos);
 
 	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (image) {
+		const int texX = rint(node->texl[0]);
+		texY += node->texl[1];
 		R_DrawNormPic(pos[0], pos[1], node->size[0], node->size[1],
-			node->size[0], baseY + node->size[1], 0, baseY, ALIGN_UL, node->blend, image);
+			texX + node->size[0], texY + node->size[1], texX, texY, ALIGN_UL, node->blend, image);
 	}
 
 	text = MN_GetReferenceString(node->menu, node->text);
