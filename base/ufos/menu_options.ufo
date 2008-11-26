@@ -901,7 +901,7 @@ menu options_game
 	// ==================
 	string actorsspeed_str
 	{
-		string	"_Actors speed:"
+		string	"_Actor speed:"
 		pos		"85 430"
 	}
 	pic actorsspeed_rahmen
