@@ -90,6 +90,8 @@ typedef struct menuNode_s {
 	char name[MAX_VAR];
 	struct nodeBehaviour_s *behaviour;
 
+	struct menuNode_s *super; /**< Node inherited, else NULL */
+
 	/* common navigation */
 	struct menuNode_s *next;
 	struct menu_s *menu;		/**< backlink */

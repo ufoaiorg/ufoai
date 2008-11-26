@@ -72,52 +72,63 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
  * @param[in] name Name of the menu to push onto menu stack
  * @param[in] delete Delete the menu from the menu stack before readd it
  * @return pointer to menu_t
+ * @todo Replace "i" by a menu_t, more easy to read
  */
 static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 {
 	int i;
 	menuNode_t *node;
+	menu_t *menu = NULL;
 
 	MN_MouseRelease();
 	MN_FocusRemove();
 
-	for (i = 0; i < mn.numMenus; i++)
+	/* find menu */
+	for (i = 0; i < mn.numMenus; i++) {
 		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR)) {
-			/* found the correct add it to stack or bring it on top */
-			if (delete)
-				MN_DeleteMenuFromStack(&mn.menus[i]);
-
-			if (mn.menuStackPos < MAX_MENUSTACK)
-				mn.menuStack[mn.menuStackPos++] = &mn.menus[i];
-			else
-				Com_Printf("Menu stack overflow\n");
-
-			/* initialize it */
-			if (mn.menus[i].initNode)
-				MN_ExecuteActions(&mn.menus[i], mn.menus[i].initNode->click);
-
-			if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-				Key_Event(K_ENTER, 0, qtrue, cls.realtime);
-			Key_SetDest(key_game);
-
-			for (node = mn.menus[i].firstChild; node; node = node->next) {
-				/* if there is a timeout value set, init the menu with current
-				 * client time */
-				if (node->timeOut)
-					node->timePushed = cl.time;
-
-				/* override confunc definition */
-				if (node->behaviour->id == MN_CONFUNC) {
-					assert(Cmd_Exists(node->name));
-					Cmd_AddUserdata(node->name, node);
-				}
-			}
-
-			return mn.menus + i;
+			menu = &mn.menus[i];
+			break;
 		}
+	}
+	if (menu == NULL) {
+		Com_Printf("Didn't find menu \"%s\"\n", name);
+		return NULL;
+	}
 
-	Com_Printf("Didn't find menu \"%s\"\n", name);
-	return NULL;
+	/* found the correct add it to stack or bring it on top */
+	if (delete)
+		MN_DeleteMenuFromStack(menu);
+
+	if (mn.menuStackPos < MAX_MENUSTACK)
+		mn.menuStack[mn.menuStackPos++] = menu;
+	else
+		Com_Printf("Menu stack overflow\n");
+
+	/* initialize it */
+	if (menu->initNode)
+		MN_ExecuteActions(menu, menu->initNode->click);
+
+	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
+		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
+	Key_SetDest(key_game);
+
+	/* if there is a timeout value set, init the menu with current client time */
+	for (node = menu->firstChild; node; node = node->next) {
+		if (node->timeOut)
+			node->timePushed = cl.time;
+	}
+
+	/* override confunc only for inherited confunc node */
+	if (menu->super) {
+		for (node = menu->firstChild; node; node = node->next) {
+			if (node->super && node->behaviour->id == MN_CONFUNC) {
+				assert(Cmd_Exists(node->name));
+				Cmd_AddUserdata(node->name, node);
+			}
+		}
+	}
+
+	return mn.menus + i;
 }
 
 /**

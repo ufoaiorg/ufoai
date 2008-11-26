@@ -598,7 +598,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		*action = &mn.menuActions[mn.numActions++];
 		memset(*action, 0, sizeof(**action));
 
-		if (node->behaviour->id == MN_CONFUNC) {
+		/* register confunc non inherited */
+		if (node->super == NULL && node->behaviour->id == MN_CONFUNC) {
 			/* don't add a callback twice */
 			if (!Cmd_Exists(node->name)) {
 				Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Confunc callback");
@@ -1041,6 +1042,7 @@ void MN_ParseMenu (const char *name, const char **text)
 		if (!superMenu)
 			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
 		*menu = *superMenu;
+		menu->super = superMenu;
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 
 		/* we dont need to update everything (some must only be NULL at the run time) */
@@ -1055,6 +1057,7 @@ void MN_ParseMenu (const char *name, const char **text)
 				Sys_Error("MAX_MENUNODES exceeded\n");
 
 			newNode = MN_CloneNode(node, menu, qtrue);
+			newNode->super = node;
 			MN_InsertNode(menu, lastNode, newNode);
 			lastNode = newNode;
 

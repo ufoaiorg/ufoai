@@ -2,7 +2,7 @@
 // HUD MAIN
 // ==================
 
-menu hud
+menu hud extends ahud
 {
 	// ==================
 	// render rectangle
