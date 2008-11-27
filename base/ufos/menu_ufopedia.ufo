@@ -909,7 +909,7 @@ menu ufopedia_mail
 	text mailclient
 	{
 		pos		"100 130"
-		size	"870 570"
+		size	"870 550"
 		num		TEXT_UFOPEDIA_MAIL
 		height	"15"
 		font	"f_small"
