@@ -2311,10 +2311,8 @@ void B_SelectBase (base_t *base)
 			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			MN_ExecuteConfunc("set_base_to_normal");
-			/* Store configuration of radar overlay to be able to set it back */
-			radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 			/* show radar overlay (if not already displayed) */
-			if (!radarOverlayWasSet)
+			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 		} else {
 			Com_Printf("MaxBases reached\n");

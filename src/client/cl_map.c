@@ -2611,6 +2611,10 @@ static void MAP_SetOverlay_f (void)
 
 	arg = Cmd_Argv(1);
 	MAP_SetOverlay(arg);
+
+	/* save last decision player took on radar display, in order to be able to restore it later */
+	if (!Q_strcmp(arg, "radar"))
+		radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 }
 
 /**
@@ -2621,23 +2625,19 @@ void MAP_DeactivateOverlay (const char *overlayID)
 {
 	if (!Q_strcmp(overlayID, "nations")) {
 		if (r_geoscape_overlay->integer & OVERLAY_NATION)
-			r_geoscape_overlay->integer ^= OVERLAY_NATION;
+			MAP_SetOverlay("nations");
 		else
 			return;
 	}
 
-	/* do nothing while the first base is not build */
-	if (gd.numBases == 0)
-		return;
-
 	if (!Q_strcmp(overlayID, "xvi")) {
 		if (r_geoscape_overlay->integer & OVERLAY_XVI)
-			r_geoscape_overlay->integer ^= OVERLAY_XVI;
+			MAP_SetOverlay("xvi");
 		else
 			return;
 	} else if (!Q_strcmp(overlayID, "radar")) {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
+			MAP_SetOverlay("radar");
 		else
 			return;
 	}

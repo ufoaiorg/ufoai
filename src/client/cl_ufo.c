@@ -765,10 +765,8 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				/* Make this UFO detected */
 				ufo->detected = qtrue;
 				newDetection = qtrue;
-				/* Store configuration of radar overlay to be able to set it back */
-				radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 				/* If this is the first UFO on geoscape, activate radar */
-				if (!radarOverlayWasSet)
+				if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 					MAP_SetOverlay("radar");
 				CL_GameTimeStop();
 			} else if (!detected) {

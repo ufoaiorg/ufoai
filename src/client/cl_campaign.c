@@ -665,6 +665,8 @@ static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 	AIR_AircraftsNotifyMissionRemoved(mission);
 }
 
+static const char* CP_MissionStageToName(const missionStage_t stage);
+
 /**
  * @brief Add a mission to geoscape: make it visible and stop time
  * @param[in] mission Pointer to added mission.
@@ -678,6 +680,13 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 	/* don't show a mission spawned by a undetected ufo, unless forced : this may be done at next detection stage */
 	if (status == MISDET_CANT_BE_DETECTED || (!force && status == MISDET_MAY_BE_DETECTED && mission->ufo && !mission->ufo->detected))
 		return;
+
+#if DEBUG
+	/* UFO that spawned this mission should be close of mission */
+	if (mission->ufo && ((fabs(mission->ufo->pos[0] - mission->pos[0]) > 1.0f) || (fabs(mission->ufo->pos[1] - mission->pos[1]) > 1.0f))) {
+		Com_Printf("Error: mission (stage: %s) spawned is not at the same location than UFO\n", CP_MissionStageToName(mission->stage));
+	}
+#endif
 
 	/* Notify the player */
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been detected in %s."), mission->location);
@@ -714,9 +723,7 @@ static void CP_CheckNewMissionDetectedOnGeoscape (void)
 			CP_MissionAddToGeoscape(mission, qtrue);
 
 			/* maybe radar is not activated yet (as ufo wasn't detected before) */
-			radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
-			/* If this is the first UFO on geoscape, activate radar */
-			if (!radarOverlayWasSet)
+			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 
 			/* if mission has a UFO, detect the UFO when it takes off (you're carefull on this location) */
@@ -760,11 +767,17 @@ static void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 
 	assert(mission->ufo);
 
+	/* UFO is landed even if it's destroyed: crash site mission is spawned */
 	mission->ufo->landed = qtrue;
 
 	/* Notications */
 	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
+
+	/* maybe we use a high speed time: UFO was detected, but flied out of radar
+	 * range since last calculation, and mission is spawned outside radar range */
+	if (!RADAR_CheckRadarSensored(mission->ufo->pos) && mission->ufo->detected)
+		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 	if (destroyed) {
 		if (mission->ufo->detected)
@@ -1088,6 +1101,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
+	CP_MissionDisableTimeLimit(mission);
 	UFO_SendToDestination(mission->ufo, mission->pos);
 }
 
