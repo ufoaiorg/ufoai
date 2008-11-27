@@ -250,6 +250,7 @@ menu aircraft
 
 	pic aircraft_return
 	{
+		if "mn_aircraftinbase <= 0"
 		tooltip	"_Call back"
 		image	menu/buttons_small
 		pos	"550 410"
@@ -259,6 +260,15 @@ menu aircraft
 		click	{ cmd "aircraft_return;" }
 		out		{ *aircraft_return texl "0 32" *aircraft_return texh "16 48" }
 		in		{ *aircraft_return texl "16 32" *aircraft_return texh "32 48" }
+	}
+	pic aircraft_return_disabled
+	{
+		if "mn_aircraftinbase > 0"
+		tooltip	"_Call back"
+		image	menu/buttons_small
+		pos	"550 410"
+		texl	"65 32"
+		texh	"80 48"
 	}
 
 	string team_members
@@ -284,6 +294,7 @@ menu aircraft
 
 	pic prev_aircraft
 	{
+		if "mn_base_num_aircraft > 1"
 		tooltip	"_Switch to the previous aircraft"
 		image	menu/buttons_small
 		pos	"500 410"
@@ -294,9 +305,19 @@ menu aircraft
 		whup	{ cmd "mn_next_aircraft;" }
 		whdown	{ cmd "mn_prev_aircraft;" }
 	}
+	pic prev_aircraft_disabled
+	{
+		if "mn_base_num_aircraft <= 1"
+		tooltip	"_Switch to the previous aircraft"
+		image	menu/buttons_small
+		pos	"500 410"
+		texl	"65 0"
+		texh	"80 16"
+	}
 
 	pic next_aircraft
 	{
+		if "mn_base_num_aircraft > 1"
 		tooltip	"_Switch to the next aircraft"
 		image	menu/buttons_small
 		pos	"970 410"
@@ -306,6 +327,15 @@ menu aircraft
 		click	{ cmd "mn_next_aircraft;" }
 		whup	{ cmd "mn_next_aircraft;" }
 		whdown	{ cmd "mn_prev_aircraft;" }
+	}
+	pic next_aircraft_disabled
+	{
+		if "mn_base_num_aircraft <= 1"
+		tooltip	"_Switch to the next aircraft"
+		image	menu/buttons_small
+		pos	"970 410"
+		texl	"81 0"
+		texh	"96 16"
 	}
 
 	pic button_leave
@@ -400,6 +430,7 @@ menu aircraft_equip
 
 	pic bt_prev
 	{
+		if "mn_base_num_aircraft > 1"
 		tooltip "_Previous aircraft"
 		image	menu/ufopedia_buttons1
 		pos	"10 665"
@@ -419,9 +450,19 @@ menu aircraft_equip
 			airequip_zone1
 		}
 	}
+	pic bt_prev_disabled
+	{
+		if "mn_base_num_aircraft <= 1"
+		tooltip "_Previous aircraft"
+		image	menu/ufopedia_buttons1d
+		pos	"10 665"
+		texl	"0 37"
+		texh	"64 73"
+	}
 
 	pic bt_next
 	{
+		if "mn_base_num_aircraft > 1"
 		tooltip "_Next aircraft"
 		image	menu/ufopedia_buttons1
 		pos	"382 665"
@@ -440,6 +481,15 @@ menu aircraft_equip
 			cmd "mn_prev_aircraft;"
 			airequip_zone1
 		}
+	}
+	pic bt_next_disabled
+	{
+		if "mn_base_num_aircraft <= 1"
+		tooltip "_Next aircraft"
+		image	menu/ufopedia_buttons1d
+		pos	"382 665"
+		texl	"0 0"
+		texh	"64 36"
 	}
 
 	string aircraftname
