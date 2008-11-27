@@ -248,27 +248,28 @@ menu aircraft
 	// additional stuff
 	// ==================
 
-	pic aircraft_return
+	/** @todo merge this two buttons by calling a confunc to update status (disable, tooltips) */
+	custombutton aircraft_return
 	{
 		if "mn_aircraftinbase <= 0"
 		tooltip	"_Call back"
-		image	menu/buttons_small
 		pos	"550 410"
-		mousefx false
-		texl	"0 32"
-		texh	"16 48"
+		image	menu/button_pack1
+		blend	true
+		texl	"0 0"
+		size	"16 16"
 		click	{ cmd "aircraft_return;" }
-		out		{ *aircraft_return texl "0 32" *aircraft_return texh "16 48" }
-		in		{ *aircraft_return texl "16 32" *aircraft_return texh "32 48" }
 	}
-	pic aircraft_return_disabled
+	custombutton aircraft_return_disabled
 	{
 		if "mn_aircraftinbase > 0"
 		tooltip	"_Call back"
-		image	menu/buttons_small
 		pos	"550 410"
-		texl	"65 32"
-		texh	"80 48"
+		image	menu/button_pack1
+		blend	true
+		texl	"0 0"
+		size	"16 16"
+		disabled	true
 	}
 
 	string team_members
