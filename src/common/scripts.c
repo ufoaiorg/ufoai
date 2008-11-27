@@ -2499,15 +2499,20 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 	}
 }
 
+/**
+ * @sa FS_MapDefSort
+ */
 static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
 {
 	const char *map1 = ((const mapDef_t *)mapDef1)->map;
 	const char *map2 = ((const mapDef_t *)mapDef2)->map;
+
 	/* skip special map chars for rma and base attack */
 	if (map1[0] == '+' || map1[0] == '.')
 		map1++;
 	if (map2[0] == '+' || map2[0] == '.')
 		map2++;
+
 	return Q_StringSort(map1, map2);
 }
 

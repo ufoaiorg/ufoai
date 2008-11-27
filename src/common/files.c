@@ -1277,6 +1277,23 @@ int fs_numInstalledMaps = -1;
 static qboolean fs_mapsInstalledInit = qfalse;
 
 /**
+ * @sa Com_MapDefSort
+ */
+static int FS_MapDefSort (const void *map1, const void *map2)
+{
+	const char *mapStr1 = *(const char * const *)map1;
+	const char *mapStr2 = *(const char * const *)map2;
+
+	/* skip special map chars for rma and base attack */
+	if (mapStr1[0] == '+')
+		mapStr1++;
+	if (mapStr2[0] == '+')
+		mapStr2++;
+
+	return Q_StringSort(mapStr1, mapStr2);
+}
+
+/**
  * @brief File the fs_maps array with valid maps
  * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
@@ -1298,7 +1315,7 @@ void FS_GetMaps (qboolean reset)
 		return;
 	else if (fs_mapsInstalledInit) {
 		Com_DPrintf(DEBUG_ENGINE, "Free old list with %i entries\n", fs_numInstalledMaps);
-		for (i = 0; i < fs_numInstalledMaps; i++)
+		for (i = 0; i <= fs_numInstalledMaps; i++)
 			Mem_Free(fs_maps[i]);
 	}
 
@@ -1403,6 +1420,8 @@ void FS_GetMaps (qboolean reset)
 	}
 
 	fs_mapsInstalledInit = qtrue;
+
+	qsort(fs_maps, fs_numInstalledMaps + 1, sizeof(char *), FS_MapDefSort);
 }
 
 /**
