@@ -291,6 +291,8 @@ menu aircraft
 		texl	"0 0"
 		texh	"16 16"
 		click	{ cmd "mn_prev_aircraft;" }
+		whup	{ cmd "mn_next_aircraft;" }
+		whdown	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic next_aircraft
@@ -302,6 +304,8 @@ menu aircraft
 		texl	"16 0"
 		texh	"32 16"
 		click	{ cmd "mn_next_aircraft;" }
+		whup	{ cmd "mn_next_aircraft;" }
+		whdown	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic button_leave
