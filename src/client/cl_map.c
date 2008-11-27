@@ -359,7 +359,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 	/* Get selected ufos */
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft--)
-		if ((aircraft->visible && !aircraft->notOnGeoscape)
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)
 #if DEBUG
 		|| Cvar_VariableInteger("debug_showufos")
 #endif
@@ -993,7 +993,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		}
 	}
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
-		if (aircraft->visible && !aircraft->notOnGeoscape) {
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			maxEventIdx++;
 		}
 	}
@@ -1098,7 +1098,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* Cycle through UFO (only those visible on geoscape) */
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
-		if (aircraft->visible && !aircraft->notOnGeoscape) {
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			if (centerOnEventIdx == counter) {
 				if (cl_3dmap->integer)
 					VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
@@ -1471,7 +1471,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* check if at least 1 UFO is visible */
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
-		if (aircraft->visible && !aircraft->notOnGeoscape) {
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			oneUFOVisible = qtrue;
 			break;
 		}
@@ -1694,7 +1694,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_MapDrawLine(node, &aircraft->route);
 		} else
 #endif
-		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL) || aircraft->notOnGeoscape)
+		if (!UFO_IsUFOSeenOnGeoscape(aircraft) || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
 			continue;
 
 		{

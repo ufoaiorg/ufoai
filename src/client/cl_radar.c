@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_map.h"
+#include "cl_ufo.h"
 #include "renderer/r_draw.h"
 
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
@@ -59,7 +60,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	R_InitializeRadarOverlay(qtrue);
 
 
-	/* Add radar coverage */
+	/* Add base radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (base) {
@@ -91,20 +92,16 @@ static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 }
 
 /**
- * @brief Update radar overlay of both radar and aircraft range.
- * @param[in] node The menu node where radar coverage will be drawn.
- * @param[in] radar Pointer to the radar that will be drawn.
- * @param[in] pos Position of the radar.
- * @param[in] updateOverlay True if only radar "wire" coverage should be drawn (for bases).
- * False if both overlay and wire coverage should be drawn (for aircraft).
+ * @brief Update radar overlay of base, installation and aircraft range.
  */
 void RADAR_UpdateWholeRadarOverlay (void)
 {
 	int baseIdx;
 
-	/* Copy Base radar overlay*/
+	/* Copy Base and installation radar overlay*/
 	R_InitializeRadarOverlay(qfalse);
 
+	/* Add aircraft radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		int aircraftIdx;
@@ -166,7 +163,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 	pts[0].y = y;
 	for (i = radar->numUFOs - 1; i >= 0; i--)
 		/* Only draw the line if the UFO is visible. It might not be - UFOs may go undetected even within radar range */
-		if ((gd.ufos + radar->ufos[i])->visible) {
+		if (UFO_IsUFOSeenOnGeoscape(gd.ufos + radar->ufos[i])) {
 			if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z < 0) {
 				pts[1].x = x;
 				pts[1].y = y;
@@ -196,21 +193,30 @@ static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
  */
 void RADAR_DeactivateRadarOverlay (void)
 {
-	int baseIdx;
-	aircraft_t *aircraft;
+	int idx, aircraftIdx;
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+	for (idx = 0; idx < MAX_BASES; idx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(idx);
 		if (!base)
 			continue;
 
 		if (base->radar.numUFOs)
 			return;
 
-		for (aircraft = base->aircraft; aircraft < base->aircraft + base->numAircraftInBase; aircraft++) {
+		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+			const aircraft_t const *aircraft = &base->aircraft[aircraftIdx];
 			if (aircraft->radar.numUFOs)
 				return;
 		}
+	}
+
+	for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
+		const installation_t const *installation = INS_GetFoundedInstallationByIDX(idx);
+		if (!installation)
+			continue;
+
+		if (installation->radar.numUFOs)
+			return;
 	}
 
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
@@ -270,9 +276,9 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
 }
 
 /**
- * @brief Notify that the specified ufo has been removed from geoscape
+ * @brief Notify to every radar that the specified ufo has been removed from geoscape
  * @param[in] ufo Pointer to UFO to remove.
- * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
+ * @param[in] destroyed True if the UFO has been destroyed, false if it's only landed.
  **/
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
@@ -378,11 +384,27 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
  */
 qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 {
-	base_t *base;
+	int idx;
 
-	for (base = gd.bases; base < gd.bases + MAX_BASES; base++) {
-		const float dist = MAP_GetDistance(pos, base->pos);		/* Distance from base to position */
+	for (idx = 0; idx < MAX_BASES; idx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(idx);
+		float dist;
+		if (!base)
+			continue;
+
+		dist = MAP_GetDistance(pos, base->pos);		/* Distance from base to position */
 		if (dist <= base->radar.range)
+			return qtrue;
+	}
+
+	for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
+		const installation_t const *installation = INS_GetFoundedInstallationByIDX(idx);
+		float dist;
+		if (!installation)
+			continue;
+
+		dist = MAP_GetDistance(pos, installation->pos);		/* Distance from base to position */
+		if (dist <= installation->radar.range)
 			return qtrue;
 	}
 
@@ -395,8 +417,12 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
  * @sa UFO_CampaignCheckEvents
  */
 qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
-	const aircraft_t* ufo, qboolean wasUFOSensored)
+	const aircraft_t* ufo)
 {
+	const float ufoDetectionProbability = 0.4f;		/**< Probability to detect UFO each 30 minutes
+													 * @todo There is a hardcoded detection probability here
+													 * - this should be scripted. Probability should be a 
+													 * function of UFO type and maybe radar type too. */
 	int dist;
 	int num;
 	int numAircraftSensored;
@@ -410,12 +436,12 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (!ufo->notOnGeoscape && ((wasUFOSensored ? radar->trackingRange : radar->range) > dist)) {
-		/* UFO is inside the radar range */
-		/** @todo There is a hardcoded detection probability here - this should be scripted. Probability should be a function of UFO type and maybe radar type too. */
-		if (frand() <= 0.40 || wasUFOSensored) {
+	if ((ufo->detected ? radar->trackingRange : radar->range) > dist) {
+		/* UFO is inside this radar range. Don't check for a probability if it has already been
+		 * detected by another radar */
+		if (frand() <= ufoDetectionProbability || ufo->detected) {
 			if (numAircraftSensored < 0) {
-				/* UFO was not sensored by the radar */
+				/* UFO was not sensored by this radar */
 				RADAR_AddUFO(radar, num);
 			}
 			return qtrue;
@@ -423,9 +449,8 @@ qboolean RADAR_CheckUFOSensored (radar_t* radar, vec2_t posRadar,
 		return qfalse;
 	}
 
-	/* UFO is not in the sensor range */
+	/* UFO is not in this sensor range any more (but maybe in the range of another radar) */
 	if (numAircraftSensored >= 0) {
-		/* UFO was sensored by the radar */
 		RADAR_RemoveUFO(radar, ufo);
 	}
 	return qfalse;

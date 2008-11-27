@@ -48,5 +48,6 @@ void UFO_RemoveFromGeoscape(aircraft_t* ufo);
 qboolean UFO_CanShoot(const aircraft_t *ufo);
 void UFO_SendToDestination(aircraft_t* ufo, vec2_t dest);
 qboolean UFO_SendPursuingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
+qboolean UFO_IsUFOSeenOnGeoscape(aircraft_t* ufo);
 
 #endif

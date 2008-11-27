@@ -86,6 +86,13 @@ typedef enum alienTeamType_s {
 	ALIENTEAM_MAX
 } alienTeamType_t;
 
+/** @brief possible mission detection status */
+typedef enum missionDetectionStatus_s {
+	MISDET_CANT_BE_DETECTED,		/**< Mission can't be seen on geoscape */
+	MISDET_ALWAYS_DETECTED,			/**< Mission is seen on geoscape, whatever it's position */
+	MISDET_MAY_BE_DETECTED			/**< Mission may be seen on geoscape, if a probability test is done */
+} missionDetectionStatus_t;
+
 /** possible campaign interest categories: type of missions that aliens can undertake */
 typedef enum interestCategory_s {
 	INTERESTCATEGORY_NONE,			/**< No mission */

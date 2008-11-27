@@ -759,7 +759,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			continue;
 
 		/* check that the ufo is still visible */
-		if (!weapons[i].target->visible) {
+		if (!UFO_IsUFOSeenOnGeoscape(weapons[i].target)) {
 			weapons[i].target = NULL;
 			continue;
 		}
@@ -814,7 +814,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			continue;
 
 		/* check that the ufo is still visible */
-		if (!weapons[i].target->visible) {
+		if (!UFO_IsUFOSeenOnGeoscape(weapons[i].target)) {
 			weapons[i].target = NULL;
 			continue;
 		}

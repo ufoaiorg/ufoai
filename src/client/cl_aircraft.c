@@ -1837,7 +1837,7 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 /**
  * @brief Notify that a UFO has been removed.
  * @param[in] ufo Pointer to UFO that has been removed.
- * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set unvisible (landed).
+ * @param[in] destroyed True if the UFO has been destroyed, false if it only landed.
  */
 void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
 {
@@ -2188,8 +2188,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	/* save the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		MSG_WriteString(sb, gd.ufos[i].id);
-		MSG_WriteByte(sb, gd.ufos[i].visible);
-		MSG_WriteByte(sb, gd.ufos[i].notOnGeoscape);
+		MSG_WriteByte(sb, gd.ufos[i].detected);
+		MSG_WriteByte(sb, gd.ufos[i].landed);
 		MSG_WritePos(sb, gd.ufos[i].pos);
 		MSG_WriteByte(sb, gd.ufos[i].status);
 		MSG_WriteLong(sb, gd.ufos[i].fuel);
@@ -2337,8 +2337,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
-			MSG_ReadByte(sb);			/* visible */
-			MSG_ReadByte(sb);			/* notOnGeoscape */
+			MSG_ReadByte(sb);			/* detected */
+			MSG_ReadByte(sb);			/* landed */
 			MSG_ReadPos(sb, tmp_vec3t);	/* pos */
 			MSG_ReadByte(sb);			/* status */
 			MSG_ReadLong(sb);			/* fuel */
@@ -2378,9 +2378,9 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			}
 		} else {
 			gd.ufos[i] = *ufo;
-			ufo = &gd.ufos[i];
-			ufo->visible = MSG_ReadByte(sb);
-			ufo->notOnGeoscape = MSG_ReadByte(sb);
+			ufo = &gd.ufos[i];					/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+			ufo->detected = MSG_ReadByte(sb);
+			ufo->landed = MSG_ReadByte(sb);
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
 			ufo->fuel = MSG_ReadLong(sb);

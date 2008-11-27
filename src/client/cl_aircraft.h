@@ -231,8 +231,11 @@ typedef struct aircraft_s {
 
 	technology_t* tech;		/**< link to the aircraft tech */
 
-	qboolean visible;		/**< The ufo is visible ? */
-	qboolean notOnGeoscape;	/**< don't let this aircraft ever appear on geoscape (e.g. ufo_carrier) */
+	qboolean detected;		/**< Is the ufo detected by a radar? (note that a detected landed ufo has @c detected set to qtrue
+							 * and @c visible set to qfalse: we can't see it on geoscape) */
+	qboolean landed;		/**< Is ufo landed for a mission? This is used when a UFO lands (a UFO must have both
+							 * @c detected and @c visible set to true to be actually seen on geoscape) */
+	qboolean notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 } aircraft_t;
 
 extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */
