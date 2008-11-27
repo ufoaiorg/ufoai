@@ -2499,6 +2499,18 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 	}
 }
 
+static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
+{
+	const char *map1 = ((const mapDef_t *)mapDef1)->map;
+	const char *map2 = ((const mapDef_t *)mapDef2)->map;
+	/* skip special map chars for rma and base attack */
+	if (map1[0] == '+' || map1[0] == '.')
+		map1++;
+	if (map2[0] == '+' || map2[0] == '.')
+		map2++;
+	return Q_StringSort(map1, map2);
+}
+
 /**
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptFirst
@@ -2557,6 +2569,9 @@ void Com_ParseScripts (void)
 		else if (!Q_strncmp(type, "team", 4))
 			Com_ParseTeam(name, &text);
 	}
+
+	/* sort the mapdef array */
+	qsort(csi.mds, csi.numMDs, sizeof(mapDef_t), Com_MapDefSort);
 
 	Com_Printf("Shared Client/Server Info loaded\n");
 	Com_Printf("...%3i items parsed\n", csi.numODs);

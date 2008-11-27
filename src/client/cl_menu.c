@@ -51,7 +51,7 @@ static void MN_ChangeGametype_f (void)
 	if (numGTs == 0)
 		return;
 
-	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.currentSelectedMap];
 	if (!md || !md->multiplayer) {
 		Com_Printf("MN_ChangeGametype_f: No mapdef for the map\n");
 		return;
@@ -144,7 +144,7 @@ static void MN_StartServer_f (void)
 		return;
 	}
 
-	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.currentSelectedMap];
 	if (!md || !md->multiplayer)
 		return;
 	assert(md->map);
@@ -222,26 +222,26 @@ static void MN_MapInfo (int step)
 	if (!csi.numMDs)
 		return;
 
-	cls.multiplayerMapDefinitionIndex += step;
+	cls.currentSelectedMap += step;
 
-	if (cls.multiplayerMapDefinitionIndex < 0)
-		cls.multiplayerMapDefinitionIndex = csi.numMDs - 1;
+	if (cls.currentSelectedMap < 0)
+		cls.currentSelectedMap = csi.numMDs - 1;
 
-	cls.multiplayerMapDefinitionIndex %= csi.numMDs;
+	cls.currentSelectedMap %= csi.numMDs;
 
 	if (!ccs.singleplayer) {
-		while (!csi.mds[cls.multiplayerMapDefinitionIndex].multiplayer) {
+		while (!csi.mds[cls.currentSelectedMap].multiplayer) {
 			i++;
-			cls.multiplayerMapDefinitionIndex += (step ? step : 1);
-			if (cls.multiplayerMapDefinitionIndex < 0)
-				cls.multiplayerMapDefinitionIndex = csi.numMDs - 1;
-			cls.multiplayerMapDefinitionIndex %= csi.numMDs;
+			cls.currentSelectedMap += (step ? step : 1);
+			if (cls.currentSelectedMap < 0)
+				cls.currentSelectedMap = csi.numMDs - 1;
+			cls.currentSelectedMap %= csi.numMDs;
 			if (i >= csi.numMDs)
 				Sys_Error("MN_MapInfo: There is no multiplayer map in any mapdef\n");
 		}
 	}
 
-	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.currentSelectedMap];
 
 	mapname = md->map;
 	/* skip random map char */

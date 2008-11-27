@@ -343,7 +343,6 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, 
 	assert(mapIdx < csi.numMDs);
 
 	md = &csi.mds[mapIdx];
-
 	if (md->storyRelated)
 		return qfalse;
 
@@ -741,7 +740,7 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 		if (mission->onGeoscape && !CP_CheckMissionVisibleOnGeoscape(mission))
 			CP_MissionRemoveFromGeoscape(mission);
 		else if (!mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_ALWAYS_DETECTED) {
-			/* only show mission that are always detected: mission that have a probability to be detected will be 
+			/* only show mission that are always detected: mission that have a probability to be detected will be
 			 * tested at next half hour */
 			CP_MissionAddToGeoscape(mission, qfalse);
 		}
@@ -6624,10 +6623,10 @@ static void CL_GameSkirmish_f (void)
 	if (!ccs.singleplayer)
 		return;
 
-	assert(cls.multiplayerMapDefinitionIndex >= 0);
-	assert(cls.multiplayerMapDefinitionIndex < MAX_MAPDEFS);
+	assert(cls.currentSelectedMap >= 0);
+	assert(cls.currentSelectedMap < MAX_MAPDEFS);
 
-	md = &csi.mds[cls.multiplayerMapDefinitionIndex];
+	md = &csi.mds[cls.currentSelectedMap];
 	if (!md)
 		return;
 

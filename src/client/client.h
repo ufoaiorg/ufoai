@@ -188,7 +188,7 @@ typedef struct client_static_s {
 
 	int playingCinematic;	/**< Set to cinematic playing flags or 0 when not playing */
 
-	int multiplayerMapDefinitionIndex;	/**< current selected multiplayer map */
+	int currentSelectedMap;	/**< current selected multiplayer or skirmish map */
 
 	char downloadName[MAX_OSPATH];
 	size_t downloadPosition;
