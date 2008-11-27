@@ -37,3 +37,18 @@ msgcategory "_nations_happiness"
 	nation_unhappy
 	nation_pleased
 }
+
+msgcategory "_transfer"
+{
+	transfer_started
+	transfer_completed_success
+	transfer_lost
+	transfer_aliens_defered
+}
+
+msgcategory "_ufo_activity"
+{
+	ufo_spotted
+	ufo_signal_lost
+	ufo_attacking
+}

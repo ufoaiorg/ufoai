@@ -38,4 +38,21 @@ msgoptions default
 	nation_unhappy pause
 	nation_unhappy sound
 	nation_pleased notify
+	transfer_started notify
+	transfer_started sound
+	transfer_completed_success notify
+	transfer_completed_success sound
+	transfer_lost notify
+	transfer_lost sound
+	transfer_lost pause
+	transfer_aliens_defered notify
+	transfer_aliens_defered sound
+	ufo_spotted notify
+	ufo_spotted sound
+	ufo_spotted pause
+	ufo_signal_lost notify
+	ufo_signal_lost sound
+	ufo_attacking notify
+	ufo_attacking sound
+	ufo_attacking pause
 }

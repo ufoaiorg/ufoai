@@ -706,7 +706,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	if (transfer->hasItems && success) {	/* Items. */
 		if (!B_GetBuildingStatus(destination, B_STORAGE)) {
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Base %s does not have Storage, items are removed!"), destination->name);
-			MN_AddNewMessage(_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+			MSO_CheckAddNewMessage(NT_TRANSFER_LOST,_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Items cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
 			for (i = 0; i < csi.numODs; i++) {
@@ -737,7 +737,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		if (!success || !B_GetBuildingStatus(destination, B_QUARTERS)) {	/* Employees will be unhired. */
 			if (success) {
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
-				MN_AddNewMessage(_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+				MSO_CheckAddNewMessage(NT_TRANSFER_LOST,_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
@@ -773,7 +773,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	if (transfer->hasAliens && success) {	/* Aliens. */
 		if (!B_GetBuildingStatus(destination, B_ALIEN_CONTAINMENT)) {
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Base %s does not have Alien Containment, Aliens are removed!"), destination->name);
-			MN_AddNewMessage(_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+			MSO_CheckAddNewMessage(NT_TRANSFER_LOST,_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
 			for (i = 0; i < gd.numAliensTD; i++) {
@@ -806,7 +806,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				} else {
 					/* No space, aircraft will be lost. */
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Base %s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
-					MN_AddNewMessage(_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+					MSO_CheckAddNewMessage(NT_TRANSFER_LOST,_("Transport mission"), mn.messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 					AIR_DeleteAircraft(transfer->srcBase, aircraft);
 				}
 			}
@@ -891,7 +891,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transferStartAircraft = NULL;
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
-	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED,_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 #if 0
 	MN_PopMenu(qfalse);
 #else
@@ -981,13 +981,13 @@ static void TR_TransferEnd (transfer_t *transfer)
 
 	if (!destination->founded) {
 		TR_EmptyTransferCargo(NULL, transfer, qfalse);
-		MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
+		MSO_CheckAddNewMessage(NT_TRANSFER_LOST,_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		/** @todo what if source base is lost? we won't be able to unhire transfered personel. */
 	} else {
 		char message[256];
 		TR_EmptyTransferCargo(destination, transfer, qtrue);
 		Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), destination->name);
-		MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+		MSO_CheckAddNewMessage(NT_TRANSFER_COMPLETED_SUCCESS,_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	}
 	transfer->active = qfalse;
 }
@@ -1097,7 +1097,7 @@ static void TR_TransferStart_f (void)
 	RS_ResearchAllowed(baseCurrent);
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
-	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED,_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	MN_PopMenu(qfalse);
 }
 
