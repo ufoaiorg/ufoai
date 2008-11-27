@@ -337,30 +337,33 @@ static int CP_SelectNewMissionType (void)
  */
 static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
 {
+	mapDef_t *md;
+
 	assert(mapIdx >= 0);
 	assert(mapIdx < csi.numMDs);
 
-	if (csi.mds[mapIdx].storyRelated)
+	md = &csi.mds[mapIdx];
+
+	if (md->storyRelated)
 		return qfalse;
 
-	if (pos && !MAP_PositionFitsTCPNTypes(pos, csi.mds[mapIdx].terrains,
-		csi.mds[mapIdx].cultures,csi.mds[mapIdx].populations, NULL))
+	if (pos && !MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL))
 		return qfalse;
 
 	if (!mission->ufo) {
 		/* a mission without UFO should not use a map with UFO */
-		if (csi.mds[mapIdx].ufos)
+		if (md->ufos)
 			return qfalse;
 	} else {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
-		if (!csi.mds[mapIdx].ufos)
+		if (!md->ufos)
 			return qfalse;
 		if (ufoCrashed) {
-			if (!LIST_ContainsString(csi.mds[mapIdx].ufos, UFO_CrashedTypeToShortName(mission->ufo->ufotype)))
+			if (!LIST_ContainsString(md->ufos, UFO_CrashedTypeToShortName(mission->ufo->ufotype)))
 				return qfalse;
 		} else {
-			if (!LIST_ContainsString(csi.mds[mapIdx].ufos, UFO_TypeToShortName(mission->ufo->ufotype)))
+			if (!LIST_ContainsString(md->ufos, UFO_TypeToShortName(mission->ufo->ufotype)))
 				return qfalse;
 		}
 	}
@@ -389,19 +392,22 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 	while (maxHits) {
 		maxHits = 0;
 		for (i = 0; i < csi.numMDs; i++) {
+			mapDef_t *md;
+
 			/* Check if mission fulfill conditions */
 			if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
 				continue;
 
 			maxHits++;
-			if (csi.mds[i].timesAlreadyUsed < minMissionAppearance) {
+			md = &csi.mds[i];
+			if (md->timesAlreadyUsed < minMissionAppearance) {
 				/* at least one fulfilling mission as been used less time than minMissionAppearance:
 				 * restart the loop with this number of time.
 				 * note: this implies that hits must be > 0 after the loop */
 				hits = 0;
-				minMissionAppearance = csi.mds[i].timesAlreadyUsed;
+				minMissionAppearance = md->timesAlreadyUsed;
 				break;
-			} else if (csi.mds[i].timesAlreadyUsed == minMissionAppearance)
+			} else if (md->timesAlreadyUsed == minMissionAppearance)
 				hits++;
 		}
 
@@ -439,15 +445,18 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 
 	/* Select mission mission number 'randomnumber' that fulfills the conditions */
 	for (i = 0; i < csi.numMDs; i++) {
+		mapDef_t *md;
+
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
 			continue;
 
-		if (csi.mds[i].timesAlreadyUsed > minMissionAppearance)
+		md = &csi.mds[i];
+		if (md->timesAlreadyUsed > minMissionAppearance)
 			continue;
 
 		/* There shouldn't be mission fulfilling conditions used less time than minMissionAppearance */
-		assert(csi.mds[i].timesAlreadyUsed == minMissionAppearance);
+		assert(md->timesAlreadyUsed == minMissionAppearance);
 
 		if (!randomNum)
 			break;
