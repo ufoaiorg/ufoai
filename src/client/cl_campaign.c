@@ -4754,9 +4754,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* restore the overlay */
 	Cvar_SetValue("r_geoscape_overlay", MSG_ReadShort(sb));
-#if 0
 	radarOverlayWasSet = MSG_ReadShort(sb);
-#endif
 
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
