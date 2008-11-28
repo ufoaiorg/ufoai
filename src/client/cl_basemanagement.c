@@ -3800,7 +3800,7 @@ static void B_PostLoadInitCheckAircraft (void)
 		}
 	}
 }
-#ENDIF
+#endif
 
 /**
  * @brief Set the capacity stuff for all the bases after loading a savegame

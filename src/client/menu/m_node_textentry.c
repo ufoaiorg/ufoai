@@ -38,14 +38,14 @@ static const int CORNER_SIZE = 17;
 static const int MID_SIZE = 1;
 static const int MARGE = 3;
 
-static const char CURSOR = '|'; /**< Use as the cursor when we edit the text */
-static const char HIDECHAR = '*';	/** use as a mask for password */
+static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
+static const char HIDECHAR = '*';	/**< use as a mask for password */
 
 static void MN_TextEntryNodeRemoveFocus(menuNode_t *node);
 static void MN_TextEntryNodeSetFocus(menuNode_t *node);
 
-static char cmdChanged[64];
-static char cmdAborted[64];
+static char cmdChanged[MAX_VAR];
+static char cmdAborted[MAX_VAR];
 
 /**
  * @brief fire the change event
