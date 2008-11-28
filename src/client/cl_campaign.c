@@ -665,7 +665,9 @@ static void CP_MissionRemoveFromGeoscape (mission_t *mission)
 	AIR_AircraftsNotifyMissionRemoved(mission);
 }
 
+#ifdef DEBUG
 static const char* CP_MissionStageToName(const missionStage_t stage);
+#endif
 
 /**
  * @brief Add a mission to geoscape: make it visible and stop time
@@ -681,7 +683,7 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 	if (status == MISDET_CANT_BE_DETECTED || (!force && status == MISDET_MAY_BE_DETECTED && mission->ufo && !mission->ufo->detected))
 		return;
 
-#if DEBUG
+#ifdef DEBUG
 	/* UFO that spawned this mission should be close of mission */
 	if (mission->ufo && ((fabs(mission->ufo->pos[0] - mission->pos[0]) > 1.0f) || (fabs(mission->ufo->pos[1] - mission->pos[1]) > 1.0f))) {
 		Com_Printf("Error: mission (stage: %s) spawned is not at the same location than UFO\n", CP_MissionStageToName(mission->stage));
