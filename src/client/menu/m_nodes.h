@@ -80,6 +80,7 @@ typedef struct excludeRect_s {
 #include "m_node_linestrip.h"
 #include "m_node_model.h"
 #include "m_node_selectbox.h"
+#include "m_node_textentry.h"
 
 /**
  * @brief menu node
@@ -181,6 +182,7 @@ typedef struct menuNode_s {
 		lineStripExtraData_t linestrip;	/**< List of lines to draw. (MN_LINESTRIP) */
 		modelExtraData_t model;
 		optionExtraData_t option;
+		textEntryExtraData_t textentry;
 	} u;
 
 } menuNode_t;

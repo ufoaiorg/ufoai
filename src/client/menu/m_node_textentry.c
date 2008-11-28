@@ -38,6 +38,9 @@ static const int CORNER_SIZE = 17;
 static const int MID_SIZE = 1;
 static const int MARGE = 3;
 
+static const char CURSOR = '|'; /**< Use as the cursor when we edit the text */
+static const char HIDECHAR = '*';	/** use as a mask for password */
+
 static void MN_TextEntryNodeRemoveFocus(menuNode_t *node);
 static void MN_TextEntryNodeSetFocus(menuNode_t *node);
 
@@ -129,7 +132,11 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 		MN_NodeAbsoluteToRelativePos(node, &x, &y);
 		if (x < 0 || y < 0 || x > node->pos[0] || y > node->pos[1]) {
 			/* keyboard, please stop */
-			Cbuf_AddText("msgmenu .\n");
+			if (node->u.textentry.clickOutAbort) {
+				Cbuf_AddText("msgmenu !\n");
+			} else {
+				Cbuf_AddText("msgmenu .\n");
+			}
 		}
 	}
 }
@@ -171,7 +178,23 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		/** @todo we dont need to edit the text to draw the cursor */
 		if (MN_GetMouseCapture() == node) {
 			if (cl.time % 1000 < 500) {
-				text = va("%s|", text);
+				text = va("%s%c", text, CURSOR);
+			}
+		}
+
+		if (node->u.textentry.isPassword) {
+			char *c = va("%s", text);
+			text = c;
+			/* hide the text */
+			/** @todo does it work with Unicode :/ */
+			while (*c != '\0') {
+				*c++ = HIDECHAR;
+			}
+			/* replace the cursor */
+			if (MN_GetMouseCapture() == node) {
+				if (cl.time % 1000 < 500) {
+					*--c = CURSOR;
+				}
 			}
 		}
 
@@ -194,6 +217,12 @@ static void MN_TextEntryNodeLoaded (menuNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
+static const value_t properties[] = {
+	{"ispassword", V_BOOL, offsetof(menuNode_t, u.textentry.isPassword), MEMBER_SIZEOF(menuNode_t, u.textentry.isPassword) },
+	{"clickoutabort", V_BOOL, offsetof(menuNode_t, u.textentry.clickOutAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.clickOutAbort)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
@@ -201,4 +230,5 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_TextEntryNodeClick;
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loaded = MN_TextEntryNodeLoaded;
+	behaviour->properties = properties;
 }
