@@ -1066,6 +1066,10 @@ static void PR_ProductionSelect_f (void)
 		else
 			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
 	}
+	/* update selection index if first entry of actual list was chosen */
+	if (!selectedProduction) {
+		prodlist->textLineSelected = gd.productions[baseCurrent->idx].numItems + QUEUE_SPACERS;
+	}
 
 	/* Update displayed info about selected entry (if any). */
 	PR_ProductionInfo(baseCurrent);
