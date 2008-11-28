@@ -306,7 +306,7 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 }
 
 /**
- * @brief Initialise radar
+ * @brief Set radar range to new value
  * @param[in,out] radar The radar to update/initialize
  * @param[in] range New range of the radar
  * @param[in] level The tech level of the radar
@@ -328,8 +328,6 @@ void RADAR_Initialise (radar_t* radar, float range, float trackingRange, float l
 
 	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON))
 		RADAR_UpdateStaticRadarCoverage();
-
-	RADAR_DeactivateRadarOverlay();
 }
 
 /**
