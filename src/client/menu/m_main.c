@@ -622,6 +622,7 @@ static void CL_MessageMenu_f (void)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief display info about menu memory
  */
@@ -644,6 +645,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-AData size: %i B\n", mn.adataize);
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }
+#endif
 
 /**
  * @brief Check the if conditions for a given node
@@ -750,7 +752,9 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
-	Cmd_AddCommand("mn_memory", MN_Memory_f, "Display info about menu memory allocation");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
+#endif
 	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, "Activates the inline cvar editing");
 
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
