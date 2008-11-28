@@ -149,15 +149,14 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 }
 
 /**
- * @brief Update stealth value of every base after aircraft moved.
+ * @brief Update stealth value of one alien base due to one aircraft.
  * @param[in] aircraft Pointer to the aircraft_t.
- * @param[in] dt Elapsed time since last check.
  * @param[in] base Pointer to the alien base.
  * @note base stealth decreases if it is inside an aircraft radar range, and even more if it's
  * inside @c radarratio times radar range.
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alienBase_t *base)
+static void AB_UpdateStealthForOneBase (const aircraft_t const *aircraft, alienBase_t *base)
 {
 	float distance;
 	float probability = 0.0001f;			/**< base probability, will be modified below */
@@ -180,8 +179,8 @@ static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alie
 	if (distance > aircraft->radar.range * radarratio)
 		probability /= decreasingFactor;
 
-	/* probability must depend on time scale */
-	probability *= dt;
+	/* probability must depend on DETECTION_INTERVAL (in case we change the value) */
+	probability *= DETECTION_INTERVAL;
 
 	base->stealth -= probability;
 
@@ -193,19 +192,33 @@ static void AB_UpdateStealthForOneBase (const aircraft_t *aircraft, int dt, alie
 }
 
 /**
- * @brief Update stealth value of every base after aircraft moved
- * @param[in] aircraft Pointer to the aircraft_t
- * @param[in] dt Elapsed time since last check
+ * @brief Update stealth value of every base for every aircraft.
+ * @note Called every @c DETECTION_INTERVAL
+ * @sa CL_CampaignRun
  * @sa UFO_UpdateAlienInterestForOneBase
  */
-void AB_UpdateStealthForAllBase (const aircraft_t *aircraft, int dt)
+void AB_UpdateStealthForAllBase (void)
 {
-	alienBase_t* base;
+	int baseIdx;
 
-	assert(aircraft);
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
+		int aircraftIdx;
+		if (!base)
+			continue;
 
-	for (base = alienBases; base < alienBases + numAlienBases; base++) {
-		AB_UpdateStealthForOneBase(aircraft, dt, base);
+		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+			const aircraft_t const *aircraft = &base->aircraft[aircraftIdx];
+			alienBase_t* alienBase;
+
+			/* Only aircraft on geoscape can detect alien bases */
+			if (!AIR_IsAircraftOnGeoscape(aircraft))
+				continue;
+
+			for (alienBase = alienBases; alienBase < alienBases + numAlienBases; alienBase++) {
+				AB_UpdateStealthForOneBase(aircraft, alienBase);
+			}
+		}
 	}
 }
 

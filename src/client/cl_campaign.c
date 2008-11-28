@@ -4428,6 +4428,14 @@ static inline void CP_UpdateXVIMapButton (void)
 }
 
 /**
+ * @brief delay between actions that must be executed independently of time scale
+ * @sa RADAR_CheckUFOSensored
+ * @sa UFO_UpdateAlienInterestForAllBasesAndInstallations
+ * @sa AB_UpdateStealthForAllBase
+ */
+const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
+
+/**
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types MN_MAP and MN_3DMAP
  * @sa MN_DrawMenus
@@ -4438,9 +4446,7 @@ static inline void CP_UpdateXVIMapButton (void)
  */
 void CL_CampaignRun (void)
 {
-	/** @todo detection interval could maybe be made scriptable */
-	const int detectioninterval = (SECONDS_PER_HOUR / 2);
-	const int currentinterval = (int)floor(ccs.date.sec) % detectioninterval;
+	const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
 	int checks, dt, i;
 	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detectioninterval */
 
@@ -4452,24 +4458,32 @@ void CL_CampaignRun (void)
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
 	checks = currentinterval + (int)floor(ccs.timer);
-	checks = (int)(checks / detectioninterval);
-	dt = detectioninterval - currentinterval;
+	checks = (int)(checks / DETECTION_INTERVAL);
+	dt = DETECTION_INTERVAL - currentinterval;
 
-	/* Execute every actions that needs to be independant of time speed : every detectioninterval
-	 *	- Run UFOs and craft at least every detectioninterval. If detection occurred, break.
-	 *	- Check if any new mission is detected */
+	/* Execute every actions that needs to be independant of time speed : every DETECTION_INTERVAL
+	 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
+	 *	- Check if any new mission is detected
+	 *	- Update stealth value of phalanx bases and installations ; alien bases */
 	for (i = 0; i < checks; i++) {
 		qboolean detection;
 		UFO_CampaignRunUFOs(dt);
 		CL_CampaignRunAircraft(dt);
 		CP_CheckNewMissionDetectedOnGeoscape();
+
+		/* Update alien interest for bases */
+		UFO_UpdateAlienInterestForAllBasesAndInstallations();
+
+		/* Update how phalanx troop know alien bases */
+		AB_UpdateStealthForAllBase();
+
 		timeAlreadyFlied += dt;
 		detection = UFO_CampaignCheckEvents(qtrue);
 		if (detection) {
-			ccs.timer = (i + 1) * detectioninterval - currentinterval;
+			ccs.timer = (i + 1) * DETECTION_INTERVAL - currentinterval;
 			break;
 		}
-		dt = detectioninterval;
+		dt = DETECTION_INTERVAL;
 	}
 
 	if (ccs.timer >= 1.0) {

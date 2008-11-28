@@ -340,6 +340,7 @@ typedef enum mapAction_s {
 extern mission_t *selectedMission;
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
+extern const int DETECTION_INTERVAL;
 
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);

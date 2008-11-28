@@ -1222,7 +1222,6 @@ void CL_CampaignRunAircraft (int dt)
 							break;
 						}
 					}
-					AB_UpdateStealthForAllBase(aircraft, dt);
 					/* radar overlay should be updated */
 					radarOverlayReset = qtrue;
 				} else if (aircraft->status == AIR_REFUEL) {
