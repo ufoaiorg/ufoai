@@ -64,11 +64,6 @@ static void MN_AirfightmapNodeMouseWheel (menuNode_t *node, qboolean down, int x
 	else if (ccs.zoom > MAX_AIRFIGHT_ZOOM) {
 		ccs.zoom = MAX_AIRFIGHT_ZOOM;
 	}
-
-	if (ccs.center[1] < 0.5 / ccs.zoom)
-		ccs.center[1] = 0.5 / ccs.zoom;
-	if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-		ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
 }
 
 void MN_RegisterAirfightMapNode (nodeBehaviour_t *behaviour)
