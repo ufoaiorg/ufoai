@@ -574,6 +574,8 @@ static void CL_MessageMenu_f (void)
 		/* abort without doing anything */
 		nameBackup[0] = cvarName[0] = '\0';
 		break;
+
+	/* cancel the edition */
 	case '!':
 		if (!*cvarName)
 			break;
@@ -588,6 +590,20 @@ static void CL_MessageMenu_f (void)
 		/* don't restore this the next time */
 		nameBackup[0] = cvarName[0] = '\0';
 		break;
+
+	/* validate the current value */
+	case '.':
+		if (!*cvarName)
+			break;
+		/* call trigger function */
+		if (Cmd_Exists(va("%s_changed", cvarName))) {
+			Cbuf_AddText(va("%s_changed\n", cvarName));
+		}
+		/* don't restore this the next time */
+		nameBackup[0] = cvarName[0] = '\0';
+		break;
+
+	/* change the value to a null string */
 	case ':':
 		if (!*cvarName)
 			break;
