@@ -153,7 +153,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
  */
 void AIR_ListAircraft_f (void)
 {
-	int i, j, k, baseIdx = -1;
+	int i, k, baseIdx;
 	base_t *base;
 	aircraft_t *aircraft;
 	employee_t *employee;
@@ -162,12 +162,9 @@ void AIR_ListAircraft_f (void)
 	if (Cmd_Argc() == 2)
 		baseIdx = atoi(Cmd_Argv(1));
 
-	for (j = 0; j < MAX_BASES; j++) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
-			continue;
-
-		if (baseIdx != -1 && baseIdx != base->idx)
 			continue;
 
 		Com_Printf("Aircraft in base %s: %i\n", base->name, base->numAircraftInBase);
@@ -2321,6 +2318,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
 	aircraft_t *ufo;
 	int i, j;
+	int numUFOs = 0;
 	const char *s;
 	/* vars, if aircraft wasn't found */
 	vec3_t tmp_vec3t;
@@ -2336,6 +2334,9 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
+			/* Remove the UFO that couldn't be loaded */
+			gd.numUFOs--;
+
 			MSG_ReadByte(sb);			/* detected */
 			MSG_ReadByte(sb);			/* landed */
 			MSG_ReadPos(sb, tmp_vec3t);	/* pos */
@@ -2453,9 +2454,13 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 					MSG_ReadShort(sb);
 				}
 			}
+			numUFOs++;
 		}
 		/** @todo more? */
 	}
+
+	if (numUFOs != gd.numUFOs)
+		Com_Printf("AIR_Load: loaded %i UFOs, but there should be %i\n", numUFOs, gd.numUFOs);
 
 	/* Load projectiles. */
 	gd.numProjectiles = MSG_ReadByte(sb);

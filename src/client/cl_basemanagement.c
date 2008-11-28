@@ -3758,9 +3758,9 @@ void B_LoadBaseSlots (baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
 
 /**
  * @brief Set the capacity stuff for all the bases after loading a savegame
- * @sa SAV_GameActionsAfterLoad
+ * @sa B_PostLoadInit
  */
-void B_PostLoadInit (void)
+static void B_PostLoadInitCapacity (void)
 {
 	int baseIdx;
 
@@ -3771,6 +3771,48 @@ void B_PostLoadInit (void)
 
 		B_ResetAllStatusAndCapacities(base, qtrue);
 	}
+}
+
+#if DEBUG
+/**
+ * @brief Make some test after loading a savegame
+ * @sa B_PostLoadInit
+ */
+static void B_PostLoadInitCheckAircraft (void)
+{
+	int baseIdx;
+	int i;
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
+		for (i = 0; i < base->numAircraftInBase; i++) {
+			aircraft_t *aircraft = &base->aircraft[i];
+
+			/* if aircraft is attacking a UFO, it should have a target */
+			if (aircraft->status == AIR_UFO && (!aircraft->aircraftTarget || !aircraft->aircraftTarget->tpl)) {
+				Com_Printf("Error in B_PostLoadInitCheckAircraft(): aircraft '%s' is attacking but has no target\n", aircraft->name);
+				aircraft->aircraftTarget = NULL;
+				AIR_AircraftReturnToBase(aircraft);
+			}
+		}
+	}
+}
+#ENDIF
+
+/**
+ * @brief Set the capacity stuff for all the bases after loading a savegame
+ * @sa SAV_GameActionsAfterLoad
+ */
+void B_PostLoadInit (void)
+{
+	B_PostLoadInitCapacity();
+
+#if DEBUG
+	B_PostLoadInitCheckAircraft();
+#endif
 }
 
 #define MAX_TEAMLIST_SIZE_FOR_LOADING 32
