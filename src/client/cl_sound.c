@@ -803,7 +803,7 @@ void S_Init (void)
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
 	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_play\" if you experience crackling when background music loops");
 
-	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
+	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
 	Cmd_AddCommand("music_change", S_Music_Change_f, "Changes the music theme");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
