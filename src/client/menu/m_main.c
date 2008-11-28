@@ -625,12 +625,8 @@ static void CL_MessageMenu_f (void)
 /**
  * @brief display info about menu memory
  */
-void MN_Memory_f ()
+static void MN_Memory_f (void)
 {
-	if (Cmd_Argc() != 1) {
-		Com_Printf("Usage: %s\n", Cmd_Argv(0));
-		return;
-	}
 	Com_Printf("\tAllocation:\n");
 	Com_Printf("\t-Option allocation: %i/%i\n", mn.numSelectBoxes, MAX_SELECT_BOX_OPTIONS);
 	Com_Printf("\t-Node allocation: %i/%i\n", mn.numNodes, MAX_MENUNODES);
@@ -638,15 +634,15 @@ void MN_Memory_f ()
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
 	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
-	Com_Printf("\t-AData allocation: %i/%i B\n", mn.curadata - mn.adata, mn.adataize);
+	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", mn.curadata - mn.adata, mn.adataize);
 	Com_Printf("\tMemory:\n");
-	Com_Printf("\t-Option structure size: %i B\n", sizeof(selectBoxOptions_t));
-	Com_Printf("\t-Node structure size: %i B\n", sizeof(menuNode_t));
-	Com_Printf("\t-Menu structure size: %i B\n", sizeof(menu_t));
-	Com_Printf("\t-Action structure size: %i B\n", sizeof(menuAction_t));
-	Com_Printf("\t-Model structure size: %i B\n", sizeof(menuModel_t));
+	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(selectBoxOptions_t));
+	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
+	Com_Printf("\t-Menu structure size: "UFO_SIZE_T" B\n", sizeof(menu_t));
+	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
+	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
 	Com_Printf("\t-AData size: %i B\n", mn.adataize);
-	Com_Printf("\t-Full size: %i B\n", sizeof(menuGlobal_t) + mn.adataize);
+	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }
 
 /**
