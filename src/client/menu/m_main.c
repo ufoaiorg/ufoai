@@ -623,6 +623,33 @@ static void CL_MessageMenu_f (void)
 }
 
 /**
+ * @brief display info about menu memory
+ */
+void MN_Memory_f ()
+{
+	if (Cmd_Argc() != 1) {
+		Com_Printf("Usage: %s\n", Cmd_Argv(0));
+		return;
+	}
+	Com_Printf("\tAllocation:\n");
+	Com_Printf("\t-Option allocation: %i/%i\n", mn.numSelectBoxes, MAX_SELECT_BOX_OPTIONS);
+	Com_Printf("\t-Node allocation: %i/%i\n", mn.numNodes, MAX_MENUNODES);
+	Com_Printf("\t-Menu allocation: %i/%i\n", mn.numMenus, MAX_MENUS);
+	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
+	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
+	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
+	Com_Printf("\t-AData allocation: %i/%i B\n", mn.curadata - mn.adata, mn.adataize);
+	Com_Printf("\tMemory:\n");
+	Com_Printf("\t-Option structure size: %i B\n", sizeof(selectBoxOptions_t));
+	Com_Printf("\t-Node structure size: %i B\n", sizeof(menuNode_t));
+	Com_Printf("\t-Menu structure size: %i B\n", sizeof(menu_t));
+	Com_Printf("\t-Action structure size: %i B\n", sizeof(menuAction_t));
+	Com_Printf("\t-Model structure size: %i B\n", sizeof(menuModel_t));
+	Com_Printf("\t-AData size: %i B\n", mn.adataize);
+	Com_Printf("\t-Full size: %i B\n", sizeof(menuGlobal_t) + mn.adataize);
+}
+
+/**
  * @brief Check the if conditions for a given node
  * @sa MN_DrawMenus
  * @sa V_IF
@@ -727,6 +754,7 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
+	Cmd_AddCommand("mn_memory", MN_Memory_f, "Display info about menu memory allocation");
 	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, "Activates the inline cvar editing");
 
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
