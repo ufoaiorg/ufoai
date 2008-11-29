@@ -448,11 +448,11 @@ static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int ac
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
 	/* Calculate the offset needed to center the trace about the line */
-    VectorAdd(bmin, bmax, offset);
-    VectorDiv(offset, 2, offset);
+	VectorAdd(bmin, bmax, offset);
+	VectorDiv(offset, 2, offset);
 
-    /* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
-     * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
+	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
+	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
 	VectorSubtract(bmin, offset, bmin);
 	VectorSubtract(bmax, offset, bmax);
 	VectorAdd(start, offset, astart);
