@@ -1718,6 +1718,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		B_ParseBaseTemplate(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
 		CL_ParseNations(name, text);
+	else if (!Q_strncmp(type, "city", 4))
+		CL_ParseCities(name, text);
 	else if (!Q_strncmp(type, "rank", 4))
 		CL_ParseMedalsAndRanks(name, text, qtrue);
 	else if (!Q_strncmp(type, "mail", 4))
@@ -1832,6 +1834,7 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("...buildings: %i\n", gd.numBuildingTemplates);
 	Com_Printf("...ranks: %i\n", gd.numRanks);
 	Com_Printf("...nations: %i\n", gd.numNations);
+	Com_Printf("...cities: %i\n", gd.numCities);
 	Com_Printf("\n");
 }
 

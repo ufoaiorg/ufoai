@@ -121,6 +121,10 @@ typedef struct globalData_s
 	nation_t nations[MAX_NATIONS];
 	int numNations;
 
+	/* == Cities == */
+	city_t cities[MAX_CITIES];
+	int numCities;
+
 	/* == UGVs == */
 	ugv_t ugvs[MAX_UGV];
 	int numUGV;

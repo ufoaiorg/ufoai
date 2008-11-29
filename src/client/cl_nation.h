@@ -53,7 +53,7 @@ typedef struct nation_s {
 	int idx;		/**< position in the nations array */
 
 	vec4_t color;		/**< The color this nation uses in the color-coded earth-map */
-	vec2_t pos;		/**< Nation name position on geoscape. */
+	vec2_t pos;		/**< Nation position on geoscape. */
 
 	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
 									 * The first entry [0] is the current month - all following entries are stored older months.
@@ -66,6 +66,17 @@ typedef struct nation_s {
 	int maxScientists;	/**< How many (monthly) scientists. */
 } nation_t;
 
+/**
+ * @brief City definition
+ */
+typedef struct city_s {
+	const char *id;			/**< Unique ID of this city. */
+	const char *name;		/**< Full name of the city. */
+	int idx;				/**< position in the cities array */
+
+	vec2_t pos;				/**< City position on geoscape. */
+} city_t;
+
 nation_t *NAT_GetNationByID(const char *nationID);
 void NAT_UpdateHappinessForAllNations(void);
 void NAT_SetHappiness(nation_t *nation, const float happiness);
@@ -73,9 +84,11 @@ int NAT_GetFunding(const nation_t* const nation, int month);
 const char* NAT_GetHappinessString(const nation_t* nation);
 
 void CL_ParseNations(const char *name, const char **text);
+void CL_ParseCities(const char *name, const char **text);
 
 void NAT_InitStartup(void);
 
 #define MAX_NATIONS 8
+#define MAX_CITIES 16
 
 #endif

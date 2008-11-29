@@ -333,7 +333,7 @@ static int CP_SelectNewMissionType (void)
  * @param[in] ufoCrashed Search the mission definition for crash ufo id if true
  * @return qfalse if map is not selectable
  */
-static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, qboolean ufoCrashed)
+static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t pos, qboolean ufoCrashed)
 {
 	mapDef_t *md;
 
@@ -370,12 +370,12 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, vec2_t pos, 
 
 /**
  * @brief Choose a map for given mission.
- * @param[in] mission Pointer to the mission where a new map should be added
+ * @param[in|out] mission Pointer to the mission where a new map should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
  * @param[in] ufoCrashed true if the ufo is crashed
  * @return qfalse if could not set mission
  */
-static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashed)
+static qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed)
 {
 	int i;
 	int maxHits = 1;	/**< Total number of maps fulfilling mission conditions. */
@@ -425,6 +425,7 @@ static qboolean CP_ChooseMap (mission_t *mission, vec2_t pos, qboolean ufoCrashe
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? UFO_TypeToShortName(mission->ufo->ufotype) : "none");
+			Com_Printf("%s",MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
 			if (pos)
 				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 			else
@@ -1306,35 +1307,44 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 }
 
 /**
+ * @brief Choose a city for terror mission.
+ * @return chosen city in gd.cities
+ */
+static const city_t* CP_ChooseCity (void)
+{
+	int randnumber = rand() % gd.numCities;
+
+	return &gd.cities[randnumber];
+}
+
+/**
  * @brief Set Terror attack mission, and go to Terror attack mission pos.
  * @note Terror attack mission -- Stage 1
+ * @note Terror missions can only take place in city: pick one in gd.cities.
  */
 static void CP_TerrorMissionGo (mission_t *mission)
 {
 	const nation_t *nation;
+	int counter;
 
 	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
-	if (CP_ChooseMap(mission, NULL, qfalse)) {
-		int counter;
-		linkedList_t *nationList = NULL;
-		const qboolean nationTest = CP_ChooseNation(mission, &nationList);
-		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
-			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
-				continue;
-			if (CP_PositionCloseToBase(mission->pos))
-				continue;
-			break;
-		}
-		if (counter >= MAX_POS_LOOP) {
-			Com_Printf("CP_TerrorMissionGo: Error, could not set position.\n");
-			CP_MissionRemove(mission);
-			return;
-		}
-		LIST_Delete(&nationList);
-	} else {
-		Com_Printf("CP_TerrorMissionGo: No map found, remove mission.\n");
+	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
+		const city_t const *city = CP_ChooseCity();
+
+		if (CP_PositionCloseToBase(city->pos))
+			continue;
+
+		if (!CP_ChooseMap(mission, city->pos, qfalse))
+			continue;
+
+		Vector2Set(mission->pos, city->pos[0], city->pos[1]);
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(city->name));
+		break;
+	}
+	if (counter >= MAX_POS_LOOP) {
+		Com_Printf("CP_TerrorMissionGo: Error, could not set position.\n");
 		CP_MissionRemove(mission);
 		return;
 	}
@@ -1342,11 +1352,6 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	mission->mapDef->timesAlreadyUsed++;
 
 	nation = MAP_GetNation(mission->pos);
-	if (nation) {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
-	} else {
-		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
-	}
 
 	if (mission->ufo) {
 		CP_MissionDisableTimeLimit(mission);
@@ -2210,6 +2215,11 @@ static int CP_XVIMissionAvailableUFOs (const mission_t const *mission, int *ufoT
 	return num;
 }
 
+/** @todo Remove me when CP_XVIMissionGo will be implemented
+ * This function should take a location close to an XVI infection point
+ * see gameplay proposal on wiki */
+static void CP_HarvestMissionGo(mission_t *mission);
+
 /**
  * @brief Determine what action should be performed when a XVI Spreading mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
@@ -2223,7 +2233,7 @@ static void CP_XVIMissionNextStage (mission_t *mission)
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to mission */
-		CP_TerrorMissionGo(mission);
+		CP_HarvestMissionGo(mission);
 		break;
 	case STAGE_MISSION_GOTO:
 		/* just arrived on a new XVI Spreading mission: start it */
@@ -2529,6 +2539,59 @@ static void CP_HarvestMissionStart (mission_t *mission)
 	}
 }
 
+
+/**
+ * @brief Set Harvest mission, and go to mission pos.
+ * @note Harvesting attack mission -- Stage 1
+ */
+static void CP_HarvestMissionGo (mission_t *mission)
+{
+	const nation_t *nation;
+
+	mission->stage = STAGE_MISSION_GOTO;
+
+	/* Choose a map */
+	if (CP_ChooseMap(mission, NULL, qfalse)) {
+		int counter;
+		linkedList_t *nationList = NULL;
+		const qboolean nationTest = CP_ChooseNation(mission, &nationList);
+		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
+			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
+				continue;
+			if (CP_PositionCloseToBase(mission->pos))
+				continue;
+			break;
+		}
+		if (counter >= MAX_POS_LOOP) {
+			Com_Printf("CP_HarvestMissionGo: Error, could not set position.\n");
+			CP_MissionRemove(mission);
+			return;
+		}
+		LIST_Delete(&nationList);
+	} else {
+		Com_Printf("CP_HarvestMissionGo: No map found, remove mission.\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	mission->mapDef->timesAlreadyUsed++;
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
+	}
+
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SendToDestination(mission->ufo, mission->pos);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
 /**
  * @brief Fill an array with available UFOs for Harvesting mission type.
  * @param[in] mission Pointer to the mission we are currently creating.
@@ -2558,7 +2621,7 @@ static void CP_HarvestMissionNextStage (mission_t *mission)
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to mission */
-		CP_TerrorMissionGo(mission);
+		CP_HarvestMissionGo(mission);
 		break;
 	case STAGE_MISSION_GOTO:
 		/* just arrived on a new Harvesting mission: start it */

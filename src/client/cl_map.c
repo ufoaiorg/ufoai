@@ -2342,7 +2342,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
  * @return true if a location was found, otherwise false. If map is water, return false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
-qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
+qboolean MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
 	const char *cultureType = MAP_GetCultureTypeByPos(pos);

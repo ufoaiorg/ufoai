@@ -237,8 +237,18 @@ void CL_ParseNations (const char *name, const char **text)
 	nation_t *nation;
 	const value_t *vp;
 	const char *token;
+	int i;
 
 	if (gd.numNations >= MAX_NATIONS) {
+		Com_Printf("CL_ParseNations: nation number exceeding maximum number of nations: %i\n", MAX_NATIONS);
+		return;
+	}
+
+	/* search for nations with same name */
+	for (i = 0; i < gd.numNations; i++)
+		if (!Q_strncmp(name, gd.nations[i].id, sizeof(gd.nations[i].id)))
+			break;
+	if (i < gd.numNations) {
 		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
@@ -298,6 +308,98 @@ void CL_ParseNations (const char *name, const char **text)
 		}
 	} while (*text);
 }
+
+static const value_t city_vals[] = {
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(city_t, name), 0},
+	{"pos", V_POS, offsetof(city_t, pos), MEMBER_SIZEOF(city_t, pos)},
+
+	{NULL, 0, 0, 0}
+};
+
+/**
+ * @brief Parse the city data from script file
+ * @param[in] name ID of the found nation
+ * @param[in] text The text of the nation node
+ * @sa city_vals
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
+ */
+void CL_ParseCities (const char *name, const char **text)
+{
+	const char *errhead = "CL_ParseCities: unexpected end of file (nation ";
+	city_t *city;
+	const value_t *vp;
+	const char *token;
+	int i;
+
+	if (gd.numCities >= MAX_CITIES) {
+		Com_Printf("CL_ParseCities: city number exceeding maximum number of cities: %i\n", MAX_CITIES);
+		return;
+	}
+
+	/* search for cities with same name */
+	for (i = 0; i < gd.numCities; i++)
+		if (!Q_strncmp(name, gd.cities[i].id, sizeof(gd.cities[i].id)))
+			break;
+	if (i < gd.numCities) {
+		Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
+		return;
+	}
+
+	/* initialize the nation */
+	city = &gd.cities[gd.numCities];
+	memset(city, 0, sizeof(*city));
+	city->idx = gd.numCities;
+	gd.numCities++;
+
+	Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
+	city->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseCities: city def \"%s\" without body ignored\n", name);
+		gd.numCities--;
+		return;
+	}
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		/* check for some standard values */
+		for (vp = city_vals; vp->string; vp++)
+			if (!Q_strcmp(token, vp->string)) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				switch (vp->type) {
+				case V_TRANSLATION_MANUAL_STRING:
+					token++;
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)city + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					break;
+				default:
+					if (Com_EParseValue(city, token, vp->type, vp->ofs, vp->size) == -1)
+						Com_Printf("CL_ParseCities: Wrong size for value %s\n", vp->string);
+					break;
+				}
+				break;
+			}
+
+		if (!vp->string) {
+			Com_Printf("CL_ParseCities: unknown token \"%s\" ignored (nation %s)\n", token, name);
+			COM_EParse(text, errhead, name);
+		}
+	} while (*text);
+}
+
 
 /*=====================================
 Menu functions
