@@ -131,10 +131,6 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 	if (node->disabled)
 		return;
 
-	if (node->click) {
-		MN_ExecuteEventActions(node, node->click);
-	}
-
 	/* no cvar */
 	if (!node->text)
 		return;
@@ -142,6 +138,9 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 		return;
 
 	if (!MN_GetMouseCapture()) {
+		if (node->click) {
+			MN_ExecuteEventActions(node, node->click);
+		}
 		MN_TextEntryNodeSetFocus(node);
 	} else {
 		int x = mousePosX;
