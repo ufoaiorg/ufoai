@@ -119,6 +119,7 @@ menu skirmish
 		string		"*cvar mn_svmapname"
 		whup		{ cmd "mn_prevmap;" }
 		whdown		{ cmd "mn_nextmap;" }
+		disabled	true
 	}
 
 	pic prev_map

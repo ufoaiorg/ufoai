@@ -1163,20 +1163,19 @@ menu mp_create_server
 		string	"_Hostname:"
 		pos	"85 450"
 	}
-	pic slot_hostname
+	textentry slot_hostname
 	{
-		image	menu/save_slot
-		pos	"85 470"
-		mousefx	true
-		click	{ cmd "msgmenu ?sv_hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 470"
+		size		"256 34"
+		string		"*cvar sv_hostname"
 	}
-	string txt_hostname
-	{
-		string	"*cvar sv_hostname"
-		pos	"95 475"
-		color	"0 .78 0 1"
-	}
-	confunc sv_hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
 
 	// ===================
 	// MAP
@@ -1186,20 +1185,21 @@ menu mp_create_server
 		string	"_Map"
 		pos	"85 510"
 	}
-	pic slot_map
+	textentry slot_map
 	{
-		image	menu/save_slot
-		pos	"85 530"
-		mousefx	true
-	}
-	string txt_mapname
-	{
-		string	"*cvar mn_svmapname"
-		pos	"95 535"
-		color	"0 .78 0 1"
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		size "256 32"
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 530"
+		size		"256 34"
+		string		"*cvar mn_svmapname"
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
+		disabled	true
 	}
 
 	string string_gametypes
