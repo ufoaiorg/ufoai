@@ -516,7 +516,7 @@ static void CL_SelectDown_f (void)
 	/* get the current menu */
 	menu = MN_GetActiveMenu();
 	if (menu && menu->leaveNode)
-		MN_ExecuteActions(menu, menu->leaveNode->click);
+		MN_ExecuteActions(menu, menu->leaveNode->onClick);
 }
 
 static void CL_SelectUp_f (void)
@@ -640,7 +640,7 @@ static void CL_LeftClickDown_f (void)
 		/* get the current menu */
 		const menu_t *menu = MN_GetActiveMenu();
 		if (menu && menu->leaveNode)
-			MN_ExecuteActions(menu, menu->leaveNode->click);
+			MN_ExecuteActions(menu, menu->leaveNode->onClick);
 	}
 }
 

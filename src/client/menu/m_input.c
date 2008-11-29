@@ -200,14 +200,14 @@ void MN_MouseMove (int x, int y)
 	/* update nodes: send 'in' and 'out' event */
 	if (oldMouseOverTest != mouseOverTest) {
 		if (oldMouseOverTest) {
-			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->mouseOut);
+			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->onMouseOut);
 			oldMouseOverTest->menu->hoverNode = NULL;
 			oldMouseOverTest->state = qfalse;
 		}
 		if (mouseOverTest) {
 			mouseOverTest->state = qtrue;
 			mouseOverTest->menu->hoverNode = mouseOverTest;
-			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->mouseIn);
+			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onMouseIn);
 		}
 	}
 	oldMouseOverTest = mouseOverTest;
@@ -276,7 +276,7 @@ void MN_LeftClick (int x, int y)
 		if (node->behaviour->leftClick) {
 			node->behaviour->leftClick(node, x, y);
 		} else {
-			MN_ExecuteActions(node->menu, node->click);
+			MN_ExecuteActions(node->menu, node->onClick);
 		}
 		return;
 	}
@@ -295,7 +295,7 @@ void MN_LeftClick (int x, int y)
 		}
 
 		for (node = menu->firstChild; node; node = node->next) {
-			if (!node->behaviour->leftClick && !node->click)
+			if (!node->behaviour->leftClick && !node->onClick)
 				continue;
 
 			/* check whether mouse is over this node */
@@ -332,7 +332,7 @@ void MN_LeftClick (int x, int y)
 				node->behaviour->leftClick(node, x, y);
 			} else {
 				/* Save the action for later execution. */
-				if (node->click && (node->click->type != EA_NULL))
+				if (node->click && (node->onClick->type != EA_NULL))
 					execute_node = node;
 			}
 			if (node->behaviour->id == MN_TEXT) {
@@ -358,15 +358,15 @@ void MN_LeftClick (int x, int y)
 				/* Delay between the 2 first actions is longer than the delay between other actions (see IN_Parse()) */
 				mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
 				mn.mouseRepeat.menu = menu;
-				mn.mouseRepeat.action = execute_node->click;
+				mn.mouseRepeat.action = execute_node->onClick;
 			}
 			if (execute_node->behaviour->id != MN_TEXT)
-				MN_ExecuteActions(menu, execute_node->click);
+				MN_ExecuteActions(menu, execute_node->onClick);
 		}
 
 		/** @todo maybe we should also check sp == mn.menuStackPos here */
 		if (!insideNode && menu->leaveNode)
-			MN_ExecuteActions(menu, menu->leaveNode->click);
+			MN_ExecuteActions(menu, menu->leaveNode->onClick);
 
 		break;
 	}
@@ -400,7 +400,7 @@ void MN_RightClick (int x, int y)
 		if (mouseOverTest->behaviour->rightClick) {
 			mouseOverTest->behaviour->rightClick(mouseOverTest, x, y);
 		} else {
-			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->rclick);
+			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onRightClick);
 		}
 		return;
 	}
@@ -468,7 +468,7 @@ void MN_MiddleClick (int x, int y)
 		if (mouseOverTest->behaviour->middleClick) {
 			mouseOverTest->behaviour->middleClick(mouseOverTest, x, y);
 		} else {
-			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->mclick);
+			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onMiddleClick);
 		}
 		return;
 	}
@@ -544,10 +544,10 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		if (mouseOverTest->behaviour->mouseWheel) {
 			mouseOverTest->behaviour->mouseWheel(mouseOverTest, down, x, y);
 		} else {
-			if (mouseOverTest->wheelUp && mouseOverTest->wheelDown)
-				MN_ExecuteActions(mouseOverTest->menu, (down ? mouseOverTest->wheelDown : mouseOverTest->wheelUp));
+			if (mouseOverTest->onWheelUp && mouseOverTest->onWheelDown)
+				MN_ExecuteActions(mouseOverTest->menu, (down ? mouseOverTest->onWheelDown : mouseOverTest->onWheelUp));
 			else
-				MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->wheel);
+				MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onWheel);
 		}
 		return;
 	}

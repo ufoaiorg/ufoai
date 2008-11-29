@@ -452,10 +452,10 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 		node->textLineSelected = line;
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	}
-	else if (node->click && node->click->type == EA_CMD) {
-		assert(node->click->data);
+	else if (node->onClick && node->onClick->type == EA_CMD) {
+		assert(node->onClick->data);
 		node->textLineSelected = line;
-		Cbuf_AddText(va("%s %i\n", (const char *)node->click->data, line));
+		Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
 	}
 }
 
@@ -478,12 +478,12 @@ static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y
 {
 	const menu_t *menu = node->menu;
 
-	if (node->wheelUp && node->wheelDown) {
-		MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
+	if (node->onWheelUp && node->onWheelDown) {
+		MN_ExecuteActions(menu, (down ? node->onWheelDown : node->onWheelUp));
 	} else {
 		MN_TextScroll(node, (down ? 1 : -1));
 		/* they can also have script commands assigned */
-		MN_ExecuteActions(menu, node->wheel);
+		MN_ExecuteActions(menu, node->onWheel);
 	}
 }
 

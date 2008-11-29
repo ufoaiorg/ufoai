@@ -48,8 +48,8 @@ static const int MARGE = 3;
  */
 static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
 {
-	if (node->click && !node->disabled) {
-		MN_ExecuteActions(node->menu, node->click);
+	if (node->onClick && !node->disabled) {
+		MN_ExecuteActions(node->menu, node->onClick);
 	}
 }
 
@@ -66,7 +66,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
-	if (!node->click || node->disabled) {
+	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
 		texX = TILE_SIZE;

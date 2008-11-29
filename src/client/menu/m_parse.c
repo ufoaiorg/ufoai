@@ -95,15 +95,15 @@ static const value_t nodeProperties[] = {
 	{"lineselected", V_INT, offsetof(menuNode_t, textLineSelected), MEMBER_SIZEOF(menuNode_t, textLineSelected)},
 
 	/* action event */
-	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, click), MEMBER_SIZEOF(menuNode_t, click)},
-	{"rclick", V_SPECIAL_ACTION, offsetof(menuNode_t, rclick), MEMBER_SIZEOF(menuNode_t, rclick)},
-	{"mclick", V_SPECIAL_ACTION, offsetof(menuNode_t, mclick), MEMBER_SIZEOF(menuNode_t, mclick)},
-	{"wheel", V_SPECIAL_ACTION, offsetof(menuNode_t, wheel), MEMBER_SIZEOF(menuNode_t, wheel)},
-	{"in", V_SPECIAL_ACTION, offsetof(menuNode_t, mouseIn), MEMBER_SIZEOF(menuNode_t, mouseIn)},
-	{"out", V_SPECIAL_ACTION, offsetof(menuNode_t, mouseOut), MEMBER_SIZEOF(menuNode_t, mouseOut)},
-	{"whup", V_SPECIAL_ACTION, offsetof(menuNode_t, wheelUp), MEMBER_SIZEOF(menuNode_t, wheelUp)},
-	{"whdown", V_SPECIAL_ACTION, offsetof(menuNode_t, wheelDown), MEMBER_SIZEOF(menuNode_t, wheelDown)},
-	{"change", V_SPECIAL_ACTION, offsetof(menuNode_t, change), MEMBER_SIZEOF(menuNode_t, change)},
+	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
+	{"rclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
+	{"mclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
+	{"wheel", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
+	{"in", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseIn), MEMBER_SIZEOF(menuNode_t, onMouseIn)},
+	{"out", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseOut), MEMBER_SIZEOF(menuNode_t, onMouseOut)},
+	{"whup", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
+	{"whdown", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
+	{"change", V_SPECIAL_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
 
 	/* very special attribute */
 	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
@@ -329,7 +329,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 					action->type = EA_CALL;
 
 					action->data = mn.curadata;
-					*(menuAction_t ***) mn.curadata = &node->click;
+					*(menuAction_t ***) mn.curadata = &node->onClick;
 					mn.curadata += ALIGN(sizeof(menuAction_t *));
 
 					/* get next token */
@@ -590,7 +590,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		menuAction_t **action;
 
 		/* add new actions to end of list */
-		action = &node->click;
+		action = &node->onClick;
 		for (; *action; action = &(*action)->next) {}
 
 		if (mn.numActions >= MAX_MENUACTIONS)
@@ -717,7 +717,7 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s.%s\n", menu->name, node->name);
 		/* reset action list of node */
-		node->click = NULL;	/**< @todo understand why this strange hack (there is a lot of over actions) */
+		node->onClick = NULL;	/**< @todo understand why this strange hack (there is a lot of over actions) */
 
 	/* else initialize node */
 	} else {

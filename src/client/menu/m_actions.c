@@ -251,7 +251,7 @@ void MN_ConfuncCommand_f (void)
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
 	assert(node);
 	assert(node->behaviour->id == MN_CONFUNC);
-	MN_ExecuteConFuncActions(node, node->click);
+	MN_ExecuteConFuncActions(node, node->onClick);
 }
 
 /**
@@ -264,7 +264,7 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 		node = node->next;
 	while (node) {
 		if (MN_CheckCondition(node) && !node->invis
-		 && ((node->click && node->mouseIn) || node->mouseIn))
+		 && ((node->onClick && node->onMouseIn) || node->onMouseIn))
 			return node;
 		node = node->next;
 	}
@@ -286,7 +286,7 @@ void MN_FocusRemove (void)
 		return;
 
 	if (focusNode)
-		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
+		MN_ExecuteActions(focusNode->menu, focusNode->onMouseOut);
 	focusNode = NULL;
 }
 
@@ -305,10 +305,10 @@ qboolean MN_FocusExecuteActionNode (void)
 		return qfalse;
 
 	if (focusNode) {
-		if (focusNode->click) {
-			MN_ExecuteActions(focusNode->menu, focusNode->click);
+		if (focusNode->onClick) {
+			MN_ExecuteActions(focusNode->menu, focusNode->onClick);
 		}
-		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
+		MN_ExecuteActions(focusNode->menu, focusNode->onMouseOut);
 		focusNode = NULL;
 		return qtrue;
 	}
@@ -333,7 +333,7 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
 	MN_FocusRemove();
 
 	focusNode = node;
-	MN_ExecuteActions(node->menu, node->mouseIn);
+	MN_ExecuteActions(node->menu, node->onMouseIn);
 
 	return qtrue;
 }

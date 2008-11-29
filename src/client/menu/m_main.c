@@ -107,7 +107,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 
 	/* initialize it */
 	if (menu->initNode)
-		MN_ExecuteActions(menu, menu->initNode->click);
+		MN_ExecuteActions(menu, menu->initNode->onClick);
 
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
@@ -235,13 +235,13 @@ void MN_PopMenu (qboolean all)
 		while (mn.menuStackPos > 0) {
 			mn.menuStackPos--;
 			if (mn.menuStack[mn.menuStackPos]->closeNode)
-				MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->closeNode->click);
+				MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->closeNode->onClick);
 		}
 
 	if (mn.menuStackPos > 0) {
 		mn.menuStackPos--;
 		if (mn.menuStack[mn.menuStackPos]->closeNode)
-			MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->closeNode->click);
+			MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->closeNode->onClick);
 	}
 
 	if (!all && mn.menuStackPos == 0) {
@@ -391,7 +391,7 @@ static void MN_ReinitCurrentMenu_f (void)
 	/* initialize it */
 	if (menu) {
 		if (menu->initNode)
-			MN_ExecuteActions(menu, menu->initNode->click);
+			MN_ExecuteActions(menu, menu->initNode->onClick);
 		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
 	}
 }

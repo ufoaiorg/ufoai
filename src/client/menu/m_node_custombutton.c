@@ -48,7 +48,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
-	if (!node->click || node->disabled) {
+	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
 		texY = MN_CUSTOMBUTTON_TEX_HEIGHT * 2;

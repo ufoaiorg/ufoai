@@ -149,7 +149,7 @@ static void MN_DrawMenusTest (void)
 		if (menu->eventNode) {
 			if (menu->eventNode->timeOut > 0 && (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)))) {
 				menu->eventTime = cls.realtime;
-				MN_ExecuteActions(menu, menu->eventNode->click);
+				MN_ExecuteActions(menu, menu->eventNode->onClick);
 #ifdef DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
 #endif
@@ -296,7 +296,7 @@ void MN_DrawMenus (void)
 		if (menu->eventNode) {
 			if (menu->eventNode->timeOut > 0 && (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)))) {
 				menu->eventTime = cls.realtime;
-				MN_ExecuteActions(menu, menu->eventNode->click);
+				MN_ExecuteActions(menu, menu->eventNode->onClick);
 #ifdef DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
 #endif

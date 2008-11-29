@@ -80,19 +80,19 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 		Sys_Error("Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_MENU_NAME" menu");
 
 	/* free previous actions */
-	if (listNode->click) {
-		assert(listNode->click->data);
-		Mem_Free(listNode->click->data);
-		Mem_Free(listNode->click);
-		listNode->click = NULL;
+	if (listNode->onClick) {
+		assert(listNode->onClick->data);
+		Mem_Free(listNode->onClick->data);
+		Mem_Free(listNode->onClick);
+		listNode->onClick = NULL;
 	}
 
 	if (clickAction) {
 		listNode->mousefx = qtrue;
-		MN_SetMenuAction(&listNode->click, EA_CMD, clickAction);
+		MN_SetMenuAction(&listNode->onClick, EA_CMD, clickAction);
 	} else {
 		listNode->mousefx = qfalse;
-		listNode->click = NULL;
+		listNode->onClick = NULL;
 	}
 
 	MN_PushMenu(popupListMenu->name);
@@ -120,21 +120,21 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 		Sys_Error("Could not get %s node in %s menu", buttonText, menu->name);
 
 	/* free previous actions */
-	if (buttonNode->click) {
-		assert(buttonNode->click->data);
-		Mem_Free(buttonNode->click->data);
-		Mem_Free(buttonNode->click);
-		buttonNode->click = NULL;
+	if (buttonNode->onClick) {
+		assert(buttonNode->onClick->data);
+		Mem_Free(buttonNode->onClick->data);
+		Mem_Free(buttonNode->onClick);
+		buttonNode->onClick = NULL;
 	}
 
 	if (clickAction) {
 		buttonNode->mousefx = qtrue;
-		MN_SetMenuAction(&buttonNode->click, EA_CMD, clickAction);
+		MN_SetMenuAction(&buttonNode->onClick, EA_CMD, clickAction);
 		buttonNode->invis = qfalse;
 		buttonTextNode->invis = qfalse;
 	} else {
 		buttonNode->mousefx = qfalse;
-		buttonNode->click = NULL;
+		buttonNode->onClick = NULL;
 		buttonNode->invis = qtrue;
 		buttonTextNode->invis = qtrue;
 	}

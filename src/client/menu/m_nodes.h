@@ -129,15 +129,15 @@ typedef struct menuNode_s {
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
 
 	/* common events */
-	struct menuAction_s *click;
-	struct menuAction_s *rclick;
-	struct menuAction_s *mclick;
-	struct menuAction_s *wheel;
-	struct menuAction_s *mouseIn;
-	struct menuAction_s *mouseOut;
-	struct menuAction_s *wheelUp;
-	struct menuAction_s *wheelDown;
-	struct menuAction_s *change;	/**< called when the widget change from an user action */
+	struct menuAction_s *onClick;
+	struct menuAction_s *onRightClick;
+	struct menuAction_s *onMiddleClick;
+	struct menuAction_s *onWheel;
+	struct menuAction_s *onMouseIn;
+	struct menuAction_s *onMouseOut;
+	struct menuAction_s *onWheelUp;
+	struct menuAction_s *onWheelDown;
+	struct menuAction_s *onChange;	/**< called when the widget change from an user action */
 
 	vec3_t scale;
 	invDef_t *container;		/** The container linked to this node. */

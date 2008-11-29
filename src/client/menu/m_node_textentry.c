@@ -57,8 +57,8 @@ static char cmdAborted[MAX_VAR];
 static inline void MN_TextEntryNodeFireChange (menuNode_t *node)
 {
 	/* fire change event */
-	if (node->change) {
-		MN_ExecuteEventActions(node, node->change);
+	if (node->onChange) {
+		MN_ExecuteEventActions(node, node->onChange);
 	}
 }
 
@@ -68,8 +68,8 @@ static inline void MN_TextEntryNodeFireChange (menuNode_t *node)
 static inline void MN_TextEntryNodeFireAbort (menuNode_t *node)
 {
 	/* fire change event */
-	if (node->u.textentry.abort) {
-		MN_ExecuteEventActions(node, node->u.textentry.abort);
+	if (node->u.textentry.onAbort) {
+		MN_ExecuteEventActions(node, node->u.textentry.onAbort);
 	}
 }
 
@@ -163,8 +163,8 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 		return;
 
 	if (!MN_GetMouseCapture()) {
-		if (node->click) {
-			MN_ExecuteEventActions(node, node->click);
+		if (node->onClick) {
+			MN_ExecuteEventActions(node, node->onClick);
 		}
 		MN_TextEntryNodeSetFocus(node);
 	} else {
@@ -266,7 +266,7 @@ static void MN_TextEntryNodeLoading (menuNode_t *node)
 static const value_t properties[] = {
 	{"ispassword", V_BOOL, offsetof(menuNode_t, u.textentry.isPassword), MEMBER_SIZEOF(menuNode_t, u.textentry.isPassword) },
 	{"clickoutabort", V_BOOL, offsetof(menuNode_t, u.textentry.clickOutAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.clickOutAbort)},
-	{"abort", V_SPECIAL_ACTION, offsetof(menuNode_t, u.textentry.abort), MEMBER_SIZEOF(menuNode_t, u.textentry.abort)},
+	{"abort", V_SPECIAL_ACTION, offsetof(menuNode_t, u.textentry.onAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.onAbort)},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -36,7 +36,7 @@ struct menuAction_s;
 typedef struct textEntryExtraData_s {
 	qboolean isPassword;	/**< Display '*' instead of the real text */
 	qboolean clickOutAbort;	/**< If we click out an activated node, it abort the edition */
-	struct menuAction_s *abort;
+	struct menuAction_s *onAbort;
 } textEntryExtraData_t;
 
 void MN_RegisterTextEntryNode(struct nodeBehaviour_s *behaviour);

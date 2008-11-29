@@ -78,8 +78,8 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 	}
 
 	/* fire change event */
-	if (node->change) {
-		MN_ExecuteEventActions(node, node->change);
+	if (node->onChange) {
+		MN_ExecuteEventActions(node, node->onChange);
 	}
 }
 
