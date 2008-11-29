@@ -807,7 +807,7 @@ menu team
 		texh	"16 64"
 		click
 		{
-			cmd "msgmenu ?mn_name"
+			cmd "msgmenu ?mn_name;"
 			*name mousefx true
 		}
 	}

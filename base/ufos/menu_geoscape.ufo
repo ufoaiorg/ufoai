@@ -1221,7 +1221,7 @@ menu popup_newbase
 		texh    "16 64"
 		mousefx false
 		click {
-			cmd "msgmenu ?mn_base_title"
+			cmd "msgmenu ?mn_base_title;"
 			*name mousefx true
 		}
 	}
@@ -1565,7 +1565,7 @@ menu popup_newinstallation
 		texh    "16 64"
 		mousefx false
 		click {
-			cmd "msgmenu ?mn_installation_title"
+			cmd "msgmenu ?mn_installation_title;"
 			*name mousefx true
 		}
 	}

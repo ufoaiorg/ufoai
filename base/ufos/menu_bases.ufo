@@ -309,7 +309,7 @@ menu bases
 		texh	"16 64"
 		click
 		{
-			cmd "msgmenu ?mn_base_title"
+			cmd "msgmenu ?mn_base_title;"
 			*name mousefx true
 		}
 	}
