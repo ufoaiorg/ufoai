@@ -4,7 +4,7 @@
 # Script to search all invalid licenses in base/textures
 # Written by Zenerka
 
-LANG=C;
+LANG=C
 
 #
 # directory with maps, relative to current
