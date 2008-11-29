@@ -32,10 +32,7 @@ echo "msgstats: ${MSGSTATS}"
 
 test -d "${PO_DIR}" || usage
 test -e "${POT_FILE}" || usage
-
 test -d "${IMAGES_DIR}" || mkdir -p "${IMAGES_DIR}"
-
-echo $(pwd)
 
 for po in $(ls ${PO_DIR}/*.po); do
 	echo -n "Generating stats for locale "$(basename "${po}" .po)"..."
