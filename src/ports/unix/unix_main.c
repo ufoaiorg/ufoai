@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 #include <fcntl.h>
 #include <sys/file.h>
+#include <locale.h>
 
 #include "../../common/common.h"
 #include "../unix/unix_glob.h"
@@ -101,6 +102,49 @@ void Sys_Sleep (int milliseconds)
 	if (milliseconds < 1)
 		milliseconds = 1;
 	usleep(milliseconds * 1000);
+}
+
+const char *Sys_SetLocale (const char *localeID)
+{
+	const char *locale;
+
+# ifndef __sun
+	unsetenv("LANGUAGE");
+# endif /* __sun */
+# ifdef __APPLE__
+	if (localeID[0] != '\0') {
+		if (Sys_Setenv("LANGUAGE", localeID) != 0)
+			Com_Printf("...setenv for LANGUAGE failed: %s\n", localeID);
+		if (Sys_Setenv("LC_ALL", localeID) != 0)
+			Com_Printf("...setenv for LC_ALL failed: %s\n", localeID);
+	}
+# endif /* __APPLE__ */
+
+	/* set to system default */
+	setlocale(LC_ALL, "C");
+	locale = setlocale(LC_MESSAGES, localeID);
+	if (!locale) {
+		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", localeID);
+		locale = setlocale(LC_MESSAGES, "");
+		if (!locale) {
+			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
+			return NULL;
+		}
+	} else {
+		Com_Printf("...using language: %s\n", locale);
+	}
+
+	return locale;
+}
+
+const char *Sys_GetLocale (void)
+{
+	/* Calling with NULL param should return current system settings. */
+	const char *currentLocale = setlocale(LC_MESSAGES, NULL);
+	if (currentLocale != NULL && currentLocale[0] != '\0')
+		return currentLocale;
+	else
+		return "C";
 }
 
 int Sys_Setenv (const char *name, const char *value)

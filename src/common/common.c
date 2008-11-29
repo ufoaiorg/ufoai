@@ -944,7 +944,7 @@ void Qcommon_Init (int argc, const char **argv)
 	/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
 	sv_gametype->modified = qfalse;
 
-	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language");
+	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
 	s_language->modified = qfalse;
 	cl_maxfps = Cvar_Get("cl_maxfps", "50", 0, NULL);
 	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);

@@ -1838,6 +1838,7 @@ void CL_ReadSinglePlayerData (void)
 /** @brief Cvars for initial check (popup at first start) */
 static cvarList_t checkcvar[] = {
 	{"cl_name", NULL, NULL},
+	{"s_language", NULL, NULL},
 
 	{NULL, NULL, NULL}
 };
@@ -1851,8 +1852,11 @@ static void CL_CheckCvars_f (void)
 	while (checkcvar[i].name) {
 		if (!checkcvar[i].var)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
-		if (!*(checkcvar[i].var->string))
+		if (checkcvar[i].var->string[0] == '\0') {
+			Com_Printf("%s has no value\n", checkcvar[i].var->name);
 			Cbuf_AddText("mn_push checkcvars;");
+			break;
+		}
 		i++;
 	}
 }
@@ -2369,55 +2373,6 @@ void CL_SlowFrame (int now, void *data)
 	CL_ActorUpdateCVars();
 }
 
-
-/**
- * @brief Gettext init function
- *
- * Initialize the locale settings for gettext
- * po files are searched in ./base/i18n
- * You can override the language-settings in setting
- * the cvar s_language to a valid language-string like
- * e.g. de_DE, en or en_US
- *
- * @sa CL_Init
- */
-static qboolean CL_LocaleSet (void)
-{
-	char *locale;
-
-#ifdef _WIN32
-	Sys_Setenv("LANG", s_language->string);
-	Sys_Setenv("LANGUAGE", s_language->string);
-#else /* _WIN32 */
-# ifndef __sun
-	unsetenv("LANGUAGE");
-# endif /* __sun */
-# ifdef __APPLE__
-	if (s_language->string[0] != '\0' && Sys_Setenv("LANGUAGE", s_language->string) != 0)
-		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (s_language->string[0] != '\0' && Sys_Setenv("LC_ALL", s_language->string) != 0)
-		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
-# endif /* __APPLE__ */
-#endif /* _WIN32 */
-
-	/* set to system default */
-	setlocale(LC_ALL, "C");
-	locale = setlocale(LC_MESSAGES, s_language->string);
-	if (!locale) {
-		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", s_language->string);
-		locale = setlocale(LC_MESSAGES, "");
-		if (!locale) {
-			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
-			return qfalse;
-		}
-	} else {
-		Com_Printf("...using language: %s\n", locale);
-		Cvar_Set("s_language", locale);
-		s_language->modified = qfalse;
-	}
-	return qtrue;
-}
-
 /**
  * @sa CL_Shutdown
  * @sa CL_InitAfter
@@ -2447,8 +2402,6 @@ void CL_Init (void)
 	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");
 	/* load language file */
 	textdomain(TEXT_DOMAIN);
-
-	CL_LocaleSet();
 
 	cl_localPool = Mem_CreatePool("Client: Local (per game)");
 	cl_genericPool = Mem_CreatePool("Client: Generic");

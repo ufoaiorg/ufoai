@@ -54,6 +54,29 @@ static language_t *languageList;	/**< linked list of all parsed languages */
 static int languageCount; /**< how many languages do we have */
 
 /**
+ * @brief Searches the locale script id with the given locale string
+ * @param[in] fullLocale The full locale string. E.g. en_US.UTF-8
+ */
+static const char *CL_GetLocaleID (const char *fullLocale)
+{
+	int i;
+	language_t *language;
+
+	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
+		localeMapping_t *mapping = language->localeMapping;
+
+		while (mapping) {
+			if (!Q_strcmp(fullLocale, mapping->localeMapping))
+				return language->localeID;
+			mapping = mapping->next;
+		}
+	}
+	Com_DPrintf(DEBUG_CLIENT, "CL_GetLocaleID: Could not find your system locale '%s'. "
+		"Add it to the languages script file and send a patch please.\n", fullLocale);
+	return NULL;
+}
+
+/**
  * @brief Parse all language definitions from the script files
  */
 void CL_ParseLanguages (const char *name, const char **text)
@@ -133,7 +156,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 
 	/* Find the proper *.mo file. */
 	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
-	if (*fs_i18ndir->string)
+	if (fs_i18ndir->string[0] != '\0')
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());
@@ -141,13 +164,16 @@ static qboolean CL_LanguageTest (const char *localeID)
 	Q_strcat(languagePath, localeID, sizeof(languagePath));
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
 
-#ifdef _WIN32
-	if (FS_FileExists(languagePath) && (Sys_Setenv("LANGUAGE=%s", localeID) == 0)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
-		return qtrue;
-	} else {
+	/* No *.mo file -> no language. */
+	if (!FS_FileExists(languagePath)) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' not found.\n", localeID);
 		return qfalse;
+	}
+
+#ifdef _WIN32
+	if (Sys_Setenv("LANGUAGE=%s", localeID) == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: locale '%s' found.\n", localeID);
+		return qtrue;
 	}
 #else
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
@@ -155,13 +181,9 @@ static qboolean CL_LanguageTest (const char *localeID)
 			break;
 	}
 	if (i == languageCount) {
-		Com_DPrintf(DEBUG_CLIENT, "Could not find locale with id '%s'\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: Could not find locale with id '%s'\n", localeID);
 		return qfalse;
 	}
-
-	/* No *.mo file -> no language. */
-	if (!FS_FileExists(languagePath))
-		return qfalse;
 
 	mapping = language->localeMapping;
 	if (!mapping) {
@@ -179,8 +201,9 @@ static qboolean CL_LanguageTest (const char *localeID)
 		mapping = mapping->next;
 	} while (mapping);
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: not possible to use language '%s'.\n", localeID);
-	return qfalse;
 #endif
+
+	return qfalse;
 }
 
 /**
@@ -195,28 +218,20 @@ void CL_LanguageInit (void)
 	menuNode_t* languageOptions;
 	selectBoxOptions_t* selectBoxOption;
 	language_t* language;
-	char deflang[MAX_VAR];
+	char systemLanguage[MAX_VAR];
 
-	if (*s_language->string) {
+	if (s_language->string[0] != '\0') {
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);
-		Q_strncpyz(deflang, s_language->string, sizeof(deflang));
+		Q_strncpyz(systemLanguage, s_language->string, sizeof(systemLanguage));
 	} else {
-#ifdef _WIN32
-		if (getenv("LANGUAGE"))
-			Q_strncpyz(deflang, getenv("LANGUAGE"), sizeof(deflang));
-		else {
-			/* Setting to en will always work in every windows. */
-			Q_strncpyz(deflang, "en", sizeof(deflang));
-		}
-#else
-		/* Calling with NULL param should return current system settings. */
-		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), sizeof(deflang));
-		if (deflang[0] == '\0')
-			Q_strncpyz(deflang, "C", sizeof(deflang));
-#endif
+		const char *currentLocale = Sys_GetLocale();
+		if (currentLocale)
+			Q_strncpyz(systemLanguage, CL_GetLocaleID(currentLocale), sizeof(systemLanguage));
+		else
+			systemLanguage[0] = '\0';
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: deflang: %s\n", deflang);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
 	menu = MN_GetMenu("options_game");
 	if (!menu)
@@ -230,8 +245,9 @@ void CL_LanguageInit (void)
 		if (!Q_strncmp(language->localeID, "none", 4))
 			continue;
 #endif
+
 		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
+		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
 			selectBoxOption = MN_NodeAddOption(languageOptions);
 			if (!selectBoxOption)
 				break;
@@ -253,7 +269,7 @@ void CL_LanguageInit (void)
 			continue;
 #endif
 		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
+		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
 			selectBoxOption = MN_NodeAddOption(languageOptions);
 			if (!selectBoxOption)
 				break;
@@ -261,8 +277,9 @@ void CL_LanguageInit (void)
 			Q_strncpyz(selectBoxOption->value, language->localeID, sizeof(selectBoxOption->value));
 		}
 	}
+
 	/* Set to the locale remembered previously. */
-	CL_LanguageTryToSet(deflang);
+	CL_LanguageTryToSet(systemLanguage);
 }
 
 /**
@@ -278,7 +295,7 @@ static void CL_NewLanguage (void)
 
 /**
  * @brief Cycle through all parsed locale mappings and try to set one after another
- * @param[in] localeID the locale id parsed from scriptfiles
+ * @param[in] localeID the locale id parsed from scriptfiles (e.g. en or de [the short id])
  * @sa CL_LocaleSet
  */
 qboolean CL_LanguageTryToSet (const char *localeID)
@@ -307,29 +324,24 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 		Com_Printf("No locale mappings for locale with id '%s'\n", localeID);
 		return qfalse;
 	}
+
+	Cvar_Set("s_language", localeID);
+	s_language->modified = qfalse;
+
 	do {
-		Cvar_Set("s_language", mapping->localeMapping);
-#ifdef _WIN32
-		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s\n", mapping->localeMapping);
-		Sys_Setenv("LANGUAGE", mapping->localeMapping);
-		Cvar_Set("s_language", language->localeID);
-		s_language->modified = qfalse;
-		CL_NewLanguage();
-		return qtrue;
-#else
-		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
-			Cvar_Set("s_language", language->localeID);
-			s_language->modified = qfalse;
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s (%s)\n", mapping->localeMapping, localeID);
+		if (Sys_SetLocale(mapping->localeMapping)) {
 			CL_NewLanguage();
 			return qtrue;
 		}
-#endif
 		mapping = mapping->next;
 	} while (mapping);
+
 #ifndef _WIN32
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: Finally try: '%s'\n", localeID);
-	setlocale(LC_MESSAGES, localeID);
+	Sys_SetLocale(localeID);
 	CL_NewLanguage();
 #endif
+
 	return qfalse;
 }

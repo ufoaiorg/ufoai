@@ -420,6 +420,41 @@ void Sys_Sleep (int milliseconds)
 	Sleep(milliseconds);
 }
 
+const char *Sys_SetLocale (const char *localeID)
+{
+	const char *locale;
+
+	Sys_Setenv("LANG", localeID);
+	Sys_Setenv("LANGUAGE", localeID);
+
+	/* set to system default */
+	setlocale(LC_ALL, "C");
+	locale = setlocale(LC_MESSAGES, localeID);
+	if (!locale) {
+		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", localeID);
+		locale = setlocale(LC_MESSAGES, "");
+		if (!locale) {
+			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
+			return NULL;
+		}
+	} else {
+		Com_Printf("...using language: %s\n", locale);
+	}
+
+	return locale;
+
+	return localeID;
+}
+
+const char *Sys_GetLocale (void)
+{
+	if (getenv("LANGUAGE"))
+		return getenv("LANGUAGE");
+	else
+		/* Setting to en will always work in every windows. */
+		return "en";
+}
+
 int Sys_Setenv (const char *name, const char *value)
 {
 	/* Windows does not have setenv, but its putenv is safe to use.
