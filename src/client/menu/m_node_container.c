@@ -244,11 +244,6 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 			}
 		}
 
-		mi.frame = 0;
-		mi.oldframe = 0;
-		mi.backlerp = 0;
-		mi.skin = 0;
-
 		Vector4Copy(color, col);
 		/* no ammo in this weapon - highlight this item */
 		if (od->weapon && od->reload && !item->a) {
