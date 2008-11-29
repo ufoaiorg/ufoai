@@ -70,19 +70,6 @@ static void MN_DrawBorder (const menuNode_t *node)
 }
 
 /**
- * @brief hack to catch a mouse move event when we redraw the GUI
- */
-static void MN_CheckMouseMove (void)
-{
-	static int oldX = 0, oldY = 0;
-	if (mousePosX != oldX || mousePosY != oldY) {
-		oldX = mousePosX;
-		oldY = mousePosY;
-		MN_MouseMove(mousePosX, mousePosY);
-	}
-}
-
-/**
  * @brief Prints active node names for debugging
  */
 static void MN_DrawDebugMenuNodeNames (void)

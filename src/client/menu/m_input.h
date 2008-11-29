@@ -34,6 +34,9 @@ void MN_MouseMove(int x, int y);
 void MN_MouseDown(int x, int y, int button);
 void MN_MouseUp(int x, int y, int button);
 
+void MN_InvalidateMouse(void);
+void MN_CheckMouseMove(void);
+
 /* mouse capture */
 menuNode_t* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(menuNode_t* node);

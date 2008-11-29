@@ -119,6 +119,28 @@ menuNode_t *mouseOverTest;
 static menuNode_t *oldMouseOverTest;
 
 /**
+ * @brief save old position of the mouse
+ */
+static int oldX = 0, oldY = 0;
+
+void MN_InvalidateMouse (void) {
+	oldX = -1;
+	oldY = -1;
+}
+
+/**
+ * @brief hack to catch a mouse move event when we redraw the GUI
+ */
+void MN_CheckMouseMove (void)
+{
+	if (mousePosX != oldX || mousePosY != oldY) {
+		oldX = mousePosX;
+		oldY = mousePosY;
+		MN_MouseMove(mousePosX, mousePosY);
+	}
+}
+
+/**
  * @brief Is called everytime the mouse position change
  */
 void MN_MouseMove (int x, int y)

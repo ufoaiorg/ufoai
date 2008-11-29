@@ -63,6 +63,7 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
 			 * @sa MN_PushCopyMenu_f */
 			for (mn.menuStackPos--; i < mn.menuStackPos; i++)
 				mn.menuStack[i] = mn.menuStack[i + 1];
+			MN_InvalidateMouse();
 			return;
 		}
 }
@@ -128,6 +129,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 		}
 	}
 
+	MN_InvalidateMouse();
 	return mn.menus + i;
 }
 
@@ -261,6 +263,8 @@ void MN_PopMenu (qboolean all)
 	/* when we leave a menu and a menu cinematic is running... we should stop it */
 	if (cls.playingCinematic == CIN_STATUS_MENU)
 		CIN_StopCinematic();
+
+	MN_InvalidateMouse();
 }
 
 /**
