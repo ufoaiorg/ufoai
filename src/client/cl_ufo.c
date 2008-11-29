@@ -166,7 +166,7 @@ void UFO_SetRandomDest (aircraft_t* ufocraft)
 void UFO_SetRandomDestAround (aircraft_t* ufocraft, vec2_t pos)
 {
 	vec2_t dest;
-	const float spread = 5.0f;
+	const float spread = 2.0f;
 	float rand1, rand2;
 
 	gaussrand(&rand1, &rand2);

@@ -444,6 +444,7 @@ void INS_DestroyInstallation (installation_t *installation)
 		return;
 
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
+	CP_MissionNotifyInstallationDestroyed(installation);
 	gd.numInstallations--;
 	installationCurrent = NULL;
 	installation->founded = qfalse;

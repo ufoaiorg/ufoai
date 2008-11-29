@@ -392,6 +392,7 @@ int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
 void CP_MissionNotifyBaseDestroyed(const base_t *base);
+void CP_MissionNotifyInstallationDestroyed(const installation_t const *installation);
 mission_t *CP_GetMissionById(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
 base_t* CP_PositionCloseToBase(const vec2_t pos);

@@ -2284,9 +2284,11 @@ static void CP_InterceptMissionIsFailure (mission_t *mission)
 
 /**
  * @brief Intercept mission ends: UFO leave earth.
+ * @param[in] mission Pointer to the mission
+ * @param[in] destroyed true if the UFO actually destroyed the installation, false else
  * @note Intercept mission -- Stage 3
  */
-static void CP_InterceptMissionLeave (mission_t *mission)
+static void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 {
 	installation_t *installation;
 
@@ -2296,7 +2298,7 @@ static void CP_InterceptMissionLeave (mission_t *mission)
 
 	/* if the mission was an attack of an installation, destroy it */
 	installation = mission->data;
-	if (installation && installation->founded && VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
+	if (destroyed && installation && installation->founded && VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
 		INS_DestroyInstallation(installation);
 	}
 
@@ -2313,8 +2315,8 @@ static void CP_InterceptMissionLeave (mission_t *mission)
  */
 static void CP_InterceptAttackInstallation (mission_t *mission)
 {
-	const date_t minAttackDelay = {1, 0};
-	const date_t attackDelay = {2, 0};		/* How long the UFO should stay on earth */
+	const date_t minAttackDelay = {0, 3600};
+	const date_t attackDelay = {0, 21600};		/* How long the UFO should stay on earth */
 	installation_t *installation;
 
 	mission->stage = STAGE_INTERCEPT;
@@ -2441,7 +2443,10 @@ static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int
 	int num = 0;
 
 	ufoTypes[num++] = UFO_FIGHTER;
-	ufoTypes[num++] = UFO_HARVESTER;
+
+	/* don't make attack on installation happens too often */
+	if (frand() < .25)
+		ufoTypes[num++] = UFO_HARVESTER;
 
 	return num;
 }
@@ -2473,7 +2478,7 @@ static void CP_InterceptNextStage (mission_t *mission)
 			const date_t AdditionalDelay = {1, 0};	/* 1 day */
 			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);
 		} else
-			CP_InterceptMissionLeave(mission);
+			CP_InterceptMissionLeave(mission, qtrue);
 		break;
 	case STAGE_RETURN_TO_ORBIT:
 		/* mission is over, remove mission */
@@ -2483,6 +2488,27 @@ static void CP_InterceptNextStage (mission_t *mission)
 		Com_Printf("CP_InterceptNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
 		CP_MissionRemove(mission);
 		break;
+	}
+}
+
+
+/**
+ * @brief Notify missions that an installation has been destroyed.
+ * @param[in] installation Pointer to the installation that has been destroyed.
+ */
+void CP_MissionNotifyInstallationDestroyed (const installation_t const *installation)
+{
+	linkedList_t *missionlist = ccs.missions;
+
+	while (missionlist) {
+		mission_t *mission = (mission_t*) missionlist->data;
+
+		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data) {
+			if ((installation_t*) mission->data != installation)
+				continue;
+			CP_InterceptMissionLeave(mission, qfalse);
+		}
+		missionlist = missionlist->next;
 	}
 }
 
