@@ -3,6 +3,7 @@
  * @todo must we need to use command to interact with keyboard?
  * @todo add a command to force the text edition from script
  * @todo allow to edit text without any cvar
+ * @todo add a custom max size
  */
 
 /*
