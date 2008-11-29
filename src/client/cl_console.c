@@ -88,7 +88,7 @@ void Con_ToggleConsole_f (void)
 		Key_SetDest(key_console);
 		/* make sure that we end all input buffers when opening the console */
 		if (msg_mode == MSG_MENU)
-			Cbuf_AddText("msgmenu !\n");
+			Cbuf_AddText("mn_msgedit !\n");
 	}
 }
 

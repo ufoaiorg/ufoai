@@ -547,7 +547,7 @@ static void MN_Translate_f (void)
  * the abort of a cvar value change (e.g. for singleplayer savegames
  * you don't want to save the game when the player hits esc) you can
  * define the cvarname_aborted confunc to handle this case, too.
- * Done by the script command msgmenu [?|!|:][cvarname]
+ * Done by the script command mn_msgedit [?|!|:][cvarname]
  * @sa Key_Message
  * @sa CL_ChangeName_f
  */
@@ -759,7 +759,7 @@ void MN_Init (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
 #endif
-	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, "Activates the inline cvar editing");
+	Cmd_AddCommand("mn_msgedit", CL_MessageMenu_f, "Activates the inline cvar editing");
 
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);

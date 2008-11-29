@@ -461,7 +461,7 @@ static void Key_Message (int key)
 			break;
 		case MSG_MENU:
 			/* end the editing (don't cancel) */
-			Cbuf_AddText("msgmenu \":");
+			Cbuf_AddText("mn_msgedit \":");
 			break;
 		default:
 			Com_Printf("Invalid msg_mode\n");
@@ -499,7 +499,7 @@ static void Key_Message (int key)
 			/* fall through */
 			Irc_Input_Deactivate();
 		case MSG_MENU:
-			Cbuf_AddText("msgmenu !\n");
+			Cbuf_AddText("mn_msgedit !\n");
 			break;
 		}
 
@@ -510,7 +510,7 @@ static void Key_Message (int key)
 		if (msg_bufferlen) {
 			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
 			if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
-				Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
+				Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
 		}
 		return;
 	}
@@ -534,7 +534,7 @@ static void Key_Message (int key)
 	msg_bufferlen += UTF8_insert_char(msg_buffer, sizeof(msg_buffer),  msg_bufferlen, key);
 
 	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
-		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
+		Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
 }
 
 

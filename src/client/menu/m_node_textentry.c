@@ -138,7 +138,7 @@ static void MN_TextEntryNodeSetFocus (menuNode_t *node)
 	Cmd_AddUserdata(cmdAborted, node);
 
 	/* start typing */
-	Cbuf_AddText(va("msgmenu ?%s\n", &((char*)node->text)[6]));
+	Cbuf_AddText(va("mn_msgedit ?%s\n", &((char*)node->text)[6]));
 }
 
 static void MN_TextEntryNodeRemoveFocus (menuNode_t *node)
@@ -174,9 +174,9 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 		if (x < 0 || y < 0 || x > node->pos[0] || y > node->pos[1]) {
 			/* keyboard, please stop */
 			if (node->u.textentry.clickOutAbort) {
-				Cbuf_AddText("msgmenu !\n");
+				Cbuf_AddText("mn_msgedit !\n");
 			} else {
-				Cbuf_AddText("msgmenu .\n");
+				Cbuf_AddText("mn_msgedit .\n");
 			}
 		}
 	}
