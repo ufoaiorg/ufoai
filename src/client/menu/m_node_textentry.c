@@ -97,7 +97,7 @@ static void MN_TextEntryNodeKeyboardAborted_f ()
  * @brief force edition of a textentry node
  * @note the textentry must be on the active menu
  */
-void MN_EditTextEntry_f (void)
+static void MN_EditTextEntry_f (void)
 {
 	menuNode_t *node;
 	const char* name;
