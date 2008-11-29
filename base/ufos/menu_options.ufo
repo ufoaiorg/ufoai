@@ -171,7 +171,7 @@ menu options_video
 		pos		"425 215"
 		align	ur
 	}
-	
+
 	/* @todo update max with GL max anisotropic */
 	spinner aniso_change
 	{
@@ -929,21 +929,19 @@ menu options_game
 		string  "_Name:"
 		pos     "85 140"
 	}
-	pic slot_name
+	textentry slot_name
 	{
-		image   menu/save_slot
-		pos     "85 160"
-		size	"256 32"
-		mousefx true
-		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
-	}
-	string txt_name
-	{
-		string "*cvar cl_name"
-		pos "95 165"
+		image	menu/button_green_verysmall
+		blend	true
 		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
+		textalign cl
+		padding 8
+		font "f_verysmall"
+		pos     "85 160"
+		size	"256 34"
+		string "*cvar cl_name"
 	}
-	confunc cl_name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 	// ===================
 	// LANGUAGE

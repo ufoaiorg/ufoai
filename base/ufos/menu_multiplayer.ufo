@@ -576,20 +576,20 @@ menu mp_serverbrowser
 		string  "_Name:"
 		pos     "65 555"
 	}
-	pic slot_name
+
+	textentry slot_name
 	{
-		image   menu/save_slot
-		pos     "65 575"
-		mousefx true
-		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
-	}
-	string txt_name
-	{
-		string "*cvar cl_name"
-		pos "75 581"
+		image	menu/button_green_verysmall
+		blend	true
 		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
+		textalign cl
+		padding 8
+		font "f_verysmall"
+		pos     "65 575"
+		size	"256 34"
+		string "*cvar cl_name"
 	}
-	confunc cl_name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 	// ==================
 	// preferences
@@ -646,20 +646,19 @@ menu mp_serverbrowser
 		string	"_Connect to IP"
 		pos	"65 500"
 	}
-	pic slot_inet_connect_to_ip
+	textentry slot0
 	{
-		image	menu/save_slot
+		image	menu/button_green_verysmall
+		blend	true
+		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
+		textalign cl
+		padding 8
+		font "f_verysmall"
 		pos	"65 520"
-		mousefx	false
-		click	{ cmd "msgmenu ?mn_server_ip" *txt_inet_ip color "1 1 1 1" *txt_inet_ip mousefx true }
+		size	"256 34"
+		string "*cvar mn_server_ip"
 	}
-	string txt_inet_ip
-	{
-		string	"*cvar mn_server_ip"
-		pos	"75 526"
-		color	"0 .78 0 1"
-	}
-	confunc mn_server_ip_changed { *txt_inet_ip color "0 .78 0 1" *txt_inet_ip mousefx false }
 
 	// ====================
 	// connect to ip button

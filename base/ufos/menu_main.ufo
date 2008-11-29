@@ -120,6 +120,7 @@ menu checkcvars
 	{
 		pos "124 192"
 		size	"777 402"
+		dragbutton	true
 	}
 
 	zone popup
@@ -186,20 +187,19 @@ menu checkcvars
 		pos	"41 88"
 		color "1 1 1 1"
 	}
-	pic slot_name
+	textentry slot_name
 	{
-		image   menu/save_slot
-		pos     "376 82"
-		mousefx true
-		click   { cmd "msgmenu ?cl_name" *txt_name color "1 1 1 1" *txt_name mousefx true }
-	}
-	string txt_name
-	{
-		string "*cvar cl_name"
-		pos "386 87"
+		image	menu/button_green_verysmall
+		blend	true
 		color "0 .78 0 1"
+		selectcolor "1 1 1 1"
+		textalign cl
+		padding 8
+		font "f_verysmall"
+		pos     "376 82"
+		size	"256 34"
+		string "*cvar cl_name"
 	}
-	confunc cl_name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 	// ===================
 	// BARS
