@@ -440,26 +440,31 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int actor_size, int hi, int lo)
 {
 	vec3_t bmin, bmax;
-	vec3_t astart, aend;
-	vec3_t offset;
+	int hz, lz;
+	int bitmask = 0x100; /**< Trace the clip levels by default */
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
 	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT - DIST_EPSILON);
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
-	/* Calculate the offset needed to center the trace about the line */
-	VectorAdd(bmin, bmax, offset);
-	VectorDiv(offset, 2, offset);
+	/* Calculate the needed bitmask. */
+	/* Include levels up to the hi mark. */
+	hz = floor((hi + start[2]) / UNIT_SIZE);
+	bitmask |= (1 << (hz + 1)) -1;
+	/* Remove levels below the lo mark */
+	lz = floor((lo + start[2]) / UNIT_SIZE);
+	if (lz > 0)
+		bitmask ^= (1 << lz) -1;
 
-	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
-	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
-	VectorSubtract(bmin, offset, bmin);
-	VectorSubtract(bmax, offset, bmax);
-	VectorAdd(start, offset, astart);
-	VectorAdd(end, offset, aend);
+
+
+
+
+
+
 
 	/* perform the trace, then return true if the trace was obstructed. */
-	tr_obstruction = RT_COMPLETEBOXTRACE(astart, aend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr_obstruction = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, bitmask, MASK_IMPASSABLE, MASK_PASSABLE);
 
 	return tr_obstruction.fraction < 1.0;
 }

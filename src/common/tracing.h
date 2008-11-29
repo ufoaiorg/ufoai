@@ -74,6 +74,19 @@ typedef struct trace_s{
 	struct edict_s *ent;		/**< not set by CM_*() functions */
 } trace_t;
 
+/* This attempts to make the box tracing code thread safe. */
+typedef struct boxtrace_s {
+	vec3_t start, end;
+	vec3_t mins, maxs;
+	vec3_t extents;
+
+	trace_t trace;
+	int contents;
+	int rejects;
+	qboolean ispoint;			/* optimized case */
+
+	TR_TILE_TYPE *tile;
+} boxtrace_t;
 
 /*==============================================================
 BOX AND LINE TRACING
@@ -100,6 +113,6 @@ qboolean TR_TestLineSingleTile(const vec3_t start, const vec3_t stop);
 qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 
-void TR_TraceToLeaf(int leafnum);
+void TR_TraceToLeaf(boxtrace_t *trace, int leafnum);
 
 #endif /* COMMON_TRACING_H */

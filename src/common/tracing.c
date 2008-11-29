@@ -88,6 +88,7 @@ static int *leaf_list;
 static float *leaf_mins, *leaf_maxs;
 static int leaf_topnode;
 
+/*
 static vec3_t trace_start, trace_end;
 static vec3_t trace_mins, trace_maxs;
 static vec3_t trace_extents;
@@ -95,7 +96,9 @@ static vec3_t trace_extents;
 static trace_t trace_trace;
 static int trace_contents;
 static int trace_rejects;
-static qboolean trace_ispoint;			/* optimized case */
+static qboolean trace_ispoint;			/ * optimized case * /
+*/
+
 
 tnode_t *tnode_p;
 
@@ -678,7 +681,7 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line
  *  originates from inside the brush, terminates inside the brush, or is completely contained within the brush.
  */
-static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *trace, cBspBrush_t *brush)
+static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush)
 {
 	int i, j;
 	TR_PLANE_TYPE *clipplane;
@@ -713,14 +716,14 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 #endif
 
 		/** @todo special case for axial */
-		if (!trace_ispoint) {	/* general box case */
+		if (!trace->ispoint) {	/* general box case */
 			/* push the plane out appropriately for mins/maxs */
 			/** @todo use signbits into 8 way lookup for each mins/maxs */
 			for (j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
-					ofs[j] = maxs[j];
+					ofs[j] = trace->maxs[j];
 				else
-					ofs[j] = mins[j];
+					ofs[j] = trace->mins[j];
 			}
 			dist = DotProduct(ofs, plane->normal);
 			dist = plane->dist - dist;
@@ -728,8 +731,8 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 			dist = plane->dist;
 		}
 
-		d1 = DotProduct(p1, plane->normal) - dist;
-		d2 = DotProduct(p2, plane->normal) - dist;
+		d1 = DotProduct(trace->start, plane->normal) - dist;
+		d2 = DotProduct(trace->end, plane->normal) - dist;
 
 		if (d2 > 0)
 			getout = qtrue;		/* endpoint is not in solid */
@@ -761,26 +764,28 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 		}
 	}
 
-	if (!trace)
+	/*
+	if (!trace->trace)
 		return;
+	*/
 
 	if (!startout) {			/* original point was inside brush */
-		trace->startsolid = qtrue;
+		trace->trace.startsolid = qtrue;
 		if (!getout)
-			trace->allsolid = qtrue;
+			trace->trace.allsolid = qtrue;
 		return;
 	}
 	if (enterfrac < leavefrac) {
-		if (enterfrac > -1 && enterfrac < trace->fraction) {
+		if (enterfrac > -1 && enterfrac < trace->trace.fraction) {
 			if (enterfrac < 0)
 				enterfrac = 0;
-			trace->fraction = enterfrac;
-			trace->plane = *clipplane;
-			trace->planenum = clipplanenum;
+			trace->trace.fraction = enterfrac;
+			trace->trace.plane = *clipplane;
+			trace->trace.planenum = clipplanenum;
 #ifdef COMPILE_UFO
-			trace->surface = leadside->surface;
+			trace->trace.surface = leadside->surface;
 #endif
-			trace->contentFlags = brush->contentFlags;
+			trace->trace.contentFlags = brush->contentFlags;
 		}
 	}
 }
@@ -788,7 +793,7 @@ static void TR_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 /**
  * @sa CM_TraceToLeaf
  */
-static void TR_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cBspBrush_t * brush)
+static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 {
 	int i, j;
 	TR_PLANE_TYPE *plane;
@@ -797,15 +802,16 @@ static void TR_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 	float d1;
 	TR_BRUSHSIDE_TYPE *side;
 
+
 	if (!brush || !brush->numsides)
 		return;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side = &curTile->brushsides[brush->firstbrushside + i];
+		side = &trace_data->tile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
 		plane = side->plane;
 #else
-		plane = curTile->planes + side->planenum;
+		plane = trace_data->tile->planes + side->planenum;
 #endif
 
 		/** @todo special case for axial */
@@ -814,14 +820,14 @@ static void TR_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 		/** @todo use signbits into 8 way lookup for each mins/maxs */
 		for (j = 0; j < 3; j++) {
 			if (plane->normal[j] < 0)
-				ofs[j] = maxs[j];
+				ofs[j] = trace_data->maxs[j];
 			else
-				ofs[j] = mins[j];
+				ofs[j] = trace_data->mins[j];
 		}
 		dist = DotProduct(ofs, plane->normal);
 		dist = plane->dist - dist;
 
-		d1 = DotProduct(p1, plane->normal) - dist;
+		d1 = DotProduct(trace_data->start, plane->normal) - dist;
 
 		/* if completely in front of face, no intersection */
 		if (d1 > 0)
@@ -829,13 +835,10 @@ static void TR_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 
 	}
 
-	if (!trace)
-		return;
-
 	/* inside this brush */
-	trace->startsolid = trace->allsolid = qtrue;
-	trace->fraction = 0;
-	trace->contentFlags = brush->contentFlags;
+	trace_data->trace.startsolid = trace_data->trace.allsolid = qtrue;
+	trace_data->trace.fraction = 0;
+	trace_data->trace.contentFlags = brush->contentFlags;
 }
 
 
@@ -849,7 +852,7 @@ static void TR_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
  *  in the leaf is examined to see if it is intersected by the line drawn in TR_RecursiveHullCheck or is within the
  *  bounding box set in trace_mins and trace_maxs with the origin on the line.
  */
-void TR_TraceToLeaf (int leafnum)
+void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 {
 	int k;
 	int brushnum;
@@ -860,7 +863,7 @@ void TR_TraceToLeaf (int leafnum)
 	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents) || (leaf->contentFlags & trace_rejects))
+	if (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
@@ -871,11 +874,11 @@ void TR_TraceToLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_contents) || (b->contentFlags & trace_rejects))
+		if (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects))
 			continue;
 
-		TR_ClipBoxToBrush(trace_mins, trace_maxs, trace_start, trace_end, &trace_trace, b);
-		if (!trace_trace.fraction)
+		TR_ClipBoxToBrush(trace_data, b);
+		if (!trace_data->trace.fraction)
 			return;
 	}
 }
@@ -884,7 +887,7 @@ void TR_TraceToLeaf (int leafnum)
 /**
  * @sa CM_TestBoxInBrush
  */
-static void TR_TestInLeaf (int leafnum)
+static void TR_TestInLeaf (boxtrace_t *trace_data, int leafnum)
 {
 	int k;
 	const TR_LEAF_TYPE *leaf;
@@ -893,7 +896,7 @@ static void TR_TestInLeaf (int leafnum)
 	assert(leafnum <= curTile->numleafs);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_contents) || (leaf->contentFlags & trace_rejects))
+	if (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
@@ -904,10 +907,10 @@ static void TR_TestInLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_contents) || (b->contentFlags & trace_rejects))
+		if (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects))
 			continue;
-		TR_TestBoxInBrush(trace_mins, trace_maxs, trace_start, &trace_trace, b);
-		if (!trace_trace.fraction)
+		TR_TestBoxInBrush(trace_data, b);
+		if (!trace_data->trace.fraction)
 			return;
 	}
 }
@@ -929,54 +932,60 @@ static void TR_TestInLeaf (int leafnum)
  *  using trace_extents.  Trace_extents is specifically how far from the line a bsp node needs
  *  to be in order to be included or excluded in the search.
  */
-static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
+static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
 {
 	TR_NODE_TYPE *node;
 	TR_PLANE_TYPE *plane;
 	float t1, t2, offset;
 	float frac, frac2;
-	int i;
-	vec3_t mid;
 	int side;
 	float midf;
+	vec3_t mid;
+	trace_t *trace = &trace_data->trace;
+	TR_TILE_TYPE *myTile = trace_data->tile;
 
-	if (trace_trace.fraction <= p1f)
+
+	if (trace->fraction <= p1f)
 		return;					/* already hit something nearer */
 
 	/* if < 0, we are in a leaf node */
 	if (num <= LEAFNODE) {
-		TR_TraceToLeaf(LEAFNODE - num);
+		TR_TraceToLeaf(trace_data, LEAFNODE - num);
 		return;
 	}
 
 	/* find the point distances to the seperating plane
 	 * and the offset for the size of the box */
-	node = curTile->nodes + num;
+	node = myTile->nodes + num;
 #ifdef COMPILE_UFO
 	plane = node->plane;
 #else
-	plane = curTile->planes + node->planenum;
+	plane = myTile->planes + node->planenum;
 #endif
 
 	if (plane->type <= PLANE_Z) {
-		t1 = p1[plane->type] - plane->dist;
-		t2 = p2[plane->type] - plane->dist;
-		offset = trace_extents[plane->type];
+		const int type = plane->type;
+		t1 = p1[type] - plane->dist;
+		t2 = p2[type] - plane->dist;
+		offset = trace_data->extents[type];
 	} else {
-		t1 = DotProduct(plane->normal, p1) - plane->dist;
-		t2 = DotProduct(plane->normal, p2) - plane->dist;
-		if (trace_ispoint)
+		vec3_t *normal = &plane->normal;
+		vec3_t *extents = &trace_data->extents;
+		float dist = plane->dist;
+		t1 = DotProduct(*normal, p1) - dist;
+		t2 = DotProduct(*normal, p2) - dist;
+		if (trace_data->ispoint)
 			offset = 0;
 		else
-			offset = fabs(trace_extents[0] * plane->normal[0]) + fabs(trace_extents[1] * plane->normal[1]) + fabs(trace_extents[2] * plane->normal[2]);
+			offset = fabs(*extents[0] * *normal[0]) + fabs(*extents[1] * *normal[1]) + fabs(*extents[2] * *normal[2]);
 	}
 
 	/* see which sides we need to consider */
 	if (t1 >= offset && t2 >= offset) {
-		TR_RecursiveHullCheck(node->children[0], p1f, p2f, p1, p2);
+		TR_RecursiveHullCheck(trace_data, node->children[0], p1f, p2f, p1, p2);
 		return;
 	} else if (t1 < -offset && t2 < -offset) {
-		TR_RecursiveHullCheck(node->children[1], p1f, p2f, p1, p2);
+		TR_RecursiveHullCheck(trace_data, node->children[1], p1f, p2f, p1, p2);
 		return;
 	}
 
@@ -1000,14 +1009,12 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 	/* move up to the node */
 	if (frac < 0)
 		frac = 0;
-	if (frac > 1)
+	else if (frac > 1)
 		frac = 1;
 
 	midf = p1f + (p2f - p1f) * frac;
-	for (i = 0; i < 3; i++)
-		mid[i] = p1[i] + frac * (p2[i] - p1[i]);
-
-	TR_RecursiveHullCheck(node->children[side], p1f, midf, p1, mid);
+	VectorInterpolation(p1, p2, midf, mid);
+	TR_RecursiveHullCheck(trace_data, node->children[side], p1f, midf, p1, mid);
 
 	/* go past the node */
 	if (frac2 < 0)
@@ -1016,10 +1023,8 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 		frac2 = 1;
 
 	midf = p1f + (p2f - p1f) * frac2;
-	for (i = 0; i < 3; i++)
-		mid[i] = p1[i] + (p2[i] - p1[i]) * frac2;
-
-	TR_RecursiveHullCheck(node->children[side ^ 1], midf, p2f, mid, p2);
+	VectorInterpolation(p1, p2, midf, mid);
+	TR_RecursiveHullCheck(trace_data, node->children[side ^ 1], midf, p2f, mid, p2);
 }
 
 /**
@@ -1045,39 +1050,55 @@ static void TR_RecursiveHullCheck (int num, float p1f, float p2f, const vec3_t p
 trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject)
 {
 	int i;
+	vec3_t offset, amins, amaxs, astart, aend;
+	boxtrace_t trace_data;
 
 	checkcount++;	/* for multi-check avoidance */
 	c_traces++;		/* for statistics, may be zeroed */
 
 	/* init */
-	curTile = tile;
+	/* curTile = tile; */
 
 	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 
 	/* fill in a default trace */
-	memset(&trace_trace, 0, sizeof(trace_trace));
-	trace_trace.fraction = 1;
-	trace_trace.surface = &(nullsurface);
+	memset(&trace_data.trace, 0, sizeof(trace_data.trace));
+	trace_data.trace.fraction = 1;
+	trace_data.trace.surface = &(nullsurface);
 
 	if (!curTile->numnodes)		/* map not loaded */
-		return trace_trace;
+		return trace_data.trace;
 
-	trace_contents = brushmask;
-	trace_rejects = brushreject;
-	VectorCopy(start, trace_start);
-	VectorCopy(end, trace_end);
-	VectorCopy(mins, trace_mins);
-	VectorCopy(maxs, trace_maxs);
+	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
+	/* Calculate the offset needed to center the trace about the line */
+    VectorAdd(mins, maxs, offset);
+    VectorDiv(offset, 2, offset);
+
+    /* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
+     * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
+	VectorSubtract(mins, offset, amins);
+	VectorSubtract(maxs, offset, amaxs);
+	VectorAdd(start, offset, astart);
+	VectorAdd(end, offset, aend);
+
+
+	trace_data.contents = brushmask;
+	trace_data.rejects = brushreject;
+	trace_data.tile = tile;
+	VectorCopy(astart, trace_data.start);
+	VectorCopy(aend, trace_data.end);
+	VectorCopy(amins, trace_data.mins);
+	VectorCopy(amaxs, trace_data.maxs);
 
 	/* check for position test special case */
-	if (VectorCompare(start, end)) {
+	if (VectorCompare(astart, aend)) {
 		int leafs[MAX_LEAFS];
 		int numleafs;
 		vec3_t c1, c2;
 		int topnode;
 
-		VectorAdd(start, mins, c1);
-		VectorAdd(start, maxs, c2);
+		VectorAdd(astart, amins, c1);
+		VectorAdd(astart, amaxs, c2);
 		for (i = 0; i < 3; i++) {
 			/* expand the box by 1 */
 			c1[i] -= 1;
@@ -1086,35 +1107,36 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 
 		numleafs = TR_BoxLeafnums_headnode(c1, c2, leafs, MAX_LEAFS, headnode, &topnode);
 		for (i = 0; i < numleafs; i++) {
-			TR_TestInLeaf(leafs[i]);
-			if (trace_trace.allsolid)
+			TR_TestInLeaf(&trace_data, leafs[i]);
+			if (trace_data.trace.allsolid)
 				break;
 		}
-		VectorCopy(start, trace_trace.endpos);
-		return trace_trace;
+		VectorCopy(start, trace_data.trace.endpos);
+		return trace_data.trace;
 	}
 
 	/* check for point special case */
-	if (VectorCompare(mins, vec3_origin) && VectorCompare(maxs, vec3_origin)) {
-		trace_ispoint = qtrue;
-		VectorClear(trace_extents);
+	if (VectorCompare(amins, vec3_origin) && VectorCompare(amaxs, vec3_origin)) {
+		trace_data.ispoint = qtrue;
+		VectorClear(trace_data.extents);
 	} else {
-		trace_ispoint = qfalse;
-		trace_extents[0] = -mins[0] > maxs[0] ? -mins[0] : maxs[0];
-		trace_extents[1] = -mins[1] > maxs[1] ? -mins[1] : maxs[1];
-		trace_extents[2] = -mins[2] > maxs[2] ? -mins[2] : maxs[2];
+		trace_data.ispoint = qfalse;
+		trace_data.extents[0] = -amins[0] > amaxs[0] ? -amins[0] : amaxs[0];
+		trace_data.extents[1] = -amins[1] > amaxs[1] ? -amins[1] : amaxs[1];
+		trace_data.extents[2] = -amins[2] > amaxs[2] ? -amins[2] : amaxs[2];
 	}
 
 	/* general sweeping through world */
-	TR_RecursiveHullCheck(headnode, 0, 1, start, end);
+	TR_RecursiveHullCheck(&trace_data, headnode, 0, 1, astart, aend);
 
-	if (trace_trace.fraction == 1.0) {
-		VectorCopy(end, trace_trace.endpos);
+	if (trace_data.trace.fraction == 1.0) {
+		VectorCopy(aend, trace_data.trace.endpos);
 	} else {
-		for (i = 0; i < 3; i++)
-			trace_trace.endpos[i] = start[i] + trace_trace.fraction * (end[i] - start[i]);
+		VectorInterpolation(trace_data.start, trace_data.end, trace_data.trace.fraction, trace_data.trace.endpos);
 	}
-	return trace_trace;
+	/* Now un-offset the end position. */
+	VectorSubtract(trace_data.trace.endpos, offset, trace_data.trace.endpos);
+	return trace_data.trace;
 }
 
 /**
