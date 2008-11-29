@@ -61,6 +61,17 @@ static inline void MN_TextEntryNodeFireChange (menuNode_t *node)
 }
 
 /**
+ * @brief fire the abort event
+ */
+static inline void MN_TextEntryNodeFireAbort (menuNode_t *node)
+{
+	/* fire change event */
+	if (node->u.textentry.abort) {
+		MN_ExecuteEventActions(node, node->u.textentry.abort);
+	}
+}
+
+/**
  * @brief callback from the keyboard
  */
 static void MN_TextEntryNodeKeyboardChanged_f ()
@@ -76,6 +87,7 @@ static void MN_TextEntryNodeKeyboardChanged_f ()
 static void MN_TextEntryNodeKeyboardAborted_f ()
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
+	MN_TextEntryNodeFireAbort(node);
 	MN_TextEntryNodeRemoveFocus(node);
 }
 
@@ -118,6 +130,10 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
+
+	if (node->click) {
+		MN_ExecuteEventActions(node, node->click);
+	}
 
 	/* no cvar */
 	if (!node->text)
@@ -175,7 +191,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 	}
 
 	text = MN_GetReferenceString(node->menu, node->text);
-	if (text != NULL && *text != '\0') {
+	if (text != NULL) {
 		/** @todo we dont need to edit the text to draw the cursor */
 		if (MN_GetMouseCapture() == node) {
 			if (cl.time % 1000 < 500) {
@@ -199,18 +215,23 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 			}
 		}
 
-		font = MN_GetFont(node->menu, node);
-		R_ColorBlend(textColor);
-		R_FontDrawStringInBox(font, node->textalign,
-			pos[0] + node->padding, pos[1] + node->padding,
-			node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
-			text, LONGLINES_PRETTYCHOP);
-		R_ColorBlend(NULL);
+		if (*text != '\0') {
+			font = MN_GetFont(node->menu, node);
+			R_ColorBlend(textColor);
+			R_FontDrawStringInBox(font, node->textalign,
+				pos[0] + node->padding, pos[1] + node->padding,
+				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
+				text, LONGLINES_PRETTYCHOP);
+			R_ColorBlend(NULL);
+		}
 	}
 
 }
 
-static void MN_TextEntryNodeLoaded (menuNode_t *node)
+/**
+ * @brief Call before the script initialisation of the node
+ */
+static void MN_TextEntryNodeLoading (menuNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CL;
@@ -221,6 +242,7 @@ static void MN_TextEntryNodeLoaded (menuNode_t *node)
 static const value_t properties[] = {
 	{"ispassword", V_BOOL, offsetof(menuNode_t, u.textentry.isPassword), MEMBER_SIZEOF(menuNode_t, u.textentry.isPassword) },
 	{"clickoutabort", V_BOOL, offsetof(menuNode_t, u.textentry.clickOutAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.clickOutAbort)},
+	{"abort", V_SPECIAL_ACTION, offsetof(menuNode_t, u.textentry.abort), MEMBER_SIZEOF(menuNode_t, u.textentry.abort)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -230,6 +252,6 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->id = MN_TEXTENTRY;
 	behaviour->leftClick = MN_TextEntryNodeClick;
 	behaviour->draw = MN_TextEntryNodeDraw;
-	behaviour->loaded = MN_TextEntryNodeLoaded;
+	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;
 }

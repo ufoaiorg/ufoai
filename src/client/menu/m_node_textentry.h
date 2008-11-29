@@ -26,15 +26,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_TEXT_ENTRY_H
 #define CLIENT_MENU_M_NODE_TEXT_ENTRY_H
 
+/* prototype */
+struct nodeBehaviour_s;
+struct menuAction_s;
+
 /**
  * @brief extradata for the textentry, to custom draw and behaviour
  */
 typedef struct textEntryExtraData_s {
 	qboolean isPassword;	/**< Display '*' instead of the real text */
 	qboolean clickOutAbort;	/**< If we click out an activated node, it abort the edition */
+	struct menuAction_s *abort;
 } textEntryExtraData_t;
-
-struct nodeBehaviour_s; /* prototype */
 
 void MN_RegisterTextEntryNode(struct nodeBehaviour_s *behaviour);
 
