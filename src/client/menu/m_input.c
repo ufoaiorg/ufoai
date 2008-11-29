@@ -123,13 +123,17 @@ static menuNode_t *oldMouseOverTest;
  */
 static int oldX = 0, oldY = 0;
 
-void MN_InvalidateMouse (void) {
+/**
+ * @brief Force to invalidate the mouse position and then to update hover nodes...
+ */
+void MN_InvalidateMouse (void)
+{
 	oldX = -1;
 	oldY = -1;
 }
 
 /**
- * @brief hack to catch a mouse move event when we redraw the GUI
+ * @brief Call mouse move only if the mouse position change
  */
 void MN_CheckMouseMove (void)
 {
