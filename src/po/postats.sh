@@ -13,7 +13,7 @@ function usage() {
 
 PO_DIR="${1:-./src/po}"
 POT_FILE="${2:-./src/po/ufoai.pot}"
-IMAGES_DIR="${3:-.}"
+IMAGES_DIR="${3:-./src/po/stats}"
 MSGSTATS=$(dirname "${0}")/pomsgstats.sh
 
 echo "using po files from ${PO_DIR}"
@@ -49,3 +49,7 @@ for po in $(ls ${PO_DIR}/*.po); do
 		${IMAGES_DIR}/$(basename "${po}" .po).png
 	echo " done"
 done
+
+scp ${IMAGES_DIR}/*.png ufosf:/home/groups/u/uf/ufoai/htdocs/img/postats
+
+
