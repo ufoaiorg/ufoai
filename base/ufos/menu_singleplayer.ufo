@@ -668,7 +668,7 @@ menu save
 	{
 		pos	"640 520"
 		size "256 64"
-		click	{ cmd "msgmenu !;mn_pop;" }
+		click	{ cmd "mn_pop;" }
 		image	menu/button_big
 		font	f_menubig
 		color	"0 0.5 0 1"
