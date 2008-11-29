@@ -270,18 +270,18 @@ static void MN_DrawMenusTest (void)
  */
 void MN_DrawMenus (void)
 {
+#if 0 /* new handler */
 	menuNode_t *node;
 	menu_t *menu;
 	int sp, pp;
 	qboolean mouseOver = qfalse;
 	vec2_t nodepos;
+#endif
 
 	/* draw function of the comming architecture */
-	if (mn_newHandler) {
-		MN_DrawMenusTest();
-		return;
-	}
+	MN_DrawMenusTest();
 
+#if 0 /* new handler */
 	MN_CheckMouseMove();
 	MN_HandleTimers();
 
@@ -424,6 +424,7 @@ void MN_DrawMenus (void)
 	}
 
 	R_ColorBlend(NULL);
+#endif
 }
 
 void MN_DrawMenusInit (void)

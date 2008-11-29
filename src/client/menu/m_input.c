@@ -35,9 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "../cl_global.h"
 
-const qboolean mn_newHandler = qtrue;
-
-
 /**
  * @sa MN_DisplayNotice
  */
@@ -175,7 +172,7 @@ void MN_MouseMove (int x, int y)
 	}
 
 	/* update nodes: send 'in' and 'out' event */
-	if (mn_newHandler && oldMouseOverTest != mouseOverTest) {
+	if (oldMouseOverTest != mouseOverTest) {
 		if (oldMouseOverTest) {
 			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->mouseOut);
 			oldMouseOverTest->menu->hoverNode = NULL;
@@ -214,10 +211,12 @@ void MN_MouseMove (int x, int y)
  */
 void MN_LeftClick (int x, int y)
 {
-	menuNode_t *node;
+#if 0 /* new handler */
 	int sp;
-	qboolean mouseOver;
 	qboolean insideNode = qfalse;
+#endif
+	menuNode_t *node;
+	qboolean mouseOver;
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -226,7 +225,7 @@ void MN_LeftClick (int x, int y)
 		return;
 	}
 
-	if (mn_newHandler && mouseOverTest) {
+	if (mouseOverTest) {
 		node = mouseOverTest;
 		if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
 			int itemX = 0;
@@ -255,7 +254,7 @@ void MN_LeftClick (int x, int y)
 		}
 		return;
 	}
-
+#if 0 /* new handler */
 	sp = mn.menuStackPos;
 
 	while (sp > 0 && !insideNode) {
@@ -345,6 +344,7 @@ void MN_LeftClick (int x, int y)
 
 		break;
 	}
+#endif
 }
 
 /**
@@ -357,9 +357,11 @@ void MN_LeftClick (int x, int y)
  */
 void MN_RightClick (int x, int y)
 {
+#if 0 /* new handler */
 	qboolean mouseOver;
 	int sp;
 	qboolean insideNode = qfalse;
+#endif
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -368,7 +370,7 @@ void MN_RightClick (int x, int y)
 		return;
 	}
 
-	if (mn_newHandler && mouseOverTest) {
+	if (mouseOverTest) {
 		if (mouseOverTest->behaviour->rightClick) {
 			mouseOverTest->behaviour->rightClick(mouseOverTest, x, y);
 		} else {
@@ -376,7 +378,7 @@ void MN_RightClick (int x, int y)
 		}
 		return;
 	}
-
+#if 0 /* new handler */
 	sp = mn.menuStackPos;
 
 	while (sp > 0 && !insideNode) {
@@ -412,6 +414,7 @@ void MN_RightClick (int x, int y)
 
 		break;
 	}
+#endif
 }
 
 /**
@@ -421,10 +424,12 @@ void MN_RightClick (int x, int y)
  */
 void MN_MiddleClick (int x, int y)
 {
+#if 0 /* new handler */
 	menuNode_t *node;
 	int sp;
 	qboolean mouseOver;
 	qboolean insideNode = qfalse;
+#endif
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -433,7 +438,7 @@ void MN_MiddleClick (int x, int y)
 		return;
 	}
 
-	if (mn_newHandler && mouseOverTest) {
+	if (mouseOverTest) {
 		if (mouseOverTest->behaviour->middleClick) {
 			mouseOverTest->behaviour->middleClick(mouseOverTest, x, y);
 		} else {
@@ -441,7 +446,7 @@ void MN_MiddleClick (int x, int y)
 		}
 		return;
 	}
-
+#if 0 /* new handler */
 	sp = mn.menuStackPos;
 
 	while (sp > 0 && !insideNode) {
@@ -476,6 +481,7 @@ void MN_MiddleClick (int x, int y)
 
 		break;
 	}
+#endif
 }
 
 /**
@@ -494,10 +500,12 @@ void MN_MiddleClick (int x, int y)
  */
 void MN_MouseWheel (qboolean down, int x, int y)
 {
+#if 0 /* new handler */
 	menuNode_t *node;
 	int sp;
 	qboolean mouseOver;
 	qboolean insideNode = qfalse;
+#endif
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -506,7 +514,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		return;
 	}
 
-	if (mn_newHandler && mouseOverTest) {
+	if (mouseOverTest) {
 		if (mouseOverTest->behaviour->mouseWheel) {
 			mouseOverTest->behaviour->mouseWheel(mouseOverTest, down, x, y);
 		} else {
@@ -517,7 +525,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		}
 		return;
 	}
-
+#if 0 /* new handler */
 	sp = mn.menuStackPos;
 
 	while (sp > 0 && !insideNode) {
@@ -555,6 +563,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 
 		break;
 	}
+#endif
 }
 
 /**

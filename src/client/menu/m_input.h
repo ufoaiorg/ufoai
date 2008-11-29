@@ -44,9 +44,6 @@ void MN_SetCvar(const char *name, const char *str, float value);
 
 extern menuNode_t *mouseOverTest; /**< mouse over active node, for preview */
 
-extern const qboolean mn_newHandler;
-
-
 /**/
 
 #endif
