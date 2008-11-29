@@ -277,19 +277,17 @@ menu bases
 		align	ur
 	}
 
-	string name
+	textentry name
 	{
 		tooltip	"_Name of this base"
 		string	"*cvar mn_base_title"
 		pos	"60 30"
+		size "128 32"
 		font	f_big
-	}
-
-	// callback function that stores the value of the cvar in the base structure
-	confunc mn_base_title_changed
-	{
-		*name mousefx false
-		cmd	"base_changename"
+		change {
+			// stores the value of the cvar in the base structure
+			cmd	"base_changename"
+		}
 	}
 
 	zone wz_base
@@ -309,8 +307,7 @@ menu bases
 		texh	"16 64"
 		click
 		{
-			cmd "msgmenu ?mn_base_title;"
-			*name mousefx true
+			cmd "mn_edittextentry name;"
 		}
 	}
 
