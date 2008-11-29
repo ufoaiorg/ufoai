@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-18 19:11+0100\n"
+"POT-Creation-Date: 2008-11-29 12:19+0100\n"
 "PO-Revision-Date: 2008-07-21 12:21+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: ITALIAN <it@li.org>\n"
@@ -75,8 +75,8 @@ msgstr "Soldati"
 msgid "Crashed UFO - Scout"
 msgstr "UFO - Scout"
 
-#: ../base/maps/forest.ump:419 ../base/ufos/aircraftmanagement.ufo:478
-#: ../base/ufos/otheritems.ufo:37 ../base/ufos/research.ufo:3244
+#: ../base/maps/forest.ump:419 ../base/ufos/aircraftmanagement.ufo:479
+#: ../base/ufos/otheritems.ufo:37 ../base/ufos/research.ufo:3301
 msgid "UFO - Scout"
 msgstr "UFO - Scout"
 
@@ -180,7 +180,7 @@ msgstr "Fiume tropicale"
 msgid "Tropical drug"
 msgstr "Droga tropicale"
 
-#: ../base/maps/ufocrash.ump:320 client/cl_campaign.c:519
+#: ../base/maps/ufocrash.ump:320 client/cl_campaign.c:527
 #, fuzzy
 msgid "Crashed UFO"
 msgstr "Magazzino"
@@ -201,204 +201,204 @@ msgstr "Villaggio ricreativo"
 msgid "Village big"
 msgstr "Villaggio grande"
 
-#: ../base/ufos/aircraftmanagement.ufo:85
+#: ../base/ufos/aircraftmanagement.ufo:86
 msgid "Firebird-class Dropship"
 msgstr "Nave da trasporto classe Firebird"
 
-#: ../base/ufos/aircraftmanagement.ufo:86
+#: ../base/ufos/aircraftmanagement.ufo:87
 msgid "Firebird D"
 msgstr "Firebird D"
 
-#: ../base/ufos/aircraftmanagement.ufo:122
+#: ../base/ufos/aircraftmanagement.ufo:123
 msgid "Herakles-class Heavy Lifter"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:123
+#: ../base/ufos/aircraftmanagement.ufo:124
 msgid "Herakles D"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:161
+#: ../base/ufos/aircraftmanagement.ufo:162
 msgid "Stiletto-class Interceptor"
 msgstr "Intercettore classe Stiletto"
 
-#: ../base/ufos/aircraftmanagement.ufo:162
+#: ../base/ufos/aircraftmanagement.ufo:163
 msgid "Stiletto I"
 msgstr "Stiletto I"
 
-#: ../base/ufos/aircraftmanagement.ufo:206
+#: ../base/ufos/aircraftmanagement.ufo:207
 msgid "Saracen-class Interceptor"
 msgstr "Intercettore classe Saracen"
 
-#: ../base/ufos/aircraftmanagement.ufo:207
+#: ../base/ufos/aircraftmanagement.ufo:208
 msgid "Saracen I"
 msgstr "Saracen I"
 
-#: ../base/ufos/aircraftmanagement.ufo:246
+#: ../base/ufos/aircraftmanagement.ufo:247
 #, fuzzy
 msgid "Dragon Interceptor"
 msgstr "Intercettatore"
 
-#: ../base/ufos/aircraftmanagement.ufo:247
+#: ../base/ufos/aircraftmanagement.ufo:248
 #, fuzzy
 msgid "Dragon"
 msgstr "Fatto"
 
-#: ../base/ufos/aircraftmanagement.ufo:286
+#: ../base/ufos/aircraftmanagement.ufo:287
 #, fuzzy
 msgid "Stingray Interceptor"
 msgstr "Intercettatore"
 
-#: ../base/ufos/aircraftmanagement.ufo:287
+#: ../base/ufos/aircraftmanagement.ufo:288
 #, fuzzy
 msgid "Stingray"
 msgstr "Raffica"
 
-#: ../base/ufos/aircraftmanagement.ufo:333 ../base/ufos/otheritems.ufo:55
-#: ../base/ufos/research.ufo:3501
+#: ../base/ufos/aircraftmanagement.ufo:334 ../base/ufos/otheritems.ufo:55
+#: ../base/ufos/research.ufo:3558
 msgid "UFO - Harvester"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:334
+#: ../base/ufos/aircraftmanagement.ufo:335
 #, fuzzy
 msgid "Harvester U"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:376 ../base/ufos/otheritems.ufo:80
-#: ../base/ufos/research.ufo:3372
+#: ../base/ufos/aircraftmanagement.ufo:377 ../base/ufos/otheritems.ufo:80
+#: ../base/ufos/research.ufo:3429
 #, fuzzy
 msgid "UFO - Carrier"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:377
+#: ../base/ufos/aircraftmanagement.ufo:378
 #, fuzzy
 msgid "Carrier U"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:399 ../base/ufos/otheritems.ufo:88
-#: ../base/ufos/research.ufo:3329
+#: ../base/ufos/aircraftmanagement.ufo:400 ../base/ufos/otheritems.ufo:88
+#: ../base/ufos/research.ufo:3386
 #, fuzzy
 msgid "UFO - Supply Ship"
 msgstr "UFO - Scout"
 
-#: ../base/ufos/aircraftmanagement.ufo:400
+#: ../base/ufos/aircraftmanagement.ufo:401
 msgid "Supply U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:421 ../base/ufos/otheritems.ufo:64
-#: ../base/ufos/research.ufo:3415
+#: ../base/ufos/aircraftmanagement.ufo:422 ../base/ufos/otheritems.ufo:64
+#: ../base/ufos/research.ufo:3472
 #, fuzzy
 msgid "UFO - Bomber"
 msgstr "UFO - Scout"
 
-#: ../base/ufos/aircraftmanagement.ufo:422
+#: ../base/ufos/aircraftmanagement.ufo:423
 msgid "Bomber U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:450 ../base/ufos/otheritems.ufo:72
-#: ../base/ufos/research.ufo:3458
+#: ../base/ufos/aircraftmanagement.ufo:451 ../base/ufos/otheritems.ufo:72
+#: ../base/ufos/research.ufo:3515
 #, fuzzy
 msgid "UFO - Corrupter"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/aircraftmanagement.ufo:451
+#: ../base/ufos/aircraftmanagement.ufo:452
 msgid "Corrupter U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:479
+#: ../base/ufos/aircraftmanagement.ufo:480
 msgid "Scout U"
 msgstr "Scout U"
 
-#: ../base/ufos/aircraftmanagement.ufo:499 ../base/ufos/otheritems.ufo:46
-#: ../base/ufos/research.ufo:3286
+#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/otheritems.ufo:46
+#: ../base/ufos/research.ufo:3343
 msgid "UFO - Fighter"
 msgstr "UFO - Intercettore"
 
-#: ../base/ufos/aircraftmanagement.ufo:500
+#: ../base/ufos/aircraftmanagement.ufo:501
 msgid "Fighter U"
 msgstr "Intercettore U"
 
-#: ../base/ufos/aircraftmanagement.ufo:522 ../base/ufos/research.ufo:4121
+#: ../base/ufos/aircraftmanagement.ufo:523 ../base/ufos/research.ufo:4178
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "Cannone Rotante SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:532
+#: ../base/ufos/aircraftmanagement.ufo:533
 #, fuzzy
 msgid "Shiva Rotary Cannon"
 msgstr "Cannone Rotante SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:542 ../base/ufos/research.ufo:4160
+#: ../base/ufos/aircraftmanagement.ufo:543 ../base/ufos/research.ufo:4217
 msgid "SHIVA 20mm API Rounds"
 msgstr "Proiettili 20mm API per SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:558 ../base/ufos/research.ufo:4181
+#: ../base/ufos/aircraftmanagement.ufo:559 ../base/ufos/research.ufo:4238
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "Proiettili 20mm HEI per SHIVA"
 
-#: ../base/ufos/aircraftmanagement.ufo:574
+#: ../base/ufos/aircraftmanagement.ufo:575
 #, fuzzy
 msgid "Raven ECM Unit"
 msgstr "Unità ECM 'Raven'"
 
-#: ../base/ufos/aircraftmanagement.ufo:585
+#: ../base/ufos/aircraftmanagement.ufo:586
 #, fuzzy
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Batteria di Missili AA 'Sparrowhawk'"
 
-#: ../base/ufos/aircraftmanagement.ufo:594
+#: ../base/ufos/aircraftmanagement.ufo:595
 #, fuzzy
 msgid "Sparrowhawk Missile"
 msgstr "Missile 'Sparrowhawk'"
 
-#: ../base/ufos/aircraftmanagement.ufo:611 ../base/ufos/research.ufo:4240
+#: ../base/ufos/aircraftmanagement.ufo:612 ../base/ufos/research.ufo:4297
 msgid "TR-20 Rocket Pod"
 msgstr "Capsula Missile TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:623 ../base/ufos/research.ufo:4257
+#: ../base/ufos/aircraftmanagement.ufo:624 ../base/ufos/research.ufo:4314
 msgid "TR-20 Rocket"
 msgstr "Missile TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/research.ufo:4276
+#: ../base/ufos/aircraftmanagement.ufo:643 ../base/ufos/research.ufo:4333
 msgid "Particle Beam Weapon"
 msgstr "Arma a Flusso di Particelle"
 
-#: ../base/ufos/aircraftmanagement.ufo:656 ../base/ufos/research.ufo:4324
+#: ../base/ufos/aircraftmanagement.ufo:657 ../base/ufos/research.ufo:4381
 msgid "Targeting Computer"
 msgstr "Sistema di Puntamento"
 
-#: ../base/ufos/aircraftmanagement.ufo:667 ../base/ufos/research.ufo:4341
+#: ../base/ufos/aircraftmanagement.ufo:668 ../base/ufos/research.ufo:4398
 msgid "Fuel Pod"
 msgstr "Capsula per il Carburante"
 
-#: ../base/ufos/aircraftmanagement.ufo:680 ../base/ufos/research.ufo:3970
+#: ../base/ufos/aircraftmanagement.ufo:681 ../base/ufos/research.ufo:4027
 msgid "Polymer Aircraft Armour"
 msgstr "Armatura Aliena Polimerica"
 
-#: ../base/ufos/aircraftmanagement.ufo:693 ../base/ufos/research.ufo:3987
+#: ../base/ufos/aircraftmanagement.ufo:694 ../base/ufos/research.ufo:4044
 #, fuzzy
 msgid "Alien Aircraft Plating"
 msgstr "Velivolo alieno individuato"
 
-#: ../base/ufos/aircraftmanagement.ufo:706 ../base/ufos/research.ufo:4007
+#: ../base/ufos/aircraftmanagement.ufo:707 ../base/ufos/research.ufo:4064
 #, fuzzy
 msgid "Alien Astrogation"
 msgstr "Le Origini degli Alieni"
 
-#: ../base/ufos/aircraftmanagement.ufo:715 ../base/ufos/research.ufo:4045
+#: ../base/ufos/aircraftmanagement.ufo:716 ../base/ufos/research.ufo:4102
 #, fuzzy
 msgid "Alien Propulsion"
 msgstr "Specie aliena"
 
-#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:4082
+#: ../base/ufos/aircraftmanagement.ufo:725 ../base/ufos/research.ufo:4139
 #, fuzzy
 msgid "Alien Detection"
 msgstr "Specie aliena"
 
-#: ../base/ufos/aircraftmanagement.ufo:737 ../base/ufos/research.ufo:3915
+#: ../base/ufos/aircraftmanagement.ufo:738 ../base/ufos/research.ufo:3972
 msgid "AA51 missile launcher"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:747 ../base/ufos/research.ufo:3932
+#: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:3989
 msgid "AA51 Cicada SAM"
 msgstr ""
 
@@ -664,52 +664,53 @@ msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 #: ../base/ufos/research.ufo:413 ../base/ufos/research.ufo:442
 #: ../base/ufos/research.ufo:450 ../base/ufos/research.ufo:479
 #: ../base/ufos/research.ufo:487 ../base/ufos/research.ufo:512
-#: ../base/ufos/research.ufo:520 ../base/ufos/research.ufo:914
-#: ../base/ufos/research.ufo:922 ../base/ufos/research.ufo:990
-#: ../base/ufos/research.ufo:998 ../base/ufos/research.ufo:1201
-#: ../base/ufos/research.ufo:1209 ../base/ufos/research.ufo:1243
-#: ../base/ufos/research.ufo:1251 ../base/ufos/research.ufo:1283
-#: ../base/ufos/research.ufo:1291 ../base/ufos/research.ufo:1343
-#: ../base/ufos/research.ufo:1351 ../base/ufos/research.ufo:1382
-#: ../base/ufos/research.ufo:1390 ../base/ufos/research.ufo:1420
-#: ../base/ufos/research.ufo:1428 ../base/ufos/research.ufo:1478
-#: ../base/ufos/research.ufo:1486 ../base/ufos/research.ufo:1538
-#: ../base/ufos/research.ufo:1546 ../base/ufos/research.ufo:1597
-#: ../base/ufos/research.ufo:1605 ../base/ufos/research.ufo:1637
-#: ../base/ufos/research.ufo:1645 ../base/ufos/research.ufo:1677
-#: ../base/ufos/research.ufo:1685 ../base/ufos/research.ufo:1737
-#: ../base/ufos/research.ufo:1745 ../base/ufos/research.ufo:1794
-#: ../base/ufos/research.ufo:1802 ../base/ufos/research.ufo:2029
-#: ../base/ufos/research.ufo:2037 ../base/ufos/research.ufo:2076
-#: ../base/ufos/research.ufo:2084 ../base/ufos/research.ufo:2120
-#: ../base/ufos/research.ufo:2128 ../base/ufos/research.ufo:2161
-#: ../base/ufos/research.ufo:2169 ../base/ufos/research.ufo:2220
-#: ../base/ufos/research.ufo:2228 ../base/ufos/research.ufo:2280
-#: ../base/ufos/research.ufo:2288 ../base/ufos/research.ufo:2340
-#: ../base/ufos/research.ufo:2348 ../base/ufos/research.ufo:2413
-#: ../base/ufos/research.ufo:2421 ../base/ufos/research.ufo:2491
-#: ../base/ufos/research.ufo:2499 ../base/ufos/research.ufo:2528
-#: ../base/ufos/research.ufo:2536 ../base/ufos/research.ufo:3112
-#: ../base/ufos/research.ufo:3258 ../base/ufos/research.ufo:3266
-#: ../base/ufos/research.ufo:3300 ../base/ufos/research.ufo:3308
-#: ../base/ufos/research.ufo:3343 ../base/ufos/research.ufo:3351
-#: ../base/ufos/research.ufo:3386 ../base/ufos/research.ufo:3394
-#: ../base/ufos/research.ufo:3429 ../base/ufos/research.ufo:3437
-#: ../base/ufos/research.ufo:3472 ../base/ufos/research.ufo:3480
-#: ../base/ufos/research.ufo:3515 ../base/ufos/research.ufo:3523
-#: ../base/ufos/research.ufo:3586 ../base/ufos/research.ufo:3594
-#: ../base/ufos/research.ufo:3645 ../base/ufos/research.ufo:3653
-#: ../base/ufos/research.ufo:3689 ../base/ufos/research.ufo:3697
-#: ../base/ufos/research.ufo:3733 ../base/ufos/research.ufo:3741
-#: ../base/ufos/research.ufo:4020 ../base/ufos/research.ufo:4027
-#: ../base/ufos/research.ufo:4058 ../base/ufos/research.ufo:4065
-#: ../base/ufos/research.ufo:4095 ../base/ufos/research.ufo:4102
-#: ../base/ufos/research.ufo:4292 ../base/ufos/research.ufo:4300
-#: ../base/ufos/research.ufo:4375 ../base/ufos/research.ufo:4383
-#: ../base/ufos/research.ufo:4469 ../base/ufos/research.ufo:4503
-#: ../base/ufos/research.ufo:4510 ../base/ufos/research.ufo:4540
-#: ../base/ufos/research.ufo:4548 ../base/ufos/research.ufo:4579
-#: ../base/ufos/research.ufo:4586
+#: ../base/ufos/research.ufo:520 ../base/ufos/research.ufo:931
+#: ../base/ufos/research.ufo:939 ../base/ufos/research.ufo:1007
+#: ../base/ufos/research.ufo:1015 ../base/ufos/research.ufo:1218
+#: ../base/ufos/research.ufo:1226 ../base/ufos/research.ufo:1260
+#: ../base/ufos/research.ufo:1268 ../base/ufos/research.ufo:1300
+#: ../base/ufos/research.ufo:1308 ../base/ufos/research.ufo:1360
+#: ../base/ufos/research.ufo:1368 ../base/ufos/research.ufo:1399
+#: ../base/ufos/research.ufo:1407 ../base/ufos/research.ufo:1437
+#: ../base/ufos/research.ufo:1445 ../base/ufos/research.ufo:1495
+#: ../base/ufos/research.ufo:1503 ../base/ufos/research.ufo:1555
+#: ../base/ufos/research.ufo:1563 ../base/ufos/research.ufo:1614
+#: ../base/ufos/research.ufo:1622 ../base/ufos/research.ufo:1654
+#: ../base/ufos/research.ufo:1662 ../base/ufos/research.ufo:1694
+#: ../base/ufos/research.ufo:1702 ../base/ufos/research.ufo:1754
+#: ../base/ufos/research.ufo:1762 ../base/ufos/research.ufo:1794
+#: ../base/ufos/research.ufo:1802 ../base/ufos/research.ufo:1851
+#: ../base/ufos/research.ufo:1859 ../base/ufos/research.ufo:2086
+#: ../base/ufos/research.ufo:2094 ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2141 ../base/ufos/research.ufo:2177
+#: ../base/ufos/research.ufo:2185 ../base/ufos/research.ufo:2218
+#: ../base/ufos/research.ufo:2226 ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2285 ../base/ufos/research.ufo:2337
+#: ../base/ufos/research.ufo:2345 ../base/ufos/research.ufo:2397
+#: ../base/ufos/research.ufo:2405 ../base/ufos/research.ufo:2470
+#: ../base/ufos/research.ufo:2478 ../base/ufos/research.ufo:2548
+#: ../base/ufos/research.ufo:2556 ../base/ufos/research.ufo:2585
+#: ../base/ufos/research.ufo:2593 ../base/ufos/research.ufo:3169
+#: ../base/ufos/research.ufo:3315 ../base/ufos/research.ufo:3323
+#: ../base/ufos/research.ufo:3357 ../base/ufos/research.ufo:3365
+#: ../base/ufos/research.ufo:3400 ../base/ufos/research.ufo:3408
+#: ../base/ufos/research.ufo:3443 ../base/ufos/research.ufo:3451
+#: ../base/ufos/research.ufo:3486 ../base/ufos/research.ufo:3494
+#: ../base/ufos/research.ufo:3529 ../base/ufos/research.ufo:3537
+#: ../base/ufos/research.ufo:3572 ../base/ufos/research.ufo:3580
+#: ../base/ufos/research.ufo:3643 ../base/ufos/research.ufo:3651
+#: ../base/ufos/research.ufo:3702 ../base/ufos/research.ufo:3710
+#: ../base/ufos/research.ufo:3746 ../base/ufos/research.ufo:3754
+#: ../base/ufos/research.ufo:3790 ../base/ufos/research.ufo:3798
+#: ../base/ufos/research.ufo:4077 ../base/ufos/research.ufo:4084
+#: ../base/ufos/research.ufo:4115 ../base/ufos/research.ufo:4122
+#: ../base/ufos/research.ufo:4152 ../base/ufos/research.ufo:4159
+#: ../base/ufos/research.ufo:4349 ../base/ufos/research.ufo:4357
+#: ../base/ufos/research.ufo:4432 ../base/ufos/research.ufo:4440
+#: ../base/ufos/research.ufo:4526 ../base/ufos/research.ufo:4560
+#: ../base/ufos/research.ufo:4567 ../base/ufos/research.ufo:4598
+#: ../base/ufos/research.ufo:4606 ../base/ufos/research.ufo:4638
+#: ../base/ufos/research.ufo:4645
 msgid "mail_to_base_commander"
 msgstr "Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
 
@@ -732,44 +733,45 @@ msgstr ""
 #: ../base/ufos/research.ufo:136 ../base/ufos/research.ufo:144
 #: ../base/ufos/research.ufo:171 ../base/ufos/research.ufo:179
 #: ../base/ufos/research.ufo:511 ../base/ufos/research.ufo:519
-#: ../base/ufos/research.ufo:913 ../base/ufos/research.ufo:921
-#: ../base/ufos/research.ufo:989 ../base/ufos/research.ufo:997
-#: ../base/ufos/research.ufo:1200 ../base/ufos/research.ufo:1208
-#: ../base/ufos/research.ufo:1242 ../base/ufos/research.ufo:1250
-#: ../base/ufos/research.ufo:1282 ../base/ufos/research.ufo:1290
-#: ../base/ufos/research.ufo:1342 ../base/ufos/research.ufo:1350
-#: ../base/ufos/research.ufo:1381 ../base/ufos/research.ufo:1389
-#: ../base/ufos/research.ufo:1419 ../base/ufos/research.ufo:1427
-#: ../base/ufos/research.ufo:1477 ../base/ufos/research.ufo:1485
-#: ../base/ufos/research.ufo:1537 ../base/ufos/research.ufo:1545
-#: ../base/ufos/research.ufo:1596 ../base/ufos/research.ufo:1604
-#: ../base/ufos/research.ufo:1636 ../base/ufos/research.ufo:1644
-#: ../base/ufos/research.ufo:1676 ../base/ufos/research.ufo:1684
-#: ../base/ufos/research.ufo:1736 ../base/ufos/research.ufo:1744
+#: ../base/ufos/research.ufo:930 ../base/ufos/research.ufo:938
+#: ../base/ufos/research.ufo:1006 ../base/ufos/research.ufo:1014
+#: ../base/ufos/research.ufo:1217 ../base/ufos/research.ufo:1225
+#: ../base/ufos/research.ufo:1259 ../base/ufos/research.ufo:1267
+#: ../base/ufos/research.ufo:1299 ../base/ufos/research.ufo:1307
+#: ../base/ufos/research.ufo:1359 ../base/ufos/research.ufo:1367
+#: ../base/ufos/research.ufo:1398 ../base/ufos/research.ufo:1406
+#: ../base/ufos/research.ufo:1436 ../base/ufos/research.ufo:1444
+#: ../base/ufos/research.ufo:1494 ../base/ufos/research.ufo:1502
+#: ../base/ufos/research.ufo:1554 ../base/ufos/research.ufo:1562
+#: ../base/ufos/research.ufo:1613 ../base/ufos/research.ufo:1621
+#: ../base/ufos/research.ufo:1653 ../base/ufos/research.ufo:1661
+#: ../base/ufos/research.ufo:1693 ../base/ufos/research.ufo:1701
+#: ../base/ufos/research.ufo:1753 ../base/ufos/research.ufo:1761
 #: ../base/ufos/research.ufo:1793 ../base/ufos/research.ufo:1801
-#: ../base/ufos/research.ufo:2028 ../base/ufos/research.ufo:2036
-#: ../base/ufos/research.ufo:2075 ../base/ufos/research.ufo:2083
-#: ../base/ufos/research.ufo:2119 ../base/ufos/research.ufo:2127
-#: ../base/ufos/research.ufo:2160 ../base/ufos/research.ufo:2168
-#: ../base/ufos/research.ufo:2219 ../base/ufos/research.ufo:2227
-#: ../base/ufos/research.ufo:2279 ../base/ufos/research.ufo:2287
-#: ../base/ufos/research.ufo:2339 ../base/ufos/research.ufo:2347
-#: ../base/ufos/research.ufo:2412 ../base/ufos/research.ufo:2420
-#: ../base/ufos/research.ufo:2490 ../base/ufos/research.ufo:2498
-#: ../base/ufos/research.ufo:2527 ../base/ufos/research.ufo:2535
-#: ../base/ufos/research.ufo:3111 ../base/ufos/research.ufo:3257
-#: ../base/ufos/research.ufo:3265 ../base/ufos/research.ufo:3299
-#: ../base/ufos/research.ufo:3307 ../base/ufos/research.ufo:3342
-#: ../base/ufos/research.ufo:3350 ../base/ufos/research.ufo:3385
-#: ../base/ufos/research.ufo:3393 ../base/ufos/research.ufo:3428
-#: ../base/ufos/research.ufo:3436 ../base/ufos/research.ufo:3471
-#: ../base/ufos/research.ufo:3479 ../base/ufos/research.ufo:3514
-#: ../base/ufos/research.ufo:3522 ../base/ufos/research.ufo:4019
-#: ../base/ufos/research.ufo:4026 ../base/ufos/research.ufo:4057
-#: ../base/ufos/research.ufo:4064 ../base/ufos/research.ufo:4094
-#: ../base/ufos/research.ufo:4101 ../base/ufos/research.ufo:4291
-#: ../base/ufos/research.ufo:4299 ../base/ufos/research.ufo:4374
-#: ../base/ufos/research.ufo:4382
+#: ../base/ufos/research.ufo:1850 ../base/ufos/research.ufo:1858
+#: ../base/ufos/research.ufo:2085 ../base/ufos/research.ufo:2093
+#: ../base/ufos/research.ufo:2132 ../base/ufos/research.ufo:2140
+#: ../base/ufos/research.ufo:2176 ../base/ufos/research.ufo:2184
+#: ../base/ufos/research.ufo:2217 ../base/ufos/research.ufo:2225
+#: ../base/ufos/research.ufo:2276 ../base/ufos/research.ufo:2284
+#: ../base/ufos/research.ufo:2336 ../base/ufos/research.ufo:2344
+#: ../base/ufos/research.ufo:2396 ../base/ufos/research.ufo:2404
+#: ../base/ufos/research.ufo:2469 ../base/ufos/research.ufo:2477
+#: ../base/ufos/research.ufo:2547 ../base/ufos/research.ufo:2555
+#: ../base/ufos/research.ufo:2584 ../base/ufos/research.ufo:2592
+#: ../base/ufos/research.ufo:3168 ../base/ufos/research.ufo:3314
+#: ../base/ufos/research.ufo:3322 ../base/ufos/research.ufo:3356
+#: ../base/ufos/research.ufo:3364 ../base/ufos/research.ufo:3399
+#: ../base/ufos/research.ufo:3407 ../base/ufos/research.ufo:3442
+#: ../base/ufos/research.ufo:3450 ../base/ufos/research.ufo:3485
+#: ../base/ufos/research.ufo:3493 ../base/ufos/research.ufo:3528
+#: ../base/ufos/research.ufo:3536 ../base/ufos/research.ufo:3571
+#: ../base/ufos/research.ufo:3579 ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:4083 ../base/ufos/research.ufo:4114
+#: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4151
+#: ../base/ufos/research.ufo:4158 ../base/ufos/research.ufo:4348
+#: ../base/ufos/research.ufo:4356 ../base/ufos/research.ufo:4431
+#: ../base/ufos/research.ufo:4439
 msgid "mail_from_paul_navarre"
 msgstr "Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
 
@@ -957,8 +959,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:242
 #: ../base/ufos/events.ufo:252 ../base/ufos/research.ufo:478
-#: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4539
-#: ../base/ufos/research.ufo:4547
+#: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4597
+#: ../base/ufos/research.ufo:4605
 msgid "mail_from_col_falkland"
 msgstr "Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
 
@@ -1098,44 +1100,44 @@ msgstr "Coop 4 giocatori"
 msgid "Radar Tower"
 msgstr "Radar"
 
-#: ../base/ufos/installation.ufo:18 ../base/ufos/menu_geoscape.ufo:1455
+#: ../base/ufos/installation.ufo:19 ../base/ufos/menu_geoscape.ufo:1455
 #, fuzzy
 msgid "UFO Yard"
 msgstr "UFO - Mietitore"
 
-#: ../base/ufos/installation.ufo:29 ../base/ufos/menu_geoscape.ufo:1422
+#: ../base/ufos/installation.ufo:30 ../base/ufos/menu_geoscape.ufo:1422
 msgid "SAM Site"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:41
+#: ../base/ufos/installation.ufo:42
 msgid "Installation #1"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:42
+#: ../base/ufos/installation.ufo:43
 msgid "Installation #2"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:43
+#: ../base/ufos/installation.ufo:44
 msgid "Installation #3"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:44
+#: ../base/ufos/installation.ufo:45
 msgid "Installation #4"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:45
+#: ../base/ufos/installation.ufo:46
 msgid "Installation #5"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:46
+#: ../base/ufos/installation.ufo:47
 msgid "Installation #6"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:47
+#: ../base/ufos/installation.ufo:48
 msgid "Installation #7"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:48
+#: ../base/ufos/installation.ufo:49
 msgid "Installation #8"
 msgstr ""
 
@@ -1442,7 +1444,7 @@ msgid "Scientist"
 msgstr "Scienziato"
 
 #: ../base/ufos/medals.ufo:38 client/cl_employee.c:255
-#: client/cl_mapfightequip.c:1217
+#: client/cl_mapfightequip.c:1213
 msgid "Pilot"
 msgstr ""
 
@@ -1598,7 +1600,8 @@ msgstr "Decolla"
 msgid "Call back aircraft"
 msgstr "Richiama velivolo"
 
-#: ../base/ufos/menu_aircraft.ufo:160 ../base/ufos/menu_aircraft.ufo:286
+#: ../base/ufos/menu_aircraft.ufo:160 ../base/ufos/menu_aircraft.ufo:255
+#: ../base/ufos/menu_aircraft.ufo:266
 msgid "Call back"
 msgstr "Richiama"
 
@@ -1615,126 +1618,151 @@ msgstr "Equipaggia"
 msgid "Produce aircraft or aircraft components"
 msgstr "Equipaggia componenti velivolo"
 
-#: ../base/ufos/menu_aircraft.ufo:210 ../base/ufos/menu_aircraft.ufo:982
+#: ../base/ufos/menu_aircraft.ufo:210 ../base/ufos/menu_aircraft.ufo:1052
 #, fuzzy
 msgid "Produce"
 msgstr "Produzione"
 
-#: ../base/ufos/menu_aircraft.ufo:253 ../base/ufos/menu_aircraft.ufo:886
-#: ../base/ufos/menu_basedefence.ufo:344 ../base/ufos/menu_hospital.ufo:420
+#: ../base/ufos/menu_aircraft.ufo:277 ../base/ufos/menu_team.ufo:936
+msgid "Team Members:"
+msgstr "Membri della Squadra:"
+
+#: ../base/ufos/menu_aircraft.ufo:299 ../base/ufos/menu_aircraft.ufo:312
+msgid "Switch to the previous aircraft"
+msgstr "Scorri al velivolo precedente"
+
+#: ../base/ufos/menu_aircraft.ufo:322 ../base/ufos/menu_aircraft.ufo:335
+msgid "Switch to the next aircraft"
+msgstr "Scorri al velivolo successivo"
+
+#: ../base/ufos/menu_aircraft.ufo:344 ../base/ufos/menu_aircraft.ufo:954
+#: ../base/ufos/menu_basedefence.ufo:338 ../base/ufos/menu_hospital.ufo:420
 #: ../base/ufos/menu_hospital.ufo:580 ../base/ufos/menu_team.ufo:972
 #: ../base/ufos/menu_team.ufo:1749
 msgid "Done"
 msgstr "Fatto"
 
-#: ../base/ufos/menu_aircraft.ufo:264
-msgid "Switch to the previous aircraft"
-msgstr "Scorri al velivolo precedente"
-
-#: ../base/ufos/menu_aircraft.ufo:275
-msgid "Switch to the next aircraft"
-msgstr "Scorri al velivolo successivo"
-
-#: ../base/ufos/menu_aircraft.ufo:299 ../base/ufos/menu_team.ufo:936
-msgid "Team Members:"
-msgstr "Membri della Squadra:"
-
-#: ../base/ufos/menu_aircraft.ufo:398
+#: ../base/ufos/menu_aircraft.ufo:435 ../base/ufos/menu_aircraft.ufo:457
 #, fuzzy
 msgid "Previous aircraft"
 msgstr "Squadra libera precedente"
 
-#: ../base/ufos/menu_aircraft.ufo:420
+#: ../base/ufos/menu_aircraft.ufo:467 ../base/ufos/menu_aircraft.ufo:489
 #, fuzzy
 msgid "Next aircraft"
 msgstr "Seleziona velivolo"
 
-#: ../base/ufos/menu_aircraft.ufo:458
+#: ../base/ufos/menu_aircraft.ufo:514
 msgid "Available equipment:"
 msgstr "Equipaggiamento disponibile:"
 
-#: ../base/ufos/menu_aircraft.ufo:506
+#: ../base/ufos/menu_aircraft.ufo:562
 #, fuzzy
 msgid "Selected item:"
 msgstr "Seleziona oggetto"
 
-#: ../base/ufos/menu_aircraft.ufo:514 ../base/ufos/menu_buy.ufo:1304
+#: ../base/ufos/menu_aircraft.ufo:570 ../base/ufos/menu_buy.ufo:1211
 #: ../base/ufos/menu_production.ufo:373 ../base/ufos/menu_transfer.ufo:191
 #, fuzzy
 msgid "Previous category"
 msgstr "Voce precedente"
 
-#: ../base/ufos/menu_aircraft.ufo:527 ../base/ufos/menu_buy.ufo:1315
+#: ../base/ufos/menu_aircraft.ufo:589 ../base/ufos/menu_buy.ufo:1222
 #: ../base/ufos/menu_production.ufo:384 ../base/ufos/menu_transfer.ufo:204
 #, fuzzy
 msgid "Next category"
 msgstr "Voce successiva"
 
-#: ../base/ufos/menu_aircraft.ufo:567 ../base/ufos/menu_aircraft.ufo:589
-#: ../base/ufos/menu_aircraft.ufo:611
+#: ../base/ufos/menu_aircraft.ufo:635 ../base/ufos/menu_aircraft.ufo:657
+#: ../base/ufos/menu_aircraft.ufo:679
 #, fuzzy
 msgid "Add selected item"
 msgstr "Seleziona oggetto"
 
-#: ../base/ufos/menu_aircraft.ufo:578 ../base/ufos/menu_aircraft.ufo:600
-#: ../base/ufos/menu_aircraft.ufo:622
+#: ../base/ufos/menu_aircraft.ufo:646 ../base/ufos/menu_aircraft.ufo:668
+#: ../base/ufos/menu_aircraft.ufo:690
 msgid "Remove item from slot"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:634 ../base/ufos/menu_aircraft.ufo:656
-#: ../base/ufos/menu_aircraft.ufo:678
+#: ../base/ufos/menu_aircraft.ufo:702 ../base/ufos/menu_aircraft.ufo:724
+#: ../base/ufos/menu_aircraft.ufo:746
 #, fuzzy
 msgid "Select this zone"
 msgstr "Seleziona oggetto"
 
 # # in game
-#: ../base/ufos/menu_aircraft.ufo:699
+#: ../base/ufos/menu_aircraft.ufo:767
 #, fuzzy
 msgid "Current item in slot"
 msgstr "Squadra corrente: %i"
 
-#: ../base/ufos/menu_aircraft.ufo:708
+#: ../base/ufos/menu_aircraft.ufo:776
 msgid "Item to install after removal"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:717
+#: ../base/ufos/menu_aircraft.ufo:785
 msgid "Ammo fitting this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:726 ../base/ufos/menu_aircraft.ufo:746
-#: ../base/ufos/menu_aircraft.ufo:766 ../base/ufos/menu_aircraft.ufo:786
-#: ../base/ufos/menu_aircraft.ufo:806 ../base/ufos/menu_aircraft.ufo:826
-#: ../base/ufos/menu_aircraft.ufo:846 ../base/ufos/menu_aircraft.ufo:866
+#: ../base/ufos/menu_aircraft.ufo:803 ../base/ufos/menu_aircraft.ufo:823
+#: ../base/ufos/menu_aircraft.ufo:843 ../base/ufos/menu_aircraft.ufo:863
+#: ../base/ufos/menu_aircraft.ufo:883 ../base/ufos/menu_aircraft.ufo:903
+#: ../base/ufos/menu_aircraft.ufo:923 ../base/ufos/menu_aircraft.ufo:943
 #, fuzzy
 msgid "Select this slot"
 msgstr "Seleziona oggetto"
 
-#: ../base/ufos/menu_aircraft.ufo:940
+#: ../base/ufos/menu_aircraft.ufo:1010
 #, fuzzy
 msgid "Action"
 msgstr "Azione:"
 
-#: ../base/ufos/menu_aircraft.ufo:948
+#: ../base/ufos/menu_aircraft.ufo:1018
 msgid "You don't have any aircraft in the base - what do you want to do?"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:956
+#: ../base/ufos/menu_aircraft.ufo:1026
 msgid "Buy aircraft"
 msgstr "Compra velivolo"
 
-#: ../base/ufos/menu_aircraft.ufo:965
+#: ../base/ufos/menu_aircraft.ufo:1035
 msgid "Buy"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:973
+#: ../base/ufos/menu_aircraft.ufo:1043
 #, fuzzy
 msgid "Produce aircraft"
 msgstr "Squadra libera precedente"
 
+#: ../base/ufos/menu_airfight.ufo:57 ../base/ufos/menu_geoscape.ufo:99
+#: ../base/ufos/menu_geoscape.ufo:583
+#, fuzzy
+msgid "CREDITS"
+msgstr "CREDITO"
+
+#: ../base/ufos/menu_airfight.ufo:65 ../base/ufos/menu_bases.ufo:273
+#: ../base/ufos/menu_geoscape.ufo:107 ../base/ufos/menu_geoscape.ufo:591
+msgid "Organisation capital"
+msgstr "Capitale organizzazione"
+
+#: ../base/ufos/menu_airfight.ufo:76 ../base/ufos/menu_geoscape.ufo:602
+msgid "Exit combat zoom mode"
+msgstr ""
+
+#: ../base/ufos/menu_airfight.ufo:88 ../base/ufos/menu_geoscape.ufo:132
+#: ../base/ufos/menu_geoscape.ufo:614
+msgid "Slow down time"
+msgstr "Rallenta il tempo"
+
+#: ../base/ufos/menu_airfight.ufo:102 ../base/ufos/menu_geoscape.ufo:146
+#: ../base/ufos/menu_geoscape.ufo:628
+msgid "Speed up time"
+msgstr "Velocizza il tempo"
+
 #: ../base/ufos/menu_aliencont.ufo:29 ../base/ufos/menu_basesummary.ufo:234
-#: ../base/ufos/menu_buildings.ufo:67 ../base/ufos/menu_buy.ufo:1326
+#: ../base/ufos/menu_buildings.ufo:67 ../base/ufos/menu_buy.ufo:1233
 #: ../base/ufos/menu_hire.ufo:793 ../base/ufos/menu_production.ufo:405
-#: ../base/ufos/menu_research.ufo:1172 ../base/ufos/menu_transfer.ufo:247
+#: ../base/ufos/menu_research.ufo:791 ../base/ufos/menu_transfer.ufo:247
 msgid "Back to baseview"
 msgstr "Torna alla vista sulla base"
 
@@ -1905,113 +1933,113 @@ msgstr "Passa all'arma nella mano destra"
 msgid "Switch to left hand weapon"
 msgstr "Passa all'arma nella mano sinistra"
 
-#: ../base/ufos/menu_althud.ufo:1497 ../base/ufos/menu_althud.ufo:1510
-#: ../base/ufos/menu_althud.ufo:1523 ../base/ufos/menu_althud.ufo:1536
-#: ../base/ufos/menu_althud.ufo:1549 ../base/ufos/menu_althud.ufo:1562
-#: ../base/ufos/menu_althud.ufo:1575 ../base/ufos/menu_althud.ufo:1588
-#: ../base/ufos/menu_althud.ufo:1601 ../base/ufos/menu_althud.ufo:1614
-#: ../base/ufos/menu_althud.ufo:1627 ../base/ufos/menu_althud.ufo:1640
-#: ../base/ufos/menu_althud.ufo:1653 ../base/ufos/menu_althud.ufo:1666
-#: ../base/ufos/menu_althud.ufo:1679 ../base/ufos/menu_althud.ufo:1692
-#: ../base/ufos/menu_hud.ufo:1262 ../base/ufos/menu_hud.ufo:1275
-#: ../base/ufos/menu_hud.ufo:1288 ../base/ufos/menu_hud.ufo:1301
-#: ../base/ufos/menu_hud.ufo:1314 ../base/ufos/menu_hud.ufo:1327
-#: ../base/ufos/menu_hud.ufo:1340 ../base/ufos/menu_hud.ufo:1353
-#: ../base/ufos/menu_hud.ufo:1366 ../base/ufos/menu_hud.ufo:1379
-#: ../base/ufos/menu_hud.ufo:1392 ../base/ufos/menu_hud.ufo:1405
-#: ../base/ufos/menu_hud.ufo:1418 ../base/ufos/menu_hud.ufo:1431
-#: ../base/ufos/menu_hud.ufo:1444 ../base/ufos/menu_hud.ufo:1457
+#: ../base/ufos/menu_althud.ufo:1465 ../base/ufos/menu_althud.ufo:1478
+#: ../base/ufos/menu_althud.ufo:1491 ../base/ufos/menu_althud.ufo:1504
+#: ../base/ufos/menu_althud.ufo:1517 ../base/ufos/menu_althud.ufo:1530
+#: ../base/ufos/menu_althud.ufo:1543 ../base/ufos/menu_althud.ufo:1556
+#: ../base/ufos/menu_althud.ufo:1569 ../base/ufos/menu_althud.ufo:1582
+#: ../base/ufos/menu_althud.ufo:1595 ../base/ufos/menu_althud.ufo:1608
+#: ../base/ufos/menu_althud.ufo:1621 ../base/ufos/menu_althud.ufo:1634
+#: ../base/ufos/menu_althud.ufo:1647 ../base/ufos/menu_althud.ufo:1660
+#: ../base/ufos/menu_hud.ufo:1227 ../base/ufos/menu_hud.ufo:1240
+#: ../base/ufos/menu_hud.ufo:1253 ../base/ufos/menu_hud.ufo:1266
+#: ../base/ufos/menu_hud.ufo:1279 ../base/ufos/menu_hud.ufo:1292
+#: ../base/ufos/menu_hud.ufo:1305 ../base/ufos/menu_hud.ufo:1318
+#: ../base/ufos/menu_hud.ufo:1331 ../base/ufos/menu_hud.ufo:1344
+#: ../base/ufos/menu_hud.ufo:1357 ../base/ufos/menu_hud.ufo:1370
+#: ../base/ufos/menu_hud.ufo:1383 ../base/ufos/menu_hud.ufo:1396
+#: ../base/ufos/menu_hud.ufo:1409 ../base/ufos/menu_hud.ufo:1422
 #, fuzzy
 msgid "Check to use this firemode for reaction fire"
 msgstr "Marca per usare questa modalità per il fuoco di reazione"
 
-#: ../base/ufos/menu_althud.ufo:1758 ../base/ufos/menu_althud.ufo:1768
+#: ../base/ufos/menu_althud.ufo:1726 ../base/ufos/menu_althud.ufo:1736
 #: ../base/ufos/menu_hud.ufo:420
 #, fuzzy
 msgid "Use Item"
 msgstr "Oggetti"
 
 # # in game
-#: ../base/ufos/menu_basedefence.ufo:85
+#: ../base/ufos/menu_basedefence.ufo:79
 #, fuzzy
 msgid "Your are changing this defence system"
 msgstr "Squadra corrente: %i"
 
-#: ../base/ufos/menu_basedefence.ufo:95
+#: ../base/ufos/menu_basedefence.ufo:89
 #, fuzzy
 msgid "Available defence:"
 msgstr "Equipaggiamento disponibile:"
 
-#: ../base/ufos/menu_basedefence.ufo:130
+#: ../base/ufos/menu_basedefence.ufo:124
 #, fuzzy
 msgid "Selected defence:"
 msgstr "Base selezionata"
 
-#: ../base/ufos/menu_basedefence.ufo:138
+#: ../base/ufos/menu_basedefence.ufo:132
 msgid "Choose missile battery"
 msgstr ""
 
-#: ../base/ufos/menu_basedefence.ufo:144
+#: ../base/ufos/menu_basedefence.ufo:138
 #, fuzzy
 msgid "Missile"
 msgstr "Missioni"
 
-#: ../base/ufos/menu_basedefence.ufo:151
+#: ../base/ufos/menu_basedefence.ufo:145
 msgid "Choose laser battery"
 msgstr ""
 
-#: ../base/ufos/menu_basedefence.ufo:157
+#: ../base/ufos/menu_basedefence.ufo:151
 #, fuzzy
 msgid "Laser"
 msgstr "laser"
 
-#: ../base/ufos/menu_basedefence.ufo:181 ../base/ufos/menu_basedefence.ufo:203
+#: ../base/ufos/menu_basedefence.ufo:175 ../base/ufos/menu_basedefence.ufo:197
 #, fuzzy
 msgid "Install selected defence system"
 msgstr "Base selezionata"
 
 # # in game
-#: ../base/ufos/menu_basedefence.ufo:192 ../base/ufos/menu_basedefence.ufo:214
+#: ../base/ufos/menu_basedefence.ufo:186 ../base/ufos/menu_basedefence.ufo:208
 #, fuzzy
 msgid "Remove this defence system"
 msgstr "Squadra corrente: %i"
 
-#: ../base/ufos/menu_basedefence.ufo:225
+#: ../base/ufos/menu_basedefence.ufo:219
 msgid "Equip this defence system with selected ammo"
 msgstr ""
 
 # # in game
-#: ../base/ufos/menu_basedefence.ufo:236
+#: ../base/ufos/menu_basedefence.ufo:230
 #, fuzzy
 msgid "Remove ammo from this defence system"
 msgstr "Squadra corrente: %i"
 
-#: ../base/ufos/menu_basedefence.ufo:248
+#: ../base/ufos/menu_basedefence.ufo:242
 #, fuzzy
 msgid "Choose defence system to build"
 msgstr "Nessun oggetto assegnato"
 
-#: ../base/ufos/menu_basedefence.ufo:270
+#: ../base/ufos/menu_basedefence.ufo:264
 msgid "Choose defence system to build after removing current one"
 msgstr ""
 
 # # in game
-#: ../base/ufos/menu_basedefence.ufo:292
+#: ../base/ufos/menu_basedefence.ufo:286
 #, fuzzy
 msgid "Change ammo in the defence system"
 msgstr "Squadra corrente: %i"
 
 # # in game
-#: ../base/ufos/menu_basedefence.ufo:313
+#: ../base/ufos/menu_basedefence.ufo:307
 #, fuzzy
 msgid "Current defence system"
 msgstr "Squadra corrente: %i"
 
-#: ../base/ufos/menu_basedefence.ufo:322
+#: ../base/ufos/menu_basedefence.ufo:316
 msgid "System to install after removal"
 msgstr ""
 
-#: ../base/ufos/menu_basedefence.ufo:331
+#: ../base/ufos/menu_basedefence.ufo:325
 msgid "Ammo to use with installed system"
 msgstr ""
 
@@ -2033,7 +2061,7 @@ msgstr "Gestisci il velivolo"
 
 #: ../base/ufos/menu_bases.ufo:99 ../base/ufos/menu_bases.ufo:117
 #: ../base/ufos/menu_geoscape.ufo:2175 ../base/ufos/research.ufo:108
-#: client/cl_map.c:348 client/cl_market.c:514 client/cl_transfer.c:430
+#: client/cl_map.c:348 client/cl_market.c:567 client/cl_transfer.c:430
 msgid "Aircraft"
 msgstr "Velivolo"
 
@@ -2104,17 +2132,13 @@ msgid "Base Summary"
 msgstr ""
 
 #: ../base/ufos/menu_bases.ufo:265 ../base/ufos/menu_basesummary.ufo:29
-#: ../base/ufos/menu_buildings.ufo:93 ../base/ufos/menu_buy.ufo:1243
-#: ../base/ufos/menu_production.ufo:30 ../base/ufos/menu_research.ufo:1116
+#: ../base/ufos/menu_buildings.ufo:93 ../base/ufos/menu_buy.ufo:1150
+#: ../base/ufos/menu_production.ufo:30 ../base/ufos/menu_research.ufo:735
 msgid "CREDIT"
 msgstr "CREDITO"
 
-#: ../base/ufos/menu_bases.ufo:273 ../base/ufos/menu_geoscape.ufo:107
-#: ../base/ufos/menu_geoscape.ufo:591
-msgid "Organisation capital"
-msgstr "Capitale organizzazione"
-
 #: ../base/ufos/menu_bases.ufo:282 ../base/ufos/menu_buildings.ufo:55
+#: ../base/ufos/menu_research.ufo:166
 msgid "Name of this base"
 msgstr "Nome della base"
 
@@ -2138,134 +2162,118 @@ msgstr "Base successiva"
 msgid "Name:"
 msgstr "Nome:"
 
-#: ../base/ufos/menu_buildings.ufo:149
+#: ../base/ufos/menu_buildings.ufo:150
 #, fuzzy
 msgid "Building preview"
 msgstr "Costruzione finita"
 
 # #ufopedia
-#: ../base/ufos/menu_buildings.ufo:194 ../base/ufos/menu_geoscape.ufo:304
+#: ../base/ufos/menu_buildings.ufo:195 ../base/ufos/menu_geoscape.ufo:304
 msgid "UFOpaedia"
 msgstr "UFOpedia"
 
-#: ../base/ufos/menu_buy.ufo:81 ../base/ufos/menu_buy.ufo:87
-#: ../base/ufos/menu_buy.ufo:93 ../base/ufos/menu_buy.ufo:99
-#: ../base/ufos/menu_buy.ufo:105 ../base/ufos/menu_buy.ufo:111
-#: ../base/ufos/menu_buy.ufo:117 ../base/ufos/menu_buy.ufo:123
-#: ../base/ufos/menu_buy.ufo:129 ../base/ufos/menu_buy.ufo:135
-#: ../base/ufos/menu_buy.ufo:141 ../base/ufos/menu_buy.ufo:147
-#: ../base/ufos/menu_buy.ufo:153 ../base/ufos/menu_buy.ufo:159
-#: ../base/ufos/menu_buy.ufo:165 ../base/ufos/menu_buy.ufo:171
-#: ../base/ufos/menu_buy.ufo:177 ../base/ufos/menu_buy.ufo:183
-#: ../base/ufos/menu_buy.ufo:189 ../base/ufos/menu_buy.ufo:195
-#: ../base/ufos/menu_buy.ufo:201 ../base/ufos/menu_buy.ufo:207
-#: ../base/ufos/menu_buy.ufo:213 ../base/ufos/menu_buy.ufo:219
-#: ../base/ufos/menu_buy.ufo:225 ../base/ufos/menu_buy.ufo:231
-#: ../base/ufos/menu_buy.ufo:237 ../base/ufos/menu_buy.ufo:243
+#: ../base/ufos/menu_buy.ufo:82 ../base/ufos/menu_buy.ufo:90
+#: ../base/ufos/menu_buy.ufo:98 ../base/ufos/menu_buy.ufo:106
+#: ../base/ufos/menu_buy.ufo:114 ../base/ufos/menu_buy.ufo:122
+#: ../base/ufos/menu_buy.ufo:130 ../base/ufos/menu_buy.ufo:138
+#: ../base/ufos/menu_buy.ufo:146 ../base/ufos/menu_buy.ufo:154
+#: ../base/ufos/menu_buy.ufo:162 ../base/ufos/menu_buy.ufo:170
+#: ../base/ufos/menu_buy.ufo:178 ../base/ufos/menu_buy.ufo:186
+#: ../base/ufos/menu_buy.ufo:194 ../base/ufos/menu_buy.ufo:202
+#: ../base/ufos/menu_buy.ufo:210 ../base/ufos/menu_buy.ufo:218
+#: ../base/ufos/menu_buy.ufo:226 ../base/ufos/menu_buy.ufo:234
+#: ../base/ufos/menu_buy.ufo:242 ../base/ufos/menu_buy.ufo:250
+#: ../base/ufos/menu_buy.ufo:258 ../base/ufos/menu_buy.ufo:266
+#: ../base/ufos/menu_buy.ufo:274 ../base/ufos/menu_buy.ufo:282
+#: ../base/ufos/menu_buy.ufo:290 ../base/ufos/menu_buy.ufo:298
 #, fuzzy
 msgid "Item autosell enabled"
 msgstr "Vendita automatica dell'oggetto attivata."
 
-#: ../base/ufos/menu_buy.ufo:84 ../base/ufos/menu_buy.ufo:90
-#: ../base/ufos/menu_buy.ufo:96 ../base/ufos/menu_buy.ufo:102
-#: ../base/ufos/menu_buy.ufo:108 ../base/ufos/menu_buy.ufo:114
-#: ../base/ufos/menu_buy.ufo:120 ../base/ufos/menu_buy.ufo:126
-#: ../base/ufos/menu_buy.ufo:132 ../base/ufos/menu_buy.ufo:138
-#: ../base/ufos/menu_buy.ufo:144 ../base/ufos/menu_buy.ufo:150
-#: ../base/ufos/menu_buy.ufo:156 ../base/ufos/menu_buy.ufo:162
-#: ../base/ufos/menu_buy.ufo:168 ../base/ufos/menu_buy.ufo:174
-#: ../base/ufos/menu_buy.ufo:180 ../base/ufos/menu_buy.ufo:186
-#: ../base/ufos/menu_buy.ufo:192 ../base/ufos/menu_buy.ufo:198
-#: ../base/ufos/menu_buy.ufo:204 ../base/ufos/menu_buy.ufo:210
-#: ../base/ufos/menu_buy.ufo:216 ../base/ufos/menu_buy.ufo:222
-#: ../base/ufos/menu_buy.ufo:228 ../base/ufos/menu_buy.ufo:234
-#: ../base/ufos/menu_buy.ufo:240 ../base/ufos/menu_buy.ufo:246
+#: ../base/ufos/menu_buy.ufo:86 ../base/ufos/menu_buy.ufo:94
+#: ../base/ufos/menu_buy.ufo:102 ../base/ufos/menu_buy.ufo:110
+#: ../base/ufos/menu_buy.ufo:118 ../base/ufos/menu_buy.ufo:126
+#: ../base/ufos/menu_buy.ufo:134 ../base/ufos/menu_buy.ufo:142
+#: ../base/ufos/menu_buy.ufo:150 ../base/ufos/menu_buy.ufo:158
+#: ../base/ufos/menu_buy.ufo:166 ../base/ufos/menu_buy.ufo:174
+#: ../base/ufos/menu_buy.ufo:182 ../base/ufos/menu_buy.ufo:190
+#: ../base/ufos/menu_buy.ufo:198 ../base/ufos/menu_buy.ufo:206
+#: ../base/ufos/menu_buy.ufo:214 ../base/ufos/menu_buy.ufo:222
+#: ../base/ufos/menu_buy.ufo:230 ../base/ufos/menu_buy.ufo:238
+#: ../base/ufos/menu_buy.ufo:246 ../base/ufos/menu_buy.ufo:254
+#: ../base/ufos/menu_buy.ufo:262 ../base/ufos/menu_buy.ufo:270
+#: ../base/ufos/menu_buy.ufo:278 ../base/ufos/menu_buy.ufo:286
+#: ../base/ufos/menu_buy.ufo:294 ../base/ufos/menu_buy.ufo:302
 #, fuzzy
 msgid "Item autosell disabled"
 msgstr "Vendita automatica dell'oggetto disattivata."
 
-#: ../base/ufos/menu_buy.ufo:321 ../base/ufos/menu_buy.ufo:354
-#: ../base/ufos/menu_buy.ufo:387 ../base/ufos/menu_buy.ufo:420
-#: ../base/ufos/menu_buy.ufo:453 ../base/ufos/menu_buy.ufo:486
-#: ../base/ufos/menu_buy.ufo:519 ../base/ufos/menu_buy.ufo:552
-#: ../base/ufos/menu_buy.ufo:585 ../base/ufos/menu_buy.ufo:618
-#: ../base/ufos/menu_buy.ufo:651 ../base/ufos/menu_buy.ufo:684
-#: ../base/ufos/menu_buy.ufo:717 ../base/ufos/menu_buy.ufo:750
-#: ../base/ufos/menu_buy.ufo:783 ../base/ufos/menu_buy.ufo:816
-#: ../base/ufos/menu_buy.ufo:849 ../base/ufos/menu_buy.ufo:882
-#: ../base/ufos/menu_buy.ufo:915 ../base/ufos/menu_buy.ufo:948
-#: ../base/ufos/menu_buy.ufo:981 ../base/ufos/menu_buy.ufo:1014
-#: ../base/ufos/menu_buy.ufo:1047 ../base/ufos/menu_buy.ufo:1080
-#: ../base/ufos/menu_buy.ufo:1113 ../base/ufos/menu_buy.ufo:1146
-#: ../base/ufos/menu_buy.ufo:1179 ../base/ufos/menu_buy.ufo:1212
-msgid "Buy item"
-msgstr "Compra oggetto"
+#: ../base/ufos/menu_buy.ufo:396 ../base/ufos/menu_buy.ufo:423
+#: ../base/ufos/menu_buy.ufo:450 ../base/ufos/menu_buy.ufo:477
+#: ../base/ufos/menu_buy.ufo:504 ../base/ufos/menu_buy.ufo:531
+#: ../base/ufos/menu_buy.ufo:558 ../base/ufos/menu_buy.ufo:585
+#: ../base/ufos/menu_buy.ufo:612 ../base/ufos/menu_buy.ufo:639
+#: ../base/ufos/menu_buy.ufo:666 ../base/ufos/menu_buy.ufo:693
+#: ../base/ufos/menu_buy.ufo:720 ../base/ufos/menu_buy.ufo:747
+#: ../base/ufos/menu_buy.ufo:774 ../base/ufos/menu_buy.ufo:801
+#: ../base/ufos/menu_buy.ufo:828 ../base/ufos/menu_buy.ufo:855
+#: ../base/ufos/menu_buy.ufo:882 ../base/ufos/menu_buy.ufo:909
+#: ../base/ufos/menu_buy.ufo:936 ../base/ufos/menu_buy.ufo:963
+#: ../base/ufos/menu_buy.ufo:990 ../base/ufos/menu_buy.ufo:1017
+#: ../base/ufos/menu_buy.ufo:1044 ../base/ufos/menu_buy.ufo:1071
+#: ../base/ufos/menu_buy.ufo:1098 ../base/ufos/menu_buy.ufo:1125
+#, fuzzy
+msgid "Buy and sell item"
+msgstr "Compra o vendi velivolo"
 
-#: ../base/ufos/menu_buy.ufo:330 ../base/ufos/menu_buy.ufo:363
-#: ../base/ufos/menu_buy.ufo:396 ../base/ufos/menu_buy.ufo:429
-#: ../base/ufos/menu_buy.ufo:462 ../base/ufos/menu_buy.ufo:495
-#: ../base/ufos/menu_buy.ufo:528 ../base/ufos/menu_buy.ufo:561
-#: ../base/ufos/menu_buy.ufo:594 ../base/ufos/menu_buy.ufo:627
-#: ../base/ufos/menu_buy.ufo:660 ../base/ufos/menu_buy.ufo:693
-#: ../base/ufos/menu_buy.ufo:726 ../base/ufos/menu_buy.ufo:759
-#: ../base/ufos/menu_buy.ufo:792 ../base/ufos/menu_buy.ufo:825
-#: ../base/ufos/menu_buy.ufo:858 ../base/ufos/menu_buy.ufo:891
-#: ../base/ufos/menu_buy.ufo:924 ../base/ufos/menu_buy.ufo:957
-#: ../base/ufos/menu_buy.ufo:990 ../base/ufos/menu_buy.ufo:1023
-#: ../base/ufos/menu_buy.ufo:1056 ../base/ufos/menu_buy.ufo:1089
-#: ../base/ufos/menu_buy.ufo:1122 ../base/ufos/menu_buy.ufo:1155
-#: ../base/ufos/menu_buy.ufo:1188 ../base/ufos/menu_buy.ufo:1221
-msgid "Sell item"
-msgstr "Vendi oggetto"
-
-#: ../base/ufos/menu_buy.ufo:1264
+#: ../base/ufos/menu_buy.ufo:1171
 msgid "Storage (used/all):"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1384 ../base/ufos/menu_team.ufo:1369
+#: ../base/ufos/menu_buy.ufo:1291 ../base/ufos/menu_team.ufo:1369
 #: ../base/ufos/menu_ufopedia.ufo:331
 msgid "Previous weapon chambered for this ammunition"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1399 ../base/ufos/menu_team.ufo:1384
+#: ../base/ufos/menu_buy.ufo:1306 ../base/ufos/menu_team.ufo:1384
 #: ../base/ufos/menu_ufopedia.ufo:346
 msgid "Previous ammunition compatible with this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1415 ../base/ufos/menu_team.ufo:1399
+#: ../base/ufos/menu_buy.ufo:1322 ../base/ufos/menu_team.ufo:1399
 #: ../base/ufos/menu_ufopedia.ufo:361
 msgid "Next weapon chambered for this ammunition"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1430 ../base/ufos/menu_team.ufo:1414
+#: ../base/ufos/menu_buy.ufo:1337 ../base/ufos/menu_team.ufo:1414
 #: ../base/ufos/menu_ufopedia.ufo:376
 msgid "Next ammunition compatible with this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1445 ../base/ufos/menu_team.ufo:1430
+#: ../base/ufos/menu_buy.ufo:1352 ../base/ufos/menu_team.ufo:1430
 #: ../base/ufos/menu_ufopedia.ufo:391
 #, fuzzy
 msgid "With weapon:"
 msgstr "Armi d'Assalto:"
 
-#: ../base/ufos/menu_buy.ufo:1454 ../base/ufos/menu_team.ufo:1439
+#: ../base/ufos/menu_buy.ufo:1361 ../base/ufos/menu_team.ufo:1439
 #: ../base/ufos/menu_ufopedia.ufo:400
 msgid "With ammo:"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1479 ../base/ufos/menu_team.ufo:1456
+#: ../base/ufos/menu_buy.ufo:1386 ../base/ufos/menu_team.ufo:1456
 #: ../base/ufos/menu_ufopedia.ufo:433
 #, fuzzy
 msgid "Previous firemode"
 msgstr "Squadra libera precedente"
 
-#: ../base/ufos/menu_buy.ufo:1494 ../base/ufos/menu_team.ufo:1471
+#: ../base/ufos/menu_buy.ufo:1401 ../base/ufos/menu_team.ufo:1471
 #: ../base/ufos/menu_ufopedia.ufo:448
 #, fuzzy
 msgid "Next firemode"
 msgstr "Prossima squadra libera"
 
-#: ../base/ufos/menu_buy.ufo:1509 ../base/ufos/menu_team.ufo:1486
+#: ../base/ufos/menu_buy.ufo:1416 ../base/ufos/menu_team.ufo:1486
 #: ../base/ufos/menu_ufopedia.ufo:463
 msgid "Firemode:"
 msgstr ""
@@ -2291,23 +2299,10 @@ msgstr "Inizia campagna"
 msgid "Back"
 msgstr "Indietro"
 
-#: ../base/ufos/menu_geoscape.ufo:99 ../base/ufos/menu_geoscape.ufo:583
-#, fuzzy
-msgid "CREDITS"
-msgstr "CREDITO"
-
 #: ../base/ufos/menu_geoscape.ufo:118
 #, fuzzy
 msgid "Stop time"
 msgstr "Fermali"
-
-#: ../base/ufos/menu_geoscape.ufo:132 ../base/ufos/menu_geoscape.ufo:614
-msgid "Slow down time"
-msgstr "Rallenta il tempo"
-
-#: ../base/ufos/menu_geoscape.ufo:146 ../base/ufos/menu_geoscape.ufo:628
-msgid "Speed up time"
-msgstr "Velocizza il tempo"
 
 #: ../base/ufos/menu_geoscape.ufo:258
 msgid "INBOX (with unread mails)"
@@ -2392,10 +2387,6 @@ msgstr ""
 msgid "Go to Options"
 msgstr "Opzioni"
 
-#: ../base/ufos/menu_geoscape.ufo:602
-msgid "Exit combat zoom mode"
-msgstr ""
-
 #: ../base/ufos/menu_geoscape.ufo:642
 msgid "Toggle between full zoom and half zoom"
 msgstr ""
@@ -2432,7 +2423,7 @@ msgstr "Il velivolo ha raggiunto la destinazione desiderata - in attesa di ordin
 #: ../base/ufos/menu_geoscape.ufo:2222 ../base/ufos/menu_geoscape.ufo:2349
 #: ../base/ufos/menu_irc.ufo:269 ../base/ufos/menu_lostwon.ufo:323
 #: ../base/ufos/menu_lostwon.ufo:444 ../base/ufos/menu_options.ufo:575
-#: ../base/ufos/menu_singleplayer.ufo:323 client/cl_installation.c:480
+#: ../base/ufos/menu_singleplayer.ufo:323 client/cl_installation.c:476
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -2452,7 +2443,7 @@ msgstr "Missione automatica"
 msgid "Auto mission"
 msgstr "Missione automatica"
 
-#: ../base/ufos/menu_geoscape.ufo:1018 client/cl_basemanagement.c:2335
+#: ../base/ufos/menu_geoscape.ufo:1018 client/cl_basemanagement.c:2333
 msgid "Base is under attack"
 msgstr "Base sotto attacco"
 
@@ -2571,10 +2562,10 @@ msgstr "%i Giorno per costruire\n"
 
 #: ../base/ufos/menu_geoscape.ufo:1799
 #, fuzzy
-msgid "Manange installation"
+msgid "Manage installation"
 msgstr "Nazioni"
 
-#: ../base/ufos/menu_geoscape.ufo:1811 client/cl_installation.c:479
+#: ../base/ufos/menu_geoscape.ufo:1811 client/cl_installation.c:475
 #, fuzzy
 msgid "Destroy installation"
 msgstr "Nazioni"
@@ -2586,7 +2577,7 @@ msgstr "Raggio d'azione:\t%g\n"
 
 #: ../base/ufos/menu_geoscape.ufo:1842 client/cl_basemanagement.c:960
 #: client/cl_basemanagement.c:970 client/cl_basemanagement.c:980
-#: client/cl_basemanagement.c:993 client/cl_installation.c:479
+#: client/cl_basemanagement.c:993 client/cl_installation.c:475
 msgid "Destroy"
 msgstr "Distruggi"
 
@@ -2663,45 +2654,45 @@ msgstr ""
 msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2409 ../base/ufos/menu_geoscape.ufo:2433
-#: ../base/ufos/menu_geoscape.ufo:2457 ../base/ufos/menu_geoscape.ufo:2481
-#: ../base/ufos/menu_geoscape.ufo:2505 ../base/ufos/menu_geoscape.ufo:2529
-#: ../base/ufos/menu_geoscape.ufo:2553 ../base/ufos/menu_geoscape.ufo:2577
-#: ../base/ufos/menu_geoscape.ufo:2601 ../base/ufos/menu_geoscape.ufo:2625
-#: ../base/ufos/menu_geoscape.ufo:2649 ../base/ufos/menu_geoscape.ufo:2673
-#: ../base/ufos/menu_geoscape.ufo:2697 ../base/ufos/menu_geoscape.ufo:2721
-#: ../base/ufos/menu_geoscape.ufo:2745 ../base/ufos/menu_geoscape.ufo:2769
-#: ../base/ufos/menu_geoscape.ufo:2793 ../base/ufos/menu_geoscape.ufo:2817
-#: ../base/ufos/menu_geoscape.ufo:2841 ../base/ufos/menu_geoscape.ufo:2865
-#: ../base/ufos/menu_geoscape.ufo:2889
+#: ../base/ufos/menu_geoscape.ufo:2411 ../base/ufos/menu_geoscape.ufo:2435
+#: ../base/ufos/menu_geoscape.ufo:2459 ../base/ufos/menu_geoscape.ufo:2483
+#: ../base/ufos/menu_geoscape.ufo:2507 ../base/ufos/menu_geoscape.ufo:2531
+#: ../base/ufos/menu_geoscape.ufo:2555 ../base/ufos/menu_geoscape.ufo:2579
+#: ../base/ufos/menu_geoscape.ufo:2603 ../base/ufos/menu_geoscape.ufo:2627
+#: ../base/ufos/menu_geoscape.ufo:2651 ../base/ufos/menu_geoscape.ufo:2675
+#: ../base/ufos/menu_geoscape.ufo:2699 ../base/ufos/menu_geoscape.ufo:2723
+#: ../base/ufos/menu_geoscape.ufo:2747 ../base/ufos/menu_geoscape.ufo:2771
+#: ../base/ufos/menu_geoscape.ufo:2795 ../base/ufos/menu_geoscape.ufo:2819
+#: ../base/ufos/menu_geoscape.ufo:2843 ../base/ufos/menu_geoscape.ufo:2867
+#: ../base/ufos/menu_geoscape.ufo:2891
 msgid "enable or disable game stopping"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2417 ../base/ufos/menu_geoscape.ufo:2441
-#: ../base/ufos/menu_geoscape.ufo:2465 ../base/ufos/menu_geoscape.ufo:2489
-#: ../base/ufos/menu_geoscape.ufo:2513 ../base/ufos/menu_geoscape.ufo:2537
-#: ../base/ufos/menu_geoscape.ufo:2561 ../base/ufos/menu_geoscape.ufo:2585
-#: ../base/ufos/menu_geoscape.ufo:2609 ../base/ufos/menu_geoscape.ufo:2633
-#: ../base/ufos/menu_geoscape.ufo:2657 ../base/ufos/menu_geoscape.ufo:2681
-#: ../base/ufos/menu_geoscape.ufo:2705 ../base/ufos/menu_geoscape.ufo:2729
-#: ../base/ufos/menu_geoscape.ufo:2753 ../base/ufos/menu_geoscape.ufo:2777
-#: ../base/ufos/menu_geoscape.ufo:2801 ../base/ufos/menu_geoscape.ufo:2825
-#: ../base/ufos/menu_geoscape.ufo:2849 ../base/ufos/menu_geoscape.ufo:2873
-#: ../base/ufos/menu_geoscape.ufo:2897
+#: ../base/ufos/menu_geoscape.ufo:2419 ../base/ufos/menu_geoscape.ufo:2443
+#: ../base/ufos/menu_geoscape.ufo:2467 ../base/ufos/menu_geoscape.ufo:2491
+#: ../base/ufos/menu_geoscape.ufo:2515 ../base/ufos/menu_geoscape.ufo:2539
+#: ../base/ufos/menu_geoscape.ufo:2563 ../base/ufos/menu_geoscape.ufo:2587
+#: ../base/ufos/menu_geoscape.ufo:2611 ../base/ufos/menu_geoscape.ufo:2635
+#: ../base/ufos/menu_geoscape.ufo:2659 ../base/ufos/menu_geoscape.ufo:2683
+#: ../base/ufos/menu_geoscape.ufo:2707 ../base/ufos/menu_geoscape.ufo:2731
+#: ../base/ufos/menu_geoscape.ufo:2755 ../base/ufos/menu_geoscape.ufo:2779
+#: ../base/ufos/menu_geoscape.ufo:2803 ../base/ufos/menu_geoscape.ufo:2827
+#: ../base/ufos/menu_geoscape.ufo:2851 ../base/ufos/menu_geoscape.ufo:2875
+#: ../base/ufos/menu_geoscape.ufo:2899
 msgid "enable or disable displaying a notification message"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2425 ../base/ufos/menu_geoscape.ufo:2449
-#: ../base/ufos/menu_geoscape.ufo:2473 ../base/ufos/menu_geoscape.ufo:2497
-#: ../base/ufos/menu_geoscape.ufo:2521 ../base/ufos/menu_geoscape.ufo:2545
-#: ../base/ufos/menu_geoscape.ufo:2569 ../base/ufos/menu_geoscape.ufo:2593
-#: ../base/ufos/menu_geoscape.ufo:2617 ../base/ufos/menu_geoscape.ufo:2641
-#: ../base/ufos/menu_geoscape.ufo:2665 ../base/ufos/menu_geoscape.ufo:2689
-#: ../base/ufos/menu_geoscape.ufo:2713 ../base/ufos/menu_geoscape.ufo:2737
-#: ../base/ufos/menu_geoscape.ufo:2761 ../base/ufos/menu_geoscape.ufo:2785
-#: ../base/ufos/menu_geoscape.ufo:2809 ../base/ufos/menu_geoscape.ufo:2833
-#: ../base/ufos/menu_geoscape.ufo:2857 ../base/ufos/menu_geoscape.ufo:2881
-#: ../base/ufos/menu_geoscape.ufo:2905
+#: ../base/ufos/menu_geoscape.ufo:2427 ../base/ufos/menu_geoscape.ufo:2451
+#: ../base/ufos/menu_geoscape.ufo:2475 ../base/ufos/menu_geoscape.ufo:2499
+#: ../base/ufos/menu_geoscape.ufo:2523 ../base/ufos/menu_geoscape.ufo:2547
+#: ../base/ufos/menu_geoscape.ufo:2571 ../base/ufos/menu_geoscape.ufo:2595
+#: ../base/ufos/menu_geoscape.ufo:2619 ../base/ufos/menu_geoscape.ufo:2643
+#: ../base/ufos/menu_geoscape.ufo:2667 ../base/ufos/menu_geoscape.ufo:2691
+#: ../base/ufos/menu_geoscape.ufo:2715 ../base/ufos/menu_geoscape.ufo:2739
+#: ../base/ufos/menu_geoscape.ufo:2763 ../base/ufos/menu_geoscape.ufo:2787
+#: ../base/ufos/menu_geoscape.ufo:2811 ../base/ufos/menu_geoscape.ufo:2835
+#: ../base/ufos/menu_geoscape.ufo:2859 ../base/ufos/menu_geoscape.ufo:2883
+#: ../base/ufos/menu_geoscape.ufo:2907
 msgid "enable or disable playing sound"
 msgstr ""
 
@@ -3644,7 +3635,7 @@ msgid "Medium"
 msgstr "Medico"
 
 #: ../base/ufos/menu_options.ufo:438 ../base/ufos/menu_options.ufo:467
-#: client/cl_campaign.c:6638
+#: client/cl_campaign.c:6877
 msgid "Normal"
 msgstr "Normale"
 
@@ -3741,7 +3732,7 @@ msgstr ""
 
 #: ../base/ufos/menu_options.ufo:904
 #, fuzzy
-msgid "Actors speed:"
+msgid "Actor speed:"
 msgstr "Velocita':"
 
 #: ../base/ufos/menu_options.ufo:972
@@ -3874,53 +3865,42 @@ msgstr "Aumenta priorità"
 msgid "Decrease priority"
 msgstr "Diminuisci priorità"
 
-#: ../base/ufos/menu_research.ufo:414 ../base/ufos/menu_research.ufo:436
-#: ../base/ufos/menu_research.ufo:458 ../base/ufos/menu_research.ufo:480
-#: ../base/ufos/menu_research.ufo:502 ../base/ufos/menu_research.ufo:524
-#: ../base/ufos/menu_research.ufo:546 ../base/ufos/menu_research.ufo:568
-#: ../base/ufos/menu_research.ufo:590 ../base/ufos/menu_research.ufo:612
-#: ../base/ufos/menu_research.ufo:634 ../base/ufos/menu_research.ufo:656
-#: ../base/ufos/menu_research.ufo:678 ../base/ufos/menu_research.ufo:700
-#: ../base/ufos/menu_research.ufo:722 ../base/ufos/menu_research.ufo:744
-#: ../base/ufos/menu_research.ufo:766 ../base/ufos/menu_research.ufo:788
-#: ../base/ufos/menu_research.ufo:810 ../base/ufos/menu_research.ufo:832
-#: ../base/ufos/menu_research.ufo:854 ../base/ufos/menu_research.ufo:876
-#: ../base/ufos/menu_research.ufo:898 ../base/ufos/menu_research.ufo:920
-#: ../base/ufos/menu_research.ufo:942 ../base/ufos/menu_research.ufo:964
-#: ../base/ufos/menu_research.ufo:986 ../base/ufos/menu_research.ufo:1008
-msgid "Add scientist"
-msgstr "Aggiungi scienziato"
+#: ../base/ufos/menu_research.ufo:116
+#, fuzzy
+msgid "Switch to another base"
+msgstr "Base successiva"
 
-#: ../base/ufos/menu_research.ufo:425 ../base/ufos/menu_research.ufo:447
-#: ../base/ufos/menu_research.ufo:469 ../base/ufos/menu_research.ufo:491
-#: ../base/ufos/menu_research.ufo:513 ../base/ufos/menu_research.ufo:535
-#: ../base/ufos/menu_research.ufo:557 ../base/ufos/menu_research.ufo:579
-#: ../base/ufos/menu_research.ufo:601 ../base/ufos/menu_research.ufo:623
-#: ../base/ufos/menu_research.ufo:645 ../base/ufos/menu_research.ufo:667
-#: ../base/ufos/menu_research.ufo:689 ../base/ufos/menu_research.ufo:711
-#: ../base/ufos/menu_research.ufo:733 ../base/ufos/menu_research.ufo:755
-#: ../base/ufos/menu_research.ufo:777 ../base/ufos/menu_research.ufo:799
-#: ../base/ufos/menu_research.ufo:821 ../base/ufos/menu_research.ufo:843
-#: ../base/ufos/menu_research.ufo:865 ../base/ufos/menu_research.ufo:887
-#: ../base/ufos/menu_research.ufo:909 ../base/ufos/menu_research.ufo:931
-#: ../base/ufos/menu_research.ufo:953 ../base/ufos/menu_research.ufo:975
-#: ../base/ufos/menu_research.ufo:997 ../base/ufos/menu_research.ufo:1019
-msgid "Remove scientist"
+#: ../base/ufos/menu_research.ufo:342 ../base/ufos/menu_research.ufo:353
+#: ../base/ufos/menu_research.ufo:364 ../base/ufos/menu_research.ufo:375
+#: ../base/ufos/menu_research.ufo:386 ../base/ufos/menu_research.ufo:397
+#: ../base/ufos/menu_research.ufo:408 ../base/ufos/menu_research.ufo:419
+#: ../base/ufos/menu_research.ufo:430 ../base/ufos/menu_research.ufo:441
+#: ../base/ufos/menu_research.ufo:452 ../base/ufos/menu_research.ufo:463
+#: ../base/ufos/menu_research.ufo:474 ../base/ufos/menu_research.ufo:485
+#: ../base/ufos/menu_research.ufo:496 ../base/ufos/menu_research.ufo:507
+#: ../base/ufos/menu_research.ufo:518 ../base/ufos/menu_research.ufo:529
+#: ../base/ufos/menu_research.ufo:540 ../base/ufos/menu_research.ufo:551
+#: ../base/ufos/menu_research.ufo:562 ../base/ufos/menu_research.ufo:573
+#: ../base/ufos/menu_research.ufo:584 ../base/ufos/menu_research.ufo:595
+#: ../base/ufos/menu_research.ufo:606 ../base/ufos/menu_research.ufo:617
+#: ../base/ufos/menu_research.ufo:628 ../base/ufos/menu_research.ufo:639
+#, fuzzy
+msgid "Add and remove scientist"
 msgstr "Togli scienziato"
 
-#: ../base/ufos/menu_research.ufo:1034
+#: ../base/ufos/menu_research.ufo:653
 msgid "Base Info"
 msgstr "Info Base"
 
-#: ../base/ufos/menu_research.ufo:1136
+#: ../base/ufos/menu_research.ufo:755
 msgid "Stop research"
 msgstr "Ferma ricerca"
 
-#: ../base/ufos/menu_research.ufo:1147
+#: ../base/ufos/menu_research.ufo:766
 msgid "Start research"
 msgstr "Inizia ricerca"
 
-#: ../base/ufos/menu_research.ufo:1158
+#: ../base/ufos/menu_research.ufo:777
 msgid "Show research proposal"
 msgstr "Mostra proposta di ricerca"
 
@@ -4171,7 +4151,7 @@ msgstr "Altro"
 msgid "Show available armour"
 msgstr "Mostra armatura"
 
-#: ../base/ufos/menu_team.ufo:1336 client/cl_mapfightequip.c:1210
+#: ../base/ufos/menu_team.ufo:1336 client/cl_mapfightequip.c:1206
 #: client/cl_ufopedia.c:195
 msgid "Armour"
 msgstr "Armature"
@@ -4296,6 +4276,16 @@ msgstr "Produzione"
 msgid "nations_happiness"
 msgstr ""
 
+#: ../base/ufos/msgcategories.ufo:41
+#, fuzzy
+msgid "transfer"
+msgstr "Trasferisci"
+
+#: ../base/ufos/msgcategories.ufo:49
+#, fuzzy
+msgid "ufo_activity"
+msgstr "Attività aliena"
+
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
 msgstr "Paesi Rivoluzionari"
@@ -4338,8 +4328,8 @@ msgstr "Antimateria"
 msgid "Alien Breathing Apparatus"
 msgstr "Apparato Respiratorio degli Alieni"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4361
-#: ../base/ufos/research.ufo:4400
+#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4418
+#: ../base/ufos/research.ufo:4457
 msgid "Alien Materials"
 msgstr "Leghe Metalloplastiche Aliene"
 
@@ -4489,13 +4479,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:366 ../base/ufos/research.ufo:374
 #: ../base/ufos/research.ufo:404 ../base/ufos/research.ufo:412
 #: ../base/ufos/research.ufo:441 ../base/ufos/research.ufo:449
-#: ../base/ufos/research.ufo:3585 ../base/ufos/research.ufo:3593
-#: ../base/ufos/research.ufo:3644 ../base/ufos/research.ufo:3652
-#: ../base/ufos/research.ufo:3688 ../base/ufos/research.ufo:3696
-#: ../base/ufos/research.ufo:3732 ../base/ufos/research.ufo:3740
-#: ../base/ufos/research.ufo:4468 ../base/ufos/research.ufo:4502
-#: ../base/ufos/research.ufo:4509 ../base/ufos/research.ufo:4578
-#: ../base/ufos/research.ufo:4585
+#: ../base/ufos/research.ufo:3642 ../base/ufos/research.ufo:3650
+#: ../base/ufos/research.ufo:3701 ../base/ufos/research.ufo:3709
+#: ../base/ufos/research.ufo:3745 ../base/ufos/research.ufo:3753
+#: ../base/ufos/research.ufo:3789 ../base/ufos/research.ufo:3797
+#: ../base/ufos/research.ufo:4525 ../base/ufos/research.ufo:4559
+#: ../base/ufos/research.ufo:4566 ../base/ufos/research.ufo:4637
+#: ../base/ufos/research.ufo:4644
 msgid "mail_from_dr_connor"
 msgstr "Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
 
@@ -4907,6 +4897,50 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:629
+#, fuzzy
+msgid "vhs_assault_txt"
+msgstr ""
+"Specifiche tecniche: Fucile d'Assalto AR-80\n"
+"\n"
+"CLASSIFICAZIONE LIVELLO: GIALLO\n"
+"\n"
+"Unità di Risposta Extraterrestre PHALANX\n"
+"\n"
+"Documento tecnico, codice di accesso alla sicurezza Delta\n"
+"\n"
+"Data di registrazione: 20 Marzo 2084\n"
+"\n"
+"Operatore: C.te Paul Navarre, R&S: Divisione Genio, PHALANX, Comando Operazioni Atlantiche\n"
+"\n"
+"\n"
+"\n"
+"Quadro Generale\n"
+"\n"
+"L'attacco alieno a Mumbai ha reso la nostra situazione dolorosamente chiara: la loro tecnologia è molto più avanzata della nostra. La completa incapacità delle truppe del Commonwealth di intaccare l'offensiva a Mumbai ha rivelato debolezze critiche nell'addestramento e equipaggiamento attuale; Le nostre truppe hanno perso 3 battaglioni solamente per portare gli alieni a un punto fermo, senza riuscire tra l'altro a infliggere perdite significative. PHALANX deve superare questa disparità, e per fare ciò abbiamo bisogno del meglio che la tecnologia umana ha da offrire.\n"
+"\n"
+"Il programma Excalibur è stato creato per trovare le armi più efficaci sulla Terra controllando le loro norme di produzione, le testimonianze degli operativi, e le loro prestazioni quando impiegate contro gli alieni.\n"
+"\n"
+"Il French LeBlanc FAA-191 (Fusil Assaut Automatique) fornisce il più vantaggioso mix di gittata, penetrazione delle corazze aliene, e capacità del caricatore della classe dei fucili d'assalto. E' un fucile di tipo bullpup, che significa che il caricatore, l'otturatore e il sistema di scatto sono posizionati dietro il grilletto per ridurre la lunghezza dell'arma. Il 191 utilizza caricatori ricurvi da 30 proiettili senza bossolo da 4.7mm, perforanti corazzati al tungsteno con impressionante capacità di penetrazione delle corazze da breve e media distanza. Il proiettile non è performante ad alte gittate, ma i fucili d'assalto non sono pensati per i combattimenti a fuoco sulla lunga distanza.\n"
+"\n"
+"Nonostante il design sia tutt'altro che nuovo, il primo prototipo è del 2057, nessun'altro fucile ha pienamente sorpassato il 191. E' accurato e veloce nella ricarica. La sua robusta costruzione lo rende un fucile affidabile in combattimento e poco incline a rottura o inceppamento. E' contemporaneamente resistente al calore, al freddo, alla polvere e all'umidità. Questo è un fucile a cui si può affidare la propria vita.\n"
+"\n"
+"Per l'impiego in PHALANX, questo fucile è stato classificato come AR-80.\n"
+"\n"
+"\n"
+"Utilizzo raccomandato\n"
+"\n"
+"Questa dovrebbe essere la nostra arma principale negli ingaggi a fuoco a media distanza. Può fornire una quantità impressionante di fuoco ed è in grado di raggiungere gittate ben maggiori rispetto a qualsiasi pistola o SMG.\n"
+"\n"
+"Tuttavia, nessuno si dovrebbe cullare nell'illusione che il fucile d'assalto sia il tutto e la fine di tutto del nostro arsenale. E' necessario avere un insieme bilanciato di armi per essere in grado di affrontare le diverse situazioni; mentre il fucile d'assalto rimane una buona soluzione sulla gittata ravvicinata, rimane lento da manovrare negli spazi ristretti, dove viene eclissato da fucili e mitragliette automatiche (SMG), armi che forniscono una potenza di fuoco ad alzo zero ben maggiore. Qualsiasi operazione di sgombro di edifici urbani dovrebbe essere guidata da armi a breve gittata, mentre i soldati equipaggiati con fucili dovrebbero occuparsi di mettere in sicurezza il perimentro, o formare una seconda ondata d'assalto di supporto agli altri.\n"
+"\n"
+"Se le nostre truppe munite di fucili dovessero essere prese al di là della gittata effettiva delle armi, dovrebbero avanzare in occultamento coprendosi a vicenda per riportare i bersagli a portata di tiro. I cecchini dovrebbero fornire fuoco di copertura per l'avanzamento delle squadre o tentare la neutralizzazione dei nemici a tiro.\n"
+"\n"
+"\n"
+"Appendice\n"
+"\n"
+"Benché l'AR-80 sia un ottimo fucile sotto tutti gli aspetti, non è studiato per combattere le forze di invasione aliena. Dovremo sviluppare armi adatte allo scopo appena sarà possibile farlo."
+
+#: ../base/ufos/research.ufo:646
 msgid "assault_txt"
 msgstr ""
 "Specifiche tecniche: Fucile d'Assalto AR-80\n"
@@ -4949,7 +4983,7 @@ msgstr ""
 "\n"
 "Benché l'AR-80 sia un ottimo fucile sotto tutti gli aspetti, non è studiato per combattere le forze di invasione aliena. Dovremo sviluppare armi adatte allo scopo appena sarà possibile farlo."
 
-#: ../base/ufos/research.ufo:647
+#: ../base/ufos/research.ufo:664
 msgid "assault_mag_txt"
 msgstr ""
 "Specifiche tecniche: Caricatore per Fucile d'Assalto\n"
@@ -4982,7 +5016,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:666
+#: ../base/ufos/research.ufo:683
 msgid "machinegun_txt"
 msgstr ""
 "Technical Specifications: MG12 Machine Gun\n"
@@ -5029,7 +5063,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:684
+#: ../base/ufos/research.ufo:701
 msgid "machinegun_mag_txt"
 msgstr ""
 "Technical Specifications: Assault Rifle Magazine\n"
@@ -5064,7 +5098,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:703
+#: ../base/ufos/research.ufo:720
 msgid "rpg_txt"
 msgstr ""
 "Technical Specifications: HPML Rocket Launcher\n"
@@ -5111,7 +5145,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:722
+#: ../base/ufos/research.ufo:739
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technical Specifications: HE Rocket\n"
@@ -5146,7 +5180,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:742
+#: ../base/ufos/research.ufo:759
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: IC Rocket\n"
@@ -5183,15 +5217,15 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:763
+#: ../base/ufos/research.ufo:780
 msgid "xaw95_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:766
+#: ../base/ufos/research.ufo:783
 msgid "xaw95_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:793
+#: ../base/ufos/research.ufo:810
 #, fuzzy
 msgid "bombkit1_txt"
 msgstr ""
@@ -5235,11 +5269,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:796
+#: ../base/ufos/research.ufo:813
 msgid "bombkit1_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:811
+#: ../base/ufos/research.ufo:828
 #, fuzzy
 msgid "bombkit2_txt"
 msgstr ""
@@ -5283,27 +5317,27 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:814
+#: ../base/ufos/research.ufo:831
 msgid "bombkit2_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:829
+#: ../base/ufos/research.ufo:846
 msgid "chaingun_txt"
 msgstr "chaingun_txt"
 
-#: ../base/ufos/research.ufo:832
+#: ../base/ufos/research.ufo:849
 msgid "chaingun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:881
 msgid "shotgun_txt"
 msgstr "shotgun_txt"
 
-#: ../base/ufos/research.ufo:900 ../base/ufos/research.ufo:939
+#: ../base/ufos/research.ufo:917 ../base/ufos/research.ufo:956
 msgid "Electromagnetic Rifle"
 msgstr "Fucile Elettromagnetico"
 
-#: ../base/ufos/research.ufo:905
+#: ../base/ufos/research.ufo:922
 msgid "bolterrifle_txt"
 msgstr ""
 "The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.\n"
@@ -5322,7 +5356,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:908
+#: ../base/ufos/research.ufo:925
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
@@ -5335,7 +5369,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:960
+#: ../base/ufos/research.ufo:977
 msgid "combatknife_txt"
 msgstr ""
 "Specifiche tecniche: Pugnale da Combattimento\n"
@@ -5376,11 +5410,11 @@ msgstr ""
 "\n"
 "Niente da dichiarare."
 
-#: ../base/ufos/research.ufo:976
+#: ../base/ufos/research.ufo:993
 msgid "Monomolecular Blades"
 msgstr "Lame Monomolecolari"
 
-#: ../base/ufos/research.ufo:981
+#: ../base/ufos/research.ufo:998
 msgid "monoknife_txt"
 msgstr ""
 "Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
@@ -5395,7 +5429,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:984
+#: ../base/ufos/research.ufo:1001
 msgid "monoknife_pre_txt"
 msgstr ""
 "Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
@@ -5410,7 +5444,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1020
+#: ../base/ufos/research.ufo:1037
 msgid "flamer_txt"
 msgstr ""
 "Technical Specifications: CRC-FL Flamethrower\n"
@@ -5457,7 +5491,7 @@ msgstr ""
 "\n"
 "This weapon should not be fired if there are civilians in or near the target zone."
 
-#: ../base/ufos/research.ufo:1039
+#: ../base/ufos/research.ufo:1056
 msgid "flamer_mag_txt"
 msgstr ""
 "Technical Specifications: C90 Canister\n"
@@ -5490,7 +5524,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1058
+#: ../base/ufos/research.ufo:1075
 msgid "flashbang_txt"
 msgstr ""
 "Technical Specifications: Flashbang\n"
@@ -5533,7 +5567,7 @@ msgstr ""
 "\n"
 "Naturally the flashbang is only effective against organic aliens with eyes and ears."
 
-#: ../base/ufos/research.ufo:1077
+#: ../base/ufos/research.ufo:1094
 msgid "fraggren_txt"
 msgstr ""
 "Technical Specifications: Fragmentation Grenade\n"
@@ -5574,7 +5608,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1096
+#: ../base/ufos/research.ufo:1113
 msgid "incgren_txt"
 msgstr ""
 "Technical Specifications: Incendiary Grenade\n"
@@ -5617,7 +5651,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1115
+#: ../base/ufos/research.ufo:1132
 msgid "grenl_txt"
 msgstr ""
 "Technical Specifications: HPGL Grenade Launcher\n"
@@ -5668,7 +5702,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and rocket launchers, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:1133
+#: ../base/ufos/research.ufo:1150
 msgid "grenl_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm HIT Grenades\n"
@@ -5701,7 +5735,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1152
+#: ../base/ufos/research.ufo:1169
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm Flechette Grenades\n"
@@ -5734,7 +5768,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1171
+#: ../base/ufos/research.ufo:1188
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm IC Grenades\n"
@@ -5767,11 +5801,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1187
+#: ../base/ufos/research.ufo:1204
 msgid "Plasma And The Grenade Launcher"
 msgstr "Lanciagranate"
 
-#: ../base/ufos/research.ufo:1192
+#: ../base/ufos/research.ufo:1209
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "Commander, we've finished the testing and prototype phase of our new 25mm plasma grenades. We're ready to move it to mass-production and full field deployment.\n"
@@ -5784,7 +5818,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1195
+#: ../base/ufos/research.ufo:1212
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
 "Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
@@ -5797,7 +5831,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1234
+#: ../base/ufos/research.ufo:1251
 msgid "laser_ammo_txt"
 msgstr ""
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.\n"
@@ -5810,7 +5844,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1237
+#: ../base/ufos/research.ufo:1254
 msgid "laser_ammo_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5823,7 +5857,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1274
+#: ../base/ufos/research.ufo:1291
 msgid "heavylaser_txt"
 msgstr ""
 "Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so.\n"
@@ -5842,7 +5876,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1277
+#: ../base/ufos/research.ufo:1294
 msgid "heavylaser_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5855,7 +5889,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1314
+#: ../base/ufos/research.ufo:1331
 msgid "irgoggles_txt"
 msgstr ""
 "Technical Specifications: IR Goggles\n"
@@ -5902,11 +5936,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1329
+#: ../base/ufos/research.ufo:1346
 msgid "Alien Artifact - Kerrblade"
 msgstr "Artefatto Alieno - Lama Kerr"
 
-#: ../base/ufos/research.ufo:1334
+#: ../base/ufos/research.ufo:1351
 msgid "kerrblade_txt"
 msgstr ""
 "Our analysis of the Kerrblade is complete, Commander. Here is my summary for your review.\n"
@@ -5925,7 +5959,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1337
+#: ../base/ufos/research.ufo:1354
 msgid "kerrblade_pre_txt"
 msgstr ""
 "Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
@@ -5936,7 +5970,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1373
+#: ../base/ufos/research.ufo:1390
 msgid "laserpistol_txt"
 msgstr ""
 "Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
@@ -5955,7 +5989,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1376
+#: ../base/ufos/research.ufo:1393
 msgid "laserpistol_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5970,7 +6004,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1411
+#: ../base/ufos/research.ufo:1428
 msgid "laserrifle_txt"
 msgstr ""
 "It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.\n"
@@ -5987,7 +6021,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1414
+#: ../base/ufos/research.ufo:1431
 msgid "laserrifle_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -6000,7 +6034,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1449
+#: ../base/ufos/research.ufo:1466
 msgid "medikit_txt"
 msgstr ""
 "Technical Specifications: Medikit\n"
@@ -6043,11 +6077,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1464 ../base/ufos/research.ufo:1506
+#: ../base/ufos/research.ufo:1481 ../base/ufos/research.ufo:1523
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Artefatto Alieno - Pistola al Plasma"
 
-#: ../base/ufos/research.ufo:1469
+#: ../base/ufos/research.ufo:1486
 msgid "plasatomizer_txt"
 msgstr ""
 "When the aliens need a sidearm, they don't screw around.\n"
@@ -6066,7 +6100,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1472
+#: ../base/ufos/research.ufo:1489
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
@@ -6077,11 +6111,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1524 ../base/ufos/research.ufo:1565
+#: ../base/ufos/research.ufo:1541 ../base/ufos/research.ufo:1582
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Artefatto Alieno - Cannone al Plasma"
 
-#: ../base/ufos/research.ufo:1529
+#: ../base/ufos/research.ufo:1546
 msgid "plasblaster_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma blaster research.\n"
@@ -6096,7 +6130,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1532
+#: ../base/ufos/research.ufo:1549
 msgid "plasblaster_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
@@ -6105,11 +6139,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1583
+#: ../base/ufos/research.ufo:1600
 msgid "Alien Artifact - Plasma Blade"
 msgstr "Artefatto Alieno - Lama al Plasma"
 
-#: ../base/ufos/research.ufo:1588
+#: ../base/ufos/research.ufo:1605
 msgid "plasblade_txt"
 msgstr ""
 "Commander, we've figured out the secrets of the alien weapon. I'm afraid the news is not good.\n"
@@ -6128,7 +6162,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1591
+#: ../base/ufos/research.ufo:1608
 msgid "plasblade_pre_txt"
 msgstr ""
 "Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
@@ -6137,11 +6171,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1623
+#: ../base/ufos/research.ufo:1640
 msgid "Alien Artifact - Plasma Grenade"
 msgstr "Artefatto Alieno - Granata al Plasma"
 
-#: ../base/ufos/research.ufo:1628
+#: ../base/ufos/research.ufo:1645
 msgid "plasmagren_txt"
 msgstr ""
 "Commander, our assessment of the alien plasma grenade is complete. Like all the alien weapons, it's very nasty and very dangerous.\n"
@@ -6156,7 +6190,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1631
+#: ../base/ufos/research.ufo:1648
 msgid "plasmagren_pre_txt"
 msgstr ""
 "Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
@@ -6167,11 +6201,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1663 ../base/ufos/research.ufo:1705
+#: ../base/ufos/research.ufo:1680 ../base/ufos/research.ufo:1722
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Artefatto Alieno - Fucile al Plasma"
 
-#: ../base/ufos/research.ufo:1668
+#: ../base/ufos/research.ufo:1685
 msgid "plasrifle_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma rifle research.\n"
@@ -6188,19 +6222,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1671
+#: ../base/ufos/research.ufo:1688
 msgid "plasrifle_pre_txt"
 msgstr ""
 "Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1723 ../base/ufos/research.ufo:1763
+#: ../base/ufos/research.ufo:1740 ../base/ufos/research.ufo:1820
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1728
+#: ../base/ufos/research.ufo:1745
 msgid "needlergun_txt"
 msgstr ""
 "Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
@@ -6217,7 +6251,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1731
+#: ../base/ufos/research.ufo:1748
 msgid "needlergun_pre_txt"
 msgstr ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
@@ -6226,22 +6260,54 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
+#: ../base/ufos/research.ufo:1780 ../base/ufos/weapons_aliens.ufo:26
+msgid "Heavy Needler Gun"
+msgstr ""
+
 #: ../base/ufos/research.ufo:1785
+#, fuzzy
+msgid "needlerheavy_txt"
+msgstr ""
+"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
+"\n"
+"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
+"\n"
+"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
+"\n"
+"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
+"\n"
+"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
+"\n"
+"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
+"\n"
+"--Cdr. Navarre"
+
+#: ../base/ufos/research.ufo:1788
+#, fuzzy
+msgid "needlerheavy_pre_txt"
+msgstr ""
+"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
+"\n"
+"Please authorise this program at your convenience, Commander.\n"
+"\n"
+"--Cdr. Navarre"
+
+#: ../base/ufos/research.ufo:1842
 #, fuzzy
 msgid "coilgun_txt"
 msgstr "chaingun_txt"
 
-#: ../base/ufos/research.ufo:1788
+#: ../base/ufos/research.ufo:1845
 msgid "coilgun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1795 ../base/ufos/research.ufo:1803
-#: ../base/ufos/weapons_human.ufo:310
+#: ../base/ufos/research.ufo:1852 ../base/ufos/research.ufo:1860
+#: ../base/ufos/weapons_human.ufo:392
 #, fuzzy
 msgid "Coilgun"
 msgstr "Testa"
 
-#: ../base/ufos/research.ufo:1840
+#: ../base/ufos/research.ufo:1897
 msgid "shotgun2_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -6286,7 +6352,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1859
+#: ../base/ufos/research.ufo:1916
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Technical Specifications: Saboted Slugs\n"
@@ -6319,7 +6385,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1881
+#: ../base/ufos/research.ufo:1938
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -6368,7 +6434,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1900
+#: ../base/ufos/research.ufo:1957
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -6403,7 +6469,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1920
+#: ../base/ufos/research.ufo:1977
 msgid "smg_txt"
 msgstr ""
 "Specifiche tecniche: Mitraglietta CRC-8\n"
@@ -6442,7 +6508,7 @@ msgstr ""
 "\n"
 "Appendice"
 
-#: ../base/ufos/research.ufo:1939
+#: ../base/ufos/research.ufo:1996
 msgid "smg_mag_txt"
 msgstr ""
 "Technical Specifications: SMG Magazine\n"
@@ -6475,7 +6541,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1959
+#: ../base/ufos/research.ufo:2016
 msgid "smokegren_txt"
 msgstr ""
 "Technical Specifications: Smoke Grenade\n"
@@ -6516,7 +6582,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1978
+#: ../base/ufos/research.ufo:2035
 msgid "sniper_txt"
 msgstr ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -6561,7 +6627,7 @@ msgstr ""
 "\n"
 "Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:1997
+#: ../base/ufos/research.ufo:2054
 msgid "sniper_mag_txt"
 msgstr ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -6594,11 +6660,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2015
+#: ../base/ufos/research.ufo:2072
 msgid "Anti-Alien Gas"
 msgstr "Gas Anti-Alieno"
 
-#: ../base/ufos/research.ufo:2020
+#: ../base/ufos/research.ufo:2077
 msgid "stungren_txt"
 msgstr ""
 "Commander,\n"
@@ -6619,7 +6685,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2023
+#: ../base/ufos/research.ufo:2080
 msgid "stungren_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6636,12 +6702,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2062
+#: ../base/ufos/research.ufo:2119
 #, fuzzy
 msgid "Alien Anti-Human Gas"
 msgstr "Velivoli Alieni"
 
-#: ../base/ufos/research.ufo:2067
+#: ../base/ufos/research.ufo:2124
 #, fuzzy
 msgid "stungren_alien_txt"
 msgstr ""
@@ -6659,11 +6725,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2070
+#: ../base/ufos/research.ufo:2127
 msgid "stungren_alien_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2111
+#: ../base/ufos/research.ufo:2168
 msgid "stunrod_txt"
 msgstr ""
 "Commander,\n"
@@ -6686,7 +6752,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2114
+#: ../base/ufos/research.ufo:2171
 msgid "stunrod_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -6705,11 +6771,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2147 ../base/ufos/research.ufo:2187
+#: ../base/ufos/research.ufo:2204 ../base/ufos/research.ufo:2244
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Artefatto Alieno - Pistola a Flusso di Particelle"
 
-#: ../base/ufos/research.ufo:2152
+#: ../base/ufos/research.ufo:2209
 msgid "pbeampistol_txt"
 msgstr ""
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
@@ -6728,7 +6794,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2155
+#: ../base/ufos/research.ufo:2212
 msgid "pbeampistol_pre_txt"
 msgstr ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
@@ -6737,11 +6803,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2206 ../base/ufos/research.ufo:2247
+#: ../base/ufos/research.ufo:2263 ../base/ufos/research.ufo:2304
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Artefatto Alieno - Cannone a Flusso di Particelle"
 
-#: ../base/ufos/research.ufo:2211
+#: ../base/ufos/research.ufo:2268
 msgid "pbeamcannon_txt"
 msgstr ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
@@ -6760,7 +6826,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2214
+#: ../base/ufos/research.ufo:2271
 msgid "pbeamcannon_pre_txt"
 msgstr ""
 "Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
@@ -6769,11 +6835,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2266 ../base/ufos/research.ufo:2306
+#: ../base/ufos/research.ufo:2323 ../base/ufos/research.ufo:2363
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Artefatto Alieno - Fucile a Flusso di Particelle"
 
-#: ../base/ufos/research.ufo:2271
+#: ../base/ufos/research.ufo:2328
 msgid "pbeamrifle_txt"
 msgstr ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.\n"
@@ -6794,7 +6860,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2274
+#: ../base/ufos/research.ufo:2331
 msgid "pbeamrifle_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
@@ -6803,11 +6869,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2326
+#: ../base/ufos/research.ufo:2383
 msgid "Man-Portable Particle Beams"
 msgstr "Flusso di Particelle Portatili"
 
-#: ../base/ufos/research.ufo:2331
+#: ../base/ufos/research.ufo:2388
 msgid "pbeamammo_txt"
 msgstr ""
 "Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.\n"
@@ -6826,7 +6892,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2334
+#: ../base/ufos/research.ufo:2391
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
@@ -6839,7 +6905,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2430
 msgid "combat_armour_txt"
 msgstr ""
 "Specifiche Tecniche: Armatura da Combattimento\n"
@@ -6880,7 +6946,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2388
+#: ../base/ufos/research.ufo:2445
 #, fuzzy
 msgid "advanced_combat_armour_txt"
 msgstr ""
@@ -6922,7 +6988,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2404
+#: ../base/ufos/research.ufo:2461
 msgid "nano_armour_txt"
 msgstr ""
 "Comandante, vorrei riferirle il successo della nostra ricerca per la produzione di nanocompositi!\n"
@@ -6941,7 +7007,7 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:2407
+#: ../base/ufos/research.ufo:2464
 msgid "nano_armour_pre_txt"
 msgstr ""
 "La nostra sperimentazione sull'armatura aliena ci ha portati a molte interessanti idee. Ovviamente, la chiave per creare armature mobili più efficienti basate su quelle aliene sta nei nanocompositi. Questo richiederà un gran numero di nanotubi di carbonio.\n"
@@ -6954,7 +7020,7 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:2482
+#: ../base/ufos/research.ufo:2539
 msgid "alien_body_armour_txt"
 msgstr ""
 "Comandante, abbiamo una relazione definitiva sull'armatura aliena.\n"
@@ -6971,7 +7037,7 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:2485
+#: ../base/ufos/research.ufo:2542
 msgid "alien_body_armour_pre_txt"
 msgstr ""
 "Comandante, abbiamo recuperato una corazza aliena dal campo di battaglia. Quest'armatura è stata una piaga per i nostri soldati a causa della sua alta resistenza ai vari tipi di danni; gli alieni che la indossavano venivano solo scalfiti dai colpi che avrebbero fatto a pezzi i loro amici senza armatura. Non dovrebbe sorprenderla il fatto che non siamo ancora riusciti a tagliarla per cominciare le ricerche sulla sua composizione. Dovremmo iniziare subito le ricerche per scovare le sue debolezze il prima possibile, e magari trovare un modo per adattarla ai nostri scopi.\n"
@@ -6980,7 +7046,7 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:2519
+#: ../base/ufos/research.ufo:2576
 msgid "alien_medium_armour_txt"
 msgstr ""
 "Quando si tratta di armature la filosofia aliena sembra essere: \"Se funziona, usiamone di più.\" Questa nuova armatura è nel design simile al modello base ma manca dei compromessi e del fragile bilanciamento dell'armatura leggera. Invece di limitarsi a proteggere il busto e la testa, il modello intermedio cerca di coprire tutte le zone vitali mediante piastre di nanopolimeri molto più addensati, aumentando la superficie protettiva anche ad arterie e centri nervosi principali. L'armatura Aliena Intermedia riporta un numero di fibre di nanotubi per centimetro quadrato doppio rispetto a quello presente nel modello base. Come risultato queste piastre sono quasi impenetrabili dalle tradizionali armi umane e perfino il più leggero strato protettivo utilizzato per coprire le giunture è capace di bloccare i proiettili con grande facilità.\n"
@@ -6997,7 +7063,7 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:2522
+#: ../base/ufos/research.ufo:2579
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
 "Comandante, dal campo di battaglia abbiamo recuperato un nuovo modello di armatura. E' molto più pesante rispetto al modello rinvenuto in precedenza, e pare che il fuoco regolare non riesca a provocare più di qualche graffio. Mai prima d'ora avevamo riscontrato una così elevata densità di CNT (Nanotubi di carbonio) come quella rilevata nelle piastre protrettive. Dobbiamo analizzarla immediatamente per determinare quali armi rimangano efficaci contro gli alieni equipaggiati con questo modello e riuscire a replicarne la tecnologia per le nostre truppe. Fintantochè non riusciremo a raggiungere questa tecnologia rimarremo in una grave situazione di svantaggio.\n"
@@ -7006,88 +7072,88 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:2557
+#: ../base/ufos/research.ufo:2614
 msgid "Blast Damage Type"
 msgstr "Tipo di Danno da Scoppio"
 
-#: ../base/ufos/research.ufo:2560 ../base/ufos/research.ufo:2573
-#: ../base/ufos/research.ufo:2586 ../base/ufos/research.ufo:2604
 #: ../base/ufos/research.ufo:2617 ../base/ufos/research.ufo:2630
-#: ../base/ufos/research.ufo:2651 ../base/ufos/research.ufo:2664
-#: ../base/ufos/research.ufo:2682 ../base/ufos/research.ufo:2695
+#: ../base/ufos/research.ufo:2643 ../base/ufos/research.ufo:2661
+#: ../base/ufos/research.ufo:2674 ../base/ufos/research.ufo:2687
 #: ../base/ufos/research.ufo:2708 ../base/ufos/research.ufo:2721
-#: ../base/ufos/research.ufo:2734 ../base/ufos/research.ufo:2747
-#: ../base/ufos/research.ufo:2760 ../base/ufos/research.ufo:2773
-#: ../base/ufos/research.ufo:2786
+#: ../base/ufos/research.ufo:2739 ../base/ufos/research.ufo:2752
+#: ../base/ufos/research.ufo:2765 ../base/ufos/research.ufo:2778
+#: ../base/ufos/research.ufo:2791 ../base/ufos/research.ufo:2804
+#: ../base/ufos/research.ufo:2817 ../base/ufos/research.ufo:2830
+#: ../base/ufos/research.ufo:2843
 #, fuzzy
 msgid "none"
 msgstr "Fatto"
 
-#: ../base/ufos/research.ufo:2570
+#: ../base/ufos/research.ufo:2627
 msgid "Fire Damage Type"
 msgstr "Danno da Bruciatura"
 
-#: ../base/ufos/research.ufo:2583
+#: ../base/ufos/research.ufo:2640
 msgid "Laser Damage Type"
 msgstr "Danno Laser"
 
-#: ../base/ufos/research.ufo:2601
+#: ../base/ufos/research.ufo:2658
 msgid "Impact Damage Type"
 msgstr "Tipo di Danno da Impatto"
 
-#: ../base/ufos/research.ufo:2614
+#: ../base/ufos/research.ufo:2671
 msgid "Shock Damage Type"
 msgstr "Danno da Urto"
 
-#: ../base/ufos/research.ufo:2627
+#: ../base/ufos/research.ufo:2684
 msgid "Plasma Damage Type"
 msgstr "Danno da Plasma"
 
-#: ../base/ufos/research.ufo:2648
+#: ../base/ufos/research.ufo:2705
 msgid "Stun Damage Type"
 msgstr "Tipo di Danno da Stordimento"
 
-#: ../base/ufos/research.ufo:2661
+#: ../base/ufos/research.ufo:2718
 msgid "Particle Beam Damage Type"
 msgstr "Tipo di Danno da Flusso di Particelle"
 
-#: ../base/ufos/research.ufo:2679
+#: ../base/ufos/research.ufo:2736
 msgid "Accuracy Attribute"
 msgstr "Attributo Mira"
 
-#: ../base/ufos/research.ufo:2692
+#: ../base/ufos/research.ufo:2749
 msgid "Assault Guns Proficiency"
 msgstr "Competenza Armi d'Assalto"
 
-#: ../base/ufos/research.ufo:2705
+#: ../base/ufos/research.ufo:2762
 msgid "Close Combat Proficiency"
 msgstr "Competenza Corpo a Corpo"
 
-#: ../base/ufos/research.ufo:2718
+#: ../base/ufos/research.ufo:2775
 msgid "High-Explosives Proficiency"
 msgstr "Competenza Esplosivi"
 
-#: ../base/ufos/research.ufo:2731
+#: ../base/ufos/research.ufo:2788
 msgid "Heavy Weapons Proficiency"
 msgstr "Competenza Armi Pesanti"
 
-#: ../base/ufos/research.ufo:2744
+#: ../base/ufos/research.ufo:2801
 msgid "Mind Attribute"
 msgstr "Qualità Mentali"
 
-#: ../base/ufos/research.ufo:2757
+#: ../base/ufos/research.ufo:2814
 msgid "Power Attribute"
 msgstr "Potenza"
 
-#: ../base/ufos/research.ufo:2770
+#: ../base/ufos/research.ufo:2827
 msgid "Sniper Rifles Proficiency"
 msgstr "Competenza Fucili di Precisione"
 
-#: ../base/ufos/research.ufo:2783
+#: ../base/ufos/research.ufo:2840
 msgid "Speed Attribute"
 msgstr "Velocità"
 
-#: ../base/ufos/research.ufo:2801
+#: ../base/ufos/research.ufo:2858
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Progetto -- Unità di Contenimento Alieni\n"
@@ -7128,7 +7194,7 @@ msgstr ""
 "\n"
 "tieni presente che i macchinari presenti nell'Unità di Contenimento, così come una grossa parte dell'equipaggiamento PHALANX, devono ancora passare il test definitivo contro una forza extraterrestre. Aggiornamenti o aggiustamenti potrebbero essere necessari affinché la struttura possa funzionare per ciò per cui é stata progettata."
 
-#: ../base/ufos/research.ufo:2819
+#: ../base/ufos/research.ufo:2876
 msgid "b_command_txt"
 msgstr ""
 "Progetto -- Quartier Generale\n"
@@ -7171,7 +7237,7 @@ msgstr ""
 "\n"
 "I vecchi piani per il QG sono stati aggiornati dai nostri ingegneri per rimpiazzare l'antico mainframe H-9000 con stazioni di lavoro olografiche all'ultima tecnologia e l'installazione di un nuovo supercomputer. Tutti gli altri componenti sono ancora utilizzabili ed efficaci."
 
-#: ../base/ufos/research.ufo:2837
+#: ../base/ufos/research.ufo:2894
 msgid "b_entrance_txt"
 msgstr ""
 "Progetto -- Ingresso\n"
@@ -7202,8 +7268,8 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2850 ../base/ufos/research.ufo:3918
-#: ../base/ufos/research.ufo:3935
+#: ../base/ufos/research.ufo:2907 ../base/ufos/research.ufo:3975
+#: ../base/ufos/research.ufo:3992
 msgid "b_missile_txt"
 msgstr ""
 "Progetto -- Batteria Missilistica\n"
@@ -7248,7 +7314,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2868
+#: ../base/ufos/research.ufo:2925
 msgid "b_large_hangar_txt"
 msgstr ""
 "Progetto -- Hangar Grande\n"
@@ -7293,7 +7359,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2886
+#: ../base/ufos/research.ufo:2943
 msgid "b_hospital_txt"
 msgstr ""
 "Progetto -- Ospedale\n"
@@ -7336,7 +7402,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2904
+#: ../base/ufos/research.ufo:2961
 msgid "b_small_hangar_txt"
 msgstr ""
 "Blueprints -- Small Hangar\n"
@@ -7381,7 +7447,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2922
+#: ../base/ufos/research.ufo:2979
 msgid "b_lab_txt"
 msgstr ""
 "Progetto -- Laboratorio di Ricerca e Sviluppo\n"
@@ -7426,7 +7492,7 @@ msgstr ""
 "\n"
 "Riguardando i file di PHALANX sulle infrastrutture di ricerca, ho concluso che i piani erano abbastanza avanzati per il loro tempo. Il design é ancora utilizzabile e può essere adattato alle nostre necessità con piccoli aggiornamenti dell'equipaggiamento."
 
-#: ../base/ufos/research.ufo:2940
+#: ../base/ufos/research.ufo:2997
 msgid "b_powerplant_txt"
 msgstr ""
 "Progetto -- Generatore\n"
@@ -7469,7 +7535,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2958
+#: ../base/ufos/research.ufo:3015
 msgid "b_quarters_txt"
 msgstr ""
 "Progetto -- Aree Residenziali\n"
@@ -7510,7 +7576,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:2971
+#: ../base/ufos/research.ufo:3028
 msgid "b_radar_txt"
 msgstr ""
 "Progetto -- Radar\n"
@@ -7557,7 +7623,7 @@ msgstr ""
 "\n"
 "Non dovremmo considerare le infrastrutture Radar come il mezzo finale per il rilevamento di UFO. Anche con sistemi supplementari la nostra copertura non é completamente affidabile, e dovremo ricercare metodi per migliorare la nostra tecnologia di rilevamento se vogliamo avere qualche possibilità di fermare questi bastardi."
 
-#: ../base/ufos/research.ufo:2989
+#: ../base/ufos/research.ufo:3046
 #, fuzzy
 msgid "b_radar_adv_txt"
 msgstr ""
@@ -7605,7 +7671,7 @@ msgstr ""
 "\n"
 "We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
 
-#: ../base/ufos/research.ufo:3008
+#: ../base/ufos/research.ufo:3065
 msgid "b_storage_txt"
 msgstr ""
 "Progetto -- Magazzino\n"
@@ -7648,7 +7714,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:3026
+#: ../base/ufos/research.ufo:3083
 msgid "b_teamroom_txt"
 msgstr ""
 "Progetto -- Sala di Ricreazione\n"
@@ -7689,7 +7755,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:3044
+#: ../base/ufos/research.ufo:3101
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Progetto -- Hangar Piccolo per UFO\n"
@@ -7730,7 +7796,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:3062
+#: ../base/ufos/research.ufo:3119
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Progetto -- Hangar Piccolo per UFO\n"
@@ -7771,7 +7837,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:3080
+#: ../base/ufos/research.ufo:3137
 msgid "b_workshop_txt"
 msgstr ""
 "Progetto -- Quartier Generale\n"
@@ -7810,12 +7876,12 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:3096
+#: ../base/ufos/research.ufo:3153
 #, fuzzy
 msgid "Blueprints - Antimatter Storage"
 msgstr "Antimateria"
 
-#: ../base/ufos/research.ufo:3101
+#: ../base/ufos/research.ufo:3158
 msgid "b_antimatter_txt"
 msgstr ""
 "Descrizione Generale\n"
@@ -7846,7 +7912,7 @@ msgstr ""
 "\n"
 "Nessuna."
 
-#: ../base/ufos/research.ufo:3128
+#: ../base/ufos/research.ufo:3185
 msgid "drop_firebird_txt"
 msgstr ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
@@ -7907,7 +7973,7 @@ msgstr ""
 "\n"
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3144
+#: ../base/ufos/research.ufo:3201
 #, fuzzy
 msgid "drop_herakles_txt"
 msgstr ""
@@ -7969,7 +8035,7 @@ msgstr ""
 "\n"
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3166
+#: ../base/ufos/research.ufo:3223
 msgid "inter_stiletto_txt"
 msgstr ""
 "Descrizione del velivolo -- Intercettore Classe Stiletto\n"
@@ -8034,7 +8100,7 @@ msgstr ""
 "\n"
 "Hardpoints: 1 piccolo (naso), 2 medi (ali), 2 trasporti equipaggiamento, 1 spazio per armatura"
 
-#: ../base/ufos/research.ufo:3182
+#: ../base/ufos/research.ufo:3239
 msgid "inter_saracen_txt"
 msgstr ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
@@ -8093,7 +8159,7 @@ msgstr ""
 "\n"
 "Hardpoints: 2 Medium hardpoints (belly), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3198
+#: ../base/ufos/research.ufo:3255
 msgid "inter_dragon_txt"
 msgstr ""
 "Commander, I'm extremely proud to present you with the plans for our new interceptor, the Dragon. As you can see we've taken more than one page out of the aliens' book and the radical styling truly pays off.\n"
@@ -8122,7 +8188,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Large hardpoint (main fuselage), 1 Medium hardpoint (bottom prong), 2 Small hardpoints (top prongs), 1 Equipment bay, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3201
+#: ../base/ufos/research.ufo:3258
 msgid "inter_dragon_pre_txt"
 msgstr ""
 "Commander, let me preface this by saying it's obvious that the aliens have been severely outperforming us in every way, but nowhere is this more evident than in the air. We were in a bad position at the start of the war and despite our efforts there has been little improvement.\n"
@@ -8133,7 +8199,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3220
+#: ../base/ufos/research.ufo:3277
 #, fuzzy
 msgid "inter_stingray_txt"
 msgstr ""
@@ -8201,11 +8267,11 @@ msgstr ""
 "\n"
 "Hardpoints: 1 Small hardpoint (nose), 2 Medium hardpoints (wings), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3223
+#: ../base/ufos/research.ufo:3280
 msgid "inter_stingray_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:3249
+#: ../base/ufos/research.ufo:3306
 msgid "ufo_scout_txt"
 msgstr ""
 "This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
@@ -8240,14 +8306,14 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:3252
+#: ../base/ufos/research.ufo:3309
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3291
+#: ../base/ufos/research.ufo:3348
 msgid "ufo_fighter_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -8280,7 +8346,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Particle Beam hardpoint"
 
-#: ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3351
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
@@ -8289,7 +8355,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3334
+#: ../base/ufos/research.ufo:3391
 msgid "ufo_supply_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -8322,7 +8388,7 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:3337
+#: ../base/ufos/research.ufo:3394
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Larger than any of the other UFOs we've seen so far, it seems to be unarmed, and its large cargo hold suggests that it may be a supply carrier of some sort, supporting alien assets on the surface of the Earth. These craft can be found at the centre of many alien formations and will drastically increase the alien presence on our planet if we allow them to complete their missions.\n"
@@ -8331,7 +8397,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3377
+#: ../base/ufos/research.ufo:3434
 #, fuzzy
 msgid "ufo_carrier_txt"
 msgstr ""
@@ -8367,11 +8433,11 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
 
-#: ../base/ufos/research.ufo:3380
+#: ../base/ufos/research.ufo:3437
 msgid "ufo_carrier_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3420
+#: ../base/ufos/research.ufo:3477
 #, fuzzy
 msgid "ufo_bomber_txt"
 msgstr ""
@@ -8405,11 +8471,11 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Particle Beam hardpoint"
 
-#: ../base/ufos/research.ufo:3423
+#: ../base/ufos/research.ufo:3480
 msgid "ufo_bomber_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3463
+#: ../base/ufos/research.ufo:3520
 msgid "ufo_corrupter_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -8442,7 +8508,7 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3523
 msgid "ufo_corrupter_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This is one of the largest UFOs we have observed so far, but the relatively light armament indicates that it's not a combat craft. Our preliminary walkabout of the interior has given us only tantalising clues about its intended function.\n"
@@ -8453,7 +8519,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3506
+#: ../base/ufos/research.ufo:3563
 msgid "ufo_harvester_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
@@ -8490,7 +8556,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
 
-#: ../base/ufos/research.ufo:3509
+#: ../base/ufos/research.ufo:3566
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.\n"
@@ -8499,23 +8565,23 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3551
+#: ../base/ufos/research.ufo:3608
 msgid "Live Specimen - Bloodspider"
 msgstr "Esemplare Vivo - Bloodspider"
 
-#: ../base/ufos/research.ufo:3553
+#: ../base/ufos/research.ufo:3610
 msgid "bloodspider_notes_txt"
 msgstr "bloodspider_notes_txt"
 
-#: ../base/ufos/research.ufo:3556
+#: ../base/ufos/research.ufo:3613
 msgid "bloodspider_notes_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3572
+#: ../base/ufos/research.ufo:3629
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsia Aliena - Bloodspider"
 
-#: ../base/ufos/research.ufo:3577
+#: ../base/ufos/research.ufo:3634
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Comandante,\n"
@@ -8538,7 +8604,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3580
+#: ../base/ufos/research.ufo:3637
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8549,11 +8615,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3629
+#: ../base/ufos/research.ufo:3686
 msgid "Alien Autopsy - Ortnok"
 msgstr "Autopsia Aliena - Ortnok"
 
-#: ../base/ufos/research.ufo:3634
+#: ../base/ufos/research.ufo:3691
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Comandante,\n"
@@ -8590,7 +8656,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3635
+#: ../base/ufos/research.ufo:3692
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Comandante,\n"
@@ -8625,7 +8691,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3638
+#: ../base/ufos/research.ufo:3695
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8636,7 +8702,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3639
+#: ../base/ufos/research.ufo:3696
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8647,11 +8713,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3673
+#: ../base/ufos/research.ufo:3730
 msgid "Alien Autopsy - Taman"
 msgstr "Autopsia Aliena - Taman"
 
-#: ../base/ufos/research.ufo:3678
+#: ../base/ufos/research.ufo:3735
 msgid "taman_autopsy_txt"
 msgstr ""
 "Comandante,\n"
@@ -8692,7 +8758,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3679
+#: ../base/ufos/research.ufo:3736
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Comandante,\n"
@@ -8733,7 +8799,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3682
+#: ../base/ufos/research.ufo:3739
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8744,7 +8810,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3683
+#: ../base/ufos/research.ufo:3740
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8755,11 +8821,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3717
+#: ../base/ufos/research.ufo:3774
 msgid "Alien Autopsy - Shevaar"
 msgstr "Autopsia Aliena - Shevaar"
 
-#: ../base/ufos/research.ufo:3722
+#: ../base/ufos/research.ufo:3779
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Comandante,\n"
@@ -8796,7 +8862,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3723
+#: ../base/ufos/research.ufo:3780
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Comandante,\n"
@@ -8831,7 +8897,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3726
+#: ../base/ufos/research.ufo:3783
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8842,7 +8908,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3727
+#: ../base/ufos/research.ufo:3784
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Comandante,\n"
@@ -8853,50 +8919,50 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3818
+#: ../base/ufos/research.ufo:3875
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:3820
+#: ../base/ufos/research.ufo:3877
 msgid "ugv_phoenix_txt"
 msgstr "ugv_phoenix_txt"
 
-#: ../base/ufos/research.ufo:3823
+#: ../base/ufos/research.ufo:3880
 msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3838
+#: ../base/ufos/research.ufo:3895
 msgid "Ares W (UGV)"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3840
+#: ../base/ufos/research.ufo:3897
 #, fuzzy
 msgid "ugv_ares_w_txt"
 msgstr "Nessuna informazione disponibile prima della ricerca."
 
-#: ../base/ufos/research.ufo:3843
+#: ../base/ufos/research.ufo:3900
 msgid "ugv_ares_w_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3859
+#: ../base/ufos/research.ufo:3916
 #, fuzzy
 msgid "ugv_chaingun_txt"
 msgstr "chaingun_txt"
 
-#: ../base/ufos/research.ufo:3862
+#: ../base/ufos/research.ufo:3919
 msgid "ugv_chaingun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3878
+#: ../base/ufos/research.ufo:3935
 #, fuzzy
 msgid "ugv_chaingun_belt_txt"
 msgstr "Nessuna informazione disponibile prima della ricerca."
 
-#: ../base/ufos/research.ufo:3881
+#: ../base/ufos/research.ufo:3938
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3896
+#: ../base/ufos/research.ufo:3953
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -8916,15 +8982,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3899
+#: ../base/ufos/research.ufo:3956
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:3953
+#: ../base/ufos/research.ufo:4010
 msgid "'Raven' ECM Unit"
 msgstr "Unità ECM 'Raven'"
 
-#: ../base/ufos/research.ufo:3956
+#: ../base/ufos/research.ufo:4013
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -8963,7 +9029,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3973
+#: ../base/ufos/research.ufo:4030
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -9006,7 +9072,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3989
+#: ../base/ufos/research.ufo:4046
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
@@ -9019,7 +9085,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3992
+#: ../base/ufos/research.ufo:4049
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
@@ -9036,11 +9102,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4012
+#: ../base/ufos/research.ufo:4069
 msgid "craft_alien_astrogation_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4015
+#: ../base/ufos/research.ufo:4072
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Comandante,abbiamo terminato il lavoro sull'unità di navigazione aliena catturata. Segue un estratto del mio rapporto.\n"
@@ -9059,7 +9125,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4050
+#: ../base/ufos/research.ufo:4107
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
@@ -9068,7 +9134,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4053
+#: ../base/ufos/research.ufo:4110
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.\n"
@@ -9091,7 +9157,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4087
+#: ../base/ufos/research.ufo:4144
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
@@ -9102,7 +9168,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4090
+#: ../base/ufos/research.ufo:4147
 msgid "craft_alien_detection_txt"
 msgstr ""
 "The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
@@ -9125,7 +9191,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4124
+#: ../base/ufos/research.ufo:4181
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "Proposal\n"
@@ -9150,11 +9216,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4143
+#: ../base/ufos/research.ufo:4200
 msgid "SHIVA Rotary Cannon"
 msgstr "Cannone Rotante SHIVA"
 
-#: ../base/ufos/research.ufo:4146
+#: ../base/ufos/research.ufo:4203
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -9197,7 +9263,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4163
+#: ../base/ufos/research.ufo:4220
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -9236,7 +9302,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4184
+#: ../base/ufos/research.ufo:4241
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -9275,11 +9341,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4202
+#: ../base/ufos/research.ufo:4259
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "Batteria di Missili AA 'Sparrowhawk'"
 
-#: ../base/ufos/research.ufo:4205
+#: ../base/ufos/research.ufo:4262
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -9328,11 +9394,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4219
+#: ../base/ufos/research.ufo:4276
 msgid "'Sparrowhawk' Missile"
 msgstr "Missile 'Sparrowhawk'"
 
-#: ../base/ufos/research.ufo:4222
+#: ../base/ufos/research.ufo:4279
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -9375,7 +9441,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4243
+#: ../base/ufos/research.ufo:4300
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -9418,7 +9484,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4260
+#: ../base/ufos/research.ufo:4317
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -9461,14 +9527,14 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4281
+#: ../base/ufos/research.ufo:4338
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4284
+#: ../base/ufos/research.ufo:4341
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
@@ -9487,7 +9553,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4327
+#: ../base/ufos/research.ufo:4384
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -9526,7 +9592,7 @@ msgstr ""
 "\n"
 "With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:4344
+#: ../base/ufos/research.ufo:4401
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -9563,7 +9629,7 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:4366 ../base/ufos/research.ufo:4402
+#: ../base/ufos/research.ufo:4423 ../base/ufos/research.ufo:4459
 msgid "alien_materials_txt"
 msgstr ""
 "Comandante, credo che abbiamo scoperto il segreto di queste leghe. Dopo qualche modifica all'equipaggiamento delle nostre Officine, dovremmo essere in grado di usare questi materiali e 'programmarli' in nuove forme avanzate.\n"
@@ -9582,15 +9648,15 @@ msgstr ""
 "\n"
 "--Com. Navarre"
 
-#: ../base/ufos/research.ufo:4369
+#: ../base/ufos/research.ufo:4426
 msgid "alien_materials_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4421
+#: ../base/ufos/research.ufo:4478
 msgid "Political Situation Before The Invasion"
 msgstr "Situazione Politica Prima dell'Invasione"
 
-#: ../base/ufos/research.ufo:4423
+#: ../base/ufos/research.ufo:4480
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "Nel 2084 la Terra ha un aspetto migliore del secolo precedente. Forse per la prima volta, la pace e la cooperazione sono la norma piuttosto che l'eccezione. Lo stato attuale delle cose, comunque, si può solo spiegare con la brutale storia del ventunesimo secolo.\n"
@@ -9609,11 +9675,11 @@ msgstr ""
 "\n"
 "L'esercito soffrì di ammutinamenti di massa nei giorni seguenti; questa fu la prima causa che portò il governo alla sconfitta. Più di sei milioni di vite andarono perdute prima che le forze fedeli al governo si arrendessero il 15 Agosto 2036, dopo aver combattuto metro dopo metro mentre i ribelli li spingevano sulle coste dell'Oceano Indiano. Questa viene considerata la fine ufficiale della Seconda Guerra Fredda."
 
-#: ../base/ufos/research.ufo:4433
+#: ../base/ufos/research.ufo:4490
 msgid "After The War"
 msgstr "Dopo la Guerra"
 
-#: ../base/ufos/research.ufo:4435
+#: ../base/ufos/research.ufo:4492
 msgid "news_after_the_war_txt"
 msgstr ""
 "Repubblica Asiatica:\n"
@@ -9726,11 +9792,11 @@ msgstr ""
 "\n"
 "Il potere militare dell'Oceania consiste principalmente nella flotta. L'esercito di terra è minuscolo se comparato con quello delle altre potenze ad eccezione delle Americhe Unite, e serve solo per scopi di difesa con un equipaggiamento e un addestramento non eccelso. Comunque sia, può rispondere velocemente a situazioni di emergenza."
 
-#: ../base/ufos/research.ufo:4445
+#: ../base/ufos/research.ufo:4502
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX e le Ripercussioni di Mumbai"
 
-#: ../base/ufos/research.ufo:4447
+#: ../base/ufos/research.ufo:4504
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "Il \"Progetto PHALANX\" venne inizialmente concepito dal dipartimento alla difesa degli Stati Uniti nel 1955, dopo la crescente preoccupazione dovuta all'elevato numero di avvistamenti UFO nel mondo. La possibilità di un'invasione aliena preoccupò parecchio i politici, già abbastanza innervositi dal potere nucleare dell'URSS. L'esistenza di forze ostili extraterrestri nell'universo sembrava molto improbabile, ancora di più che queste forze attaccassero proprio la Terra -- ma potevano permettersi gli Stati Uniti di correre il rischio?\n"
@@ -9761,11 +9827,11 @@ msgstr ""
 "\n"
 "Mancava solo il leader."
 
-#: ../base/ufos/research.ufo:4457
+#: ../base/ufos/research.ufo:4514
 msgid "A New Twist"
 msgstr "Trama/La Svolta"
 
-#: ../base/ufos/research.ufo:4462
+#: ../base/ufos/research.ufo:4519
 msgid "news_new_twist_txt"
 msgstr ""
 "Comandante,\n"
@@ -9790,7 +9856,7 @@ msgstr ""
 "\n"
 "Dott. Connor"
 
-#: ../base/ufos/research.ufo:4463
+#: ../base/ufos/research.ufo:4520
 #, fuzzy
 msgid "news_new_twist_alt_txt"
 msgstr ""
@@ -9816,11 +9882,11 @@ msgstr ""
 "\n"
 "Dott. Connor"
 
-#: ../base/ufos/research.ufo:4488
+#: ../base/ufos/research.ufo:4545
 msgid "The Enemy On Earth"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4493
+#: ../base/ufos/research.ufo:4550
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Proposal\n"
@@ -9853,7 +9919,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4494
+#: ../base/ufos/research.ufo:4551
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
@@ -9874,7 +9940,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4497
+#: ../base/ufos/research.ufo:4554
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -9897,11 +9963,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4526
+#: ../base/ufos/research.ufo:4584
 msgid "XVI Census"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4531
+#: ../base/ufos/research.ufo:4589
 msgid "xvi_census_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -9924,7 +9990,7 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:4534
+#: ../base/ufos/research.ufo:4592
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -9941,11 +10007,11 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:4565
+#: ../base/ufos/research.ufo:4624
 msgid "The Enemy On Earth - Revisited"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4570
+#: ../base/ufos/research.ufo:4629
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
@@ -9967,7 +10033,7 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:4573
+#: ../base/ufos/research.ufo:4632
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "<TODO>"
 
@@ -10579,26 +10645,27 @@ msgstr "Granata al Plasma"
 msgid "Bomb"
 msgstr ""
 
-#: ../base/ufos/weapons_aliens.ufo:26
+#: ../base/ufos/weapons_aliens.ufo:46
 #, fuzzy
 msgid "Needler Gun Magazine"
 msgstr "Caricatore Mitragliatore Pesante"
 
-#: ../base/ufos/weapons_aliens.ufo:42 ../base/ufos/weapons_human.ufo:42
-#: ../base/ufos/weapons_human.ufo:266 ../base/ufos/weapons_human.ufo:346
-#: ../base/ufos/weapons_human.ufo:425 ../base/ufos/weapons_human.ufo:525
-#: ../base/ufos/weapons_human.ufo:626 ../base/ufos/weapons_human.ufo:1846
+#: ../base/ufos/weapons_aliens.ufo:62 ../base/ufos/weapons_aliens.ufo:125
+#: ../base/ufos/weapons_human.ufo:42 ../base/ufos/weapons_human.ufo:124
+#: ../base/ufos/weapons_human.ufo:348 ../base/ufos/weapons_human.ufo:428
+#: ../base/ufos/weapons_human.ufo:507 ../base/ufos/weapons_human.ufo:607
+#: ../base/ufos/weapons_human.ufo:708 ../base/ufos/weapons_human.ufo:1928
 #: ../base/ufos/weapons_particle.ufo:41 ../base/ufos/weapons_particle.ufo:122
 #: ../base/ufos/weapons_particle.ufo:224 ../base/ufos/weapons_plasma.ufo:41
 #: ../base/ufos/weapons_plasma.ufo:143 ../base/ufos/weapons_plasma.ufo:268
 msgid "Snap Shot"
 msgstr "Colpo improvviso"
 
-#: ../base/ufos/weapons_aliens.ufo:62
+#: ../base/ufos/weapons_aliens.ufo:82 ../base/ufos/weapons_aliens.ufo:145
 msgid "Cannonade"
 msgstr "Cannone"
 
-#: ../base/ufos/weapons_aliens.ufo:82
+#: ../base/ufos/weapons_aliens.ufo:102 ../base/ufos/weapons_aliens.ufo:165
 msgid "Precision Shot"
 msgstr "Colpo Mirato"
 
@@ -10610,205 +10677,207 @@ msgstr "Fucile d'Assalto"
 msgid "Assault Rifle Magazine"
 msgstr "Caricatore per Fucile d'Assalto"
 
-#: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:444
-#: ../base/ufos/weapons_human.ufo:544 ../base/ufos/weapons_human.ufo:768
-#: ../base/ufos/weapons_human.ufo:853 ../base/ufos/weapons_human.ufo:900
-#: ../base/ufos/weapons_human.ufo:1600 ../base/ufos/weapons_human.ufo:1866
+#: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:143
+#: ../base/ufos/weapons_human.ufo:526 ../base/ufos/weapons_human.ufo:626
+#: ../base/ufos/weapons_human.ufo:850 ../base/ufos/weapons_human.ufo:935
+#: ../base/ufos/weapons_human.ufo:982 ../base/ufos/weapons_human.ufo:1682
+#: ../base/ufos/weapons_human.ufo:1948
 msgid "3-Round Burst"
 msgstr "Raffica da 3 Proiettili"
 
-#: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:184
-#: ../base/ufos/weapons_human.ufo:564 ../base/ufos/weapons_human.ufo:665
-#: ../base/ufos/weapons_human.ufo:922 ../base/ufos/weapons_multiplayer.ufo:68
-#: ../base/ufos/weapons_multiplayer.ufo:259
+#: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:163
+#: ../base/ufos/weapons_human.ufo:266 ../base/ufos/weapons_human.ufo:646
+#: ../base/ufos/weapons_human.ufo:747 ../base/ufos/weapons_human.ufo:1004
+#: ../base/ufos/weapons_multiplayer.ufo:68
+#: ../base/ufos/weapons_multiplayer.ufo:279
 #: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_ugv.ufo:101
 msgid "Full-Auto"
 msgstr "Raffica"
 
-#: ../base/ufos/weapons_human.ufo:101
+#: ../base/ufos/weapons_human.ufo:101 ../base/ufos/weapons_human.ufo:183
 #, fuzzy
 msgid "Aimed shot"
 msgstr "Colpo Mirato"
 
-#: ../base/ufos/weapons_human.ufo:126
+#: ../base/ufos/weapons_human.ufo:208
 #, fuzzy
 msgid "Machine Gun"
 msgstr "Mitraglietta"
 
-#: ../base/ufos/weapons_human.ufo:147
+#: ../base/ufos/weapons_human.ufo:229
 #, fuzzy
 msgid "Machine Gun Magazine"
 msgstr "Caricatore Mitragliatore Pesante"
 
-#: ../base/ufos/weapons_human.ufo:164
+#: ../base/ufos/weapons_human.ufo:246
 #, fuzzy
 msgid "5-Shot Burst"
 msgstr "Raffica"
 
-#: ../base/ufos/weapons_human.ufo:204 ../base/ufos/weapons_multiplayer.ufo:88
-#: ../base/ufos/weapons_multiplayer.ufo:279
+#: ../base/ufos/weapons_human.ufo:286 ../base/ufos/weapons_multiplayer.ufo:88
+#: ../base/ufos/weapons_multiplayer.ufo:299
 #, fuzzy
 msgid "Full-Auto Sweep"
 msgstr "Raffica"
 
-#: ../base/ufos/weapons_human.ufo:230
+#: ../base/ufos/weapons_human.ufo:312
 msgid "Sniper Rifle"
 msgstr "Fucile da Cecchino"
 
-#: ../base/ufos/weapons_human.ufo:250
+#: ../base/ufos/weapons_human.ufo:332
 msgid "Sniper Rifle Magazine"
 msgstr "Caricatore per Fucile da Cecchino"
 
-#: ../base/ufos/weapons_human.ufo:285 ../base/ufos/weapons_human.ufo:365
-#: ../base/ufos/weapons_human.ufo:464 ../base/ufos/weapons_human.ufo:685
-#: ../base/ufos/weapons_human.ufo:1094 ../base/ufos/weapons_human.ufo:1137
-#: ../base/ufos/weapons_human.ufo:1886 ../base/ufos/weapons_particle.ufo:141
+#: ../base/ufos/weapons_human.ufo:367 ../base/ufos/weapons_human.ufo:447
+#: ../base/ufos/weapons_human.ufo:546 ../base/ufos/weapons_human.ufo:767
+#: ../base/ufos/weapons_human.ufo:1176 ../base/ufos/weapons_human.ufo:1219
+#: ../base/ufos/weapons_human.ufo:1968 ../base/ufos/weapons_particle.ufo:141
 #: ../base/ufos/weapons_plasma.ufo:61 ../base/ufos/weapons_plasma.ufo:163
 msgid "Aimed Shot"
 msgstr "Colpo Mirato"
 
-#: ../base/ufos/weapons_human.ufo:330
+#: ../base/ufos/weapons_human.ufo:412
 msgid "Coilgun Clip"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:390
+#: ../base/ufos/weapons_human.ufo:472
 msgid "7.62mm Pistol"
 msgstr "Pistola da 7.62mm"
 
-#: ../base/ufos/weapons_human.ufo:409
+#: ../base/ufos/weapons_human.ufo:491
 msgid "7.62mm Pistol Magazine"
 msgstr "Caricatore per Pistola da 7.62mm"
 
-#: ../base/ufos/weapons_human.ufo:489
+#: ../base/ufos/weapons_human.ufo:571
 msgid "Machine Pistol"
 msgstr "Pistola a Tachioni"
 
-#: ../base/ufos/weapons_human.ufo:509
+#: ../base/ufos/weapons_human.ufo:591
 msgid "4.2mm MP Magazine"
 msgstr "Caricatore 4.2mm MP"
 
-#: ../base/ufos/weapons_human.ufo:591
+#: ../base/ufos/weapons_human.ufo:673
 msgid "Submachine Gun"
 msgstr "Mitraglietta"
 
-#: ../base/ufos/weapons_human.ufo:610
+#: ../base/ufos/weapons_human.ufo:692
 msgid "SMG Magazine"
 msgstr "Caricatore Mitraglietta"
 
-#: ../base/ufos/weapons_human.ufo:645 ../base/ufos/weapons_multiplayer.ufo:48
+#: ../base/ufos/weapons_human.ufo:727 ../base/ufos/weapons_multiplayer.ufo:48
 msgid "5-Round Burst"
 msgstr "Raffica da 5 Proiettili"
 
-#: ../base/ufos/weapons_human.ufo:710
+#: ../base/ufos/weapons_human.ufo:792
 msgid "Riot Shotgun"
 msgstr "Fucile da Rivolta"
 
-#: ../base/ufos/weapons_human.ufo:730
+#: ../base/ufos/weapons_human.ufo:812
 msgid "Saboted Slugs"
 msgstr "Cartucce a Pallettoni"
 
-#: ../base/ufos/weapons_human.ufo:746 ../base/ufos/weapons_human.ufo:831
-#: ../base/ufos/weapons_human.ufo:878 ../base/ufos/weapons_human.ufo:1579
+#: ../base/ufos/weapons_human.ufo:828 ../base/ufos/weapons_human.ufo:913
+#: ../base/ufos/weapons_human.ufo:960 ../base/ufos/weapons_human.ufo:1661
 #: ../base/ufos/weapons_multiplayer.ufo:150
 msgid "Single Shot"
 msgstr "Colpo Singolo"
 
-#: ../base/ufos/weapons_human.ufo:796
+#: ../base/ufos/weapons_human.ufo:878
 msgid "Micro Shotgun"
 msgstr "Mini Fucile a Pompa"
 
-#: ../base/ufos/weapons_human.ufo:815 ../base/ufos/weapons_multiplayer.ufo:134
+#: ../base/ufos/weapons_human.ufo:897 ../base/ufos/weapons_multiplayer.ufo:134
 msgid "Flechette Shells"
 msgstr "Proiettili per Sparachiodi"
 
-#: ../base/ufos/weapons_human.ufo:949
+#: ../base/ufos/weapons_human.ufo:1031
 msgid "Flamethrower"
 msgstr "Lanciafiamme"
 
-#: ../base/ufos/weapons_human.ufo:969
+#: ../base/ufos/weapons_human.ufo:1051
 msgid "C90 Canister"
 msgstr "Contenitore per C90"
 
-#: ../base/ufos/weapons_human.ufo:986
+#: ../base/ufos/weapons_human.ufo:1068
 msgid "Candlelight"
 msgstr "Fuoco di Candela"
 
-#: ../base/ufos/weapons_human.ufo:1007
+#: ../base/ufos/weapons_human.ufo:1089
 msgid "Inferno"
 msgstr "Inferno"
 
-#: ../base/ufos/weapons_human.ufo:1028
+#: ../base/ufos/weapons_human.ufo:1110
 #, fuzzy
 msgid "Inferno Sweep"
 msgstr "Inferno"
 
-#: ../base/ufos/weapons_human.ufo:1056
+#: ../base/ufos/weapons_human.ufo:1138
 msgid "Rocket Launcher"
 msgstr "Lanciamissili"
 
-#: ../base/ufos/weapons_human.ufo:1077
+#: ../base/ufos/weapons_human.ufo:1159
 msgid "HE Rocket"
 msgstr "Missile HE"
 
-#: ../base/ufos/weapons_human.ufo:1120
+#: ../base/ufos/weapons_human.ufo:1202
 msgid "IC Rocket"
 msgstr "Missile IC"
 
-#: ../base/ufos/weapons_human.ufo:1166
+#: ../base/ufos/weapons_human.ufo:1248
 msgid "Grenade Launcher"
 msgstr "Lanciagranate"
 
-#: ../base/ufos/weapons_human.ufo:1187
+#: ../base/ufos/weapons_human.ufo:1269
 msgid "25mm HIT Grenades"
 msgstr "Granate 25mm HIT"
 
-#: ../base/ufos/weapons_human.ufo:1204 ../base/ufos/weapons_human.ufo:1391
-#: ../base/ufos/weapons_human.ufo:1640
+#: ../base/ufos/weapons_human.ufo:1286 ../base/ufos/weapons_human.ufo:1473
+#: ../base/ufos/weapons_human.ufo:1722
 msgid "Snap Shot - Airburst"
 msgstr "Colpo Improvviso - Esplosione in Volo"
 
-#: ../base/ufos/weapons_human.ufo:1231 ../base/ufos/weapons_human.ufo:1419
-#: ../base/ufos/weapons_human.ufo:1667
+#: ../base/ufos/weapons_human.ufo:1313 ../base/ufos/weapons_human.ufo:1501
+#: ../base/ufos/weapons_human.ufo:1749
 msgid "Aimed Shot - Airburst"
 msgstr "Colpo Mirato - Esplosione in Volo"
 
-#: ../base/ufos/weapons_human.ufo:1258 ../base/ufos/weapons_human.ufo:1446
-#: ../base/ufos/weapons_human.ufo:1693
+#: ../base/ufos/weapons_human.ufo:1340 ../base/ufos/weapons_human.ufo:1528
+#: ../base/ufos/weapons_human.ufo:1775
 msgid "3-Round Burst - Airburst"
 msgstr "Raffica da 3 Proiettili - Esplosione in Volo"
 
-#: ../base/ufos/weapons_human.ufo:1285 ../base/ufos/weapons_human.ufo:1473
-#: ../base/ufos/weapons_human.ufo:1719
+#: ../base/ufos/weapons_human.ufo:1367 ../base/ufos/weapons_human.ufo:1555
+#: ../base/ufos/weapons_human.ufo:1801
 msgid "Snap Shot - Timed"
 msgstr "Colpo Improvviso - Esplosione a Tempo"
 
-#: ../base/ufos/weapons_human.ufo:1314 ../base/ufos/weapons_human.ufo:1502
-#: ../base/ufos/weapons_human.ufo:1747
+#: ../base/ufos/weapons_human.ufo:1396 ../base/ufos/weapons_human.ufo:1584
+#: ../base/ufos/weapons_human.ufo:1829
 msgid "Aimed Shot - Timed"
 msgstr "Colpo Mirato - Esplosione a Tempo"
 
-#: ../base/ufos/weapons_human.ufo:1343 ../base/ufos/weapons_human.ufo:1531
-#: ../base/ufos/weapons_human.ufo:1775
+#: ../base/ufos/weapons_human.ufo:1425 ../base/ufos/weapons_human.ufo:1613
+#: ../base/ufos/weapons_human.ufo:1857
 msgid "3-Round Burst - Timed"
 msgstr "Raffica da 3 Proiettili - Esplosione a Tempo"
 
-#: ../base/ufos/weapons_human.ufo:1374
+#: ../base/ufos/weapons_human.ufo:1456
 msgid "25mm IC Grenades"
 msgstr "Granate 25mm IC"
 
-#: ../base/ufos/weapons_human.ufo:1562
+#: ../base/ufos/weapons_human.ufo:1644
 msgid "25mm Flechette Grenades"
 msgstr "Granate 25mm a Frammentazione"
 
-#: ../base/ufos/weapons_human.ufo:1623
+#: ../base/ufos/weapons_human.ufo:1705
 msgid "25mm PB Grenades"
 msgstr "Granate 25mm PB"
 
-#: ../base/ufos/weapons_human.ufo:1809
+#: ../base/ufos/weapons_human.ufo:1891
 msgid "Bolter Rifle"
 msgstr "Fucile Bolter"
 
-#: ../base/ufos/weapons_human.ufo:1829
+#: ../base/ufos/weapons_human.ufo:1911
 msgid "Bolter Rifle Magazine"
 msgstr "Caricatore per Fucile Bolter"
 
@@ -10898,16 +10967,21 @@ msgstr "Fucile a Pompa"
 msgid "Double Shot"
 msgstr "Colpo Doppio"
 
-#: ../base/ufos/weapons_multiplayer.ufo:201
+#: ../base/ufos/weapons_multiplayer.ufo:199
+#, fuzzy
+msgid "VHS Assault Rifle"
+msgstr "Fucile d'Assalto"
+
+#: ../base/ufos/weapons_multiplayer.ufo:221
 msgid "XAW95"
 msgstr ""
 
-#: ../base/ufos/weapons_multiplayer.ufo:222
+#: ../base/ufos/weapons_multiplayer.ufo:242
 #, fuzzy
 msgid "XAW95 Magazine"
 msgstr "Caricatore Mitraglietta"
 
-#: ../base/ufos/weapons_multiplayer.ufo:239 ../base/ufos/weapons_ugv.ufo:80
+#: ../base/ufos/weapons_multiplayer.ufo:259 ../base/ufos/weapons_ugv.ufo:80
 #, fuzzy
 msgid "10-Round Burst"
 msgstr "Raffica da 3 Proiettili"
@@ -11323,244 +11397,244 @@ msgstr "Il tuo turno è iniziato!\n"
 msgid "Unknown alien race"
 msgstr "Tecnologia Sconosciuta ricercabile"
 
-#: client/cl_aircraft.c:266
+#: client/cl_aircraft.c:263
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
 
-#: client/cl_aircraft.c:266 client/cl_aircraft.c:274 client/cl_aircraft.c:282
-#: client/cl_aircraft.c:829 client/cl_aircraft.c:1202
-#: client/cl_aircraft.c:1210 client/cl_aircraft.c:1316
-#: client/cl_aircraft.c:1340 client/cl_airfight.c:387
+#: client/cl_aircraft.c:263 client/cl_aircraft.c:271 client/cl_aircraft.c:279
+#: client/cl_aircraft.c:828 client/cl_aircraft.c:1231
+#: client/cl_aircraft.c:1239 client/cl_aircraft.c:1345
+#: client/cl_aircraft.c:1369 client/cl_airfight.c:388
 #: client/cl_aliencont.c:181 client/cl_aliencont.c:209
 #: client/cl_aliencont.c:222 client/cl_aliencont.c:232
 #: client/cl_basemanagement.c:938 client/cl_basemanagement.c:1489
-#: client/cl_basemanagement.c:2710 client/cl_basemanagement.c:3001
-#: client/cl_basemanagement.c:3010 client/cl_basemanagement.c:3030
-#: client/cl_basemanagement.c:3040 client/cl_basemanagement.c:3051
-#: client/cl_basemanagement.c:3058 client/cl_basemanagement.c:3066
-#: client/cl_basemanagement.c:3071 client/cl_basemanagement.c:3076
-#: client/cl_campaign.c:143 client/cl_campaign.c:186 client/cl_campaign.c:668
-#: client/cl_campaign.c:1392 client/cl_campaign.c:4011
-#: client/cl_campaign.c:4022 client/cl_campaign.c:4032
-#: client/cl_campaign.c:4042 client/cl_campaign.c:4052
-#: client/cl_campaign.c:4063 client/cl_campaign.c:4079
-#: client/cl_campaign.c:4092 client/cl_campaign.c:4099
-#: client/cl_campaign.c:4107 client/cl_campaign.c:5354
-#: client/cl_campaign.c:5419 client/cl_campaign.c:5468
-#: client/cl_campaign.c:5480 client/cl_campaign.c:5482
-#: client/cl_campaign.c:5817 client/cl_installation.c:338
-#: client/cl_installation.c:408 client/cl_inventory.c:338
+#: client/cl_basemanagement.c:2708 client/cl_basemanagement.c:3000
+#: client/cl_basemanagement.c:3009 client/cl_basemanagement.c:3029
+#: client/cl_basemanagement.c:3039 client/cl_basemanagement.c:3050
+#: client/cl_basemanagement.c:3057 client/cl_basemanagement.c:3065
+#: client/cl_basemanagement.c:3070 client/cl_basemanagement.c:3075
+#: client/cl_campaign.c:144 client/cl_campaign.c:187 client/cl_campaign.c:695
+#: client/cl_campaign.c:1468 client/cl_campaign.c:4223
+#: client/cl_campaign.c:4234 client/cl_campaign.c:4244
+#: client/cl_campaign.c:4254 client/cl_campaign.c:4264
+#: client/cl_campaign.c:4275 client/cl_campaign.c:4291
+#: client/cl_campaign.c:4304 client/cl_campaign.c:4311
+#: client/cl_campaign.c:4319 client/cl_campaign.c:5591
+#: client/cl_campaign.c:5656 client/cl_campaign.c:5705
+#: client/cl_campaign.c:5717 client/cl_campaign.c:5719
+#: client/cl_campaign.c:6054 client/cl_installation.c:337
+#: client/cl_installation.c:404 client/cl_inventory.c:338
 #: client/cl_inventory.c:343 client/cl_inventory.c:764 client/cl_main.c:1027
 #: client/cl_main.c:1265 client/cl_map.c:279 client/cl_map.c:283
-#: client/cl_map.c:303 client/cl_map.c:307 client/cl_mapfightequip.c:1007
-#: client/cl_mapfightequip.c:1011 client/cl_mapfightequip.c:1015
-#: client/cl_mapfightequip.c:1037 client/cl_mapfightequip.c:1043
-#: client/cl_mapfightequip.c:1051 client/cl_mapfightequip.c:1056
-#: client/cl_market.c:696 client/cl_market.c:701 client/cl_parse.c:1761
+#: client/cl_map.c:303 client/cl_map.c:307 client/cl_mapfightequip.c:1003
+#: client/cl_mapfightequip.c:1007 client/cl_mapfightequip.c:1011
+#: client/cl_mapfightequip.c:1033 client/cl_mapfightequip.c:1039
+#: client/cl_mapfightequip.c:1047 client/cl_mapfightequip.c:1052
+#: client/cl_market.c:754 client/cl_market.c:759 client/cl_parse.c:1761
 #: client/cl_popup.c:503 client/cl_produce.c:608 client/cl_produce.c:618
 #: client/cl_produce.c:629 client/cl_produce.c:639 client/cl_produce.c:650
-#: client/cl_research.c:1138 client/cl_research.c:1156
-#: client/cl_research.c:1162 client/cl_research.c:1200
-#: client/cl_research.c:1230 client/cl_research.c:1413
-#: client/cl_research.c:1416 client/cl_ufo.c:391 client/cl_ufo.c:735
-#: client/cl_ufo.c:747
+#: client/cl_research.c:1184 client/cl_research.c:1202
+#: client/cl_research.c:1208 client/cl_research.c:1246
+#: client/cl_research.c:1276 client/cl_research.c:1487
+#: client/cl_research.c:1490 client/cl_ufo.c:477 client/cl_ufo.c:826
+#: client/cl_ufo.c:834
 msgid "Notice"
 msgstr "Avviso"
 
-#: client/cl_aircraft.c:274
+#: client/cl_aircraft.c:271
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
 
-#: client/cl_aircraft.c:282
+#: client/cl_aircraft.c:279
 msgid "Aircraft started"
 msgstr "Velivolo decollato"
 
-#: client/cl_aircraft.c:306
+#: client/cl_aircraft.c:303
 msgid "ON RED ALERT"
 msgstr "ALLARME ROSSO"
 
-#: client/cl_aircraft.c:310
+#: client/cl_aircraft.c:307
 msgid "Nothing - should not be displayed"
 msgstr "Niente - non dovrebbe essere mostrato"
 
-#: client/cl_aircraft.c:312
+#: client/cl_aircraft.c:309
 #, fuzzy
 msgid "at home base"
 msgstr "Alla base madre"
 
-#: client/cl_aircraft.c:314
+#: client/cl_aircraft.c:311
 #, fuzzy
 msgid "refuelling"
 msgstr "Rifornimento"
 
-#: client/cl_aircraft.c:316
+#: client/cl_aircraft.c:313
 #, fuzzy
 msgid "idle"
 msgstr "Pausa"
 
-#: client/cl_aircraft.c:318
+#: client/cl_aircraft.c:315
 #, fuzzy
 msgid "in transit"
 msgstr "In transito"
 
-#: client/cl_aircraft.c:320
+#: client/cl_aircraft.c:317
 #, fuzzy
 msgid "enroute to mission"
 msgstr "Missione automatica"
 
-#: client/cl_aircraft.c:322
+#: client/cl_aircraft.c:319
 #, fuzzy
 msgid "pursuing a UFO"
 msgstr "Inseguendo un UFO"
 
-#: client/cl_aircraft.c:324
+#: client/cl_aircraft.c:321
 #, fuzzy
 msgid "ready to drop soldiers"
 msgstr "Rinomina la base"
 
-#: client/cl_aircraft.c:326
+#: client/cl_aircraft.c:323
 #, fuzzy
 msgid "intercepting a UFO"
 msgstr "In intercettazione"
 
-#: client/cl_aircraft.c:328
+#: client/cl_aircraft.c:325
 #, fuzzy
 msgid "enroute to new home base"
 msgstr "Genera una nuova squadra"
 
-#: client/cl_aircraft.c:330
+#: client/cl_aircraft.c:327
 #, fuzzy
 msgid "returning to base"
 msgstr "Base corrente:"
 
-#: client/cl_aircraft.c:543
+#: client/cl_aircraft.c:540
 #, fuzzy
 msgid "Interceptor"
 msgstr "Intercettazione"
 
-#: client/cl_aircraft.c:545
+#: client/cl_aircraft.c:542
 #, fuzzy
 msgid "Transporter"
 msgstr "Missione di trasporto"
 
-#: client/cl_aircraft.c:547 client/cl_map.c:368 client/cl_ufo.c:143
+#: client/cl_aircraft.c:544 client/cl_map.c:368 client/cl_ufo.c:143
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cl_aircraft.c:738 client/cl_map.c:1898 client/cl_map.c:1907
-#: client/cl_map.c:1920
+#: client/cl_aircraft.c:735 client/cl_map.c:1916 client/cl_map.c:1925
+#: client/cl_map.c:1938
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Velocita':\t%.0f\n"
 
-#: client/cl_aircraft.c:740 client/cl_map.c:1899 client/cl_map.c:1908
+#: client/cl_aircraft.c:737 client/cl_map.c:1917 client/cl_map.c:1926
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Carburante:\t%i/%i\n"
 
-#: client/cl_aircraft.c:742 client/cl_ufopedia.c:698
+#: client/cl_aircraft.c:739 client/cl_ufopedia.c:698
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr ""
 
-#: client/cl_aircraft.c:744
+#: client/cl_aircraft.c:741
 #, fuzzy, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Arma:\t%s\n"
 
-#: client/cl_aircraft.c:745
+#: client/cl_aircraft.c:742
 #, fuzzy, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Max. munizioni:\t%i\n"
 
-#: client/cl_aircraft.c:746
+#: client/cl_aircraft.c:743
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr ""
 
-#: client/cl_aircraft.c:828
+#: client/cl_aircraft.c:827
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
 msgstr ""
 
-#: client/cl_aircraft.c:867
+#: client/cl_aircraft.c:866
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_aircraft.c:871
+#: client/cl_aircraft.c:870
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_aircraft.c:874
+#: client/cl_aircraft.c:873
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/cl_aircraft.c:877
+#: client/cl_aircraft.c:876
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/cl_aircraft.c:881
+#: client/cl_aircraft.c:880
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/cl_aircraft.c:1202
+#: client/cl_aircraft.c:1231
 #, fuzzy, c-format
 msgid "Craft %s has refuelled at base %s."
 msgstr "La tua nave da trasporto ha finito il carburante e ritorna alla base."
 
-#: client/cl_aircraft.c:1210
+#: client/cl_aircraft.c:1239
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "La tua nave da trasporto ha finito il carburante e ritorna alla base."
 
-#: client/cl_aircraft.c:1316
+#: client/cl_aircraft.c:1345
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/cl_aircraft.c:1340
+#: client/cl_aircraft.c:1369
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/cl_airfight.c:387
+#: client/cl_airfight.c:388
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr ""
 
-#: client/cl_airfight.c:466 client/cl_airfight.c:486
+#: client/cl_airfight.c:467 client/cl_airfight.c:487
 msgid "Interception"
 msgstr "Intercettazione"
 
-#: client/cl_airfight.c:466
+#: client/cl_airfight.c:467
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:486 client/cl_campaign.c:5482
+#: client/cl_airfight.c:487 client/cl_campaign.c:5719
 msgid "You've lost the battle"
 msgstr "Hai perso la battaglia"
 
-#: client/cl_airfight.c:618 client/cl_airfight.c:630 client/cl_airfight.c:649
+#: client/cl_airfight.c:619 client/cl_airfight.c:631 client/cl_airfight.c:650
 #, fuzzy
 msgid "Base facility destroyed"
 msgstr "Infrastrutture"
 
-#: client/cl_airfight.c:618
+#: client/cl_airfight.c:619
 #, fuzzy
 msgid "You've lost a missile battery system."
 msgstr "Hai perso la battaglia"
 
-#: client/cl_airfight.c:630
+#: client/cl_airfight.c:631
 #, fuzzy
 msgid "You've lost a laser battery system."
 msgstr "Hai perso la battaglia"
 
-#: client/cl_airfight.c:648
+#: client/cl_airfight.c:649
 #, c-format
 msgid "You've lost a base facility (%s)."
 msgstr ""
@@ -11743,43 +11817,43 @@ msgstr "Costi di mantenimento:\t%i c\n"
 msgid "Needs:\t%s\n"
 msgstr "Dipende:\t%s\n"
 
-#: client/cl_basemanagement.c:2311 client/cl_campaign.c:4342
+#: client/cl_basemanagement.c:2311 client/cl_campaign.c:4577
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_basemanagement.c:2630 client/cl_team.c:1216 client/cl_team.c:1666
+#: client/cl_basemanagement.c:2628 client/cl_team.c:1216 client/cl_team.c:1666
 msgid "NewTeam"
 msgstr "Nuova Squadra"
 
-#: client/cl_basemanagement.c:2692
+#: client/cl_basemanagement.c:2690
 #, fuzzy, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Nuova base costruita: %s."
 
-#: client/cl_basemanagement.c:2694
+#: client/cl_basemanagement.c:2692
 #, fuzzy, c-format
 msgid "A new base has been built: %s"
 msgstr "Nuova base costruita: %s."
 
-#: client/cl_basemanagement.c:2695
+#: client/cl_basemanagement.c:2693
 msgid "Base built"
 msgstr "Base costruita"
 
-#: client/cl_basemanagement.c:2709
+#: client/cl_basemanagement.c:2707
 msgid "Not enough credits to set up a new base."
 msgstr "Non hai abbastanza soldi per una nuova base."
 
-#: client/cl_basemanagement.c:3000
+#: client/cl_basemanagement.c:2999
 #, fuzzy
 msgid "Base is under attack, you can't access this building !"
 msgstr "Base sotto attacco"
 
-#: client/cl_basemanagement.c:3009
+#: client/cl_basemanagement.c:3008
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
 
-#: client/cl_basemanagement.c:3028
+#: client/cl_basemanagement.c:3027
 #, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -11790,52 +11864,52 @@ msgid_plural ""
 msgstr[0] "Costruzione di %s edificio finita nella base %s."
 msgstr[1] "Costruzione di %s edificio finita nella base %s."
 
-#: client/cl_basemanagement.c:3039
+#: client/cl_basemanagement.c:3038
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr ""
 
-#: client/cl_basemanagement.c:3049
+#: client/cl_basemanagement.c:3048
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:3056
+#: client/cl_basemanagement.c:3055
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
-#: client/cl_basemanagement.c:3064 client/cl_basemanagement.c:3069
+#: client/cl_basemanagement.c:3063 client/cl_basemanagement.c:3068
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr ""
 
-#: client/cl_basemanagement.c:3075
+#: client/cl_basemanagement.c:3074
 #, fuzzy, c-format
 msgid "Build a %s first."
 msgstr "Costruisci un hangar prima"
 
-#: client/cl_basemanagement.c:3139
+#: client/cl_basemanagement.c:3138
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Nessun velivolo in questa base - Devi prima comprare o trasferire un velivolo\n"
 
-#: client/cl_basemanagement.c:3139 client/cl_basemanagement.c:3141
-#: client/cl_campaign.c:5068 client/cl_market.c:678 client/cl_market.c:683
-#: client/cl_market.c:805 client/cl_market.c:807 client/cl_save.c:381
+#: client/cl_basemanagement.c:3138 client/cl_basemanagement.c:3140
+#: client/cl_campaign.c:5305 client/cl_market.c:736 client/cl_market.c:741
+#: client/cl_market.c:859 client/cl_market.c:861 client/cl_save.c:381
 #: client/cl_team.c:1716 client/cl_team.c:1723
 msgid "Note"
 msgstr "Nota"
 
-#: client/cl_basemanagement.c:3141
+#: client/cl_basemanagement.c:3140
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Nessun velivolo in questa base - Devi prima comprare un velivolo\n"
 
-#: client/cl_basemanagement.c:3292
+#: client/cl_basemanagement.c:3291
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Costruzione di %s edificio finita nella base %s."
 
-#: client/cl_basemanagement.c:3293
+#: client/cl_basemanagement.c:3292
 msgid "Building finished"
 msgstr "Costruzione finita"
 
@@ -11883,259 +11957,264 @@ msgstr ""
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/cl_campaign.c:143 client/cl_map.c:283
+#: client/cl_campaign.c:144 client/cl_map.c:283
 msgid "Could not set up your base at this location"
 msgstr "Non puoi costruire una base qui"
 
-#: client/cl_campaign.c:186 client/cl_map.c:307
+#: client/cl_campaign.c:187 client/cl_map.c:307
 #, fuzzy
 msgid "Could not set up your installation at this location"
 msgstr "Non puoi costruire una base qui"
 
-#: client/cl_campaign.c:507
+#: client/cl_campaign.c:515
 msgid "Landed UFO"
 msgstr ""
 
-#: client/cl_campaign.c:509
+#: client/cl_campaign.c:517
 #, fuzzy
 msgid "Terror mission"
 msgstr "Missione di trasporto"
 
-#: client/cl_campaign.c:511
+#: client/cl_campaign.c:519
 msgid "Base attack"
 msgstr "Attacco alla Base"
 
-#: client/cl_campaign.c:513 client/cl_campaign.c:3020
+#: client/cl_campaign.c:521 client/cl_campaign.c:3231
 #, fuzzy
 msgid "Alien base"
 msgstr "Alieni"
 
-#: client/cl_campaign.c:515
+#: client/cl_campaign.c:523
 #, fuzzy
 msgid "Harvesting mission"
 msgstr "Muovendo alla missione"
 
-#: client/cl_campaign.c:667
+#: client/cl_campaign.c:694
 #, fuzzy, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Attività aliena riportata: '%s'"
 
-#: client/cl_campaign.c:1028 client/cl_campaign.c:1262
-#: client/cl_campaign.c:2987
+#: client/cl_campaign.c:1103 client/cl_campaign.c:1338
+#: client/cl_campaign.c:3198
 #, fuzzy
 msgid "No nation"
 msgstr "Nazioni"
 
-#: client/cl_campaign.c:1391
+#: client/cl_campaign.c:1467
 #, fuzzy, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "La tua base %s è stata saccheggiata! Tutti gli impiegati sono stati uccisi e l'equipaggiamento distrutto."
 
-#: client/cl_campaign.c:1466
+#: client/cl_campaign.c:1542
 #, fuzzy, c-format
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"
 msgstr "Base sotto attacco"
 
-#: client/cl_campaign.c:1468
+#: client/cl_campaign.c:1544
 #, fuzzy, c-format
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"
 msgstr "Base sotto attacco"
 
-#: client/cl_campaign.c:3413
+#: client/cl_campaign.c:3624
 msgid "You've gone too far into debt."
 msgstr ""
 
-#: client/cl_campaign.c:3421
+#: client/cl_campaign.c:3632
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/cl_campaign.c:3427
+#: client/cl_campaign.c:3638
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/cl_campaign.c:3445
+#: client/cl_campaign.c:3656
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
 # # cl_campaign.c
-#: client/cl_campaign.c:3685
+#: client/cl_campaign.c:3896
 msgid "Jan"
 msgstr "Gen"
 
-#: client/cl_campaign.c:3687
+#: client/cl_campaign.c:3898
 msgid "Feb"
 msgstr "Feb"
 
-#: client/cl_campaign.c:3689
+#: client/cl_campaign.c:3900
 msgid "Mar"
 msgstr "Mar"
 
-#: client/cl_campaign.c:3691
+#: client/cl_campaign.c:3902
 msgid "Apr"
 msgstr "Apr"
 
-#: client/cl_campaign.c:3693
+#: client/cl_campaign.c:3904
 msgid "May"
 msgstr "Mag"
 
-#: client/cl_campaign.c:3695
+#: client/cl_campaign.c:3906
 msgid "Jun"
 msgstr "Giu"
 
-#: client/cl_campaign.c:3697
+#: client/cl_campaign.c:3908
 msgid "Jul"
 msgstr "Lug"
 
-#: client/cl_campaign.c:3699
+#: client/cl_campaign.c:3910
 msgid "Aug"
 msgstr "Ago"
 
-#: client/cl_campaign.c:3701
+#: client/cl_campaign.c:3912
 msgid "Sep"
 msgstr "Set"
 
-#: client/cl_campaign.c:3703
+#: client/cl_campaign.c:3914
 msgid "Oct"
 msgstr "Ott"
 
-#: client/cl_campaign.c:3705
+#: client/cl_campaign.c:3916
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:3707
+#: client/cl_campaign.c:3918
 msgid "Dec"
 msgstr "Dic"
 
-#: client/cl_campaign.c:3728
+#: client/cl_campaign.c:3939
 msgid "stopped"
 msgstr ""
 
-#: client/cl_campaign.c:3729
+#: client/cl_campaign.c:3940
 msgid "5 sec"
 msgstr "5 sec."
 
-#: client/cl_campaign.c:3730
+#: client/cl_campaign.c:3941
 #, fuzzy
 msgid "10 sec"
 msgstr "5 sec."
 
-#: client/cl_campaign.c:3731
+#: client/cl_campaign.c:3942
 #, fuzzy
 msgid "1 min"
 msgstr "5 min."
 
-#: client/cl_campaign.c:3732
+#: client/cl_campaign.c:3943
 msgid "5 mins"
 msgstr "5 min."
 
-#: client/cl_campaign.c:3733
+#: client/cl_campaign.c:3944
 #, fuzzy
 msgid "10 mins"
 msgstr "5 min."
 
-#: client/cl_campaign.c:3734
+#: client/cl_campaign.c:3945
+#, fuzzy
+msgid "20 mins"
+msgstr "5 min."
+
+#: client/cl_campaign.c:3946
 msgid "1 hour"
 msgstr "1 ora"
 
-#: client/cl_campaign.c:3735
+#: client/cl_campaign.c:3947
 #, fuzzy
 msgid "12 hours"
 msgstr "12 ore"
 
-#: client/cl_campaign.c:3736
+#: client/cl_campaign.c:3948
 msgid "1 day"
 msgstr "1 g."
 
-#: client/cl_campaign.c:3737
+#: client/cl_campaign.c:3949
 msgid "5 days"
 msgstr "5 gg."
 
-#: client/cl_campaign.c:3825 client/cl_event.c:247 client/cl_save.c:304
+#: client/cl_campaign.c:4037 client/cl_event.c:247 client/cl_save.c:304
 #: client/cl_ufopedia.c:854 client/cl_ufopedia.c:861
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:3829
+#: client/cl_campaign.c:4041
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:4005
+#: client/cl_campaign.c:4217
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Hai ottenuto %i %s, %i %s, %i %s, %i %s, and %i %s dalle nazioni %s (%s)"
 
-#: client/cl_campaign.c:4006
+#: client/cl_campaign.c:4218
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "credito"
 msgstr[1] "crediti"
 
-#: client/cl_campaign.c:4007 client/cl_campaign.c:6691
+#: client/cl_campaign.c:4219 client/cl_campaign.c:6930
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scienziato"
 msgstr[1] "scienziati"
 
-#: client/cl_campaign.c:4008 client/cl_campaign.c:6690
+#: client/cl_campaign.c:4220 client/cl_campaign.c:6929
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldato"
 msgstr[1] "soldati"
 
-#: client/cl_campaign.c:4009 client/cl_campaign.c:6692
+#: client/cl_campaign.c:4221 client/cl_campaign.c:6931
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "operaio"
 msgstr[1] "operai"
 
-#: client/cl_campaign.c:4020
+#: client/cl_campaign.c:4232
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Paghi %i crediti per i soldati"
 
-#: client/cl_campaign.c:4030
+#: client/cl_campaign.c:4242
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Paghi %i crediti per gli operai"
 
-#: client/cl_campaign.c:4040
+#: client/cl_campaign.c:4252
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Paghi %i crediti per gli scienziati"
 
-#: client/cl_campaign.c:4050
+#: client/cl_campaign.c:4262
 #, fuzzy, c-format
 msgid "Paid %i credits to pilots"
 msgstr "Paghi %i crediti per i medici"
 
-#: client/cl_campaign.c:4061
+#: client/cl_campaign.c:4273
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Paghi %i crediti per i robots"
 
-#: client/cl_campaign.c:4077
+#: client/cl_campaign.c:4289
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Paghi %i crediti per il velivolo"
 
-#: client/cl_campaign.c:4091
+#: client/cl_campaign.c:4303
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Paghi %i crediti di mantenimento della base %s"
 
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4309
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Paghi %i crediti per amministrazione."
 
-#: client/cl_campaign.c:4105
+#: client/cl_campaign.c:4317
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Paghi %i interessi sui tuoi debiti."
 
-#: client/cl_campaign.c:4364
+#: client/cl_campaign.c:4599
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12146,7 +12225,7 @@ msgstr ""
 "Perse:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:4369
+#: client/cl_campaign.c:4604
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12157,49 +12236,49 @@ msgstr ""
 "Attive:\t%i\n"
 "Attaccate:\t%i\n"
 
-#: client/cl_campaign.c:4377
+#: client/cl_campaign.c:4612
 #, fuzzy, c-format
 msgid "%s\n"
 msgstr ""
 "%s\n"
 "%s"
 
-#: client/cl_campaign.c:4384 client/cl_ufopedia.c:1715
+#: client/cl_campaign.c:4619 client/cl_ufopedia.c:1715
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:4423 client/cl_ufopedia.c:440
+#: client/cl_campaign.c:4658 client/cl_ufopedia.c:440
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:4429
+#: client/cl_campaign.c:4664
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Impiegati:\t%i c\n"
 
-#: client/cl_campaign.c:4442
+#: client/cl_campaign.c:4677
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Velivoli:\t%i c\n"
 
-#: client/cl_campaign.c:4453
+#: client/cl_campaign.c:4688
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s):\t%i c\n"
 
-#: client/cl_campaign.c:4458
+#: client/cl_campaign.c:4693
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Costi d'amministrazione:\t%i c\n"
 
-#: client/cl_campaign.c:4465
+#: client/cl_campaign.c:4700
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Debito:\t%i c\n"
 
-#: client/cl_campaign.c:4468
+#: client/cl_campaign.c:4703
 #, c-format
 msgid ""
 "\n"
@@ -12210,87 +12289,87 @@ msgstr ""
 "\t-------\n"
 "Somma:\t%i c\n"
 
-#: client/cl_campaign.c:4473
+#: client/cl_campaign.c:4708
 #, fuzzy, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Max. squadre permesse in questa mappa:\t%s\n"
 
-#: client/cl_campaign.c:4478
+#: client/cl_campaign.c:4713
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cl_campaign.c:5068
+#: client/cl_campaign.c:5305
 msgid "Assemble or load a team"
 msgstr "Crea o carica una squadra"
 
-#: client/cl_campaign.c:5354
+#: client/cl_campaign.c:5591
 msgid "Your dropship is not near the landing zone"
 msgstr "Le nave trasporto è lontana dalla zona d'atterraggio"
 
-#: client/cl_campaign.c:5419
+#: client/cl_campaign.c:5656
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:5467 client/cl_campaign.c:5816
+#: client/cl_campaign.c:5704 client/cl_campaign.c:6053
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Difesa della base: %s operazione riuscita!"
 
-#: client/cl_campaign.c:5480
+#: client/cl_campaign.c:5717
 msgid "You've won the battle"
 msgstr "Hai vinto la battaglia"
 
-#: client/cl_campaign.c:5562
+#: client/cl_campaign.c:5799
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s e'stato promosso a %s.\n"
 
-#: client/cl_campaign.c:5564
+#: client/cl_campaign.c:5801
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s è stato promosso al grado postumo di %s\\per il coraggio dimostrato in una situazione di pericolo mortale.\n"
 
-#: client/cl_campaign.c:5565
+#: client/cl_campaign.c:5802
 msgid "Soldier promoted"
 msgstr "Soldato promosso"
 
-#: client/cl_campaign.c:6631
+#: client/cl_campaign.c:6870
 msgid "Chicken-hearted"
 msgstr "Pollo"
 
-#: client/cl_campaign.c:6633
+#: client/cl_campaign.c:6872
 msgid "Very Easy"
 msgstr "Facilissimo"
 
-#: client/cl_campaign.c:6636
+#: client/cl_campaign.c:6875
 msgid "Easy"
 msgstr "Facile"
 
-#: client/cl_campaign.c:6641
+#: client/cl_campaign.c:6880
 msgid "Hard"
 msgstr "Difficile"
 
-#: client/cl_campaign.c:6643
+#: client/cl_campaign.c:6882
 msgid "Very Hard"
 msgstr "Molto Difficile"
 
-#: client/cl_campaign.c:6645
+#: client/cl_campaign.c:6884
 msgid "Insane"
 msgstr "Insano"
 
-#: client/cl_campaign.c:6681
+#: client/cl_campaign.c:6920
 msgid "Human"
 msgstr "Umano"
 
-#: client/cl_campaign.c:6683 client/cl_transfer.c:428
+#: client/cl_campaign.c:6922 client/cl_transfer.c:428
 msgid "Aliens"
 msgstr "Alieni"
 
-#: client/cl_campaign.c:6685
+#: client/cl_campaign.c:6924
 #, c-format
 msgid ""
 "%s\n"
@@ -12496,59 +12575,59 @@ msgstr ""
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Cambia fra visuale in soggettiva/terza persona"
 
-#: client/cl_installation.c:243
+#: client/cl_installation.c:242
 #, fuzzy, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "1 g."
 msgstr[1] "1 g."
 
-#: client/cl_installation.c:323
+#: client/cl_installation.c:322
 #, fuzzy, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "Nuova base costruita: %s."
 
-#: client/cl_installation.c:325
+#: client/cl_installation.c:324
 #, fuzzy, c-format
 msgid "A new installation has been built: %s"
 msgstr "Nuova base costruita: %s."
 
-#: client/cl_installation.c:326
+#: client/cl_installation.c:325
 #, fuzzy
 msgid "Installation building"
 msgstr "Nazioni"
 
-#: client/cl_installation.c:337
+#: client/cl_installation.c:336
 #, fuzzy
 msgid "Not enough credits to set up a new installation."
 msgstr "Non hai abbastanza soldi per una nuova base."
 
-#: client/cl_installation.c:408 client/cl_map.c:303
+#: client/cl_installation.c:404 client/cl_map.c:303
 #, fuzzy
 msgid "You've reached the installation limit."
 msgstr "Hai raggiunto il limite di basi."
 
-#: client/cl_installation.c:455
+#: client/cl_installation.c:451
 #, fuzzy, c-format
 msgid "Installation %s was destroyed."
 msgstr "Nazioni"
 
-#: client/cl_installation.c:456
+#: client/cl_installation.c:452
 #, fuzzy
 msgid "Installation destroyed"
 msgstr "Nazioni"
 
-#: client/cl_installation.c:478
+#: client/cl_installation.c:474
 #, fuzzy
 msgid "Destroy Installation"
 msgstr "Nazioni"
 
-#: client/cl_installation.c:478
+#: client/cl_installation.c:474
 #, fuzzy
 msgid "Do you really want to destroy this installation?"
 msgstr "Sei sicuro di voler distruggere l'edificio?"
 
-#: client/cl_installation.c:480
+#: client/cl_installation.c:476
 #, fuzzy
 msgid "Forget it"
 msgstr "Forza a cominciare"
@@ -12568,7 +12647,7 @@ msgstr "Nazioni"
 msgid "%d c"
 msgstr "%i c"
 
-#: client/cl_installation.c:722
+#: client/cl_installation.c:727
 #, fuzzy, c-format
 msgid "%d day\n"
 msgid_plural "%d days\n"
@@ -12763,7 +12842,7 @@ msgstr ""
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2196 client/cl_view.c:281
+#: client/cl_main.c:2196 client/cl_view.c:278
 msgid "Awaiting game start"
 msgstr ""
 
@@ -12785,41 +12864,41 @@ msgstr "Base"
 msgid "Installation"
 msgstr "Nazioni"
 
-#: client/cl_map.c:1472
+#: client/cl_map.c:1488
 msgid "Day"
 msgstr "Giorno"
 
-#: client/cl_map.c:1472
+#: client/cl_map.c:1488
 msgid "Night"
 msgstr "Notte"
 
-#: client/cl_map.c:1814
+#: client/cl_map.c:1832
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cl_map.c:1858
+#: client/cl_map.c:1876
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Scegli la locazione desiderata della nuova base sulla mappa.\n"
 
-#: client/cl_map.c:1861
+#: client/cl_map.c:1879
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Scegli la locazione desiderata della nuova base sulla mappa.\n"
 
-#: client/cl_map.c:1866
+#: client/cl_map.c:1884
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Gli alieni attaccano la nostra base proprio adesso.\n"
 
-#: client/cl_map.c:1871
+#: client/cl_map.c:1889
 msgid "Select ufo or mission on map\n"
 msgstr "Seleziona ufo o missione sulla mappa\n"
 
-#: client/cl_map.c:1876
+#: client/cl_map.c:1894
 msgid "UFO in radar range\n"
 msgstr "UFO a portata del radar\n"
 
-#: client/cl_map.c:1884
+#: client/cl_map.c:1902
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -12830,184 +12909,181 @@ msgstr ""
 "Tipo: %s\n"
 "Obbiettivo: %s\n"
 
-#: client/cl_map.c:1895 client/cl_map.c:1905
+#: client/cl_map.c:1913 client/cl_map.c:1923
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nome:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1896 client/cl_map.c:1906
+#: client/cl_map.c:1914 client/cl_map.c:1924
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Stato:\t%s\n"
 
-#: client/cl_map.c:1897
+#: client/cl_map.c:1915
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/cl_map.c:1901 client/cl_map.c:1913
+#: client/cl_map.c:1919 client/cl_map.c:1931
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Azione:\t%s\n"
 
-#: client/cl_mapfightequip.c:853
+#: client/cl_mapfightequip.c:849
 #, fuzzy
 msgid "No defence of this type in this installation\n"
 msgstr "Nessuna unità di contenimento alieni in questa base\n"
 
-#: client/cl_mapfightequip.c:857 client/cl_mapfightequip.c:871
-#: client/cl_mapfightequip.c:885
+#: client/cl_mapfightequip.c:853 client/cl_mapfightequip.c:867
+#: client/cl_mapfightequip.c:881
 #, fuzzy, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "Il magazzino è vuoto.\n"
 
-#: client/cl_mapfightequip.c:860 client/cl_mapfightequip.c:874
-#: client/cl_mapfightequip.c:888
+#: client/cl_mapfightequip.c:856 client/cl_mapfightequip.c:870
+#: client/cl_mapfightequip.c:884
 #, fuzzy, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "Scudo:\t%s\n"
 
-#: client/cl_mapfightequip.c:867 client/cl_mapfightequip.c:881
+#: client/cl_mapfightequip.c:863 client/cl_mapfightequip.c:877
 #, fuzzy
 msgid "No defence of this type in this base\n"
 msgstr "Nessuna unità di contenimento alieni in questa base\n"
 
-#: client/cl_mapfightequip.c:901
+#: client/cl_mapfightequip.c:897
 #, fuzzy
 msgid "No defence system assigned.\n"
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:907
+#: client/cl_mapfightequip.c:903
 #, fuzzy
 msgid "This defence system is functional.\n"
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:909
+#: client/cl_mapfightequip.c:905
 #, c-format
 msgid "This defence system will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:911
+#: client/cl_mapfightequip.c:907
 #, c-format
 msgid "This defence system will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:918
+#: client/cl_mapfightequip.c:914
 #, fuzzy
 msgid "No defence system assigned."
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:920
+#: client/cl_mapfightequip.c:916
 #, fuzzy, c-format
 msgid ""
 "%s\n"
 "This defence system will be operational in %i hours.\n"
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:932
+#: client/cl_mapfightequip.c:928
 msgid "No ammo assigned to this defence system."
 msgstr ""
 
-#: client/cl_mapfightequip.c:936
-#, c-format
-msgid " (%i missile left)"
-msgid_plural " (%i missiles left)"
-msgstr[0] ""
-msgstr[1] ""
+#: client/cl_mapfightequip.c:932
+msgid " (unlimited missiles)"
+msgstr ""
 
-#: client/cl_mapfightequip.c:1005
+#: client/cl_mapfightequip.c:1001
 #, c-format
 msgid "%s was successfully installed into aircraft %s at base %s."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1009
+#: client/cl_mapfightequip.c:1005
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1013
+#: client/cl_mapfightequip.c:1009
 #, c-format
 msgid "%s was successfully installed at base %s."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1035
+#: client/cl_mapfightequip.c:1031
 #, c-format
 msgid "%s was successfully removed from aircraft %s at base %s."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1041
+#: client/cl_mapfightequip.c:1037
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1049
+#: client/cl_mapfightequip.c:1045
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1054
+#: client/cl_mapfightequip.c:1050
 #, c-format
 msgid "%s was successfully removed from base %s."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1208
+#: client/cl_mapfightequip.c:1204
 msgid "Weapons"
 msgstr "Armi"
 
-#: client/cl_mapfightequip.c:1212
+#: client/cl_mapfightequip.c:1208
 msgid "Items"
 msgstr "Oggetti"
 
-#: client/cl_mapfightequip.c:1215
+#: client/cl_mapfightequip.c:1211
 #, fuzzy
 msgid "Ammo"
 msgstr "Armatura"
 
-#: client/cl_mapfightequip.c:1219
+#: client/cl_mapfightequip.c:1215
 #, fuzzy
 msgid "Unknown"
 msgstr "Abilità sconosciuta"
 
-#: client/cl_mapfightequip.c:1316
+#: client/cl_mapfightequip.c:1312
 #, fuzzy
 msgid "No pilot assigned."
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:1326
+#: client/cl_mapfightequip.c:1322
 #, fuzzy
 msgid "No item assigned.\n"
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:1327
+#: client/cl_mapfightequip.c:1323
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1333
+#: client/cl_mapfightequip.c:1329
 msgid "This item is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1335
+#: client/cl_mapfightequip.c:1331
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1338
+#: client/cl_mapfightequip.c:1334
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1346
+#: client/cl_mapfightequip.c:1342
 #, fuzzy
 msgid "No item assigned."
 msgstr "Nessun oggetto assegnato"
 
-#: client/cl_mapfightequip.c:1350
+#: client/cl_mapfightequip.c:1346
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1360
+#: client/cl_mapfightequip.c:1356
 msgid "No ammo assigned to this weapon."
 msgstr ""
 
@@ -13030,95 +13106,95 @@ msgstr "Laser Pesante"
 msgid "Unknown weight"
 msgstr "Abilità sconosciuta"
 
-#: client/cl_market.c:277
+#: client/cl_market.c:325
 #, c-format
 msgid "%i c\n"
 msgstr "%i c\n"
 
-#: client/cl_market.c:499
+#: client/cl_market.c:552
 #, fuzzy
 msgid "Primary weapons"
 msgstr "Primarie"
 
-#: client/cl_market.c:502
+#: client/cl_market.c:555
 #, fuzzy
 msgid "Secondary weapons"
 msgstr "Mostra armi secondarie nel magazzino"
 
-#: client/cl_market.c:505
+#: client/cl_market.c:558
 #, fuzzy
 msgid "Heavy weapons"
 msgstr "Armi Pesanti:"
 
-#: client/cl_market.c:508
+#: client/cl_market.c:561
 msgid "Miscellaneous"
 msgstr ""
 
-#: client/cl_market.c:511
+#: client/cl_market.c:564
 #, fuzzy
 msgid "Personal Armour"
 msgstr "Mostra armatura"
 
-#: client/cl_market.c:517
+#: client/cl_market.c:570
 #, fuzzy
 msgid "Other"
 msgstr "Entra"
 
-#: client/cl_market.c:520
+#: client/cl_market.c:573
 #, fuzzy
 msgid "Aircraft equipment"
 msgstr "Equipaggiamento disponibile:"
 
-#: client/cl_market.c:523
+#: client/cl_market.c:576
 #, fuzzy
 msgid "Tanks"
 msgstr "Trasferisci"
 
-#: client/cl_market.c:526
+#: client/cl_market.c:579
 #, fuzzy
 msgid "Disassembling"
 msgstr "Produzione di %s iniziata"
 
-#: client/cl_market.c:642 client/cl_market.c:863
+#: client/cl_market.c:700 client/cl_market.c:942
 #, fuzzy
 msgid "Not enough storage space"
 msgstr "Non ci sono abbastanza dormitori"
 
-#: client/cl_market.c:642 client/cl_market.c:863
+#: client/cl_market.c:700 client/cl_market.c:942
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
 "Build more storage facilities."
 msgstr ""
 
-#: client/cl_market.c:678
+#: client/cl_market.c:736
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
 
-#: client/cl_market.c:683
+#: client/cl_market.c:741
 #, fuzzy
 msgid "Build a hangar first."
 msgstr "Costruisci un hangar prima"
 
-#: client/cl_market.c:696
+#: client/cl_market.c:754
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 msgstr ""
 
-#: client/cl_market.c:701
+#: client/cl_market.c:759
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 msgstr ""
 
-#: client/cl_market.c:805
+#: client/cl_market.c:859
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Non puoi vendere un velivolo se c'è ancora una squadra assegnata"
 
-#: client/cl_market.c:807
+#: client/cl_market.c:861
 #, fuzzy
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Non puoi vendere un velivolo se c'è ancora una squadra assegnata"
@@ -13326,7 +13402,7 @@ msgid ""
 msgstr "Non puoi mettere in coda altri oggetti!"
 
 #: client/cl_produce.c:271 client/cl_produce.c:274 client/cl_produce.c:279
-#: client/cl_produce.c:1263 client/cl_produce.c:1304 client/cl_transfer.c:259
+#: client/cl_produce.c:1267 client/cl_produce.c:1308 client/cl_transfer.c:259
 #: client/cl_transfer.c:262 client/cl_transfer.c:265
 msgid "Hangars not ready"
 msgstr ""
@@ -13345,7 +13421,7 @@ msgid ""
 "No hangars in this base.\n"
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_produce.c:279 client/cl_produce.c:1263 client/cl_produce.c:1304
+#: client/cl_produce.c:279 client/cl_produce.c:1267 client/cl_produce.c:1308
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -13444,39 +13520,39 @@ msgstr "Tempo di produzione\t%ih\n"
 msgid "No aircraft selected."
 msgstr "Non hai selezionato il velivolo"
 
-#: client/cl_produce.c:1330
+#: client/cl_produce.c:1334
 msgid "Queue full!"
 msgstr "Coda piena!"
 
-#: client/cl_produce.c:1330
+#: client/cl_produce.c:1334
 msgid "You cannot queue any more items!"
 msgstr "Non puoi mettere in coda altri oggetti!"
 
-#: client/cl_produce.c:1350 client/cl_produce.c:1366
+#: client/cl_produce.c:1354 client/cl_produce.c:1370
 #, fuzzy
 msgid "Not enough material!"
 msgstr "Non ci sono abbastanza dormitori"
 
-#: client/cl_produce.c:1350
+#: client/cl_produce.c:1354
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
-#: client/cl_produce.c:1354 client/cl_produce.c:1378
+#: client/cl_produce.c:1358 client/cl_produce.c:1382
 #, c-format
 msgid "Production of %s started"
 msgstr "Produzione di %s iniziata"
 
-#: client/cl_produce.c:1355 client/cl_produce.c:1358 client/cl_produce.c:1379
+#: client/cl_produce.c:1359 client/cl_produce.c:1362 client/cl_produce.c:1383
 msgid "Production started"
 msgstr "Produzione iniziata"
 
-#: client/cl_produce.c:1357
+#: client/cl_produce.c:1361
 #, fuzzy, c-format
 msgid "Disassembling of %s started"
 msgstr "Produzione di %s iniziata"
 
-#: client/cl_produce.c:1366
+#: client/cl_produce.c:1370
 #, fuzzy
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "Non hai abbastanza dormitori per i tuoi impiegati."
@@ -13555,7 +13631,7 @@ msgstr ""
 msgid "Status: Unknown technology"
 msgstr "Stato: Tecnologia sconosciuta"
 
-#: client/cl_research.c:929 client/cl_research.c:933
+#: client/cl_research.c:938 client/cl_research.c:942
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -13563,20 +13639,20 @@ msgstr ""
 "Non c'è più spazio nei laboratori.\n"
 "Costruiscine di più.\n"
 
-#: client/cl_research.c:929 client/cl_research.c:933
+#: client/cl_research.c:938 client/cl_research.c:942
 #, fuzzy
 msgid "Not enough laboratories"
 msgstr "Non ci sono abbastanza dormitori"
 
-#: client/cl_research.c:1138
+#: client/cl_research.c:1184
 msgid "This item is currently under research in another base."
 msgstr "Questo oggetto è già sotto studio in un'altra base."
 
-#: client/cl_research.c:1156 client/cl_research.c:1200
+#: client/cl_research.c:1202 client/cl_research.c:1246
 msgid "The research on this item is complete."
 msgstr "Lo studio di questo oggetto è completo."
 
-#: client/cl_research.c:1162
+#: client/cl_research.c:1208
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13584,27 +13660,27 @@ msgstr ""
 "Non è ancora possibile studiare questo oggetto.\n"
 "Devi prima aver compreso le tecnologie su cui è basato."
 
-#: client/cl_research.c:1230
+#: client/cl_research.c:1276
 msgid "No research proposal available for this project."
 msgstr "Nessuna proposta di ricerca per questo progetto."
 
-#: client/cl_research.c:1307
+#: client/cl_research.c:1370
 msgid "mx."
 msgstr ""
 
-#: client/cl_research.c:1413
+#: client/cl_research.c:1487
 msgid "Nothing to research"
 msgstr "Niente da ricercare"
 
-#: client/cl_research.c:1416
+#: client/cl_research.c:1490
 msgid "Build a laboratory first"
 msgstr "Costruisci un laboratorio prima"
 
-#: client/cl_research.c:1892
+#: client/cl_research.c:1967
 msgid "No description available."
 msgstr "Nessuna descrizione."
 
-#: client/cl_research.c:1893
+#: client/cl_research.c:1968
 #, fuzzy
 msgid "No research proposal available."
 msgstr "Nessuna proposta di ricerca per questo progetto."
@@ -14311,16 +14387,16 @@ msgstr "Nessun magazzino in questa base\n"
 msgid "No power supplies in this base.\n"
 msgstr "Nessun magazzino in questa base\n"
 
-#: client/cl_ufo.c:391
+#: client/cl_ufo.c:477
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr ""
 
-#: client/cl_ufo.c:735
+#: client/cl_ufo.c:826
 msgid "Our radar detected a new UFO"
 msgstr ""
 
-#: client/cl_ufo.c:747
+#: client/cl_ufo.c:834
 msgid "Our radar has lost the tracking on a UFO"
 msgstr ""
 
@@ -14645,17 +14721,17 @@ msgstr "  * %s\n"
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_uforecovery.c:223 client/cl_uforecovery.c:393
-#: client/cl_uforecovery.c:479
+#: client/cl_uforecovery.c:223 client/cl_uforecovery.c:391
+#: client/cl_uforecovery.c:476
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_uforecovery.c:391
+#: client/cl_uforecovery.c:389
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_uforecovery.c:477
+#: client/cl_uforecovery.c:474
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -14677,7 +14753,7 @@ msgstr ""
 msgid "This change might require a restart"
 msgstr ""
 
-#: client/menu/m_main.c:697
+#: client/menu/m_main.c:768
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Nascondi l'HUD (Premi ESC per riattivarlo)"
 
@@ -14753,7 +14829,69 @@ msgstr ""
 msgid "nation_pleased"
 msgstr "Max. giocatori per squadra"
 
-#: client/menu/m_messages.c:101
+#: client/menu/m_messages.c:48
+#, fuzzy
+msgid "transfer_started"
+msgstr "Velivolo decollato"
+
+#: client/menu/m_messages.c:49
+msgid "transfer_completed_success"
+msgstr ""
+
+#: client/menu/m_messages.c:50
+#, fuzzy
+msgid "transfer_lost"
+msgstr "Trasferisci"
+
+#: client/menu/m_messages.c:51
+msgid "transfer_aliens_defered"
+msgstr ""
+
+#: client/menu/m_messages.c:52
+#, fuzzy
+msgid "ufo_spotted"
+msgstr ""
+"This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
+"\n"
+"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It makes sense. Every modern military force needs intelligence more than anything.\n"
+"\n"
+"Here are the major technical details:\n"
+"\n"
+"-- The craft has only a small fuel tank and few provisions for a crew. It seems designed for little more than coming down from orbit, flying around a bit, and then returning.\n"
+"\n"
+"-- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down and won't come back up.\n"
+"\n"
+"-- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment that we can identify, which would defeat the purpose of a scout. Your guess is as good as ours, sir.\n"
+"\n"
+"Beyond that the craft has no particular distinguishing characteristics.\n"
+"\n"
+"As I said, this UFO type is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these things down whenever we're not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
+"\n"
+"--Cdr. Navarre\n"
+"\n"
+"\n"
+"Estimated Scout statistics:\n"
+"\n"
+"\n"
+"Size: Small (6m x 14m x 3m)\n"
+"\n"
+"Cruising speed: +/- 1,600 km/h\n"
+"\n"
+"Top speed: +/- 3,000km/h\n"
+"\n"
+"Crew capacity: 3 max.\n"
+"\n"
+"Weapon capacity: None"
+
+#: client/menu/m_messages.c:53
+msgid "ufo_signal_lost"
+msgstr ""
+
+#: client/menu/m_messages.c:54
+msgid "ufo_attacking"
+msgstr ""
+
+#: client/menu/m_messages.c:108
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
@@ -14765,21 +14903,21 @@ msgid_plural "%i days left"
 msgstr[0] "%i giorno rimanente"
 msgstr[1] "%i giorni rimanenti"
 
-#: client/menu/m_node_container.c:290 client/menu/m_node_container.c:295
+#: client/menu/m_node_container.c:287 client/menu/m_node_container.c:292
 #, fuzzy, c-format
 msgid "Ammo: %i\n"
 msgstr "Max. munizioni:\t%i\n"
 
-#: client/menu/m_node_container.c:294
+#: client/menu/m_node_container.c:291
 #, c-format
 msgid "%s loaded\n"
 msgstr ""
 
-#: client/menu/m_node_container.c:301
+#: client/menu/m_node_container.c:298
 msgid "Usable in:\n"
 msgstr ""
 
-#: client/menu/m_node_container.c:342
+#: client/menu/m_node_container.c:339
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "In: %i Out: %i"
@@ -14927,20 +15065,20 @@ msgstr "Impossibile eseguire - non è un unità!\n"
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Impossibile eseguire - munizioni insufficienti\n"
 
-#: game/g_spawn.c:672
+#: game/g_spawn.c:685
 msgid "Aliens entered target zone\n"
 msgstr ""
 
-#: game/g_spawn.c:699
+#: game/g_spawn.c:712
 #, fuzzy
 msgid "Item was placed\n"
 msgstr "Nessun oggetto assegnato"
 
-#: game/g_spawn.c:705
+#: game/g_spawn.c:718
 msgid "Target zone is occupied\n"
 msgstr ""
 
-#: game/g_spawn.c:837
+#: game/g_spawn.c:850
 #, c-format
 msgid "Mission won for team %i\n"
 msgstr ""
@@ -14958,6 +15096,29 @@ msgstr "Alieni"
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
 msgstr ""
+
+#: po/OTHER_STRINGS:7
+#, fuzzy
+msgid "All"
+msgstr "Palla"
+
+#: po/OTHER_STRINGS:8
+#, fuzzy
+msgid "Free"
+msgstr "Grenchen"
+
+#: po/OTHER_STRINGS:9
+msgid "Playing"
+msgstr ""
+
+#~ msgid "Buy item"
+#~ msgstr "Compra oggetto"
+
+#~ msgid "Sell item"
+#~ msgstr "Vendi oggetto"
+
+#~ msgid "Add scientist"
+#~ msgstr "Aggiungi scienziato"
 
 #, fuzzy
 #~ msgid "Build at least one workshop"
@@ -15111,10 +15272,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "No storage in this base"
 #~ msgstr "Nessun magazzino in questa base\n"
-
-#, fuzzy
-#~ msgid "Buy or sell craftitems"
-#~ msgstr "Compra o vendi velivolo"
 
 #, fuzzy
 #~ msgid "Show aircraft"
@@ -15716,9 +15873,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "%s: %i"
 #~ msgstr "%s (%s)\n"
-
-#~ msgid "Alien activity"
-#~ msgstr "Attività aliena"
 
 #, fuzzy
 #~ msgid "The mission %s expired and %i civilian died."
