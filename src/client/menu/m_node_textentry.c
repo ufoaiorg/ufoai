@@ -1,7 +1,6 @@
 /**
  * @file m_node_textentry.c
  * @todo must we need to use command to interact with keyboard?
- * @todo add a command to force the text edition from script
  * @todo allow to edit text without any cvar
  * @todo add a custom max size
  */
@@ -43,9 +42,12 @@ static const int MARGE = 3;
 static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
 static const char HIDECHAR = '*';	/**< use as a mask for password */
 
+/* prototype */
 static void MN_TextEntryNodeRemoveFocus(menuNode_t *node);
 static void MN_TextEntryNodeSetFocus(menuNode_t *node);
+static void MN_TextEntryNodeSetFocus (menuNode_t *node);
 
+/* global data */
 static char cmdChanged[MAX_VAR];
 static char cmdAborted[MAX_VAR];
 
@@ -77,8 +79,8 @@ static inline void MN_TextEntryNodeFireAbort (menuNode_t *node)
 static void MN_TextEntryNodeKeyboardChanged_f ()
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	MN_TextEntryNodeFireChange(node);
 	MN_TextEntryNodeRemoveFocus(node);
+	MN_TextEntryNodeFireChange(node);
 }
 
 /**
@@ -87,8 +89,31 @@ static void MN_TextEntryNodeKeyboardChanged_f ()
 static void MN_TextEntryNodeKeyboardAborted_f ()
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	MN_TextEntryNodeFireAbort(node);
 	MN_TextEntryNodeRemoveFocus(node);
+	MN_TextEntryNodeFireAbort(node);
+}
+
+/**
+ * @brief force edition of a textentry node
+ * @note the textentry must be on the active menu
+ */
+void MN_EditTextEntry_f (void)
+{
+	menuNode_t *node;
+	const char* name;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <textentrynode>\n", Cmd_Argv(0));
+		return;
+	}
+
+	name = Cmd_Argv(1);
+	node = MN_GetNode(MN_GetActiveMenu(), name);
+	if (!node) {
+		Com_Printf("MN_EditTextEntry_f: node '%s' dont exists on the current active menu '%s'\n", name, MN_GetActiveMenu()->name);
+		return;
+	}
+	MN_TextEntryNodeSetFocus(node);
 }
 
 /**
@@ -253,4 +278,6 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;
+
+	Cmd_AddCommand("mn_edittextentry", MN_EditTextEntry_f, "Force edition of the textentry.");
 }
