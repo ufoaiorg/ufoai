@@ -1796,7 +1796,7 @@ menu popup_installationstatus
 	{
 //		if "mn_installation_type eq samsite"
 		if "mn_installation_timetobuild eq -"
-		tooltip	"_Manange installation"
+		tooltip	"_Manage installation"
 		image	menu/multi_buttons3
 		pos	"296 188"
 		size	"176 32"
