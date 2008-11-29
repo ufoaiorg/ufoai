@@ -2,6 +2,7 @@
  * @file m_node_textentry.c
  * @todo must we need to use command to interact with keyboard?
  * @todo add a command to force the text edition from script
+ * @todo allow to edit text without any cvar
  */
 
 /*
@@ -79,7 +80,6 @@ static void MN_TextEntryNodeKeyboardAborted_f ()
 
 /**
  * @todo save last existing commands, to restitute it
- * @todo log warning for buffer overflow
  */
 static void MN_TextEntryNodeSetFocus (menuNode_t *node)
 {
@@ -186,7 +186,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 			char *c = va("%s", text);
 			text = c;
 			/* hide the text */
-			/** @todo does it work with Unicode :/ */
+			/** @todo does it work with Unicode :/ dont we create to char? */
 			while (*c != '\0') {
 				*c++ = HIDECHAR;
 			}
