@@ -1605,20 +1605,20 @@ menu serverpassword
 		string  "_Password:"
 		pos     "66 58"
 	}
-	pic slot_password
+	textentry slot_password
 	{
-		image   menu/save_slot
-		pos     "66 78"
-		mousefx true
-		click   { cmd "msgmenu ?password" *txt_password color "1 1 1 1" *txt_password mousefx true }
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"66 78"
+		size		"256 34"
+		string		"*cvar password"
+		ispassword	true
 	}
-	string txt_password
-	{
-		string	"*cvar password"
-		pos		"71 83"
-		color	"0 .78 0 1"
-	}
-	confunc password_changed { *txt_password color "0 .78 0 1" *txt_password mousefx false }
 
 	button set_password
 	{
@@ -1634,11 +1634,6 @@ menu serverpassword
 		color	"0 0.5 0 1"
 		string	"_OK"
 		selectcolor	"1 1 1 1"
-	}
-
-	func close
-	{
-		password_changed
 	}
 }
 
