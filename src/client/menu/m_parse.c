@@ -1062,18 +1062,14 @@ void MN_ParseMenu (const char *name, const char **text)
 			lastNode = newNode;
 
 			/* update special links */
-			if (superMenu->initNode == node)
-				menu->initNode = newNode;
-			else if (superMenu->closeNode == node)
-				menu->closeNode = newNode;
-			else if (superMenu->renderNode == node)
+			if (superMenu->renderNode == node)
 				menu->renderNode = newNode;
 			else if (superMenu->popupNode == node)
 				menu->popupNode = newNode;
-			else if (superMenu->eventNode == node)
+			else if (superMenu->onTimeOut == node->onClick) {
+				menu->onTimeOut = newNode->onClick;
 				menu->eventNode = newNode;
-			else if (superMenu->leaveNode == node)
-				menu->leaveNode = newNode;
+			}
 		}
 
 		token = COM_Parse(text);

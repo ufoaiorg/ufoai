@@ -322,19 +322,19 @@ static void MN_UnHideNode_f (void)
 /**
  * @brief Init a behaviour to null. A null node doesn't react
  */
-static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual, void(*loading)(menuNode_t*), int id)
+static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual, void(*loaded)(menuNode_t*), int id)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = name;
 	behaviour->id = id;
 	behaviour->isVirtual = isVirtual;
-	behaviour->loading = loading;
+	behaviour->loaded = loaded;
 }
 
 /**
  * @todo create a m_node_zone.c
  */
-static void MN_ZoneNodeLoading (menuNode_t *node)
+static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
 	menu_t * menu = node->menu;
 	if (!Q_strncmp(node->name, "render", 6)) {
@@ -353,30 +353,31 @@ static void MN_ZoneNodeLoading (menuNode_t *node)
 /**
  * @todo create a m_node_func.c
  */
-static void MN_FuncNodeLoading (menuNode_t *node)
+static void MN_FuncNodeLoaded (menuNode_t *node)
 {
 	menu_t * menu = node->menu;
 	if (!Q_strncmp(node->name, "init", 4)) {
-		if (!menu->initNode)
-			menu->initNode = node;
+		if (!menu->onInit)
+			menu->onInit = node->onClick;
 		else
-			Com_Printf("MN_FuncNodeLoading: second init function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoaded: second init function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "close", 5)) {
-		if (!menu->closeNode)
-			menu->closeNode = node;
+		if (!menu->onClose)
+			menu->onClose = node->onClick;
 		else
-			Com_Printf("MN_FuncNodeLoading: second close function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoaded: second close function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "event", 5)) {
-		if (!menu->eventNode) {
+		if (!menu->onTimeOut) {
 			menu->eventNode = node;
 			menu->eventNode->timeOut = 2000; /* default value */
+			menu->onTimeOut = node->onClick;
 		} else
-			Com_Printf("MN_FuncNodeLoading: second event function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoaded: second event function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "leave", 5)) {
-		if (!menu->leaveNode) {
-			menu->leaveNode = node;
+		if (!menu->onLeave) {
+			menu->onLeave = node->onClick;
 		} else
-			Com_Printf("MN_FuncNodeLoading: second leave function ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_FuncNodeLoaded: second leave function ignored (menu \"%s\")\n", menu->name);
 	}
 
 }
@@ -448,8 +449,8 @@ void MN_InitNodes (void)
 	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue, NULL, MN_NULL);
 	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue, NULL, MN_CONFUNC);
 	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue, NULL, MN_CVARFUNC);
-	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue, MN_FuncNodeLoading, MN_FUNC);
-	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoading, MN_ZONE);
+	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue, MN_FuncNodeLoaded, MN_FUNC);
+	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoaded, MN_ZONE);
 	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
 	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
 	MN_RegisterSpinnerNode(nodeBehaviourList + MN_SPINNER);

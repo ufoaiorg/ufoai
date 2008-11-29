@@ -50,10 +50,12 @@ typedef struct menu_s {
 	menuNode_t *renderNode;
 
 	/** @todo think about converting it to action instead of node */
-	menuNode_t *initNode;	/**< node to execute on init. Single 'func' node, or NULL */
-	menuNode_t *closeNode;	/**< node to execute on close. Single 'func' node, or NULL */
 	menuNode_t *eventNode;	/**< single 'func' node, or NULL */
-	menuNode_t *leaveNode;	/**< single 'func' node, or NULL */
+	struct menuAction_s *onInit; 	/**< Call when the menu is push */
+	struct menuAction_s *onClose;	/**< Call when the menu is pop */
+	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the menu out */
+	struct menuAction_s *onLeave;	/**< Call when mouse leave the window? call by cl_input */
+
 } menu_t;
 
 void MN_RegisterWindowNode(nodeBehaviour_t *behaviour);

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "m_node_window.h"
+#include "m_parse.h"
 
 /**
  * @brief Searches all nodes in the given menu for a given nodename
@@ -176,6 +177,9 @@ static const value_t windowNodeProperties[] = {
 	{"size", V_POS, offsetof(menu_t, size), MEMBER_SIZEOF(menu_t, size)},
 	{"dragbutton", V_BOOL, offsetof(menu_t, dragButton), MEMBER_SIZEOF(menu_t, dragButton)},
 	{"closebutton", V_BOOL, offsetof(menu_t, closeButton), MEMBER_SIZEOF(menu_t, closeButton)},
+	{"init", V_SPECIAL_ACTION, offsetof(menu_t, onInit), MEMBER_SIZEOF(menu_t, onInit)},
+	{"close", V_SPECIAL_ACTION, offsetof(menu_t, onClose), MEMBER_SIZEOF(menu_t, onClose)},
+	{"leave", V_SPECIAL_ACTION, offsetof(menu_t, onLeave), MEMBER_SIZEOF(menu_t, onLeave)},
 
 	{NULL, V_NULL, 0, 0}
 };

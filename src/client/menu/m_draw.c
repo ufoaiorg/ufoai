@@ -146,10 +146,10 @@ static void MN_DrawMenusTest (void)
 	while (sp < mn.menuStackPos) {
 		menu = mn.menuStack[sp++];
 		/* event node */
-		if (menu->eventNode) {
+		if (menu->onTimeOut) {
 			if (menu->eventNode->timeOut > 0 && (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)))) {
 				menu->eventTime = cls.realtime;
-				MN_ExecuteActions(menu, menu->eventNode->onClick);
+				MN_ExecuteActions(menu, menu->onTimeOut);
 #ifdef DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
 #endif

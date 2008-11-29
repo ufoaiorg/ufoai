@@ -106,8 +106,8 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 		Com_Printf("Menu stack overflow\n");
 
 	/* initialize it */
-	if (menu->initNode)
-		MN_ExecuteActions(menu, menu->initNode->onClick);
+	if (menu->onInit)
+		MN_ExecuteActions(menu, menu->onInit);
 
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
@@ -234,14 +234,14 @@ void MN_PopMenu (qboolean all)
 	if (all)
 		while (mn.menuStackPos > 0) {
 			mn.menuStackPos--;
-			if (mn.menuStack[mn.menuStackPos]->closeNode)
-				MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->closeNode->onClick);
+			if (mn.menuStack[mn.menuStackPos]->onClose)
+				MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->onClose);
 		}
 
 	if (mn.menuStackPos > 0) {
 		mn.menuStackPos--;
-		if (mn.menuStack[mn.menuStackPos]->closeNode)
-			MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->closeNode->onClick);
+		if (mn.menuStack[mn.menuStackPos]->onClose)
+			MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->onClose);
 	}
 
 	if (!all && mn.menuStackPos == 0) {
@@ -390,8 +390,8 @@ static void MN_ReinitCurrentMenu_f (void)
 	menu_t* menu = MN_GetActiveMenu();
 	/* initialize it */
 	if (menu) {
-		if (menu->initNode)
-			MN_ExecuteActions(menu, menu->initNode->onClick);
+		if (menu->onInit)
+			MN_ExecuteActions(menu, menu->onInit);
 		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
 	}
 }
