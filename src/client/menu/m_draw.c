@@ -215,6 +215,8 @@ static void MN_DrawMenusTest (void)
 		}	/* for */
 	}
 
+	menu = MN_GetActiveMenu();
+
 	/* draw tooltip */
 	if (menu->hoverNode && mn_show_tooltips->integer) {
 		if (itemHover) {
@@ -248,7 +250,6 @@ static void MN_DrawMenusTest (void)
 
 	/* draw a special notice */
 	if (cl.time < cl.msgTime) {
-		menu = MN_GetActiveMenu();
 		if (menu->noticePos[0] || menu->noticePos[1])
 			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
 		else
