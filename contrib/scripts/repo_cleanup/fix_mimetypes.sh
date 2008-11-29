@@ -17,28 +17,28 @@ set -f
 
 . mimetypes
 for ((EXTENSION=0; EXTENSION < ${#MIME_EXTENSION[@]}; EXTENSION++)); do
-    [[ $NOTFIRST ]] && {
-	EXPRESSION="$EXPRESSION -o "
-    } || {
-	NOTFIRST=yes
-    }
-    EXPRESSION="${EXPRESSION}-name *.${MIME_EXTENSION[$EXTENSION]}"
+	[[ $NOTFIRST ]] && {
+		EXPRESSION="$EXPRESSION -o "
+	} || {
+		NOTFIRST=yes
+	}
+	EXPRESSION="${EXPRESSION}-name *.${MIME_EXTENSION[$EXTENSION]}"
 done
 
 mime () {
-    if [ "$(svn pg svn:mime-type "$3")" == "$2" ]; then
-        [[ $REPORTNEGATIVES ]] && echo "not setting mime type for $3, already $2"
-    else
-        [[ $REPORTPOSITIVES ]] && echo "*** setting svn:mime-type to $2 for $3"
-        svn ps svn:mime-type $2 "$3"
-    fi
+	if [ "$(svn pg svn:mime-type "$3")" == "$2" ]; then
+		[[ $REPORTNEGATIVES ]] && echo "not setting mime type for $3, already $2"
+	else
+		[[ $REPORTPOSITIVES ]] && echo "*** setting svn:mime-type to $2 for $3"
+		svn ps svn:mime-type $2 "$3"
+	fi
 }
 
 while read FILENAME; do
-    for ((EXTENSION=0; EXTENSION < ${#MIME_EXTENSION[@]}; EXTENSION++)); do
+	for ((EXTENSION=0; EXTENSION < ${#MIME_EXTENSION[@]}; EXTENSION++)); do
 	if [ "${FILENAME##*.}" == "${MIME_EXTENSION[$EXTENSION]}" ]; then
-	    mime "${MIME_EXTENSION[$EXTENSION]}" "${MIME_TYPE[$EXTENSION]}" "$FILENAME"
+		mime "${MIME_EXTENSION[$EXTENSION]}" "${MIME_TYPE[$EXTENSION]}" "$FILENAME"
 	fi
-    done
+	done
 done < <(find "$DIR" -type f ! -wholename '*/.svn*' $EXPRESSION)
 set +f
