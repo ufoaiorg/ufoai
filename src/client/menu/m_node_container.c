@@ -212,6 +212,8 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 		if (item->rotated)
 			angles[0] -= 90;
 
+		memset(&mi, 0, sizeof(mi));
+
 		/* Draw model, if there is no image. */
 		mi.name = od->model;
 		mi.origin = origin;

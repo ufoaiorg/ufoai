@@ -148,7 +148,7 @@ static void R_DrawPtlModel (ptl_t * p)
 	modelInfo_t mi;
 
 	/* initialize minfo */
-	memset(&mi, 0, sizeof(modelInfo_t));
+	memset(&mi, 0, sizeof(mi));
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;
