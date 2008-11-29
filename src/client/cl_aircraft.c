@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 
 /** @todo Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
-static aircraft_t *menuAircraft = NULL;
+aircraft_t *menuAircraft = NULL;
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 /**
  * Number of aircraft templates.

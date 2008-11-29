@@ -7070,6 +7070,7 @@ void CL_ResetSinglePlayerData (void)
 		if (csi.teamDef[i].alien)
 			gd.numAliensTD++;
 	}
+	menuAircraft = NULL;
 }
 
 #ifdef DEBUG
