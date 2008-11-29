@@ -1,5 +1,14 @@
 #!/bin/bash
 
+## Add an ufosf entry to your ~/.ssh/config to upload the images
+## replace 'username' by your sf.net account
+#	Host ufosf
+#		Compression	yes
+#		CompressionLevel	9
+#		Hostname	web.sourceforge.net
+#		user		username,ufoai
+#
+
 FUZZY_COLOR=#ffd800
 UNTRTD_COLOR=#ff0000
 TRTD_COLOR=#00ff06
