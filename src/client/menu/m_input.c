@@ -99,12 +99,12 @@ void MN_SetMouseCapture (menuNode_t* node)
 
 /**
  * @brief Release the captured node
- * @todo update mouse events (in, out)
  */
 void MN_MouseRelease (void)
 {
 	capturedNode = NULL;
 	MN_FocusRemove();
+	MN_InvalidateMouse();
 }
 
 /**
