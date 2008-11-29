@@ -440,13 +440,27 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int actor_size, int hi, int lo)
 {
 	vec3_t bmin, bmax;
+	vec3_t astart, aend;
+	vec3_t offset;
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
 	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT - DIST_EPSILON);
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
+	/* Calculate the offset needed to center the trace about the line */
+    VectorAdd(bmin, bmax, offset);
+    VectorDiv(offset, 2, offset);
+
+    /* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
+     * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
+	VectorSubtract(bmin, offset, bmin);
+	VectorSubtract(bmax, offset, bmax);
+	VectorAdd(start, offset, astart);
+	VectorAdd(end, offset, aend);
+
 	/* perform the trace, then return true if the trace was obstructed. */
-	tr_obstruction = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr_obstruction = RT_COMPLETEBOXTRACE(astart, aend, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
+
 	return tr_obstruction.fraction < 1.0;
 }
 
