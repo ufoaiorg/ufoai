@@ -111,35 +111,20 @@ menu irc
 		font	f_verysmall
 	}
 
-	confunc irc_send_buffer_clicked
+	textentry slot_irc_send_buffer
 	{
-		cmd "msgmenu ?irc_send_buffer;irc_activate;"
-		*irc_send_buffer mousefx true
-	}
-
-	pic irc_send_buffer_img
-	{
-		image	menu/irc_input
-		pos		"30 715"
-		texl	"0 0"
-		texh	"690 26"
-		click
-		{
-			cmd "irc_send_buffer_clicked;"
-		}
-	}
-
-	string irc_send_buffer
-	{
-		string	"*cvar irc_send_buffer"
-		pos		"34 718"
-		size	"682 20"
-		bgcolor	"0.5 0.5 0.5 0.2"
-		font	f_small
-	}
-
-	confunc irc_send_buffer_changed
-	{
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"30 710"
+		size		"690 34"
+		string		"*cvar irc_send_buffer"
+		click 		{ cmd "irc_activate;" }
+		bgcolor		"0.5 0.5 0.5 0.2"
 	}
 
 	pic irc_scrollup
@@ -175,7 +160,7 @@ menu irc
 	// ==================
 	func init
 	{
-		cmd "mn_escpop 3;irc_send_buffer_clicked;"
+		cmd "mn_escpop 3;"
 	}
 
 	// ==================

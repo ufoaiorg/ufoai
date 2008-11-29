@@ -987,9 +987,11 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "PING", 4))
 			Com_DPrintf(DEBUG_CLIENT, "IRC: <PING> %s\n", msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "ERROR", 5))
+		else if (!Q_strncmp(cmd.id.string, "ERROR", 5)) {
 			Irc_Logic_Disconnect(msg->trailing);
-		else
+			Q_strncpyz(popupText, msg->trailing, sizeof(popupText));
+			MN_Popup(_("Error"), popupText);
+		} else
 			Irc_AppendToBuffer(msg->trailing);
 		break;
 	} /* switch */
@@ -1213,9 +1215,11 @@ static void Irc_Logic_ReadMessages (void)
 			/* success */
 			if (msg_complete)
 				Irc_Proto_ProcessServerMsg(&msg);
-		} else
+		} else {
 			/* failure */
+			MN_Popup(_("Error"), _("Server closed connection"));
 			Irc_Logic_Disconnect("Server closed connection");
+		}
 	} while (msg_complete);
 }
 
@@ -1619,7 +1623,6 @@ static void Irc_UserClick_f (void)
 
 	name = irc_userListOrdered[cnt];
 	Cvar_Set("irc_send_buffer", va("%s%s: ", irc_send_buffer->string, &name[1]));
-	MN_ExecuteConfunc("irc_send_buffer_clicked");
 }
 
 /**
@@ -1646,7 +1649,6 @@ static void Irc_UserRightClick_f (void)
 
 	name = irc_userListOrdered[cnt];
 	Irc_Proto_Whois(&name[1]);
-	MN_ExecuteConfunc("irc_send_buffer_clicked");
 }
 
 /*
