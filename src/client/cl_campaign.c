@@ -225,8 +225,6 @@ static void CL_ResetAlienInterest (void)
 	ccs.lastMissionSpawnedDelay = 0;
 	ccs.overallInterest = 20;
 
-	/* Set initial individual interests
-	 * @todo These values should probably be set in campaign.ufo */
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
 		ccs.interest[i] = 0;
 	ccs.interest[INTERESTCATEGORY_NONE] = 6;
@@ -989,7 +987,7 @@ base_t* CP_PositionCloseToBase (const vec2_t pos)
  */
 static void CP_ReconMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(-0.20f, INTERESTCATEGORY_RECON);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	if (AB_GetAlienBaseNumber())
 		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
@@ -1039,6 +1037,10 @@ static void CP_ReconMissionLeave (mission_t *mission)
  */
 static qboolean CP_ReconMissionChoose (mission_t *mission)
 {
+	/* mission without UFO is always a ground mission */
+	if (!mission->ufo)
+		return qfalse;
+
 	return (frand() > 0.5f);
 }
 
@@ -1052,6 +1054,8 @@ static void CP_ReconMissionAerial (mission_t *mission)
 	const date_t minReconDelay = {1, 0};
 	const date_t reconDelay = {2, 0};		/* How long the UFO will fly on earth */
 
+	assert(mission->ufo);
+
 	mission->stage = STAGE_RECON_AIR;
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minReconDelay, reconDelay));
@@ -1060,18 +1064,20 @@ static void CP_ReconMissionAerial (mission_t *mission)
 /**
  * @brief Set ground mission, and go to ground mission pos.
  * @note Recon mission -- Stage 1
+ * @note ground mission can be spawned without UFO
  * @sa CP_ReconMissionSelect
  */
 static void CP_ReconMissionGroundGo (mission_t *mission)
 {
 	const nation_t *nation;
 
-	assert(mission->ufo);
-
 	mission->stage = STAGE_MISSION_GOTO;
 
-	CP_MissionRemoveFromGeoscape(mission);
-	mission->ufo->landed = qfalse;
+	/* maybe the UFO just finished a ground mission and starts a new one? */
+	if (mission->ufo) {
+		CP_MissionRemoveFromGeoscape(mission);
+		mission->ufo->landed = qfalse;
+	}
 
 	/* Choose a map */
 	if (CP_ChooseMap(mission, NULL, qfalse)) {
@@ -1103,8 +1109,13 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
-	CP_MissionDisableTimeLimit(mission);
-	UFO_SendToDestination(mission->ufo, mission->pos);
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SendToDestination(mission->ufo, mission->pos);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
 }
 
 /**
@@ -1116,13 +1127,12 @@ static void CP_ReconMissionGround (mission_t *mission)
 	const date_t minMissionDelay = {2, 0};
 	const date_t missionDelay = {3, 0};
 
-	assert(mission->ufo);
-
 	mission->stage = STAGE_RECON_GROUND;
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
-	CP_UFORemoveFromGeoscape(mission, qfalse);
+	if (mission->ufo)
+		CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, qfalse);
 }
@@ -2590,6 +2600,7 @@ static int CP_MissionChooseUFO (const mission_t *mission)
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
 		numTypes = CP_ReconMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
 		break;
 	case INTERESTCATEGORY_TERROR_ATTACK:
 		numTypes = CP_TerrorMissionAvailableUFOs(mission, ufoTypes);
