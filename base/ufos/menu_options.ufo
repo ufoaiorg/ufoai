@@ -931,16 +931,16 @@ menu options_game
 	}
 	textentry slot_name
 	{
-		image	menu/button_green_verysmall
-		blend	true
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
-		textalign cl
-		padding 8
-		font "f_verysmall"
-		pos     "85 160"
-		size	"256 34"
-		string "*cvar cl_name"
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 160"
+		size		"256 34"
+		string		"*cvar cl_name"
 	}
 
 	// ===================

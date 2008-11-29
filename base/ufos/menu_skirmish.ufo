@@ -105,20 +105,20 @@ menu skirmish
 		string	"_Map"
 		pos	"500 510"
 	}
-	pic slot_map
+	textentry slot_map
 	{
-		image	menu/save_slot
-		pos	"500 530"
-		mousefx	true
-	}
-	string txt_mapname
-	{
-		string	"*cvar mn_svmapname"
-		pos	"510 535"
-		color	"0 .78 0 1"
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		size "256 32"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"500 530"
+		size		"256 34"
+		string		"*cvar mn_svmapname"
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
 	}
 
 	pic prev_map

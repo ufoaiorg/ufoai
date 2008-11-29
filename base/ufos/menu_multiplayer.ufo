@@ -99,91 +99,125 @@ menu mp_team
 	// slots
 	// ==================
 
-	func teamslotclear
+	textentry slot_team0
 	{
-		*slot0 image menu/save_slot
-		*slot1 image menu/save_slot
-		*slot2 image menu/save_slot
-		*slot3 image menu/save_slot
-		*slot4 image menu/save_slot
-		*slot5 image menu/save_slot
-		*slot6 image menu/save_slot
-		*slot7 image menu/save_slot
-	}
-	func teamslot0 { teamslotclear *slot0 image menu/save_slota cmd "mn_slot 0;" }
-	func teamslot1 { teamslotclear *slot1 image menu/save_slota cmd "mn_slot 1;" }
-	func teamslot2 { teamslotclear *slot2 image menu/save_slota cmd "mn_slot 2;" }
-	func teamslot3 { teamslotclear *slot3 image menu/save_slota cmd "mn_slot 3;" }
-	func teamslot4 { teamslotclear *slot4 image menu/save_slota cmd "mn_slot 4;" }
-	func teamslot5 { teamslotclear *slot5 image menu/save_slota cmd "mn_slot 5;" }
-	func teamslot6 { teamslotclear *slot6 image menu/save_slota cmd "mn_slot 6;" }
-	func teamslot7 { teamslotclear *slot7 image menu/save_slota cmd "mn_slot 7;" }
-
-	pic slot0
-	{
-		image	menu/save_slot
-		pos	"85 130"
-		mousefx	true
-		click	{ teamslot0 }
-	}
-	pic slot1
-	{
-		image	menu/save_slot
-		pos	"85 165"
-		mousefx	true
-		click	{ teamslot1 }
-	}
-	pic slot2
-	{
-		image	menu/save_slot
-		pos	"85 200"
-		mousefx	true
-		click	{ teamslot2 }
-	}
-	pic slot3
-	{
-		image	menu/save_slot
-		pos	"85 235"
-		mousefx	true
-		click	{ teamslot3 }
-	}
-	pic slot4
-	{
-		image	menu/save_slot
-		pos	"85 270"
-		mousefx	true
-		click	{ teamslot4 }
-	}
-	pic slot5
-	{
-		image	menu/save_slot
-		pos	"85 305"
-		mousefx	true
-		click	{ teamslot5 }
-	}
-	pic slot6
-	{
-		image	menu/save_slot
-		pos	"85 340"
-		mousefx	true
-		click	{ teamslot6 }
-	}
-	pic slot7
-	{
-		image	menu/save_slot
-		pos	"85 375"
-		mousefx	true
-		click	{ teamslot7 }
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 130"
+		size		"256 34"
+		string		"*cvar mn_slot0"
+		click		{ cmd "mn_slot 0;" }
 	}
 
-	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "95 140" size "240 11" color "0 .78 0 1" }
-	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "95 175" size "240 11" color "0 .78 0 1" }
-	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "95 210" size "240 11" color "0 .78 0 1" }
-	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "95 245" size "240 11" color "0 .78 0 1" }
-	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "95 280" size "240 11" color "0 .78 0 1" }
-	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "95 315" size "240 11" color "0 .78 0 1" }
-	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "95 350" size "240 11" color "0 .78 0 1" }
-	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "95 385" size "240 11" color "0 .78 0 1" }
+	textentry slot_team1
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 165"
+		size		"256 34"
+		string		"*cvar mn_slot1"
+		click		{ cmd "mn_slot 1;" }
+	}
+
+	textentry slot_team2
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 200"
+		size		"256 34"
+		string		"*cvar mn_slot2"
+		click		{ cmd "mn_slot 2;" }
+	}
+
+	textentry slot_team3
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 235"
+		size		"256 34"
+		string		"*cvar mn_slot3"
+		click		{ cmd "mn_slot 3;" }
+	}
+
+	textentry slot_team4
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 270"
+		size		"256 34"
+		string		"*cvar mn_slot4"
+		click		{ cmd "mn_slot 4;" }
+	}
+
+	textentry slot_team5
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 305"
+		size		"256 34"
+		string		"*cvar mn_slot5"
+		click		{ cmd "mn_slot 5;" }
+	}
+
+	textentry slot_team6
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 340"
+		size		"256 34"
+		string		"*cvar mn_slot6"
+		click		{ cmd "mn_slot 6;" }
+	}
+
+	textentry slot_team7
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 375"
+		size		"256 34"
+		string		"*cvar mn_slot7"
+		click		{ cmd "mn_slot 7;" }
+	}
 
 	custombutton button_load
 	{
@@ -296,20 +330,19 @@ menu mp_team
 		string	"_Name"
 		pos	"85 620"
 	}
-	pic slot_teamname
+	textentry slot_teamname
 	{
-		image	menu/save_slot
-		pos	"85 640"
-		mousefx	true
-		click	{ cmd "msgmenu ?mn_teamname" *txt_teamname color "1 1 1 1" *txt_teamname mousefx true }
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 640"
+		size		"256 34"
+		string		"*cvar mn_teamname"
 	}
-	string txt_teamname
-	{
-		string	"*cvar mn_teamname"
-		pos	"95 645"
-		color	"0 .78 0 1"
-	}
-	confunc mn_teamname_changed { *txt_teamname color "0 .78 0 1" *txt_teamname mousefx false }
 
 	// ==================
 	// buttons
@@ -644,20 +677,20 @@ menu mp_serverbrowser
 	string current_inet_connect_to_ip
 	{
 		string	"_Connect to IP"
-		pos	"65 500"
+		pos		"65 500"
 	}
-	textentry slot0
+	textentry slot_ip
 	{
-		image	menu/button_green_verysmall
-		blend	true
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
-		textalign cl
-		padding 8
-		font "f_verysmall"
-		pos	"65 520"
-		size	"256 34"
-		string "*cvar mn_server_ip"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"65 520"
+		size		"256 34"
+		string		"*cvar mn_server_ip"
 	}
 
 	// ====================
@@ -1084,20 +1117,20 @@ menu mp_create_server
 		string	"_Server-Password:"
 		pos	"85 330"
 	}
-	pic slot_server_pwd
+	textentry slot_server_pwd
 	{
-		image	menu/save_slot
-		pos	"85 350"
-		mousefx	true
-		click	{ cmd "msgmenu ?password" *txt_server_pwd color "1 1 1 1" *txt_server_pwd mousefx true }
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 350"
+		size		"256 34"
+		ispassword	true
+		string		"*cvar password"
 	}
-	string txt_server_pwd
-	{
-		string	"*cvar password"
-		pos	"95 355"
-		color	"0 .78 0 1"
-	}
-	confunc password_changed { *txt_server_pwd color "0 .78 0 1" *txt_server_pwd mousefx false }
 
 	// ===================
 	// RCON_PASSWORD
@@ -1107,20 +1140,20 @@ menu mp_create_server
 		string	"_RCON-Password:"
 		pos	"85 390"
 	}
-	pic slot_rcon_pwd
+	textentry slot_rcon_pwd
 	{
-		image	menu/save_slot
-		pos	"85 410"
-		mousefx	true
-		click	{ cmd "msgmenu ?rcon_password" *txt_rcon_pwd color "1 1 1 1" *txt_rcon_pwd mousefx true }
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 410"
+		size		"256 34"
+		ispassword	true
+		string		"*cvar rcon_password"
 	}
-	string txt_rcon_pwd
-	{
-		string	"*cvar rcon_password"
-		pos	"95 415"
-		color	"0 .78 0 1"
-	}
-	confunc rcon_password_changed { *txt_rcon_pwd color "0 .78 0 1" *txt_rcon_pwd mousefx false }
 
 	// ===================
 	// HOSTNAME
