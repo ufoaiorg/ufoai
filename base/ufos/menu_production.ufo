@@ -393,6 +393,7 @@ menu production
 	// ITEMS
 	item itemmodel
 	{
+		if "mn_itemtype != 5"
 		model	"*cvar mn_item"
 		pos	"793 288"
 		scale	"7 7 7"
