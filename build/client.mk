@@ -76,6 +76,7 @@ CLIENT_SRCS = \
 	client/menu/m_node_radar.c \
 	client/menu/m_node_selectbox.c \
 	client/menu/m_node_string.c \
+	client/menu/m_node_special.c \
 	client/menu/m_node_spinner.c \
 	client/menu/m_node_tab.c \
 	client/menu/m_node_tbar.c \

@@ -522,6 +522,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_node_selectbox.h" />
+		<Unit filename="..\..\src\client\menu\m_node_special.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_node_special.h" />
 		<Unit filename="..\..\src\client\menu\m_node_spinner.c">
 			<Option compilerVar="CC" />
 		</Unit>

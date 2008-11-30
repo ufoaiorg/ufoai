@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_radar.h"
 #include "m_node_selectbox.h"
 #include "m_node_string.h"
+#include "m_node_special.h"
 #include "m_node_spinner.h"
 #include "m_node_tab.h"
 #include "m_node_tbar.h"
@@ -320,69 +321,6 @@ static void MN_UnHideNode_f (void)
 }
 
 /**
- * @brief Init a behaviour to null. A null node doesn't react
- */
-static inline void MN_RegisterNullNode (nodeBehaviour_t* behaviour, const char* name, qboolean isVirtual, void(*loaded)(menuNode_t*), int id)
-{
-	memset(behaviour, 0, sizeof(behaviour));
-	behaviour->name = name;
-	behaviour->id = id;
-	behaviour->isVirtual = isVirtual;
-	behaviour->loaded = loaded;
-}
-
-/**
- * @todo create a m_node_zone.c
- */
-static void MN_ZoneNodeLoaded (menuNode_t *node)
-{
-	menu_t * menu = node->menu;
-	if (!Q_strncmp(node->name, "render", 6)) {
-		if (!menu->renderNode)
-			menu->renderNode = node;
-		else
-			Com_Printf("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "popup", 5)) {
-		if (!menu->popupNode)
-			menu->popupNode = node;
-		else
-			Com_Printf("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n", menu->name);
-	}
-}
-
-/**
- * @todo create a m_node_func.c
- */
-static void MN_FuncNodeLoaded (menuNode_t *node)
-{
-	menu_t * menu = node->menu;
-	if (!Q_strncmp(node->name, "init", 4)) {
-		if (!menu->onInit)
-			menu->onInit = node->onClick;
-		else
-			Com_Printf("MN_FuncNodeLoaded: second init function ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "close", 5)) {
-		if (!menu->onClose)
-			menu->onClose = node->onClick;
-		else
-			Com_Printf("MN_FuncNodeLoaded: second close function ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "event", 5)) {
-		if (!menu->onTimeOut) {
-			menu->eventNode = node;
-			menu->eventNode->timeOut = 2000; /* default value */
-			menu->onTimeOut = node->onClick;
-		} else
-			Com_Printf("MN_FuncNodeLoaded: second event function ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "leave", 5)) {
-		if (!menu->onLeave) {
-			menu->onLeave = node->onClick;
-		} else
-			Com_Printf("MN_FuncNodeLoaded: second leave function ignored (menu \"%s\")\n", menu->name);
-	}
-
-}
-
-/**
  * @brief Set node property
  * @note More hard to set string like that at the run time
  * @todo remove atof
@@ -446,11 +384,11 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
 
 	/* all nodes */
-	MN_RegisterNullNode(nodeBehaviourList + MN_NULL, "", qtrue, NULL, MN_NULL);
-	MN_RegisterNullNode(nodeBehaviourList + MN_CONFUNC, "confunc", qtrue, NULL, MN_CONFUNC);
-	MN_RegisterNullNode(nodeBehaviourList + MN_CVARFUNC, "cvarfunc", qtrue, NULL, MN_CVARFUNC);
-	MN_RegisterNullNode(nodeBehaviourList + MN_FUNC, "func", qtrue, MN_FuncNodeLoaded, MN_FUNC);
-	MN_RegisterNullNode(nodeBehaviourList + MN_ZONE, "zone", qfalse, MN_ZoneNodeLoaded, MN_ZONE);
+	MN_RegisterNullNode(nodeBehaviourList + MN_NULL);
+	MN_RegisterConFuncNode(nodeBehaviourList + MN_CONFUNC);
+	MN_RegisterCvarFuncNode(nodeBehaviourList + MN_CVARFUNC);
+	MN_RegisterFuncNode(nodeBehaviourList + MN_FUNC);
+	MN_RegisterZoneNode(nodeBehaviourList + MN_ZONE);
 	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
 	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
 	MN_RegisterSpinnerNode(nodeBehaviourList + MN_SPINNER);
