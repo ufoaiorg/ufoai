@@ -171,10 +171,11 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 	assert(item->t);
 	od = item->t;
 
+	/* don't handle the od->tech->image here - it's very ufopedia specific in most cases */
 	if (od->image[0]) {
 		vec3_t imgOrg;
-		int imgWidth = item->t->sx * C_UNIT;
-		int imgHeight = item->t->sy * C_UNIT;
+		const int imgWidth = item->t->sx * C_UNIT;
+		const int imgHeight = item->t->sy * C_UNIT;
 
 		VectorCopy(org, imgOrg);
 
@@ -214,7 +215,7 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 
 		memset(&mi, 0, sizeof(mi));
 
-		/* the image from the tech structure has higher priority, because the item model itself
+		/* the model from the tech structure has higher priority, because the item model itself
 		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
 		/** @todo Support the drawing of menuModel_t */
 		if (od->tech && od->tech->mdl)
