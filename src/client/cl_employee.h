@@ -103,7 +103,7 @@ int E_CountAllHired(const base_t* const base);
 int E_CountUnhired(employeeType_t type);
 int E_CountUnhiredRobotsByType(const ugv_t *ugvType);
 int E_CountUnassigned(const base_t* const base, employeeType_t type);
-inline employee_t* E_GetEmployeeByMenuIndex(int num);
+employee_t* E_GetEmployeeByMenuIndex(int num);
 void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
 void E_DeleteEmployeesExceedingCapacity(base_t *base);
