@@ -308,13 +308,24 @@ menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 
 /**
  * @sa IN_Parse
+ * @todo cleanup this function
  */
 qboolean MN_CursorOnMenu (int x, int y)
 {
+#if 0 /* new handler */
 	menuNode_t *node;
 	menu_t *menu;
 	int sp;
+#endif
 
+	if (mouseOverTest) {
+		/* else if it is a render node */
+		if (mouseOverTest == mouseOverTest->menu->renderNode) {
+			return qfalse;
+		}
+		return qtrue;
+	}
+#if 0 /* new handler */
 	sp = mn.menuStackPos;
 
 	while (sp > 0) {
@@ -334,7 +345,7 @@ qboolean MN_CursorOnMenu (int x, int y)
 				return qfalse;
 		}
 	}
-
+#endif
 	return qfalse;
 }
 
