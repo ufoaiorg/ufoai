@@ -363,7 +363,7 @@ static void SCR_DrawCursor (void)
 		VectorSet(org, mousePosX, mousePosY, -50);
 		if (dragInfo.toNode && checkedTo)
 			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
-		MN_DrawItem(dragInfo.toNode, org, &dragInfo.item, -1, -1, scale, color);
+		MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);
 
 
 #ifdef PARANOID
