@@ -178,6 +178,11 @@ void MN_MouseMove (int x, int y)
 			menu = m;
 			break;
 		}
+
+		if (m->modal) {
+			/* we must not search anymore */
+			break;
+		}
 	}
 
 	/* find the first node under the mouse (last of the node list) */
