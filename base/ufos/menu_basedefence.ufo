@@ -103,7 +103,7 @@ menu basedefence
 
 	model mdl_top
 	{
-		md2		"*cvar mn_upmodel_top"
+		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		origin	"886 545 0"
 		pos		"786 500"

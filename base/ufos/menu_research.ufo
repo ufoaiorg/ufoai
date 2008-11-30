@@ -809,7 +809,7 @@ menu research
 
 	item itemmodel
 	{
-		md2	"*cvar mn_researchitem"
+		model	"*cvar mn_researchitem"
 		pos		"793 288"
 		scale	"7 7 7"
 	}
@@ -817,14 +817,14 @@ menu research
 	// @todo do we even use the weaponmodel and ammomodel nodes?
 	item weaponmodel
 	{
-		md2	"*cvar mn_researchweapon"
+		model	"*cvar mn_researchweapon"
 		pos		"750 288"
 		scale	"7 7 7"
 	}
 
 	item ammomodel
 	{
-		md2	"*cvar mn_researchammo"
+		model	"*cvar mn_researchammo"
 		pos		"930 288"
 		scale	"7 7 7"
 	}

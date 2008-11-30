@@ -235,7 +235,7 @@ menu ufopedia
 
 	model mdl_top
 	{
-		md2		"*cvar mn_upmodel_top"
+		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		origin	"870 215 0"
 		pos	"750 85"
@@ -315,7 +315,7 @@ menu ufopedia
 
 	model mdl_bottom
 	{
-		md2		"*cvar mn_upmodel_bottom"
+		model	"*cvar mn_upmodel_bottom"
 		origin	"870 415 0"
 		angles	"0 0 120"
 		pos		"790 335"

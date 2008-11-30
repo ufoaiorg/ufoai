@@ -811,7 +811,7 @@ menu team
 
 	model body
 	{
-		md2		"*cvar mn_body"
+		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand2"
 		origin	"580 215 0"
@@ -826,7 +826,7 @@ menu team
 
 	model head
 	{
-		md2		"*cvar mn_head"
+		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"body tag_head"
 		scale	"1.0 1.0 1.0"
@@ -922,7 +922,7 @@ menu team
 
 	model aircraft
 	{
-		md2		"*cvar mn_aircraft_model"
+		model	"*cvar mn_aircraft_model"
 		origin	"690 640 0"
 		angles	"-20 -40 120"
 		scale	"1.1 1.1 1.1"
@@ -1346,7 +1346,7 @@ menu equipment
 
 	item itemmodel
 	{
-		md2	"*cvar mn_item"
+		model	"*cvar mn_item"
 		pos		"203 472"
 		scale	"7 7 7"
 	}
@@ -1646,7 +1646,7 @@ menu equipment
 
 	model body
 	{
-		md2	"*cvar mn_body"
+		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand_menu"
 		origin	"785 173 0"
@@ -1656,9 +1656,9 @@ menu equipment
 
 	model head
 	{
-		md2	"*cvar mn_head"
+		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
-		tag	"body tag_head"
+		tag		"body tag_head"
 		scale	"1.0 1.0 1.0"
 	}
 

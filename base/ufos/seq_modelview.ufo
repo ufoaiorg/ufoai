@@ -57,7 +57,7 @@ sequence view
 
 	model bloodspider
 	{
-		model	models/aliens/bloodspider/bloodspider.md2
+		model	aliens/bloodspider/bloodspider
 		anim	walk0
 		origin	"0 -15 0"
 		omega "0 -30 0"

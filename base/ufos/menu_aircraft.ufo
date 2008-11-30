@@ -218,7 +218,7 @@ menu aircraft
 	// ==================
 	model aircraft
 	{
-		md2		"*cvar mn_aircraft_model"
+		model	"*cvar mn_aircraft_model"
 		origin	"690 240 0"
 	}
 
@@ -408,9 +408,9 @@ menu aircraft_equip
 
 	model aircraftequip
 	{
-		md2	"*cvar mn_aircraft_model"
+		model	"*cvar mn_aircraft_model"
 		origin	"228 318 0"
-		pos	"20 20"
+		pos		"20 20"
 		size	"415 728"
 //		bgcolor	"1 1 1 0.5"
 	}
@@ -529,10 +529,10 @@ menu aircraft_equip
 	model mdl_top
 	{
 		if "mn_equip_pilot != 1"
-		md2	"*cvar mn_upmodel_top"
+		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		origin	"886 545 0"
-		pos	"786 500"
+		pos		"786 500"
 		size	"200 175"
 		mousefx	true
 		click
@@ -541,10 +541,10 @@ menu aircraft_equip
 	model mdl_top_pilot
 	{
 		if "mn_equip_pilot == 1"
-		md2	"*cvar mn_upmodel_top"
+		model	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
 		origin	"886 555 0"
-		pos	"786 500"
+		pos		"786 500"
 		size	"100 100"
 		mousefx	true
 		click
@@ -791,7 +791,7 @@ menu aircraft_equip
 
 	model airequip_model_slot0
 	{
-		md2		"*cvar mn_aircraft_item_model_slot0"
+		model	"*cvar mn_aircraft_item_model_slot0"
 		pos		"38 38"
 		size	"60 60"
 		origin	"68 68 0"
@@ -811,7 +811,7 @@ menu aircraft_equip
 
 	model airequip_model_slot1
 	{
-		md2		"*cvar mn_aircraft_item_model_slot1"
+		model	"*cvar mn_aircraft_item_model_slot1"
 		pos		"196 38"
 		size	"60 60"
 		origin	"226 68 0"
@@ -831,7 +831,7 @@ menu aircraft_equip
 
 	model airequip_model_slot2
 	{
-		md2	"*cvar mn_aircraft_item_model_slot2"
+		model	"*cvar mn_aircraft_item_model_slot2"
 		pos		"353 38"
 		size	"60 60"
 		origin	"383 68 0"
@@ -851,7 +851,7 @@ menu aircraft_equip
 
 	model airequip_model_slot3
 	{
-		md2		"*cvar mn_aircraft_item_model_slot3"
+		model	"*cvar mn_aircraft_item_model_slot3"
 		pos		"38 301"
 		size	"60 60"
 		origin	"68 331 0"
@@ -871,7 +871,7 @@ menu aircraft_equip
 
 	model airequip_model_slot4
 	{
-		md2		"*cvar mn_aircraft_item_model_slot4"
+		model	"*cvar mn_aircraft_item_model_slot4"
 		pos		"353 301"
 		size	"60 60"
 		origin	"383 331 0"
@@ -891,7 +891,7 @@ menu aircraft_equip
 
 	model airequip_model_slot5
 	{
-		md2		"*cvar mn_aircraft_item_model_slot5"
+		model	"*cvar mn_aircraft_item_model_slot5"
 		pos		"38 564"
 		size	"60 60"
 		origin	"68 594 0"
@@ -911,7 +911,7 @@ menu aircraft_equip
 
 	model airequip_model_slot6
 	{
-		md2		"*cvar mn_aircraft_item_model_slot6"
+		model	"*cvar mn_aircraft_item_model_slot6"
 		pos		"196 564"
 		size	"60 60"
 		origin	"226 594 0"
@@ -931,7 +931,7 @@ menu aircraft_equip
 
 	model airequip_model_slot7
 	{
-		md2		"*cvar mn_aircraft_item_model_slot7"
+		model	"*cvar mn_aircraft_item_model_slot7"
 		pos		"353 564"
 		size	"60 60"
 		origin	"383 594 0"

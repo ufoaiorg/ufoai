@@ -5,19 +5,19 @@ sequence credits
 
 	precache models
 	{
-		models/aircraft/ufo_fighter/ufo_fighter_hull.md2
-		models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2
-		models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2
-		models/aircraft/ufo_fighter/ufo_fighter_wings.md2
-		models/soldiers/male/body.md2
-		models/soldiers/male/head01b.md2
-		models/soldiers/male/head03a.md2
-		models/soldiers/malelight/body.md2
-		models/soldiers/malelight/head01a.md2
-		models/soldiers/malelight/head02a.md2
-		models/soldiers/malemedium/body.md2
-		models/soldiers/malemedium/head02b.md2
-		models/soldiers/malemedium/head03a.md2
+		aircraft/ufo_fighter/ufo_fighter_hull
+		aircraft/ufo_fighter/ufo_fighter_engines_1
+		aircraft/ufo_fighter/ufo_fighter_engines_2
+		aircraft/ufo_fighter/ufo_fighter_wings
+		soldiers/male/body
+		soldiers/male/head01b
+		soldiers/male/head03a
+		soldiers/malelight/body
+		soldiers/malelight/head01a
+		soldiers/malelight/head02a
+		soldiers/malemedium/body
+		soldiers/malemedium/head02b
+		soldiers/malemedium/head03a
 	}
 	precache pics
 	{
@@ -35,89 +35,89 @@ sequence credits
 	// ================================
 	model body1
 	{
-		model	models/soldiers/malelight/body.md2
+		model	soldiers/malelight/body
 		skin	2
 		anim	cstand0
 		origin	"0 -15 0"
 	}
 	model head1
 	{
-		model	models/soldiers/malelight/head01a.md2
+		model	soldiers/malelight/head01a
 		parent	body1
 		tag		tag_head
 	}
 	model body2
 	{
-		model	models/soldiers/malemedium/body.md2
+		model	soldiers/malemedium/body
 		anim	cstand0
 		origin	"0 15 0"
 	}
 	model head2
 	{
-		model	models/soldiers/malemedium/head02b.md2
+		model	soldiers/malemedium/head02b
 		parent	body2
 		tag		tag_head
 	}
 	model body3
 	{
-		model	models/soldiers/male/body.md2
+		model	soldiers/male/body
 		anim	stand0
 		skin	2
 		origin	"-10 0 5"
 	}
 	model head3
 	{
-		model	models/soldiers/male/head03a.md2
+		model	soldiers/male/head03a
 		parent	body3
 		tag		tag_head
 	}
 	model body4
 	{
-		model	models/soldiers/malelight/body.md2
+		model	soldiers/malelight/body
 		anim	stand1
 		origin	"-10 30 5"
 	}
 	model head4
 	{
-		model	models/soldiers/malelight/head02a.md2
+		model	soldiers/malelight/head02a
 		parent	body4
 		tag		tag_head
 	}
 	model body5
 	{
-		model	models/soldiers/malemedium/body.md2
+		model	soldiers/malemedium/body
 		anim	stand0
 		origin	"-10 -30 5"
 	}
 	model head5
 	{
-		model	models/soldiers/malemedium/head03a.md2
+		model	soldiers/malemedium/head03a
 		parent	body5
 		tag		tag_head
 	}
 	model body6
 	{
-		model	models/soldiers/male/body.md2
+		model	soldiers/male/body
 		skin	1
 		anim	stand0
 		origin	"-30 -15 10"
 	}
 	model head6
 	{
-		model	models/soldiers/male/head01b.md2
+		model	soldiers/male/head01b
 		parent	body6
 		tag		tag_head
 	}
 	model body7
 	{
-		model	models/soldiers/male/body.md2
+		model	soldiers/male/body
 		skin	3
 		anim	stand1
 		origin	"-30 15 10"
 	}
 	model head7
 	{
-		model	models/soldiers/male/head03a.md2
+		model	soldiers/male/head03a
 		parent	body7
 		tag		tag_head
 	}
@@ -556,25 +556,25 @@ sequence credits
 	}
 	model ship_hull
 	{
-		model	models/aircraft/ufo_fighter/ufo_fighter_hull.md2
+		model	aircraft/ufo_fighter/ufo_fighter_hull
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_wings
 	{
-		model	models/aircraft/ufo_fighter/ufo_fighter_wings.md2
+		model	aircraft/ufo_fighter/ufo_fighter_wings
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_engine1
 	{
-		model	models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2
+		model	aircraft/ufo_fighter/ufo_fighter_engines_1
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_engine2
 	{
-		model	models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2
+		model	aircraft/ufo_fighter/ufo_fighter_engines_2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}

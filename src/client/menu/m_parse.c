@@ -63,7 +63,7 @@ static const value_t nodeProperties[] = {
 	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
 	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
-	{"md2", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
+	{"model", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
 	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
 	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
 	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */

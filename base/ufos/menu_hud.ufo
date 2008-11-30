@@ -794,7 +794,7 @@ menu hud extends ahud
 	// ==================
 	model head
 	{
-		md2		"*cvar mn_head"
+		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		origin	"56 54 0"
 		angles	"0 60 90"

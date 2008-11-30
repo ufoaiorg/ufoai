@@ -27,7 +27,7 @@ menu physdata
 
 	model actor
 	{
-		md2		"*cvar mn_body"
+		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand2"
 		origin	"370 270 0"
@@ -37,7 +37,7 @@ menu physdata
 
 	model head
 	{
-		md2		"*cvar mn_head"
+		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"actor tag_head"
 		scale	"1.0 1.0 1.0"
