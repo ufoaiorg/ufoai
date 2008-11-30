@@ -145,6 +145,37 @@ void MN_CheckMouseMove (void)
 }
 
 /**
+ * @brief Check if a position is inner a node
+ * @param[in] node The node to test
+ * @param[in] x absolute x position on the screen
+ * @param[in] y absolute y position on the screen
+ * @todo Move it on a better file.c
+ */
+qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
+{
+	int i;
+	/* relative position */
+	x -= node->menu->pos[0];
+	y -= node->menu->pos[1];
+
+	/* check bounding box */
+	if (x < node->pos[0] || x > node->pos[0] + node->size[0]
+	|| y < node->pos[1] || y > node->pos[1] + node->size[1]) {
+		return qfalse;
+	}
+
+	/* check excluded box */
+	for (i = 0; i < node->excludeNum; i++) {
+		if (x >= node->exclude[i].pos[0]
+		&& x <= node->exclude[i].pos[0] + node->exclude[i].size[0]
+		&& y >= node->exclude[i].pos[1]
+		&& y <= node->exclude[i].pos[1] + node->exclude[i].size[1])
+			return qfalse;
+	}
+	return qtrue;
+}
+
+/**
  * @brief Is called everytime the mouse position change
  */
 void MN_MouseMove (int x, int y)
@@ -188,17 +219,13 @@ void MN_MouseMove (int x, int y)
 	/* find the first node under the mouse (last of the node list) */
 	mouseOverTest = NULL;
 	if (menu) {
-		/* relative position */
-		const int xx = x - menu->pos[0];
-		const int yy = y - menu->pos[1];
-
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstChild; node; node = node->next) {
-			if (node->invis || !MN_CheckCondition(node))
+			if (node->invis || node->behaviour->isVirtual || !MN_CheckCondition(node))
 				continue;
-			if (xx >= node->pos[0] && xx <= node->pos[0] + node->size[0]
-				&& yy >= node->pos[1] && yy <= node->pos[1] + node->size[1])
+			if (MN_IsInnerNode(node, x, y)) {
 				mouseOverTest = node;
+			}
 		}
 	}
 
