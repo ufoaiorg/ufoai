@@ -163,104 +163,94 @@ static void MN_ScrollContainerPrev_f (void)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
+void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	objDef_t *od;
+	vec4_t col;
+	vec3_t origin;
 
 	assert(item);
 	assert(item->t);
 	od = item->t;
 
-	/* don't handle the od->tech->image here - it's very ufopedia specific in most cases */
-	if (od->image[0]) {
-		vec3_t imgOrg;
-		const int imgWidth = item->t->sx * C_UNIT;
-		const int imgHeight = item->t->sy * C_UNIT;
+	Vector4Copy(color, col);
+	/* no ammo in this weapon - highlight this item */
+	if (od->weapon && od->reload && !item->a) {
+		col[1] *= 0.5;
+		col[2] *= 0.5;
+	}
 
-		VectorCopy(org, imgOrg);
+	VectorCopy(org, origin);
 
-		/* Calculate correct location of the image (depends on rotation) */
-		/** @todo Change the rotation of the image as well, right now only the location is changed.
-		 * How is image-rotation handled right now? */
-		if (x >= 0 || y >= 0) {
-			/* Add offset of location in container. */
-			imgOrg[0] += x * C_UNIT;
-			imgOrg[1] += y * C_UNIT;
+	/* Calculate correct location of the image or the model (depends on rotation) */
+	/** @todo Change the rotation of the image as well, right now only the location is changed.
+	 * How is image-rotation handled right now? */
+	if (x >= 0 || y >= 0) {
+		/* Add offset of location in container. */
+		origin[0] += x * C_UNIT;
+		origin[1] += y * C_UNIT;
 
-			/* Add offset for item-center (depends on rotation). */
-			if (item->rotated) {
-				imgOrg[0] += item->t->sy * C_UNIT / 2.0;
-				imgOrg[1] += item->t->sx * C_UNIT / 2.0;
-				/** @todo Image size calculation depends on handling of image-rotation.
-				imgWidth = item->t->sy * C_UNIT;
-				imgHeight = item->t->sx * C_UNIT;
-				*/
-			} else {
-				imgOrg[0] += item->t->sx * C_UNIT / 2.0;
-				imgOrg[1] += item->t->sy * C_UNIT / 2.0;
-			}
+		/* Add offset for item-center (depends on rotation). */
+		if (item->rotated) {
+			origin[0] += od->sy * C_UNIT / 2.0;
+			origin[1] += od->sx * C_UNIT / 2.0;
+			/** @todo Image size calculation depends on handling of image-rotation.
+			imgWidth = od->sy * C_UNIT;
+			imgHeight = od->sx * C_UNIT;
+			*/
+		} else {
+			origin[0] += od->sx * C_UNIT / 2.0;
+			origin[1] += od->sy * C_UNIT / 2.0;
 		}
+	}
+
+	/* don't handle the od->tech->image here - it's very ufopedia specific in most cases */
+	if (od->image[0] != '\0') {
+		const int imgWidth = od->sx * C_UNIT;
+		const int imgHeight = od->sy * C_UNIT;
 
 		/* Draw the image. */
-		R_DrawNormPic(imgOrg[0], imgOrg[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
-	} else if (od->model[0]) {
-		modelInfo_t mi;
-		vec3_t angles = { -10, 160, 70 };
-		vec3_t origin;
-		vec3_t size;
-		vec4_t col;
+		R_DrawNormPic(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
+	} else {
+		menuModel_t *menuModel = NULL;
+		const char *modelName = od->model;
+		if (od->tech && od->tech->mdl) {
+			menuModel = MN_GetMenuModel(od->tech->mdl);
+			/* the model from the tech structure has higher priority, because the item model itself
+			 * is mainly for the battlescape or the geoscape - only use that as a fallback */
+			modelName = od->tech->mdl;
+		}
 
-		if (item->rotated)
-			angles[0] -= 90;
+		/* no model definition in the tech struct, not in the fallback object definition */
+		if (modelName == NULL || modelName[0] == '\0') {
+			Com_Printf("MN_DrawItem: No model given for item: '%s'\n", od->id);
+			return;
+		}
 
-		memset(&mi, 0, sizeof(mi));
-
-		/* the model from the tech structure has higher priority, because the item model itself
-		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
-		/** @todo Support the drawing of menuModel_t */
-		if (od->tech && od->tech->mdl)
-			mi.name = od->tech->mdl;
-		else
-			mi.name = od->model;
-		mi.origin = origin;
-		mi.angles = angles;
-		mi.center = od->center;
-		mi.scale = size;
-
-		if (od->scale) {
-			VectorScale(scale, od->scale, size);
+		if (menuModel && node) {
+			const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+			MN_DrawModelNode(node, ref, modelName);
 		} else {
-			VectorCopy(scale, size);
+			modelInfo_t mi;
+			vec3_t angles = {-10, 160, 70};
+			vec3_t size = {scale[0], scale[1], scale[2]};
+
+			if (item->rotated)
+				angles[0] -= 90;
+
+			memset(&mi, 0, sizeof(mi));
+			mi.origin = origin;
+			mi.angles = angles;
+			mi.center = od->center;
+			mi.scale = size;
+			mi.color = col;
+			mi.name = modelName;
+			if (od->scale)
+				VectorScale(size, od->scale, size);
+
+			/* draw the model */
+			R_DrawModelDirect(&mi, NULL, NULL);
 		}
-
-		VectorCopy(org, origin);
-		/* Calculate correct location of the model (depends on rotation) */
-		if (x >= 0 || y >= 0) {
-			/* Add offset of location in container. */
-			origin[0] += C_UNIT * x;
-			origin[1] += C_UNIT * y;
-
-			/* Add offset for item-center (depends on rotation). */
-			if (item->rotated) {
-				origin[0] += item->t->sy * C_UNIT / 2.0;
-				origin[1] += item->t->sx * C_UNIT / 2.0;
-			} else {
-				origin[0] += item->t->sx * C_UNIT / 2.0;
-				origin[1] += item->t->sy * C_UNIT / 2.0;
-			}
-		}
-
-		Vector4Copy(color, col);
-		/* no ammo in this weapon - highlight this item */
-		if (od->weapon && od->reload && !item->a) {
-			col[1] *= 0.5;
-			col[2] *= 0.5;
-		}
-
-		mi.color = col;
-
-		/* draw the model */
-		R_DrawModelDirect(&mi, NULL, NULL);
 	}
 }
 
@@ -488,9 +478,9 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 				if (item->t->holdTwoHanded) {
 					if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
-						MN_DrawItem(pos, item, -1, -1, scale, colorLoadable);
+						MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
 					else
-						MN_DrawItem(pos, item, -1, -1, scale, color);
+						MN_DrawItem(node, pos, item, -1, -1, scale, color);
 				}
 			}
 		} else if (menuInventory->c[node->container->id]) {
@@ -514,9 +504,9 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			assert(item);
 			assert(item->t);
 			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
-				MN_DrawItem(pos, item, -1, -1, scale, colorLoadable);
+				MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
 			else
-				MN_DrawItem(pos, item, -1, -1, scale, color);
+				MN_DrawItem(node, pos, item, -1, -1, scale, color);
 		}
 	} else {
 		if (node->container->scroll) {
@@ -600,9 +590,9 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 								/* Actually draw the item. */
 								tempItem.t = ic->item.t;
 								if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
-									MN_DrawItem(pos, &tempItem, -1, -1, scale, colorLoadable);
+									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
 								else
-									MN_DrawItem(pos, &tempItem, -1, -1, scale, color);
+									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
 
 								if (node->container->scrollVertical) {
 									/* Draw the item name. */
@@ -638,7 +628,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 												curWidth += tempItem.t->sx * C_UNIT;
 
-												MN_DrawItem(pos, &tempItem, -1, -1, scale, color);
+												MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
 												R_FontDrawString("f_verysmall", ALIGN_LC,
 													pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
 													pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
@@ -682,9 +672,9 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 				assert(ic->item.t);
 				if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
-					MN_DrawItem(nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
+					MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 				else
-					MN_DrawItem(nodepos, &ic->item, ic->x, ic->y, scale, color);
+					MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, color);
 			}
 		}
 	}

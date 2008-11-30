@@ -353,7 +353,7 @@ static void SCR_DrawCursor (void)
 							-40);
 				}
 				Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
-				MN_DrawItem(org, &dragInfo.item, -1, -1, scale, color);	/**< Draw preview item. */
+				MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);	/**< Draw preview item. */
 			}
 
 			dragInfo.item.rotated = oldRotated ;
@@ -363,10 +363,10 @@ static void SCR_DrawCursor (void)
 		VectorSet(org, mousePosX, mousePosY, -50);
 		if (dragInfo.toNode && checkedTo)
 			Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
-		MN_DrawItem(org, &dragInfo.item, -1, -1, scale, color);
+		MN_DrawItem(dragInfo.toNode, org, &dragInfo.item, -1, -1, scale, color);
 
 
-#if 0
+#ifdef PARANOID
 		/** Debugging only - Will draw a marker in the upper left corner of the
 		 * dragged item (which is the one used for calculating the resulting grid-coordinates).
 		 * @todo Maybe we could make this a feature in some way. i.e. we could draw

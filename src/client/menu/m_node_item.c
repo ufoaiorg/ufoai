@@ -48,7 +48,7 @@ static void MN_DrawItemNode (menuNode_t *node, const objDef_t *od)
 	MN_GetNodeAbsPos(node, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;
-	MN_DrawItem(pos, &item, -1, -1, node->scale, color);
+	MN_DrawItem(node, pos, &item, -1, -1, node->scale, color);
 }
 
 /**
@@ -71,7 +71,7 @@ static void MN_DrawItemNode2 (menuNode_t *node)
 			assert(aircraft->tech);
 			MN_DrawModelNode(node, ref, aircraft->tech->mdl);
 		} else {
-			Com_Printf("Unknown item: '%s'\n", ref);
+			Com_Printf("MN_DrawItemNode2: Unknown item: '%s'\n", ref);
 		}
 	}
 }

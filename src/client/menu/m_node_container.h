@@ -34,7 +34,7 @@ void MN_RegisterContainerNode(nodeBehaviour_t *behaviour);
 void MN_FindContainer(menuNode_t* const node);
 invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY);
 void MN_Drag(const menuNode_t* const node, struct base_s *base, int x, int y, qboolean rightClick);
-void MN_DrawItem(const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color);
+void MN_DrawItem(menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color);
 void MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
 
 #endif
