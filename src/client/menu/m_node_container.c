@@ -214,8 +214,13 @@ void MN_DrawItem (const vec3_t org, const item_t *item, int x, int y, const vec3
 
 		memset(&mi, 0, sizeof(mi));
 
-		/* Draw model, if there is no image. */
-		mi.name = od->model;
+		/* the image from the tech structure has higher priority, because the item model itself
+		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
+		/** @todo Support the drawing of menuModel_t */
+		if (od->tech && od->tech->mdl)
+			mi.name = od->tech->mdl;
+		else
+			mi.name = od->model;
 		mi.origin = origin;
 		mi.angles = angles;
 		mi.center = od->center;
