@@ -105,7 +105,7 @@ building building_missile
 	fixcosts	10000
 	depends		building_command // need to know where to shoot
 	type		missile
-	build_time	1
+	build_time	3
 	varcosts	5000
 	map_name	"missile"
 	pedia		rs_building_missile

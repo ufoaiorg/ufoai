@@ -738,7 +738,7 @@ craftitem base_AA51_launcher
 	name		"_AA51 missile launcher"
 	crafttype		base_missile
 	size	90	// medium
-	installationTime	48
+	installationTime	12
 	price		50000
 	is_dummy	true
 }

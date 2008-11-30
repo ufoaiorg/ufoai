@@ -33,7 +33,7 @@ installation samsite
 	max_batteries	2
 	max_ufo_stored	0
 	max_damage		1
-	buildtime	1
+	buildtime	3
 }
 
 
