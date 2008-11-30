@@ -24,10 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_nodes.h"
 #include "m_node_window.h"
-#include "m_special.h"
+#include "m_node_special.h"
 
 /**
- * @todo create a m_node_zone.c
+ * @brief Call after script init the node
  */
 static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
@@ -45,6 +45,9 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Call before script init the node
+ */
 static void MN_FuncNodeLoading (menuNode_t *node)
 {
 	if (!Q_strncmp(node->name, "event", 5)) {
@@ -53,6 +56,7 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 }
 
 /**
+ * @brief Call after script init the node
  */
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {
