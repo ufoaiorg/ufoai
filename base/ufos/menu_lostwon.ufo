@@ -357,6 +357,7 @@ menu popup_recoverynationlist
 		pos		"124 192"
 		size	"777 402"
 		dragbutton true
+		modal	true
 	}
 
 	zone popup
