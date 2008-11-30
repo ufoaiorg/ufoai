@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_special.h"
 
 /**
- * @brief Call after script init the node
+ * @brief Call after the script initialized the node
  */
 static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
@@ -46,7 +46,7 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 }
 
 /**
- * @brief Call before script init the node
+ * @brief Call before the script initializes the node
  */
 static void MN_FuncNodeLoading (menuNode_t *node)
 {
@@ -56,7 +56,7 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 }
 
 /**
- * @brief Call after script init the node
+ * @brief Call after the script initialized the node
  */
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {
