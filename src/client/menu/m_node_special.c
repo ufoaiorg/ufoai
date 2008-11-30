@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_nodes.h"
 #include "m_node_window.h"
+#include "m_special.h"
 
 /**
  * @todo create a m_node_zone.c
