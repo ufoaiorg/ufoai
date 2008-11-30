@@ -113,6 +113,25 @@ public:
 	}
 };
 
+static void file_dialog_update_preview (GtkFileChooser *file_chooser, gpointer data)
+{
+	GtkWidget *preview = GTK_WIDGET(data);
+	char *filename = gtk_file_chooser_get_preview_filename(file_chooser);
+
+	if (filename != NULL) {
+		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_size(filename, 128, 128, NULL);
+
+		gtk_image_set_from_pixbuf(GTK_IMAGE(preview), pixbuf);
+
+		gtk_file_chooser_set_preview_widget_active(file_chooser, pixbuf != NULL);
+		if (pixbuf)
+			gdk_pixbuf_unref(pixbuf);
+
+		g_free(filename);
+	}
+}
+
+
 static char g_file_dialog_file[1024];
 
 static const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
@@ -166,6 +185,11 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 		gtk_file_filter_set_name(filter, masks.m_masks[i].c_str());
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 	}
+
+	GtkWidget *preview = gtk_image_new();
+	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), preview);
+	g_signal_connect(GTK_FILE_CHOOSER(dialog), "update-preview",
+			G_CALLBACK(file_dialog_update_preview), preview);
 
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		strcpy(g_file_dialog_file, gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
