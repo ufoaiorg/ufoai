@@ -151,7 +151,7 @@ void MN_CheckMouseMove (void)
  * @param[in] y absolute y position on the screen
  * @todo Move it on a better file.c
  */
-qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
+static qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
 {
 	int i;
 	/* relative position */
