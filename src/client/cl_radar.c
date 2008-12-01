@@ -59,7 +59,6 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	/* Initialise radar range (will be filled below) */
 	R_InitializeRadarOverlay(qtrue);
 
-
 	/* Add base radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -326,7 +325,7 @@ void RADAR_Initialise (radar_t* radar, float range, float trackingRange, float l
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && (radar->range - oldrange > UFO_EPSILON))
+	if (updateSourceRadarMap && (fabs(radar->range - oldrange) > UFO_EPSILON))
 		RADAR_UpdateStaticRadarCoverage();
 }
 
