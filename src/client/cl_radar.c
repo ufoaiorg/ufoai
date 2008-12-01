@@ -62,7 +62,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	/* Add base radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (base) {
+		if (base && base->radar.range) {
 			R_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, qtrue);
 		}
 	}
@@ -70,7 +70,8 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	/* Add installation coverage */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (installation && installation->founded && installation->installationStatus == INSTALLATION_WORKING) {
+		if (installation && installation->founded &&
+			installation->installationStatus == INSTALLATION_WORKING && installation->radar.range) {
 			R_AddRadarCoverage(installation->pos, installation->radar.range, installation->radar.trackingRange, qtrue);
 		}
 	}
@@ -325,8 +326,10 @@ void RADAR_Initialise (radar_t* radar, float range, float trackingRange, float l
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && (fabs(radar->range - oldrange) > UFO_EPSILON))
+	if (updateSourceRadarMap && (fabs(radar->range - oldrange) > UFO_EPSILON)) {
 		RADAR_UpdateStaticRadarCoverage();
+		RADAR_UpdateWholeRadarOverlay();
+	}
 }
 
 /**
