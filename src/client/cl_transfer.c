@@ -1104,14 +1104,11 @@ static void TR_TransferStart_f (void)
 /**
  * @brief Set the number of item to transfer.
  */
-static inline int TR_GetTransferFactor (void)
+static int TR_GetTransferFactor (void)
 {
-	int numItems;
-	/** The higher this value, the slower transfer factor will change */
+	/* The higher this value, the slower transfer factor will change */
 	const float NUM_CLICK_PARAMETER = 13.0f;
-
-	numItems = exp(mn.mouseRepeat.numClick / NUM_CLICK_PARAMETER);
-	numItems = min(MAX_TR_FACTORS, numItems);
+	const int numItems = min(MAX_TR_FACTORS, exp(mn.mouseRepeat.numClick / NUM_CLICK_PARAMETER));
 	return numItems;
 }
 

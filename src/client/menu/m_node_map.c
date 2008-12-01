@@ -47,7 +47,7 @@ static void MN_MapNodeDraw (menuNode_t *node)
 
 static void MN_MapNodeRightClick (menuNode_t *node, int x, int y)
 {
-	if (!gd.combatZoomOn || !gd.combatZoomedUfo) {
+	if (!gd.combatZoomOn || !gd.combatZoomedUFO) {
 		if (!cl_3dmap->integer)
 			mouseSpace = MS_SHIFTMAP;
 		else
@@ -63,7 +63,7 @@ static void MN_MapNodeMiddleClick (menuNode_t *node, int x, int y)
 
 static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	if (gd.combatZoomOn  && gd.combatZoomedUfo) {
+	if (gd.combatZoomOn  && gd.combatZoomedUFO) {
 		return;
 	}
 

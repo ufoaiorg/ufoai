@@ -398,7 +398,7 @@ const char *CP_MissionToTypeString(const mission_t *mission);
 base_t* CP_PositionCloseToBase(const vec2_t pos);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
-void CP_MissionIsOverByUfo(aircraft_t *ufocraft);
+void CP_MissionIsOverByUFO(aircraft_t *ufocraft);
 const char* MAP_GetMissionModel(const mission_t *mission);
 void CP_UFOProceedMission(aircraft_t *ufocraft);
 

@@ -2844,7 +2844,7 @@ static inline void CP_MissionIsOver (mission_t *mission)
  * @brief Mission is finished because Phalanx team ended it.
  * @param[in] ufocraft Pointer to the UFO involved in this mission
  */
-void CP_MissionIsOverByUfo (aircraft_t *ufocraft)
+void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
 {
 	assert(ufocraft->mission);
 	CP_MissionIsOver(ufocraft->mission);
@@ -4148,7 +4148,7 @@ void CL_UpdateTime (void)
 void CL_GameTimeStop (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
-	const int lapseType = gd.combatZoomedUfo ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 
 	if ((lapse[0].type & lapseType) != lapseType)
 		return;
@@ -4172,7 +4172,7 @@ void CL_GameTimeStop (void)
 void CL_GameTimeSlow (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
-	const int lapseType = gd.combatZoomedUfo ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int minGameLapse = CL_MinGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
@@ -4210,7 +4210,7 @@ void CL_GameTimeSlow (void)
 void CL_GameTimeFast (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
-	const int lapseType = gd.combatZoomedUfo ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int maxGameLapse = CL_MaxGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed

@@ -63,8 +63,8 @@ static void AFM_GetAircraftInCombatRange (float distance)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				/* const float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);*/
-				if (aircraft->aircraftTarget == gd.combatZoomedUfo || aircraft == gd.combatZoomedUfo->aircraftTarget) {
-					const float distanceToTarget = MAP_GetDistance(aircraft->pos, gd.combatZoomedUfo->pos);
+				if (aircraft->aircraftTarget == gd.combatZoomedUFO || aircraft == gd.combatZoomedUFO->aircraftTarget) {
+					const float distanceToTarget = MAP_GetDistance(aircraft->pos, gd.combatZoomedUFO->pos);
 					if (distanceToTarget < distance) {
 						assert(numAircraftList < MAX_AIRCRAFT);
 						aircraftList[numAircraftList++] = aircraft;
@@ -85,8 +85,8 @@ static void AFM_GetUFOsInCombatRange (float distance)
 	aircraft_t *ufo;
 
 	for (ufo = &gd.ufos[gd.numUFOs - 1]; ufo >= gd.ufos; ufo--) {
-		const float distance = MAP_GetDistance(ufo->pos, gd.combatZoomedUfo->pos);
-		if (distance < distance || gd.combatZoomedUfo == ufo) {
+		const float distance = MAP_GetDistance(ufo->pos, gd.combatZoomedUFO->pos);
+		if (distance < distance || gd.combatZoomedUFO == ufo) {
 			assert(numUFOList < MAX_AIRCRAFT);
 			ufoList[numUFOList++] = ufo;
 		}
@@ -98,7 +98,7 @@ static void AFM_GetUFOsInCombatRange (float distance)
  */
 void AFM_Init_f (void)
 {
-	Vector2Copy(gd.combatZoomedUfo->pos, airFightMapCenter);
+	Vector2Copy(gd.combatZoomedUFO->pos, airFightMapCenter);
 
 	ccs.zoom = 1.2f;
 	Vector2Set(ccs.center, 0.5f, 0.5f);
@@ -121,9 +121,9 @@ void AFM_Init_f (void)
  */
 void AFM_Exit_f (void)
 {
-	if (gd.combatZoomedUfo) {
+	if (gd.combatZoomedUFO) {
 		gd.combatZoomOn = qfalse;
-		gd.combatZoomedUfo = NULL;
+		gd.combatZoomedUFO = NULL;
 		CL_EnsureValidGameLapseForGeoscape();
 	}
 }
@@ -337,7 +337,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		VectorScale(centroid, 1.0/(float)combatAirIdx, centroid);
 		AFM_CenterMapPosition(centroid);
 	} else {
-		AFM_CenterMapPosition(gd.combatZoomedUfo->pos);
+		AFM_CenterMapPosition(gd.combatZoomedUFO->pos);
 	}
 
 	if (gd.gameTimeScale > 0)

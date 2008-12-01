@@ -137,8 +137,8 @@ typedef struct globalData_s
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUFOs;	/**< The current amount of UFOS on the geoscape. */
 
-	/* Ufo to follow while in combat zoom */
-	aircraft_t *combatZoomedUfo;
+	/* UFO to follow while in combat zoom */
+	aircraft_t *combatZoomedUFO;
 	qboolean combatZoomOn;
 	combatZoomLevel_t combatZoomLevel;
 

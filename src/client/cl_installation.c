@@ -51,7 +51,7 @@ installationType_t INS_GetType (const installation_t *installation)
 {
 	if (installation->installationTemplate->maxBatteries > 0)
 		return INSTALLATION_DEFENCE;
-	else if (installation->installationTemplate->maxUfoStored > 0)
+	else if (installation->installationTemplate->maxUFOsStored > 0)
 		return INSTALLATION_UFOYARD;
 
 	/* default is radar */
@@ -129,7 +129,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* this cvar is needed by INS_SetBuildingByClick below*/
 	Cvar_SetValue("mn_installation_id", installation->idx);
 
-	installation->numUfosInInstallation = 0;
+	installation->numUFOsInInstallation = 0;
 
 	/* a new installation is not discovered (yet) */
 	installation->alienInterest = newInstallationAlienInterest;
@@ -152,7 +152,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: id = %s, range = %i, batteries = %i, ufos = %i\n",
 		installation->installationTemplate->id, installation->installationTemplate->radarRange,
-		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUfoStored);
+		installation->installationTemplate->maxBatteries, installation->installationTemplate->maxUFOsStored);
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(installation->radar), 0.0f, 0.0f, 1.0f, qtrue);
@@ -381,11 +381,11 @@ static void INS_InstallationList_f (void)
 		Com_Printf("Installation idx %i\n", installation->idx);
 		Com_Printf("Installation name %s\n", installation->name);
 		Com_Printf("Installation founded %i\n", installation->founded);
-		Com_Printf("Installation numUfosInInstallation %i\n", installation->numUfosInInstallation);
+		Com_Printf("Installation numUFOsInInstallation %i\n", installation->numUFOsInInstallation);
 		Com_Printf("Installation sensorWidth %i\n", installation->radar.range);
 		Com_Printf("Installation numSensoredAircraft %i\n", installation->radar.numUFOs);
 		Com_Printf("Installation Alien interest %f\n", installation->alienInterest);
-		Com_Printf("\nInstallation aircraft %i\n", installation->numUfosInInstallation);
+		Com_Printf("\nInstallation aircraft %i\n", installation->numUFOsInInstallation);
 		Com_Printf("Installation pos %.02f:%.02f\n", installation->pos[0], installation->pos[1]);
 		Com_Printf("\n\n");
 	}
@@ -499,7 +499,7 @@ void INS_InitStartup (void)
 		gd.installationTemplates[idx].cost = 0;
 		gd.installationTemplates[idx].radarRange = 0.0f;
 		gd.installationTemplates[idx].trackingRange = 0.0f;
-		gd.installationTemplates[idx].maxUfoStored = 0;
+		gd.installationTemplates[idx].maxUFOsStored = 0;
 		gd.installationTemplates[idx].maxBatteries = 0;
 	}
 
@@ -708,7 +708,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
-			installation->maxUfoStored = atoi(token);
+			installation->maxUFOsStored = atoi(token);
 		} else if (!Q_strncmp(token, "max_damage", MAX_VAR)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)

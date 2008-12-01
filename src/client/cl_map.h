@@ -47,7 +47,7 @@ qboolean checkSmoothRotation(void);
 void MAP_CenterOnPoint_f(void);
 void MAP_TurnCombatZoomOn(void);
 void MAP_TurnCombatZoomOff(void);
-void MAP_SetCombatZoomedUfo(aircraft_t *combatZoomedUfo);
+void MAP_SetCombatZoomedUFO(aircraft_t *combatZoomedUFO);
 void MAP_CombatZoomExit_f(void);
 void MAP_StopSmoothMovement(void);
 void MAP_SetSmoothZoom(float finalZoomLevel, qboolean useSafeAcceleration);

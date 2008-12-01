@@ -53,15 +53,15 @@ typedef struct installationTemplate_s {
 	int radarRange;			/**< The range of the installation's radar.  Units is the angle of the two points from center of earth. */
 	int trackingRange;		/**< The tracking range of the installation's radar. Units are degrees. */
 	int maxBatteries;		/**< The maximum number of battery slots that can be used in an installation. */
-	int maxUfoStored;		/**< The maximum number of ufos that can be stored in an installation. */
+	int maxUFOsStored;		/**< The maximum number of ufos that can be stored in an installation. */
 	int maxDamage;			/**< The maximum amount of damage an installation can sustain before it is destroyed. */
 	int buildTime;			/**< Time to build the installation, in days. */
 } installationTemplate_t;
 
-typedef struct installationUfos_s {
+typedef struct installationUFOs_s {
 	aircraft_t *aircraftTemplate;
 	int amount;
-} installationUfos_t;
+} installationUFOs_t;
 
 typedef struct installationWeapon_s {
 	/* int idx; */
@@ -99,8 +99,8 @@ typedef struct installation_s {
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
 	/** All ufo aircraft in this installation. This is used for UFO Yards. **/
-	installationUfos_t installationUfos[MAX_AIRCRAFT];
-	int numUfosInInstallation;	/**< How many ufos are in this installation. */
+	installationUFOs_t installationUFOs[MAX_AIRCRAFT];
+	int numUFOsInInstallation;	/**< How many ufos are in this installation. */
 
 	capacities_t aircraftCapacity;		/**< Capacity of UFO Yard. */
 

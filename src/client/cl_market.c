@@ -61,14 +61,14 @@ static const int MAX_AIRCRAFT_SUPPLY = 8;
 /** @brief Max values for Buy/Sell factors. */
 static const int MAX_BS_FACTORS = 500;
 
-static inline const objDef_t *BS_GetObjectDefition (buyListEntry_t *entry)
+static const objDef_t *BS_GetObjectDefition (const buyListEntry_t *entry)
 {
 	assert(entry);
 	if (entry->item)
 		return entry->item;
-	if (entry->ugv)
+	else if (entry->ugv)
 		return NULL;
-	if (entry->aircraft)
+	else if (entry->aircraft)
 		return NULL;
 
 	Sys_Error("You should not check an empty buy list entry");

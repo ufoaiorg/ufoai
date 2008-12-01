@@ -465,7 +465,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
-			CP_MissionIsOverByUfo(aircraft);
+			CP_MissionIsOverByUFO(aircraft);
 		}
 	} else {
 		/* change destination of other projectiles aiming aircraft */
