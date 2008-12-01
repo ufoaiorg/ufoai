@@ -244,6 +244,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			/* cut the image tag */
 			cur += strlen(TEXT_IMAGETAG);
 			token = COM_Parse((const char **)&cur);
+			/** @todo fix scrolling images */
 			if (node->textLines > node->textScroll)
 				y1 += (node->textLines - node->textScroll) * node->texh[0];
 			/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
