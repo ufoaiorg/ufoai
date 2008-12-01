@@ -851,7 +851,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
  * @brief Check if an aircraft should be seen on geoscape.
  * @return true or false wether UFO should be seen or not on geoscape.
  */
-inline qboolean UFO_IsUFOSeenOnGeoscape (aircraft_t* ufo)
+qboolean UFO_IsUFOSeenOnGeoscape (aircraft_t* ufo)
 {
 #if DEBUG
 	if (ufo->notOnGeoscape)
