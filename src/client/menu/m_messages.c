@@ -395,6 +395,33 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+/**
+ * @brief Returns the category entry that is shown at given selection index.
+ * @param selection index in visible list as returned by text list
+ * @param visibleIndex flag indicating that index is from visible lines, not from text row
+ * @return category entry from gd.msgCategoryEntries
+ * @note this method takes into account scroll index and folding state of categories.
+ * @sa MSO_Toggle_f
+ * @sa MSO_OptionsClick_f
+ */
+static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex(const int selection, const qboolean visibleIndex)
+{
+	int entriesToCheck = visibleIndex? selection + messageList_scroll : selection;
+	int realIndex = 0;
+	for (; entriesToCheck > 0; realIndex++) {
+		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[realIndex];
+		entriesToCheck--;
+		if (entry->isCategory && entry->category->isFolded) {
+			/* first entry of category is category itself, count other entries */
+			msgCategoryEntry_t *invisibleEntry = entry->next;
+			while (invisibleEntry) {
+				realIndex++;
+				invisibleEntry = invisibleEntry->next;
+			}
+		}
+	}
+	return &gd.msgCategoryEntries[realIndex];
+}
 
 /**
  * @brief Initializes menu texts for scrollable area
@@ -438,32 +465,29 @@ static void MSO_InitTextList (void)
  */
 static void MSO_UpdateVisibleButtons (void)
 {
-	int i;
+	int idx;
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (i = 0; visible < msoTextNode->height && i < gd.numMsgCategoryEntries; i++) {
-		const int idx = i + messageList_scroll;
-		if (idx < gd.numMsgCategoryEntries) {
-			const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[idx];
-			if (entry->isCategory) {
-				/* category is visible anyway*/
-				MN_ExecuteConfunc(va("ms_disable%i",visible));
+	for (idx = 0; visible < msoTextNode->height && idx < gd.numMsgCategoryEntries; idx++) {
+		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
+		if (entry->isCategory) {
+			/* category is visible anyway*/
+			MN_ExecuteConfunc(va("ms_disable%i",visible));
+			visible++;
+		} else {
+			assert(entry->category);
+			if (!entry->category->isFolded) {
+				MN_ExecuteConfunc(va("ms_enable%i", visible));
+				MN_ExecuteConfunc(va("ms_pause%s%i", entry->settings->doPause ? "e" : "d", visible));
+				MN_ExecuteConfunc(va("ms_notify%s%i", entry->settings->doNotify ? "e" : "d", visible));
+				MN_ExecuteConfunc(va("ms_sound%s%i", entry->settings->doSound ? "e" : "d", visible));
 				visible++;
-			} else {
-				assert(entry->category);
-				if (!entry->category->isFolded) {
-					MN_ExecuteConfunc(va("ms_enable%i", visible));
-					MN_ExecuteConfunc(va("ms_pause%s%i", entry->settings->doPause ? "e" : "d", visible));
-					MN_ExecuteConfunc(va("ms_notify%s%i", entry->settings->doNotify ? "e" : "d", visible));
-					MN_ExecuteConfunc(va("ms_sound%s%i", entry->settings->doSound ? "e" : "d", visible));
-					visible++;
-				}
 			}
 		}
 	}
 
-	for (; visible < msoTextNode->height && i < lengthof(gd.msgCategoryEntries); i++) {
+	for (; visible < msoTextNode->height && idx < lengthof(gd.msgCategoryEntries); idx++) {
 		MN_ExecuteConfunc(va("ms_disable%i", visible));
 		visible++;
 	}
@@ -521,34 +545,6 @@ static void MSO_Set (const int listIndex, const notify_t type, const mso_t optio
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
 		messageOptionsInitialized = qfalse;
-}
-
-/**
- * @brief Returns the category entry that is shown at given selection index.
- * @param selection index in visible list as returned by text list
- * @param visibleIndex flag indicating that index is from visible lines, not from text row
- * @return category entry from gd.msgCategoryEntries
- * @note this method takes into account scroll index and folding state of categories.
- * @sa MSO_Toggle_f
- * @sa MSO_OptionsClick_f
- */
-static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex(const int selection, const qboolean visibleIndex)
-{
-	int entriesToCheck = visibleIndex? selection + messageList_scroll : selection;
-	int realIndex = 0;
-	for (; entriesToCheck > 0; realIndex++) {
-		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[realIndex];
-		entriesToCheck--;
-		if (entry->isCategory && entry->category->isFolded) {
-			/* first entry of category is category itself, count other entries */
-			msgCategoryEntry_t *invisibleEntry = entry->next;
-			while (invisibleEntry) {
-				realIndex++;
-				invisibleEntry = invisibleEntry->next;
-			}
-		}
-	}
-	return &gd.msgCategoryEntries[realIndex];
 }
 
 /**
