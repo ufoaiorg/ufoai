@@ -402,7 +402,7 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
  */
 static void MSO_InitTextList (void)
 {
-	char categoryLine[64];
+	char lineprefix[64],categoryLine[128];
 	int idx;
 	const int oldVisibleEntries = visibleMSOEntries;
 
@@ -413,7 +413,12 @@ static void MSO_InitTextList (void)
 		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[idx];
 		if (!entry->isCategory && entry->category->isFolded)
 			continue;
-		Com_sprintf(categoryLine, sizeof(categoryLine), "%s%s\n", entry->isCategory ? (entry->category->isFolded? "+": "-") : "--", _(entry->notifyType));
+		if (entry->isCategory)
+			/* Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"menu/ufopedia_%s", entry->category->isFolded? "aliens": "artifacts"); */
+			Com_sprintf(lineprefix, sizeof(lineprefix), "%s", entry->category->isFolded? "+": "-");
+		else
+			Com_sprintf(lineprefix, sizeof(lineprefix), "   ");
+		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s\n", lineprefix, _(entry->notifyType));
 		Q_strcat(ms_messageSettingsList, categoryLine, sizeof(ms_messageSettingsList));
 		visibleMSOEntries++;
 	}
