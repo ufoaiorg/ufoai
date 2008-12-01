@@ -58,6 +58,7 @@ static const int QUEUE_SPACERS = 2;
 
 static cvar_t* mn_production_limit;		/**< Maximum items in queue. */
 static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
+static cvar_t* mn_production_amount;	/**< Amount of the current production; if no production, an invalide value */
 
 static menuNode_t *node1, *node2, *prodlist;
 
@@ -830,7 +831,7 @@ static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
 		production_t *prod = selectedProduction;
-		MN_ExecuteConfunc("prod_all_on");
+		MN_ExecuteConfunc("prod_taskselected");
 		if (prod->aircraft) {
 			PR_AircraftInfo(prod->aircraft);
 		} else if (prod->production) {
@@ -838,16 +839,20 @@ static void PR_ProductionInfo (const base_t *base)
 		} else {
 			PR_DisassemblyInfo(base, prod->item, INV_GetComponentsByItem(prod->item), prod->percentDone);
 		}
+		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
+
 	} else {
-		MN_ExecuteConfunc("prod_priodecr_off");
 		if (selectedAircraft) {
+			MN_ExecuteConfunc("prod_availableselected");
 			PR_AircraftInfo(selectedAircraft);
 		} else if (selectedItem) {
+			MN_ExecuteConfunc("prod_availableselected");
 			PR_ItemProductionInfo(base, selectedItem, 0.0);
 		} else if (selectedDisassembly) {
+			MN_ExecuteConfunc("prod_availableselected");
 			PR_DisassemblyInfo(base, selectedDisassembly->asItem, selectedDisassembly, 0.0);
 		} else {
-			MN_ExecuteConfunc("prod_inc_off");
+			MN_ExecuteConfunc("prod_nothingselected");
 			if (produceCategory == FILTER_AIRCRAFT)
 				mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
 			else
@@ -1196,6 +1201,7 @@ void PR_ProductionInit (void)
 	Com_DPrintf(DEBUG_CLIENT, "Reset all productions\n");
 	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
+	mn_production_amount = Cvar_Get("mn_production_amount", "0", 0, NULL);
 }
 
 /**
@@ -1457,6 +1463,33 @@ static void PR_ProductionDecrease_f (void)
 }
 
 /**
+ * @brief Change the production amount by given diff.
+ */
+static void PR_ProductionChange_f (void)
+{
+	int amount;
+
+	if (!baseCurrent)
+		return;
+
+	if (!(selectedProduction || selectedAircraft || selectedItem
+			|| selectedDisassembly))
+		return;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <diff> : change the production amount\n", Cmd_Argv(0));
+		return;
+	}
+
+	amount = atoi(Cmd_Argv(1));
+	if (amount > 0) {
+		Cbuf_AddText(va("prod_inc %i\n", amount));
+	} else {
+		Cbuf_AddText(va("prod_dec %i\n", -amount));
+	}
+}
+
+/**
  * @brief shift the current production up the list
  */
 static void PR_ProductionUp_f (void)
@@ -1524,6 +1557,7 @@ void PR_InitStartup (void)
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
 	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
+	Cmd_AddCommand("prod_change", PR_ProductionChange_f, "Change production amount");
 	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
