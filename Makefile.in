@@ -104,6 +104,12 @@ echo_info:
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) pk3' to assemble the pk3 files"
 	@echo
+ifeq ($(BUILD_GTKRADIANT),1)
+	@echo "Radiant"
+	@echo "-----------------------"
+	@echo "Type '$(MAKE) radiant' to compile radiant mapeditor"
+	@echo
+endif
 	@echo "Built for $(BUILDDIR)"
 	@echo
 
