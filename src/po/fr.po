@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-11-29 12:19+0100\n"
-"PO-Revision-Date: 2008-12-01 20:03+0100\n"
+"PO-Revision-Date: 2008-12-01 20:17+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -10624,7 +10624,7 @@ msgstr "Les objets dont vous équipez vos appareils peuvent le ralentir. Pour in
 
 #: ../base/ufos/tips.ufo:44
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
-msgstr "Un appareil attaqué peut de réfugier dans une base pour ne pas être détruit par des OVNI."
+msgstr "Un appareil attaqué peut se réfugier dans une base pour ne pas être détruit par des OVNI."
 
 #: ../base/ufos/tips.ufo:45
 msgid "Build an alien containment to be able to imprison aliens alive."
