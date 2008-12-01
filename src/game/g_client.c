@@ -2626,7 +2626,7 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
  * @note The fieldsize is not skipped
  * @sa G_ClientTeamInfo
  */
-static inline void G_ClientSkipActorInfo (void)
+static void G_ClientSkipActorInfo (void)
 {
 	int k, j;
 

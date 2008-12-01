@@ -68,7 +68,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 	}
 }
 
-static inline void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
+static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
 {
 	int i, j;
 	const mAliasFrame_t *frame, *oldframe;
