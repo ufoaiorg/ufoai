@@ -77,6 +77,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 	mAliasBoneMatrix_t *outBoneMatrix;
 	mAliasBoneVertex_t *outBoneVertexes;
 	int32_t *outIndex, *index;
+	const float *texcoords;
 	int num;
 	int i, j, k;
 	dpmbone_t *bone;
@@ -165,9 +166,9 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 
 		/* load texcoords */
 		outMesh->stcoords = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
-		for (num = 0, index = (int32_t *)((byte *)dpm + mesh->ofs_texcoords); num < outMesh->num_verts; num++, index += 2) {
-			outMesh->stcoords[j][0] = BigLong(index[0]);
-			outMesh->stcoords[j][1] = BigLong(index[1]);
+		for (num = 0, texcoords = (float *)((byte *)dpm + mesh->ofs_texcoords); num < outMesh->num_verts; num++, texcoords += 2) {
+			outMesh->stcoords[j][0] = BigFloat(texcoords[0]);
+			outMesh->stcoords[j][1] = BigFloat(texcoords[1]);
 		}
 
 		/* load indexes for faster array draw access */
