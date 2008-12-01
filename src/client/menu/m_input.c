@@ -198,11 +198,6 @@ void MN_MouseMove (int x, int y)
 	menu = NULL;
 	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
 		menu_t *m = mn.menuStack[sp];
-		/* full screen menu */
-		if (m->size[0] == 0 && m->size[1] == 0) {
-			menu = m;
-			break;
-		}
 		/* check mouse vs menu boundedbox */
 		if (x >= m->pos[0] && x <= m->pos[0] + m->size[0]
 			&& y >= m->pos[1] && y <= m->pos[1] + m->size[1]) {

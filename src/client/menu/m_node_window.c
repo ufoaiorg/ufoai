@@ -121,6 +121,10 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menu_t *newMenu, qboolean recu
  */
 void MN_WindowNodeLoading (menu_t *menu)
 {
+	menu->pos[0] = 0;
+	menu->pos[1] = 0;
+	menu->size[0] = VID_NORM_WIDTH;
+	menu->size[1] = VID_NORM_HEIGHT;
 }
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 17;
