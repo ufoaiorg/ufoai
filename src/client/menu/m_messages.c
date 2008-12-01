@@ -404,16 +404,16 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
  * @sa MSO_Toggle_f
  * @sa MSO_OptionsClick_f
  */
-static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex(const int selection, const qboolean visibleIndex)
+static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selection, const qboolean visibleIndex)
 {
-	int entriesToCheck = visibleIndex? selection + messageList_scroll : selection;
+	int entriesToCheck = visibleIndex ? selection + messageList_scroll : selection;
 	int realIndex = 0;
 	for (; entriesToCheck > 0; realIndex++) {
 		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[realIndex];
 		entriesToCheck--;
 		if (entry->isCategory && entry->category->isFolded) {
 			/* first entry of category is category itself, count other entries */
-			msgCategoryEntry_t *invisibleEntry = entry->next;
+			const msgCategoryEntry_t *invisibleEntry = entry->next;
 			while (invisibleEntry) {
 				realIndex++;
 				invisibleEntry = invisibleEntry->next;
@@ -429,7 +429,7 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex(const int select
  */
 static void MSO_InitTextList (void)
 {
-	char lineprefix[64],categoryLine[128];
+	char lineprefix[64], categoryLine[128];
 	int idx;
 	const int oldVisibleEntries = visibleMSOEntries;
 
@@ -442,7 +442,7 @@ static void MSO_InitTextList (void)
 			continue;
 		if (entry->isCategory)
 			/* Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"menu/ufopedia_%s", entry->category->isFolded? "aliens": "artifacts"); */
-			Com_sprintf(lineprefix, sizeof(lineprefix), "%s", entry->category->isFolded? "+": "-");
+			Com_sprintf(lineprefix, sizeof(lineprefix), "%s", entry->category->isFolded ?  "+" : "-");
 		else
 			Com_sprintf(lineprefix, sizeof(lineprefix), "   ");
 		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s\n", lineprefix, _(entry->notifyType));
