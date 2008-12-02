@@ -337,32 +337,24 @@ menu employees
 		in	{ *bt_employee18 texl "0 20" *bt_employee18 texh "20 40" }
 	}
 
-	pic button_scrollup
-	{
-		tooltip "_Scroll up"
-		image	menu/buttons_small
-		mousefx true
-		pos	"28 30"
-		texh	"48 48"
-		texl	"32 32"
-		click	{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
-		repeat	true
-		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
-		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc hire_update_number {
+		cmd "mn_setnodeproperty scroll fullsize <1>"
+
 	}
 
-	pic button_scrolldown
+	vscrollbar scroll
 	{
-		tooltip "_Scroll down"
-		image	menu/buttons_small
-		mousefx true
-		pos	"28 720"
-		texl	"32 48"
-		texh	"48 64"
-		click	{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
-		repeat	true
-		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
-		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
+		image	menu/scrollbar_v_green	blend	true
+		pos	"20 30"	size	"27 700"
+		current 0
+		viewsize 19
+		fullsize 50
+		change {
+			cmd "mn_textscroll employee_list <lastdiff>; employee_scroll;"
+		}
 	}
 
 	text employee_list

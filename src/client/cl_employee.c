@@ -219,6 +219,9 @@ static void E_EmployeeList_f (void)
 		Cmd_ExecuteString("employee_select 0\n");
 	else
 		Cmd_ExecuteString(va("employee_select %i;", selectedEmployee ? selectedEmployee->idx : 0));
+
+	/* update scroll */
+	MN_ExecuteConfunc(va("hire_update_number %i", employeesInCurrentList));
 }
 
 
@@ -1298,7 +1301,7 @@ static void E_EmployeeDelete_f (void)
 		}
 	}
 	E_DeleteEmployee(employee, employee->type);
-	MN_ExecuteConfunc(va("employee_init %i\n", employeeCategory));
+	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
 	employeeListNode->textScroll = scroll;
 }
 
