@@ -419,18 +419,18 @@ static void U2M_SetDefaultConfigValues (void)
 	config.mapMicrovol = 1.0f; /* this value is up for debate blondandy */
 
 	/* lightmap night values */
-	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.05, 0.05, 0.05);
-	config.sun_intensity[LIGHTMAP_NIGHT] = 55;
-	Vector2Set(config.sun_angles[LIGHTMAP_NIGHT], -60, 30);
-	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.8, 0.8, 1.0);
+	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.05, 0.05, 0.08);
+	config.sun_intensity[LIGHTMAP_NIGHT] = 90;
+	Vector2Set(config.sun_angles[LIGHTMAP_NIGHT], -80, 220);
+	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.65, 0.75, 0.90);
 	ColorNormalize(config.sun_color[LIGHTMAP_NIGHT], config.sun_color[LIGHTMAP_NIGHT]);
 	AngleVectors(config.sun_angles[LIGHTMAP_NIGHT], config.sun_normal[LIGHTMAP_NIGHT], NULL, NULL);
 
 	/* lightmap day values */
-	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.05, 0.06, 0.07);
-	config.sun_intensity[LIGHTMAP_DAY] = 120;
-	Vector2Set(config.sun_angles[LIGHTMAP_DAY], -60, 30);
-	VectorSet(config.sun_color[LIGHTMAP_DAY], 1.0, 0.8, 0.8);
+	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.13, 0.13, 0.10);
+	config.sun_intensity[LIGHTMAP_DAY] = 200;
+	Vector2Set(config.sun_angles[LIGHTMAP_DAY], -75, 100);
+	VectorSet(config.sun_color[LIGHTMAP_DAY], 0.90, 0.75, 0.65);
 	ColorNormalize(config.sun_color[LIGHTMAP_DAY], config.sun_color[LIGHTMAP_DAY]);
 	AngleVectors(config.sun_angles[LIGHTMAP_DAY], config.sun_normal[LIGHTMAP_DAY], NULL, NULL);
 
