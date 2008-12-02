@@ -32,9 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo think about adding a "direction" property and merging v and h scrollbar
  */
 typedef struct abstractScrollbarExtraData_s {
-	int pos;	/**< Position of the visible size */
+	int pos;		/**< Position of the visible size */
 	int viewsize;	/**< Visible size */
 	int fullsize;	/**< Full size allowed */
+	int lastdiff;	/**< Different of the pos from the last update. Its more an event property than a node property */
 } abstractScrollbarExtraData_t;
 
 struct nodeBehaviour_s; /* prototype */

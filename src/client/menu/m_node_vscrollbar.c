@@ -61,6 +61,7 @@ static void MN_VScrollbarNodeSet (menuNode_t *node, int value)
 		return;
 
 	/* update status */
+	EXTRADATA(node).lastdiff = pos - EXTRADATA(node).pos;
 	EXTRADATA(node).pos = pos;
 
 	/* fire change event */
@@ -94,10 +95,11 @@ static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button
  */
 static void MN_VScrollbarNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
+	const int diff = (down)?1:-1;
 	/** @todo remove that when the input handler is updated */
 	if (node->disabled)
 		return;
-	MN_VScrollbarNodeSet(node, EXTRADATA(node).pos + (down)?1:-1);
+	MN_VScrollbarNodeSet(node, EXTRADATA(node).pos + diff);
 }
 
 /**
