@@ -1085,7 +1085,7 @@ void WriteMapFile (const char *filename)
  */
 void LoadMapFile (const char *filename)
 {
-	int i;
+	int i, subdivide;
 
 	Verb_Printf(VERB_EXTRA, "--- LoadMapFile ---\n");
 
@@ -1108,6 +1108,12 @@ void LoadMapFile (const char *filename)
 	numTiles = 1;
 
 	while (ParseMapEntity(filename));
+
+	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
+	if (subdivide >= 256 && subdivide <= 2048) {
+		Verb_Printf(VERB_EXTRA, "Using subdivide %d from worldspawn.\n", subdivide);
+		config.subdivideSize = subdivide;
+	}
 
 	if (footstepsCnt)
 		Com_Printf("Generated footstep file with %i entries\n", footstepsCnt);

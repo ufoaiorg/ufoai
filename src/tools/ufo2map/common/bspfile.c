@@ -461,11 +461,18 @@ static entity_t* ParseEntity (void)
 void ParseEntities (void)
 {
 	entity_t *ent;
+	int subdivide;
 
 	num_entities = 0;
 	ParseFromMemory(curTile->entdata, curTile->entdatasize);
 
 	while ((ent = ParseEntity()) != NULL) {
+	}
+
+	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
+	if (subdivide >= 256 && subdivide <= 2048) {
+		Verb_Printf(VERB_EXTRA, "Using subdivide %d from worldspawn.\n", subdivide);
+		config.subdivideSize = subdivide;
 	}
 }
 

@@ -86,7 +86,6 @@ typedef struct mapConfig_s {
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume; /**< -micro test after CSG */
 	qboolean extrasamples;
-	float subdiv;
 	qboolean info;
 	qboolean generateFootstepFile;
 	qboolean generateMaterialFile;

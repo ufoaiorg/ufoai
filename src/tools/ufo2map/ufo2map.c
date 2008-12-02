@@ -85,14 +85,13 @@ static void Usage (void)
 		" -nolighting TYPE           : don't perform the lighting calculations, where TYPE is one of day, night, all\n"
 		"                              default is all\n"
 		" -quant                     : lightquant\n"
-		" -lightingchop              : subdivide for better looking lightmap\n"
 		" -scale                     : lightscale\n"
 		" -t --threads               : thread amount\n"
 	); Com_Printf(
 		"\nBinary space partitioning (BSPing) options:\n"
 		" -block <xl> <yl>           : \n"
 		" -blocks <xl> <yl> <xh> <yh>: \n"
-		" -chop                      : subdivide brushes for better light effects (but higher poly count)\n"
+		" -subdivide                 : subdivide brushes for better light effects (but higher poly count)\n"
 		" -direct                    : direct light scaling (float value)\n"
 		" -entity                    : entity light scaling (float value)\n"
 		" -fulldetail                : don't treat details (and trans surfaces) as details\n"
@@ -320,7 +319,7 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-verboseentities")) {
 			Verb_Printf(VERB_LESS, "verboseentities = true\n");
 			config.verboseentities = qtrue;
-		} else if (!strcmp(argv[i], "-chop")) {
+		} else if (!strcmp(argv[i], "-subdivide")) {
 			config.subdivideSize = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "subdivide_size = %f\n", config.subdivideSize);
 			i++;
@@ -343,10 +342,6 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-extra")) {
 			config.extrasamples = qtrue;
 			Verb_Printf(VERB_LESS, "extrasamples = true\n");
-		} else if (!strcmp(argv[i],"-lightingchop")) {
-			Verb_Printf(VERB_LESS, "lighting subdivide size = %s\n", argv[i + 1]);
-			config.subdiv = atoi(argv[i + 1]);
-			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
 			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {
@@ -409,14 +404,13 @@ static void U2M_SetDefaultConfigValues (void)
 {
 	config.verbosity = VERB_NORMAL;
 
-	config.subdivideSize = 2048.0f; /* bsp subdiv */
+	config.subdivideSize = 1024.0f; /* bsp subdiv */
 	config.block_xl = -8;
 	config.block_xh = 7;
 	config.block_yl = -8;
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
-	config.subdiv = 2048.0f; /* lighting chop/subdiv */
-	config.mapMicrovol = 1.0f;/* this value is up for debate blondandy */
+	config.mapMicrovol = 1.0f; /* this value is up for debate blondandy */
 
 	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.0, 0.0, 0.0);
 	VectorScale(config.sun_ambient_color[LIGHTMAP_NIGHT], 128.0f, config.sun_ambient_color[LIGHTMAP_NIGHT]);
