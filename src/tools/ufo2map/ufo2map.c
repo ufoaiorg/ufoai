@@ -81,11 +81,12 @@ static void Usage (void)
 	); Com_Printf(
 		"\nLighting options:\n"
 		" -extra                     : extra light samples\n"
-		" -maxlight                  : \n"
 		" -nolighting TYPE           : don't perform the lighting calculations, where TYPE is one of day, night, all\n"
 		"                              default is all\n"
-		" -quant                     : lightquant\n"
+		" -quant                     : lightquant - lightmap resolution downscale (e.g. 4 = 1 << 4) (values between 1 and 6)\n"
 		" -scale                     : lightscale\n"
+		" -saturation                : saturation factor (e.g. 1.5 - default is 1.0)\n"
+		" -contrast                  : contrast factor (e.g. 1.05, default is 1.0)\n"
 		" -t --threads               : thread amount\n"
 	); Com_Printf(
 		"\nBinary space partitioning (BSPing) options:\n"
@@ -352,6 +353,14 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-scale")) {
 			config.lightscale = atof(argv[i + 1]);
 			i++;
+		} else if (!strcmp(argv[i], "-saturation")) {
+			config.saturation = atof(argv[i + 1]);
+			Verb_Printf(VERB_LESS, "saturation at %f\n", config.saturation);
+			i++;
+		} else if (!strcmp(argv[i], "-contrast")) {
+			config.contrast = atof(argv[i + 1]);
+			Verb_Printf(VERB_LESS, "contrast at %f\n", config.contrast);
+			i++;
 		} else if (!strcmp(argv[i],"-direct")) {
 			config.direct_scale *= atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "direct light scaling at %f\n", config.direct_scale);
@@ -359,9 +368,6 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i],"-entity")) {
 			config.entity_scale *= atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "entity light scaling at %f\n", config.entity_scale);
-			i++;
-		} else if (!strcmp(argv[i],"-maxlight")) {
-			config.maxlight = atof(argv[i + 1]) * 196.0;
 			i++;
 		} else if (!strcmp(argv[i], "-nolighting")) {
 			if (argc > i + 1) {
@@ -412,8 +418,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.microvolume = 1.0f;
 	config.mapMicrovol = 1.0f; /* this value is up for debate blondandy */
 
-	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.0, 0.0, 0.0);
-	VectorScale(config.sun_ambient_color[LIGHTMAP_NIGHT], 128.0f, config.sun_ambient_color[LIGHTMAP_NIGHT]);
+	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.05, 0.05, 0.05);
 
 	config.sun_intensity[LIGHTMAP_NIGHT] = 35;
 	config.sun_pitch[LIGHTMAP_NIGHT] = 15.0 * torad;
@@ -421,8 +426,7 @@ static void U2M_SetDefaultConfigValues (void)
 	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.8, 0.8, 1.0);
 	ColorNormalize(config.sun_color[LIGHTMAP_NIGHT], config.sun_color[LIGHTMAP_NIGHT]);
 
-	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.4, 0.4, 0.4);
-	VectorScale(config.sun_ambient_color[LIGHTMAP_DAY], 128.0f, config.sun_ambient_color[LIGHTMAP_DAY]);
+	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.05, 0.06, 0.07);
 
 	config.sun_intensity[LIGHTMAP_DAY] = 120;
 	config.sun_pitch[LIGHTMAP_DAY] = 30.0 * torad;
@@ -440,7 +444,8 @@ static void U2M_SetDefaultConfigValues (void)
 		sin(config.sun_yaw[LIGHTMAP_DAY]) * sin(config.sun_pitch[LIGHTMAP_DAY]),
 		cos(config.sun_pitch[LIGHTMAP_DAY]));
 
-	config.maxlight = 196;
+	config.saturation = 1.0f;
+	config.contrast = 1.0f;
 	config.lightscale = 1.0;
 	config.lightquant = 4;
 	config.direct_scale = 0.4f;

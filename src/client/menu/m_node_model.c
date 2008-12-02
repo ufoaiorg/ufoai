@@ -35,10 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void MN_LinkMenuModels (void)
 {
 	int i, j;
-	menuModel_t *m;
 
 	for (i = 0; i < mn.numMenuModels; i++) {
-		m = &mn.menuModels[i];
+		menuModel_t *m = &mn.menuModels[i];
 		for (j = 0; j < m->menuTransformCnt; j++) {
 			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
 			if (m->menuTransform[j].menuPtr == NULL)

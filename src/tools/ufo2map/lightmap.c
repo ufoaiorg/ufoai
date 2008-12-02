@@ -283,8 +283,8 @@ typedef struct light_s {
 	float		stopdot;	/**< spotlights cone */
 } light_t;
 
-static light_t *lights[2];
-static int numlights[2];
+static light_t *lights[LIGHTMAP_MAX];
+static int numlights[LIGHTMAP_MAX];
 
 /**
  * @brief Create lights out of patches and lights
@@ -398,6 +398,8 @@ void BuildLights (void)
 	{
 		const entity_t *e = &entities[0];
 		const char *ambient, *light, *angles, *color;
+		float f;
+		int i;
 
 		if (config.compile_for_day) {
 			ambient = ValueForKey(e, "ambient_day");
@@ -428,10 +430,33 @@ void BuildLights (void)
 			ColorNormalize(sun_color, sun_color);
 		}
 
-		if (ambient[0] != '\0') {
+		if (ambient[0] != '\0')
 			GetVectorFromString(ambient, sun_ambient_color);
-			VectorScale(sun_ambient_color, 128.0f, sun_ambient_color);
-		}
+
+		/* optionally pull light_scale from worldspawn */
+		f = FloatForKey(e, "light_scale");
+		if (f > 0.0)
+			config.lightscale = f;
+
+		/* saturation as well */
+		f = FloatForKey(e, "saturation");
+		if (f > 0.0)
+			config.saturation = f;
+		else
+			Verb_Printf(VERB_EXTRA, "Invalid saturation setting (%f) in worldspawn found\n", f);
+
+		f = FloatForKey(e, "contrast");
+		if (f > 0.0)
+			config.contrast = f;
+		else
+			Verb_Printf(VERB_EXTRA, "Invalid contrast setting (%f) in worldspawn found\n", f);
+
+		/* lightmap resolution downscale (e.g. 4 = 1 << 4) */
+		i = atoi(ValueForKey(e, "quant"));
+		if (i >= 1 && i <= 6)
+			config.lightquant = i;
+		else
+			Verb_Printf(VERB_EXTRA, "Invalid quant setting (%i) in worldspawn found\n", i);
 	}
 
 	Verb_Printf(VERB_EXTRA, "light settings:\n * intensity: %i\n * sun_angles: pitch %f yaw %f\n * sun_color: %f:%f:%f\n * sun_ambient_color: %f:%f:%f\n",
@@ -447,7 +472,6 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	vec3_t delta;
 	float dot, light;
 
-	/* add sun light */
 	if (!sun_intensity)
 		return;
 
@@ -508,10 +532,10 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 			/* linear falloff with cone */
 			dot2 = -DotProduct(delta, l->normal);
 			if (dot2 > l->stopdot) {
-				/* inside light cone */
+				/* inside the cone */
 				light = (l->intensity - dist) * dot;
 			} else {
-				/* outside light cone */
+				/* outside the cone */
 				light = (l->intensity - dist) * dot;
 			}
 			break;
@@ -671,8 +695,6 @@ static const float sampleofs[MAX_SAMPLES][2] = {
 	{0.0, 0.0}, {-0.125, -0.125}, {0.125, -0.125}, {0.125, 0.125}, {-0.125, 0.125}
 };
 
-#define CLAMP_DELUXEMAP_Z 0.5
-
 /**
  * @brief
  * @sa FinalLightFace
@@ -751,8 +773,8 @@ void BuildFacelights (unsigned int facenum)
 
 	center = face_extents[facenum].center;  /* center of the face */
 
-	/* get the light samples */
-	for (i = 0; i < l[0].numsurfpt; i++) {
+	/* calculate light for each sample */
+	for (i = 0; i < fl->numsamples; i++) {
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
 		float *direction = fl->directions + i * 3;		/* accumulate direction here */
 
@@ -798,6 +820,7 @@ void BuildFacelights (unsigned int facenum)
 		free(l[i].surfpt);
 }
 
+static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};
 
 /**
  * @brief Add the indirect lighting on top of the direct
@@ -808,9 +831,9 @@ void FinalLightFace (unsigned int facenum)
 {
 	dBspFace_t *f;
 	int j, k;
-	vec3_t dir;
+	vec3_t dir, intensity;
 	facelight_t	*fl;
-	float max, newmax;
+	float max, d;
 	byte *dest;
 
 	f = &curTile->faces[facenum];
@@ -838,40 +861,63 @@ void FinalLightFace (unsigned int facenum)
 	dest = &curTile->lightdata[config.compile_for_day][f->lightofs[config.compile_for_day]];
 
 	for (j = 0; j < fl->numsamples; j++) {
-		vec3_t lb;
-		float clamp;
+		vec3_t temp;
 
 		/* start with raw sample data */
-		VectorCopy((fl->samples + j * 3), lb);
+		VectorCopy((fl->samples + j * 3), temp);
+
+		/* convert to float */
+		VectorScale(temp, 1.0 / 255.0, temp);
 
 		/* add an ambient term if desired */
-		VectorAdd(lb, sun_ambient_color, lb);
+		VectorAdd(temp, sun_ambient_color, temp);
 
 		/* apply global scale factor */
-		VectorScale(lb, config.lightscale, lb);
+		VectorScale(temp, config.lightscale, temp);
 
-		max = -999;
+		max = 0.0;
 
 		/* find the brightest component */
 		for (k = 0; k < 3; k++) {
-			/* enforcing some minumum */
-			if (lb[k] < 1.0)
-				lb[k] = 1.0;
+			/* enforcing positive values */
+			if (temp[k] < 0.0)
+				temp[k] = 0.0;
 
-			if (lb[k] > max)
-				max = lb[k];
+			if (temp[k] > max)
+				max = temp[k];
 		}
 
-		newmax = max;
+		if (max > 255.0)  /* clamp without changing hue */
+			VectorScale(temp, 255.0 / max, temp);
 
-		if (newmax > config.maxlight)
-			newmax = config.maxlight;
+		for (k = 0; k < 3; k++) {  /* apply contrast */
+			temp[k] -= 0.5;  /* normalize to -0.5 through 0.5 */
 
-		clamp = newmax / max;
+			temp[k] *= config.contrast;  /* scale */
 
-		/* write the lightmap sample data */
+			temp[k] += 0.5;
+
+			if (temp[k] > 1.0)  /* clamp */
+				temp[k] = 1.0;
+			else if (temp[k] < 0)
+				temp[k] = 0;
+		}
+
+		/* apply saturation */
+		d = DotProduct(temp, luminosity);
+
+		VectorSet(intensity, d, d, d);
+		VectorMix(intensity, temp, config.saturation, temp);
+
 		for (k = 0; k < 3; k++) {
-			*dest++ = (byte)(lb[k] * clamp);
+			temp[k] *= 255.0;  /* back to byte */
+
+			if (temp[k] > 255.0)  /* clamp */
+				temp[k] = 255.0;
+			else if (temp[k] < 0.0)
+				temp[k] = 0.0;
+
+			*dest++ = (byte)temp[k];
 		}
 
 		/* also write the directional data */
