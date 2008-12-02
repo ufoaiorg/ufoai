@@ -74,13 +74,17 @@ pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])
 "nextmap"	the map that should be started after this one was finished
 "randomspawn"	use random spawn positions for the actors to spawn them
 "light_night"	light intensity [e.g. 10 or 100]
-"angles_night"	light angle [pitch yaw 0]
+"angles_night"	light angle [pitch yaw]
 "color_night"	light color (RGB) [0.0-1.0]
 "ambient_night"	ambient color (RGB) [0.0-1.0]
 "light_day"		light intensity [e.g. 10 or 100]
-"angles_day"	light angle [pitch yaw 0]
+"angles_day"	light angle [pitch yaw]
 "color_day"		light color (RGB) [0.0-1.0]
 "ambient_day"	ambient color (RGB) [0.0-1.0]
+"light_scale"
+"saturation"	1.0 is default. Make e.g. 0.5 steps
+"contrast"		1.0 is default. Don't make too big steps, E.g. try 1.05
+"quant"			lightmap resolution downscale (e.g. 4 = 1 << 4)
 */
 
 /*QUAKED info_null (0 0.5 0) (-4 -4 -4) (4 4 4)
