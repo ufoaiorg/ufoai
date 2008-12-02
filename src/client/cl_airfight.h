@@ -49,6 +49,7 @@ typedef struct aircraftProjectile_s {
 	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos[MAX_MULTIPLE_PROJECTILES];	/**< array of positions of the projectile (latitude and longitude) */
 	vec3_t projectedPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if projected positions of the projectile (latitude and longitude). */
+	vec3_t oldDrawPos[MAX_MULTIPLE_PROJECTILES];	/**< Array if old draw positions of the projectile (latitude and longitude). */
 	int numProjectiles;      /**< Number of projectile positions used for this projectile. */
 	qboolean hasMoved;       /**< Has the projectile been moved by the CampaignRunProjectiles function */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */

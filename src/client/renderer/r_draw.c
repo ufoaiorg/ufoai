@@ -804,7 +804,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 
 	memset(&mi, 0, sizeof(mi));
 
-	Com_sprintf(path, sizeof(path), "geoscape/%s", model);
+	Com_sprintf(path, sizeof(path), "%s", model);
 	mi.model = R_RegisterModelShort(path);
 	if (!mi.model) {
 		Com_Printf("Could not find model '%s'\n", path);

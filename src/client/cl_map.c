@@ -1686,6 +1686,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 
 				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
+				VectorCopy(aircraft->pos, aircraft->oldDrawPos);
 			}
 	}
 
@@ -1783,6 +1784,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/circle");
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
+			VectorCopy(aircraft->pos, aircraft->oldDrawPos);
 		}
 	}
 

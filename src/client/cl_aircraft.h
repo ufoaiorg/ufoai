@@ -188,8 +188,9 @@ typedef struct aircraft_s {
 	int size;			/**< Size of the aircraft used in capacity calculations. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
-	vec3_t projectedPos;	/**< Array if projected positions of the aircraft (latitude and longitude). */
-	qboolean hasMoved;       /**< Has the projectile been moved. */
+	vec3_t projectedPos;	/**< Projected position of the aircraft (latitude and longitude). */
+	vec3_t oldDrawPos;	/**< The old draw position of the aircraft ( (latitude and longitude). */
+	qboolean hasMoved;       /**< Has the aircraft been moved. */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	int point;
 	int time;

@@ -354,22 +354,33 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		aircraft_t *aircraft = aircraftList[idx];
 		float weaponRanges[MAX_AIRCRAFTSLOT];
 		float angle;
+		qboolean newDraw = qtrue;
 		const int numWeaponRanges = AIR_GetAircraftWeaponRanges(aircraft->weapons, aircraft->maxWeapons, weaponRanges);
 #if 0
 		Com_DPrintf(DEBUG_CLIENT, "pos=%f,%f projPos=%f,%f \n", aircraft->pos[0], aircraft->pos[1], aircraft->projectedPos[0],
 			aircraft->projectedPos[1]);
 #endif
-		if (maxInterpolationPoints > 2 && aircraft->numInterpolationPoints < maxInterpolationPoints && 1 == 2) {
+		if (maxInterpolationPoints > 2 && aircraft->numInterpolationPoints < maxInterpolationPoints) {
 			/* If a new point hasn't been given and there is at least 3 points need to be filled in then
 			 * use linear interpolation to draw the points until a new projectile point is provided.
 			 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
 			 * gaps in points so dont add the overhead of interpolation. */
 			const float xInterpolStep = (aircraft->projectedPos[0] - aircraft->pos[0]) / (float)maxInterpolationPoints;
 			aircraft->numInterpolationPoints += 1;
-			drawPos[0] = aircraft->pos[0] + (xInterpolStep * aircraft->numInterpolationPoints);
+			drawPos[0] = aircraft->pos[0] + (xInterpolStep * (float)aircraft->numInterpolationPoints);
 			LinearInterpolation(aircraft->pos, aircraft->projectedPos, drawPos[0], drawPos[1]);
 		} else {
-			VectorCopy(aircraft->pos, drawPos);
+			if (maxInterpolationPoints <= 2) {
+				VectorCopy(aircraft->pos, drawPos);
+			} else {
+				newDraw = qfalse;
+			}
+		}
+
+		if (newDraw == qtrue) {
+			VectorCopy(drawPos, aircraft->oldDrawPos);
+		} else {
+			VectorCopy(aircraft->oldDrawPos, drawPos);
 		}
 
 		/* Draw all weapon ranges for this aircraft if at least one UFO is visible */
@@ -395,6 +406,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		aircraft_t *ufo = ufoList[idx];
 		float weaponRanges[MAX_AIRCRAFTSLOT];
 		float angle;
+		qboolean newDraw = qtrue;
 		int numWeaponRanges = AIR_GetAircraftWeaponRanges(ufo->weapons, ufo->maxWeapons, weaponRanges);
 
 		if (maxInterpolationPoints > 2 && ufo->numInterpolationPoints < maxInterpolationPoints) {
@@ -404,10 +416,20 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			 * gaps in points so dont add the overhead of interpolation. */
 			const float xInterpolStep = (ufo->projectedPos[0] - ufo->pos[0]) / (float)maxInterpolationPoints;
 			ufo->numInterpolationPoints += 1;
-			drawPos[0] = ufo->pos[0] + (xInterpolStep * ufo->numInterpolationPoints);
+			drawPos[0] = ufo->pos[0] + (xInterpolStep * (float)ufo->numInterpolationPoints);
 			LinearInterpolation(ufo->pos, ufo->projectedPos, drawPos[0], drawPos[1]);
 		} else {
-			VectorCopy(ufo->pos, drawPos);
+			if (maxInterpolationPoints <= 2) {
+				VectorCopy(ufo->pos, drawPos);
+			} else {
+				newDraw = qfalse;
+			}
+		}
+
+		if (newDraw == qtrue) {
+			VectorCopy(drawPos, ufo->oldDrawPos);
+		} else {
+			VectorCopy(ufo->oldDrawPos, drawPos);
 		}
 
 		/* Draw all weapon ranges for this aircraft if at least one UFO is visible */
@@ -431,6 +453,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
 		vec3_t drawPos = {0, 0, 0};
+		qboolean newDraw = qtrue;
 
 		if (!projectile->aimedAircraft)
 			continue;
@@ -453,7 +476,18 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 				drawPos[0] = projectile->pos[0][0] + (xInterpolStep * projectile->numInterpolationPoints);
 				LinearInterpolation(projectile->pos[0], projectile->projectedPos[0], drawPos[0], drawPos[1]);
 			} else {
-				VectorCopy(projectile->pos[0], drawPos);
+				if (maxInterpolationPoints <= 2) {
+					VectorCopy(projectile->pos[0], drawPos);
+				} else {
+					newDraw = qfalse;
+				}
+
+			}
+
+			if (newDraw == qtrue) {
+				VectorCopy(drawPos, projectile->oldDrawPos[0]);
+			} else {
+				VectorCopy(projectile->oldDrawPos[0], drawPos);
 			}
 		}
 
