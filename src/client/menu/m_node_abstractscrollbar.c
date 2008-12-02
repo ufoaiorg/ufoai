@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractscrollbar.h"
 
 static const value_t properties[] = {
-	{"pos", V_INT, offsetof(menuNode_t, u.abstractscrollbar.pos),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.pos)},
+	{"current", V_INT, offsetof(menuNode_t, u.abstractscrollbar.pos),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.pos)},
 	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollbar.viewsize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.viewsize)},
 	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollbar.fullsize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.fullsize)},
 	{NULL, V_NULL, 0, 0}
