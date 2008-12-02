@@ -654,6 +654,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\tMemory:\n");
 	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(selectBoxOptions_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
+	Com_Printf("\t-Extra data node structure size: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u));
 	Com_Printf("\t-Menu structure size: "UFO_SIZE_T" B\n", sizeof(menu_t));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
