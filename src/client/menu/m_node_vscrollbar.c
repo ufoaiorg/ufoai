@@ -75,6 +75,8 @@ static int oldMouseY;
 
 static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
+	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
+		return;
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
 
@@ -86,6 +88,8 @@ static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int butt
 
 static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
+	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
+		return;
 	if (button == K_MOUSE1)
 		MN_MouseRelease();
 }
@@ -96,9 +100,14 @@ static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button
 static void MN_VScrollbarNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	const int diff = (down)?1:-1;
+
 	/** @todo remove that when the input handler is updated */
 	if (node->disabled)
 		return;
+
+	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
+		return;
+
 	MN_VScrollbarNodeSet(node, EXTRADATA(node).pos + diff);
 }
 
@@ -121,14 +130,10 @@ static void MN_VScrollbarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 }
 
 /**
- * @todo special case if fullsize = 0 or viewsize >= fullsize
+ * @brief Call to draw the node
  */
 static void MN_VScrollbarNodeDraw (menuNode_t *node)
 {
-	const int cuttableSize = node->size[1] - (ELEMENT_HEIGHT * 4);
-	const int low = cuttableSize * ((float)(EXTRADATA(node).pos + 0) / (float)EXTRADATA(node).fullsize);
-	const int mid = cuttableSize * ((float)(EXTRADATA(node).viewsize) / (float)EXTRADATA(node).fullsize);
-	const int hi = cuttableSize - low - mid;
 	vec2_t pos;
 	int y = 0;
 	int texX = 0;
@@ -143,59 +148,90 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 		return;
 	}
 
-	/* top */
-	R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
-		texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-		ALIGN_UL, node->blend, texture);
-	texY += TILE_HEIGHT;
-	y += ELEMENT_HEIGHT;
+	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize) {
+		texX = TILE_WIDTH * 3;
 
-	/* top to slider */
-	if (low) {
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, low,
+		/* top */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+			ALIGN_UL, node->blend, texture);
+		texY += TILE_HEIGHT;
+		y += ELEMENT_HEIGHT;
+
+		/* top to bottom */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, node->size[1] - (ELEMENT_HEIGHT * 2),
+			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+			ALIGN_UL, node->blend, texture);
+		texY += TILE_HEIGHT * 5;
+		y += node->size[1] - (ELEMENT_HEIGHT * 2);
+		assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
+
+		/* bottom */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+			ALIGN_UL, node->blend, texture);
+
+	} else {
+		const int cuttableSize = node->size[1] - (ELEMENT_HEIGHT * 4);
+		const int low = cuttableSize * ((float)(EXTRADATA(node).pos + 0) / (float)EXTRADATA(node).fullsize);
+		const int mid = cuttableSize * ((float)(EXTRADATA(node).viewsize) / (float)EXTRADATA(node).fullsize);
+		const int hi = cuttableSize - low - mid;
+
+		/* top */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+			ALIGN_UL, node->blend, texture);
+		texY += TILE_HEIGHT;
+		y += ELEMENT_HEIGHT;
+
+		/* top to slider */
+		if (low) {
+			R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, low,
+				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+				ALIGN_UL, node->blend, texture);
+		}
+		texY += TILE_HEIGHT;
+		y += low;
+
+		/* top slider */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+			ALIGN_UL, node->blend, texture);
+		texY += TILE_HEIGHT;
+		y += ELEMENT_HEIGHT;
+
+		/* middle slider */
+		if (mid) {
+			R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, mid,
+				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+				ALIGN_UL, node->blend, texture);
+		}
+		texY += TILE_HEIGHT;
+		y += mid;
+
+		/* bottom slider */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
+			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+			ALIGN_UL, node->blend, texture);
+		texY += TILE_HEIGHT;
+		y += ELEMENT_HEIGHT;
+
+		/* slider to bottom */
+		if (hi) {
+			R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, hi,
+				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
+				ALIGN_UL, node->blend, texture);
+		}
+		texY += TILE_HEIGHT;
+		y += hi;
+		assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
+
+		/* bottom */
+		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 			ALIGN_UL, node->blend, texture);
 	}
-	texY += TILE_HEIGHT;
-	y += low;
 
-	/* top slider */
-	R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
-		texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-		ALIGN_UL, node->blend, texture);
-	texY += TILE_HEIGHT;
-	y += ELEMENT_HEIGHT;
-
-	/* middle slider */
-	if (mid) {
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, mid,
-			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
-	}
-	texY += TILE_HEIGHT;
-	y += mid;
-
-	/* bottom slider */
-	R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
-		texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-		ALIGN_UL, node->blend, texture);
-	texY += TILE_HEIGHT;
-	y += ELEMENT_HEIGHT;
-
-	/* slider to bottom */
-	if (hi) {
-		R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, hi,
-			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-			ALIGN_UL, node->blend, texture);
-	}
-	texY += TILE_HEIGHT;
-	y += hi;
-	assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
-
-	/* bottom */
-	R_DrawNormPic(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
-		texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
-		ALIGN_UL, node->blend, texture);
 }
 
 static void MN_VScrollbarNodeLoaded (menuNode_t *node)
