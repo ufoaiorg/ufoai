@@ -68,8 +68,8 @@ AC_ARG_ENABLE(ufo2map,
 	[], [enable_ufo2map=yes])
 
 AC_ARG_ENABLE(gtkradiant,
-	[AS_HELP_STRING([--enable-gtkradiant], [build gtkradiant @<:@default=disabled@:>@])],
-	[], [enable_gtkradiant=no])
+	[AS_HELP_STRING([--enable-gtkradiant], [build gtkradiant @<:@default=enabled@:>@])],
+	[], [enable_gtkradiant=yes])
 
 AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],

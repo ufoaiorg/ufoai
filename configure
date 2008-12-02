@@ -1299,7 +1299,7 @@ Optional Features:
   --disable-dedicated     build dedicated server [default=enabled]
   --disable-client        build client [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
-  --enable-gtkradiant     build gtkradiant [default=disabled]
+  --enable-gtkradiant     build gtkradiant [default=enabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
@@ -2027,7 +2027,7 @@ fi
 if test "${enable_gtkradiant+set}" = set; then
   enableval=$enable_gtkradiant;
 else
-  enable_gtkradiant=no
+  enable_gtkradiant=yes
 fi
 
 
