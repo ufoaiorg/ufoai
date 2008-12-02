@@ -42,7 +42,7 @@ void MN_LinkMenuModels (void)
 		for (j = 0; j < m->menuTransformCnt; j++) {
 			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
 			if (m->menuTransform[j].menuPtr == NULL)
-				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'", m->menuTransform[j].menuID, m->id);
+				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'\n", m->menuTransform[j].menuID, m->id);
 			/* we don't need this anymore */
 			Mem_Free(m->menuTransform[j].menuID);
 			m->menuTransform[j].menuID = NULL;
