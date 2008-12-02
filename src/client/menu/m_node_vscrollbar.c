@@ -107,7 +107,7 @@ static void MN_VScrollbarNodeWheel (menuNode_t *node, qboolean down, int x, int 
  */
 static void MN_VScrollbarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
-	const int posSize = EXTRADATA(node).fullsize - EXTRADATA(node).viewsize;
+	const int posSize = EXTRADATA(node).fullsize;
 	const int graphicSize = node->size[1] - (4 * ELEMENT_HEIGHT);
 	int pos = 0;
 
