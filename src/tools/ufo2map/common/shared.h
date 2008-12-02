@@ -111,9 +111,8 @@ typedef struct mapConfig_s {
 	int sun_intensity[LIGHTMAP_MAX];
 	vec3_t sun_ambient_color[LIGHTMAP_MAX];
 	vec3_t sun_color[LIGHTMAP_MAX];
-	float sun_yaw[LIGHTMAP_MAX];
-	float sun_pitch[LIGHTMAP_MAX];
-	vec3_t sun_dir[LIGHTMAP_MAX];
+	vec3_t sun_angles[LIGHTMAP_MAX];
+	vec3_t sun_normal[LIGHTMAP_MAX];
 
 	float saturation;
 	float contrast;

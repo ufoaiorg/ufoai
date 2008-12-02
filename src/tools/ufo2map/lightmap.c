@@ -25,9 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "lighting.h"
 #include "../../common/tracing.h"
 
-#define	sun_pitch			config.sun_pitch[config.compile_for_day]
-#define	sun_yaw				config.sun_yaw[config.compile_for_day]
-#define	sun_dir				config.sun_dir[config.compile_for_day]
+#define	sun_angles			config.sun_angles[config.compile_for_day]
+#define	sun_normal			config.sun_normal[config.compile_for_day]
 #define	sun_color			config.sun_color[config.compile_for_day]
 #define	sun_intensity		config.sun_intensity[config.compile_for_day]
 #define	sun_ambient_color	config.sun_ambient_color[config.compile_for_day]
@@ -417,12 +416,8 @@ void BuildLights (void)
 			sun_intensity = atoi(light);
 
 		if (angles[0] != '\0') {
-			vec3_t vector;
-			GetVectorFromString(angles, vector);
-			sun_pitch = vector[PITCH] * torad;
-			sun_yaw = vector[YAW] * torad;
-			VectorSet(sun_dir, cos(sun_yaw) * sin(sun_pitch),
-				sin(sun_yaw) * sin(sun_pitch), cos(sun_pitch));
+			GetVectorFromString(angles, sun_angles);
+			AngleVectors(sun_angles, sun_normal, NULL, NULL);
 		}
 
 		if (color[0] != '\0') {
@@ -460,7 +455,7 @@ void BuildLights (void)
 	}
 
 	Verb_Printf(VERB_EXTRA, "light settings:\n * intensity: %i\n * sun_angles: pitch %f yaw %f\n * sun_color: %f:%f:%f\n * sun_ambient_color: %f:%f:%f\n",
-		sun_intensity, sun_pitch, sun_yaw, sun_color[0], sun_color[1], sun_color[2], sun_ambient_color[0], sun_ambient_color[1], sun_ambient_color[2]);
+		sun_intensity, sun_angles[0], sun_angles[1], sun_color[0], sun_color[1], sun_color[2], sun_ambient_color[0], sun_ambient_color[1], sun_ambient_color[2]);
 	Verb_Printf(VERB_NORMAL, "%i direct lights for %s lightmap\n", numlights[config.compile_for_day], (config.compile_for_day ? "day" : "night"));
 }
 
@@ -475,13 +470,13 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	if (!sun_intensity)
 		return;
 
-	dot = DotProduct(sun_dir, normal);
+	dot = DotProduct(sun_normal, normal);
 	if (dot <= 0.001)
 		return; /* wrong direction */
 
 	/* don't use only 512 (which would be the 8 level max unit) but a
 	 * higher value - because the light angle is not fixed at 90 degree */
-	VectorMA(pos, 8192, sun_dir, delta);
+	VectorMA(pos, 8192, sun_normal, delta);
 
 	if (TR_TestLineSingleTile(pos, delta))
 		return; /* occluded */
@@ -492,8 +487,8 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	VectorMA(sample, light, sun_color, sample);
 
 	/* and accumulate the direction */
-	VectorMix(normal, sun_dir, light / sun_intensity, delta);
-	VectorMA(direction, light * scale, sun_dir, direction);
+	VectorMix(normal, sun_normal, light / sun_intensity, delta);
+	VectorMA(direction, light * scale, delta, direction);
 }
 
 

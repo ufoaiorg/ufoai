@@ -418,37 +418,27 @@ static void U2M_SetDefaultConfigValues (void)
 	config.microvolume = 1.0f;
 	config.mapMicrovol = 1.0f; /* this value is up for debate blondandy */
 
+	/* lightmap night values */
 	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.05, 0.05, 0.05);
-
-	config.sun_intensity[LIGHTMAP_NIGHT] = 35;
-	config.sun_pitch[LIGHTMAP_NIGHT] = 15.0 * torad;
-	config.sun_yaw[LIGHTMAP_NIGHT] = 60.0 * torad;
+	config.sun_intensity[LIGHTMAP_NIGHT] = 55;
+	Vector2Set(config.sun_angles[LIGHTMAP_NIGHT], -60, 30);
 	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.8, 0.8, 1.0);
 	ColorNormalize(config.sun_color[LIGHTMAP_NIGHT], config.sun_color[LIGHTMAP_NIGHT]);
+	AngleVectors(config.sun_angles[LIGHTMAP_NIGHT], config.sun_normal[LIGHTMAP_NIGHT], NULL, NULL);
 
+	/* lightmap day values */
 	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.05, 0.06, 0.07);
-
 	config.sun_intensity[LIGHTMAP_DAY] = 120;
-	config.sun_pitch[LIGHTMAP_DAY] = 30.0 * torad;
-	config.sun_yaw[LIGHTMAP_DAY] = 210.0 * torad;
+	Vector2Set(config.sun_angles[LIGHTMAP_DAY], -60, 30);
 	VectorSet(config.sun_color[LIGHTMAP_DAY], 1.0, 0.8, 0.8);
 	ColorNormalize(config.sun_color[LIGHTMAP_DAY], config.sun_color[LIGHTMAP_DAY]);
-
-	VectorSet(config.sun_dir[LIGHTMAP_NIGHT],
-		cos(config.sun_yaw[LIGHTMAP_NIGHT]) * sin(config.sun_pitch[LIGHTMAP_NIGHT]),
-		sin(config.sun_yaw[LIGHTMAP_NIGHT]) * sin(config.sun_pitch[LIGHTMAP_NIGHT]),
-		cos(config.sun_pitch[LIGHTMAP_NIGHT]));
-
-	VectorSet(config.sun_dir[LIGHTMAP_DAY],
-		cos(config.sun_yaw[LIGHTMAP_DAY]) * sin(config.sun_pitch[LIGHTMAP_DAY]),
-		sin(config.sun_yaw[LIGHTMAP_DAY]) * sin(config.sun_pitch[LIGHTMAP_DAY]),
-		cos(config.sun_pitch[LIGHTMAP_DAY]));
+	AngleVectors(config.sun_angles[LIGHTMAP_DAY], config.sun_normal[LIGHTMAP_DAY], NULL, NULL);
 
 	config.saturation = 1.0f;
 	config.contrast = 1.0f;
 	config.lightscale = 1.0;
 	config.lightquant = 4;
-	config.direct_scale = 0.4f;
+	config.direct_scale = 0.4f; /**< surface lighting scale factor */
 	config.entity_scale = 1.0f;
 
 	config.generateFootstepFile = qtrue;
