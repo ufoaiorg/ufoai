@@ -282,7 +282,7 @@ menu bases
 		tooltip	"_Name of this base"
 		string	"*cvar mn_base_title"
 		pos	"60 30"
-		size "128 32"
+		size "240 32"
 		font	f_big
 		change {
 			// stores the value of the cvar in the base structure
