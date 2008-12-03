@@ -874,7 +874,7 @@ static void Check_FindCompositeSides (void)
 		}
 	}
 
-	Check_Printf(VERB_EXTRA, qfalse, -1, -1, "%i composite sides found", numCompositeSides);
+	Check_Printf(VERB_EXTRA, qfalse, -1, -1, "%i composite sides found\n", numCompositeSides);
 
 	done = qtrue;
 }
