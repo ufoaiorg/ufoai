@@ -225,6 +225,8 @@ void Entity_InitFilters() {
 	add_entity_filter(g_filter_entity_trigger, EXCLUDE_TRIGGERS);
 	add_entity_filter(g_filter_entity_misc_model, EXCLUDE_MODELS);
 	add_entity_filter(g_filter_entity_light, EXCLUDE_LIGHTS);
+	add_entity_filter(g_filter_entity_world, EXCLUDE_NO_FOOTSTEPS, true);
+	add_entity_filter(g_filter_entity_world, EXCLUDE_NO_SURFLIGHTS, true);
 }
 
 

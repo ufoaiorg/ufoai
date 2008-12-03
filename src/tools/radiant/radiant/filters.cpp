@@ -171,8 +171,10 @@ void Filters_constructMenu(GtkMenu* menu_in_menu) {
 	create_check_menu_item_with_mnemonic(menu_in_menu, "WeaponClips", "FilterWeaponClips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Lights", "FilterLights");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "NoSurfLights", "FilterNoSurfLights");
+	create_check_menu_item_with_mnemonic(menu_in_menu, "NoFootsteps", "FilterNoFootsteps");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Structural", "FilterStructural");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Nodraw", "FilterNodraw");
+	create_check_menu_item_with_mnemonic(menu_in_menu, "Phong", "FilterPhong");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Details", "FilterDetails");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Hints", "FilterHintsSkips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, "Models", "FilterModels");
@@ -202,13 +204,15 @@ void ConstructFilters() {
 	add_filter_command(EXCLUDE_ACTORCLIP, "FilterActorClips", Accelerator('7', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_WEAPONCLIP, "FilterWeaponClips", Accelerator('8', (GdkModifierType)GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('9', (GdkModifierType)GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_NO_SURFLIGHTS, "FilterNoSurfLights", Accelerator('9', (GdkModifierType)GDK_MOD1_MASK));
+	add_filter_command(EXCLUDE_NO_SURFLIGHTS, "FilterNoSurfLights", Accelerator('9', (GdkModifierType)(GDK_MOD1_MASK | GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('0', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_NODRAW, "FilterNodraw", Accelerator('N', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_DETAILS, "FilterDetails", Accelerator('D', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_HINTSSKIPS, "FilterHintsSkips", Accelerator('H', (GdkModifierType)GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_MODELS, "FilterModels", Accelerator('M', (GdkModifierType)GDK_SHIFT_MASK));
 	add_filter_command(EXCLUDE_TRIGGERS, "FilterTriggers", Accelerator('T', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_PHONG, "FilterPhong", Accelerator('P', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	add_filter_command(EXCLUDE_NO_FOOTSTEPS, "FilterNoFootsteps", Accelerator('F', (GdkModifierType)(GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	PerformFiltering();
 }

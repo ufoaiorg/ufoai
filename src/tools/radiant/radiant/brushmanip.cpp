@@ -874,15 +874,25 @@ public:
 	}
 };
 
+/** @todo share the values with the rest of the code */
+#define SURF_LIGHT		0x00000001
+#define SURF_PHONG		0x00000400
+#define SURF_FOOTSTEP	0x00001000
+
 filter_face_flags g_filter_face_clip(QER_CLIP);
 filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);
 
-#define SURF_LIGHT 0x00000001
 filter_face_surface g_filter_face_light(SURF_LIGHT);
 filter_brush_one_face g_filter_brush_light(&g_filter_face_light);
 
+filter_face_surface g_filter_face_phong(SURF_PHONG);
+filter_brush_one_face g_filter_brush_phong(&g_filter_face_phong);
+
 filter_face_surface g_filter_face_no_surflight(SURF_LIGHT);
 filter_brush_no_face g_filter_brush_no_surflight(&g_filter_face_no_surflight);
+
+filter_face_surface g_filter_face_no_footstep(SURF_FOOTSTEP);
+filter_brush_no_face g_filter_brush_no_footstep(&g_filter_face_no_footstep);
 
 filter_face_shader g_filter_face_weapclip("textures/tex_common/weaponclip");
 filter_brush_all_faces g_filter_brush_weapclip(&g_filter_face_weapclip);
@@ -915,6 +925,8 @@ filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 void BrushFilters_construct() {
 	add_brush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_WEAPONCLIP);
+	add_brush_filter(g_filter_brush_phong, EXCLUDE_PHONG);
+	add_brush_filter(g_filter_brush_no_footstep, EXCLUDE_NO_FOOTSTEPS);
 	add_brush_filter(g_filter_brush_light, EXCLUDE_LIGHTS);
 	add_brush_filter(g_filter_brush_no_surflight, EXCLUDE_NO_SURFLIGHTS);
 	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_ACTORCLIP);
