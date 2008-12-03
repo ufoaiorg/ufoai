@@ -1595,9 +1595,9 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 			const float angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				/* two skins - second skin is for baseattack */
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 1);
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 1);
 			else
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", 0);
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 0);
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/baseattack");
