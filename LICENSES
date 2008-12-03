@@ -2348,10 +2348,7 @@ base/textures/tex_base/fence.tga | GNU General Public License 2.0 | OpenArena GP
 base/textures/tex_base/fence2.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_base/grid2_alpha.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/grid_alpha.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/helipad.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_base/lab_floor001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
