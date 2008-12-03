@@ -18,6 +18,7 @@ set starttime=%TIME%
 set onlynewer=-onlynewer
 set extrasamples=-extra
 set shutdownonfinish=false
+set quant=
 
 REM loop through args. SHIFT turns %2 into %1 etc
 
@@ -35,7 +36,7 @@ if EXIST base\maps\%1 (
 	echo   /help      print ^(this^) help and exit
 	echo   /clean     recompile all maps. default is to only compile
 	echo              if .map is newer than.bsp
-	echo   /fast      only do one pass on light samples. default is five.
+	echo   /fast      only do one pass on light samples. default is five. Also downscale the lightmap.
 	echo   /shutdown  shutdown computer when compilation complete
 	echo   path       relative to base\maps.
 	echo              eg foo processes *.map in base\maps\foo
@@ -44,6 +45,7 @@ if EXIST base\maps\%1 (
 	set onlynewer=
 ) else if "%1"=="/fast" (
 	set extrasamples=
+	set quant=-quant 6
 ) else if "%1"=="/shutdown" (
 	set shutdownonfinish=true
 ) else (
@@ -60,7 +62,7 @@ echo found %NUMBER_OF_PROCESSORS% processors
 echo using %usecores% processors
 echo compiling maps in %curpath%
 
-set ufo2mapparameters=%extrasamples% %onlynewer% -t %usecores%
+set ufo2mapparameters=%extrasamples% %onlynewer% -t %usecores% %quant%
 
 for /D %%i in (%curpath%\*) DO (
 	call :compilemap %%i
