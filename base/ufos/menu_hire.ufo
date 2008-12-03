@@ -308,7 +308,10 @@ menu employees
 	 */
 	confunc hire_update_number {
 		cmd "mn_setnodeproperty scroll fullsize <1>"
+	}
 
+	confunc hire_fixe_scroll {
+		cmd "mn_setnodeproperty scroll current <1>"
 	}
 
 	vscrollbar scroll
@@ -335,7 +338,8 @@ menu employees
 		num		TEXT_LIST
 //		bgcolor	"1 1 1 0.5"
 		click
-		wheel	{ cmd "employee_scroll;" }
+		whup	{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
+		whdown	{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
 	}
 
 	// ==================

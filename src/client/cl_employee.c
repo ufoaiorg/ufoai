@@ -110,8 +110,10 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < cl_numnames->integer; cnt++) {
 		Cvar_ForceSet(va("mn_name%i", cnt), "");
-		Cbuf_AddText(va("employeedisable %i\n", cnt));
+		MN_ExecuteConfunc(va("employeedisable %i\n", cnt));
 	}
+
+	MN_ExecuteConfunc(va("hire_fixe_scroll %i\n", employeeListNode->textScroll));
 }
 
 /**
