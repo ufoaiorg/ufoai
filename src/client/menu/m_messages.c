@@ -420,6 +420,8 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selec
 			}
 		}
 	}
+	if (realIndex >= gd.numMsgCategoryEntries)
+		return NULL;
 	return &gd.msgCategoryEntries[realIndex];
 }
 
@@ -471,6 +473,8 @@ static void MSO_UpdateVisibleButtons (void)
 	/* update visible button lines based on current displayed values */
 	for (idx = 0; visible < msoTextNode->height && idx < gd.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
+		if (!entry)
+			break;
 		if (entry->isCategory) {
 			/* category is visible anyway*/
 			MN_ExecuteConfunc(va("ms_disable%i",visible));
@@ -562,6 +566,8 @@ static void MSO_Toggle_f (void)
 		qboolean activate;
 		notify_t type;
 
+		if (!selectedEntry)
+			return;
 		if (selectedEntry->isCategory) {
 			Com_Printf("Toggle command with selected category entry ignored.\n");
 			return;
@@ -701,7 +707,7 @@ static void MSO_OptionsClick_f(void)
 		return;
 
 	category = MSO_GetEntryFromSelectionIndex(num, qfalse);
-	if (!category->isCategory)
+	if (!category || !category->isCategory)
 		return;
 	category->category->isFolded = !category->category->isFolded;
 	messageOptionsPrepared = qfalse;
