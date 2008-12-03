@@ -347,7 +347,7 @@ menu employees
 		if "mn_show_employee >= 1"
 		string	"*cvar mn_name"
 		pos		"475 17"
-		size	"128 32"
+		size	"400 32"
 		change {
 			cmd	"team_changename;"
 		}
