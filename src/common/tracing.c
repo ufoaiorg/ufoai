@@ -944,7 +944,6 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 	trace_t *trace = &trace_data->trace;
 	TR_TILE_TYPE *myTile = trace_data->tile;
 
-
 	if (trace->fraction <= p1f)
 		return;					/* already hit something nearer */
 
@@ -954,12 +953,15 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		return;
 	}
 
+	assert(num < MAX_MAP_NODES);
+
 	/* find the point distances to the seperating plane
 	 * and the offset for the size of the box */
 	node = myTile->nodes + num;
 #ifdef COMPILE_UFO
 	plane = node->plane;
 #else
+	assert(node->planenum < MAX_MAP_PLANES);
 	plane = myTile->planes + node->planenum;
 #endif
 
@@ -969,15 +971,15 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		t2 = p2[type] - plane->dist;
 		offset = trace_data->extents[type];
 	} else {
-		vec3_t *normal = &plane->normal;
-		vec3_t *extents = &trace_data->extents;
-		float dist = plane->dist;
-		t1 = DotProduct(*normal, p1) - dist;
-		t2 = DotProduct(*normal, p2) - dist;
+		const float dist = plane->dist;
+		t1 = DotProduct(plane->normal, p1) - dist;
+		t2 = DotProduct(plane->normal, p2) - dist;
 		if (trace_data->ispoint)
 			offset = 0;
 		else
-			offset = fabs(*extents[0] * *normal[0]) + fabs(*extents[1] * *normal[1]) + fabs(*extents[2] * *normal[2]);
+			offset = fabs(trace_data->extents[0] * plane->normal[0])
+				+ fabs(trace_data->extents[1] * plane->normal[1])
+				+ fabs(trace_data->extents[2] * plane->normal[2]);
 	}
 
 	/* see which sides we need to consider */
