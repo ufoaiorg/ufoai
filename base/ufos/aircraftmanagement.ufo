@@ -597,7 +597,7 @@ craftitem craft_ammo_sparrowhawk
 	craftweapon		craft_weapon_sparrowhawk
 	price		1000
 	size	40	// light
-	model		"missile_sparrow"
+	model		"geoscape/missile_sparrow"
 
 	ammo		7
 	wdamage		20
@@ -625,7 +625,7 @@ craftitem craft_ammo_tr20
 	crafttype	ammo
 	craftweapon		craft_weapon_tr20
 	price		840
-	model		"missile_tr20"
+	model		"geoscape/missile_tr20"
 
 //	ammo		152
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
@@ -750,7 +750,7 @@ craftitem base_ammo_AA51
 	craftweapon		base_AA51_launcher
 	is_dummy	true
 	notonmarket	true
-	model		"missile"
+	model		"geoscape/missile"
 
 //	ammo		80
 // The value (20) below is a workaround until we can display (or fake) high numbers of projectiles in interception
