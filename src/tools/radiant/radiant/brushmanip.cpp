@@ -773,7 +773,15 @@ public:
 	}
 };
 
-
+class filter_face_surface : public FaceFilter {
+	int m_surface;
+public:
+	filter_face_surface(int surface) : m_surface(surface) {
+	}
+	bool filter(const Face& face) const {
+		return (face.getShader().m_flags.m_surfaceFlags & m_surface) != 0;
+	}
+};
 
 class FaceFilterAny {
 	FaceFilter* m_filter;
@@ -815,6 +823,20 @@ public:
 	}
 };
 
+class FaceFilterOne {
+	FaceFilter* m_filter;
+	bool& m_filtered;
+public:
+	FaceFilterOne(FaceFilter* filter, bool& filtered) : m_filter(filter), m_filtered(filtered) {
+		m_filtered = false;
+	}
+	void operator()(Face& face) const {
+		if (m_filter->filter(face)) {
+			m_filtered = true;
+		}
+	}
+};
+
 class filter_brush_all_faces : public BrushFilter {
 	FaceFilter* m_filter;
 public:
@@ -828,8 +850,24 @@ public:
 };
 
 
+class filter_brush_one_face : public BrushFilter {
+	FaceFilter* m_filter;
+public:
+	filter_brush_one_face(FaceFilter* filter) : m_filter(filter) {
+	}
+	bool filter(const Brush& brush) const {
+		bool filtered;
+		Brush_forEachFace(brush, FaceFilterOne(m_filter, filtered));
+		return filtered;
+	}
+};
+
 filter_face_flags g_filter_face_clip(QER_CLIP);
 filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);
+
+#define SURF_LIGHT 0x00000001
+filter_face_surface g_filter_face_light(SURF_LIGHT);
+filter_brush_one_face g_filter_brush_light(&g_filter_face_light);
 
 filter_face_shader g_filter_face_weapclip("textures/tex_common/weaponclip");
 filter_brush_all_faces g_filter_brush_weapclip(&g_filter_face_weapclip);
@@ -862,6 +900,7 @@ filter_brush_all_faces g_filter_brush_detail(&g_filter_face_detail);
 void BrushFilters_construct() {
 	add_brush_filter(g_filter_brush_clip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_WEAPONCLIP);
+	add_brush_filter(g_filter_brush_light, EXCLUDE_LIGHTS);
 	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_ACTORCLIP);
 	add_brush_filter(g_filter_brush_weapclip, EXCLUDE_CLIP);
 	add_brush_filter(g_filter_brush_actorclip, EXCLUDE_CLIP);
