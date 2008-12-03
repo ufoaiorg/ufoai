@@ -301,7 +301,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 		/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
 		/* prevent line from being drawn if there is nothing that should be drawn afer it */
-		if (*cur && cur[1])
+		/* if (cur && (cur[1] || list)) RudolfoWood: I'll fix that checks asap */
 			R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue, node->longlines);
 
 		if (node->mousefx)
