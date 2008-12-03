@@ -1332,6 +1332,9 @@ void CheckNodraws (void)
 			/* skip those that are already nodraw */
 			if (iSide->surfaceFlags & SURF_NODRAW)
 				continue;
+			/* surface lights may point downwards */
+			else if (iSide->surfaceFlags & SURF_LIGHT)
+				continue;
 
 			if (Check_SidePointsDown(iSide)) {
 				Check_SetNodraw(iSide);
@@ -1369,6 +1372,9 @@ void CheckNodraws (void)
 
 				/* skip those that are already nodraw */
 				if (iSide->surfaceFlags & SURF_NODRAW)
+					continue;
+				/* surface lights may point downwards */
+				else if (iSide->surfaceFlags & SURF_LIGHT)
 					continue;
 
 				/* check each side of brush j for doing the hiding */
