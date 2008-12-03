@@ -6,7 +6,7 @@ MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "
 BSPS = $(MAPSRCS:%.map=%.bsp)
 
 UFO2MAPFLAGS = -extra -t $(shell echo %NUMBER_OF_PROCESSORS%)
-FAST_UFO2MAPFLAGS = -t $(shell echo %NUMBER_OF_PROCESSORS%)
+FAST_UFO2MAPFLAGS = -t $(shell echo %NUMBER_OF_PROCESSORS%) -quant 6
 ENTS_UFO2MAPFLAGS = -onlyents
 
 all: $(BSPS)
