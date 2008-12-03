@@ -40,11 +40,6 @@ qboolean MN_TextScroll (menuNode_t *node, int offset)
 	if (!node || !node->height)
 		return qfalse;
 
-	if (abs(offset) >= node->height) {
-		/* Offset value is bigger than textbox height. */
-		return qfalse;
-	}
-
 	if (node->textLines <= node->height) {
 		/* Number of lines are less than the height of the textbox. */
 		node->textScroll = 0;
