@@ -95,11 +95,11 @@ static void E_EmployeeListScroll_f (void)
 		/* change the buttons */
 		if (employee->hired) {
 			if (employee->baseHired == baseCurrent)
-				Cbuf_AddText(va("employeeadd%i\n", cnt));
+				MN_ExecuteConfunc(va("employeeadd %i\n", cnt));
 			else
-				Cbuf_AddText(va("employeedisable%i\n", cnt));
+				MN_ExecuteConfunc(va("employeedisable %i\n", cnt));
 		} else
-			Cbuf_AddText(va("employeedel%i\n", cnt));
+			MN_ExecuteConfunc(va("employeedel %i\n", cnt));
 
 		cnt++;
 
@@ -110,7 +110,7 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < cl_numnames->integer; cnt++) {
 		Cvar_ForceSet(va("mn_name%i", cnt), "");
-		Cbuf_AddText(va("employeedisable%i\n", cnt));
+		Cbuf_AddText(va("employeedisable %i\n", cnt));
 	}
 }
 
@@ -180,11 +180,11 @@ static void E_EmployeeList_f (void)
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"),employee->chr.name));
 					else
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
-					Cbuf_AddText(va("employeeadd%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
+					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 				} else
-					Cbuf_AddText(va("employeedisable%i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
+					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
 			} else
-				Cbuf_AddText(va("employeedel%i\n", employeesInCurrentList));
+				Cbuf_AddText(va("employeedel %i\n", employeesInCurrentList));
 		}
 		employeesInCurrentList++;
 	}
@@ -210,7 +210,7 @@ static void E_EmployeeList_f (void)
 	i = employeesInCurrentList;
 	for (;i < cl_numnames->integer;i++) {
 		Cvar_ForceSet(va("mn_name%i", i), "");
-		Cbuf_AddText(va("employeedisable%i\n", i));
+		Cbuf_AddText(va("employeedisable %i\n", i));
 	}
 
 	/* Select the current employee if name was changed or first one. Use the direct string
@@ -1350,13 +1350,13 @@ static void E_EmployeeHire_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			MN_DisplayNotice(_("Could not fire employee"), 2000);
 		} else
-			Cbuf_AddText(va("employeedel%i\n", button));
+			Cbuf_AddText(va("employeedel %i\n", button));
 	} else {
 		if (!E_HireEmployee(baseCurrent, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
 			MN_DisplayNotice(_("Could not hire employee"), 2000);
 		} else
-			Cbuf_AddText(va("employeeadd%i\n", button));
+			Cbuf_AddText(va("employeeadd %i\n", button));
 	}
 	Cbuf_AddText(va("employee_select %i\n", num));
 }

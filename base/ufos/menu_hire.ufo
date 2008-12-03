@@ -48,70 +48,36 @@ menu employees
 		*bt_employee18 image menu/checkbox_green_unchecked
 	}
 
-	confunc employeedel0 { *bt_employee0 image menu/checkbox_green_unchecked }
-	confunc employeedel1 { *bt_employee1 image menu/checkbox_green_unchecked }
-	confunc employeedel2 { *bt_employee2 image menu/checkbox_green_unchecked }
-	confunc employeedel3 { *bt_employee3 image menu/checkbox_green_unchecked }
-	confunc employeedel4 { *bt_employee4 image menu/checkbox_green_unchecked }
-	confunc employeedel5 { *bt_employee5 image menu/checkbox_green_unchecked }
-	confunc employeedel6 { *bt_employee6 image menu/checkbox_green_unchecked }
-	confunc employeedel7 { *bt_employee7 image menu/checkbox_green_unchecked }
-	confunc employeedel8 { *bt_employee8 image menu/checkbox_green_unchecked }
-	confunc employeedel9 { *bt_employee9 image menu/checkbox_green_unchecked }
-	confunc employeedel10 { *bt_employee10 image menu/checkbox_green_unchecked }
-	confunc employeedel11 { *bt_employee11 image menu/checkbox_green_unchecked }
-	confunc employeedel12 { *bt_employee12 image menu/checkbox_green_unchecked }
-	confunc employeedel13 { *bt_employee13 image menu/checkbox_green_unchecked }
-	confunc employeedel14 { *bt_employee14 image menu/checkbox_green_unchecked }
-	confunc employeedel15 { *bt_employee15 image menu/checkbox_green_unchecked }
-	confunc employeedel16 { *bt_employee16 image menu/checkbox_green_unchecked }
-	confunc employeedel17 { *bt_employee17 image menu/checkbox_green_unchecked }
-	confunc employeedel18 { *bt_employee18 image menu/checkbox_green_unchecked }
+	/**
+	 * @param[in] <1> row of the employee in the view
+	 */
+	confunc employeedel
+	{
+		*bt_employee<1> image menu/checkbox_green_unchecked
+		*bt_employee<1> invis false
+	}
 
-	confunc employeeadd0 { *bt_employee0 image menu/checkbox_green_checked }
-	confunc employeeadd1 { *bt_employee1 image menu/checkbox_green_checked }
-	confunc employeeadd2 { *bt_employee2 image menu/checkbox_green_checked }
-	confunc employeeadd3 { *bt_employee3 image menu/checkbox_green_checked }
-	confunc employeeadd4 { *bt_employee4 image menu/checkbox_green_checked }
-	confunc employeeadd5 { *bt_employee5 image menu/checkbox_green_checked }
-	confunc employeeadd6 { *bt_employee6 image menu/checkbox_green_checked }
-	confunc employeeadd7 { *bt_employee7 image menu/checkbox_green_checked }
-	confunc employeeadd8 { *bt_employee8 image menu/checkbox_green_checked }
-	confunc employeeadd9 { *bt_employee9 image menu/checkbox_green_checked }
-	confunc employeeadd10 { *bt_employee10 image menu/checkbox_green_checked }
-	confunc employeeadd11 { *bt_employee11 image menu/checkbox_green_checked }
-	confunc employeeadd12 { *bt_employee12 image menu/checkbox_green_checked }
-	confunc employeeadd13 { *bt_employee13 image menu/checkbox_green_checked }
-	confunc employeeadd14 { *bt_employee14 image menu/checkbox_green_checked }
-	confunc employeeadd15 { *bt_employee15 image menu/checkbox_green_checked }
-	confunc employeeadd16 { *bt_employee16 image menu/checkbox_green_checked }
-	confunc employeeadd17 { *bt_employee17 image menu/checkbox_green_checked }
-	confunc employeeadd18 { *bt_employee18 image menu/checkbox_green_checked }
+	/**
+	 * @param[in] <1> row of the employee in the view
+	 */
+	confunc employeeadd
+	{
+		*bt_employee<1> image menu/checkbox_green_checked
+		*bt_employee<1> invis false
+	}
 
-	confunc employeedisable0 { *bt_employee0 image menu/checkbox_green_disabled }
-	confunc employeedisable1 { *bt_employee1 image menu/checkbox_green_disabled }
-	confunc employeedisable2 { *bt_employee2 image menu/checkbox_green_disabled }
-	confunc employeedisable3 { *bt_employee3 image menu/checkbox_green_disabled }
-	confunc employeedisable4 { *bt_employee4 image menu/checkbox_green_disabled }
-	confunc employeedisable5 { *bt_employee5 image menu/checkbox_green_disabled }
-	confunc employeedisable6 { *bt_employee6 image menu/checkbox_green_disabled }
-	confunc employeedisable7 { *bt_employee7 image menu/checkbox_green_disabled }
-	confunc employeedisable8 { *bt_employee8 image menu/checkbox_green_disabled }
-	confunc employeedisable9 { *bt_employee9 image menu/checkbox_green_disabled }
-	confunc employeedisable10 { *bt_employee10 image menu/checkbox_green_disabled }
-	confunc employeedisable11 { *bt_employee11 image menu/checkbox_green_disabled }
-	confunc employeedisable12 { *bt_employee12 image menu/checkbox_green_disabled }
-	confunc employeedisable13 { *bt_employee13 image menu/checkbox_green_disabled }
-	confunc employeedisable14 { *bt_employee14 image menu/checkbox_green_disabled }
-	confunc employeedisable15 { *bt_employee15 image menu/checkbox_green_disabled }
-	confunc employeedisable16 { *bt_employee16 image menu/checkbox_green_disabled }
-	confunc employeedisable17 { *bt_employee17 image menu/checkbox_green_disabled }
-	confunc employeedisable18 { *bt_employee18 image menu/checkbox_green_disabled }
+	/**
+	 * @param[in] <1> row of the employee in the view
+	 */
+	confunc employeedisable
+	{
+		*bt_employee<1> invis true
+	}
 
 	pic bt_employee0
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 30"
+		pos	"322 30"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -123,7 +89,7 @@ menu employees
 	pic bt_employee1
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 68"
+		pos	"322 68"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -135,7 +101,7 @@ menu employees
 	pic bt_employee2
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 106"
+		pos	"322 106"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -147,7 +113,7 @@ menu employees
 	pic bt_employee3
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 144"
+		pos	"322 144"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -159,7 +125,7 @@ menu employees
 	pic bt_employee4
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 182"
+		pos	"322 182"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -171,7 +137,7 @@ menu employees
 	pic bt_employee5
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 220"
+		pos	"322 220"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -183,7 +149,7 @@ menu employees
 	pic bt_employee6
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 258"
+		pos	"322 258"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -195,7 +161,7 @@ menu employees
 	pic bt_employee7
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 296"
+		pos	"322 296"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -207,7 +173,7 @@ menu employees
 	pic bt_employee8
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 334"
+		pos	"322 334"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -219,7 +185,7 @@ menu employees
 	pic bt_employee9
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 372"
+		pos	"322 372"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -231,7 +197,7 @@ menu employees
 	pic bt_employee10
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 410"
+		pos	"322 410"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -243,7 +209,7 @@ menu employees
 	pic bt_employee11
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 448"
+		pos	"322 448"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -255,7 +221,7 @@ menu employees
 	pic bt_employee12
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 486"
+		pos	"322 486"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -267,7 +233,7 @@ menu employees
 	pic bt_employee13
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 524"
+		pos	"322 524"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -279,7 +245,7 @@ menu employees
 	pic bt_employee14
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 562"
+		pos	"322 562"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -291,7 +257,7 @@ menu employees
 	pic bt_employee15
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 600"
+		pos	"322 600"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -303,7 +269,7 @@ menu employees
 	pic bt_employee16
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 638"
+		pos	"322 638"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -315,7 +281,7 @@ menu employees
 	pic bt_employee17
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 676"
+		pos	"322 676"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -327,7 +293,7 @@ menu employees
 	pic bt_employee18
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
-		pos	"362 714"
+		pos	"322 714"
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
@@ -348,7 +314,7 @@ menu employees
 	vscrollbar scroll
 	{
 		image	menu/scrollbar_v_green	blend	true
-		pos	"20 30"	size	"27 700"
+		pos	"360 25"	size	"27 719"
 		current 0
 		viewsize 19
 		fullsize 50
@@ -359,13 +325,13 @@ menu employees
 
 	text employee_list
 	{
+		pos	"40 32"
+		size	"280 722"
 		format	"38 100"
+		height	"19"
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx	true
-		height	"19"
-		pos	"60 32"
-		size	"280 722"
 		num		TEXT_LIST
 //		bgcolor	"1 1 1 0.5"
 		click
