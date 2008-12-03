@@ -1,0 +1,8 @@
+{
+	material tex_mattn/brick03g
+	hardness 0.5
+}
+{
+	material tex_mattn/brick03
+	hardness 0.5
+}
