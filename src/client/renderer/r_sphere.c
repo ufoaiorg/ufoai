@@ -58,9 +58,9 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	int vertspos = 0;
 	int texespos = 0;
 
-	sphere->verts = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_modelPool, 0);
-	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 4), vid_modelPool, 0);
-	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_modelPool, 0);
+	sphere->verts = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_genericPool, 0);
+	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 4), vid_genericPool, 0);
+	sphere->normals = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_genericPool, 0);
 
 	/* must be i <= tris, as one loop is wasted, because of the spiral */
 	for (i = 0; i <= tris; i++) { /* loop through rho, from pole to pole */
