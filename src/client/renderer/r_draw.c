@@ -799,18 +799,16 @@ void R_DrawPolygon (int points, int *verts)
 void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model, int skin)
 {
 	modelInfo_t mi;
-	char path[MAX_QPATH] = "";
 	vec3_t model_center;
 
 	memset(&mi, 0, sizeof(mi));
 
-	Com_sprintf(path, sizeof(path), "geoscape/%s", model);
-	mi.model = R_RegisterModelShort(path);
+	mi.model = R_RegisterModelShort(model);
 	if (!mi.model) {
-		Com_Printf("Could not find model '%s'\n", path);
+		Com_Printf("Could not find model '%s'\n", model);
 		return;
 	}
-	mi.name = path;
+	mi.name = model;
 
 	mi.origin = position;
 	mi.angles = angles;
