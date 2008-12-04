@@ -1,5 +1,6 @@
 /**
  * @file m_node_selectbox.c
+ * @todo change to mouse behaviour. It better to click to dropdown the list
  */
 
 /*
@@ -202,11 +203,11 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	MN_GetNodeAbsPos(node, pos);
 	clickedAtOption = (y - pos[1]);
 
-	if (node->size[1])
-		clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
-	else
-		clickedAtOption = (clickedAtOption - SELECTBOX_DEFAULT_HEIGHT) / SELECTBOX_DEFAULT_HEIGHT; /* default height - see selectbox.tga */
+	/* we click on the head */
+	if (clickedAtOption < node->size[1])
+		return;
 
+	clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
 	if (clickedAtOption < 0 || clickedAtOption >= node->u.option.count)
 		return;
 
@@ -221,10 +222,13 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
 		return;
 
+	/* select the right option */
 	selectBoxOption = node->u.option.first;
 	for (; clickedAtOption > 0 && selectBoxOption; selectBoxOption = selectBoxOption->next) {
 		clickedAtOption--;
 	}
+
+	/* update the status */
 	if (selectBoxOption) {
 		const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
 		MN_SetCvar(cvarName, selectBoxOption->value, 0);
@@ -245,6 +249,13 @@ static void MN_SelectBoxNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
+
+static void MN_SelectBoxNodeLoaded (menuNode_t *node)
+{
+	/* force a size (according to the texture) */
+	node->size[1] = SELECTBOX_DEFAULT_HEIGHT;
+}
+
 
 static const value_t properties[] = {
 	/* very special attribute */
@@ -270,5 +281,6 @@ void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_SelectBoxNodeClick;
 	behaviour->mouseMove = MN_SelectBoxNodeMouseMove;
 	behaviour->loading = MN_SelectBoxNodeLoading;
+	behaviour->loaded = MN_SelectBoxNodeLoaded;
 	behaviour->capturedMouseMove = MN_SelectBoxNodeCapturedMouseMove;
 }
