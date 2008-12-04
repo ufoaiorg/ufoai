@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_font.h"
 #include "m_node_text.h"
+#include "m_actions.h"
 #include "../cl_video.h" /**< @todo Clean this up and remove this include */
 
 /**
@@ -477,14 +478,12 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	const menu_t *menu = node->menu;
-
 	if (node->onWheelUp && node->onWheelDown) {
-		MN_ExecuteActions(menu, (down ? node->onWheelDown : node->onWheelUp));
+		MN_ExecuteEventActions(node, (down ? node->onWheelDown : node->onWheelUp));
 	} else {
 		MN_TextScroll(node, (down ? 1 : -1));
 		/* they can also have script commands assigned */
-		MN_ExecuteActions(menu, node->onWheel);
+		MN_ExecuteEventActions(node, node->onWheel);
 	}
 }
 

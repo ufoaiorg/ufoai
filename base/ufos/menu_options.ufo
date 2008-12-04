@@ -172,6 +172,7 @@ menu options_video
 		align	ur
 	}
 
+
 	/* @todo update max with GL max anisotropic */
 	spinner aniso_change
 	{
@@ -742,42 +743,28 @@ menu options_keys
 	// only show the current binding - no support for changing them atm
 	text keylist
 	{
-		size	"460 560"
 		pos	"65 110"
+		size	"460 540"
 		height	"28"
 		num	TEXT_LIST
-		wheel
 		format	"20 0"
-		scrollbar	true
-//		bgcolor	"1 1 1 0.4"
+		wheel	{ cmd "mn_setnodeproperty keyscroll current <text_scroll>" }
 	}
 
-	pic scrollup
-	{
-		tooltip "_Scroll up"
-		image menu/buttons_small
-		pos		"511 90"
-		texl	"32 32"
-		texh	"48 48"
-		mousefx	true
-		click	{ cmd "mn_textscroll keylist -1;" }
-		repeat	true
-		out	{ *scrollup texl "32 32" *scrollup texh "48 48" }
-		in	{ *scrollup texl "48 32" *scrollup texh "64 48" }
+	vscrollbar keyscroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos	"500 110"	size	"27 560"
+		current 0
+		viewsize 28
+		fullsize 50
+		change {
+			cmd "mn_textscroll keylist <lastdiff>;"
+		}
 	}
 
-	pic scrolldown
+	confunc optionkey_count
 	{
-		tooltip "_Scroll down"
-		image menu/buttons_small
-		pos		"511 680"
-		texl	"32 48"
-		texh	"48 64"
-		mousefx	true
-		click	{ cmd "mn_textscroll keylist 1;" }
-		repeat	true
-		out	{ *scrolldown texl "32 48" *scrolldown texh "48 64" }
-		in	{ *scrolldown texl "48 48" *scrolldown texh "64 64" }
+		cmd "mn_setnodeproperty keyscroll fullsize <1>"
 	}
 
 	func init

@@ -195,18 +195,25 @@ static void MN_InitKeyList_f (void)
 {
 	static char keylist[2048];
 	int i;
+	int nb = 0;
 
 	*keylist = '\0';
 
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (keybindings[i] && keybindings[i][0])
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++) {
+		if (keybindings[i] && keybindings[i][0]) {
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
+			nb++;
+		}
+	}
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(menukeybindings[i])), sizeof(keylist));
 
 	mn.menuText[TEXT_LIST] = keylist;
+
+	/* @todo bad size computation, the text node only know the number of line */
+	MN_ExecuteConfunc(va("optionkey_count %i", nb));
 }
 
 /**
