@@ -196,14 +196,12 @@ static void MN_InitKeyList_f (void)
 	menuNode_t *node;
 	static char keylist[2048];
 	int i;
-	int nb = 0;
 
 	*keylist = '\0';
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++) {
 		if (keybindings[i] && keybindings[i][0]) {
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keybindings[i])), sizeof(keylist));
-			nb++;
 		}
 	}
 
