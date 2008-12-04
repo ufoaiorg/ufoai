@@ -436,7 +436,7 @@ static void U2M_SetDefaultConfigValues (void)
 
 	config.saturation = 1.0f;
 	config.contrast = 1.0f;
-	config.lightscale = 1.0;
+	config.lightscale = 0.7;
 	config.lightquant = 4;
 	config.direct_scale = 0.4f; /**< surface lighting scale factor */
 	config.entity_scale = 1.0f;
