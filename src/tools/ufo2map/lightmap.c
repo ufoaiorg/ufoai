@@ -264,20 +264,21 @@ typedef struct facelight_s {
 
 static facelight_t facelight[LIGHTMAP_MAX][MAX_MAP_FACES];
 
+/** @brief Different types of sources emitting light */
 typedef enum {
-	emit_surface,
-	emit_point,
-	emit_spotlight
+	emit_surface,		/**< surface light via SURF_LIGHT */
+	emit_point,			/**< point light given via light entity */
+	emit_spotlight		/**< spotlight given via light entity (+target) or via light_spot entity */
 } emittype_t;
 
 /** @brief a light source */
 typedef struct light_s {
-	struct light_s *next;
-	emittype_t	type;
+	struct light_s *next;	/**< next light in the chain */
+	emittype_t	type;		/**< light type */
 
 	float		intensity;	/**< brightness */
-	vec3_t		origin;
-	vec3_t		color;
+	vec3_t		origin;		/**< the origin of the light */
+	vec3_t		color;		/**< the color (RGB) of the light */
 	vec3_t		normal;		/**< spotlight direction */
 	float		stopdot;	/**< spotlights cone */
 } light_t;
@@ -348,7 +349,7 @@ void BuildLights (void)
 
 		intensity = FloatForKey(e, "light");
 		if (!intensity)
-			intensity = 300;
+			intensity = 300.0;
 		color = ValueForKey(e, "_color");
 		if (color && color[0]){
 			sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]);
@@ -379,11 +380,11 @@ void BuildLights (void)
 			} else {	/* point down angle */
 				const float angle = FloatForKey(e, "angle");
 				if (angle == ANGLE_UP) {
-					l->normal[0] = l->normal[1] = 0;
-					l->normal[2] = 1;
+					l->normal[0] = l->normal[1] = 0.0;
+					l->normal[2] = 1.0;
 				} else if (angle == ANGLE_DOWN) {
-					l->normal[0] = l->normal[1] = 0;
-					l->normal[2] = -1;
+					l->normal[0] = l->normal[1] = 0.0;
+					l->normal[2] = -1.0;
 				} else {
 					l->normal[2] = 0;
 					l->normal[0] = cos(angle / 180.0f * M_PI);
@@ -531,7 +532,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 				light = (l->intensity - dist) * dot;
 			} else {
 				/* outside the cone */
-				light = (l->intensity - dist) * dot;
+				light = (l->intensity * 0.5 - dist) * dot;
 			}
 			break;
 		default:

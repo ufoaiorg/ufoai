@@ -225,9 +225,14 @@ void CL_LanguageInit (void)
 		Q_strncpyz(systemLanguage, s_language->string, sizeof(systemLanguage));
 	} else {
 		const char *currentLocale = Sys_GetLocale();
-		if (currentLocale)
-			Q_strncpyz(systemLanguage, CL_GetLocaleID(currentLocale), sizeof(systemLanguage));
-		else
+
+		if (currentLocale) {
+			const char *localeID = CL_GetLocaleID(currentLocale);
+			if (localeID)
+				Q_strncpyz(systemLanguage, localeID, sizeof(systemLanguage));
+			else
+				systemLanguage[0] = '\0';
+		} else
 			systemLanguage[0] = '\0';
 	}
 
