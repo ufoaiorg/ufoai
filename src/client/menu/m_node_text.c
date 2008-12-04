@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_actions.h"
 #include "../cl_video.h" /**< @todo Clean this up and remove this include */
 
+static void MN_TextNodeDraw (menuNode_t *node);
+
 /**
  * @brief Scrolls the text in a textbox up/down.
  * @param[in] node The node of the text to be scrolled.
@@ -63,6 +65,29 @@ qboolean MN_TextScroll (menuNode_t *node, int offset)
 		node->textScroll = textScroll_new;
 		return qtrue;
 	}
+}
+
+/**
+ * @brief Call to say to the node the text is updated
+ */
+static void MN_TextUpdated_f (void)
+{
+	menuNode_t *node;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <nodename>\n", Cmd_Argv(0));
+		return;
+	}
+
+	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
+	if (!node) {
+		Com_DPrintf(DEBUG_CLIENT, "MN_TextUpdateLines_f: Node '%s.%s' not found.\n", MN_GetActiveMenu()->name, Cmd_Argv(1));
+		return;
+	}
+
+	/* @todo fix it better */
+	/* bad hack to compute the lines */
+	MN_TextNodeDraw(node);
 }
 
 /**
@@ -507,4 +532,5 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
+	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
 }

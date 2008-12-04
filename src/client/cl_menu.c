@@ -193,6 +193,7 @@ void MN_SetViewRect (const menu_t* menu)
  */
 static void MN_InitKeyList_f (void)
 {
+	menuNode_t *node;
 	static char keylist[2048];
 	int i;
 	int nb = 0;
@@ -213,7 +214,9 @@ static void MN_InitKeyList_f (void)
 	mn.menuText[TEXT_LIST] = keylist;
 
 	/* @todo bad size computation, the text node only know the number of line */
-	MN_ExecuteConfunc(va("optionkey_count %i", nb));
+	MN_ExecuteConfunc("mn_textupdated keylist");
+	node = MN_GetNodeFromCurrentMenu("keylist");
+	MN_ExecuteConfunc(va("optionkey_count %i", node->textLines));
 }
 
 /**
