@@ -443,8 +443,9 @@ static void MSO_InitTextList (void)
 		if (!entry->isCategory && entry->category->isFolded)
 			continue;
 		if (entry->isCategory) {
-			/* Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"menu/ufopedia_%s", entry->category->isFolded ? "aliens" : "artifacts"); */
-			Com_sprintf(lineprefix, sizeof(lineprefix), "%s", entry->category->isFolded ?  "+" : "-");
+			/** @todo replace placeholder images with correct ones, perhaps fix indent for non-categories */
+			Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"menu/ufopedia_%s", entry->category->isFolded ? "aliens" : "artifacts");
+			/* Com_sprintf(lineprefix, sizeof(lineprefix), "%s", entry->category->isFolded ?  "+" : "-"); */
 		} else
 			Com_sprintf(lineprefix, sizeof(lineprefix), "   ");
 		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s\n", lineprefix, _(entry->notifyType));

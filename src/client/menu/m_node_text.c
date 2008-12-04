@@ -242,9 +242,12 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			/** @todo fix scrolling images */
 			if (node->textLines > node->textScroll)
 				y1 += (node->textLines - node->textScroll) * node->texh[0];
-			/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
-			image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
-			x1 += image->height;
+			/* don't draw images that would be out of visible area */
+			if (y + height > y1 && node->textLines >= node->textScroll) {
+				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
+				image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
+				x1 += image->height;
+			}
 		}
 
 		/* get the position of the next newline - otherwise end will be null */
