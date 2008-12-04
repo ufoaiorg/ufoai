@@ -1,5 +1,11 @@
 /**
  * @file m_node_checkbox.c
+ * @code
+ * checkbox check_item {
+ *   cvar "*cvar mn_serverday"
+ *   pos  "410 100"
+ * }
+ * @endcode
  */
 
 /*

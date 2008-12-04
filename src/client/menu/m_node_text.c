@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_actions.h"
 #include "../cl_video.h" /**< @todo Clean this up and remove this include */
 
-static void MN_TextNodeDraw (menuNode_t *node);
+static void MN_TextNodeDraw(menuNode_t *node);
 
 /**
  * @brief Scrolls the text in a textbox up/down.
@@ -85,7 +85,7 @@ static void MN_TextUpdated_f (void)
 		return;
 	}
 
-	/* @todo fix it better */
+	/** @todo fix it better */
 	/* bad hack to compute the lines */
 	MN_TextNodeDraw(node);
 }
