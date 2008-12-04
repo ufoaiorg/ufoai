@@ -729,7 +729,9 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), AIR_GetAircraftIdxInBase(aircraft) + 1, base->numAircraftInBase));	/**< @todo Comment on the "+1" part here. */
-	Cvar_Set("mn_aircraft_model", aircraft->model);
+	if (!aircraft->tech)
+		Sys_Error("No technology assigned to aircraft '%s'", aircraft->id);
+	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),
