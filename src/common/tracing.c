@@ -336,8 +336,8 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
 	 * Often an occluding node will be found in the same thead
 	 * as the last trace, so test that one first. */
 	if (curTile->theadlevel[lastthead] != LEVEL_ACTORCLIP
-	    && curTile->theadlevel[lastthead] != LEVEL_WEAPONCLIP
-	    && TR_TestLine_r(curTile->thead[lastthead], start, stop))
+	 && curTile->theadlevel[lastthead] != LEVEL_WEAPONCLIP
+	 && TR_TestLine_r(curTile->thead[lastthead], start, stop))
 		return qtrue;
 
 	for (i = 0; i < curTile->numtheads; i++) {

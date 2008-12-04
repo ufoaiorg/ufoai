@@ -3619,14 +3619,14 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 
 	if (mission->ufo && CP_UFOIsCrashed(mission))
 		/** @todo Should be a special crashed UFO mission model */
-		return "mission";
+		return "geoscape/mission";
 
 	if (mission->mapDef->storyRelated) {
 		if ((mission->category == INTERESTCATEGORY_BUILDING) && (mission->stage == STAGE_BASE_DISCOVERED))
-			return "alienbase";
+			return "geoscape/alienbase";
 		else
 			/** @todo Should be a special story related mission model */
-			return "mission";
+			return "geoscape/mission";
 	}
 
 	switch (mission->category) {
@@ -3636,7 +3636,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_HARVEST:
 	case INTERESTCATEGORY_TERROR_ATTACK:
 	case INTERESTCATEGORY_BUILDING:
-		return "mission";
+		return "geoscape/mission";
 	case INTERESTCATEGORY_BASE_ATTACK:	/* Should not be reached, this mission category is not drawn on geoscape */
 	case INTERESTCATEGORY_SUPPLY:		/* Should not be reached, this mission category is not drawn on geoscape */
 	case INTERESTCATEGORY_INTERCEPT:	/* Should not be reached, this mission category is not drawn on geoscape */
