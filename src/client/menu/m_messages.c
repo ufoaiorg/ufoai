@@ -708,6 +708,9 @@ static void MSO_OptionsClick_f(void)
 		return;
 
 	category = MSO_GetEntryFromSelectionIndex(num, qfalse);
+	assert(msoTextNode);
+	/* don't highlight selection */
+	msoTextNode->textLineSelected = -1;
 	if (!category || !category->isCategory)
 		return;
 	category->category->isFolded = !category->category->isFolded;
