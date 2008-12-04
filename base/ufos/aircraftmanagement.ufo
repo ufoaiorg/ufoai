@@ -86,7 +86,7 @@ aircraft craft_drop_firebird
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
 	type		transporter
-	model		"drop_firebird"
+	model		"geoscape/drop_firebird"
 	price		140000
 	building	building_hangar
 	numteam		8
@@ -123,7 +123,7 @@ aircraft craft_drop_herakles
 	name		"_Herakles-class Heavy Lifter"
 	shortname	"_Herakles D"
 	type		transporter
-	model		"drop_herakles"
+	model		"geoscape/drop_herakles"
 	price		180000
 	building	building_hangar
 	numteam		8
@@ -162,7 +162,7 @@ aircraft craft_inter_stiletto
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
 	type		interceptor
-	model		"inter_stiletto"
+	model		"geoscape/inter_stiletto"
 	numteam		1
 	size		1
 	price		40000
@@ -207,7 +207,7 @@ aircraft craft_inter_saracen
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
 	type		interceptor
-	model		"inter_saracen"
+	model		"geoscape/inter_saracen"
 	numteam		1
 	size		2
 	price		100000
@@ -247,7 +247,7 @@ aircraft craft_inter_dragon
 	name		"_Dragon Interceptor"
 	shortname	"_Dragon"
 	type		interceptor
-	model		"inter_dragon"
+	model		"geoscape/inter_dragon"
 	numteam		1
 	size		1
 	price		100000
@@ -287,7 +287,7 @@ aircraft craft_inter_stingray
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
 	type		interceptor
-	model		"inter_stingray"
+	model		"geoscape/inter_stingray"
 	numteam		1
 	size		1
 	price		200000
@@ -334,7 +334,7 @@ aircraft craft_ufo_harvester
 	name		"_UFO - Harvester"
 	shortname	"_Harvester U"
 	type		ufo
-	model		"ufo_harvester"
+	model		"geoscape/ufo_harvester"
 	size		2
 	building	building_big_ufo_hangar
 	price		200000
@@ -377,7 +377,7 @@ aircraft craft_ufo_carrier
 	name		"_UFO - Carrier"
 	shortname	"_Carrier U"
 	type		ufo
-	model		"ufo_carrier"
+	model		"geoscape/ufo_carrier"
 	size		1
 	building	building_small_ufo_hangar
 	price		1000000
@@ -400,7 +400,7 @@ aircraft craft_ufo_supply
 	name		"_UFO - Supply Ship"
 	shortname	"_Supply U"
 	type		ufo
-	model		"ufo_supply"
+	model		"geoscape/ufo_supply"
 	size		1
 	building	building_big_ufo_hangar
 	price		250000
@@ -422,7 +422,7 @@ aircraft craft_ufo_bomber
 	name		"_UFO - Bomber"
 	shortname	"_Bomber U"
 	type		ufo
-	model		"ufo_bomber"
+	model		"geoscape/ufo_bomber"
 	size		1
 	building	building_big_ufo_hangar
 	price		250000
@@ -451,7 +451,7 @@ aircraft craft_ufo_corrupter
 	name		"_UFO - Corrupter"
 	shortname	"_Corrupter U"
 	type		ufo
-	model		"ufo_corrupter"
+	model		"geoscape/ufo_corrupter"
 	size		1
 	building	building_big_ufo_hangar
 	price		230000
@@ -479,7 +479,7 @@ aircraft craft_ufo_scout
 	name		"_UFO - Scout"
 	shortname	"_Scout U"
 	type		ufo
-	model		"ufo_scout"
+	model		"geoscape/ufo_scout"
 	size		1
 	building	building_small_ufo_hangar
 	price		150000
@@ -500,7 +500,7 @@ aircraft craft_ufo_fighter
 	name		"_UFO - Fighter"
 	shortname	"_Fighter U"
 	type		ufo
-	model		"ufo_fighter"
+	model		"geoscape/ufo_fighter"
 	size		1
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
