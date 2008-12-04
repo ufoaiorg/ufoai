@@ -113,7 +113,7 @@ static void E_EmployeeListScroll_f (void)
 		MN_ExecuteConfunc(va("employeedisable %i\n", cnt));
 	}
 
-	MN_ExecuteConfunc(va("hire_fixe_scroll %i\n", employeeListNode->textScroll));
+	MN_ExecuteConfunc(va("hire_fix_scroll %i\n", employeeListNode->textScroll));
 }
 
 /**

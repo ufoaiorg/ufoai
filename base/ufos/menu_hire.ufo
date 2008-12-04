@@ -310,7 +310,7 @@ menu employees
 		cmd "mn_setnodeproperty scroll fullsize <1>"
 	}
 
-	confunc hire_fixe_scroll {
+	confunc hire_fix_scroll {
 		cmd "mn_setnodeproperty scroll current <1>"
 	}
 
