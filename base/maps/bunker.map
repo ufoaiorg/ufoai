@@ -3,16 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"subdivide" "1024"
-"light_scale" "0.7"
-"angles_night" "-80 220"
-"color_night" "0.65 0.75 0.95"
-"light_night" "70"
-"ambient_night" "0.1 0.1 0.15"
-"angles_day" "-75 100"
-"color_day" "0.90 0.75 0.65"
-"light_day" "190"
-"ambient_day" "0.4 0.4 0.4"
 // brush 0
 {
 ( -256 256 69 ) ( -292 256 69 ) ( -292 192 69 ) tex_common/nodraw -65 -126 0 -0.1875 0.1875 134225408 128 0
