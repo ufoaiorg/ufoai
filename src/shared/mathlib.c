@@ -531,12 +531,12 @@ static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const ve
 vec_t VectorNormalize (vec3_t v)
 {
 	float length;
+	/** @note - Embedding the assignments into the expressions provides huge performance
+	 * increases when compiled with optimizations.  The value of an assignment is retained for
+	 * the comparison or evaluation, saving time for a function that is called 471342268 times in 2 minutes. */
 
-	length = DotProduct(v, v);
-	length = sqrt(length);		/** @todo */
-
-	if (length) {
-		const float ilength = 1.0 / length;
+	if ((length = DotProduct(v, v))) { /**< Assign and compare the result */
+		const float ilength = 1.0 / (length = sqrtf(length)); /** @todo */ /**< Assign and use the result */
 		v[0] *= ilength;
 		v[1] *= ilength;
 		v[2] *= ilength;
