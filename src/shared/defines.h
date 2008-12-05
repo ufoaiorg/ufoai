@@ -385,10 +385,11 @@ COLLISION DETECTION
 /* TestLine level masks */
 /* game/g_client.c, game/g_combat.c, common/routing.c, common/tracing.c, ufo2map/lightmap.c, ufo2map/radiosity.c,
  * client/cl_actor.c, client/cl_le.c */
-#define	TL_FLAG_NONE		0x00
-#define	TL_FLAG_ACTORCLIP	0x01
-#define	TL_FLAG_WEAPONCLIP	0x02
-#define	TL_FLAG_ALL			0x07
+#define	TL_FLAG_NONE			0x0000
+#define	TL_FLAG_REGULAR_LEVELS	0x00FF
+#define	TL_FLAG_ACTORCLIP		0x0100
+#define	TL_FLAG_WEAPONCLIP		0x0200
+#define	TL_FLAG_ALL				0x0300
 
 /* ufo2map/common/bspfile.c, renderer/r_lightmap.c, renderer/r_lightmap.h, renderer/R-main.c, renderer/r_model_brush.c,
  * shared/typedefs.h */

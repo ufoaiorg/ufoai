@@ -239,7 +239,7 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
-	int r;
+	int r, type;
 
 	/* leaf node */
 	if (node & (1 << 31))
@@ -247,22 +247,22 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
-	switch (tnode->type) {
-	case PLANE_X:
-	case PLANE_Y:
-	case PLANE_Z:
-		front = start[tnode->type] - tnode->dist;
-		back = stop[tnode->type] - tnode->dist;
-		break;
-	case PLANE_NONE:
+	if ((type = tnode->type) <= PLANE_Z) {
+		const float dist = tnode->dist;
+		front = start[type] - dist;
+		back = stop[type] - dist;
+	}
+	else if (type == PLANE_NONE) {
 		r = TR_TestLine_r(tnode->children[0], start, stop);
 		if (r)
 			return r;
 		return TR_TestLine_r(tnode->children[1], start, stop);
-	default:
-		front = DotProduct(start, tnode->normal) - tnode->dist;
-		back = DotProduct(stop, tnode->normal) - tnode->dist;
-		break;
+	}
+	else {
+		vec3_t *normal = &tnode->normal;
+		const float dist = tnode->dist;
+		front = DotProduct(start, *normal) - dist;
+		back = DotProduct(stop, *normal) - dist;
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
@@ -274,9 +274,7 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 		const float frac = front / (front - back);
 		vec3_t mid;
 
-		mid[0] = start[0] + (stop[0] - start[0]) * frac;
-		mid[1] = start[1] + (stop[1] - start[1]) * frac;
-		mid[2] = start[2] + (stop[2] - start[2]) * frac;
+		VectorInterpolation(start, stop, frac, mid);
 
 		r = TR_TestLine_r(tnode->children[side], start, mid);
 		if (r)
@@ -287,27 +285,33 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 
 
 /**
- * @brief
+ * @brief Tests to see if a line intersects any brushes in a tile.
  * @param[in] tile The map tile containing the structures to be traced.
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
  * @sa CL_TargetingToHit
  * @note levels:
+ * 0-255: brushes are assigned to a level based on their assigned veiwing levels.  A brush with
+ *    no levels assigned will be stuck in 0, a brush viewable from all 8 levels will be in 255, and
+ *    so on.  Each brush will only appear in one level.
  * 256: weaponclip-level
  * 257: actorclip-level
- * 258: stepon-level (only exists while processing paths in ufo2map)
  */
 static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, int levelmask)
 {
+	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
 
 	curTile = tile;
 	/* loop over all theads */
 	for (i = 0; i < curTile->numtheads; i++) {
-		if (curTile->theadlevel[i] == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
+		const int level = curTile->theadlevel[i];
+		if (level && corelevels && !(level & levelmask))
 			continue;
-		if (curTile->theadlevel[i] == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
+		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
+			continue;
+		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
 		if (TR_TestLine_r(curTile->thead[i], start, stop))
 			return qtrue;
@@ -326,7 +330,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
  */
 qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
 {
-	int i;
+	int i, mask, lz, hz;
 	static int lastthead = 0;
 
 	assert(numTiles == 1);
@@ -340,12 +344,25 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
 	 && TR_TestLine_r(curTile->thead[lastthead], start, stop))
 		return qtrue;
 
+	/* Proper maps in ufo:ai have their brushes surface flags set
+	 * based on the game levels the surfaces occur in.  We can use this to
+	 * our advantage by skipping any theadlevels that do not include
+	 * any levels between the start and stop points. */
+	lz = floor(min(start[2], stop[2]) / UNIT_HEIGHT); /**< Convert to game levels */
+	hz = floor(max(start[2], stop[2]) / UNIT_HEIGHT);
+	mask = (1 << (hz + 1)) -1; /**< Generate bit mask */
+	if (lz > 0)
+		mask ^= (1 << lz) -1; /**< Generate bit mask */
+
 	for (i = 0; i < curTile->numtheads; i++) {
+		const int level = curTile->theadlevel[i];
 		if (i == lastthead)
 			continue;
-		if (curTile->theadlevel[i] == LEVEL_ACTORCLIP)
+		if (level == LEVEL_ACTORCLIP)
 			continue;
-		if (curTile->theadlevel[i] == LEVEL_WEAPONCLIP)
+		if (level == LEVEL_WEAPONCLIP)
+			continue;
+		if (!(level & mask))
 			continue;
 		if (TR_TestLine_r(curTile->thead[i], start, stop)) {
 			lastthead = i;
@@ -476,6 +493,7 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
  */
 static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
+	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
 
 	curTile = tile;
@@ -483,9 +501,12 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 	VectorCopy(stop, end);
 
 	for (i = 0; i < tile->numtheads; i++) {
-		if (curTile->theadlevel[i] == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
+		const int level = tile->theadlevel[i];
+		if (level && corelevels && !(level & levelmask))
 			continue;
-		if (curTile->theadlevel[i] == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
+		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
+			continue;
+		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
 		if (TR_TestLineDist_r(tile->thead[i], start, stop))
 			if (VectorNearer(tr_end, end, start))
