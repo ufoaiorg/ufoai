@@ -837,6 +837,39 @@ static void Cvar_Del_f (void)
 }
 
 /**
+ * @brief Add a value to a cvar
+ */
+static void Cvar_Add_f (void)
+{
+	cvar_t *cvar;
+	float value;
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <variable> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cvar = Cvar_Get(Cmd_Argv(1), "", 0, NULL);
+	value = cvar->value + atof(Cmd_Argv(2));
+	Cvar_SetValue(Cmd_Argv(1), value);
+}
+
+/**
+ * @brief Apply a modulo to a cvar
+ */
+static void Cvar_Mod_f (void)
+{
+	cvar_t *cvar;
+	int value;
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <variable> <value>\n", Cmd_Argv(0));
+		return;
+	}
+	cvar = Cvar_Get(Cmd_Argv(1), "", 0, NULL);
+	value = cvar->integer % atoi(Cmd_Argv(2));
+	Cvar_SetValue(Cmd_Argv(1), value);
+}
+
+/**
  * @brief Reset cheat cvar values to default
  * @sa CL_SendCommand
  */
@@ -876,6 +909,8 @@ void Cvar_Init (void)
 	Cmd_AddCommand("setold", Cvar_SetOld_f, "Restore the cvar old value");
 	Cmd_AddCommand("del", Cvar_Del_f, "Delete a cvar");
 	Cmd_AddCommand("set", Cvar_Set_f, "Set a cvar value");
+	Cmd_AddCommand("add", Cvar_Add_f, "Add a value to a cvar");
+	Cmd_AddCommand("mod", Cvar_Mod_f, "Apply a modulo on a cvar");
 	Cmd_AddCommand("copy", Cvar_Copy_f, "Copy cvar target to source");
 	Cmd_AddCommand("cvarlist", Cvar_List_f, "Show all cvars");
 }
