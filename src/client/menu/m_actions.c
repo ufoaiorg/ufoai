@@ -114,6 +114,7 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
 
 	while (outputSize && *input != '\0' && *input != ' ' && *input != '>') {
 		*output++ = *input++;
+		outputSize--;
 	}
 	if (*input != '>') {
 		return NULL;
@@ -132,7 +133,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - ((addNewLine)?2:1);
-	static char propertyName[16];
+	static char propertyName[64];
 	const char *cin = input;
 	char *cout = cmd;
 
@@ -141,7 +142,31 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 			/* read propertyName between '<' and '>' */
 			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
-				if (source) {
+				if (!Q_strncmp(propertyName, "cvari:", 6)) {
+					cvar_t *cvar = Cvar_Get(propertyName + 6, "", 0, NULL);
+					int l = snprintf(cout, length, "%i", cvar->integer);
+					cout += l;
+					cin = next;
+					length -= l;
+					continue;
+
+				} else if (!Q_strncmp(propertyName, "cvarf:", 6)) {
+					cvar_t *cvar = Cvar_Get(propertyName + 6, "", 0, NULL);
+					int l = snprintf(cout, length, "%f", cvar->value);
+					cout += l;
+					cin = next;
+					length -= l;
+					continue;
+
+				} else if (!Q_strncmp(propertyName, "cvar:", 5)) {
+					cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
+					int l = snprintf(cout, length, "%s", cvar->string);
+					cout += l;
+					cin = next;
+					length -= l;
+					continue;
+
+				} else if (source) {
 					/* find peroperty definition */
 					const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
 					if (property) {
@@ -181,6 +206,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 		*cout++ = '\n';
 	}
 	*cout++ = '\0';
+	Com_Printf("%s\n", cmd);
 	return cmd;
 }
 
@@ -188,7 +214,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 {
 	static int callnumber = 0;
 	const menuAction_t *action;
-	if (callnumber++ > 10) {
+	if (callnumber++ > 20) {
 		Com_Printf("MN_ExecuteInjectedActions: Possible recursion\n");
 		return;
 	}
