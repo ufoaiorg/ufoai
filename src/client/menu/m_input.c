@@ -137,6 +137,11 @@ void MN_InvalidateMouse (void)
  */
 void MN_CheckMouseMove (void)
 {
+    /* is hovered node no more draw */
+    if (mouseOverTest && (mouseOverTest->invis || !MN_CheckCondition(mouseOverTest))) {
+        MN_InvalidateMouse();
+    }
+
 	if (mousePosX != oldX || mousePosY != oldY) {
 		oldX = mousePosX;
 		oldY = mousePosY;
