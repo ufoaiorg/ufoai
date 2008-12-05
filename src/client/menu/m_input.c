@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_map.h"
 #include "m_input.h"
 #include "m_main.h"
+#include "m_actions.h"
 #include "m_parse.h"
 #include "m_input.h"
 #include "m_dragndrop.h"
@@ -308,7 +309,7 @@ void MN_LeftClick (int x, int y)
 		if (node->behaviour->leftClick) {
 			node->behaviour->leftClick(node, x, y);
 		} else {
-			MN_ExecuteActions(node->menu, node->onClick);
+			MN_ExecuteEventActions(node, node->onClick);
 		}
 		return;
 	}
@@ -393,12 +394,12 @@ void MN_LeftClick (int x, int y)
 				mn.mouseRepeat.action = execute_node->onClick;
 			}
 			if (execute_node->behaviour->id != MN_TEXT)
-				MN_ExecuteActions(menu, execute_node->onClick);
+				MN_ExecuteEventActions(execute_node, execute_node->onClick);
 		}
 
 		/** @todo maybe we should also check sp == mn.menuStackPos here */
 		if (!insideNode && menu->leaveNode)
-			MN_ExecuteActions(menu, menu->leaveNode->onClick);
+			MN_ExecuteEventActions(menu, menu->leaveNode->onClick);
 
 		break;
 	}
