@@ -19,47 +19,39 @@ menu map
 
 	map themap
 	{
-		// only if messagesystem is turned off
-		if "mn_messagesystem == 0"
 		pos		"0 0"
 		size	"1024 768"
 		click	mclick wheel
 		rclick	{ cmd "mn_mapaction_reset;" }
-		// menu
-		excluderect
-		{
-			pos	"768 0"
-			size	"256 768"
-		}
 	}
 
-	map themap_wmessagesystem
+	confunc messagesystem_mode0
 	{
-		// only if messagesystem is turned on in halfheight mode (click)
-		if "mn_messagesystem == 1"
-		pos	"0 0"
-		size	"1024 768"
-		click	mclick wheel
-		rclick	{ cmd "mn_mapaction_reset;" }
-		// menu
-		excluderect
-		{
-			pos	"768 0"
-			size	"256 768"
-		}
-		excluderect
-		{
-			pos	"0 0"
-			size	"768 400"
-		}
+		*messagesystem	height	1
+		*messagesystem	size	"768 22"
+		*messagesystem	scrollbar "false"
 	}
 
-	map themap_wfullmessagesystem
+	confunc messagesystem_mode1
 	{
-		// only if messagesystem is turned on in in fullheight mode (rclick)
-		if "mn_messagesystem == 2"
-		pos	"0 0"
-		size	"1024 768"
+		*messagesystem	height	5
+		*messagesystem	size	"768 110"
+		*messagesystem	scrollbar "false"
+	}
+
+	confunc messagesystem_mode2
+	{
+		*messagesystem	height	10
+		*messagesystem	size	"768 220"
+		*messagesystem	scrollbar "false"
+	}
+
+	confunc messagesystem_mode3
+	{
+		*messagesystem	height	38
+		*messagesystem	size	"768 768"
+		*messagesystem	scrollbar "true"
+		cmd "game_timestop;"
 	}
 
 	text messagesystem
@@ -417,63 +409,18 @@ menu map
 
 	pic bt_messagesystem
 	{
-		// only if messagesystem is turned off
-		if "mn_messagesystem == 0"
 		// @todo: better -more verbose- tooltip
 		tooltip	"_Open up messages"
 		image	menu/geo_eventlog
 		pos		"850 320"
 		texl	"0 0"
 		texh	"32 32"
-		mousefx	false
-		out	{
-				*bt_messagesystem texl "0 0"
-				*bt_messagesystem texh "32 32"
-				*messagesystem size "768 22"
-				*messagesystem height "1"
-		}
-		in	{
-				*bt_messagesystem texl "32 0"
-				*bt_messagesystem texh "64 32"
-				*messagesystem size "768 400"
-				*messagesystem height "20"
-		}
+		// out	{ cmd "bt_messagesystem_out" }
+		// in	{ cmd "bt_messagesystem_in" }
 		click	{
-				*messagesystem size "768 400"
-				*messagesystem scrollbar "true"
-				cmd "set mn_messagesystem 1;"
-		}
-		rclick	{
-				*messagesystem size "768 768"
-				*messagesystem scrollbar "true"
-				cmd "game_timestop; set mn_messagesystem 2;"
-				*messagesystem height "38"
-		}
-	}
-
-	pic bt_messagesystem_on
-	{
-		// only if messagesystem is turned on
-		if "mn_messagesystem > 0"
-		tooltip	"_Close down messages"
-		image	menu/geo_eventlog
-		pos		"850 320"
-		texl	"32 0"
-		texh	"64 32"
-		mousefx	false
-		click	{
-				cmd "mn_textscroll messagesystem reset"
-				*messagesystem size "768 400"
-				*messagesystem scrollbar "false"
-				cmd "set mn_messagesystem 0;"
-		}
-		out	{
-				*bt_messagesystem_on texl "0 0"
-				*bt_messagesystem_on texh "32 32"
-		}
-		in	{
-				*bt_messagesystem_on texl "32 0"
-				*bt_messagesystem_on texh "64 32"
+			cmd "add mn_messagesystem 1;"
+			cmd "mod mn_messagesystem 4;"
+			cmd "messagesystem_mode<cvari:mn_messagesystem>;"
 		}
 	}
 
@@ -518,7 +465,8 @@ menu map
 
 	func init
 	{
-		cmd		"music_change geoscape;"
+		cmd	"music_change geoscape;"
+		cmd	"set mn_messagesystem 0"
 	}
 }
 
