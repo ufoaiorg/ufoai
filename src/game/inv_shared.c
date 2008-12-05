@@ -58,7 +58,7 @@ void INVSH_InitCSI (csi_t * import)
 const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
 {
 #ifdef DEBUG
-	if (!obj) \
+	if (!obj)
 		Sys_Error("FIRESH_GetFiredef: no obj given.\n");
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i]\n", weapFdsIdx);
