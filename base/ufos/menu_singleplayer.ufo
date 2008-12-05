@@ -643,7 +643,7 @@ menu save
 		color "0 .78 0 1" selectcolor "1 1 1 1"
 		textalign cl	padding 8	font "f_verysmall"
 		pos		"640 410" size	"256 34"
-		string "*cvar mn_slot7"
+		string "*cvar mn_slot6"
 		click	{ cmd "game_comments;game_savenamecleanup 6;" }
 		change	{ cmd "game_save slot6 *mn_slot6;game_comments;" }
 		abort	{ cmd "game_comments;" }

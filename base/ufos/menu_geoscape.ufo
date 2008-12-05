@@ -467,6 +467,14 @@ menu map
 				*messagesystem scrollbar "false"
 				cmd "set mn_messagesystem 0;"
 		}
+		out	{
+				*bt_messagesystem_on texl "0 0"
+				*bt_messagesystem_on texh "32 32"
+		}
+		in	{
+				*bt_messagesystem_on texl "32 0"
+				*bt_messagesystem_on texh "64 32"
+		}
 	}
 
 	pic bt_messagesettings
