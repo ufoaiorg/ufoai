@@ -450,7 +450,7 @@ static void TR_ResetScrolling_f (void)
 
 	/* maybe we call this function and transfer menu is not on the menu stack */
 	if (trans_list) {
-		trans_list->textScroll = 0;
+		trans_list->u.text.textScroll = 0;
 	}
 }
 

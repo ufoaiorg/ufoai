@@ -1052,7 +1052,7 @@ static void PR_ProductionSelect_f (void)
 	}
 
 	/* Reset scroll values of the list. */
-	node1->textScroll = node2->textScroll = prodlist->textScroll = 0;
+	node1->u.text.textScroll = node2->u.text.textScroll = prodlist->u.text.textScroll = 0;
 
 	/* Update list of entries for current production tab. */
 	PR_UpdateProductionList(baseCurrent);
@@ -1073,7 +1073,7 @@ static void PR_ProductionSelect_f (void)
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
-		prodlist->textLineSelected = gd.productions[baseCurrent->idx].numItems + QUEUE_SPACERS;
+		MN_TextNodeSelectLine(prodlist, gd.productions[baseCurrent->idx].numItems + QUEUE_SPACERS);
 	}
 
 	/* Update displayed info about selected entry (if any). */
@@ -1189,7 +1189,7 @@ static void PR_ProductionListScroll_f (void)
 	assert(node2);
 	assert(prodlist);
 
-	node1->textScroll = node2->textScroll = prodlist->textScroll;
+	node1->u.text.textScroll = node2->u.text.textScroll = prodlist->u.text.textScroll;
 }
 
 /**

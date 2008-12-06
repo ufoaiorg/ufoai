@@ -7036,7 +7036,7 @@ static void CP_CampaignsClick_f (void)
 
 	/* Highlight currently selected entry */
 	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
-	campaignlist->textLineSelected = num;
+	MN_TextNodeSelectLine(campaignlist, num);
 }
 
 /**

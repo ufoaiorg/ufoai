@@ -166,23 +166,23 @@ static void BS_MarketScroll_f (void)
 	if (!node)
 		return;
 
-	buyList.scroll = node->textScroll;
+	buyList.scroll = node->u.text.textScroll;
 
 	if (buyList.length > MAX_MARKET_MENU_ENTRIES && buyList.scroll >= buyList.length - MAX_MARKET_MENU_ENTRIES) {
 		buyList.scroll = buyList.length - MAX_MARKET_MENU_ENTRIES;
-		node->textScroll = buyList.scroll;
+		node->u.text.textScroll = buyList.scroll;
 	}
 
 	/* the following nodes must exist */
 	node = MN_GetNodeFromCurrentMenu("market_market");
 	assert(node);
-	node->textScroll = buyList.scroll;
+	node->u.text.textScroll = buyList.scroll;
 	node = MN_GetNodeFromCurrentMenu("market_storage");
 	assert(node);
-	node->textScroll = buyList.scroll;
+	node->u.text.textScroll = buyList.scroll;
 	node = MN_GetNodeFromCurrentMenu("market_prices");
 	assert(node);
-	node->textScroll = buyList.scroll;
+	node->u.text.textScroll = buyList.scroll;
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
@@ -612,9 +612,9 @@ static void BS_BuyType_f (void)
 		Cvar_Set("mn_itemtypename", _(BS_BuyTypeName(buyCat)));
 		buyList.scroll = 0;
 		if (node) {
-			node->textScroll = 0;
+			node->u.text.textScroll = 0;
 			/* reset selection */
-			node->textLineSelected = 0;
+			MN_TextNodeSelectLine(node, 0);
 		}
 		currentSelectedMenuEntry = NULL;
 		BS_MarketScroll_f();

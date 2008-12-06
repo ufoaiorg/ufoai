@@ -330,7 +330,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 
 	/* Highlight currently selected entry */
 	baseList = MN_GetNodeFromCurrentMenu("cp_uforecovery_baselist");
-	baseList->textLineSelected = num;
+	MN_TextNodeSelectLine(baseList, num);
 }
 
 /**
@@ -365,7 +365,7 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 
 	/* Highlight currently selected entry */
 	nationList = MN_GetNodeFromCurrentMenu("cp_uforecovery_nationlist");
-	nationList->textLineSelected = num;
+	MN_TextNodeSelectLine(nationList, num);
 }
 
 /**

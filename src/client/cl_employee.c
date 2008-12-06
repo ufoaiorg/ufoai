@@ -80,7 +80,7 @@ static void E_EmployeeListScroll_f (void)
 	if (!baseCurrent)
 		return;
 
-	j = employeeListNode->textScroll;
+	j = employeeListNode->u.text.textScroll;
 
 	for (i = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
 		/* don't show employees of other bases */
@@ -113,7 +113,7 @@ static void E_EmployeeListScroll_f (void)
 		MN_ExecuteConfunc(va("employeedisable %i\n", cnt));
 	}
 
-	MN_ExecuteConfunc(va("hire_fix_scroll %i\n", employeeListNode->textScroll));
+	MN_ExecuteConfunc(va("hire_fix_scroll %i\n", employeeListNode->u.text.textScroll));
 }
 
 /**
@@ -153,7 +153,7 @@ static void E_EmployeeList_f (void)
 		/* Reset scrolling when no specific entry was given. */
 		/** @todo Is there a case where hiredEmployeeIdx is < 0 and the
 		 * textScroll must be reset? */
-		employeeListNode->textScroll = 0;
+		employeeListNode->u.text.textScroll = 0;
 	} else {
 		/** @todo If employee is given but outside the current visible list
 		 * (defined by employeeListNode->textScroll) we need to calculate the
@@ -174,17 +174,17 @@ static void E_EmployeeList_f (void)
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
 		/** @todo Check if the "textScroll % cl_numnames->integer" calculation
 		 * is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
-		if ((employeesInCurrentList >= employeeListNode->textScroll)
-		 && (employeesInCurrentList < (employeeListNode->textScroll + cl_numnames->integer))) {
+		if ((employeesInCurrentList >= employeeListNode->u.text.textScroll)
+		 && (employeesInCurrentList < (employeeListNode->u.text.textScroll + cl_numnames->integer))) {
 			if (employee->hired) {
 				if (employee->baseHired == baseCurrent) {
 					if (employee->transfer)
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"),employee->chr.name));
 					else
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
-					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
+					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % cl_numnames->integer)));
 				} else
-					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->textScroll % cl_numnames->integer)));
+					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % cl_numnames->integer)));
 			} else
 				Cbuf_AddText(va("employeedel %i\n", employeesInCurrentList));
 		}
@@ -1275,7 +1275,7 @@ static void E_EmployeeDelete_f (void)
 {
 	/* num - menu index (line in text) */
 	int num;
-	const int scroll = employeeListNode->textScroll;
+	const int scroll = employeeListNode->u.text.textScroll;
 	employee_t* employee;
 
 	if (!baseCurrent)
@@ -1288,7 +1288,7 @@ static void E_EmployeeDelete_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	num += employeeListNode->textScroll;
+	num += employeeListNode->u.text.textScroll;
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	/* empty slot selected */
@@ -1304,7 +1304,7 @@ static void E_EmployeeDelete_f (void)
 	}
 	E_DeleteEmployee(employee, employee->type);
 	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
-	employeeListNode->textScroll = scroll;
+	employeeListNode->u.text.textScroll = scroll;
 }
 
 /**
@@ -1334,12 +1334,12 @@ static void E_EmployeeHire_f (void)
 	 * cl_numnames [19]) possible ... */
 	if (*arg == '+') {
 		num = atoi(arg + 1);
-		button = num - employeeListNode->textScroll;
+		button = num - employeeListNode->u.text.textScroll;
 	/* ... or with the hire pictures that are using only values from
 	 * 0 - cl_numnames [19] */
 	} else {
 		button = atoi(Cmd_Argv(1));
-		num = button + employeeListNode->textScroll;
+		num = button + employeeListNode->u.text.textScroll;
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
@@ -1393,7 +1393,7 @@ static void E_EmployeeSelect_f (void)
 		CL_CharacterCvars(&(employee->chr));
 
 		/* Set the value of the selected line in the scroll-text to the correct number. */
-		employeeListNode->textLineSelected = num;
+		MN_TextNodeSelectLine(employeeListNode, num);
 	}
 }
 

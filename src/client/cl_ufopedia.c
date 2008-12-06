@@ -111,7 +111,7 @@ static void UP_ChangeDisplay (int newDisplay)
 
 	/* maybe we call this function and the UFOpaedia is not on the menu stack */
 	if (ufopedia && ufopediaMail) {
-		ufopedia->textScroll = ufopediaMail->textScroll = 0;
+		ufopedia->u.text.textScroll = ufopediaMail->u.text.textScroll = 0;
 	}
 
 	/* make sure, that we leave the mail header space */
@@ -1543,7 +1543,7 @@ static void UP_SetMailButtons_f (void)
 	if (!mailClientListNode)
 		return;
 
-	num = mailClientListNode->textScroll;
+	num = mailClientListNode->u.text.textScroll;
 
 	while (m && (i < MAIL_CLIENT_LINES)) {
 		switch (m->type) {

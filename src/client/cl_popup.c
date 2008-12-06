@@ -149,7 +149,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 		popupListNode = MN_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
-		popupListNode->textLineSelected = homebase;
+		MN_TextNodeSelectLine(popupListNode, homebase);
 		selectedAircraft = aircraft;
 		return qtrue;
 	}
@@ -208,8 +208,8 @@ static void CL_PopupChangeHomebase_f (void)
 	}
 
 	if (popupListNode) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Setting currently selected line (from %i) to %i.\n", popupListNode->textLineSelected, selectedPopupIndex);
-		popupListNode->textLineSelected = selectedPopupIndex;
+		Com_DPrintf(DEBUG_CLIENT, "CL_PopupChangeHomebase_f: Setting currently selected line (from %i) to %i.\n", popupListNode->u.text.textLineSelected, selectedPopupIndex);
+		MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 	}
 
 	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);

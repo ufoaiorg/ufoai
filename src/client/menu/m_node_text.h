@@ -22,13 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../shared/ufotypes.h"
+
 #ifndef CLIENT_MENU_M_NODE_TEXT_H
 #define CLIENT_MENU_M_NODE_TEXT_H
-
-#include "../../common/common.h"
-
-#include "m_nodes.h"
-#include "m_messages.h"
 
 #define MAX_MENUTEXTLEN		32768
 /* used to speed up buffer safe string copies */
@@ -43,11 +40,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* space between text and scrollbar */
 #define MN_SCROLLBAR_PADDING 10
 
-void MN_TextScrollBottom(const char* nodeName);
-qboolean MN_TextScroll(menuNode_t *node, int offset);
-void MN_MenuTextReset(int menuTextID);
-int MN_TextNodeGetLine (const menuNode_t *node, int x, int y);
+struct nodeBehaviour_s;
+struct menuAction_s;
 
-void MN_RegisterTextNode(nodeBehaviour_t *behaviour);
+void MN_TextScrollBottom(const char* nodeName);
+qboolean MN_TextScroll(struct menuNode_s *node, int offset);
+void MN_MenuTextReset(int menuTextID);
+int MN_TextNodeGetLine(const struct menuNode_s *node, int x, int y);
+void MN_TextNodeSelectLine(struct menuNode_s *node, int num);
+
+void MN_RegisterTextNode(struct nodeBehaviour_s *behaviour);
+
+typedef struct {
+	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
+	qboolean scrollbarLeft;		/**< true if the scrollbar should be on the left side of the text node */
+	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
+	int textScroll;				/**< textfields - current scroll position */
+	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
+	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
+	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
+	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
+	int rows;					/**< textfields: max. rows to show */
+
+} textExtraData_t;
 
 #endif

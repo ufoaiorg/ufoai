@@ -1166,7 +1166,7 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
-		popupListNode->textLineSelected = selectedEntry;
+		MN_TextNodeSelectLine(popupListNode, selectedEntry);
 		popupReload = qfalse;
 	}
 }
@@ -1254,8 +1254,8 @@ void CL_ReserveShot_f (void)
 		MSG_Write_PA(PA_RESERVE_SHOT_FM, selActor->entnum, hand, fmIdx, weapIdx);
 		*/
 		if (popupListNode) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: Setting currently selected line (from %i) to %i.\n", popupListNode->textLineSelected, selectedPopupIndex);
-			popupListNode->textLineSelected = selectedPopupIndex;
+			Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: Setting currently selected line (from %i) to %i.\n", popupListNode->u.text.textLineSelected, selectedPopupIndex);
+			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveShot_f: can not select entry %i. It needs %i TUs, we have %i.\n", selectedPopupIndex, TUs, CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT));

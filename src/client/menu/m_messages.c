@@ -454,11 +454,11 @@ static void MSO_InitTextList (void)
 	}
 	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
 	messageOptionsInitialized = qfalse;
-	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->rows) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->rows;
+	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->u.text.rows) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.rows;
 		if (messageList_scroll < 0)
 			messageList_scroll = 0;
-		msoTextNode->textScroll = messageList_scroll;
+		msoTextNode->u.text.textScroll = messageList_scroll;
 	}
 }
 
@@ -472,7 +472,7 @@ static void MSO_UpdateVisibleButtons (void)
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (idx = 0; visible < msoTextNode->rows && idx < gd.numMsgCategoryEntries; idx++) {
+	for (idx = 0; visible < msoTextNode->u.text.rows && idx < gd.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
 		if (!entry)
 			break;
@@ -492,7 +492,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; visible < msoTextNode->rows && idx < lengthof(gd.msgCategoryEntries); idx++) {
+	for (; visible < msoTextNode->u.text.rows && idx < lengthof(gd.msgCategoryEntries); idx++) {
 		MN_ExecuteConfunc(va("ms_disable%i", visible));
 		visible++;
 	}
@@ -676,14 +676,14 @@ static void MSO_Scroll_f (void)
 		return;
 
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
-	if (visibleMSOEntries < msoTextNode->rows)
+	if (visibleMSOEntries < msoTextNode->u.text.rows)
 		return;
 
-	messageList_scroll = msoTextNode->textScroll;
+	messageList_scroll = msoTextNode->u.text.textScroll;
 
-	if (messageList_scroll >= visibleMSOEntries - msoTextNode->rows) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->rows;
-		msoTextNode->textScroll = messageList_scroll;
+	if (messageList_scroll >= visibleMSOEntries - msoTextNode->u.text.rows) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.rows;
+		msoTextNode->u.text.textScroll = messageList_scroll;
 	}
 
 	if (messageList_scroll != oldScrollIdx)
@@ -710,7 +710,7 @@ static void MSO_OptionsClick_f(void)
 	category = MSO_GetEntryFromSelectionIndex(num, qfalse);
 	assert(msoTextNode);
 	/* don't highlight selection */
-	msoTextNode->textLineSelected = -1;
+	MN_TextNodeSelectLine(msoTextNode, -1);
 	if (!category || !category->isCategory)
 		return;
 	category->category->isFolded = !category->category->isFolded;

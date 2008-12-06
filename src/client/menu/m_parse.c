@@ -1093,11 +1093,6 @@ void MN_ParseMenu (const char *name, const char **text)
 	/** @todo waithing for the merge of menu and node */
 	/* menuBehaviour->loaded(menu); */
 	MN_WindowNodeLoaded(menu);
-
-	for (node = menu->firstChild; node; node = node->next)
-		if (node->num >= MAX_MENUTEXTS)
-			Sys_Error("Error in menu %s - max menu num exeeded (num: %i, max: %i) in node '%s'", menu->name, node->num, MAX_MENUTEXTS, node->name);
-
 }
 
 /**

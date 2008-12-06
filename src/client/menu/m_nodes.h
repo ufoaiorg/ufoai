@@ -80,6 +80,7 @@ typedef struct excludeRect_s {
 #include "m_node_linestrip.h"
 #include "m_node_model.h"
 #include "m_node_selectbox.h"
+#include "m_node_text.h"
 #include "m_node_textentry.h"
 
 /**
@@ -161,16 +162,8 @@ typedef struct menuNode_s {
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 
 	/* MN_TEXT */
-	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
-	qboolean scrollbarLeft;		/**< true if the scrollbar should be on the left side of the text node */
+	/** @todo romove it  from 'string node', need to full implement R_FontDrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
-	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
-	int textScroll;				/**< textfields - current scroll position */
-	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
-	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
-	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
-	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
-	int rows;					/**< textfields: max. rows to show */
 
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */
@@ -183,6 +176,7 @@ typedef struct menuNode_s {
 		modelExtraData_t model;
 		optionExtraData_t option;
 		textEntryExtraData_t textentry;
+		textExtraData_t text;
 	} u;
 
 } menuNode_t;

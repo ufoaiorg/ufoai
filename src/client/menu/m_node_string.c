@@ -37,7 +37,7 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	if (!ref)
 		return;
 	MN_GetNodeAbsPos(node, nodepos);
-	ref += node->horizontalScroll;
+
 	/* blinking */
 	R_ColorBlend(node->color);
 	if (node->size[0] == 0) {
