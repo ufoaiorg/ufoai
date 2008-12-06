@@ -47,13 +47,8 @@ static const value_t nodeProperties[] = {
 	/* conflicts with textnode height at the moment */
 	{"height", V_FLOAT, offsetof(menuNode_t, size[1]), MEMBER_SIZEOF(menuNode_t, size[1])},
 #endif
-	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
 	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
-	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 	{"baseid", V_BASEID, offsetof(menuNode_t, baseid), MEMBER_SIZEOF(menuNode_t, baseid)},
-	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
-	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll), MEMBER_SIZEOF(menuNode_t, textScroll)},
-	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
 	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
 	{"timeout_once", V_BOOL, offsetof(menuNode_t, timeOutOnce), MEMBER_SIZEOF(menuNode_t, timeOutOnce)},
 	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
@@ -88,11 +83,8 @@ static const value_t nodeProperties[] = {
 	{"if", V_IF, offsetof(menuNode_t, depends), 0},
 	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},
 	{"clickdelay", V_INT, offsetof(menuNode_t, clickDelay), MEMBER_SIZEOF(menuNode_t, clickDelay)},
-	{"scrollbar", V_BOOL, offsetof(menuNode_t, scrollbar), MEMBER_SIZEOF(menuNode_t, scrollbar)},
-	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
 	{"point_width", V_FLOAT, offsetof(menuNode_t, pointWidth), MEMBER_SIZEOF(menuNode_t, pointWidth)},
 	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
-	{"lineselected", V_INT, offsetof(menuNode_t, textLineSelected), MEMBER_SIZEOF(menuNode_t, textLineSelected)},
 
 	/* action event */
 	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
@@ -277,6 +269,17 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 /*				Com_Printf(" %s", *token); */
 
 				val = MN_FindPropertyByName(nodeProperties, *token);
+				if (!val) {
+					/* do we ALREADY know this node? and his type */
+					menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
+					if (node) {
+						if (node->behaviour->properties) {
+							val = MN_FindPropertyByName(node->behaviour->properties, *token);
+						}
+					} else {
+						Com_Printf("MN_ParseAction: node \"%s\" not already know (in event)\n", *token);
+					}
+				}
 
 				action->scriptValues = val;
 

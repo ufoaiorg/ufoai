@@ -519,6 +519,18 @@ static void MN_TextNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
+static const value_t properties[] = {
+	{"scrollbar", V_BOOL, offsetof(menuNode_t, scrollbar), MEMBER_SIZEOF(menuNode_t, scrollbar)},
+	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
+	{"lineselected", V_INT, offsetof(menuNode_t, textLineSelected), MEMBER_SIZEOF(menuNode_t, textLineSelected)},
+	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
+	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
+	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll), MEMBER_SIZEOF(menuNode_t, textScroll)},
+	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
@@ -529,6 +541,7 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseWheel = MN_TextNodeMouseWheel;
 	behaviour->mouseMove = MN_TextNodeMouseMove;
 	behaviour->loading = MN_TextNodeLoading;
+	behaviour->properties = properties;
 
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");

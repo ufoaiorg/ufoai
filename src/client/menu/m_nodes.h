@@ -139,20 +139,14 @@ typedef struct menuNode_s {
 	struct menuAction_s *onWheelDown;
 	struct menuAction_s *onChange;	/**< called when the widget change from an user action */
 
+	/* @todo need cleanup */
 	vec3_t scale;
 	invDef_t *container;		/** The container linked to this node. */
-	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
-	int textScroll;				/**< textfields - current scroll position */
-	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
-	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
-	byte longlines;				/**< what to do with long lines */
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
 	qboolean repeat;			/**< repeat action when "click" is holded */
 	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
-	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
-	qboolean scrollbarLeft;		/**< true if the scrollbar should be on the left side of the text node */
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
@@ -167,10 +161,16 @@ typedef struct menuNode_s {
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 
 	/* MN_TEXT */
-	int lineUnderMouse;	/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
+	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
+	qboolean scrollbarLeft;		/**< true if the scrollbar should be on the left side of the text node */
+	byte longlines;				/**< what to do with long lines */
+	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
+	int textScroll;				/**< textfields - current scroll position */
+	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
+	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
+	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
-	int height;					/**< textfields: max. rows to show
-								 * select box: options count */
+	int height;					/**< textfields: max. rows to show */
 
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */
