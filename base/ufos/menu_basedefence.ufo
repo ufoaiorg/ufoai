@@ -68,7 +68,7 @@ menu basedefence
 //		bgcolor	"1 1 1 0.5"
 		format	"22 0"
 		wheel
-		height	"27"
+		rows	"27"
 		num		TEXT_BASEDEFENCE_LIST
 		mousefx	true
 		click
@@ -98,7 +98,7 @@ menu basedefence
 		size	"400 120"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
-		height	"6"
+		rows	"6"
 	}
 
 	model mdl_top
@@ -160,7 +160,7 @@ menu basedefence
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
 		wheel
-		height	"11"
+		rows	"11"
 		num TEXT_LIST
 		mousefx	true
 		click
@@ -255,7 +255,7 @@ menu basedefence
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num		TEXT_AIREQUIP_1
-		height	"2"
+		rows	"2"
 	}
 
 	pic airequip_zone_select2
@@ -277,7 +277,7 @@ menu basedefence
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num		TEXT_AIREQUIP_2
-		height	"2"
+		rows	"2"
 	}
 
 	pic airequip_zone_select3
@@ -299,7 +299,7 @@ menu basedefence
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num		TEXT_AIREQUIP_3
-		height	"2"
+		rows	"2"
 	}
 
 	string basedef_header1

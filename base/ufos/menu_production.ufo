@@ -179,7 +179,7 @@ menu production
 		click
 		rclick
 		wheel	{ cmd "prod_scroll;" }
-		height "30"
+		rows "30"
 		mousefx	true
 	}
 
@@ -190,7 +190,7 @@ menu production
 		color	"0 .78 0 1"
 		format	"22 0"
 		num		TEXT_PRODUCTION_AMOUNT
-		height "30"
+		rows "30"
 		mousefx	true
 	}
 
@@ -201,7 +201,7 @@ menu production
 		color	"0 .78 0 1"
 		format	"22 0"
 		num		TEXT_PRODUCTION_QUEUED
-		height	"30"
+		rows	"30"
 		mousefx true
 	}
 
@@ -392,7 +392,7 @@ menu production
 		size	"366 100"
 		format	"20 260"
 		num		TEXT_PRODUCTION_INFO
-		height	"5"
+		rows	"5"
 		wheel
 		scrollbar true
 	}

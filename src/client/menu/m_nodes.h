@@ -170,7 +170,7 @@ typedef struct menuNode_s {
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
-	int height;					/**< textfields: max. rows to show */
+	int rows;					/**< textfields: max. rows to show */
 
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */

@@ -84,7 +84,7 @@ menu campaigns
 		click	{ }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
-		height	"10"
+		rows	"10"
 		wheel
 		scrollbar true
 	}
@@ -95,7 +95,7 @@ menu campaigns
 		format	"20 0"
 		size	"420 380"
 		num		TEXT_STANDARD
-		height	19
+		rows	19
 		wheel
 		scrollbar true
 //		bgcolor "1 1 1 0.4"

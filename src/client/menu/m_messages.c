@@ -454,8 +454,8 @@ static void MSO_InitTextList (void)
 	}
 	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
 	messageOptionsInitialized = qfalse;
-	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->height) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->height;
+	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->rows) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->rows;
 		if (messageList_scroll < 0)
 			messageList_scroll = 0;
 		msoTextNode->textScroll = messageList_scroll;
@@ -472,7 +472,7 @@ static void MSO_UpdateVisibleButtons (void)
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (idx = 0; visible < msoTextNode->height && idx < gd.numMsgCategoryEntries; idx++) {
+	for (idx = 0; visible < msoTextNode->rows && idx < gd.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
 		if (!entry)
 			break;
@@ -492,7 +492,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; visible < msoTextNode->height && idx < lengthof(gd.msgCategoryEntries); idx++) {
+	for (; visible < msoTextNode->rows && idx < lengthof(gd.msgCategoryEntries); idx++) {
 		MN_ExecuteConfunc(va("ms_disable%i", visible));
 		visible++;
 	}
@@ -676,13 +676,13 @@ static void MSO_Scroll_f (void)
 		return;
 
 	/* no scrolling if visible entry count is less than max on page (due to folding) */
-	if (visibleMSOEntries < msoTextNode->height)
+	if (visibleMSOEntries < msoTextNode->rows)
 		return;
 
 	messageList_scroll = msoTextNode->textScroll;
 
-	if (messageList_scroll >= visibleMSOEntries - msoTextNode->height ) {
-		messageList_scroll = visibleMSOEntries - msoTextNode->height;
+	if (messageList_scroll >= visibleMSOEntries - msoTextNode->rows) {
+		messageList_scroll = visibleMSOEntries - msoTextNode->rows;
 		msoTextNode->textScroll = messageList_scroll;
 	}
 

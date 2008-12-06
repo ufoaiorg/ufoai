@@ -374,7 +374,7 @@ menu serverinfo
 		size	"420 550"
 		format	"20 200"
 		num		TEXT_STANDARD
-		height	"27"
+		rows	"27"
 	}
 
 	string user_list_str
@@ -413,7 +413,7 @@ menu serverinfo
 		padding 10
 		bgcolor	"0.3 0.3 0.3 0.4"
 		wheel
-		height	"19"
+		rows	"19"
 		num	TEXT_LIST
 	}
 
@@ -593,7 +593,7 @@ menu mp_serverbrowser
 		padding 10
 		bgcolor	"0.3 0.3 0.3 0.4"
 		wheel
-		height	"17"
+		rows	"17"
 		num	TEXT_LIST
 		click	{ }
 		rclick	{ cmd "pingservers;" }
@@ -1357,7 +1357,7 @@ menu multiplayer_selectteam
 		size	"422 320"
 		format	"16 60"
 //		bgcolor	"1 1 1 0.5"
-		height	20
+		rows	20
 		num		TEXT_LIST
 	}
 
@@ -1368,7 +1368,7 @@ menu multiplayer_selectteam
 		format	"16 60"
 //		bgcolor	"1 1 1 0.5"
 		num		TEXT_STANDARD
-		height	1
+		rows	1
 	}
 
 	string maxplayersperteams_str
@@ -1463,7 +1463,7 @@ menu multiplayer_selectteam
 		font	"f_verysmall"
 		wheel
 		num		TEXT_CHAT_WINDOW
-		height	"10"
+		rows	"10"
 		format	"16 0"
 		padding	5
 		bordercolor	"0.5 0.5 0.5 1"
@@ -1677,7 +1677,7 @@ menu chat_popup
 		wheel
 		num		TEXT_CHAT_WINDOW
 		wheel
-		height	6
+		rows	6
 	}
 
 	button enter_lobby

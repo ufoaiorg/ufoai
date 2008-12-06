@@ -112,7 +112,7 @@ menu buildings
 		selectcolor	"1 1 1 1"
 		mousefx	true
 		num		TEXT_BUILDINGS
-		height	"20"
+		rows	"20"
 		click
 	}
 
@@ -186,7 +186,7 @@ menu popup_buildingpreview
 		mousefx false
 		format	"20 140"
 		num		TEXT_BUILDING_INFO
-		height	"7"
+		rows	"7"
 	}
 
 	pic ufopedia_link

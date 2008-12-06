@@ -301,7 +301,7 @@ menu quickload
 		pos		"26 58"
 		size	"440 64"
 		format	"16 0"
-		height	4
+		rows	4
 	}
 
 	pic bt_cancel
@@ -718,7 +718,7 @@ menu lostgame
 		pos		"512 640"
 		size	"900 100"
 		format	"20 0"
-		height	"5"
+		rows	"5"
 		wheel
 		font	"f_normal"
 		scrollbar true

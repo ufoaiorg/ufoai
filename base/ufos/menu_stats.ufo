@@ -54,7 +54,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		TEXT_STATS_MISSION
-		height	"6"
+		rows	"6"
 	}
 
 	string base_string
@@ -71,7 +71,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		TEXT_STATS_BASES
-		height	"6"
+		rows	"6"
 	}
 
 	string ins_string
@@ -88,7 +88,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		TEXT_STATS_INSTALLATIONS
-		height	"6"
+		rows	"6"
 	}
 
 	string empl_string
@@ -105,7 +105,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		TEXT_STATS_EMPLOYEES
-		height	"6"
+		rows	"6"
 	}
 
 	string costs_string
@@ -122,7 +122,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 340"
 		num		TEXT_STATS_COSTS
-		height	"18"
+		rows	"18"
 	}
 
 	string nations_string
@@ -140,7 +140,7 @@ menu stats
 		size	"470 240"
 		format  "22 360"
 		num		TEXT_STATS_NATIONS
-		height	"10"
+		rows	"10"
 		click
 		mousefx	true
 	}
@@ -160,7 +160,7 @@ menu stats
 		size	"470 110"
 		format  "22 360"
 		num		TEXT_GENERIC
-		height	"5"
+		rows	"5"
 	}
 
 	func init

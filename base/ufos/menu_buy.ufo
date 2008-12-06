@@ -30,7 +30,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		num		TEXT_MARKET_NAMES
-		height	"28"
+		rows	"28"
 		format	"25 0"
 		pos		"55 40"
 		size	"265 700"
@@ -45,7 +45,7 @@ menu buy
 		color	"0 .78 0 1"
 		align	ur
 		num		TEXT_MARKET_STORAGE
-		height	"28"
+		rows	"28"
 		size	"40 700"
 		format	"25 0"
 		pos	"370 40"
@@ -56,7 +56,7 @@ menu buy
 		color	"0 .78 0 1"
 		align	ur
 		num		TEXT_MARKET_MARKET
-		height	"28"
+		rows	"28"
 		size	"40 700"
 		format	"25 0"
 		pos		"446 40"
@@ -67,7 +67,7 @@ menu buy
 		color	"0 .78 0 1"
 		align	ur
 		num		TEXT_MARKET_PRICES
-		height	"28"
+		rows	"28"
 		size	"80 700"
 		format	"25 0"
 		pos		"542 40"
@@ -1271,7 +1271,7 @@ menu buy
 	{
 		pos		"620 377"
 		size	"336 150"
-		height	"10"
+		rows	"10"
 		format	"15 168"
 		font	"f_verysmall"
 	}

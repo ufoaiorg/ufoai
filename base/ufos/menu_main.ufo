@@ -370,7 +370,7 @@ menu popup_tipoftheday
 		num	TEXT_TIPOFTHEDAY
 		click	{ }
 		wheel
-		height	6
+		rows	6
 	}
 
 	button bt_next

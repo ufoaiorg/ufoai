@@ -31,7 +31,7 @@ menu map
 		size	"768 22"
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
-		height	1
+		rows	1
 		num		TEXT_MESSAGESYSTEM
 		wheel
 		scrollbar false
@@ -40,7 +40,7 @@ menu map
 	/* one line */
 	confunc messagesystem_mode0
 	{
-		*messagesystem	height	1
+		*messagesystem	rows	1
 		*messagesystem	size	"768 22"
 		*messagesystem	scrollbar "false"
 	}
@@ -48,7 +48,7 @@ menu map
 	/* 5 lines */
 	confunc messagesystem_mode1
 	{
-		*messagesystem	height	5
+		*messagesystem	rows	5
 		*messagesystem	size	"768 110"
 		*messagesystem	scrollbar "false"
 	}
@@ -56,7 +56,7 @@ menu map
 	/* 10 lines */
 	confunc messagesystem_mode2
 	{
-		*messagesystem	height	10
+		*messagesystem	rows	10
 		*messagesystem	size	"768 220"
 		*messagesystem	scrollbar "false"
 	}
@@ -64,7 +64,7 @@ menu map
 	/* full screen */
 	confunc messagesystem_mode3
 	{
-		*messagesystem	height	38
+		*messagesystem	rows	38
 		*messagesystem	size	"768 768"
 		*messagesystem	scrollbar "true"
 		cmd "game_timestop;"
@@ -236,7 +236,7 @@ menu map
 		pos			"800 154"
 		size		"192 144"
 		format		"18 100"
-		height		"8"
+		rows		"8"
 		wheel
 //		bgcolor		"1 1 1 0.6"
 		scrollbar	true
@@ -513,7 +513,7 @@ menu map_combatzoom
 		size	"768 22"
 		bgcolor	"0 0 0 .5"
 		format	"20 0"
-		height	1
+		rows	1
 		num		TEXT_MESSAGESYSTEM
 		wheel
 	}
@@ -667,7 +667,7 @@ menu popup_list
 		pos		"176 18"
 		align	uc
 		size	"446 20"
-		height	"1"
+		rows	"1"
 		num		TEXT_POPUP
 	}
 
@@ -678,7 +678,7 @@ menu popup_list
 		format	"16 100"
 		size	"446 32"
 //		bgcolor	"1 1 1 0.5"
-		height	2
+		rows	2
 	}
 	text popup_list
 	{
@@ -687,7 +687,7 @@ menu popup_list
 		format	"16 100"
 		size	"446 96"
 //		bgcolor	"1 1 1 0.5"
-		height	6
+		rows	6
 		wheel
 		scrollbar true
 	}
@@ -745,7 +745,7 @@ menu popup_button
 		pos		"248 30"
 		align	uc
 		size	"446 20"
-		height	"1"
+		rows	"1"
 		num		TEXT_POPUP
 		align cc
 	}
@@ -757,7 +757,7 @@ menu popup_button
 		format	"16 100"
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"
-		height	8
+		rows	8
 		scrollbar	true
 		wheel
 	}
@@ -985,7 +985,7 @@ menu popup_baseattack
 		pos	"26 58"
 		num	TEXT_POPUP
 		size	"450 144"
-		height	5
+		rows	5
 	}
 
 	pic bt_go
@@ -1100,7 +1100,7 @@ menu popup_transferbaselist
 		size	"450 144"
 //		bgcolor	"1 1 1 0.5"
 		format	"16 100"
-		height	9
+		rows	9
 		wheel
 		click
 		rclick	{ cmd "mn_pop; aircraft_return;" }
@@ -1881,7 +1881,7 @@ menu popup_intercept
 		mousefx	true
 		num		TEXT_AIRCRAFT_LIST
 		wheel
-		height	"13"
+		rows	"13"
 		click
 		rclick
 		longlines prettychop
@@ -1894,7 +1894,7 @@ menu popup_intercept
 		format	"20 175"
 		mousefx	true
 		num		TEXT_BASE_LIST
-		height	"13"
+		rows	"13"
 		wheel
 		click
 		rclick
@@ -1989,7 +1989,7 @@ menu popup_mission
 		mousefx	true
 		num		TEXT_AIRCRAFT_LIST
 		wheel
-		height	"13"
+		rows	"13"
 		click
 		rclick
 	}
@@ -2068,7 +2068,7 @@ menu popup_multi_selection
 		format	"20 150"
 		num		TEXT_MULTISELECTION
 		wheel
-		height	5
+		rows	5
 		mousefx	true
 		click	{ cmd "multi_select;" }
 	}
@@ -2147,7 +2147,7 @@ menu popup_aircraft
 		size	"420 100"
 		format	"20 150"
 		num		TEXT_POPUP
-		height	5
+		rows	5
 		mousefx	true
 		click
 		wheel
@@ -2202,7 +2202,7 @@ menu popup
 		pos		"176 18"
 		align	uc
 		size	"446 20"
-		height	"1"
+		rows	"1"
 		num		TEXT_POPUP
 	}
 
@@ -2213,7 +2213,7 @@ menu popup
 		format	"16 100"
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"
-		height	8
+		rows	8
 		scrollbar	true
 		wheel
 	}
@@ -2345,7 +2345,7 @@ menu messageoptions
 	{
 		color	"0 .78 0 1"
 		num		TEXT_MESSAGEOPTIONS
-		height	"12"
+		rows	"12"
 		format	"25 0"
 		pos		"30 90"
 		size	"265 300"

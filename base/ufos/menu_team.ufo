@@ -1356,7 +1356,7 @@ menu equipment
 		pos		"40 530"
 		size	"326 160"
 		format	"20 190"
-		height	"8"
+		rows	"8"
 		scrollbar	true
 		wheel
 	}

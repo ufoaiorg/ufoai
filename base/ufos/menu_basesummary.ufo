@@ -71,7 +71,7 @@ menu basesummary
 		wheel
 		font		f_small
 		scrollbar	true
-		height		"42"
+		rows		"42"
 	}
 
 	// ==================
@@ -86,7 +86,7 @@ menu basesummary
 		format		"16 30"
 		wheel
 		scrollbar	yes
-		height		"25"
+		rows		"25"
 		num			TEXT_STANDARD
 	}
 

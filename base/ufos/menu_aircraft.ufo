@@ -290,7 +290,7 @@ menu aircraft
 		size	"510 200"
 		format	"20 220"
 		num		TEXT_AIRCRAFT_INFO
-		height	"10"
+		rows	"10"
 	}
 
 	pic prev_aircraft
@@ -523,7 +523,7 @@ menu aircraft_equip
 		size	"400 120"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
-		height	"6"
+		rows	"6"
 	}
 
 	model mdl_top
@@ -624,7 +624,7 @@ menu aircraft_equip
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
 		wheel
-		height	"11"
+		rows	"11"
 		num TEXT_LIST
 		mousefx	true
 		click
@@ -715,7 +715,7 @@ menu aircraft_equip
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num	TEXT_AIREQUIP_1
-		height	"2"
+		rows	"2"
 	}
 
 	pic airequip_zone_select2
@@ -737,7 +737,7 @@ menu aircraft_equip
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num	TEXT_AIREQUIP_2
-		height	"2"
+		rows	"2"
 	}
 
 	pic airequip_zone_select3
@@ -759,7 +759,7 @@ menu aircraft_equip
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num	TEXT_AIREQUIP_3
-		height	"2"
+		rows	"2"
 	}
 
 	string airequip_header1

@@ -47,7 +47,7 @@ menu tutorials
 		format	"20 0"
 		size	"260 280"
 		num		TEXT_LIST
-		height	"14"
+		rows	"14"
 		mousefx true
 		wheel
 		scrollbar true

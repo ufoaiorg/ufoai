@@ -40,10 +40,10 @@ qboolean MN_TextScroll (menuNode_t *node, int offset)
 {
 	int textScroll_new;
 
-	if (!node || !node->height)
+	if (!node || !node->rows)
 		return qfalse;
 
-	if (node->textLines <= node->height) {
+	if (node->textLines <= node->rows) {
 		/* Number of lines are less than the height of the textbox. */
 		node->textScroll = 0;
 		return qfalse;
@@ -56,9 +56,9 @@ qboolean MN_TextScroll (menuNode_t *node, int offset)
 		node->textScroll = 0;
 		return qtrue;
 
-	} else if (textScroll_new >= (node->textLines + 1 - node->height)) {
+	} else if (textScroll_new >= (node->textLines + 1 - node->rows)) {
 		/* Goto last possible line, no matter how big the offset was. */
-		node->textScroll = node->textLines - node->height;
+		node->textScroll = node->textLines - node->rows;
 		return qtrue;
 
 	} else {
@@ -134,9 +134,9 @@ void MN_TextScrollBottom (const char* nodeName)
 		return;
 	}
 
-	if (node->textLines > node->height) {
-		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", node->textLines - node->height + 1);
-		node->textScroll = node->textLines - node->height + 1;
+	if (node->textLines > node->rows) {
+		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", node->textLines - node->rows + 1);
+		node->textScroll = node->textLines - node->rows + 1;
 	}
 }
 
@@ -149,20 +149,20 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 	static const vec4_t scrollbarBackground = {0.03, 0.41, 0.05, 0.5};
 	static const vec4_t scrollbarColor = {0.03, 0.41, 0.05, 1.0};
 
-	if (node->scrollbar && node->height && node->textLines > node->height) {
+	if (node->scrollbar && node->rows && node->textLines > node->rows) {
 		vec2_t nodepos;
 		int scrollbarX;
 		float scrollbarY;
 
 		MN_GetNodeAbsPos(node, nodepos);
 		scrollbarX = nodepos[0] + (node->scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
-		scrollbarY = node->size[1] * node->height / node->textLines * MN_SCROLLBAR_HEIGHT;
+		scrollbarY = node->size[1] * node->rows / node->textLines * MN_SCROLLBAR_HEIGHT;
 
 		R_DrawFill(scrollbarX, nodepos[1],
 			MN_SCROLLBAR_WIDTH, node->size[1],
 			ALIGN_UL, scrollbarBackground);
 
-		R_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->height),
+		R_DrawFill(scrollbarX, nodepos[1] + (node->size[1] - scrollbarY) * node->textScroll / (node->textLines - node->rows),
 			MN_SCROLLBAR_WIDTH, scrollbarY,
 			ALIGN_UL, scrollbarColor);
 	}
@@ -321,7 +321,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
-			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse, LONGLINES_PRETTYCHOP);
+			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, node->rows, node->textScroll, &node->textLines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -331,7 +331,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
 		/* prevent line from being drawn if there is nothing that should be drawn afer it */
 		 if (cur && (cur[0] || end || list))
-			R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue, node->longlines);
+			R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->rows, node->textScroll, &node->textLines, qtrue, node->longlines);
 
 		if (node->mousefx)
 			R_ColorBlend(node->color); /* restore original color */
@@ -385,12 +385,12 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 		}
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, node->height, 0, &screenLines, qtrue, node->longlines);
-		if (screenLines > node->height)
+		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, node->rows, 0, &screenLines, qtrue, node->longlines);
+		if (screenLines > node->rows)
 			break;
 	}
 
-	if (node->scrollbar && node->height) {
+	if (node->scrollbar && node->rows) {
 		node->textLines = 0;
 		for (message = messageStack; message; message = message->next)
 			node->textLines++;
@@ -398,8 +398,8 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 		 * to the last message, if the last page has multiline
 		 * messages. Getting an accurate count of the last page
 		 * would be nice, if it can be done efficiently enough. */
-		if (node->textLines > node->height)
-			node->textLines += node->height / 2;
+		if (node->textLines > node->rows)
+			node->textLines += node->rows / 2;
 		MN_DrawScrollBar(node);
 	}
 }
@@ -525,7 +525,7 @@ static const value_t properties[] = {
 	{"lineselected", V_INT, offsetof(menuNode_t, textLineSelected), MEMBER_SIZEOF(menuNode_t, textLineSelected)},
 	{"num", V_MENUTEXTID, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
-	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
+	{"rows", V_INT, offsetof(menuNode_t, rows), MEMBER_SIZEOF(menuNode_t, rows)},
 	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll), MEMBER_SIZEOF(menuNode_t, textScroll)},
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
 	{NULL, V_NULL, 0, 0}

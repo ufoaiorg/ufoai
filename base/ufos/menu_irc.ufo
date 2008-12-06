@@ -68,7 +68,7 @@ menu irc
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 0"
 		num		TEXT_LIST
-		height	"27"
+		rows	"27"
 		wheel
 		mousefx		true
 		scrollbar	true
@@ -81,7 +81,7 @@ menu irc
 		pos		"30 168"
 		size	"695 528"
 //		bgcolor	"0.5 0.5 0.5 0.2"
-		height	"24"
+		rows	"24"
 		format  "22 0"
 		num		TEXT_STANDARD
 		wheel
@@ -201,7 +201,7 @@ menu irc_popup
 		pos		"176 18"
 		align	uc
 		size	"446 20"
-		height	"1"
+		rows	"1"
 		num	TEXT_POPUP
 	}
 

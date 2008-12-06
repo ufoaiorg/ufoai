@@ -60,7 +60,7 @@ menu althud extends ahud
 		font	"f_verysmall"
 		wheel
 		num		TEXT_CHAT_WINDOW
-		height	"3"
+		rows	"3"
 		format	"16 0"
 		padding	5
 		bordercolor	"0.5 0.5 0.5 1"
@@ -129,12 +129,12 @@ menu althud extends ahud
 		mousefx false
 		out	{
 				*chatscreen size "690 48"
-				*chatscreen height "3"
+				*chatscreen rows "3"
 				*event timeout 10000
 			}
 		in	{
 				*chatscreen size "690 400"
-				*chatscreen height "25"
+				*chatscreen rows "25"
 				*event timeout 0
 				cmd "mn_unhidenode chatscreen;"
 			}
@@ -1149,7 +1149,7 @@ menu althud extends ahud
 		size	"275 50"
 		format	"20 100"
 		color	"0 1 0 1"
-		height	"2"
+		rows	"2"
 	}
 
 	// ==================

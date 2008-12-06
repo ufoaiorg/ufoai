@@ -96,7 +96,7 @@ menu transfer
 		pos		"60 80"
 		size	"460 240"
 		format	"20 0"
-		height	"12"
+		rows	"12"
 //		bgcolor	"1 1 1 0.5"
 	}
 
@@ -118,7 +118,7 @@ menu transfer
 		click
 		format	"20 0"
 		wheel
-		height	"18"
+		rows	"18"
 //		bgcolor	"1 1 1 0.5"
 		repeat	true
 	}
@@ -169,7 +169,7 @@ menu transfer
 		click
 		format	"20 0"
 		wheel
-		height	"20"
+		rows	"20"
 //		bgcolor	"1 1 1 0.5"
 		repeat	true
 	}

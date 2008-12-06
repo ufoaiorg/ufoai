@@ -331,7 +331,7 @@ menu employees
 		pos	"40 32"
 		size	"280 722"
 		format	"38 100"
-		height	"19"
+		rows	"19"
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx	true
@@ -652,7 +652,7 @@ menu employees
 		size	"366 80"
 		format	"20 260"
 		num		TEXT_EMPLOYEE
-		height	"4"
+		rows	"4"
 	}
 
 	// ==================
