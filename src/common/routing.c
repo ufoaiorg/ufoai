@@ -752,10 +752,10 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	 * +Like in the floor tracing, we can assign the direction value for multiple cells and
 	 *  skip some scans.
 	 * +The value of each current cell will list the max allowed height of an actor in the passageway,
-     *  which also can be used to see if an actor can fly upward.
-     * +The allowed height will be based off the floor in the cell or the bottom of the cell; we do not
-     *  want super tall characters to fly through ceilings.
-     * +To see if an actor can fly down, we check the cells on level down to see if the diagonal movement
+	 *  which also can be used to see if an actor can fly upward.
+	 * +The allowed height will be based off the floor in the cell or the bottom of the cell; we do not
+	 *  want super tall characters to fly through ceilings.
+	 * +To see if an actor can fly down, we check the cells on level down to see if the diagonal movement
 	 *  can be made and that both have ceilings above the current level.
 	 */
 
