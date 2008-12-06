@@ -182,21 +182,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-#if 0
-	if (node->behaviour->id == MN_CONTAINER) {
-		MN_FindContainer(node);
-		if (!node->container)
-			return qfalse;
-
-		/* check bounding box */
-		if (x < nodepos[0] || x > nodepos[0] + node->size[0] || y < nodepos[1] || y > nodepos[1] + node->size[1])
-			return qfalse;
-
-		/* found a container */
-		return qtrue;
-	}
-#endif
-
 	/* check for click action */
 	if (!node->behaviour->leftClick && !node->behaviour->rightClick && !node->behaviour->middleClick && !node->behaviour->mouseWheel && !node->onClick && !node->onRightClick && !node->onMiddleClick && !node->onWheel && !node->onMouseIn && !node->onMouseOut && !node->onWheelUp && !node->onWheelDown)
 		return qfalse;

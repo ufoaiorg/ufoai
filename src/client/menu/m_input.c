@@ -268,10 +268,6 @@ void MN_MouseMove (int x, int y)
  */
 void MN_LeftClick (int x, int y)
 {
-#if 0 /* new handler */
-	int sp;
-	qboolean insideNode = qfalse;
-#endif
 	menuNode_t *node;
 	qboolean mouseOver;
 
@@ -311,97 +307,6 @@ void MN_LeftClick (int x, int y)
 		}
 		return;
 	}
-#if 0 /* new handler */
-	sp = mn.menuStackPos;
-
-	while (sp > 0 && !insideNode) {
-		menu_t *menu = mn.menuStack[--sp];
-		menuNode_t *execute_node = NULL;
-
-		/* check mouse vs menu boundedbox */
-		if (menu->size[0] != 0 && menu->size[1] != 0) {
-			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
-				continue;
-		}
-
-		for (node = menu->firstChild; node; node = node->next) {
-			if (!node->behaviour->leftClick && !node->onClick)
-				continue;
-
-			/* check whether mouse is over this node */
-			if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
-				int itemX = 0;
-				int itemY = 0;
-
-				/** We calculate the position of the top-left corner of the dragged
-				 * item in oder to compensate for the centered-drawn cursor-item.
-				 * Or to be more exact, we calculate the relative offset from the cursor
-				 * location to the middle of the top-left square of the item.
-				 * @sa MN_DrawMenus:MN_CONTAINER */
-				if (dragInfo.item.t) {
-					itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
-					itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
-
-					/* Place relative center in the middle of the square. */
-					itemX -= C_UNIT / 2;
-					itemY -= C_UNIT / 2;
-				}
-				mouseOver = MN_CheckNodeZone(node, x, y) || MN_CheckNodeZone(node, x - itemX, y - itemY);
-			} else {
-				mouseOver = MN_CheckNodeZone(node, x, y);
-			}
-
-			if (!mouseOver)
-				continue;
-
-			/* check whether we clicked at least on one menu node */
-			insideNode = qtrue;
-
-			/* found a node -> do actions */
-			if (node->behaviour->leftClick) {
-				node->behaviour->leftClick(node, x, y);
-			} else {
-				/* Save the action for later execution. */
-				if (node->click && (node->onClick->type != EA_NULL))
-					execute_node = node;
-			}
-			if (node->behaviour->id == MN_TEXT) {
-				execute_node = node;
-				mn.mouseRepeat.textLine = MN_TextNodeGetLine(node, x, y);
-			}
-		}
-
-		/* Only execute the last-found (i.e. from the top-most displayed node) action found.
-		 * Especially needed for button-nodes that are (partially) overlayed and all have actions defined.
-		 * e.g. the firemode checkboxes. */
-		if (execute_node) {
-			mn.mouseRepeat.node = execute_node;
-			mn.mouseRepeat.lastclicked = cls.realtime;
-			if (execute_node->repeat) {
-				mouseSpace = MS_LHOLD;
-				/* Reset number of click */
-				mn.mouseRepeat.numClick = 1;
-				if (execute_node->clickDelay)
-					mn.mouseRepeat.clickDelay = execute_node->clickDelay;
-				else
-					mn.mouseRepeat.clickDelay = 300;
-				/* Delay between the 2 first actions is longer than the delay between other actions (see IN_Parse()) */
-				mn.mouseRepeat.nexttime = cls.realtime + mn.mouseRepeat.clickDelay;
-				mn.mouseRepeat.menu = menu;
-				mn.mouseRepeat.action = execute_node->onClick;
-			}
-			if (execute_node->behaviour->id != MN_TEXT)
-				MN_ExecuteEventActions(execute_node, execute_node->onClick);
-		}
-
-		/** @todo maybe we should also check sp == mn.menuStackPos here */
-		if (!insideNode && menu->leaveNode)
-			MN_ExecuteEventActions(menu, menu->leaveNode->onClick);
-
-		break;
-	}
-#endif
 }
 
 /**
@@ -414,12 +319,6 @@ void MN_LeftClick (int x, int y)
  */
 void MN_RightClick (int x, int y)
 {
-#if 0 /* new handler */
-	qboolean mouseOver;
-	int sp;
-	qboolean insideNode = qfalse;
-#endif
-
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->rightClick)
@@ -435,43 +334,6 @@ void MN_RightClick (int x, int y)
 		}
 		return;
 	}
-#if 0 /* new handler */
-	sp = mn.menuStackPos;
-
-	while (sp > 0 && !insideNode) {
-		menu_t *menu = mn.menuStack[--sp];
-		menuNode_t *node;
-
-		/* check mouse vs menu boundedbox */
-		if (menu->size[0] != 0 && menu->size[1] != 0) {
-			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
-				continue;
-		}
-
-		for (node = menu->firstChild; node; node = node->next) {
-			/* no right click for this node defined */
-			if (!node->behaviour->rightClick && !node->rclick)
-				continue;
-
-			/* check whether mouse if over this node */
-			mouseOver = MN_CheckNodeZone(node, x, y);
-			if (!mouseOver)
-				continue;
-
-			insideNode = qtrue;
-
-			/* found a node -> do actions */
-			if (node->behaviour->rightClick) {
-				node->behaviour->rightClick(node, x, y);
-			} else {
-				MN_ExecuteActions(menu, node->rclick);
-			}
-		}
-
-		break;
-	}
-#endif
 }
 
 /**
@@ -481,13 +343,6 @@ void MN_RightClick (int x, int y)
  */
 void MN_MiddleClick (int x, int y)
 {
-#if 0 /* new handler */
-	menuNode_t *node;
-	int sp;
-	qboolean mouseOver;
-	qboolean insideNode = qfalse;
-#endif
-
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->middleClick)
@@ -503,42 +358,6 @@ void MN_MiddleClick (int x, int y)
 		}
 		return;
 	}
-#if 0 /* new handler */
-	sp = mn.menuStackPos;
-
-	while (sp > 0 && !insideNode) {
-		menu_t *menu = mn.menuStack[--sp];
-
-		/* check mouse vs menu boundedbox */
-		if (menu->size[0] != 0 && menu->size[1] != 0) {
-			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
-				continue;
-		}
-
-		for (node = menu->firstChild; node; node = node->next) {
-			/* no middle click for this node defined */
-			if (!node->behaviour->middleClick && !node->mclick)
-				continue;
-
-			insideNode = qtrue;
-
-			/* check whether mouse if over this node */
-			mouseOver = MN_CheckNodeZone(node, x, y);
-			if (!mouseOver)
-				continue;
-
-			/* found a node -> do actions */
-			if (node->behaviour->middleClick) {
-				node->behaviour->middleClick(node, x, y);
-			} else {
-				MN_ExecuteActions(menu, node->mclick);
-			}
-		}
-
-		break;
-	}
-#endif
 }
 
 /**
@@ -557,13 +376,6 @@ void MN_MiddleClick (int x, int y)
  */
 void MN_MouseWheel (qboolean down, int x, int y)
 {
-#if 0 /* new handler */
-	menuNode_t *node;
-	int sp;
-	qboolean mouseOver;
-	qboolean insideNode = qfalse;
-#endif
-
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->mouseWheel)
@@ -582,45 +394,6 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		}
 		return;
 	}
-#if 0 /* new handler */
-	sp = mn.menuStackPos;
-
-	while (sp > 0 && !insideNode) {
-		menu_t *menu = mn.menuStack[--sp];
-
-		/* check mouse vs menu boundedbox */
-		if (menu->size[0] != 0 && menu->size[1] != 0) {
-			if (x < menu->pos[0] || x > menu->pos[0] + menu->size[0]
-			 || y < menu->pos[1] || y > menu->pos[1] + menu->size[1])
-				continue;
-		}
-
-		for (node = menu->firstChild; node; node = node->next) {
-			/* both wheelUp & wheelDown required */
-			if (!node->behaviour->mouseWheel && !node->wheel && !(node->wheelUp && node->wheelDown))
-				continue;
-
-			/* check whether mouse if over this node */
-			mouseOver = MN_CheckNodeZone(node, x, y);
-			if (!mouseOver)
-				continue;
-
-			insideNode = qtrue;
-
-			/* found a node -> do actions */
-			if (node->behaviour->mouseWheel) {
-				node->behaviour->mouseWheel(node, down, x, y);
-			} else {
-				if (node->wheelUp && node->wheelDown)
-					MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
-				else
-					MN_ExecuteActions(menu, node->wheel);
-			}
-		}
-
-		break;
-	}
-#endif
 }
 
 /**

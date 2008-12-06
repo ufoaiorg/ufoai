@@ -312,12 +312,6 @@ menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
  */
 qboolean MN_CursorOnMenu (int x, int y)
 {
-#if 0 /* new handler */
-	menuNode_t *node;
-	menu_t *menu;
-	int sp;
-#endif
-
 	if (mouseOverTest) {
 		/* else if it is a render node */
 		if (mouseOverTest == mouseOverTest->menu->renderNode) {
@@ -325,27 +319,6 @@ qboolean MN_CursorOnMenu (int x, int y)
 		}
 		return qtrue;
 	}
-#if 0 /* new handler */
-	sp = mn.menuStackPos;
-
-	while (sp > 0) {
-		menu = mn.menuStack[--sp];
-		for (node = menu->firstChild; node; node = node->next)
-			if (MN_CheckNodeZone(node, x, y)) {
-				/* found an element */
-				/*MN_FocusSetNode(node);*/
-				return qtrue;
-			}
-
-		if (menu->renderNode) {
-			/* don't care about non-rendered windows */
-			if (menu->renderNode->invis)
-				return qtrue;
-			else
-				return qfalse;
-		}
-	}
-#endif
 	return qfalse;
 }
 
