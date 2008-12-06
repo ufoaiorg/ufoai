@@ -156,7 +156,7 @@ void MN_CheckMouseMove (void)
  * @param[in] y absolute y position on the screen
  * @todo Move it on a better file.c
  */
-static qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
+static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
 {
 	int i;
 	/* relative position */
@@ -185,9 +185,9 @@ static qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
  */
 void MN_MouseMove (int x, int y)
 {
-	const menu_t *menu;
+	menu_t *menu;
 	int sp;
-	const menuNode_t *node;
+	menuNode_t *node;
 
 	/* send the captured move mouse event */
 	if (capturedNode) {
@@ -197,7 +197,6 @@ void MN_MouseMove (int x, int y)
 	}
 
 	MN_FocusRemove();
-
 
 	/* find the first menu under the mouse */
 	menu = NULL;
