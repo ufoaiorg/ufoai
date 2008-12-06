@@ -229,7 +229,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	row_pointers = png_get_rows(png_ptr, info_ptr);
 	rowptr = 0;
 
-	img = Mem_PoolAlloc(info_ptr->width * info_ptr->height * 4, vid_imagePool, 0);
+	img = Mem_PoolAllocExt(info_ptr->width * info_ptr->height * 4, qfalse, vid_imagePool, 0);
 	if (pic)
 		*pic = img;
 
@@ -296,7 +296,7 @@ void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
 
 	png_write_info(png_ptr, info_ptr);
 
-	row_pointers = Mem_PoolAlloc(height * sizeof(png_bytep), vid_imagePool, 0);
+	row_pointers = Mem_PoolAllocExt(height * sizeof(png_bytep), qfalse, vid_imagePool, 0);
 	for (i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 
@@ -467,7 +467,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	if (height)
 		*height = rows;
 
-	targaRGBA = Mem_PoolAlloc(columns * rows * 4, vid_imagePool, 0);
+	targaRGBA = Mem_PoolAllocExt(columns * rows * 4, qfalse, vid_imagePool, 0);
 	*pic = targaRGBA;
 
 	/* If bit 5 of attributes isn't set, the image has been stored from bottom to top */
@@ -560,7 +560,7 @@ void R_WriteTGA (qFILE *f, byte *buffer, int width, int height)
 
 	/* Allocate an output buffer */
 	size = (width * height * channels) + 18;
-	out = Mem_PoolAlloc(size, vid_imagePool, 0);
+	out = Mem_PoolAllocExt(size, qfalse, vid_imagePool, 0);
 
 	/* Fill in header */
 	/* byte 0: image ID field length */
@@ -816,7 +816,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	}
 
 	/* Allocate Memory for decompressed image */
-	rgbadata = Mem_PoolAlloc(cinfo.output_width * cinfo.output_height * 4, vid_imagePool, 0);
+	rgbadata = Mem_PoolAllocExt(cinfo.output_width * cinfo.output_height * 4, qfalse, vid_imagePool, 0);
 	if (!rgbadata) {
 		Com_Printf("Insufficient RAM for JPEG buffer\n");
 		jpeg_destroy_decompress(&cinfo);
@@ -824,7 +824,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 		return;
 	}
 	/* Allocate Scanline buffer */
-	scanline = Mem_PoolAlloc(cinfo.output_width * components, vid_imagePool, 0);
+	scanline = Mem_PoolAllocExt(cinfo.output_width * components, qfalse, vid_imagePool, 0);
 	if (!scanline) {
 		Com_Printf("Insufficient RAM for JPEG scanline buffer\n");
 		Mem_Free(rgbadata);
@@ -968,8 +968,8 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
 	unsigned *p1, *p2;
 	const unsigned fracstep = inwidth * 0x10000 / outwidth;
 
-	p1 = (unsigned *)Mem_PoolAlloc(outwidth * outheight * sizeof(unsigned), vid_imagePool, 0);
-	p2 = (unsigned *)Mem_PoolAlloc(outwidth * outheight * sizeof(unsigned), vid_imagePool, 0);
+	p1 = (unsigned *)Mem_PoolAllocExt(outwidth * outheight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+	p2 = (unsigned *)Mem_PoolAllocExt(outwidth * outheight * sizeof(unsigned), qfalse, vid_imagePool, 0);
 
 	frac = fracstep >> 2;
 	for (i = 0; i < outwidth; i++) {
@@ -1124,7 +1124,7 @@ static void R_UploadTexture (unsigned *data, int width, int height, image_t* ima
 	}
 
 	if (scaled_width != width || scaled_height != height) {  /* whereas others need to be scaled */
-		scaled = (unsigned *)Mem_PoolAlloc(scaled_width * scaled_height * sizeof(unsigned), vid_imagePool, 0);
+		scaled = (unsigned *)Mem_PoolAllocExt(scaled_width * scaled_height * sizeof(unsigned), qfalse, vid_imagePool, 0);
 		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);
 	} else {
 		scaled = data;
@@ -1194,25 +1194,25 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 {
 	byte *out;
 	int i, j, k;
-	byte *src, *dest;
-	byte *u, *d, *l, *r;
+	byte *dest;
+	const int size = width * height * bpp;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
-	out = (byte *)Mem_PoolAlloc(width * height * bpp, vid_imagePool, 0);
+	out = (byte *)Mem_PoolAllocExt(size, qfalse, vid_imagePool, 0);
 	if (!out)
-		Sys_Error("Mem_PoolAlloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
+		Sys_Error("Mem_PoolAllocExt: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
 
-	memcpy(out, in, width * height * bpp);
+	memcpy(out, in, size);
 
 	for (i = 1; i < height - 1; i++) {
 		for (j = 1; j < width - 1; j++) {
 
-			src = in + ((i * width) + j) * bpp;  /* current input pixel */
+			const byte *src = in + ((i * width) + j) * bpp;  /* current input pixel */
 
-			u = (src - (width * bpp));  /* and it's neighbors */
-			d = (src + (width * bpp));
-			l = (src - (1 * bpp));
-			r = (src + (1 * bpp));
+			const byte *u = (src - (width * bpp));  /* and it's neighbors */
+			const byte *d = (src + (width * bpp));
+			const byte *l = (src - (1 * bpp));
+			const byte *r = (src + (1 * bpp));
 
 			dest = out + ((i * width) + j) * bpp;  /* current output pixel */
 
@@ -1405,7 +1405,7 @@ byte* R_XVIMapCopy (int *width, int *height)
 {
 	int x, y;
 	const int bpp = 4;
-	byte *buf = Mem_PoolAlloc(r_xviTexture->height * r_xviTexture->width * bpp, vid_imagePool, 0);
+	byte *buf = Mem_PoolAllocExt(r_xviTexture->height * r_xviTexture->width * bpp, qfalse, vid_imagePool, 0);
 
 	*width = r_xviTexture->width;
 	*height = r_xviTexture->height;
@@ -1450,7 +1450,7 @@ void R_CreateRadarOverlay (void)
 		return;
 	}
 
-	r_radarPic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
+	r_radarPic = Mem_PoolAllocExt(radarHeight * radarWidth * bpp, qfalse, vid_imagePool, 0);
 	r_radarSourcePic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
 
 	/* Set an image */
