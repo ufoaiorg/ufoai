@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-11-29 12:19+0100\n"
-"PO-Revision-Date: 2008-11-29 12:24+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2008-12-06 11:26+0100\n"
+"Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,9 +40,8 @@ msgid "City_disco"
 msgstr ""
 
 #: ../base/maps/community_centre.ump:53
-#, fuzzy
 msgid "Community_centre"
-msgstr "Kommandozentrale"
+msgstr "Gemeindezentrum"
 
 #: ../base/maps/construction.ump:53
 msgid "Construction"
@@ -54,7 +53,7 @@ msgstr "Drogenkartell"
 
 #: ../base/maps/eaglenest.ump:42
 msgid "Eaglenest"
-msgstr ""
+msgstr "Adlernest"
 
 #: ../base/maps/forest.ump:331
 msgid "Little forest"
@@ -2614,9 +2613,8 @@ msgid "Close down messages"
 msgstr "Schließe Nachrichtenfenster"
 
 #: ../base/ufos/menu_geoscape.ufo:474
-#, fuzzy
 msgid "Change message and pause settings"
-msgstr "Eingabeeinstellungen"
+msgstr "Änderung der Nachrichten und Pauseneinstellungen"
 
 #: ../base/ufos/menu_geoscape.ufo:487
 msgid "Center objects on the map"
@@ -2627,7 +2625,6 @@ msgid "Go to Options"
 msgstr "Optionen"
 
 #: ../base/ufos/menu_geoscape.ufo:642
-#, fuzzy
 msgid "Toggle between full zoom and half zoom"
 msgstr "Umschalten zwischen Total- und Halbzoom"
 
@@ -12217,7 +12214,6 @@ msgid "Insufficient storage space at that base."
 msgstr "Nicht genügend Lagerplatz vorhanden in dieser Basis."
 
 #: client/cl_aircraft.c:880
-#, fuzzy
 msgid "That base is beyond this aircraft's range."
 msgstr "Die Basis ist ausserhalb Flugreichweite des Flugzeugs."
 
@@ -12233,7 +12229,7 @@ msgstr "%s hat wenig Treibstoff und muss zur Basis zurückkehren"
 
 #: client/cl_aircraft.c:1345
 msgid "Assign one or more soldiers to this aircraft first."
-msgstr ""
+msgstr "Weisen Sie dem Flugzeug mehr Soldaten zu."
 
 #: client/cl_aircraft.c:1369
 msgid "Insufficient fuel."
@@ -13580,7 +13576,6 @@ msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sh\n"
 
 #: client/cl_mapfightequip.c:849
-#, fuzzy
 msgid "No defence of this type in this installation\n"
 msgstr "Keine Verteidigungsanlagen dieser Art in dieser Basis.\n"
 
@@ -13660,7 +13655,7 @@ msgstr "%s wurde erfolgreich in der Basis %s installiert."
 #: client/cl_mapfightequip.c:1031
 #, c-format
 msgid "%s was successfully removed from aircraft %s at base %s."
-msgstr ""
+msgstr "%s wurde erfolgreich aus dem Flugzeug %s in der basis %s erntfernt."
 
 #: client/cl_mapfightequip.c:1037
 #, c-format
@@ -13910,7 +13905,7 @@ msgstr "Überschäumend"
 #: client/cl_nation.c:157
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
-msgstr "Nation %s hat seine Zufriedenheit con %s nach %s geändert"
+msgstr "Nation %s hat seine Zufriedenheit von %s nach %s geändert"
 
 #: client/cl_nation.c:161
 #, c-format
@@ -13962,7 +13957,6 @@ msgid "current homebase of aircraft"
 msgstr "aktuelle Heimatbasis"
 
 #: client/cl_popup.c:135
-#, fuzzy
 msgid "base can hold aircraft"
 msgstr "Basis hat platz für ein Flugzeug"
 
@@ -15074,7 +15068,7 @@ msgstr "Waffengattung unbekannt"
 
 #: client/cl_ufopedia.c:189
 msgid "Cruising speed"
-msgstr ""
+msgstr "Fluggeschwindigkeit"
 
 #: client/cl_ufopedia.c:192
 msgid "Maximum speed"
@@ -15448,7 +15442,6 @@ msgid "installation_destroyed"
 msgstr "Tankstelle"
 
 #: client/menu/m_messages.c:39
-#, fuzzy
 msgid "research_new_proposed"
 msgstr "Zeige Forschungsantrag"
 
@@ -15485,14 +15478,12 @@ msgid "nation_pleased"
 msgstr "Zufriedenheit der Nation"
 
 #: client/menu/m_messages.c:48
-#, fuzzy
 msgid "transfer_started"
-msgstr "Flugzeug gestartet"
+msgstr "Transfer gestartet"
 
 #: client/menu/m_messages.c:49
-#, fuzzy
 msgid "transfer_completed_success"
-msgstr "Forschung abgeschlossen"
+msgstr "Transfer erfolgreich  abgeschlossen"
 
 #: client/menu/m_messages.c:50
 #, fuzzy
@@ -15501,54 +15492,19 @@ msgstr "Transfer"
 
 #: client/menu/m_messages.c:51
 msgid "transfer_aliens_defered"
-msgstr ""
+msgstr "Transfer des Ausseridischer verschoben"
 
 #: client/menu/m_messages.c:52
-#, fuzzy
 msgid "ufo_spotted"
-msgstr ""
-"Dieses kleine UFO ist der erste Typ, den wir sowohl auf dem Radar als auch optisch gesichtet hatten. Obwohl sie anscheinend bei den aktuellen Überfällen nicht mehr beteiligt sind, sind sie ebenso eine Bedrohung; bisher haben sie den Weg für jede Art von außerirdischer Aktivität auf der Erde geebnet.\n"
-"\n"
-"Wir haben diese Klasse von UFO als 'Kundschafter' bezeichnet, da es den Anschein hat als wäre dies sein Zweck auf der Erde. Das ergibt Sinn. Jede moderne Streitkraft benötigt Aufklärung mehr als alles andere.\n"
-"\n"
-"Hier sind die wichtigsten technischen Details:\n"
-"\n"
-"-- Das Schiff selbst besitzt nur einen kleinen Treibstofftank und ein wenig Verpflegung für die Besatzung. Es scheint so als wäre es für nicht viel mehr als für einen Anflug aus dem Orbit, ein wenig umher- und zurückfliegen konstruiert.\n"
-"\n"
-"-- Wir haben keine Beweise für ein Fahrwerk oder Schwebefähigkeit in ihm gefunden, was darauf hinweist, dass es nicht für Landungen gedacht ist. Wenn es beide Triebwerke verliert, schmiert es ab und wird nicht wieder hochkommen.\n"
-"\n"
-"-- Wir haben festgestellt, dass das Fluggerät unbewaffnet ist, aber es ist mit etwas ausgerüstet, das wie eine große Gruppe Sensoren aussieht, eingebaut in die vier Vorsprünge am Cockpit. Seltsamerweise sieht es so aus, als würde es mit keiner Kommunikationsanlage ausgerüstet sein, die wir identifizieren könnten, was den Zweck eines Aufklärers verfehlen würde. Ihre Einschätzung ist genauso wie unsere, Sir.\n"
-"\n"
-"Darüber hinaus hat das UFO keinerlei charakteristische Merkmale.\n"
-"\n"
-"Wie ich bereits sagte, wird dieser UFO-Typ hauptsächlich als Aufklärungseinheit und als Vorhut für die größeren Schiffe verwendet. Obwohl unbewaffnet, sollten wir diese Dinger abschießen, soweit wir nicht anderweitig beschäftigt sind, da alles was die Außerirdischen vorhaben, sicherlich schlecht für uns ist.\n"
-"\n"
-"--Cdr. Navarre\n"
-"\n"
-"Geschätzte Scout Statistiken:\n"
-"\n"
-"Größe: Klein (6m x 14m x 3m)\n"
-"\n"
-"Reisegeschwindigkeit: +/- 1600 km/h\n"
-"\n"
-"Höchstgeschwindigkeit: +/- 3000km/h\n"
-"\n"
-"Besatzung: max. 3\n"
-"\n"
-"Waffenkapazität: Keine"
+msgstr "Ufo sichtung"
 
 #: client/menu/m_messages.c:53
-#, fuzzy
 msgid "ufo_signal_lost"
-msgstr ""
-"This melee weapon has proven to be of great value in hand to hand combat because of the\n"
-"devestating burns it can inflict when someone touches its blade. Generally the enemy is unable\n"
-"to fight onward just after one strike. On the downside the range of this weapon is utterly\n"
-"limited."
+msgstr "Ufo signal verloren"
 
 #: client/menu/m_messages.c:54
 msgid "ufo_attacking"
-msgstr ""
+msgstr "Ufo angriff"
 
 #: client/menu/m_messages.c:108
 #, c-format
