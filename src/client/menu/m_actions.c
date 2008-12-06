@@ -202,11 +202,11 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	/* is buffer too small? */
 	assert(cin[0] == '\0');
 
-	if (addNewLine) {
+	if (addNewLine)
 		*cout++ = '\n';
-	}
+
 	*cout++ = '\0';
-	Com_Printf("%s\n", cmd);
+
 	return cmd;
 }
 

@@ -133,7 +133,9 @@ static void TR_MakeTracingNode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			const int contentFlags = curTile->leafs[-(node->children[i]) - 1].contentFlags & ~(1 << 31);
+			const int index = -(node->children[i]) - 1;
+			const TR_LEAF_TYPE *leaf = &curTile->leafs[index];
+			const int contentFlags = leaf->contentFlags & ~(1 << 31);
 			if ((contentFlags & MASK_IMPASSABLE) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);
 			else

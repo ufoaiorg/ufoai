@@ -456,13 +456,6 @@ static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int ac
 	if (lz > 0)
 		bitmask ^= (1 << lz) -1;
 
-
-
-
-
-
-
-
 	/* perform the trace, then return true if the trace was obstructed. */
 	tr_obstruction = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, bitmask, MASK_IMPASSABLE, MASK_PASSABLE);
 

@@ -91,6 +91,7 @@ static int c_pruned;
 
 /**
  * @sa PruneNodes
+ * @brief Will cut solid nodes by recursing down the bsp tree
  */
 static void PruneNodes_r (node_t *node)
 {
@@ -102,7 +103,7 @@ static void PruneNodes_r (node_t *node)
 	PruneNodes_r(node->children[1]);
 
 	if ((node->children[0]->contentFlags & CONTENTS_SOLID)
-		&& (node->children[1]->contentFlags & CONTENTS_SOLID)) {
+	 && (node->children[1]->contentFlags & CONTENTS_SOLID)) {
 		if (node->faces)
 			Sys_Error("node->faces seperating CONTENTS_SOLID");
 		if (node->children[0]->faces || node->children[1]->faces)

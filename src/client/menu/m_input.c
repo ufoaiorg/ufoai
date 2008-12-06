@@ -138,10 +138,9 @@ void MN_InvalidateMouse (void)
  */
 void MN_CheckMouseMove (void)
 {
-    /* is hovered node no more draw */
-    if (mouseOverTest && (mouseOverTest->invis || !MN_CheckCondition(mouseOverTest))) {
-        MN_InvalidateMouse();
-    }
+	/* is hovered node no more draw */
+	if (mouseOverTest && (mouseOverTest->invis || !MN_CheckCondition(mouseOverTest)))
+		MN_InvalidateMouse();
 
 	if (mousePosX != oldX || mousePosY != oldY) {
 		oldX = mousePosX;
@@ -166,16 +165,16 @@ static qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
 
 	/* check bounding box */
 	if (x < node->pos[0] || x > node->pos[0] + node->size[0]
-	|| y < node->pos[1] || y > node->pos[1] + node->size[1]) {
+	 || y < node->pos[1] || y > node->pos[1] + node->size[1]) {
 		return qfalse;
 	}
 
 	/* check excluded box */
 	for (i = 0; i < node->excludeNum; i++) {
 		if (x >= node->exclude[i].pos[0]
-		&& x <= node->exclude[i].pos[0] + node->exclude[i].size[0]
-		&& y >= node->exclude[i].pos[1]
-		&& y <= node->exclude[i].pos[1] + node->exclude[i].size[1])
+		 && x <= node->exclude[i].pos[0] + node->exclude[i].size[0]
+		 && y >= node->exclude[i].pos[1]
+		 && y <= node->exclude[i].pos[1] + node->exclude[i].size[1])
 			return qfalse;
 	}
 	return qtrue;
@@ -186,9 +185,9 @@ static qboolean MN_IsInnerNode (menuNode_t* const node, int x, int y)
  */
 void MN_MouseMove (int x, int y)
 {
-	menu_t *menu;
+	const menu_t *menu;
 	int sp;
-	menuNode_t *node;
+	const menuNode_t *node;
 
 	/* send the captured move mouse event */
 	if (capturedNode) {
@@ -206,7 +205,7 @@ void MN_MouseMove (int x, int y)
 		menu_t *m = mn.menuStack[sp];
 		/* check mouse vs menu boundedbox */
 		if (x >= m->pos[0] && x <= m->pos[0] + m->size[0]
-			&& y >= m->pos[1] && y <= m->pos[1] + m->size[1]) {
+		 && y >= m->pos[1] && y <= m->pos[1] + m->size[1]) {
 			menu = m;
 			break;
 		}
