@@ -1215,29 +1215,5 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
  */
 qboolean MN_ScriptSanityCheck (void)
 {
-	int i, error = 0;
-	menuNode_t* node;
-
-	for (i = 0, node = mn.menuNodes; i < mn.numNodes; i++, node++) {
-		switch (node->behaviour->id) {
-		case MN_TEXT:
-			if (!node->rows) {
-				Com_Printf("MN_ParseNodeBody: node '%s' (menu: %s) has no height value but is a text node\n", node->name, node->menu->name);
-				error++;
-			} else if (node->texh[0] && node->rows != (int)(node->size[1] / node->texh[0])) {
-				/* if node->texh[0] == 0, the height of the font is used */
-				Com_Printf("MN_ParseNodeBody: height value (%i) of node '%s' (menu: %s) differs from size (%.0f) and format (%.0f) values\n",
-					node->rows, node->name, node->menu->name, node->size[1], node->texh[0]);
-				error++;
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	if (!error)
-		return qtrue;
-	else
-		return qfalse;
+	return qtrue;
 }

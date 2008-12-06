@@ -911,7 +911,7 @@ menu ufopedia_mail
 		pos		"100 130"
 		size	"870 550"
 		num		TEXT_UFOPEDIA_MAIL
-		rows	"15"
+		//rows	"15"
 		font	"f_small"
 		format	"38 700"
 		click	rclick wheel

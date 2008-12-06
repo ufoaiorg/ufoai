@@ -519,6 +519,43 @@ static void MN_TextNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
+static void MN_TextNodeLoaded (menuNode_t *node)
+{
+	/* auto compute lineheight */
+	if (node->texh[0] == 0) {
+		if (node->rows != 0 && node->size[1] != 0) {
+			node->texh[0] = node->size[1] / node->rows;
+		} else {
+			/* the font is used */
+			/** @todo clean this up once font_t is known in the client */
+			const char *font = MN_GetFont(node->menu, node);
+			node->texh[0] = R_FontGetHeight(font) / 2;
+		}
+	}
+
+	/* auto compute rows */
+	if (node->rows == 0) {
+		if (node->size[1] != 0 && node->texh[0] != 0) {
+			node->rows = node->size[1] / node->texh[0];
+		} else {
+			node->rows = 1;
+			Com_Printf("MN_TextNodeLoaded: node '%s.%s' has no rows value\n", node->menu->name, node->name);
+		}
+	}
+
+	/* auto compute height */
+	if (node->size[1] == 0) {
+		node->size[1] = node->rows * node->texh[0];
+	}
+
+#if DEBUG
+	if (node->rows != (int)(node->size[1] / node->texh[0])) {
+		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s.%s' differs from size (%.0f) and format (%.0f) values\n",
+			node->rows, node->menu->name, node->name, node->size[1], node->texh[0]);
+	}
+#endif
+}
+
 static const value_t properties[] = {
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, scrollbar), MEMBER_SIZEOF(menuNode_t, scrollbar)},
 	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
@@ -541,6 +578,7 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseWheel = MN_TextNodeMouseWheel;
 	behaviour->mouseMove = MN_TextNodeMouseMove;
 	behaviour->loading = MN_TextNodeLoading;
+	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
 
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
