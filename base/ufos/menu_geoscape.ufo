@@ -25,6 +25,18 @@ menu map
 		rclick	{ cmd "mn_mapaction_reset;" }
 	}
 
+	text messagesystem
+	{
+		pos	"0 0"
+		size	"768 22"
+		bgcolor	"0 0 0 .5"
+		format	"20 0"
+		height	1
+		num		TEXT_MESSAGESYSTEM
+		wheel
+		scrollbar false
+	}
+
 	/* one line */
 	confunc messagesystem_mode0
 	{
@@ -56,18 +68,6 @@ menu map
 		*messagesystem	size	"768 768"
 		*messagesystem	scrollbar "true"
 		cmd "game_timestop;"
-	}
-
-	text messagesystem
-	{
-		pos	"0 0"
-		size	"768 22"
-		bgcolor	"0 0 0 .5"
-		format	"20 0"
-		height	1
-		num		TEXT_MESSAGESYSTEM
-		wheel
-		scrollbar false
 	}
 
 	pic back

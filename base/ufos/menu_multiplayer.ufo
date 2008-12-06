@@ -866,7 +866,7 @@ menu mp_create_server
 		pos	"410 100"
 	}
 
-	string firewall_str
+	text firewall_str
 	{
 		string	"_Make sure that you've opened the TCP port 27910 in your firewall settings"
 		pos		"-207 150"
@@ -1201,7 +1201,7 @@ menu mp_create_server
 		disabled	true
 	}
 
-	string string_gametypes
+	text string_gametypes
 	{
 		pos			"85 570"
 		font		"f_verysmall"

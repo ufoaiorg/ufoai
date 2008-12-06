@@ -205,7 +205,7 @@ menu irc_popup
 		num	TEXT_POPUP
 	}
 
-	string popup_text
+	text popup_text
 	{
 		pos	"26 58"
 		format	"16 100"

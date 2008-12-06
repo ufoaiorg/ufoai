@@ -641,6 +641,25 @@ menu hud extends ahud
 	// ==================
 	// CHAT BUTTONS
 	// ==================
+
+	// the name must be the same in all huds
+	text chatscreen
+	{
+		pos		"130 70"
+		size	"690 48"
+		font	"f_verysmall"
+		wheel
+		num		TEXT_CHAT_WINDOW
+		height	"3"
+		format	"16 0"
+		padding	5
+		bordercolor	"0.5 0.5 0.5 1"
+		border	2
+		bgcolor	"0 0.1 0 0.8"
+		in	{
+			cmd "unhide_chatscreen;"
+		}
+	}
 	pic bar_chat
 	{
 		if	"sv_maxclients >= 2"
@@ -729,25 +748,6 @@ menu hud extends ahud
 	confunc hide_chatscreen
 	{
 		*chatscreen invis true
-	}
-
-	// the name must be the same in all huds
-	text chatscreen
-	{
-		pos		"130 70"
-		size	"690 48"
-		font	"f_verysmall"
-		wheel
-		num		TEXT_CHAT_WINDOW
-		height	"3"
-		format	"16 0"
-		padding	5
-		bordercolor	"0.5 0.5 0.5 1"
-		border	2
-		bgcolor	"0 0.1 0 0.8"
-		in	{
-			cmd "unhide_chatscreen;"
-		}
 	}
 
 	func event

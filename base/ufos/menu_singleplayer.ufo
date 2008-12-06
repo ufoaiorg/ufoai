@@ -295,7 +295,7 @@ menu quickload
 		font	f_big
 	}
 
-	string name_label
+	text name_label
 	{
 		string	"_Are you sure that you really want to reload the last automatically saved campaign state?"
 		pos		"26 58"
