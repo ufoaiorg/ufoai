@@ -707,7 +707,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	f->portal = p;
 
 	if ((p->nodes[pside]->contentFlags & CONTENTS_WINDOW)
-		&& VisibleContents(p->nodes[!pside]->contentFlags ^ p->nodes[pside]->contentFlags) == CONTENTS_WINDOW)
+	 && VisibleContents(p->nodes[!pside]->contentFlags ^ p->nodes[pside]->contentFlags) == CONTENTS_WINDOW)
 		return NULL;	/* don't show insides of windows */
 
 	/* do back-clipping */
