@@ -37,12 +37,18 @@ menu map
 		scrollbar false
 	}
 
+	confunc messagesystem_changemode
+	{
+		cmd "messagesystem_mode<cvar:mn_messagesystem>;"
+	}
+
 	/* one line */
 	confunc messagesystem_mode0
 	{
 		*messagesystem	rows	1
 		*messagesystem	size	"768 22"
-		*messagesystem	scrollbar "false"
+		*messagesystem	scrollbar false
+		cmd "set mn_messagesystem 0;"
 	}
 
 	/* 5 lines */
@@ -50,7 +56,7 @@ menu map
 	{
 		*messagesystem	rows	5
 		*messagesystem	size	"768 110"
-		*messagesystem	scrollbar "false"
+		*messagesystem	scrollbar false
 	}
 
 	/* 10 lines */
@@ -58,7 +64,7 @@ menu map
 	{
 		*messagesystem	rows	10
 		*messagesystem	size	"768 220"
-		*messagesystem	scrollbar "false"
+		*messagesystem	scrollbar false
 	}
 
 	/* full screen */
@@ -66,8 +72,9 @@ menu map
 	{
 		*messagesystem	rows	38
 		*messagesystem	size	"768 768"
-		*messagesystem	scrollbar "true"
+		*messagesystem	scrollbar true
 		cmd "game_timestop;"
+		cmd "set mn_messagesystem 3;"
 	}
 
 	pic back
@@ -424,7 +431,10 @@ menu map
 		click	{
 			cmd "add mn_messagesystem 1;"
 			cmd "mod mn_messagesystem 4;"
-			cmd "messagesystem_mode<cvar:mn_messagesystem>;"
+			cmd "messagesystem_changemode"
+		}
+		rclick	{
+			cmd "messagesystem_mode3"
 		}
 	}
 
@@ -469,8 +479,7 @@ menu map
 
 	func init
 	{
-		cmd	"music_change geoscape;"
-		cmd	"set mn_messagesystem 0;"
+		cmd	"music_change geoscape;messagesystem_mode0"
 	}
 }
 
@@ -618,8 +627,8 @@ menu map_combatzoom
 
 	func init
 	{
-		cmd		"music_change aircombat;"
-		cmd		"set mn_messagesystem 0; messagesystem_mode0"	// MessageSystem turned off
+		cmd	"music_change aircombat;"
+		cmd	"messagesystem_mode0"	// MessageSystem turned off
 	}
 
 	func close
