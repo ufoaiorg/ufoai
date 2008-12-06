@@ -142,23 +142,8 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 			/* read propertyName between '<' and '>' */
 			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
-				if (!Q_strncmp(propertyName, "cvari:", 6)) {
-					cvar_t *cvar = Cvar_Get(propertyName + 6, "", 0, NULL);
-					int l = snprintf(cout, length, "%i", cvar->integer);
-					cout += l;
-					cin = next;
-					length -= l;
-					continue;
-
-				} else if (!Q_strncmp(propertyName, "cvarf:", 6)) {
-					cvar_t *cvar = Cvar_Get(propertyName + 6, "", 0, NULL);
-					int l = snprintf(cout, length, "%f", cvar->value);
-					cout += l;
-					cin = next;
-					length -= l;
-					continue;
-
-				} else if (!Q_strncmp(propertyName, "cvar:", 5)) {
+				/* cvar injection */
+				if (!Q_strncmp(propertyName, "cvar:", 5)) {
 					cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
 					int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
@@ -166,6 +151,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 					length -= l;
 					continue;
 
+				/* source property injection */
 				} else if (source) {
 					/* find peroperty definition */
 					const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);

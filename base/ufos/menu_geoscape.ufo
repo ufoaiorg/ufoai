@@ -420,7 +420,7 @@ menu map
 		click	{
 			cmd "add mn_messagesystem 1;"
 			cmd "mod mn_messagesystem 4;"
-			cmd "messagesystem_mode<cvari:mn_messagesystem>;"
+			cmd "messagesystem_mode<cvar:mn_messagesystem>;"
 		}
 	}
 
