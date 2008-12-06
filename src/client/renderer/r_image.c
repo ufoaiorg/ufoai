@@ -1213,7 +1213,6 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 {
 	byte *out;
 	int i, j, k;
-	byte *dest;
 	const int size = width * height * bpp;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
@@ -1225,7 +1224,6 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 	for (i = 1; i < height - 1; i++) {
 		for (j = 1; j < width - 1; j++) {
-
 			const byte *src = in + ((i * width) + j) * bpp;  /* current input pixel */
 
 			const byte *u = (src - (width * bpp));  /* and it's neighbors */
@@ -1233,7 +1231,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 			const byte *l = (src - (1 * bpp));
 			const byte *r = (src + (1 * bpp));
 
-			dest = out + ((i * width) + j) * bpp;  /* current output pixel */
+			byte *dest = out + ((i * width) + j) * bpp;  /* current output pixel */
 
 			for (k = 0; k < bpp; k++)
 				dest[k] = (u[k] + d[k] + l[k] + r[k]) / 4;
@@ -1241,7 +1239,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	}
 
 	/* copy the softened image over the input image, and free it */
-	memcpy(in, out, width * height * bpp);
+	memcpy(in, out, size);
 	Mem_Free(out);
 }
 
