@@ -750,6 +750,20 @@ void RS_InitTree (qboolean load)
 	if (!load) {
 		assert(baseCurrent);
 		RS_MarkResearchable(qtrue, baseCurrent);
+	} else {
+		/* after loading a savegame the aircraft in bases and installations don't have any tech assigned */
+		/** @todo what about ufos? */
+		int k;
+
+		for (j = 0; j < gd.numBases; j++) {
+			base_t *b = B_GetFoundedBaseByIDX(j);
+			if (!b)
+				continue;
+			for (k = 0; k < b->numAircraftInBase; k++) {
+				aircraft_t *aircraft = &b->aircraft[k];
+				aircraft->tech = RS_GetTechByProvided(aircraft->id);
+			}
+		}
 	}
 
 	memset(&curRequiredList, 0, sizeof(curRequiredList));
