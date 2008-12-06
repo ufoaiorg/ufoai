@@ -1009,32 +1009,44 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
  */
 void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 {
-	vec3_t intensity, luminosity, temp;
-	int i, j, c, mask;
-	byte *p;
-	float max, d;
 	const float scale = 1.0 / 255.0;
 
-	p = (byte *)in;
-	c = width * height;
+	byte *p          = (byte*)in;
+	byte *end        = p + width * height * 4;
+	float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
+	float contrast   = r_contrast->value;
+	float saturation = r_saturation->value;
+	vec3_t intensity, luminosity, temp;
+	int j, mask;
+	float max, d;
 
-	if (type == it_world || type == it_effect || type == it_material)
-		mask = 1;
-	else if (type == it_lightmap)
-		mask = 2;
-	else
-		mask = 0;  /* monochrome/invert */
+	enum filter_flags_t {
+		FILTER_NONE       = 0,
+		FILTER_MONOCHROME = 1U << 0,
+		FILTER_INVERT     = 1U << 1
+	} filter;
+
+	/* monochrome/invert */
+	switch (type) {
+		case it_world:
+		case it_effect:
+		case it_material: mask = 1; break;
+		case it_lightmap: mask = 2; break;
+		default:          mask = 0; break;
+	}
+	filter = FILTER_NONE;
+	if (r_monochrome->integer & mask)
+		filter |= FILTER_MONOCHROME;
+	if (r_invert->integer & mask)
+		filter |= FILTER_INVERT;
 
 	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
 
-	for (i = 0; i < c; i++, p+= 4) {
+	for (; p != end; p += 4) {
 		VectorCopy(p, temp);
 		VectorScale(temp, scale, temp);  /* convert to float */
 
-		if (type == it_lightmap)  /* apply brightness */
-			VectorScale(temp, r_modulate->value, temp);
-		else
-			VectorScale(temp, r_brightness->value, temp);
+		VectorScale(temp, brightness, temp);  /* apply brightness */
 
 		max = 0.0;  /* determine brightest component */
 
@@ -1051,7 +1063,7 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 
 		for (j = 0; j < 3; j++) {  /* apply contrast */
 			temp[j] -= 0.5;  /* normalize to -0.5 through 0.5 */
-			temp[j] *= r_contrast->value;  /* scale */
+			temp[j] *= contrast;  /* scale */
 			temp[j] += 0.5;
 
 			if (temp[j] > 1.0)  /* clamp */
@@ -1064,7 +1076,7 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 		d = DotProduct(temp, luminosity);
 
 		VectorSet(intensity, d, d, d);
-		VectorMix(intensity, temp, r_saturation->value, temp);
+		VectorMix(intensity, temp, saturation, temp);
 
 		for (j = 0; j < 3; j++) {
 			temp[j] *= 255;  /* back to byte */
@@ -1077,10 +1089,10 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 			p[j] = (byte)temp[j];
 		}
 
-		if (r_monochrome->integer & mask)  /* monochrome */
+		if (filter & FILTER_MONOCHROME)
 			p[0] = p[1] = p[2] = (p[0] + p[1] + p[2]) / 3;
 
-		if (r_invert->integer & mask) {  /* inverted */
+		if (filter & FILTER_INVERT) {
 			p[0] = 255 - p[0];
 			p[1] = 255 - p[1];
 			p[2] = 255 - p[2];
