@@ -253,14 +253,12 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 		const float dist = tnode->dist;
 		front = start[type] - dist;
 		back = stop[type] - dist;
-	}
-	else if (type == PLANE_NONE) {
+	} else if (type == PLANE_NONE) {
 		r = TR_TestLine_r(tnode->children[0], start, stop);
 		if (r)
 			return r;
 		return TR_TestLine_r(tnode->children[1], start, stop);
-	}
-	else {
+	} else {
 		vec3_t *normal = &tnode->normal;
 		const float dist = tnode->dist;
 		front = DotProduct(start, *normal) - dist;
@@ -294,7 +292,7 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
  * @param[in] levelmask
  * @sa CL_TargetingToHit
  * @note levels:
- * 0-255: brushes are assigned to a level based on their assigned veiwing levels.  A brush with
+ * 0-255: brushes are assigned to a level based on their assigned viewing levels.  A brush with
  *    no levels assigned will be stuck in 0, a brush viewable from all 8 levels will be in 255, and
  *    so on.  Each brush will only appear in one level.
  * 256: weaponclip-level
