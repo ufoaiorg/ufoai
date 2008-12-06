@@ -848,7 +848,12 @@ static void Cvar_Add_f (void)
 		return;
 	}
 
-	cvar = Cvar_Get(Cmd_Argv(1), "", 0, NULL);
+	cvar = Cvar_FindVar(Cmd_Argv(1));
+	if (!cvar) {
+		Com_Printf("Cvar_Add_f: %s not exists\n", Cmd_Argv(1));
+		return;
+	}
+
 	value = cvar->value + atof(Cmd_Argv(2));
 	Cvar_SetValue(Cmd_Argv(1), value);
 }
@@ -864,7 +869,13 @@ static void Cvar_Mod_f (void)
 		Com_Printf("Usage: %s <variable> <value>\n", Cmd_Argv(0));
 		return;
 	}
-	cvar = Cvar_Get(Cmd_Argv(1), "", 0, NULL);
+
+	cvar = Cvar_FindVar(Cmd_Argv(1));
+	if (!cvar) {
+		Com_Printf("Cvar_Mod_f: %s not exists\n", Cmd_Argv(1));
+		return;
+	}
+
 	value = cvar->integer % atoi(Cmd_Argv(2));
 	Cvar_SetValue(Cmd_Argv(1), value);
 }
