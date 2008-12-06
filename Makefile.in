@@ -73,7 +73,7 @@ Makefile: Makefile.in
 # Say how to build the build directories
 $(BUILDDIR)/.dirs:
 	@mkdir -p $(foreach i, $(ALL_OBJS), $(dir $i))
-	@mkdir -p $(foreach i, $(RADIANT_OBJS), $(dir $i))
+	@mkdir -p $(foreach i, $(ALL_RADIANT_OBJS), $(dir $i))
 	@touch $@
 
 clean:
