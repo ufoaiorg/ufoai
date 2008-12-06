@@ -25,6 +25,7 @@ menu map
 		rclick	{ cmd "mn_mapaction_reset;" }
 	}
 
+	/* one line */
 	confunc messagesystem_mode0
 	{
 		*messagesystem	height	1
@@ -32,6 +33,7 @@ menu map
 		*messagesystem	scrollbar "false"
 	}
 
+	/* 5 lines */
 	confunc messagesystem_mode1
 	{
 		*messagesystem	height	5
@@ -39,6 +41,7 @@ menu map
 		*messagesystem	scrollbar "false"
 	}
 
+	/* 10 lines */
 	confunc messagesystem_mode2
 	{
 		*messagesystem	height	10
@@ -46,6 +49,7 @@ menu map
 		*messagesystem	scrollbar "false"
 	}
 
+	/* full screen */
 	confunc messagesystem_mode3
 	{
 		*messagesystem	height	38
@@ -466,7 +470,7 @@ menu map
 	func init
 	{
 		cmd	"music_change geoscape;"
-		cmd	"set mn_messagesystem 0"
+		cmd	"set mn_messagesystem 0;"
 	}
 }
 
@@ -615,7 +619,7 @@ menu map_combatzoom
 	func init
 	{
 		cmd		"music_change aircombat;"
-		cmd		"set mn_messagesystem 0;"	// MessageSystem turned off
+		cmd		"set mn_messagesystem 0; messagesystem_mode0"	// MessageSystem turned off
 	}
 
 	func close
