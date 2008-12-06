@@ -493,7 +493,6 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
  */
 static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
-	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
 
 	curTile = tile;
@@ -502,8 +501,6 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 
 	for (i = 0; i < tile->numtheads; i++) {
 		const int level = tile->theadlevel[i];
-		if (level && corelevels && !(level & levelmask))
-			continue;
 		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))

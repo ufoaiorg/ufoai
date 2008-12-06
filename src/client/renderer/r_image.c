@@ -1011,11 +1011,11 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 {
 	const float scale = 1.0 / 255.0;
 
-	byte *p          = (byte*)in;
-	byte *end        = p + width * height * 4;
-	float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
-	float contrast   = r_contrast->value;
-	float saturation = r_saturation->value;
+	byte *p = (byte*)in;
+	const byte *end = p + width * height * 4;
+	const float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
+	const float contrast = r_contrast->value;
+	const float saturation = r_saturation->value;
 	vec3_t intensity, luminosity, temp;
 	int j, mask;
 	float max, d;
@@ -1028,12 +1028,19 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 
 	/* monochrome/invert */
 	switch (type) {
-		case it_world:
-		case it_effect:
-		case it_material: mask = 1; break;
-		case it_lightmap: mask = 2; break;
-		default:          mask = 0; break;
+	case it_world:
+	case it_effect:
+	case it_material:
+		mask = 1;
+		break;
+	case it_lightmap:
+		mask = 2;
+		break;
+	default:
+		mask = 0;
+		break;
 	}
+
 	filter = FILTER_NONE;
 	if (r_monochrome->integer & mask)
 		filter |= FILTER_MONOCHROME;
