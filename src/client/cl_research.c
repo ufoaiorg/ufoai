@@ -752,7 +752,6 @@ void RS_InitTree (qboolean load)
 		RS_MarkResearchable(qtrue, baseCurrent);
 	} else {
 		/* after loading a savegame the aircraft in bases and installations don't have any tech assigned */
-		/** @todo what about ufos? */
 		int k;
 
 		for (j = 0; j < gd.numBases; j++) {
@@ -761,6 +760,9 @@ void RS_InitTree (qboolean load)
 				continue;
 			for (k = 0; k < b->numAircraftInBase; k++) {
 				aircraft_t *aircraft = &b->aircraft[k];
+				if (aircraft->tech)
+					/* if this error is hit, the call is maybe not needed any longer */
+					Sys_Error("RS_InitTree: aircraft already has a tech assigned");
 				aircraft->tech = RS_GetTechByProvided(aircraft->id);
 			}
 		}
