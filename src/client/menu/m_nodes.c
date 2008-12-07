@@ -364,11 +364,9 @@ static void MN_NodeSetProperty_f (void)
 
 void MN_InitNodes (void)
 {
-	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
-	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
-	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
+	int i;
 
-	/* all nodes */
+	/* compute list of node behaviours */
 	MN_RegisterNullNode(nodeBehaviourList + MN_NULL);
 	MN_RegisterConFuncNode(nodeBehaviourList + MN_CONFUNC);
 	MN_RegisterCvarFuncNode(nodeBehaviourList + MN_CVARFUNC);
@@ -404,4 +402,14 @@ void MN_InitNodes (void)
 	/* direct access to menu node */
 	menuBehaviour = nodeBehaviourList + MN_WINDOW;
 
+	/* finalise initialisation */
+	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
+	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
+	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
+	for (i = 0; i < MN_NUM_NODETYPE; i++) {
+		nodeBehaviour_t *b = nodeBehaviourList + i;
+		if (b->initBehaviour) {
+			b->initBehaviour(b);
+		}
+	}
 }

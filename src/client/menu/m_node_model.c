@@ -494,6 +494,16 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
+static void MN_ModelNodeInitBehaviour (nodeBehaviour_t *behaviour)
+{
+#ifdef DEBUG
+	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
+	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
+	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
+#endif
+	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+}
+
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
@@ -501,11 +511,5 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_DrawModelNode2;
 	behaviour->leftClick = MN_ModelNodeClick;
 	behaviour->loading = MN_ModelNodeLoading;
-
-#ifdef DEBUG
-	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
-#endif
-	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+	behaviour->initBehaviour = MN_ModelNodeInitBehaviour;
 }

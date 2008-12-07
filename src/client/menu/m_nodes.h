@@ -190,7 +190,10 @@ typedef struct nodeBehaviour_s {
 	const value_t* properties; /**< list of properties of the node */
 	int propertyCount;	/**< number of the properties into the propertiesList. Cache value to speedup search */
 
-	/* function */
+	/* behaviour function */
+	void (*initBehaviour)(struct nodeBehaviour_s *behaviour);		/**< call aflter all behaviour registration */
+
+	/* node function */
 	void (*draw)(menuNode_t *node);		/**< how to draw a node */
 	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
 	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
