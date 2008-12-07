@@ -1253,7 +1253,7 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 			 * examined.
 			 * @todo @note that LEVEL_STEPON should not be available at this point, but may be erroneously
 			 * included in another level, requiring the addition ot the brushreject parameter.
-			 * @todo Is the above still true?
+			 * @todo the above is no longer true - clean up here
 			 */
 			if (h->level && levelmask && !(h->level & levelmask))
 				continue;
