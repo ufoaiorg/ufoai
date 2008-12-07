@@ -41,12 +41,16 @@ static void *game_library;
 
 const char *Sys_GetCurrentUser (void)
 {
+	static char s_userName[MAX_VAR];
 	struct passwd *p;
 
 	if ((p = getpwuid(getuid())) == NULL)
-		return "";
-
-	return p->pw_name;
+		s_userName[0] = '\0';
+	else {
+		strncpy(s_userName, p->pw_name, sizeof(s_userName));
+		s_userName[sizeof(s_userName) - 1] = '\0';
+	}
+	return s_userName;
 }
 
 /**

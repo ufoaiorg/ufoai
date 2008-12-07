@@ -301,7 +301,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		Com_Printf("R_LoadShader: %s: %s\n", sh->name, log);
 
 		qglDeleteShader(sh->id);
-		memset(sh, 0, sizeof(r_shader_t));
+		memset(sh, 0, sizeof(sh));
 
 		Mem_Free(source);
 		return NULL;
