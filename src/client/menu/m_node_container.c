@@ -66,7 +66,6 @@ static void MN_ScrollContainerUpdate_f (void)
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", menuInventory->scrollCur));
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", menuInventory->scrollNum));
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", menuInventory->scrollTotalNum));
-	return;
 #if 0
 	/* "Previous"/"Backward" button. Are there items before the first displayed one? */
 	if (menuInventory->scrollCur > 0) {
@@ -110,10 +109,9 @@ static void MN_ScrollContainerNext_f (void)
 	if (!menuInventory)
 		return;
 
-
 	/* Check if the end of the currently visible items still is not the last of the displayable items. */
 	if (menuInventory->scrollCur < menuInventory->scrollTotalNum
-		&& menuInventory->scrollCur + menuInventory->scrollNum < menuInventory->scrollTotalNum) {
+	 && menuInventory->scrollCur + menuInventory->scrollNum < menuInventory->scrollTotalNum) {
 		menuInventory->scrollCur++;
 		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Increased current scroll index: %i (num: %i, total: %i).\n",
 			menuInventory->scrollCur,
@@ -382,14 +380,8 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
  */
 static void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
-	objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
-	qboolean showTUs = qtrue;
+	const objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
-
-	/* The shape of the free positions. */
-	uint32_t free[SHAPE_BIG_MAX_HEIGHT];
-	int x, y;
-	int checkedTo;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
 	assert(mouseSpace == MS_DRAGITEM);
@@ -402,13 +394,19 @@ static void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 		if (node->container == dragInfo.from || Com_CheckToInventory(inv, od, node->container, 0, 0, dragInfo.ic))
 			MN_DrawFree(node->container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
 	} else {
+		/* The shape of the free positions. */
+		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
+		qboolean showTUs = qtrue;
+		int x, y;
+
 		memset(free, 0, sizeof(free));
+
 		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 			for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */
-				checkedTo = Com_CheckToInventory(inv, od, node->container, x, y, dragInfo.ic);
+				const int checkedTo = Com_CheckToInventory(inv, od, node->container, x, y, dragInfo.ic);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */

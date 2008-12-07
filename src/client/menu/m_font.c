@@ -42,6 +42,12 @@ static const value_t fontValues[] = {
 	{NULL, V_NULL, 0},
 };
 
+/**
+ * @brief Registers a new TTF font
+ * @note The TTF font path is translated via gettext to be able to use differnet
+ * fonts for every translation
+ * @param[in] font
+ */
 static void MN_RegisterFont (const font_t *font)
 {
 	const char *path = _(font->path);
