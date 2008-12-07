@@ -36,6 +36,7 @@ void MN_MouseUp(int x, int y, int button);
 
 void MN_InvalidateMouse(void);
 void MN_CheckMouseMove(void);
+menuNode_t *MN_GetHoveredNode(void);
 
 /* mouse capture */
 menuNode_t* MN_GetMouseCapture(void);
@@ -44,9 +45,5 @@ void MN_MouseRelease(void);
 
 /** @todo move it somewhere */
 void MN_SetCvar(const char *name, const char *str, float value);
-
-extern menuNode_t *mouseOverTest; /**< mouse over active node, for preview */
-
-/**/
 
 #endif

@@ -77,7 +77,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	static vec4_t red = {1, 0.0, 0.0, 1.0};
 	/*static vec4_t redalpha = {1, 0.0, 0.0, 0.2};*/
 	static vec4_t white = {1, 1.0, 1.0, 1.0};
-	menuNode_t *node = mouseOverTest;
+	menuNode_t *node = MN_GetHoveredNode();
 	vec2_t pos;
 	int size = 20;
 	int weigth = 5;
@@ -113,9 +113,10 @@ static void MN_DrawDebugMenuNodeNames (void)
 
 /**
  * @brief Draws the menu stack
+ * @todo move DrawMenusTest here
  * @sa SCR_UpdateScreen
  */
-static void MN_DrawMenusTest (void)
+void MN_DrawMenus (void)
 {
 	menuNode_t *node;
 	menu_t *menu;
@@ -222,9 +223,9 @@ static void MN_DrawMenusTest (void)
 		}
 	}
 
-	/* timeout? */
-	if (mouseOverTest && mouseOverTest->timePushed) {
-		node = mouseOverTest;
+	/** @todo remove it (or clean up) when it possible. timeout? */
+	if (MN_GetHoveredNode() && MN_GetHoveredNode()->timePushed) {
+		node = MN_GetHoveredNode();
 		if (node->timePushed + node->timeOut < cls.realtime) {
 			node->timePushed = 0;
 			node->invis = qtrue;
@@ -250,17 +251,6 @@ static void MN_DrawMenusTest (void)
 
 
 	R_ColorBlend(NULL);
-}
-
-/**
- * @brief Draws the menu stack
- * @todo move DrawMenusTest here
- * @sa SCR_UpdateScreen
- */
-void MN_DrawMenus (void)
-{
-	/* draw function of the comming architecture */
-	MN_DrawMenusTest();
 }
 
 void MN_DrawMenusInit (void)

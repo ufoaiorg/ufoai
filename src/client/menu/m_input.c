@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @sa MN_DisplayNotice
+ * @todo move it into a better file
  */
 static void MN_CheckCvar (const cvar_t *cvar)
 {
@@ -52,6 +53,7 @@ static void MN_CheckCvar (const cvar_t *cvar)
 
 /**
  * @param[in] str Might be NULL if you want to set a float value
+ * @todo move it into a better file
  */
 void MN_SetCvar (const char *name, const char *str, float value)
 {
@@ -74,7 +76,7 @@ void MN_SetCvar (const char *name, const char *str, float value)
  * @sa MN_SetMouseCapture
  * @sa MN_GetMouseCapture
  * @sa MN_MouseRelease
- * @todo think about replacing it by a boolean. When capturedNode != NULL => mouseOverTest == capturedNode
+ * @todo think about replacing it by a boolean. When capturedNode != NULL => hoveredNode == capturedNode
  * it create unneed case
  */
 static menuNode_t* capturedNode = NULL;
@@ -109,28 +111,39 @@ void MN_MouseRelease (void)
 }
 
 /**
- * @brief save the node under the mouse
- * @todo rename it into hoveredNode when the code is stable
+ * @brief save the current hovered node (first node under the mouse)
+ * @sa MN_GetHoveredNode
+ * @sa MN_MouseMove
+ * @sa MN_CheckMouseMove
  */
-menuNode_t *mouseOverTest;
+static menuNode_t* hoveredNode = NULL;
 
 /**
- * @brief save the previous node under the mouse
+ * @brief save the previous hovered node
  */
-static menuNode_t *oldMouseOverTest;
+static menuNode_t *oldHoveredNode;
 
 /**
  * @brief save old position of the mouse
  */
-static int oldX = 0, oldY = 0;
+static int oldMousePosX = 0, oldMousePosY = 0;
+
+/**
+ * @brief Get the current hovered node
+ * @return A node, else NULL if the mouse hover nothing
+ */
+menuNode_t *MN_GetHoveredNode (void)
+{
+	return hoveredNode;
+}
 
 /**
  * @brief Force to invalidate the mouse position and then to update hover nodes...
  */
 void MN_InvalidateMouse (void)
 {
-	oldX = -1;
-	oldY = -1;
+	oldMousePosX = -1;
+	oldMousePosY = -1;
 }
 
 /**
@@ -139,12 +152,12 @@ void MN_InvalidateMouse (void)
 void MN_CheckMouseMove (void)
 {
 	/* is hovered node no more draw */
-	if (mouseOverTest && (mouseOverTest->invis || !MN_CheckCondition(mouseOverTest)))
+	if (hoveredNode && (hoveredNode->invis || !MN_CheckCondition(hoveredNode)))
 		MN_InvalidateMouse();
 
-	if (mousePosX != oldX || mousePosY != oldY) {
-		oldX = mousePosX;
-		oldY = mousePosY;
+	if (mousePosX != oldMousePosX || mousePosY != oldMousePosY) {
+		oldMousePosX = mousePosX;
+		oldMousePosY = mousePosY;
 		MN_MouseMove(mousePosX, mousePosY);
 	}
 }
@@ -216,36 +229,36 @@ void MN_MouseMove (int x, int y)
 	}
 
 	/* find the first node under the mouse (last of the node list) */
-	mouseOverTest = NULL;
+	hoveredNode = NULL;
 	if (menu) {
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstChild; node; node = node->next) {
 			if (node->invis || node->behaviour->isVirtual || !MN_CheckCondition(node))
 				continue;
 			if (MN_IsInnerNode(node, x, y)) {
-				mouseOverTest = node;
+				hoveredNode = node;
 			}
 		}
 	}
 
 	/* update nodes: send 'in' and 'out' event */
-	if (oldMouseOverTest != mouseOverTest) {
-		if (oldMouseOverTest) {
-			MN_ExecuteActions(oldMouseOverTest->menu, oldMouseOverTest->onMouseOut);
-			oldMouseOverTest->menu->hoverNode = NULL;
-			oldMouseOverTest->state = qfalse;
+	if (oldHoveredNode != hoveredNode) {
+		if (oldHoveredNode) {
+			MN_ExecuteActions(oldHoveredNode->menu, oldHoveredNode->onMouseOut);
+			oldHoveredNode->menu->hoverNode = NULL;
+			oldHoveredNode->state = qfalse;
 		}
-		if (mouseOverTest) {
-			mouseOverTest->state = qtrue;
-			mouseOverTest->menu->hoverNode = mouseOverTest;
-			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onMouseIn);
+		if (hoveredNode) {
+			hoveredNode->state = qtrue;
+			hoveredNode->menu->hoverNode = hoveredNode;
+			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onMouseIn);
 		}
 	}
-	oldMouseOverTest = mouseOverTest;
+	oldHoveredNode = hoveredNode;
 
 	/* send the move event */
-	if (mouseOverTest && mouseOverTest->behaviour->mouseMove) {
-		mouseOverTest->behaviour->mouseMove(mouseOverTest, x, y);
+	if (hoveredNode && hoveredNode->behaviour->mouseMove) {
+		hoveredNode->behaviour->mouseMove(hoveredNode, x, y);
 	}
 }
 
@@ -278,8 +291,8 @@ void MN_LeftClick (int x, int y)
 		return;
 	}
 
-	if (mouseOverTest) {
-		node = mouseOverTest;
+	if (hoveredNode) {
+		node = hoveredNode;
 		if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
 			int itemX = 0;
 			int itemY = 0;
@@ -326,11 +339,11 @@ void MN_RightClick (int x, int y)
 		return;
 	}
 
-	if (mouseOverTest) {
-		if (mouseOverTest->behaviour->rightClick) {
-			mouseOverTest->behaviour->rightClick(mouseOverTest, x, y);
+	if (hoveredNode) {
+		if (hoveredNode->behaviour->rightClick) {
+			hoveredNode->behaviour->rightClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onRightClick);
+			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onRightClick);
 		}
 		return;
 	}
@@ -350,11 +363,11 @@ void MN_MiddleClick (int x, int y)
 		return;
 	}
 
-	if (mouseOverTest) {
-		if (mouseOverTest->behaviour->middleClick) {
-			mouseOverTest->behaviour->middleClick(mouseOverTest, x, y);
+	if (hoveredNode) {
+		if (hoveredNode->behaviour->middleClick) {
+			hoveredNode->behaviour->middleClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onMiddleClick);
+			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onMiddleClick);
 		}
 		return;
 	}
@@ -383,14 +396,14 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		return;
 	}
 
-	if (mouseOverTest) {
-		if (mouseOverTest->behaviour->mouseWheel) {
-			mouseOverTest->behaviour->mouseWheel(mouseOverTest, down, x, y);
+	if (hoveredNode) {
+		if (hoveredNode->behaviour->mouseWheel) {
+			hoveredNode->behaviour->mouseWheel(hoveredNode, down, x, y);
 		} else {
-			if (mouseOverTest->onWheelUp && mouseOverTest->onWheelDown)
-				MN_ExecuteActions(mouseOverTest->menu, (down ? mouseOverTest->onWheelDown : mouseOverTest->onWheelUp));
+			if (hoveredNode->onWheelUp && hoveredNode->onWheelDown)
+				MN_ExecuteActions(hoveredNode->menu, (down ? hoveredNode->onWheelDown : hoveredNode->onWheelUp));
 			else
-				MN_ExecuteActions(mouseOverTest->menu, mouseOverTest->onWheel);
+				MN_ExecuteActions(hoveredNode->menu, hoveredNode->onWheel);
 		}
 		return;
 	}
@@ -414,7 +427,7 @@ void MN_MouseDown (int x, int y, int button)
 	menuNode_t *node;
 
 	/* captured or hover node */
-	node = capturedNode ? capturedNode : mouseOverTest;
+	node = capturedNode ? capturedNode : hoveredNode;
 
 	if (node == NULL)
 		return;
@@ -441,7 +454,7 @@ void MN_MouseUp (int x, int y, int button)
 	menuNode_t *node;
 
 	/* captured or hover node */
-	node = capturedNode ? capturedNode : mouseOverTest;
+	node = capturedNode ? capturedNode : hoveredNode;
 
 	if (node == NULL)
 		return;

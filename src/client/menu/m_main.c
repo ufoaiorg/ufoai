@@ -312,9 +312,10 @@ menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
  */
 qboolean MN_CursorOnMenu (int x, int y)
 {
-	if (mouseOverTest) {
+	const menuNode_t *hovered = MN_GetHoveredNode();
+	if (hovered) {
 		/* else if it is a render node */
-		if (mouseOverTest == mouseOverTest->menu->renderNode) {
+		if (hovered == hovered->menu->renderNode) {
 			return qfalse;
 		}
 		return qtrue;
