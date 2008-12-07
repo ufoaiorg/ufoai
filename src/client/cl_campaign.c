@@ -685,7 +685,7 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 #ifdef DEBUG
 	/* UFO that spawned this mission should be close of mission */
 	if (mission->ufo && ((fabs(mission->ufo->pos[0] - mission->pos[0]) > 1.0f) || (fabs(mission->ufo->pos[1] - mission->pos[1]) > 1.0f))) {
-		Com_Printf("Error: mission (stage: %s) spawned is not at the same location than UFO\n", CP_MissionStageToName(mission->stage));
+		Com_Printf("Error: mission (stage: %s) spawned is not at the same location as UFO\n", CP_MissionStageToName(mission->stage));
 	}
 #endif
 
@@ -3264,7 +3264,6 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
 	const nation_t *nation;
 	mission_t *mission;
-	const base_t *base;
 
 	mission = ufo->mission;
 	if (!mission)
@@ -3277,19 +3276,8 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 		CP_MissionRemove(mission);
 		return;
 	}
-	/* Check if new mission is close from an existing base */
-	base = CP_PositionCloseToBase(mission->pos);
-	if (base) {
-		const float dist = MAP_GetDistance(ufo->pos, base->pos);
-		if (dist > UFO_EPSILON) {
-			mission->pos[0] = base->pos[0] + (ufo->pos[0] - base->pos[0]) * MIN_DIST_BASE / dist;
-			mission->pos[1] = base->pos[1] + (ufo->pos[1] - base->pos[1]) * MIN_DIST_BASE / dist;
-		} else {
-			mission->pos[0] = base->pos[0];
-			mission->pos[1] = base->pos[1] + MIN_DIST_BASE;
-		}
-	} else
-		Vector2Copy(ufo->pos, mission->pos);
+
+	Vector2Copy(ufo->pos, mission->pos);
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
@@ -3299,7 +3287,8 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	}
 
 	CP_MissionDisableTimeLimit(mission);
-	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
+	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array
+	  (may be used to know what items are collected from battlefield)*/
 	CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, qfalse);
