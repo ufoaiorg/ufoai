@@ -61,6 +61,7 @@ typedef struct {
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
 	int rows;					/**< textfields: max. rows to show */
+	struct menuAction_s *onLinesChange;
 
 } textExtraData_t;
 

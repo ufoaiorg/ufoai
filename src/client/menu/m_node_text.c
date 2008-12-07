@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_font.h"
 #include "m_node_text.h"
 #include "m_actions.h"
+#include "m_parse.h"
 #include "../cl_video.h" /**< @todo Clean this up and remove this include */
 #include "../../common/scripts.h"
 
@@ -366,7 +367,14 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 		}
 	} while (cur);
 
-	EXTRADATA(node).textLines = lines;
+	/* content have change */
+	if (EXTRADATA(node).textLines != lines) {
+		EXTRADATA(node).textLines = lines;
+		/* fire the change of the lines */
+		if (EXTRADATA(node).onLinesChange) {
+			MN_ExecuteEventActions(node, EXTRADATA(node).onLinesChange);
+		}
+	}
 
 	MN_DrawScrollBar(node);
 }
@@ -597,6 +605,8 @@ static const value_t properties[] = {
 	{"num", V_MENUTEXTID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
 	{"rows", V_INT, offsetof(menuNode_t, u.text.rows), MEMBER_SIZEOF(menuNode_t, u.text.rows)},
 	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.textScroll), MEMBER_SIZEOF(menuNode_t, u.text.textScroll)},
+	{"lineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
+	{"lines", V_INT, offsetof(menuNode_t, u.text.textLines), MEMBER_SIZEOF(menuNode_t, u.text.textLines)},
 
 	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
