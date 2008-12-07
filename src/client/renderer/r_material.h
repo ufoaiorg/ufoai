@@ -48,14 +48,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* set on stages with valid render passes */
 #define STAGE_RENDER		(1 << 31)
 
+/* composite mask for simplifying state management */
+#define STAGE_TEXTURE_MATRIX ( \
+	STAGE_STRETCH | STAGE_ROTATE | STAGE_SCROLL_S | STAGE_SCROLL_T | \
+	STAGE_SCALE_S | STAGE_SCALE_T \
+)
+
 /* frame based animation, lerp between consecutive images */
 #define MAX_ANIM_FRAMES 8
 
 #define UPDATE_THRESHOLD 0.02
 
 typedef struct rotate_s {
-	float hz, dhz;
-	float dsin, dcos;
+	float hz, deg;
 } rotate_t;
 
 typedef struct blendmode_s {

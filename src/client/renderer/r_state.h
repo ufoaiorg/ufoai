@@ -85,6 +85,7 @@ typedef struct {
 
 	/* states */
 	qboolean blend_enabled;
+	qboolean color_array_enabled;
 	qboolean alpha_test_enabled;
 	qboolean lighting_enabled;
 	qboolean bumpmap_enabled;
@@ -115,6 +116,7 @@ void R_BindDefaultArray(GLenum target);
 void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
+void R_EnableColorArray(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(qboolean enable, material_t *material);
 void R_EnableWarp(r_program_t *program, qboolean enable);

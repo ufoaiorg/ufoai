@@ -263,7 +263,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	}
 
 	for (i = 0; i < 3; i++)
-		surf->center[i] = (mins[i] + maxs[i]) / 2;
+		surf->center[i] = (mins[i] + maxs[i]) / 2.0;
 
 	for (i = 0; i < 2; i++) {
 		/* tiny rounding hack, not sure if it works */
@@ -271,7 +271,10 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 		bmaxs[i] = ceil(stmaxs[i] / surf->lightmap_scale);
 
 		surf->stmins[i] = bmins[i] * surf->lightmap_scale;
-		surf->stmaxs[i] = (bmaxs[i] - bmins[i]) * surf->lightmap_scale;
+		surf->stmaxs[i] = bmaxs[i] * surf->lightmap_scale;
+
+		surf->stcenter[i] = (surf->stmaxs[i] + surf->stmins[i]) / 2.0;
+		surf->stextents[i] = surf->stmaxs[i] - surf->stmins[i];
 	}
 }
 
@@ -597,13 +600,13 @@ static void R_LoadBspVertexArrays (model_t *mod)
 				s = DotProduct(point, sdir) + soff;
 				s -= surf->stmins[0];
 				s += surf->light_s * surf->lightmap_scale;
-				s += 1 * (surf->lightmap_scale / 2);
+				s += 1 * (surf->lightmap_scale / 2.0);
 				s /= r_lightmaps.size * surf->lightmap_scale;
 
 				t = DotProduct(point, tdir) + toff;
 				t -= surf->stmins[1];
 				t += surf->light_t * surf->lightmap_scale;
-				t += 1 * (surf->lightmap_scale / 2);
+				t += 1 * (surf->lightmap_scale / 2.0);
 				t /= r_lightmaps.size * surf->lightmap_scale;
 			}
 

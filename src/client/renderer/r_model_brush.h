@@ -73,6 +73,8 @@ typedef struct mBspSurface_s {
 
 	short stmins[2];		/**< st min coordinates */
 	short stmaxs[2];			/**< st max coordinates */
+	vec2_t stcenter;
+	vec2_t stextents;
 
 	vec3_t center;
 	vec4_t color;

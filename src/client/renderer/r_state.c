@@ -224,6 +224,19 @@ void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
+void R_EnableColorArray (qboolean enable)
+{
+	if (r_state.color_array_enabled == enable)
+		return;
+
+	r_state.color_array_enabled = enable;
+
+	if (enable)
+		glEnableClientState(GL_COLOR_ARRAY);
+	else
+		glDisableClientState(GL_COLOR_ARRAY);
+}
+
 void R_EnableLighting (r_program_t *program, qboolean enable)
 {
 	if (!r_programs->integer || (enable && !program))
@@ -374,13 +387,14 @@ void R_SetupGL3D (void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glRotatef(-90, 1, 0, 0);	/* put Z going up */
-	glRotatef(90, 0, 0, 1);	/* put Z going up */
-	glRotatef(-refdef.viewangles[2], 1, 0, 0);
-	glRotatef(-refdef.viewangles[0], 0, 1, 0);
-	glRotatef(-refdef.viewangles[1], 0, 0, 1);
+	glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
+	glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
+	glRotatef(-refdef.viewangles[2], 1.0, 0.0, 0.0);
+	glRotatef(-refdef.viewangles[0], 0.0, 1.0, 0.0);
+	glRotatef(-refdef.viewangles[1], 0.0, 0.0, 1.0);
 	glTranslatef(-refdef.vieworg[0], -refdef.vieworg[1], -refdef.vieworg[2]);
 
+	/* retrieve the resulting matrix for other manipulations  */
 	glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
 
 	r_state.ortho = qfalse;
@@ -483,9 +497,9 @@ void R_SetDefaultState (void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	glEnableClientState(GL_COLOR_ARRAY);
+	R_EnableColorArray(qtrue);
 	R_BindDefaultArray(GL_COLOR_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	R_EnableColorArray(qfalse);
 
 	glEnableClientState(GL_NORMAL_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);

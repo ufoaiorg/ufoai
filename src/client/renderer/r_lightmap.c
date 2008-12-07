@@ -112,8 +112,8 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 {
 	int i, j, smax, tmax, size;
 
-	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
-	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
+	smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
+	tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 
 	size = smax * tmax;
 	stride -= (smax * 4);
@@ -150,8 +150,8 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	unsigned int i, j, size;
 	byte *lightmap, *lm, *l, *deluxemap, *dm;
 
-	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
-	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
+	smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
+	tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 	size = smax * tmax;
 	stride -= (smax * LIGHTMAP_BLOCK_BYTES);
 
@@ -236,8 +236,8 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	if (!(surf->flags & MSURF_LIGHTMAP))
 		return;
 
-	smax = (surf->stmaxs[0] / surf->lightmap_scale) + 1;
-	tmax = (surf->stmaxs[1] / surf->lightmap_scale) + 1;
+	smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
+	tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 
 	if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
 		/* upload the last block */
@@ -375,7 +375,7 @@ begin:
 		ds = s - surf->stmins[0];
 		dt = t - surf->stmins[1];
 
-		if (ds > surf->stmaxs[0] || dt > surf->stmaxs[1])
+		if (ds > surf->stextents[0] || dt > surf->stextents[1])
 			continue;
 
 		/* we've hit, so find the sample */
@@ -385,7 +385,7 @@ begin:
 		dt /= surf->lightmap_scale;
 
 		/* resolve the lightmap sample at intersection */
-		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stmaxs[0] / surf->lightmap_scale) + 1) + (int)ds));
+		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stextents[0] / surf->lightmap_scale) + 1) + (int)ds));
 
 		/* and normalize it to floating point */
 		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,

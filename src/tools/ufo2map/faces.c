@@ -51,13 +51,13 @@ static int edge_verts[MAX_MAP_VERTS];
 static int vertexchain[MAX_MAP_VERTS];		/* the next vertex in a hash chain */
 static int hashverts[HASH_SIZE * HASH_SIZE];	/* a vertex number, or 0 for no verts */
 
-
+/**
+ * @todo Fix this to support the full bsp level bounds
+ */
 static unsigned HashVec (const vec3_t vec)
 {
-	int x, y;
-
-	x = (4096 + (int)(vec[0] + 0.5)) >> 7;
-	y = (4096 + (int)(vec[1] + 0.5)) >> 7;
+	const int x = (4096 + (int)(vec[0] + 0.5)) >> 7;
+	const int y = (4096 + (int)(vec[1] + 0.5)) >> 7;
 
 	if (x < 0 || x >= HASH_SIZE || y < 0 || y >= HASH_SIZE)
 		Sys_Error("HashVec: point outside valid range");

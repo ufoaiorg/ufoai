@@ -45,14 +45,11 @@ static void R_UpdateMaterial (material_t *m)
 
 		if (s->flags & STAGE_STRETCH) {
 			s->stretch.dhz = (sin(refdef.time * s->stretch.hz * 6.28) + 1.0) / 2.0;
-			s->stretch.damp = s->stretch.dhz * s->stretch.amp;
+			s->stretch.damp = 1.5 - s->stretch.dhz * s->stretch.amp;
 		}
 
-		if (s->flags & STAGE_ROTATE) {
-			s->rotate.dhz = refdef.time * s->rotate.hz * 6.28;
-			s->rotate.dsin = sin(s->rotate.dhz);
-			s->rotate.dcos = cos(s->rotate.dhz);
-		}
+		if (s->flags & STAGE_ROTATE)
+			s->rotate.deg = refdef.time * s->rotate.hz * 360.0;
 
 		if (s->flags & STAGE_SCROLL_S)
 			s->scroll.ds = s->scroll.s * refdef.time;
@@ -69,68 +66,71 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
+static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materialStage_t *stage)
+{
+	static qboolean identity = qtrue;
+	float s, t;
+
+	if (!(stage->flags & STAGE_TEXTURE_MATRIX)) {
+		if (!identity)
+			glLoadIdentity();
+
+		identity = qtrue;
+		return;
+	}
+
+	glLoadIdentity();
+
+	s = surf->stcenter[0] / surf->texinfo->image->width;
+	t = surf->stcenter[1] / surf->texinfo->image->height;
+
+	if (stage->flags & STAGE_STRETCH) {
+		glTranslatef(-s, -t, 0.0);
+		glScalef(stage->stretch.damp, stage->stretch.damp, 1.0);
+		glTranslatef(-s, -t, 0.0);
+	}
+
+	if (stage->flags & STAGE_ROTATE) {
+		glTranslatef(-s, -t, 0.0);
+		glRotatef(stage->rotate.deg, 0.0, 0.0, 1.0);
+		glTranslatef(-s, -t, 0.0);
+	}
+
+	if (stage->flags & STAGE_SCALE_S)
+		glScalef(stage->scale.s, 1.0, 1.0);
+
+	if (stage->flags & STAGE_SCALE_T)
+		glScalef(1.0, stage->scale.t, 1.0);
+
+	if (stage->flags & STAGE_SCROLL_S)
+		glTranslatef(stage->scroll.ds, 0.0, 0.0);
+
+	if (stage->flags & STAGE_SCROLL_T)
+		glTranslatef(0.0, stage->scroll.dt, 0.0);
+
+	identity = qfalse;
+}
+
+
 static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
 {
 	vec3_t tmp;
-	float s, t, s0, t0;
 
 	if (stage->flags & STAGE_ENVMAP) {  /* generate texcoords */
-		tmp[0] = v[0] * r_locals.world_matrix[0] + v[1] * r_locals.world_matrix[4] +
-				v[2] * r_locals.world_matrix[8] + r_locals.world_matrix[12];
-
-		tmp[1] = v[0] * r_locals.world_matrix[1] + v[1] * r_locals.world_matrix[5] +
-				v[2] * r_locals.world_matrix[9] + r_locals.world_matrix[13];
-
-		tmp[2] = v[0] * r_locals.world_matrix[2] + v[1] * r_locals.world_matrix[6] +
-				v[2] * r_locals.world_matrix[10] + r_locals.world_matrix[14];
-
+		VectorSubtract(v, refdef.vieworg, tmp);
 		VectorNormalize(tmp);
-
-		s = tmp[0];
-		t = tmp[1];
+		Vector2Copy(tmp, out);
 	} else {  /* or use the ones we were given */
-		s = in[0];
-		t = in[1];
+		Vector2Copy(in, out);
 	}
-
-	/* scale first... */
-	if (stage->flags & STAGE_SCALE_S)
-		s *= stage->scale.s;
-
-	if (stage->flags & STAGE_SCALE_T)
-		t *= stage->scale.t;
-
-	/* ...then scroll */
-	if (stage->flags & STAGE_SCROLL_S)
-		s += stage->scroll.ds;
-
-	if (stage->flags & STAGE_SCROLL_T)
-		t += stage->scroll.dt;
-
-	/* rotate */
-	if (stage->flags & STAGE_ROTATE) {
-		s0 = s - 0.5;
-		t0 = t + 0.5;
-		s = stage->rotate.dcos * s0 - stage->rotate.dsin * t0 + 0.5;
-		t = stage->rotate.dsin * s0 + stage->rotate.dcos * t0 - 0.5;
-	}
-
-	out[0] = s;
-	out[1] = t;
 }
 
+/**
+ * @todo vertex deform
+ */
 static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
 {
-	vec3_t tmp;
-
-	/* translate from surface center */
-	if (stage->flags & STAGE_STRETCH) {
-		VectorSubtract(in, surf->center, tmp);
-		VectorScale(tmp, stage->stretch.damp, tmp);
-		VectorAdd(in, tmp, out);
-	} else {  /* or simply copy */
-		VectorCopy(in, out);
-	}
+	VectorCopy(in, out);
 }
 
 static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
@@ -161,11 +161,11 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
  * @brief Set the correct states for the material stage
  * @sa R_DrawMaterialSurfaces
  */
-static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const materialStage_t *stage)
+static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	vec4_t color;
 
-	/* bind the texture or envmap */
+	/* bind the texture */
 	R_BindTexture(stage->image->texnum);
 
 	/* and optionally the lightmap */
@@ -175,36 +175,44 @@ static void R_SetMaterialSurfaceState (const mBspSurface_t *surf, const material
 	} else
 		R_EnableTexture(&texunit_lightmap, qfalse);
 
+	/* load the texture matrix for rotations, stretches, etc.. */
+	R_StageTextureMatrix(surf, stage);
+
 	/* set the blend function, ensuring a good default */
 	if (stage->flags & STAGE_BLEND)
 		R_BlendFunc(stage->blend.src, stage->blend.dest);
 	else
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	/* resolve the color, which may be explicit or implied */
-	if (stage->flags & STAGE_COLOR)
-		VectorCopy(stage->color, color);
-	else if (stage->flags & STAGE_ENVMAP)
-		VectorCopy(surf->color, color);
-	else
-		VectorSet(color, 1.0, 1.0, 1.0);
-
-	/* modulate the alpha value for animations */
-	if (stage->flags & STAGE_PULSE)
-		color[3] = stage->pulse.dhz;
-	else
-		color[3] = 1.0;
-
-	R_Color(color);
-
 	/* for terrain, enable the color array */
 	if (stage->flags & STAGE_TERRAIN)
-		glEnableClientState(GL_COLOR_ARRAY);
+		R_EnableColorArray(qtrue);
 	else
-		glDisableClientState(GL_COLOR_ARRAY);
+		R_EnableColorArray(qfalse);
+
+	/* when not using the color array, resolve the shade color */
+	if (!r_state.color_array_enabled) {
+		if (stage->flags & STAGE_COLOR)  /* explicit */
+			VectorCopy(stage->color, color);
+
+		else if (stage->flags & STAGE_ENVMAP)  /* implied */
+			VectorCopy(surf->color, color);
+
+		else  /* default */
+			VectorSet(color, 1.0, 1.0, 1.0);
+
+		/* modulate the alpha value for pulses */
+		if (stage->flags & STAGE_PULSE) {
+			color[3] = stage->pulse.dhz;
+		} else {
+			color[3] = 1.0;
+		}
+
+		R_Color(color);
+	}
 }
 
-static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
+static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i;
 
@@ -246,6 +254,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	assert(r_state.blend_enabled);
 
 	glEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
+	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
 
 	for (i = 0; i < surfs->count; i++) {
 		materialStage_t *s;
@@ -264,9 +273,9 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 			glPolygonOffset(-1, j);  /* increase depth offset for each stage */
 
-			R_SetMaterialSurfaceState(surf, s);
+			R_SetSurfaceStageState(surf, s);
 
-			R_DrawMaterialSurface(surf, s);
+			R_DrawSurfaceStage(surf, s);
 		}
 	}
 
@@ -276,11 +285,14 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	glPolygonOffset(0, 0);
 	glDisable(GL_POLYGON_OFFSET_FILL);
 
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
 
-	glDisableClientState(GL_COLOR_ARRAY);
+	R_EnableColorArray(qfalse);
 }
 
 /**
