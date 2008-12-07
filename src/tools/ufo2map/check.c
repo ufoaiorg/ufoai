@@ -467,11 +467,11 @@ static const entityCheck_t checkArray[] = {
  * @brief faces that are near pointing down may be set nodraw,
  * as views are always slightly down
  */
-static qboolean Check_SidePointsDown(const side_t *s)
+static qboolean Check_SidePointsDown (const side_t *s)
 {
 	const vec3_t down = {0.0f, 0.0f, -1.0f};
 	const plane_t *plane = &mapplanes[s->planenum];
-	float dihedralCos = DotProduct(plane->normal, down);
+	const float dihedralCos = DotProduct(plane->normal, down);
 	return dihedralCos >= NEARDOWN_COS;
 }
 
@@ -502,11 +502,11 @@ static inline float Check_PointPlaneDistance (const vec3_t point, const plane_t 
  */
 static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
 {
-	plane_t *plane1 = &mapplanes[side1->planenum];
-	plane_t *plane2 = &mapplanes[side2->planenum];
-	float distance, dihedralCos;
+	const plane_t *plane1 = &mapplanes[side1->planenum];
+	const plane_t *plane2 = &mapplanes[side2->planenum];
+	float distance;
 
-	dihedralCos = DotProduct(plane1->normal, plane2->normal);
+	const float dihedralCos = DotProduct(plane1->normal, plane2->normal);
 	if (dihedralCos >= -COS_EPSILON)
 		return qfalse; /* not facing each other */
 
@@ -527,11 +527,10 @@ static qboolean FacingAndCoincidentTo (const side_t *side1, const side_t *side2)
  */
 static qboolean ParallelAndCoincidentTo (const side_t *side1, const side_t *side2)
 {
-	plane_t *plane1 = &mapplanes[side1->planenum];
-	plane_t *plane2 = &mapplanes[side2->planenum];
-	float distance, dihedralCos;
-
-	dihedralCos = DotProduct(plane1->normal, plane2->normal);
+	float distance;
+	const plane_t *plane1 = &mapplanes[side1->planenum];
+	const plane_t *plane2 = &mapplanes[side2->planenum];
+	const float dihedralCos = DotProduct(plane1->normal, plane2->normal);
 	if (dihedralCos <= COS_EPSILON)
 		return qfalse; /* not parallel */
 
@@ -549,18 +548,17 @@ static qboolean ParallelAndCoincidentTo (const side_t *side1, const side_t *side
 static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbrush_t *brush, const pointInBrush_t mode)
 {
 	int i;
-	float dist; /* distance to one of the planes of the sides, negative implies the point is inside this plane */
 	int numPlanes = 0; /* how many of the sides the point is on. on 2 sides, means on an edge. on 3 a vertex */
-	float epsilon = CH_DIST_EPSILON;
-
 	/* PIB_INCL_SURF is the default */
-	epsilon *= mode == PIB_EXCL_SURF ? -1.0f : 1.0f;/* apply epsilon the other way if the surface is excluded */
+	/* apply epsilon the other way if the surface is excluded */
+	const float epsilon = CH_DIST_EPSILON * (mode == PIB_EXCL_SURF ? -1.0f : 1.0f);
 
 	for (i = 0; i < brush->numsides; i++) {
 		const plane_t *plane = &mapplanes[brush->original_sides[i].planenum];
 
-			/* if the point is on the wrong side of any face, then it is outside */
-		dist = Check_PointPlaneDistance(point, plane);
+		/* if the point is on the wrong side of any face, then it is outside */
+		/* distance to one of the planes of the sides, negative implies the point is inside this plane */
+		const float dist = Check_PointPlaneDistance(point, plane);
 		if (dist > epsilon)
 			return qfalse;
 

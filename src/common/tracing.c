@@ -823,7 +823,6 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 	float d1;
 	TR_BRUSHSIDE_TYPE *side;
 
-
 	if (!brush || !brush->numsides)
 		return;
 
@@ -853,7 +852,6 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 		/* if completely in front of face, no intersection */
 		if (d1 > 0)
 			return;
-
 	}
 
 	/* inside this brush */
@@ -1097,8 +1095,8 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
     VectorAdd(mins, maxs, offset);
     VectorDiv(offset, 2, offset);
 
-    /* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
-     * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
+	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
+	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
 	VectorSubtract(mins, offset, amins);
 	VectorSubtract(maxs, offset, amaxs);
 	VectorAdd(start, offset, astart);
