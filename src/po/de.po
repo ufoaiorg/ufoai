@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-11-29 12:19+0100\n"
-"PO-Revision-Date: 2008-12-06 11:26+0100\n"
+"PO-Revision-Date: 2008-12-07 10:36+0100\n"
 "Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "Kleiner Friedhof"
 
 #: ../base/maps/city_disco.ump:54
 msgid "City_disco"
-msgstr ""
+msgstr "City disco"
 
 #: ../base/maps/community_centre.ump:53
 msgid "Community_centre"
@@ -2824,7 +2824,6 @@ msgid "Destroy installation"
 msgstr "Zerstöre externe Einrichtung"
 
 #: ../base/ufos/menu_geoscape.ufo:1834
-#, fuzzy
 msgid "Manage"
 msgstr "Manage"
 
@@ -11278,9 +11277,8 @@ msgid "Machine Gun Magazine"
 msgstr "Maschinengewehrmagazin"
 
 #: ../base/ufos/weapons_human.ufo:246
-#, fuzzy
 msgid "5-Shot Burst"
-msgstr "Kurzer Feuerstoß"
+msgstr "5-facher Feuerstoß"
 
 #: ../base/ufos/weapons_human.ufo:286
 #: ../base/ufos/weapons_multiplayer.ufo:88
@@ -11599,8 +11597,9 @@ msgid "Cannon Particle Accelerator"
 msgstr "Partikelbeschleuniger - Kanone"
 
 #: ../base/ufos/weapons_particle.ufo:264
+#, fuzzy
 msgid "Unrestricted Blast"
-msgstr ""
+msgstr "Uneingeschränkter Feuerstos"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -12195,7 +12194,7 @@ msgstr "Elektronik:\t%i an %i"
 #: client/cl_aircraft.c:827
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
-msgstr ""
+msgstr "Ein neues (a %s) hochwertiges Fahrzeug steht in Basis %s zu verfügung"
 
 #: client/cl_aircraft.c:866
 msgid "No operational hangars at that base."
@@ -13267,7 +13266,7 @@ msgstr "Sicher, dass die externe Einrichtung abgerissen werden soll?"
 #: client/cl_installation.c:476
 #, fuzzy
 msgid "Forget it"
-msgstr "Erzwinge Start"
+msgstr "Vergiss es"
 
 #: client/cl_installation.c:557
 #, c-format
@@ -13768,7 +13767,7 @@ msgstr "Verschiedenes"
 #: client/cl_market.c:564
 #, fuzzy
 msgid "Personal Armour"
-msgstr "Energierüstung"
+msgstr "Persönliche Schutzkleidung"
 
 #: client/cl_market.c:570
 msgid "Other"
@@ -15414,32 +15413,32 @@ msgstr "Verstecke das HUD (ESC reaktiviert es)"
 #: client/menu/m_messages.c:33
 #, fuzzy
 msgid "installation_installed"
-msgstr "Tankstelle"
+msgstr "installation installed"
 
 #: client/menu/m_messages.c:34
 #, fuzzy
 msgid "installation_removed"
-msgstr "Max. Basen erreicht"
+msgstr "Installation ernfernt"
 
 #: client/menu/m_messages.c:35
 #, fuzzy
 msgid "installation_replaced"
-msgstr "Max. Basen erreicht"
+msgstr "Installation ersetzt"
 
 #: client/menu/m_messages.c:36
 #, fuzzy
 msgid "installation_build_started"
-msgstr "Max. Basen erreicht"
+msgstr "Bau der Installation gestarted"
 
 #: client/menu/m_messages.c:37
 #, fuzzy
 msgid "installation_build_finished"
-msgstr "Konstruktion abgeschlossen"
+msgstr "bau der Installation abgeschlossen"
 
 #: client/menu/m_messages.c:38
 #, fuzzy
 msgid "installation_destroyed"
-msgstr "Tankstelle"
+msgstr "Installation fertig"
 
 #: client/menu/m_messages.c:39
 msgid "research_new_proposed"
@@ -15486,9 +15485,8 @@ msgid "transfer_completed_success"
 msgstr "Transfer erfolgreich  abgeschlossen"
 
 #: client/menu/m_messages.c:50
-#, fuzzy
 msgid "transfer_lost"
-msgstr "Transfer"
+msgstr "Transfer verloren"
 
 #: client/menu/m_messages.c:51
 msgid "transfer_aliens_defered"
@@ -15679,7 +15677,7 @@ msgstr "Nicht genug Munition!\n"
 
 #: game/g_spawn.c:685
 msgid "Aliens entered target zone\n"
-msgstr ""
+msgstr "ALiens haben Zielbereich betreten\n"
 
 #: game/g_spawn.c:712
 msgid "Item was placed\n"
