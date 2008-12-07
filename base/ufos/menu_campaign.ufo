@@ -93,40 +93,28 @@ menu campaigns
 	{
 		pos	"500 300"
 		format	"20 0"
-		size	"420 380"
+		size	"415 380"
 		num		TEXT_STANDARD
 		rows	19
-		wheel
-		scrollbar true
 //		bgcolor "1 1 1 0.4"
+		wheel {
+			cmd "mn_setnodeproperty campaign_desc_scroll current <text_scroll>"
+		}
+		lineschange {
+			cmd "mn_setnodeproperty campaign_desc_scroll fullsize <lines>"
+			cmd "mn_setnodeproperty campaign_desc_scroll current <text_scroll>"
+		}
 	}
 
-	pic cp_scrollup
-	{
-		tooltip "_Scroll up"
-		image menu/buttons_small
-		pos		"908 284"
-		texl	"32 32"
-		texh	"48 48"
-		mousefx	true
-		click	{ cmd "mn_textscroll campaign_desc -1;" }
-		repeat	true
-		out	{ *cp_scrollup texl "32 32" *cp_scrollup texh "48 48" }
-		in	{ *cp_scrollup texl "48 32" *cp_scrollup texh "64 48" }
-	}
-
-	pic cp_scrolldown
-	{
-		tooltip "_Scroll down"
-		image menu/buttons_small
-		pos		"908 680"
-		texl	"32 48"
-		texh	"48 64"
-		mousefx	true
-		click	{ cmd "mn_textscroll campaign_desc 1;" }
-		repeat	true
-		out	{ *cp_scrolldown texl "32 48" *cp_scrolldown texh "48 64" }
-		in	{ *cp_scrolldown texl "48 48" *cp_scrolldown texh "64 64" }
+	vscrollbar campaign_desc_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos	"915 300"	size	"27 380"
+		current 0
+		viewsize 19
+		fullsize 19
+		change {
+			cmd "mn_textscroll campaign_desc <lastdiff>;"
+		}
 	}
 
 	func init
