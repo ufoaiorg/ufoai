@@ -108,26 +108,62 @@ menu ufopedia
 	{
 		if "mn_up_mail == 0"
 		pos		"40 85"
-		size	"670 368"
+		size	"640 368"
 		num		TEXT_UFOPEDIA
 		format	"23 100"
-		click rclick wheel
+		click rclick
 //		bgcolor " 0.5 1 0.5 0.3"
 		rows	"16"
-		scrollbar true
+		wheel {
+			cmd "mn_setnodeproperty ufopedia_scroll current <text_scroll>"
+		}
+		lineschange {
+			cmd "mn_setnodeproperty ufopedia_scroll fullsize <lines>"
+			cmd "mn_setnodeproperty ufopedia_scroll current <text_scroll>"
+		}
+	}
+
+	vscrollbar ufopedia_scroll {
+		if "mn_up_mail == 0"
+		image	menu/scrollbar_v_green	blend	true
+		pos	"696 85"	size	"27 368"
+		current 0
+		viewsize 16
+		fullsize 50
+		change {
+			cmd "mn_textscroll ufopedia <lastdiff>;"
+		}
 	}
 
 	text ufopedia_mail
 	{
 		if "mn_up_mail == 1"
 		pos		"50 208"
-		size	"660 240"
+		size	"640 240"
 		num		TEXT_UFOPEDIA
 		format	"24 100"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		rows	"10"
-		scrollbar true
+		wheel {
+			cmd "mn_setnodeproperty ufopedia_mail_scroll current <text_scroll>"
+		}
+		lineschange {
+			cmd "mn_setnodeproperty ufopedia_mail_scroll fullsize <lines>"
+			cmd "mn_setnodeproperty ufopedia_mail_scroll current <text_scroll>"
+		}
+	}
+
+	vscrollbar ufopedia_mail_scroll {
+		if "mn_up_mail == 1"
+		image	menu/scrollbar_v_green	blend	true
+		pos	"696 208"	size	"27 240"
+		current 0
+		viewsize 10
+		fullsize 50
+		change {
+			cmd "mn_textscroll ufopedia_mail <lastdiff>;"
+		}
 	}
 
 	text ufopedia_mail_header
@@ -146,20 +182,26 @@ menu ufopedia
 	{
 		*ufopedia format	"23 0"
 		*ufopedia rows	"16"
+		*ufopedia_scroll	viewsize	16
 		*ufopedia font		f_big
 		*ufopedia mousefx	true
-		*ufopedia size		"670 368"
+		*ufopedia 			height	368
+		*ufopedia_scroll	height	368
 		cmd "mn_textscroll ufopedia reset;"
+		*ufopedia_scroll current 0
 	}
 
 	confunc mn_upfsmall
 	{
 		*ufopedia format	"18 0"
 		*ufopedia rows	"20"
+		*ufopedia_scroll	viewsize	20
 		*ufopedia font		f_small
 		*ufopedia mousefx	false
-		*ufopedia size		"670 360"
+		*ufopedia 			height	360
+		*ufopedia_scroll	height	360
 		cmd "mn_textscroll ufopedia reset;"
+		*ufopedia_scroll current 0
 	}
 
 	text description
@@ -243,66 +285,6 @@ menu ufopedia
 		size	"240 240"
 		mousefx	true
 		click
-	}
-
-	pic button_scrollup
-	{
-		if "mn_up_mail == 0"
-		tooltip "_Scroll up"
-		image	menu/buttons_small
-		mousefx true
-		pos		"696 66"
-		texh	"48 48"
-		texl	"32 32"
-		click	{ cmd "mn_textscroll ufopedia -1;" }
-		repeat	true
-		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
-		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
-	}
-
-	pic button_scrolldown
-	{
-		if "mn_up_mail == 0"
-		tooltip "_Scroll down"
-		image	menu/buttons_small
-		mousefx true
-		pos		"696 456"
-		texl	"32 48"
-		texh	"48 64"
-		click	{ cmd "mn_textscroll ufopedia 1;" }
-		repeat	true
-		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
-		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
-	}
-
-	pic button_scrollup_mail
-	{
-		if "mn_up_mail == 1"
-		tooltip "_Scroll up"
-		image	menu/buttons_small
-		mousefx true
-		pos		"696 185"
-		texh	"48 48"
-		texl	"32 32"
-		click	{ cmd "mn_textscroll ufopedia_mail -1;" }
-		repeat	true
-		out		{ *button_scrollup_mail texl "32 32" *button_scrollup_mail texh "48 48" }
-		in		{ *button_scrollup_mail texl "48 32" *button_scrollup_mail texh "64 48" }
-	}
-
-	pic button_scrolldown_mail
-	{
-		if "mn_up_mail == 1"
-		tooltip "_Scroll down"
-		image	menu/buttons_small
-		mousefx true
-		pos		"696 456"
-		texl	"32 48"
-		texh	"48 64"
-		click	{ cmd "mn_textscroll ufopedia_mail 1;" }
-		repeat	true
-		out		{ *button_scrolldown_mail texl "32 48" *button_scrolldown_mail texh "48 64" }
-		in		{ *button_scrolldown_mail texl "48 48" *button_scrolldown_mail texh "64 64" }
 	}
 
 	pic image_top
