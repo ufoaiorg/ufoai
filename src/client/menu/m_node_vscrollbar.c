@@ -148,7 +148,7 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 		return;
 	}
 
-	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize) {
+	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize <= EXTRADATA(node).viewsize) {
 		texX = TILE_WIDTH * 3;
 
 		/* top */

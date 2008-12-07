@@ -79,13 +79,29 @@ menu irc
 	text irc_data
 	{
 		pos		"30 168"
-		size	"695 528"
+		size	"680 528"
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		rows	"24"
 		format  "22 0"
 		num		TEXT_STANDARD
-		wheel
-		scrollbar	true
+		wheel {
+			cmd "mn_setnodeproperty irc_data_scroll current <text_scroll>"
+		}
+		lineschange {
+			cmd "mn_setnodeproperty irc_data_scroll fullsize <lines>"
+			cmd "mn_setnodeproperty irc_data_scroll current <text_scroll>"
+		}
+	}
+
+	vscrollbar irc_data_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos	"693 168"	size	"27 528"
+		current 0
+		viewsize 24
+		fullsize 24
+		change {
+			cmd "mn_textscroll irc_data <lastdiff>;"
+		}
 	}
 
 	string irc_server_string
@@ -125,34 +141,6 @@ menu irc
 		string		"*cvar irc_send_buffer"
 		click 		{ cmd "irc_activate;" }
 		bgcolor		"0.5 0.5 0.5 0.2"
-	}
-
-	pic irc_scrollup
-	{
-		tooltip "_Scroll up"
-		image menu/buttons_small
-		pos		"712 64"
-		texl	"32 32"
-		texh	"48 48"
-		mousefx	true
-		click	{ cmd "mn_textscroll irc_data -1;" }
-		repeat	true
-		out	{ *irc_scrollup texl "32 32" *irc_scrollup texh "48 48" }
-		in	{ *irc_scrollup texl "48 32" *irc_scrollup texh "64 48" }
-	}
-
-	pic irc_scrolldown
-	{
-		tooltip "_Scroll down"
-		image menu/buttons_small
-		pos		"712 696"
-		texl	"32 48"
-		texh	"48 64"
-		mousefx	true
-		click	{ cmd "mn_textscroll irc_data 1;" }
-		repeat	true
-		out	{ *irc_scrolldown texl "32 48" *irc_scrolldown texh "48 64" }
-		in	{ *irc_scrolldown texl "48 48" *irc_scrolldown texh "64 64" }
 	}
 
 	// ==================
