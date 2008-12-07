@@ -1457,21 +1457,22 @@ void R_CreateRadarOverlay (void)
 	const int radarWidth = 512;
 	const int radarHeight = 256;
 	const int bpp = 4;
+	const int size = bpp * radarHeight * radarWidth;
 
 	/* create new texture only once per life time, but reset it for every
 	 * new game (campaign start or game load) */
 	if (r_radarTexture) {
-		memset(r_radarSourcePic, 0, bpp * radarHeight * radarWidth);
-		memset(r_radarPic, 0, bpp * radarHeight * radarWidth);
+		memset(r_radarSourcePic, 0, size);
+		memset(r_radarPic, 0, size);
 		R_UploadRadarCoverage(qfalse);
 		return;
 	}
 
-	r_radarPic = Mem_PoolAllocExt(radarHeight * radarWidth * bpp, qfalse, vid_imagePool, 0);
-	r_radarSourcePic = Mem_PoolAlloc(radarHeight * radarWidth * bpp, vid_imagePool, 0);
+	r_radarPic = Mem_PoolAlloc(size, vid_imagePool, 0);
+	r_radarSourcePic = Mem_PoolAlloc(size, vid_imagePool, 0);
 
 	/* Set an image */
-	r_radarTexture = R_LoadImageData("pics/geoscape/map_earth_xvi_overlay", r_radarPic, radarWidth, radarHeight, it_wrappic);
+	r_radarTexture = R_LoadImageData("pics/geoscape/map_earth_radar_overlay", r_radarPic, radarWidth, radarHeight, it_wrappic);
 }
 
 /**
