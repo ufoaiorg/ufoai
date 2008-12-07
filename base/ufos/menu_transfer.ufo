@@ -117,38 +117,27 @@ menu transfer
 		mousefx	true
 		click
 		format	"20 0"
-		wheel
 		rows	"18"
 //		bgcolor	"1 1 1 0.5"
 		repeat	true
+		wheel {
+			cmd "mn_setnodeproperty trans_list_scroll current <text_scroll>"
+		}
+		lineschange {
+			cmd "mn_setnodeproperty trans_list_scroll fullsize <lines>"
+			cmd "mn_setnodeproperty trans_list_scroll current <text_scroll>"
+		}
 	}
 
-	pic button_scrollup
-	{
-		tooltip "_Scroll up"
-		image	menu/buttons_small
-		mousefx true
-		pos		"524 370"
-		texh	"48 48"
-		texl	"32 32"
-		click	{ cmd "mn_textscroll trans_list -1;" }
-		repeat	true
-		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
-		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
-	}
-
-	pic button_scrolldown
-	{
-		tooltip "_Scroll down"
-		image	menu/buttons_small
-		mousefx true
-		pos		"524 714"
-		texl	"32 48"
-		texh	"48 64"
-		click	{ cmd "mn_textscroll trans_list 1;" }
-		repeat	true
-		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
-		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
+	vscrollbar trans_list_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos		"514 370"	size	"27 360"
+		current 0
+		viewsize 18
+		fullsize 18
+		change {
+			cmd "mn_textscroll trans_list <lastdiff>;"
+		}
 	}
 
 	string s_trans_cargolist
