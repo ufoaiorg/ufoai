@@ -154,7 +154,7 @@ void R_DisableAttribute (const char *name)
 static void R_ShutdownShader (r_shader_t *sh)
 {
 	qglDeleteShader(sh->id);
-	memset(sh, 0, sizeof(r_shader_t));
+	memset(sh, 0, sizeof(*sh));
 }
 
 static void R_ShutdownProgram (r_program_t *prog)
@@ -301,7 +301,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		Com_Printf("R_LoadShader: %s: %s\n", sh->name, log);
 
 		qglDeleteShader(sh->id);
-		memset(sh, 0, sizeof(sh));
+		memset(sh, 0, sizeof(*sh));
 
 		Mem_Free(source);
 		return NULL;
