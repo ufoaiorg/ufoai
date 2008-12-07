@@ -1698,43 +1698,15 @@ menu equipment
 	container equip		{ pos "422 397" }
 	container headgear	{ pos "678 104" }
 
-	confunc cont_scroll_prev_ina { *container_scroll_prev image menu/container_scrollv_ina }
-	confunc cont_scroll_next_ina { *container_scroll_next image menu/container_scrollv_ina }
-
-	confunc cont_scroll_prev_act { *container_scroll_prev image menu/container_scrollv }
-	confunc cont_scroll_next_act { *container_scroll_next image menu/container_scrollv }
-
-	confunc cont_scroll_prev_high { *container_scroll_prev image menu/container_scrollv_high }
-	confunc cont_scroll_next_high { *container_scroll_next image menu/container_scrollv_high }
-
-	pic container_scroll_prev
-	{
-		tooltip	"_Scroll backward"
-		image	menu/container_scrollv
-		blend 1
-		mousefx	false
-		pos		"445 364"
-		texl	"0 0"
-		texh	"127 31"
-		click {	cmd "scrollcont_prev;" }
-		repeat	true
-		in { cmd "set mn_cont_scroll_prev_hover 1;scrollcont_update;" }
-		out { cmd "set mn_cont_scroll_prev_hover 0;scrollcont_update;" }
-	}
-
-	pic container_scroll_next
-	{
-		tooltip	"_Scroll forward"
-		image	menu/container_scrollv
-		blend 1
-		mousefx	false
-		pos		"445 715"
-		texl	"0 32"
-		texh	"127 63"
-		click { cmd "scrollcont_next;" }
-		repeat	true
-		in { cmd "set mn_cont_scroll_next_hover 1;scrollcont_update;" }
-		out { cmd "set mn_cont_scroll_next_hover 0;scrollcont_update;" }
+	vscrollbar equip_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos	"800 397"	size	"27 340"
+		current 0
+		viewsize 8
+		fullsize 20
+		change {
+			cmd "scrollcont_scroll <lastdiff>;"
+		}
 	}
 
 	// ==================

@@ -1,5 +1,9 @@
 /**
  * @file m_node_container.c
+ * @todo need refactoring. one possible way:
+ * @todo 1) generic drag-and-drop
+ * @todo 2) move container list code out
+ * @todo 3) improve the code genericity (remove baseCurrent...)
  */
 
 /*
@@ -59,6 +63,11 @@ dragInfo_t dragInfo = {
  */
 static void MN_ScrollContainerUpdate_f (void)
 {
+	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", menuInventory->scrollCur));
+	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", menuInventory->scrollNum));
+	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", menuInventory->scrollTotalNum));
+	return;
+#if 0
 	/* "Previous"/"Backward" button. Are there items before the first displayed one? */
 	if (menuInventory->scrollCur > 0) {
 		/* Clicking the button will do something. */
@@ -82,6 +91,7 @@ static void MN_ScrollContainerUpdate_f (void)
 		/* The button is disabled. */
 		Cbuf_AddText("cont_scroll_next_ina\n");
 	}
+#endif
 }
 
 /**
@@ -148,6 +158,36 @@ static void MN_ScrollContainerPrev_f (void)
 
 	/* Update display of scroll buttons. */
 	MN_ScrollContainerUpdate_f();
+}
+
+/**
+ * @brief Scrolls items in a scrollable container.
+ */
+static void MN_ScrollContainerScroll_f (void)
+{
+	int offset;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <+/-offset>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* Can be called from everywhere. */
+	if (!baseCurrent)
+		return;
+
+	if (!menuInventory)
+		return;
+
+	offset = atoi(Cmd_Argv(1));
+	while (offset > 0) {
+		MN_ScrollContainerNext_f();
+		offset--;
+	}
+	while (offset < 0) {
+		MN_ScrollContainerPrev_f();
+		offset++;
+	}
 }
 
 /**
@@ -709,70 +749,73 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 static void MN_DrawContainerNode2 (menuNode_t *node)
 {
 	vec2_t nodepos;
+	const invList_t *itemHover_temp;
+	qboolean exists;
+	int itemX = 0;
+	int itemY = 0;
 
 	/* node transparent but active */
 	if (node->color[3] < 0.001) {
 		return;
 	}
 
+	if (!menuInventory)
+		return;
+
 	MN_GetNodeAbsPos(node, nodepos);
 
-	if (menuInventory) {
-		const invList_t *itemHover_temp = MN_DrawContainerNode(node);
-		qboolean exists;
-		int itemX = 0;
-		int itemY = 0;
 
-		if (itemHover_temp)
-			MN_SetItemHover(itemHover_temp);
+	itemHover_temp = MN_DrawContainerNode(node);
+
+	if (itemHover_temp)
+		MN_SetItemHover(itemHover_temp);
 
 
-		/** We calculate the position of the top-left corner of the dragged
-		 * item in oder to compensate for the centered-drawn cursor-item.
-		 * Or to be more exact, we calculate the relative offset from the cursor
-		 * location to the middle of the top-left square of the item.
-		 * @sa MN_LeftClick */
-		if (dragInfo.item.t) {
-			itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
-			itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+	/** We calculate the position of the top-left corner of the dragged
+	 * item in oder to compensate for the centered-drawn cursor-item.
+	 * Or to be more exact, we calculate the relative offset from the cursor
+	 * location to the middle of the top-left square of the item.
+	 * @sa MN_LeftClick */
+	if (dragInfo.item.t) {
+		itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
+		itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
 
-			/* Place relative center in the middle of the square. */
-			itemX -= C_UNIT / 2;
-			itemY -= C_UNIT / 2;
-		}
+		/* Place relative center in the middle of the square. */
+		itemX -= C_UNIT / 2;
+		itemY -= C_UNIT / 2;
+	}
 
-		/* Store information for preview drawing of dragged items. */
-		if (MN_CheckNodeZone(node, mousePosX, mousePosY)
-		 ||	MN_CheckNodeZone(node, mousePosX - itemX, mousePosY - itemY)) {
-			dragInfo.toNode = node;
-			dragInfo.to = node->container;
+	/* Store information for preview drawing of dragged items. */
+	if (MN_CheckNodeZone(node, mousePosX, mousePosY)
+	 ||	MN_CheckNodeZone(node, mousePosX - itemX, mousePosY - itemY)) {
+		dragInfo.toNode = node;
+		dragInfo.to = node->container;
 
-			dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
-			dragInfo.toY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
+		dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
+		dragInfo.toY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
 
-			/** Check if the items already exists in the container. i.e. there is already at least one item.
-			 * @sa Com_AddToInventory */
-			exists = qfalse;
-			if (dragInfo.to && dragInfo.toNode
-			 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
-			 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
-			 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
-					exists = qtrue;
-			 }
+		/** Check if the items already exists in the container. i.e. there is already at least one item.
+		 * @sa Com_AddToInventory */
+		exists = qfalse;
+		if (dragInfo.to && dragInfo.toNode
+		 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
+		 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
+		 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
+				exists = qtrue;
+		 }
 
-			/** Search for a suitable position to render the item at if
-			 * the container is "single", the cursor is out of bound of the container.
-			 */
-			 if (!exists && dragInfo.item.t && (dragInfo.to->single
-			  || dragInfo.toX  < 0 || dragInfo.toY < 0
-			  || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
-	#if 0
-	/* ... or there is something in the way. */
-	/* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-			  || (Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY) == INV_DOES_NOT_FIT)) {
-	#endif
-				Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
-			}
+		/** Search for a suitable position to render the item at if
+		 * the container is "single", the cursor is out of bound of the container.
+		 */
+		 if (!exists && dragInfo.item.t && (dragInfo.to->single
+		  || dragInfo.toX  < 0 || dragInfo.toY < 0
+		  || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+#if 0
+/* ... or there is something in the way. */
+/* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
+		  || (Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY) == INV_DOES_NOT_FIT)) {
+#endif
+			Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
 		}
 	}
 }
@@ -1122,6 +1165,7 @@ static void MN_ContainerNodeInitBehaviour (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
 	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
+	Cmd_AddCommand("scrollcont_scroll", MN_ScrollContainerScroll_f, "Scrolls the current container.");
 }
 
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
