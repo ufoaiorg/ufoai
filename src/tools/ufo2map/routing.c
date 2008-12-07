@@ -48,7 +48,7 @@ static ipos3_t wpMins, wpMaxs;
  */
 static int CheckUnit (unsigned int unitnum)
 {
-	int  new_z;
+	int new_z;
 
 	/* get coordinates of that unit */
 	const int z = unitnum % PATHFINDING_HEIGHT;
@@ -58,7 +58,7 @@ static int CheckUnit (unsigned int unitnum)
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
 	if (x > wpMaxs[0] - actor_size || y > wpMaxs[1] - actor_size || z > wpMaxs[2]
-			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
+	 || x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
 		/* don't enter - outside world */
 		return 0;
 	}
@@ -82,7 +82,7 @@ static int CheckUnit (unsigned int unitnum)
  */
 static void CheckUnitThread (unsigned int unitnum)
 {
-	int basenum = unitnum * PATHFINDING_HEIGHT;
+	const int basenum = unitnum * PATHFINDING_HEIGHT;
 	int newnum;
 	for (newnum = basenum + PATHFINDING_HEIGHT - 1; newnum >= basenum; newnum--)
 		newnum += CheckUnit(newnum);
@@ -94,7 +94,7 @@ static void CheckUnitThread (unsigned int unitnum)
  */
 static int CheckConnections (unsigned int unitnum)
 {
-	int  new_z;
+	int new_z;
 
 	/* get coordinates of that unit */
 	const int z = unitnum % PATHFINDING_HEIGHT;
@@ -106,7 +106,7 @@ static int CheckConnections (unsigned int unitnum)
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
 	if (x > wpMaxs[0] - actor_size || y > wpMaxs[1] - actor_size || z > wpMaxs[2]
-			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
+	 || x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
 		/* don't enter - outside world */
 		/* Com_Printf("x%i y%i z%i dir%i size%i (%i, %i, %i) (%i, %i, %i)\n", x, y, z, dir, size, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 		return 0;
@@ -131,7 +131,7 @@ static int CheckConnections (unsigned int unitnum)
  */
 static void CheckConnectionsThread (unsigned int unitnum)
 {
-	int basenum = unitnum * PATHFINDING_HEIGHT;
+	const int basenum = unitnum * PATHFINDING_HEIGHT;
 	int newnum;
 	for (newnum = basenum; newnum < basenum + PATHFINDING_HEIGHT; newnum++)
 		newnum += CheckConnections(newnum);

@@ -55,6 +55,8 @@ void R_BindTexture (int texnum)
 	if (texnum == r_state.active_texunit->texnum)
 		return;
 
+	assert(texnum > 0);
+
 	r_state.active_texunit->texnum = texnum;
 
 	glBindTexture(GL_TEXTURE_2D, texnum);

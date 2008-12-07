@@ -375,6 +375,14 @@ COLLISION DETECTION
 
 /* common/tracing.c, ufo2map/common/trace.c, ufo2map/csg.c, ufo2map/radiosity.c, ufo2map/routing.c, client/cl_input.c,
  * common/cmodel.c, renderer/r_bsp.c, shared/typedefs.h */
+/**
+ * @note The bsp trees are generated based on the levels that a given brush is supposed to be in.
+ * So a bursh that is tagged for viewing in levels 1, 2, and 3 will be in bsp tree 7 (1 + 2 + 4)
+ * a brush that is viewable in all levels will be in bsp tree level 255, and a bush that is not
+ * tagged for viewing will be in tree 0.
+ * Also, a brush will only be in one bsp tree - the brush tagged for levels 1, 2, and 3 will only
+ * be in tree 7, saving memory
+ */
 #define	LEVEL_LASTVISIBLE		255
 #define	LEVEL_WEAPONCLIP		256
 #define	LEVEL_ACTORCLIP			257
