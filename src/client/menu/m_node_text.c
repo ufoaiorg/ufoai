@@ -223,6 +223,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
 	char *cur, *tab, *end;
+	int lines;
 	int x1; /* variable x position */
 
 	if (text) {
@@ -251,7 +252,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 	R_ColorBlend(node->color);
 
 	/*Com_Printf("\n\n\nEXTRADATA(node).textLines: %i \n", EXTRADATA(node).textLines);*/
-	EXTRADATA(node).textLines = 0;
+	lines = 0;
 	do {
 		/* new line starts from node x position */
 		x1 = x;
@@ -278,10 +279,10 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			cur += strlen(TEXT_IMAGETAG);
 			token = COM_Parse((const char **)&cur);
 			/** @todo fix scrolling images */
-			if (EXTRADATA(node).textLines > EXTRADATA(node).textScroll)
-				y1 += (EXTRADATA(node).textLines - EXTRADATA(node).textScroll) * node->texh[0];
+			if (lines > EXTRADATA(node).textScroll)
+				y1 += (lines - EXTRADATA(node).textScroll) * node->texh[0];
 			/* don't draw images that would be out of visible area */
-			if (y + height > y1 && EXTRADATA(node).textLines >= EXTRADATA(node).textScroll) {
+			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
 				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
 				image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
 				x1 += image->height;
@@ -296,15 +297,15 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			*end++ = '\0';
 
 		/* highlighting */
-		if (EXTRADATA(node).textLines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
+		if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
 			/* Draw current line in "selected" color (if the linenumber is stored). */
 			R_Color(node->selectedColor);
 		}
 
-		if (node->state && node->mousefx && EXTRADATA(node).textLines == EXTRADATA(node).lineUnderMouse) {
+		if (node->state && node->mousefx && lines == EXTRADATA(node).lineUnderMouse) {
 			/* Hightlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
-			if (EXTRADATA(node).textLines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
+			if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
 				R_ColorBlend(colorSelectedHover);
 			} else {
 				R_ColorBlend(colorHover);
@@ -332,22 +333,22 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			while (*tab == '\t')
 				*tab++ = '\0';
 
-			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
-			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &EXTRADATA(node).textLines, qfalse, LONGLINES_PRETTYCHOP);
+			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
+			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
 		} while (1);
 
-		/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
+		/*Com_Printf("until newline - lines: %i\n", lines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
 		/* prevent line from being drawn if there is nothing that should be drawn afer it */
 		if (cur && (cur[0] || end || list)) {
 			/* is it a white line? */
 			if (!cur) {
-				EXTRADATA(node).textLines++;
+				lines++;
 			} else {
-				R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &EXTRADATA(node).textLines, qtrue, node->longlines);
+				R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
 			}
 		}
 
@@ -364,6 +365,8 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			}
 		}
 	} while (cur);
+
+	EXTRADATA(node).textLines = lines;
 
 	MN_DrawScrollBar(node);
 }
@@ -409,15 +412,16 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 	}
 
 	if (EXTRADATA(node).scrollbar && EXTRADATA(node).rows) {
-		EXTRADATA(node).textLines = 0;
+		int lines = 0;
 		for (message = messageStack; message; message = message->next)
-			EXTRADATA(node).textLines++;
+			lines++;
 		/** @todo This is a hack to allow scrolling all the way
 		 * to the last message, if the last page has multiline
 		 * messages. Getting an accurate count of the last page
 		 * would be nice, if it can be done efficiently enough. */
-		if (EXTRADATA(node).textLines > EXTRADATA(node).rows)
-			EXTRADATA(node).textLines += EXTRADATA(node).rows / 2;
+		if (lines > EXTRADATA(node).rows)
+			lines += EXTRADATA(node).rows / 2;
+		EXTRADATA(node).textLines = lines;
 		MN_DrawScrollBar(node);
 	}
 }
