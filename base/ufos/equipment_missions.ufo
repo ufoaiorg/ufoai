@@ -23,7 +23,7 @@
 // you get only n/40 of each item number, rounded down
 // (the rounding down is the auto-mission penalty).
 //
-// Note that we describe the selection of weapon for aliens, but the same
+// Note that we describe the selection of weapons for aliens, but the same
 // procedure is used for initial equipment of phalanx soldiers.
 //
 // Alien weapon assignment procedure, more or less (see inv_shared.c):
@@ -83,12 +83,12 @@
 //    Select the most expensive armour in the equipment definition.
 // 6b. See if this armour is taken:
 //    The selected armour has a probability #A/40 to be taken
-// 6c. If A is not taken, then we go back to 2.a: another weapon B is selected,
-//    but the default B weapon is the weapon which cost is just below A cost
+// 6c. If A is not taken, then we go back to 6.a: another armour A is selected,
+//    but the new armour A is the armour which cost is just below the previous A's cost.
 //    If there is no armour left, alien has no armour.
 // 6d. There is a probability to retry to get an armour (go back to 6a), depending
-//    on the result of step 1.b
-
+//    on the result of step 6.c
+//
 // There is no problem if the number of assigned things
 // is bigger than the total in equipment --- on average it is OK.
 // For example, take 40-alien team, then 1 plasrifle
@@ -103,15 +103,15 @@
 // gives two grenades per alien, on average,
 // while 40 plaspistol and 40 pbeampistol gives only 1 sidearm
 // (so 20 plaspistol and 20 pbeampistol is a better idea in practice).
-
-// there are 2 types of alien equipment :
-// alien_workersS	or alien_soldiersS
+//
+// there are 2 types of alien equipment:
+// alien_workersS or alien_soldiersS
 //    S is any string (used to specify the equipment definition)
 //    For a given stage, all equipment definition can be chosen with the same proability.
-//    For each alien equipment, you must specifiy mininterest and maxinterest : the lower
+//    For each alien equipment, you must specifiy mininterest and maxinterest: the lower
 //    and upper value of overall alieninterest that can use this equipment definition.
 //    Equipment used will be picked randomly between all definition fitting overallinterest.
-//    Note that all equipment definition must have different names.
+//    Note that all equipment definitions must have different names.
 
 equipment alien_workers1
 {
@@ -130,11 +130,11 @@ equipment alien_workers1_explosive
 	mininterest			0
 	maxinterest			250
 	plaspistol			12
-	plaspistol_ammo			16
+	plaspistol_ammo		16
 	plasblaster			14
-	plasblaster_ammo		20
+	plasblaster_ammo	20
 	kerrblade			10
-	plasmagrenade			10
+	plasmagrenade		10
 	light_alien         3
 	medium_alien        1
 }
