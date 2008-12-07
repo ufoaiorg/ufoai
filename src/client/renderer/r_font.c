@@ -202,7 +202,6 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 
 /**
  * @brief Searches the array of available fonts (see fonts.ufo)
- * @return font_t pointer or NULL
  */
 static font_t *R_FontGetFont (const char *name)
 {
@@ -221,16 +220,16 @@ static font_t *R_FontGetFont (const char *name)
  */
 void R_FontListCache_f (void)
 {
-	int i = 0;
-	int collCount = 0, collSum = 0;
+	int i;
+	int collSum = 0;
 
 	Com_Printf("Font cache info\n========================\n");
 	Com_Printf("...wrap cache size: %i - used %i\n", MAX_WRAP_CACHE, numWraps);
 	Com_Printf("...chunk cache size: %i - used %i\n", MAX_CHUNK_CACHE, numChunks);
 
-	for (; i < numWraps; i++) {
+	for (i = 0; i < numWraps; i++) {
 		const wrapCache_t *wrap = &wrapCache[i];
-		collCount = 0;
+		int collCount = 0;
 		while (wrap->next) {
 			collCount++;
 			wrap = wrap->next;
@@ -398,8 +397,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 		/* tidy up broken UTF-8 at end of line which may have been
 		 * truncated by caller by use of functions like Q_strncpyz */
 		utf8len = 1;
-		while (len > utf8len
-			   && UTF8_CONTINUATION_BYTE(buf[pos + len - utf8len]))
+		while (len > utf8len && UTF8_CONTINUATION_BYTE(buf[pos + len - utf8len]))
 			utf8len++;
 		if (len > 0 && utf8len != UTF8_char_len(buf[pos + len - utf8len])) {
 			len -= utf8len;
@@ -476,7 +474,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 		if (!Q_strncmp(text, wrap->text, sizeof(wrap->text) - 1)
 		 && wrap->font == f && wrap->method == method
 		 && (wrap->maxWidth == maxWidth || (wrap->numChunks == 1 && (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
-		return wrap;
+			return wrap;
 
 	if (numWraps >= MAX_WRAP_CACHE)
 		R_FontCleanCache();
@@ -513,7 +511,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines)
 {
 	const font_t *font = R_FontGetFont(fontId);
-	wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
+	const wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
 
 	if (width) {
 		int i;
@@ -613,10 +611,10 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 
 static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 {
-	float nx = x * viddef.rx;
-	float ny = y * viddef.ry;
-	float nw = w * viddef.rx;
-	float nh = h * viddef.ry;
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
 
 	R_BindTexture(texId);
 	R_EnableBlend(qtrue);
@@ -798,7 +796,7 @@ void R_FontRegister (const char *name, int size, const char *path, const char *s
  */
 int R_FontGetHeight (const char *fontID)
 {
-	font_t *font = R_FontGetFont(fontID);
+	const font_t *font = R_FontGetFont(fontID);
 	if (font)
 		return font->height;
 	return -1;
