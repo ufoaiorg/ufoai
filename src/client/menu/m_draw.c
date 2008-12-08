@@ -206,7 +206,7 @@ void MN_DrawMenus (void)
 	menu = MN_GetActiveMenu();
 
 	/* draw tooltip */
-	if (menu->hoverNode && mn_show_tooltips->integer) {
+	if (menu && menu->hoverNode && mn_show_tooltips->integer) {
 		if (itemHover) {
 			char tooltiptext[MAX_VAR * 2];
 			const int itemToolTipWidth = 250;
@@ -223,9 +223,10 @@ void MN_DrawMenus (void)
 		}
 	}
 
+	node = MN_GetHoveredNode();
+
 	/** @todo remove it (or clean up) when it possible. timeout? */
-	if (MN_GetHoveredNode() && MN_GetHoveredNode()->timePushed) {
-		node = MN_GetHoveredNode();
+	if (node && node->timePushed) {
 		if (node->timePushed + node->timeOut < cls.realtime) {
 			node->timePushed = 0;
 			node->invis = qtrue;
@@ -238,7 +239,7 @@ void MN_DrawMenus (void)
 
 	/* draw a special notice */
 	if (cl.time < cl.msgTime) {
-		if (menu->noticePos[0] || menu->noticePos[1])
+		if (menu && (menu->noticePos[0] || menu->noticePos[1]))
 			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
 		else
 			MN_DrawNotice(500, 110);
@@ -246,9 +247,8 @@ void MN_DrawMenus (void)
 
 	/* debug information */
 	if (mn_debugmenu->integer == 2) {
-        MN_DrawDebugMenuNodeNames();
-    }
-
+		MN_DrawDebugMenuNodeNames();
+	}
 
 	R_ColorBlend(NULL);
 }

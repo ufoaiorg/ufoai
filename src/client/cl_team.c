@@ -1644,8 +1644,9 @@ static void CL_AssignSoldier_f (void)
 }
 
 /**
- * @brief Saves a team
+ * @brief Saves a multiplayer team
  * @sa CL_SaveTeamMultiplayerInfo
+ * @sa CL_LoadTeamMultiplayer
  * @todo Implement EMPL_ROBOT
  */
 static qboolean CL_SaveTeamMultiplayer (base_t *base, aircraft_t *aircraft, const char *filename)
