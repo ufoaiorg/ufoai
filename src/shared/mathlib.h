@@ -146,7 +146,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 #define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
-
+#define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
 #define VectorInterpolation(p1,p2,frac,mid)	(mid[0]=p1[0]+frac*(p2[0]-p1[0]),mid[1]=p1[1]+frac*(p2[1]-p1[1]),mid[2]=p1[2]+frac*(p2[2]-p1[2]))
 
 /** @note  This works because the dv value is a byte value.
@@ -186,7 +186,6 @@ void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t v);    /* returns vector length */
 vec_t VectorNormalize2(const vec3_t v, vec3_t out);
 void VectorInverse(vec3_t v);
-void VectorScale(const vec3_t in, const vec_t scale, vec3_t out);
 void VectorMidpoint(const vec3_t point1, const vec3_t point2, vec3_t midpoint);
 int Q_log2(int val);
 

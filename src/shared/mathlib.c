@@ -351,13 +351,6 @@ void VectorInverse (vec3_t v)
 	v[2] = -v[2];
 }
 
-void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
-{
-	out[0] = in[0] * scale;
-	out[1] = in[1] * scale;
-	out[2] = in[2] * scale;
-}
-
 /**
  * @brief Calculates the midpoint between two vectors.
  * @param[in] point1 vector of first point.

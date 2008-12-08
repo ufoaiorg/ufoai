@@ -134,6 +134,9 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	pool->createLine = fileLine;
 	pool->inUse = qtrue;
 	Q_strncpyz(pool->name, name, sizeof(pool->name));
+
+	Com_DPrintf(DEBUG_ENGINE, "Created memory pool '%s'\n", pool->name);
+
 	return pool;
 }
 
