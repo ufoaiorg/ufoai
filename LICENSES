@@ -391,12 +391,23 @@ base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public Licen
 base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/drop_herakles/ammobox.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/ammobox.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/extinguiser.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/extinguiser.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/herakles_int.jpg | GNU General Public License 2.0 | Herakles (outside) texture by Willem "Sitters", interiour from GPLed Nexuiz Textures
 base/models/aircraft/drop_herakles/herakles_int.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_int.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_int_top.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_int_top.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/herakles_nm.png |  |  | data_source/models/sitters/craft_drop_herakles/dropship_normal.bmp
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_top.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/seats.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/seats.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/wallbox.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
