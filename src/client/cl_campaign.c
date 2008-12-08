@@ -3677,7 +3677,7 @@ static void CL_BackupMonthlyData (void)
 	for (nat = 0; nat < gd.numNations; nat++) {
 		nation_t *nation = &gd.nations[nat];
 
-		for (i = MONTHS_PER_YEAR-1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
+		for (i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];
 		}
 	}

@@ -266,7 +266,7 @@ int AIRFIGHT_ChooseWeapon (const aircraftSlot_t const *slot, int maxSlot, const 
 	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 	int i, weapon_status;
 	float distance0 = 99999.9f;
-	float distance = MAP_GetDistance(pos, targetPos);
+	const float distance = MAP_GetDistance(pos, targetPos);
 
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
@@ -442,9 +442,9 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
  */
 void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
-	byte *color;
-
 	if (phalanxWon) {
+		byte *color;
+
 		assert(aircraft);
 
 		/* change destination of other projectiles aiming aircraft */
@@ -693,15 +693,12 @@ static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t ori
 void AIRFIGHT_CampaignRunProjectiles (int dt)
 {
 	int idx;
-	float angle;
-	float movement;
-	vec3_t ortogonalVector, finalPoint, projectedPoint;
 
 	/* gd.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
 	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
 		aircraftProjectile_t *projectile = &gd.projectiles[idx];
+		const float movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		projectile->time += dt;
-		movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		projectile->hasMoved = qtrue;
 		projectile->numInterpolationPoints = 0;
 
@@ -716,6 +713,9 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 			/* remove the missile from gd.projectiles[] */
 			AIRFIGHT_RemoveProjectile(projectile);
 		} else {
+			float angle;
+			vec3_t ortogonalVector, finalPoint, projectedPoint;
+
 			/* missile is moving towards its target */
 			if (projectile->aimedAircraft) {
 				AIRFIGHT_GetNextPointInPath(&movement, projectile->pos[0], projectile->aimedAircraft->pos, &angle, finalPoint, ortogonalVector);
