@@ -426,6 +426,26 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selec
 }
 
 /**
+ * @brief Function tries to retrieve actual category entry for given category id.
+ * @param categoryid id of category to search
+ * @return category entry or @code NULL @endcode
+ */
+static msgCategory_t *MSO_GetCategoryFromName(const char* categoryid)
+{
+	msgCategory_t *categoryEntry = NULL;
+	int idx;
+
+	for (idx = 0; idx < gd.numMsgCategories; idx++) {
+		if (!Q_strcmp(gd.messageCategories[idx].id, categoryid)) {
+			categoryEntry = &gd.messageCategories[idx];
+			break;
+		}
+	}
+
+	return categoryEntry;
+}
+
+/**
  * @brief Initializes menu texts for scrollable area
  * @sa MSO_Init_f
  */
@@ -552,6 +572,25 @@ static void MSO_Set (const int listIndex, const notify_t type, const mso_t optio
 		messageOptionsInitialized = qfalse;
 }
 
+
+/**
+ * @brief Function updates given category based on state.
+ * @param categoryEntry category entry to update
+ * @param state new folding state of category
+ * @param callInit @code qtrue @endcode to trigger initialization of messageoptions text
+ * @sa MSO_Init_f
+ */
+static void MSO_SetCategoryState (msgCategory_t *categoryEntry, const byte state, const qboolean callInit) {
+	if ((state & MSGCATMASK_FOLDED) == MSGCATMASK_FOLDED)
+		categoryEntry->isFolded = qtrue;
+	else
+		categoryEntry->isFolded = qfalse;
+
+	messageOptionsPrepared = qfalse;
+	if (callInit)
+		MSO_Init_f();
+}
+
 /**
  * @brief Function for menu buttons to update message settings.
  * @sa MSO_Set
@@ -665,6 +704,28 @@ static void MSO_SetAll_f(void)
 }
 
 /**
+ * @brief Function callback that sets the current state of a messageoptions category.
+ * @note Calling this function causes the messageoptions to be reinitialized.
+ * @sa MSO_SetCategoryState
+ */
+static void MSO_SetCategoryState_f(void)
+{
+	if (Cmd_Argc() != 3)
+		Com_Printf("Usage: %s <categoryid> <state>\n", Cmd_Argv(0));
+	else {
+		const char *categoryId = Cmd_Argv(1);
+		const byte state = atoi(Cmd_Argv(2));
+		msgCategory_t *categoryEntry = MSO_GetCategoryFromName(categoryId);
+
+		if (!categoryEntry) {
+			Sys_ConsoleOutput(va("Unrecognized categoryid during setCategoryState '%s' ignored\n", categoryId));
+			return;
+		}
+		MSO_SetCategoryState(categoryEntry, state, qtrue);
+	}
+}
+
+/**
  * @brief Function to update message options menu after scrolling.
  * Updates all visible button lines based on configuration.
  */
@@ -768,24 +829,38 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
 qboolean MSO_Save (sizebuf_t* sb, void* data)
 {
 	notify_t type;
-	const int count = NT_NUM_NOTIFYTYPE;
+	int idx;
+	const int optionsCount = NT_NUM_NOTIFYTYPE;
+	const int categoryCount = gd.numMsgCategories;
 
 	/* save amount of available entries (forward compatible for additional types) */
-	MSG_WriteLong(sb, count);
+	MSG_WriteLong(sb, optionsCount);
 
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		byte bitmask = 0;
-		if (messageSettings[type].doNotify) {
+		messageSettings_t actualSetting = messageSettings[type];
+		if (actualSetting.doNotify) {
 			bitmask |= NTMASK_NOTIFY;
 		}
-		if (messageSettings[type].doPause) {
+		if (actualSetting.doPause) {
 			bitmask |= NTMASK_PAUSE;
 		}
-		if (messageSettings[type].doSound) {
+		if (actualSetting.doSound) {
 			bitmask |= NTMASK_SOUND;
 		}
 		MSG_WriteString(sb, nt_strings[type]);
+		MSG_WriteByte(sb, bitmask);
+	}
+
+	MSG_WriteLong(sb, categoryCount);
+	for (idx = 0; idx < categoryCount; idx++) {
+		byte bitmask = 0;
+		msgCategory_t actualCategory = gd.messageCategories[idx];
+		if (actualCategory.isFolded) {
+			bitmask |= MSGCATMASK_FOLDED;
+		}
+		MSG_WriteString(sb, actualCategory.id);
 		MSG_WriteByte(sb, bitmask);
 	}
 	return qtrue;
@@ -797,19 +872,20 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
  */
 qboolean MSO_Load (sizebuf_t* sb, void* data)
 {
-	int count;
+	int optionsCount;
+	int categoryCount;
 
 	/* reset current message settings (default to set for undefined settings)*/
 	memset(messageSettings, 1, sizeof(messageSettings));
 
-	/* load all positive settings */
-	count = MSG_ReadLong(sb);
-	if (count < 0) {
+	/* load all msgoptions settings */
+	optionsCount = MSG_ReadLong(sb);
+	if (optionsCount < 0) {
 		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
 		return qfalse;
 	}
 
-	for (; count > 0; count--) {
+	for (; optionsCount > 0; optionsCount--) {
 		const char *messagetype = MSG_ReadString(sb);
 		const byte pauseOrNotify = MSG_ReadByte(sb);
 		notify_t type;
@@ -820,14 +896,32 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 		}
 		/** @todo (menu) check why this message is not shown anywhere in logs*/
 		if (type == NT_NUM_NOTIFYTYPE) {
-			Com_Printf("Unrecognized messagetype during load '%s' ignored\n", messagetype);
+			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
 			continue;
 		}
 		MSO_Set(0, type, MSO_NOTIFY, ((pauseOrNotify & NTMASK_NOTIFY) == NTMASK_NOTIFY), qfalse);
 		MSO_Set(0, type, MSO_PAUSE, ((pauseOrNotify & NTMASK_PAUSE) == NTMASK_PAUSE), qfalse);
 		MSO_Set(0, type, MSO_SOUND, ((pauseOrNotify & NTMASK_SOUND) == NTMASK_SOUND), qfalse);
-
 	}
+
+#if 0
+	categoryCount = MSG_ReadLong(sb);
+	if (categoryCount < 0) {
+		Com_Printf("Can't load negative number of message category settings, probably old savegame.\n");
+		return qfalse;
+	}
+
+	for (; categoryCount> 0; categoryCount--) {
+		const char *categoryId = MSG_ReadString(sb);
+		const byte categoryState = MSG_ReadByte(sb);
+		msgCategory_t *category = MSO_GetCategoryFromName(categoryId);
+		if (!category) {
+			Com_Printf("Unrecognized messagecategoryid '%s' ignored while loading\n", categoryId);
+			continue;
+		}
+		MSO_SetCategoryState(category, categoryState, qfalse);
+	}
+#endif
 	messageOptionsInitialized = qfalse;
 	visibleMSOEntries = 0;
 	messageList_scroll = 0;
@@ -959,7 +1053,8 @@ void MN_MessageInit (void)
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("msgoptions_toggle", MSO_Toggle_f, "Toggles pause, notification or sound setting for a message category");
 	Cmd_AddCommand("msgoptions_setall", MSO_SetAll_f, "Sets pause, notification or sound setting for all message categories");
-	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notificatio or sound setting for a message category");
+	Cmd_AddCommand("msgoptions_set", MSO_Set_f, "Sets pause, notification or sound setting for a message category");
+	Cmd_AddCommand("msgoptions_setcat", MSO_SetCategoryState_f, "Sets the new state for a category");
 	Cmd_AddCommand("msgoptions_scroll", MSO_Scroll_f, "Scroll callback function for message options menu text");
 	Cmd_AddCommand("messagetypes_click", MSO_OptionsClick_f, "Callback function to (un-)fold visible categories");
 	Cmd_AddCommand("msgoptions_init", MSO_Init_f, "Initializes message options menu");

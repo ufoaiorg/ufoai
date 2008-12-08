@@ -105,6 +105,11 @@ typedef enum ntmask_s {
 	NTMASK_SOUND  = 1 << 2
 } notifymask_t;
 
+/** @brief bitmask values for storing msgcategory state */
+typedef enum msgcategorymask_s {
+	MSGCATMASK_FOLDED = 1 << 0
+} msgcategorymask_t;
+
 /** @brief notification types */
 typedef enum mso_s {
 	MSO_PAUSE,	/**< pause game */
