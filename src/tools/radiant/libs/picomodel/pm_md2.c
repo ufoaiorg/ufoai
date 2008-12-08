@@ -469,7 +469,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	/* Fill in Look Up Table, and allocate/fill Linked List from vert array as needed for dup STs per Vert. */
 	tot_numVerts = md2->numXYZ;
 	for (i = 0; i < md2->numTris; i++) {
-		p_md2Triangle = (md2Triangle_t *) (bb + md2->ofsTris + (sizeof(md2Triangle_t)*i));
+		p_md2Triangle = (md2Triangle_t *) (bb + md2->ofsTris + (sizeof(md2Triangle_t) * i));
 		for (j = 0; j < 3; j++) {
 			if (p_index_LUT[p_md2Triangle->index_xyz[j]].ST == -1) /* No Main Entry */
 				p_index_LUT[p_md2Triangle->index_xyz[j]].ST = p_md2Triangle->index_st[j];
@@ -478,33 +478,33 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 
 	/* Build Picomodel */
 	triangle = (md2Triangle_t *) ((picoByte_t *) (bb + md2->ofsTris));
-	texCoord = (md2St_t*) ((picoByte_t *) (bb + md2->ofsST));
-	vertex = (md2XyzNormal_t*) ((picoByte_t*) (frame->verts));
 	for (j = 0; j < md2->numTris; j++, triangle++) {
-		PicoSetSurfaceIndex(picoSurface, j*3   , triangle->index_xyz[0]);
-		PicoSetSurfaceIndex(picoSurface, j*3+1 , triangle->index_xyz[1]);
-		PicoSetSurfaceIndex(picoSurface, j*3+2 , triangle->index_xyz[2]);
+		PicoSetSurfaceIndex(picoSurface, j * 3, triangle->index_xyz[0]);
+		PicoSetSurfaceIndex(picoSurface, j * 3 + 1, triangle->index_xyz[1]);
+		PicoSetSurfaceIndex(picoSurface, j * 3 + 2, triangle->index_xyz[2]);
 	}
 
 	_pico_set_color(color, 255, 255, 255, 255);
 
-	for (i=0; i< md2->numXYZ; i++, vertex++) {
+	texCoord = (md2St_t*) ((picoByte_t *) (bb + md2->ofsST));
+	vertex = (md2XyzNormal_t*) ((picoByte_t*) (frame->verts));
+	for (i = 0; i < md2->numXYZ; i++, vertex++) {
 		/* set vertex origin */
 		xyz[0] = vertex->v[0] * frame->scale[0] + frame->translate[0];
 		xyz[1] = vertex->v[1] * frame->scale[1] + frame->translate[1];
 		xyz[2] = vertex->v[2] * frame->scale[2] + frame->translate[2];
-		PicoSetSurfaceXYZ(picoSurface, i , xyz);
+		PicoSetSurfaceXYZ(picoSurface, i, xyz);
 
 		/* set normal */
 		normal[0] = md2_normals[vertex->lightnormalindex][0];
 		normal[1] = md2_normals[vertex->lightnormalindex][1];
 		normal[2] = md2_normals[vertex->lightnormalindex][2];
-		PicoSetSurfaceNormal(picoSurface, i , normal);
+		PicoSetSurfaceNormal(picoSurface, i, normal);
 
 		/* set st coords */
-		st[0] =  ((float)texCoord[p_index_LUT[i].ST].s / (float)md2->skinWidth);
-		st[1] =  ((float)texCoord[p_index_LUT[i].ST].t / (float)md2->skinHeight);
-		PicoSetSurfaceST(picoSurface, 0, i , st);
+		st[0] = (float)texCoord[p_index_LUT[i].ST].s / (float)md2->skinWidth;
+		st[1] = (float)texCoord[p_index_LUT[i].ST].t / (float)md2->skinHeight;
+		PicoSetSurfaceST(picoSurface, 0, i, st);
 
 		/* set color */
 		PicoSetSurfaceColor(picoSurface, 0, i, color);
