@@ -868,6 +868,8 @@ base/models/objects/construct/generator/generator.md2 | GNU General Public Licen
 base/models/objects/construct/generator/generator.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/mixer/mixer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/mixer/mixer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -901,6 +903,8 @@ base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribu
 base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/flowerpot2/flowerpot2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/flowerpot2/flowerpot2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/furniture/locker/locker2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/furniture/locker/locker2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
