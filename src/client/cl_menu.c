@@ -124,11 +124,13 @@ static void MN_StartServer_f (void)
 	char map[MAX_VAR];
 	mapDef_t *md;
 	aircraft_t *aircraft;
+	base_t *base;
 
 	if (ccs.singleplayer)
 		return;
 
-	aircraft = AIR_AircraftGetFromIdx(0);
+	base = B_GetBaseByIDX(0);
+	aircraft = &base->aircraft[0];
 	assert(aircraft);
 
 	if (!sv_dedicated->integer && !B_GetNumOnTeam(aircraft)) {
