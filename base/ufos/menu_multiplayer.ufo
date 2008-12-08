@@ -1486,18 +1486,18 @@ menu multiplayer_selectteam
 menu multiplayer_wait
 {
 	{
-		pos "0 0"
-		size	"496 247"
+		pos 		"0 0"
+		size		"1024 768"
 	}
 
 	zone popup
 	{
-		invis true
+		invis	true
 	}
 	pic background
 	{
 		image	"*cvar mn_mappicbig"
-		pos	"0 0"
+		pos		"0 0"
 		size	"1024 768"
 	}
 	string mapname
@@ -1505,63 +1505,54 @@ menu multiplayer_wait
 		font	f_small
 		color	"1 1 1 1"
 		string	"*cvar mn_svmapname"
-		pos	"512 72"
+		pos		"512 72"
 		align	uc
 	}
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
-		pos	"264 262"
+		pos		"264 262"
 		size	"496 247"
 		blend	true
 	}
 	string title
 	{
-		string "_Please wait"
-		pos "440 280"
-		font f_big
+		string	"_Please wait"
+		pos		"440 280"
+		font	f_big
 	}
 
 	string teams_str
 	{
-		string "_Players connected, waiting for others"
-		pos "335 370"
+		string	"_Players connected, waiting for others"
+		pos		"335 370"
 	}
 	string teams_val
 	{
-		string "*cvar mp_wait_init_players"
-		color "0 0.5 0 1"
-		pos "300 370"
+		string	"*cvar mp_wait_init_players"
+		color	"0 0.5 0 1"
+		pos		"300 370"
 	}
 
-	pic bt_force
+	button bt_force
 	{
 		if "mp_wait_init_show_force == 1"
 		tooltip	"_Start the game even if not all teams have joined"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		size	"176 32"
-		pos	"560 454"
-		size	"176 32"
-		out	{ *string_force color "0 0.5 0 1" *bt_force image menu/multi_buttons3 }
-		in	{ *string_force color "1 1 1 1" *bt_force image menu/multi_buttons3a }
+		image	menu/button_green_small
+		blend	true
+		width	"200"
+		pos		"520 446"
 		click	{ cmd "sv startgame;" }
-	}
-	string string_force
-	{
-		if "mp_wait_init_show_force == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
 		string	"_Force start"
-		pos	"648 470"
-		align	cc
 	}
 
 	func event
 	{
-		timeout 2000
-		cmd "mp_wait_init;"
+		timeout	2000
+		cmd		"mp_wait_init;"
 	}
 }
 
@@ -1624,7 +1615,7 @@ menu serverpassword
 		tooltip	"_Connect"
 		image	menu/button_green_small
 		pos		"260 170"
-		size	"200 48"
+		width	"200"
 		blend	true
 		click	{
 			cmd "mn_server_need_password 0;mn_pop;connect;"
@@ -1685,7 +1676,7 @@ menu chat_popup
 		tooltip	"_Go into the lobby"
 		image	menu/button_green_small
 		pos		"260 170"
-		size	"200 48"
+		width	"200"
 		blend	true
 		click	{ cmd "mn_pop;mn_push irc;" }
 		font	f_menu

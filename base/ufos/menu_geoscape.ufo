@@ -2232,7 +2232,7 @@ menu popup
 		image	menu/button_green_small
 		blend	true
 		pos		"260 180"
-		width	"200 48"
+		width	"200"
 		click	{ cmd "mn_pop;" }
 		font	f_menu
 		color	"0 0.5 0 1"
