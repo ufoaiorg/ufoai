@@ -525,6 +525,17 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
+	/* draw nation overlay */
+	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
+		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
+		if (gl == r_noTexture)
+			Sys_Error("Could not load geoscape nation overlay image");
+
+		/* draw day image */
+		R_BindTexture(gl->texnum);
+		glDrawArrays(GL_QUADS, 0, 4);
+	}
+
 	/* draw XVI image */
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		R_BindTexture(r_xviTexture->texnum);
@@ -534,17 +545,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	/* draw radar image */
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
 		R_BindTexture(r_radarTexture->texnum);
-		glDrawArrays(GL_QUADS, 0, 4);
-	}
-
-	/* draw nation overlay */
-	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
-		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
-		if (gl == r_noTexture)
-			Sys_Error("Could not load geoscape nation overlay image");
-
-		/* draw day image */
-		R_BindTexture(gl->texnum);
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
 

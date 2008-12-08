@@ -1561,6 +1561,30 @@ void R_UploadRadarCoverage (qboolean smooth)
 	R_UploadTexture((unsigned *) r_radarPic, r_radarTexture->upload_width, r_radarTexture->upload_height, r_radarTexture);
 }
 
+static inline void R_DeleteImage (image_t *image)
+{
+	/* free it */
+	glDeleteTextures(1, (GLuint *) &image->texnum);
+	R_CheckError();
+	memset(image, 0, sizeof(*image));
+}
+
+/**
+ * @todo Hash support
+ */
+static inline image_t *R_GetImage (const char *name)
+{
+	int i;
+	image_t *image;
+
+	/* look for it */
+	for (i = 0, image = r_images; i < r_numImages; i++, image++)
+		if (!Q_strcmp(name, image->name))
+			return image;
+
+	return NULL;
+}
+
 /**
  * @brief Creates a new image from RGBA data. Stores it in the gltextures array
  * and also uploads it.
@@ -1576,6 +1600,13 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	image_t *image;
 	int i;
 	size_t len;
+
+	/* look for it */
+	image = R_GetImage(name);
+	if (image) {
+		Com_Printf("R_LoadImageData: image '%s' is already uploaded\n", name);
+		return image;
+	}
 
 	/* find a free image_t */
 	for (i = 0, image = r_images; i < r_numImages; i++, image++)
@@ -1640,7 +1671,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	char lname[MAX_QPATH];
 	char *ename;
 	image_t *image;
-	int i;
 	size_t len;
 	const imageLoader_t *loader;
 
@@ -1657,10 +1687,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	ename = &(lname[len]);
 	*ename = 0;
 
-	/* look for it */
-	for (i = 0, image = r_images; i < r_numImages; i++, image++)
-		if (!Q_strncmp(lname, image->name, MAX_QPATH))
-			return image;
+	image = R_GetImage(lname);
+	if (image)
+		return image;
 
 	loader = imageLoader;
 	while (loader->load) {
@@ -1744,10 +1773,7 @@ void R_ShutdownImages (void)
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (!image->texnum)
 			continue;			/* free image_t slot */
-		/* free it */
-		glDeleteTextures(1, (GLuint *) &image->texnum);
-		R_CheckError();
-		memset(image, 0, sizeof(*image));
+		R_DeleteImage(image);
 	}
 }
 
