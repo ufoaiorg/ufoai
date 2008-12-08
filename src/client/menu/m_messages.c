@@ -904,7 +904,6 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 		MSO_Set(0, type, MSO_SOUND, ((pauseOrNotify & NTMASK_SOUND) == NTMASK_SOUND), qfalse);
 	}
 
-#if 0
 	categoryCount = MSG_ReadLong(sb);
 	if (categoryCount < 0) {
 		Com_Printf("Can't load negative number of message category settings, probably old savegame.\n");
@@ -921,7 +920,6 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 		}
 		MSO_SetCategoryState(category, categoryState, qfalse);
 	}
-#endif
 	messageOptionsInitialized = qfalse;
 	visibleMSOEntries = 0;
 	messageList_scroll = 0;
