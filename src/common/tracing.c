@@ -1092,8 +1092,8 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
 	/* Calculate the offset needed to center the trace about the line */
-    VectorAdd(mins, maxs, offset);
-    VectorDiv(offset, 2, offset);
+	VectorAdd(mins, maxs, offset);
+	VectorDiv(offset, 2, offset);
 
 	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
 	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
@@ -1101,7 +1101,6 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 	VectorSubtract(maxs, offset, amaxs);
 	VectorAdd(start, offset, astart);
 	VectorAdd(end, offset, aend);
-
 
 	trace_data.contents = brushmask;
 	trace_data.rejects = brushreject;
