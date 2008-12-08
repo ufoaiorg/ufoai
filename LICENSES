@@ -912,9 +912,9 @@ base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hovercraft.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/industrial/console/auvbg.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/cabels.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/console.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/industrial/console/console.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/lamp/lamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/lamp/lamp.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/valve/valve.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
