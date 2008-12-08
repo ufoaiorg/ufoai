@@ -306,8 +306,8 @@ COLLISION DETECTION
 #define	SURF_LIGHT		0x00000001 /**< value will hold the light strength */
 #define	SURF_SLICK		0x00000002 /**< effects game physics */
 #define	SURF_WARP		0x00000008 /**< turbulent water warp */
-#define	SURF_TRANS33	0x00000010 /**< 0.33 alpha blending */
-#define	SURF_TRANS66	0x00000020 /**< 0.66 alpha blending */
+#define	SURF_BLEND33	0x00000010 /**< 0.33 alpha blending */
+#define	SURF_BLEND66	0x00000020 /**< 0.66 alpha blending */
 #define	SURF_FLOWING	0x00000040 /**< scroll towards angle */
 #define	SURF_NODRAW		0x00000080 /**< don't bother referencing the texture */
 #define	SURF_HINT		0x00000100 /**< make a primary bsp splitter */

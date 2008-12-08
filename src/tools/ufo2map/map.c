@@ -245,7 +245,7 @@ static int BrushContents (mapbrush_t *b)
 
 	/* if any side is translucent, mark the contents
 	 * and change solid to window */
-	if (trans & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST)) {
+	if (trans & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST)) {
 		contentFlags |= CONTENTS_TRANSLUCENT;
 		if (contentFlags & CONTENTS_SOLID) {
 			contentFlags &= ~CONTENTS_SOLID;
@@ -683,7 +683,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		}
 
 		/* translucent objects are automatically classified as detail */
-		if (side->surfaceFlags & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST))
+		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST))
 			side->contentFlags |= CONTENTS_DETAIL;
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;

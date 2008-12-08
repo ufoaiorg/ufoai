@@ -728,7 +728,6 @@ void RS_InitTree (qboolean load)
 		case RS_LOGIC:
 			/* Does not need any additional data. */
 			break;
-
 		} /* switch */
 
 		/* Check if we finally have a name for the tech. */

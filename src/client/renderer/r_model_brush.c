@@ -763,7 +763,7 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* determine the maximum counts for each rendered type in order to
 	 * allocate only what is necessary for the specified model */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+		if (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (surf->texinfo->flags & SURF_WARP)
 				mod->bsp.blend_warp_surfaces->count++;
 			else
@@ -794,7 +794,7 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* iterate the surfaces again, populating the allocated arrays based
 	 * on primary render type */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+		if (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (surf->texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
 			else

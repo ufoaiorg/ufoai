@@ -55,7 +55,6 @@ Non-displayed light. All lights are for the night version. If you want them to s
 "light"		intensity 0-255
 "target"	entity target name (info_null)
 "_cone"		default is 10
-"angle"		Special values: UP -1; DOWN -2;
 */
 
 /*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) day
@@ -63,6 +62,7 @@ Non-displayed light. All lights are for the night version. If you want them to s
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "_cone"		default is 10
+"target"	entity target name (info_null)
 "angle"		Special values: UP -1; DOWN -2;
 */
 

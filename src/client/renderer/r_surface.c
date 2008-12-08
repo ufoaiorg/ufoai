@@ -120,11 +120,11 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 
 	if (r_state.blend_enabled) {  /* alpha blend */
 		vec4_t color = {1.0, 1.0, 1.0, 1.0};
-		switch (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-		case SURF_TRANS33:
+		switch (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
+		case SURF_BLEND33:
 			color[3] = 0.33;
 			break;
-		case SURF_TRANS66:
+		case SURF_BLEND66:
 			color[3] = 0.66;
 			break;
 		}
