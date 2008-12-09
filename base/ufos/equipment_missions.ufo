@@ -17,95 +17,65 @@
 //	needlergun
 //	needlerheavy
 //
-// The equipment approximately represent what an 40-alien team
-// will have on battlescape. This is also the loot you get
-// from auto-mission with 40 aliens. If there are n < 40 aliens,
-// you get only n/40 of each item number, rounded down
-// (the rounding down is the auto-mission penalty).
-//
-// Note that we describe the selection of weapons for aliens, but the same
+// The equipment definition contains the probability to get an item between 0 and 100
+// These definition are used for phalanx initial equipment and alien equipment.
+// In the following, we describe the selection of weapons for aliens, but the same
 // procedure is used for initial equipment of phalanx soldiers.
 //
 // Alien weapon assignment procedure, more or less (see inv_shared.c):
 // For each alien, pick the following:
 // 1. Get a primary weapon:
-// 1a. Select a primary weapon:
-//    There is 15% chance to select any primary weapon W in the equipment definition.
-//    If no primary weapon is selected, the default selected weapon is the most expensive.
-// 1b. See if this weapon is taken:
-//    The selected weapon has a probability #W/40 to be taken
-//    where #W is the number of W weapons listed in equipment.
-// 1c. If W is not taken, then we go back to 1.a: another weapon X is selected,
-//    but the default X weapon is the weapon which cost is just below W cost.
-//    If there is no weapon cheaper than W, alien has no primary weapon.
-// 1d. get the following number of ammo for each weapon separately:
-//      (#ammo/#weapon) slightly randomly increased
-//    with probability depending on the fractional part,
-//    where #ammo and #weapon are the numbers of that particular
-//    ammo and weapon in the equipment definition;
-//    #ammo/#weapon should be greater than 1
+// 1a. Get a primary weapon:
+//    A primary weapon is randomly picked in all primary weapon available. The sum of the
+//    probability for all primary weapon must not exceed 100. If this sum is below 100 --
+//    let's say 80 -- there is 20 % proability that the alien has no primary weapon.
+// 1b. Select an ammo:
+//    If several ammo types are available for the selected weapon, ammo is randomly chosen
+//    with the relative probability given by the last 2 numbers. If there is at least one ammo type
+//    in the equipment definition, you will have an ammo.
+//    Example: ammo1 125	ammo2 250. 
+//             ammo1 has 25/(25+50)*100 = 33 % probability to be selected.
+//             ammo2 has 50/(25+50)*100 = 67% probability to be selected.
+// 1c. get the following number of ammo for the selected ammo type:
+//    there is a probability given by the last 2 numbers to get one ammo, plus
+//    the first number of the probability number.
+//    Example : with previous values, 
+//            you'll have 25% to have 2 ammo1 (else only 1 ammo1)
+//            you'll have 50% to have 3 ammo2 (else only 2 ammo1)
+//    This number is the number of ammo alien will have in the backpack (weapon is already loaded)
 //
 // 2. Get a secondary weapon with reload (sidearms):
-// 2a. Select a secondary weapon:
-//    If primary weapon is a particle or normal damage weapon,
-//    selected secondary weapon is the cheapest weapon.
-//    Otherwise, it's the most expensive.
-// 2b. See if this weapon is taken:
-//    The selected weapon has a probability #S/40 to be taken
-//    where #S is the number of S secondary weapons listed in equipment.
-// 2c. If S is not taken, then we go back to 2.a: another weapon T is selected,
-//    but the default T weapon is the weapon which cost is just below S cost
-//    (or above if W primary weapon is a particle or normal damage weapon).
-//    If there is no weapon fitting W, alien has no secondary weapon.
-// 2d. If alien has a one-handed secondary weapon without primary weapon,
-//    the is 30% chance that he get onather identical secondary weapon in
-//    the other hand.
-// 2e. get the following number of ammo for each weapon separately: see primary weapon
+//    The procedure is the same as for primary weapon.
+//    If alien got a primary weapon in first step with damage type 'particle' or 'normal', then
+//       all probabilities are divided by 2 (therefore, you have a maximum 50 % probabilty to have
+//       a secondary weapon)
+//    If alien got no primary weapon, but got a secondary weapon, there is 30 % that he gets a second one.
 //
-// 3. If alien has no weapon at this stage, there is 30% chance that we go back to 2.a
+// 3. If alien has no weapon at this stage, there is 40% chance that we go back to 2.
 //    to increase the probability to get a secondary weapon.
 //
 // 4. Get misc items and secondary weapons without reload: (that includes kerrblades or plasblade)
-// 4a. Select a misc items:
-//    Select the most expensive item in list.
-// 4b. See if the item is taken:
-//    the selected item has a probability #I/40 to be taken (as long as it fits
-//    in their hand / belt / holster).
-//    if #I is greater than 40, then it automatically gets this item.
-// 4c. If no item has been selected, then we try again with the item which cost
-//    is just below I cost.
+//    The probability is used in the same way as for ammos. Therefore, you can use proability greater
+//    than 100 to get several grenades.
 //
-// 5. If alien has no primary nor secondary weapon at this stage, there is 30% chance
-//    that we go back to 4.a to increase number of misc items.
+// 5. If alien has no primary nor secondary weapon at this stage, there is 40% chance
+//    that we go back to 4 to increase number of misc items.
+//
+// 6. If alien has no weapon at this stage, the most expensive secondary weapon without reload (ie knife)
+//    will be selected.
 //
 // 6. Get an armour:
-// 6a. Select an armour:
-//    Select the most expensive armour in the equipment definition.
-// 6b. See if this armour is taken:
-//    The selected armour has a probability #A/40 to be taken
-// 6c. If A is not taken, then we go back to 6.a: another armour A is selected,
-//    but the new armour A is the armour which cost is just below the previous A's cost.
-//    If there is no armour left, alien has no armour.
-// 6d. There is a probability to retry to get an armour (go back to 6a), depending
-//    on the result of step 6.c
+//    Same procedure as for primary weapons. The probability to get an armour is increased if alien has
+//    no primary weapon.
 //
-// There is no problem if the number of assigned things
-// is bigger than the total in equipment --- on average it is OK.
-// For example, take 40-alien team, then 1 plasrifle
-// makes it possible, though very unlikely, that each alien
-// will get a rifle. Take a 30-alien team with 40 plasrifles,
-// this guarantees that each alien will get a primary weapon;
-// with 60 plasrifle_ammo, they will also get, on average, 1.5 ammo per alien.
-// but with 2-alien team, 39 plasrifle gives only high probability
-// that there will be at least 1 plasrifle in the team, no certainty.
-// Each individual type of misc items and blades is assigned separately,
-// so, e.g., 40 alienincgrenade and 40 plasmagrenade
-// gives two grenades per alien, on average,
-// while 40 plaspistol and 40 pbeampistol gives only 1 sidearm
-// (so 20 plaspistol and 20 pbeampistol is a better idea in practice).
+// For a given weapon category (except blades), the total probability should never exceed 100.
+// Note that a weapon can be added only if alien has still room to get it. An alien with primary and
+//    secondary weapon won't prabably get any Kerr Blade.
 //
 // there are 2 types of alien equipment:
 // alien_workersS or alien_soldiersS
+//    alien_workers is used for harvest, recon, building and supply missions.
+//    alien_soliders is used for all other mission categories.
 //    S is any string (used to specify the equipment definition)
 //    For a given stage, all equipment definition can be chosen with the same proability.
 //    For each alien equipment, you must specifiy mininterest and maxinterest: the lower
@@ -113,45 +83,74 @@
 //    Equipment used will be picked randomly between all definition fitting overallinterest.
 //    Note that all equipment definitions must have different names.
 
+
+// =======================
+// ALIEN EQUIPMENT
+// =======================
+
 equipment alien_workers1
 {
 	mininterest			0
 	maxinterest			250
-	plaspistol			20
-	plaspistol_ammo		29
-	plasrifle			1
-	plasrifle_ammo		1
-	kerrblade			50
-	light_alien         1
+
+	// Primary
+	plasrifle			2
+		plasrifle_ammo		90
+
+	// Secondary
+	plaspistol			50
+		plaspistol_ammo		80
+
+	// Misc
+	kerrblade			100
+
+	// Armour
+	light_alien			2
 }
 
 equipment alien_workers1_explosive
 {
 	mininterest			0
 	maxinterest			250
-	plaspistol			12
-	plaspistol_ammo		16
-	plasblaster			14
-	plasblaster_ammo	20
-	kerrblade			10
-	plasmagrenade		10
-	light_alien         3
-	medium_alien        1
+
+	// Primary
+	plasblaster			35
+		plasblaster_ammo	50
+
+	// Secondary
+	plaspistol			30
+		plaspistol_ammo		40
+
+	// Misc
+	kerrblade			20
+	plasmagrenade		20
+
+	// Armour
+	light_alien			6
+	medium_alien		2
 }
 
 equipment alien_soldiers1
 {
 	mininterest			0
 	maxinterest			250
-	plaspistol			15
-	plaspistol_ammo		55
-	plasrifle			20
-	plasrifle_ammo		45
-	plasblaster			7
-	plasblaster_ammo	7
-	kerrblade			35
-	plasblade			1
-	light_alien         13
+
+	// Primary
+	plasrifle			40
+		plasrifle_ammo		110
+	plasblaster			18
+		plasblaster_ammo	18
+
+	// Secondary
+	plaspistol			38
+		plaspistol_ammo		120
+
+	// Misc
+	kerrblade			80
+	plasblade			3
+
+	// Armour
+	light_alien			33
 }
 
 equipment alien_workers2
@@ -330,39 +329,53 @@ equipment alien_soldiers4
 //	heavy_alien         29
 }
 
-// human equipment
+// =======================
+// PHALANX EQUIPMENT
+// =======================
 
+// This is used to select items soldiers will have when starting a new game
+// Ne need to define min / max values, this is used only when game starts.
 equipment human_phalanx_initial
 {
-	assault				14
-	assault_ammo		45
-	sniper				19
-	sniper_ammo			60
-	pistol				25
-	pistol_ammo			75
-	smg 				21
-	smg_ammo			75
-	shotgun2			10
-//	shotgun2_ammo		40
-	shotgun2_slug_ammo	40
-//	shotgun_mirco		27
-//	shotgun_micro_ammo	90
-	flamer				10
-	flamer_ammo			35
-	rpg				    8
-	rpg_ammo			32
-	grenl				8
-	grenl_ammo			32
-	fraggrenade			70
-	knife				23
-	light	    		17
-	medikit				20
-	irgoggles			5
-	smokegrenade		20
+	// Primary
+	assault				25
+		assault_ammo		150
+	sniper				25
+		sniper_ammo			150
+	shotgun2			15
+		shotgun2_slug_ammo	300
+	flamer				15
+		flamer_ammo			350
+	rpg				    10
+		rpg_ammo			220
+	grenl				10
+		grenl_ammo			220
+
+	// Secondary
+	pistol				60
+		pistol_ammo			120
+	smg 				40
+		smg_ammo			120
+
+	// Misc
+	fraggrenade				150
+	knife					30
+	medikit					40
+	irgoggles				15
+	smokegrenade			40
+
+	// Armour
+	light	    		43
 }
+
+// =======================
+// HUMAN EQUIPMENT
+// =======================
 
 equipment human_farmers // some will be weaponless
 {
+	mininterest			0
+	maxinterest			10000
 	pistol				2
 	pistol_ammo			2
 	shotgun				5
@@ -373,6 +386,8 @@ equipment human_farmers // some will be weaponless
 
 equipment human_gang
 {
+	mininterest			0
+	maxinterest			10000
 	assault				1
 	assault_ammo		1
 	pistol				3
@@ -391,6 +406,8 @@ equipment human_gang
 
 equipment human_police // some may be weaponless
 {
+	mininterest			0
+	maxinterest			10000
 	pistol				10
 	pistol_ammo			25
 	shotgun				5
@@ -405,6 +422,8 @@ equipment human_police // some may be weaponless
 
 equipment human_antiterrorist
 {
+	mininterest			0
+	maxinterest			10000
 	assault				5
 	assault_ammo		12
 	sniper				15
@@ -425,6 +444,8 @@ equipment human_antiterrorist
 
 equipment human_army
 {
+	mininterest			0
+	maxinterest			10000
 	assault				25
 	assault_ammo		35
 	sniper				1
