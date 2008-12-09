@@ -199,6 +199,7 @@ static void CMod_LoadSurfaces (lump_t * l, const vec3_t shift)
 /**
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
+ * @sa TR_BuildTracingNode_r
  */
 static void CMod_LoadNodes (lump_t * l, const vec3_t shift)
 {
@@ -1294,10 +1295,6 @@ BOX TRACING
 static void CM_InitBoxHull (void)
 {
 	int i;
-	int side;
-	cBspNode_t *c;
-	cBspPlane_t *p;
-	cBspBrushSide_t *s;
 
 	curTile->box_headnode = curTile->numnodes;
 	curTile->box_planes = &curTile->planes[curTile->numplanes];
@@ -1323,7 +1320,10 @@ static void CM_InitBoxHull (void)
 
 	/* each side */
 	for (i = 0; i < 6; i++) {
-		side = i & 1;
+		const int side = i & 1;
+		cBspNode_t *c;
+		cBspPlane_t *p;
+		cBspBrushSide_t *s;
 
 		/* brush sides */
 		s = &curTile->brushsides[curTile->numbrushsides + i];

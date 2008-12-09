@@ -182,6 +182,9 @@ typedef struct {
 	int worldlevel;
 	int brush_count, alias_count;
 
+	trace_t trace;  /* occlusion testing */
+	struct entity_s *trace_ent;
+
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
 

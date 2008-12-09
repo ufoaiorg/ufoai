@@ -1,5 +1,7 @@
 /**
  * @file r_lightmap.c
+ * In video memory, lightmaps are chunked into NxN RGBA blocks.
+ * In the bsp, they are just RGB, and we retrieve them using floating point for precision.
  */
 
 /*
@@ -178,6 +180,14 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 	/* apply modulate, contrast, resolve average surface color, etc.. */
 	R_FilterTexture((unsigned *)lightmap, smax, tmax, it_lightmap);
 
+
+	if (surf->texinfo->flags & (SURF_BLEND33 | SURF_ALPHATEST))
+		surf->color[3] = 0.25;
+	else if (surf->texinfo->flags & SURF_BLEND66)
+		surf->color[3] = 0.50;
+	else
+		surf->color[3] = 1.0;
+
 	/* soften it if it's sufficiently large */
 	if (r_soften->integer && size > 128)
 		for (i = 0; i < 4; i++) {
@@ -293,186 +303,170 @@ void R_EndBuildingLightmaps (void)
 	R_UploadLightmapBlock();
 }
 
-/** @brief for resolving static lighting for mesh ents */
-lightmap_sample_t r_lightmap_sample;
 
 /**
- * @brief for resolving static lighting for mesh ents
- * @todo This is not yet working because we are using some special nodes for
- * pathfinding @sa BuildNodeChildren - and these nodes don't have a plane assigned
+ * @brief Moves the given mins/maxs volume through the world from start to end.
+ * @param[in] start Start vector to start the trace from
+ * @param[in] end End vector to stop the trace at
+ * @param[in] mins Bounding box used for tracing
+ * @param[in] maxs Bounding box used for tracing
+ * @param[in] contentmask Searched content the trace should watch for
  */
-static qboolean R_LightPoint_ (const model_t *mapTile, const mBspNode_t *node, vec3_t start, vec3_t end)
+static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 {
-	float front, back;
-	int i, side, sample;
-	float s, t, ds, dt;
-	vec3_t mid;
-	mBspSurface_t *surf;
-	mBspTexInfo_t *tex;
+	vec3_t mins, maxs;
+	float frac;
+	trace_t tr;
+	int i;
 
-begin:
+	r_locals.tracenum++;
 
-	/** @todo Due to the pathfinding nodes the lighting is not working
-	 * not every node is touched */
-	/* special pathfinding node */
-	if (!node->plane)
-		return qfalse;
+	if (r_locals.tracenum > 0xffff)  /* avoid overflows */
+		r_locals.tracenum = 0;
 
-	if (node->contents != CONTENTS_NO_LEAF) /* didn't hit anything */
-		return qfalse;
+	VectorSet(mins, -size, -size, -size);
+	VectorSet(maxs, size, size, size);
 
-	VectorCopy(end, mid);
+	refdef.trace = TR_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask, 0);
 
-	/* optimize for axially aligned planes */
-	switch (node->plane->type) {
-	case PLANE_X:
-	case PLANE_Y:
-		node = node->children[start[node->plane->type] < node->plane->dist];
-		goto begin;
-	case PLANE_Z:
-		side = start[2] < node->plane->dist;
-		if ((end[2] < node->plane->dist) == side) {
-			node = node->children[side];
-			goto begin;
-		}
-		mid[2] = node->plane->dist;
-		break;
-	default:
-		/* compute partial dot product to determine sidedness */
-		back = front = start[0] * node->plane->normal[0] + start[1] * node->plane->normal[1];
-		front += start[2] * node->plane->normal[2];
-		back += end[2] * node->plane->normal[2];
-		side = front < node->plane->dist;
-		if ((back < node->plane->dist) == side) {
-			node = node->children[side];
-			goto begin;
-		}
-		mid[2] = start[2] + (end[2] - start[2]) * (front - node->plane->dist) / (front - back);
-		break;
-	}
+	frac = refdef.trace.fraction;
 
-	/* go down front side */
-	if (R_LightPoint_(mapTile, node->children[side], start, mid))
-		return qtrue;
-
-	/* check for impact on this node */
-	surf = mapTile->bsp.surfaces + node->firstsurface;
-	for (i = 0; i < node->numsurfaces; i++, surf++) {
-		if (!(surf->flags & MSURF_LIGHTMAP))
-			continue;  /* no lightmap */
-
-		if (surf->texinfo->flags & SURF_ALPHATEST)
-			continue;
-
-		tex = surf->texinfo;
-
-		s = DotProduct(mid, tex->vecs[0]) + tex->vecs[0][3];
-		t = DotProduct(mid, tex->vecs[1]) + tex->vecs[1][3];
-
-		if (s < surf->stmins[0] || t < surf->stmins[1])
-			continue;
-
-		ds = s - surf->stmins[0];
-		dt = t - surf->stmins[1];
-
-		if (ds > surf->stextents[0] || dt > surf->stextents[1])
-			continue;
-
-		/* we've hit, so find the sample */
-		VectorCopy(mid, r_lightmap_sample.point);
-
-		ds /= surf->lightmap_scale;
-		dt /= surf->lightmap_scale;
-
-		/* resolve the lightmap sample at intersection */
-		sample = (int)(LIGHTMAP_BYTES * ((int)dt * ((surf->stextents[0] / surf->lightmap_scale) + 1) + (int)ds));
-
-		/* and normalize it to floating point */
-		VectorSet(r_lightmap_sample.color, surf->lightmap[sample + 0] / 255.0,
-				surf->lightmap[sample + 1] / 255.0, surf->lightmap[sample + 2] / 255.0);
-
-		return qtrue;
-	}
-
-	/* go down back side */
-	return R_LightPoint_(mapTile, node->children[!side], mid, end);
-}
-
-/**
- * @sa R_LightPoint_
- */
-void R_LightPoint (const vec3_t p)
-{
-	lightmap_sample_t lms;
-	vec3_t start, end, dest;
-	float dist, d;
-	int j;
-
-	/* fullbright */
-	memset(&r_lightmap_sample, 0, sizeof(r_lightmap_sample));
-	VectorSet(r_lightmap_sample.color, 1.0, 1.0, 1.0);
-
-	if (!r_mapTiles[0]->bsp.lightdata)
-		return;
-
-	/* there is lightdata */
-	VectorSet(r_lightmap_sample.color, 0.5, 0.5, 0.5);
-	lms = r_lightmap_sample;
-
-	/* dest is the absolute lowest we'll trace to */
-	VectorCopy(p, dest);
-	dest[2] -= 256;
-
-	dist = 999999;
-
-	VectorCopy(p, start);	/* while start and end are transformed according */
-	VectorCopy(dest, end);	/* to the entity being traced */
-
-	/* check world */
-	for (j = 0; j < r_numMapTiles; j++) {
-		const mBspNode_t *node = r_mapTiles[j]->bsp.nodes;
-		if (!r_mapTiles[j]->bsp.lightdata) {
-			Com_Printf("R_LightPoint: No light data in maptile %i (%s)\n", j, r_mapTiles[j]->name);
-			continue;
-		}
-
-		if (!node->plane) {
-			Com_Printf("R_LightPoint: Called with pathfinding node\n");
-			continue;
-		}
-
-		if (!R_LightPoint_(r_mapTiles[j], node, start, end))
-			continue;
-
-		if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
-			dist = start[2] - r_lightmap_sample.point[2];
-			lms = r_lightmap_sample;
-		}
-	}
-
-	/* check inline bsp models */
-	for (j = 0; j < r_numEntities; j++) {
-		const entity_t *ent = R_GetEntity(j);
-		model_t *m = ent->model;
-		mBspModel_t *bsp = &m->bsp;
+	/* check bsp models */
+	for (i = 0; i < r_numEntities; i++) {
+		entity_t *ent = R_GetEntity(i);
+		const model_t *m = ent->model;
 
 		if (!m || m->type != mod_bsp_submodel)
 			continue;
 
-		VectorSubtract(p, ent->origin, start);
-		VectorSubtract(dest, ent->origin, end);
+		tr = TR_TransformedBoxTrace(start, end, mins, maxs, &mapTiles[m->bsp.maptile], m->bsp.firstnode,
+				contentmask, 0, ent->origin, ent->angles);
 
-		if (!R_LightPoint_(r_mapTiles[bsp->maptile], &r_mapTiles[bsp->maptile]->bsp.nodes[m->bsp.firstnode], start, end))
-			continue;
+		if (tr.fraction < frac) {
+			refdef.trace = tr;
+			refdef.trace_ent = ent;
 
-		if ((d = start[2] - r_lightmap_sample.point[2]) < dist) {  /* hit */
-			lms = r_lightmap_sample;
-			dist = d;
-
-			VectorAdd(lms.point, ent->origin, lms.point);
+			frac = tr.fraction;
 		}
 	}
+}
 
-	/* copy the closest result to the shared instance */
-	r_lightmap_sample = lms;
+
+/**
+ * @brief Clip to all surfaces within the specified range, accumulating static lighting
+ * color to the specified vector in the event of an intersection.
+ * @todo This is not yet working because we are using some special nodes for
+ * pathfinding @sa BuildNodeChildren - and these nodes don't have a plane assigned
+ */
+static qboolean R_LightPoint_ (const int tile, const int firstsurface, const int numsurfaces, const vec3_t point, vec3_t color)
+{
+	mBspSurface_t *surf;
+	int i, width, sample;
+	float s, t;
+
+	/* resolve the surface that was impacted */
+	surf = r_mapTiles[tile]->bsp.surfaces + firstsurface;
+
+	for (i = 0; i < numsurfaces; i++, surf++) {
+		const mBspTexInfo_t *tex = surf->texinfo;
+
+		if (!(surf->flags & MSURF_LIGHTMAP))
+			continue;	/* no lightmap */
+
+#if 0
+		/** @todo Texture names don't match - because image_t holds the full path */
+		if (strcmp(refdef.trace.surface->name, tex->image->name))
+			continue;	/* different material */
+
+		if (!VectorCompare(refdef.trace.plane.normal, surf->plane->normal))
+			continue;	/* facing the wrong way */
+#endif
+
+		if (surf->tracenum == r_locals.tracenum)
+			continue;	/* already checked this trace */
+
+		surf->tracenum = r_locals.tracenum;
+
+		s = DotProduct(point, tex->vecs[0]) + tex->vecs[0][3] - surf->stmins[0];
+		t = DotProduct(point, tex->vecs[1]) + tex->vecs[1][3] - surf->stmins[1];
+
+		if ((s < 0.0 || s > surf->stextents[0]) || (t < 0.0 || t > surf->stextents[1]))
+			continue;
+
+		/* we've hit, resolve the texture coordinates */
+		s /= surf->lightmap_scale;
+		t /= surf->lightmap_scale;
+
+		/* resolve the lightmap at intersection */
+		width = (surf->stextents[0] / surf->lightmap_scale) + 1;
+		sample = (int)(3 * ((int)t * width + (int)s));
+
+		/* and convert it to floating point */
+		VectorScale((&surf->lightmap[sample]), 1.0 / 255.0, color);
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+* @sa R_LightPoint_
+*/
+void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
+{
+	vec3_t start, end;
+
+	/* clear it */
+	memset(lighting, 0, sizeof(*lighting));
+
+	if (!r_mapTiles[0]->bsp.lightdata){  /* world is not lit */
+		VectorSet(lighting->color, 1.0, 1.0, 1.0);
+		return;
+	}
+
+	VectorCopy(point, start);
+	VectorCopy(point, end);
+	end[2] -= 256.0;
+
+	R_Trace(start, end, 0.0, MASK_SOLID);
+
+	if (!refdef.trace.leafnum) {  /* didn't hit anything */
+		/** @todo use worldspawn light and ambient settings to get a better value here */
+		VectorSet(lighting->color, 0.5, 0.5, 0.5);
+		return;
+	}
+
+	VectorCopy(refdef.trace.endpos, lighting->point);
+	VectorCopy(refdef.trace.plane.normal, lighting->normal);
+
+	/* clip to all surfaces of the bsp entity */
+	if (refdef.trace_ent) {
+		VectorSubtract(refdef.trace.endpos,
+				refdef.trace_ent->origin, refdef.trace.endpos);
+
+		R_LightPoint_(refdef.trace_ent->model->bsp.maptile,
+				refdef.trace_ent->model->bsp.firstmodelsurface,
+				refdef.trace_ent->model->bsp.nummodelsurfaces,
+				refdef.trace.endpos, lighting->color);
+	} else {
+		/* general case is to recurse up the nodes */
+		int i;
+		for (i = 0; i < r_numMapTiles; i++) {
+#if 0
+			if (refdef.trace.leafnum < r_mapTiles[i]->bsp.numleafs) {
+				mBspLeaf_t *leaf = &r_mapTiles[i]->bsp.leafs[refdef.trace.leafnum];
+				mBspNode_t *node = leaf->parent;
+				while (node) {
+					if (R_LightPoint_(i, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->color))
+						return;
+
+					node = node->parent;
+				}
+			}
+#else
+			if (R_LightPoint_(i, 0, r_mapTiles[i]->bsp.numsurfaces, refdef.trace.endpos, lighting->color))
+				break;
+#endif
+		}
+	}
 }

@@ -344,17 +344,24 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 	}
 }
 
-static inline void R_ModSetParent (mBspNode_t *node, mBspNode_t *parent)
+/**
+ * @sa R_SetModel
+ */
+static inline void R_SetParent (mBspNode_t *node, mBspNode_t *parent)
 {
 	node->parent = parent;
-	if (node->contents != CONTENTS_NO_LEAF)
+
+	/* a leaf doesn't have any children */
+	if (node->contents != CONTENTS_NODE)
 		return;
-	R_ModSetParent(node->children[0], node);
-	R_ModSetParent(node->children[1], node);
+
+	R_SetParent(node->children[0], node);
+	R_SetParent(node->children[1], node);
 }
 
 /**
  * @sa BuildNodeChildren
+ * @sa TR_BuildTracingNode_r
  */
 static void R_ModLoadNodes (const lump_t *l)
 {
@@ -374,13 +381,18 @@ static void R_ModLoadNodes (const lump_t *l)
 
 	for (i = 0; i < count; i++, in++, out++) {
 		p = LittleLong(in->planenum);
+
 		/* skip special pathfinding nodes - they have a negative index */
-		if (p == PLANENUM_LEAF)
+		if (p == PLANENUM_LEAF) {
 			/* in case of "special" pathfinding nodes (they don't have a plane)
 			 * we have to set this to NULL */
 			out->plane = NULL;
-		else
+			out->contents = CONTENTS_PATHFINDING_NODE;
+		} else {
 			out->plane = r_worldmodel->bsp.planes + p;
+			/* differentiate from leafs */
+			out->contents = CONTENTS_NODE;
+		}
 
 		for (j = 0; j < 3; j++) {
 			out->minmaxs[j] = LittleShort(in->mins[j]) + (float)shift[j];
@@ -389,8 +401,6 @@ static void R_ModLoadNodes (const lump_t *l)
 
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
-		/* differentiate from leafs */
-		out->contents = CONTENTS_NO_LEAF;
 
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
@@ -405,7 +415,7 @@ static void R_ModLoadNodes (const lump_t *l)
 	}
 
 	/* sets nodes and leafs */
-	R_ModSetParent(r_worldmodel->bsp.nodes, NULL);
+	R_SetParent(r_worldmodel->bsp.nodes, NULL);
 }
 
 static void R_ModLoadLeafs (const lump_t *l)
@@ -826,11 +836,15 @@ static void R_LoadSurfacesArrays (model_t *mod)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
 
+
+/**
+ * @sa R_SetParents
+ */
 static void R_SetModel (mBspNode_t *node, model_t *mod)
 {
 	node->model = mod;
 
-	if (node->contents != CONTENTS_NO_LEAF)
+	if (node->contents != CONTENTS_NODE)
 		return;
 
 	R_SetModel(node->children[0], mod);

@@ -250,7 +250,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 		return;					/* culled out */
 
 	/* if a leaf node, draw stuff */
-	if (node->contents != LEAFNODE)
+	if (node->contents > CONTENTS_NODE)
 		return;
 
 	/* pathfinding nodes are invalid here */

@@ -25,6 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_ENTITY_H
 #define R_ENTITY_H
 
+typedef struct static_lighting_s {
+	vec3_t point;	/**< impact point, shadow origin */
+	vec3_t normal;	/**< shadow direction */
+	vec3_t color;	/**< light color */
+	qboolean dirty;	/**< cache invalidation */
+} static_lighting_t;
+
 /**
  * @brief entity transform matrix
  */
@@ -56,6 +63,8 @@ typedef struct entity_s {
 	animState_t as;
 
 	transform_t transform;
+
+	static_lighting_t *lighting;	/**< cached static lighting info */
 
 	struct entity_s *next;		/**< for chaining */
 } entity_t;

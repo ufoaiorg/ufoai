@@ -114,6 +114,7 @@ typedef struct rlocals_s {
 	cBspPlane_t frustum[4];
 
 	int frame;
+	int tracenum;
 
 	float world_matrix[16];
 } rlocals_t;

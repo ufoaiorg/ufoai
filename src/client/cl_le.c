@@ -125,6 +125,9 @@ void LM_AddToScene (void)
 
 		/* renderflags like RF_GLOW */
 		ent.flags = lm->renderFlags;
+		ent.lighting = &lm->lighting;
+		/** @todo only when animated or initially added */
+		ent.lighting->dirty = qtrue;
 
 		/* add it to the scene */
 		R_AddEntity(&ent);
@@ -1141,6 +1144,9 @@ void LE_AddToScene (void)
 			if (le->addFunc)
 				if (!le->addFunc(le, &ent))
 					continue;
+
+			ent.lighting = &le->lighting;
+			ent.lighting->dirty = qtrue;
 
 			/* add it to the scene */
 			R_AddEntity(&ent);

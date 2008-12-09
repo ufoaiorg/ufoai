@@ -70,6 +70,7 @@ typedef struct trace_s{
 	cBspSurface_t *surface;	    /**< surface hit */
 	int planenum;				/**< index of the plane hit, used for map debugging */
 	int contentFlags;			/**< contents on other side of surface hit */
+	int leafnum;
 	struct le_s *le;			/**< not set by CM_*() functions */
 	struct edict_s *ent;		/**< not set by CM_*() functions */
 } trace_t;

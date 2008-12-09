@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LIGHTMAP_H
 #define R_LIGHTMAP_H
 
+#include "r_entity.h"
+
 #define	LIGHTMAP_BLOCK_WIDTH	4096
 #define	LIGHTMAP_BLOCK_HEIGHT	4096
 #define LIGHTMAP_BLOCK_BYTES	4 /* bytes RGBA */
@@ -40,11 +42,6 @@ void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
 void R_EndBuildingLightmaps(void);
 void R_BeginBuildingLightmaps(void);
-
-typedef struct lightmap_sample_s {
-	vec3_t point;
-	vec3_t color;
-} lightmap_sample_t;
 
 /* in the bsp, they are just rgb, and we work with floats */
 #define LIGHTMAP_FBUFFER_SIZE \
@@ -65,7 +62,6 @@ typedef struct lightmaps_s {
 
 extern lightmaps_t r_lightmaps;
 
-extern lightmap_sample_t r_lightmap_sample;
-void R_LightPoint(const vec3_t p);
+void R_LightPoint(const vec3_t p, static_lighting_t *lighting);
 
 #endif

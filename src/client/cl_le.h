@@ -100,6 +100,8 @@ typedef struct le_s {
 	int gender;
 	const fireDef_t *fd;	/**< in case this is a projectile */
 
+	static_lighting_t lighting;
+
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
 } le_t;							/* local entity */
@@ -122,6 +124,8 @@ typedef struct lm_s {
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
+
+	static_lighting_t lighting;
 
 	struct model_s *model;
 } localModel_t;							/* local models */

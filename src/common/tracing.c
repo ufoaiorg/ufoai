@@ -150,6 +150,10 @@ static void TR_MakeTracingNode (int nodenum)
 	}
 }
 
+/**
+ * @sa CMod_LoadNodes
+ * @sa R_ModLoadNodes
+ */
 void TR_BuildTracingNode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
@@ -702,7 +706,7 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line
  *  originates from inside the brush, terminates inside the brush, or is completely contained within the brush.
  */
-static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush)
+static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TYPE *leaf)
 {
 	int i, j;
 	TR_PLANE_TYPE *clipplane;
@@ -794,6 +798,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush)
 		trace->trace.startsolid = qtrue;
 		if (!getout)
 			trace->trace.allsolid = qtrue;
+		trace->trace.leafnum = leaf - curTile->leafs;
 		return;
 	}
 	if (enterfrac < leavefrac) {
@@ -807,6 +812,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush)
 			trace->trace.surface = leadside->surface;
 #endif
 			trace->trace.contentFlags = brush->contentFlags;
+			trace->trace.leafnum = leaf - curTile->leafs;
 		}
 	}
 }
@@ -874,9 +880,7 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 {
 	int k;
-	int brushnum;
 	TR_LEAF_TYPE *leaf;
-	cBspBrush_t *b;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= curTile->numleafs);
@@ -887,8 +891,8 @@ void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
-		brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		b = &curTile->brushes[brushnum];
+		const int brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
+		cBspBrush_t *b = &curTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
@@ -896,7 +900,7 @@ void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 		if (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects))
 			continue;
 
-		TR_ClipBoxToBrush(trace_data, b);
+		TR_ClipBoxToBrush(trace_data, b, leaf);
 		if (!trace_data->trace.fraction)
 			return;
 	}

@@ -85,6 +85,8 @@ typedef struct mBspSurface_s {
 
 	GLuint index;
 
+	int tracenum;
+
 	mBspTexInfo_t *texinfo;
 
 	int lightmap_texnum;
@@ -116,8 +118,12 @@ typedef struct msurfaces_s {
 #define R_SurfaceToSurfaces(surfs, surf)\
 	(surfs)->surfaces[(surfs)->count++] = surf
 
-#define CONTENTS_NO_LEAF -1
+#define CONTENTS_NODE -1
+#define CONTENTS_PATHFINDING_NODE -2
 
+
+/**
+ * @note The mBspLeaf_t type shares the same first variables - don't change the order */
 typedef struct mBspNode_s {
 	/* common with leaf */
 	int contents;				/**< -1, to differentiate from leafs */
@@ -125,23 +131,23 @@ typedef struct mBspNode_s {
 
 	struct mBspNode_s *parent;
 
+	struct model_s *model;
+
 	/* node specific */
 	cBspPlane_t *plane;
 	struct mBspNode_s *children[2];
 
 	unsigned short firstsurface;
 	unsigned short numsurfaces;
-
-	struct model_s *model;
 } mBspNode_t;
 
 typedef struct mBspLeaf_s {
-	/* common with node */
+	/* common with mBspNode_t */
 	int contents;				/**< will be a negative contents number */
 
 	float minmaxs[6];			/**< for bounding box culling */
 
-	struct mnode_s *parent;
+	mBspNode_t *parent;
 
 	struct model_s *model;
 } mBspLeaf_t;

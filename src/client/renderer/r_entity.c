@@ -405,9 +405,9 @@ static void R_DrawBspEntities (const entity_t *ents)
 /**
  * @sa R_DrawEntities
  */
-static void R_DrawMeshEntities (const entity_t *ents)
+static void R_DrawMeshEntities (entity_t *ents)
 {
-	const entity_t *e;
+	entity_t *e;
 
 	e = ents;
 
