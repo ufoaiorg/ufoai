@@ -551,22 +551,20 @@ static void MN_TextNodeLoading (menuNode_t *node)
 
 static void MN_TextNodeLoaded (menuNode_t *node)
 {
+	int lineheight = node->texh[0];
 	/* auto compute lineheight */
-	if (node->texh[0] == 0) {
-		if (EXTRADATA(node).rows != 0 && node->size[1] != 0) {
-			node->texh[0] = node->size[1] / EXTRADATA(node).rows;
-		} else {
-			/* the font is used */
-			/** @todo clean this up once font_t is known in the client */
-			const char *font = MN_GetFont(node->menu, node);
-			node->texh[0] = R_FontGetHeight(font) / 2;
-		}
+    /* we dont overwrite node->texh[0], because "0" is dynamically replaced by font height on draw fonction */
+	if (lineheight == 0) {
+        /* the font is used */
+        /** @todo clean this up once font_t is known in the client */
+        const char *font = MN_GetFont(node->menu, node);
+        lineheight = R_FontGetHeight(font) / 2;
 	}
 
 	/* auto compute rows */
 	if (EXTRADATA(node).rows == 0) {
-		if (node->size[1] != 0 && node->texh[0] != 0) {
-			EXTRADATA(node).rows = node->size[1] / node->texh[0];
+		if (node->size[1] != 0 && lineheight != 0) {
+			EXTRADATA(node).rows = node->size[1] / lineheight;
 		} else {
 			EXTRADATA(node).rows = 1;
 			Com_Printf("MN_TextNodeLoaded: node '%s.%s' has no rows value\n", node->menu->name, node->name);
@@ -575,7 +573,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 
 	/* auto compute height */
 	if (node->size[1] == 0) {
-		node->size[1] = EXTRADATA(node).rows * node->texh[0];
+		node->size[1] = EXTRADATA(node).rows * lineheight;
 	}
 
 	/* is text slot exists */
@@ -584,9 +582,9 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 
 
 #if DEBUG
-	if (EXTRADATA(node).rows != (int)(node->size[1] / node->texh[0])) {
-		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s.%s' differs from size (%.0f) and format (%.0f) values\n",
-			EXTRADATA(node).rows, node->menu->name, node->name, node->size[1], node->texh[0]);
+	if (EXTRADATA(node).rows != (int)(node->size[1] / lineheight)) {
+		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s.%s' differs from size (%.0f) and format (%i) values\n",
+			EXTRADATA(node).rows, node->menu->name, node->name, node->size[1], lineheight);
 	}
 #endif
 }
