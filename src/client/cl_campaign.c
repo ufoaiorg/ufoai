@@ -425,7 +425,8 @@ static qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufo
 		} else {
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? UFO_TypeToShortName(mission->ufo->ufotype) : "none");
-			Com_Printf("%s",MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
+			if (pos)
+				Com_Printf("%s",MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
 			if (pos)
 				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 			else
@@ -1372,9 +1373,16 @@ static void CP_TerrorMissionGo (mission_t *mission)
 static int CP_TerrorMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
 {
 	int num = 0;
+	const float CORRUPTER_PROBABILITY = 0.2;	/**< Probability to get a corrupter. Note that the probability
+													to get a corrupter among all possible UFO is this number
+													divided by the number of possible UFO */
 
 	ufoTypes[num++] = UFO_SCOUT;
 	ufoTypes[num++] = UFO_FIGHTER;
+
+	/* give a small chance to get a corrupter when XVI spreading started */
+	if (ccs.XVISpreadActivated && (frand() < CORRUPTER_PROBABILITY))
+		ufoTypes[num++] = UFO_CORRUPTER;
 
 	return num;
 }
@@ -2211,6 +2219,7 @@ static int CP_XVIMissionAvailableUFOs (const mission_t const *mission, int *ufoT
 
 	ufoTypes[num++] = UFO_SCOUT;
 	ufoTypes[num++] = UFO_FIGHTER;
+	ufoTypes[num++] = UFO_CORRUPTER;
 
 	return num;
 }
@@ -2441,11 +2450,14 @@ static void CP_InterceptMissionSet (mission_t *mission)
 static int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
 {
 	int num = 0;
+	const float HARVESTER_PROBABILITY = 0.25;	/**< Probability to get a harvester. Note that the probability
+													to get a corrupter among all possible UFO is this number
+													divided by the number of possible UFO */
 
 	ufoTypes[num++] = UFO_FIGHTER;
 
 	/* don't make attack on installation happens too often */
-	if (frand() < .25)
+	if (frand() < HARVESTER_PROBABILITY)
 		ufoTypes[num++] = UFO_HARVESTER;
 
 	return num;
@@ -3644,6 +3656,10 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 static void CP_SpreadXVI (void)
 {
 	const linkedList_t *list = ccs.missions;
+
+	/* don't check if XVI spreading didn't start yet */
+	if (!ccs.XVISpreadActivated)
+		return;
 
 	for (;list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;

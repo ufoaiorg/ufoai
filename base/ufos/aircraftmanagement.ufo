@@ -462,7 +462,6 @@ aircraft craft_ufo_corrupter
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
-	nogeoscape	true
 }
 
 aircraft craft_ufo_scout
