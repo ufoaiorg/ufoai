@@ -407,7 +407,7 @@ void R_DrawAliasModel (entity_t *e)
 		vec4_t color = {1, 1, 1, 1};
 
 		/* update static lighting info */
-		if (e->lighting->dirty) {
+		if (e->lighting && e->lighting->dirty) {
 			/* tagged models have an origin relative to the parent entity - so we
 			 * have to transform them */
 			if (e->tagent) {

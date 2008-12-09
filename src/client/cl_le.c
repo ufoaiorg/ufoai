@@ -95,6 +95,7 @@ void CL_RecalcRouting (const le_t* le)
  * @brief Add the local models to the scene
  * @sa V_RenderView
  * @sa LE_AddToScene
+ * @sa LM_AddModel
  */
 void LM_AddToScene (void)
 {
@@ -121,13 +122,12 @@ void LM_AddToScene (void)
 			ent.as = lm->as;
 			/* do animation */
 			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
+			lm->lighting.dirty = qtrue;
 		}
 
 		/* renderflags like RF_GLOW */
 		ent.flags = lm->renderFlags;
 		ent.lighting = &lm->lighting;
-		/** @todo only when animated or initially added */
-		ent.lighting->dirty = qtrue;
 
 		/* add it to the scene */
 		R_AddEntity(&ent);
@@ -249,6 +249,7 @@ void LM_Register (void)
  * @note misc_model
  * @sa CL_ParseEntitystring
  * @param[in] entnum Entity number
+ * @sa LM_AddToScene
  */
 localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
@@ -270,6 +271,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
+	lm->lighting.dirty = qtrue;
 	VectorCopy(scale, lm->scale);
 
 	return lm;
@@ -1139,14 +1141,14 @@ void LE_AddToScene (void)
 				break;
 			}
 
+			ent.lighting = &le->lighting;
+			ent.lighting->dirty = qtrue;
+
 			/* call add function */
 			/* if it returns false, don't draw */
 			if (le->addFunc)
 				if (!le->addFunc(le, &ent))
 					continue;
-
-			ent.lighting = &le->lighting;
-			ent.lighting->dirty = qtrue;
 
 			/* add it to the scene */
 			R_AddEntity(&ent);
