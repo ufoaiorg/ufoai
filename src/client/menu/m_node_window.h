@@ -44,9 +44,6 @@ typedef struct menu_s {
 
 	menuNode_t *firstChild;	/**< first element of linked list of child */
 
-	/** @todo remove it after the cleanup of the input handler */
-	menuNode_t *hoverNode;	/**< current hovered node */
-
 	menuNode_t *popupNode;
 	menuNode_t *renderNode;
 

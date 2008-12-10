@@ -248,12 +248,10 @@ void MN_MouseMove (int x, int y)
 	if (oldHoveredNode != hoveredNode) {
 		if (oldHoveredNode) {
 			MN_ExecuteActions(oldHoveredNode->menu, oldHoveredNode->onMouseOut);
-			oldHoveredNode->menu->hoverNode = NULL;
 			oldHoveredNode->state = qfalse;
 		}
 		if (hoveredNode) {
 			hoveredNode->state = qtrue;
-			hoveredNode->menu->hoverNode = hoveredNode;
 			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onMouseIn);
 		}
 	}

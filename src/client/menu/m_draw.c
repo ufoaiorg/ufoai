@@ -128,7 +128,7 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
  */
 void MN_DrawMenus (void)
 {
-	menuNode_t *node;
+	menuNode_t *hoveredNode;
 	menu_t *menu;
 	int sp, pp;
 	qboolean mouseOver = qfalse;
@@ -168,6 +168,7 @@ void MN_DrawMenus (void)
 	dragInfo.toNode = NULL;
 
 	while (sp < mn.menuStackPos) {
+		menuNode_t *node;
 		menu = mn.menuStack[sp++];
 		/* event node */
 		if (menu->onTimeOut) {
@@ -225,10 +226,11 @@ void MN_DrawMenus (void)
 		}	/* for */
 	}
 
-	menu = MN_GetActiveMenu();
+
+	hoveredNode = MN_GetHoveredNode();
 
 	/* draw tooltip */
-	if (menu && menu->hoverNode && tooltipVisible) {
+	if (hoveredNode && tooltipVisible) {
 		if (itemHover) {
 			char tooltiptext[MAX_VAR * 2];
 			const int itemToolTipWidth = 250;
@@ -241,25 +243,24 @@ void MN_DrawMenus (void)
 #endif
 			MN_DrawTooltip("f_small", tooltiptext, mousePosX, mousePosY, itemToolTipWidth, 0);
 		} else {
-			MN_Tooltip(menu, menu->hoverNode, mousePosX, mousePosY);
+			MN_Tooltip(hoveredNode->menu, hoveredNode, mousePosX, mousePosY);
 		}
 	}
 
-	node = MN_GetHoveredNode();
-
 	/** @todo remove it (or clean up) when it possible. timeout? */
-	if (node && node->timePushed) {
-		if (node->timePushed + node->timeOut < cls.realtime) {
-			node->timePushed = 0;
-			node->invis = qtrue;
+	if (hoveredNode && hoveredNode->timePushed) {
+		if (hoveredNode->timePushed + hoveredNode->timeOut < cls.realtime) {
+			hoveredNode->timePushed = 0;
+			hoveredNode->invis = qtrue;
 			/* only timeout this once, otherwise there is a new timeout after every new stack push */
-			if (node->timeOutOnce)
-				node->timeOut = 0;
-			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
+			if (hoveredNode->timeOutOnce)
+				hoveredNode->timeOut = 0;
+			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", hoveredNode->name);
 		}
 	}
 
 	/* draw a special notice */
+	menu = MN_GetActiveMenu();
 	if (cl.time < cl.msgTime) {
 		if (menu && (menu->noticePos[0] || menu->noticePos[1]))
 			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
@@ -272,6 +273,7 @@ void MN_DrawMenus (void)
 		MN_DrawDebugMenuNodeNames();
 	}
 
+	/** @todo better to use an assert(blend==NULL) to cleanup the code */
 	R_ColorBlend(NULL);
 }
 

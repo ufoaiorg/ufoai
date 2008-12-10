@@ -1048,9 +1048,6 @@ void MN_ParseMenu (const char *name, const char **text)
 		menu->super = superMenu;
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 
-		/* we dont need to update everything (some must only be NULL at the run time) */
-		assert(!superMenu->hoverNode);
-
 		/* start a new list */
 		menu->firstChild = NULL;
 
