@@ -121,14 +121,14 @@ MAP LOADING
  */
 static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 {
-	dBspModel_t *in;
+	const dBspModel_t *in;
 	cBspModel_t *out;
 	int i, j, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspModel_t))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(dBspModel_t));
 	count = l->filelen / sizeof(dBspModel_t);
@@ -165,14 +165,14 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
  */
 static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
 {
-	dBspTexinfo_t *in;
+	const dBspTexinfo_t *in;
 	cBspSurface_t *out;
 	int i, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspTexinfo_t))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspTexinfo_t);
@@ -203,7 +203,7 @@ static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
  */
 static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 {
-	dBspNode_t *in;
+	const dBspNode_t *in;
 	int child;
 	cBspNode_t *out;
 	int i, j, count;
@@ -211,7 +211,7 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspNode_t))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspNode_t);
@@ -253,14 +253,14 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
  */
 static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
 {
-	dBspBrush_t *in;
+	const dBspBrush_t *in;
 	cBspBrush_t *out;
 	int i, count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrush_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrush_t);
@@ -290,13 +290,13 @@ static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
 {
 	int i;
 	cBspLeaf_t *out;
-	dBspLeaf_t *in;
+	const dBspLeaf_t *in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspLeaf_t))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspLeaf_t);
@@ -342,14 +342,14 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
-	dBspPlane_t *in;
+	const dBspPlane_t *in;
 	int count;
 	int bits;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspPlane_t))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspPlane_t);
@@ -393,13 +393,13 @@ static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
 {
 	int i;
 	unsigned short *out;
-	unsigned short *in;
+	const unsigned short *in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);
@@ -427,16 +427,15 @@ static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
  */
 static void CMod_LoadBrushSides (const lump_t * l, const vec3_t shift)
 {
-	int i, j;
+	int i;
 	cBspBrushSide_t *out;
-	dBspBrushSide_t *in;
+	const dBspBrushSide_t *in;
 	int count;
-	int num;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (void *) (cmod_base + l->fileofs);
+	in = (const void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
@@ -453,11 +452,11 @@ static void CMod_LoadBrushSides (const lump_t * l, const vec3_t shift)
 	curTile->brushsides = out;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		num = LittleShort(in->planenum);
-		out->plane = &curTile->planes[num];
-		j = LittleShort(in->texinfo);
+		const int num = LittleShort(in->planenum);
+		const int j = LittleShort(in->texinfo);
 		if (j >= curTile->numtexinfo)
 			Com_Error(ERR_DROP, "Bad brushside texinfo");
+		out->plane = &curTile->planes[num];
 		out->surface = &curTile->surfaces[j];
 	}
 }
@@ -758,8 +757,6 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 GAME RELATED TRACING
 ===============================================================================
 */
-
-
 
 
 /**
@@ -1068,10 +1065,10 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	return checksum;
 }
 
-static void CMod_RerouteMap(void)
+static void CMod_RerouteMap (void)
 {
 	int size, x, y, z, dir;
-	int dx, dy, i;
+	int i;
 	pos3_t mins, maxs;
 
 	VecToPos(map_min, mins);
@@ -1101,9 +1098,9 @@ static void CMod_RerouteMap(void)
 	*/
 
 	/* Floor pass */
-	for (size = 0; size < ACTOR_MAX_SIZE; size++)
-		for (y = mins[1]; y <= maxs[1]; y++)
-			for (x = mins[0]; x <= maxs[0]; x++)
+	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
+		for (y = mins[1]; y <= maxs[1]; y++) {
+			for (x = mins[0]; x <= maxs[0]; x++) {
 				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
@@ -1112,32 +1109,38 @@ static void CMod_RerouteMap(void)
 						z = new_z;
 					}
 				}
+			}
+		}
+	}
 
 	/* Wall pass */
-	for (size = 0; size < ACTOR_MAX_SIZE; size++)
-		for (y = mins[1]; y <= maxs[1]; y++)
-			for (x = mins[0]; x <= maxs[0]; x++)
+	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
+		for (y = mins[1]; y <= maxs[1]; y++) {
+			for (x = mins[0]; x <= maxs[0]; x++) {
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-					dx = x + dvecs[dir][0];
-					dy = y + dvecs[dir][1];
+					const int dx = x + dvecs[dir][0];
+					const int dy = y + dvecs[dir][1];
 					/* Skip if the destination is out of bounds. */
 					if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 						continue;
 					/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 					if (reroute[size][y][x] && reroute[size][dy][dx]
-						&& (reroute[size][y][x] == ROUTING_NOT_REACHABLE
-						|| reroute[size][dy][dx] == ROUTING_NOT_REACHABLE
-						|| reroute[size][dy][dx] != reroute[size][y][x])) {
-							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
-							 * RT_UpdateConnection expects it and breaks otherwise. */
-							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-							for (z = 0; z <= maxs[2]; z++) {
-								const int new_z = RT_UpdateConnection(clMap, size + 1, x, y, z, dir);
-								assert(new_z >= z);
-								z = new_z;
-							}
+					 && (reroute[size][y][x] == ROUTING_NOT_REACHABLE
+					 || reroute[size][dy][dx] == ROUTING_NOT_REACHABLE
+					 || reroute[size][dy][dx] != reroute[size][y][x])) {
+						/** @note This update MUST go from the bottom (0) to the top (7) of the model.
+						 * RT_UpdateConnection expects it and breaks otherwise. */
+						/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
+						for (z = 0; z <= maxs[2]; z++) {
+							const int new_z = RT_UpdateConnection(clMap, size + 1, x, y, z, dir);
+							assert(new_z >= z);
+							z = new_z;
 						}
+					}
 				}
+			}
+		}
+	}
 }
 
 /**

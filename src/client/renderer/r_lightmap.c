@@ -112,12 +112,11 @@ static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
  */
 static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
-	int i, j, smax, tmax, size;
+	int i, j;
 
-	smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
-	tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
+	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
+	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 
-	size = smax * tmax;
 	stride -= (smax * 4);
 
 	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
@@ -148,13 +147,12 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
  */
 static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int stride)
 {
-	int smax, tmax;
-	unsigned int i, j, size;
+	unsigned int i, j;
 	byte *lightmap, *lm, *l, *deluxemap, *dm;
 
-	smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
-	tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
-	size = smax * tmax;
+	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
+	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
+	const int size = smax * tmax;
 	stride -= (smax * LIGHTMAP_BLOCK_BYTES);
 
 	lightmap = (byte *)Mem_PoolAlloc(size * LIGHTMAP_BLOCK_BYTES, vid_lightPool, 0);

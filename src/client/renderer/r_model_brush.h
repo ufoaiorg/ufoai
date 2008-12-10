@@ -91,7 +91,7 @@ typedef struct mBspSurface_s {
 
 	int lightmap_texnum;
 	int deluxemap_texnum;
-	byte style;
+
 	byte *samples;				/**< lightmap samples - only used at loading time */
 	byte *lightmap;				/**< finalized lightmap samples, cached for lookups */
 

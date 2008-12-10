@@ -77,7 +77,7 @@ TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 /** @note number of loaded map tiles (map assembly) */
 int numTiles = 0;
 
-/** @note Used in CM_BoxTrace, but does nothing. */
+/** @note For multi-check avoidance. */
 static int checkcount;
 
 /** @note used to hold the point on a line that an obstacle is encountered. */
