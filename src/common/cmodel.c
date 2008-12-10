@@ -961,6 +961,17 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 	}
 }
 
+/**
+ * @brief Loads the lightmap for server side visibility lookup
+ * @todo Implement this
+ */
+static void CMod_LoadLighting (const lump_t * l)
+{
+#if 0
+	curTile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
+	memcpy(curTile->lightdata, cmod_base + l->fileofs, l->filelen);
+#endif
+}
 
 /**
  * @brief Adds in a single map tile
@@ -975,7 +986,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
+static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -1032,6 +1043,10 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	CMod_LoadSubmodels(&header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(&header.lumps[LUMP_NODES], shift);
 	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift);
+	if (day)
+		CMod_LoadLighting(&header.lumps[LUMP_LIGHTING_DAY]);
+	else
+		CMod_LoadLighting(&header.lumps[LUMP_LIGHTING_NIGHT]);
 
 	CM_InitBoxHull();
 	CM_MakeTracingNodes();
@@ -1123,9 +1138,7 @@ static void CMod_RerouteMap(void)
 							}
 						}
 				}
-
 }
-
 
 /**
  * @brief Loads in the map and all submodels
@@ -1135,7 +1148,7 @@ static void CMod_RerouteMap(void)
  * @sa R_ModBeginLoading
  * @note Make sure that mapchecksum was set to 0 before you call this function
  */
-void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
+void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *mapchecksum)
 {
 	const char *token;
 	char name[MAX_VAR];
@@ -1198,10 +1211,10 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
 			if (sh[2] >= PATHFINDING_HEIGHT)
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
-			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], sh[2]);
+			*mapchecksum += CM_AddMapTile(name, day, sh[0], sh[1], sh[2]);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			*mapchecksum = CM_AddMapTile(name, 0, 0, 0);
+			*mapchecksum = CM_AddMapTile(name, day, 0, 0, 0);
 			/* Copy the server map from the client */
 			memcpy(&svMap, &clMap, sizeof(svMap));
 			return;

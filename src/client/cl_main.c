@@ -1458,6 +1458,8 @@ void CL_RequestNextDownload (void)
 	/* for singleplayer game this is already loaded in our local server
 	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
+		qboolean day = atoi(cl.configstrings[CS_LIGHTMAP]);
+
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
 
@@ -1478,7 +1480,7 @@ void CL_RequestNextDownload (void)
 			ufoScript_checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
+		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &map_checksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);

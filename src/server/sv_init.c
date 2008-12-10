@@ -1108,7 +1108,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	else
 		sv.configstrings[CS_POSITIONS][0] = 0;
 
-	CM_LoadMap(map, pos, &checksum);
+	CM_LoadMap(map, day, pos, &checksum);
 
 	Com_Printf("checksum for the map '%s': %u\n", server, checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
