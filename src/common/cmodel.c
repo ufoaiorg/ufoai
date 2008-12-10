@@ -814,8 +814,6 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	Com_Printf("Map:%s  Offset:(%i, %i, %i)\n", name, sX, sY, sZ);
 	Com_Printf("wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
 
-	curTile = &mapTiles[numTiles - 1];
-
 	/* wpMins and wpMaxs have the map size data from the initial build.
 	 * Offset this by the given parameters so the stored values are in real coordinates. */
 	curTile->wpMins[0] += sX;
