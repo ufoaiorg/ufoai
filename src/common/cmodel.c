@@ -119,7 +119,7 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (lump_t * l, const vec3_t shift)
+static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 {
 	dBspModel_t *in;
 	cBspModel_t *out;
@@ -163,7 +163,7 @@ static void CMod_LoadSubmodels (lump_t * l, const vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (lump_t * l, const vec3_t shift)
+static void CMod_LoadSurfaces (const lump_t * l, const vec3_t shift)
 {
 	dBspTexinfo_t *in;
 	cBspSurface_t *out;
@@ -201,7 +201,7 @@ static void CMod_LoadSurfaces (lump_t * l, const vec3_t shift)
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (lump_t * l, const vec3_t shift)
+static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 {
 	dBspNode_t *in;
 	int child;
@@ -251,7 +251,7 @@ static void CMod_LoadNodes (lump_t * l, const vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (lump_t * l, const vec3_t shift)
+static void CMod_LoadBrushes (const lump_t * l, const vec3_t shift)
 {
 	dBspBrush_t *in;
 	cBspBrush_t *out;
@@ -286,7 +286,7 @@ static void CMod_LoadBrushes (lump_t * l, const vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (lump_t * l, const vec3_t shift)
+static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
 {
 	int i;
 	cBspLeaf_t *out;
@@ -338,7 +338,7 @@ static void CMod_LoadLeafs (lump_t * l, const vec3_t shift)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (lump_t * l, const vec3_t shift)
+static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
@@ -389,7 +389,7 @@ static void CMod_LoadPlanes (lump_t * l, const vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (lump_t * l, const vec3_t shift)
+static void CMod_LoadLeafBrushes (const lump_t * l, const vec3_t shift)
 {
 	int i;
 	unsigned short *out;
@@ -425,7 +425,7 @@ static void CMod_LoadLeafBrushes (lump_t * l, const vec3_t shift)
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (lump_t * l, const vec3_t shift)
+static void CMod_LoadBrushSides (const lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspBrushSide_t *out;
@@ -770,7 +770,7 @@ GAME RELATED TRACING
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (const char *name, lump_t * l, int sX, int sY, int sZ)
+static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY, int sZ)
 {
 	static routing_t temp_map[ACTOR_MAX_SIZE];
 	byte *source;
