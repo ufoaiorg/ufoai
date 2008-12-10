@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct base_s;
 
 #include "m_nodes.h"
-#include "m_dragndrop.h"
 
 void MN_RegisterContainerNode(nodeBehaviour_t *behaviour);
 void MN_FindContainer(menuNode_t* const node);
