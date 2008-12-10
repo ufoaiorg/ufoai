@@ -62,7 +62,7 @@ static const invList_t *itemHover;
  * @todo think better about this mecanism
  * @sa itemHover
  */
-void MN_SetItemHover(const invList_t *item) {
+static void MN_SetItemHover(const invList_t *item) {
 	itemHover = item;
 }
 
