@@ -31,6 +31,4 @@ void MN_DrawMenus(void);
 void MN_DrawMenusInit(void);
 void MN_DisplayNotice(const char *text, int time);
 
-void MN_SetItemHover(const invList_t *item);
-
 #endif

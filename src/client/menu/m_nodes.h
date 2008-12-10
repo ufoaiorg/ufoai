@@ -195,6 +195,7 @@ typedef struct nodeBehaviour_s {
 
 	/* node function */
 	void (*draw)(menuNode_t *node);		/**< how to draw a node */
+	void (*drawTooltip)(menuNode_t *node, int x, int y);		/**< allow to custom tooltip */
 	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
 	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
 	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */

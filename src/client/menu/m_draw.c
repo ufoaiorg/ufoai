@@ -39,18 +39,8 @@ cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;
 
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
-static const invList_t *itemHover;
 static qboolean tooltipVisible = qfalse;
 static menuTimer_t *tooltipTimer;
-
-/**
- * @brief assign an hover item for the draw pipeline
- * @todo think better about this mecanism
- * @sa itemHover
- */
-void MN_SetItemHover(const invList_t *item) {
-	itemHover = item;
-}
 
 static void MN_DrawBorder (const menuNode_t *node)
 {
@@ -150,8 +140,6 @@ void MN_DrawMenus (void)
 
 	MN_HandleTimers();
 
-	MN_SetItemHover(NULL);
-
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
 	sp = mn.menuStackPos;
@@ -231,17 +219,8 @@ void MN_DrawMenus (void)
 
 	/* draw tooltip */
 	if (hoveredNode && tooltipVisible) {
-		if (itemHover) {
-			char tooltiptext[MAX_VAR * 2];
-			const int itemToolTipWidth = 250;
-
-			/* Get name and info about item */
-			MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-#ifdef DEBUG
-			/* Display stored container-coordinates of the item. */
-			Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
-#endif
-			MN_DrawTooltip("f_small", tooltiptext, mousePosX, mousePosY, itemToolTipWidth, 0);
+		if (hoveredNode->behaviour->drawTooltip) {
+			hoveredNode->behaviour->drawTooltip(hoveredNode, mousePosX, mousePosY);
 		} else {
 			MN_Tooltip(hoveredNode->menu, hoveredNode, mousePosX, mousePosY);
 		}

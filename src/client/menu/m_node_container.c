@@ -55,6 +55,16 @@ dragInfo_t dragInfo = {
 
 }; /**< To crash as soon as possible. */
 
+static const invList_t *itemHover;
+
+/**
+ * @brief assign an hover item for the draw pipeline
+ * @todo think better about this mecanism
+ * @sa itemHover
+ */
+void MN_SetItemHover(const invList_t *item) {
+	itemHover = item;
+}
 
 /**
  * @brief Update display of scroll buttons.
@@ -744,13 +754,18 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
  * @todo need to think about a common mechanism from drag-drop
  * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
  */
-static void MN_DrawContainerNode2 (menuNode_t *node)
+static void MN_ContainerNodeDraw (menuNode_t *node)
 {
 	vec2_t nodepos;
 	const invList_t *itemHover_temp;
 	qboolean exists;
 	int itemX = 0;
 	int itemY = 0;
+
+	/** @todo not very nice */
+	if (node->state) {
+		MN_SetItemHover(NULL);
+	}
 
 	/* node transparent but active */
 	if (node->color[3] < 0.001) {
@@ -813,6 +828,30 @@ static void MN_DrawContainerNode2 (menuNode_t *node)
 #endif
 			Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
 		}
+	}
+}
+
+/**
+ * @brief Custom tooltip for container node
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x Position x of the mouse
+ * @param[in] y Position y of the mouse
+ * @todo If we can fast request container, here we must compute everything, without need of "draw function" and "itemHover var"
+ * @todo Why "MAX_VAR * 2"? MAX_VAR is already very big for tooltip no?
+ */
+static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
+{
+	static char tooltiptext[MAX_VAR * 2];
+	if (itemHover) {
+		const int itemToolTipWidth = 250;
+
+		/* Get name and info about item */
+		MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+#ifdef DEBUG
+		/* Display stored container-coordinates of the item. */
+		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
+#endif
+		MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, 0);
 	}
 }
 
@@ -1168,7 +1207,8 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
 	behaviour->id = MN_CONTAINER;
-	behaviour->draw = MN_DrawContainerNode2;
+	behaviour->draw = MN_ContainerNodeDraw;
+	behaviour->drawTooltip = MN_ContainerNodeDrawTooltip;
 	behaviour->leftClick = MN_ContainerClick;
 	behaviour->rightClick = MN_ContainerRightClick;
 	behaviour->loading = MN_ContainerLoading;
