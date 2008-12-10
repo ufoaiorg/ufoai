@@ -42,16 +42,10 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	R_ColorBlend(node->color);
 	if (node->size[0] == 0) {
 		/** @todo (menu) should this wrap or chop long lines? */
-		if (!node->mousefx || cl.time % 1000 < 500)
-			R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse, 0);
-		else
-			R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse, 0);
+		R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse, 0);
 	}
 	else {
-		if (!node->mousefx || cl.time % 1000 < 500)
-			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], ref, node->longlines);
-		else
-			R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], va("%s*\n", ref), node->longlines);
+		R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], ref, node->longlines);
 	}
 
 	R_ColorBlend(NULL);
