@@ -38,7 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;
 
+static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 static const invList_t *itemHover;
+static qboolean tooltipVisible = qfalse;
+static menuTimer_t *tooltipTimer;
 
 /**
  * @brief assign an hover item for the draw pipeline
@@ -111,6 +114,13 @@ static void MN_DrawDebugMenuNodeNames (void)
 	R_DrawFill(pos[0] + node->size[0] - weigth, pos[1]+node->size[1] - size, weigth, size, ALIGN_UL, red);
 }
 
+
+static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
+{
+	tooltipVisible = qtrue;
+}
+
+
 /**
  * @brief Draws the menu stack
  * @todo move DrawMenusTest here
@@ -122,9 +132,22 @@ void MN_DrawMenus (void)
 	menu_t *menu;
 	int sp, pp;
 	qboolean mouseOver = qfalse;
+	qboolean mouseMoved = qfalse;
 	vec2_t nodepos;
 
-	MN_CheckMouseMove();
+
+	mouseMoved = MN_CheckMouseMove();
+
+	/* handle delay time for tooltips */
+	if (mouseMoved && tooltipTimer != NULL) {
+		MN_TimerRelease(tooltipTimer);
+		tooltipTimer = NULL;
+		tooltipVisible = qfalse;
+	} else if (!mouseMoved && tooltipTimer == NULL && mn_show_tooltips->integer) {
+		tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
+		MN_TimerStart(tooltipTimer);
+	}
+
 	MN_HandleTimers();
 
 	MN_SetItemHover(NULL);
@@ -199,14 +222,13 @@ void MN_DrawMenus (void)
 
 			/** @todo remove it when its possible */
 			R_ColorBlend(NULL);
-
 		}	/* for */
 	}
 
 	menu = MN_GetActiveMenu();
 
 	/* draw tooltip */
-	if (menu && menu->hoverNode && mn_show_tooltips->integer) {
+	if (menu && menu->hoverNode && tooltipVisible) {
 		if (itemHover) {
 			char tooltiptext[MAX_VAR * 2];
 			const int itemToolTipWidth = 250;

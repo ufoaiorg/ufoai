@@ -35,7 +35,7 @@ void MN_MouseDown(int x, int y, int button);
 void MN_MouseUp(int x, int y, int button);
 
 void MN_InvalidateMouse(void);
-void MN_CheckMouseMove(void);
+qboolean MN_CheckMouseMove(void);
 menuNode_t *MN_GetHoveredNode(void);
 
 /* mouse capture */

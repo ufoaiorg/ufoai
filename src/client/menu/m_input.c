@@ -149,7 +149,7 @@ void MN_InvalidateMouse (void)
 /**
  * @brief Call mouse move only if the mouse position change
  */
-void MN_CheckMouseMove (void)
+qboolean MN_CheckMouseMove (void)
 {
 	/* is hovered node no more draw */
 	if (hoveredNode && (hoveredNode->invis || !MN_CheckCondition(hoveredNode)))
@@ -159,7 +159,10 @@ void MN_CheckMouseMove (void)
 		oldMousePosX = mousePosX;
 		oldMousePosY = mousePosY;
 		MN_MouseMove(mousePosX, mousePosY);
+		return qtrue;
 	}
+
+	return qfalse;
 }
 
 /**

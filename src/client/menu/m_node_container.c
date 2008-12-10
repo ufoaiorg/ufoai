@@ -762,12 +762,10 @@ static void MN_DrawContainerNode2 (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-
 	itemHover_temp = MN_DrawContainerNode(node);
 
 	if (itemHover_temp)
 		MN_SetItemHover(itemHover_temp);
-
 
 	/** We calculate the position of the top-left corner of the dragged
 	 * item in oder to compensate for the centered-drawn cursor-item.
