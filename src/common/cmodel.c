@@ -344,7 +344,6 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 	cBspPlane_t *out;
 	const dBspPlane_t *in;
 	int count;
-	int bits;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
@@ -368,16 +367,8 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 	curTile->planes = out;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		bits = 0;
-		for (j = 0; j < 3; j++) {
-			out->normal[j] = LittleFloat(in->normal[j]);
-			if (out->normal[j] < 0)
-				bits |= 1 << j;
-		}
-
 		out->dist = LittleFloat(in->dist);
 		out->type = LittleLong(in->type);
-		out->signbits = bits;
 
 		/* shift (map assembly) */
 		for (j = 0; j < 3; j++)
@@ -1356,13 +1347,11 @@ static void CM_InitBoxHull (void)
 		/* planes */
 		p = &curTile->box_planes[i * 2];
 		p->type = i >> 1;
-		p->signbits = 0;
 		VectorClear(p->normal);
 		p->normal[i >> 1] = 1;
 
 		p = &curTile->box_planes[i * 2 + 1];
 		p->type = 3 + (i >> 1);
-		p->signbits = 0;
 		VectorClear(p->normal);
 		p->normal[i >> 1] = -1;
 	}

@@ -743,7 +743,6 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TY
 		/** @todo special case for axial */
 		if (!trace->ispoint) {	/* general box case */
 			/* push the plane out appropriately for mins/maxs */
-			/** @todo use signbits into 8 way lookup for each mins/maxs */
 			for (j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
 					ofs[j] = trace->maxs[j];
@@ -843,7 +842,6 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 		/** @todo special case for axial */
 		/* general box case */
 		/* push the plane out appropriately for mins/maxs */
-		/** @todo use signbits into 8 way lookup for each mins/maxs */
 		for (j = 0; j < 3; j++) {
 			if (plane->normal[j] < 0)
 				ofs[j] = trace_data->maxs[j];

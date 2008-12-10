@@ -162,7 +162,7 @@ typedef struct menuNode_s {
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 
 	/* MN_TEXT */
-	/** @todo romove it  from 'string node', need to full implement R_FontDrawStringInBox */
+	/** @todo remove it  from 'string node', need to full implement R_FontDrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
 
 	/* BaseLayout */
@@ -184,28 +184,28 @@ typedef struct menuNode_s {
 /** @brief node behaviour, how a node work */
 typedef struct nodeBehaviour_s {
 	/* attributes */
-	const char* name;	/**< name of the behaviour: string type of a node */
-	int id;				/**< id of the behaviour: will be removed soon */
-	qboolean isVirtual; /**< if true, the node dont have any position on the screen */
-	const value_t* properties; /**< list of properties of the node */
-	int propertyCount;	/**< number of the properties into the propertiesList. Cache value to speedup search */
+	const char* name;			/**< name of the behaviour: string type of a node */
+	int id;						/**< id of the behaviour: @todo will be removed soon */
+	qboolean isVirtual;			/**< if true, the node dont have any position on the screen */
+	const value_t* properties;	/**< list of properties of the node */
+	int propertyCount;			/**< number of the properties into the propertiesList. Cache value to speedup search */
 
 	/* behaviour function */
-	void (*initBehaviour)(struct nodeBehaviour_s *behaviour);		/**< call aflter all behaviour registration */
+	void (*initBehaviour)(struct nodeBehaviour_s *behaviour);	/**< call after all behaviour registration */
 
 	/* node function */
-	void (*draw)(menuNode_t *node);		/**< how to draw a node */
-	void (*drawTooltip)(menuNode_t *node, int x, int y);		/**< allow to custom tooltip */
-	void (*leftClick)(menuNode_t *node, int x, int y); /**< on left mouse click into the node */
-	void (*rightClick)(menuNode_t *node, int x, int y); /**< on left mouse button click into the node */
-	void (*middleClick)(menuNode_t *node, int x, int y); /**< on right mouse button click into the node */
-	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y); /**< on use mouse wheel into the node */
+	void (*draw)(menuNode_t *node);							/**< how to draw a node */
+	void (*drawTooltip)(menuNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
+	void (*leftClick)(menuNode_t *node, int x, int y);		/**< left mouse click event in the node */
+	void (*rightClick)(menuNode_t *node, int x, int y);		/**< left mouse button click event in the node */
+	void (*middleClick)(menuNode_t *node, int x, int y);	/**< right mouse button click event in the node */
+	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y);	/**< mouse wheel event in the node */
 	void (*mouseMove)(menuNode_t *node, int x, int y);
-	void (*mouseDown)(menuNode_t *node, int x, int y, int button);	/**< on a mouse button down into the node */
-	void (*mouseUp)(menuNode_t *node, int x, int y, int button);	/**< on a mouse button up into the node */
+	void (*mouseDown)(menuNode_t *node, int x, int y, int button);	/**< mouse button down event in the node */
+	void (*mouseUp)(menuNode_t *node, int x, int y, int button);	/**< mouse button up event in the node */
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
-	void (*loading)(menuNode_t *node);		/**< call before script initialisation to init default value */
-	void (*loaded)(menuNode_t *node); /**< call one time, when node load from script is finished */
+	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
+	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 
 	/** Planed */
 	/*

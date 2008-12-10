@@ -72,8 +72,6 @@ typedef struct cBspPlane_s {
 	vec3_t normal;
 	float dist;
 	byte type;					/**< for fast side tests */
-	byte signbits;				/**< signx + (signy<<1) + (signz<<1) */
-	byte pad[2];
 } cBspPlane_t;
 
 typedef struct cBspModel_s {
@@ -94,24 +92,24 @@ typedef struct cBspSurface_s {
 	byte *lightmap;			/**< lightmap samples for server side visibility lookup */
 } cBspSurface_t;
 
-typedef struct {
+typedef struct cBspNode_s {
 	cBspPlane_t *plane;
 	vec3_t mins, maxs;
 	int children[2];			/**< negative numbers are leafs */
 } cBspNode_t;
 
-typedef struct {
+typedef struct cBspBrushSide_s {
 	cBspPlane_t *plane;
 	cBspSurface_t *surface;
 } cBspBrushSide_t;
 
-typedef struct {
+typedef struct cBspLeaf_s {
 	int contentFlags;
 	unsigned short firstleafbrush;
 	unsigned short numleafbrushes;
 } cBspLeaf_t;
 
-typedef struct {
+typedef struct cBspBrush_s {
 	int contentFlags;			/**< the CONTENTS_* mask */
 	int numsides;				/**< number of sides for this models - start to count from firstbrushside */
 	int firstbrushside;			/**< first brush in the list of this model */

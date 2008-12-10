@@ -472,7 +472,7 @@ static void R_ModLoadSurfedges (const lump_t *l)
  */
 static void R_ModLoadPlanes (const lump_t *l)
 {
-	int i, j;
+	int i;
 	cBspPlane_t *out;
 	const dBspPlane_t *in;
 	int count;
@@ -488,16 +488,8 @@ static void R_ModLoadPlanes (const lump_t *l)
 	r_worldmodel->bsp.numplanes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		int bits = 0;
-		for (j = 0; j < 3; j++) {
-			out->normal[j] = LittleFloat(in->normal[j]);
-			if (out->normal[j] < 0)
-				bits |= 1 << j;
-		}
-
 		out->dist = LittleFloat(in->dist);
 		out->type = LittleLong(in->type);
-		out->signbits = bits;
 	}
 }
 

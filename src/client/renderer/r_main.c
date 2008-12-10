@@ -101,22 +101,6 @@ static void R_Strings_f (void)
 	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
 }
 
-/**
- * @sa R_ModLoadPlanes
- */
-static inline int SignbitsForPlane (const cBspPlane_t * out)
-{
-	int bits, j;
-
-	/* for fast box on planeside test */
-	bits = 0;
-	for (j = 0; j < 3; j++) {
-		if (out->normal[j] < 0)
-			bits |= 1 << j;
-	}
-	return bits;
-}
-
 void R_SetupFrustum (void)
 {
 	int i;
@@ -143,7 +127,6 @@ void R_SetupFrustum (void)
 		for (i = 0; i < 4; i++) {
 			r_locals.frustum[i].type = PLANE_ANYZ;
 			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
-			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
 		}
 		r_locals.frustum[0].dist -= 10 * refdef.fov_x;
 		r_locals.frustum[1].dist -= 10 * refdef.fov_x;
@@ -162,7 +145,6 @@ void R_SetupFrustum (void)
 		for (i = 0; i < 4; i++) {
 			r_locals.frustum[i].type = PLANE_ANYZ;
 			r_locals.frustum[i].dist = DotProduct(refdef.vieworg, r_locals.frustum[i].normal);
-			r_locals.frustum[i].signbits = SignbitsForPlane(&r_locals.frustum[i]);
 		}
 	}
 }
