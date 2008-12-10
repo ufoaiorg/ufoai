@@ -71,6 +71,7 @@ typedef struct trace_s{
 	int planenum;				/**< index of the plane hit, used for map debugging */
 	int contentFlags;			/**< contents on other side of surface hit */
 	int leafnum;
+	int mapTile;				/**< the map tile we hit something */
 	struct le_s *le;			/**< not set by CM_*() functions */
 	struct edict_s *ent;		/**< not set by CM_*() functions */
 } trace_t;

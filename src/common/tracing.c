@@ -1209,6 +1209,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 
 	/* sweep the box through the model */
 	trace = TR_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask, brushreject);
+	trace.mapTile = mapTiles - tile;
 
 	if (rotated && trace.fraction != 1.0) {
 		/** @todo figure out how to do this with existing angles */
@@ -1259,6 +1260,7 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 
 			assert(h->cnode < curTile->numnodes + 6); /* +6 => bbox */
 			newtr = TR_BoxTrace(start, end, mins, maxs, &mapTiles[tile], h->cnode, brushmask, brushreject);
+			newtr.mapTile = tile;
 
 			/* memorize the trace with the minimal fraction */
 			if (newtr.fraction == 0.0)

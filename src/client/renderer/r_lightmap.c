@@ -447,24 +447,13 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 				refdef.trace_ent->model->bsp.nummodelsurfaces,
 				refdef.trace.endpos, lighting->color);
 	} else {
-		/* general case is to recurse up the nodes */
-		int i;
-		for (i = 0; i < r_numMapTiles; i++) {
-#if 0
-			if (refdef.trace.leafnum < r_mapTiles[i]->bsp.numleafs) {
-				mBspLeaf_t *leaf = &r_mapTiles[i]->bsp.leafs[refdef.trace.leafnum];
-				mBspNode_t *node = leaf->parent;
-				while (node) {
-					if (R_LightPoint_(i, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->color))
-						return;
-
-					node = node->parent;
-				}
-			}
-#else
-			if (R_LightPoint_(i, 0, r_mapTiles[i]->bsp.numsurfaces, refdef.trace.endpos, lighting->color))
-				break;
-#endif
+		mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
+		mBspNode_t *node = leaf->parent;
+		/** @todo this doesn't work yet - node is always(?) null */
+		while (node) {
+			if (R_LightPoint_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->color))
+				return;
+			node = node->parent;
 		}
 	}
 }
