@@ -43,9 +43,8 @@ char map_entitystring[MAX_MAP_ENTSTRING];
 vec3_t map_min, map_max;
 
 /** @brief server and client routing table */
-/* routing_t svMap, clMap; */
-routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE]; /* A routing_t per size */
-pathing_t svPathMap, clPathMap; /* This is where the data for TUS used to move and actor locations go */
+routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
+pathing_t svPathMap, clPathMap; /**< This is where the data for TUS used to move and actor locations go */
 
 /** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;
@@ -305,8 +304,8 @@ static void CMod_LoadLeafs (const lump_t * l, const vec3_t shift)
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no leafs");
 	/* need to save space for box planes */
-	if (count > MAX_MAP_PLANES)
-		Com_Error(ERR_DROP, "Map has too many planes");
+	if (count > MAX_MAP_LEAFS)
+		Com_Error(ERR_DROP, "Map has too many leafs");
 
 	/* add some for the box */
 	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
