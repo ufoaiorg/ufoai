@@ -204,9 +204,6 @@ static void MN_SpinnerNodeLoaded (menuNode_t *node)
 
 void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 {
-	/* inheritance */
-	MN_RegisterAbstractValueNode(behaviour);
-	/* overwrite */
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
 	behaviour->id = MN_SPINNER;

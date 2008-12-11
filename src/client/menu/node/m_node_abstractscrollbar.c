@@ -37,6 +37,6 @@ void MN_RegisterAbstractScrollbarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = qtrue;
-	behaviour->id = MN_NULL;
+	behaviour->id = MN_ABSTRACTSCROLLBAR;
 	behaviour->properties = properties;
 }

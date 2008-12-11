@@ -84,9 +84,6 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
 {
-	/* inheritance */
-	MN_RegisterButtonNode(behaviour);
-	/* overwrite */
 	behaviour->name = "custombutton";
 	behaviour->extends = "button";
 	behaviour->id = MN_CUSTOMBUTTON;

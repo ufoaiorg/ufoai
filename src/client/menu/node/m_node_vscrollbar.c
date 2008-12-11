@@ -245,9 +245,6 @@ static void MN_VScrollbarNodeLoaded (menuNode_t *node)
 
 void MN_RegisterVScrollbarNode (nodeBehaviour_t *behaviour)
 {
-	/* inheritance */
-	MN_RegisterAbstractScrollbarNode(behaviour);
-	/* overwrite */
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
 	behaviour->id = MN_VSCROLLBAR;

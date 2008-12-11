@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_input.h"
 #include "../../game/q_shared.h"
 
+#include "node/m_node_abstractscrollbar.h"
+#include "node/m_node_abstractvalue.h"
 #include "node/m_node_bar.h"
 #include "node/m_node_base.h"
 #include "node/m_node_button.h"
@@ -256,13 +258,13 @@ static void MN_HideNode_f (void)
 /**
  * @todo Change the @c type to @c char* (behaviourName)
  */
-menuNode_t* MN_AllocNode (int type)
+menuNode_t* MN_AllocNode (const char* type)
 {
 	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
 	if (mn.numNodes >= MAX_MENUNODES)
 		Sys_Error("MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
-	node->behaviour = &nodeBehaviourList[type];
+	node->behaviour = MN_GetNodeBehaviour(type);
 	return node;
 }
 
@@ -280,6 +282,72 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 	}
 	Sys_Error("Node behaviour '%s' doesn't exist\n", name);
 	return NULL;
+}
+
+/* position of virtual function into node behaviour */
+static const int virtualFunctions[] = {
+	offsetof(nodeBehaviour_t, draw),
+	offsetof(nodeBehaviour_t, drawTooltip),
+	offsetof(nodeBehaviour_t, leftClick),
+	offsetof(nodeBehaviour_t, rightClick),
+	offsetof(nodeBehaviour_t, middleClick),
+	offsetof(nodeBehaviour_t, mouseWheel),
+	offsetof(nodeBehaviour_t, mouseMove),
+	offsetof(nodeBehaviour_t, mouseDown),
+	offsetof(nodeBehaviour_t, mouseUp),
+	offsetof(nodeBehaviour_t, capturedMouseMove),
+	offsetof(nodeBehaviour_t, loading),
+	offsetof(nodeBehaviour_t, loaded),
+	0
+};
+
+static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
+{
+	if (behaviour->isInitialized)
+		return;
+
+	/** @todo check (when its possible) properties are ordered by name */
+	/* check and update properties data */
+	if (behaviour->properties) {
+		int num = 0;
+		const value_t* current = behaviour->properties;
+		while (current->string != NULL) {
+			num++;
+			current++;
+		}
+		behaviour->propertyCount = num;
+	}
+
+	if (behaviour->extends) {
+		int i = 0;
+		behaviour->super = MN_GetNodeBehaviour(behaviour->extends);
+		MN_InitializeNodeBehaviour(behaviour->super);
+
+		while (qtrue) {
+			int pos = virtualFunctions[i];
+			size_t superFunc;
+			size_t func;
+			if (pos == 0)
+				break;
+
+			/* cache super function if we dont overwrite it */
+			superFunc = *(size_t*)((char*)behaviour->super + pos);
+			func = *(size_t*)((char*)behaviour + pos);
+			if (func == 0 && superFunc != 0) {
+				*(size_t*)((char*)behaviour + pos) = superFunc;
+			}
+
+			i++;
+		}
+
+		/** @todo remove it when we will allow to search properties into the super list */
+		if (behaviour->properties == NULL) {
+			behaviour->properties = behaviour->super->properties;
+			behaviour->propertyCount = behaviour->super->propertyCount;
+		}
+	}
+
+	behaviour->isInitialized = qtrue;
 }
 
 /**
@@ -364,45 +432,73 @@ static void MN_NodeSetProperty_f (void)
 
 void MN_InitNodes (void)
 {
-	int i;
+	int i = 0;
+	nodeBehaviour_t *current = nodeBehaviourList;
 
+	/** @todo convert it with an array of function */
 	/* compute list of node behaviours */
-	MN_RegisterNullNode(nodeBehaviourList + MN_NULL);
-	MN_RegisterConFuncNode(nodeBehaviourList + MN_CONFUNC);
-	MN_RegisterCvarFuncNode(nodeBehaviourList + MN_CVARFUNC);
-	MN_RegisterFuncNode(nodeBehaviourList + MN_FUNC);
-	MN_RegisterZoneNode(nodeBehaviourList + MN_ZONE);
-	MN_RegisterImageNode(nodeBehaviourList + MN_PIC);
-	MN_RegisterStringNode(nodeBehaviourList + MN_STRING);
-	MN_RegisterSpinnerNode(nodeBehaviourList + MN_SPINNER);
-	MN_RegisterTextNode(nodeBehaviourList + MN_TEXT);
-	MN_RegisterTextEntryNode(nodeBehaviourList + MN_TEXTENTRY);
-	MN_RegisterBarNode(nodeBehaviourList + MN_BAR);
-	MN_RegisterTBarNode(nodeBehaviourList + MN_TBAR);
-	MN_RegisterModelNode(nodeBehaviourList + MN_MODEL);
-	MN_RegisterContainerNode(nodeBehaviourList + MN_CONTAINER);
-	MN_RegisterItemNode(nodeBehaviourList + MN_ITEM);
-	MN_RegisterMapNode(nodeBehaviourList + MN_MAP);
-	MN_RegisterAirfightMapNode(nodeBehaviourList + MN_AIRFIGHTMAP);
-	MN_RegisterBaseMapNode(nodeBehaviourList + MN_BASEMAP);
-	MN_RegisterBaseLayoutNode(nodeBehaviourList + MN_BASELAYOUT);
-	MN_RegisterCheckBoxNode(nodeBehaviourList + MN_CHECKBOX);
-	MN_RegisterSelectBoxNode(nodeBehaviourList + MN_SELECTBOX);
-	MN_RegisterLineStripNode(nodeBehaviourList + MN_LINESTRIP);
-	MN_RegisterCinematicNode(nodeBehaviourList + MN_CINEMATIC);
-	MN_RegisterRadarNode(nodeBehaviourList + MN_RADAR);
-	MN_RegisterTabNode(nodeBehaviourList + MN_TAB);
-	MN_RegisterControlsNode(nodeBehaviourList + MN_CONTROLS);
-	MN_RegisterCustomButtonNode(nodeBehaviourList + MN_CUSTOMBUTTON);
-	MN_RegisterWindowPanelNode(nodeBehaviourList + MN_WINDOWPANEL);
-	MN_RegisterButtonNode(nodeBehaviourList + MN_BUTTON);
-	MN_RegisterWindowNode(nodeBehaviourList + MN_WINDOW);	/**< for conveniance, must not be used */
-	MN_RegisterVScrollbarNode(nodeBehaviourList + MN_VSCROLLBAR);
+	MN_RegisterNullNode(current++);
+	MN_RegisterAbstractOptionNode(current++);
+	MN_RegisterAbstractScrollbarNode(current++);
+	MN_RegisterAbstractValueNode(current++);
+	MN_RegisterAirfightMapNode(current++);
+	MN_RegisterBarNode(current++);
+	MN_RegisterBaseLayoutNode(current++);
+	MN_RegisterBaseMapNode(current++);
+	MN_RegisterButtonNode(current++);
+	MN_RegisterCheckBoxNode(current++);
+	MN_RegisterCinematicNode(current++);
+	MN_RegisterConFuncNode(current++);
+	MN_RegisterContainerNode(current++);
+	MN_RegisterControlsNode(current++);
+	MN_RegisterCustomButtonNode(current++);
+	MN_RegisterCvarFuncNode(current++);
+	MN_RegisterFuncNode(current++);
+	MN_RegisterItemNode(current++);
+	MN_RegisterLineStripNode(current++);
+	MN_RegisterMapNode(current++);
+	MN_RegisterWindowNode(current++); /** @todo 'menu', rename it according to the function when its possible */
+	MN_RegisterModelNode(current++);
+	MN_RegisterImageNode(current++); /** @todo 'pic', rename it according to the function when its possible */
+	MN_RegisterRadarNode(current++);
+	MN_RegisterSelectBoxNode(current++);
+	MN_RegisterSpinnerNode(current++);
+	MN_RegisterStringNode(current++);
+	MN_RegisterTabNode(current++);
+	MN_RegisterTBarNode(current++);
+	MN_RegisterTextNode(current++);
+	MN_RegisterTextEntryNode(current++);
+	MN_RegisterVScrollbarNode(current++);
+	MN_RegisterWindowPanelNode(current++);
+	MN_RegisterZoneNode(current++);
 
+	/* check for safe data: list must be sorted by alphabet */
+	current = nodeBehaviourList;
+	for (i = 1; i < MN_NUM_NODETYPE; i++) {
+		nodeBehaviour_t *a = current;
+		nodeBehaviour_t *b = current + 1;
+		if (Q_strcmp(a->name, b->name) >= 0) {
+#if DEBUG
+			Sys_Error("MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name\n", a->name, b->name);
+#else
+			Sys_Error("MN_InitNodes: Error: '%s' is before '%s'\n", a->name, b->name);
+#endif
+		}
+		current++;
+	}
+
+	/* finalyse node behaviour initialization */
+	current = nodeBehaviourList;
+	for (i = 1; i < MN_NUM_NODETYPE; i++) {
+		MN_InitializeNodeBehaviour(current);
+		current++;
+	}
+
+	/** @todo move it where it is used (global var not need) */
 	/* direct access to menu node */
-	menuBehaviour = nodeBehaviourList + MN_WINDOW;
+	menuBehaviour = MN_GetNodeBehaviour("menu");
 
-	/* finalise initialisation */
+	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");

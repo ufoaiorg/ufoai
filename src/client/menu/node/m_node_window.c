@@ -109,7 +109,7 @@ void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menu_t *newMenu, qboolean recursive)
 {
-	menuNode_t* newNode = MN_AllocNode(node->behaviour->id);
+	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
 	*newNode = *node;
 	newNode->menu = newMenu;
 	newNode->next = NULL;
@@ -138,7 +138,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 {
 	/* if it need, construct the drag button */
 	if (menu->dragButton) {
-		menuNode_t *control = MN_AllocNode(MN_CONTROLS);
+		menuNode_t *control = MN_AllocNode("controls");
 		int positionFromRight = CONTROLS_PADDING;
 		if (menu->closeButton)
 			positionFromRight += CONTROLS_IMAGE_DIMENSIONS + CONTROLS_SPACING;
@@ -156,7 +156,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 
 	/* if the menu should have a close button, add it here */
 	if (menu->closeButton) {
-		menuNode_t *button = MN_AllocNode(MN_PIC);
+		menuNode_t *button = MN_AllocNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = menu;

@@ -64,6 +64,9 @@ typedef enum mn_s {
 	MN_BUTTON,
 	MN_WINDOW,
 	MN_VSCROLLBAR,
+	MN_ABSTRACTSCROLLBAR,
+	MN_ABSTRACTVALUE,
+	MN_ABSTRACTOPTION,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -181,7 +184,10 @@ typedef struct menuNode_s {
 
 } menuNode_t;
 
-/** @brief node behaviour, how a node work */
+/**
+ * @brief node behaviour, how a node work
+ * @sa virtualFunctions
+ */
 typedef struct nodeBehaviour_s {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
@@ -189,6 +195,7 @@ typedef struct nodeBehaviour_s {
 	int id;							/**< id of the behaviour: @todo will be removed soon */
 	qboolean isVirtual;				/**< true, if the node dont have any position on the screen */
 	qboolean isAbstract;			/**< true, if we can't instanciate the behaviour */
+	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
 	const value_t* properties;		/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	struct nodeBehaviour_s *super;	/**< link to the extended node */
@@ -228,7 +235,7 @@ void MN_HideNode(menuNode_t* node);
 void MN_SetNewNodePos(menuNode_t* node, int x, int y);
 void MN_GetNodeAbsPos(const menuNode_t* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const menuNode_t* node, int *x, int *y);
-menuNode_t* MN_AllocNode(int type);
+menuNode_t* MN_AllocNode(const char* type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 struct value_s;
 const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);

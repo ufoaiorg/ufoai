@@ -266,16 +266,13 @@ static const value_t properties[] = {
 void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
-	behaviour->id = MN_NULL;
+	behaviour->id = MN_ABSTRACTOPTION;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 }
 
 void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 {
-	/* inherite */
-	MN_RegisterAbstractOptionNode(behaviour);
-	/* overwrite */
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
 	behaviour->id = MN_SELECTBOX;

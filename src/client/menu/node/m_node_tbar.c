@@ -51,9 +51,6 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
-	/* inherite */
-	MN_RegisterAbstractValueNode(behaviour);
-	/* overwrite */
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->id = MN_TBAR;

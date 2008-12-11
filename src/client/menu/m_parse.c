@@ -724,7 +724,7 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 
 	/* else initialize node */
 	} else {
-		node = MN_AllocNode(behaviour->id);
+		node = MN_AllocNode(behaviour->name);
 		node->menu = menu;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
 		MN_AppendNode(menu, node);

@@ -211,9 +211,6 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 {
-	/* inherite */
-	MN_RegisterAbstractOptionNode(behaviour);
-	/* overwrite */
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
 	behaviour->id = MN_TAB;

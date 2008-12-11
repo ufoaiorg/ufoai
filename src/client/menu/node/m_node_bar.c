@@ -104,9 +104,6 @@ static void MN_DrawBarLoading (menuNode_t *node)
 
 void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 {
-	/* inherite */
-	MN_RegisterAbstractValueNode(behaviour);
-	/* overwrite */
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
 	behaviour->id = MN_BAR;
