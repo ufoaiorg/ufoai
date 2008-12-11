@@ -64,28 +64,30 @@ static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
  */
 static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTimer)
 {
-	/* find insert position */
+	menuTimer_t* current = first;
 	menuTimer_t* prev = NULL;
-	if (first != NULL) {
-		prev = first->prev;
+
+	/* find insert position */
+	if (current != NULL) {
+		prev = current->prev;
 	}
-	while (first) {
-		if (newTimer->nextTime < first->nextTime)
+	while (current) {
+		if (newTimer->nextTime < current->nextTime)
 			break;
-		prev = first;
-		first = first->next;
+		prev = current;
+		current = current->next;
 	}
 
-	/* insert between prev and first */
+	/* insert between prev and current */
 	newTimer->prev = prev;
-	newTimer->next = first;
-	if (first != NULL) {
-		first->prev = newTimer;
+	newTimer->next = current;
+	if (current != NULL) {
+		current->prev = newTimer;
 	}
-	if (prev == NULL) {
-		mn_firstTimer = newTimer;
-	} else {
+	if (prev != NULL) {
 		prev->next = newTimer;
+	} else {
+		mn_firstTimer = newTimer;
 	}
 }
 
@@ -122,7 +124,7 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
 
 	/* search empty slot */
 	for (i = 0; i < MN_TIMER_SLOT_NUMBER; i++) {
-		if (mn_timerSlots[i].node != NULL && mn_timerSlots[i].callback != NULL)
+		if (mn_timerSlots[i].callback != NULL)
 			continue;
 		timer = mn_timerSlots + i;
 		break;
@@ -136,6 +138,8 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
 	timer->delay = firstDelay;
 	timer->callback = callback;
 	timer->calledTime = 0;
+	timer->prev = NULL;
+	timer->next = NULL;
 	return timer;
 }
 
@@ -144,6 +148,7 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
  */
 void MN_TimerStart (menuTimer_t *timer)
 {
+	assert(mn_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
 	timer->nextTime = cls.realtime + timer->delay;
 	MN_InsertTimerInActiveList(mn_firstTimer, timer);
 }
