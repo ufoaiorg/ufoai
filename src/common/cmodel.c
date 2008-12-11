@@ -370,9 +370,11 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 		out->dist = LittleFloat(in->dist);
 		out->type = LittleLong(in->type);
 
-		/* shift (map assembly) */
-		for (j = 0; j < 3; j++)
+		/* load normals and shift (map assembly) */
+		for (j = 0; j < 3; j++) {
+			out->normal[j] = LittleFloat(in->normal[j]);
 			out->dist += out->normal[j] * shift[j];
+		}
 	}
 }
 
@@ -831,7 +833,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	assert(minZ <= maxZ);
 
 	Com_Printf("Tile bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX, minY, minZ, maxX, maxY, maxZ);
-	Com_Printf("Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX -sX, minY - sY, minZ - sZ, maxX -sX, maxY -sY, maxZ - sZ);
+	Com_Printf("Source bounds: (%i, %i, %i) to (%i, %i, %i)\n", minX - sX, minY - sY, minZ - sZ, maxX - sX, maxY - sY, maxZ - sZ);
 
 	for (size = 0; size < ACTOR_MAX_SIZE; size++)
 		/* Adjust starting x and y by size to catch large actor cell overlap. */
