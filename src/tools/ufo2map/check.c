@@ -845,7 +845,7 @@ static void Check_FindCompositeSides (void)
 		for (is = 0; is < iBrush->numsides; is++) {
 			side_t *iSide = &iBrush->original_sides[is];
 
-			if (iSide->isCompositeMember || (iSide->surfaceFlags & SURF_NODRAW))
+			if (iSide->isCompositeMember || Check_SurfProp(SURF_NODRAW, iSide))
 				continue; /* do not find the same composite again. no nodraws */
 
 			/* start making the list of brushes in the composite,
@@ -871,7 +871,7 @@ static void Check_FindCompositeSides (void)
 				for (j = 0; j < bChecking->numsides; j++) {
 					side_t *sChecking = &bChecking->original_sides[j];
 
-					if (sChecking->surfaceFlags & SURF_NODRAW)
+					if (Check_SurfProp(SURF_NODRAW, sChecking))
 						continue; /* no nodraws in composites */
 
 					if (ParallelAndCoincidentTo(iSide, sChecking)) {
@@ -1257,7 +1257,7 @@ void CheckZFighting (void)
 			for (is = 0; is < iBrush->numsides; is++) {
 				const side_t *iSide = &iBrush->original_sides[is];
 
-				if (iSide->surfaceFlags & SURF_NODRAW)
+				if (Check_SurfProp(SURF_NODRAW, iSide))
 					continue; /* skip nodraws */
 
 				if (Check_SidePointsDown(iSide))
@@ -1268,7 +1268,7 @@ void CheckZFighting (void)
 					const side_t *jSide = &jBrush->original_sides[js];
 
 					/* skip nodraws */
-					if (jSide->surfaceFlags & SURF_NODRAW)
+					if (Check_SurfProp(SURF_NODRAW, jSide))
 						continue;
 
 #if 0
@@ -1387,7 +1387,7 @@ void CheckNodraws (void)
 			side_t *iSide = &iBrush->original_sides[is];
 
 			/* skip those that are already nodraw */
-			if (iSide->surfaceFlags & SURF_NODRAW)
+			if (Check_SurfProp(SURF_NODRAW, iSide))
 				continue;
 			/* surface lights may point downwards */
 			else if (iSide->surfaceFlags & SURF_LIGHT)
@@ -1428,7 +1428,7 @@ void CheckNodraws (void)
 				side_t *iSide = &iBrush->original_sides[is];
 
 				/* skip those that are already nodraw */
-				if (iSide->surfaceFlags & SURF_NODRAW)
+				if (Check_SurfProp(SURF_NODRAW, iSide))
 					continue;
 				/* surface lights may point downwards */
 				else if (iSide->surfaceFlags & SURF_LIGHT)
@@ -1484,7 +1484,7 @@ void CheckNodraws (void)
 
 				/* skip those that are already nodraw. note: this includes sides hidden by single sides
 				 * set above - this prevents duplicate nodraw reports */
-				if (iSide->surfaceFlags & SURF_NODRAW)
+				if (Check_SurfProp(SURF_NODRAW, iSide))
 					continue;
 
 				iWinding = iSide->winding;
@@ -1781,7 +1781,7 @@ void CheckLevelFlags (void)
 			const side_t *side = &brush->original_sides[j];
 			assert(side);
 
-			if (!(side->surfaceFlags & SURF_NODRAW)) {
+			if (!(Check_SurfProp(SURF_NODRAW, side))) {
 				allNodraw = qfalse;
 				break;
 			}
