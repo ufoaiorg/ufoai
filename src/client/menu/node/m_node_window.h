@@ -62,7 +62,6 @@ menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 menuNode_t *MN_GetLastNode(const menu_t* const menu);
 void MN_InsertNode(menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode);
 void MN_AppendNode(menu_t* const menu, menuNode_t *newNode);
-menuNode_t* MN_CloneNode(const menuNode_t* node, struct menu_s *newMenu, qboolean recursive);
 
 void MN_WindowNodeLoading(menu_t *menu);
 void MN_WindowNodeLoaded(menu_t *menu);

@@ -242,5 +242,6 @@ const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const
 qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
 
 void MN_InitNodes(void);
+menuNode_t* MN_CloneNode(const menuNode_t* node, struct menu_s *newMenu, qboolean recursive);
 
 #endif

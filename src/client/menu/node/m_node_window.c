@@ -101,22 +101,6 @@ void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
 }
 
 /**
- * @brief Clone a node
- * @param[in] node to clone
- * @param[in] recursive True if we also must clone subnodeas
- * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
- * @todo remember to update this function when we allow a tree of nodes
- */
-menuNode_t* MN_CloneNode (const menuNode_t* node, menu_t *newMenu, qboolean recursive)
-{
-	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
-	*newNode = *node;
-	newNode->menu = newMenu;
-	newNode->next = NULL;
-	return newNode;
-}
-
-/**
  * @brief Called at the begin of the load from script
  */
 void MN_WindowNodeLoading (menu_t *menu)
