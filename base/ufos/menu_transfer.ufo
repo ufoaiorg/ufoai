@@ -119,7 +119,7 @@ menu transfer
 		format	"20 0"
 		rows	"18"
 //		bgcolor	"1 1 1 0.5"
-		repeat	true
+//		repeat	true
 		wheel {
 			cmd "mn_setnodeproperty trans_list_scroll current <text_scroll>"
 		}
@@ -160,7 +160,7 @@ menu transfer
 		wheel
 		rows	"20"
 //		bgcolor	"1 1 1 0.5"
-		repeat	true
+//		repeat	true
 	}
 
 	// ==================

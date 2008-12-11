@@ -361,7 +361,6 @@ menu aliencont
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "aliencont_list_up;" }
-		repeat	true
 		out		{ *ac_button_scrollup texl "32 32" *ac_button_scrollup texh "48 48" }
 		in		{ *ac_button_scrollup texl "48 32" *ac_button_scrollup texh "64 48" }
 	}
@@ -375,7 +374,6 @@ menu aliencont
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "aliencont_list_down;" }
-		repeat	true
 		out		{ *ac_button_scrolldown texl "32 48" *ac_button_scrolldown texh "48 64" }
 		in		{ *ac_button_scrolldown texl "48 48" *ac_button_scrolldown texh "64 64" }
 	}

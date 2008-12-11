@@ -391,7 +391,6 @@ menu hospital
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "hosp_list_up;" }
-		repeat	true
 		out		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
 		in		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
 	}
@@ -405,7 +404,6 @@ menu hospital
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "hosp_list_down;" }
-		repeat	true
 		out		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
 		in		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
 	}
