@@ -601,9 +601,66 @@ void CheckEntities (void)
 	}
 }
 
+/**
+ * @brief textures take priority over flags. checks if a tex marks a side as having a
+ * special property.
+ * @param (surface or content) flag the property to check for. should only have one bit set.
+ * @param s the side to check the texture of
+ * @return qtrue if the tex indicates the side has the property. Also returns qfalse if
+ * the property is not one of those covered by this function.
+ * @sa Check_SurfProps to check for one of several properties with one call
+ */
+static qboolean Check_SurfProp (const int flag, const side_t *s)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *tex = &side_brushtextures[index];
+	switch (flag) {
+		case SURF_NODRAW:
+			return !strcmp(tex->name, "tex_common/nodraw") ? qtrue : qfalse;
+		case CONTENTS_WEAPONCLIP:
+			return !strcmp(tex->name, "tex_common/weaponclip") ? qtrue : qfalse;
+		case CONTENTS_ACTORCLIP:
+			return !strcmp(tex->name, "tex_common/actorclip") ? qtrue : qfalse;
+		case CONTENTS_ORIGIN:
+			return !strcmp(tex->name, "tex_common/origin") ? qtrue : qfalse;
+		default:
+			return qfalse;
+	}
+}
 
 /**
- * @return qtrue for brushes that do not move, are not breakable, are not seethrough, etc
+ * @brief textures take priority over flags. checks if a tex marks a side as having a
+ * special property.
+ * @param flags the properties to check for. may have several bits set
+ * @param s the side to check the texture of
+ * @return qtrue if the tex indicates the side has one of the properties in flags
+ * Also returns qfalse if
+ * the property is not one of those covered by this function.
+ * @sa Check_SurfProp to check for one property with a call
+ */
+static qboolean Check_SurfProps (const int flags, const side_t *s)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *tex = &side_brushtextures[index];
+	char *texname = tex->name;
+	if (flags & SURF_NODRAW) {
+		if (!strcmp(texname, "tex_common/nodraw"))
+			return qtrue;
+	} else if (flags & CONTENTS_WEAPONCLIP) {
+		if (!strcmp(texname, "tex_common/weaponclip"))
+			return qtrue;
+	} else if (flags & CONTENTS_ACTORCLIP) {
+		if (!strcmp(texname, "tex_common/actorclip"))
+			return qtrue;
+	} else if (flags & CONTENTS_ORIGIN) {
+		if (!strcmp(texname, "tex_common/origin"))
+			return qtrue;
+	}
+	return qfalse;
+}
+
+/**
+ * @return qtrue for brushes that do not move, are breakable, are seethrough, etc
  */
 static qboolean Check_IsOptimisable (const mapbrush_t *b) {
 	const entity_t *e = &entities[b->entitynum];
@@ -616,9 +673,11 @@ static qboolean Check_IsOptimisable (const mapbrush_t *b) {
 	/* content flags should be the same on all faces, but we shall be suspicious */
 	for (i = 0; i < b->numsides; i++) {
 		const side_t *side = &b->original_sides[i];
-		if (side->contentFlags & (CONTENTS_ORIGIN | MASK_CLIP | CONTENTS_TRANSLUCENT))
+		if (Check_SurfProps(CONTENTS_ORIGIN | MASK_CLIP, side))
 			return qfalse;
-		numNodraws += side->surfaceFlags & SURF_NODRAW ? 1 : 0;
+		if (side->contentFlags & CONTENTS_TRANSLUCENT)
+			return qfalse;
+		numNodraws += Check_SurfProp(SURF_NODRAW, side) ? 1 : 0;
 	}
 
 	/* all nodraw brushes are special too */
