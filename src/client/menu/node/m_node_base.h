@@ -1,5 +1,5 @@
 /**
- * @file m_font.h
+ * @file m_node_base.h
  */
 
 /*
@@ -22,25 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_FONT_H
-#define CLIENT_MENU_M_FONT_H
+#ifndef CLIENT_MENU_M_NODE_BASE_H
+#define CLIENT_MENU_M_NODE_BASE_H
 
-#include "node/m_node_window.h"
+#include "../m_nodes.h"
 
-typedef struct font_s {
-	char *name;
-	int size;
-	char *style;
-	char *path;
-} font_t;
-
-extern font_t *fontSmall;
-extern font_t *fontBig;
-
-/* will return the size and the path for each font */
-const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
-/* this is the function where all the sdl_ttf fonts are parsed */
-void MN_ParseFont(const char *name, const char **text);
-void MN_InitFonts(void);
+void MN_RegisterBaseMapNode(nodeBehaviour_t *behaviour);
+void MN_RegisterBaseLayoutNode(nodeBehaviour_t *behaviour);
 
 #endif

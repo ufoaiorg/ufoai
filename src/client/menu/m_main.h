@@ -30,11 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MENUSTACK		32
 #define MAX_MENUACTIONS		8192
 
-#include "m_node_window.h"
+#include "node/m_node_window.h"
 #include "m_actions.h"
 #include "m_messages.h"
 #include "m_nodes.h"
-#include "m_node_model.h"
+#include "node/m_node_model.h"
 
 typedef struct mouseRepeat_s {
 	menu_t *menu;				/**< where - the menu is it executed in (context) */

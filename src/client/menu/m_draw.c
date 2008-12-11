@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
-#include "m_node_container.h"
+#include "node/m_node_container.h"
 
 cvar_t *mn_debugmenu;
 cvar_t *mn_show_tooltips;

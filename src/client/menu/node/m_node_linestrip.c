@@ -1,5 +1,5 @@
 /**
- * @file m_font.h
+ * @file m_node_linestrip.c
  */
 
 /*
@@ -22,25 +22,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_FONT_H
-#define CLIENT_MENU_M_FONT_H
+#include "../m_nodes.h"
+#include "../m_parse.h"
+#include "m_node_linestrip.h"
 
-#include "node/m_node_window.h"
+static void MN_LineStripNodeDraw (menuNode_t *node)
+{
+	int i;
+	if (node->u.linestrip.numStrips > 0) {
+		/* Draw all linestrips. */
+		for (i = 0; i < node->u.linestrip.numStrips; i++) {
+			/* Draw this line if it's valid. */
+			if (node->u.linestrip.pointList[i] && (node->u.linestrip.numPoints[i] > 0)) {
+				R_ColorBlend(node->u.linestrip.color[i]);
+				R_DrawLineStrip(node->u.linestrip.numPoints[i], node->u.linestrip.pointList[i]);
+			}
+		}
+	}
+}
 
-typedef struct font_s {
-	char *name;
-	int size;
-	char *style;
-	char *path;
-} font_t;
-
-extern font_t *fontSmall;
-extern font_t *fontBig;
-
-/* will return the size and the path for each font */
-const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
-/* this is the function where all the sdl_ttf fonts are parsed */
-void MN_ParseFont(const char *name, const char **text);
-void MN_InitFonts(void);
-
-#endif
+void MN_RegisterLineStripNode (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "linestrip";
+	behaviour->id = MN_LINESTRIP;
+	behaviour->draw = MN_LineStripNodeDraw;
+}

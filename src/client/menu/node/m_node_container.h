@@ -1,5 +1,5 @@
 /**
- * @file m_font.h
+ * @file m_node_container.h
  */
 
 /*
@@ -22,25 +22,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_FONT_H
-#define CLIENT_MENU_M_FONT_H
+#ifndef CLIENT_MENU_M_NODE_CONTAINER_H
+#define CLIENT_MENU_M_NODE_CONTAINER_H
 
-#include "node/m_node_window.h"
+struct base_s;
 
-typedef struct font_s {
-	char *name;
-	int size;
-	char *style;
-	char *path;
-} font_t;
+#include "../m_nodes.h"
 
-extern font_t *fontSmall;
-extern font_t *fontBig;
-
-/* will return the size and the path for each font */
-const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
-/* this is the function where all the sdl_ttf fonts are parsed */
-void MN_ParseFont(const char *name, const char **text);
-void MN_InitFonts(void);
+void MN_RegisterContainerNode(nodeBehaviour_t *behaviour);
+void MN_FindContainer(menuNode_t* const node);
+invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY);
+void MN_Drag(const menuNode_t* const node, struct base_s *base, int x, int y, qboolean rightClick);
+void MN_DrawItem(menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color);
+void MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
 
 #endif
