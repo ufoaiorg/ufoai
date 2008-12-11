@@ -1196,14 +1196,6 @@ static void MN_ContainerLoading (menuNode_t *node)
 	node->color[3] = 1.0;
 }
 
-static void MN_ContainerNodeInitBehaviour (nodeBehaviour_t *behaviour)
-{
-	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
-	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
-	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
-	Cmd_AddCommand("scrollcont_scroll", MN_ScrollContainerScroll_f, "Scrolls the current container.");
-}
-
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
@@ -1214,5 +1206,9 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->rightClick = MN_ContainerRightClick;
 	behaviour->loading = MN_ContainerLoading;
 	behaviour->loaded = MN_FindContainer;
-	behaviour->initBehaviour = MN_ContainerNodeInitBehaviour;
+
+	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
+	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
+	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
+	Cmd_AddCommand("scrollcont_scroll", MN_ScrollContainerScroll_f, "Scrolls the current container.");
 }

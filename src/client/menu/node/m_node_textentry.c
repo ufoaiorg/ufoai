@@ -263,11 +263,6 @@ static void MN_TextEntryNodeLoading (menuNode_t *node)
 	Vector4Set(node->selectedColor, 1, 1, 1, 1);
 }
 
-static void MN_TextEntryNodeInitBehaviour (nodeBehaviour_t *behaviour)
-{
-	Cmd_AddCommand("mn_edittextentry", MN_EditTextEntry_f, "Force edition of the textentry.");
-}
-
 static const value_t properties[] = {
 	{"ispassword", V_BOOL, offsetof(menuNode_t, u.textentry.isPassword), MEMBER_SIZEOF(menuNode_t, u.textentry.isPassword) },
 	{"clickoutabort", V_BOOL, offsetof(menuNode_t, u.textentry.clickOutAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.clickOutAbort)},
@@ -283,5 +278,6 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;
-	behaviour->initBehaviour = MN_TextEntryNodeInitBehaviour;
+
+	Cmd_AddCommand("mn_edittextentry", MN_EditTextEntry_f, "Force edition of the textentry.");
 }

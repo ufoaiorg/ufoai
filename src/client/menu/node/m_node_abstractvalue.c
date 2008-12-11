@@ -38,5 +38,8 @@ static const value_t properties[] = {
 
 void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 {
+	behaviour->name = "abstractvalue";
+	behaviour->isAbstract = qtrue;
+	behaviour->id = MN_NULL;
 	behaviour->properties = properties;
 }

@@ -88,6 +88,7 @@ void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
 	MN_RegisterButtonNode(behaviour);
 	/* overwrite */
 	behaviour->name = "custombutton";
+	behaviour->extends = "button";
 	behaviour->id = MN_CUSTOMBUTTON;
 	behaviour->draw = MN_CustomButtonNodeDraw;
 }

@@ -208,6 +208,7 @@ void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 	MN_RegisterAbstractValueNode(behaviour);
 	/* overwrite */
 	behaviour->name = "spinner";
+	behaviour->extends = "abstractvalue";
 	behaviour->id = MN_SPINNER;
 	behaviour->mouseWheel = MN_SpinnerNodeWheel;
 	behaviour->mouseDown = MN_SpinnerNodeDown;

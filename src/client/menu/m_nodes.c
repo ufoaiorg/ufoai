@@ -406,10 +406,4 @@ void MN_InitNodes (void)
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
-	for (i = 0; i < MN_NUM_NODETYPE; i++) {
-		nodeBehaviour_t *b = nodeBehaviourList + i;
-		if (b->initBehaviour) {
-			b->initBehaviour(b);
-		}
-	}
 }

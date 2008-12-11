@@ -108,6 +108,7 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	MN_RegisterAbstractValueNode(behaviour);
 	/* overwrite */
 	behaviour->name = "bar";
+	behaviour->extends = "abstractvalue";
 	behaviour->id = MN_BAR;
 	behaviour->draw = MN_DrawBarNode;
 	behaviour->loading = MN_DrawBarLoading;

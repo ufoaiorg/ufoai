@@ -36,6 +36,7 @@ static const value_t properties[] = {
 void MN_RegisterAbstractScrollbarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollbar";
+	behaviour->isAbstract = qtrue;
 	behaviour->id = MN_NULL;
 	behaviour->properties = properties;
 }

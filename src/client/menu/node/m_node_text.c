@@ -589,13 +589,6 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 #endif
 }
 
-static void MN_TextNodeInitBehaviour (nodeBehaviour_t *behaviour)
-{
-	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
-	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
-	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
-}
-
 static const value_t properties[] = {
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, u.text.scrollbar), MEMBER_SIZEOF(menuNode_t, u.text.scrollbar)},
 	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, u.text.scrollbarLeft), MEMBER_SIZEOF(menuNode_t, u.text.scrollbarLeft)},
@@ -623,5 +616,8 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_TextNodeLoading;
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
-	behaviour->initBehaviour = MN_TextNodeInitBehaviour;
+
+	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
+	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
+	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
 }

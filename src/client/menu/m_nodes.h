@@ -183,17 +183,17 @@ typedef struct menuNode_s {
 
 /** @brief node behaviour, how a node work */
 typedef struct nodeBehaviour_s {
-	/* attributes */
-	const char* name;			/**< name of the behaviour: string type of a node */
-	int id;						/**< id of the behaviour: @todo will be removed soon */
-	qboolean isVirtual;			/**< if true, the node dont have any position on the screen */
-	const value_t* properties;	/**< list of properties of the node */
-	int propertyCount;			/**< number of the properties into the propertiesList. Cache value to speedup search */
+	/* behaviour attributes */
+	const char* name;				/**< name of the behaviour: string type of a node */
+	const char* extends;			/**< name of the extends behaviour */
+	int id;							/**< id of the behaviour: @todo will be removed soon */
+	qboolean isVirtual;				/**< true, if the node dont have any position on the screen */
+	qboolean isAbstract;			/**< true, if we can't instanciate the behaviour */
+	const value_t* properties;		/**< list of properties of the node */
+	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
+	struct nodeBehaviour_s *super;	/**< link to the extended node */
 
-	/* behaviour function */
-	void (*initBehaviour)(struct nodeBehaviour_s *behaviour);	/**< call after all behaviour registration */
-
-	/* node function */
+	/* node functions */
 	void (*draw)(menuNode_t *node);							/**< how to draw a node */
 	void (*drawTooltip)(menuNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
 	void (*leftClick)(menuNode_t *node, int x, int y);		/**< left mouse click event in the node */
@@ -207,7 +207,7 @@ typedef struct nodeBehaviour_s {
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 
-	/** Planed */
+	/* Planed */
 	/*
 	mouse move event
 	void (*mouseEnter)(menuNode_t *node);
