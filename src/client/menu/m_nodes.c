@@ -324,7 +324,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 		MN_InitializeNodeBehaviour(behaviour->super);
 
 		while (qtrue) {
-			int pos = virtualFunctions[i];
+			const int pos = virtualFunctions[i];
 			size_t superFunc;
 			size_t func;
 			if (pos == 0)
@@ -475,8 +475,8 @@ void MN_InitNodes (void)
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
 	for (i = 1; i < MN_NUM_NODETYPE; i++) {
-		nodeBehaviour_t *a = current;
-		nodeBehaviour_t *b = current + 1;
+		const nodeBehaviour_t *a = current;
+		const nodeBehaviour_t *b = current + 1;
 		if (Q_strcmp(a->name, b->name) >= 0) {
 #if DEBUG
 			Sys_Error("MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name\n", a->name, b->name);

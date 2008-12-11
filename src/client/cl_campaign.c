@@ -5371,7 +5371,8 @@ static void CL_GameGo (void)
 	base_t *base;
 
 	if (!curCampaign) {
-		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selectedMission: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selectedMission, gd.interceptAircraft->idx);
+		assert(gd.interceptAircraft);
+		Com_DPrintf(DEBUG_CLIENT, "selectedMission: %p, interceptAircraft: %p\n", (void *)selectedMission, (void *gd.interceptAircraft);
 		return;
 	}
 
