@@ -27,25 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_special.h"
 
 /**
- * @brief Call after the script initialized the node
- */
-static void MN_ZoneNodeLoaded (menuNode_t *node)
-{
-	menu_t * menu = node->menu;
-	if (!Q_strncmp(node->name, "render", 6)) {
-		if (!menu->renderNode)
-			menu->renderNode = node;
-		else
-			Com_Printf("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "popup", 5)) {
-		if (!menu->popupNode)
-			menu->popupNode = node;
-		else
-			Com_Printf("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n", menu->name);
-	}
-}
-
-/**
  * @brief Call before the script initializes the node
  */
 static void MN_FuncNodeLoading (menuNode_t *node)
@@ -84,15 +65,6 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 			Com_Printf("MN_FuncNodeLoaded: second leave function ignored (menu \"%s\")\n", menu->name);
 	}
 
-}
-
-void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
-{
-	memset(behaviour, 0, sizeof(behaviour));
-	behaviour->name = "zone";
-	behaviour->id = MN_ZONE;
-	behaviour->isVirtual = qfalse;
-	behaviour->loaded = MN_ZoneNodeLoaded;
 }
 
 void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)

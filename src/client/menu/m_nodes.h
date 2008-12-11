@@ -149,8 +149,6 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	qboolean repeat;			/**< repeat action when "click" is holded */
-	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
@@ -167,6 +165,10 @@ typedef struct menuNode_s {
 	/* MN_TEXT */
 	/** @todo remove it  from 'string node', need to full implement R_FontDrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
+
+	/* MN_ZONE */
+	qboolean repeat;			/**< repeat action when "click" is holded */
+	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */

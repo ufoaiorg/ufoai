@@ -57,6 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_textentry.h"
 #include "node/m_node_vscrollbar.h"
 #include "node/m_node_windowpanel.h"
+#include "node/m_node_zone.h"
 
 extern menuNode_t *focusNode;
 

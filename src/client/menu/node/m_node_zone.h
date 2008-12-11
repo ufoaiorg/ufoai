@@ -22,14 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_SPECIAL_H
-#define CLIENT_MENU_M_NODE_SPECIAL_H
+#ifndef CLIENT_MENU_M_NODE_ZONE_H
+#define CLIENT_MENU_M_NODE_ZONE_H
 
 #include "../m_nodes.h"
 
-void MN_RegisterConFuncNode(nodeBehaviour_t *behaviour);
-void MN_RegisterCvarFuncNode(nodeBehaviour_t *behaviour);
-void MN_RegisterFuncNode(nodeBehaviour_t *behaviour);
-void MN_RegisterNullNode(nodeBehaviour_t *behaviour);
+void MN_RegisterZoneNode(nodeBehaviour_t *behaviour);
 
 #endif

@@ -127,13 +127,14 @@ void MN_DrawMenus (void)
 
 
 	mouseMoved = MN_CheckMouseMove();
+	hoveredNode = MN_GetHoveredNode();
 
 	/* handle delay time for tooltips */
 	if (mouseMoved && tooltipTimer != NULL) {
 		MN_TimerRelease(tooltipTimer);
 		tooltipTimer = NULL;
 		tooltipVisible = qfalse;
-	} else if (!mouseMoved && tooltipTimer == NULL && mn_show_tooltips->integer) {
+	} else if (!mouseMoved && tooltipTimer == NULL && mn_show_tooltips->integer && hoveredNode) {
 		tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
 		MN_TimerStart(tooltipTimer);
 	}
@@ -213,9 +214,6 @@ void MN_DrawMenus (void)
 			R_ColorBlend(NULL);
 		}	/* for */
 	}
-
-
-	hoveredNode = MN_GetHoveredNode();
 
 	/* draw tooltip */
 	if (hoveredNode && tooltipVisible) {

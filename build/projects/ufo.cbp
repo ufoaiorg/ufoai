@@ -582,6 +582,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_windowpanel.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_zone.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_zone.h" />
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_bsp.c">
 			<Option compilerVar="CC" />
