@@ -226,7 +226,6 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 {
 	vec3_t mins, maxs;
 	vec2_t stmins, stmaxs;
-	int bmins[2], bmaxs[2];
 	int i, j;
 	const mBspTexInfo_t *tex;
 
@@ -266,12 +265,11 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 		surf->center[i] = (mins[i] + maxs[i]) / 2.0;
 
 	for (i = 0; i < 2; i++) {
-		/* tiny rounding hack, not sure if it works */
-		bmins[i] = floor(stmins[i] / surf->lightmap_scale);
-		bmaxs[i] = ceil(stmaxs[i] / surf->lightmap_scale);
+		const int bmins = floor(stmins[i] / surf->lightmap_scale);
+		const int bmaxs = ceil(stmaxs[i] / surf->lightmap_scale);
 
-		surf->stmins[i] = bmins[i] * surf->lightmap_scale;
-		surf->stmaxs[i] = bmaxs[i] * surf->lightmap_scale;
+		surf->stmins[i] = bmins * surf->lightmap_scale;
+		surf->stmaxs[i] = bmaxs * surf->lightmap_scale;
 
 		surf->stcenter[i] = (surf->stmaxs[i] + surf->stmins[i]) / 2.0;
 		surf->stextents[i] = surf->stmaxs[i] - surf->stmins[i];
