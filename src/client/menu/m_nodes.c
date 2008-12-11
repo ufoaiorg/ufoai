@@ -270,16 +270,28 @@ menuNode_t* MN_AllocNode (const char* type)
 
 /**
  * @brief Return a node behaviour by name
- * @todo when its possible use a dicotomic search
+ * @note Use a dicotomic search. nodeBehaviourList must be sorted by name.
  */
 nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 {
-	int i;
-	for (i = 0; i < MN_NUM_NODETYPE; i++) {
-		if (!Q_strcmp(name, nodeBehaviourList[i].name)) {
-			return &nodeBehaviourList[i];
-		}
+	unsigned char min = 0;
+	unsigned char max = MN_NUM_NODETYPE;
+
+	while (min != max) {
+		const int mid = (min + max) >> 1;
+		const char diff = Q_strcmp(nodeBehaviourList[mid].name, name);
+		assert(mid < max);
+		assert(mid >= min);
+
+		if (diff == 0)
+			return &nodeBehaviourList[mid];
+
+		if (diff > 0)
+			max = mid;
+		else
+			min = mid + 1;
 	}
+
 	Sys_Error("Node behaviour '%s' doesn't exist\n", name);
 	return NULL;
 }
