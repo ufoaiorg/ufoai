@@ -34,7 +34,6 @@ typedef enum {
 	MS_MENU,		/**< we are over some menu node */
 	MS_DRAGITEM,	/**< we are dragging some stuff / equipment */
 	MS_ROTATE,		/**< we are rotating models (UFOpaedia) */
-	MS_LHOLD,		/**< we are holding left mouse button */
 	MS_SHIFTMAP,	/**< we move the geoscape map */
 	MS_ZOOMMAP,		/**< we zoom the geoscape map (also possible via mousewheels)*/
 	MS_SHIFT3DMAP,	/**< we rotate the 3d globe */

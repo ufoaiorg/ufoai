@@ -1253,40 +1253,6 @@ static void IN_Parse (void)
 		/* do nothing */
 		return;
 
-	/* repeat the mouse button */
-	case MS_LHOLD:
-		if (cls.realtime >= mn.mouseRepeat.nexttime) {
-			/* how many times delay between 2 consecutive actions other
-			 * than the 2 first one must be shorter than delay between the two
-			 * first actions. (must be > 1) */
-			const int DELAY_FACTOR = 3;
-
-			/* delay between 2 actions when mouse button is kept pushed */
-			const int repeatDelay = mn.mouseRepeat.clickDelay / DELAY_FACTOR;
-
-			/* number of actions to perform since we last reached this part of the code
-			 * (we don't use cls.realtime to make number of actions independant of FPS) */
-			const int numClickSinceLastCall = 1 + (cls.realtime - mn.mouseRepeat.nexttime) / repeatDelay;
-			int i;
-
-			for (i = 0; i < numClickSinceLastCall; i++) {
-				mn.mouseRepeat.numClick++;
-				if (mn.mouseRepeat.node->behaviour->id != MN_TEXT) {
-					/* we didn't click on a text node (button,...) */
-					MN_ExecuteActions(mn.mouseRepeat.menu, mn.mouseRepeat.action);
-				} else {
-					if (mn.mouseRepeat.textLine) {
-						menuNode_t *node = mn.mouseRepeat.node;
-						node->behaviour->leftClick(node, mousePosX, mousePosY);
-					}
-				}
-			}
-
-			/* next "event" after clickdelay msec - low values (>= 100) would result in executing
-			 * repeatable click nodes more than once - only do this for menus you want this behaviour */
-			mn.mouseRepeat.nexttime += repeatDelay * numClickSinceLastCall;
-		}
-		return;
 	default:
 		mouseSpace = MS_NULL;
 
