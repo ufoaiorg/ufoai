@@ -602,7 +602,8 @@ msgstr "Aeronave alienígena avistada"
 
 #: ../base/ufos/events.ufo:60
 msgid "mail_from_un"
-msgstr "2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
+msgstr ""
+"2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -674,7 +675,8 @@ msgstr "2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
 #: ../base/ufos/research.ufo:4606 ../base/ufos/research.ufo:4638
 #: ../base/ufos/research.ufo:4645
 msgid "mail_to_base_commander"
-msgstr "Comandante da Base, FALANGE, Comando de Operações do Atlântico"
+msgstr ""
+"Comandante da Base, FALANGE, Comando de Operações do Atlântico"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -734,7 +736,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4356 ../base/ufos/research.ufo:4431
 #: ../base/ufos/research.ufo:4439
 msgid "mail_from_paul_navarre"
-msgstr "Cmd. Paul Navarre, P&D: Divisão de Engenharia, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Cmd. Paul Navarre, P&D: Divisão de Engenharia, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 msgid "Recovery Report -- %s"
@@ -778,7 +781,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr "Maj. Abel S. Howard, Comando & Controle, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Maj. Abel S. Howard, Comando & Controle, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -873,7 +877,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4597
 #: ../base/ufos/research.ufo:4605
 msgid "mail_from_col_falkland"
-msgstr "Cel. Ingrid Falkland, Divisão de Inteligência, FALANGE,Comando de Operações Atlânticas"
+msgstr ""
+"Cel. Ingrid Falkland, Divisão de Inteligência, FALANGE,Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -903,7 +908,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr "Cmd. Subakh al-Kuhar, Asa Aérea, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Cmd. Subakh al-Kuhar, Asa Aérea, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -4302,7 +4308,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4566 ../base/ufos/research.ufo:4637
 #: ../base/ufos/research.ufo:4644
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, P&D: Divisão Biológica e de Contenção, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Dr. Connor, P&D: Divisão Biológica e de Contenção, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/research.ufo:258 ../base/ufos/research.ufo:298
 msgid "alien_breathing_txt"
@@ -5669,7 +5676,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1212
 msgid "grenl_plasma_ammo_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
+"\n"
+"Now that we're able to reproduce these alien plasma grenades, we've been looking into the possibility of adapting the technology to be fired from a grenade launcher. This would be a challenge, as the plasma hand grenades are significantly larger than 25mm, but we may be able to produce a scaled-back version that -- while not as powerful -- will have all the advantages of being fired from our standard HPGL Grenade Launcher.\n"
+"\n"
+"If we can manage to design and produce magazines of this type, they'd lend the HPGL increased firepower and even more tactical applications, well worth the monetary cost.\n"
+"\n"
+"The project is waiting for your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1251
 msgid "laser_ammo_txt"
@@ -5718,7 +5734,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1294
 msgid "heavylaser_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"Thanks to the experience we've gained from our Continuous Wave Laser research, my team and I have figured out one or two possible ways to further amplify the damage output of our infantry lasers. However, this will require significant research and refining of our prototype, as well as enlarging several of the components. The result will be a strictly heavy-infantry weapon of about the same size and weight as our HPML Rocket Launcher.\n"
+"\n"
+"We estimate that this weapon could be invaluable in a fire support role or as a direct-fire blockade breaker, capable of dissolving enemy strongpoints with powerful, pinpoint accurate fire. It would have attributes and capabilities which may be lacking in our current heavy weapons arsenal. Accuracy at range is generally abysmal in Earth-built heavy weapons, and they can be difficult to employ in situations where we need to avoid collateral damage. The heavy laser would avoid these issues altogether.\n"
+"\n"
+"It's certainly worth looking into, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1331
 msgid "irgoggles_txt"
@@ -5792,7 +5817,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1354
 msgid "kerrblade_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
+"\n"
+"We should examine the blade to determine its function and see how it was made. There may be a way to duplicate this technology in a form that's compatible for human use, which would make melee engagements with alien combatants far more survivable than going at them with a combat knife.\n"
+"\n"
+"Of course, this program will need your approval for lab time and funding.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1390
 msgid "laserpistol_txt"
@@ -5815,7 +5847,18 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1393
 msgid "laserpistol_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
+"\n"
+"The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:\n"
+"\n"
+"1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.\n"
+"\n"
+"As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1428
 msgid "laserrifle_txt"
@@ -5836,7 +5879,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1431
 msgid "laserrifle_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.\n"
+"\n"
+"The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.\n"
+"\n"
+"As always, Commander, we'll begin work as soon as you give us your authorisation.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1466
 msgid "medikit_txt"
@@ -5906,7 +5958,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1489
 msgid "plasatomizer_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
+"\n"
+"The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!\n"
+"\n"
+"Of course, this program will need your approval for lab time and funding.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1541 ../base/ufos/research.ufo:1582
 msgid "Alien Artifact - Plasma Blaster"
@@ -5929,7 +5988,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1549
 msgid "plasblaster_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
+"\n"
+"Please authorise this research program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1600
 msgid "Alien Artifact - Plasma Blade"
@@ -5956,7 +6020,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1608
 msgid "plasblade_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
+"\n"
+"More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1640
 msgid "Alien Artifact - Plasma Grenade"
@@ -5979,7 +6048,14 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1648
 msgid "plasmagren_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
+"\n"
+"We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
+"\n"
+"The project is ready for research, just waiting on your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1680 ../base/ufos/research.ufo:1722
 msgid "Alien Artifact - Plasma Rifle"
@@ -6004,7 +6080,10 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1688
 msgid "plasrifle_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1740 ../base/ufos/research.ufo:1820
 #: ../base/ufos/weapons_aliens.ufo:6
@@ -6060,14 +6139,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1788
-#, fuzzy
 msgid "needlerheavy_pre_txt"
-msgstr ""
-"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
-"\n"
-"Please authorise this program at your convenience, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Nenhuma informação pré-pesquisa disponível"
 
 #: ../base/ufos/research.ufo:1842
 #, fuzzy
@@ -6513,7 +6586,20 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2080
 msgid "stungren_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander,\n"
+"\n"
+"Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.\n"
+"\n"
+"Our study of the various live and dead alien specimens we've recovered has been enlightening. Thanks to the discoveries we've made over the past few months, my team and I have come to believe that we're ready to start a bio/chemical warfare program against the alien threat. We have tissue samples, autopsy data, live specimens for testing; all the raw materials we require to investigate methods of properly incapacitating battlefield specimens without being forced to send PHALANX troops into melee combat.\n"
+"\n"
+"This will be a challenge given the constant protection and filtration offered by the alien breathing apparatus, which prevents any harmful materials entering the lungs, but if you authorise sufficient lab time and funding we can almost certainly develop an aerosol compound that will disable exposed aliens by chemical or biological means.\n"
+"\n"
+"This will be a project of greatest importance and priority, Commander. The sooner you lend it your authorisation, the better.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2119
 msgid "Alien Anti-Human Gas"
@@ -6552,7 +6638,22 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2171
 msgid "stunrod_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander,\n"
+"\n"
+"I hope I'm not overstepping my bounds, but I have an important technical research proposal to make, a proposal to create a new piece of PHALANX equipment for use by our field agents. I realise this falls outside the responsibilities of my division. However, I've already discussed things with Cdr. Navarre, and he doesn't quite see eye-to-eye with me on the necessity of the item in question. I had no choice but to go to straight to you with the proposal.\n"
+"\n"
+"As you know, we've yet to capture an alien alive during our tactical engagements in all the weeks we've been waging this war. Now that we know how to keep them alive in containment, our lack of specimens is becoming a serious impediment to our biological and chemical research. We need living tissue to study, performing its natural functions inside a living body, and we don't have the ability to simply clone up some aliens to research. We need prisoners. The sooner the better.\n"
+"\n"
+"That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a two-handed man-portable unit with a large battery and several charge settings, the highest of which should be sufficient even to disable alien robots such as the Bloodspider. We in DivBio believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners.\n"
+"\n"
+"Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, my division's needs will be far, far higher than that for proper research and interrogation.\n"
+"\n"
+"I hope you understand. Please authorise lab time and funding for this project as soon as you can, and I'll get some people from DivEngine together to develop this project properly. I would of course be delighted if you could explain things to Cdr. Navarre. I'm sure he'll be happy to receive a message from you.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2204 ../base/ufos/research.ufo:2244
 msgid "Alien Artifact - Particle Beam Pistol"
@@ -6579,7 +6680,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2212
 msgid "pbeampistol_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
+"\n"
+"Please authorise this program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2263 ../base/ufos/research.ufo:2304
 msgid "Alien Artifact - Particle Beam Cannon"
@@ -6606,7 +6712,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2271
 msgid "pbeamcannon_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
+"\n"
+"Please authorise this program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2323 ../base/ufos/research.ufo:2363
 msgid "Alien Artifact - Particle Beam Rifle"
@@ -6635,7 +6746,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2331
 msgid "pbeamrifle_pre_txt"
-msgstr "Nenhuma informação pré-pesquisa disponível"
+msgstr ""
+"Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
+"\n"
+"Please authorise this program at your earliest convenience.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2383
 msgid "Man-Portable Particle Beams"
@@ -7846,7 +7962,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3280
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3306
 msgid "ufo_scout_txt"
@@ -8427,7 +8544,6 @@ msgstr ""
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:3875
 msgid "Phoenix UGV"
@@ -8491,7 +8607,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3956
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4010
 msgid "'Raven' ECM Unit"
@@ -9189,7 +9306,6 @@ msgstr ""
 "A guerra civil que veio a seguir foi algo que a Terra nunca havia visto. Oficiais geralmente se referem a ela como a filha bastarda do Vietnam com a Primeira Guerra Mundial. Foi visto bombardeamento de populações inteiras, execuções em massa de prisioneiros de guerra, em operações táticas nucleares em várias cidades -- incluindo Xangai, Seul e Nova Deli -- em 7 de Junho de 2034. Os leais ao governo jogaram um total de 6 peças de 50 quilotons em posições rebeldes altamente protegidas, incluindo as populações civis que os rebeldes protegiam.\n"
 "\n"
 "O exército leal sofreu massivas deserções nos dias que se seguiram; foi o único evento que eventualmente causou a ruína do governo. Mais de seis milhões de vidas foram perdidas antes da rendição das forças leais em 15 de Agosto de 2036, que lutaram com unhas e dentes em largas táticas terrestres enquanto os rebeldes, devagar, os empurravam para dentro do Oceano Índico. Este foi, oficialmente, o fim da Segunda Guerra Fria."
-
 # possivelmente pós-guerra
 #: ../base/ufos/research.ufo:4490
 msgid "After The War"
@@ -9342,7 +9458,6 @@ msgstr ""
 "Por unanimidade, foi decidido manter o projeto o mais secreto possível, sendo conhecido apenas pelos mais altos políticos e comandantes militares do mundo. O público foi confortado com ações e palavras de efeito enquanto uma equipe altamente qualificada, vinda de toda parte do mundo, operacionalizava a ressurreição da FALANGE para colocá-la de volta à ativa. Velhos equipamentos foram reativados e recuperados do estoque, a poeira retirada dos manuais e pilhas de armas foram preparadas para o uso. Com o suporte secreto de todas as oito potências mundiais, o projeto obteve recursos, suporte e os homens necessários para a guerra.\n"
 "\n"
 "Tudo o que faltava era um líder."
-
 # revisar...
 #: ../base/ufos/research.ufo:4514
 msgid "A New Twist"
@@ -9675,35 +9790,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "O ano é 2084. A Terra, um lugar estável como jamais se viu, desfruta de um período de relativa paz. O início violento do século 21 está longe agora; memórias distantes, mas não tão distantes ao ponto de serem esquecidas. Para a maioria das pessoas da Terra, a Segunda Guerra Fria é uma sombra negra do passado, assim como foram as Guerras Mundiais no início do século 20."
+msgstr ""
+"O ano é 2084. A Terra, um lugar estável como jamais se viu, desfruta de um período de relativa paz. O início violento do século 21 está longe agora; memórias distantes, mas não tão distantes ao ponto de serem esquecidas. Para a maioria das pessoas da Terra, a Segunda Guerra Fria é uma sombra negra do passado, assim como foram as Guerras Mundiais no início do século 20."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Conflitos se tornaram raros ao final do século, à medida que novas tecnologias e cuidados universais de saúde finalmente tornaram-se disponíveis para o terceiro mundo. Mesmo os eventos terroristas pararam assim que a Segunda Guerra Fria começou, com seus horrores e atrocidades ainda vivas nas mentes das pessoas, dos antigos Estados Unidos ao roubado subcontinente Indiano. Lutas de classes elevam-se ao campo de batalha político, já que agora cada nação tem representação garantida e justa nas Nações Unidas, e o padrão de vida global cresce lentamente em razão do empobrecimento dos vários cantos do planeta. Países solidificaram-se, mantendo-se em volta de uma Nações Unidas reestruturada que, com sucesso, policia os governos mundiais. Blocos fragmentados de países menores, assustados a princípio pelo vasto poder acumulado em volta da China e da União Européia, formaram poderosas ligas políticas -- e então se viram sem vizinhos com os quais pudessem lutar pela segurança. Pela primeira vez na história da humanidade, há lei e ordem por mais de três quartos do mundo."
+msgstr ""
+"Conflitos se tornaram raros ao final do século, à medida que novas tecnologias e cuidados universais de saúde finalmente tornaram-se disponíveis para o terceiro mundo. Mesmo os eventos terroristas pararam assim que a Segunda Guerra Fria começou, com seus horrores e atrocidades ainda vivas nas mentes das pessoas, dos antigos Estados Unidos ao roubado subcontinente Indiano. Lutas de classes elevam-se ao campo de batalha político, já que agora cada nação tem representação garantida e justa nas Nações Unidas, e o padrão de vida global cresce lentamente em razão do empobrecimento dos vários cantos do planeta. Países solidificaram-se, mantendo-se em volta de uma Nações Unidas reestruturada que, com sucesso, policia os governos mundiais. Blocos fragmentados de países menores, assustados a princípio pelo vasto poder acumulado em volta da China e da União Européia, formaram poderosas ligas políticas -- e então se viram sem vizinhos com os quais pudessem lutar pela segurança. Pela primeira vez na história da humanidade, há lei e ordem por mais de três quartos do mundo."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Para muitas pessoas na Terra, tudo está indo muito bem."
+msgstr ""
+"Para muitas pessoas na Terra, tudo está indo muito bem."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "O primeiro ataque ocorre na cidade de Mumbai em 3 de março de 2084. Seis pequenos OVNIs aparecem do nada, descem da órbita, indetectáveis pelas vastas instalações de radares que cobrem os céus de Mumbai, e eliminam a cidade com maior densidade populacional da Terra. Eles não dão nenhum aviso, nenhuma explicação. Vinte mil civis inocentes e três batalhões de tropas de elite são massacrados por brutais vinte horas antes que os soldados das Confederações conseguissem interromper o avanço dos alienígenas. Então, assim como apareceram, eles entram em sua espaçonave e sobem para órbita desaparecendo, deixando apenas as ruas arruinadas de Mumbai como evidência."
+msgstr ""
+"O primeiro ataque ocorre na cidade de Mumbai em 3 de março de 2084. Seis pequenos OVNIs aparecem do nada, descem da órbita, indetectáveis pelas vastas instalações de radares que cobrem os céus de Mumbai, e eliminam a cidade com maior densidade populacional da Terra. Eles não dão nenhum aviso, nenhuma explicação. Vinte mil civis inocentes e três batalhões de tropas de elite são massacrados por brutais vinte horas antes que os soldados das Confederações conseguissem interromper o avanço dos alienígenas. Então, assim como apareceram, eles entram em sua espaçonave e sobem para órbita desaparecendo, deixando apenas as ruas arruinadas de Mumbai como evidência."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Um encontro de emergência das Nações unidades não obtém nenhuma direção conclusiva. As invasões continuam mais rápidas, maiores e mais selvagens que antes. Desta vez em Bonn, Johannesburg e Bongkok. Algumas nações tentam diplomacia, enviando mensagens em centenas de idiomas aos alienígenas através dos países. Suas palavras são ignoradas. Dentro de horas, todas as três cidades são esvaziadas de vida humana. O ataque pára quando os vários militares recebem permissão para atacá-los. Os alienígenas deixam para trás apenas concreto e sangue. Todos os OVNIs desaparecem sem rastros -- mas ninguém duvida que eles voltem."
+msgstr ""
+"Um encontro de emergência das Nações unidades não obtém nenhuma direção conclusiva. As invasões continuam mais rápidas, maiores e mais selvagens que antes. Desta vez em Bonn, Johannesburg e Bongkok. Algumas nações tentam diplomacia, enviando mensagens em centenas de idiomas aos alienígenas através dos países. Suas palavras são ignoradas. Dentro de horas, todas as três cidades são esvaziadas de vida humana. O ataque pára quando os vários militares recebem permissão para atacá-los. Os alienígenas deixam para trás apenas concreto e sangue. Todos os OVNIs desaparecem sem rastros -- mas ninguém duvida que eles voltem."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Oitenta e sete horas após o ataque inicial em Mumbai, a Terra declara guerra. Por duas semanas, cada um dos exércitos da humanidade usa suas melhores habilidades, tentando se defender dos misteriosos atacantes alienígenas. Eles alcançam alguns preciosos sucessos."
+msgstr ""
+"Oitenta e sete horas após o ataque inicial em Mumbai, a Terra declara guerra. Por duas semanas, cada um dos exércitos da humanidade usa suas melhores habilidades, tentando se defender dos misteriosos atacantes alienígenas. Eles alcançam alguns preciosos sucessos."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Com apenas uma alternativa, as Nações Unidas reage. Equipamentos antigos são reavaliados, alguns com mais de um século de idade, e uma agência antiextraterrestre há muito desativada -- FALANGE --, dos antigos Estados Unidos, é ressuscitada sob uma nova bandeira das Nações Unidas. Seu trabalho é combater a ameaça alienígena, e garantir a sobrevivência da raça humana a qualquer custo."
+msgstr ""
+"Com apenas uma alternativa, as Nações Unidas reage. Equipamentos antigos são reavaliados, alguns com mais de um século de idade, e uma agência antiextraterrestre há muito desativada -- FALANGE --, dos antigos Estados Unidos, é ressuscitada sob uma nova bandeira das Nações Unidas. Seu trabalho é combater a ameaça alienígena, e garantir a sobrevivência da raça humana a qualquer custo."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Mantida por todos os oito blocos políticos da Terra e composta pelos soldados de elite de seus exércitos, a FALANGE é a melhor das melhores. É a primeira e única linha de defesa da Terra. Ela não pode falhar; porque se falhar, a humanidade não terá nenhuma chance."
+msgstr ""
+"Mantida por todos os oito blocos políticos da Terra e composta pelos soldados de elite de seus exércitos, a FALANGE é a melhor das melhores. É a primeira e única linha de defesa da Terra. Ela não pode falhar; porque se falhar, a humanidade não terá nenhuma chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

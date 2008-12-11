@@ -4221,7 +4221,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:131
 msgid "laser_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
+"\n"
+"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
+"\n"
+"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
+"\n"
+"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:161 ../base/ufos/research.ufo:199
 msgid "antimatter_txt"
@@ -4265,11 +4274,21 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:165
 msgid "antimatter_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
+"\n"
+"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:166
 msgid "antimatter_extra_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
+"\n"
+"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:215
 msgid "Live Alien"
@@ -4348,7 +4367,18 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:261
 msgid "alien_breathing_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander,\n"
+"\n"
+"During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
+"\n"
+"I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.\n"
+"\n"
+"Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:315
 msgid "The Alien Mind"
@@ -4545,7 +4575,20 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:473
 msgid "alien_origins_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
+"\n"
+"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
+"\n"
+"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
+"\n"
+"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:498
 msgid "UFO Theory"
@@ -5207,7 +5250,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:925
 msgid "bolterrifle_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
+"\n"
+"At least, that's what we thought, until the aliens showed up.\n"
+"\n"
+"Seeing alien craft hurtling through our skies, advanced robots scuttling through our streets, and high-powered energy weapons tearing up our people has given us a whole host of new ideas. It has also caused us to take a very close look through our collected UN research data. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new weapon for our tactical teams that will be both man-portable and combat-effective. This weapon would have extreme range and power and may serve us well in the days ahead.\n"
+"\n"
+"This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:977
 msgid "combatknife_txt"
@@ -6123,14 +6175,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1788
-#, fuzzy
 msgid "needlerheavy_pre_txt"
-msgstr ""
-"Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
-"\n"
-"Please authorise this program at your convenience, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1842
 #, fuzzy
@@ -8102,7 +8148,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3280
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3306
 msgid "ufo_scout_txt"
@@ -8778,7 +8825,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3956
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4010
 msgid "'Raven' ECM Unit"
@@ -9447,7 +9495,12 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4426
 msgid "alien_materials_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
+"\n"
+"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4478
 msgid "Political Situation Before The Invasion"
