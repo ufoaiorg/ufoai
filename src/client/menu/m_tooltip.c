@@ -67,7 +67,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 
 	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, tooltipBG);
 	R_ColorBlend(tooltipColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1 + dx, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	R_ColorBlend(NULL);
 	return width;
@@ -79,22 +79,21 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 {
 	const char *tooltip;
-	int width = 0;
+	int maxWidth = 200;
 
 	/* maybe no tooltip but a key entity? */
 	if (node->tooltip) {
 		char buf[256]; /** @todo @sa MN_DrawTooltip */
 		tooltip = MN_GetReferenceString(menu, node->tooltip);
 		Q_strncpyz(buf, tooltip, sizeof(buf));
-		width = MN_DrawTooltip("f_small", buf, x, y, width, 0);
-		y += 20;
+		MN_DrawTooltip("f_small", buf, x, y, maxWidth, 0);
 	} else if (node->key[0]) {
 		if (node->key[0] == '*') {
 			tooltip = MN_GetReferenceString(menu, node->key);
 			if (tooltip)
 				Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), tooltip);
 		}
-		MN_DrawTooltip("f_verysmall", node->key, x, y, width,0);
+		MN_DrawTooltip("f_verysmall", node->key, x, y, maxWidth, 0);
 	}
 }
 
