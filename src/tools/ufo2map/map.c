@@ -129,7 +129,7 @@ static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 	nummapplanes += 2;
 
 	/* always put axial planes facing positive first */
-	if (p->type <= PLANE_Z) {
+	if (AXIAL(p)) {
 		if (p->normal[0] < 0 || p->normal[1] < 0 || p->normal[2] < 0) {
 			/* flip order */
 			temp = *p;

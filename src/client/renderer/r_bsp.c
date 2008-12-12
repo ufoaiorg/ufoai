@@ -52,6 +52,10 @@ static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 	return qfalse;
 }
 
+/**
+ * @brief Checks whether the model is inside the view
+ * @sa R_CullBox
+ */
 qboolean R_CullBspModel (const entity_t *e)
 {
 	vec3_t mins, maxs;
@@ -88,16 +92,10 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
 		/* find which side of the surf we are on  */
-		switch (surf->plane->type) {
-		case PLANE_X:
-		case PLANE_Y:
-		case PLANE_Z:
+		if (AXIAL(surf->plane)
 			dot = modelorg[surf->plane->type] - surf->plane->dist;
-			break;
-		default:
+		else
 			dot = DotProduct(modelorg, surf->plane->normal) - surf->plane->dist;
-			break;
-		}
 
 		if (((surf->flags & MSURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) ||
 			(!(surf->flags & MSURF_PLANEBACK) && (dot > BACKFACE_EPSILON)))
@@ -260,7 +258,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 	 * find which side of the node we are on */
 	if (r_isometric->integer) {
 		dot = -DotProduct(r_locals.forward, node->plane->normal);
-	} else if (node->plane->type > PLANE_Z) {
+	} else if (!AXIAL(node->plane)) {
 		dot = DotProduct(refdef.vieworg, node->plane->normal) - node->plane->dist;
 	} else {
 		dot = refdef.vieworg[node->plane->type] - node->plane->dist;

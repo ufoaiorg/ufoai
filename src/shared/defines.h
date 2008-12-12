@@ -251,6 +251,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* common/tracing.c, ufo2map/common/trace.c */
 #define	PLANE_NONE		6
 
+#define AXIAL(p) (p->type < PLANE_ANYX)
+
 /** planes (x & ~1) and (x & ~1) + 1 are always opposites */
 
 /* ufo2map/lightmap.c */
@@ -410,7 +412,6 @@ COLLISION DETECTION
 #define	PSIDE_BACK			2
 #define	PSIDE_BOTH			(PSIDE_FRONT|PSIDE_BACK)
 #define	PSIDE_FACING		4
-
 
 /* shared/shared.c, ufo2map/common/scriplib.c, ufo2map/common/scriplib.h, client/cl_parse.c, client/client.h,
  * common/common.c, server/server.h, server/sv_ccmds.c, server/sv_game.c, server/sv_init.c */

@@ -572,7 +572,7 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plan
 	vec_t dist1, dist2;
 
 	/* axial planes are easy */
-	if (plane->type <= PLANE_Z) {
+	if (AXIAL(plane)) {
 		side = 0;
 		if (maxs[plane->type] > plane->dist + PLANESIDE_EPSILON)
 			side |= PSIDE_FRONT;
@@ -986,7 +986,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 	plane = myTile->planes + node->planenum;
 #endif
 
-	if (plane->type <= PLANE_Z) {
+	if (AXIAL(plane)) {
 		const int type = plane->type;
 		t1 = p1[type] - plane->dist;
 		t2 = p2[type] - plane->dist;

@@ -77,12 +77,12 @@ static void R_UploadLightmapBlock (void)
 static qboolean R_AllocLightmapBlock (int w, int h, int *x, int *y)
 {
 	int i, j;
-	int best, best2;
+	int best;
 
 	best = r_lightmaps.size;
 
 	for (i = 0; i < r_lightmaps.size - w; i++) {
-		best2 = 0;
+		int best2 = 0;
 
 		for (j = 0; j < w; j++) {
 			if (r_lightmaps.allocated[i + j] >= best)
