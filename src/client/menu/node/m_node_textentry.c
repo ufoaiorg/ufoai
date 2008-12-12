@@ -27,17 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 #include "../m_parse.h"
-#include "../m_drawutil.h"
 #include "../m_font.h"
 #include "../m_input.h"
 #include "../m_actions.h"
 #include "../../client.h"
 #include "m_node_textentry.h"
 
-static const int TILE_SIZE = 64;
-static const int CORNER_SIZE = 17;
-static const int MID_SIZE = 1;
-static const int MARGE = 3;
+#define TILE_SIZE 64
+#define CORNER_SIZE 17
+#define MID_SIZE 1
+#define MARGE 3
 
 static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
 static const char HIDECHAR = '*';	/**< use as a mask for password */
@@ -184,6 +183,11 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 
 static void MN_TextEntryNodeDraw (menuNode_t *node)
 {
+	static const int panelTemplate[] = {
+		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
+		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
+		MARGE
+	};
 	const char *text;
 	const char *font;
 	int texX, texY;
@@ -211,7 +215,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (image) {
-		MN_DrawPanel(pos, node->size, image, node->blend, texX, texY, CORNER_SIZE, MID_SIZE, MARGE);
+		R_DrawPanel(pos, node->size, image, node->blend, texX, texY, panelTemplate);
 	}
 
 	text = MN_GetReferenceString(node->menu, node->text);

@@ -34,15 +34,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* constants defining all tile of the texture */
 
-static const int LEFT_WIDTH = 20;
-static const int MID_WIDTH = 1;
-static const int RIGHT_WIDTH = 19;
+#define LEFT_WIDTH 20
+#define MID_WIDTH 1
+#define RIGHT_WIDTH 19
 
-static const int TOP_HEIGHT = 46;
-static const int MID_HEIGHT = 1;
-static const int BOTTOM_HEIGHT = 19;
+#define TOP_HEIGHT 46
+#define MID_HEIGHT 1
+#define BOTTOM_HEIGHT 19
 
-static const int MARGE = 3;
+#define MARGE 3
 
 static const int LEFT_POSX = 0;
 #define MID_POSX (LEFT_POSX + LEFT_WIDTH + MARGE)
@@ -65,42 +65,20 @@ static void MN_WindowPanelNodeLoaded (menuNode_t *node)
 
 static void MN_WindowPanelNodeDraw (menuNode_t *node)
 {
+	static const int panelTemplate[] = {
+		LEFT_WIDTH, MID_WIDTH, RIGHT_WIDTH,
+		TOP_HEIGHT, MID_HEIGHT, BOTTOM_HEIGHT,
+		MARGE
+	};
 	vec2_t pos;
 	const char* image;
-	int y, h;
 
 	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (!image)
 		return;
 
 	MN_GetNodeAbsPos(node, pos);
-
-	/* draw top (from left to right) */
-	R_DrawNormPic(pos[0], pos[1], LEFT_WIDTH, TOP_HEIGHT, LEFT_POSX + LEFT_WIDTH, TOP_POSY + TOP_HEIGHT,
-		LEFT_POSX, TOP_POSY, ALIGN_UL, node->blend, image);
-	R_DrawNormPic(pos[0] + LEFT_WIDTH, pos[1], node->size[0] - LEFT_WIDTH - RIGHT_WIDTH, TOP_HEIGHT, MID_POSX + MID_WIDTH, TOP_POSY + TOP_HEIGHT,
-		MID_POSX, TOP_POSY, ALIGN_UL, node->blend, image);
-	R_DrawNormPic(pos[0] + node->size[0] - RIGHT_WIDTH, pos[1], RIGHT_WIDTH, TOP_HEIGHT, RIGHT_POSX + RIGHT_WIDTH, TOP_POSY + TOP_HEIGHT,
-		RIGHT_POSX, TOP_POSY, ALIGN_UL, node->blend, image);
-
-	/* draw middle (from left to right) */
-	y = pos[1] + TOP_HEIGHT;
-	h = node->size[1] - TOP_HEIGHT - BOTTOM_HEIGHT; /*< height of middle */
-	R_DrawNormPic(pos[0], y, LEFT_WIDTH, h, LEFT_POSX + LEFT_WIDTH, MID_POSY + MID_HEIGHT,
-		LEFT_POSX, MID_POSY, ALIGN_UL, node->blend, image);
-	R_DrawNormPic(pos[0] + LEFT_WIDTH, y, node->size[0] - LEFT_WIDTH - RIGHT_WIDTH, h, MID_POSX + MID_WIDTH, MID_POSY + MID_HEIGHT,
-		MID_POSX, MID_POSY, ALIGN_UL, node->blend, image);
-	R_DrawNormPic(pos[0] + node->size[0] - RIGHT_WIDTH, y, RIGHT_WIDTH, h, RIGHT_POSX + RIGHT_WIDTH, MID_POSY + MID_HEIGHT,
-		RIGHT_POSX, MID_POSY, ALIGN_UL, node->blend, image);
-
-	/* draw bottom (from left to right) */
-	y = pos[1] + node->size[1] - BOTTOM_HEIGHT;
-	R_DrawNormPic(pos[0], y, LEFT_WIDTH, BOTTOM_HEIGHT, LEFT_POSX + LEFT_WIDTH, BOTTOM_POSY + BOTTOM_HEIGHT,
-		LEFT_POSX, BOTTOM_POSY, ALIGN_UL, node->blend, image);
-	R_DrawNormPic(pos[0] + LEFT_WIDTH, y, node->size[0] - LEFT_WIDTH - RIGHT_WIDTH, BOTTOM_HEIGHT, MID_POSX + MID_WIDTH, BOTTOM_POSY + BOTTOM_HEIGHT,
-		MID_POSX, BOTTOM_POSY, ALIGN_UL, node->blend, image);
-	R_DrawNormPic(pos[0] + node->size[0] - RIGHT_WIDTH, y, RIGHT_WIDTH, BOTTOM_HEIGHT, RIGHT_POSX + RIGHT_WIDTH, BOTTOM_POSY + BOTTOM_HEIGHT,
-		RIGHT_POSX, BOTTOM_POSY, ALIGN_UL, node->blend, image);
+	R_DrawPanel(pos, node->size, image, node->blend, 0, 0, panelTemplate);
 }
 
 void MN_RegisterWindowPanelNode (nodeBehaviour_t *behaviour)
