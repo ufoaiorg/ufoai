@@ -615,7 +615,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				/* give a value estimate for using this plane */
 
 				value = 5 * facing - 5 * splits - abs(front - back);
-				if (AXIAL(mapplanes[pnum]))
+				if (AXIAL((&mapplanes[pnum])))
 					value += 5;		/* axial is better */
 				value -= epsilonbrush * 1000;	/* avoid! */
 
