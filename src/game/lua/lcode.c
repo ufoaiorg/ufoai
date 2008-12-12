@@ -836,3 +836,4 @@ void luaK_setlist (FuncState *fs, int base, int nelems, int tostore) {
   }
   fs->freereg = base + 1;  /* free registers with list values */
 }
+

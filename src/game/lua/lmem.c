@@ -83,3 +83,4 @@ void *luaM_realloc_ (lua_State *L, void *block, size_t osize, size_t nsize) {
   g->totalbytes = (g->totalbytes - osize) + nsize;
   return block;
 }
+

@@ -251,7 +251,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* common/tracing.c, ufo2map/common/trace.c */
 #define	PLANE_NONE		6
 
-#define AXIAL(p) (p->type < PLANE_ANYX)
+#define AXIAL(p) ((p)->type < PLANE_ANYX)
 
 /** planes (x & ~1) and (x & ~1) + 1 are always opposites */
 

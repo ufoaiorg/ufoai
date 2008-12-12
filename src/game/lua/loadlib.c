@@ -1,5 +1,5 @@
 /*
-** $Id: loadlib.c,v 1.52.1.2 2007/12/28 14:58:43 roberto Exp $
+** $Id: loadlib.c,v 1.52.1.3 2008/08/06 13:29:28 roberto Exp $
 ** Dynamic library loader for Lua
 ** See Copyright Notice in lua.h
 **
@@ -444,7 +444,7 @@ static int loader_preload (lua_State *L) {
 }
 
 
-static int sentinel_ = 0;
+static const int sentinel_ = 0;
 #define sentinel	((void *)&sentinel_)
 
 
@@ -502,12 +502,14 @@ static int ll_require (lua_State *L) {
 ** 'module' function
 ** =======================================================
 */
-
+  
 
 static void setfenv (lua_State *L) {
   lua_Debug ar;
-  lua_getstack(L, 1, &ar);
-  lua_getinfo(L, "f", &ar);
+  if (lua_getstack(L, 1, &ar) == 0 ||
+      lua_getinfo(L, "f", &ar) == 0 ||  /* get calling function */
+      lua_iscfunction(L, -1))
+    luaL_error(L, LUA_QL("module") " not called from a Lua function");
   lua_pushvalue(L, -2);
   lua_setfenv(L, -2);
   lua_pop(L, 1);
@@ -630,7 +632,7 @@ LUALIB_API int luaopen_package (lua_State *L) {
   lua_setfield(L, -2, "__gc");
   /* create `package' table */
   luaL_register(L, LUA_LOADLIBNAME, pk_funcs);
-#if defined(LUA_COMPAT_LOADLIB)
+#if defined(LUA_COMPAT_LOADLIB) 
   lua_getfield(L, -1, "loadlib");
   lua_setfield(L, LUA_GLOBALSINDEX, "loadlib");
 #endif
@@ -661,3 +663,4 @@ LUALIB_API int luaopen_package (lua_State *L) {
   lua_pop(L, 1);
   return 1;  /* return 'package' table */
 }
+
