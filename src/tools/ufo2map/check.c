@@ -1348,10 +1348,16 @@ static void Check_SetNodraw (side_t *s)
 	brush_texture_t *tex = &side_brushtextures[index];
 
 	Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
-	s->surfaceFlags |= SURF_NODRAW;
-	tex->surfaceFlags |= SURF_NODRAW;
+
+	/* do not actually set the flag that will be written back on -fix
+	 * the texture is set, this should trigger the flag to be set
+	 * in compile mode. check should behave the same as fix. */
+	if (!(config.fixMap || config.performMapCheck))
+		tex->surfaceFlags |= SURF_NODRAW;
+
 	s->surfaceFlags &= ~SURF_PHONG;
 	tex->surfaceFlags &= ~SURF_PHONG;
+	s->surfaceFlags |= SURF_NODRAW;
 }
 
 #define CH_COMP_NDR_EDGE_INTSCT_BUF 21
@@ -1836,6 +1842,10 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 	const int initCont = side->contentFlags;
 	const char *flagsDescription = NULL;
 
+	/* see discussion at Check_SetNodraw */
+	if (config.fixMap || config.performMapCheck)
+		goto skipflagsetting;
+
 	if (!strcmp(texname, "tex_common/actorclip")) {
 		side->contentFlags |= CONTENTS_ACTORCLIP;
 		flagsDescription = "CONTENTS_ACTORCLIP";
@@ -1886,8 +1896,10 @@ void SetImpliedFlags (side_t *side, brush_texture_t *tex, const mapbrush_t *brus
 			"%s implied by %s texture has been set\n", flagsDescription ? flagsDescription : "-", texname);
 	}
 
+	skipflagsetting:
+
 	/* additional test, which does not directly depend on tex. */
-	if ((tex->surfaceFlags & SURF_NODRAW) && (tex->surfaceFlags & SURF_PHONG)) {
+	if (Check_SurfProp(SURF_NODRAW, side) && (tex->surfaceFlags & SURF_PHONG)) {
 		/* nodraw never has phong set */
 		side->surfaceFlags &= ~SURF_PHONG;
 		tex->surfaceFlags &= ~SURF_PHONG;

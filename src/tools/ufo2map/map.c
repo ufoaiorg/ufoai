@@ -693,11 +693,11 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 		/* hints are never detail */
 		if (side->surfaceFlags & SURF_HINT) {
-			/**@todo i just defed this out. i think it can probably be deleted
+			/**@todo defed out bit can probably be deleted
 			  * messes up levelflags. legacy q2 stuff? blondandy. */
-			#if 0
+#if 0
 			side->contentFlags = 0;
-			#endif
+#endif
 			side->surfaceFlags &= ~CONTENTS_DETAIL;
 		}
 
@@ -741,7 +741,8 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			&td, vec3_origin, b->isTerrain);
 		side->brush = b;
 
-		/* if in check or fix mode, let them choose to do this, and the call is made elsewhere */
+		/* if in check or fix mode, let them choose to do this (with command line options),
+		 * and then call is made elsewhere */
 		if (!checkOrFix)
 			SetImpliedFlags(side, &td, b);
 
