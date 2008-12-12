@@ -92,7 +92,7 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 
 	for (i = 0; i < e->model->bsp.nummodelsurfaces; i++, surf++) {
 		/* find which side of the surf we are on  */
-		if (AXIAL(surf->plane)
+		if (AXIAL(surf->plane))
 			dot = modelorg[surf->plane->type] - surf->plane->dist;
 		else
 			dot = DotProduct(modelorg, surf->plane->normal) - surf->plane->dist;
