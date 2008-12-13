@@ -115,6 +115,4 @@ qboolean TR_TestLineSingleTile(const vec3_t start, const vec3_t stop);
 qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 
-void TR_TraceToLeaf(boxtrace_t *trace, int leafnum);
-
 #endif /* COMMON_TRACING_H */

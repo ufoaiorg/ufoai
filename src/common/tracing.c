@@ -457,8 +457,6 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 		}
 
 		return side;
-
-		break;
 	default:
 		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
 		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
@@ -875,7 +873,7 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
  *  in the leaf is examined to see if it is intersected by the line drawn in TR_RecursiveHullCheck or is within the
  *  bounding box set in trace_mins and trace_maxs with the origin on the line.
  */
-void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
+static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 {
 	int k;
 	TR_LEAF_TYPE *leaf;
@@ -1080,7 +1078,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 	c_traces++;		/* for statistics, may be zeroed */
 
 	/* init */
-	/* curTile = tile; */
+	curTile = tile;
 
 	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 
