@@ -350,11 +350,22 @@ static inline void R_SetParent (mBspNode_t *node, mBspNode_t *parent)
 	node->parent = parent;
 
 	/* a leaf doesn't have any children */
-	if (node->contents != CONTENTS_NODE)
+	if (node->contents > CONTENTS_NODE)
 		return;
 
 	R_SetParent(node->children[0], node);
 	R_SetParent(node->children[1], node);
+}
+
+static void R_RecurseSetParent (mBspNode_t *node, mBspNode_t *parent)
+{
+	/* skip special pathfinding nodes */
+	if (!node->plane) {
+		R_RecurseSetParent(node->children[0], parent);
+		R_RecurseSetParent(node->children[1], parent);
+	} else {
+		R_SetParent(node, parent);
+	}
 }
 
 /**
@@ -413,7 +424,7 @@ static void R_ModLoadNodes (const lump_t *l)
 	}
 
 	/* sets nodes and leafs */
-	R_SetParent(r_worldmodel->bsp.nodes, NULL);
+	R_RecurseSetParent(r_worldmodel->bsp.nodes, NULL);
 }
 
 static void R_ModLoadLeafs (const lump_t *l)
