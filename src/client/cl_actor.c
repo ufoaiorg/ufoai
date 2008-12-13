@@ -365,7 +365,7 @@ static void CL_ActorGlobalCVars (void)
 			Cvar_SetValue(va("mn_morale%i",i), le->morale);
 			Cvar_SetValue(va("mn_moralemax%i",i), le->maxMorale);
 			Cvar_SetValue(va("mn_stun%i", i), le->STUN);
-			Com_sprintf(tooltip, sizeof(tooltip), "%s\nHP: %i/%i TU: %i\n",
+			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n",
 				CL_GetActorChr(le)->name, le->HP, le->maxHP, le->TU);
 			if (RIGHT(le))
 				Q_strcat(tooltip, va("%s\n", RIGHT(le)->item.t->name), sizeof(tooltip));
@@ -490,7 +490,7 @@ static void SetWeaponButton (int button, weaponButtonState_t state)
 {
 	const weaponButtonState_t currentState = weaponButtonState[button];
 	char cbufText[MAX_VAR];
-	char const* prefix;
+	const char const* prefix;
 
 	assert(button < BT_NUM_TYPES);
 
