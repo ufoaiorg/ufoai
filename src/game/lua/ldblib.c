@@ -138,7 +138,7 @@ static int db_getinfo (lua_State *L) {
     treatstackoption(L, L1, "func");
   return 1;  /* return table */
 }
-    
+
 
 static int db_getlocal (lua_State *L) {
   int arg;
@@ -200,7 +200,7 @@ static int db_setupvalue (lua_State *L) {
 
 
 
-static const char KEY_HOOK = 'h';
+static char KEY_HOOK = 'h';
 
 
 static void hookf (lua_State *L, lua_Debug *ar) {
