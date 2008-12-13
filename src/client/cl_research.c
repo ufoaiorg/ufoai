@@ -806,6 +806,7 @@ static void RS_UpdateInfo (const base_t* base)
 {
 	char tmpbuf[128];
 	technology_t *tech;
+	int type;
 
 	/* reset cvars */
 	Cvar_Set("mn_research_imagetop", "");
@@ -819,7 +820,9 @@ static void RS_UpdateInfo (const base_t* base)
 		return;
 
 	/* selection is not a research */
-	if (researchList2[researchListPos].type != RSGUI_RESEARCH && researchList2[researchListPos].type != RSGUI_RESEARCHOUT)
+	/** @todo it can be an assert */
+	type = researchList2[researchListPos].type;
+	if (type != RSGUI_RESEARCH && type != RSGUI_RESEARCHOUT && type != RSGUI_UNRESEARCHABLEITEM)
 		return;
 
 	tech = researchList2[researchListPos].tech;
@@ -1338,7 +1341,7 @@ static void RS_ShowPedia_f (void)
  */
 static void RS_InitGUIData (base_t* base)
 {
-	int i;
+	int i, j;
 	int row;
 	int available[MAX_BASES];
 	qboolean first;
@@ -1421,8 +1424,8 @@ static void RS_InitGUIData (base_t* base)
 
 
 	/* research from another bases */
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *b = B_GetFoundedBaseByIDX(i);
+	for (j = 0; j < MAX_BASES; j++) {
+		base_t *b = B_GetFoundedBaseByIDX(j);
 		if (!b || b == base)
 			continue;
 
@@ -1469,6 +1472,33 @@ static void RS_InitGUIData (base_t* base)
 }
 
 /**
+ * @brief Update the research status of a row
+ */
+static void RS_UpdateResearchStatus (int row)
+{
+	guiResearchElement_t *element = &researchList2[row];
+	assert(element->type == RSGUI_RESEARCH || element->type == RSGUI_RESEARCHOUT);
+
+	switch (element->tech->statusResearch) {
+	case RS_RUNNING:
+		/* Color the item with 'research running'-color. */
+		MN_ExecuteConfunc(va("research_running %i", row));
+		break;
+	case RS_PAUSED:
+		/* Color the item with 'research paused'-color. */
+		MN_ExecuteConfunc(va("research_paused %i", row));
+		break;
+	case RS_NONE:
+		/* Color the item with 'research normal'-color. */
+		MN_ExecuteConfunc(va("research_normal %i", row));
+		break;
+	case RS_FINISH:
+	default:
+		break;
+	}
+}
+
+/**
  * @brief Initialize/Update all the GUI according to the current view
  * @param[in] base Pointer to the base where item list is updated
  * @param[in] update If true, only update editable content
@@ -1493,7 +1523,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 		guiResearchElement_t *element = &researchList2[i];
 
 		/* only element of the current base can change */
-		if (update && element->base != base)
+		if (update && (element->base != base && element->type != RSGUI_RESEARCHOUT))
 			continue;
 
 		switch (element->type) {
@@ -1514,24 +1544,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 
-				/* Set the text of the research items and mark them if they are currently researched. */
-				switch (element->tech->statusResearch) {
-				case RS_RUNNING:
-					/* Color the item with 'research running'-color. */
-					MN_ExecuteConfunc(va("research_running %i", i));
-					break;
-				case RS_PAUSED:
-					/* Color the item with 'research paused'-color. */
-					MN_ExecuteConfunc(va("research_paused %i", i));
-					break;
-				case RS_NONE:
-					/* Color the item with 'research normal'-color. */
-					MN_ExecuteConfunc(va("research_normal %i", i));
-					break;
-				case RS_FINISH:
-				default:
-					break;
-				}
+				RS_UpdateResearchStatus(i);
 			}
 			break;
 		case RSGUI_BASETITLE:
@@ -1549,6 +1562,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
+			RS_UpdateResearchStatus(i);
 			break;
 		case RSGUI_MISSINGITEM:
 			MN_ExecuteConfunc(va("research_missingitem %i", i));
