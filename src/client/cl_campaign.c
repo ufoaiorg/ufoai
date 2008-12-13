@@ -5370,11 +5370,8 @@ static void CL_GameGo (void)
 	aircraft_t *aircraft;
 	base_t *base;
 
-	if (!curCampaign) {
-		assert(gd.interceptAircraft);
-		Com_DPrintf(DEBUG_CLIENT, "selectedMission: %p, interceptAircraft: %p\n", (void *)selectedMission, (void *)gd.interceptAircraft);
+	if (!curCampaign || !cls.missionaircraft)
 		return;
-	}
 
 	aircraft = cls.missionaircraft;
 	base = CP_GetMissionBase();
