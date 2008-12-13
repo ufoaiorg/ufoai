@@ -1,5 +1,10 @@
 GAME_CFLAGS+=-DCOMPILE_UFO
 
+# Lua apicheck adds asserts to make sure stack is sane
+ifeq ($(BUILD_DEBUG),1)
+	CFLAGS+=-DLUA_USE_APICHECK
+endif
+
 GAME_SRCS=\
 	game/q_shared.c \
 	game/g_ai.c \

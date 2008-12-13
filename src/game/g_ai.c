@@ -32,8 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "lua/lauxlib.h"
 
 
-#define		POS3_METATABLE		"pos3"
-#define		ACTOR_METATABLE		"actor"
+#define		POS3_METATABLE		"pos3" /**< Pos3 Lua Metatable name. */
+#define		ACTOR_METATABLE		"actor" /**< Actor Lua Metable name. */
 
 /**
  * Provides an api like luaL_dostring for buffers.
@@ -59,18 +59,18 @@ typedef struct {
  * @brief Wrapper around edict.
  */
 typedef struct aiActor_s {
-	edict_t *ent;
+	edict_t *ent; /**< Actual actor. */
 } aiActor_t;
 
 
-/**
- * @brief Stores the current actor running Lua commands.
+/*
+ * Current AI Actor.
  */
-static edict_t *AIL_ent = NULL;
-static player_t *AIL_player = NULL;
+static edict_t *AIL_ent = NULL; /**< Actor currently running the Lua AI. */
+static player_t *AIL_player = NULL; /**< Player currently running the Lua AI. */
 
 
-/**
+/*
  * Actor metatable.
  */
 /* Internal functions. */
@@ -91,7 +91,7 @@ static const luaL_reg actorL_methods[] = {
 	{"face", actorL_face},
 	{"team", actorL_team},
 	{NULL, NULL}
-};
+}; /**< Lua Actor metatable methods. */
 
 
 /**
@@ -111,7 +111,7 @@ static const luaL_reg pos3L_methods[] = {
 	{"goto", pos3L_goto},
 	{"face", pos3L_face},
 	{NULL, NULL}
-};
+}; /**< Lua Pos3 metatable methods. */
 
 
 /**
@@ -139,7 +139,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionshoot", AIL_positionshoot},
 	{"positionhide", AIL_positionhide},
 	{NULL, NULL}
-};
+}; /**< Lua AI module methods. */
 
 
 /**
@@ -168,6 +168,9 @@ static int actorL_register (lua_State *L)
 
 	/* Register the values */
 	luaL_register(L, NULL, actorL_methods);
+
+	/* Clean up stack. */
+	lua_pop(L, 1);
 
 	return 0; /* No error */
 }
@@ -385,6 +388,9 @@ static int pos3L_register (lua_State *L)
 	/* Register the values */
 	luaL_register(L, NULL, pos3L_methods);
 
+	/* Clean up the stack. */
+	lua_pop(L, 1);
+
 	return 0; /* No error */
 }
 
@@ -550,6 +556,7 @@ static int AIL_see (lua_State *L)
 	float dist_lookup[MAX_EDICTS];
 	const char *s;
 
+	/* Defaults. */
 	team = TEAM_NONE;
 	vision = 0;
 
@@ -812,6 +819,7 @@ static int AIL_positionshoot (lua_State *L)
  */
 static int AIL_positionhide (lua_State *L)
 {
+	/** @todo Implement getting a good hiding position. */
 	return 0;
 }
 
@@ -900,7 +908,7 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 
 	return qtrue;
 }
-#endif
+#endif /* LUA_AI */
 
 /**
  * @brief Checks whether the AI controlled actor wants to use a door
@@ -1390,7 +1398,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	return bestActionPoints;
 }
-#endif
+#endif /* LUA_AI */
 
 edict_t *ai_waypointList;
 
@@ -1573,7 +1581,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	return bestAia;
 }
-#endif
+#endif /* LUA_AI */
 
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk
@@ -1634,9 +1642,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* Cleanup */
 	AIL_ent = NULL;
 	AIL_player = NULL;
-
-#else
-
+#else /* LUA_AI */
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
@@ -1705,7 +1711,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		ent->hiding = qfalse;
 	}
-#endif
+#endif /* LUA_AI */
 }
 
 
