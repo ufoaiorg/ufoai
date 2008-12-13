@@ -563,7 +563,7 @@ BOX TRACING
 /**
  * @brief Returns PSIDE_FRONT, PSIDE_BACK, or PSIDE_BOTH
  */
-int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, TR_PLANE_TYPE *plane)
+int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane)
 {
 	int side, i;
 	vec3_t corners[2];
@@ -632,11 +632,12 @@ int TR_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
  * call with topnode set to the headnode, returns with topnode
  * set to the first node that splits the box
  */
-static void TR_BoxLeafnums_r (int nodenum)
+static void TR_BoxLeafnums_r (boxtrace_t *trace_data, int nodenum)
 {
 	TR_PLANE_TYPE *plane;
 	TR_NODE_TYPE *node;
 	int s;
+	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	while (1) {
 		if (nodenum <= LEAFNODE) {
@@ -648,12 +649,12 @@ static void TR_BoxLeafnums_r (int nodenum)
 			return;
 		}
 
-		assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
-		node = &curTile->nodes[nodenum];
+		assert(nodenum < myTile->numnodes + 6); /* +6 => bbox */
+		node = &myTile->nodes[nodenum];
 #ifdef COMPILE_UFO
 		plane = node->plane;
 #else
-		plane = curTile->planes + node->planenum;
+		plane = myTile->planes + node->planenum;
 #endif
 
 		s = TR_BoxOnPlaneSide(leaf_mins, leaf_maxs, plane);
@@ -664,7 +665,7 @@ static void TR_BoxLeafnums_r (int nodenum)
 		else {					/* go down both */
 			if (leaf_topnode == LEAFNODE)
 				leaf_topnode = nodenum;
-			TR_BoxLeafnums_r(node->children[0]);
+			TR_BoxLeafnums_r(trace_data, node->children[0]);
 			nodenum = node->children[1];
 		}
 	}
@@ -673,8 +674,10 @@ static void TR_BoxLeafnums_r (int nodenum)
 /**
  * @param[in] headnode if < 0 we are in a leaf node
  */
-static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
+static int TR_BoxLeafnums_headnode (boxtrace_t *trace_data, vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
 {
+	TR_TILE_TYPE *myTile = trace_data->tile;
+
 	leaf_list = list;
 	leaf_count = 0;
 	leaf_maxcount = listsize;
@@ -683,8 +686,8 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
 
 	leaf_topnode = LEAFNODE;
 
-	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
-	TR_BoxLeafnums_r(headnode);
+	assert(headnode < myTile->numnodes + 6); /* +6 => bbox */
+	TR_BoxLeafnums_r(trace_data, headnode);
 
 	if (topnode)
 		*topnode = leaf_topnode;
@@ -704,7 +707,7 @@ static int TR_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
  *  the perpendicular bounding box from mins to maxs originating from the line. It also check to see if the line
  *  originates from inside the brush, terminates inside the brush, or is completely contained within the brush.
  */
-static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TYPE *leaf)
+static void TR_ClipBoxToBrush (boxtrace_t *trace_data, cBspBrush_t *brush, TR_LEAF_TYPE *leaf)
 {
 	int i, j;
 	TR_PLANE_TYPE *clipplane;
@@ -715,6 +718,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TY
 	float d1, d2;
 	qboolean getout, startout;
 	TR_BRUSHSIDE_TYPE *leadside;
+	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	enterfrac = -1;
 	leavefrac = 1;
@@ -731,21 +735,21 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TY
 	clipplanenum = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
-		TR_BRUSHSIDE_TYPE *side = &curTile->brushsides[brush->firstbrushside + i];
+		TR_BRUSHSIDE_TYPE *side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
 		TR_PLANE_TYPE *plane = side->plane;
 #else
-		TR_PLANE_TYPE *plane = curTile->planes + side->planenum;
+		TR_PLANE_TYPE *plane = myTile->planes + side->planenum;
 #endif
 
 		/** @todo special case for axial */
-		if (!trace->ispoint) {	/* general box case */
+		if (!trace_data->ispoint) {	/* general box case */
 			/* push the plane out appropriately for mins/maxs */
 			for (j = 0; j < 3; j++) {
 				if (plane->normal[j] < 0)
-					ofs[j] = trace->maxs[j];
+					ofs[j] = trace_data->maxs[j];
 				else
-					ofs[j] = trace->mins[j];
+					ofs[j] = trace_data->mins[j];
 			}
 			dist = DotProduct(ofs, plane->normal);
 			dist = plane->dist - dist;
@@ -753,8 +757,8 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TY
 			dist = plane->dist;
 		}
 
-		d1 = DotProduct(trace->start, plane->normal) - dist;
-		d2 = DotProduct(trace->end, plane->normal) - dist;
+		d1 = DotProduct(trace_data->start, plane->normal) - dist;
+		d2 = DotProduct(trace_data->end, plane->normal) - dist;
 
 		if (d2 > 0)
 			getout = qtrue;		/* endpoint is not in solid */
@@ -792,24 +796,24 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace, cBspBrush_t *brush, TR_LEAF_TY
 	*/
 
 	if (!startout) {			/* original point was inside brush */
-		trace->trace.startsolid = qtrue;
+		trace_data->trace.startsolid = qtrue;
 		if (!getout)
-			trace->trace.allsolid = qtrue;
-		trace->trace.leafnum = leaf - curTile->leafs;
+			trace_data->trace.allsolid = qtrue;
+		trace_data->trace.leafnum = leaf - curTile->leafs;
 		return;
 	}
 	if (enterfrac < leavefrac) {
-		if (enterfrac > -1 && enterfrac < trace->trace.fraction) {
+		if (enterfrac > -1 && enterfrac < trace_data->trace.fraction) {
 			if (enterfrac < 0)
 				enterfrac = 0;
-			trace->trace.fraction = enterfrac;
-			trace->trace.plane = *clipplane;
-			trace->trace.planenum = clipplanenum;
+			trace_data->trace.fraction = enterfrac;
+			trace_data->trace.plane = *clipplane;
+			trace_data->trace.planenum = clipplanenum;
 #ifdef COMPILE_UFO
-			trace->trace.surface = leadside->surface;
+			trace_data->trace.surface = leadside->surface;
 #endif
-			trace->trace.contentFlags = brush->contentFlags;
-			trace->trace.leafnum = leaf - curTile->leafs;
+			trace_data->trace.contentFlags = brush->contentFlags;
+			trace_data->trace.leafnum = leaf - curTile->leafs;
 		}
 	}
 }
@@ -825,16 +829,17 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 	vec3_t ofs;
 	float d1;
 	TR_BRUSHSIDE_TYPE *side;
+	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	if (!brush || !brush->numsides)
 		return;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side = &trace_data->tile->brushsides[brush->firstbrushside + i];
+		side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
 		plane = side->plane;
 #else
-		plane = trace_data->tile->planes + side->planenum;
+		plane = myTile->planes + side->planenum;
 #endif
 
 		/** @todo special case for axial */
@@ -910,18 +915,19 @@ static void TR_TestInLeaf (boxtrace_t *trace_data, int leafnum)
 {
 	int k;
 	const TR_LEAF_TYPE *leaf;
+	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	assert(leafnum > LEAFNODE);
-	assert(leafnum <= curTile->numleafs);
+	assert(leafnum <= myTile->numleafs);
 
-	leaf = &curTile->leafs[leafnum];
+	leaf = &myTile->leafs[leafnum];
 	if (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects))
 		return;
 
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
-		const int brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		cBspBrush_t *b = &curTile->brushes[brushnum];
+		const int brushnum = myTile->leafbrushes[leaf->firstleafbrush + k];
+		cBspBrush_t *b = &myTile->brushes[brushnum];
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
@@ -1077,17 +1083,14 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 	checkcount++;	/* for multi-check avoidance */
 	c_traces++;		/* for statistics, may be zeroed */
 
-	/* init */
-	curTile = tile;
-
-	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
+	assert(headnode < tile->numnodes + 6); /* +6 => bbox */
 
 	/* fill in a default trace */
 	memset(&trace_data.trace, 0, sizeof(trace_data.trace));
 	trace_data.trace.fraction = 1;
 	trace_data.trace.surface = &(nullsurface);
 
-	if (!curTile->numnodes)		/* map not loaded */
+	if (!tile->numnodes)		/* map not loaded */
 		return trace_data.trace;
 
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
@@ -1125,7 +1128,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 			c2[i] += 1;
 		}
 
-		numleafs = TR_BoxLeafnums_headnode(c1, c2, leafs, MAX_LEAFS, headnode, &topnode);
+		numleafs = TR_BoxLeafnums_headnode(&trace_data, c1, c2, leafs, MAX_LEAFS, headnode, &topnode);
 		for (i = 0; i < numleafs; i++) {
 			TR_TestInLeaf(&trace_data, leafs[i]);
 			if (trace_data.trace.allsolid)

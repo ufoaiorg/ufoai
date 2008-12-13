@@ -423,13 +423,15 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 
 	R_Trace(start, end, 0.0, MASK_SOLID);
 
-	if (!refdef.trace.leafnum) {  /* didn't hit anything */
+	/* didn't hit anything */
+	if (!refdef.trace.leafnum) {
 		/** @todo use worldspawn light and ambient settings to get a better value here */
 		VectorSet(lighting->color, 0.5, 0.5, 0.5);
 		return;
 	}
 
-	if (!r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {  /* maptile is not lit */
+	/* maptile is not lit */
+	if (!r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
 		VectorSet(lighting->color, 1.0, 1.0, 1.0);
 		return;
 	}
