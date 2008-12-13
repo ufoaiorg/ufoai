@@ -234,6 +234,8 @@ radiant:
 clean-radiant:
 	@echo "Radiant is not enabled - use './configure --enable-gtkradiant'"
 
+ALL_RADIANT_OBJS=""
+
 endif
 
 # Say how to build .o files from .cpp files for this module
