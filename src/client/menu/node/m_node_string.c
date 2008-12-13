@@ -45,7 +45,7 @@ static void MN_StringNodeDraw (menuNode_t *node)
 		R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse, 0);
 	}
 	else {
-		R_FontDrawStringInBox(font, node->textalign, nodepos[0], nodepos[1], node->size[0], node->size[1], ref, node->longlines);
+		R_FontDrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, node->longlines);
 	}
 
 	R_ColorBlend(NULL);

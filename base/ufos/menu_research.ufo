@@ -180,6 +180,8 @@ menu research
 		string	"*cvar mn_base_title"
 		pos	"60 30"
 		size "240 32"
+		textalign	cl
+		padding	8
 		font	f_big
 	}
 
