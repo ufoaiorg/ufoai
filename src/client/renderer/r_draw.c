@@ -996,7 +996,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, vec3_t rota
 /**
  * @brief draw a panel from a texture as we can see on the image
  * The function is inline because there are often 3 or 5 const param, with it a lot of var became const too
- * @image html http://ufoai.ninex.info/wiki/textures/Inline_draw_panel.png
+ * @image html http://ufoai.ninex.info/wiki/images/Inline_draw_panel.png
  * @param[in] pos Position of the output panel
  * @param[in] size Size of the output panel
  * @param[in] texture Texture contain the template of the panel
