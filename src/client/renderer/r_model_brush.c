@@ -369,8 +369,8 @@ static void R_RecurseSetParent (mBspNode_t *node, mBspNode_t *parent)
 }
 
 /**
- * @sa BuildNodeChildren
  * @sa TR_BuildTracingNode_r
+ * @sa R_RecurseSetParent
  */
 static void R_ModLoadNodes (const lump_t *l)
 {

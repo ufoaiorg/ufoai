@@ -353,8 +353,7 @@ static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 /**
  * @brief Clip to all surfaces within the specified range, accumulating static lighting
  * color to the specified vector in the event of an intersection.
- * @todo This is not yet working because we are using some special nodes for
- * pathfinding @sa BuildNodeChildren - and these nodes don't have a plane assigned
+ * @sa R_RecurseSetParent
  */
 static qboolean R_LightPoint_ (const int tile, const int firstsurface, const int numsurfaces, const vec3_t point, vec3_t color)
 {
@@ -374,7 +373,7 @@ static qboolean R_LightPoint_ (const int tile, const int firstsurface, const int
 #if 0
 		/** @todo Texture names don't match - because image_t holds the full path */
 		if (strcmp(refdef.trace.surface->name, tex->image->name))
-			continue;	/* different material */
+			continue;	/* wrong material */
 
 		if (!VectorCompare(refdef.trace.plane.normal, surf->plane->normal))
 			continue;	/* facing the wrong way */
@@ -407,16 +406,50 @@ static qboolean R_LightPoint_ (const int tile, const int firstsurface, const int
 	return qfalse;
 }
 
+#define STATIC_LIGHTING_INTERVAL 0.25
+
+static void R_LightPointLerp (static_lighting_t *lighting)
+{
+	float lerp;
+
+	/* only one sample */
+	if (VectorCompare(lighting->colors[1], vec3_origin)) {
+		VectorCopy(lighting->colors[0], lighting->color);
+		return;
+	}
+
+	/* calculate the lerp fraction */
+	lerp = (refdef.time - lighting->time) / STATIC_LIGHTING_INTERVAL;
+
+	/* and lerp the samples */
+	VectorMix(lighting->colors[1], lighting->colors[0], lerp, lighting->color);
+}
+
 /**
 * @sa R_LightPoint_
 */
 void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 {
+	static_lighting_t l;
 	vec3_t start, end;
+	float delta;
+
+	l = *lighting;  /* save some things for lerping */
 
 	/* clear it */
 	memset(lighting, 0, sizeof(*lighting));
 
+	/* restore colors and time for lerping */
+	VectorCopy(l.colors[0], lighting->colors[0]);
+	VectorCopy(l.colors[1], lighting->colors[1]);
+
+	lighting->time = l.time;
+
+	/* new level wrap */
+	if (lighting->time > refdef.time)
+		lighting->time = 0.0;
+
+	/* do the trace */
 	VectorCopy(point, start);
 	VectorCopy(point, end);
 	end[2] -= 256.0;
@@ -425,37 +458,60 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 
 	/* didn't hit anything */
 	if (!refdef.trace.leafnum) {
-		/** @todo use worldspawn light and ambient settings to get a better value here */
-		VectorSet(lighting->color, 0.5, 0.5, 0.5);
-		return;
-	}
+		if (lighting->time)
+			VectorCopy(l.color, lighting->color);
+		else
+			/** @todo use worldspawn light and ambient settings to get a better value here */
+			VectorSet(lighting->color, 0.5, 0.5, 0.5);
 
-	/* maptile is not lit */
-	if (!r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
-		VectorSet(lighting->color, 1.0, 1.0, 1.0);
+		lighting->dirty = qtrue;
 		return;
 	}
 
 	VectorCopy(refdef.trace.endpos, lighting->point);
 	VectorCopy(refdef.trace.plane.normal, lighting->normal);
 
-	/* clip to all surfaces of the bsp entity */
-	if (refdef.trace_ent) {
-		VectorSubtract(refdef.trace.endpos,
-				refdef.trace_ent->origin, refdef.trace.endpos);
+	/* resolve the lighting sample, using linear interpolation */
+	delta = refdef.time - lighting->time;
 
-		R_LightPoint_(refdef.trace_ent->model->bsp.maptile,
-				refdef.trace_ent->model->bsp.firstmodelsurface,
-				refdef.trace_ent->model->bsp.nummodelsurfaces,
-				refdef.trace.endpos, lighting->color);
-	} else {
-		mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
-		mBspNode_t *node = leaf->parent;
-		/** @todo this doesn't work yet - node is always(?) null */
-		while (node) {
-			if (R_LightPoint_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->color))
-				break;
-			node = node->parent;
+	/* just lerp */
+	if (lighting->time && delta < STATIC_LIGHTING_INTERVAL) {
+		R_LightPointLerp(lighting);
+		return;
+	}
+
+	/* bump the time */
+	lighting->time = refdef.time;
+
+	/* shuffle the samples */
+	VectorCopy(lighting->colors[0], lighting->colors[1]);
+
+	VectorSet(lighting->colors[0], 1.0, 1.0, 1.0);
+
+	/* resolve the lighting sample */
+	if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
+		/* clip to all surfaces of the bsp entity */
+		if (refdef.trace_ent) {
+			VectorSubtract(refdef.trace.endpos,
+					refdef.trace_ent->origin, refdef.trace.endpos);
+
+			R_LightPoint_(refdef.trace_ent->model->bsp.maptile,
+					refdef.trace_ent->model->bsp.firstmodelsurface,
+					refdef.trace_ent->model->bsp.nummodelsurfaces,
+					refdef.trace.endpos, lighting->color);
+		} else {
+			mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
+			mBspNode_t *node = leaf->parent;
+
+			while (node) {
+				if (R_LightPoint_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->colors[0]))
+					break;
+
+				node = node->parent;
+			}
 		}
 	}
+
+	/* interpolate the lighting samples */
+	R_LightPointLerp(lighting);
 }
