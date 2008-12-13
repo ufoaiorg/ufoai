@@ -294,7 +294,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 static void R_RecurseWorld (mBspNode_t * node, int tile)
 {
 	/* skip special pathfinding nodes */
-	if (!node->plane) {
+	if (node->contents == CONTENTS_PATHFINDING_NODE) {
 		R_RecurseWorld(node->children[0], tile);
 		R_RecurseWorld(node->children[1], tile);
 	} else {

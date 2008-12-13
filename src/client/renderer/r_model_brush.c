@@ -343,32 +343,6 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 }
 
 /**
- * @sa R_SetModel
- */
-static inline void R_SetParent (mBspNode_t *node, mBspNode_t *parent)
-{
-	node->parent = parent;
-
-	/* a leaf doesn't have any children */
-	if (node->contents > CONTENTS_NODE)
-		return;
-
-	R_SetParent(node->children[0], node);
-	R_SetParent(node->children[1], node);
-}
-
-static void R_RecurseSetParent (mBspNode_t *node, mBspNode_t *parent)
-{
-	/* skip special pathfinding nodes */
-	if (!node->plane) {
-		R_RecurseSetParent(node->children[0], parent);
-		R_RecurseSetParent(node->children[1], parent);
-	} else {
-		R_SetParent(node, parent);
-	}
-}
-
-/**
  * @sa TR_BuildTracingNode_r
  * @sa R_RecurseSetParent
  */
@@ -377,6 +351,7 @@ static void R_ModLoadNodes (const lump_t *l)
 	int i, j, count, p;
 	const dBspNode_t *in;
 	mBspNode_t *out;
+	mBspNode_t *parent = NULL;
 
 	in = (const void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -401,6 +376,7 @@ static void R_ModLoadNodes (const lump_t *l)
 			out->plane = r_worldmodel->bsp.planes + p;
 			/* differentiate from leafs */
 			out->contents = CONTENTS_NODE;
+			parent = out;
 		}
 
 		for (j = 0; j < 3; j++) {
@@ -420,11 +396,9 @@ static void R_ModLoadNodes (const lump_t *l)
 				assert((LEAFNODE - p) < r_worldmodel->bsp.numleafs);
 				out->children[j] = (mBspNode_t *) (r_worldmodel->bsp.leafs + (LEAFNODE - p));
 			}
+			out->children[j]->parent = parent;
 		}
 	}
-
-	/* sets nodes and leafs */
-	R_RecurseSetParent(r_worldmodel->bsp.nodes, NULL);
 }
 
 static void R_ModLoadLeafs (const lump_t *l)
@@ -841,17 +815,32 @@ static void R_LoadSurfacesArrays (model_t *mod)
 
 
 /**
- * @sa R_SetParents
+ * @sa R_SetParent
  */
 static void R_SetModel (mBspNode_t *node, model_t *mod)
 {
 	node->model = mod;
 
-	if (node->contents != CONTENTS_NODE)
+	if (node->contents > CONTENTS_NODE)
 		return;
 
 	R_SetModel(node->children[0], mod);
 	R_SetModel(node->children[1], mod);
+}
+
+
+/**
+ * @sa R_RecurseSetParent
+ */
+static void R_RecursiveSetModel (mBspNode_t *node, model_t *mod)
+{
+	/* skip special pathfinding nodes */
+	if (node->contents == CONTENTS_PATHFINDING_NODE) {
+		R_RecursiveSetModel(node->children[0], mod);
+		R_RecursiveSetModel(node->children[1], mod);
+	} else {
+		R_SetModel(node, mod);
+	}
 }
 
 /**
@@ -876,7 +865,7 @@ static void R_SetupSubmodels (void)
 		if (mod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
 			Com_Error(ERR_DROP, "R_SetupSubmodels: Inline model %i has bad firstnode", i);
 
-		R_SetModel(mod->bsp.nodes, mod);
+		R_RecursiveSetModel(mod->bsp.nodes, mod);
 
 		VectorCopy(bm->maxs, mod->maxs);
 		VectorCopy(bm->mins, mod->mins);
