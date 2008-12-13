@@ -268,7 +268,7 @@ menu hud extends ahud
 	pic bt_actor0
 	{
 		key "*binding soldier_select 0"
-		tooltip	"_Soldier 1"
+		tooltip	"*cvar mn_soldier0_tt"
 		pos	"426 10"
 		texl	"0 0"
 		texh	"28 36"
@@ -278,7 +278,7 @@ menu hud extends ahud
 	pic bt_actor1
 	{
 		key "*binding soldier_select 1"
-		tooltip	"_Soldier 2"
+		tooltip	"*cvar mn_soldier1_tt"
 		pos	"457 10"
 		texl	"32 0"
 		texh	"60 36"
@@ -288,7 +288,7 @@ menu hud extends ahud
 	pic bt_actor2
 	{
 		key "*binding soldier_select 2"
-		tooltip	"_Soldier 3"
+		tooltip	"*cvar mn_soldier2_tt"
 		pos	"488 10"
 		texl	"64 0"
 		texh	"92 36"
@@ -298,7 +298,7 @@ menu hud extends ahud
 	pic bt_actor3
 	{
 		key "*binding soldier_select 3"
-		tooltip	"_Soldier 4"
+		tooltip	"*cvar mn_soldier3_tt"
 		pos	"519 10"
 		texl	"96 0"
 		texh	"124 36"
@@ -308,7 +308,7 @@ menu hud extends ahud
 	pic bt_actor4
 	{
 		key "*binding soldier_select 4"
-		tooltip	"_Soldier 5"
+		tooltip	"*cvar mn_soldier4_tt"
 		pos	"550 10"
 		texl	"0 38"
 		texh	"28 74"
@@ -318,7 +318,7 @@ menu hud extends ahud
 	pic bt_actor5
 	{
 		key "*binding soldier_select 5"
-		tooltip	"_Soldier 6"
+		tooltip	"*cvar mn_soldier5_tt"
 		pos	"581 10"
 		texl	"32 38"
 		texh	"60 74"
@@ -328,7 +328,7 @@ menu hud extends ahud
 	pic bt_actor6
 	{
 		key "*binding soldier_select 6"
-		tooltip	"_Soldier 7"
+		tooltip	"*cvar mn_soldier6_tt"
 		pos	"612 10"
 		texl	"64 38"
 		texh	"92 74"
@@ -338,7 +338,7 @@ menu hud extends ahud
 	pic bt_actor7
 	{
 		key "*binding soldier_select 7"
-		tooltip	"_Soldier 8"
+		tooltip	"*cvar mn_soldier7_tt"
 		pos	"643 10"
 		texl	"96 38"
 		texh	"124 74"
