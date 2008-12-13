@@ -432,7 +432,7 @@ void R_DrawAliasModel (entity_t *e)
 		/* IR goggles override color
 		 * don't highlight all misc_models, only actors */
 		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
-			color[1] = color[2] = 0.0;
+			VectorSet(color, 1.0, 0.0, 0.0);
 
 		R_Color(color);
 	}
