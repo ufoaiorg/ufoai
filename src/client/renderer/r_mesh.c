@@ -407,20 +407,22 @@ void R_DrawAliasModel (entity_t *e)
 		vec4_t color = {1, 1, 1, 1};
 
 		/* update static lighting info */
-		if (e->lighting && e->lighting->dirty) {
-			/* tagged models have an origin relative to the parent entity - so we
-			 * have to transform them */
-			if (e->tagent) {
-				vec4_t tmp;
-				GLVectorTransform(e->transform.matrix, e->origin, tmp);
-				R_LightPoint(tmp, e->lighting);
-			} else {
-				R_LightPoint(e->origin, e->lighting);
+		if (e->lighting) {
+			if (e->lighting->dirty) {
+				/* tagged models have an origin relative to the parent entity - so we
+				 * have to transform them */
+				if (e->tagent) {
+					vec4_t tmp;
+					GLVectorTransform(e->transform.matrix, e->origin, tmp);
+					R_LightPoint(tmp, e->lighting);
+				} else {
+					R_LightPoint(e->origin, e->lighting);
+				}
 			}
-		}
 
-		/* resolve the color, starting with the lighting result */
-		VectorCopy(e->lighting->color, color);
+			/* resolve the color, starting with the lighting result */
+			VectorCopy(e->lighting->color, color);
+		}
 
 		if (e->flags & RF_GLOW) {  /* and then adding in a pulse */
 			const float f = 1.0 + sin((refdef.time + (e - R_GetEntity(0))) * 6.0);

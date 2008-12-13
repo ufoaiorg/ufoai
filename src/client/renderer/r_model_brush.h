@@ -144,7 +144,6 @@ typedef struct mBspNode_s {
 typedef struct mBspLeaf_s {
 	/* common with mBspNode_t */
 	int contents;				/**< will be a negative contents number */
-
 	float minmaxs[6];			/**< for bounding box culling */
 
 	mBspNode_t *parent;

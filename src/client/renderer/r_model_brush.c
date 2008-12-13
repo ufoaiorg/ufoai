@@ -602,13 +602,13 @@ static void R_LoadBspVertexArrays (model_t *mod)
 				s = DotProduct(point, sdir) + soff;
 				s -= surf->stmins[0];
 				s += surf->light_s * surf->lightmap_scale;
-				s += 1 * (surf->lightmap_scale / 2.0);
+				s += surf->lightmap_scale / 2.0;
 				s /= r_lightmaps.size * surf->lightmap_scale;
 
 				t = DotProduct(point, tdir) + toff;
 				t -= surf->stmins[1];
 				t += surf->light_t * surf->lightmap_scale;
-				t += 1 * (surf->lightmap_scale / 2.0);
+				t += surf->lightmap_scale / 2.0;
 				t /= r_lightmaps.size * surf->lightmap_scale;
 			}
 
