@@ -355,6 +355,7 @@ static void CL_ActorGlobalCVars (void)
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {
 			char tooltip[80] = "";
+			const character_t *chr = CL_GetActorChr(le);
 
 			/* the model name is the first entry in model_t */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
@@ -366,7 +367,7 @@ static void CL_ActorGlobalCVars (void)
 			Cvar_SetValue(va("mn_moralemax%i",i), le->maxMorale);
 			Cvar_SetValue(va("mn_stun%i", i), le->STUN);
 			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n",
-				CL_GetActorChr(le)->name, le->HP, le->maxHP, le->TU);
+				chr ? chr->name : "", le->HP, le->maxHP, le->TU);
 			if (RIGHT(le))
 				Q_strcat(tooltip, va("%s\n", RIGHT(le)->item.t->name), sizeof(tooltip));
 			/* check for left hand weapon */
