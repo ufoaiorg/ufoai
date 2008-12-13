@@ -1429,6 +1429,10 @@ static void RS_InitGUIData (base_t* base)
 		if (!b || b == base)
 			continue;
 
+		/* skip bases without labs */
+		if (B_GetBuildingInBaseByType(b, B_LAB, qtrue) == NULL)
+			continue;
+
 		researchList2[row].type = RSGUI_NOTHING;
 		row++;
 		researchList2[row].type = RSGUI_BASETITLE;
