@@ -30,33 +30,36 @@
 //    probability for all primary weapon must not exceed 100. If this sum is below 100 --
 //    let's say 80 -- there is 20 % proability that the alien has no primary weapon.
 // 1b. Select an ammo:
-//    If several ammo types are available for the selected weapon, ammo is randomly chosen
-//    with the relative probability given by the last 2 numbers. If there is at least one ammo type
-//    in the equipment definition, you will have an ammo.
-//    Example: ammo1 125	ammo2 250. 
-//             ammo1 has 25/(25+50)*100 = 33 % probability to be selected.
-//             ammo2 has 50/(25+50)*100 = 67% probability to be selected.
-// 1c. get the following number of ammo for the selected ammo type:
-//    there is a probability given by the last 2 numbers to get one ammo, plus
-//    the first number of the probability number.
-//    Example : with previous values, 
-//            you'll have 25% to have 2 ammo1 (else only 1 ammo1)
-//            you'll have 50% to have 3 ammo2 (else only 2 ammo1)
-//    This number is the number of ammo alien will have in the backpack (weapon is already loaded)
+//    There is an equal probability to get any ammo in equipment definition that fits the weapon obtained in 1.a.
+//    The number of ammo added (weapon being already loaded) is the number entered in equipment definition.
+//    Note that writing 'plaspistol_ammo  0' is not the same than writing nothing: in first case weapon will be
+//    loaded, in last case it won't.
 //
 // 2. Get a secondary weapon with reload (sidearms):
 //    The procedure is the same as for primary weapon.
 //    If alien got a primary weapon in first step with damage type 'particle' or 'normal', then
 //       all probabilities are divided by 2 (therefore, you have a maximum 50 % probabilty to have
 //       a secondary weapon)
-//    If alien got no primary weapon, but got a secondary weapon, there is 30 % that he gets a second one.
+//    If alien got no primary weapon, but got a secondary weapon, there is 30 % that he gets a second one. He
+//       may also have a few more ammos.
 //
 // 3. If alien has no weapon at this stage, there is 40% chance that we go back to 2.
 //    to increase the probability to get a secondary weapon.
 //
 // 4. Get misc items and secondary weapons without reload: (that includes kerrblades or plasblade)
-//    The probability is used in the same way as for ammos. Therefore, you can use proability greater
-//    than 100 to get several grenades.
+// 4a. select an item:
+//    If several misc items are available, item is randomly chosen with the relative probability given
+//    by the last 2 numbers. If there is at least one item in the equipment definition, you will have an item.
+//    Example: item1 125	item2 250. 
+//             item1 has 25/(25+50)*100 = 33 % probability to be selected.
+//             item2 has 50/(25+50)*100 = 67% probability to be selected.
+// 4b. get the number of items:
+//    there is a probability given by the last 2 numbers to get one item, plus
+//    the first number of the probability number.
+//    Example : with previous values, 
+//            you'll have 25% to have 2 item1 (else only 1 item1)
+//            you'll have 50% to have 3 item2 (else only 2 item2)
+//    Therefore, you can use probability greater than 100 to get several grenades.
 //
 // 5. If alien has no primary nor secondary weapon at this stage, there is 40% chance
 //    that we go back to 4 to increase number of misc items.
@@ -68,16 +71,17 @@
 //    Same procedure as for primary weapons. The probability to get an armour is increased if alien has
 //    no primary weapon.
 //
-// For a given weapon category (except blades), the total probability should never exceed 100.
+// For a given weapon category (except blades), the total probability should never exceed 100. (this is not true
+//    for misc items).
 // Note that a weapon can be added only if alien has still room to get it. An alien with primary and
-//    secondary weapon won't prabably get any Kerr Blade.
+//    secondary weapon won't probably get any Kerr Blade.
 //
 // there are 2 types of alien equipment:
 // alien_workersS or alien_soldiersS
 //    alien_workers is used for harvest, recon, building and supply missions.
 //    alien_soliders is used for all other mission categories.
 //    S is any string (used to specify the equipment definition)
-//    For a given stage, all equipment definition can be chosen with the same proability.
+//    For a given stage, all equipment definitions can be chosen with the same probability.
 //    For each alien equipment, you must specifiy mininterest and maxinterest: the lower
 //    and upper value of overall alieninterest that can use this equipment definition.
 //    Equipment used will be picked randomly between all definition fitting overallinterest.
@@ -95,11 +99,11 @@ equipment alien_workers1
 
 	// Primary
 	plasrifle			2
-		plasrifle_ammo		20
+		plasrifle_ammo		0
 
 	// Secondary
 	plaspistol			50
-		plaspistol_ammo		80
+		plaspistol_ammo		1
 
 	// Misc
 	kerrblade			100
@@ -115,11 +119,11 @@ equipment alien_workers1_explosive
 
 	// Primary
 	plasblaster			35
-		plasblaster_ammo	50
+		plasblaster_ammo	1
 
 	// Secondary
 	plaspistol			30
-		plaspistol_ammo		40
+		plaspistol_ammo		0
 
 	// Misc
 	kerrblade			20
@@ -137,13 +141,13 @@ equipment alien_soldiers1
 
 	// Primary
 	plasrifle			40
-		plasrifle_ammo		110
+		plasrifle_ammo		1
 	plasblaster			18
-		plasblaster_ammo	18
+		plasblaster_ammo	0
 
 	// Secondary
 	plaspistol			38
-		plaspistol_ammo		120
+		plaspistol_ammo		1
 
 	// Misc
 	kerrblade			80
@@ -160,11 +164,11 @@ equipment alien_workers2
 
 	// Primary
 	plasrifle			5
-		plasrifle_ammo		30
+		plasrifle_ammo		0
 
 	// Secondary
 	plaspistol			75
-		plaspistol_ammo		88
+		plaspistol_ammo		1
 
 	// Misc
 	kerrblade			90
@@ -182,15 +186,15 @@ equipment alien_soldiers_melee2
 
 	// Primary
 	plasrifle			3
-		plasrifle_ammo		10
+		plasrifle_ammo		0
 	pbeamrifle			3
-		pbeamrifle_ammo		10
+		pbeamrifle_ammo		0
 
 	// Secondary
 	plaspistol			3
-		plaspistol_ammo		10
+		plaspistol_ammo		0
 	pbeampistol			3
-		pbeampistol_ammo	10
+		pbeampistol_ammo	0
 
 	// Misc
 	kerrblade			10
@@ -210,15 +214,15 @@ equipment alien_soldiers2
 
 	// Primary
 	plasrifle			60
-		plasrifle_ammo		120
+		plasrifle_ammo		0
 	plasblaster			30
-		plasblaster_ammo	60
+		plasblaster_ammo	1
 
 	// Secondary
 	plaspistol			90
-		plaspistol_ammo		180
+		plaspistol_ammo		20
 	pbeampistol			3
-		pbeampistol_ammo	30
+		pbeampistol_ammo	1
 
 	// Misc
 	kerrblade			80
@@ -237,11 +241,11 @@ equipment alien_workers3
 
 	// Primary
 	plasrifle			5
-		plasrifle_ammo		15
+		plasrifle_ammo		0
 
 	// Secondary
 	pbeampistol			50
-		pbeampistol_ammo	65
+		pbeampistol_ammo	1
 
 	// Misc
 	kerrblade			8
@@ -260,13 +264,13 @@ equipment alien_workers_explosive3
 
 	// Primary
 	plasblaster			8
-		plasblaster_ammo	15
+		plasblaster_ammo	0
 	pbeamcannon			8
-		pbeamcannon_ammo	15
+		pbeamcannon_ammo	0
 
 	// Secondary
 	plaspistol			2
-		plaspistol_ammo		5
+		plaspistol_ammo		0
 
 	// Misc
 	kerrblade			25
@@ -286,17 +290,17 @@ equipment alien_soldiers3
 
 	// Primary
 	plasblaster			40
-		plasblaster_ammo	90
+		plasblaster_ammo	1
 	plasrifle			40
-		plasrifle_ammo		70
+		plasrifle_ammo		1
 	pbeamrifle			6
-		pbeamrifle_ammo		6
+		pbeamrifle_ammo		0
 
 	// Secondary
 	plaspistol			38
-		plaspistol_ammo		70
+		plaspistol_ammo		1
 	pbeampistol			50
-		pbeampistol_ammo	120
+		pbeampistol_ammo	1
 
 	// Misc
 	kerrblade			10
@@ -383,23 +387,23 @@ equipment human_phalanx_initial
 {
 	// Primary
 	assault				25
-		assault_ammo		150
+		assault_ammo		1
 	sniper				25
-		sniper_ammo			150
+		sniper_ammo			1
 	shotgun2			15
-		shotgun2_slug_ammo	300
+		shotgun2_slug_ammo	2
 	flamer				15
-		flamer_ammo			350
+		flamer_ammo			2
 	rpg				    10
-		rpg_ammo			220
+		rpg_ammo			1
 	grenl				10
-		grenl_ammo			220
+		grenl_ammo			2
 
 	// Secondary
 	pistol				60
-		pistol_ammo			120
+		pistol_ammo			1
 	smg 				40
-		smg_ammo			120
+		smg_ammo			1
 
 	// Misc
 	fraggrenade				150

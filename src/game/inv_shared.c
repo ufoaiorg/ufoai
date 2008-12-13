@@ -1179,7 +1179,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 	qboolean allowLeft;
 	qboolean packed;
 	int ammoMult = 1;
-	int randNumber, sum;
+	int randNumber, totalAvailableAmmo;
 
 #ifdef PARANOID
 	if (weapon == NULL) {
@@ -1202,22 +1202,23 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			item.m = weapon;
 			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
 		} else {
-			/* find some suitable ammo for the weapon (we will have at least one if there are ammos in equipment definition) */
-			sum = 0;
+			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
+			 * weapon in equipment definition) */
+			totalAvailableAmmo = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
 				if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 					/* if equip[i] is greater than 100, the first number is the number of items you'll get:
 					 * don't take it into account for propability */
-					sum += equip[i] ? max(equip[i] % 100,1) : 0;
+					totalAvailableAmmo++;
 				}
 			}
-			if (sum) {
-				randNumber = rand() % sum;
+			if (totalAvailableAmmo) {
+				randNumber = rand() % totalAvailableAmmo;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
 					if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
-						randNumber -= equip[i] ? max(equip[i] % 100,1) : 0;
+						randNumber--;
 						if (randNumber < 0) {
 							ammo = obj;
 							break;
@@ -1261,10 +1262,8 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 		int numpacked = 0;
 
 		/* how many clips? */
-		num = max(
-			(equip[ammo->idx] / 100
-			+ (equip[ammo->idx] % 100 > rand() % 100))
-			* (float) (1.0f + missedPrimary / 100.0), 1);
+		num = (1 + equip[ammo->idx])
+			* (float) (1.0f + missedPrimary / 100.0);
 
 		/* pack some ammo */
 		while (num--) {
