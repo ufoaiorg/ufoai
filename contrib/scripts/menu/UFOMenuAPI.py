@@ -13,7 +13,7 @@ import os.path
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
 
 removeComment = re.compile('(?:\s|^)(//.*$)', re.MULTILINE)
-removeEvents = re.compile('(\s)(click|rclick|mclick|wheel|in|out|whup|whdown)\s*\{.*?\}', re.DOTALL)
+removeEvents = re.compile('(\s)(click|change|rclick|mclick|wheel|in|out|whup|whdown)\s*\{.*?\}', re.DOTALL)
 removeFunctions = re.compile('(\s)(confunc|func)(\s+)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
 removeOptions = re.compile('(\s)(option)(\s+)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
 
@@ -350,9 +350,46 @@ def moveMultiplayerMenuContent():
 
 	root.save()
 
-if __name__ == "__main__":
-	#moveMultiplayerMenuContent()
+##
+# @brief move the reserch table where we want
+# @note update newpos to set a new position
+def moveResearchTable():
 	root = Root()
-	root.loadAll()
+	root.loadFile('base/ufos/menu_research.ufo')
+
+	print '-----'
+
+	def fullMove(menu, prefix, newpos, posref):
+		print "----- " + prefix + " -----"
+		dec = menu.childname[prefix + "0"].pos
+		dec = dec[0] - posref[0], dec[1] - posref[1]
+	
+		for i in xrange(0, 27 + 1):
+			x, y = newpos[0] + dec[0], newpos[1] + dec[1] + i * 25
+			menu.childname[prefix + str(i)].updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+
+	
+	menu = root.nodes.childname["research"]
+	posref = menu.childname["img_status0"].pos
+	newpos = 50, 113
+	
+	fullMove(menu, "img_status", newpos, posref)
+	fullMove(menu, "txt_item", newpos, posref)
+	fullMove(menu, "txt_assigned", newpos, posref)
+	fullMove(menu, "txt_available", newpos, posref)
+	fullMove(menu, "txt_max", newpos, posref)
+	fullMove(menu, "bt_rs_change", newpos, posref)	
+
+	root.save()
+
+
+
+
+	
+	
+if __name__ == "__main__":
+	#moveResearchTable()
+	#root = Root()
+	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')
 
