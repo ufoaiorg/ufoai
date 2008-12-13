@@ -70,7 +70,8 @@ static int researchListPos;
 
 static stringlist_t curRequiredList;
 
-void RS_InitGUI(base_t* base, qboolean update);
+/* prototype */
+static void RS_InitGUI(base_t* base, qboolean update);
 
 
 /**
@@ -1335,7 +1336,7 @@ static void RS_ShowPedia_f (void)
  * @param[in] base Pointer to the base where item list is updated
  * @note call when we open the GUI
  */
-void RS_InitGUIData (base_t* base)
+static void RS_InitGUIData (base_t* base)
 {
 	int i;
 	int row;
@@ -1474,7 +1475,7 @@ void RS_InitGUIData (base_t* base)
  * @note See menu_research.ufo for the layout/called functions.
  * @todo Display free space in all labs in the current base for each item.
  */
-void RS_InitGUI (base_t* base, qboolean update)
+static void RS_InitGUI (base_t* base, qboolean update)
 {
 	int i = 0;
 	int available[MAX_BASES];
