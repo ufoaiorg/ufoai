@@ -374,10 +374,10 @@ static qboolean R_LightPoint_ (const int tile, const int firstsurface, const int
 		/** @todo Texture names don't match - because image_t holds the full path */
 		if (strcmp(refdef.trace.surface->name, tex->image->name))
 			continue;	/* wrong material */
+#endif
 
 		if (!VectorCompare(refdef.trace.plane.normal, surf->plane->normal))
 			continue;	/* facing the wrong way */
-#endif
 
 		if (surf->tracenum == r_locals.tracenum)
 			continue;	/* already checked this trace */

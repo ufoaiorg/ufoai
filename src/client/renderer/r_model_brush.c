@@ -372,6 +372,7 @@ static void R_ModLoadNodes (const lump_t *l)
 			 * we have to set this to NULL */
 			out->plane = NULL;
 			out->contents = CONTENTS_PATHFINDING_NODE;
+			parent = NULL;
 		} else {
 			out->plane = r_worldmodel->bsp.planes + p;
 			/* differentiate from leafs */
