@@ -417,11 +417,6 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 	/* clear it */
 	memset(lighting, 0, sizeof(*lighting));
 
-	if (!r_mapTiles[0]->bsp.lightdata){  /* world is not lit */
-		VectorSet(lighting->color, 1.0, 1.0, 1.0);
-		return;
-	}
-
 	VectorCopy(point, start);
 	VectorCopy(point, end);
 	end[2] -= 256.0;
@@ -431,6 +426,11 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 	if (!refdef.trace.leafnum) {  /* didn't hit anything */
 		/** @todo use worldspawn light and ambient settings to get a better value here */
 		VectorSet(lighting->color, 0.5, 0.5, 0.5);
+		return;
+	}
+
+	if (!r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {  /* maptile is not lit */
+		VectorSet(lighting->color, 1.0, 1.0, 1.0);
 		return;
 	}
 
@@ -452,7 +452,7 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 		/** @todo this doesn't work yet - node is always(?) null */
 		while (node) {
 			if (R_LightPoint_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->color))
-				return;
+				break;
 			node = node->parent;
 		}
 	}
