@@ -67,7 +67,7 @@
 // 6. If alien has no weapon at this stage, the most expensive secondary weapon without reload (ie knife)
 //    will be selected.
 //
-// 6. Get an armour:
+// 7. Get an armour:
 //    Same procedure as for primary weapons. The probability to get an armour is increased if alien has
 //    no primary weapon.
 //
@@ -235,7 +235,7 @@ equipment alien_soldiers2
 
 	// Secondary
 	plaspistol			90
-		plaspistol_ammo		20
+		plaspistol_ammo		0
 	pbeampistol			3
 		pbeampistol_ammo	1
 

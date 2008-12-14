@@ -1778,6 +1778,7 @@ static const sanity_functions_t sanity_functions[] = {
 	{MN_ScriptSanityCheck, "menu"},
 #ifdef DEBUG
 	{INV_ItemsSanityCheck, "items"},
+	{INV_EquipmentDefSanityCheck, "items"},
 #endif
 
 	{NULL, NULL}

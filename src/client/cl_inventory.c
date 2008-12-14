@@ -865,6 +865,9 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 }
 
 #ifdef DEBUG
+/**
+ * @brief Make sure values of items after parsing are proper.
+ */
 qboolean INV_ItemsSanityCheck (void)
 {
 	int i;
@@ -895,6 +898,67 @@ qboolean INV_ItemsSanityCheck (void)
 			result = qfalse;
 			Com_Printf("INV_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
 		}
+	}
+
+	return result;
+}
+
+/**
+ * @brief Make sure equipment definitions used to generate teams are proper.
+ * @note Check that the sum of all proabilities is smaller or equal to 100 for a weapon type.
+ * @sa INVSH_EquipActor
+ */
+qboolean INV_EquipmentDefSanityCheck (void)
+{
+	int i, j;
+	int sum;
+	qboolean result = qtrue;
+
+	for (i = 0; i < csi.numEDs; i++) {
+		const equipDef_t const *ed = &csi.eds[i];
+		/* only check definitions used for generating teams */
+		if (Q_strncmp(ed->name, "alien", 5) && Q_strncmp(ed->name, "human", 5))
+			continue;
+
+		/* Check primary */
+		sum = 0;
+		for (j = 0; j < csi.numODs; j++) {
+			const objDef_t const *obj = &csi.ods[j];
+			if (obj->weapon
+				&& (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))
+				&& obj->fireTwoHanded)
+				sum += ed->num[j];
+		}
+		if (sum > 100) {
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->name);
+			result = qfalse;
+		}
+
+		/* Check secondary */
+		sum = 0;
+		for (j = 0; j < csi.numODs; j++) {
+			const objDef_t const *obj = &csi.ods[j];
+			if (obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload && !obj->deplete)
+				sum += ed->num[j];
+		}
+		if (sum > 100) {
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->name);
+			result = qfalse;
+		}
+
+		/* Check armour */
+		sum = 0;
+		for (j = 0; j < csi.numODs; j++) {
+			const objDef_t const *obj = &csi.ods[j];
+			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
+				sum += ed->num[j];
+		}
+		if (sum > 100) {
+			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->name);
+			result = qfalse;
+		}
+
+		/* Don't check misc: the total probability can be greater than 100 */
 	}
 
 	return result;

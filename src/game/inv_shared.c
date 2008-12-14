@@ -1423,7 +1423,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
 				if (equip[i] && obj->weapon
-					&& INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload) {
+					&& INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload && !obj->deplete) {
 					randNumber -= equip[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						weapon = obj;
@@ -1456,7 +1456,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = &CSI->ods[i];
 			if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
-				 && !obj->reload) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+				 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 				/* if equip[i] is greater than 100, the first number is the number of items you'll get:
 				 * don't take it into account for propability
 				 * Make sure that the probability is at least one if an item can be selected */
@@ -1470,7 +1470,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
 					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
-						 && !obj->reload) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+						 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 						randNumber -= equip[i] ? max(equip[i] % 100,1) : 0;
 						if (randNumber < 0) {
 							weapon = obj;
