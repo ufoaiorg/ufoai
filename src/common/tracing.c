@@ -334,7 +334,7 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
  */
 qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
 {
-	int i, mask, lz, hz;
+	int i;
 	static int lastthead = 0;
 
 	assert(numTiles == 1);
@@ -348,16 +348,6 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
 	 && TR_TestLine_r(curTile->thead[lastthead], start, stop))
 		return qtrue;
 
-	/* Proper maps in ufo:ai have their brushes surface flags set
-	 * based on the game levels the surfaces occur in.  We can use this to
-	 * our advantage by skipping any theadlevels that do not include
-	 * any levels between the start and stop points. */
-	lz = floor(min(start[2], stop[2]) / UNIT_HEIGHT); /**< Convert to game levels */
-	hz = floor(max(start[2], stop[2]) / UNIT_HEIGHT);
-	mask = (1 << (hz + 1)) -1; /**< Generate bit mask */
-	if (lz > 0)
-		mask ^= (1 << lz) -1; /**< Generate bit mask */
-
 	for (i = 0; i < curTile->numtheads; i++) {
 		const int level = curTile->theadlevel[i];
 		if (i == lastthead)
@@ -365,8 +355,6 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
 		if (level == LEVEL_ACTORCLIP)
 			continue;
 		if (level == LEVEL_WEAPONCLIP)
-			continue;
-		if (!(level & mask))
 			continue;
 		if (TR_TestLine_r(curTile->thead[i], start, stop)) {
 			lastthead = i;
