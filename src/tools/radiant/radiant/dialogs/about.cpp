@@ -76,15 +76,6 @@ void DoAbout (void)
 				gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 				gtk_label_set_justify(label, GTK_JUSTIFY_LEFT);
 			}
-
-			{
-				GtkVBox* vbox2 = create_dialog_vbox(4);
-				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox2), FALSE, TRUE, 0);
-				{
-					GtkButton* button = create_modal_dialog_button("OK", ok_button);
-					gtk_box_pack_start (GTK_BOX (vbox2), GTK_WIDGET(button), FALSE, FALSE, 0);
-				}
-			}
 		}
 		{
 			GtkFrame* frame = create_dialog_frame("<b>GTK+ Properties</b>");
@@ -174,6 +165,12 @@ void DoAbout (void)
 					}
 				}
 			}
+		}
+		{
+			GtkHBox* hbox = create_dialog_hbox(4);
+			GtkButton* button = create_modal_dialog_button("OK", ok_button);
+			gtk_box_pack_end(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), FALSE, FALSE, 0);
 		}
 	}
 
