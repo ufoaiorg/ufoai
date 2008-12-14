@@ -374,6 +374,8 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (!shooter->baseTarget)
+				/** @todo This should be calculated only when target destination changes, or when aircraft speed changes.
+				 *  @sa AIR_GetDestination */
 				UFO_SendPursuingAircraft(shooter, target);
 			else
 				/* ufo is attacking a base */

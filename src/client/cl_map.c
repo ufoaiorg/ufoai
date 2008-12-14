@@ -834,7 +834,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 
 	start = 0;
 
-	/* draw only when the point of the path is visible*/
+	/* draw only when the point of the path is visible */
 	R_Color(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
 		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {

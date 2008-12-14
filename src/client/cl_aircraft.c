@@ -1898,6 +1898,46 @@ void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 }
 
 /**
+ * @brief Calculates the point where aircraft should go to intecept a moving target.
+ * @param[in] shooter Pointer to shooting aircraft.
+ * @param[in] target Pointer to target aircraft.
+ * @param[out] dest Destination that shooting aircraft should aim to intercept target aircraft.
+ * @todo This function is not perfect, because I (Kracken) made the calculations in a plane.
+ * We should use here geometry on a sphere, and only compute this calculation every time target
+ * change destination, or one of the aircraft speed changes. The calculation here gives good results
+ * when both aircraft are quite close (most of the time, it's true).
+ */
+static void AIR_GetDestination (const aircraft_t const *shooter, const aircraft_t const *target, vec2_t *dest)
+{
+	vec3_t shooterPos, targetPos, targetDestPos, shooterDestPos, rotationAxis;
+	float dist;
+	float angle;
+
+	/* Convert aircraft position into cartesian frame */
+	PolarToVec(shooter->pos, shooterPos);
+	PolarToVec(target->pos, targetPos);
+	PolarToVec(target->route.point[target->route.numPoints - 1], targetDestPos);
+
+	/* In the following, we note S the position of the shooter, T the position of the target,
+		D the destination of the target and I the interception point where shooter should reach target */
+
+	/* Calculate angle between ST and TD (in radian) */
+	angle = acos(DotProduct(shooterPos, targetPos));
+
+	/* Calculate the distance target will be able to fly before shooter reaches it */
+	dist = MAP_GetDistance(shooter->pos, target->pos);
+	dist /= cos(angle) + sqrt(pow(shooter->stats[AIR_STATS_SPEED], 2) / pow(target->stats[AIR_STATS_SPEED], 2) - pow(sin(angle), 2));
+
+	/* Get rotation vector */
+	CrossProduct(targetPos, targetDestPos, rotationAxis);
+	VectorNormalize(rotationAxis);
+
+	/* Rotate target position of dist to find destination point */
+	RotatePointAroundVector(shooterDestPos, rotationAxis, targetPos, dist);
+	VecToPolar(shooterDestPos, *dest);
+}
+
+/**
  * @brief Make the specified aircraft purchasing a UFO.
  * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
  * @param[in] ufo Pointer to a UFO.
@@ -1905,6 +1945,7 @@ void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	const int num = ufo - gd.ufos;
+	vec2_t dest;
 
 	if (num < 0 || num >= gd.numUFOs || ! aircraft || ! ufo)
 		return qfalse;
@@ -1917,7 +1958,8 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 
 	/* don't check if the aircraft has enough fuel: maybe UFO will come closer */
 
-	MAP_MapCalcLine(aircraft->pos, ufo->pos, &aircraft->route);
+	AIR_GetDestination(aircraft, ufo, &dest);
+	MAP_MapCalcLine(aircraft->pos, dest, &aircraft->route);
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
 	aircraft->point = 0;
