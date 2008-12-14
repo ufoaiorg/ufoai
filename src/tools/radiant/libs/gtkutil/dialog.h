@@ -73,7 +73,7 @@ GtkTable* create_dialog_table(unsigned int rows, unsigned int columns, unsigned 
 GtkButton* create_dialog_button(const char* label, GCallback func, gpointer data);
 GtkVBox* create_dialog_vbox(int spacing, int border = 0);
 GtkHBox* create_dialog_hbox(int spacing, int border = 0);
-GtkFrame* create_dialog_frame(const char* label, GtkShadowType shadow = GTK_SHADOW_ETCHED_IN);
+GtkFrame* create_dialog_frame(const char* frameHeadline, GtkShadowType shadow = GTK_SHADOW_ETCHED_IN);
 
 GtkButton* create_modal_dialog_button(const char* label, ModalDialogButton& button);
 GtkWindow* create_modal_dialog_window(GtkWindow* parent, const char* title, ModalDialog& dialog, int default_w = -1, int default_h = -1);

@@ -40,9 +40,12 @@ GtkHBox* create_dialog_hbox(int spacing, int border) {
 	return hbox;
 }
 
-GtkFrame* create_dialog_frame(const char* label, GtkShadowType shadow) {
-	GtkFrame* frame = GTK_FRAME(gtk_frame_new(label));
-	gtk_widget_show(GTK_WIDGET(frame));
+GtkFrame* create_dialog_frame(const char* frameHeadline, GtkShadowType shadow) {
+	GtkFrame* frame = GTK_FRAME(gtk_frame_new(NULL));
+	GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
+	gtk_label_set_markup(label, frameHeadline);
+	gtk_frame_set_label_widget(frame, GTK_WIDGET(label));
+	gtk_widget_show_all(GTK_WIDGET(frame));
 	gtk_frame_set_shadow_type(frame, shadow);
 	return frame;
 }

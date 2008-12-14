@@ -63,11 +63,13 @@ void DoAbout (void)
 			}
 
 			{
-				GtkLabel* label = GTK_LABEL(gtk_label_new("UFORadiant " RADIANT_VERSION "\n"
-				                            __DATE__ "\n\n"
-				                            RADIANT_ABOUTMSG "\n\n"
-				                            "This program is free software\n"
-				                            "licensed under the GNU GPL.\n"));
+				GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
+				gtk_label_set_markup(label, "<b>UFORadiant " RADIANT_VERSION "</b>\n"
+					__DATE__ "\n\n"
+					RADIANT_ABOUTMSG "\n\n"
+					"This program is free software\n"
+					"licensed under the GNU GPL.\n\n"
+					"<b>UFO:AI</b> http://ufoai.sourceforge.net\n");
 
 				gtk_widget_show(GTK_WIDGET(label));
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label), FALSE, FALSE, 0);
@@ -85,7 +87,7 @@ void DoAbout (void)
 			}
 		}
 		{
-			GtkFrame* frame = create_dialog_frame("OpenGL Properties");
+			GtkFrame* frame = create_dialog_frame("<b>OpenGL Properties</b>");
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 			{
 				GtkTable* table = create_dialog_table(3, 2, 4, 4, 4);
@@ -94,53 +96,53 @@ void DoAbout (void)
 					GtkLabel* label = GTK_LABEL(gtk_label_new("Vendor:"));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new("Version:"));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new("Renderer:"));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 2, 3,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new(reinterpret_cast<const char*>(glGetString(GL_VENDOR))));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 0, 1,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 1, 2,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new(reinterpret_cast<const char*>(glGetString(GL_RENDERER))));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 2, 3,
-					                 (GtkAttachOptions) (GTK_FILL),
-					                 (GtkAttachOptions) (0), 0, 0);
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 			}
 			{
-				GtkFrame* frame = create_dialog_frame("OpenGL Extensions");
+				GtkFrame* frame = create_dialog_frame("<b>OpenGL Extensions</b>");
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 				{
 					GtkScrolledWindow* sc_extensions = create_scrolled_window(GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS, 4);
