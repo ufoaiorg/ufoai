@@ -352,6 +352,8 @@ menu popup_tipoftheday
 	{
 		cvar	"*cvar cl_showTipOfTheDay"
 		pos	"36 194"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 		align	ul
 	}
 	string activate_string

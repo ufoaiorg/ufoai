@@ -867,6 +867,8 @@ menu mp_create_server
 	{
 		cvar	"*cvar mn_serverday"
 		pos	"410 100"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 	}
 
 	text firewall_str
@@ -892,6 +894,8 @@ menu mp_create_server
 		image	"menu/checkbox"
 		cvar	"*cvar sv_public"
 		pos	"410 120"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 	}
 
 	// ===================
@@ -906,6 +910,8 @@ menu mp_create_server
 	{
 		cvar	"*cvar sv_enablemorale"
 		pos	"410 140"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 	}
 
 	// ===================
@@ -959,6 +965,8 @@ menu mp_create_server
 	{
 		cvar	"*cvar sv_teamplay"
 		pos	"410 180"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 	}
 
 	// ===================
@@ -1109,6 +1117,8 @@ menu mp_create_server
 	{
 		cvar	"*cvar ai_autojoin"
 		pos	"410 300"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 	}
 
 	// ===================

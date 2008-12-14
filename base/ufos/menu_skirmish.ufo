@@ -68,6 +68,8 @@ menu skirmish
 	{
 		cvar	"*cvar mn_serverday"
 		pos	"825 260"
+		image	"menu/checkbox_blue"
+		size	"20 18"
 	}
 
 	// ===================

@@ -33,60 +33,48 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_checkbox.h"
 
-/**
- * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
- */
-static void MN_CheckBoxNodeLoaded (menuNode_t *node) {
-	/* update the size when its possible */
-	if (node->size[0] == 0 && node->size[1] == 0) {
-		if (node->texl[0] != 0 || node->texh[0] != 0) {
-			node->size[0] = node->texh[0] - node->texl[0];
-			node->size[1] = node->texh[1] - node->texl[1];
-		} else {
-			/* the checked and unchecked should always have the same dimensions */
-			int sx, sy;
-			if (!node->dataImageOrModel) {
-				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
-			} else {
-				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->dataImageOrModel));
-			}
-			node->size[0] = sx;
-			node->size[1] = sy;
-		}
-	}
-}
-
 static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
-	const char *image;
 	const char *ref;
-	vec2_t nodepos;
-	const menu_t* menu = node->menu;
-	const char *checkBoxImage = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	vec2_t pos;
+	const char *image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	int texx, texy;
 
-	MN_GetNodeAbsPos(node, nodepos);
 	/* image set? */
-	if (checkBoxImage && *checkBoxImage)
-		image = checkBoxImage;
-	else
-		image = "menu/checkbox";
+	if (!image || image[0] == '\0')
+		return;
 
-	ref = MN_GetReferenceString(menu, node->dataModelSkinOrCVar);
+	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
 	if (!ref)
 		return;
 
-	switch (*ref) {
+	/* outter status */
+	if (node->disabled) {
+		texy = 96;
+	} else if (node->state) {
+		texy = 32;
+	} else {
+		texy = 0;
+	}
+
+	/* inner status */
+	switch (ref[0]) {
 	case '0':
-		R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
-			node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_unchecked", image));
+		texx = 0;
 		break;
 	case '1':
-		R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
-			node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_checked", image));
+		texx = 32;
+		break;
+	case '-': /* negative */
+		texx = 64;
 		break;
 	default:
-		Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed (%s)\n", ref);
+		Com_Printf("Error - invalid value for MN_CHECKBOX node - only -1/0/1 allowed (%s)\n", ref);
 	}
+
+	MN_GetNodeAbsPos(node, pos);
+	R_DrawNormPic(pos[0], pos[1], node->size[0], node->size[1],
+		texx + node->size[0], texy + node->size[1], texx, texy, ALIGN_UL, node->blend, image);
 }
 
 /**
@@ -107,11 +95,18 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 	MN_SetCvar(cvarName, NULL, value);
 }
 
+/**
+ * @brief Handled before the begin of the load of the node from the script
+ */
+static void MN_CheckBoxNodeLoading (menuNode_t *node) {
+	node->blend = qtrue;
+}
+
 void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->id = MN_CHECKBOX;
 	behaviour->draw = MN_CheckBoxNodeDraw;
 	behaviour->leftClick = MN_CheckBoxNodeClick;
-	behaviour->loaded = MN_CheckBoxNodeLoaded;
+	behaviour->loading = MN_CheckBoxNodeLoading;
 }
