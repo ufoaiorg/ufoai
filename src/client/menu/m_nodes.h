@@ -92,7 +92,7 @@ typedef struct excludeRect_s {
  */
 typedef struct menuNode_s {
 	/* common identification */
-	char name[MAX_VAR];
+	char name[MAX_VAR];			/**< name from the script files */
 	struct nodeBehaviour_s *behaviour;
 
 	struct menuNode_s *super; /**< Node inherited, else NULL */
@@ -106,14 +106,14 @@ typedef struct menuNode_s {
 	vec2_t size;
 
 	/* common attributes */
-	char key[MAX_VAR];
+	char key[MAX_VAR];			/**< key bindings - used as tooltip */
 	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
 	byte textalign;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
-	qboolean invis;
-	qboolean blend;
-	qboolean disabled;			/**< true, the node is unactive */
+	qboolean invis;				/**< true if the node is invisible */
+	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
+	qboolean disabled;			/**< true if the node is inactive */
 	int mousefx;
 	char* text;
 	const char* font;	/**< Font to draw text */
@@ -121,8 +121,7 @@ typedef struct menuNode_s {
 
 	byte align;					/** @todo delete it when its possible */
 
-	/** @todo need a cleanup
-	 */
+	/** @todo needs cleanup */
 	void* dataImageOrModel;	/**< an image, or a model, this depends on the node type */
 	void* dataModelSkinOrCVar; /**< a skin or a cvar, this depends on the node type */
 
@@ -143,7 +142,7 @@ typedef struct menuNode_s {
 	struct menuAction_s *onWheelDown;
 	struct menuAction_s *onChange;	/**< called when the widget change from an user action */
 
-	/* @todo need cleanup */
+	/** @todo needs cleanup */
 	vec3_t scale;
 	invDef_t *container;		/** The container linked to this node. */
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
