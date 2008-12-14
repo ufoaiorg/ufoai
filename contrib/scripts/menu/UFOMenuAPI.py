@@ -392,4 +392,5 @@ if __name__ == "__main__":
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')
+	pass
 
