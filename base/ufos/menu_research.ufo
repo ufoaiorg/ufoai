@@ -667,14 +667,14 @@ menu research
 	string txt_base_name
 	{
 		string "_Base Info"
-		pos "715 200"
+		pos "695 200"
 	}
 
 	// Free labs in the selected base
 	string txt_base_labs
 	{
 		string "*cvar mn_research_labs"
-		pos "725 220"
+		pos "705 220"
 		color "0 .78 0 1"
 	}
 
@@ -682,7 +682,7 @@ menu research
 	string txt_base_scis
 	{
 		string "*cvar mn_research_scis"
-		pos "725 240"
+		pos "705 240"
 		color "0 .78 0 1"
 	}
 
@@ -692,50 +692,50 @@ menu research
 	string txt_selected_name
 	{
 		string "*cvar mn_research_selname"
-		pos "715 270"
+		pos "695 270"
 	}
 
 	pic image_top
 	{
 		image	"*cvar mn_research_imagetop"
-		pos	"775 294"
+		pos	"755 294"
 		size	"220 220"
 	}
 
 	string txt_selected_status
 	{
 		string "*cvar mn_research_selstatus"
-		pos "725 520"
+		pos "695 520"
 		color "0 .78 0 1"
-		size	"340 54"
+		size	"290 54"
 	}
 
 	//The base this research item is researched in
 	string txt_selected_base
 	{
 		string "*cvar mn_research_selbase"
-		pos "725 574"
+		pos "695 574"
 		color "0 .78 0 1"
-		size	"340 18"
+		size	"290 18"
 	}
 
 	string txt_selected_time
 	{
 		string "*cvar mn_research_seltime"
-		pos "725 594"
+		pos "695 594"
 		color "0 .78 0 1"
-		size	"340 18"
+		size	"290 18"
 	}
 	pic progress_img
 	{
 		if "mn_research_seltimebar != 0"
-		pos "725 612"
+		pos "695 612"
 		image menu/bar_rahmen
 	}
 	bar progress_bar
 	{
 		if "mn_research_seltimebar != 0"
-		pos "734 617"
+		pos "704 617"
 		current "*cvar mn_research_seltimebar"
 		size "245 6"
 		color "0 .8 0 1"
