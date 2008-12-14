@@ -4,7 +4,7 @@
 # @brief extract node inheritance from .h and .c files
 # @license Public domain,e
 # @return a DOT document into stdout (http://www.graphviz.org/)
-# @todo generate properties, functions, confunc too
+# @todo generate functions, confunc too
 #
 
 import os, os.path, sys
@@ -20,6 +20,7 @@ class NodeBehaviour:
 	def __init__(self):
 		self.name = ""
 		self.extends = "node"
+		self.properties = {}
 		pass
 
 	def init(self, dic):
@@ -27,16 +28,93 @@ class NodeBehaviour:
 		if 'extends' in dic:
 			self.extends = dic['extends']
 		
+	def initProperties(self, dic):
+		self.properties = dic
+		
 	def genDot(self):
 		result = ""
-		print "\t_%s [label=\"%s\"]" % (self.name, self.name)
-		print "\t_%s -> _%s" % (self.name, self.extends)
+		label = ""
+
+		label = '<tr><td align="center">' + self.name + '</td></tr>\n'
+		
+		if len(self.properties) != 0:
+			p = ''
+			names = self.properties.keys()
+			names.sort()
+			for name in names:
+				type = self.properties[name]
+				if p != '':
+					p = p + '<br />'
+				p = p + '+ ' + name + ': ' + type
+			label = label + '<tr><td balign="left">' + p + '</td></tr>'
+
+		label = '<table border="0" cellborder="1" cellspacing="0" cellpadding="4">\n' + label + '\n</table>'
+			
+		result = result + "\t_%s [rankdir=TB,shape=plaintext,label=<\n%s>]\n" % (self.name, label)
+		if self.extends != None:
+			result = result + "\t_%s -> _%s\n" % (self.name, self.extends)
 		
 		return result
 
-		
+# @brief Extract each properties into a text according to the structure name
+def extractProperties(filedata, structName):
+	signature = "const value_t %s[]" % structName
+	properties = filedata.split(signature)
+	properties = properties[1]
+
+	i = properties.find('{')
+	j = properties.find('};')
+	properties = properties[i+1:j]
+
+	result = {}
+	for line in properties.split('},'):
+		i = line.find('{')
+		if i == -1:
+			continue
+		line = line[i+1:]
+		e = line.split(',')
+
+		name = e[0].strip()
+		if name[0] == '"':
+			name = name[1:len(name)-1]
+
+		if name == 'NULL':
+			continue
+
+		type = e[1].strip()
+		result[name] = type
+
+	return result
+
+# @brief Extract each body of registration function into a text
+def extractRegistrationFunctions(filedata):
+	result = []
+	
+	register = filedata.split("\nvoid MN_Register")
+	register.pop(0)
+	
+	for body in register:
+		body = body.split('{')[1]
+		body = body.split('}')[0]
+		result.append(body)
+
+	return result
+
 def extractData():
 	result = []
+	
+	# the main node
+	n = NodeBehaviour()
+	n.name = "node"
+	n.extends = None
+	file = open(UFOAI_ROOT + '/src/client/menu/m_parse.c', "rt")
+	data = file.read()
+	file.close()
+	props = extractProperties(data, 'nodeProperties')
+	n.initProperties(props)
+	result.append(n)
+
+	# all nodes
 	for f in os.listdir(dir):
 		if ".c" not in f:
 			continue
@@ -45,13 +123,7 @@ def extractData():
 		data = file.read()
 		file.close()
 
-		data = data.split("\nvoid MN_Register")
-		data.pop(0)
-		
-		for code in data:
-			code = code.split('{')[1]
-			code = code.split('}')[0]
-			
+		for code in extractRegistrationFunctions(data):
 			lines = code.split('\n')
 			dic = {}
 			for l in lines:
@@ -67,6 +139,9 @@ def extractData():
 			
 			n = NodeBehaviour()
 			n.init(dic)
+			if 'properties' in dic:
+				props = extractProperties(data, dic['properties'])
+				n.initProperties(props)
 			result.append(n)
 
 	return result
@@ -78,8 +153,6 @@ def genDot(nodeList):
 	print "\trankdir=LR"
 	print "\tnode [shape=box]"
 	print "\tedge [arrowhead=onormal]"
-	print ""
-	print "\t_node [label=\"node\"]"
 	print ""
 	for n in nodeList:
 		print n.genDot()
