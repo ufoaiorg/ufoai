@@ -192,7 +192,9 @@ static void CreateCheckDialog (void)
 	gtk_widget_set_usize(button, 60, -2);
 
 	button = gtk_button_new_with_label("Fix");
+#if GTK_CHECK_VERSION(2, 12, 0)
 	gtk_widget_set_tooltip_text(button, "Will fix all errors, not only the selected ones");
+#endif
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(fixCallback), NULL);
 	gtk_widget_set_usize(button, 60, -2);
