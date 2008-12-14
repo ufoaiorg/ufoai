@@ -216,17 +216,17 @@ typedef struct nodeBehaviour_s {
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 
-	/* Planed */
-	/*
-	mouse move event
+	/* Planned */
+#if 0
+	/* mouse move event */
 	void (*mouseEnter)(menuNode_t *node);
 	void (*mouseLeave)(menuNode_t *node);
-	drag and drop callback
-	int  (*dndEnter)(menuNode_t *node);
-	void (*dndLeave)(menuNode_t *node);
-	int  (*dndMove)(menuNode_t *node);
-	int  (*dndEnd)(menuNode_t *node);
-	*/
+	/* drag and drop callback */
+	int (*dragAndDropEnter)(menuNode_t *node);
+	void (*dragAndDropLeave)(menuNode_t *node);
+	int (*dragAndDropMove)(menuNode_t *node);
+	int (*dragAndDropEnd)(menuNode_t *node);
+#endif
 } nodeBehaviour_t;
 
 extern nodeBehaviour_t* menuBehaviour;
