@@ -1465,6 +1465,9 @@ static void Com_ParseEquipment (const char *name, const char **text)
 						return;
 					}
 					n = atoi(token);
+					if (ed->num[i])
+						Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
+							csi.ods[i].id, name);
 					if (n)
 						ed->num[i] = n;
 					break;

@@ -75,6 +75,8 @@
 //    for misc items).
 // Note that a weapon can be added only if alien has still room to get it. An alien with primary and
 //    secondary weapon won't probably get any Kerr Blade.
+// Note also that you can't use the same item twice in the same equipment definition: only the last one will be
+//    taken into account.
 //
 // there are 2 types of alien equipment:
 // alien_workersS or alien_soldiersS
@@ -132,6 +134,19 @@ equipment alien_workers1_explosive
 	// Armour
 	light_alien			6
 	medium_alien		2
+}
+
+equipment alien_soldiers0
+{
+	mininterest			0
+	maxinterest			40
+
+	// Secondary
+	plaspistol			5
+		plaspistol_ammo		0
+
+	// Misc
+	kerrblade			100
 }
 
 equipment alien_soldiers1
@@ -287,7 +302,6 @@ equipment alien_soldiers3
 	mininterest			500
 	maxinterest			750
 
-
 	// Primary
 	plasblaster			40
 		plasblaster_ammo	1
@@ -317,64 +331,88 @@ equipment alien_workers4
 {
 	mininterest			750
 	maxinterest			10000
-	plaspistol			10
-	plaspistol_ammo		15
-	plasrifle			1
-	plasrifle_ammo		1
-	plasblaster			3
-	plasblaster_ammo	6
-	pbeampistol		35
-	pbeampistol_ammo	75
-	pbeamcannon		10
-	pbeamcannon_ammo	15
-	kerrblade			2
-	plasblade			25
-	plasmagrenade		35
-	light_alien         1
-	medium_alien        25 // 10
-//	heavy_alien         15
+
+	// Primary
+	plasrifle			3
+		plasrifle_ammo		0
+	plasblaster			6
+		plasblaster_ammo	0
+	pbeamcannon			25
+		pbeamcannon_ammo	0
+
+	// Secondary
+	pbeampistol			70
+		pbeampistol_ammo	2
+	plaspistol			20
+		plaspistol_ammo		0
+
+	// Misc
+	kerrblade			5
+	plasblade			60
+	plasmagrenade		40
+
+	// Armour
+	light_alien			2
+	medium_alien		70	// 30
+//	heavy_alien         40
 }
 
 equipment alien_soldiers_plasma4
 {
 	mininterest			750
 	maxinterest			10000
-	plaspistol			35
-	plaspistol_ammo		100
-	plasrifle			10
-	plasrifle_ammo		25
-	plasblaster			30
-	plasblaster_ammo	85
-	kerrblade			3
-	plasblade			100
-	plasmagrenade		100
-	light_alien         1
-	medium_alien        38 // 5
-//	heavy_alien         34
+
+	// Primary
+	plasrifle			22
+		plasrifle_ammo		1
+	plasblaster			70
+		plasblaster_ammo	1
+
+	// Secondary
+	plaspistol			80
+		plaspistol_ammo		3
+
+	// Misc
+	kerrblade			2
+	plasblade			40
+	plasmagrenade		360
+
+	// Armour
+	light_alien			2
+	medium_alien		95	// 10
+//	heavy_alien         85
 }
 
 equipment alien_soldiers4
 {
 	mininterest			750
 	maxinterest			10000
-	plaspistol			15
-	plaspistol_ammo		40
-	plasrifle			1
-	plasrifle_ammo		3
-	plasblaster			2
-	plasblaster_ammo	5
-	pbeampistol		25
-	pbeampistol_ammo	65
-	pbeamcannon		15
-	pbeamcannon_ammo	40
-	pbeamrifle		15
-	pbeamrifle_ammo	40
-	kerrblade			10 // bulky, will rarely get into the backpack
-	plasblade			70
-	plasmagrenade		70
-	light_alien         1
-	medium_alien        38 // 10
-//	heavy_alien         29
+
+	// Primary
+	plasrifle			3
+		plasrifle_ammo		1
+	plasblaster			5
+		plasblaster_ammo	1
+	pbeamcannon		40
+		pbeamcannon_ammo	1
+	pbeamrifle		35
+		pbeamrifle_ammo		1
+
+	// Secondary
+	plaspistol			38
+		plaspistol_ammo		1
+	pbeampistol			50
+		pbeampistol_ammo	2
+
+	// Misc
+	kerrblade			5
+	plasblade			50
+	plasmagrenade		250
+
+	// Armour
+	light_alien			2
+	medium_alien		95	// 10
+//	heavy_alien			70
 }
 
 // =======================
