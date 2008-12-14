@@ -31,25 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_image.h"
 #include "m_node_controls.h"
 
-/**
- * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
- */
-static void MN_ControlsNodeLoaded (menuNode_t *node)
-{
-	/* update the size when its possible */
-	if (node->size[0] == 0 && node->size[1] == 0) {
-		if (node->texl[0] != 0 || node->texh[0] != 0) {
-			node->size[0] = node->texh[0] - node->texl[0];
-			node->size[1] = node->texh[1] - node->texl[1];
-		} else if (node->dataImageOrModel) {
-			int sx, sy;
-			R_DrawGetPicSize(&sx, &sy, node->dataImageOrModel);
-			node->size[0] = sx;
-			node->size[1] = sy;
-		}
-	}
-}
-
 static int deltaMouseX;
 static int deltaMouseY;
 
@@ -93,21 +74,11 @@ static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	MN_SetNewMenuPos(node->menu, x, y);
 }
 
-/**
- * @todo remove MN_ImageNodeDraw for a real draw code (copy-paste), image node may change
- */
-static void MN_ControlsNodeDraw(menuNode_t *node)
-{
-	/* as is the node is an image */
-	MN_ImageNodeDraw(node);
-}
-
 void MN_RegisterControlsNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
+	behaviour->extends = "pic";
 	behaviour->id = MN_CONTROLS;
-	behaviour->draw = MN_ControlsNodeDraw;
-	behaviour->loaded = MN_ControlsNodeLoaded;
 	behaviour->mouseDown = MN_ControlsNodeMouseDown;
 	behaviour->mouseUp = MN_ControlsNodeMouseUp;
 	behaviour->capturedMouseMove = MN_ControlsNodeCapturedMouseMove;

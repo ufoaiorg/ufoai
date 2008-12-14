@@ -115,6 +115,8 @@ static const int CONTROLS_IMAGE_DIMENSIONS = 17;
 static const int CONTROLS_PADDING = 22;
 static const int CONTROLS_SPACING = 5;
 
+#define TOP_HEIGHT 46
+
 /**
  * @brief Called at the end of the load from script
  */
@@ -128,12 +130,12 @@ void MN_WindowNodeLoaded (menu_t *menu)
 			positionFromRight += CONTROLS_IMAGE_DIMENSIONS + CONTROLS_SPACING;
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
-		control->dataImageOrModel = "menu/move";
+		control->dataImageOrModel = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
-		control->size[0] = CONTROLS_IMAGE_DIMENSIONS;
-		control->size[1] = CONTROLS_IMAGE_DIMENSIONS;
-		control->pos[0] = menu->size[0] - positionFromRight - control->size[0];
-		control->pos[1] = CONTROLS_PADDING;
+		control->size[0] = menu->size[0];
+		control->size[1] = TOP_HEIGHT;
+		control->pos[0] = 0;
+		control->pos[1] = 0;
 		control->tooltip = _("Drag to move window");
 		MN_AppendNode(menu, control);
 	}
