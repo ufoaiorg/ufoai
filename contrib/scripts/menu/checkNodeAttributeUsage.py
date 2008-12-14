@@ -14,69 +14,74 @@ UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
 
 attributes = [
 	"name",
-	"key",
-	"type",
-	"origin",
-	"scale",
-	"angles",
+	"behaviour",
+	"super ",
+	"next",
+	"menu",
 	"pos",
 	"size",
-	"texh",
-	"texl",
+	"key",
 	"state",
-	"align",
+	"textalign",
 	"border",
 	"padding",
 	"invis",
 	"blend",
+	"disabled",
 	"mousefx",
-	"container",
-	"horizontalScroll",
-	"textScroll",
-	"textLines",
-	"textLineSelected",
-	"timeOut",
-	"timePushed",
-	"timeOutOnce",
-	"num",
-	"height",
-	"baseid",
-	"options",
+	"text",
+	"font",
+	"tooltip ",
+	"align",
+	"dataImageOrModel",
+	"dataModelSkinOrCVar",
 	"color",
 	"bgcolor",
 	"bordercolor",
 	"selectedColor",
-	"click",
-	"rclick",
-	"mclick",
-	"wheel",
-	"mouseIn",
-	"mouseOut",
-	"wheelUp",
-	"wheelDown",
-	"repeat",
-	"clickDelay",
-	"scrollbar",
-	"scrollbarLeft",
+	"onClick",
+	"onRightClick",
+	"onMiddleClick",
+	"onWheel",
+	"onMouseIn",
+	"onMouseOut",
+	"onWheelUp",
+	"onWheelDown",
+	"onChange",
+	"scale",
+	"container",
+	"timeOut",
+	"timePushed",
+	"timeOutOnce",
 	"exclude",
 	"excludeNum",
 	"depends",
-	"menu",
-	"next",
-	"linestrips",
+	"scriptValues",
+	"texh",
+	"texl",
 	"pointWidth",
 	"gapWidth",
-	"scriptValues",
-	"dataStringOrImageOrModel",
-	"dataAnimOrFont",
-	"dataModelSkinOrCVar",
-	"dataNodeTooltip",
-	"abstractvalue",
-	"model",
+	"longlines",
+	"repeat",
+	"clickDelay",
+	"baseid",
 ]
 
 files = []
 dir = UFOAI_ROOT + '/src/client/menu'
+
+for f in os.listdir(dir):
+	if ".c" not in f:
+		continue
+
+	file = open(dir + '/' + f, "rt")
+	data = file.read()
+	file.close()
+
+	fd = f, data
+	files.append(fd)
+
+dir = UFOAI_ROOT + '/src/client/menu/node'
 
 for f in os.listdir(dir):
 	if ".c" not in f:
