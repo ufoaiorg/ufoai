@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-12-14 15:51+0100\n"
-"PO-Revision-Date: 2008-12-14 18:46+0100\n"
+"PO-Revision-Date: 2008-12-14 21:51+0100\n"
 "Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,6 @@ msgid "Alienbase"
 msgstr "Außerirdische Basis"
 
 #: ../base/maps/bomber_city.ump:57
-#, fuzzy
 msgid "Bomber_city"
 msgstr "Bomber_city"
 
@@ -419,8 +418,9 @@ msgid "particlebeam"
 msgstr "Partikelstrahl"
 
 #: ../base/ufos/armour.ufo:57
+#, fuzzy
 msgid "stun_electro"
-msgstr ""
+msgstr "elektro stunner"
 
 #: ../base/ufos/armour.ufo:58
 msgid "stun_gas"
@@ -615,8 +615,9 @@ msgid "Play the aliens"
 msgstr "Spiele die Außerirdischen"
 
 #: ../base/ufos/campaign.ufo:176
+#, fuzzy
 msgid "alien_campaign_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/cities.ufo:15
 msgid "Stockholm"
@@ -943,16 +944,18 @@ msgid "Not Enough Money -- %s"
 msgstr "Nicht genügend Geld -- %s"
 
 #: ../base/ufos/events.ufo:95
+#, fuzzy
 msgid "mail_not_enough_money"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:104
 msgid "Not Enough Resources -- %s"
 msgstr "Nicht genügend Ressourcen -- %s"
 
 #: ../base/ufos/events.ufo:105
+#, fuzzy
 msgid "mail_not_enough_ressources"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:114
 msgid "Production Finished -- %s"
@@ -961,7 +964,7 @@ msgstr "Produktion abgeschlossen -- %s"
 #: ../base/ufos/events.ufo:115
 #, fuzzy
 msgid "mail_production_finished"
-msgstr "Produktion abgeschlossen"
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:122
 #: ../base/ufos/events.ufo:142
@@ -981,70 +984,35 @@ msgid "Monthly Report -- %s"
 msgstr "Monatsreport -- %s"
 
 #: ../base/ufos/events.ufo:125
+#, fuzzy
 msgid "mail_monthly_report"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:134
 msgid "UFO Stored In Hangar -- %s"
 msgstr "UFO in Hangar verstaut -- %s"
 
 #: ../base/ufos/events.ufo:135
-#, fuzzy
 msgid "mail_ufo_in_hangar"
-msgstr ""
-"Baupläne -- Kleiner UFO Hangar\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Forschungsdokument, Freigabe Sigma -- Nur für den Kommandanten\n"
-"\n"
-"Gespeichert: 19. März 2084\n"
-"\n"
-"von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Dies sind die fertigen Pläne für unseren neuen UFO Hangar. Sie wurden dazu entwickelt, geborgene UFOs zu lagern, um sie auseinanderzunehmen und sie werden solange als belegt markiert, bis diese vollkommen in ihre Einzelteile zerlegt und die Teile ins Lager transferiert sind. UFOs müssen stark zerlegt werden, bis sie ins Lager passen. Diese Arbeit dort zu tun, wo das UFO abgestürzt ist, könnte sehr gefährlich sein, da es aufgrund der Gefahr von Plünderern sehr gefährlich für unsere Wissenschaftler und Techniker sein könnte. Und das könnte ebenfalls gefährlich für unsere Sicherheit und Geheimhaltung sein.\n"
-"\n"
-"Die Wichtigkeit, geborgene UFOs zu untersuchen, sollte klar sein. Es gibt uns einen Einblick in die Funktionsweise und Verwundbarkeit von Alienfahrzeugen und außerdem kann es zu neuen technischen Entdeckungen führen, die die Effektivität unserer Fahrzeuge erhöhen. Ist ein UFO für den Transport gesichert, wird es mit Transporthelikoptern zu einer PHALANX Basis gebracht. Bergungsoperationen werden von örtlichen UN Kräften durchgeführt, um unsere eigenen begrenzten Ressourcen zu schonen.\n"
-"\n"
-"Der kleine UFO Hangar kann ein Alienluftfahrzeug von begrenzter Größe lagern. Wir werden die Größe der UFOs bei Entdeckung erkennen und können sehen, welche Hangargröße es benötigt.\n"
-"\n"
-"Der kleine UFO Hangar benötigt ein Kraftwerk, um seine High-tech Maschinen und Plasmaschneider zu benutzen. Es benötigt ebenfalls ein Lager und eine Werkstatt, damit die Zerlegung vonstatten gehen kann.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Alle geborgenen UFOs sollten ein für allemal kampfunfähig gemacht werden, sobald sie in unseren Händen sind. Sollte diese Basis angegriffen werden können wir es uns nicht erlauben, dass die gelagerten UFOs reaktiviert und gegen uns verwendet werden. Sogar ohne Antrieb sind die Waffen ein großes Risiko in unserer Basis.\n"
-"\n"
-"Wenn dieser Ablauf befolgt wird, ist der UFO Hangar nur von kleiner taktischer Wichtigkeit für Aliens und wird höchstwahrscheinlich von ihnen ignoriert. Uns die Zerlegung von UFOs zu verwehren ist nicht so wichtig wie unsere Forschung oder Produktion zu stoppen oder unsere Basis komplett zu zerstören.\n"
-"\n"
-"Wir werden sehr wahrscheinlich mehrere dieser Einrichtungen benötigen, um mehrere UFOs gleichzeitig zu zerlegen. Sollte die Notwendigkeit bestehen, können wir auch gelagerte UFOs entsorgen, um Platz für ein neues zu machen. In diesem Fall werden alle Teile, die bereits im Lager sind, sofort verfügbar, aber alles, was nicht entfernt wurde, ist verloren.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner."
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:144
 msgid "Transfer Received -- %s"
 msgstr "Transfer empfangen -- %s"
 
 #: ../base/ufos/events.ufo:145
+#, fuzzy
 msgid "mail_transfer_received"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:154
 msgid "Equipment Order Received -- %s"
 msgstr "Auftrag über Ausrüstung erhalten -- %s"
 
 #: ../base/ufos/events.ufo:155
+#, fuzzy
 msgid "mail_equipment_order_received"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:164
 msgid "Construction Finished -- %s"
@@ -1069,16 +1037,18 @@ msgid "Base Attack Report -- %s"
 msgstr "Basenangriffsreport -- %s"
 
 #: ../base/ufos/events.ufo:185
+#, fuzzy
 msgid "mail_base_attack_report"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:194
 msgid "Mission Summary -- %s"
 msgstr "Missionsbericht -- %s"
 
 #: ../base/ufos/events.ufo:195
+#, fuzzy
 msgid "mail_mission_summary"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:204
 msgid "Alien Base Discovered -- %s"
@@ -1094,16 +1064,18 @@ msgid "Lost Radar Tracking -- %s"
 msgstr "Radarsignal verloren -- %s"
 
 #: ../base/ufos/events.ufo:215
+#, fuzzy
 msgid "mail_lost_radar_tracking"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:224
 msgid "New Radar Contact -- %s"
 msgstr "Neues Radarsignal entdeckt -- %s"
 
 #: ../base/ufos/events.ufo:225
+#, fuzzy
 msgid "mail_new_radar_contact"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:232
 #: ../base/ufos/events.ufo:242
@@ -1120,16 +1092,18 @@ msgid "Response Too Late -- %s"
 msgstr "Reaktion zu spät -- %s"
 
 #: ../base/ufos/events.ufo:235
+#, fuzzy
 msgid "mail_response_too_late"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:244
 msgid "UFO Shot Down -- %s"
 msgstr "UFO abgeschossen -- %s"
 
 #: ../base/ufos/events.ufo:245
+#, fuzzy
 msgid "mail_ufo_shot_down"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:254
 msgid "Alien Activity Reported -- %s"
@@ -1157,40 +1131,46 @@ msgid "New Aircraft Arrived -- %s"
 msgstr "Neues Flugzeug eingetroffen -- %s"
 
 #: ../base/ufos/events.ufo:265
+#, fuzzy
 msgid "mail_new_aircraft_arrived"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:274
 msgid "Aircraft Lost Target -- %s"
 msgstr "Flugzeug hat Ziel verloren -- %s"
 
 #: ../base/ufos/events.ufo:275
+#, fuzzy
 msgid "mail_aircraft_lost_target"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:284
 msgid "Aircraft Ready -- %s"
 msgstr "Flugzeug einsatzbereit -- %s"
 
 #: ../base/ufos/events.ufo:285
+#, fuzzy
 msgid "mail_aircraft_ready"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:294
+#, fuzzy
 msgid "Aircraft Bingo Fuel -- %s"
-msgstr ""
+msgstr "Flugzeug Bingo Treibstoff -- %s"
 
 #: ../base/ufos/events.ufo:295
+#, fuzzy
 msgid "mail_aircraft_bingo_fuel"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:304
 msgid "Aircraft Landed -- %s"
 msgstr "Flugzeug gelandet -- %s"
 
 #: ../base/ufos/events.ufo:305
+#, fuzzy
 msgid "mail_aircraft_landed"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/fonts.ufo:15
 #: ../base/ufos/fonts.ufo:22
@@ -1265,7 +1245,7 @@ msgstr "UFO Hof"
 #: ../base/ufos/installation.ufo:30
 #: ../base/ufos/menu_geoscape.ufo:1395
 msgid "SAM Site"
-msgstr ""
+msgstr "Luftabwehr Stellung"
 
 #: ../base/ufos/installation.ufo:42
 msgid "Installation #1"
@@ -1484,7 +1464,7 @@ msgstr "Einw eher altmodischer Vorortsbezirk."
 #: ../base/ufos/maps.ufo:1329
 #: ../base/ufos/maps.ufo:1369
 msgid "A small neighbourhood in a warm urban region."
-msgstr ""
+msgstr "Eine kleine Wohngegend in deiner warmen Städtischen Region"
 
 #: ../base/ufos/maps.ufo:1409
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
@@ -2788,9 +2768,8 @@ msgid "New radar tower"
 msgstr "Neuer Radarturm"
 
 #: ../base/ufos/menu_geoscape.ufo:1503
-#, fuzzy
 msgid "New SAM site"
-msgstr "Neue Basis anlegen"
+msgstr "Neue Luftabwehr Stellung"
 
 #: ../base/ufos/menu_geoscape.ufo:1510
 #, fuzzy
@@ -4199,14 +4178,12 @@ msgstr "Anzahl"
 
 #: ../base/ufos/menu_production.ufo:239
 #: ../base/ufos/menu_production.ufo:250
-#, fuzzy
 msgid "Change the production amount"
-msgstr "Auflösung ändern"
+msgstr "Produktionsmenge ändern"
 
 #: ../base/ufos/menu_production.ufo:263
-#, fuzzy
 msgid "Start this production"
-msgstr "Produktion stoppen"
+msgstr "Produktion starten"
 
 #: ../base/ufos/menu_production.ufo:273
 msgid "Stop production"
@@ -4522,9 +4499,8 @@ msgid "Heavy"
 msgstr "Schwer"
 
 #: ../base/ufos/menu_team.ufo:1312
-#, fuzzy
 msgid "Show available miscellaneous equipment and weapons"
-msgstr "Ausrüstung im Lager anzeigen"
+msgstr "Diverse Ausrüstung und Waffen im Lager anzeigen"
 
 #: ../base/ufos/menu_team.ufo:1320
 msgid "Misc"
@@ -4625,9 +4601,8 @@ msgid "Leave mailclient"
 msgstr "Schließe Mailclient"
 
 #: ../base/ufos/msgcategories.ufo:7
-#, fuzzy
 msgid "install_equipment"
-msgstr "Verfügbare Ausrüstung"
+msgstr "Equippent montieren"
 
 #: ../base/ufos/msgcategories.ufo:14
 #, fuzzy
@@ -5669,8 +5644,9 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/research.ufo:780
+#, fuzzy
 msgid "xaw95_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:783
 msgid "xaw95_pre_txt"
@@ -5679,46 +5655,7 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:810
 #, fuzzy
 msgid "bombkit1_txt"
-msgstr ""
-"Technische Spezifikationen: Medikit\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE GELB\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Technisches Dokument, Freigabe Delta\n"
-"\n"
-"Gespeichert: 19. März 2084\n"
-"\n"
-"Von: Leitende Chirurgin Helen Floydd, Medizinische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"In der Vergangenheit benötigte die Leistung von Erste Hilfe oder Feldchirurgie speziell trainierte Gefechtsärzte und -chirurgen, die den Stress des Lebensrettens unter Beschuss aushalten. Soldaten, die ihre Kameraden zu Boden gehen sehen, hatten normalerweise keine andere Wahl als weiterzukämpfen und zu hoffen, dass die Sanitäter rechtzeitig ankommen, falls diese nicht vor Angst erstarren oder in Panik ausbrechen oder nutzlose Versuche an einer Feldverarztung ohne ausreichende Fähigkeiten oder Materialien versuchen.\n"
-"\n"
-"Das mag vielleicht eine tragbare Strategie in den Schützengräben des zweiten Weltkriegs gewesen sein, aber nun nicht mehr. Das Warten auf den Sanitäter kann den Tod für den Soldaten bedeuten, der sonst bei sofortiger Hilfe gerettet werden könnte. Die sofortige Verabreichung von Traumamedizin muss so schnell und einfach wie möglich erfolgen können, so dass jeder Soldat lebensrettende Anstrengungen mit minimalem Training unternehmen kann. Und hier kommt das moderne Medikit zum Tragen.\n"
-"\n"
-"Jedes Medikit beinhaltet einen eingebauten Computer, welcher Verletzungen mit Hilfe von Röntgenstrahlung und Ultraschall diagnostizieren kann. Es kann EKG's und EEG's zur selben Zeit durchführen, den Blutdruck und Puls messen und sogar die Kampfeffektivität des Soldaten anhand seiner persönlichen Daten (gespeichert in einem kleinen Extrachip für medizinische, standortliche und Identifikationszwecke) messen. All diese Informationen werden in einem kleinen Hologramm gezeigt oder direkt in das Helmsystem des Soldaten gespeist. Zur gleichen Zeit kann das Medikit eine Reihe von Arzneimitteln und sterile Operationswerkzeuge liefern, Wunden mit einem speziellen Heizeisen kautarisieren und, was viel wichtiger ist, seine Ladung Nanoroboter in eine Wunde geben.\n"
-"\n"
-"Die alte Idee medizinische Nanoroboter wurde als erstes vor 20 Jahren von vietnamesischen Forschern realisiert. Heute ist Medizin ohne sie undenkbar. Nanoroboter sind winzige Roboter, mit einem Durchmesser von ein paar Mikrometern, die sehr schnell für verschiedene spezielle Aufgaben programmiert werden können. Sie können schnell Wunden sterilisieren und gerissene Arterien verschließen, den Medikitanwender über innere Blutungen informieren, Absaugungen an angemessen Stellen initiieren, Darm- und Magendurchbrüche schließen, brandiges Gewebe wiederbeleben oder entfernen und Nervenschäden reparieren. Sie lösen sich problemlos in den Blutstrom des Opfers auf, bis sich die Batterien nach 10 bis 15 Sekunden erschöpfen, was aber meist nicht lange genug ist, um Schwerverletzte zu stabilisieren. Zwei oder mehr Dosen Nanoroboter sind vielleicht angebrachter. Jede Anzahl an Dosen kann ohne Nebenwirkungen verabreicht und verdaut werden.\n"
-"\n"
-"Diese Technologie ist der wohl wichtigste Durchbruch in der Unfallchirurgie, der je gemacht wurde. Es kann alles tun außer Gewebe regenerieren. Wenn mehr Aufmerksamkeit benötigt wird, zum Beispiel bei einem Organtreffer oder wenn eine Kugel in einer kritischen Stelle steckt, dann stellt das Meditkit Ausrüstung und detaillierte Anweisungen für den Soldaten zur Verfügung. Es kann nie den OP ersetzen, aber es ist das transportabelste Krankenhaus, dass wir je bekommen können.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"All unsere Soldaten wurden für die Benutzung des Medikits ausgebildet. Tatsächlich sollte, unter perfekten Umständen, jeder Soldat ein Medikit für den Sofortgebrauch dabei haben, aber ich weiß, dass unsere Soldaten nur eine begrenzte Tragfähigkeit haben. Schwere Wunden sollten sofort behandelt werden, um Komplikationen und weiteres Risiko für den verletzten Soldaten zu vermeiden. Wenn ein Opfer immer noch laufen kann, sollte es sich vom Kampf zurückziehen und Deckung suchen, um sich von einem Kameraden behandeln lassen.\n"
-"\n"
-"Die Arzneimittel in einem Medikit können ebenfalls benutzt werden, um einen bewusstlosen Soldaten aufzuwecken. Wenn das getan wurde, stellen Sie sicher, den Soldaten aus der Schusslinie zu bekommen, um ihn an einem sicheren Ort ordentlich zu behandeln. Der Sanitäter selbst muss vielleicht auf das Opfer zugehen, um ihm die Flucht zu ermöglichen. Das ist eine akzeptable Praxis, aber dazu sollten sie dem Sanitäter den nötigen Feuerschutz geben. Das Leben eines Soldaten wegzuwerfen, um ein anderes zu retten, ist keine gute Schlachtfeldmathematik.\n"
-"\n"
-"Wenn es ein verwundeter Soldat lebendig zur Basis zurückschafft, wird unser medizinisches Team die Behandlung übernehmen. Das Risiko, das jemand dem Gefechtstrauma erliegt, während er in einer PHALANX-Krankenstation liegt, ist weniger als einen Prozent und so nahe an Null, wie es möglich ist.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:813
 msgid "bombkit1_pre_txt"
@@ -5727,46 +5664,7 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:828
 #, fuzzy
 msgid "bombkit2_txt"
-msgstr ""
-"Technische Spezifikationen: Medikit\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE GELB\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Technisches Dokument, Freigabe Delta\n"
-"\n"
-"Gespeichert: 19. März 2084\n"
-"\n"
-"Von: Leitende Chirurgin Helen Floydd, Medizinische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"In der Vergangenheit benötigte die Leistung von Erste Hilfe oder Feldchirurgie speziell trainierte Gefechtsärzte und -chirurgen, die den Stress des Lebensrettens unter Beschuss aushalten. Soldaten, die ihre Kameraden zu Boden gehen sehen, hatten normalerweise keine andere Wahl als weiterzukämpfen und zu hoffen, dass die Sanitäter rechtzeitig ankommen, falls diese nicht vor Angst erstarren oder in Panik ausbrechen oder nutzlose Versuche an einer Feldverarztung ohne ausreichende Fähigkeiten oder Materialien versuchen.\n"
-"\n"
-"Das mag vielleicht eine tragbare Strategie in den Schützengräben des zweiten Weltkriegs gewesen sein, aber nun nicht mehr. Das Warten auf den Sanitäter kann den Tod für den Soldaten bedeuten, der sonst bei sofortiger Hilfe gerettet werden könnte. Die sofortige Verabreichung von Traumamedizin muss so schnell und einfach wie möglich erfolgen können, so dass jeder Soldat lebensrettende Anstrengungen mit minimalem Training unternehmen kann. Und hier kommt das moderne Medikit zum Tragen.\n"
-"\n"
-"Jedes Medikit beinhaltet einen eingebauten Computer, welcher Verletzungen mit Hilfe von Röntgenstrahlung und Ultraschall diagnostizieren kann. Es kann EKG's und EEG's zur selben Zeit durchführen, den Blutdruck und Puls messen und sogar die Kampfeffektivität des Soldaten anhand seiner persönlichen Daten (gespeichert in einem kleinen Extrachip für medizinische, standortliche und Identifikationszwecke) messen. All diese Informationen werden in einem kleinen Hologramm gezeigt oder direkt in das Helmsystem des Soldaten gespeist. Zur gleichen Zeit kann das Medikit eine Reihe von Arzneimitteln und sterile Operationswerkzeuge liefern, Wunden mit einem speziellen Heizeisen kautarisieren und, was viel wichtiger ist, seine Ladung Nanoroboter in eine Wunde geben.\n"
-"\n"
-"Die alte Idee medizinische Nanoroboter wurde als erstes vor 20 Jahren von vietnamesischen Forschern realisiert. Heute ist Medizin ohne sie undenkbar. Nanoroboter sind winzige Roboter, mit einem Durchmesser von ein paar Mikrometern, die sehr schnell für verschiedene spezielle Aufgaben programmiert werden können. Sie können schnell Wunden sterilisieren und gerissene Arterien verschließen, den Medikitanwender über innere Blutungen informieren, Absaugungen an angemessen Stellen initiieren, Darm- und Magendurchbrüche schließen, brandiges Gewebe wiederbeleben oder entfernen und Nervenschäden reparieren. Sie lösen sich problemlos in den Blutstrom des Opfers auf, bis sich die Batterien nach 10 bis 15 Sekunden erschöpfen, was aber meist nicht lange genug ist, um Schwerverletzte zu stabilisieren. Zwei oder mehr Dosen Nanoroboter sind vielleicht angebrachter. Jede Anzahl an Dosen kann ohne Nebenwirkungen verabreicht und verdaut werden.\n"
-"\n"
-"Diese Technologie ist der wohl wichtigste Durchbruch in der Unfallchirurgie, der je gemacht wurde. Es kann alles tun außer Gewebe regenerieren. Wenn mehr Aufmerksamkeit benötigt wird, zum Beispiel bei einem Organtreffer oder wenn eine Kugel in einer kritischen Stelle steckt, dann stellt das Meditkit Ausrüstung und detaillierte Anweisungen für den Soldaten zur Verfügung. Es kann nie den OP ersetzen, aber es ist das transportabelste Krankenhaus, dass wir je bekommen können.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"All unsere Soldaten wurden für die Benutzung des Medikits ausgebildet. Tatsächlich sollte, unter perfekten Umständen, jeder Soldat ein Medikit für den Sofortgebrauch dabei haben, aber ich weiß, dass unsere Soldaten nur eine begrenzte Tragfähigkeit haben. Schwere Wunden sollten sofort behandelt werden, um Komplikationen und weiteres Risiko für den verletzten Soldaten zu vermeiden. Wenn ein Opfer immer noch laufen kann, sollte es sich vom Kampf zurückziehen und Deckung suchen, um sich von einem Kameraden behandeln lassen.\n"
-"\n"
-"Die Arzneimittel in einem Medikit können ebenfalls benutzt werden, um einen bewusstlosen Soldaten aufzuwecken. Wenn das getan wurde, stellen Sie sicher, den Soldaten aus der Schusslinie zu bekommen, um ihn an einem sicheren Ort ordentlich zu behandeln. Der Sanitäter selbst muss vielleicht auf das Opfer zugehen, um ihm die Flucht zu ermöglichen. Das ist eine akzeptable Praxis, aber dazu sollten sie dem Sanitäter den nötigen Feuerschutz geben. Das Leben eines Soldaten wegzuwerfen, um ein anderes zu retten, ist keine gute Schlachtfeldmathematik.\n"
-"\n"
-"Wenn es ein verwundeter Soldat lebendig zur Basis zurückschafft, wird unser medizinisches Team die Behandlung übernehmen. Das Risiko, das jemand dem Gefechtstrauma erliegt, während er in einer PHALANX-Krankenstation liegt, ist weniger als einen Prozent und so nahe an Null, wie es möglich ist.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:831
 msgid "bombkit2_pre_txt"
@@ -6787,7 +6685,7 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:1842
 #, fuzzy
 msgid "coilgun_txt"
-msgstr "Ein Anwesen das wohlhabenden und einflussreichen Leute gehört."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1845
 msgid "coilgun_pre_txt"
@@ -6798,7 +6696,7 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/weapons_human.ufo:392
 #, fuzzy
 msgid "Coilgun"
-msgstr "Medaille"
+msgstr "Coilgun"
 
 #: ../base/ufos/research.ufo:1897
 msgid "shotgun2_txt"
@@ -7208,20 +7106,7 @@ msgstr "Außerirdisches Anti-Menschen Gas"
 #: ../base/ufos/research.ufo:2124
 #, fuzzy
 msgid "stungren_alien_txt"
-msgstr ""
-"Herr Kommandant,\n"
-"\n"
-"Seit dem Beginn der Invasion haben wir uns die Köpfe über die Biologie der Außerirdischen zerbrochen. Wir wissen fast nichts über sie, ihre Biologie, ihre Genetik oder ihre möglichen Verwundbarkeiten. Das hat uns im Bereich der biologischen und chemischen Kriegsführung hilflos gemacht.\n"
-"\n"
-"Unsere Studien der verschiedenen lebenden und toten Spezies, die wir geborgen haben, war erleuchtend. Dank der Entdeckungen, die wir in den letzten Monaten gemacht haben, sind mein Team und ich zu der Überzeugung gekommen, dass wir bereit sind, ein Programm zur chemischen/biologischen Kriegsführung gegen die außerirdische Bedrohung zu starten. Wir haben Gewebeproben, Autopsiedaten und lebende Organismen zum Testen; alle Rohmaterialen, die wir brauchen, um Methoden zu testen, wie man auf dem Schlachtfeld einen Außerirdischen richtig kampfunfähig macht, ohne PHALANX-Truppen in den Nahkampf zu schicken.\n"
-"\n"
-"Das wird eine Herausforderung, aufgrund des konstanten Schutzes und Filterungen, die der außerirdische Atmungsapparat bietet, der verhindert, das irgendwelche schädlichen Materialien in die Lungen kommen, aber wenn sie genügend Laborzeit und Mittel genehmigen, können wir sicher ein Aerosol entwickeln, dass ungeschützte Außerirdische durch chemische oder biologische Mittel neutralisiert.\n"
-"\n"
-"Dieses Projekt hat größte Wichtigkeit und Priorität, Herr Kommandant. Je eher sie ihre Autorisierung geben, desto besser.\n"
-"\n"
-"Mit freundlichen Grüßen,\n"
-"\n"
-"Dr. Connor"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2127
 msgid "stungren_alien_pre_txt"
@@ -8127,50 +8012,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3046
 #, fuzzy
 msgid "b_radar_adv_txt"
-msgstr ""
-"Baupläne -- Radar\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Konstruktionsinhalt, Freigabe Sigma -- Nur für den Kommandanten\n"
-"\n"
-"Gespeichert: 18. März 2084\n"
-"\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Herr Kommandant, wir haben massive Änderungen an unserem alten Radardesign vorgenommen, um sie auf den neuesten Stand zu bringen. Der alte Bericht ist nicht länger zutreffend, daher habe ich entschieden, ihn durch diesen zu ersetzen.\n"
-"\n"
-"Unsere Radaranlage ist keine große Radarschüssel. Sie ist eher eine Kontrollzentrale für eine Reihe von getarnten Schüsseln, welche auf erhöhten Plätzen rund um die Basis installiert sind. Es gibt für jede Anlage zwischen 8 und 12 Schüsseln, je nach verfügbaren Platz und Abtastreichweite der einzelnen Schüsseln. Jede Schüssel ist mit mehreren Erkennungsmitteln ausgerüstet, nicht nur dem handelsüblichen Radar, da Radar Schwierigkeiten hat, auf Alienkontakte aufgeschaltet zu bleiben. Die anderen Systeme beinhalten (sind aber nicht darauf beschränkt) Infrarot und Lasererkennung.\n"
-"\n"
-"Mehr als eine Radaranlage wird unsere Erkennungsreichweite entsprechend erhöhen.\n"
-"\n"
-"Die Anlage ist ständig bemannt und in 6-Stunden-Schichten werden alle von den Computern gesammelten Daten ausgewertet. Menschliche Mitarbeiter sind absolut notwendig und sollten immer präsent sein; was die Computer als Radarecho abtun, könnte ein getarnter Alienernter sein, der kurz davor ist, eine große Zahl Zivilisten anzugreifen. Instinkt und Erfahrung zählt genauso viel wie Softwareintelligenz.\n"
-"\n"
-"Unser Radar ist mit der UN Luftfahrzeug Registratur verbunden und kann die Transpondersignale eines jeden zivilen Luftfahrzeuges mit seinem Flugplan und Ladungsmanifest abgleichen. Nicht-PHALANX Militärluftfahrzeuge werden ebenfalls dazu aufgefordert, ihren Flugplan in die Datenbank zu speichern, aber wir können nicht sicher wissen, ob die verschiedenen Militärs dieser Direktive gewissenhaft folgen.\n"
-"\n"
-"Die Radaranlage kann nicht ohne ein Kraftwerk zur Stromversorgung und eine Kommandozentrale, die die taktische Radarnutzung koordiniert, funktionieren.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Da unsere Radarschüsseln nicht in der Basis stationiert sind, gibt es nicht wirklich eine große Bedrohung der Basisentdeckung, wenn wir aktives Radar benutzen. Und wenn wir von der Zahl der sonstigen militärischen Radaranlagen ausgehen, ist es unwahrscheinlich, dass ein Alienraumschiff unsere Basis findet, wenn es das Signal zurückverfolgt. sie würden höchstens das ungefähre Gebiet finden, in dem sich die Basis befindet.\n"
-"\n"
-"Dennoch könnte jedes UFO, das in dem Gebiet patrouilliert, versuchen, unsere Basis zu finden und wir sollten unter keinen Umständen zulassen, dass es seine Mission abschließt.\n"
-"\n"
-"Während eines Angriffes ist die Radaranlage einem großen Risiko ausgesetzt, da es unsere Augen und Ohren darstellt. Ohne funktionierendes Radar können wir die UFO's nicht sehen, die wir abfangen sollen. Wenn angreifende Aliens sich der Anlage nähern, werden sie sicher versuchen, sie mit Sprengstoff zu zerstören. Das dürfen wir nicht zulassen.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Zusatz, Sachbearbeiter Abel S. Howard, 18. März 2084:\n"
-"\n"
-"Wir sollten die Radaranlagen nicht als Lösung für alles in Sachen UFO Aufspürung betrachten. Sogar mit Zusatzsystem ist unsere Abtastfähigkeit nicht vollständig sicher und wir sollten Wege erforschen, unsere Aufspürtechnologie zu verbessern, wenn wir eine Chance haben wollen, diese Bastarde aufzuhalten."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3065
 msgid "b_storage_txt"
@@ -10502,7 +10344,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4624
 #, fuzzy
 msgid "The Enemy On Earth - Revisited"
-msgstr "Die Bedrohung von der Erde"
+msgstr "Die Bedrohung auf der Erde"
 
 #: ../base/ufos/research.ufo:4629
 #, fuzzy
@@ -11151,7 +10993,7 @@ msgstr "Bombe"
 #: ../base/ufos/weapons_aliens.ufo:46
 #, fuzzy
 msgid "Needler Gun Magazine"
-msgstr "Maschinengewehrmagazin"
+msgstr "Needler Gun Magazine"
 
 #: ../base/ufos/weapons_aliens.ufo:62
 #: ../base/ufos/weapons_aliens.ufo:125
@@ -11260,8 +11102,9 @@ msgid "Aimed Shot"
 msgstr "Gezielter Schuss"
 
 #: ../base/ufos/weapons_human.ufo:412
+#, fuzzy
 msgid "Coilgun Clip"
-msgstr ""
+msgstr "Coilgun Magazin"
 
 #: ../base/ufos/weapons_human.ufo:472
 msgid "7.62mm Pistol"
@@ -14275,8 +14118,9 @@ msgid "Unassigned scientists"
 msgstr "Nicht zugewiesene Forscher"
 
 #: client/cl_research.c:1577
+#, fuzzy
 msgid "Missing an artifact"
-msgstr ""
+msgstr "Fehlendes Artefakt"
 
 #: client/cl_research.c:1585
 msgid "Unresearchable collected items"
