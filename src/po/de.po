@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-12-14 15:51+0100\n"
-"PO-Revision-Date: 2008-12-14 15:55+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2008-12-14 18:46+0100\n"
+"Last-Translator: M <M>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr "Außerirdische Basis"
 #: ../base/maps/bomber_city.ump:57
 #, fuzzy
 msgid "Bomber_city"
-msgstr "UFO-Bomb."
+msgstr "Bomber_city"
 
 #: ../base/maps/bridge.ump:58
 msgid "Bridge"
@@ -620,12 +620,11 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:15
 msgid "Stockholm"
-msgstr ""
+msgstr "Stockholm"
 
 #: ../base/ufos/cities.ufo:28
-#, fuzzy
 msgid "Athens"
-msgstr "Außerirdische"
+msgstr "Athen"
 
 #: ../base/ufos/cities.ufo:48
 msgid "Berlin"
@@ -633,7 +632,7 @@ msgstr "Berlin"
 
 #: ../base/ufos/cities.ufo:61
 msgid "Cape Town"
-msgstr ""
+msgstr "Kapstadt"
 
 #: ../base/ufos/cities.ufo:102
 msgid "Sydney"
@@ -1261,7 +1260,7 @@ msgstr "Radarturm"
 #: ../base/ufos/menu_geoscape.ufo:1428
 #, fuzzy
 msgid "UFO Yard"
-msgstr "UFO - Transporter"
+msgstr "UFO Hof"
 
 #: ../base/ufos/installation.ufo:30
 #: ../base/ufos/menu_geoscape.ufo:1395
@@ -2809,7 +2808,7 @@ msgstr "Baue einen Radarturm"
 
 #: ../base/ufos/menu_geoscape.ufo:1650
 msgid "No manangeable options for a radartower"
-msgstr ""
+msgstr "Keine Manage-optionen für Radarturm"
 
 #: ../base/ufos/menu_geoscape.ufo:1698
 msgid "Installation Status"
@@ -11591,7 +11590,7 @@ msgstr "Maschinenkanonen Gurt"
 
 #: ../base/ufos/weapons_ugv.ufo:146
 msgid "Autocannon Module"
-msgstr ""
+msgstr "Autokanonen Magazin"
 
 #: client/cl_actor.c:165
 msgid "Poor"
@@ -12077,9 +12076,8 @@ msgid "pursuing a UFO"
 msgstr "UFO abfangen"
 
 #: client/cl_aircraft.c:321
-#, fuzzy
 msgid "ready to drop soldiers"
-msgstr "Soldat umbenennen"
+msgstr "Bereit zu die Soldaten abzusetzen"
 
 #: client/cl_aircraft.c:323
 msgid "intercepting a UFO"
@@ -13099,9 +13097,8 @@ msgid "Turn soldier toward mouse pointer"
 msgstr "Soldat zum Mauszeiger drehen"
 
 #: client/cl_input.c:1727
-#, fuzzy
 msgid "Toggles the hud radar mode"
-msgstr "Kopfausrüstung umschalten"
+msgstr "Radarmode ändern"
 
 #: client/cl_input.c:1730
 msgid "Toggle stand/crounch"
@@ -13216,7 +13213,6 @@ msgid "Do you really want to destroy this installation?"
 msgstr "Sicher, dass die externe Einrichtung abgerissen werden soll?"
 
 #: client/cl_installation.c:477
-#, fuzzy
 msgid "Forget it"
 msgstr "Vergiss es"
 
@@ -13723,9 +13719,8 @@ msgid "Miscellaneous"
 msgstr "Verschiedenes"
 
 #: client/cl_market.c:564
-#, fuzzy
 msgid "Personal Armour"
-msgstr "Persönliche Schutzkleidung"
+msgstr "Persönliche Schutzrüstung"
 
 #: client/cl_market.c:570
 msgid "Other"
@@ -14276,18 +14271,16 @@ msgid "No research proposal available for this project."
 msgstr "Kein Forschungsantrag für dieses Projekt vorhanden."
 
 #: client/cl_research.c:1560
-#, fuzzy
 msgid "Unassigned scientists"
-msgstr "Rekrutiere Forscher"
+msgstr "Nicht zugewiesene Forscher"
 
 #: client/cl_research.c:1577
 msgid "Missing an artifact"
 msgstr ""
 
 #: client/cl_research.c:1585
-#, fuzzy
 msgid "Unresearchable collected items"
-msgstr "%i gesammelter Gegenstand"
+msgstr "Unerforschbare gesammelte Gegenstände"
 
 #: client/cl_research.c:1645
 msgid "Nothing to research"
