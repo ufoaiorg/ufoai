@@ -52,7 +52,8 @@ menu stats
 		pos		"40 110"
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
-		format  "22 170"
+		lineheight  22
+		tabwidth	170
 		num		TEXT_STATS_MISSION
 		rows	"6"
 	}
@@ -69,7 +70,8 @@ menu stats
 		pos		"250 110"
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
-		format  "22 170"
+		lineheight  22
+		tabwidth	170
 		num		TEXT_STATS_BASES
 		rows	"6"
 	}
@@ -86,7 +88,8 @@ menu stats
 		pos		"460 110"
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
-		format  "22 170"
+		lineheight  22
+		tabwidth	170
 		num		TEXT_STATS_INSTALLATIONS
 		rows	"6"
 	}
@@ -103,7 +106,8 @@ menu stats
 		pos		"670 110"
 		size	"200 140"
 		bgcolor	"0.5 0.5 0.5 0.2"
-		format  "22 170"
+		lineheight  22
+		tabwidth	170
 		num		TEXT_STATS_EMPLOYEES
 		rows	"6"
 	}
@@ -120,7 +124,8 @@ menu stats
 		pos		"40 284"
 		size	"470 400"
 		bgcolor	"0.5 0.5 0.5 0.2"
-		format  "22 340"
+		lineheight  22
+		tabwidth	340
 		num		TEXT_STATS_COSTS
 		rows	"18"
 	}
@@ -138,7 +143,8 @@ menu stats
 		pos		"518 284"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		size	"470 240"
-		format  "22 360"
+		lineheight  22
+		tabwidth	360
 		num		TEXT_STATS_NATIONS
 		rows	"10"
 		click
@@ -158,7 +164,8 @@ menu stats
 		pos		"518 574"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		size	"470 110"
-		format  "22 360"
+		lineheight  22
+		tabwidth	360
 		num		TEXT_GENERIC
 		rows	"5"
 	}

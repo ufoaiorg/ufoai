@@ -31,7 +31,7 @@ menu buy
 		color	"0 .78 0 1"
 		num		TEXT_MARKET_NAMES
 		rows	"28"
-		format	"25 0"
+		lineheight	"25"
 		pos		"55 40"
 		size	"265 700"
 		click
@@ -47,7 +47,7 @@ menu buy
 		num		TEXT_MARKET_STORAGE
 		rows	"28"
 		size	"40 700"
-		format	"25 0"
+		lineheight	"25"
 		pos	"370 40"
 	}
 
@@ -58,7 +58,7 @@ menu buy
 		num		TEXT_MARKET_MARKET
 		rows	"28"
 		size	"40 700"
-		format	"25 0"
+		lineheight	"25"
 		pos		"446 40"
 	}
 
@@ -69,7 +69,7 @@ menu buy
 		num		TEXT_MARKET_PRICES
 		rows	"28"
 		size	"80 700"
-		format	"25 0"
+		lineheight	"25"
 		pos		"542 40"
 		wheel	{ cmd "market_scroll;" }
 	}
@@ -1272,7 +1272,8 @@ menu buy
 		pos		"620 377"
 		size	"336 150"
 		rows	"10"
-		format	"15 168"
+		lineheight 15
+		tabwidth 168
 		font	"f_verysmall"
 	}
 

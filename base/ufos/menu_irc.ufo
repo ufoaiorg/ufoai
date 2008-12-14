@@ -66,7 +66,7 @@ menu irc
 		pos		"750 100"
 		size	"240 594"
 //		bgcolor	"0.5 0.5 0.5 0.2"
-		format  "22 0"
+		lineheight	22
 		num		TEXT_LIST
 		rows	"27"
 		wheel
@@ -82,7 +82,7 @@ menu irc
 		size	"680 528"
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		rows	"24"
-		format  "22 0"
+		lineheight  "22"
 		num		TEXT_STANDARD
 		wheel {
 			cmd "mn_setnodeproperty irc_data_scroll current <text_scroll>"
@@ -196,7 +196,8 @@ menu irc_popup
 	text popup_text
 	{
 		pos	"26 58"
-		format	"16 100"
+		lineheight 16
+		tabwidth 100
 		size	"446 128"
 		string "_You are not connected to the lobby. Do you want to connect?"
 	}

@@ -44,7 +44,7 @@ menu tutorials
 	text tutoriallist
 	{
 		pos	"640 220"
-		format	"20 0"
+		lineheight	"20"
 		size	"260 280"
 		num		TEXT_LIST
 		rows	"14"

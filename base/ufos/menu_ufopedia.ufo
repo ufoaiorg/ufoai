@@ -110,7 +110,8 @@ menu ufopedia
 		pos		"40 85"
 		size	"640 368"
 		num		TEXT_UFOPEDIA
-		format	"23 100"
+		lineheight	23
+		tabwidth	100
 		click rclick
 //		bgcolor " 0.5 1 0.5 0.3"
 		rows	"16"
@@ -141,7 +142,8 @@ menu ufopedia
 		pos		"50 208"
 		size	"640 240"
 		num		TEXT_UFOPEDIA
-		format	"24 100"
+		lineheight	24
+		tabwidth	100
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		rows	"10"
@@ -172,7 +174,7 @@ menu ufopedia
 		pos		"50 80"
 		size	"660 134"
 		num		TEXT_UFOPEDIA_MAILHEADER
-		format	"24 0"
+		lineheight	"24"
 		rows	"5"
 		font	"f_small_bold"
 //		bgcolor " 0.5 1 0.5 0.3"
@@ -180,7 +182,7 @@ menu ufopedia
 
 	confunc mn_upfbig
 	{
-		*ufopedia format	"23 0"
+		*ufopedia lineheight	"23"
 		*ufopedia rows	"16"
 		*ufopedia_scroll	viewsize	16
 		*ufopedia font		f_big
@@ -193,7 +195,7 @@ menu ufopedia
 
 	confunc mn_upfsmall
 	{
-		*ufopedia format	"18 0"
+		*ufopedia lineheight	"18"
 		*ufopedia rows	"20"
 		*ufopedia_scroll	viewsize	20
 		*ufopedia font		f_small
@@ -208,7 +210,8 @@ menu ufopedia
 	{
 		pos		"30 495"
 		size	"495 200"
-		format	"20 230"
+		lineheight	20
+		tabwidth	230
 //		bgcolor	" 1 0.5 0.5 0.3"
 		wheel
 		rows	"10"
@@ -257,7 +260,7 @@ menu ufopedia
 	{
 		pos		"550 495"
 		size	"354 246"
-		format	"20 0"
+		lineheight	"20"
 		num	TEXT_LIST
 		rows	"12"
 		click
@@ -895,7 +898,8 @@ menu ufopedia_mail
 		num		TEXT_UFOPEDIA_MAIL
 		//rows	"15"
 		font	"f_small"
-		format	"38 700"
+		lineheight	38
+		tabwidth	700
 		click	rclick wheel
 		mousefx	true
 //		bgcolor	" 0 1 0 0.5"

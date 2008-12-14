@@ -1355,7 +1355,8 @@ menu equipment
 	{
 		pos		"40 530"
 		size	"326 160"
-		format	"20 190"
+		lineheight	20
+		tabwidth	190
 		rows	"8"
 		scrollbar	true
 		wheel

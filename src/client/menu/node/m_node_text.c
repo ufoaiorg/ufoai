@@ -193,14 +193,14 @@ int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 	assert(node->behaviour->id == MN_TEXT);
 
 	/* if no texh, its not a text list, result is not important */
-	if (!node->texh[0])
+	if (!node->u.text.lineHeight)
 		return 0;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 	if (EXTRADATA(node).textScroll)
-		return (int) (y / node->texh[0]) + EXTRADATA(node).textScroll;
+		return (int) (y / node->u.text.lineHeight) + EXTRADATA(node).textScroll;
 	else
-		return (int) (y / node->texh[0]);
+		return (int) (y / node->u.text.lineHeight);
 }
 
 static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
@@ -281,7 +281,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			token = COM_Parse((const char **)&cur);
 			/** @todo fix scrolling images */
 			if (lines > EXTRADATA(node).textScroll)
-				y1 += (lines - EXTRADATA(node).textScroll) * node->texh[0];
+				y1 += (lines - EXTRADATA(node).textScroll) * node->u.text.lineHeight;
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
 				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
@@ -324,10 +324,10 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 
 			/* use tab stop as given via menu definition format string
 			 * or use 1/3 of the node size (width) */
-			if (!node->texh[1])
+			if (!node->u.text.tabWidth)
 				tabwidth = width / 3;
 			else
-				tabwidth = node->texh[1];
+				tabwidth = node->u.text.tabWidth;
 
 			numtabs = strspn(tab, "\t");
 			tabwidth *= numtabs;
@@ -335,7 +335,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->texh[0], cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
+			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -349,7 +349,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			if (!cur) {
 				lines++;
 			} else {
-				R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->texh[0], cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
+				R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
 			}
 		}
 
@@ -414,7 +414,7 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 		}
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->texh[0], text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
+		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
 		if (screenLines > EXTRADATA(node).rows)
 			break;
 	}
@@ -551,9 +551,9 @@ static void MN_TextNodeLoading (menuNode_t *node)
 
 static void MN_TextNodeLoaded (menuNode_t *node)
 {
-	int lineheight = node->texh[0];
+	int lineheight = node->u.text.lineHeight;
 	/* auto compute lineheight */
-    /* we dont overwrite node->texh[0], because "0" is dynamically replaced by font height on draw fonction */
+    /* we dont overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw fonction */
 	if (lineheight == 0) {
         /* the font is used */
         /** @todo clean this up once font_t is known in the client */
@@ -598,8 +598,8 @@ static const value_t properties[] = {
 	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.textScroll), MEMBER_SIZEOF(menuNode_t, u.text.textScroll)},
 	{"lineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
 	{"lines", V_INT, offsetof(menuNode_t, u.text.textLines), MEMBER_SIZEOF(menuNode_t, u.text.textLines)},
-
-	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"lineheight", V_INT, offsetof(menuNode_t, u.text.lineHeight), MEMBER_SIZEOF(menuNode_t, u.text.lineHeight)},
+	{"tabwidth", V_INT, offsetof(menuNode_t, u.text.tabWidth), MEMBER_SIZEOF(menuNode_t, u.text.tabWidth)},
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
 	{NULL, V_NULL, 0, 0}
 };

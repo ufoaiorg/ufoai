@@ -61,7 +61,7 @@ menu althud extends ahud
 		wheel
 		num		TEXT_CHAT_WINDOW
 		rows	"3"
-		format	"16 0"
+		lineheight	"16"
 		padding	5
 		bordercolor	"0.5 0.5 0.5 1"
 		border	2
@@ -1147,7 +1147,8 @@ menu althud extends ahud
 	{
 		pos		"5 722"
 		size	"275 50"
-		format	"20 100"
+		lineheight	20
+		tabwidth	100
 		color	"0 1 0 1"
 		rows	"2"
 	}

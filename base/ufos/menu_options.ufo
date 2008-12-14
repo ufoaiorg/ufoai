@@ -747,7 +747,7 @@ menu options_keys
 		size	"460 540"
 		//rows	"28"
 		num	TEXT_LIST
-		format	"20 0"
+		lineheight	"20"
 		wheel	{ cmd "mn_setnodeproperty keyscroll current <text_scroll>" }
 	}
 

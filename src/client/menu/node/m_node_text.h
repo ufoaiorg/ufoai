@@ -62,6 +62,8 @@ typedef struct {
 	int num;					/**< textfields: menutexts-id - baselayouts: baseID */
 	int rows;					/**< textfields: max. rows to show */
 	struct menuAction_s *onLinesChange;
+	int lineHeight;			/**< size between two lines */
+	int tabWidth;				/**< max size of a tabulation */
 
 } textExtraData_t;
 

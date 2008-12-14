@@ -107,7 +107,8 @@ menu buildings
 	{
 		pos		"770 120"
 		size	"210 600"
-		format	"30 700"
+		lineheight	30
+		tabwidth	700
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx	true
@@ -184,7 +185,8 @@ menu popup_buildingpreview
 		pos		"30 100"
 		size	"300 150"
 		mousefx false
-		format	"20 140"
+		lineheight	20
+		tabwidth	140
 		num		TEXT_BUILDING_INFO
 		rows	"7"
 	}

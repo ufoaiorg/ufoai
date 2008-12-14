@@ -146,7 +146,7 @@ menu production
 		pos		"40 70"
 		size	"376 670"
 		color	"0 .78 0 1"
-		format	"22 0"
+		lineheight	"22"
 		num		TEXT_PRODUCTION_LIST
 		click
 		rclick
@@ -166,7 +166,7 @@ menu production
 		pos		"505 70"
 		size	"30 670"
 		color	"0 .78 0 1"
-		format	"22 0"
+		lineheight	"22"
 		num		TEXT_PRODUCTION_AMOUNT
 		rows "30"
 		mousefx	true
@@ -188,7 +188,7 @@ menu production
 		pos		"465 70"
 		size	"30 670"
 		color	"0 .78 0 1"
-		format	"22 0"
+		lineheight	"22"
 		num		TEXT_PRODUCTION_QUEUED
 		rows	"30"
 		mousefx true
@@ -377,7 +377,8 @@ menu production
 	{
 		pos		"610 428"
 		size	"366 100"
-		format	"20 260"
+		lineheight	20
+		tabwidth	260
 		num		TEXT_PRODUCTION_INFO
 		rows	"5"
 		wheel

@@ -366,7 +366,8 @@ menu popup_tipoftheday
 	{
 		pos	"26 58"
 		size	"444 120"
-		format	"20 150"
+		lineheight	20
+		tabwidth	150
 		num	TEXT_TIPOFTHEDAY
 		click	{ }
 		wheel

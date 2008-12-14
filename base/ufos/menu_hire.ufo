@@ -330,7 +330,8 @@ menu employees
 	{
 		pos	"40 32"
 		size	"280 722"
-		format	"38 100"
+		lineheight	38
+		tabwidth	100
 		rows	"19"
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -650,7 +651,8 @@ menu employees
 		pos		"610 428"
 //		bgcolor "1 1 1 0.5"
 		size	"366 80"
-		format	"20 260"
+		lineheight	20
+		tabwidth	260
 		num		TEXT_EMPLOYEE
 		rows	"4"
 	}

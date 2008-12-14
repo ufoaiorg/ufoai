@@ -95,7 +95,7 @@ menu transfer
 		num		TEXT_BASE_INFO
 		pos		"60 80"
 		size	"460 240"
-		format	"20 0"
+		lineheight	"20"
 		rows	"12"
 //		bgcolor	"1 1 1 0.5"
 	}
@@ -116,7 +116,7 @@ menu transfer
 		size	"460 360"
 		mousefx	true
 		click
-		format	"20 0"
+		lineheight	"20"
 		rows	"18"
 //		bgcolor	"1 1 1 0.5"
 //		repeat	true
@@ -156,7 +156,7 @@ menu transfer
 		size	"400 400"
 		mousefx	true
 		click
-		format	"20 0"
+		lineheight	"20"
 		wheel
 		rows	"20"
 //		bgcolor	"1 1 1 0.5"

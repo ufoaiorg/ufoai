@@ -30,7 +30,7 @@ menu map
 		pos	"0 0"
 		size	"768 22"
 		bgcolor	"0 0 0 .5"
-		format	"20 0"
+		lineheight	"20"
 		rows	1
 		num		TEXT_MESSAGESYSTEM
 		wheel
@@ -242,7 +242,8 @@ menu map
 	{
 		pos			"800 154"
 		size		"192 144"
-		format		"18 100"
+		lineheight		18
+		tabwidth	100
 		rows		"8"
 		wheel
 //		bgcolor		"1 1 1 0.6"
@@ -521,7 +522,7 @@ menu map_combatzoom
 		pos		"0 0"
 		size	"768 22"
 		bgcolor	"0 0 0 .5"
-		format	"20 0"
+		lineheight	"20"
 		rows	1
 		num		TEXT_MESSAGESYSTEM
 		wheel
@@ -684,7 +685,8 @@ menu popup_list
 	{
 		pos		"26 58"
 		num		TEXT_POPUP_INFO
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 		size	"446 32"
 //		bgcolor	"1 1 1 0.5"
 		rows	2
@@ -693,7 +695,8 @@ menu popup_list
 	{
 		pos		"26 96"
 		num		TEXT_LIST
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 		size	"446 96"
 //		bgcolor	"1 1 1 0.5"
 		rows	6
@@ -763,7 +766,8 @@ menu popup_button
 	{
 		pos		"26 58"
 		num		TEXT_POPUP_INFO
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"
 		rows	8
@@ -1108,7 +1112,8 @@ menu popup_transferbaselist
 		pos		"26 74"
 		size	"450 144"
 //		bgcolor	"1 1 1 0.5"
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 		rows	9
 		wheel
 		click
@@ -1886,7 +1891,8 @@ menu popup_intercept
 	{
 		pos		"26 74"
 		size	"460 260"
-		format	"20 150"
+		lineheight	20
+		tabwidth	150
 		mousefx	true
 		num		TEXT_AIRCRAFT_LIST
 		wheel
@@ -1900,7 +1906,8 @@ menu popup_intercept
 	{
 		pos		"501 74"
 		size	"250 260"
-		format	"20 175"
+		lineheight	20
+		tabwidth	175
 		mousefx	true
 		num		TEXT_BASE_LIST
 		rows	"13"
@@ -1994,7 +2001,8 @@ menu popup_mission
 		pos		"26 74"
 		size	"640 260"
 //		bgcolor	"1 1 1 0.6"
-		format	"20 190"
+		lineheight	20
+		tabwidth	190
 		mousefx	true
 		num		TEXT_AIRCRAFT_LIST
 		wheel
@@ -2074,7 +2082,8 @@ menu popup_multi_selection
 	{
 		pos		"26 78"
 		size	"420 100"
-		format	"20 150"
+		lineheight	20
+		tabwidth	150
 		num		TEXT_MULTISELECTION
 		wheel
 		rows	5
@@ -2154,7 +2163,8 @@ menu popup_aircraft
 	{
 		pos		"26 78"
 		size	"420 100"
-		format	"20 150"
+		lineheight	20
+		tabwidth	150
 		num		TEXT_POPUP
 		rows	5
 		mousefx	true
@@ -2219,7 +2229,8 @@ menu popup
 	{
 		pos		"26 58"
 		num		TEXT_POPUP_INFO
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 		size	"446 128"
 //		bgcolor	"1 1 1 0.5"
 		rows	8
@@ -2355,7 +2366,7 @@ menu messageoptions
 		color	"0 .78 0 1"
 		num		TEXT_MESSAGEOPTIONS
 		rows	"12"
-		format	"25 0"
+		lineheight	"25"
 		pos		"30 90"
 		size	"265 300"
 		wheel	{ cmd "msgoptions_scroll;" }

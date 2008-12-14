@@ -372,7 +372,8 @@ menu serverinfo
 	{
 		pos		"500 200"
 		size	"420 550"
-		format	"20 200"
+		lineheight	20
+		tabwidth	200
 		num		TEXT_STANDARD
 		rows	"27"
 	}
@@ -405,7 +406,8 @@ menu serverinfo
 	{
 		pos	"50 170"
 		size	"300 380"
-		format	"20 200"
+		lineheight	20
+		tabwidth	200
 		font	"f_verysmall"
 		mousefx	true
 		border 3
@@ -585,7 +587,8 @@ menu mp_serverbrowser
 	{
 		pos	"85 140"
 		size	"420 340"
-		format	"20 48"
+		lineheight	20
+		tabwidth	48
 		font	"f_verysmall"
 		mousefx	true
 		border 3
@@ -1355,7 +1358,8 @@ menu multiplayer_selectteam
 	{
 		pos		"300 100"
 		size	"422 320"
-		format	"16 60"
+		lineheight	16
+		tabwidth	60
 //		bgcolor	"1 1 1 0.5"
 		rows	20
 		num		TEXT_LIST
@@ -1365,7 +1369,8 @@ menu multiplayer_selectteam
 	{
 		pos		"300 430"
 		size	"422 16"
-		format	"16 60"
+		lineheight	16
+		tabwidth	60
 //		bgcolor	"1 1 1 0.5"
 		num		TEXT_STANDARD
 		rows	1
@@ -1464,7 +1469,7 @@ menu multiplayer_selectteam
 		wheel
 		num		TEXT_CHAT_WINDOW
 		rows	"10"
-		format	"16 0"
+		lineheight	"16"
 		padding	5
 		bordercolor	"0.5 0.5 0.5 1"
 		border	2
@@ -1663,7 +1668,8 @@ menu chat_popup
 	{
 		pos		"26 58"
 		size	"444 120"
-		format	"20 150"
+		lineheight	20
+		tabwidth	150
 		font	"f_verysmall"
 		wheel
 		num		TEXT_CHAT_WINDOW

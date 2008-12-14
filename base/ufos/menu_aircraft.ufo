@@ -288,7 +288,8 @@ menu aircraft
 	{
 		pos		"480 540"
 		size	"510 200"
-		format	"20 220"
+		lineheight	20
+		tabwidth	220
 		num		TEXT_AIRCRAFT_INFO
 		rows	"10"
 	}
@@ -521,7 +522,7 @@ menu aircraft_equip
 	{
 		pos	"760 630"
 		size	"400 120"
-		format	"20 0"
+		lineheight	"20"
 //		bgcolor	"1 1 1 0.5"
 		rows	"6"
 	}
@@ -622,7 +623,7 @@ menu aircraft_equip
 		pos		"472 480"
 		size	"252 220"
 //		bgcolor	"1 1 1 0.5"
-		format	"20 0"
+		lineheight	"20"
 		wheel
 		rows	"11"
 		num TEXT_LIST
@@ -712,7 +713,7 @@ menu aircraft_equip
 	{
 		pos	"546 70"
 		size	"430 35"
-		format	"16 0"
+		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
 		num	TEXT_AIREQUIP_1
 		rows	"2"
@@ -734,7 +735,7 @@ menu aircraft_equip
 	{
 		pos	"546 204"
 		size	"430 35"
-		format	"16 0"
+		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
 		num	TEXT_AIREQUIP_2
 		rows	"2"
@@ -756,7 +757,7 @@ menu aircraft_equip
 	{
 		pos	"546 339"
 		size	"430 35"
-		format	"16 0"
+		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
 		num	TEXT_AIREQUIP_3
 		rows	"2"

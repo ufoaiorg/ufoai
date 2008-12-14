@@ -30,7 +30,8 @@ menu won
 	{
 		pos		"500 150"
 		size	"480 680"
-		format	"20 350"
+		lineheight	20
+		tabwidth	350
 		rows	"34"
 	}
 
@@ -186,7 +187,8 @@ menu lost
 	{
 		pos		"500 150"
 		size	"480 680"
-		format	"20 350"
+		lineheight	20
+		tabwidth	350
 		rows	"34"
 	}
 
@@ -285,7 +287,8 @@ menu popup_recoverybaselist
 //		bgcolor "1 1 1 0.5"
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 		rows 6
 		scrollbar true
 		wheel click
@@ -404,7 +407,8 @@ menu popup_recoverynationlist
 		num	TEXT_LIST
 		pos		"26 74"
 		size	"726 134"
-		format	"16 100"
+		lineheight	16
+		tabwidth	100
 //		bgcolor	"1 1 1 0.6"
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
