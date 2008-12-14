@@ -87,6 +87,22 @@ void DoAbout (void)
 			}
 		}
 		{
+			GtkFrame* frame = create_dialog_frame("<b>GTK+ Properties</b>");
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
+			gtk_widget_show(GTK_WIDGET(frame));
+
+			GtkHBox* hboxVersion = create_dialog_hbox(0, 4);
+			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(hboxVersion));
+
+			char versionString[64];
+			snprintf(versionString, sizeof(versionString), "Version: %i.%i.%i", gtk_major_version, gtk_minor_version, gtk_micro_version);
+			GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
+			gtk_widget_show(GTK_WIDGET(label));
+			gtk_box_pack_start(GTK_BOX(hboxVersion), GTK_WIDGET(label), FALSE, FALSE, 0);
+			gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+			gtk_label_set_justify(label, GTK_JUSTIFY_LEFT);
+		}
+		{
 			GtkFrame* frame = create_dialog_frame("<b>OpenGL Properties</b>");
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 			{
