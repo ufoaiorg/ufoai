@@ -186,11 +186,11 @@ static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
 	}
 
 	/* check excluded box */
-	for (i = 0; i < node->excludeNum; i++) {
-		if (x >= node->exclude[i].pos[0]
-		 && x <= node->exclude[i].pos[0] + node->exclude[i].size[0]
-		 && y >= node->exclude[i].pos[1]
-		 && y <= node->exclude[i].pos[1] + node->exclude[i].size[1])
+	for (i = 0; i < node->excludeRectNum; i++) {
+		if (x >= node->excludeRect[i].pos[0]
+		 && x <= node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+		 && y >= node->excludeRect[i].pos[1]
+		 && y <= node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
 			return qfalse;
 	}
 	return qtrue;

@@ -213,9 +213,9 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
 		return qfalse;
 
-	for (i = 0; i < node->excludeNum; i++) {
-		if (x >= node->menu->pos[0] + node->exclude[i].pos[0] && x <= node->menu->pos[0] + node->exclude[i].pos[0] + node->exclude[i].size[0]
-		 && y >= node->menu->pos[1] + node->exclude[i].pos[1] && y <= node->menu->pos[1] + node->exclude[i].pos[1] + node->exclude[i].size[1])
+	for (i = 0; i < node->excludeRectNum; i++) {
+		if (x >= node->menu->pos[0] + node->excludeRect[i].pos[0] && x <= node->menu->pos[0] + node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+		 && y >= node->menu->pos[1] + node->excludeRect[i].pos[1] && y <= node->menu->pos[1] + node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
 			return qfalse;
 	}
 

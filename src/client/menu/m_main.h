@@ -84,6 +84,9 @@ typedef struct menuGlobal_s {
 	menuModel_t menuModels[MAX_MENUMODELS];
 	int numMenuModels;
 
+	excludeRect_t excludeRect[MAX_EXLUDERECTS];
+	int numExcludeRect;
+
 } menuGlobal_t;
 
 extern menuGlobal_t mn;

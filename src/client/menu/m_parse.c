@@ -451,6 +451,8 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 
 static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const char **token, const char *errhead)
 {
+	excludeRect_t rect;
+
 	/* get parameters */
 	*token = COM_EParse(text, errhead, node->name);
 	if (!*text)
@@ -468,18 +470,32 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
-			Com_EParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
+			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
 		} else if (!Q_strcmp(*token, "size")) {
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
-			Com_EParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
+			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 		}
 	} while (**token != '}');
-	if (node->excludeNum < MAX_EXLUDERECTS - 1)
-		node->excludeNum++;
-	else
+
+
+	if (node->excludeRectNum >= MAX_EXLUDERECTS) {
 		Com_Printf("MN_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
+		return qfalse;
+	}
+
+	/* copy the rect into the global structure */
+	mn.excludeRect[mn.numExcludeRect] = rect;
+
+	/* link only the first element */
+	if (node->excludeRect == NULL) {
+		node->excludeRect = &mn.excludeRect[mn.numExcludeRect];
+	}
+
+	mn.numExcludeRect++;
+	node->excludeRectNum++;
+
 	return qtrue;
 }
 

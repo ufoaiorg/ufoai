@@ -510,6 +510,7 @@ menu map_combatzoom
 		click	mclick wheel
 		rclick	{ cmd "mn_mapaction_reset;" }
 		// menu
+		// @todo check if it is realy need
 		excluderect
 		{
 			pos		"768 0"

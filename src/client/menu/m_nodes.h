@@ -71,7 +71,7 @@ typedef enum mn_s {
 	MN_NUM_NODETYPE
 } mn_t;
 
-#define MAX_EXLUDERECTS	16
+#define MAX_EXLUDERECTS	32
 
 typedef struct excludeRect_s {
 	vec2_t pos, size;
@@ -119,6 +119,11 @@ typedef struct menuNode_s {
 	const char* font;	/**< Font to draw text */
 	const char* tooltip; /**< holds the tooltip */
 
+	/* not used a lot */
+	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
+	int excludeRectNum;					/**< how many exclude rects defined? */
+
+
 	byte align;					/** @todo delete it when its possible */
 
 	/** @todo needs cleanup */
@@ -148,8 +153,6 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
-	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
 	const value_t *scriptValues;
 
