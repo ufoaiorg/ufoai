@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-11-29 12:19+0100\n"
+"POT-Creation-Date: 2008-12-14 15:51+0100\n"
 "PO-Revision-Date: 2008-07-22 14:30+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -73,7 +73,7 @@ msgstr "ทหาร"
 msgid "Crashed UFO - Scout"
 msgstr "จานบินสอดแนม"
 
-#: ../base/maps/forest.ump:419 ../base/ufos/aircraftmanagement.ufo:479
+#: ../base/maps/forest.ump:419 ../base/ufos/aircraftmanagement.ufo:478
 #: ../base/ufos/otheritems.ufo:37 ../base/ufos/research.ufo:3301
 msgid "UFO - Scout"
 msgstr "จานบินสอดแนม"
@@ -298,101 +298,101 @@ msgstr "จานบิน - ยานเก็บเกี่ยว"
 msgid "Corrupter U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:480
+#: ../base/ufos/aircraftmanagement.ufo:479
 msgid "Scout U"
 msgstr "จ. สอดแนม"
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/otheritems.ufo:46
+#: ../base/ufos/aircraftmanagement.ufo:499 ../base/ufos/otheritems.ufo:46
 #: ../base/ufos/research.ufo:3343
 msgid "UFO - Fighter"
 msgstr "จานบินต่อสู้"
 
-#: ../base/ufos/aircraftmanagement.ufo:501
+#: ../base/ufos/aircraftmanagement.ufo:500
 msgid "Fighter U"
 msgstr "จ. ต่อสู้"
 
-#: ../base/ufos/aircraftmanagement.ufo:523 ../base/ufos/research.ufo:4178
+#: ../base/ufos/aircraftmanagement.ufo:522 ../base/ufos/research.ufo:4178
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:533
+#: ../base/ufos/aircraftmanagement.ufo:532
 #, fuzzy
 msgid "Shiva Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:543 ../base/ufos/research.ufo:4217
+#: ../base/ufos/aircraftmanagement.ufo:542 ../base/ufos/research.ufo:4217
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:559 ../base/ufos/research.ufo:4238
+#: ../base/ufos/aircraftmanagement.ufo:558 ../base/ufos/research.ufo:4238
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:575
+#: ../base/ufos/aircraftmanagement.ufo:574
 #, fuzzy
 msgid "Raven ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/aircraftmanagement.ufo:586
+#: ../base/ufos/aircraftmanagement.ufo:585
 #, fuzzy
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/aircraftmanagement.ufo:595
+#: ../base/ufos/aircraftmanagement.ufo:594
 #, fuzzy
 msgid "Sparrowhawk Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/aircraftmanagement.ufo:612 ../base/ufos/research.ufo:4297
+#: ../base/ufos/aircraftmanagement.ufo:611 ../base/ufos/research.ufo:4297
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:624 ../base/ufos/research.ufo:4314
+#: ../base/ufos/aircraftmanagement.ufo:623 ../base/ufos/research.ufo:4314
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/aircraftmanagement.ufo:643 ../base/ufos/research.ufo:4333
+#: ../base/ufos/aircraftmanagement.ufo:642 ../base/ufos/research.ufo:4333
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/aircraftmanagement.ufo:657 ../base/ufos/research.ufo:4381
+#: ../base/ufos/aircraftmanagement.ufo:656 ../base/ufos/research.ufo:4381
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/aircraftmanagement.ufo:668 ../base/ufos/research.ufo:4398
+#: ../base/ufos/aircraftmanagement.ufo:667 ../base/ufos/research.ufo:4398
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:681 ../base/ufos/research.ufo:4027
+#: ../base/ufos/aircraftmanagement.ufo:680 ../base/ufos/research.ufo:4027
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/aircraftmanagement.ufo:694 ../base/ufos/research.ufo:4044
+#: ../base/ufos/aircraftmanagement.ufo:693 ../base/ufos/research.ufo:4044
 #, fuzzy
 msgid "Alien Aircraft Plating"
 msgstr "พบยานต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:707 ../base/ufos/research.ufo:4064
+#: ../base/ufos/aircraftmanagement.ufo:706 ../base/ufos/research.ufo:4064
 #, fuzzy
 msgid "Alien Astrogation"
 msgstr "Alien Origins"
 
-#: ../base/ufos/aircraftmanagement.ufo:716 ../base/ufos/research.ufo:4102
+#: ../base/ufos/aircraftmanagement.ufo:715 ../base/ufos/research.ufo:4102
 #, fuzzy
 msgid "Alien Propulsion"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:725 ../base/ufos/research.ufo:4139
+#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:4139
 #, fuzzy
 msgid "Alien Detection"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:738 ../base/ufos/research.ufo:3972
+#: ../base/ufos/aircraftmanagement.ufo:737 ../base/ufos/research.ufo:3972
 msgid "AA51 missile launcher"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:3989
+#: ../base/ufos/aircraftmanagement.ufo:747 ../base/ufos/research.ufo:3989
 msgid "AA51 Cicada SAM"
 msgstr ""
 
@@ -628,6 +628,31 @@ msgstr "เล่นเป็นมนุษย์ต่างดาว"
 msgid "alien_campaign_txt"
 msgstr ""
 
+#: ../base/ufos/cities.ufo:15
+msgid "Stockholm"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:28
+#, fuzzy
+msgid "Athens"
+msgstr "มนุษย์ต่างดาว"
+
+#: ../base/ufos/cities.ufo:48
+msgid "Berlin"
+msgstr "เบอร์ลิน"
+
+#: ../base/ufos/cities.ufo:61
+msgid "Cape Town"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:102
+msgid "Sydney"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:122
+msgid "Wellington"
+msgstr "เวลลิงตัน"
+
 #: ../base/ufos/events.ufo:21
 msgid "Devastating alien terror attack on Mumbai"
 msgstr "การโจมตีอย่างหนักของมนุษย์ต่างดาวที่มุมไบ"
@@ -711,8 +736,7 @@ msgstr "ดร. คอนเนอร์, แผนกวิจัยและ�
 #: ../base/ufos/research.ufo:4606 ../base/ufos/research.ufo:4638
 #: ../base/ufos/research.ufo:4645
 msgid "mail_to_base_commander"
-msgstr ""
-"ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
+msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
@@ -772,8 +796,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4356 ../base/ufos/research.ufo:4431
 #: ../base/ufos/research.ufo:4439
 msgid "mail_from_paul_navarre"
-msgstr ""
-"ผบ. พอล นาวาเร, แผนกวิจัยและพัฒนา: ฝ่ายวิศวกรรม, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr "ผบ. พอล นาวาเร, แผนกวิจัยและพัฒนา: ฝ่ายวิศวกรรม, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
 #, fuzzy
@@ -824,8 +847,7 @@ msgstr "ผลิตเสร็จสิ้น"
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
 msgid "mail_from_xo"
-msgstr ""
-"XO อาเบล เอส. ฮาร์เวิร์ด, ฝ่ายปฏิบัตการภาคพื้น, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr "XO อาเบล เอส. ฮาร์เวิร์ด, ฝ่ายปฏิบัตการภาคพื้น, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
@@ -963,8 +985,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:486 ../base/ufos/research.ufo:4597
 #: ../base/ufos/research.ufo:4605
 msgid "mail_from_col_falkland"
-msgstr ""
-"พล.ท. อินกริด ฟอล์คแลนด์, สำนักข่าวกรอง, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr "พล.ท. อินกริด ฟอล์คแลนด์, สำนักข่าวกรอง, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
@@ -996,8 +1017,7 @@ msgstr "พบการปฏิบัติการของมนุษย์
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
 msgid "mail_from_air_cdr"
-msgstr ""
-"ผบ. (อากาศ) สุบัคห์ อัล-คุฮา, ฝ่ายปฏิบัติการทางอากาศ, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr "ผบ. (อากาศ) สุบัคห์ อัล-คุฮา, ฝ่ายปฏิบัติการทางอากาศ, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
@@ -1103,11 +1123,11 @@ msgstr "ร่วมมือกัน 4 คน"
 msgid "Radar Tower"
 msgstr "เรดาร์"
 
-#: ../base/ufos/installation.ufo:19 ../base/ufos/menu_geoscape.ufo:1455
+#: ../base/ufos/installation.ufo:19 ../base/ufos/menu_geoscape.ufo:1428
 msgid "UFO Yard"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:30 ../base/ufos/menu_geoscape.ufo:1422
+#: ../base/ufos/installation.ufo:30 ../base/ufos/menu_geoscape.ufo:1395
 msgid "SAM Site"
 msgstr ""
 
@@ -1440,21 +1460,21 @@ msgstr "กางเขน"
 msgid "Coin"
 msgstr "เหรียญ"
 
-#: ../base/ufos/medals.ufo:30 client/cl_employee.c:251
+#: ../base/ufos/medals.ufo:30 client/cl_employee.c:256
 msgid "Scientist"
 msgstr "นักวิทยาศาสตร์"
 
-#: ../base/ufos/medals.ufo:38 client/cl_employee.c:255
+#: ../base/ufos/medals.ufo:38 client/cl_employee.c:260
 #: client/cl_mapfightequip.c:1213
 msgid "Pilot"
 msgstr ""
 
 #: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1597
-#: ../base/ufos/team_humans.ufo:1620 client/cl_employee.c:257
+#: ../base/ufos/team_humans.ufo:1620 client/cl_employee.c:262
 msgid "UGV"
 msgstr "UGV"
 
-#: ../base/ufos/medals.ufo:54 client/cl_employee.c:253
+#: ../base/ufos/medals.ufo:54 client/cl_employee.c:258
 msgid "Worker"
 msgstr "คนงาน"
 
@@ -1613,150 +1633,151 @@ msgstr "ติดตั้ง"
 msgid "Produce aircraft or aircraft components"
 msgstr "Equip aircraft components"
 
-#: ../base/ufos/menu_aircraft.ufo:210 ../base/ufos/menu_aircraft.ufo:1052
+#: ../base/ufos/menu_aircraft.ufo:210 ../base/ufos/menu_aircraft.ufo:1053
 #, fuzzy
 msgid "Produce"
 msgstr "การผลิต"
 
-#: ../base/ufos/menu_aircraft.ufo:277 ../base/ufos/menu_team.ufo:936
+#: ../base/ufos/menu_aircraft.ufo:277 ../base/ufos/menu_team.ufo:933
 msgid "Team Members:"
 msgstr "สมาชิกทีม:"
 
-#: ../base/ufos/menu_aircraft.ufo:299 ../base/ufos/menu_aircraft.ufo:312
+#: ../base/ufos/menu_aircraft.ufo:300 ../base/ufos/menu_aircraft.ufo:313
 msgid "Switch to the previous aircraft"
 msgstr "เปลี่ยนไปยานก่อนหน้า"
 
-#: ../base/ufos/menu_aircraft.ufo:322 ../base/ufos/menu_aircraft.ufo:335
+#: ../base/ufos/menu_aircraft.ufo:323 ../base/ufos/menu_aircraft.ufo:336
 msgid "Switch to the next aircraft"
 msgstr "เปลี่ยนไปยานถัดไป"
 
-#: ../base/ufos/menu_aircraft.ufo:344 ../base/ufos/menu_aircraft.ufo:954
-#: ../base/ufos/menu_basedefence.ufo:338 ../base/ufos/menu_hospital.ufo:420
-#: ../base/ufos/menu_hospital.ufo:580 ../base/ufos/menu_team.ufo:972
-#: ../base/ufos/menu_team.ufo:1749
+#: ../base/ufos/menu_aircraft.ufo:345 ../base/ufos/menu_aircraft.ufo:955
+#: ../base/ufos/menu_basedefence.ufo:338 ../base/ufos/menu_hospital.ufo:418
+#: ../base/ufos/menu_hospital.ufo:578 ../base/ufos/menu_team.ufo:969
+#: ../base/ufos/menu_team.ufo:1719
 msgid "Done"
 msgstr "เสร็จ"
 
-#: ../base/ufos/menu_aircraft.ufo:435 ../base/ufos/menu_aircraft.ufo:457
+#: ../base/ufos/menu_aircraft.ufo:436 ../base/ufos/menu_aircraft.ufo:458
 #, fuzzy
 msgid "Previous aircraft"
 msgstr "ซื้อยาน"
 
-#: ../base/ufos/menu_aircraft.ufo:467 ../base/ufos/menu_aircraft.ufo:489
+#: ../base/ufos/menu_aircraft.ufo:468 ../base/ufos/menu_aircraft.ufo:490
 #, fuzzy
 msgid "Next aircraft"
 msgstr "เลือกยาน"
 
-#: ../base/ufos/menu_aircraft.ufo:514
+#: ../base/ufos/menu_aircraft.ufo:515
 msgid "Available equipment:"
 msgstr "ของที่มีอยู่:"
 
-#: ../base/ufos/menu_aircraft.ufo:562
+#: ../base/ufos/menu_aircraft.ufo:563
 #, fuzzy
 msgid "Selected item:"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:570 ../base/ufos/menu_buy.ufo:1211
-#: ../base/ufos/menu_production.ufo:373 ../base/ufos/menu_transfer.ufo:191
+#: ../base/ufos/menu_aircraft.ufo:571 ../base/ufos/menu_buy.ufo:1211
+#: ../base/ufos/menu_production.ufo:413 ../base/ufos/menu_transfer.ufo:180
 #, fuzzy
 msgid "Previous category"
 msgstr "ข้อก่อนหน้า"
 
-#: ../base/ufos/menu_aircraft.ufo:589 ../base/ufos/menu_buy.ufo:1222
-#: ../base/ufos/menu_production.ufo:384 ../base/ufos/menu_transfer.ufo:204
+#: ../base/ufos/menu_aircraft.ufo:590 ../base/ufos/menu_buy.ufo:1222
+#: ../base/ufos/menu_production.ufo:424 ../base/ufos/menu_transfer.ufo:193
 #, fuzzy
 msgid "Next category"
 msgstr "ข้อต่อไป"
 
-#: ../base/ufos/menu_aircraft.ufo:635 ../base/ufos/menu_aircraft.ufo:657
-#: ../base/ufos/menu_aircraft.ufo:679
+#: ../base/ufos/menu_aircraft.ufo:636 ../base/ufos/menu_aircraft.ufo:658
+#: ../base/ufos/menu_aircraft.ufo:680
 #, fuzzy
 msgid "Add selected item"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:646 ../base/ufos/menu_aircraft.ufo:668
-#: ../base/ufos/menu_aircraft.ufo:690
+#: ../base/ufos/menu_aircraft.ufo:647 ../base/ufos/menu_aircraft.ufo:669
+#: ../base/ufos/menu_aircraft.ufo:691
 msgid "Remove item from slot"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:702 ../base/ufos/menu_aircraft.ufo:724
-#: ../base/ufos/menu_aircraft.ufo:746
+#: ../base/ufos/menu_aircraft.ufo:703 ../base/ufos/menu_aircraft.ufo:725
+#: ../base/ufos/menu_aircraft.ufo:747
 #, fuzzy
 msgid "Select this zone"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:767
+#: ../base/ufos/menu_aircraft.ufo:768
 #, fuzzy
 msgid "Current item in slot"
 msgstr "ทีมปัจจุบัน: %i"
 
-#: ../base/ufos/menu_aircraft.ufo:776
+#: ../base/ufos/menu_aircraft.ufo:777
 msgid "Item to install after removal"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:785
+#: ../base/ufos/menu_aircraft.ufo:786
 msgid "Ammo fitting this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:803 ../base/ufos/menu_aircraft.ufo:823
-#: ../base/ufos/menu_aircraft.ufo:843 ../base/ufos/menu_aircraft.ufo:863
-#: ../base/ufos/menu_aircraft.ufo:883 ../base/ufos/menu_aircraft.ufo:903
-#: ../base/ufos/menu_aircraft.ufo:923 ../base/ufos/menu_aircraft.ufo:943
+#: ../base/ufos/menu_aircraft.ufo:804 ../base/ufos/menu_aircraft.ufo:824
+#: ../base/ufos/menu_aircraft.ufo:844 ../base/ufos/menu_aircraft.ufo:864
+#: ../base/ufos/menu_aircraft.ufo:884 ../base/ufos/menu_aircraft.ufo:904
+#: ../base/ufos/menu_aircraft.ufo:924 ../base/ufos/menu_aircraft.ufo:944
 #, fuzzy
 msgid "Select this slot"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:1010
+#: ../base/ufos/menu_aircraft.ufo:1011
 #, fuzzy
 msgid "Action"
 msgstr "ทำงาน:"
 
-#: ../base/ufos/menu_aircraft.ufo:1018
+#: ../base/ufos/menu_aircraft.ufo:1019
 msgid "You don't have any aircraft in the base - what do you want to do?"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:1026
+#: ../base/ufos/menu_aircraft.ufo:1027
 msgid "Buy aircraft"
 msgstr "ซื้อยาน"
 
-#: ../base/ufos/menu_aircraft.ufo:1035
+#: ../base/ufos/menu_aircraft.ufo:1036
 msgid "Buy"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:1043
+#: ../base/ufos/menu_aircraft.ufo:1044
 #, fuzzy
 msgid "Produce aircraft"
 msgstr "ซื้อยาน"
 
-#: ../base/ufos/menu_airfight.ufo:57 ../base/ufos/menu_geoscape.ufo:99
-#: ../base/ufos/menu_geoscape.ufo:583
+#: ../base/ufos/menu_airfight.ufo:57 ../base/ufos/menu_geoscape.ufo:102
+#: ../base/ufos/menu_geoscape.ufo:553
 #, fuzzy
 msgid "CREDITS"
 msgstr "เครดิต"
 
 #: ../base/ufos/menu_airfight.ufo:65 ../base/ufos/menu_bases.ufo:273
-#: ../base/ufos/menu_geoscape.ufo:107 ../base/ufos/menu_geoscape.ufo:591
+#: ../base/ufos/menu_geoscape.ufo:110 ../base/ufos/menu_geoscape.ufo:561
+#: ../base/ufos/menu_research.ufo:760
 msgid "Organisation capital"
 msgstr "เงินทุนขององค์กร"
 
-#: ../base/ufos/menu_airfight.ufo:76 ../base/ufos/menu_geoscape.ufo:602
+#: ../base/ufos/menu_airfight.ufo:76 ../base/ufos/menu_geoscape.ufo:572
 msgid "Exit combat zoom mode"
 msgstr ""
 
-#: ../base/ufos/menu_airfight.ufo:88 ../base/ufos/menu_geoscape.ufo:132
-#: ../base/ufos/menu_geoscape.ufo:614
+#: ../base/ufos/menu_airfight.ufo:88 ../base/ufos/menu_geoscape.ufo:135
+#: ../base/ufos/menu_geoscape.ufo:584
 msgid "Slow down time"
 msgstr "ทำให้เวลาช้าลง"
 
-#: ../base/ufos/menu_airfight.ufo:102 ../base/ufos/menu_geoscape.ufo:146
-#: ../base/ufos/menu_geoscape.ufo:628
+#: ../base/ufos/menu_airfight.ufo:102 ../base/ufos/menu_geoscape.ufo:149
+#: ../base/ufos/menu_geoscape.ufo:598
 msgid "Speed up time"
 msgstr "เร่งเวลา"
 
-#: ../base/ufos/menu_aliencont.ufo:29 ../base/ufos/menu_basesummary.ufo:234
+#: ../base/ufos/menu_aliencont.ufo:29 ../base/ufos/menu_basesummary.ufo:236
 #: ../base/ufos/menu_buildings.ufo:67 ../base/ufos/menu_buy.ufo:1233
-#: ../base/ufos/menu_hire.ufo:793 ../base/ufos/menu_production.ufo:405
-#: ../base/ufos/menu_research.ufo:791 ../base/ufos/menu_transfer.ufo:247
+#: ../base/ufos/menu_hire.ufo:754 ../base/ufos/menu_production.ufo:435
+#: ../base/ufos/menu_research.ufo:809 ../base/ufos/menu_transfer.ufo:236
 msgid "Back to baseview"
 msgstr "กลับไปหน้าฐาน"
 
@@ -1806,47 +1827,39 @@ msgstr "เริ่มเนื้อเรื่อง"
 msgid "Kill this alien"
 msgstr "ฆ่ามนุษย์ต่างดาวหนึ่งคน"
 
-#: ../base/ufos/menu_aliencont.ufo:357 ../base/ufos/menu_campaign.ufo:106
-#: ../base/ufos/menu_hire.ufo:342 ../base/ufos/menu_hospital.ufo:387
-#: ../base/ufos/menu_irc.ufo:147 ../base/ufos/menu_options.ufo:757
-#: ../base/ufos/menu_production.ufo:132 ../base/ufos/menu_transfer.ufo:128
-#: ../base/ufos/menu_ufopedia.ufo:251 ../base/ufos/menu_ufopedia.ufo:281
+#: ../base/ufos/menu_aliencont.ufo:357 ../base/ufos/menu_hospital.ufo:387
 msgid "Scroll up"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:371 ../base/ufos/menu_campaign.ufo:120
-#: ../base/ufos/menu_hire.ufo:356 ../base/ufos/menu_hospital.ufo:401
-#: ../base/ufos/menu_irc.ufo:161 ../base/ufos/menu_options.ufo:771
-#: ../base/ufos/menu_production.ufo:146 ../base/ufos/menu_transfer.ufo:142
-#: ../base/ufos/menu_ufopedia.ufo:266 ../base/ufos/menu_ufopedia.ufo:296
+#: ../base/ufos/menu_aliencont.ufo:370 ../base/ufos/menu_hospital.ufo:400
 msgid "Scroll down"
 msgstr ""
 
-#: ../base/ufos/menu_aliencont.ufo:413
+#: ../base/ufos/menu_aliencont.ufo:411
 #, fuzzy
 msgid "Amounts"
 msgstr "จำนวน"
 
-#: ../base/ufos/menu_aliencont.ufo:424
+#: ../base/ufos/menu_aliencont.ufo:422
 #, fuzzy
 msgid "Alive:"
 msgstr "มนุษย์ต่างดาว"
 
-#: ../base/ufos/menu_aliencont.ufo:444
+#: ../base/ufos/menu_aliencont.ufo:442
 #, fuzzy
 msgid "Dead:"
 msgstr "พร้อม"
 
-#: ../base/ufos/menu_aliencont.ufo:464
+#: ../base/ufos/menu_aliencont.ufo:462
 #, fuzzy
 msgid "Base info"
 msgstr "ข้อมูลฐาน"
 
-#: ../base/ufos/menu_aliencont.ufo:475
+#: ../base/ufos/menu_aliencont.ufo:473
 msgid "Current base:"
 msgstr "ฐานปัจจุบัน:"
 
-#: ../base/ufos/menu_aliencont.ufo:495
+#: ../base/ufos/menu_aliencont.ufo:493
 #, fuzzy
 msgid "Base capacity:"
 msgstr "Base capacity"
@@ -1856,19 +1869,19 @@ msgstr "Base capacity"
 msgid "Inventory and physical stats"
 msgstr "อุปกรณ์และค่าสภาพร่างกาย"
 
-#: ../base/ufos/menu_althud.ufo:76 ../base/ufos/menu_hud.ufo:665
+#: ../base/ufos/menu_althud.ufo:95 ../base/ufos/menu_hud.ufo:684
 msgid "Chat"
 msgstr "พูดคุย"
 
-#: ../base/ufos/menu_althud.ufo:90 ../base/ufos/menu_hud.ufo:679
+#: ../base/ufos/menu_althud.ufo:109 ../base/ufos/menu_hud.ufo:698
 msgid "Teamchat"
 msgstr "พูดคุยในทีม"
 
-#: ../base/ufos/menu_althud.ufo:104 ../base/ufos/menu_hud.ufo:693
+#: ../base/ufos/menu_althud.ufo:123 ../base/ufos/menu_hud.ufo:712
 msgid "Show chat history"
 msgstr "แสดงเนื้อหาการพูดคุยเก่า"
 
-#: ../base/ufos/menu_althud.ufo:127 ../base/ufos/menu_hud.ufo:716
+#: ../base/ufos/menu_althud.ufo:146 ../base/ufos/menu_hud.ufo:735
 msgid "Chat messages"
 msgstr "ส่งข้อความ"
 
@@ -1926,27 +1939,27 @@ msgstr "เปลี่ยนเป็นอาวุธมือขวา"
 msgid "Switch to left hand weapon"
 msgstr "เปลี่ยนเป็นอาวุธมือซ้าย"
 
-#: ../base/ufos/menu_althud.ufo:1465 ../base/ufos/menu_althud.ufo:1478
-#: ../base/ufos/menu_althud.ufo:1491 ../base/ufos/menu_althud.ufo:1504
-#: ../base/ufos/menu_althud.ufo:1517 ../base/ufos/menu_althud.ufo:1530
-#: ../base/ufos/menu_althud.ufo:1543 ../base/ufos/menu_althud.ufo:1556
-#: ../base/ufos/menu_althud.ufo:1569 ../base/ufos/menu_althud.ufo:1582
-#: ../base/ufos/menu_althud.ufo:1595 ../base/ufos/menu_althud.ufo:1608
-#: ../base/ufos/menu_althud.ufo:1621 ../base/ufos/menu_althud.ufo:1634
-#: ../base/ufos/menu_althud.ufo:1647 ../base/ufos/menu_althud.ufo:1660
-#: ../base/ufos/menu_hud.ufo:1227 ../base/ufos/menu_hud.ufo:1240
-#: ../base/ufos/menu_hud.ufo:1253 ../base/ufos/menu_hud.ufo:1266
-#: ../base/ufos/menu_hud.ufo:1279 ../base/ufos/menu_hud.ufo:1292
-#: ../base/ufos/menu_hud.ufo:1305 ../base/ufos/menu_hud.ufo:1318
-#: ../base/ufos/menu_hud.ufo:1331 ../base/ufos/menu_hud.ufo:1344
-#: ../base/ufos/menu_hud.ufo:1357 ../base/ufos/menu_hud.ufo:1370
-#: ../base/ufos/menu_hud.ufo:1383 ../base/ufos/menu_hud.ufo:1396
-#: ../base/ufos/menu_hud.ufo:1409 ../base/ufos/menu_hud.ufo:1422
+#: ../base/ufos/menu_althud.ufo:1466 ../base/ufos/menu_althud.ufo:1479
+#: ../base/ufos/menu_althud.ufo:1492 ../base/ufos/menu_althud.ufo:1505
+#: ../base/ufos/menu_althud.ufo:1518 ../base/ufos/menu_althud.ufo:1531
+#: ../base/ufos/menu_althud.ufo:1544 ../base/ufos/menu_althud.ufo:1557
+#: ../base/ufos/menu_althud.ufo:1570 ../base/ufos/menu_althud.ufo:1583
+#: ../base/ufos/menu_althud.ufo:1596 ../base/ufos/menu_althud.ufo:1609
+#: ../base/ufos/menu_althud.ufo:1622 ../base/ufos/menu_althud.ufo:1635
+#: ../base/ufos/menu_althud.ufo:1648 ../base/ufos/menu_althud.ufo:1661
+#: ../base/ufos/menu_hud.ufo:1228 ../base/ufos/menu_hud.ufo:1241
+#: ../base/ufos/menu_hud.ufo:1254 ../base/ufos/menu_hud.ufo:1267
+#: ../base/ufos/menu_hud.ufo:1280 ../base/ufos/menu_hud.ufo:1293
+#: ../base/ufos/menu_hud.ufo:1306 ../base/ufos/menu_hud.ufo:1319
+#: ../base/ufos/menu_hud.ufo:1332 ../base/ufos/menu_hud.ufo:1345
+#: ../base/ufos/menu_hud.ufo:1358 ../base/ufos/menu_hud.ufo:1371
+#: ../base/ufos/menu_hud.ufo:1384 ../base/ufos/menu_hud.ufo:1397
+#: ../base/ufos/menu_hud.ufo:1410 ../base/ufos/menu_hud.ufo:1423
 #, fuzzy
 msgid "Check to use this firemode for reaction fire"
 msgstr "เลือกเพื่อใช้รูปแบบนี้ในการยิงโต้ตอบ"
 
-#: ../base/ufos/menu_althud.ufo:1726 ../base/ufos/menu_althud.ufo:1736
+#: ../base/ufos/menu_althud.ufo:1727 ../base/ufos/menu_althud.ufo:1737
 #: ../base/ufos/menu_hud.ufo:420
 #, fuzzy
 msgid "Use Item"
@@ -2044,7 +2057,7 @@ msgid "Manage your aircraft"
 msgstr "จัดการเครื่องบิน"
 
 #: ../base/ufos/menu_bases.ufo:99 ../base/ufos/menu_bases.ufo:117
-#: ../base/ufos/menu_geoscape.ufo:2175 ../base/ufos/research.ufo:108
+#: ../base/ufos/menu_geoscape.ufo:2143 ../base/ufos/research.ufo:108
 #: client/cl_map.c:348 client/cl_market.c:567 client/cl_transfer.c:430
 msgid "Aircraft"
 msgstr "ยานบิน"
@@ -2067,7 +2080,7 @@ msgid "Transfer equipment or personnel"
 msgstr "โยกย้ายอุปกรณ์ หรือบุคคล"
 
 #: ../base/ufos/menu_bases.ufo:151 ../base/ufos/menu_transfer.ufo:109
-#: ../base/ufos/menu_transfer.ufo:242 client/cl_basemanagement.c:961
+#: ../base/ufos/menu_transfer.ufo:231 client/cl_basemanagement.c:961
 #: client/cl_basemanagement.c:971 client/cl_basemanagement.c:981
 msgid "Transfer"
 msgstr "โยกย้าย"
@@ -2117,41 +2130,41 @@ msgstr ""
 
 #: ../base/ufos/menu_bases.ufo:265 ../base/ufos/menu_basesummary.ufo:29
 #: ../base/ufos/menu_buildings.ufo:93 ../base/ufos/menu_buy.ufo:1150
-#: ../base/ufos/menu_production.ufo:30 ../base/ufos/menu_research.ufo:735
+#: ../base/ufos/menu_production.ufo:30 ../base/ufos/menu_research.ufo:752
 msgid "CREDIT"
 msgstr "เครดิต"
 
 #: ../base/ufos/menu_bases.ufo:282 ../base/ufos/menu_buildings.ufo:55
-#: ../base/ufos/menu_research.ufo:166
+#: ../base/ufos/menu_research.ufo:179
 msgid "Name of this base"
 msgstr "ชื่อฐาน"
 
-#: ../base/ufos/menu_bases.ufo:305 ../base/ufos/menu_geoscape.ufo:1217
+#: ../base/ufos/menu_bases.ufo:303 ../base/ufos/menu_geoscape.ufo:1191
 msgid "Rename your base"
 msgstr "เปลี่ยนชื่อฐาน"
 
-#: ../base/ufos/menu_bases.ufo:319
+#: ../base/ufos/menu_bases.ufo:316
 msgid "Switch to the previous base"
 msgstr "เปลี่ยนไปฐานก่อนหน้า"
 
-#: ../base/ufos/menu_bases.ufo:330
+#: ../base/ufos/menu_bases.ufo:327
 msgid "Switch to the next base"
 msgstr "เปลี่ยนไปฐานต่อไป"
 
-#: ../base/ufos/menu_basesummary.ufo:49 ../base/ufos/menu_geoscape.ufo:1204
-#: ../base/ufos/menu_geoscape.ufo:1544 ../base/ufos/menu_geoscape.ufo:1737
-#: ../base/ufos/menu_geoscape.ufo:1905 ../base/ufos/menu_geoscape.ufo:2011
-#: ../base/ufos/menu_geoscape.ufo:2109 ../base/ufos/menu_main.ufo:185
-#: ../base/ufos/menu_multiplayer.ufo:576 ../base/ufos/menu_options.ufo:929
+#: ../base/ufos/menu_basesummary.ufo:49 ../base/ufos/menu_geoscape.ufo:1178
+#: ../base/ufos/menu_geoscape.ufo:1517 ../base/ufos/menu_geoscape.ufo:1705
+#: ../base/ufos/menu_geoscape.ufo:1868 ../base/ufos/menu_geoscape.ufo:1977
+#: ../base/ufos/menu_geoscape.ufo:2076 ../base/ufos/menu_main.ufo:186
+#: ../base/ufos/menu_multiplayer.ufo:611 ../base/ufos/menu_options.ufo:916
 msgid "Name:"
 msgstr "ชื่อ:"
 
-#: ../base/ufos/menu_buildings.ufo:150
+#: ../base/ufos/menu_buildings.ufo:151
 #, fuzzy
 msgid "Building preview"
 msgstr "สิ่งก่อสร้างเสร็จ"
 
-#: ../base/ufos/menu_buildings.ufo:195 ../base/ufos/menu_geoscape.ufo:304
+#: ../base/ufos/menu_buildings.ufo:197 ../base/ufos/menu_geoscape.ufo:308
 msgid "UFOpaedia"
 msgstr "จานบินอภิธาน"
 
@@ -2214,48 +2227,48 @@ msgstr "ซื้อหรือขายยานบิน"
 msgid "Storage (used/all):"
 msgstr "Workers (all/ready)"
 
-#: ../base/ufos/menu_buy.ufo:1291 ../base/ufos/menu_team.ufo:1369
-#: ../base/ufos/menu_ufopedia.ufo:331
+#: ../base/ufos/menu_buy.ufo:1292 ../base/ufos/menu_team.ufo:1367
+#: ../base/ufos/menu_ufopedia.ufo:316
 msgid "Previous weapon chambered for this ammunition"
 msgstr "อาวุธก่อนหน้าที่ใช้กับกระสุนนี้"
 
-#: ../base/ufos/menu_buy.ufo:1306 ../base/ufos/menu_team.ufo:1384
-#: ../base/ufos/menu_ufopedia.ufo:346
+#: ../base/ufos/menu_buy.ufo:1307 ../base/ufos/menu_team.ufo:1382
+#: ../base/ufos/menu_ufopedia.ufo:331
 msgid "Previous ammunition compatible with this weapon"
 msgstr "กระสุนก่อนหน้าที่ใช้กับอาวุธนี้"
 
-#: ../base/ufos/menu_buy.ufo:1322 ../base/ufos/menu_team.ufo:1399
-#: ../base/ufos/menu_ufopedia.ufo:361
+#: ../base/ufos/menu_buy.ufo:1323 ../base/ufos/menu_team.ufo:1397
+#: ../base/ufos/menu_ufopedia.ufo:346
 msgid "Next weapon chambered for this ammunition"
 msgstr "อาวุธถัดไปที่ใช้กับกระสุนนี้"
 
-#: ../base/ufos/menu_buy.ufo:1337 ../base/ufos/menu_team.ufo:1414
-#: ../base/ufos/menu_ufopedia.ufo:376
+#: ../base/ufos/menu_buy.ufo:1338 ../base/ufos/menu_team.ufo:1412
+#: ../base/ufos/menu_ufopedia.ufo:361
 msgid "Next ammunition compatible with this weapon"
 msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
 
-#: ../base/ufos/menu_buy.ufo:1352 ../base/ufos/menu_team.ufo:1430
-#: ../base/ufos/menu_ufopedia.ufo:391
+#: ../base/ufos/menu_buy.ufo:1353 ../base/ufos/menu_team.ufo:1428
+#: ../base/ufos/menu_ufopedia.ufo:376
 msgid "With weapon:"
 msgstr "ใช้กับอาวุธ:"
 
-#: ../base/ufos/menu_buy.ufo:1361 ../base/ufos/menu_team.ufo:1439
-#: ../base/ufos/menu_ufopedia.ufo:400
+#: ../base/ufos/menu_buy.ufo:1362 ../base/ufos/menu_team.ufo:1437
+#: ../base/ufos/menu_ufopedia.ufo:385
 msgid "With ammo:"
 msgstr "ใช้กับกระสุน:"
 
-#: ../base/ufos/menu_buy.ufo:1386 ../base/ufos/menu_team.ufo:1456
-#: ../base/ufos/menu_ufopedia.ufo:433
+#: ../base/ufos/menu_buy.ufo:1387 ../base/ufos/menu_team.ufo:1454
+#: ../base/ufos/menu_ufopedia.ufo:418
 msgid "Previous firemode"
 msgstr "วิธีการยิงก่อนหน้า"
 
-#: ../base/ufos/menu_buy.ufo:1401 ../base/ufos/menu_team.ufo:1471
-#: ../base/ufos/menu_ufopedia.ufo:448
+#: ../base/ufos/menu_buy.ufo:1402 ../base/ufos/menu_team.ufo:1469
+#: ../base/ufos/menu_ufopedia.ufo:433
 msgid "Next firemode"
 msgstr "วิธีการยิงถัดไป"
 
-#: ../base/ufos/menu_buy.ufo:1416 ../base/ufos/menu_team.ufo:1486
-#: ../base/ufos/menu_ufopedia.ufo:463
+#: ../base/ufos/menu_buy.ufo:1417 ../base/ufos/menu_team.ufo:1484
+#: ../base/ufos/menu_ufopedia.ufo:448
 msgid "Firemode:"
 msgstr "วิธีการยิง:"
 
@@ -2271,523 +2284,518 @@ msgstr ""
 msgid "Start campaign"
 msgstr "เริ่มเนื้อเรื่อง"
 
-#: ../base/ufos/menu_campaign.ufo:74 ../base/ufos/menu_geoscape.ufo:1702
-#: ../base/ufos/menu_geoscape.ufo:1825 ../base/ufos/menu_multiplayer.ufo:74
+#: ../base/ufos/menu_campaign.ufo:74 ../base/ufos/menu_geoscape.ufo:1670
+#: ../base/ufos/menu_geoscape.ufo:1788 ../base/ufos/menu_multiplayer.ufo:74
 #: ../base/ufos/menu_options.ufo:100 ../base/ufos/menu_singleplayer.ufo:110
 #: ../base/ufos/menu_singleplayer.ufo:522
-#: ../base/ufos/menu_singleplayer.ufo:743 ../base/ufos/menu_skirmish.ufo:34
+#: ../base/ufos/menu_singleplayer.ufo:676 ../base/ufos/menu_skirmish.ufo:34
 #: ../base/ufos/menu_tutorials.ufo:41
 msgid "Back"
 msgstr "ถอยกลับ"
 
-#: ../base/ufos/menu_geoscape.ufo:118
+#: ../base/ufos/menu_geoscape.ufo:121
 #, fuzzy
 msgid "Stop time"
 msgstr "หยุดยั้งพวกมัน"
 
-#: ../base/ufos/menu_geoscape.ufo:258
+#: ../base/ufos/menu_geoscape.ufo:262
 msgid "INBOX (with unread mails)"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:259 ../base/ufos/menu_geoscape.ufo:274
-#: ../base/ufos/menu_ufopedia.ufo:510
+#: ../base/ufos/menu_geoscape.ufo:263 ../base/ufos/menu_geoscape.ufo:278
+#: ../base/ufos/menu_ufopedia.ufo:495
 msgid "Mailclient"
 msgstr "ระบบเมล์"
 
-#: ../base/ufos/menu_geoscape.ufo:273
+#: ../base/ufos/menu_geoscape.ufo:277
 msgid "INBOX"
 msgstr "ตู้รับจดหมาย"
 
-#: ../base/ufos/menu_geoscape.ufo:285
+#: ../base/ufos/menu_geoscape.ufo:289
 msgid "Organisation statistics"
 msgstr "สถิติองค์กร"
 
-#: ../base/ufos/menu_geoscape.ufo:290 ../base/ufos/menu_stats.ufo:37
+#: ../base/ufos/menu_geoscape.ufo:294 ../base/ufos/menu_stats.ufo:37
 msgid "Statistics"
 msgstr "สถิติ"
 
-#: ../base/ufos/menu_geoscape.ufo:299
+#: ../base/ufos/menu_geoscape.ufo:303
 #, fuzzy
 msgid "Open UFOpaedia"
 msgstr "จานบินอภิธาน"
 
-#: ../base/ufos/menu_geoscape.ufo:314 ../base/ufos/menu_geoscape.ufo:318
-#: ../base/ufos/menu_geoscape.ufo:330
+#: ../base/ufos/menu_geoscape.ufo:318 ../base/ufos/menu_geoscape.ufo:322
+#: ../base/ufos/menu_geoscape.ufo:334
 msgid "Create base"
 msgstr "สร้างฐาน"
 
-#: ../base/ufos/menu_geoscape.ufo:329
+#: ../base/ufos/menu_geoscape.ufo:333
 #, fuzzy
 msgid "Max. bases reached"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: ../base/ufos/menu_geoscape.ufo:345 ../base/ufos/menu_geoscape.ufo:349
-#: ../base/ufos/menu_geoscape.ufo:362
+#: ../base/ufos/menu_geoscape.ufo:349 ../base/ufos/menu_geoscape.ufo:353
+#: ../base/ufos/menu_geoscape.ufo:366
 msgid "Create installation"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:361
+#: ../base/ufos/menu_geoscape.ufo:365
 #, fuzzy
 msgid "Max. installations reached"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: ../base/ufos/menu_geoscape.ufo:380
+#: ../base/ufos/menu_geoscape.ufo:384
 msgid "Highlight nation borders"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:393
+#: ../base/ufos/menu_geoscape.ufo:397
 #, fuzzy
 msgid "Show radar range"
 msgstr "จานบินในระยะเรดาร์\n"
 
-#: ../base/ufos/menu_geoscape.ufo:407
+#: ../base/ufos/menu_geoscape.ufo:411
 msgid "Show XVI map"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:423
+#: ../base/ufos/menu_geoscape.ufo:425
 msgid "Open up messages"
 msgstr "เปิดข้อความ"
 
-#: ../base/ufos/menu_geoscape.ufo:458
-#, fuzzy
-msgid "Close down messages"
-msgstr "เปิดข้อความ"
-
-#: ../base/ufos/menu_geoscape.ufo:474
+#: ../base/ufos/menu_geoscape.ufo:444
 #, fuzzy
 msgid "Change message and pause settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_geoscape.ufo:487
+#: ../base/ufos/menu_geoscape.ufo:457
 msgid "Center objects on the map"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:500
+#: ../base/ufos/menu_geoscape.ufo:470
 #, fuzzy
 msgid "Go to Options"
 msgstr "ตัวเลือก"
 
-#: ../base/ufos/menu_geoscape.ufo:642
+#: ../base/ufos/menu_geoscape.ufo:612
 msgid "Toggle between full zoom and half zoom"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:736 ../base/ufos/menu_geoscape.ufo:923
-#: ../base/ufos/menu_geoscape.ufo:1152 ../base/ufos/menu_geoscape.ufo:1275
-#: ../base/ufos/menu_geoscape.ufo:1480 ../base/ufos/menu_geoscape.ufo:1603
-#: ../base/ufos/menu_geoscape.ufo:1688 ../base/ufos/menu_geoscape.ufo:1785
-#: ../base/ufos/menu_geoscape.ufo:1955 ../base/ufos/menu_geoscape.ufo:2049
-#: ../base/ufos/menu_geoscape.ufo:2128 ../base/ufos/menu_geoscape.ufo:2208
-#: ../base/ufos/menu_geoscape.ufo:2272 ../base/ufos/menu_irc.ufo:255
-#: ../base/ufos/menu_lostwon.ufo:309 ../base/ufos/menu_lostwon.ufo:430
-#: ../base/ufos/menu_options.ufo:549 ../base/ufos/menu_singleplayer.ufo:309
+#: ../base/ufos/menu_geoscape.ufo:708 ../base/ufos/menu_geoscape.ufo:896
+#: ../base/ufos/menu_geoscape.ufo:1126 ../base/ufos/menu_geoscape.ufo:1248
+#: ../base/ufos/menu_geoscape.ufo:1453 ../base/ufos/menu_geoscape.ufo:1571
+#: ../base/ufos/menu_geoscape.ufo:1656 ../base/ufos/menu_geoscape.ufo:1748
+#: ../base/ufos/menu_geoscape.ufo:1921 ../base/ufos/menu_geoscape.ufo:2016
+#: ../base/ufos/menu_geoscape.ufo:2096 ../base/ufos/menu_geoscape.ufo:2177
+#: ../base/ufos/menu_geoscape.ufo:2242 ../base/ufos/menu_irc.ufo:229
+#: ../base/ufos/menu_lostwon.ufo:312 ../base/ufos/menu_lostwon.ufo:435
+#: ../base/ufos/menu_options.ufo:550 ../base/ufos/menu_singleplayer.ufo:309
 msgid "Close this dialogue"
 msgstr "ปิดกรอบนี้"
 
-#: ../base/ufos/menu_geoscape.ufo:751 ../base/ufos/menu_geoscape.ufo:2280
-#: ../base/ufos/menu_main.ufo:175 ../base/ufos/menu_multiplayer.ufo:1603
+#: ../base/ufos/menu_geoscape.ufo:723 ../base/ufos/menu_geoscape.ufo:2250
+#: ../base/ufos/menu_main.ufo:176 ../base/ufos/menu_multiplayer.ufo:1630
 msgid "OK"
 msgstr "ตกลง"
 
-#: ../base/ufos/menu_geoscape.ufo:910
+#: ../base/ufos/menu_geoscape.ufo:883
 msgid "Ready"
 msgstr "พร้อม"
 
-#: ../base/ufos/menu_geoscape.ufo:917
+#: ../base/ufos/menu_geoscape.ufo:890
 msgid "Aircraft reached desired location - what to do?"
 msgstr "เครื่องบินถึงที่หมาย - ต้องการทำอะไร?"
 
-#: ../base/ufos/menu_geoscape.ufo:937 ../base/ufos/menu_geoscape.ufo:1166
-#: ../base/ufos/menu_geoscape.ufo:1307 ../base/ufos/menu_geoscape.ufo:1494
-#: ../base/ufos/menu_geoscape.ufo:1629 ../base/ufos/menu_geoscape.ufo:1969
-#: ../base/ufos/menu_geoscape.ufo:2063 ../base/ufos/menu_geoscape.ufo:2142
-#: ../base/ufos/menu_geoscape.ufo:2222 ../base/ufos/menu_geoscape.ufo:2349
-#: ../base/ufos/menu_irc.ufo:269 ../base/ufos/menu_lostwon.ufo:323
-#: ../base/ufos/menu_lostwon.ufo:444 ../base/ufos/menu_options.ufo:575
-#: ../base/ufos/menu_singleplayer.ufo:323 client/cl_installation.c:476
+#: ../base/ufos/menu_geoscape.ufo:910 ../base/ufos/menu_geoscape.ufo:1140
+#: ../base/ufos/menu_geoscape.ufo:1280 ../base/ufos/menu_geoscape.ufo:1467
+#: ../base/ufos/menu_geoscape.ufo:1597 ../base/ufos/menu_geoscape.ufo:1935
+#: ../base/ufos/menu_geoscape.ufo:2030 ../base/ufos/menu_geoscape.ufo:2110
+#: ../base/ufos/menu_geoscape.ufo:2191 ../base/ufos/menu_geoscape.ufo:2319
+#: ../base/ufos/menu_irc.ufo:243 ../base/ufos/menu_lostwon.ufo:326
+#: ../base/ufos/menu_lostwon.ufo:449 ../base/ufos/menu_options.ufo:576
+#: ../base/ufos/menu_singleplayer.ufo:323 client/cl_installation.c:477
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: ../base/ufos/menu_geoscape.ufo:944 ../base/ufos/menu_geoscape.ufo:1033
+#: ../base/ufos/menu_geoscape.ufo:917 ../base/ufos/menu_geoscape.ufo:1006
 msgid "Enter the battlefield"
 msgstr "เข้าสู่สนามรบ"
 
-#: ../base/ufos/menu_geoscape.ufo:958 ../base/ufos/menu_geoscape.ufo:1047
+#: ../base/ufos/menu_geoscape.ufo:931 ../base/ufos/menu_geoscape.ufo:1020
 msgid "Enter"
 msgstr "เข้า"
 
-#: ../base/ufos/menu_geoscape.ufo:966 ../base/ufos/menu_geoscape.ufo:1054
+#: ../base/ufos/menu_geoscape.ufo:939 ../base/ufos/menu_geoscape.ufo:1027
 msgid "Automatically finish mission"
 msgstr "ทำภารกิจนี้อัตโนมัติ"
 
-#: ../base/ufos/menu_geoscape.ufo:981 ../base/ufos/menu_geoscape.ufo:1068
+#: ../base/ufos/menu_geoscape.ufo:954 ../base/ufos/menu_geoscape.ufo:1041
 msgid "Auto mission"
 msgstr "ภารกิจอัตโนมัติ"
 
-#: ../base/ufos/menu_geoscape.ufo:1018 client/cl_basemanagement.c:2333
+#: ../base/ufos/menu_geoscape.ufo:991 client/cl_basemanagement.c:2333
 msgid "Base is under attack"
 msgstr "ฐานถูกโจมตี"
 
-#: ../base/ufos/menu_geoscape.ufo:1075
+#: ../base/ufos/menu_geoscape.ufo:1048
 #, fuzzy
 msgid "Enter base before the battle"
 msgstr "เข้าสู่สนามรบ"
 
-#: ../base/ufos/menu_geoscape.ufo:1089
+#: ../base/ufos/menu_geoscape.ufo:1062
 #, fuzzy
 msgid "Enter base"
 msgstr "ทางเข้า"
 
-#: ../base/ufos/menu_geoscape.ufo:1125
+#: ../base/ufos/menu_geoscape.ufo:1098
 msgid "Select base to transfer to"
 msgstr "เลือกฐานที่จะโอนไป"
 
-#: ../base/ufos/menu_geoscape.ufo:1132
+#: ../base/ufos/menu_geoscape.ufo:1105
 msgid "Choose a base to host alien bodies:"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1197
+#: ../base/ufos/menu_geoscape.ufo:1171
 msgid "New base"
 msgstr "ฐานใหม่"
 
-#: ../base/ufos/menu_geoscape.ufo:1231 ../base/ufos/menu_geoscape.ufo:1575
+#: ../base/ufos/menu_geoscape.ufo:1204 ../base/ufos/menu_geoscape.ufo:1543
 msgid "Cost:"
 msgstr "ราคา:"
 
-#: ../base/ufos/menu_geoscape.ufo:1245
+#: ../base/ufos/menu_geoscape.ufo:1218
 msgid "Start with employees:"
 msgstr "เริ่มด้วยพนักงาน:"
 
-#: ../base/ufos/menu_geoscape.ufo:1254
+#: ../base/ufos/menu_geoscape.ufo:1227
 msgid "Employees already hired at campaign start"
 msgstr "มีพนักงานแล้วตอนเริ่มต้น"
 
-#: ../base/ufos/menu_geoscape.ufo:1261
+#: ../base/ufos/menu_geoscape.ufo:1234
 msgid "Start with buildings:"
 msgstr "เริ่มด้วยสิ่งก่อสร้าง:"
 
-#: ../base/ufos/menu_geoscape.ufo:1270
+#: ../base/ufos/menu_geoscape.ufo:1243
 msgid "Buildings already built in the initial base"
 msgstr "มีสิ่งก่อสร้างในฐานแรกแล้ว"
 
-#: ../base/ufos/menu_geoscape.ufo:1290
+#: ../base/ufos/menu_geoscape.ufo:1263
 msgid "Build the base"
 msgstr "สร้างฐาน"
 
-#: ../base/ufos/menu_geoscape.ufo:1315 ../base/ufos/menu_geoscape.ufo:1637
+#: ../base/ufos/menu_geoscape.ufo:1288 ../base/ufos/menu_geoscape.ufo:1605
 msgid "Build"
 msgstr "สร้าง"
 
-#: ../base/ufos/menu_geoscape.ufo:1346
+#: ../base/ufos/menu_geoscape.ufo:1319
 #, fuzzy
 msgid "New installation"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_geoscape.ufo:1353
+#: ../base/ufos/menu_geoscape.ufo:1326
 #, fuzzy
 msgid "Type"
 msgstr "ประเภท:"
 
-#: ../base/ufos/menu_geoscape.ufo:1359
+#: ../base/ufos/menu_geoscape.ufo:1332
 #, fuzzy
 msgid "Build Time"
 msgstr "สร้าง"
 
-#: ../base/ufos/menu_geoscape.ufo:1366
+#: ../base/ufos/menu_geoscape.ufo:1339
 #, fuzzy
 msgid "Cost"
 msgstr "ราคา:"
 
-#: ../base/ufos/menu_geoscape.ufo:1389
+#: ../base/ufos/menu_geoscape.ufo:1362
 #, fuzzy
 msgid "Radar tower"
 msgstr "เรดาร์"
 
-#: ../base/ufos/menu_geoscape.ufo:1523
+#: ../base/ufos/menu_geoscape.ufo:1496
 msgid "New radar tower"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1530
+#: ../base/ufos/menu_geoscape.ufo:1503
 #, fuzzy
 msgid "New SAM site"
 msgstr "ฐานใหม่"
 
-#: ../base/ufos/menu_geoscape.ufo:1537
+#: ../base/ufos/menu_geoscape.ufo:1510
 msgid "New UFO yard"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1561 ../base/ufos/menu_geoscape.ufo:1756
+#: ../base/ufos/menu_geoscape.ufo:1530 ../base/ufos/menu_geoscape.ufo:1721
 #, fuzzy
 msgid "Rename installation"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_geoscape.ufo:1615
+#: ../base/ufos/menu_geoscape.ufo:1583
 #, fuzzy
 msgid "Build the radar tower"
 msgstr "สร้างฐาน"
 
-#: ../base/ufos/menu_geoscape.ufo:1682
+#: ../base/ufos/menu_geoscape.ufo:1650
 msgid "No manangeable options for a radartower"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1730
+#: ../base/ufos/menu_geoscape.ufo:1698
 #, fuzzy
 msgid "Installation Status"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_geoscape.ufo:1772
+#: ../base/ufos/menu_geoscape.ufo:1735
 #, fuzzy
 msgid "Time to build:"
 msgstr "%i วันในการสร้าง\n"
 
-#: ../base/ufos/menu_geoscape.ufo:1799
+#: ../base/ufos/menu_geoscape.ufo:1762
 #, fuzzy
 msgid "Manage installation"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_geoscape.ufo:1811 client/cl_installation.c:475
+#: ../base/ufos/menu_geoscape.ufo:1774 client/cl_installation.c:476
 #, fuzzy
 msgid "Destroy installation"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_geoscape.ufo:1834
+#: ../base/ufos/menu_geoscape.ufo:1797
 msgid "Manage"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1842 client/cl_basemanagement.c:960
+#: ../base/ufos/menu_geoscape.ufo:1805 client/cl_basemanagement.c:960
 #: client/cl_basemanagement.c:970 client/cl_basemanagement.c:980
-#: client/cl_basemanagement.c:993 client/cl_installation.c:475
+#: client/cl_basemanagement.c:993 client/cl_installation.c:476
 msgid "Destroy"
 msgstr "ทำลาย"
 
-#: ../base/ufos/menu_geoscape.ufo:1889 ../base/ufos/menu_geoscape.ufo:2003
+#: ../base/ufos/menu_geoscape.ufo:1852 ../base/ufos/menu_geoscape.ufo:1969
 msgid "Select aircraft"
 msgstr "เลือกยาน"
 
-#: ../base/ufos/menu_geoscape.ufo:1897
+#: ../base/ufos/menu_geoscape.ufo:1860
 #, fuzzy
 msgid "Select base"
 msgstr "ฐานที่เลือก"
 
-#: ../base/ufos/menu_geoscape.ufo:1911 ../base/ufos/menu_geoscape.ufo:2017
+#: ../base/ufos/menu_geoscape.ufo:1874 ../base/ufos/menu_geoscape.ufo:1983
 msgid "Status:"
 msgstr "สถานะ:"
 
-#: ../base/ufos/menu_geoscape.ufo:1917 ../base/ufos/menu_geoscape.ufo:1923
-#: ../base/ufos/menu_geoscape.ufo:2023
+#: ../base/ufos/menu_geoscape.ufo:1880 ../base/ufos/menu_geoscape.ufo:1886
+#: ../base/ufos/menu_geoscape.ufo:1989
 msgid "Base:"
 msgstr "ฐาน:"
 
-#: ../base/ufos/menu_geoscape.ufo:2029
+#: ../base/ufos/menu_geoscape.ufo:1995
 #, fuzzy
 msgid "ETA:"
 msgstr "ปฏิบัติการ:\t%s\n"
 
-#: ../base/ufos/menu_geoscape.ufo:2095
+#: ../base/ufos/menu_geoscape.ufo:2062
 msgid "Select item"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_geoscape.ufo:2102
+#: ../base/ufos/menu_geoscape.ufo:2069
 msgid "Type:"
 msgstr "ประเภท:"
 
-#: ../base/ufos/menu_geoscape.ufo:2182
+#: ../base/ufos/menu_geoscape.ufo:2150
 msgid "Action:"
 msgstr "ทำงาน:"
 
-#: ../base/ufos/menu_geoscape.ufo:2189
+#: ../base/ufos/menu_geoscape.ufo:2157
 msgid "Description:"
 msgstr "คำอธิบาย:"
 
-#: ../base/ufos/menu_geoscape.ufo:2335
+#: ../base/ufos/menu_geoscape.ufo:2305
 #, fuzzy
 msgid "Apply"
 msgstr "ยินดี"
 
-#: ../base/ufos/menu_geoscape.ufo:2336
+#: ../base/ufos/menu_geoscape.ufo:2306
 msgid "Apply changes"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2350
+#: ../base/ufos/menu_geoscape.ufo:2320
 msgid "Revert changes"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2355
+#: ../base/ufos/menu_geoscape.ufo:2325
 #, fuzzy
 msgid "Pause/message settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_geoscape.ufo:2362
+#: ../base/ufos/menu_geoscape.ufo:2332
 msgid "Notify type"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2369
+#: ../base/ufos/menu_geoscape.ufo:2339
 msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2378
+#: ../base/ufos/menu_geoscape.ufo:2348
 msgid "Enable or disable messages being displayed for all notification types.\\nLeft click enables all notifications, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2387
+#: ../base/ufos/menu_geoscape.ufo:2357
 msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2411 ../base/ufos/menu_geoscape.ufo:2435
-#: ../base/ufos/menu_geoscape.ufo:2459 ../base/ufos/menu_geoscape.ufo:2483
-#: ../base/ufos/menu_geoscape.ufo:2507 ../base/ufos/menu_geoscape.ufo:2531
-#: ../base/ufos/menu_geoscape.ufo:2555 ../base/ufos/menu_geoscape.ufo:2579
-#: ../base/ufos/menu_geoscape.ufo:2603 ../base/ufos/menu_geoscape.ufo:2627
-#: ../base/ufos/menu_geoscape.ufo:2651 ../base/ufos/menu_geoscape.ufo:2675
-#: ../base/ufos/menu_geoscape.ufo:2699 ../base/ufos/menu_geoscape.ufo:2723
-#: ../base/ufos/menu_geoscape.ufo:2747 ../base/ufos/menu_geoscape.ufo:2771
-#: ../base/ufos/menu_geoscape.ufo:2795 ../base/ufos/menu_geoscape.ufo:2819
-#: ../base/ufos/menu_geoscape.ufo:2843 ../base/ufos/menu_geoscape.ufo:2867
-#: ../base/ufos/menu_geoscape.ufo:2891
+#: ../base/ufos/menu_geoscape.ufo:2381 ../base/ufos/menu_geoscape.ufo:2405
+#: ../base/ufos/menu_geoscape.ufo:2429 ../base/ufos/menu_geoscape.ufo:2453
+#: ../base/ufos/menu_geoscape.ufo:2477 ../base/ufos/menu_geoscape.ufo:2501
+#: ../base/ufos/menu_geoscape.ufo:2525 ../base/ufos/menu_geoscape.ufo:2549
+#: ../base/ufos/menu_geoscape.ufo:2573 ../base/ufos/menu_geoscape.ufo:2597
+#: ../base/ufos/menu_geoscape.ufo:2621 ../base/ufos/menu_geoscape.ufo:2645
+#: ../base/ufos/menu_geoscape.ufo:2669 ../base/ufos/menu_geoscape.ufo:2693
+#: ../base/ufos/menu_geoscape.ufo:2717 ../base/ufos/menu_geoscape.ufo:2741
+#: ../base/ufos/menu_geoscape.ufo:2765 ../base/ufos/menu_geoscape.ufo:2789
+#: ../base/ufos/menu_geoscape.ufo:2813 ../base/ufos/menu_geoscape.ufo:2837
+#: ../base/ufos/menu_geoscape.ufo:2861
 msgid "enable or disable game stopping"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2419 ../base/ufos/menu_geoscape.ufo:2443
-#: ../base/ufos/menu_geoscape.ufo:2467 ../base/ufos/menu_geoscape.ufo:2491
-#: ../base/ufos/menu_geoscape.ufo:2515 ../base/ufos/menu_geoscape.ufo:2539
-#: ../base/ufos/menu_geoscape.ufo:2563 ../base/ufos/menu_geoscape.ufo:2587
-#: ../base/ufos/menu_geoscape.ufo:2611 ../base/ufos/menu_geoscape.ufo:2635
-#: ../base/ufos/menu_geoscape.ufo:2659 ../base/ufos/menu_geoscape.ufo:2683
-#: ../base/ufos/menu_geoscape.ufo:2707 ../base/ufos/menu_geoscape.ufo:2731
-#: ../base/ufos/menu_geoscape.ufo:2755 ../base/ufos/menu_geoscape.ufo:2779
-#: ../base/ufos/menu_geoscape.ufo:2803 ../base/ufos/menu_geoscape.ufo:2827
-#: ../base/ufos/menu_geoscape.ufo:2851 ../base/ufos/menu_geoscape.ufo:2875
-#: ../base/ufos/menu_geoscape.ufo:2899
+#: ../base/ufos/menu_geoscape.ufo:2389 ../base/ufos/menu_geoscape.ufo:2413
+#: ../base/ufos/menu_geoscape.ufo:2437 ../base/ufos/menu_geoscape.ufo:2461
+#: ../base/ufos/menu_geoscape.ufo:2485 ../base/ufos/menu_geoscape.ufo:2509
+#: ../base/ufos/menu_geoscape.ufo:2533 ../base/ufos/menu_geoscape.ufo:2557
+#: ../base/ufos/menu_geoscape.ufo:2581 ../base/ufos/menu_geoscape.ufo:2605
+#: ../base/ufos/menu_geoscape.ufo:2629 ../base/ufos/menu_geoscape.ufo:2653
+#: ../base/ufos/menu_geoscape.ufo:2677 ../base/ufos/menu_geoscape.ufo:2701
+#: ../base/ufos/menu_geoscape.ufo:2725 ../base/ufos/menu_geoscape.ufo:2749
+#: ../base/ufos/menu_geoscape.ufo:2773 ../base/ufos/menu_geoscape.ufo:2797
+#: ../base/ufos/menu_geoscape.ufo:2821 ../base/ufos/menu_geoscape.ufo:2845
+#: ../base/ufos/menu_geoscape.ufo:2869
 msgid "enable or disable displaying a notification message"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2427 ../base/ufos/menu_geoscape.ufo:2451
-#: ../base/ufos/menu_geoscape.ufo:2475 ../base/ufos/menu_geoscape.ufo:2499
-#: ../base/ufos/menu_geoscape.ufo:2523 ../base/ufos/menu_geoscape.ufo:2547
-#: ../base/ufos/menu_geoscape.ufo:2571 ../base/ufos/menu_geoscape.ufo:2595
-#: ../base/ufos/menu_geoscape.ufo:2619 ../base/ufos/menu_geoscape.ufo:2643
-#: ../base/ufos/menu_geoscape.ufo:2667 ../base/ufos/menu_geoscape.ufo:2691
-#: ../base/ufos/menu_geoscape.ufo:2715 ../base/ufos/menu_geoscape.ufo:2739
-#: ../base/ufos/menu_geoscape.ufo:2763 ../base/ufos/menu_geoscape.ufo:2787
-#: ../base/ufos/menu_geoscape.ufo:2811 ../base/ufos/menu_geoscape.ufo:2835
-#: ../base/ufos/menu_geoscape.ufo:2859 ../base/ufos/menu_geoscape.ufo:2883
-#: ../base/ufos/menu_geoscape.ufo:2907
+#: ../base/ufos/menu_geoscape.ufo:2397 ../base/ufos/menu_geoscape.ufo:2421
+#: ../base/ufos/menu_geoscape.ufo:2445 ../base/ufos/menu_geoscape.ufo:2469
+#: ../base/ufos/menu_geoscape.ufo:2493 ../base/ufos/menu_geoscape.ufo:2517
+#: ../base/ufos/menu_geoscape.ufo:2541 ../base/ufos/menu_geoscape.ufo:2565
+#: ../base/ufos/menu_geoscape.ufo:2589 ../base/ufos/menu_geoscape.ufo:2613
+#: ../base/ufos/menu_geoscape.ufo:2637 ../base/ufos/menu_geoscape.ufo:2661
+#: ../base/ufos/menu_geoscape.ufo:2685 ../base/ufos/menu_geoscape.ufo:2709
+#: ../base/ufos/menu_geoscape.ufo:2733 ../base/ufos/menu_geoscape.ufo:2757
+#: ../base/ufos/menu_geoscape.ufo:2781 ../base/ufos/menu_geoscape.ufo:2805
+#: ../base/ufos/menu_geoscape.ufo:2829 ../base/ufos/menu_geoscape.ufo:2853
+#: ../base/ufos/menu_geoscape.ufo:2877
 msgid "enable or disable playing sound"
 msgstr ""
 
-#: ../base/ufos/menu_hire.ufo:113 ../base/ufos/menu_hire.ufo:125
-#: ../base/ufos/menu_hire.ufo:137 ../base/ufos/menu_hire.ufo:149
-#: ../base/ufos/menu_hire.ufo:161 ../base/ufos/menu_hire.ufo:173
-#: ../base/ufos/menu_hire.ufo:185 ../base/ufos/menu_hire.ufo:197
-#: ../base/ufos/menu_hire.ufo:209 ../base/ufos/menu_hire.ufo:221
-#: ../base/ufos/menu_hire.ufo:233 ../base/ufos/menu_hire.ufo:245
-#: ../base/ufos/menu_hire.ufo:257 ../base/ufos/menu_hire.ufo:269
-#: ../base/ufos/menu_hire.ufo:281 ../base/ufos/menu_hire.ufo:293
-#: ../base/ufos/menu_hire.ufo:305 ../base/ufos/menu_hire.ufo:317
-#: ../base/ufos/menu_hire.ufo:329
+#: ../base/ufos/menu_hire.ufo:79 ../base/ufos/menu_hire.ufo:91
+#: ../base/ufos/menu_hire.ufo:103 ../base/ufos/menu_hire.ufo:115
+#: ../base/ufos/menu_hire.ufo:127 ../base/ufos/menu_hire.ufo:139
+#: ../base/ufos/menu_hire.ufo:151 ../base/ufos/menu_hire.ufo:163
+#: ../base/ufos/menu_hire.ufo:175 ../base/ufos/menu_hire.ufo:187
+#: ../base/ufos/menu_hire.ufo:199 ../base/ufos/menu_hire.ufo:211
+#: ../base/ufos/menu_hire.ufo:223 ../base/ufos/menu_hire.ufo:235
+#: ../base/ufos/menu_hire.ufo:247 ../base/ufos/menu_hire.ufo:259
+#: ../base/ufos/menu_hire.ufo:271 ../base/ufos/menu_hire.ufo:283
+#: ../base/ufos/menu_hire.ufo:295
 msgid "Hire/Unhire - Right click to remove"
 msgstr ""
 
-#: ../base/ufos/menu_hire.ufo:403
+#: ../base/ufos/menu_hire.ufo:364
 msgid "Rename your employee"
 msgstr "เปลี่ยนชื่อ"
 
-#: ../base/ufos/menu_hire.ufo:454 ../base/ufos/menu_hospital.ufo:493
-#: ../base/ufos/menu_physdat.ufo:50 ../base/ufos/menu_team.ufo:841
-#: ../base/ufos/menu_team.ufo:1505
+#: ../base/ufos/menu_hire.ufo:414 ../base/ufos/menu_hospital.ufo:491
+#: ../base/ufos/menu_physdat.ufo:50 ../base/ufos/menu_team.ufo:838
+#: ../base/ufos/menu_team.ufo:1503
 msgid "Strength:"
 msgstr "ความแข็งแกร่ง:"
 
-#: ../base/ufos/menu_hire.ufo:475 ../base/ufos/menu_hospital.ufo:498
-#: ../base/ufos/menu_options.ufo:1138 ../base/ufos/menu_physdat.ufo:55
-#: ../base/ufos/menu_team.ufo:846 ../base/ufos/menu_team.ufo:1510
+#: ../base/ufos/menu_hire.ufo:435 ../base/ufos/menu_hospital.ufo:496
+#: ../base/ufos/menu_options.ufo:1123 ../base/ufos/menu_physdat.ufo:55
+#: ../base/ufos/menu_team.ufo:843 ../base/ufos/menu_team.ufo:1508
 msgid "Speed:"
 msgstr "ความเร็ว:"
 
-#: ../base/ufos/menu_hire.ufo:496 ../base/ufos/menu_hospital.ufo:503
-#: ../base/ufos/menu_physdat.ufo:60 ../base/ufos/menu_team.ufo:851
-#: ../base/ufos/menu_team.ufo:1515
+#: ../base/ufos/menu_hire.ufo:456 ../base/ufos/menu_hospital.ufo:501
+#: ../base/ufos/menu_physdat.ufo:60 ../base/ufos/menu_team.ufo:848
+#: ../base/ufos/menu_team.ufo:1513
 msgid "Accuracy:"
 msgstr "ความแม่นยำ:"
 
-#: ../base/ufos/menu_hire.ufo:518 ../base/ufos/menu_hospital.ufo:508
-#: ../base/ufos/menu_physdat.ufo:65 ../base/ufos/menu_team.ufo:856
-#: ../base/ufos/menu_team.ufo:1520
+#: ../base/ufos/menu_hire.ufo:478 ../base/ufos/menu_hospital.ufo:506
+#: ../base/ufos/menu_physdat.ufo:65 ../base/ufos/menu_team.ufo:853
+#: ../base/ufos/menu_team.ufo:1518
 msgid "Mind:"
 msgstr "จิตใจ:"
 
-#: ../base/ufos/menu_hire.ufo:539 ../base/ufos/menu_hospital.ufo:513
-#: ../base/ufos/menu_physdat.ufo:70 ../base/ufos/menu_team.ufo:861
-#: ../base/ufos/menu_team.ufo:1525
+#: ../base/ufos/menu_hire.ufo:499 ../base/ufos/menu_hospital.ufo:511
+#: ../base/ufos/menu_physdat.ufo:70 ../base/ufos/menu_team.ufo:858
+#: ../base/ufos/menu_team.ufo:1523
 msgid "Close Combat:"
 msgstr "ต่อสู้ประชิดตัว:"
 
-#: ../base/ufos/menu_hire.ufo:560 ../base/ufos/menu_hospital.ufo:518
-#: ../base/ufos/menu_physdat.ufo:75 ../base/ufos/menu_team.ufo:866
-#: ../base/ufos/menu_team.ufo:1530
+#: ../base/ufos/menu_hire.ufo:520 ../base/ufos/menu_hospital.ufo:516
+#: ../base/ufos/menu_physdat.ufo:75 ../base/ufos/menu_team.ufo:863
+#: ../base/ufos/menu_team.ufo:1528
 msgid "Heavy Weapons:"
 msgstr "อาวุธหนัก:"
 
-#: ../base/ufos/menu_hire.ufo:581 ../base/ufos/menu_hospital.ufo:523
-#: ../base/ufos/menu_physdat.ufo:80 ../base/ufos/menu_team.ufo:871
-#: ../base/ufos/menu_team.ufo:1535
+#: ../base/ufos/menu_hire.ufo:541 ../base/ufos/menu_hospital.ufo:521
+#: ../base/ufos/menu_physdat.ufo:80 ../base/ufos/menu_team.ufo:868
+#: ../base/ufos/menu_team.ufo:1533
 msgid "Assault Weapons:"
 msgstr "อาวุธจู่โจม:"
 
-#: ../base/ufos/menu_hire.ufo:602 ../base/ufos/menu_hospital.ufo:528
-#: ../base/ufos/menu_physdat.ufo:85 ../base/ufos/menu_team.ufo:876
-#: ../base/ufos/menu_team.ufo:1540
+#: ../base/ufos/menu_hire.ufo:562 ../base/ufos/menu_hospital.ufo:526
+#: ../base/ufos/menu_physdat.ufo:85 ../base/ufos/menu_team.ufo:873
+#: ../base/ufos/menu_team.ufo:1538
 msgid "Sniper Rifles:"
 msgstr "ไรเฟิลซุ่มยิง:"
 
-#: ../base/ufos/menu_hire.ufo:623 ../base/ufos/menu_hospital.ufo:533
-#: ../base/ufos/menu_physdat.ufo:90 ../base/ufos/menu_team.ufo:881
-#: ../base/ufos/menu_team.ufo:1545
+#: ../base/ufos/menu_hire.ufo:583 ../base/ufos/menu_hospital.ufo:531
+#: ../base/ufos/menu_physdat.ufo:90 ../base/ufos/menu_team.ufo:878
+#: ../base/ufos/menu_team.ufo:1543
 msgid "High-Explosives:"
 msgstr "ระเบิดแรงสูง:"
 
-#: ../base/ufos/menu_hire.ufo:645 ../base/ufos/menu_hospital.ufo:538
-#: ../base/ufos/menu_team.ufo:886
+#: ../base/ufos/menu_hire.ufo:605 ../base/ufos/menu_hospital.ufo:536
+#: ../base/ufos/menu_team.ufo:883
 msgid "Health:"
 msgstr "พลังชีวิต:"
 
-#: ../base/ufos/menu_hire.ufo:666 ../base/ufos/menu_team.ufo:907
+#: ../base/ufos/menu_hire.ufo:626 ../base/ufos/menu_team.ufo:904
 msgid "Missions Performed:"
 msgstr "เข้าร่วมภารกิจ:"
 
-#: ../base/ufos/menu_hire.ufo:677 ../base/ufos/menu_team.ufo:913
+#: ../base/ufos/menu_hire.ufo:637 ../base/ufos/menu_team.ufo:910
 msgid "Enemies Killed:"
 msgstr "ฆ่าศัตรู:"
 
-#: ../base/ufos/menu_hire.ufo:737
+#: ../base/ufos/menu_hire.ufo:698
 msgid "Hire soldiers"
 msgstr "จ้างทหาร"
 
-#: ../base/ufos/menu_hire.ufo:746
+#: ../base/ufos/menu_hire.ufo:707
 msgid "Soldiers"
 msgstr "ทหาร"
 
-#: ../base/ufos/menu_hire.ufo:751
+#: ../base/ufos/menu_hire.ufo:712
 msgid "Hire scientists"
 msgstr "จ้างนักวิทยาศาสตร์"
 
-#: ../base/ufos/menu_hire.ufo:760
+#: ../base/ufos/menu_hire.ufo:721
 msgid "Scientists"
 msgstr "นักวิทยาศาสตร์"
 
-#: ../base/ufos/menu_hire.ufo:765
+#: ../base/ufos/menu_hire.ufo:726
 msgid "Hire workers"
 msgstr "จ้างคนงาน"
 
-#: ../base/ufos/menu_hire.ufo:774
+#: ../base/ufos/menu_hire.ufo:735
 msgid "Workers"
 msgstr "คนงาน"
 
-#: ../base/ufos/menu_hire.ufo:779
+#: ../base/ufos/menu_hire.ufo:740
 #, fuzzy
 msgid "Hire pilots"
 msgstr "จ้างพนักงาน"
 
-#: ../base/ufos/menu_hire.ufo:788
+#: ../base/ufos/menu_hire.ufo:749
 msgid "Pilots"
 msgstr ""
 
@@ -2874,7 +2882,7 @@ msgstr ""
 msgid "Currently being healed"
 msgstr "รักษาตัวอยู่"
 
-#: ../base/ufos/menu_hospital.ufo:551 ../base/ufos/menu_hospital.ufo:567
+#: ../base/ufos/menu_hospital.ufo:549 ../base/ufos/menu_hospital.ufo:565
 msgid "Implants"
 msgstr "ฝัง"
 
@@ -2910,38 +2918,6 @@ msgstr "ระดับ 7"
 msgid "Level 8"
 msgstr "ระดับ 8"
 
-#: ../base/ufos/menu_hud.ufo:271
-msgid "Soldier 1"
-msgstr "ทหาร 1"
-
-#: ../base/ufos/menu_hud.ufo:281
-msgid "Soldier 2"
-msgstr "ทหาร 2"
-
-#: ../base/ufos/menu_hud.ufo:291
-msgid "Soldier 3"
-msgstr "ทหาร 3"
-
-#: ../base/ufos/menu_hud.ufo:301
-msgid "Soldier 4"
-msgstr "ทหาร 4"
-
-#: ../base/ufos/menu_hud.ufo:311
-msgid "Soldier 5"
-msgstr "ทหาร 5"
-
-#: ../base/ufos/menu_hud.ufo:321
-msgid "Soldier 6"
-msgstr "ทหาร 6"
-
-#: ../base/ufos/menu_hud.ufo:331
-msgid "Soldier 7"
-msgstr "ทหาร 7"
-
-#: ../base/ufos/menu_hud.ufo:341
-msgid "Soldier 8"
-msgstr "ทหาร 8"
-
 #: ../base/ufos/menu_hud.ufo:410
 msgid "Primary fire mode"
 msgstr "วิธีการยิงหลัก"
@@ -2971,32 +2947,32 @@ msgstr "ค่าสภาพร่างกายของทหารคนน
 msgid "Inventory"
 msgstr "ของติดตัว"
 
-#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:1016
+#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:1013
 msgid "Backpack"
 msgstr "กระเป๋าหลัง"
 
-#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:1025
+#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:1022
 msgid "Left Hand"
 msgstr "มือซ้าย"
 
-#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:1034
+#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:1031
 msgid "Right Hand"
 msgstr "มือขวา"
 
-#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:1043
+#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:1040
 msgid "Extension"
 msgstr "ส่วนเพิ่มเติม"
 
-#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1052
+#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1049
 #, fuzzy
 msgid "Headgear"
 msgstr "เรดาร์"
 
-#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1061
+#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1058
 msgid "Holster"
 msgstr "สายคาด"
 
-#: ../base/ufos/menu_inventory.ufo:75 ../base/ufos/menu_team.ufo:1070
+#: ../base/ufos/menu_inventory.ufo:75 ../base/ufos/menu_team.ufo:1067
 msgid "Belt"
 msgstr "เข็มขัด"
 
@@ -3004,8 +2980,8 @@ msgstr "เข็มขัด"
 msgid "Floor"
 msgstr "ชั้น"
 
-#: ../base/ufos/menu_irc.ufo:28 ../base/ufos/menu_multiplayer.ufo:634
-#: ../base/ufos/menu_multiplayer.ufo:1667
+#: ../base/ufos/menu_irc.ufo:28 ../base/ufos/menu_multiplayer.ufo:669
+#: ../base/ufos/menu_multiplayer.ufo:1690
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 msgid "Lobby"
 msgstr "ล็อบบี้"
@@ -3027,71 +3003,71 @@ msgstr ""
 msgid "Users"
 msgstr "Users"
 
-#: ../base/ufos/menu_irc.ufo:228
+#: ../base/ufos/menu_irc.ufo:202
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr ""
 
-#: ../base/ufos/menu_irc.ufo:234
+#: ../base/ufos/menu_irc.ufo:208
 #, fuzzy
 msgid "Connect to the lobby"
 msgstr "เชื่อมต่อ IP"
 
-#: ../base/ufos/menu_irc.ufo:248 ../base/ufos/menu_multiplayer.ufo:414
-#: ../base/ufos/menu_multiplayer.ufo:680
-#: ../base/ufos/menu_multiplayer.ufo:1593
+#: ../base/ufos/menu_irc.ufo:222 ../base/ufos/menu_multiplayer.ufo:448
+#: ../base/ufos/menu_multiplayer.ufo:714
+#: ../base/ufos/menu_multiplayer.ufo:1620
 msgid "Connect"
 msgstr "เชื่อมต่อ"
 
-#: ../base/ufos/menu_lostwon.ufo:49
+#: ../base/ufos/menu_lostwon.ufo:50
 msgid "No UFO hangars or no power supply"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:50
+#: ../base/ufos/menu_lostwon.ufo:51
 msgid "No nation with accepted level of alien infiltration"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:51 ../base/ufos/menu_lostwon.ufo:53
-#: ../base/ufos/menu_lostwon.ufo:54 ../base/ufos/menu_lostwon.ufo:55
+#: ../base/ufos/menu_lostwon.ufo:52 ../base/ufos/menu_lostwon.ufo:54
+#: ../base/ufos/menu_lostwon.ufo:55 ../base/ufos/menu_lostwon.ufo:56
 msgid "UFO recovery process finished"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:61
+#: ../base/ufos/menu_lostwon.ufo:62
 #, fuzzy
 msgid "Store the UFO in base"
 msgstr "เปลี่ยนไปฐานต่อไป"
 
-#: ../base/ufos/menu_lostwon.ufo:69
+#: ../base/ufos/menu_lostwon.ufo:70
 #, fuzzy
 msgid "Store UFO"
 msgstr "ห้องเก็บของ"
 
-#: ../base/ufos/menu_lostwon.ufo:75
+#: ../base/ufos/menu_lostwon.ufo:76
 msgid "Sell the UFO to desired nation"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:83
+#: ../base/ufos/menu_lostwon.ufo:84
 msgid "Sell UFO"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:89
+#: ../base/ufos/menu_lostwon.ufo:90
 msgid "Destroy recovered UFO"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:97
+#: ../base/ufos/menu_lostwon.ufo:98
 #, fuzzy
 msgid "Destroy UFO"
 msgstr "ทำลาย"
 
-#: ../base/ufos/menu_lostwon.ufo:108 ../base/ufos/menu_lostwon.ufo:199
+#: ../base/ufos/menu_lostwon.ufo:109 ../base/ufos/menu_lostwon.ufo:201
 msgid "Retry this mission"
 msgstr "ทำภารกิจนี้อีกครั้ง"
 
-#: ../base/ufos/menu_lostwon.ufo:116 ../base/ufos/menu_lostwon.ufo:207
+#: ../base/ufos/menu_lostwon.ufo:117 ../base/ufos/menu_lostwon.ufo:209
 msgid "Try again"
 msgstr "ลองใหม่"
 
-#: ../base/ufos/menu_lostwon.ufo:135 ../base/ufos/menu_lostwon.ufo:143
-#: ../base/ufos/menu_lostwon.ufo:225 ../base/ufos/menu_lostwon.ufo:236
+#: ../base/ufos/menu_lostwon.ufo:136 ../base/ufos/menu_lostwon.ufo:144
+#: ../base/ufos/menu_lostwon.ufo:227 ../base/ufos/menu_lostwon.ufo:238
 #: ../base/ufos/menu_multiplayeringame.ufo:44
 #: ../base/ufos/menu_singleplayer.ufo:98
 #: ../base/ufos/menu_singleplayer.ufo:132
@@ -3100,43 +3076,43 @@ msgstr "ลองใหม่"
 msgid "Continue"
 msgstr "เล่นต่อ"
 
-#: ../base/ufos/menu_lostwon.ufo:275
+#: ../base/ufos/menu_lostwon.ufo:277
 #, fuzzy
 msgid "Select base for UFO recovery"
 msgstr "เลือกฐานที่จะโอนไป"
 
-#: ../base/ufos/menu_lostwon.ufo:330
+#: ../base/ufos/menu_lostwon.ufo:333
 msgid "Begin UFO recovery process"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:344
+#: ../base/ufos/menu_lostwon.ufo:347
 msgid "Recover"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:377
+#: ../base/ufos/menu_lostwon.ufo:381
 msgid "Select nation for UFO recovery"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:385
+#: ../base/ufos/menu_lostwon.ufo:389
 #, fuzzy
 msgid "Nation:"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_lostwon.ufo:391
+#: ../base/ufos/menu_lostwon.ufo:395
 #, fuzzy
 msgid "Price:"
 msgstr "ถนัด"
 
-#: ../base/ufos/menu_lostwon.ufo:397
+#: ../base/ufos/menu_lostwon.ufo:401
 #, fuzzy
 msgid "Relations:"
 msgstr "ความคมชัด:"
 
-#: ../base/ufos/menu_lostwon.ufo:451
+#: ../base/ufos/menu_lostwon.ufo:456
 msgid "Begin UFO sell process"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:465
+#: ../base/ufos/menu_lostwon.ufo:470
 #, fuzzy
 msgid "Sell"
 msgstr "ขายอุปกรณ์"
@@ -3162,33 +3138,33 @@ msgstr "Credits"
 msgid "Exit"
 msgstr "ออก"
 
-#: ../base/ufos/menu_main.ufo:139
+#: ../base/ufos/menu_main.ufo:140
 #, fuzzy
 msgid "Initial settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_main.ufo:147
+#: ../base/ufos/menu_main.ufo:148
 msgid "Variable:"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:154
+#: ../base/ufos/menu_main.ufo:155
 msgid "Value:"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:161
+#: ../base/ufos/menu_main.ufo:162
 #, fuzzy
 msgid "Save settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_main.ufo:209 ../base/ufos/menu_options.ufo:623
+#: ../base/ufos/menu_main.ufo:209 ../base/ufos/menu_options.ufo:624
 msgid "Volume Control"
 msgstr "ควบคุมระดับเสียง"
 
-#: ../base/ufos/menu_main.ufo:215 ../base/ufos/menu_options.ufo:628
+#: ../base/ufos/menu_main.ufo:215 ../base/ufos/menu_options.ufo:629
 msgid "Effects:"
 msgstr "เสียงประกอบ:"
 
-#: ../base/ufos/menu_main.ufo:236 ../base/ufos/menu_options.ufo:650
+#: ../base/ufos/menu_main.ufo:236 ../base/ufos/menu_options.ufo:651
 msgid "Music:"
 msgstr "เพลง:"
 
@@ -3196,7 +3172,7 @@ msgstr "เพลง:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:270 ../base/ufos/menu_options.ufo:954
+#: ../base/ufos/menu_main.ufo:270 ../base/ufos/menu_options.ufo:939
 msgid "Language"
 msgstr ""
 
@@ -3208,15 +3184,15 @@ msgstr ""
 msgid "Tip of the day"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:359 ../base/ufos/menu_options.ufo:873
+#: ../base/ufos/menu_main.ufo:359 ../base/ufos/menu_options.ufo:860
 msgid "Show tip of the day"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:378 ../base/ufos/menu_main.ufo:386
+#: ../base/ufos/menu_main.ufo:379 ../base/ufos/menu_main.ufo:387
 msgid "Next"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:38 ../base/ufos/menu_multiplayer.ufo:369
+#: ../base/ufos/menu_multiplayer.ufo:38 ../base/ufos/menu_multiplayer.ufo:402
 msgid "Team"
 msgstr "ทีม"
 
@@ -3228,262 +3204,262 @@ msgstr "เข้าร่วม"
 msgid "Create"
 msgstr "สร้าง"
 
-#: ../base/ufos/menu_multiplayer.ufo:192
+#: ../base/ufos/menu_multiplayer.ufo:226
 msgid "Load team from current selected slot"
 msgstr "โหลดทีมจากชุดที่เลือกอยู่"
 
-#: ../base/ufos/menu_multiplayer.ufo:198 ../base/ufos/menu_singleplayer.ufo:56
+#: ../base/ufos/menu_multiplayer.ufo:232 ../base/ufos/menu_singleplayer.ufo:56
 #: ../base/ufos/menu_singleplayer.ufo:386
 msgid "Load"
 msgstr "โหลด"
 
-#: ../base/ufos/menu_multiplayer.ufo:204
+#: ../base/ufos/menu_multiplayer.ufo:238
 msgid "Save team to current selected slot"
 msgstr "บันทึกทีมลงชุดที่เลือก"
 
-#: ../base/ufos/menu_multiplayer.ufo:211 ../base/ufos/menu_singleplayer.ufo:70
+#: ../base/ufos/menu_multiplayer.ufo:245 ../base/ufos/menu_singleplayer.ufo:70
 #: ../base/ufos/menu_singleplayer.ufo:84
 #: ../base/ufos/menu_singleplayer.ufo:564
 msgid "Save"
 msgstr "บันทึก"
 
-#: ../base/ufos/menu_multiplayer.ufo:220
+#: ../base/ufos/menu_multiplayer.ufo:254
 msgid "Current Team"
 msgstr "ทีมปัจจุบัน"
 
-#: ../base/ufos/menu_multiplayer.ufo:228
+#: ../base/ufos/menu_multiplayer.ufo:262
 msgid "Edit your team after loading"
 msgstr "แก้ไขทีมหลังขึ้นเครื่อง"
 
-#: ../base/ufos/menu_multiplayer.ufo:235
+#: ../base/ufos/menu_multiplayer.ufo:269
 msgid "Edit"
 msgstr "แก้ไข"
 
-#: ../base/ufos/menu_multiplayer.ufo:241
+#: ../base/ufos/menu_multiplayer.ufo:275
 msgid "Generate a new team"
 msgstr "สร้างทีมใหม่"
 
-#: ../base/ufos/menu_multiplayer.ufo:248
+#: ../base/ufos/menu_multiplayer.ufo:282
 msgid "New"
 msgstr "เริ่มใหม่"
 
-#: ../base/ufos/menu_multiplayer.ufo:254
+#: ../base/ufos/menu_multiplayer.ufo:288
 msgid "Generate a team automatically"
 msgstr "สร้างทีมอัตโนมัติ"
 
-#: ../base/ufos/menu_multiplayer.ufo:261
+#: ../base/ufos/menu_multiplayer.ufo:295
 msgid "Auto"
 msgstr "อัตโนมัติ"
 
-#: ../base/ufos/menu_multiplayer.ufo:266
+#: ../base/ufos/menu_multiplayer.ufo:300
 msgid "Race:"
 msgstr "เผ่าพันธุ์:"
 
-#: ../base/ufos/menu_multiplayer.ufo:296 ../base/ufos/menu_multiplayer.ufo:361
+#: ../base/ufos/menu_multiplayer.ufo:330 ../base/ufos/menu_multiplayer.ufo:394
 msgid "Name"
 msgstr "ชื่อ"
 
-#: ../base/ufos/menu_multiplayer.ufo:353
+#: ../base/ufos/menu_multiplayer.ufo:386
 #, fuzzy
 msgid "Userlist"
 msgstr "Users"
 
-#: ../base/ufos/menu_multiplayer.ufo:419
+#: ../base/ufos/menu_multiplayer.ufo:453
 #, fuzzy
 msgid "Leave Serverbrowser"
 msgstr "ดูเซอร์เวอร์"
 
-#: ../base/ufos/menu_multiplayer.ufo:439
+#: ../base/ufos/menu_multiplayer.ufo:473
 msgid "Bookmark"
 msgstr "เก็บไว้"
 
-#: ../base/ufos/menu_multiplayer.ufo:465
+#: ../base/ufos/menu_multiplayer.ufo:499
 msgid "Serverfilter:"
 msgstr "ฟิลเตอร์เซอร์เวอร์r:"
 
-#: ../base/ufos/menu_multiplayer.ufo:519 ../base/ufos/menu_multiplayer.ufo:736
+#: ../base/ufos/menu_multiplayer.ufo:553 ../base/ufos/menu_multiplayer.ufo:770
 msgid "Serverbrowser"
 msgstr "ดูเซอร์เวอร์"
 
-#: ../base/ufos/menu_multiplayer.ufo:546 ../base/ufos/menu_multiplayer.ufo:744
-#: ../base/ufos/menu_multiplayer.ufo:753
+#: ../base/ufos/menu_multiplayer.ufo:580 ../base/ufos/menu_multiplayer.ufo:778
+#: ../base/ufos/menu_multiplayer.ufo:787
 msgid "Bookmarks"
 msgstr "เก็บไว้"
 
-#: ../base/ufos/menu_multiplayer.ufo:613
+#: ../base/ufos/menu_multiplayer.ufo:648
 msgid "Refresh"
 msgstr "แสดงใหม่"
 
-#: ../base/ufos/menu_multiplayer.ufo:646
+#: ../base/ufos/menu_multiplayer.ufo:681
 msgid "Connect to IP"
 msgstr "เชื่อมต่อ IP"
 
-#: ../base/ufos/menu_multiplayer.ufo:759 ../base/ufos/menu_multiplayer.ufo:762
-#: ../base/ufos/menu_multiplayer.ufo:765 ../base/ufos/menu_multiplayer.ufo:768
-#: ../base/ufos/menu_multiplayer.ufo:771 ../base/ufos/menu_multiplayer.ufo:774
-#: ../base/ufos/menu_multiplayer.ufo:777 ../base/ufos/menu_multiplayer.ufo:780
-#: ../base/ufos/menu_multiplayer.ufo:783 ../base/ufos/menu_multiplayer.ufo:786
-#: ../base/ufos/menu_multiplayer.ufo:789 ../base/ufos/menu_multiplayer.ufo:792
-#: ../base/ufos/menu_multiplayer.ufo:795 ../base/ufos/menu_multiplayer.ufo:798
-#: ../base/ufos/menu_multiplayer.ufo:801 ../base/ufos/menu_multiplayer.ufo:804
+#: ../base/ufos/menu_multiplayer.ufo:793 ../base/ufos/menu_multiplayer.ufo:796
+#: ../base/ufos/menu_multiplayer.ufo:799 ../base/ufos/menu_multiplayer.ufo:802
+#: ../base/ufos/menu_multiplayer.ufo:805 ../base/ufos/menu_multiplayer.ufo:808
+#: ../base/ufos/menu_multiplayer.ufo:811 ../base/ufos/menu_multiplayer.ufo:814
+#: ../base/ufos/menu_multiplayer.ufo:817 ../base/ufos/menu_multiplayer.ufo:820
+#: ../base/ufos/menu_multiplayer.ufo:823 ../base/ufos/menu_multiplayer.ufo:826
+#: ../base/ufos/menu_multiplayer.ufo:829 ../base/ufos/menu_multiplayer.ufo:832
+#: ../base/ufos/menu_multiplayer.ufo:835 ../base/ufos/menu_multiplayer.ufo:838
 msgid "Delete this bookmark"
 msgstr "ลบตัวคั่นนี้"
 
-#: ../base/ufos/menu_multiplayer.ufo:829 ../base/ufos/menu_skirmish.ufo:64
+#: ../base/ufos/menu_multiplayer.ufo:863 ../base/ufos/menu_skirmish.ufo:64
 #, fuzzy
 msgid "Day version:"
 msgstr "เวอร์ชั่น:\t%s\n"
 
-#: ../base/ufos/menu_multiplayer.ufo:840 ../base/ufos/seq_tutorials.ufo:785
+#: ../base/ufos/menu_multiplayer.ufo:874 ../base/ufos/seq_tutorials.ufo:785
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:853
+#: ../base/ufos/menu_multiplayer.ufo:887
 msgid "Make this server public:"
 msgstr "เปิดเป็นเซอร์เวอร์สาธาระ:"
 
-#: ../base/ufos/menu_multiplayer.ufo:868
+#: ../base/ufos/menu_multiplayer.ufo:902
 msgid "Enable morale states:"
 msgstr "เปิดใช้ระดับกำลังใจ:"
 
-#: ../base/ufos/menu_multiplayer.ufo:882
+#: ../base/ufos/menu_multiplayer.ufo:916
 msgid "Gametype:"
 msgstr "รูปแบบเกม:"
 
-#: ../base/ufos/menu_multiplayer.ufo:921
+#: ../base/ufos/menu_multiplayer.ufo:955
 msgid "Teamplay:"
 msgstr "เล่นเป็นทีม:"
 
-#: ../base/ufos/menu_multiplayer.ufo:935
+#: ../base/ufos/menu_multiplayer.ufo:969
 msgid "Max. clients:"
 msgstr "ลูกข่ายสูงสุด:"
 
-#: ../base/ufos/menu_multiplayer.ufo:937
+#: ../base/ufos/menu_multiplayer.ufo:971
 msgid "Sets the max allowed clients to connect"
 msgstr "ตั้งจำนวนสูงสุดลูกข่ายจะเชื่อมต่อได้"
 
-#: ../base/ufos/menu_multiplayer.ufo:962
+#: ../base/ufos/menu_multiplayer.ufo:996
 msgid "Max. soldiers per team:"
 msgstr "ทหารสูงสุดในทีม:"
 
-#: ../base/ufos/menu_multiplayer.ufo:964
+#: ../base/ufos/menu_multiplayer.ufo:998
 msgid "Sets the max allowed soldiers per team"
 msgstr "ตั้งจำนวนทหารสูงสุดที่แต่ละทีมมีได้"
 
-#: ../base/ufos/menu_multiplayer.ufo:989
+#: ../base/ufos/menu_multiplayer.ufo:1023
 msgid "Max. soldiers per player:"
 msgstr "ทหารสูงสุดต่อผู้เล่น:"
 
-#: ../base/ufos/menu_multiplayer.ufo:991
+#: ../base/ufos/menu_multiplayer.ufo:1025
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "ตั้งจำนวนทหารสูงสุดที่แต่ละผู้เล่นมีได้ ขณะเล่นเป็นทีม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1017
+#: ../base/ufos/menu_multiplayer.ufo:1051
 msgid "Max. human players per team:"
 msgstr "ผู้เล่นมนุษย์สูงสุดต่อทีม:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1043 ../base/ufos/menu_skirmish.ufo:78
+#: ../base/ufos/menu_multiplayer.ufo:1077 ../base/ufos/menu_skirmish.ufo:78
 msgid "Max. AI actors:"
 msgstr "จำนวนผู้เล่นคอมพิวเตอร์สูงสุด:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1045
+#: ../base/ufos/menu_multiplayer.ufo:1079
 msgid "Max AI actors for teamplay mode"
 msgstr "จำนวนสูงสุดของผู้เล่นคอมพิวเตอร์ในแบบทีม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1070
+#: ../base/ufos/menu_multiplayer.ufo:1104
 msgid "AI autojoin:"
 msgstr "คอมพิวเตอร์เข้าร่วมอัตโนมัติ:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1072
+#: ../base/ufos/menu_multiplayer.ufo:1106
 msgid "AI autojoin on free teams"
 msgstr "คอมพิวเตอร์เข้าร่วมทีมที่ว่างอัตโนมัติ"
 
-#: ../base/ufos/menu_multiplayer.ufo:1085
+#: ../base/ufos/menu_multiplayer.ufo:1119
 msgid "Server-Password:"
 msgstr "รหัสผ่านเซอร์เวอร์:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1108
+#: ../base/ufos/menu_multiplayer.ufo:1142
 msgid "RCON-Password:"
 msgstr "รหัสผ่าน RCON:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1131
+#: ../base/ufos/menu_multiplayer.ufo:1165
 msgid "Hostname:"
 msgstr "ชื่อโฮสต์:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1154 ../base/ufos/menu_skirmish.ufo:105
+#: ../base/ufos/menu_multiplayer.ufo:1187 ../base/ufos/menu_skirmish.ufo:105
 msgid "Map"
 msgstr "แผนที่"
 
-#: ../base/ufos/menu_multiplayer.ufo:1251
+#: ../base/ufos/menu_multiplayer.ufo:1285
 msgid "Start server"
 msgstr "เริ่มเซอร์เวอร์"
 
-#: ../base/ufos/menu_multiplayer.ufo:1300
+#: ../base/ufos/menu_multiplayer.ufo:1334
 msgid "Team selection"
 msgstr "เลือกทีม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1309
+#: ../base/ufos/menu_multiplayer.ufo:1343
 msgid "Click the big button in the lower right corner when ready"
 msgstr "กดปุ่มใหญ่ด้านขวาล่างเมื่อพร้อม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1345
+#: ../base/ufos/menu_multiplayer.ufo:1381
 msgid "Max. players per team"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1357
+#: ../base/ufos/menu_multiplayer.ufo:1393
 msgid "Max. teams for this map"
 msgstr "ทีมสูงสุดสำหรับแผนที่นี้"
 
-#: ../base/ufos/menu_multiplayer.ufo:1369
+#: ../base/ufos/menu_multiplayer.ufo:1405
 msgid "Team preference:"
 msgstr "การตั้งค่าทีม:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1380
+#: ../base/ufos/menu_multiplayer.ufo:1416
 msgid "Next free team"
 msgstr "ทีมว่างถัดไป"
 
-#: ../base/ufos/menu_multiplayer.ufo:1390
+#: ../base/ufos/menu_multiplayer.ufo:1426
 msgid "Previous free team"
 msgstr "ทีมว่างก่อนหน้า"
 
-#: ../base/ufos/menu_multiplayer.ufo:1401
+#: ../base/ufos/menu_multiplayer.ufo:1437
 msgid "Finish the teamselection and start the game"
 msgstr "จบการเลือกทีมและเริ่มเกม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1419
+#: ../base/ufos/menu_multiplayer.ufo:1455
 msgid "Activate chat"
 msgstr "เปิดระบบสนทนา"
 
-#: ../base/ufos/menu_multiplayer.ufo:1489
+#: ../base/ufos/menu_multiplayer.ufo:1525
 msgid "Please wait"
 msgstr "โปรดรอ"
 
-#: ../base/ufos/menu_multiplayer.ufo:1496
+#: ../base/ufos/menu_multiplayer.ufo:1532
 msgid "Players connected, waiting for others"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1509
+#: ../base/ufos/menu_multiplayer.ufo:1545
 msgid "Start the game even if not all teams have joined"
 msgstr "เริ่มเกมแม้ว่าทุกทีมยังไม่ได้เข้าร่วม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1525
+#: ../base/ufos/menu_multiplayer.ufo:1554
 msgid "Force start"
 msgstr "บังคับให้เริ่ม"
 
-#: ../base/ufos/menu_multiplayer.ufo:1565
+#: ../base/ufos/menu_multiplayer.ufo:1592
 msgid "Enter server password"
 msgstr "ใส่รหัสของเซอร์เวอร์"
 
-#: ../base/ufos/menu_multiplayer.ufo:1573
+#: ../base/ufos/menu_multiplayer.ufo:1600
 msgid "Password:"
 msgstr "รหัส:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1642
+#: ../base/ufos/menu_multiplayer.ufo:1664
 #, fuzzy
 msgid "Personal message"
 msgstr "เปิดข้อความ"
 
-#: ../base/ufos/menu_multiplayer.ufo:1659
+#: ../base/ufos/menu_multiplayer.ufo:1682
 #, fuzzy
 msgid "Go into the lobby"
 msgstr "เชื่อมต่อ IP"
@@ -3532,250 +3508,250 @@ msgstr ""
 msgid "Texture anisotropy level:"
 msgstr "ระดับการเปลี่ยนแปลงพื้นผิว:"
 
-#: ../base/ufos/menu_options.ufo:189
+#: ../base/ufos/menu_options.ufo:190
 msgid "Fullscreen:"
 msgstr "ภาพเต็มจอ:"
 
-#: ../base/ufos/menu_options.ufo:200
+#: ../base/ufos/menu_options.ufo:201
 msgid "Texture compression:"
 msgstr "บีบภาพผิวนอก:"
 
-#: ../base/ufos/menu_options.ufo:211
+#: ../base/ufos/menu_options.ufo:212
 msgid "Show FPS:"
 msgstr "แสดงค่า FPS:"
 
-#: ../base/ufos/menu_options.ufo:222
+#: ../base/ufos/menu_options.ufo:223
 msgid "Texture Lod:"
 msgstr "ความละเอียดพื้นผิว:"
 
-#: ../base/ufos/menu_options.ufo:233
+#: ../base/ufos/menu_options.ufo:234
 msgid "Isometric Mode:"
 msgstr "รูปแบบมุมเอียง:"
 
-#: ../base/ufos/menu_options.ufo:244
+#: ../base/ufos/menu_options.ufo:245
 msgid "GLSL shaders:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:255
+#: ../base/ufos/menu_options.ufo:256
 msgid "Realtime lighting:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:266
+#: ../base/ufos/menu_options.ufo:267
 msgid "Weather effects:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:277
+#: ../base/ufos/menu_options.ufo:278
 msgid "Vertex buffers:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:288
+#: ../base/ufos/menu_options.ufo:289
 msgid "Multisample buffers:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:310
+#: ../base/ufos/menu_options.ufo:311
 msgid "Swap interval:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:333
+#: ../base/ufos/menu_options.ufo:334
 msgid "Gamma:"
 msgstr "แกมม่า:"
 
-#: ../base/ufos/menu_options.ufo:355
+#: ../base/ufos/menu_options.ufo:356
 #, fuzzy
 msgid "Contrast:"
 msgstr "ราคา:"
 
-#: ../base/ufos/menu_options.ufo:377
+#: ../base/ufos/menu_options.ufo:378
 msgid "Brightness:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:399
+#: ../base/ufos/menu_options.ufo:400
 msgid "Lightmap scale:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:428 ../base/ufos/menu_options.ufo:457
+#: ../base/ufos/menu_options.ufo:429 ../base/ufos/menu_options.ufo:458
 #, fuzzy
 msgid "Low"
 msgstr "โยนสูง"
 
-#: ../base/ufos/menu_options.ufo:433 ../base/ufos/menu_options.ufo:462
+#: ../base/ufos/menu_options.ufo:434 ../base/ufos/menu_options.ufo:463
 #, fuzzy
 msgid "Medium"
 msgstr "เสนารักษ์"
 
-#: ../base/ufos/menu_options.ufo:438 ../base/ufos/menu_options.ufo:467
-#: client/cl_campaign.c:6877
+#: ../base/ufos/menu_options.ufo:439 ../base/ufos/menu_options.ufo:468
+#: client/cl_campaign.c:6980
 msgid "Normal"
 msgstr "ปกติ"
 
-#: ../base/ufos/menu_options.ufo:443 ../base/ufos/menu_options.ufo:472
+#: ../base/ufos/menu_options.ufo:444 ../base/ufos/menu_options.ufo:473
 #, fuzzy
 msgid "High"
 msgstr "กลางคืน"
 
-#: ../base/ufos/menu_options.ufo:477 client/cl_actor.c:179
+#: ../base/ufos/menu_options.ufo:478 client/cl_actor.c:179
 msgid "Excellent"
 msgstr "ยอดเยี่ยม"
 
-#: ../base/ufos/menu_options.ufo:482
+#: ../base/ufos/menu_options.ufo:483
 #, fuzzy
 msgid "Extreme"
 msgstr "Extreme Players"
 
-#: ../base/ufos/menu_options.ufo:536
+#: ../base/ufos/menu_options.ufo:537
 msgid "Maintain resolution"
 msgstr "ใช้ค่าความคมชัดเดิม"
 
-#: ../base/ufos/menu_options.ufo:543
+#: ../base/ufos/menu_options.ufo:544
 msgid "Want To Maintain resolution"
 msgstr "ต้องการใช้ค่าความคมชัดเดิม"
 
-#: ../base/ufos/menu_options.ufo:561
+#: ../base/ufos/menu_options.ufo:562
 msgid "Change the resolution"
 msgstr "เปลี่ยนค่าความคมชัด"
 
-#: ../base/ufos/menu_options.ufo:583
+#: ../base/ufos/menu_options.ufo:584
 msgid "Accept"
 msgstr "ตกลง"
 
-#: ../base/ufos/menu_options.ufo:615
+#: ../base/ufos/menu_options.ufo:616
 msgid "Sound settings"
 msgstr "ตั้งค่าเสียง"
 
-#: ../base/ufos/menu_options.ufo:672
+#: ../base/ufos/menu_options.ufo:673
 #, fuzzy
 msgid "Sound rate:"
 msgstr "การประมวลเสียง:"
 
-#: ../base/ufos/menu_options.ufo:677
+#: ../base/ufos/menu_options.ufo:678
 msgid "Restart sound to change the settings"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:736
+#: ../base/ufos/menu_options.ufo:737
 msgid "Show key bindings"
 msgstr "แสดง key bindings"
 
-#: ../base/ufos/menu_options.ufo:802
+#: ../base/ufos/menu_options.ufo:789
 msgid "Game settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_options.ufo:813
+#: ../base/ufos/menu_options.ufo:800
 msgid "Tooltips:"
 msgstr "คำแนะนำ:"
 
-#: ../base/ufos/menu_options.ufo:820
+#: ../base/ufos/menu_options.ufo:807
 msgid "Activates tooltips"
 msgstr "เปิดคำแนะนำ"
 
-#: ../base/ufos/menu_options.ufo:828
+#: ../base/ufos/menu_options.ufo:815
 msgid "Centre view:"
 msgstr "ศูนย์กลางมุมมอง :"
 
-#: ../base/ufos/menu_options.ufo:835
+#: ../base/ufos/menu_options.ufo:822
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "เลื่อนไปที่ทหารที่ถูกเลือก ยิง  และปรากฏตัว"
 
-#: ../base/ufos/menu_options.ufo:843
+#: ../base/ufos/menu_options.ufo:830
 msgid "Cursor tooltips:"
 msgstr "คำแนะนำเคอร์เซอร์:"
 
-#: ../base/ufos/menu_options.ufo:850
+#: ../base/ufos/menu_options.ufo:837
 msgid "Activates cursor tooltips"
 msgstr "เปิดคำแนะนำเคอร์เซอร์"
 
-#: ../base/ufos/menu_options.ufo:858
+#: ../base/ufos/menu_options.ufo:845
 msgid "3D Geoscape:"
 msgstr "แผนที่ 3 มิติ:"
 
-#: ../base/ufos/menu_options.ufo:865
+#: ../base/ufos/menu_options.ufo:852
 msgid "Use 3D geoscape"
 msgstr "ใช้แผนที่ 3 มิติ"
 
-#: ../base/ufos/menu_options.ufo:889
+#: ../base/ufos/menu_options.ufo:876
 msgid "Precache models:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:896
+#: ../base/ufos/menu_options.ufo:883
 msgid "Precache models (faster menus)"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:904
+#: ../base/ufos/menu_options.ufo:891
 #, fuzzy
 msgid "Actor speed:"
 msgstr "ความเร็ว:"
 
-#: ../base/ufos/menu_options.ufo:972
+#: ../base/ufos/menu_options.ufo:957
 msgid "HUD Design:"
 msgstr "การออกแบบ HUD:"
 
-#: ../base/ufos/menu_options.ufo:983
+#: ../base/ufos/menu_options.ufo:968
 msgid "Original HUD"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:988
+#: ../base/ufos/menu_options.ufo:973
 msgid "Alternative HUD"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1009
+#: ../base/ufos/menu_options.ufo:994
 #, fuzzy
 msgid "Input settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_options.ufo:1020
+#: ../base/ufos/menu_options.ufo:1005
 #, fuzzy
 msgid "Camera"
 msgstr "ชื่อ"
 
-#: ../base/ufos/menu_options.ufo:1025
+#: ../base/ufos/menu_options.ufo:1010
 #, fuzzy
 msgid "Scroll Speed:"
 msgstr "ความเร็ว:"
 
-#: ../base/ufos/menu_options.ufo:1051
+#: ../base/ufos/menu_options.ufo:1036
 msgid "Rotation Speed:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1077
+#: ../base/ufos/menu_options.ufo:1062
 msgid "Move Acceleration:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1103
+#: ../base/ufos/menu_options.ufo:1088
 #, fuzzy
 msgid "Joystick settings:"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/menu_options.ufo:1112
+#: ../base/ufos/menu_options.ufo:1097
 msgid "Threshold:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1171
+#: ../base/ufos/menu_options.ufo:1156
 msgid "Keys"
 msgstr "คีย์"
 
-#: ../base/ufos/menu_options.ufo:1181 client/cl_actor.c:204
+#: ../base/ufos/menu_options.ufo:1166 client/cl_actor.c:204
 #, fuzzy
 msgid "Autostand"
 msgstr "อัจฉริยะ"
 
-#: ../base/ufos/menu_options.ufo:1192 ../base/ufos/menu_options.ufo:1219
+#: ../base/ufos/menu_options.ufo:1177 ../base/ufos/menu_options.ufo:1204
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "ใช่"
 
-#: ../base/ufos/menu_options.ufo:1197 ../base/ufos/menu_options.ufo:1224
+#: ../base/ufos/menu_options.ufo:1182 ../base/ufos/menu_options.ufo:1209
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "ไม่"
 
-#: ../base/ufos/menu_options.ufo:1208
+#: ../base/ufos/menu_options.ufo:1193
 msgid "Confirm Actions:"
 msgstr "ยืนยันการกระทำ:"
 
-#: ../base/ufos/menu_options.ufo:1229
+#: ../base/ufos/menu_options.ufo:1214
 msgid "Only for moving"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1240
+#: ../base/ufos/menu_options.ufo:1225
 msgid "Joystick:"
 msgstr ""
 
@@ -3799,78 +3775,72 @@ msgstr "Base capacity"
 msgid "Storage capacity:"
 msgstr "Base capacity"
 
-#: ../base/ufos/menu_production.ufo:160
+#: ../base/ufos/menu_production.ufo:132
 msgid "Q"
 msgstr "Q"
 
-#: ../base/ufos/menu_production.ufo:167
+#: ../base/ufos/menu_production.ufo:139
 msgid "Num"
 msgstr "Num"
 
-#: ../base/ufos/menu_production.ufo:212
-msgid "Increase production by 1"
-msgstr "เพิ่มการผลิต 1"
+#: ../base/ufos/menu_production.ufo:239 ../base/ufos/menu_production.ufo:250
+#, fuzzy
+msgid "Change the production amount"
+msgstr "เปลี่ยนค่าความคมชัด"
 
-#: ../base/ufos/menu_production.ufo:225
+#: ../base/ufos/menu_production.ufo:263
+#, fuzzy
+msgid "Start this production"
+msgstr "หยุดการผลิต"
+
+#: ../base/ufos/menu_production.ufo:273
 msgid "Stop production"
 msgstr "หยุดการผลิต"
 
-#: ../base/ufos/menu_production.ufo:235
-msgid "Decrease production by 1"
-msgstr "ลดการผลิต 1"
-
-#: ../base/ufos/menu_production.ufo:249
-msgid "Increase production by 10"
-msgstr "เพิ่มการผลิต 10"
-
-#: ../base/ufos/menu_production.ufo:263
-msgid "Decrease production by 10"
-msgstr "ลดการผลิต 10"
-
-#: ../base/ufos/menu_production.ufo:276
+#: ../base/ufos/menu_production.ufo:283
 msgid "Increase priority"
 msgstr "เพิ่มความสำคัญ"
 
-#: ../base/ufos/menu_production.ufo:289
+#: ../base/ufos/menu_production.ufo:295
 msgid "Decrease priority"
 msgstr "ลดความสำคัญ"
 
-#: ../base/ufos/menu_research.ufo:116
+#: ../base/ufos/menu_research.ufo:137
 #, fuzzy
 msgid "Switch to another base"
 msgstr "เปลี่ยนไปฐานต่อไป"
 
-#: ../base/ufos/menu_research.ufo:342 ../base/ufos/menu_research.ufo:353
-#: ../base/ufos/menu_research.ufo:364 ../base/ufos/menu_research.ufo:375
-#: ../base/ufos/menu_research.ufo:386 ../base/ufos/menu_research.ufo:397
-#: ../base/ufos/menu_research.ufo:408 ../base/ufos/menu_research.ufo:419
-#: ../base/ufos/menu_research.ufo:430 ../base/ufos/menu_research.ufo:441
-#: ../base/ufos/menu_research.ufo:452 ../base/ufos/menu_research.ufo:463
-#: ../base/ufos/menu_research.ufo:474 ../base/ufos/menu_research.ufo:485
-#: ../base/ufos/menu_research.ufo:496 ../base/ufos/menu_research.ufo:507
-#: ../base/ufos/menu_research.ufo:518 ../base/ufos/menu_research.ufo:529
-#: ../base/ufos/menu_research.ufo:540 ../base/ufos/menu_research.ufo:551
-#: ../base/ufos/menu_research.ufo:562 ../base/ufos/menu_research.ufo:573
-#: ../base/ufos/menu_research.ufo:584 ../base/ufos/menu_research.ufo:595
-#: ../base/ufos/menu_research.ufo:606 ../base/ufos/menu_research.ufo:617
-#: ../base/ufos/menu_research.ufo:628 ../base/ufos/menu_research.ufo:639
+#: ../base/ufos/menu_research.ufo:358 ../base/ufos/menu_research.ufo:369
+#: ../base/ufos/menu_research.ufo:380 ../base/ufos/menu_research.ufo:391
+#: ../base/ufos/menu_research.ufo:402 ../base/ufos/menu_research.ufo:413
+#: ../base/ufos/menu_research.ufo:424 ../base/ufos/menu_research.ufo:435
+#: ../base/ufos/menu_research.ufo:446 ../base/ufos/menu_research.ufo:457
+#: ../base/ufos/menu_research.ufo:468 ../base/ufos/menu_research.ufo:479
+#: ../base/ufos/menu_research.ufo:490 ../base/ufos/menu_research.ufo:501
+#: ../base/ufos/menu_research.ufo:512 ../base/ufos/menu_research.ufo:523
+#: ../base/ufos/menu_research.ufo:534 ../base/ufos/menu_research.ufo:545
+#: ../base/ufos/menu_research.ufo:556 ../base/ufos/menu_research.ufo:567
+#: ../base/ufos/menu_research.ufo:578 ../base/ufos/menu_research.ufo:589
+#: ../base/ufos/menu_research.ufo:600 ../base/ufos/menu_research.ufo:611
+#: ../base/ufos/menu_research.ufo:622 ../base/ufos/menu_research.ufo:633
+#: ../base/ufos/menu_research.ufo:644 ../base/ufos/menu_research.ufo:655
 #, fuzzy
 msgid "Add and remove scientist"
 msgstr "ลดนักวิทยาศาสตร์"
 
-#: ../base/ufos/menu_research.ufo:653
+#: ../base/ufos/menu_research.ufo:669
 msgid "Base Info"
 msgstr "ข้อมูลของฐาน"
 
-#: ../base/ufos/menu_research.ufo:755
+#: ../base/ufos/menu_research.ufo:773
 msgid "Stop research"
 msgstr "หยุดวิจัย"
 
-#: ../base/ufos/menu_research.ufo:766
+#: ../base/ufos/menu_research.ufo:784
 msgid "Start research"
 msgstr "เริ่มวิจัย"
 
-#: ../base/ufos/menu_research.ufo:777
+#: ../base/ufos/menu_research.ufo:795
 msgid "Show research proposal"
 msgstr "แสดงโครงการ"
 
@@ -3913,36 +3883,36 @@ msgstr ""
 msgid "Reload"
 msgstr "พร้อม"
 
-#: ../base/ufos/menu_singleplayer.ufo:775 client/cl_team.c:2360
+#: ../base/ufos/menu_singleplayer.ufo:708 client/cl_team.c:2361
 #, fuzzy
 msgid "You've lost the game"
 msgstr "คุณแพ้"
 
-#: ../base/ufos/menu_singleplayer.ufo:797
-#: ../base/ufos/menu_singleplayer.ufo:885 ../base/ufos/seq_ingame.ufo:13
+#: ../base/ufos/menu_singleplayer.ufo:730
+#: ../base/ufos/menu_singleplayer.ufo:818 ../base/ufos/seq_ingame.ufo:13
 #: ../base/ufos/seq_ingame.ufo:42 ../base/ufos/seq_ingame.ufo:80
 #: ../base/ufos/seq_intro.ufo:73
 msgid "Click to continue"
 msgstr "กดเพื่อดำเนินการต่อ"
 
-#: ../base/ufos/menu_singleplayer.ufo:841
+#: ../base/ufos/menu_singleplayer.ufo:774
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "ขอบคุณที่เล่น UFO:Alien Invasion"
 
-#: ../base/ufos/menu_singleplayer.ufo:850
+#: ../base/ufos/menu_singleplayer.ufo:783
 msgid "Now after you have finished the single-player campaigns"
 msgstr "ในเมื่อคุณสามารถจบเกมเล่นคนเดียวได้แล้ว"
 
-#: ../base/ufos/menu_singleplayer.ufo:858
+#: ../base/ufos/menu_singleplayer.ufo:791
 msgid "you should try the multiplayer features"
 msgstr "คุณควรลองเล่นเกมเล่นหลายคนดู"
 
-#: ../base/ufos/menu_singleplayer.ufo:867
+#: ../base/ufos/menu_singleplayer.ufo:800
 #, fuzzy
 msgid "Visit http://ufoai.sf.net"
 msgstr "http://ufoai.sf.net"
 
-#: ../base/ufos/menu_singleplayer.ufo:876
+#: ../base/ufos/menu_singleplayer.ufo:809
 msgid "and join irc.freenode.org #ufo:ai"
 msgstr "และเข้าร่วม  irc.freenode.org #ufo:ai"
 
@@ -3965,57 +3935,57 @@ msgstr "จำนวนสูงสุดของผู้เล่นคอม
 msgid "Missions"
 msgstr "ภารกิจ"
 
-#: ../base/ufos/menu_stats.ufo:62
+#: ../base/ufos/menu_stats.ufo:63
 msgid "Bases"
 msgstr "ฐาน"
 
-#: ../base/ufos/menu_stats.ufo:79
+#: ../base/ufos/menu_stats.ufo:81
 #, fuzzy
 msgid "Installations"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_stats.ufo:96 client/cl_transfer.c:426
+#: ../base/ufos/menu_stats.ufo:99 client/cl_transfer.c:426
 msgid "Employees"
 msgstr "พนักงาน"
 
-#: ../base/ufos/menu_stats.ufo:113
+#: ../base/ufos/menu_stats.ufo:117
 msgid "Costs"
 msgstr "ลงทุน"
 
-#: ../base/ufos/menu_stats.ufo:130
+#: ../base/ufos/menu_stats.ufo:135
 msgid "Nations"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_stats.ufo:150
+#: ../base/ufos/menu_stats.ufo:156
 #, fuzzy
 msgid "Campaign"
 msgstr "เนื้อเรื่อง"
 
-#: ../base/ufos/menu_stats.ufo:207
+#: ../base/ufos/menu_stats.ufo:214
 #, fuzzy
 msgid "Nation Statistics"
 msgstr "สถิติองค์กร"
 
-#: ../base/ufos/menu_stats.ufo:242
+#: ../base/ufos/menu_stats.ufo:249
 #, fuzzy
 msgid "Nation"
 msgstr "ประเทศ"
 
-#: ../base/ufos/menu_stats.ufo:256
+#: ../base/ufos/menu_stats.ufo:263
 #, fuzzy
 msgid "Current Funding"
 msgstr "รักษาตัวอยู่"
 
-#: ../base/ufos/menu_stats.ufo:282
+#: ../base/ufos/menu_stats.ufo:289
 msgid "Month (Relative to current)"
 msgstr ""
 
-#: ../base/ufos/menu_stats.ufo:338
+#: ../base/ufos/menu_stats.ufo:345
 #, fuzzy
 msgid "Funding"
 msgstr "อัจฉริยะ"
 
-#: ../base/ufos/menu_stats.ufo:348
+#: ../base/ufos/menu_stats.ufo:355
 msgid "max"
 msgstr ""
 
@@ -4058,92 +4028,84 @@ msgstr "ทหารไม่มีอุปกรณ์"
 msgid "Add/remove this soldier"
 msgstr "เพิ่ม/ลด ทหารคนนี้"
 
-#: ../base/ufos/menu_team.ufo:803
+#: ../base/ufos/menu_team.ufo:801
 msgid "Rename your soldier"
 msgstr "เปลี่ยนชื่อทหาร"
 
-#: ../base/ufos/menu_team.ufo:950 ../base/ufos/menu_team.ufo:961
+#: ../base/ufos/menu_team.ufo:947 ../base/ufos/menu_team.ufo:958
 msgid "Assign tanks"
 msgstr ""
 
-#: ../base/ufos/menu_team.ufo:955
+#: ../base/ufos/menu_team.ufo:952
 #, fuzzy
 msgid "Assign soldiers"
 msgstr "จัดการทหาร"
 
-#: ../base/ufos/menu_team.ufo:1128 ../base/ufos/menu_team.ufo:1137
-#: ../base/ufos/menu_team.ufo:1146 ../base/ufos/menu_team.ufo:1155
-#: ../base/ufos/menu_team.ufo:1164 ../base/ufos/menu_team.ufo:1173
-#: ../base/ufos/menu_team.ufo:1182 ../base/ufos/menu_team.ufo:1191
+#: ../base/ufos/menu_team.ufo:1125 ../base/ufos/menu_team.ufo:1134
+#: ../base/ufos/menu_team.ufo:1143 ../base/ufos/menu_team.ufo:1152
+#: ../base/ufos/menu_team.ufo:1161 ../base/ufos/menu_team.ufo:1170
+#: ../base/ufos/menu_team.ufo:1179 ../base/ufos/menu_team.ufo:1188
 msgid "Equip this soldier"
 msgstr "ติดอุปกรณ์ให้ทหารคนนี้"
 
-#: ../base/ufos/menu_team.ufo:1276
+#: ../base/ufos/menu_team.ufo:1273
 #, fuzzy
 msgid "Show available primary weapons"
 msgstr "แสดงอาวุธหลัก"
 
-#: ../base/ufos/menu_team.ufo:1284
+#: ../base/ufos/menu_team.ufo:1281
 msgid "Primary"
 msgstr "หลัก"
 
-#: ../base/ufos/menu_team.ufo:1289
+#: ../base/ufos/menu_team.ufo:1286
 #, fuzzy
 msgid "Show available secondary weapons"
 msgstr "แสดงอาวุธรองเท่านั้น"
 
-#: ../base/ufos/menu_team.ufo:1297
+#: ../base/ufos/menu_team.ufo:1294
 msgid "Secondary"
 msgstr "รอง"
 
-#: ../base/ufos/menu_team.ufo:1302
+#: ../base/ufos/menu_team.ufo:1299
 #, fuzzy
 msgid "Show available heavy weapons"
 msgstr "แสดงอาวุธหลัก"
 
-#: ../base/ufos/menu_team.ufo:1310 client/cl_ufopedia.c:162
+#: ../base/ufos/menu_team.ufo:1307 client/cl_ufopedia.c:162
 msgid "Heavy"
 msgstr "หนัก"
 
-#: ../base/ufos/menu_team.ufo:1315
+#: ../base/ufos/menu_team.ufo:1312
 #, fuzzy
 msgid "Show available miscellaneous equipment and weapons"
 msgstr "แสดงอุปกรณ์อื่นๆ ที่มีในโรงเก็บ"
 
-#: ../base/ufos/menu_team.ufo:1323
+#: ../base/ufos/menu_team.ufo:1320
 msgid "Misc"
 msgstr "อื่นๆ"
 
-#: ../base/ufos/menu_team.ufo:1328
+#: ../base/ufos/menu_team.ufo:1325
 #, fuzzy
 msgid "Show available armour"
 msgstr "แสดงเกราะ"
 
-#: ../base/ufos/menu_team.ufo:1336 client/cl_mapfightequip.c:1206
+#: ../base/ufos/menu_team.ufo:1333 client/cl_mapfightequip.c:1206
 #: client/cl_ufopedia.c:195
 msgid "Armour"
 msgstr "อุปกรณ์/เกราะ"
 
-#: ../base/ufos/menu_team.ufo:1618
+#: ../base/ufos/menu_team.ufo:1616
 msgid "Object Info"
 msgstr "ข้อมูลสิ่งของ"
 
-#: ../base/ufos/menu_team.ufo:1630
+#: ../base/ufos/menu_team.ufo:1628
 msgid "Actor Abilities"
 msgstr "ความสามารถผู้ใช้"
 
-#: ../base/ufos/menu_team.ufo:1672
+#: ../base/ufos/menu_team.ufo:1670
 #, fuzzy
 msgid "Use current skin with every soldier aboard"
 msgstr "ใช้ผิวนี้กับทหารทุกคนบนเครื่อง"
-
-#: ../base/ufos/menu_team.ufo:1715
-msgid "Scroll backward"
-msgstr ""
-
-#: ../base/ufos/menu_team.ufo:1730
-msgid "Scroll forward"
-msgstr ""
 
 #: ../base/ufos/menu_transfer.ufo:46
 #, fuzzy
@@ -4163,19 +4125,19 @@ msgstr "ฐานที่เลือก"
 msgid "Baseinfo"
 msgstr "ข้อมูลฐาน"
 
-#: ../base/ufos/menu_transfer.ufo:160
+#: ../base/ufos/menu_transfer.ufo:149
 msgid "Cargo onboard"
 msgstr "สินค้าอยู่บนเครื่อง"
 
-#: ../base/ufos/menu_transfer.ufo:221
+#: ../base/ufos/menu_transfer.ufo:210
 msgid "Empty the aircraft storage"
 msgstr "นำของออกจากเครื่องทั้งหมด"
 
-#: ../base/ufos/menu_transfer.ufo:229
+#: ../base/ufos/menu_transfer.ufo:218
 msgid "Unload"
 msgstr "เอาของออก"
 
-#: ../base/ufos/menu_transfer.ufo:234
+#: ../base/ufos/menu_transfer.ufo:223
 msgid "Start the transfer"
 msgstr "เริ่มการโยกย้าย"
 
@@ -4203,20 +4165,20 @@ msgstr "วิจัยผล"
 msgid "Leave UFOpaedia"
 msgstr "ออกจาก จานบินอภิธาน"
 
-#: ../base/ufos/menu_ufopedia.ufo:519
+#: ../base/ufos/menu_ufopedia.ufo:504
 msgid "Time:"
 msgstr "เวลา:"
 
-#: ../base/ufos/menu_ufopedia.ufo:536
+#: ../base/ufos/menu_ufopedia.ufo:521
 msgid "Date:"
 msgstr "วันที่:"
 
-#: ../base/ufos/menu_ufopedia.ufo:554
+#: ../base/ufos/menu_ufopedia.ufo:539
 #, fuzzy
 msgid "Mark all messages read"
 msgstr "ผู้เล่นสูงสุดต่อทีม"
 
-#: ../base/ufos/menu_ufopedia.ufo:926
+#: ../base/ufos/menu_ufopedia.ufo:912
 msgid "Leave mailclient"
 msgstr "ออกจากระบบเมล์"
 
@@ -4480,8 +4442,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4566 ../base/ufos/research.ufo:4637
 #: ../base/ufos/research.ufo:4644
 msgid "mail_from_dr_connor"
-msgstr ""
-"ดร. คอนเนอร์, แผนกวิจัยและพัฒนา: ฝ่ายชีววิทยาและการกักกัน, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
+msgstr "ดร. คอนเนอร์, แผนกวิจัยและพัฒนา: ฝ่ายชีววิทยาและการกักกัน, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
 
 #: ../base/ufos/research.ufo:258 ../base/ufos/research.ufo:298
 msgid "alien_breathing_txt"
@@ -8143,8 +8104,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3280
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3306
 msgid "ufo_scout_txt"
@@ -10201,43 +10161,35 @@ msgstr "สำหรับมนุษย์โลกจำนวนมาก �
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"ปี 2084 โลกแม้จะยังไม่ใช่สถานที่สงบสุขที่สุด แต่ก็มีสันติภาพพอสมควร ความรุนแรงในตอนต้นศตวรรษที่ 21 นั้นกลายเป็นแค่อดีต เรื่องราวอันแสนไกล แม้จะไม่ได้ไกลจนถูกลืม สำหรับประชากรโลกส่วนใหญ่ สงครามเย็นครั้งที่สองนั้นเป็นแค่เงาอดีต เหมือนกับที่เด็กในปลายศตวรรษที่ 20 รู้สึกเกี่ยวกับสงครามโลกครั้งที่สอง"
+msgstr "ปี 2084 โลกแม้จะยังไม่ใช่สถานที่สงบสุขที่สุด แต่ก็มีสันติภาพพอสมควร ความรุนแรงในตอนต้นศตวรรษที่ 21 นั้นกลายเป็นแค่อดีต เรื่องราวอันแสนไกล แม้จะไม่ได้ไกลจนถูกลืม สำหรับประชากรโลกส่วนใหญ่ สงครามเย็นครั้งที่สองนั้นเป็นแค่เงาอดีต เหมือนกับที่เด็กในปลายศตวรรษที่ 20 รู้สึกเกี่ยวกับสงครามโลกครั้งที่สอง"
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"ความขัดแย้งได้ลดลงอย่างมากในปลายศตวรรษ เมื่อวิทยาการและการสาธารณสุขได้เข้าถึงโลกที่สามในที่สุด แม้แต่การก่อการร้ายก็ดูจะซาลงไปเมื่อเกิดสงครามเย็นครั้งที่สอง ซึ่งมนุษยชาตได้เห็นความน่ากลัวและไร้มนุษยธรรม ตั้งแต่สหรัฐเดิมถึงทวีปย่อยอินเดียที่ถูกทำลาย การต่อสุ้ระหว่างชนชั้นได้กลายเป็นสงครามทางการเมืองเมื่อทุกประเทศมีสิทธิเท่าเทียมในสหประชาชาติ และระดับมาตรฐานการดำรงชีพของโลกได้เพิ่มขึ้น แม้แต่ในส่วนที่ยากจนที่สุด หลายประเทศได้มีความมั่นคงและเข้มแข็ง ภายใต้สหประชาชาติโครงสร้างใหม่ที่สามารถควบคุมรัฐบาลโลกได้ ประเทศขนาดเล็ก ซึ่งหวาดกลัวกับอำนาจที่จีนและสหภาพยุโรปกำลังรวบรวม ได้สร้างกลุ่มการเมืองของตนเอง -- แต่ก็พบว่าไม่สามารถสู้กับกลุ่มประเทศเพื่อนบ้านอย่างปลอดภัยได้ เป็นครั้งแรกในประวัติศาสตร์มนุษยชาต ที่มีกฎหมายและความสงบเรียบร้อยมากกว่าสามในสี่ส่วนของโลก"
+msgstr "ความขัดแย้งได้ลดลงอย่างมากในปลายศตวรรษ เมื่อวิทยาการและการสาธารณสุขได้เข้าถึงโลกที่สามในที่สุด แม้แต่การก่อการร้ายก็ดูจะซาลงไปเมื่อเกิดสงครามเย็นครั้งที่สอง ซึ่งมนุษยชาตได้เห็นความน่ากลัวและไร้มนุษยธรรม ตั้งแต่สหรัฐเดิมถึงทวีปย่อยอินเดียที่ถูกทำลาย การต่อสุ้ระหว่างชนชั้นได้กลายเป็นสงครามทางการเมืองเมื่อทุกประเทศมีสิทธิเท่าเทียมในสหประชาชาติ และระดับมาตรฐานการดำรงชีพของโลกได้เพิ่มขึ้น แม้แต่ในส่วนที่ยากจนที่สุด หลายประเทศได้มีความมั่นคงและเข้มแข็ง ภายใต้สหประชาชาติโครงสร้างใหม่ที่สามารถควบคุมรัฐบาลโลกได้ ประเทศขนาดเล็ก ซึ่งหวาดกลัวกับอำนาจที่จีนและสหภาพยุโรปกำลังรวบรวม ได้สร้างกลุ่มการเมืองของตนเอง -- แต่ก็พบว่าไม่สามารถสู้กับกลุ่มประเทศเพื่อนบ้านอย่างปลอดภัยได้ เป็นครั้งแรกในประวัติศาสตร์มนุษยชาต ที่มีกฎหมายและความสงบเรียบร้อยมากกว่าสามในสี่ส่วนของโลก"
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"สำหรับมนุษย์โลกจำนวนมาก ทุกอย่างดูจะเรียบร้อยดี"
+msgstr "สำหรับมนุษย์โลกจำนวนมาก ทุกอย่างดูจะเรียบร้อยดี"
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"การโจมตีครั้งแรกเกิดที่มุมไบในวันที่ 3 มีนาคม 2084, จานบินขนาดเล็กหกลำปรากฏอย่างไม่มีที่มา และบินลงมาจากชั้นบรรยากาศ ผ่านระบบเรดาร์ที่ครอบคลุมน่านฟ้ามุมไบโดยไม่ถูกพบ และลงจอดในเมืองที่มีประชากรหนาแน่นที่สุดในโลก มันไม่ได้เตือนล่วงหน้า หรืออธิบายใดๆ พลเรือนสองหมื่นคนและทหารชั้นแนวหน้าสามกองพันถูกสังหารในช่ววสิบสองชั่วโมงอันโหดเหี้ยม จนกระทั่งทหารเครือจักรภพสามารถหยุดยั้งการเคลื่อนตัวของมนุษย์ต่างดาวได้ แล้วมันก็หนีหายไปในจานบินและหายสาปสูญไปในบรรยากาศ โดยไม่เหลือร่องรอยแบบเดียวกันการปรากฏตัว ทิ้งไว้เพียงแต่ท้องถนนที่ถูกทำลายยับเยินเป็นหลักฐาน"
+msgstr "การโจมตีครั้งแรกเกิดที่มุมไบในวันที่ 3 มีนาคม 2084, จานบินขนาดเล็กหกลำปรากฏอย่างไม่มีที่มา และบินลงมาจากชั้นบรรยากาศ ผ่านระบบเรดาร์ที่ครอบคลุมน่านฟ้ามุมไบโดยไม่ถูกพบ และลงจอดในเมืองที่มีประชากรหนาแน่นที่สุดในโลก มันไม่ได้เตือนล่วงหน้า หรืออธิบายใดๆ พลเรือนสองหมื่นคนและทหารชั้นแนวหน้าสามกองพันถูกสังหารในช่ววสิบสองชั่วโมงอันโหดเหี้ยม จนกระทั่งทหารเครือจักรภพสามารถหยุดยั้งการเคลื่อนตัวของมนุษย์ต่างดาวได้ แล้วมันก็หนีหายไปในจานบินและหายสาปสูญไปในบรรยากาศ โดยไม่เหลือร่องรอยแบบเดียวกันการปรากฏตัว ทิ้งไว้เพียงแต่ท้องถนนที่ถูกทำลายยับเยินเป็นหลักฐาน"
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"การประชุมฉุกเฉินในสหประชาชาติไม่ได้ผลลัพธ์ การบุกรุกได้ทวีความเร็ว ขนาด และความรุนแรง คราวนี้ในบอนน์ โจฮันเนสเบิร์ก และกรุงเทพ หลายประเทศพยายามใช้วิธีการทูต โดยการส่งข้อมูลในหลายพันภาษาไปยังมนุษย์ต่างดาวที่ทำลายประเทศ แต่คำพูดเหล่านี้ก้ไม่ได้รับการสนใจ ไม่กี่ชั่วโมงเมืองทั้งสามก็ไม่เหลือมนุษย์รอด การโจมตีสิ้นสุดลงขณะที่ทหารหลายกลุ่มเพิ่งได้รับอนุญาตให้ตีโต้ มนุษย์ต่างดาวไม่เหลืออะไรไว้นอกจากคอนกรีตและกองเลือด จานบินทั้งหมดหายสาปสูญไม่เหลือร่องรอย -- แต่ทุกคนก็รู้ว่าพวกม้นจะกลับมาอีก"
+msgstr "การประชุมฉุกเฉินในสหประชาชาติไม่ได้ผลลัพธ์ การบุกรุกได้ทวีความเร็ว ขนาด และความรุนแรง คราวนี้ในบอนน์ โจฮันเนสเบิร์ก และกรุงเทพ หลายประเทศพยายามใช้วิธีการทูต โดยการส่งข้อมูลในหลายพันภาษาไปยังมนุษย์ต่างดาวที่ทำลายประเทศ แต่คำพูดเหล่านี้ก้ไม่ได้รับการสนใจ ไม่กี่ชั่วโมงเมืองทั้งสามก็ไม่เหลือมนุษย์รอด การโจมตีสิ้นสุดลงขณะที่ทหารหลายกลุ่มเพิ่งได้รับอนุญาตให้ตีโต้ มนุษย์ต่างดาวไม่เหลืออะไรไว้นอกจากคอนกรีตและกองเลือด จานบินทั้งหมดหายสาปสูญไม่เหลือร่องรอย -- แต่ทุกคนก็รู้ว่าพวกม้นจะกลับมาอีก"
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"แปดสิบเจ็ดชั่วโมงหลังจากโจมตีที่มุมไบ โลกได้ตัดสินใจประกาศสงคราม ในสองสัปดาห์ กองทัพของมนุษย์ต่างพยายามแยกกันต่อต้านผู้รุกรานจากต่างดาวอย่างสุดความสามารถ แต่พวกเขาประสบความสำเร็จไม่มากนัก"
+msgstr "แปดสิบเจ็ดชั่วโมงหลังจากโจมตีที่มุมไบ โลกได้ตัดสินใจประกาศสงคราม ในสองสัปดาห์ กองทัพของมนุษย์ต่างพยายามแยกกันต่อต้านผู้รุกรานจากต่างดาวอย่างสุดความสามารถ แต่พวกเขาประสบความสำเร็จไม่มากนัก"
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"เมื่อเหลือทางเลือกอย่างเดียว สหประชาชาติจึงต้องเข้าแทรกแซง มีการนำอุปกรณ์เก่ากลับมาใช้ แม้บางอย่างจะเก่ากว่าร้อยปี และหน่วยปฏิบัติการของอดีตสหรัฐ ที่ถูกปิดไปแล้ว -- PHALANX -- ได้ถูกก่อตั้งขึ้นมาใหม่ภายใต้สหประชาชาติ ภารกิจหลักก็คือการต่อสู้กับมหันตภัยจากต่างดาว และปกป้องมนุษยชาตให้อยู่รอดด้วยทุกวิถีทาง"
+msgstr "เมื่อเหลือทางเลือกอย่างเดียว สหประชาชาติจึงต้องเข้าแทรกแซง มีการนำอุปกรณ์เก่ากลับมาใช้ แม้บางอย่างจะเก่ากว่าร้อยปี และหน่วยปฏิบัติการของอดีตสหรัฐ ที่ถูกปิดไปแล้ว -- PHALANX -- ได้ถูกก่อตั้งขึ้นมาใหม่ภายใต้สหประชาชาติ ภารกิจหลักก็คือการต่อสู้กับมหันตภัยจากต่างดาว และปกป้องมนุษยชาตให้อยู่รอดด้วยทุกวิถีทาง"
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"ด้วยเงินทุนจากมหาอำนาจทั้งแปด และทหารที่เก่งที่สุดจากกองทัพระดับสูงสุด PHALANX คือสุดยอดของสุดยอด มันเป็นแนวป้องกันแรกและแนวป้องกันเดียวของโลก มันล้มเหลวไม่ได้ เพราะความล้มเหลวย่อมหมายถึงจุดจบของมนุษยชาติ"
+msgstr "ด้วยเงินทุนจากมหาอำนาจทั้งแปด และทหารที่เก่งที่สุดจากกองทัพระดับสูงสุด PHALANX คือสุดยอดของสุดยอด มันเป็นแนวป้องกันแรกและแนวป้องกันเดียวของโลก มันล้มเหลวไม่ได้ เพราะความล้มเหลวย่อมหมายถึงจุดจบของมนุษยชาติ"
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -11095,43 +11047,43 @@ msgstr ""
 msgid "Rank: %s"
 msgstr "ยศ: %s"
 
-#: client/cl_actor.c:982 client/cl_actor.c:1000
+#: client/cl_actor.c:994 client/cl_actor.c:1012
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "ค่าเวลาที่เหลือ: %i"
 
-#: client/cl_actor.c:984 client/cl_actor.c:1002
+#: client/cl_actor.c:996 client/cl_actor.c:1014
 msgid "No remaining TUs left after shot."
 msgstr "ไม่เหลือค่าเวลาหลังจากยิง"
 
-#: client/cl_actor.c:987 client/cl_actor.c:1005
+#: client/cl_actor.c:999 client/cl_actor.c:1017
 #, c-format
 msgid "TU: %i"
 msgstr "ค่าเวลา: %i"
 
-#: client/cl_actor.c:988 client/cl_actor.c:1006
+#: client/cl_actor.c:1000 client/cl_actor.c:1018
 #, c-format
 msgid "Shots:%i"
 msgstr "ยิง:%i"
 
-#: client/cl_actor.c:1102
+#: client/cl_actor.c:1114
 msgid "[0 TU] No reservation"
 msgstr ""
 
-#: client/cl_actor.c:1125
+#: client/cl_actor.c:1137
 #, c-format
 msgid "[%i TU] %s - %s"
 msgstr ""
 
-#: client/cl_actor.c:1166
+#: client/cl_actor.c:1178
 msgid "Reserve TUs for firing/using."
 msgstr ""
 
-#: client/cl_actor.c:1166
+#: client/cl_actor.c:1178
 msgid "Shot Reservation"
 msgstr ""
 
-#: client/cl_actor.c:1774 client/cl_actor.c:2131
+#: client/cl_actor.c:1786 client/cl_actor.c:2143
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -11139,43 +11091,43 @@ msgstr ""
 "ทำไม่ได้:\n"
 "ค่าเวลาไม่พอ\n"
 
-#: client/cl_actor.c:1842
+#: client/cl_actor.c:1854
 #, fuzzy
 msgid "Not enough TUs for standing up."
 msgstr "Not enough workshops"
 
-#: client/cl_actor.c:1845
+#: client/cl_actor.c:1857
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr ""
 
-#: client/cl_actor.c:1851
+#: client/cl_actor.c:1863
 #, fuzzy
 msgid "Not enough TUs for crouching."
 msgstr "สลับการยิงตอบโต้"
 
-#: client/cl_actor.c:1854
+#: client/cl_actor.c:1866
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/cl_actor.c:1862
+#: client/cl_actor.c:1874
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/cl_actor.c:1865
+#: client/cl_actor.c:1877
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr ""
 
-#: client/cl_actor.c:1868
+#: client/cl_actor.c:1880
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr ""
 
-#: client/cl_actor.c:1874
+#: client/cl_actor.c:1886
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -11183,34 +11135,34 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/cl_actor.c:1877
+#: client/cl_actor.c:1889
 msgid "Reserve TUs for shooting."
 msgstr ""
 
-#: client/cl_actor.c:1880
+#: client/cl_actor.c:1892
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/cl_actor.c:1952
+#: client/cl_actor.c:1964
 #, fuzzy
 msgid "No reload possible for right hand."
 msgstr "บรรจุกระสุนอาวุธมือขวา"
 
-#: client/cl_actor.c:1955 client/cl_actor.c:1967
+#: client/cl_actor.c:1967 client/cl_actor.c:1979
 #, fuzzy, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "บรรจุกระสุน"
 
-#: client/cl_actor.c:1964
+#: client/cl_actor.c:1976
 #, fuzzy
 msgid "No reload possible for left hand."
 msgstr "บรรจุกระสุนอาวุธมือซ้าย"
 
-#: client/cl_actor.c:2094
+#: client/cl_actor.c:2106
 msgid "No item in hand.\n"
 msgstr "ไม่มีอุปกรณ์ในมือ\n"
 
-#: client/cl_actor.c:2107
+#: client/cl_actor.c:2119
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -11218,7 +11170,7 @@ msgstr ""
 "ทำไม่ได้:\n"
 "กระสุนหมด\n"
 
-#: client/cl_actor.c:2112
+#: client/cl_actor.c:2124
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -11226,7 +11178,7 @@ msgstr ""
 "อาวุธนี้ยิงไม่ได้\n"
 "ด้วยมือเดียว\n"
 
-#: client/cl_actor.c:2121
+#: client/cl_actor.c:2133
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -11234,7 +11186,7 @@ msgstr ""
 "ทำไม่ได้:\n"
 "ของนี้บรรจุกระสุนใหม่ไม่ได้\n"
 
-#: client/cl_actor.c:2126
+#: client/cl_actor.c:2138
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -11242,7 +11194,7 @@ msgstr ""
 "ทำไม่ได้:\n"
 "ไม่มีกระสุน\n"
 
-#: client/cl_actor.c:2198
+#: client/cl_actor.c:2210
 #, c-format
 msgid ""
 "Time Units\n"
@@ -11251,17 +11203,17 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/cl_actor.c:2315
+#: client/cl_actor.c:2327
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 
-#: client/cl_actor.c:2317
+#: client/cl_actor.c:2329
 #, fuzzy, c-format
 msgid "Morale  %i"
 msgstr "เกราะ  %i\tกำลังใจ  %i\n"
 
-#: client/cl_actor.c:2325
+#: client/cl_actor.c:2337
 #, fuzzy, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -11270,7 +11222,7 @@ msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/cl_actor.c:2329
+#: client/cl_actor.c:2341
 #, fuzzy, c-format
 msgid ""
 "Morale  %i\n"
@@ -11279,7 +11231,7 @@ msgstr ""
 "เกราะ  %i\tกำลังใจ  %i\n"
 "เคลื่อนที่ %i (%i เหลือค่าเวลา)\n"
 
-#: client/cl_actor.c:2350
+#: client/cl_actor.c:2362
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -11287,7 +11239,7 @@ msgstr ""
 "ยังใช้ของนี้ไม่ได้\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/cl_actor.c:2367
+#: client/cl_actor.c:2379
 #, c-format
 msgid ""
 "%s\n"
@@ -11296,19 +11248,19 @@ msgstr ""
 "%s\n"
 "(ไม่มี)\n"
 
-#: client/cl_actor.c:2376
+#: client/cl_actor.c:2388
 msgid "Currently panics!\n"
 msgstr "ตกใจอยู่!\n"
 
-#: client/cl_actor.c:2874
+#: client/cl_actor.c:2886
 msgid "Nobody selected\n"
 msgstr "ไม่ได้เลือกใคร\n"
 
-#: client/cl_actor.c:2884
+#: client/cl_actor.c:2896
 msgid "This isn't your round\n"
 msgstr "ไม่ใช่ตาของคุณ\n"
 
-#: client/cl_actor.c:3142
+#: client/cl_actor.c:3154
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -11316,65 +11268,65 @@ msgstr ""
 "บรรจุกระสุนไม่ได้\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/cl_actor.c:3975
+#: client/cl_actor.c:3987
 #, fuzzy, c-format
 msgid "%s %s was stunned\n"
 msgstr "ขยับตัวไม่ได้\n"
 
-#: client/cl_actor.c:3979
+#: client/cl_actor.c:3991
 #, fuzzy, c-format
 msgid "%s %s was killed\n"
 msgstr "ถูกฆ่าตาย\n"
 
-#: client/cl_actor.c:3987
+#: client/cl_actor.c:3999
 msgid "A civilian was stunned.\n"
 msgstr "พลเรือนขยับตัวไม่ได้\n"
 
-#: client/cl_actor.c:3989
+#: client/cl_actor.c:4001
 msgid "A civilian was killed.\n"
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: client/cl_actor.c:3995
+#: client/cl_actor.c:4007
 #, fuzzy, c-format
 msgid "An alien was stunned: %s\n"
 msgstr "มนุษย์ต่างดาวขยับตัวไม่ได้:"
 
-#: client/cl_actor.c:3998
+#: client/cl_actor.c:4010
 #, fuzzy, c-format
 msgid "An alien was killed: %s\n"
 msgstr "มนุษย์ต่างดาวถูกฆ่า:"
 
-#: client/cl_actor.c:4003 client/cl_actor.c:4009
+#: client/cl_actor.c:4015 client/cl_actor.c:4021
 msgid "An alien was stunned.\n"
 msgstr "มนุษย์ต่างดาวขยับตัวไม่ได้\n"
 
-#: client/cl_actor.c:4005 client/cl_actor.c:4011
+#: client/cl_actor.c:4017 client/cl_actor.c:4023
 msgid "An alien was killed.\n"
 msgstr "มนุษย์ต่างดาวถูกฆ่า\n"
 
-#: client/cl_actor.c:4016
+#: client/cl_actor.c:4028
 msgid "A soldier was stunned.\n"
 msgstr "ทหารขยับตัวไม่ได้\n"
 
-#: client/cl_actor.c:4018
+#: client/cl_actor.c:4030
 msgid "A soldier was killed.\n"
 msgstr "ทหารถูกฆ่า\n"
 
-#: client/cl_actor.c:4022
+#: client/cl_actor.c:4034
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "สมาชิกทีม %i ขยับตัวไม่ได้\n"
 
-#: client/cl_actor.c:4024
+#: client/cl_actor.c:4036
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "สมาชิกทีม %i ถูกฆ่า\n"
 
-#: client/cl_actor.c:4208
+#: client/cl_actor.c:4220
 msgid "Your round started!\n"
 msgstr "เริ่มตาคุณ!\n"
 
-#: client/cl_actor.c:5046
+#: client/cl_actor.c:5064
 #, fuzzy
 msgid "Unknown alien race"
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
@@ -11387,9 +11339,9 @@ msgid ""
 msgstr ""
 
 #: client/cl_aircraft.c:263 client/cl_aircraft.c:271 client/cl_aircraft.c:279
-#: client/cl_aircraft.c:828 client/cl_aircraft.c:1231
-#: client/cl_aircraft.c:1239 client/cl_aircraft.c:1345
-#: client/cl_aircraft.c:1369 client/cl_airfight.c:388
+#: client/cl_aircraft.c:830 client/cl_aircraft.c:1233
+#: client/cl_aircraft.c:1241 client/cl_aircraft.c:1347
+#: client/cl_aircraft.c:1371 client/cl_airfight.c:388
 #: client/cl_aliencont.c:181 client/cl_aliencont.c:209
 #: client/cl_aliencont.c:222 client/cl_aliencont.c:232
 #: client/cl_basemanagement.c:938 client/cl_basemanagement.c:1489
@@ -11399,15 +11351,15 @@ msgstr ""
 #: client/cl_basemanagement.c:3057 client/cl_basemanagement.c:3065
 #: client/cl_basemanagement.c:3070 client/cl_basemanagement.c:3075
 #: client/cl_campaign.c:144 client/cl_campaign.c:187 client/cl_campaign.c:695
-#: client/cl_campaign.c:1468 client/cl_campaign.c:4223
-#: client/cl_campaign.c:4234 client/cl_campaign.c:4244
-#: client/cl_campaign.c:4254 client/cl_campaign.c:4264
-#: client/cl_campaign.c:4275 client/cl_campaign.c:4291
-#: client/cl_campaign.c:4304 client/cl_campaign.c:4311
-#: client/cl_campaign.c:4319 client/cl_campaign.c:5591
-#: client/cl_campaign.c:5656 client/cl_campaign.c:5705
-#: client/cl_campaign.c:5717 client/cl_campaign.c:5719
-#: client/cl_campaign.c:6054 client/cl_installation.c:337
+#: client/cl_campaign.c:1491 client/cl_campaign.c:4328
+#: client/cl_campaign.c:4339 client/cl_campaign.c:4349
+#: client/cl_campaign.c:4359 client/cl_campaign.c:4369
+#: client/cl_campaign.c:4380 client/cl_campaign.c:4396
+#: client/cl_campaign.c:4409 client/cl_campaign.c:4416
+#: client/cl_campaign.c:4424 client/cl_campaign.c:5694
+#: client/cl_campaign.c:5759 client/cl_campaign.c:5808
+#: client/cl_campaign.c:5820 client/cl_campaign.c:5822
+#: client/cl_campaign.c:6157 client/cl_installation.c:337
 #: client/cl_installation.c:404 client/cl_inventory.c:338
 #: client/cl_inventory.c:343 client/cl_inventory.c:764 client/cl_main.c:1027
 #: client/cl_main.c:1265 client/cl_map.c:279 client/cl_map.c:283
@@ -11416,12 +11368,12 @@ msgstr ""
 #: client/cl_mapfightequip.c:1033 client/cl_mapfightequip.c:1039
 #: client/cl_mapfightequip.c:1047 client/cl_mapfightequip.c:1052
 #: client/cl_market.c:754 client/cl_market.c:759 client/cl_parse.c:1761
-#: client/cl_popup.c:503 client/cl_produce.c:608 client/cl_produce.c:618
-#: client/cl_produce.c:629 client/cl_produce.c:639 client/cl_produce.c:650
-#: client/cl_research.c:1184 client/cl_research.c:1202
-#: client/cl_research.c:1208 client/cl_research.c:1246
-#: client/cl_research.c:1276 client/cl_research.c:1487
-#: client/cl_research.c:1490 client/cl_ufo.c:477 client/cl_ufo.c:826
+#: client/cl_popup.c:503 client/cl_produce.c:609 client/cl_produce.c:619
+#: client/cl_produce.c:630 client/cl_produce.c:640 client/cl_produce.c:651
+#: client/cl_research.c:1241 client/cl_research.c:1259
+#: client/cl_research.c:1265 client/cl_research.c:1303
+#: client/cl_research.c:1333 client/cl_research.c:1645
+#: client/cl_research.c:1648 client/cl_ufo.c:477 client/cl_ufo.c:826
 #: client/cl_ufo.c:834
 msgid "Notice"
 msgstr "ข้อสังเกต"
@@ -11509,79 +11461,79 @@ msgstr "ภารกิจขนส่ง"
 msgid "UFO"
 msgstr "จานบิน"
 
-#: client/cl_aircraft.c:735 client/cl_map.c:1916 client/cl_map.c:1925
-#: client/cl_map.c:1938
+#: client/cl_aircraft.c:737 client/cl_map.c:1927 client/cl_map.c:1936
+#: client/cl_map.c:1949
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "ความเร็ว:\t%.0f\n"
 
-#: client/cl_aircraft.c:737 client/cl_map.c:1917 client/cl_map.c:1926
+#: client/cl_aircraft.c:739 client/cl_map.c:1928 client/cl_map.c:1937
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "เชื้อเพลิง:\t%i/%i\n"
 
-#: client/cl_aircraft.c:739 client/cl_ufopedia.c:698
+#: client/cl_aircraft.c:741 client/cl_ufopedia.c:698
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr ""
 
-#: client/cl_aircraft.c:741
+#: client/cl_aircraft.c:743
 #, fuzzy, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/cl_aircraft.c:742
+#: client/cl_aircraft.c:744
 #, fuzzy, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "เครื่องบิน:\t%i c\n"
 
-#: client/cl_aircraft.c:743
+#: client/cl_aircraft.c:745
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr ""
 
-#: client/cl_aircraft.c:827
+#: client/cl_aircraft.c:829
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
 msgstr ""
 
-#: client/cl_aircraft.c:866
+#: client/cl_aircraft.c:868
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/cl_aircraft.c:870
+#: client/cl_aircraft.c:872
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/cl_aircraft.c:873
+#: client/cl_aircraft.c:875
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/cl_aircraft.c:876
+#: client/cl_aircraft.c:878
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/cl_aircraft.c:880
+#: client/cl_aircraft.c:882
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/cl_aircraft.c:1231
+#: client/cl_aircraft.c:1233
 #, fuzzy, c-format
 msgid "Craft %s has refuelled at base %s."
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/cl_aircraft.c:1239
+#: client/cl_aircraft.c:1241
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/cl_aircraft.c:1345
+#: client/cl_aircraft.c:1347
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/cl_aircraft.c:1369
+#: client/cl_aircraft.c:1371
 msgid "Insufficient fuel."
 msgstr ""
 
@@ -11597,7 +11549,7 @@ msgstr "ดักจับ"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:487 client/cl_campaign.c:5719
+#: client/cl_airfight.c:487 client/cl_campaign.c:5822
 msgid "You've lost the battle"
 msgstr "คุณรบแพ้"
 
@@ -11799,12 +11751,12 @@ msgstr "ค่าใช้จ่ายในการทำงาน:\t%i c\n"
 msgid "Needs:\t%s\n"
 msgstr "ขึ้นกับ:\t%s\n"
 
-#: client/cl_basemanagement.c:2311 client/cl_campaign.c:4577
+#: client/cl_basemanagement.c:2311 client/cl_campaign.c:4682
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_basemanagement.c:2628 client/cl_team.c:1216 client/cl_team.c:1666
+#: client/cl_basemanagement.c:2628 client/cl_team.c:1216 client/cl_team.c:1667
 msgid "NewTeam"
 msgstr "ทีมใหม่"
 
@@ -11876,9 +11828,9 @@ msgid "No aircraft in this base - You first have to purchase or transfer an airc
 msgstr "ไม่มียานบินในฐาน - คุณต้องซื้อหรือโยกย้ายยานบินก่อน\n"
 
 #: client/cl_basemanagement.c:3138 client/cl_basemanagement.c:3140
-#: client/cl_campaign.c:5305 client/cl_market.c:736 client/cl_market.c:741
+#: client/cl_campaign.c:5408 client/cl_market.c:736 client/cl_market.c:741
 #: client/cl_market.c:859 client/cl_market.c:861 client/cl_save.c:381
-#: client/cl_team.c:1716 client/cl_team.c:1723
+#: client/cl_team.c:1717 client/cl_team.c:1724
 msgid "Note"
 msgstr "ข้อสังเกต"
 
@@ -11961,7 +11913,7 @@ msgstr "ภารกิจการเคลื่อนย้าย"
 msgid "Base attack"
 msgstr "การโจมตีขั้นพื้นฐาน"
 
-#: client/cl_campaign.c:521 client/cl_campaign.c:3231
+#: client/cl_campaign.c:521 client/cl_campaign.c:3332
 #, fuzzy
 msgid "Alien base"
 msgstr "มนุษย์ต่างดาว"
@@ -11976,226 +11928,226 @@ msgstr "เคลื่อนที่ไปยังภารกิจ"
 msgid "Alien activity has been detected in %s."
 msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
 
-#: client/cl_campaign.c:1103 client/cl_campaign.c:1338
-#: client/cl_campaign.c:3198
+#: client/cl_campaign.c:1111 client/cl_campaign.c:2621
+#: client/cl_campaign.c:3298
 #, fuzzy
 msgid "No nation"
 msgstr "ประเทศ"
 
-#: client/cl_campaign.c:1467
+#: client/cl_campaign.c:1490
 #, fuzzy, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
 msgstr "ฐาน: %s ถูกถล่มย่อยยับ! พนักงานทุกคนโดนฆ่า อุปกรณ์ทั้งหมดถูกทำลาย"
 
-#: client/cl_campaign.c:1542
+#: client/cl_campaign.c:1565
 #, fuzzy, c-format
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"
 msgstr "ฐานถูกโจมตี"
 
-#: client/cl_campaign.c:1544
+#: client/cl_campaign.c:1567
 #, fuzzy, c-format
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"
 msgstr "ฐานถูกโจมตี"
 
-#: client/cl_campaign.c:3624
+#: client/cl_campaign.c:3729
 msgid "You've gone too far into debt."
 msgstr ""
 
-#: client/cl_campaign.c:3632
+#: client/cl_campaign.c:3737
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/cl_campaign.c:3638
+#: client/cl_campaign.c:3743
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/cl_campaign.c:3656
+#: client/cl_campaign.c:3761
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/cl_campaign.c:3896
+#: client/cl_campaign.c:4001
 msgid "Jan"
 msgstr "มค."
 
-#: client/cl_campaign.c:3898
+#: client/cl_campaign.c:4003
 msgid "Feb"
 msgstr "กพ."
 
-#: client/cl_campaign.c:3900
+#: client/cl_campaign.c:4005
 msgid "Mar"
 msgstr "มีค."
 
-#: client/cl_campaign.c:3902
+#: client/cl_campaign.c:4007
 msgid "Apr"
 msgstr "เมย."
 
-#: client/cl_campaign.c:3904
+#: client/cl_campaign.c:4009
 msgid "May"
 msgstr "พค."
 
-#: client/cl_campaign.c:3906
+#: client/cl_campaign.c:4011
 msgid "Jun"
 msgstr "มิย."
 
-#: client/cl_campaign.c:3908
+#: client/cl_campaign.c:4013
 msgid "Jul"
 msgstr "กค."
 
-#: client/cl_campaign.c:3910
+#: client/cl_campaign.c:4015
 msgid "Aug"
 msgstr "สค."
 
-#: client/cl_campaign.c:3912
+#: client/cl_campaign.c:4017
 msgid "Sep"
 msgstr "กย."
 
-#: client/cl_campaign.c:3914
+#: client/cl_campaign.c:4019
 msgid "Oct"
 msgstr "ตค."
 
-#: client/cl_campaign.c:3916
+#: client/cl_campaign.c:4021
 msgid "Nov"
 msgstr "พย."
 
-#: client/cl_campaign.c:3918
+#: client/cl_campaign.c:4023
 msgid "Dec"
 msgstr "ธค."
 
-#: client/cl_campaign.c:3939
+#: client/cl_campaign.c:4044
 msgid "stopped"
 msgstr ""
 
-#: client/cl_campaign.c:3940
+#: client/cl_campaign.c:4045
 msgid "5 sec"
 msgstr "5 วินาที"
 
-#: client/cl_campaign.c:3941
+#: client/cl_campaign.c:4046
 #, fuzzy
 msgid "10 sec"
 msgstr "5 วินาที"
 
-#: client/cl_campaign.c:3942
+#: client/cl_campaign.c:4047
 #, fuzzy
 msgid "1 min"
 msgstr "5 นาที"
 
-#: client/cl_campaign.c:3943
+#: client/cl_campaign.c:4048
 msgid "5 mins"
 msgstr "5 นาที"
 
-#: client/cl_campaign.c:3944
+#: client/cl_campaign.c:4049
 #, fuzzy
 msgid "10 mins"
 msgstr "5 นาที"
 
-#: client/cl_campaign.c:3945
+#: client/cl_campaign.c:4050
 #, fuzzy
 msgid "20 mins"
 msgstr "5 นาที"
 
-#: client/cl_campaign.c:3946
+#: client/cl_campaign.c:4051
 msgid "1 hour"
 msgstr "1 ชม."
 
-#: client/cl_campaign.c:3947
+#: client/cl_campaign.c:4052
 #, fuzzy
 msgid "12 hours"
 msgstr "12 ชม."
 
-#: client/cl_campaign.c:3948
+#: client/cl_campaign.c:4053
 msgid "1 day"
 msgstr "1 วัน"
 
-#: client/cl_campaign.c:3949
+#: client/cl_campaign.c:4054
 msgid "5 days"
 msgstr "5 วัน"
 
-#: client/cl_campaign.c:4037 client/cl_event.c:247 client/cl_save.c:304
+#: client/cl_campaign.c:4142 client/cl_event.c:247 client/cl_save.c:304
 #: client/cl_ufopedia.c:854 client/cl_ufopedia.c:861
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:4041
+#: client/cl_campaign.c:4146
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:4217
+#: client/cl_campaign.c:4322
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "ได้ %i %s, %i %s, %i %s, %i %s, และ %i %s จากประเทศ %s (%s)"
 
-#: client/cl_campaign.c:4218
+#: client/cl_campaign.c:4323
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "เครดิต"
 msgstr[1] "เครดิต"
 
-#: client/cl_campaign.c:4219 client/cl_campaign.c:6930
+#: client/cl_campaign.c:4324 client/cl_campaign.c:7033
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "นักวิทยาศาสตร์"
 msgstr[1] "นักวิทยาศาสตร์"
 
-#: client/cl_campaign.c:4220 client/cl_campaign.c:6929
+#: client/cl_campaign.c:4325 client/cl_campaign.c:7032
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "ทหาร"
 msgstr[1] "ทหาร"
 
-#: client/cl_campaign.c:4221 client/cl_campaign.c:6931
+#: client/cl_campaign.c:4326 client/cl_campaign.c:7034
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "คนงาน"
 msgstr[1] "คนงาน"
 
-#: client/cl_campaign.c:4232
+#: client/cl_campaign.c:4337
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "จ่าย %i เครดิต ให้ทหาร"
 
-#: client/cl_campaign.c:4242
+#: client/cl_campaign.c:4347
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "จ่าย %i เครดิต ให้คนงาน"
 
-#: client/cl_campaign.c:4252
+#: client/cl_campaign.c:4357
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "จ่าย %i เครดิต ให้นักวิทยาศาสตร์"
 
-#: client/cl_campaign.c:4262
+#: client/cl_campaign.c:4367
 #, fuzzy, c-format
 msgid "Paid %i credits to pilots"
 msgstr "จ่าย %i เครดิต ให้เสนารักษ์"
 
-#: client/cl_campaign.c:4273
+#: client/cl_campaign.c:4378
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "จ่าย %i เครดิต สำหรับค่าหุ่นยนต์"
 
-#: client/cl_campaign.c:4289
+#: client/cl_campaign.c:4394
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "จ่าย %i เครดิต สำหรับยานบิน"
 
-#: client/cl_campaign.c:4303
+#: client/cl_campaign.c:4408
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "จ่าย %i เครดิตเป็นค่ารักษาฐาน %s"
 
-#: client/cl_campaign.c:4309
+#: client/cl_campaign.c:4414
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "จ่าย %i เครดิต เป็นค่าจัดการ"
 
-#: client/cl_campaign.c:4317
+#: client/cl_campaign.c:4422
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "จ่าย %i เครดิต เป็นค่าดอกเบี้ยเงินกู้"
 
-#: client/cl_campaign.c:4599
+#: client/cl_campaign.c:4704
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12206,7 +12158,7 @@ msgstr ""
 "แพ้:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:4604
+#: client/cl_campaign.c:4709
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12217,47 +12169,47 @@ msgstr ""
 "คงอยู่:\t%i\n"
 "ถูกโจมตี:\t%i\n"
 
-#: client/cl_campaign.c:4612
+#: client/cl_campaign.c:4717
 #, fuzzy, c-format
 msgid "%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:4619 client/cl_ufopedia.c:1715
+#: client/cl_campaign.c:4724 client/cl_ufopedia.c:1715
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:4658 client/cl_ufopedia.c:440
+#: client/cl_campaign.c:4763 client/cl_ufopedia.c:440
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:4664
+#: client/cl_campaign.c:4769
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "พนักงาน:\t%i c\n"
 
-#: client/cl_campaign.c:4677
+#: client/cl_campaign.c:4782
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "เครื่องบิน:\t%i c\n"
 
-#: client/cl_campaign.c:4688
+#: client/cl_campaign.c:4793
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "ฐาน (%s):\t%i c\n"
 
-#: client/cl_campaign.c:4693
+#: client/cl_campaign.c:4798
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "ค่าใช้จ่ายในการดำเนินการ:\t%i c\n"
 
-#: client/cl_campaign.c:4700
+#: client/cl_campaign.c:4805
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "หนี้สิน:\t%i c\n"
 
-#: client/cl_campaign.c:4703
+#: client/cl_campaign.c:4808
 #, c-format
 msgid ""
 "\n"
@@ -12268,87 +12220,87 @@ msgstr ""
 "\t-------\n"
 "รวม:\t%i c\n"
 
-#: client/cl_campaign.c:4708
+#: client/cl_campaign.c:4813
 #, fuzzy, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "ทีมสูงสุดในแผนที่:\t%s\n"
 
-#: client/cl_campaign.c:4713
+#: client/cl_campaign.c:4818
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cl_campaign.c:5305
+#: client/cl_campaign.c:5408
 msgid "Assemble or load a team"
 msgstr "รวมพล หรือจัดขึ้นเครื่อง"
 
-#: client/cl_campaign.c:5591
+#: client/cl_campaign.c:5694
 msgid "Your dropship is not near the landing zone"
 msgstr "เครื่องไม่ได้อยู่ใกล้กลับบริเวณลงจอด"
 
-#: client/cl_campaign.c:5656
+#: client/cl_campaign.c:5759
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:5704 client/cl_campaign.c:6053
+#: client/cl_campaign.c:5807 client/cl_campaign.c:6156
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
 
-#: client/cl_campaign.c:5717
+#: client/cl_campaign.c:5820
 msgid "You've won the battle"
 msgstr "คุณรบชนะ"
 
-#: client/cl_campaign.c:5799
+#: client/cl_campaign.c:5902
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ได้เลื่อนยศเป็น %s.\n"
 
-#: client/cl_campaign.c:5801
+#: client/cl_campaign.c:5904
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s ได้รับการเลื่อนยศเป็น %s\\ หลังการเสียชีวิต เนื่องจากได้ต่อสู้อย่างสมเกียรติในสงครามที่ไม่มีโอกาสรอด\n"
 
-#: client/cl_campaign.c:5802
+#: client/cl_campaign.c:5905
 msgid "Soldier promoted"
 msgstr "ทหารเลื่อนยศ"
 
-#: client/cl_campaign.c:6870
+#: client/cl_campaign.c:6973
 msgid "Chicken-hearted"
 msgstr "ง่ายสุด"
 
-#: client/cl_campaign.c:6872
+#: client/cl_campaign.c:6975
 msgid "Very Easy"
 msgstr "ง่ายมาก"
 
-#: client/cl_campaign.c:6875
+#: client/cl_campaign.c:6978
 msgid "Easy"
 msgstr "ง่าย"
 
-#: client/cl_campaign.c:6880
+#: client/cl_campaign.c:6983
 msgid "Hard"
 msgstr "ยาก"
 
-#: client/cl_campaign.c:6882
+#: client/cl_campaign.c:6985
 msgid "Very Hard"
 msgstr "ยากมาก"
 
-#: client/cl_campaign.c:6884
+#: client/cl_campaign.c:6987
 msgid "Insane"
 msgstr "ยากสุด"
 
-#: client/cl_campaign.c:6920
+#: client/cl_campaign.c:7023
 msgid "Human"
 msgstr "มนุษย์"
 
-#: client/cl_campaign.c:6922 client/cl_transfer.c:428
+#: client/cl_campaign.c:7025 client/cl_transfer.c:428
 msgid "Aliens"
 msgstr "มนุษย์ต่างดาว"
 
-#: client/cl_campaign.c:6924
+#: client/cl_campaign.c:7027
 #, fuzzy, c-format
 msgid ""
 "%s\n"
@@ -12379,20 +12331,20 @@ msgstr "ส่งข้อความให้ผู้เล่นทุกค
 msgid "Send a message to allied team members"
 msgstr "ส่งข้อความให้พันธมิตรทุกคน"
 
-#: client/cl_employee.c:180
+#: client/cl_employee.c:182
 #, fuzzy, c-format
 msgid "%s [Transferred]"
 msgstr "โยกย้าย"
 
-#: client/cl_employee.c:249
+#: client/cl_employee.c:254
 msgid "Soldier"
 msgstr "ทหาร"
 
-#: client/cl_employee.c:583
+#: client/cl_employee.c:588
 msgid "Not enough quarters"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/cl_employee.c:583
+#: client/cl_employee.c:588
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -12400,12 +12352,12 @@ msgstr ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
 
-#: client/cl_employee.c:1348
+#: client/cl_employee.c:1353
 #, fuzzy
 msgid "Could not fire employee"
 msgstr "จ้างพนักงาน"
 
-#: client/cl_employee.c:1354
+#: client/cl_employee.c:1359
 #, fuzzy
 msgid "Could not hire employee"
 msgstr "จ้างพนักงาน"
@@ -12415,139 +12367,139 @@ msgstr "จ้างพนักงาน"
 msgid "You've got a new mail: %s"
 msgstr "มีเครื่องบินใหม่ ( %s) ในฐาน %s"
 
-#: client/cl_input.c:1728
+#: client/cl_input.c:1694
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบแบบทวนเข็มนาฬิกา"
 
-#: client/cl_input.c:1730
+#: client/cl_input.c:1696
 msgid "Rotate battlescape camera clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบตามเข็มนาฬิกา"
 
-#: client/cl_input.c:1732
+#: client/cl_input.c:1698
 msgid "Tilt battlescape camera up"
 msgstr "เอียงมุมกล้องในสนามรบขึ้น"
 
-#: client/cl_input.c:1734
+#: client/cl_input.c:1700
 msgid "Tilt battlescape camera down"
 msgstr "เอียงมุมกล้องในสนามรบลง"
 
-#: client/cl_input.c:1736
+#: client/cl_input.c:1702
 msgid "Move battlescape camera left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/cl_input.c:1738
+#: client/cl_input.c:1704
 msgid "Move battlescape camera right"
 msgstr "เลื่อนกล้องสนามรบไปทางขวา"
 
-#: client/cl_input.c:1740
+#: client/cl_input.c:1706
 msgid "Move battlescape camera forward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหน้า"
 
-#: client/cl_input.c:1742
+#: client/cl_input.c:1708
 msgid "Move battlescape camera backward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหลัง"
 
-#: client/cl_input.c:1744 client/cl_input.c:1786
+#: client/cl_input.c:1710 client/cl_input.c:1752
 msgid "Zoom in"
 msgstr "ซูมเข้า"
 
-#: client/cl_input.c:1746 client/cl_input.c:1787
+#: client/cl_input.c:1712 client/cl_input.c:1753
 msgid "Zoom out"
 msgstr "ซูมออก"
 
-#: client/cl_input.c:1749
+#: client/cl_input.c:1715
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1751
+#: client/cl_input.c:1717
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1753
+#: client/cl_input.c:1719
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1755
+#: client/cl_input.c:1721
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "เลือก / เดินไปที่จุด / ในโหมดยิงให้ยิง ฯลฯ"
 
-#: client/cl_input.c:1757
+#: client/cl_input.c:1723
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "เดินไปที่จุด/ในโหมดยิง ให้ยกเลิกการกระทำ"
 
-#: client/cl_input.c:1759
+#: client/cl_input.c:1725
 msgid "Turn soldier toward mouse pointer"
 msgstr "หันทหารไปยังลูกศร"
 
-#: client/cl_input.c:1761
+#: client/cl_input.c:1727
 #, fuzzy
 msgid "Toggles the hud radar mode"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/cl_input.c:1764
+#: client/cl_input.c:1730
 msgid "Toggle stand/crounch"
 msgstr "สลับ ยืน/ย่อตัว"
 
-#: client/cl_input.c:1765
+#: client/cl_input.c:1731
 msgid "Toggle reaction fire"
 msgstr "สลับการยิงตอบโต้"
 
-#: client/cl_input.c:1766
+#: client/cl_input.c:1732
 #, fuzzy
 msgid "Toggle reservation for crouching."
 msgstr "สลับการยิงตอบโต้"
 
-#: client/cl_input.c:1767
+#: client/cl_input.c:1733
 #, fuzzy
 msgid "Toggle the headgear"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/cl_input.c:1768
+#: client/cl_input.c:1734
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "สลับไปมนุษย์ต่างดาวตัวต่อไป"
 
-#: client/cl_input.c:1769
+#: client/cl_input.c:1735
 msgid "Draw a line to each alien visible to the current actor."
 msgstr ""
 
-#: client/cl_input.c:1770
+#: client/cl_input.c:1736
 msgid "Toggle to next alien visible from selected actor."
 msgstr ""
 
-#: client/cl_input.c:1780
+#: client/cl_input.c:1746
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "บรรจุกระสุนอาวุธมือซ้าย"
 
-#: client/cl_input.c:1781
+#: client/cl_input.c:1747
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "บรรจุกระสุนอาวุธมือขวา"
 
-#: client/cl_input.c:1782
+#: client/cl_input.c:1748
 msgid "Ends current round"
 msgstr "จบตา"
 
-#: client/cl_input.c:1783
+#: client/cl_input.c:1749
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/cl_input.c:1784
+#: client/cl_input.c:1750
 msgid "Slice through terrain at a higher level"
 msgstr "มองผ่านพื้นไปขั้นสูงกว่า"
 
-#: client/cl_input.c:1785
+#: client/cl_input.c:1751
 msgid "Slice through terrain at a lower level"
 msgstr "มองผ่านพื้นไปขั้นต่ำกว่า"
 
-#: client/cl_input.c:1788
+#: client/cl_input.c:1754
 msgid "Confirm the current action"
 msgstr "ยืนยันการกระทำ"
 
-#: client/cl_input.c:1789
+#: client/cl_input.c:1755
 msgid "Toggle the combat zoom level (full zoom or half zoom)."
 msgstr ""
 
-#: client/cl_input.c:1800 client/cl_input.c:1802
+#: client/cl_input.c:1766 client/cl_input.c:1768
 msgid "Toggle first-person/third-person camera mode"
 msgstr "เปลี่ยนมุมมอง บุคคลที่หนึ่ง/บุคคลที่สาม"
 
@@ -12583,47 +12535,47 @@ msgstr "เครดิตไม่พอตั้งฐานใหม่"
 msgid "You've reached the installation limit."
 msgstr "จำนวนฐานถึงขีดจำกัด"
 
-#: client/cl_installation.c:451
+#: client/cl_installation.c:452
 #, fuzzy, c-format
 msgid "Installation %s was destroyed."
 msgstr "ประเทศ"
 
-#: client/cl_installation.c:452
+#: client/cl_installation.c:453
 #, fuzzy
 msgid "Installation destroyed"
 msgstr "ประเทศ"
 
-#: client/cl_installation.c:474
+#: client/cl_installation.c:475
 #, fuzzy
 msgid "Destroy Installation"
 msgstr "ประเทศ"
 
-#: client/cl_installation.c:474
+#: client/cl_installation.c:475
 #, fuzzy
 msgid "Do you really want to destroy this installation?"
 msgstr "แน่ใจหรือว่าจะทำลายสิ่งก่อสร้างนี้?"
 
-#: client/cl_installation.c:476
+#: client/cl_installation.c:477
 #, fuzzy
 msgid "Forget it"
 msgstr "บังคับให้เริ่ม"
 
-#: client/cl_installation.c:557
+#: client/cl_installation.c:558
 #, fuzzy, c-format
 msgid "Construction of installation %s finished."
 msgstr "ก่อสร้างเสร็จสิ้น"
 
-#: client/cl_installation.c:558
+#: client/cl_installation.c:559
 #, fuzzy
 msgid "Installation finished"
 msgstr "ประเทศ"
 
-#: client/cl_installation.c:690
+#: client/cl_installation.c:691
 #, fuzzy, c-format
 msgid "%d c"
 msgstr "%i c"
 
-#: client/cl_installation.c:727
+#: client/cl_installation.c:728
 #, fuzzy, c-format
 msgid "%d day\n"
 msgid_plural "%d days\n"
@@ -12659,19 +12611,24 @@ msgstr[1] "ไม่ได้ติดตั้งอุปกรณ์"
 msgid "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
-#: client/cl_language.c:276
+#: client/cl_irc.c:993 client/cl_irc.c:1220 client/cl_main.c:379
+#: client/cl_main.c:739 client/cl_main.c:1487 client/cl_main.c:1492
+#: client/cl_main.c:1498 client/cl_main.c:1506 client/cl_save.c:453
+#: client/cl_save.c:476 client/cl_save.c:617
+msgid "Error"
+msgstr "ผิดพลาด"
+
+#: client/cl_irc.c:1220
+msgid "Server closed connection"
+msgstr ""
+
+#: client/cl_language.c:298
 msgid "..."
 msgstr ""
 
 #: client/cl_main.c:379
 msgid "Assemble a team first"
 msgstr "จัดตั้งทีมก่อน"
-
-#: client/cl_main.c:379 client/cl_main.c:739 client/cl_main.c:1485
-#: client/cl_main.c:1490 client/cl_main.c:1496 client/cl_main.c:1504
-#: client/cl_save.c:453 client/cl_save.c:476 client/cl_save.c:617
-msgid "Error"
-msgstr "ผิดพลาด"
 
 #: client/cl_main.c:739
 msgid "Server needs restarting - something went wrong"
@@ -12791,37 +12748,37 @@ msgstr "ทีมถูกใช้แล้ว"
 msgid "Invalid or full team"
 msgstr "ทีมนี้ใช้ไม่ได้ หรือเต็มแล้ว"
 
-#: client/cl_main.c:1484
+#: client/cl_main.c:1486
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "เวอร์ชั่นของเกม (%s) ไม่ตรงกับของเซอร์เวอร์"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1492
 msgid "Local map version differs from server"
 msgstr "เวอร์ชั่นแผนที่ไม่ตรงกับของเซอร์เวอร์"
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1498
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:1503
+#: client/cl_main.c:1505
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "เวอร์ชั่นเกม (%s) ต่างกับของเซอร์เวอร์ (%s)"
 
-#: client/cl_main.c:2074
+#: client/cl_main.c:2084
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2075
+#: client/cl_main.c:2085
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:2196 client/cl_view.c:278
+#: client/cl_main.c:2206 client/cl_view.c:278
 msgid "Awaiting game start"
 msgstr ""
 
-#: client/cl_main.c:2250
+#: client/cl_main.c:2260
 #, fuzzy
 msgid "Custom"
 msgstr "อัตโนมัติ"
@@ -12839,41 +12796,41 @@ msgstr "ฐาน"
 msgid "Installation"
 msgstr "ประเทศ"
 
-#: client/cl_map.c:1488
+#: client/cl_map.c:1497
 msgid "Day"
 msgstr "กลางวัน"
 
-#: client/cl_map.c:1488
+#: client/cl_map.c:1497
 msgid "Night"
 msgstr "กลางคืน"
 
-#: client/cl_map.c:1832
+#: client/cl_map.c:1843
 #, fuzzy, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_map.c:1876
+#: client/cl_map.c:1887
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "เลือกที่ตั้งฐานใหม่บนแผนที่\n"
 
-#: client/cl_map.c:1879
+#: client/cl_map.c:1890
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "เลือกที่ตั้งฐานใหม่บนแผนที่\n"
 
-#: client/cl_map.c:1884
+#: client/cl_map.c:1895
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "ตอนนี้มนุษย์ต่างดาวโจมตีฐานเรา\n"
 
-#: client/cl_map.c:1889
+#: client/cl_map.c:1900
 msgid "Select ufo or mission on map\n"
 msgstr "เลือกจานบินหรือภารกิจบนแผนที่\n"
 
-#: client/cl_map.c:1894
+#: client/cl_map.c:1905
 msgid "UFO in radar range\n"
 msgstr "จานบินในระยะเรดาร์\n"
 
-#: client/cl_map.c:1902
+#: client/cl_map.c:1913
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -12884,22 +12841,22 @@ msgstr ""
 "ประเภท: %s\n"
 "วัตถุประสงค์: %s\n"
 
-#: client/cl_map.c:1913 client/cl_map.c:1923
+#: client/cl_map.c:1924 client/cl_map.c:1934
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "ชื่อ:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1914 client/cl_map.c:1924
+#: client/cl_map.c:1925 client/cl_map.c:1935
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "สถานะ:\t%s\n"
 
-#: client/cl_map.c:1915
+#: client/cl_map.c:1926
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/cl_map.c:1919 client/cl_map.c:1931
+#: client/cl_map.c:1930 client/cl_map.c:1942
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ปฏิบัติการ:\t%s\n"
@@ -13183,25 +13140,25 @@ msgstr "ขายเครื่องบินไม่ได้ หากม�
 msgid "You can't sell an aircraft that is not in base"
 msgstr "ขายเครื่องบินไม่ได้ หากมีทีมประจำบนเครื่อง"
 
-#: client/cl_menu.c:137
+#: client/cl_menu.c:139
 #, fuzzy
 msgid "No team assigned"
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/cl_menu.c:137
+#: client/cl_menu.c:139
 msgid "Please choose and equip your team first"
 msgstr ""
 
-#: client/cl_menu.c:143
+#: client/cl_menu.c:145
 #, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "ตั้งจำนวนทหารสูงสุดที่แต่ละทีมมีได้"
 
-#: client/cl_menu.c:143
+#: client/cl_menu.c:145
 msgid "Settings doesn't make sense"
 msgstr "การตั้งค่าไม่สมเหตุผล"
 
-#: client/cl_menu.c:281
+#: client/cl_menu.c:291
 #, fuzzy
 msgid "all"
 msgstr "บอล"
@@ -13360,12 +13317,12 @@ msgid ""
 "Aircraft cannot start.\n"
 msgstr ""
 
-#: client/cl_produce.c:246
+#: client/cl_produce.c:247
 #, fuzzy
 msgid "Not enough workers"
 msgstr "Not enough workshops"
 
-#: client/cl_produce.c:246
+#: client/cl_produce.c:247
 #, fuzzy
 msgid ""
 "You cannot queue productions without workers hired in this base.\n"
@@ -13375,11 +13332,11 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/cl_produce.c:253
+#: client/cl_produce.c:254
 msgid "Not enough workshops"
 msgstr "Not enough workshops"
 
-#: client/cl_produce.c:253
+#: client/cl_produce.c:254
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -13387,13 +13344,13 @@ msgstr ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 
-#: client/cl_produce.c:271 client/cl_produce.c:274 client/cl_produce.c:279
-#: client/cl_produce.c:1267 client/cl_produce.c:1308 client/cl_transfer.c:259
+#: client/cl_produce.c:272 client/cl_produce.c:275 client/cl_produce.c:280
+#: client/cl_produce.c:1273 client/cl_produce.c:1314 client/cl_transfer.c:259
 #: client/cl_transfer.c:262 client/cl_transfer.c:265
 msgid "Hangars not ready"
 msgstr ""
 
-#: client/cl_produce.c:271
+#: client/cl_produce.c:272
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -13402,7 +13359,7 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/cl_produce.c:274
+#: client/cl_produce.c:275
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -13411,7 +13368,7 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/cl_produce.c:279 client/cl_produce.c:1267 client/cl_produce.c:1308
+#: client/cl_produce.c:280 client/cl_produce.c:1273 client/cl_produce.c:1314
 #, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
@@ -13420,210 +13377,210 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/cl_produce.c:513
+#: client/cl_produce.c:514
 #, c-format
 msgid "Production queue for base %s is empty"
 msgstr "คิวการผลิตของฐาน %s ว่าง"
 
-#: client/cl_produce.c:514
+#: client/cl_produce.c:515
 msgid "Production queue empty"
 msgstr "คิวการผลิตว่าง"
 
-#: client/cl_produce.c:607 client/cl_produce.c:628
+#: client/cl_produce.c:608 client/cl_produce.c:629
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in base %s.\n"
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/cl_produce.c:617
+#: client/cl_produce.c:618
 #, fuzzy, c-format
 msgid "Not enough free storage space in base %s. Production postponed.\n"
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/cl_produce.c:638
+#: client/cl_produce.c:639
 #, fuzzy, c-format
 msgid "Not enough free hangar space in base %s. Production postponed.\n"
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/cl_produce.c:649
+#: client/cl_produce.c:650
 #, fuzzy, c-format
 msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
 msgstr "เครดิตไม่พอตั้งฐานใหม่"
 
-#: client/cl_produce.c:681 client/cl_produce.c:693
+#: client/cl_produce.c:682 client/cl_produce.c:694
 #, c-format
 msgid "The production of %s has finished."
 msgstr "การผลิต %s เสร็จสิ้น"
 
-#: client/cl_produce.c:682 client/cl_produce.c:694 client/cl_produce.c:724
+#: client/cl_produce.c:683 client/cl_produce.c:695 client/cl_produce.c:725
 msgid "Production finished"
 msgstr "ผลิตเสร็จสิ้น"
 
-#: client/cl_produce.c:723
+#: client/cl_produce.c:724
 #, fuzzy, c-format
 msgid "The disassembling of %s has finished."
 msgstr "การผลิต %s เสร็จสิ้น"
 
-#: client/cl_produce.c:749 client/cl_produce.c:854
+#: client/cl_produce.c:750 client/cl_produce.c:859
 msgid "No item selected"
 msgstr "ไม่ได้เลือกอุปกรณ์"
 
-#: client/cl_produce.c:758
+#: client/cl_produce.c:759
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "ต้นทุนต่อชิ้น\t%i c\n"
 
-#: client/cl_produce.c:760 client/cl_produce.c:817
+#: client/cl_produce.c:761 client/cl_produce.c:818
 #, fuzzy, c-format
 msgid "Production time\t%ih\n"
 msgstr "เวลาผลิต\t%ih\n"
 
-#: client/cl_produce.c:761
+#: client/cl_produce.c:762
 #, fuzzy, c-format
 msgid "Item size\t%i\n"
 msgstr "ทีมแพ้\t%i\n"
 
-#: client/cl_produce.c:788
+#: client/cl_produce.c:789
 #, c-format
 msgid "%s - disassembly\n"
 msgstr ""
 
-#: client/cl_produce.c:789
+#: client/cl_produce.c:790
 #, fuzzy
 msgid "Components: "
 msgstr "พอใช้"
 
-#: client/cl_produce.c:794
+#: client/cl_produce.c:795
 #, fuzzy, c-format
 msgid "%s (%i) "
 msgstr "%s (%s)\n"
 
-#: client/cl_produce.c:798
+#: client/cl_produce.c:799
 #, c-format
 msgid "Disassembly time\t%ih\n"
 msgstr ""
 
-#: client/cl_produce.c:814
+#: client/cl_produce.c:815
 #, fuzzy, c-format
 msgid "Production costs\t%i c\n"
 msgstr "เวลาผลิต\t%ih\n"
 
-#: client/cl_produce.c:852
+#: client/cl_produce.c:857
 #, fuzzy
 msgid "No aircraft selected."
 msgstr "ไม่ได้เลือกยานบิน"
 
-#: client/cl_produce.c:1334
+#: client/cl_produce.c:1340
 msgid "Queue full!"
 msgstr "คิวเต็ม!"
 
-#: client/cl_produce.c:1334
+#: client/cl_produce.c:1340
 msgid "You cannot queue any more items!"
 msgstr "เพิ่มคิวไม่ได้อีกแล้ว!"
 
-#: client/cl_produce.c:1354 client/cl_produce.c:1370
+#: client/cl_produce.c:1360 client/cl_produce.c:1376
 #, fuzzy
 msgid "Not enough material!"
 msgstr "ที่อยู่ไม่พอ"
 
-#: client/cl_produce.c:1354
+#: client/cl_produce.c:1360
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
-#: client/cl_produce.c:1358 client/cl_produce.c:1382
+#: client/cl_produce.c:1364 client/cl_produce.c:1388
 #, c-format
 msgid "Production of %s started"
 msgstr "เริ่มการผลิต %s"
 
-#: client/cl_produce.c:1359 client/cl_produce.c:1362 client/cl_produce.c:1383
+#: client/cl_produce.c:1365 client/cl_produce.c:1368 client/cl_produce.c:1389
 msgid "Production started"
 msgstr "เริ่มการผลิต"
 
-#: client/cl_produce.c:1361
+#: client/cl_produce.c:1367
 #, fuzzy, c-format
 msgid "Disassembling of %s started"
 msgstr "เริ่มการผลิต %s"
 
-#: client/cl_produce.c:1370
+#: client/cl_produce.c:1376
 #, fuzzy
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "เขตพักอาศัยไม่พอกับจำนวนพนักงาน"
 
-#: client/cl_research.c:91
+#: client/cl_research.c:117
 #, c-format
 msgid "A research project has been completed: %s\n"
 msgstr "โครงการวิจัยเสร็จสิ้น: %s\n"
 
-#: client/cl_research.c:92
+#: client/cl_research.c:118
 msgid "Research finished"
 msgstr "การวิจัยเสร็จสิ้น"
 
-#: client/cl_research.c:126 client/cl_research.c:444
+#: client/cl_research.c:152 client/cl_research.c:470
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "นำเสนอโครงการใหม่: %s\n"
 
-#: client/cl_research.c:127
+#: client/cl_research.c:153
 msgid "Unknown Technology researchable"
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
 
-#: client/cl_research.c:445
+#: client/cl_research.c:471
 msgid "Unknown Technology found"
 msgstr "พบวิทยาการที่ยังไม่รู้จัก"
 
-#: client/cl_research.c:783
+#: client/cl_research.c:833
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
 msgstr ""
 
-#: client/cl_research.c:789
+#: client/cl_research.c:839
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr ""
 
-#: client/cl_research.c:794
+#: client/cl_research.c:844
 msgid "Not researched in any base."
 msgstr "ไม่ได้วิจัยในฐานใดทั้งสิ้น"
 
-#: client/cl_research.c:800
+#: client/cl_research.c:850
 #, c-format
 msgid "Researched in %s"
 msgstr "วิจัยใน %s"
 
-#: client/cl_research.c:802
+#: client/cl_research.c:852
 msgid "Researched in this base."
 msgstr "วิจัยในฐานนี้"
 
-#: client/cl_research.c:814
+#: client/cl_research.c:864
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "ความก้าวหน้า: %.1f%%"
 
-#: client/cl_research.c:817
+#: client/cl_research.c:867
 msgid "Progress: Not available."
 msgstr "ความก้าวหน้า: ไม่มีข้อมูล"
 
-#: client/cl_research.c:822
+#: client/cl_research.c:872
 msgid "Status: Under research"
 msgstr "สถานะ: กำลังวิจัย"
 
-#: client/cl_research.c:825
+#: client/cl_research.c:875
 msgid "Status: Research paused"
 msgstr "สถานะ: หยุดวิจัยชั่วคราว"
 
-#: client/cl_research.c:828
+#: client/cl_research.c:878
 msgid "Status: Research finished"
 msgstr "สถานะ: วิจัยเสร็จสิ้น"
 
-#: client/cl_research.c:833
+#: client/cl_research.c:883
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr ""
 
-#: client/cl_research.c:835
+#: client/cl_research.c:885
 msgid "Status: Unknown technology"
 msgstr "สถานะ: วิทยการที่ยังไม่รู้จัก"
 
-#: client/cl_research.c:938 client/cl_research.c:942
+#: client/cl_research.c:995 client/cl_research.c:999
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -13631,19 +13588,19 @@ msgstr ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
 
-#: client/cl_research.c:938 client/cl_research.c:942
+#: client/cl_research.c:995 client/cl_research.c:999
 msgid "Not enough laboratories"
 msgstr "Not enough laboratories"
 
-#: client/cl_research.c:1184
+#: client/cl_research.c:1241
 msgid "This item is currently under research in another base."
 msgstr "ของนี้ถูกวิจัยในฐานอื่น"
 
-#: client/cl_research.c:1202 client/cl_research.c:1246
+#: client/cl_research.c:1259 client/cl_research.c:1303
 msgid "The research on this item is complete."
 msgstr "การวิจัยของชิ้นนี้เสร็จสิ้น"
 
-#: client/cl_research.c:1208
+#: client/cl_research.c:1265
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -13651,27 +13608,37 @@ msgstr ""
 "ยังวิจัยของนี้ไม่ได้\n"
 "ต้องวิจัยวิทยาการพื้นฐานก่อน"
 
-#: client/cl_research.c:1276
+#: client/cl_research.c:1333
 msgid "No research proposal available for this project."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
 
-#: client/cl_research.c:1370
-msgid "mx."
+#: client/cl_research.c:1560
+#, fuzzy
+msgid "Unassigned scientists"
+msgstr "จ้างนักวิทยาศาสตร์"
+
+#: client/cl_research.c:1577
+msgid "Missing an artifact"
 msgstr ""
 
-#: client/cl_research.c:1487
+#: client/cl_research.c:1585
+#, fuzzy
+msgid "Unresearchable collected items"
+msgstr "ของที่เก็บ %i"
+
+#: client/cl_research.c:1645
 msgid "Nothing to research"
 msgstr "ไม่มีอะไรจะวิจัย"
 
-#: client/cl_research.c:1490
+#: client/cl_research.c:1648
 msgid "Build a laboratory first"
 msgstr "สร้างห้องวิจัยก่อน"
 
-#: client/cl_research.c:1967
+#: client/cl_research.c:2128
 msgid "No description available."
 msgstr "ไม่มีคำอธิบาย"
 
-#: client/cl_research.c:1968
+#: client/cl_research.c:2129
 #, fuzzy
 msgid "No research proposal available."
 msgstr "ไม่มีการนำเสนอโครงการวิจัยนี้"
@@ -13804,34 +13771,34 @@ msgstr ""
 msgid "New team created"
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/cl_team.c:1716
+#: client/cl_team.c:1717
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "ยังไม่มีอะไรจะบันทึก"
 
-#: client/cl_team.c:1723
+#: client/cl_team.c:1724
 msgid "Error saving team. Check free disk space!"
 msgstr "เกิดข้อผิดพลาดในการบันทึกทีม ตรวจที่ว่างในดิสค์!"
 
-#: client/cl_team.c:1917
+#: client/cl_team.c:1918
 msgid "Select a soldier from list"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: client/cl_team.c:1918
+#: client/cl_team.c:1919
 #, fuzzy
 msgid "Reselect the current soldier"
 msgstr "เลือกทหาร"
 
-#: client/cl_team.c:1919
+#: client/cl_team.c:1920
 msgid "Toggle to next soldier"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/cl_team.c:2263 client/cl_team.c:2303
+#: client/cl_team.c:2264 client/cl_team.c:2304
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "ฆ่ามนุษย์ต่างดาว\t%i\n"
 
-#: client/cl_team.c:2265
+#: client/cl_team.c:2266
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -13840,7 +13807,7 @@ msgstr ""
 "จับมนุษย์ต่างดาวได้\t%i\n"
 "\n"
 
-#: client/cl_team.c:2266 client/cl_team.c:2307
+#: client/cl_team.c:2267 client/cl_team.c:2308
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13849,12 +13816,12 @@ msgstr ""
 "มนุษย์ต่างดาวเหลือรอด\t%i\n"
 "\n"
 
-#: client/cl_team.c:2268
+#: client/cl_team.c:2269
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "ฆ่าศัตรู\t%i\n"
 
-#: client/cl_team.c:2270
+#: client/cl_team.c:2271
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -13863,7 +13830,7 @@ msgstr ""
 "จับศัตรู\t%i\n"
 "\n"
 
-#: client/cl_team.c:2271
+#: client/cl_team.c:2272
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -13872,22 +13839,22 @@ msgstr ""
 "ศัตรูเหลือรอด\t%i\n"
 "\n"
 
-#: client/cl_team.c:2275
+#: client/cl_team.c:2276
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "ทีมแพ้\t%i\n"
 
-#: client/cl_team.c:2276
+#: client/cl_team.c:2277
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "ทีมที่หายสาปสูญ\t%i\n"
 
-#: client/cl_team.c:2277
+#: client/cl_team.c:2278
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "สูญเสียจากการยิงของฝ่ายเดียวกัน\t%i\n"
 
-#: client/cl_team.c:2278
+#: client/cl_team.c:2279
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -13896,22 +13863,22 @@ msgstr ""
 "คนหลงเหลือในทีม\t%i\n"
 "\n"
 
-#: client/cl_team.c:2281
+#: client/cl_team.c:2282
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "พลเรือนที่ถูกมนุษย์ต่างดาวฆ่า\t%i\n"
 
-#: client/cl_team.c:2283
+#: client/cl_team.c:2284
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "พลเรือนที่ถูกศัตรูฆ่า\t%i\n"
 
-#: client/cl_team.c:2285
+#: client/cl_team.c:2286
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "พลเรือนที่ถูกทีมเราฆ่า\t%i\n"
 
-#: client/cl_team.c:2286
+#: client/cl_team.c:2287
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13922,27 +13889,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2306
+#: client/cl_team.c:2307
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "จับมนุษย์ต่างดาวได้\t%i\n"
 
-#: client/cl_team.c:2310
+#: client/cl_team.c:2311
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "ทหาร PHALANX ที่ถูกฆ่าโดยมนุษย์ต่างดาว\t%i\n"
 
-#: client/cl_team.c:2311
+#: client/cl_team.c:2312
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "ทหาร PHALANX หายสาปสูญ\t%i\n"
 
-#: client/cl_team.c:2312
+#: client/cl_team.c:2313
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "ทหาร PHALANX ตายด้วยกระสุนฝ่ายตนเอง\t%i\n"
 
-#: client/cl_team.c:2313
+#: client/cl_team.c:2314
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13951,17 +13918,17 @@ msgstr ""
 "ผู้เหลือรอด PHALANX \t%i\n"
 "\n"
 
-#: client/cl_team.c:2315
+#: client/cl_team.c:2316
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "พลเรือนที่ถูกมนุษย์ต่างดาวฆ่า\t%i\n"
 
-#: client/cl_team.c:2316
+#: client/cl_team.c:2317
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "พลเรือนที่ตายด้วยกระสุนฝ่ายเราเอง\t%i\n"
 
-#: client/cl_team.c:2317
+#: client/cl_team.c:2318
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13970,26 +13937,26 @@ msgstr ""
 "พลเรือนที่ช่วยได้\t%i\n"
 "\n"
 
-#: client/cl_team.c:2318
+#: client/cl_team.c:2319
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/cl_team.c:2338
+#: client/cl_team.c:2339
 #, c-format
 msgid ""
 "\n"
 "Secured crashed %s\n"
 msgstr ""
 
-#: client/cl_team.c:2340
+#: client/cl_team.c:2341
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr "ปิดล้อมพื้นที่"
 
-#: client/cl_team.c:2351
+#: client/cl_team.c:2352
 #, c-format
 msgid ""
 "\n"
@@ -14002,15 +13969,15 @@ msgstr ""
 "ฆ่าศัตรูได้:  %i\n"
 "ผู้รอดชีวิต:  %i"
 
-#: client/cl_team.c:2353
+#: client/cl_team.c:2354
 msgid "You won the game!"
 msgstr "คุณชนะ!"
 
-#: client/cl_team.c:2355
+#: client/cl_team.c:2356
 msgid "Congratulations"
 msgstr "ขอแสดงความยินดี"
 
-#: client/cl_team.c:2357
+#: client/cl_team.c:2358
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -14020,11 +13987,11 @@ msgstr ""
 "\n"
 "ไม่เหลือผู้มีชีวิตรอดทั้งสองฝ่าย"
 
-#: client/cl_team.c:2358
+#: client/cl_team.c:2359
 msgid "Game Drawn!"
 msgstr "เสมอ!"
 
-#: client/cl_team.c:2362
+#: client/cl_team.c:2363
 msgid "Better luck next time"
 msgstr "ขอให้โชคดีคราวหน้า"
 
@@ -14305,70 +14272,70 @@ msgstr ""
 msgid "Transport mission ended, unloading cargo in base %s"
 msgstr "ภารกิจเคลื่อนนย้ายเสร็จสิ้น - กลับฐานที่ประจำการ"
 
-#: client/cl_transfer.c:1137
+#: client/cl_transfer.c:1134
 msgid "No target base selected"
 msgstr "ไม่ได้เลือกฐานเป้าหมาย"
 
-#: client/cl_transfer.c:1137
+#: client/cl_transfer.c:1134
 msgid "Please select the target base from the list"
 msgstr "เลือกฐานเป้าหมายจากรายชื่อ"
 
-#: client/cl_transfer.c:1326
+#: client/cl_transfer.c:1323
 #, fuzzy
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "กำลังโยกย้ายอุปกรณ์ - ฐานนี้มีโรงเก็บของ\n"
 
-#: client/cl_transfer.c:1329
+#: client/cl_transfer.c:1326
 #, fuzzy
 msgid "No Storage in this base.\n"
 msgstr "ฐานนี้ไม่มีโรงเก็บของ\n"
 
-#: client/cl_transfer.c:1333
+#: client/cl_transfer.c:1330
 #, fuzzy
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "สามารถโอนพนักงานได้ - ฐานนี้มีที่พักอาศัย\n"
 
-#: client/cl_transfer.c:1335
+#: client/cl_transfer.c:1332
 #, fuzzy
 msgid "No Living Quarters in this base.\n"
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/cl_transfer.c:1339
+#: client/cl_transfer.c:1336
 #, fuzzy
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "โอนย้ายมนุษย์ต่างดาวได้ - ฐานนี้มีเขตกักกัน\n"
 
-#: client/cl_transfer.c:1341
+#: client/cl_transfer.c:1338
 #, fuzzy
 msgid "No Alien Containment in this base.\n"
 msgstr "ฐานนี้ไม่มีเขตกักกัน\n"
 
-#: client/cl_transfer.c:1345
+#: client/cl_transfer.c:1342
 #, fuzzy
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "โอนย้ายมนุษย์ต่างดาวได้ - ฐานนี้มีเขตกักกัน\n"
 
-#: client/cl_transfer.c:1347
+#: client/cl_transfer.c:1344
 #, fuzzy
 msgid "No Antimatter Storage in this base.\n"
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/cl_transfer.c:1351
+#: client/cl_transfer.c:1348
 #, fuzzy
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "โอนย้ายมนุษย์ต่างดาวได้ - ฐานนี้มีเขตกักกัน\n"
 
-#: client/cl_transfer.c:1353
+#: client/cl_transfer.c:1350
 #, fuzzy
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "โอนย้ายไม่ได้ - ฐานไม่มีโรงเก็บยาน"
 
-#: client/cl_transfer.c:1355
+#: client/cl_transfer.c:1352
 #, fuzzy
 msgid "No Hangar in this base.\n"
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: client/cl_transfer.c:1359
+#: client/cl_transfer.c:1356
 #, fuzzy
 msgid "No power supplies in this base.\n"
 msgstr "ฐานนี้ไม่มีโรงเก็บของ\n"
@@ -14725,15 +14692,15 @@ msgstr "กำลังโหลด %s"
 msgid "loading models..."
 msgstr "โหลด รูปแบบ..."
 
-#: client/menu/m_input.c:45
+#: client/menu/m_input.c:47
 msgid "This change requires a restart"
 msgstr ""
 
-#: client/menu/m_input.c:47
+#: client/menu/m_input.c:49
 msgid "This change might require a restart"
 msgstr ""
 
-#: client/menu/m_main.c:768
+#: client/menu/m_main.c:754
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "ซ่อน HUD (กด ESC ให้ HUD ทำงานอีกครั้ง)"
 
@@ -14876,45 +14843,46 @@ msgstr ""
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
 
-#: client/menu/m_node_base.c:193
+#: client/menu/m_tooltip.c:94
+#, c-format
+msgid "Key: %s"
+msgstr "รหัส: %s"
+
+#: client/menu/node/m_node_base.c:193
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "ขาดอีด %i วัน"
 msgstr[1] "ขาดอีก %i วัน"
 
-#: client/menu/m_node_container.c:287 client/menu/m_node_container.c:292
+#: client/menu/node/m_node_container.c:332
+#: client/menu/node/m_node_container.c:337
 #, fuzzy, c-format
 msgid "Ammo: %i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/menu/m_node_container.c:291
+#: client/menu/node/m_node_container.c:336
 #, c-format
 msgid "%s loaded\n"
 msgstr ""
 
-#: client/menu/m_node_container.c:298
+#: client/menu/node/m_node_container.c:343
 msgid "Usable in:\n"
 msgstr ""
 
-#: client/menu/m_node_container.c:339
+#: client/menu/node/m_node_container.c:384
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "เข้า: %i ออก: %i"
 
-#: client/menu/m_node_window.c:148
+#: client/menu/node/m_node_window.c:139
 msgid "Drag to move window"
 msgstr ""
 
-#: client/menu/m_node_window.c:164
+#: client/menu/node/m_node_window.c:155
 #, fuzzy
 msgid "Close the window"
 msgstr "ปิดกรอบนี้"
-
-#: client/menu/m_tooltip.c:95
-#, c-format
-msgid "Key: %s"
-msgstr "รหัส: %s"
 
 #: game/g_client.c:809
 msgid "Can't perform action - this isn't your round!\n"
@@ -15090,6 +15058,46 @@ msgstr "เกรนเชน"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Close down messages"
+#~ msgstr "เปิดข้อความ"
+
+#~ msgid "Soldier 1"
+#~ msgstr "ทหาร 1"
+
+#~ msgid "Soldier 2"
+#~ msgstr "ทหาร 2"
+
+#~ msgid "Soldier 3"
+#~ msgstr "ทหาร 3"
+
+#~ msgid "Soldier 4"
+#~ msgstr "ทหาร 4"
+
+#~ msgid "Soldier 5"
+#~ msgstr "ทหาร 5"
+
+#~ msgid "Soldier 6"
+#~ msgstr "ทหาร 6"
+
+#~ msgid "Soldier 7"
+#~ msgstr "ทหาร 7"
+
+#~ msgid "Soldier 8"
+#~ msgstr "ทหาร 8"
+
+#~ msgid "Increase production by 1"
+#~ msgstr "เพิ่มการผลิต 1"
+
+#~ msgid "Decrease production by 1"
+#~ msgstr "ลดการผลิต 1"
+
+#~ msgid "Increase production by 10"
+#~ msgstr "เพิ่มการผลิต 10"
+
+#~ msgid "Decrease production by 10"
+#~ msgstr "ลดการผลิต 10"
 
 #~ msgid "Buy item"
 #~ msgstr "ซื้ออุปกรณ์"
@@ -15621,15 +15629,9 @@ msgstr ""
 #~ msgid "Marina Serra"
 #~ msgstr "มารีน่า เซอร่า"
 
-#~ msgid "Berlin"
-#~ msgstr "เบอร์ลิน"
-
 #, fuzzy
 #~ msgid "Protect civilians."
 #~ msgstr "ปกป้องพลเรือน"
-
-#~ msgid "Wellington"
-#~ msgstr "เวลลิงตัน"
 
 #~ msgid "There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
 #~ msgstr "มีข่าวลือว่ามนุษย์ต่างดาวบุกเหมือง แม้ว่าแหล่งข่าวจะไม่น่าเชื่อถือ ก็ยังต้องเข้าสำรวจ"
