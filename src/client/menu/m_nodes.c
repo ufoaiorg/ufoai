@@ -447,7 +447,7 @@ static void MN_NodeSetProperty_f (void)
 
 	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
 	if (!node) {
-		Com_Printf("Node '%s' not find\n", Cmd_Argv(1));
+		Com_Printf("MN_NodeSetProperty_f: Node '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
 

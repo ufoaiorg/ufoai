@@ -54,7 +54,7 @@ menu team
 	 */
 	confunc listdel {
 		*bt_actor<1> disabled false
-		cmd "mn_setnodeproperty bt_actor current 0"
+		cmd "mn_setnodeproperty bt_actor<1> current 0"
 	}
 
 	/**
@@ -62,7 +62,7 @@ menu team
 	 */
 	confunc listadd {
 		*bt_actor<1> disabled false
-		cmd "mn_setnodeproperty bt_actor current 1"
+		cmd "mn_setnodeproperty bt_actor<1> current 1"
 	}
 
 	/**
