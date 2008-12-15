@@ -469,6 +469,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_tooltip.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractnode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractnode.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollbar.c">
 			<Option compilerVar="CC" />
 		</Unit>
