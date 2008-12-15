@@ -686,7 +686,7 @@ void R_LoadMaterials (const char *map)
 			m->specular = atof(COM_Parse(&buffer));
 			if (m->specular < 0.0) {
 				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
-				m->specular = DEFAULT_SPECULAR;;
+				m->specular = DEFAULT_SPECULAR;
 			}
 		}
 		if (!strcmp(c, "parallax")) {
