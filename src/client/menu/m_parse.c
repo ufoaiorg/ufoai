@@ -1050,7 +1050,6 @@ void MN_ParseMenu (const char *name, const char **text)
 	/* does this menu inherit data from another menu? */
 	if (!Q_strncmp(token, "extends", 7)) {
 		menu_t *superMenu;
-		menuNode_t *lastNode = NULL;
 		menuNode_t *newNode;
 
 		token = COM_Parse(text);
