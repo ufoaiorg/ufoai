@@ -480,7 +480,8 @@ menu map
 
 	func init
 	{
-		cmd	"music_change geoscape;messagesystem_mode0"
+		cmd	"music_change geoscape;"
+		messagesystem_mode0
 	}
 }
 

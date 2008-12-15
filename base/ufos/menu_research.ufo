@@ -40,9 +40,9 @@ menu research
 	 * @param[in] <4> max value allowed
 	 */
 	confunc research_updateitem {
-		cmd "mn_setnodeproperty bt_rs_change<1> current <2>"
-		cmd "mn_setnodeproperty bt_rs_change<1> min <3>"
-		cmd "mn_setnodeproperty bt_rs_change<1> max <4>"
+		cmd "mn_setnodeproperty bt_rs_change<1> current <2>;"
+		cmd "mn_setnodeproperty bt_rs_change<1> min <3>;"
+		cmd "mn_setnodeproperty bt_rs_change<1> max <4>;"
 	}
 
 	confunc research_clear
@@ -171,7 +171,7 @@ menu research
 	 */
 	confunc research_changebase {
 		cmd "mn_pop;mn_pop;mn_select_base <1>;mn_push research;"
-		cmd "research_select <2>"
+		cmd "research_select <2>;"
 	}
 
 	string name
@@ -360,7 +360,7 @@ menu research
 		pos		"410 113"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 0; mn_rs_change 0 <lastdiff>"
+			cmd "research_select 0; mn_rs_change 0 <lastdiff>;"
 		}
 	}
 
@@ -371,7 +371,7 @@ menu research
 		pos		"410 138"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 1; mn_rs_change 1 <lastdiff>"
+			cmd "research_select 1; mn_rs_change 1 <lastdiff>;"
 		}
 	}
 
@@ -382,7 +382,7 @@ menu research
 		pos		"410 163"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 2; mn_rs_change 2 <lastdiff>"
+			cmd "research_select 2; mn_rs_change 2 <lastdiff>;"
 		}
 	}
 
@@ -393,7 +393,7 @@ menu research
 		pos		"410 188"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 3; mn_rs_change 3 <lastdiff>"
+			cmd "research_select 3; mn_rs_change 3 <lastdiff>;"
 		}
 	}
 
@@ -404,7 +404,7 @@ menu research
 		pos		"410 213"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 4; mn_rs_change 4 <lastdiff>"
+			cmd "research_select 4; mn_rs_change 4 <lastdiff>;"
 		}
 	}
 
@@ -415,7 +415,7 @@ menu research
 		pos		"410 238"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 5; mn_rs_change 5 <lastdiff>"
+			cmd "research_select 5; mn_rs_change 5 <lastdiff>;"
 		}
 	}
 
@@ -426,7 +426,7 @@ menu research
 		pos		"410 263"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 6; mn_rs_change 6 <lastdiff>"
+			cmd "research_select 6; mn_rs_change 6 <lastdiff>;"
 		}
 	}
 
@@ -437,7 +437,7 @@ menu research
 		pos		"410 288"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 7; mn_rs_change 7 <lastdiff>"
+			cmd "research_select 7; mn_rs_change 7 <lastdiff>;"
 		}
 	}
 
@@ -448,7 +448,7 @@ menu research
 		pos		"410 313"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 8; mn_rs_change 8 <lastdiff>"
+			cmd "research_select 8; mn_rs_change 8 <lastdiff>;"
 		}
 	}
 
@@ -459,7 +459,7 @@ menu research
 		pos		"410 338"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 9; mn_rs_change 9 <lastdiff>"
+			cmd "research_select 9; mn_rs_change 9 <lastdiff>;"
 		}
 	}
 
@@ -470,7 +470,7 @@ menu research
 		pos		"410 363"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 10; mn_rs_change 10 <lastdiff>"
+			cmd "research_select 10; mn_rs_change 10 <lastdiff>;"
 		}
 	}
 
@@ -481,7 +481,7 @@ menu research
 		pos		"410 388"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 11; mn_rs_change 11 <lastdiff>"
+			cmd "research_select 11; mn_rs_change 11 <lastdiff>;"
 		}
 	}
 
@@ -492,7 +492,7 @@ menu research
 		pos		"410 413"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 12; mn_rs_change 12 <lastdiff>"
+			cmd "research_select 12; mn_rs_change 12 <lastdiff>;"
 		}
 	}
 
@@ -503,7 +503,7 @@ menu research
 		pos		"410 438"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 13; mn_rs_change 13 <lastdiff>"
+			cmd "research_select 13; mn_rs_change 13 <lastdiff>;"
 		}
 	}
 
@@ -514,7 +514,7 @@ menu research
 		pos		"410 463"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 14; mn_rs_change 14 <lastdiff>"
+			cmd "research_select 14; mn_rs_change 14 <lastdiff>;"
 		}
 	}
 
@@ -525,7 +525,7 @@ menu research
 		pos		"410 488"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 15; mn_rs_change 15 <lastdiff>"
+			cmd "research_select 15; mn_rs_change 15 <lastdiff>;"
 		}
 	}
 
@@ -536,7 +536,7 @@ menu research
 		pos		"410 513"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 16; mn_rs_change 16 <lastdiff>"
+			cmd "research_select 16; mn_rs_change 16 <lastdiff>;"
 		}
 	}
 
@@ -547,7 +547,7 @@ menu research
 		pos		"410 538"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 17; mn_rs_change 17 <lastdiff>"
+			cmd "research_select 17; mn_rs_change 17 <lastdiff>;"
 		}
 	}
 
@@ -558,7 +558,7 @@ menu research
 		pos		"410 563"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 18; mn_rs_change 18 <lastdiff>"
+			cmd "research_select 18; mn_rs_change 18 <lastdiff>;"
 		}
 	}
 
@@ -569,7 +569,7 @@ menu research
 		pos		"410 588"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 19; mn_rs_change 19 <lastdiff>"
+			cmd "research_select 19; mn_rs_change 19 <lastdiff>;"
 		}
 	}
 
@@ -580,7 +580,7 @@ menu research
 		pos		"410 613"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 20; mn_rs_change 20 <lastdiff>"
+			cmd "research_select 20; mn_rs_change 20 <lastdiff>;"
 		}
 	}
 
@@ -591,7 +591,7 @@ menu research
 		pos		"410 638"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 21; mn_rs_change 21 <lastdiff>"
+			cmd "research_select 21; mn_rs_change 21 <lastdiff>;"
 		}
 	}
 
@@ -602,7 +602,7 @@ menu research
 		pos		"410 663"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 22; mn_rs_change 22 <lastdiff>"
+			cmd "research_select 22; mn_rs_change 22 <lastdiff>;"
 		}
 	}
 
@@ -613,7 +613,7 @@ menu research
 		pos		"410 688"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 23; mn_rs_change 23 <lastdiff>"
+			cmd "research_select 23; mn_rs_change 23 <lastdiff>;"
 		}
 	}
 
@@ -624,7 +624,7 @@ menu research
 		pos		"410 713"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 24; mn_rs_change 24 <lastdiff>"
+			cmd "research_select 24; mn_rs_change 24 <lastdiff>;"
 		}
 	}
 
@@ -635,7 +635,7 @@ menu research
 		pos		"410 738"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 25; mn_rs_change 25 <lastdiff>"
+			cmd "research_select 25; mn_rs_change 25 <lastdiff>;"
 		}
 	}
 
@@ -646,7 +646,7 @@ menu research
 		pos		"410 763"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 26; mn_rs_change 26 <lastdiff>"
+			cmd "research_select 26; mn_rs_change 26 <lastdiff>;"
 		}
 	}
 
@@ -657,7 +657,7 @@ menu research
 		pos		"410 788"
 		min 0 current 10000 max 20000 delta 1
 		change {
-			cmd "research_select 27; mn_rs_change 27 <lastdiff>"
+			cmd "research_select 27; mn_rs_change 27 <lastdiff>;"
 		}
 	}
 

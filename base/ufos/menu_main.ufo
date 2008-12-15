@@ -96,7 +96,7 @@ menu main
 	{
 		pos	"640 520"
 		size "256 64"
-		click	{ cmd quit }
+		click	{ cmd "quit;" }
 		image	menu/button_big
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -312,12 +312,12 @@ menu sequence
 	zone click
 	{
 		size	"1024 768"
-		click	{ cmd seq_click; }
+		click	{ cmd "seq_click;" }
 	}
 
 	func close
 	{
-		cmd		seq_end;
+		cmd		"seq_end;"
 	}
 }
 

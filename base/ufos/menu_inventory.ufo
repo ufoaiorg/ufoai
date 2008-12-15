@@ -144,7 +144,7 @@ menu inventory
 		pos		"684 554"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 }
 
@@ -160,7 +160,7 @@ menu hudinv extends inventory
 		mousefx true
 		pos		"983 266"
 		size	"36 75"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	zone bt_inventory
@@ -169,7 +169,7 @@ menu hudinv extends inventory
 		mousefx true
 		pos		"983 376"
 		size	"36 75"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 	func leave
 	{
@@ -188,8 +188,8 @@ menu ahudinv extends inventory
 		tooltip "_Inventory and physical stats"
 		pos     "878 84"
 		size    "130 265"
-		click   { cmd mn_pop }
-		rclick  { cmd mn_pop }
+		click   { cmd "mn_pop;" }
+		rclick  { cmd "mn_pop;" }
 	}
 	func leave
 	{

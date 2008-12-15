@@ -92,7 +92,7 @@ menu options
 	{
 		pos	"80 470"
 		size "256 64"
-		click	{ cmd "mn_pop;mn_pop" }
+		click	{ cmd "mn_pop;mn_pop;" }
 		image	menu/button_big
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -766,7 +766,7 @@ menu options_keys
 		//rows	"28"
 		textid	TEXT_LIST
 		lineheight	"20"
-		wheel	{ cmd "mn_setnodeproperty keyscroll current <text_scroll>" }
+		wheel	{ cmd "mn_setnodeproperty keyscroll current <text_scroll>;" }
 	}
 
 	vscrollbar keyscroll {
@@ -782,7 +782,7 @@ menu options_keys
 
 	confunc optionkey_count
 	{
-		cmd "mn_setnodeproperty keyscroll fullsize <1>"
+		cmd "mn_setnodeproperty keyscroll fullsize <1>;"
 	}
 
 	func init
