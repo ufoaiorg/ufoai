@@ -1279,12 +1279,12 @@ static void CL_MarkTeam_f (void)
 		/* Set name of the employee. */
 		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
 		/* Change the buttons */
-		Cbuf_AddText(va("listdel%i\n", k));
+		Cbuf_AddText(va("listdel %i\n", k));
 		if (!alreadyInOtherShip && CL_SoldierInAircraft(employee, aircraft))
-			Cbuf_AddText(va("listadd%i\n", k));
+			Cbuf_AddText(va("listadd %i\n", k));
 		else if (alreadyInOtherShip)
 			/* Disable the button - the soldier is already on another aircraft */
-			Cbuf_AddText(va("listdisable%i\n", k));
+			Cbuf_AddText(va("listdisable %i\n", k));
 
 		/* Check if the employee has something equipped. */
 		for (j = 0; j < csi.numIDs; j++) {
@@ -1293,9 +1293,9 @@ static void CL_MarkTeam_f (void)
 				break;
 		}
 		if (j < csi.numIDs)
-			Cbuf_AddText(va("listholdsequip%i\n", k));
+			Cbuf_AddText(va("listholdsequip %i\n", k));
 		else
-			Cbuf_AddText(va("listholdsnoequip%i\n", k));
+			Cbuf_AddText(va("listholdsnoequip %i\n", k));
 
 		k++;
 		if (k >= cl_numnames->integer)
@@ -1305,9 +1305,9 @@ static void CL_MarkTeam_f (void)
 	}
 
 	for (;k < cl_numnames->integer; k++) {
-		Cbuf_AddText(va("listdisable%i\n", k));
+		Cbuf_AddText(va("listdisable %i\n", k));
 		Cvar_ForceSet(va("mn_name%i", k), "");
-		Cbuf_AddText(va("listholdsnoequip%i\n", k));
+		Cbuf_AddText(va("listholdsnoequip %i\n", k));
 	}
 }
 
@@ -1593,14 +1593,14 @@ void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t
 
 	if (CL_SoldierInAircraft(employee, aircraft)) {
 		/* Remove soldier from aircraft/team. */
-		Cbuf_AddText(va("listdel%i\n", num));
+		Cbuf_AddText(va("listdel %i\n", num));
 		/* use the global aircraft index here */
 		CL_RemoveSoldierFromAircraft(employee, aircraft);
-		Cbuf_AddText(va("listholdsnoequip%i\n", num));
+		Cbuf_AddText(va("listholdsnoequip %i\n", num));
 	} else {
 		/* Assign soldier to aircraft/team if aircraft is not full */
 		if (CL_AssignSoldierToAircraft(employee, aircraft))
-			Cbuf_AddText(va("listadd%i\n", num));
+			Cbuf_AddText(va("listadd %i\n", num));
 	}
 	/* Select the desired one anyways. */
 	CL_UpdateActorAircraftVar(aircraft, employee->type);

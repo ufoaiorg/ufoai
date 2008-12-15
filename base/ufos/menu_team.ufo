@@ -28,26 +28,6 @@ menu team
 
 	func team_clear
 	{
-		*bt_actor0 image menu/checkbox_green_unchecked
-		*bt_actor1 image menu/checkbox_green_unchecked
-		*bt_actor2 image menu/checkbox_green_unchecked
-		*bt_actor3 image menu/checkbox_green_unchecked
-		*bt_actor4 image menu/checkbox_green_unchecked
-		*bt_actor5 image menu/checkbox_green_unchecked
-		*bt_actor6 image menu/checkbox_green_unchecked
-		*bt_actor7 image menu/checkbox_green_unchecked
-		*bt_actor8 image menu/checkbox_green_unchecked
-		*bt_actor9 image menu/checkbox_green_unchecked
-		*bt_actor10 image menu/checkbox_green_unchecked
-		*bt_actor11 image menu/checkbox_green_unchecked
-		*bt_actor12 image menu/checkbox_green_unchecked
-		*bt_actor13 image menu/checkbox_green_unchecked
-		*bt_actor14 image menu/checkbox_green_unchecked
-		*bt_actor15 image menu/checkbox_green_unchecked
-		*bt_actor16 image menu/checkbox_green_unchecked
-		*bt_actor17 image menu/checkbox_green_unchecked
-		*bt_actor18 image menu/checkbox_green_unchecked
-
 		*txt_actor0 color "0 .78 0 1"
 		*txt_actor1 color "0 .78 0 1"
 		*txt_actor2 color "0 .78 0 1"
@@ -69,143 +49,44 @@ menu team
 		*txt_actor18 color "0 .78 0 1"
 	}
 
-	confunc listdel0 { *bt_actor0 image menu/checkbox_green_unchecked }
-	confunc listdel1 { *bt_actor1 image menu/checkbox_green_unchecked }
-	confunc listdel2 { *bt_actor2 image menu/checkbox_green_unchecked }
-	confunc listdel3 { *bt_actor3 image menu/checkbox_green_unchecked }
-	confunc listdel4 { *bt_actor4 image menu/checkbox_green_unchecked }
-	confunc listdel5 { *bt_actor5 image menu/checkbox_green_unchecked }
-	confunc listdel6 { *bt_actor6 image menu/checkbox_green_unchecked }
-	confunc listdel7 { *bt_actor7 image menu/checkbox_green_unchecked }
-	confunc listdel8 { *bt_actor8 image menu/checkbox_green_unchecked }
-	confunc listdel9 { *bt_actor9 image menu/checkbox_green_unchecked }
-	confunc listdel10 { *bt_actor10 image menu/checkbox_green_unchecked }
-	confunc listdel11 { *bt_actor11 image menu/checkbox_green_unchecked }
-	confunc listdel12 { *bt_actor12 image menu/checkbox_green_unchecked }
-	confunc listdel13 { *bt_actor13 image menu/checkbox_green_unchecked }
-	confunc listdel14 { *bt_actor14 image menu/checkbox_green_unchecked }
-	confunc listdel15 { *bt_actor15 image menu/checkbox_green_unchecked }
-	confunc listdel16 { *bt_actor16 image menu/checkbox_green_unchecked }
-	confunc listdel17 { *bt_actor17 image menu/checkbox_green_unchecked }
-	confunc listdel18 { *bt_actor18 image menu/checkbox_green_unchecked }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc listdel {
+		*bt_actor<1> disabled false
+		cmd "mn_setnodeproperty bt_actor current 0"
+	}
 
-	confunc listadd0 { *bt_actor0 image menu/checkbox_green_checked }
-	confunc listadd1 { *bt_actor1 image menu/checkbox_green_checked }
-	confunc listadd2 { *bt_actor2 image menu/checkbox_green_checked }
-	confunc listadd3 { *bt_actor3 image menu/checkbox_green_checked }
-	confunc listadd4 { *bt_actor4 image menu/checkbox_green_checked }
-	confunc listadd5 { *bt_actor5 image menu/checkbox_green_checked }
-	confunc listadd6 { *bt_actor6 image menu/checkbox_green_checked }
-	confunc listadd7 { *bt_actor7 image menu/checkbox_green_checked }
-	confunc listadd8 { *bt_actor8 image menu/checkbox_green_checked }
-	confunc listadd9 { *bt_actor9 image menu/checkbox_green_checked }
-	confunc listadd10 { *bt_actor10 image menu/checkbox_green_checked }
-	confunc listadd11 { *bt_actor11 image menu/checkbox_green_checked }
-	confunc listadd12 { *bt_actor12 image menu/checkbox_green_checked }
-	confunc listadd13 { *bt_actor13 image menu/checkbox_green_checked }
-	confunc listadd14 { *bt_actor14 image menu/checkbox_green_checked }
-	confunc listadd15 { *bt_actor15 image menu/checkbox_green_checked }
-	confunc listadd16 { *bt_actor16 image menu/checkbox_green_checked }
-	confunc listadd17 { *bt_actor17 image menu/checkbox_green_checked }
-	confunc listadd18 { *bt_actor18 image menu/checkbox_green_checked }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc listadd {
+		*bt_actor<1> disabled false
+		cmd "mn_setnodeproperty bt_actor current 1"
+	}
 
-	confunc listholdsequip0 { *bt_equip0 tooltip "_Soldier carries equipment"
-		*bt_equip0 texl "16 0" *bt_equip0 texh "32 16" }
-	confunc listholdsequip1 { *bt_equip1 tooltip "_Soldier carries equipment"
-		*bt_equip1 texl "16 0" *bt_equip1 texh "32 16" }
-	confunc listholdsequip2 { *bt_equip2 tooltip "_Soldier carries equipment"
-		*bt_equip2 texl "16 0" *bt_equip2 texh "32 16" }
-	confunc listholdsequip3 { *bt_equip3 tooltip "_Soldier carries equipment"
-		*bt_equip3 texl "16 0" *bt_equip3 texh "32 16" }
-	confunc listholdsequip4 { *bt_equip4 tooltip "_Soldier carries equipment"
-		*bt_equip4 texl "16 0" *bt_equip4 texh "32 16" }
-	confunc listholdsequip5 { *bt_equip5 tooltip "_Soldier carries equipment"
-		*bt_equip5 texl "16 0" *bt_equip5 texh "32 16" }
-	confunc listholdsequip6 { *bt_equip6 tooltip "_Soldier carries equipment"
-		*bt_equip6 texl "16 0" *bt_equip6 texh "32 16" }
-	confunc listholdsequip7 { *bt_equip7 tooltip "_Soldier carries equipment"
-		*bt_equip7 texl "16 0" *bt_equip7 texh "32 16" }
-	confunc listholdsequip8 { *bt_equip8 tooltip "_Soldier carries equipment"
-		*bt_equip8 texl "16 0" *bt_equip8 texh "32 16" }
-	confunc listholdsequip9 { *bt_equip9 tooltip "_Soldier carries equipment"
-		*bt_equip9 texl "16 0" *bt_equip9 texh "32 16" }
-	confunc listholdsequip10 { *bt_equip10 tooltip "_Soldier carries equipment"
-		*bt_equip10 texl "16 0" *bt_equip10 texh "32 16" }
-	confunc listholdsequip11 { *bt_equip11 tooltip "_Soldier carries equipment"
-		*bt_equip11 texl "16 0" *bt_equip11 texh "32 16" }
-	confunc listholdsequip12 { *bt_equip12 tooltip "_Soldier carries equipment"
-		*bt_equip12 texl "16 0" *bt_equip12 texh "32 16" }
-	confunc listholdsequip13 { *bt_equip13 tooltip "_Soldier carries equipment"
-		*bt_equip13 texl "16 0" *bt_equip13 texh "32 16" }
-	confunc listholdsequip14 { *bt_equip14 tooltip "_Soldier carries equipment"
-		*bt_equip14 texl "16 0" *bt_equip14 texh "32 16" }
-	confunc listholdsequip15 { *bt_equip15 tooltip "_Soldier carries equipment"
-		*bt_equip15 texl "16 0" *bt_equip15 texh "32 16" }
-	confunc listholdsequip16 { *bt_equip16 tooltip "_Soldier carries equipment"
-		*bt_equip16 texl "16 0" *bt_equip16 texh "32 16" }
-	confunc listholdsequip17 { *bt_equip17 tooltip "_Soldier carries equipment"
-		*bt_equip17 texl "16 0" *bt_equip17 texh "32 16" }
-	confunc listholdsequip18 { *bt_equip18 tooltip "_Soldier carries equipment"
-		*bt_equip18 texl "16 0" *bt_equip18 texh "32 16" }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc listholdsequip {
+		*bt_equip<1> tooltip "_Soldier carries equipment"
+		*bt_equip<1> texl "16 0" *bt_equip0 texh "32 16"
+	}
 
-	confunc listholdsnoequip0 { *bt_equip0 tooltip "_Soldier carries no equipment"
-		*bt_equip0 texl "0 0" *bt_equip0 texh "16 16" }
-	confunc listholdsnoequip1 { *bt_equip1 tooltip "_Soldier carries no equipment"
-		*bt_equip1 texl "0 0" *bt_equip1 texh "16 16" }
-	confunc listholdsnoequip2 { *bt_equip2 tooltip "_Soldier carries no equipment"
-		*bt_equip2 texl "0 0" *bt_equip2 texh "16 16" }
-	confunc listholdsnoequip3 { *bt_equip3 tooltip "_Soldier carries no equipment"
-		*bt_equip3 texl "0 0" *bt_equip3 texh "16 16" }
-	confunc listholdsnoequip4 { *bt_equip4 tooltip "_Soldier carries no equipment"
-		*bt_equip4 texl "0 0" *bt_equip4 texh "16 16" }
-	confunc listholdsnoequip5 { *bt_equip5 tooltip "_Soldier carries no equipment"
-		*bt_equip5 texl "0 0" *bt_equip5 texh "16 16" }
-	confunc listholdsnoequip6 { *bt_equip6 tooltip "_Soldier carries no equipment"
-		*bt_equip6 texl "0 0" *bt_equip6 texh "16 16" }
-	confunc listholdsnoequip7 { *bt_equip7 tooltip "_Soldier carries no equipment"
-		*bt_equip7 texl "0 0" *bt_equip7 texh "16 16" }
-	confunc listholdsnoequip8 { *bt_equip8 tooltip "_Soldier carries no equipment"
-		*bt_equip8 texl "0 0" *bt_equip8 texh "16 16" }
-	confunc listholdsnoequip9 { *bt_equip9 tooltip "_Soldier carries no equipment"
-		*bt_equip9 texl "0 0" *bt_equip9 texh "16 16" }
-	confunc listholdsnoequip10 { *bt_equip10 tooltip "_Soldier carries no equipment"
-		*bt_equip10 texl "0 0" *bt_equip10 texh "16 16" }
-	confunc listholdsnoequip11 { *bt_equip11 tooltip "_Soldier carries no equipment"
-		*bt_equip11 texl "0 0" *bt_equip11 texh "16 16" }
-	confunc listholdsnoequip12 { *bt_equip12 tooltip "_Soldier carries no equipment"
-		*bt_equip12 texl "0 0" *bt_equip12 texh "16 16" }
-	confunc listholdsnoequip13 { *bt_equip13 tooltip "_Soldier carries no equipment"
-		*bt_equip13 texl "0 0" *bt_equip13 texh "16 16" }
-	confunc listholdsnoequip14 { *bt_equip14 tooltip "_Soldier carries no equipment"
-		*bt_equip14 texl "0 0" *bt_equip14 texh "16 16" }
-	confunc listholdsnoequip15 { *bt_equip15 tooltip "_Soldier carries no equipment"
-		*bt_equip15 texl "0 0" *bt_equip15 texh "16 16" }
-	confunc listholdsnoequip16 { *bt_equip16 tooltip "_Soldier carries no equipment"
-		*bt_equip16 texl "0 0" *bt_equip16 texh "16 16" }
-	confunc listholdsnoequip17 { *bt_equip17 tooltip "_Soldier carries no equipment"
-		*bt_equip17 texl "0 0" *bt_equip17 texh "16 16" }
-	confunc listholdsnoequip18 { *bt_equip18 tooltip "_Soldier carries no equipment"
-		*bt_equip18 texl "0 0" *bt_equip18 texh "16 16" }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc listholdsnoequip {
+		*bt_equip<1> tooltip "_Soldier carries no equipment"
+		*bt_equip<1> texl "0 0" *bt_equip0 texh "16 16"
+	}
 
-	confunc listdisable0 { *bt_actor0 image menu/checkbox_green_disabled }
-	confunc listdisable1 { *bt_actor1 image menu/checkbox_green_disabled }
-	confunc listdisable2 { *bt_actor2 image menu/checkbox_green_disabled }
-	confunc listdisable3 { *bt_actor3 image menu/checkbox_green_disabled }
-	confunc listdisable4 { *bt_actor4 image menu/checkbox_green_disabled }
-	confunc listdisable5 { *bt_actor5 image menu/checkbox_green_disabled }
-	confunc listdisable6 { *bt_actor6 image menu/checkbox_green_disabled }
-	confunc listdisable7 { *bt_actor7 image menu/checkbox_green_disabled }
-	confunc listdisable8 { *bt_actor8 image menu/checkbox_green_disabled }
-	confunc listdisable9 { *bt_actor9 image menu/checkbox_green_disabled }
-	confunc listdisable10 { *bt_actor10 image menu/checkbox_green_disabled }
-	confunc listdisable11 { *bt_actor11 image menu/checkbox_green_disabled }
-	confunc listdisable12 { *bt_actor12 image menu/checkbox_green_disabled }
-	confunc listdisable13 { *bt_actor13 image menu/checkbox_green_disabled }
-	confunc listdisable14 { *bt_actor14 image menu/checkbox_green_disabled }
-	confunc listdisable15 { *bt_actor15 image menu/checkbox_green_disabled }
-	confunc listdisable16 { *bt_actor16 image menu/checkbox_green_disabled }
-	confunc listdisable17 { *bt_actor17 image menu/checkbox_green_disabled }
-	confunc listdisable18 { *bt_actor18 image menu/checkbox_green_disabled }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc listdisable {
+		*bt_actor<1> disabled true
+	}
 
 	confunc teamselect0 { *txt_actor0 color "1 1 1 1" }
 	confunc teamselect1 { *txt_actor1 color "1 1 1 1" }
@@ -437,215 +318,180 @@ menu team
 		in
 	}
 
-	pic bt_actor0
+	// checkbox
+
+	checkbox bt_actor0
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 30"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 0;" }
-		out	{ *bt_actor0 texl "0 0" *bt_actor0 texh "20 20" }
-		in	{ *bt_actor0 texl "0 20" *bt_actor0 texh "20 40" }
+		change { cmd "team_hire 0;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor1
+	checkbox bt_actor1
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 68"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 1;" }
-		out	{ *bt_actor1 texl "0 0" *bt_actor1 texh "20 20" }
-		in	{ *bt_actor1 texl "0 20" *bt_actor1 texh "20 40" }
+		change { cmd "team_hire 1;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor2
+	checkbox bt_actor2
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 106"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 2;" }
-		out	{ *bt_actor2 texl "0 0" *bt_actor2 texh "20 20" }
-		in	{ *bt_actor2 texl "0 20" *bt_actor2 texh "20 40" }
+		change { cmd "team_hire 2;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor3
+	checkbox bt_actor3
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 144"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 3;" }
-		out	{ *bt_actor3 texl "0 0" *bt_actor3 texh "20 20" }
-		in	{ *bt_actor3 texl "0 20" *bt_actor3 texh "20 40" }
+		change { cmd "team_hire 3;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor4
+	checkbox bt_actor4
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 182"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 4;" }
-		out	{ *bt_actor4 texl "0 0" *bt_actor4 texh "20 20" }
-		in	{ *bt_actor4 texl "0 20" *bt_actor4 texh "20 40" }
+		change { cmd "team_hire 4;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor5
+	checkbox bt_actor5
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 220"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 5;" }
-		out	{ *bt_actor5 texl "0 0" *bt_actor5 texh "20 20" }
-		in	{ *bt_actor5 texl "0 20" *bt_actor5 texh "20 40" }
+		change { cmd "team_hire 5;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor6
+	checkbox bt_actor6
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 258"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 6;" }
-		out	{ *bt_actor6 texl "0 0" *bt_actor6 texh "20 20" }
-		in	{ *bt_actor6 texl "0 20" *bt_actor6 texh "20 40" }
+		change { cmd "team_hire 6;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor7
+	checkbox bt_actor7
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 296"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 7;" }
-		out	{ *bt_actor7 texl "0 0" *bt_actor7 texh "20 20" }
-		in	{ *bt_actor7 texl "0 20" *bt_actor7 texh "20 40" }
+		change { cmd "team_hire 7;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor8
+	checkbox bt_actor8
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 334"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 8;" }
-		out	{ *bt_actor8 texl "0 0" *bt_actor8 texh "20 20" }
-		in	{ *bt_actor8 texl "0 20" *bt_actor8 texh "20 40" }
+		change { cmd "team_hire 8;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor9
+	checkbox bt_actor9
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 372"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 9;" }
-		out	{ *bt_actor9 texl "0 0" *bt_actor9 texh "20 20" }
-		in	{ *bt_actor9 texl "0 20" *bt_actor9 texh "20 40" }
+		change { cmd "team_hire 9;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor10
+	checkbox bt_actor10
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 410"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 10;" }
-		out	{ *bt_actor10 texl "0 0" *bt_actor10 texh "20 20" }
-		in	{ *bt_actor10 texl "0 20" *bt_actor10 texh "20 40" }
+		change { cmd "team_hire 10;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor11
+	checkbox bt_actor11
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 448"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 11;" }
-		out	{ *bt_actor11 texl "0 0" *bt_actor11 texh "20 20" }
-		in	{ *bt_actor11 texl "0 20" *bt_actor11 texh "20 40" }
+		change { cmd "team_hire 11;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor12
+	checkbox bt_actor12
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 486"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 12;" }
-		out	{ *bt_actor12 texl "0 0" *bt_actor12 texh "20 20" }
-		in	{ *bt_actor12 texl "0 20" *bt_actor12 texh "20 40" }
+		change { cmd "team_hire 12;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor13
+	checkbox bt_actor13
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 524"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 13;" }
-		out	{ *bt_actor13 texl "0 0" *bt_actor13 texh "20 20" }
-		in	{ *bt_actor13 texl "0 20" *bt_actor13 texh "20 40" }
+		change { cmd "team_hire 13;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor14
+	checkbox bt_actor14
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 562"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 14;" }
-		out	{ *bt_actor14 texl "0 0" *bt_actor14 texh "20 20" }
-		in	{ *bt_actor14 texl "0 20" *bt_actor14 texh "20 40" }
+		change { cmd "team_hire 14;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor15
+	checkbox bt_actor15
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 600"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 15;" }
-		out	{ *bt_actor15 texl "0 0" *bt_actor15 texh "20 20" }
-		in	{ *bt_actor15 texl "0 20" *bt_actor15 texh "20 40" }
+		change { cmd "team_hire 15;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor16
+	checkbox bt_actor16
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 638"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 16;" }
-		out	{ *bt_actor16 texl "0 0" *bt_actor16 texh "20 20" }
-		in	{ *bt_actor16 texl "0 20" *bt_actor16 texh "20 40" }
+		change { cmd "team_hire 16;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor17
+	checkbox bt_actor17
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 676"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 17;" }
-		out	{ *bt_actor17 texl "0 0" *bt_actor17 texh "20 20" }
-		in	{ *bt_actor17 texl "0 20" *bt_actor17 texh "20 40" }
+		change { cmd "team_hire 17;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
-	pic bt_actor18
+	checkbox bt_actor18
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"362 714"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "team_hire 18;" }
-		out	{ *bt_actor18 texl "0 0" *bt_actor18 texh "20 20" }
-		in	{ *bt_actor18 texl "0 20" *bt_actor18 texh "20 40" }
+		change { cmd "team_hire 18;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
 	}
+
 	string txt_actor0
 	{
 		string	"*cvar mn_ename0"
