@@ -281,7 +281,7 @@ menu popup_recoverybaselist
 
 	text cp_uforecovery_baselist
 	{
-		num TEXT_LIST
+		textid TEXT_LIST
 		pos	"26 58"
 		size "440 96"
 //		bgcolor "1 1 1 0.5"
@@ -404,7 +404,7 @@ menu popup_recoverynationlist
 
 	text cp_uforecovery_nationlist
 	{
-		num	TEXT_LIST
+		textid	TEXT_LIST
 		pos		"26 74"
 		size	"726 134"
 		lineheight	16

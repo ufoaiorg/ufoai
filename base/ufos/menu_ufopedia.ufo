@@ -109,7 +109,7 @@ menu ufopedia
 		if "mn_up_mail == 0"
 		pos		"40 85"
 		size	"640 368"
-		num		TEXT_UFOPEDIA
+		textid		TEXT_UFOPEDIA
 		lineheight	23
 		tabwidth	100
 		click rclick
@@ -141,7 +141,7 @@ menu ufopedia
 		if "mn_up_mail == 1"
 		pos		"50 208"
 		size	"640 240"
-		num		TEXT_UFOPEDIA
+		textid		TEXT_UFOPEDIA
 		lineheight	24
 		tabwidth	100
 		click rclick wheel
@@ -173,7 +173,7 @@ menu ufopedia
 		if "mn_up_mail == 1"
 		pos		"50 80"
 		size	"660 134"
-		num		TEXT_UFOPEDIA_MAILHEADER
+		textid		TEXT_UFOPEDIA_MAILHEADER
 		lineheight	"24"
 		rows	"5"
 		font	"f_small_bold"
@@ -261,7 +261,7 @@ menu ufopedia
 		pos		"550 495"
 		size	"354 246"
 		lineheight	"20"
-		num	TEXT_LIST
+		textid	TEXT_LIST
 		rows	"12"
 		click
 		mousefx true
@@ -895,7 +895,7 @@ menu ufopedia_mail
 	{
 		pos		"100 130"
 		size	"870 550"
-		num		TEXT_UFOPEDIA_MAIL
+		textid		TEXT_UFOPEDIA_MAIL
 		//rows	"15"
 		font	"f_small"
 		lineheight	38

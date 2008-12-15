@@ -80,7 +80,7 @@ menu campaigns
 		size	"420 200"
 		mousefx	true
 		lineheight	"20"
-		num		TEXT_CAMPAIGN_LIST
+		textid		TEXT_CAMPAIGN_LIST
 		click	{ }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
@@ -94,7 +94,7 @@ menu campaigns
 		pos	"500 300"
 		lineheight	"20"
 		size	"415 380"
-		num		TEXT_STANDARD
+		textid		TEXT_STANDARD
 		rows	19
 //		bgcolor "1 1 1 0.4"
 		wheel {

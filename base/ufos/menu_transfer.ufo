@@ -92,7 +92,7 @@ menu transfer
 
 	text t_baseinfo
 	{
-		num		TEXT_BASE_INFO
+		textid		TEXT_BASE_INFO
 		pos		"60 80"
 		size	"460 240"
 		lineheight	"20"
@@ -111,7 +111,7 @@ menu transfer
 
 	text trans_list
 	{
-		num 	TEXT_TRANSFER_LIST
+		textid 	TEXT_TRANSFER_LIST
 		pos		"60 370"
 		size	"460 360"
 		mousefx	true
@@ -151,7 +151,7 @@ menu transfer
 
 	text trans_cargolist
 	{
-		num		TEXT_CARGO_LIST
+		textid		TEXT_CARGO_LIST
 		pos		"607 150"
 		size	"400 400"
 		mousefx	true

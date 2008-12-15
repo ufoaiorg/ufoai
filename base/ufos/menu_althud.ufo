@@ -59,7 +59,7 @@ menu althud extends ahud
 		size	"690 48"
 		font	"f_verysmall"
 		wheel
-		num		TEXT_CHAT_WINDOW
+		textid		TEXT_CHAT_WINDOW
 		rows	"3"
 		lineheight	"16"
 		padding	5

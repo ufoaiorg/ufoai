@@ -46,7 +46,7 @@ menu tutorials
 		pos	"640 220"
 		lineheight	"20"
 		size	"260 280"
-		num		TEXT_LIST
+		textid		TEXT_LIST
 		rows	"14"
 		mousefx true
 		wheel

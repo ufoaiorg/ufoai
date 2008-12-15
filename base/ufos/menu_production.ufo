@@ -147,7 +147,7 @@ menu production
 		size	"376 670"
 		color	"0 .78 0 1"
 		lineheight	"22"
-		num		TEXT_PRODUCTION_LIST
+		textid		TEXT_PRODUCTION_LIST
 		click
 		rclick
 		rows "30"
@@ -167,7 +167,7 @@ menu production
 		size	"30 670"
 		color	"0 .78 0 1"
 		lineheight	"22"
-		num		TEXT_PRODUCTION_AMOUNT
+		textid		TEXT_PRODUCTION_AMOUNT
 		rows "30"
 		mousefx	true
 	}
@@ -189,7 +189,7 @@ menu production
 		size	"30 670"
 		color	"0 .78 0 1"
 		lineheight	"22"
-		num		TEXT_PRODUCTION_QUEUED
+		textid		TEXT_PRODUCTION_QUEUED
 		rows	"30"
 		mousefx true
 	}
@@ -379,7 +379,7 @@ menu production
 		size	"366 100"
 		lineheight	20
 		tabwidth	260
-		num		TEXT_PRODUCTION_INFO
+		textid		TEXT_PRODUCTION_INFO
 		rows	"5"
 		wheel
 		scrollbar true

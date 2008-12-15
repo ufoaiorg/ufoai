@@ -67,7 +67,7 @@ menu irc
 		size	"240 594"
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		lineheight	22
-		num		TEXT_LIST
+		textid		TEXT_LIST
 		rows	"27"
 		wheel
 		mousefx		true
@@ -83,7 +83,7 @@ menu irc
 //		bgcolor	"0.5 0.5 0.5 0.2"
 		rows	"24"
 		lineheight  "22"
-		num		TEXT_STANDARD
+		textid		TEXT_STANDARD
 		wheel {
 			cmd "mn_setnodeproperty irc_data_scroll current <text_scroll>"
 		}
@@ -190,7 +190,7 @@ menu irc_popup
 		align	uc
 		size	"446 20"
 		rows	"1"
-		num	TEXT_POPUP
+		textid	TEXT_POPUP
 	}
 
 	text popup_text

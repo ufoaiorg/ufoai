@@ -106,7 +106,7 @@ menu buildings
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx	true
-		num		TEXT_BUILDINGS
+		textid		TEXT_BUILDINGS
 		rows	"20"
 		click
 	}
@@ -181,7 +181,7 @@ menu popup_buildingpreview
 		mousefx false
 		lineheight	20
 		tabwidth	140
-		num		TEXT_BUILDING_INFO
+		textid		TEXT_BUILDING_INFO
 		rows	"7"
 	}
 

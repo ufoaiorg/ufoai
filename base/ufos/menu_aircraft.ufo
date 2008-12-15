@@ -290,7 +290,7 @@ menu aircraft
 		size	"510 200"
 		lineheight	20
 		tabwidth	220
-		num		TEXT_AIRCRAFT_INFO
+		textid		TEXT_AIRCRAFT_INFO
 		rows	"10"
 	}
 
@@ -626,7 +626,7 @@ menu aircraft_equip
 		lineheight	"20"
 		wheel
 		rows	"11"
-		num TEXT_LIST
+		textid TEXT_LIST
 		mousefx	true
 		click
 	}
@@ -715,7 +715,7 @@ menu aircraft_equip
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
-		num	TEXT_AIREQUIP_1
+		textid	TEXT_AIREQUIP_1
 		rows	"2"
 	}
 
@@ -737,7 +737,7 @@ menu aircraft_equip
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
-		num	TEXT_AIREQUIP_2
+		textid	TEXT_AIREQUIP_2
 		rows	"2"
 	}
 
@@ -759,7 +759,7 @@ menu aircraft_equip
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
-		num	TEXT_AIREQUIP_3
+		textid	TEXT_AIREQUIP_3
 		rows	"2"
 	}
 

@@ -54,7 +54,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		lineheight  22
 		tabwidth	170
-		num		TEXT_STATS_MISSION
+		textid		TEXT_STATS_MISSION
 		rows	"6"
 	}
 
@@ -72,7 +72,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		lineheight  22
 		tabwidth	170
-		num		TEXT_STATS_BASES
+		textid		TEXT_STATS_BASES
 		rows	"6"
 	}
 
@@ -90,7 +90,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		lineheight  22
 		tabwidth	170
-		num		TEXT_STATS_INSTALLATIONS
+		textid		TEXT_STATS_INSTALLATIONS
 		rows	"6"
 	}
 
@@ -108,7 +108,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		lineheight  22
 		tabwidth	170
-		num		TEXT_STATS_EMPLOYEES
+		textid		TEXT_STATS_EMPLOYEES
 		rows	"6"
 	}
 
@@ -126,7 +126,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		lineheight  22
 		tabwidth	340
-		num		TEXT_STATS_COSTS
+		textid		TEXT_STATS_COSTS
 		rows	"18"
 	}
 
@@ -145,7 +145,7 @@ menu stats
 		size	"470 240"
 		lineheight  22
 		tabwidth	360
-		num		TEXT_STATS_NATIONS
+		textid		TEXT_STATS_NATIONS
 		rows	"10"
 		click
 		mousefx	true
@@ -166,7 +166,7 @@ menu stats
 		size	"470 110"
 		lineheight  22
 		tabwidth	360
-		num		TEXT_GENERIC
+		textid		TEXT_GENERIC
 		rows	"5"
 	}
 

@@ -374,7 +374,7 @@ menu serverinfo
 		size	"420 550"
 		lineheight	20
 		tabwidth	200
-		num		TEXT_STANDARD
+		textid		TEXT_STANDARD
 		rows	"27"
 	}
 
@@ -416,7 +416,7 @@ menu serverinfo
 		bgcolor	"0.3 0.3 0.3 0.4"
 		wheel
 		rows	"19"
-		num	TEXT_LIST
+		textid	TEXT_LIST
 	}
 
 	string mapstring
@@ -597,7 +597,7 @@ menu mp_serverbrowser
 		bgcolor	"0.3 0.3 0.3 0.4"
 		wheel
 		rows	"17"
-		num	TEXT_LIST
+		textid	TEXT_LIST
 		click	{ }
 		rclick	{ cmd "pingservers;" }
 	}
@@ -1372,7 +1372,7 @@ menu multiplayer_selectteam
 		tabwidth	60
 //		bgcolor	"1 1 1 0.5"
 		rows	20
-		num		TEXT_LIST
+		textid		TEXT_LIST
 	}
 
 	text teamnum_status
@@ -1382,7 +1382,7 @@ menu multiplayer_selectteam
 		lineheight	16
 		tabwidth	60
 //		bgcolor	"1 1 1 0.5"
-		num		TEXT_STANDARD
+		textid		TEXT_STANDARD
 		rows	1
 	}
 
@@ -1477,7 +1477,7 @@ menu multiplayer_selectteam
 		size	"690 160"
 		font	"f_verysmall"
 		wheel
-		num		TEXT_CHAT_WINDOW
+		textid		TEXT_CHAT_WINDOW
 		rows	"10"
 		lineheight	"16"
 		padding	5
@@ -1682,7 +1682,7 @@ menu chat_popup
 		tabwidth	150
 		font	"f_verysmall"
 		wheel
-		num		TEXT_CHAT_WINDOW
+		textid		TEXT_CHAT_WINDOW
 		wheel
 		rows	6
 	}

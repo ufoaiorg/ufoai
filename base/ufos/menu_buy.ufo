@@ -29,7 +29,7 @@ menu buy
 	text market
 	{
 		color	"0 .78 0 1"
-		num		TEXT_MARKET_NAMES
+		textid		TEXT_MARKET_NAMES
 		rows	"28"
 		lineheight	"25"
 		pos		"55 40"
@@ -44,7 +44,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num		TEXT_MARKET_STORAGE
+		textid		TEXT_MARKET_STORAGE
 		rows	"28"
 		size	"40 700"
 		lineheight	"25"
@@ -55,7 +55,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num		TEXT_MARKET_MARKET
+		textid		TEXT_MARKET_MARKET
 		rows	"28"
 		size	"40 700"
 		lineheight	"25"
@@ -66,7 +66,7 @@ menu buy
 	{
 		color	"0 .78 0 1"
 		align	ur
-		num		TEXT_MARKET_PRICES
+		textid		TEXT_MARKET_PRICES
 		rows	"28"
 		size	"80 700"
 		lineheight	"25"

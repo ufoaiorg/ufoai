@@ -69,7 +69,7 @@ menu basedefence
 		lineheight	"22"
 		wheel
 		rows	"27"
-		num		TEXT_BASEDEFENCE_LIST
+		textid		TEXT_BASEDEFENCE_LIST
 		mousefx	true
 		click
 	}
@@ -161,7 +161,7 @@ menu basedefence
 		lineheight	"20"
 		wheel
 		rows	"11"
-		num TEXT_LIST
+		textid TEXT_LIST
 		mousefx	true
 		click
 	}
@@ -254,7 +254,7 @@ menu basedefence
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
-		num		TEXT_AIREQUIP_1
+		textid		TEXT_AIREQUIP_1
 		rows	"2"
 	}
 
@@ -276,7 +276,7 @@ menu basedefence
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
-		num		TEXT_AIREQUIP_2
+		textid		TEXT_AIREQUIP_2
 		rows	"2"
 	}
 
@@ -298,7 +298,7 @@ menu basedefence
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
-		num		TEXT_AIREQUIP_3
+		textid		TEXT_AIREQUIP_3
 		rows	"2"
 	}
 

@@ -279,7 +279,7 @@ menu employees
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx	true
-		num		TEXT_LIST
+		textid		TEXT_LIST
 //		bgcolor	"1 1 1 0.5"
 		click
 		whup	{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
@@ -596,7 +596,7 @@ menu employees
 		size	"366 80"
 		lineheight	20
 		tabwidth	260
-		num		TEXT_EMPLOYEE
+		textid		TEXT_EMPLOYEE
 		rows	"4"
 	}
 

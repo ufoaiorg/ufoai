@@ -370,7 +370,7 @@ menu popup_tipoftheday
 		size	"444 120"
 		lineheight	20
 		tabwidth	150
-		num	TEXT_TIPOFTHEDAY
+		textid	TEXT_TIPOFTHEDAY
 		click	{ }
 		wheel
 		rows	6

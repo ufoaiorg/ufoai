@@ -32,7 +32,7 @@ menu map
 		bgcolor	"0 0 0 .5"
 		lineheight	"20"
 		rows	1
-		num		TEXT_MESSAGESYSTEM
+		textid		TEXT_MESSAGESYSTEM
 		wheel
 		scrollbar false
 	}
@@ -525,7 +525,7 @@ menu map_combatzoom
 		bgcolor	"0 0 0 .5"
 		lineheight	"20"
 		rows	1
-		num		TEXT_MESSAGESYSTEM
+		textid		TEXT_MESSAGESYSTEM
 		wheel
 	}
 
@@ -679,13 +679,13 @@ menu popup_list
 		align	uc
 		size	"446 20"
 		rows	"1"
-		num		TEXT_POPUP
+		textid		TEXT_POPUP
 	}
 
 	text popup_text
 	{
 		pos		"26 58"
-		num		TEXT_POPUP_INFO
+		textid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
 		size	"446 32"
@@ -695,7 +695,7 @@ menu popup_list
 	text popup_list
 	{
 		pos		"26 96"
-		num		TEXT_LIST
+		textid		TEXT_LIST
 		lineheight	16
 		tabwidth	100
 		size	"446 96"
@@ -759,14 +759,14 @@ menu popup_button
 		align	uc
 		size	"446 20"
 		rows	"1"
-		num		TEXT_POPUP
+		textid		TEXT_POPUP
 		align cc
 	}
 
 	text popup_text
 	{
 		pos		"26 58"
-		num		TEXT_POPUP_INFO
+		textid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
 		size	"446 128"
@@ -997,7 +997,7 @@ menu popup_baseattack
 	text description
 	{
 		pos	"26 58"
-		num	TEXT_POPUP
+		textid	TEXT_POPUP
 		size	"450 144"
 		rows	5
 	}
@@ -1109,7 +1109,7 @@ menu popup_transferbaselist
 
 	text trans_baselist
 	{
-		num		TEXT_LIST
+		textid		TEXT_LIST
 		pos		"26 74"
 		size	"450 144"
 //		bgcolor	"1 1 1 0.5"
@@ -1899,7 +1899,7 @@ menu popup_intercept
 		lineheight	20
 		tabwidth	150
 		mousefx	true
-		num		TEXT_AIRCRAFT_LIST
+		textid		TEXT_AIRCRAFT_LIST
 		wheel
 		rows	"13"
 		click
@@ -1914,7 +1914,7 @@ menu popup_intercept
 		lineheight	20
 		tabwidth	175
 		mousefx	true
-		num		TEXT_BASE_LIST
+		textid		TEXT_BASE_LIST
 		rows	"13"
 		wheel
 		click
@@ -2009,7 +2009,7 @@ menu popup_mission
 		lineheight	20
 		tabwidth	190
 		mousefx	true
-		num		TEXT_AIRCRAFT_LIST
+		textid		TEXT_AIRCRAFT_LIST
 		wheel
 		rows	"13"
 		click
@@ -2089,7 +2089,7 @@ menu popup_multi_selection
 		size	"420 100"
 		lineheight	20
 		tabwidth	150
-		num		TEXT_MULTISELECTION
+		textid		TEXT_MULTISELECTION
 		wheel
 		rows	5
 		mousefx	true
@@ -2170,7 +2170,7 @@ menu popup_aircraft
 		size	"420 100"
 		lineheight	20
 		tabwidth	150
-		num		TEXT_POPUP
+		textid		TEXT_POPUP
 		rows	5
 		mousefx	true
 		click
@@ -2227,13 +2227,13 @@ menu popup
 		align	uc
 		size	"446 20"
 		rows	"1"
-		num		TEXT_POPUP
+		textid		TEXT_POPUP
 	}
 
 	text popup_text
 	{
 		pos		"26 58"
-		num		TEXT_POPUP_INFO
+		textid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
 		size	"446 128"
@@ -2369,7 +2369,7 @@ menu messageoptions
 	text messagetypes
 	{
 		color	"0 .78 0 1"
-		num		TEXT_MESSAGEOPTIONS
+		textid		TEXT_MESSAGEOPTIONS
 		rows	"12"
 		lineheight	"25"
 		pos		"30 90"

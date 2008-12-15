@@ -63,7 +63,7 @@ menu basesummary
 	// ===================
 	text txt_base_summary
 	{
-		num			TEXT_STATS_BASESUMMARY
+		textid			TEXT_STATS_BASESUMMARY
 		pos			"30 66"
 		size		"500 672"
 		lineheight		16
@@ -89,7 +89,7 @@ menu basesummary
 		wheel
 		scrollbar	yes
 		rows		"25"
-		num			TEXT_STANDARD
+		textid			TEXT_STANDARD
 	}
 
 	func resetbaselayout
