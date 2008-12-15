@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ufoai 2.2\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-12-14 15:51+0100\n"
-"PO-Revision-Date: 2008-12-14 23:06+0100\n"
+"PO-Revision-Date: 2008-12-15 09:24+0100\n"
 "Last-Translator: Ryiel <szerintem@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1989,7 +1989,7 @@ msgstr "Ellenséget vettünk észre"
 #: ../base/ufos/menu_althud.ufo:537
 #: ../base/ufos/menu_hud.ufo:237
 msgid "Click to cycle through spotted enemies"
-msgstr ""
+msgstr "Kattints ide ahhoz, hogy végignézd a meglátott ellenfeleket"
 
 #: ../base/ufos/menu_althud.ufo:547
 #: ../base/ufos/menu_hud.ufo:213
@@ -2022,7 +2022,7 @@ msgstr "Nincs reakció"
 #: ../base/ufos/menu_althud.ufo:646
 #: ../base/ufos/menu_hud.ufo:446
 msgid "Use headgear"
-msgstr ""
+msgstr "Sisak használata"
 
 #: ../base/ufos/menu_althud.ufo:749
 msgid "Level up"
@@ -2073,7 +2073,7 @@ msgstr "Válts a bal kéz fegyverére"
 #: ../base/ufos/menu_hud.ufo:1410
 #: ../base/ufos/menu_hud.ufo:1423
 msgid "Check to use this firemode for reaction fire"
-msgstr ""
+msgstr "Ellenőrizd, hogy ezt a tűzelési módot használjad visszalövésnél"
 
 #: ../base/ufos/menu_althud.ufo:1727
 #: ../base/ufos/menu_althud.ufo:1737
@@ -2133,7 +2133,7 @@ msgstr "Jelenlegi védelmi rendszer"
 
 #: ../base/ufos/menu_basedefence.ufo:264
 msgid "Choose defence system to build after removing current one"
-msgstr ""
+msgstr "Válaszd ki, hogy milyen védelmi rendszert telepítesz a jelenlegi eltávolítása után"
 
 #: ../base/ufos/menu_basedefence.ufo:286
 msgid "Change ammo in the defence system"
@@ -2145,11 +2145,11 @@ msgstr "Jelenlegi védelmi rendszer"
 
 #: ../base/ufos/menu_basedefence.ufo:316
 msgid "System to install after removal"
-msgstr ""
+msgstr "Az eltávolítás utáni rendszer telepítése"
 
 #: ../base/ufos/menu_basedefence.ufo:325
 msgid "Ammo to use with installed system"
-msgstr ""
+msgstr "Muníció használata a telepített rendszerrel"
 
 #: ../base/ufos/menu_bases.ufo:31
 msgid "Back to geoscape"
@@ -2400,7 +2400,7 @@ msgstr ""
 #: ../base/ufos/menu_team.ufo:1382
 #: ../base/ufos/menu_ufopedia.ufo:331
 msgid "Previous ammunition compatible with this weapon"
-msgstr ""
+msgstr "Előző muníció ami használható ezzel a fegyverrel"
 
 #: ../base/ufos/menu_buy.ufo:1323
 #: ../base/ufos/menu_team.ufo:1397
@@ -2412,19 +2412,19 @@ msgstr ""
 #: ../base/ufos/menu_team.ufo:1412
 #: ../base/ufos/menu_ufopedia.ufo:361
 msgid "Next ammunition compatible with this weapon"
-msgstr ""
+msgstr "Következő muníció ami használható ezzel a fegyverrel"
 
 #: ../base/ufos/menu_buy.ufo:1353
 #: ../base/ufos/menu_team.ufo:1428
 #: ../base/ufos/menu_ufopedia.ufo:376
 msgid "With weapon:"
-msgstr ""
+msgstr "Fegyverrel:"
 
 #: ../base/ufos/menu_buy.ufo:1362
 #: ../base/ufos/menu_team.ufo:1437
 #: ../base/ufos/menu_ufopedia.ufo:385
 msgid "With ammo:"
-msgstr ""
+msgstr "Munícióval:"
 
 #: ../base/ufos/menu_buy.ufo:1387
 #: ../base/ufos/menu_team.ufo:1454
@@ -2550,7 +2550,7 @@ msgstr "Beállítások"
 
 #: ../base/ufos/menu_geoscape.ufo:612
 msgid "Toggle between full zoom and half zoom"
-msgstr ""
+msgstr "Teljes zoom és fél-zoom közötti váltás"
 
 #: ../base/ufos/menu_geoscape.ufo:708
 #: ../base/ufos/menu_geoscape.ufo:896
@@ -2646,7 +2646,7 @@ msgstr "Válassz célbázist az átcsoportosításhoz"
 
 #: ../base/ufos/menu_geoscape.ufo:1105
 msgid "Choose a base to host alien bodies:"
-msgstr ""
+msgstr "Válassz egy bázist az idegen testek tárolására:"
 
 #: ../base/ufos/menu_geoscape.ufo:1171
 msgid "New base"
@@ -2779,11 +2779,11 @@ msgstr "Bázis:"
 
 #: ../base/ufos/menu_geoscape.ufo:1995
 msgid "ETA:"
-msgstr ""
+msgstr "Érkezés:"
 
 #: ../base/ufos/menu_geoscape.ufo:2062
 msgid "Select item"
-msgstr ""
+msgstr "Tárgy kiválasztása"
 
 #: ../base/ufos/menu_geoscape.ufo:2069
 msgid "Type:"
@@ -2791,7 +2791,7 @@ msgstr "Típus:"
 
 #: ../base/ufos/menu_geoscape.ufo:2150
 msgid "Action:"
-msgstr ""
+msgstr "Akció:"
 
 #: ../base/ufos/menu_geoscape.ufo:2157
 msgid "Description:"
@@ -2858,7 +2858,7 @@ msgstr ""
 #: ../base/ufos/menu_geoscape.ufo:2837
 #: ../base/ufos/menu_geoscape.ufo:2861
 msgid "enable or disable game stopping"
-msgstr ""
+msgstr "A játék megállításának engedélyezése vagy tiltása"
 
 #: ../base/ufos/menu_geoscape.ufo:2389
 #: ../base/ufos/menu_geoscape.ufo:2413
@@ -2882,7 +2882,7 @@ msgstr ""
 #: ../base/ufos/menu_geoscape.ufo:2845
 #: ../base/ufos/menu_geoscape.ufo:2869
 msgid "enable or disable displaying a notification message"
-msgstr ""
+msgstr "A felbukkanó üzenetek engedélyezése vagy tiltása"
 
 #: ../base/ufos/menu_geoscape.ufo:2397
 #: ../base/ufos/menu_geoscape.ufo:2421
@@ -2928,7 +2928,7 @@ msgstr "A játékhangok be- vagy kikapcsolása"
 #: ../base/ufos/menu_hire.ufo:283
 #: ../base/ufos/menu_hire.ufo:295
 msgid "Hire/Unhire - Right click to remove"
-msgstr ""
+msgstr "Felbérelés/Kirúgás - Jobb klikk az eltávolításhoz"
 
 #: ../base/ufos/menu_hire.ufo:364
 msgid "Rename your employee"
@@ -3285,12 +3285,12 @@ msgstr "Bővítmény"
 #: ../base/ufos/menu_inventory.ufo:57
 #: ../base/ufos/menu_team.ufo:1049
 msgid "Headgear"
-msgstr ""
+msgstr "Fejfedő"
 
 #: ../base/ufos/menu_inventory.ufo:66
 #: ../base/ufos/menu_team.ufo:1058
 msgid "Holster"
-msgstr ""
+msgstr "Pisztolytáska"
 
 #: ../base/ufos/menu_inventory.ufo:75
 #: ../base/ufos/menu_team.ufo:1067
@@ -4137,7 +4137,7 @@ msgstr "Fontosság csökkentése"
 
 #: ../base/ufos/menu_research.ufo:137
 msgid "Switch to another base"
-msgstr ""
+msgstr "Váltás másik bázisra"
 
 #: ../base/ufos/menu_research.ufo:358
 #: ../base/ufos/menu_research.ufo:369
@@ -4220,7 +4220,7 @@ msgstr "Utolsó automatikus mentés visszatöltése."
 
 #: ../base/ufos/menu_singleplayer.ufo:344
 msgid "Reload"
-msgstr ""
+msgstr "Újratöltés"
 
 #: ../base/ufos/menu_singleplayer.ufo:708
 #: client/cl_team.c:2361
@@ -4262,7 +4262,7 @@ msgstr "Start"
 
 #: ../base/ufos/menu_skirmish.ufo:54
 msgid "Skirmish game settings"
-msgstr ""
+msgstr "Gyakorló játék beállításai"
 
 #: ../base/ufos/menu_skirmish.ufo:80
 msgid "Max AI actors for this game"
@@ -4341,7 +4341,7 @@ msgstr "max"
 #: ../base/ufos/menu_team.ufo:146
 #: ../base/ufos/menu_team.ufo:148
 msgid "Soldier carries equipment"
-msgstr ""
+msgstr "Felszerelést cipelő katonák"
 
 #: ../base/ufos/menu_team.ufo:151
 #: ../base/ufos/menu_team.ufo:153
@@ -4363,7 +4363,7 @@ msgstr ""
 #: ../base/ufos/menu_team.ufo:185
 #: ../base/ufos/menu_team.ufo:187
 msgid "Soldier carries no equipment"
-msgstr ""
+msgstr "Felszerelést nem cipelő katonák"
 
 #: ../base/ufos/menu_team.ufo:442
 #: ../base/ufos/menu_team.ufo:453
@@ -4394,7 +4394,7 @@ msgstr "Katona átnevezése"
 #: ../base/ufos/menu_team.ufo:947
 #: ../base/ufos/menu_team.ufo:958
 msgid "Assign tanks"
-msgstr ""
+msgstr "Tankok kijelölése"
 
 #: ../base/ufos/menu_team.ufo:952
 msgid "Assign soldiers"
@@ -4464,7 +4464,7 @@ msgstr "Katona képességei"
 
 #: ../base/ufos/menu_team.ufo:1670
 msgid "Use current skin with every soldier aboard"
-msgstr ""
+msgstr "Jelenlegi kinézet használata az összes katonánál a fedélzeten"
 
 #: ../base/ufos/menu_transfer.ufo:46
 msgid "Select previous base for transfer"
@@ -4484,7 +4484,7 @@ msgstr "Bázisinfó"
 
 #: ../base/ufos/menu_transfer.ufo:149
 msgid "Cargo onboard"
-msgstr ""
+msgstr "Rakomány a fedélzeten"
 
 #: ../base/ufos/menu_transfer.ufo:210
 msgid "Empty the aircraft storage"
@@ -4492,11 +4492,11 @@ msgstr ""
 
 #: ../base/ufos/menu_transfer.ufo:218
 msgid "Unload"
-msgstr ""
+msgstr "Kipakolás"
 
 #: ../base/ufos/menu_transfer.ufo:223
 msgid "Start the transfer"
-msgstr ""
+msgstr "Átszállítás megkezdése"
 
 #: ../base/ufos/menu_ufopedia.ufo:31
 msgid "Previous entry"
@@ -4520,7 +4520,7 @@ msgstr "Kutatás eredményei"
 
 #: ../base/ufos/menu_ufopedia.ufo:92
 msgid "Leave UFOpaedia"
-msgstr ""
+msgstr "UFOpédia elhagyása"
 
 #: ../base/ufos/menu_ufopedia.ufo:504
 msgid "Time:"
@@ -4532,7 +4532,7 @@ msgstr "Dátum:"
 
 #: ../base/ufos/menu_ufopedia.ufo:539
 msgid "Mark all messages read"
-msgstr ""
+msgstr "Az összes üzenet olvasottként való megjelölése"
 
 #: ../base/ufos/menu_ufopedia.ufo:912
 msgid "Leave mailclient"
@@ -4621,7 +4621,7 @@ msgstr "Idegen anyagok"
 #: ../base/ufos/weapons_melee.ufo:83
 #: ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
-msgstr ""
+msgstr "Szúrás"
 
 #: ../base/ufos/research.ufo:107
 msgid "Background"
@@ -4892,7 +4892,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:353
 msgid "Odd Behaviour"
-msgstr ""
+msgstr "Furcsa viselkedés"
 
 #: ../base/ufos/research.ufo:358
 msgid "alien_odd_behaviour_txt"
@@ -9773,7 +9773,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4514
 msgid "A New Twist"
-msgstr ""
+msgstr "Egy új fordulat"
 
 #: ../base/ufos/research.ufo:4519
 msgid "news_new_twist_txt"
