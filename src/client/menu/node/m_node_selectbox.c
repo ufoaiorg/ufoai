@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_input.h"
 #include "m_node_selectbox.h"
+#include "m_node_abstractnode.h"
 
 #define SELECTBOX_SIDE_WIDTH 7.0f
 #define SELECTBOX_RIGHT_WIDTH 20.0f

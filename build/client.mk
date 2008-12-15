@@ -61,6 +61,7 @@ CLIENT_SRCS = \
 	client/menu/m_popup.c \
 	client/menu/m_timer.c \
 	client/menu/m_tooltip.c \
+	client/menu/node/m_node_abstractnode.c \
 	client/menu/node/m_node_abstractvalue.c \
 	client/menu/node/m_node_abstractscrollbar.c \
 	client/menu/node/m_node_bar.c \

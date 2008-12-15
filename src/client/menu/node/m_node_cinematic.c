@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "m_node_model.h"
 #include "m_node_cinematic.h"
+#include "m_node_abstractnode.h"
 
 static void MN_CinematicNodeDraw (menuNode_t *node)
 {

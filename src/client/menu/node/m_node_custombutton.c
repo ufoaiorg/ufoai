@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_custombutton.h"
 #include "m_node_button.h"
+#include "m_node_abstractnode.h"
 
 #define MN_CUSTOMBUTTON_TEX_HEIGHT 64
 #define MN_CUSTOMBUTTON_TEX_WIDTH 256

@@ -67,6 +67,7 @@ typedef enum mn_s {
 	MN_ABSTRACTSCROLLBAR,
 	MN_ABSTRACTVALUE,
 	MN_ABSTRACTOPTION,
+	MN_ABSTRACTNODE,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -231,19 +232,11 @@ typedef struct nodeBehaviour_s {
 #endif
 } nodeBehaviour_t;
 
-extern nodeBehaviour_t* menuBehaviour;
-
 qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
-void MN_UnHideNode(menuNode_t* node);
-void MN_HideNode(menuNode_t* node);
-void MN_SetNewNodePos(menuNode_t* node, int x, int y);
-void MN_GetNodeAbsPos(const menuNode_t* node, vec2_t pos);
-void MN_NodeAbsoluteToRelativePos(const menuNode_t* node, int *x, int *y);
 menuNode_t* MN_AllocNode(const char* type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 struct value_s;
 const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);
-qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
 
 void MN_InitNodes(void);
 menuNode_t* MN_CloneNode(const menuNode_t* node, struct menu_s *newMenu, qboolean recursive);

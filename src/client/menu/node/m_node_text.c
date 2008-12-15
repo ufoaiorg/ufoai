@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_video.h" /**< @todo Clean this up and remove this include */
 #include "../../../common/scripts.h"
 #include "m_node_text.h"
+#include "m_node_abstractnode.h"
 
 #define EXTRADATA(node) (node->u.text)
 

@@ -30,76 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
 
-/** @brief valid properties for a node */
-static const value_t nodeProperties[] = {
-	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
-	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
-	{"width", V_FLOAT, offsetof(menuNode_t, size[0]), MEMBER_SIZEOF(menuNode_t, size[0])},
-	{"height", V_FLOAT, offsetof(menuNode_t, size[1]), MEMBER_SIZEOF(menuNode_t, size[1])},
-	{"left", V_FLOAT, offsetof(menuNode_t, pos[0]), MEMBER_SIZEOF(menuNode_t, pos[0])},
-	{"top", V_FLOAT, offsetof(menuNode_t, pos[1]), MEMBER_SIZEOF(menuNode_t, pos[1])},
-
-	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
-	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
-	{"blend", V_BOOL, offsetof(menuNode_t, blend), MEMBER_SIZEOF(menuNode_t, blend)},
-	{"disabled", V_BOOL, offsetof(menuNode_t, disabled), MEMBER_SIZEOF(menuNode_t, disabled)},
-	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
-	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
-	{"border", V_INT, offsetof(menuNode_t, border), MEMBER_SIZEOF(menuNode_t, border)},
-	{"padding", V_INT, offsetof(menuNode_t, padding), MEMBER_SIZEOF(menuNode_t, padding)},
-	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
-	{"baseid", V_BASEID, offsetof(menuNode_t, baseid), MEMBER_SIZEOF(menuNode_t, baseid)},
-	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
-	{"timeout_once", V_BOOL, offsetof(menuNode_t, timeOutOnce), MEMBER_SIZEOF(menuNode_t, timeOutOnce)},
-	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
-	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
-	{"key", V_STRING, offsetof(menuNode_t, key), 0},
-
-	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
-	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
-	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
-	{"model", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
-	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
-	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
-	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
-	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, font), 0},
-#if 0 /* never use */
-	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
-#endif
-
-	/* specific for model
-	 * @todo move it into the node behaviour
-	 */
-	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.animation), 0},
-	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
-	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
-	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.tag), 0},
-
-	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
-	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
-	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
-	{"textalign", V_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
-	{"if", V_IF, offsetof(menuNode_t, depends), 0},
-	{"point_width", V_FLOAT, offsetof(menuNode_t, pointWidth), MEMBER_SIZEOF(menuNode_t, pointWidth)},
-	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
-
-	/* action event */
-	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
-	{"rclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
-	{"mclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
-	{"wheel", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
-	{"in", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseIn), MEMBER_SIZEOF(menuNode_t, onMouseIn)},
-	{"out", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseOut), MEMBER_SIZEOF(menuNode_t, onMouseOut)},
-	{"whup", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
-	{"whdown", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
-	{"change", V_SPECIAL_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
-
-	/* very special attribute */
-	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
-
-	{NULL, V_NULL, 0, 0},
-};
 
 /** @brief valid properties for options of the selectbox and tab */
 static const value_t selectBoxValues[] = {
@@ -166,11 +96,16 @@ static const value_t* MN_FindPropertyByName (const value_t* propertyList, const 
  */
 const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char* name)
 {
-	const value_t *result;
-	result = MN_FindPropertyByName(nodeProperties, name);
-	if (!result && node->behaviour->properties)
-		result = MN_FindPropertyByName(node->behaviour->properties, name);
-	return result;
+	nodeBehaviour_t *behaviour;
+	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
+		const value_t *result;
+		if (behaviour->properties == NULL)
+			continue;
+		result = MN_FindPropertyByName(behaviour->properties, name);
+		if (result)
+			return result;
+	}
+	return NULL;
 }
 
 /**
@@ -180,6 +115,7 @@ const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char*
 static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token)
 {
 	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
+	const nodeBehaviour_t *abstractnode = MN_GetNodeBehaviour("abstractnode");
 	menuAction_t *lastAction;
 	menuNode_t *node;
 	qboolean found;
@@ -266,7 +202,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 /*				Com_Printf(" %s", *token); */
 
-				val = MN_FindPropertyByName(nodeProperties, *token);
+				val = MN_FindPropertyByName(abstractnode->properties, *token);
 				if (!val) {
 					/* do we ALREADY know this node? and his type */
 					menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
@@ -783,6 +719,8 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 
 static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const char **token, const char *errhead)
 {
+	const nodeBehaviour_t* menuBehaviour = MN_GetNodeBehaviour("menu");
+
 	/* there are no menu properties */
 	if (*token[0] != '{') {
 		return qtrue;
@@ -1143,6 +1081,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
+			const nodeBehaviour_t *abstractnode = MN_GetNodeBehaviour("abstractnode");
 			menuNode_t *refNode;
 			const value_t *val;
 
@@ -1152,7 +1091,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 				return NULL;
 
 			/* get the property */
-			val = MN_FindPropertyByName(nodeProperties, token);
+			val = MN_FindPropertyByName(abstractnode->properties, token);
 
 			if (!val)
 				return NULL;
@@ -1191,6 +1130,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 			/* get the cvar value */
 			return Cvar_VariableValue(token);
 		} else {
+			const nodeBehaviour_t *abstractnode = MN_GetNodeBehaviour("abstractnode");
 			menuNode_t *refNode;
 			const value_t *val;
 
@@ -1200,7 +1140,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 				return 0.0;
 
 			/* get the property */
-			val = MN_FindPropertyByName(nodeProperties, token);
+			val = MN_FindPropertyByName(abstractnode->properties, token);
 
 			if (!val || val->type != V_FLOAT)
 				return 0.0;

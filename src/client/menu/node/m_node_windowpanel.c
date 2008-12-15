@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_input.h"
 #include "m_node_windowpanel.h"
+#include "m_node_abstractnode.h"
 
 /* constants defining all tile of the texture */
 

@@ -1,5 +1,5 @@
 /**
- * @file m_draw.h
+ * @file m_node_abstractnode.h
  */
 
 /*
@@ -22,14 +22,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_DRAW_H
-#define CLIENT_MENU_M_DRAW_H
+#ifndef CLIENT_MENU_M_NODE_ABSTRACTNODE_H
+#define CLIENT_MENU_M_NODE_ABSTRACTNODE_H
 
-extern cvar_t *mn_show_tooltips;
+#include "../m_nodes.h"
 
-void MN_DrawMenus(void);
-void MN_DrawMenusInit(void);
-void MN_DisplayNotice(const char *text, int time);
-void MN_DrawCursor (void);
+void MN_RegisterAbstractNode(nodeBehaviour_t *);
+
+struct menuNode_s;
+void MN_UnHideNode(struct menuNode_s* node);
+void MN_HideNode(struct menuNode_s* node);
+void MN_SetNewNodePos(struct menuNode_s* node, int x, int y);
+void MN_GetNodeAbsPos(const struct menuNode_s* node, vec2_t pos);
+void MN_NodeAbsoluteToRelativePos(const struct menuNode_s* node, int *x, int *y);
+
+struct value_s;
+qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
 
 #endif

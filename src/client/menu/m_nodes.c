@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_input.h"
 #include "../../game/q_shared.h"
 
+#include "node/m_node_abstractnode.h"
 #include "node/m_node_abstractscrollbar.h"
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_bar.h"
@@ -70,45 +71,6 @@ static nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
  * @brief menu behaviour, not realy a node for the moment
  */
 nodeBehaviour_t *menuBehaviour;
-
-/**
- * @brief Returns the absolute position of a menunode
- * @param[in] menunode
- * @param[out] pos
- */
-void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
-{
-	if (!node)
-		Sys_Error("MN_GetNodeAbsPos: No node given");
-	if (!node->menu)
-		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
-
-	/* if we request the position of an undrawable node, there is a problem */
-	if (node->behaviour->isVirtual)
-		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
-
-	Vector2Set(pos, node->menu->pos[0] + node->pos[0], node->menu->pos[1] + node->pos[1]);
-}
-
-/**
- * @brief Update an absolute position to a relative one
- * @param[in] menunode
- * @param[inout] x an absolute x position
- * @param[inout] y an absolute y position
- */
-void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
-{
-	assert(node != NULL);
-	assert(x != NULL);
-	assert(y != NULL);
-
-	/* if we request the position of an undrawable node, there is a problem */
-	if (node->behaviour->isVirtual)
-		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
-
-	*x -= node->menu->pos[0] + node->pos[0];
-	*y -= node->menu->pos[1] + node->pos[1];
-}
 
 #if 0
 /** @todo (menu) to be integrated into MN_CheckNodeZone */
@@ -223,40 +185,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 }
 
 /**
- * @brief Sets new x and y coordinates for a given node
- */
-void MN_SetNewNodePos (menuNode_t* node, int x, int y)
-{
-	if (node) {
-		node->pos[0] = x;
-		node->pos[1] = y;
-	}
-}
-
-/**
- * @brief Hides a given menu node
- * @note Sanity check whether node is null included
- */
-void MN_HideNode (menuNode_t* node)
-{
-	if (node)
-		node->invis = qtrue;
-	else
-		Com_Printf("MN_HideNode: No node given\n");
-}
-
-/**
- * @brief Script command to hide a given menu node
- */
-static void MN_HideNode_f (void)
-{
-	if (Cmd_Argc() == 2)
-		MN_HideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
-	else
-		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
-}
-
-/**
  * @todo Change the @c type to @c char* (behaviourName)
  */
 menuNode_t* MN_AllocNode (const char* type)
@@ -348,6 +276,11 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 		behaviour->propertyCount = num;
 	}
 
+	/* everything inherite 'abstractnode' */
+	if (behaviour->extends == NULL && Q_strcmp(behaviour->name, "abstractnode") != 0) {
+		behaviour->extends = "abstractnode";
+	}
+
 	if (behaviour->extends) {
 		int i = 0;
 		behaviour->super = MN_GetNodeBehaviour(behaviour->extends);
@@ -369,95 +302,9 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 
 			i++;
 		}
-
-		/** @todo remove it when we will allow to search properties into the super list */
-		if (behaviour->properties == NULL) {
-			behaviour->properties = behaviour->super->properties;
-			behaviour->propertyCount = behaviour->super->propertyCount;
-		}
 	}
 
 	behaviour->isInitialized = qtrue;
-}
-
-/**
- * @brief Unhides a given menu node
- * @note Sanity check whether node is null included
- */
-void MN_UnHideNode (menuNode_t* node)
-{
-	if (node)
-		node->invis = qfalse;
-	else
-		Com_Printf("MN_UnHideNode: No node given\n");
-}
-
-/**
- * @brief Script command to unhide a given menu node
- */
-static void MN_UnHideNode_f (void)
-{
-	if (Cmd_Argc() == 2)
-		MN_UnHideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
-	else
-		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
-}
-
-/**
- * @brief Set node property
- * @note More hard to set string like that at the run time
- * @todo remove atof
- * @todo add support of more fixed size value (everything else string)
- */
-qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const char* value)
-{
-	byte* b = (byte*)node + property->ofs;
-
-	if (property->type == V_FLOAT) {
-		*(float*) b = atof(value);
-	} else if (property->type == (V_FLOAT|V_MENU_COPY)) {
-		b = (byte*) (*(void**)b);
-		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
-			MN_SetCvar(&((char*)b)[6], NULL, atof(value));
-		} else {
-			*(float*) b = atof(value);
-		}
-	} else if (property->type == V_INT) {
-		*(int*) b = atoi(value);
-    } else {
-		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s.%s@%s'\n", node->menu->name, node->name, property->string);
-		return qfalse;
-	}
-
-	return qtrue;
-}
-
-/**
- * @brief set a node property from the command line
- */
-static void MN_NodeSetProperty_f (void)
-{
-	menuNode_t *node;
-	const value_t *property;
-
-	if (Cmd_Argc() != 4) {
-		Com_Printf("Usage: %s <node> <prop> <value>\n", Cmd_Argv(0));
-		return;
-	}
-
-	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
-	if (!node) {
-		Com_Printf("MN_NodeSetProperty_f: Node '%s' not found\n", Cmd_Argv(1));
-		return;
-	}
-
-	property = MN_NodeGetPropertyDefinition(node, Cmd_Argv(2));
-	if (!property) {
-		Com_Printf("Property '%s.%s@%s' dont exists\n", node->menu->name, node->name, Cmd_Argv(2));
-		return;
-	}
-
-	MN_NodeSetProperty(node, property, Cmd_Argv(3));
 }
 
 void MN_InitNodes (void)
@@ -468,6 +315,7 @@ void MN_InitNodes (void)
 	/** @todo convert it with an array of function */
 	/* compute list of node behaviours */
 	MN_RegisterNullNode(current++);
+	MN_RegisterAbstractNode(current++);
 	MN_RegisterAbstractOptionNode(current++);
 	MN_RegisterAbstractScrollbarNode(current++);
 	MN_RegisterAbstractValueNode(current++);
@@ -504,7 +352,7 @@ void MN_InitNodes (void)
 
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
-	for (i = 1; i < MN_NUM_NODETYPE; i++) {
+	for (i = 0; i < MN_NUM_NODETYPE - 1; i++) {
 		const nodeBehaviour_t *a = current;
 		const nodeBehaviour_t *b = current + 1;
 		if (Q_strcmp(a->name, b->name) >= 0) {
@@ -519,17 +367,8 @@ void MN_InitNodes (void)
 
 	/* finalyse node behaviour initialization */
 	current = nodeBehaviourList;
-	for (i = 1; i < MN_NUM_NODETYPE; i++) {
+	for (i = 0; i < MN_NUM_NODETYPE; i++) {
 		MN_InitializeNodeBehaviour(current);
 		current++;
 	}
-
-	/** @todo move it where it is used (global var not need) */
-	/* direct access to menu node */
-	menuBehaviour = MN_GetNodeBehaviour("menu");
-
-	/* some commands */
-	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
-	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
-	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
 }

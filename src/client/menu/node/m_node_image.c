@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_tooltip.h"
 #include "../m_nodes.h"
 #include "m_node_image.h"
+#include "m_node_abstractnode.h"
 
 /**
  * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
