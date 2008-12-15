@@ -2889,343 +2889,64 @@ menu messageoptions
 	// ===================
 	// confuncs to change button pictures
 	// ===================
-	confunc ms_pausee0 { *bt_pause0 image menu/checkbox_checked }
-	confunc ms_paused0 { *bt_pause0 image menu/checkbox_unchecked }
-	confunc ms_notifye0 { *bt_notify0 image menu/checkbox_checked }
-	confunc ms_notifyd0 { *bt_notify0 image menu/checkbox_unchecked }
-	confunc ms_sounde0 { *bt_sound0 image menu/checkbox_checked }
-	confunc ms_soundd0 { *bt_sound0 image menu/checkbox_unchecked }
-
-	confunc ms_pausee1 { *bt_pause1 image menu/checkbox_checked }
-	confunc ms_paused1 { *bt_pause1 image menu/checkbox_unchecked }
-	confunc ms_notifye1 { *bt_notify1 image menu/checkbox_checked }
-	confunc ms_notifyd1 { *bt_notify1 image menu/checkbox_unchecked }
-	confunc ms_sounde1 { *bt_sound1 image menu/checkbox_checked }
-	confunc ms_soundd1 { *bt_sound1 image menu/checkbox_unchecked }
-
-	confunc ms_pausee2 { *bt_pause2 image menu/checkbox_checked }
-	confunc ms_paused2 { *bt_pause2 image menu/checkbox_unchecked }
-	confunc ms_notifye2 { *bt_notify2 image menu/checkbox_checked }
-	confunc ms_notifyd2 { *bt_notify2 image menu/checkbox_unchecked }
-	confunc ms_sounde2 { *bt_sound2 image menu/checkbox_checked }
-	confunc ms_soundd2 { *bt_sound2 image menu/checkbox_unchecked }
-
-	confunc ms_pausee3 { *bt_pause3 image menu/checkbox_checked }
-	confunc ms_paused3 { *bt_pause3 image menu/checkbox_unchecked }
-	confunc ms_notifye3 { *bt_notify3 image menu/checkbox_checked }
-	confunc ms_notifyd3 { *bt_notify3 image menu/checkbox_unchecked }
-	confunc ms_sounde3 { *bt_sound3 image menu/checkbox_checked }
-	confunc ms_soundd3 { *bt_sound3 image menu/checkbox_unchecked }
-
-	confunc ms_pausee4 { *bt_pause4 image menu/checkbox_checked }
-	confunc ms_paused4 { *bt_pause4 image menu/checkbox_unchecked }
-	confunc ms_notifye4 { *bt_notify4 image menu/checkbox_checked }
-	confunc ms_notifyd4 { *bt_notify4 image menu/checkbox_unchecked }
-	confunc ms_sounde4 { *bt_sound4 image menu/checkbox_checked }
-	confunc ms_soundd4 { *bt_sound4 image menu/checkbox_unchecked }
-
-	confunc ms_pausee5 { *bt_pause5 image menu/checkbox_checked }
-	confunc ms_paused5 { *bt_pause5 image menu/checkbox_unchecked }
-	confunc ms_notifye5 { *bt_notify5 image menu/checkbox_checked }
-	confunc ms_notifyd5 { *bt_notify5 image menu/checkbox_unchecked }
-	confunc ms_sounde5 { *bt_sound5 image menu/checkbox_checked }
-	confunc ms_soundd5 { *bt_sound5 image menu/checkbox_unchecked }
-
-	confunc ms_pausee6 { *bt_pause6 image menu/checkbox_checked }
-	confunc ms_paused6 { *bt_pause6 image menu/checkbox_unchecked }
-	confunc ms_notifye6 { *bt_notify6 image menu/checkbox_checked }
-	confunc ms_notifyd6 { *bt_notify6 image menu/checkbox_unchecked }
-	confunc ms_sounde6 { *bt_sound6 image menu/checkbox_checked }
-	confunc ms_soundd6 { *bt_sound6 image menu/checkbox_unchecked }
-
-	confunc ms_pausee7 { *bt_pause7 image menu/checkbox_checked }
-	confunc ms_paused7 { *bt_pause7 image menu/checkbox_unchecked }
-	confunc ms_notifye7 { *bt_notify7 image menu/checkbox_checked }
-	confunc ms_notifyd7 { *bt_notify7 image menu/checkbox_unchecked }
-	confunc ms_sounde7 { *bt_sound7 image menu/checkbox_checked }
-	confunc ms_soundd7 { *bt_sound7 image menu/checkbox_unchecked }
-
-	confunc ms_pausee8 { *bt_pause8 image menu/checkbox_checked }
-	confunc ms_paused8 { *bt_pause8 image menu/checkbox_unchecked }
-	confunc ms_notifye8 { *bt_notify8 image menu/checkbox_checked }
-	confunc ms_notifyd8 { *bt_notify8 image menu/checkbox_unchecked }
-	confunc ms_sounde8 { *bt_sound8 image menu/checkbox_checked }
-	confunc ms_soundd8 { *bt_sound8 image menu/checkbox_unchecked }
-
-	confunc ms_pausee9 { *bt_pause9 image menu/checkbox_checked }
-	confunc ms_paused9 { *bt_pause9 image menu/checkbox_unchecked }
-	confunc ms_notifye9 { *bt_notify9 image menu/checkbox_checked }
-	confunc ms_notifyd9 { *bt_notify9 image menu/checkbox_unchecked }
-	confunc ms_sounde9 { *bt_sound9 image menu/checkbox_checked }
-	confunc ms_soundd9 { *bt_sound9 image menu/checkbox_unchecked }
-
-	confunc ms_pausee10 { *bt_pause10 image menu/checkbox_checked }
-	confunc ms_paused10 { *bt_pause10 image menu/checkbox_unchecked }
-	confunc ms_notifye10 { *bt_notify10 image menu/checkbox_checked }
-	confunc ms_notifyd10 { *bt_notify10 image menu/checkbox_unchecked }
-	confunc ms_sounde10 { *bt_sound10 image menu/checkbox_checked }
-	confunc ms_soundd10 { *bt_sound10 image menu/checkbox_unchecked }
-
-	confunc ms_pausee11 { *bt_pause11 image menu/checkbox_checked }
-	confunc ms_paused11 { *bt_pause11 image menu/checkbox_unchecked }
-	confunc ms_notifye11 { *bt_notify11 image menu/checkbox_checked }
-	confunc ms_notifyd11 { *bt_notify11 image menu/checkbox_unchecked }
-	confunc ms_sounde11 { *bt_sound11 image menu/checkbox_checked }
-	confunc ms_soundd11 { *bt_sound11 image menu/checkbox_unchecked }
-
-	confunc ms_pausee12 { *bt_pause12 image menu/checkbox_checked }
-	confunc ms_paused12 { *bt_pause12 image menu/checkbox_unchecked }
-	confunc ms_notifye12 { *bt_notify12 image menu/checkbox_checked }
-	confunc ms_notifyd12 { *bt_notify12 image menu/checkbox_unchecked }
-	confunc ms_sounde12 { *bt_sound12 image menu/checkbox_checked }
-	confunc ms_soundd12 { *bt_sound12 image menu/checkbox_unchecked }
-
-	confunc ms_pausee13 { *bt_pause13 image menu/checkbox_checked }
-	confunc ms_paused13 { *bt_pause13 image menu/checkbox_unchecked }
-	confunc ms_notifye13 { *bt_notify13 image menu/checkbox_checked }
-	confunc ms_notifyd13 { *bt_notify13 image menu/checkbox_unchecked }
-	confunc ms_sounde13 { *bt_sound13 image menu/checkbox_checked }
-	confunc ms_soundd13 { *bt_sound13 image menu/checkbox_unchecked }
-
-	confunc ms_pausee14 { *bt_pause14 image menu/checkbox_checked }
-	confunc ms_paused14 { *bt_pause14 image menu/checkbox_unchecked }
-	confunc ms_notifye14 { *bt_notify14 image menu/checkbox_checked }
-	confunc ms_notifyd14 { *bt_notify14 image menu/checkbox_unchecked }
-	confunc ms_sounde14 { *bt_sound14 image menu/checkbox_checked }
-	confunc ms_soundd14 { *bt_sound14 image menu/checkbox_unchecked }
-
-	confunc ms_pausee15 { *bt_pause15 image menu/checkbox_checked }
-	confunc ms_paused15 { *bt_pause15 image menu/checkbox_unchecked }
-	confunc ms_notifye15 { *bt_notify15 image menu/checkbox_checked }
-	confunc ms_notifyd15 { *bt_notify15 image menu/checkbox_unchecked }
-	confunc ms_sounde15 { *bt_sound15 image menu/checkbox_checked }
-	confunc ms_soundd15 { *bt_sound15 image menu/checkbox_unchecked }
-
-	confunc ms_pausee16 { *bt_pause16 image menu/checkbox_checked }
-	confunc ms_paused16 { *bt_pause16 image menu/checkbox_unchecked }
-	confunc ms_notifye16 { *bt_notify16 image menu/checkbox_checked }
-	confunc ms_notifyd16 { *bt_notify16 image menu/checkbox_unchecked }
-	confunc ms_sounde16 { *bt_sound16 image menu/checkbox_checked }
-	confunc ms_soundd16 { *bt_sound16 image menu/checkbox_unchecked }
-
-	confunc ms_pausee17 { *bt_pause17 image menu/checkbox_checked }
-	confunc ms_paused17 { *bt_pause17 image menu/checkbox_unchecked }
-	confunc ms_notifye17 { *bt_notify17 image menu/checkbox_checked }
-	confunc ms_notifyd17 { *bt_notify17 image menu/checkbox_unchecked }
-	confunc ms_sounde17 { *bt_sound17 image menu/checkbox_checked }
-	confunc ms_soundd17 { *bt_sound17 image menu/checkbox_unchecked }
-
-	confunc ms_pausee18 { *bt_pause18 image menu/checkbox_checked }
-	confunc ms_paused18 { *bt_pause18 image menu/checkbox_unchecked }
-	confunc ms_notifye18 { *bt_notify18 image menu/checkbox_checked }
-	confunc ms_notifyd18 { *bt_notify18 image menu/checkbox_unchecked }
-	confunc ms_sounde18 { *bt_sound18 image menu/checkbox_checked }
-	confunc ms_soundd18 { *bt_sound18 image menu/checkbox_unchecked }
-
-	confunc ms_pausee19 { *bt_pause19 image menu/checkbox_checked }
-	confunc ms_paused19 { *bt_pause19 image menu/checkbox_unchecked }
-	confunc ms_notifye19 { *bt_notify19 image menu/checkbox_checked }
-	confunc ms_notifyd19 { *bt_notify19 image menu/checkbox_unchecked }
-	confunc ms_sounde19 { *bt_sound19 image menu/checkbox_checked }
-	confunc ms_soundd19 { *bt_sound19 image menu/checkbox_unchecked }
-
-	confunc ms_pausee20 { *bt_pause20 image menu/checkbox_checked }
-	confunc ms_paused20 { *bt_pause20 image menu/checkbox_unchecked }
-	confunc ms_notifye20 { *bt_notify20 image menu/checkbox_checked }
-	confunc ms_notifyd20 { *bt_notify20 image menu/checkbox_unchecked }
-	confunc ms_sounde20 { *bt_sound20 image menu/checkbox_checked }
-	confunc ms_soundd20 { *bt_sound20 image menu/checkbox_unchecked }
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_pausee {
+		*bt_pause<1> image menu/checkbox_checked
+	}
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_paused {
+		*bt_pause<1> image menu/checkbox_unchecked
+	}
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_notifye {
+		*bt_notify<1> image menu/checkbox_checked
+	}
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_notifyd {
+		*bt_notify<1> image menu/checkbox_unchecked
+	}
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_sounde {
+		*bt_sound<1> image menu/checkbox_checked
+	}
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_soundd {
+		*bt_sound<1> image menu/checkbox_unchecked
+	}
 
 	// ===================
 	// confuncs to enable/disable lines
 	// ===================
-	confunc ms_enable0 { *bt_pause0 invis false
-		*bt_notify0 invis false
-		*bt_sound0 invis false
-	}
-	confunc ms_disable0 { *bt_pause0 invis true
-		*bt_notify0 invis true
-		*bt_sound0 invis true
+
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_enable {
+		*bt_pause<1> invis false
+		*bt_notify<1> invis false
+		*bt_sound<1> invis false
 	}
 
-	confunc ms_enable1 { *bt_pause1 invis false
-		*bt_notify1 invis false
-		*bt_sound1 invis false
-	}
-	confunc ms_disable1 { *bt_pause1 invis true
-		*bt_notify1 invis true
-		*bt_sound1 invis true
-	}
-
-	confunc ms_enable2 { *bt_pause2 invis false
-		*bt_notify2 invis false
-		*bt_sound2 invis false
-	}
-	confunc ms_disable2 { *bt_pause2 invis true
-		*bt_notify2 invis true
-		*bt_sound2 invis true
+	/**
+	 * @param[in] <1> row into the current view
+	 */
+	confunc ms_disable {
+		*bt_pause<1> invis true
+		*bt_notify<1> invis true
+		*bt_sound<1> invis true
 	}
 
-	confunc ms_enable3 { *bt_pause3 invis false
-		*bt_notify3 invis false
-		*bt_sound3 invis false
-	}
-	confunc ms_disable3 { *bt_pause3 invis true
-		*bt_notify3 invis true
-		*bt_sound3 invis true
-	}
-
-	confunc ms_enable4 { *bt_pause4 invis false
-		*bt_notify4 invis false
-		*bt_sound4 invis false
-	}
-	confunc ms_disable4 { *bt_pause4 invis true
-		*bt_notify4 invis true
-		*bt_sound4 invis true
-	}
-
-	confunc ms_enable5 { *bt_pause5 invis false
-		*bt_notify5 invis false
-		*bt_sound5 invis false
-	}
-	confunc ms_disable5 { *bt_pause5 invis true
-		*bt_notify5 invis true
-		*bt_sound5 invis true
-	}
-
-	confunc ms_enable6 { *bt_pause6 invis false
-		*bt_notify6 invis false
-		*bt_sound6 invis false
-	}
-	confunc ms_disable6 { *bt_pause6 invis true
-		*bt_notify6 invis true
-		*bt_sound6 invis true
-	}
-
-	confunc ms_enable7 { *bt_pause7 invis false
-		*bt_notify7 invis false
-		*bt_sound7 invis false
-	}
-	confunc ms_disable7 { *bt_pause7 invis true
-		*bt_notify7 invis true
-		*bt_sound7 invis true
-	}
-
-	confunc ms_enable8 { *bt_pause8 invis false
-		*bt_notify8 invis false
-		*bt_sound8 invis false
-	}
-	confunc ms_disable8 { *bt_pause8 invis true
-		*bt_notify8 invis true
-		*bt_sound8 invis true
-	}
-
-	confunc ms_enable9 { *bt_pause9 invis false
-		*bt_notify9 invis false
-		*bt_sound9 invis false
-	}
-	confunc ms_disable9 { *bt_pause9 invis true
-		*bt_notify9 invis true
-		*bt_sound9 invis true
-	}
-
-	confunc ms_enable10 { *bt_pause10 invis false
-		*bt_notify10 invis false
-		*bt_sound10 invis false
-	}
-	confunc ms_disable10 { *bt_pause10 invis true
-		*bt_notify10 invis true
-		*bt_sound10 invis true
-	}
-
-	confunc ms_enable11 { *bt_pause11 invis false
-		*bt_notify11 invis false
-		*bt_sound11 invis false
-	}
-	confunc ms_disable11 { *bt_pause11 invis true
-		*bt_notify11 invis true
-		*bt_sound11 invis true
-	}
-
-	confunc ms_enable12 { *bt_pause12 invis false
-		*bt_notify12 invis false
-		*bt_sound12 invis false
-	}
-	confunc ms_disable12 { *bt_pause12 invis true
-		*bt_notify12 invis true
-		*bt_sound12 invis true
-	}
-
-	confunc ms_enable13 { *bt_pause13 invis false
-		*bt_notify13 invis false
-		*bt_sound13 invis false
-	}
-	confunc ms_disable13 { *bt_pause13 invis true
-		*bt_notify13 invis true
-		*bt_sound13 invis true
-	}
-
-	confunc ms_enable14 { *bt_pause14 invis false
-		*bt_notify14 invis false
-		*bt_sound14 invis false
-	}
-	confunc ms_disable14 { *bt_pause14 invis true
-		*bt_notify14 invis true
-		*bt_sound14 invis true
-	}
-
-	confunc ms_enable15 { *bt_pause15 invis false
-		*bt_notify15 invis false
-		*bt_sound15 invis false
-	}
-	confunc ms_disable15 { *bt_pause15 invis true
-		*bt_notify15 invis true
-		*bt_sound15 invis true
-	}
-
-	confunc ms_enable16 { *bt_pause16 invis false
-		*bt_notify16 invis false
-		*bt_sound16 invis false
-	}
-	confunc ms_disable16 { *bt_pause16 invis true
-		*bt_notify16 invis true
-		*bt_sound16 invis true
-	}
-
-	confunc ms_enable17 { *bt_pause17 invis false
-		*bt_notify17 invis false
-		*bt_sound17 invis false
-	}
-	confunc ms_disable17 { *bt_pause17 invis true
-		*bt_notify17 invis true
-		*bt_sound17 invis true
-	}
-
-	confunc ms_enable18 { *bt_pause18 invis false
-		*bt_notify18 invis false
-		*bt_sound18 invis false
-	}
-	confunc ms_disable18 { *bt_pause18 invis true
-		*bt_notify18 invis true
-		*bt_sound18 invis true
-	}
-
-	confunc ms_enable19 { *bt_pause19 invis false
-		*bt_notify19 invis false
-		*bt_sound19 invis false
-	}
-	confunc ms_disable19 { *bt_pause19 invis true
-		*bt_notify19 invis true
-		*bt_sound19 invis true
-	}
-
-	confunc ms_enable20 { *bt_pause20 invis false
-		*bt_notify20 invis false
-		*bt_sound20 invis false
-	}
-	confunc ms_disable20 { *bt_pause20 invis true
-		*bt_notify20 invis true
-		*bt_sound20 invis true
-	}
 
 }
