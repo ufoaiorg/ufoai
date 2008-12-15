@@ -133,20 +133,22 @@ vec_t Q_rint (const vec_t in)
  */
 vec_t ColorNormalize (const vec3_t in, vec3_t out)
 {
-	float max, scale;
+	float max;
 
+	/* find the brightest component */
 	max = in[0];
 	if (in[1] > max)
 		max = in[1];
 	if (in[2] > max)
 		max = in[2];
 
-	if (max == 0)
+	/* avoid FPE */
+	if (max == 0.0) {
+		VectorClear(out);
 		return 0;
+	}
 
-	scale = 1.0 / max;
-
-	VectorScale (in, scale, out);
+	VectorScale (in, 1.0 / max, out);
 
 	return max;
 }

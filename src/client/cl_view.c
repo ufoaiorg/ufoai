@@ -166,7 +166,7 @@ static void CL_ParseEntitystring (const char *es)
 			}
 
 			if (spawnflags & (1 << MISC_MODEL_GLOW))
-				renderFlags |= RF_GLOW;
+				renderFlags |= RF_PULSE;
 
 			/* add it */
 			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF), renderFlags, scale);

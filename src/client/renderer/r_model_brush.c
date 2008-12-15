@@ -50,13 +50,46 @@ static model_t *r_worldmodel;
 /**
  * @brief Load the lightmap data
  */
-static void R_ModLoadLighting (const lump_t *l)
+static void R_ModLoadLighting (const lump_t *l, qboolean day)
 {
+	const char *s;
+	const vec3_t soften = {0.5, 0.5, 0.5};
+	const char *ambientLightString = day ? "\"ambient_day\"" : "\"ambient_night\"";
+
 	if (!l->filelen) {
 		r_worldmodel->bsp.lightdata = NULL;
 		r_worldmodel->bsp.lightquant = 4;
 		return;
 	}
+
+	/* resolve ambient light */
+	if ((s = strstr(map_entitystring, ambientLightString))) {
+		int i;
+		const char *c;
+
+		c = COM_Parse(&s);  /* parse the string itself */
+
+		for (i = 0; i < 3; i++) {
+			c = COM_Parse(&s);
+			refdef.ambient_light[i] = atof(c);
+
+			if (refdef.ambient_light[i] < 0.1)  /* clamp it */
+				refdef.ambient_light[i] = 0.1;
+
+			if (refdef.ambient_light[i] > 0.2)
+				refdef.ambient_light[i] = 0.2;
+		}
+
+		Com_DPrintf(DEBUG_RENDERER, "Resolved %s: %1.2f %1.2f %1.2f\n",
+			ambientLightString, refdef.ambient_light[0], refdef.ambient_light[1], refdef.ambient_light[2]);
+ 	} else  /* ensure sane default */
+		VectorSet(refdef.ambient_light, 0.15, 0.15, 0.15);
+
+	/* scale it by modulate */
+	VectorScale(refdef.ambient_light, r_modulate->value, refdef.ambient_light);
+
+	/* pale it out some */
+	VectorMix(refdef.ambient_light, soften, 0.5, refdef.ambient_light);
 
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
@@ -893,6 +926,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	int i;
 	byte *buffer;
 	dBspHeader_t *header;
+	const int lightingLump = day ? LUMP_LIGHTING_DAY : LUMP_LIGHTING_NIGHT;
 
 	/* get new model */
 	if (r_numModels < 0 || r_numModels >= MAX_MOD_KNOWN)
@@ -935,10 +969,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadNormals(&header->lumps[LUMP_NORMALS]);
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
-	if (day)
-		R_ModLoadLighting(&header->lumps[LUMP_LIGHTING_DAY]);
-	else
-		R_ModLoadLighting(&header->lumps[LUMP_LIGHTING_NIGHT]);
+	R_ModLoadLighting(&header->lumps[lightingLump], day);
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
 	R_ModLoadSurfaces(day, &header->lumps[LUMP_FACES]);

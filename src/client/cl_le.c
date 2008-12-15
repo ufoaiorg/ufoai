@@ -125,7 +125,7 @@ void LM_AddToScene (void)
 			lm->lighting.dirty = qtrue;
 		}
 
-		/* renderflags like RF_GLOW */
+		/* renderflags like RF_PULSE */
 		ent.flags = lm->renderFlags;
 		ent.lighting = &lm->lighting;
 

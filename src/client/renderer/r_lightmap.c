@@ -412,6 +412,10 @@ static void R_LightPointLerp (static_lighting_t *lighting)
 {
 	float lerp;
 
+	/* enforce the level's ambient light as a minimum value */
+	if (VectorSum(lighting->colors[0]) < VectorSum(refdef.ambient_light))
+		VectorCopy(refdef.ambient_light, lighting->colors[0]);
+
 	/* only one sample */
 	if (VectorCompare(lighting->colors[1], vec3_origin)) {
 		VectorCopy(lighting->colors[0], lighting->color);
@@ -430,22 +434,12 @@ static void R_LightPointLerp (static_lighting_t *lighting)
 */
 void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 {
-	static_lighting_t l;
 	vec3_t start, end;
 	float delta;
 
-	l = *lighting;  /* save some things for lerping */
+	lighting->dirty = qfalse;  /* mark it clean */
 
-	/* clear it */
-	memset(lighting, 0, sizeof(*lighting));
-
-	/* restore colors and time for lerping */
-	VectorCopy(l.colors[0], lighting->colors[0]);
-	VectorCopy(l.colors[1], lighting->colors[1]);
-
-	lighting->time = l.time;
-
-	/* new level wrap */
+	/* new level check */
 	if (lighting->time > refdef.time)
 		lighting->time = 0.0;
 
@@ -456,20 +450,14 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 
 	R_Trace(start, end, 0.0, MASK_SOLID);
 
-	/* didn't hit anything */
-	if (!refdef.trace.leafnum) {
-		if (lighting->time)
-			VectorCopy(l.color, lighting->color);
-		else
-			/** @todo use worldspawn light and ambient settings to get a better value here */
-			VectorSet(lighting->color, 0.5, 0.5, 0.5);
-
-		lighting->dirty = qtrue;
-		return;
+	/* resolve the shadow origin and direction */
+	if (refdef.trace.leafnum) { /* hit something */
+		VectorCopy(refdef.trace.endpos, lighting->point);
+		VectorCopy(refdef.trace.plane.normal, lighting->normal);
+	} else {  /* clear it */
+		VectorClear(lighting->point);
+		VectorClear(lighting->normal);
 	}
-
-	VectorCopy(refdef.trace.endpos, lighting->point);
-	VectorCopy(refdef.trace.plane.normal, lighting->normal);
 
 	/* resolve the lighting sample, using linear interpolation */
 	delta = refdef.time - lighting->time;
@@ -486,29 +474,34 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 	/* shuffle the samples */
 	VectorCopy(lighting->colors[0], lighting->colors[1]);
 
-	VectorSet(lighting->colors[0], 1.0, 1.0, 1.0);
+	/* hit something */
+	if (refdef.trace.leafnum) {
+		VectorSet(lighting->colors[0], 1.0, 1.0, 1.0);
+		/* resolve the lighting sample */
+		if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
+			/* clip to all surfaces of the bsp entity */
+			if (refdef.trace_ent) {
+				VectorSubtract(refdef.trace.endpos,
+						refdef.trace_ent->origin, refdef.trace.endpos);
 
-	/* resolve the lighting sample */
-	if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
-		/* clip to all surfaces of the bsp entity */
-		if (refdef.trace_ent) {
-			VectorSubtract(refdef.trace.endpos,
-					refdef.trace_ent->origin, refdef.trace.endpos);
+				R_LightPoint_(refdef.trace_ent->model->bsp.maptile,
+						refdef.trace_ent->model->bsp.firstmodelsurface,
+						refdef.trace_ent->model->bsp.nummodelsurfaces,
+						refdef.trace.endpos, lighting->color);
+			} else {
+				/* general case is to recurse up the nodes */
+				mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
+				mBspNode_t *node = leaf->parent;
 
-			R_LightPoint_(refdef.trace_ent->model->bsp.maptile,
-					refdef.trace_ent->model->bsp.firstmodelsurface,
-					refdef.trace_ent->model->bsp.nummodelsurfaces,
-					refdef.trace.endpos, lighting->color);
-		} else {
-			mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
-			mBspNode_t *node = leaf->parent;
+				while (node) {
+					if (R_LightPoint_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->colors[0]))
+						break;
 
-			while (node) {
-				if (R_LightPoint_(refdef.trace.mapTile, node->firstsurface, node->numsurfaces, refdef.trace.endpos, lighting->colors[0]))
-					break;
-
-				node = node->parent;
+					node = node->parent;
+				}
 			}
+		} else { /* use the level's ambient lighting */
+			VectorCopy(refdef.ambient_light, lighting->colors[0]);
 		}
 	}
 

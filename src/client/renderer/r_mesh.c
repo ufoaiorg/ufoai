@@ -405,6 +405,7 @@ void R_DrawAliasModel (entity_t *e)
 	/* resolve lighting for coloring */
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		vec4_t color = {1, 1, 1, 1};
+		float g;
 
 		/* update static lighting info */
 		if (e->lighting) {
@@ -424,15 +425,26 @@ void R_DrawAliasModel (entity_t *e)
 			VectorCopy(e->lighting->color, color);
 		}
 
-		if (e->flags & RF_GLOW) {  /* and then adding in a pulse */
-			const float f = 1.0 + sin((refdef.time + (e - R_GetEntity(0))) * 6.0);
-			VectorScale(color, 1.0 + f * 0.33, color);
-		}
-
 		/* IR goggles override color
 		 * don't highlight all misc_models, only actors */
 		if (refdef.rdflags & RDF_IRGOGGLES && e->flags & RF_ACTOR)
-			VectorSet(color, 1.0, 0.0, 0.0);
+			color[0] = 1.0;
+
+		if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
+			const float f = 1.0 + sin((refdef.time + (e->model->alias.meshes[0].num_tris)) * 6.0) * 0.33;
+			VectorScale(color, 1.0 + f, color);
+		}
+
+		g = 0.0;
+		/* find brightest component */
+ 		for (i = 0; i < 3; i++) {
+ 			if (color[i] > g)  /* keep it */
+				g = color[i];
+		}
+
+		/* scale it back to 1.0 */
+		if (g > 1.0)
+			VectorScale(color, 1.0 / g, color);
 
 		R_Color(color);
 	}
