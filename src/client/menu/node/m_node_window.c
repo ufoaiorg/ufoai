@@ -49,24 +49,6 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
 }
 
 /**
- * @brief Return the last node from the menu
- * @return The last node, else NULL if no nodes
- */
-menuNode_t *MN_GetLastNode (const menu_t* const menu)
-{
-	menuNode_t *last;
-
-	if (!menu->firstChild)
-		return NULL;
-
-	last = menu->firstChild;
-	while (last->next) {
-		last = last->next;
-	}
-	return last;
-}
-
-/**
  * @brief Insert a node next another one into a menu. If prevNode is NULL add the node on the heap of the menu
  * @param[in] menu Menu where inserting a node
  * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the menu
@@ -81,10 +63,16 @@ void MN_InsertNode (menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNod
 	if (prevNode == NULL) {
 		newNode->next = menu->firstChild;
 		menu->firstChild = newNode;
+		if (menu->lastChild == NULL) {
+			menu->lastChild = newNode;
+		}
 		return;
 	}
 	newNode->next = prevNode->next;
 	prevNode->next = newNode;
+	if (prevNode == menu->lastChild) {
+		menu->lastChild = newNode;
+	}
 }
 
 /**
@@ -93,11 +81,7 @@ void MN_InsertNode (menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNod
  */
 void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
 {
-	menuNode_t *last;
-	assert(menu);
-	assert(newNode);
-	last = MN_GetLastNode(menu);
-	MN_InsertNode(menu, last, newNode);
+	MN_InsertNode(menu, menu->lastChild, newNode);
 }
 
 /**

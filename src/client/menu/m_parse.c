@@ -1064,6 +1064,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 		/* start a new list */
 		menu->firstChild = NULL;
+		menu->lastChild = NULL;
 
 		/* clone all super menu's nodes */
 		for (node = superMenu->firstChild; node; node = node->next) {
@@ -1072,8 +1073,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 			newNode = MN_CloneNode(node, menu, qtrue);
 			newNode->super = node;
-			MN_InsertNode(menu, lastNode, newNode);
-			lastNode = newNode;
+			MN_AppendNode(menu, newNode);
 
 			/* update special links */
 			if (superMenu->renderNode == node)

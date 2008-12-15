@@ -43,6 +43,7 @@ typedef struct menu_s {
 	qboolean modal;
 
 	menuNode_t *firstChild;	/**< first element of linked list of child */
+	menuNode_t *lastChild;	/**< last element of linked list of child */
 
 	menuNode_t *popupNode;
 	menuNode_t *renderNode;
@@ -59,7 +60,6 @@ typedef struct menu_s {
 void MN_RegisterWindowNode(nodeBehaviour_t *behaviour);
 
 menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
-menuNode_t *MN_GetLastNode(const menu_t* const menu);
 void MN_InsertNode(menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode);
 void MN_AppendNode(menu_t* const menu, menuNode_t *newNode);
 
