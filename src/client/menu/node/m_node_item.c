@@ -35,26 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_item.h"
 #include "m_node_container.h"
 
-static void MN_DrawItemNode (menuNode_t *node, const objDef_t *od)
-{
-	item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
-	const vec4_t color = {1, 1, 1, 1};
-	vec2_t pos;
-
-	item.t = &csi.ods[od->idx];
-
-	/* We position the model of the item ourself (in the middle of the item
-	 * node). See the "-1, -1" parameter of MN_DrawItem. */
-	MN_GetNodeAbsPos(node, pos);
-	pos[0] += node->size[0] / 2.0;
-	pos[1] += node->size[1] / 2.0;
-	MN_DrawItem(node, pos, &item, -1, -1, node->scale, color);
-}
-
 /**
- * @todo need a cleanup/merge/refactoring with MN_DrawItemNode
+ * @brief Draw an item node
  */
-static void MN_DrawItemNode2 (menuNode_t *node)
+static void MN_ItemNodeDraw (menuNode_t *node)
 {
 	const objDef_t *od;
 	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
@@ -64,7 +48,19 @@ static void MN_DrawItemNode2 (menuNode_t *node)
 
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
-		MN_DrawItemNode(node, od);
+		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
+		const vec4_t color = {1, 1, 1, 1};
+		vec2_t pos;
+
+		item.t = &csi.ods[od->idx];
+
+		/* We position the model of the item ourself (in the middle of the item
+		 * node). See the "-1, -1" parameter of MN_DrawItem. */
+		MN_GetNodeAbsPos(node, pos);
+		pos[0] += node->size[0] / 2.0;
+		pos[1] += node->size[1] / 2.0;
+		MN_DrawItem(node, pos, &item, -1, -1, node->scale, color);
+
 	} else {
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {
@@ -80,5 +76,5 @@ void MN_RegisterItemNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
 	behaviour->id = MN_ITEM;
-	behaviour->draw = MN_DrawItemNode2;
+	behaviour->draw = MN_ItemNodeDraw;
 }
