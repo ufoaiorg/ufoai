@@ -1279,12 +1279,12 @@ static void CL_MarkTeam_f (void)
 		/* Set name of the employee. */
 		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
 		/* Change the buttons */
-		MN_ExecuteConfunc("listdel %i\n", k);
+		MN_ExecuteConfunc("listdel %i", k);
 		if (!alreadyInOtherShip && CL_SoldierInAircraft(employee, aircraft))
-			MN_ExecuteConfunc("listadd %i\n", k);
+			MN_ExecuteConfunc("listadd %i", k);
 		else if (alreadyInOtherShip)
 			/* Disable the button - the soldier is already on another aircraft */
-			MN_ExecuteConfunc("listdisable %i\n", k);
+			MN_ExecuteConfunc("listdisable %i", k);
 
 		/* Check if the employee has something equipped. */
 		for (j = 0; j < csi.numIDs; j++) {
@@ -1293,9 +1293,9 @@ static void CL_MarkTeam_f (void)
 				break;
 		}
 		if (j < csi.numIDs)
-			MN_ExecuteConfunc("listholdsequip %i\n", k);
+			MN_ExecuteConfunc("listholdsequip %i", k);
 		else
-			MN_ExecuteConfunc("listholdsnoequip %i\n", k);
+			MN_ExecuteConfunc("listholdsnoequip %i", k);
 
 		k++;
 		if (k >= cl_numnames->integer)
@@ -1305,9 +1305,9 @@ static void CL_MarkTeam_f (void)
 	}
 
 	for (;k < cl_numnames->integer; k++) {
-		MN_ExecuteConfunc("listdisable %i\n", k);
+		MN_ExecuteConfunc("listdisable %i", k);
 		Cvar_ForceSet(va("mn_name%i", k), "");
-		MN_ExecuteConfunc("listholdsnoequip %i\n", k);
+		MN_ExecuteConfunc("listholdsnoequip %i", k);
 	}
 }
 
@@ -1320,12 +1320,12 @@ static void CL_ToggleTeamList_f (void)
 	if (displayHeavyEquipmentList) {
 		Com_DPrintf(DEBUG_CLIENT, "Changing to soldier-list.\n");
 		displayHeavyEquipmentList = qfalse;
-		MN_ExecuteConfunc("toggle_show_heavybutton\n");
+		MN_ExecuteConfunc("toggle_show_heavybutton");
 	} else {
 		if (gd.numEmployees[EMPL_ROBOT] > 0) {
 			Com_DPrintf(DEBUG_CLIENT, "Changing to heavy equipment (tank) list.\n");
 			displayHeavyEquipmentList = qtrue;
-			MN_ExecuteConfunc("toggle_show_soldiersbutton\n");
+			MN_ExecuteConfunc("toggle_show_soldiersbutton");
 		} else {
 			/* Nothing to display/assign - staying in soldier-list. */
 			Com_DPrintf(DEBUG_CLIENT, "No heavy equipment available.\n");

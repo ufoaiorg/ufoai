@@ -935,7 +935,7 @@ static void CL_ResearchSelect_f (void)
 	if (type == RSGUI_BASETITLE) {
 		base_t *b = researchList2[num].base;
 		if (b != NULL && b != baseCurrent) {
-			MN_ExecuteConfunc(va("research_changebase %i %i\n", b->idx, researchListPos));
+			MN_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
 			return;
 		}
 	}
@@ -1486,15 +1486,15 @@ static void RS_UpdateResearchStatus (int row)
 	switch (element->tech->statusResearch) {
 	case RS_RUNNING:
 		/* Color the item with 'research running'-color. */
-		MN_ExecuteConfunc(va("research_running %i", row));
+		MN_ExecuteConfunc("research_running %i", row);
 		break;
 	case RS_PAUSED:
 		/* Color the item with 'research paused'-color. */
-		MN_ExecuteConfunc(va("research_paused %i", row));
+		MN_ExecuteConfunc("research_paused %i", row);
 		break;
 	case RS_NONE:
 		/* Color the item with 'research normal'-color. */
-		MN_ExecuteConfunc(va("research_normal %i", row));
+		MN_ExecuteConfunc("research_normal %i", row);
 		break;
 	case RS_FINISH:
 	default:
@@ -1532,7 +1532,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 
 		switch (element->type) {
 		case RSGUI_NOTHING:
-			MN_ExecuteConfunc(va("research_hide %i", i));
+			MN_ExecuteConfunc("research_hide %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), "");
 			break;
 		case RSGUI_RESEARCH:
@@ -1540,11 +1540,11 @@ static void RS_InitGUI (base_t* base, qboolean update)
 				const int min = 0;
 				const int value = element->tech->scientists;
 				const int max = available[element->base->idx] + element->tech->scientists;
-				MN_ExecuteConfunc(va("research_research %i", i));
+				MN_ExecuteConfunc("research_research %i", i);
 				if (!update) {
 					Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 				}
-				MN_ExecuteConfunc(va("research_updateitem %i %i %i %i", i, value, min, max));
+				MN_ExecuteConfunc("research_updateitem %i %i %i %i", i, value, min, max);
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 
@@ -1552,36 +1552,36 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			}
 			break;
 		case RSGUI_BASETITLE:
-			MN_ExecuteConfunc(va("research_basetitle %i", i));
+			MN_ExecuteConfunc("research_basetitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), element->base->name);
 			break;
 		case RSGUI_BASEINFO:
-			MN_ExecuteConfunc(va("research_baseinfo %i", i));
+			MN_ExecuteConfunc("research_baseinfo %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Unassigned scientists"));
 			/* How many scis are unassigned */
 			Cvar_SetValue(va("mn_researchassigned%i", i), available[element->base->idx]);
 			break;
 		case RSGUI_RESEARCHOUT:
-			MN_ExecuteConfunc(va("research_outterresearch %i", i));
+			MN_ExecuteConfunc("research_outterresearch %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 			RS_UpdateResearchStatus(i);
 			break;
 		case RSGUI_MISSINGITEM:
-			MN_ExecuteConfunc(va("research_missingitem %i", i));
+			MN_ExecuteConfunc("research_missingitem %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			break;
 		case RSGUI_MISSINGITEMTITLE:
-			MN_ExecuteConfunc(va("research_missingitemtitle %i", i));
+			MN_ExecuteConfunc("research_missingitemtitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Missing an artifact"));
 			break;
 		case RSGUI_UNRESEARCHABLEITEM:
-			MN_ExecuteConfunc(va("research_unresearchableitem %i", i));
+			MN_ExecuteConfunc("research_unresearchableitem %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			break;
 		case RSGUI_UNRESEARCHABLEITEMTITLE:
-			MN_ExecuteConfunc(va("research_unresearchableitemtitle %i", i));
+			MN_ExecuteConfunc("research_unresearchableitemtitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Unresearchable collected items"));
 			break;
 		default:
@@ -1592,7 +1592,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 	/* Set rest of the list-entries to have no text at all. */
 	if (!update) {
 		for (; i < MAX_RESEARCHDISPLAY; i++) {
-			MN_ExecuteConfunc(va("research_hide %i", i));
+			MN_ExecuteConfunc("research_hide %i", i);
 		}
 	}
 
@@ -1603,7 +1603,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			int t = researchList2[researchListPos].type;
 			/* is it a tech row */
 			if (t == RSGUI_RESEARCH || t == RSGUI_RESEARCHOUT || t == RSGUI_UNRESEARCHABLEITEM) {
-				MN_ExecuteConfunc(va("research_selected %i", researchListPos));
+				MN_ExecuteConfunc("research_selected %i", researchListPos);
 			}
 		}
 	}

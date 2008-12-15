@@ -95,11 +95,11 @@ static void E_EmployeeListScroll_f (void)
 		/* change the buttons */
 		if (employee->hired) {
 			if (employee->baseHired == baseCurrent)
-				MN_ExecuteConfunc("employeeadd %i\n", cnt);
+				MN_ExecuteConfunc("employeeadd %i", cnt);
 			else
-				MN_ExecuteConfunc("employeedisable %i\n", cnt);
+				MN_ExecuteConfunc("employeedisable %i", cnt);
 		} else
-			MN_ExecuteConfunc("employeedel %i\n", cnt);
+			MN_ExecuteConfunc("employeedel %i", cnt);
 
 		cnt++;
 
@@ -110,10 +110,10 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < cl_numnames->integer; cnt++) {
 		Cvar_ForceSet(va("mn_name%i", cnt), "");
-		MN_ExecuteConfunc("employeedisable %i\n", cnt);
+		MN_ExecuteConfunc("employeedisable %i", cnt);
 	}
 
-	MN_ExecuteConfunc("hire_fix_scroll %i\n", employeeListNode->u.text.textScroll);
+	MN_ExecuteConfunc("hire_fix_scroll %i", employeeListNode->u.text.textScroll);
 }
 
 /**
@@ -220,10 +220,10 @@ static void E_EmployeeList_f (void)
 	if (hiredEmployeeIdx < 0)
 		Cmd_ExecuteString("employee_select 0\n");
 	else
-		Cmd_ExecuteString(va("employee_select %i;", selectedEmployee ? selectedEmployee->idx : 0));
+		Cmd_ExecuteString(va("employee_select %i\n", selectedEmployee ? selectedEmployee->idx : 0));
 
 	/* update scroll */
-	MN_ExecuteConfunc(va("hire_update_number %i", employeesInCurrentList));
+	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
 }
 
 
