@@ -350,7 +350,7 @@ menu popup_tipoftheday
 
 	checkbox activate
 	{
-		cvar	"*cvar cl_showTipOfTheDay"
+		current	"*cvar cl_showTipOfTheDay"
 		pos	"36 194"
 		image	"menu/checkbox_blue"
 		size	"20 18"

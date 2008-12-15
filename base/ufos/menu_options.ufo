@@ -192,7 +192,7 @@ menu options_video
 	}
 	checkbox fullscreen
 	{
-		cvar	"*cvar vid_fullscreen"
+		current	"*cvar vid_fullscreen"
 		pos		"425 240"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -205,7 +205,7 @@ menu options_video
 	}
 	checkbox compression
 	{
-		cvar	"*cvar r_ext_texture_compression"
+		current	"*cvar r_ext_texture_compression"
 		pos		"425 265"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -218,7 +218,7 @@ menu options_video
 	}
 	checkbox fps
 	{
-		cvar	"*cvar cl_fps"
+		current	"*cvar cl_fps"
 		pos		"425 290"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -231,7 +231,7 @@ menu options_video
 	}
 	checkbox lod
 	{
-		cvar	"*cvar r_texture_lod"
+		current	"*cvar r_texture_lod"
 		pos		"425 315"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -244,7 +244,7 @@ menu options_video
 	}
 	checkbox isomode
 	{
-		cvar	"*cvar r_isometric"
+		current	"*cvar r_isometric"
 		pos		"425 340"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -257,7 +257,7 @@ menu options_video
 	}
 	checkbox glsl
 	{
-		cvar	"*cvar r_programs"
+		current	"*cvar r_programs"
 		pos		"425 365"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -270,7 +270,7 @@ menu options_video
 	}
 	checkbox light
 	{
-		cvar	"*cvar r_lighting"
+		current	"*cvar r_lighting"
 		pos		"425 390"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -283,7 +283,7 @@ menu options_video
 	}
 	checkbox ptlweather
 	{
-		cvar	"*cvar cl_particleweather"
+		current	"*cvar cl_particleweather"
 		pos		"425 415"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -296,7 +296,7 @@ menu options_video
 	}
 	checkbox vbo
 	{
-		cvar	"*cvar r_vertexbuffers"
+		current	"*cvar r_vertexbuffers"
 		pos		"425 440"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -820,7 +820,7 @@ menu options_game
 	}
 	checkbox tooltip
 	{
-		cvar	"*cvar mn_show_tooltips"
+		current	"*cvar mn_show_tooltips"
 		pos		"425 280"
 		tooltip	"_Activates tooltips"
 		image	"menu/checkbox_blue"
@@ -837,7 +837,7 @@ menu options_game
 	}
 	checkbox centerview_value
 	{
-		cvar	"*cvar cl_centerview"
+		current	"*cvar cl_centerview"
 		pos		"425 305"
 		tooltip	"_Centring at soldier selecting, shooting and appearing"
 		image	"menu/checkbox_blue"
@@ -854,7 +854,7 @@ menu options_game
 	}
 	checkbox c_tooltip
 	{
-		cvar	"*cvar cl_show_cursor_tooltips"
+		current	"*cvar cl_show_cursor_tooltips"
 		pos		"425 330"
 		tooltip	"_Activates cursor tooltips"
 		image	"menu/checkbox_blue"
@@ -871,7 +871,7 @@ menu options_game
 	}
 	checkbox 3dmap
 	{
-		cvar	"*cvar cl_3dmap"
+		current	"*cvar cl_3dmap"
 		pos		"425 355"
 		tooltip	"_Use 3D geoscape"
 		image	"menu/checkbox_blue"
@@ -890,7 +890,7 @@ menu options_game
 	}
 	checkbox tipoftheday
 	{
-		cvar	"*cvar cl_showTipOfTheDay"
+		current	"*cvar cl_showTipOfTheDay"
 		pos	"425 380"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -906,7 +906,7 @@ menu options_game
 	}
 	checkbox precache
 	{
-		cvar	"*cvar cl_precache"
+		current	"*cvar cl_precache"
 		pos	"425 405"
 		tooltip	"_Precache models (faster menus)"
 		image	"menu/checkbox_blue"

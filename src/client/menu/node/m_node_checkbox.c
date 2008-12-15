@@ -31,21 +31,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_input.h"
+#include "../m_actions.h"
 #include "m_node_checkbox.h"
 
 static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
-	const char *ref;
+	const float value = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
 	vec2_t pos;
 	const char *image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	int texx, texy;
 
 	/* image set? */
 	if (!image || image[0] == '\0')
-		return;
-
-	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
-	if (!ref)
 		return;
 
 	/* outter status */
@@ -58,18 +55,12 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 	}
 
 	/* inner status */
-	switch (ref[0]) {
-	case '0':
+	if (value == 0) {
 		texx = 0;
-		break;
-	case '1':
+	} else if (value > 0) {
 		texx = 32;
-		break;
-	case '-': /* negative */
+	} else { /* value < 0 */
 		texx = 64;
-		break;
-	default:
-		Com_Printf("Error - invalid value for MN_CHECKBOX node - only -1/0/1 allowed (%s)\n", ref);
 	}
 
 	MN_GetNodeAbsPos(node, pos);
@@ -82,17 +73,26 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
  */
 static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 {
-	int value;
-	const char *cvarName;
+	const float last = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
+	float value;
 
-	assert(node->dataModelSkinOrCVar);
-	/* no cvar? */
-	if (Q_strncmp(node->dataModelSkinOrCVar, "*cvar", 5))
+	/* update value */
+	value = (last > 0) ? 0 : 1;
+	if (last == value)
 		return;
 
-	cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
-	value = Cvar_VariableInteger(cvarName) ^ 1;
-	MN_SetCvar(cvarName, NULL, value);
+	/* save result */
+	node->u.abstractvalue.lastdiff = value - last;
+	if (!Q_strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
+		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
+	} else {
+		*(float*) node->u.abstractvalue.value = value;
+	}
+
+	/* fire change event */
+	if (node->onChange) {
+		MN_ExecuteEventActions(node, node->onChange);
+	}
 }
 
 /**
@@ -105,6 +105,7 @@ static void MN_CheckBoxNodeLoading (menuNode_t *node) {
 void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
+	behaviour->extends = "abstractvalue";
 	behaviour->id = MN_CHECKBOX;
 	behaviour->draw = MN_CheckBoxNodeDraw;
 	behaviour->leftClick = MN_CheckBoxNodeClick;

@@ -1223,7 +1223,7 @@ menu popup_newbase
 	checkbox start_employees
 	{
 		if		"mn_base_count <= 0"
-		cvar	"*cvar cl_start_employees"
+		current	"*cvar cl_start_employees"
 		pos		"456 98"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -1241,7 +1241,7 @@ menu popup_newbase
 	checkbox start_building
 	{
 		if		"mn_base_count <= 0"
-		cvar	"*cvar cl_start_buildings"
+		current	"*cvar cl_start_buildings"
 		pos		"456 123"
 		image	"menu/checkbox_blue"
 		size	"20 18"

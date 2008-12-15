@@ -865,7 +865,7 @@ menu mp_create_server
 	}
 	checkbox daynight_value
 	{
-		cvar	"*cvar mn_serverday"
+		current	"*cvar mn_serverday"
 		pos	"410 100"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -892,7 +892,7 @@ menu mp_create_server
 	checkbox public_value
 	{
 		image	"menu/checkbox"
-		cvar	"*cvar sv_public"
+		current	"*cvar sv_public"
 		pos	"410 120"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -908,7 +908,7 @@ menu mp_create_server
 	}
 	checkbox morale_value
 	{
-		cvar	"*cvar sv_enablemorale"
+		current	"*cvar sv_enablemorale"
 		pos	"410 140"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -963,7 +963,7 @@ menu mp_create_server
 	}
 	checkbox server_teamplay_value
 	{
-		cvar	"*cvar sv_teamplay"
+		current	"*cvar sv_teamplay"
 		pos	"410 180"
 		image	"menu/checkbox_blue"
 		size	"20 18"
@@ -1115,7 +1115,7 @@ menu mp_create_server
 	}
 	checkbox ai_autojoin_value
 	{
-		cvar	"*cvar ai_autojoin"
+		current	"*cvar ai_autojoin"
 		pos	"410 300"
 		image	"menu/checkbox_blue"
 		size	"20 18"
