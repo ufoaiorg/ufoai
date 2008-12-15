@@ -516,21 +516,27 @@ menu hud extends ahud
 		out	{ cmd "remaining_tus crouch 0;" }
 	}
 
-	confunc crouch_checkbox_disable_s { *bt_crouch_reservation image menu/checkbox_disabled }
-	confunc crouch_checkbox_clear_s	{ *bt_crouch_reservation image menu/checkbox_unchecked }
-	confunc crouch_checkbox_check_s	{ *bt_crouch_reservation image menu/checkbox_checked }
-
-	pic bt_crouch_reservation
+	checkbox bt_crouch_reservation
 	{
 		tooltip	"*cvar mn_crouch_reservation_tt"
+		image	"menu/checkbox_blue"	size	"20 18"
 		pos	"828 723"
-		texl	"0 0"
-		texh	"17 16"
-		mousefx true
-		click { cmd "togglecrouchreserve;" }
-//		out	{ *bt_crouch_reservation texl "0 0" *bt_crouch_reservation texh "17 16" }	// activate this if we ever get a "hover" version
-//		in	{ *bt_crouch_reservation texl "0 17" *bt_crouch_reservation texh "17 33" }
+		current 0
+		change { cmd "togglecrouchreserve;" }
 	}
+
+	confunc crouch_checkbox_disable_s {
+		*bt_crouch_reservation disabled true
+	}
+	confunc crouch_checkbox_clear_s	{
+		*bt_crouch_reservation disabled false
+		cmd "mn_setnodeproperty bt_crouch_reservation current 0"
+	}
+	confunc crouch_checkbox_check_s	{
+		*bt_crouch_reservation disabled false
+		cmd "mn_setnodeproperty bt_crouch_reservation current 1"
+	}
+
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear_s
