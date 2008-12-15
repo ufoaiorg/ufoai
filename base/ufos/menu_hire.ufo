@@ -27,25 +27,6 @@ menu employees
 
 	func employee_clear
 	{
-		*bt_employee0 image menu/checkbox_green_unchecked
-		*bt_employee1 image menu/checkbox_green_unchecked
-		*bt_employee2 image menu/checkbox_green_unchecked
-		*bt_employee3 image menu/checkbox_green_unchecked
-		*bt_employee4 image menu/checkbox_green_unchecked
-		*bt_employee5 image menu/checkbox_green_unchecked
-		*bt_employee6 image menu/checkbox_green_unchecked
-		*bt_employee7 image menu/checkbox_green_unchecked
-		*bt_employee8 image menu/checkbox_green_unchecked
-		*bt_employee9 image menu/checkbox_green_unchecked
-		*bt_employee10 image menu/checkbox_green_unchecked
-		*bt_employee11 image menu/checkbox_green_unchecked
-		*bt_employee12 image menu/checkbox_green_unchecked
-		*bt_employee13 image menu/checkbox_green_unchecked
-		*bt_employee14 image menu/checkbox_green_unchecked
-		*bt_employee15 image menu/checkbox_green_unchecked
-		*bt_employee16 image menu/checkbox_green_unchecked
-		*bt_employee17 image menu/checkbox_green_unchecked
-		*bt_employee18 image menu/checkbox_green_unchecked
 	}
 
 	/**
@@ -53,7 +34,7 @@ menu employees
 	 */
 	confunc employeedel
 	{
-		*bt_employee<1> image menu/checkbox_green_unchecked
+		cmd "mn_setnodeproperty bt_employee<1> current 0"
 		*bt_employee<1> invis false
 	}
 
@@ -62,7 +43,7 @@ menu employees
 	 */
 	confunc employeeadd
 	{
-		*bt_employee<1> image menu/checkbox_green_checked
+		cmd "mn_setnodeproperty bt_employee<1> current 1"
 		*bt_employee<1> invis false
 	}
 
@@ -74,233 +55,195 @@ menu employees
 		*bt_employee<1> invis true
 	}
 
-	pic bt_employee0
+	checkbox bt_employee0
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 30"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 0;" }
+		size "20 20"
+		change { cmd "employee_hire 0;" }
 		rclick { cmd "employee_delete 0;" }
-		out	{ *bt_employee0 texl "0 0" *bt_employee0 texh "20 20" }
-		in	{ *bt_employee0 texl "0 20" *bt_employee0 texh "20 40" }
 	}
-	pic bt_employee1
+	checkbox bt_employee1
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 68"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 1;" }
+		size "20 20"
+		change { cmd "employee_hire 1;" }
 		rclick { cmd "employee_delete 1;" }
-		out	{ *bt_employee1 texl "0 0" *bt_employee1 texh "20 20" }
-		in	{ *bt_employee1 texl "0 20" *bt_employee1 texh "20 40" }
 	}
-	pic bt_employee2
+	checkbox bt_employee2
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 106"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 2;" }
+		size "20 20"
+		change { cmd "employee_hire 2;" }
 		rclick { cmd "employee_delete 2;" }
-		out	{ *bt_employee2 texl "0 0" *bt_employee2 texh "20 20" }
-		in	{ *bt_employee2 texl "0 20" *bt_employee2 texh "20 40" }
 	}
-	pic bt_employee3
+	checkbox bt_employee3
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 144"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 3;" }
+		size "20 20"
+		change { cmd "employee_hire 3;" }
 		rclick { cmd "employee_delete 3;" }
-		out	{ *bt_employee3 texl "0 0" *bt_employee3 texh "20 20" }
-		in	{ *bt_employee3 texl "0 20" *bt_employee3 texh "20 40" }
 	}
-	pic bt_employee4
+	checkbox bt_employee4
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 182"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 4;" }
+		size "20 20"
+		change { cmd "employee_hire 4;" }
 		rclick { cmd "employee_delete 4;" }
-		out	{ *bt_employee4 texl "0 0" *bt_employee4 texh "20 20" }
-		in	{ *bt_employee4 texl "0 20" *bt_employee4 texh "20 40" }
 	}
-	pic bt_employee5
+	checkbox bt_employee5
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 220"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 5;" }
+		size "20 20"
+		change { cmd "employee_hire 5;" }
 		rclick { cmd "employee_delete 5;" }
-		out	{ *bt_employee5 texl "0 0" *bt_employee5 texh "20 20" }
-		in	{ *bt_employee5 texl "0 20" *bt_employee5 texh "20 40" }
 	}
-	pic bt_employee6
+	checkbox bt_employee6
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 258"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 6;" }
+		size "20 20"
+		change { cmd "employee_hire 6;" }
 		rclick { cmd "employee_delete 6;" }
-		out	{ *bt_employee6 texl "0 0" *bt_employee6 texh "20 20" }
-		in	{ *bt_employee6 texl "0 20" *bt_employee6 texh "20 40" }
 	}
-	pic bt_employee7
+	checkbox bt_employee7
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 296"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 7;" }
+		size "20 20"
+		change { cmd "employee_hire 7;" }
 		rclick { cmd "employee_delete 7;" }
-		out	{ *bt_employee7 texl "0 0" *bt_employee7 texh "20 20" }
-		in	{ *bt_employee7 texl "0 20" *bt_employee7 texh "20 40" }
 	}
-	pic bt_employee8
+	checkbox bt_employee8
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 334"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 8;" }
+		size "20 20"
+		change { cmd "employee_hire 8;" }
 		rclick { cmd "employee_delete 8;" }
-		out	{ *bt_employee8 texl "0 0" *bt_employee8 texh "20 20" }
-		in	{ *bt_employee8 texl "0 20" *bt_employee8 texh "20 40" }
 	}
-	pic bt_employee9
+	checkbox bt_employee9
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 372"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 9;" }
+		size "20 20"
+		change { cmd "employee_hire 9;" }
 		rclick { cmd "employee_delete 9;" }
-		out	{ *bt_employee9 texl "0 0" *bt_employee9 texh "20 20" }
-		in	{ *bt_employee9 texl "0 20" *bt_employee9 texh "20 40" }
 	}
-	pic bt_employee10
+	checkbox bt_employee10
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 410"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 10;" }
+		size "20 20"
+		change { cmd "employee_hire 10;" }
 		rclick { cmd "employee_delete 10;" }
-		out	{ *bt_employee10 texl "0 0" *bt_employee10 texh "20 20" }
-		in	{ *bt_employee10 texl "0 20" *bt_employee10 texh "20 40" }
 	}
-	pic bt_employee11
+	checkbox bt_employee11
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 448"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 11;" }
+		size "20 20"
+		change { cmd "employee_hire 11;" }
 		rclick { cmd "employee_delete 11;" }
-		out	{ *bt_employee11 texl "0 0" *bt_employee11 texh "20 20" }
-		in	{ *bt_employee11 texl "0 20" *bt_employee11 texh "20 40" }
 	}
-	pic bt_employee12
+	checkbox bt_employee12
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 486"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 12;" }
+		size "20 20"
+		change { cmd "employee_hire 12;" }
 		rclick { cmd "employee_delete 12;" }
-		out	{ *bt_employee12 texl "0 0" *bt_employee12 texh "20 20" }
-		in	{ *bt_employee12 texl "0 20" *bt_employee12 texh "20 40" }
 	}
-	pic bt_employee13
+	checkbox bt_employee13
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 524"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 13;" }
+		size "20 20"
+		change { cmd "employee_hire 13;" }
 		rclick { cmd "employee_delete 13;" }
-		out	{ *bt_employee13 texl "0 0" *bt_employee13 texh "20 20" }
-		in	{ *bt_employee13 texl "0 20" *bt_employee13 texh "20 40" }
 	}
-	pic bt_employee14
+	checkbox bt_employee14
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 562"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 14;" }
+		size "20 20"
+		change { cmd "employee_hire 14;" }
 		rclick { cmd "employee_delete 14;" }
-		out	{ *bt_employee14 texl "0 0" *bt_employee14 texh "20 20" }
-		in	{ *bt_employee14 texl "0 20" *bt_employee14 texh "20 40" }
 	}
-	pic bt_employee15
+	checkbox bt_employee15
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 600"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 15;" }
+		size "20 20"
+		change { cmd "employee_hire 15;" }
 		rclick { cmd "employee_delete 15;" }
-		out	{ *bt_employee15 texl "0 0" *bt_employee15 texh "20 20" }
-		in	{ *bt_employee15 texl "0 20" *bt_employee15 texh "20 40" }
 	}
-	pic bt_employee16
+	checkbox bt_employee16
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 638"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 16;" }
+		size "20 20"
+		change { cmd "employee_hire 16;" }
 		rclick { cmd "employee_delete 16;" }
-		out	{ *bt_employee16 texl "0 0" *bt_employee16 texh "20 20" }
-		in	{ *bt_employee16 texl "0 20" *bt_employee16 texh "20 40" }
 	}
-	pic bt_employee17
+	checkbox bt_employee17
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 676"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 17;" }
+		size "20 20"
+		change { cmd "employee_hire 17;" }
 		rclick { cmd "employee_delete 17;" }
-		out	{ *bt_employee17 texl "0 0" *bt_employee17 texh "20 20" }
-		in	{ *bt_employee17 texl "0 20" *bt_employee17 texh "20 40" }
 	}
-	pic bt_employee18
+	checkbox bt_employee18
 	{
 		tooltip	"_Hire/Unhire - Right click to remove"
+		current 0
+		image menu/checkbox_green
 		pos	"322 714"
-		texl	"0 0"
-		texh	"20 20"
-		mousefx true
-		click { cmd "employee_hire 18;" }
+		size "20 20"
+		change { cmd "employee_hire 18;" }
 		rclick { cmd "employee_delete 18;" }
-		out	{ *bt_employee18 texl "0 0" *bt_employee18 texh "20 20" }
-		in	{ *bt_employee18 texl "0 20" *bt_employee18 texh "20 40" }
 	}
 
 	/**
