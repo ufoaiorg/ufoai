@@ -1046,15 +1046,15 @@ static void CL_Select_f (void)
 		} else {
 			/* HACK */
 			/* deselect current selected soldier and select the new one - these are confuncs */
-			MN_ExecuteConfunc(va("teamdeselect%i", cl_selected->integer));
-			MN_ExecuteConfunc(va("teamselect%i", num));
-			MN_ExecuteConfunc(va("equipdeselect%i", cl_selected->integer));
-			MN_ExecuteConfunc(va("equipselect%i", num));
+			MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
+			MN_ExecuteConfunc("teamselect%i", num);
+			MN_ExecuteConfunc("equipdeselect%i", cl_selected->integer);
+			MN_ExecuteConfunc("equipselect%i", num);
 		}
 	} else {
 		/* deselect current selected soldier and select the new one - these are confuncs */
-		MN_ExecuteConfunc(va("%sdeselect%i", command, cl_selected->integer));
-		MN_ExecuteConfunc(va("%sselect%i", command, num));
+		MN_ExecuteConfunc("%sdeselect%i", command, cl_selected->integer);
+		MN_ExecuteConfunc("%sselect%i", command, num);
 	}
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
@@ -1279,12 +1279,12 @@ static void CL_MarkTeam_f (void)
 		/* Set name of the employee. */
 		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
 		/* Change the buttons */
-		Cbuf_AddText(va("listdel %i\n", k));
+		MN_ExecuteConfunc("listdel %i\n", k);
 		if (!alreadyInOtherShip && CL_SoldierInAircraft(employee, aircraft))
-			Cbuf_AddText(va("listadd %i\n", k));
+			MN_ExecuteConfunc("listadd %i\n", k);
 		else if (alreadyInOtherShip)
 			/* Disable the button - the soldier is already on another aircraft */
-			Cbuf_AddText(va("listdisable %i\n", k));
+			MN_ExecuteConfunc("listdisable %i\n", k);
 
 		/* Check if the employee has something equipped. */
 		for (j = 0; j < csi.numIDs; j++) {
@@ -1293,9 +1293,9 @@ static void CL_MarkTeam_f (void)
 				break;
 		}
 		if (j < csi.numIDs)
-			Cbuf_AddText(va("listholdsequip %i\n", k));
+			MN_ExecuteConfunc("listholdsequip %i\n", k);
 		else
-			Cbuf_AddText(va("listholdsnoequip %i\n", k));
+			MN_ExecuteConfunc("listholdsnoequip %i\n", k);
 
 		k++;
 		if (k >= cl_numnames->integer)
@@ -1305,9 +1305,9 @@ static void CL_MarkTeam_f (void)
 	}
 
 	for (;k < cl_numnames->integer; k++) {
-		Cbuf_AddText(va("listdisable %i\n", k));
+		MN_ExecuteConfunc("listdisable %i\n", k);
 		Cvar_ForceSet(va("mn_name%i", k), "");
-		Cbuf_AddText(va("listholdsnoequip %i\n", k));
+		MN_ExecuteConfunc("listholdsnoequip %i\n", k);
 	}
 }
 
@@ -1320,12 +1320,12 @@ static void CL_ToggleTeamList_f (void)
 	if (displayHeavyEquipmentList) {
 		Com_DPrintf(DEBUG_CLIENT, "Changing to soldier-list.\n");
 		displayHeavyEquipmentList = qfalse;
-		Cbuf_AddText("toggle_show_heavybutton\n");
+		MN_ExecuteConfunc("toggle_show_heavybutton\n");
 	} else {
 		if (gd.numEmployees[EMPL_ROBOT] > 0) {
 			Com_DPrintf(DEBUG_CLIENT, "Changing to heavy equipment (tank) list.\n");
 			displayHeavyEquipmentList = qtrue;
-			Cbuf_AddText("toggle_show_soldiersbutton\n");
+			MN_ExecuteConfunc("toggle_show_soldiersbutton\n");
 		} else {
 			/* Nothing to display/assign - staying in soldier-list. */
 			Com_DPrintf(DEBUG_CLIENT, "No heavy equipment available.\n");

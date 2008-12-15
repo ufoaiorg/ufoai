@@ -31,14 +31,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 menuNode_t *focusNode;
 
+#define MAX_CONFUNC_SIZE 512
 /**
  * @brief Executes confunc - just to identify those confuncs in the code - in
  * this frame.
  * @param[in] confunc The confunc id that should be executed
  */
-void MN_ExecuteConfunc (const char *confunc)
+void MN_ExecuteConfunc (const char *fmt, ...)
 {
+	va_list ap;
+	char confunc[MAX_CONFUNC_SIZE];
+
+	va_start(ap, fmt);
+	Q_vsnprintf(confunc, sizeof(confunc), fmt, ap);
 	Cmd_ExecuteString(confunc);
+	va_end(ap);
 }
 
 static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_t* const action)

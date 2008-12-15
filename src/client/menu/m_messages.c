@@ -498,22 +498,22 @@ static void MSO_UpdateVisibleButtons (void)
 			break;
 		if (entry->isCategory) {
 			/* category is visible anyway*/
-			MN_ExecuteConfunc(va("ms_disable %i",visible));
+			MN_ExecuteConfunc("ms_disable %i", visible);
 			visible++;
 		} else {
 			assert(entry->category);
 			if (!entry->category->isFolded) {
-				MN_ExecuteConfunc(va("ms_enable %i", visible));
-				MN_ExecuteConfunc(va("ms_pause%s %i", entry->settings->doPause ? "e" : "d", visible));
-				MN_ExecuteConfunc(va("ms_notify%s %i", entry->settings->doNotify ? "e" : "d", visible));
-				MN_ExecuteConfunc(va("ms_sound%s %i", entry->settings->doSound ? "e" : "d", visible));
+				MN_ExecuteConfunc("ms_enable %i", visible);
+				MN_ExecuteConfunc("ms_pause%s %i", entry->settings->doPause ? "e" : "d", visible);
+				MN_ExecuteConfunc("ms_notify%s %i", entry->settings->doNotify ? "e" : "d", visible);
+				MN_ExecuteConfunc("ms_sound%s %i", entry->settings->doSound ? "e" : "d", visible);
 				visible++;
 			}
 		}
 	}
 
 	for (; visible < msoTextNode->u.text.rows && idx < lengthof(gd.msgCategoryEntries); idx++) {
-		MN_ExecuteConfunc(va("ms_disable %i", visible));
+		MN_ExecuteConfunc("ms_disable %i", visible);
 		visible++;
 	}
 }
@@ -566,7 +566,7 @@ static void MSO_Set (const int listIndex, const notify_t type, const mso_t optio
 		option = "sound";
 	}
 	if (sendCommands)
-		MN_ExecuteConfunc(va("ms_%s%s %i", option, activate ? "e" : "d", listIndex));
+		MN_ExecuteConfunc("ms_%s%s %i", option, activate ? "e" : "d", listIndex);
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
 		messageOptionsInitialized = qfalse;

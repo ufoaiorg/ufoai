@@ -95,11 +95,11 @@ static void E_EmployeeListScroll_f (void)
 		/* change the buttons */
 		if (employee->hired) {
 			if (employee->baseHired == baseCurrent)
-				MN_ExecuteConfunc(va("employeeadd %i\n", cnt));
+				MN_ExecuteConfunc("employeeadd %i\n", cnt);
 			else
-				MN_ExecuteConfunc(va("employeedisable %i\n", cnt));
+				MN_ExecuteConfunc("employeedisable %i\n", cnt);
 		} else
-			MN_ExecuteConfunc(va("employeedel %i\n", cnt));
+			MN_ExecuteConfunc("employeedel %i\n", cnt);
 
 		cnt++;
 
@@ -110,10 +110,10 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < cl_numnames->integer; cnt++) {
 		Cvar_ForceSet(va("mn_name%i", cnt), "");
-		MN_ExecuteConfunc(va("employeedisable %i\n", cnt));
+		MN_ExecuteConfunc("employeedisable %i\n", cnt);
 	}
 
-	MN_ExecuteConfunc(va("hire_fix_scroll %i\n", employeeListNode->u.text.textScroll));
+	MN_ExecuteConfunc("hire_fix_scroll %i\n", employeeListNode->u.text.textScroll);
 }
 
 /**
