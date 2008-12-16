@@ -1870,25 +1870,25 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* Crouch/stand reservation checkbox. */
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
-		Cbuf_AddText("crouch_checkbox_check\n");
+		MN_ExecuteConfunc("crouch_checkbox_check\n");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."), CL_ReservedTUs(selActor, RES_CROUCH)));
 	} else if (time >= TU_CROUCH) {
-		Cbuf_AddText("crouch_checkbox_clear\n");
+		MN_ExecuteConfunc("crouch_checkbox_clear\n");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
 	} else {
-		Cbuf_AddText("crouch_checkbox_disable\n");
+		MN_ExecuteConfunc("crouch_checkbox_disable\n");
 		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
 	}
 
 	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
 	if (CL_ReservedTUs(selActor, RES_SHOT)) {
-		Cbuf_AddText("reserve_shot_check\n");
+		MN_ExecuteConfunc("reserve_shot_check\n");
 		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."), CL_ReservedTUs(selActor, RES_SHOT)));
 	} else if (CL_CheckFiremodeReservation()) {
-		Cbuf_AddText("reserve_shot_clear\n");
+		MN_ExecuteConfunc("reserve_shot_clear\n");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
 	} else {
-		Cbuf_AddText("reserve_shot_disable\n");
+		MN_ExecuteConfunc("reserve_shot_disable\n");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
 	}
 
