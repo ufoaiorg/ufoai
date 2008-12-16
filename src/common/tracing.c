@@ -253,20 +253,22 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
-	if ((type = tnode->type) <= PLANE_Z) {
-		const float dist = tnode->dist;
-		front = start[type] - dist;
-		back = stop[type] - dist;
-	} else if (type == PLANE_NONE) {
+	switch (tnode->type) {
+	case PLANE_X:
+	case PLANE_Y:
+	case PLANE_Z:
+		front = start[tnode->type] - tnode->dist;
+		back = stop[tnode->type] - tnode->dist;
+		break;
+	case PLANE_NONE:
 		r = TR_TestLine_r(tnode->children[0], start, stop);
 		if (r)
 			return r;
 		return TR_TestLine_r(tnode->children[1], start, stop);
-	} else {
-		vec3_t *normal = &tnode->normal;
-		const float dist = tnode->dist;
-		front = DotProduct(start, *normal) - dist;
-		back = DotProduct(stop, *normal) - dist;
+	default:
+		front = DotProduct(start, tnode->normal) - tnode->dist;
+		back = DotProduct(stop, tnode->normal) - tnode->dist;
+		break;
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
