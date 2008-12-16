@@ -2898,37 +2898,37 @@ menu messageoptions
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_pausee {
-		cmd "mn_setnodeproperty bt_pause<1> current 1"
+		*(checkbox)bt_pause<1> current 1
 	}
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_paused {
-		cmd "mn_setnodeproperty bt_pause<1> current 0"
+		*(checkbox)bt_pause<1> current 0
 	}
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_notifye {
-		cmd "mn_setnodeproperty bt_notify<1> current 1"
+		*(checkbox)bt_notify<1> current 1
 	}
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_notifyd {
-		cmd "mn_setnodeproperty bt_notify<1> current 0"
+		*(checkbox)bt_notify<1> current 0
 	}
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_sounde {
-		cmd "mn_setnodeproperty bt_sound<1> current 1"
+		*(checkbox)bt_sound<1> current 1
 	}
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_soundd {
-		cmd "mn_setnodeproperty bt_sound<1> current 0"
+		*(checkbox)bt_sound<1> current 0
 	}
 
 	// ===================

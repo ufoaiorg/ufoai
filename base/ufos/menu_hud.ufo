@@ -530,11 +530,11 @@ menu hud extends ahud
 	}
 	confunc crouch_checkbox_clear_s	{
 		*bt_crouch_reservation disabled false
-		cmd "mn_setnodeproperty bt_crouch_reservation current 0"
+		*(checkbox)bt_crouch_reservation current 0
 	}
 	confunc crouch_checkbox_check_s	{
 		*bt_crouch_reservation disabled false
-		cmd "mn_setnodeproperty bt_crouch_reservation current 1"
+		*(checkbox)bt_crouch_reservation current 1
 	}
 
 
