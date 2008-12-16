@@ -823,7 +823,7 @@ menu team
 
 	func init
 	{
-		team_clear
+		call team_clear
 		cmd "team_mark;team_select 0;set mn_show_employee 1;"
 	}
 }
@@ -1108,11 +1108,11 @@ menu equipment
 		*bt_misc		color "1 1 1 0.8"
 		*bt_armour	color "1 1 1 0.8"
 	}
-	confunc equip_primary	{ cmd "equip_type primary;"	equip_reset *bt_primary	color "1 1 1 1" }
-	confunc equip_secondary	{ cmd "equip_type secondary;"	equip_reset *bt_secondary	color "1 1 1 1" }
-	confunc equip_heavy	{ cmd "equip_type heavy;"	equip_reset *bt_heavy	color "1 1 1 1" }
-	confunc equip_misc	{ cmd "equip_type misc;"	equip_reset *bt_misc	color "1 1 1 1" }
-	confunc equip_armour	{ cmd "equip_type armour;"	equip_reset *bt_armour	color "1 1 1 1" }
+	confunc equip_primary	{ cmd "equip_type primary;"	call equip_reset *bt_primary	color "1 1 1 1" }
+	confunc equip_secondary	{ cmd "equip_type secondary;"	call equip_reset *bt_secondary	color "1 1 1 1" }
+	confunc equip_heavy	{ cmd "equip_type heavy;"	call equip_reset *bt_heavy	color "1 1 1 1" }
+	confunc equip_misc	{ cmd "equip_type misc;"	call equip_reset *bt_misc	color "1 1 1 1" }
+	confunc equip_armour	{ cmd "equip_type armour;"	call equip_reset *bt_armour	color "1 1 1 1" }
 
 	button bt_primary
 	{
@@ -1120,7 +1120,7 @@ menu equipment
 		image	menu/button_blue
 		pos		"374 70"	//125
 		size	"128 52"
-		click	{ equip_primary }
+		click	{ call equip_primary }
 		color "1 1 1 0.6"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -1133,7 +1133,7 @@ menu equipment
 		image	menu/button_blue
 		pos		"374 125"	//180
 		size	"128 52"
-		click	{ equip_secondary }
+		click	{ call equip_secondary }
 		color "1 1 1 0.6"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -1146,7 +1146,7 @@ menu equipment
 		image	menu/button_blue
 		pos		"374 180"
 		size	"128 52"
-		click	{ equip_heavy }
+		click	{ call equip_heavy }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -1159,7 +1159,7 @@ menu equipment
 		image	menu/button_blue
 		pos		"374 235"
 		size	"128 52"
-		click	{ equip_misc }
+		click	{ call equip_misc }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -1172,7 +1172,7 @@ menu equipment
 		image	menu/button_blue
 		pos		"374 290"
 		size	"128 52"
-		click	{ equip_armour }
+		click	{ call equip_armour }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -1466,7 +1466,7 @@ menu equipment
 	{
 		pos		"20 710"
 		size	"180 40"
-		click	{ weapon_stats }
+		click	{ call weapon_stats }
 	}
 
 	string txt_abilities
@@ -1478,7 +1478,7 @@ menu equipment
 	{
 		pos		"205 710"
 		size	"180 40"
-		click	{ actor_stats }
+		click	{ call actor_stats }
 	}
 
 	// ==================
@@ -1573,8 +1573,8 @@ menu equipment
 
 	func init
 	{
-		names_clear
-		actor_stats
+		call names_clear
+		call actor_stats
 		cmd "genequip;equip_primary;equip_select 0;"
 	}
 }

@@ -816,9 +816,9 @@ menu althud extends ahud
 		pos		"964 464"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
-		whup	{ show_rightweapon cmd "switch_firemode_list r;" }
-		whdown	{ show_leftweapon cmd "switch_firemode_list l;" }
-		click	{ show_rightweapon cmd "switch_firemode_list r;" }
+		whup	{ call show_rightweapon cmd "switch_firemode_list r;" }
+		whdown	{ call show_leftweapon cmd "switch_firemode_list l;" }
+		click	{ call show_rightweapon cmd "switch_firemode_list r;" }
 	}
 	pic switch_to_left_hand
 	{
@@ -827,9 +827,9 @@ menu althud extends ahud
 		pos		"980 464"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
-		whup	{ show_rightweapon cmd "switch_firemode_list r;" }
-		whdown	{ show_leftweapon cmd "switch_firemode_list l;" }
-		click	{ show_leftweapon cmd "switch_firemode_list l;" }
+		whup	{ call show_rightweapon cmd "switch_firemode_list r;" }
+		whdown	{ call show_leftweapon cmd "switch_firemode_list l;" }
+		click	{ call show_leftweapon cmd "switch_firemode_list l;" }
 	}
 
 	// ==================
@@ -1166,7 +1166,7 @@ menu althud extends ahud
 	{
 		cmd "music_change battlescape;"
 		cmd "set hud_refresh 1;"
-		show_rightweapon
+		call show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}
 

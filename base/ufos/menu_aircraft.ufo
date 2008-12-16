@@ -422,11 +422,11 @@ menu aircraft_equip
 		size	"420 631"
 		whup	{
 			cmd "mn_next_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 		whdown	{
 			cmd "mn_prev_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 	}
 
@@ -441,15 +441,15 @@ menu aircraft_equip
 		mousefx true
 		click	{
 			cmd "mn_prev_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 		whup	{
 			cmd "mn_next_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 		whdown	{
 			cmd "mn_prev_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 	}
 	pic bt_prev_disabled
@@ -473,15 +473,15 @@ menu aircraft_equip
 		mousefx true
 		click	{
 			cmd "mn_next_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 		whup	{
 			cmd "mn_next_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 		whdown	{
 			cmd "mn_prev_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 	}
 	pic bt_next_disabled
@@ -502,11 +502,11 @@ menu aircraft_equip
 		string	"*cvar mn_aircraftname"
 		whup	{
 			cmd	"mn_next_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 		whdown	{
 			cmd	"mn_prev_aircraft;"
-			airequip_zone1
+			call airequip_zone1
 		}
 	}
 
@@ -706,7 +706,7 @@ menu aircraft_equip
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
-		click	{ airequip_zone1 }
+		click	{ call airequip_zone1 }
 	}
 
 	text airequip_text_zone1
@@ -728,7 +728,7 @@ menu aircraft_equip
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
-		click	{ airequip_zone2 }
+		click	{ call airequip_zone2 }
 	}
 
 	text airequip_text_zone2
@@ -750,7 +750,7 @@ menu aircraft_equip
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
-		click	{ airequip_zone3 }
+		click	{ call airequip_zone3 }
 	}
 
 	text airequip_text_zone3
@@ -970,7 +970,7 @@ menu aircraft_equip
 	{
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "airequip_updatemenu 2;"
-		airequip_zone1
+		call airequip_zone1
 	}
 	func close
 	{

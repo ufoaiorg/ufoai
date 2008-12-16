@@ -38,15 +38,6 @@ typedef enum ea_s {
 	EA_NUM_EVENTACTION
 } ea_t;
 
-static const int ea_values[EA_NUM_EVENTACTION] = {
-	V_NULL,
-	V_LONGSTRING,
-
-	V_NULL,
-	V_NULL,
-	V_NULL
-};
-
 typedef struct menuAction_s {
 	int type;
 	void *data;

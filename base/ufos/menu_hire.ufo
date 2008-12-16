@@ -614,25 +614,25 @@ menu employees
 	func empl_soldiers
 	{
 		cmd "employee_init 0;"
-		empl_reset
+		call empl_reset
 		*bt_soldier		color "1 1 1 1"
 	}
 	func empl_scientists
 	{
 		cmd "employee_init 1;"
-		empl_reset
+		call empl_reset
 		*bt_scientists	color "1 1 1 1"
 	}
 	func empl_workers
 	{
 		cmd "employee_init 2;"
-		empl_reset
+		call empl_reset
 		*bt_workers		color "1 1 1 1"
 	}
 	func empl_pilots
 	{
 		cmd "employee_init 3;"
-		empl_reset
+		call empl_reset
 		*bt_pilots		color "1 1 1 1"
 	}
 
@@ -643,7 +643,7 @@ menu employees
 		blend	true
 		pos		"615 585"
 		size	"128 52"
-		click	{ empl_soldiers }
+		click	{ call empl_soldiers }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -657,7 +657,7 @@ menu employees
 		blend	true
 		pos		"615 655"
 		size	"128 52"
-		click	{ empl_scientists }
+		click	{ call empl_scientists }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -671,7 +671,7 @@ menu employees
 		blend	true
 		pos		"765 585"
 		size	"128 52"
-		click	{ empl_workers }
+		click	{ call empl_workers }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -685,7 +685,7 @@ menu employees
 		blend	true
 		pos		"765 655"
 		size	"128 52"
-		click	{ empl_pilots }
+		click	{ call empl_pilots }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font	"f_big"
@@ -709,8 +709,8 @@ menu employees
 
 	func init
 	{
-		employee_clear
-		empl_soldiers
+		call employee_clear
+		call empl_soldiers
 		cmd "employee_init 0;"
 	}
 

@@ -115,7 +115,7 @@ menu basesummary
 		pos			"654 62"
 		baseid		0
 		click 		{
-			resetbaselayout
+			call resetbaselayout
 			*base0 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 0;"
 		}
@@ -129,7 +129,7 @@ menu basesummary
 		pos			"724 62"
 		baseid		1
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base1 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 1;"
 		}
@@ -143,7 +143,7 @@ menu basesummary
 		pos			"794 62"
 		baseid		2
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base2 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 2;"
 		}
@@ -157,7 +157,7 @@ menu basesummary
 		pos			"864 62"
 		baseid		3
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base3 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 3;"
 		}
@@ -171,7 +171,7 @@ menu basesummary
 		pos			"654 137"
 		baseid		4
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base4 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 4;"
 		}
@@ -185,7 +185,7 @@ menu basesummary
 		pos			"724 137"
 		baseid		5
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base5 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 5;"
 		}
@@ -199,7 +199,7 @@ menu basesummary
 		pos			"794 137"
 		baseid		6
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base6 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 6;"
 		}
@@ -213,7 +213,7 @@ menu basesummary
 		pos			"864 137"
 		baseid		7
 		click		{
-			resetbaselayout
+			call resetbaselayout
 			*base7 bgcolor "1 1 1 1"
 			cmd "basesummary_selectbase 7;"
 		}
@@ -224,7 +224,7 @@ menu basesummary
 	// ==================
 	func init
 	{
-		resetbaselayout
+		call resetbaselayout
 		cmd "basesummary_init;"
 	}
 

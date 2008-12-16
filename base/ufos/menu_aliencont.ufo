@@ -167,31 +167,31 @@ menu aliencont
 	confunc ac_hide_autopsy10 { *ac_kill_zone10 invis false *ac_autopsy_zone10 invis true }
 	confunc ac_hide_autopsy11 { *ac_kill_zone11 invis false *ac_autopsy_zone11 invis true }
 
-	confunc aliencontneedautopsy0  { *ac_icon0  image icons/surgery *ac_button0 image menu/hosp_button_light *ac_icon0 tooltip "_Start autopsy" ac_hide_kill0 }
-	confunc aliencontneedautopsy1  { *ac_icon1  image icons/surgery *ac_button1 image menu/hosp_button_light *ac_icon1 tooltip "_Start autopsy" ac_hide_kill1 }
-	confunc aliencontneedautopsy2  { *ac_icon2  image icons/surgery *ac_button2 image menu/hosp_button_light *ac_icon2 tooltip "_Start autopsy" ac_hide_kill2 }
-	confunc aliencontneedautopsy3  { *ac_icon3  image icons/surgery *ac_button3 image menu/hosp_button_light *ac_icon3 tooltip "_Start autopsy" ac_hide_kill3 }
-	confunc aliencontneedautopsy4  { *ac_icon4  image icons/surgery *ac_button4 image menu/hosp_button_light *ac_icon4 tooltip "_Start autopsy" ac_hide_kill4 }
-	confunc aliencontneedautopsy5  { *ac_icon5  image icons/surgery *ac_button5 image menu/hosp_button_light *ac_icon5 tooltip "_Start autopsy" ac_hide_kill5 }
-	confunc aliencontneedautopsy6  { *ac_icon6  image icons/surgery *ac_button6 image menu/hosp_button_light *ac_icon6 tooltip "_Start autopsy" ac_hide_kill6 }
-	confunc aliencontneedautopsy7  { *ac_icon7  image icons/surgery *ac_button7 image menu/hosp_button_light *ac_icon7 tooltip "_Start autopsy" ac_hide_kill7 }
-	confunc aliencontneedautopsy8  { *ac_icon8  image icons/surgery *ac_button8 image menu/hosp_button_light *ac_icon8 tooltip "_Start autopsy" ac_hide_kill8 }
-	confunc aliencontneedautopsy9  { *ac_icon9  image icons/surgery *ac_button9 image menu/hosp_button_light *ac_icon9 tooltip "_Start autopsy" ac_hide_kill9 }
-	confunc aliencontneedautopsy10 { *ac_icon10 image icons/surgery *ac_button10 image menu/hosp_button_light *ac_icon10 tooltip "_Start autopsy" ac_hide_kill10 }
-	confunc aliencontneedautopsy11 { *ac_icon11 image icons/surgery *ac_button11 image menu/hosp_button_light *ac_icon11 tooltip "_Start autopsy" ac_hide_kill11 }
+	confunc aliencontneedautopsy0  { *ac_icon0  image icons/surgery *ac_button0 image menu/hosp_button_light *ac_icon0 tooltip "_Start autopsy" call ac_hide_kill0 }
+	confunc aliencontneedautopsy1  { *ac_icon1  image icons/surgery *ac_button1 image menu/hosp_button_light *ac_icon1 tooltip "_Start autopsy" call ac_hide_kill1 }
+	confunc aliencontneedautopsy2  { *ac_icon2  image icons/surgery *ac_button2 image menu/hosp_button_light *ac_icon2 tooltip "_Start autopsy" call ac_hide_kill2 }
+	confunc aliencontneedautopsy3  { *ac_icon3  image icons/surgery *ac_button3 image menu/hosp_button_light *ac_icon3 tooltip "_Start autopsy" call ac_hide_kill3 }
+	confunc aliencontneedautopsy4  { *ac_icon4  image icons/surgery *ac_button4 image menu/hosp_button_light *ac_icon4 tooltip "_Start autopsy" call ac_hide_kill4 }
+	confunc aliencontneedautopsy5  { *ac_icon5  image icons/surgery *ac_button5 image menu/hosp_button_light *ac_icon5 tooltip "_Start autopsy" call ac_hide_kill5 }
+	confunc aliencontneedautopsy6  { *ac_icon6  image icons/surgery *ac_button6 image menu/hosp_button_light *ac_icon6 tooltip "_Start autopsy" call ac_hide_kill6 }
+	confunc aliencontneedautopsy7  { *ac_icon7  image icons/surgery *ac_button7 image menu/hosp_button_light *ac_icon7 tooltip "_Start autopsy" call ac_hide_kill7 }
+	confunc aliencontneedautopsy8  { *ac_icon8  image icons/surgery *ac_button8 image menu/hosp_button_light *ac_icon8 tooltip "_Start autopsy" call ac_hide_kill8 }
+	confunc aliencontneedautopsy9  { *ac_icon9  image icons/surgery *ac_button9 image menu/hosp_button_light *ac_icon9 tooltip "_Start autopsy" call ac_hide_kill9 }
+	confunc aliencontneedautopsy10 { *ac_icon10 image icons/surgery *ac_button10 image menu/hosp_button_light *ac_icon10 tooltip "_Start autopsy" call ac_hide_kill10 }
+	confunc aliencontneedautopsy11 { *ac_icon11 image icons/surgery *ac_button11 image menu/hosp_button_light *ac_icon11 tooltip "_Start autopsy" call ac_hide_kill11 }
 
-	confunc aliencontkill0  { *ac_icon0  image icons/kill *ac_button0 image menu/hosp_button_light *ac_icon0 tooltip "_Kill this alien" ac_hide_autopsy0 }
-	confunc aliencontkill1  { *ac_icon1  image icons/kill *ac_button1 image menu/hosp_button_light *ac_icon1 tooltip "_Kill this alien" ac_hide_autopsy1 }
-	confunc aliencontkill2  { *ac_icon2  image icons/kill *ac_button2 image menu/hosp_button_light *ac_icon2 tooltip "_Kill this alien" ac_hide_autopsy2 }
-	confunc aliencontkill3  { *ac_icon3  image icons/kill *ac_button3 image menu/hosp_button_light *ac_icon3 tooltip "_Kill this alien" ac_hide_autopsy3 }
-	confunc aliencontkill4  { *ac_icon4  image icons/kill *ac_button4 image menu/hosp_button_light *ac_icon4 tooltip "_Kill this alien" ac_hide_autopsy4 }
-	confunc aliencontkill5  { *ac_icon5  image icons/kill *ac_button5 image menu/hosp_button_light *ac_icon5 tooltip "_Kill this alien" ac_hide_autopsy5 }
-	confunc aliencontkill6  { *ac_icon6  image icons/kill *ac_button6 image menu/hosp_button_light *ac_icon6 tooltip "_Kill this alien" ac_hide_autopsy6 }
-	confunc aliencontkill7  { *ac_icon7  image icons/kill *ac_button7 image menu/hosp_button_light *ac_icon7 tooltip "_Kill this alien" ac_hide_autopsy7 }
-	confunc aliencontkill8  { *ac_icon8  image icons/kill *ac_button8 image menu/hosp_button_light *ac_icon8 tooltip "_Kill this alien" ac_hide_autopsy8 }
-	confunc aliencontkill9  { *ac_icon9  image icons/kill *ac_button9 image menu/hosp_button_light *ac_icon9 tooltip "_Kill this alien" ac_hide_autopsy9 }
-	confunc aliencontkill10 { *ac_icon10 image icons/kill *ac_button10 image menu/hosp_button_light *ac_icon10 tooltip "_Kill this alien" ac_hide_autopsy10 }
-	confunc aliencontkill11 { *ac_icon11 image icons/kill *ac_button11 image menu/hosp_button_light *ac_icon11 tooltip "_Kill this alien" ac_hide_autopsy11 }
+	confunc aliencontkill0  { *ac_icon0  image icons/kill *ac_button0 image menu/hosp_button_light *ac_icon0 tooltip "_Kill this alien" call ac_hide_autopsy0 }
+	confunc aliencontkill1  { *ac_icon1  image icons/kill *ac_button1 image menu/hosp_button_light *ac_icon1 tooltip "_Kill this alien" call ac_hide_autopsy1 }
+	confunc aliencontkill2  { *ac_icon2  image icons/kill *ac_button2 image menu/hosp_button_light *ac_icon2 tooltip "_Kill this alien" call ac_hide_autopsy2 }
+	confunc aliencontkill3  { *ac_icon3  image icons/kill *ac_button3 image menu/hosp_button_light *ac_icon3 tooltip "_Kill this alien" call ac_hide_autopsy3 }
+	confunc aliencontkill4  { *ac_icon4  image icons/kill *ac_button4 image menu/hosp_button_light *ac_icon4 tooltip "_Kill this alien" call ac_hide_autopsy4 }
+	confunc aliencontkill5  { *ac_icon5  image icons/kill *ac_button5 image menu/hosp_button_light *ac_icon5 tooltip "_Kill this alien" call ac_hide_autopsy5 }
+	confunc aliencontkill6  { *ac_icon6  image icons/kill *ac_button6 image menu/hosp_button_light *ac_icon6 tooltip "_Kill this alien" call ac_hide_autopsy6 }
+	confunc aliencontkill7  { *ac_icon7  image icons/kill *ac_button7 image menu/hosp_button_light *ac_icon7 tooltip "_Kill this alien" call ac_hide_autopsy7 }
+	confunc aliencontkill8  { *ac_icon8  image icons/kill *ac_button8 image menu/hosp_button_light *ac_icon8 tooltip "_Kill this alien" call ac_hide_autopsy8 }
+	confunc aliencontkill9  { *ac_icon9  image icons/kill *ac_button9 image menu/hosp_button_light *ac_icon9 tooltip "_Kill this alien" call ac_hide_autopsy9 }
+	confunc aliencontkill10 { *ac_icon10 image icons/kill *ac_button10 image menu/hosp_button_light *ac_icon10 tooltip "_Kill this alien" call ac_hide_autopsy10 }
+	confunc aliencontkill11 { *ac_icon11 image icons/kill *ac_button11 image menu/hosp_button_light *ac_icon11 tooltip "_Kill this alien" call ac_hide_autopsy11 }
 
 	zone ac_scroll_zone
 	{

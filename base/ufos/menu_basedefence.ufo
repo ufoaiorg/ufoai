@@ -38,14 +38,14 @@ menu basedefence
 	func basedef_missile
 	{
 		cmd "basedef_updatemenu 0;"
-		basedef_reset
+		call basedef_reset
 		*basedef_header3 invis false
 	}
 
 	func basedef_laser
 	{
 		cmd "basedef_updatemenu 1;"
-		basedef_reset
+		call basedef_reset
 	}
 
 	func basedef_zone1
@@ -134,7 +134,7 @@ menu basedefence
 		pos		"50 710"
 		image	menu/button_blue
 		size	"128 52"
-		click	{ basedef_missile }
+		click	{ call basedef_missile }
 		string "_Missile"
 		color "1 1 1 1"
 		selectcolor "1 1 1 1"
@@ -147,7 +147,7 @@ menu basedefence
 		pos		"288 710"
 		image	menu/button_blue
 		size	"128 52"
-		click	{ basedef_laser }
+		click	{ call basedef_laser }
 		string "_Laser"
 		color "1 1 1 1"
 		selectcolor "1 1 1 1"
@@ -245,7 +245,7 @@ menu basedefence
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
-		click	{ basedef_zone1 }
+		click	{ call basedef_zone1 }
 	}
 
 	text basedef_text_zone1
@@ -267,7 +267,7 @@ menu basedefence
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
-		click	{ basedef_zone2 }
+		click	{ call basedef_zone2 }
 	}
 
 	text basedef_text_zone2
@@ -289,7 +289,7 @@ menu basedefence
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
-		click	{ basedef_zone3 }
+		click	{ call basedef_zone3 }
 	}
 
 	text basedef_text_zone3
@@ -346,7 +346,7 @@ menu basedefence
 
 	func init
 	{
-		basedef_initnodevalues
+		call basedef_initnodevalues
 		cmd "basedef_initmenu;basedef_updatemenu 0;airequip_zone_select 1;"
 	}
 
