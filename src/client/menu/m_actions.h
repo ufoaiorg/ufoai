@@ -54,7 +54,18 @@ typedef struct menuAction_s {
 	const value_t *scriptValues;
 } menuAction_t;
 
+/* prevent preprocessing of 'printf' into __attribute__ */
+#define _SAVE_PRINTF_ printf
+#undef printf
+
+#ifdef __GNUC__
 void MN_ExecuteConfunc(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+#else
+void MN_ExecuteConfunc(const char *fmt, ...);
+#endif
+
+#define printf _SAVE_PRINTF_
+
 
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 void MN_ConfuncCommand_f(void);
