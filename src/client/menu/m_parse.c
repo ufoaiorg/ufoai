@@ -124,60 +124,22 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 	lastAction = NULL;
 
-	do {
+	/* prevent bad position */
+	assert(*token[0] == '{');
+
+	while (qtrue) {
+		found = qfalse;
 		/* get new token */
 		*token = COM_EParse(text, errhead, NULL);
 		if (!*token)
 			return qfalse;
 
-		/* get actions */
-		do {
-			found = qfalse;
+		if (*token[0] == '}')
+			break;
 
-			/* standard function execution */
-			for (i = 0; i < EA_CALL; i++)
-				if (!Q_strcasecmp(*token, ea_strings[i])) {
-/*					Com_Printf("   %s", *token); */
-
-					/* add the action */
-					if (lastAction) {
-						if (mn.numActions >= MAX_MENUACTIONS)
-							Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-						action = &mn.menuActions[mn.numActions++];
-						memset(action, 0, sizeof(*action));
-						lastAction->next = action;
-					}
-					action->type = i;
-
-					if (ea_values[i] != V_NULL) {
-						/* get parameter values */
-						*token = COM_EParse(text, errhead, NULL);
-						if (!*text)
-							return qfalse;
-
-/*						Com_Printf(" %s", *token); */
-
-						/* get the value */
-						action->data = mn.curadata;
-						mn.curadata += Com_EParseValue(mn.curadata, *token, ea_values[i], 0, 0);
-					}
-
-/*					Com_Printf("\n"); */
-
-					/* get next token */
-					*token = COM_EParse(text, errhead, NULL);
-					if (!*text)
-						return qfalse;
-
-					lastAction = action;
-					found = qtrue;
-					break;
-				}
-
-			/* node property setting */
-			switch (**token) {
-			case '*':
-/*				Com_Printf("   %s", *token); */
+		/* standard function execution */
+		for (i = 0; i < EA_CALL; i++) {
+			if (!Q_strcasecmp(*token, ea_strings[i])) {
 
 				/* add the action */
 				if (lastAction) {
@@ -187,118 +149,148 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 					memset(action, 0, sizeof(*action));
 					lastAction->next = action;
 				}
-				action->type = EA_NODE;
+				action->type = i;
 
-				/* get the node name */
-				action->data = mn.curadata;
-
-				strcpy((char *) mn.curadata, &(*token)[1]);
-				mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
-
-				/* get the node property */
-				*token = COM_EParse(text, errhead, NULL);
-				if (!*text)
-					return qfalse;
-
-/*				Com_Printf(" %s", *token); */
-
-				val = MN_FindPropertyByName(abstractnode->properties, *token);
-				if (!val) {
-					/* do we ALREADY know this node? and his type */
-					menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
-					if (node) {
-						val = MN_NodeGetPropertyDefinition(node, *token);
-					} else {
-						Com_Printf("MN_ParseAction: node \"%s\" not already know (in event)\n", *token);
-					}
-				}
-
-				action->scriptValues = val;
-
-				if (!val || !val->type) {
-					Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
-					mn.curadata = action->data;
-					if (lastAction) {
-						lastAction->next = NULL;
-						mn.numActions--;
-					}
-					break;
-				}
-
-				/* get the value */
-				*token = COM_EParse(text, errhead, NULL);
-				if (!*text)
-					return qfalse;
-
-/*				Com_Printf(" %s\n", *token); */
-
-				mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
-
-				/* get next token */
-				*token = COM_EParse(text, errhead, NULL);
-				if (!*text)
-					return qfalse;
-
-				lastAction = action;
-				found = qtrue;
-				break;
-			case '&':
-				action->type = EA_VAR;
-				break;
-			}
-
-			/* function calls */
-			for (node = mn.menus[mn.numMenus - 1].firstChild; node; node = node->next)
-				if ((node->behaviour->id == MN_FUNC || node->behaviour->id == MN_CONFUNC || node->behaviour->id == MN_CVARFUNC)
-					&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
-/*					Com_Printf("   %s\n", node->name); */
-
-					/* add the action */
-					if (lastAction) {
-						if (mn.numActions >= MAX_MENUACTIONS)
-							Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-						action = &mn.menuActions[mn.numActions++];
-						memset(action, 0, sizeof(*action));
-						lastAction->next = action;
-					}
-					action->type = EA_CALL;
-
-					action->data = mn.curadata;
-					*(menuAction_t ***) mn.curadata = &node->onClick;
-					mn.curadata += ALIGN(sizeof(menuAction_t *));
-
-					/* get next token */
+				if (ea_values[i] != V_NULL) {
+					/* get parameter values */
 					*token = COM_EParse(text, errhead, NULL);
 					if (!*text)
 						return qfalse;
 
-					lastAction = action;
-					found = qtrue;
-					break;
+					/* get the value */
+					action->data = mn.curadata;
+					mn.curadata += Com_EParseValue(mn.curadata, *token, ea_values[i], 0, 0);
 				}
-		} while (found);
 
-		/* test for end or unknown token */
-		if (**token == '}') {
-			/* finished */
-			return qtrue;
-		} else {
-			if (!Q_strcmp(*token, "timeout")) {
-				/* get new token */
-				*token = COM_EParse(text, errhead, NULL);
-				if (!*token || **token == '}') {
-					Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", menuNode->name);
-					return qfalse;
+				lastAction = action;
+				found = qtrue;
+				break;
+			}
+			if (found)
+				continue;
+		}
+
+		/* node property setting */
+		switch (*token[0]) {
+		case '*':
+
+			/* add the action */
+			if (lastAction) {
+				if (mn.numActions >= MAX_MENUACTIONS)
+					Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+				action = &mn.menuActions[mn.numActions++];
+				memset(action, 0, sizeof(*action));
+				lastAction->next = action;
+			}
+			action->type = EA_NODE;
+
+			/* get the node name */
+			action->data = mn.curadata;
+
+			strcpy((char *) mn.curadata, &(*token)[1]);
+			mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
+
+			/* get the node property */
+			*token = COM_EParse(text, errhead, NULL);
+			if (!*text)
+				return qfalse;
+
+/*				Com_Printf(" %s", *token); */
+
+			val = MN_FindPropertyByName(abstractnode->properties, *token);
+			if (!val) {
+				/* do we ALREADY know this node? and his type */
+				menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
+				if (node) {
+					val = MN_NodeGetPropertyDefinition(node, *token);
+				} else {
+					Com_Printf("MN_ParseAction: node \"%s\" not already know (in event)\n", *token);
 				}
-				menuNode->timeOut = atoi(*token);
-			} else {
-				/* unknown token, print message and continue */
-				Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s, menu %s)\n", *token, menuNode->name, menuNode->menu->name);
+			}
+
+			action->scriptValues = val;
+
+			if (!val || !val->type) {
+				Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
+				mn.curadata = action->data;
+				if (lastAction) {
+					lastAction->next = NULL;
+					mn.numActions--;
+				}
+				break;
+			}
+
+			/* get the value */
+			*token = COM_EParse(text, errhead, NULL);
+			if (!*text)
+				return qfalse;
+
+/*				Com_Printf(" %s\n", *token); */
+
+			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+
+			lastAction = action;
+			found = qtrue;
+			break;
+		case '&':
+			action->type = EA_VAR;
+			found = qtrue;
+			Com_Printf("MN_ParseAction: token \"%s\" ignored, EA_VAR not implemented (node: %s.%s)\n", *token, menuNode->menu->name, menuNode->name);
+			break;
+		}
+
+		if (found)
+			continue;
+
+		/* function calls */
+		for (node = mn.menus[mn.numMenus - 1].firstChild; node; node = node->next) {
+			if ((node->behaviour->id == MN_FUNC || node->behaviour->id == MN_CONFUNC || node->behaviour->id == MN_CVARFUNC)
+				&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
+/*					Com_Printf("   %s\n", node->name); */
+
+				/* add the action */
+				if (lastAction) {
+					if (mn.numActions >= MAX_MENUACTIONS)
+						Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+					action = &mn.menuActions[mn.numActions++];
+					memset(action, 0, sizeof(*action));
+					lastAction->next = action;
+				}
+				action->type = EA_CALL;
+
+				action->data = mn.curadata;
+				*(menuAction_t ***) mn.curadata = &node->onClick;
+				mn.curadata += ALIGN(sizeof(menuAction_t *));
+
+				lastAction = action;
+				found = qtrue;
+				break;
 			}
 		}
-	} while (*text);
 
-	return qfalse;
+		if (found)
+			continue;
+
+		if (!Q_strcmp(*token, "timeout")) {
+			/* get new token */
+			*token = COM_EParse(text, errhead, NULL);
+			/** @todo use scanef instead of atoi, no need to check '}' */
+			if (!*token || **token == '}') {
+				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", menuNode->name);
+				return qfalse;
+			}
+			menuNode->timeOut = atoi(*token);
+			continue;
+		}
+
+		/* unknown token, print message and continue */
+		Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s, menu %s)\n", *token, menuNode->name, menuNode->menu->name);
+		return qfalse;
+	}
+
+	assert(*token[0] == '}');
+
+	return qtrue;
 }
 
 static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char **token, const char *errhead)
