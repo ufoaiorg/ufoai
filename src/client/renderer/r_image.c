@@ -1497,33 +1497,75 @@ void R_InitializeRadarOverlay (qboolean source)
 }
 
 /**
- * @brief Update one pixel
- * @param[in] pos Position of the center of radar
- * @param[in] innerRadius Radius of the radar coverage
- * @param[in] outerRadius Radius of the outer radar coverage
+ * @brief Draw radar overlay for a given latitude between 2 longitudes.
+ * @param[in] latMin Minimum latitude.
+ * @param[in] latMax Maximum latitude.
+ * @param[in] y current row in radar overlay.
  * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
+ * @pre We assume latMax - latMin <= 180 degrees.
  */
-static void R_AddRadarCoverageOneLine (const vec2_t pos, float innerRadius, float outerRadius, qboolean source, int x, int y)
+static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qboolean source)
 {
 	const int bpp = 4;							/**< byte per pixel */
 	const int radarWidth = r_radarTexture->width;
-	const int radarHeight = r_radarTexture->height;
-	const byte innerAlpha = 0;					/**< Alpha of the inner radar range */
-	const byte outerAlpha = 60;					/**< Alpha of the outer radar range */
-	vec2_t currentPos;							/**< current position (in latitude / longitude) */
-	float distance;
+	const float radarWidthPerDegree = radarWidth / 360.0f;
+	int xMin, xMax, x;
 
-	Vector2Set(currentPos,
-		180.0f - 360.0f * x / ((float) radarWidth * bpp),
-		90.0f - 180.0f * y / ((float) radarHeight * bpp));
-	distance = MAP_GetDistance(pos, currentPos);
-	if (distance <= outerRadius) {
-		byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
-		if (distance > innerRadius && dest[3] != innerAlpha)
-			dest[3] = outerAlpha;
-		else
-			dest[3] = innerAlpha;
+	if (latMin < -180.0f) {
+		xMin = 0;
+		xMax = bpp * ceil((latMax + 180.0f) * radarWidthPerDegree);
+		for (x = xMin; x < xMax; x += bpp) {
+			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+			if (alpha < dest[3])
+				dest[3] = alpha;
+		}
+		xMin = bpp * floor((latMin - 180.0f) * radarWidthPerDegree);
+		xMax = bpp * radarWidth;
+		for (x = xMin; x < xMax; x += bpp) {
+			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+			if (alpha < dest[3])
+				dest[3] = alpha;
+		}
+	} else if (latMax > 180.0f) {
+		xMin = 0;
+		xMax = bpp * ceil((latMax - 180.0f) * radarWidthPerDegree);
+		for (x = xMin; x < xMax; x += bpp) {
+			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+			if (alpha < dest[3])
+				dest[3] = alpha;
+		}
+		xMin = bpp * floor((latMin + 180.0f) * radarWidthPerDegree);
+		xMax = bpp * radarWidth;
+		for (x = xMin; x < xMax; x += bpp) {
+			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+			if (alpha < dest[3])
+				dest[3] = alpha;
+		}
+	} else {
+		xMin = bpp * floor((latMin + 180.0f) * radarWidthPerDegree);
+		xMax = bpp * ceil((latMax + 180.0f) * radarWidthPerDegree);
+		for (x = xMin; x < xMax; x += bpp) {
+			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
+			if (alpha < dest[3])
+				dest[3] = alpha;
+		}
 	}
+}
+
+/**
+ * @brief Return the half longitude affected by radar at a given latitude.
+ * @param[in] radarPos center of the radar.
+ * @param[in] radius radius of the radar.
+ * @param[in] y latitude of current point (in radians).
+ * @note This is an implementation of the following facts:
+ * - the distance (on a sphere) between radarPos and current position is equal to radius
+ * - the border of the radar coverage on a row has the same latitude than current latitude.
+ */
+static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radius, const float  yLat)
+{
+	float angle = (cos(radius * torad) - sin(radarPos[1] * torad) * sin(yLat)) / (cos(radarPos[1] * torad) * cos(yLat));
+
+	return fabs(angle) > 1.0f ? 180.0f : todeg * acos(angle);
 }
 
 /**
@@ -1537,77 +1579,70 @@ static void R_AddRadarCoverageOneLine (const vec2_t pos, float innerRadius, floa
 void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius, qboolean source)
 {
 	const int bpp = 4;							/**< byte per pixel */
-	const int radarWidth = r_radarTexture->width;
+	const byte innerAlpha = 0;					/**< Alpha of the inner radar range */
+	const byte outerAlpha = 60;					/**< Alpha of the outer radar range */
 	const int radarHeight = r_radarTexture->height;
-	const float radarWidthPerDegree = radarWidth / 360.0f;
 	const float radarHeightPerDegree = radarHeight / 180.0f;
-	int x, y;									/**< current position (in pixel) */
-	int yMax, yMin;					/**< Bounding box of the zone that should be drawn */
+	int y;										/**< current position (in pixel) */
+	int yMax, yMin;								/**< Bounding box of the inner radar zone */
+	int outeryMax, outeryMin;					/**< Bounding box of the outer radar zone */
 
 	assert(outerRadius < 180);
 
-	if (pos[1] + outerRadius > 90) {
+	if (pos[1] + innerRadius > 90) {
 		yMin = 0;
-		yMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
-	} else if (pos[1] - outerRadius < -90) {
-		yMin = bpp * round((90 - pos[1] - outerRadius) * radarHeightPerDegree);
+		yMax = bpp * round((90 - pos[1] + innerRadius) * radarHeightPerDegree);
+	} else if (pos[1] - innerRadius < -90) {
+		yMin = bpp * ceil((90 - pos[1] - innerRadius) * radarHeightPerDegree);
 		yMax = bpp * radarHeight;
 	} else {
-		yMin = bpp * round((90 - pos[1] - outerRadius) * radarHeightPerDegree);
-		yMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
+		yMin = bpp * ceil((90 - pos[1] - innerRadius) * radarHeightPerDegree);
+		yMax = bpp * round((90 - pos[1] + innerRadius) * radarHeightPerDegree);
+	}
+
+	if (pos[1] + outerRadius > 90) {
+		outeryMin = 0;
+		outeryMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
+	} else if (pos[1] - outerRadius < -90) {
+		outeryMin = bpp * ceil((90 - pos[1] - outerRadius) * radarHeightPerDegree);
+		outeryMax = bpp * radarHeight;
+	} else {
+		outeryMin = bpp * ceil((90 - pos[1] - outerRadius) * radarHeightPerDegree);
+		outeryMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
 	}
 
 	assert(yMin >= 0);
 	assert(yMax <= bpp * radarHeight);		/* the loop will stop just BEFORE yMax */
 	assert(yMin <= yMax);
 
-	for (y = yMin; y < yMax; y += bpp) {
-		const float yLat = 90.0f - y / (radarHeightPerDegree * bpp);
-		const float dist = cos(outerRadius * torad) / cos((yLat - pos[1]) * torad);
-		float angle = todeg * acos(1.0f - (1.0f - dist) / (cos(torad * yLat) * cos(torad * yLat)));
-		int xMin, xMax;
+	/* Draw upper part of the radar coverage */
+	for (y = outeryMin; y < yMin; y += bpp) {
+		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
+		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
 
-		/* increase value to make sure radar will be fully scanned.
-		 * I don't understand why we need this, but if we don't use it radars are not fully
-		 * scanned close to the pole. Maybe something's wrong in the calculation? -- Kracken */
-		angle = angle / cos(torad * yLat);
-		
-		if (angle >= 180.0f || yLat < -70.0f || yLat > 70.0f) {
-			/* xMin and xMax are too sensitive too errors close to the pole: compute all the line */
-			xMin = 0;
-			xMax = bpp * radarWidth;
-			for (x = xMin; x < xMax; x += bpp) {
-				R_AddRadarCoverageOneLine(pos, innerRadius, outerRadius, source, x, y);
-			}
-		} else if (pos[0] + angle > 180.0f) {
-			xMin = 0;
-			xMax = bpp * ceil((-pos[0] + angle + 180.0f) * radarWidthPerDegree);
-			for (x = xMin; x < xMax; x += bpp) {
-				R_AddRadarCoverageOneLine(pos, innerRadius, outerRadius, source, x, y);
-			}
-			xMin = bpp * floor((-pos[0] - angle - 180.0f) * radarWidthPerDegree);
-			xMax = bpp * radarWidth;
-			for (x = xMin; x < xMax; x += bpp) {
-				R_AddRadarCoverageOneLine(pos, innerRadius, outerRadius, source, x, y);
-			}
-		} else if (pos[0] - angle < -180.0f) {
-			xMin = 0;
-			xMax = bpp * ceil((-pos[0] + angle - 180.0f) * radarWidthPerDegree);
-			for (x = xMin; x < xMax; x += bpp) {
-				R_AddRadarCoverageOneLine(pos, innerRadius, outerRadius, source, x, y);
-			}
-			xMin = bpp * floor((-pos[0] - angle + 180.0f) * radarWidthPerDegree);
-			xMax = bpp * radarWidth;
-			for (x = xMin; x < xMax; x += bpp) {
-				R_AddRadarCoverageOneLine(pos, innerRadius, outerRadius, source, x, y);
-			}
-		} else {
-			xMin = bpp * floor((-pos[0] - angle + 180.0f) * radarWidthPerDegree);
-			xMax = bpp * ceil((-pos[0] + angle + 180.0f) * radarWidthPerDegree);
-			for (x = xMin; x < xMax; x += bpp) {
-				R_AddRadarCoverageOneLine(pos, innerRadius, outerRadius, source, x, y);
-			}
-		}
+		/* Only the outer radar coverage is drawn at this latitude */
+		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] + outerDeltaLong, y, outerAlpha, source);
+	}
+
+	/* Draw middle part of the radar coverage */
+	for (y = yMin; y < yMax; y += bpp) {
+		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
+		float deltaLong = R_GetRadarDeltaLongitude(pos, innerRadius, yLat);
+		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+
+		/* At this latitude, there are 3 parts to draw: left outer radar, inner radar, and right outer radar */
+		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] - deltaLong, y, outerAlpha, source);
+		R_DrawRadarOverlayRow(-pos[0] - deltaLong, -pos[0] + deltaLong, y, innerAlpha, source);
+		R_DrawRadarOverlayRow(-pos[0] + deltaLong, -pos[0] + outerDeltaLong, y, outerAlpha, source);
+	}
+
+	/* Draw lower part of the radar coverage */
+	for (y = yMax; y < outeryMax; y += bpp) {
+		const float yLat = torad * (90.0f - y / (radarHeightPerDegree * bpp));	/**< latitude of current point, in radian */
+		float outerDeltaLong = R_GetRadarDeltaLongitude(pos, outerRadius, yLat);
+
+		/* Only the outer radar coverage is drawn at this latitude */
+		R_DrawRadarOverlayRow(-pos[0] - outerDeltaLong, -pos[0] + outerDeltaLong, y, outerAlpha, source);
 	}
 }
 
