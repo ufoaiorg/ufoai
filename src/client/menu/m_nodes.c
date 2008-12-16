@@ -67,10 +67,35 @@ extern menuNode_t *focusNode;
  */
 static nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
 
-/**
- * @brief menu behaviour, not realy a node for the moment
+/*
+ * @brief Get a property from a behaviour or his inheritance
+ * @param[in] node Requested node
+ * @param[in] name Property name we search
+ * @return A value_t with the requested name, else NULL
  */
-nodeBehaviour_t *menuBehaviour;
+const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, const char* name)
+{
+	for (; behaviour; behaviour = behaviour->super) {
+		const value_t *result;
+		if (behaviour->properties == NULL)
+			continue;
+		result = MN_FindPropertyByName(behaviour->properties, name);
+		if (result)
+			return result;
+	}
+	return NULL;
+}
+
+/**
+ * @brief Get a property definition from a node
+ * @param[in] node Requested node
+ * @param[in] name Property name we search
+ * @todo We can delete it
+ */
+const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char* name)
+{
+	return MN_GetPropertyFromBehaviour(node->behaviour, name);
+}
 
 #if 0
 /** @todo (menu) to be integrated into MN_CheckNodeZone */

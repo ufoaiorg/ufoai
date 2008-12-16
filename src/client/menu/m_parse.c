@@ -76,14 +76,13 @@ static const char *ea_special_strings[EA_SPECIAL_NUM_EVENTACTION] = {
 	"timeout",
 };
 
-
 /**
  * @brief Find a value_t by name into a array of value_t
  * @param[in] propertyList Array of value_t, with null termination
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
  */
-static const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* name)
+const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* name)
 {
 	const value_t* current = propertyList;
 	while (current->string != NULL) {
@@ -95,34 +94,12 @@ static const value_t* MN_FindPropertyByName (const value_t* propertyList, const 
 }
 
 /**
- * @brief Get a property definition from a node
- * @param[in] node Requested node
- * @param[in] name Property name we search
- * @return A value_t with the requested name, else NULL
- * @todo it will be better to have it on m_nodes.c
- */
-const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char* name)
-{
-	nodeBehaviour_t *behaviour;
-	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
-		const value_t *result;
-		if (behaviour->properties == NULL)
-			continue;
-		result = MN_FindPropertyByName(behaviour->properties, name);
-		if (result)
-			return result;
-	}
-	return NULL;
-}
-
-/**
  * @brief
  * @sa MN_ExecuteActions
  */
 static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token)
 {
 	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
-	const nodeBehaviour_t *abstractnode = MN_GetNodeBehaviour("abstractnode");
 	menuAction_t *lastAction;
 	menuNode_t *node;
 	qboolean found;
@@ -201,43 +178,62 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 		case EA_NODE:
 			/* get the node name */
-			action->data = mn.curadata;
+			{
+				char cast[32] = "abstractnode";
+				const char *nodeName = *token + 1;
+				nodeBehaviour_t *castedBehaviour;
 
-			strcpy((char *) mn.curadata, &(*token)[1]);
-			mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
+				/* check cast */
+				if (nodeName[0] == '(') {
+					char *end = strchr(nodeName, ')');
+					assert(end != NULL);
+					assert(end - nodeName < 32);
 
-			/* get the node property */
-			*token = COM_EParse(text, errhead, NULL);
-			if (!*text)
-				return qfalse;
-
-/*				Com_Printf(" %s", *token); */
-
-			val = MN_FindPropertyByName(abstractnode->properties, *token);
-			if (!val) {
-				/* do we ALREADY know this node? and his type */
-				menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
-				if (node) {
-					val = MN_NodeGetPropertyDefinition(node, *token);
-				} else {
-					Com_Printf("MN_ParseAction: node \"%s\" not already know (in event)\n", *token);
+					/* copy the cast and update the node name */
+					if (end != NULL) {
+						strncpy(cast, nodeName + 1, end - nodeName - 1);
+						cast[end - nodeName - 1] = '\0';
+						nodeName = end + 1;
+					}
 				}
+
+				/* copy the node */
+				action->data = mn.curadata;
+				strcpy((char *) mn.curadata, nodeName);
+				mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
+
+				/* get the node property */
+				*token = COM_EParse(text, errhead, NULL);
+				if (!*text)
+					return qfalse;
+
+				castedBehaviour = MN_GetNodeBehaviour(cast);
+				val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
+				if (!val) {
+					/* do we ALREADY know this node? and his type */
+					menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
+					if (node) {
+						val = MN_NodeGetPropertyDefinition(node, *token);
+					} else {
+						Com_Printf("MN_ParseAction: node \"%s\" not already know (in event), you can cast it\n", *token);
+					}
+				}
+
+				action->scriptValues = val;
+
+				if (!val || !val->type) {
+					Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
+					action->type = EA_NULL;
+					break;
+				}
+
+				/* get the value */
+				*token = COM_EParse(text, errhead, NULL);
+				if (!*text)
+					return qfalse;
+
+				mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 			}
-
-			action->scriptValues = val;
-
-			if (!val || !val->type) {
-				Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
-				action->type = EA_NULL;
-				break;
-			}
-
-			/* get the value */
-			*token = COM_EParse(text, errhead, NULL);
-			if (!*text)
-				return qfalse;
-
-			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 			break;
 
 		case EA_VAR:
