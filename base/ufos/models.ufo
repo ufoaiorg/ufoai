@@ -688,7 +688,7 @@ menu_model craft_shield_polymer
 	model	"aircraft/craft_arm_poly/polymer"
 	menutransform {
 		production		"2 2 2"	"-120 120 -30"	"-20 0 0"
-		market			"2 2 2"	"-120 120 -30"	"-20 0 0"
+		buy				"2 2 2"	"-120 120 -30"	"-20 0 0"
 		ufopedia		"2 2 2"	"-120 120 -30"	"-20 0 0"
 		aircraft_equip	"2 2 2"	"-120 120 -30"	"-20 15 0"
 	}
