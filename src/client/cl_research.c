@@ -776,7 +776,8 @@ void RS_InitTree (qboolean load)
 		assert(baseCurrent);
 		RS_MarkResearchable(qtrue, baseCurrent);
 	} else {
-		/* after loading a savegame the aircraft in bases and installations don't have any tech assigned */
+		/* when you load a savegame right after starting UFO, the aircraft in bases
+		 * and installations don't have any tech assigned */
 		int k;
 
 		for (j = 0; j < gd.numBases; j++) {
@@ -785,10 +786,9 @@ void RS_InitTree (qboolean load)
 				continue;
 			for (k = 0; k < b->numAircraftInBase; k++) {
 				aircraft_t *aircraft = &b->aircraft[k];
-				if (aircraft->tech)
-					/* if this error is hit, the call is maybe not needed any longer */
-					Sys_Error("RS_InitTree: aircraft already has a tech assigned");
-				aircraft->tech = RS_GetTechByProvided(aircraft->id);
+				/* if you already played before loading the game, tech are already defined for templates */
+				if (!aircraft->tech)
+					aircraft->tech = RS_GetTechByProvided(aircraft->id);
 			}
 		}
 	}
