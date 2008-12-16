@@ -51,6 +51,7 @@ stamps/build-arch: config.status
 	dh_testdir
 
 	$(MAKE) BUILDDIR=$(CURDIR)/BUILD
+	$(MAKE) BUILDDIR=$(CURDIR)/BUILD radiant
 
 	mkdir -p stamps
 	touch $@

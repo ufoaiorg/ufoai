@@ -11,7 +11,8 @@ Standards-Version: 3.7.3
 Package: ufoai
 Architecture: any
 Depends: ${shlibs:Depends}, ufoai-data (= ${source:Version}), 
- ufoai-common (= ${source:Version})
+ ufoai-common (= ${source:Version}), libpng12-0, libsdl-mixer1.2,
+ libsdl-ttf2.0-0
 Recommends: ufoai-music
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
@@ -74,7 +75,7 @@ Description: Music for UFO: Alien Invasion
 Package: ufoai-tools
 Architecture: any
 Depends: ${shlibs:Depends}
-Suggests: blender, gtkradiant
+Suggests: blender, ufoai-radiant
 Description: UFO: Alien Invasion - data-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -82,7 +83,8 @@ Description: UFO: Alien Invasion - data-building tool
 
 Package: ufoai-radiant
 Architecture: any
-Depends: ${shlibs:Depends}, ufoai-tools
+Depends: ${shlibs:Depends}, ufoai-tools, libgtk2.0-0, libgtkglext1,
+ libglib2.0-0, libxml2
 Description: UFO: Alien Invasion - map-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .

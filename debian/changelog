@@ -1,3 +1,36 @@
+ufoai (2.3~~svn20849) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Nightly compile for Dec 16 2008
+  * Added radiant to debian/rules, now radiant binary is included
+  * Added dependencies for ufoai-radiant and ufoai
+
+ -- Arthur Haney <spyro@spyrius.com>  Tue, 16 Dec 2008 08:50:00 -0600
+
+ufoai (2.3~~svn20836) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Nightly compile for Dec 15 2008
+  * Fixed radiant by moving to /usr/share/games/ufoai/radiant
+
+ -- Arthur Haney <spyro@spyrius.com>  Mon, 15 Dec 2008 23:00:00 +0000
+
+ufoai (2.3~~svn20826) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Moved translations files into /usr/lib/games/ufoai
+
+ -- Arthur Haney <spyro@spyrius.com>  Wed, 19 Sep 2007 22:09:13 +0100
+
+ufoai (2.3~~svn20746) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Initial build
+  * Added basedirname back into .install files
+  * Added radiant into files
+
+ -- Arthur Haney <spyro@spyrius.com>  Wed, 19 Sep 2007 22:09:13 +0100
+
 ufoai (2.3~~svn14428) unstable; urgency=low
 
   [ Martin Gerhardy ]
