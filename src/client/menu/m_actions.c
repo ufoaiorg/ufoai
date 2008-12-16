@@ -87,8 +87,19 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 
 			if (!(action->scriptValues->type & V_MENU_COPY))
 				Com_SetValue(node, (char *) data, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-			else
-				*(byte **) ((byte *) node + action->scriptValues->ofs) = data;
+			else {
+				void *mem = ((byte *) node + action->scriptValues->ofs);
+				switch (action->scriptValues->type & V_BASETYPEMASK) {
+				case V_FLOAT:
+					**(float **) mem = *(float*) data;
+					break;
+				case V_INT:
+					**(int **) mem = *(int*) data;
+					break;
+				default:
+					*(byte **) mem = data;
+				}
+			}
 		}
 		break;
 	default:
@@ -240,8 +251,19 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 
 				if (!(action->scriptValues->type & V_MENU_COPY))
 					Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-				else
-					*(byte **) ((byte *) node + action->scriptValues->ofs) = value;
+				else {
+					void *mem = ((byte *) node + action->scriptValues->ofs);
+					switch (action->scriptValues->type & V_BASETYPEMASK) {
+					case V_FLOAT:
+						**(float **) mem = *(float*) value;
+						break;
+					case V_INT:
+						**(int **) mem = *(int*) value;
+						break;
+					default:
+						*(byte **) mem = value;
+					}
+				}
 			}
 			break;
 
