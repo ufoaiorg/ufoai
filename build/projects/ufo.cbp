@@ -153,6 +153,7 @@
 		<Unit filename="..\..\base\ufos\language.ufo" />
 		<Unit filename="..\..\base\ufos\maps.ufo" />
 		<Unit filename="..\..\base\ufos\medals.ufo" />
+		<Unit filename="..\..\base\ufos\menu_ahud.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aliencont.ufo" />
 		<Unit filename="..\..\base\ufos\menu_althud.ufo" />

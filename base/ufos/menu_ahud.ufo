@@ -23,4 +23,10 @@ menu ahud {
 	confunc set_right_cb_ina { }
 	confunc set_left_cb_a { }
 	confunc set_right_cb_a { }
+
+	/* Prevent time for crouch */
+	confunc crouch_checkbox_disable_s { }
+	confunc crouch_checkbox_clear_s	{ }
+	confunc crouch_checkbox_check_s	{ }
+
 }

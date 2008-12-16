@@ -207,9 +207,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 					/* do we ALREADY know this node? and his type */
 					menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
 					if (node) {
-						if (node->behaviour->properties) {
-							val = MN_FindPropertyByName(node->behaviour->properties, *token);
-						}
+						val = MN_NodeGetPropertyDefinition(node, *token);
 					} else {
 						Com_Printf("MN_ParseAction: node \"%s\" not already know (in event)\n", *token);
 					}
@@ -1081,7 +1079,6 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
-			const nodeBehaviour_t *abstractnode = MN_GetNodeBehaviour("abstractnode");
 			menuNode_t *refNode;
 			const value_t *val;
 
@@ -1091,8 +1088,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 				return NULL;
 
 			/* get the property */
-			val = MN_FindPropertyByName(abstractnode->properties, token);
-
+			val = MN_NodeGetPropertyDefinition(refNode, token);
 			if (!val)
 				return NULL;
 
@@ -1130,7 +1126,6 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 			/* get the cvar value */
 			return Cvar_VariableValue(token);
 		} else {
-			const nodeBehaviour_t *abstractnode = MN_GetNodeBehaviour("abstractnode");
 			menuNode_t *refNode;
 			const value_t *val;
 
@@ -1140,8 +1135,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 				return 0.0;
 
 			/* get the property */
-			val = MN_FindPropertyByName(abstractnode->properties, token);
-
+			val = MN_NodeGetPropertyDefinition(refNode, token);
 			if (!val || val->type != V_FLOAT)
 				return 0.0;
 
