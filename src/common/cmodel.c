@@ -1073,21 +1073,9 @@ static void CMod_RerouteMap (void)
 	for (i = 0; i < 3; i++)
 		mins[i] = max(mins[i], 0);
 
-	Com_Printf("rerouting (%i %i %i) (%i %i %i)\n",
+	Com_DPrintf(DEBUG_PATHING, "rerouting (%i %i %i) (%i %i %i)\n",
 		(int)mins[0], (int)mins[1], (int)mins[2],
 		(int)maxs[0], (int)maxs[1], (int)maxs[2]);
-
-	/*
-	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
-		for (y = mins[1]; y <= maxs[1]; y++) {
-			for (x = mins[0]; x <= maxs[0]; x++) {
-				Com_Printf("%i,", reroute[size][y][x]);
-			}
-			Com_Printf("\n");
-		}
-		Com_Printf("\n");
-	}
-	*/
 
 	/* Floor pass */
 	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
@@ -1389,13 +1377,39 @@ void Grid_DumpWholeClientMap_f (void)
 
 
 /**
- * @brief  Dumps contents of the entire client map to console for inspection.
+ * @brief  Dumps contents of the entire server map to console for inspection.
  * @sa CL_InitLocal
  */
 void Grid_DumpWholeServerMap_f (void)
 {
 	Grid_DumpWholeMap(&svMap[0]);
 	Grid_DumpWholeMap(&svMap[1]);
+}
+
+
+/**
+ * @brief  Dumps contents of the entire client routing table to CSV file.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpClientRoutes_f (void)
+{
+	ipos3_t wpMins, wpMaxs;
+	VecToPos(map_min, wpMins);
+	VecToPos(map_max, wpMaxs);
+	RT_WriteCSVFiles(clMap, "ufoaiclient", wpMins, wpMaxs);
+}
+
+
+/**
+ * @brief  Dumps contents of the entire server routing table to CSV file.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpServerRoutes_f (void)
+{
+	ipos3_t wpMins, wpMaxs;
+	VecToPos(map_min, wpMins);
+	VecToPos(map_max, wpMaxs);
+	RT_WriteCSVFiles(svMap, "ufoaiserver", wpMins, wpMaxs);
 }
 
 

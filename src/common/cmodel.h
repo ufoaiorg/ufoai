@@ -65,6 +65,8 @@ extern struct pathing_s svPathMap, clPathMap;
 
 void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);
+void Grid_DumpClientRoutes_f (void);
+void Grid_DumpServerRoutes_f (void);
 void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max);
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
 void Grid_DumpDVTable(struct pathing_s *path);

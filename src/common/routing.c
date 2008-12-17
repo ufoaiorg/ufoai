@@ -290,8 +290,8 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	 */
 	while (qtrue) { /* Loop forever, we will exit if we hit the model bottom or find a valid floor. */
 		if (debugTrace)
-			Com_Printf("[(%i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
-				x, y, z, start[0], start[1], start[2], end[0], end[1], end[2]);
+			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
+				x, y, z, actor_size, start[0], start[1], start[2], end[0], end[1], end[2]);
 		tr = RT_COMPLETEBOXTRACE(start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
@@ -413,16 +413,22 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	for (i = fz; i <= cz; i++) {
 		/* Round up floor to keep feet out of model. */
 		RT_FLOOR(map, actor_size, x, y, i) = (int)ceil((bottom - i * UNIT_HEIGHT) / QUANT);
-		/* Com_Printf("floor(%i, %i, %i)=%i.\n", x, y, i, RT_FLOOR(map, size, x, y, i)); */
 		/* Round down ceiling to heep head out of model.  Also offset by floor and max at 255. */
 		RT_CEILING(map, actor_size, x, y, i) = (int)floor((top - i * UNIT_HEIGHT) / QUANT);
-		/* Com_Printf("ceil(%i, %i, %i)=%i.\n", x, y, i, RT_CEILING(map, size, x, y, i)); */
+		if (debugTrace) {
+			Com_Printf("floor(%i, %i, %i, %i)=%i.\n", x, y, i, actor_size, RT_FLOOR(map, actor_size, x, y, i));
+			Com_Printf("ceil(%i, %i, %i, %i)=%i.\n", x, y, i, actor_size, RT_CEILING(map, actor_size, x, y, i));
+		}
 	}
 
 	/* Also, update the floors of any filled cells immediately above the ceiling up to our original cell. */
 	for (i = cz + 1; i <= z; i++) {
 		RT_FLOOR(map, actor_size, x, y, i) = CELL_HEIGHT; /* There is no floor in this cell. */
 		RT_CEILING(map, actor_size, x, y, i) = 0; /* There is no ceiling, the true indicator of a filled cell. */
+		if (debugTrace) {
+			Com_Printf("floor(%i, %i, %i)=%i.\n", x, y, i, RT_FLOOR(map, actor_size, x, y, i));
+			Com_Printf("ceil(%i, %i, %i)=%i.\n", x, y, i, RT_CEILING(map, actor_size, x, y, i));
+		}
 	}
 
 	/* Return the lowest z coordinate that we updated floors for. */
@@ -793,7 +799,6 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 		if (debugTrace)
 			Com_Printf("RT_CONN for (%i, %i, %i) as:%i dir:%i = %i\n", x, y, i, actor_size, dir, RT_CONN(map, actor_size, x, y, i, dir));
 	}
-	/* RT_CONN(map, actor_size, ax, ay, z, dir) = ceil_p - floor_p; */
 
 	/*
 	 * Return the highest z coordinate scanned- cz if fz==cz, z==cz, or the floor in cz is negative.
@@ -804,4 +809,96 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	if (fz == cz || z == cz || RT_FLOOR(map, actor_size, x, y, cz) < 0)
 		return cz;
 	return cz - 1;
+}
+
+
+void RT_WriteCSVFiles(struct routing_s *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs){
+	char filename[MAX_OSPATH], ext[MAX_OSPATH];
+	FILE *handle;
+	int i, x, y, z;
+
+	/* An elevation files- dumps the floor and ceiling levels relative to each cell. */
+	for (i = 1; i <= ACTOR_MAX_SIZE; i++) {
+		strncpy(filename, baseFilename, sizeof(filename) - 1);
+		sprintf(ext, ".%i.elevation.csv", i);
+		COM_DefaultExtension(filename, sizeof(filename), ext);
+		handle = fopen(filename, "w");
+		if (!handle)
+			Sys_Error("Could not open file %s.", filename);
+		fprintf(handle, ",");
+		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
+			fprintf(handle, "x:%i,", x);
+		fprintf(handle, "\n");
+		for (z = maxs[2]; z >= mins[2]; z--) {
+			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
+				fprintf(handle, "z:%i  y:%i,", z ,y);
+				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
+					/* compare results */
+					fprintf(handle, "h:%i c:%i,", RT_FLOOR(map, i, x, y, z), RT_CEILING(map, i, x, y, z));
+				}
+				fprintf(handle, "\n");
+			}
+			fprintf(handle, "\n");
+		}
+		fclose(handle);
+	}
+
+	/* Output the walls/passage files. */
+	for (i = 1; i <= ACTOR_MAX_SIZE; i++) {
+		strncpy(filename, baseFilename, sizeof(filename) - 1);
+		sprintf(ext, ".%i.walls.csv", i);
+		COM_DefaultExtension(filename, sizeof(filename), ext);
+		handle = fopen(filename, "w");
+		if (!handle)
+			Sys_Error("Could not open file %s.", filename);
+		fprintf(handle, ",");
+		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
+			fprintf(handle, "x:%i,", x);
+		fprintf(handle, "\n");
+		for (z = maxs[2]; z >= mins[2]; z--) {
+			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
+				fprintf(handle, "z:%i  y:%i,", z ,y);
+				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
+					/* compare results */
+					fprintf(handle, "\"");
+
+					/* NW corner */
+					fprintf(handle, "%3i ", RT_CONN_NX_PY(map, i, x, y, z));
+
+					/* N side */
+					fprintf(handle, "%3i ", RT_CONN_PY(map, i, x, y, z));
+
+					/* NE corner */
+					fprintf(handle, "%3i ", RT_CONN_PX_PY(map, i, x, y, z));
+
+					fprintf(handle, "\n");
+
+					/* W side */
+					fprintf(handle, "%3i ", RT_CONN_NX(map, i, x, y, z));
+
+					/* Center - display floor height */
+					fprintf(handle, "_%+2i_ ", RT_FLOOR(map, i, x, y, z));
+
+					/* E side */
+					fprintf(handle, "%3i ", RT_CONN_PX(map, i, x, y, z));
+
+					fprintf(handle, "\n");
+
+					/* SW corner */
+					fprintf(handle, "%3i ", RT_CONN_NX_NY(map, i, x, y, z));
+
+					/* S side */
+					fprintf(handle, "%3i ", RT_CONN_NY(map, i, x, y, z));
+
+					/* SE corner */
+					fprintf(handle, "%3i ", RT_CONN_PX_NY(map, i, x, y, z));
+
+					fprintf(handle, "\",");
+				}
+				fprintf(handle, "\n");
+			}
+			fprintf(handle, "\n");
+		}
+		fclose(handle);
+	}
 }

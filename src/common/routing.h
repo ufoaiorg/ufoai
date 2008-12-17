@@ -122,3 +122,11 @@ GRID ORIENTED MOVEMENT AND SCANNING
 void Grid_DumpMap(struct routing_s *map, int size, int lx, int ly, int lz, int hx, int hy, int hz);
 void Grid_DumpWholeMap(routing_t *map);
 void RT_GetMapSize (vec3_t map_min, vec3_t map_max);
+
+/*
+==========================================================
+DEBUGGING CODE
+==========================================================
+*/
+
+void RT_WriteCSVFiles(struct routing_s *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
