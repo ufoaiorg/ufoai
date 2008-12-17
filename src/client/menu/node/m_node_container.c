@@ -376,7 +376,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
  * @brief Draws the free and usable inventory positions when dragging an item.
  * @note Only call this function in dragging mode
  */
-static void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
+static void MN_ContainerNodeDrawFreeSpace (inventory_t *inv, const menuNode_t *node)
 {
 	const objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
@@ -717,7 +717,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 	/* Draw free space if dragging - but not for idEquip */
 	if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
-		MN_InvDrawFree(menuInventory, node);
+		MN_ContainerNodeDrawFreeSpace(menuInventory, node);
 
 	/** @todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
 	/* Draw tooltip for weapon or ammo */
@@ -739,36 +739,21 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 }
 
 /**
- * @todo need to think about a common mechanism from drag-drop
- * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
+ * @brief Draw a preview of the DND item dropped into the node
+ * @todo function create from a merge; computation can be cleanup (maybe)
  */
-static void MN_ContainerNodeDraw (menuNode_t *node)
+static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
 {
 	vec2_t nodepos;
-	const invList_t *itemHover_temp;
 	qboolean exists;
 	int itemX = 0;
 	int itemY = 0;
-
-	/** @todo not very nice */
-	if (node->state) {
-		MN_SetItemHover(NULL);
-	}
-
-	/* node transparent but active */
-	if (node->color[3] < 0.001) {
-		return;
-	}
-
-	if (!menuInventory)
-		return;
+	int checkedTo = INV_DOES_NOT_FIT;
+	vec3_t org;
+	vec4_t color = { 1, 1, 1, 1 };
+	const vec3_t scale = { 3.5, 3.5, 3.5 };
 
 	MN_GetNodeAbsPos(node, nodepos);
-
-	itemHover_temp = MN_DrawContainerNode(node);
-
-	if (itemHover_temp)
-		MN_SetItemHover(itemHover_temp);
 
 	/** We calculate the position of the top-left corner of the dragged
 	 * item in oder to compensate for the centered-drawn cursor-item.
@@ -817,6 +802,87 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 			Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
 		}
 	}
+
+
+	/* draw the drop preview item */
+
+	/** Revert the rotation info for the cursor-item in case it
+	 * has been changed (can happen in rare conditions).
+	 * @todo Maybe we can later change this to reflect "manual" rotation?
+	 * @todo Check if this causes problems when letting the item snap back to its original location. */
+	dragInfo.item.rotated = qfalse;
+
+	/* Draw "preview" of placed (&rotated) item. */
+	if (dragInfo.toNode && !dragInfo.to->scroll) {
+		const int oldRotated = dragInfo.item.rotated;
+
+		checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY, dragInfo.ic);
+
+		if (checkedTo == INV_FITS_ONLY_ROTATED)
+			dragInfo.item.rotated = qtrue;
+
+		if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
+			vec2_t nodepos;
+
+			MN_GetNodeAbsPos(dragInfo.toNode, nodepos);
+			if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
+				VectorSet(org,
+					nodepos[0] + dragInfo.toNode->size[0] / 2.0,
+					nodepos[1] + dragInfo.toNode->size[1] / 2.0,
+					-40);
+			} else {
+				/* This is a "grid" container - we need to calculate the item-position
+				 * (on the screen) from stored placement in the container and the
+				 * calculated rotation info. */
+				if (dragInfo.item.rotated)
+					VectorSet(org,
+						nodepos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT,
+						nodepos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT,
+						-40);
+				else
+					VectorSet(org,
+						nodepos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT,
+						nodepos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT,
+						-40);
+			}
+			Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
+			MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);	/**< Draw preview item. */
+		}
+
+		dragInfo.item.rotated = oldRotated ;
+	}
+
+	dragInfo.isPlaceFound = checkedTo != 0;
+}
+
+/**
+ * @todo need to think about a common mechanism from drag-drop
+ * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
+ */
+static void MN_ContainerNodeDraw (menuNode_t *node)
+{
+	const invList_t *itemHover_temp;
+
+	/** @todo not very nice */
+	if (node->state) {
+		MN_SetItemHover(NULL);
+	}
+
+	/* node transparent but active */
+	if (node->color[3] < 0.001) {
+		return;
+	}
+
+	if (!menuInventory)
+		return;
+
+	itemHover_temp = MN_DrawContainerNode(node);
+
+	if (itemHover_temp)
+		MN_SetItemHover(itemHover_temp);
+
+	if (MN_DNDIsDestinationNode(node))
+		MN_ContainerNodeDrawDropPreview(node);
 }
 
 /**

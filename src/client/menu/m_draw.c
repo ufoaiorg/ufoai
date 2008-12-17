@@ -62,24 +62,40 @@ static void MN_DrawBorder (const menuNode_t *node)
 		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
 }
 
+static void MN_HilightNode (menuNode_t *node, vec4_t color)
+{
+	const int size = 20;
+	const int weigth = 5;
+	vec2_t pos;
+	MN_GetNodeAbsPos(node, pos);
+
+	R_ColorBlend(color);
+	R_FontDrawString("f_small_bold", ALIGN_LR, pos[0], pos[1], pos[0], pos[1], 200, 200, 0, node->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_ColorBlend(NULL);
+
+	/*R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, redalpha);*/
+	R_DrawFill(pos[0], pos[1], size, weigth, ALIGN_UL, color);
+	R_DrawFill(pos[0], pos[1], weigth, size, ALIGN_UL, color);
+	R_DrawFill(pos[0] + node->size[0] - size, pos[1]+node->size[1] - weigth, size, weigth, ALIGN_UL, color);
+	R_DrawFill(pos[0] + node->size[0] - weigth, pos[1]+node->size[1] - size, weigth, size, ALIGN_UL, color);
+}
+
 /**
  * @brief Prints active node names for debugging
  */
 static void MN_DrawDebugMenuNodeNames (void)
 {
-	static vec4_t red = {1, 0.0, 0.0, 1.0};
+	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
+	static vec4_t green = {0.0, 0.5, 0.0, 1.0};
 	/*static vec4_t redalpha = {1, 0.0, 0.0, 0.2};*/
 	static vec4_t white = {1, 1.0, 1.0, 1.0};
-	menuNode_t *node = MN_GetHoveredNode();
-	vec2_t pos;
-	int size = 20;
-	int weigth = 5;
+	menuNode_t *hoveredNode = MN_GetHoveredNode();
 	int sp;
 	int posy = 0;
 
 	for (sp = 0; sp < mn.menuStackPos; sp++) {
 		menu_t *menu = mn.menuStack[sp];
-		if (node && node->menu == menu)
+		if (hoveredNode && hoveredNode->menu == menu)
 			R_ColorBlend(red);
 		else
 			R_ColorBlend(white);
@@ -88,20 +104,10 @@ static void MN_DrawDebugMenuNodeNames (void)
 	}
 	R_ColorBlend(NULL);
 
-	if (node == NULL)
-		return;
-
-	MN_GetNodeAbsPos(node, pos);
-
-	R_ColorBlend(red);
-	R_FontDrawString("f_small_bold", ALIGN_LR, pos[0], pos[1], pos[0], pos[1], 200, 200, 0, node->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
-	R_ColorBlend(NULL);
-
-	/*R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, redalpha);*/
-	R_DrawFill(pos[0], pos[1], size, weigth, ALIGN_UL, red);
-	R_DrawFill(pos[0], pos[1], weigth, size, ALIGN_UL, red);
-	R_DrawFill(pos[0] + node->size[0] - size, pos[1]+node->size[1] - weigth, size, weigth, ALIGN_UL, red);
-	R_DrawFill(pos[0] + node->size[0] - weigth, pos[1]+node->size[1] - size, weigth, size, ALIGN_UL, red);
+	if (dragInfo.toNode)
+		MN_HilightNode(dragInfo.toNode, green);
+	if (hoveredNode != NULL)
+		MN_HilightNode(hoveredNode, red);
 }
 
 

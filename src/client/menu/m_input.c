@@ -196,22 +196,14 @@ static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
 }
 
 /**
- * @brief Is called everytime the mouse position change
+ * @brief Return the first visible node at a possition
  */
-void MN_MouseMove (int x, int y)
+menuNode_t *MN_GetNodeByPosition (int x, int y)
 {
 	menu_t *menu;
 	int sp;
 	menuNode_t *node;
-
-	/* send the captured move mouse event */
-	if (capturedNode) {
-		if (capturedNode->behaviour->capturedMouseMove)
-			capturedNode->behaviour->capturedMouseMove(capturedNode, x, y);
-		return;
-	}
-
-	MN_FocusRemove();
+	menuNode_t *find;
 
 	/* find the first menu under the mouse */
 	menu = NULL;
@@ -231,17 +223,36 @@ void MN_MouseMove (int x, int y)
 	}
 
 	/* find the first node under the mouse (last of the node list) */
-	hoveredNode = NULL;
+	find = NULL;
 	if (menu) {
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstChild; node; node = node->next) {
 			if (node->invis || node->behaviour->isVirtual || !MN_CheckCondition(node))
 				continue;
 			if (MN_IsInnerNode(node, x, y)) {
-				hoveredNode = node;
+				find = node;
 			}
 		}
 	}
+
+	return find;
+}
+
+/**
+ * @brief Is called everytime the mouse position change
+ */
+void MN_MouseMove (int x, int y)
+{
+	/* send the captured move mouse event */
+	if (capturedNode) {
+		if (capturedNode->behaviour->capturedMouseMove)
+			capturedNode->behaviour->capturedMouseMove(capturedNode, x, y);
+		return;
+	}
+
+	MN_FocusRemove();
+
+	hoveredNode = MN_GetNodeByPosition(x, y);
 
 	/* update nodes: send 'in' and 'out' event */
 	if (oldHoveredNode != hoveredNode) {

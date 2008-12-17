@@ -45,6 +45,11 @@ typedef struct dragInfo_s {
 	int fromAbsoluteX;				/**< Where the drag start */
 	int fromAbsoluteY;				/**< Where the drag start */
 
+	struct menuNode_s *toNode;		/**< Current hovered node */
+
+	qboolean isPlaceFound;			/**< Have we find a place for the current object */
+
+
 	/* bellow that, nothing is generic :/ */
 
 	item_t item;	/**< The item that is currently dragged. */
@@ -55,7 +60,6 @@ typedef struct dragInfo_s {
 	int fromY;		/**< The Y position in the container the item was/is located. */
 
 	/* The "to" variables are only used in cl_screen.c to draw the preview. */
-	const struct menuNode_s *toNode;
 	const struct invDef_s *to;
 	int toX;
 	int toY;
@@ -64,7 +68,12 @@ typedef struct dragInfo_s {
 extern dragInfo_t dragInfo;
 
 void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
+
+/*  getter */
 qboolean MN_DNDIsDragging(void);
+qboolean MN_DNDIsDestinationNode(struct menuNode_s *node);
+
+/* setter */
 void MN_DNDStart(struct menuNode_s *from);
 void MN_DNDDragItem(item_t *item, struct invList_s *fromInventory);
 void MN_DNDFromContainer(struct invDef_s *container, int ownFromX, int ownFromY);
