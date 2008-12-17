@@ -42,18 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
-static const invList_t *itemHover;
-
-/**
- * @brief assign an hover item for the draw pipeline
- * @todo think better about this mecanism
- * @sa itemHover
- */
-static void MN_SetItemHover (const invList_t *item)
-{
-	itemHover = item;
-}
-
 /**
  * @brief Update display of scroll buttons.
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
@@ -719,22 +707,6 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
 		MN_ContainerNodeDrawFreeSpace(menuInventory, node);
 
-	/** @todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
-	/* Draw tooltip for weapon or ammo */
-	if (MN_DNDIsDragging() && node->state && mn_show_tooltips->integer) {
-		assert(node->container);
-
-		/** Find out where the mouse is. */
-		if (node->container->scroll) {
-			return MN_GetItemFromScrollableContainer(node, mousePosX, mousePosY, NULL, NULL);
-		} else {
-			return Com_SearchInInventory(menuInventory,
-				node->container,
-				(mousePosX - nodepos[0]) / C_UNIT,
-				(mousePosY - nodepos[1]) / C_UNIT);
-		}
-	}
-
 	return NULL;
 }
 
@@ -861,17 +833,11 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
  */
 static void MN_ContainerNodeDraw (menuNode_t *node)
 {
-	const invList_t *itemHover_temp = NULL;
-
 	if (!menuInventory)
 		return;
 
 	if (node->color[3] > 0.001) {
-		itemHover_temp = MN_DrawContainerNode(node);
-	}
-
-	if (node->state) {
-		MN_SetItemHover(itemHover_temp);
+		MN_DrawContainerNode(node);
 	}
 
 	if (MN_DNDIsDestinationNode(node))
@@ -883,12 +849,26 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
  * @param[in] node Node we request to draw tooltip
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
- * @todo If we can fast request container, here we must compute everything, without need of "draw function" and "itemHover var"
  * @todo Why "MAX_VAR * 2"? MAX_VAR is already very big for tooltip no?
  */
 static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 {
 	static char tooltiptext[MAX_VAR * 2];
+	const invList_t *itemHover;
+	vec2_t nodepos;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	/** Find out where the mouse is. */
+	if (node->container->scroll) {
+		itemHover = MN_GetItemFromScrollableContainer(node, x, y, NULL, NULL);
+	} else {
+		itemHover = Com_SearchInInventory(menuInventory,
+			node->container,
+			(x - nodepos[0]) / C_UNIT,
+			(y - nodepos[1]) / C_UNIT);
+	}
+
 	if (itemHover) {
 		const int itemToolTipWidth = 250;
 
@@ -1171,7 +1151,6 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 				node->container->id, dragInfo.toX, dragInfo.toY);
 
 			MN_DNDStop();
-			MN_SetItemHover(NULL);
 			return;
 		}
 
@@ -1201,7 +1180,6 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 				dragInfo.from, fItem);
 		}
 		MN_DNDStop();
-		MN_SetItemHover(NULL);
 	}
 
 	/* Update display of scroll buttons. */

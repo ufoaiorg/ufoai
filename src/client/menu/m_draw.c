@@ -219,7 +219,7 @@ void MN_DrawMenus (void)
 	}
 
 	/* draw tooltip */
-	if (hoveredNode && tooltipVisible) {
+	if (hoveredNode && tooltipVisible && mouseSpace != MS_DRAGITEM) {
 		if (hoveredNode->behaviour->drawTooltip) {
 			hoveredNode->behaviour->drawTooltip(hoveredNode, mousePosX, mousePosY);
 		} else {
