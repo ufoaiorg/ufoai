@@ -66,6 +66,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/sidebar/sidebar.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entitylist.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \
@@ -75,8 +76,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
-	\
-	$(RADIANT_BASE)/radiant/surfaceinspector/surfaceinspector.cpp \
 	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
