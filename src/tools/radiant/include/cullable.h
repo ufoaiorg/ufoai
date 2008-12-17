@@ -38,6 +38,8 @@ typedef EnumeratedValue<VolumeIntersection> VolumeIntersectionValue;
 class VolumeTest {
 public:
 
+	virtual ~VolumeTest(){}
+
 	/// \brief Returns true if \p point intersects volume.
 	virtual bool TestPoint(const Vector3& point) const = 0;
 	/// \brief Returns true if \p segment intersects volume.
@@ -61,6 +63,8 @@ public:
 class Cullable {
 public:
 	STRING_CONSTANT(Name, "Cullable");
+
+	virtual ~Cullable(){}
 
 	virtual VolumeIntersectionValue intersectVolume(const VolumeTest& test, const Matrix4& localToWorld) const = 0;
 };

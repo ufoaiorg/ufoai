@@ -161,6 +161,7 @@ float distance_for_axis(const Vector3& a, const Vector3& b, const Vector3& axis)
 
 class Manipulatable {
 public:
+	virtual ~Manipulatable(){}
 	virtual void Construct(const Matrix4& device2manip, const float x, const float y) = 0;
 	virtual void Transform(const Matrix4& manip2object, const Matrix4& device2manip, const float x, const float y) = 0;
 };
@@ -174,6 +175,7 @@ void transform_local2object(Matrix4& object, const Matrix4& local, const Matrix4
 
 class Rotatable {
 public:
+	virtual ~Rotatable(){}
 	virtual void rotate(const Quaternion& rotation) = 0;
 };
 
@@ -235,6 +237,7 @@ void translation_local2object(Vector3& object, const Vector3& local, const Matri
 
 class Translatable {
 public:
+	virtual ~Translatable(){}
 	virtual void translate(const Vector3& translation) = 0;
 };
 
@@ -291,6 +294,7 @@ public:
 
 class Scalable {
 public:
+	virtual ~Scalable(){}
 	virtual void scale(const Vector3& scaling) = 0;
 };
 
@@ -711,6 +715,7 @@ inline void draw_semicircle(const std::size_t segments, const float radius, Poin
 
 class Manipulator {
 public:
+	virtual ~Manipulator(){}
 	virtual Manipulatable* GetManipulatable() = 0;
 	virtual void testSelect(const View& view, const Matrix4& pivot2world) {
 	}

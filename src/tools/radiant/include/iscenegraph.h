@@ -72,12 +72,15 @@ public:
 
 	class Walker {
 	public:
+		virtual ~Walker(){}
 		/// \brief Called before traversing the first child-instance of 'instance'. If the return value is false, the children of the current instance are not traversed.
 		virtual bool pre(const Path& path, Instance& instance) const = 0;
 		/// \brief Called after traversing the last child-instance of 'instance'.
 		virtual void post(const Path& path, Instance& instance) const {
 		}
 	};
+
+	virtual ~Graph() {}
 
 	/// \brief Returns the root-node of the graph.
 	virtual Node& root() = 0;
@@ -117,6 +120,8 @@ public:
 
 	class Observer {
 	public:
+		virtual ~Observer(){}
+
 		/// \brief Called when a node is added to the container.
 		virtual void insert(Node& node) = 0;
 		/// \brief Called when a node is removed from the container.
@@ -125,12 +130,17 @@ public:
 
 	class Walker {
 	public:
+		virtual ~Walker(){}
+
 		/// \brief Called before traversing the first child-node of 'node'. If the return value is false, the children of the current node are not traversed.
 		virtual bool pre(Node& node) const = 0;
 		/// \brief Called after traversing the last child-node of 'node'.
 		virtual void post(Node& node) const {
 		}
 	};
+
+	virtual ~Traversable(){}
+
 	/// \brief Adds a node to the container.
 	virtual void insert(Node& node) = 0;
 	/// \brief Removes a node from the container.
@@ -147,6 +157,8 @@ public:
 
 	class Observer {
 	public:
+		virtual ~Observer(){}
+
 		/// \brief Called when an instance is added to the container.
 		virtual void insert(scene::Instance* instance) = 0;
 		/// \brief Called when an instance is removed from the container.
@@ -155,8 +167,12 @@ public:
 
 	class Visitor {
 	public:
+		virtual ~Visitor(){}
+
 		virtual void visit(Instance& instance) const = 0;
 	};
+
+	virtual ~Instantiable(){}
 
 	/// \brief Returns a new instance uniquely identified by 'path'.
 	virtual scene::Instance* create(const scene::Path& path, scene::Instance* parent) = 0;
@@ -171,6 +187,8 @@ public:
 class Cloneable {
 public:
 	STRING_CONSTANT(Name, "scene::Cloneable");
+
+	virtual ~Cloneable(){}
 
 	/// \brief Returns a copy of itself.
 	virtual scene::Node& clone() const = 0;

@@ -62,6 +62,7 @@ public:
 
 	class Visitor {
 	public:
+		virtual ~Visitor(){}
 		virtual void visit(const char* name) = 0;
 	};
 

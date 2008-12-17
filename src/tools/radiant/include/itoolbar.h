@@ -34,6 +34,8 @@ public:
 		eRadioButton,
 	};
 
+	virtual ~IToolbarButton(){}
+
 	virtual const char* getImage() const = 0;
 	virtual const char* getText() const = 0;
 	virtual const char* getTooltip() const = 0;

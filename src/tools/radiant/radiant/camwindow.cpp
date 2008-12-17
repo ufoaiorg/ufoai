@@ -1577,6 +1577,7 @@ void CamWnd_SetMode(camera_draw_mode mode) {
 class CameraModel {
 public:
 	STRING_CONSTANT(Name, "CameraModel");
+	virtual ~CameraModel(){}
 	virtual void setCameraView(CameraView* view, const Callback& disconnect) = 0;
 };
 

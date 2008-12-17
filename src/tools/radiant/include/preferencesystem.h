@@ -33,6 +33,8 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "preferences");
 
+	virtual ~PreferenceSystem(){}
+
 	virtual void registerPreference(const char* name, const StringImportCallback& importer, const StringExportCallback& exporter) = 0;
 };
 

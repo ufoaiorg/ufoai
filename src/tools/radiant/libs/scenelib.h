@@ -50,6 +50,8 @@ class ComponentSelectionTestable {
 public:
 	STRING_CONSTANT(Name, "ComponentSelectionTestable");
 
+	virtual ~ComponentSelectionTestable(){}
+
 	virtual bool isSelectedComponents() const = 0;
 	virtual void setSelectedComponents(bool select, SelectionSystem::EComponentMode mode) = 0;
 	virtual void testSelectComponents(Selector& selector, SelectionTest& test, SelectionSystem::EComponentMode mode) = 0;
@@ -59,6 +61,7 @@ class ComponentEditable {
 public:
 	STRING_CONSTANT(Name, "ComponentEditable");
 
+	virtual ~ComponentEditable(){}
 	virtual const AABB& getSelectedComponentsBounds() const = 0;
 };
 
@@ -66,6 +69,7 @@ class ComponentSnappable {
 public:
 	STRING_CONSTANT(Name, "ComponentSnappable");
 
+	virtual ~ComponentSnappable(){}
 	virtual void snapComponents(float snap) = 0;
 };
 
@@ -73,6 +77,7 @@ class Bounded {
 public:
 	STRING_CONSTANT(Name, "Bounded");
 
+	virtual ~Bounded(){}
 	virtual const AABB& localAABB() const = 0;
 };
 
@@ -856,6 +861,7 @@ public:
 
 class Counter {
 public:
+	virtual ~Counter(){}
 	virtual void increment() = 0;
 	virtual void decrement() = 0;
 };

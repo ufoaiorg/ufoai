@@ -32,6 +32,9 @@ class Namespace {
 public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "namespace");
+
+	virtual ~Namespace(){}
+
 	virtual void attach(const NameCallback& setName, const NameCallbackCallback& attachObserver) = 0;
 	virtual void detach(const NameCallback& setName, const NameCallbackCallback& detachObserver) = 0;
 	virtual void makeUnique(const char* name, const NameCallback& setName) const = 0;
@@ -40,6 +43,8 @@ public:
 class Namespaced {
 public:
 	STRING_CONSTANT(Name, "Namespaced");
+
+	virtual ~Namespaced(){}
 
 	virtual void setNamespace(Namespace& space) = 0;
 };

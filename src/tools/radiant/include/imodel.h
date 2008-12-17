@@ -34,6 +34,8 @@ class ModelLoader {
 public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "model");
+
+	virtual ~ModelLoader(){}
 	virtual scene::Node& loadModel(ArchiveFile& file) = 0;
 };
 

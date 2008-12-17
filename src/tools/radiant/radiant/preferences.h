@@ -108,6 +108,7 @@ typedef Callback1<PreferencesPage&> PreferencesPageCallback;
 
 class PreferenceGroup {
 public:
+	virtual ~PreferenceGroup(){}
 	virtual PreferencesPage createPage(const char* treeName, const char* frameName) = 0;
 };
 

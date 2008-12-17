@@ -192,6 +192,7 @@ class VolumeTest;
 
 class SelectionTest {
 public:
+	virtual ~SelectionTest(){}
 	virtual void BeginMesh(const Matrix4& localToWorld, bool twoSided = false) = 0;
 	virtual const VolumeTest& getVolume() const = 0;
 	virtual const Vector3& getNear() const = 0;
@@ -210,6 +211,7 @@ class Selectable;
 
 class Selector {
 public:
+	virtual ~Selector(){}
 	virtual void pushSelectable(Selectable& selectable) = 0;
 	virtual void popSelectable() = 0;
 	virtual void addIntersection(const SelectionIntersection& intersection) = 0;
@@ -233,6 +235,7 @@ class SelectionTestable {
 public:
 	STRING_CONSTANT(Name, "SelectionTestable");
 
+	virtual ~SelectionTestable(){}
 	virtual void testSelect(Selector& selector, SelectionTest& test) = 0;
 };
 
@@ -246,6 +249,7 @@ typedef Callback1<const Plane3&> PlaneCallback;
 
 class SelectedPlanes {
 public:
+	virtual ~SelectedPlanes(){}
 	virtual bool contains(const Plane3& plane) const = 0;
 };
 
@@ -253,6 +257,7 @@ class PlaneSelectable {
 public:
 	STRING_CONSTANT(Name, "PlaneSelectable");
 
+	virtual ~PlaneSelectable(){}
 	virtual void selectPlanes(Selector& selector, SelectionTest& test, const PlaneCallback& selectedPlaneCallback) = 0;
 	virtual void selectReversedPlanes(Selector& selector, const SelectedPlanes& selectedPlanes) = 0;
 };

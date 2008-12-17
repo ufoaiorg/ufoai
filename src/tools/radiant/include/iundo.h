@@ -36,17 +36,20 @@ public:
 
 class Undoable {
 public:
+	virtual ~Undoable() {}
 	virtual UndoMemento* exportState() const = 0;
 	virtual void importState(const UndoMemento* state) = 0;
 };
 
 class UndoObserver {
 public:
+	virtual ~UndoObserver() {}
 	virtual void save(Undoable* undoable) = 0;
 };
 
 class UndoTracker {
 public:
+	virtual ~UndoTracker() {}
 	virtual void clear() = 0;
 	virtual void begin() = 0;
 	virtual void undo() = 0;
@@ -58,6 +61,7 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "undo");
 
+	virtual ~UndoSystem() {}
 	virtual UndoObserver* observer(Undoable* undoable) = 0;
 	virtual void release(Undoable* undoable) = 0;
 

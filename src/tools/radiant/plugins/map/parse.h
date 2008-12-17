@@ -28,6 +28,7 @@ class BrushCreator;
 
 class PrimitiveParser {
 public:
+	virtual ~PrimitiveParser(){}
 	virtual scene::Node& parsePrimitive(Tokeniser& tokeniser) const = 0;
 };
 

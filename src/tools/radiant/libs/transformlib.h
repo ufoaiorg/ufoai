@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class TransformNode {
 public:
 	STRING_CONSTANT(Name, "TransformNode");
+	virtual ~TransformNode(){}
 	/// \brief Returns the transform which maps the node's local-space into the local-space of its parent node.
 	virtual const Matrix4& localToParent() const  = 0;
 };
@@ -94,6 +95,8 @@ const TransformModifierType TRANSFORM_COMPONENT = true;
 class Transformable {
 public:
 	STRING_CONSTANT(Name, "Transformable");
+
+	virtual ~Transformable() {}
 
 	virtual void setType(TransformModifierType type) = 0;
 	virtual void setTranslation(const Translation& value) = 0;

@@ -31,6 +31,7 @@ void GlobalShortcuts_reportUnregistered();
 
 class CommandVisitor {
 public:
+	virtual ~CommandVisitor(){}
 	virtual void visit(const char* name, Accelerator& accelerator) = 0;
 };
 

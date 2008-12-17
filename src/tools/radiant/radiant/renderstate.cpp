@@ -976,7 +976,7 @@ class OpenGLStateMap : public OpenGLStateLibrary {
 	typedef std::map<CopiedString, OpenGLState> States;
 	States m_states;
 public:
-	~OpenGLStateMap() {
+	virtual ~OpenGLStateMap() {
 		ASSERT_MESSAGE(m_states.empty(), "OpenGLStateMap::~OpenGLStateMap: not empty");
 	}
 

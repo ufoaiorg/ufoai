@@ -39,6 +39,7 @@ public:
 
 class IFileTypeList {
 public:
+	virtual ~IFileTypeList() {}
 	virtual void addType(const char* moduleName, filetype_t type) = 0;
 };
 
@@ -47,6 +48,7 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "filetypes");
 
+	virtual ~IFileTypeRegistry() {}
 	virtual void addType(const char* moduleType, const char* moduleName, filetype_t type) = 0;
 	virtual void getTypeList(const char* moduleType, IFileTypeList* typelist) = 0;
 };

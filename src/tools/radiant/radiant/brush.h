@@ -215,6 +215,7 @@ inline void brush_check_shader(const char* name) {
 
 class FaceShaderObserver {
 public:
+	virtual ~FaceShaderObserver(){}
 	virtual void realiseShader() = 0;
 	virtual void unrealiseShader() = 0;
 };
@@ -661,6 +662,7 @@ class Face;
 
 class FaceFilter {
 public:
+	virtual ~FaceFilter(){}
 	virtual bool filter(const Face& face) const = 0;
 };
 
@@ -675,6 +677,7 @@ extern bool g_brush_texturelock_enabled;
 
 class FaceObserver {
 public:
+	virtual ~FaceObserver(){}
 	virtual void planeChanged() = 0;
 	virtual void connectivityChanged() = 0;
 	virtual void shaderChanged() = 0;
@@ -1158,6 +1161,7 @@ typedef std::vector<Brush*> brush_vector_t;
 
 class BrushFilter {
 public:
+	virtual ~BrushFilter(){}
 	virtual bool filter(const Brush& brush) const = 0;
 };
 
@@ -1250,6 +1254,7 @@ public:
 
 class BrushObserver {
 public:
+	virtual ~BrushObserver(){}
 	virtual void reserve(std::size_t size) = 0;
 	virtual void clear() = 0;
 	virtual void push_back(Face& face) = 0;
@@ -1268,6 +1273,7 @@ public:
 
 class BrushVisitor {
 public:
+	virtual ~BrushVisitor(){}
 	virtual void visit(Face& face) const = 0;
 };
 
@@ -2601,6 +2607,7 @@ public:
 
 class BrushInstanceVisitor {
 public:
+	virtual ~BrushInstanceVisitor(){}
 	virtual void visit(FaceInstance& face) const = 0;
 };
 

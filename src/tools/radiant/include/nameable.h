@@ -31,6 +31,8 @@ class Nameable {
 public:
 	STRING_CONSTANT(Name, "Nameable");
 
+	virtual ~Nameable(){}
+
 	virtual const char* name() const = 0;
 	virtual void attach(const NameCallback& callback) = 0;
 	virtual void detach(const NameCallback& callback) = 0;

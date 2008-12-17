@@ -72,6 +72,8 @@ public:
 
 class OpenGLStateLibrary {
 public:
+	virtual ~OpenGLStateLibrary(){}
+
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "openglshaderlibrary");
 

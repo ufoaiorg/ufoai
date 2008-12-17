@@ -905,6 +905,7 @@ void Map_Reload (void)
 
 class Excluder {
 public:
+	virtual ~Excluder(){}
 	virtual bool excluded(scene::Node& node) const = 0;
 };
 

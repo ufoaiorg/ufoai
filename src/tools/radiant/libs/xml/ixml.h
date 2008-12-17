@@ -27,11 +27,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class XMLAttrVisitor {
 public:
+	virtual ~XMLAttrVisitor(){}
 	virtual void visit(const char* name, const char* value) = 0;
 };
 
 class XMLElement {
 public:
+	virtual ~XMLElement(){}
 	virtual const char* name() const = 0;
 	virtual const char* attribute(const char* name) const = 0;
 	virtual void forEachAttribute(XMLAttrVisitor& visitor) const = 0;
@@ -48,6 +50,7 @@ public:
 class XMLExporter {
 public:
 	STRING_CONSTANT(Name, "XMLExporter");
+	virtual ~XMLExporter(){}
 
 	virtual void exportXML(XMLImporter& importer) = 0;
 };

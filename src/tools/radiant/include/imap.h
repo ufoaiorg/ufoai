@@ -32,6 +32,8 @@ class MapImporter {
 public:
 	STRING_CONSTANT(Name, "MapImporter");
 
+	virtual ~MapImporter(){}
+
 	virtual bool importTokens(Tokeniser& tokeniser) = 0;
 };
 
@@ -39,6 +41,8 @@ public:
 class MapExporter {
 public:
 	STRING_CONSTANT(Name, "MapExporter");
+
+	virtual ~MapExporter(){}
 
 	virtual void exportTokens(TokenWriter& writer) const = 0;
 };
@@ -58,6 +62,8 @@ class MapFormat {
 public:
 	INTEGER_CONSTANT(Version, 2);
 	STRING_CONSTANT(Name, "map");
+
+	virtual ~MapFormat(){}
 
 	/// \brief Read a map graph into \p root from \p outputStream, using \p entityTable to create entities.
 	virtual void readGraph(scene::Node& root, TextInputStream& inputStream, EntityCreator& entityTable) const = 0;

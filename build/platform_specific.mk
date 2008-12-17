@@ -53,7 +53,6 @@ ifeq ($(TARGET_OS),darwin)
 	SHARED_LDFLAGS=-dynamiclib
 	CFLAGS+= -D_BSD_SOURCE -D_XOPEN_SOURCE
 	SERVER_LIBS+=
-	RADIANT_LIBS+=-lglx
 
 	ifeq ($(TARGET_CPU),universal)
 		CFLAGS_M_OPTS=

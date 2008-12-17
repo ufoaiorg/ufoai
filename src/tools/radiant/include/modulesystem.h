@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class Module {
 public:
+	virtual ~Module(){}
 	virtual void capture() = 0;
 	virtual void release() = 0;
 	virtual void* getTable() = 0;
@@ -51,8 +52,11 @@ class ModuleServer {
 public:
 	class Visitor {
 	public:
+		virtual ~Visitor(){}
 		virtual void visit(const char* name, Module& module) const = 0;
 	};
+
+	virtual ~ModuleServer(){}
 
 	virtual void setError(bool error) = 0;
 	virtual bool getError() const = 0;
@@ -101,8 +105,10 @@ inline void initialiseModule(ModuleServer& server) {
 template<typename Type>
 class Modules {
 public:
+	virtual ~Modules(){}
 	class Visitor {
 	public:
+		virtual ~Visitor(){}
 		virtual void visit(const char* name, const Type& table) const = 0;
 	};
 

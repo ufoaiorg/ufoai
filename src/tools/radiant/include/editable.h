@@ -35,6 +35,8 @@ class Editable {
 public:
 	STRING_CONSTANT(Name, "Editable");
 
+	virtual ~Editable(){}
+
 	virtual const Matrix4& getLocalPivot() const = 0;
 };
 
@@ -45,6 +47,8 @@ inline Editable* Node_getEditable(scene::Node& node) {
 class Snappable {
 public:
 	STRING_CONSTANT(Name, "Snappable");
+
+	virtual ~Snappable(){}
 
 	virtual void snapto(float snap) = 0;
 };

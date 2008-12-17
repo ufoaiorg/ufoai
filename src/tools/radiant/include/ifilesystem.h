@@ -43,6 +43,8 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "VFS");
 
+	virtual ~VirtualFileSystem(){}
+
 	/// \brief Adds a root search \p path.
 	/// Called before \c initialise.
 	virtual void initDirectory(const char *path) = 0;

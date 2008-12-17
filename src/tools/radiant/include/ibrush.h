@@ -51,6 +51,7 @@ class BrushCreator {
 public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "brush");
+	virtual ~BrushCreator(){}
 	virtual scene::Node& createBrush() = 0;
 	virtual bool useAlternativeTextureProjection() const = 0;
 	virtual void Brush_forEachFace(scene::Node& brush, const BrushFaceDataCallback& callback) = 0;

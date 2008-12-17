@@ -31,6 +31,7 @@ class Entity;
 
 class EntityFilter {
 public:
+	virtual ~EntityFilter(){}
 	virtual bool filter(const Entity& entity) const = 0;
 };
 

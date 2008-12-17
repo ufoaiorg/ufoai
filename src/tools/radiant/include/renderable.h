@@ -58,6 +58,8 @@ public:
 		eFullMaterials,
 	};
 
+	virtual ~Renderer(){}
+
 	virtual void PushState() = 0;
 	virtual void PopState() = 0;
 	virtual void SetState(Shader* state, EStyle mode) = 0;
@@ -77,6 +79,8 @@ class VolumeTest;
 class Renderable {
 public:
 	STRING_CONSTANT(Name, "Renderable");
+
+	virtual ~Renderable(){}
 
 	/** Submit renderable geometry when rendering takes place in Solid mode. */
 	virtual void renderSolid(Renderer& renderer, const VolumeTest& volume) const = 0;

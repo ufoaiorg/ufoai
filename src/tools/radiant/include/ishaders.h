@@ -60,6 +60,7 @@ public:
 
 class ShaderLayer {
 public:
+	virtual ~ShaderLayer(){}
 	virtual qtexture_t* texture() const = 0;
 	virtual BlendFunc blendFunc() const = 0;
 	virtual bool clampToBorder() const = 0;
@@ -83,6 +84,7 @@ public:
 		eCullNone,
 		eCullBack,
 	};
+	virtual ~IShader(){}
 	// Increment the number of references to this object
 	virtual void IncRef() = 0;
 	// Decrement the reference count
@@ -125,6 +127,7 @@ public:
 	// NOTE: shader and texture names used must be full path.
 	// Shaders usable as textures have prefix equal to getTexturePrefix()
 
+	virtual ~ShaderSystem(){}
 	virtual void realise() = 0;
 	virtual void unrealise() = 0;
 	virtual void refresh() = 0;

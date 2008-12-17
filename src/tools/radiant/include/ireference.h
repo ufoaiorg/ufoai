@@ -32,6 +32,7 @@ class ModuleObserver;
 
 class Resource {
 public:
+	virtual ~Resource() {}
 	virtual bool load() = 0;
 	virtual bool save() = 0;
 	virtual void flush() = 0;
@@ -51,6 +52,7 @@ public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "reference");
 
+	virtual ~ReferenceCache(){}
 	virtual Resource* capture(const char* path) = 0;
 	virtual void release(const char* path) = 0;
 

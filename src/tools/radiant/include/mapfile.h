@@ -31,6 +31,7 @@ class MapFile {
 public:
 	STRING_CONSTANT(Name, "MapFile");
 
+	virtual ~MapFile(){}
 	virtual void save() = 0;
 	virtual bool saved() const = 0;
 	virtual void changed() = 0;

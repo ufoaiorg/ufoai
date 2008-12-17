@@ -33,6 +33,7 @@ typedef Callback1<const char*> KeyObserver;
 
 class EntityKeyValue {
 public:
+	virtual ~EntityKeyValue(){}
 	virtual const char* c_str() const = 0;
 	virtual void assign(const char* other) = 0;
 	virtual void attach(const KeyObserver& observer) = 0;
@@ -45,6 +46,7 @@ public:
 
 	class Observer {
 	public:
+		virtual ~Observer(){}
 		virtual void insert(const char* key, EntityKeyValue& value) = 0;
 		virtual void erase(const char* key, EntityKeyValue& value) = 0;
 		virtual void clear() { };
@@ -52,8 +54,11 @@ public:
 
 	class Visitor {
 	public:
+		virtual ~Visitor(){}
 		virtual void visit(const char* key, const char* value) = 0;
 	};
+
+	virtual ~Entity(){}
 
 	virtual const EntityClass& getEntityClass() const = 0;
 	virtual void forEachKeyValue(Visitor& visitor) const = 0;
@@ -104,6 +109,8 @@ class EntityCreator {
 public:
 	INTEGER_CONSTANT(Version, 2);
 	STRING_CONSTANT(Name, "entity");
+
+	virtual ~EntityCreator(){}
 
 	virtual scene::Node& createEntity(EntityClass* eclass) = 0;
 

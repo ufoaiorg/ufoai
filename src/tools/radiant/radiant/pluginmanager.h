@@ -46,6 +46,7 @@ public:
 
 class PluginsVisitor {
 public:
+	virtual ~PluginsVisitor(){}
 	virtual void visit(IPlugIn& plugin) = 0;
 };
 

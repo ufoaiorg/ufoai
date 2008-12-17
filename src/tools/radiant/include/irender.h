@@ -59,6 +59,7 @@ class Shader;
 
 class RendererLight {
 public:
+	virtual ~RendererLight(){}
 	virtual Shader* getShader() const = 0;
 	virtual const Vector3& colour() const = 0;
 	virtual bool isProjected() const = 0;
@@ -66,6 +67,7 @@ public:
 
 class LightCullable {
 public:
+	virtual ~LightCullable(){}
 	virtual void insertLight(const RendererLight& light) {
 	}
 	virtual void clearLights() {
@@ -79,6 +81,7 @@ typedef Callback1<const RendererLight&> RendererLightCallback;
 
 class LightList {
 public:
+	virtual ~LightList(){}
 	virtual void evaluateLights() const = 0;
 	virtual void lightsChanged() const = 0;
 	virtual void forEachLight(const RendererLightCallback& callback) const = 0;
@@ -90,6 +93,7 @@ const int c_attr_Binormal = 4;
 
 class OpenGLRenderable {
 public:
+	virtual ~OpenGLRenderable(){}
 	virtual void render(RenderStateFlags state) const = 0;
 };
 
@@ -101,6 +105,7 @@ class ModuleObserver;
 
 class Shader {
 public:
+	virtual ~Shader(){}
 	virtual void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview, const LightList* lights = 0) = 0;
 	virtual void incrementUsed() = 0;
 	virtual void decrementUsed() = 0;
@@ -114,6 +119,8 @@ class ShaderCache {
 public:
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "renderstate");
+
+	virtual ~ShaderCache(){}
 
 	virtual Shader* capture(const char* name) = 0;
 	virtual void release(const char* name) = 0;

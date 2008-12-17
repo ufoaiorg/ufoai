@@ -38,6 +38,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class Targetable {
 public:
+	virtual ~Targetable(){}
 	virtual const Vector3& world_position() const = 0;
 };
 

@@ -34,6 +34,8 @@ class Selectable {
 public:
 	STRING_CONSTANT(Name, "Selectable");
 
+	virtual ~Selectable(){}
+
 	virtual void setSelected(bool select) = 0;
 	virtual bool isSelected() const = 0;
 };
@@ -44,6 +46,8 @@ class Instance;
 
 class InstanceSelectionObserver {
 public:
+	virtual ~InstanceSelectionObserver(){}
+
 	virtual void onSelectedChanged(scene::Instance& instance) = 0;
 };
 
@@ -83,6 +87,8 @@ public:
 		eClip,
 	};
 
+	virtual ~SelectionSystem(){}
+
 	virtual void SetMode(EMode mode) = 0;
 	virtual EMode Mode() const = 0;
 	virtual void SetComponentMode(EComponentMode mode) = 0;
@@ -102,6 +108,8 @@ public:
 
 	class Visitor {
 	public:
+		virtual ~Visitor(){}
+
 		virtual void visit(scene::Instance& instance) const = 0;
 	};
 	virtual void foreachSelected(const Visitor& visitor) const = 0;

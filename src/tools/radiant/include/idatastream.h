@@ -33,6 +33,7 @@ public:
 /// \brief A read-only byte-stream.
 class InputStream : public StreamBase {
 public:
+	virtual ~InputStream(){}
 	/// \brief Attempts to read the next \p length bytes from the stream to \p buffer.
 	/// Returns the number of bytes actually stored in \p buffer.
 	virtual size_type read(byte_type* buffer, size_type length) = 0;
@@ -41,6 +42,7 @@ public:
 /// \brief A write-only byte-stream.
 class OutputStream : public StreamBase {
 public:
+	virtual ~OutputStream(){}
 	/// \brief Attempts to write \p length bytes to the stream from \p buffer.
 	/// Returns the number of bytes actually read from \p buffer.
 	virtual size_type write(const byte_type* buffer, size_type length) = 0;
@@ -57,6 +59,7 @@ public:
 		end,
 	};
 
+	virtual ~SeekableStream(){}
 	/// \brief Sets the current \p position of the stream relative to the start.
 	virtual position_type seek(position_type position) = 0;
 	/// \brief Sets the current \p position of the stream relative to either the start, end or current position.
