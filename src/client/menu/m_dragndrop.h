@@ -74,9 +74,10 @@ qboolean MN_DNDIsDragging(void);
 qboolean MN_DNDIsTargetNode(struct menuNode_s *node);
 
 /* setter */
-void MN_DNDStart(struct menuNode_s *from);
+void MN_DNDStartDrag(struct menuNode_s *from);
 void MN_DNDDragItem(item_t *item, struct invList_s *fromInventory);
 void MN_DNDFromContainer(struct invDef_s *container, int ownFromX, int ownFromY);
-void MN_DNDStop(void);
+void MN_DNDDrop(void);
+void MN_DNDAbort(void);
 
 #endif

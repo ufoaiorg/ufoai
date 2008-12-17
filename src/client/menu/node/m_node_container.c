@@ -799,7 +799,8 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
 		dragInfo.item.rotated = oldRotated ;
 	}
 
-	dragInfo.isPlaceFound = checkedTo != 0;
+	/** @todo remember to move it at the right place (DNDMove) */
+	/* dragInfo.isPlaceFound = checkedTo != 0; */
 }
 
 /**
@@ -1032,7 +1033,7 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 		if (ic) {
 			if (!rightClick) {
 				/* Found item to drag. Prepare for drag-mode. */
-				MN_DNDStart(node);
+				MN_DNDStartDrag(node);
 				MN_DNDDragItem(&(ic->item), ic);
 				MN_DNDFromContainer(node->container, fromX, fromY);
 			} else {
@@ -1125,7 +1126,7 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 				dragInfo.from->id, dragInfo.fromX, dragInfo.fromY,
 				node->container->id, dragInfo.toX, dragInfo.toY);
 
-			MN_DNDStop();
+			MN_DNDDrop();
 			return;
 		}
 
@@ -1154,7 +1155,7 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 				dragInfo.to, dragInfo.toX, dragInfo.toY,
 				dragInfo.from, fItem);
 		}
-		MN_DNDStop();
+		MN_DNDDrop();
 	}
 
 	/* Update display of scroll buttons. */
@@ -1175,20 +1176,29 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 	}
 }
 
-static void MN_ContainerClick (menuNode_t *node, int x, int y)
+static void MN_ContainerNodeClick (menuNode_t *node, int x, int y)
 {
 	MN_Drag(node, baseCurrent, x, y, qfalse);
 }
 
-static void MN_ContainerRightClick (menuNode_t *node, int x, int y)
+static void MN_ContainerNodeRightClick (menuNode_t *node, int x, int y)
 {
 	MN_Drag(node, baseCurrent, x, y, qtrue);
 }
 
-static void MN_ContainerLoading (menuNode_t *node)
+static void MN_ContainerNodeLoading (menuNode_t *node)
 {
 	node->container = NULL;
 	node->color[3] = 1.0;
+}
+
+/**
+ * @brief Call when a DND enter into the node
+ */
+static qboolean MN_ContainerNodeDNDEnter (menuNode_t *node)
+{
+	/* accept items */
+	return dragInfo.type == DND_ITEM;
 }
 
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
@@ -1197,10 +1207,11 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->id = MN_CONTAINER;
 	behaviour->draw = MN_ContainerNodeDraw;
 	behaviour->drawTooltip = MN_ContainerNodeDrawTooltip;
-	behaviour->leftClick = MN_ContainerClick;
-	behaviour->rightClick = MN_ContainerRightClick;
-	behaviour->loading = MN_ContainerLoading;
+	behaviour->leftClick = MN_ContainerNodeClick;
+	behaviour->rightClick = MN_ContainerNodeRightClick;
+	behaviour->loading = MN_ContainerNodeLoading;
 	behaviour->loaded = MN_FindContainer;
+	behaviour->DNDEnter = MN_ContainerNodeDNDEnter;
 
 	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");

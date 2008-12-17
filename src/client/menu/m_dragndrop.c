@@ -70,15 +70,16 @@ qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 {
 	if (mouseSpace != MS_DRAGITEM)
 		return qfalse;
-	return dragInfo.sourceNode == node;
+	return dragInfo.targetNode == node;
 }
 
 /**
  * @brief Start a drag and drop
  * @sa MN_DNDDragItem
- * @sa MN_DNDStop
+ * @sa MN_DNDDrop
+ * @sa MN_DNDAbort
  */
-void MN_DNDStart (menuNode_t *node)
+void MN_DNDStartDrag (menuNode_t *node)
 {
 	assert(mouseSpace != MS_DRAGITEM);
 	mouseSpace = MS_DRAGITEM;
@@ -88,16 +89,53 @@ void MN_DNDStart (menuNode_t *node)
 }
 
 /**
- * @brief Stop the drag and drop
- * @sa MN_DNDStart
+ * @brief Cleanup data about DND
  */
-void MN_DNDStop (void)
+static inline void MN_DNDCleanup (void)
 {
-	assert(mouseSpace == MS_DRAGITEM);
-	assert(dragInfo.type != DND_NOTHING);
 	dragInfo.type = DND_NOTHING;
 	dragInfo.targetNode = NULL;
 	dragInfo.sourceNode = NULL;
+}
+
+/**
+ * @brief Drop the object at the current position
+ * @sa MN_DNDStartDrag
+ * @sa MN_DNDDrop
+ */
+void MN_DNDAbort (void)
+{
+	assert(mouseSpace == MS_DRAGITEM);
+	assert(dragInfo.type != DND_NOTHING);
+	assert(dragInfo.sourceNode != NULL);
+
+	if (dragInfo.targetNode) {
+		dragInfo.targetNode->behaviour->DNDLeave(dragInfo.targetNode);
+	}
+	dragInfo.sourceNode->behaviour->DNDFinished(dragInfo.sourceNode, qfalse);
+
+	MN_DNDCleanup();
+	mouseSpace = MS_NULL;
+}
+
+/**
+ * @brief Drop the object at the current position
+ * @sa MN_DNDStartDrag
+ * @sa MN_DNDAbort
+ */
+void MN_DNDDrop (void)
+{
+	qboolean result = qfalse;
+	assert(mouseSpace == MS_DRAGITEM);
+	assert(dragInfo.type != DND_NOTHING);
+	assert(dragInfo.sourceNode != NULL);
+
+	if (dragInfo.targetNode) {
+		result = dragInfo.targetNode->behaviour->DNDDrop(dragInfo.targetNode, mousePosX, mousePosY);
+	}
+	dragInfo.sourceNode->behaviour->DNDFinished(dragInfo.sourceNode, result);
+
+	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
 }
 
@@ -125,24 +163,76 @@ void MN_DNDFromContainer (invDef_t *container, int ownFromX, int ownFromY)
 	dragInfo.fromY = ownFromY;
 }
 
+
+static int oldMousePosX = -1;
+static int oldMousePosY = -1;
+static qboolean nodeAcceptDND = qfalse;
+static qboolean positionAcceptDND = qfalse;
+
+/**
+ * @brief Manage the DND when we move the mouse
+ */
+void MN_DNDMouseMove (int mousePosX, int mousePosY)
+{
+	menuNode_t *node = MN_GetNodeByPosition(mousePosX, mousePosY);
+
+	if (node != dragInfo.targetNode) {
+		if (dragInfo.targetNode) {
+			dragInfo.targetNode->behaviour->DNDLeave(dragInfo.targetNode);
+		}
+		dragInfo.targetNode = node;
+		if (dragInfo.targetNode) {
+			nodeAcceptDND = dragInfo.targetNode->behaviour->DNDEnter(dragInfo.targetNode);
+		}
+	}
+
+	if (dragInfo.targetNode == NULL) {
+		nodeAcceptDND = qfalse;
+		positionAcceptDND = qfalse;
+		return;
+	}
+
+	if (!nodeAcceptDND) {
+		positionAcceptDND = qfalse;
+		return;
+	}
+
+	positionAcceptDND = node->behaviour->DNDMove(dragInfo.targetNode, mousePosX, mousePosY);
+}
+
+
 /**
  * @todo at least, the draw of the preview must be down by the requested node
  */
 void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 {
 	const vec3_t scale = { 3.5, 3.5, 3.5 };
-	vec3_t org;
+	vec3_t orgine;
 	vec4_t color = { 1, 1, 1, 1 };
 
-	/** @todo move it at a better plce when its possible */
-	dragInfo.targetNode = MN_GetNodeByPosition(mousePosX, mousePosY);
+	/* check mouse move */
+	if (mousePosX != oldMousePosX || mousePosY != oldMousePosY) {
+		oldMousePosX = mousePosX;
+		oldMousePosY = mousePosY;
+		MN_DNDMouseMove(mousePosX, mousePosY);
+	}
 
 	/* draw the draging item */
 
-	VectorSet(org, mousePosX, mousePosY, -50);
-	if (dragInfo.targetNode && dragInfo.isPlaceFound)
-		Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
-	MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);
+	VectorSet(orgine, mousePosX, mousePosY, -50);
+
+	/* Tune down the opacity of the cursor-item if the preview item is drawn. */
+	if (positionAcceptDND)
+		Vector4Set(color, 1, 1, 1, 0.2);
+
+	switch (dragInfo.type) {
+	case DND_ITEM:
+		MN_DrawItem(NULL, orgine, &dragInfo.item, -1, -1, scale, color);
+		break;
+
+	default:
+		assert(qfalse);
+	}
 
 #ifdef PARANOID
 	/** Debugging only - Will draw a marker in the upper left corner of the
@@ -152,11 +242,11 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 
 	Vector4Set(color, 1, 0, 0, 1);
 	if (dragInfo.item.t)
-		VectorSet(org,
+		VectorSet(orgine,
 			mousePosX - (C_UNIT * dragInfo.item.t->sx - C_UNIT) / 2,
 			mousePosY - (C_UNIT * dragInfo.item.t->sy - C_UNIT) / 2,
 			-50);
-	R_DrawCircle2D(org[0] * viddef.rx, org[1] * viddef.ry, 2.0, qtrue, color, 1.0);
+	R_DrawCircle2D(orgine[0] * viddef.rx, orgine[1] * viddef.ry, 2.0, qtrue, color, 1.0);
 #endif
 
 }
