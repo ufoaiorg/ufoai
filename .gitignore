@@ -5,4 +5,5 @@
 /config.log
 /config.h
 /Makefile
-/debug-linux-gnu-i386
+/debug-*
+/release-*
