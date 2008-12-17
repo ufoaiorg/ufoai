@@ -44,7 +44,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "stringio.h"
 
 #include "gtkutil/idledraw.h"
-#include "gtkutil/dialog.h"
 #include "gtkutil/entry.h"
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/pointer.h"
@@ -87,9 +86,7 @@ public:
 
 void SurfaceInspector_GridChange();
 
-class SurfaceInspector : public Dialog {
-	GtkWindow* BuildDialog();
-
+class SurfaceInspector {
 	NonModalEntry m_textureEntry;
 	NonModalSpinner m_hshiftSpinner;
 	NonModalEntry m_hshiftEntry;
@@ -108,15 +105,11 @@ class SurfaceInspector : public Dialog {
 	GtkFrame* m_surfaceFlagsFrame;
 	GtkCheckButton* m_contentFlags[32];
 	GtkFrame* m_contentFlagsFrame;
-	GtkWindow *m_surfaceDialogWindow;
-	GtkWidget *m_surfaceDialogBox;
 
 	NonModalEntry m_valueEntry;
 	GtkEntry* m_valueEntryWidget;
 public:
-	WindowPositionTracker m_positionTracker;
-	WindowPositionTrackerImportStringCaller m_importPosition;
-	WindowPositionTrackerExportStringCaller m_exportPosition;
+	GtkWidget* BuildNotebook();
 
 	// Dialog Data
 	float m_fitHorizontal;
@@ -143,8 +136,6 @@ public:
 			m_rotateEntry(Increment::ApplyCaller(m_rotateIncrement), Increment::CancelCaller(m_rotateIncrement)),
 			m_idleDraw(UpdateCaller(*this)),
 			m_valueEntry(ApplyFlagsCaller(*this), UpdateCaller(*this)),
-			m_importPosition(m_positionTracker),
-			m_exportPosition(m_positionTracker),
 			m_hshiftIncrement(g_si_globals.shift[0]),
 			m_vshiftIncrement(g_si_globals.shift[1]),
 			m_hscaleIncrement(g_si_globals.scale[0]),
@@ -152,24 +143,11 @@ public:
 			m_rotateIncrement(g_si_globals.rotate) {
 		m_fitVertical = 1;
 		m_fitHorizontal = 1;
-		m_positionTracker.setPosition(c_default_window_pos);
-	}
-
-	void constructWindow(GtkWindow* main_window) {
-		m_parent = main_window;
-		Create();
 		AddGridChangeCallback(FreeCaller<SurfaceInspector_GridChange>());
 	}
-	void destroyWindow (void) {
-		Destroy();
-	}
-	bool visible() const {
-		return GTK_WIDGET_VISIBLE(const_cast<GtkWindow*>(GetWidget()));
-	}
+
 	void queueDraw (void) {
-		if (visible()) {
-			m_idleDraw.queueDraw();
-		}
+		m_idleDraw.queueDraw();
 	}
 
 	void Update();
@@ -189,13 +167,6 @@ inline SurfaceInspector& getSurfaceInspector (void) {
 	ASSERT_NOTNULL(g_SurfaceInspector);
 	return *g_SurfaceInspector;
 }
-}
-
-void SurfaceInspector_constructWindow(GtkWindow* main_window) {
-	getSurfaceInspector().constructWindow(main_window);
-}
-void SurfaceInspector_destroyWindow (void) {
-	getSurfaceInspector().destroyWindow();
 }
 
 void SurfaceInspector_queueDraw (void) {
@@ -340,7 +311,7 @@ si_globals_t g_si_globals;
 static void DoSnapTToGrid(float hscale, float vscale) {
 	g_si_globals.shift[0] = static_cast<float>(float_to_integer(static_cast<float>(GetGridSize()) / hscale));
 	g_si_globals.shift[1] = static_cast<float>(float_to_integer(static_cast<float>(GetGridSize()) / vscale));
-	getSurfaceInspector().queueDraw();
+	SurfaceInspector_queueDraw();
 }
 
 void SurfaceInspector_GridChange (void) {
@@ -369,28 +340,6 @@ static void OnBtnMatchGrid(GtkWidget *widget, gpointer data) {
 	DoSnapTToGrid (hscale, vscale);
 }
 
-/**
- * @brief DoSurface will always try to show the surface inspector
- * or update it because something new has been selected
- * @note Shamus: It does get called when the SI is hidden, but not when you select something new. ;-)
- */
-void DoSurface (void) {
-	if (getSurfaceInspector().GetWidget() == 0) {
-		getSurfaceInspector().Create();
-	}
-	getSurfaceInspector().Update();
-	getSurfaceInspector().importData();
-	getSurfaceInspector().ShowDlg();
-}
-
-void SurfaceInspector_toggleShown (void) {
-	if (getSurfaceInspector().visible()) {
-		getSurfaceInspector().HideDlg();
-	} else {
-		DoSurface();
-	}
-}
-
 void SurfaceInspector_FitTexture (void) {
 	UndoableCommand undo("textureAutoFit");
 	Select_FitTexture(getSurfaceInspector().m_fitHorizontal, getSurfaceInspector().m_fitVertical);
@@ -405,7 +354,6 @@ static void OnBtnAxial(GtkWidget *widget, gpointer data) {
 }
 
 static void OnBtnFaceFit(GtkWidget *widget, gpointer data) {
-	getSurfaceInspector().exportData();
 	SurfaceInspector_FitTexture();
 }
 
@@ -503,408 +451,400 @@ static guint togglebutton_connect_toggled(GtkToggleButton* button, const Callbac
 	return g_signal_connect_swapped(G_OBJECT(button), "toggled", G_CALLBACK(callback.getThunk()), callback.getEnvironment());
 }
 
-GtkWindow* SurfaceInspector::BuildDialog (void)
+GtkWidget* SurfaceInspector::BuildNotebook (void)
 {
-	m_surfaceDialogWindow = create_floating_window("Surface Inspector", m_parent);
+	GtkWidget* pageframe = gtk_frame_new("Surface Inspector");
 
-	m_positionTracker.connect(m_surfaceDialogWindow);
-
-	global_accel_connect_window(m_surfaceDialogWindow);
-
-	window_connect_focus_in_clear_focus_widget(m_surfaceDialogWindow);
+	// replaced by only the vbox:
+	GtkWidget *surfaceDialogBox = gtk_vbox_new(FALSE, 5);
+	gtk_widget_show(surfaceDialogBox);
+	gtk_container_add(GTK_CONTAINER(pageframe), GTK_WIDGET(surfaceDialogBox));
+	gtk_container_set_border_width(GTK_CONTAINER(surfaceDialogBox), 5);
 
 	{
-		// replaced by only the vbox:
-		m_surfaceDialogBox = gtk_vbox_new(FALSE, 5);
-		gtk_widget_show(m_surfaceDialogBox);
-		gtk_container_add(GTK_CONTAINER(m_surfaceDialogWindow), GTK_WIDGET(m_surfaceDialogBox));
-		gtk_container_set_border_width(GTK_CONTAINER(m_surfaceDialogBox), 5);
+		GtkWidget* hbox2 = gtk_hbox_new(FALSE, 5);
+		gtk_widget_show(hbox2);
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(hbox2), FALSE, FALSE, 0);
 
 		{
-			GtkWidget* hbox2 = gtk_hbox_new(FALSE, 5);
-			gtk_widget_show(hbox2);
-			gtk_box_pack_start(GTK_BOX(m_surfaceDialogBox), GTK_WIDGET(hbox2), FALSE, FALSE, 0);
-
-			{
-				GtkWidget* label = gtk_label_new("Texture");
-				gtk_widget_show(label);
-				gtk_box_pack_start(GTK_BOX (hbox2), label, FALSE, TRUE, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_box_pack_start(GTK_BOX(hbox2), GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_texture = entry;
-				m_textureEntry.connect(entry);
-				GlobalTextureEntryCompletion::instance().connect(entry);
-			}
+			GtkWidget* label = gtk_label_new("Texture");
+			gtk_widget_show(label);
+			gtk_box_pack_start(GTK_BOX (hbox2), label, FALSE, TRUE, 0);
 		}
-
 		{
-			GtkWidget* table = gtk_table_new(6, 4, FALSE);
+			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+			gtk_widget_show(GTK_WIDGET(entry));
+			gtk_box_pack_start(GTK_BOX(hbox2), GTK_WIDGET(entry), TRUE, TRUE, 0);
+			m_texture = entry;
+			m_textureEntry.connect(entry);
+			GlobalTextureEntryCompletion::instance().connect(entry);
+		}
+	}
+
+	{
+		GtkWidget* table = gtk_table_new(6, 4, FALSE);
+		gtk_widget_show(table);
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(table), FALSE, FALSE, 0);
+		gtk_table_set_row_spacings(GTK_TABLE(table), 5);
+		gtk_table_set_col_spacings(GTK_TABLE(table), 5);
+		{
+			GtkWidget* label = gtk_label_new("Horizontal shift");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
+			m_hshiftIncrement.m_spin = spin;
+			m_hshiftSpinner.connect(spin);
+			gtk_widget_show(GTK_WIDGET(spin));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 0, 1,
+							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Step");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+			gtk_widget_show(GTK_WIDGET(entry));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 0, 1,
+							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			m_hshiftIncrement.m_entry = entry;
+			m_hshiftEntry.connect(entry);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Vertical shift");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
+			m_vshiftIncrement.m_spin = spin;
+			m_vshiftSpinner.connect(spin);
+			gtk_widget_show(GTK_WIDGET(spin));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 1, 2,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Step");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+			gtk_widget_show(GTK_WIDGET(entry));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 1, 2,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			m_vshiftIncrement.m_entry = entry;
+			m_vshiftEntry.connect(entry);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Horizontal stretch");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
+			m_hscaleIncrement.m_spin = spin;
+			m_hscaleSpinner.connect(spin);
+			gtk_widget_show(GTK_WIDGET(spin));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 2, 3,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+		}
+		{
+			GtkWidget* label = gtk_label_new ("Step");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 2, 3,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 2, 3);
+		}
+		{
+			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+			gtk_widget_show(GTK_WIDGET(entry));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 2, 3,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 2, 3);
+			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			m_hscaleIncrement.m_entry = entry;
+			m_hscaleEntry.connect(entry);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Vertical stretch");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
+			m_vscaleIncrement.m_spin = spin;
+			m_vscaleSpinner.connect(spin);
+			gtk_widget_show(GTK_WIDGET(spin));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 3, 4,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Step");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 3, 4,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+			gtk_widget_show(GTK_WIDGET(entry));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 3, 4,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			m_vscaleIncrement.m_entry = entry;
+			m_vscaleEntry.connect(entry);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Rotate");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 4, 5,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
+			m_rotateIncrement.m_spin = spin;
+			m_rotateSpinner.connect(spin);
+			gtk_widget_show(GTK_WIDGET(spin));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 4, 5,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+			gtk_spin_button_set_wrap(spin, TRUE);
+		}
+		{
+			GtkWidget* label = gtk_label_new("Step");
+			gtk_widget_show(label);
+			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
+			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 4, 5,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+		}
+		{
+			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+			gtk_widget_show(GTK_WIDGET(entry));
+			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 4, 5,
+							(GtkAttachOptions) (GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			m_rotateIncrement.m_entry = entry;
+			m_rotateEntry.connect(entry);
+		}
+		{
+			// match grid button
+			GtkWidget* button = gtk_button_new_with_label("Match Grid");
+			gtk_widget_show(button);
+			gtk_table_attach(GTK_TABLE(table), button, 2, 4, 5, 6,
+							(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+							(GtkAttachOptions) (0), 0, 0);
+			g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(OnBtnMatchGrid), 0);
+		}
+	}
+
+	{
+		GtkWidget* frame = gtk_frame_new("Texturing");
+		gtk_widget_show(frame);
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), FALSE, FALSE, 0);
+		{
+			GtkWidget* table = gtk_table_new(4, 4, FALSE);
 			gtk_widget_show(table);
-			gtk_box_pack_start(GTK_BOX(m_surfaceDialogBox), GTK_WIDGET(table), FALSE, FALSE, 0);
+			gtk_container_add(GTK_CONTAINER(frame), table);
 			gtk_table_set_row_spacings(GTK_TABLE(table), 5);
 			gtk_table_set_col_spacings(GTK_TABLE(table), 5);
+			gtk_container_set_border_width (GTK_CONTAINER (table), 5);
 			{
-				GtkWidget* label = gtk_label_new("Horizontal shift");
+				GtkWidget* label = gtk_label_new("Brush");
 				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 								(GtkAttachOptions) (GTK_FILL),
 								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
-				m_hshiftIncrement.m_spin = spin;
-				m_hshiftSpinner.connect(spin);
-				gtk_widget_show(GTK_WIDGET(spin));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 0, 1,
-								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Step");
+				GtkWidget* label = gtk_label_new("Width");
 				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
 								(GtkAttachOptions) (GTK_FILL),
 								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 0, 1,
-								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
-				m_hshiftIncrement.m_entry = entry;
-				m_hshiftEntry.connect(entry);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Vertical shift");
+				GtkWidget* label = gtk_label_new("Height");
 				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
+				gtk_table_attach(GTK_TABLE(table), label, 3, 4, 0, 1,
 								(GtkAttachOptions) (GTK_FILL),
 								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
-				m_vshiftIncrement.m_spin = spin;
-				m_vshiftSpinner.connect(spin);
-				gtk_widget_show(GTK_WIDGET(spin));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 1, 2,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Step");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 1, 2,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
-				m_vshiftIncrement.m_entry = entry;
-				m_vshiftEntry.connect(entry);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Horizontal stretch");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
-				m_hscaleIncrement.m_spin = spin;
-				m_hscaleSpinner.connect(spin);
-				gtk_widget_show(GTK_WIDGET(spin));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 2, 3,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
-			}
-			{
-				GtkWidget* label = gtk_label_new ("Step");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 2, 3,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 2, 3);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 2, 3,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 2, 3);
-				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
-				m_hscaleIncrement.m_entry = entry;
-				m_hscaleEntry.connect(entry);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Vertical stretch");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
-				m_vscaleIncrement.m_spin = spin;
-				m_vscaleSpinner.connect(spin);
-				gtk_widget_show(GTK_WIDGET(spin));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 3, 4,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Step");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 3, 4,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 3, 4,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
-				m_vscaleIncrement.m_entry = entry;
-				m_vscaleEntry.connect(entry);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Rotate");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 4, 5,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
-				m_rotateIncrement.m_spin = spin;
-				m_rotateSpinner.connect(spin);
-				gtk_widget_show(GTK_WIDGET(spin));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 4, 5,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
-				gtk_spin_button_set_wrap(spin, TRUE);
-			}
-			{
-				GtkWidget* label = gtk_label_new("Step");
-				gtk_widget_show(label);
-				gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 4, 5,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-			}
-			{
-				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-				gtk_widget_show(GTK_WIDGET(entry));
-				gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 4, 5,
-								(GtkAttachOptions) (GTK_FILL),
-								(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
-				m_rotateIncrement.m_entry = entry;
-				m_rotateEntry.connect(entry);
-			}
-			{
-				// match grid button
-				GtkWidget* button = gtk_button_new_with_label("Match Grid");
+				GtkWidget* button = gtk_button_new_with_label("Axial");
 				gtk_widget_show(button);
-				gtk_table_attach(GTK_TABLE(table), button, 2, 4, 5, 6,
+				gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
 								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 								(GtkAttachOptions) (0), 0, 0);
-				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(OnBtnMatchGrid), 0);
+				g_signal_connect(G_OBJECT(button), "clicked",
+								G_CALLBACK(OnBtnAxial), 0);
+				gtk_widget_set_usize (button, 60, -2);
+			}
+			{
+				GtkWidget* button = gtk_button_new_with_label("Fit");
+				gtk_widget_show(button);
+				gtk_table_attach(GTK_TABLE(table), button, 1, 2, 1, 2,
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
+				g_signal_connect(G_OBJECT(button), "clicked",
+								G_CALLBACK(OnBtnFaceFit), 0);
+				gtk_widget_set_usize (button, 60, -2);
+			}
+			{
+				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
+				gtk_widget_show(spin);
+				gtk_table_attach(GTK_TABLE(table), spin, 2, 3, 1, 2,
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
+				gtk_widget_set_usize (spin, 60, -2);
+//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
+			}
+			{
+				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
+				gtk_widget_show(spin);
+				gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2,
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
+				gtk_widget_set_usize (spin, 60, -2);
+//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
 			}
 		}
-
+	}
+	{
+		m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new("Surface Flags"));
+		gtk_widget_show(GTK_WIDGET(m_surfaceFlagsFrame));
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
 		{
-			GtkWidget* frame = gtk_frame_new("Texturing");
-			gtk_widget_show(frame);
-			gtk_box_pack_start(GTK_BOX(m_surfaceDialogBox), GTK_WIDGET(frame), FALSE, FALSE, 0);
+			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+			//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+			gtk_widget_show(GTK_WIDGET(vbox3));
+			gtk_container_add(GTK_CONTAINER(m_surfaceFlagsFrame), GTK_WIDGET(vbox3));
 			{
-				GtkWidget* table = gtk_table_new(4, 4, FALSE);
-				gtk_widget_show(table);
-				gtk_container_add(GTK_CONTAINER(frame), table);
-				gtk_table_set_row_spacings(GTK_TABLE(table), 5);
-				gtk_table_set_col_spacings(GTK_TABLE(table), 5);
-				gtk_container_set_border_width (GTK_CONTAINER (table), 5);
-				{
-					GtkWidget* label = gtk_label_new("Brush");
-					gtk_widget_show(label);
-					gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-									(GtkAttachOptions) (GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-				}
-				{
-					GtkWidget* label = gtk_label_new("Width");
-					gtk_widget_show(label);
-					gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
-									(GtkAttachOptions) (GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-				}
-				{
-					GtkWidget* label = gtk_label_new("Height");
-					gtk_widget_show(label);
-					gtk_table_attach(GTK_TABLE(table), label, 3, 4, 0, 1,
-									(GtkAttachOptions) (GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-				}
-				{
-					GtkWidget* button = gtk_button_new_with_label("Axial");
-					gtk_widget_show(button);
-					gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
-									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-					g_signal_connect(G_OBJECT(button), "clicked",
-									G_CALLBACK(OnBtnAxial), 0);
-					gtk_widget_set_usize (button, 60, -2);
-				}
-				{
-					GtkWidget* button = gtk_button_new_with_label("Fit");
-					gtk_widget_show(button);
-					gtk_table_attach(GTK_TABLE(table), button, 1, 2, 1, 2,
-									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-					g_signal_connect(G_OBJECT(button), "clicked",
-									G_CALLBACK(OnBtnFaceFit), 0);
-					gtk_widget_set_usize (button, 60, -2);
-				}
-				{
-					GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
-					gtk_widget_show(spin);
-					gtk_table_attach(GTK_TABLE(table), spin, 2, 3, 1, 2,
-									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-					gtk_widget_set_usize (spin, 60, -2);
-					AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
-				}
-				{
-					GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
-					gtk_widget_show(spin);
-					gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2,
-									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-									(GtkAttachOptions) (0), 0, 0);
-					gtk_widget_set_usize (spin, 60, -2);
-					AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
-				}
-			}
-		}
-		{
-			m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new("Surface Flags"));
-			gtk_widget_show(GTK_WIDGET(m_surfaceFlagsFrame));
-			gtk_box_pack_start(GTK_BOX(m_surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
-			{
-				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-				gtk_widget_show(GTK_WIDGET(vbox3));
-				gtk_container_add(GTK_CONTAINER(m_surfaceFlagsFrame), GTK_WIDGET(vbox3));
-				{
-					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-					gtk_widget_show(GTK_WIDGET(table));
-					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-					gtk_table_set_row_spacings(table, 0);
-					gtk_table_set_col_spacings(table, 0);
+				GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+				gtk_widget_show(GTK_WIDGET(table));
+				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+				gtk_table_set_row_spacings(table, 0);
+				gtk_table_set_col_spacings(table, 0);
 
-					GtkCheckButton** p = m_surfaceFlags;
+				GtkCheckButton** p = m_surfaceFlags;
 
-					for (int c = 0; c != 4; ++c) {
-						for (int r = 0; r != 8; ++r) {
-							const char *name = getSurfaceFlagName(c * 8 + r);
-							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
-							gtk_widget_show(GTK_WIDGET(check));
-							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-												(GtkAttachOptions)(0), 0, 0);
-							*p++ = check;
-							guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-							if (!strncmp(name, "surf", 4))
-								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
-						}
+				for (int c = 0; c != 4; ++c) {
+					for (int r = 0; r != 8; ++r) {
+						const char *name = getSurfaceFlagName(c * 8 + r);
+						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+						gtk_widget_show(GTK_WIDGET(check));
+						gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+											(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+											(GtkAttachOptions)(0), 0, 0);
+						*p++ = check;
+						guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
+						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						if (!strncmp(name, "surf", 4))
+							gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
 					}
-				}
-			}
-		}
-		{
-			m_contentFlagsFrame = GTK_FRAME(gtk_frame_new("Content Flags"));
-			gtk_widget_show(GTK_WIDGET(m_contentFlagsFrame));
-			gtk_box_pack_start(GTK_BOX(m_surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
-			{
-				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-				gtk_widget_show(GTK_WIDGET(vbox3));
-				gtk_container_add(GTK_CONTAINER(m_contentFlagsFrame), GTK_WIDGET(vbox3));
-				{
-					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-					gtk_widget_show(GTK_WIDGET(table));
-					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-					gtk_table_set_row_spacings(table, 0);
-					gtk_table_set_col_spacings(table, 0);
-
-					GtkCheckButton** p = m_contentFlags;
-
-					for (int c = 0; c != 4; ++c) {
-						for (int r = 0; r != 8; ++r) {
-							const char *name = getContentFlagName(c * 8 + r);
-							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
-							gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
-							gtk_widget_show(GTK_WIDGET(check));
-							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-												(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-												(GtkAttachOptions)(0), 0, 0);
-							*p++ = check;
-							guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-							if (!strncmp(name, "cont", 4))
-								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
-						}
-					}
-				}
-			}
-		}
-		{
-			GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
-			gtk_widget_show(GTK_WIDGET(frame));
-			gtk_box_pack_start(GTK_BOX(m_surfaceDialogBox), GTK_WIDGET(frame), TRUE, TRUE, 0);
-			{
-				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-				gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-				gtk_widget_show(GTK_WIDGET(vbox3));
-				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-
-				{
-					GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-					gtk_widget_show(GTK_WIDGET(entry));
-					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
-					m_valueEntryWidget = entry;
-					m_valueEntry.connect(entry);
 				}
 			}
 		}
 	}
+	{
+		m_contentFlagsFrame = GTK_FRAME(gtk_frame_new("Content Flags"));
+		gtk_widget_show(GTK_WIDGET(m_contentFlagsFrame));
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
+		{
+			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+			//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+			gtk_widget_show(GTK_WIDGET(vbox3));
+			gtk_container_add(GTK_CONTAINER(m_contentFlagsFrame), GTK_WIDGET(vbox3));
+			{
+				GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+				gtk_widget_show(GTK_WIDGET(table));
+				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+				gtk_table_set_row_spacings(table, 0);
+				gtk_table_set_col_spacings(table, 0);
 
-	return m_surfaceDialogWindow;
+				GtkCheckButton** p = m_contentFlags;
+
+				for (int c = 0; c != 4; ++c) {
+					for (int r = 0; r != 8; ++r) {
+						const char *name = getContentFlagName(c * 8 + r);
+						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+						gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
+						gtk_widget_show(GTK_WIDGET(check));
+						gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+											(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+											(GtkAttachOptions)(0), 0, 0);
+						*p++ = check;
+						guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
+						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						if (!strncmp(name, "cont", 4))
+							gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+					}
+				}
+			}
+		}
+	}
+	{
+		GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
+		gtk_widget_show(GTK_WIDGET(frame));
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), TRUE, TRUE, 0);
+		{
+			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+			gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+			gtk_widget_show(GTK_WIDGET(vbox3));
+			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
+
+			{
+				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+				gtk_widget_show(GTK_WIDGET(entry));
+				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
+				m_valueEntryWidget = entry;
+				m_valueEntry.connect(entry);
+			}
+		}
+	}
+
+	return pageframe;
 }
 
 static void spin_button_set_value_no_signal(GtkSpinButton* spin, gdouble value) {
@@ -989,10 +929,8 @@ void SurfaceInspector::Update (void) {
 		toggle_button_set_active_no_signal(b, state);
 	}
 
-
 	if (!g_SelectedFaceInstances.empty()) {
 		gtk_widget_hide_all(GTK_WIDGET(m_contentFlagsFrame));
-		gtk_container_check_resize(GTK_CONTAINER(m_surfaceDialogBox));
 	} else {
 		gtk_widget_show_all(GTK_WIDGET(m_contentFlagsFrame));
 
@@ -1272,7 +1210,6 @@ void SurfaceInspector_registerPreferencesPage (void) {
 
 void SurfaceInspector_registerCommands (void) {
 	GlobalCommands_insert("FitTexture", FreeCaller<SurfaceInspector_FitTexture>(), Accelerator('B', (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("SurfaceInspector", FreeCaller<SurfaceInspector_toggleShown>(), Accelerator('S'));
 
 	GlobalCommands_insert("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture>());
 	GlobalCommands_insert("FacePasteTexture", FreeCaller<SelectedFaces_pasteTexture>());
@@ -1289,7 +1226,6 @@ void SurfaceInspector_Construct (void) {
 
 	FaceTextureClipboard_setDefault();
 
-	GlobalPreferenceSystem().registerPreference("SurfaceWnd", getSurfaceInspector().m_importPosition, getSurfaceInspector().m_exportPosition);
 	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Scale1", FloatImportStringCaller(g_si_globals.scale[0]), FloatExportStringCaller(g_si_globals.scale[0]));
 	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Scale2", FloatImportStringCaller(g_si_globals.scale[1]), FloatExportStringCaller(g_si_globals.scale[1]));
 	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Shift1", FloatImportStringCaller(g_si_globals.shift[0]), FloatExportStringCaller(g_si_globals.shift[0]));
@@ -1310,7 +1246,5 @@ void SurfaceInspector_Destroy (void) {
 
 GtkWidget *SurfaceInspector_constructNotebookTab (void)
 {
-	GtkWidget* pageframe = gtk_frame_new("Surface Inspector");
-
-	return pageframe;
+	return g_SurfaceInspector->BuildNotebook();
 }

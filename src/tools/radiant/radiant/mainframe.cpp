@@ -1390,7 +1390,6 @@ static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
 	if (style == MainFrame::eSplit) {
 		create_menu_item_with_mnemonic(menu, "Texture Browser", "ToggleTextures");
 	}
-	create_menu_item_with_mnemonic(menu, "_Surface Inspector", "SurfaceInspector");
 
 	menu_separator(menu);
 	{
@@ -1810,7 +1809,6 @@ static GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style) {
 	if (style != MainFrame::eRegular) {
 		toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
 	}
-	toolbar_append_button(toolbar, "Surface Inspector (S)", "si.bmp", "SurfaceInspector");
 
 	return toolbar;
 }
@@ -2026,7 +2024,6 @@ void MainFrame::Create (void) {
 
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
-	SurfaceInspector_constructWindow(window);
 
 	int w, h;
 	gtk_window_get_size(window, &w, &h);
@@ -2178,7 +2175,6 @@ void MainFrame::Shutdown (void) {
 	m_pCamWnd = 0;
 
 	PreferencesDialog_destroyWindow();
-	SurfaceInspector_destroyWindow();
 	FindTextureDialog_destroyWindow();
 
 	// destroying group-dialog last because it may contain texture-browser

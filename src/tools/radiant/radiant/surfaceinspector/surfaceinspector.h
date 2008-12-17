@@ -27,9 +27,6 @@ void SurfaceInspector_Construct();
 void SurfaceInspector_Destroy();
 
 typedef struct _GtkWidget GtkWidget;
-typedef struct _GtkWindow GtkWindow;
-void SurfaceInspector_constructWindow(GtkWindow* widget);
-void SurfaceInspector_destroyWindow();
 
 bool SelectedFaces_empty();
 void SelectedFaces_copyTexture();
