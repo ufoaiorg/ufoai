@@ -243,6 +243,10 @@ menuNode_t *MN_GetNodeByPosition (int x, int y)
  */
 void MN_MouseMove (int x, int y)
 {
+	/** @todo very bad code */
+	if (mouseSpace == MS_DRAGITEM)
+		return;
+
 	/* send the captured move mouse event */
 	if (capturedNode) {
 		if (capturedNode->behaviour->capturedMouseMove)

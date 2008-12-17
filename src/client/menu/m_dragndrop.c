@@ -96,6 +96,8 @@ void MN_DNDStop (void)
 	assert(mouseSpace == MS_DRAGITEM);
 	assert(dragInfo.type != DND_NOTHING);
 	dragInfo.type = DND_NOTHING;
+	dragInfo.toNode = NULL;
+	dragInfo.fromNode = NULL;
 	mouseSpace = MS_NULL;
 }
 

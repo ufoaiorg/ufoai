@@ -159,9 +159,6 @@ void MN_DrawMenus (void)
 	if (pp < sp)
 		pp = sp;
 
-	/* Reset info for preview rendering of dragged items. */
-	dragInfo.toNode = NULL;
-
 	while (sp < mn.menuStackPos) {
 		menuNode_t *node;
 		menu = mn.menuStack[sp++];

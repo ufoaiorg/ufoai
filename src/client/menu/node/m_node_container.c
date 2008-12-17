@@ -861,25 +861,18 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
  */
 static void MN_ContainerNodeDraw (menuNode_t *node)
 {
-	const invList_t *itemHover_temp;
-
-	/** @todo not very nice */
-	if (node->state) {
-		MN_SetItemHover(NULL);
-	}
-
-	/* node transparent but active */
-	if (node->color[3] < 0.001) {
-		return;
-	}
+	const invList_t *itemHover_temp = NULL;
 
 	if (!menuInventory)
 		return;
 
-	itemHover_temp = MN_DrawContainerNode(node);
+	if (node->color[3] > 0.001) {
+		itemHover_temp = MN_DrawContainerNode(node);
+	}
 
-	if (itemHover_temp)
+	if (node->state) {
 		MN_SetItemHover(itemHover_temp);
+	}
 
 	if (MN_DNDIsDestinationNode(node))
 		MN_ContainerNodeDrawDropPreview(node);
@@ -1168,7 +1161,6 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 	} else {
 		invList_t *fItem;
 		/* End drag */
-		MN_DNDStop();
 
 		/* tactical mission */
 		if (selActor) {
@@ -1178,6 +1170,8 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 				dragInfo.from->id, dragInfo.fromX, dragInfo.fromY,
 				node->container->id, dragInfo.toX, dragInfo.toY);
 
+			MN_DNDStop();
+			MN_SetItemHover(NULL);
 			return;
 		}
 
@@ -1195,19 +1189,19 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 			 * handled differently than normal containers somehow.
 			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
 			 * In a perfect world node->container would always be the same as dragInfo.to here. */
-			dragInfo.toNode = node;
-			dragInfo.to = node->container;
-			dragInfo.toX = 0;
-			dragInfo.toY = 0;
+			if (dragInfo.toNode == node) {
+				dragInfo.to = node->container;
+				dragInfo.toX = 0;
+				dragInfo.toY = 0;
+			}
 		}
-		if (node->container == dragInfo.to) {
+		if (dragInfo.toNode) {
 			INV_MoveItem(menuInventory,
 				dragInfo.to, dragInfo.toX, dragInfo.toY,
 				dragInfo.from, fItem);
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "MN_Drag: node->container and dragInfo.to mismatch (%s != %s).\n", node->container->name,
-				(dragInfo.to) ? dragInfo.to->name : "(none)");
 		}
+		MN_DNDStop();
+		MN_SetItemHover(NULL);
 	}
 
 	/* Update display of scroll buttons. */
