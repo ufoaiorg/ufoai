@@ -252,12 +252,43 @@ static void MN_NodeSetProperty_f (void)
 	MN_NodeSetProperty(node, property, Cmd_Argv(3));
 }
 
+static qboolean MN_ABstractNodeDNDEnter (menuNode_t *node)
+{
+	return qfalse;
+}
+
+static qboolean MN_ABstractNodeDNDMove (menuNode_t *node, int x, int y)
+{
+	return qtrue;
+}
+
+static void MN_ABstractNodeDNDLeave (menuNode_t *node)
+{
+}
+
+static qboolean MN_ABstractNodeDNDDrop (menuNode_t *node, int x, int y)
+{
+	return qtrue;
+}
+
+static qboolean MN_ABstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
+{
+	return isDroped;
+}
+
 void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;
 	behaviour->id = MN_ABSTRACTNODE;
 	behaviour->properties = properties;
+
+	/* drag and drop callback */
+	behaviour->DNDEnter = MN_ABstractNodeDNDEnter;
+	behaviour->DNDMove = MN_ABstractNodeDNDMove;
+	behaviour->DNDLeave = MN_ABstractNodeDNDLeave;
+	behaviour->DNDDrop = MN_ABstractNodeDNDDrop;
+	behaviour->DNDFinished = MN_ABstractNodeDNDFinished;
 
 	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");

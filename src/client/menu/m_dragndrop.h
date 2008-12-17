@@ -41,11 +41,11 @@ typedef enum {
 
 typedef struct dragInfo_s {
 	dndType_t type;					/**< What are we dragging */
-	struct menuNode_s *fromNode;	/**< Node providing the drag item */
-	int fromAbsoluteX;				/**< Where the drag start */
-	int fromAbsoluteY;				/**< Where the drag start */
+	struct menuNode_s *sourceNode;	/**< Node providing the drag item */
+	int sourceAbsoluteX;			/**< Where the drag start */
+	int sourceAbsoluteY;			/**< Where the drag start */
 
-	struct menuNode_s *toNode;		/**< Current hovered node */
+	struct menuNode_s *targetNode;	/**< Current hovered node */
 
 	qboolean isPlaceFound;			/**< Have we find a place for the current object */
 
@@ -71,7 +71,7 @@ void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
 
 /*  getter */
 qboolean MN_DNDIsDragging(void);
-qboolean MN_DNDIsDestinationNode(struct menuNode_s *node);
+qboolean MN_DNDIsTargetNode(struct menuNode_s *node);
 
 /* setter */
 void MN_DNDStart(struct menuNode_s *from);

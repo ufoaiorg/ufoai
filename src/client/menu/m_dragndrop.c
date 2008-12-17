@@ -64,13 +64,13 @@ qboolean MN_DNDIsDragging (void)
 }
 
 /**
- * @brief Retrun true if the requested node is the current destination of a dnd
+ * @brief Retrun true if the requested node is the current target of the DND
  */
-qboolean MN_DNDIsDestinationNode(struct menuNode_s *node)
+qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 {
 	if (mouseSpace != MS_DRAGITEM)
 		return qfalse;
-	return dragInfo.toNode == node;
+	return dragInfo.sourceNode == node;
 }
 
 /**
@@ -82,9 +82,9 @@ void MN_DNDStart (menuNode_t *node)
 {
 	assert(mouseSpace != MS_DRAGITEM);
 	mouseSpace = MS_DRAGITEM;
-	dragInfo.fromNode = node;
-	dragInfo.fromAbsoluteX = mousePosX;
-	dragInfo.fromAbsoluteY = mousePosY;
+	dragInfo.sourceNode = node;
+	dragInfo.sourceAbsoluteX = mousePosX;
+	dragInfo.sourceAbsoluteY = mousePosY;
 }
 
 /**
@@ -96,8 +96,8 @@ void MN_DNDStop (void)
 	assert(mouseSpace == MS_DRAGITEM);
 	assert(dragInfo.type != DND_NOTHING);
 	dragInfo.type = DND_NOTHING;
-	dragInfo.toNode = NULL;
-	dragInfo.fromNode = NULL;
+	dragInfo.targetNode = NULL;
+	dragInfo.sourceNode = NULL;
 	mouseSpace = MS_NULL;
 }
 
@@ -135,12 +135,12 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 	vec4_t color = { 1, 1, 1, 1 };
 
 	/** @todo move it at a better plce when its possible */
-	dragInfo.toNode = MN_GetNodeByPosition(mousePosX, mousePosY);
+	dragInfo.targetNode = MN_GetNodeByPosition(mousePosX, mousePosY);
 
 	/* draw the draging item */
 
 	VectorSet(org, mousePosX, mousePosY, -50);
-	if (dragInfo.toNode && dragInfo.isPlaceFound)
+	if (dragInfo.targetNode && dragInfo.isPlaceFound)
 		Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
 	MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);
 

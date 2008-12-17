@@ -104,8 +104,8 @@ static void MN_DrawDebugMenuNodeNames (void)
 	}
 	R_ColorBlend(NULL);
 
-	if (dragInfo.toNode)
-		MN_HilightNode(dragInfo.toNode, green);
+	if (dragInfo.targetNode)
+		MN_HilightNode(dragInfo.targetNode, green);
 	if (hoveredNode != NULL)
 		MN_HilightNode(hoveredNode, red);
 }

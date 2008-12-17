@@ -52,31 +52,6 @@ static void MN_ScrollContainerUpdate_f (void)
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", menuInventory->scrollCur));
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", menuInventory->scrollNum));
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", menuInventory->scrollTotalNum));
-#if 0
-	/* "Previous"/"Backward" button. Are there items before the first displayed one? */
-	if (menuInventory->scrollCur > 0) {
-		/* Clicking the button will do something. */
-		if (Cvar_VariableInteger("mn_cont_scroll_prev_hover"))
-			Cbuf_AddText("cont_scroll_prev_high\n");
-		else
-			Cbuf_AddText("cont_scroll_prev_act\n");
-	} else {
-		/* The button is disabled. */
-		Cbuf_AddText("cont_scroll_prev_ina\n");
-	}
-
-	/* "Next"/"Forward" button. Are there still items after the ones that get displayed? */
-	if (menuInventory->scrollNum + menuInventory->scrollCur < menuInventory->scrollTotalNum) {
-		/* Clicking the button will do something. */
-		if (Cvar_VariableInteger("mn_cont_scroll_next_hover"))
-			Cbuf_AddText("cont_scroll_next_high\n");
-		else
-			Cbuf_AddText("cont_scroll_next_act\n");
-	} else {
-		/* The button is disabled. */
-		Cbuf_AddText("cont_scroll_next_ina\n");
-	}
-#endif
 }
 
 /**
@@ -744,7 +719,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
 	/* Store information for preview drawing of dragged items. */
 	if (MN_CheckNodeZone(node, mousePosX, mousePosY)
 	 ||	MN_CheckNodeZone(node, mousePosX - itemX, mousePosY - itemY)) {
-		dragInfo.toNode = node;
+		dragInfo.targetNode = node;
 		dragInfo.to = node->container;
 
 		dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
@@ -753,7 +728,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
 		/** Check if the items already exists in the container. i.e. there is already at least one item.
 		 * @sa Com_AddToInventory */
 		exists = qfalse;
-		if (dragInfo.to && dragInfo.toNode
+		if (dragInfo.to && dragInfo.targetNode
 		 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
 		 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
 		 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
@@ -785,7 +760,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
 	dragInfo.item.rotated = qfalse;
 
 	/* Draw "preview" of placed (&rotated) item. */
-	if (dragInfo.toNode && !dragInfo.to->scroll) {
+	if (dragInfo.targetNode && !dragInfo.to->scroll) {
 		const int oldRotated = dragInfo.item.rotated;
 
 		checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY, dragInfo.ic);
@@ -796,11 +771,11 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *node)
 		if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
 			vec2_t nodepos;
 
-			MN_GetNodeAbsPos(dragInfo.toNode, nodepos);
+			MN_GetNodeAbsPos(dragInfo.targetNode, nodepos);
 			if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
 				VectorSet(org,
-					nodepos[0] + dragInfo.toNode->size[0] / 2.0,
-					nodepos[1] + dragInfo.toNode->size[1] / 2.0,
+					nodepos[0] + dragInfo.targetNode->size[0] / 2.0,
+					nodepos[1] + dragInfo.targetNode->size[1] / 2.0,
 					-40);
 			} else {
 				/* This is a "grid" container - we need to calculate the item-position
@@ -840,7 +815,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 		MN_DrawContainerNode(node);
 	}
 
-	if (MN_DNDIsDestinationNode(node))
+	if (MN_DNDIsTargetNode(node))
 		MN_ContainerNodeDrawDropPreview(node);
 }
 
@@ -1168,13 +1143,13 @@ static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qbo
 			 * handled differently than normal containers somehow.
 			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
 			 * In a perfect world node->container would always be the same as dragInfo.to here. */
-			if (dragInfo.toNode == node) {
+			if (dragInfo.targetNode == node) {
 				dragInfo.to = node->container;
 				dragInfo.toX = 0;
 				dragInfo.toY = 0;
 			}
 		}
-		if (dragInfo.toNode) {
+		if (dragInfo.targetNode) {
 			INV_MoveItem(menuInventory,
 				dragInfo.to, dragInfo.toX, dragInfo.toY,
 				dragInfo.from, fItem);
