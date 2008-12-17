@@ -245,7 +245,7 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
-	int r, type;
+	int r;
 
 	/* leaf node */
 	if (node & (1 << 31))
