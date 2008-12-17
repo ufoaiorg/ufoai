@@ -134,6 +134,15 @@ static void file_dialog_update_preview (GtkFileChooser *file_chooser, gpointer d
 
 static char g_file_dialog_file[1024];
 
+static const char *shortcutFoldersInBaseDir[] = {
+	"maps",
+	"models",
+	"models/objects",
+	"sound",
+	"textures",
+	NULL
+};
+
 static const char* file_dialog_show (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
 {
 	filetype_t type;
@@ -176,8 +185,16 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 		}
 	}
 
-	// we should add all important paths as shortcut folder...
-	// gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), "/tmp/", NULL);
+	// we add all important paths as shortcut folder..
+	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+	const char *enginePath = GlobalRadiant().getEnginePath();
+	const char **shortcut = shortcutFoldersInBaseDir;
+	while (*shortcut) {
+		char uri[256];
+		snprintf(uri, sizeof(uri), "%s%s/%s", enginePath, baseGame, *shortcut);
+		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), uri, NULL);
+		shortcut++;
+	}
 
 	for (std::size_t i = 0; i < masks.m_filters.size(); ++i) {
 		GtkFileFilter* filter = gtk_file_filter_new();
