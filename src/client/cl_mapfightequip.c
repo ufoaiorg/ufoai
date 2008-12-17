@@ -1275,7 +1275,6 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			break;
 		}
 	}
-	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 
 	/* Reset value of noparams */
 	noparams = qfalse;
@@ -1304,6 +1303,8 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList(NULL, NULL, aircraft);
+
+	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 
 	/* Fill the texts of each zone, if we are dealing with a pilot, we need to  */
 	if (airequipID == AC_ITEM_PILOT) {
