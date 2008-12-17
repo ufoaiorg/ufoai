@@ -1,3 +1,9 @@
+/**
+ * @file surfaceinspector.cpp
+ * @brief Surface Dialog
+ * @author Leonardo Zide (leo@lokigames.com)
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -18,12 +24,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-//
-// Surface Dialog
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "surfaceinspector.h"
 
@@ -1179,7 +1179,7 @@ void SelectedFaces_copyTexture(void) {
 	}
 }
 
-void FaceInstance_pasteTexture(FaceInstance& faceInstance) {
+static void FaceInstance_pasteTexture(FaceInstance& faceInstance) {
 	faceInstance.getFace().SetTexdef(g_faceTextureClipboard.m_projection);
 	faceInstance.getFace().SetShader(TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
 	faceInstance.getFace().SetFlags(g_faceTextureClipboard.m_flags);
@@ -1195,20 +1195,20 @@ void SelectedFaces_pasteTexture (void) {
 	g_SelectedFaceInstances.foreach(FaceInstance_pasteTexture);
 }
 
-
-
-void SurfaceInspector_constructPreferences(PreferencesPage& page) {
+static void SurfaceInspector_constructPreferences(PreferencesPage& page) {
 	page.appendCheckBox("", "Surface Inspector Increments Match Grid", g_si_globals.m_bSnapTToGrid);
 }
+
 void SurfaceInspector_constructPage(PreferenceGroup& group) {
 	PreferencesPage page(group.createPage("Surface Inspector", "Surface Inspector Preferences"));
 	SurfaceInspector_constructPreferences(page);
 }
-void SurfaceInspector_registerPreferencesPage (void) {
+
+static void SurfaceInspector_registerPreferencesPage (void) {
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, SurfaceInspector_constructPage>());
 }
 
-void SurfaceInspector_registerCommands (void) {
+static void SurfaceInspector_registerCommands (void) {
 	GlobalCommands_insert("FitTexture", FreeCaller<SurfaceInspector_FitTexture>(), Accelerator('B', (GdkModifierType)GDK_SHIFT_MASK));
 
 	GlobalCommands_insert("FaceCopyTexture", FreeCaller<SelectedFaces_copyTexture>());
@@ -1217,7 +1217,6 @@ void SurfaceInspector_registerCommands (void) {
 
 
 #include "preferencesystem.h"
-
 
 void SurfaceInspector_Construct (void) {
 	g_SurfaceInspector = new SurfaceInspector;
@@ -1240,6 +1239,7 @@ void SurfaceInspector_Construct (void) {
 
 	SurfaceInspector_registerPreferencesPage();
 }
+
 void SurfaceInspector_Destroy (void) {
 	delete g_SurfaceInspector;
 }

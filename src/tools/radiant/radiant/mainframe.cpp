@@ -96,7 +96,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qgl.h"
 #include "select.h"
 #include "server.h"
-#include "surfaceinspector/surfaceinspector.h"
 #include "textures.h"
 #include "texwindow.h"
 #include "url.h"

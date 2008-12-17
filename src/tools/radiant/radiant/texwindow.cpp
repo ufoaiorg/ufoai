@@ -74,7 +74,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "dialogs/findtextures.h"
-#include "surfaceinspector/surfaceinspector.h"
+#include "sidebar/sidebar.h"
 #include "groupdialog.h"
 #include "preferences.h"
 #include "commands.h"

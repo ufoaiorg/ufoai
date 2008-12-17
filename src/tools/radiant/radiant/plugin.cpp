@@ -60,7 +60,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "mainframe.h"
 #include "lastused.h"
 #include "multimon.h"
-#include "surfaceinspector/surfaceinspector.h"
 #include "groupdialog.h"
 #include "camwindow.h"
 #include "xywindow.h"
