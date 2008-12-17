@@ -189,7 +189,7 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 		Scene_forEachChildSelectable(SelectableSetSelected(true), instance.path());
 	}
 
-	// tweaking: when right click dropping a light entity, ask for light value in a custom dialog box
+	// TODO tweaking: when right click dropping a light entity, ask for light value in a custom dialog box
 	if (string_equal_nocase(name, "light")) {
 		int intensity = g_iLastLightIntensity;
 
@@ -279,7 +279,7 @@ const char* misc_model_dialog(GtkWidget* parent) {
 		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
 	}
 
-	const char *filename = file_dialog (parent, TRUE, "Choose Model", buffer.c_str(), ModelLoader::Name());
+	const char *filename = file_dialog(parent, TRUE, "Choose Model", buffer.c_str(), ModelLoader::Name());
 	if (filename != 0) {
 		// use VFS to get the correct relative path
 		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
