@@ -344,7 +344,7 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	qglLinkProgram(prog->id);
 
 	qglGetProgramiv(prog->id, GL_LINK_STATUS, &e);
-	if (!e) {
+	if (!e || !prog->v || !prog->f) {
 		char log[MAX_STRING_CHARS];
 		qglGetProgramInfoLog(prog->id, sizeof(log) - 1, NULL, log);
 		Com_Printf("R_LoadProgram: %s: %s\n", prog->name, log);
