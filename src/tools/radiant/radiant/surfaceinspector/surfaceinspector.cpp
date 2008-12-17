@@ -1307,3 +1307,10 @@ void SurfaceInspector_Construct (void) {
 void SurfaceInspector_Destroy (void) {
 	delete g_SurfaceInspector;
 }
+
+GtkWidget *SurfaceInspector_constructNotebookTab (void)
+{
+	GtkWidget* pageframe = gtk_frame_new("Surface Inspector");
+
+	return pageframe;
+}

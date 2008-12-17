@@ -2021,6 +2021,7 @@ void MainFrame::Create (void) {
 	gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
 
 	Sidebar_constructEntities(notebook);
+	Sidebar_constructSurfaces(notebook);
 	gtk_widget_show_all(notebook);
 
 	PreferencesDialog_constructWindow(window);

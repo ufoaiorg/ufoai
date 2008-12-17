@@ -38,3 +38,23 @@ void Sidebar_constructEntities (GtkWidget *notebook)
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
+
+
+void Sidebar_constructSurfaces (GtkWidget *notebook)
+{
+	GtkWidget *label = gtk_label_new("Surfaces");
+	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	// scrollable window settings
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+
+	// surface inspector
+	GtkWidget *pageSurfaceInspector = SurfaceInspector_constructNotebookTab();
+	gtk_container_add(GTK_CONTAINER(vbox), pageSurfaceInspector);
+
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), GTK_WIDGET(vbox));
+
+	gtk_widget_show_all(swin);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+}

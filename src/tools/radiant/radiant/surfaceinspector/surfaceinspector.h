@@ -54,4 +54,6 @@ struct si_globals_t {
 };
 extern si_globals_t g_si_globals;
 
+GtkWidget *SurfaceInspector_constructNotebookTab(void);
+
 #endif

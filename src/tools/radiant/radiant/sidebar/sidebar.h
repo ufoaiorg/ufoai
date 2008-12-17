@@ -22,5 +22,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <gtk/gtk.h>
 
 void Sidebar_constructEntities(GtkWidget *notebook);
+void Sidebar_constructSurfaces(GtkWidget *notebook);
 
 #endif

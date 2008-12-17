@@ -1341,17 +1341,8 @@ GtkWidget* EntityInspector_constructNotebookTab(void)
 			}
 
 			{
-				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-
-				GtkWidget* viewport = gtk_viewport_new(0, 0);
-				gtk_viewport_set_shadow_type(GTK_VIEWPORT(viewport), GTK_SHADOW_NONE);
-
 				g_attributeBox = GTK_VBOX(gtk_vbox_new(FALSE, 2));
-
-				gtk_container_add(GTK_CONTAINER(viewport), GTK_WIDGET(g_attributeBox));
-				gtk_container_add(GTK_CONTAINER(scr), viewport);
-				gtk_paned_pack2(GTK_PANED(split2), scr, FALSE, FALSE);
+				gtk_paned_pack2(GTK_PANED(split2), GTK_WIDGET(g_attributeBox), FALSE, FALSE);
 			}
 		}
 	}
@@ -1376,7 +1367,7 @@ GtkWidget* EntityInspector_constructNotebookTab(void)
 	return pageframe;
 }
 
-// todo remove me?
+/// todo remove me?
 class EntityInspector : public ModuleObserver {
 	std::size_t m_unrealised;
 public:
