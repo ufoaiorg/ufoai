@@ -219,14 +219,6 @@ menu hud extends ahud
 		click	{ cmd "nextround;" }
 	}
 
-	zone spotted
-	{
-		key "*binding nextalien"
-		tooltip	"_Enemy spotted"
-		pos	"816 12"
-		size	"48 34"
-		click	{ cmd "nextalien;" }
-	}
 	string numspotted
 	{
 		key "*binding nextalien"
@@ -235,7 +227,7 @@ menu hud extends ahud
 		size	"48 34"
 		align	cc
 		tooltip "_Click to cycle through spotted enemies"
-		in
+		click	{ cmd "nextalien;" }
 	}
 
 	confunc hudselects0 { *bt_actor0 image hud/buttons1a }

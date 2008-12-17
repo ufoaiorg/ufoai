@@ -85,7 +85,7 @@ menu basesummary
 //		bgcolor		"1 1 1 0.5"
 		font		f_small
 		lineheight		16
-		tabwidth	30
+		tabwidth	50
 		wheel
 		scrollbar	yes
 		rows		"25"
