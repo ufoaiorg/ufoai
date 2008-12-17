@@ -51,6 +51,7 @@ CLIENT_SRCS = \
 	client/cl_view.c \
 	\
 	client/menu/m_actions.c \
+	client/menu/m_dragndrop.c \
 	client/menu/m_draw.c \
 	client/menu/m_font.c \
 	client/menu/m_input.c \
