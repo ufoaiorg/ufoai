@@ -1161,107 +1161,112 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 /**
  * @brief Handles aircraft movement and actions in geoscape mode
  * @sa CL_CampaignRun
- * @param[in] dt time delta
+ * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
+ * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */
-void CL_CampaignRunAircraft (int dt)
+void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 {
 	aircraft_t *aircraft;
 	int i, j, k;
-	qboolean radarOverlayReset = qfalse; /**< true if at least one aircraft moved: radar overlay must be updated */
+	static qboolean radarOverlayReset = qfalse;	/**< true if at least one aircraft moved: radar overlay must be updated 
+												 * This is static because aircraft can move without radar beeing 
+												 * updated (sa CL_CampaignRun) */
 
-	for (j = 0; j < MAX_BASES; j++) {
-		base_t *base = B_GetBaseByIDX(j);
-		if (!base->founded) {
-			if (base->numAircraftInBase) {
-				/** @todo if a base was destroyed, but there are still
-				 * aircraft on their way... */
+	if (dt > 0) {
+		for (j = 0; j < MAX_BASES; j++) {
+			base_t *base = B_GetBaseByIDX(j);
+			if (!base->founded) {
+				if (base->numAircraftInBase) {
+					/** @todo if a base was destroyed, but there are still
+					 * aircraft on their way... */
+				}
+				continue;
 			}
-			continue;
-		}
 
-		/* Run each aircraft */
-		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
-			if (aircraft->homebase) {
-				if (aircraft->status == AIR_IDLE) {
-					/* Aircraft idle out of base */
-					aircraft->fuel -= dt;
-				} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
-					/* Aircraft is moving */
-					if (AIR_AircraftMakeMove(dt, aircraft)) {
-						/* aircraft reach its destination */
-						float *end;
+			/* Run each aircraft */
+			for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+				if (aircraft->homebase) {
+					if (aircraft->status == AIR_IDLE) {
+						/* Aircraft idle out of base */
+						aircraft->fuel -= dt;
+					} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
+						/* Aircraft is moving */
+						if (AIR_AircraftMakeMove(dt, aircraft)) {
+							/* aircraft reach its destination */
+							float *end;
 
-						end = aircraft->route.point[aircraft->route.numPoints - 1];
-						Vector2Copy(end, aircraft->pos);
-						MAP_CheckPositionBoundaries(aircraft->pos);
+							end = aircraft->route.point[aircraft->route.numPoints - 1];
+							Vector2Copy(end, aircraft->pos);
+							MAP_CheckPositionBoundaries(aircraft->pos);
 
-						switch (aircraft->status) {
-						case AIR_MISSION:
-							/* Aircraft reached its mission */
-							assert(aircraft->mission);
-							aircraft->mission->active = qtrue;
-							aircraft->status = AIR_DROP;
-							cls.missionaircraft = aircraft;
-							MAP_SelectMission(cls.missionaircraft->mission);
-							gd.interceptAircraft = cls.missionaircraft;
-							Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft->idx);
-							CL_GameTimeStop();
-							MN_PushMenu("popup_intercept_ready");
-							break;
-						case AIR_RETURNING:
-							/* aircraft entered in homebase */
-							CL_AircraftReturnedToHomeBase(aircraft);
-							aircraft->status = AIR_REFUEL;
-							break;
-						case AIR_TRANSFER:
-						case AIR_UFO:
-							break;
-						default:
-							aircraft->status = AIR_IDLE;
-							break;
+							switch (aircraft->status) {
+							case AIR_MISSION:
+								/* Aircraft reached its mission */
+								assert(aircraft->mission);
+								aircraft->mission->active = qtrue;
+								aircraft->status = AIR_DROP;
+								cls.missionaircraft = aircraft;
+								MAP_SelectMission(cls.missionaircraft->mission);
+								gd.interceptAircraft = cls.missionaircraft;
+								Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft->idx);
+								CL_GameTimeStop();
+								MN_PushMenu("popup_intercept_ready");
+								break;
+							case AIR_RETURNING:
+								/* aircraft entered in homebase */
+								CL_AircraftReturnedToHomeBase(aircraft);
+								aircraft->status = AIR_REFUEL;
+								break;
+							case AIR_TRANSFER:
+								case AIR_UFO:
+								break;
+							default:
+								aircraft->status = AIR_IDLE;
+								break;
+							}
+						}
+						/* radar overlay should be updated */
+						radarOverlayReset = qtrue;
+					} else if (aircraft->status == AIR_REFUEL) {
+						/* Aircraft is refuelling at base */
+						aircraft->fuel += dt * AIRCRAFT_REFUEL_FACTOR;
+						if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
+							aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+							aircraft->status = AIR_HOME;
+							assert(aircraft->homebase);
+							MN_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 						}
 					}
-					/* radar overlay should be updated */
-					radarOverlayReset = qtrue;
-				} else if (aircraft->status == AIR_REFUEL) {
-					/* Aircraft is refuelling at base */
-					aircraft->fuel += dt * AIRCRAFT_REFUEL_FACTOR;
-					if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
-						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
-						aircraft->status = AIR_HOME;
-						assert(aircraft->homebase);
-						MN_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+
+					/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
+					if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
+						!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
+						/** @todo check if aircraft can go to a closer base with free space */
+						MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
+						AIR_AircraftReturnToBase(aircraft);
 					}
-				}
-
-				/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
-				if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
-					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
-					/** @todo check if aircraft can go to a closer base with free space */
-					MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
-					AIR_AircraftReturnToBase(aircraft);
-				}
-
-				/* Aircraft purchasing ufo */
-				if (aircraft->status == AIR_UFO) {
-					/* Solve the fight */
-					AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
-				}
-
-				/* Update delay to launch next projectile */
-				if (AIR_IsAircraftOnGeoscape(aircraft)) {
-					for (k = 0; k < aircraft->maxWeapons; k++) {
-						if (aircraft->weapons[k].delayNextShot > 0)
-							aircraft->weapons[k].delayNextShot -= dt;
+	
+					/* Aircraft purchasing ufo */
+					if (aircraft->status == AIR_UFO) {
+						/* Solve the fight */
+						AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
 					}
+	
+					/* Update delay to launch next projectile */
+					if (AIR_IsAircraftOnGeoscape(aircraft)) {
+						for (k = 0; k < aircraft->maxWeapons; k++) {
+							if (aircraft->weapons[k].delayNextShot > 0)
+								aircraft->weapons[k].delayNextShot -= dt;
+						}
+					}
+				} else {
+					/** @todo Maybe even Sys_Error? */
+					Com_Printf("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')\n", j, aircraft->id);
 				}
-			} else {
-				/** @todo Maybe even Sys_Error? */
-				Com_Printf("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')\n", j, aircraft->id);
-			}
+		}
 	}
 
-	if (radarOverlayReset && (r_geoscape_overlay->integer & OVERLAY_RADAR)) {
+	if (updateRadarOverlay && radarOverlayReset && (r_geoscape_overlay->integer & OVERLAY_RADAR)) {
 		RADAR_UpdateWholeRadarOverlay();
 		radarOverlayReset = qfalse;
 	}

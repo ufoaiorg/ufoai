@@ -4575,7 +4575,7 @@ void CL_CampaignRun (void)
 	for (i = 0; i < checks; i++) {
 		qboolean detection;
 		UFO_CampaignRunUFOs(dt);
-		CL_CampaignRunAircraft(dt);
+		CL_CampaignRunAircraft(dt, qfalse);
 		CP_CheckNewMissionDetectedOnGeoscape();
 
 		/* Update alien interest for bases */
@@ -4636,7 +4636,7 @@ void CL_CampaignRun (void)
 		if (dt > timeAlreadyFlied) {
 			/** aircraft and UFO already moved during radar detection (see above),
 			 *  just make them move the missing part -- if any */
-			CL_CampaignRunAircraft(dt - timeAlreadyFlied);
+			CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
 			UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
 		}
 		UFO_CampaignCheckEvents(qfalse);
