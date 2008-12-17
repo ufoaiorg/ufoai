@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
-#include "node/m_node_container.h"
 #include "node/m_node_abstractnode.h"
 
 cvar_t *mn_debugmenu;
@@ -257,78 +256,7 @@ void MN_DrawMenus (void)
 
 void MN_DrawCursor (void)
 {
-	const vec3_t scale = { 3.5, 3.5, 3.5 };
-	vec3_t org;
-	vec4_t color = { 1, 1, 1, 1 };
-	int checkedTo = INV_DOES_NOT_FIT;
-
-	/** Revert the rotation info for the cursor-item in case it
-	 * has been changed (can happen in rare conditions).
-	 * @todo Maybe we can later change this to reflect "manual" rotation?
-	 * @todo Check if this causes problems when letting the item snap back to its original location. */
-	dragInfo.item.rotated = qfalse;
-
-	/* Draw "preview" of placed (&rotated) item. */
-	if (dragInfo.toNode && !dragInfo.to->scroll) {
-		const int oldRotated = dragInfo.item.rotated;
-
-		checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY, dragInfo.ic);
-
-		if (checkedTo == INV_FITS_ONLY_ROTATED)
-			dragInfo.item.rotated = qtrue;
-
-		if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
-			vec2_t nodepos;
-
-			MN_GetNodeAbsPos(dragInfo.toNode, nodepos);
-			if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
-				VectorSet(org,
-					nodepos[0] + dragInfo.toNode->size[0] / 2.0,
-					nodepos[1] + dragInfo.toNode->size[1] / 2.0,
-					-40);
-			} else {
-				/* This is a "grid" container - we need to calculate the item-position
-				 * (on the screen) from stored placement in the container and the
-				 * calculated rotation info. */
-				if (dragInfo.item.rotated)
-					VectorSet(org,
-						nodepos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT,
-						nodepos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT,
-						-40);
-				else
-					VectorSet(org,
-						nodepos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT,
-						nodepos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT,
-						-40);
-			}
-			Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
-			MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);	/**< Draw preview item. */
-		}
-
-		dragInfo.item.rotated = oldRotated ;
-	}
-
-	/* Draw the (2.) item at the cursor. */
-	VectorSet(org, mousePosX, mousePosY, -50);
-	if (dragInfo.toNode && checkedTo)
-		Vector4Set(color, 1, 1, 1, 0.2);		/**< Tune down the opacity of the cursor-item if the preview item is drawn. */
-	MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);
-
-
-#ifdef PARANOID
-	/** Debugging only - Will draw a marker in the upper left corner of the
-	 * dragged item (which is the one used for calculating the resulting grid-coordinates).
-	 * @todo Maybe we could make this a feature in some way. i.e. we could draw
-	 * a special cursor at this place when dragging as a hint*/
-
-	Vector4Set(color, 1, 0, 0, 1);
-	if (dragInfo.item.t)
-		VectorSet(org,
-			mousePosX - (C_UNIT * dragInfo.item.t->sx - C_UNIT) / 2,
-			mousePosY - (C_UNIT * dragInfo.item.t->sy - C_UNIT) / 2,
-			-50);
-	R_DrawCircle2D(org[0] * viddef.rx, org[1] * viddef.ry, 2.0, qtrue, color, 1.0);
-#endif
+	MN_DrawDragAndDrop(mousePosX, mousePosY);
 }
 
 void MN_DrawMenusInit (void)

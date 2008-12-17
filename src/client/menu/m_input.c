@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_actions.h"
 #include "m_parse.h"
 #include "m_input.h"
-#include "m_dragndrop.h"
 #include "node/m_node_text.h"
 #include "node/m_node_tab.h"
 #include "m_nodes.h"
@@ -283,7 +282,6 @@ void MN_MouseMove (int x, int y)
 void MN_LeftClick (int x, int y)
 {
 	menuNode_t *node;
-	qboolean mouseOver;
 
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -293,7 +291,11 @@ void MN_LeftClick (int x, int y)
 	}
 
 	if (hoveredNode) {
+#if 0 /* this code do nothing? */
+		qboolean mouseOver;
+#endif
 		node = hoveredNode;
+#if 0 /* this code do nothing? */
 		if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
 			int itemX = 0;
 			int itemY = 0;
@@ -313,6 +315,7 @@ void MN_LeftClick (int x, int y)
 			}
 			mouseOver = MN_CheckNodeZone(node, x, y) || MN_CheckNodeZone(node, x - itemX, y - itemY);
 		}
+#endif
 
 		if (node->behaviour->leftClick) {
 			node->behaviour->leftClick(node, x, y);

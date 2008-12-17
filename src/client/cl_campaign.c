@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_uforecovery.h"
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
-#include "menu/m_dragndrop.h"
+#include "menu/node/m_node_container.h"
 #include "cl_installation.h"
 
 /**

@@ -42,20 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
-dragInfo_t dragInfo = {
-	{NONE_AMMO, NULL, NULL, 1, 0},	/* item */
-	NULL,	/* ic */
-	NULL,	/* from */
-	-1,		/* fromX */
-	-1,		/* fromY */
-
-	NULL,	/* toNode */
-	NULL,	/* to */
-	-1,		/* toX */
-	-1		/* toY */
-
-}; /**< To crash as soon as possible. */
-
 static const invList_t *itemHover;
 
 /**
@@ -388,7 +374,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 
 /**
  * @brief Draws the free and usable inventory positions when dragging an item.
- * @note Only call this function in dragging mode @code (mouseSpace == MS_DRAGITEM) @endcode
+ * @note Only call this function in dragging mode
  */
 static void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 {
@@ -396,7 +382,7 @@ static void MN_InvDrawFree (inventory_t *inv, const menuNode_t *node)
 	vec2_t nodepos;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
-	assert(mouseSpace == MS_DRAGITEM);
+	assert(MN_DNDIsDragging());
 	assert(inv);
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -507,7 +493,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (mouseSpace == MS_DRAGITEM && dragInfo.item.t)
+	if (MN_DNDIsDragging())
 		drawLoadable = qtrue;
 
 	if (node->container->single) {
@@ -730,12 +716,12 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	}
 
 	/* Draw free space if dragging - but not for idEquip */
-	if (mouseSpace == MS_DRAGITEM && node->container->id != csi.idEquip)
+	if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
 		MN_InvDrawFree(menuInventory, node);
 
 	/** @todo Draw tooltips for dragged ammo (and info about weapon it can be loaded in when hovering over it). */
 	/* Draw tooltip for weapon or ammo */
-	if (mouseSpace != MS_DRAGITEM && node->state && mn_show_tooltips->integer) {
+	if (MN_DNDIsDragging() && node->state && mn_show_tooltips->integer) {
 		assert(node->container);
 
 		/** Find out where the mouse is. */
@@ -994,7 +980,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
  * @param[in] mouseX/mouseY Mouse coordinates.
  * @param[in] rightClick If we want to auto-assign items instead of dragging them this has to be qtrue.
  */
-void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY, qboolean rightClick)
+static void MN_Drag (menuNode_t* node, base_t *base, int mouseX, int mouseY, qboolean rightClick)
 {
 	int sel;
 
@@ -1032,14 +1018,9 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 		if (ic) {
 			if (!rightClick) {
 				/* Found item to drag. Prepare for drag-mode. */
-				mouseSpace = MS_DRAGITEM;
-				dragInfo.item = ic->item;
-				dragInfo.ic = ic;
-				dragInfo.from = node->container;
-
-				/* Store grid-position (in the container) of the mouse. */
-				dragInfo.fromX = fromX;
-				dragInfo.fromY = fromY;
+				MN_DNDStart(node);
+				MN_DNDDragItem(&(ic->item), ic);
+				MN_DNDFromContainer(node->container, fromX, fromY);
 			} else {
 				/* Right click: automatic item assignment/removal. */
 				if (node->container->id != csi.idEquip) {
@@ -1121,7 +1102,7 @@ void MN_Drag (const menuNode_t* const node, base_t *base, int mouseX, int mouseY
 	} else {
 		invList_t *fItem;
 		/* End drag */
-		mouseSpace = MS_NULL;
+		MN_DNDStop();
 
 		/* tactical mission */
 		if (selActor) {

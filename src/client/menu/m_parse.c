@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_main.h"
 #include "m_actions.h"
-#include "m_dragndrop.h"
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
 

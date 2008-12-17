@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_draw.h"
 #include "../m_parse.h"
 #include "../m_font.h"
-#include "../m_dragndrop.h"
-#include "../m_tooltip.h"
 #include "../m_nodes.h"
 #include "m_node_model.h"
 #include "m_node_cinematic.h"

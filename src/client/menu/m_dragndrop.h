@@ -28,34 +28,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../game/inv_shared.h"
 
-/** @brief One unit in the containers is 25x25. */
-#define C_UNIT				25
+struct invList_s;
+struct invDef_s;
+struct menuNode_s;
+struct invDef_s;
 
-/**
- * @brief Offset between two rows (and the top of the container to
- * the first row) of items in a scrollable container.
- * Right now only used for vertical containers.
- */
-#define	C_ROW_OFFSET		15
+typedef enum {
+	DND_NOTHING,
+	DND_ITEM,
+} dndType_t;
 
-extern inventory_t *menuInventory;
 
 typedef struct dragInfo_s {
+	dndType_t type;					/**< What are we dragging */
+	struct menuNode_s *fromNode;	/**< Node providing the drag item */
+	int fromAbsoluteX;				/**< Where the drag start */
+	int fromAbsoluteY;				/**< Where the drag start */
+
+	/* bellow that, nothing is generic :/ */
+
 	item_t item;	/**< The item that is currently dragged. */
-	const invList_t *ic;	/**< The current invList pointer (only used for ignoring the dragged item for finding free space right now) */
-	const invDef_t * from;	/**< The container the items is dragged out of (i.e. from). */
+	const struct invList_s *ic;	/**< The current invList pointer (only used for ignoring the dragged item for finding free space right now) */
+	const struct invDef_s * from;	/**< The container the items is dragged out of (i.e. from). */
 	int fromX;		/**< The X position in the container the item was/is located.
 					 * More exactly this is the position the user clicked on. (i.e. NOT necessarily invList_t->x) */
 	int fromY;		/**< The Y position in the container the item was/is located. */
 
 	/* The "to" variables are only used in cl_screen.c to draw the preview. */
-	const menuNode_t *toNode;
-	const invDef_t *to;
+	const struct menuNode_s *toNode;
+	const struct invDef_s *to;
 	int toX;
 	int toY;
 } dragInfo_t;
 
 extern dragInfo_t dragInfo;
 
+void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
+qboolean MN_DNDIsDragging(void);
+void MN_DNDStart(struct menuNode_s *from);
+void MN_DNDDragItem(item_t *item, struct invList_s *fromInventory);
+void MN_DNDFromContainer(struct invDef_s *container, int ownFromX, int ownFromY);
+void MN_DNDStop(void);
 
 #endif

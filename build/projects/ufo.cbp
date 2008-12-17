@@ -429,6 +429,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_actions.h" />
+		<Unit filename="..\..\src\client\menu\m_dragndrop.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\menu\m_dragndrop.h" />
 		<Unit filename="..\..\src\client\menu\m_draw.c">
 			<Option compilerVar="CC" />
