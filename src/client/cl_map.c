@@ -747,6 +747,8 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 
 	line->distance = fabs(phiEnd - phiStart) / n * todeg;
 	line->numPoints = n + 1;
+	/* make sure we do not exceed route array size */
+	assert(line->numPoints <= LINE_MAXPTS);
 	dPhi = (phiEnd - phiStart) / n;
 	p = NULL;
 	for (phi = phiStart, i = 0; i <= n; phi += dPhi, i++) {

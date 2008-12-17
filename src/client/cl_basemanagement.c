@@ -3984,6 +3984,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->radar.range = MSG_ReadShort(sb);
 			aircraft->radar.trackingRange = MSG_ReadShort(sb);
 			aircraft->route.numPoints = MSG_ReadShort(sb);
+			if (aircraft->route.numPoints > LINE_MAXPTS) {
+				Com_Printf("B_Load: number of points (%i) for aircraft route exceed maximum value (%i)\n", aircraft->route.numPoints, LINE_MAXPTS);
+				return qfalse;
+			}
 			aircraft->route.distance = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.numPoints; l++)
 				MSG_Read2Pos(sb, aircraft->route.point[l]);

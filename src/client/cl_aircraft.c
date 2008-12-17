@@ -2437,8 +2437,10 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);
-			if (ufo->route.numPoints > LINE_MAXPTS)
+			if (ufo->route.numPoints > LINE_MAXPTS) {
+				Com_Printf("AIR_Load: number of points (%i) for UFO route exceed maximum value (%i)\n", ufo->route.numPoints, LINE_MAXPTS);
 				return qfalse;
+			}
 			ufo->route.distance = MSG_ReadFloat(sb);
 			for (j = 0; j < ufo->route.numPoints; j++)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
