@@ -3781,6 +3781,7 @@ static void B_PostLoadInitCapacity (void)
 static void B_PostLoadInitCheckAircraft (void)
 {
 	int baseIdx;
+	int totalNumberOfAircraft = 0;
 	int i;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -3790,6 +3791,7 @@ static void B_PostLoadInitCheckAircraft (void)
 
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
+			totalNumberOfAircraft++;
 
 			/* if aircraft is attacking a UFO, it should have a target */
 			if (aircraft->status == AIR_UFO && (!aircraft->aircraftTarget || !aircraft->aircraftTarget->tpl)) {
@@ -3799,6 +3801,9 @@ static void B_PostLoadInitCheckAircraft (void)
 			}
 		}
 	}
+
+	if (totalNumberOfAircraft != gd.numAircraft)
+		Com_Printf("Error in B_PostLoadInitCheckAircraft(): Total number of aircraft (%i) does not fit saved value (%i)\n", totalNumberOfAircraft, gd.numAircraft);
 }
 #endif
 
@@ -3877,10 +3882,18 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* read missile battery slots */
 		b->numBatteries = MSG_ReadByte(sb);
+		if (b->numBatteries > MAX_BASE_SLOT) {
+			Com_Printf("B_Load: number of batteries in base '%s' (%i) exceed maximum value (%i)\n", b->name, b->numBatteries, MAX_BASE_SLOT);
+			return qfalse;
+		}
 		B_LoadBaseSlots(b->batteries, b->numBatteries, sb);
 
 		/* read laser battery slots */
 		b->numLasers = MSG_ReadByte(sb);
+		if (b->numLasers > MAX_BASE_SLOT) {
+			Com_Printf("B_Load: number of lasers in base '%s' (%i) exceed maximum value (%i)\n", b->name, b->numLasers, MAX_BASE_SLOT);
+			return qfalse;
+		}
 		B_LoadBaseSlots(b->lasers, b->numLasers, sb);
 
 		b->aircraftCurrent = NULL;
@@ -3889,6 +3902,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
 
 		b->numAircraftInBase = MSG_ReadByte(sb);
+		if (b->numAircraftInBase > MAX_AIRCRAFT) {
+			Com_Printf("B_Load: number of aircraft in base '%s' (%i) exceed maximum value (%i)\n", b->name, b->numAircraftInBase, MAX_AIRCRAFT);
+			return qfalse;
+		}
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft_t *aircraft;
 
@@ -3992,7 +4009,15 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < aircraft->route.numPoints; l++)
 				MSG_Read2Pos(sb, aircraft->route.point[l]);
 			aircraft->alientypes = MSG_ReadShort(sb);
+			if (aircraft->alientypes > MAX_CARGO) {
+				Com_Printf("B_Load: number of alien types (%i) exceed maximum value (%i)\n", aircraft->alientypes, MAX_CARGO);
+				return qfalse;
+			}
 			aircraft->itemtypes = MSG_ReadShort(sb);
+			if (aircraft->itemtypes > MAX_CARGO) {
+				Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", aircraft->itemtypes, MAX_CARGO);
+				return qfalse;
+			}
 			/* aliencargo */
 			for (l = 0; l < aircraft->alientypes; l++) {
 				aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
