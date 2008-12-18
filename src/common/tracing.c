@@ -666,8 +666,6 @@ static void TR_BoxLeafnums_r (boxtrace_t *trace_data, int nodenum)
  */
 static int TR_BoxLeafnums_headnode (boxtrace_t *trace_data, vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
 {
-	TR_TILE_TYPE *myTile = trace_data->tile;
-
 	leaf_list = list;
 	leaf_count = 0;
 	leaf_maxcount = listsize;
@@ -676,7 +674,7 @@ static int TR_BoxLeafnums_headnode (boxtrace_t *trace_data, vec3_t mins, vec3_t 
 
 	leaf_topnode = LEAFNODE;
 
-	assert(headnode < myTile->numnodes + 6); /* +6 => bbox */
+	assert(headnode < trace_data->tile->numnodes + 6); /* +6 => bbox */
 	TR_BoxLeafnums_r(trace_data, headnode);
 
 	if (topnode)

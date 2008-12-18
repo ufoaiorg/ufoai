@@ -2801,7 +2801,7 @@ static void CP_MissionStageEnd (mission_t *mission)
  * @brief Mission is finished because Phalanx team ended it.
  * @param[in] mission Pointer to the mission that is ended.
  */
-static inline void CP_MissionIsOver (mission_t *mission)
+static void CP_MissionIsOver (mission_t *mission)
 {
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
