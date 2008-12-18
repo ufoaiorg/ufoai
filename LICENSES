@@ -2413,6 +2413,12 @@ base/textures/tex_base/wall004_blue.jpg | GNU General Public License 2.0 | John 
 base/textures/tex_base/wall004_brown.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall004_gold.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall004_red.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_base/wall1.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall1_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall2.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall2_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall5.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/textures/tex_base/wall5_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_base/wires01.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_base/wires02.tga | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_base/wires1.tga | GNU General Public License 2.0 | OpenArena GPLed Content
