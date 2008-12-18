@@ -1,23 +1,23 @@
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "entity.h"
 
@@ -47,73 +47,88 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dialogs/light.h"
 #include "dialogs/particle.h"
 
-struct entity_globals_t {
-	Vector3 color_entity;
+struct entity_globals_t
+{
+		Vector3 color_entity;
 
-	entity_globals_t() :
-			color_entity(0.0f, 0.0f, 0.0f) {
-	}
+		entity_globals_t () :
+			color_entity(0.0f, 0.0f, 0.0f)
+		{
+		}
 };
 
 entity_globals_t g_entity_globals;
 
-class EntitySetKeyValueSelected : public scene::Graph::Walker {
-	const char* m_key;
-	const char* m_value;
-public:
-	EntitySetKeyValueSelected(const char* key, const char* value)
-			: m_key(key), m_value(value) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		return true;
-	}
-	void post(const scene::Path& path, scene::Instance& instance) const {
-		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
-			entity->setKeyValue(m_key, m_value);
+class EntitySetKeyValueSelected: public scene::Graph::Walker
+{
+		const char* m_key;
+		const char* m_value;
+	public:
+		EntitySetKeyValueSelected (const char* key, const char* value) :
+			m_key(key), m_value(value)
+		{
 		}
-	}
-};
-
-class EntitySetClassnameSelected : public scene::Graph::Walker {
-	const char* m_classname;
-public:
-	EntitySetClassnameSelected(const char* classname)
-			: m_classname(classname) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		return true;
-	}
-	void post(const scene::Path& path, scene::Instance& instance) const {
-		Entity* entity = Node_getEntity(path.top());
-		if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
-			NodeSmartReference node(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(m_classname, node_is_group(path.top()))));
-
-			EntityCopyingVisitor visitor(*Node_getEntity(node));
-
-			entity->forEachKeyValue(visitor);
-
-			NodeSmartReference child(path.top().get());
-			NodeSmartReference parent(path.parent().get());
-			Node_getTraversable(parent)->erase(child);
-			if (Node_getTraversable(child) != 0 && Node_getTraversable(node) != 0 && node_is_group(node)) {
-				parentBrushes(child, node);
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			Entity* entity = Node_getEntity(path.top());
+			if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
+				entity->setKeyValue(m_key, m_value);
 			}
-			Node_getTraversable(parent)->insert(node);
 		}
-	}
 };
 
-void Scene_EntitySetKeyValue_Selected(const char* key, const char* value) {
+class EntitySetClassnameSelected: public scene::Graph::Walker
+{
+		const char* m_classname;
+	public:
+		EntitySetClassnameSelected (const char* classname) :
+			m_classname(classname)
+		{
+		}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			Entity* entity = Node_getEntity(path.top());
+			if (entity != 0 && (instance.childSelected() || Instance_getSelectable(instance)->isSelected())) {
+				NodeSmartReference node(GlobalEntityCreator().createEntity(GlobalEntityClassManager().findOrInsert(
+						m_classname, node_is_group(path.top()))));
+
+				EntityCopyingVisitor visitor(*Node_getEntity(node));
+
+				entity->forEachKeyValue(visitor);
+
+				NodeSmartReference child(path.top().get());
+				NodeSmartReference parent(path.parent().get());
+				Node_getTraversable(parent)->erase(child);
+				if (Node_getTraversable(child) != 0 && Node_getTraversable(node) != 0 && node_is_group(node)) {
+					parentBrushes(child, node);
+				}
+				Node_getTraversable(parent)->insert(node);
+			}
+		}
+};
+
+void Scene_EntitySetKeyValue_Selected (const char* key, const char* value)
+{
 	GlobalSceneGraph().traverse(EntitySetKeyValueSelected(key, value));
 }
 
-void Scene_EntitySetClassname_Selected(const char* classname) {
+void Scene_EntitySetClassname_Selected (const char* classname)
+{
 	GlobalSceneGraph().traverse(EntitySetClassnameSelected(classname));
 }
 
-void Entity_ungroupSelected() {
-	if (GlobalSelectionSystem().countSelected() < 1) return;
+void Entity_ungroupSelected ()
+{
+	if (GlobalSelectionSystem().countSelected() < 1)
+		return;
 
 	UndoableCommand undo("ungroupSelectedEntities");
 
@@ -134,12 +149,11 @@ void Entity_ungroupSelected() {
 	}
 }
 
-void Entity_connectSelected() {
+void Entity_connectSelected ()
+{
 	if (GlobalSelectionSystem().countSelected() == 2) {
-		GlobalEntityCreator().connectEntities(
-			GlobalSelectionSystem().penultimateSelected().path(),
-			GlobalSelectionSystem().ultimateSelected().path()
-		);
+		GlobalEntityCreator().connectEntities(GlobalSelectionSystem().penultimateSelected().path(),
+				GlobalSelectionSystem().ultimateSelected().path());
 	} else {
 		globalErrorStream() << "entityConnectSelected: exactly two instances must be selected\n";
 	}
@@ -147,14 +161,15 @@ void Entity_connectSelected() {
 
 static int g_iLastLightIntensity = 100;
 
-void Entity_createFromSelection(const char* name, const Vector3& origin) {
+void Entity_createFromSelection (const char* name, const Vector3& origin)
+{
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
-	bool isModel = string_equal_nocase(name, "misc_model");
-	bool isSound = string_equal_nocase(name, "misc_sound");
-	bool isParticle = string_equal_nocase(name, "misc_particle");
+	const bool isModel = string_equal_nocase(name, "misc_model");
+	const bool isSound = string_equal_nocase(name, "misc_sound");
+	const bool isParticle = string_equal_nocase(name, "misc_particle");
 
-	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
+	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
 		globalErrorStream() << "failed to create a group entity - no brushes are selected\n";
@@ -220,13 +235,11 @@ void Entity_createFromSelection(const char* name, const Vector3& origin) {
 	}
 }
 
-
-bool DoNormalisedColor(Vector3& color) {
+bool DoNormalisedColor (Vector3& color)
+{
 	if (!color_dialog(GTK_WIDGET(MainFrame_getWindow()), color))
 		return false;
-	/*
-	** scale colors so that at least one component is at 1.0F
-	*/
+	/* scale colors so that at least one component is at 1.0F */
 
 	float largest = 0.0F;
 
@@ -242,7 +255,7 @@ bool DoNormalisedColor(Vector3& color) {
 		color[1] = 1.0F;
 		color[2] = 1.0F;
 	} else {
-		float scaler = 1.0F / largest;
+		const float scaler = 1.0F / largest;
 
 		color[0] *= scaler;
 		color[1] *= scaler;
@@ -252,7 +265,8 @@ bool DoNormalisedColor(Vector3& color) {
 	return true;
 }
 
-void Entity_setColour() {
+void Entity_setColour ()
+{
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
 		Entity* entity = Node_getEntity(path.top());
@@ -268,7 +282,8 @@ void Entity_setColour() {
 	}
 }
 
-const char* misc_model_dialog(GtkWidget* parent) {
+const char* misc_model_dialog (GtkWidget* parent)
+{
 	StringOutputStream buffer(1024);
 
 	buffer << g_qeglobals.m_userGamePath.c_str() << "models/";
@@ -298,7 +313,8 @@ char* misc_particle_dialog (GtkWidget* parent)
 	return particle;
 }
 
-const char* misc_sound_dialog(GtkWidget* parent) {
+const char* misc_sound_dialog (GtkWidget* parent)
+{
 	StringOutputStream buffer(1024);
 
 	buffer << g_qeglobals.m_userGamePath.c_str() << "sound/";
@@ -320,7 +336,8 @@ const char* misc_sound_dialog(GtkWidget* parent) {
 	return filename;
 }
 
-void Entity_constructMenu(GtkMenu* menu) {
+void Entity_constructMenu (GtkMenu* menu)
+{
 	create_menu_item_with_mnemonic(menu, "_Ungroup", "UngroupSelection");
 	create_menu_item_with_mnemonic(menu, "_Connect", "ConnectSelection");
 	create_menu_item_with_mnemonic(menu, "_Select Color...", "EntityColor");
@@ -329,14 +346,19 @@ void Entity_constructMenu(GtkMenu* menu) {
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void Entity_Construct() {
-	GlobalCommands_insert("EntityColor", FreeCaller<Entity_setColour>(), Accelerator('K'));
-	GlobalCommands_insert("ConnectSelection", FreeCaller<Entity_connectSelected>(), Accelerator('K', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("UngroupSelection", FreeCaller<Entity_ungroupSelected>());
+void Entity_Construct ()
+{
+	GlobalCommands_insert("EntityColor", FreeCaller<Entity_setColour> (), Accelerator('K'));
+	GlobalCommands_insert("ConnectSelection", FreeCaller<Entity_connectSelected> (), Accelerator('K',
+			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("UngroupSelection", FreeCaller<Entity_ungroupSelected> ());
 
-	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity), Vector3ExportStringCaller(g_entity_globals.color_entity));
-	GlobalPreferenceSystem().registerPreference("LastLightIntensity", IntImportStringCaller(g_iLastLightIntensity), IntExportStringCaller(g_iLastLightIntensity));
+	GlobalPreferenceSystem().registerPreference("SI_Colors5", Vector3ImportStringCaller(g_entity_globals.color_entity),
+			Vector3ExportStringCaller(g_entity_globals.color_entity));
+	GlobalPreferenceSystem().registerPreference("LastLightIntensity", IntImportStringCaller(g_iLastLightIntensity),
+			IntExportStringCaller(g_iLastLightIntensity));
 }
 
-void Entity_Destroy() {
+void Entity_Destroy ()
+{
 }

@@ -1104,7 +1104,8 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 	GtkListStore *store = GTK_LIST_STORE(model);
 
 	gtk_list_store_append(store, &iter);
-	// TODO add a parameter name already - new parameters should be added via entify comment click
+	// TODO add a parameter name already - new parameters should be added via entity comment click
+	// maybe the key names should only be valid options from entities.def for the current entity?
 	gtk_list_store_set(store, &iter, 0, "", 1, "", -1);
 
 	GtkTreeViewColumn* viewColumn = gtk_tree_view_get_column(view, 0);
