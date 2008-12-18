@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-14 15:51+0100\n"
+"POT-Creation-Date: 2008-12-18 21:42+0100\n"
 "PO-Revision-Date: 2008-10-26 19:32+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -1196,11 +1196,11 @@ msgstr ""
 msgid "Radar Tower"
 msgstr "雷达站"
 
-#: ../base/ufos/installation.ufo:19 ../base/ufos/menu_geoscape.ufo:1428
+#: ../base/ufos/installation.ufo:19
 msgid "UFO Yard"
 msgstr ""
 
-#: ../base/ufos/installation.ufo:30 ../base/ufos/menu_geoscape.ufo:1395
+#: ../base/ufos/installation.ufo:30 ../base/ufos/menu_geoscape.ufo:1401
 msgid "SAM Site"
 msgstr "地对空飞弹基地"
 
@@ -1508,7 +1508,7 @@ msgstr "UFO坠落现场。"
 msgid "An alien base."
 msgstr "一个异形基地。"
 
-#: ../base/ufos/maps.ufo:2419
+#: ../base/ufos/maps.ufo:2421
 msgid "Base is under attack."
 msgstr "基地受到攻击。"
 
@@ -1525,7 +1525,7 @@ msgid "Scientist"
 msgstr "研究员"
 
 #: ../base/ufos/medals.ufo:38 client/cl_employee.c:260
-#: client/cl_mapfightequip.c:1213
+#: client/cl_mapfightequip.c:1214
 msgid "Pilot"
 msgstr "飞行员"
 
@@ -1695,7 +1695,7 @@ msgstr "生产航空机或相关装备"
 msgid "Produce"
 msgstr "制造"
 
-#: ../base/ufos/menu_aircraft.ufo:277 ../base/ufos/menu_team.ufo:933
+#: ../base/ufos/menu_aircraft.ufo:277 ../base/ufos/menu_team.ufo:779
 msgid "Team Members:"
 msgstr "搭乘人数："
 
@@ -1709,8 +1709,8 @@ msgstr "后一架航空机"
 
 #: ../base/ufos/menu_aircraft.ufo:345 ../base/ufos/menu_aircraft.ufo:955
 #: ../base/ufos/menu_basedefence.ufo:338 ../base/ufos/menu_hospital.ufo:418
-#: ../base/ufos/menu_hospital.ufo:578 ../base/ufos/menu_team.ufo:969
-#: ../base/ufos/menu_team.ufo:1719
+#: ../base/ufos/menu_hospital.ufo:578 ../base/ufos/menu_team.ufo:815
+#: ../base/ufos/menu_team.ufo:1565
 msgid "Done"
 msgstr "完成"
 
@@ -1795,33 +1795,33 @@ msgid "Produce aircraft"
 msgstr "制造航空机"
 
 #: ../base/ufos/menu_airfight.ufo:57 ../base/ufos/menu_geoscape.ufo:102
-#: ../base/ufos/menu_geoscape.ufo:553
+#: ../base/ufos/menu_geoscape.ufo:555
 msgid "CREDITS"
 msgstr "资金"
 
 #: ../base/ufos/menu_airfight.ufo:65 ../base/ufos/menu_bases.ufo:273
-#: ../base/ufos/menu_geoscape.ufo:110 ../base/ufos/menu_geoscape.ufo:561
+#: ../base/ufos/menu_geoscape.ufo:110 ../base/ufos/menu_geoscape.ufo:563
 #: ../base/ufos/menu_research.ufo:760
 msgid "Organisation capital"
 msgstr "合计资金"
 
-#: ../base/ufos/menu_airfight.ufo:76 ../base/ufos/menu_geoscape.ufo:572
+#: ../base/ufos/menu_airfight.ufo:76 ../base/ufos/menu_geoscape.ufo:574
 msgid "Exit combat zoom mode"
 msgstr "离开战斗模式"
 
 #: ../base/ufos/menu_airfight.ufo:88 ../base/ufos/menu_geoscape.ufo:135
-#: ../base/ufos/menu_geoscape.ufo:584
+#: ../base/ufos/menu_geoscape.ufo:586
 msgid "Slow down time"
 msgstr "减速"
 
 #: ../base/ufos/menu_airfight.ufo:102 ../base/ufos/menu_geoscape.ufo:149
-#: ../base/ufos/menu_geoscape.ufo:598
+#: ../base/ufos/menu_geoscape.ufo:600
 msgid "Speed up time"
 msgstr "加速"
 
 #: ../base/ufos/menu_aliencont.ufo:29 ../base/ufos/menu_basesummary.ufo:236
-#: ../base/ufos/menu_buildings.ufo:67 ../base/ufos/menu_buy.ufo:1233
-#: ../base/ufos/menu_hire.ufo:754 ../base/ufos/menu_production.ufo:435
+#: ../base/ufos/menu_buildings.ufo:61 ../base/ufos/menu_buy.ufo:1233
+#: ../base/ufos/menu_hire.ufo:697 ../base/ufos/menu_production.ufo:435
 #: ../base/ufos/menu_research.ufo:809 ../base/ufos/menu_transfer.ufo:236
 msgid "Back to baseview"
 msgstr "返回基地浏览窗口"
@@ -1905,27 +1905,27 @@ msgstr "基地容量："
 msgid "Inventory and physical stats"
 msgstr "详细资料"
 
-#: ../base/ufos/menu_althud.ufo:95 ../base/ufos/menu_hud.ufo:684
+#: ../base/ufos/menu_althud.ufo:95 ../base/ufos/menu_hud.ufo:682
 msgid "Chat"
 msgstr "对话"
 
-#: ../base/ufos/menu_althud.ufo:109 ../base/ufos/menu_hud.ufo:698
+#: ../base/ufos/menu_althud.ufo:109 ../base/ufos/menu_hud.ufo:696
 msgid "Teamchat"
 msgstr "队伍聊天"
 
-#: ../base/ufos/menu_althud.ufo:123 ../base/ufos/menu_hud.ufo:712
+#: ../base/ufos/menu_althud.ufo:123 ../base/ufos/menu_hud.ufo:710
 msgid "Show chat history"
 msgstr "对话记录"
 
-#: ../base/ufos/menu_althud.ufo:146 ../base/ufos/menu_hud.ufo:735
+#: ../base/ufos/menu_althud.ufo:146 ../base/ufos/menu_hud.ufo:733
 msgid "Chat messages"
 msgstr "对话信息"
 
-#: ../base/ufos/menu_althud.ufo:529 ../base/ufos/menu_hud.ufo:225
+#: ../base/ufos/menu_althud.ufo:529
 msgid "Enemy spotted"
 msgstr "侦测敌情"
 
-#: ../base/ufos/menu_althud.ufo:537 ../base/ufos/menu_hud.ufo:237
+#: ../base/ufos/menu_althud.ufo:537 ../base/ufos/menu_hud.ufo:229
 msgid "Click to cycle through spotted enemies"
 msgstr "点击遍历发现的敌人"
 
@@ -1933,7 +1933,7 @@ msgstr "点击遍历发现的敌人"
 msgid "Finish round"
 msgstr "回合结束"
 
-#: ../base/ufos/menu_althud.ufo:603 ../base/ufos/menu_hud.ufo:569
+#: ../base/ufos/menu_althud.ufo:603 ../base/ufos/menu_hud.ufo:567
 msgid "Multiple-shot reaction fire"
 msgstr "预留多次自动反应攻击模式"
 
@@ -1941,7 +1941,7 @@ msgstr "预留多次自动反应攻击模式"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "预留多次自动反应攻击模式（无法实现）"
 
-#: ../base/ufos/menu_althud.ufo:613 ../base/ufos/menu_hud.ufo:581
+#: ../base/ufos/menu_althud.ufo:613 ../base/ufos/menu_hud.ufo:579
 msgid "One-shot reaction fire"
 msgstr "预留一次自动反应攻击模式"
 
@@ -1949,51 +1949,51 @@ msgstr "预留一次自动反应攻击模式"
 msgid "One-shot reaction fire (not possible)"
 msgstr "预留一次自动反应攻击模式 （无法实现）"
 
-#: ../base/ufos/menu_althud.ufo:624 ../base/ufos/menu_hud.ufo:593
+#: ../base/ufos/menu_althud.ufo:624 ../base/ufos/menu_hud.ufo:591
 msgid "No reaction fire"
 msgstr "无自动反应"
 
-#: ../base/ufos/menu_althud.ufo:646 ../base/ufos/menu_hud.ufo:446
+#: ../base/ufos/menu_althud.ufo:646 ../base/ufos/menu_hud.ufo:438
 msgid "Use headgear"
 msgstr "使用护目镜"
 
-#: ../base/ufos/menu_althud.ufo:749
+#: ../base/ufos/menu_althud.ufo:754
 msgid "Level up"
 msgstr "上一层"
 
-#: ../base/ufos/menu_althud.ufo:760
+#: ../base/ufos/menu_althud.ufo:765
 msgid "Level down"
 msgstr "下一层"
 
-#: ../base/ufos/menu_althud.ufo:809
+#: ../base/ufos/menu_althud.ufo:814
 msgid "Switch to right hand weapon"
 msgstr "切换至右手武器"
 
-#: ../base/ufos/menu_althud.ufo:820
+#: ../base/ufos/menu_althud.ufo:825
 msgid "Switch to left hand weapon"
 msgstr "切换至左手武器"
 
-#: ../base/ufos/menu_althud.ufo:1466 ../base/ufos/menu_althud.ufo:1479
-#: ../base/ufos/menu_althud.ufo:1492 ../base/ufos/menu_althud.ufo:1505
-#: ../base/ufos/menu_althud.ufo:1518 ../base/ufos/menu_althud.ufo:1531
-#: ../base/ufos/menu_althud.ufo:1544 ../base/ufos/menu_althud.ufo:1557
-#: ../base/ufos/menu_althud.ufo:1570 ../base/ufos/menu_althud.ufo:1583
-#: ../base/ufos/menu_althud.ufo:1596 ../base/ufos/menu_althud.ufo:1609
-#: ../base/ufos/menu_althud.ufo:1622 ../base/ufos/menu_althud.ufo:1635
-#: ../base/ufos/menu_althud.ufo:1648 ../base/ufos/menu_althud.ufo:1661
-#: ../base/ufos/menu_hud.ufo:1228 ../base/ufos/menu_hud.ufo:1241
-#: ../base/ufos/menu_hud.ufo:1254 ../base/ufos/menu_hud.ufo:1267
-#: ../base/ufos/menu_hud.ufo:1280 ../base/ufos/menu_hud.ufo:1293
-#: ../base/ufos/menu_hud.ufo:1306 ../base/ufos/menu_hud.ufo:1319
-#: ../base/ufos/menu_hud.ufo:1332 ../base/ufos/menu_hud.ufo:1345
-#: ../base/ufos/menu_hud.ufo:1358 ../base/ufos/menu_hud.ufo:1371
-#: ../base/ufos/menu_hud.ufo:1384 ../base/ufos/menu_hud.ufo:1397
-#: ../base/ufos/menu_hud.ufo:1410 ../base/ufos/menu_hud.ufo:1423
+#: ../base/ufos/menu_althud.ufo:1471 ../base/ufos/menu_althud.ufo:1484
+#: ../base/ufos/menu_althud.ufo:1497 ../base/ufos/menu_althud.ufo:1510
+#: ../base/ufos/menu_althud.ufo:1523 ../base/ufos/menu_althud.ufo:1536
+#: ../base/ufos/menu_althud.ufo:1549 ../base/ufos/menu_althud.ufo:1562
+#: ../base/ufos/menu_althud.ufo:1575 ../base/ufos/menu_althud.ufo:1588
+#: ../base/ufos/menu_althud.ufo:1601 ../base/ufos/menu_althud.ufo:1614
+#: ../base/ufos/menu_althud.ufo:1627 ../base/ufos/menu_althud.ufo:1640
+#: ../base/ufos/menu_althud.ufo:1653 ../base/ufos/menu_althud.ufo:1666
+#: ../base/ufos/menu_hud.ufo:1226 ../base/ufos/menu_hud.ufo:1239
+#: ../base/ufos/menu_hud.ufo:1252 ../base/ufos/menu_hud.ufo:1265
+#: ../base/ufos/menu_hud.ufo:1278 ../base/ufos/menu_hud.ufo:1291
+#: ../base/ufos/menu_hud.ufo:1304 ../base/ufos/menu_hud.ufo:1317
+#: ../base/ufos/menu_hud.ufo:1330 ../base/ufos/menu_hud.ufo:1343
+#: ../base/ufos/menu_hud.ufo:1356 ../base/ufos/menu_hud.ufo:1369
+#: ../base/ufos/menu_hud.ufo:1382 ../base/ufos/menu_hud.ufo:1395
+#: ../base/ufos/menu_hud.ufo:1408 ../base/ufos/menu_hud.ufo:1421
 msgid "Check to use this firemode for reaction fire"
 msgstr "使用此攻击方式为自动反应攻击方式"
 
-#: ../base/ufos/menu_althud.ufo:1727 ../base/ufos/menu_althud.ufo:1737
-#: ../base/ufos/menu_hud.ufo:420
+#: ../base/ufos/menu_althud.ufo:1732 ../base/ufos/menu_althud.ufo:1742
+#: ../base/ufos/menu_hud.ufo:412
 msgid "Use Item"
 msgstr "使用"
 
@@ -2082,7 +2082,7 @@ msgid "Manage your aircraft"
 msgstr "管理航空机"
 
 #: ../base/ufos/menu_bases.ufo:99 ../base/ufos/menu_bases.ufo:117
-#: ../base/ufos/menu_geoscape.ufo:2143 ../base/ufos/research.ufo:108
+#: ../base/ufos/menu_geoscape.ufo:2150 ../base/ufos/research.ufo:108
 #: client/cl_map.c:348 client/cl_market.c:567 client/cl_transfer.c:430
 msgid "Aircraft"
 msgstr "航空机"
@@ -2150,17 +2150,17 @@ msgid "Base Summary"
 msgstr "基地摘要"
 
 #: ../base/ufos/menu_bases.ufo:265 ../base/ufos/menu_basesummary.ufo:29
-#: ../base/ufos/menu_buildings.ufo:93 ../base/ufos/menu_buy.ufo:1150
+#: ../base/ufos/menu_buildings.ufo:87 ../base/ufos/menu_buy.ufo:1150
 #: ../base/ufos/menu_production.ufo:30 ../base/ufos/menu_research.ufo:752
 msgid "CREDIT"
 msgstr "所持金"
 
-#: ../base/ufos/menu_bases.ufo:282 ../base/ufos/menu_buildings.ufo:55
+#: ../base/ufos/menu_bases.ufo:282 ../base/ufos/menu_buildings.ufo:49
 #: ../base/ufos/menu_research.ufo:179
 msgid "Name of this base"
 msgstr "此基地名称"
 
-#: ../base/ufos/menu_bases.ufo:303 ../base/ufos/menu_geoscape.ufo:1191
+#: ../base/ufos/menu_bases.ufo:303 ../base/ufos/menu_geoscape.ufo:1193
 msgid "Rename your base"
 msgstr "基地名称更改"
 
@@ -2172,20 +2172,20 @@ msgstr "前一个基地"
 msgid "Switch to the next base"
 msgstr "后一个基地"
 
-#: ../base/ufos/menu_basesummary.ufo:49 ../base/ufos/menu_geoscape.ufo:1178
-#: ../base/ufos/menu_geoscape.ufo:1517 ../base/ufos/menu_geoscape.ufo:1705
-#: ../base/ufos/menu_geoscape.ufo:1868 ../base/ufos/menu_geoscape.ufo:1977
-#: ../base/ufos/menu_geoscape.ufo:2076 ../base/ufos/menu_main.ufo:186
-#: ../base/ufos/menu_multiplayer.ufo:611 ../base/ufos/menu_options.ufo:916
+#: ../base/ufos/menu_basesummary.ufo:49 ../base/ufos/menu_geoscape.ufo:1180
+#: ../base/ufos/menu_geoscape.ufo:1524 ../base/ufos/menu_geoscape.ufo:1712
+#: ../base/ufos/menu_geoscape.ufo:1875 ../base/ufos/menu_geoscape.ufo:1984
+#: ../base/ufos/menu_geoscape.ufo:2083 ../base/ufos/menu_main.ufo:186
+#: ../base/ufos/menu_multiplayer.ufo:611 ../base/ufos/menu_options.ufo:946
 msgid "Name:"
 msgstr "名称："
 
-#: ../base/ufos/menu_buildings.ufo:151
+#: ../base/ufos/menu_buildings.ufo:145
 #, fuzzy
 msgid "Building preview"
 msgstr "建造完工"
 
-#: ../base/ufos/menu_buildings.ufo:197 ../base/ufos/menu_geoscape.ufo:308
+#: ../base/ufos/menu_buildings.ufo:191 ../base/ufos/menu_geoscape.ufo:308
 msgid "UFOpaedia"
 msgstr "资料库"
 
@@ -2245,47 +2245,47 @@ msgstr "买卖机载设备"
 msgid "Storage (used/all):"
 msgstr "仓库（使用量/限量）"
 
-#: ../base/ufos/menu_buy.ufo:1292 ../base/ufos/menu_team.ufo:1367
+#: ../base/ufos/menu_buy.ufo:1292 ../base/ufos/menu_team.ufo:1213
 #: ../base/ufos/menu_ufopedia.ufo:316
 msgid "Previous weapon chambered for this ammunition"
 msgstr "前一种使用此弹药的武器"
 
-#: ../base/ufos/menu_buy.ufo:1307 ../base/ufos/menu_team.ufo:1382
+#: ../base/ufos/menu_buy.ufo:1307 ../base/ufos/menu_team.ufo:1228
 #: ../base/ufos/menu_ufopedia.ufo:331
 msgid "Previous ammunition compatible with this weapon"
 msgstr "此武器的前一种使用弹药"
 
-#: ../base/ufos/menu_buy.ufo:1323 ../base/ufos/menu_team.ufo:1397
+#: ../base/ufos/menu_buy.ufo:1323 ../base/ufos/menu_team.ufo:1243
 #: ../base/ufos/menu_ufopedia.ufo:346
 msgid "Next weapon chambered for this ammunition"
 msgstr "后一种使用此弹药的武器"
 
-#: ../base/ufos/menu_buy.ufo:1338 ../base/ufos/menu_team.ufo:1412
+#: ../base/ufos/menu_buy.ufo:1338 ../base/ufos/menu_team.ufo:1258
 #: ../base/ufos/menu_ufopedia.ufo:361
 msgid "Next ammunition compatible with this weapon"
 msgstr "此武器的后一种使用弹药"
 
-#: ../base/ufos/menu_buy.ufo:1353 ../base/ufos/menu_team.ufo:1428
+#: ../base/ufos/menu_buy.ufo:1353 ../base/ufos/menu_team.ufo:1274
 #: ../base/ufos/menu_ufopedia.ufo:376
 msgid "With weapon:"
 msgstr "使用武器："
 
-#: ../base/ufos/menu_buy.ufo:1362 ../base/ufos/menu_team.ufo:1437
+#: ../base/ufos/menu_buy.ufo:1362 ../base/ufos/menu_team.ufo:1283
 #: ../base/ufos/menu_ufopedia.ufo:385
 msgid "With ammo:"
 msgstr "使用弹药："
 
-#: ../base/ufos/menu_buy.ufo:1387 ../base/ufos/menu_team.ufo:1454
+#: ../base/ufos/menu_buy.ufo:1387 ../base/ufos/menu_team.ufo:1300
 #: ../base/ufos/menu_ufopedia.ufo:418
 msgid "Previous firemode"
 msgstr "前一种攻击方法"
 
-#: ../base/ufos/menu_buy.ufo:1402 ../base/ufos/menu_team.ufo:1469
+#: ../base/ufos/menu_buy.ufo:1402 ../base/ufos/menu_team.ufo:1315
 #: ../base/ufos/menu_ufopedia.ufo:433
 msgid "Next firemode"
 msgstr "后一种攻击方法"
 
-#: ../base/ufos/menu_buy.ufo:1417 ../base/ufos/menu_team.ufo:1484
+#: ../base/ufos/menu_buy.ufo:1417 ../base/ufos/menu_team.ufo:1330
 #: ../base/ufos/menu_ufopedia.ufo:448
 msgid "Firemode:"
 msgstr "攻击方法："
@@ -2302,8 +2302,8 @@ msgstr "快速战斗"
 msgid "Start campaign"
 msgstr "开    始"
 
-#: ../base/ufos/menu_campaign.ufo:74 ../base/ufos/menu_geoscape.ufo:1670
-#: ../base/ufos/menu_geoscape.ufo:1788 ../base/ufos/menu_multiplayer.ufo:74
+#: ../base/ufos/menu_campaign.ufo:74 ../base/ufos/menu_geoscape.ufo:1677
+#: ../base/ufos/menu_geoscape.ufo:1795 ../base/ufos/menu_multiplayer.ufo:74
 #: ../base/ufos/menu_options.ufo:100 ../base/ufos/menu_singleplayer.ufo:110
 #: ../base/ufos/menu_singleplayer.ufo:522
 #: ../base/ufos/menu_singleplayer.ufo:676 ../base/ufos/menu_skirmish.ufo:34
@@ -2387,415 +2387,415 @@ msgstr "以建筑为地图中心"
 msgid "Go to Options"
 msgstr "系统配置"
 
-#: ../base/ufos/menu_geoscape.ufo:612
+#: ../base/ufos/menu_geoscape.ufo:614
 msgid "Toggle between full zoom and half zoom"
 msgstr "切换全放大和半放大"
 
-#: ../base/ufos/menu_geoscape.ufo:708 ../base/ufos/menu_geoscape.ufo:896
-#: ../base/ufos/menu_geoscape.ufo:1126 ../base/ufos/menu_geoscape.ufo:1248
-#: ../base/ufos/menu_geoscape.ufo:1453 ../base/ufos/menu_geoscape.ufo:1571
-#: ../base/ufos/menu_geoscape.ufo:1656 ../base/ufos/menu_geoscape.ufo:1748
-#: ../base/ufos/menu_geoscape.ufo:1921 ../base/ufos/menu_geoscape.ufo:2016
-#: ../base/ufos/menu_geoscape.ufo:2096 ../base/ufos/menu_geoscape.ufo:2177
-#: ../base/ufos/menu_geoscape.ufo:2242 ../base/ufos/menu_irc.ufo:229
+#: ../base/ufos/menu_geoscape.ufo:710 ../base/ufos/menu_geoscape.ufo:898
+#: ../base/ufos/menu_geoscape.ufo:1128 ../base/ufos/menu_geoscape.ufo:1254
+#: ../base/ufos/menu_geoscape.ufo:1460 ../base/ufos/menu_geoscape.ufo:1578
+#: ../base/ufos/menu_geoscape.ufo:1663 ../base/ufos/menu_geoscape.ufo:1755
+#: ../base/ufos/menu_geoscape.ufo:1928 ../base/ufos/menu_geoscape.ufo:2023
+#: ../base/ufos/menu_geoscape.ufo:2103 ../base/ufos/menu_geoscape.ufo:2184
+#: ../base/ufos/menu_geoscape.ufo:2249 ../base/ufos/menu_irc.ufo:229
 #: ../base/ufos/menu_lostwon.ufo:312 ../base/ufos/menu_lostwon.ufo:435
-#: ../base/ufos/menu_options.ufo:550 ../base/ufos/menu_singleplayer.ufo:309
+#: ../base/ufos/menu_options.ufo:568 ../base/ufos/menu_singleplayer.ufo:309
 msgid "Close this dialogue"
 msgstr "关闭窗口"
 
-#: ../base/ufos/menu_geoscape.ufo:723 ../base/ufos/menu_geoscape.ufo:2250
-#: ../base/ufos/menu_main.ufo:176 ../base/ufos/menu_multiplayer.ufo:1630
+#: ../base/ufos/menu_geoscape.ufo:725 ../base/ufos/menu_geoscape.ufo:2257
+#: ../base/ufos/menu_main.ufo:176 ../base/ufos/menu_multiplayer.ufo:1640
 msgid "OK"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:883
+#: ../base/ufos/menu_geoscape.ufo:885
 msgid "Ready"
 msgstr "准备"
 
-#: ../base/ufos/menu_geoscape.ufo:890
+#: ../base/ufos/menu_geoscape.ufo:892
 msgid "Aircraft reached desired location - what to do?"
 msgstr "航空机抵达预定地点，有何指示？"
 
-#: ../base/ufos/menu_geoscape.ufo:910 ../base/ufos/menu_geoscape.ufo:1140
-#: ../base/ufos/menu_geoscape.ufo:1280 ../base/ufos/menu_geoscape.ufo:1467
-#: ../base/ufos/menu_geoscape.ufo:1597 ../base/ufos/menu_geoscape.ufo:1935
-#: ../base/ufos/menu_geoscape.ufo:2030 ../base/ufos/menu_geoscape.ufo:2110
-#: ../base/ufos/menu_geoscape.ufo:2191 ../base/ufos/menu_geoscape.ufo:2319
+#: ../base/ufos/menu_geoscape.ufo:912 ../base/ufos/menu_geoscape.ufo:1142
+#: ../base/ufos/menu_geoscape.ufo:1286 ../base/ufos/menu_geoscape.ufo:1474
+#: ../base/ufos/menu_geoscape.ufo:1604 ../base/ufos/menu_geoscape.ufo:1942
+#: ../base/ufos/menu_geoscape.ufo:2037 ../base/ufos/menu_geoscape.ufo:2117
+#: ../base/ufos/menu_geoscape.ufo:2198 ../base/ufos/menu_geoscape.ufo:2326
 #: ../base/ufos/menu_irc.ufo:243 ../base/ufos/menu_lostwon.ufo:326
-#: ../base/ufos/menu_lostwon.ufo:449 ../base/ufos/menu_options.ufo:576
+#: ../base/ufos/menu_lostwon.ufo:449 ../base/ufos/menu_options.ufo:594
 #: ../base/ufos/menu_singleplayer.ufo:323 client/cl_installation.c:477
 msgid "Cancel"
 msgstr "取消"
 
-#: ../base/ufos/menu_geoscape.ufo:917 ../base/ufos/menu_geoscape.ufo:1006
+#: ../base/ufos/menu_geoscape.ufo:919 ../base/ufos/menu_geoscape.ufo:1008
 msgid "Enter the battlefield"
 msgstr "进入战场"
 
-#: ../base/ufos/menu_geoscape.ufo:931 ../base/ufos/menu_geoscape.ufo:1020
+#: ../base/ufos/menu_geoscape.ufo:933 ../base/ufos/menu_geoscape.ufo:1022
 msgid "Enter"
 msgstr "进入"
 
-#: ../base/ufos/menu_geoscape.ufo:939 ../base/ufos/menu_geoscape.ufo:1027
+#: ../base/ufos/menu_geoscape.ufo:941 ../base/ufos/menu_geoscape.ufo:1029
 msgid "Automatically finish mission"
 msgstr "自动战斗"
 
-#: ../base/ufos/menu_geoscape.ufo:954 ../base/ufos/menu_geoscape.ufo:1041
+#: ../base/ufos/menu_geoscape.ufo:956 ../base/ufos/menu_geoscape.ufo:1043
 msgid "Auto mission"
 msgstr "自动"
 
-#: ../base/ufos/menu_geoscape.ufo:991 client/cl_basemanagement.c:2333
+#: ../base/ufos/menu_geoscape.ufo:993 client/cl_basemanagement.c:2334
 msgid "Base is under attack"
 msgstr "基地正在被攻击"
 
-#: ../base/ufos/menu_geoscape.ufo:1048
+#: ../base/ufos/menu_geoscape.ufo:1050
 msgid "Enter base before the battle"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1062
+#: ../base/ufos/menu_geoscape.ufo:1064
 msgid "Enter base"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1098
+#: ../base/ufos/menu_geoscape.ufo:1100
 msgid "Select base to transfer to"
 msgstr "选择一个基地运输"
 
-#: ../base/ufos/menu_geoscape.ufo:1105
+#: ../base/ufos/menu_geoscape.ufo:1107
 msgid "Choose a base to host alien bodies:"
 msgstr "选择一个基地存放异形："
 
-#: ../base/ufos/menu_geoscape.ufo:1171
+#: ../base/ufos/menu_geoscape.ufo:1173
 msgid "New base"
 msgstr "新基地"
 
-#: ../base/ufos/menu_geoscape.ufo:1204 ../base/ufos/menu_geoscape.ufo:1543
+#: ../base/ufos/menu_geoscape.ufo:1206 ../base/ufos/menu_geoscape.ufo:1550
 msgid "Cost:"
 msgstr "费用："
 
-#: ../base/ufos/menu_geoscape.ufo:1218
+#: ../base/ufos/menu_geoscape.ufo:1220
 msgid "Start with employees:"
 msgstr "开始有员工："
 
-#: ../base/ufos/menu_geoscape.ufo:1227
+#: ../base/ufos/menu_geoscape.ufo:1231
 msgid "Employees already hired at campaign start"
 msgstr "建立基地的同时也雇用人员"
 
-#: ../base/ufos/menu_geoscape.ufo:1234
+#: ../base/ufos/menu_geoscape.ufo:1238
 msgid "Start with buildings:"
 msgstr "开始有建筑："
 
-#: ../base/ufos/menu_geoscape.ufo:1243
+#: ../base/ufos/menu_geoscape.ufo:1249
 msgid "Buildings already built in the initial base"
 msgstr "建立基地的同时也建筑部分设施"
 
-#: ../base/ufos/menu_geoscape.ufo:1263
+#: ../base/ufos/menu_geoscape.ufo:1269
 msgid "Build the base"
 msgstr "建立此基地"
 
-#: ../base/ufos/menu_geoscape.ufo:1288 ../base/ufos/menu_geoscape.ufo:1605
+#: ../base/ufos/menu_geoscape.ufo:1294 ../base/ufos/menu_geoscape.ufo:1612
 msgid "Build"
 msgstr "建造"
 
-#: ../base/ufos/menu_geoscape.ufo:1319
+#: ../base/ufos/menu_geoscape.ufo:1325
 msgid "New installation"
 msgstr "新基站"
 
-#: ../base/ufos/menu_geoscape.ufo:1326
+#: ../base/ufos/menu_geoscape.ufo:1332
 msgid "Type"
 msgstr "种类"
 
-#: ../base/ufos/menu_geoscape.ufo:1332
+#: ../base/ufos/menu_geoscape.ufo:1338
 #, fuzzy
 msgid "Build Time"
 msgstr "建造"
 
-#: ../base/ufos/menu_geoscape.ufo:1339
+#: ../base/ufos/menu_geoscape.ufo:1345
 msgid "Cost"
 msgstr "费用"
 
-#: ../base/ufos/menu_geoscape.ufo:1362
+#: ../base/ufos/menu_geoscape.ufo:1368
 msgid "Radar tower"
 msgstr "雷达站"
 
-#: ../base/ufos/menu_geoscape.ufo:1496
+#: ../base/ufos/menu_geoscape.ufo:1503
 msgid "New radar tower"
 msgstr "新的雷达站"
 
-#: ../base/ufos/menu_geoscape.ufo:1503
+#: ../base/ufos/menu_geoscape.ufo:1510
 msgid "New SAM site"
 msgstr "新的防空基地"
 
-#: ../base/ufos/menu_geoscape.ufo:1510
+#: ../base/ufos/menu_geoscape.ufo:1517
 msgid "New UFO yard"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1530 ../base/ufos/menu_geoscape.ufo:1721
+#: ../base/ufos/menu_geoscape.ufo:1537 ../base/ufos/menu_geoscape.ufo:1728
 msgid "Rename installation"
 msgstr "基站重新命名"
 
-#: ../base/ufos/menu_geoscape.ufo:1583
+#: ../base/ufos/menu_geoscape.ufo:1590
 msgid "Build the radar tower"
 msgstr "建立雷达站"
 
-#: ../base/ufos/menu_geoscape.ufo:1650
+#: ../base/ufos/menu_geoscape.ufo:1657
 msgid "No manangeable options for a radartower"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1698
+#: ../base/ufos/menu_geoscape.ufo:1705
 #, fuzzy
 msgid "Installation Status"
 msgstr "基站"
 
-#: ../base/ufos/menu_geoscape.ufo:1735
+#: ../base/ufos/menu_geoscape.ufo:1742
 #, fuzzy
 msgid "Time to build:"
 msgstr "%i Day to build\n"
 
-#: ../base/ufos/menu_geoscape.ufo:1762
+#: ../base/ufos/menu_geoscape.ufo:1769
 #, fuzzy
 msgid "Manage installation"
 msgstr "基站重新命名"
 
-#: ../base/ufos/menu_geoscape.ufo:1774 client/cl_installation.c:476
+#: ../base/ufos/menu_geoscape.ufo:1781 client/cl_installation.c:476
 #, fuzzy
 msgid "Destroy installation"
 msgstr "新基站"
 
-#: ../base/ufos/menu_geoscape.ufo:1797
+#: ../base/ufos/menu_geoscape.ufo:1804
 #, fuzzy
 msgid "Manage"
 msgstr "Range"
 
-#: ../base/ufos/menu_geoscape.ufo:1805 client/cl_basemanagement.c:960
+#: ../base/ufos/menu_geoscape.ufo:1812 client/cl_basemanagement.c:960
 #: client/cl_basemanagement.c:970 client/cl_basemanagement.c:980
 #: client/cl_basemanagement.c:993 client/cl_installation.c:476
 msgid "Destroy"
 msgstr "摧毁"
 
-#: ../base/ufos/menu_geoscape.ufo:1852 ../base/ufos/menu_geoscape.ufo:1969
+#: ../base/ufos/menu_geoscape.ufo:1859 ../base/ufos/menu_geoscape.ufo:1976
 msgid "Select aircraft"
 msgstr "选择航空机"
 
-#: ../base/ufos/menu_geoscape.ufo:1860
+#: ../base/ufos/menu_geoscape.ufo:1867
 msgid "Select base"
 msgstr "选择基地"
 
-#: ../base/ufos/menu_geoscape.ufo:1874 ../base/ufos/menu_geoscape.ufo:1983
+#: ../base/ufos/menu_geoscape.ufo:1881 ../base/ufos/menu_geoscape.ufo:1990
 msgid "Status:"
 msgstr "状态："
 
-#: ../base/ufos/menu_geoscape.ufo:1880 ../base/ufos/menu_geoscape.ufo:1886
-#: ../base/ufos/menu_geoscape.ufo:1989
+#: ../base/ufos/menu_geoscape.ufo:1887 ../base/ufos/menu_geoscape.ufo:1893
+#: ../base/ufos/menu_geoscape.ufo:1996
 msgid "Base:"
 msgstr "基地："
 
-#: ../base/ufos/menu_geoscape.ufo:1995
+#: ../base/ufos/menu_geoscape.ufo:2002
 msgid "ETA:"
 msgstr "估计到达时间："
 
-#: ../base/ufos/menu_geoscape.ufo:2062
+#: ../base/ufos/menu_geoscape.ufo:2069
 msgid "Select item"
 msgstr "选择"
 
-#: ../base/ufos/menu_geoscape.ufo:2069
+#: ../base/ufos/menu_geoscape.ufo:2076
 msgid "Type:"
 msgstr "种类："
 
-#: ../base/ufos/menu_geoscape.ufo:2150
+#: ../base/ufos/menu_geoscape.ufo:2157
 msgid "Action:"
 msgstr "行动："
 
-#: ../base/ufos/menu_geoscape.ufo:2157
+#: ../base/ufos/menu_geoscape.ufo:2164
 msgid "Description:"
 msgstr "目的地："
 
-#: ../base/ufos/menu_geoscape.ufo:2305
+#: ../base/ufos/menu_geoscape.ufo:2312
 #, fuzzy
 msgid "Apply"
 msgstr "UFO货机"
 
-#: ../base/ufos/menu_geoscape.ufo:2306
+#: ../base/ufos/menu_geoscape.ufo:2313
 msgid "Apply changes"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2320
+#: ../base/ufos/menu_geoscape.ufo:2327
 msgid "Revert changes"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2325
+#: ../base/ufos/menu_geoscape.ufo:2332
 msgid "Pause/message settings"
 msgstr "暂停设定"
 
-#: ../base/ufos/menu_geoscape.ufo:2332
+#: ../base/ufos/menu_geoscape.ufo:2339
 msgid "Notify type"
 msgstr "通告类型"
 
-#: ../base/ufos/menu_geoscape.ufo:2339
+#: ../base/ufos/menu_geoscape.ufo:2346
 msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2348
+#: ../base/ufos/menu_geoscape.ufo:2355
 msgid "Enable or disable messages being displayed for all notification types.\\nLeft click enables all notifications, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2357
+#: ../base/ufos/menu_geoscape.ufo:2364
 msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2381 ../base/ufos/menu_geoscape.ufo:2405
-#: ../base/ufos/menu_geoscape.ufo:2429 ../base/ufos/menu_geoscape.ufo:2453
-#: ../base/ufos/menu_geoscape.ufo:2477 ../base/ufos/menu_geoscape.ufo:2501
-#: ../base/ufos/menu_geoscape.ufo:2525 ../base/ufos/menu_geoscape.ufo:2549
-#: ../base/ufos/menu_geoscape.ufo:2573 ../base/ufos/menu_geoscape.ufo:2597
-#: ../base/ufos/menu_geoscape.ufo:2621 ../base/ufos/menu_geoscape.ufo:2645
-#: ../base/ufos/menu_geoscape.ufo:2669 ../base/ufos/menu_geoscape.ufo:2693
-#: ../base/ufos/menu_geoscape.ufo:2717 ../base/ufos/menu_geoscape.ufo:2741
-#: ../base/ufos/menu_geoscape.ufo:2765 ../base/ufos/menu_geoscape.ufo:2789
-#: ../base/ufos/menu_geoscape.ufo:2813 ../base/ufos/menu_geoscape.ufo:2837
-#: ../base/ufos/menu_geoscape.ufo:2861
+#: ../base/ufos/menu_geoscape.ufo:2392 ../base/ufos/menu_geoscape.ufo:2416
+#: ../base/ufos/menu_geoscape.ufo:2440 ../base/ufos/menu_geoscape.ufo:2464
+#: ../base/ufos/menu_geoscape.ufo:2488 ../base/ufos/menu_geoscape.ufo:2512
+#: ../base/ufos/menu_geoscape.ufo:2536 ../base/ufos/menu_geoscape.ufo:2560
+#: ../base/ufos/menu_geoscape.ufo:2584 ../base/ufos/menu_geoscape.ufo:2608
+#: ../base/ufos/menu_geoscape.ufo:2632 ../base/ufos/menu_geoscape.ufo:2656
+#: ../base/ufos/menu_geoscape.ufo:2680 ../base/ufos/menu_geoscape.ufo:2704
+#: ../base/ufos/menu_geoscape.ufo:2728 ../base/ufos/menu_geoscape.ufo:2752
+#: ../base/ufos/menu_geoscape.ufo:2776 ../base/ufos/menu_geoscape.ufo:2800
+#: ../base/ufos/menu_geoscape.ufo:2824 ../base/ufos/menu_geoscape.ufo:2848
+#: ../base/ufos/menu_geoscape.ufo:2872
 msgid "enable or disable game stopping"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2389 ../base/ufos/menu_geoscape.ufo:2413
-#: ../base/ufos/menu_geoscape.ufo:2437 ../base/ufos/menu_geoscape.ufo:2461
-#: ../base/ufos/menu_geoscape.ufo:2485 ../base/ufos/menu_geoscape.ufo:2509
-#: ../base/ufos/menu_geoscape.ufo:2533 ../base/ufos/menu_geoscape.ufo:2557
-#: ../base/ufos/menu_geoscape.ufo:2581 ../base/ufos/menu_geoscape.ufo:2605
-#: ../base/ufos/menu_geoscape.ufo:2629 ../base/ufos/menu_geoscape.ufo:2653
-#: ../base/ufos/menu_geoscape.ufo:2677 ../base/ufos/menu_geoscape.ufo:2701
-#: ../base/ufos/menu_geoscape.ufo:2725 ../base/ufos/menu_geoscape.ufo:2749
-#: ../base/ufos/menu_geoscape.ufo:2773 ../base/ufos/menu_geoscape.ufo:2797
-#: ../base/ufos/menu_geoscape.ufo:2821 ../base/ufos/menu_geoscape.ufo:2845
-#: ../base/ufos/menu_geoscape.ufo:2869
+#: ../base/ufos/menu_geoscape.ufo:2400 ../base/ufos/menu_geoscape.ufo:2424
+#: ../base/ufos/menu_geoscape.ufo:2448 ../base/ufos/menu_geoscape.ufo:2472
+#: ../base/ufos/menu_geoscape.ufo:2496 ../base/ufos/menu_geoscape.ufo:2520
+#: ../base/ufos/menu_geoscape.ufo:2544 ../base/ufos/menu_geoscape.ufo:2568
+#: ../base/ufos/menu_geoscape.ufo:2592 ../base/ufos/menu_geoscape.ufo:2616
+#: ../base/ufos/menu_geoscape.ufo:2640 ../base/ufos/menu_geoscape.ufo:2664
+#: ../base/ufos/menu_geoscape.ufo:2688 ../base/ufos/menu_geoscape.ufo:2712
+#: ../base/ufos/menu_geoscape.ufo:2736 ../base/ufos/menu_geoscape.ufo:2760
+#: ../base/ufos/menu_geoscape.ufo:2784 ../base/ufos/menu_geoscape.ufo:2808
+#: ../base/ufos/menu_geoscape.ufo:2832 ../base/ufos/menu_geoscape.ufo:2856
+#: ../base/ufos/menu_geoscape.ufo:2880
 msgid "enable or disable displaying a notification message"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2397 ../base/ufos/menu_geoscape.ufo:2421
-#: ../base/ufos/menu_geoscape.ufo:2445 ../base/ufos/menu_geoscape.ufo:2469
-#: ../base/ufos/menu_geoscape.ufo:2493 ../base/ufos/menu_geoscape.ufo:2517
-#: ../base/ufos/menu_geoscape.ufo:2541 ../base/ufos/menu_geoscape.ufo:2565
-#: ../base/ufos/menu_geoscape.ufo:2589 ../base/ufos/menu_geoscape.ufo:2613
-#: ../base/ufos/menu_geoscape.ufo:2637 ../base/ufos/menu_geoscape.ufo:2661
-#: ../base/ufos/menu_geoscape.ufo:2685 ../base/ufos/menu_geoscape.ufo:2709
-#: ../base/ufos/menu_geoscape.ufo:2733 ../base/ufos/menu_geoscape.ufo:2757
-#: ../base/ufos/menu_geoscape.ufo:2781 ../base/ufos/menu_geoscape.ufo:2805
-#: ../base/ufos/menu_geoscape.ufo:2829 ../base/ufos/menu_geoscape.ufo:2853
-#: ../base/ufos/menu_geoscape.ufo:2877
+#: ../base/ufos/menu_geoscape.ufo:2408 ../base/ufos/menu_geoscape.ufo:2432
+#: ../base/ufos/menu_geoscape.ufo:2456 ../base/ufos/menu_geoscape.ufo:2480
+#: ../base/ufos/menu_geoscape.ufo:2504 ../base/ufos/menu_geoscape.ufo:2528
+#: ../base/ufos/menu_geoscape.ufo:2552 ../base/ufos/menu_geoscape.ufo:2576
+#: ../base/ufos/menu_geoscape.ufo:2600 ../base/ufos/menu_geoscape.ufo:2624
+#: ../base/ufos/menu_geoscape.ufo:2648 ../base/ufos/menu_geoscape.ufo:2672
+#: ../base/ufos/menu_geoscape.ufo:2696 ../base/ufos/menu_geoscape.ufo:2720
+#: ../base/ufos/menu_geoscape.ufo:2744 ../base/ufos/menu_geoscape.ufo:2768
+#: ../base/ufos/menu_geoscape.ufo:2792 ../base/ufos/menu_geoscape.ufo:2816
+#: ../base/ufos/menu_geoscape.ufo:2840 ../base/ufos/menu_geoscape.ufo:2864
+#: ../base/ufos/menu_geoscape.ufo:2888
 msgid "enable or disable playing sound"
 msgstr ""
 
-#: ../base/ufos/menu_hire.ufo:79 ../base/ufos/menu_hire.ufo:91
-#: ../base/ufos/menu_hire.ufo:103 ../base/ufos/menu_hire.ufo:115
-#: ../base/ufos/menu_hire.ufo:127 ../base/ufos/menu_hire.ufo:139
-#: ../base/ufos/menu_hire.ufo:151 ../base/ufos/menu_hire.ufo:163
-#: ../base/ufos/menu_hire.ufo:175 ../base/ufos/menu_hire.ufo:187
-#: ../base/ufos/menu_hire.ufo:199 ../base/ufos/menu_hire.ufo:211
-#: ../base/ufos/menu_hire.ufo:223 ../base/ufos/menu_hire.ufo:235
-#: ../base/ufos/menu_hire.ufo:247 ../base/ufos/menu_hire.ufo:259
-#: ../base/ufos/menu_hire.ufo:271 ../base/ufos/menu_hire.ufo:283
-#: ../base/ufos/menu_hire.ufo:295
+#: ../base/ufos/menu_hire.ufo:60 ../base/ufos/menu_hire.ufo:70
+#: ../base/ufos/menu_hire.ufo:80 ../base/ufos/menu_hire.ufo:90
+#: ../base/ufos/menu_hire.ufo:100 ../base/ufos/menu_hire.ufo:110
+#: ../base/ufos/menu_hire.ufo:120 ../base/ufos/menu_hire.ufo:130
+#: ../base/ufos/menu_hire.ufo:140 ../base/ufos/menu_hire.ufo:150
+#: ../base/ufos/menu_hire.ufo:160 ../base/ufos/menu_hire.ufo:170
+#: ../base/ufos/menu_hire.ufo:180 ../base/ufos/menu_hire.ufo:190
+#: ../base/ufos/menu_hire.ufo:200 ../base/ufos/menu_hire.ufo:210
+#: ../base/ufos/menu_hire.ufo:220 ../base/ufos/menu_hire.ufo:230
+#: ../base/ufos/menu_hire.ufo:240
 msgid "Hire/Unhire - Right click to remove"
 msgstr "雇用/解雇 - 右键点击从列表中永久移除"
 
-#: ../base/ufos/menu_hire.ufo:364
+#: ../base/ufos/menu_hire.ufo:307
 msgid "Rename your employee"
 msgstr "员工改名"
 
-#: ../base/ufos/menu_hire.ufo:414 ../base/ufos/menu_hospital.ufo:491
-#: ../base/ufos/menu_physdat.ufo:50 ../base/ufos/menu_team.ufo:838
-#: ../base/ufos/menu_team.ufo:1503
+#: ../base/ufos/menu_hire.ufo:357 ../base/ufos/menu_hospital.ufo:491
+#: ../base/ufos/menu_physdat.ufo:50 ../base/ufos/menu_team.ufo:684
+#: ../base/ufos/menu_team.ufo:1349
 msgid "Strength:"
 msgstr "体力："
 
-#: ../base/ufos/menu_hire.ufo:435 ../base/ufos/menu_hospital.ufo:496
-#: ../base/ufos/menu_options.ufo:1123 ../base/ufos/menu_physdat.ufo:55
-#: ../base/ufos/menu_team.ufo:843 ../base/ufos/menu_team.ufo:1508
+#: ../base/ufos/menu_hire.ufo:378 ../base/ufos/menu_hospital.ufo:496
+#: ../base/ufos/menu_options.ufo:1153 ../base/ufos/menu_physdat.ufo:55
+#: ../base/ufos/menu_team.ufo:689 ../base/ufos/menu_team.ufo:1354
 msgid "Speed:"
 msgstr "速度："
 
-#: ../base/ufos/menu_hire.ufo:456 ../base/ufos/menu_hospital.ufo:501
-#: ../base/ufos/menu_physdat.ufo:60 ../base/ufos/menu_team.ufo:848
-#: ../base/ufos/menu_team.ufo:1513
+#: ../base/ufos/menu_hire.ufo:399 ../base/ufos/menu_hospital.ufo:501
+#: ../base/ufos/menu_physdat.ufo:60 ../base/ufos/menu_team.ufo:694
+#: ../base/ufos/menu_team.ufo:1359
 msgid "Accuracy:"
 msgstr "精度："
 
-#: ../base/ufos/menu_hire.ufo:478 ../base/ufos/menu_hospital.ufo:506
-#: ../base/ufos/menu_physdat.ufo:65 ../base/ufos/menu_team.ufo:853
-#: ../base/ufos/menu_team.ufo:1518
+#: ../base/ufos/menu_hire.ufo:421 ../base/ufos/menu_hospital.ufo:506
+#: ../base/ufos/menu_physdat.ufo:65 ../base/ufos/menu_team.ufo:699
+#: ../base/ufos/menu_team.ufo:1364
 msgid "Mind:"
 msgstr "精神力："
 
-#: ../base/ufos/menu_hire.ufo:499 ../base/ufos/menu_hospital.ufo:511
-#: ../base/ufos/menu_physdat.ufo:70 ../base/ufos/menu_team.ufo:858
-#: ../base/ufos/menu_team.ufo:1523
+#: ../base/ufos/menu_hire.ufo:442 ../base/ufos/menu_hospital.ufo:511
+#: ../base/ufos/menu_physdat.ufo:70 ../base/ufos/menu_team.ufo:704
+#: ../base/ufos/menu_team.ufo:1369
 msgid "Close Combat:"
 msgstr "近身搏斗："
 
-#: ../base/ufos/menu_hire.ufo:520 ../base/ufos/menu_hospital.ufo:516
-#: ../base/ufos/menu_physdat.ufo:75 ../base/ufos/menu_team.ufo:863
-#: ../base/ufos/menu_team.ufo:1528
+#: ../base/ufos/menu_hire.ufo:463 ../base/ufos/menu_hospital.ufo:516
+#: ../base/ufos/menu_physdat.ufo:75 ../base/ufos/menu_team.ufo:709
+#: ../base/ufos/menu_team.ufo:1374
 msgid "Heavy Weapons:"
 msgstr "重武器："
 
-#: ../base/ufos/menu_hire.ufo:541 ../base/ufos/menu_hospital.ufo:521
-#: ../base/ufos/menu_physdat.ufo:80 ../base/ufos/menu_team.ufo:868
-#: ../base/ufos/menu_team.ufo:1533
+#: ../base/ufos/menu_hire.ufo:484 ../base/ufos/menu_hospital.ufo:521
+#: ../base/ufos/menu_physdat.ufo:80 ../base/ufos/menu_team.ufo:714
+#: ../base/ufos/menu_team.ufo:1379
 msgid "Assault Weapons:"
 msgstr "轻武器："
 
-#: ../base/ufos/menu_hire.ufo:562 ../base/ufos/menu_hospital.ufo:526
-#: ../base/ufos/menu_physdat.ufo:85 ../base/ufos/menu_team.ufo:873
-#: ../base/ufos/menu_team.ufo:1538
+#: ../base/ufos/menu_hire.ufo:505 ../base/ufos/menu_hospital.ufo:526
+#: ../base/ufos/menu_physdat.ufo:85 ../base/ufos/menu_team.ufo:719
+#: ../base/ufos/menu_team.ufo:1384
 msgid "Sniper Rifles:"
 msgstr "阻击武器："
 
-#: ../base/ufos/menu_hire.ufo:583 ../base/ufos/menu_hospital.ufo:531
-#: ../base/ufos/menu_physdat.ufo:90 ../base/ufos/menu_team.ufo:878
-#: ../base/ufos/menu_team.ufo:1543
+#: ../base/ufos/menu_hire.ufo:526 ../base/ufos/menu_hospital.ufo:531
+#: ../base/ufos/menu_physdat.ufo:90 ../base/ufos/menu_team.ufo:724
+#: ../base/ufos/menu_team.ufo:1389
 msgid "High-Explosives:"
 msgstr "爆破武器："
 
-#: ../base/ufos/menu_hire.ufo:605 ../base/ufos/menu_hospital.ufo:536
-#: ../base/ufos/menu_team.ufo:883
+#: ../base/ufos/menu_hire.ufo:548 ../base/ufos/menu_hospital.ufo:536
+#: ../base/ufos/menu_team.ufo:729
 msgid "Health:"
 msgstr "生命力："
 
-#: ../base/ufos/menu_hire.ufo:626 ../base/ufos/menu_team.ufo:904
+#: ../base/ufos/menu_hire.ufo:569 ../base/ufos/menu_team.ufo:750
 msgid "Missions Performed:"
 msgstr "任务参加数："
 
-#: ../base/ufos/menu_hire.ufo:637 ../base/ufos/menu_team.ufo:910
+#: ../base/ufos/menu_hire.ufo:580 ../base/ufos/menu_team.ufo:756
 msgid "Enemies Killed:"
 msgstr "杀敌数："
 
-#: ../base/ufos/menu_hire.ufo:698
+#: ../base/ufos/menu_hire.ufo:641
 msgid "Hire soldiers"
 msgstr "雇用士兵"
 
-#: ../base/ufos/menu_hire.ufo:707
+#: ../base/ufos/menu_hire.ufo:650
 msgid "Soldiers"
 msgstr "士兵"
 
-#: ../base/ufos/menu_hire.ufo:712
+#: ../base/ufos/menu_hire.ufo:655
 msgid "Hire scientists"
 msgstr "雇用研究员"
 
-#: ../base/ufos/menu_hire.ufo:721
+#: ../base/ufos/menu_hire.ufo:664
 msgid "Scientists"
 msgstr "研究员"
 
-#: ../base/ufos/menu_hire.ufo:726
+#: ../base/ufos/menu_hire.ufo:669
 msgid "Hire workers"
 msgstr "雇用工人"
 
-#: ../base/ufos/menu_hire.ufo:735
+#: ../base/ufos/menu_hire.ufo:678
 msgid "Workers"
 msgstr "工人"
 
-#: ../base/ufos/menu_hire.ufo:740
+#: ../base/ufos/menu_hire.ufo:683
 msgid "Hire pilots"
 msgstr "雇用飞行员"
 
-#: ../base/ufos/menu_hire.ufo:749
+#: ../base/ufos/menu_hire.ufo:692
 msgid "Pilots"
 msgstr "飞行员"
 
@@ -2915,58 +2915,58 @@ msgstr "七层"
 msgid "Level 8"
 msgstr "八层"
 
-#: ../base/ufos/menu_hud.ufo:410
+#: ../base/ufos/menu_hud.ufo:402
 msgid "Primary fire mode"
 msgstr "首选进攻模式"
 
-#: ../base/ufos/menu_hud.ufo:575
+#: ../base/ufos/menu_hud.ufo:573
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "预留多次自动反应攻击模式 （无法实现）"
 
-#: ../base/ufos/menu_hud.ufo:587
+#: ../base/ufos/menu_hud.ufo:585
 msgid "One-shot reaction fire (Not possible)"
 msgstr "预留一次自动反应攻击模式 （无法实现）"
 
-#: ../base/ufos/menu_hud.ufo:761 ../base/ufos/menu_main.ufo:68
+#: ../base/ufos/menu_hud.ufo:759 ../base/ufos/menu_main.ufo:68
 #: ../base/ufos/menu_multiplayeringame.ufo:56
 #: ../base/ufos/menu_singleplayer.ufo:157
 #: ../base/ufos/menu_singleplayer.ufo:252
 msgid "Options"
 msgstr "系统设置"
 
-#: ../base/ufos/menu_hud.ufo:772
+#: ../base/ufos/menu_hud.ufo:770
 msgid "Physical stats of this soldier"
 msgstr "士兵身体状况"
 
-#: ../base/ufos/menu_hud.ufo:783 ../base/ufos/seq_tutorials.ufo:518
+#: ../base/ufos/menu_hud.ufo:781 ../base/ufos/seq_tutorials.ufo:518
 msgid "Inventory"
 msgstr "详细资料"
 
-#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:1013
+#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:859
 msgid "Backpack"
 msgstr "背包"
 
-#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:1022
+#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:868
 msgid "Left Hand"
 msgstr "左手"
 
-#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:1031
+#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:877
 msgid "Right Hand"
 msgstr "右手"
 
-#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:1040
+#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:886
 msgid "Extension"
 msgstr "附加"
 
-#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1049
+#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:895
 msgid "Headgear"
 msgstr "护目镜"
 
-#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1058
+#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:904
 msgid "Holster"
 msgstr "枪套"
 
-#: ../base/ufos/menu_inventory.ufo:75 ../base/ufos/menu_team.ufo:1067
+#: ../base/ufos/menu_inventory.ufo:75 ../base/ufos/menu_team.ufo:913
 msgid "Belt"
 msgstr "腰带"
 
@@ -2975,7 +2975,7 @@ msgid "Floor"
 msgstr "地板"
 
 #: ../base/ufos/menu_irc.ufo:28 ../base/ufos/menu_multiplayer.ufo:669
-#: ../base/ufos/menu_multiplayer.ufo:1690
+#: ../base/ufos/menu_multiplayer.ufo:1700
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 msgid "Lobby"
 msgstr "大厅"
@@ -3006,7 +3006,7 @@ msgstr "连接到大厅"
 
 #: ../base/ufos/menu_irc.ufo:222 ../base/ufos/menu_multiplayer.ufo:448
 #: ../base/ufos/menu_multiplayer.ufo:714
-#: ../base/ufos/menu_multiplayer.ufo:1620
+#: ../base/ufos/menu_multiplayer.ufo:1630
 msgid "Connect"
 msgstr "连接"
 
@@ -3138,15 +3138,15 @@ msgstr "数值："
 msgid "Save settings"
 msgstr "保存设定"
 
-#: ../base/ufos/menu_main.ufo:209 ../base/ufos/menu_options.ufo:624
+#: ../base/ufos/menu_main.ufo:209 ../base/ufos/menu_options.ufo:642
 msgid "Volume Control"
 msgstr "音量"
 
-#: ../base/ufos/menu_main.ufo:215 ../base/ufos/menu_options.ufo:629
+#: ../base/ufos/menu_main.ufo:215 ../base/ufos/menu_options.ufo:647
 msgid "Effects:"
 msgstr "效果："
 
-#: ../base/ufos/menu_main.ufo:236 ../base/ufos/menu_options.ufo:651
+#: ../base/ufos/menu_main.ufo:236 ../base/ufos/menu_options.ufo:669
 msgid "Music:"
 msgstr "音乐："
 
@@ -3154,7 +3154,7 @@ msgstr "音乐："
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr "你必须设定玩家名称然后点击OK:"
 
-#: ../base/ufos/menu_main.ufo:270 ../base/ufos/menu_options.ufo:939
+#: ../base/ufos/menu_main.ufo:270 ../base/ufos/menu_options.ufo:969
 msgid "Language"
 msgstr "语言"
 
@@ -3166,11 +3166,11 @@ msgstr "语言："
 msgid "Tip of the day"
 msgstr "今日小技巧"
 
-#: ../base/ufos/menu_main.ufo:359 ../base/ufos/menu_options.ufo:860
+#: ../base/ufos/menu_main.ufo:361 ../base/ufos/menu_options.ufo:886
 msgid "Show tip of the day"
 msgstr "显示小技巧"
 
-#: ../base/ufos/menu_main.ufo:379 ../base/ufos/menu_main.ufo:387
+#: ../base/ufos/menu_main.ufo:381 ../base/ufos/menu_main.ufo:389
 msgid "Next"
 msgstr "下一个"
 
@@ -3289,157 +3289,157 @@ msgstr "删除"
 msgid "Day version:"
 msgstr "是否是白天："
 
-#: ../base/ufos/menu_multiplayer.ufo:874 ../base/ufos/seq_tutorials.ufo:785
+#: ../base/ufos/menu_multiplayer.ufo:876 ../base/ufos/seq_tutorials.ufo:785
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
 "请确认您已经打开了TCP端口27910\n"
 "注意您的防火墙设置"
 
-#: ../base/ufos/menu_multiplayer.ufo:887
+#: ../base/ufos/menu_multiplayer.ufo:889
 msgid "Make this server public:"
 msgstr "服务器公开："
 
-#: ../base/ufos/menu_multiplayer.ufo:902
+#: ../base/ufos/menu_multiplayer.ufo:906
 msgid "Enable morale states:"
 msgstr "士气值有效："
 
-#: ../base/ufos/menu_multiplayer.ufo:916
+#: ../base/ufos/menu_multiplayer.ufo:922
 msgid "Gametype:"
 msgstr "游戏类型："
 
-#: ../base/ufos/menu_multiplayer.ufo:955
+#: ../base/ufos/menu_multiplayer.ufo:961
 msgid "Teamplay:"
 msgstr "团队模式："
 
-#: ../base/ufos/menu_multiplayer.ufo:969
+#: ../base/ufos/menu_multiplayer.ufo:977
 msgid "Max. clients:"
 msgstr "最大客户端数目："
 
-#: ../base/ufos/menu_multiplayer.ufo:971
+#: ../base/ufos/menu_multiplayer.ufo:979
 msgid "Sets the max allowed clients to connect"
 msgstr "设置最大允许连结数"
 
-#: ../base/ufos/menu_multiplayer.ufo:996
+#: ../base/ufos/menu_multiplayer.ufo:1004
 msgid "Max. soldiers per team:"
 msgstr "一个队伍最多士兵数："
 
-#: ../base/ufos/menu_multiplayer.ufo:998
+#: ../base/ufos/menu_multiplayer.ufo:1006
 msgid "Sets the max allowed soldiers per team"
 msgstr "设置一个队伍最多允许多少个士兵"
 
-#: ../base/ufos/menu_multiplayer.ufo:1023
+#: ../base/ufos/menu_multiplayer.ufo:1031
 msgid "Max. soldiers per player:"
 msgstr "每个玩家最多可以控制的角色数量："
 
-#: ../base/ufos/menu_multiplayer.ufo:1025
+#: ../base/ufos/menu_multiplayer.ufo:1033
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "在团队模式下一个队伍最多允许多少个士兵"
 
-#: ../base/ufos/menu_multiplayer.ufo:1051
+#: ../base/ufos/menu_multiplayer.ufo:1059
 msgid "Max. human players per team:"
 msgstr "一个队伍最多玩家数："
 
-#: ../base/ufos/menu_multiplayer.ufo:1077 ../base/ufos/menu_skirmish.ufo:78
+#: ../base/ufos/menu_multiplayer.ufo:1085 ../base/ufos/menu_skirmish.ufo:80
 msgid "Max. AI actors:"
 msgstr "AI最多数量："
 
-#: ../base/ufos/menu_multiplayer.ufo:1079
+#: ../base/ufos/menu_multiplayer.ufo:1087
 msgid "Max AI actors for teamplay mode"
 msgstr "团队模式下AI角色最多多少"
 
-#: ../base/ufos/menu_multiplayer.ufo:1104
+#: ../base/ufos/menu_multiplayer.ufo:1112
 msgid "AI autojoin:"
 msgstr "电脑自动加入"
 
-#: ../base/ufos/menu_multiplayer.ufo:1106
+#: ../base/ufos/menu_multiplayer.ufo:1114
 msgid "AI autojoin on free teams"
 msgstr "AI自动加入"
 
-#: ../base/ufos/menu_multiplayer.ufo:1119
+#: ../base/ufos/menu_multiplayer.ufo:1129
 msgid "Server-Password:"
 msgstr "服务器密码："
 
-#: ../base/ufos/menu_multiplayer.ufo:1142
+#: ../base/ufos/menu_multiplayer.ufo:1152
 msgid "RCON-Password:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1165
+#: ../base/ufos/menu_multiplayer.ufo:1175
 msgid "Hostname:"
 msgstr "主机名："
 
-#: ../base/ufos/menu_multiplayer.ufo:1187 ../base/ufos/menu_skirmish.ufo:105
+#: ../base/ufos/menu_multiplayer.ufo:1197 ../base/ufos/menu_skirmish.ufo:107
 msgid "Map"
 msgstr "地图"
 
-#: ../base/ufos/menu_multiplayer.ufo:1285
+#: ../base/ufos/menu_multiplayer.ufo:1295
 msgid "Start server"
 msgstr "启动服务器"
 
-#: ../base/ufos/menu_multiplayer.ufo:1334
+#: ../base/ufos/menu_multiplayer.ufo:1344
 msgid "Team selection"
 msgstr "队伍选择"
 
-#: ../base/ufos/menu_multiplayer.ufo:1343
+#: ../base/ufos/menu_multiplayer.ufo:1353
 msgid "Click the big button in the lower right corner when ready"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1381
+#: ../base/ufos/menu_multiplayer.ufo:1391
 msgid "Max. players per team"
 msgstr "一个队伍玩家最大数"
 
-#: ../base/ufos/menu_multiplayer.ufo:1393
+#: ../base/ufos/menu_multiplayer.ufo:1403
 msgid "Max. teams for this map"
 msgstr "这个地图最多几个队伍"
 
-#: ../base/ufos/menu_multiplayer.ufo:1405
+#: ../base/ufos/menu_multiplayer.ufo:1415
 msgid "Team preference:"
 msgstr "队伍选择："
 
-#: ../base/ufos/menu_multiplayer.ufo:1416
+#: ../base/ufos/menu_multiplayer.ufo:1426
 msgid "Next free team"
 msgstr "后一个"
 
-#: ../base/ufos/menu_multiplayer.ufo:1426
+#: ../base/ufos/menu_multiplayer.ufo:1436
 msgid "Previous free team"
 msgstr "前一个"
 
-#: ../base/ufos/menu_multiplayer.ufo:1437
+#: ../base/ufos/menu_multiplayer.ufo:1447
 msgid "Finish the teamselection and start the game"
 msgstr "结束队伍选择开始游戏"
 
-#: ../base/ufos/menu_multiplayer.ufo:1455
+#: ../base/ufos/menu_multiplayer.ufo:1465
 msgid "Activate chat"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1525
+#: ../base/ufos/menu_multiplayer.ufo:1535
 msgid "Please wait"
 msgstr "请稍候"
 
-#: ../base/ufos/menu_multiplayer.ufo:1532
+#: ../base/ufos/menu_multiplayer.ufo:1542
 msgid "Players connected, waiting for others"
 msgstr "有玩家介入，请等其他的玩家"
 
-#: ../base/ufos/menu_multiplayer.ufo:1545
+#: ../base/ufos/menu_multiplayer.ufo:1555
 msgid "Start the game even if not all teams have joined"
 msgstr "不管团队人员是否满员都开始游戏"
 
-#: ../base/ufos/menu_multiplayer.ufo:1554
+#: ../base/ufos/menu_multiplayer.ufo:1564
 msgid "Force start"
 msgstr "强制开始"
 
-#: ../base/ufos/menu_multiplayer.ufo:1592
+#: ../base/ufos/menu_multiplayer.ufo:1602
 msgid "Enter server password"
 msgstr "输入服务器密码"
 
-#: ../base/ufos/menu_multiplayer.ufo:1600
+#: ../base/ufos/menu_multiplayer.ufo:1610
 msgid "Password:"
 msgstr "密码："
 
-#: ../base/ufos/menu_multiplayer.ufo:1664
+#: ../base/ufos/menu_multiplayer.ufo:1674
 msgid "Personal message"
 msgstr "个人消息"
 
-#: ../base/ufos/menu_multiplayer.ufo:1682
+#: ../base/ufos/menu_multiplayer.ufo:1692
 msgid "Go into the lobby"
 msgstr "进入大厅"
 
@@ -3491,235 +3491,235 @@ msgstr "各向异性纹理级别："
 msgid "Fullscreen:"
 msgstr "全屏："
 
-#: ../base/ufos/menu_options.ufo:201
+#: ../base/ufos/menu_options.ufo:203
 msgid "Texture compression:"
 msgstr "纹理压缩："
 
-#: ../base/ufos/menu_options.ufo:212
+#: ../base/ufos/menu_options.ufo:216
 msgid "Show FPS:"
 msgstr "显示FPS："
 
-#: ../base/ufos/menu_options.ufo:223
+#: ../base/ufos/menu_options.ufo:229
 msgid "Texture Lod:"
 msgstr "纹理层次细节："
 
-#: ../base/ufos/menu_options.ufo:234
+#: ../base/ufos/menu_options.ufo:242
 msgid "Isometric Mode:"
 msgstr "等距模式："
 
-#: ../base/ufos/menu_options.ufo:245
+#: ../base/ufos/menu_options.ufo:255
 msgid "GLSL shaders:"
 msgstr "GLSL着色："
 
-#: ../base/ufos/menu_options.ufo:256
+#: ../base/ufos/menu_options.ufo:268
 msgid "Realtime lighting:"
 msgstr "实时光线："
 
-#: ../base/ufos/menu_options.ufo:267
+#: ../base/ufos/menu_options.ufo:281
 msgid "Weather effects:"
 msgstr "天气效果："
 
-#: ../base/ufos/menu_options.ufo:278
+#: ../base/ufos/menu_options.ufo:294
 msgid "Vertex buffers:"
 msgstr "顶点缓冲："
 
-#: ../base/ufos/menu_options.ufo:289
+#: ../base/ufos/menu_options.ufo:307
 msgid "Multisample buffers:"
 msgstr "多重采样缓冲："
 
-#: ../base/ufos/menu_options.ufo:311
+#: ../base/ufos/menu_options.ufo:329
 msgid "Swap interval:"
 msgstr "刷新间隔："
 
-#: ../base/ufos/menu_options.ufo:334
+#: ../base/ufos/menu_options.ufo:352
 msgid "Gamma:"
 msgstr "灰度系数："
 
-#: ../base/ufos/menu_options.ufo:356
+#: ../base/ufos/menu_options.ufo:374
 msgid "Contrast:"
 msgstr "对比度："
 
-#: ../base/ufos/menu_options.ufo:378
+#: ../base/ufos/menu_options.ufo:396
 msgid "Brightness:"
 msgstr "明亮度："
 
-#: ../base/ufos/menu_options.ufo:400
+#: ../base/ufos/menu_options.ufo:418
 msgid "Lightmap scale:"
 msgstr "灯光贴图比例："
 
-#: ../base/ufos/menu_options.ufo:429 ../base/ufos/menu_options.ufo:458
+#: ../base/ufos/menu_options.ufo:447 ../base/ufos/menu_options.ufo:476
 msgid "Low"
 msgstr "低"
 
-#: ../base/ufos/menu_options.ufo:434 ../base/ufos/menu_options.ufo:463
+#: ../base/ufos/menu_options.ufo:452 ../base/ufos/menu_options.ufo:481
 msgid "Medium"
 msgstr "中"
 
-#: ../base/ufos/menu_options.ufo:439 ../base/ufos/menu_options.ufo:468
-#: client/cl_campaign.c:6980
+#: ../base/ufos/menu_options.ufo:457 ../base/ufos/menu_options.ufo:486
+#: client/cl_campaign.c:7038
 msgid "Normal"
 msgstr "一般"
 
-#: ../base/ufos/menu_options.ufo:444 ../base/ufos/menu_options.ufo:473
+#: ../base/ufos/menu_options.ufo:462 ../base/ufos/menu_options.ufo:491
 msgid "High"
 msgstr "高"
 
-#: ../base/ufos/menu_options.ufo:478 client/cl_actor.c:179
+#: ../base/ufos/menu_options.ufo:496 client/cl_actor.c:179
 msgid "Excellent"
 msgstr "杰出"
 
-#: ../base/ufos/menu_options.ufo:483
+#: ../base/ufos/menu_options.ufo:501
 msgid "Extreme"
 msgstr "顶级"
 
-#: ../base/ufos/menu_options.ufo:537
+#: ../base/ufos/menu_options.ufo:555
 msgid "Maintain resolution"
 msgstr "解析度调整"
 
-#: ../base/ufos/menu_options.ufo:544
+#: ../base/ufos/menu_options.ufo:562
 msgid "Want To Maintain resolution"
 msgstr "调整解析度"
 
-#: ../base/ufos/menu_options.ufo:562
+#: ../base/ufos/menu_options.ufo:580
 msgid "Change the resolution"
 msgstr "改变分辨率"
 
-#: ../base/ufos/menu_options.ufo:584
+#: ../base/ufos/menu_options.ufo:602
 msgid "Accept"
 msgstr "接受"
 
-#: ../base/ufos/menu_options.ufo:616
+#: ../base/ufos/menu_options.ufo:634
 msgid "Sound settings"
 msgstr "声音设定"
 
-#: ../base/ufos/menu_options.ufo:673
+#: ../base/ufos/menu_options.ufo:691
 msgid "Sound rate:"
 msgstr "声效频率："
 
-#: ../base/ufos/menu_options.ufo:678
+#: ../base/ufos/menu_options.ufo:696
 msgid "Restart sound to change the settings"
 msgstr "应用声音设定"
 
-#: ../base/ufos/menu_options.ufo:737
+#: ../base/ufos/menu_options.ufo:755
 msgid "Show key bindings"
 msgstr "显示快捷键设定"
 
-#: ../base/ufos/menu_options.ufo:789
+#: ../base/ufos/menu_options.ufo:807
 msgid "Game settings"
 msgstr "游戏设定"
 
-#: ../base/ufos/menu_options.ufo:800
+#: ../base/ufos/menu_options.ufo:818
 msgid "Tooltips:"
 msgstr "提示："
 
-#: ../base/ufos/menu_options.ufo:807
+#: ../base/ufos/menu_options.ufo:825
 msgid "Activates tooltips"
 msgstr "显示提示"
 
-#: ../base/ufos/menu_options.ufo:815
+#: ../base/ufos/menu_options.ufo:835
 msgid "Centre view:"
 msgstr "中心视角："
 
-#: ../base/ufos/menu_options.ufo:822
+#: ../base/ufos/menu_options.ufo:842
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "按选择的士兵为中心，操作射击"
 
-#: ../base/ufos/menu_options.ufo:830
+#: ../base/ufos/menu_options.ufo:852
 msgid "Cursor tooltips:"
 msgstr "鼠标提示："
 
-#: ../base/ufos/menu_options.ufo:837
+#: ../base/ufos/menu_options.ufo:859
 msgid "Activates cursor tooltips"
 msgstr "激活动态提示"
 
-#: ../base/ufos/menu_options.ufo:845
+#: ../base/ufos/menu_options.ufo:869
 msgid "3D Geoscape:"
 msgstr "3D 地球："
 
-#: ../base/ufos/menu_options.ufo:852
+#: ../base/ufos/menu_options.ufo:876
 msgid "Use 3D geoscape"
 msgstr "使用三维地球"
 
-#: ../base/ufos/menu_options.ufo:876
+#: ../base/ufos/menu_options.ufo:904
 msgid "Precache models:"
 msgstr "缓冲模式："
 
-#: ../base/ufos/menu_options.ufo:883
+#: ../base/ufos/menu_options.ufo:911
 msgid "Precache models (faster menus)"
 msgstr "缓冲模式（快速菜单）"
 
-#: ../base/ufos/menu_options.ufo:891
+#: ../base/ufos/menu_options.ufo:921
 #, fuzzy
 msgid "Actor speed:"
 msgstr "人物移动速度："
 
-#: ../base/ufos/menu_options.ufo:957
+#: ../base/ufos/menu_options.ufo:987
 msgid "HUD Design:"
 msgstr "战斗界面："
 
-#: ../base/ufos/menu_options.ufo:968
+#: ../base/ufos/menu_options.ufo:998
 msgid "Original HUD"
 msgstr "原始"
 
-#: ../base/ufos/menu_options.ufo:973
+#: ../base/ufos/menu_options.ufo:1003
 msgid "Alternative HUD"
 msgstr "另一种"
 
-#: ../base/ufos/menu_options.ufo:994
+#: ../base/ufos/menu_options.ufo:1024
 msgid "Input settings"
 msgstr "操作设置"
 
-#: ../base/ufos/menu_options.ufo:1005
+#: ../base/ufos/menu_options.ufo:1035
 msgid "Camera"
 msgstr "视角"
 
-#: ../base/ufos/menu_options.ufo:1010
+#: ../base/ufos/menu_options.ufo:1040
 msgid "Scroll Speed:"
 msgstr "卷动速度："
 
-#: ../base/ufos/menu_options.ufo:1036
+#: ../base/ufos/menu_options.ufo:1066
 msgid "Rotation Speed:"
 msgstr "旋转速度："
 
-#: ../base/ufos/menu_options.ufo:1062
+#: ../base/ufos/menu_options.ufo:1092
 msgid "Move Acceleration:"
 msgstr "移动速度："
 
-#: ../base/ufos/menu_options.ufo:1088
+#: ../base/ufos/menu_options.ufo:1118
 msgid "Joystick settings:"
 msgstr "游戏杆设定："
 
-#: ../base/ufos/menu_options.ufo:1097
+#: ../base/ufos/menu_options.ufo:1127
 msgid "Threshold:"
 msgstr "阈值："
 
-#: ../base/ufos/menu_options.ufo:1156
+#: ../base/ufos/menu_options.ufo:1186
 msgid "Keys"
 msgstr "快捷键"
 
-#: ../base/ufos/menu_options.ufo:1166 client/cl_actor.c:204
+#: ../base/ufos/menu_options.ufo:1196 client/cl_actor.c:204
 msgid "Autostand"
 msgstr "自动站立"
 
-#: ../base/ufos/menu_options.ufo:1177 ../base/ufos/menu_options.ufo:1204
+#: ../base/ufos/menu_options.ufo:1207 ../base/ufos/menu_options.ufo:1234
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1182 ../base/ufos/menu_options.ufo:1209
+#: ../base/ufos/menu_options.ufo:1212 ../base/ufos/menu_options.ufo:1239
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1193
+#: ../base/ufos/menu_options.ufo:1223
 msgid "Confirm Actions:"
 msgstr "操作确认："
 
-#: ../base/ufos/menu_options.ufo:1214
+#: ../base/ufos/menu_options.ufo:1244
 msgid "Only for moving"
 msgstr "移动的时候确认"
 
-#: ../base/ufos/menu_options.ufo:1225
+#: ../base/ufos/menu_options.ufo:1255
 msgid "Joystick:"
 msgstr "游戏杆："
 
@@ -3883,7 +3883,7 @@ msgstr "开    始"
 msgid "Skirmish game settings"
 msgstr "战斗模式设定"
 
-#: ../base/ufos/menu_skirmish.ufo:80
+#: ../base/ufos/menu_skirmish.ufo:82
 msgid "Max AI actors for this game"
 msgstr ""
 
@@ -3939,114 +3939,96 @@ msgstr "资金"
 msgid "max"
 msgstr "最大"
 
-#: ../base/ufos/menu_team.ufo:112 ../base/ufos/menu_team.ufo:114
-#: ../base/ufos/menu_team.ufo:116 ../base/ufos/menu_team.ufo:118
-#: ../base/ufos/menu_team.ufo:120 ../base/ufos/menu_team.ufo:122
-#: ../base/ufos/menu_team.ufo:124 ../base/ufos/menu_team.ufo:126
-#: ../base/ufos/menu_team.ufo:128 ../base/ufos/menu_team.ufo:130
-#: ../base/ufos/menu_team.ufo:132 ../base/ufos/menu_team.ufo:134
-#: ../base/ufos/menu_team.ufo:136 ../base/ufos/menu_team.ufo:138
-#: ../base/ufos/menu_team.ufo:140 ../base/ufos/menu_team.ufo:142
-#: ../base/ufos/menu_team.ufo:144 ../base/ufos/menu_team.ufo:146
-#: ../base/ufos/menu_team.ufo:148
+#: ../base/ufos/menu_team.ufo:72
 msgid "Soldier carries equipment"
 msgstr "携带有装备"
 
-#: ../base/ufos/menu_team.ufo:151 ../base/ufos/menu_team.ufo:153
-#: ../base/ufos/menu_team.ufo:155 ../base/ufos/menu_team.ufo:157
-#: ../base/ufos/menu_team.ufo:159 ../base/ufos/menu_team.ufo:161
-#: ../base/ufos/menu_team.ufo:163 ../base/ufos/menu_team.ufo:165
-#: ../base/ufos/menu_team.ufo:167 ../base/ufos/menu_team.ufo:169
-#: ../base/ufos/menu_team.ufo:171 ../base/ufos/menu_team.ufo:173
-#: ../base/ufos/menu_team.ufo:175 ../base/ufos/menu_team.ufo:177
-#: ../base/ufos/menu_team.ufo:179 ../base/ufos/menu_team.ufo:181
-#: ../base/ufos/menu_team.ufo:183 ../base/ufos/menu_team.ufo:185
-#: ../base/ufos/menu_team.ufo:187
+#: ../base/ufos/menu_team.ufo:80
 msgid "Soldier carries no equipment"
 msgstr "没有携带装备"
 
-#: ../base/ufos/menu_team.ufo:442 ../base/ufos/menu_team.ufo:453
-#: ../base/ufos/menu_team.ufo:464 ../base/ufos/menu_team.ufo:475
-#: ../base/ufos/menu_team.ufo:486 ../base/ufos/menu_team.ufo:497
-#: ../base/ufos/menu_team.ufo:508 ../base/ufos/menu_team.ufo:519
-#: ../base/ufos/menu_team.ufo:530 ../base/ufos/menu_team.ufo:541
-#: ../base/ufos/menu_team.ufo:552 ../base/ufos/menu_team.ufo:563
-#: ../base/ufos/menu_team.ufo:574 ../base/ufos/menu_team.ufo:585
-#: ../base/ufos/menu_team.ufo:596 ../base/ufos/menu_team.ufo:607
-#: ../base/ufos/menu_team.ufo:618 ../base/ufos/menu_team.ufo:629
-#: ../base/ufos/menu_team.ufo:640
+#: ../base/ufos/menu_team.ufo:325 ../base/ufos/menu_team.ufo:334
+#: ../base/ufos/menu_team.ufo:343 ../base/ufos/menu_team.ufo:352
+#: ../base/ufos/menu_team.ufo:361 ../base/ufos/menu_team.ufo:370
+#: ../base/ufos/menu_team.ufo:379 ../base/ufos/menu_team.ufo:388
+#: ../base/ufos/menu_team.ufo:397 ../base/ufos/menu_team.ufo:406
+#: ../base/ufos/menu_team.ufo:415 ../base/ufos/menu_team.ufo:424
+#: ../base/ufos/menu_team.ufo:433 ../base/ufos/menu_team.ufo:442
+#: ../base/ufos/menu_team.ufo:451 ../base/ufos/menu_team.ufo:460
+#: ../base/ufos/menu_team.ufo:469 ../base/ufos/menu_team.ufo:478
+#: ../base/ufos/menu_team.ufo:487
 msgid "Add/remove this soldier"
 msgstr "搭载/移除此士兵"
 
-#: ../base/ufos/menu_team.ufo:801
+#: ../base/ufos/menu_team.ufo:647
 msgid "Rename your soldier"
 msgstr "改名换姓"
 
-#: ../base/ufos/menu_team.ufo:947 ../base/ufos/menu_team.ufo:958
+#: ../base/ufos/menu_team.ufo:793 ../base/ufos/menu_team.ufo:804
 msgid "Assign tanks"
 msgstr "分配坦克"
 
-#: ../base/ufos/menu_team.ufo:952
+#: ../base/ufos/menu_team.ufo:798
 msgid "Assign soldiers"
 msgstr "分配士兵"
 
-#: ../base/ufos/menu_team.ufo:1125 ../base/ufos/menu_team.ufo:1134
-#: ../base/ufos/menu_team.ufo:1143 ../base/ufos/menu_team.ufo:1152
-#: ../base/ufos/menu_team.ufo:1161 ../base/ufos/menu_team.ufo:1170
-#: ../base/ufos/menu_team.ufo:1179 ../base/ufos/menu_team.ufo:1188
+#: ../base/ufos/menu_team.ufo:971 ../base/ufos/menu_team.ufo:980
+#: ../base/ufos/menu_team.ufo:989 ../base/ufos/menu_team.ufo:998
+#: ../base/ufos/menu_team.ufo:1007 ../base/ufos/menu_team.ufo:1016
+#: ../base/ufos/menu_team.ufo:1025 ../base/ufos/menu_team.ufo:1034
 msgid "Equip this soldier"
 msgstr "装备此士兵"
 
-#: ../base/ufos/menu_team.ufo:1273
+#: ../base/ufos/menu_team.ufo:1119
 msgid "Show available primary weapons"
 msgstr "显示可用的主武器"
 
-#: ../base/ufos/menu_team.ufo:1281
+#: ../base/ufos/menu_team.ufo:1127
 msgid "Primary"
 msgstr "主武器"
 
-#: ../base/ufos/menu_team.ufo:1286
+#: ../base/ufos/menu_team.ufo:1132
 msgid "Show available secondary weapons"
 msgstr "显示可用的副武器"
 
-#: ../base/ufos/menu_team.ufo:1294
+#: ../base/ufos/menu_team.ufo:1140
 msgid "Secondary"
 msgstr "副武器"
 
-#: ../base/ufos/menu_team.ufo:1299
+#: ../base/ufos/menu_team.ufo:1145
 msgid "Show available heavy weapons"
 msgstr "显示可用的重型武器"
 
-#: ../base/ufos/menu_team.ufo:1307 client/cl_ufopedia.c:162
+#: ../base/ufos/menu_team.ufo:1153 client/cl_ufopedia.c:162
 msgid "Heavy"
 msgstr "大型"
 
-#: ../base/ufos/menu_team.ufo:1312
+#: ../base/ufos/menu_team.ufo:1158
 msgid "Show available miscellaneous equipment and weapons"
 msgstr "显示可用的特殊装备"
 
-#: ../base/ufos/menu_team.ufo:1320
+#: ../base/ufos/menu_team.ufo:1166
 msgid "Misc"
 msgstr "特殊"
 
-#: ../base/ufos/menu_team.ufo:1325
+#: ../base/ufos/menu_team.ufo:1171
 msgid "Show available armour"
 msgstr "显示可用的作战服"
 
-#: ../base/ufos/menu_team.ufo:1333 client/cl_mapfightequip.c:1206
+#: ../base/ufos/menu_team.ufo:1179 client/cl_mapfightequip.c:1207
 #: client/cl_ufopedia.c:195
 msgid "Armour"
 msgstr "装甲"
 
-#: ../base/ufos/menu_team.ufo:1616
+#: ../base/ufos/menu_team.ufo:1462
 msgid "Object Info"
 msgstr "物品资料"
 
-#: ../base/ufos/menu_team.ufo:1628
+#: ../base/ufos/menu_team.ufo:1474
 msgid "Actor Abilities"
 msgstr "士兵能力"
 
-#: ../base/ufos/menu_team.ufo:1670
+#: ../base/ufos/menu_team.ufo:1516
 msgid "Use current skin with every soldier aboard"
 msgstr "所有士兵都使用这种迷彩"
 
@@ -11249,42 +11231,42 @@ msgstr ""
 "航空机无法起飞。\n"
 
 #: client/cl_aircraft.c:263 client/cl_aircraft.c:271 client/cl_aircraft.c:279
-#: client/cl_aircraft.c:830 client/cl_aircraft.c:1233
-#: client/cl_aircraft.c:1241 client/cl_aircraft.c:1347
-#: client/cl_aircraft.c:1371 client/cl_airfight.c:388
+#: client/cl_aircraft.c:830 client/cl_aircraft.c:1237
+#: client/cl_aircraft.c:1245 client/cl_aircraft.c:1352
+#: client/cl_aircraft.c:1376 client/cl_airfight.c:390
 #: client/cl_aliencont.c:181 client/cl_aliencont.c:209
 #: client/cl_aliencont.c:222 client/cl_aliencont.c:232
-#: client/cl_basemanagement.c:938 client/cl_basemanagement.c:1489
-#: client/cl_basemanagement.c:2708 client/cl_basemanagement.c:3000
-#: client/cl_basemanagement.c:3009 client/cl_basemanagement.c:3029
-#: client/cl_basemanagement.c:3039 client/cl_basemanagement.c:3050
-#: client/cl_basemanagement.c:3057 client/cl_basemanagement.c:3065
-#: client/cl_basemanagement.c:3070 client/cl_basemanagement.c:3075
+#: client/cl_basemanagement.c:938 client/cl_basemanagement.c:1490
+#: client/cl_basemanagement.c:2709 client/cl_basemanagement.c:3001
+#: client/cl_basemanagement.c:3010 client/cl_basemanagement.c:3030
+#: client/cl_basemanagement.c:3040 client/cl_basemanagement.c:3051
+#: client/cl_basemanagement.c:3058 client/cl_basemanagement.c:3066
+#: client/cl_basemanagement.c:3071 client/cl_basemanagement.c:3076
 #: client/cl_campaign.c:144 client/cl_campaign.c:187 client/cl_campaign.c:695
-#: client/cl_campaign.c:1491 client/cl_campaign.c:4328
-#: client/cl_campaign.c:4339 client/cl_campaign.c:4349
-#: client/cl_campaign.c:4359 client/cl_campaign.c:4369
-#: client/cl_campaign.c:4380 client/cl_campaign.c:4396
-#: client/cl_campaign.c:4409 client/cl_campaign.c:4416
-#: client/cl_campaign.c:4424 client/cl_campaign.c:5694
-#: client/cl_campaign.c:5759 client/cl_campaign.c:5808
-#: client/cl_campaign.c:5820 client/cl_campaign.c:5822
-#: client/cl_campaign.c:6157 client/cl_installation.c:337
+#: client/cl_campaign.c:1491 client/cl_campaign.c:4335
+#: client/cl_campaign.c:4346 client/cl_campaign.c:4356
+#: client/cl_campaign.c:4366 client/cl_campaign.c:4376
+#: client/cl_campaign.c:4387 client/cl_campaign.c:4403
+#: client/cl_campaign.c:4416 client/cl_campaign.c:4423
+#: client/cl_campaign.c:4431 client/cl_campaign.c:5752
+#: client/cl_campaign.c:5817 client/cl_campaign.c:5866
+#: client/cl_campaign.c:5878 client/cl_campaign.c:5880
+#: client/cl_campaign.c:6215 client/cl_installation.c:337
 #: client/cl_installation.c:404 client/cl_inventory.c:338
 #: client/cl_inventory.c:343 client/cl_inventory.c:764 client/cl_main.c:1027
 #: client/cl_main.c:1265 client/cl_map.c:279 client/cl_map.c:283
-#: client/cl_map.c:303 client/cl_map.c:307 client/cl_mapfightequip.c:1003
-#: client/cl_mapfightequip.c:1007 client/cl_mapfightequip.c:1011
-#: client/cl_mapfightequip.c:1033 client/cl_mapfightequip.c:1039
-#: client/cl_mapfightequip.c:1047 client/cl_mapfightequip.c:1052
+#: client/cl_map.c:303 client/cl_map.c:307 client/cl_mapfightequip.c:1004
+#: client/cl_mapfightequip.c:1008 client/cl_mapfightequip.c:1012
+#: client/cl_mapfightequip.c:1034 client/cl_mapfightequip.c:1040
+#: client/cl_mapfightequip.c:1048 client/cl_mapfightequip.c:1053
 #: client/cl_market.c:754 client/cl_market.c:759 client/cl_parse.c:1761
 #: client/cl_popup.c:503 client/cl_produce.c:609 client/cl_produce.c:619
 #: client/cl_produce.c:630 client/cl_produce.c:640 client/cl_produce.c:651
 #: client/cl_research.c:1241 client/cl_research.c:1259
 #: client/cl_research.c:1265 client/cl_research.c:1303
 #: client/cl_research.c:1333 client/cl_research.c:1645
-#: client/cl_research.c:1648 client/cl_ufo.c:477 client/cl_ufo.c:826
-#: client/cl_ufo.c:834
+#: client/cl_research.c:1648 client/cl_ufo.c:477 client/cl_ufo.c:825
+#: client/cl_ufo.c:833
 msgid "Notice"
 msgstr "注    释"
 
@@ -11362,13 +11344,13 @@ msgstr "输送机"
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cl_aircraft.c:737 client/cl_map.c:1927 client/cl_map.c:1936
-#: client/cl_map.c:1949
+#: client/cl_aircraft.c:737 client/cl_map.c:1929 client/cl_map.c:1938
+#: client/cl_map.c:1951
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度：\t%i 公里/小时\n"
 
-#: client/cl_aircraft.c:739 client/cl_map.c:1928 client/cl_map.c:1937
+#: client/cl_aircraft.c:739 client/cl_map.c:1930 client/cl_map.c:1939
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料：\t%i/%i\n"
@@ -11418,53 +11400,53 @@ msgstr "那个基地仓库空间不够。"
 msgid "That base is beyond this aircraft's range."
 msgstr "那个基地不在航空机范围。"
 
-#: client/cl_aircraft.c:1233
+#: client/cl_aircraft.c:1237
 #, c-format
 msgid "Craft %s has refuelled at base %s."
 msgstr "%s 在基地%s补充燃料。"
 
-#: client/cl_aircraft.c:1241
+#: client/cl_aircraft.c:1245
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "%s燃料不足只好返回基地"
 
-#: client/cl_aircraft.c:1347
+#: client/cl_aircraft.c:1352
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "先给这个航空机分配士兵。"
 
-#: client/cl_aircraft.c:1371
+#: client/cl_aircraft.c:1376
 msgid "Insufficient fuel."
 msgstr "燃料不足。"
 
-#: client/cl_airfight.c:388
+#: client/cl_airfight.c:390
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr "航空机弹药不足--现在返回基地"
 
-#: client/cl_airfight.c:467 client/cl_airfight.c:487
+#: client/cl_airfight.c:469 client/cl_airfight.c:489
 msgid "Interception"
 msgstr "拦截"
 
-#: client/cl_airfight.c:467
+#: client/cl_airfight.c:469
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO拦截成功l -- UFO坠落海中。"
 
-#: client/cl_airfight.c:487 client/cl_campaign.c:5822
+#: client/cl_airfight.c:489 client/cl_campaign.c:5880
 msgid "You've lost the battle"
 msgstr "战斗失败"
 
-#: client/cl_airfight.c:619 client/cl_airfight.c:631 client/cl_airfight.c:650
+#: client/cl_airfight.c:621 client/cl_airfight.c:633 client/cl_airfight.c:652
 msgid "Base facility destroyed"
 msgstr "基地建筑被破坏"
 
-#: client/cl_airfight.c:619
+#: client/cl_airfight.c:621
 msgid "You've lost a missile battery system."
 msgstr "损失一个飞弹发射架。"
 
-#: client/cl_airfight.c:631
+#: client/cl_airfight.c:633
 msgid "You've lost a laser battery system."
 msgstr "损失一个激光发射器。"
 
-#: client/cl_airfight.c:649
+#: client/cl_airfight.c:651
 #, c-format
 msgid "You've lost a base facility (%s)."
 msgstr "你失去一个基地设施（%s）"
@@ -11615,68 +11597,68 @@ msgstr "完工"
 msgid "Down"
 msgstr ""
 
-#: client/cl_basemanagement.c:1489
+#: client/cl_basemanagement.c:1490
 msgid "Not enough credits to build this\n"
 msgstr "资金不够\n"
 
-#: client/cl_basemanagement.c:1583
+#: client/cl_basemanagement.c:1584
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "费用：\t%i c\n"
 
-#: client/cl_basemanagement.c:1586
+#: client/cl_basemanagement.c:1587
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i Day to build\n"
 msgstr[1] "%i Days to build\n"
 
-#: client/cl_basemanagement.c:1589 client/cl_ufopedia.c:569
+#: client/cl_basemanagement.c:1590 client/cl_ufopedia.c:569
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "维护费：\t%i c\n"
 
-#: client/cl_basemanagement.c:1592 client/cl_ufopedia.c:566
+#: client/cl_basemanagement.c:1593 client/cl_ufopedia.c:566
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "需要：\t%s\n"
 
-#: client/cl_basemanagement.c:2311 client/cl_campaign.c:4682
+#: client/cl_basemanagement.c:2312 client/cl_campaign.c:4689
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_basemanagement.c:2628 client/cl_team.c:1216 client/cl_team.c:1667
+#: client/cl_basemanagement.c:2629 client/cl_team.c:1216 client/cl_team.c:1667
 msgid "NewTeam"
 msgstr ""
 
-#: client/cl_basemanagement.c:2690
+#: client/cl_basemanagement.c:2691
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "新基地已经建造： %s （组织： %s）"
 
-#: client/cl_basemanagement.c:2692
+#: client/cl_basemanagement.c:2693
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "新基地建造： %s"
 
-#: client/cl_basemanagement.c:2693
+#: client/cl_basemanagement.c:2694
 msgid "Base built"
 msgstr "基地建设"
 
-#: client/cl_basemanagement.c:2707
+#: client/cl_basemanagement.c:2708
 msgid "Not enough credits to set up a new base."
 msgstr "资金不足以建新基地"
 
-#: client/cl_basemanagement.c:2999
+#: client/cl_basemanagement.c:3000
 msgid "Base is under attack, you can't access this building !"
 msgstr "基地正在被攻击，你无法操作这个设施！"
 
-#: client/cl_basemanagement.c:3008
+#: client/cl_basemanagement.c:3009
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "你需要至少一个机用平台 (及其辅助设施) 来使用航空机。"
 
-#: client/cl_basemanagement.c:3027
+#: client/cl_basemanagement.c:3028
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -11691,52 +11673,52 @@ msgstr[1] ""
 "还有 %i 天才能完工。\n"
 "请等待。"
 
-#: client/cl_basemanagement.c:3038
+#: client/cl_basemanagement.c:3039
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "你需要有 %s 才能建设 %s 。"
 
-#: client/cl_basemanagement.c:3048
+#: client/cl_basemanagement.c:3049
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "设施%s还没有建造好，还需要建造%s。"
 
-#: client/cl_basemanagement.c:3055
+#: client/cl_basemanagement.c:3056
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
-#: client/cl_basemanagement.c:3063 client/cl_basemanagement.c:3068
+#: client/cl_basemanagement.c:3064 client/cl_basemanagement.c:3069
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "你需要雇用%s才能使用%s。"
 
-#: client/cl_basemanagement.c:3074
+#: client/cl_basemanagement.c:3075
 #, c-format
 msgid "Build a %s first."
 msgstr "先造一个 %s 。"
 
-#: client/cl_basemanagement.c:3138
+#: client/cl_basemanagement.c:3139
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "基地里没有航空机--你需要购买或传送一架航空机\n"
 
-#: client/cl_basemanagement.c:3138 client/cl_basemanagement.c:3140
-#: client/cl_campaign.c:5408 client/cl_market.c:736 client/cl_market.c:741
+#: client/cl_basemanagement.c:3139 client/cl_basemanagement.c:3141
+#: client/cl_campaign.c:5415 client/cl_market.c:736 client/cl_market.c:741
 #: client/cl_market.c:859 client/cl_market.c:861 client/cl_save.c:381
 #: client/cl_team.c:1717 client/cl_team.c:1724
 msgid "Note"
 msgstr "注意"
 
-#: client/cl_basemanagement.c:3140
+#: client/cl_basemanagement.c:3141
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "基地里没有航空机--你需要购买一架航空机\n"
 
-#: client/cl_basemanagement.c:3291
+#: client/cl_basemanagement.c:3292
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "%s 建设完工在基地 %s。"
 
-#: client/cl_basemanagement.c:3292
+#: client/cl_basemanagement.c:3293
 msgid "Building finished"
 msgstr "建造完工"
 
@@ -11800,7 +11782,7 @@ msgstr "异形活动"
 msgid "Base attack"
 msgstr "基地攻击"
 
-#: client/cl_campaign.c:521 client/cl_campaign.c:3332
+#: client/cl_campaign.c:521 client/cl_campaign.c:3339
 msgid "Alien base"
 msgstr "异形基地"
 
@@ -11813,8 +11795,8 @@ msgstr "大型异形活动"
 msgid "Alien activity has been detected in %s."
 msgstr "在%s发现有异形活动。"
 
-#: client/cl_campaign.c:1111 client/cl_campaign.c:2621
-#: client/cl_campaign.c:3298
+#: client/cl_campaign.c:1111 client/cl_campaign.c:2628
+#: client/cl_campaign.c:3305
 msgid "No nation"
 msgstr "无国界区域"
 
@@ -11833,201 +11815,201 @@ msgstr ""
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"
 msgstr ""
 
-#: client/cl_campaign.c:3729
+#: client/cl_campaign.c:3736
 msgid "You've gone too far into debt."
 msgstr "你有太多债务了。"
 
-#: client/cl_campaign.c:3737
+#: client/cl_campaign.c:3744
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/cl_campaign.c:3743
+#: client/cl_campaign.c:3750
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/cl_campaign.c:3761
+#: client/cl_campaign.c:3768
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/cl_campaign.c:4001
+#: client/cl_campaign.c:4008
 msgid "Jan"
 msgstr "一月"
 
-#: client/cl_campaign.c:4003
+#: client/cl_campaign.c:4010
 msgid "Feb"
 msgstr "二月"
 
-#: client/cl_campaign.c:4005
+#: client/cl_campaign.c:4012
 msgid "Mar"
 msgstr "三月"
 
-#: client/cl_campaign.c:4007
+#: client/cl_campaign.c:4014
 msgid "Apr"
 msgstr "四月"
 
-#: client/cl_campaign.c:4009
+#: client/cl_campaign.c:4016
 msgid "May"
 msgstr "五月"
 
-#: client/cl_campaign.c:4011
+#: client/cl_campaign.c:4018
 msgid "Jun"
 msgstr "六月"
 
-#: client/cl_campaign.c:4013
+#: client/cl_campaign.c:4020
 msgid "Jul"
 msgstr "七月"
 
-#: client/cl_campaign.c:4015
+#: client/cl_campaign.c:4022
 msgid "Aug"
 msgstr "八月"
 
-#: client/cl_campaign.c:4017
+#: client/cl_campaign.c:4024
 msgid "Sep"
 msgstr "九月"
 
-#: client/cl_campaign.c:4019
+#: client/cl_campaign.c:4026
 msgid "Oct"
 msgstr "十月"
 
-#: client/cl_campaign.c:4021
+#: client/cl_campaign.c:4028
 msgid "Nov"
 msgstr "十一月"
 
-#: client/cl_campaign.c:4023
+#: client/cl_campaign.c:4030
 msgid "Dec"
 msgstr "十二月"
 
-#: client/cl_campaign.c:4044
+#: client/cl_campaign.c:4051
 msgid "stopped"
 msgstr "暂停"
 
-#: client/cl_campaign.c:4045
+#: client/cl_campaign.c:4052
 msgid "5 sec"
 msgstr "五秒"
 
-#: client/cl_campaign.c:4046
+#: client/cl_campaign.c:4053
 msgid "10 sec"
 msgstr "十秒"
 
-#: client/cl_campaign.c:4047
+#: client/cl_campaign.c:4054
 msgid "1 min"
 msgstr "一分钟"
 
-#: client/cl_campaign.c:4048
+#: client/cl_campaign.c:4055
 msgid "5 mins"
 msgstr "五分钟"
 
-#: client/cl_campaign.c:4049
+#: client/cl_campaign.c:4056
 msgid "10 mins"
 msgstr "十分钟"
 
-#: client/cl_campaign.c:4050
+#: client/cl_campaign.c:4057
 #, fuzzy
 msgid "20 mins"
 msgstr "十分钟"
 
-#: client/cl_campaign.c:4051
+#: client/cl_campaign.c:4058
 msgid "1 hour"
 msgstr "一小时"
 
-#: client/cl_campaign.c:4052
+#: client/cl_campaign.c:4059
 msgid "12 hours"
 msgstr "半天"
 
-#: client/cl_campaign.c:4053
+#: client/cl_campaign.c:4060
 msgid "1 day"
 msgstr "一天"
 
-#: client/cl_campaign.c:4054
+#: client/cl_campaign.c:4061
 msgid "5 days"
 msgstr "五天"
 
-#: client/cl_campaign.c:4142 client/cl_event.c:247 client/cl_save.c:304
+#: client/cl_campaign.c:4149 client/cl_event.c:247 client/cl_save.c:304
 #: client/cl_ufopedia.c:854 client/cl_ufopedia.c:861
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:4146
+#: client/cl_campaign.c:4153
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:4322
+#: client/cl_campaign.c:4329
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "获取 %i %s、 %i %s、 %i %s 和 %i %s 从 %s (%s)"
 
-#: client/cl_campaign.c:4323
+#: client/cl_campaign.c:4330
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "资金"
 msgstr[1] "资金"
 
-#: client/cl_campaign.c:4324 client/cl_campaign.c:7033
+#: client/cl_campaign.c:4331 client/cl_campaign.c:7091
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "研究员"
 msgstr[1] "研究员"
 
-#: client/cl_campaign.c:4325 client/cl_campaign.c:7032
+#: client/cl_campaign.c:4332 client/cl_campaign.c:7090
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "士兵"
 msgstr[1] "士兵"
 
-#: client/cl_campaign.c:4326 client/cl_campaign.c:7034
+#: client/cl_campaign.c:4333 client/cl_campaign.c:7092
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "工人"
 msgstr[1] "工人"
 
-#: client/cl_campaign.c:4337
+#: client/cl_campaign.c:4344
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "支付士兵 %i 薪水"
 
-#: client/cl_campaign.c:4347
+#: client/cl_campaign.c:4354
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "支付工人 %i 薪水"
 
-#: client/cl_campaign.c:4357
+#: client/cl_campaign.c:4364
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "支付研究员 %i 薪水"
 
-#: client/cl_campaign.c:4367
+#: client/cl_campaign.c:4374
 #, c-format
 msgid "Paid %i credits to pilots"
 msgstr "支付飞行员 %i 薪水"
 
-#: client/cl_campaign.c:4378
+#: client/cl_campaign.c:4385
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "花费 %i 维护机器人"
 
-#: client/cl_campaign.c:4394
+#: client/cl_campaign.c:4401
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "花费 %i 维护航空机"
 
-#: client/cl_campaign.c:4408
+#: client/cl_campaign.c:4415
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "花费 %i 维护基地 %s"
 
-#: client/cl_campaign.c:4414
+#: client/cl_campaign.c:4421
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "支付 %i 管理费。"
 
-#: client/cl_campaign.c:4422
+#: client/cl_campaign.c:4429
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "偿还 %i 欠债。"
 
-#: client/cl_campaign.c:4704
+#: client/cl_campaign.c:4711
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12038,7 +12020,7 @@ msgstr ""
 "失败：\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:4709
+#: client/cl_campaign.c:4716
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12049,47 +12031,47 @@ msgstr ""
 "健在：\t%i\n"
 "攻击：\t%i\n"
 
-#: client/cl_campaign.c:4717
+#: client/cl_campaign.c:4724
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: client/cl_campaign.c:4724 client/cl_ufopedia.c:1715
+#: client/cl_campaign.c:4731 client/cl_ufopedia.c:1715
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:4763 client/cl_ufopedia.c:440
+#: client/cl_campaign.c:4770 client/cl_ufopedia.c:440
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:4769
+#: client/cl_campaign.c:4776
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "薪资：\t%i c\n"
 
-#: client/cl_campaign.c:4782
+#: client/cl_campaign.c:4789
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "航空机维护费：\t%i c\n"
 
-#: client/cl_campaign.c:4793
+#: client/cl_campaign.c:4800
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "基地维护 （%s）费：\t%i c\n"
 
-#: client/cl_campaign.c:4798
+#: client/cl_campaign.c:4805
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "管理费：\t%i c\n"
 
-#: client/cl_campaign.c:4805
+#: client/cl_campaign.c:4812
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "债务：\t%i c\n"
 
-#: client/cl_campaign.c:4808
+#: client/cl_campaign.c:4815
 #, c-format
 msgid ""
 "\n"
@@ -12100,87 +12082,102 @@ msgstr ""
 "\t-------\n"
 "合计：\t%i c\n"
 
-#: client/cl_campaign.c:4813
+#: client/cl_campaign.c:4820
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "最大借款额： %ic\n"
 
-#: client/cl_campaign.c:4818
+#: client/cl_campaign.c:4825
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/cl_campaign.c:5408
+#: client/cl_campaign.c:5415
 msgid "Assemble or load a team"
 msgstr "装载或分配队伍"
 
-#: client/cl_campaign.c:5694
+#: client/cl_campaign.c:5525
+msgid ""
+"Congratulations! You have reached the end of the UFO:AI campaign.\n"
+"However, this is not the end of the road. The game remains in development.\n"
+"The campaign will be expanded with new missions, new enemies, new UFOs, new player controllable craft and more research.\n"
+"\n"
+"And YOU can help make it happen! Visit our forums or IRC channel to find\n"
+"out what you can do to help finish this game. Alternatively, you can just\n"
+"come by and talk about the game, or find other players for a multiplayer game.\n"
+"\n"
+"Thank you for playing, and we hope to see you around.\n"
+"\n"
+"   - The UFO:AI development team"
+msgstr ""
+
+#: client/cl_campaign.c:5752
 msgid "Your dropship is not near the landing zone"
 msgstr "你的登陆机没有靠近登陆点"
 
-#: client/cl_campaign.c:5759
+#: client/cl_campaign.c:5817
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr "收集了 %i 具异形尸体"
 
-#: client/cl_campaign.c:5807 client/cl_campaign.c:6156
+#: client/cl_campaign.c:5865 client/cl_campaign.c:6214
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "基地防御： %s 成功！"
 
-#: client/cl_campaign.c:5820
+#: client/cl_campaign.c:5878
 msgid "You've won the battle"
 msgstr "战斗胜利"
 
-#: client/cl_campaign.c:5902
+#: client/cl_campaign.c:5960
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已经升级到 %s。\n"
 
-#: client/cl_campaign.c:5904
+#: client/cl_campaign.c:5962
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s在战斗中光荣牺牲，被追封%s。\n"
 
-#: client/cl_campaign.c:5905
+#: client/cl_campaign.c:5963
 msgid "Soldier promoted"
 msgstr "士兵晋升"
 
-#: client/cl_campaign.c:6973
+#: client/cl_campaign.c:7031
 msgid "Chicken-hearted"
 msgstr "幼稚"
 
-#: client/cl_campaign.c:6975
+#: client/cl_campaign.c:7033
 msgid "Very Easy"
 msgstr "超级简单"
 
-#: client/cl_campaign.c:6978
+#: client/cl_campaign.c:7036
 msgid "Easy"
 msgstr "简单"
 
-#: client/cl_campaign.c:6983
+#: client/cl_campaign.c:7041
 msgid "Hard"
 msgstr "困难"
 
-#: client/cl_campaign.c:6985
+#: client/cl_campaign.c:7043
 msgid "Very Hard"
 msgstr "很困难"
 
-#: client/cl_campaign.c:6987
+#: client/cl_campaign.c:7045
 msgid "Insane"
 msgstr "极难"
 
-#: client/cl_campaign.c:7023
+#: client/cl_campaign.c:7081
 msgid "Human"
 msgstr "人类"
 
-#: client/cl_campaign.c:7025 client/cl_transfer.c:428
+#: client/cl_campaign.c:7083 client/cl_transfer.c:428
 msgid "Aliens"
 msgstr "异形"
 
-#: client/cl_campaign.c:7027
+#: client/cl_campaign.c:7085
 #, c-format
 msgid ""
 "%s\n"
@@ -12249,135 +12246,135 @@ msgstr "不能雇用员工"
 msgid "You've got a new mail: %s"
 msgstr "你收到新邮件： %s"
 
-#: client/cl_input.c:1694
+#: client/cl_input.c:1695
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "逆时针旋转战斗视角"
 
-#: client/cl_input.c:1696
+#: client/cl_input.c:1697
 msgid "Rotate battlescape camera clockwise"
 msgstr "顺时针旋转战斗视角"
 
-#: client/cl_input.c:1698
+#: client/cl_input.c:1699
 msgid "Tilt battlescape camera up"
 msgstr "调高战斗视角"
 
-#: client/cl_input.c:1700
+#: client/cl_input.c:1701
 msgid "Tilt battlescape camera down"
 msgstr "降低战斗视角"
 
-#: client/cl_input.c:1702
+#: client/cl_input.c:1703
 msgid "Move battlescape camera left"
 msgstr "左移战斗视角"
 
-#: client/cl_input.c:1704
+#: client/cl_input.c:1705
 msgid "Move battlescape camera right"
 msgstr "右移战斗视角"
 
-#: client/cl_input.c:1706
+#: client/cl_input.c:1707
 msgid "Move battlescape camera forward"
 msgstr "向前移动战斗视角"
 
-#: client/cl_input.c:1708
+#: client/cl_input.c:1709
 msgid "Move battlescape camera backward"
 msgstr "向后移动战斗视角"
 
-#: client/cl_input.c:1710 client/cl_input.c:1752
+#: client/cl_input.c:1711 client/cl_input.c:1753
 msgid "Zoom in"
 msgstr "放大"
 
-#: client/cl_input.c:1712 client/cl_input.c:1753
+#: client/cl_input.c:1713 client/cl_input.c:1754
 msgid "Zoom out"
 msgstr "缩小"
 
-#: client/cl_input.c:1715
+#: client/cl_input.c:1716
 msgid "Left mouse button click (menu)"
 msgstr "鼠标左键点击（菜单）"
 
-#: client/cl_input.c:1717
+#: client/cl_input.c:1718
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1719
+#: client/cl_input.c:1720
 msgid "Right mouse button click (menu)"
 msgstr "鼠标右键点击（菜单）"
 
-#: client/cl_input.c:1721
+#: client/cl_input.c:1722
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "选择目标或移动目标或射击"
 
-#: client/cl_input.c:1723
+#: client/cl_input.c:1724
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "移动到指定地点或取消射击模式"
 
-#: client/cl_input.c:1725
+#: client/cl_input.c:1726
 msgid "Turn soldier toward mouse pointer"
 msgstr "使士兵面向鼠标方向"
 
-#: client/cl_input.c:1727
+#: client/cl_input.c:1728
 msgid "Toggles the hud radar mode"
 msgstr "切换雷达模式"
 
-#: client/cl_input.c:1730
+#: client/cl_input.c:1731
 msgid "Toggle stand/crounch"
 msgstr "切换站姿/蹲姿"
 
-#: client/cl_input.c:1731
+#: client/cl_input.c:1732
 msgid "Toggle reaction fire"
 msgstr "切换自动反应攻击模式"
 
-#: client/cl_input.c:1732
+#: client/cl_input.c:1733
 msgid "Toggle reservation for crouching."
 msgstr "切换预留下蹲时间"
 
-#: client/cl_input.c:1733
+#: client/cl_input.c:1734
 msgid "Toggle the headgear"
 msgstr "切换护目镜"
 
-#: client/cl_input.c:1734
+#: client/cl_input.c:1735
 msgid "Toggle to next alien"
 msgstr "切换下一个异形"
 
-#: client/cl_input.c:1735
+#: client/cl_input.c:1736
 msgid "Draw a line to each alien visible to the current actor."
 msgstr "在选定的异形和士兵之间画一条红线。"
 
-#: client/cl_input.c:1736
+#: client/cl_input.c:1737
 msgid "Toggle to next alien visible from selected actor."
 msgstr "切换当前选定士兵可见的异形"
 
-#: client/cl_input.c:1746
+#: client/cl_input.c:1747
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "左手武器装弹"
 
-#: client/cl_input.c:1747
+#: client/cl_input.c:1748
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "右手武器装弹"
 
-#: client/cl_input.c:1748
+#: client/cl_input.c:1749
 msgid "Ends current round"
 msgstr "结束当前回合"
 
-#: client/cl_input.c:1749
+#: client/cl_input.c:1750
 msgid "Opens or closes a door"
 msgstr "开关一扇门"
 
-#: client/cl_input.c:1750
+#: client/cl_input.c:1751
 msgid "Slice through terrain at a higher level"
 msgstr "调整视角高度到上一层"
 
-#: client/cl_input.c:1751
+#: client/cl_input.c:1752
 msgid "Slice through terrain at a lower level"
 msgstr "调整视角高度到下一层"
 
-#: client/cl_input.c:1754
+#: client/cl_input.c:1755
 msgid "Confirm the current action"
 msgstr "确认当前的操作"
 
-#: client/cl_input.c:1755
+#: client/cl_input.c:1756
 msgid "Toggle the combat zoom level (full zoom or half zoom)."
 msgstr "切换战斗放大模式（全放大或半放大）"
 
-#: client/cl_input.c:1766 client/cl_input.c:1768
+#: client/cl_input.c:1767 client/cl_input.c:1769
 msgid "Toggle first-person/third-person camera mode"
 msgstr "切换第一人称视角/第三人称视角"
 
@@ -12650,11 +12647,11 @@ msgstr "细微调整你射击的高度"
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "显示选定的士兵的详细装备资料"
 
-#: client/cl_main.c:2206 client/cl_view.c:278
+#: client/cl_main.c:2208 client/cl_view.c:278
 msgid "Awaiting game start"
 msgstr "等待游戏开始"
 
-#: client/cl_main.c:2260
+#: client/cl_main.c:2262
 msgid "Custom"
 msgstr "手动"
 
@@ -12670,40 +12667,40 @@ msgstr "基地"
 msgid "Installation"
 msgstr "基站"
 
-#: client/cl_map.c:1497
+#: client/cl_map.c:1499
 msgid "Day"
 msgstr "白天"
 
-#: client/cl_map.c:1497
+#: client/cl_map.c:1499
 msgid "Night"
 msgstr "夜晚"
 
-#: client/cl_map.c:1843
+#: client/cl_map.c:1845
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cl_map.c:1887
+#: client/cl_map.c:1889
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "在地图上选择新基地位置。\n"
 
-#: client/cl_map.c:1890
+#: client/cl_map.c:1892
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "在地图上选择新基站的建造位置。\n"
 
-#: client/cl_map.c:1895
+#: client/cl_map.c:1897
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "异形马上要攻击我们的基地。\n"
 
-#: client/cl_map.c:1900
+#: client/cl_map.c:1902
 msgid "Select ufo or mission on map\n"
 msgstr "在地图上选择UFO或任务\n"
 
-#: client/cl_map.c:1905
+#: client/cl_map.c:1907
 msgid "UFO in radar range\n"
 msgstr "UFO在雷达范围\n"
 
-#: client/cl_map.c:1913
+#: client/cl_map.c:1915
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12714,69 +12711,69 @@ msgstr ""
 "类型： %s\n"
 "环境： %s"
 
-#: client/cl_map.c:1924 client/cl_map.c:1934
+#: client/cl_map.c:1926 client/cl_map.c:1936
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名称：\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1925 client/cl_map.c:1935
+#: client/cl_map.c:1927 client/cl_map.c:1937
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状态：\t%s\n"
 
-#: client/cl_map.c:1926
+#: client/cl_map.c:1928
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "与目标距离：\t\t%.0f\n"
 
-#: client/cl_map.c:1930 client/cl_map.c:1942
+#: client/cl_map.c:1932 client/cl_map.c:1944
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "估计用时：\t%s小时\n"
 
-#: client/cl_mapfightequip.c:849
+#: client/cl_mapfightequip.c:850
 msgid "No defence of this type in this installation\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:853 client/cl_mapfightequip.c:867
-#: client/cl_mapfightequip.c:881
+#: client/cl_mapfightequip.c:854 client/cl_mapfightequip.c:868
+#: client/cl_mapfightequip.c:882
 #, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "防御井 %i:\t空\n"
 
-#: client/cl_mapfightequip.c:856 client/cl_mapfightequip.c:870
-#: client/cl_mapfightequip.c:884
+#: client/cl_mapfightequip.c:857 client/cl_mapfightequip.c:871
+#: client/cl_mapfightequip.c:885
 #, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "防御井 %i:\t%s\n"
 
-#: client/cl_mapfightequip.c:863 client/cl_mapfightequip.c:877
+#: client/cl_mapfightequip.c:864 client/cl_mapfightequip.c:878
 msgid "No defence of this type in this base\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:897
+#: client/cl_mapfightequip.c:898
 msgid "No defence system assigned.\n"
 msgstr "未指派防御系统。\n"
 
-#: client/cl_mapfightequip.c:903
+#: client/cl_mapfightequip.c:904
 msgid "This defence system is functional.\n"
 msgstr "防御系统可以使用。\n"
 
-#: client/cl_mapfightequip.c:905
+#: client/cl_mapfightequip.c:906
 #, c-format
 msgid "This defence system will be installed in %i hours.\n"
 msgstr "防御系统将在 %i 小时后安装完。\n"
 
-#: client/cl_mapfightequip.c:907
+#: client/cl_mapfightequip.c:908
 #, c-format
 msgid "This defence system will be removed in %i hours.\n"
 msgstr "防御系统将在 %i 小时后移除。\n"
 
-#: client/cl_mapfightequip.c:914
+#: client/cl_mapfightequip.c:915
 msgid "No defence system assigned."
 msgstr "未指派防御系统。"
 
-#: client/cl_mapfightequip.c:916
+#: client/cl_mapfightequip.c:917
 #, c-format
 msgid ""
 "%s\n"
@@ -12785,119 +12782,119 @@ msgstr ""
 "%s\n"
 "防御系统%i小时以后可以运作。\n"
 
-#: client/cl_mapfightequip.c:928
+#: client/cl_mapfightequip.c:929
 msgid "No ammo assigned to this defence system."
 msgstr "防御系统未设定弹药。"
 
-#: client/cl_mapfightequip.c:932
+#: client/cl_mapfightequip.c:933
 #, fuzzy
 msgid " (unlimited missiles)"
 msgstr " (%i 剩余)"
 
-#: client/cl_mapfightequip.c:1001
+#: client/cl_mapfightequip.c:1002
 #, c-format
 msgid "%s was successfully installed into aircraft %s at base %s."
 msgstr "%s已经安装到航空机%s（%s）。"
 
-#: client/cl_mapfightequip.c:1005
+#: client/cl_mapfightequip.c:1006
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "%s已经安装到%s。"
 
-#: client/cl_mapfightequip.c:1009
+#: client/cl_mapfightequip.c:1010
 #, c-format
 msgid "%s was successfully installed at base %s."
 msgstr "%s已经安装到%s。"
 
-#: client/cl_mapfightequip.c:1031
+#: client/cl_mapfightequip.c:1032
 #, c-format
 msgid "%s was successfully removed from aircraft %s at base %s."
 msgstr "%s已经从%s移除（%s）。"
 
-#: client/cl_mapfightequip.c:1037
+#: client/cl_mapfightequip.c:1038
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
 msgstr "%s已经移除，开始安装%s到%s（%s）"
 
-#: client/cl_mapfightequip.c:1045
+#: client/cl_mapfightequip.c:1046
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s已经从%s移除。"
 
-#: client/cl_mapfightequip.c:1050
+#: client/cl_mapfightequip.c:1051
 #, c-format
 msgid "%s was successfully removed from base %s."
 msgstr "%s已经从%s移除。"
 
-#: client/cl_mapfightequip.c:1204
+#: client/cl_mapfightequip.c:1205
 msgid "Weapons"
 msgstr "武器"
 
-#: client/cl_mapfightequip.c:1208
+#: client/cl_mapfightequip.c:1209
 msgid "Items"
 msgstr "装备"
 
-#: client/cl_mapfightequip.c:1211
+#: client/cl_mapfightequip.c:1212
 msgid "Ammo"
 msgstr "弹药"
 
-#: client/cl_mapfightequip.c:1215
+#: client/cl_mapfightequip.c:1216
 msgid "Unknown"
 msgstr "未知"
 
-#: client/cl_mapfightequip.c:1312
+#: client/cl_mapfightequip.c:1314
 msgid "No pilot assigned."
 msgstr "未分配飞行员。"
 
-#: client/cl_mapfightequip.c:1322
+#: client/cl_mapfightequip.c:1324
 msgid "No item assigned.\n"
 msgstr "未装备。\n"
 
-#: client/cl_mapfightequip.c:1323
+#: client/cl_mapfightequip.c:1325
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "此部位可以加装 %s 装备"
 
-#: client/cl_mapfightequip.c:1329
+#: client/cl_mapfightequip.c:1331
 msgid "This item is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1331
+#: client/cl_mapfightequip.c:1333
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "加装此设备需要 %i 小时。\n"
 
-#: client/cl_mapfightequip.c:1334
+#: client/cl_mapfightequip.c:1336
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "移除此设备需要 %i 小时。\n"
 
-#: client/cl_mapfightequip.c:1342
+#: client/cl_mapfightequip.c:1344
 msgid "No item assigned."
 msgstr "未装备"
 
-#: client/cl_mapfightequip.c:1346
+#: client/cl_mapfightequip.c:1348
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr "还有 %i 小时才能处理完。\n"
 
-#: client/cl_mapfightequip.c:1356
+#: client/cl_mapfightequip.c:1358
 msgid "No ammo assigned to this weapon."
 msgstr "未指定弹药。"
 
-#: client/cl_mapfightequip.c:2450
+#: client/cl_mapfightequip.c:2452
 msgid "Light weight"
 msgstr "小型"
 
-#: client/cl_mapfightequip.c:2453
+#: client/cl_mapfightequip.c:2455
 msgid "Medium weight"
 msgstr "中型"
 
-#: client/cl_mapfightequip.c:2456
+#: client/cl_mapfightequip.c:2458
 msgid "Heavy weight"
 msgstr "大型"
 
-#: client/cl_mapfightequip.c:2459
+#: client/cl_mapfightequip.c:2461
 msgid "Unknown weight"
 msgstr "未知"
 
@@ -13555,12 +13552,12 @@ msgstr "快速战役成功读取。"
 msgid "Saves to the quick save slot"
 msgstr "快速存档"
 
-#: client/cl_screen.c:160
+#: client/cl_screen.c:159
 #, c-format
 msgid "Downloading [%s]"
 msgstr "下载 [%s]"
 
-#: client/cl_screen.c:199
+#: client/cl_screen.c:198
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "读取地图 [%s]"
@@ -14160,11 +14157,11 @@ msgstr "这个基地没有电力。\n"
 msgid "A UFO is flying toward %s"
 msgstr "一架UFO接近 %s"
 
-#: client/cl_ufo.c:826
+#: client/cl_ufo.c:825
 msgid "Our radar detected a new UFO"
 msgstr "我们的雷达侦测到一个新的UFO"
 
-#: client/cl_ufo.c:834
+#: client/cl_ufo.c:833
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "我们的雷达已经失去了追踪的UFO"
 
@@ -14501,15 +14498,15 @@ msgstr "加载 %s"
 msgid "loading models..."
 msgstr "模块读取"
 
-#: client/menu/m_input.c:47
+#: client/menu/m_input.c:46
 msgid "This change requires a restart"
 msgstr "这个设定变更需要重新进入游戏才能生效"
 
-#: client/menu/m_input.c:49
+#: client/menu/m_input.c:48
 msgid "This change might require a restart"
 msgstr "这个设定变更可能需要重新进入游戏才能生效"
 
-#: client/menu/m_main.c:754
+#: client/menu/m_main.c:755
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "隐藏界面（按 ESC 使用界面）"
 
@@ -14665,31 +14662,31 @@ msgid_plural "%i days left"
 msgstr[0] "还差 %i 天"
 msgstr[1] "还差 %i 天"
 
-#: client/menu/node/m_node_container.c:332
-#: client/menu/node/m_node_container.c:337
+#: client/menu/node/m_node_container.c:304
+#: client/menu/node/m_node_container.c:309
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "弹药： %i\n"
 
-#: client/menu/node/m_node_container.c:336
+#: client/menu/node/m_node_container.c:308
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s 已装填\n"
 
-#: client/menu/node/m_node_container.c:343
+#: client/menu/node/m_node_container.c:315
 msgid "Usable in:\n"
 msgstr "被用于：\n"
 
-#: client/menu/node/m_node_container.c:384
+#: client/menu/node/m_node_container.c:356
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "放入耗时：%i 取出耗时：%i"
 
-#: client/menu/node/m_node_window.c:139
+#: client/menu/node/m_node_window.c:123
 msgid "Drag to move window"
 msgstr "拖动窗口"
 
-#: client/menu/node/m_node_window.c:155
+#: client/menu/node/m_node_window.c:139
 #, fuzzy
 msgid "Close the window"
 msgstr "关闭窗口"
