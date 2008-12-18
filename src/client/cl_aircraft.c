@@ -2239,7 +2239,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, gd.ufos[i].status);
 		MSG_WriteLong(sb, gd.ufos[i].fuel);
 		MSG_WriteLong(sb, gd.ufos[i].damage);
-		MSG_WriteShort(sb, gd.ufos[i].time);
+		MSG_WriteLong(sb, gd.ufos[i].time);
 		MSG_WriteShort(sb, gd.ufos[i].point);
 		MSG_WriteShort(sb, gd.ufos[i].route.numPoints);
 		MSG_WriteFloat(sb, gd.ufos[i].route.distance);
@@ -2338,7 +2338,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, gd.projectiles[i].aimedAircraft->idx);
 		} else
 			MSG_WriteByte(sb, 2);
-		MSG_WriteShort(sb, gd.projectiles[i].time);
+		MSG_WriteLong(sb, gd.projectiles[i].time);
 		MSG_WriteFloat(sb, gd.projectiles[i].angle);
 		MSG_WriteByte(sb, gd.projectiles[i].bullets);
 		MSG_WriteByte(sb, gd.projectiles[i].laser);
@@ -2381,6 +2381,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		s = MSG_ReadString(sb);
 		ufo = AIR_GetAircraft(s);
+		/* maybe aircraft id in .ufo file changed? */
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
 			/* Remove the UFO that couldn't be loaded */
@@ -2392,9 +2393,16 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadByte(sb);			/* status */
 			MSG_ReadLong(sb);			/* fuel */
 			MSG_ReadLong(sb);			/* damage */
+#if 0
+			MSG_ReadLong(sb);			/* time */
+#else
 			MSG_ReadShort(sb);			/* time */
+#endif
 			MSG_ReadShort(sb);			/* point */
 			tmp_int = MSG_ReadShort(sb);/* numPoints */
+			if (ufo->route.numPoints > LINE_MAXPTS) {
+				return qfalse;
+			}
 			MSG_ReadFloat(sb);			/* distance */
 			for (j = 0; j < tmp_int; j++)
 				MSG_Read2Pos(sb, tmp_vec2t);	/* route points */
@@ -2434,7 +2442,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->status = MSG_ReadByte(sb);
 			ufo->fuel = MSG_ReadLong(sb);
 			ufo->damage = MSG_ReadLong(sb);
+#if 0
+			ufo->time = MSG_ReadLong(sb);
+#else
 			ufo->time = MSG_ReadShort(sb);
+#endif
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);
 			if (ufo->route.numPoints > LINE_MAXPTS) {
@@ -2460,6 +2472,10 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				ufo->aircraftTarget = AIR_AircraftGetFromIdx(tmp_int);
 			/* read weapon slot */
 			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int > MAX_AIRCRAFTSLOT) {
+				Com_Printf("AIR_Load: number of weapon slots (%i) for UFO exceed maximum value (%i)\n", tmp_int, MAX_AIRCRAFTSLOT);
+				return qfalse;
+			}
 			for (j = 0; j < tmp_int; j++) {
 				/* check that there are enough slots in this aircraft */
 				if (j < ufo->maxWeapons) {
@@ -2493,6 +2509,10 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			}
 			/* read electronics slot */
 			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int > MAX_AIRCRAFTSLOT) {
+				Com_Printf("AIR_Load: number of electronic slots (%i) for UFO exceed maximum value (%i)\n", tmp_int, MAX_AIRCRAFTSLOT);
+				return qfalse;
+			}
 			for (j = 0; j < tmp_int; j++) {
 				/* check that there are enough slots in this aircraft */
 				if (j < ufo->maxElectronics) {
@@ -2515,8 +2535,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 
 	/* Load projectiles. */
 	gd.numProjectiles = MSG_ReadByte(sb);
-	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE)
-		Sys_Error("AIR_Load: Too many projectiles on map (%i)\n", gd.numProjectiles);
+	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE) {
+		Com_Printf("AIR_Load: Too many projectiles on map (%i)\n", gd.numProjectiles);
+		return qfalse;
+	}
+
 
 	for (i = 0; i < gd.numProjectiles; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
@@ -2545,12 +2568,18 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
 				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+#if 0
+			gd.projectiles[i].time = MSG_ReadLong(sb);
+#else
 			gd.projectiles[i].time = MSG_ReadShort(sb);
+#endif
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
 			gd.projectiles[i].bullets = MSG_ReadByte(sb);
 			gd.projectiles[i].laser = MSG_ReadByte(sb);
-		} else
-			Sys_Error("AIR_Load: Could not get technology of projectile %i\n", i);
+		} else {
+			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
+			return qfalse;
+		}
 	}
 
 	/* Load recoveries. */
@@ -2592,7 +2621,7 @@ qboolean AIR_AircraftAllowed (const base_t* base)
 }
 
 /**
- * @brief Checks the parsed buildings for errors
+ * @brief Checks the parsed aircraft for errors
  * @return false if there are errors - true otherwise
  */
 qboolean AIR_ScriptSanityCheck (void)

@@ -192,8 +192,8 @@ typedef struct aircraft_s {
 	vec3_t oldDrawPos;	/**< The old draw position of the aircraft ( (latitude and longitude). */
 	qboolean hasMoved;       /**< Has the aircraft been moved. */
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
-	int point;
-	int time;
+	int point;			/**< Number of route points that has already been done when aircraft is moving */
+	int time;			/**< Elapsed seconds since aircraft started it's new route */
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
 						 * is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
 
