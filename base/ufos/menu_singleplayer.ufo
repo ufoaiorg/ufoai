@@ -777,21 +777,17 @@ menu endgame
 		color	"0 0.8 0 1"
 	}
 
-	string endgame_multiplayer
-	{
-		pos	"512 640"
-		string	"_Now after you have finished the single-player campaigns"
-		font "f_normal"
-		align	uc
+	// reason why you've won
+	text reason {
 		color	"0 0.8 0 0.9"
-	}
-	string endgame_multiplayer_2
-	{
-		pos	"512 660"
-		string	"_you should try the multiplayer features"
-		font "f_normal"
 		align	uc
-		color	"0 0.8 0 0.9"
+		pos		"512 640"
+		size	"900 100"
+		lineheight	"20"
+		rows	"5"
+		wheel
+		font	"f_normal"
+		scrollbar true
 	}
 
 	string endgame_note
