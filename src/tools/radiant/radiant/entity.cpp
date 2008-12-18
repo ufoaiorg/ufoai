@@ -168,6 +168,11 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	const bool isModel = string_equal_nocase(name, "misc_model");
 	const bool isSound = string_equal_nocase(name, "misc_sound");
 	const bool isParticle = string_equal_nocase(name, "misc_particle");
+	const bool isStartingPositionActor = string_equal_nocase(name, "info_player_start") || string_equal_nocase(name,
+			"info_human_start") || string_equal_nocase(name, "info_alien_start") || string_equal_nocase(name,
+			"info_civilian_start");
+	const bool isStartingPositionUGV = string_equal_nocase(name, "info_2x2_start");
+	const bool isStartingPosition = isStartingPositionActor || isStartingPositionUGV;
 
 	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
@@ -192,7 +197,21 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 		Transformable* transform = Instance_getTransformable(instance);
 		if (transform != 0) {
 			transform->setType(TRANSFORM_PRIMITIVE);
-			transform->setTranslation(origin);
+			if (isStartingPosition) {
+				// TODO: Use entityClass->mins, entityClass->maxs
+				const int size = isStartingPositionActor ? 16 : 32;
+				// TODO: Use the grid size constants UNIT_HEIGHT and UNIT_SIZE
+				const int x = ((int)origin.x() % 32) * 32 - size;
+				const int y = ((int)origin.y() % 32) * 32 - size;
+				const int z = ((int)origin.z() % 64) * 64 + 6 + 64;
+				const Vector3 vec(x, y, z);
+				globalWarningStream() << "original start position: " << origin.x() << " " << origin.y() << " " << origin.z() << "\n";
+				globalWarningStream() << "start position: " << x << " " << y << " " << z << "\n";
+
+				transform->setTranslation(vec);
+			} else {
+				transform->setTranslation(origin);
+			}
 			transform->freezeTransform();
 		}
 

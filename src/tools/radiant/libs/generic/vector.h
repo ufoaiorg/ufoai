@@ -1,4 +1,3 @@
-
 #if !defined(INCLUDED_VECTOR_H)
 #define INCLUDED_VECTOR_H
 
@@ -7,7 +6,7 @@
 template <typename Element>
 class BasicVector2 {
 	Element m_elements[2];
-public:
+	public:
 	BasicVector2() {
 	}
 	BasicVector2(const Element& x_, const Element& y_) {
@@ -47,7 +46,7 @@ public:
 template<typename Element>
 class BasicVector3 {
 	Element m_elements[3];
-public:
+	public:
 
 	BasicVector3() {
 	}
@@ -101,7 +100,7 @@ public:
 template<typename Element>
 class BasicVector4 {
 	Element m_elements[4];
-public:
+	public:
 
 	BasicVector4() {
 	}
@@ -204,6 +203,5 @@ typedef BasicVector3<float> Vector3;
 
 /// \brief A 4-element vector stored in single-precision floating-point.
 typedef BasicVector4<float> Vector4;
-
 
 #endif

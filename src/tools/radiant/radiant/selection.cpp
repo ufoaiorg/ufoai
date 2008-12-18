@@ -499,7 +499,7 @@ inline double vector3_distance_squared (const Point3D& a, const Point3D& b)
 	return vector3_length_squared(b - a);
 }
 
-// get the distance of a point to a segment.
+//! get the distance of a point to a segment.
 Point3D segment_closest_point_to_point (const Segment3D& segment, const Point3D& point)
 {
 	Vector3 v = segment.p1 - segment.p0;
@@ -524,8 +524,10 @@ double segment_dist_to_point_3d (const Segment3D& segment, const Point3D& point)
 typedef Vector3 point_t;
 typedef const Vector3* point_iterator_t;
 
-// crossing number test for a point in a polygon
-// This code is patterned after [Franklin, 2000]
+/**
+ * @brief transform from normalised device coords to object coords
+ * @note This code is patterned after [Franklin, 2000]
+ */
 bool point_test_polygon_2d (const point_t& P, point_iterator_t start, point_iterator_t finish)
 {
 	std::size_t crossings = 0;
@@ -535,7 +537,7 @@ bool point_test_polygon_2d (const point_t& P, point_iterator_t start, point_iter
 		if ((((*prev)[1] <= P[1]) && ((*cur)[1] > P[1])) // an upward crossing
 				|| (((*prev)[1] > P[1]) && ((*cur)[1] <= P[1]))) { // a downward crossing
 			// compute the actual edge-ray intersect x-coordinate
-			float vt = (float) (P[1] - (*prev)[1]) / ((*cur)[1] - (*prev)[1]);
+			const float vt = (float) (P[1] - (*prev)[1]) / ((*cur)[1] - (*prev)[1]);
 			if (P[0] < (*prev)[0] + vt * ((*cur)[0] - (*prev)[0])) { // P[0] < intersect
 				++crossings; // a valid crossing of y=P[1] right of P[0]
 			}
@@ -2010,6 +2012,7 @@ class TranslateSelected: public SelectionSystem::Visitor
 			Transformable* transform = Instance_getTransformable(instance);
 			if (transform != 0) {
 				transform->setType(TRANSFORM_PRIMITIVE);
+				// TODO: e.g. info_player_start should always be aligned to a given grid size
 				transform->setTranslation(m_translate);
 			}
 		}

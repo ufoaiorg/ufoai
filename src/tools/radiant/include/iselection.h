@@ -67,8 +67,8 @@ public:
 	STRING_CONSTANT(Name, "selection");
 
 	enum EMode {
-		eEntity,
-		ePrimitive,
+		eEntity,	/**< entity editing */
+		ePrimitive,	/**< brush editing */
 		eComponent,	/**< vertex, edge or face editing */
 	};
 
