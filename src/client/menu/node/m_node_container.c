@@ -1130,10 +1130,10 @@ static void MN_ContainerNodeLoading (menuNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-static qboolean MN_ContainerNodeDNDEnter (menuNode_t *node)
+static qboolean MN_ContainerNodeDNDEnter (menuNode_t *target)
 {
-	/* accept items */
-	return MN_DNDGetType() == DND_ITEM;
+	/* accept items only, if we have a container */
+	return MN_DNDGetType() == DND_ITEM && target->container;
 }
 
 /**
