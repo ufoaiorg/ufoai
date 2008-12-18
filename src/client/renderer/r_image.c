@@ -1611,8 +1611,8 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 		outeryMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
 	}
 
-	assert(yMin >= 0);
-	assert(yMax <= bpp * radarHeight);		/* the loop will stop just BEFORE yMax */
+	assert(outeryMin >= 0);
+	assert(outeryMax <= bpp * radarHeight);		/* the loop will stop just BEFORE yMax */
 	assert(yMin <= yMax);
 
 	/* Draw upper part of the radar coverage */
