@@ -5522,7 +5522,7 @@ static void CP_ChangeNationHappiness_f (void)
  */
 static void CP_EndGame_f (void)
 {
-	mn.menuText[TEXT_STANDARD] = _("The game ends here.");
+	mn.menuText[TEXT_STANDARD] = _("Congratulations! You have reached the end of the UFO:AI campaign.\nHowever, this is not the end of the road. The game remains in development\nnew UFOs, new player controllable craft and more research.\n\nAnd YOU can help make it happen! Visit our forums or IRC channel to find\nout what you can do to help finish this game. Alternatively, you can just\ncome by and talk about the game, or find other players for a multiplayer game.\n\nThank you for playing, and we hope to see you around.\n\n   - The UFO:AI development team");
 	CP_EndCampaign(qtrue);
 }
 
