@@ -5523,7 +5523,7 @@ static void CP_ChangeNationHappiness_f (void)
 static void CP_EndGame_f (void)
 {
 	mn.menuText[TEXT_STANDARD] = _("The game ends here.");
-	CP_EndCampaign(qfalse);
+	CP_EndCampaign(qtrue);
 }
 
 /** @brief mission trigger functions */
