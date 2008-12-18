@@ -2233,7 +2233,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	/* save the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		MSG_WriteString(sb, gd.ufos[i].id);
-		MSG_WriteByte(sb, gd.ufos[i].detected);
+		MSG_WriteByte(sb, gd.ufos[i].detected);	/* must be saved because detection is random */
 		MSG_WriteByte(sb, gd.ufos[i].landed);
 		MSG_WritePos(sb, gd.ufos[i].pos);
 		MSG_WriteByte(sb, gd.ufos[i].status);
