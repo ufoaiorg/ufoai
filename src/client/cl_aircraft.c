@@ -1926,7 +1926,7 @@ static void AIR_GetDestination (const aircraft_t const *shooter, const aircraft_
 	PolarToVec(target->route.point[target->route.numPoints - 1], targetDestPos);
 
 	/* In the following, we note S the position of the shooter, T the position of the target,
-		D the destination of the target and I the interception point where shooter should reach target */
+	 * D the destination of the target and I the interception point where shooter should reach target */
 
 	/* Calculate angle between ST and TD (in radian) */
 	angle = acos(DotProduct(shooterPos, targetPos));

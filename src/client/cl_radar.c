@@ -406,7 +406,6 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 static void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 {
 	int idx;
-	float dist;
 
 	for (idx = 0; idx < MAX_BASES; idx++) {
 		base_t *base = B_GetFoundedBaseByIDX(idx);
@@ -416,7 +415,7 @@ static void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 			continue;
 
 		if (RADAR_IsUFOSensored(&base->radar, ufo - gd.ufos) == UFO_NOT_SENSORED) {
-			dist = MAP_GetDistance(ufo->pos, base->pos);	/* Distance from radar to UFO */
+			const float dist = MAP_GetDistance(ufo->pos, base->pos);	/* Distance from radar to UFO */
 			if (dist <= base->radar.trackingRange)
 				RADAR_AddUFO(&base->radar, ufo - gd.ufos);
 		}
@@ -428,7 +427,7 @@ static void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 				continue;
 
 			if (RADAR_IsUFOSensored(&aircraft->radar, ufo - gd.ufos) == UFO_NOT_SENSORED) {
-				dist = MAP_GetDistance(ufo->pos, aircraft->pos);	/* Distance from radar to UFO */
+				const float dist = MAP_GetDistance(ufo->pos, aircraft->pos);	/* Distance from radar to UFO */
 				if (dist <= aircraft->radar.trackingRange)
 					RADAR_AddUFO(&aircraft->radar, ufo - gd.ufos);
 			}
@@ -446,7 +445,7 @@ static void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 			continue;
 
 		if (RADAR_IsUFOSensored(&installation->radar, ufo - gd.ufos) == UFO_NOT_SENSORED) {
-			dist = MAP_GetDistance(ufo->pos, installation->pos);	/* Distance from radar to UFO */
+			const float dist = MAP_GetDistance(ufo->pos, installation->pos);	/* Distance from radar to UFO */
 			if (dist <= ufo->radar.trackingRange)
 				RADAR_AddUFO(&installation->radar, ufo - gd.ufos);
 		}

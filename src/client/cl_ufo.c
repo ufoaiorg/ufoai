@@ -425,7 +425,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 {
 	int baseIdx;
 	aircraft_t* phalanxAircraft;
-	float distance = 999999., dist;
+	float distance = 999999.;
 
 	/* Every UFO on geoscape should have a mission assigned */
 	assert(ufo->mission);
@@ -465,7 +465,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 			/* check that aircraft is flying */
 			if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
 				/* get the distance from ufo to aircraft */
-				dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
+				const float dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
 				/* check out of reach */
 				if (dist > MAX_DETECTING_RANGE)
 					continue;
