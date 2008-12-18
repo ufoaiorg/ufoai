@@ -5497,7 +5497,8 @@ static void CP_ChangeNationHappiness_f (void)
 	float change;
 	nation_t *nation;
 
-	if (Cmd_Argc() < 2) {
+	/* baseid is appened in mission trigger function */
+	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));
 		return;
 	}
