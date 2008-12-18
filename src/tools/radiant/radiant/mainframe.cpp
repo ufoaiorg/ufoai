@@ -1528,6 +1528,9 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Show");
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
+		create_menu_item_with_mnemonic(menu_in_menu, "Toggle Grid", "ToggleGrid");
+		create_menu_item_with_mnemonic(menu_in_menu, "Toggle Crosshairs", "ToggleCrosshairs");
+		create_menu_item_with_mnemonic(menu_in_menu, "Toggle Sizeinfo", "ToggleSizePaint");
 		create_check_menu_item_with_mnemonic(menu_in_menu, "Show _Angles", "ShowAngles");
 		create_check_menu_item_with_mnemonic(menu_in_menu, "Show _Names", "ShowNames");
 		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Blocks", "ShowBlocks");
@@ -2131,138 +2134,137 @@ void MainFrame::Create (void)
 	GroupDialog_constructWindow(window);
 
 #ifdef WIN32
-			if (g_multimon_globals.m_bStartOnPrimMon) {
-				PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
-				window_set_position(window, g_layout_globals.m_position);
-			} else
+	if (g_multimon_globals.m_bStartOnPrimMon) {
+		PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
+		window_set_position(window, g_layout_globals.m_position);
+	} else
 #endif
-			if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
-				window_set_position(window, g_layout_globals.m_position);
-			}
+	if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
+		window_set_position(window, g_layout_globals.m_position);
+	}
 
-			m_window = window;
+	m_window = window;
 
-			gtk_widget_show(GTK_WIDGET(window));
+	gtk_widget_show(GTK_WIDGET(window));
 
-			GtkWidget* mainHsplit = gtk_hpaned_new();
-			gtk_box_pack_start(GTK_BOX(hbox), mainHsplit, TRUE, TRUE, 0);
-			gtk_widget_show(mainHsplit);
+	GtkWidget* mainHsplit = gtk_hpaned_new();
+	gtk_box_pack_start(GTK_BOX(hbox), mainHsplit, TRUE, TRUE, 0);
+	gtk_widget_show(mainHsplit);
 
-			GtkWidget *notebook = gtk_notebook_new();
-			gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
+	GtkWidget *notebook = gtk_notebook_new();
+	gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
 
-			Sidebar_constructEntities(notebook);
-			Sidebar_constructSurfaces(notebook);
-			gtk_widget_show_all(notebook);
+	Sidebar_constructEntities(notebook);
+	Sidebar_constructSurfaces(notebook);
+	gtk_widget_show_all(notebook);
 
-			PreferencesDialog_constructWindow(window);
-			FindTextureDialog_constructWindow(window);
+	PreferencesDialog_constructWindow(window);
+	FindTextureDialog_constructWindow(window);
 
-			int w, h;
-			gtk_window_get_size(window, &w, &h);
-			gtk_paned_set_position(GTK_PANED(mainHsplit), w);
+	int w, h;
+	gtk_window_get_size(window, &w, &h);
+	gtk_paned_set_position(GTK_PANED(mainHsplit), w);
 
-			// create edit windows according to user setable style
-			switch (CurrentStyle()) {
-				case eRegular:
-				{
-					GtkWidget* vsplit = gtk_vpaned_new();
-					m_vSplit = vsplit;
-					gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
-					gtk_widget_show(vsplit);
+	// create edit windows according to user setable style
+	switch (CurrentStyle()) {
+	case eRegular:
+	{
+		GtkWidget* vsplit = gtk_vpaned_new();
+		m_vSplit = vsplit;
+		gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
+		gtk_widget_show(vsplit);
 
-					// console
-			GtkWidget* console_window = Console_constructWindow(window);
-			gtk_paned_pack2(GTK_PANED(vsplit), console_window, FALSE, TRUE);
+		// console
+		GtkWidget* console_window = Console_constructWindow(window);
+		gtk_paned_pack2(GTK_PANED(vsplit), console_window, FALSE, TRUE);
+
+		{
+			GtkWidget* hsplit = gtk_hpaned_new();
+			gtk_widget_show(hsplit);
+			m_hSplit = hsplit;
+			gtk_paned_add1(GTK_PANED(vsplit), hsplit);
+
+			// xy
+			m_pXYWnd = new XYWnd();
+			m_pXYWnd->SetViewType(XY);
+			GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(m_pXYWnd->GetWidget()));
 
 			{
-				GtkWidget* hsplit = gtk_hpaned_new();
-				gtk_widget_show(hsplit);
-				m_hSplit = hsplit;
-				gtk_paned_add1(GTK_PANED(vsplit), hsplit);
+				GtkWidget* vsplit2 = gtk_vpaned_new();
+				gtk_widget_show(vsplit2);
+				m_vSplit2 = vsplit2;
 
-				// xy
-				m_pXYWnd = new XYWnd();
-				m_pXYWnd->SetViewType(XY);
-				GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(m_pXYWnd->GetWidget()));
-
-				{
-					GtkWidget* vsplit2 = gtk_vpaned_new();
-					gtk_widget_show(vsplit2);
-					m_vSplit2 = vsplit2;
-
-					if (CurrentStyle() == eRegular) {
-						gtk_paned_add1(GTK_PANED(hsplit), xy_window);
-						gtk_paned_add2(GTK_PANED(hsplit), vsplit2);
-					} else {
-						gtk_paned_add1(GTK_PANED(hsplit), vsplit2);
-						gtk_paned_add2(GTK_PANED(hsplit), xy_window);
-					}
-
-					// camera
-					m_pCamWnd = NewCamWnd();
-					GlobalCamera_setCamWnd(*m_pCamWnd);
-					CamWnd_setParent(*m_pCamWnd, window);
-					GtkFrame* camera_window = create_framed_widget(CamWnd_getWidget(*m_pCamWnd));
-					gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
-
-					// textures
-					GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructWindow(window));
-					gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
+				if (CurrentStyle() == eRegular) {
+					gtk_paned_add1(GTK_PANED(hsplit), xy_window);
+					gtk_paned_add2(GTK_PANED(hsplit), vsplit2);
+				} else {
+					gtk_paned_add1(GTK_PANED(hsplit), vsplit2);
+					gtk_paned_add2(GTK_PANED(hsplit), xy_window);
 				}
+
+				// camera
+				m_pCamWnd = NewCamWnd();
+				GlobalCamera_setCamWnd(*m_pCamWnd);
+				CamWnd_setParent(*m_pCamWnd, window);
+				GtkFrame* camera_window = create_framed_widget(CamWnd_getWidget(*m_pCamWnd));
+				gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
+
+				// textures
+				GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructWindow(window));
+				gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
 			}
 		}
-
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
 		gtk_paned_set_position(GTK_PANED(m_hSplit), g_layout_globals.nXYWidth);
 		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
 		break;
+	}
 
-		case eSplit:
-		{
-			GtkWidget* vsplit = gtk_vpaned_new();
-			m_vSplit = vsplit;
-			gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
-			gtk_widget_show(vsplit);
+	case eSplit:
+	{
+		GtkWidget* vsplit = gtk_vpaned_new();
+		m_vSplit = vsplit;
+		gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
+		gtk_widget_show(vsplit);
 
-			// camera
-			m_pCamWnd = NewCamWnd();
-			GlobalCamera_setCamWnd(*m_pCamWnd);
-			CamWnd_setParent(*m_pCamWnd, window);
-			GtkWidget* camera = CamWnd_getWidget(*m_pCamWnd);
+		// camera
+		m_pCamWnd = NewCamWnd();
+		GlobalCamera_setCamWnd(*m_pCamWnd);
+		CamWnd_setParent(*m_pCamWnd, window);
+		GtkWidget* camera = CamWnd_getWidget(*m_pCamWnd);
 
-			// yz window
-			m_pYZWnd = new XYWnd();
-			m_pYZWnd->SetViewType(YZ);
-			GtkWidget* yz = m_pYZWnd->GetWidget();
+		// yz window
+		m_pYZWnd = new XYWnd();
+		m_pYZWnd->SetViewType(YZ);
+		GtkWidget* yz = m_pYZWnd->GetWidget();
 
-			// xy window
-			m_pXYWnd = new XYWnd();
-			m_pXYWnd->SetViewType(XY);
-			GtkWidget* xy = m_pXYWnd->GetWidget();
+		// xy window
+		m_pXYWnd = new XYWnd();
+		m_pXYWnd->SetViewType(XY);
+		GtkWidget* xy = m_pXYWnd->GetWidget();
 
-			// xz window
-			m_pXZWnd = new XYWnd();
-			m_pXZWnd->SetViewType(XZ);
-			GtkWidget* xz = m_pXZWnd->GetWidget();
+		// xz window
+		m_pXZWnd = new XYWnd();
+		m_pXZWnd->SetViewType(XZ);
+		GtkWidget* xz = m_pXZWnd->GetWidget();
 
-			// split view (4 views)
-			GtkHPaned* split = create_split_views(camera, yz, xy, xz);
-			gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
+		// split view (4 views)
+		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
+		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
 
-			// textures
-			GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
-			g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
+		// textures
+		GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
+		g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
 
-			// console
-			GtkWidget* console_window = Console_constructWindow(window);
-			gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
+		// console
+		GtkWidget* console_window = Console_constructWindow(window);
+		gtk_paned_pack2(GTK_PANED(m_vSplit), GTK_WIDGET(console_window), TRUE, TRUE);
 
-			// set height of the upper split view (seperates the 4 views and the console)
-			gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
-		}
+		// set height of the upper split view (seperates the 4 views and the console)
+		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
 		break;
-		default:
+	}
+	default:
 		Error("Invalid layout type set - remove your radiant config files and retry");
 	}
 
