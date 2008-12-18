@@ -417,7 +417,8 @@ void BuildLights (void)
 			sun_intensity = atoi(light);
 
 		if (angles[0] != '\0') {
-			GetVectorFromString(angles, sun_angles);
+			VectorClear(sun_angles);
+			sscanf(angles, "%f %f", &sun_angles[0], &sun_angles[1]);
 			AngleVectors(sun_angles, sun_normal, NULL, NULL);
 		}
 
