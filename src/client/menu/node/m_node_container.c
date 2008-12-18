@@ -1211,7 +1211,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->rightClick = MN_ContainerNodeRightClick;
 	behaviour->loading = MN_ContainerNodeLoading;
 	behaviour->loaded = MN_FindContainer;
-	behaviour->DNDEnter = MN_ContainerNodeDNDEnter;
+	behaviour->dndEnter = MN_ContainerNodeDNDEnter;
 
 	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");

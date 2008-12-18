@@ -220,11 +220,11 @@ typedef struct nodeBehaviour_s {
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 
 	/* drag and drop callback */
-	qboolean (*DNDEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
-	qboolean (*DNDMove)(menuNode_t *node, int x, int y);			/**< Send to the target when we enter first, return true if we can drop the DND here */
-	void (*DNDLeave)(menuNode_t *node);								/**< Send to the target when the DND is cancelled */
-	qboolean (*DNDDrop)(menuNode_t *node, int x, int y);			/**< Send to the target to finalize the drop */
-	qboolean (*DNDFinished)(menuNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
+	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
+	qboolean (*dndMove)(menuNode_t *node, int x, int y);			/**< Send to the target when we enter first, return true if we can drop the DND here */
+	void (*dndLeave)(menuNode_t *node);								/**< Send to the target when the DND is cancelled */
+	qboolean (*dndDrop)(menuNode_t *node, int x, int y);			/**< Send to the target to finalize the drop */
+	qboolean (*dndFinished)(menuNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
 
 	/* Planned */
 #if 0

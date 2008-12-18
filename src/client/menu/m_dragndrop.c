@@ -109,9 +109,9 @@ void MN_DNDAbort (void)
 	assert(dragInfo.sourceNode != NULL);
 
 	if (dragInfo.targetNode) {
-		dragInfo.targetNode->behaviour->DNDLeave(dragInfo.targetNode);
+		dragInfo.targetNode->behaviour->dndLeave(dragInfo.targetNode);
 	}
-	dragInfo.sourceNode->behaviour->DNDFinished(dragInfo.sourceNode, qfalse);
+	dragInfo.sourceNode->behaviour->dndFinished(dragInfo.sourceNode, qfalse);
 
 	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
@@ -130,9 +130,9 @@ void MN_DNDDrop (void)
 	assert(dragInfo.sourceNode != NULL);
 
 	if (dragInfo.targetNode) {
-		result = dragInfo.targetNode->behaviour->DNDDrop(dragInfo.targetNode, mousePosX, mousePosY);
+		result = dragInfo.targetNode->behaviour->dndDrop(dragInfo.targetNode, mousePosX, mousePosY);
 	}
-	dragInfo.sourceNode->behaviour->DNDFinished(dragInfo.sourceNode, result);
+	dragInfo.sourceNode->behaviour->dndFinished(dragInfo.sourceNode, result);
 
 	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
@@ -177,11 +177,11 @@ static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 
 	if (node != dragInfo.targetNode) {
 		if (dragInfo.targetNode) {
-			dragInfo.targetNode->behaviour->DNDLeave(dragInfo.targetNode);
+			dragInfo.targetNode->behaviour->dndLeave(dragInfo.targetNode);
 		}
 		dragInfo.targetNode = node;
 		if (dragInfo.targetNode) {
-			nodeAcceptDND = dragInfo.targetNode->behaviour->DNDEnter(dragInfo.targetNode);
+			nodeAcceptDND = dragInfo.targetNode->behaviour->dndEnter(dragInfo.targetNode);
 		}
 	}
 
@@ -196,7 +196,7 @@ static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 		return;
 	}
 
-	positionAcceptDND = node->behaviour->DNDMove(dragInfo.targetNode, mousePosX, mousePosY);
+	positionAcceptDND = node->behaviour->dndMove(dragInfo.targetNode, mousePosX, mousePosY);
 }
 
 

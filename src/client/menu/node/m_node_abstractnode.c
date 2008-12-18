@@ -284,11 +284,11 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->properties = properties;
 
 	/* drag and drop callback */
-	behaviour->DNDEnter = MN_ABstractNodeDNDEnter;
-	behaviour->DNDMove = MN_ABstractNodeDNDMove;
-	behaviour->DNDLeave = MN_ABstractNodeDNDLeave;
-	behaviour->DNDDrop = MN_ABstractNodeDNDDrop;
-	behaviour->DNDFinished = MN_ABstractNodeDNDFinished;
+	behaviour->dndEnter = MN_ABstractNodeDNDEnter;
+	behaviour->dndMove = MN_ABstractNodeDNDMove;
+	behaviour->dndLeave = MN_ABstractNodeDNDLeave;
+	behaviour->dndDrop = MN_ABstractNodeDNDDrop;
+	behaviour->dndFinished = MN_ABstractNodeDNDFinished;
 
 	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
