@@ -71,8 +71,8 @@ int B_GetEmployeeCount (const base_t* const base)
  */
 base_t* B_GetBaseByIDX (int baseIdx)
 {
-	assert(baseIdx < MAX_BASES);
-	assert(baseIdx >= 0);
+	if (baseIdx >= MAX_BASES || baseIdx < 0)
+		Com_Error(ERR_DROP, "Invalid base index of %i given", baseIdx);
 	return &gd.bases[baseIdx];
 }
 
