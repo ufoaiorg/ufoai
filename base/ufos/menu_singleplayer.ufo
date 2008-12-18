@@ -790,24 +790,6 @@ menu endgame
 		scrollbar true
 	}
 
-	string endgame_note
-	{
-		pos	"512 700"
-		string	"_Visit http://ufoai.sf.net"
-		font "f_normal"
-		align	uc
-		color	"0 0.8 0 0.9"
-	}
-
-	string endgame_note_irc
-	{
-		pos	"512 720"
-		string	"_and join irc.freenode.org #ufo:ai"
-		font "f_normal"
-		align	uc
-		color	"0 0.8 0 0.9"
-	}
-
 	string endgame_click
 	{
 		pos	"1014 750"
