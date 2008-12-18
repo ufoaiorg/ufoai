@@ -163,7 +163,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 	pts[0].y = y;
 	for (i = radar->numUFOs - 1; i >= 0; i--)
 		/* Only draw the line if the UFO is visible. It might not be - UFOs may go undetected even within radar range */
-		if (UFO_IsUFOSeenOnGeoscape(gd.ufos + radar->ufos[i])) {
+		if ((radar->ufos[i] != UFO_NOT_SENSORED) && UFO_IsUFOSeenOnGeoscape(gd.ufos + radar->ufos[i])) {
 			if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z < 0) {
 				pts[1].x = x;
 				pts[1].y = y;
@@ -238,6 +238,9 @@ static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
 
 	if (radar->numUFOs >= MAX_UFOONGEOSCAPE)
 		return qfalse;
+
+	/* we really want to avoid buffer overflow: numUFO is supposed to be UFO idx */
+	assert(numUFO <= MAX_UFOONGEOSCAPE);
 
 	radar->ufos[radar->numUFOs] = numUFO;
 	radar->numUFOs++;
