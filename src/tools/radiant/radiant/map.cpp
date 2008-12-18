@@ -702,6 +702,7 @@ void Scene_EntityBreakdown(EntityBreakdown& entitymap) {
 
 WindowPosition g_posMapInfoWnd(c_default_window_pos);
 
+// TODO: Move into sidebar
 void DoMapInfo (void) {
 	ModalDialog dialog;
 	GtkEntry* brushes_entry;
