@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_abstractnode.h"
 
 /**
- * @todo is it realy need to init this structure?
+ * @todo is it really needed to init this structure?
  */
 dragInfo_t dragInfo = {
 	DND_NOTHING,
@@ -52,7 +52,6 @@ dragInfo_t dragInfo = {
 	NULL,	/* to */
 	-1,		/* toX */
 	-1		/* toY */
-
 };
 
 /**
@@ -172,7 +171,7 @@ static qboolean positionAcceptDND = qfalse;
 /**
  * @brief Manage the DND when we move the mouse
  */
-void MN_DNDMouseMove (int mousePosX, int mousePosY)
+static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 {
 	menuNode_t *node = MN_GetNodeByPosition(mousePosX, mousePosY);
 
@@ -223,7 +222,7 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 
 	/* Tune down the opacity of the cursor-item if the preview item is drawn. */
 	if (positionAcceptDND)
-		Vector4Set(color, 1, 1, 1, 0.2);
+		color[3] = 0.2;
 
 	switch (dragInfo.type) {
 	case DND_ITEM:
@@ -248,5 +247,4 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 			-50);
 	R_DrawCircle2D(orgine[0] * viddef.rx, orgine[1] * viddef.ry, 2.0, qtrue, color, 1.0);
 #endif
-
 }
