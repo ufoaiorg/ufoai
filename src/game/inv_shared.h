@@ -412,6 +412,12 @@ typedef struct mapDef_s {
 	qboolean storyRelated;		/**< Is this a mission story related? */
 	int timesAlreadyUsed;		/**< Number of times the map has already been used */
 	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
+
+	/** @note Don't end with ; - the trigger commands get the base index as
+	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
+	 * in your trigger command, you can seperate more commands with ; of course */
+	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
+	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
 } mapDef_t;
 
 typedef struct damageType_s {

@@ -149,12 +149,8 @@ typedef struct mission_s {
 	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
 	qboolean onGeoscape;			/**< Should the mission be displayed on geoscape */
 
-	/** @todo I'm not sure this is really needed still -- Kracken */
-	/** @note Don't end with ; - the trigger commands get the base index as
-	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
-	 * in your trigger command, you can seperate more commands with ; of course */
-	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
-	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
+	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
+	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
 } mission_t;
 
 /** battlescape parameters that were used */

@@ -5444,8 +5444,7 @@ static void CP_AddTechAsResearchable_f (void)
 	const char *techID;
 	technology_t *tech;
 
-	/* baseid is appened in mission trigger function */
-	if (Cmd_Argc() < 3) {
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <tech>\n", Cmd_Argv(0));
 		return;
 	}
@@ -5467,8 +5466,7 @@ static void CP_AddItemAsCollected_f (void)
 	int i, baseID;
 	const char* id;
 
-	/* baseid is appened in mission trigger function */
-	if (Cmd_Argc() < 3) {
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item>\n", Cmd_Argv(0));
 		return;
 	}
@@ -5497,8 +5495,7 @@ static void CP_ChangeNationHappiness_f (void)
 	float change;
 	nation_t *nation;
 
-	/* baseid is appened in mission trigger function */
-	if (Cmd_Argc() < 3) {
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));
 		return;
 	}
@@ -5568,14 +5565,25 @@ void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
-	if (won && m->onwin[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
-		Cbuf_AddText(va("%s\n", m->onwin));
-	} else if (!won && m->onlose[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
-		Cbuf_AddText(va("%s\n", m->onlose));
+	if (won) {
+		if (m->onwin[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
+			Cmd_ExecuteString(m->onwin);
+		}
+		if (m->mapDef && m->mapDef->onwin[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->mapDef->onwin);
+			Cmd_ExecuteString(m->mapDef->onwin);
+		}
+	} else {
+		if (m->onlose[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
+			Cmd_ExecuteString(m->onlose);
+		}
+		if (m->mapDef && m->mapDef->onlose[0] != '\0') {
+			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->mapDef->onlose);
+			Cmd_ExecuteString(m->mapDef->onlose);
+		}
 	}
-	Cbuf_Execute();
 	CP_MissionTriggerFunctions(qfalse);
 }
 

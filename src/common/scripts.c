@@ -2415,6 +2415,9 @@ static const value_t mapdef_vals[] = {
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
 
+	{"onwin", V_STRING, offsetof(mapDef_t, onwin), 0},
+	{"onlose", V_STRING, offsetof(mapDef_t, onlose), 0},
+
 	{NULL, 0, 0, 0}
 };
 
