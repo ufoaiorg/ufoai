@@ -296,8 +296,8 @@ void BuildLights (void)
 	light_t *l;
 
 	/* surfaces */
-	for(i = 0; i < MAX_MAP_FACES; i++){
-		patch_t *p = face_patches[i];
+	for (i = 0; i < MAX_MAP_FACES; i++) {
+		const patch_t *p = face_patches[i];
 		while (p) {  /* iterate subdivided patches */
 			if (VectorCompare(p->light, vec3_origin))
 				continue;
