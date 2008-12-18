@@ -4,25 +4,25 @@
  */
 
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "autosave.h"
 
@@ -39,7 +39,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qe3.h"
 #include "preferences.h"
 
-static inline bool DoesFileExist(const char* name, std::size_t& size) {
+static inline bool DoesFileExist (const char* name, std::size_t& size)
+{
 	if (file_exists(name)) {
 		size += file_size(name);
 		return true;
@@ -47,7 +48,8 @@ static inline bool DoesFileExist(const char* name, std::size_t& size) {
 	return false;
 }
 
-static void Map_Snapshot() {
+static void Map_Snapshot ()
+{
 	// we need to do the following
 	// 1. make sure the snapshot directory exists (create it if it doesn't)
 	// 2. find out what the lastest save is based on number
@@ -65,7 +67,7 @@ static void Map_Snapshot() {
 
 		StringOutputStream snapshotFilename(256);
 
-		for (int nCount = 0; ; ++nCount) {
+		for (int nCount = 0;; ++nCount) {
 			// The original map's filename is "<path>/<name>.<ext>"
 			// The snapshot's filename will be "<path>/snapshots/<name>.<count>.<ext>"
 			const char* end = path_get_filename_base_end(strNewPath.c_str());
@@ -82,7 +84,8 @@ static void Map_Snapshot() {
 		Map_SaveFile(snapshotFilename.c_str());
 
 		if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
-			globalWarningStream() << "The snapshot files in " << snapshotsDir.c_str() << " total more than 50 megabytes. You might consider cleaning up.";
+			globalWarningStream() << "The snapshot files in " << snapshotsDir.c_str()
+					<< " total more than 50 megabytes. You might consider cleaning up.";
 		}
 	} else {
 		StringOutputStream strMsg(256);
@@ -95,16 +98,19 @@ static bool g_AutoSave_Enabled = true;
 static int m_AutoSave_Frequency = 5;
 static bool g_SnapShots_Enabled = false;
 
-namespace {
-time_t s_start = 0;
-std::size_t s_changes = 0;
+namespace
+{
+	time_t s_start = 0;
+	std::size_t s_changes = 0;
 }
 
-void AutoSave_clear() {
+void AutoSave_clear ()
+{
 	s_changes = 0;
 }
 
-static inline scene::Node& Map_Node() {
+static inline scene::Node& Map_Node ()
+{
 	return GlobalSceneGraph().root();
 }
 
@@ -112,7 +118,8 @@ static inline scene::Node& Map_Node() {
  * @brief If five minutes have passed since making a change
  * and the map hasn't been saved, save it out.
  */
-void QE_CheckAutoSave (void) {
+void QE_CheckAutoSave (void)
+{
 	if (!Map_Valid(g_map) || !ScreenUpdates_Enabled()) {
 		return;
 	}
@@ -158,31 +165,38 @@ void QE_CheckAutoSave (void) {
 	}
 }
 
-static void Autosave_constructPreferences(PreferencesPage& page) {
+static void Autosave_constructPreferences (PreferencesPage& page)
+{
 	GtkWidget* autosave_enabled = page.appendCheckBox("Autosave", "Enable Autosave", g_AutoSave_Enabled);
 	GtkWidget* autosave_frequency = page.appendSpinner("Autosave Frequency (minutes)", m_AutoSave_Frequency, 1, 1, 60);
 	Widget_connectToggleDependency(autosave_frequency, autosave_enabled);
 	page.appendCheckBox("", "Save Snapshots", g_SnapShots_Enabled);
 }
-void Autosave_constructPage(PreferenceGroup& group) {
+void Autosave_constructPage (PreferenceGroup& group)
+{
 	PreferencesPage page(group.createPage("Autosave", "Autosave Preferences"));
 	Autosave_constructPreferences(page);
 }
-void Autosave_registerPreferencesPage() {
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Autosave_constructPage>());
+void Autosave_registerPreferencesPage ()
+{
+	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Autosave_constructPage> ());
 }
-
 
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void Autosave_Construct() {
-	GlobalPreferenceSystem().registerPreference("Autosave", BoolImportStringCaller(g_AutoSave_Enabled), BoolExportStringCaller(g_AutoSave_Enabled));
-	GlobalPreferenceSystem().registerPreference("AutosaveMinutes", IntImportStringCaller(m_AutoSave_Frequency), IntExportStringCaller(m_AutoSave_Frequency));
-	GlobalPreferenceSystem().registerPreference("Snapshots", BoolImportStringCaller(g_SnapShots_Enabled), BoolExportStringCaller(g_SnapShots_Enabled));
+void Autosave_Construct ()
+{
+	GlobalPreferenceSystem().registerPreference("Autosave", BoolImportStringCaller(g_AutoSave_Enabled),
+			BoolExportStringCaller(g_AutoSave_Enabled));
+	GlobalPreferenceSystem().registerPreference("AutosaveMinutes", IntImportStringCaller(m_AutoSave_Frequency),
+			IntExportStringCaller(m_AutoSave_Frequency));
+	GlobalPreferenceSystem().registerPreference("Snapshots", BoolImportStringCaller(g_SnapShots_Enabled),
+			BoolExportStringCaller(g_SnapShots_Enabled));
 
 	Autosave_registerPreferencesPage();
 }
 
-void Autosave_Destroy() {
+void Autosave_Destroy ()
+{
 }

@@ -6,25 +6,25 @@
  */
 
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "mainframe.h"
 
@@ -104,55 +104,59 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "renderstate.h"
 #include "referencecache.h"
 
-struct layout_globals_t {
-	WindowPosition m_position;
+struct layout_globals_t
+{
+		WindowPosition m_position;
 
-	int nXYHeight;
-	int nXYWidth;
-	int nCamWidth;
-	int nCamHeight;
-	int nState;
+		int nXYHeight;
+		int nXYWidth;
+		int nCamWidth;
+		int nCamHeight;
+		int nState;
 
-	layout_globals_t() :
+		layout_globals_t () :
 			m_position(-1, -1, 640, 480),
 
-			nXYHeight(650),
-			nXYWidth(300),
-			nCamWidth(200),
-			nCamHeight(200),
-			nState(GDK_WINDOW_STATE_MAXIMIZED) {
-	}
+			nXYHeight(650), nXYWidth(300), nCamWidth(200), nCamHeight(200), nState(GDK_WINDOW_STATE_MAXIMIZED)
+		{
+		}
 };
 
 layout_globals_t g_layout_globals;
 glwindow_globals_t g_glwindow_globals;
 
-
 // Virtual file system
-class VFSModuleObserver : public ModuleObserver {
-	std::size_t m_unrealised;
-public:
-	VFSModuleObserver() : m_unrealised(1) {
-	}
-	void realise (void) {
-		if (--m_unrealised == 0) {
-			QE_InitVFS();
-			GlobalFileSystem().initialise();
+class VFSModuleObserver: public ModuleObserver
+{
+		std::size_t m_unrealised;
+	public:
+		VFSModuleObserver () :
+			m_unrealised(1)
+		{
 		}
-	}
-	void unrealise (void) {
-		if (++m_unrealised == 1) {
-			GlobalFileSystem().shutdown();
+		void realise (void)
+		{
+			if (--m_unrealised == 0) {
+				QE_InitVFS();
+				GlobalFileSystem().initialise();
+			}
 		}
-	}
+		void unrealise (void)
+		{
+			if (++m_unrealised == 1) {
+				GlobalFileSystem().shutdown();
+			}
+		}
 };
 
 VFSModuleObserver g_VFSModuleObserver;
 
-void VFS_Construct (void) {
+void VFS_Construct (void)
+{
 	Radiant_attachHomePathsObserver(g_VFSModuleObserver);
 }
-void VFS_Destroy (void) {
+void VFS_Destroy (void)
+{
 	Radiant_detachHomePathsObserver(g_VFSModuleObserver);
 }
 
@@ -194,22 +198,27 @@ void Radiant_detachHomePathsObserver (ModuleObserver& observer)
 	g_homePathObservers.detach(observer);
 }
 
-class HomePathsModuleObserver : public ModuleObserver {
-	std::size_t m_unrealised;
-public:
-	HomePathsModuleObserver() : m_unrealised(1) {
-	}
-	void realise (void) {
-		if (--m_unrealised == 0) {
-			HomePaths_Realise();
-			g_homePathObservers.realise();
+class HomePathsModuleObserver: public ModuleObserver
+{
+		std::size_t m_unrealised;
+	public:
+		HomePathsModuleObserver () :
+			m_unrealised(1)
+		{
 		}
-	}
-	void unrealise (void) {
-		if (++m_unrealised == 1) {
-			g_homePathObservers.unrealise();
+		void realise (void)
+		{
+			if (--m_unrealised == 0) {
+				HomePaths_Realise();
+				g_homePathObservers.realise();
+			}
 		}
-	}
+		void unrealise (void)
+		{
+			if (++m_unrealised == 1) {
+				g_homePathObservers.unrealise();
+			}
+		}
 };
 
 HomePathsModuleObserver g_HomePathsModuleObserver;
@@ -223,7 +232,6 @@ void HomePaths_Destroy (void)
 	Radiant_detachEnginePathObserver(g_HomePathsModuleObserver);
 }
 
-
 // Engine Path
 
 static CopiedString g_strEnginePath;
@@ -235,10 +243,10 @@ void Radiant_attachEnginePathObserver (ModuleObserver& observer)
 	g_enginePathObservers.attach(observer);
 }
 
-void Radiant_detachEnginePathObserver(ModuleObserver& observer) {
+void Radiant_detachEnginePathObserver (ModuleObserver& observer)
+{
 	g_enginePathObservers.detach(observer);
 }
-
 
 void EnginePath_Realise (void)
 {
@@ -246,7 +254,6 @@ void EnginePath_Realise (void)
 		g_enginePathObservers.realise();
 	}
 }
-
 
 const char* EnginePath_get (void)
 {
@@ -276,7 +283,6 @@ void setEnginePath (const char* path)
 	}
 }
 
-
 // Compiler Path
 
 CopiedString g_strCompilerBinaryWithPath("");
@@ -288,7 +294,7 @@ const char* CompilerBinaryWithPath_get (void)
 
 // App Path
 
-CopiedString g_strAppPath;                 ///< holds the full path of the executable
+CopiedString g_strAppPath; ///< holds the full path of the executable
 
 const char* AppPath_get (void)
 {
@@ -304,7 +310,7 @@ const char* SettingsPath_get (void)
 	return g_strSettingsPath.c_str();
 }
 
-void EnginePathImport(CopiedString& self, const char* value)
+void EnginePathImport (CopiedString& self, const char* value)
 {
 	setEnginePath(value);
 }
@@ -312,10 +318,8 @@ typedef ReferenceCaller1<CopiedString, const char*, EnginePathImport> EnginePath
 
 void Paths_constructPreferences (PreferencesPage& page)
 {
-	page.appendPathEntry("Engine Path", true,
-			StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
-			StringExportCallback(StringExportCaller(g_strEnginePath))
-		);
+	page.appendPathEntry("Engine Path", true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
+			StringExportCallback(StringExportCaller(g_strEnginePath)));
 	page.appendPathEntry("Compiler Binary", g_strCompilerBinaryWithPath, false);
 }
 void Paths_constructPage (PreferenceGroup& group)
@@ -326,26 +330,27 @@ void Paths_constructPage (PreferenceGroup& group)
 
 void Paths_registerPreferencesPage (void)
 {
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Paths_constructPage>());
+	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Paths_constructPage> ());
 }
 
-
-class PathsDialog : public Dialog {
-public:
-	GtkWindow* BuildDialog (void) {
-		GtkFrame* frame = create_dialog_frame("Path settings", GTK_SHADOW_ETCHED_IN);
-
-		GtkVBox* vbox2 = create_dialog_vbox(0, 4);
-		gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
-
+class PathsDialog: public Dialog
+{
+	public:
+		GtkWindow* BuildDialog (void)
 		{
-			PreferencesPage preferencesPage(*this, GTK_WIDGET(vbox2));
-			Paths_constructPreferences(preferencesPage);
-		}
+			GtkFrame* frame = create_dialog_frame("Path settings", GTK_SHADOW_ETCHED_IN);
 
-		return create_simple_modal_dialog_window("Engine Path Not Found", m_modal, GTK_WIDGET(frame));
-	}
-};
+			GtkVBox* vbox2 = create_dialog_vbox(0, 4);
+			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
+
+			{
+				PreferencesPage preferencesPage(*this, GTK_WIDGET(vbox2));
+				Paths_constructPreferences(preferencesPage);
+			}
+
+			return create_simple_modal_dialog_window("Engine Path Not Found", m_modal, GTK_WIDGET(frame));
+		}
+	};
 
 PathsDialog g_PathsDialog;
 
@@ -358,10 +363,11 @@ void EnginePath_verify (void)
 	}
 }
 
-namespace {
-CopiedString g_gamename;
-ModuleObservers g_gameNameObservers;
-ModuleObservers g_gameModeObservers;
+namespace
+{
+	CopiedString g_gamename;
+	ModuleObservers g_gameNameObservers;
+	ModuleObservers g_gameModeObservers;
 }
 
 void Radiant_attachGameNameObserver (ModuleObserver& observer)
@@ -379,7 +385,8 @@ const char* basegame_get (void)
 	return g_pGameDescription->getRequiredKeyValue("basegame");
 }
 
-const char* gamename_get (void) {
+const char* gamename_get (void)
+{
 	const char* gamename = g_gamename.c_str();
 	if (string_empty(gamename)) {
 		return basegame_get();
@@ -387,7 +394,8 @@ const char* gamename_get (void) {
 	return gamename;
 }
 
-void gamename_set(const char* gamename) {
+void gamename_set (const char* gamename)
+{
 	if (!string_equal(gamename, g_gamename.c_str())) {
 		g_gameNameObservers.unrealise();
 		g_gamename = gamename;
@@ -395,46 +403,54 @@ void gamename_set(const char* gamename) {
 	}
 }
 
-void Radiant_attachGameModeObserver(ModuleObserver& observer) {
+void Radiant_attachGameModeObserver (ModuleObserver& observer)
+{
 	g_gameModeObservers.attach(observer);
 }
 
-void Radiant_detachGameModeObserver(ModuleObserver& observer) {
+void Radiant_detachGameModeObserver (ModuleObserver& observer)
+{
 	g_gameModeObservers.detach(observer);
 }
 
 #include "os/dir.h"
 
-class CLoadModule {
-	const char* m_path;
-public:
-	CLoadModule(const char* path) : m_path(path) {
-	}
-	void operator()(const char* name) const {
-		char fullname[1024];
-		ASSERT_MESSAGE(strlen(m_path) + strlen(name) < 1024, "");
-		strcpy(fullname, m_path);
-		strcat(fullname, name);
-		globalOutputStream() << "Found '" << fullname << "'\n";
-		GlobalModuleServer_loadModule(fullname);
-	}
+class CLoadModule
+{
+		const char* m_path;
+	public:
+		CLoadModule (const char* path) :
+			m_path(path)
+		{
+		}
+		void operator() (const char* name) const
+		{
+			char fullname[1024];
+			ASSERT_MESSAGE(strlen(m_path) + strlen(name) < 1024, "");
+			strcpy(fullname, m_path);
+			strcat(fullname, name);
+			globalOutputStream() << "Found '" << fullname << "'\n";
+			GlobalModuleServer_loadModule(fullname);
+		}
 };
 
 const char* const c_library_extension =
 #if defined(WIN32)
-    "dll"
+		"dll"
 #elif defined (__APPLE__)
-    "dylib"
+		"dylib"
 #elif defined(__linux__) || defined (__FreeBSD__)
-    "so"
+		"so"
 #endif
-    ;
+;
 
-void Radiant_loadModules(const char* path) {
-	Directory_forEach(path, MatchFileExtension<CLoadModule>(c_library_extension, CLoadModule(path)));
+void Radiant_loadModules (const char* path)
+{
+	Directory_forEach(path, MatchFileExtension<CLoadModule> (c_library_extension, CLoadModule(path)));
 }
 
-void Radiant_loadModulesFromRoot(const char* directory) {
+void Radiant_loadModulesFromRoot (const char* directory)
+{
 	{
 		StringOutputStream path(256);
 		path << directory << g_pluginsDir;
@@ -450,15 +466,18 @@ void Radiant_loadModulesFromRoot(const char* directory) {
 
 ModuleObservers g_gameToolsPathObservers;
 
-void Radiant_attachGameToolsPathObserver(ModuleObserver& observer) {
+void Radiant_attachGameToolsPathObserver (ModuleObserver& observer)
+{
 	g_gameToolsPathObservers.attach(observer);
 }
 
-void Radiant_detachGameToolsPathObserver(ModuleObserver& observer) {
+void Radiant_detachGameToolsPathObserver (ModuleObserver& observer)
+{
 	g_gameToolsPathObservers.detach(observer);
 }
 
-void Radiant_Initialise (void) {
+void Radiant_Initialise (void)
+{
 	GlobalModuleServer_Initialise();
 
 	Radiant_loadModulesFromRoot(AppPath_get());
@@ -473,7 +492,8 @@ void Radiant_Initialise (void) {
 	g_gameNameObservers.realise();
 }
 
-void Radiant_Shutdown (void) {
+void Radiant_Shutdown (void)
+{
 	g_gameNameObservers.unrealise();
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
@@ -489,45 +509,53 @@ void Radiant_Shutdown (void) {
 	GlobalModuleServer_Shutdown();
 }
 
-void Exit (void) {
+void Exit (void)
+{
 	if (ConfirmModified("Exit Radiant")) {
 		gtk_main_quit();
 	}
 }
 
-
-void Undo (void) {
+void Undo (void)
+{
 	GlobalUndoSystem().undo();
 	SceneChangeNotify();
 }
 
-void Redo (void) {
+void Redo (void)
+{
 	GlobalUndoSystem().redo();
 	SceneChangeNotify();
 }
 
-void deleteSelection (void) {
+void deleteSelection (void)
+{
 	UndoableCommand undo("deleteSelected");
 	Select_Delete();
 }
 
-void Map_ExportSelected(TextOutputStream& ostream) {
+void Map_ExportSelected (TextOutputStream& ostream)
+{
 	Map_ExportSelected(ostream, Map_getFormat(g_map));
 }
 
-void Map_ImportSelected(TextInputStream& istream) {
+void Map_ImportSelected (TextInputStream& istream)
+{
 	Map_ImportSelected(istream, Map_getFormat(g_map));
 }
 
-void Selection_Copy (void) {
+void Selection_Copy (void)
+{
 	clipboard_copy(Map_ExportSelected);
 }
 
-void Selection_Paste (void) {
+void Selection_Paste (void)
+{
 	clipboard_paste(Map_ImportSelected);
 }
 
-void Copy (void) {
+void Copy (void)
+{
 	if (SelectedFaces_empty()) {
 		Selection_Copy();
 	} else {
@@ -535,7 +563,8 @@ void Copy (void) {
 	}
 }
 
-void Paste (void) {
+void Paste (void)
+{
 	if (SelectedFaces_empty()) {
 		UndoableCommand undo("paste");
 
@@ -546,7 +575,8 @@ void Paste (void) {
 	}
 }
 
-void PasteToCamera (void) {
+void PasteToCamera (void)
+{
 	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
 	GlobalSelectionSystem().setSelectedAll(false);
 
@@ -563,81 +593,90 @@ void PasteToCamera (void) {
 	GlobalSelectionSystem().translateSelected(delta);
 }
 
-void OpenHelpURL (void) {
+void OpenHelpURL (void)
+{
 	OpenURL("http://ufoai.ninex.info/wiki/index.php/Category:Mapping");
 }
 
-void OpenBugReportURL (void) {
+void OpenBugReportURL (void)
+{
 	OpenURL("http://sourceforge.net/tracker/?func=add&group_id=157793&atid=805242");
 }
 
-static void ModeChangeNotify();
+static void ModeChangeNotify ();
 
-typedef void(*ToolMode)();
+typedef void(*ToolMode) ();
 static ToolMode g_currentToolMode = 0;
 bool g_currentToolModeSupportsComponentEditing = false;
 static ToolMode g_defaultToolMode = 0;
 
-void SelectionSystem_DefaultMode (void) {
+void SelectionSystem_DefaultMode (void)
+{
 	GlobalSelectionSystem().SetMode(SelectionSystem::ePrimitive);
 	GlobalSelectionSystem().SetComponentMode(SelectionSystem::eDefault);
 	ModeChangeNotify();
 }
 
-
-bool EdgeMode (void) {
-	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-		&& GlobalSelectionSystem().ComponentMode() == SelectionSystem::eEdge;
+bool EdgeMode (void)
+{
+	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent && GlobalSelectionSystem().ComponentMode()
+			== SelectionSystem::eEdge;
 }
 
-bool VertexMode (void) {
-	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-		&& GlobalSelectionSystem().ComponentMode() == SelectionSystem::eVertex;
+bool VertexMode (void)
+{
+	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent && GlobalSelectionSystem().ComponentMode()
+			== SelectionSystem::eVertex;
 }
 
-bool FaceMode (void) {
-	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-		&& GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace;
+bool FaceMode (void)
+{
+	return GlobalSelectionSystem().Mode() == SelectionSystem::eComponent && GlobalSelectionSystem().ComponentMode()
+			== SelectionSystem::eFace;
 }
 
-template < bool (*BoolFunction)() >
-class BoolFunctionExport {
-public:
-	static void apply(const BoolImportCallback& importCallback) {
-		importCallback(BoolFunction());
-	}
+template<bool(*BoolFunction) ()>
+class BoolFunctionExport
+{
+	public:
+		static void apply (const BoolImportCallback& importCallback)
+		{
+			importCallback(BoolFunction());
+		}
 };
 
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<EdgeMode>::apply> EdgeModeApplyCaller;
 EdgeModeApplyCaller g_edgeMode_button_caller;
-BoolExportCallback g_edgeMode_button_callback(g_edgeMode_button_caller);
-ToggleItem g_edgeMode_button(g_edgeMode_button_callback);
+BoolExportCallback g_edgeMode_button_callback (g_edgeMode_button_caller);
+ToggleItem g_edgeMode_button (g_edgeMode_button_callback);
 
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<VertexMode>::apply> VertexModeApplyCaller;
 VertexModeApplyCaller g_vertexMode_button_caller;
-BoolExportCallback g_vertexMode_button_callback(g_vertexMode_button_caller);
-ToggleItem g_vertexMode_button(g_vertexMode_button_callback);
+BoolExportCallback g_vertexMode_button_callback (g_vertexMode_button_caller);
+ToggleItem g_vertexMode_button (g_vertexMode_button_callback);
 
 typedef FreeCaller1<const BoolImportCallback&, &BoolFunctionExport<FaceMode>::apply> FaceModeApplyCaller;
 FaceModeApplyCaller g_faceMode_button_caller;
-BoolExportCallback g_faceMode_button_callback(g_faceMode_button_caller);
-ToggleItem g_faceMode_button(g_faceMode_button_callback);
+BoolExportCallback g_faceMode_button_callback (g_faceMode_button_caller);
+ToggleItem g_faceMode_button (g_faceMode_button_callback);
 
-void ComponentModeChanged (void) {
+void ComponentModeChanged (void)
+{
 	g_edgeMode_button.update();
 	g_vertexMode_button.update();
 	g_faceMode_button.update();
 }
 
-void ComponentMode_SelectionChanged(const Selectable& selectable) {
-	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-	&& GlobalSelectionSystem().countSelected() == 0) {
+void ComponentMode_SelectionChanged (const Selectable& selectable)
+{
+	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent && GlobalSelectionSystem().countSelected() == 0) {
 		SelectionSystem_DefaultMode();
 		ComponentModeChanged();
 	}
 }
 
-void SelectEdgeMode (void) {
+void SelectEdgeMode (void)
+{
 #if 0
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		GlobalSelectionSystem().Select(false);
@@ -660,7 +699,8 @@ void SelectEdgeMode (void) {
 	ModeChangeNotify();
 }
 
-void SelectVertexMode (void) {
+void SelectVertexMode (void)
+{
 #if 0
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		GlobalSelectionSystem().Select(false);
@@ -683,7 +723,8 @@ void SelectVertexMode (void) {
 	ModeChangeNotify();
 }
 
-void SelectFaceMode (void) {
+void SelectFaceMode (void)
+{
 #if 0
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		GlobalSelectionSystem().Select(false);
@@ -706,60 +747,64 @@ void SelectFaceMode (void) {
 	ModeChangeNotify();
 }
 
+class CloneSelected: public scene::Graph::Walker
+{
+	public:
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.size() == 1)
+				return true;
 
-class CloneSelected : public scene::Graph::Walker {
-public:
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (path.size() == 1)
+			if (!path.top().get().isRoot()) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected()) {
+					return false;
+				}
+			}
+
 			return true;
+		}
+		void post (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.size() == 1)
+				return;
 
-		if (!path.top().get().isRoot()) {
-			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0 && selectable->isSelected()) {
-				return false;
+			if (!path.top().get().isRoot()) {
+				Selectable* selectable = Instance_getSelectable(instance);
+				if (selectable != 0 && selectable->isSelected()) {
+					NodeSmartReference clone(Node_Clone(path.top()));
+					Map_gatherNamespaced(clone);
+					Node_getTraversable(path.parent().get())->insert(clone);
+				}
 			}
 		}
-
-		return true;
-	}
-	void post(const scene::Path& path, scene::Instance& instance) const {
-		if (path.size() == 1)
-			return;
-
-		if (!path.top().get().isRoot()) {
-			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0 && selectable->isSelected()) {
-				NodeSmartReference clone(Node_Clone(path.top()));
-				Map_gatherNamespaced(clone);
-				Node_getTraversable(path.parent().get())->insert(clone);
-			}
-		}
-	}
 };
 
-void Scene_Clone_Selected(scene::Graph& graph) {
+void Scene_Clone_Selected (scene::Graph& graph)
+{
 	graph.traverse(CloneSelected());
 
 	Map_mergeClonedNames();
 }
 
-enum ENudgeDirection {
-	eNudgeUp = 1,
-	eNudgeDown = 3,
-	eNudgeLeft = 0,
-	eNudgeRight = 2,
+enum ENudgeDirection
+{
+	eNudgeUp = 1, eNudgeDown = 3, eNudgeLeft = 0, eNudgeRight = 2,
 };
 
-struct AxisBase {
-	Vector3 x;
-	Vector3 y;
-	Vector3 z;
-	AxisBase(const Vector3& x_, const Vector3& y_, const Vector3& z_)
-			: x(x_), y(y_), z(z_) {
-	}
+struct AxisBase
+{
+		Vector3 x;
+		Vector3 y;
+		Vector3 z;
+		AxisBase (const Vector3& x_, const Vector3& y_, const Vector3& z_) :
+			x(x_), y(y_), z(z_)
+		{
+		}
 };
 
-AxisBase AxisBase_forViewType(VIEWTYPE viewtype) {
+AxisBase AxisBase_forViewType (VIEWTYPE viewtype)
+{
 	switch (viewtype) {
 	case XY:
 		return AxisBase(g_vector3_axis_x, g_vector3_axis_y, g_vector3_axis_z);
@@ -773,7 +818,8 @@ AxisBase AxisBase_forViewType(VIEWTYPE viewtype) {
 	return AxisBase(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0));
 }
 
-Vector3 AxisBase_axisForDirection(const AxisBase& axes, ENudgeDirection direction) {
+Vector3 AxisBase_axisForDirection (const AxisBase& axes, ENudgeDirection direction)
+{
 	switch (direction) {
 	case eNudgeLeft:
 		return vector3_negated(axes.x);
@@ -789,14 +835,16 @@ Vector3 AxisBase_axisForDirection(const AxisBase& axes, ENudgeDirection directio
 	return Vector3(0, 0, 0);
 }
 
-void NudgeSelection(ENudgeDirection direction, float fAmount, VIEWTYPE viewtype) {
+void NudgeSelection (ENudgeDirection direction, float fAmount, VIEWTYPE viewtype)
+{
 	AxisBase axes(AxisBase_forViewType(viewtype));
 	Vector3 view_direction(vector3_negated(axes.z));
 	Vector3 nudge(vector3_scaled(AxisBase_axisForDirection(axes, direction), fAmount));
 	GlobalSelectionSystem().NudgeManipulator(nudge, view_direction);
 }
 
-void Selection_Clone (void) {
+void Selection_Clone (void)
+{
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive) {
 		UndoableCommand undo("cloneSelected");
 
@@ -808,7 +856,8 @@ void Selection_Clone (void) {
 }
 
 // called when the escape key is used (either on the main window or on an inspector)
-void Selection_Deselect (void) {
+void Selection_Deselect (void)
+{
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		if (GlobalSelectionSystem().countSelectedComponents() != 0) {
 			GlobalSelectionSystem().setSelectedAllComponents(false);
@@ -825,69 +874,77 @@ void Selection_Deselect (void) {
 	}
 }
 
-
-void Selection_NudgeUp (void) {
+void Selection_NudgeUp (void)
+{
 	UndoableCommand undo("nudgeSelectedUp");
 	NudgeSelection(eNudgeUp, GetGridSize(), GlobalXYWnd_getCurrentViewType());
 }
 
-void Selection_NudgeDown (void) {
+void Selection_NudgeDown (void)
+{
 	UndoableCommand undo("nudgeSelectedDown");
 	NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd_getCurrentViewType());
 }
 
-void Selection_NudgeLeft (void) {
+void Selection_NudgeLeft (void)
+{
 	UndoableCommand undo("nudgeSelectedLeft");
 	NudgeSelection(eNudgeLeft, GetGridSize(), GlobalXYWnd_getCurrentViewType());
 }
 
-void Selection_NudgeRight (void) {
+void Selection_NudgeRight (void)
+{
 	UndoableCommand undo("nudgeSelectedRight");
 	NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd_getCurrentViewType());
 }
 
-
-void TranslateToolExport(const BoolImportCallback& importCallback) {
+void TranslateToolExport (const BoolImportCallback& importCallback)
+{
 	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eTranslate);
 }
 
-void RotateToolExport(const BoolImportCallback& importCallback) {
+void RotateToolExport (const BoolImportCallback& importCallback)
+{
 	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eRotate);
 }
 
-void ScaleToolExport(const BoolImportCallback& importCallback) {
+void ScaleToolExport (const BoolImportCallback& importCallback)
+{
 	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eScale);
 }
 
-void DragToolExport(const BoolImportCallback& importCallback) {
+void DragToolExport (const BoolImportCallback& importCallback)
+{
 	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eDrag);
 }
 
-void ClipperToolExport(const BoolImportCallback& importCallback) {
+void ClipperToolExport (const BoolImportCallback& importCallback)
+{
 	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eClip);
 }
 
 FreeCaller1<const BoolImportCallback&, TranslateToolExport> g_translatemode_button_caller;
-BoolExportCallback g_translatemode_button_callback(g_translatemode_button_caller);
-ToggleItem g_translatemode_button(g_translatemode_button_callback);
+BoolExportCallback g_translatemode_button_callback (g_translatemode_button_caller);
+ToggleItem g_translatemode_button (g_translatemode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, RotateToolExport> g_rotatemode_button_caller;
-BoolExportCallback g_rotatemode_button_callback(g_rotatemode_button_caller);
-ToggleItem g_rotatemode_button(g_rotatemode_button_callback);
+BoolExportCallback g_rotatemode_button_callback (g_rotatemode_button_caller);
+ToggleItem g_rotatemode_button (g_rotatemode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, ScaleToolExport> g_scalemode_button_caller;
-BoolExportCallback g_scalemode_button_callback(g_scalemode_button_caller);
-ToggleItem g_scalemode_button(g_scalemode_button_callback);
+BoolExportCallback g_scalemode_button_callback (g_scalemode_button_caller);
+ToggleItem g_scalemode_button (g_scalemode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, DragToolExport> g_dragmode_button_caller;
-BoolExportCallback g_dragmode_button_callback(g_dragmode_button_caller);
-ToggleItem g_dragmode_button(g_dragmode_button_callback);
+BoolExportCallback g_dragmode_button_callback (g_dragmode_button_caller);
+ToggleItem g_dragmode_button (g_dragmode_button_callback);
 
 FreeCaller1<const BoolImportCallback&, ClipperToolExport> g_clipper_button_caller;
-BoolExportCallback g_clipper_button_callback(g_clipper_button_caller);
-ToggleItem g_clipper_button(g_clipper_button_callback);
+BoolExportCallback g_clipper_button_callback (g_clipper_button_caller);
+ToggleItem g_clipper_button (g_clipper_button_callback);
 
-void ToolChanged (void) {
+void ToolChanged (void)
+{
 	g_translatemode_button.update();
 	g_rotatemode_button.update();
 	g_scalemode_button.update();
@@ -897,7 +954,8 @@ void ToolChanged (void) {
 
 static const char* const c_ResizeMode_status = "QE4 Drag Tool";
 
-void DragMode (void) {
+void DragMode (void)
+{
 	if (g_currentToolMode == DragMode && g_defaultToolMode != DragMode) {
 		g_defaultToolMode();
 	} else {
@@ -913,10 +971,10 @@ void DragMode (void) {
 	}
 }
 
-
 static const char* const c_TranslateMode_status = "Translate Tool";
 
-void TranslateMode (void) {
+void TranslateMode (void)
+{
 	if (g_currentToolMode == TranslateMode && g_defaultToolMode != TranslateMode) {
 		g_defaultToolMode();
 	} else {
@@ -934,7 +992,8 @@ void TranslateMode (void) {
 
 static const char* const c_RotateMode_status = "Rotate Tool";
 
-void RotateMode (void) {
+void RotateMode (void)
+{
 	if (g_currentToolMode == RotateMode && g_defaultToolMode != RotateMode) {
 		g_defaultToolMode();
 	} else {
@@ -952,7 +1011,8 @@ void RotateMode (void) {
 
 static const char* const c_ScaleMode_status = "Scale Tool";
 
-void ScaleMode (void) {
+void ScaleMode (void)
+{
 	if (g_currentToolMode == ScaleMode && g_defaultToolMode != ScaleMode) {
 		g_defaultToolMode();
 	} else {
@@ -968,11 +1028,10 @@ void ScaleMode (void) {
 	}
 }
 
-
 static const char* const c_ClipperMode_status = "Clipper Tool";
 
-
-void ClipperMode (void) {
+void ClipperMode (void)
+{
 	if (g_currentToolMode == ClipperMode && g_defaultToolMode != ClipperMode) {
 		g_defaultToolMode();
 	} else {
@@ -990,113 +1049,132 @@ void ClipperMode (void) {
 	}
 }
 
-
-void Texdef_Rotate(float angle) {
+void Texdef_Rotate (float angle)
+{
 	StringOutputStream command;
 	command << "brushRotateTexture -angle " << angle;
 	UndoableCommand undo(command.c_str());
 	Select_RotateTexture(angle);
 }
 
-void Texdef_RotateClockwise (void) {
-	Texdef_Rotate(static_cast<float>(fabs(g_si_globals.rotate)));
+void Texdef_RotateClockwise (void)
+{
+	Texdef_Rotate(static_cast<float> (fabs(g_si_globals.rotate)));
 }
 
-void Texdef_RotateAntiClockwise (void) {
-	Texdef_Rotate(static_cast<float>(-fabs(g_si_globals.rotate)));
+void Texdef_RotateAntiClockwise (void)
+{
+	Texdef_Rotate(static_cast<float> (-fabs(g_si_globals.rotate)));
 }
 
-void Texdef_Scale(float x, float y) {
+void Texdef_Scale (float x, float y)
+{
 	StringOutputStream command;
 	command << "brushScaleTexture -x " << x << " -y " << y;
 	UndoableCommand undo(command.c_str());
 	Select_ScaleTexture(x, y);
 }
 
-void Texdef_ScaleUp (void) {
+void Texdef_ScaleUp (void)
+{
 	Texdef_Scale(0, g_si_globals.scale[1]);
 }
 
-void Texdef_ScaleDown (void) {
+void Texdef_ScaleDown (void)
+{
 	Texdef_Scale(0, -g_si_globals.scale[1]);
 }
 
-void Texdef_ScaleLeft (void) {
+void Texdef_ScaleLeft (void)
+{
 	Texdef_Scale(-g_si_globals.scale[0], 0);
 }
 
-void Texdef_ScaleRight (void) {
+void Texdef_ScaleRight (void)
+{
 	Texdef_Scale(g_si_globals.scale[0], 0);
 }
 
-void Texdef_Shift(float x, float y) {
+void Texdef_Shift (float x, float y)
+{
 	StringOutputStream command;
 	command << "brushShiftTexture -x " << x << " -y " << y;
 	UndoableCommand undo(command.c_str());
 	Select_ShiftTexture(x, y);
 }
 
-void Texdef_ShiftLeft (void) {
+void Texdef_ShiftLeft (void)
+{
 	Texdef_Shift(-g_si_globals.shift[0], 0);
 }
 
-void Texdef_ShiftRight (void) {
+void Texdef_ShiftRight (void)
+{
 	Texdef_Shift(g_si_globals.shift[0], 0);
 }
 
-void Texdef_ShiftUp (void) {
+void Texdef_ShiftUp (void)
+{
 	Texdef_Shift(0, g_si_globals.shift[1]);
 }
 
-void Texdef_ShiftDown (void) {
+void Texdef_ShiftDown (void)
+{
 	Texdef_Shift(0, -g_si_globals.shift[1]);
 }
 
-
-
-class SnappableSnapToGridSelected : public scene::Graph::Walker {
-	float m_snap;
-public:
-	SnappableSnapToGridSelected(float snap)
-			: m_snap(snap) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			Snappable* snappable = Node_getSnappable(path.top());
-			if (snappable != 0 && Instance_getSelectable(instance)->isSelected()) {
-				snappable->snapto(m_snap);
-			}
+class SnappableSnapToGridSelected: public scene::Graph::Walker
+{
+		float m_snap;
+	public:
+		SnappableSnapToGridSelected (float snap) :
+			m_snap(snap)
+		{
 		}
-		return true;
-	}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Snappable* snappable = Node_getSnappable(path.top());
+				if (snappable != 0 && Instance_getSelectable(instance)->isSelected()) {
+					snappable->snapto(m_snap);
+				}
+			}
+			return true;
+		}
 };
 
-void Scene_SnapToGrid_Selected(scene::Graph& graph, float snap) {
+void Scene_SnapToGrid_Selected (scene::Graph& graph, float snap)
+{
 	graph.traverse(SnappableSnapToGridSelected(snap));
 }
 
-class ComponentSnappableSnapToGridSelected : public scene::Graph::Walker {
-	float m_snap;
-public:
-	ComponentSnappableSnapToGridSelected(float snap)
-			: m_snap(snap) {
-	}
-	bool pre(const scene::Path& path, scene::Instance& instance) const {
-		if (path.top().get().visible()) {
-			ComponentSnappable* componentSnappable = Instance_getComponentSnappable(instance);
-			if (componentSnappable != 0 && Instance_getSelectable(instance)->isSelected()) {
-				componentSnappable->snapComponents(m_snap);
-			}
+class ComponentSnappableSnapToGridSelected: public scene::Graph::Walker
+{
+		float m_snap;
+	public:
+		ComponentSnappableSnapToGridSelected (float snap) :
+			m_snap(snap)
+		{
 		}
-		return true;
-	}
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				ComponentSnappable* componentSnappable = Instance_getComponentSnappable(instance);
+				if (componentSnappable != 0 && Instance_getSelectable(instance)->isSelected()) {
+					componentSnappable->snapComponents(m_snap);
+				}
+			}
+			return true;
+		}
 };
 
-void Scene_SnapToGrid_Component_Selected(scene::Graph& graph, float snap) {
+void Scene_SnapToGrid_Component_Selected (scene::Graph& graph, float snap)
+{
 	graph.traverse(ComponentSnappableSnapToGridSelected(snap));
 }
 
-void Selection_SnapToGrid (void) {
+void Selection_SnapToGrid (void)
+{
 	StringOutputStream command;
 	command << "snapSelected -grid " << GetGridSize();
 	UndoableCommand undo(command.c_str());
@@ -1111,7 +1189,8 @@ void Selection_SnapToGrid (void) {
 /**
  * @brief Timer function that is called every second
  */
-static gint qe_every_second(gpointer data) {
+static gint qe_every_second (gpointer data)
+{
 	GdkModifierType mask;
 
 	gdk_window_get_pointer(0, 0, 0, &mask);
@@ -1125,31 +1204,37 @@ static gint qe_every_second(gpointer data) {
 
 static guint s_qe_every_second_id = 0;
 
-void EverySecondTimer_enable (void) {
+void EverySecondTimer_enable (void)
+{
 	if (s_qe_every_second_id == 0) {
 		s_qe_every_second_id = gtk_timeout_add(1000, qe_every_second, 0);
 	}
 }
 
-void EverySecondTimer_disable (void) {
+void EverySecondTimer_disable (void)
+{
 	if (s_qe_every_second_id != 0) {
 		gtk_timeout_remove(s_qe_every_second_id);
 		s_qe_every_second_id = 0;
 	}
 }
 
-gint window_realize_remove_decoration(GtkWidget* widget, gpointer data) {
-	gdk_window_set_decorations(widget->window, (GdkWMDecoration)(GDK_DECOR_ALL | GDK_DECOR_MENU | GDK_DECOR_MINIMIZE | GDK_DECOR_MAXIMIZE));
+gint window_realize_remove_decoration (GtkWidget* widget, gpointer data)
+{
+	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MENU | GDK_DECOR_MINIMIZE
+			| GDK_DECOR_MAXIMIZE));
 	return FALSE;
 }
 
-class WaitDialog {
-public:
-	GtkWindow* m_window;
-	GtkLabel* m_label;
+class WaitDialog
+{
+	public:
+		GtkWindow* m_window;
+		GtkLabel* m_label;
 };
 
-static WaitDialog create_wait_dialog(const char* title, const char* text) {
+static WaitDialog create_wait_dialog (const char* title, const char* text)
+{
 	WaitDialog dialog;
 
 	dialog.m_window = create_floating_window(title, MainFrame_getWindow());
@@ -1171,21 +1256,24 @@ static WaitDialog create_wait_dialog(const char* title, const char* text) {
 	return dialog;
 }
 
-namespace {
-clock_t g_lastRedrawTime = 0;
-const clock_t c_redrawInterval = clock_t(CLOCKS_PER_SEC / 10);
+namespace
+{
+	clock_t g_lastRedrawTime = 0;
+	const clock_t c_redrawInterval = clock_t(CLOCKS_PER_SEC / 10);
 
-bool redrawRequired (void) {
-	clock_t currentTime = std::clock();
-	if (currentTime - g_lastRedrawTime >= c_redrawInterval) {
-		g_lastRedrawTime = currentTime;
-		return true;
+	bool redrawRequired (void)
+	{
+		clock_t currentTime = std::clock();
+		if (currentTime - g_lastRedrawTime >= c_redrawInterval) {
+			g_lastRedrawTime = currentTime;
+			return true;
+		}
+		return false;
 	}
-	return false;
-}
 }
 
-bool MainFrame_isActiveApp (void) {
+bool MainFrame_isActiveApp (void)
+{
 	GList* list = gtk_window_list_toplevels();
 	for (GList* i = list; i != 0; i = g_list_next(i)) {
 		if (gtk_window_is_active(GTK_WINDOW(i->data))) {
@@ -1199,17 +1287,20 @@ typedef std::list<CopiedString> StringStack;
 static StringStack g_wait_stack;
 static WaitDialog g_wait;
 
-bool ScreenUpdates_Enabled (void) {
+bool ScreenUpdates_Enabled (void)
+{
 	return g_wait_stack.empty();
 }
 
-void ScreenUpdates_process (void) {
+void ScreenUpdates_process (void)
+{
 	if (redrawRequired() && GTK_WIDGET_VISIBLE(g_wait.m_window)) {
 		process_gui();
 	}
 }
 
-void ScreenUpdates_Disable(const char* message, const char* title) {
+void ScreenUpdates_Disable (const char* message, const char* title)
+{
 	if (g_wait_stack.empty()) {
 		EverySecondTimer_disable();
 
@@ -1231,7 +1322,8 @@ void ScreenUpdates_Disable(const char* message, const char* title) {
 	g_wait_stack.push_back(message);
 }
 
-void ScreenUpdates_Enable (void) {
+void ScreenUpdates_Enable (void)
+{
 	ASSERT_MESSAGE(!ScreenUpdates_Enabled(), "screen updates already enabled");
 	g_wait_stack.pop_back();
 	if (g_wait_stack.empty()) {
@@ -1245,65 +1337,71 @@ void ScreenUpdates_Enable (void) {
 	}
 }
 
-static void GlobalCamera_UpdateWindow (void) {
+static void GlobalCamera_UpdateWindow (void)
+{
 	if (g_pParentWnd != 0) {
 		CamWnd_Update(*g_pParentWnd->GetCamWnd());
 	}
 }
 
-void XY_UpdateWindow(MainFrame& mainframe) {
+void XY_UpdateWindow (MainFrame& mainframe)
+{
 	if (mainframe.GetXYWnd() != 0) {
 		XYWnd_Update(*mainframe.GetXYWnd());
 	}
 }
 
-void XZ_UpdateWindow(MainFrame& mainframe) {
+void XZ_UpdateWindow (MainFrame& mainframe)
+{
 	if (mainframe.GetXZWnd() != 0) {
 		XYWnd_Update(*mainframe.GetXZWnd());
 	}
 }
 
-void YZ_UpdateWindow(MainFrame& mainframe) {
+void YZ_UpdateWindow (MainFrame& mainframe)
+{
 	if (mainframe.GetYZWnd() != 0) {
 		XYWnd_Update(*mainframe.GetYZWnd());
 	}
 }
 
-void XY_UpdateAllWindows(MainFrame& mainframe) {
+void XY_UpdateAllWindows (MainFrame& mainframe)
+{
 	XY_UpdateWindow(mainframe);
 	XZ_UpdateWindow(mainframe);
 	YZ_UpdateWindow(mainframe);
 }
 
-void XY_UpdateAllWindows (void) {
+void XY_UpdateAllWindows (void)
+{
 	if (g_pParentWnd != 0) {
 		XY_UpdateAllWindows(*g_pParentWnd);
 	}
 }
 
-void UpdateAllWindows (void) {
+void UpdateAllWindows (void)
+{
 	GlobalCamera_UpdateWindow();
 	XY_UpdateAllWindows();
 }
 
-
-static void ModeChangeNotify (void) {
+static void ModeChangeNotify (void)
+{
 	SceneChangeNotify();
 }
 
-void ClipperChangeNotify (void) {
+void ClipperChangeNotify (void)
+{
 	GlobalCamera_UpdateWindow();
 	XY_UpdateAllWindows();
 }
-
 
 static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, "Window Layout");
 LatchedBool g_Layout_enableDetachableMenus(false, "Detachable Menus");
 static LatchedBool g_Layout_enablePluginToolbar(true, "Plugin Toolbar");
 
-
-
-static GtkMenuItem* create_file_menu (void) {
+static GtkMenuItem* create_file_menu (void)
+{
 	// File menu
 	GtkMenuItem* file_menu_item = new_sub_menu_item_with_mnemonic("_File");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(file_menu_item));
@@ -1329,7 +1427,8 @@ static GtkMenuItem* create_file_menu (void) {
 	return file_menu_item;
 }
 
-static GtkMenuItem* create_edit_menu (void) {
+static GtkMenuItem* create_edit_menu (void)
+{
 	// Edit menu
 	GtkMenuItem* edit_menu_item = new_sub_menu_item_with_mnemonic("_Edit");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(edit_menu_item));
@@ -1359,7 +1458,7 @@ static GtkMenuItem* create_edit_menu (void) {
 
 	menu_separator(menu);
 
-	create_menu_item_with_mnemonic(menu, "Shortcuts list", FreeCaller<DoCommandListDlg>());
+	create_menu_item_with_mnemonic(menu, "Shortcuts list", FreeCaller<DoCommandListDlg> ());
 	create_menu_item_with_mnemonic(menu, "Pre_ferences...", "Preferences");
 
 	return edit_menu_item;
@@ -1378,7 +1477,7 @@ static GtkMenuItem* create_filter_menu (void)
 	return filter_menu_item;
 }
 
-static GtkMenuItem* create_view_menu(MainFrame::EViewStyle style)
+static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 {
 	// View menu
 	GtkMenuItem* view_menu_item = new_sub_menu_item_with_mnemonic("Vie_w");
@@ -1542,10 +1641,10 @@ static GtkMenuItem* create_misc_menu (void)
 	create_menu_item_with_mnemonic(menu, "Map Info...", "MapInfo");
 	create_menu_item_with_mnemonic(menu, "_Print XY View", FreeCaller<WXY_Print>());
 	create_menu_item_with_mnemonic(menu, "_Background select", FreeCaller<WXY_BackgroundSelect>());
-//	create_menu_item_with_mnemonic(menu, "_Benchmark", FreeCaller<GlobalCamera_Benchmark>());
+	//	create_menu_item_with_mnemonic(menu, "_Benchmark", FreeCaller<GlobalCamera_Benchmark>());
 
-	return misc_menu_item;
-}
+			return misc_menu_item;
+		}
 
 static GtkMenuItem* create_tools_menu (void)
 {
@@ -1575,7 +1674,8 @@ static GtkMenuItem* create_entity_menu (void)
 	return entity_menu_item;
 }
 
-static GtkMenuItem* create_brush_menu (void) {
+static GtkMenuItem* create_brush_menu (void)
+{
 	// Brush menu
 	GtkMenuItem* brush_menu_item = new_sub_menu_item_with_mnemonic("B_rush");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(brush_menu_item));
@@ -1587,7 +1687,8 @@ static GtkMenuItem* create_brush_menu (void) {
 	return brush_menu_item;
 }
 
-static GtkMenuItem* create_help_menu (void) {
+static GtkMenuItem* create_help_menu (void)
+{
 	// Help menu
 	GtkMenuItem* help_menu_item = new_sub_menu_item_with_mnemonic("_Help");
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(help_menu_item));
@@ -1596,13 +1697,14 @@ static GtkMenuItem* create_help_menu (void) {
 
 	create_menu_item_with_mnemonic(menu, "Manual", "OpenManual");
 
-	create_menu_item_with_mnemonic(menu, "Bug report", FreeCaller<OpenBugReportURL>());
-	create_menu_item_with_mnemonic(menu, "_About", FreeCaller<DoAbout>());
+	create_menu_item_with_mnemonic(menu, "Bug report", FreeCaller<OpenBugReportURL> ());
+	create_menu_item_with_mnemonic(menu, "_About", FreeCaller<DoAbout> ());
 
 	return help_menu_item;
 }
 
-static GtkMenuBar* create_main_menu(MainFrame::EViewStyle style) {
+static GtkMenuBar* create_main_menu (MainFrame::EViewStyle style)
+{
 	GtkMenuBar* menu_bar = GTK_MENU_BAR(gtk_menu_bar_new());
 	gtk_widget_show(GTK_WIDGET(menu_bar));
 
@@ -1622,8 +1724,8 @@ static GtkMenuBar* create_main_menu(MainFrame::EViewStyle style) {
 	return menu_bar;
 }
 
-
-static void Manipulators_registerShortcuts (void) {
+static void Manipulators_registerShortcuts (void)
+{
 	toggle_add_accelerator("MouseRotate");
 	toggle_add_accelerator("MouseTranslate");
 	toggle_add_accelerator("MouseScale");
@@ -1631,7 +1733,8 @@ static void Manipulators_registerShortcuts (void) {
 	toggle_add_accelerator("ToggleClipper");
 }
 
-static void TexdefNudge_registerShortcuts (void) {
+static void TexdefNudge_registerShortcuts (void)
+{
 	command_connect_accelerator("TexRotateClock");
 	command_connect_accelerator("TexRotateCounter");
 	command_connect_accelerator("TexScaleUp");
@@ -1644,7 +1747,8 @@ static void TexdefNudge_registerShortcuts (void) {
 	command_connect_accelerator("TexShiftRight");
 }
 
-static void SelectNudge_registerShortcuts (void) {
+static void SelectNudge_registerShortcuts (void)
+{
 	command_connect_accelerator("MoveSelectionDOWN");
 	command_connect_accelerator("MoveSelectionUP");
 	//command_connect_accelerator("SelectNudgeLeft");
@@ -1653,20 +1757,23 @@ static void SelectNudge_registerShortcuts (void) {
 	//command_connect_accelerator("SelectNudgeDown");
 }
 
-static void SnapToGrid_registerShortcuts (void) {
+static void SnapToGrid_registerShortcuts (void)
+{
 	command_connect_accelerator("SnapToGrid");
 }
 
-static void SelectByType_registerShortcuts (void) {
+static void SelectByType_registerShortcuts (void)
+{
 	command_connect_accelerator("SelectAllOfType");
 }
 
-static void SurfaceInspector_registerShortcuts (void) {
+static void SurfaceInspector_registerShortcuts (void)
+{
 	command_connect_accelerator("FitTexture");
 }
 
-
-void register_shortcuts (void) {
+void register_shortcuts (void)
+{
 	Grid_registerShortcuts();
 	XYWnd_registerShortcuts();
 	CamWnd_registerShortcuts();
@@ -1678,17 +1785,20 @@ void register_shortcuts (void) {
 	SelectByType_registerShortcuts();
 }
 
-static void File_constructToolbar(GtkToolbar* toolbar) {
+static void File_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_button(toolbar, "Open an existing map (CTRL + O)", "file_open.bmp", "OpenMap");
 	toolbar_append_button(toolbar, "Save the active map (CTRL + S)", "file_save.bmp", "SaveMap");
 }
 
-static void UndoRedo_constructToolbar(GtkToolbar* toolbar) {
+static void UndoRedo_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_button(toolbar, "Undo (CTRL + Z)", "undo.bmp", "Undo");
 	toolbar_append_button(toolbar, "Redo (CTRL + Y)", "redo.bmp", "Redo");
 }
 
-static void RotateFlip_constructToolbar(GtkToolbar* toolbar) {
+static void RotateFlip_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_button(toolbar, "x-axis Flip", "brush_flipx.bmp", "MirrorSelectionX");
 	toolbar_append_button(toolbar, "x-axis Rotate", "brush_rotatex.bmp", "RotateSelectionX");
 	toolbar_append_button(toolbar, "y-axis Flip", "brush_flipy.bmp", "MirrorSelectionY");
@@ -1697,39 +1807,46 @@ static void RotateFlip_constructToolbar(GtkToolbar* toolbar) {
 	toolbar_append_button(toolbar, "z-axis Rotate", "brush_rotatez.bmp", "RotateSelectionZ");
 }
 
-static void Select_constructToolbar(GtkToolbar* toolbar) {
+static void Select_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_button(toolbar, "Select touching", "selection_selecttouching.bmp", "SelectTouching");
 	toolbar_append_button(toolbar, "Select inside", "selection_selectinside.bmp", "SelectInside");
 	toolbar_append_button(toolbar, "Select whole entity", "selection_selectentities.bmp", "ExpandSelectionToEntities");
 }
 
-static void CSG_constructToolbar(GtkToolbar* toolbar) {
+static void CSG_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_button(toolbar, "CSG Subtract (SHIFT + U)", "selection_csgsubtract.bmp", "CSGSubtract");
 	toolbar_append_button(toolbar, "CSG Merge (CTRL + U)", "selection_csgmerge.bmp", "CSGMerge");
 	toolbar_append_button(toolbar, "Hollow", "selection_makehollow.bmp", "CSGHollow");
 }
 
-static void ComponentModes_constructToolbar(GtkToolbar* toolbar) {
+static void ComponentModes_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_toggle_button(toolbar, "Select Vertices (V)", "modify_vertices.bmp", "DragVertices");
 	toolbar_append_toggle_button(toolbar, "Select Edges (E)", "modify_edges.bmp", "DragEdges");
 	toolbar_append_toggle_button(toolbar, "Select Faces (F)", "modify_faces.bmp", "DragFaces");
 }
 
-static void Clipper_constructToolbar(GtkToolbar* toolbar) {
+static void Clipper_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_toggle_button(toolbar, "Clipper (X)", "view_clipper.bmp", "ToggleClipper");
 }
 
-static void Filters_constructToolbar(GtkToolbar* toolbar) {
+static void Filters_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_toggle_button(toolbar, "Filter nodraw", "filter_nodraw.bmp", "FilterNodraw");
 	toolbar_append_toggle_button(toolbar, "Filter actorclip", "filter_actorclip.bmp", "FilterActorClips");
 	toolbar_append_toggle_button(toolbar, "Filter weaponclip", "filter_weaponclip.bmp", "FilterWeaponClips");
 }
 
-static void XYWnd_constructToolbar(GtkToolbar* toolbar) {
+static void XYWnd_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_button(toolbar, "Change views", "view_change.bmp", "NextView");
 }
 
-static void Manipulators_constructToolbar(GtkToolbar* toolbar) {
+static void Manipulators_constructToolbar (GtkToolbar* toolbar)
+{
 	toolbar_append_toggle_button(toolbar, "Translate (W)", "select_mousetranslate.bmp", "MouseTranslate");
 	toolbar_append_toggle_button(toolbar, "Rotate (R)", "select_mouserotate.bmp", "MouseRotate");
 	toolbar_append_toggle_button(toolbar, "Scale", "select_mousescale.bmp", "MouseScale");
@@ -1738,7 +1855,8 @@ static void Manipulators_constructToolbar(GtkToolbar* toolbar) {
 	Clipper_constructToolbar(toolbar);
 }
 
-static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
+static GtkToolbar* create_main_toolbar_horizontal (MainFrame::EViewStyle style)
+{
 	GtkToolbar* toolbar = GTK_TOOLBAR(gtk_toolbar_new());
 	gtk_toolbar_set_show_arrow(toolbar, TRUE);
 	gtk_toolbar_set_orientation(toolbar, GTK_ORIENTATION_HORIZONTAL);
@@ -1748,11 +1866,11 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 
 	File_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
 	UndoRedo_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
 	RotateFlip_constructToolbar(toolbar);
 
@@ -1781,7 +1899,8 @@ static GtkToolbar* create_main_toolbar_horizontal(MainFrame::EViewStyle style) {
 	return toolbar;
 }
 
-static GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style) {
+static GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
+{
 	GtkToolbar* toolbar = GTK_TOOLBAR(gtk_toolbar_new());
 	gtk_toolbar_set_show_arrow(toolbar, TRUE);
 	gtk_toolbar_set_orientation(toolbar, GTK_ORIENTATION_VERTICAL);
@@ -1795,7 +1914,7 @@ static GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style) {
 
 	Manipulators_constructToolbar(toolbar);
 
-	gtk_toolbar_append_space (GTK_TOOLBAR (toolbar));
+	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
 	CSG_constructToolbar(toolbar);
 
@@ -1812,7 +1931,8 @@ static GtkToolbar* create_main_toolbar_vertical(MainFrame::EViewStyle style) {
 	return toolbar;
 }
 
-static GtkWidget* create_main_statusbar(GtkWidget *pStatusLabel[c_count_status]) {
+static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status])
+{
 	GtkTable* table = GTK_TABLE(gtk_table_new(1, c_count_status, FALSE));
 	gtk_widget_show(GTK_WIDGET(table));
 
@@ -1843,35 +1963,42 @@ static GtkWidget* create_main_statusbar(GtkWidget *pStatusLabel[c_count_status])
 	return GTK_WIDGET(table);
 }
 
-class MainWindowActive {
-	static gboolean notify(GtkWindow* window, gpointer dummy, MainWindowActive* self) {
-		if (g_wait.m_window != 0 && gtk_window_is_active(window) && !GTK_WIDGET_VISIBLE(g_wait.m_window)) {
-			gtk_widget_show(GTK_WIDGET(g_wait.m_window));
-		}
+class MainWindowActive
+{
+		static gboolean notify (GtkWindow* window, gpointer dummy, MainWindowActive* self)
+		{
+			if (g_wait.m_window != 0 && gtk_window_is_active(window) && !GTK_WIDGET_VISIBLE(g_wait.m_window)) {
+				gtk_widget_show(GTK_WIDGET(g_wait.m_window));
+			}
 
-		return FALSE;
-	}
-public:
-	void connect(GtkWindow* toplevel_window) {
-		g_signal_connect(G_OBJECT(toplevel_window), "notify::is-active", G_CALLBACK(notify), this);
-	}
+			return FALSE;
+		}
+	public:
+		void connect (GtkWindow* toplevel_window)
+		{
+			g_signal_connect(G_OBJECT(toplevel_window), "notify::is-active", G_CALLBACK(notify), this);
+		}
 };
 
 MainWindowActive g_MainWindowActive;
 
-SignalHandlerId XYWindowDestroyed_connect(const SignalHandler& handler) {
+SignalHandlerId XYWindowDestroyed_connect (const SignalHandler& handler)
+{
 	return g_pParentWnd->GetXYWnd()->onDestroyed.connectFirst(handler);
 }
 
-void XYWindowDestroyed_disconnect(SignalHandlerId id) {
+void XYWindowDestroyed_disconnect (SignalHandlerId id)
+{
 	g_pParentWnd->GetXYWnd()->onDestroyed.disconnect(id);
 }
 
-MouseEventHandlerId XYWindowMouseDown_connect(const MouseEventHandler& handler) {
+MouseEventHandlerId XYWindowMouseDown_connect (const MouseEventHandler& handler)
+{
 	return g_pParentWnd->GetXYWnd()->onMouseDown.connectFirst(handler);
 }
 
-void XYWindowMouseDown_disconnect(MouseEventHandlerId id) {
+void XYWindowMouseDown_disconnect (MouseEventHandlerId id)
+{
 	g_pParentWnd->GetXYWnd()->onMouseDown.disconnect(id);
 }
 
@@ -1880,28 +2007,32 @@ void XYWindowMouseDown_disconnect(MouseEventHandlerId id) {
 
 MainFrame* g_pParentWnd = 0;
 
-GtkWindow* MainFrame_getWindow (void) {
+GtkWindow* MainFrame_getWindow (void)
+{
 	if (g_pParentWnd == 0) {
 		return 0;
 	}
 	return g_pParentWnd->m_window;
 }
 
-MainFrame::MainFrame() : m_window(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this)) {
+MainFrame::MainFrame () :
+	m_window(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this))
+{
 	m_pXYWnd = 0;
 	m_pCamWnd = 0;
 	m_pYZWnd = 0;
 	m_pXZWnd = 0;
 	m_pActiveXY = 0;
 
-	for (int n = 0;n < c_count_status;n++) {
+	for (int n = 0; n < c_count_status; n++) {
 		m_pStatusLabel[n] = 0;
 	}
 
 	Create();
 }
 
-MainFrame::~MainFrame (void) {
+MainFrame::~MainFrame (void)
+{
 	SaveWindowInfo();
 
 	gtk_widget_hide(GTK_WIDGET(m_window));
@@ -1911,7 +2042,8 @@ MainFrame::~MainFrame (void) {
 	gtk_widget_destroy(GTK_WIDGET(m_window));
 }
 
-void MainFrame::SetActiveXY(XYWnd* p) {
+void MainFrame::SetActiveXY (XYWnd* p)
+{
 	if (m_pActiveXY)
 		m_pActiveXY->SetActive(false);
 
@@ -1927,7 +2059,8 @@ static WindowPositionTracker g_posXYWnd;
 static WindowPositionTracker g_posXZWnd;
 static WindowPositionTracker g_posYZWnd;
 
-static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data) {
+static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
+{
 	if (ConfirmModified("Exit Radiant")) {
 		gtk_main_quit();
 	}
@@ -1938,7 +2071,8 @@ static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
 /**
  * @brief Create the user settable window layout
  */
-void MainFrame::Create (void) {
+void MainFrame::Create (void)
+{
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 
 	GlobalWindowObservers_connectTopLevel(window);
@@ -1968,7 +2102,7 @@ void MainFrame::Create (void) {
 
 	global_accel_connect_window(window);
 
-	m_nCurrentStyle = (EViewStyle)g_Layout_viewStyle.m_value;
+	m_nCurrentStyle = (EViewStyle) g_Layout_viewStyle.m_value;
 
 	register_shortcuts();
 
@@ -1997,47 +2131,47 @@ void MainFrame::Create (void) {
 	GroupDialog_constructWindow(window);
 
 #ifdef WIN32
-	if (g_multimon_globals.m_bStartOnPrimMon) {
-		PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
-		window_set_position(window, g_layout_globals.m_position);
-	} else
+			if (g_multimon_globals.m_bStartOnPrimMon) {
+				PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
+				window_set_position(window, g_layout_globals.m_position);
+			} else
 #endif
-	if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
-		window_set_position(window, g_layout_globals.m_position);
-	}
+			if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
+				window_set_position(window, g_layout_globals.m_position);
+			}
 
-	m_window = window;
+			m_window = window;
 
-	gtk_widget_show(GTK_WIDGET(window));
+			gtk_widget_show(GTK_WIDGET(window));
 
-	GtkWidget* mainHsplit = gtk_hpaned_new();
-	gtk_box_pack_start(GTK_BOX(hbox), mainHsplit, TRUE, TRUE, 0);
-	gtk_widget_show(mainHsplit);
+			GtkWidget* mainHsplit = gtk_hpaned_new();
+			gtk_box_pack_start(GTK_BOX(hbox), mainHsplit, TRUE, TRUE, 0);
+			gtk_widget_show(mainHsplit);
 
-	GtkWidget *notebook = gtk_notebook_new();
-	gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
+			GtkWidget *notebook = gtk_notebook_new();
+			gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
 
-	Sidebar_constructEntities(notebook);
-	Sidebar_constructSurfaces(notebook);
-	gtk_widget_show_all(notebook);
+			Sidebar_constructEntities(notebook);
+			Sidebar_constructSurfaces(notebook);
+			gtk_widget_show_all(notebook);
 
-	PreferencesDialog_constructWindow(window);
-	FindTextureDialog_constructWindow(window);
+			PreferencesDialog_constructWindow(window);
+			FindTextureDialog_constructWindow(window);
 
-	int w, h;
-	gtk_window_get_size(window, &w, &h);
-	gtk_paned_set_position(GTK_PANED(mainHsplit), w);
+			int w, h;
+			gtk_window_get_size(window, &w, &h);
+			gtk_paned_set_position(GTK_PANED(mainHsplit), w);
 
-	// create edit windows according to user setable style
-	switch (CurrentStyle()) {
-	case eRegular:
-		{
-			GtkWidget* vsplit = gtk_vpaned_new();
-			m_vSplit = vsplit;
-			gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
-			gtk_widget_show(vsplit);
+			// create edit windows according to user setable style
+			switch (CurrentStyle()) {
+				case eRegular:
+				{
+					GtkWidget* vsplit = gtk_vpaned_new();
+					m_vSplit = vsplit;
+					gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
+					gtk_widget_show(vsplit);
 
-			// console
+					// console
 			GtkWidget* console_window = Console_constructWindow(window);
 			gtk_paned_pack2(GTK_PANED(vsplit), console_window, FALSE, TRUE);
 
@@ -2084,7 +2218,7 @@ void MainFrame::Create (void) {
 		gtk_paned_set_position(GTK_PANED(m_vSplit2), g_layout_globals.nCamHeight);
 		break;
 
-	case eSplit:
+		case eSplit:
 		{
 			GtkWidget* vsplit = gtk_vpaned_new();
 			m_vSplit = vsplit;
@@ -2128,7 +2262,7 @@ void MainFrame::Create (void) {
 			gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
 		}
 		break;
-	default:
+		default:
 		Error("Invalid layout type set - remove your radiant config files and retry");
 	}
 
@@ -2145,7 +2279,8 @@ void MainFrame::Create (void) {
 	GlobalShortcuts_reportUnregistered();
 }
 
-void MainFrame::SaveWindowInfo (void) {
+void MainFrame::SaveWindowInfo (void)
+{
 	if (CurrentStyle() == eRegular) {
 		g_layout_globals.nXYWidth = gtk_paned_get_position(GTK_PANED(m_hSplit));
 		g_layout_globals.nXYHeight = gtk_paned_get_position(GTK_PANED(m_vSplit));
@@ -2158,7 +2293,8 @@ void MainFrame::SaveWindowInfo (void) {
 	g_layout_globals.nState = gdk_window_get_state(GTK_WIDGET(m_window)->window);
 }
 
-void MainFrame::Shutdown (void) {
+void MainFrame::Shutdown (void)
+{
 	EverySecondTimer_disable();
 
 	delete m_pXYWnd;
@@ -2203,7 +2339,6 @@ void MainFrame::SetStatusText (CopiedString& status_text, const char* pText)
 	UpdateStatusText();
 }
 
-
 /**
  * @brief Updates the first statusbar column
  * @param[in] status the status to print into the first statusbar column
@@ -2217,16 +2352,18 @@ void Sys_Status (const char* status)
 	}
 }
 
-namespace {
-GLFont g_font(0, 0);
+namespace
+{
+	GLFont g_font(0, 0);
 }
 
-void GlobalGL_sharedContextCreated (void) {
+void GlobalGL_sharedContextCreated (void)
+{
 	// report OpenGL information
-	globalOutputStream() << "GL_VENDOR: " << reinterpret_cast<const char*>(glGetString (GL_VENDOR)) << "\n";
-	globalOutputStream() << "GL_RENDERER: " << reinterpret_cast<const char*>(glGetString (GL_RENDERER)) << "\n";
-	globalOutputStream() << "GL_VERSION: " << reinterpret_cast<const char*>(glGetString (GL_VERSION)) << "\n";
-	globalOutputStream() << "GL_EXTENSIONS: " << reinterpret_cast<const char*>(glGetString (GL_EXTENSIONS)) << "\n";
+	globalOutputStream() << "GL_VENDOR: " << reinterpret_cast<const char*> (glGetString(GL_VENDOR)) << "\n";
+	globalOutputStream() << "GL_RENDERER: " << reinterpret_cast<const char*> (glGetString(GL_RENDERER)) << "\n";
+	globalOutputStream() << "GL_VERSION: " << reinterpret_cast<const char*> (glGetString(GL_VERSION)) << "\n";
+	globalOutputStream() << "GL_EXTENSIONS: " << reinterpret_cast<const char*> (glGetString(GL_EXTENSIONS)) << "\n";
 
 	QGL_sharedContextCreated(GlobalOpenGL());
 
@@ -2244,163 +2381,198 @@ void GlobalGL_sharedContextCreated (void) {
 	GlobalOpenGL().m_fontHeight = g_font.getPixelHeight();
 }
 
-void GlobalGL_sharedContextDestroyed (void) {
+void GlobalGL_sharedContextDestroyed (void)
+{
 	Textures_Unrealise();
 	GlobalShaderCache().unrealise();
 
 	QGL_sharedContextDestroyed(GlobalOpenGL());
 }
 
-
-void Layout_constructPreferences(PreferencesPage& page) {
+void Layout_constructPreferences (PreferencesPage& page)
+{
 	{
-		const char* layouts[] = {"window_regular.bmp", "window_split.bmp"};
-		page.appendRadioIcons(
-			"Window Layout",
-			STRING_ARRAY_RANGE(layouts),
-			LatchedIntImportCaller(g_Layout_viewStyle),
-			IntExportCaller(g_Layout_viewStyle.m_latched)
-		);
+		const char* layouts[] = { "window_regular.bmp", "window_split.bmp" };
+		page.appendRadioIcons("Window Layout", STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
 	}
-	page.appendCheckBox(
-		"", "Detachable Menus",
-		LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
-		BoolExportCaller(g_Layout_enableDetachableMenus.m_latched)
-	);
-	page.appendCheckBox(
-		"", "Plugin Toolbar",
-		LatchedBoolImportCaller(g_Layout_enablePluginToolbar),
-		BoolExportCaller(g_Layout_enablePluginToolbar.m_latched)
-	);
+	page.appendCheckBox("", "Detachable Menus", LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
+			BoolExportCaller(g_Layout_enableDetachableMenus.m_latched));
+	page.appendCheckBox("", "Plugin Toolbar", LatchedBoolImportCaller(g_Layout_enablePluginToolbar), BoolExportCaller(
+			g_Layout_enablePluginToolbar.m_latched));
 }
 
-void Layout_constructPage(PreferenceGroup& group) {
+void Layout_constructPage (PreferenceGroup& group)
+{
 	PreferencesPage page(group.createPage("Layout", "Layout Preferences"));
 	Layout_constructPreferences(page);
 }
 
-void Layout_registerPreferencesPage (void) {
-	PreferencesDialog_addInterfacePage(FreeCaller1<PreferenceGroup&, Layout_constructPage>());
+void Layout_registerPreferencesPage (void)
+{
+	PreferencesDialog_addInterfacePage(FreeCaller1<PreferenceGroup&, Layout_constructPage> ());
 }
-
 
 #include "preferencesystem.h"
 #include "stringio.h"
 
-void MainFrame_Construct (void) {
-	GlobalCommands_insert("OpenManual", FreeCaller<OpenHelpURL>(), Accelerator(GDK_F1));
+void MainFrame_Construct (void)
+{
+	GlobalCommands_insert("OpenManual", FreeCaller<OpenHelpURL> (), Accelerator(GDK_F1));
 
-	GlobalCommands_insert("NewMap", FreeCaller<NewMap>());
-	GlobalCommands_insert("OpenMap", FreeCaller<OpenMap>(), Accelerator('O', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("ImportMap", FreeCaller<ImportMap>());
-	GlobalCommands_insert("SaveMap", FreeCaller<SaveMap>(), Accelerator('S', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("SaveMapAs", FreeCaller<SaveMapAs>());
-	GlobalCommands_insert("SaveSelected", FreeCaller<ExportMap>());
-	GlobalCommands_insert("SaveRegion", FreeCaller<SaveRegion>());
-	GlobalCommands_insert("RefreshReferences", FreeCaller<RefreshReferences>());
-	GlobalCommands_insert("Exit", FreeCaller<Exit>());
+	GlobalCommands_insert("NewMap", FreeCaller<NewMap> ());
+	GlobalCommands_insert("OpenMap", FreeCaller<OpenMap> (), Accelerator('O', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("ImportMap", FreeCaller<ImportMap> ());
+	GlobalCommands_insert("SaveMap", FreeCaller<SaveMap> (), Accelerator('S', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("SaveMapAs", FreeCaller<SaveMapAs> ());
+	GlobalCommands_insert("SaveSelected", FreeCaller<ExportMap> ());
+	GlobalCommands_insert("SaveRegion", FreeCaller<SaveRegion> ());
+	GlobalCommands_insert("RefreshReferences", FreeCaller<RefreshReferences> ());
+	GlobalCommands_insert("Exit", FreeCaller<Exit> ());
 
-	GlobalCommands_insert("Undo", FreeCaller<Undo>(), Accelerator('Z', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("Redo", FreeCaller<Redo>(), Accelerator('Y', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("Copy", FreeCaller<Copy>(), Accelerator('C', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("Paste", FreeCaller<Paste>(), Accelerator('V', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("PasteToCamera", FreeCaller<PasteToCamera>(), Accelerator('V', (GdkModifierType)GDK_MOD1_MASK));
-	GlobalCommands_insert("CloneSelection", FreeCaller<Selection_Clone>(), Accelerator(GDK_space));
-	GlobalCommands_insert("DeleteSelection", FreeCaller<deleteSelection>(), Accelerator(GDK_BackSpace));
-	GlobalCommands_insert("ParentSelection", FreeCaller<Scene_parentSelected>());
-	GlobalCommands_insert("UnSelectSelection", FreeCaller<Selection_Deselect>(), Accelerator(GDK_Escape));
-	GlobalCommands_insert("InvertSelection", FreeCaller<Select_Invert>(), Accelerator('I'));
-	GlobalCommands_insert("SelectInside", FreeCaller<Select_Inside>());
-	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching>());
-	GlobalCommands_insert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities>(), Accelerator('E', (GdkModifierType)(GDK_MOD1_MASK | GDK_CONTROL_MASK)));
-	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog>(), Accelerator('P'));
+	GlobalCommands_insert("Undo", FreeCaller<Undo> (), Accelerator('Z', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("Redo", FreeCaller<Redo> (), Accelerator('Y', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("Copy", FreeCaller<Copy> (), Accelerator('C', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("Paste", FreeCaller<Paste> (), Accelerator('V', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("PasteToCamera", FreeCaller<PasteToCamera> (), Accelerator('V',
+			(GdkModifierType) GDK_MOD1_MASK));
+	GlobalCommands_insert("CloneSelection", FreeCaller<Selection_Clone> (), Accelerator(GDK_space));
+	GlobalCommands_insert("DeleteSelection", FreeCaller<deleteSelection> (), Accelerator(GDK_BackSpace));
+	GlobalCommands_insert("ParentSelection", FreeCaller<Scene_parentSelected> ());
+	GlobalCommands_insert("UnSelectSelection", FreeCaller<Selection_Deselect> (), Accelerator(GDK_Escape));
+	GlobalCommands_insert("InvertSelection", FreeCaller<Select_Invert> (), Accelerator('I'));
+	GlobalCommands_insert("SelectInside", FreeCaller<Select_Inside> ());
+	GlobalCommands_insert("SelectTouching", FreeCaller<Select_Touching> ());
+	GlobalCommands_insert("ExpandSelectionToEntities", FreeCaller<Scene_ExpandSelectionToEntities> (), Accelerator('E',
+			(GdkModifierType) (GDK_MOD1_MASK | GDK_CONTROL_MASK)));
+	GlobalCommands_insert("Preferences", FreeCaller<PreferencesDialog_showDialog> (), Accelerator('P'));
 
-	GlobalCommands_insert("ShowHidden", FreeCaller<Select_ShowAllHidden>(), Accelerator('H', (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("HideSelected", FreeCaller<HideSelected>(), Accelerator('H'));
+	GlobalCommands_insert("ShowHidden", FreeCaller<Select_ShowAllHidden> (), Accelerator('H',
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("HideSelected", FreeCaller<HideSelected> (), Accelerator('H'));
 
-	GlobalToggles_insert("DragVertices", FreeCaller<SelectVertexMode>(), ToggleItem::AddCallbackCaller(g_vertexMode_button), Accelerator('V'));
-	GlobalToggles_insert("DragEdges", FreeCaller<SelectEdgeMode>(), ToggleItem::AddCallbackCaller(g_edgeMode_button), Accelerator('E'));
-	GlobalToggles_insert("DragFaces", FreeCaller<SelectFaceMode>(), ToggleItem::AddCallbackCaller(g_faceMode_button), Accelerator('F'));
+	GlobalToggles_insert("DragVertices", FreeCaller<SelectVertexMode> (), ToggleItem::AddCallbackCaller(
+			g_vertexMode_button), Accelerator('V'));
+	GlobalToggles_insert("DragEdges", FreeCaller<SelectEdgeMode> (), ToggleItem::AddCallbackCaller(g_edgeMode_button),
+			Accelerator('E'));
+	GlobalToggles_insert("DragFaces", FreeCaller<SelectFaceMode> (), ToggleItem::AddCallbackCaller(g_faceMode_button),
+			Accelerator('F'));
 
-	GlobalCommands_insert("MirrorSelectionX", FreeCaller<Selection_Flipx>());
-	GlobalCommands_insert("RotateSelectionX", FreeCaller<Selection_Rotatex>());
-	GlobalCommands_insert("MirrorSelectionY", FreeCaller<Selection_Flipy>());
-	GlobalCommands_insert("RotateSelectionY", FreeCaller<Selection_Rotatey>());
-	GlobalCommands_insert("MirrorSelectionZ", FreeCaller<Selection_Flipz>());
-	GlobalCommands_insert("RotateSelectionZ", FreeCaller<Selection_Rotatez>());
+	GlobalCommands_insert("MirrorSelectionX", FreeCaller<Selection_Flipx> ());
+	GlobalCommands_insert("RotateSelectionX", FreeCaller<Selection_Rotatex> ());
+	GlobalCommands_insert("MirrorSelectionY", FreeCaller<Selection_Flipy> ());
+	GlobalCommands_insert("RotateSelectionY", FreeCaller<Selection_Rotatey> ());
+	GlobalCommands_insert("MirrorSelectionZ", FreeCaller<Selection_Flipz> ());
+	GlobalCommands_insert("RotateSelectionZ", FreeCaller<Selection_Rotatez> ());
 
-	GlobalCommands_insert("ArbitraryRotation", FreeCaller<DoRotateDlg>());
-	GlobalCommands_insert("ArbitraryScale", FreeCaller<DoScaleDlg>());
+	GlobalCommands_insert("ArbitraryRotation", FreeCaller<DoRotateDlg> ());
+	GlobalCommands_insert("ArbitraryScale", FreeCaller<DoScaleDlg> ());
 
-	GlobalCommands_insert("FindBrush", FreeCaller<DoFind>());
+	GlobalCommands_insert("FindBrush", FreeCaller<DoFind> ());
 
-	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors>());
-	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile>());
-	GlobalCommands_insert("ShowPathfinding", FreeCaller<ShowPathfinding>());
+	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
+	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
+	GlobalCommands_insert("ShowPathfinding", FreeCaller<ShowPathfinding> ());
 
-	GlobalCommands_insert("MapInfo", FreeCaller<DoMapInfo>(), Accelerator('M'));
+	GlobalCommands_insert("MapInfo", FreeCaller<DoMapInfo> (), Accelerator('M'));
 
-	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode>(), ToggleItem::AddCallbackCaller(g_clipper_button), Accelerator('X'));
+	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
+			Accelerator('X'));
 
-	GlobalToggles_insert("MouseTranslate", FreeCaller<TranslateMode>(), ToggleItem::AddCallbackCaller(g_translatemode_button), Accelerator('W'));
-	GlobalToggles_insert("MouseRotate", FreeCaller<RotateMode>(), ToggleItem::AddCallbackCaller(g_rotatemode_button), Accelerator('R'));
-	GlobalToggles_insert("MouseScale", FreeCaller<ScaleMode>(), ToggleItem::AddCallbackCaller(g_scalemode_button));
-	GlobalToggles_insert("MouseDrag", FreeCaller<DragMode>(), ToggleItem::AddCallbackCaller(g_dragmode_button), Accelerator('Q'));
+	GlobalToggles_insert("MouseTranslate", FreeCaller<TranslateMode> (), ToggleItem::AddCallbackCaller(
+			g_translatemode_button), Accelerator('W'));
+	GlobalToggles_insert("MouseRotate", FreeCaller<RotateMode> (), ToggleItem::AddCallbackCaller(g_rotatemode_button),
+			Accelerator('R'));
+	GlobalToggles_insert("MouseScale", FreeCaller<ScaleMode> (), ToggleItem::AddCallbackCaller(g_scalemode_button));
+	GlobalToggles_insert("MouseDrag", FreeCaller<DragMode> (), ToggleItem::AddCallbackCaller(g_dragmode_button),
+			Accelerator('Q'));
 
 	ColorScheme_registerCommands();
 
-	GlobalCommands_insert("CSGSubtract", FreeCaller<CSG_Subtract>(), Accelerator('U', (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("CSGMerge", FreeCaller<CSG_Merge>(), Accelerator('U', (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("CSGHollow", FreeCaller<CSG_MakeHollow>());
+	GlobalCommands_insert("CSGSubtract", FreeCaller<CSG_Subtract> (),
+			Accelerator('U', (GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("CSGHollow", FreeCaller<CSG_MakeHollow> ());
 
 	Grid_registerCommands();
 
-	GlobalCommands_insert("SnapToGrid", FreeCaller<Selection_SnapToGrid>(), Accelerator('G', (GdkModifierType)GDK_CONTROL_MASK));
+	GlobalCommands_insert("SnapToGrid", FreeCaller<Selection_SnapToGrid> (), Accelerator('G',
+			(GdkModifierType) GDK_CONTROL_MASK));
 
-	GlobalCommands_insert("SelectAllOfType", FreeCaller<Select_AllOfType>(), Accelerator('A', (GdkModifierType)GDK_SHIFT_MASK));
+	GlobalCommands_insert("SelectAllOfType", FreeCaller<Select_AllOfType> (), Accelerator('A',
+			(GdkModifierType) GDK_SHIFT_MASK));
 
-	GlobalCommands_insert("TexRotateClock", FreeCaller<Texdef_RotateClockwise>(), Accelerator(GDK_Next, (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise>(), Accelerator(GDK_Prior, (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexScaleUp", FreeCaller<Texdef_ScaleUp>(), Accelerator(GDK_Up, (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexScaleDown", FreeCaller<Texdef_ScaleDown>(), Accelerator(GDK_Down, (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexScaleLeft", FreeCaller<Texdef_ScaleLeft>(), Accelerator(GDK_Left, (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexScaleRight", FreeCaller<Texdef_ScaleRight>(), Accelerator(GDK_Right, (GdkModifierType)GDK_CONTROL_MASK));
-	GlobalCommands_insert("TexShiftUp", FreeCaller<Texdef_ShiftUp>(), Accelerator(GDK_Up, (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexShiftDown", FreeCaller<Texdef_ShiftDown>(), Accelerator(GDK_Down, (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexShiftLeft", FreeCaller<Texdef_ShiftLeft>(), Accelerator(GDK_Left, (GdkModifierType)GDK_SHIFT_MASK));
-	GlobalCommands_insert("TexShiftRight", FreeCaller<Texdef_ShiftRight>(), Accelerator(GDK_Right, (GdkModifierType)GDK_SHIFT_MASK));
+	GlobalCommands_insert("TexRotateClock", FreeCaller<Texdef_RotateClockwise> (), Accelerator(GDK_Next,
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("TexRotateCounter", FreeCaller<Texdef_RotateAntiClockwise> (), Accelerator(GDK_Prior,
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("TexScaleUp", FreeCaller<Texdef_ScaleUp> (), Accelerator(GDK_Up,
+			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("TexScaleDown", FreeCaller<Texdef_ScaleDown> (), Accelerator(GDK_Down,
+			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("TexScaleLeft", FreeCaller<Texdef_ScaleLeft> (), Accelerator(GDK_Left,
+			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("TexScaleRight", FreeCaller<Texdef_ScaleRight> (), Accelerator(GDK_Right,
+			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("TexShiftUp", FreeCaller<Texdef_ShiftUp> (), Accelerator(GDK_Up,
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("TexShiftDown", FreeCaller<Texdef_ShiftDown> (), Accelerator(GDK_Down,
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("TexShiftLeft", FreeCaller<Texdef_ShiftLeft> (), Accelerator(GDK_Left,
+			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("TexShiftRight", FreeCaller<Texdef_ShiftRight> (), Accelerator(GDK_Right,
+			(GdkModifierType) GDK_SHIFT_MASK));
 
-	GlobalCommands_insert("MoveSelectionDOWN", FreeCaller<Selection_MoveDown>(), Accelerator(GDK_KP_Subtract));
-	GlobalCommands_insert("MoveSelectionUP", FreeCaller<Selection_MoveUp>(), Accelerator(GDK_KP_Add));
+	GlobalCommands_insert("MoveSelectionDOWN", FreeCaller<Selection_MoveDown> (), Accelerator(GDK_KP_Subtract));
+	GlobalCommands_insert("MoveSelectionUP", FreeCaller<Selection_MoveUp> (), Accelerator(GDK_KP_Add));
 
-	GlobalCommands_insert("SelectNudgeLeft", FreeCaller<Selection_NudgeLeft>(), Accelerator(GDK_Left, (GdkModifierType)GDK_MOD1_MASK));
-	GlobalCommands_insert("SelectNudgeRight", FreeCaller<Selection_NudgeRight>(), Accelerator(GDK_Right, (GdkModifierType)GDK_MOD1_MASK));
-	GlobalCommands_insert("SelectNudgeUp", FreeCaller<Selection_NudgeUp>(), Accelerator(GDK_Up, (GdkModifierType)GDK_MOD1_MASK));
-	GlobalCommands_insert("SelectNudgeDown", FreeCaller<Selection_NudgeDown>(), Accelerator(GDK_Down, (GdkModifierType)GDK_MOD1_MASK));
+	GlobalCommands_insert("SelectNudgeLeft", FreeCaller<Selection_NudgeLeft> (), Accelerator(GDK_Left,
+			(GdkModifierType) GDK_MOD1_MASK));
+	GlobalCommands_insert("SelectNudgeRight", FreeCaller<Selection_NudgeRight> (), Accelerator(GDK_Right,
+			(GdkModifierType) GDK_MOD1_MASK));
+	GlobalCommands_insert("SelectNudgeUp", FreeCaller<Selection_NudgeUp> (), Accelerator(GDK_Up,
+			(GdkModifierType) GDK_MOD1_MASK));
+	GlobalCommands_insert("SelectNudgeDown", FreeCaller<Selection_NudgeDown> (), Accelerator(GDK_Down,
+			(GdkModifierType) GDK_MOD1_MASK));
 
 	XYShow_registerCommands();
 
 	typedef FreeCaller1<const Selectable&, ComponentMode_SelectionChanged> ComponentModeSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(ComponentModeSelectionChangedCaller());
 
-	GlobalPreferenceSystem().registerPreference("DetachableMenus", BoolImportStringCaller(g_Layout_enableDetachableMenus.m_latched), BoolExportStringCaller(g_Layout_enableDetachableMenus.m_latched));
-	GlobalPreferenceSystem().registerPreference("PluginToolBar", BoolImportStringCaller(g_Layout_enablePluginToolbar.m_latched), BoolExportStringCaller(g_Layout_enablePluginToolbar.m_latched));
-	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched), IntExportStringCaller(g_Layout_viewStyle.m_latched));
-	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight), IntExportStringCaller(g_layout_globals.nXYHeight));
-	GlobalPreferenceSystem().registerPreference("XYWidth", IntImportStringCaller(g_layout_globals.nXYWidth), IntExportStringCaller(g_layout_globals.nXYWidth));
-	GlobalPreferenceSystem().registerPreference("CamWidth", IntImportStringCaller(g_layout_globals.nCamWidth), IntExportStringCaller(g_layout_globals.nCamWidth));
-	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight), IntExportStringCaller(g_layout_globals.nCamHeight));
+	GlobalPreferenceSystem().registerPreference("DetachableMenus", BoolImportStringCaller(
+			g_Layout_enableDetachableMenus.m_latched), BoolExportStringCaller(g_Layout_enableDetachableMenus.m_latched));
+	GlobalPreferenceSystem().registerPreference("PluginToolBar", BoolImportStringCaller(
+			g_Layout_enablePluginToolbar.m_latched), BoolExportStringCaller(g_Layout_enablePluginToolbar.m_latched));
+	GlobalPreferenceSystem().registerPreference("QE4StyleWindows", IntImportStringCaller(g_Layout_viewStyle.m_latched),
+			IntExportStringCaller(g_Layout_viewStyle.m_latched));
+	GlobalPreferenceSystem().registerPreference("XYHeight", IntImportStringCaller(g_layout_globals.nXYHeight),
+			IntExportStringCaller(g_layout_globals.nXYHeight));
+	GlobalPreferenceSystem().registerPreference("XYWidth", IntImportStringCaller(g_layout_globals.nXYWidth),
+			IntExportStringCaller(g_layout_globals.nXYWidth));
+	GlobalPreferenceSystem().registerPreference("CamWidth", IntImportStringCaller(g_layout_globals.nCamWidth),
+			IntExportStringCaller(g_layout_globals.nCamWidth));
+	GlobalPreferenceSystem().registerPreference("CamHeight", IntImportStringCaller(g_layout_globals.nCamHeight),
+			IntExportStringCaller(g_layout_globals.nCamHeight));
 
-	GlobalPreferenceSystem().registerPreference("State", IntImportStringCaller(g_layout_globals.nState), IntExportStringCaller(g_layout_globals.nState));
-	GlobalPreferenceSystem().registerPreference("PositionX", IntImportStringCaller(g_layout_globals.m_position.x), IntExportStringCaller(g_layout_globals.m_position.x));
-	GlobalPreferenceSystem().registerPreference("PositionY", IntImportStringCaller(g_layout_globals.m_position.y), IntExportStringCaller(g_layout_globals.m_position.y));
-	GlobalPreferenceSystem().registerPreference("Width", IntImportStringCaller(g_layout_globals.m_position.w), IntExportStringCaller(g_layout_globals.m_position.w));
-	GlobalPreferenceSystem().registerPreference("Height", IntImportStringCaller(g_layout_globals.m_position.h), IntExportStringCaller(g_layout_globals.m_position.h));
+	GlobalPreferenceSystem().registerPreference("State", IntImportStringCaller(g_layout_globals.nState),
+			IntExportStringCaller(g_layout_globals.nState));
+	GlobalPreferenceSystem().registerPreference("PositionX", IntImportStringCaller(g_layout_globals.m_position.x),
+			IntExportStringCaller(g_layout_globals.m_position.x));
+	GlobalPreferenceSystem().registerPreference("PositionY", IntImportStringCaller(g_layout_globals.m_position.y),
+			IntExportStringCaller(g_layout_globals.m_position.y));
+	GlobalPreferenceSystem().registerPreference("Width", IntImportStringCaller(g_layout_globals.m_position.w),
+			IntExportStringCaller(g_layout_globals.m_position.w));
+	GlobalPreferenceSystem().registerPreference("Height", IntImportStringCaller(g_layout_globals.m_position.h),
+			IntExportStringCaller(g_layout_globals.m_position.h));
 
-	GlobalPreferenceSystem().registerPreference("CamWnd", WindowPositionTrackerImportStringCaller(g_posCamWnd), WindowPositionTrackerExportStringCaller(g_posCamWnd));
-	GlobalPreferenceSystem().registerPreference("XYWnd", WindowPositionTrackerImportStringCaller(g_posXYWnd), WindowPositionTrackerExportStringCaller(g_posXYWnd));
-	GlobalPreferenceSystem().registerPreference("YZWnd", WindowPositionTrackerImportStringCaller(g_posYZWnd), WindowPositionTrackerExportStringCaller(g_posYZWnd));
-	GlobalPreferenceSystem().registerPreference("XZWnd", WindowPositionTrackerImportStringCaller(g_posXZWnd), WindowPositionTrackerExportStringCaller(g_posXZWnd));
+	GlobalPreferenceSystem().registerPreference("CamWnd", WindowPositionTrackerImportStringCaller(g_posCamWnd),
+			WindowPositionTrackerExportStringCaller(g_posCamWnd));
+	GlobalPreferenceSystem().registerPreference("XYWnd", WindowPositionTrackerImportStringCaller(g_posXYWnd),
+			WindowPositionTrackerExportStringCaller(g_posXYWnd));
+	GlobalPreferenceSystem().registerPreference("YZWnd", WindowPositionTrackerImportStringCaller(g_posYZWnd),
+			WindowPositionTrackerExportStringCaller(g_posYZWnd));
+	GlobalPreferenceSystem().registerPreference("XZWnd", WindowPositionTrackerImportStringCaller(g_posXZWnd),
+			WindowPositionTrackerExportStringCaller(g_posXZWnd));
 
 	{
 		/// @todo this should not be used - radiant is installed in the ufo dir
@@ -2409,41 +2581,41 @@ void MainFrame_Construct (void) {
 		/// @todo Also use PKGDATADIR
 		const char* ENGINEPATH_ATTRIBUTE =
 #if defined(WIN32)
-		    "enginepath_win32"
+				"enginepath_win32"
 #elif defined(__linux__) || defined (__FreeBSD__)
-		    "enginepath_linux"
+				"enginepath_linux"
 #elif defined(__APPLE__)
-		    "enginepath_macos"
+						"enginepath_macos"
 #else
 #error "unknown platform"
 #endif
-		    ;
-		StringOutputStream path(256);
-		path << DirectoryCleaned(g_pGameDescription->getRequiredKeyValue(ENGINEPATH_ATTRIBUTE));
-		g_strEnginePath = path.c_str();
-	}
+;						StringOutputStream path(256);
+						path << DirectoryCleaned(g_pGameDescription->getRequiredKeyValue(ENGINEPATH_ATTRIBUTE));
+						g_strEnginePath = path.c_str();
+					}
 
-	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
-	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
+					GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
+					GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
 
-	g_Layout_viewStyle.useLatched();
-	g_Layout_enableDetachableMenus.useLatched();
-	g_Layout_enablePluginToolbar.useLatched();
+					g_Layout_viewStyle.useLatched();
+					g_Layout_enableDetachableMenus.useLatched();
+					g_Layout_enablePluginToolbar.useLatched();
 
-	Layout_registerPreferencesPage();
-	Paths_registerPreferencesPage();
+					Layout_registerPreferencesPage();
+					Paths_registerPreferencesPage();
 
-	g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged>());
-	g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged>());
-	GlobalEntityCreator().setCounter(&g_entityCount);
+					g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged>());
+					g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged>());
+					GlobalEntityCreator().setCounter(&g_entityCount);
 
-	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
-	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
+					GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
+					GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
 
-	ColorScheme_Init();
-}
+					ColorScheme_Init();
+				}
 
-void MainFrame_Destroy (void) {
+void MainFrame_Destroy (void)
+{
 	ColorScheme_Destroy();
 
 	GlobalEntityCreator().setCounter(0);
@@ -2451,10 +2623,12 @@ void MainFrame_Destroy (void) {
 	g_brushCount.setCountChangedCallback(Callback());
 }
 
-
-void GLWindow_Construct (void) {
-	GlobalPreferenceSystem().registerPreference("MouseButtons", IntImportStringCaller(g_glwindow_globals.m_nMouseType), IntExportStringCaller(g_glwindow_globals.m_nMouseType));
+void GLWindow_Construct (void)
+{
+	GlobalPreferenceSystem().registerPreference("MouseButtons", IntImportStringCaller(g_glwindow_globals.m_nMouseType),
+			IntExportStringCaller(g_glwindow_globals.m_nMouseType));
 }
 
-void GLWindow_Destroy (void) {
+void GLWindow_Destroy (void)
+{
 }

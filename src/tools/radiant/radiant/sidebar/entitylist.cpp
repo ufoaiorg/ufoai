@@ -4,25 +4,25 @@
  */
 
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "entitylist.h"
 
@@ -42,75 +42,81 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "../treemodel.h"
 
-void RedrawEntityList();
+void RedrawEntityList ();
 typedef FreeCaller<RedrawEntityList> RedrawEntityListCaller;
 
 typedef struct _GtkTreeView GtkTreeView;
 
-class EntityList {
-public:
-	enum EDirty {
-		eDefault,
-		eSelection,
-		eInsertRemove,
-	};
+class EntityList
+{
+	public:
+		enum EDirty
+		{
+			eDefault, eSelection, eInsertRemove,
+		};
 
-	EDirty m_dirty;
+		EDirty m_dirty;
 
-	IdleDraw m_idleDraw;
-	WindowPositionTracker m_positionTracker;
+		IdleDraw m_idleDraw;
+		WindowPositionTracker m_positionTracker;
 
-	GtkTreeView* m_tree_view;
-	GraphTreeModel* m_tree_model;
-	bool m_selection_disabled;
+		GtkTreeView* m_tree_view;
+		GraphTreeModel* m_tree_model;
+		bool m_selection_disabled;
 
-	EntityList() :
-			m_dirty(EntityList::eDefault),
-			m_idleDraw(RedrawEntityListCaller()),
-			m_selection_disabled(false) {
-	}
+		EntityList () :
+			m_dirty(EntityList::eDefault), m_idleDraw(RedrawEntityListCaller()), m_selection_disabled(false)
+		{
+		}
 };
 
-namespace {
-EntityList* g_EntityList;
+namespace
+{
+	EntityList* g_EntityList;
 
-inline EntityList& getEntityList (void) {
-	ASSERT_NOTNULL(g_EntityList);
-	return *g_EntityList;
-}
+	inline EntityList& getEntityList (void)
+	{
+		ASSERT_NOTNULL(g_EntityList);
+		return *g_EntityList;
+	}
 }
 
 template<typename value_type>
-inline void gtk_tree_model_get_pointer(GtkTreeModel* model, GtkTreeIter* iter, gint column, value_type** pointer) {
+inline void gtk_tree_model_get_pointer (GtkTreeModel* model, GtkTreeIter* iter, gint column, value_type** pointer)
+{
 	GValue value = GValue_default();
 	gtk_tree_model_get_value(model, iter, column, &value);
-	*pointer = (value_type*)g_value_get_pointer(&value);
+	*pointer = (value_type*) g_value_get_pointer(&value);
 }
 
-static void entitylist_treeviewcolumn_celldatafunc(GtkTreeViewColumn* column, GtkCellRenderer* renderer, GtkTreeModel* model, GtkTreeIter* iter, gpointer data) {
+static void entitylist_treeviewcolumn_celldatafunc (GtkTreeViewColumn* column, GtkCellRenderer* renderer,
+		GtkTreeModel* model, GtkTreeIter* iter, gpointer data)
+{
 	scene::Node* node;
 	gtk_tree_model_get_pointer(model, iter, 0, &node);
 	scene::Instance* instance;
 	gtk_tree_model_get_pointer(model, iter, 1, &instance);
 	if (node != 0) {
 		gtk_cell_renderer_set_fixed_size(renderer, -1, -1);
-		char* name = const_cast<char*>(node_get_name(*node));
-		g_object_set(G_OBJECT(renderer), "text", name, "visible", TRUE, (char const*)0);
+		char* name = const_cast<char*> (node_get_name(*node));
+		g_object_set(G_OBJECT(renderer), "text", name, "visible", TRUE, (char const*) 0);
 
 		//globalOutputStream() << "rendering cell " << makeQuoted(name) << "\n";
 		GtkStyle* style = gtk_widget_get_style(GTK_WIDGET(getEntityList().m_tree_view));
 		if (instance->childSelected()) {
-			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_ACTIVE], (char const*)0);
+			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_ACTIVE], (char const*) 0);
 		} else {
-			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_NORMAL], (char const*)0);
+			g_object_set(G_OBJECT(renderer), "cell-background-gdk", &style->base[GTK_STATE_NORMAL], (char const*) 0);
 		}
 	} else {
 		gtk_cell_renderer_set_fixed_size(renderer, -1, 0);
-		g_object_set(G_OBJECT(renderer), "text", "", "visible", FALSE, (char const*)0);
+		g_object_set(G_OBJECT(renderer), "text", "", "visible", FALSE, (char const*) 0);
 	}
 }
 
-static gboolean entitylist_tree_select(GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path, gboolean path_currently_selected, gpointer data) {
+static gboolean entitylist_tree_select (GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path,
+		gboolean path_currently_selected, gpointer data)
+{
 	GtkTreeIter iter;
 	gtk_tree_model_get_iter(model, &iter, path);
 	scene::Node* node;
@@ -135,24 +141,27 @@ static gboolean entitylist_tree_select(GtkTreeSelection *selection, GtkTreeModel
 	return FALSE;
 }
 
-static gboolean entitylist_tree_select_null(GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path, gboolean path_currently_selected, gpointer data) {
+static gboolean entitylist_tree_select_null (GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path,
+		gboolean path_currently_selected, gpointer data)
+{
 	return TRUE;
 }
 
-void EntityList_ConnectSignals(GtkTreeView* view) {
+void EntityList_ConnectSignals (GtkTreeView* view)
+{
 	GtkTreeSelection* select = gtk_tree_view_get_selection(view);
 	gtk_tree_selection_set_select_function(select, entitylist_tree_select, NULL, 0);
 }
 
-void EntityList_DisconnectSignals(GtkTreeView* view) {
+void EntityList_DisconnectSignals (GtkTreeView* view)
+{
 	GtkTreeSelection* select = gtk_tree_view_get_selection(view);
 	gtk_tree_selection_set_select_function(select, entitylist_tree_select_null, 0, 0);
 }
 
-
-
-static gboolean treemodel_update_selection(GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, gpointer data) {
-	GtkTreeView* view = reinterpret_cast<GtkTreeView*>(data);
+static gboolean treemodel_update_selection (GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, gpointer data)
+{
+	GtkTreeView* view = reinterpret_cast<GtkTreeView*> (data);
 
 	scene::Instance* instance;
 	gtk_tree_model_get_pointer(model, iter, 1, &instance);
@@ -170,14 +179,15 @@ static gboolean treemodel_update_selection(GtkTreeModel* model, GtkTreePath* pat
 	return FALSE;
 }
 
-void EntityList_UpdateSelection(GtkTreeModel* model, GtkTreeView* view) {
+void EntityList_UpdateSelection (GtkTreeModel* model, GtkTreeView* view)
+{
 	EntityList_DisconnectSignals(view);
 	gtk_tree_model_foreach(model, treemodel_update_selection, view);
 	EntityList_ConnectSignals(view);
 }
 
-
-void RedrawEntityList (void) {
+void RedrawEntityList (void)
+{
 	switch (getEntityList().m_dirty) {
 	case EntityList::eInsertRemove:
 	case EntityList::eSelection:
@@ -188,11 +198,13 @@ void RedrawEntityList (void) {
 	getEntityList().m_dirty = EntityList::eDefault;
 }
 
-void entitylist_queue_draw (void) {
+void entitylist_queue_draw (void)
+{
 	getEntityList().m_idleDraw.queueDraw();
 }
 
-void EntityList_SelectionUpdate (void) {
+void EntityList_SelectionUpdate (void)
+{
 	if (getEntityList().m_selection_disabled)
 		return;
 
@@ -201,22 +213,26 @@ void EntityList_SelectionUpdate (void) {
 	entitylist_queue_draw();
 }
 
-void EntityList_SelectionChanged(const Selectable& selectable) {
+void EntityList_SelectionChanged (const Selectable& selectable)
+{
 	EntityList_SelectionUpdate();
 }
 
-void entitylist_treeview_rowcollapsed(GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, gpointer user_data) {
+void entitylist_treeview_rowcollapsed (GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, gpointer user_data)
+{
 }
 
-void entitylist_treeview_row_expanded(GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, gpointer user_data) {
+void entitylist_treeview_row_expanded (GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, gpointer user_data)
+{
 	EntityList_SelectionUpdate();
 }
 
-gint graph_tree_model_compare_name(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data) {
+gint graph_tree_model_compare_name (GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data)
+{
 	scene::Node* first;
-	gtk_tree_model_get(model, a, 0, (gpointer*)&first, -1);
+	gtk_tree_model_get(model, a, 0, (gpointer*) &first, -1);
 	scene::Node* second;
-	gtk_tree_model_get(model, b, 0, (gpointer*)&second, -1);
+	gtk_tree_model_get(model, b, 0, (gpointer*) &second, -1);
 	int result = 0;
 	if (first != 0 && second != 0) {
 		result = string_compare(node_get_name(*first), node_get_name(*second));
@@ -227,14 +243,15 @@ gint graph_tree_model_compare_name(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 	return result;
 }
 
-extern GraphTreeModel* scene_graph_get_tree_model();
-static void AttachEntityTreeModel (void) {
+extern GraphTreeModel* scene_graph_get_tree_model ();
+static void AttachEntityTreeModel (void)
+{
 	getEntityList().m_tree_model = scene_graph_get_tree_model();
 
 	gtk_tree_view_set_model(getEntityList().m_tree_view, GTK_TREE_MODEL(getEntityList().m_tree_model));
 }
 
-GtkWidget *EntityList_constructNotebookTab(void)
+GtkWidget *EntityList_constructNotebookTab (void)
 {
 	GtkWidget* pageframe = gtk_frame_new("Entity List");
 
@@ -280,12 +297,15 @@ GtkWidget *EntityList_constructNotebookTab(void)
 /**
  * @sa EntityList_Destroy
  */
-void EntityList_Construct (void) {
+void EntityList_Construct (void)
+{
 	g_EntityList = new EntityList;
 
 	getEntityList().m_positionTracker.setPosition(c_default_window_pos);
 
-	GlobalPreferenceSystem().registerPreference("EntityInfoDlg", WindowPositionTrackerImportStringCaller(getEntityList().m_positionTracker), WindowPositionTrackerExportStringCaller(getEntityList().m_positionTracker));
+	GlobalPreferenceSystem().registerPreference("EntityInfoDlg", WindowPositionTrackerImportStringCaller(
+			getEntityList().m_positionTracker), WindowPositionTrackerExportStringCaller(
+			getEntityList().m_positionTracker));
 
 	typedef FreeCaller1<const Selectable&, EntityList_SelectionChanged> EntityListSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityListSelectionChangedCaller());
@@ -294,6 +314,7 @@ void EntityList_Construct (void) {
 /**
  * @sa EntityList_Construct
  */
-void EntityList_Destroy (void) {
+void EntityList_Destroy (void)
+{
 	delete g_EntityList;
 }
