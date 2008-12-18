@@ -1421,38 +1421,39 @@ menu popup_newinstallation_type
 		font	f_small
 	}
 
-	pic ufoyard_icon
-	{
-		image	"geoscape/ufoyard"
-		pos	"46 118"
-		in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
-		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
-	}
-	string ufoyard_type
-	{
-		string	"_UFO Yard"
-		pos	"86 118"
-		size	"389 18"
-		font	f_small
-		in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
-		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
-	}
-	string ufoyard_buildtime
-	{
-		string	"*cvar mn_installation_ufoyard_buildtime"
-		pos	"351 118"
-		align	ur
-		font	f_small
-	}
-	string ufoyard_cost
-	{
-		string	"*cvar mn_installation_ufoyard_cost"
-		pos	"451 118"
-		align	ur
-		font	f_small
-	}
+	// disabled for 2.3
+	//pic ufoyard_icon
+	//{
+	//	image	"geoscape/ufoyard"
+	//	pos	"46 118"
+	//	in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
+	//	out	{ *bt_highlight invis true }
+	//	click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
+	//}
+	//string ufoyard_type
+	//{
+	//	string	"_UFO Yard"
+	//	pos	"86 118"
+	//	size	"389 18"
+	//	font	f_small
+	//	in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
+	//	out	{ *bt_highlight invis true }
+	//	click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
+	//}
+	//string ufoyard_buildtime
+	//{
+	//	string	"*cvar mn_installation_ufoyard_buildtime"
+	//	pos	"351 118"
+	//	align	ur
+	//	font	f_small
+	//}
+	//string ufoyard_cost
+	//{
+	//	string	"*cvar mn_installation_ufoyard_cost"
+	//	pos	"451 118"
+	//	align	ur
+	//	font	f_small
+	//}
 
 	pic bt_cancel
 	{
