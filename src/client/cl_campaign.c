@@ -5435,6 +5435,27 @@ static void CL_GameGo (void)
 }
 
 /**
+ * @note Mission trigger function
+ * @sa CP_MissionTriggerFunctions
+ * @sa CP_ExecuteMissionTrigger
+ */
+static void CP_AddTechAsResearchable_f (void)
+{
+	const char *techID;
+	technology_t *tech;
+
+	/* baseid is appened in mission trigger function */
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <tech>\n", Cmd_Argv(0));
+		return;
+	}
+
+	techID = Cmd_Argv(1);
+	tech = RS_GetTechByID(techID);
+	RS_MarkOneResearchable(tech);
+}
+
+/**
  * @brief For things like craft_ufo_scout that are no real items this function will
  * increase the collected counter by one
  * @note Mission trigger function
@@ -5496,10 +5517,23 @@ static void CP_ChangeNationHappiness_f (void)
 	NAT_SetHappiness(nation, nation->stats[0].happiness + change);
 }
 
+/**
+ * @note Mission trigger function
+ * @sa CP_MissionTriggerFunctions
+ * @sa CP_ExecuteMissionTrigger
+ */
+static void CP_EndGame_f (void)
+{
+	mn.menuText[TEXT_STANDARD] = _("The game ends here.");
+	CP_EndCampaign(qfalse);
+}
+
 /** @brief mission trigger functions */
 static const cmdList_t cp_commands[] = {
+	{"cp_add_researchable", CP_AddTechAsResearchable_f, "Add a tech as researchable"},
 	{"cp_add_item", CP_AddItemAsCollected_f, "Add an item as collected"},
 	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation hapiness."},
+	{"cp_endgame", CP_EndGame_f, "This command will end the current campaign"},
 
 	{NULL, NULL, NULL}
 };
