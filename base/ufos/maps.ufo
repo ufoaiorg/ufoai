@@ -2406,6 +2406,8 @@ mapdef alienbase
 	description		"_An alien base."
 	storyrelated	true
 	maxaliens		8
+	// TODO: The first alien base is the end of the campaign currently
+	onwin			"cp_endgame"
 }
 
 ///////////////////////
