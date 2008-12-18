@@ -1344,6 +1344,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 
 	/* Reset Radar range */
 	RADAR_Initialise(&(base->radar), 0.0f, 0.0f, 1.0f, qtrue);
+	RADAR_InitialiseUFOs(&base->radar);
 }
 
 /**
@@ -3379,6 +3380,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
 	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
+	RADAR_InitialiseUFOs(&aircraft->radar);		/**< Reset UFO sensored on radar */
 
 	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
 	 * @todo this should be removed when new inventory code will be over */

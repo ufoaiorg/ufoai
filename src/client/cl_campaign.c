@@ -4585,7 +4585,7 @@ void CL_CampaignRun (void)
 		AB_UpdateStealthForAllBase();
 
 		timeAlreadyFlied += dt;
-		detection = UFO_CampaignCheckEvents(qtrue);
+		detection = UFO_CampaignCheckEvents();
 		if (detection) {
 			ccs.timer = (i + 1) * DETECTION_INTERVAL - currentinterval;
 			break;
@@ -4639,7 +4639,7 @@ void CL_CampaignRun (void)
 			CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
 			UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
 		}
-		UFO_CampaignCheckEvents(qfalse);
+		UFO_CampaignCheckEvents();
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();
 		CP_CheckLostCondition(qtrue, NULL, 0);

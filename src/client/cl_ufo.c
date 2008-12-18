@@ -766,10 +766,9 @@ static void UFO_RemoveFromGeoscape_f (void)
 
 /**
  * @brief Check events for UFOs: Appears or disappears on radars
- * @param[in] checkStatusChanged qtrue if you want to make a check for UFO detection. qfalse means UFOs can only disappear from the radar.
  * @return qtrue if any new ufo was detected during this iteration, qfalse otherwise
  */
-qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
+qboolean UFO_CampaignCheckEvents (void)
 {
 	qboolean detected, newDetection;
 	int baseIdx, installationIdx;
@@ -794,7 +793,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				continue;
 
 			/* maybe the ufo is already detected, don't reset it */
-			detected |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo);
+			detected |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, detected | ufo->detected);
 		}
 
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
@@ -803,7 +802,7 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 				continue;
 
 			/* maybe the ufo is already detected, don't reset it */
-			detected |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo);
+			detected |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected);
 		}
 
 		/* Check for ufo tracking by aircraft */
@@ -816,13 +815,13 @@ qboolean UFO_CampaignCheckEvents (qboolean checkStatusChanged)
 					if (!AIR_IsAircraftOnGeoscape(aircraft))
 						continue;
 					/* maybe the ufo is already detected, don't reset it */
-					detected |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo);
+					detected |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected);
 				}
 			}
 
 		/* Check if ufo appears or disappears on radar */
 		if (detected != ufo->detected) {
-			if (checkStatusChanged && detected) {
+			if (detected) {
 				MSO_CheckAddNewMessage(NT_UFO_SPOTTED,_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_UFOSPOTTED, NULL);
 				/* Make this UFO detected */
 				ufo->detected = qtrue;

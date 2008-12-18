@@ -36,10 +36,19 @@ extern const float RADAR_BASERTRACKINGANGE;
 extern const float RADAR_AIRCRAFTRANGE;
 extern const float RADAR_AIRCRAFTTRACKINGRANGE;
 
+/**
+ * @brief Different status for numAmmo.
+ */
+enum {
+	UFO_NOT_SENSORED = -1,			/**< Radar has no UFO Sensored. */
+
+	/* positive or null values are used for UFO idx */
+};
+
 typedef struct radar_s {
 	int range;						/**< Range of radar */
 	int trackingRange;				/**< Tracking range of radar */
-	int ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar (gd.ufos[id]) */
+	int ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar (gd.ufos[id]). UFO_NOT_SENSORED if no UFO sensored. */
 	int numUFOs;					/**< Num UFOs sensored by radar */
 } radar_t;
 
@@ -49,10 +58,11 @@ void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, const 
 void RADAR_DeactivateRadarOverlay(void);
 void RADAR_NotifyUFORemoved(const struct aircraft_s* ufo, qboolean destroyed);
 void RADAR_Initialise(radar_t* radar, float range, float trackingRange, float level, qboolean updateSourceRadarMap);
+void RADAR_InitialiseUFOs(radar_t *radar);
 void RADAR_UpdateBaseRadarCoverage_f(void);
 void RADAR_UpdateInstallationRadarCoverage(struct installation_s *installation, const float radarRange, const float trackingRadarRange);
 qboolean RADAR_CheckRadarSensored(const vec2_t pos);
-qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar, const struct aircraft_s* ufo);
+qboolean RADAR_CheckUFOSensored(radar_t* radar, vec2_t posRadar, const struct aircraft_s* ufo, qboolean detected);
 void RADAR_SetRadarAfterLoading(void);
 
 #endif

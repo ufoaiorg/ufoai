@@ -1497,6 +1497,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		/* default is no ufo */
 		aircraftTemplate->ufotype = UFO_MAX;
 		AII_InitialiseAircraftSlots(aircraftTemplate);
+		/* Initialise UFO sensored */
+		RADAR_InitialiseUFOs(&aircraftTemplate->radar);
 
 		numAircraftTemplates++;
 	} else {
