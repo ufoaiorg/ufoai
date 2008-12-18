@@ -50,6 +50,6 @@ qboolean MN_DNDIsTargetNode(struct menuNode_s *node);
 qboolean MN_DNDIsSourceNode(struct menuNode_s *node);
 struct menuNode_s *MN_DNDGetTargetNode(void);
 int MN_DNDGetType(void);
-struct item_s *MN_DNDGetItem();
+struct item_s *MN_DNDGetItem(void);
 
 #endif
