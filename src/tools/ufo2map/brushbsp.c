@@ -359,11 +359,11 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
-	int i, j, num, s;
+	int i, j, s;
 	plane_t *plane;
 	dBspPlane_t plane2;
 	winding_t *w;
-	vec_t d, d_front, d_back;
+	vec_t d_front, d_back;
 	int front, back;
 
 	*numsplits = 0;
@@ -372,7 +372,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	/* if the brush actually uses the planenum,
 	 * we can tell the side for sure */
 	for (i = 0; i < brush->numsides; i++) {
-		num = brush->sides[i].planenum;
+		const int num = brush->sides[i].planenum;
 		if (num >= 0x10000)
 			Sys_Error("bad planenum");
 		if (num == planenum)
@@ -406,7 +406,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 			continue;
 		front = back = 0;
 		for (j = 0; j < w->numpoints; j++) {
-			d = DotProduct(w->p[j], plane->normal) - plane->dist;
+			const vec_t d = DotProduct(w->p[j], plane->normal) - plane->dist;
 			if (d > d_front)
 				d_front = d;
 			if (d < d_back)
@@ -414,7 +414,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 
 			if (d > 0.1) /* PLANESIDE_EPSILON) */
 				front = 1;
-			if (d < -0.1) /* PLANESIDE_EPSILON) */
+			else if (d < -0.1) /* PLANESIDE_EPSILON) */
 				back = 1;
 		}
 		if (front && back) {
@@ -534,7 +534,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 {
 	int value, bestvalue;
 	bspbrush_t *brush, *test;
-	side_t *side, *bestside;
+	side_t *bestside;
 	int i, j, pass, numpasses, pnum;
 	int front, back, both, facing, splits;
 	int bsplits, bestsplits, epsilonbrush;
@@ -560,7 +560,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 			for (i = 0; i < brush->numsides; i++) {
 				/** @todo This will overflow if numsides is bigger than 6
 				 * @sa bspbrush_t */
-				side = brush->sides + i;
+				side_t *side = brush->sides + i;
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */
 				if (!side->winding)
