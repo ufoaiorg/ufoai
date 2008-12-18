@@ -1,3 +1,7 @@
+/**
+ * @file entity.cpp
+ */
+
 /*
  Copyright (C) 1999-2006 Id Software, Inc. and contributors.
  For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -201,11 +205,12 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 				// TODO: Use entityClass->mins, entityClass->maxs
 				const int size = isStartingPositionActor ? 16 : 32;
 				// TODO: Use the grid size constants UNIT_HEIGHT and UNIT_SIZE
-				const int x = ((int)origin.x() % 32) * 32 - size;
-				const int y = ((int)origin.y() % 32) * 32 - size;
-				const int z = ((int)origin.z() % 64) * 64 + 6 + 64;
+				const int x = ((int) origin.x() % 32) * 32 - size;
+				const int y = ((int) origin.y() % 32) * 32 - size;
+				const int z = ((int) origin.z() % 64) * 64 + 6 + 64;
 				const Vector3 vec(x, y, z);
-				globalWarningStream() << "original start position: " << origin.x() << " " << origin.y() << " " << origin.z() << "\n";
+				globalWarningStream() << "original start position: " << origin.x() << " " << origin.y() << " "
+						<< origin.z() << "\n";
 				globalWarningStream() << "start position: " << x << " " << y << " " << z << "\n";
 
 				transform->setTranslation(vec);
