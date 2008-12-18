@@ -5523,7 +5523,8 @@ static void CP_ChangeNationHappiness_f (void)
 static void CP_EndGame_f (void)
 {
 	mn.menuText[TEXT_STANDARD] = _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
-		"However, this is not the end of the road. The game remains in development\n"
+		"However, this is not the end of the road. The game remains in development.\n"
+		"The campaign will be expanded with new missions, new enemies,"
 		"new UFOs, new player controllable craft and more research.\n\n"
 		"And YOU can help make it happen! Visit our forums or IRC channel to find\n"
 		"out what you can do to help finish this game. Alternatively, you can just\n"
