@@ -240,7 +240,7 @@ static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
 		return qfalse;
 
 	/* we really want to avoid buffer overflow: numUFO is supposed to be UFO idx */
-	assert(numUFO <= MAX_UFOONGEOSCAPE);
+	assert(numUFO <= MAX_UFOONGEOSCAPE && numUFO >= 0);
 
 	radar->ufos[radar->numUFOs] = numUFO;
 	radar->numUFOs++;
