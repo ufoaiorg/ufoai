@@ -2,8 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
+"angles_day" "90 0"
+"angles_night" "90 0"
+"light_day" "0"
+"light_night" "0"
 "maxlevel" "5"
-"light" "120"
 // brush 0
 {
 ( 512 192 96 ) ( 0 320 96 ) ( 512 320 96 ) tex_alienbase/wall01 0 42 0 1 1 65024 0 0
