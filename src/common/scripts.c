@@ -2644,4 +2644,3 @@ void Com_PrecacheCharacterModels (void)
 	cls.loadingPercent = loading + percent;
 }
 #endif
-

@@ -1168,8 +1168,8 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 {
 	aircraft_t *aircraft;
 	int i, j, k;
-	static qboolean radarOverlayReset = qfalse;	/**< true if at least one aircraft moved: radar overlay must be updated 
-												 * This is static because aircraft can move without radar beeing 
+	static qboolean radarOverlayReset = qfalse;	/**< true if at least one aircraft moved: radar overlay must be updated
+												 * This is static because aircraft can move without radar beeing
 												 * updated (sa CL_CampaignRun) */
 
 	if (dt > 0) {
@@ -1245,13 +1245,13 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
 						AIR_AircraftReturnToBase(aircraft);
 					}
-	
+
 					/* Aircraft purchasing ufo */
 					if (aircraft->status == AIR_UFO) {
 						/* Solve the fight */
 						AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
 					}
-	
+
 					/* Update delay to launch next projectile */
 					if (AIR_IsAircraftOnGeoscape(aircraft)) {
 						for (k = 0; k < aircraft->maxWeapons; k++) {

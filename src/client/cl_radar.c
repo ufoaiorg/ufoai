@@ -478,7 +478,7 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, vec2_t posRadar,
 	 * @note This correspond to 40 % each 30 minutes (coded this way to be able to
 	 * change @c DETECTION_INTERVAL without changing the way radar works)
 	 * @todo There is a hardcoded detection probability here
-	 * - this should be scripted. Probability should be a 
+	 * - this should be scripted. Probability should be a
 	 * function of UFO type and maybe radar type too. */
 	const float ufoDetectionProbability = 0.000125f * DETECTION_INTERVAL;
 

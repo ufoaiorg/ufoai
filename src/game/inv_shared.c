@@ -1450,7 +1450,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			repeat = WEAPONLESS_BONUS > frand();
 		else
 			repeat = 0;
-		/* Misc object probability can be bigger than 100 -- you're sure to 
+		/* Misc object probability can be bigger than 100 -- you're sure to
 		 * have one misc if it fits your backpack */
 		sum = 0;
 		for (i = 0; i < CSI->numODs; i++) {

@@ -57,5 +57,3 @@ for po in $(ls ${PO_DIR}/*.po); do
 done
 
 scp ${IMAGES_DIR}/*.png ufosf:/home/groups/u/uf/ufoai/htdocs/img/postats
-
-

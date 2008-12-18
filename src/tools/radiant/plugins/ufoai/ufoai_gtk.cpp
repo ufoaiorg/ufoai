@@ -165,4 +165,3 @@ const IToolbarButton* GetToolbarButton(std::size_t index) {
 	g_ufoaiToolbarButtons[index].mIndex = index;
 	return &g_ufoaiToolbarButtons[index];
 }
-

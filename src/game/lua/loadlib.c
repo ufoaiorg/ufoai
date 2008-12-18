@@ -663,4 +663,3 @@ LUALIB_API int luaopen_package (lua_State *L) {
   lua_pop(L, 1);
   return 1;  /* return 'package' table */
 }
-
