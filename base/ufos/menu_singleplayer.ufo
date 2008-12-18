@@ -699,7 +699,7 @@ menu lostgame
 
 	pic background
 	{
-		image	menu/endgame_bg
+		image	menu/losegame_bg
 	}
 
 	string lostgame
@@ -765,7 +765,7 @@ menu endgame
 
 	pic background
 	{
-		image	menu/endgame_bg
+		image	menu/wingame_bg
 	}
 
 	string endgame

@@ -2007,7 +2007,6 @@ base/pics/menu/buy_buttons1a.tga | GNU General Public License 2.0 |  | Based on 
 base/pics/menu/close.tga | GNU General Public License 2.0
 base/pics/menu/del.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/employee_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/endgame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/equipment_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/geo_eventlog.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
 base/pics/menu/geo_eventoptions.tga | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -2021,6 +2020,7 @@ base/pics/menu/hosp_button_green.tga | GNU General Public License 2.0
 base/pics/menu/hosp_button_light.tga | GNU General Public License 2.0
 base/pics/menu/hosp_empl_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/hospital_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/losegame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/mail_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/mail_button.tga | GNU General Public License 2.0
 base/pics/menu/mailclient.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
@@ -2058,6 +2058,7 @@ base/pics/menu/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 
 base/pics/menu/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/vertical_bar.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
+base/pics/menu/wingame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/won_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/nations/africa.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/asia.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
