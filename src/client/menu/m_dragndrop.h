@@ -28,56 +28,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../game/inv_shared.h"
 
-struct invList_s;
-struct invDef_s;
 struct menuNode_s;
-struct invDef_s;
+struct item_s;
 
 typedef enum {
 	DND_NOTHING,
 	DND_ITEM,
 } dndType_t;
 
-
-typedef struct dragInfo_s {
-	dndType_t type;					/**< What are we dragging */
-	struct menuNode_s *sourceNode;	/**< Node providing the drag item */
-	int sourceAbsoluteX;			/**< Where the drag start */
-	int sourceAbsoluteY;			/**< Where the drag start */
-
-	struct menuNode_s *targetNode;	/**< Current hovered node */
-
-	qboolean isPlaceFound;			/**< Have we find a place for the current object */
-
-
-	/* bellow that, nothing is generic :/ */
-
-	item_t item;	/**< The item that is currently dragged. */
-	const struct invList_s *ic;	/**< The current invList pointer (only used for ignoring the dragged item for finding free space right now) */
-	const struct invDef_s * from;	/**< The container the items is dragged out of (i.e. from). */
-	int fromX;		/**< The X position in the container the item was/is located.
-					 * More exactly this is the position the user clicked on. (i.e. NOT necessarily invList_t->x) */
-	int fromY;		/**< The Y position in the container the item was/is located. */
-
-	/* The "to" variables are only used in cl_screen.c to draw the preview. */
-	const struct invDef_s *to;
-	int toX;
-	int toY;
-} dragInfo_t;
-
-extern dragInfo_t dragInfo;
-
+/* management */
 void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
+
+/* command */
+void MN_DNDDragItem (struct menuNode_s *node, struct item_s *item);
+void MN_DNDDrop(void);
+void MN_DNDAbort(void);
 
 /*  getter */
 qboolean MN_DNDIsDragging(void);
 qboolean MN_DNDIsTargetNode(struct menuNode_s *node);
-
-/* setter */
-void MN_DNDStartDrag(struct menuNode_s *from);
-void MN_DNDDragItem(item_t *item, struct invList_s *fromInventory);
-void MN_DNDFromContainer(struct invDef_s *container, int ownFromX, int ownFromY);
-void MN_DNDDrop(void);
-void MN_DNDAbort(void);
+qboolean MN_DNDIsSourceNode(struct menuNode_s *node);
+struct menuNode_s *MN_DNDGetTargetNode(void);
+int MN_DNDGetType(void);
+struct item_s *MN_DNDGetItem();
 
 #endif

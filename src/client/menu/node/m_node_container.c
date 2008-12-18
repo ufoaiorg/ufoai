@@ -42,6 +42,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
+/** self cache for drag item
+ * @note we can use a global var because we only can have 1 source node at a time
+ */
+static int dragInfoFromX = -1;
+static int dragInfoFromY = -1;
+
+/** self cache for the preview and dropped item
+ * @note we can use a global var because we only can have 1 target node at a time
+ */
+static int dragInfoToX = -1;
+static int dragInfoToY = -1;
+
+/** The current invList pointer (only used for ignoring the dragged item
+ * for finding free space right now)
+ */
+static const invList_t *dragInfoIC;
+
 /**
  * @brief Update display of scroll buttons.
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
@@ -344,9 +361,9 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
  * @brief Draws the free and usable inventory positions when dragging an item.
  * @note Only call this function in dragging mode
  */
-static void MN_ContainerNodeDrawFreeSpace (inventory_t *inv, const menuNode_t *node)
+static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
 {
-	const objDef_t *od = dragInfo.item.t;	/**< Get the 'type' of the dragged item. */
+	const objDef_t *od = MN_DNDGetItem()->t;	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
@@ -357,7 +374,7 @@ static void MN_ContainerNodeDrawFreeSpace (inventory_t *inv, const menuNode_t *n
 	/* if single container (hands, extension, headgear) */
 	if (node->container->single) {
 		/* if container is free or the dragged-item is in it */
-		if (node->container == dragInfo.from || Com_CheckToInventory(inv, od, node->container, 0, 0, dragInfo.ic))
+		if (MN_DNDIsSourceNode(node) || Com_CheckToInventory(inv, od, node->container, 0, 0, dragInfoIC))
 			MN_DrawFree(node->container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		/* The shape of the free positions. */
@@ -372,7 +389,7 @@ static void MN_ContainerNodeDrawFreeSpace (inventory_t *inv, const menuNode_t *n
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */
-				const int checkedTo = Com_CheckToInventory(inv, od, node->container, x, y, dragInfo.ic);
+				const int checkedTo = Com_CheckToInventory(inv, od, node->container, x, y, dragInfoIC);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
@@ -450,6 +467,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
+	objDef_t *dragType;
 
 #if 0
 	MN_FindContainer(node);
@@ -461,8 +479,10 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (MN_DNDIsDragging())
+	if (MN_DNDIsDragging()) {
+		dragType = MN_DNDGetItem()->t;
 		drawLoadable = qtrue;
+	}
 
 	if (node->container->single) {
 		/* Single container */
@@ -481,7 +501,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 				assert(item->t);
 
 				if (item->t->holdTwoHanded) {
-					if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
+					if (drawLoadable && INVSH_LoadableInWeapon(dragType, item->t))
 						MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
 					else
 						MN_DrawItem(node, pos, item, -1, -1, scale, color);
@@ -507,7 +527,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 			item = &menuInventory->c[node->container->id]->item;
 			assert(item);
 			assert(item->t);
-			if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, item->t))
+			if (drawLoadable && INVSH_LoadableInWeapon(dragType, item->t))
 				MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
 			else
 				MN_DrawItem(node, pos, item, -1, -1, scale, color);
@@ -593,7 +613,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 								/* Actually draw the item. */
 								tempItem.t = ic->item.t;
-								if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
+								if (drawLoadable && INVSH_LoadableInWeapon(dragType, ic->item.t))
 									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
 								else
 									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
@@ -675,7 +695,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 			for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 				assert(ic->item.t);
-				if (drawLoadable && INVSH_LoadableInWeapon(dragInfo.item.t, ic->item.t))
+				if (drawLoadable && INVSH_LoadableInWeapon(dragType, ic->item.t))
 					MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 				else
 					MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, color);
@@ -685,7 +705,7 @@ static const invList_t* MN_DrawContainerNode (menuNode_t *node)
 
 	/* Draw free space if dragging - but not for idEquip */
 	if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
-		MN_ContainerNodeDrawFreeSpace(menuInventory, node);
+		MN_ContainerNodeDrawFreeSpace(node, menuInventory);
 
 	return NULL;
 }
@@ -700,9 +720,10 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 {
 	vec2_t nodepos;
 	int checkedTo = INV_DOES_NOT_FIT;
-	vec3_t org;
+	vec3_t origine;
 	vec4_t color = { 1, 1, 1, 1 };
 	const vec3_t scale = { 3.5, 3.5, 3.5 };
+	item_t previewItem;
 
 	MN_GetNodeAbsPos(target, nodepos);
 
@@ -712,23 +733,23 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 	 * has been changed (can happen in rare conditions).
 	 * @todo Maybe we can later change this to reflect "manual" rotation?
 	 * @todo Check if this causes problems when letting the item snap back to its original location. */
-	dragInfo.item.rotated = qfalse;
+	previewItem = *MN_DNDGetItem();
+
+	previewItem.rotated = qfalse;
 
 	/* Draw "preview" of placed (&rotated) item. */
 	if (!MN_IsScrollContainerNode(target)) {
-		const int oldRotated = dragInfo.item.rotated;
-
-		checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY, dragInfo.ic);
+		checkedTo = Com_CheckToInventory(menuInventory, previewItem.t, target->container, dragInfoToX, dragInfoToY, dragInfoIC);
 
 		if (checkedTo == INV_FITS_ONLY_ROTATED)
-			dragInfo.item.rotated = qtrue;
+			previewItem.rotated = qtrue;
 
-		if (checkedTo && Q_strncmp(dragInfo.item.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
+		if (checkedTo && Q_strncmp(previewItem.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
 			vec2_t nodepos;
 
 			MN_GetNodeAbsPos(target, nodepos);
-			if (dragInfo.to->single) { /* Get center of single container for placement of preview item */
-				VectorSet(org,
+			if (target->container->single) { /* Get center of single container for placement of preview item */
+				VectorSet(origine,
 					nodepos[0] + target->size[0] / 2.0,
 					nodepos[1] + target->size[1] / 2.0,
 					-40);
@@ -736,22 +757,20 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 				/* This is a "grid" container - we need to calculate the item-position
 				 * (on the screen) from stored placement in the container and the
 				 * calculated rotation info. */
-				if (dragInfo.item.rotated)
-					VectorSet(org,
-						nodepos[0] + (dragInfo.toX + dragInfo.item.t->sy / 2.0) * C_UNIT,
-						nodepos[1] + (dragInfo.toY + dragInfo.item.t->sx / 2.0) * C_UNIT,
+				if (previewItem.rotated)
+					VectorSet(origine,
+						nodepos[0] + (dragInfoToX + previewItem.t->sy / 2.0) * C_UNIT,
+						nodepos[1] + (dragInfoToY + previewItem.t->sx / 2.0) * C_UNIT,
 						-40);
 				else
-					VectorSet(org,
-						nodepos[0] + (dragInfo.toX + dragInfo.item.t->sx / 2.0) * C_UNIT,
-						nodepos[1] + (dragInfo.toY + dragInfo.item.t->sy / 2.0) * C_UNIT,
+					VectorSet(origine,
+						nodepos[0] + (dragInfoToX + previewItem.t->sx / 2.0) * C_UNIT,
+						nodepos[1] + (dragInfoToY + previewItem.t->sy / 2.0) * C_UNIT,
 						-40);
 			}
 			Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
-			MN_DrawItem(NULL, org, &dragInfo.item, -1, -1, scale, color);	/**< Draw preview item. */
+			MN_DrawItem(NULL, origine, &previewItem, -1, -1, scale, color);	/**< Draw preview item. */
 		}
-
-		dragInfo.item.rotated = oldRotated ;
 	}
 }
 
@@ -986,9 +1005,10 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 		if (ic) {
 			if (!rightClick) {
 				/* Found item to drag. Prepare for drag-mode. */
-				MN_DNDStartDrag(node);
-				MN_DNDDragItem(&(ic->item), ic);
-				MN_DNDFromContainer(node->container, fromX, fromY);
+				MN_DNDDragItem(node, &(ic->item));
+				dragInfoIC = ic;
+				dragInfoFromX = fromX;
+				dragInfoFromY = fromY;
 			} else {
 				/* Right click: automatic item assignment/removal. */
 				if (node->container->id != csi.idEquip) {
@@ -1065,7 +1085,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 				}
 			}
 			UP_ItemDescription(ic->item.t);
-/*			MN_DrawTooltip("f_verysmall", csi.ods[dragInfo.item.t].name, fromX, fromY, 0);*/
+/*			MN_DrawTooltip("f_verysmall", csi.ods[MN_DNDGetItem()->t].name, fromX, fromY, 0);*/
 		}
 	} else {
 		MN_DNDDrop();
@@ -1074,6 +1094,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	/* Update display of scroll buttons. */
 	MN_ScrollContainerUpdate_f();
 
+	/** @todo need to understand better that */
 	/* We are in the base or multiplayer inventory */
 	if (sel < chrDisplayList.num) {
 		assert(chrDisplayList.chr[sel]);
@@ -1082,9 +1103,10 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 		else
 			CL_CharacterCvars(chrDisplayList.chr[sel]);
 
+		/** @todo ungeneric */
 		/* Update object info */
-		if (dragInfo.from) {
-			Cvar_Set("mn_item", dragInfo.item.t->id);
+		if (MN_DNDGetType() == DND_ITEM) {
+			Cvar_Set("mn_item", MN_DNDGetItem()->t->id);
 		}
 	}
 }
@@ -1111,7 +1133,7 @@ static void MN_ContainerNodeLoading (menuNode_t *node)
 static qboolean MN_ContainerNodeDNDEnter (menuNode_t *node)
 {
 	/* accept items */
-	return dragInfo.type == DND_ITEM;
+	return MN_DNDGetType() == DND_ITEM;
 }
 
 /**
@@ -1125,6 +1147,7 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	int itemX = 0;
 	int itemY = 0;
 	int checkedTo = INV_DOES_NOT_FIT;
+	item_t *dragItem = MN_DNDGetItem();
 
 	MN_GetNodeAbsPos(target, nodepos);
 
@@ -1133,9 +1156,9 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	 * Or to be more exact, we calculate the relative offset from the cursor
 	 * location to the middle of the top-left square of the item.
 	 * @sa MN_LeftClick */
-	if (dragInfo.item.t) {
-		itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
-		itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
+	if (dragItem->t) {
+		itemX = C_UNIT * dragItem->t->sx / 2;	/* Half item-width. */
+		itemY = C_UNIT * dragItem->t->sy / 2;	/* Half item-height. */
 
 		/* Place relative center in the middle of the square. */
 		itemX -= C_UNIT / 2;
@@ -1145,38 +1168,36 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	/* Store information for preview drawing of dragged items. */
 	if (MN_CheckNodeZone(target, mousePosX, mousePosY)
 	 ||	MN_CheckNodeZone(target, mousePosX - itemX, mousePosY - itemY)) {
-		dragInfo.to = target->container;
-
-		dragInfo.toX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
-		dragInfo.toY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
+		dragInfoToX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
+		dragInfoToY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
 
 		/** Check if the items already exists in the container. i.e. there is already at least one item.
 		 * @sa Com_AddToInventory */
 		exists = qfalse;
-		if (dragInfo.to
-		 && (dragInfo.to->id == csi.idFloor || dragInfo.to->id == csi.idEquip)
-		 && (dragInfo.toX  < 0 || dragInfo.toY < 0 || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)
-		 && Com_ExistsInInventory(menuInventory, dragInfo.to, dragInfo.item)) {
+		if (target->container
+		 && (target->container->id == csi.idFloor || target->container->id == csi.idEquip)
+		 && (dragInfoToX  < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
+		 && Com_ExistsInInventory(menuInventory, target->container, *dragItem)) {
 				exists = qtrue;
 		 }
 
 		/** Search for a suitable position to render the item at if
 		 * the container is "single", the cursor is out of bound of the container.
 		 */
-		 if (!exists && dragInfo.item.t && (dragInfo.to->single
-		  || dragInfo.toX  < 0 || dragInfo.toY < 0
-		  || dragInfo.toX >= SHAPE_BIG_MAX_WIDTH || dragInfo.toY >= SHAPE_BIG_MAX_HEIGHT)) {
+		 if (!exists && dragItem->t && (target->container->single
+		  || dragInfoToX  < 0 || dragInfoToY < 0
+		  || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
 #if 0
 /* ... or there is something in the way. */
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-		  || (Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY) == INV_DOES_NOT_FIT)) {
+		  || (Com_CheckToInventory(menuInventory, dragItem->t, target->container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
-			Com_FindSpace(menuInventory, &dragInfo.item, dragInfo.to, &dragInfo.toX, &dragInfo.toY, dragInfo.ic);
+			Com_FindSpace(menuInventory, dragItem, target->container, &dragInfoToX, &dragInfoToY, dragInfoIC);
 		}
 	}
 
 	if (!MN_IsScrollContainerNode(target)) {
-		checkedTo = Com_CheckToInventory(menuInventory, dragInfo.item.t, dragInfo.to, dragInfo.toX, dragInfo.toY, dragInfo.ic);
+		checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, target->container, dragInfoToX, dragInfoToY, dragInfoIC);
 		return checkedTo != 0;
 	}
 
@@ -1188,16 +1209,17 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
  */
 static void MN_ContainerNodeDNDLeave (menuNode_t *node)
 {
-	dragInfo.to = NULL;
-	dragInfo.toX = -1;
-	dragInfo.toY = -1;
+	dragInfoToX = -1;
+	dragInfoToY = -1;
 }
 
 /**
  * @brief Call into the source when the DND end
  */
-static qboolean MN_ContainerNodeDNDFinished (menuNode_t *node, qboolean isDroped)
+static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDroped)
 {
+	item_t *dragItem = MN_DNDGetItem();
+
 	/* if the target can't finalyse the DND we stop */
 	if (!isDroped) {
 		return qfalse;
@@ -1205,41 +1227,47 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *node, qboolean isDroped
 
 	/* tactical mission */
 	if (selActor) {
-		assert(node->container);
-		assert(dragInfo.from);
+		assert(source->container);
+		/** @todo aren't there a bug here? 2 source->container */
 		MSG_Write_PA(PA_INVMOVE, selActor->entnum,
-			dragInfo.from->id, dragInfo.fromX, dragInfo.fromY,
-			node->container->id, dragInfo.toX, dragInfo.toY);
+			source->container->id, dragInfoFromX, dragInfoFromY,
+			source->container->id, dragInfoToX, dragInfoToY);
 	} else {
 		invList_t *fItem;
+		menuNode_t *target;
 		assert(baseCurrent);
 
 		/* menu */
-		/** @todo replace it by: if (node == scrollableContainer) */
-		if (MN_IsScrollContainerNode(node))
-			fItem = INV_SearchInScrollableContainer(menuInventory, dragInfo.from, NONE, NONE, dragInfo.item.t, baseCurrent->equipType);
+		if (MN_IsScrollContainerNode(source))
+			fItem = INV_SearchInScrollableContainer(menuInventory, source->container, NONE, NONE, dragItem->t, baseCurrent->equipType);
 		else
-			fItem = Com_SearchInInventory(menuInventory, dragInfo.from, dragInfo.fromX, dragInfo.fromY);
+			fItem = Com_SearchInInventory(menuInventory, source->container, dragInfoFromX, dragInfoFromY);
 
 		/** @todo need to understand what its done here */
-		if (node->container->id == csi.idArmour) {
+		if (source->container->id == csi.idArmour) {
 			/** hackhack @todo This is only because armour containers (and their nodes) are
 			 * handled differently than normal containers somehow.
 			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
 			 * In a perfect world node->container would always be the same as dragInfo.to here. */
-			if (dragInfo.targetNode == node) {
-				dragInfo.to = node->container;
-				dragInfo.toX = 0;
-				dragInfo.toY = 0;
+			if (MN_DNDGetTargetNode() == source) {
+				/* dragInfo.to = source->container; */
+				dragInfoToX = 0;
+				dragInfoToY = 0;
 			}
 		}
-		if (dragInfo.targetNode) {
+
+		target = MN_DNDGetTargetNode();
+		if (target) {
+			/** @todo We must split the move in two, we may not know how to add the item to the target (see dndDrop) */
+			assert(target->container);
 			INV_MoveItem(menuInventory,
-				dragInfo.to, dragInfo.toX, dragInfo.toY,
-				dragInfo.from, fItem);
+				target->container, dragInfoToX, dragInfoToY,
+				source->container, fItem);
 		}
 	}
 
+	dragInfoFromX = -1;
+	dragInfoFromY = -1;
 	return qtrue;
 }
 

@@ -28,38 +28,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_container.h"
 #include "node/m_node_abstractnode.h"
 
-/**
- * @todo is it really needed to init this structure?
+/** @todo add commend for all this var
  */
-dragInfo_t dragInfo = {
-	DND_NOTHING,
-	NULL,
-	0,
-	0,
+static int oldMousePosX = -1;				/**< Save position X of the mouse to know when it move */
+static int oldMousePosY = -1;				/**< Save position Y of the mouse to know when it move */
 
-	NULL,	/* toNode */
+static qboolean nodeAcceptDND = qfalse;		/**< Save if the current target node can accept the DND object */
+static qboolean positionAcceptDND = qfalse;	/**< Save if the current position accept the DND object */
 
-	qfalse,
+static dndType_t objectType;				/**< Save the type of the object we are dragging */
+static item_t draggingItem;					/**< Save the dragging object */
 
-	/* bellow that, nothing is generic */
+static menuNode_t *sourceNode;				/**< Node where come from the DND object */
+static menuNode_t *targetNode;				/**< Current node under the mouse */
 
-	{NONE_AMMO, NULL, NULL, 1, 0},	/* item */
-	NULL,	/* ic */
-	NULL,	/* from */
-	-1,		/* fromX */
-	-1,		/* fromY */
-
-	NULL,	/* to */
-	-1,		/* toX */
-	-1		/* toY */
-};
 
 /**
  * @brief Retrun true if we are dragging something
  */
 qboolean MN_DNDIsDragging (void)
 {
-	return mouseSpace == MS_DRAGITEM && dragInfo.type != DND_NOTHING;
+	return mouseSpace == MS_DRAGITEM && objectType != DND_NOTHING;
 }
 
 /**
@@ -69,22 +58,59 @@ qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 {
 	if (mouseSpace != MS_DRAGITEM)
 		return qfalse;
-	return dragInfo.targetNode == node;
+	return targetNode == node;
 }
 
 /**
- * @brief Start a drag and drop
+ * @brief Retrun true if the requested node is the source of the DND
+ */
+qboolean MN_DNDIsSourceNode (struct menuNode_s *node)
+{
+	if (mouseSpace != MS_DRAGITEM)
+		return qfalse;
+	return sourceNode == node;
+}
+
+/**
+ * @brief Retrun the current type of the dragging object, else DND_NOTHING
+ */
+int MN_DNDGetType (void)
+{
+	return objectType;
+}
+
+menuNode_t *MN_DNDGetTargetNode (void)
+{
+	assert(mouseSpace == MS_DRAGITEM);
+	return targetNode;
+}
+
+/**
+ * @brief Private function to init a the start of a DND
  * @sa MN_DNDDragItem
  * @sa MN_DNDDrop
  * @sa MN_DNDAbort
  */
-void MN_DNDStartDrag (menuNode_t *node)
+static void MN_DNDDrag (menuNode_t *node)
 {
 	assert(mouseSpace != MS_DRAGITEM);
 	mouseSpace = MS_DRAGITEM;
-	dragInfo.sourceNode = node;
-	dragInfo.sourceAbsoluteX = mousePosX;
-	dragInfo.sourceAbsoluteY = mousePosY;
+	sourceNode = node;
+}
+
+/**
+ * @brief Start to drag an item
+ * @sa MN_DNDDrag
+ * @sa MN_DNDDrop
+ * @sa MN_DNDAbort
+ */
+void MN_DNDDragItem (menuNode_t *node, item_t *item)
+{
+	MN_DNDDrag(node);
+	assert(mouseSpace == MS_DRAGITEM);
+	assert(objectType == DND_NOTHING);
+	objectType = DND_ITEM;
+	draggingItem = *item;
 }
 
 /**
@@ -92,9 +118,9 @@ void MN_DNDStartDrag (menuNode_t *node)
  */
 static inline void MN_DNDCleanup (void)
 {
-	dragInfo.type = DND_NOTHING;
-	dragInfo.targetNode = NULL;
-	dragInfo.sourceNode = NULL;
+	objectType = DND_NOTHING;
+	targetNode = NULL;
+	sourceNode = NULL;
 }
 
 /**
@@ -105,13 +131,13 @@ static inline void MN_DNDCleanup (void)
 void MN_DNDAbort (void)
 {
 	assert(mouseSpace == MS_DRAGITEM);
-	assert(dragInfo.type != DND_NOTHING);
-	assert(dragInfo.sourceNode != NULL);
+	assert(objectType != DND_NOTHING);
+	assert(sourceNode != NULL);
 
-	if (dragInfo.targetNode) {
-		dragInfo.targetNode->behaviour->dndLeave(dragInfo.targetNode);
+	if (targetNode) {
+		targetNode->behaviour->dndLeave(targetNode);
 	}
-	dragInfo.sourceNode->behaviour->dndFinished(dragInfo.sourceNode, qfalse);
+	sourceNode->behaviour->dndFinished(sourceNode, qfalse);
 
 	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
@@ -126,47 +152,23 @@ void MN_DNDDrop (void)
 {
 	qboolean result = qfalse;
 	assert(mouseSpace == MS_DRAGITEM);
-	assert(dragInfo.type != DND_NOTHING);
-	assert(dragInfo.sourceNode != NULL);
+	assert(objectType != DND_NOTHING);
+	assert(sourceNode != NULL);
 
-	if (dragInfo.targetNode) {
-		result = dragInfo.targetNode->behaviour->dndDrop(dragInfo.targetNode, mousePosX, mousePosY);
+	if (targetNode) {
+		result = targetNode->behaviour->dndDrop(targetNode, mousePosX, mousePosY);
 	}
-	dragInfo.sourceNode->behaviour->dndFinished(dragInfo.sourceNode, result);
+	sourceNode->behaviour->dndFinished(sourceNode, result);
 
 	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
 }
 
-/**
- * @brief Intitialize the dnd provide the object to drag
- */
-void MN_DNDDragItem (item_t *item, invList_t *fromInventory)
+item_t *MN_DNDGetItem (void)
 {
-	assert(mouseSpace == MS_DRAGITEM);
-	assert(dragInfo.type == DND_NOTHING);
-	dragInfo.type = DND_ITEM;
-	dragInfo.item = *item;
-	dragInfo.ic = fromInventory;
+	assert(objectType == DND_ITEM);
+	return &draggingItem;
 }
-
-/**
- * @brief Provide extradata to the current draging object
- */
-void MN_DNDFromContainer (invDef_t *container, int ownFromX, int ownFromY)
-{
-	assert(mouseSpace == MS_DRAGITEM);
-	dragInfo.from = container;
-	/* Store grid-position (in the container) of the mouse. */
-	dragInfo.fromX = ownFromX;
-	dragInfo.fromY = ownFromY;
-}
-
-
-static int oldMousePosX = -1;
-static int oldMousePosY = -1;
-static qboolean nodeAcceptDND = qfalse;
-static qboolean positionAcceptDND = qfalse;
 
 /**
  * @brief Manage the DND when we move the mouse
@@ -175,17 +177,17 @@ static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 {
 	menuNode_t *node = MN_GetNodeByPosition(mousePosX, mousePosY);
 
-	if (node != dragInfo.targetNode) {
-		if (dragInfo.targetNode) {
-			dragInfo.targetNode->behaviour->dndLeave(dragInfo.targetNode);
+	if (node != targetNode) {
+		if (targetNode) {
+			targetNode->behaviour->dndLeave(targetNode);
 		}
-		dragInfo.targetNode = node;
-		if (dragInfo.targetNode) {
-			nodeAcceptDND = dragInfo.targetNode->behaviour->dndEnter(dragInfo.targetNode);
+		targetNode = node;
+		if (targetNode) {
+			nodeAcceptDND = targetNode->behaviour->dndEnter(targetNode);
 		}
 	}
 
-	if (dragInfo.targetNode == NULL) {
+	if (targetNode == NULL) {
 		nodeAcceptDND = qfalse;
 		positionAcceptDND = qfalse;
 		return;
@@ -196,7 +198,7 @@ static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 		return;
 	}
 
-	positionAcceptDND = node->behaviour->dndMove(dragInfo.targetNode, mousePosX, mousePosY);
+	positionAcceptDND = node->behaviour->dndMove(targetNode, mousePosX, mousePosY);
 }
 
 
@@ -224,27 +226,26 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 	if (positionAcceptDND)
 		color[3] = 0.2;
 
-	switch (dragInfo.type) {
+	switch (objectType) {
 	case DND_ITEM:
-		MN_DrawItem(NULL, orgine, &dragInfo.item, -1, -1, scale, color);
+		MN_DrawItem(NULL, orgine, &draggingItem, -1, -1, scale, color);
+#ifdef PARANOID
+		/** Debugging only - Will draw a marker in the upper left corner of the
+		 * dragged item (which is the one used for calculating the resulting grid-coordinates).
+		 * @todo Maybe we could make this a feature in some way. i.e. we could draw
+		 * a special cursor at this place when dragging as a hint*/
+
+		Vector4Set(color, 1, 0, 0, 1);
+		if (draggingItem.t)
+			VectorSet(orgine,
+				mousePosX - (C_UNIT * draggingItem.t->sx - C_UNIT) / 2,
+				mousePosY - (C_UNIT * draggingItem.t->sy - C_UNIT) / 2,
+				-50);
+		R_DrawCircle2D(orgine[0] * viddef.rx, orgine[1] * viddef.ry, 2.0, qtrue, color, 1.0);
+#endif
 		break;
 
 	default:
 		assert(qfalse);
 	}
-
-#ifdef PARANOID
-	/** Debugging only - Will draw a marker in the upper left corner of the
-	 * dragged item (which is the one used for calculating the resulting grid-coordinates).
-	 * @todo Maybe we could make this a feature in some way. i.e. we could draw
-	 * a special cursor at this place when dragging as a hint*/
-
-	Vector4Set(color, 1, 0, 0, 1);
-	if (dragInfo.item.t)
-		VectorSet(orgine,
-			mousePosX - (C_UNIT * dragInfo.item.t->sx - C_UNIT) / 2,
-			mousePosY - (C_UNIT * dragInfo.item.t->sy - C_UNIT) / 2,
-			-50);
-	R_DrawCircle2D(orgine[0] * viddef.rx, orgine[1] * viddef.ry, 2.0, qtrue, color, 1.0);
-#endif
 }
