@@ -1652,7 +1652,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer_t *transfer = &gd.alltransfers[i];
-		size_t      n        = MAX_AIRCRAFT;
+		size_t n = MAX_AIRCRAFT;
 
 		/* skip non active transfer */
 		if (!transfer->active)

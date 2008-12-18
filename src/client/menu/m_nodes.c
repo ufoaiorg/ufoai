@@ -385,7 +385,7 @@ void MN_InitNodes (void)
 		const nodeBehaviour_t *a = current;
 		const nodeBehaviour_t *b = current + 1;
 		if (Q_strcmp(a->name, b->name) >= 0) {
-#if DEBUG
+#ifdef DEBUG
 			Sys_Error("MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name\n", a->name, b->name);
 #else
 			Sys_Error("MN_InitNodes: Error: '%s' is before '%s'\n", a->name, b->name);

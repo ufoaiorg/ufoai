@@ -554,12 +554,12 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 {
 	int lineheight = node->u.text.lineHeight;
 	/* auto compute lineheight */
-    /* we dont overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw fonction */
+	/* we dont overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw fonction */
 	if (lineheight == 0) {
-        /* the font is used */
-        /** @todo clean this up once font_t is known in the client */
-        const char *font = MN_GetFont(node->menu, node);
-        lineheight = R_FontGetHeight(font) / 2;
+		/* the font is used */
+		/** @todo clean this up once font_t is known in the client */
+		const char *font = MN_GetFont(node->menu, node);
+		lineheight = R_FontGetHeight(font) / 2;
 	}
 
 	/* auto compute rows */
@@ -581,8 +581,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	if (EXTRADATA(node).num >= MAX_MENUTEXTS)
 		Sys_Error("Error in node %s.%s - max menu num exeeded (num: %i, max: %i)", node->menu->name, node->name, EXTRADATA(node).num, MAX_MENUTEXTS);
 
-
-#if DEBUG
+#ifdef DEBUG
 	if (EXTRADATA(node).rows != (int)(node->size[1] / lineheight)) {
 		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s.%s' differs from size (%.0f) and format (%i) values\n",
 			EXTRADATA(node).rows, node->menu->name, node->name, node->size[1], lineheight);

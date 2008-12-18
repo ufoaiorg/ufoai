@@ -717,7 +717,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 				assert(item.m);
 				ed->numLoose[item.m->idx] = item.a;
 				/* We don't have to accumulate loose ammo into clips
-				   because we did it previously and we create no new ammo */
+				 * because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
 			item.a = ed->numLoose[i];

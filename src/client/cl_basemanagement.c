@@ -3775,7 +3775,7 @@ static void B_PostLoadInitCapacity (void)
 	}
 }
 
-#if DEBUG
+#ifdef DEBUG
 /**
  * @brief Make some test after loading a savegame
  * @sa B_PostLoadInit
@@ -3817,7 +3817,7 @@ void B_PostLoadInit (void)
 {
 	B_PostLoadInitCapacity();
 
-#if DEBUG
+#ifdef DEBUG
 	B_PostLoadInitCheckAircraft();
 #endif
 }

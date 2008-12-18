@@ -660,7 +660,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
  * @todo This could be replaced with a set of much simpler interfaces.
  */
 int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
-        int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method)
+		int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method)
 {
 	const int horiz_align = align % 3; /* left, center, right */
 	const int vert_align = align / 3;  /* top, center, bottom */

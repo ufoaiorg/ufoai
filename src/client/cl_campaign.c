@@ -715,7 +715,7 @@ static void CP_CheckNewMissionDetectedOnGeoscape (void)
 		if (status != MISDET_MAY_BE_DETECTED || mission->onGeoscape == qtrue)
 			continue;
 
-#if DEBUG
+#ifdef DEBUG
 		if (mission->ufo)
 			assert(!mission->ufo->detected);
 #endif
@@ -4204,7 +4204,7 @@ void CL_GameTimeSlow (void)
 			} else {
 				gameLapse--;
 			}
-	   }
+		}
 	}
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
@@ -4242,7 +4242,7 @@ void CL_GameTimeFast (void)
 			} else {
 				gameLapse++;
 			}
-	   }
+		}
 	}
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */

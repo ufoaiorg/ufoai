@@ -800,7 +800,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	jpeg_start_decompress(&cinfo);
 
 	components = cinfo.output_components;
-    if (components != 3 && components != 1) {
+	if (components != 3 && components != 1) {
 		Com_DPrintf(DEBUG_RENDERER, "R_LoadJPG: Bad jpeg components '%s' (%d)\n", filename, components);
 		jpeg_destroy_decompress(&cinfo);
 		FS_FreeFile(rawdata);

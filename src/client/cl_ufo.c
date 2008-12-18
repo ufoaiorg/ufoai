@@ -852,7 +852,7 @@ qboolean UFO_CampaignCheckEvents (void)
  */
 qboolean UFO_IsUFOSeenOnGeoscape (aircraft_t* ufo)
 {
-#if DEBUG
+#ifdef DEBUG
 	if (ufo->notOnGeoscape)
 		Sys_Error("UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
 #endif

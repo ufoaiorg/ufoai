@@ -1329,7 +1329,7 @@ static void CL_TeamNum_f (void)
 				break;
 			} else {
 				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
-#if DEBUG
+#ifdef DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
 			}
@@ -1343,7 +1343,7 @@ static void CL_TeamNum_f (void)
 				break;
 			} else {
 				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
-#if DEBUG
+#ifdef DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
 			}

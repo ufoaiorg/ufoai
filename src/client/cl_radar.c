@@ -228,8 +228,8 @@ static int RADAR_IsUFOSensored (const radar_t* radar, int numUFO)
  */
 static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
 {
-#if DEBUG
-	int num = RADAR_IsUFOSensored (radar, numUFO);
+#ifdef DEBUG
+	const int num = RADAR_IsUFOSensored(radar, numUFO);
 	if (num != UFO_NOT_SENSORED) {
 		Com_Printf("RADAR_AddUFO: Aircraft already in radar range\n");
 		return qfalse;

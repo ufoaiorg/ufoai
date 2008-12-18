@@ -360,7 +360,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	/* Get selected ufos */
 	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft--)
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)
-#if DEBUG
+#ifdef DEBUG
 		|| Cvar_VariableInteger("debug_showufos")
 #endif
 		)

@@ -473,9 +473,9 @@ static void INS_DestroyInstallation_f (void)
 
 		Com_sprintf(command, MAX_VAR, "mn_destroyinstallation %d 1; mn_pop;", installation->idx);
 		MN_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
-		    command, _("Destroy"), _("Destroy installation"),
-		    "mn_pop;", _("Cancel"), _("Forget it"),
-		    NULL, NULL, NULL);
+			command, _("Destroy"), _("Destroy installation"),
+			"mn_pop;", _("Cancel"), _("Forget it"),
+			NULL, NULL, NULL);
 		return;
 	}
 	INS_DestroyInstallation(installation);
