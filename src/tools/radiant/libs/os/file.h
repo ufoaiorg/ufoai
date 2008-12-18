@@ -1,29 +1,31 @@
+/**
+ * @file file.h
+ * @brief OS file-system querying and manipulation.
+ */
+
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #if !defined(INCLUDED_OS_FILE_H)
 #define INCLUDED_OS_FILE_H
-
-/// \file
-/// \brief OS file-system querying and manipulation.
 
 #if defined(WIN32)
 #include <io.h> // _access()
@@ -47,7 +49,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// - The directory component of \p from identifies an existing directory which is accessible for writing.
 /// - The path \p to does not identify an existing file or directory.
 /// - The directory component of \p to identifies an existing directory which is accessible for writing.
-inline bool file_move(const char* from, const char* to) {
+inline bool file_move (const char* from, const char* to)
+{
 	ASSERT_MESSAGE(from != 0 && to != 0, "file_move: invalid path");
 	return rename(from, to) == 0;
 }
@@ -57,18 +60,19 @@ inline bool file_move(const char* from, const char* to) {
 /// The operation will fail unless:
 /// - The \p path identifies an existing file.
 /// - The parent-directory component of \p path identifies an existing directory which is accessible for writing.
-inline bool file_remove(const char* path) {
+inline bool file_remove (const char* path)
+{
 	ASSERT_MESSAGE(path != 0, "file_remove: invalid path");
 	return remove(path) == 0;
 }
 
 namespace FileAccess {
-enum Mode {
-	Read = R_OK,
-	Write = W_OK,
-	ReadWrite = Read | Write,
-	Exists = F_OK
-};
+	enum Mode {
+		Read = R_OK,
+		Write = W_OK,
+		ReadWrite = Read | Write,
+		Exists = F_OK
+	};
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and/or may be accessed for reading, writing or both, depending on the value of \p mode.
@@ -78,22 +82,26 @@ inline bool file_accessible(const char* path, FileAccess::Mode mode) {
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and may be opened for reading.
-inline bool file_readable(const char* path) {
+inline bool file_readable (const char* path)
+{
 	return file_accessible(path, FileAccess::Read);
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and may be opened for writing.
-inline bool file_writeable(const char* path) {
+inline bool file_writeable (const char* path)
+{
 	return file_accessible(path, FileAccess::Write);
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists.
-inline bool file_exists(const char* path) {
+inline bool file_exists (const char* path)
+{
 	return file_accessible(path, FileAccess::Exists);
 }
 
 /// \brief Returns true if the file or directory identified by \p path exists and is a directory.
-inline bool file_is_directory(const char* path) {
+inline bool file_is_directory (const char* path)
+{
 	ASSERT_MESSAGE(path != 0, "file_is_directory: invalid path");
 	struct stat st;
 	if (stat(path, &st) == -1) {
@@ -105,7 +113,8 @@ inline bool file_is_directory(const char* path) {
 typedef std::size_t FileSize;
 
 /// \brief Returns the size in bytes of the file identified by \p path, or 0 if the file was not found.
-inline FileSize file_size(const char* path) {
+inline FileSize file_size (const char* path)
+{
 	ASSERT_MESSAGE(path != 0, "file_size: invalid path");
 	struct stat st;
 	if (stat(path, &st) == -1) {
@@ -120,7 +129,8 @@ typedef std::time_t FileTime;
 const FileTime c_invalidFileTime = -1;
 
 /// \brief Returns the time that the file identified by \p path was last modified, or c_invalidFileTime if the file was not found.
-inline FileTime file_modified(const char* path) {
+inline FileTime file_modified (const char* path)
+{
 	ASSERT_MESSAGE(path != 0, "file_modified: invalid path");
 	struct stat st;
 	if (stat(path, &st) == -1) {
@@ -128,7 +138,5 @@ inline FileTime file_modified(const char* path) {
 	}
 	return st.st_mtime;
 }
-
-
 
 #endif
