@@ -2393,11 +2393,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadByte(sb);			/* status */
 			MSG_ReadLong(sb);			/* fuel */
 			MSG_ReadLong(sb);			/* damage */
-#if 0
 			MSG_ReadLong(sb);			/* time */
-#else
-			MSG_ReadShort(sb);			/* time */
-#endif
 			MSG_ReadShort(sb);			/* point */
 			tmp_int = MSG_ReadShort(sb);/* numPoints */
 			if (ufo->route.numPoints > LINE_MAXPTS) {
@@ -2442,11 +2438,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->status = MSG_ReadByte(sb);
 			ufo->fuel = MSG_ReadLong(sb);
 			ufo->damage = MSG_ReadLong(sb);
-#if 0
 			ufo->time = MSG_ReadLong(sb);
-#else
-			ufo->time = MSG_ReadShort(sb);
-#endif
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);
 			if (ufo->route.numPoints > LINE_MAXPTS) {
@@ -2568,11 +2560,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
 				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
-#if 0
 			gd.projectiles[i].time = MSG_ReadLong(sb);
-#else
-			gd.projectiles[i].time = MSG_ReadShort(sb);
-#endif
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
 			gd.projectiles[i].bullets = MSG_ReadByte(sb);
 			gd.projectiles[i].laser = MSG_ReadByte(sb);
