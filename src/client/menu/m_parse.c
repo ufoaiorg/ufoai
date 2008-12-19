@@ -94,10 +94,11 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
 
 /**
  * @brief Allocate a string into the menu memory
- * @node Its not a dynamic memory allocation. Please only use it at the loading time
+ * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] string Use to initialize the string
  * @param[in] size request a fixed memory size, if 0 the string size is used
  * @todo use it every where its possible (search mn.curadata)
+ * @todo Assert out when we are not in parsing/loading stage
  */
 char* MN_AllocString (const char* string, int size)
 {
