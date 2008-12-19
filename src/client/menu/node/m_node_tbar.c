@@ -41,7 +41,12 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, nodepos);
 
 	if (node->pointWidth) {
-		const float ps = MN_GetReferenceFloat(menu, node->u.abstractvalue.value) - MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
+		float ps = MN_GetReferenceFloat(menu, node->u.abstractvalue.value) - MN_GetReferenceFloat(menu,
+				node->u.abstractvalue.min);
+		const float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
+		/* if max is set (e.g. for hp), use this as 100% */
+		if (max != 0.0f)
+			ps = ps / max * 100;
 		shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
 	} else
 		shx = node->texh[0];
