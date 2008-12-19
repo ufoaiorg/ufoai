@@ -667,14 +667,14 @@ menu research
 	string txt_base_name
 	{
 		string "_Base Info"
-		pos "695 200"
+		pos "695 115"
 	}
 
 	// Free labs in the selected base
 	string txt_base_labs
 	{
 		string "*cvar mn_research_labs"
-		pos "705 220"
+		pos "705 135"
 		color "0 .78 0 1"
 	}
 
@@ -682,30 +682,31 @@ menu research
 	string txt_base_scis
 	{
 		string "*cvar mn_research_scis"
-		pos "705 240"
+		pos "705 155"
 		color "0 .78 0 1"
 	}
 
 	// ==================
 	// Informations on research progress and technology details
 	// ==================
+
 	string txt_selected_name
 	{
 		string "*cvar mn_research_selname"
-		pos "695 270"
+		pos "695 190"
 	}
 
 	pic image_top
 	{
 		image	"*cvar mn_research_imagetop"
-		pos	"755 294"
-		size	"220 220"
+		pos	"730 235"
+		size	"220 380"
 	}
 
 	string txt_selected_status
 	{
 		string "*cvar mn_research_selstatus"
-		pos "695 520"
+		pos "705 210"
 		color "0 .78 0 1"
 		size	"290 54"
 	}
@@ -714,7 +715,7 @@ menu research
 	string txt_selected_base
 	{
 		string "*cvar mn_research_selbase"
-		pos "695 574"
+		pos "695 615"
 		color "0 .78 0 1"
 		size	"290 18"
 	}
@@ -722,25 +723,24 @@ menu research
 	string txt_selected_time
 	{
 		string "*cvar mn_research_seltime"
-		pos "695 594"
+		pos "695 635"
 		color "0 .78 0 1"
 		size	"290 18"
 	}
 	pic progress_img
 	{
 		if "mn_research_seltimebar != 0"
-		pos "695 612"
+		pos "704 657"
 		image menu/bar_rahmen
 	}
 	bar progress_bar
 	{
 		if "mn_research_seltimebar != 0"
-		pos "704 617"
+		pos "714 662"
 		current "*cvar mn_research_seltimebar"
 		size "245 6"
 		color "0 .8 0 1"
 		max 100
-		align uc
 	}
 
 	// ==================
@@ -768,36 +768,36 @@ menu research
 	// buttons
 	// ==================
 
-	pic bt_stop
+	custombutton bt_stop
 	{
 		tooltip	"_Stop research"
 		image	menu/button_research
-		mousefx	true
-		pos		"820 670"
+		blend	true
+		pos		"815 680"
 		texl    "0 0"
-		texh    "64 64"
+		size	"64 64"
 		click	{ cmd "mn_stop_research;" }
 	}
 
-	pic bt_start
+	custombutton bt_start
 	{
 		tooltip	"_Start research"
 		image	menu/button_research
-		mousefx	true
-		pos		"750 666"
-		texl	"0 64"
-		texh	"64 128"
+		blend	true
+		pos		"745 680"
+		texl	"64 0"
+		size	"64 64"
 		click	{ cmd "mn_start_research;" }
 	}
 
-	pic bt_pedia
+	custombutton bt_pedia
 	{
 		tooltip	"_Show research proposal"
 		image	menu/button_research
-		mousefx	true
-		pos		"890 666"
-		texl	"64 64"
-		texh	"128 128"
+		blend	true
+		pos		"885 680"
+		texl	"128 0"
+		size	"64 64"
 		click	{ cmd "mn_show_ufopedia;" }
 	}
 
