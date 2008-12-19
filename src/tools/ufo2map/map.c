@@ -1110,8 +1110,6 @@ void LoadMapFile (const char *filename)
 
 	while (ParseMapEntity(filename));
 
-	CheckNodraws();
-
 	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));
 	if (subdivide >= 256 && subdivide <= 2048) {
 		Verb_Printf(VERB_EXTRA, "Using subdivide %d from worldspawn.\n", subdivide);
