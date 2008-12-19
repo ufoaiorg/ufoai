@@ -138,7 +138,7 @@ static void Usage (void)
 		"    flv filllevelflags      : ensure set levelflag bits are uninterrupted\n"
 		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
 	); Com_Printf(
-		"                              may have it incorrectly assigned. ***not working properly, not included in 'all'.\n"
+		"                              may have it incorrectly assigned.\n"
 		"    tex textures            : warns when no texture or error texture is assigned.\n"
 		"                              ensures special textures and content/surface flags are consistent.\n"
 	); Com_Printf(
