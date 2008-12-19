@@ -487,9 +487,12 @@ mapdef tropic_river
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+  craft_ufo_corrupter
+  craft_ufo_scout
+  craft_crash_scout
+	}
 
 	terrains
 	{
@@ -518,9 +521,12 @@ mapdef tropic_drug
 	multiplayer		false
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+  craft_ufo_corrupter
+  craft_ufo_scout
+  craft_crash_scout
+	}
 
 	terrains
 	{
@@ -1222,18 +1228,21 @@ mapdef scout_crash
 
 	terrains
 	{
+		grass
+		mountain
 		cold
-		arctic
 	}
 
 	cultures
 	{
-		//any
+		western
 	}
 
 	populations
 	{
-		//any
+		suburban
+		village
+		rural
 	}
 }
 
@@ -1722,6 +1731,7 @@ mapdef fighter_crash
 
 	populations
 	{
+		village
 		nonpopulation
 		rural
 	}
@@ -1989,7 +1999,7 @@ mapdef harvester_crash
 
 	ufos
 	{
-		craft_ufo_harvester
+		craft_crash_harvester
 	}
 
 	terrains
@@ -2004,6 +2014,7 @@ mapdef harvester_crash
 
 	populations
 	{
+		rural
 		nonpopulation
 	}
 }

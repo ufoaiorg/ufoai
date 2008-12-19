@@ -211,6 +211,45 @@ abc     +a     +a     +a     abc
 0      abc     abc     abc     0
 }
 
+// craft_ufo_scout
+tile +craft_ufo_scout
+{
+4 5
+
+0      abc     abc     0
+abc     +a    +a     abc
+abc     +a    +a     abc
+abc     +a    +a     abc
+0      abc     abc     0
+}
+
+// craft_crash_scout
+tile +craft_crash_scout
+{
+5 4
+
+0      abc     abc     abc     0
+abc     +a    +a      +a     abc
+abc     +a    +a      +a     abc
+0      abc     abc     abc     0
+}
+
+
+// craft_ufo_corrupter
+tile +craft_ufo_corrupter
+{
+10 8
+
+0       0      abc     abc     abc     abc     abc     abc     abc     0
+0       0      a      +a      +a      +a      +a      +a      +a     abc
+0        a     a      +a      +a      +a      +a      +a      +a     abc
+abc     +a    +a      +a      +a      +a      +a      +a      +a     abc
+abc     +a    +a      +a      +a      +a      +a      +a      +a     abc
+0        a    +a      +a      +a      +a      +a      +a      +a     abc
+0        a    +a      +a      +a      +a      +a      +a      +a     abc
+0      abc     abc     abc     abc     abc     abc     abc     abc     0
+}
+
 // *********************************
 
 assembly river
@@ -240,7 +279,9 @@ title "_Tropical river"
 +p01 "0 3"
 +p02 "0 3"
 
-+drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+
 }
 
 assembly drug
@@ -264,5 +305,7 @@ title "_Tropical drug"
 +p01 "0 8"
 +p02 "0 8"
 
-+drop_firebird "1 1"
+*rm_drop +drop_firebird "1 1"
+*rm_ufo +craft_ufo_scout "1 1"
+
 }
