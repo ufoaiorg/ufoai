@@ -3,25 +3,25 @@
  */
 
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #if !defined (INCLUDED_ENTITYLIB_H)
 #define INCLUDED_ENTITYLIB_H
@@ -99,7 +99,7 @@ inline void aabb_testselect(const AABB& aabb, SelectionTest& test, SelectionInte
 		0, 1, 2, 3,
 		3, 7, 4, 0,
 		3, 2, 6, 7,
-		7, 6, 5, 4,
+		7, 6, 5, 4
 	};
 
 	Vector3 points[8];
@@ -107,18 +107,15 @@ inline void aabb_testselect(const AABB& aabb, SelectionTest& test, SelectionInte
 	test.TestQuads(VertexPointer(reinterpret_cast<VertexPointer::pointer>(points), sizeof(Vector3)), IndexPointer(indices, 24), best);
 }
 
-inline void aabb_draw_wire(const Vector3 points[8]) {
-	typedef std::size_t index_t;
-	index_t indices[24] = {
-		0, 1, 1, 2, 2, 3, 3, 0,
-		4, 5, 5, 6, 6, 7, 7, 4,
-		0, 4, 1, 5, 2, 6, 3, 7,
-	};
+inline void aabb_draw_wire (const Vector3 points[8])
+{
+	const unsigned char indices[] = { 0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7 };
 	glVertexPointer(3, GL_FLOAT, 0, points);
-	glDrawElements(GL_LINES, sizeof(indices)/sizeof(index_t), GL_UNSIGNED_INT, indices);
+	glDrawElements(GL_LINES, 24, GL_UNSIGNED_BYTE, indices);
 }
 
-inline void aabb_draw_flatshade(const Vector3 points[8]) {
+inline void aabb_draw_flatshade (const Vector3 points[8])
+{
 	glBegin(GL_QUADS);
 
 	glNormal3fv(vector3_to_array(aabb_normals[0]));
@@ -259,7 +256,7 @@ inline void aabb_draw(const AABB& aabb, RenderStateFlags state) {
 
 class RenderableSolidAABB : public OpenGLRenderable {
 	const AABB& m_aabb;
-public:
+	public:
 	RenderableSolidAABB(const AABB& aabb) : m_aabb(aabb) {
 	}
 	void render(RenderStateFlags state) const {
@@ -269,14 +266,13 @@ public:
 
 class RenderableWireframeAABB : public OpenGLRenderable {
 	const AABB& m_aabb;
-public:
+	public:
 	RenderableWireframeAABB(const AABB& aabb) : m_aabb(aabb) {
 	}
 	void render(RenderStateFlags state) const {
 		aabb_draw_wire(m_aabb);
 	}
 };
-
 
 /// \brief A key/value pair of strings.
 ///
@@ -291,10 +287,10 @@ class KeyValue : public EntityKeyValue {
 	const char* m_empty;
 	ObservedUndoableObject<CopiedString> m_undo;
 	static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
-public:
+	public:
 
 	KeyValue(const char* string, const char* empty)
-			: m_refcount(0), m_string(string), m_empty(empty), m_undo(m_string, UndoImportCaller(*this)) {
+	: m_refcount(0), m_string(string), m_empty(empty), m_undo(m_string, UndoImportCaller(*this)) {
 		notify();
 	}
 	~KeyValue() {
@@ -364,13 +360,13 @@ public:
 /// - Provides undo support through the global undo system.
 /// - New keys are appended to the end of the list.
 class EntityKeyValues : public Entity {
-public:
+	public:
 	typedef KeyValue Value;
 
 	static StringPool& getPool() {
 		return Static<StringPool, KeyContext>::instance();
 	}
-private:
+	private:
 	static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 	static Counter* m_counter;
 
@@ -454,23 +450,23 @@ private:
 		}
 	}
 
-public:
+	public:
 	bool m_isContainer;
 
 	EntityKeyValues(EntityClass* eclass) :
-			m_eclass(eclass),
-			m_undo(m_keyValues, UndoImportCaller(*this)),
-			m_instanced(false),
-			m_observerMutex(false),
-			m_isContainer(!eclass->fixedsize) {
+	m_eclass(eclass),
+	m_undo(m_keyValues, UndoImportCaller(*this)),
+	m_instanced(false),
+	m_observerMutex(false),
+	m_isContainer(!eclass->fixedsize) {
 	}
 	EntityKeyValues(const EntityKeyValues& other) :
-			Entity(other),
-			m_eclass(&other.getEntityClass()),
-			m_undo(m_keyValues, UndoImportCaller(*this)),
-			m_instanced(false),
-			m_observerMutex(false),
-			m_isContainer(other.m_isContainer) {
+	Entity(other),
+	m_eclass(&other.getEntityClass()),
+	m_undo(m_keyValues, UndoImportCaller(*this)),
+	m_instanced(false),
+	m_observerMutex(false),
+	m_isContainer(other.m_isContainer) {
 		for (KeyValues::const_iterator i = other.m_keyValues.begin(); i != other.m_keyValues.end(); ++i) {
 			insert((*i).first.c_str(), (*i).second->c_str());
 		}
@@ -596,13 +592,13 @@ public:
 class ResourceReference {
 	CopiedString m_name;
 	Resource* m_resource;
-public:
+	public:
 	ResourceReference(const char* name)
-			: m_name(name) {
+	: m_name(name) {
 		capture();
 	}
 	ResourceReference(const ResourceReference& other)
-			: m_name(other.m_name) {
+	: m_name(other.m_name) {
 		capture();
 	}
 	ResourceReference& operator=(const ResourceReference& other) {
@@ -644,11 +640,11 @@ public:
 };
 
 namespace std {
-/// \brief Swaps the values of \p self and \p other.
-/// Overloads std::swap.
-inline void swap(ResourceReference& self, ResourceReference& other) {
-	self.swap(other);
-}
+	/// \brief Swaps the values of \p self and \p other.
+	/// Overloads std::swap.
+	inline void swap(ResourceReference& self, ResourceReference& other) {
+		self.swap(other);
+	}
 }
 
 #endif
