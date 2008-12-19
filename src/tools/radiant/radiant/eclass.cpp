@@ -1,23 +1,27 @@
+/**
+ * @file eclass.cpp
+ */
+
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "debugging/debugging.h"
 
@@ -37,65 +41,74 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "preferences.h"
 #include "mainframe.h"
 
-
-namespace {
+namespace
+{
 	typedef std::map<const char*, EntityClass*, RawStringLessNoCase> EntityClasses;
 	EntityClasses g_entityClasses;
-	EntityClass	*eclass_bad = 0;
+	EntityClass *eclass_bad = 0;
 	typedef std::map<CopiedString, ListAttributeType> ListAttributeTypes;
 	ListAttributeTypes g_listTypes;
 }
 
-EClassModules& EntityClassManager_getEClassModules();
+EClassModules& EntityClassManager_getEClassModules ();
 
 /*!
-implementation of the EClass manager API
-*/
+ implementation of the EClass manager API
+ */
 
-void CleanEntityList(EntityClasses& entityClasses) {
+void CleanEntityList (EntityClasses& entityClasses)
+{
 	for (EntityClasses::iterator i = entityClasses.begin(); i != entityClasses.end(); ++i) {
 		(*i).second->free((*i).second);
 	}
 	entityClasses.clear();
 }
 
-void Eclass_Clear() {
+void Eclass_Clear ()
+{
 	CleanEntityList(g_entityClasses);
 	g_listTypes.clear();
 }
 
-EntityClass* EClass_InsertSortedList(EntityClasses& entityClasses, EntityClass *entityClass) {
-	std::pair<EntityClasses::iterator, bool> result = entityClasses.insert(EntityClasses::value_type(entityClass->name(), entityClass));
+EntityClass* EClass_InsertSortedList (EntityClasses& entityClasses, EntityClass *entityClass)
+{
+	std::pair<EntityClasses::iterator, bool> result = entityClasses.insert(EntityClasses::value_type(
+			entityClass->name(), entityClass));
 	if (!result.second) {
 		entityClass->free(entityClass);
 	}
 	return (*result.first).second;
 }
 
-EntityClass* Eclass_InsertAlphabetized (EntityClass *e) {
+EntityClass* Eclass_InsertAlphabetized (EntityClass *e)
+{
 	return EClass_InsertSortedList(g_entityClasses, e);
 }
 
-void Eclass_forEach(EntityClassVisitor& visitor) {
+void Eclass_forEach (EntityClassVisitor& visitor)
+{
 	for (EntityClasses::iterator i = g_entityClasses.begin(); i != g_entityClasses.end(); ++i) {
 		visitor.visit((*i).second);
 	}
 }
 
-
-class RadiantEclassCollector : public EntityClassCollector {
-public:
-	void insert(EntityClass* eclass) {
-		Eclass_InsertAlphabetized(eclass);
-	}
-	void insert(const char* name, const ListAttributeType& list) {
-		g_listTypes.insert(ListAttributeTypes::value_type(name, list));
-	}
+class RadiantEclassCollector: public EntityClassCollector
+{
+	public:
+		void insert (EntityClass* eclass)
+		{
+			Eclass_InsertAlphabetized(eclass);
+		}
+		void insert (const char* name, const ListAttributeType& list)
+		{
+			g_listTypes.insert(ListAttributeTypes::value_type(name, list));
+		}
 };
 
 RadiantEclassCollector g_collector;
 
-const ListAttributeType* EntityClass_findListType(const char* name) {
+const ListAttributeType* EntityClass_findListType (const char* name)
+{
 	ListAttributeTypes::iterator i = g_listTypes.find(name);
 	if (i != g_listTypes.end()) {
 		return &(*i).second;
@@ -103,71 +116,85 @@ const ListAttributeType* EntityClass_findListType(const char* name) {
 	return 0;
 }
 
-class EntityClassesLoadFile {
-	const EntityClassScanner& scanner;
-	const char* m_directory;
-public:
-	EntityClassesLoadFile(const EntityClassScanner& scanner, const char* directory) : scanner(scanner), m_directory(directory) {
-	}
-	void operator()(const char* name) const {
-		// for a given name, we grab the first .def in the vfs
-		// this allows to override base/entities.def for instance
-		StringOutputStream relPath(256);
-		relPath << m_directory << name;
+class EntityClassesLoadFile
+{
+		const EntityClassScanner& scanner;
+		const char* m_directory;
+	public:
+		EntityClassesLoadFile (const EntityClassScanner& scanner, const char* directory) :
+			scanner(scanner), m_directory(directory)
+		{
+		}
+		void operator() (const char* name) const
+		{
+			// for a given name, we grab the first .def in the vfs
+			// this allows to override base/entities.def for instance
+			StringOutputStream relPath(256);
+			relPath << m_directory << name;
 
-		scanner.scanFile(g_collector, relPath.c_str());
-	}
+			scanner.scanFile(g_collector, relPath.c_str());
+		}
 };
 
-struct PathLess {
-	bool operator()(const CopiedString& path, const CopiedString& other) const {
-		return path_less(path.c_str(), other.c_str());
-	}
+struct PathLess
+{
+		bool operator() (const CopiedString& path, const CopiedString& other) const
+		{
+			return path_less(path.c_str(), other.c_str());
+		}
 };
 
 typedef std::map<CopiedString, const char*, PathLess> Paths;
 
-class PathsInsert {
-	Paths& m_paths;
-	const char* m_directory;
-public:
-	PathsInsert(Paths& paths, const char* directory) : m_paths(paths), m_directory(directory) {
-	}
-	void operator()(const char* name) const {
-		m_paths.insert(Paths::value_type(name, m_directory));
-	}
+class PathsInsert
+{
+		Paths& m_paths;
+		const char* m_directory;
+	public:
+		PathsInsert (Paths& paths, const char* directory) :
+			m_paths(paths), m_directory(directory)
+		{
+		}
+		void operator() (const char* name) const
+		{
+			m_paths.insert(Paths::value_type(name, m_directory));
+		}
 };
 
-
-void EntityClassUFO_constructDirectory(const char* directory, const char* extension, Paths& paths) {
+void EntityClassUFO_constructDirectory (const char* directory, const char* extension, Paths& paths)
+{
 	globalOutputStream() << "EntityClass: searching " << makeQuoted(directory) << " for *." << extension << '\n';
 	Directory_forEach(directory, matchFileExtension(extension, PathsInsert(paths, directory)));
 }
 
-
-void EntityClassUFO_Construct() {
+void EntityClassUFO_Construct ()
+{
 	StringOutputStream appDirectory(256);
 	appDirectory << GlobalRadiant().getAppPath() << "games/";
 
-	class LoadEntityDefinitionsVisitor : public EClassModules::Visitor {
-		const char* appDirectory;
-	public:
-		LoadEntityDefinitionsVisitor(const char* appDirectory)
-				: appDirectory(appDirectory) {
-		}
-		void visit(const char* name, const EntityClassScanner& table) const {
-			Paths paths;
-			EntityClassUFO_constructDirectory(appDirectory, table.getExtension(), paths);
-			for (Paths::iterator i = paths.begin(); i != paths.end(); ++i) {
-				EntityClassesLoadFile(table, (*i).second)((*i).first.c_str());
+	class LoadEntityDefinitionsVisitor: public EClassModules::Visitor
+	{
+			const char* appDirectory;
+		public:
+			LoadEntityDefinitionsVisitor (const char* appDirectory) :
+				appDirectory(appDirectory)
+			{
 			}
-		}
+			void visit (const char* name, const EntityClassScanner& table) const
+			{
+				Paths paths;
+				EntityClassUFO_constructDirectory(appDirectory, table.getExtension(), paths);
+				for (Paths::iterator i = paths.begin(); i != paths.end(); ++i) {
+					EntityClassesLoadFile(table, (*i).second)((*i).first.c_str());
+				}
+			}
 	};
 
 	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor(appDirectory.c_str()));
 }
 
-EntityClass *Eclass_ForName(const char *name, bool has_brushes) {
+EntityClass *Eclass_ForName (const char *name, bool has_brushes)
+{
 	ASSERT_NOTNULL(name);
 
 	if (string_empty(name)) {
@@ -183,58 +210,71 @@ EntityClass *Eclass_ForName(const char *name, bool has_brushes) {
 	return Eclass_InsertAlphabetized(e);
 }
 
-class EntityClassUFO : public ModuleObserver {
-	std::size_t m_unrealised;
-	ModuleObservers m_observers;
-public:
-	EntityClassUFO() : m_unrealised(4) {
-	}
-	void realise() {
-		if (--m_unrealised == 0) {
-			//globalOutputStream() << "Entity Classes: realise\n";
-			EntityClassUFO_Construct();
-			m_observers.realise();
+class EntityClassUFO: public ModuleObserver
+{
+		std::size_t m_unrealised;
+		ModuleObservers m_observers;
+	public:
+		EntityClassUFO () :
+			m_unrealised(4)
+		{
 		}
-	}
-	void unrealise() {
-		if (++m_unrealised == 1) {
-			m_observers.unrealise();
-			//globalOutputStream() << "Entity Classes: unrealise\n";
-			Eclass_Clear();
+		void realise ()
+		{
+			if (--m_unrealised == 0) {
+				//globalOutputStream() << "Entity Classes: realise\n";
+				EntityClassUFO_Construct();
+				m_observers.realise();
+			}
 		}
-	}
-	void attach(ModuleObserver& observer) {
-		m_observers.attach(observer);
-	}
-	void detach(ModuleObserver& observer) {
-		m_observers.detach(observer);
-	}
+		void unrealise ()
+		{
+			if (++m_unrealised == 1) {
+				m_observers.unrealise();
+				//globalOutputStream() << "Entity Classes: unrealise\n";
+				Eclass_Clear();
+			}
+		}
+		void attach (ModuleObserver& observer)
+		{
+			m_observers.attach(observer);
+		}
+		void detach (ModuleObserver& observer)
+		{
+			m_observers.detach(observer);
+		}
 };
 
 EntityClassUFO g_EntityClassUFO;
 
-void EntityClass_attach(ModuleObserver& observer) {
+void EntityClass_attach (ModuleObserver& observer)
+{
 	g_EntityClassUFO.attach(observer);
 }
-void EntityClass_detach(ModuleObserver& observer) {
+void EntityClass_detach (ModuleObserver& observer)
+{
 	g_EntityClassUFO.detach(observer);
 }
 
-void EntityClass_realise() {
+void EntityClass_realise ()
+{
 	g_EntityClassUFO.realise();
 }
-void EntityClass_unrealise() {
+void EntityClass_unrealise ()
+{
 	g_EntityClassUFO.unrealise();
 }
 
-void EntityClassUFO_construct() {
+void EntityClassUFO_construct ()
+{
 	// start by creating the default unknown eclass
 	eclass_bad = EClass_Create("UNKNOWN_CLASS", Vector3(0.0f, 0.5f, 0.0f), "");
 
 	EntityClass_realise();
 }
 
-void EntityClassUFO_destroy() {
+void EntityClassUFO_destroy ()
+{
 	EntityClass_unrealise();
 
 	eclass_bad->free(eclass_bad);
@@ -242,51 +282,58 @@ void EntityClassUFO_destroy() {
 
 #include "modulesystem/modulesmap.h"
 
-class EntityClassUFODependencies :
-			public GlobalRadiantModuleRef,
-			public GlobalFileSystemModuleRef,
-			public GlobalShaderCacheModuleRef {
-	EClassModulesRef m_eclass_modules;
-public:
-	EntityClassUFODependencies() :
-			m_eclass_modules("def") {
-	}
-	EClassModules& getEClassModules() {
-		return m_eclass_modules.get();
-	}
+class EntityClassUFODependencies: public GlobalRadiantModuleRef,
+		public GlobalFileSystemModuleRef,
+		public GlobalShaderCacheModuleRef
+{
+		EClassModulesRef m_eclass_modules;
+	public:
+		EntityClassUFODependencies () :
+			m_eclass_modules("def")
+		{
+		}
+		EClassModules& getEClassModules ()
+		{
+			return m_eclass_modules.get();
+		}
 };
 
-class EclassManagerAPI {
-	EntityClassManager m_eclassmanager;
-public:
-	typedef EntityClassManager Type;
-	STRING_CONSTANT(Name, "ufo");
+class EclassManagerAPI
+{
+		EntityClassManager m_eclassmanager;
+	public:
+		typedef EntityClassManager Type;
+		STRING_CONSTANT(Name, "ufo")
+		;
 
-	EclassManagerAPI() {
-		EntityClassUFO_construct();
+		EclassManagerAPI ()
+		{
+			EntityClassUFO_construct();
 
-		m_eclassmanager.findOrInsert = &Eclass_ForName;
-		m_eclassmanager.findListType = &EntityClass_findListType;
-		m_eclassmanager.forEach = &Eclass_forEach;
-		m_eclassmanager.attach = &EntityClass_attach;
-		m_eclassmanager.detach = &EntityClass_detach;
-		m_eclassmanager.realise = &EntityClass_realise;
-		m_eclassmanager.unrealise = &EntityClass_unrealise;
+			m_eclassmanager.findOrInsert = &Eclass_ForName;
+			m_eclassmanager.findListType = &EntityClass_findListType;
+			m_eclassmanager.forEach = &Eclass_forEach;
+			m_eclassmanager.attach = &EntityClass_attach;
+			m_eclassmanager.detach = &EntityClass_detach;
+			m_eclassmanager.realise = &EntityClass_realise;
+			m_eclassmanager.unrealise = &EntityClass_unrealise;
 
-		GlobalRadiant().attachGameToolsPathObserver(g_EntityClassUFO);
-		GlobalRadiant().attachGameModeObserver(g_EntityClassUFO);
-		GlobalRadiant().attachGameNameObserver(g_EntityClassUFO);
-	}
-	~EclassManagerAPI() {
-		GlobalRadiant().detachGameNameObserver(g_EntityClassUFO);
-		GlobalRadiant().detachGameModeObserver(g_EntityClassUFO);
-		GlobalRadiant().detachGameToolsPathObserver(g_EntityClassUFO);
+			GlobalRadiant().attachGameToolsPathObserver(g_EntityClassUFO);
+			GlobalRadiant().attachGameModeObserver(g_EntityClassUFO);
+			GlobalRadiant().attachGameNameObserver(g_EntityClassUFO);
+		}
+		~EclassManagerAPI ()
+		{
+			GlobalRadiant().detachGameNameObserver(g_EntityClassUFO);
+			GlobalRadiant().detachGameModeObserver(g_EntityClassUFO);
+			GlobalRadiant().detachGameToolsPathObserver(g_EntityClassUFO);
 
-		EntityClassUFO_destroy();
-	}
-	EntityClassManager* getTable() {
-		return &m_eclassmanager;
-	}
+			EntityClassUFO_destroy();
+		}
+		EntityClassManager* getTable ()
+		{
+			return &m_eclassmanager;
+		}
 };
 
 #include "modulesystem/singletonmodule.h"
@@ -294,8 +341,9 @@ public:
 
 typedef SingletonModule<EclassManagerAPI, EntityClassUFODependencies> EclassManagerModule;
 typedef Static<EclassManagerModule> StaticEclassManagerModule;
-StaticRegisterModule staticRegisterEclassManager(StaticEclassManagerModule::instance());
+StaticRegisterModule staticRegisterEclassManager (StaticEclassManagerModule::instance ());
 
-EClassModules& EntityClassManager_getEClassModules() {
+EClassModules& EntityClassManager_getEClassModules ()
+{
 	return StaticEclassManagerModule::instance().getDependencies().getEClassModules();
 }

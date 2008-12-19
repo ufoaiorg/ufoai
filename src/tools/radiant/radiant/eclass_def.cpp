@@ -1,23 +1,27 @@
+/**
+ * @file eclass_def.cpp
+ */
+
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "iscriplib.h"
 #include "ifilesystem.h"
@@ -29,41 +33,46 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "modulesystem/moduleregistry.h"
 #include "os/path.h"
 
-static const char* EClass_GetExtension() {
-	return "def";
+#define EXTENSION "def"
+
+static const char* EClass_GetExtension ()
+{
+	return EXTENSION;
 }
 static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename);
 
-
 #include "modulesystem/singletonmodule.h"
 
-class EntityClassDefDependencies : public GlobalShaderCacheModuleRef, public GlobalScripLibModuleRef {
+class EntityClassDefDependencies: public GlobalShaderCacheModuleRef, public GlobalScripLibModuleRef
+{
 };
 
-class EclassDefAPI {
-	EntityClassScanner m_eclassdef;
-public:
-	typedef EntityClassScanner Type;
-	STRING_CONSTANT(Name, "def");
+class EclassDefAPI
+{
+		EntityClassScanner m_eclassdef;
+	public:
+		typedef EntityClassScanner Type;
+		STRING_CONSTANT(Name, EXTENSION)
+		;
 
-	EclassDefAPI() {
-		m_eclassdef.scanFile = &Eclass_ScanFile;
-		m_eclassdef.getExtension = &EClass_GetExtension;
-	}
-	EntityClassScanner* getTable() {
-		return &m_eclassdef;
-	}
+		EclassDefAPI ()
+		{
+			m_eclassdef.scanFile = &Eclass_ScanFile;
+			m_eclassdef.getExtension = &EClass_GetExtension;
+		}
+		EntityClassScanner* getTable ()
+		{
+			return &m_eclassdef;
+		}
 };
 
 typedef SingletonModule<EclassDefAPI, EntityClassDefDependencies> EclassDefModule;
 typedef Static<EclassDefModule> StaticEclassDefModule;
-StaticRegisterModule staticRegisterEclassDef(StaticEclassDefModule::instance());
-
+StaticRegisterModule staticRegisterEclassDef (StaticEclassDefModule::instance ());
 
 #include "string/string.h"
 
 #include <stdlib.h>
-
 
 static char com_token[1024];
 static bool com_eof;
@@ -72,7 +81,8 @@ static const char *debugname;
 /**
  * @brief Parse a token out of a string
  */
-static const char *COM_Parse (const char *data) {
+static const char *COM_Parse (const char *data)
+{
 	int c;
 	int len = 0;
 
@@ -81,12 +91,11 @@ static const char *COM_Parse (const char *data) {
 	if (!data)
 		return 0;
 
-// skip whitespace
-skipwhite:
-	while ( (c = *data) <= ' ') {
+	// skip whitespace
+	skipwhite: while ((c = *data) <= ' ') {
 		if (c == 0) {
 			com_eof = true;
-			return 0;			// end of file;
+			return 0; // end of file;
 		}
 		data++;
 	}
@@ -97,7 +106,6 @@ skipwhite:
 			data++;
 		goto skipwhite;
 	}
-
 
 	// handle quoted strings specially
 	if (c == '\"') {
@@ -135,7 +143,8 @@ skipwhite:
 	return data;
 }
 
-static void setSpecialLoad(EntityClass *e, const char* pWhat, CopiedString& p) {
+static void setSpecialLoad (EntityClass *e, const char* pWhat, CopiedString& p)
+{
 	const char *pText;
 	const char *where = strstr(e->comments(), pWhat);
 	if (!where)
@@ -157,24 +166,25 @@ static void setSpecialLoad(EntityClass *e, const char* pWhat, CopiedString& p) {
 
 /*
 
-the classname, color triple, and bounding box are parsed out of comments
-A ? size means take the exact brush size.
+ the classname, color triple, and bounding box are parsed out of comments
+ A ? size means take the exact brush size.
 
-/ *QUAKED <classname> (0 0 0) ?
-/ *QUAKED <classname> (0 0 0) (-8 -8 -8) (8 8 8)
+ / *QUAKED <classname> (0 0 0) ?
+ / *QUAKED <classname> (0 0 0) (-8 -8 -8) (8 8 8)
 
-Flag names can follow the size description:
+ Flag names can follow the size description:
 
-/ *QUAKED func_door (0 .5 .8) ? START_OPEN STONE_SOUND DOOR_DONT_LINK GOLD_KEY SILVER_KEY
+ / *QUAKED func_door (0 .5 .8) ? START_OPEN STONE_SOUND DOOR_DONT_LINK GOLD_KEY SILVER_KEY
 
-*/
+ */
 
-static EntityClass *Eclass_InitFromText (const char *text) {
+static EntityClass *Eclass_InitFromText (const char *text)
+{
 	EntityClass* e = Eclass_Alloc();
 	e->free = &Eclass_Free;
 
 	// grab the name
-	text = COM_Parse (text);
+	text = COM_Parse(text);
 	e->m_name = com_token;
 	debugname = e->name();
 
@@ -195,16 +205,16 @@ static EntityClass *Eclass_InitFromText (const char *text) {
 	text++;
 
 	// get the size
-	text = COM_Parse (text);
-	if (com_token[0] == '(') {	// parse the size as two vectors
+	text = COM_Parse(text);
+	if (com_token[0] == '(') { // parse the size as two vectors
 		e->fixedsize = true;
-		const int r = sscanf(text, "%f %f %f) (%f %f %f)", &e->mins[0], &e->mins[1], &e->mins[2],
-			&e->maxs[0], &e->maxs[1], &e->maxs[2]);
+		const int r = sscanf(text, "%f %f %f) (%f %f %f)", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
+				&e->maxs[1], &e->maxs[2]);
 		if (r != 6) {
 			return 0;
 		}
 
-		for (int i = 0 ; i < 2 ; i++) {
+		for (int i = 0; i < 2; i++) {
 			while (*text != ')') {
 				if (!*text) {
 					return 0;
@@ -229,7 +239,7 @@ static EntityClass *Eclass_InitFromText (const char *text) {
 	{
 		// any remaining words are parm flags
 		const char* p = parms;
-		for (std::size_t i = 0 ; i < MAX_FLAGS ; i++) {
+		for (std::size_t i = 0; i < MAX_FLAGS; i++) {
 			p = COM_Parse(p);
 			if (!p)
 				break;
@@ -256,8 +266,9 @@ static EntityClass *Eclass_InitFromText (const char *text) {
 	return e;
 }
 
-static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename) {
-	EntityClass	*e;
+static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename)
+{
+	EntityClass *e;
 
 	TextFileInputStream inputFile(filename);
 	if (inputFile.failed()) {
@@ -266,13 +277,9 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	}
 	globalOutputStream() << "ScanFile: " << filename << "\n";
 
-	enum EParserState {
-		eParseDefault,
-		eParseSolidus,
-		eParseComment,
-		eParseQuakeED,
-		eParseEntityClass,
-		eParseEntityClassEnd,
+	enum EParserState
+	{
+		eParseDefault, eParseSolidus, eParseComment, eParseQuakeED, eParseEntityClass, eParseEntityClassEnd,
 	} state = eParseDefault;
 	const char* quakeEd = "QUAKED";
 	const char* p = 0;
