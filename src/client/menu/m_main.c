@@ -273,6 +273,65 @@ static void MN_PushCopyMenu_f (void)
 	}
 }
 
+static void MN_RemoveMenuAtPositionFromStack (int position)
+{
+	int i;
+	assert(position < mn.menuStackPos);
+	assert(position >= 0);
+
+	/* create space for the new menu */
+	for (i = position; i < mn.menuStackPos; i++) {
+		mn.menuStack[i] = mn.menuStack[i + 1];
+	}
+	mn.menuStack[mn.menuStackPos--] = NULL;
+}
+
+static void MN_CloseAllMenu (void)
+{
+	int i;
+	for (i = mn.menuStackPos - 1; i >= 0; i--) {
+		menu_t *menu = mn.menuStack[i];
+
+		if (menu->onClose)
+			MN_ExecuteActions(menu, menu->onClose);
+
+		/* safe: unlink window */
+		menu->parent = NULL;
+		mn.menuStackPos--;
+		mn.menuStack[mn.menuStackPos] = NULL;
+	}
+}
+
+static void MN_CloseMenu (menu_t *menu)
+{
+	int i;
+
+	MN_MouseRelease();
+	MN_FocusRemove();
+
+	assert(mn.menuStackPos);
+	i = MN_GetMenuPositionFromStackByName(menu->name);
+
+	/* close child */
+	while (i + 1 < mn.menuStackPos) {
+		menu_t *m = mn.menuStack[i + 1];
+		if (m->parent != menu) {
+			break;
+		}
+		if (m->onClose)
+			MN_ExecuteActions(m, m->onClose);
+		m->parent = NULL;
+		MN_RemoveMenuAtPositionFromStack(i + 1);
+	}
+
+	/* close the menu */
+	if (menu->onClose)
+		MN_ExecuteActions(menu, menu->onClose);
+	menu->parent = NULL;
+	MN_RemoveMenuAtPositionFromStack(i);
+
+	MN_InvalidateMouse();
+}
 
 /**
  * @brief Pops a menu from the menu stack
@@ -282,44 +341,27 @@ static void MN_PushCopyMenu_f (void)
 void MN_PopMenu (qboolean all)
 {
 	menu_t *mainMenu = NULL;
+	menu_t *oldfirst = mn.menuStack[0];
+	assert(mn.menuStackPos);
 
 	/* make sure that we end all input buffers */
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
 
-	MN_MouseRelease();
-	MN_FocusRemove();
+	if (all) {
+		MN_CloseAllMenu();
+	} else {
 
-	assert(mn.menuStackPos);
-
-	/* find the main menu we must remove */
-	if (!all) {
 		mainMenu = mn.menuStack[mn.menuStackPos - 1];
 		if (mainMenu->parent)
 			mainMenu = mainMenu->parent;
+		MN_CloseMenu(mainMenu);
 	}
 
-	while (mn.menuStackPos > 0) {
-		menu_t *menu = mn.menuStack[mn.menuStackPos - 1];
-
-		/* are we on a "pop" case? */
-		if (!all && menu != mainMenu && menu->parent != mainMenu) {
-			break;
-		}
-
-		if (menu->onClose)
-			MN_ExecuteActions(menu, menu->onClose);
-
-		/* safe: unlink window */
-		menu->parent = NULL;
-		mn.menuStackPos--;
-		/** @todo uncomment this when its possible (see #1 bellow) */
-		/* mn.menuStack[mn.menuStackPos] = NULL; */
-	}
 
 	/** @todo #1 ununderstandable code */
 	if (!all && mn.menuStackPos == 0) {
-		if (!Q_strncmp(mn.menuStack[0]->name, mn_main->string, MAX_VAR)) {
+		if (!Q_strncmp(oldfirst->name, mn_main->string, MAX_VAR)) {
 			if (*mn_active->string)
 				MN_PushMenu(mn_active->string, NULL);
 			if (!mn.menuStackPos)
@@ -337,8 +379,29 @@ void MN_PopMenu (qboolean all)
 	/* when we leave a menu and a menu cinematic is running... we should stop it */
 	if (cls.playingCinematic == CIN_STATUS_MENU)
 		CIN_StopCinematic();
+}
 
-	MN_InvalidateMouse();
+/**
+ * @brief Console function to close a named menu
+ * @sa MN_PushMenu
+ */
+static void MN_CloseMenu_f (void)
+{
+	menu_t *menu;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
+		return;
+	}
+
+	menu = MN_FindMenuByName(Cmd_Argv(1));
+	if (menu == NULL) {
+		Com_Printf("Didn't find menu \"%s\"\n", Cmd_Argv(1));
+		return;
+	}
+
+	/* found the correct add it to stack or bring it on top */
+	MN_CloseMenu(menu);
 }
 
 /**
@@ -827,6 +890,7 @@ void MN_Init (void)
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
+	Cmd_AddCommand("mn_close", MN_CloseMenu_f, "Close a menu");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");

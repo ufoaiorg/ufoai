@@ -32,7 +32,9 @@ void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const menu_t* const menu, void *ref);
 const char *MN_GetReferenceString(const menu_t* const menu, const char *ref);
 struct value_s;
-const value_t* MN_FindPropertyByName (const struct value_s* propertyList, const char* name);
+const value_t* MN_FindPropertyByName(const struct value_s* propertyList, const char* name);
+char* MN_AllocString(const char* string, int size);
+
 
 qboolean MN_ScriptSanityCheck(void);
 

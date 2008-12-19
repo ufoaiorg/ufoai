@@ -109,9 +109,6 @@ void MN_WindowNodeLoaded (menu_t *menu)
 	/* if it need, construct the drag button */
 	if (menu->dragButton) {
 		menuNode_t *control = MN_AllocNode("controls");
-		int positionFromRight = CONTROLS_PADDING;
-		if (menu->closeButton)
-			positionFromRight += CONTROLS_IMAGE_DIMENSIONS + CONTROLS_SPACING;
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
 		control->dataImageOrModel = NULL;
@@ -128,6 +125,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 	if (menu->closeButton) {
 		menuNode_t *button = MN_AllocNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
+		const char* command = MN_AllocString(va("mn_close %s;", menu->name), 0);
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = menu;
 		button->dataImageOrModel = "menu/close";
@@ -137,8 +135,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		button->pos[0] = menu->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
-		/** @todo improve the pop when menu->parent != NULL (we must only close this window, not the parent :D) */
-		MN_SetMenuAction(&button->onClick, EA_CMD, "mn_pop;");
+		MN_SetMenuAction(&button->onClick, EA_CMD, command);
 		MN_AppendNode(menu, button);
 	}
 }
