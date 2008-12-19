@@ -101,18 +101,18 @@ menu map
 	{
 		string	"_CREDITS"
 		pos	"808 54"
+		size	"175 25"
 		font	f_small
-		align	ul
 	}
 
 	string txt_credits
 	{
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
-		size	"256 20"
-		pos	"990 54"
+		pos	"808 54"
+		size	"175 25"
 		font	f_small
-		align	ur
+		textalign	ur
 		in
 	}
 
