@@ -1362,7 +1362,9 @@ static void Check_SetNodraw (side_t *s)
 
 	/* do not actually set the flag that will be written back on -fix
 	 * the texture is set, this should trigger the flag to be set
-	 * in compile mode. check should behave the same as fix. */
+	 * in compile mode. check should behave the same as fix.
+	 * The flag must be set in compile mode, as SetImpliedFlags calls are before the
+	 * CheckNodraws call */
 	if (!(config.fixMap || config.performMapCheck))
 		tex->surfaceFlags |= SURF_NODRAW;
 
