@@ -134,13 +134,14 @@ void MN_DNDAbort (void)
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
 
-	if (targetNode) {
+	if (nodeAcceptDND && targetNode) {
 		targetNode->behaviour->dndLeave(targetNode);
 	}
 	sourceNode->behaviour->dndFinished(sourceNode, qfalse);
 
 	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
+	MN_InvalidateMouse();
 }
 
 /**
@@ -155,6 +156,11 @@ void MN_DNDDrop (void)
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
 
+	if (!positionAcceptDND) {
+		MN_DNDAbort();
+		return;
+	}
+
 	if (targetNode) {
 		result = targetNode->behaviour->dndDrop(targetNode, mousePosX, mousePosY);
 	}
@@ -162,6 +168,7 @@ void MN_DNDDrop (void)
 
 	MN_DNDCleanup();
 	mouseSpace = MS_NULL;
+	MN_InvalidateMouse();
 }
 
 item_t *MN_DNDGetItem (void)
