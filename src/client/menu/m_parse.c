@@ -101,14 +101,14 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
  */
 char* MN_AllocString (const char* string, int size)
 {
-	char* result = mn.curadata;
+	char* result = (char *)mn.curadata;
 	if (size != 0) {
 		assert(mn.curadata - mn.adata + size <= mn.adataize);
-		strncpy(mn.curadata, string, size);
+		strncpy((char *)mn.curadata, string, size);
 		mn.curadata += size;
 	} else {
 		assert(mn.curadata - mn.adata + strlen(string) + 1 <= mn.adataize);
-		mn.curadata += sprintf(mn.curadata, "%s", string);
+		mn.curadata += sprintf((char *)mn.curadata, "%s", string);
 	}
 	return result;
 }
