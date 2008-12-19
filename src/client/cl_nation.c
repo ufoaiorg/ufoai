@@ -162,7 +162,7 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 		notifyType = NT_HAPPINESS_PLEASED;
 	} else if (happiness < curCampaign->minhappiness && oldHappiness > curCampaign->minhappiness) {
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), /** @todo need to more specific message */
-			_("Happiness of nation %s is %s and less than minimal happiness allowed to the campaign."), _(nation->name), newString);
+			_("Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"), _(nation->name), newString);
 		notifyType = NT_HAPPINESS_MIN;
 	} else {
 		return;
