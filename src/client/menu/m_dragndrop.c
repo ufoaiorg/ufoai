@@ -185,7 +185,7 @@ static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 	menuNode_t *node = MN_GetNodeByPosition(mousePosX, mousePosY);
 
 	if (node != targetNode) {
-		if (targetNode) {
+		if (nodeAcceptDND && targetNode) {
 			targetNode->behaviour->dndLeave(targetNode);
 		}
 		targetNode = node;
