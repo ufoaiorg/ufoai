@@ -104,7 +104,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	}
 	R_ColorBlend(NULL);
 
-	if (MN_DNDGetTargetNode())
+	if (MN_DNDIsDragging())
 		MN_HilightNode(MN_DNDGetTargetNode(), green);
 	if (hoveredNode != NULL)
 		MN_HilightNode(hoveredNode, red);

@@ -113,7 +113,7 @@ menu buildings
 
 	func init
 	{
-		cmd "building_init;mn_push popup_buildingpreview;buildings_click 0;"
+		cmd "building_init;mn_push_child popup_buildingpreview buildings;buildings_click 0;"
 		*buildings lineselected 0
 	}
 
@@ -197,10 +197,4 @@ menu popup_buildingpreview
 			cmd "building_ufopedia;"
 		}
 	}
-
-	func close {
-		// when we close the floating window, we close the parent
-		cmd "mn_pop;"
-	}
-
 }

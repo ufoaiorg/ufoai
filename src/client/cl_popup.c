@@ -263,7 +263,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	}
 
 	/* Display popup_aircraft menu */
-	MN_PushMenu("popup_aircraft");
+	MN_PushMenu("popup_aircraft", NULL);
 }
 
 /**
@@ -456,9 +456,9 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 
 	/* Display the popup */
 	if (ufo)
-		MN_PushMenu("popup_intercept");
+		MN_PushMenu("popup_intercept", NULL);
 	else
-		MN_PushMenu("popup_mission");
+		MN_PushMenu("popup_mission", NULL);
 }
 
 /**
@@ -529,7 +529,7 @@ static void CL_PopupInterceptRClick_f (void)
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	B_SelectBase(aircraft->homebase);
-	MN_PushMenu("aircraft");
+	MN_PushMenu("aircraft", NULL);
 }
 
 /**

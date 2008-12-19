@@ -137,6 +137,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		button->pos[0] = menu->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
+		/** @todo improve the pop when menu->parent != NULL (we must only close this window, not the parent :D) */
 		MN_SetMenuAction(&button->onClick, EA_CMD, "mn_pop;");
 		MN_AppendNode(menu, button);
 	}

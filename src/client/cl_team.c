@@ -1215,7 +1215,7 @@ static void CL_GenerateNewTeam_f (void)
 	CL_ResetMultiplayerTeamInBase(baseCurrent);
 	Cvar_Set("mn_teamname", _("NewTeam"));
 	CL_GameExit();
-	MN_PushMenu("team");
+	MN_PushMenu("team", NULL);
 }
 
 /**
@@ -2289,7 +2289,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
-		MN_PushMenu("main");
+		MN_PushMenu("main", NULL);
 	} else {
 		/* the mission was in singleplayer */
 		/* loot the battlefield */
@@ -2321,7 +2321,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
-		MN_PushMenu("map");
+		MN_PushMenu("map", NULL);
 	}
 	/* show win screen */
 	if (ccs.singleplayer) {
@@ -2340,9 +2340,9 @@ void CL_ParseResults (struct dbuffer *msg)
 				else
 					Q_strcat(resultText, va(_("\nSecured landed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
 			}
-			MN_PushMenu("won");
+			MN_PushMenu("won", NULL);
 		} else
-			MN_PushMenu("lost");
+			MN_PushMenu("lost", NULL);
 
 		/* on singleplayer we disconnect the game and shutdown the server
 		 * we can safely wipe all mission data now */

@@ -102,7 +102,7 @@ void MN_SetNewMenuPos_f (void);
 
 void MN_DragMenu(void);
 
-menu_t* MN_PushMenu(const char *name);
+menu_t* MN_PushMenu(const char *name, const char *parentName);
 void MN_PopMenu(qboolean all);
 menu_t* MN_GetActiveMenu(void);
 menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);

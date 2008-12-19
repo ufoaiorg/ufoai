@@ -68,6 +68,49 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
 		}
 }
 
+static inline menu_t* MN_FindMenuByName (const char *name)
+{
+	int i;
+	for (i = 0; i < mn.numMenus; i++) {
+		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR)) {
+			return &mn.menus[i];
+		}
+	}
+	return NULL;
+}
+
+static inline int MN_GetMenuPositionFromStackByName (const char *name)
+{
+	int i;
+	for (i = 0; i < mn.menuStackPos; i++) {
+		if (!Q_strncmp(mn.menuStack[i]->name, name, MAX_VAR)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
+ * @brief Insert a menu at a position of the stack
+ * @param[in] menu The menu to insert
+ * @param[in] position Where we want to add the menu (0 is the deeper element of the stack)
+ */
+static inline void MN_InsertMenuIntoStack (menu_t *menu, int position)
+{
+	int i;
+	assert(position <= mn.menuStackPos);
+	assert(position > 0);
+	assert(menu != NULL);
+
+	/* create space for the new menu */
+	for (i = mn.menuStackPos; i > position; i--) {
+		mn.menuStack[i] = mn.menuStack[i - 1];
+	}
+	/* insert */
+	mn.menuStack[position] = menu;
+	mn.menuStackPos++;
+}
+
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
@@ -75,22 +118,15 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
  * @return pointer to menu_t
  * @todo Replace "i" by a menu_t, more easy to read
  */
-static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
+static menu_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean delete)
 {
-	int i;
 	menuNode_t *node;
 	menu_t *menu = NULL;
 
 	MN_MouseRelease();
 	MN_FocusRemove();
 
-	/* find menu */
-	for (i = 0; i < mn.numMenus; i++) {
-		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR)) {
-			menu = &mn.menus[i];
-			break;
-		}
-	}
+	menu = MN_FindMenuByName(name);
 	if (menu == NULL) {
 		Com_Printf("Didn't find menu \"%s\"\n", name);
 		return NULL;
@@ -101,7 +137,16 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 		MN_DeleteMenuFromStack(menu);
 
 	if (mn.menuStackPos < MAX_MENUSTACK)
-		mn.menuStack[mn.menuStackPos++] = menu;
+		if (parent) {
+			const int parentPos = MN_GetMenuPositionFromStackByName(parent);
+			if (parentPos == -1) {
+				Com_Printf("Didn't find parent menu \"%s\"\n", parent);
+				return NULL;
+			}
+			MN_InsertMenuIntoStack(menu, parentPos + 1);
+			menu->parent = mn.menuStack[parentPos];
+		} else
+			mn.menuStack[mn.menuStackPos++] = menu;
 	else
 		Com_Printf("Menu stack overflow\n");
 
@@ -130,7 +175,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 	}
 
 	MN_InvalidateMouse();
-	return mn.menus + i;
+	return menu;
 }
 
 /**
@@ -171,9 +216,21 @@ int MN_CompletePushMenu (const char *partial, const char **match)
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
  */
-menu_t* MN_PushMenu (const char *name)
+menu_t* MN_PushMenu (const char *name, const char *parentName)
 {
-	return MN_PushMenuDelete(name, qtrue);
+	return MN_PushMenuDelete(name, parentName, qtrue);
+}
+
+/**
+ * @brief Console function to push a child menu onto the menu stack
+ * @sa MN_PushMenu
+ */
+static void MN_PushChildMenu_f (void)
+{
+	if (Cmd_Argc() > 1)
+		MN_PushMenu(Cmd_Argv(1), Cmd_Argv(2));
+	else
+		Com_Printf("Usage: %s <name> <parentname>\n", Cmd_Argv(0));
 }
 
 /**
@@ -183,7 +240,7 @@ menu_t* MN_PushMenu (const char *name)
 static void MN_PushMenu_f (void)
 {
 	if (Cmd_Argc() > 1)
-		MN_PushMenu(Cmd_Argv(1));
+		MN_PushMenu(Cmd_Argv(1), NULL);
 	else
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 }
@@ -199,7 +256,7 @@ static void MN_PushNoHud_f (void)
 	if (!CL_OnBattlescape())
 		return;
 
-	MN_PushMenu("nohud");
+	MN_PushMenu("nohud", NULL);
 }
 
 /**
@@ -210,7 +267,7 @@ static void MN_PushCopyMenu_f (void)
 {
 	if (Cmd_Argc() > 1) {
 		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
-		MN_PushMenuDelete(Cmd_Argv(1), qfalse);
+		MN_PushMenuDelete(Cmd_Argv(1), NULL, qfalse);
 	} else {
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 	}
@@ -224,6 +281,8 @@ static void MN_PushCopyMenu_f (void)
  */
 void MN_PopMenu (qboolean all)
 {
+	menu_t *mainMenu = NULL;
+
 	/* make sure that we end all input buffers */
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
@@ -231,30 +290,45 @@ void MN_PopMenu (qboolean all)
 	MN_MouseRelease();
 	MN_FocusRemove();
 
-	if (all)
-		while (mn.menuStackPos > 0) {
-			mn.menuStackPos--;
-			if (mn.menuStack[mn.menuStackPos]->onClose)
-				MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->onClose);
-		}
+	assert(mn.menuStackPos);
 
-	if (mn.menuStackPos > 0) {
-		mn.menuStackPos--;
-		if (mn.menuStack[mn.menuStackPos]->onClose)
-			MN_ExecuteActions(mn.menuStack[mn.menuStackPos], mn.menuStack[mn.menuStackPos]->onClose);
+	/* find the main menu we must remove */
+	if (!all) {
+		mainMenu = mn.menuStack[mn.menuStackPos - 1];
+		if (mainMenu->parent)
+			mainMenu = mainMenu->parent;
 	}
 
+	while (mn.menuStackPos > 0) {
+		menu_t *menu = mn.menuStack[mn.menuStackPos - 1];
+
+		/* are we on a "pop" case? */
+		if (!all && menu != mainMenu && menu->parent != mainMenu) {
+			break;
+		}
+
+		if (menu->onClose)
+			MN_ExecuteActions(menu, menu->onClose);
+
+		/* safe: unlink window */
+		menu->parent = NULL;
+		mn.menuStackPos--;
+		/** @todo uncomment this when its possible (see #1 bellow) */
+		/* mn.menuStack[mn.menuStackPos] = NULL; */
+	}
+
+	/** @todo #1 ununderstandable code */
 	if (!all && mn.menuStackPos == 0) {
 		if (!Q_strncmp(mn.menuStack[0]->name, mn_main->string, MAX_VAR)) {
 			if (*mn_active->string)
-				MN_PushMenu(mn_active->string);
+				MN_PushMenu(mn_active->string, NULL);
 			if (!mn.menuStackPos)
-				MN_PushMenu(mn_main->string);
+				MN_PushMenu(mn_main->string, NULL);
 		} else {
 			if (*mn_main->string)
-				MN_PushMenu(mn_main->string);
+				MN_PushMenu(mn_main->string, NULL);
 			if (!mn.menuStackPos)
-				MN_PushMenu(mn_active->string);
+				MN_PushMenu(mn_active->string, NULL);
 		}
 	}
 
@@ -750,6 +824,7 @@ void MN_Init (void)
 
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
+	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));

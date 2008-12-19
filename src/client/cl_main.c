@@ -301,17 +301,17 @@ void CL_Drop (void)
 	if (ccs.singleplayer && curCampaign) {
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
-		MN_PushMenu("map");
+		MN_PushMenu("map", NULL);
 	} else {
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
-		MN_PushMenu("main");
+		MN_PushMenu("main", NULL);
 		/* the main menu may have a init node - execute it */
 		Cbuf_Execute();
 	}
 
 	if (*mn_afterdrop->string) {
-		MN_PushMenu(mn_afterdrop->string);
+		MN_PushMenu(mn_afterdrop->string, NULL);
 		Cvar_Set("mn_afterdrop", "");
 	}
 	if (*mn_main_afterdrop->string) {
@@ -381,7 +381,7 @@ static void CL_Connect_f (void)
 	}
 
 	if (Cvar_VariableInteger("mn_server_need_password")) {
-		MN_PushMenu("serverpassword");
+		MN_PushMenu("serverpassword", NULL);
 		return;
 	}
 
@@ -903,7 +903,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
 		mn.menuText[TEXT_LIST] = userInfoText;
-		MN_PushMenu("serverinfo");
+		MN_PushMenu("serverinfo", NULL);
 	} else
 		Com_Printf("%c%s", COLORED_GREEN, s);
 }
@@ -1261,7 +1261,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		s = NET_ReadString(msg);
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
-			MN_PushMenu("serverpassword");
+			MN_PushMenu("serverpassword", NULL);
 		MN_Popup(_("Notice"), _(s));
 		return;
 	}
@@ -1431,10 +1431,10 @@ static void CL_SpawnSoldiers_f (void)
 	/* spawn immediately if in single-player, otherwise wait for other players to join */
 	if (ccs.singleplayer) {
 		/* activate hud */
-		MN_PushMenu(mn_hud->string);
+		MN_PushMenu(mn_hud->string, NULL);
 		Cvar_Set("mn_active", mn_hud->string);
 	} else {
-		MN_PushMenu("multiplayer_wait");
+		MN_PushMenu("multiplayer_wait", NULL);
 	}
 }
 

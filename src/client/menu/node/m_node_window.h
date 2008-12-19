@@ -33,11 +33,12 @@ typedef struct menu_s {
 	char name[MAX_VAR];
 	int eventTime;
 
-	struct menu_s *super; /**< Menu inherited, else NULL */
+	struct menu_s *super; 	/**< Menu inherited, else NULL */
+	struct menu_s *parent; 	/**< Parent menu inherited, else NULL */
 
-	vec2_t pos;	/**< the position of the menu */
-	vec2_t size;	/**< the size of the menu */
-	vec2_t noticePos; /**< the position where the cl.msgText messages are rendered */
+	vec2_t pos;				/**< the position of the menu */
+	vec2_t size;			/**< the size of the menu */
+	vec2_t noticePos; 		/**< the position where the cl.msgText messages are rendered */
 	qboolean dragButton;
 	qboolean closeButton;
 	qboolean modal;

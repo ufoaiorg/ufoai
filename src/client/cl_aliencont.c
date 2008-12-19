@@ -864,7 +864,7 @@ static void AC_ResearchAlien_f (void)
 		Sys_Error("aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
-		MN_PushMenu("research");
+		MN_PushMenu("research", NULL);
 }
 
 static void AC_AlienClick (const base_t *base, int num)

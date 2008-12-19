@@ -1210,7 +1210,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 								gd.interceptAircraft = cls.missionaircraft;
 								Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft->idx);
 								CL_GameTimeStop();
-								MN_PushMenu("popup_intercept_ready");
+								MN_PushMenu("popup_intercept_ready", NULL);
 								break;
 							case AIR_RETURNING:
 								/* aircraft entered in homebase */
@@ -1368,7 +1368,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->active = qtrue;
-		MN_PushMenu("popup_baseattack");
+		MN_PushMenu("popup_baseattack", NULL);
 		return qtrue;
 	}
 

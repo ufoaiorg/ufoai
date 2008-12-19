@@ -241,7 +241,7 @@ void INS_SelectInstallation (installation_t *installation)
 		} else {
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
-		MN_PushMenu("popup_installationstatus");
+		MN_PushMenu("popup_installationstatus", NULL);
 	}
 }
 

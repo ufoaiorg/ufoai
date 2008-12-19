@@ -967,7 +967,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i live alien)\n", "(can host %i live aliens)\n", num), num), sizeof(transferBaseSelectPopup));
 	}
 	mn.menuText[TEXT_LIST] = transferBaseSelectPopup;
-	MN_PushMenu("popup_transferbaselist");
+	MN_PushMenu("popup_transferbaselist", NULL);
 }
 
 /**

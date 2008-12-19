@@ -423,7 +423,7 @@ static void CP_NationStatsClick_f (void)
 	if (num < 0 || num >= gd.numNations)
 		return;
 
-	MN_PushMenu("nations");
+	MN_PushMenu("nations", NULL);
 	Cbuf_AddText(va("nation_select %i;", num));
 }
 

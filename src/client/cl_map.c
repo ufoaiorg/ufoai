@@ -274,7 +274,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			if (gd.numBases < MAX_BASES) {
 				Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
-				MN_PushMenu("popup_newbase");
+				MN_PushMenu("popup_newbase", NULL);
 			} else {
 				MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
 			}
@@ -298,7 +298,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			if (gd.numInstallations < MAX_INSTALLATIONS) {
 				Cvar_Set("mn_installation_title", gd.installations[gd.numInstallations].name);
-				MN_PushMenu("popup_newinstallation");
+				MN_PushMenu("popup_newinstallation", NULL);
 			} else {
 				MN_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 			}
@@ -310,7 +310,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		}
 		break;
 	case MA_UFORADAR:
-		MN_PushMenu("popup_intercept_ufo");
+		MN_PushMenu("popup_intercept_ufo", NULL);
 		/* if shoot down - we have a new crashsite mission if color != water */
 		break;
 	default:
@@ -374,7 +374,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		/* Display popup for multi selection */
 		mn.menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
 		CL_GameTimeStop();
-		MN_PushMenu("popup_multi_selection");
+		MN_PushMenu("popup_multi_selection", NULL);
 	} else {
 		/* Nothing selected */
 		if (!selectedAircraft)
@@ -1472,7 +1472,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	assert(node);
 
 	if (ccs.zoom < 35.0f  && gd.combatZoomedUFO)
-		MN_PushMenu("airfight");
+		MN_PushMenu("airfight", NULL);
 
 
 	/* font color on geoscape */

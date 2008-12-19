@@ -531,7 +531,7 @@ static void CL_Reset (struct dbuffer *msg)
 	if (!ccs.singleplayer) {
 		/* pop any waiting menu and activate the HUD */
 		MN_PopMenu(qtrue);
-		MN_PushMenu(mn_hud->string);
+		MN_PushMenu(mn_hud->string, NULL);
 		Cvar_Set("mn_active", mn_hud->string);
 		Cvar_Set("mn_main", "multiplayerInGame");
 	}
@@ -584,13 +584,13 @@ static void CL_StartGame (struct dbuffer *msg)
 
 	if (!ccs.singleplayer && baseCurrent) {
 		if (team_play) {
-			MN_PushMenu("multiplayer_selectteam");
+			MN_PushMenu("multiplayer_selectteam", NULL);
 			Cvar_Set("mn_active", "multiplayer_selectteam");
 		} else {
 			Cbuf_AddText("mp_selectteam_init\n");
 		}
 	} else {
-		MN_PushMenu(mn_hud->string);
+		MN_PushMenu(mn_hud->string, NULL);
 		Cvar_Set("mn_active", mn_hud->string);
 	}
 

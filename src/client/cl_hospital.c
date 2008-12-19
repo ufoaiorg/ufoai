@@ -333,7 +333,7 @@ static void HOS_ListClick_f (void)
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
-		MN_PushMenu("hospital_employee");
+		MN_PushMenu("hospital_employee", NULL);
 }
 
 static char employeeDesc[512];

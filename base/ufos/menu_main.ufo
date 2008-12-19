@@ -107,7 +107,7 @@ menu main
 	func init
 	{
 		cmd "music_change main;"
-		cmd "mn_push popup_tipoftheday;check_cvars;"
+		cmd "mn_push_child popup_tipoftheday main;check_cvars;"
 	}
 }
 

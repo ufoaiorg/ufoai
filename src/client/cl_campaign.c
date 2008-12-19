@@ -1571,7 +1571,7 @@ static void CP_BaseAttackStartMission (mission_t *mission)
 	CL_GameTimeStop();
 	B_SelectBase(base);
 	MN_PopMenu(qfalse);
-	MN_PushMenu("popup_baseattack");
+	MN_PushMenu("popup_baseattack", NULL);
 }
 
 /**
@@ -6978,7 +6978,7 @@ static void CL_GameNew_f (void)
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
-	MN_PushMenu("map");
+	MN_PushMenu("map", NULL);
 
 	/* create a base as first step */
 	B_SelectBase(NULL);

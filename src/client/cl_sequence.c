@@ -395,7 +395,7 @@ static void CL_SequenceStart_f (void)
 	/* display the sequence menu */
 	/* the default is in menu_main.ufo - menu sequence */
 	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
-	menu = MN_PushMenu(menuName);
+	menu = MN_PushMenu(menuName, NULL);
 	if (!menu) {
 		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
 		return;

@@ -5126,9 +5126,9 @@ void CL_ActorInventoryOpen_f (void)
 		const menu_t* menu = MN_GetActiveMenu();
 		if (!strstr(menu->name, "hudinv")) {
 			if (!Q_strcmp(mn_hud->string, "althud"))
-				MN_PushMenu("ahudinv");
+				MN_PushMenu("ahudinv", NULL);
 			else
-				MN_PushMenu("hudinv");
+				MN_PushMenu("hudinv", NULL);
 		} else
 			MN_PopMenu(qfalse);
 	}

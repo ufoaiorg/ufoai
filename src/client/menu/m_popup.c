@@ -48,7 +48,7 @@ void MN_Popup (const char *title, const char *text)
 	mn.menuText[TEXT_POPUP_INFO] = text;
 	if (ccs.singleplayer)
 		CL_GameTimeStop();
-	MN_PushMenu(POPUP_MENU_NAME);
+	MN_PushMenu(POPUP_MENU_NAME, NULL);
 }
 
 /**
@@ -95,7 +95,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 		listNode->onClick = NULL;
 	}
 
-	MN_PushMenu(popupListMenu->name);
+	MN_PushMenu(popupListMenu->name, NULL);
 	return listNode;
 }
 
@@ -205,5 +205,5 @@ void MN_PopupButton (const char *title, const char *text,
 			clickAction3 ? clickAction3 : popupAction3, va("%s3", POPUPBUTTON_NODE_STRING_NAME));
 	}
 
-	MN_PushMenu(popupButtonMenu->name);
+	MN_PushMenu(popupButtonMenu->name, NULL);
 }

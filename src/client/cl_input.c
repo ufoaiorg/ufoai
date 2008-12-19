@@ -856,7 +856,7 @@ static void CL_MakeBaseMapShot_f (void)
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
-	MN_PushMenu("nohud");
+	MN_PushMenu("nohud", NULL);
 	/* hide any active console */
 	Key_SetDest(key_game);
 	Cmd_ExecuteString("r_screenshot tga");

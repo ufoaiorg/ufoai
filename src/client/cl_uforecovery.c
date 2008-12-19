@@ -297,7 +297,7 @@ static void CP_UFORecoveredStore_f (void)
 			Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
 		/* If more than one - popup with list to select base. */
 		mn.menuText[TEXT_LIST] = recoveryBaseSelectPopup;
-		MN_PushMenu("popup_recoverybaselist");
+		MN_PushMenu("popup_recoverybaselist", NULL);
 		break;
 	}
 }
@@ -458,7 +458,7 @@ static void CP_UFORecoveredSell_f (void)
 		return;
 
 	mn.menuText[TEXT_LIST] = recoveryNationSelectPopup;
-	MN_PushMenu("popup_recoverynationlist");
+	MN_PushMenu("popup_recoverynationlist", NULL);
 }
 
 /**

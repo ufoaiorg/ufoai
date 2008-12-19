@@ -751,7 +751,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 				MN_AddChatMessage(va("<%s> %s\n", nick, trailing));
 				if (Q_strcmp(menu->name, "irc") && Q_strcmp(menu->name, mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
-					MN_PushMenu("chat_popup");
+					MN_PushMenu("chat_popup", NULL);
 				}
 			}
 		}
@@ -1718,7 +1718,7 @@ void Irc_Input_Activate (void)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		MN_PopMenu(qfalse);
-		MN_PushMenu("irc_popup");
+		MN_PushMenu("irc_popup", NULL);
 		/* cancel any active editing */
 		return;
 	}
