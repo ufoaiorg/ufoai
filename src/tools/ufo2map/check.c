@@ -773,7 +773,7 @@ static qboolean Check_SideIsInBrush (const side_t *side, const mapbrush_t *brush
 #if 0
 /**
  * @brief for debugging, use this to see which face is the problem
- * as there is not non-debugging use (yet) usually #ifed out
+ * as there is no non-debugging use (yet) usually #ifed out
  */
 static void Check_SetError (side_t *s)
 {
@@ -809,6 +809,17 @@ static qboolean Check_SidesTouch (side_t *a, side_t *b)
 	}
 	return qfalse;
 }
+
+#if 0
+/** @brief returns qtrue if the side has the texture */
+static qboolean Check_HasTex(const side_t *s, const char *tex)
+{
+	const ptrdiff_t index = s - brushsides;
+	brush_texture_t *stex = &side_brushtextures[index];
+
+	return strcmp(stex->name, tex) ? qfalse : qtrue;
+}
+#endif
 
 /**
  * @brief a composite side is a side made of sides from neighbouring brushes. the sides abut.
@@ -1098,13 +1109,13 @@ static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2
 	VectorAdd(e1p1, e1p1ToIntersection, intersection);
 	e1p1Dist = DotProduct(e1p1ToIntersection, unitDir1);
 
-	if (e1p1Dist < 0 || e1p1Dist > length1)
+	if (e1p1Dist < CH_DIST_EPSILON || e1p1Dist > (length1 - CH_DIST_EPSILON))
 		return qfalse; /* intersection is not between vertices of edge 1 */
 
 	VectorSubtract(intersection, e2p1, e2p1ToIntersection);
 	e2p1Dist = DotProduct(e2p1ToIntersection, unitDir2);
-	if (e2p1Dist < 0 || e2p1Dist > length2)
-		return qfalse; /* intersection is not between vertices of edge 1 */
+	if (e2p1Dist < CH_DIST_EPSILON || e2p1Dist > (length2 - CH_DIST_EPSILON))
+		return qfalse; /* intersection is not between vertices of edge 2 */
 
 	return qtrue;
 }
@@ -1515,6 +1526,7 @@ void CheckNodraws (void)
 						goto next_iSide;
 				}
 
+				/* search for intersections between composite and iSide */
 				for (k = 0; k < iWinding->numpoints; k++) {
 					vec3_t intersection;
 					int lastIntersectionMembInd = -1;
@@ -1558,9 +1570,9 @@ void CheckNodraws (void)
 								/* note that as each member side is convex any line can intersect its edges a maximum of twice,
 								 * as the member sides of the composite are the inner loop, these two (if they exist) will
 								 * be found consecutively */
-								if ((lastIntersectionMembInd == l)
-								 && (VectorDistSqr(intersection, lastIntersection) > CH_DIST_EPSILON_SQR)
-								 && !Check_LevelForNodraws(composite->memberSides[l], iSide))
+								if ((lastIntersectionMembInd == l) /* same composite as last intersection found */
+								 && (VectorDistSqr(intersection, lastIntersection) > CH_DIST_EPSILON_SQR) /* dist between this and last intersection is nonzero, indicating they are different intersections */
+								 && !Check_LevelForNodraws(composite->memberSides[l], iSide)) /* check nodraws */
 									goto next_iSide;
 
 								lastIntersectionMembInd = l;
