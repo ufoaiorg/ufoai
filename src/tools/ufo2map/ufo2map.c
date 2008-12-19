@@ -92,7 +92,7 @@ static void Usage (void)
 		"\nBinary space partitioning (BSPing) options:\n"
 		" -block <xl> <yl>           : \n"
 		" -blocks <xl> <yl> <xh> <yh>: \n"
-		" -subdivide                 : subdivide brushes for better light effects (but higher poly count)\n"
+		" -subdivide                 : subdivide brushes for better light effects (but higher polycount)\n"
 		" -direct                    : direct light scaling (float value)\n"
 		" -entity                    : entity light scaling (float value)\n"
 		" -fulldetail                : don't treat details (and trans surfaces) as details\n"
@@ -108,7 +108,7 @@ static void Usage (void)
 		" -nodetail                  : skip detail brushes\n"
 		" -nomerge                   : skip node face merging\n"
 		" -noprune                   : don't prune (or cut) nodes\n"
-		" -nosubdiv                  : don't subdivide (less polycount, but crappy light effects)\n"
+		" -nosubdiv                  : don't subdivide (low polycount, but crappy light effects)\n"
 		" -noshare                   : \n"
 		" -notjunc                   : \n"
 		" -nowater                   : skip water brushes in compilation\n"
@@ -596,8 +596,7 @@ int main (int argc, const char **argv)
 			Check_ContainedBrushes();
 		if (config.chkBrushes || config.chkAll)
 			CheckBrushes();
-		/** @todo include in chkAll when it works */
-		if (config.chkNodraws /* || config.chkAll */)
+		if (config.chkNodraws || config.chkAll)
 			CheckNodraws();
 		if (config.chkZFight  || config.chkAll || config.chkBrushes)
 			CheckZFighting();
