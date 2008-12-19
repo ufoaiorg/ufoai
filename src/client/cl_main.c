@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
 #include "menu/m_popup.h"
+#include "menu/m_main.h"
 #include "menu/m_font.h"
 #include "menu/m_parse.h"
 #include "menu/node/m_node_selectbox.h"
@@ -294,7 +295,10 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
-	MN_PopMenu(qtrue);
+	/** @todo check that, there are already no menu to pop */
+	if (mn.menuStackPos) {
+		MN_PopMenu(qtrue);
+	}
 
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
