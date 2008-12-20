@@ -319,6 +319,7 @@ void ToolsCheckErrors (void)
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
 		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
+		globalWarningStream() << message << "\n";
 	}
 }
 
@@ -362,5 +363,10 @@ void ToolsCompile (void)
 			free(output);
 		} else
 			globalOutputStream() << "-------------------\nCompiler: " << mapcompiler << "\nParameter: " << bufParam << "\nWorking dir: " << bufPath << "\n-------------------\n";
+	} else {
+		StringOutputStream message(256);
+		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
+		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
+		globalWarningStream() << message << "\n";
 	}
 }
