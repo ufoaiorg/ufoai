@@ -182,7 +182,6 @@ const char* CompilerBinaryWithPath_get();
 extern CopiedString g_strAppPath;
 const char* AppPath_get();
 
-extern CopiedString g_strSettingsPath;
 const char* SettingsPath_get();
 
 const char* const g_pluginsDir = "plugins/"; ///< name of plugins directory, always sub-directory of toolspath

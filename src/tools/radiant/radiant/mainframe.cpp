@@ -31,6 +31,7 @@
 #include "debugging/debugging.h"
 #include "version.h"
 #include "error.h"
+#include "environment.h"
 
 #include "ifilesystem.h"
 #include "iundo.h"
@@ -300,13 +301,9 @@ const char* AppPath_get (void)
 	return g_strAppPath.c_str();
 }
 
-/// directory for temp files
-/// NOTE: on *nix this is were we check for .pid
-CopiedString g_strSettingsPath;
-
 const char* SettingsPath_get (void)
 {
-	return g_strSettingsPath.c_str();
+	return environment_get_home_path();
 }
 
 void EnginePathImport (CopiedString& self, const char* value)

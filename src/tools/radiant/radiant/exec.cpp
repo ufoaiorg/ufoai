@@ -332,6 +332,13 @@ ExecState exec_cmd_set_state (ExecCmd *e, ExecState state)
 	return ret;
 }
 
+static GList *exec_cmd_list = NULL;
+
+GList* exec_get_cmd_list (void)
+{
+	return exec_cmd_list;
+}
+
 /**
  * @brief Runs the given command in a seperate thread
  * @sa exec_run_cmd for sync processes
@@ -348,15 +355,19 @@ void exec_run (Exec *ex)
 			piped = g_list_first(piped);
 			continue;
 		}
+
+		exec_cmd_list = g_list_append(exec_cmd_list, e);
+
 		if (e->pre_proc)
 			e->pre_proc(e, NULL);
-		/** @todo update jobinfo panels (job started) */
 
 		state = exec_cmd_get_state(e);
 		if (state == SKIPPED)
 			continue;
-		else if (state == CANCELLED)
+		else if (state == CANCELLED) {
+			exec_cmd_list = g_list_remove(exec_cmd_list, e);
 			break;
+		}
 
 		GThread *thread = NULL;
 		if (e->lib_proc != NULL)
@@ -382,13 +393,15 @@ void exec_run (Exec *ex)
 
 		if (e->post_proc)
 			e->post_proc(e, NULL);
-		/** @todo update jobinfo panels (job finished) */
+
 		if (thread != NULL)
 			g_thread_join(thread);
 
+		exec_cmd_list = g_list_remove(exec_cmd_list, e);
 		g_list_free(piped);
 		piped = NULL;
 	}
+
 	g_list_free(piped);
 	exec_set_outcome(ex);
 }

@@ -67,5 +67,6 @@ gint exec_run_cmd(const gchar *cmd, gchar **output);
 ExecState exec_cmd_get_state(ExecCmd *e);
 ExecState exec_cmd_set_state(ExecCmd *e, ExecState state);
 gint exec_count_operations(const Exec *e);
+GList* exec_get_cmd_list(void);
 
 #endif	/*_EXEC_H_*/

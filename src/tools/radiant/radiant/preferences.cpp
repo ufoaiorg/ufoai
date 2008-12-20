@@ -193,8 +193,7 @@ static void ScanForGameDefinition() {
 		g_pGameDescription = new CGameDescription(pDoc, path);
 		xmlFreeDoc(pDoc);
 	} else {
-		globalErrorStream() << "XML parser failed on '" << path << "'\n";
-		g_pGameDescription = NULL;
+		Error("XML parser failed on '%s'\n", path);
 	}
 }
 

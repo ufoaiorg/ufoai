@@ -22,10 +22,12 @@
  */
 
 #include "jobinfo.h"
+#include "../exec.h"
 
 GtkWidget *JobInfo_constructNotebookTab (void)
 {
 	GtkWidget* pageframe = gtk_frame_new("Currently running");
+	GList *jobs = exec_get_cmd_list();
 
 	return GTK_WIDGET(pageframe);
 }

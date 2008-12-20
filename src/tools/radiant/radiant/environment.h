@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_ENVIRONMENT_H)
 #define INCLUDED_ENVIRONMENT_H
 
-void environment_init(int argc, char* argv[]);
-const char* environment_get_home_path();
-const char* environment_get_app_path();
+void environment_init(void);
+const char* environment_get_home_path(void);
+const char* environment_get_app_path(void);
 
 #endif

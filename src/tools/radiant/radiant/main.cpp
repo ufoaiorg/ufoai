@@ -277,24 +277,10 @@ static void streams_init(void) {
 }
 
 static void paths_init(void) {
-	const char* home = environment_get_home_path();
-	g_mkdir_with_parents(home, 775);
-
-	{
-		StringOutputStream path(256);
-		path << home;
-		g_strSettingsPath = path.c_str();
-	}
-
-	g_mkdir_with_parents(g_strSettingsPath.c_str(), 775);
-
+	StringOutputStream path(256);
 	g_strAppPath = environment_get_app_path();
-
-	{
-		StringOutputStream path(256);
-		path << g_strAppPath.c_str() << "bitmaps/";
-		BitmapsPath_set(path.c_str());
-	}
+	path << g_strAppPath.c_str() << "bitmaps/";
+	BitmapsPath_set(path.c_str());
 }
 
 static void create_global_pid(void) {
@@ -442,7 +428,7 @@ int main (int argc, char* argv[]) {
 
 	GlobalDebugMessageHandler::instance().setHandler(GlobalPopupDebugMessageHandler::instance());
 
-	environment_init(argc, argv);
+	environment_init();
 
 	paths_init();
 
