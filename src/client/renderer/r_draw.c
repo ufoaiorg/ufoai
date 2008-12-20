@@ -824,11 +824,12 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 }
 
 /**
- * @brief Center position of Skybox along z-axis. This is used to make sure we see only the inside of Skybox.
+ * @brief Center position of skybox along z-axis. This is used to make sure we see only the inside of Skybox.
  * @sa R_DrawStarfield
  * @sa R_SetupGL2D
  */
 const float SKYBOX_DEPTH = -500.0f;
+
 /**
  * @brief Half size of Skybox.
  * @note The bigger, the less perspective default you'll have, but the more you'll
@@ -836,7 +837,54 @@ const float SKYBOX_DEPTH = -500.0f;
  * @sa R_DrawStarfield
  * @sa R_SetupGL2D
  */
-const int SKYBOX_HALFSIZE = 800.0f;
+#define SKYBOX_HALFSIZE 800.0f
+
+static const float starFieldVerts[] = {
+	/* face 1 */
+	-SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+
+	/* face 2 */
+	-SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+
+	/* face 3 */
+	+SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+
+	/* face 4 */
+	-SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+
+	/* face 5 */
+	-SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+
+	/* face 6 */
+	-SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, +SKYBOX_HALFSIZE,
+	+SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE,
+	-SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE, -SKYBOX_HALFSIZE
+};
+
+static const float starFieldTexCoords[] = {
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+};
 
 /**
  * @brief Bind and draw starfield.
@@ -855,14 +903,14 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	glPushMatrix();
 
 	/* deactivate writing in depth buffer to be able to have a skybox close to the camera,
-	 * and to see at the same time objects that are below skybox (ie with z > -SKYBOX_DEPTH) */
+	 * and to see at the same time objects that are below skybox (i.e. with z > -SKYBOX_DEPTH) */
 	glDepthMask(GL_FALSE);
 
-	/* We must center the skybox on the camera border of view, and not on the earth, in order
-	 * to see only the inside of the cuve */
+	/* we must center the skybox on the camera border of view, and not on the earth, in order
+	 * to see only the inside of the cube */
 	glTranslatef(pos[0], pos[1], -SKYBOX_DEPTH);
 
-	/* Rotates starfield: only time and rotation of earth around itself causes starfield to rotate. */
+	/* rotates starfield: only time and rotation of earth around itself causes starfield to rotate. */
 	VectorSet(angle, rotate[0] - p * todeg, rotate[1], rotate[2]);
 	glRotatef(angle[YAW], 1, 0, 0);
 	glRotatef(angle[ROLL], 0, 1, 0);
@@ -870,50 +918,16 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 
 	R_BindTexture(texnum);
 
-	/* Draw the cube */
-	glBegin(GL_QUADS);
+	/* alter the array pointers */
+	glVertexPointer(3, GL_FLOAT, 0, starFieldVerts);
+	glTexCoordPointer(2, GL_FLOAT, 0, starFieldTexCoords);
 
-	// face 1
-	glTexCoord2i(0,0);glVertex3i(-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(1,0);glVertex3i(+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(1,1);glVertex3i(+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(0,1);glVertex3i(-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-
-	// face 2
-	glTexCoord2i(0,0);glVertex3i(-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(1,0);glVertex3i(+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(1,1);glVertex3i(+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(0,1);glVertex3i(-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-
-	// face 3
-	glTexCoord2i(0,0);glVertex3i(+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(1,0);glVertex3i(+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(1,1);glVertex3i(+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(0,1);glVertex3i(+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-
-	// face 4
-	glTexCoord2i(0,0);glVertex3i(-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(1,0);glVertex3i(-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(1,1);glVertex3i(-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(0,1);glVertex3i(-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-
-	// face 5
-	glTexCoord2i(1,0);glVertex3i(-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(1,1);glVertex3i(+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(0,1);glVertex3i(+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(0,0);glVertex3i(-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-
-	// face 6
-	glTexCoord2i(1,0);glVertex3i(-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(1,1);glVertex3i(+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,+SKYBOX_HALFSIZE);
-	glTexCoord2i(0,1);glVertex3i(+SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-	glTexCoord2i(0,0);glVertex3i(-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE,-SKYBOX_HALFSIZE);
-
-	glEnd();
+	/* draw the cube */
+	glDrawArrays(GL_QUADS, 0, 24);
 
 	glDepthMask(GL_TRUE);
 
-	/* Restore Previous matrix */
+	/* restore previous matrix */
 	glPopMatrix();
 }
 
@@ -972,16 +986,17 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
 
+	glEnable(GL_BLEND);
+
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
-	R_DrawStarfield(starfield->texnum, earthPos, rotate, p);
+	if (starfield != r_noTexture)
+		R_DrawStarfield(starfield->texnum, earthPos, rotate, p);
 
 	/* load sun image */
 	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
 	if (sun != r_noTexture && v[2] < 0 && !disableSolarRender) {
 		const float sunZoom = 1.38f * SKYBOX_HALFSIZE;	/**< Sun must rotate roughly at the same speed as skybox */
-		glEnable(GL_BLEND);
 		R_DrawTexture(sun->texnum, earthPos[0] - 64 * viddef.rx + sunZoom * v[1] * viddef.rx , earthPos[1] - 64 * viddef.ry + sunZoom * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
-		glDisable(GL_BLEND);
 	}
 
 	/* Draw atmosphere */
@@ -990,10 +1005,10 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		const float bgZoom = zoom;
 		/* Force height to make sure the image is a circle (and not an ellipse) */
 		const int halfHeight = 768.0f * viddef.ry;
-		glEnable(GL_BLEND);
 		R_DrawTexture(background->texnum,  earthPos[0] - nw / 2 * bgZoom, earthPos[1] - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
-		glDisable(GL_BLEND);
 	}
+
+	glDisable(GL_BLEND);
 
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
