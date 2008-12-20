@@ -90,7 +90,7 @@ void MapInfo_Update (void)
 	gtk_entry_set_text(GTK_ENTRY (entities_entry), tmp);
 }
 
-
+/** @todo Click action should be to select all the ents of the given type */
 GtkWidget *MapInfo_constructNotebookTab (void)
 {
 	GtkVBox* vbox = create_dialog_vbox(4, 4);

@@ -227,7 +227,7 @@ typedef struct technology_s {
 } technology_t;
 
 void RS_InitStartup(void);
-void RS_ResetHash(void);
+void RS_ResetTechs(void);
 void RS_ResearchRun(void);
 void RS_UpdateGUI(struct base_s *base);
 void RS_ParseTechnologies(const char *name, const char **text);

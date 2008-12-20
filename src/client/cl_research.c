@@ -635,8 +635,6 @@ void RS_RequiredLinksAssign (void)
 
 	/* clean up redirected techs list as it is no longer needed */
 	LIST_Delete(&redirectedTechs);
-
-
 }
 
 /**
@@ -2034,11 +2032,12 @@ void RS_InitStartup (void)
 /**
  * @brief This is called everytime RS_ParseTechnologies is called - to prevent cyclic hash tables
  */
-void RS_ResetHash (void)
+void RS_ResetTechs (void)
 {
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
 	memset(techHash, 0, sizeof(techHash));
 	memset(techHashProvided, 0, sizeof(techHashProvided));
+
 	/* delete redirectedTechs, will be filled during parse */
 	LIST_Delete(&redirectedTechs);
 }

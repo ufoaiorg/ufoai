@@ -7123,7 +7123,7 @@ void CL_ResetSinglePlayerData (void)
 
 	/* called to flood the hash list - because the parse tech function
 	 * was maybe already called */
-	RS_ResetHash();
+	RS_ResetTechs();
 	E_ResetEmployees();
 	INVSH_InitInventory(invList);
 	/* Count Alien team definitions. */

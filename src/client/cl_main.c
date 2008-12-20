@@ -254,7 +254,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		selectedMission = NULL;
 		base = B_GetBaseByIDX(0);
 		B_ClearBase(base);
-		RS_ResetHash();
+		RS_ResetTechs();
 		gd.numBases = 1;
 		gd.numAircraft = 0;
 
