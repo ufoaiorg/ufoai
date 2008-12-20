@@ -128,7 +128,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 	}
 
 	strncpy(commandBuf, execdirBuf, sizeof(commandBuf) - 1);
-	strncat(commandBuf, cmd, sizeof(commandBuf) - 1)
+	strncat(commandBuf, cmd, sizeof(commandBuf) - 1);
 	commandBuf[sizeof(commandBuf) - 1] = '\0';
 
 	// get handles and
