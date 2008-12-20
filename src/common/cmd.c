@@ -860,7 +860,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 	/* and then aliases */
 	if (matches < MAX_COMPLETE) {
 		for (a = cmd_alias; a; a = a->next) {
-			if (strstr(a->name, partial)) {
+			if (!Q_strncmp(partial, a->name, len)) {
 				Com_Printf("[ali] %s\n", a->name);
 				localMatch[matches++] = a->name;
 				if (matches >= MAX_COMPLETE)
