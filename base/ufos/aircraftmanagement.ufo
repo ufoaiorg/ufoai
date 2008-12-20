@@ -203,7 +203,7 @@ aircraft craft_inter_saracen
 	param {
 		speed		12
 		maxspeed	18
-		shield		0
+		shield		3
 		ecm		80
 		damage		50
 		accuracy	70
