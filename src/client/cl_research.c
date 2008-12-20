@@ -633,6 +633,9 @@ void RS_RequiredLinksAssign (void)
 		ll = ll->next;
 	}
 
+	/* clean up redirected techs list as it is no longer needed */
+	LIST_Delete(&redirectedTechs);
+
 
 }
 
@@ -2029,13 +2032,15 @@ void RS_InitStartup (void)
 }
 
 /**
- * @brief This i called everytime RS_ParseTechnologies is called - to prevent cyclic hash tables
+ * @brief This is called everytime RS_ParseTechnologies is called - to prevent cyclic hash tables
  */
 void RS_ResetHash (void)
 {
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
 	memset(techHash, 0, sizeof(techHash));
 	memset(techHashProvided, 0, sizeof(techHashProvided));
+	/* delete redirectedTechs, will be filled during parse */
+	LIST_Delete(&redirectedTechs);
 }
 
 /**
@@ -2088,9 +2093,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	requirements_t *requiredTemp;
 	descriptions_t *descTemp;
 	int i;
-
-	/* Clear linked list. */
-	LIST_Delete(&redirectedTechs);
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		if (!Q_strcmp(gd.technologies[i].id, name)) {
