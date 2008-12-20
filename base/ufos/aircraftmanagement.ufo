@@ -16,16 +16,19 @@
 //	--vv-- Parameters which can get influenced by craft equipement ("craftitem"). --vv--
 //	speed - The speed of the aircraft, which tells how fast the aircraft is.
 //		to convert in km/h, multiply speed by 111 (= pi / 180 * radius_of_earth)
-//	shield - The parameter of aircraft shield, which tells aircraft's protection.
-//	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
+//	shield - The parameter of aircraft shield, which tells aircraft's protection. This value is subtracted from the damage of any weapon hit.
+//	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy. Chance to hit equals Accuracy/ECM.
 //	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
-//	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent).
+//	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy. Chance to hit equals Accuracy/ECM.
 //	range - operationnal range of the aircraft (in degree). 180 degrees is the range between one point and the opposite
 //			point on earth. Used to defined fuelsize. This value must be AFTER speed value.
 //	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //	---------------------------------------------------------------------
 //
 // craftitem
+//
+//	NOTE: Whenever a parameter modifies any of the aircraft's stats (accuracy, ecm, etc), the value will be considered a multiplier
+//	when it's lower than 2, and an absolute modifier when it's higher than 2. This does NOT go for modifiers that are not V_RELABS!
 //
 //	crafttype - The type of the item. Possible values:
 //		weapon
@@ -42,6 +45,7 @@
 //	price		- Cost of buying one item.
 //	craftweapon	- Only for crafttype: ammo, defines which weapon uses this ammo.
 //	size		- The size of the item used to see if it fits the slot (only for weapons).
+//  ecm         - Modifier for craft ECM rating.
 //	installationTime -
 //		The time needed to install/remove the item from the aircraft
 //		any param of aircraft param{}. These values are V_RELABS, and will modifiy
@@ -54,9 +58,10 @@
 //	craftweapon	- The weapon that can use this ammo.
 //	ammo		- The total number of ammo that can be fired with one unit of ammunition.
 //	wspeed		- The speed of the ammo on geoscape once it's been shot.
-//	wrange		- The range of the weapon, which tells the minimum distance of opening fire.
+//	wrange		- The range of the weapon, which tells the minimum distance of opening fire. (this one is not V_RELABS).
 //	delay		- The delay between 2 shots of this ammunition.
-//	wdamage		- For ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS).
+//	wdamage		- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
+//  accuracy	- Modifier to craft accuracy when firing this weapon
 //	---------------------------------------------------------------------
 //
 //=========================================================================
@@ -199,10 +204,10 @@ aircraft craft_inter_saracen
 		speed		12
 		maxspeed	18
 		shield		0
-		ecm		100
-		damage		40
+		ecm		80
+		damage		50
 		accuracy	70
-		range		100
+		range		110
 	}
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
