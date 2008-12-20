@@ -777,73 +777,40 @@ menu popup_button
 		wheel
 	}
 
-	pic popup_button_1
+	button popup_button_1
 	{
 		invis	true
 		tooltip	"*cvar mn_popup_button_tooltip1"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
+		image	menu/button_green_small	blend true
 		pos		"26 192"
 		size	"176 32"
-		out		{ *popup_button_string_1 color "0 0.5 0 1" *popup_button_1 image menu/multi_buttons3 }
-		in		{ *popup_button_string_1 color "1 1 1 1" *popup_button_1 image menu/multi_buttons3a }
-	}
-
-	string popup_button_string_1
-	{
-		invis	true
 		string	"*cvar mn_popup_button_text1"
 		font	f_menu
 		color	"0 0.5 0 1"
-		pos		"114 208"
-		align	cc
 	}
 
-	pic popup_button_2
+	button popup_button_2
 	{
 		invis	true
 		tooltip	"*cvar mn_popup_button_tooltip2"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"296 192"
+		image	menu/button_green_small	blend true
 		size	"176 32"
-		out		{ *popup_button_string_2 color "0 0.5 0 1" *popup_button_2 image menu/multi_buttons3 }
-		in		{ *popup_button_string_2 color "1 1 1 1" *popup_button_2 image menu/multi_buttons3a }
-	}
-
-	string popup_button_string_2
-	{
-		invis	true
+		pos		"296 192"
 		string	"*cvar mn_popup_button_text2"
 		font	f_menu
 		color	"0 0.5 0 1"
-		pos		"384 208"
-		align	cc
 	}
 
-	pic popup_button_3
+	button popup_button_3
 	{
 		invis	true
 		tooltip	"*cvar mn_popup_button_tooltip3"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
+		image	menu/button_green_small	blend true
 		pos		"296 156"
 		size	"176 32"
-		out		{ *popup_button_string_3 color "0 0.5 0 1" *popup_button_3 image menu/multi_buttons3 }
-		in		{ *popup_button_string_3 color "1 1 1 1" *popup_button_3 image menu/multi_buttons3a }
-	}
-
-	string popup_button_string_3
-	{
-		invis	true
 		string	"*cvar mn_popup_button_text3"
 		font	f_menu
 		color	"0 0.5 0 1"
-		pos		"384 172"
-		align	cc
 	}
 
 	func init

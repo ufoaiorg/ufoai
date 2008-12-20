@@ -219,26 +219,26 @@ menu mp_team
 		click		{ cmd "mn_slot 7;" }
 	}
 
-	custombutton button_load
+	button button_load
 	{
 		pos	"365 130"
 		size "128 64"
 		tooltip "_Load team from current selected slot"
 		click	{ cmd "loadteamslot;" }
-		image	menu/multi_buttons2
+		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Load"
 	}
 
-	custombutton button_save
+	button button_save
 	{
 		pos	"365 200"
 		tooltip	"_Save team to current selected slot"
 		size "128 64"
 		click	{ cmd "saveteamslot;team_comments;" }
-		image	menu/multi_buttons2
+		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -256,39 +256,39 @@ menu mp_team
 		font	f_big
 	}
 
-	custombutton button_edit
+	button button_edit
 	{
 		pos	"85 490"
 		tooltip	"_Edit your team after loading"
 		size "128 64"
 		click	{ cmd "mn_push team;" }
-		image	menu/multi_buttons2
+		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Edit"
 	}
 
-	custombutton button_new
+	button button_new
 	{
 		pos	"225 490"
 		tooltip	"_Generate a new team"
 		size "128 64"
 		click	{ cmd "team_new;" }
-		image	menu/multi_buttons2
+		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_New"
 	}
 
-	custombutton button_auto
+	button button_auto
 	{
 		pos	"365 490"
 		tooltip	"_Generate a team automatically"
 		size "128 64"
 		click	{ cmd "game_exit;assign_initial;" }
-		image	menu/multi_buttons2
+		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
