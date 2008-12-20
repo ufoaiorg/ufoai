@@ -40,7 +40,6 @@
 #include "container/array.h"
 #include "scenelib.h"
 #include "render.h"
-#include "cmdlib.h"
 #include "math/frustum.h"
 
 #include "gtkutil/widget.h"
@@ -1561,7 +1560,7 @@ void CamWnd::draw ()
 
 void CamWnd::BenchMark ()
 {
-	const double dStart = Sys_DoubleTime();
+	const double dStart = clock() / 1000.0;
 	for (int i = 0; i < 100; i++) {
 		Vector3 angles;
 		angles[CAMERA_ROLL] = 0;
@@ -1569,7 +1568,7 @@ void CamWnd::BenchMark ()
 		angles[CAMERA_YAW] = static_cast<float> (i * (360.0 / 100.0));
 		Camera_setAngles(*this, angles);
 	}
-	const double dEnd = Sys_DoubleTime();
+	const double dEnd = clock() / 1000.0;
 	globalOutputStream() << FloatFormat(dEnd - dStart, 5, 2) << " seconds\n";
 }
 

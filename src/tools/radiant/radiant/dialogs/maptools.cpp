@@ -319,6 +319,39 @@ void ToolsCheckErrors (void)
 	}
 }
 
+static void compileReadProgress (void *ex, void *buffer)
+{
+	g_return_if_fail(buffer != NULL);
+	g_return_if_fail(ex != NULL);
+
+	gchar *buf = (gchar*)buffer;
+
+	globalOutputStream() << buf << "\n";
+
+	const gboolean finallight = strstr(buf, "FINALLIGHT:") != 0;
+	const gboolean facelights = strstr(buf, "FACELIGHTS:") != 0;
+	const gboolean conncheck = strstr(buf, "CONNCHECK:") != 0;
+	const gboolean unitcheck = strstr(buf, "UNITCHECK:") != 0;
+	const gboolean level = strstr(buf, "LEVEL:") != 0;
+
+	gfloat total_fraction;
+
+	if (finallight)
+		total_fraction = 5.0;
+	else if (facelights)
+		total_fraction = 4.0;
+	else if (conncheck)
+		total_fraction = 3.0;
+	else if (unitcheck)
+		total_fraction = 2.0;
+	else if (level)
+		total_fraction = 1.0;
+	else
+		total_fraction = 0.0;
+
+	total_fraction *= (1.0 / 5.0);
+}
+
 /**
  * @todo Implement gui to controll options
  */
@@ -339,22 +372,16 @@ void ToolsCompile (void)
 
 	if (file_exists(compilerBinaryWithPath)) {
 		const char* fullname = Map_Name(g_map);
-		char bufCmd[1024];
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
 
-		// attach parameter and map name
-		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, fullname);
-		bufCmd[sizeof(bufCmd) - 1] = '\0';
-
-		char* output = NULL;
-		/** @todo thread this and update the main window */
-		exec_run_cmd(bufCmd, &output);
-		if (output) {
-			/** @todo parse and display this in a gtk window */
-			globalOutputStream() << output;
-			free(output);
-		} else
-			globalOutputStream() << "-------------------\nCommand: " << bufCmd << "\n-------------------\n";
+		Exec *compilerRun = exec_new("CompileRun", "Compiles the current map with the mapcompiler");
+		ExecCmd *cmd = exec_cmd_new(compilerRun);
+		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
+		exec_cmd_add_arg(cmd, compiler_parameter);
+		exec_cmd_add_arg(cmd, fullname);
+		cmd->read_proc = compileReadProgress;
+		cmd->working_dir = g_path_get_basename(compilerBinaryWithPath);
+		exec_run(compilerRun);
 	} else {
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";

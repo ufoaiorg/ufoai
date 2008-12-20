@@ -170,7 +170,7 @@ void HomePaths_Realise (void)
 		StringOutputStream path(256);
 		path << DirectoryCleaned(g_get_home_dir()) << prefix << "/";
 		g_qeglobals.m_userEnginePath = path.c_str();
-		Q_mkdir(g_qeglobals.m_userEnginePath.c_str());
+		g_mkdir_with_parents(g_qeglobals.m_userEnginePath.c_str(), 775);
 	} else
 #endif
 	{
@@ -183,7 +183,7 @@ void HomePaths_Realise (void)
 		g_qeglobals.m_userGamePath = path.c_str();
 	}
 	ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "HomePaths_Realise: user-game-path is empty");
-	Q_mkdir(g_qeglobals.m_userGamePath.c_str());
+	g_mkdir_with_parents(g_qeglobals.m_userGamePath.c_str(), 775);
 }
 
 ModuleObservers g_homePathObservers;
@@ -1935,13 +1935,13 @@ static GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
 
 static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status])
 {
-	GtkTable* table = GTK_TABLE(gtk_table_new(1, c_count_status, FALSE));
+	GtkTable* table = GTK_TABLE(gtk_table_new(1, c_count_status + 1, FALSE));
 	gtk_widget_show(GTK_WIDGET(table));
 
 	{
 		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-		gtk_misc_set_padding(GTK_MISC(label), 4, 2);
+		gtk_misc_set_padding(GTK_MISC(label), 2, 2);
 		gtk_widget_show(GTK_WIDGET(label));
 		gtk_table_attach_defaults(table, GTK_WIDGET(label), 0, 1, 0, 1);
 		pStatusLabel[c_command_status] = GTK_WIDGET(label);
@@ -1956,7 +1956,7 @@ static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status]
 		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
 		gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-		gtk_misc_set_padding(GTK_MISC(label), 4, 2);
+		gtk_misc_set_padding(GTK_MISC(label), 2, 2);
 		gtk_widget_show(GTK_WIDGET(label));
 		gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(label));
 		pStatusLabel[i] = GTK_WIDGET(label);

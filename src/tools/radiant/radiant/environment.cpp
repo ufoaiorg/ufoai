@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "debugging/debugging.h"
 #include "os/path.h"
 #include "cmdlib.h"
-
+#include <time.h>
 
 static int g_argc;
 static char** g_argv;
@@ -128,10 +128,8 @@ void environment_init (int argc, char* argv[])
 
 	{
 		StringOutputStream home(256);
-		home << DirectoryCleaned(g_get_home_dir()) << ".ufoai/";
-		Q_mkdir(home.c_str());
-		home << "radiant/";
-		Q_mkdir(home.c_str());
+		home << DirectoryCleaned(g_get_home_dir()) << ".ufoai/radiant/";
+		g_mkdir_with_parents(home.c_str(), 775);
 		home_path = home.c_str();
 		globalOutputStream() << "HomePath: " << home_path.c_str();
 	}
@@ -181,10 +179,8 @@ void environment_init (int argc, char* argv[])
 		} else {
 			home << PathCleaned(appdata);
 		}
-		home << "/UFOAI/";
-		Q_mkdir(home.c_str());
-		home << "/RadiantSettings/";;
-		Q_mkdir(home.c_str());
+		home << "/UFOAI/RadiantSettings/";
+		g_mkdir_with_parents(home.c_str(), 775);
 		home_path = home.c_str();
 		globalOutputStream() << "HomePath: " << home_path.c_str();
 	}

@@ -34,6 +34,9 @@
 
 #include "string/string.h"
 
+#include <glib.h>
+#include <glib/gstdio.h>
+
 #if defined(WIN32)
 # define OS_CASE_INSENSITIVE
 # ifndef PATH_MAX

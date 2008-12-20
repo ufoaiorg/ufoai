@@ -69,7 +69,7 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 
 #include "iundo.h"
 
-#include <gtk/gtkmain.h>
+#include <gtk/gtk.h>
 
 #include "cmdlib.h"
 #include "os/file.h"
@@ -279,7 +279,7 @@ static void streams_init(void) {
 
 static void paths_init(void) {
 	const char* home = environment_get_home_path();
-	Q_mkdir(home);
+	g_mkdir_with_parents(home, 775);
 
 	{
 		StringOutputStream path(256);
@@ -287,7 +287,7 @@ static void paths_init(void) {
 		g_strSettingsPath = path.c_str();
 	}
 
-	Q_mkdir(g_strSettingsPath.c_str());
+	g_mkdir_with_parents(g_strSettingsPath.c_str(), 775);
 
 	g_strAppPath = environment_get_app_path();
 
@@ -426,6 +426,8 @@ int main (int argc, char* argv[]) {
 
 	gtk_disable_setlocale();
 	gtk_init(&argc, &argv);
+
+	g_thread_init(NULL);
 
 	// redirect Gtk warnings to the console
 	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |

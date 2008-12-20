@@ -1368,8 +1368,8 @@ void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 		XY_SnapToGrid(m_mousePosition);
 
 		StringOutputStream status(64);
-		status << "x:: " << FloatFormat(m_mousePosition[0], 6, 1) << "  y:: " << FloatFormat(m_mousePosition[1], 6, 1)
-				<< "  z:: " << FloatFormat(m_mousePosition[2], 6, 1);
+		status << "x: " << FloatFormat(m_mousePosition[0], 6, 1) << "  y: " << FloatFormat(m_mousePosition[1], 6, 1)
+				<< "  z: " << FloatFormat(m_mousePosition[2], 6, 1);
 		g_pParentWnd->SetStatusText(g_pParentWnd->m_position_status, status.c_str());
 
 		if (g_bCrossHairs) {

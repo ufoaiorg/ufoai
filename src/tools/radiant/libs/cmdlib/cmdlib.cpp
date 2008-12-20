@@ -31,6 +31,16 @@
 # include <sys/wait.h>
 #endif
 
+#ifdef _WIN32
+#define pipe(childpipe)
+#define waitpid(pid,exitcode,flags)
+#define kill(pid, signal)
+#define SIGQUIT 0
+#define SIGTERM 0
+#define SIGKILL 0
+#define WNOHANG 0
+#endif
+
 
 static gint child_child_pipe[2];
 static gboolean show_trace = TRUE;
@@ -156,7 +166,6 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 
 		/* If the process was cancelled then we kill off the child */
 		if (exec_cmd_get_state(e) == CANCELLED) {
-#ifndef _WIN32
 			g_debug("exec_spawn_process - killing process with pid [%d]\n", e->pid);
 			gint ret = kill(e->pid, SIGQUIT);
 			g_debug("exec_spawn_process - SIGQUIT returned [%d]\n", ret);
@@ -168,15 +177,10 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 					g_debug("exec_spawn_process - SIGKILL returned [%d]\n", ret);
 				}
 			}
-#else
-			g_warning("exec_spawn_process - killing process with pid [%d] is not implemented for windows\n", e->pid);
-#endif
 		}
 
 		/* Reap the child so we don't get a zombie */
-#ifndef _WIN32
 		waitpid(e->pid, &e->exit_code, 0);
-#endif
 		g_spawn_close_pid(e->pid);
 		close(std_out);
 		close(std_err);
