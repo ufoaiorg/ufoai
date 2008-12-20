@@ -20,14 +20,17 @@
  */
 
 #include "cmdlib.h"
-#include <sys/wait.h>
 #include <glib/gprintf.h>
 #include <string.h>
 #include <unistd.h>
 
-#if defined (__FreeBSD__) || defined(__OpenBSD__)
-#include <signal.h>
+#if defined (__FreeBSD__) || defined(__OpenBSD__) || defined(__linux__)
+# if defined (__FreeBSD__) || defined(__OpenBSD__)
+#  include <signal.h>
+# endif
+# include <sys/wait.h>
 #endif
+
 
 static gint child_child_pipe[2];
 static gboolean show_trace = TRUE;
@@ -78,7 +81,10 @@ static gboolean exec_channel_callback (GIOChannel *channel, GIOCondition conditi
 			cont = FALSE;
 		} else if (cmd->read_proc) {
 			GError *error = NULL;
-			gchar *converted = g_convert_with_fallback(buffer, bytes, "UTF-8", "ISO-8859-1", "", NULL, NULL, &error);
+			const gchar* to_codeset = "UTF-8";
+			const gchar* from_codeset = "ISO-8859-1";
+			gchar* fallback = NULL;
+			gchar *converted = g_convert_with_fallback(buffer, bytes, to_codeset, from_codeset, fallback, NULL, NULL, &error);
 			if (converted != NULL) {
 				cmd->read_proc(cmd, converted);
 				g_free(converted);
@@ -150,6 +156,7 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 
 		/* If the process was cancelled then we kill off the child */
 		if (exec_cmd_get_state(e) == CANCELLED) {
+#ifndef _WIN32
 			g_debug("exec_spawn_process - killing process with pid [%d]\n", e->pid);
 			gint ret = kill(e->pid, SIGQUIT);
 			g_debug("exec_spawn_process - SIGQUIT returned [%d]\n", ret);
@@ -161,10 +168,15 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 					g_debug("exec_spawn_process - SIGKILL returned [%d]\n", ret);
 				}
 			}
+#else
+			g_warning("exec_spawn_process - killing process with pid [%d] is not implemented for windows\n", e->pid);
+#endif
 		}
 
 		/* Reap the child so we don't get a zombie */
+#ifndef _WIN32
 		waitpid(e->pid, &e->exit_code, 0);
+#endif
 		g_spawn_close_pid(e->pid);
 		close(std_out);
 		close(std_err);

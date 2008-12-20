@@ -34,7 +34,7 @@ typedef enum
 typedef struct
 {
 	GPtrArray *args;
-	pid_t pid;
+	GPid pid;
 	gint exit_code;
 	ExecState state;
 	GMutex *state_mutex;

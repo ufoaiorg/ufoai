@@ -320,7 +320,7 @@ void ToolsCheckErrors (void)
 }
 
 /**
- * @todo Implement me
+ * @todo Implement gui to controll options
  */
 void ToolsCompile (void)
 {
