@@ -222,7 +222,7 @@ void ToolsCheckErrors (void)
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
 		// attach parameter and map name
-		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, fullname);
+		snprintf(bufCmd, sizeof(bufCmd) - 1, "\"%s\" %s \"%s\"", compilerBinaryWithPath, compiler_parameter, fullname);
 		bufCmd[sizeof(bufCmd) - 1] = '\0';
 
 		char* output = NULL;
