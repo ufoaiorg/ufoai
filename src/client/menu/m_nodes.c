@@ -152,7 +152,13 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	int sx, sy, tx, ty, i;
 	vec2_t nodepos;
 
-	/* skip all unactive nodes */
+	/*	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
+	if (mn.numNodes >= MAX_MENUNODES)
+		Sys_Error("MAX_MENUNODES hit");
+	memset(node, 0, sizeof(*node));
+	node->behaviour = MN_GetNodeBehaviour(type);
+	return node;
+ skip all unactive nodes */
 	if (node->behaviour->isVirtual)
 		return qfalse;
 
@@ -209,7 +215,9 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 }
 
 /**
- * @todo Change the @c type to @c char* (behaviourName)
+ * @brief Allocate a node into the menu memory
+ * @note Its not a dynamic memory allocation. Please only use it at the loading time
+ * @todo Assert out when we are not in parsing/loading stage
  */
 menuNode_t* MN_AllocNode (const char* type)
 {

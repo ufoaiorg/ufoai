@@ -93,10 +93,13 @@ static const value_t properties[] = {
 	{"whdown", V_SPECIAL_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
 	{"change", V_SPECIAL_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
 
+	/* maybe only button */
+	{"icon", V_SPECIAL_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
+
 	/* very special attribute */
 	{"excluderect", V_SPECIAL_EXCLUDERECT, 0, 0},
 
-	{NULL, V_NULL, 0, 0},
+	{NULL, V_NULL, 0, 0}
 };
 
 /**

@@ -116,7 +116,6 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 	tooltipVisible = qtrue;
 }
 
-
 /**
  * @brief Draws the menu stack
  * @todo move DrawMenusTest here

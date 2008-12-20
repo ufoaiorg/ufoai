@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_window.h"
 
 void MN_ParseMenu(const char *name, const char **text);
+void MN_ParseIcon(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const menu_t* const menu, void *ref);
 const char *MN_GetReferenceString(const menu_t* const menu, const char *ref);
@@ -44,6 +45,6 @@ qboolean MN_ScriptSanityCheck(void);
 #define	V_SPECIAL_ACTION		(V_SPECIAL + 0)	/**< Identify an action type into the value_t structure */
 #define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)	/**< Identify a special attribute, use special parse function */
 #define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) /**< Identify a special attribute, use special parse function */
-
+#define V_SPECIAL_ICONREF		(V_SPECIAL + 3) /**< Identify a special attribute, use special parse function */
 
 #endif

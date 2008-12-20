@@ -1,0 +1,43 @@
+// icon definitions for GUI
+
+icon geoscape {
+	image "menu/icon_pack1"
+	texl "0 0"
+	size "42 42"
+}
+
+icon check {
+	image "menu/icon_pack1"
+	texl "48 0"
+	size "42 42"
+}
+
+icon return {
+	image "menu/icon_pack1"
+	texl "101 36"
+	size "25 24"
+}
+
+icon research_stop {
+	image "menu/icon_pack1"
+	texl "112 0"
+	size "49 31"
+}
+
+icon research_start {
+	image "menu/icon_pack1"
+	texl "160 0"
+	size "49 31"
+}
+
+icon mail {
+	image "menu/icon_pack1"
+	texl "225 5"
+	size "30 23"
+}
+
+icon garbage {
+	image "menu/icon_pack1"
+	texl "229 35"
+	size "22 25"
+}

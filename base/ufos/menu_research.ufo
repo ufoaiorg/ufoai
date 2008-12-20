@@ -772,6 +772,7 @@ menu research
 	{
 		tooltip	"_Stop research"
 		image	menu/button_research
+		icon	research_stop
 		blend	true
 		pos		"815 680"
 		texl    "0 0"
@@ -783,6 +784,7 @@ menu research
 	{
 		tooltip	"_Start research"
 		image	menu/button_research
+		icon	research_start
 		blend	true
 		pos		"745 680"
 		texl	"64 0"
@@ -794,6 +796,7 @@ menu research
 	{
 		tooltip	"_Show research proposal"
 		image	menu/button_research
+		icon	mail
 		blend	true
 		pos		"885 680"
 		texl	"128 0"

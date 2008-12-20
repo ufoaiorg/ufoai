@@ -148,6 +148,7 @@
 		<Unit filename="..\..\base\ufos\events.ufo" />
 		<Unit filename="..\..\base\ufos\fonts.ufo" />
 		<Unit filename="..\..\base\ufos\gametypes.ufo" />
+		<Unit filename="..\..\base\ufos\icons.ufo" />
 		<Unit filename="..\..\base\ufos\installation.ufo" />
 		<Unit filename="..\..\base\ufos\inventory.ufo" />
 		<Unit filename="..\..\base\ufos\language.ufo" />
@@ -441,6 +442,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_font.h" />
+		<Unit filename="..\..\src\client\menu\m_icon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_icon.h" />
 		<Unit filename="..\..\src\client\menu\m_input.c">
 			<Option compilerVar="CC" />
 		</Unit>

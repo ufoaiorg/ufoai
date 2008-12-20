@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_parse.h"
 #include "m_main.h"
 #include "m_actions.h"
+#include "m_icon.h"
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
 
@@ -594,7 +595,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		if (!val) {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseNodeBody: unknown property \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
+			Com_Printf("MN_ParseNodeBody: unknown property \"%s\", node ignored (node %s.%s)\n", *token, node->menu->name, node->name);
 			return qfalse;
 		}
 
@@ -623,9 +624,19 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			if (!result)
 				return qfalse;
 
+		} else if (val->type == V_SPECIAL_ICONREF) {
+			menuIcon_t** icon = (menuIcon_t**) ((byte *) node + val->ofs);
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			*icon = MN_GetIconByName(*token);
+			if (*icon == NULL) {
+				Com_Printf("MN_ParseNodeBody: icon '%s' not found (node %s.%s)\n", *token, node->menu->name, node->name);
+			}
+
 		} else {
 			/* unknown val->type !!!!! */
-			Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" ignored (node \"%s\", menu %s)\n", val->type, node->name, node->menu->name);
+			Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" ignored (node %s.%s)\n", val->type, node->menu->name, node->name);
 			return qfalse;
 		}
 	} while (*text);
@@ -951,6 +962,71 @@ void MN_ParseMenuModel (const char *name, const char **text)
 			Com_Printf("MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n", token, name);
 
 	} while (*text);
+}
+
+void MN_ParseIcon (const char *name, const char **text)
+{
+	menuIcon_t *icon;
+	const char *token;
+
+	/* search for menus with same name */
+	icon = MN_AllocIcon(name);
+
+	/* get it's body */
+	token = COM_Parse(text);
+	assert(Q_strcmp(token, "{") == 0);
+
+	/* read properties */
+	while (qtrue) {
+		const value_t *property;
+
+		token = COM_Parse(text);
+		if (*text == NULL)
+			return;
+		if (token[0] == '}')
+			break;
+
+		property = MN_FindPropertyByName(mn_iconProperties, token);
+		if (!property) {
+			Com_Printf("MN_ParseOption: unknown options property: '%s' - ignore it\n", token);
+			return;
+		}
+
+		/* get parameter values */
+		token = COM_Parse(text);
+		if (*text == NULL)
+			return;
+
+		if (!(property->type & V_MENU_COPY)) {
+			size_t bytes;
+			qboolean result = Com_ParseValue(icon, token, property->type, property->ofs, property->size, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				return;
+			}
+		} else {
+			size_t bytes;
+			qboolean result;
+			/* a reference to data is handled like this */
+			*(byte **) ((byte *) icon + property->ofs) = mn.curadata;
+			/* references are parsed as string */
+
+			/* sanity check */
+			if ((property->type&V_BASETYPEMASK) == V_STRING && strlen(token) > MAX_VAR - 1) {
+				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", token, property->string);
+				return;
+			}
+
+			result = Com_ParseValue(mn.curadata, token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				return;
+			}
+			mn.curadata += bytes;
+		}
+	}
+
+	return;
 }
 
 /**

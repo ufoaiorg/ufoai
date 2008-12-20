@@ -1672,6 +1672,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		MN_ParseMenuModel(name, text);
 	else if (!Q_strncmp(type, "menu", 4))
 		MN_ParseMenu(name, text);
+	else if (!Q_strncmp(type, "icon", 4))
+		MN_ParseIcon(name, text);
 	else if (!Q_strncmp(type, "particle", 8))
 		CL_ParseParticle(name, text);
 	else if (!Q_strncmp(type, "sequence", 8))

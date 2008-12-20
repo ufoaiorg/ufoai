@@ -78,6 +78,8 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
+struct menuIcon_s;
+
 /* extradata struct */
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_abstractscrollbar.h"
@@ -117,8 +119,9 @@ typedef struct menuNode_s {
 	qboolean disabled;			/**< true if the node is inactive */
 	int mousefx;
 	char* text;
-	const char* font;	/**< Font to draw text */
-	const char* tooltip; /**< holds the tooltip */
+	const char* font;			/**< Font to draw text */
+	const char* tooltip;		/**< holds the tooltip */
+	struct menuIcon_s *icon;	/**< Link to an icon */
 
 	/* not used a lot */
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
