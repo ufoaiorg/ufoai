@@ -50,14 +50,16 @@ static void CL_GetTipOfTheDay_f (void)
 	int rnd;
 	tipOfTheDay_t* tip;
 
+	/** @todo not his role, remove it when its possible */
 	if (!tipCount) {
-		MN_PopMenu(qfalse);
+		MN_CloseMenu("popup_tipoftheday");
 		Com_Printf("No tips parsed\n");
 		return;
 	}
 
+	/** @todo not his role, and wrong behaviour, remove it when its possible */
 	if (!cl_showTipOfTheDay->integer) {
-		MN_PopMenu(qfalse);
+		MN_CloseMenu("popup_tipoftheday");
 		return;
 	}
 

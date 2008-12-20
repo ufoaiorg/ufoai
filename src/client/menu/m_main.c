@@ -302,7 +302,10 @@ static void MN_CloseAllMenu (void)
 	}
 }
 
-static void MN_CloseMenu (menu_t *menu)
+/**
+ * @todo FInd  better name
+ */
+static void MN_CloseMenuByRef (menu_t *menu)
 {
 	int i;
 
@@ -333,6 +336,18 @@ static void MN_CloseMenu (menu_t *menu)
 	MN_InvalidateMouse();
 }
 
+void MN_CloseMenu (const char* name)
+{
+	menu_t *menu = MN_FindMenuByName(name);
+	if (menu == NULL) {
+		Com_Printf("Menu '%s' dont exists\n", name);
+		return;
+	}
+
+	/* found the correct add it to stack or bring it on top */
+	MN_CloseMenuByRef(menu);
+}
+
 /**
  * @brief Pops a menu from the menu stack
  * @param[in] all If true pop all menus from stack
@@ -353,7 +368,7 @@ void MN_PopMenu (qboolean all)
 		menu_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
 		if (mainMenu->parent)
 			mainMenu = mainMenu->parent;
-		MN_CloseMenu(mainMenu);
+		MN_CloseMenuByRef(mainMenu);
 	}
 
 	if (!all && mn.menuStackPos == 0) {
@@ -386,21 +401,12 @@ void MN_PopMenu (qboolean all)
  */
 static void MN_CloseMenu_f (void)
 {
-	menu_t *menu;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 		return;
 	}
 
-	menu = MN_FindMenuByName(Cmd_Argv(1));
-	if (menu == NULL) {
-		Com_Printf("Didn't find menu \"%s\"\n", Cmd_Argv(1));
-		return;
-	}
-
-	/* found the correct add it to stack or bring it on top */
-	MN_CloseMenu(menu);
+	MN_CloseMenu(Cmd_Argv(1));
 }
 
 /**
