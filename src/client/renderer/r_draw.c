@@ -902,10 +902,6 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 	/* go to a new matrix */
 	glPushMatrix();
 
-	/* deactivate writing in depth buffer to be able to have a skybox close to the camera,
-	 * and to see at the same time objects that are below skybox (i.e. with z > -SKYBOX_DEPTH) */
-	glDepthMask(GL_FALSE);
-
 	/* we must center the skybox on the camera border of view, and not on the earth, in order
 	 * to see only the inside of the cube */
 	glTranslatef(pos[0], pos[1], -SKYBOX_DEPTH);
@@ -924,8 +920,6 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 
 	/* draw the cube */
 	glDrawArrays(GL_QUADS, 0, 24);
-
-	glDepthMask(GL_TRUE);
 
 	/* restore previous matrix */
 	glPopMatrix();
