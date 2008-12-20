@@ -33,6 +33,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "igl.h"
 #include "../mainframe.h"
 
+#ifdef DEBUG
+# define ABOUT_DEBUG "Debug build"
+#else
+# define ABOUT_DEBUG "Release build"
+#endif
+
 void DoAbout (void)
 {
 	ModalDialog dialog;
@@ -65,7 +71,7 @@ void DoAbout (void)
 			{
 				GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
 				gtk_label_set_markup(label, "<b>UFORadiant " RADIANT_VERSION "</b>\n"
-					__DATE__ "\n\n"
+					__DATE__ " " ABOUT_DEBUG "\n\n"
 					RADIANT_ABOUTMSG "\n\n"
 					"This program is free software\n"
 					"licensed under the GNU GPL.\n\n"
