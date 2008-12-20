@@ -32,9 +32,9 @@
 #endif
 
 #ifdef _WIN32
-#define pipe(childpipe)
-#define waitpid(pid,exitcode,flags)
-#define kill(pid, signal)
+#define pipe(childpipe) 0
+#define waitpid(pid,exitcode,flags) 0
+#define kill(pid, signal) 0
 #define SIGQUIT 0
 #define SIGTERM 0
 #define SIGKILL 0
