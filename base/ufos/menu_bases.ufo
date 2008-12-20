@@ -26,23 +26,14 @@ menu bases
 		pos		"512 256"
 	}
 
-	pic back_geo
+	custombutton back_geo
 	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
 		tooltip	"_Back to geoscape"
-		image	menu/button_mapmen_options2
 		pos	"950 10"
-		texl	"0 64"
-		texh	"64 128"
-		mousefx false
+		icon geoscape
 		click	{ cmd "mn_pop;check_baseattacks;" }
-		out	{
-				*back_geo texl "0 64"
-				*back_geo texh "64 128"
-			}
-		in	{
-				*back_geo texl "64 64"
-				*back_geo texh "128 128"
-			}
 	}
 
 	// ==================

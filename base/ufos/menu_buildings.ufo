@@ -56,26 +56,14 @@ menu buildings
 	// buttons
 	// ==================
 
-	pic back
+	custombutton back
 	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
 		tooltip	"_Back to baseview"
-		image	menu/button_mapmen_options2
 		pos		"950 10"
-		texl	"0 0"
-		texh	"64 64"
-		mousefx	false
-		click
-		{
-			cmd mn_pop;
-		}
-		out {
-				*back texl "0 0"
-				*back texh "64 64"
-		}
-		in {
-				*back texl "64 0"
-				*back texh "128 64"
-		}
+		icon	return
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
