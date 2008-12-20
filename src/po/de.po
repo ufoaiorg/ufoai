@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-12-18 21:42+0100\n"
-"PO-Revision-Date: 2008-12-18 21:43+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2008-12-20 11:44+0100\n"
+"Last-Translator: Christoph Hartwig <rudolfo.pinewood@googlemail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1248,35 +1248,35 @@ msgstr "Luftabwehr Stellung"
 
 #: ../base/ufos/installation.ufo:42
 msgid "Installation #1"
-msgstr "Installation #1"
+msgstr "Externe Einrichtung #1"
 
 #: ../base/ufos/installation.ufo:43
 msgid "Installation #2"
-msgstr "Installation #2"
+msgstr "Externe Einrichtung #2"
 
 #: ../base/ufos/installation.ufo:44
 msgid "Installation #3"
-msgstr "Installation #3"
+msgstr "Externe Einrichtung #3"
 
 #: ../base/ufos/installation.ufo:45
 msgid "Installation #4"
-msgstr "Installation #4"
+msgstr "Externe Einrichtung #4"
 
 #: ../base/ufos/installation.ufo:46
 msgid "Installation #5"
-msgstr "Installation #5"
+msgstr "Externe Einrichtung #5"
 
 #: ../base/ufos/installation.ufo:47
 msgid "Installation #6"
-msgstr "Installation #6"
+msgstr "Externe Einrichtung #6"
 
 #: ../base/ufos/installation.ufo:48
 msgid "Installation #7"
-msgstr "Installation #7"
+msgstr "Externe Einrichtung #7"
 
 #: ../base/ufos/installation.ufo:49
 msgid "Installation #8"
-msgstr "Installation #8"
+msgstr "Externe Einrichtung #8"
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -2573,7 +2573,7 @@ msgstr "Max. Basen erreicht"
 #: ../base/ufos/menu_geoscape.ufo:353
 #: ../base/ufos/menu_geoscape.ufo:366
 msgid "Create installation"
-msgstr ""
+msgstr "Externe Einrichtung anlegen"
 
 #: ../base/ufos/menu_geoscape.ufo:365
 msgid "Max. installations reached"
@@ -4564,12 +4564,11 @@ msgstr "Schließe Mailclient"
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
-msgstr "Equippent montieren"
+msgstr "Ausrüstung montieren"
 
 #: ../base/ufos/msgcategories.ufo:14
-#, fuzzy
 msgid "installation_construction"
-msgstr "Tankstelle"
+msgstr "Bau externer Einrichtungen"
 
 #: ../base/ufos/msgcategories.ufo:21
 msgid "research"
@@ -11949,7 +11948,7 @@ msgstr "Elektronik:\t%i an %i"
 #: client/cl_aircraft.c:829
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
-msgstr "Ein neues (a %s) hochwertiges Fahrzeug steht in Basis %s zu verfügung"
+msgstr "Ein neues hochwertiges Fahrzeug (ein %s) steht in Basis %s zu verfügung"
 
 #: client/cl_aircraft.c:868
 msgid "No operational hangars at that base."
@@ -13034,7 +13033,7 @@ msgstr "Externe Einrichtung zerstört"
 
 #: client/cl_installation.c:475
 msgid "Destroy Installation"
-msgstr "Externe Einrichtung zerströren"
+msgstr "Externe Einrichtung zerstören"
 
 #: client/cl_installation.c:475
 msgid "Do you really want to destroy this installation?"
@@ -13306,9 +13305,8 @@ msgid "Select the desired location of the new base on the map.\n"
 msgstr "Wähle die gewünschte Position der neuen Basis auf der Karte.\n"
 
 #: client/cl_map.c:1892
-#, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
-msgstr "Wähle die gewünschte Position der neuen Basis auf der Karte.\n"
+msgstr "Wähle die gewünschte Position der neuen externen Einrichtung auf der Karte.\n"
 
 #: client/cl_map.c:1897
 msgid "Aliens are attacking our base at this very moment.\n"
@@ -13358,7 +13356,7 @@ msgstr "ETA:\t%sh\n"
 
 #: client/cl_mapfightequip.c:850
 msgid "No defence of this type in this installation\n"
-msgstr "Keine Verteidigungsanlagen dieser Art in dieser Basis.\n"
+msgstr "Keine Verteidigungsanlagen dieser Art in dieser externen Einrichtung.\n"
 
 #: client/cl_mapfightequip.c:854
 #: client/cl_mapfightequip.c:868
@@ -13441,7 +13439,7 @@ msgstr "%s wurde erfolgreich aus dem Flugzeug %s in der basis %s erntfernt."
 #: client/cl_mapfightequip.c:1038
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at base %s"
-msgstr ""
+msgstr "%s wurde erfolgreich entfernt. Einbau von %s in Flugzeug %s (Basis %s) wird begonnen."
 
 #: client/cl_mapfightequip.c:1046
 #, c-format
@@ -15200,33 +15198,32 @@ msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Verstecke das HUD (ESC reaktiviert es)"
 
 #: client/menu/m_messages.c:33
-#, fuzzy
 msgid "installation_installed"
-msgstr "installation installed"
+msgstr "Ausrüstung eingebaut"
 
 #: client/menu/m_messages.c:34
 msgid "installation_removed"
-msgstr "Externe Einrichtungen entfernt"
+msgstr "Ausrüstung entfernt"
 
 #: client/menu/m_messages.c:35
 msgid "installation_replaced"
-msgstr "Externe Einrichtungen ersetzt"
+msgstr "Ausrüstung ersetzt"
 
 #: client/menu/m_messages.c:36
 msgid "installation_build_started"
-msgstr "Bau der externen Einrichtungen gestartet"
+msgstr "Bau der externen Einrichtung gestartet"
 
 #: client/menu/m_messages.c:37
 msgid "installation_build_finished"
-msgstr "Bau der externen Einrichtungen abgeschlossen"
+msgstr "Bau der externen Einrichtung abgeschlossen"
 
 #: client/menu/m_messages.c:38
 msgid "installation_destroyed"
-msgstr "Externe Einrichtungen zerstört"
+msgstr "Externe Einrichtung zerstört"
 
 #: client/menu/m_messages.c:39
 msgid "research_new_proposed"
-msgstr "Zeige Forschungsantrag"
+msgstr "Neuer Forschungsantrag verfügbar"
 
 #: client/menu/m_messages.c:40
 msgid "research_completed"
@@ -15254,7 +15251,7 @@ msgstr "Zufriedenheit der Nation hat sich geändert"
 
 #: client/menu/m_messages.c:46
 msgid "nation_unhappy"
-msgstr "Nation is unglücklich"
+msgstr "Nation ist unglücklich"
 
 #: client/menu/m_messages.c:47
 msgid "nation_pleased"
@@ -15278,15 +15275,15 @@ msgstr "Transfer des Ausseridischer verschoben"
 
 #: client/menu/m_messages.c:52
 msgid "ufo_spotted"
-msgstr "Ufo sichtung"
+msgstr "Ufo-Sichtung"
 
 #: client/menu/m_messages.c:53
 msgid "ufo_signal_lost"
-msgstr "Ufo signal verloren"
+msgstr "Ufo-Signal verloren"
 
 #: client/menu/m_messages.c:54
 msgid "ufo_attacking"
-msgstr "Ufo angriff"
+msgstr "Ufo greift an"
 
 #: client/menu/m_messages.c:108
 #, c-format
