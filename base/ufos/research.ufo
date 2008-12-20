@@ -210,6 +210,44 @@ tech rs_item_antimatter
 	image		"techs/antimatter"
 }
 
+tech rs_craft_upgrade_antimatter_engines
+{
+	type		tech
+	up_chapter	tech
+	name		"_Upgrade - Antimatter engines"
+	description {
+		default "_craft_upgrade_antimatter_engines_txt"
+	}
+	pre_description {
+		default "_craft_upgrade_antimatter_engines_pre_txt"
+	}
+	
+	require_AND
+	{
+		tech rs_antimatter
+		tech rs_craft_alien_propulsion
+	}
+	
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}	
+
+	time 2800
+	image	techs/antimatter_engine
+}
+
 tech rs_alien_live
 {
 	name	"_Live Alien"
@@ -421,6 +459,32 @@ tech rs_alien_communication
 	}
 	time	1600
 //	image		"techs/alien_communication"
+}
+
+tech rs_alien_base
+{
+	type		tech
+	up_chapter	threat
+	name		"_Alien base"
+	description {
+		default "_alien_base_txt"
+	}
+
+	require_AND
+	{
+		tech rs_alien_base_discovered_event
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		// subject	defined by "name"
+		icon	icons/tech
+	}	
+
+	time 0
+	image	techs/alien_base
 }
 
 tech rs_universal_serum
@@ -3204,9 +3268,8 @@ tech rs_craft_drop_herakles
 	up_chapter	crafts
 
 	// FIXME
-	require_OR {
-		tech rs_craft_ufo_scout
-		tech rs_craft_ufo_fighter
+	require_AND {
+		tech rs_alien_base
 	}
 
 	provides	craft_drop_herakles
@@ -3260,9 +3323,8 @@ tech rs_craft_inter_dragon
 	up_chapter	crafts
 
 	provides	craft_inter_dragon
-	require_OR {
-		tech rs_craft_ufo_scout
-		tech rs_craft_ufo_fighter
+	require_AND {
+		tech rs_craft_upgrade_antimatter_engines
 	}
 	time	3000
 	producetime	600
