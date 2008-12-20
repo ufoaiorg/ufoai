@@ -128,7 +128,7 @@
 		<Linker>
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="../../src/tools/radiant/libs/cmdlib/cmdlib.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/exec.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/gtkutil/accelerator.cpp">

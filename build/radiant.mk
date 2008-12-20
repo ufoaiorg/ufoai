@@ -24,6 +24,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/entity.cpp \
 	$(RADIANT_BASE)/radiant/environment.cpp \
 	$(RADIANT_BASE)/radiant/error.cpp \
+	$(RADIANT_BASE)/radiant/exec.cpp \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
 	$(RADIANT_BASE)/radiant/filters.cpp \
 	$(RADIANT_BASE)/radiant/grid.cpp \
@@ -95,8 +96,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/libs/gtkutil/paned.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/toolbar.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
-	\
-	$(RADIANT_BASE)/libs/cmdlib/cmdlib.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp
