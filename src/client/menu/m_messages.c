@@ -60,7 +60,6 @@ messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding actual 
 messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding backup message settings (used for restore function in options popup) */
 int messageList_scroll = 0; /**< actual messageSettings list begin index due to scrolling */
 int visibleMSOEntries = 0; /**< actual visible entry count */
-static char ms_messageSettingsList[1024];/**< buffer for message settings text node */
 qboolean messageOptionsInitialized = qfalse; /**< flag indicating whether message options menu is initialized @sa MSO_Init_f */
 qboolean messageOptionsPrepared = qfalse; /**< flag indicating whether parsed category data is prepared @sa MSO_ParseCategories */
 static menuNode_t *msoTextNode; /**< reference to text node for easier references */
@@ -455,7 +454,9 @@ static void MSO_InitTextList (void)
 	int idx;
 	const int oldVisibleEntries = visibleMSOEntries;
 
-	ms_messageSettingsList[0] = '\0';
+	linkedList_t *messageSettingsList = NULL;
+
+	MN_MenuTextReset(TEXT_MESSAGEOPTIONS);
 	visibleMSOEntries = 0;
 
 	for (idx = 0; idx < gd.numMsgCategoryEntries; idx++) {
@@ -465,14 +466,13 @@ static void MSO_InitTextList (void)
 		if (entry->isCategory) {
 			/** @todo replace placeholder images with correct ones, perhaps fix indent for non-categories */
 			Com_sprintf(lineprefix, sizeof(lineprefix), TEXT_IMAGETAG"menu/ufopedia_%s", entry->category->isFolded ? "aliens" : "artifacts");
-			/* Com_sprintf(lineprefix, sizeof(lineprefix), "%s", entry->category->isFolded ?  "+" : "-"); */
 		} else
 			Com_sprintf(lineprefix, sizeof(lineprefix), "   ");
-		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s\n", lineprefix, _(entry->notifyType));
-		Q_strcat(ms_messageSettingsList, categoryLine, sizeof(ms_messageSettingsList));
+		Com_sprintf(categoryLine, sizeof(categoryLine), "%s %s", lineprefix, _(entry->notifyType));
+		LIST_AddString(&messageSettingsList, categoryLine);
 		visibleMSOEntries++;
 	}
-	mn.menuText[TEXT_MESSAGEOPTIONS] = ms_messageSettingsList;
+	mn.menuTextLinkedList[TEXT_MESSAGEOPTIONS] = messageSettingsList;
 	messageOptionsInitialized = qfalse;
 	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->u.text.rows) {
 		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.rows;
