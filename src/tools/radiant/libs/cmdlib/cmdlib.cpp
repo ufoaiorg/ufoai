@@ -150,8 +150,9 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 			pCmdline++;
 	}
 	// create a pipe to read the system output from
-	if (!CreatePipe(&readfh, &startupinfo.hStdOutput, &sattr, 0))
-		return NULL;
+	if (!CreatePipe(&readfh, &startupinfo.hStdOutput, &sattr, 0)) {
+		return strdup(FormatGetLastError());
+	}
 
 	if (CreateProcess(pCmd, pCmdline, NULL, NULL, TRUE, dwCreationFlags,
 		NULL, execdirBuf, &startupinfo, &ProcessInformation)) {
@@ -176,7 +177,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 		}
 		return cbuff;
 	}
-	return NULL;
+	return strdup(FormatGetLastError());
 }
 
 #endif
