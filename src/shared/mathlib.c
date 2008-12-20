@@ -239,6 +239,10 @@ void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 }
 
 /**
+ * @brief Multiply 3*3 matrix by 3*3 matrix.
+ * @param[out] c The result of the multiplication matrix = @c a * @c b (not the same as @c b * @c a !)
+ * @param[in] a First matrix.
+ * @param[in] b Second matrix.
  * @sa GLMatrixMultiply
  */
 void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
@@ -258,11 +262,11 @@ void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 
 
 /**
- * @brief
+ * @brief Multiply 4*4 matrix by 4*4 matrix.
  * @sa MatrixMultiply
- * @param[out] c The target matrix
- * @param[in] a
- * @param[in] b
+ * @param[out] c The result of the multiplication matrix = @c a * @c b (not the same as @c b * @c a !)
+ * @param[in] a First matrix.
+ * @param[in] b Second matrix.
  */
 void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 {
@@ -276,10 +280,11 @@ void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 }
 
 /**
- * @brief Transforms a vector with a given matrix
- * @param[out] out
- * @param[in] m The matrix to transform the vector with
- * @param[in] in The vector that should be transformed
+ * @brief Multiply 4*4 matrix by 4d vector.
+ * @param[out] out the result of the multiplication = @c m * @c in.
+ * @param[in] m 4*4 matrix
+ * @param[in] in 4d vector.
+ * @sa VectorRotate
  */
 void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 {
@@ -290,9 +295,13 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 }
 
 /**
- * @param[out] vb The target vector
- * @param[in] m
- * @param[in] va
+ * @brief Rotate a vector with a rotation matrix.
+ * @param[out] vb The result of multiplication (ie vector @va after rotation).
+ * @param[in] m The 3*3 matrix (rotation matrix in case of a rotation).
+ * @param[in] va The vector that should be multiplied (ie rotated in case of rotation).
+ * @note Basically, this is just the multiplication of @c m * @c va: this is the same than
+ * GLVectorTransform in 3D. This can be used for other applications than rotation.
+ * @sa GLVectorTransform
  */
 void VectorRotate (vec3_t m[3], const vec3_t va, vec3_t vb)
 {
@@ -338,6 +347,13 @@ vec_t VectorLength (const vec3_t v)
 	return sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 
+/**
+ * @brief Calculate a position on @c v1 @c v2 line.
+ * @param[in] v1 First point of the line.
+ * @param[in] v2 Second point of the line.
+ * @param[in] mix Position on the line. If 0 < @c mix < 1, @c out is between @c v1 and @c v2 .
+ * if @c mix < 0, @c out is outside @c v1 and @c v2 , on @c v1 side.
+ */
 void VectorMix (const vec3_t v1, const vec3_t v2, float mix, vec3_t out)
 {
 	int i;
@@ -346,6 +362,10 @@ void VectorMix (const vec3_t v1, const vec3_t v2, float mix, vec3_t out)
 		out[i] = v1[i] * (1.0 - mix) + v2[i] * mix;
 }
 
+/**
+ * @brief Inverse a vector.
+ * @param[in|out] v Vector to inverse. Output value is -@c v.
+ */
 void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
