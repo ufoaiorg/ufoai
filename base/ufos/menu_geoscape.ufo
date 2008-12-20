@@ -2375,7 +2375,7 @@ menu messageoptions
 		rows	"12"
 		lineheight	"25"
 		pos		"30 90"
-		size	"265 300"
+		size	"315 300"
 		wheel	{ cmd "msgoptions_scroll;" }
 		mousefx	true
 		longlines prettychop
