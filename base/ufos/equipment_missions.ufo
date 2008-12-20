@@ -404,7 +404,7 @@ equipment alien_soldiers4
 		pbeamrifle_ammo		1
 	needlergun          20
 		needlergun_ammo     1
-	heavyneedler		15
+	needlerheavy		15
 		needlergun_ammo		1
 
 	// Secondary
