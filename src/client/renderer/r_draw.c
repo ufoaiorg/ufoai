@@ -980,7 +980,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
 
-	glEnable(GL_BLEND);
+	R_EnableBlend(qtrue);
 
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
 	if (starfield != r_noTexture)
@@ -1002,7 +1002,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		R_DrawTexture(background->texnum,  earthPos[0] - nw / 2 * bgZoom, earthPos[1] - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
 	}
 
-	glDisable(GL_BLEND);
+	R_EnableBlend(qfalse);
 
 	/* load earth image */
 	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
