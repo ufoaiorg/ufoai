@@ -54,6 +54,7 @@ CLIENT_SRCS = \
 	client/menu/m_dragndrop.c \
 	client/menu/m_draw.c \
 	client/menu/m_font.c \
+	client/menu/m_icon.c \
 	client/menu/m_input.c \
 	client/menu/m_main.c \
 	client/menu/m_messages.c \
