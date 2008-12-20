@@ -3867,7 +3867,7 @@ static void CP_CheckEvents (void)
 	}
 
 	/* Humans start to attacking player. */
-	if (ccs.overallInterest > 450) {
+	if (!ccs.humansAttackActivated && ccs.overallInterest > 450) {
 		ccs.humansAttackActivated = qtrue;
 		/* Mark prequesite of "rs_enemy_on_earth" as met. */
 		RS_ResearchFinish(RS_GetTechByID("rs_enemy_on_earth_event"));
@@ -3878,7 +3878,7 @@ static void CP_CheckEvents (void)
 	 * as well after news_new_twist is marked as researched)
 	 * @todo We could actually call CP_StartXVISpreading_f directly here as well ... dunno if it helps?
 	 *		It's at least more script-able if we keep it as-is. Not that that says much ;) */
-	if (ccs.overallInterest > 400) {
+	if (!ccs.XVISpreadActivated && ccs.overallInterest > 400) {
 		/* Mark prequesite of "news_new_twist" as met. */
 		RS_ResearchFinish(RS_GetTechByID(XVI_EVENT_NAME));
 	}
