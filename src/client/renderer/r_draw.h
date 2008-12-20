@@ -29,7 +29,7 @@ const image_t *R_DrawNormPic(float x, float y, float w, float h, float sh, float
 void R_DrawChar(int x, int y, int c);
 void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
-void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender);
+void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender);
 void R_Draw3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model, int skin);
 int R_DrawImagePixelData(const char *name, byte *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);

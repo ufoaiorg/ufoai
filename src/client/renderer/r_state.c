@@ -409,6 +409,8 @@ void R_SetupGL3D (void)
 	R_CheckError();
 }
 
+extern const float SKYBOX_DEPTH;
+
 /**
  * @sa R_SetupGL3D
  */
@@ -420,8 +422,9 @@ void R_SetupGL2D (void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	/* switch to orthographic (2 dimensional) projection */
-	glOrtho(0, viddef.width, viddef.height, 0, 9999, -9999);
+	/* switch to orthographic (2 dimensional) projection
+	 * don't draw anything before skybox */
+	glOrtho(0, viddef.width, viddef.height, 0, 9999, SKYBOX_DEPTH);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
