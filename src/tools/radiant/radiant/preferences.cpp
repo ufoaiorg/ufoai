@@ -43,7 +43,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "os/dir.h"
 #include "gtkutil/filechooser.h"
 #include "gtkutil/messagebox.h"
-#include "cmdlib.h"
 
 #include "error.h"
 #include "console.h"

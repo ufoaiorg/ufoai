@@ -68,7 +68,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stringio.h"
 #include "shaderlib.h"
 #include "texturelib.h"
-#include "cmdlib.h"
 #include "moduleobservers.h"
 #include "archivelib.h"
 #include "imagelib.h"

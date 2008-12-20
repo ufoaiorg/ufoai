@@ -51,7 +51,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "stream/memstream.h"
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
-#include "cmdlib.h"
 #include "texmanip.h"
 #include "textures.h"
 #include "convert.h"

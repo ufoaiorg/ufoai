@@ -71,7 +71,6 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 
 #include <gtk/gtk.h>
 
-#include "cmdlib.h"
 #include "os/file.h"
 #include "os/path.h"
 #include "stream/stringstream.h"

@@ -46,7 +46,6 @@
 
 #include <gtk/gtk.h>
 
-#include "cmdlib.h"
 #include "scenelib.h"
 #include "stream/stringstream.h"
 #include "signal/isignal.h"
