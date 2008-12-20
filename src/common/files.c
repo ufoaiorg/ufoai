@@ -1185,8 +1185,8 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 	static char *lFile = NULL;
 	static byte *lBuffer = NULL;
 
-	static char headerType[32];
-	static char headerName[32];
+	static char headerType[MAX_VAR];
+	static char headerName[MAX_VAR];
 	listBlock_t *block;
 	const char *token;
 
