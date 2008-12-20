@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <gtk/gtk.h>
 #include "maptools.h"
-#include "cmdlib.h"   // Q_Exec
+#include "cmdlib.h"
 #include "os/file.h"  // file_exists
 #include "os/path.h"  // path_get_filename_start
 #include "scenelib.h" // g_brushCount
@@ -77,20 +77,15 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 	compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		char bufParam[1024];
-		char bufPath[1024];
+		char bufCmd[1024];
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
 
 		// attach parameter and map name
-		snprintf(bufParam, sizeof(bufParam) - 1, "%s %s", compiler_parameter, fullname);
-		bufParam[sizeof(bufParam) - 1] = '\0';
+		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, fullname);
+		bufCmd[sizeof(bufCmd) - 1] = '\0';
 
-		// extract path to get a working dir
-		const char *mapcompiler = path_get_filename_start(compilerBinaryWithPath);
-		strncpy(bufPath, compilerBinaryWithPath, mapcompiler - compilerBinaryWithPath);
-		bufPath[mapcompiler - compilerBinaryWithPath] = '\0';
-
-		char* output = Q_Exec(mapcompiler, bufParam, bufPath, false);
+		char* output = NULL;
+		exec_run_cmd(bufCmd, &output);
 		if (output) {
 			// reload after fix
 			Map_Reload();
@@ -99,7 +94,7 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 			globalOutputStream() << "-------------------\n" << output << "-------------------\n";
 			free(output);
 		} else {
-			globalOutputStream() << "-------------------\nCompiler: " << mapcompiler << "\nParameter: " << bufParam << "\nWorking dir: " << bufPath << "\n-------------------\n";
+			globalOutputStream() << "-------------------\nCommand: " << bufCmd << "\n-------------------\n";
 			return 0;
 		}
 	} else {
@@ -222,20 +217,16 @@ void ToolsCheckErrors (void)
 	compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		char bufParam[1024];
-		char bufPath[1024];
 		int rows = 0;
+		char bufCmd[1024];
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
-		snprintf(bufParam, sizeof(bufParam) - 1, "%s %s", compiler_parameter, fullname);
-		bufParam[sizeof(bufParam) - 1] = '\0';
+		// attach parameter and map name
+		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, fullname);
+		bufCmd[sizeof(bufCmd) - 1] = '\0';
 
-		// extract path to get a working dir
-		const char *mapcompiler = path_get_filename_start(compilerBinaryWithPath);
-		strncpy(bufPath, compilerBinaryWithPath, mapcompiler - compilerBinaryWithPath);
-		bufPath[mapcompiler - compilerBinaryWithPath] = '\0';
-
-		char* output = Q_Exec(mapcompiler, bufParam, bufPath, false);
+		char* output = NULL;
+		exec_run_cmd(bufCmd, &output);
 		if (output) {
 			if (!checkDialog)
 				CreateCheckDialog();
@@ -317,7 +308,7 @@ void ToolsCheckErrors (void)
 
 			free(output);
 		} else {
-			globalOutputStream() << "-------------------\nCompiler: " << mapcompiler << "\nParameter: " << bufParam << "\nWorking dir: " << bufPath << "\n-------------------\n";
+			globalOutputStream() << "-------------------\nCommand: " << bufCmd << "\n-------------------\n";
 			globalOutputStream() << "No output for checking " << fullname << "\n";
 		}
 	} else {
@@ -347,27 +338,23 @@ void ToolsCompile (void)
 	compilerBinaryWithPath = CompilerBinaryWithPath_get();
 
 	if (file_exists(compilerBinaryWithPath)) {
-		char bufParam[1024];
-		char bufPath[1024];
 		const char* fullname = Map_Name(g_map);
+		char bufCmd[1024];
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
 
-		snprintf(bufParam, sizeof(bufParam) - 1, "%s %s", compiler_parameter, fullname);
-		bufParam[sizeof(bufParam) - 1] = '\0';
+		// attach parameter and map name
+		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, fullname);
+		bufCmd[sizeof(bufCmd) - 1] = '\0';
 
-		// extract path to get a working dir
-		const char *mapcompiler = path_get_filename_start(compilerBinaryWithPath);
-		strncpy(bufPath, compilerBinaryWithPath, mapcompiler - compilerBinaryWithPath);
-		bufPath[mapcompiler - compilerBinaryWithPath] = '\0';
-
+		char* output = NULL;
 		/** @todo thread this and update the main window */
-		char* output = Q_Exec(mapcompiler, bufParam, bufPath, false);
+		exec_run_cmd(bufCmd, &output);
 		if (output) {
 			/** @todo parse and display this in a gtk window */
 			globalOutputStream() << output;
 			free(output);
 		} else
-			globalOutputStream() << "-------------------\nCompiler: " << mapcompiler << "\nParameter: " << bufParam << "\nWorking dir: " << bufPath << "\n-------------------\n";
+			globalOutputStream() << "-------------------\nCommand: " << bufCmd << "\n-------------------\n";
 	} else {
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";

@@ -1,99 +1,70 @@
+/**
+ * @file cmdlib.h
+ * @author luke_biddell@yahoo.com
+ */
+
 /*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 
-This file is part of GtkRadiant.
+#ifndef _EXEC_H_
+#define _EXEC_H_
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+#include <gtk/gtk.h>
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+typedef void (*ExecFunc) (void *, void*);
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+typedef enum
+{
+	RUNNING = 0, SKIPPED, CANCELLED, FAILED, COMPLETED
+} ExecState;
 
-//
-// start of shared cmdlib stuff
-//
+typedef struct
+{
+	GPtrArray *args;
+	pid_t pid;
+	gint exit_code;
+	ExecState state;
+	GMutex *state_mutex;
+	ExecFunc lib_proc;
+	ExecFunc pre_proc;
+	ExecFunc read_proc;
+	ExecFunc post_proc;
+	gchar *working_dir;
+	gboolean piped;
+} ExecCmd;
 
-#ifndef __CMDLIB__
-#define __CMDLIB__
+typedef struct
+{
+	gchar *process_title;
+	gchar *process_description;
+	GList *cmds;
+	GError *err;
+	ExecState outcome;
+} Exec;
 
-#include <time.h>
+Exec *exec_new(const gchar *process_title, const gchar *process_description);
+ExecCmd *exec_cmd_new(Exec *e);
+void exec_delete(Exec *self);
+void exec_run(Exec *e);
+void exec_stop(Exec *e);
+void exec_cmd_add_arg(ExecCmd *e, const gchar *format, ...);
+void exec_cmd_update_arg(ExecCmd *e, const gchar *arg_start, const gchar *format, ...);
+gint exec_run_cmd(const gchar *cmd, gchar **output);
+ExecState exec_cmd_get_state(ExecCmd *e);
+ExecState exec_cmd_set_state(ExecCmd *e, ExecState state);
+gint exec_count_operations(const Exec *e);
 
-
-// TTimo started adding portability code:
-// return true if spawning was successful, false otherwise
-// on win32 we have a bCreateConsole flag to create a new console or run inside the current one
-// execute a system command:
-//   cmd: the command to run
-//   cmdline: the command line
-// NOTE TTimo following are win32 specific:
-//   execdir: the directory to execute in
-//   bCreateConsole: spawn a new console or not
-// return values;
-//   if the spawn was fine
-//   TODO TTimo add functionality to track the process until it dies
-
-char *Q_Exec(const char *cmd, const char *cmdline, const char *execdir, bool bCreateConsole);
-
-// some easy portability crap
-
-
-#define access_owner_read 0400
-#define access_owner_write 0200
-#define access_owner_execute 0100
-#define access_owner_rw_ 0600
-#define access_owner_r_x 0500
-#define access_owner__wx 0300
-#define access_owner_rwx 0700
-
-#define access_group_read 0040
-#define access_group_write 0020
-#define access_group_execute 0010
-#define access_group_rw_ 0060
-#define access_group_r_x 0050
-#define access_group__wx 0030
-#define access_group_rwx 0070
-
-#define access_others_read 0004
-#define access_others_write 0002
-#define access_others_execute 0001
-#define access_others_rw_ 0006
-#define access_others_r_x 0005
-#define access_others__wx 0003
-#define access_others_rwx 0007
-
-
-#define access_rwxrwxr_x (access_owner_rwx | access_group_rwx | access_others_r_x)
-#define access_rwxrwxrwx (access_owner_rwx | access_group_rwx | access_others_rwx)
-
-// Q_mkdir
-// returns true if succeeded in creating directory
-#ifdef WIN32
-#include <direct.h>
-inline bool Q_mkdir(const char* name) {
-	return _mkdir(name) != -1;
-}
-#else
-#include <sys/stat.h>
-inline bool Q_mkdir(const char* name) {
-	return mkdir(name, access_rwxrwxr_x) != -1;
-}
-#endif
-
-
-inline double Sys_DoubleTime(void) {
-	return clock()/ 1000.0;
-}
-
-
-
-#endif
+#endif	/*_EXEC_H_*/

@@ -201,13 +201,12 @@ void DoTextEditor (const char* filename, int cursorpos)
 #else
 	/* check if a custom editor is set */
 	if (g_TextEditor_useCustomEditor && !g_TextEditor_editorCommand.empty()) {
-		char *output;
+		char *output = NULL;
 		StringOutputStream strEditCommand(256);
 		strEditCommand << g_TextEditor_editorCommand.c_str() << " \"" << filename << "\"";
 
 		globalOutputStream() << "Launching: " << strEditCommand.c_str() << "\n";
-		/* note: linux does not return false if the command failed so it will assume success */
-		output = Q_Exec(0, const_cast<char*>(strEditCommand.c_str()), 0, true);
+		exec_run_cmd(strEditCommand.c_str(), &output);
 		if (!output) {
 			globalWarningStream() << "Failed to execute " << strEditCommand.c_str() << ", using default\n";
 		} else {
