@@ -101,9 +101,6 @@
 		<Unit filename="..\..\src\tools\radiant\plugins\shaders\shaders.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\cmdlib\cmdlib.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

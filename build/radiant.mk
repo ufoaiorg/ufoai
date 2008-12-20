@@ -5,6 +5,7 @@
 RADIANT_BASE = tools/radiant
 
 RADIANT_CFLAGS+=-Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include
+RADIANT_LIBS+=-lgthread-2.0
 
 RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/autosave.cpp \
@@ -161,9 +162,7 @@ RADIANT_PLUGIN_MAP_TARGET=radiant/modules/map.$(SHARED_EXT)
 #shaders plugin
 RADIANT_PLUGIN_SHADERS_SRCS_CPP = \
 	$(RADIANT_BASE)/plugins/shaders/shaders.cpp \
-	$(RADIANT_BASE)/plugins/shaders/plugin.cpp \
-	\
-	$(RADIANT_BASE)/libs/cmdlib/cmdlib.cpp
+	$(RADIANT_BASE)/plugins/shaders/plugin.cpp
 
 RADIANT_PLUGIN_SHADERS_CPP_OBJS=$(RADIANT_PLUGIN_SHADERS_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_SHADERS_TARGET=radiant/modules/shaders.$(SHARED_EXT)
