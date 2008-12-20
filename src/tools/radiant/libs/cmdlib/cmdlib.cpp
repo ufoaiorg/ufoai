@@ -105,6 +105,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 	SECURITY_ATTRIBUTES sattr;
 	HANDLE readfh;
 	char *cbuff;
+	char commandBuf[1024];
 	char cmdlineBuf[1024];
 	char execdirBuf[1024];
 
@@ -125,6 +126,11 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 			*w = '\\';
 		}
 	}
+
+	strncpy(commandBuf, execdirBuf, sizeof(commandBuf) - 1);
+	strncat(commandBuf, cmd, sizeof(commandBuf) - 1)
+	commandBuf[sizeof(commandBuf) - 1] = '\0';
+
 	// get handles and
 	GetStartupInfo(&startupinfo);
 
@@ -139,7 +145,7 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 		dwCreationFlags = DETACHED_PROCESS | NORMAL_PRIORITY_CLASS;
 	const char *pCmd;
 	char *pCmdline;
-	pCmd = cmd;
+	pCmd = commandBuf;
 	if (pCmd) {
 		while (*pCmd == ' ')
 			pCmd++;
