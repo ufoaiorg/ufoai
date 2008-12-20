@@ -47,38 +47,31 @@ menu aliencont
 		whdown	{ cmd "aliencont_prevbase;" }
 	}
 
-	pic bt_alc_prevbase
+	custombutton bt_alc_prevbase
 	{
+		image menu/button_pack1	texl	"32 0"	blend	true
 		tooltip	"_Previous alien containment"
-		mousefx	true
-		image menu/button_aliencont1
-		pos	"620 682"
-		texl	"0 0"
-		texh	"32 64"
+		pos	"620 689"	size	"32 50"
 		click	{ cmd "aliencont_prevbase;" }
 	}
 
-	confunc aliencont_killb { *bt_alc_killaliens image menu/button_aliencont1 }
-	confunc aliencont_killg { *bt_alc_killaliens image menu/button_aliencont2 }
+	confunc aliencont_killb { *bt_alc_killaliens disabled false }
+	confunc aliencont_killg { *bt_alc_killaliens disabled true }
 
-	pic bt_alc_killaliens
+	custombutton bt_alc_killaliens
 	{
 		tooltip	"_Kill all aliens in this base"
-		mousefx	true
-		pos	"800 680"
-		texl    "64 64"
-		texh    "128 128"
+		pos	"800 680"	size "64 64"
+		icon	killalien
 		click	{ cmd "aliencont_killall;" }
 	}
 
-	pic bt_alc_nextbase
+	custombutton bt_alc_nextbase
 	{
+		image menu/button_pack1	texl	"64 0"	blend	true
+		size	"32 50"
 		tooltip	"_Next alien containment"
-		mousefx	true
-		image menu/button_aliencont1
-		pos	"870 682"
-		texl	"32 0"
-		texh	"64 64"
+		pos	"870 689"
 		click	{ cmd "aliencont_nextbase;" }
 	}
 

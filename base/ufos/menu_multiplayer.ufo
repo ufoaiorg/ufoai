@@ -790,52 +790,52 @@ menu mp_bookmarks
 	}
 
 	string adr0 { pos "510 230" string "*cvar adr0" size "300 12" }
-	pic resetadr0 { if "adr0" pos "480 230" image menu/del click { cmd "del adr0;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr0 { if "adr0" pos "480 230" size "22 22" icon garbage	click { cmd "del adr0;" } tooltip "_Delete this bookmark" }
 
 	string adr1 { pos "510 260" string "*cvar adr1" size "300 12" }
-	pic resetadr1 { if "adr1" pos "480 260" image menu/del click { cmd "del adr1;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr1 { if "adr1" pos "480 230" size "22 22" icon garbage	click { cmd "del adr1;" } tooltip "_Delete this bookmark" }
 
 	string adr2 { pos "510 290" string "*cvar adr2" size "300 12" }
-	pic resetadr2 { if "adr2" pos "480 290" image menu/del click { cmd "del adr2;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr2 { if "adr2" pos "480 230" size "22 22" icon garbage	click { cmd "del adr2;" } tooltip "_Delete this bookmark" }
 
 	string adr3 { pos "510 320" string "*cvar adr3" size "300 12" }
-	pic resetadr3 { if "adr3" pos "480 320" image menu/del click { cmd "del adr3;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr3 { if "adr3" pos "480 230" size "22 22" icon garbage	click { cmd "del adr3;" } tooltip "_Delete this bookmark" }
 
 	string adr4 { pos "510 350" string "*cvar adr4" size "300 12" }
-	pic resetadr4 { if "adr4" pos "480 350" image menu/del click { cmd "del adr4;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr4 { if "adr4" pos "480 230" size "22 22" icon garbage	click { cmd "del adr4;" } tooltip "_Delete this bookmark" }
 
 	string adr5 { pos "510 380" string "*cvar adr5" size "300 12" }
-	pic resetadr5 { if "adr5" pos "480 380" image menu/del click { cmd "del adr5;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr5 { if "adr5" pos "480 230" size "22 22" icon garbage	click { cmd "del adr5;" } tooltip "_Delete this bookmark" }
 
 	string adr6 { pos "510 410" string "*cvar adr6" size "300 12" }
-	pic resetadr6 { if "adr6" pos "480 410" image menu/del click { cmd "del adr6;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr6 { if "adr6" pos "480 230" size "22 22" icon garbage	click { cmd "del adr6;" } tooltip "_Delete this bookmark" }
 
 	string adr7 { pos "510 440" string "*cvar adr7" size "300 12" }
-	pic resetadr7 { if "adr7" pos "480 440" image menu/del click { cmd "del adr7;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr7 { if "adr7" pos "480 230" size "22 22" icon garbage	click { cmd "del adr7;" } tooltip "_Delete this bookmark" }
 
 	string adr8 { pos "510 470" string "*cvar adr8" size "300 12" }
-	pic resetadr8 { if "adr8" pos "480 470" image menu/del click { cmd "del adr8;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr8 { if "adr8" pos "480 230" size "22 22" icon garbage	click { cmd "del adr8;" } tooltip "_Delete this bookmark" }
 
 	string adr9 { pos "510 500" string "*cvar adr9" size "300 12" }
-	pic resetadr9 { if "adr9" pos "480 500" image menu/del click { cmd "del adr9;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr9 { if "adr9" pos "480 230" size "22 22" icon garbage	click { cmd "del adr9;" } tooltip "_Delete this bookmark" }
 
 	string adr10 { pos "510 530" string "*cvar adr10" size "300 12" }
-	pic resetadr10 { if "adr10" pos "480 530" image menu/del click { cmd "del adr10;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr10 { if "adr10" pos "480 230" size "22 22" icon garbage	click { cmd "del adr10;" } tooltip "_Delete this bookmark" }
 
 	string adr11 { pos "510 560" string "*cvar adr11" size "300 12" }
-	pic resetadr11 { if "adr11" pos "480 560" image menu/del click { cmd "del adr11;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr11 { if "adr11" pos "480 230" size "22 22" icon garbage	click { cmd "del adr11;" } tooltip "_Delete this bookmark" }
 
 	string adr12 { pos "510 590" string "*cvar adr12" size "300 12" }
-	pic resetadr12 { if "adr12" pos "480 590" image menu/del click { cmd "del adr12;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr12 { if "adr12" pos "480 230" size "22 22" icon garbage	click { cmd "del adr12;" } tooltip "_Delete this bookmark" }
 
 	string adr13 { pos "510 620" string "*cvar adr13" size "300 12" }
-	pic resetadr13 { if "adr13" pos "480 620" image menu/del click { cmd "del adr13;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr13 { if "adr13" pos "480 230" size "22 22" icon garbage	click { cmd "del adr13;" } tooltip "_Delete this bookmark" }
 
 	string adr14 { pos "510 650" string "*cvar adr14" size "300 12" }
-	pic resetadr14 { if "adr14" pos "480 650" image menu/del click { cmd "del adr14;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr14 { if "adr14" pos "480 230" size "22 22" icon garbage	click { cmd "del adr14;" } tooltip "_Delete this bookmark" }
 
 	string adr15 { pos "510 680" string "*cvar adr15" size "300 12" }
-	pic resetadr15 { if "adr15" pos "480 680" image menu/del click { cmd "del adr15;" } tooltip "_Delete this bookmark" }
+	custombutton resetadr15 { if "adr15" pos "480 230" size "22 22" icon garbage	click { cmd "del adr15;" } tooltip "_Delete this bookmark" }
 
 	func init
 	{

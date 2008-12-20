@@ -175,14 +175,12 @@ menu transfer
 		align	cc
 	}
 
-	pic bt_previtemtype
+	custombutton bt_previtemtype
 	{
+		image menu/button_pack1	texl	"32 0"	blend	true
+		size	"32 50"
 		tooltip	"_Previous category"
-		mousefx	true
-		image	menu/button_aliencont1
-		pos	"620 595"
-		texl	"0 0"
-		texh	"32 64"
+		pos	"620 602"
 		click	{ cmd "trans_prevcat;" }
 		whup	{ cmd "trans_prevcat;" }
 		whdown	{ cmd "trans_nextcat;" }
@@ -190,12 +188,10 @@ menu transfer
 
 	pic bt_nextitemtype
 	{
+		image menu/button_pack1	texl	"64 0"	blend	true
+		size	"32 50"
 		tooltip	"_Next category"
-		mousefx	true
-		image	menu/button_aliencont1
-		pos	"940 595"
-		texl	"32 0"
-		texh	"64 64"
+		pos	"940 602"
 		click	{ cmd "trans_nextcat;" }
 		whup	{ cmd "trans_prevcat;" }
 		whdown	{ cmd "trans_nextcat;" }

@@ -41,3 +41,21 @@ icon garbage {
 	texl "229 35"
 	size "22 25"
 }
+
+icon autopsyalien {
+	image "menu/icon_pack2"
+	texl	"1 1"
+	size	"44 48"
+}
+
+icon killalien {
+	image "menu/icon_pack2"
+	texl	"49 1"
+	size	"29 25"
+}
+
+icon question {
+	image "menu/icon_pack2"
+	texl	"80 0"
+	size	"27 46"
+}

@@ -1983,8 +1983,6 @@ base/pics/menu/basedefence_bg.tga | GNU General Public License 2.0 |  | Based on
 base/pics/menu/basesummary_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_aircraft_menu.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/button_aliencont1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/button_aliencont2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_alienkill1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_alienkill2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_autosell1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
@@ -1995,15 +1993,12 @@ base/pics/menu/button_equip.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/button_menu_geo.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_produce.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/button_square.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/button_summary1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/button_summary2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buttons_small.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buttons_team.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buttons_time.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buy_buttons1.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/buy_buttons1a.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/close.tga | GNU General Public License 2.0
-base/pics/menu/del.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/employee_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/equipment_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/geo_eventlog.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
@@ -2036,7 +2031,6 @@ base/pics/menu/multiplayer_teamsel.tga | GNU General Public License 2.0 |  | Bas
 base/pics/menu/options_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/production_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/research_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/scroll.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/selectbox.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/selectbox_green.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/skirmish_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
