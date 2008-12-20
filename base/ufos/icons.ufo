@@ -21,13 +21,13 @@ icon return {
 icon research_stop {
 	image "menu/icon_pack1"
 	texl "112 0"
-	size "49 31"
+	size "43 34"
 }
 
 icon research_start {
 	image "menu/icon_pack1"
 	texl "160 0"
-	size "49 31"
+	size "49 34"
 }
 
 icon mail {

@@ -81,8 +81,13 @@ menuIcon_t* MN_AllocIcon (const char* name)
  */
 void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY)
 {
-	/* const int texY = posX;
-	const int texY = posY + (64 * status);
-	*/
-	assert(qfalse);
+	const int texX = icon->pos[0];
+	const int texY = icon->pos[1] + (64 * status);
+	assert(icon->image != NULL);
+
+	posX += (sizeX - icon->size[0]) / 2;
+	posY += (sizeY - icon->size[1]) / 2;
+
+	R_DrawNormPic(posX, posY, icon->size[0], icon->size[1],
+		texX + icon->size[0], texY + icon->size[1], texX, texY, ALIGN_UL, qtrue, icon->image);
 }

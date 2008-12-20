@@ -770,51 +770,44 @@ menu research
 
 	custombutton bt_stop
 	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
 		tooltip	"_Stop research"
-		image	menu/button_research
 		icon	research_stop
-		blend	true
 		pos		"815 680"
-		texl    "0 0"
-		size	"64 64"
 		click	{ cmd "mn_stop_research;" }
 	}
 
 	custombutton bt_start
 	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
 		tooltip	"_Start research"
-		image	menu/button_research
 		icon	research_start
-		blend	true
 		pos		"745 680"
-		texl	"64 0"
-		size	"64 64"
 		click	{ cmd "mn_start_research;" }
 	}
 
 	custombutton bt_pedia
 	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
 		tooltip	"_Show research proposal"
-		image	menu/button_research
 		icon	mail
-		blend	true
 		pos		"885 680"
-		texl	"128 0"
-		size	"64 64"
 		click	{ cmd "mn_show_ufopedia;" }
 	}
 
 	// ==================
 	// buttons
 	// ==================
-	pic bt_continue
+	custombutton bt_continue
 	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
 		tooltip	"_Back to baseview"
-		image	hud/buttons2
-		mousefx	true
 		pos		"950 20"
-		texl	"0 0"
-		texh	"64 37"
+		icon	"return"
 		click	{ cmd "mn_pop;" }
 	}
 
