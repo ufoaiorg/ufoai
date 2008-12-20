@@ -1028,7 +1028,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	VectorSet(moonPos, earthPos[0] + celestialDist * v[1], earthPos[1] + celestialDist * v[0], -celestialDist * v[2]);
+	VectorSet(moonPos, earthPos[0] + celestialDist * v[1], earthPos[1] + celestialDist * v[0], celestialDist * v[2]);
 
 	/* enable the lighting */
 	glEnable(GL_LIGHTING);
@@ -1069,7 +1069,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	}
 
 	/* draw the moon */
-	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
+	if (r_globeMoon.texture != r_noTexture && moonPos[2] < 0 && !disableSolarRender)
 		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
 
 	/* Disable depth */

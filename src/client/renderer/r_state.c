@@ -424,7 +424,7 @@ void R_SetupGL2D (void)
 
 	/* switch to orthographic (2 dimensional) projection
 	 * don't draw anything before skybox */
-	glOrtho(0, viddef.width, viddef.height, 0, 9999.0f, SKYBOX_DEPTH);
+	glOrtho(0, viddef.width, viddef.height, 0, SKYBOX_DEPTH, 9999.0f);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
