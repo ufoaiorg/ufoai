@@ -1514,7 +1514,6 @@ void EntityInspector_construct (void)
 			IntExportStringCaller(g_entitysplit1_position));
 	GlobalPreferenceSystem().registerPreference("EntitySplit2", IntImportStringCaller(g_entitysplit2_position),
 			IntExportStringCaller(g_entitysplit2_position));
-
 }
 
 void EntityInspector_destroy (void)

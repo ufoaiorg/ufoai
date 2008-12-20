@@ -30,6 +30,7 @@
 
 #include "../qe3.h"
 #include "iselection.h"
+#include "signal/isignal.h"
 #include "eclasslib.h"
 #include "ientity.h"
 #include "iscenegraph.h"
@@ -72,6 +73,8 @@ void MapInfo_Update (void)
 	EntityBreakdown entitymap;
 	Scene_EntityBreakdown(entitymap);
 
+	gtk_list_store_clear(GTK_LIST_STORE(entityList));
+
 	for (EntityBreakdown::iterator i = entitymap.begin(); i != entitymap.end(); ++i) {
 		char tmp[16];
 		sprintf (tmp, "%u", Unsigned((*i).second));
@@ -79,8 +82,6 @@ void MapInfo_Update (void)
 		gtk_list_store_append(GTK_LIST_STORE(entityList), &iter);
 		gtk_list_store_set(GTK_LIST_STORE(entityList), &iter, 0, (*i).first.c_str(), 1, tmp, -1);
 	}
-
-	g_object_unref(G_OBJECT(entityList));
 
 	char tmp[16];
 	sprintf(tmp, "%u", Unsigned(g_brushCount.get()));
@@ -189,7 +190,7 @@ void MapInfo_SelectionChanged (const Selectable& selectable)
 void MapInfo_Construct (void)
 {
 	typedef FreeCaller1<const Selectable&, MapInfo_SelectionChanged> MapInfoSelectionChangedCaller;
-/*	GlobalSelectionSystem().addSelectionChangeCallback(MapInfoSelectionChangedCaller());*/
+	GlobalSelectionSystem().addSelectionChangeCallback(MapInfoSelectionChangedCaller());
 }
 
 /**
