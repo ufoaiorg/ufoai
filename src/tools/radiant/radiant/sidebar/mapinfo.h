@@ -1,4 +1,9 @@
 /*
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
+
+ This file is part of GtkRadiant.
+
  GtkRadiant is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -14,17 +19,13 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef INCLUDED_SIDEBAR_H
-#define INCLUDED_SIDEBAR_H
+#if !defined(INCLUDED_MAPINFO_H)
+#define INCLUDED_MAPINFO_H
 
-#include "entitylist.h"
-#include "entityinspector.h"
-#include "mapinfo.h"
-#include "surfaceinspector.h"
 #include <gtk/gtk.h>
 
-void Sidebar_constructEntities(GtkWidget *notebook);
-void Sidebar_constructSurfaces(GtkWidget *notebook);
-void Sidebar_constructMapInfo(GtkWidget *notebook);
+void MapInfo_Construct();
+void MapInfo_Destroy();
+GtkWidget *MapInfo_constructNotebookTab();
 
 #endif

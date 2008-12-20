@@ -1641,7 +1641,6 @@ static GtkMenuItem* create_misc_menu (void)
 	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(create_colours_menu()));
 
 	create_menu_item_with_mnemonic(menu, "Find brush...", "FindBrush");
-	create_menu_item_with_mnemonic(menu, "Map Info...", "MapInfo");
 	create_menu_item_with_mnemonic(menu, "_Print XY View", FreeCaller<WXY_Print>());
 	create_menu_item_with_mnemonic(menu, "_Background select", FreeCaller<WXY_BackgroundSelect>());
 	//	create_menu_item_with_mnemonic(menu, "_Benchmark", FreeCaller<GlobalCamera_Benchmark>());
@@ -2156,6 +2155,7 @@ void MainFrame::Create (void)
 
 	Sidebar_constructEntities(notebook);
 	Sidebar_constructSurfaces(notebook);
+	Sidebar_constructMapInfo(notebook);
 	gtk_widget_show_all(notebook);
 
 	PreferencesDialog_constructWindow(window);
@@ -2474,8 +2474,6 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
 	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
 	GlobalCommands_insert("ShowPathfinding", FreeCaller<ShowPathfinding> ());
-
-	GlobalCommands_insert("MapInfo", FreeCaller<DoMapInfo> (), Accelerator('M'));
 
 	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
 			Accelerator('X'));

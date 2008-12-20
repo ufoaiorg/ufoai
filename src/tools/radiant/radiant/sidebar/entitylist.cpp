@@ -27,6 +27,7 @@
 #include "entitylist.h"
 
 #include "iselection.h"
+#include "preferencesystem.h"
 
 #include "string/string.h"
 #include "scenelib.h"
@@ -290,22 +291,12 @@ GtkWidget *EntityList_constructNotebookTab (void)
 	return pageframe;
 }
 
-#include "preferencesystem.h"
-
-#include "iselection.h"
-
 /**
  * @sa EntityList_Destroy
  */
 void EntityList_Construct (void)
 {
 	g_EntityList = new EntityList;
-
-	getEntityList().m_positionTracker.setPosition(c_default_window_pos);
-
-	GlobalPreferenceSystem().registerPreference("EntityInfoDlg", WindowPositionTrackerImportStringCaller(
-			getEntityList().m_positionTracker), WindowPositionTrackerExportStringCaller(
-			getEntityList().m_positionTracker));
 
 	typedef FreeCaller1<const Selectable&, EntityList_SelectionChanged> EntityListSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(EntityListSelectionChangedCaller());

@@ -225,6 +225,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/sidebar/surfaceinspector.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/sidebar/mapinfo.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -224,6 +224,7 @@ public:
 		GLWindow_Construct();
 		Map_Construct();
 		EntityList_Construct();
+		MapInfo_Construct();
 		MainFrame_Construct();
 		GroupDialog_Construct();
 		SurfaceInspector_Construct();
@@ -256,6 +257,7 @@ public:
 		GroupDialog_Destroy();
 		MainFrame_Destroy();
 		EntityList_Destroy();
+		MapInfo_Destroy();
 		Map_Destroy();
 		GLWindow_Destroy();
 		MRU_Destroy();
