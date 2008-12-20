@@ -24,6 +24,7 @@
 
 #include <gtk/gtk.h>
 
+/** @brief Callback from within the process */
 typedef void (*ExecFunc) (void *, void*);
 
 typedef enum
@@ -40,7 +41,7 @@ typedef struct
 	GMutex *state_mutex;
 	ExecFunc lib_proc;
 	ExecFunc pre_proc;
-	ExecFunc read_proc;
+	ExecFunc read_proc;	/**< read the output of the process from stdout */
 	ExecFunc post_proc;
 	gchar *working_dir;
 	gboolean piped;

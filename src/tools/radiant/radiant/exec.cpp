@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "cmdlib.h"
+#include "exec.h"
 #include <glib/gprintf.h>
 #include <string.h>
 #include <unistd.h>
@@ -332,6 +332,10 @@ ExecState exec_cmd_set_state (ExecCmd *e, ExecState state)
 	return ret;
 }
 
+/**
+ * @brief Runs the given command in a seperate thread
+ * @sa exec_run_cmd for sync processes
+ */
 void exec_run (Exec *ex)
 {
 	ExecState state = RUNNING;
@@ -396,6 +400,10 @@ void exec_stop (Exec *e)
 	g_debug("exec_stop - complete\n");
 }
 
+/**
+ * @brief Runs the given command and blocks the GUI until command is finished
+ * @sa exec_run for async processes
+ */
 gint exec_run_cmd (const gchar *cmd, gchar **output)
 {
 	gchar *std_out = NULL;

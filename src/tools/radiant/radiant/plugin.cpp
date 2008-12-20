@@ -225,6 +225,7 @@ public:
 		Map_Construct();
 		EntityList_Construct();
 		MapInfo_Construct();
+		JobInfo_Construct();
 		MainFrame_Construct();
 		GroupDialog_Construct();
 		SurfaceInspector_Construct();
@@ -258,6 +259,7 @@ public:
 		MainFrame_Destroy();
 		EntityList_Destroy();
 		MapInfo_Destroy();
+		JobInfo_Destroy();
 		Map_Destroy();
 		GLWindow_Destroy();
 		MRU_Destroy();

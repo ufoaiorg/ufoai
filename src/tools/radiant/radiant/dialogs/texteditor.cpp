@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "texteditor.h"
 #include "string/string.h"
 #include "stream/stringstream.h"
-#include "cmdlib.h"
+#include "../exec.h"
 #ifdef WIN32
 #include "../gtkmisc.h"
 #include "../mainframe.h"
