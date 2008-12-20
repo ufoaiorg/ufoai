@@ -100,9 +100,6 @@
 		<Unit filename="..\..\src\tools\radiant\plugins\archivezip\archive.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\libs\cmdlib\cmdlib.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
