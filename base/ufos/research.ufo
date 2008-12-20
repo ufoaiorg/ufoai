@@ -953,7 +953,7 @@ tech rs_weapon_bolterrifle
 
 tech rs_weapon_bolterrifle_ammo
 {
-	name	"_Electromagnetic Rifle"
+	name	"_Electromagnetic Rifle Magazine"
 	type	weapon
 	up_chapter	equipment
 
