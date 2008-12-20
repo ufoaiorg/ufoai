@@ -25,14 +25,16 @@
  */
 
 #include "mapinfo.h"
+
+#include <map>
+
+#include "../qe3.h"
+#include "iselection.h"
 #include "eclasslib.h"
 #include "ientity.h"
 #include "iscenegraph.h"
 #include "gtkutil/dialog.h"
 #include "gtkutil/window.h"
-#include "../qe3.h"
-
-#include <map>
 
 typedef std::map<CopiedString, std::size_t> EntityBreakdown;
 
@@ -64,7 +66,7 @@ static GtkEntry* brushes_entry;
 static GtkEntry* entities_entry;
 static GtkListStore* entityList;
 
-static void MapInfo_Update (void)
+void MapInfo_Update (void)
 {
 	// Initialize fields
 	EntityBreakdown entitymap;
@@ -176,11 +178,18 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 	return GTK_WIDGET(vbox);
 }
 
+void MapInfo_SelectionChanged (const Selectable& selectable)
+{
+	MapInfo_Update();
+}
+
 /**
  * @sa MapInfo_Destroy
  */
 void MapInfo_Construct (void)
 {
+	typedef FreeCaller1<const Selectable&, MapInfo_SelectionChanged> MapInfoSelectionChangedCaller;
+/*	GlobalSelectionSystem().addSelectionChangeCallback(MapInfoSelectionChangedCaller());*/
 }
 
 /**

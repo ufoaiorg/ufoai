@@ -46,8 +46,6 @@
 void RedrawEntityList ();
 typedef FreeCaller<RedrawEntityList> RedrawEntityListCaller;
 
-typedef struct _GtkTreeView GtkTreeView;
-
 class EntityList
 {
 	public:
@@ -59,7 +57,6 @@ class EntityList
 		EDirty m_dirty;
 
 		IdleDraw m_idleDraw;
-		WindowPositionTracker m_positionTracker;
 
 		GtkTreeView* m_tree_view;
 		GraphTreeModel* m_tree_model;
@@ -214,11 +211,6 @@ void EntityList_SelectionUpdate (void)
 	entitylist_queue_draw();
 }
 
-void EntityList_SelectionChanged (const Selectable& selectable)
-{
-	EntityList_SelectionUpdate();
-}
-
 void entitylist_treeview_rowcollapsed (GtkTreeView* view, GtkTreeIter* iter, GtkTreePath* path, gpointer user_data)
 {
 }
@@ -289,6 +281,11 @@ GtkWidget *EntityList_constructNotebookTab (void)
 	AttachEntityTreeModel();
 
 	return pageframe;
+}
+
+void EntityList_SelectionChanged (const Selectable& selectable)
+{
+	EntityList_SelectionUpdate();
 }
 
 /**
