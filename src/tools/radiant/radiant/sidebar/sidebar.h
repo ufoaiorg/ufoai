@@ -21,10 +21,13 @@
 #include "entityinspector.h"
 #include "mapinfo.h"
 #include "surfaceinspector.h"
+#include "jobinfo.h"
+
 #include <gtk/gtk.h>
 
 void Sidebar_constructEntities(GtkWidget *notebook);
 void Sidebar_constructSurfaces(GtkWidget *notebook);
 void Sidebar_constructMapInfo(GtkWidget *notebook);
+void Sidebar_constructJobInfo(GtkWidget *notebook);
 
 #endif

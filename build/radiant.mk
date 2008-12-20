@@ -69,6 +69,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/sidebar/entityinspector.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/surfaceinspector.cpp \
 	$(RADIANT_BASE)/radiant/sidebar/mapinfo.cpp \
+	$(RADIANT_BASE)/radiant/sidebar/jobinfo.cpp \
 	\
 	$(RADIANT_BASE)/radiant/dialogs/texteditor.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/about.cpp \

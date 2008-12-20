@@ -2155,6 +2155,7 @@ void MainFrame::Create (void)
 	Sidebar_constructEntities(notebook);
 	Sidebar_constructSurfaces(notebook);
 	Sidebar_constructMapInfo(notebook);
+	Sidebar_constructJobInfo(notebook);
 	gtk_widget_show_all(notebook);
 
 	PreferencesDialog_constructWindow(window);

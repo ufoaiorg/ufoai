@@ -230,6 +230,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/sidebar/mapinfo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/sidebar/jobinfo.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/dialogs/about.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
