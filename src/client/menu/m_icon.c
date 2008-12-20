@@ -37,6 +37,7 @@ const value_t mn_iconProperties[] = {
 /**
  * @brief Return an icon by is name
  * @param[in] name Name of the icon
+ * @return The requested icon, else NULL
  * @todo Assert out when we are not in parsing/loading stage
  * @todo Only used at the loading time, else it will be nice to improve the search
  */
