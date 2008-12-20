@@ -350,6 +350,7 @@ void exec_run (Exec *ex)
 		}
 		if (e->pre_proc)
 			e->pre_proc(e, NULL);
+		/** @todo update jobinfo panels (job started) */
 
 		state = exec_cmd_get_state(e);
 		if (state == SKIPPED)
@@ -381,6 +382,7 @@ void exec_run (Exec *ex)
 
 		if (e->post_proc)
 			e->post_proc(e, NULL);
+		/** @todo update jobinfo panels (job finished) */
 		if (thread != NULL)
 			g_thread_join(thread);
 
