@@ -20,12 +20,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "glfont.h"
-#ifdef _WIN32
-#include <windows.h>
-#endif
 #include <GL/gl.h>
 #include "debugging/debugging.h"
-
 #include <gtk/gtkglwidget.h>
 
 GLFont glfont_create(const char* font_string) {

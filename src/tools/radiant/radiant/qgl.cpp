@@ -28,21 +28,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdlib.h>
 #include <string.h>
 
-#if defined(_WIN32)
-#define WINGDIAPI __declspec(dllimport)
-#define APIENTRY __stdcall
-#endif
-
 #include <GL/gl.h>
 
-#if defined(_WIN32)
-#undef WINGDIAPI
-#undef APIENTRY
-#endif
-
 #include "igl.h"
-
-
 
 
 #if defined(_WIN32)

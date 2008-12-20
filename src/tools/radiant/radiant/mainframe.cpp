@@ -2582,34 +2582,35 @@ void MainFrame_Construct (void)
 #elif defined(__linux__) || defined (__FreeBSD__)
 				"enginepath_linux"
 #elif defined(__APPLE__)
-						"enginepath_macos"
+				"enginepath_macos"
 #else
 #error "unknown platform"
 #endif
-;						StringOutputStream path(256);
-						path << DirectoryCleaned(g_pGameDescription->getRequiredKeyValue(ENGINEPATH_ATTRIBUTE));
-						g_strEnginePath = path.c_str();
-					}
+;
+		StringOutputStream path(256);
+		path << DirectoryCleaned(g_pGameDescription->getRequiredKeyValue(ENGINEPATH_ATTRIBUTE));
+		g_strEnginePath = path.c_str();
+	}
 
-					GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
-					GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
+	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
+	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
 
-					g_Layout_viewStyle.useLatched();
-					g_Layout_enableDetachableMenus.useLatched();
-					g_Layout_enablePluginToolbar.useLatched();
+	g_Layout_viewStyle.useLatched();
+	g_Layout_enableDetachableMenus.useLatched();
+	g_Layout_enablePluginToolbar.useLatched();
 
-					Layout_registerPreferencesPage();
-					Paths_registerPreferencesPage();
+	Layout_registerPreferencesPage();
+	Paths_registerPreferencesPage();
 
-					g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged>());
-					g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged>());
-					GlobalEntityCreator().setCounter(&g_entityCount);
+	g_brushCount.setCountChangedCallback(FreeCaller<QE_brushCountChanged>());
+	g_entityCount.setCountChangedCallback(FreeCaller<QE_entityCountChanged>());
+	GlobalEntityCreator().setCounter(&g_entityCount);
 
-					GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
-					GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
+	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
+	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
 
-					ColorScheme_Init();
-				}
+	ColorScheme_Init();
+}
 
 void MainFrame_Destroy (void)
 {
