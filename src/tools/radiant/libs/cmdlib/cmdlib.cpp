@@ -111,6 +111,12 @@ char *Q_Exec (const char *cmd, const char *cmdline, const char *execdir, bool bC
 	strncpy(cmdlineBuf, cmdline, sizeof(cmdlineBuf) - 1);
 	cmdlineBuf[sizeof(cmdlineBuf) - 1] = '\0';
 
+	for (char* w = cmdlineBuf; *w != '\0'; w++) {
+		if (*w == '/') {
+			*w = '\\';
+		}
+	}
+
 	strncpy(execdirBuf, execdir, sizeof(execdirBuf) - 1);
 	execdirBuf[sizeof(execdirBuf) - 1] = '\0';
 
