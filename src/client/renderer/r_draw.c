@@ -828,7 +828,7 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
  * @sa R_DrawStarfield
  * @sa R_SetupGL2D
  */
-const float SKYBOX_DEPTH = -500.0f;
+const float SKYBOX_DEPTH = -9999.0f;
 
 /**
  * @brief Half size of Skybox.
@@ -945,11 +945,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 2.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float p;
-	/* earth radius is about 3000.0f * zoom, so 300 with the base zoom of 0.1
-	 * Note that moon dist should be 18 000 then, but if we use that we don't see the moon
-	 * and the movement of the moon is made by step: this is not nice. I prefered to use
-	 * a lower but nicer value. */
-	const float moonDist = 2000.0f;
+	/* set distance of the moon to make it static on starfield when time is stoped.
+	 * this distance should be used for any celestial body considered at infinite location (sun, moon) */
+	const float celestialDist = 1.37f * SKYBOX_HALFSIZE;
 	const float moonSize = 0.025f;
 
 	image_t *starfield, *background, *sun;
@@ -989,8 +987,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* load sun image */
 	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
 	if (sun != r_noTexture && v[2] < 0 && !disableSolarRender) {
-		const float sunZoom = 1.38f * SKYBOX_HALFSIZE;	/**< Sun must rotate roughly at the same speed as skybox */
-		R_DrawTexture(sun->texnum, earthPos[0] - 64 * viddef.rx + sunZoom * v[1] * viddef.rx , earthPos[1] - 64 * viddef.ry + sunZoom * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
+		R_DrawTexture(sun->texnum, earthPos[0] - 64 * viddef.rx + celestialDist * v[1] * viddef.rx , earthPos[1] - 64 * viddef.ry + celestialDist * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
 	}
 
 	/* Draw atmosphere */
@@ -1031,7 +1028,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	VectorSet(moonPos, earthPos[0] + moonDist * v[1], earthPos[1] + moonDist * v[0], -moonDist * v[2]);
+	VectorSet(moonPos, earthPos[0] + celestialDist * v[1], earthPos[1] + celestialDist * v[0], -celestialDist * v[2]);
 
 	/* enable the lighting */
 	glEnable(GL_LIGHTING);
