@@ -950,7 +950,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	vec4_t lightPos;
 	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 2.0f};
 	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
-	float a, sqrta, p, q;
+	float p;
 	/* earth radius is about 3000.0f * zoom, so 300 with the base zoom of 0.1
 	 * Note that moon dist should be 18 000 then, but if we use that we don't see the moon
 	 * and the movement of the moon is made by step: this is not nice. I prefered to use
@@ -972,10 +972,10 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	vec3_t v, v1, rotationAxis;
 
 	/* Compute light position in absolute frame */
-	q = (day % DAYS_PER_YEAR + (float) (second / (float)SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;	/* sun rotation (year) */
+	const float q = (day % DAYS_PER_YEAR + (float) (second / (float)SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;	/* sun rotation (year) */
+	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
+	const float sqrta = sqrt(0.5f * (1 - a * a));
 	p = (float) (second / (float)SECONDS_PER_DAY) * 2 * M_PI - 0.5f * M_PI;		/* earth rotation (day) */
-	a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
-	sqrta = sqrt(0.5f * (1 - a * a));
 	Vector4Set(lightPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0);
 
 	/* Then rotate it in the relative frame of player view, to get sun position (no need to rotate
