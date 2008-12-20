@@ -11,11 +11,12 @@
 //	pbeamcannon_ammo
 //	pbeamrifle
 //	pbeamrifle_ammo
+//	needlergun
+//	needlerheavy
+//	needlergun_ammo
 //	kerrblade
 //	plasblade
 //	plasmagrenade
-//	needlergun
-//	needlerheavy
 //
 // The equipment definition contains the probability to get an item between 0 and 100
 // These definition are used for phalanx initial equipment and alien equipment.
@@ -303,12 +304,14 @@ equipment alien_soldiers3
 	maxinterest			750
 
 	// Primary
-	plasblaster			40
+	plasblaster			30
 		plasblaster_ammo	1
-	plasrifle			40
+	plasrifle			30
 		plasrifle_ammo		1
 	pbeamrifle			6
 		pbeamrifle_ammo		0
+	needlergun          20
+		needlergun_ammo     1
 
 	// Secondary
 	plaspistol			38
@@ -339,6 +342,8 @@ equipment alien_workers4
 		plasblaster_ammo	0
 	pbeamcannon			25
 		pbeamcannon_ammo	0
+	needlergun          20
+		needlergun_ammo     1
 
 	// Secondary
 	pbeampistol			70
@@ -393,10 +398,14 @@ equipment alien_soldiers4
 		plasrifle_ammo		1
 	plasblaster			5
 		plasblaster_ammo	1
-	pbeamcannon		40
+	pbeamcannon			30
 		pbeamcannon_ammo	1
-	pbeamrifle		35
+	pbeamrifle			25
 		pbeamrifle_ammo		1
+	needlergun          20
+		needlergun_ammo     1
+	heavyneedler		15
+		needlergun_ammo		1
 
 	// Secondary
 	plaspistol			38
