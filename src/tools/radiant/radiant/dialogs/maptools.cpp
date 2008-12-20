@@ -102,6 +102,11 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 			globalOutputStream() << "-------------------\nCompiler: " << mapcompiler << "\nParameter: " << bufParam << "\nWorking dir: " << bufPath << "\n-------------------\n";
 			return 0;
 		}
+	} else {
+		StringOutputStream message(256);
+		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
+		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
+		globalWarningStream() << message.c_str() << "\n";
 	}
 	return 1;
 }
@@ -319,7 +324,7 @@ void ToolsCheckErrors (void)
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
 		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
-		globalWarningStream() << message << "\n";
+		globalWarningStream() << message.c_str() << "\n";
 	}
 }
 
@@ -367,6 +372,6 @@ void ToolsCompile (void)
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
 		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
-		globalWarningStream() << message << "\n";
+		globalWarningStream() << message.c_str() << "\n";
 	}
 }
