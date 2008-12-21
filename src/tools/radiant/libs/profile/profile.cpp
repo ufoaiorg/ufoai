@@ -1,3 +1,9 @@
+/**
+ * @file profile.cpp
+ * @brief Application settings load/save
+ * @author Leonardo Zide (leo@lokigames.com)
+ */
+
 /*
 Copyright (c) 2001, Loki software, inc.
 All rights reserved.
@@ -28,36 +34,23 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-//
-// Application settings load/save
-//
-// Leonardo Zide (leo@lokigames.com)
-//
-
 #include "profile.h"
 
 #include <string.h>
-#include <stdio.h>
-#include <math.h>
-
-#include "file.h"
-
 #include <stdlib.h>
 
-
-// =============================================================================
-// Static functions
+#include "file.h"
 
 bool read_var (const char *filename, const char *section, const char *key, char *value) {
 	char line[1024], *ptr;
 	FILE *rc;
 
-	rc = fopen (filename, "rt");
+	rc = fopen(filename, "rt");
 
 	if (rc == NULL)
 		return false;
 
-	while (fgets (line, 1024, rc) != 0) {
+	while (fgets(line, 1024, rc) != 0) {
 		// First we find the section
 		if (line[0] != '[')
 			continue;
@@ -65,8 +58,8 @@ bool read_var (const char *filename, const char *section, const char *key, char 
 		ptr = strchr (line, ']');
 		*ptr = '\0';
 
-		if (strcmp (&line[1], section) == 0) {
-			while (fgets (line, 1024, rc) != 0) {
+		if (strcmp(&line[1], section) == 0) {
+			while(fgets (line, 1024, rc) != 0) {
 				ptr = strchr (line, '=');
 
 				if (ptr == NULL) {
@@ -80,12 +73,12 @@ bool read_var (const char *filename, const char *section, const char *key, char 
 				while (line[strlen(line)-1] == ' ')
 					line[strlen(line)-1] = '\0';
 
-				if (strcmp (line, key) == 0) {
-					strcpy (value, ptr + 1);
-					fclose (rc);
+				if (strcmp(line, key) == 0) {
+					strcpy(value, ptr + 1);
+					fclose(rc);
 
-					if (value[strlen (value)-1] == 10 || value[strlen (value)-1] == 13 || value[strlen (value)-1] == 32)
-						value[strlen (value)-1] = 0;
+					if (value[strlen(value)-1] == 10 || value[strlen(value)-1] == 13 || value[strlen(value)-1] == 32)
+						value[strlen(value)-1] = 0;
 
 					return true;
 				}
@@ -103,7 +96,7 @@ bool save_var (const char *filename, const char *section, const char *key, const
 	bool found;
 	FILE *rc;
 
-	rc = fopen (filename, "rb");
+	rc = fopen(filename, "rb");
 
 	if (rc != NULL) {
 		unsigned int len;
@@ -171,96 +164,4 @@ bool save_var (const char *filename, const char *section, const char *key, const
 
 	fclose (rc);
 	return true;
-}
-
-// =============================================================================
-// Global functions
-
-bool profile_save_int (const char *filename, const char *section, const char *key, int value) {
-	char buf[16];
-	sprintf (buf, "%d", value);
-	return save_var (filename, section, key, buf);
-}
-
-bool profile_save_float (const char *filename, const char *section, const char *key, float value) {
-	char buf[16];
-	sprintf (buf, "%f", value);
-	return save_var (filename, section, key, buf);
-}
-
-bool profile_save_string (const char * filename, const char *section, const char *key, const char *value) {
-	return save_var (filename, section, key, value);
-}
-
-bool profile_save_buffer (const char * rc_path, const char *name, void *buffer, unsigned int size) {
-	bool ret = false;
-	char filename[1024];
-	sprintf (filename, "%s/%s.bin", rc_path, name);
-	FILE *f;
-
-	f = fopen (filename, "wb");
-
-	if (f != NULL) {
-		if (fwrite (buffer, size, 1, f) == 1)
-			ret = true;
-
-		fclose (f);
-	}
-
-	return ret;
-}
-
-bool profile_load_buffer (const char * rc_path, const char *name, void *buffer, unsigned int *plSize) {
-	char filename[1024];
-	sprintf (filename, "%s/%s.bin", rc_path, name);
-	bool ret = false;
-	unsigned int len;
-	FILE *f;
-
-	f = fopen (filename, "rb");
-
-	if (f != NULL) {
-		fseek (f, 0, SEEK_END);
-		len = ftell (f);
-		rewind (f);
-
-		if (len > *plSize)
-			len = *plSize;
-		else
-			*plSize = len;
-
-		if (fread (buffer, len, 1, f) == 1)
-			ret = true;
-
-		fclose (f);
-	}
-
-	return true;
-}
-
-int profile_load_int (const char *filename, const char *section, const char *key, int default_value) {
-	char value[1024];
-
-	if (read_var (filename, section, key, value))
-		return atoi (value);
-	else
-		return default_value;
-}
-
-float profile_load_float (const char *filename, const char *section, const char *key, float default_value) {
-	char value[1024];
-
-	if (read_var (filename, section, key, value))
-		return static_cast<float>(atof(value));
-	else
-		return default_value;
-}
-
-char* profile_load_string (const char *filename, const char *section, const char *key, const char *default_value) {
-	static char value[1024];
-
-	if (!read_var(filename, section, key, value))
-		strncpy(value, default_value, sizeof(value));
-
-	return value;
 }
