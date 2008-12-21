@@ -223,9 +223,9 @@ static void SCR_TouchPics (void)
 		if (scr_cursor->integer > 9 || scr_cursor->integer < 0)
 			Cvar_SetValue("cursor", 1);
 
-		R_RegisterPic("wait");
-		R_RegisterPic("ducked");
-		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", scr_cursor->integer);
+		R_RegisterPic("cursor/wait");
+		R_RegisterPic("cursor/ducked");
+		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor/cursor%i", scr_cursor->integer);
 		if (!R_RegisterPic(cursor_pic)) {
 			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
 			cursor_pic[0] = '\0';
@@ -268,15 +268,15 @@ static void SCR_DrawCursor (void)
 			if (selActor) {
 				/* Display 'crouch' icon if actor is crouched. */
 				if (selActor->state & STATE_CROUCHED)
-					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursor/ducked");
 				icon_offset_y += 16;	/* Height of 'crouched' icon. */
 				icon_offset_y += icon_spacing;
 
 				/* Display 'Reaction shot' icon if actor has it activated. */
 				if (selActor->state & STATE_REACTION_ONCE)
-					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursor/reactionfire");
 				else if (selActor->state & STATE_REACTION_MANY)
-					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
+					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursor/reactionfiremany");
 				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
 
