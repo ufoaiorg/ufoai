@@ -16,7 +16,6 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "shared.h"
 #include "ufoai_gtk.h"
 #include "ufoai_filters.h"
 
