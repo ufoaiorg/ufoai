@@ -42,6 +42,24 @@ icon garbage {
 	size "22 25"
 }
 
+icon next {
+	image "menu/icon_pack1"
+	texl	"130 38"
+	size	"13 20"
+}
+
+icon prev {
+	image "menu/icon_pack1"
+	texl	"145 38"
+	size	"13 20"
+}
+
+icon list {
+	image "menu/icon_pack1"
+	texl	"162 35"
+	size	"23 26"
+}
+
 icon autopsyalien {
 	image "menu/icon_pack2"
 	texl	"1 1"

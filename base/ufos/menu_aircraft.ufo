@@ -430,14 +430,14 @@ menu aircraft_equip
 		}
 	}
 
-	pic bt_prev
+	custombutton bt_prev
 	{
 		if "mn_base_num_aircraft > 1"
 		tooltip "_Previous aircraft"
-		image	menu/ufopedia_buttons1
-		pos	"10 665"
-		texl	"0 37"
-		texh	"64 73"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 665"	size	"64 37"
+		icon prev
+
 		mousefx true
 		click	{
 			cmd "mn_prev_aircraft;"
@@ -452,25 +452,23 @@ menu aircraft_equip
 			call airequip_zone1
 		}
 	}
-	pic bt_prev_disabled
+	custombutton bt_prev_disabled
 	{
 		if "mn_base_num_aircraft <= 1"
 		tooltip "_Previous aircraft"
-		image	menu/ufopedia_buttons1d
-		pos	"10 665"
-		texl	"0 37"
-		texh	"64 73"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 665"	size	"64 37"
+		icon prev
+		disabled	true
 	}
 
-	pic bt_next
+	custombutton bt_next
 	{
 		if "mn_base_num_aircraft > 1"
 		tooltip "_Next aircraft"
-		image	menu/ufopedia_buttons1
-		pos	"382 665"
-		texl	"0 0"
-		texh	"64 36"
-		mousefx true
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"382 665"	size	"64 37"
+		icon next
 		click	{
 			cmd "mn_next_aircraft;"
 			call airequip_zone1
@@ -484,14 +482,14 @@ menu aircraft_equip
 			call airequip_zone1
 		}
 	}
-	pic bt_next_disabled
+	custombutton bt_next_disabled
 	{
 		if "mn_base_num_aircraft <= 1"
 		tooltip "_Next aircraft"
-		image	menu/ufopedia_buttons1d
-		pos	"382 665"
-		texl	"0 0"
-		texh	"64 36"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"382 665"	size	"64 37"
+		icon next
+		disabled true
 	}
 
 	string aircraftname
@@ -566,14 +564,12 @@ menu aircraft_equip
 		align	uc
 	}
 
-	pic bt_prev_craftitemtype
+	custombutton bt_prev_craftitemtype
 	{
 		tooltip	"_Previous category"
-		image	menu/ufopedia_buttons1
-		pos	"10 712"
-		texl	"0 37"
-		texh	"64 73"
-		mousefx	true
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 712"	size	"64 37"
+		icon prev
 		click	{
 			cmd "mn_prev_equiptype;"
 		}
@@ -585,14 +581,12 @@ menu aircraft_equip
 		}
 	}
 
-	pic bt_next_craftitemtype
+	custombutton bt_next_craftitemtype
 	{
 		tooltip	"_Next category"
-		image	menu/ufopedia_buttons1
-		pos	"382 712"
-		texl	"0 0"
-		texh	"64 36"
-		mousefx	true
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"382 712"	size	"64 37"
+		icon next
 		click	{
 			cmd "mn_next_equiptype;"
 		}

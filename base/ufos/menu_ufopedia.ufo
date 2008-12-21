@@ -26,62 +26,52 @@ menu ufopedia
 	// buttons
 	// ==================
 
-	pic bt_prev
+	custombutton bt_prev
 	{
 		tooltip "_Previous entry"
-		image	menu/ufopedia_buttons1
-		pos		"10 10"
-		texl	"0 37"
-		texh	"64 73"
-		mousefx true
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 10"	size	"64 37"
+		icon prev
 		click	{ cmd mn_upprev; }
 	}
 
-	pic bt_next
+	custombutton bt_next
 	{
 		tooltip "_Next entry"
-		image	menu/ufopedia_buttons1
-		pos		"950 10"
-		texl	"0 0"
-		texh	"64 36"
-		mousefx true
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"950 10"	size	"64 37"
+		icon next
 		click	{ cmd mn_upnext; }
 	}
 
-	pic button_content
+	custombutton button_content
 	{
 		tooltip "_Back to content"
-		image	menu/ufopedia_buttons1
-		mousefx true
-		pos		"10 720"
-		texl	"0 74"
-		texh	"64 111"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 720"	size	"64 37"
+		icon list
 		click	{ cmd "mn_upback;" }
 	}
 
-	pic button_text_pre
+	custombutton button_text_pre
 	{
 		if	"mn_uppreavailable == 1"
 		tooltip "_Pre research text"
-		image	menu/ufopedia_buttons2
-		mousefx true
-		pos		"90 14"
-		texl	"0 0"
-		texh	"32 32"
+		image	menu/button_background	texl	"128 0"	blend true
+		pos	"90 14"	size	"37 32"
+		icon prev
 		click	{
 			cmd "set mn_uppretext 1; mn_upupdate;"
 		}
 	}
 
-	pic button_text_normal
+	custombutton button_text_normal
 	{
 		if	"mn_updisplay == 2"
 		tooltip "_Research results"
-		image	menu/ufopedia_buttons2
-		mousefx true
-		pos		"140 14"
-		texl	"32 0"
-		texh	"64 32"
+		image	menu/button_background	texl	"128 0"	blend true
+		pos	"140 14"	size	"37 32"
+		icon next
 		click	{
 			cmd "set mn_uppretext 0; mn_upupdate;"
 		}
