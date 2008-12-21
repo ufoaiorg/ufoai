@@ -4564,10 +4564,8 @@ void CL_CampaignRun (void)
 	int checks, dt, i;
 	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detectioninterval */
 
-#ifdef DEBUG
 	/* temporary check to find out bug: [1999099] no pilots available */
 	assert(gd.numEmployees[EMPL_PILOT]);
-#endif
 
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
