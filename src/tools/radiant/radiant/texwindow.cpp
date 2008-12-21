@@ -297,7 +297,7 @@ const char* TextureBrowser_GetSelectedShader(TextureBrowser& textureBrowser) {
  * @sa MainFrame::SetStatusText
  */
 void TextureBrowser_SetStatus(TextureBrowser& textureBrowser, const char* name) {
-	IShader* shader = QERApp_Shader_ForName( name);
+	IShader* shader = QERApp_Shader_ForName(name);
 	qtexture_t* q = shader->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);
@@ -525,8 +525,11 @@ bool texture_name_ignore(const char* name) {
 class LoadShaderVisitor : public Archive::Visitor {
 public:
 	void visit(const char* name) {
+		gchar *shaderName = g_path_get_dirname(name);
+		// TODO: Fix this mess
 		IShader* shader = QERApp_Shader_ForName(CopiedString(StringRange(name, path_get_filename_base_end(name))).c_str());
 		shader->DecRef();
+		g_free(shaderName);
 	}
 };
 

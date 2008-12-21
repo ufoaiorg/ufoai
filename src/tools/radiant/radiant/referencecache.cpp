@@ -75,7 +75,7 @@ bool MapResource_loadFile(const MapFormat& format, scene::Node& root, const char
 	TextFileInputStream file(filename);
 	if (!file.failed()) {
 		globalOutputStream() << "success\n";
-		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename), "Loading Map");
+		ScopeDisableScreenUpdates disableScreenUpdates(g_path_get_basename(filename), "Loading Map");
 		ASSERT_NOTNULL(g_entityCreator);
 		format.readGraph(root, file, *g_entityCreator);
 		return true;
@@ -106,7 +106,7 @@ bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTrave
 	TextFileOutputStream file(filename);
 	if (!file.failed()) {
 		globalOutputStream() << "success\n";
-		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename), "Saving Map");
+		ScopeDisableScreenUpdates disableScreenUpdates(g_path_get_basename(filename), "Saving Map");
 		format.writeGraph(root, traverse, file);
 		return true;
 	}
@@ -180,7 +180,7 @@ static ModelLoader* ModelLoader_forType(const char* type) {
 }
 
 NodeSmartReference ModelResource_load(ModelLoader* loader, const char* name) {
-	ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(name), "Loading Model");
+	ScopeDisableScreenUpdates disableScreenUpdates(g_path_get_basename(name), "Loading Model");
 
 	NodeSmartReference model(g_nullModel);
 

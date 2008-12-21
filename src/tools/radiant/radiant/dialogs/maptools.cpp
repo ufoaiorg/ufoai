@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "maptools.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
-#include "os/path.h"  // path_get_filename_start
 #include "scenelib.h" // g_brushCount
 #include "gtkutil/messagebox.h"  // gtk_MessageBox
 #include "stream/stringstream.h"
