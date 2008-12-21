@@ -55,7 +55,7 @@ void environment_init (void)
 #ifdef PKGDATADIR
 	path.clear();
 	path << PKGDATADIR << "/radiant/";
-	if (g_file_test(PKGDATADIR, (GFileTest)G_FILE_TEST_IS_DIR))
+	if (g_file_test(path.c_str(), (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())
 		app_path = path.c_str();
 	else
 #endif
