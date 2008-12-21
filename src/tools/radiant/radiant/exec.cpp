@@ -52,8 +52,8 @@ static void exec_print_cmd (const ExecCmd *e)
 	if (show_trace) {
 		guint i = 0;
 		for (; i < e->args->len; i++)
-			g_print("%s ", (gchar*) g_ptr_array_index(e->args, i));
-		g_print("\n");
+			g_debug("%s ", (gchar*) g_ptr_array_index(e->args, i));
+		g_debug("\n");
 	}
 }
 
@@ -251,6 +251,7 @@ ExecCmd* exec_cmd_new (Exec **exec)
 	e->state = RUNNING;
 	e->state_mutex = g_mutex_new();
 	e->exec = *exec;
+	e->parse_progress = FALSE;
 	(*exec)->cmds = g_list_append((*exec)->cmds, e);
 	(*exec)->cmds = g_list_first((*exec)->cmds);
 	return e;
@@ -407,6 +408,7 @@ void exec_run (Exec *ex)
 	exec_cmd_list = g_list_remove(exec_cmd_list, ex);
 	g_list_free(piped);
 	exec_set_outcome(ex);
+	ex->update();
 }
 
 void exec_stop (Exec *e)

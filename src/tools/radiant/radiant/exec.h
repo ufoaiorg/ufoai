@@ -46,6 +46,7 @@ typedef struct
 	gchar *working_dir;
 	gboolean piped;
 	gpointer exec;
+	gboolean parse_progress;
 } ExecCmd;
 
 typedef struct

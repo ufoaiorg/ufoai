@@ -314,9 +314,24 @@ void ToolsCheckErrors (void)
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
 		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
-		globalWarningStream() << message.c_str() << "\n";
+		g_warning("%s\n", message.c_str());
 	}
 }
+
+static const gdouble compilerSteps = 7.0;
+static const gdouble substeps = 10.0; /* 0..9 in the output */
+static const gdouble stepWidth = 1.0 / compilerSteps / substeps;
+static int cnt = 0;
+
+static const char *steps[] = {
+	"LEVEL:",
+	"UNITCHECK:",
+	"CONNCHECK:",
+	"FACELIGHTS:",
+	"FINALLIGHT:",
+
+	(const char *)0
+};
 
 static void compileReadProgress (void *ex, void *buffer)
 {
@@ -327,12 +342,28 @@ static void compileReadProgress (void *ex, void *buffer)
 
 	gchar *buf = (gchar*)buffer;
 
-	const char *dots = strstr(buf, "...");
-	if (dots) {
-		const int progress = atoi(dots - 1);
-		if (progress) {
-			exec->fraction += 0.02;
-			exec->update();
+	if (strstr(buf, "(time:")) {
+		job->parse_progress = FALSE;
+	} else {
+		const char **step = steps;
+		while (*step) {
+			if (g_strcmp0(*step, buf)) {
+				job->parse_progress = TRUE;
+				break;
+			}
+			step++;
+		}
+	}
+
+	if (job->parse_progress) {
+		const char *dots = strstr(buf, "...");
+		if (dots) {
+			const char progress = *(dots - 1);
+			if (progress >= '0' && progress <= '9') {
+				cnt++;
+				exec->fraction += stepWidth;
+				exec->update();
+			}
 		}
 	}
 }
@@ -367,10 +398,12 @@ void ToolsCompile (void)
 		cmd->read_proc = compileReadProgress;
 		cmd->working_dir = g_path_get_basename(compilerBinaryWithPath);
 		exec_run(compilerRun);
+		g_warning("cnt: %i (%s)\n", cnt, fullname);
+		cnt = 0;
 	} else {
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
 		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
-		globalWarningStream() << message.c_str() << "\n";
+		g_warning("%s\n", message.c_str());
 	}
 }
