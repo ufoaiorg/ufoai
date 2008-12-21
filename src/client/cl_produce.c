@@ -902,10 +902,11 @@ static void PR_ProductionListRightClick_f (void)
 
 		if (produceCategory == FILTER_AIRCRAFT) {
 			const aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
-			/* ufo research definition must not have a tech assigned
+			/* aircraftTemplate may be empty if rclicked below real entry
+			 * ufo research definition must not have a tech assigned
 			 * only RS_CRAFT types have
 			 * @sa RS_InitTree */
-			if (aircraftTemplate->tech)
+			if (aircraftTemplate && aircraftTemplate->tech)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
 			components_t *comp = (components_t*)LIST_GetByIdx(productionItemList, idx);
