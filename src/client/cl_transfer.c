@@ -56,6 +56,9 @@ static employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 /** @brief Current aircraft for transfer. */
 static int trAircraftsTmp[MAX_AIRCRAFT];
 
+/** @brief Current cargo type count (updated in TR_CargoList) */
+static int trCargoCountTmp = 0;
+
 /** @brief Max values for transfer factors. */
 static const int MAX_TR_FACTORS = 500;
 
@@ -282,12 +285,13 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
  */
 static void TR_CargoList (void)
 {
-	int i, cnt = 0;
+	int i = 0;
 	employeeType_t emplType;
 	int trempl[MAX_EMPL];
 	linkedList_t *cargoList = NULL;
 	char str[128];
 
+	trCargoCountTmp = 0;
 	memset(cargo, 0, sizeof(cargo));
 	memset(trempl, 0, sizeof(trempl));
 
@@ -297,10 +301,10 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				csi.ods[i].name, trItemsTmp[i]);
 			LIST_AddString(&cargoList, str);
-			cargo[cnt].type = CARGO_TYPE_ITEM;
-			cargo[cnt].itemidx = i;
-			cnt++;
-			if (cnt >= MAX_CARGO) {
+			cargo[trCargoCountTmp].type = CARGO_TYPE_ITEM;
+			cargo[trCargoCountTmp].itemidx = i;
+			trCargoCountTmp++;
+			if (trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -316,10 +320,10 @@ static void TR_CargoList (void)
 					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s"),
 						gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 					LIST_AddString(&cargoList, str);
-					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
-					cargo[cnt].itemidx = employee->idx;
-					cnt++;
-					if (cnt >= MAX_CARGO) {
+					cargo[trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
+					cargo[trCargoCountTmp].itemidx = employee->idx;
+					trCargoCountTmp++;
+					if (trCargoCountTmp >= MAX_CARGO) {
 						Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 						break;
 					}
@@ -335,9 +339,9 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				E_GetEmployeeString(emplType), trempl[emplType]);
 			LIST_AddString(&cargoList, str);
-			cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
-			cnt++;
-			if (cnt >= MAX_CARGO) {
+			cargo[trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
+			trCargoCountTmp++;
+			if (trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -350,10 +354,10 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)"),
 				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
 			LIST_AddString(&cargoList, str);
-			cargo[cnt].type = CARGO_TYPE_ALIEN_DEAD;
-			cargo[cnt].itemidx = i;
-			cnt++;
-			if (cnt >= MAX_CARGO) {
+			cargo[trCargoCountTmp].type = CARGO_TYPE_ALIEN_DEAD;
+			cargo[trCargoCountTmp].itemidx = i;
+			trCargoCountTmp++;
+			if (trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -364,10 +368,10 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 			LIST_AddString(&cargoList, str);
-			cargo[cnt].type = CARGO_TYPE_ALIEN_ALIVE;
-			cargo[cnt].itemidx = i;
-			cnt++;
-			if (cnt >= MAX_CARGO) {
+			cargo[trCargoCountTmp].type = CARGO_TYPE_ALIEN_ALIVE;
+			cargo[trCargoCountTmp].itemidx = i;
+			trCargoCountTmp++;
+			if (trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -381,10 +385,10 @@ static void TR_CargoList (void)
 			assert(aircraft);
 			Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
 			LIST_AddString(&cargoList, str);
-			cargo[cnt].type = CARGO_TYPE_AIRCRAFT;
-			cargo[cnt].itemidx = i;
-			cnt++;
-			if (cnt >= MAX_CARGO) {
+			cargo[trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
+			cargo[trCargoCountTmp].itemidx = i;
+			trCargoCountTmp++;
+			if (trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -1011,6 +1015,11 @@ static void TR_TransferStart_f (void)
 
 	if (!transferBase || !baseCurrent) {
 		Com_Printf("TR_TransferStart_f: No base selected!\n");
+		return;
+	}
+
+	/* don't start any empty transport */
+	if (!trCargoCountTmp) {
 		return;
 	}
 
