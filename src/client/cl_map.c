@@ -492,7 +492,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	*y = (int) (mid[1] - radius * v[0]);
 
 	if (z) {
-		*z = (int) (-radius * v[2]);
+		*z = (int) (radius * v[2]);
 	}
 
 	/* if the point is on the wrong side of earth, the player cannot see it */
@@ -594,8 +594,8 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 			costheta = cos(angles[0] * torad);
 			sintheta = sin(angles[0] * torad);
 
-			angles[1] = 180.0f + asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
-			angles[2] = 180.0f - asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
+			angles[1] = 180.0f - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
+			angles[2] = asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 		} else {
 			VectorSet(angles, theta, 180, 0);
 		}
