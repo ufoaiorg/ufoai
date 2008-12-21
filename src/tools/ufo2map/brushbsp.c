@@ -88,8 +88,6 @@ static void SnapWeldVector (const vec3_t a, const vec3_t b, vec3_t out)
 	}
 }
 
-#define DEGENERATE_EPSILON	0.1
-
 /**
  * @brief removes degenerate edges from a winding
  * @returns qtrue if the winding is valid
@@ -119,7 +117,7 @@ static qboolean FixWinding (winding_t *w)
 		/* degenerate edge? */
 		VectorSubtract(w->p[i], w->p[j], vec);
 		dist = VectorLength(vec);
-		if (dist < DEGENERATE_EPSILON) {
+		if (dist < ON_EPSILON) {
 			valid = qfalse;
 
 			/* create an average point (ydnar 2002-01-26: using nearest-integer weld preference) */
