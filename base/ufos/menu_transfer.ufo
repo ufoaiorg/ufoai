@@ -186,7 +186,7 @@ menu transfer
 		whdown	{ cmd "trans_nextcat;" }
 	}
 
-	pic bt_nextitemtype
+	custombutton bt_nextitemtype
 	{
 		image menu/button_pack1	texl	"64 0"	blend	true
 		size	"32 50"
