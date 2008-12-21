@@ -64,7 +64,7 @@ void environment_init (void)
 	{
 		gchar *currentDir = g_get_current_dir();
 		path.clear();
-		path << DirectoryCleaned(currentDir) << RADIANT_DIRECTORY;
+		path << DirectoryCleaned(currentDir);
 		app_path = path.c_str();
 		g_free(currentDir);
 	}
