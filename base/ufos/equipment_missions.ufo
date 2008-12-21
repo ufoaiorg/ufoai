@@ -78,6 +78,10 @@
 //    secondary weapon won't probably get any Kerr Blade.
 // Note also that you can't use the same item twice in the same equipment definition: only the last one will be
 //    taken into account.
+//    That implies that if weapon1 and weapon2 uses the same ammo, you must define ammo only once (and therefore
+//    both weapon must have the same number of ammo).
+// If you get in equipment definition weapon1 with ammo1 and weapon2 with ammo2, when ammo2 can fit ammo1, note
+//    that you will be able to get ammo1 OR ammo2 for weapon1.
 //
 // there are 2 types of alien equipment:
 // alien_workersS or alien_soldiersS
@@ -403,9 +407,9 @@ equipment alien_soldiers4
 	pbeamrifle			25
 		pbeamrifle_ammo		1
 	needlergun          20
-		needlergun_ammo     1
-	needlerheavy		15
 		needlergun_ammo		1
+	needlerheavy		15
+//		needlergun_ammo		(use same ammo as for needlergun)
 
 	// Secondary
 	plaspistol			38

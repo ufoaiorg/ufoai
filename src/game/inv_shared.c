@@ -1208,8 +1208,6 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
 				if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
-					/* if equip[i] is greater than 100, the first number is the number of items you'll get:
-					 * don't take it into account for propability */
 					totalAvailableAmmo++;
 				}
 			}
