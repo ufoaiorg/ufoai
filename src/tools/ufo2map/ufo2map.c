@@ -77,7 +77,7 @@ static void Usage (void)
 		"                              if it is required, this should be the first option\n"
 		"                              0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname\n"
 		"                              2 - (check/fix) mapname if findings, 4 - normal output,\n"
-		"                              5 - extra output (eg from BSPing)\n"
+		"                              5 - extra output, 6 - dump (a lot extra from BSPing)\n"
 	); Com_Printf(
 		"\nLighting options:\n"
 		" -extra                     : extra light samples\n"
