@@ -1170,7 +1170,7 @@ static void UP_Content_f (void)
 			assert(numChapters_displaylist<MAX_PEDIACHAPTERS);
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
 			/** @todo integrate images into text better */
-			Q_strcat(upText, va(TEXT_IMAGETAG"menu/ufopedia_%s %s\n", gd.upChapters[i].id, _(gd.upChapters[i].name)), sizeof(upText));
+			Q_strcat(upText, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", gd.upChapters[i].id, _(gd.upChapters[i].name)), sizeof(upText));
 		}
 	}
 

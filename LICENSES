@@ -1814,6 +1814,14 @@ base/pics/icons/intelligence.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/kill.tga | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
 base/pics/icons/surgery.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/tech.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_artifacts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_buildings.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_crafts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_equipment.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/un.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/loading.jpg | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2033,16 +2041,8 @@ base/pics/menu/skirmish_bg.jpg | GNU General Public License 2.0 |  | Based on or
 base/pics/menu/stats_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/team_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/transfer_bg.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_artifacts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/ufopedia_buildings.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/ufopedia_buttons2.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
-base/pics/menu/ufopedia_crafts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_equipment.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/menu/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/menu/vertical_bar.tga | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/wingame_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
 base/pics/menu/won_bg.jpg | GNU General Public License 2.0 |  | Based on original menu artwork by SparX and Rasta
