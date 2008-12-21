@@ -111,14 +111,15 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 {
 	menuNode_t* buttonNode;
 	menuNode_t* buttonTextNode;
+	/* @todo BAYO: please check remove of buttonTextNode */
 
 	buttonNode = MN_GetNode(menu, button);
 	if (!buttonNode)
 		Sys_Error("Could not get %s node in %s menu", button, menu->name);
-	buttonTextNode = MN_GetNode(menu, buttonText);
+	/* buttonTextNode = MN_GetNode(menu, buttonText);
 	if (!buttonTextNode)
 		Sys_Error("Could not get %s node in %s menu", buttonText, menu->name);
-
+*/
 	/* free previous actions */
 	if (buttonNode->onClick) {
 		assert(buttonNode->onClick->data);
@@ -131,12 +132,12 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 		buttonNode->mousefx = qtrue;
 		MN_SetMenuAction(&buttonNode->onClick, EA_CMD, clickAction);
 		buttonNode->invis = qfalse;
-		buttonTextNode->invis = qfalse;
+	/*	buttonTextNode->invis = qfalse; */
 	} else {
 		buttonNode->mousefx = qfalse;
 		buttonNode->onClick = NULL;
 		buttonNode->invis = qtrue;
-		buttonTextNode->invis = qtrue;
+/*		buttonTextNode->invis = qtrue; */
 	}
 }
 
