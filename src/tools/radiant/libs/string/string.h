@@ -81,11 +81,7 @@ inline bool string_greater(const char* string, const char* other) {
 /// Returns 0 if \p string is lexicographically equal to \p other after converting both to lower-case.
 /// O(n)
 inline int string_compare_nocase(const char* string, const char* other) {
-#ifdef WIN32
-	return _stricmp(string, other);
-#else
-	return strcasecmp(string, other);
-#endif
+	return g_ascii_strcasecmp(string, other);
 }
 
 /// \brief Returns <0 if [\p string, \p string + \p n) is lexicographically less than [\p other, \p other + \p n).
@@ -94,11 +90,7 @@ inline int string_compare_nocase(const char* string, const char* other) {
 /// Treats all ascii characters as lower-case during comparisons.
 /// O(n)
 inline int string_compare_nocase_n(const char* string, const char* other, std::size_t n) {
-#ifdef WIN32
-	return _strnicmp(string, other, n);
-#else
-	return strncasecmp(string, other, n);
-#endif
+	return g_ascii_strncasecmp(string, other, n);
 }
 
 /// \brief Returns true if \p string is lexicographically equal to \p other.
