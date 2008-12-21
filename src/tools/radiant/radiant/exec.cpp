@@ -244,16 +244,15 @@ static void exec_cmd_delete (ExecCmd *e)
 	g_free(e->working_dir);
 }
 
-ExecCmd* exec_cmd_new (Exec *exec)
+ExecCmd* exec_cmd_new (Exec **exec)
 {
 	ExecCmd *e = g_new0(ExecCmd, 1);
 	e->args = g_ptr_array_new();
 	e->state = RUNNING;
 	e->state_mutex = g_mutex_new();
-	e->fraction = 0.0;
-	e->exec = exec;
-	exec->cmds = g_list_append(exec->cmds, e);
-	exec->cmds = g_list_first(exec->cmds);
+	e->exec = *exec;
+	(*exec)->cmds = g_list_append((*exec)->cmds, e);
+	(*exec)->cmds = g_list_first((*exec)->cmds);
 	return e;
 }
 

@@ -327,26 +327,14 @@ static void compileReadProgress (void *ex, void *buffer)
 
 	gchar *buf = (gchar*)buffer;
 
-	const gboolean finallight = strstr(buf, "FINALLIGHT:") != 0;
-	const gboolean facelights = strstr(buf, "FACELIGHTS:") != 0;
-	const gboolean conncheck = strstr(buf, "CONNCHECK:") != 0;
-	const gboolean unitcheck = strstr(buf, "UNITCHECK:") != 0;
-	const gboolean level = strstr(buf, "LEVEL:") != 0;
-
-	if (finallight)
-		exec->fraction += 0.2;
-	else if (facelights)
-		exec->fraction += 0.2;
-	else if (conncheck)
-		exec->fraction += 0.2;
-	else if (unitcheck)
-		exec->fraction += 0.2;
-	else if (level)
-		exec->fraction += 0.2;
-
-	// TODO: Parse real progress
-
-	exec->update();
+	const char *dots = strstr(buf, "...");
+	if (dots) {
+		const int progress = atoi(dots - 1);
+		if (progress) {
+			exec->fraction += 0.02;
+			exec->update();
+		}
+	}
 }
 
 /**
@@ -372,7 +360,7 @@ void ToolsCompile (void)
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
 
 		Exec *compilerRun = exec_new("CompileRun", "Compiles the current map with the mapcompiler");
-		ExecCmd *cmd = exec_cmd_new(compilerRun);
+		ExecCmd *cmd = exec_cmd_new(&compilerRun);
 		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
 		exec_cmd_add_arg(cmd, compiler_parameter);
 		exec_cmd_add_arg(cmd, fullname);

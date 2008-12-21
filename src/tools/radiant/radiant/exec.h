@@ -60,7 +60,7 @@ typedef struct
 } Exec;
 
 Exec *exec_new(const gchar *process_title, const gchar *process_description);
-ExecCmd *exec_cmd_new(Exec *e);
+ExecCmd *exec_cmd_new(Exec **e);
 void exec_delete(Exec *self);
 void exec_run(Exec *e);
 void exec_stop(Exec *e);
