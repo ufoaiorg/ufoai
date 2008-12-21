@@ -35,6 +35,8 @@ enum {
 	JOB_PROGRESS,
 	JOB_ACTION,
 	JOB_POINTER,
+	JOB_TOOLTIP,
+	JOB_ACTION_TOOLTIP,
 
 	JOB_COLUMNS
 };
@@ -63,7 +65,7 @@ GtkWidget *JobInfo_constructNotebookTab (void)
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(scr), TRUE, TRUE, 0);
 
 		{
-			GtkListStore* store = gtk_list_store_new(JOB_COLUMNS, G_TYPE_STRING, G_TYPE_DOUBLE, G_TYPE_BOOLEAN, G_TYPE_POINTER);
+			GtkListStore* store = gtk_list_store_new(JOB_COLUMNS, G_TYPE_STRING, G_TYPE_DOUBLE, G_TYPE_BOOLEAN, G_TYPE_POINTER, G_TYPE_STRING, G_TYPE_STRING);
 
 			view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
 			gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(view), TRUE);
@@ -96,6 +98,7 @@ GtkWidget *JobInfo_constructNotebookTab (void)
 				gtk_tree_view_column_set_max_width(column, 20);
 			}
 
+			gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(view), JOB_ACTION_TOOLTIP);
 			gtk_container_add(GTK_CONTAINER(scr), view);
 
 			jobList = store;
@@ -113,7 +116,8 @@ static void updateJobs (gpointer data, gpointer user_data)
 	jobCount++;
 
 	gtk_list_store_append(GTK_LIST_STORE(jobList), &iter);
-	gtk_list_store_set(GTK_LIST_STORE(jobList), &iter, JOB_TITLE, job->process_title, JOB_PROGRESS, 50.0, JOB_ACTION, FALSE, JOB_POINTER, job, -1);
+	gtk_list_store_set(GTK_LIST_STORE(jobList), &iter, JOB_TITLE, job->process_title, JOB_PROGRESS, 50.0,
+		JOB_ACTION, TRUE, JOB_POINTER, job, JOB_TOOLTIP, job->process_description, JOB_ACTION_TOOLTIP, "Click to cancel the job", -1);
 }
 
 void JobInfo_Update (void)
