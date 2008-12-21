@@ -716,8 +716,9 @@ static void CP_CheckNewMissionDetectedOnGeoscape (void)
 			continue;
 
 #ifdef DEBUG
-		if (mission->ufo)
+		if (mission->ufo) {
 			assert(!mission->ufo->detected);
+		}
 #endif
 
 		if (frand() <= missionDetectionProbability) {
