@@ -32,72 +32,72 @@ menu main
 	// buttons
 	// ==================
 
-	custombutton button_singleplayer
+	button button_singleplayer
 	{
 		pos	"640 170"
 		size "256 64"
 		click	{ cmd "mn_push singleplayer" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Single-player"
 	}
 
-	custombutton button_multiplayer
+	button button_multiplayer
 	{
 		pos	"640 240"
 		size "256 64"
 		click	{ cmd "mn_push multiplayer;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Multiplayer"
 	}
 
-	custombutton button_options
+	button button_options
 	{
 		pos	"640 310"
 		size "256 64"
 		click	{ cmd "mn_push options;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Options"
 	}
 
-	custombutton button_tut
+	button button_tut
 	{
 		pos	"640 380"
 		size "256 64"
 		click	{ cmd "mn_push tutorials;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Tutorials"
 	}
 
-	custombutton button_credits
+	button button_credits
 	{
 		pos	"640 450"
 		size "256 64"
 		click	{ cmd "seq_start credits;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Credits"
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "quit;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

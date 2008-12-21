@@ -26,74 +26,74 @@ menu options
 	// buttons
 	// ==================
 
-	custombutton button_input
+	button button_input
 	{
 		pos	"80 170"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_input;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Input"
 	}
 
-	custombutton button_video
+	button button_video
 	{
 		pos	"80 240"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_video;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Video"
 	}
 
-	custombutton button_sound
+	button button_sound
 	{
 		if "snd_init == 1"
 		pos	"80 310"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_sound;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Sound"
 	}
 
-	custombutton button_sound_na
+	button button_sound_na
 	{
 		if "snd_init == 0"
 		tooltip	"_Sound is not activated"
 		pos	"80 310"
 		size "256 64"
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Sound"
 	}
 
-	custombutton button_game
+	button button_game
 	{
 		pos	"80 380"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_game;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Game"
 	}
 
-	custombutton button_back
+	button button_back
 	{
 		pos	"80 470"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -1174,12 +1174,12 @@ menu options_input
 	// ===================
 	// KEY BINDINGS
 	// ===================
-	custombutton button_keys
+	button button_keys
 	{
 		pos	"85 620"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_keys;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

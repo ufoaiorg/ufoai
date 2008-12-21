@@ -38,36 +38,36 @@ menu campaigns
 	// ==================
 	// buttons
 	// ==================
-	custombutton c_button_skirmish
+	button c_button_skirmish
 	{
 		pos	"80 250"
 		size "256 64"
 		click	{ cmd "mn_push skirmish;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Skirmish"
 	}
 
-	custombutton c_button_start
+	button c_button_start
 	{
 		pos	"80 320"
 		size "256 64"
 		click	{ cmd "game_new;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Start campaign"
 	}
 
-	custombutton c_button_exit
+	button c_button_exit
 	{
 		pos	"80 450"
 		size "256 64"
 		click	{ cmd "mn_pop esc;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

@@ -32,78 +32,78 @@ menu singleplayer
 	// buttons
 	// ==================
 
-	custombutton button_new
+	button button_new
 	{
 		pos	"640 170"
 		size "256 64"
 		click	{ cmd "game_exit; mn_push campaigns;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_New game"
 	}
 
-	custombutton button_load
+	button button_load
 	{
 		pos	"640 240"
 		size "256 64"
 		click	{ cmd "mn_push load;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Load"
 	}
 
-	custombutton button_save_na
+	button button_save_na
 	{
 		// only if we have no game started yet
 		if "mn_main ne singleplayerInGame"
 		tooltip	"_No game to save"
 		pos	"640 310"
 		size "256 64"
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Save"
 	}
 
-	custombutton button_save
+	button button_save
 	{
 		// only if we already have a game started
 		if "mn_main eq singleplayerInGame"
 		pos	"640 310"
 		size "256 64"
 		click	{ cmd "mn_push save;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Save"
 	}
 
-	custombutton button_continue
+	button button_continue
 	{
 		if "mn_lastsave"
 		tooltip	"_Load last saved game or continue playing"
 		pos	"640 380"
 		size "256 64"
 		click	{ cmd "game_continue;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Continue"
 	}
 
-	custombutton button_back
+	button button_back
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -120,12 +120,12 @@ menu singleplayer
 menu singleplayerInGame extends singleplayer
 {
 	// over-ride button_new with a continue button
-	custombutton button_new
+	button button_new
 	{
 		pos	"640 170"
 		size "256 64"
 		click	{ cmd "game_continue;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -133,11 +133,11 @@ menu singleplayerInGame extends singleplayer
 	}
 
 	// over-ride button_continue with a continue button
-	custombutton button_continue
+	button button_continue
 	{
 		pos	"640 170"
 		size "256 64"
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		invis	true
 		color	"0 0.5 0 1"
@@ -145,24 +145,24 @@ menu singleplayerInGame extends singleplayer
 		string	"_Continue"
 	}
 
-	custombutton button_options
+	button button_options
 	{
 		pos	"640 380"
 		size "256 64"
 		click	{ cmd "mn_push options;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Options"
 	}
 
-	custombutton button_back
+	button button_back
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -204,60 +204,60 @@ menu singleplayermission
 	// buttons
 	// ==================
 
-	custombutton button_continue
+	button button_continue
 	{
 		pos	"640 170"
 		size "256 64"
 		click	{ cmd "game_continue;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Continue"
 	}
 
-	custombutton button_abort
+	button button_abort
 	{
 		pos	"640 240"
 		size "256 64"
 		click	{ cmd "game_abort;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Abort"
 	}
 
-	custombutton button_retry
+	button button_retry
 	{
 		pos	"640 310"
 		size "256 64"
 		click	{ cmd "game_go;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Retry"
 	}
 
-	custombutton button_options
+	button button_options
 	{
 		pos	"640 380"
 		size "256 64"
 		click	{ cmd "mn_push options;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Options"
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -510,12 +510,12 @@ menu load
 	// buttons
 	// ==================
 
-	custombutton button_back
+	button button_back
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -664,12 +664,12 @@ menu save
 	// buttons
 	// ==================
 
-	custombutton button_back
+	button button_back
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

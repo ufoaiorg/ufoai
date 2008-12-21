@@ -32,49 +32,49 @@ menu multiplayerInGame
 	// buttons
 	// ==================
 
-	custombutton button_continue
+	button button_continue
 	{
 		pos	"640 170"
 		size "256 64"
 		click	{ cmd "mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Continue"
 	}
 
-	custombutton button_options
+	button button_options
 	{
 		pos	"640 240"
 		size "256 64"
 		click	{ cmd "mn_push options;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Options"
 	}
 
-	custombutton button_irc
+	button button_irc
 	{
 		if "irc_defaultChannel"
 		pos	"640 310"
 		size "256 64"
 		click	{ cmd "mn_push irc;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Lobby"
 	}
 
-	custombutton button_abort
+	button button_abort
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

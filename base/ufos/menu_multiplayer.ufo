@@ -26,48 +26,48 @@ menu multiplayer
 	// buttons
 	// ==================
 
-	custombutton button_team
+	button button_team
 	{
 		pos	"80 220"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push mp_team;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Team"
 	}
 
-	custombutton button_join
+	button button_join
 	{
 		pos	"80 290"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push mp_serverbrowser;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Join"
 	}
 
-	custombutton button_create
+	button button_create
 	{
 		pos	"80 360"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push mp_create_server;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_Create"
 	}
 
-	custombutton button_exit
+	button button_exit
 	{
 		pos	"80 450"
 		size "256 64"
 		click	{ cmd "mn_escpop 5; mn_pop esc;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -436,12 +436,12 @@ menu serverinfo
 		texh    "128 96"
 	}
 
-	custombutton button_connect
+	button button_connect
 	{
 		pos	"70 580"
 		size "256 64"
 		click	{ cmd "connect *mn_server_ip;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -1283,12 +1283,12 @@ menu mp_create_server
 	// ====================
 	// create_server button
 	// ====================
-	custombutton button_server
+	button button_server
 	{
 		pos	"155 630"
 		size "256 64"
 		click	{ cmd "mn_startserver;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

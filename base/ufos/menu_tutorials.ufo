@@ -29,12 +29,12 @@ menu tutorials
 		font f_big
 	}
 
-	custombutton button_back
+	button button_back
 	{
 		pos	"640 520"
 		size "256 64"
 		click	{ cmd "mn_pop;" }
-		image	menu/button_big
+		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
