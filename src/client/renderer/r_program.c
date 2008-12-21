@@ -415,6 +415,11 @@ void R_InitPrograms (void)
 		return;
 	}
 
+	/* shaders are deactivated - don't try to load them - some cards
+	 * even have problems with this */
+	if (!r_programs->integer)
+		return;
+
 	memset(r_state.shaders, 0, sizeof(r_state.shaders));
 	memset(r_state.programs, 0, sizeof(r_state.programs));
 

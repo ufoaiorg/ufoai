@@ -194,6 +194,11 @@ void R_BeginFrame (void)
 		r_anisotropic->modified = qfalse;
 	}
 
+	if (r_programs->modified) {
+		R_RestartPrograms_f();
+		r_programs->modified = qfalse;
+	}
+
 	/* draw buffer stuff */
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
