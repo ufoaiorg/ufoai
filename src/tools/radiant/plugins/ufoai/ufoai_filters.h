@@ -19,6 +19,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_FILTERS_H)
 #define INCLUDED_FILTERS_H
 
+#include "shared.h"
+
 void filter_level(int flag);
 
 #endif
