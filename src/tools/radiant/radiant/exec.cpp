@@ -24,6 +24,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "sidebar/jobinfo.h"
+
 #if defined (__FreeBSD__) || defined(__OpenBSD__) || defined(__linux__)
 # if defined (__FreeBSD__) || defined(__OpenBSD__)
 #  include <signal.h>
@@ -40,7 +42,6 @@
 #define SIGKILL 0
 #define WNOHANG 0
 #endif
-
 
 static gint child_child_pipe[2];
 static gboolean show_trace = TRUE;
@@ -348,6 +349,11 @@ void exec_run (Exec *ex)
 	ExecState state = RUNNING;
 	GList *piped = NULL;
 	GList *cmd = ex->cmds;
+
+	exec_cmd_list = g_list_append(exec_cmd_list, ex);
+
+	JobInfo_Update();
+
 	for (; cmd != NULL && ((state != CANCELLED) && (state != FAILED)); cmd = cmd->next) {
 		ExecCmd *e = (ExecCmd*) cmd->data;
 		if (e->piped) {
@@ -356,18 +362,14 @@ void exec_run (Exec *ex)
 			continue;
 		}
 
-		exec_cmd_list = g_list_append(exec_cmd_list, e);
-
 		if (e->pre_proc)
 			e->pre_proc(e, NULL);
 
 		state = exec_cmd_get_state(e);
 		if (state == SKIPPED)
 			continue;
-		else if (state == CANCELLED) {
-			exec_cmd_list = g_list_remove(exec_cmd_list, e);
+		else if (state == CANCELLED)
 			break;
-		}
 
 		GThread *thread = NULL;
 		if (e->lib_proc != NULL)
@@ -397,11 +399,12 @@ void exec_run (Exec *ex)
 		if (thread != NULL)
 			g_thread_join(thread);
 
-		exec_cmd_list = g_list_remove(exec_cmd_list, e);
 		g_list_free(piped);
 		piped = NULL;
 	}
 
+	exec_cmd_list = g_list_remove(exec_cmd_list, ex);
+	JobInfo_Update();
 	g_list_free(piped);
 	exec_set_outcome(ex);
 }

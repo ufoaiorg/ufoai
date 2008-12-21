@@ -326,8 +326,6 @@ static void compileReadProgress (void *ex, void *buffer)
 
 	gchar *buf = (gchar*)buffer;
 
-	globalOutputStream() << buf << "\n";
-
 	const gboolean finallight = strstr(buf, "FINALLIGHT:") != 0;
 	const gboolean facelights = strstr(buf, "FACELIGHTS:") != 0;
 	const gboolean conncheck = strstr(buf, "CONNCHECK:") != 0;
