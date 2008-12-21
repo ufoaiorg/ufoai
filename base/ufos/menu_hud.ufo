@@ -17,17 +17,13 @@ menu hud extends ahud
 	// floor bar
 	// ==================
 
-	zone bar_floor_zone
-	{
-		pos	"0 104"
-		size	"40 512"
-		click
-	}
-
 	pic bar_floor
 	{
 		image	hud/bar_floor
 		pos	"0 128"
+		texl	"0 0"
+		texh	"40 467"
+		size	"40 467"
 	}
 
 	confunc disfloor0 { *bt_floor1 image hud/buttons1g }
@@ -134,71 +130,38 @@ menu hud extends ahud
 	// actor and team bar
 	// ==================
 
-	zone bar_head_zone
-	{
-		pos	"0 0"
-		size	"111 104"
-		click
-	}
-
-	zone bar_name_zone
-	{
-		pos	"112 0"
-		size	"250 48"
-		click
-	}
-
-	zone bar_team_zone
-	{
-		pos	"361 0"
-		size	"262 55"
-		click
-	}
-
-	zone bar_nextround_zone1
-	{
-		pos	"623 0"
-		size	"100 16"
-		click
-	}
-
-	zone bar_nextround_zone2
-	{
-		pos	"722 0"
-		size	"86 27"
-		click
-	}
-
-	zone bar_nextround_zone3
-	{
-		pos	"808 0"
-		size	"216 55"
-		click
-	}
-
 	pic bar_head
 	{
 		image	hud/bar_head
 		pos	"0 0"
+		excluderect { pos	"36 104"	size	"220 24" }
+		excluderect { pos	"112 49"	size	"144 80" }
 	}
 
 	pic bar_name
 	{
 		image	hud/bar_name
-		pos	"256 0"
+		pos	"256 0"	size "256 56"	texh "256 56"
+		blend	true
+		excluderect { pos	"0 49"	size	"159 16" }
 	}
 
 
 	pic bar_team
 	{
 		image	hud/bar_teammember
-		pos	"512 0"
+		pos	"512 0"	size "256 56"	texh "256 56"
+		blend	true
+		excluderect { pos	"168 18"	size	"44 47" }
+		excluderect { pos	"168 29"	size	"89 36" }
 	}
 
 	pic bar_nextround
 	{
 		image	hud/bar_nextround
-		pos	"768 0"
+		pos	"768 0"	size "256 56"	texh "256 56"
+		blend	true
+		excluderect { pos	"0 28"	size	"40 36" }
 	}
 
 	string actorname
@@ -356,32 +319,22 @@ menu hud extends ahud
 	// weapon bars
 	// ==================
 
-	zone bar_weapon_left_zone
-	{
-		pos	"0 616"
-		size	"176 152"
-		click
-	}
-
-	zone bar_weapon_right_zone
-	{
-		pos	"848 616"
-		size	"176 152"
-		click
-	}
-
 	pic bar_weapon_left
 	{
 		image	hud/bar_leftweapon
-		mousefx true
+		blend	true
 		pos	"0 512"
+		excluderect { pos	"33 0"	size	"223 104" }
+		excluderect { pos	"176 0"	size	"80 128" }
 	}
 
 	pic bar_weapon_right
 	{
 		image	hud/bar_rightweapon
-		mousefx true
+		blend	true
 		pos	"768 512"
+		excluderect { pos	"0 0"	size	"222 104" }
+		excluderect { pos	"0 0"	size	"80 128" }
 	}
 
 	confunc selpls { *bt_pfire_left   image hud/buttons1a }
@@ -474,13 +427,6 @@ menu hud extends ahud
 	// ==================
 	// info bar
 	// ==================
-
-//	zone bar_info_zone
-//	{
-//		pos	"176 640"
-//		size	"672 128"
-//		click
-//	}
 
 	pic bar_info
 	{
@@ -610,30 +556,20 @@ menu hud extends ahud
 	// right popup bar
 	// ==================
 
-	zone bar_popup_zone1
-	{
-		pos		"976 128"
-		size	"48 333"
-		click
-	}
-
-	zone bar_popup_zone2
-	{
-		pos		"988 461"
-		size	"48 154"
-		click
-	}
-
 	pic bar_popup
 	{
 		image	hud/bar_popup
-		pos		"960 256"
+		pos		"977 256"
+		texl	"17 0"
+		texh	"64 256"
 	}
 
 	pic bar_game
 	{
 		image	hud/bar_game
-		pos		"960 128"
+		pos		"977 128"
+		texl	"17 0"
+		texh	"64 128"
 	}
 
 	// ==================

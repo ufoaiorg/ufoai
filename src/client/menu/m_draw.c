@@ -87,7 +87,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 {
 	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	static vec4_t green = {0.0, 0.5, 0.0, 1.0};
-	/*static vec4_t redalpha = {1, 0.0, 0.0, 0.2};*/
+	static vec4_t redalpha = {1, 0.0, 0.0, 0.4};
 	static vec4_t white = {1, 1.0, 1.0, 1.0};
 	menuNode_t *hoveredNode = MN_GetHoveredNode();
 	int sp;
@@ -106,8 +106,15 @@ static void MN_DrawDebugMenuNodeNames (void)
 
 	if (MN_DNDIsDragging())
 		MN_HilightNode(MN_DNDGetTargetNode(), green);
-	if (hoveredNode != NULL)
+	if (hoveredNode != NULL) {
+		int i;
+		for (i = 0; i < hoveredNode->excludeRectNum; i++) {
+			int x = hoveredNode->menu->pos[0] + hoveredNode->pos[0] + hoveredNode->excludeRect[i].pos[0];
+			int y = hoveredNode->menu->pos[1] + hoveredNode->pos[1] + hoveredNode->excludeRect[i].pos[1];
+			R_DrawFill(x, y, hoveredNode->excludeRect[i].size[0], hoveredNode->excludeRect[i].size[1], ALIGN_UL, redalpha);
+		}
 		MN_HilightNode(hoveredNode, red);
+	}
 }
 
 
