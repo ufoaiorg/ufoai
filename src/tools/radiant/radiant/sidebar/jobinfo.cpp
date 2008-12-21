@@ -116,7 +116,7 @@ static void updateJobs (gpointer data, gpointer user_data)
 	jobCount++;
 
 	gtk_list_store_append(GTK_LIST_STORE(jobList), &iter);
-	gtk_list_store_set(GTK_LIST_STORE(jobList), &iter, JOB_TITLE, job->process_title, JOB_PROGRESS, 50.0,
+	gtk_list_store_set(GTK_LIST_STORE(jobList), &iter, JOB_TITLE, job->process_title, JOB_PROGRESS, job->fraction * 100.0,
 		JOB_ACTION, TRUE, JOB_POINTER, job, JOB_TOOLTIP, job->process_description, JOB_ACTION_TOOLTIP, "Click to cancel the job", -1);
 }
 

@@ -250,6 +250,8 @@ ExecCmd* exec_cmd_new (Exec *exec)
 	e->args = g_ptr_array_new();
 	e->state = RUNNING;
 	e->state_mutex = g_mutex_new();
+	e->fraction = 0.0;
+	e->exec = exec;
 	exec->cmds = g_list_append(exec->cmds, e);
 	exec->cmds = g_list_first(exec->cmds);
 	return e;
@@ -277,6 +279,8 @@ Exec* exec_new (const gchar *process_title, const gchar *process_description)
 	exec->process_title = g_strdup(process_title);
 	exec->process_description = g_strdup(process_description);
 	exec->outcome = FAILED;
+	exec->fraction = 0.0;
+	exec->update = JobInfo_Update;
 	return exec;
 }
 
@@ -352,8 +356,6 @@ void exec_run (Exec *ex)
 
 	exec_cmd_list = g_list_append(exec_cmd_list, ex);
 
-	JobInfo_Update();
-
 	for (; cmd != NULL && ((state != CANCELLED) && (state != FAILED)); cmd = cmd->next) {
 		ExecCmd *e = (ExecCmd*) cmd->data;
 		if (e->piped) {
@@ -404,7 +406,6 @@ void exec_run (Exec *ex)
 	}
 
 	exec_cmd_list = g_list_remove(exec_cmd_list, ex);
-	JobInfo_Update();
 	g_list_free(piped);
 	exec_set_outcome(ex);
 }

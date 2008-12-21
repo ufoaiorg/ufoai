@@ -45,6 +45,7 @@ typedef struct
 	ExecFunc post_proc;
 	gchar *working_dir;
 	gboolean piped;
+	gpointer exec;
 } ExecCmd;
 
 typedef struct
@@ -53,7 +54,9 @@ typedef struct
 	gchar *process_description;
 	GList *cmds;
 	GError *err;
+	gdouble fraction;
 	ExecState outcome;
+	void(*update)(void);
 } Exec;
 
 Exec *exec_new(const gchar *process_title, const gchar *process_description);

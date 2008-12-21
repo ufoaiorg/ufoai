@@ -322,6 +322,8 @@ static void compileReadProgress (void *ex, void *buffer)
 {
 	g_return_if_fail(buffer != NULL);
 	g_return_if_fail(ex != NULL);
+	ExecCmd *job = (ExecCmd *) ex;
+	Exec *exec = (Exec *)job->exec;
 
 	gchar *buf = (gchar*)buffer;
 
@@ -331,22 +333,20 @@ static void compileReadProgress (void *ex, void *buffer)
 	const gboolean unitcheck = strstr(buf, "UNITCHECK:") != 0;
 	const gboolean level = strstr(buf, "LEVEL:") != 0;
 
-	gfloat total_fraction;
-
 	if (finallight)
-		total_fraction = 5.0;
+		exec->fraction += 0.2;
 	else if (facelights)
-		total_fraction = 4.0;
+		exec->fraction += 0.2;
 	else if (conncheck)
-		total_fraction = 3.0;
+		exec->fraction += 0.2;
 	else if (unitcheck)
-		total_fraction = 2.0;
+		exec->fraction += 0.2;
 	else if (level)
-		total_fraction = 1.0;
-	else
-		total_fraction = 0.0;
+		exec->fraction += 0.2;
 
-	total_fraction *= (1.0 / 5.0);
+	// TODO: Parse real progress
+
+	exec->update();
 }
 
 /**
