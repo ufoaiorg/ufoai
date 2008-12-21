@@ -544,7 +544,7 @@ menu hud extends ahud
 	confunc reserve_shot_disable_s
 	{
 		*bt_shot_reservation texl	"64 32"
-		*bt_shot_reservation texh	"127 64"
+		*bt_shot_reservation texh	"115 64"
 	}
 	pic bt_shot_reservation
 	{
@@ -553,7 +553,7 @@ menu hud extends ahud
 		image hud/button_reserve_shot
 		pos	"303 681"
 		texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
-		texh	"127 64"
+		texh	"115 64"
 		mousefx true
 		click	{ cmd "sel_shotreservation;" }
 		rclick	{ cmd "sel_shotreservation 0;" }
