@@ -138,7 +138,7 @@ static void EmitFace (const face_t *f)
  */
 static int EmitDrawNode_r (node_t *node)
 {
-	const char* side[2]={"front", "back"};
+	const char* side[2] = {"front", "back"};
 	dBspNode_t *n;
 	const face_t *f;
 	int i;
@@ -177,11 +177,11 @@ static int EmitDrawNode_r (node_t *node)
 	/* recursively output the other nodes */
 	for (i = 0; i < 2; i++) {
 		if (node->children[i]->planenum == PLANENUM_LEAF) {
-			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating child leaf for %s of bsp node %i.\n", side[i], n - curTile->nodes);
+			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating child leaf for %s of bsp node %li.\n", side[i], n - curTile->nodes);
 			n->children[i] = -(curTile->numleafs + 1);
 			EmitLeaf(node->children[i]);
 		} else {
-			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: adding child node for bsp node %i.\n", n - curTile->nodes);
+			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: adding child node for bsp node %li.\n", n - curTile->nodes);
 			n->children[i] = curTile->numnodes;
 			EmitDrawNode_r(node->children[i]);
 		}

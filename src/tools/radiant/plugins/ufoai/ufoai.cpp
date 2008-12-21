@@ -16,6 +16,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include "shared.h"
 #include "ufoai_gtk.h"
 #include "ufoai_filters.h"
 
@@ -72,21 +73,21 @@ void dispatch(const char* command, float* vMin, float* vMax, bool bSingleBrush) 
 				"\nPlugin version: " PLUGIN_VERSION "\nAuthor: Martin Gerhardy (tlh2000/mattn)\n", "About",
 				eMB_OK, eMB_ICONDEFAULT);
 	} else if (string_equal(command, "Level 1")) {
-		filter_level(CONTENTS_LEVEL1);
+		filter_level(CONTENTS_LEVEL_1);
 	} else if (string_equal(command, "Level 2")) {
-		filter_level(CONTENTS_LEVEL2);
+		filter_level(CONTENTS_LEVEL_2);
 	} else if (string_equal(command, "Level 3")) {
-		filter_level(CONTENTS_LEVEL3);
+		filter_level(CONTENTS_LEVEL_3);
 	} else if (string_equal(command, "Level 4")) {
-		filter_level(CONTENTS_LEVEL4);
+		filter_level(CONTENTS_LEVEL_4);
 	} else if (string_equal(command, "Level 5")) {
-		filter_level(CONTENTS_LEVEL5);
+		filter_level(CONTENTS_LEVEL_5);
 	} else if (string_equal(command, "Level 6")) {
-		filter_level(CONTENTS_LEVEL6);
+		filter_level(CONTENTS_LEVEL_6);
 	} else if (string_equal(command, "Level 7")) {
-		filter_level(CONTENTS_LEVEL7);
+		filter_level(CONTENTS_LEVEL_7);
 	} else if (string_equal(command, "Level 8")) {
-		filter_level(CONTENTS_LEVEL8);
+		filter_level(CONTENTS_LEVEL_8);
 	}
 
 	if (message != NULL) {
