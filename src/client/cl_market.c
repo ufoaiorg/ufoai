@@ -370,7 +370,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = air_samp;
-				BS_UpdateItem(base, j);
+				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
@@ -395,7 +395,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
-				BS_UpdateItem(base, j);
+				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
@@ -410,13 +410,19 @@ static void BS_BuyType (const base_t *base)
 			const technology_t* tech = RS_GetTechByProvided(gd.ugvs[i].id);
 			assert(tech);
 			if (RS_IsResearched_ptr(tech)) {
+				const int hiredRobot = E_CountHiredRobotByType(base, &gd.ugvs[i]);
+				const int unhiredRobot = E_CountUnhiredRobotsByType(&gd.ugvs[i]);
+
+				if (hiredRobot + unhiredRobot <= 0)
+					continue;
+
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show%i", j - buyList.scroll);
 				}
 
 				BS_AddToList(tech->name,
-					E_CountHiredRobotByType(base, &gd.ugvs[i]),	/* numInStorage */
-					E_CountUnhiredRobotsByType(&gd.ugvs[i]),			/* numOnMarket */
+					hiredRobot,			/* numInStorage */
+					unhiredRobot,			/* numOnMarket */
 					gd.ugvs[i].price);
 
 				if (j >= MAX_BUYLIST)
@@ -424,7 +430,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = &gd.ugvs[i];
 				buyList.l[j].aircraft = NULL;
-				BS_UpdateItem(base, j);
+				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
@@ -450,7 +456,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
-				BS_UpdateItem(base, j);
+				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
@@ -483,6 +489,7 @@ static void BS_BuyType (const base_t *base)
 					buyList.l[j].item = od;
 					buyList.l[j].ugv = NULL;
 					buyList.l[j].aircraft = NULL;
+					BS_UpdateItem(base, j - buyList.scroll);
 					j++;
 				}
 			}
@@ -617,10 +624,10 @@ static void BS_BuyType_f (void)
 			MN_TextNodeSelectLine(node, 0);
 		}
 		currentSelectedMenuEntry = NULL;
-		BS_MarketScroll_f();
 	}
 
 	BS_BuyType(baseCurrent);
+	BS_MarketScroll_f();
 }
 
 /**
