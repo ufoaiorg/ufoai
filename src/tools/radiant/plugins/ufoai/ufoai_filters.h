@@ -21,15 +21,4 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 void filter_level(int flag);
 
-#define CONTENTS_LEVEL8 0x8000
-#define CONTENTS_LEVEL7 0x4000
-#define CONTENTS_LEVEL6 0x2000
-#define CONTENTS_LEVEL5 0x1000
-#define CONTENTS_LEVEL4 0x0800
-#define CONTENTS_LEVEL3 0x0400
-#define CONTENTS_LEVEL2 0x0200
-#define CONTENTS_LEVEL1 0x0100
-#define CONTENTS_ACTORCLIP 0x10000
-#define CONTENTS_WEAPONCLIP 0x2000000
-
 #endif

@@ -23,6 +23,8 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "shared.h"
+
 #include "entity.h"
 
 #include "ientity.h"
@@ -204,10 +206,9 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 			if (isStartingPosition) {
 				// TODO: Use entityClass->mins, entityClass->maxs
 				const int size = isStartingPositionActor ? 16 : 32;
-				// TODO: Use the grid size constants UNIT_HEIGHT and UNIT_SIZE
-				const int x = ((int) origin.x() % 32) * 32 - size;
-				const int y = ((int) origin.y() % 32) * 32 - size;
-				const int z = ((int) origin.z() % 64) * 64 + 6 + 64;
+				const int x = ((int) origin.x() % UNIT_SIZE) * UNIT_SIZE - size;
+				const int y = ((int) origin.y() % UNIT_SIZE) * UNIT_SIZE - size;
+				const int z = (int) origin.z();
 				const Vector3 vec(x, y, z);
 				globalWarningStream() << "original start position: " << origin.x() << " " << origin.y() << " "
 						<< origin.z() << "\n";

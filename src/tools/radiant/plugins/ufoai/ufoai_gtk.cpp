@@ -123,28 +123,28 @@ public:
 	virtual void activate() const {
 		switch ( mIndex ) {
 		case 0:
-			filter_level(CONTENTS_LEVEL1);
+			filter_level(CONTENTS_LEVEL_1);
 			break;
 		case 1:
-			filter_level(CONTENTS_LEVEL2);
+			filter_level(CONTENTS_LEVEL_2);
 			break;
 		case 2:
-			filter_level(CONTENTS_LEVEL3);
+			filter_level(CONTENTS_LEVEL_3);
 			break;
 		case 3:
-			filter_level(CONTENTS_LEVEL4);
+			filter_level(CONTENTS_LEVEL_4);
 			break;
 		case 4:
-			filter_level(CONTENTS_LEVEL5);
+			filter_level(CONTENTS_LEVEL_5);
 			break;
 		case 5:
-			filter_level(CONTENTS_LEVEL6);
+			filter_level(CONTENTS_LEVEL_6);
 			break;
 		case 6:
-			filter_level(CONTENTS_LEVEL7);
+			filter_level(CONTENTS_LEVEL_7);
 			break;
 		case 7:
-			filter_level(CONTENTS_LEVEL8);
+			filter_level(CONTENTS_LEVEL_8);
 			break;
 		}
 		SceneChangeNotify();

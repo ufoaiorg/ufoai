@@ -27,11 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_POINTS_ON_WINDING	64
 
-/* you can define on_epsilon in the makefile as tighter */
-#ifndef	ON_EPSILON
-#define	ON_EPSILON	0.1
-#endif
-
 winding_t *AllocWinding(int points);
 vec_t WindingArea(const winding_t *w);
 void WindingCenter(const winding_t *w, vec3_t center);

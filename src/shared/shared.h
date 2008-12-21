@@ -30,16 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include "../../config.h"
 #endif
 
-/* important units */
-#define UNIT_SIZE   32
-#define UNIT_HEIGHT 64
-/* player height - 12 to be able to walk trough doors
- * UNIT_HEIGHT is the height of one level */
-#define PLAYER_HEIGHT		(UNIT_HEIGHT - 16)
-#define QUANT	4
-/* WALL_SIZE is the distance a wall may protrude from the edge of a cell without interfeeting with an actor entering the cell */
-#define WALL_SIZE 5
-
 #define MAX_VAR     64
 
 /** @sa CONTENTS_NODE - @todo replace this with CONTENTS_NODE? */

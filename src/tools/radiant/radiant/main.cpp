@@ -61,8 +61,6 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 
 */
 
-#include "main.h"
-
 #include "version.h"
 
 #include "debugging/debugging.h"

@@ -179,8 +179,7 @@ brushsplit_t Winding_ClassifyPlane(const Winding& winding, const Plane3& plane) 
 }
 
 
-#define DEBUG_EPSILON ON_EPSILON
-const double DEBUG_EPSILON_SQUARED = DEBUG_EPSILON * DEBUG_EPSILON;
+const double DEBUG_EPSILON_SQUARED = ON_EPSILON * ON_EPSILON;
 
 #define WINDING_DEBUG 0
 

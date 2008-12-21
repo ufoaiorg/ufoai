@@ -19,6 +19,8 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "shared.h"
+
 #include "brushmanip.h"
 
 #include "gtkutil/widget.h"
@@ -1021,11 +1023,6 @@ class filter_brush_no_face: public BrushFilter
 			return !filtered;
 		}
 };
-
-/** @todo share the values with the rest of the code */
-#define SURF_LIGHT		0x00000001
-#define SURF_PHONG		0x00000400
-#define SURF_FOOTSTEP	0x00001000
 
 filter_face_flags g_filter_face_clip (QER_CLIP);
 filter_brush_all_faces g_filter_brush_clip(&g_filter_face_clip);

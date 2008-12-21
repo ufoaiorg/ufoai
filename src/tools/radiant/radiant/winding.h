@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_WINDING_H
 
 #include "debugging/debugging.h"
+#include "shared.h"
 
 #include <vector>
 
@@ -232,9 +233,8 @@ class Plane3;
 
 void Winding_createInfinite(FixedWinding& w, const Plane3& plane, double infinity);
 
-const double ON_EPSILON	= 1.0 / (1 << 8);
-
 /// \brief Returns true if edge (\p x, \p y) is smaller than the epsilon used to classify winding points against a plane.
+/// ON_EPSILON was 1.0 / (1 << 8) - but now we are using the global value
 inline bool Edge_isDegenerate(const Vector3& x, const Vector3& y) {
 	return vector3_length_squared(y - x) < (ON_EPSILON * ON_EPSILON);
 }
