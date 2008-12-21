@@ -90,7 +90,7 @@ typedef std::set<CopiedString> TextureGroups;
 void TextureGroups_addShader(TextureGroups& groups, const char* shaderName) {
 	const char* texture = path_make_relative(shaderName, "textures/");
 	if (texture != shaderName) {
-		const char* last = path_remove_directory(texture);
+		const char* last = g_path_get_basename(texture);
 		if (!string_empty(last)) {
 			groups.insert(CopiedString(StringRange(texture, --last)));
 		}

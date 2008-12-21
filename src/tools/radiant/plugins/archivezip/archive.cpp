@@ -142,7 +142,7 @@ class ZipArchive : public Archive {
 
 		m_istream.seek(extras + comment, FileInputStream::cur);
 
-		if (path_is_directory(filename.data())) {
+		if (g_file_test(filename.data(), (GFileTest)G_FILE_TEST_IS_DIR)) {
 			m_filesystem[filename.data()] = 0;
 		} else {
 			ZipFileSystem::entry_type& file = m_filesystem[filename.data()];

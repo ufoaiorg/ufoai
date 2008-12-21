@@ -91,7 +91,7 @@ NodeSmartReference MapResource_load(const MapFormat& format, const char* path, c
 	StringOutputStream fullpath(256);
 	fullpath << path << name;
 
-	if (path_is_absolute(fullpath.c_str())) {
+	if (g_path_is_absolute(fullpath.c_str())) {
 		MapResource_loadFile(format, root, fullpath.c_str());
 	} else {
 		globalErrorStream() << "map path is not fully qualified: " << makeQuoted(fullpath.c_str()) << "\n";
@@ -101,7 +101,7 @@ NodeSmartReference MapResource_load(const MapFormat& format, const char* path, c
 }
 
 bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse, const char* filename) {
-	//ASSERT_MESSAGE(path_is_absolute(filename), "MapResource_saveFile: path is not absolute: " << makeQuoted(filename));
+	//ASSERT_MESSAGE(g_path_is_absolute(filename), "MapResource_saveFile: path is not absolute: " << makeQuoted(filename));
 	globalOutputStream() << "Open file " << filename << " for write...";
 	TextFileOutputStream file(filename);
 	if (!file.failed()) {
@@ -121,7 +121,7 @@ static bool file_saveBackup(const char* path) {
 		backup << StringRange(path, path_get_extension(path)) << "bak";
 
 		return (!file_exists(backup.c_str()) || file_remove(backup.c_str())) // remove backup
-		       && file_move(path, backup.c_str()); // rename current to backup
+			&& file_move(path, backup.c_str()); // rename current to backup
 	}
 
 	globalErrorStream() << "map path is not writeable: " << makeQuoted(path) << "\n";
@@ -132,7 +132,7 @@ bool MapResource_save(const MapFormat& format, scene::Node& root, const char* pa
 	StringOutputStream fullpath(256);
 	fullpath << path << name;
 
-	if (path_is_absolute(fullpath.c_str())) {
+	if (g_path_is_absolute(fullpath.c_str())) {
 		if (!file_exists(fullpath.c_str()) || file_saveBackup(fullpath.c_str())) {
 			return MapResource_saveFile(format, root, Map_Traverse, fullpath.c_str());
 		}
@@ -295,7 +295,7 @@ bool g_realised = false;
 
 // name may be absolute or relative
 const char* rootPath(const char* name) {
-	return GlobalFileSystem().findRoot(path_is_absolute(name) ? name : GlobalFileSystem().findFile(name));
+	return GlobalFileSystem().findRoot(g_path_is_absolute(name) ? name : GlobalFileSystem().findFile(name));
 }
 }
 

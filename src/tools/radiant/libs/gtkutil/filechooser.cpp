@@ -181,68 +181,68 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER_ON_PARENT);
 
 	// we expect an actual path below, if the path is 0 we might crash
-			if (path != 0 && !string_empty(path)) {
-				ASSERT_MESSAGE(path_is_absolute(path), "file_dialog_show: path not absolute: " << makeQuoted(path));
+	if (path != 0 && !string_empty(path)) {
+		ASSERT_MESSAGE(g_path_is_absolute(path), "file_dialog_show: path not absolute: " << makeQuoted(path));
 
-				if (strstr(g_file_dialog_file, path)) {
-					gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), g_file_dialog_file);
-				} else {
-					gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
-				}
-			}
-
-			// we add all important paths as shortcut folder..
-			const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-			const char *enginePath = GlobalRadiant().getEnginePath();
-			const char **shortcut = shortcutFoldersInBaseDir;
-			while (*shortcut) {
-				char uri[256];
-				snprintf(uri, sizeof(uri), "%s%s/%s", enginePath, baseGame, *shortcut);
-				gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), uri, NULL);
-				shortcut++;
-			}
-
-			for (std::size_t i = 0; i < masks.m_filters.size(); ++i) {
-				GtkFileFilter* filter = gtk_file_filter_new();
-				gtk_file_filter_add_pattern(filter, masks.m_filters[i].c_str());
-				gtk_file_filter_set_name(filter, masks.m_masks[i].c_str());
-				gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
-			}
-
-			GtkWidget *preview = gtk_image_new();
-			gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), preview);
-			g_signal_connect(GTK_FILE_CHOOSER(dialog), "update-preview",
-					G_CALLBACK(file_dialog_update_preview), preview);
-
-			if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
-				strcpy(g_file_dialog_file, gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-
-				if (!string_equal(pattern, "*")) {
-					GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
-					if (filter != 0) { // no filter set? some file-chooser implementations may allow the user to set no filter, which we treat as 'all files'
-						type = masks.GetTypeForGTKMask(gtk_file_filter_get_name(filter)).m_type;
-						// last ext separator
-						const char* extension = path_get_extension(g_file_dialog_file);
-						// no extension
-						if (string_empty(extension)) {
-							strcat(g_file_dialog_file, type.pattern + 1);
-						} else {
-							strcpy(g_file_dialog_file + (extension - g_file_dialog_file), type.pattern + 2);
-						}
-					}
-				}
-			} else {
-				g_file_dialog_file[0] = '\0';
-			}
-
-			gtk_widget_destroy(dialog);
-
-			// don't return an empty filename
-			if (g_file_dialog_file[0] == '\0')
-			return NULL;
-
-			return g_file_dialog_file;
+		if (strstr(g_file_dialog_file, path)) {
+			gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), g_file_dialog_file);
+		} else {
+			gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
 		}
+	}
+
+	// we add all important paths as shortcut folder..
+	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+	const char *enginePath = GlobalRadiant().getEnginePath();
+	const char **shortcut = shortcutFoldersInBaseDir;
+	while (*shortcut) {
+		char uri[256];
+		snprintf(uri, sizeof(uri), "%s%s/%s", enginePath, baseGame, *shortcut);
+		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), uri, NULL);
+		shortcut++;
+	}
+
+	for (std::size_t i = 0; i < masks.m_filters.size(); ++i) {
+		GtkFileFilter* filter = gtk_file_filter_new();
+		gtk_file_filter_add_pattern(filter, masks.m_filters[i].c_str());
+		gtk_file_filter_set_name(filter, masks.m_masks[i].c_str());
+		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+	}
+
+	GtkWidget *preview = gtk_image_new();
+	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), preview);
+	g_signal_connect(GTK_FILE_CHOOSER(dialog), "update-preview",
+			G_CALLBACK(file_dialog_update_preview), preview);
+
+	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
+		strcpy(g_file_dialog_file, gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+
+		if (!string_equal(pattern, "*")) {
+			GtkFileFilter* filter = gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog));
+			if (filter != 0) { // no filter set? some file-chooser implementations may allow the user to set no filter, which we treat as 'all files'
+				type = masks.GetTypeForGTKMask(gtk_file_filter_get_name(filter)).m_type;
+				// last ext separator
+				const char* extension = path_get_extension(g_file_dialog_file);
+				// no extension
+				if (string_empty(extension)) {
+					strcat(g_file_dialog_file, type.pattern + 1);
+				} else {
+					strcpy(g_file_dialog_file + (extension - g_file_dialog_file), type.pattern + 2);
+				}
+			}
+		}
+	} else {
+		g_file_dialog_file[0] = '\0';
+	}
+
+	gtk_widget_destroy(dialog);
+
+	// don't return an empty filename
+	if (g_file_dialog_file[0] == '\0')
+	return NULL;
+
+	return g_file_dialog_file;
+}
 
 char* dir_dialog (GtkWidget* parent, const char* title, const char* path)
 {

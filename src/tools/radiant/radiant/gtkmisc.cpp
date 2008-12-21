@@ -148,7 +148,7 @@ void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
 
 void button_clicked_entry_browse_directory(GtkWidget* widget, GtkEntry* entry) {
 	const char* text = gtk_entry_get_text(entry);
-	char *dir = dir_dialog(gtk_widget_get_toplevel(widget), "Choose Directory", path_is_absolute(text) ? text : "" );
+	char *dir = dir_dialog(gtk_widget_get_toplevel(widget), "Choose Directory", g_path_is_absolute(text) ? text : "" );
 
 	if (dir != 0) {
 		gchar* converted = g_filename_to_utf8(dir, -1, 0, 0, 0);

@@ -1,3 +1,12 @@
+
+/**
+ * @file file.cpp
+ * @brief File class, can be a memory file or a regular disk file.
+ * @note Originally from LeoCAD, used with permission from the author. :)
+ *
+ * @author Leonardo Zide (leo@lokigames.com)
+ */
+
 /*
 Copyright (c) 2001, Loki software, inc.
 All rights reserved.
@@ -27,13 +36,6 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
-//
-// File class, can be a memory file or a regular disk file.
-// Originally from LeoCAD, used with permission from the author. :)
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "file.h"
 

@@ -100,11 +100,11 @@ public:
 	/// O(log n) on average.
 	entry_type& operator[](const Path& path) {
 		{
-			const char* end = path_remove_directory(path.c_str());
+			const char* end = g_path_get_basename(path.c_str());
 			while (end[0] != '\0') {
 				Path dir(StringRange(path.c_str(), end));
 				m_entries.insert(value_type(dir, Entry(0)));
-				end = path_remove_directory(end);
+				end = g_path_get_basename(end);
 			}
 		}
 

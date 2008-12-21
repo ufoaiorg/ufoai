@@ -91,40 +91,6 @@ inline bool path_equal_n(const char* path, const char* other, std::size_t n) {
 #endif
 }
 
-/// \brief Returns true if \p path is a fully qualified file-system path.
-/// O(1)
-inline bool path_is_absolute (const char* path)
-{
-#if defined(WIN32)
-	return path[0] == '/'
-	|| (path[0] != '\0' && path[1] == ':'); // local drive
-#elif defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	return path[0] == '/';
-#endif
-}
-
-/// \brief Returns true if \p path is a directory.
-/// O(n)
-inline bool path_is_directory (const char* path)
-{
-	std::size_t length = strlen(path);
-	if (length > 0) {
-		return path[length - 1] == '/';
-	}
-	return false;
-}
-
-/// \brief Returns a pointer to the first character of the component of \p path following the first directory component.
-/// O(n)
-inline const char* path_remove_directory (const char* path)
-{
-	const char* first_separator = strchr(path, '/');
-	if (first_separator != 0) {
-		return ++first_separator;
-	}
-	return "";
-}
-
 /// \brief Returns a pointer to the first character of the filename component of \p path.
 /// O(n)
 inline const char* path_get_filename_start (const char* path)

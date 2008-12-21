@@ -28,14 +28,11 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-//
-//  file.h
-////////////////////////////////////////////////////
-
 #if !defined(INCLUDED_PROFILE_FILE_H)
 #define INCLUDED_PROFILE_FILE_H
 
 #include "idatastream.h"
+
 
 /*!
 API for data streams
@@ -45,7 +42,6 @@ modified to be abstracted and shared across modules
 
 NOTE: why IDataStream and not IStream? because IStream is defined in windows IDL headers
 */
-
 class IDataStream : public InputStream, public OutputStream {
 public:
 	typedef int offset_type;
