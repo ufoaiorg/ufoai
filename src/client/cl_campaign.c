@@ -715,11 +715,8 @@ static void CP_CheckNewMissionDetectedOnGeoscape (void)
 		if (status != MISDET_MAY_BE_DETECTED || mission->onGeoscape == qtrue)
 			continue;
 
-#ifdef DEBUG
-		if (mission->ufo) {
-			assert(!mission->ufo->detected);
-		}
-#endif
+		/* if there is a ufo assigned, it must not be detected */
+		assert(!mission->ufo || !mission->ufo->detected);
 
 		if (frand() <= missionDetectionProbability) {
 			/* mission is detected */
