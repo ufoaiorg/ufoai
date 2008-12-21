@@ -750,6 +750,13 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		 * have to recalculate the texinfo */
 		side_brushtextures[nummapbrushsides] = td;
 
+		Verb_Printf(VERB_DUMP, "Brush %i Side %i (%f %f %f) (%f %f %f) (%f %f %f) texinfo:%i[%s] plane:%i\n", nummapbrushes, nummapbrushsides,
+			planepts[0][0], planepts[0][1], planepts[0][2],
+			planepts[1][0], planepts[1][1], planepts[1][2],
+			planepts[2][0], planepts[2][1], planepts[2][2],
+			side->texinfo, td.name, planenum);
+
+
 		nummapbrushsides++;
 		b->numsides++;
 	} while (1);
@@ -780,6 +787,10 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 
 	/* create windings for sides and bounds for brush */
 	MakeBrushWindings(b);
+
+	Verb_Printf(VERB_DUMP, "Brush %i mins (%f %f %f) maxs (%f %f %f)\n", nummapbrushes,
+		b->mins[0], b->mins[1], b->mins[2],
+		b->maxs[0], b->maxs[1], b->maxs[2]);
 
 	/* origin brushes are removed, but they set
 	 * the rotation origin for the rest of the brushes (like func_door)

@@ -60,7 +60,8 @@ typedef enum {
 	VERB_MAPNAME, /**< print mapname only. in check/fix, only do this if a problem is found */
 	VERB_LESS,
 	VERB_NORMAL,
-	VERB_EXTRA, /**< the highest verbosity level */
+	VERB_EXTRA,
+	VERB_DUMP, /**< the highest verbosity level */
 	VERB_NUM /**< the number of verbosity levels */
 } verbosityLevel_t;
 

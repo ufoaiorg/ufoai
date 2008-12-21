@@ -116,6 +116,9 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, const int n[3])
 
 		AddPointToBounds(newmins, worldMins, worldMaxs);
 		AddPointToBounds(newmaxs, worldMins, worldMaxs);
+
+		Verb_Printf(VERB_DUMP, "BuildNodeChildren: node=%i (%i %i %i) (%i %i %i)\n", node,
+			curTile->nodes[node].mins[0], curTile->nodes[node].mins[1], curTile->nodes[node].mins[2], curTile->nodes[node].maxs[0], curTile->nodes[node].maxs[1], curTile->nodes[node].maxs[2]);
 	}
 
 	/* return the last stored node */
@@ -139,6 +142,9 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
 		return LEAFNODE;
+
+	Verb_Printf(VERB_DUMP, "ConstructLevelNodes_r: lv=%i (%f %f %f) (%f %f %f)\n", levelnum,
+		cmins[0], cmins[1], cmins[2], cmaxs[0], cmaxs[1], cmaxs[2]);
 
 	VectorSubtract(bmaxs, bmins, diff);
 

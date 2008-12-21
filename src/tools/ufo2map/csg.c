@@ -295,6 +295,9 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	int i, j, vis;
 	int c_faces, c_brushes, numsides;
 
+	Verb_Printf(VERB_DUMP, "MakeBspBrushList: bounds (%f %f %f) (%f %f %f)\n",
+		clipmins[0], clipmins[1], clipmins[2], clipmaxs[0], clipmaxs[1], clipmaxs[2]);
+
 	for (i = 0; i < 2; i++) {
 		float dist;
 		vec3_t normal = {0, 0, 0};
@@ -312,15 +315,22 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	for (i = startbrush; i < endbrush; i++) {
 		mapbrush_t *mb = &mapbrushes[i];
 
-		if (!IsInLevel(mb->contentFlags, level))
-			continue;
 
-		if (mb->finished)
+		if (!IsInLevel(mb->contentFlags, level)){
+			Verb_Printf(VERB_DUMP, "Rejected brush %i: wrong level.\n", i);
 			continue;
+		}
+
+		if (mb->finished){
+			Verb_Printf(VERB_DUMP, "Rejected brush %i: already finished.\n", i);
+			continue;
+		}
 
 		numsides = mb->numsides;
-		if (!numsides)
+		if (!numsides) {
+			Verb_Printf(VERB_DUMP, "Rejected brush %i: no sides.\n", i);
 			continue;
+		}
 
 		/* make sure the brush has at least one face showing */
 		vis = 0;
@@ -353,14 +363,17 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 
 		/* carve off anything outside the clip box */
 		newbrush = ClipBrushToBox(newbrush, clipmins, clipmaxs);
-		if (!newbrush)
+		if (!newbrush) {
+			Verb_Printf(VERB_DUMP, "Rejected brush %i: cannot clip to box.\n", i);
 			continue;
+		}
 
 		c_faces += vis;
 		c_brushes++;
 
 		newbrush->next = brushlist;
 		brushlist = newbrush;
+		Verb_Printf(VERB_DUMP, "Added brush %i.\n", i);
 	}
 
 	return brushlist;

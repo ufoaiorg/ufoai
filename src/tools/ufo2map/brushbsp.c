@@ -479,7 +479,10 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 	node->planenum = PLANENUM_LEAF;
 	node->contentFlags = 0;
 
+	Verb_Printf(VERB_DUMP, "LeafNode: scanning brushes.\n");
+
 	for (b = brushes; b; b = b->next) {
+		Verb_Printf(VERB_DUMP, "LeafNode: scanning brush %i\n", b->original->brushnum);
 		/* if the brush is solid and all of its sides are on nodes,
 		 * it eats everything */
 		if (b->original->contentFlags & CONTENTS_SOLID && !(b->original->contentFlags & CONTENTS_PASSABLE)) {
@@ -860,10 +863,12 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 			SplitBrush(brush, node->planenum, &newbrush, &newbrush2);
 			if (newbrush) {
 				newbrush->next = *front;
+				Verb_Printf(VERB_DUMP, "SplitBrushList: Adding brush %i to front list.\n", newbrush->original->brushnum);
 				*front = newbrush;
 			}
 			if (newbrush2) {
 				newbrush2->next = *back;
+				Verb_Printf(VERB_DUMP, "SplitBrushList: Adding brush %i to back list.\n", newbrush2->original->brushnum);
 				*back = newbrush2;
 			}
 			continue;
@@ -885,13 +890,16 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 		if (sides & PSIDE_FRONT) {
 			newbrush->next = *front;
 			*front = newbrush;
+			Verb_Printf(VERB_DUMP, "SplitBrushList: Adding brush %i to front list.\n", newbrush->original->brushnum);
 			continue;
 		}
 		if (sides & PSIDE_BACK) {
 			newbrush->next = *back;
+			Verb_Printf(VERB_DUMP, "SplitBrushList: Adding brush %i to back list.\n", newbrush->original->brushnum);
 			*back = newbrush;
 			continue;
 		}
+	Verb_Printf(VERB_DUMP, "SplitBrushList: Brush %i fell off the map.\n", newbrush->original->brushnum);
 	}
 }
 
@@ -913,8 +921,11 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 		node->side = NULL;
 		node->planenum = PLANENUM_LEAF;
 		LeafNode(node, brushes);
+		Verb_Printf(VERB_DUMP, "BuildTree_r: Created a leaf node.\n");
 		return node;
 	}
+
+	Verb_Printf(VERB_DUMP, "BuildTree_r: splitting along plane %i\n", bestside->planenum);
 
 	/* this is a splitplane node */
 	node->side = bestside;

@@ -86,6 +86,7 @@ static void EmitLeaf (const node_t *node)
 			if (curTile->leafbrushes[i] == brushnum)
 				break;
 		if (i == curTile->numleafbrushes) {
+			Verb_Printf(VERB_DUMP, "EmitLeaf: adding brush %i to leaf %i\n", brushnum, curTile->numleafs - 1);
 			curTile->leafbrushes[curTile->numleafbrushes] = brushnum;
 			curTile->numleafbrushes++;
 		}
@@ -137,11 +138,13 @@ static void EmitFace (const face_t *f)
  */
 static int EmitDrawNode_r (node_t *node)
 {
+	const char* side[2]={"front", "back"};
 	dBspNode_t *n;
 	const face_t *f;
 	int i;
 
 	if (node->planenum == PLANENUM_LEAF) {
+		Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating singleton leaf.\n");
 		EmitLeaf(node);
 		return -curTile->numleafs;
 	}
@@ -150,6 +153,7 @@ static int EmitDrawNode_r (node_t *node)
 	if (curTile->numnodes >= MAX_MAP_NODES)
 		Sys_Error("MAX_MAP_NODES (%i)", curTile->numnodes);
 	n = &curTile->nodes[curTile->numnodes];
+	Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating bsp node %i\n", curTile->numnodes);
 	curTile->numnodes++;
 
 	VectorCopy((short)node->mins, n->mins);
@@ -173,9 +177,11 @@ static int EmitDrawNode_r (node_t *node)
 	/* recursively output the other nodes */
 	for (i = 0; i < 2; i++) {
 		if (node->children[i]->planenum == PLANENUM_LEAF) {
+			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: creating child leaf for %s of bsp node %i.\n", side[i], n - curTile->nodes);
 			n->children[i] = -(curTile->numleafs + 1);
 			EmitLeaf(node->children[i]);
 		} else {
+			Verb_Printf(VERB_DUMP, "EmitDrawNode_r: adding child node for bsp node %i.\n", n - curTile->nodes);
 			n->children[i] = curTile->numnodes;
 			EmitDrawNode_r(node->children[i]);
 		}
