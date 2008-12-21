@@ -447,15 +447,22 @@ static void TR_ResetScrolling_f (void)
 {
 	/* for reseting the scrolling */
 	static menuNode_t *trans_list = NULL;
+	static menuNode_t *trans_list_scroll = NULL;
 
 	if (!trans_list) {
 		trans_list = MN_GetNodeFromCurrentMenu("trans_list");
 	}
+	if (!trans_list_scroll) {
+		trans_list_scroll = MN_GetNodeFromCurrentMenu("trans_list_scroll");
+	}
 
 	/* maybe we call this function and transfer menu is not on the menu stack */
-	if (trans_list) {
-		trans_list->u.text.textScroll = 0;
+	if (!trans_list || !trans_list_scroll) {
+		return;
 	}
+
+	trans_list->u.text.textScroll = 0;
+	trans_list_scroll->u.abstractscrollbar.pos = 0;
 }
 
 static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t transferType)
@@ -1722,6 +1729,8 @@ static void TR_Init_f (void)
 	/* Set up cvar used to display transferBase. */
 	if (transferBase)
 		Cvar_Set("mn_trans_base_name", transferBase->name);
+	/* Reset scrolling for item-in-base list */
+	TR_ResetScrolling_f();
 }
 
 /**
