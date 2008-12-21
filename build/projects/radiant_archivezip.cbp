@@ -44,6 +44,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="--export-all-symbols" />
+					<Add library="libglib-2.0" />
 					<Add library="z" />
 				</Linker>
 			</Target>
