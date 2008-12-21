@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "stream/textstream.h"
 #include "stream/stringstream.h"
+#include "os/path.h"
 
 #include <glib.h>
 
@@ -39,30 +40,31 @@ const char* environment_get_app_path (void)
 	return app_path.c_str();
 }
 
+
 #ifdef _WIN32
-#define RADIANT_DIRECTORY "/UFOAI/RadiantSettings/"
+#define RADIANT_HOME "UFOAI/"
 #else
-#define RADIANT_DIRECTORY ".ufoai/radiant/"
+#define RADIANT_HOME ".ufoai/"
 #endif
+#define RADIANT_DIRECTORY "radiant/"
 
 void environment_init (void)
 {
 	StringOutputStream path(256);
-	path << g_get_home_dir() << "/" << RADIANT_DIRECTORY;
+	path << DirectoryCleaned(g_get_home_dir()) << RADIANT_HOME << RADIANT_DIRECTORY;
 	g_mkdir_with_parents(path.c_str(), 775);
 	home_path = path.c_str();
 
-#ifdef PKGDATADIR
 	path.clear();
-	path << PKGDATADIR << "/radiant/";
-	if (g_file_test(path.c_str(), (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())
-		app_path = path.c_str();
+#ifdef PKGDATADIR
+	if (g_file_test(PKGDATADIR"/"RADIANT_DIRECTORY, (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())
+		app_path << PKGDATADIR"/"RADIANT_DIRECTORY;
 	else
 #endif
 	{
 		gchar *currentDir = g_get_current_dir();
 		path.clear();
-		path << currentDir << "/radiant/";
+		path << DirectoryCleaned(currentDir) << RADIANT_DIRECTORY;
 		app_path = path.c_str();
 		g_free(currentDir);
 	}
