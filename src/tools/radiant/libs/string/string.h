@@ -1,3 +1,8 @@
+/**
+ * @file string.h
+ * @brief C-style null-terminated-character-array string library.
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -22,12 +27,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_STRING_STRING_H)
 #define INCLUDED_STRING_STRING_H
 
-/// \file
-/// C-style null-terminated-character-array string library.
-
 #include <cstring>
 #include <cctype>
 #include <algorithm>
+#include <glib.h>
 
 #include "memory/allocator.h"
 #include "generic/arrayrange.h"

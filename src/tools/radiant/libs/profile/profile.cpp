@@ -44,8 +44,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
 
-#include "str.h"
-
 
 // =============================================================================
 // Static functions
@@ -259,13 +257,10 @@ float profile_load_float (const char *filename, const char *section, const char 
 }
 
 char* profile_load_string (const char *filename, const char *section, const char *key, const char *default_value) {
-	static Str ret;
-	char value[1024];
+	static char value[1024];
 
-	if (read_var (filename, section, key, value))
-		ret = value;
-	else
-		ret = default_value;
+	if (!read_var(filename, section, key, value))
+		strncpy(value, default_value, sizeof(value));
 
-	return (char*)ret.GetBuffer();
+	return value;
 }

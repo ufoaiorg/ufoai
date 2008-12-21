@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdio.h>
 #include <string.h>
 #include <algorithm>
+#include <glib.h>
 
 #include "generic/arrayrange.h"
 
@@ -113,10 +114,6 @@ inline char* write_size_t_decimal_backward(char* ptr, size_t decimal, bool show_
 }
 
 
-#ifdef WIN32
-#define snprintf _snprintf
-#endif
-
 /// \brief Writes a single character \p c to \p ostream.
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, char c) {
@@ -131,7 +128,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const double d) {
 	const std::size_t bufferSize = 16;
 	char buf[bufferSize];
-	ostream.write(buf, snprintf(buf, bufferSize, "%g", d));
+	ostream.write(buf, g_snprintf(buf, bufferSize, "%g", d));
 	return ostream;
 }
 
@@ -199,7 +196,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const HexChar& c) {
 	const std::size_t bufferSize = 16;
 	char buf[bufferSize];
-	ostream.write(buf, snprintf(buf, bufferSize, "%X", c.m_value & 0xFF));
+	ostream.write(buf, g_snprintf(buf, bufferSize, "%X", c.m_value & 0xFF));
 	return ostream;
 }
 
@@ -262,7 +259,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const FloatFormat& formatted) {
 	const std::size_t bufferSize = 32;
 	char buf[bufferSize];
-	ostream.write(buf, snprintf(buf, bufferSize, "%*.*lf", formatted.m_width, formatted.m_precision, formatted.m_f));
+	ostream.write(buf, g_snprintf(buf, bufferSize, "%*.*lf", formatted.m_width, formatted.m_precision, formatted.m_f));
 	return ostream;
 }
 
@@ -281,7 +278,7 @@ template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const Decimal& decimal) {
 	const int bufferSize = 22;
 	char buf[bufferSize];
-	std::size_t length = snprintf(buf, bufferSize, "%.7g", decimal.m_f);
+	std::size_t length = g_snprintf(buf, bufferSize, "%.7g", decimal.m_f);
 	ostream.write(buf, length);
 	return ostream;
 }
