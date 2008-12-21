@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define POPUPBUTTON_MENU_NAME "popup_button"
 #define POPUPBUTTON_NODE_NAME "popup_button_"
-#define POPUPBUTTON_NODE_STRING_NAME "popup_button_string_"
 #define POPUP_MENU_NAME "popup"
 
 /** @brief strings to be used for popup when text is not static */
@@ -104,22 +103,17 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
  * @param[in] menu menu where buttons are modified.
  * @param[in] button Name of the node of the button.
  * @param[in] clickAction Action to perform when button is clicked.
- * @param[in] buttonText Name of the node of the string.
+ * @param[in] buttonText Name of the node of the string. NULL if nothing
  * @note clickAction may be NULL if button is not needed.
  */
-static void MN_SetOneButton (menu_t* menu, const char *button, const char *clickAction, const char *buttonText)
+static void MN_SetOneButton (menu_t* menu, const char *button, const char *clickAction)
 {
 	menuNode_t* buttonNode;
-	menuNode_t* buttonTextNode;
-	/* @todo BAYO: please check remove of buttonTextNode */
 
 	buttonNode = MN_GetNode(menu, button);
 	if (!buttonNode)
 		Sys_Error("Could not get %s node in %s menu", button, menu->name);
-	/* buttonTextNode = MN_GetNode(menu, buttonText);
-	if (!buttonTextNode)
-		Sys_Error("Could not get %s node in %s menu", buttonText, menu->name);
-*/
+
 	/* free previous actions */
 	if (buttonNode->onClick) {
 		assert(buttonNode->onClick->data);
@@ -132,12 +126,10 @@ static void MN_SetOneButton (menu_t* menu, const char *button, const char *click
 		buttonNode->mousefx = qtrue;
 		MN_SetMenuAction(&buttonNode->onClick, EA_CMD, clickAction);
 		buttonNode->invis = qfalse;
-	/*	buttonTextNode->invis = qfalse; */
 	} else {
 		buttonNode->mousefx = qfalse;
 		buttonNode->onClick = NULL;
 		buttonNode->invis = qtrue;
-/*		buttonTextNode->invis = qtrue; */
 	}
 }
 
@@ -180,30 +172,28 @@ void MN_PopupButton (const char *title, const char *text,
 	Cvar_Set("mn_popup_button_tooltip1", tooltip1);
 	if (!clickAction1 && !clickText1) {
 		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
-			NULL, va("%s1", POPUPBUTTON_NODE_STRING_NAME));
+			NULL);
 	} else {
 		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
-			clickAction1 ? clickAction1 : popupAction1, va("%s1", POPUPBUTTON_NODE_STRING_NAME));
+			clickAction1 ? clickAction1 : popupAction1);
 	}
 
 	Cvar_Set("mn_popup_button_text2", clickText2);
 	Cvar_Set("mn_popup_button_tooltip2", tooltip2);
 	if (!clickAction2 && !clickText2) {
-		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
-			NULL, va("%s2", POPUPBUTTON_NODE_STRING_NAME));
+		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
 		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
-			clickAction2 ? clickAction2 : popupAction2, va("%s2", POPUPBUTTON_NODE_STRING_NAME));
+			clickAction2 ? clickAction2 : popupAction2);
 	}
 
 	Cvar_Set("mn_popup_button_text3", clickText3);
 	Cvar_Set("mn_popup_button_tooltip3", tooltip3);
 	if (!clickAction3 && !clickText3) {
-		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
-			NULL, va("%s3", POPUPBUTTON_NODE_STRING_NAME));
+		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
 		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
-			clickAction3 ? clickAction3 : popupAction3, va("%s3", POPUPBUTTON_NODE_STRING_NAME));
+			clickAction3 ? clickAction3 : popupAction3);
 	}
 
 	MN_PushMenu(popupButtonMenu->name, NULL);
