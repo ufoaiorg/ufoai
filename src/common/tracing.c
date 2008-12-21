@@ -102,6 +102,7 @@ static qboolean trace_ispoint;			/ * optimized case * /
 
 tnode_t *tnode_p;
 
+
 /*
 ===============================================================================
 TRACING NODES
@@ -463,9 +464,7 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 
 	frac = front / (front - back);
 
-	mid[0] = start[0] + (stop[0] - start[0]) * frac;
-	mid[1] = start[1] + (stop[1] - start[1]) * frac;
-	mid[2] = start[2] + (stop[2] - start[2]) * frac;
+	VectorInterpolation(start, stop, frac, mid);
 
 	r = TR_TestLineDist_r(tnode->children[side], start, mid);
 	if (r)
@@ -778,11 +777,6 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace_data, cBspBrush_t *brush, TR_LE
 		}
 	}
 
-	/*
-	if (!trace->trace)
-		return;
-	*/
-
 	if (!startout) {			/* original point was inside brush */
 		trace_data->trace.startsolid = qtrue;
 		if (!getout)
@@ -870,23 +864,26 @@ static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 {
 	int k;
 	TR_LEAF_TYPE *leaf;
+	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	assert(leafnum > LEAFNODE);
 	assert(leafnum <= curTile->numleafs);
 
-	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects))
+	leaf = &myTile->leafs[leafnum];
+
+	if ((trace_data->contents != MASK_ALL) && (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects)))
 		return;
 
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
 		const int brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
 		cBspBrush_t *b = &curTile->brushes[brushnum];
+
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects))
+		if ((trace_data->contents != MASK_ALL) && (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects)))
 			continue;
 
 		TR_ClipBoxToBrush(trace_data, b, leaf);
@@ -920,7 +917,7 @@ static void TR_TestInLeaf (boxtrace_t *trace_data, int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects))
+		if (!(trace_data->contents && b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects))
 			continue;
 		TR_TestBoxInBrush(trace_data, b);
 		if (!trace_data->trace.fraction)
@@ -971,6 +968,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 	/* find the point distances to the seperating plane
 	 * and the offset for the size of the box */
 	node = myTile->nodes + num;
+
 #ifdef COMPILE_UFO
 	plane = node->plane;
 #else
@@ -985,14 +983,15 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		offset = trace_data->extents[type];
 	} else {
 		const float dist = plane->dist;
-		t1 = DotProduct(plane->normal, p1) - dist;
-		t2 = DotProduct(plane->normal, p2) - dist;
+		vec3_t *normal = &plane->normal;
+		t1 = DotProduct(*normal, p1) - dist;
+		t2 = DotProduct(*normal, p2) - dist;
 		if (trace_data->ispoint)
 			offset = 0;
 		else
-			offset = fabs(trace_data->extents[0] * plane->normal[0])
-				+ fabs(trace_data->extents[1] * plane->normal[1])
-				+ fabs(trace_data->extents[2] * plane->normal[2]);
+			offset = fabs(trace_data->extents[0] * *normal[0])
+				+ fabs(trace_data->extents[1] * *normal[1])
+				+ fabs(trace_data->extents[2] * *normal[2]);
 	}
 
 	/* see which sides we need to consider */
@@ -1005,6 +1004,12 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 	}
 
 	/* put the crosspoint DIST_EPSILON pixels on the near side */
+	/** @note t1 and t2 refer to the distance the endpoints of the line are from the bsp dividing plane for this node.
+	 * Additionally, frac and frac2 are the fractions of the CURRENT PIECE of the line that was being tested, and will
+	 * add to (aproximately) 1.  When midf is calculated, frac and frac2 are converted to reflect the fraction of the
+	 * WHOLE line being traced.  However, the interpolated vector is based on the CURRENT endpoints so uses frac and
+	 * frac2 to find the actual splitting point.
+	 */
 	if (t1 < t2) {
 		const float idist = 1.0 / (t1 - t2);
 		side = 1;
@@ -1028,7 +1033,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		frac = 1;
 
 	midf = p1f + (p2f - p1f) * frac;
-	VectorInterpolation(p1, p2, midf, mid);
+	VectorInterpolation(p1, p2, frac, mid);
 	TR_RecursiveHullCheck(trace_data, node->children[side], p1f, midf, p1, mid);
 
 	/* go past the node */
@@ -1038,7 +1043,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		frac2 = 1;
 
 	midf = p1f + (p2f - p1f) * frac2;
-	VectorInterpolation(p1, p2, midf, mid);
+	VectorInterpolation(p1, p2, frac, mid);
 	TR_RecursiveHullCheck(trace_data, node->children[side ^ 1], midf, p2f, mid, p2);
 }
 
@@ -1084,7 +1089,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 	/* Optimize the trace by moving the line to be traced across into the origin of the box trace. */
 	/* Calculate the offset needed to center the trace about the line */
 	VectorAdd(mins, maxs, offset);
-	VectorDiv(offset, 2, offset);
+	VectorDiv(offset, 2.0, offset);
 
 	/* Now remove the offset from bmin and bmax (effectively centering the trace box about the origin)
 	 * and add the offset to the trace line (effectively repositioning the trace box at the desired coordinates) */
@@ -1132,15 +1137,13 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 		VectorClear(trace_data.extents);
 	} else {
 		trace_data.ispoint = qfalse;
-		trace_data.extents[0] = -amins[0] > amaxs[0] ? -amins[0] : amaxs[0];
-		trace_data.extents[1] = -amins[1] > amaxs[1] ? -amins[1] : amaxs[1];
-		trace_data.extents[2] = -amins[2] > amaxs[2] ? -amins[2] : amaxs[2];
+		VectorCopy(amaxs, trace_data.extents);
 	}
 
 	/* general sweeping through world */
 	TR_RecursiveHullCheck(&trace_data, headnode, 0, 1, astart, aend);
 
-	if (trace_data.trace.fraction == 1.0) {
+	if (trace_data.trace.fraction >= 1.0) {
 		VectorCopy(aend, trace_data.trace.endpos);
 	} else {
 		VectorInterpolation(trace_data.start, trace_data.end, trace_data.trace.fraction, trace_data.trace.endpos);
@@ -1211,9 +1214,7 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 		trace.plane.normal[2] = DotProduct(temp, up);
 	}
 
-	trace.endpos[0] = start[0] + trace.fraction * (end[0] - start[0]);
-	trace.endpos[1] = start[1] + trace.fraction * (end[1] - start[1]);
-	trace.endpos[2] = start[2] + trace.fraction * (end[2] - start[2]);
+	VectorInterpolation(start, end, trace.fraction, trace.endpos);
 
 	return trace;
 }

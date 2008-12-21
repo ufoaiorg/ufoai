@@ -239,7 +239,9 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 {
 	vec3_t start, end; /* Start and end of the traces */
 	vec3_t bmin, bmax; /* Extents of the ceiling box being traced */
-	vec3_t bmin2, bmax2; /* Extents of the floor box being traced */
+	/* Extents of the floor box being traced */
+	const vec3_t bmin2 = {-2 + DIST_EPSILON, -2 + DIST_EPSILON, 0};
+	const vec3_t bmax2 = {2 - DIST_EPSILON, 2 - DIST_EPSILON, 0};
 	vec3_t tstart, tend;
 	pos3_t pos;
 	float bottom, top; /* Floor and ceiling model distances from the cell base. */
@@ -265,17 +267,13 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	 */
 	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point. */
 	start[2] += UNIT_HEIGHT / 2 - QUANT;
-	end[2] = -UNIT_HEIGHT; /* To the bottom of the model! (Plus some for good measure) */
+	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
 
 
 	/* Configure bmin and bmax for the main ceiling scan */
 	VectorSet(bmin, UNIT_SIZE * actor_size / -2 + WALL_SIZE + DIST_EPSILON, UNIT_SIZE * actor_size / -2 + WALL_SIZE + DIST_EPSILON, 0);
 	VectorSet(bmax, UNIT_SIZE * actor_size /  2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size /  2 - WALL_SIZE - DIST_EPSILON, 0);
 
-
-	/* Configure bmin2 and bmax2 for the main floor scan */
-	VectorSet(bmin2, -2 + DIST_EPSILON, -2 + DIST_EPSILON, 0);
-	VectorSet(bmax2, 2 - DIST_EPSILON, 2 - DIST_EPSILON, 0);
 
 	/*
 	 * Trace for a floor.  Steps:
@@ -292,11 +290,12 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 		if (debugTrace)
 			Com_Printf("[(%i, %i, %i, %i)]Casting floor (%f, %f, %f) to (%f, %f, %f)\n",
 				x, y, z, actor_size, start[0], start[1], start[2], end[0], end[1], end[2]);
+
 		tr = RT_COMPLETEBOXTRACE(start, end, bmin2, bmax2, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 		if (tr.fraction >= 1.0) {
 			/* There is no brush underneath this starting point. */
 			if (debugTrace)
-				Com_Printf("Reached bottom of map.  No floor in cell(s).\n");
+				Com_Printf("Reached bottom of map.  No floor in cell(s). %f\n", tr.endpos[2]);
 			/* Mark all cells to the model base as filled. */
 			for (i = z; i >= 0 ; i--) {
 				/* no floor in this cell, it is bottomless! */
