@@ -60,8 +60,10 @@ void environment_init (void)
 	else
 #endif
 	{
+		gchar *currentDir = g_get_current_dir();
 		path.clear();
-		path << g_path_get_dirname(g_get_prgname()) << "/radiant/";
+		path << currentDir << "/radiant/";
 		app_path = path.c_str();
+		g_free(currentDir);
 	}
 }
