@@ -364,10 +364,59 @@ aircraft craft_inter_stingray
 // *********************************
 // UFOS
 // Notes
+// UFOs are listed in order of appearance. See also: http://ufoai.ninex.info/wiki/index.php/Aircraft
 // adding or renaming ufos: change the assembly name or add the assembly to base/maps/ufocrash[dn].ump
 // *********************************
 
-// FIXME
+aircraft craft_ufo_scout
+{
+	param {
+		speed		7
+		maxspeed	13
+		shield		0
+		ecm		70
+		damage		30
+		accuracy	50
+		range		208
+	}
+	name		"_UFO - Scout"
+	shortname	"_Scout U"
+	type		ufo
+	model		"geoscape/ufo_scout"
+	size		1
+	building	building_small_ufo_hangar
+	price		150000
+	image		"geoscape/air_ufo"
+}
+
+aircraft craft_ufo_fighter
+{
+	param {
+		speed		8
+		maxspeed	14
+		shield		0
+		ecm		90
+		damage		50
+		accuracy	80
+		range		236
+	}
+	name		"_UFO - Fighter"
+	shortname	"_Fighter U"
+	type		ufo
+	model		"geoscape/ufo_fighter"
+	size		1
+	// FIXME: should be big hangar
+	building	building_small_ufo_hangar
+	price		180000
+	image		"geoscape/air_ufo"
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+}
+
 aircraft craft_ufo_harvester
 {
 	param {
@@ -375,7 +424,7 @@ aircraft craft_ufo_harvester
 		maxspeed	18
 		shield		3
 		ecm		100
-		damage		40
+		damage		80
 		accuracy	100
 		range		278
 	}
@@ -407,41 +456,43 @@ aircraft craft_ufo_harvester
 	}
 }
 
-// The carrier UFO does not normally appear on the geoscape. It's used to carry
-// other UFOs to and from the mothership.
-// The only times it shows up on the geoscape is when PHALANX shoots one down
-// from orbit as per a story-driven mission.
-aircraft craft_ufo_carrier
+// TODO: Gunboat goes here
+
+aircraft craft_ufo_corrupter
 {
 	param {
 		speed		13
-		maxspeed	20
-		shield		0
-		ecm		100
-		damage		60
-		accuracy	50
+		maxspeed	17
+		shield		4
+		ecm			100
+		damage		100
+		accuracy	80
 		range		347
 	}
-	name		"_UFO - Carrier"
-	shortname	"_Carrier U"
+	name		"_UFO - Corrupter"
+	shortname	"_Corrupter U"
 	type		ufo
-	model		"geoscape/ufo_carrier"
+	model		"geoscape/ufo_corrupter"
 	size		1
-	building	building_small_ufo_hangar
-	price		1000000
+	building	building_big_ufo_hangar
+	price		230000
 	image		"geoscape/air_ufo"
-	nogeoscape	true
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
 }
 
-// FIXME
 aircraft craft_ufo_supply
 {
 	param {
 		speed		8
 		maxspeed	16
 		shield		5
-		ecm		100
-		damage		50
+		ecm		80
+		damage		70
 		accuracy	50
 		range		208
 	}
@@ -455,7 +506,8 @@ aircraft craft_ufo_supply
 	image		"geoscape/air_ufo"
 }
 
-// FIXME
+// TODO: Ripper goes here
+
 aircraft craft_ufo_bomber
 {
 	param {
@@ -484,81 +536,32 @@ aircraft craft_ufo_bomber
 	nogeoscape	true
 }
 
-// FIXME
-aircraft craft_ufo_corrupter
+// TODO: Battleship goes here
+
+// The carrier UFO does not normally appear on the geoscape. It's used to carry
+// other UFOs to and from the mothership.
+// The only times it shows up on the geoscape is when PHALANX shoots one down
+// from orbit as per a story-driven mission.
+aircraft craft_ufo_carrier
 {
 	param {
 		speed		13
-		maxspeed	17
+		maxspeed	20
 		shield		0
-		ecm			100
-		damage		40
-		accuracy	80
+		ecm		100
+		damage		60
+		accuracy	50
 		range		347
 	}
-	name		"_UFO - Corrupter"
-	shortname	"_Corrupter U"
+	name		"_UFO - Carrier"
+	shortname	"_Carrier U"
 	type		ufo
-	model		"geoscape/ufo_corrupter"
-	size		1
-	building	building_big_ufo_hangar
-	price		230000
-	image		"geoscape/air_ufo"
-	slot {
-		type		weapon
-		size		light
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
-	}
-}
-
-aircraft craft_ufo_scout
-{
-	param {
-		speed		7
-		maxspeed	13
-		shield		0
-		ecm		100
-		damage		30
-		accuracy	50
-		range		208
-	}
-	name		"_UFO - Scout"
-	shortname	"_Scout U"
-	type		ufo
-	model		"geoscape/ufo_scout"
+	model		"geoscape/ufo_carrier"
 	size		1
 	building	building_small_ufo_hangar
-	price		150000
+	price		1000000
 	image		"geoscape/air_ufo"
-}
-
-aircraft craft_ufo_fighter
-{
-	param {
-		speed		8
-		maxspeed	14
-		shield		0
-		ecm		100
-		damage		80
-		accuracy	80
-		range		236
-	}
-	name		"_UFO - Fighter"
-	shortname	"_Fighter U"
-	type		ufo
-	model		"geoscape/ufo_fighter"
-	size		1
-	// FIXME: should be big hangar
-	building	building_small_ufo_hangar
-	price		180000
-	image		"geoscape/air_ufo"
-	slot {
-		type		weapon
-		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
-	}
+	nogeoscape	true
 }
 
 // *********************************
@@ -593,7 +596,7 @@ craftitem craft_ammo_shiva_API
 	price		600
 
 	ammo		20
-	wdamage		10
+	wdamage		8
 	accuracy	0.3
 	wrange		0.28
 	wspeed		62
@@ -609,7 +612,7 @@ craftitem craft_ammo_shiva_HEI
 	price		640
 
 	ammo		20
-	wdamage		14
+	wdamage		10
 	accuracy	0.2
 	wrange		0.28
 	wspeed		62
@@ -647,7 +650,7 @@ craftitem craft_ammo_sparrowhawk
 	model		"geoscape/missile_sparrow"
 
 	ammo		7
-	wdamage		20
+	wdamage		15
 	accuracy	0.4
 	wrange		0.62
 	wspeed		25
@@ -678,7 +681,7 @@ craftitem craft_ammo_tr20
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
 	size	10	// light
 	ammo		12
-	wdamage		18
+	wdamage		13
 	accuracy	0.4
 	wrange		0.28
 	wspeed		19
@@ -693,7 +696,7 @@ craftitem craft_weapon_particle_beam
 	installationTime	4
 	price		45000
 
-	wdamage		25
+	wdamage		17
 	speed		0.8
 	maxspeed	0.8
 	wrange		0.45
@@ -802,7 +805,7 @@ craftitem base_ammo_AA51
 //	ammo		80
 // The value (20) below is a workaround until we can display (or fake) high numbers of projectiles in interception
 	ammo		20
-	wdamage		50
+	wdamage		20
 	accuracy	0.3
 	wrange		7
 	wspeed		200
