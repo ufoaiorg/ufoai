@@ -54,7 +54,7 @@ static void Map_Snapshot ()
 	// 2. find out what the lastest save is based on number
 	// 3. inc that and save the map
 	const char* path = Map_Name(g_map);
-	const char* name = g_path_get_basename(path);
+	const char* name = path_get_filename_start(path);
 
 	StringOutputStream snapshotsDir(256);
 	snapshotsDir << StringRange(path, name) << "snapshots";

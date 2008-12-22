@@ -132,7 +132,7 @@ void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
 	const char *file = gtk_entry_get_text(entry);
 	char bufPath[1024];
 	if (file) {
-		const char *filename = g_path_get_basename(file);
+		const char *filename = path_get_filename_start(file);
 		strncpy(bufPath, file, filename - file);
 		bufPath[filename - file] = '\0';
 		file = bufPath;

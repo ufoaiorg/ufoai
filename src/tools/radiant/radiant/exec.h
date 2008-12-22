@@ -43,7 +43,7 @@ typedef struct
 	ExecFunc pre_proc;
 	ExecFunc read_proc;	/**< read the output of the process from stdout */
 	ExecFunc post_proc;
-	gchar *working_dir;
+	const gchar *working_dir;
 	gboolean piped;
 	gpointer exec;
 	gboolean parse_progress;

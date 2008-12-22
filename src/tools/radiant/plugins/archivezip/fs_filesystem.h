@@ -39,6 +39,17 @@ inline unsigned int path_get_depth(const char* path) {
 	return depth;
 }
 
+/// \brief Returns a pointer to the first character of the component of \p path following the first directory component.
+/// O(n)
+inline const char* path_remove_directory (const char* path)
+{
+	const char* first_separator = strchr(path, '/');
+	if (first_separator != 0) {
+		return ++first_separator;
+	}
+	return "";
+}
+
 /// \brief A generic unix-style file-system which maps paths to files and directories.
 /// Provides average O(log n) find and insert methods.
 /// \param file_type The data type which represents a file.
@@ -100,11 +111,11 @@ public:
 	/// O(log n) on average.
 	entry_type& operator[](const Path& path) {
 		{
-			const char* end = g_path_get_basename(path.c_str());
+			const char* end = path_remove_directory(path.c_str());
 			while (end[0] != '\0') {
 				Path dir(StringRange(path.c_str(), end));
 				m_entries.insert(value_type(dir, Entry(0)));
-				end = g_path_get_basename(end);
+				end = path_remove_directory(end);
 			}
 		}
 

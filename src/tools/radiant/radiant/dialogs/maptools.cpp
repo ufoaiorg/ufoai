@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "maptools.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
+#include "os/path.h"  // path_get_filename_start
 #include "scenelib.h" // g_brushCount
 #include "gtkutil/messagebox.h"  // gtk_MessageBox
 #include "stream/stringstream.h"
@@ -396,7 +397,7 @@ void ToolsCompile (void)
 		exec_cmd_add_arg(cmd, compiler_parameter);
 		exec_cmd_add_arg(cmd, fullname);
 		cmd->read_proc = compileReadProgress;
-		cmd->working_dir = g_path_get_basename(compilerBinaryWithPath);
+		cmd->working_dir = path_get_filename_start(compilerBinaryWithPath);
 		exec_run(compilerRun);
 		g_warning("cnt: %i (%s)\n", cnt, fullname);
 		cnt = 0;

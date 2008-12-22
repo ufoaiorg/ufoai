@@ -44,6 +44,28 @@
 # endif
 #endif
 
+/// \brief Returns a pointer to the first character of the filename component of \p path.
+/// O(n)
+inline const char* path_get_filename_start (const char* path)
+{
+	{
+		const char* last_forward_slash = strrchr(path, '/');
+		if (last_forward_slash != 0) {
+			return last_forward_slash + 1;
+		}
+	}
+
+	// not strictly necessary,since paths should not contain '\'
+	{
+		const char* last_backward_slash = strrchr(path, '\\');
+		if (last_backward_slash != 0) {
+			return last_backward_slash + 1;
+		}
+	}
+
+	return path;
+}
+
 /// \brief Returns true if \p path is lexicographically sorted before \p other.
 /// If both \p path and \p other refer to the same file, neither will be sorted before the other.
 /// O(n)
@@ -95,7 +117,7 @@ inline bool path_equal_n(const char* path, const char* other, std::size_t n) {
 /// O(n)
 inline const char* path_get_filename_base_end (const char* path)
 {
-	const char* last_period = strrchr(g_path_get_basename(path), '.');
+	const char* last_period = strrchr(path_get_filename_start(path), '.');
 	return (last_period != 0) ? last_period : path + string_length(path);
 }
 
@@ -120,7 +142,7 @@ inline const char* path_make_relative (const char* path, const char* base)
 /// O(n)
 inline const char* path_get_extension (const char* path)
 {
-	const char* last_period = strrchr(g_path_get_basename(path), '.');
+	const char* last_period = strrchr(path_get_filename_start(path), '.');
 	if (last_period != 0) {
 		return ++last_period;
 	}
