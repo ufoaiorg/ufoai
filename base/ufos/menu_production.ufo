@@ -220,7 +220,7 @@ menu production
 	}
 
 	string label_1 {
-		pos		"790 355"	size "20 20"
+		pos		"786 355"	size "24 20"
 		string	"x1"
 		color	"0 .78 0 1"
 		font	"f_small"
@@ -228,7 +228,7 @@ menu production
 	}
 
 	string label_10 {
-		pos		"830 355"	size "30 20"
+		pos		"824 355"	size "36 20"
 		string	"x10"
 		color	"0 .78 0 1"
 		font	"f_small"

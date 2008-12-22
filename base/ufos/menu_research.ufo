@@ -335,24 +335,6 @@ menu research
 	string txt_available24	{ string "*cvar mn_researchavailable24"	pos "460 713"	color "0 .78 0 1"	align ur }
 	string txt_max24	{ string "*cvar mn_researchmax24"		pos "560 713"	color "0 .78 0 1"	align ur }
 
-	pic img_status25	{ tooltip "*cvar mn_researchstatus25"	pos	"50 738"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item25	{ string "*cvar mn_researchitem25"		pos "70 738"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 25;" } }
-	string txt_assigned25	{ string "*cvar mn_researchassigned25"	textalign ur size "40 20"  pos "365 738"	color "0 .78 0 1" }
-	string txt_available25	{ string "*cvar mn_researchavailable25"	pos "460 738"	color "0 .78 0 1"	align ur }
-	string txt_max25	{ string "*cvar mn_researchmax25"		pos "560 738"	color "0 .78 0 1"	align ur }
-
-	pic img_status26	{ tooltip "*cvar mn_researchstatus26"	pos	"50 763"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item26	{ string "*cvar mn_researchitem26"		pos "70 763"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 26;" } }
-	string txt_assigned26	{ string "*cvar mn_researchassigned26"	textalign ur size "40 20"  pos "365 763"	color "0 .78 0 1" }
-	string txt_available26	{ string "*cvar mn_researchavailable26"	pos "460 763"	color "0 .78 0 1"	align ur }
-	string txt_max26	{ string "*cvar mn_researchmax26"		pos "560 763"	color "0 .78 0 1"	align ur }
-
-	pic img_status27	{ tooltip "*cvar mn_researchstatus27"	pos	"50 788"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item27	{ string "*cvar mn_researchitem27"		pos "70 788"	color "0 .78 0 1"	size "275 16"	click { cmd "research_select 27;" } }
-	string txt_assigned27	{ string "*cvar mn_researchassigned27"	textalign ur size "40 20"  pos "365 788"	color "0 .78 0 1" }
-	string txt_available27	{ string "*cvar mn_researchavailable27"	pos "460 788"	color "0 .78 0 1"	align ur }
-	string txt_max27	{ string "*cvar mn_researchmax27"		pos "560 788"	color "0 .78 0 1"	align ur }
-
 	spinner bt_rs_change0
 	{
 		tooltip	"_Add and remove scientist"
@@ -625,39 +607,6 @@ menu research
 		min 0 current 10000 max 20000 delta 1
 		change {
 			cmd "research_select 24; mn_rs_change 24 <lastdiff>;"
-		}
-	}
-
-	spinner bt_rs_change25
-	{
-		tooltip	"_Add and remove scientist"
-		image	menu/spinner_blue blend true
-		pos		"410 738"
-		min 0 current 10000 max 20000 delta 1
-		change {
-			cmd "research_select 25; mn_rs_change 25 <lastdiff>;"
-		}
-	}
-
-	spinner bt_rs_change26
-	{
-		tooltip	"_Add and remove scientist"
-		image	menu/spinner_blue blend true
-		pos		"410 763"
-		min 0 current 10000 max 20000 delta 1
-		change {
-			cmd "research_select 26; mn_rs_change 26 <lastdiff>;"
-		}
-	}
-
-	spinner bt_rs_change27
-	{
-		tooltip	"_Add and remove scientist"
-		image	menu/spinner_blue blend true
-		pos		"410 788"
-		min 0 current 10000 max 20000 delta 1
-		change {
-			cmd "research_select 27; mn_rs_change 27 <lastdiff>;"
 		}
 	}
 
