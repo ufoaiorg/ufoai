@@ -110,12 +110,12 @@ typedef enum msgcategorymask_s {
 	MSGCATMASK_FOLDED = 1 << 0
 } msgcategorymask_t;
 
-/** @brief notification types */
-typedef enum mso_s {
-	MSO_PAUSE = NTMASK_PAUSE | NTMASK_NOTIFY,	/**< pause game */
-	MSO_NOTIFY = NTMASK_NOTIFY,					/**< add notification message */
-	MSO_SOUND = NTMASK_SOUND | NTMASK_NOTIFY	/**< play notification sound */
-} mso_t;
+/** @brief notification type: pause game */
+#define MSO_PAUSE (NTMASK_PAUSE | NTMASK_NOTIFY)
+/** @brief notification type: add notification message */
+#define MSO_NOTIFY (NTMASK_NOTIFY)
+/** @brief notification type: play notification sound */
+#define MSO_SOUND (NTMASK_SOUND | NTMASK_NOTIFY)
 
 /**
  * @brief structure holding pause and notify settings for a notify type.

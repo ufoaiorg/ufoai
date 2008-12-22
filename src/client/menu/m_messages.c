@@ -550,7 +550,7 @@ static void MSO_Init_f (void)
  * @sa MSO_Set_f
  * @note if sendCommands is qfalse, initialization of buttons is reactivated for next menu displaying
  */
-static void MSO_Set (const int listIndex, const notify_t type, const mso_t optionType, const qboolean activate, const qboolean sendCommands)
+static void MSO_Set (const int listIndex, const notify_t type, const int optionType, const qboolean activate, const qboolean sendCommands)
 {
 	messageSettings_t *settings = &messageSettings[type];
 
@@ -611,7 +611,7 @@ static void MSO_Toggle_f (void)
 	else {
 		const int listIndex = atoi(Cmd_Argv(1));
 		const msgCategoryEntry_t *selectedEntry = MSO_GetEntryFromSelectionIndex(listIndex,qtrue);
-		mso_t optionType;
+		int optionType;
 		qboolean activate;
 		notify_t type;
 
@@ -654,7 +654,7 @@ static void MSO_Set_f (void)
 		Com_Printf("Usage: %s <messagetypename> <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
 	else {
 		notify_t type;
-		mso_t optionsType;
+		int optionsType;
 		const char *messagetype = Cmd_Argv(1);
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -681,7 +681,7 @@ static void MSO_Set_f (void)
 }
 
 /**
- * @brief Function callback that sets all message options settings for one mso_t to given value.
+ * @brief Function callback that sets all message options settings for one option type to given value.
  * @sa MSO_Set
  * @sa MSO_Init_f
  */
@@ -690,7 +690,7 @@ static void MSO_SetAll_f(void)
 	if (Cmd_Argc() != 3)
 		Com_Printf("Usage: %s <pause|notify|sound> <0|1>\n", Cmd_Argv(0));
 	else {
-		mso_t optionsType;
+		int optionsType;
 		notify_t type;
 		qboolean activate = atoi(Cmd_Argv(2));
 		if (!Q_strcmp(Cmd_Argv(1), "pause"))
