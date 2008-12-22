@@ -494,7 +494,7 @@ menu aircraft_equip
 
 	string aircraftname
 	{
-    	pos		"224 686"
+		pos		"224 686"
 		size	"300 16"
 		align	cc
 		string	"*cvar mn_aircraftname"
@@ -711,6 +711,8 @@ menu aircraft_equip
 //		bgcolor	"1 1 1 0.5"
 		textid	TEXT_AIREQUIP_1
 		rows	"2"
+		tooltip	"_Select this zone"
+		click	{ call airequip_zone1 }
 	}
 
 	pic airequip_zone_select2
@@ -733,6 +735,8 @@ menu aircraft_equip
 //		bgcolor	"1 1 1 0.5"
 		textid	TEXT_AIREQUIP_2
 		rows	"2"
+		tooltip	"_Select this zone"
+		click	{ call airequip_zone2 }
 	}
 
 	pic airequip_zone_select3
@@ -755,6 +759,8 @@ menu aircraft_equip
 //		bgcolor	"1 1 1 0.5"
 		textid	TEXT_AIREQUIP_3
 		rows	"2"
+		tooltip	"_Select this zone"
+		click	{ call airequip_zone3 }
 	}
 
 	string airequip_header1
