@@ -3551,7 +3551,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 }
 
 /**
- * @brief Create alien team.
+ * @brief Create civilian team.
  * @param[in] mission Pointer to the mission that generates the battle
  */
 static void CP_CreateCivilianTeam (mission_t *mission)
