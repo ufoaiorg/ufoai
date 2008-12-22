@@ -42,6 +42,7 @@ void UFO_FleePhalanxAircraft(aircraft_t *ufo, const vec2_t v);
 void UFO_CheckShootBack(aircraft_t *ufo, aircraft_t* phalanxAircraft);
 void UFO_CampaignRunUFOs(int dt);
 void UFO_UpdateAlienInterestForAllBasesAndInstallations(void);
+void UFO_DetectNewUFO(aircraft_t *ufocraft);
 qboolean UFO_CampaignCheckEvents(void);
 void UFO_InitStartup(void);
 aircraft_t *UFO_AddToGeoscape(ufoType_t ufotype, vec2_t destination, mission_t *mission);

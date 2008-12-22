@@ -4636,13 +4636,12 @@ void CL_CampaignRun (void)
 			CL_CampaignRunMarket();
 		}
 
-		/* check for campaign events */
-		if (dt > timeAlreadyFlied) {
-			/** aircraft and UFO already moved during radar detection (see above),
-			 *  just make them move the missing part -- if any */
-			CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
-			UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
-		}
+		/** check for campaign events
+		 *  aircraft and UFO already moved during radar detection (see above),
+		 *  just make them move the missing part -- if any */
+		UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
+		/* must be called even if dt = timeAlreadyFlied in order to update radar overlay */
+		CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
 		UFO_CampaignCheckEvents();
 		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CP_CheckEvents();

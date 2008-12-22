@@ -965,6 +965,8 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
 	int i, j;
 	transfer_t *transfer;
+	/* Check if aircraft is on geoscape while it's not destroyed yet */
+	const qboolean aircraftIsOnGeoscape = AIR_IsAircraftOnGeoscape(aircraft);
 
 	assert(aircraft);
 	base = aircraft->homebase;
@@ -1054,6 +1056,10 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	/* update hangar capacities */
 	AIR_UpdateHangarCapForAll(base);
+
+	/* Update Radar overlay */
+	if (aircraftIsOnGeoscape)
+		RADAR_UpdateWholeRadarOverlay();
 }
 
 /**
@@ -1087,8 +1093,6 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 		/* This shouldn't ever happen. */
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
 	}
-
-	aircraft->status = AIR_HOME;
 
 	AIR_DeleteAircraft(aircraft->homebase, aircraft);
 }
@@ -1171,6 +1175,8 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 	static qboolean radarOverlayReset = qfalse;	/**< true if at least one aircraft moved: radar overlay must be updated
 												 * This is static because aircraft can move without radar beeing
 												 * updated (sa CL_CampaignRun) */
+
+	assert(dt >= 0);
 
 	if (dt > 0) {
 		for (j = 0; j < MAX_BASES; j++) {

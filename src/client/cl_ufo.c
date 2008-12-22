@@ -472,7 +472,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 				/* choose the nearest target */
 				if (dist < distance) {
 					distance = dist;
-					if (UFO_SendPursuingAircraft(ufo, phalanxAircraft)) {
+					if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
 						/* stop time and notify */
 						MSO_CheckAddNewMessage(NT_UFO_ATTACKING,_("Notice"), va(_("A UFO is flying toward %s"), _(phalanxAircraft->name)), qfalse, MSG_STANDARD, NULL);
 						/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
@@ -562,6 +562,12 @@ void UFO_CampaignRunUFOs (int dt)
 {
 	aircraft_t*	ufo;
 	int k;
+
+	assert(dt >= 0);
+
+	/* dt may be 0 if a UFO has been detection occured (see CL_CampaignRun) */
+	if (!dt)
+		return;
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
@@ -765,6 +771,20 @@ static void UFO_RemoveFromGeoscape_f (void)
 #endif
 
 /**
+ * @brief Perform actions when a new UFO is detected.
+ * @param[in] ufocraft Pointer to the UFO that has just been detected.
+ */
+void UFO_DetectNewUFO (aircraft_t *ufocraft)
+{
+	/* Make this UFO detected */
+	ufocraft->detected = qtrue;
+
+	/* If this is the first UFO on geoscape, activate radar */
+	if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+		MAP_SetOverlay("radar");
+}
+
+/**
  * @brief Check events for UFOs: Appears or disappears on radars
  * @return qtrue if any new ufo was detected during this iteration, qfalse otherwise
  */
@@ -794,6 +814,14 @@ qboolean UFO_CampaignCheckEvents (void)
 
 			/* maybe the ufo is already detected, don't reset it */
 			detected |= RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, detected | ufo->detected);
+
+			/* Check if UFO is detected by an aircraft */
+			for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
+				if (!AIR_IsAircraftOnGeoscape(aircraft))
+					continue;
+				/* maybe the ufo is already detected, don't reset it */
+				detected |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected);
+			}
 		}
 
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
@@ -805,30 +833,19 @@ qboolean UFO_CampaignCheckEvents (void)
 			detected |= RADAR_CheckUFOSensored(&installation->radar, installation->pos, ufo, detected | ufo->detected);
 		}
 
-		/* Check for ufo tracking by aircraft */
-		if (detected || ufo->detected)
-			for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-				base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-				if (!base)
-					continue;
-				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
-					if (!AIR_IsAircraftOnGeoscape(aircraft))
-						continue;
-					/* maybe the ufo is already detected, don't reset it */
-					detected |= RADAR_CheckUFOSensored(&aircraft->radar, aircraft->pos, ufo, detected | ufo->detected);
-				}
-			}
-
 		/* Check if ufo appears or disappears on radar */
 		if (detected != ufo->detected) {
 			if (detected) {
-				MSO_CheckAddNewMessage(NT_UFO_SPOTTED,_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_UFOSPOTTED, NULL);
-				/* Make this UFO detected */
-				ufo->detected = qtrue;
+				/* if UFO is aiming a PHALANX aircraft, warn player */
+				if (ufo->aircraftTarget) {
+					/* stop time and notify */
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING,_("Notice"), va(_("A UFO is flying toward %s"), _(ufo->aircraftTarget->name)), qfalse, MSG_STANDARD, NULL);
+					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
+					 * @sa UFO_SearchAircraftTarget */
+				} else
+					MSO_CheckAddNewMessage(NT_UFO_SPOTTED,_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_UFOSPOTTED, NULL);
 				newDetection = qtrue;
-				/* If this is the first UFO on geoscape, activate radar */
-				if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
-					MAP_SetOverlay("radar");
+				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {
 				MSO_CheckAddNewMessage(NT_UFO_SIGNAL_LOST,_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_UFOSPOTTED, NULL);
 				/* Make this UFO undetected */

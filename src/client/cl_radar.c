@@ -408,7 +408,7 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
  * @brief Adds detected UFO to any radar in range (if not already detected).
  * @param[in] ufo Pointer to the UFO to check.
  */
-static void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
+void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 {
 	int idx;
 
