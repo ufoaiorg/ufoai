@@ -636,6 +636,43 @@ menu employees
 		*bt_pilots		color "1 1 1 1"
 	}
 
+	tab empl_switch {
+		cvar "*cvar"
+		pos	"450 500"
+		size	"500 36"
+		cvar	"*cvar mn_hiretype"
+		option soldier {
+			label	"_Soldiers"
+			value	"0"
+			icon	greenhead_soldier
+			action "employee_init 0;"
+		}
+		option pilot {
+			label	"_Pilots"
+			value	"3"
+			icon	greenhead_pilot
+			action "employee_init 3;"
+		}
+		option worker {
+			label	"_Workers"
+			value	"2"
+			icon	greenhead_worker
+			action "employee_init 2;"
+		}
+		option scientist {
+			label	"_Scientists"
+			value	"1"
+			icon	greenhead_scientist
+			action "employee_init 1;"
+		}
+		//option medic {
+		//	label	"_Medics"
+		//	value	"5"
+		//	icon	greenhead_medic
+		//	action "employee_init 4;"
+		//}
+	}
+
 	button bt_soldier
 	{
 		tooltip	"_Hire soldiers"
@@ -712,6 +749,7 @@ menu employees
 		call employee_clear
 		call empl_soldiers
 		cmd "employee_init 0;"
+		cmd "set mn_hiretype 0;"
 	}
 
 	func close

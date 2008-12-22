@@ -77,3 +77,33 @@ icon question {
 	texl	"80 0"
 	size	"27 46"
 }
+
+icon greenhead_soldier {
+	image "menu/icon_pack2"
+	texl	"116 0"
+	size	"28 28"
+}
+
+icon greenhead_pilot {
+	image "menu/icon_pack2"
+	texl	"144 0"
+	size	"28 28"
+}
+
+icon greenhead_worker {
+	image "menu/icon_pack2"
+	texl	"172 0"
+	size	"28 28"
+}
+
+icon greenhead_scientist {
+	image "menu/icon_pack2"
+	texl	"200 0"
+	size	"28 28"
+}
+
+icon greenhead_medic {
+	image "menu/icon_pack2"
+	texl	"228 0"
+	size	"28 28"
+}

@@ -37,6 +37,7 @@ static const value_t selectBoxValues[] = {
 	{"label", V_TRANSLATION_MANUAL_STRING, offsetof(selectBoxOptions_t, label), sizeof(char) * SELECTBOX_MAX_VALUE_LENGTH},
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
 	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
+	{"icon", V_SPECIAL_ICONREF, offsetof(selectBoxOptions_t, icon), 0},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -348,12 +349,14 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 	 * this one is executed on each selection
 	 */
 
+	*token = COM_EParse(text, errhead, node->name);
+	if (!*text)
+		return qfalse;
+
 	do {
 		const value_t *property;
+		int result;
 
-		*token = COM_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
 		if (*token[0] == '}')
 			break;
 
@@ -364,29 +367,12 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		}
 
 		/* get parameter values */
-		*token = COM_EParse(text, errhead, node->name);
-		if (!*text)
+		result = MN_ParseProperty(&mn.menuSelectBoxes[mn.numSelectBoxes], property, mn.menuSelectBoxes[mn.numSelectBoxes].id, text, token);
+		if (!result) {
+			Com_Printf("MN_ParseOption: Parsing for option '%s'. See upper\n", mn.menuSelectBoxes[mn.numSelectBoxes].id);
 			return qfalse;
-
-		if (property->type == V_TRANSLATION_MANUAL_STRING) {
-			if (property->size) {
-				/* selectbox values are static arrays */
-				char *target = ((char*)&mn.menuSelectBoxes[mn.numSelectBoxes] + property->ofs);
-				const char *translateableToken = *token;
-				if (translateableToken[0] == '_')
-					translateableToken++;
-				Q_strncpyz(target, translateableToken, property->size);
-			}
-			/* otherwise fall through */
-		} else {
-			int result;
-			size_t bytes;
-			result = Com_ParseValue(&mn.menuSelectBoxes[mn.numSelectBoxes], *token, property->type, property->ofs, property->size, &bytes);
-			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseOption: Invalid value for property '%s': %s\n", property->string, Com_GetError());
-				return qfalse;
-			}
 		}
+
 	} while (**token != '}');
 	MN_NodeAddOption(node);
 	return qtrue;
@@ -491,14 +477,25 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 	switch (specialType) {
 	case 0:	/* common type */
+
 		*token = COM_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
 
-		result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
-		if (result != RESULT_OK) {
-			Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
-			return qfalse;
+		if (property->type == V_TRANSLATION_MANUAL_STRING) {
+			/* selectbox values are static arrays */
+			char *target = ((char*)object + property->ofs);
+			const char *translateableToken = *token;
+			assert(property->size);
+			if (translateableToken[0] == '_')
+				translateableToken++;
+			Q_strncpyz(target, translateableToken, property->size);
+		} else {
+			result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				return qfalse;
+			}
 		}
 		break;
 

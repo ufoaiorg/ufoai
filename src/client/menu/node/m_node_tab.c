@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_input.h"
+#include "../m_icon.h"
 #include "m_node_tab.h"
 
 typedef enum {
@@ -74,6 +75,9 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 
 		/* @todo use LONGLINES_CHOP once rendering is done that way */
 		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &fontWidth, NULL, NULL);
+		if (tabOption->icon) {
+			fontWidth += tabOption->icon->size[0];
+		}
 		if (x < TILE_WIDTH + fontWidth)
 			return tabOption;
 
@@ -177,7 +181,8 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	tabOption = node->u.option.first;
 
 	while (tabOption) {
-		int fontHeight, fontWidth;
+		int fontHeight, tabWidth;
+		int textPos;
 		/* Check the status of the current tab */
 		mn_tab_type_t status = MN_TAB_NORMAL;
 		if (!Q_strcmp(tabOption->value, ref)) {
@@ -190,12 +195,22 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &fontWidth, &fontHeight, NULL);
-		MN_TabNodeDrawPlain(image, currentX, node->pos[1], fontWidth, status);
-		R_FontDrawString(font, 0, currentX, node->pos[1] + ((node->size[1] - fontHeight) / 2),
-			currentX, node->pos[1], fontWidth, TILE_HEIGHT,
+		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &tabWidth, &fontHeight, NULL);
+		if (tabOption->icon) {
+			tabWidth += tabOption->icon->size[0];
+		}
+
+		MN_TabNodeDrawPlain(image, currentX, node->pos[1], tabWidth, status);
+
+		textPos = currentX;
+		if (tabOption->icon) {
+			MN_DrawIconInBox(tabOption->icon, 0, currentX, node->pos[1], tabOption->icon->size[0], TILE_HEIGHT);
+			textPos += tabOption->icon->size[0];
+		}
+		R_FontDrawString(font, 0, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
+			currentX, node->pos[1], 400, TILE_HEIGHT,
 			0, _(tabOption->label), 0, 0, NULL, qfalse, LONGLINES_WRAP);
-		currentX += fontWidth;
+		currentX += tabWidth;
 
 		/* Next */
 		tabOption = tabOption->next;

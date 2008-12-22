@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_MAX_VALUE_LENGTH 32
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
+struct menuIcon_s;
+
 /** @brief MN_SELECTBOX definition */
 typedef struct selectBoxOptions_s {
 	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
@@ -37,6 +39,7 @@ typedef struct selectBoxOptions_s {
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node
 							 * NULL terminated for each node */
+	struct menuIcon_s *icon;	/**< Facultative icon */
 	qboolean hovered;		/**< current selected option entry selected? */
 } selectBoxOptions_t;
 
