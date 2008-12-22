@@ -2312,7 +2312,7 @@ static void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	/* if the mission was an attack of an installation, destroy it */
-	installation = mission->data;
+	installation = (installation_t *)mission->data;
 	if (destroyed && installation && installation->founded && VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
 		INS_DestroyInstallation(installation);
 	}
@@ -2493,7 +2493,7 @@ static void CP_InterceptNextStage (mission_t *mission)
 		if (AIRFIGHT_ChooseWeapon(mission->ufo->weapons, mission->ufo->maxWeapons, mission->ufo->pos, mission->ufo->pos) !=
 			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO && !mission->data) {
 			/* UFO is fighting and has still ammo, wait a little bit before leaving (UFO is not attacking an installation) */
-			const date_t AdditionalDelay = {1, 0};	/* 1 day */
+			const date_t AdditionalDelay = {0, 3600};	/* check every hour if there is still ammos */
 			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);
 		} else
 			CP_InterceptMissionLeave(mission, qtrue);
@@ -3255,7 +3255,7 @@ void CP_CheckNextStageDestination (aircraft_t *ufocraft)
 }
 
 /**
- * @brief Make UFO proceed with its mission when the is no more target.
+ * @brief Make UFO proceed with its mission when the fight with another aircraft is over (and UFO survived).
  * @param[in] ufocraft Pointer to the ufo that should proceed a mission.
  */
 void CP_UFOProceedMission (aircraft_t *ufocraft)
@@ -3264,9 +3264,14 @@ void CP_UFOProceedMission (aircraft_t *ufocraft)
 	assert(ufocraft->mission);
 
 	if (ufocraft->mission->category == INTERESTCATEGORY_INTERCEPT && !ufocraft->mission->data) {
-		/* Interception mission is over */
-		ufocraft->status = AIR_TRANSIT;			/* continue stage */
-		CP_MissionStageEnd(ufocraft->mission);
+		/* This is an Intercept mission where UFO attacks aircraft (not installations) */
+		/* Keep on looking targets until mission is over, unless no more ammo */
+		ufocraft->status = AIR_TRANSIT;
+		if (AIRFIGHT_ChooseWeapon(ufocraft->weapons, ufocraft->maxWeapons, ufocraft->pos, ufocraft->pos) !=
+			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
+			UFO_SetRandomDest(ufocraft);
+		else
+			CP_MissionStageEnd(ufocraft->mission);
 	} else if (ufocraft->mission->stage < STAGE_MISSION_GOTO ||
 		ufocraft->mission->stage >= STAGE_RETURN_TO_ORBIT) {
 		UFO_SetRandomDest(ufocraft);

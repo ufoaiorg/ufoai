@@ -864,6 +864,24 @@ qboolean UFO_CampaignCheckEvents (void)
 }
 
 /**
+ * @brief Notify to UFOs that a Phalanx aircraft has been destroyed.
+ * @param[in] aircraft Pointer to the Phalanx aircraft that has been removed.
+ */
+void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
+{
+	int ufoIdx;
+
+	assert(aircraft);
+
+	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
+		aircraft_t *ufo = &gd.ufos[ufoIdx];
+
+		if (ufo->aircraftTarget == aircraft)
+			ufo->aircraftTarget = NULL;
+	}
+}
+
+/**
  * @brief Check if an aircraft should be seen on geoscape.
  * @return true or false wether UFO should be seen or not on geoscape.
  */

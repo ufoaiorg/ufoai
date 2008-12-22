@@ -486,6 +486,9 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		 * back to base as soon as the projectiles will hit their target */
 		AIRFIGHT_UpdateProjectileForDestroyedAircraft(aircraft);
 
+		/* notify UFOs that a phalanx aircraft has been destroyed */
+		UFO_NotifyPhalanxAircraftRemoved(aircraft);
+
 		/* Destroy the aircraft and everything onboard - the aircraft pointer
 		 * is no longer valid after this point */
 		AIR_DestroyAircraft(aircraft);
