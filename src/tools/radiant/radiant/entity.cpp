@@ -204,11 +204,12 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 		if (transform != 0) {
 			transform->setType(TRANSFORM_PRIMITIVE);
 			if (isStartingPosition) {
-				// TODO: Use entityClass->mins, entityClass->maxs
-				const int size = isStartingPositionActor ? 16 : 32;
-				const int x = ((int) origin.x() % UNIT_SIZE) * UNIT_SIZE - size;
-				const int y = ((int) origin.y() % UNIT_SIZE) * UNIT_SIZE - size;
-				const int z = (int) origin.z();
+				const int sizeX = (entityClass->maxs[0] - entityClass->mins[0]) / 2;
+				const int sizeY = (entityClass->maxs[1] - entityClass->mins[1]) / 2;
+				const int sizeZ = (entityClass->maxs[2] - entityClass->mins[2]) / 2;
+				const int x = ((int) origin.x() / UNIT_SIZE) * UNIT_SIZE - sizeX;
+				const int y = ((int) origin.y() / UNIT_SIZE) * UNIT_SIZE - sizeY;
+				const int z = ((int) origin.z() / UNIT_HEIGHT) * UNIT_HEIGHT + sizeZ;
 				const Vector3 vec(x, y, z);
 				globalWarningStream() << "original start position: " << origin.x() << " " << origin.y() << " "
 						<< origin.z() << "\n";
