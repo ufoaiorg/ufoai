@@ -47,13 +47,15 @@ static ipos3_t shift;
  */
 static model_t *r_worldmodel;
 
+#define MIN_AMBIENT_COMPONENT 0.05
+#define MIN_AMBIENT_SUM 1.25
+
 /**
  * @brief Load the lightmap data
  */
 static void R_ModLoadLighting (const lump_t *l, qboolean day)
 {
 	const char *s;
-	const vec3_t soften = {0.5, 0.5, 0.5};
 	const char *ambientLightString = day ? "\"ambient_day\"" : "\"ambient_night\"";
 
 	if (!l->filelen) {
@@ -69,27 +71,22 @@ static void R_ModLoadLighting (const lump_t *l, qboolean day)
 
 		c = COM_Parse(&s);  /* parse the string itself */
 
-		for (i = 0; i < 3; i++) {
-			c = COM_Parse(&s);
-			refdef.ambient_light[i] = atof(c);
+		sscanf(c, "%f %f %f", &refdef.ambient_light[0],
+			&refdef.ambient_light[1], &refdef.ambient_light[2]);
 
-			if (refdef.ambient_light[i] < 0.1)  /* clamp it */
-				refdef.ambient_light[i] = 0.1;
-
-			if (refdef.ambient_light[i] > 0.2)
-				refdef.ambient_light[i] = 0.2;
+		for (i = 0; i < 3; i++) {  /* clamp it */
+			if (refdef.ambient_light[i] < MIN_AMBIENT_COMPONENT)
+				refdef.ambient_light[i] = MIN_AMBIENT_COMPONENT;
 		}
 
 		Com_DPrintf(DEBUG_RENDERER, "Resolved %s: %1.2f %1.2f %1.2f\n",
 			ambientLightString, refdef.ambient_light[0], refdef.ambient_light[1], refdef.ambient_light[2]);
  	} else  /* ensure sane default */
-		VectorSet(refdef.ambient_light, 0.15, 0.15, 0.15);
+		VectorSet(refdef.ambient_light, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT);
 
-	/* scale it by modulate */
-	VectorScale(refdef.ambient_light, r_modulate->value, refdef.ambient_light);
-
-	/* pale it out some */
-	VectorMix(refdef.ambient_light, soften, 0.5, refdef.ambient_light);
+	/* scale it into a reasonable range, the clamp above ensures this will work */
+	while (VectorSum(refdef.ambient_light) < MIN_AMBIENT_SUM)
+		VectorScale(refdef.ambient_light, 1.25, refdef.ambient_light);
 
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);

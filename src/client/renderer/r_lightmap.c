@@ -412,10 +412,6 @@ static void R_LightPointLerp (static_lighting_t *lighting)
 {
 	float lerp;
 
-	/* enforce the level's ambient light as a minimum value */
-	if (VectorSum(lighting->colors[0]) < VectorSum(refdef.ambient_light))
-		VectorCopy(refdef.ambient_light, lighting->colors[0]);
-
 	/* only one sample */
 	if (VectorCompare(lighting->colors[1], vec3_origin)) {
 		VectorCopy(lighting->colors[0], lighting->color);
