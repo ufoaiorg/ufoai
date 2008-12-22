@@ -1542,16 +1542,16 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		switch (INS_GetType(installation)) {
 		case INSTALLATION_RADAR:
-			symbol = "radar";
+			symbol = "geoscape/radar";
 			break;
 		case INSTALLATION_UFOYARD:
-			symbol = "ufoyard";
+			symbol = "geoscape/ufoyard";
 			break;
 		case INSTALLATION_DEFENCE:
-			symbol = "defence";
+			symbol = "geoscape/defence";
 			break;
 		default:
-			symbol = "base";
+			symbol = "geoscape/base";
 			break;
 		}
 
@@ -1560,7 +1560,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 			const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
 			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, symbol, 0);
 		} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, va("geoscape/%s", symbol));
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, symbol);
 		}
 
 		/* Draw base names */
