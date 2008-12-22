@@ -317,6 +317,12 @@ menu_model inter_dragon
 	}
 }
 
+// ============== Starchaser Interceptor ======================
+menu_model inter_starchaser
+{
+	model	"aircraft/inter_dragon/starchaser_folded"
+}
+
 // ============== Stiletto Interceptor =====================
 menu_model inter_stiletto_glass
 {

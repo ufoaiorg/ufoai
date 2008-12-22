@@ -244,7 +244,7 @@ aircraft craft_inter_dragon
 		speed		17
 		maxspeed	23
 		shield		0
-		ecm		100
+		ecm			100
 		damage		40
 		accuracy	80
 		range		146
@@ -258,6 +258,51 @@ aircraft craft_inter_dragon
 	price		100000
 	building	building_intercept
 	image		"geoscape/air_interceptor"
+	slot {
+		type		weapon
+		position	wing_left
+		size		medium
+	}
+	slot {
+		type		weapon
+		position	wing_right
+		size		medium
+	}
+	slot {
+		type		electronics
+		position	wing_left
+	}
+	slot {
+		type		electronics
+		position	wing_right
+	}
+}
+
+aircraft craft_inter_starchaser
+{
+	param {
+		speed		9
+		maxspeed	14
+		shield		0
+		ecm		100
+		damage		30
+		accuracy	100
+		range		80
+	}
+	name		"_Starchaser-class Interceptor"
+	shortname	"_Starchaser"
+	type		interceptor
+	model		"geoscape/inter_starchaser"
+	numteam		1
+	size		1
+	price		40000
+	building	building_intercept
+	image		"geoscape/air_interceptor"
+	slot {
+		type		weapon
+		position	nose_center
+		size		light
+	}
 	slot {
 		type		weapon
 		position	wing_left

@@ -221,13 +221,13 @@ tech rs_craft_upgrade_am_engines
 	pre_description {
 		default "_craft_upgrade_am_engines_pre_txt"
 	}
-	
+
 	require_AND
 	{
 		tech rs_antimatter
 		tech rs_craft_alien_propulsion
 	}
-	
+
 	mail_pre
 	{
 		from	"_mail_from_paul_navarre"
@@ -242,7 +242,7 @@ tech rs_craft_upgrade_am_engines
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		icon	icons/tech
-	}	
+	}
 
 	time 2800
 	image	techs/antimatter_engine
@@ -481,7 +481,7 @@ tech rs_alien_base
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
 		icon	icons/tech
-	}	
+	}
 
 	time 0
 	image	techs/alien_base
@@ -3330,6 +3330,27 @@ tech rs_craft_inter_dragon
 	producetime	600
 
 	mdl		inter_dragon
+}
+
+tech rs_craft_inter_starchaser
+{
+	type	craft
+	description {
+		default "_inter_starchaser_txt"
+	}
+	pre_description	{
+		default "_inter_starchaser_pre_txt"
+	}
+	up_chapter	crafts
+
+	provides	craft_inter_starchaser
+	require_AND {
+		tech rs_craft_upgrade_am_engines
+	}
+	time	3000
+	producetime	600
+
+	mdl		inter_starchaser
 }
 
 tech rs_craft_inter_stingray
