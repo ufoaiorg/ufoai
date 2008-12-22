@@ -397,7 +397,7 @@ void ToolsCompile (void)
 		exec_cmd_add_arg(cmd, compiler_parameter);
 		exec_cmd_add_arg(cmd, fullname);
 		cmd->read_proc = compileReadProgress;
-		cmd->working_dir = path_get_filename_start(compilerBinaryWithPath);
+		cmd->working_dir = g_strdup(path_get_filename_start(compilerBinaryWithPath));
 		exec_run(compilerRun);
 		g_warning("cnt: %i (%s)\n", cnt, fullname);
 		cnt = 0;
