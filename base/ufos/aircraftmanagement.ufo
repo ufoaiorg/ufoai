@@ -70,7 +70,7 @@
 //=========================================================================
 
 //
-// AIRCRAFTS
+// AIRCRAFT
 //
 
 // *********************************
@@ -83,10 +83,10 @@ aircraft craft_drop_firebird
 		speed		7
 		maxspeed	10
 		shield		0
-		ecm			100
-		damage		50
+		ecm			70
+		damage		70
 		accuracy	70
-		range		243
+		range		240
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
