@@ -229,7 +229,7 @@ void SP_func_door (edict_t *ent)
 	ent->classname = "door";
 	ent->type = ET_DOOR;
 	if (!ent->noise)
-		ent->noise = "";
+		ent->noise = "doors/open_close";
 
 	/* set an inline model */
 	gi.SetModel(ent, ent->model);
