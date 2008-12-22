@@ -2862,42 +2862,19 @@ menu messageoptions
 	// ===================
 	// confuncs to update widgets
 	// ===================
+	
 	/**
-	 * @param[in] <1> row into the current view
+	 * @param[in] <1> row in current view
+	 * @param[in] <2> state for pause button
+	 * @param[in] <3> state for notification button
+	 * @param[in] <4> state for sound notification button
 	 */
-	confunc ms_pausee {
-		*(checkbox)bt_pause<1> current 1
+	confunc ms_btnstate {
+		cmd "mn_setnodeproperty bt_pause<1> current <2>"
+		cmd "mn_setnodeproperty bt_notify<1> current <3>"
+		cmd "mn_setnodeproperty bt_sound<1> current <4>"
 	}
-	/**
-	 * @param[in] <1> row into the current view
-	 */
-	confunc ms_paused {
-		*(checkbox)bt_pause<1> current 0
-	}
-	/**
-	 * @param[in] <1> row into the current view
-	 */
-	confunc ms_notifye {
-		*(checkbox)bt_notify<1> current 1
-	}
-	/**
-	 * @param[in] <1> row into the current view
-	 */
-	confunc ms_notifyd {
-		*(checkbox)bt_notify<1> current 0
-	}
-	/**
-	 * @param[in] <1> row into the current view
-	 */
-	confunc ms_sounde {
-		*(checkbox)bt_sound<1> current 1
-	}
-	/**
-	 * @param[in] <1> row into the current view
-	 */
-	confunc ms_soundd {
-		*(checkbox)bt_sound<1> current 0
-	}
+	
 
 	// ===================
 	// confuncs to enable/disable lines

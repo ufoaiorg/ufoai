@@ -504,9 +504,8 @@ static void MSO_UpdateVisibleButtons (void)
 			assert(entry->category);
 			if (!entry->category->isFolded) {
 				MN_ExecuteConfunc("ms_enable %i", visible);
-				MN_ExecuteConfunc("ms_pause%s %i", entry->settings->doPause ? "e" : "d", visible);
-				MN_ExecuteConfunc("ms_notify%s %i", entry->settings->doNotify ? "e" : "d", visible);
-				MN_ExecuteConfunc("ms_sound%s %i", entry->settings->doSound ? "e" : "d", visible);
+				MN_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
+						entry->settings->doNotify, entry->settings->doSound);
 				visible++;
 			}
 		}
@@ -553,20 +552,17 @@ static void MSO_Init_f (void)
  */
 static void MSO_Set (const int listIndex, const notify_t type, const mso_t optionType, const qboolean activate, const qboolean sendCommands)
 {
-	const char* option;
+	messageSettings_t *settings = &messageSettings[type];
 
 	if (optionType == MSO_PAUSE) {
-		messageSettings[type].doPause = activate;
-		option = "pause";
+		settings->doPause = activate;
 	} else if (optionType == MSO_NOTIFY) {
-		messageSettings[type].doNotify = activate;
-		option = "notify";
+		settings->doNotify = activate;
 	} else {
-		messageSettings[type].doSound = activate;
-		option = "sound";
+		settings->doSound = activate;
 	}
 	if (sendCommands)
-		MN_ExecuteConfunc("ms_%s%s %i", option, activate ? "e" : "d", listIndex);
+		MN_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
 		messageOptionsInitialized = qfalse;
