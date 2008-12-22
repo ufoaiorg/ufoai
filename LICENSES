@@ -2225,12 +2225,12 @@ base/sound/civilians/male_hurt.ogg | Creative Commons Sampling Plus 1.0 |  | htt
 base/sound/civilians/male_hurt2.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/male_hurt3.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/male_hurt4.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/doors/door_02.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/door_creak_low_short.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/door_latch_01.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/door_latch_sharp.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/door_open_and_creak.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/door_squeaky_close.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/creak_low_short.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/latch_01.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/latch_sharp.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/open_and_creak.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/open_close.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/squeaky_close.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
