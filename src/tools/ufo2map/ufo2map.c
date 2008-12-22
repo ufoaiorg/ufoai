@@ -428,7 +428,7 @@ static void U2M_SetDefaultConfigValues (void)
 
 	/* lightmap day values */
 	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.14, 0.14, 0.14);
-	config.sun_intensity[LIGHTMAP_DAY] = 200;
+	config.sun_intensity[LIGHTMAP_DAY] = 240;
 	Vector2Set(config.sun_angles[LIGHTMAP_DAY], -75, 100);
 	VectorSet(config.sun_color[LIGHTMAP_DAY], 0.90, 0.75, 0.65);
 	ColorNormalize(config.sun_color[LIGHTMAP_DAY], config.sun_color[LIGHTMAP_DAY]);
