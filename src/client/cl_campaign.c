@@ -744,9 +744,10 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
 
 	for (; list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
-		if (mission->onGeoscape && !CP_CheckMissionVisibleOnGeoscape(mission))
+		if (mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_CANT_BE_DETECTED) {
+			/* remove a mission when radar is destroyed */
 			CP_MissionRemoveFromGeoscape(mission);
-		else if (!mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_ALWAYS_DETECTED) {
+		} else if (!mission->onGeoscape && CP_CheckMissionVisibleOnGeoscape(mission) == MISDET_ALWAYS_DETECTED) {
 			/* only show mission that are always detected: mission that have a probability to be detected will be
 			 * tested at next half hour */
 			CP_MissionAddToGeoscape(mission, qfalse);
