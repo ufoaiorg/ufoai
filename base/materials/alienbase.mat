@@ -14,9 +14,9 @@
 		lightmap
 	}
 	{
-	    texture tex_alienbase/wall01_c
-	    pulse 0.6
-	    lightmap
+		texture tex_alienbase/wall01_c
+		pulse 0.6
+		lightmap
 	}
 	{
 		texture tex_alienbase/wall01_b
