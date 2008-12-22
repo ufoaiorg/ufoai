@@ -2142,25 +2142,15 @@ void MainFrame::Create (void)
 
 	gtk_widget_show(GTK_WIDGET(window));
 
-	GtkWidget* mainHsplit = gtk_hpaned_new();
-	gtk_box_pack_start(GTK_BOX(hbox), mainHsplit, TRUE, TRUE, 0);
-	gtk_widget_show(mainHsplit);
-
-	GtkWidget *notebook = gtk_notebook_new();
-	gtk_paned_pack2(GTK_PANED(mainHsplit), GTK_WIDGET(notebook), FALSE, FALSE);
-
-	Sidebar_constructEntities(notebook);
-	Sidebar_constructSurfaces(notebook);
-	Sidebar_constructMapInfo(notebook);
-	Sidebar_constructJobInfo(notebook);
-	gtk_widget_show_all(notebook);
+	GtkWidget* mainHBox = gtk_hbox_new(0, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), mainHBox, TRUE, TRUE, 0);
+	gtk_widget_show(mainHBox);
 
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
 
 	int w, h;
 	gtk_window_get_size(window, &w, &h);
-	gtk_paned_set_position(GTK_PANED(mainHsplit), w);
 
 	// create edit windows according to user setable style
 	switch (CurrentStyle()) {
@@ -2168,7 +2158,7 @@ void MainFrame::Create (void)
 	{
 		GtkWidget* vsplit = gtk_vpaned_new();
 		m_vSplit = vsplit;
-		gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
+		gtk_box_pack_start(GTK_BOX(mainHBox), vsplit, TRUE, TRUE, 0);
 		gtk_widget_show(vsplit);
 
 		// console
@@ -2221,7 +2211,7 @@ void MainFrame::Create (void)
 	{
 		GtkWidget* vsplit = gtk_vpaned_new();
 		m_vSplit = vsplit;
-		gtk_paned_add1(GTK_PANED(mainHsplit), vsplit);
+		gtk_box_pack_start(GTK_BOX(mainHBox), vsplit, TRUE, TRUE, 0);
 		gtk_widget_show(vsplit);
 
 		// camera
@@ -2264,6 +2254,9 @@ void MainFrame::Create (void)
 	default:
 		Error("Invalid layout type set - remove your radiant config files and retry");
 	}
+
+	GtkWidget *notebook = Sidebar_construct();
+	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
 
 	SetActiveXY(m_pXYWnd);
 

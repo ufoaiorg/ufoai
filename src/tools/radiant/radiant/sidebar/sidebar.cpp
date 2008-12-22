@@ -16,7 +16,9 @@
 
 #include "sidebar.h"
 
-void Sidebar_constructEntities (GtkWidget *notebook)
+#include <gtk/gtk.h>
+
+static void Sidebar_constructEntities (GtkWidget *notebook)
 {
 	GtkWidget *label = gtk_label_new("Entities");
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -39,7 +41,7 @@ void Sidebar_constructEntities (GtkWidget *notebook)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-void Sidebar_constructSurfaces (GtkWidget *notebook)
+static void Sidebar_constructSurfaces (GtkWidget *notebook)
 {
 	GtkWidget *label = gtk_label_new("Surfaces");
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -58,7 +60,7 @@ void Sidebar_constructSurfaces (GtkWidget *notebook)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-void Sidebar_constructMapInfo (GtkWidget *notebook)
+static void Sidebar_constructMapInfo (GtkWidget *notebook)
 {
 	GtkWidget *label = gtk_label_new("Map Info");
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -77,7 +79,7 @@ void Sidebar_constructMapInfo (GtkWidget *notebook)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
-void Sidebar_constructJobInfo (GtkWidget *notebook)
+static void Sidebar_constructJobInfo (GtkWidget *notebook)
 {
 	GtkWidget *label = gtk_label_new("Job Info");
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
@@ -94,4 +96,18 @@ void Sidebar_constructJobInfo (GtkWidget *notebook)
 
 	gtk_widget_show_all(swin);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
+}
+
+GtkWidget *Sidebar_construct (void)
+{
+	GtkWidget *notebook = gtk_notebook_new();
+
+	Sidebar_constructEntities(notebook);
+	Sidebar_constructSurfaces(notebook);
+	Sidebar_constructMapInfo(notebook);
+	Sidebar_constructJobInfo(notebook);
+
+	gtk_widget_show_all(notebook);
+
+	return notebook;
 }
