@@ -708,9 +708,6 @@ class ListAttribute: public EntityAttribute
 
 namespace
 {
-	int g_entitysplit1_position;
-	int g_entitysplit2_position;
-
 	GtkTreeView* g_entityClassList;
 	GtkTextView* g_entityClassComment;
 
@@ -1300,173 +1297,140 @@ static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* 
 GtkWidget* EntityInspector_constructNotebookTab (void)
 {
 	GtkWidget* pageframe = gtk_frame_new("Entity Inspector");
-	GtkWidget* g_entity_split1 = 0;
-	GtkWidget* g_entity_split2 = 0;
+	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
 
 	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);
 
 	{
-		GtkWidget* split1 = gtk_vpaned_new();
-		gtk_container_add(GTK_CONTAINER(pageframe), split1);
-
-		g_entity_split1 = split1;
+		gtk_container_add(GTK_CONTAINER(pageframe), vbox);
 
 		{
-			GtkWidget* split2 = gtk_vpaned_new();
-			gtk_paned_add1(GTK_PANED(split1), split2);
-
-			g_entity_split2 = split2;
-
-			{
-				// entity class list
-				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-				gtk_paned_add1(GTK_PANED(split2), scr);
-				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
-
-				{
-					GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
-
-					GtkTreeView* view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
-					gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
-					gtk_tree_view_set_headers_visible(view, FALSE);
-					g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(EntityClassList_button_press), 0);
-					g_signal_connect(G_OBJECT(view), "key_press_event", G_CALLBACK(EntityClassList_keypress), 0);
-
-					{
-						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text",
-								0, (char const*) 0);
-						gtk_tree_view_append_column(view, column);
-					}
-
-					{
-						GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
-						g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed),
-								0);
-					}
-
-					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
-
-					g_object_unref(G_OBJECT(store));
-					g_entityClassList = view;
-					g_entlist_store = store;
-				}
-			}
+			// entity class list
+			GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+			gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
+			gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+			gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 			{
-				// entity class comments
-				GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-				gtk_paned_add2(GTK_PANED(split2), scr);
-				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-				gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
+				GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
+
+				GtkTreeView* view = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(store)));
+				gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
+				gtk_tree_view_set_headers_visible(view, FALSE);
+				g_signal_connect(G_OBJECT(view), "button_press_event", G_CALLBACK(EntityClassList_button_press), 0);
+				g_signal_connect(G_OBJECT(view), "key_press_event", G_CALLBACK(EntityClassList_keypress), 0);
 
 				{
-					GtkTextView* text = GTK_TEXT_VIEW(gtk_text_view_new());
-					widget_set_size(GTK_WIDGET(text), 0, 0); // as small as possible
-					gtk_text_view_set_wrap_mode(text, GTK_WRAP_WORD);
-					gtk_text_view_set_editable(text, FALSE);
-					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(text));
-					g_entityClassComment = text;
+					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text",
+							0, (char const*) 0);
+					gtk_tree_view_append_column(view, column);
 				}
+
+				{
+					GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
+					g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityClassList_selection_changed),
+							0);
+				}
+
+				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(view));
+
+				g_object_unref(G_OBJECT(store));
+				g_entityClassList = view;
+				g_entlist_store = store;
 			}
 		}
 
 		{
-			GtkWidget* split2 = gtk_vpaned_new();
-			gtk_paned_add2(GTK_PANED(split1), split2);
+			// entity class comments
+			GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+			gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
+			gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+			gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
 
 			{
-				GtkWidget* vbox2 = gtk_vbox_new(FALSE, 2);
-				gtk_paned_pack1(GTK_PANED(split2), vbox2, FALSE, FALSE);
-
-				{
-					// Spawnflags (4 colums wide max, or window gets too wide.)
-					GtkTable* table = GTK_TABLE(gtk_table_new(4, 4, FALSE));
-					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(table), FALSE, TRUE, 0);
-
-					g_spawnflagsTable = table;
-
-					for (int i = 0; i < MAX_FLAGS; i++) {
-						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(""));
-						gtk_widget_ref(GTK_WIDGET(check));
-						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(check),
-								"toggled", G_CALLBACK(SpawnflagCheck_toggled), 0)));
-						g_entitySpawnflagsCheck[i] = check;
-					}
-				}
-
-				{
-					// entity key/value list
-					GtkWidget* scr = gtk_scrolled_window_new(0, 0);
-					gtk_box_pack_start(GTK_BOX(vbox2), scr, TRUE, TRUE, 0);
-					gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-					gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
-
-					GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
-
-					GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
-					gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
-
-					{
-						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text",
-								0, (char const*) 0);
-						gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
-						g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
-						g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
-					}
-
-					{
-						GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-						GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Value	", renderer,
-								"text", 1, (char const*) 0);
-						gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
-						g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
-						g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
-					}
-
-					gtk_container_add(GTK_CONTAINER(scr), view);
-
-					g_object_unref(G_OBJECT(store));
-
-					g_entprops_store = store;
-
-					// entity parameter action buttons
-					GtkBox* hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
-					gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(hbox), FALSE, TRUE, 0);
-
-					{
-						GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_REMOVE));
-						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue),
-								gpointer(view));
-						gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
-					}
-					{
-						GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_NEW));
-						g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue),
-								gpointer(view));
-						gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
-					}
-				}
-			}
-
-			{
-				g_attributeBox = GTK_VBOX(gtk_vbox_new(FALSE, 2));
-				gtk_paned_pack2(GTK_PANED(split2), GTK_WIDGET(g_attributeBox), FALSE, FALSE);
+				GtkTextView* text = GTK_TEXT_VIEW(gtk_text_view_new());
+				widget_set_size(GTK_WIDGET(text), 0, 0); // as small as possible
+				gtk_text_view_set_wrap_mode(text, GTK_WRAP_WORD);
+				gtk_text_view_set_editable(text, FALSE);
+				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(text));
+				g_entityClassComment = text;
 			}
 		}
-	}
 
-	// show the sliders in any case
-	if (g_entitysplit2_position < 22)
-		g_entitysplit2_position = 22;
-	gtk_paned_set_position(GTK_PANED(g_entity_split2), g_entitysplit2_position);
+		{
+			// Spawnflags (4 colums wide max, or window gets too wide.)
+			GtkTable* table = GTK_TABLE(gtk_table_new(4, 4, FALSE));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(table), FALSE, TRUE, 0);
 
-	if ((g_entitysplit1_position - g_entitysplit2_position) > 27) {
-		gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit1_position);
-	} else {
-		gtk_paned_set_position(GTK_PANED(g_entity_split1), g_entitysplit2_position + 27);
+			g_spawnflagsTable = table;
+
+			for (int i = 0; i < MAX_FLAGS; i++) {
+				GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(""));
+				gtk_widget_ref(GTK_WIDGET(check));
+				g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(g_signal_connect(G_OBJECT(check),
+						"toggled", G_CALLBACK(SpawnflagCheck_toggled), 0)));
+				g_entitySpawnflagsCheck[i] = check;
+			}
+		}
+
+		{
+			// entity key/value list
+			GtkWidget* scr = gtk_scrolled_window_new(0, 0);
+			gtk_box_pack_start(GTK_BOX(vbox), scr, TRUE, TRUE, 0);
+			gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+			gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scr), GTK_SHADOW_IN);
+
+			GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+
+			GtkWidget* view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+			gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
+
+			{
+				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text",
+						0, (char const*) 0);
+				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
+				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
+				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
+			}
+
+			{
+				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Value	", renderer,
+						"text", 1, (char const*) 0);
+				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
+				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
+				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
+			}
+
+			gtk_container_add(GTK_CONTAINER(scr), view);
+
+			g_object_unref(G_OBJECT(store));
+
+			g_entprops_store = store;
+
+			// entity parameter action buttons
+			GtkBox* hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), FALSE, TRUE, 0);
+
+			{
+				GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_REMOVE));
+				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue),
+						gpointer(view));
+				gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
+			}
+			{
+				GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_NEW));
+				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue),
+						gpointer(view));
+				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, TRUE, 0);
+			}
+		}
+		{
+			g_attributeBox = GTK_VBOX(gtk_vbox_new(FALSE, 2));
+			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(g_attributeBox), FALSE, FALSE, 0);
+		}
 	}
 
 	EntityClassList_fill();
@@ -1509,11 +1473,6 @@ EntityInspector g_EntityInspector;
 void EntityInspector_construct (void)
 {
 	GlobalEntityClassManager().attach(g_EntityInspector);
-
-	GlobalPreferenceSystem().registerPreference("EntitySplit1", IntImportStringCaller(g_entitysplit1_position),
-			IntExportStringCaller(g_entitysplit1_position));
-	GlobalPreferenceSystem().registerPreference("EntitySplit2", IntImportStringCaller(g_entitysplit2_position),
-			IntExportStringCaller(g_entitysplit2_position));
 }
 
 void EntityInspector_destroy (void)
