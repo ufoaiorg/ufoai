@@ -19,15 +19,17 @@ class NodeBehaviour:
 
 	def __init__(self):
 		self.name = ""
-		self.extends = "node"
+		self.extends = "abstractnode"
 		self.properties = {}
 		pass
 
 	def init(self, dic):
 		self.name = dic['name']
-		if 'extends' in dic:
+		if (self.name == "abstractnode"):
+			self.extends = None
+		elif 'extends' in dic:
 			self.extends = dic['extends']
-		
+
 	def initProperties(self, dic):
 		self.properties = dic
 		
@@ -103,17 +105,6 @@ def extractRegistrationFunctions(filedata):
 def extractData():
 	result = []
 	
-	# the main node
-	n = NodeBehaviour()
-	n.name = "node"
-	n.extends = None
-	file = open(UFOAI_ROOT + '/src/client/menu/m_parse.c', "rt")
-	data = file.read()
-	file.close()
-	props = extractProperties(data, 'nodeProperties')
-	n.initProperties(props)
-	result.append(n)
-
 	# all nodes
 	for f in os.listdir(dir):
 		if ".c" not in f:
