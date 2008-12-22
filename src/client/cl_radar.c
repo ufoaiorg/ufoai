@@ -499,12 +499,13 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
  * @param[in] detected Is the UFO already detected by another radar? (Beware: this is not the same as ufo->detected)
  * @return true if the aircraft is inside sensor and was sensored
  * @sa UFO_CampaignCheckEvents
+ * @sa CP_CheckNewMissionDetectedOnGeoscape
  */
 qboolean RADAR_CheckUFOSensored (radar_t *radar, vec2_t posRadar,
 	const aircraft_t *ufo, qboolean detected)
 {
 	/** @brief Probability to detect UFO each @c DETECTION_INTERVAL
-	 * @note This correspond to 40 % each 30 minutes (coded this way to be able to
+	 * @note This correspond to 40 percents each 30 minutes (coded this way to be able to
 	 * change @c DETECTION_INTERVAL without changing the way radar works)
 	 * @todo There is a hardcoded detection probability here
 	 * - this should be scripted. Probability should be a

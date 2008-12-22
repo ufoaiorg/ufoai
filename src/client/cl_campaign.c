@@ -700,12 +700,18 @@ static inline void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 
 /**
  * @brief Check if mission has been detected by radar.
- * @note called every 30 minutes
+ * @note called every @c DETECTION_INTERVAL.
+ * @sa RADAR_CheckUFOSensored
+ * @return True if a new mission was detected.
  */
-static void CP_CheckNewMissionDetectedOnGeoscape (void)
+static qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 {
 	const linkedList_t *list = ccs.missions;
-	const float missionDetectionProbability = 0.4f;	/**< Probability to detect mission each 30 minutes */
+	/** @brief Probability to detect UFO each @c DETECTION_INTERVAL
+	 * @note This correspond to 40 percents each 30 minutes (coded this way to be able to
+	 * change @c DETECTION_INTERVAL without changing the way radar works) */
+	const float missionDetectionProbability = 0.000125f * DETECTION_INTERVAL;
+	qboolean newDetection = qfalse;
 
 	for (; list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
@@ -726,11 +732,14 @@ static void CP_CheckNewMissionDetectedOnGeoscape (void)
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 
-			/* if mission has a UFO, detect the UFO when it takes off (you're carefull on this location) */
+			/* if mission has a UFO, detect the UFO when it takes off */
 			if (mission->ufo)
 				mission->ufo->detected = qtrue;
+
+			newDetection = qtrue;
 		}
 	}
+	return newDetection;
 }
 
 /**
@@ -4585,7 +4594,7 @@ void CL_CampaignRun (void)
 		qboolean detection;
 		UFO_CampaignRunUFOs(dt);
 		CL_CampaignRunAircraft(dt, qfalse);
-		CP_CheckNewMissionDetectedOnGeoscape();
+		detection = CP_CheckNewMissionDetectedOnGeoscape();
 
 		/* Update alien interest for bases */
 		UFO_UpdateAlienInterestForAllBasesAndInstallations();
@@ -4594,7 +4603,7 @@ void CL_CampaignRun (void)
 		AB_UpdateStealthForAllBase();
 
 		timeAlreadyFlied += dt;
-		detection = UFO_CampaignCheckEvents();
+		detection |= UFO_CampaignCheckEvents();
 		if (detection) {
 			ccs.timer = (i + 1) * DETECTION_INTERVAL - currentinterval;
 			break;
