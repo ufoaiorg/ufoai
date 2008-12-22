@@ -494,12 +494,12 @@ mapdef tropic_river
 
 	ufos
 	{
-  craft_ufo_corrupter
-  craft_ufo_scout
-  craft_ufo_fighter
-  craft_ufo_harvester
-  craft_crash_scout
-  craft_crash_fighter
+		craft_ufo_corrupter
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+		craft_crash_scout
+		craft_crash_fighter
 	}
 
 	terrains
@@ -531,12 +531,12 @@ mapdef tropic_drug
 
 	ufos
 	{
-  craft_ufo_corrupter
-  craft_ufo_scout
-  craft_ufo_fighter
-  craft_ufo_harvester
-  craft_crash_scout
-  craft_crash_fighter
+		craft_ufo_corrupter
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+		craft_crash_scout
+		craft_crash_fighter
 	}
 
 	terrains
@@ -568,8 +568,8 @@ mapdef tropic_bigufo
 
 	ufos
 	{
-  craft_ufo_corrupter
-  craft_ufo_harvester
+		craft_ufo_corrupter
+		craft_ufo_harvester
 	}
 
 	terrains
