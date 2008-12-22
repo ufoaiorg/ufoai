@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
 
+static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token);
 
 /** @brief valid properties for options of the selectbox and tab */
 static const value_t selectBoxValues[] = {
@@ -441,70 +442,6 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	return qtrue;
 }
 
-static qboolean MN_ParseNodeProperty (menuNode_t * node, const value_t *val, const char **text, const char **token, const char *errhead)
-{
-	size_t bytes;
-	int result;
-	node->scriptValues = val;
-
-	/* Com_Printf("  %s", *token); */
-
-	if (val->type == V_NULL) {
-		return qtrue;
-	}
-
-	/* get parameter values */
-	*token = COM_EParse(text, errhead, node->name);
-	if (!*text)
-		return qfalse;
-
-	/* Com_Printf(" %s", *token); */
-
-	/* get the value */
-	if ((val->type & V_SPECIAL_TYPE) == 0) {
-		result = Com_ParseValue(node, *token, val->type, val->ofs, val->size, &bytes);
-		if (result != RESULT_OK) {
-			Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
-			return qfalse;
-		}
-	} else {
-		/* a reference to data is handled like this */
-		*(byte **) ((byte *) node + val->ofs) = mn.curadata;
-		/* references are parsed as string */
-		if (**token == '*') {
-			/* sanity check */
-			if (strlen(*token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseNodeProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-				return qfalse;
-			}
-
-			result = Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0, &bytes);
-			if (result != RESULT_OK) {
-				Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
-				return qfalse;
-			}
-			mn.curadata += bytes;
-		} else {
-			/* sanity check */
-			if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseNodeProperty: Value '%s' is too long (key %s)\n", *token, val->string);
-				return qfalse;
-			}
-
-			result = Com_ParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size, &bytes);
-			if (result != RESULT_OK) {
-				Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
-				return qfalse;
-			}
-			mn.curadata += bytes;
-		}
-	}
-
-	/* Com_Printf("\n"); */
-	return qtrue;
-}
-
-
 static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, const char **text, const char **token, const char *errhead)
 {
 	menuAction_t **action;
@@ -533,6 +470,154 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 		if (!*text)
 			return qfalse;
 	}
+	return qtrue;
+}
+
+/**
+ * @brief Parse a property value
+ * @todo dont read the next token (need to change the script language)
+ */
+static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token)
+{
+	const char *errhead = "MN_ParseProperty: unexpected end of file (object";
+	size_t bytes;
+	int result;
+	const int specialType = property->type & V_SPECIAL_TYPE;
+	qboolean haveReadNextToken = qfalse;
+
+	if (property->type == V_NULL) {
+		return qfalse;
+	}
+
+	switch (specialType) {
+	case 0:	/* common type */
+		*token = COM_EParse(text, errhead, objectName);
+		if (!*text)
+			return qfalse;
+
+		result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
+		if (result != RESULT_OK) {
+			Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+			return qfalse;
+		}
+		break;
+
+	case V_SPECIAL_REF:
+		*token = COM_EParse(text, errhead, objectName);
+		if (!*text)
+			return qfalse;
+
+		/* a reference to data is handled like this */
+		*(byte **) ((byte *) object + property->ofs) = mn.curadata;
+
+		/** @todo check for the moment its not a cvar */
+		assert (*token[0] != '*');
+
+		/* sanity check */
+		if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
+			Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
+			return qfalse;
+		}
+
+		result = Com_ParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+		if (result != RESULT_OK) {
+			Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
+			return qfalse;
+		}
+		mn.curadata += bytes;
+
+		break;
+
+	case V_SPECIAL_CVAR:	/* common type */
+		*token = COM_EParse(text, errhead, objectName);
+		if (!*text)
+			return qfalse;
+
+		/* a reference to data is handled like this */
+		*(byte **) ((byte *) object + property->ofs) = mn.curadata;
+		/* references are parsed as string */
+		if (**token == '*') {
+			/* sanity check */
+			if (strlen(*token) > MAX_VAR - 1) {
+				Com_Printf(": Value '%s' is too long (key %s)\n", *token, property->string);
+				return qfalse;
+			}
+
+			result = Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				return qfalse;
+			}
+			mn.curadata += bytes;
+		} else {
+			/* sanity check */
+			if (property->type == V_STRING && strlen(*token) > MAX_VAR - 1) {
+				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
+				return qfalse;
+			}
+
+			result = Com_ParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+			if (result != RESULT_OK) {
+				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				return qfalse;
+			}
+			mn.curadata += bytes;
+		}
+		break;
+
+	case V_SPECIAL:
+
+		switch (property->type) {
+		case V_SPECIAL_ACTION:
+			result = MN_ParseEventProperty(object, property, text, token, errhead);
+			if (!result)
+				return qfalse;
+			haveReadNextToken = qtrue;
+			break;
+
+		case V_SPECIAL_EXCLUDERECT:
+			result = MN_ParseExcludeRect(object, text, token, errhead);
+			if (!result)
+				return qfalse;
+			break;
+
+		/* for MN_SELECTBOX */
+		case V_SPECIAL_OPTIONNODE:
+			result = MN_ParseOption(object, text, token, errhead);
+			if (!result)
+				return qfalse;
+			break;
+
+		case V_SPECIAL_ICONREF:
+			{
+				menuIcon_t** icon = (menuIcon_t**) ((byte *) object + property->ofs);
+				*token = COM_EParse(text, errhead, objectName);
+				if (!*text)
+					return qfalse;
+				*icon = MN_GetIconByName(*token);
+				if (*icon == NULL) {
+					Com_Printf("MN_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
+				}
+			}
+			break;
+
+		default:
+			Com_Printf("MN_ParseProperty: unknown property type '%d' (0x%X) (%s@%s)\n", property->type, property->type, objectName, property->string);
+			return qfalse;
+		}
+		break;
+
+	default:
+		Com_Printf("MN_ParseNodeBody: unknown property type '%d' (0x%X) (%s@%s)\n", property->type, property->type, objectName, property->string);
+		return qfalse;
+	}
+
+	if (!haveReadNextToken) {
+		*token = COM_EParse(text, errhead, objectName);
+		if (!*text)
+			return qfalse;
+	}
+
 	return qtrue;
 }
 
@@ -573,7 +658,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 	do {
 		const value_t *val;
-		qboolean result;
+		int result;
 
 		/* get new token */
 		if (!nextTokenAlreadyRead) {
@@ -599,46 +684,19 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			return qfalse;
 		}
 
+		/** @todo check if its realy need */
+		node->scriptValues = val;
 
-		/* if its not a special case */
-		if ((val->type & V_SPECIAL_TYPE) == 0 || (val->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
-			result = MN_ParseNodeProperty(node, val, text, token, errhead);
-			if (!result)
-				return qfalse;
-
-		/* is it an event property */
-		} else if (val->type == V_SPECIAL_ACTION) {
-			result = MN_ParseEventProperty(node, val, text, token, errhead);
-			if (!result)
-				return qfalse;
-			nextTokenAlreadyRead = qtrue;
-
-		} else if (val->type == V_SPECIAL_EXCLUDERECT) {
-			result = MN_ParseExcludeRect(node, text, token, errhead);
-			if (!result)
-				return qfalse;
-
-		/* for MN_SELECTBOX */
-		} else if (val->type == V_SPECIAL_OPTIONNODE) {
-			result = MN_ParseOption(node, text, token, errhead);
-			if (!result)
-				return qfalse;
-
-		} else if (val->type == V_SPECIAL_ICONREF) {
-			menuIcon_t** icon = (menuIcon_t**) ((byte *) node + val->ofs);
-			*token = COM_EParse(text, errhead, node->name);
-			if (!*text)
-				return qfalse;
-			*icon = MN_GetIconByName(*token);
-			if (*icon == NULL) {
-				Com_Printf("MN_ParseNodeBody: icon '%s' not found (node %s.%s)\n", *token, node->menu->name, node->name);
-			}
-
-		} else {
-			/* unknown val->type !!!!! */
-			Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" (0x%X) ignored (node %s.%s@%s)\n", val->type, val->type, node->menu->name, node->name, val->string);
+		/* get parameter values */
+		result = MN_ParseProperty(node, val, node->name, text, token);
+		if (!result) {
+			Com_Printf("MN_ParseNodeBody: Problem with parsing of node property '%s.%s@%s'. See upper\n", node->menu->name, node->name, val->string);
 			return qfalse;
 		}
+
+		nextTokenAlreadyRead = qtrue;
+
+
 	} while (*text);
 
 	return qfalse;
@@ -976,53 +1034,30 @@ void MN_ParseIcon (const char *name, const char **text)
 	token = COM_Parse(text);
 	assert(Q_strcmp(token, "{") == 0);
 
+	/** @todo While MN_ParseProperty read the next token */
+	token = COM_Parse(text);
+	if (*text == NULL)
+		return;
+
 	/* read properties */
 	while (qtrue) {
 		const value_t *property;
+		qboolean result;
 
-		token = COM_Parse(text);
-		if (*text == NULL)
-			return;
 		if (token[0] == '}')
 			break;
 
 		property = MN_FindPropertyByName(mn_iconProperties, token);
 		if (!property) {
-			Com_Printf("MN_ParseOption: unknown options property: '%s' - ignore it\n", token);
+			Com_Printf("MN_ParseIcon: unknown options property: '%s' - ignore it\n", token);
 			return;
 		}
 
 		/* get parameter values */
-		token = COM_Parse(text);
-		if (*text == NULL)
+		result = MN_ParseProperty(icon, property, icon->name, text, &token);
+		if (!result) {
+			Com_Printf("MN_ParseIcon: Parsing for icon '%s'. See upper\n", icon->name);
 			return;
-
-		if ((property->type & V_SPECIAL_TYPE) == 0) {
-			size_t bytes;
-			qboolean result = Com_ParseValue(icon, token, property->type, property->ofs, property->size, &bytes);
-			if (result != RESULT_OK) {
-				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
-				return;
-			}
-		} else {
-			size_t bytes;
-			qboolean result;
-			/* a reference to data is handled like this */
-			*(byte **) ((byte *) icon + property->ofs) = mn.curadata;
-			/* references are parsed as string */
-
-			/* sanity check */
-			if ((property->type&V_BASETYPEMASK) == V_STRING && strlen(token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseNodeProperty: Value '%s' is too long (key %s)\n", token, property->string);
-				return;
-			}
-
-			result = Com_ParseValue(mn.curadata, token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
-			if (result != RESULT_OK) {
-				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
-				return;
-			}
-			mn.curadata += bytes;
 		}
 	}
 
