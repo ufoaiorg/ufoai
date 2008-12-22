@@ -112,9 +112,9 @@ typedef enum msgcategorymask_s {
 
 /** @brief notification types */
 typedef enum mso_s {
-	MSO_PAUSE,	/**< pause game */
-	MSO_NOTIFY,	/**< add notification message */
-	MSO_SOUND	/**< play notification sound */
+	MSO_PAUSE = NTMASK_PAUSE | NTMASK_NOTIFY,	/**< pause game */
+	MSO_NOTIFY = NTMASK_NOTIFY,					/**< add notification message */
+	MSO_SOUND = NTMASK_SOUND | NTMASK_NOTIFY	/**< play notification sound */
 } mso_t;
 
 /**

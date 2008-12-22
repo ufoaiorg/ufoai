@@ -554,13 +554,26 @@ static void MSO_Set (const int listIndex, const notify_t type, const mso_t optio
 {
 	messageSettings_t *settings = &messageSettings[type];
 
-	if (optionType == MSO_PAUSE) {
-		settings->doPause = activate;
-	} else if (optionType == MSO_NOTIFY) {
+	if (activate) {
+		if ((optionType & NTMASK_PAUSE) == NTMASK_PAUSE)
+			settings->doPause = activate;
+		if ((optionType & NTMASK_SOUND)== NTMASK_SOUND)
+			settings->doSound = activate;
+		/* notification anyway*/
 		settings->doNotify = activate;
 	} else {
-		settings->doSound = activate;
+		if ((optionType & NTMASK_PAUSE) == NTMASK_PAUSE)
+			settings->doPause = activate;
+		if ((optionType & NTMASK_SOUND)== NTMASK_SOUND)
+			settings->doSound = activate;
+		/* disable all if notify is disabled */
+		if (optionType == MSO_NOTIFY) {
+			settings->doNotify = activate;
+			settings->doPause = activate;
+			settings->doSound = activate;
+		}
 	}
+
 	if (sendCommands)
 		MN_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
 	else
