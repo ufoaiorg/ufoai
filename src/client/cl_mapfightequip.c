@@ -130,8 +130,17 @@ static void AIM_CheckAirequipID (void)
  */
 static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
-	if (!slot)
+	if (!slot) {
+		/* This is a pilot */
+		airequipSelectedZone = ZONE_MAIN;
 		return;
+	}
+
+	if (airequipSelectedZone == ZONE_AMMO && (airequipID < AC_ITEM_AMMO) && (airequipID > AC_ITEM_WEAPON)) {
+		/* you can select ammo only for weapons and ammo */
+		airequipSelectedZone = ZONE_MAIN;
+	}
+
 	/* You can choose an ammo only if a weapon has already been selected */
 	if (airequipID >= AC_ITEM_AMMO && !slot->item) {
 		airequipSelectedZone = ZONE_MAIN;
