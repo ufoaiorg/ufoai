@@ -37,6 +37,9 @@ static int alienContFirstEntry;
 
 static void AC_UpdateMenu(const base_t *base);
 
+/** status flag indicating that mail about died aliens due to missing breathing tech was sent */
+static qboolean breathingMailSent = qfalse;
+
 /**
  * Collecting aliens functions
  */
@@ -162,6 +165,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
  * @param[in] aircraft Aircraft transporting cargo to homebase.
  * @sa CL_AircraftReturnedToHomeBase
  * @sa AL_FillInContainment
+ * @note an event mail about missing breathing tech will be triggered if necessary.
  */
 void AL_AddAliens (aircraft_t *aircraft)
 {
@@ -208,6 +212,10 @@ void AL_AddAliens (aircraft_t *aircraft)
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You cannot hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
 						messageAlreadySet = qtrue;
+					}
+					if (!breathingMailSent) {
+						Cmd_ExecuteString("addeventmail alienbreathing");
+						breathingMailSent = qtrue;
 					}
 				} else {
 					for (k = 0; k < cargo[i].amount_alive; k++) {
@@ -1087,6 +1095,8 @@ qboolean AC_Save (sizebuf_t* sb, void* data)
  */
 qboolean AC_Load (sizebuf_t* sb, void* data)
 {
+	/* @todo load and save state, perhaps integrate flag into ccs? */
+	breathingMailSent = qfalse;
 	return qtrue;
 }
 

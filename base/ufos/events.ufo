@@ -16,6 +16,24 @@
 //		Link to the ufopedia entry.
 // ==============================================
 
+// ==============================================
+// MAIL DEFINITIONS - for notification emails about various events.
+// ==============================================
+// Description
+//	from
+//		mail sender
+//	to
+//		receiver
+//	date
+//		date when mail is sent, optional - will be filled with current game date if not provided
+//	subject
+//		subject header
+//	body
+//		mail body text
+//	icon
+//		icon to use in mailbox
+// ==============================================
+
 news_event mumbai
 {
 	name "_Devastating alien terror attack on Mumbai"
@@ -62,6 +80,15 @@ mail prolog
 	date "_2084 Mar 21"
 	subject "_Good Luck"
 	body "_mail_prolog"
+	icon icons/un
+}
+
+mail alienbreathing
+{
+	from "_mail_from_paul_navarre"
+	to "_mail_to_base_commander"
+	subject "_Alien died"
+	body "_mail_alienbreathing"
 	icon icons/un
 }
 
