@@ -1112,7 +1112,6 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	aircraft->fuel -= dt;
 
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / (float)SECONDS_PER_HOUR;
-	Com_DPrintf(DEBUG_CLIENT, "dist=%f aircraft time=%i, elapsed time=%i\n", dist, aircraft->time, dt);
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
@@ -1127,17 +1126,12 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
 		MAP_CheckPositionBoundaries(aircraft->pos);
-
-		Com_DPrintf(DEBUG_CLIENT, "pos: frac=%f p=%i rt pt1=%f,%f rt pt2=%f,%f\n", frac, p, aircraft->route.point[p][0],
-			aircraft->route.point[p][1], aircraft->route.point[p + 1][0], aircraft->route.point[p + 1][1]);
 	}
 
 	aircraft->hasMoved = qtrue;
 	aircraft->numInterpolationPoints = 0;
 
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * (aircraft->time + dt) / (float)SECONDS_PER_HOUR;
-
-	Com_DPrintf(DEBUG_CLIENT, "dist=%f aircraft time=%i, elapsed time=%i\n", dist, aircraft->time, dt);
 
 	/* Now calculate the projected position */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
@@ -1151,13 +1145,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		aircraft->projectedPos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
 		MAP_CheckPositionBoundaries(aircraft->projectedPos);
-
-		Com_DPrintf(DEBUG_CLIENT, "projected: frac=%f p=%i rt pt1=%f,%f rt pt2=%f,%f\n", frac, p, aircraft->route.point[p][0],
-			aircraft->route.point[p][1], aircraft->route.point[p + 1][0], aircraft->route.point[p + 1][1]);
 	}
-
-	Com_DPrintf(DEBUG_CLIENT, "pos=%f,%f projectedPos=%f,%f\n", aircraft->pos[0], aircraft->pos[1], aircraft->projectedPos[0],
-		aircraft->projectedPos[1]);
 
 	return qfalse;
 }
