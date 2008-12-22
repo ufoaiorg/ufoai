@@ -393,6 +393,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 	} else {
 		/* no ammo left, or no weapon, proceed with mission */
 		if (shooter->type == AIRCRAFT_UFO) {
+			shooter->aircraftTarget = NULL;		/* reset target */
 			CP_UFOProceedMission(shooter);
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
